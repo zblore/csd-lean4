@@ -14,6 +14,7 @@ structure OnticSetup (Σ : Type*) [MeasurableSpace Σ] where
   Ω0 : Set Σ
   hΩ0_meas : MeasurableSet Ω0
   hΩ0_nonzero : (μL : Measure Σ) Ω0 ≠ 0
+  hΩ0_lt_top : (μL : Measure Σ) Ω0 < ∞
 
 namespace OnticSetup
 
