@@ -1,5 +1,7 @@
 import CsdLean4.LF1.Setup
 
-namespace CsdLean4.LF1
+namespace CSD
+namespace LF1
 
-end CsdLean4.LF1
+end LF1
+end CSD
