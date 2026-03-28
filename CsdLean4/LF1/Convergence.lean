@@ -9,7 +9,7 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
+variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
 
 namespace TrialModel
 
@@ -21,31 +21,29 @@ Strong law for the indicator random variables attached to a fixed outcome region
 
 It shows that the empirical frequency converges almost surely to the expectation of
 the indicator random variable.  The separate identification of that expectation with
-the ontic weight is handled below through an explicit hypothesis `hmean`, discharged
-in practice by `integral_indicatorRV_eq_weightReal` from `Expectation.lean`.
+the ontic weight is handled below through `integral_indicatorRV_eq_weightReal`.
+
+Integrability and identical distribution are derived automatically from the model;
+only pairwise independence must be supplied by the caller.
 -/
 theorem strongLaw_indicator_to_mean_ae
     (O : S.OutcomeRegion)
-    (hint :
-      Integrable (T.indicatorRV (S := S) O 0) (T.trialMeasure))
     (hindep :
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := S) O n)))
-    (hident :
-      ∀ n,
-        IdentDistrib
-          (T.indicatorRV (S := S) O n)
-          (T.indicatorRV (S := S) O 0)
-          (T.trialMeasure) (T.trialMeasure)) :
+          (fun n => T.indicatorRV (S := S) O n))) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto
         (fun n : ℕ =>
-          (∑ i in Finset.range n, T.indicatorRV (S := S) O i ω) / (n : ℝ))
+          (∑ i ∈ Finset.range n, T.indicatorRV (S := S) O i ω) / (n : ℝ))
         atTop
-        (nhds (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure)) := by
-  sorry
+        (nhds (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure)) :=
+  strong_law_ae_real
+    (fun n => T.indicatorRV (S := S) O n)
+    (T.indicatorRV_integrable (S := S) O 0)
+    hindep
+    (fun n => T.indicatorRV_identDistrib (S := S) O n)
 
 /--
 If the expectation of the indicator random variable has been identified with the
@@ -54,30 +52,20 @@ that weight.
 -/
 theorem strongLaw_indicator_to_weight_ae
     (O : S.OutcomeRegion)
-    (hint :
-      Integrable (T.indicatorRV (S := S) O 0) (T.trialMeasure))
     (hindep :
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := S) O n)))
-    (hident :
-      ∀ n,
-        IdentDistrib
-          (T.indicatorRV (S := S) O n)
-          (T.indicatorRV (S := S) O 0)
-          (T.trialMeasure) (T.trialMeasure))
-    (hmean :
-      (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure) = T.weightReal (S := S) O) :
+          (fun n => T.indicatorRV (S := S) O n))) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto
         (fun n : ℕ =>
-          (∑ i in Finset.range n, T.indicatorRV (S := S) O i ω) / (n : ℝ))
+          (∑ i ∈ Finset.range n, T.indicatorRV (S := S) O i ω) / (n : ℝ))
         atTop
-        (nhds (T.weightReal (S := S) O)) := by
+        (nhds (O.weightReal)) := by
   filter_upwards
-    [T.strongLaw_indicator_to_mean_ae (S := S) O hint hindep hident] with ω hω
-  simpa [hmean] using hω
+    [T.strongLaw_indicator_to_mean_ae (S := S) O hindep] with ω hω
+  simpa [T.integral_indicatorRV_eq_weightReal (S := S) O 0] using hω
 
 /--
 Version of the previous theorem written using the `empiricalFreq` abbreviation from
@@ -85,28 +73,18 @@ Version of the previous theorem written using the `empiricalFreq` abbreviation f
 -/
 theorem strongLaw_empiricalFreq_to_weight_ae
     (O : S.OutcomeRegion)
-    (hint :
-      Integrable (T.indicatorRV (S := S) O 0) (T.trialMeasure))
     (hindep :
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := S) O n)))
-    (hident :
-      ∀ n,
-        IdentDistrib
-          (T.indicatorRV (S := S) O n)
-          (T.indicatorRV (S := S) O 0)
-          (T.trialMeasure) (T.trialMeasure))
-    (hmean :
-      (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure) = T.weightReal (S := S) O) :
+          (fun n => T.indicatorRV (S := S) O n))) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto
         (fun n : ℕ => T.empiricalFreq (S := S) O n ω)
         atTop
-        (nhds (T.weightReal (S := S) O)) := by
+        (nhds (O.weightReal)) := by
   filter_upwards
-    [T.strongLaw_indicator_to_weight_ae (S := S) O hint hindep hident hmean] with ω hω
+    [T.strongLaw_indicator_to_weight_ae (S := S) O hindep] with ω hω
   simpa [TrialModel.empiricalFreq] using hω
 
 end TrialModel

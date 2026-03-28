@@ -7,38 +7,39 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
-
-/-- A single measurable outcome region in the ontic state space. -/
-structure OutcomeRegion where
-  Ω : Set Σ
+/-- A single measurable outcome region in the ontic state space.
+    Parameterized by `S` so that `S.OutcomeRegion` works as dot notation. -/
+structure OutcomeRegion {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma]
+    (_S : OnticSetup Sigma) where
+  Ω : Set Sigma
   hΩ_meas : MeasurableSet Ω
 
 namespace OutcomeRegion
 
+variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma]
+         {S : OnticSetup Sigma} (O : OutcomeRegion S)
+
 /-- The pullback event of an outcome region under the deterministic flow `Φ`. -/
-def preEvent (O : S.OutcomeRegion) : Set Σ :=
+noncomputable def preEvent : Set Sigma :=
   S.Φ ⁻¹' O.Ω
 
-lemma measurable_preEvent (O : S.OutcomeRegion) :
-    MeasurableSet (O.preEvent (S := S)) := by
-  exact O.hΩ_meas.preimage S.measurable_Φ
+lemma measurable_preEvent : MeasurableSet O.preEvent :=
+  O.hΩ_meas.preimage S.measurable_Φ
 
 /-- The preparation-side version of the event. -/
-def prepEvent (O : S.OutcomeRegion) : Set Σ :=
-  S.Ω0 ∩ O.preEvent (S := S)
+noncomputable def prepEvent : Set Sigma :=
+  S.Ω0 ∩ O.preEvent
 
-lemma measurable_prepEvent (O : S.OutcomeRegion) :
-    MeasurableSet (O.prepEvent (S := S)) := by
-  exact S.hΩ0_meas.inter (O.measurable_preEvent (S := S))
+lemma measurable_prepEvent : MeasurableSet O.prepEvent :=
+  S.hΩ0_meas.inter O.measurable_preEvent
 
 /-- The outcome weight under the preparation probability measure. -/
-noncomputable def weight (O : S.OutcomeRegion) : ℝ≥0∞ :=
-  ((S.prepMeasure : ProbabilityMeasure Σ) : Measure Σ) (O.preEvent (S := S))
+noncomputable def weight : ENNReal :=
+  ((S.prepMeasure : ProbabilityMeasure Sigma) : Measure Sigma) O.preEvent
 
 /-- The outcome weight as a real number, for use in convergence statements. -/
-noncomputable def weightReal (O : S.OutcomeRegion) : ℝ :=
-  ENNReal.toReal (O.weight (S := S))
+noncomputable def weightReal : ℝ :=
+  ENNReal.toReal O.weight
 
 end OutcomeRegion
 

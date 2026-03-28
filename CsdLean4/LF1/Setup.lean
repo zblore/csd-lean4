@@ -1,5 +1,6 @@
 import Mathlib.MeasureTheory.Measure.FiniteMeasure
 import Mathlib.Dynamics.Ergodic.MeasurePreserving
+import Mathlib.MeasureTheory.Measure.MeasureSpace
 
 open MeasureTheory Set
 
@@ -7,21 +8,19 @@ namespace CSD
 namespace LF1
 
 /-- Ambient ontic data for LF1. -/
-structure OnticSetup (Σ : Type*) [MeasurableSpace Σ] [Nonempty Σ] where
-  μL : MeasureTheory.FiniteMeasure Σ
-  Φ  : Σ → Σ
-  hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure Σ) (μL : Measure Σ)
-  Ω0 : Set Σ
+structure OnticSetup (Sigma : Type*) [MeasurableSpace Sigma] [Nonempty Sigma] where
+  μL : MeasureTheory.FiniteMeasure Sigma
+  Φ  : Sigma → Sigma
+  hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure Sigma) (μL : Measure Sigma)
+  Ω0 : Set Sigma
   hΩ0_meas : MeasurableSet Ω0
-  hΩ0_nonzero : (μL : Measure Σ) Ω0 ≠ 0
-  hΩ0_lt_top : (μL : Measure Σ) Ω0 < ∞
+  hΩ0_nonzero : (μL : Measure Sigma) Ω0 ≠ 0
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
+variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
 
-@[simp] lemma measurable_Φ : Measurable S.Φ :=
-  S.hΦ_pres.measurable
+@[simp] lemma measurable_Φ : Measurable S.Φ := S.hΦ_pres.measurable
 
 end OnticSetup
 
