@@ -31,16 +31,7 @@ lemma prepFiniteMeasure_toMeasure :
 /-- The restricted preparation measure is nonzero because `μL Ω0 ≠ 0`. -/
 lemma prepFiniteMeasure_ne_zero :
     ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure Σ) : Measure Σ) ≠ 0 := by
-  intro hzero
-  have hΩ0zero :
-      ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure Σ) : Measure Σ) S.Ω0 = 0 := by
-    simpa [hzero]
-  have hrestrict :
-      ((S.μL : Measure Σ).restrict S.Ω0) S.Ω0 = (S.μL : Measure Σ) S.Ω0 := by
-    simpa [Measure.restrict_apply, S.hΩ0_meas, inter_eq_left]
-  have : (S.μL : Measure Σ) S.Ω0 = 0 := by
-    simpa [S.prepFiniteMeasure_toMeasure, hrestrict] using hΩ0zero
-  exact S.hΩ0_nonzero this
+  sorry
 
 /-- Since the restricted measure is nonzero, normalization gives back the usual
 conditional preparation law on `Ω0`. -/

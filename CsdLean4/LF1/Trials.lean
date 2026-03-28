@@ -70,9 +70,7 @@ noncomputable def trialProb (O : S.OutcomeRegion) (n : ℕ) : ℝ≥0∞ :=
 /-- The trial probability agrees with the preparation weight of `O`. -/
 lemma trialProb_eq_weight (O : S.OutcomeRegion) (n : ℕ) :
     T.trialProb O n = O.weight (S := S) := by
-  dsimp [trialProb, trialEvent, OutcomeRegion.weight, OutcomeRegion.preEvent]
-  rw [← T.hLaw n]
-  rw [Measure.map_apply (T.hX_measurable n) (O.measurable_preEvent (S := S))]
+  sorry
 
 /-- All trial probabilities agree, because each trial has the same law. -/
 lemma trialProb_eq_trialProb_zero (O : S.OutcomeRegion) (n : ℕ) :

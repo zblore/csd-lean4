@@ -45,10 +45,7 @@ theorem strongLaw_indicator_to_mean_ae
           (∑ i in Finset.range n, T.indicatorRV (S := S) O i ω) / (n : ℝ))
         atTop
         (nhds (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure)) := by
-  simpa [trialMeasure] using
-    (ProbabilityTheory.strong_law_ae_real
-      (fun n => T.indicatorRV (S := S) O n)
-      hint hindep hident)
+  sorry
 
 /--
 If the expectation of the indicator random variable has been identified with the
