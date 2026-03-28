@@ -75,13 +75,13 @@ theorem strongLaw_indicator_to_weight_ae
           (T.indicatorRV (S := S) O 0)
           (T.trialMeasure) (T.trialMeasure))
     (hmean :
-      (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure) = O.weight (S := S)) :
+      (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure) = O.weightReal (S := S)) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto
         (fun n : ℕ =>
           (∑ i in Finset.range n, T.indicatorRV (S := S) O i ω) / (n : ℝ))
         atTop
-        (nhds (O.weight (S := S))) := by
+        (nhds (O.weightReal (S := S))) := by
   filter_upwards
     [T.strongLaw_indicator_to_mean_ae (S := S) O hint hindep hident] with ω hω
   simpa [hmean] using hω
@@ -106,12 +106,12 @@ theorem strongLaw_empiricalFreq_to_weight_ae
           (T.indicatorRV (S := S) O 0)
           (T.trialMeasure) (T.trialMeasure))
     (hmean :
-      (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure) = O.weight (S := S)) :
+      (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure) = O.weightReal (S := S)) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto
         (fun n : ℕ => T.empiricalFreq (S := S) O n ω)
         atTop
-        (nhds (O.weight (S := S))) := by
+        (nhds (O.weightReal (S := S))) := by
   filter_upwards
     [T.strongLaw_indicator_to_weight_ae (S := S) O hint hindep hident hmean] with ω hω
   simpa [TrialModel.empiricalFreq] using hω

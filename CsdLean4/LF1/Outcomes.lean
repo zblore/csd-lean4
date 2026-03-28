@@ -36,6 +36,10 @@ lemma measurable_prepEvent (O : S.OutcomeRegion) :
 noncomputable def weight (O : S.OutcomeRegion) : ℝ≥0∞ :=
   ((S.prepMeasure : ProbabilityMeasure Σ) : Measure Σ) (O.preEvent (S := S))
 
+/-- The outcome weight as a real number, for use in convergence statements. -/
+noncomputable def weightReal (O : S.OutcomeRegion) : ℝ :=
+  ENNReal.toReal (O.weight (S := S))
+
 end OutcomeRegion
 
 end OnticSetup
