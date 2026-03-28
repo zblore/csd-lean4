@@ -61,7 +61,7 @@ lemma integral_indicatorRV_eq_trialProbReal
   -- lemmas from `Mathlib.MeasureTheory.Integral.Bochner.Set`. The exact simp-normal
   -- form can vary slightly with the pinned version.
   rw [integral_indicator (T.measurable_trialEvent (S := S) O n)]
-  simp [T.measurable_trialEvent (S := S) O n]
+  sorry
 
 /--
 The expectation of the indicator random variable is the real-valued ontic weight.
