@@ -9,13 +9,14 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] (S : OnticSetup Σ)
+variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
 
 /-- The finite measure obtained by restricting `μL` to the preparation region `Ω0`. -/
 def prepFiniteMeasure : MeasureTheory.FiniteMeasure Σ :=
   ⟨((S.μL : Measure Σ).restrict S.Ω0), by
     -- finiteness follows from finiteness of μL
-    simpa using (S.μL.finite Set.univ)
+    haveI := S.μL.isFiniteMeasure
+    infer_instance
   ⟩
 
 /-- The preparation probability measure, obtained by normalizing the restricted measure. -/

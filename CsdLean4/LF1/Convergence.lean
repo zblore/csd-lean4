@@ -9,7 +9,7 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] (S : OnticSetup Σ)
+variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
 
 namespace TrialModel
 
@@ -47,7 +47,7 @@ theorem strongLaw_indicator_to_mean_ae
         (nhds (∫ x, T.indicatorRV (S := S) O 0 x ∂ T.trialMeasure)) := by
   simpa [trialMeasure] using
     (ProbabilityTheory.strong_law_ae_real
-      (X := fun n => T.indicatorRV (S := S) O n)
+      (fun n => T.indicatorRV (S := S) O n)
       hint hindep hident)
 
 /--

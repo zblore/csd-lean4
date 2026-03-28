@@ -8,7 +8,7 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] (S : OnticSetup Σ)
+variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
 
 namespace TrialModel
 

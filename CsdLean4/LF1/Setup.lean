@@ -7,7 +7,7 @@ namespace CSD
 namespace LF1
 
 /-- Ambient ontic data for LF1. -/
-structure OnticSetup (Σ : Type*) [MeasurableSpace Σ] where
+structure OnticSetup (Σ : Type*) [MeasurableSpace Σ] [Nonempty Σ] where
   μL : MeasureTheory.FiniteMeasure Σ
   Φ  : Σ → Σ
   hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure Σ) (μL : Measure Σ)
@@ -18,7 +18,7 @@ structure OnticSetup (Σ : Type*) [MeasurableSpace Σ] where
 
 namespace OnticSetup
 
-variable {Σ : Type*} [MeasurableSpace Σ] (S : OnticSetup Σ)
+variable {Σ : Type*} [MeasurableSpace Σ] [Nonempty Σ] (S : OnticSetup Σ)
 
 @[simp] lemma measurable_Φ : Measurable S.Φ :=
   S.hΦ_pres.measurable
