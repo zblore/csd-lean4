@@ -57,13 +57,13 @@ At the current implementation stage, the formal development is organised so that
 ```text
 CSD/
   LF1/
-    Setup.lean
-    Preparation.lean
-    Outcomes.lean
-    Trials.lean
-    Indicators.lean
-    Expectation.lean
-    Convergence.lean
-    MainTheorem.lean
+    Setup.lean        -- ontic space, μL, Φ, Ω0
+    Preparation.lean  -- conditional preparation measure
+    Outcomes.lean     -- outcome regions, weights
+    Trials.lean       -- TrialModel: i.i.d. repeated-trial probability space
+    Indicators.lean   -- indicatorRV, empiricalFreq
+    Expectation.lean  -- E[indicator] = weightReal bridge
+    Convergence.lean  -- strong law of large numbers application
+    MainTheorem.lean  -- LF1 main theorem and corollaries
 CSD.lean
 ```
