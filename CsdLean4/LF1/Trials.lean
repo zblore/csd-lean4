@@ -71,6 +71,8 @@ noncomputable def trialProb (O : S.OutcomeRegion) (n : ℕ) : ENNReal :=
 lemma trialProb_eq_weight (O : S.OutcomeRegion) (n : ℕ) :
     T.trialProb O n = O.weight (S := S) := by
   unfold trialProb trialEvent OutcomeRegion.weight
+  -- P(X n ⁻¹' preEvent) = (map Xn P)(preEvent)   [← Measure.map_apply, backward direction]
+  -- then (map Xn P) = prepMeasure                  [T.hLaw n]
   rw [← Measure.map_apply (T.measurable_X n) (O.measurable_preEvent (S := S)), T.hLaw n]
 
 /-- All trial probabilities agree, because each trial has the same law. -/

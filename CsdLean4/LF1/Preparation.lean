@@ -58,6 +58,16 @@ lemma prepMeasure_apply (A : Set Sigma) (hA : MeasurableSet A) :
   have hmass_eq : (S.prepFiniteMeasure.mass : ENNReal) = (S.μL : Measure Sigma) S.Ω0 := by
     rw [FiniteMeasure.ennreal_mass, prepFiniteMeasure_toMeasure,
         Measure.restrict_apply MeasurableSet.univ, Set.univ_inter]
+  -- Rewrite chain:
+  -- (1) prepMeasure_toMeasure_eq        : unfold prepMeasure as normalization of prepFiniteMeasure
+  -- (2) toMeasure_normalize_eq_of_nonzero: normalized(μ)(A) = mass(μ)⁻¹ • μ(A)
+  -- (3) Measure.smul_apply              : evaluate the scalar-multiple measure at A
+  -- (4) prepFiniteMeasure_toMeasure     : unfold prepFiniteMeasure as μL restricted to Ω0
+  -- (5) Measure.restrict_apply hA       : (μL|Ω0)(A) = μL(A ∩ Ω0)
+  -- (6) ENNReal.smul_def, smul_eq_mul   : convert ℝ≥0 scalar action to ENNReal multiplication
+  -- (7) ENNReal.div_eq_inv_mul          : rewrite a / b as b⁻¹ * a to match the LHS shape
+  -- (8) ENNReal.coe_inv hmass_ne        : ↑(mass⁻¹ : ℝ≥0) = (↑mass : ENNReal)⁻¹
+  -- (9) hmass_eq                        : substitute ↑mass = μL(Ω0)
   rw [prepMeasure_toMeasure_eq,
       FiniteMeasure.toMeasure_normalize_eq_of_nonzero S.prepFiniteMeasure hne_fm,
       Measure.smul_apply, prepFiniteMeasure_toMeasure, Measure.restrict_apply hA,

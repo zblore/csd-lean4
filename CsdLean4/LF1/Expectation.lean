@@ -41,6 +41,10 @@ lemma integral_indicatorRV_eq_trialProbReal
     ∫ ω, T.indicatorRV (S := S) O n ω ∂ T.trialMeasure
       = T.trialProbReal (S := S) O n := by
   unfold indicatorRV trialProbReal trialProb
+  -- integral_indicator: ∫ 1_{E} f dμ = ∫_{E} f dμ  (reduces to set integral over trialEvent)
+  -- setIntegral_const:  ∫_{E} c dμ = c • μ(E)
+  -- smul_eq_mul, mul_one: 1 • μ(E) = μ(E)
+  -- Measure.real: ENNReal.toReal (μ E) = Measure.real μ E  (definitional simp)
   rw [integral_indicator (T.measurable_trialEvent (S := S) O n),
       setIntegral_const, smul_eq_mul, mul_one]
   simp [Measure.real]

@@ -104,7 +104,9 @@ lemma indicatorRV_identDistrib (O : S.OutcomeRegion) (n : ℕ) :
       (T.indicatorRV (S := S) O 0)
       ((T.P : ProbabilityMeasure Ω) : Measure Ω)
       ((T.P : ProbabilityMeasure Ω) : Measure Ω) := by
-  -- indicatorRV O m = f ∘ X m where f = Set.indicator O.preEvent (fun _ => 1)
+  -- Strategy: factor indicatorRV O m = f ∘ X m, where f is the fixed Sigma-valued indicator.
+  -- Then identical distribution of X n and X 0 (both have law prepMeasure, by T.hLaw)
+  -- lifts to identical distribution of f ∘ X n and f ∘ X 0 via IdentDistrib.comp.
   let f := Set.indicator (O.preEvent (S := S)) (fun _ => (1 : ℝ))
   have hfact : ∀ m, T.indicatorRV (S := S) O m = f ∘ T.X m := fun m => by
     funext ω

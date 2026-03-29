@@ -52,13 +52,62 @@ At the current implementation stage, the formal development is organised so that
 4. convergence is obtained from a law of large numbers
 5. the expectation of the indicator is identified with the corresponding ontic weight
 
+## Key theorem signature
+
+The main exported result is `LF1_main_theorem_ae`:
+
+```
+LF1_main_theorem_ae
+    (T : S.TrialModel Ω)
+    (O : S.OutcomeRegion)
+    (hindep : Pairwise (IndepFun on (T.indicatorRV O ·))) :
+    ∀ᵐ ω ∂ T.trialMeasure,
+      Tendsto (T.empiricalFreq O · ω) atTop (nhds O.weightReal)
+```
+
+Pairwise independence of the trial indicator random variables is the **only non-trivial
+hypothesis**.  Integrability and identical distribution are automatic consequences of the
+`TrialModel` structure.
+
+`Preparation.lean` also provides `prepMeasure_apply`, the explicit rewriting formula
+`µprep(A) = µL(A ∩ Ω0) / µL(Ω0)`, as infrastructure for LF2 and later papers.
+
+## Scope and limitations
+
+`OnticSetup` takes an abstract measurable space `Sigma : Type*` — it is **not**
+specialised to `ℝ^{2n}`, a symplectic manifold, or any other concrete phase space.
+The physical grounding of each field is:
+
+| Field | Physical meaning | Status in this formalization |
+|---|---|---|
+| `μL` | Liouville measure | *assumed* as a finite measure |
+| `Φ` | Hamiltonian flow | *assumed* as a measurable map |
+| `hΦ_pres` | Liouville's theorem | *assumed* as a hypothesis |
+| `Ω0` | Preparation region | *assumed* as a measurable set |
+
+Deriving these from symplectic geometry or Hamilton's equations is outside the scope
+of LF1. LF2 and later papers are expected to instantiate `OnticSetup` with a concrete
+mechanical phase space when bridging to Born weights.
+
+## LF1 → LF2 interface
+
+LF1 delivers `O.weightReal` as the almost-sure limit of empirical frequencies.
+`weightReal` is defined as `ENNReal.toReal (µprep(O.preEvent))`, the real-valued
+normalised Liouville volume of the pulled-back outcome region.
+
+For LF2 to establish a Born-weight connection, it will need to:
+
+1. Instantiate `Sigma` with a concrete ontic space carrying quantum structure
+2. Show that `O.weightReal` reduces to `|⟨ψ|φ⟩|²` for the relevant states
+3. Use `prepMeasure_apply` to rewrite weights in terms of `µL`, enabling calculation
+
 ## Repository structure
 
 ```text
 CSD/
   LF1/
     Setup.lean        -- ontic space, μL, Φ, Ω0
-    Preparation.lean  -- conditional preparation measure
+    Preparation.lean  -- conditional preparation measure + prepMeasure_apply formula
     Outcomes.lean     -- outcome regions, weights
     Trials.lean       -- TrialModel: i.i.d. repeated-trial probability space
     Indicators.lean   -- indicatorRV, empiricalFreq
