@@ -1,3 +1,16 @@
+/-
+LF1 indicator observables.
+
+Interpretation:
+A trial in LF1 is ontically deterministic. A sampled initial microstate `x : Ω`
+evolves under the measurable flow and yields an outcome by membership in a
+measurable ontic outcome event. The indicator random variable does not represent
+intrinsic stochastic evolution. It is the pullback of a deterministic outcome
+event along the repeated-trial preparation model.
+
+Thus the probabilistic layer in LF1 enters only through repeated preparation
+sampling, not through stochastic ontic dynamics.
+-/
 import CsdLean4.LF1.Trials
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 

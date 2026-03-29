@@ -1,3 +1,13 @@
+/-
+LF1 outcome regions.
+
+Outcome regions are measurable ontic regions associated with a fixed
+experimental context. In LF1 they are treated abstractly as measurable sets.
+The realised outcome of a single trial is determined by whether the deterministic
+evolution of the sampled microstate lands in the corresponding outcome region.
+
+No stochastic outcome law is postulated at this stage.
+-/
 import CsdLean4.LF1.Preparation
 
 open MeasureTheory Set

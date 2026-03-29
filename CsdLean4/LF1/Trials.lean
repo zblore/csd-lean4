@@ -1,3 +1,13 @@
+/-
+LF1 repeated-trial probability space.
+
+This file introduces the repeated-preparation model used in LF1.
+Each trial begins from a fresh initial microstate sampled from the conditional
+preparation measure on the preparation region. The resulting product measure
+models repetition of preparation, not stochastic dynamics of a single trial.
+
+Single-trial evolution remains deterministic at the ontic level.
+-/
 import CsdLean4.LF1.Outcomes
 import Mathlib.Probability.IdentDistrib
 import Mathlib.Probability.ProductMeasure

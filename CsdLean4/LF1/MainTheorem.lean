@@ -1,3 +1,12 @@
+/-
+Main theorem of LF1.
+
+The theorem proved here is a deterministic repeated-trial typicality theorem.
+The ontic flow and outcome assignment are deterministic. Probability enters only
+through the repeated-preparation model on initial conditions. The convergence
+step then follows from a law of large numbers applied to the induced indicator
+observables.
+-/
 import CsdLean4.LF1.Setup
 import CsdLean4.LF1.Preparation
 import CsdLean4.LF1.Outcomes
