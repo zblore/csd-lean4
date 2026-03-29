@@ -51,6 +51,22 @@ noncomputable def weight : ENNReal :=
 noncomputable def weightReal : ℝ :=
   ENNReal.toReal O.weight
 
+/--
+The outcome weight equals the Liouville volume of `prepEvent` divided by `μL(Ω0)`.
+
+This connects `weight` (defined via `prepMeasure`) to `prepEvent` (the preparation-side
+initial-condition event `Ω0 ∩ Φ⁻¹(O.Ω)`) and makes the volume-typicality interpretation
+explicit: the weight is the fraction of the preparation region whose deterministic
+evolution lands in the outcome region.
+-/
+lemma weight_eq_prepEvent_div :
+    O.weight (S := S) =
+      (S.μL : Measure Sigma) O.prepEvent / (S.μL : Measure Sigma) S.Ω0 := by
+  unfold weight prepEvent
+  rw [S.prepMeasure_apply O.preEvent O.measurable_preEvent]
+  congr 1
+  rw [Set.inter_comm]
+
 end OutcomeRegion
 
 end OnticSetup

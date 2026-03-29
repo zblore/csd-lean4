@@ -71,6 +71,17 @@ lemma measurable_trialEvent (O : S.OutcomeRegion) (n : ℕ) :
   (O.measurable_preEvent (S := S)).preimage (T.measurable_X n)
 
 /--
+The trial event is the preimage of the outcome region under the composition `Φ ∘ X n`.
+
+This makes the deterministic structure explicit: a sample point `ω` is in the trial
+event if and only if the `n`-th initial microstate `X n ω`, after evolving under the
+ontic flow `Φ`, lands in the outcome region `O.Ω`.
+-/
+lemma trialEvent_eq_comp_preimage (O : S.OutcomeRegion) (n : ℕ) :
+    T.trialEvent (S := S) O n = (S.Φ ∘ T.X n) ⁻¹' O.Ω := by
+  simp [trialEvent, OutcomeRegion.preEvent, Set.preimage_comp]
+
+/--
 The probability of the `n`-th trial landing in outcome region `O`, computed on
 the external sample space.
 -/

@@ -24,7 +24,10 @@ structure OnticSetup (Sigma : Type*) [MeasurableSpace Sigma] [Nonempty Sigma] wh
       In concrete settings this is the time-`t` map of Hamilton's equations. -/
   Φ  : Sigma → Sigma
   /-- Liouville's theorem: the flow `Φ` preserves the Liouville measure `μL`.
-      Assumed as a hypothesis; derivable from the symplectic structure in concrete cases. -/
+      Assumed as a hypothesis; derivable from the symplectic structure in concrete cases.
+      Note: within LF1 only measurability of `Φ` (extracted via `measurable_Φ`) is used
+      in proofs. The full measure-preservation property is carried here for correctness of
+      the ontic model and will be exercised in LF2 and later layers. -/
   hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure Sigma) (μL : Measure Sigma)
   /-- The preparation region: the measurable subset of phase space consistent with the
       experimental preparation procedure. -/
