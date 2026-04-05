@@ -7,6 +7,22 @@ The realised outcome of a single trial is determined by whether the deterministi
 evolution of the sampled microstate lands in the corresponding outcome region.
 
 No stochastic outcome law is postulated at this stage.
+
+## Coding choice: single region, not a partition family
+
+The manuscript describes a measurable outcome partition {Ω_i^Σ} of the ontic state space.
+This file formalises one element of that partition at a time via `OutcomeRegion`.
+
+This is deliberate and mathematically sufficient for LF1: the frequency theorem is proved
+for an arbitrary fixed `O : OutcomeRegion`. To obtain the joint almost-sure statement for
+a finite partition {O_1, ..., O_k}, apply the theorem once per element and intersect the
+resulting full-measure sets — a finite intersection of full-measure sets is still
+full-measure, so no new structure is needed.
+
+A formalised `OutcomePartition` type (carrying disjointness, exhaustion, and a measurable
+family) would be the right object if a future layer (LF2/LF3) needs to reason about
+partition sums such as Σ_i weight(O_i) = 1 or POVM completeness. That extension should
+be built in the layer that first requires it, not here.
 -/
 import CsdLean4.LF1.Preparation
 

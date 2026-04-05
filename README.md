@@ -9,7 +9,7 @@ This repository contains the Lean4 development for the finite-dimensional formal
 The first target is **LF1**, which formalises the repeated-trial frequency theorem underlying volume-based deterministic accounts of quantum statistics. In this setting, a finite-measure ontic state space is equipped with:
 
 - a measurable preparation region
-- a measurable outcome region
+- a measurable outcome partition `{Ω_i^Σ}`, with the frequency theorem stated for a chosen outcome region
 - a deterministic measure-preserving flow
 - a repeated-trial preparation model
 
@@ -54,7 +54,7 @@ Later formalisation targets are expected to include:
 
 ## Mathematical target of LF1
 
-For a finite-measure ontic state space `(Σ, μL)`, measurable preparation region `Ω0 ⊂ Σ`, measurable ontic outcome region `Ω_i^Σ`, and deterministic `μL`-preserving flow `Φ_t`, LF1 studies repeated trials whose initial microstates are sampled independently from the conditional preparation measure on `Ω0`.
+For a finite-measure ontic state space `(Σ, μL)`, measurable preparation region `Ω0 ⊂ Σ`, measurable outcome partition `{Ω_i^Σ}` of `Σ`, and deterministic `μL`-preserving flow `Φ_t`, LF1 studies repeated trials whose initial microstates are sampled independently from the conditional preparation measure on `Ω0`. The frequency theorem is stated and proved for a chosen element `Ω_i^Σ` of that partition; the joint almost-sure statement for the full partition follows by finite intersection of full-measure sets.
 
 The deterministic structure is essential:
 
@@ -88,7 +88,7 @@ LF1_main_theorem_ae
 
 The theorem is stated on the repeated-trial sample space, but its physical meaning is deterministic.
 
-For a fixed outcome region `O`, the quantity `T.indicatorRV O j` is the indicator of a deterministic ontic event for the `j`-th trial: the `j`-th sampled microstate evolves under the measurable flow and either does or does not land in the relevant outcome region. The probabilistic structure comes only from the repeated-preparation model on the initial conditions.
+The theorem is stated for a single chosen element `O : OutcomeRegion` of the outcome partition — one `Ω_i^Σ` at a time. The quantity `T.indicatorRV O j` is the indicator of a deterministic ontic event for the `j`-th trial: the `j`-th sampled microstate evolves under the measurable flow and either does or does not land in `O`. The probabilistic structure comes only from the repeated-preparation model on the initial conditions. Applying the theorem once per partition element and intersecting the resulting full-measure sets yields the joint almost-sure statement for the full partition.
 
 Pairwise independence of the trial indicator random variables is therefore the **only non-trivial repeated-trial hypothesis**. Integrability and identical distribution are automatic consequences of the `TrialModel` structure.
 

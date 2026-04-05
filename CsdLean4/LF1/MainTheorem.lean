@@ -6,6 +6,20 @@ The ontic flow and outcome assignment are deterministic. Probability enters only
 through the repeated-preparation model on initial conditions. The convergence
 step then follows from a law of large numbers applied to the induced indicator
 observables.
+
+## Relation to the manuscript's partition language
+
+The manuscript states the frequency theorem for a full measurable outcome partition
+{Ω_i^Σ}. The theorem here is stated for a single `O : OutcomeRegion` — one element of
+that partition — rather than for a formalised partition family object.
+
+This is sufficient: the joint almost-sure statement for a finite partition follows by
+applying `LF1_main_theorem_ae` once per partition element and intersecting the resulting
+full-measure sets. A finite intersection of full-measure sets remains full-measure, so no
+additional structure is required at this layer.
+
+See `Outcomes.lean` for further discussion of when a formalised partition type would
+become necessary (LF2/LF3 and POVM completeness).
 -/
 import CsdLean4.LF1.Setup
 import CsdLean4.LF1.Preparation
