@@ -246,5 +246,23 @@ theorem born_quadratic
   rw [RCLike.mul_conj]
   norm_cast
 
+/-- **Composite endpoint.** For an operational package whose Busch-extracted
+    density operator is `rankOneDensity ψ` (i.e., the preparation is the pure
+    state `|ψ⟩`), the probability of a rank-1 outcome `|φ⟩⟨φ|` is `|⟨ψ|φ⟩|²`.
+
+    The hypothesis `hρ` — that `OP.p` already agrees with the trace form of
+    `rankOneDensity ψ` on every effect — is the downstream consumption of
+    `busch_effect_gleason` for the pure-preparation case. Callers obtain it by
+    applying the Busch axiom and using `ExistsUnique.unique` to identify the
+    unique density operator as `rankOneDensity ψ`. -/
+theorem pure_state_born_weights
+    {N : ℕ} (OP : OperationalPackage N)
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (hρ : ∀ E : Effect N, OP.p E = traceForm (rankOneDensity ψ hψ) E)
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    OP.p (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
+  rw [hρ]
+  exact born_quadratic ψ φ hψ hφ
+
 end LF2
 end CSD
