@@ -72,6 +72,18 @@ noncomputable def zero : Effect N where
   nonneg      := Matrix.PosSemidef.zero
   le_one      := by simpa [sub_zero] using (Matrix.PosSemidef.one (n := Fin N) (R := ℂ))
 
+/-- **Conditional sum of effects.** If `E`, `F` are effects and `E + F ≤ I`,
+    their sum is again an effect. Hermitian-ness and PSD of the sum are
+    automatic (Hermitian matrices are closed under addition, PSD matrices
+    form a convex cone); only `le_one` is a genuine precondition — hence its
+    role as an explicit hypothesis. -/
+noncomputable def add (E F : Effect N)
+    (hLe : (1 - (E.M + F.M)).PosSemidef) : Effect N where
+  M           := E.M + F.M
+  isHermitian := E.isHermitian.add F.isHermitian
+  nonneg      := E.nonneg.add F.nonneg
+  le_one      := hLe
+
 end Effect
 
 end LF2
