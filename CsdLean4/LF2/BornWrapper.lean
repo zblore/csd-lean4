@@ -246,15 +246,17 @@ theorem born_quadratic
   rw [RCLike.mul_conj]
   norm_cast
 
-/-- **Composite endpoint.** For an operational package whose Busch-extracted
-    density operator is `rankOneDensity ψ` (i.e., the preparation is the pure
-    state `|ψ⟩`), the probability of a rank-1 outcome `|φ⟩⟨φ|` is `|⟨ψ|φ⟩|²`.
+/-- **Composite endpoint (Busch-mediated form).** For an operational package
+    whose Busch-extracted density operator is `rankOneDensity ψ` (i.e., the
+    preparation is the pure state `|ψ⟩`), the probability of a rank-1 outcome
+    `|φ⟩⟨φ|` is `|⟨ψ|φ⟩|²`.
 
     The hypothesis `hρ` — that `OP.p` already agrees with the trace form of
     `rankOneDensity ψ` on every effect — is the downstream consumption of
-    `busch_effect_gleason` for the pure-preparation case. Callers obtain it by
-    applying the Busch axiom and using `ExistsUnique.unique` to identify the
-    unique density operator as `rankOneDensity ψ`. -/
+    `busch_effect_gleason` for the pure-preparation case. It is derivable from
+    a weaker purity hypothesis via `rankOneDensity_unique_of_certainty` +
+    `busch_effect_gleason`; see `pure_state_born_weights_of_certainty` below
+    for the strengthened form. -/
 theorem pure_state_born_weights
     {N : ℕ} (OP : OperationalPackage N)
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
@@ -262,6 +264,66 @@ theorem pure_state_born_weights
     (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
     OP.p (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
   rw [hρ]
+  exact born_quadratic ψ φ hψ hφ
+
+/-- **Imported matrix fact — uniqueness of pure-state density from certainty.**
+
+    A density operator `ρ` whose trace form pairs with `|ψ⟩⟨ψ|` to give `1`
+    is necessarily `|ψ⟩⟨ψ|` itself.  Equivalently, the only density operator
+    that assigns probability one to the rank-1 projector through `ψ` is
+    `rankOneDensity ψ`.
+
+    **Proof sketch** (standard, via the spectral theorem for Hermitian
+    matrices — formalizing it in Mathlib requires non-trivial plumbing via
+    `Matrix.IsHermitian.spectralTheorem` and PSD functional calculus, which
+    is deferred to later work; axiomatised here as standard linear algebra):
+
+    1.  The hypothesis `traceForm ρ (rankOneEffect ψ hψ) = 1` unfolds to
+        `⟨ψ, ρ ψ⟩ = 1` in `ℂ`.
+    2.  Using `ρ² ≤ ρ` (which holds for any density with spectrum in `[0,1]`)
+        and Cauchy–Schwarz, `‖ρψ - ψ‖² = 0`, hence `ρψ = ψ`.  So `ψ` is an
+        eigenvector of `ρ` with eigenvalue `1`.
+    3.  From `Tr(ρ) = 1` together with `⟨ψ, ρψ⟩ = 1`, the contribution of
+        `ψ^⊥` to the trace is zero.  By PSD, `ρ` vanishes on `ψ^⊥`.
+    4.  Therefore `ρ = |ψ⟩⟨ψ|` as matrices; structurally `ρ = rankOneDensity ψ hψ`.
+
+    The uniqueness is a standard consequence of the spectral theorem and is
+    included in any introductory quantum-information text (e.g. Nielsen &
+    Chuang, "Quantum Computation and Quantum Information"). It is imported
+    here as an axiom alongside `invariant_measure_uniqueness` and
+    `busch_effect_gleason`; proving it via Mathlib's spectral theorem is an
+    LF3-scope task. -/
+axiom rankOneDensity_unique_of_certainty
+    {N : ℕ}
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (ρ : DensityOperator N)
+    (h_certain : traceForm ρ (rankOneEffect ψ hψ) = 1) :
+    ρ = rankOneDensity ψ hψ
+
+/-- **Strengthened composite endpoint.**  Given only a **purity hypothesis** —
+    that the operational package assigns probability one to the rank-1
+    effect through `ψ`, i.e. the preparation is "certain" to produce `ψ` —
+    the Born quadratic form `|⟨ψ|φ⟩|²` falls out for every rank-1 outcome.
+
+    This is the tightened version of `pure_state_born_weights` that derives
+    the `hρ`-hypothesis from the weaker `h_certain`, using
+    `busch_effect_gleason` to extract a density operator and
+    `rankOneDensity_unique_of_certainty` to identify it as `rankOneDensity ψ`.
+    The proof composes three named ingredients:
+    `busch_effect_gleason`, `rankOneDensity_unique_of_certainty`, and
+    `born_quadratic`. -/
+theorem pure_state_born_weights_of_certainty
+    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N)
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (h_certain : OP.p (rankOneEffect ψ hψ) = 1)
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    OP.p (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
+  obtain ⟨ρ, hρ_spec, _hρ_unique⟩ := busch_effect_gleason hN OP
+  have hρ_eq : ρ = rankOneDensity ψ hψ := by
+    refine rankOneDensity_unique_of_certainty ψ hψ ρ ?_
+    rw [← hρ_spec]
+    exact h_certain
+  rw [hρ_spec, hρ_eq]
   exact born_quadratic ψ φ hψ hφ
 
 end LF2

@@ -104,15 +104,27 @@ Interface.lean     — lf1_weight_eq_projective_weight and its specialisation
 ```
 
 **LF2 is the first layer with `axiom` declarations.** LF1 is
-axiom-and-sorry-free; LF2 deliberately adds exactly two axioms, both called
-for by spec §7.4:
+axiom-and-sorry-free; LF2 has exactly three axioms:
 
 - `invariant_measure_uniqueness` — invariant-measure uniqueness on the
   abstract projective target (concretely: SU(N)-invariant Borel probability
-  measure on CP^{N-1} is unique). Not in Mathlib.
+  measure on CP^{N-1} is unique). Spec-mandated (§7.4). Not in Mathlib.
 - `busch_effect_gleason` — effect-additive probability on finite-dim
-  operational packages admits a unique trace-form density operator. Not in
-  Mathlib.
+  operational packages admits a unique trace-form density operator.
+  Spec-mandated (§7.4). Not in Mathlib.
+- `rankOneDensity_unique_of_certainty` — a density operator that assigns
+  probability one to a rank-1 projector `|ψ⟩⟨ψ|` is necessarily `|ψ⟩⟨ψ|`
+  itself. Standard corollary of the spectral theorem; used to strengthen
+  `pure_state_born_weights` so that the "OP is certain at ψ" hypothesis
+  suffices to conclude `|⟨ψ|φ⟩|²`. Imported as an axiom pending Mathlib
+  spectral-theorem integration (an LF3-scope task); the proof sketch is
+  in the module docstring.
+
+The first two are imported per the spec's explicit directive. The third is
+an auxiliary matrix fact that makes `pure_state_born_weights_of_certainty`
+work from a weaker purity hypothesis — without it, the pure-state endpoint
+requires the caller to already know `OP.p E = traceForm (rankOneDensity ψ) E`
+for every effect, which is almost the conclusion.
 
 Everything else is proved. Notably, `born_quadratic` is a genuine Lean proof
 (trace-of-outer-product identity + conjugate symmetry + `RCLike.mul_conj`),
@@ -139,11 +151,17 @@ not a narrative corollary.
 **Key infrastructure lemmas exported by LF2** (consumed by LF3+):
 
 - `measure_bridge` — the central bridge theorem
-- `lf1_weight_eq_projective_weight` — the LF1 ↔ LF2 hinge
+- `lf1_weight_eq_projective_weight` — the LF1 ↔ LF2 hinge (measure identity)
+- `LF1_main_theorem_projective` — the LF1 ↔ LF2 headline theorem: LF1
+  frequency convergence, stated natively in projective form. This is the
+  theorem-level consumption of LF1 by LF2 (not just structural)
 - `outerProduct_posSemidef`, `one_sub_outerProduct_posSemidef` — projection
   lemmas useful wherever rank-1 effects appear downstream
 - `born_quadratic` — the quadratic form in Lean; any LF3+ Born-weight
   consumer can cite it
+- `pure_state_born_weights_of_certainty` — derives `|⟨ψ,φ⟩|²` from a
+  purity hypothesis (`OP.p` is certain at `ψ`), routing through the
+  Busch axiom + matrix uniqueness
 
 ### Planned future layers
 
