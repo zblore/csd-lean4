@@ -162,5 +162,50 @@ lemma outerProduct_trace_of_unit_norm
   rw [outerProduct_trace, inner_self_eq_norm_sq_to_K, hφ]
   simp
 
+/-- Unfolding: the dot-product `φ ⬝ᵥ star φ` is the trace of the outer product.
+    For a unit vector this equals `1`. -/
+lemma dotProduct_self_star_of_unit_norm
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    ((fun i => φ i) : Fin N → ℂ) ⬝ᵥ (fun i => star (φ i)) = 1 := by
+  have h := outerProduct_trace_of_unit_norm φ hφ
+  rwa [outerProduct, Matrix.trace_vecMulVec] at h
+
+/-- **Rank-1 projector is idempotent** for a unit vector: `P * P = P`.  This
+    is the defining algebraic property of an orthogonal projection. -/
+lemma outerProduct_mul_self_of_unit_norm
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    outerProduct φ * outerProduct φ = outerProduct φ := by
+  rw [outerProduct, Matrix.vecMulVec_mul_vecMulVec]
+  have h : ((fun i => star (φ i)) : Fin N → ℂ) ⬝ᵥ (fun i => φ i) = 1 := by
+    rw [dotProduct_comm]; exact dotProduct_self_star_of_unit_norm φ hφ
+  rw [h, one_smul]
+
+/-- **`1 - P` is idempotent** when `P` is. Ring calculation: `(1-P)(1-P) =
+    1 - 2P + P²` and `P² = P` gives `1 - P`. -/
+lemma one_sub_outerProduct_mul_self_of_unit_norm
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (1 - outerProduct φ) * (1 - outerProduct φ) = 1 - outerProduct φ := by
+  have hP := outerProduct_mul_self_of_unit_norm φ hφ
+  -- Expand (1-P)(1-P) manually; matrix rings are non-commutative so `ring` won't
+  -- reduce, but `sub_mul` / `mul_sub` distributivity + `hP` closes it with `abel`.
+  rw [sub_mul, one_mul, mul_sub, mul_one, hP]
+  abel
+
+/-- **Rank-1 complement is PSD.** `(I - |φ⟩⟨φ|).PosSemidef` for unit `φ`.
+    Proof: the matrix is Hermitian and idempotent, hence equal to its own
+    product with its conjugate transpose, hence PSD. -/
+lemma one_sub_outerProduct_posSemidef
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (1 - outerProduct φ).PosSemidef := by
+  have hHerm : (1 - outerProduct φ).IsHermitian :=
+    Matrix.isHermitian_one.sub (outerProduct_isHermitian φ)
+  have hIdem := one_sub_outerProduct_mul_self_of_unit_norm φ hφ
+  -- Rewrite (1 - P) = (1 - P) * (1 - P) = (1 - P) * (1 - P)ᴴ (Hermitian),
+  -- and apply posSemidef_self_mul_conjTranspose.
+  have key : (1 - outerProduct φ) = (1 - outerProduct φ) * (1 - outerProduct φ)ᴴ := by
+    rw [hHerm.eq, hIdem]
+  rw [key]
+  exact Matrix.posSemidef_self_mul_conjTranspose _
+
 end LF2
 end CSD
