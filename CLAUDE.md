@@ -69,9 +69,89 @@ The theorem is deliberately stated for a **single** `O : OutcomeRegion` rather t
 - `trialEvent_eq_comp_preimage` — makes deterministic structure explicit
 - `indicatorRV_integrable`, `indicatorRV_identDistrib` — prerequisites for the strong law
 
+### LF2: measure bridge and Born-weight wrapper
+
+LF2 sits directly on top of LF1 and delivers:
+
+- the sector-conditional **measure bridge** `π*μL = c • μFS` connecting ontic
+  Liouville volume to an abstract projective reference measure;
+- the **Born-weight wrapper** packaging finite-dimensional probability under
+  an explicit operational consistency package (spec Definition 5.1);
+- the **proved Born quadratic form** `wᵢ = ‖⟨ψ, φᵢ⟩‖²` for rank-1 outcomes on
+  pure preparations;
+- the **LF1 ↔ LF2 weight identity** linking `μprep(π⁻¹(O))` to
+  `(π*μprep)(O)`, so `LF1_main_theorem_ae` consumers can reinterpret the
+  limiting ontic weight as a projective weight.
+
+LF2 module chain (under `CsdLean4/LF2/`, namespace `CSD.LF2`):
+
+```
+Setup.lean         — SectorData: LF1 OnticSetup + measurable π : Σ → P +
+                     G-action with μL-invariance and π-equivariance
+MeasureBridge.lean — π*μL, preimage_action_eq (Lemma 1),
+                     pushforward_epAction_invariant (Lemma 2),
+                     invariant_measure_uniqueness AXIOM, measure_bridge
+Weights.lean       — MeasurablePartition, projectiveWeight,
+                     weights_sum_eq_one (normalisation)
+BornWrapper.lean   — concrete Effect / DensityOperator (N×N complex matrices),
+                     traceForm, Effect.one / .zero / .add helpers,
+                     outerProduct + all projection lemmas,
+                     rankOneEffect / rankOneDensity, OperationalPackage,
+                     busch_effect_gleason AXIOM, born_form_of_package,
+                     born_quadratic (proved), pure_state_born_weights
+Interface.lean     — lf1_weight_eq_projective_weight and its specialisation
+                     to LF1's S.prepMeasure
+```
+
+**LF2 is the first layer with `axiom` declarations.** LF1 is
+axiom-and-sorry-free; LF2 deliberately adds exactly two axioms, both called
+for by spec §7.4:
+
+- `invariant_measure_uniqueness` — invariant-measure uniqueness on the
+  abstract projective target (concretely: SU(N)-invariant Borel probability
+  measure on CP^{N-1} is unique). Not in Mathlib.
+- `busch_effect_gleason` — effect-additive probability on finite-dim
+  operational packages admits a unique trace-form density operator. Not in
+  Mathlib.
+
+Everything else is proved. Notably, `born_quadratic` is a genuine Lean proof
+(trace-of-outer-product identity + conjugate symmetry + `RCLike.mul_conj`),
+not a narrative corollary.
+
+**LF2 design choices:**
+
+- `SectorData` is parametric in an abstract `(Sigma, P, G)`. The projective
+  target `P` is **not** specialised to Mathlib's `Projectivization`; no
+  Fubini–Study measure is constructed. Concrete instantiation is deferred to
+  LF3+.
+- The reference measure `μFS` is **not** a field of `SectorData`; it enters
+  `measure_bridge` as an explicit argument, keeping `SectorData`
+  `μFS`-agnostic.
+- `Effect` and `DensityOperator` are concrete `Matrix (Fin N) (Fin N) ℂ`
+  structures (not opaque stubs). This gives real Lean content to the Born
+  quadratic form.
+- `Effect.add` takes the `le_one` hypothesis (`1 - (E.M + F.M)).PosSemidef`)
+  as an explicit argument — no `Option`-valued addition, no
+  `Decidable (PosSemidef _)` required.
+- `ComplexOrder` is opened scoped in `BornWrapper.lean` so that `ℂ` has the
+  `PartialOrder` / `StarOrderedRing` instances required by `Matrix.PosSemidef`.
+
+**Key infrastructure lemmas exported by LF2** (consumed by LF3+):
+
+- `measure_bridge` — the central bridge theorem
+- `lf1_weight_eq_projective_weight` — the LF1 ↔ LF2 hinge
+- `outerProduct_posSemidef`, `one_sub_outerProduct_posSemidef` — projection
+  lemmas useful wherever rank-1 effects appear downstream
+- `born_quadratic` — the quadratic form in Lean; any LF3+ Born-weight
+  consumer can cite it
+
 ### Planned future layers
 
-LF1 is the base. The README outlines LF2 (measure bridge / Born-weight wrapper), LF3 (mixed states, POVMs, reduction), LF4 (control Hamiltonians), and LF5 (outcome-conditioned update and sequential circuits). Each future layer will instantiate `OnticSetup` and use `prepMeasure_apply` from LF1.
+LF1 and LF2 are in place. The README outlines LF3 (mixed states, POVMs,
+reduction), LF4 (control Hamiltonians), and LF5 (outcome-conditioned update
+and sequential circuits). Each future layer will instantiate `OnticSetup`
+(via `SectorData.toOntic`) and consume `prepMeasure_apply` from LF1 plus
+`measure_bridge` / `lf1_weight_eq_projective_weight` from LF2.
 
 ## Lean / Mathlib conventions
 
