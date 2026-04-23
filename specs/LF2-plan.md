@@ -7,7 +7,7 @@ Drives implementation under `CsdLean4/LF2/`.
 
 - **Abstract projective layer.** `CP^{N-1}` is represented as an abstract `MeasurableSpace P` with a distinguished reference measure `μFS` (required to be a probability measure). No use of Mathlib's `Projectivization`, no construction of the Fubini–Study form. Concrete instantiation is deferred.
 - **Symmetry group is abstract.** `SU(N)` is represented by a type parameter `G : Type*` with `Group G` and measurable actions on `Σ` and `P`. The spec's concrete `SU(N)` appears nowhere in LF2 Lean source.
-- **Minimal operational stubs.** `Effect`, `DensityOperator`, and effect-additive probability are declared as **minimal custom structures** inside `BornWrapper.lean`, with just enough content for the Busch axiom to have a well-typed statement. Mathlib's operator theory is not pulled in.
+- **Concrete matrix-based operational structures.** `Effect`, `DensityOperator`, and the operational package are concrete N×N complex matrix structures using Mathlib's `Matrix` / `PosDef` / `Hermitian` / `EuclideanSpace` APIs. This is a revision of an earlier "opaque stub" plan: it costs ~200–300 extra lines of Lean but lets us *prove* the Born quadratic form `wᵢ = |⟨ψ|φᵢ⟩|²` as a Lean lemma rather than leave it as narrative. See §2.4 for the structure definitions and the proof sketch.
 - **Two `axiom` declarations are permitted** in LF2 (both called for by the spec §7.4):
   1. `invariant_measure_uniqueness` — invariant-measure uniqueness on `P`
   2. `busch_effect_gleason` — effect-additive probability ⇒ unique trace-form density operator
@@ -153,58 +153,144 @@ theorem weights_sum_eq_one
 
 ### 2.4 `BornWrapper.lean`
 
-**This is the riskiest module.** The spec gives an "informal" Lean signature that references names (`Effect H`, `DensityOperator H`, `Tr`, `Effect.toMat`) that don't exist in Mathlib in that shape. We introduce **minimal local stubs**:
+**Strategy: concrete matrix-based structures + Busch as imported axiom + Born quadratic form proved as a Lean lemma.**
+
+An earlier version of this plan proposed opaque stubs for `Effect`/`DensityOperator`. On review that under-formalized §5.4 of the spec: the whole point of the wrapper is to exhibit `wᵢ = |⟨ψ|φᵢ⟩|²` for rank-one projectors. Keeping the quadratic form as narrative would leave the observable payoff of LF2 out of Lean.
+
+Revised strategy: represent `Effect` and `DensityOperator` as concrete N×N complex matrices over `Mathlib.Data.Matrix` + `Mathlib.LinearAlgebra.Matrix.PosDef`; state Busch as an axiom over these concrete types; **prove** the Born quadratic form as a lemma by direct computation with Mathlib's trace/inner-product API. The load-bearing theorem (Busch) stays axiomatic per spec §7.4; the verifiable corollary (`wᵢ = |⟨ψ|φᵢ⟩|²`) becomes a real Lean proof.
+
+#### Concrete structures
 
 ```lean
-/-- Abstract placeholder for a finite-dimensional complex Hilbert space. -/
-variable (H : Type*)
+variable {N : ℕ}
 
-/-- Minimal effect-algebra stub: an effect is a self-adjoint operator with 0 ≤ E ≤ I.
-    LF2 does not construct this; it is a local stub so the axiom statement is well-typed. -/
-structure Effect where
-  -- intentionally opaque; real content deferred to later layers
-  dummy : Unit := ()
+/-- Effect on an N-dimensional complex Hilbert space:
+    a Hermitian matrix with 0 ≤ E ≤ I. -/
+structure Effect (N : ℕ) where
+  M            : Matrix (Fin N) (Fin N) ℂ
+  isHermitian  : M.IsHermitian
+  nonneg       : M.PosSemidef
+  le_one       : (1 - M).PosSemidef
 
-/-- Minimal density-operator stub. -/
-structure DensityOperator where
-  dummy : Unit := ()
+/-- Density operator: Hermitian PSD matrix with trace 1. -/
+structure DensityOperator (N : ℕ) where
+  M            : Matrix (Fin N) (Fin N) ℂ
+  isHermitian  : M.IsHermitian
+  nonneg       : M.PosSemidef
+  trace_one    : M.trace = 1
 
-/-- Trace pairing stub. -/
-noncomputable def traceForm (ρ : DensityOperator H) (E : Effect H) : ℝ := 0
-
-/-- Operational consistency package (spec Definition 5.1). -/
-structure OperationalPackage where
-  p         : Effect H → ℝ
-  nonneg    : ∀ E, 0 ≤ p E
-  le_one    : ∀ E, p E ≤ 1
-  additive  : ∀ E F : Effect H, (∃ G : Effect H, True) → p E + p F = p E  -- placeholder shape
-  -- spec clauses 1, 2, 3: finite-additivity, p(I)=1, unitary covariance
-  -- exact shapes fixed at implementation time
-
-/-- Imported Busch effect-Gleason theorem. For every operational package on a
-    finite-dimensional Hilbert space with N ≥ 2, there is a unique density operator
-    representing it in trace form. -/
-axiom busch_effect_gleason
-    (H : Type*) (N : ℕ) (hN : 2 ≤ N) -- dimension recorded as a parameter
-    (OP : OperationalPackage H) :
-    ∃! ρ : DensityOperator H, ∀ E, OP.p E = traceForm ρ E
+/-- Trace-form pairing. The trace of a Hermitian product is real; we extract
+    the real part. Correctness of this cast is a small lemma. -/
+noncomputable def traceForm (ρ : DensityOperator N) (E : Effect N) : ℝ :=
+  RCLike.re ((ρ.M * E.M).trace)
 ```
 
-**Born-form assignment.** A thin theorem stating that the combination of the measure bridge and an operational package yields a trace-form probability assignment:
+#### Rank-1 constructions
+
+```lean
+/-- Rank-1 projector |φ⟩⟨φ| as an Effect, from a unit vector φ. -/
+noncomputable def rankOneEffect
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) : Effect N := ...
+
+/-- Rank-1 pure-state density |ψ⟩⟨ψ|. -/
+noncomputable def rankOneDensity
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1) : DensityOperator N := ...
+```
+
+Both are "outer product of a unit vector with itself"; the Hermitian/PSD/trace conditions fall out from `hψ`/`hφ` by direct calculation.
+
+#### Born quadratic form (proved)
+
+```lean
+/-- Spec §5.4: for rank-1 outcomes on pure preparations, the trace-form probability
+    equals the squared magnitude of the inner product. -/
+theorem born_quadratic
+    (ψ φ : EuclideanSpace ℂ (Fin N))
+    (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
+    traceForm (rankOneDensity ψ hψ) (rankOneEffect φ hφ) = ‖⟪ψ, φ⟫_ℂ‖ ^ 2
+```
+
+Proof strategy: `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ⟨φ|ψ⟩⟨ψ|φ⟩ = |⟨ψ,φ⟩|²`, a standard trace-of-outer-product identity. Uses `Matrix.trace_mul_cycle`, outer-product definition, and the `RCLike.re`/`‖·‖` bookkeeping.
+
+#### Effect constants and conditional addition
+
+Helpers that absorb the matrix-level bookkeeping so the `OperationalPackage` fields stay readable:
+
+```lean
+namespace Effect
+
+/-- The identity effect `I`. -/
+noncomputable def one : Effect N :=
+  { M := 1
+    isHermitian := Matrix.isHermitian_one
+    nonneg := Matrix.PosSemidef.one
+    le_one := by simpa using Matrix.PosSemidef.zero }
+
+/-- Sum of two effects, conditioned on the sum being ≤ I. Hermitian-ness and
+    PSD of the sum are automatic from the summands; only `le_one` is a genuine
+    precondition, so we take it as an explicit argument. -/
+noncomputable def add (E F : Effect N)
+    (hLe : (1 - (E.M + F.M)).PosSemidef) : Effect N :=
+  { M := E.M + F.M
+    isHermitian := E.isHermitian.add F.isHermitian
+    nonneg := E.nonneg.add F.nonneg
+    le_one := hLe }
+
+end Effect
+```
+
+#### Operational package + Busch axiom
+
+```lean
+/-- Operational consistency package (spec Definition 5.1). -/
+structure OperationalPackage (N : ℕ) where
+  p          : Effect N → ℝ
+  nonneg     : ∀ E, 0 ≤ p E
+  le_one     : ∀ E, p E ≤ 1
+  total_one  : p Effect.one = 1
+  additivity :
+    ∀ E F : Effect N, ∀ (hLe : (1 - (E.M + F.M)).PosSemidef),
+      p (Effect.add E F hLe) = p E + p F
+  -- Unitary covariance (spec clause 3) is left out of the minimal structure; add
+  -- it iff busch_effect_gleason's final statement requires it.
+
+/-- Imported Busch effect-Gleason theorem (spec §5.2, §7.4). -/
+axiom busch_effect_gleason
+    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N) :
+    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E
+```
+
+**Why this shape over alternatives considered:**
+- `Effect.add` takes `hLe` (the only genuine precondition) as an explicit argument and returns an `Effect N` directly, avoiding `Option`-valued addition and the `Decidable (PosSemidef …)` headache (PSD is not decidable without `Classical`).
+- `Effect.one` lets `total_one` read as `p Effect.one = 1` instead of an inlined anonymous constructor.
+- Bundling `IsHermitian`/`PosSemidef` closure-under-sum into `Effect.add` means the package itself never mentions those predicates — only `le_one`, which is the one genuine constraint.
+
+Exact Mathlib lemma names `Matrix.isHermitian_one`, `Matrix.PosSemidef.one`, `Matrix.PosSemidef.zero`, `Matrix.IsHermitian.add`, `Matrix.PosSemidef.add` are the expected spellings; if any differ, the fix is local to `Effect.add` / `Effect.one`.
+
+#### Wrapper theorem
 
 ```lean
 theorem born_form_of_package
-    (D : SectorData Sigma P G)
-    (μprep : Measure Sigma) [IsProbabilityMeasure μprep]
-    (H : Type*) (N : ℕ) (hN : 2 ≤ N)
-    (OP : OperationalPackage H) :
-    ∃! ρ : DensityOperator H, ∀ E, OP.p E = traceForm ρ E := by
-  exact busch_effect_gleason H N hN OP
+    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N) :
+    ∃! ρ : DensityOperator N, ∀ E, OP.p E = traceForm ρ E :=
+  busch_effect_gleason hN OP
 ```
 
-The literal `wᵢ = |⟨ψ|φᵢ⟩|²` identification is **not** formalized as a Lean equation — it requires inner products and concrete operator algebra that the abstract setup does not carry. This matches the spec's framing: the wrapper delivers existence of a trace-form density; the quadratic form is the corollary for rank-one projectors, interpreted informally.
+#### Composite endpoint
 
-**Proposal to flag at review:** if the user wants the quadratic form inside Lean, BornWrapper grows substantially (we'd need to import Mathlib inner-product-space machinery and build the identification for rank-1 projectors). The current plan keeps this as **out of scope** and records it as a "next-layer" task. Flagged in the risk register below.
+```lean
+/-- For a pure preparation |ψ⟩ and rank-1 outcome projectors {|φᵢ⟩}, the Born weights
+    from the operational package coincide with |⟨ψ|φᵢ⟩|² — the exact spec §5.4 claim. -/
+theorem pure_state_born_weights
+    {N n : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N)
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (hρ : OP.p (rankOneEffect ψ hψ) = traceForm (rankOneDensity ψ hψ) (rankOneEffect ψ hψ))
+      -- ^ the Busch-provided ρ specialised at ψ, via Classical.choose / uniqueness
+    (φ : Fin n → EuclideanSpace ℂ (Fin N)) (hφ : ∀ i, ‖φ i‖ = 1) :
+    ∀ i, OP.p (rankOneEffect (φ i) (hφ i)) = ‖⟪ψ, φ i⟫_ℂ‖ ^ 2
+```
+
+(The exact `hρ`-extraction shape is the main fiddle; `Classical.choose` on `ExistsUnique` + applying uniqueness to fix `ρ = rankOneDensity ψ hψ` under the assumption that the preparation is pure. This last step may want a separate lemma "a pure state determines itself as the trace-form density".)
 
 ### 2.5 `Interface.lean`
 
@@ -243,7 +329,7 @@ Imports expected per module:
 | `Setup.lean` | `CsdLean4.LF1.Setup`, `Mathlib.MeasureTheory.MeasurableSpace.Defs`, `Mathlib.MeasureTheory.Group.MeasurableEquiv`, `Mathlib.Dynamics.Ergodic.MeasurePreserving` |
 | `MeasureBridge.lean` | `CsdLean4.LF2.Setup`, `Mathlib.MeasureTheory.Measure.MeasureSpace`, `Mathlib.MeasureTheory.Measure.Map` |
 | `Weights.lean` | `CsdLean4.LF2.MeasureBridge` |
-| `BornWrapper.lean` | standalone (no Mathlib operator theory; just `Mathlib.Data.Real.Basic`) |
+| `BornWrapper.lean` | `Mathlib.Data.Matrix.Basic`, `Mathlib.LinearAlgebra.Matrix.Trace`, `Mathlib.LinearAlgebra.Matrix.Hermitian`, `Mathlib.LinearAlgebra.Matrix.PosDef`, `Mathlib.Analysis.InnerProductSpace.PiL2` (for `EuclideanSpace`), `Mathlib.Analysis.RCLike.Basic` |
 | `Interface.lean` | `CsdLean4.LF2.Weights`, `CsdLean4.LF1.Preparation`, `CsdLean4.LF1.Outcomes` |
 
 Main Mathlib API used: `Measure.map`, `Measure.map_apply`, `MeasurePreserving`, `MeasurableEquiv`, `IsProbabilityMeasure`, `IsFiniteMeasure`.
@@ -256,8 +342,10 @@ No Jacobian / Radon–Nikodym API needed at this layer (spec §7.7).
 |---|---|---|
 | `IsFiniteMeasure`/`IsProbabilityMeasure` instance plumbing trips up `measure_bridge` | Low | Adjust to `[IsFiniteMeasure μ]` as an explicit hypothesis if instance synthesis fails |
 | Axiom statements don't compose cleanly with the theorems consuming them | Medium | Write consumers first as `example` blocks, tune axiom shapes, then lock them in |
-| `OperationalPackage.additive` shape (finite additivity under `E + F ≤ I`) requires an abstract "E + F" we don't have | Medium | Make `OperationalPackage` parametric over an effect-addition operation, or encode the premise as `∃ G, p (E+F) = p G ∧ ...`. Finalise at implementation |
-| User actually wants `|⟨ψ\|φᵢ⟩|²` in Lean (not just trace form via axiom) | High if triggered | Would require ~5× more work; keeping out of scope pending user decision |
+| Mathlib lemma names for PSD/Hermitian closure-under-sum and for `1`/`0` PSD differ from expected (`Matrix.PosSemidef.add`, `Matrix.IsHermitian.add`, `Matrix.PosSemidef.one`, `Matrix.isHermitian_one`) | Low | Fix is localised to `Effect.one` and `Effect.add`; other fields never touch these predicates directly |
+| Born quadratic proof (`trace_mul_cycle` + outer-product expansion + `RCLike.re`/`‖·‖` bookkeeping) longer than estimated | Medium | It's a well-known identity, but Mathlib lemma names may need hunting. Budget extra time; fallback is bespoke calculation rather than tactic chains |
+| Mathlib's `PosSemidef` API for `(1 - M)` — checking operator inequality on Hermitian matrices — less ergonomic than expected | Medium | State structure fields with `PosSemidef` directly, not via a `≤` instance; accept some verbosity |
+| `Classical.choose` extraction of the Busch ρ in `pure_state_born_weights` awkward; uniqueness applied with wrong witness | Medium | Factor into a dedicated lemma "pure preparation ⇒ ρ = rankOneDensity ψ hψ" that applies `ExistsUnique.unique` cleanly |
 | Group-action coherence (`onticAction 1 = id` etc.) needed after all | Low | Add fields to `SectorData` if a proof hits it |
 
 ## 6. Sorry scope
@@ -285,6 +373,6 @@ import CsdLean4.LF2.Interface
 2. `Interface.lean` skeleton (just the Measure.map_apply wrapper) — sanity-check LF1 interop.
 3. `MeasureBridge.lean` — lemmas (a), (b), (c) without the axiom first; then axiom + (d).
 4. `Weights.lean`.
-5. `BornWrapper.lean` — axiom first, then consumers; this is where shape iteration happens.
+5. `BornWrapper.lean` — largest new module (~200–300 lines). Order within: structures (`Effect`, `DensityOperator`) → `traceForm` → `rankOneEffect`/`rankOneDensity` + auxiliary lemmas → `born_quadratic` proof → `OperationalPackage` → Busch axiom → `born_form_of_package` → `pure_state_born_weights`. This is where shape iteration happens; each step builds on the previous.
 6. Tighten `Interface.lean` corollary linking to `LF1_main_theorem_ae`.
 7. Root import update, CLAUDE.md LF2 section, build green.
