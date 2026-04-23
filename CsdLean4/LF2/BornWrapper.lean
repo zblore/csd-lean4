@@ -124,5 +124,43 @@ theorem born_form_of_package
     ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
   busch_effect_gleason hN OP
 
+/-! ### Rank-1 outer products
+
+The construction `|φ⟩⟨φ|` as an N×N complex matrix, together with its basic
+algebraic properties (Hermitian, PSD, trace). This is the raw matrix layer;
+`rankOneEffect` / `rankOneDensity` (next phase) package it into the structure
+types above. -/
+
+/-- **Rank-1 outer product.** `|φ⟩⟨φ|` with entries `M i j = φ i * star (φ j)`. -/
+noncomputable def outerProduct (φ : EuclideanSpace ℂ (Fin N)) :
+    Matrix (Fin N) (Fin N) ℂ :=
+  Matrix.vecMulVec (fun i => φ i) (fun i => star (φ i))
+
+/-- The outer product is positive semi-definite. Immediate from the general
+    fact `PosSemidef (vecMulVec a (star a))`. -/
+lemma outerProduct_posSemidef (φ : EuclideanSpace ℂ (Fin N)) :
+    (outerProduct φ).PosSemidef := by
+  simpa [outerProduct] using
+    Matrix.posSemidef_vecMulVec_self_star (R := ℂ) (fun i => φ i)
+
+/-- The outer product is Hermitian (a consequence of being PSD). -/
+lemma outerProduct_isHermitian (φ : EuclideanSpace ℂ (Fin N)) :
+    (outerProduct φ).IsHermitian :=
+  (outerProduct_posSemidef φ).isHermitian
+
+/-- Trace of the outer product equals the Hilbert-space inner product
+    `inner ℂ φ φ`. -/
+lemma outerProduct_trace (φ : EuclideanSpace ℂ (Fin N)) :
+    (outerProduct φ).trace = inner ℂ φ φ := by
+  rw [outerProduct, Matrix.trace_vecMulVec, EuclideanSpace.inner_eq_star_dotProduct]
+  rfl
+
+/-- For a unit vector, the trace of the outer product is `1`. -/
+lemma outerProduct_trace_of_unit_norm
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (outerProduct φ).trace = 1 := by
+  rw [outerProduct_trace, inner_self_eq_norm_sq_to_K, hφ]
+  simp
+
 end LF2
 end CSD
