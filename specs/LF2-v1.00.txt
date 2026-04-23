@@ -1,0 +1,1395 @@
+LF2: THE MEASURE BRIDGE AND BORN-WEIGHT WRAPPER
+
+                                                            A PREPRINT
+
+                                                            Zayn Blore
+                                                     zayn.blore@ou.ac.uk
+                                             www.constraintsurfacedynamics.com
+
+                             April 23, 2026
+
+                             ABSTRACT
+
+This paper develops the second layer of the Lean4 formalisation programme by isolating the finite-
+dimensional measure-and-weight layer that sits between deterministic volume typicality and the later
+operational reconstruction. Building on LF1, which proves that empirical frequencies converge to
+normalised ontic volume weights under repeated preparation, the present paper formalises the measure
+bridge from ontic Liouville volume to projective-state weights and then packages the Born-weight
+layer under explicitly stated external inputs. LF1 itself is not a Born-rule paper, and LF2 is designed
+to make that separation precise.
+
+The first component is a sector-conditional pushforward result. Under the symmetry-compatible
+quantum-effective assumptions, with a measurable projection  :   CP N-1 (smooth and
+surjective in the underlying physical model), SU (N )-equivariance, and invariant Liouville measure
+µL, the pushforward measure is proportional to the Fubini­Study measure:
+
+                             µL = c · µF S,  c  =  µF   µL()    -1  )  .
+                                                       S (CP N
+
+This is the measure bridge established at the paper level in TN1 and tracked in the programme
+dependency map as a distinct layer from the later Born-weight step.
+
+The second component is the Born-weight wrapper. Given the projective measure layer, LF2 packages
+the finite-dimensional probability assignment using an explicit operational consistency package
+together with an imported Busch effect-Gleason theorem, applied uniformly for finite dimensions N
+ 2.
+
+Contents
+
+1 Introduction                                                                                           3
+
+1.1 Role of LF2 within the formalisation programme . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.2 From deterministic typicality to projective weights . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.3 Why LF1 is not yet a Born-rule layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+1.4 Main results and scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+1.5 Status of this document . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+2 Ontic and Epistemic Setup                                                                              5
+
+2.1 Ontic space (, µL) and finite-dimensional scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.2 Projective epistemic space CP N-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.3 Projection map  :   CP N-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+                         LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+2.4 Preparation measures, pushforwards, and epistemic densities . . . . . . . . . . . . . . . . . . . . . . 6
+2.5 Symmetry-compatible sector data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+3 Symmetry and the Measure Bridge                                         7
+
+3.1 The SU (N ) action on CP N-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+3.2 Uniqueness of the invariant measure on CP N-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+3.3 Sector-conditional pushforward statement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+4 Projective Weights from Pushforward Measure                             8
+
+4.1 Outcome regions on CP N-1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+4.2 Weights induced by the prepared pushforward measure . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+4.3 Normalisation and state dependence . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+4.4 Relation to prepared epistemic densities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+5 Born-Weight Wrapper                                                     9
+
+5.1 Operational consistency package . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+5.2 Imported effect-Gleason theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+5.3 Uniform treatment of the qubit case . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+5.4 Finite-dimensional Born-form assignment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+6 Interface with LF1                                                      10
+
+6.1 LF1 output as normalised ontic weight . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+6.2 From frequency convergence to projective weights . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+6.3 Separation of theorem layers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+6.4 What LF2 adds beyond LF1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+7 Lean4 Formalisation Strategy                                            12
+
+7.1 Abstract measure layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+7.2 Encoding projective-space structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+7.3 Pushforward and invariance statements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+7.4 Imported external theorem boundary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+7.5 Repository architecture and dependency flow . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+7.6 LF1 interface in Lean . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+7.7 Mathlib dependencies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+8 Scope and Limitations                                                   14
+
+8.1 Finite-dimensional restriction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+8.2 Dependence on symmetry-sector assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+8.3 No derivation of  or  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+8.4 External inputs in the Born-weight layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+8.5 Separation from later reconstruction layers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+8.6 No claim beyond the weight layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+                                               2
+                     LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+9 Conclusion                                                          15
+
+9.1 Summary of results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+9.2 Role within the formalisation stack . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+9.3 What is established . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+9.4 What remains open . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+9.5 Next steps . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+9.6 Final remark . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+A Assumptions Audit                                                   17
+
+A.1 Purpose of the audit . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+A.2 Internally proved statements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+A.3 Imported mathematical results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+A.4 Physical-model assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+A.5 Assumptions not made . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+A.6 Audit summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+B Internal and External Theorem Boundary                              19
+
+B.1 Purpose . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+B.2 Internal LF2 theorem layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+B.3 External mathematical inputs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+B.4 Physical-model assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+B.5 What LF2 does not claim . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+B.6 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+1 Introduction
+
+1.1 Role of LF2 within the formalisation programme
+
+The Lean branch of the programme is organised as a layered formalisation of the finite-dimensional CSD stack. LF1
+establishes the repeated-trial typicality theorem: under deterministic, measure-preserving ontic dynamics together with
+an explicit repeated-preparation model, empirical outcome frequencies converge almost surely to the corresponding
+normalised ontic volume weights. LF1 is therefore the formal statistical backbone of the programme, but it is not yet a
+Born-rule formalisation. Its result is a theorem about deterministic volume typicality under repeated preparation, not a
+theorem identifying those weights with the standard projective probability rule. This scope restriction is explicit both in
+LF1 itself and in the programme dependency map.
+
+LF2 is designed to formalise the next layer. Its task is to connect the ontic volume weights delivered by LF1 to the
+projective probability structure used in the finite-dimensional reconstruction. In programme terms, LF2 sits between
+Layer 1, where deterministic dynamics yields stable frequencies, and the later operational layers, where mixed states,
+POVMs, subsystem reduction, and sequential update are represented in finite dimension. The role of the present paper is
+therefore narrow but structurally essential: it isolates the measure-and-weight layer as a standalone formal component,
+with its assumptions and external inputs stated explicitly.
+
+1.2 From deterministic typicality to projective weights
+
+The central conceptual move from LF1 to LF2 is straightforward. LF1 produces normalised ontic weights on the
+preparation side. If a preparation region 0   and an outcome event are given, then the repeated-trial theorem
+identifies the almost-sure frequency limit with the corresponding normalised ontic volume ratio. What LF1 does not yet
+supply is the finite-dimensional projective interpretation of those weights.
+
+                                          3
+LF2: The Measure Bridge and Born-Weight Wrapper                                              A PREPRINT
+
+That interpretation requires a measure bridge. In the finite-dimensional CSD framework, observational access is
+modelled in the Lean formal layer by a measurable projection
+
+                                                             :   CP N-1.
+
+In the broader physical model, this projection is also taken to be smooth, surjective, and many-to-one, but only
+measurability is used in LF2. Once this projection is fixed, the key question becomes measure-theoretic: under what
+conditions does the pushforward of ontic Liouville measure define the same weight structure as the canonical projective
+measure on CP N-1? The answer, at the paper level, is supplied by the symmetry-compatible pushforward statement
+developed in TN1. In the symmetry-compatible quantum-effective sector, if the Liouville measure is invariant and the
+projection is SU (N )-equivariant, then the pushforward measure is proportional to the Fubini­Study measure:
+
+                                             µL = c · µF S,     c  =  µF   µL()    -1  )  .
+This is the first component of LF2.                                       S (CP N
+
+The second component is operational. Even once µFS has been identified as the canonical projective measure, one
+still needs the finite-dimensional weight assignment that links projective geometry to the Born form. In the current
+programme, this step is not treated as a direct consequence of measure uniqueness alone. Rather, it is packaged through
+an operational consistency layer together with an imported Busch effect-Gleason theorem for effect-additive probability
+assignments in finite dimensions N  2. Accordingly, LF2 must keep these two layers separate: the measure bridge and
+the Born-weight wrapper are related, but they are not the same theorem.
+
+1.3 Why LF1 is not yet a Born-rule layer
+
+This distinction matters both mathematically and programmatically. It would be misleading to describe LF1 as a Lean
+derivation of the Born rule. LF1 formalises the statement that deterministic repeated-preparation models yield stable
+long-run frequencies equal to normalised ontic weights. It does not formalise the projective measure bridge, does not
+fix the Fubini­Study measure, and does not prove the finite-dimensional Born-form assignment. Those belong to later
+layers.
+
+The dependency structure of the programme makes this separation explicit. The first layer is deterministic typicality and
+frequency emergence. The second layer fixes the admissible projective weight structure in the symmetry-compatible
+sector. Only after these steps does the programme proceed to the fuller finite-dimensional operational dictionary.
+LF2 should therefore be read as the formal closure of the measure-and-weight interface, not as a complete formal
+reconstruction of quantum mechanics.
+
+This point is also methodologically important. One purpose of the Lean branch is to prevent distinct claims from being
+compressed into a single rhetorical step. In informal foundational writing, deterministic dynamics, invariant measures,
+projective geometry, and probability assignments are often presented together in a way that obscures which assumptions
+are doing the work. LF2 is intended to make the logical situation transparent. It does not pretend that all later CSD
+structure is already formalised. Instead, it records exactly what is needed to pass from LF1's deterministic frequency
+theorem to the finite-dimensional projective weight layer.
+
+1.4 Main results and scope
+
+The present paper has two principal aims. First, it formalises the symmetry-based measure bridge from ontic Liouville
+volume to projective Fubini­Study measure. Second, it packages the finite-dimensional Born-weight layer using an
+explicit operational consistency package together with clearly delimited imported inputs. In this sense, LF2 is a wrapper
+paper as much as a theorem paper: it identifies the exact formal interface between deterministic ontic weights and the
+projective probability rule used elsewhere in the finite-dimensional stack.
+
+The scope of LF2 is deliberately limited. The paper works entirely within the finite-dimensional setting. It does not
+attempt to derive the ontic manifold  from deeper principles. It does not derive the projection map . It does not
+solve the A5 problem of why physically relevant Hamiltonians lie in the quantum-effective sector. It does not address
+continuum limits, field-theoretic structure, or the broader scaling questions deferred to later work. Its role is narrower:
+to formalise the measure bridge and the Born-weight wrapper that are already logically required by Paper B, TN1, LF1,
+and the dependency map.
+
+With that scope fixed, the value of LF2 is clear. LF1 shows that deterministic volume typicality yields stable frequencies.
+LF2 shows how, in the symmetry-compatible finite-dimensional sector, those weights are linked to the canonical
+projective measure and then to the Born-form probability assignment. The result is a formally cleaner transition from
+the deterministic statistical backbone to the later finite-dimensional reconstruction layers.
+
+                                                             4
+LF2: The Measure Bridge and Born-Weight Wrapper                                  A PREPRINT
+
+1.5 Status of this document
+
+This document specifies the LF2 Lean4 module to be implemented in the csd-lean4 repository, building on the
+already-implemented LF1 module. Theorem statements in the present-tense form (for example, "LF2 proves ...")
+describe the implementation targets. The canonical artefact is the Lean repository. A revised version of this document
+will be deposited after the implementation is complete, recording the final type signatures and any deviations from this
+specification.
+
+2 Ontic and Epistemic Setup
+
+2.1 Ontic space (, µL) and finite-dimensional scope
+
+We work throughout in the finite-dimensional setting. The ontic space is taken to be a compact, connected, smooth
+manifold  equipped with a finite Borel measure µL. In the intended CSD interpretation, µL is the Liouville measure
+associated with the ontic symplectic structure, but for the logical purposes of the present paper only the measure-theoretic
+properties required for pushforward and normalisation are used explicitly.
+
+The compactness assumption ensures
+
+                                                µL() < ,
+
+so that all preparation measures considered below are finite and normalisable. This is essential for the passage from
+ontic weights to projective weights. LF2 does not attempt to derive  from deeper principles, nor does it attempt
+to formalise the full symplectic or Kähler construction from first principles. Those structures belong to the broader
+finite-dimensional framework and are treated here only through the measure-theoretic data they induce.
+
+The finite-dimensional restriction is not merely technical. The present layer is intended to sit directly above LF1 and
+directly below the later operational reconstruction papers. Accordingly, it takes as input a finite-dimensional ontic space,
+a finite Liouville-type measure, and a projection to finite-dimensional projective state space. No infinite-dimensional
+extension is claimed in this paper.
+
+2.2 Projective epistemic space CP N-1
+
+The epistemic state space is complex projective space
+
+                                                       CP N-1,
+
+the space of rays in CN . This is the canonical operational pure-state space in the finite-dimensional CSD framework. Its
+geometric structure is fixed independently of any ontic interpretation: it carries the Fubini­Study metric, the associated
+symplectic form, and the corresponding invariant Borel measure µF S.
+
+Throughout LF2, µF S denotes the unnormalised Borel measure associated with the Fubini­Study volume form
+
+                                       F S             =   FNS-1 ,
+                                                          (N - 1)!
+
+matching the convention of TN1. When the normalised version is needed, we write
+
+                                       µFnoSrm  :=     µF     µF S   -1  )  .
+                                                              (CP N
+                                                           S
+
+The role of CP N-1 in the present paper is twofold. First, it is the codomain of the epistemic projection
+
+                                                             :   CP N-1.
+
+Second, it is the space on which the projective probability weights are defined. LF2 is concerned with the precise
+relation between these two uses. In particular, the central question is how the ontic measure µL induces, via , a
+projective measure that can be compared with µF S.
+We reserve uppercase N for the Hilbert-space dimension throughout. This matches the canonical finite-dimensional
+notation fixed in TN0 and keeps the present formal layer consistent with the wider programme.
+
+                                                          5
+                                LF2: The Measure Bridge and Born-Weight Wrapper                         A PREPRINT
+
+2.3 Projection map  :   CP N-1
+
+The ontic-epistemic link is represented by a measurable map
+
+                                                             :   CP N-1.
+
+In the broader physical model,  is also smooth, surjective, and many-to-one, but only measurability is used in the LF2
+formal development. Smoothness and surjectivity are recorded as physical-model assumptions in Appendix A.4 and are
+not encoded in the Lean module.
+
+The many-to-one character of  is essential. Distinct ontic microstates may correspond to the same epistemic ray, and
+hence the projective description is coarse relative to the ontic one. This is precisely why the pushforward measure
+becomes important: a single projective state generally corresponds not to one ontic point, but to an entire fibre
+
+                                                         F[] := -1([])  .
+
+LF2 does not require a detailed classification of fibres. It requires only enough regularity of  for the pushforward
+measure
+
+                                                                   µL
+to be well defined as a finite Borel measure on CP N-1.
+
+Later sections will impose additional structure, specifically symmetry compatibility and SU (N )-equivariance, in order
+to identify this pushforward with the Fubini­Study measure up to scale. At the present stage, however, we record only
+the basic ontic-epistemic setup.
+
+2.4 Preparation measures, pushforwards, and epistemic densities
+
+Let µprep denote a preparation measure on . In the standard finite-dimensional setting, µprep is assumed to be
+absolutely continuous with respect to µL, so that
+
+                                                               µprep  µL.
+
+Equivalently, there exists a non-negative density fprep  L1(, µL) such that
+
+                                dµprep(x) = fprep(x) dµL(x),    fprep dµL = 1.
+
+                                                              
+
+This expresses the preparation as a normalised ontic ensemble relative to the Liouville measure.
+
+Pushing forward along  yields a finite Borel measure on projective space,
+
+                                            µprep,
+
+defined in the standard way by  (µprep)(A) := µprep(-1(A))
+
+for every Borel subset A  CP N-1. When
+
+                                        µprep  µF S ,
+
+one may define the associated epistemic density by the Radon­Nikodym derivative
+
+                                        ep  :=  d(µprep) ,
+                                                   dµF S
+
+so that
+
+                                        µprep = ep µF S .
+
+This is the standard projective density representation used elsewhere in the finite-dimensional stack.
+
+At this stage, two distinct measures must be kept conceptually separate.
+
+First, there is the ontic reference measure µL on . Second, there is the canonical projective reference measure µF S on
+CP N-1. The purpose of the measure bridge developed in the next section is to connect these two reference structures
+in the symmetry-compatible sector. Only once that connection is established can one interpret ontic volume weights as
+projective weights in a canonical way.
+
+Accordingly, the present section provides the minimal input data for LF2: an ontic finite-measure space, a projective
+epistemic target, a many-to-one projection, and preparation measures whose pushforwards admit comparison with the
+Fubini­Study structure.
+
+                                                6
+LF2: The Measure Bridge and Born-Weight Wrapper                              A PREPRINT
+
+2.5 Symmetry-compatible sector data
+
+The symmetry-compatible sector data consists of the tuple
+
+where                                            (, µL, , U ),
+is a measurable group action on  such that:  U : SU (N ) ×   
+
+1. for every U  SU (N ), the map UU :    is a measurable bijection;
+
+2. µL is invariant, in the sense that
+
+                                             µL(UU (E)) = µL(E)
+
+for every Borel set E   and every U  SU (N );
+
+3.  is equivariant, in the sense that
+
+                                             (UU (x)) = U · (x)
+
+for every x   and every U  SU (N ).
+
+The lifted action U is part of the input data. It is not constructed from .
+
+3 Symmetry and the Measure Bridge
+
+3.1 The SU (N ) action on CP N-1
+
+The projective space CP N-1 carries a natural transitive action of the special unitary group SU (N ). For U  SU (N )
+and a ray []  CP N-1, the action is defined by
+
+                                                             U · [] := [U ].
+
+This action is well defined on rays and preserves the Fubini­Study metric, the associated symplectic form, and the
+induced Borel structure. In particular, it defines a symmetry group of the projective state space that is independent of
+any ontic construction.
+
+The relevance of this symmetry for the present paper is twofold. First, it constrains the class of admissible measures
+on CP N-1. Second, it provides the compatibility condition under which the ontic pushforward measure may be
+identified with the canonical projective measure. The measure bridge is therefore not purely measure-theoretic, but
+symmetry-constrained.
+
+3.2 Uniqueness of the invariant measure on CP N-1
+
+Let µ be a finite Borel measure on CP N-1. We say that µ is SU (N )-invariant if
+
+                                                            µ(U · A) = µ(A)
+
+for every Borel set A  CP N-1 and every U  SU (N ).
+
+The classification of invariant measures on compact homogeneous spaces implies that, up to normalisation, there is a
+unique SU (N )-invariant Borel probability measure on CP N-1. In the present context, this distinguished measure is
+the Fubini­Study measure µF S.
+
+This uniqueness statement is a standard structural input. LF2 does not reprove it in full generality. Instead, it treats the
+invariant-measure classification as part of the accepted finite-dimensional mathematical background, in the same way
+that Gleason-class results are treated later in the Born-weight layer.
+Combining compactness of CP N-1 with the transitive SU (N ) action, one obtains the following structural result: any
+SU (N )-invariant Borel probability measure on CP N-1 is equal to µF S.
+In particular, if µ is a finite SU (N )-invariant Borel measure on CP N-1, then µ is proportional to µF S. The propor-
+tionality constant is determined explicitly in Section 3.3 for the pushforward measure µL by comparing total masses
+on CP N-1.
+
+                                             7
+                     LF2: The Measure Bridge and Born-Weight Wrapper                        A PREPRINT
+
+3.3 Sector-conditional pushforward statement
+
+We now work with the symmetry-compatible sector data of Section 2.5.
+
+Lemma 1 (Preimage-action identity). Let A  CP N-1 be Borel and let U  SU (N ). Under equivariance of  and
+
+bijectivity of UU ,
+
+                                          -1(U · A) = UU -1(A) .
+
+Lemma 2 (Pushforward invariance). Under Lemma 1 and invariance of µL under U , one has
+
+                                                     (µL)(U · A) = (µL)(A)
+for every Borel set A  CP N-1 and every U  SU (N ).
+
+Theorem 1 (Measure bridge). Assume the symmetry-compatible sector data of Section 2.5 and the imported invariant-
+measure uniqueness axiom of Section 7.4. Then
+
+                               µL = c · µF S,            c  =    µF   µL()       -1  )  .
+                                                                     S (CP N
+
+The value of c is determined by integrating both sides over CP N-1:
+                                                      µL() = c · µF S(CP N-1).
+
+4 Projective Weights from Pushforward Measure
+
+4.1 Outcome regions on CP N-1
+
+Let M denote a measurement context in the finite-dimensional setting. To each such context we associate a finite
+
+collection of measurable outcome regions      {eip(M )}iI ,
+
+where each eip(M )  CP N-1 is a Borel subset of projective space, and the family forms a partition up to sets of
+µF S-measure zero:
+
+                     µF S CP N-1 \ iep(M ) = 0,       µF S iep(M )  jep(M ) = 0 for i = j.
+
+                                                  iI
+
+These regions represent the epistemic realisation of measurement outcomes. Their construction is context-dependent,
+and LF2 does not attempt a full classification. It requires only that they are measurable and that they form a partition in
+the above sense.
+
+For the Lean module, the index set I is taken to be Fin n for some n  N, and the partition is encoded as a
+MeasurablePartition structure with fields:
+
+                             parts : Fin n  Set(CP N-1),
+                             measurable : i, MeasurableSet(parts i),
+
+                             pairwise_null : i j, i = j  µF S (parts i)  (parts j) = 0,
+
+                     cover_null : µF S CP N-1 \ parts i = 0.
+
+                                                                              i
+
+4.2 Weights induced by the prepared pushforward measure
+
+Given the measure bridge of Theorem 1,
+
+                               µL = c · µF S,            c  =    µF   µL()       -1  )  ,
+                                                                     S (CP N
+
+one obtains a natural assignment of weights to outcome regions.
+
+Let µprep be a preparation measure on , absolutely continuous with respect to µL, and let
+
+                                          µprep = ep µF S
+
+                                                      8
+                         LF2: The Measure Bridge and Born-Weight Wrapper                                 A PREPRINT
+
+be the corresponding epistemic measure on CP N-1. For each outcome region eip(M ), define the weight
+
+                         wi := (µprep) eip(M )         =                ep dµF S .
+
+                                                               iep(M )
+
+Equivalently, in purely ontic terms,
+                                                     wi = µprep -1(eip(M )) .
+
+This expresses the projective weight as the ontic measure of the corresponding pulled-back outcome set.
+
+4.3 Normalisation and state dependence
+
+By construction, the weights satisfy
+                                                                    wi = 1,
+
+                                                                                           iI
+
+since the outcome regions form a partition up to µF S-null sets and µprep is a probability measure.
+
+The weights depend on the preparation through the density ep. In particular, for a sharply prepared epistemic state
+concentrated near a ray []  CP N-1, the measure µprep is concentrated near [], and the weights wi reflect the
+relative overlap of this concentration with the outcome regions.
+
+At this stage, LF2 does not assume a specific functional form for ep. The dependence on [] is encoded entirely
+through the preparation measure and its pushforward. The next section will introduce the additional structure required
+to identify this dependence with the standard Born-form assignment.
+
+4.4 Relation to prepared epistemic densities
+
+The expression
+
+                         wi =                 eip(M )  ep dµF S
+
+is the general finite-dimensional probability formula at the projective level. It should be contrasted with state-independent
+
+expressions of the form                         µF S (iep)
+                                              µF S (CP N-1
+                                                            )  ,
+
+which are not, in general, physically meaningful unless ep is uniform.
+
+Thus, the role of the measure bridge is not merely to identify µF S as a canonical measure, but to provide the reference
+structure relative to which epistemic densities are defined. The actual probability weights are always preparation-
+dependent, and this dependence is encoded in ep.
+
+This completes the construction of projective weights from the pushforward measure. The next section packages the
+additional operational input required to recover the Born-form assignment in finite dimension.
+
+5 Born-Weight Wrapper
+
+5.1 Operational consistency package
+
+Definition 5.1 (OperationalPackage). Let H be a finite-dimensional complex Hilbert space. An operational consistency
+package consists of a map
+
+                                                            p : E(H)  [0, 1]
+from the effect algebra E(H) to the unit interval such that:
+
+       1. if E, F  E(H) and E + F  I, then
+                                                           p(E + F ) = p(E) + p(F );
+
+       2.
+                                                                      p(I) = 1;
+
+       3. for every unitary U on H and every E  E(H),
+                                                               p(U EU ) = pU (E),
+
+          with the usual covariance interpretation for simultaneous transformation of preparation and effect structure.
+
+                                              9
+                      LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+5.2 Imported effect-Gleason theorem
+
+Theorem 2 (Busch effect-Gleason, imported as axiom). Let H be a complex Hilbert space with dim H = N  2. Let
+                                                            p : E(H)  [0, 1]
+
+satisfy Definition 5.1. Then there exists a unique density operator  on H such that
+                                               p(E) = Tr(E) for all E  E(H).
+
+Lean-side signature (informal):
+
+           axiom busch_effect_gleason :
+           {N : N} (hN : N  2)
+          (p : Effect H  R)
+          (hp : IsEffectAdditiveProbability p),
+           !  : DensityOperator H, E, p E = Tr (.toMat  E.toMat)
+
+Both the invariant-measure uniqueness theorem and the Busch effect-Gleason theorem are stated as axiom declarations
+rather than imported from Mathlib, because as of this writing neither theorem is present in Mathlib.
+
+5.3 Uniform treatment of the qubit case
+
+Under the effect-additive package of Definition 5.1, the qubit case requires no separate treatment. The Busch theorem
+applies uniformly for all finite dimensions N  2.
+
+5.4 Finite-dimensional Born-form assignment
+
+Combining the measure bridge with the operational consistency package of Definition 5.1 and the imported Busch
+effect-Gleason theorem yields the finite-dimensional Born-form assignment.
+For a pure preparation []  CP N-1 and a measurement with projectors {Pi}, the weights take the form
+
+                                                             wi = |Pi|.
+
+Equivalently, writing Pi = |ii| for rank-one projectors,
+                                                             wi = ||i|2.
+
+This is the standard quadratic probability rule. In the present framework, it is not attributed to a single theorem. Rather,
+it arises from the combination of:
+
+        · the measure bridge, which identifies the canonical projective measure;
+        · the preparation-dependent density ep on CP N-1;
+        · the operational consistency package;
+        · the imported Busch effect-Gleason theorem.
+
+The role of LF2 is to formalise this interface. It makes explicit how the deterministic volume weights from LF1 are
+connected, through symmetry and operational structure, to the Born-form assignment used in the finite-dimensional
+reconstruction.
+
+6 Interface with LF1
+
+6.1 LF1 output as normalised ontic weight
+
+LF1 establishes the repeated-trial typicality theorem for deterministic ontic dynamics under a preparation model. For a
+given preparation region 0   and an outcome event represented by a measurable set i  , the LF1 result states
+that the empirical frequency converges almost surely to the corresponding normalised ontic weight:
+
+                       lim  1                n          =  µL(i  0) .
+                            n                                 µL(0)
+                      n                        1i (xk)
+
+                                           k=1
+
+                                           10
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+Equivalently, writing µprep for the conditional preparation measure on 0, this can be expressed as
+                                                          wiontic = µprep(i ).
+
+This is the output of LF1: a deterministic construction of stable weights defined entirely at the ontic level.
+
+6.2 From frequency convergence to projective weights
+LF2 does not modify the LF1 result. Instead, it reinterprets the ontic weight in projective terms.
+Given a measurement context M , let iep(M )  CP N-1 be the corresponding epistemic outcome region. The
+associated ontic outcome set is then given by the pullback
+
+                                                      i (M ) := -1(eip(M )).
+
+The LF1 weight can therefore be written as
+                                                   wiontic = µprep -1(iep(M )) .
+
+By definition of the pushforward measure, this is exactly
+                                                    wiontic = (µprep) eip(M ) .
+
+Thus the LF1 weight coincides with the projective weight defined in Section 4:
+                                                               wi = wiontic.
+
+This identity is purely measure-theoretic. It does not yet invoke any symmetry or Born-form structure. It is simply the
+statement that the LF1 weights, when expressed through the projection map, are exactly the pushforward weights on
+CP N-1.
+The Lean-side encoding of this identity is specified in Section 7.6.
+
+6.3 Separation of theorem layers
+The purpose of the present section is to make the logical separation between LF1 and LF2 explicit.
+
+        · LF1 proves convergence of empirical frequencies to ontic weights:
+                                                             frequency  µprep(i).
+
+        · The projection map  converts ontic outcome sets into epistemic regions:
+                                                                  i = -1(eip).
+
+        · The pushforward measure identifies these weights with projective weights:
+                                                          µprep(i ) = (µprep)(iep).
+
+        · The measure bridge and Born-weight wrapper then determine the functional form of these weights.
+
+Each step uses a different input:
+
+        · deterministic dynamics and repeated preparation (LF1),
+        · projection structure,
+        · symmetry and invariant measure,
+        · operational consistency and Gleason-class results.
+
+LF2 does not collapse these into a single argument. It records them as distinct layers.
+
+                                                                     11
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+6.4 What LF2 adds beyond LF1
+
+LF1 establishes that deterministic volume typicality yields stable frequencies equal to ontic weights. LF2 adds two
+further pieces of structure:
+
+       1. the measure bridge, which identifies the canonical projective measure induced by the ontic measure;
+       2. the Born-weight wrapper, which fixes the admissible probability assignment on CP N-1 under operational
+
+           constraints.
+
+Together, these show that the LF1 weights are not only stable, but coincide with the standard finite-dimensional
+probability rule when expressed in projective terms.
+Importantly, LF2 does not extend beyond this interface. It does not derive the projection map, does not resolve the
+quantum-effective sector, and does not address composite or continuum structure. Its contribution is to make the
+transition from deterministic ontic weights to projective Born-form weights precise and formally separable from the
+surrounding assumptions.
+
+7 Lean4 Formalisation Strategy
+
+7.1 Abstract measure layer
+
+The formalisation of LF2 is designed to sit directly on top of the LF1 infrastructure. Accordingly, the starting point is
+the abstract measure-theoretic layer already implemented in LF1, where the ontic space is represented as a measurable
+type  equipped with a finite measure µL.
+LF2 extends this layer by introducing a second measurable space representing projective state space, together with a
+measurable map
+
+                                                             :   CP N-1.
+
+At the Lean level, the symmetry-compatible sector should be represented by a structure carrying:
+
+        · a measurable type ,
+        · a finite measure µL,
+        · a measurable projection  :   CP N-1,
+        · a measurable SU (N ) action on , for example as
+
+                                                   action : SU N  MeasurableEquiv  
+           or an equivalent measurable-action formulation,
+        · proof fields expressing equivariance of  and invariance of µL.
+
+7.2 Encoding projective-space structure
+
+While CP N-1 carries rich geometric structure, the Lean formalisation focuses on the minimal data required for the
+measure bridge. In particular, the projective space is treated as a measurable space equipped with a distinguished
+reference measure µF S.
+The action of SU (N ) is not constructed in full differential-geometric detail. Instead, the formalisation encodes the
+invariance properties that are required for the uniqueness of the measure. This allows the argument to proceed without
+committing to a specific coordinate realisation of CP N-1.
+
+7.3 Pushforward and invariance statements
+
+The central formal object is the pushforward measure
+                                                                   µL,
+
+implemented in Lean using the standard pushforward construction for measures.
+The uniqueness of the invariant measure is represented by an explicit imported axiom, for example
+
+                                        axiom invariant_measure_uniqueness_CPN.
+
+                                                                     12
+              LF2: The Measure Bridge and Born-Weight Wrapper              A PREPRINT
+
+In the formalisation, the equivariance and invariance conditions are introduced as explicit hypotheses. The uniqueness
+of the invariant measure is treated as an external input, represented either as an axiom or as a previously established
+theorem in the formal library.
+
+7.4 Imported external theorem boundary
+
+A key design principle of LF2 is to make the boundary between internal formalisation and external mathematical input
+explicit.
+Two components are treated as imported:
+
+        · the uniqueness of the SU (N )-invariant measure on CP N-1;
+        · the Busch effect-Gleason theorem used in the Born-weight wrapper.
+
+In Lean, these appear as named assumptions or abstract theorems, rather than being rederived within the LF2 develop-
+ment. This ensures that the formalisation remains modular and that the logical dependencies are transparent.
+
+7.5 Repository architecture and dependency flow
+
+The LF2 implementation is organised as an extension of the LF1 module structure. At a schematic level, the repository
+is expected to include:
+
+CSD/
+
+LF1/
+
+...
+
+LF2/
+
+Setup.lean    -- ontic/epistemic spaces and projection
+
+MeasureBridge.lean -- pushforward and invariance statements
+
+Weights.lean  -- projective weights and normalisation
+
+BornWrapper.lean -- imported Gleason layer and final weights
+
+Interface.lean -- connection to LF1 results
+
+The dependency flow is strictly layered:
+
+      · LF1 provides the frequency convergence theorem and ontic weights;
+      · LF2 Setup defines the projection and projective space;
+      · MeasureBridge establishes the relation between µL and µF S;
+      · Weights defines projective weights from pushforward measures;
+      · BornWrapper fixes the admissible probability assignment;
+      · Interface links the LF1 output to the LF2 weight structure.
+
+This modular structure mirrors the conceptual layering of the programme. It ensures that each component can be
+verified independently and that later extensions, such as mixed states and sequential measurement, can build on a clearly
+defined base.
+
+Note: The MeasurablePartition structure is defined in Weights.lean.
+
+7.6 LF1 interface in Lean
+
+LF2 imports the implemented LF1 backbone through the module chain Setup.lean, Preparation.lean,
+Outcomes.lean, Trials.lean, Indicators.lean, Expectation.lean, Convergence.lean, and
+MainTheorem.lean.
+The confirmed LF1 names required by LF2 are:
+
+        · LF1_main_theorem_ae: the exported almost-everywhere frequency-convergence theorem;
+        · prepMeasure_apply: the explicit rewriting lemma for the preparation measure;
+        · TrialModel and OutcomeRegion: the LF1-side repeated-trial and outcome-region objects.
+
+                                                 13
+                          LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+If the repository confirms additional structure names such as OnticSetup, those exact implementation names should
+be used here. The present document should follow the repository naming rather than introducing speculative aliases.
+
+The LF2-side interface theorem should be stated as:
+                                          µprep -1(iep(M )) = (µprep) iep(M ) ,
+
+with the Lean-side interface theorem named, for example, lf1_weight_eq_projective_weight.
+
+7.7 Mathlib dependencies
+
+The intended Mathlib dependencies are as follows.
+
+· MeasureTheory.Measure.Basic for Measure, map, and pushforward constructions;
+· MeasureTheory.Measure.MeasureSpace for measurable-space structure;
+· MeasureTheory.MeasurableSpace.Basic for measurability hypotheses;
+· Mathlib.Algebra.Group.Defs for MulAction, together with explicit measurability hypotheses on the
+
+  action.
+
+No Jacobian or change-of-variables API is needed at this stage.
+
+The pushforward identity  (µL)(A) = µL(-1(A))
+
+is implemented through MeasureTheory.Measure.map_apply, requiring Measurable  and MeasurableSet A.
+
+The invariant-measure uniqueness theorem on CP N-1 is not currently available in Mathlib and should therefore be
+introduced as an imported axiom, for example invariant_measure_uniqueness_CPN.
+
+8 Scope and Limitations
+
+8.1 Finite-dimensional restriction
+
+All results in this paper are stated in the finite-dimensional setting. The ontic space , the projection , and the
+epistemic space CP N-1 are all assumed to be finite-dimensional. The measure bridge and the Born-weight wrapper
+are formulated entirely within this regime.
+No claim is made that the present construction extends directly to infinite-dimensional Hilbert spaces or to continuum
+systems. The purpose of LF2 is to formalise the finite-dimensional layer that sits immediately above LF1. Any extension
+beyond this setting requires additional structure and is deferred to later work.
+
+8.2 Dependence on symmetry-sector assumptions
+
+The measure bridge is not a general theorem for arbitrary ontic projections. It is a sector-conditional result. In particular,
+it depends on symmetry-compatibility assumptions, including:
+
+        · invariance of the ontic measure µL under a lifted symmetry action;
+        · SU (N )-equivariance of the projection map .
+
+These conditions define the symmetry-compatible quantum-effective sector in which the pushforward measure can be
+identified with the Fubini­Study measure up to scale. LF2 does not derive these assumptions. It makes them explicit
+and uses them as hypotheses.
+
+8.3 No derivation of  or 
+
+The ontic manifold  and the projection map
+                                                             :   CP N-1
+
+are treated as given. LF2 does not attempt to derive their existence, uniqueness, or detailed structure from deeper
+principles.
+In particular, the geometry of , the origin of its symplectic or Kähler structure, and the physical interpretation of the
+projection map are outside the scope of the present paper. LF2 uses only the measure-theoretic and mapping properties
+required to define pushforward measures and projective weights.
+
+                                                   14
+                        LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+8.4 External inputs in the Born-weight layer
+
+The Born-weight wrapper relies on external mathematical inputs. These include:
+        · the uniqueness of the SU (N )-invariant measure on CP N-1;
+        · the Busch effect-Gleason theorem for finite-dimensional Hilbert spaces with N  2 under the effect-additive
+           operational package.
+
+LF2 does not rederive these results. It incorporates them as explicit assumptions within the formalisation. The role of
+the present paper is to show how these inputs connect to the measure bridge and to the LF1 output, not to replace them.
+
+8.5 Separation from later reconstruction layers
+
+LF2 does not attempt to provide a full reconstruction of finite-dimensional quantum mechanics. In particular, it does
+not address:
+
+        · mixed states and convex structure;
+        · general POVM constructions beyond the imported results;
+        · subsystem reduction and composite structure;
+        · sequential measurement and update rules.
+
+These topics belong to later layers of the programme and are treated in subsequent notes. The purpose of LF2 is limited
+to the measure-and-weight interface.
+
+8.6 No claim beyond the weight layer
+
+The results of LF2 should be read as establishing a specific interface:
+
+        · LF1 provides deterministic frequency convergence to ontic weights;
+        · LF2 identifies the corresponding projective measure structure;
+        · LF2 packages the Born-form assignment under explicit assumptions.
+
+No broader claim is made. In particular, LF2 does not claim:
+
+        · a derivation of the quantum-effective sector;
+        · a classification of admissible Hamiltonians;
+        · an extension to continuum or field-theoretic regimes.
+
+These remain open problems in the programme. The present paper isolates the measure-and-weight layer so that these
+later questions can be addressed on a clearly defined foundation.
+
+9 Conclusion
+
+9.1 Summary of results
+
+This paper has formalised the measure-and-weight layer that connects deterministic ontic dynamics to the finite-
+dimensional projective probability structure.
+
+The first result is the measure bridge. Under symmetry-compatible assumptions, the pushforward of the ontic Liouville
+measure defines a projective measure proportional to the Fubini­Study measure on CP N-1:
+
+                        µL = c · µF S,  c   =  µF   µL()    -1  )  .
+                                                   S (CP N
+
+The second result is the Born-weight wrapper. Given the projective measure structure, and under the operational
+consistency package of Definition 5.1 together with the imported Busch effect-Gleason theorem, the admissible
+probability assignment takes the standard quadratic form for finite-dimensional systems.
+
+These two components are logically distinct. The measure bridge identifies the canonical projective measure. The
+Born-weight wrapper fixes the admissible probability assignment relative to that measure. LF2 makes this separation
+explicit and formal.
+
+                                        15
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+9.2 Role within the formalisation stack
+
+LF2 completes the second layer of the Lean formalisation programme.
+LF1 establishes deterministic frequency convergence to ontic weights. LF2 identifies the corresponding projective
+measure structure and packages the finite-dimensional probability rule. Together, these two layers provide a complete
+interface between deterministic volume typicality and the projective probability structure used in the later reconstruction.
+This layered structure is intentional. It ensures that the statistical, geometric, and operational components of the
+framework are not conflated. Each layer is stated with its own assumptions and its own conclusions.
+
+9.3 What is established
+
+Within its stated scope, LF2 establishes the following:
+
+        · a symmetry-constrained identification of the pushforward measure with the Fubini­Study measure;
+        · a precise definition of projective weights induced by ontic preparation measures;
+        · a formal interface between deterministic frequency convergence and projective probability assignment;
+        · an explicit separation between internally formalised results and externally imported inputs.
+
+These results complete the finite-dimensional measure-and-weight layer required by the earlier papers.
+
+9.4 What remains open
+
+LF2 does not resolve several central questions in the programme.
+In particular, it does not:
+
+        · derive the ontic manifold  or the projection map ;
+        · explain the origin of the symmetry-compatible sector;
+        · address composite-system structure from first principles;
+        · extend the construction beyond finite dimension.
+
+These are not omissions. They are part of the staged structure of the programme. LF2 isolates the layer that can be
+formalised independently of these deeper questions.
+
+9.5 Next steps
+
+With the measure-and-weight layer in place, the next steps in the formalisation programme are clear.
+Subsequent work will extend the formalisation to:
+
+        · mixed states and convex structure;
+        · general measurement frameworks, including POVMs;
+        · subsystem reduction and composite systems;
+        · sequential measurement and update rules.
+
+These layers build directly on the interface established by LF1 and LF2.
+
+9.6 Final remark
+
+The primary contribution of LF2 is not a single new theorem, but a clarification of structure. It identifies the exact point
+at which deterministic ontic weights become projective probability weights, and it records the assumptions required for
+that transition.
+In doing so, it separates what is proved, what is assumed, and what is deferred. That separation is essential for any
+further development of the formalisation programme.
+
+                                                                     16
+                     LF2: The Measure Bridge and Born-Weight Wrapper                     A PREPRINT
+
+A Assumptions Audit
+
+A.1 Purpose of the audit
+
+A central aim of LF2 is not only to formalise the measure bridge and Born-weight wrapper, but also to make their
+logical dependencies completely explicit. LF1 already adopted this approach by separating internally proved statements,
+imported mathematical results, and physical-model assumptions, precisely because formalisation forces the underlying
+theorem architecture to be stated without compression. The same discipline is even more important here, since LF2 sits
+at the point where deterministic ontic weights are connected to projective probability structure through a combination
+of internal formalisation and external theorem inputs.
+
+For that reason, the present section separates the ingredients of LF2 into four distinct classes:
+
+       1. statements proved internally in the formal development;
+
+       2. mathematical results imported as external inputs;
+
+       3. assumptions that belong to the physical model rather than to the mathematical proof;
+
+       4. assumptions that are not made in LF2.
+
+This division is important both mathematically and conceptually. Mathematically, it clarifies what LF2 actually
+establishes. Conceptually, it prevents the significance of the formal layer from becoming stronger than the theorem
+package warrants. In the programme dependency map, Layer 2 is already explicitly split into a measure-bridge step and
+a Born-weight step, with distinct dependency statuses. LF2 should preserve that same separation.
+
+A.2 Internally proved statements
+
+The internal contribution of LF2 is the formal theorem chain that carries the development from the declared ontic-
+epistemic setup to the projective weight layer. At the level of mathematical content, the following components should
+be proved directly within the LF2 development.
+
+Pushforward measure construction: Given a measurable map
+                                                             :   CP N-1
+
+and a finite ontic measure µL on , the formalisation constructs the pushforward measure
+                                                                   µL
+
+on CP N-1 and proves the standard rewriting identity
+                                                      (µL)(A) = µL(-1(A))
+
+for measurable A  CP N-1.
+
+Projective weight construction: Given a preparation measure µprep  µL and measurable outcome regions
+                                                       {eip(M )}iI  CP N-1,
+
+the development defines the projective weights
+                                                      wi := (µprep) iep(M )
+
+and proves their basic properties, including non-negativity and normalisation.
+
+Measure-bridge theorem schema: Under the explicitly stated symmetry hypotheses, the formalisation proves that the
+pushforward measure is invariant under the induced SU(N) action on CP N-1. Given the imported invariant-measure
+
+uniqueness theorem, the internal formal step then yields the proportionality statement
+
+                     µL = c · µF S,  c   =  µF   µL()    -1  )  .
+                                                S (CP N
+
+                                     17
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+Interface theorem with LF1: A key internal lemma identifies the LF1 ontic weight with the LF2 projective weight:
+                                          µprep -1(eip(M )) = (µprep) iep(M ) .
+
+This is the exact formal interface between the deterministic frequency theorem of LF1 and the projective weight layer
+developed in LF2.
+
+These internal theorems constitute the genuine contribution of LF2 as a formalisation paper. They are not merely
+inherited from an external library. They are the machine-checked assembly of the theorem spine required for the
+measure-and-weight layer identified in the programme map. LF1 already established the statistical backbone; LF2 adds
+the measure bridge and formal weight interface above it.
+
+A.3 Imported mathematical results
+
+LF2 does not attempt to rebuild all required mathematics from first principles. As in LF1, that would be the wrong
+target. The goal is to formalise a particular layer of the CSD stack, not to rederive the full mathematical substrate of
+measure theory, homogeneous-space theory, and quantum probability. LF1 already made this explicit at the level of
+imported Mathlib infrastructure, and LF2 should do the same for its own load-bearing external inputs.
+
+The following ingredients are expected to be imported rather than reproved inside LF2.
+
+Basic definitions and theorems concerning measurable spaces, measurable maps, pushforward measures, absolute
+continuity, Radon­Nikodym derivatives, and finite measures belong to the imported foundational layer.
+The uniqueness of the SU (N )-invariant Borel probability measure on CP N-1 is treated as an external theorem input.
+In programme terms, this is the content of the measure-uniqueness step tracked as R9 in CSD1 and developed at the
+paper level in TN1. LF2 uses that result rather than reproving it from scratch.
+Busch effect-Gleason theorem for N  2. The Born-form assignment depends on an external theorem for effect-
+additive probability assignments on the finite-dimensional effect algebra. Under the operational consistency package
+of Definition 5.1, this theorem yields a unique density-operator representation in trace form for all finite dimensions
+N  2.
+
+The role of imported results in LF2 should be described with care. They are not weaknesses of the formalisation. On the
+contrary, they are part of what makes the project modular and auditable. What matters is that the paper identifies them
+explicitly, so that the reader can distinguish the internal LF2 contribution from the broader mathematical infrastructure
+on which it relies.
+
+A.4 Physical-model assumptions
+
+The most important conceptual benefit of the audit is the isolation of the physical assumptions. These are not proved
+in Lean. They are not consequences of the measure-theoretic setup alone. They are the modelling inputs required to
+interpret the formal development as a statement about the finite-dimensional CSD framework.
+
+Existence of an ontic space and Liouville measure: LF2 assumes an ontic space  equipped with a physically
+relevant finite measure µL. The paper does not derive this ontology. It states what follows once such a space and
+measure are given.
+
+Existence of an epistemic projection: LF2 assumes a smooth, surjective, many-to-one map
+
+                                                             :   CP N-1.
+
+The paper does not derive the existence or uniqueness of this projection. It only formalises the consequences of using it
+in the measure-and-weight layer.
+
+Symmetry-compatible sector assumptions: The measure bridge is conditional on working in the symmetry-
+compatible quantum-effective sector. Concretely, LF2 assumes SU (N )-equivariance of the projection and invariance
+of µL under the corresponding lifted action. In CSD1, this is exactly the sector-conditional content of A4b and R9.
+
+Existence of measurable outcome regions: LF2 assumes that a fixed measurement context determines measurable
+outcome regions on CP N-1 with the required null-boundary regularity. The paper does not classify which such
+partitions are physically realised. As CSD1 records, that broader universality question remains conditional or open.
+
+                                                                     18
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+Operational consistency package: The Born-weight wrapper depends on the operational consistency package,
+defined once in Section 5.1 as Definition 5.1. LF2 does not derive these conditions from deeper ontology. It records
+them as the operational assumptions under which the external theorem inputs apply.
+
+A.5 Assumptions not made
+
+A useful audit should record not only what LF2 assumes, but also what it does not assume.
+
+No derivation of  or : LF2 does not claim to derive the ontic manifold  or the projection map  from deeper
+principles.
+
+No fully internal derivation of Born weights: LF2 does not claim a fully internal, self-contained proof of the Born
+rule. The Born-weight wrapper explicitly depends on the external Busch effect-Gleason theorem, as the programme
+index already states.
+
+No resolution of the A5 problem: LF2 does not derive the quantum-effective sector or explain why physical
+Hamiltonians lie in it. CSD1 treats this as a deferred foundational extension.
+
+No mixed-state, POVM, or sequential-measurement closure: LF2 does not formalise the later finite-dimensional
+operational dictionary. Those layers belong to LF3 and LF5, corresponding to TN4 and TN6.
+
+No continuum or field-theoretic extension: LF2 remains entirely finite-dimensional. It does not claim any extension
+to continuum, infinite-dimensional, relativistic, or field-theoretic settings. That discipline is consistent with the current
+status of the broader programme, where such extensions are deferred to later bridge work.
+
+A.6 Audit summary
+
+The internal contribution of LF2 is the formal measure-and-weight interface: pushforward construction, projective
+weights, sector-conditional measure bridge, and the explicit connection back to the LF1 ontic weights. The imported
+mathematical layer consists primarily of invariant-measure uniqueness on CP N-1 and the Busch effect-Gleason
+theorem required for the Born-weight wrapper. The physical-model assumptions are the ontic-epistemic architecture
+and the symmetry-compatible sector conditions. The paper does not claim deeper derivations beyond this layer.
+This is exactly the scope LF2 should have. In the current programme map, LF2 is defined as the machine-verified
+measure bridge and Born-weight wrapper, with the external theorem inputs made explicit as imports rather than hidden
+inside the narrative. The present audit makes that status precise.
+
+B Internal and External Theorem Boundary
+
+B.1 Purpose
+
+One purpose of LF2 is to make explicit which parts of the measure-and-weight layer are formalised internally and
+which parts enter as external mathematical inputs. This is important because the present paper sits at a boundary point
+in the programme. It connects the deterministic frequency theorem of LF1 to the finite-dimensional Born-weight layer,
+but it does not collapse those two layers into a single theorem.
+Accordingly, LF2 distinguishes between:
+
+       1. internally formalised results, proved within the LF2 development;
+       2. external theorem inputs, imported rather than reproved;
+       3. physical-model assumptions, which belong to the finite-dimensional CSD framework rather than to the internal
+
+           mathematical proof.
+
+B.2 Internal LF2 theorem layer
+
+The internal LF2 theorem layer consists of the formal measure-theoretic bridge from ontic weights to projective weights.
+More precisely, LF2 proves the following schematic chain.
+
+                                                                     19
+                                  LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+Pushforward construction: Given a measurable projection
+
+                                   :   CP N-1
+
+and a finite ontic measure µL on , LF2 defines the pushforward measure
+
+                                                  µL
+
+and proves the standard identity  (µL)(A) = µL(-1(A))
+for measurable A  CP N-1.
+
+Invariance transfer: Given the explicit symmetry hypotheses of the symmetry-compatible sector, LF2 proves that
+µL is invariant under the induced SU (N ) action on CP N-1.
+
+Projective weight construction: Given a preparation measure µprep on , LF2 defines the corresponding projective
+weights
+
+                                                       wi = (µprep) eip(M )
+for measurable outcome regions iep(M )  CP N-1, and proves their basic measure-theoretic properties, including
+non-negativity and normalisation.
+
+Interface with LF1: LF2 proves that the LF1 ontic weight and the LF2 projective weight coincide:
+                                          µprep -1(eip(M )) = (µprep) eip(M ) .
+
+This identity is the exact formal interface between the deterministic repeated-trial theorem of LF1 and the projective
+weight layer of LF2.
+
+B.3 External mathematical inputs
+
+LF2 does not reprove all mathematical results needed for the full finite-dimensional probability layer. The following
+inputs are treated as external.
+
+Invariant-measure uniqueness on CP N-1: LF2 imports the uniqueness of the SU(N)-invariant Borel probability
+measure on CP N-1. From this result, together with the internally proved invariance of µL, LF2 obtains the
+sector-conditional proportionality
+
+                                  µL = c · µF S,  c   =  µF   µL()      -1  )  .
+                                                             S (CP N
+
+Busch effect-Gleason theorem for N  2: LF2 imports the finite-dimensional theorem that, under the effect-additive
+operational consistency package of Definition 5.1, the admissible probability assignment must take trace form for all
+finite dimensions N  2.
+
+These results are not hidden assumptions. They are explicit imported inputs, and LF2 is designed to record them as
+such.
+
+B.4 Physical-model assumptions
+
+In addition to external theorem inputs, LF2 depends on physical-model assumptions belonging to the finite-dimensional
+framework.
+
+Ontic space and Liouville measure: LF2 assumes an ontic space  equipped with a finite reference measure µL.
+Epistemic projection: LF2 assumes a smooth, surjective, many-to-one map
+
+                                                             :   CP N-1.
+
+Symmetry-compatible sector: LF2 assumes the symmetry hypotheses under which the measure bridge is expected
+to hold, including SU (N )-equivariance of  and invariance of µL under the corresponding lifted action.
+
+                                                  20
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+Outcome-region structure: LF2 assumes that each measurement context determines measurable projective outcome
+regions with the required null-boundary regularity.
+These assumptions are part of the model architecture. They are not proved internally in LF2.
+
+B.5 What LF2 does not claim
+
+The explicit theorem boundary also clarifies what LF2 does not claim.
+LF2 does not claim:
+
+        · a derivation of the ontic manifold ;
+        · a derivation of the projection map ;
+        · a fully internal proof of invariant-measure uniqueness on CP N-1;
+        · a fully internal proof of the Busch effect-Gleason theorem;
+        · a reconstruction of the full finite-dimensional operational dictionary beyond the measure-and-weight layer.
+
+In particular, LF2 should not be read as a standalone first-principles derivation of the whole finite-dimensional quantum
+formalism. Its role is narrower: it formalises the measure bridge and packages the Born-weight wrapper under clearly
+stated external inputs.
+
+B.6 Summary
+
+The internal content of LF2 is the formal measure-and-weight interface:
+
+                             ontic measure - pushforward measure - projective weights.
+
+The external content consists of the invariant-measure uniqueness theorem and the Gleason-family inputs needed for
+the Born-weight layer. The physical-model content is the ontic-epistemic architecture within which these theorems are
+applied.
+This boundary is not a weakness of LF2. It is part of its purpose. The paper is intended to make explicit exactly which
+parts of the finite-dimensional probability layer are internally formalised, which are imported, and which are assumed
+as part of the underlying model.
+
+References
+
+Abhay Ashtekar and Troy A. Schilling. Geometrical formulation of quantum mechanics. In Alex Harvey, edi-
+   tor, On Einstein's Path: Essays in Honor of Engelbert Schücking, pages 23­65. Springer New York, New York,
+   NY, 1999. ISBN 978-1-4612-7137-6. doi:10.1007/978-1-4612-1422-9_3. URL https://doi.org/10.1007/
+   978-1-4612-1422-9_3.
+
+Ingemar Bengtsson and Karol Z yczkowski. Geometry of Quantum States: An Introduction to Quantum Entanglement.
+   Cambridge University Press, Cambridge, 2 edition, 2017. ISBN 9781108293495.
+
+Zayn Blore. Lf1: Machine-verified volume typicality and frequency convergence for deterministic repeated trials, April
+   2026a. Preprint.
+
+Zayn Blore. Volume-based probability: Outcome frequencies from deterministic geometry, March 2026b. Preprint.
+Zayn Blore. Fixing the measure: Deriving ||2 from symmetry in deterministic geometry, March 2026c. Preprint.
+Zayn Blore. A deterministic reconstruction of finite-dimensional quantum mechanics, March 2026d. Preprint.
+Zayn Blore. Tn0: Canonical notation and conventions for constraint-surface dynamics, March 2026e. Preprint.
+Zayn Blore. Tn1: Deriving the fubini­study measure as an su(n)-equivariant pushforward, February 2026f. Preprint.
+Zayn Blore. csd-lean4, 2026g. URL https://github.com/zblore/csd-lean4. GitHub repository. Add branch or
+
+   commit hash if you want a fixed citation target.
+Vladimir I. Bogachev. Measure Theory, volume 2. Springer Berlin Heidelberg, Berlin, Heidelberg, 2007. ISBN
+
+   9783540345145. doi:10.1007/978-3-540-34514-5. URL https://doi.org/10.1007/978-3-540-34514-5.
+Max Born. Quantenmechanik der stoßvorgänge. Zeitschrift für Physik, 38(11­12):803­827, November 1926. ISSN
+
+  1434-601X. doi:10.1007/BF01397184. URL http://dx.doi.org/10.1007/BF01397184.
+
+                                                                     21
+LF2: The Measure Bridge and Born-Weight Wrapper  A PREPRINT
+
+Dorje C. Brody and Lane P. Hughston. Geometric quantum mechanics. Journal of Geometry and Physics, 38(1):
+  19­53, January 2001. ISSN 0393-0440. doi:10.1016/S0393-0440(00)00052-7. URL https://doi.org/10.1016/
+   S0393-0440(00)00052-7.
+
+Paul Busch. Quantum states and generalized observables: A simple proof of Gleason's theorem. Physical Review
+  Letters, 91(12):120403, September 2003. ISSN 1079-7114. doi:10.1103/PhysRevLett.91.120403. URL https:
+  //doi.org/10.1103/PhysRevLett.91.120403.
+
+Leonardo de Moura, Soonho Kong, Jeremy Avigad, Floris van Doorn, and Jakob von Raumer. The lean theorem
+   prover (system description). In Amy P. Felty and Aart Middeldorp, editors, Automated Deduction -- CADE-25,
+  volume 9195 of Lecture Notes in Computer Science, pages 378­388, Cham, 2015. Springer. ISBN 9783319214009.
+   doi:10.1007/978-3-319-21401-6_26. URL https://doi.org/10.1007/978-3-319-21401-6_26.
+
+Andrew M. Gleason. Measures on the closed subspaces of a hilbert space. Journal of Mathematics and Mechanics, 6
+  (6):885­893, 1957. URL https://www.jstor.org/stable/24900595.
+
+Sigurdur Helgason. Differential Geometry, Lie Groups, and Symmetric Spaces, volume 80 of Pure and Applied Mathe-
+   matics. Academic Press, New York, December 1978. ISBN 9780123384607. URL https://shop.elsevier.com/
+   books/differential-geometry-lie-groups-and-symmetric-spaces/helgason/978-0-12-338460-7.
+
+T. W. B. Kibble. Geometrization of quantum mechanics. Communications in Mathematical Physics, 65(2):189­201,
+  June 1979. ISSN 1432-0916. doi:10.1007/BF01225149. URL https://doi.org/10.1007/BF01225149.
+
+Anthony W. Knapp. Lie Groups Beyond an Introduction, volume 140 of Progress in Mathematics. Birkhäuser,
+   Boston, 2002. ISBN 9780817642594. doi:10.1007/978-1-4757-2453-0. URL https://doi.org/10.1007/
+   978-1-4757-2453-0.
+
+M. A. Naimark. Spectral functions of a symmetric operator. Izvestiya Akademii Nauk SSSR. Seriya Matematicheskaya,
+  4(3):277­318, 1940. URL https://www.mathnet.ru/eng/im3893. In Russian.
+
+The mathlib Community. The Lean Mathematical Library. In Jasmin Blanchette and Catalin Hri¸tcu, editors, Proceedings
+   of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs, CPP 2020, pages 367­381,
+   New York, NY, USA, January 2020. ACM. doi:10.1145/3372885.3373824. URL https://doi.org/10.1145/
+   3372885.3373824.
+
+22
+
