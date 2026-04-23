@@ -136,6 +136,11 @@ not a narrative corollary.
   target `P` is **not** specialised to Mathlib's `Projectivization`; no
   Fubini–Study measure is constructed. Concrete instantiation is deferred to
   LF3+.
+- `SectorData` carries **group-action coherence fields**
+  (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`)
+  expressing the left-action laws for `onticAction` and `epAction`. LF2's
+  own theorems don't consume them, but LF3 will when it uses
+  transitivity / orbits / Haar measure.
 - The reference measure `μFS` is **not** a field of `SectorData`; it enters
   `measure_bridge` as an explicit argument, keeping `SectorData`
   `μFS`-agnostic.
@@ -145,6 +150,12 @@ not a narrative corollary.
 - `Effect.add` takes the `le_one` hypothesis (`1 - (E.M + F.M)).PosSemidef`)
   as an explicit argument — no `Option`-valued addition, no
   `Decidable (PosSemidef _)` required.
+- `Effect.conjugateBy (U : Matrix.unitaryGroup (Fin N) ℂ)` returns `U† E U`
+  as an `Effect`. This is the structural helper for spec Def 5.1 clause 3
+  (unitary covariance), but the clause itself is **not** a field on
+  `OperationalPackage` — both natural readings have issues (invariance
+  over-constrains; covariance is type-heavy). Deferred to LF3; see
+  `specs/LF3-todo.md` §1.
 - `ComplexOrder` is opened scoped in `BornWrapper.lean` so that `ℂ` has the
   `PartialOrder` / `StarOrderedRing` instances required by `Matrix.PosSemidef`.
 
@@ -170,6 +181,13 @@ reduction), LF4 (control Hamiltonians), and LF5 (outcome-conditioned update
 and sequential circuits). Each future layer will instantiate `OnticSetup`
 (via `SectorData.toOntic`) and consume `prepMeasure_apply` from LF1 plus
 `measure_bridge` / `lf1_weight_eq_projective_weight` from LF2.
+
+**LF3 TODO list:** concrete items deferred from LF2 are recorded in
+`specs/LF3-todo.md` — unitary covariance clause, preparation-to-Hilbert
+correspondence, rank-1 effects from projective points,
+`rankOneDensity_unique_of_certainty` axiom discharge, σ-additivity check,
+concrete `(Sigma, P, G)` instantiation, etc.  Read that file before
+starting LF3 work.
 
 ## Lean / Mathlib conventions
 

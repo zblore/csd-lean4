@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.RCLike.Basic
 import Mathlib.Analysis.Complex.Order
@@ -84,14 +85,54 @@ noncomputable def add (E F : Effect N)
   nonneg      := E.nonneg.add F.nonneg
   le_one      := hLe
 
+/-- **Unitary conjugation of an effect.** `U† E U` is again an effect for any
+    unitary `U`: Hermitian-ness, PSD, and `E ≤ I` are all preserved by
+    conjugation with a unitary matrix.  This is the structural ingredient
+    behind spec Definition 5.1 clause 3 (unitary covariance). -/
+noncomputable def conjugateBy
+    (U : Matrix.unitaryGroup (Fin N) ℂ) (E : Effect N) : Effect N where
+  M := (U.1 : Matrix (Fin N) (Fin N) ℂ)ᴴ * E.M * U.1
+  isHermitian := Matrix.isHermitian_conjTranspose_mul_mul U.1 E.isHermitian
+  nonneg      := E.nonneg.conjTranspose_mul_mul_same U.1
+  le_one := by
+    -- 1 - U† E U = U† (1 - E) U; PSD via conjTranspose_mul_mul_same on (1 - E).
+    have hstar : (star U.1 : Matrix (Fin N) (Fin N) ℂ) = U.1ᴴ :=
+      Matrix.star_eq_conjTranspose U.1
+    have hUU : U.1ᴴ * U.1 = (1 : Matrix (Fin N) (Fin N) ℂ) := by
+      rw [← hstar]; exact Matrix.UnitaryGroup.star_mul_self U
+    have key : (1 : Matrix (Fin N) (Fin N) ℂ) - U.1ᴴ * E.M * U.1
+        = U.1ᴴ * (1 - E.M) * U.1 := by
+      rw [Matrix.mul_sub, Matrix.sub_mul, mul_one, hUU]
+    rw [key]
+    exact E.le_one.conjTranspose_mul_mul_same U.1
+
 end Effect
 
 /-- **Operational consistency package (spec Definition 5.1).** An assignment of
     probabilities to effects satisfying: non-negativity, boundedness by 1,
     total-one on the identity, and finite additivity when the sum remains
-    below `I`. Unitary covariance (spec clause 3) is omitted from this minimal
-    structure and may be added if the Busch axiom's precise statement
-    requires it in a future refinement. -/
+    below `I`.
+
+    **On the omission of clause 3 (unitary covariance).** Spec Def 5.1 lists a
+    third clause: `p(U† E U) = p_U(E)` for every unitary `U`, "with the usual
+    covariance interpretation for simultaneous transformation of preparation
+    and effect structure."  Two natural Lean encodings exist:
+
+    - **Invariance reading** — `p (Effect.conjugateBy U E) = p E` for all `U`.
+      This over-constrains to basis-invariant packages (essentially the
+      maximally mixed state); a pure-state package from `|ψ⟩⟨ψ|` does *not*
+      satisfy it, since `Tr(|ψ⟩⟨ψ| U† E U) = Tr(|Uψ⟩⟨Uψ| E)`, not `Tr(|ψ⟩⟨ψ| E)`.
+    - **Covariant reading** — a functor `OperationalPackage.conjugateBy U`
+      sending one package to another with `(conjugateBy U OP).p E = OP.p
+      (Effect.conjugateBy U E)`, preserving the nonneg / le_one / total / add
+      fields.  This is the mathematically correct encoding, but it's
+      type-heavy and not needed by `busch_effect_gleason` as currently stated.
+
+    Rather than commit to the wrong reading, LF2 omits clause 3 from the
+    structure and exposes `Effect.conjugateBy` below as the structural
+    building block.  LF3 (where unitary evolution enters non-trivially) is
+    the right place to pick one of the two encodings; see
+    `specs/LF3-todo.md`. -/
 structure OperationalPackage (N : ℕ) where
   /-- Probability assignment. -/
   p          : Effect N → ℝ

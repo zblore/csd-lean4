@@ -41,15 +41,27 @@ structure SectorData
   /-- Measurability of the projection. -/
   measurable_π : Measurable π
   /-- The lifted `G`-action on `Σ`, as a family of measurable equivalences. -/
-  onticAction  : G → Sigma ≃ᵐ Sigma
+  onticAction     : G → Sigma ≃ᵐ Sigma
   /-- The `G`-action on `P`, as a family of measurable equivalences. -/
-  epAction     : G → P ≃ᵐ P
+  epAction        : G → P ≃ᵐ P
+  /-- Identity element of `G` acts as the identity on `Σ`. -/
+  onticAction_one : onticAction 1 = MeasurableEquiv.refl Sigma
+  /-- Left-action composition on `Σ`: `(g * h) · x = g · (h · x)`.  Recall
+      `(e.trans f) x = f (e x)`, so the right-hand side below applies `h` first
+      and then `g`, matching the left-action convention. -/
+  onticAction_mul : ∀ g h : G,
+                      onticAction (g * h) = (onticAction h).trans (onticAction g)
+  /-- Identity element of `G` acts as the identity on `P`. -/
+  epAction_one    : epAction 1 = MeasurableEquiv.refl P
+  /-- Left-action composition on `P`. -/
+  epAction_mul    : ∀ g h : G,
+                      epAction (g * h) = (epAction h).trans (epAction g)
   /-- Liouville invariance: each `onticAction g` preserves `μL`. -/
-  hμL_inv      : ∀ g, MeasurePreserving (onticAction g)
-                        (toOntic.μL : Measure Sigma)
-                        (toOntic.μL : Measure Sigma)
+  hμL_inv         : ∀ g, MeasurePreserving (onticAction g)
+                           (toOntic.μL : Measure Sigma)
+                           (toOntic.μL : Measure Sigma)
   /-- Equivariance: `π` intertwines the ontic and epistemic actions. -/
-  hπ_equiv     : ∀ g x, π (onticAction g x) = epAction g (π x)
+  hπ_equiv        : ∀ g x, π (onticAction g x) = epAction g (π x)
 
 namespace SectorData
 
