@@ -86,5 +86,43 @@ noncomputable def add (E F : Effect N)
 
 end Effect
 
+/-- **Operational consistency package (spec Definition 5.1).** An assignment of
+    probabilities to effects satisfying: non-negativity, boundedness by 1,
+    total-one on the identity, and finite additivity when the sum remains
+    below `I`. Unitary covariance (spec clause 3) is omitted from this minimal
+    structure and may be added if the Busch axiom's precise statement
+    requires it in a future refinement. -/
+structure OperationalPackage (N : ℕ) where
+  /-- Probability assignment. -/
+  p          : Effect N → ℝ
+  /-- `0 ≤ p(E)`. -/
+  nonneg     : ∀ E, 0 ≤ p E
+  /-- `p(E) ≤ 1`. -/
+  le_one     : ∀ E, p E ≤ 1
+  /-- `p(I) = 1`. -/
+  total_one  : p Effect.one = 1
+  /-- Finite additivity: if `E + F ≤ I` then `p(E + F) = p(E) + p(F)`. -/
+  additivity : ∀ E F : Effect N, ∀ (hLe : (1 - (E.M + F.M)).PosSemidef),
+                 p (Effect.add E F hLe) = p E + p F
+
+/-- **Imported Busch effect-Gleason theorem (spec §5.2, §7.4).** Under the
+    effect-additive operational consistency package of Definition 5.1 and
+    dimension `N ≥ 2`, there is a unique density operator `ρ` such that
+    `p(E) = Tr(ρ · E)` for every effect `E`.
+
+    This is the load-bearing external input of the Born-weight wrapper and is
+    not present in Mathlib. LF2 imports it axiomatically rather than
+    rederiving it, per the explicit spec directive in §7.4. -/
+axiom busch_effect_gleason
+    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N) :
+    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E
+
+/-- **Born-form assignment (spec §5.4 wrapper).** Thin wrapper exposing the
+    Busch axiom under an `LF2`-namespaced name. -/
+theorem born_form_of_package
+    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N) :
+    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
+  busch_effect_gleason hN OP
+
 end LF2
 end CSD
