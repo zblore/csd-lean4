@@ -223,5 +223,28 @@ noncomputable def rankOneDensity
   nonneg      := outerProduct_posSemidef ψ
   trace_one   := outerProduct_trace_of_unit_norm ψ hψ
 
+/-- **Spec §5.4 — the Born quadratic form.** For a pure preparation `|ψ⟩` and
+    a rank-1 projector outcome `|φ⟩⟨φ|` (both with unit norm), the trace-form
+    probability equals `|⟨ψ|φ⟩|²`. -/
+theorem born_quadratic
+    (ψ φ : EuclideanSpace ℂ (Fin N))
+    (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
+    traceForm (rankOneDensity ψ hψ) (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
+  simp only [traceForm, rankOneDensity, rankOneEffect, outerProduct]
+  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul]
+  -- The two inner dot-products are (Euclidean) inner products up to order.
+  have h1 : ((fun i => star (ψ i)) : Fin N → ℂ) ⬝ᵥ (fun i => φ i) = inner ℂ ψ φ := by
+    rw [dotProduct_comm]
+    exact (EuclideanSpace.inner_eq_star_dotProduct ψ φ).symm
+  have h2 : ((fun i => ψ i) : Fin N → ℂ) ⬝ᵥ (fun i => star (φ i)) = inner ℂ φ ψ :=
+    (EuclideanSpace.inner_eq_star_dotProduct φ ψ).symm
+  -- smul_eq_mul to unfold smul on ℂ.
+  rw [smul_eq_mul, h1, h2]
+  -- Conjugate symmetry: inner ℂ φ ψ = star (inner ℂ ψ φ)
+  rw [show inner ℂ φ ψ = starRingEnd ℂ (inner ℂ ψ φ) from (inner_conj_symm φ ψ).symm]
+  -- z * star z = ‖z‖^2 (in ℂ); then re strips the coercion.
+  rw [RCLike.mul_conj]
+  norm_cast
+
 end LF2
 end CSD
