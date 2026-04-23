@@ -55,5 +55,24 @@ structure DensityOperator (N : ℕ) where
 noncomputable def traceForm (ρ : DensityOperator N) (E : Effect N) : ℝ :=
   RCLike.re ((ρ.M * E.M).trace)
 
+namespace Effect
+
+/-- The identity effect `I`. Represents the trivial always-true measurement
+    outcome. -/
+noncomputable def one : Effect N where
+  M           := 1
+  isHermitian := Matrix.isHermitian_one
+  nonneg      := Matrix.PosSemidef.one
+  le_one      := by simpa [sub_self] using (Matrix.PosSemidef.zero (n := Fin N) (R := ℂ))
+
+/-- The zero effect. Represents the trivial always-false measurement outcome. -/
+noncomputable def zero : Effect N where
+  M           := 0
+  isHermitian := Matrix.isHermitian_zero
+  nonneg      := Matrix.PosSemidef.zero
+  le_one      := by simpa [sub_zero] using (Matrix.PosSemidef.one (n := Fin N) (R := ℂ))
+
+end Effect
+
 end LF2
 end CSD
