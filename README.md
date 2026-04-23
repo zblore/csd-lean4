@@ -147,7 +147,7 @@ For LF2 to establish a Born-weight connection, it will need to:
 ## Repository structure
 
 ```text
-CSD/
+CsdLean4/
   LF1/
     Setup.lean        -- ontic space, μL, Φ, Ω0
     Preparation.lean  -- conditional preparation measure + prepMeasure_apply formula
@@ -157,5 +157,6 @@ CSD/
     Expectation.lean  -- E[indicator] = weightReal bridge
     Convergence.lean  -- strong law of large numbers application
     MainTheorem.lean  -- LF1 main theorem and corollaries
-CSD.lean
+  Basic.lean          -- Pkg.Basic convenience re-export
+CsdLean4.lean         -- canonical top-level import (explicit module list)
 ```

@@ -1,0 +1,83 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Build Commands
+
+```bash
+# Build the full project
+lake build
+
+# Check a single file
+lake env lean CsdLean4/LF1/MainTheorem.lean
+
+# Update dependencies (after editing lakefile.lean)
+lake update
+```
+
+The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` with no errors and no `sorry`s constitutes a verified proof.
+
+CI (`.github/workflows/ci.yml`) runs `leanprover/lean-action@v1` with `build: true` on push to `main`/`master` and on all PRs.
+
+## Architecture
+
+This project formalizes **LF1: a deterministic repeated-trial frequency theorem** (Constraint-Surface Dynamics, Layer 1). The core claim: empirical frequencies of outcomes in deterministic repeated-trial experiments converge almost surely to ontic volume weights.
+
+### Key design choice: determinism
+
+Probability enters only through **repeated-preparation sampling** — each trial draws a new initial microstate from a conditional measure on a preparation region Ω₀. The ontic evolution Φ is a deterministic measure-preserving flow. There is no intrinsic randomness at the ontic level.
+
+### Module dependency chain (linear, each imports the previous)
+
+```
+Setup.lean          — OnticSetup: measurable space Σ, Liouville measure μL,
+                      deterministic flow Φ, preparation region Ω₀
+Preparation.lean    — prepMeasure: conditional measure μprep(A) = μL(A ∩ Ω₀) / μL(Ω₀)
+Outcomes.lean       — OutcomeRegion: measurable subsets, preEvent pullbacks, weight
+Trials.lean         — TrialModel: i.i.d. preparation sampling, repeated-trial space
+Indicators.lean     — indicatorRV, empiricalFreq (Bernoulli 0/1 per trial)
+Expectation.lean    — Bridge: E[indicatorRV O n] = O.weightReal
+Convergence.lean    — Applies Mathlib's strong law of large numbers
+MainTheorem.lean    — LF1_main_theorem_ae and corollaries
+```
+
+`CsdLean4.lean` (the root file) is the canonical top-level import — it lists every module explicitly. `CsdLean4/Basic.lean` is the conventional `Pkg.Basic` convenience re-export that transitively pulls in the chain via `MainTheorem`. Downstream layers and external consumers should `import CsdLean4.Basic`; edits inside the package should modify the explicit list in `CsdLean4.lean`.
+
+Future layers (LF2, LF3, …) become sibling directories `CsdLean4/LF2/`, each instantiating `OnticSetup`. New top-level modules must be added explicitly to `CsdLean4.lean` — that file is not glob-based.
+
+All definitions live under the `CSD.LF1` namespace, with sub-namespaces `OnticSetup` and `OnticSetup.TrialModel`. New lemmas should follow this pattern.
+
+### Main theorem signature
+
+```lean
+theorem LF1_main_theorem_ae
+    (T : S.TrialModel Ω)
+    (O : S.OutcomeRegion)
+    (hindep : Pairwise (IndepFun on (T.indicatorRV O ·))) :
+    ∀ᵐ ω ∂ T.trialMeasure,
+      Tendsto (T.empiricalFreq O · ω) atTop (nhds O.weightReal)
+```
+
+The only hypothesis the caller must supply is pairwise independence of trial indicators (`hindep`). Integrability and identical distribution are proved internally.
+
+The theorem is deliberately stated for a **single** `O : OutcomeRegion` rather than a formalised partition family. The joint almost-sure statement for a finite measurable outcome partition `{Ω_i^Σ}` follows by applying the theorem once per element and intersecting the resulting full-measure sets. Do not refactor this into a partition type at the LF1 layer — the single-outcome form is intentional (see the docstring of `MainTheorem.lean`). A partition type may become necessary at LF2/LF3 for POVM completeness.
+
+### Key infrastructure lemmas (used by future layers)
+
+- `prepMeasure_apply` — explicit rewriting formula for the conditional measure (consumed by LF2/LF3)
+- `weight_eq_prepEvent_div` — volume interpretation of weights
+- `trialEvent_eq_comp_preimage` — makes deterministic structure explicit
+- `indicatorRV_integrable`, `indicatorRV_identDistrib` — prerequisites for the strong law
+
+### Planned future layers
+
+LF1 is the base. The README outlines LF2 (measure bridge / Born-weight wrapper), LF3 (mixed states, POVMs, reduction), LF4 (control Hamiltonians), and LF5 (outcome-conditioned update and sequential circuits). Each future layer will instantiate `OnticSetup` and use `prepMeasure_apply` from LF1.
+
+## Lean / Mathlib conventions
+
+- `sorry`-free proofs are required; `lake build` failing or any `sorry` means the formalization is incomplete.
+- Mathlib's `MeasureTheory` namespace is used throughout. Lean elaboration order matters — structure field order in `OnticSetup` and `TrialModel` is load-bearing.
+- When adding new lemmas, place them in the module where their primary definition lives; keep the dependency chain linear (no circular imports).
+- `hΩ0_nonzero : (μL : Measure Sigma) Ω0 ≠ 0` is a hypothesis threaded through many definitions — it prevents division-by-zero in `prepMeasure` and is required wherever conditional measure values are rewritten.
+- `hΦ_pres : MeasurePreserving Φ μL μL` (Liouville's theorem) is structural ontic input on `OnticSetup`, but inside LF1 **only its measurability content is used** (extracted via `measurable_Φ`). The full measure-preservation property is carried for physical admissibility and will be exercised in LF2+. Do not be surprised that LF1 proofs never invoke the preservation part directly.
+- `Sigma` in `OnticSetup` is an abstract `MeasurableSpace` — it is **not** specialised to `ℝ^{2n}`, a symplectic manifold, or any concrete phase space. Do not add assumptions that implicitly assume one; concrete instantiation is LF2's job.
