@@ -207,5 +207,21 @@ lemma one_sub_outerProduct_posSemidef
   rw [key]
   exact Matrix.posSemidef_self_mul_conjTranspose _
 
+/-- **Rank-1 projector as an Effect.** `|φ⟩⟨φ|` for a unit vector `φ`. -/
+noncomputable def rankOneEffect
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) : Effect N where
+  M           := outerProduct φ
+  isHermitian := outerProduct_isHermitian φ
+  nonneg      := outerProduct_posSemidef φ
+  le_one      := one_sub_outerProduct_posSemidef φ hφ
+
+/-- **Rank-1 pure-state density operator.** `|ψ⟩⟨ψ|` for a unit vector `ψ`. -/
+noncomputable def rankOneDensity
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1) : DensityOperator N where
+  M           := outerProduct ψ
+  isHermitian := outerProduct_isHermitian ψ
+  nonneg      := outerProduct_posSemidef ψ
+  trace_one   := outerProduct_trace_of_unit_norm ψ hψ
+
 end LF2
 end CSD
