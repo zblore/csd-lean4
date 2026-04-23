@@ -1,0 +1,1111 @@
+    LF1. MACHINE-VERIFIED VOLUME TYPICALITY AND
+FREQUENCY CONVERGENCE FOR DETERMINISTIC REPEATED
+
+                                  TRIALS
+
+                                                            A PREPRINT
+
+                                                             Zayn Blore
+                                                     zayn.blore@ou.ac.uk
+                       www.constraintsurfacedynamics.com, https://github.com/zblore/csd-lean4
+
+                                                   April 23, 2026
+
+                                           ABSTRACT
+
+We formalise in Lean4/Mathlib the core repeated-trial theorem underlying volume-based deterministic
+accounts of quantum statistics. The setting is a finite-measure ontic state space (, µL) equipped
+with a measurable preparation region 0  , a deterministic measurable flow  :   , and a
+fixed measurable ontic outcome region. The key modelling assumption is explicit: repeated trials
+are represented by a repeated-preparation model in which each trial begins from an initial microstate
+distributed according to the conditional preparation measure on 0. For a fixed outcome region,
+the empirical frequencies of the associated indicator observables converge almost surely to the
+corresponding normalised ontic weight.
+
+The formalisation isolates the exact logical dependencies of the result, separates what is proved
+inside Lean from what is imported from Mathlib, and distinguishes the physical assumptions of
+the repeated-preparation model from the law-of-large-numbers machinery used in the convergence
+step. In the current repository, the theorem is exported as LF1_main_theorem_ae. It is stated for
+a repeated-trial model T : S.TrialModel  and a fixed outcome region O : S.OutcomeRegion,
+with pairwise independence of the associated indicator random variables as the only non-trivial
+repeated-trial hypothesis supplied explicitly at the final stage. Integrability and identical-distribution
+properties are discharged internally from the trial-model structure.
+
+Within the Constraint-Surface Dynamics programme, this paper formalises the statistical backbone of
+volume typicality in the notation of TN0. It does not, by itself, provide a machine-verified deriva-
+tion of Born-form weights, a projective measure bridge, or the mixed-state and post-measurement
+layers. Its role is narrower and more precise: to show that, once deterministic ontic events and a
+repeated-preparation scheme have been specified, empirical frequencies converge almost surely to
+the corresponding real-valued normalised ontic weights.
+
+Contents
+
+1 Introduction                                                                                              3
+
+1.1 Why formalise the volume-typicality backbone . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.2 Scope of the present paper . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.3 Main result . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.4 Why machine verification matters here . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+1.5 Position within the CSD programme . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+1.6 Structure of the paper . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+2 Mathematical statement of the repeated-trial theorem  5
+
+2.1 Ontic setup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+2.2 Conditional preparation measure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+2.3 Repeated trials and empirical frequencies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+2.4 Main theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+2.5 Interpretation of the theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+2.6 Boundary of the claim . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+3 Lean4 formalisation architecture                      7
+
+3.1 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+3.2 Base measurable structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+3.3 Conditional preparation measure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+3.4 Outcome events and weights . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+3.5 Repeated-trial probability space . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+3.6 Indicator observables and empirical frequencies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+3.7 Convergence theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+3.8 Separation of theorem layers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+3.9 Repository structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+3.10 What is specific to CSD and what is not . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+4 Assumptions audit                                     11
+
+4.1 Purpose of the audit . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+4.2 Internally proved statements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+4.3 Imported mathematical results from Mathlib . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+4.4 Physical-model assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+4.5 Assumptions not made . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+4.6 Audit summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+5 Relation to the CSD programme                         13
+
+5.1 Role of LF1 within the finite-dimensional programme . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+5.2 Relation to Paper A . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+
+5.3 Why LF1 is not yet a Born-rule paper . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+5.4 Relation to the later Lean papers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+5.5 Why LF1 is the correct first Lean target . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+5.6 Relation to the finite-dimensional closure package . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+5.7 Relation to applications and the QC path . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+5.8 Boundary of programme-level significance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+6 Discussion                                            15
+
+6.1 What the formalisation clarifies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+6.2 What LF1 does not establish . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+                                    2
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+    6.3 Methodological lessons from the Lean development . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+    6.4 Implications for the wider Lean branch . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+    6.5 Limitations and open questions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+    6.6 Concluding perspective . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+1 Introduction
+
+1.1 Why formalise the volume-typicality backbone
+
+A central claim of volume-based deterministic approaches to quantum statistics is that stable experimental frequencies
+can arise from deterministic dynamics together with geometric measure, without introducing fundamental stochastic
+laws at the ontic level. In the Constraint-Surface Dynamics (CSD) programme, this claim appears in its most basic
+form as a repeated-trial theorem: if an experiment is represented by a measurable preparation region and a measurable
+partition into outcome regions, and if each run begins from an independently sampled initial microstate drawn from
+the preparation ensemble, then long-run outcome frequencies converge to the corresponding normalised volume ratios
+(Blore 2026a).
+This theorem is mathematically standard in spirit, but its role in foundational work is often presented only informally. In
+practice, several distinct ingredients are usually run together: the deterministic dynamical law, the preserved measure,
+the preparation model, the measurable outcome partition, and the probabilistic convergence theorem used to pass from
+single-run geometry to long-run frequencies. A machine-checked formalisation is valuable precisely because it forces
+these ingredients to be stated separately and with full logical precision. Assumptions that may remain tacit in an
+informal derivation must be declared explicitly. Dependencies on external theorems must be identified. Ambiguities of
+notation or scope must be removed.
+The purpose of the present paper is therefore not to introduce a new physical postulate, but to formalise a specific
+theorem that already plays a foundational role in the CSD programme. We use Lean4 and Mathlib to make the
+repeated-trial frequency claim fully explicit, to separate the mathematical core from the physical modelling assumptions,
+and to provide a reusable formal basis for later work on the projective measure bridge, operational weights, mixed
+states, control Hamiltonians, and sequential update.
+
+1.2 Scope of the present paper
+
+The purpose of LF1 is to formalise, in Lean4/Mathlib, the repeated-trial frequency theorem that underlies the volume-
+typicality layer of the CSD programme. The formal result is stated at the level of an abstract ontic measurable
+space equipped with a finite measure, a measurable preparation region, a deterministic measurable flow, and a fixed
+measurable ontic outcome region. The theorem then concerns repeated trials whose initial microstates are sampled
+from the conditional preparation measure.
+The present paper therefore does not formalise a full measurement partition as a primitive Lean object. Instead, it
+formalises the theorem for a single measurable outcome region at a time. In physical applications, a measurement
+context may of course determine a family of such regions, typically forming a partition up to null sets, but the Lean
+theorem is deliberately stated one region at a time in order to isolate the exact repeated-trial content.
+Equally importantly, LF1 does not attempt to formalise the measure bridge to projective space, the Born-form weight
+assignment, mixed states, POVMs, subsystem reduction, or post-measurement update. Those belong to later layers of
+the programme. LF1 isolates the statistical backbone only: once a deterministic ontic model and a repeated-preparation
+scheme have been specified, empirical frequencies converge almost surely to the corresponding normalised ontic weight.
+
+1.3 Main result
+
+The corresponding Lean4 implementation is publicly available at https://github.com/zblore/csd-lean4.
+This repository contains the LF1 development and serves as the implementation base for the theorem
+LF1_main_theorem_ae.
+It is stated for a repeated-trial model T : S.TrialModel , a fixed measurable ontic outcome region O :
+S.OutcomeRegion, and a pairwise-independence hypothesis on the associated indicator random variables. Its conclu-
+sion is almost-sure convergence of the empirical frequencies to the real-valued ontic weight O.weightReal.
+
+                                                                      3
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+In mathematical terms, the theorem has the form
+
+                             w^N () - O.weightReal for T.trialMeasure-almost every ,
+
+where w^N is the empirical frequency built from the indicator observable associated with the outcome region O. The
+key point is that the theorem is deterministic at the ontic level. A single trial has no stochastic outcome law. The only
+probabilistic ingredient is the repeated-preparation model on the initial conditions.
+The theorem is intentionally modest in scope. It does not prove a Born-rule statement. It proves that, once the ontic
+model, preparation measure, and outcome event are fixed, repeated preparation yields frequencies converging almost
+surely to the corresponding normalised ontic weight. This is the precise machine-verified content of LF1.
+
+1.4 Why machine verification matters here
+
+One contribution of the present work is methodological. Foundational arguments often derive much of their apparent
+force from compression. Several steps are packaged together and presented as conceptually natural, even when their
+exact logical order has not been made fully explicit. Formal verification is valuable because it resists that compression.
+To formalise the repeated-trial theorem, one must answer concrete questions such as the following.
+
+       1. What exactly is the ambient measurable structure on .
+       2. Which subsets are assumed measurable.
+       3. How is the conditional preparation measure defined.
+       4. Where independence enters the repeated-trial model.
+       5. Which parts of the proof are internal to the theorem prover and which rely on imported probability theory.
+       6. Which assumptions belong to mathematics and which belong to the physical model.
+
+For a sceptical reader, this clarification is itself a substantive result. Even if the formalised theorem is mathematically
+familiar, the act of machine verification exposes the precise assumptions required for the theorem to carry the physical
+interpretation assigned to it. This is especially important in foundational settings, where claims may otherwise appear
+stronger than the formal argument strictly warrants.
+
+1.5 Position within the CSD programme
+
+Within the wider CSD programme, LF1 occupies a specific and limited role. It formalises the repeated-trial volume-
+typicality layer that underpins the statistical claims of Paper A, using the notation and symbol conventions fixed in
+TN0 (Blore 2026a; Blore 2026d). Later layers of the programme address different questions. The measure-bridge layer
+connects ontic Liouville volume to projective Fubini-Study measure. The operational layer treats mixed states, POVMs,
+and subsystem reduction. The control layer treats control-dependent Hamiltonians and outcome basins. The sequential
+layer treats outcome-conditioned update and repeated circuits. LF1 is the first element of that chain because it isolates
+the cleanest mathematical kernel and the theorem most naturally suited to immediate Lean formalisation.
+This limited role should be kept in view throughout. LF1 is important because later claims depend on it. It is not, by
+itself, the whole finite-dimensional story.
+
+1.6 Structure of the paper
+
+The remainder of the paper is organised as follows.
+Section 2 states the mathematical theorem in the notation used throughout the current CSD programme and defines the
+repeated-trial preparation model precisely.
+Section 3 presents the Lean4 formalisation architecture, including the measure-theoretic setup, the trial space, the
+indicator observables, and the convergence argument.
+Section 4 provides an assumptions audit, separating internally proved lemmas, Mathlib imports, and physical modelling
+assumptions.
+Section 5 explains how LF1 fits into the wider CSD programme and which later formalisation layers depend on it.
+Section 6 discusses what the formalisation clarifies, what remains outside its scope, and what the natural next steps are
+for the Lean branch.
+
+                                                                      4
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+2 Mathematical statement of the repeated-trial theorem
+
+2.1 Ontic setup
+
+Let (, F, µL) be a finite-measure ontic measurable space. Let
+                                                                :
+
+be a measurable deterministic evolution map, interpreted physically as the ontic flow associated with a fixed experimental
+context. Let
+
+                                                                  0  
+
+be the measurable preparation region, with
+
+                                            0 < µL(0) < .
+
+For the formal LF1 theorem, one next fixes a single measurable ontic outcome region
+                                                                   .
+
+This region is to be understood as the ontic basin associated with one definite outcome under the chosen experimental
+context. The corresponding pulled-back initial-condition event is
+
+                                                                -1(),
+
+and the corresponding preparation-side event is
+                                                             0  -1().
+
+This single-region formulation is the exact level at which the current Lean theorem is stated. In physical applications, a
+measurement context may determine a family of outcome regions {i }iI , often forming a measurable partition up to
+null sets. However, LF1 formalises the theorem one outcome region at a time, which is sufficient for the repeated-trial
+
+convergence result.
+
+2.2 Conditional preparation measure
+
+The file Preparation.lean constructs the conditional preparation measure from the ontic measure µL and the
+preparation region 0. At the mathematical level, the construction is
+
+                                            µprep(A)  :=  µL(A  0) .
+                                                            µL(0)
+
+In the current repository this is not merely planned architecture. It is already implemented, together with the explicit
+rewriting lemma
+
+                                                         prepMeasure_apply,
+
+which expresses the preparation measure in the concrete form above. This lemma is important because it gives the bridge
+between the abstract probability measure used in the repeated-trial theorem and the Liouville-volume interpretation
+required by the wider CSD programme.
+
+Accordingly, LF1 does not merely assert the existence of a normalised preparation measure. It already machine-verifies
+the basic measure-theoretic infrastructure needed to use that measure explicitly in later Lean layers.
+
+2.3 Repeated trials and empirical frequencies
+
+The repeated-trial model is conceptually the usual repeated-preparation scheme: each run begins from a fresh initial
+microstate sampled from the conditional preparation measure on 0, and each trial then evolves deterministically under
+. In the current Lean development, however, this is encoded in a slightly more general way.
+
+Rather than building the theorem directly on a specific countable product probability space, the formalisation introduces
+a repeated-trial structure
+
+                                                          T : S.TrialModel ,
+
+where  is an external sample space indexing repeated runs. The structure carries a probability measure P on  and
+measurable trial maps
+
+                                                       Xn :   , n  N,
+
+                                                          5
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+such that each Xn has law equal to the conditional preparation measure µprep.
+
+For a fixed ontic outcome region , the event that the n-th trial realises that outcome is the set
+
+                                                        En := Xn-1 -1() .
+Equivalently, writing O for the fixed outcome region object in the Lean development, one has
+
+                                                       En = Xn-1(O.preEvent).
+
+The associated indicator observable is then
+
+                                               Yn := 1En ,
+
+and the empirical frequency after N trials is
+
+                                               1 N-1          Yn.
+                                               w^N := N
+                                                         n=0
+
+This is the quantity whose almost-sure convergence is established in the formal theorem.
+
+2.4 Main theorem
+
+We now state the theorem in the form that matches the current Lean repository.
+
+Theorem 1 (LF1 repeated-trial convergence theorem). Let S be an ontic setup, let
+
+                                               T : S.TrialModel 
+
+be a repeated-trial model, and let
+
+                                               O : S.OutcomeRegion
+
+be a fixed measurable ontic outcome region. Assume that the associated indicator random variables are pairwise
+independent. Then the empirical frequency of the outcome region O converges almost surely to the corresponding
+real-valued ontic weight:
+
+w^N - O.weightReal for T.trialMeasure-almost every repeated-trial sample point.
+
+Here the quantity O.weightReal is the real-valued normalised ontic weight associated with the preparation-side event
+                                                             0  -1().
+
+Equivalently, it is the real-valued form of the preparation probability of the pulled-back outcome event.
+
+The only non-trivial repeated-trial hypothesis supplied explicitly at this stage is pairwise independence of the indicator
+random variables. Integrability and identical distribution are automatic consequences of the model structure already
+encoded in the earlier Lean files. This exact separation of assumptions is one of the main clarifications provided by the
+formalisation.
+
+2.5 Interpretation of the theorem
+
+The theorem does not state that a single trajectory explores the full preparation region in time, nor does it rely on an
+ergodic hypothesis for individual ontic histories. Instead, it concerns repeated preparation. The statistical regularity
+arises because each trial begins from a fresh initial microstate sampled from the same preparation ensemble, and because
+the outcome rule is represented by measurable basin membership after deterministic evolution.
+
+This distinction is important. The theorem formalised here is a statement about deterministic repeated trials with
+ensemble sampling, not about arbitrary long-time averages along one ontic orbit. In particular, the probabilistic content
+enters through the repeated-trial preparation model, not through any stochastic modification of the ontic dynamics.
+
+2.6 Boundary of the claim
+
+Theorem 1 establishes a frequency result for deterministic measure-preserving dynamics under repeated preparation. It
+provides the statistical backbone required for volume-typicality arguments, but it does not by itself identify the weights
+wi with Born-form probabilities on projective state space.
+
+Two additional layers lie beyond the scope of the present paper.
+
+First, one must connect the relevant ontic volume structure to the effective projective measure used in the quantum
+description. Second, one must justify the operational probability rule on that projective space. Those steps belong to
+later parts of the CSD programme and to later papers in the Lean formalisation branch.
+
+Accordingly, LF1 should be read as a formalisation of the determinism-to-frequency bridge only. It is a necessary
+component of the wider programme, but not its complete probability-theoretic closure.
+
+                                               6
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+3 Lean4 formalisation architecture
+
+3.1 Overview
+
+The formal content of LF1 is organised around a simple theorem chain. We begin with a finite-measure ontic state
+space, a measurable preparation region, and a fixed measurable ontic outcome region. We then define the repeated-trial
+preparation model by equipping an external sample space with trial maps whose common law is the conditional
+preparation measure on the preparation region. From these sampled initial conditions, we construct indicator random
+variables for the chosen outcome region and form the corresponding empirical frequencies. The main theorem then
+follows by combining three ingredients: measurability of the indicator observables, identification of their expectations
+with the corresponding normalised ontic weight, and an appropriate law of large numbers.
+
+This section gives a guided description of that architecture. It is not intended as a code dump. Instead, the goal is
+to explain how the mathematical statement of Section 2 is decomposed into a sequence of formal definitions and
+lemmas suitable for Lean4 and Mathlib. The main design principle is modularity. The formalisation isolates the purely
+measure-theoretic kernel of the repeated-trial theorem so that later papers in the Lean branch can reuse it without
+reworking the foundational infrastructure. In physical applications, a full measurement context may determine a family
+of outcome regions, but the present formal theorem is stated one region at a time.
+
+3.2 Base measurable structure
+
+The base file Setup.lean introduces the ambient ontic data for LF1. Its core structure is an abstract measurable space
+ equipped with:
+
+       1. a finite measure µL,
+       2. a deterministic evolution map  :   ,
+       3. a measure-preservation hypothesis for ,
+       4. a measurable preparation region 0  ,
+       5. a non-vanishing assumption µL(0) = 0.
+
+A noteworthy feature of the current implementation is that the measure-preservation hypothesis is carried as part of
+the ontic model structure, but the LF1 proofs themselves directly use only measurability of , extracted from that
+hypothesis. This is the correct division for the present layer: LF1 needs the measurable pullback of outcome events,
+while the fuller dynamical significance of Liouville preservation is reserved for later layers.
+
+Outcome regions are not fields of the base setup structure. They are introduced later, in Outcomes.lean, as separate
+measurable objects associated with a fixed experimental context.
+
+3.3 Conditional preparation measure
+
+The file Preparation.lean constructs the preparation probability measure induced by the preparation region 0.
+Mathematically, this is the normalised restriction of µL to 0:
+
+                                     µprep(A)  =  µL(A  0) .
+                                                    µL(0)
+
+In the current repository this construction is already implemented, together with the explicit rewriting lemma
+
+                                     prepMeasure_apply,
+
+which expresses the preparation measure in the concrete form above. This step is conceptually modest but formally
+important. It isolates the point at which the physical preparation procedure becomes a probability measure suitable for
+repeated sampling.
+
+The file also establishes the basic facts needed downstream: the conditional preparation measure is well defined because
+
+                                     0 < µL(0) < ,
+
+it is a probability measure, and for every measurable A   one has the explicit identity
+
+                                     µprep(A)  =  µL(A  0) .
+                                                    µL(0)
+
+                                                  7
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+This infrastructure matters because it cleanly separates the ontic measure µL, which belongs to the physical model,
+from the preparation probability law, which is the object used by the repeated-trial probability theory. It also provides a
+reusable measure-theoretic layer for later Lean papers in the branch.
+
+3.4 Outcome events and weights
+
+The file Outcomes.lean introduces a single measurable ontic outcome region
+                                                        O : S.OutcomeRegion.
+
+Its underlying measurable set is denoted O.. From this the formalisation defines three associated objects.
+
+First, the pulled-back outcome event under the deterministic ontic flow:
+                                                      O.preEvent := -1(O.).
+
+Second, the preparation-side event:
+
+                                      O.prepEvent := 0  O.preEvent.
+
+Third, the corresponding outcome weight under the preparation measure:
+                       O.weight := µprep(O.preEvent), O.weightReal := toReal O.weight .
+
+A central lemma already present in the repository states that
+
+                                                   O.weight = µL(O.prepEvent) .
+                                                                          µL(0)
+
+This makes the volume-typicality interpretation explicit: the ontic weight is the fraction of the preparation region whose
+deterministic evolution lands in the chosen outcome region.
+
+The file Expectation.lean then proves the expectation bridge in two steps. First,
+                                                  E[Yn] = trialProbReal(O, n),
+
+via the lemma integral_indicatorRV_eq_trialProbReal. Second,
+                                                        E[Yn] = O.weightReal,
+
+via the lemma integral_indicatorRV_eq_weightReal. These are the exact machine-verified identities that connect
+indicator expectations to normalised ontic weights.
+
+3.5 Repeated-trial probability space
+
+A natural informal presentation of repeated trials uses a countable product probability space and coordinate projections.
+The current repository adopts a slightly more abstract and more reusable interface. The file Trials.lean introduces a
+structure
+
+                                                          T : S.TrialModel ,
+where  is an external sample space for repeated runs, P is a probability measure on , and
+
+                                                               Xn :   
+
+is the ontic initial microstate for the n-th trial.
+
+Each Xn is measurable, and each has law equal to the preparation probability measure:
+                                                           Law(Xn) = µprep.
+
+This is built directly into the structure. Independence is not hard-coded into TrialModel. Instead, it is supplied later,
+at the convergence stage, in the exact form required by the law of large numbers used in the repository.
+
+For a fixed outcome region O, the n-th trial event is
+
+                                     T.trialEvent(O, n) = Xn-1(O.preEvent),
+
+and its probability is
+
+                                      T.trialProb(O, n).
+
+The formalisation proves that
+
+                                      T.trialProb(O, n) = O.weight,
+
+so every trial carries the same ontic weight because every trial has the same preparation law.
+
+This architecture is preferable for LF1 because it isolates the truly necessary repeated-trial content without committing
+the theorem statement to one specific concrete sample-space construction.
+
+                                                       8
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+3.6 Indicator observables and empirical frequencies
+
+For a fixed outcome region O, the formalisation defines the real-valued indicator random variable
+
+                                                        Yn := 1T.trialEvent(O,n)
+on the repeated-trial sample space. The empirical frequency is then defined by
+
+                                                     1 N-1
+w^N := N                                                     Yn.
+
+                                                        n=0
+
+At this stage the code proves the standard elementary properties required for the strong-law step. Each indicator is
+measurable, bounded, and integrable. Moreover, because each trial random variable Xn has the same law µprep, the
+indicator family is identically distributed in the sense needed for the later convergence theorem.
+
+It is important, however, to match the repository precisely here. The final theorem does not ask the user to supply
+a full i.i.d. package as a separate hypothesis. Identical distribution is derived automatically from the TrialModel
+structure and the expectation bridge proved in the earlier files. The only non-trivial repeated-trial hypothesis that must
+be supplied explicitly at the final stage is pairwise independence of the indicator random variables.
+
+3.7 Convergence theorem
+
+The file Convergence.lean applies the strong law of large numbers to the indicator observables attached to a fixed
+outcome region. The imported Mathlib result used here is
+
+                                                        strong_law_ae_real.
+
+The first convergence lemma proved in the repository is
+
+                                               strongLaw_indicator_to_mean_ae,
+
+which states that the empirical averages of the indicator random variables converge almost surely to their common
+expectation. The next lemma,
+
+                                             strongLaw_indicator_to_weight_ae,
+
+combines that strong-law step with the already-proved expectation-to-weight bridge. Finally,
+
+                                          strongLaw_empiricalFreq_to_weight_ae
+
+rewrites the result in terms of the empiricalFreq abbreviation defined earlier.
+Thus the current formal route is completely explicit. The mode of convergence is almost sure convergence. Integrability
+and identical distribution are discharged internally. The only non-trivial convergence hypothesis supplied by the caller
+is pairwise independence of the indicator random variables.
+This exact statement should be reflected in the manuscript, rather than speaking only generically of a law-of-large-
+numbers application.
+
+3.8 Separation of theorem layers
+A useful conceptual decomposition of LF1 is the following four-layer split.
+
+Layer 1: Measure-theoretic setup. This layer introduces the ontic measurable space, preparation region, deterministic
+flow, preparation measure, and outcome-region weights.
+
+Layer 2: Trial-space construction. This layer introduces the repeated-trial sample space and the family of trial maps
+whose common law is the preparation measure.
+
+Layer 3: Indicator observables and expectation bridge. This layer defines the indicator random variables and
+proves that their expectations agree with the real-valued ontic weights.
+
+                                                     9
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+Layer 4: Frequency convergence. This layer applies the strong law of large numbers to obtain almost-sure conver-
+gence of empirical frequencies.
+At the code level, the current repository refines this conceptual split slightly by isolating the expectation bridge into
+its own file, Expectation.lean, between Indicators.lean and Convergence.lean. This refinement is useful
+and should be reflected in the architectural description, because it cleanly separates indicator construction from the
+identification of expectations with ontic weights.
+
+3.9 Repository structure
+
+The public Lean4 implementation for LF1 is available at https://github.com/zblore/csd-lean4. The current
+repository layout mirrors the theorem architecture and is no longer merely prospective.
+The current repository layout mirrors the theorem architecture and is no longer merely prospective. The LF1 development
+is exported from the top-level file CsdLean4.lean, which imports the following eight modules:
+
+CsdLean4/LF1/Setup.lean
+CsdLean4/LF1/Preparation.lean
+CsdLean4/LF1/Outcomes.lean
+CsdLean4/LF1/Trials.lean
+CsdLean4/LF1/Indicators.lean
+CsdLean4/LF1/Expectation.lean
+CsdLean4/LF1/Convergence.lean
+CsdLean4/LF1/MainTheorem.lean
+
+Their roles are as follows.
+
+        · Setup.lean: ontic measurable space, finite measure, deterministic flow, preparation region.
+        · Preparation.lean: conditional preparation measure and the explicit rewriting formula
+
+           prepMeasure_apply.
+        · Outcomes.lean: measurable ontic outcome regions, pullback events, preparation-side events, and ontic
+
+          weights.
+        · Trials.lean: repeated-trial model on an external sample space, including the common-law condition for
+
+           trial maps.
+        · Indicators.lean: indicator observables and empirical frequencies.
+        · Expectation.lean: expectation-to-weight bridge.
+        · Convergence.lean: strong-law application and almost-sure convergence lemmas.
+        · MainTheorem.lean: the exported LF1 theorem and its immediate corollaries.
+
+This modular layout is one of the strengths of the present implementation. It cleanly isolates reusable theorem layers
+and provides a stable interface for later formalisation targets such as LF2 through LF5.
+
+3.10 What is specific to CSD and what is not
+
+One of the main interpretive virtues of the formalisation is that it makes the CSD-specific content easy to identify. Most
+of the theorem is standard probability theory. The specifically CSD-shaped inputs are comparatively few:
+
+       1. the interpretation of  as an ontic state space,
+       2. the use of µL as the physically relevant conserved measure,
+       3. the interpretation of 0 as a preparation ensemble,
+       4. the interpretation of the i as outcome basins produced by a fixed experimental context,
+       5. the deterministic evolution map t.
+
+Everything after these declarations is, in essence, a theorem of repeated-trial probability theory. This is not a weakness.
+On the contrary, it is exactly what the formalisation is meant to clarify. LF1 does not claim that the probability rule
+itself is unique. It claims that once a deterministic measure-preserving model and repeated preparation structure are
+given, stable frequencies follow from normalised volume weights. The Lean architecture makes that claim precise and
+no stronger.
+
+                                                                     10
+LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+4 Assumptions audit
+
+4.1 Purpose of the audit
+
+A central aim of LF1 is not only to formalise the repeated-trial frequency theorem, but also to make its logical
+dependencies completely explicit. In informal foundational arguments, mathematical facts, modelling choices, and
+physical assumptions are often presented together in compressed form. One contribution of machine verification is that
+this compression can no longer be maintained. Every object must be typed, every theorem must state its hypotheses,
+and every external dependency must be declared.
+
+For that reason, the present section separates the ingredients of LF1 into three distinct classes:
+
+       1. statements proved internally in the Lean development,
+       2. results imported from Mathlib,
+       3. assumptions that belong to the physical model rather than to the mathematical proof.
+
+This division is important both mathematically and conceptually. Mathematically, it clarifies the real content of the
+formal theorem. Conceptually, it prevents the foundational interpretation of LF1 from becoming stronger than the
+underlying formal result warrants.
+
+4.2 Internally proved statements
+
+The internal contribution of LF1 is now best described as an implemented theorem chain, not merely as a proposed
+architecture. The following statements are already proved within the current repository.
+
+Normalised preparation measure. The development constructs the conditional preparation measure
+
+                                           µprep(A)  =  µL(A  0) ,
+                                                          µL(0)
+
+and provides the explicit rewriting lemma
+
+                                           prepMeasure_apply.
+
+Measurable outcome-region events. For a fixed measurable outcome region O, the repository constructs the
+
+pulled-back event
+                                                      O.preEvent = -1(O.)
+
+and the preparation-side event
+
+                                 O.prepEvent = 0  O.preEvent,
+
+and proves their measurability.
+
+Ontic weight formula. The development defines the ontic weight O.weight through the preparation measure and
+proves the explicit identity
+
+                                                   O.weight = µL(O.prepEvent) .
+                                                                         µL(0)
+
+Trial-event and trial-probability infrastructure. For each repeated-trial model T , the repository defines
+trialEvent and trialProb, and proves
+
+                                                   T.trialProb(O, n) = O.weight.
+
+Expectation bridge. The key expectation lemmas already present are
+         integral_indicatorRV_eq_trialProbReal and integral_indicatorRV_eq_weightReal.
+
+These show that the expectation of the indicator observable equals the corresponding real-valued ontic weight.
+
+Strong-law convergence chain. The repository proves the successive convergence lemmas
+strongLaw_indicator_to_mean_ae, strongLaw_indicator_to_weight_ae, strongLaw_empiricalFreq_to_weigh
+
+                                                     11
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+Exported main theorem. The final theorem is exported as
+                                                       LF1_main_theorem_ae,
+
+with the theorem signature matching the manuscript-level statement: for a repeated-trial model T , a fixed outcome
+region O, and a pairwise-independence hypothesis, empirical frequencies converge almost surely to O.weightReal.
+This theorem chain is the genuine internal mathematical content of LF1 as it presently stands.
+
+4.3 Imported mathematical results from Mathlib
+
+LF1 is intentionally modest in its imported mathematical dependencies. The core external convergence result used in
+the present repository is the real-valued strong law of large numbers
+
+                                                        strong_law_ae_real,
+imported via Mathlib.Probability.StrongLaw.
+The repository also imports standard infrastructure from Mathlib for identical distribution and repeated-trial measure
+handling, including the modules for IdentDistrib and product-measure constructions. These are used to organise the
+repeated-trial probability model and to discharge the standard probability-theoretic hypotheses required by the strong
+law.
+It is important to state this precisely. The current implementation does not present the theorem as if it were proved from
+first principles inside LF1 alone. Rather, LF1 combines a machine-verified CSD-specific measure-and-event construction
+with a standard imported law-of-large-numbers theorem from Mathlib. This is exactly the correct methodological stance
+for the first Lean target in the programme.
+
+4.4 Physical-model assumptions
+
+The mathematical proof in LF1 rests on a small and explicit package of physical-model assumptions.
+
+Finite ontic measure. The ontic measurable space carries a finite measure µL, interpreted physically as Liouville
+measure or its abstract measurable analogue.
+
+Deterministic ontic flow. There is a deterministic evolution map
+                                                                :   ,
+
+interpreted physically as the ontic flow of the isolated system under the chosen experimental context.
+
+Preparation region. There is a measurable preparation region 0   of non-zero measure, allowing construction of
+the conditional preparation measure.
+
+Outcome region. For the current theorem, one fixes a single measurable ontic outcome region O.  . The
+wider physical interpretation may involve a family of such regions associated with a measurement context, but the
+machine-verified LF1 theorem is stated for one region at a time.
+
+Repeated preparation. Repeated trials are modelled by measurable trial maps Xn whose common law is the
+preparation measure. At the final theorem level, the only non-trivial repeated-trial hypothesis supplied explicitly is
+pairwise independence of the associated indicator random variables.
+
+Measure preservation. The ontic setup carries a measure-preservation hypothesis for , reflecting Liouville in-
+variance. In the present LF1 layer this enters directly only through the induced measurability of , while its fuller
+dynamical role is reserved for later layers.
+These assumptions are exactly the point of LF1. The paper does not claim to derive them from deeper symplectic or
+Hamiltonian structure. It treats them as the physically motivated ontic input package on top of which the repeated-trial
+frequency theorem is machine-verified.
+
+4.5 Assumptions not made
+
+An audit is clearer if it also records what the formalisation does not assume. The following ingredients are outside the
+scope of LF1 and are not needed for the main theorem.
+
+                                                                     12
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+No ergodicity assumption. LF1 does not assume that a single ontic orbit explores the full preparation region in time.
+The theorem is about repeated preparation, not about long-time averages on a single trajectory.
+
+No stochastic ontic dynamics. The ontic evolution remains deterministic throughout. Probability enters only through
+the repeated-trial preparation model.
+
+No projective-state-space structure. The theorem does not require CPN-1, Fubini-Study measure, or any projective
+geometric apparatus. Those belong to later measure-bridge and operational-weight layers.
+
+No uniqueness theorem for Born-form weights. LF1 does not assume or prove any Gleason-type, Busch-type, or
+other uniqueness theorem for quantum probabilities. It is a frequency theorem only.
+
+No mixed states or POVMs. The theorem is formulated entirely at the level of preparation regions and outcome
+events in the ontic space. Mixed-state structure, density operators, POVMs, and subsystem reduction belong to later
+formalisation stages.
+This list is scientifically important. It shows that LF1 isolates a comparatively small theorem kernel. That is a virtue. A
+narrow theorem with a transparent hypothesis set is easier to verify, easier to criticise fairly, and easier to reuse.
+
+4.6 Audit summary
+
+The assumptions audit shows that LF1 has a deliberately narrow and transparent logical profile.
+First, the CSD-specific content is confined to the ontic measurable setup: the finite measure µL, the deterministic flow
+, the preparation region 0, and the fixed measurable outcome region O.
+Second, the repository already proves the full bridge from these ontic inputs to the repeated-trial theorem infrastructure:
+the conditional preparation measure, the measurable pulled-back event, the ontic weight formula, the indicator
+observables, and the expectation-to-weight identity.
+Third, the final convergence step relies on a standard imported strong law of large numbers. The explicit non-trivial
+repeated-trial hypothesis supplied at that stage is pairwise independence of the indicator random variables. Integrability
+and identical distribution are obtained automatically from the earlier formal structure.
+In that precise sense, LF1 does exactly what it should do. It makes the statistical backbone of deterministic volume
+typicality explicit, formal, and no stronger than the theorem actually warrants.
+
+5 Relation to the CSD programme
+
+5.1 Role of LF1 within the finite-dimensional programme
+
+Within the Constraint-Surface Dynamics programme, LF1 formalises the first theorem in the statistical backbone of
+the finite-dimensional reconstruction. Its role is narrow but structurally important. Paper A establishes that, under an
+explicit repeated-trial preparation model, deterministic measure-preserving dynamics on a finite-measure ontic state
+space yield stable long-run outcome frequencies equal to the corresponding normalised volume ratios (Blore 2026a).
+LF1 is the machine-verified version of that claim.
+This role should be stated carefully. LF1 does not introduce a new physical principle. Nor does it attempt to settle the
+wider interpretive or operational questions of the programme. Its contribution is methodological and foundational in a
+precise sense: it turns the determinism-to-frequency bridge into a theorem whose assumptions, imported dependencies,
+and formal proof structure are all fully explicit.
+In the internal dependency logic of the CSD programme, this is the first formal layer because later claims presuppose it.
+Any account that aims to connect ontic volume to effective quantum weights, to mixed-state structure, or to controlled
+measurement dynamics still requires a theorem showing how repeated observed frequencies arise from deterministic
+geometry under repeated preparation. LF1 isolates exactly that theorem.
+
+5.2 Relation to Paper A
+
+LF1 should be read as a formal companion to Paper A rather than as a replacement for it. Paper A is the conceptual and
+mathematical source of the repeated-trial volume-typicality claim. It introduces the preparation region, the outcome
+
+                                                                     13
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+regions, the deterministic volume-preserving flow, and the repeated independent preparation model under which
+empirical frequencies converge to the corresponding measure ratios (Blore 2026a).
+LF1 takes that theorem spine and expresses it in a theorem-prover-friendly form. In doing so, it performs three tasks
+that Paper A, by design, does not attempt in full detail.
+First, it rewrites the theorem in the canonical notation adopted after TN0. The present paper therefore uses (, µL, t)
+in place of the earlier notation of Paper A.
+Second, it separates the repeated-trial sampling model from the deterministic dynamics themselves. This distinction is
+conceptually present in Paper A, but the formalisation forces it to be stated with complete precision.
+Third, it converts the theorem into a reusable formal module. Later Lean papers in the branch are intended to build on
+this module directly rather than to restate the same probabilistic infrastructure each time.
+Accordingly, LF1 should be cited as the machine-verified formalisation of the Paper A backbone theorem, not as an
+independent route to the same conclusion.
+
+5.3 Why LF1 is not yet a Born-rule paper
+
+The current paper must also state clearly what it does not accomplish. The theorem formalised in LF1 is a frequency
+theorem. It shows that, under repeated preparation from a conditional measure on an ontic state space, empirical
+frequencies converge to the corresponding normalised volume weights. This is the statistical backbone of a volume-based
+account of outcome regularities. It is not yet a derivation of the Born rule.
+This distinction is already explicit in Paper A itself. Paper A states that its result is a compatibility statement: if the
+relevant outcome volumes align with squared-amplitude weights, then the resulting frequencies match the Born rule, but
+the paper does not itself explain why that alignment should hold (Blore 2026a). That further step belongs to later work.
+For the same reason, LF1 does not establish the general finite-dimensional quantum probability rule. It contains neither
+the projective measure bridge nor the operational uniqueness layer. In the current programme logic, those belong to
+later results and later Lean papers. Thus LF1 should be presented as a machine-verified volume-typicality theorem and
+nothing stronger.
+
+5.4 Relation to the later Lean papers
+
+The Lean branch of the current paper index is organised so that LF1 supplies the formal kernel for later developments.
+In that branch, LF2 addresses the measure bridge and Born-weight wrapper, LF3 addresses mixed states, POVMs, and
+reduction, LF4 addresses control Hamiltonians and outcome basins, and LF5 addresses outcome-conditioned update
+and sequential circuits (Blore 2026e).
+The dependence structure is conceptually straightforward.
+LF2 requires a clean formal account of how repeated-trial frequencies are tied to normalised volume weights before one
+can ask how those weights are transported to projective state space.
+LF3 requires a stable formal probability layer before one can treat density operators, subsystem marginals, and POVM
+probabilities in a systematic way.
+LF4 requires the event-to-indicator and frequency machinery of LF1 in order to express gate-dependent basin transport
+as a measurable change in outcome statistics under deterministic control.
+LF5 requires the same probabilistic infrastructure in order to describe sequential experiments, where a new preparation
+for the next stage is conditioned on a realised earlier outcome.
+Thus LF1 should be understood as a foundational software and theorem layer for the rest of the Lean branch. Its
+theorem is simple compared with the later papers, but the later papers are cleaner precisely because LF1 isolates the
+repeated-trial kernel in advance.
+
+5.5 Why LF1 is the correct first Lean target
+
+The choice of LF1 as the first Lean formalisation target is not arbitrary. In the current dependency map of the
+programme, the recommended first internal Lean target is the typicality and frequency-to-volume link, because once the
+dynamical assumptions are declared, the result is largely measure-theoretic and therefore well matched to the existing
+theorem-proving ecosystem (Blore 2026f). Later in the same internal map, the second recommended Lean target is the
+
+                                                                     14
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+finite-dimensional affine-functional and marginalisation layer, with Gleason-class and Naimark-type results allowed as
+imported theorems at first.
+This ordering has a clear methodological advantage. It allows the Lean branch to begin with a theorem that is both
+mathematically precise and realistically achievable. It also forces the programme to state its first probabilistic claim
+with maximal clarity before moving on to more elaborate structures such as projective-state-space geometry, operational
+weight functionals, or post-measurement update.
+For that reason, LF1 should not be viewed as a preliminary exercise. It is the natural first theorem to formalise because
+it is the narrowest theorem on which several later layers depend.
+
+5.6 Relation to the finite-dimensional closure package
+
+In the broader CSD programme, the finite-dimensional reconstruction is treated as a layered structure rather than as a
+single theorem. The internal dependency map states that a sector-conditional finite-dimensional closure requires the
+backbone results, the operational completion provided by TN4, the sequential-update layer provided by TN6, and at
+least one constructive basin model together with a worked template example (Blore 2026f). LF1 addresses only the first
+of these components.
+This is a strength rather than a weakness. By keeping LF1 narrow, the present paper makes it easier to distinguish
+what has already been formalised from what still belongs to later stages. In particular, LF1 does not claim to close the
+finite-dimensional programme by itself. It contributes one clearly identified theorem to that closure package.
+The practical consequence is that LF1 strengthens the formal basis of the programme, but the programme should still
+describe its broader finite-dimensional claims as depending on later layers until those layers are also formalised.
+
+5.7 Relation to applications and the QC path
+
+The present paper also has a clear downstream role in the quantum-information and quantum-computation path of
+the programme. The current paper index places QI2, Quantum Computation as Geometric Dynamics, in the active
+application-facing branch, and places LF4 and LF5 later in the Lean branch as the formal counterparts of control-
+dependent basin transport and sequential circuit update (Blore 2026e).
+LF1 does not by itself explain quantum gates or circuit dynamics in full. What it does provide is the first rigorous
+ingredient needed for such an explanation: once a control-dependent Hamiltonian and an outcome-basin structure
+are supplied, LF1 tells us how repeated observed frequencies are related to the corresponding normalised geometric
+weights. In that sense, LF1 is not the whole QC explanation, but it is part of the formal substrate on which the QC
+explanation is built.
+This is exactly the right level of claim for the present paper. It contributes to the later QC-facing story without pretending
+to complete it.
+
+5.8 Boundary of programme-level significance
+
+It is useful to conclude this section by stating the programme-level significance of LF1 in one sentence. LF1 shows that
+the first statistical theorem in the finite-dimensional CSD architecture can be expressed as a transparent Lean4 theorem
+whose assumptions are explicit and whose proof no longer depends on informal compression. It does not yet provide
+the full probability rule, the full operational layer, or the full control-and-update story. Those remain the tasks of later
+papers.
+That boundary should remain visible throughout. The value of LF1 lies precisely in the fact that it does one thing
+cleanly. It machine-checks the repeated-trial volume-typicality backbone and thereby stabilises the first formal rung of
+the wider CSD programme.
+
+6 Discussion
+
+6.1 What the formalisation clarifies
+
+The present formalisation clarifies several points that are often left implicit in informal foundational discussions.
+First, it separates deterministic ontic evolution from probabilistic repeated preparation. A single trial is completely
+deterministic at the ontic level. The probability space enters only to model repeated preparation of initial conditions.
+
+                                                                     15
+        LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+Second, it identifies the exact measure-theoretic object whose value controls the frequency theorem: not an abstract
+probability postulate, but the normalised ontic weight of a pulled-back measurable outcome event.
+
+Third, it shows that the expectation-to-weight bridge is itself a non-trivial formal layer and deserves explicit isolation. In
+the repository this appears as its own file, Expectation.lean, between the indicator construction and the convergence
+theorem.
+
+Fourth, it reveals the exact theorem architecture of LF1 as a structured composition of measure restriction, repeated-
+trial sample-space modelling, deterministic event pullback, indicator observables, expectation identification, and a
+law-of-large-numbers step.
+
+Finally, it clarifies the boundary of the result. LF1 is a theorem about repeated-trial frequency convergence for
+deterministic ontic models with a probabilistic preparation scheme. It is not yet a theorem about Born weights,
+projective geometry, mixed states, or post-measurement update. That sharper boundary is a strength, not a weakness,
+because it makes the role of LF1 within the wider CSD programme fully explicit.
+
+6.2 What LF1 does not establish
+
+The narrowness of LF1 should be regarded as a strength, but it is equally important to state clearly what remains outside
+its scope.
+
+Most importantly, LF1 does not provide a machine-verified derivation of the Born rule. The theorem proved here yields
+long-run convergence of empirical frequencies to normalised ontic volume ratios under repeated preparation. It does
+not yet show why those weights must coincide with the standard quadratic quantum weights in full finite-dimensional
+generality. That further step requires additional structure beyond the present paper.
+
+In particular, LF1 does not establish a measure bridge from ontic volume on  to the effective projective measure on
+
+     N  -1.  Nor  does  it  establish  the  operational  uniqueness  of  the  Born-form  probability  assignment  on  projective  state
+
+CP
+
+space. Those tasks belong to later layers of the programme.
+
+LF1 also does not classify the physically realised outcome partitions. The theorem assumes the existence of measurable
+outcome regions with the required null-boundary and partition properties, but it does not derive them from a full
+dynamical construction of the measuring apparatus. The question of which partitions are physically admissible remains
+a separate issue.
+
+Similarly, LF1 does not treat mixed states, POVMs, subsystem reduction, control-dependent Hamiltonians, outcome-
+conditioned update, or sequential experiments. All of these require additional formal machinery. The present paper
+deliberately avoids them in order to isolate the cleanest theorem kernel.
+
+Finally, LF1 does not claim that all aspects of the finite-dimensional CSD programme are now formally closed. It settles
+one theorem layer only. Its contribution is foundational in the architectural sense, not exhaustive in the programme-wide
+sense.
+
+6.3 Methodological lessons from the Lean development
+
+The formalisation also yields several methodological lessons that are useful beyond the immediate theorem.
+
+The first lesson is that formal verification is especially valuable when a theorem sits at the boundary between mathematics
+and physical interpretation. In such cases, a proof that appears conceptually straightforward may still conceal unspoken
+assumptions. Lean does not permit such assumptions to remain tacit. This improves not only mathematical rigour but
+also interpretive hygiene.
+
+The second lesson is that a good formalisation target is often narrower than the corresponding informal claim. The
+natural temptation in a foundational programme is to formalise large slogans such as "deterministic geometry yields
+quantum probabilities." In practice, progress is more reliable when this slogan is decomposed into sharply delimited
+theorem layers. LF1 represents one such layer. It is substantial enough to matter, but narrow enough to be realistically
+machine-checked.
+
+The third lesson is that the distinction between imported theorems and newly formalised theorem chains is scientifically
+productive rather than embarrassing. In a mature theorem-proving ecosystem, one should expect to inherit measure
+theory and probability infrastructure from the existing library. The intellectual task is to identify exactly where the
+new formal contribution begins. In LF1, that contribution begins when the physical-model data are assembled into the
+specific repeated-trial theorem chain relevant to the CSD setting.
+
+                                                                     16
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+
+The fourth lesson is that notation discipline matters. One practical benefit of working after TN0 is that the ontic measure,
+flow, and region notation are already stabilised. This reduces ambiguity and makes later cross-paper formal reuse more
+realistic. The formalisation process therefore supports the broader programme aim of keeping terminology and symbol
+use consistent across technical notes and papers.
+
+6.4 Implications for the wider Lean branch
+
+LF1 is best understood as the first reusable module in a larger formalisation programme. Its theorem kernel is expected
+to support later Lean papers in at least four ways.
+First, later work on the measure bridge can reuse the preparation-measure and event-weight infrastructure developed
+here. Even when the relevant outcome weights are eventually pushed forward to projective state space, the repeated-trial
+frequency layer will remain unchanged.
+Second, later work on mixed states, POVMs, and subsystem reduction can reuse the trial-space and expectation
+machinery of LF1. The objects become richer, but the underlying probability-theoretic spine remains similar.
+Third, later work on control Hamiltonians and outcome basins can reuse the event-to-indicator pipeline of LF1. In
+that setting, the main novelty will not be the probability layer itself, but the control-dependent construction of the
+measurable events whose frequencies are to be tracked.
+Fourth, later work on sequential update and circuits can reuse the same machinery once the post-measurement
+preparation for the next stage has been defined. In this sense, LF1 provides infrastructure not only for theorem
+statements but also for software architecture within the repository.
+This reuse is one of the main reasons for keeping LF1 narrow. A theorem that does one thing cleanly is easier to import
+into later formal work than a paper that tries to formalise several layers at once.
+
+6.5 Limitations and open questions
+
+Although LF1 is intentionally narrow, it still leaves several important questions open.
+One open question concerns the physical status of the repeated independent preparation model. In the present paper, it
+is treated as an explicit modelling assumption because that is the correct logical status for the theorem proved here. A
+deeper analysis of how such repeated preparation arises from the physical architecture of experimental protocols would
+belong to a later paper.
+A second open question concerns the dynamical construction of outcome regions. LF1 assumes the measurable outcome
+basins are given. For foundational and application-facing purposes, however, it is desirable to explain how those basins
+arise from specific system-apparatus couplings. That problem belongs to the later control-Hamiltonian layer.
+A third open question concerns the passage from ontic volume to effective projective quantum weights. The present
+paper does not address the projective geometry of quantum theory, and therefore does not yet connect the formal
+theorem directly to standard Born-form statistics.
+A fourth open question concerns the extent to which later finite-dimensional layers can be formalised internally, rather
+than by importing external uniqueness theorems. LF1 does not resolve that issue, but it helps by isolating the part of the
+programme that is already fully formalisation-ready.
+These limitations should not be read as objections to LF1. They are the natural boundaries of a paper designed to
+formalise one theorem layer well.
+
+6.6 Concluding perspective
+
+LF1 shows that the first statistical theorem in the finite-dimensional CSD architecture can be made fully explicit in a
+modern theorem prover. This is valuable for two reasons. At the technical level, it provides a machine-checked version
+of the repeated-trial volume-typicality backbone. At the conceptual level, it clarifies exactly what that backbone does
+and does not establish.
+The main result is therefore modest but significant. Deterministic measure-preserving dynamics, together with a
+measurable preparation ensemble and an explicit repeated-trial sampling model, suffice to generate long-run frequencies
+equal to normalised volume weights. This does not yet complete the wider probability story of the programme. It does,
+however, stabilise the first formal rung of that story.
+
+                                                                     17
+       LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
+For a foundational research programme, that is already a meaningful achievement. A theorem whose assumptions are
+transparent, whose proof is machine checked, and whose scope is carefully bounded provides a firmer basis for later
+claims than an informal argument whose dependencies remain partially compressed. LF1 is intended to provide exactly
+that firmer basis.
+
+References
+
+Zayn Blore. Volume-based probability: Outcome frequencies from deterministic geometry, March 2026a. A preprint.
+Zayn Blore. Fixing the measure: Deriving ||2 from symmetry in deterministic geometry, March 2026b. A preprint.
+Zayn Blore. A deterministic reconstruction of finite-dimensional quantum mechanics, March 2026c. A preprint.
+Zayn Blore. Tn0: Canonical notation and conventions for constraint-surface dynamics, March 2026d. A preprint.
+
+                                                                     18
+
