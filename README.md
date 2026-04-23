@@ -1,6 +1,6 @@
 # csd-lean4
 
-Lean4 formalisation of Constraint-Surface Dynamics, beginning with LF1: volume typicality and frequency convergence for deterministic repeated trials.
+Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials) and **LF2** (sector-conditional measure bridge and Born-weight wrapper) are merged and machine-verified; LF3 is the next target.
 
 ## Overview
 
@@ -31,11 +31,11 @@ No stochastic evolution is introduced at the ontic level. The only probabilistic
 
 Accordingly, LF1 should be read as a deterministic typicality theorem with a probabilistic preparation model, not as an intrinsic-randomness theorem.
 
-## Current scope
+## Scope
 
-The present repository begins with the LF1 layer only.
+Two layers are currently formalised:
 
-LF1 formalises:
+**LF1** — deterministic repeated-trial typicality theorem. Formalises:
 
 - the ontic measurable setup
 - the preparation probability measure
@@ -45,12 +45,23 @@ LF1 formalises:
 - the expectation-to-weight bridge
 - frequency convergence via a law of large numbers
 
-Later formalisation targets are expected to include:
+**LF2** — sector-conditional measure bridge and Born-weight wrapper. Formalises:
 
-- **LF2**: measure bridge and Born-weight wrapper
-- **LF3**: mixed states, POVMs, and reduction
-- **LF4**: control Hamiltonians and outcome basins
-- **LF5**: outcome-conditioned update and sequential circuits
+- the `SectorData` bundling LF1's `OnticSetup` with an abstract projective target, a measurable projection, and a symmetry-group action
+- the pushforward measure bridge `π_* μL = c · μFS` under symmetry-compatible hypotheses + one imported axiom
+- projective weights and their normalisation on a measurable partition
+- concrete matrix-based `Effect` and `DensityOperator` structures, with `Effect.one` / `Effect.add` / `Effect.conjugateBy` helpers
+- the Born quadratic form `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ‖⟨ψ, φ⟩‖²` as a genuine Lean proof
+- pure-state Born weights derived from a purity hypothesis via the imported Busch effect-Gleason axiom
+- the LF1 ↔ LF2 weight identity and a combined LF1+LF2 headline theorem
+
+Later formalisation targets (not yet started):
+
+- **LF3**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 are listed in [`specs/LF3-todo.md`](specs/LF3-todo.md).
+- **LF4**: control Hamiltonians and outcome basins.
+- **LF5**: outcome-conditioned update and sequential circuits.
+
+Canonical spec preprints, plain-text sidecars, per-layer implementation plans, and the LF3 TODO list live in [`specs/`](specs/).
 
 ## Mathematical target of LF1
 
@@ -132,31 +143,91 @@ Deriving these from symplectic geometry or Hamilton's equations is outside the s
 of LF1. LF2 and later papers are expected to instantiate `OnticSetup` with a concrete
 mechanical phase space when bridging to Born weights.
 
-## LF1 → LF2 interface
+## LF2: measure bridge and Born-weight wrapper
 
-LF1 delivers `O.weightReal` as the almost-sure limit of empirical frequencies for deterministic ontic trials under repeated preparation sampling.
-`weightReal` is defined as `ENNReal.toReal (µprep(O.preEvent))`, the real-valued
-normalised Liouville volume of the pulled-back outcome region.
+LF2 sits directly on top of LF1. It formalises the finite-dimensional measure-and-weight interface that connects LF1's ontic volume weights to projective Born-form probabilities under explicit symmetry and operational assumptions.
 
-For LF2 to establish a Born-weight connection, it will need to:
+### What LF2 delivers
 
-1. Instantiate `Sigma` with a concrete ontic space carrying quantum structure
-2. Show that `O.weightReal` reduces to `|⟨ψ|φ⟩|²` for the relevant states
-3. Use `prepMeasure_apply` to rewrite weights in terms of `µL`, enabling calculation
+Under a `SectorData Sigma P G` — the LF1 `OnticSetup` bundled with an abstract measurable projective target `P`, a measurable projection `π : Σ → P`, and a group `G` acting measurably on both with `μL`-invariance and `π`-equivariance — LF2 proves:
+
+1. **Measure bridge.** `π_* μL = c · μFS` for some `c : ENNReal`, where `μFS` is any `G`-invariant probability reference measure on `P`. LF2 proves internally that `π_* μL` is `G`-invariant (`pushforward_epAction_invariant`) and then invokes the imported invariant-measure uniqueness axiom.
+
+2. **LF1 ↔ LF2 weight identity.** `μprep(π⁻¹(O_ep)) = (π_* μprep)(O_ep)` — one line via `Measure.map_apply`. The structural hinge linking LF1's ontic weights to LF2's projective weights.
+
+3. **Combined LF1 + LF2 theorem** (`LF1_main_theorem_projective`). Under the correspondence `O.preEvent = π⁻¹(O_ep)`, the LF1 empirical frequency converges almost surely to the real-valued projective weight of `O_ep`.
+
+4. **Born quadratic form** (`born_quadratic`). For unit vectors `ψ, φ : EuclideanSpace ℂ (Fin N)`,
+   `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ‖⟨ψ, φ⟩‖²`. Genuine Lean proof — trace-of-outer-product identity, conjugate symmetry of the inner product, and `RCLike.mul_conj`.
+
+5. **Pure-state Born weights from certainty** (`pure_state_born_weights_of_certainty`). Given an operational consistency package `OP` that is "certain" at `|ψ⟩` (i.e. `OP.p (rankOneEffect ψ hψ) = 1`), for every unit vector `φ` the probability satisfies `OP.p (rankOneEffect φ hφ) = ‖⟨ψ, φ⟩‖²`. Composes `busch_effect_gleason` + `rankOneDensity_unique_of_certainty` + `born_quadratic`.
+
+### LF2 axiom posture
+
+LF2 has exactly **three named axioms**:
+
+| Axiom | Role | Source |
+|---|---|---|
+| `invariant_measure_uniqueness` | `G`-invariant probability measure on `P` is unique (Fubini–Study in the concrete CSD model) | Spec-mandated (§7.4); not in Mathlib |
+| `busch_effect_gleason` | Effect-additive probability on finite-dim `N ≥ 2` admits a unique trace-form density | Spec-mandated (§7.4); not in Mathlib |
+| `rankOneDensity_unique_of_certainty` | A density operator with `⟨ψ\|ρ\|ψ⟩ = 1` is `\|ψ⟩⟨ψ\|` | Standard spectral-theorem corollary; axiomatised pending Mathlib integration, full proof sketch in module docstring |
+
+LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.choice`, `Quot.sound`). `#print axioms` on each LF2 theorem legibly names exactly which of the three axioms it cites; several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **none** of them.
+
+### Design choices in LF2
+
+- `SectorData` is parametric in `(Sigma, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure is constructed. Concrete instantiation is LF3's job.
+- The reference measure `μFS` is not a field of `SectorData`; it enters `measure_bridge` as an explicit argument, keeping `SectorData` `μFS`-agnostic.
+- `Effect` and `DensityOperator` are concrete `Matrix (Fin N) (Fin N) ℂ` structures (not opaque stubs). This gives `born_quadratic` real Lean content rather than leaving it narrative.
+- `Effect.add` takes the `le_one` hypothesis `(1 - (E.M + F.M)).PosSemidef` as an explicit argument — avoids `Option`-valued addition and `Decidable (PosSemidef _)`.
+- `SectorData` carries group-action coherence fields (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`). LF2's own proofs do not consume them; they are staged for LF3 work on transitivity/orbits/Haar measure.
+- Spec Def 5.1 clause 3 (unitary covariance) is deliberately **not** added as a field on `OperationalPackage` — the literal invariance reading over-constrains, the covariant reading is type-heavy. Deferred to LF3.
+
+### What LF2 does not prove
+
+LF2 is a wrapper paper in the spec's sense (§1.4). It does **not** provide:
+
+- a proof of either of the two spec-mandated axioms;
+- a first-principles derivation of the Born rule;
+- a preparation-measure-to-Hilbert-vector correspondence, which is what would be needed to close the full chain from the LF1 frequency limit to `|⟨ψ, φ⟩|²` in a single theorem (deferred to LF3);
+- mixed states, POVMs, sequential measurement, or subsystem reduction (LF3/LF4/LF5 territory).
+
+## LF1 ↔ LF2 interface
+
+Implemented in `CsdLean4/LF2/Interface.lean`:
+
+- `lf1_weight_eq_projective_weight (D : SectorData Σ P G) (μprep : Measure Σ) (hOep : MeasurableSet O_ep) : μprep (D.π ⁻¹' O_ep) = projectiveWeight D μprep O_ep` — the raw measure identity.
+- `LF1_main_theorem_projective` — the headline combined theorem: given LF1 trial data, an LF2 sector, and an outcome correspondence `O.preEvent = D.π ⁻¹' O_ep`, the empirical frequency converges almost surely to the projective weight (real-valued).
+
+The second is the point at which LF2 genuinely consumes LF1 at the theorem level, not merely by structural embedding.
 
 ## Repository structure
 
 ```text
 CsdLean4/
   LF1/
-    Setup.lean        -- ontic space, μL, Φ, Ω0
-    Preparation.lean  -- conditional preparation measure + prepMeasure_apply formula
-    Outcomes.lean     -- outcome regions, weights
-    Trials.lean       -- TrialModel: i.i.d. repeated-trial probability space
-    Indicators.lean   -- indicatorRV, empiricalFreq
-    Expectation.lean  -- E[indicator] = weightReal bridge
-    Convergence.lean  -- strong law of large numbers application
-    MainTheorem.lean  -- LF1 main theorem and corollaries
-  Basic.lean          -- Pkg.Basic convenience re-export
-CsdLean4.lean         -- canonical top-level import (explicit module list)
+    Setup.lean         -- ontic space, μL, Φ, Ω0
+    Preparation.lean   -- conditional preparation measure + prepMeasure_apply
+    Outcomes.lean      -- outcome regions, weights
+    Trials.lean        -- TrialModel: i.i.d. repeated-trial probability space
+    Indicators.lean    -- indicatorRV, empiricalFreq
+    Expectation.lean   -- E[indicator] = weightReal bridge
+    Convergence.lean   -- strong law of large numbers application
+    MainTheorem.lean   -- LF1 main theorem and corollaries
+  LF2/
+    Setup.lean         -- SectorData: OnticSetup + π + G-action (with coherence)
+    MeasureBridge.lean -- pushforward, invariance transfer, measure_bridge theorem
+    Weights.lean       -- MeasurablePartition, projectiveWeight, normalisation
+    BornWrapper.lean   -- Effect, DensityOperator, Busch axiom, Born quadratic
+    Interface.lean     -- LF1 ↔ LF2 identity + combined LF1+LF2 theorem
+  Basic.lean           -- Pkg.Basic convenience re-export
+CsdLean4.lean          -- canonical top-level import (explicit module list)
+specs/
+  LF1-v1.01.pdf        -- LF1 preprint (canonical)
+  LF1-v1.01.txt        -- extracted plain-text sidecar
+  LF1-plan.md          -- retrospective design record
+  LF2-v1.00.pdf        -- LF2 preprint (canonical)
+  LF2-v1.00.txt        -- extracted plain-text sidecar
+  LF2-plan.md          -- implementation plan
+  LF3-todo.md          -- eight items deferred from LF2 to LF3
 ```
