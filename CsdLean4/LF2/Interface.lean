@@ -1,6 +1,7 @@
 import CsdLean4.LF2.Weights
 import CsdLean4.LF1.Preparation
 import CsdLean4.LF1.Outcomes
+import CsdLean4.LF1.MainTheorem
 
 /-!
 # LF2 ↔ LF1 interface
@@ -15,7 +16,7 @@ and the hinge by which LF2's measure bridge feeds back into the LF1 frequency
 theorem.
 -/
 
-open MeasureTheory Set
+open MeasureTheory Set Filter
 
 namespace CSD
 namespace LF2
@@ -49,6 +50,65 @@ theorem lf1_prepMeasure_weight_eq_projective_weight
           ((D.toOntic.prepMeasure :
               MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) Oep :=
   lf1_weight_eq_projective_weight D _ hOep
+
+/-- **Combined LF1 + LF2 main theorem.**  Under the LF1 repeated-trial model
+    and an LF2 sector structure with projection `π`, if an LF1 outcome
+    region's pre-event coincides with the `π`-preimage of a projective
+    outcome region `Oep`, then the empirical frequency converges almost
+    surely to the (real-valued) **projective weight** of `Oep` under the
+    pushforward of the preparation measure.
+
+    This is the theorem-level consumption of LF1 by LF2: it shows that the
+    LF1 limit is not merely an ontic volume fraction but can be reinterpreted
+    natively in the projective measurable space that LF2 introduces.  No new
+    mathematical content beyond LF1 + the LF2 interface identity — the point
+    is the combined statement.
+
+    A full Born-form conclusion (`‖⟨ψ, φ⟩‖²`) would require an additional
+    spec-layer correspondence between measure-theoretic projective
+    preparations and Hilbert-space unit vectors, which LF2 does not
+    formalise.  See spec §6.4 and §8.5. -/
+theorem LF1_main_theorem_projective
+    (D : SectorData Sigma P G)
+    {Ω : Type*} [MeasurableSpace Ω]
+    (T : D.toOntic.TrialModel Ω)
+    (O : D.toOntic.OutcomeRegion)
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
+          (fun n => T.indicatorRV (S := D.toOntic) O n)))
+    {Oep : Set P} (hOep : MeasurableSet Oep)
+    (hCorresp : O.preEvent = D.π ⁻¹' Oep) :
+    ∀ᵐ ω ∂ T.trialMeasure,
+      Tendsto
+        (fun n : ℕ => T.empiricalFreq (S := D.toOntic) O n ω)
+        atTop
+        (nhds
+          (ENNReal.toReal
+            (projectiveWeight D
+              ((D.toOntic.prepMeasure :
+                  MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+              Oep))) := by
+  have hW :
+      O.weightReal =
+        ENNReal.toReal
+          (projectiveWeight D
+            ((D.toOntic.prepMeasure :
+                MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+            Oep) := by
+    unfold CSD.LF1.OnticSetup.OutcomeRegion.weightReal
+    congr 1
+    show ((D.toOntic.prepMeasure :
+              MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) O.preEvent
+      = projectiveWeight D
+          ((D.toOntic.prepMeasure :
+              MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+          Oep
+    rw [hCorresp]
+    exact lf1_weight_eq_projective_weight D _ hOep
+  rw [← hW]
+  exact D.toOntic.LF1_main_theorem_ae T O hindep
 
 end LF2
 end CSD
