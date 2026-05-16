@@ -1,6 +1,6 @@
 # csd-lean4
 
-Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials) and **LF2** (sector-conditional measure bridge and Born-weight wrapper) are merged and machine-verified; LF4 is the next target.
+Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials), **LF2** (sector-conditional measure bridge and Born-weight wrapper), and **LF3** (singlet kernel and the LF1↔LF2↔LF3 empirical chain) are merged and machine-verified; LF4 is the next target.
 
 ## Overview
 
@@ -55,10 +55,26 @@ Two layers are currently formalised:
 - pure-state Born weights derived from a purity hypothesis via the imported Busch effect-Gleason axiom
 - the LF1 ↔ LF2 weight identity and a combined LF1+LF2 headline theorem
 
+**LF3** — singlet kernel, pointer-sector decomposition, and the LF1↔LF2↔LF3 empirical chain. Formalises:
+
+- `Sign`, `DetectorSetting`, abstract pointer-readout algebra (`BinaryPointerProjectors`), and the system-apparatus container `SystemApparatusSetup`
+- the concrete two-qubit `pauliDot` operators, `sigmaDotLeft/Right/Joint`, and the joint spin projector `jointSpinProj` on `Fin 2 × Fin 2`
+- the Bell singlet `|ψ⁻⟩ = (1/√2)(|+-⟩ − |-+⟩)`, with `singlet_norm` proved
+- the abstract `TensorFactorReadoutAlgebra` (commuting local Hamiltonians as structural data) and `MeasurementUnitary` (full + per-wing unitaries as `LinearIsometryEquiv`s, factorisation `U = uA ∘ uB` and impulsive eigenstate-action as fields)
+- branch states and the four-term branch decomposition of the final state, with `branch_separation_leakage_bound`
+- the abstract pointer-sector projective algebra `ProjectorAlgebra` and the operator-form `branchWeight`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
+- the LF3→LF2 Born-form bridge `branchWeight_eq_LF2_Born` (trace-inner core identity proved against the existing LF2 `traceForm`)
+- the **singlet kernel algebraic core** `cst_squared_eq : ‖cAmp s t (a, b)‖² = (1 − st a·b)/4`, the correlation `−a·b`, marginals `1/2`, no-signalling on each side, and finite-leakage versions of all four
+- the **headline LF1↔LF2↔LF3 chain capstones**: `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²` where `cAmp = √P_st`), and `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`), composing `LF1_main_theorem_ae` + `lf1_weight_eq_projective_weight` + `cst_squared_eq` under an external `hLF2` hypothesis discharged by LF4-todo §2 + §7
+- the **closed-form / bra-ket equivalence** `cAmp_norm_sq_eq_inner_norm_sq`: the closed-form `cAmp = √P_st` agrees with the genuine Hilbert-space inner product `⟨v, ψ⁻⟩` on squared norms, given the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` as a hypothesis (discharged in v2 from a constructed `jointSpinEig`)
+
+All five LF3 capstone exports are fully axiom-clean: `#print axioms` returns only `propext`, `Classical.choice`, `Quot.sound`. None of LF2's three axioms appear anywhere in the chain.
+
+The closed-form `cAmp := √P_st` is a v1.00 representative; the v2 plan is to construct `jointSpinEig` from the spectral decomposition of `jointSpinProj` so that `cAmp` becomes a derived `inner ℂ jointSpinEig singlet` rather than the closed-form sqrt. The `_inner` capstone variant already states the physically faithful form for callers who supply their own eigenstate.
+
 Later formalisation targets (not yet started):
 
-- **LF3**: control Hamiltonians and outcome basins.
-- **LF4**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 are listed in [`specs/LF4-todo.md`](specs/LF4-todo.md).
+- **LF4**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 (and the LF3 `hLF2` discharge) are listed in [`specs/LF4-todo.md`](specs/LF4-todo.md).
 - **LF5**: outcome-conditioned update and sequential circuits.
 
 Canonical spec preprints, plain-text sidecars, per-layer implementation plans, and the LF4 TODO list live in [`specs/`](specs/).

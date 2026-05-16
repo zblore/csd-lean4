@@ -11,6 +11,18 @@ import CsdLean4.LF2.MeasureBridge
 import CsdLean4.LF2.Weights
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.Interface
+import CsdLean4.LF3.Setup
+import CsdLean4.LF3.Hamiltonian
+import CsdLean4.LF3.BranchSeparation
+import CsdLean4.LF3.Projectors.Core
+import CsdLean4.LF3.Projectors.BranchWeight
+import CsdLean4.LF3.Projectors.LF2Interface
+import CsdLean4.LF3.Singlet.State
+import CsdLean4.LF3.Singlet.Expectations
+import CsdLean4.LF3.Singlet.Kernel
+import CsdLean4.LF3.Singlet.Leakage
+import CsdLean4.LF3.ContextMap
+import CsdLean4.LF3.Interface
 
 /-!
 # CSD
@@ -24,4 +36,9 @@ This file exports:
   Fubini–Study measure, and the Born-weight wrapper packaging the
   finite-dimensional probability assignment under explicit external-theorem
   inputs.
+- **LF3**: the singlet kernel `(1 − st a·b)/4`, the operational pointer-sector
+  decomposition (kernel + correlation + marginals + no-signalling + pointer-
+  completeness, with finite-leakage stability), and the LF1↔LF2↔LF3 empirical
+  chain capstone (`LF3_singlet_frequency_convergence`,
+  `LF3_singlet_frequency_convergence_born`).
 -/

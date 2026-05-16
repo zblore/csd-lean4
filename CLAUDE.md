@@ -174,19 +174,123 @@ not a narrative corollary.
   purity hypothesis (`OP.p` is certain at `ψ`), routing through the
   Busch axiom + matrix uniqueness
 
+### LF3: singlet kernel and the LF1↔LF2↔LF3 empirical chain
+
+LF3 sits on top of LF2 and delivers:
+
+- the **singlet kernel** `P_{st}(a, b) = (1 − st·a·b)/4` and its operational
+  consequences (correlation `−a·b`, marginals `1/2`, no-signalling on each
+  side, pointer-completeness);
+- the **finite-leakage stability** of all four quantities, parameterised by
+  per-side leakage parameters `εA`, `εB`;
+- the **LF1↔LF2↔LF3 empirical chain capstones**
+  `LF3_singlet_frequency_convergence` (pre-Born, landing on `(1 − st a·b)/4`)
+  and `LF3_singlet_frequency_convergence_born` (Born-mediated, landing on
+  `‖cAmp s t (a, b)‖²`).
+
+LF3 module chain (under `CsdLean4/LF3/`, namespace `CSD.LF3`):
+
+```
+Setup.lean              — Sign, DetectorSetting, BinaryPointerProjectors,
+                          SystemApparatusSetup, pauliDot, sigmaDotLeft/Right/Joint,
+                          spinProj, jointSpinProj
+Hamiltonian.lean        — TensorFactorReadoutAlgebra, MeasurementUnitary
+                          (abstract factorisation + eigenstate-action fields)
+BranchSeparation.lean   — branchState, finalState, pointerOverlapA/B,
+                          wrongPointerReadoutMass, PointerLeakageBounds,
+                          branch_separation_leakage_bound
+Projectors/
+  Core.lean             — ProjectorAlgebra, mHat, four field re-exports
+  BranchWeight.lean     — branchWeight, StrongReadoutCompat, LeakageCompat,
+                          branchWeight_strong_readout, branchWeight_finite_leakage
+  LF2Interface.lean     — BasisIso, rankOneStateOfΨ, effectOfM,
+                          trace_outerProduct_mul_eq_inner,
+                          branchWeight_eq_LF2_Born
+Singlet/
+  State.lean            — singlet, singlet_norm, expectation
+  Expectations.lean     — singlet_left/right_pauli_expectation_zero,
+                          singlet_pauli_correlation,
+                          expectation_formula (helper, 1 sorry placeholder)
+  Kernel.lean           — dotR, P_st, cAmp (closed-form sqrt definition),
+                          cst_squared_eq (algebraic core, derived from
+                          closed-form cAmp), correlation_eq_neg_dot,
+                          marginal_a/b_eq_half, no_signalling_strong_readout_a/b,
+                          abstract_branchWeight_eq_P_st_at_singlet
+  Leakage.lean          — singlet_pointer_probability_finite_leakage,
+                          correlation_finite_leakage_bound,
+                          marginal_a/b_finite_leakage_bound
+ContextMap.lean         — MeasurementContext, ContextIndexedOutcomeMaps,
+                          GlobalCHSHAssignment (definitional separation,
+                          no Fine axiom), six context-form theorems
+Interface.lean          — LF3_main_theorem (8-conjunct),
+                          LF3_finite_leakage_theorem (4-conjunct),
+                          LF3_singlet_frequency_convergence (pre-Born),
+                          LF3_singlet_frequency_convergence_born (closed form),
+                          LF3_singlet_frequency_convergence_born_inner
+                            (genuine bra-ket form, takes eigenstate parameter)
+```
+
+**LF3 axiom inheritance.** `LF3_main_theorem` is fully axiom-clean (only
+Mathlib foundational `propext`, `Classical.choice`, `Quot.sound`). The four
+exported theorems do **not** invoke `busch_effect_gleason`,
+`invariant_measure_uniqueness`, or `rankOneDensity_unique_of_certainty` —
+LF2's three axioms enter only through `LF2.pure_state_born_weights_of_certainty`,
+which LF3 does not consume (the singlet is concretely given as a Hilbert
+vector, not extracted from a Busch package).
+
+**LF3 design choices:**
+
+- `Sign` is a two-element inductive `| plus | minus` (spec §9.4).
+- The two-qubit factor `HAB` is `EuclideanSpace ℂ (Fin 2 × Fin 2)`
+  (matching the `Fin 2 × Fin 2` indexing on `pauliDot ⊗ pauliDot`).
+- `MeasurementUnitary` carries the full and per-wing unitaries as
+  `LinearIsometryEquiv` (Mathlib idiom); unitarity is encoded in the type.
+- Self-adjointness on continuous linear maps is stated via the inner-product
+  equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` to avoid `Star`
+  typeclass synthesis on `H_SA →L[ℂ] H_SA`.
+- `cAmp` is defined in **closed form** as `(Real.sqrt (P_st a b s t) : ℂ)`.
+  This sidesteps the explicit construction of joint spin eigenstates;
+  downstream theorems consume only `‖cAmp‖²`, so a future swap to
+  `cAmp := inner ℂ jointSpinEig singlet` is transparent. The bra-ket
+  equivalence is exposed via `cAmp_norm_sq_eq_inner_norm_sq` (under a
+  rank-1 projector hypothesis) and via the
+  `LF3_singlet_frequency_convergence_born_inner` capstone variant.
+- The `LF1↔LF2↔LF3` chain capstone takes an external `hLF2` hypothesis
+  relating `projectiveWeight (O_st s t) = ENNReal.ofReal (P_st ctx.a ctx.b s t)`.
+  This is the LF4-todo §2 + §7 boundary (preparation ↔ Hilbert + projective-
+  first outcomes); the LF3 capstone records the structural shape of the
+  chain under that external hypothesis.
+
+**LF3 is sorry-free.** All four capstone exports and every supporting lemma
+are fully axiom-clean — `#print axioms` returns only `propext`,
+`Classical.choice`, `Quot.sound` (the Mathlib foundational set). None of
+LF2's three axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`,
+`rankOneDensity_unique_of_certainty`) appear anywhere in the LF3 export.
+
+**LF3 self-adjointness convention.** `BinaryPointerProjectors`,
+`TensorFactorReadoutAlgebra`, `ProjectorAlgebra`, and `mHat_isSelfAdjoint`
+state self-adjointness via the inner-product equation
+`∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` rather than Mathlib's
+`IsSelfAdjoint T` predicate. This deviates from idiom but is forced: the
+`Star (H →L[ℂ] H)` typeclass synthesis on a finite-dim complex inner-product
+space fails even with `Mathlib.Analysis.InnerProductSpace.Adjoint` imported
+(the adjoint construction needs full completeness boilerplate Mathlib
+doesn't synthesise for our `[NormedAddCommGroup H] [InnerProductSpace ℂ H]
+[FiniteDimensional ℂ H]` setup). The inner-product spelling is
+mathematically equivalent and avoids the synthesis dead-end.
+
 ### Planned future layers
 
-LF1 and LF2 are in place. The README outlines LF3 (control Hamiltonians),
-LF4 (mixed states, POVMs, reduction), and LF5 (outcome-conditioned update
-and sequential circuits). Each future layer will instantiate `OnticSetup`
-(via `SectorData.toOntic`) and consume `prepMeasure_apply` from LF1 plus
+LF1, LF2, and LF3 are in place. The README outlines LF4 (mixed states,
+POVMs, reduction) and LF5 (outcome-conditioned update and sequential
+circuits). Each future layer will instantiate `OnticSetup` (via
+`SectorData.toOntic`) and consume `prepMeasure_apply` from LF1 plus
 `measure_bridge` / `lf1_weight_eq_projective_weight` from LF2.
 
-**LF4 TODO list:** concrete items deferred from LF2 are recorded in
-`specs/LF4-todo.md` — unitary covariance clause, preparation-to-Hilbert
-correspondence, rank-1 effects from projective points,
-`rankOneDensity_unique_of_certainty` axiom discharge, σ-additivity check,
-concrete `(Sigma, P, G)` instantiation, etc.  Read that file before
+**LF4 TODO list:** concrete items deferred from LF2 (and now LF3) are
+recorded in `specs/LF4-todo.md`. The hLF2 hypothesis on the LF3 empirical
+chain capstone (preparation-to-Hilbert correspondence + projective-first
+outcomes) discharges through items §2 and §7 there. Read that file before
 starting LF4 work.
 
 ## Lean / Mathlib conventions

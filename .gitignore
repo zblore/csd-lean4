@@ -1,2 +1,4 @@
 .lake
 .claude/
+.build.log
+.cache.log
