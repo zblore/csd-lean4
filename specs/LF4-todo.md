@@ -1,6 +1,6 @@
-# LF3 TODO: items deferred from LF2
+# LF4 TODO: items deferred from LF2
 
-Items LF2 deliberately left for LF3, with rationale and concrete pickup notes.
+Items LF2 deliberately left for LF4, with rationale and concrete pickup notes.
 
 ## 1. Unitary covariance clause of OperationalPackage (spec Def 5.1 clause 3)
 
@@ -29,7 +29,7 @@ Items LF2 deliberately left for LF3, with rationale and concrete pickup notes.
 **Why deferred:** LF1's `μprep : Measure Σ` and LF2-BornWrapper's `ψ : EuclideanSpace ℂ (Fin N)` live in disjoint type universes. Connecting them requires introducing `P ↔ Projectivization ℂ (EuclideanSpace ℂ (Fin N))` and a concentration argument.
 
 **Pickup sketch:**
-1. In LF3, specialise LF2's abstract `P` to `Projectivization ℂ (EuclideanSpace ℂ (Fin N))`.
+1. In LF4, specialise LF2's abstract `P` to `Projectivization ℂ (EuclideanSpace ℂ (Fin N))`.
 2. Introduce a "pure preparation" predicate on `μprep`: something like "the pushforward `π * μprep` is a Dirac measure at a projective point `[ψ] ∈ CP^{N-1}`."
 3. Lift `[ψ]` to a unit vector `ψ : EuclideanSpace ℂ (Fin N)` (choice of representative mod phase).
 4. Connect the resulting `OperationalPackage` (derived from `μprep` via the measure bridge + Radon–Nikodym) to `rankOneDensity ψ` via `busch_effect_gleason` + `rankOneDensity_unique_of_certainty`.
@@ -43,7 +43,7 @@ Items LF2 deliberately left for LF3, with rationale and concrete pickup notes.
 
 **Status:** `rankOneEffect`, `rankOneDensity` take `EuclideanSpace ℂ (Fin N)` unit vectors, not projective points.
 
-**Why deferred:** LF3 needs outcomes specified projectively (`[φ] ∈ CP^{N-1}`), not as unit vectors. Currently a phase-dependent vector is required. Phase-invariance of the outer product `|φ⟩⟨φ|` makes this sound, but LF2 doesn't expose it.
+**Why deferred:** LF4 needs outcomes specified projectively (`[φ] ∈ CP^{N-1}`), not as unit vectors. Currently a phase-dependent vector is required. Phase-invariance of the outer product `|φ⟩⟨φ|` makes this sound, but LF2 doesn't expose it.
 
 **Pickup:**
 1. Prove `rankOneEffect φ hφ = rankOneEffect (c • φ) hφ'` for `|c| = 1` (phase invariance of the outer product). One-line calculation: `(c • φ) * star (c • φ) = c · star c · (φ * star φ) = ‖c‖² · (φ * star φ) = φ * star φ`.
@@ -93,7 +93,7 @@ Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the
 **Why deferred:** In finite dimension the distinction is usually inessential — the effect algebra is "compact enough" that finite additivity implies σ-additivity. But we haven't verified this formally.
 
 **Pickup:**
-1. Before LF3 attempts to *prove* `busch_effect_gleason` (rather than import), verify: in finite dim, finite additivity + other Def 5.1 clauses imply σ-additivity.
+1. Before LF4 attempts to *prove* `busch_effect_gleason` (rather than import), verify: in finite dim, finite additivity + other Def 5.1 clauses imply σ-additivity.
 2. If yes, no code change needed. If no, weaken `OperationalPackage.additivity` to a `σ`-additive form over countable effect families.
 
 ---
@@ -102,7 +102,7 @@ Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the
 
 **Status:** LF1's `OutcomeRegion` has `Ω : Set Sigma` (ontic-first). LF2's `LF1_main_theorem_projective` takes a correspondence hypothesis `O.preEvent = D.π ⁻¹' Oep` linking them.
 
-**Why deferred:** A cleaner LF3 architecture would let callers specify outcomes projectively and derive the ontic counterpart. Currently the caller must supply both and prove the correspondence.
+**Why deferred:** A cleaner LF4 architecture would let callers specify outcomes projectively and derive the ontic counterpart. Currently the caller must supply both and prove the correspondence.
 
 **Pickup:**
 1. Build a helper `SectorData.outcomeOfProjective : {Oep : Set P} → MeasurableSet Oep → D.toOntic.OutcomeRegion` that constructs the LF1-side outcome from a projective outcome region (with `Ω := Φ⁻¹(π⁻¹(Oep))` or similar).
@@ -112,10 +112,10 @@ Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the
 
 ## 8. Concrete Sigma / P / G instantiation
 
-**Status:** LF2's `SectorData` is abstract in `(Sigma, P, G)`. LF3 will want a concrete realisation.
+**Status:** LF2's `SectorData` is abstract in `(Sigma, P, G)`. LF4 will want a concrete realisation.
 
 **Pickup:**
-1. In LF3, take `Sigma := ` a specific phase space (or continue abstract).
+1. In LF4, take `Sigma := ` a specific phase space (or continue abstract).
 2. `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` with `[Fintype (Fin N)]`, `[DecidableEq (Fin N)]`.
 3. `G := Matrix.specialUnitaryGroup (Fin N) ℂ` (or `Matrix.unitaryGroup` for the full unitary case).
 4. Construct the Fubini–Study measure `μFS` as a probability measure on `P` (concretely: via the normalised round measure on the sphere, pushed forward through the quotient `S^{2N-1} → CP^{N-1}`).

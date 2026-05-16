@@ -365,7 +365,7 @@ import CsdLean4.LF2.Interface
 
 `CsdLean4/Basic.lean` is unchanged (it re-exports via `MainTheorem`; after LF2, `Interface` becomes the natural "deepest" leaf, so we may add `import CsdLean4.LF2.Interface` there for convenience). Decision: mirror the LF1 pattern — single import of the deepest module.
 
-`CLAUDE.md` gets an LF2 section mirroring the LF1 structure: module chain, internal vs. imported, key lemmas for future layers (LF3+).
+`CLAUDE.md` gets an LF2 section mirroring the LF1 structure: module chain, internal vs. imported, key lemmas for future layers (LF4+).
 
 ## 8. Implementation order (suggested)
 

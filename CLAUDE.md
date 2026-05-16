@@ -43,7 +43,7 @@ MainTheorem.lean    — LF1_main_theorem_ae and corollaries
 
 `CsdLean4.lean` (the root file) is the canonical top-level import — it lists every module explicitly. `CsdLean4/Basic.lean` is the conventional `Pkg.Basic` convenience re-export that transitively pulls in the chain via `MainTheorem`. Downstream layers and external consumers should `import CsdLean4.Basic`; edits inside the package should modify the explicit list in `CsdLean4.lean`.
 
-Future layers (LF2, LF3, …) become sibling directories `CsdLean4/LF2/`, each instantiating `OnticSetup`. New top-level modules must be added explicitly to `CsdLean4.lean` — that file is not glob-based.
+Future layers (LF2, LF4, …) become sibling directories `CsdLean4/LF2/`, each instantiating `OnticSetup`. New top-level modules must be added explicitly to `CsdLean4.lean` — that file is not glob-based.
 
 All definitions live under the `CSD.LF1` namespace, with sub-namespaces `OnticSetup` and `OnticSetup.TrialModel`. New lemmas should follow this pattern.
 
@@ -60,11 +60,11 @@ theorem LF1_main_theorem_ae
 
 The only hypothesis the caller must supply is pairwise independence of trial indicators (`hindep`). Integrability and identical distribution are proved internally.
 
-The theorem is deliberately stated for a **single** `O : OutcomeRegion` rather than a formalised partition family. The joint almost-sure statement for a finite measurable outcome partition `{Ω_i^Σ}` follows by applying the theorem once per element and intersecting the resulting full-measure sets. Do not refactor this into a partition type at the LF1 layer — the single-outcome form is intentional (see the docstring of `MainTheorem.lean`). A partition type may become necessary at LF2/LF3 for POVM completeness.
+The theorem is deliberately stated for a **single** `O : OutcomeRegion` rather than a formalised partition family. The joint almost-sure statement for a finite measurable outcome partition `{Ω_i^Σ}` follows by applying the theorem once per element and intersecting the resulting full-measure sets. Do not refactor this into a partition type at the LF1 layer — the single-outcome form is intentional (see the docstring of `MainTheorem.lean`). A partition type may become necessary at LF2/LF4 for POVM completeness.
 
 ### Key infrastructure lemmas (used by future layers)
 
-- `prepMeasure_apply` — explicit rewriting formula for the conditional measure (consumed by LF2/LF3)
+- `prepMeasure_apply` — explicit rewriting formula for the conditional measure (consumed by LF2/LF4)
 - `weight_eq_prepEvent_div` — volume interpretation of weights
 - `trialEvent_eq_comp_preimage` — makes deterministic structure explicit
 - `indicatorRV_integrable`, `indicatorRV_identDistrib` — prerequisites for the strong law
@@ -117,7 +117,7 @@ axiom-and-sorry-free; LF2 has exactly three axioms:
   itself. Standard corollary of the spectral theorem; used to strengthen
   `pure_state_born_weights` so that the "OP is certain at ψ" hypothesis
   suffices to conclude `|⟨ψ|φ⟩|²`. Imported as an axiom pending Mathlib
-  spectral-theorem integration (an LF3-scope task); the proof sketch is
+  spectral-theorem integration (an LF4-scope task); the proof sketch is
   in the module docstring.
 
 The first two are imported per the spec's explicit directive. The third is
@@ -135,11 +135,11 @@ not a narrative corollary.
 - `SectorData` is parametric in an abstract `(Sigma, P, G)`. The projective
   target `P` is **not** specialised to Mathlib's `Projectivization`; no
   Fubini–Study measure is constructed. Concrete instantiation is deferred to
-  LF3+.
+  LF4+.
 - `SectorData` carries **group-action coherence fields**
   (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`)
   expressing the left-action laws for `onticAction` and `epAction`. LF2's
-  own theorems don't consume them, but LF3 will when it uses
+  own theorems don't consume them, but LF4 will when it uses
   transitivity / orbits / Haar measure.
 - The reference measure `μFS` is **not** a field of `SectorData`; it enters
   `measure_bridge` as an explicit argument, keeping `SectorData`
@@ -154,12 +154,12 @@ not a narrative corollary.
   as an `Effect`. This is the structural helper for spec Def 5.1 clause 3
   (unitary covariance), but the clause itself is **not** a field on
   `OperationalPackage` — both natural readings have issues (invariance
-  over-constrains; covariance is type-heavy). Deferred to LF3; see
-  `specs/LF3-todo.md` §1.
+  over-constrains; covariance is type-heavy). Deferred to LF4; see
+  `specs/LF4-todo.md` §1.
 - `ComplexOrder` is opened scoped in `BornWrapper.lean` so that `ℂ` has the
   `PartialOrder` / `StarOrderedRing` instances required by `Matrix.PosSemidef`.
 
-**Key infrastructure lemmas exported by LF2** (consumed by LF3+):
+**Key infrastructure lemmas exported by LF2** (consumed by LF4+):
 
 - `measure_bridge` — the central bridge theorem
 - `lf1_weight_eq_projective_weight` — the LF1 ↔ LF2 hinge (measure identity)
@@ -168,7 +168,7 @@ not a narrative corollary.
   theorem-level consumption of LF1 by LF2 (not just structural)
 - `outerProduct_posSemidef`, `one_sub_outerProduct_posSemidef` — projection
   lemmas useful wherever rank-1 effects appear downstream
-- `born_quadratic` — the quadratic form in Lean; any LF3+ Born-weight
+- `born_quadratic` — the quadratic form in Lean; any LF4+ Born-weight
   consumer can cite it
 - `pure_state_born_weights_of_certainty` — derives `|⟨ψ,φ⟩|²` from a
   purity hypothesis (`OP.p` is certain at `ψ`), routing through the
@@ -176,18 +176,18 @@ not a narrative corollary.
 
 ### Planned future layers
 
-LF1 and LF2 are in place. The README outlines LF3 (mixed states, POVMs,
-reduction), LF4 (control Hamiltonians), and LF5 (outcome-conditioned update
+LF1 and LF2 are in place. The README outlines LF3 (control Hamiltonians),
+LF4 (mixed states, POVMs, reduction), and LF5 (outcome-conditioned update
 and sequential circuits). Each future layer will instantiate `OnticSetup`
 (via `SectorData.toOntic`) and consume `prepMeasure_apply` from LF1 plus
 `measure_bridge` / `lf1_weight_eq_projective_weight` from LF2.
 
-**LF3 TODO list:** concrete items deferred from LF2 are recorded in
-`specs/LF3-todo.md` — unitary covariance clause, preparation-to-Hilbert
+**LF4 TODO list:** concrete items deferred from LF2 are recorded in
+`specs/LF4-todo.md` — unitary covariance clause, preparation-to-Hilbert
 correspondence, rank-1 effects from projective points,
 `rankOneDensity_unique_of_certainty` axiom discharge, σ-additivity check,
 concrete `(Sigma, P, G)` instantiation, etc.  Read that file before
-starting LF3 work.
+starting LF4 work.
 
 ## Lean / Mathlib conventions
 

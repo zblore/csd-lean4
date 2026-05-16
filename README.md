@@ -1,6 +1,6 @@
 # csd-lean4
 
-Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials) and **LF2** (sector-conditional measure bridge and Born-weight wrapper) are merged and machine-verified; LF3 is the next target.
+Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials) and **LF2** (sector-conditional measure bridge and Born-weight wrapper) are merged and machine-verified; LF4 is the next target.
 
 ## Overview
 
@@ -57,11 +57,11 @@ Two layers are currently formalised:
 
 Later formalisation targets (not yet started):
 
-- **LF3**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 are listed in [`specs/LF3-todo.md`](specs/LF3-todo.md).
-- **LF4**: control Hamiltonians and outcome basins.
+- **LF3**: control Hamiltonians and outcome basins.
+- **LF4**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 are listed in [`specs/LF4-todo.md`](specs/LF4-todo.md).
 - **LF5**: outcome-conditioned update and sequential circuits.
 
-Canonical spec preprints, plain-text sidecars, per-layer implementation plans, and the LF3 TODO list live in [`specs/`](specs/).
+Canonical spec preprints, plain-text sidecars, per-layer implementation plans, and the LF4 TODO list live in [`specs/`](specs/).
 
 ## Mathematical target of LF1
 
@@ -176,12 +176,12 @@ LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.cho
 
 ### Design choices in LF2
 
-- `SectorData` is parametric in `(Sigma, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure is constructed. Concrete instantiation is LF3's job.
+- `SectorData` is parametric in `(Sigma, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure is constructed. Concrete instantiation is LF4's job.
 - The reference measure `μFS` is not a field of `SectorData`; it enters `measure_bridge` as an explicit argument, keeping `SectorData` `μFS`-agnostic.
 - `Effect` and `DensityOperator` are concrete `Matrix (Fin N) (Fin N) ℂ` structures (not opaque stubs). This gives `born_quadratic` real Lean content rather than leaving it narrative.
 - `Effect.add` takes the `le_one` hypothesis `(1 - (E.M + F.M)).PosSemidef` as an explicit argument — avoids `Option`-valued addition and `Decidable (PosSemidef _)`.
-- `SectorData` carries group-action coherence fields (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`). LF2's own proofs do not consume them; they are staged for LF3 work on transitivity/orbits/Haar measure.
-- Spec Def 5.1 clause 3 (unitary covariance) is deliberately **not** added as a field on `OperationalPackage` — the literal invariance reading over-constrains, the covariant reading is type-heavy. Deferred to LF3.
+- `SectorData` carries group-action coherence fields (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`). LF2's own proofs do not consume them; they are staged for LF4 work on transitivity/orbits/Haar measure.
+- Spec Def 5.1 clause 3 (unitary covariance) is deliberately **not** added as a field on `OperationalPackage` — the literal invariance reading over-constrains, the covariant reading is type-heavy. Deferred to LF4.
 
 ### What LF2 does not prove
 
@@ -189,7 +189,7 @@ LF2 is a wrapper paper in the spec's sense (§1.4). It does **not** provide:
 
 - a proof of either of the two spec-mandated axioms;
 - a first-principles derivation of the Born rule;
-- a preparation-measure-to-Hilbert-vector correspondence, which is what would be needed to close the full chain from the LF1 frequency limit to `|⟨ψ, φ⟩|²` in a single theorem (deferred to LF3);
+- a preparation-measure-to-Hilbert-vector correspondence, which is what would be needed to close the full chain from the LF1 frequency limit to `|⟨ψ, φ⟩|²` in a single theorem (deferred to LF4);
 - mixed states, POVMs, sequential measurement, or subsystem reduction (LF3/LF4/LF5 territory).
 
 ## LF1 ↔ LF2 interface
@@ -229,5 +229,5 @@ specs/
   LF2-v1.00.pdf        -- LF2 preprint (canonical)
   LF2-v1.00.txt        -- extracted plain-text sidecar
   LF2-plan.md          -- implementation plan
-  LF3-todo.md          -- eight items deferred from LF2 to LF3
+  LF4-todo.md          -- eight items deferred from LF2 to LF4
 ```

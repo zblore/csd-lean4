@@ -14,7 +14,7 @@ Extends the LF1 `OnticSetup` with:
   `G`-equivariance of `π`) that drive the LF2 measure bridge.
 
 The projective space is left abstract — no `Projectivization`, no Fubini–Study
-measure construction. Concrete instantiation is LF3+'s job. The reference
+measure construction. Concrete instantiation is LF4+'s job. The reference
 measure `μFS` is not a field of `SectorData`; it enters downstream theorems as
 an explicit argument, keeping `SectorData` `μFS`-agnostic.
 -/

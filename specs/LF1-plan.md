@@ -54,7 +54,7 @@ theorem LF1_main_theorem_ae
 
 Caller supplies only pairwise independence of trial indicators. Integrability and identical distribution are proved internally.
 
-The theorem is stated for a **single** `O : OutcomeRegion`. The joint almost-sure statement for a finite measurable partition follows by applying the theorem once per element and intersecting the resulting full-measure sets. This is intentional; a partition type may be introduced at LF2/LF3 for POVM completeness, not here.
+The theorem is stated for a **single** `O : OutcomeRegion`. The joint almost-sure statement for a finite measurable partition follows by applying the theorem once per element and intersecting the resulting full-measure sets. This is intentional; a partition type may be introduced at LF2/LF4 for POVM completeness, not here.
 
 ## 4. Infrastructure lemmas consumed by LF2+
 

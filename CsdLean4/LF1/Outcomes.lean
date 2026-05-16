@@ -20,7 +20,7 @@ resulting full-measure sets — a finite intersection of full-measure sets is st
 full-measure, so no new structure is needed.
 
 A formalised `OutcomePartition` type (carrying disjointness, exhaustion, and a measurable
-family) would be the right object if a future layer (LF2/LF3) needs to reason about
+family) would be the right object if a future layer (LF2/LF4) needs to reason about
 partition sums such as Σ_i weight(O_i) = 1 or POVM completeness. That extension should
 be built in the layer that first requires it, not here.
 -/

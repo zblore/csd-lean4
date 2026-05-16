@@ -19,7 +19,7 @@ full-measure sets. A finite intersection of full-measure sets remains full-measu
 additional structure is required at this layer.
 
 See `Outcomes.lean` for further discussion of when a formalised partition type would
-become necessary (LF2/LF3 and POVM completeness).
+become necessary (LF2/LF4 and POVM completeness).
 -/
 import CsdLean4.LF1.Setup
 import CsdLean4.LF1.Preparation

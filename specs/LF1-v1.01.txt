@@ -14,7 +14,7 @@ FREQUENCY CONVERGENCE FOR DETERMINISTIC REPEATED
                                            ABSTRACT
 
 We formalise in Lean4/Mathlib the core repeated-trial theorem underlying volume-based deterministic
-accounts of quantum statistics. The setting is a finite-measure ontic state space (, µL) equipped
+accounts of quantum statistics. The setting is a finite-measure ontic state space (, ï¿½L) equipped
 with a measurable preparation region 0  , a deterministic measurable flow  :   , and a
 fixed measurable ontic outcome region. The key modelling assumption is explicit: repeated trials
 are represented by a repeated-preparation model in which each trial begins from an initial microstate
@@ -254,7 +254,7 @@ for the Lean branch.
 
 2.1 Ontic setup
 
-Let (, F, µL) be a finite-measure ontic measurable space. Let
+Let (, F, ï¿½L) be a finite-measure ontic measurable space. Let
                                                                 :
 
 be a measurable deterministic evolution map, interpreted physically as the ontic flow associated with a fixed experimental
@@ -264,7 +264,7 @@ context. Let
 
 be the measurable preparation region, with
 
-                                            0 < µL(0) < .
+                                            0 < ï¿½L(0) < .
 
 For the formal LF1 theorem, one next fixes a single measurable ontic outcome region
                                                                    .
@@ -285,11 +285,11 @@ convergence result.
 
 2.2 Conditional preparation measure
 
-The file Preparation.lean constructs the conditional preparation measure from the ontic measure µL and the
+The file Preparation.lean constructs the conditional preparation measure from the ontic measure ï¿½L and the
 preparation region 0. At the mathematical level, the construction is
 
-                                            µprep(A)  :=  µL(A  0) .
-                                                            µL(0)
+                                            ï¿½prep(A)  :=  ï¿½L(A  0) .
+                                                            ï¿½L(0)
 
 In the current repository this is not merely planned architecture. It is already implemented, together with the explicit
 rewriting lemma
@@ -322,7 +322,7 @@ measurable trial maps
                                                           5
 LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
 
-such that each Xn has law equal to the conditional preparation measure µprep.
+such that each Xn has law equal to the conditional preparation measure ï¿½prep.
 
 For a fixed ontic outcome region , the event that the n-th trial realises that outcome is the set
 
@@ -424,11 +424,11 @@ of outcome regions, but the present formal theorem is stated one region at a tim
 The base file Setup.lean introduces the ambient ontic data for LF1. Its core structure is an abstract measurable space
  equipped with:
 
-       1. a finite measure µL,
+       1. a finite measure ï¿½L,
        2. a deterministic evolution map  :   ,
        3. a measure-preservation hypothesis for ,
        4. a measurable preparation region 0  ,
-       5. a non-vanishing assumption µL(0) = 0.
+       5. a non-vanishing assumption ï¿½L(0) = 0.
 
 A noteworthy feature of the current implementation is that the measure-preservation hypothesis is carried as part of
 the ontic model structure, but the LF1 proofs themselves directly use only measurability of , extracted from that
@@ -441,10 +441,10 @@ measurable objects associated with a fixed experimental context.
 3.3 Conditional preparation measure
 
 The file Preparation.lean constructs the preparation probability measure induced by the preparation region 0.
-Mathematically, this is the normalised restriction of µL to 0:
+Mathematically, this is the normalised restriction of ï¿½L to 0:
 
-                                     µprep(A)  =  µL(A  0) .
-                                                    µL(0)
+                                     ï¿½prep(A)  =  ï¿½L(A  0) .
+                                                    ï¿½L(0)
 
 In the current repository this construction is already implemented, together with the explicit rewriting lemma
 
@@ -456,17 +456,17 @@ repeated sampling.
 
 The file also establishes the basic facts needed downstream: the conditional preparation measure is well defined because
 
-                                     0 < µL(0) < ,
+                                     0 < ï¿½L(0) < ,
 
 it is a probability measure, and for every measurable A   one has the explicit identity
 
-                                     µprep(A)  =  µL(A  0) .
-                                                    µL(0)
+                                     ï¿½prep(A)  =  ï¿½L(A  0) .
+                                                    ï¿½L(0)
 
                                                   7
 LF1. Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated ATriPaRlsEPRINT
 
-This infrastructure matters because it cleanly separates the ontic measure µL, which belongs to the physical model,
+This infrastructure matters because it cleanly separates the ontic measure ï¿½L, which belongs to the physical model,
 from the preparation probability law, which is the object used by the repeated-trial probability theory. It also provides a
 reusable measure-theoretic layer for later Lean papers in the branch.
 
@@ -485,12 +485,12 @@ Second, the preparation-side event:
                                       O.prepEvent := 0  O.preEvent.
 
 Third, the corresponding outcome weight under the preparation measure:
-                       O.weight := µprep(O.preEvent), O.weightReal := toReal O.weight .
+                       O.weight := ï¿½prep(O.preEvent), O.weightReal := toReal O.weight .
 
 A central lemma already present in the repository states that
 
-                                                   O.weight = µL(O.prepEvent) .
-                                                                          µL(0)
+                                                   O.weight = ï¿½L(O.prepEvent) .
+                                                                          ï¿½L(0)
 
 This makes the volume-typicality interpretation explicit: the ontic weight is the fraction of the preparation region whose
 deterministic evolution lands in the chosen outcome region.
@@ -518,7 +518,7 @@ where  is an external sample space for repeated runs, P is a probability measure
 is the ontic initial microstate for the n-th trial.
 
 Each Xn is measurable, and each has law equal to the preparation probability measure:
-                                                           Law(Xn) = µprep.
+                                                           Law(Xn) = ï¿½prep.
 
 This is built directly into the structure. Independence is not hard-coded into TrialModel. Instead, it is supplied later,
 at the convergence stage, in the exact form required by the law of large numbers used in the repository.
@@ -556,7 +556,7 @@ w^N := N                                                     Yn.
                                                         n=0
 
 At this stage the code proves the standard elementary properties required for the strong-law step. Each indicator is
-measurable, bounded, and integrable. Moreover, because each trial random variable Xn has the same law µprep, the
+measurable, bounded, and integrable. Moreover, because each trial random variable Xn has the same law ï¿½prep, the
 indicator family is identically distributed in the sense needed for the later convergence theorem.
 
 It is important, however, to match the repository precisely here. The final theorem does not ask the user to supply
@@ -631,20 +631,20 @@ CsdLean4/LF1/MainTheorem.lean
 
 Their roles are as follows.
 
-        · Setup.lean: ontic measurable space, finite measure, deterministic flow, preparation region.
-        · Preparation.lean: conditional preparation measure and the explicit rewriting formula
+        ï¿½ Setup.lean: ontic measurable space, finite measure, deterministic flow, preparation region.
+        ï¿½ Preparation.lean: conditional preparation measure and the explicit rewriting formula
 
            prepMeasure_apply.
-        · Outcomes.lean: measurable ontic outcome regions, pullback events, preparation-side events, and ontic
+        ï¿½ Outcomes.lean: measurable ontic outcome regions, pullback events, preparation-side events, and ontic
 
           weights.
-        · Trials.lean: repeated-trial model on an external sample space, including the common-law condition for
+        ï¿½ Trials.lean: repeated-trial model on an external sample space, including the common-law condition for
 
            trial maps.
-        · Indicators.lean: indicator observables and empirical frequencies.
-        · Expectation.lean: expectation-to-weight bridge.
-        · Convergence.lean: strong-law application and almost-sure convergence lemmas.
-        · MainTheorem.lean: the exported LF1 theorem and its immediate corollaries.
+        ï¿½ Indicators.lean: indicator observables and empirical frequencies.
+        ï¿½ Expectation.lean: expectation-to-weight bridge.
+        ï¿½ Convergence.lean: strong-law application and almost-sure convergence lemmas.
+        ï¿½ MainTheorem.lean: the exported LF1 theorem and its immediate corollaries.
 
 This modular layout is one of the strengths of the present implementation. It cleanly isolates reusable theorem layers
 and provides a stable interface for later formalisation targets such as LF2 through LF5.
@@ -655,7 +655,7 @@ One of the main interpretive virtues of the formalisation is that it makes the C
 of the theorem is standard probability theory. The specifically CSD-shaped inputs are comparatively few:
 
        1. the interpretation of  as an ontic state space,
-       2. the use of µL as the physically relevant conserved measure,
+       2. the use of ï¿½L as the physically relevant conserved measure,
        3. the interpretation of 0 as a preparation ensemble,
        4. the interpretation of the i as outcome basins produced by a fixed experimental context,
        5. the deterministic evolution map t.
@@ -696,8 +696,8 @@ architecture. The following statements are already proved within the current rep
 
 Normalised preparation measure. The development constructs the conditional preparation measure
 
-                                           µprep(A)  =  µL(A  0) ,
-                                                          µL(0)
+                                           ï¿½prep(A)  =  ï¿½L(A  0) ,
+                                                          ï¿½L(0)
 
 and provides the explicit rewriting lemma
 
@@ -717,8 +717,8 @@ and proves their measurability.
 Ontic weight formula. The development defines the ontic weight O.weight through the preparation measure and
 proves the explicit identity
 
-                                                   O.weight = µL(O.prepEvent) .
-                                                                         µL(0)
+                                                   O.weight = ï¿½L(O.prepEvent) .
+                                                                         ï¿½L(0)
 
 Trial-event and trial-probability infrastructure. For each repeated-trial model T , the repository defines
 trialEvent and trialProb, and proves
@@ -763,7 +763,7 @@ for the first Lean target in the programme.
 
 The mathematical proof in LF1 rests on a small and explicit package of physical-model assumptions.
 
-Finite ontic measure. The ontic measurable space carries a finite measure µL, interpreted physically as Liouville
+Finite ontic measure. The ontic measurable space carries a finite measure ï¿½L, interpreted physically as Liouville
 measure or its abstract measurable analogue.
 
 Deterministic ontic flow. There is a deterministic evolution map
@@ -818,7 +818,7 @@ narrow theorem with a transparent hypothesis set is easier to verify, easier to 
 4.6 Audit summary
 
 The assumptions audit shows that LF1 has a deliberately narrow and transparent logical profile.
-First, the CSD-specific content is confined to the ontic measurable setup: the finite measure µL, the deterministic flow
+First, the CSD-specific content is confined to the ontic measurable setup: the finite measure ï¿½L, the deterministic flow
 , the preparation region 0, and the fixed measurable outcome region O.
 Second, the repository already proves the full bridge from these ontic inputs to the repeated-trial theorem infrastructure:
 the conditional preparation measure, the measurable pulled-back event, the ontic weight formula, the indicator
@@ -859,7 +859,7 @@ regions, the deterministic volume-preserving flow, and the repeated independent 
 empirical frequencies converge to the corresponding measure ratios (Blore 2026a).
 LF1 takes that theorem spine and expresses it in a theorem-prover-friendly form. In doing so, it performs three tasks
 that Paper A, by design, does not attempt in full detail.
-First, it rewrites the theorem in the canonical notation adopted after TN0. The present paper therefore uses (, µL, t)
+First, it rewrites the theorem in the canonical notation adopted after TN0. The present paper therefore uses (, ï¿½L, t)
 in place of the earlier notation of Paper A.
 Second, it separates the repeated-trial sampling model from the deterministic dynamics themselves. This distinction is
 conceptually present in Paper A, but the formalisation forces it to be stated with complete precision.
@@ -885,16 +885,16 @@ nothing stronger.
 5.4 Relation to the later Lean papers
 
 The Lean branch of the current paper index is organised so that LF1 supplies the formal kernel for later developments.
-In that branch, LF2 addresses the measure bridge and Born-weight wrapper, LF3 addresses mixed states, POVMs, and
-reduction, LF4 addresses control Hamiltonians and outcome basins, and LF5 addresses outcome-conditioned update
+In that branch, LF2 addresses the measure bridge and Born-weight wrapper, LF3 addresses control Hamiltonians and
+outcome basins, LF4 addresses mixed states, POVMs, and reduction, and LF5 addresses outcome-conditioned update
 and sequential circuits (Blore 2026e).
 The dependence structure is conceptually straightforward.
 LF2 requires a clean formal account of how repeated-trial frequencies are tied to normalised volume weights before one
 can ask how those weights are transported to projective state space.
-LF3 requires a stable formal probability layer before one can treat density operators, subsystem marginals, and POVM
-probabilities in a systematic way.
-LF4 requires the event-to-indicator and frequency machinery of LF1 in order to express gate-dependent basin transport
+LF3 requires the event-to-indicator and frequency machinery of LF1 in order to express gate-dependent basin transport
 as a measurable change in outcome statistics under deterministic control.
+LF4 requires a stable formal probability layer before one can treat density operators, subsystem marginals, and POVM
+probabilities in a systematic way.
 LF5 requires the same probabilistic infrastructure in order to describe sequential experiments, where a new preparation
 for the next stage is conditioned on a realised earlier outcome.
 Thus LF1 should be understood as a foundational software and theorem layer for the rest of the Lean branch. Its
@@ -937,7 +937,7 @@ describe its broader finite-dimensional claims as depending on later layers unti
 
 The present paper also has a clear downstream role in the quantum-information and quantum-computation path of
 the programme. The current paper index places QI2, Quantum Computation as Geometric Dynamics, in the active
-application-facing branch, and places LF4 and LF5 later in the Lean branch as the formal counterparts of control-
+application-facing branch, and places LF3 and LF5 later in the Lean branch as the formal counterparts of control-
 dependent basin transport and sequential circuit update (Blore 2026e).
 LF1 does not by itself explain quantum gates or circuit dynamics in full. What it does provide is the first rigorous
 ingredient needed for such an explanation: once a control-dependent Hamiltonian and an outcome-basin structure

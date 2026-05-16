@@ -130,9 +130,9 @@ end Effect
 
     Rather than commit to the wrong reading, LF2 omits clause 3 from the
     structure and exposes `Effect.conjugateBy` below as the structural
-    building block.  LF3 (where unitary evolution enters non-trivially) is
+    building block.  LF4 (where unitary evolution enters non-trivially) is
     the right place to pick one of the two encodings; see
-    `specs/LF3-todo.md`. -/
+    `specs/LF4-todo.md`. -/
 structure OperationalPackage (N : ℕ) where
   /-- Probability assignment. -/
   p          : Effect N → ℝ
@@ -333,7 +333,7 @@ theorem pure_state_born_weights
     Chuang, "Quantum Computation and Quantum Information"). It is imported
     here as an axiom alongside `invariant_measure_uniqueness` and
     `busch_effect_gleason`; proving it via Mathlib's spectral theorem is an
-    LF3-scope task. -/
+    LF4-scope task. -/
 axiom rankOneDensity_unique_of_certainty
     {N : ℕ}
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
