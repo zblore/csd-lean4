@@ -6,6 +6,8 @@ import CsdLean4.LF1.MainTheorem
 /-!
 # LF2 ↔ LF1 interface
 
+**Category:** 3-Local (LF1 ↔ LF2 weight identity plus combined `LF1_main_theorem_projective` headline theorem).
+
 Spec §6. The measure-theoretic identity linking the LF1 ontic weight
 `μprep(π⁻¹(O))` to the LF2 projective weight `(π*μprep)(O)`.
 

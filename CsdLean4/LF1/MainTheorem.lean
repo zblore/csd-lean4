@@ -1,5 +1,15 @@
-/-
-Main theorem of LF1.
+import CsdLean4.LF1.Setup
+import CsdLean4.LF1.Preparation
+import CsdLean4.LF1.Outcomes
+import CsdLean4.LF1.Trials
+import CsdLean4.LF1.Indicators
+import CsdLean4.LF1.Expectation
+import CsdLean4.LF1.Convergence
+
+/-!
+# LF1 Main Theorem
+
+**Category:** 3-Local (LF1 headline theorem: deterministic repeated-trial frequency convergence).
 
 The theorem proved here is a deterministic repeated-trial typicality theorem.
 The ontic flow and outcome assignment are deterministic. Probability enters only
@@ -21,13 +31,6 @@ additional structure is required at this layer.
 See `Outcomes.lean` for further discussion of when a formalised partition type would
 become necessary (LF2/LF4 and POVM completeness).
 -/
-import CsdLean4.LF1.Setup
-import CsdLean4.LF1.Preparation
-import CsdLean4.LF1.Outcomes
-import CsdLean4.LF1.Trials
-import CsdLean4.LF1.Indicators
-import CsdLean4.LF1.Expectation
-import CsdLean4.LF1.Convergence
 
 open MeasureTheory ProbabilityTheory Set Filter
 

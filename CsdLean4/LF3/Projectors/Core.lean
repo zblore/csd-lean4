@@ -3,6 +3,8 @@ import CsdLean4.LF3.BranchSeparation
 /-!
 # LF3 Projectors / Core: abstract pointer-sector projective algebra
 
+**Category:** 3-Local (LF3 abstract four-projector pointer-sector algebra, v1.00 data form).
+
 Paper §5 / §9.7.
 
 The `ProjectorAlgebra` structure carries the four projective-decomposition

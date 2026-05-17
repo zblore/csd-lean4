@@ -7,6 +7,8 @@ import CsdLean4.LF3.Projectors.TensorModel
 /-!
 # CsdLean4.Basic
 
+**Category:** Special (convenience re-export of LF1 + LF2 + LF3 deepest-leaf modules).
+
 Conventional entry point for the package, following the Lean 4 idiom of `Pkg.Basic`.
 External consumers who write `import CsdLean4.Basic` get the full LF1 + LF2 + LF3
 development.

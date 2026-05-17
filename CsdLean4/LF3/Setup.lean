@@ -6,6 +6,8 @@ import Mathlib.LinearAlgebra.Matrix.Trace
 /-!
 # LF3 Setup: signs, detector settings, system-apparatus interfaces, two-qubit Pauli layer
 
+**Category:** 3-Local (LF3 foundational types and concrete two-qubit Pauli / spin-projector layer).
+
 Paper §2 / §9.4.
 
 Defines the foundational types (Sign, DetectorSetting), the abstract

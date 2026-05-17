@@ -3,6 +3,8 @@ import CsdLean4.LF2.MeasureBridge
 /-!
 # LF2 Projective Weights
 
+**Category:** 3-Local (LF2 measurable partitions on the projective target and their weight normalisation).
+
 Spec §4:
 
 - `MeasurablePartition` — measurable partition of `P` up to null sets

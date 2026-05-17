@@ -32,6 +32,8 @@ import CsdLean4.Tests.Examples
 /-!
 # CSD
 
+**Category:** Special (canonical top-level import; explicit module list across LF1 + LF2 + LF3 + Util + Tests).
+
 Top-level import file for the Constraint-Surface Dynamics Lean4 project.
 
 This file exports:

@@ -4,6 +4,8 @@ import CsdLean4.LF2.Interface
 /-!
 # LF3 PurePreparation: bundled hLF2 discharge target
 
+**Category:** 3-Local (LF3 `PureSingletPreparation` bundle: ontic ↔ projective outcome correspondence plus Born identity, hLF2 discharge target for LF4).
+
 Paper boundary at the LF1 ↔ LF2 ↔ LF3 capstone (spec §10.5 / LF4-todo §2 + §7).
 
 The three `LF3_singlet_frequency_convergence*` capstones in `Interface.lean`

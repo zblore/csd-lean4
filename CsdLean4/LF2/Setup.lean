@@ -5,6 +5,8 @@ import Mathlib.Dynamics.Ergodic.MeasurePreserving
 /-!
 # LF2 Setup: Sector data
 
+**Category:** 3-Local (LF2 `SectorData`: LF1 `OnticSetup` plus projective target, projection, and group action).
+
 Extends the LF1 `OnticSetup` with:
 
 - a measurable projection `π : Σ → P` onto an abstract epistemic measurable

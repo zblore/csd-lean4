@@ -3,6 +3,8 @@ import CsdLean4.LF3.Singlet.Kernel
 /-!
 # LF3 ContextMap: measurement contexts and the Bell-consistency boundary
 
+**Category:** 3-Local (LF3 context-indexed outcome maps and Bell-consistency boundary via definitional separation, no Fine axiom).
+
 Paper §8 / §9.9.
 
 Definitional separation of context-indexed outcome maps from a global CHSH

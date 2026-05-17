@@ -3,6 +3,8 @@ import CsdLean4.LF3.Setup
 /-!
 # LF3 Singlet / State: Bell singlet vector and expectation functional
 
+**Category:** 3-Local (LF3 Bell singlet `|ψ⁻⟩` in `EuclideanSpace ℂ (Fin 2 × Fin 2)`, unit-norm, expectation functional).
+
 Paper §6.
 
 The Bell singlet `|ψ⁻⟩` in `HAB := EuclideanSpace ℂ (Fin 4)` (basis order

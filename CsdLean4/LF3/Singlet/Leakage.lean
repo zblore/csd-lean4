@@ -3,6 +3,8 @@ import CsdLean4.LF3.Singlet.Kernel
 /-!
 # LF3 Singlet / Leakage: finite-leakage stability of kernel, correlation, marginals
 
+**Category:** 3-Local (LF3 finite-leakage bounds on all four kernel quantities, parameterised by `εA`, `εB`).
+
 Paper §7.
 
 Each finite-leakage bound is a triangle inequality on the appropriate finite

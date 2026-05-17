@@ -3,6 +3,8 @@ import CsdLean4.LF3.Singlet.State
 /-!
 # LF3 Singlet / Expectations: the headline 4×4 Pauli expectation calculation
 
+**Category:** 3-Local (LF3 left/right zero expectations and `singlet_pauli_correlation = −a·b`).
+
 Paper §6.
 
 Three theorems on the Bell singlet:

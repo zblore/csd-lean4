@@ -2,6 +2,12 @@ import CsdLean4.LF1.Expectation
 import Mathlib.Probability.StrongLaw
 import Mathlib.Probability.IdentDistrib
 
+/-!
+# LF1 Convergence
+
+**Category:** 3-Local (LF1 strong-law application: empirical frequencies converge to ontic weights).
+-/
+
 open MeasureTheory ProbabilityTheory Set Filter
 
 namespace CSD

@@ -5,6 +5,8 @@ import CsdLean4.Util.MathlibCandidates
 /-!
 # LF3 Projectors / TensorModel: derive ProjectorAlgebra from a tensor structure
 
+**Category:** 3-Local (LF3 v2 derivation: `ProjectorAlgebra` / `MeasurementUnitary` from `TensorEmbedding` / `UnitaryTensorEmbedding`).
+
 Paper §9.7 v2 derivation target.
 
 The abstract `ProjectorAlgebra` in `LF3/Projectors/Core.lean` carries the

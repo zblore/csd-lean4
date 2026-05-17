@@ -9,6 +9,8 @@ import Mathlib.Analysis.Complex.Order
 /-!
 # LF2 Born-Weight Wrapper
 
+**Category:** 3-Local (LF2 matrix-based `Effect`/`DensityOperator`, Born quadratic form, and `busch_effect_gleason` / `rankOneDensity_unique_of_certainty` axioms).
+
 Spec §5. Packages the finite-dimensional probability assignment using
 concrete matrix-based `Effect`/`DensityOperator` structures, an imported
 `busch_effect_gleason` axiom, and (downstream phases) a proved Born quadratic

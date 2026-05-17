@@ -7,6 +7,8 @@ import Mathlib.Data.ENNReal.Basic
 /-!
 # LF2 Measure Bridge
 
+**Category:** 3-Local (LF2 `π_* μL = c · μFS` bridge plus the invariant-measure uniqueness axiom).
+
 Four pieces (spec §3.3, Lemma 1, Lemma 2, Theorem 1):
 
 1. `pushforward_apply` — thin wrapper over `Measure.map_apply` specialised to a

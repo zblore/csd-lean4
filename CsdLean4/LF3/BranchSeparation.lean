@@ -3,6 +3,8 @@ import CsdLean4.LF3.Hamiltonian
 /-!
 # LF3 BranchSeparation: branch-state decomposition and pointer-leakage bounds
 
+**Category:** 3-Local (LF3 branch-separated final state, per-wing pointer overlaps, leakage bound).
+
 Paper §4 / §9.6.
 
 Defines the branch-separated final state, the per-wing pointer-overlap

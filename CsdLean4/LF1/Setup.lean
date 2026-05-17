@@ -2,6 +2,12 @@ import Mathlib.MeasureTheory.Measure.FiniteMeasure
 import Mathlib.Dynamics.Ergodic.MeasurePreserving
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 
+/-!
+# LF1 Setup
+
+**Category:** 3-Local (LF1 ontic phase-space data: measurable space, Liouville measure, deterministic flow, preparation region).
+-/
+
 open MeasureTheory Set
 
 namespace CSD

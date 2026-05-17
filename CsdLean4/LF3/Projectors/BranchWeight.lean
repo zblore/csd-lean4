@@ -3,6 +3,8 @@ import CsdLean4.LF3.Projectors.Core
 /-!
 # LF3 Projectors / BranchWeight: operator-form branch weight and bounds
 
+**Category:** 3-Local (LF3 operator-form branch weight `Re ⟨Ψ, M_{st} Ψ⟩` and strong-readout / finite-leakage bounds).
+
 Paper §5.10 / §9.7.
 
 Defines the operator-form branch weight `w_{st}(Ψ) = Re ⟨Ψ, M_{st} Ψ⟩` and

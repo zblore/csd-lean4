@@ -7,6 +7,8 @@ import CsdLean4.LF3.PurePreparation
 /-!
 # Examples and API smoke tests
 
+**Category:** Special (cross-layer worked examples and API-shape smoke tests).
+
 Concrete worked examples and type-level smoke tests for the LF1, LF2,
 LF3 exported theorems. Build-fails if a signature changes incompatibly,
 catching API drift without requiring axiom inspection.

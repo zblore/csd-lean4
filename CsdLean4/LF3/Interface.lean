@@ -16,6 +16,8 @@ import CsdLean4.LF2.Interface
 /-!
 # LF3 Interface: the LF1 ↔ LF2 ↔ LF3 chain closure
 
+**Category:** 3-Local (LF3 headline exports: `LF3_main_theorem`, `LF3_finite_leakage_theorem`, three chain capstones).
+
 Paper §9.13 / spec §10.5.
 
 Four exported theorems, in descending order of programme-level importance:

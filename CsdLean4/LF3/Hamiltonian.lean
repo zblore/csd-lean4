@@ -3,6 +3,8 @@ import CsdLean4.LF3.Setup
 /-!
 # LF3 Hamiltonian: tensor-factor readout algebra and measurement unitary
 
+**Category:** 3-Local (LF3 abstract structural interfaces for the impulsive-readout measurement model).
+
 Paper §3 / §9.5. Abstract structural interfaces for the impulsive-readout
 measurement model:
 

@@ -8,6 +8,8 @@ import CsdLean4.LF3.Projectors.TensorModel
 /-!
 # Axiom regression suite
 
+**Category:** Special (cross-layer axiom-posture regression for all headline theorems).
+
 `#guard_msgs` + `#print axioms` for every theorem in `AXIOMS.md §5`. Build
 fails on regression: if any theorem acquires (or sheds) an axiom, the
 expected `info:` string no longer matches `#print axioms`'s output, and

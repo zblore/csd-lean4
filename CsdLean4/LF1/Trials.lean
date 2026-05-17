@@ -1,5 +1,11 @@
-/-
-LF1 repeated-trial probability space.
+import CsdLean4.LF1.Outcomes
+import Mathlib.Probability.IdentDistrib
+import Mathlib.Probability.ProductMeasure
+
+/-!
+# LF1 Trials
+
+**Category:** 3-Local (LF1 repeated-trial probability space and i.i.d. preparation sampling).
 
 This file introduces the repeated-preparation model used in LF1.
 Each trial begins from a fresh initial microstate sampled from the conditional
@@ -8,9 +14,6 @@ models repetition of preparation, not stochastic dynamics of a single trial.
 
 Single-trial evolution remains deterministic at the ontic level.
 -/
-import CsdLean4.LF1.Outcomes
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.ProductMeasure
 
 open MeasureTheory ProbabilityTheory Set
 

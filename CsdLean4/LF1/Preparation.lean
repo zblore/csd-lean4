@@ -2,6 +2,12 @@ import CsdLean4.LF1.Setup
 import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 import Mathlib.MeasureTheory.Measure.FiniteMeasure
 
+/-!
+# LF1 Preparation
+
+**Category:** 3-Local (LF1 conditional preparation measure on `Ω0`).
+-/
+
 open MeasureTheory Set
 
 namespace CSD

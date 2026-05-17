@@ -4,6 +4,8 @@ import CsdLean4.LF2.BornWrapper
 /-!
 # LF3 Projectors / LF2 interface: branch weight ↔ LF2 Born form
 
+**Category:** 3-Local (LF3 → LF2 bridge: branch weight equals LF2 trace-form Born weight on rank-1 effects).
+
 Paper §5.14 / §9.7.
 
 Bridges the abstract `H_SA`-level branch weight to LF2's concrete matrix-based

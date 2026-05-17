@@ -1,5 +1,9 @@
-/-
-LF1 outcome regions.
+import CsdLean4.LF1.Preparation
+
+/-!
+# LF1 Outcomes
+
+**Category:** 3-Local (LF1 outcome regions and their weights).
 
 Outcome regions are measurable ontic regions associated with a fixed
 experimental context. In LF1 they are treated abstractly as measurable sets.
@@ -24,7 +28,6 @@ family) would be the right object if a future layer (LF2/LF4) needs to reason ab
 partition sums such as Σ_i weight(O_i) = 1 or POVM completeness. That extension should
 be built in the layer that first requires it, not here.
 -/
-import CsdLean4.LF1.Preparation
 
 open MeasureTheory Set
 

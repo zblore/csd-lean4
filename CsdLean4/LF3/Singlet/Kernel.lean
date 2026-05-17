@@ -4,6 +4,8 @@ import CsdLean4.LF3.Projectors.BranchWeight
 /-!
 # LF3 Singlet / Kernel: pointer-sector kernel, correlation, marginals
 
+**Category:** 3-Local (LF3 algebraic core: `P_st`, `cAmp`, `cst_squared_eq`, correlation, marginals, no-signalling).
+
 Paper §6 / §7.
 
 The algebraic core: `‖c_{st}(a,b)‖² = (1 − st · a·b) / 4` (spec §9.8 calls

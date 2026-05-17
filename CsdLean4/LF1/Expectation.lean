@@ -2,6 +2,12 @@ import CsdLean4.LF1.Indicators
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 
+/-!
+# LF1 Expectation
+
+**Category:** 3-Local (LF1 expectation-to-weight bridge `E[𝟙_O] = O.weightReal`).
+-/
+
 open MeasureTheory ProbabilityTheory Set ENNReal
 
 namespace CSD

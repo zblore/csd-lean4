@@ -3,6 +3,8 @@ import Mathlib.Topology.Algebra.Module.LinearMap
 /-!
 # Mathlib upstream candidates
 
+**Category:** 1-Mathlib (CSD-free helper lemmas staged as Mathlib upstream candidates).
+
 Generalised forms of helper lemmas currently used in CSD-specific modules.
 Each lemma here is stated in maximum-general Mathlib idiom: it depends on
 no CSD-specific structure, names follow Mathlib snake_case conventions,
