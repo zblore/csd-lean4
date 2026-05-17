@@ -80,15 +80,17 @@ theorem expectation_formula (M : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
              star_zero, star_neg,
              show star ((Real.sqrt 2 : ℂ)⁻¹) = ((Real.sqrt 2 : ℂ)⁻¹) by
                rw [star_inv₀, Complex.star_def, Complex.conj_ofReal]]
-  -- Of the 16 double-sum terms, 12 contain a factor `0`; let `ring_nf` collect
-  -- the surviving 4 into a normal form with `((√2)⁻¹)²` factors. Note: the
-  -- next rewrite assumes `ring_nf` produces `((√2)⁻¹)^2`; if a future Mathlib
-  -- changes `ring_nf`'s normalisation, replace with `linear_combination` over
-  -- `inv_sqrt_two_sq` with explicit per-entry coefficients.
-  ring_nf
-  rw [show ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1/2 : ℂ) by
-    rw [sq]; exact inv_sqrt_two_sq]
-  ring
+  -- Of the 16 double-sum terms, 12 contain a factor `0`; the surviving 4 each
+  -- have a `((√2)⁻¹) * ((√2)⁻¹)` factor that must be reduced to `1/2`.
+  -- Defensive close: `linear_combination` over `inv_sqrt_two_sq` with an
+  -- explicit coefficient `(M(0,1)(0,1) - M(0,1)(1,0) - M(1,0)(0,1) + M(1,0)(1,0))`.
+  -- Independent of `ring_nf`'s normalisation: the goal becomes a `ring` identity
+  -- in `(Real.sqrt 2 : ℂ)⁻¹` and the four `M` entries once the hypothesis is
+  -- subtracted off, which does not depend on whether the normal form picks
+  -- `c * c` or `c ^ 2` for the squared inverse.
+  linear_combination
+    (M (0,1) (0,1) - M (0,1) (1,0) - M (1,0) (0,1) + M (1,0) (1,0))
+      * inv_sqrt_two_sq
 
 /-! ### Pauli matrix entries (auxiliaries) -/
 

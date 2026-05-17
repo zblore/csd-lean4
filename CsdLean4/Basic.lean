@@ -20,4 +20,12 @@ explicitly. This file re-exports the deepest leaves of each layer:
 - `LF3.Interface` transitively pulls in the full LF3 chain (Setup, Hamiltonian,
   BranchSeparation, Projectors/*, Singlet/*, ContextMap) and re-exposes the four
   capstone theorems including the LF1↔LF2↔LF3 empirical chain.
+
+## Invariant
+
+Any new top-level module added to `CsdLean4.lean` (the canonical explicit list)
+must also be reachable from this file, either directly or transitively through
+one of the imports above. When a new sibling layer (e.g. `LF4.Interface`) lands,
+add it here as well. Failure to do so silently strands the layer for external
+consumers who `import CsdLean4.Basic` but not the canonical root.
 -/
