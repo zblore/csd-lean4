@@ -68,18 +68,21 @@ theorem hA_commute_hB {S : SystemApparatusSetup K_A K_B H_SA}
     `ProjectorAlgebra` (`LF3/Projectors/Core.lean`), this carries the
     composite-tensor-structure debt D4 / G6 in Lean form.
 
-    **v2 derivation target, partial.** The factorisation field
-    `factorises : ∀ x, u x = uA (uB x)` is feasible by the same
-    `TensorEmbedding K_A K_B H_SA` route used for `ProjectorAlgebra` in
-    `LF3/Projectors/TensorModel.lean`, extended with per-wing unitaries
-    `vA : K_A ≃ₗᵢ[ℂ] K_A`, `vB : K_B ≃ₗᵢ[ℂ] K_B` and a unitary-preserving
-    extension of `liftA`, `liftB`. This is an immediate follow-up to the
-    TensorModel module and remains scheduled. The eigenstate-action field
-    `action`, encoding the impulsive-readout idealisation, requires
-    `exp(-iHt)` machinery (operator exponential, Stone on bounded self-
-    adjoint operators); spec §9.5 explicitly carves this out of v1.00 and
-    LF4 or later is the natural home, gated on the operator-exponential
-    pickup. -/
+    **v2 derivation status, partial discharge landed.** The factorisation
+    field `factorises : ∀ x, u x = uA (uB x)` is now derivable via
+    `MeasurementUnitary.ofUnitaryTensorEmbedding` in
+    `LF3/Projectors/TensorModel.lean`. The constructor takes a
+    `UnitaryTensorEmbedding K_A K_B H_SA` (per-wing unitary lifts with
+    commuting images), per-wing unitaries `vA`, `vB`, the joint-eigenstate
+    / pointer-translation data, and the action proof; it defines
+    `u := (liftB_unitary vB).trans (liftA_unitary vA)` and discharges
+    `factorises` by `rfl`. The eigenstate-action field `action`, encoding
+    the impulsive-readout idealisation, requires `exp(-iHt)` machinery
+    (operator exponential, Stone on bounded self-adjoint operators); spec
+    §9.5 explicitly carves this out of v1.00 and LF4 or later is the
+    natural home, gated on the operator-exponential pickup. The abstract
+    `MeasurementUnitary` structure remains available for callers without a
+    tensor model. -/
 structure MeasurementUnitary (S : SystemApparatusSetup K_A K_B H_SA) where
   /-- The full measurement unitary on `H_SA`. -/
   u          : H_SA ≃ₗᵢ[ℂ] H_SA

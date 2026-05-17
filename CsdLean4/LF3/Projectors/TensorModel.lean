@@ -1,4 +1,5 @@
 import CsdLean4.LF3.Projectors.Core
+import CsdLean4.LF3.Hamiltonian
 
 /-!
 # LF3 Projectors / TensorModel: derive ProjectorAlgebra from a tensor structure
@@ -235,6 +236,81 @@ def ProjectorAlgebra.ofTensorEmbedding
         T.liftA_one, T.liftB_one]
     -- Goal: (1 : H_SA →L[ℂ] H_SA) ∘L 1 = 1
     exact one_mul _
+
+/-! ### UnitaryTensorEmbedding and the MeasurementUnitary factorisation
+
+The same bipartite tensor-factor structure of `H_SA`, in its unitary form:
+per-wing unitaries `vA : K_A ≃ₗᵢ[ℂ] K_A` and `vB : K_B ≃ₗᵢ[ℂ] K_B` lift to
+`H_SA ≃ₗᵢ[ℂ] H_SA` through unitary-preserving extensions of the
+TensorEmbedding's algebra-homomorphism lifts.
+
+Used to derive `MeasurementUnitary.factorises` (`u x = uA (uB x)`) from
+the definition `u := uB.trans uA`. The eigenstate-action field
+(`action`) remains data per spec §9.5 carve-out (operator-exponential
+machinery).
+
+The commutation condition `liftA_unitary vA` and `liftB_unitary vB`
+commute is the unitary analogue of `TensorEmbedding.liftA_liftB_commute`:
+tensor-factor independence at the unitary level. It is physically
+required (per-wing unitaries act on independent Hilbert factors and
+therefore commute) and is included for fidelity, even though
+`MeasurementUnitary.factorises` itself does not consume it.
+
+A `UnitaryTensorEmbedding` is intentionally a standalone structure rather
+than an extension of `TensorEmbedding`: callers needing only the operator
+algebra-hom (e.g. the `ProjectorAlgebra` derivation above) should not be
+required to supply unitary lifts as well. Future work that needs a
+single coherent abstraction (with `(liftA_unitary v).toContinuousLinearMap
+= liftA v.toContinuousLinearMap` as a coherence field) can combine the
+two; the current split keeps preconditions minimal.
+-/
+
+/-- Unitary bipartite tensor-factor structure on `H_SA`. Per-wing
+    unitaries lift to `H_SA`-unitaries; A-wing and B-wing lifts commute. -/
+structure UnitaryTensorEmbedding (K_A K_B H_SA : Type*)
+    [NormedAddCommGroup K_A] [InnerProductSpace ℂ K_A] [FiniteDimensional ℂ K_A]
+    [NormedAddCommGroup K_B] [InnerProductSpace ℂ K_B] [FiniteDimensional ℂ K_B]
+    [NormedAddCommGroup H_SA] [InnerProductSpace ℂ H_SA] [FiniteDimensional ℂ H_SA]
+    where
+  /-- Lift of A-wing unitary. -/
+  liftA_unitary : (K_A ≃ₗᵢ[ℂ] K_A) → (H_SA ≃ₗᵢ[ℂ] H_SA)
+  /-- Lift of B-wing unitary. -/
+  liftB_unitary : (K_B ≃ₗᵢ[ℂ] K_B) → (H_SA ≃ₗᵢ[ℂ] H_SA)
+  /-- A-wing and B-wing unitary lifts commute (tensor-factor independence at
+      the unitary level; physically required because per-wing unitaries act
+      on independent Hilbert factors). -/
+  liftA_liftB_unitary_commute : ∀ (vA : K_A ≃ₗᵢ[ℂ] K_A) (vB : K_B ≃ₗᵢ[ℂ] K_B),
+    (liftA_unitary vA).trans (liftB_unitary vB)
+      = (liftB_unitary vB).trans (liftA_unitary vA)
+
+/-- MeasurementUnitary from a UnitaryTensorEmbedding plus per-wing
+    unitaries plus the joint-eigenstate / pointer-translation data.
+
+    The full unitary is defined as `u := (liftB_unitary vB).trans
+    (liftA_unitary vA)`. The `factorises` field then follows by definition
+    of `LinearIsometryEquiv.trans`, discharged here as `rfl` (no separate
+    proof needed). The `action` field remains caller-supplied per spec
+    §9.5: it encodes the impulsive-readout idealisation and requires
+    operator-exponential / Stone machinery, which is LF4-or-later. -/
+def MeasurementUnitary.ofUnitaryTensorEmbedding
+    {S : SystemApparatusSetup K_A K_B H_SA}
+    (T : UnitaryTensorEmbedding K_A K_B H_SA)
+    (vA : K_A ≃ₗᵢ[ℂ] K_A) (vB : K_B ≃ₗᵢ[ℂ] K_B)
+    (jointEig : Sign × Sign → K_A → K_B → H_SA)
+    (ptrTransA : Sign → K_A → K_A)
+    (ptrTransB : Sign → K_B → K_B)
+    (action : ∀ s t φA φB,
+       T.liftA_unitary vA (T.liftB_unitary vB (jointEig (s, t) φA φB))
+         = jointEig (s, t) (ptrTransA s φA) (ptrTransB t φB)) :
+    MeasurementUnitary S where
+  u := (T.liftB_unitary vB).trans (T.liftA_unitary vA)
+  uA := T.liftA_unitary vA
+  uB := T.liftB_unitary vB
+  factorises := fun _ => rfl
+  jointEig := jointEig
+  ptrTransA := ptrTransA
+  ptrTransB := ptrTransB
+  action := action
 
 end LF3
 end CSD
