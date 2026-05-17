@@ -12,8 +12,9 @@ Defines the foundational types (Sign, DetectorSetting), the abstract
 pointer-readout and system-apparatus interfaces, and the concrete two-qubit
 Pauli / spin-projector layer used by `Singlet/*`. The setup-level matrix
 identities (§2.8: `pauliDot_isHermitian`, `pauliDot_sq`, `spinProj_idem`,
-etc.) are placeholders pending proof; they have stable signatures so
-downstream modules can be drafted in parallel.
+`spinProj_isHermitian`, `spinProj_complete`) are proved below from
+`DetectorSetting.sum_sq_components_eq_one`, `Sign.val_mul_self`, and 2×2
+matrix arithmetic.
 -/
 
 open Matrix Kronecker

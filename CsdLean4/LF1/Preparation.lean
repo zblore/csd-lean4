@@ -41,38 +41,47 @@ lemma prepMeasure_toMeasure_eq :
       (((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure Sigma).normalize :
         MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) := rfl
 
+/-- The mass of `prepFiniteMeasure`, coerced to `ENNReal`, equals `µL(Ω0)`.
+Isolated so a Mathlib refactor of `FiniteMeasure.ennreal_mass` or
+`Measure.restrict_apply` lands in one place. -/
+lemma prepFiniteMeasure_mass_eq :
+    (S.prepFiniteMeasure.mass : ENNReal) = (S.μL : Measure Sigma) S.Ω0 := by
+  rw [FiniteMeasure.ennreal_mass, prepFiniteMeasure_toMeasure,
+      Measure.restrict_apply MeasurableSet.univ, Set.univ_inter]
+
+/-- `prepFiniteMeasure` is nonzero as a finite measure, and its mass is nonzero
+as an `ℝ≥0`. Both facts are needed by `prepMeasure_apply`; bundling them isolates
+the dependency on `FiniteMeasure.mass_nonzero_iff`. -/
+lemma prepFiniteMeasure_ne_zero_pair :
+    S.prepFiniteMeasure ≠ 0 ∧ S.prepFiniteMeasure.mass ≠ 0 := by
+  refine ⟨?_, ?_⟩
+  · exact fun h => S.prepFiniteMeasure_ne_zero (congrArg FiniteMeasure.toMeasure h)
+  · exact S.prepFiniteMeasure.mass_nonzero_iff.mpr
+      (fun h => S.prepFiniteMeasure_ne_zero (congrArg FiniteMeasure.toMeasure h))
+
 /--
 The preparation probability measure applied to a measurable set equals the
 Liouville measure of the intersection with `Ω0`, divided by `µL(Ω0)`.
 
 This is the explicit rewriting formula `µprep(A) = µL(A ∩ Ω0) / µL(Ω0)` that
 Section 4.2 of the LF1 paper identifies as infrastructure for the wider Lean branch.
+
+The proof routes through three named intermediate facts
+(`prepMeasure_toMeasure_eq`, `prepFiniteMeasure_toMeasure`,
+`prepFiniteMeasure_mass_eq`) and three Mathlib lemmas
+(`toMeasure_normalize_eq_of_nonzero`, `Measure.smul_apply`,
+`Measure.restrict_apply`). A future Mathlib rename of any of the latter is
+localised to this one proof.
 -/
 lemma prepMeasure_apply (A : Set Sigma) (hA : MeasurableSet A) :
     ((S.prepMeasure : MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) A =
       (S.μL : Measure Sigma) (A ∩ S.Ω0) / (S.μL : Measure Sigma) S.Ω0 := by
-  have hne_fm : S.prepFiniteMeasure ≠ 0 := fun h =>
-    S.prepFiniteMeasure_ne_zero (congrArg FiniteMeasure.toMeasure h)
-  have hmass_ne : S.prepFiniteMeasure.mass ≠ 0 :=
-    S.prepFiniteMeasure.mass_nonzero_iff.mpr hne_fm
-  have hmass_eq : (S.prepFiniteMeasure.mass : ENNReal) = (S.μL : Measure Sigma) S.Ω0 := by
-    rw [FiniteMeasure.ennreal_mass, prepFiniteMeasure_toMeasure,
-        Measure.restrict_apply MeasurableSet.univ, Set.univ_inter]
-  -- Rewrite chain:
-  -- (1) prepMeasure_toMeasure_eq        : unfold prepMeasure as normalization of prepFiniteMeasure
-  -- (2) toMeasure_normalize_eq_of_nonzero: normalized(μ)(A) = mass(μ)⁻¹ • μ(A)
-  -- (3) Measure.smul_apply              : evaluate the scalar-multiple measure at A
-  -- (4) prepFiniteMeasure_toMeasure     : unfold prepFiniteMeasure as μL restricted to Ω0
-  -- (5) Measure.restrict_apply hA       : (μL|Ω0)(A) = μL(A ∩ Ω0)
-  -- (6) ENNReal.smul_def, smul_eq_mul   : convert ℝ≥0 scalar action to ENNReal multiplication
-  -- (7) ENNReal.div_eq_inv_mul          : rewrite a / b as b⁻¹ * a to match the LHS shape
-  -- (8) ENNReal.coe_inv hmass_ne        : ↑(mass⁻¹ : ℝ≥0) = (↑mass : ENNReal)⁻¹
-  -- (9) hmass_eq                        : substitute ↑mass = μL(Ω0)
+  obtain ⟨hne_fm, hmass_ne⟩ := S.prepFiniteMeasure_ne_zero_pair
   rw [prepMeasure_toMeasure_eq,
       FiniteMeasure.toMeasure_normalize_eq_of_nonzero S.prepFiniteMeasure hne_fm,
       Measure.smul_apply, prepFiniteMeasure_toMeasure, Measure.restrict_apply hA,
       ENNReal.smul_def, smul_eq_mul,
-      ENNReal.div_eq_inv_mul, ENNReal.coe_inv hmass_ne, hmass_eq]
+      ENNReal.div_eq_inv_mul, ENNReal.coe_inv hmass_ne, S.prepFiniteMeasure_mass_eq]
 
 end OnticSetup
 

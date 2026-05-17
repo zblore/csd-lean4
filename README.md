@@ -217,33 +217,97 @@ Implemented in `CsdLean4/LF2/Interface.lean`:
 
 The second is the point at which LF2 genuinely consumes LF1 at the theorem level, not merely by structural embedding.
 
+## LF3: singlet kernel, pointer-sector decomposition, and the LF1↔LF2↔LF3 empirical chain
+
+LF3 sits directly on top of LF2. It instantiates the abstract Born-weight machinery on the concrete two-qubit singlet, derives the singlet kernel `P_st(a, b) = (1 − s·t·a·b)/4` together with its four operational consequences, proves finite-leakage stability of all four, and exposes the headline LF1↔LF2↔LF3 empirical chain capstones.
+
+### What LF3 delivers
+
+1. **Singlet kernel and operational consequences** (§9.13). For Bell singlet `|ψ⁻⟩`, detector settings `a, b : DetectorSetting`, and outcome signs `s, t : Sign`:
+   - kernel `P_st(a, b) = (1 − s·t·a·b)/4`,
+   - correlation `∑ s·t·P_st = −a·b`,
+   - A- and B-marginals `1/2`,
+   - operational no-signalling on each side,
+   - pointer-completeness on each wing.
+   All eight are bundled in `LF3_main_theorem`.
+
+2. **Finite-leakage stability** (§9.13 + §7). Under per-side leakage parameters `εA, εB`, each of the four quantities (pointer-sector probability, correlation, A-marginal, B-marginal) deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors 1, 4, 2, 2). Strong-readout exactness is the `εA = εB = 0` limit.
+
+3. **Born quadratic form on the singlet.** The closed-form amplitude `cAmp s t (a, b) := √P_st` satisfies `‖cAmp‖² = P_st`. Under the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` for a caller-supplied unit vector `v` (a joint spin eigenstate), `‖cAmp‖² = ‖⟨v, ψ⁻⟩‖²`.
+
+4. **LF1↔LF2↔LF3 empirical chain capstones.** Composing `LF1_main_theorem_ae` + `lf1_weight_eq_projective_weight` + `cst_squared_eq`:
+   - `LF3_singlet_frequency_convergence` — pre-Born form. Empirical frequencies of pointer outcomes `(s, t)` under repeated preparation converge almost surely to `P_st(a, b) = (1 − s·t·a·b)/4`.
+   - `LF3_singlet_frequency_convergence_born` — closed-form Born variant landing on `‖cAmp s t (a, b)‖²`.
+   - `LF3_singlet_frequency_convergence_born_inner` — physically faithful bra-ket variant landing on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`.
+
+All three capstones consume an external `hLF2` hypothesis relating the projective weight of the pointer-sector outcome region to `ENNReal.ofReal P_st`. This is the LF2↔LF3 boundary discharged by LF4-todo §2 (preparation ↔ Hilbert) + §7 (projective-first outcomes).
+
+### LF3 axiom posture
+
+LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`). The three LF2 axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`, `rankOneDensity_unique_of_certainty`) are not invoked anywhere in LF3's exports: the singlet is concretely given as a Hilbert vector rather than extracted from a Busch operational package, and the pre-Born capstone routes around the Born wrapper entirely. `#print axioms LF3_main_theorem` and `#print axioms LF3_singlet_frequency_convergence_born_inner` both legibly return the foundational triple only.
+
+### Design choices in LF3
+
+- `Sign` is a two-element inductive `| plus | minus` (spec §9.4), with `val : Sign → ℝ` giving `±1`.
+- The two-qubit factor `HAB` is `EuclideanSpace ℂ (Fin 2 × Fin 2)` (matching the indexing on `pauliDot ⊗ pauliDot`).
+- `MeasurementUnitary` carries the full and per-wing unitaries as `LinearIsometryEquiv`, encoding unitarity in the type.
+- `cAmp` is defined in closed form as `(Real.sqrt (P_st a b s t) : ℂ)`. This sidesteps the explicit construction of joint spin eigenstates; downstream theorems consume only `‖cAmp‖²`. The bra-ket equivalence is exposed via `cAmp_norm_sq_eq_inner_norm_sq` under a rank-1 projector hypothesis on `jointSpinProj`.
+- Self-adjointness on continuous linear maps is stated via the inner-product equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` rather than Mathlib's `IsSelfAdjoint T`. This is forced: `Star (H →L[ℂ] H)` typeclass synthesis on a finite-dim complex inner-product space fails even with `Mathlib.Analysis.InnerProductSpace.Adjoint` imported. The inner-product spelling is mathematically equivalent and avoids the synthesis dead-end.
+- `ProjectorAlgebra` is taken as axiomatised structural data (the four pointer-sector projectors satisfy the four projection identities as fields). Deriving it from a concrete tensor-factor decomposition is a v2 task.
+
+### What LF3 does not prove
+
+- The preparation-to-Hilbert-vector correspondence needed to discharge `hLF2` (LF4-todo §2);
+- a projective-first outcome specification that would make `hLF2` unnecessary (LF4-todo §7);
+- the constructed joint spin eigenstate `jointSpinEig` (currently the `_inner` capstone takes `v` as an external parameter; v2 plan: spectral decomposition of `jointSpinProj`);
+- mixed states, POVMs, subsystem reduction, sequential update (LF4/LF5 territory).
+
 ## Repository structure
 
 ```text
 CsdLean4/
   LF1/
-    Setup.lean         -- ontic space, μL, Φ, Ω0
-    Preparation.lean   -- conditional preparation measure + prepMeasure_apply
-    Outcomes.lean      -- outcome regions, weights
-    Trials.lean        -- TrialModel: i.i.d. repeated-trial probability space
-    Indicators.lean    -- indicatorRV, empiricalFreq
-    Expectation.lean   -- E[indicator] = weightReal bridge
-    Convergence.lean   -- strong law of large numbers application
-    MainTheorem.lean   -- LF1 main theorem and corollaries
+    Setup.lean              -- ontic space, μL, Φ, Ω0
+    Preparation.lean        -- conditional preparation measure + prepMeasure_apply
+    Outcomes.lean           -- outcome regions, weights
+    Trials.lean             -- TrialModel: i.i.d. repeated-trial probability space
+    Indicators.lean         -- indicatorRV, empiricalFreq
+    Expectation.lean        -- E[indicator] = weightReal bridge
+    Convergence.lean        -- strong law of large numbers application
+    MainTheorem.lean        -- LF1 main theorem and corollaries
   LF2/
-    Setup.lean         -- SectorData: OnticSetup + π + G-action (with coherence)
-    MeasureBridge.lean -- pushforward, invariance transfer, measure_bridge theorem
-    Weights.lean       -- MeasurablePartition, projectiveWeight, normalisation
-    BornWrapper.lean   -- Effect, DensityOperator, Busch axiom, Born quadratic
-    Interface.lean     -- LF1 ↔ LF2 identity + combined LF1+LF2 theorem
-  Basic.lean           -- Pkg.Basic convenience re-export
-CsdLean4.lean          -- canonical top-level import (explicit module list)
+    Setup.lean              -- SectorData: OnticSetup + π + G-action (with coherence)
+    MeasureBridge.lean      -- pushforward, invariance transfer, measure_bridge theorem
+    Weights.lean            -- MeasurablePartition, projectiveWeight, normalisation
+    BornWrapper.lean        -- Effect, DensityOperator, Busch axiom, Born quadratic
+    Interface.lean          -- LF1 ↔ LF2 identity + combined LF1+LF2 theorem
+  LF3/
+    Setup.lean              -- Sign, DetectorSetting, pauliDot, spinProj, jointSpinProj
+    Hamiltonian.lean        -- TensorFactorReadoutAlgebra, MeasurementUnitary
+    BranchSeparation.lean   -- branchState, finalState, pointer overlaps, leakage bound
+    Projectors/
+      Core.lean             -- ProjectorAlgebra, mHat, projection field re-exports
+      BranchWeight.lean     -- branchWeight, StrongReadoutCompat, LeakageCompat
+      LF2Interface.lean     -- branchWeight_eq_LF2_Born (LF3 → LF2 Born-form bridge)
+    Singlet/
+      State.lean            -- singlet, singlet_norm, expectation
+      Expectations.lean     -- ⟨ψ⁻|σ·a ⊗ I|ψ⁻⟩, ⟨ψ⁻|I ⊗ σ·b|ψ⁻⟩, ⟨ψ⁻|σ·a ⊗ σ·b|ψ⁻⟩
+      Kernel.lean           -- P_st, cAmp, cst_squared_eq, correlation/marginals
+      Leakage.lean          -- finite-leakage versions of all four quantities
+    ContextMap.lean         -- MeasurementContext, GlobalCHSHAssignment, six context-form theorems
+    Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
+                            --   LF3_singlet_frequency_convergence (+ Born, + inner variants)
+  Basic.lean                -- Pkg.Basic convenience re-export
+CsdLean4.lean               -- canonical top-level import (explicit module list)
 specs/
-  LF1-v1.01.pdf        -- LF1 preprint (canonical)
-  LF1-v1.01.txt        -- extracted plain-text sidecar
-  LF1-plan.md          -- retrospective design record
-  LF2-v1.00.pdf        -- LF2 preprint (canonical)
-  LF2-v1.00.txt        -- extracted plain-text sidecar
-  LF2-plan.md          -- implementation plan
-  LF4-todo.md          -- eight items deferred from LF2 to LF4
+  LF1-v1.01.pdf             -- LF1 preprint (canonical)
+  LF1-v1.01.txt             -- extracted plain-text sidecar
+  LF1-plan.md               -- retrospective design record
+  LF2-v1.00.pdf             -- LF2 preprint (canonical)
+  LF2-v1.00.txt             -- extracted plain-text sidecar
+  LF2-plan.md               -- implementation plan
+  LF3-v1.00.pdf             -- LF3 preprint (canonical)
+  LF3-v1.00.txt             -- extracted plain-text sidecar
+  LF3-plan.md               -- implementation plan
+  LF4-todo.md               -- eight items deferred from LF2 (and LF3) to LF4
 ```

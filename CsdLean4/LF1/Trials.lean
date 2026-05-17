@@ -46,15 +46,6 @@ variable {S}
 variable {Ω : Type*} [MeasurableSpace Ω]
 variable (T : S.TrialModel Ω)
 
-/-- The law of the `n`-th trial random variable. -/
-noncomputable def law (n : ℕ) : Measure Sigma :=
-  Measure.map (T.X n) ((T.P : ProbabilityMeasure Ω) : Measure Ω)
-
-@[simp]
-lemma law_eq_prepMeasure (n : ℕ) :
-    T.law n = ((S.prepMeasure : ProbabilityMeasure Sigma) : Measure Sigma) :=
-  T.hLaw n
-
 @[simp]
 lemma measurable_X (n : ℕ) : Measurable (T.X n) :=
   T.hX_measurable n

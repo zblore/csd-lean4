@@ -210,7 +210,7 @@ Singlet/
   State.lean            — singlet, singlet_norm, expectation
   Expectations.lean     — singlet_left/right_pauli_expectation_zero,
                           singlet_pauli_correlation,
-                          expectation_formula (helper, 1 sorry placeholder)
+                          expectation_formula (helper, fully proved)
   Kernel.lean           — dotR, P_st, cAmp (closed-form sqrt definition),
                           cst_squared_eq (algebraic core, derived from
                           closed-form cAmp), correlation_eq_neg_dot,
