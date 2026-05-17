@@ -59,20 +59,16 @@ lemma prepFiniteMeasure_ne_zero_pair :
   · exact S.prepFiniteMeasure.mass_nonzero_iff.mpr
       (fun h => S.prepFiniteMeasure_ne_zero (congrArg FiniteMeasure.toMeasure h))
 
-/--
-The preparation probability measure applied to a measurable set equals the
-Liouville measure of the intersection with `Ω0`, divided by `µL(Ω0)`.
-
-This is the explicit rewriting formula `µprep(A) = µL(A ∩ Ω0) / µL(Ω0)` that
-Section 4.2 of the LF1 paper identifies as infrastructure for the wider Lean branch.
+/-- The preparation probability measure applied to a measurable set `A`
+equals the Liouville measure of `A ∩ Ω0` divided by `µL(Ω0)`. Explicit
+form of the conditional preparation measure (Paper A §4.2).
 
 The proof routes through three named intermediate facts
 (`prepMeasure_toMeasure_eq`, `prepFiniteMeasure_toMeasure`,
-`prepFiniteMeasure_mass_eq`) and three Mathlib lemmas
+`prepFiniteMeasure_mass_eq`) plus three Mathlib lemmas
 (`toMeasure_normalize_eq_of_nonzero`, `Measure.smul_apply`,
-`Measure.restrict_apply`). A future Mathlib rename of any of the latter is
-localised to this one proof.
--/
+`Measure.restrict_apply`), so a future Mathlib rename of any one is
+localised to this proof. -/
 lemma prepMeasure_apply (A : Set SigmaSpace) (hA : MeasurableSet A) :
     ((S.prepMeasure : MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) A =
       (S.μL : Measure SigmaSpace) (A ∩ S.Ω0) / (S.μL : Measure SigmaSpace) S.Ω0 := by

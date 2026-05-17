@@ -111,15 +111,16 @@ theorem expectation_constant_across_trials
 
 end TrialModel
 
-/--
-A convenient top-level alias for the LF1 theorem.
+/-- **LF1 main theorem.** For a fixed outcome region `O`, the empirical
+frequency of `O` over repeated trials converges almost surely to the
+real-valued normalised ontic weight `O.weightReal`.
 
-This is the statement most closely matching the manuscript:
-empirical frequencies converge almost surely to the real-valued normalised ontic weight.
+The only caller-supplied hypothesis is pairwise independence of the trial
+indicator random variables. Integrability and identical distribution follow
+automatically from the `TrialModel` structure.
 
-The only non-trivial hypothesis is pairwise independence of the trial random variables.
-Integrability and identical distribution follow automatically from the model.
--/
+Top-level alias for `TrialModel.main_theorem_ae` matching the manuscript
+statement of Paper A. -/
 theorem LF1_main_theorem_ae
     {Ω : Type*} [MeasurableSpace Ω]
     (T : S.TrialModel Ω)
