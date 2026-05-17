@@ -138,8 +138,8 @@ The `hLF2` hypothesis supplies the LF2/LF3 connection at the rank-1 singlet;
 it is the composition of LF4-todo §2 (preparation ↔ Hilbert correspondence)
 and LF4-todo §7 (projective-first outcomes) — see `specs/LF4-todo.md`. -/
 
-variable {Sigma P G : Type*}
-  [MeasurableSpace Sigma] [Nonempty Sigma]
+variable {SigmaSpace P G : Type*}
+  [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
 
@@ -155,7 +155,7 @@ variable {Sigma P G : Type*}
     - and (the `hLF2` external hypothesis) the LF2 ↔ LF3 weight identity
       relating `projectiveWeight (O_st s t)` to `P_st ctx.a ctx.b s t`. -/
 theorem LF3_singlet_frequency_convergence
-    (D : CSD.LF2.SectorData Sigma P G)
+    (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext)
@@ -171,7 +171,7 @@ theorem LF3_singlet_frequency_convergence
     (hLF2 : ∀ s t,
        CSD.LF2.projectiveWeight D
          ((D.toOntic.prepMeasure :
-             MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+             MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
          (O_st s t)
        = ENNReal.ofReal (P_st ctx.a ctx.b s t)) :
     ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
@@ -192,7 +192,7 @@ theorem LF3_singlet_frequency_convergence
     `‖⟨v, ψ⁻⟩‖²` is recovered by `LF3_singlet_frequency_convergence_born_inner`
     below, given an actual joint spin eigenstate `v`. -/
 theorem LF3_singlet_frequency_convergence_born
-    (D : CSD.LF2.SectorData Sigma P G)
+    (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext)
@@ -208,7 +208,7 @@ theorem LF3_singlet_frequency_convergence_born
     (hLF2 : ∀ s t,
        CSD.LF2.projectiveWeight D
          ((D.toOntic.prepMeasure :
-             MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+             MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
          (O_st s t)
        = ENNReal.ofReal (P_st ctx.a ctx.b s t)) :
     ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
@@ -234,7 +234,7 @@ theorem LF3_singlet_frequency_convergence_born
     RHS `‖⟨v, ψ⁻⟩‖²` is a genuine Hilbert-space inner product, not a
     closed-form repackaging. -/
 theorem LF3_singlet_frequency_convergence_born_inner
-    (D : CSD.LF2.SectorData Sigma P G)
+    (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext)
@@ -250,7 +250,7 @@ theorem LF3_singlet_frequency_convergence_born_inner
     (hLF2 : ∀ s t,
        CSD.LF2.projectiveWeight D
          ((D.toOntic.prepMeasure :
-             MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+             MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
          (O_st s t)
        = ENNReal.ofReal (P_st ctx.a ctx.b s t))
     (jointSpinEig : Sign → Sign → EuclideanSpace ℂ (Fin 2 × Fin 2))

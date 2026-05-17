@@ -21,7 +21,7 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] (S : OnticSetup SigmaSpace)
 
 namespace TrialModel
 
@@ -117,7 +117,7 @@ lemma indicatorRV_identDistrib (O : S.OutcomeRegion) (n : ℕ) :
       (T.indicatorRV (S := S) O 0)
       ((T.P : ProbabilityMeasure Ω) : Measure Ω)
       ((T.P : ProbabilityMeasure Ω) : Measure Ω) := by
-  -- Strategy: factor indicatorRV O m = f ∘ X m, where f is the fixed Sigma-valued indicator.
+  -- Strategy: factor indicatorRV O m = f ∘ X m, where f is the fixed SigmaSpace-valued indicator.
   -- Then identical distribution of X n and X 0 (both have law prepMeasure, by T.hLaw)
   -- lifts to identical distribution of f ∘ X n and f ∘ X 0 via IdentDistrib.comp.
   let f := Set.indicator (O.preEvent (S := S)) (fun _ => (1 : ℝ))

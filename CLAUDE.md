@@ -136,7 +136,7 @@ not a narrative corollary.
 
 **LF2 design choices:**
 
-- `SectorData` is parametric in an abstract `(Sigma, P, G)`. The projective
+- `SectorData` is parametric in an abstract `(SigmaSpace, P, G)`. The projective
   target `P` is **not** specialised to Mathlib's `Projectivization`; no
   Fubini–Study measure is constructed. Concrete instantiation is deferred to
   LF4+.
@@ -302,6 +302,6 @@ starting LF4 work.
 - `sorry`-free proofs are required; `lake build` failing or any `sorry` means the formalization is incomplete.
 - Mathlib's `MeasureTheory` namespace is used throughout. Lean elaboration order matters — structure field order in `OnticSetup` and `TrialModel` is load-bearing.
 - When adding new lemmas, place them in the module where their primary definition lives; keep the dependency chain linear (no circular imports).
-- `hΩ0_nonzero : (μL : Measure Sigma) Ω0 ≠ 0` is a hypothesis threaded through many definitions — it prevents division-by-zero in `prepMeasure` and is required wherever conditional measure values are rewritten.
+- `hΩ0_nonzero : (μL : Measure SigmaSpace) Ω0 ≠ 0` is a hypothesis threaded through many definitions — it prevents division-by-zero in `prepMeasure` and is required wherever conditional measure values are rewritten.
 - `hΦ_pres : MeasurePreserving Φ μL μL` (Liouville's theorem) is structural ontic input on `OnticSetup`, but inside LF1, LF2, and LF3 **only its measurability content is used** (extracted via `measurable_Φ`). Grep confirms no current proof in the corpus invokes the preservation content. The full property is carried for physical admissibility of the ontic model and becomes load-bearing only when LF4 derives `μL` from a concrete symplectic / Kähler volume form. Until then `hΦ_pres` is structural payload; the LF1 proof is strictly more general than the physical reading suggests. See the `OnticSetup` module docstring in `LF1/Setup.lean` for the honest disclosure.
-- `Sigma` in `OnticSetup` is an abstract `MeasurableSpace` — it is **not** specialised to `ℝ^{2n}`, a symplectic manifold, or any concrete phase space. Do not add assumptions that implicitly assume one; concrete instantiation is LF2's job.
+- `SigmaSpace` in `OnticSetup` is an abstract `MeasurableSpace` — it is **not** specialised to `ℝ^{2n}`, a symplectic manifold, or any concrete phase space. Do not add assumptions that implicitly assume one; concrete instantiation is LF2's job.

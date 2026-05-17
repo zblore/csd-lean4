@@ -44,22 +44,22 @@ open MeasureTheory
 /-- LF2 sector data: LF1 ontic setup + measurable projection π : Σ → P +
     measurable G-actions on Σ and P with invariance of μL and equivariance of π. -/
 structure SectorData
-    (Sigma P G : Type*)
-    [MeasurableSpace Sigma] [Nonempty Sigma]
+    (SigmaSpace P G : Type*)
+    [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
     [MeasurableSpace P]
     [Group G] where
   /-- Underlying LF1 ontic setup. -/
-  toOntic       : CSD.LF1.OnticSetup Sigma
+  toOntic       : CSD.LF1.OnticSetup SigmaSpace
   /-- The epistemic projection. -/
-  π             : Sigma → P
+  π             : SigmaSpace → P
   measurable_π  : Measurable π
   /-- Lifted G-action on Σ (measurable equivalences). -/
-  onticAction   : G → Sigma ≃ᵐ Sigma
+  onticAction   : G → SigmaSpace ≃ᵐ SigmaSpace
   /-- G-action on P. -/
   epAction      : G → P ≃ᵐ P
   /-- μL is invariant under the Σ-action. -/
   hμL_inv       : ∀ g, MeasurePreserving (onticAction g)
-                          (toOntic.μL : Measure Sigma) (toOntic.μL : Measure Sigma)
+                          (toOntic.μL : Measure SigmaSpace) (toOntic.μL : Measure SigmaSpace)
   /-- π intertwines the two actions. -/
   hπ_equiv      : ∀ g x, π (onticAction g x) = epAction g (π x)
 ```
@@ -76,15 +76,15 @@ Four pieces:
 **(a) Pushforward rewrite.** Thin wrapper over `MeasureTheory.Measure.map_apply`:
 ```lean
 lemma pushforward_apply
-    (D : SectorData Sigma P G) (A : Set P) (hA : MeasurableSet A) :
-    (Measure.map D.π (D.toOntic.μL : Measure Sigma)) A
-      = (D.toOntic.μL : Measure Sigma) (D.π ⁻¹' A) := ...
+    (D : SectorData SigmaSpace P G) (A : Set P) (hA : MeasurableSet A) :
+    (Measure.map D.π (D.toOntic.μL : Measure SigmaSpace)) A
+      = (D.toOntic.μL : Measure SigmaSpace) (D.π ⁻¹' A) := ...
 ```
 
 **(b) Preimage-action identity (spec Lemma 1).**
 ```lean
 lemma preimage_action_eq
-    (D : SectorData Sigma P G) (g : G) (A : Set P) :
+    (D : SectorData SigmaSpace P G) (g : G) (A : Set P) :
     D.π ⁻¹' (D.epAction g '' A) = (D.onticAction g) '' (D.π ⁻¹' A)
 ```
 Direct from `hπ_equiv` + bijectivity of `onticAction g`.
@@ -92,7 +92,7 @@ Direct from `hπ_equiv` + bijectivity of `onticAction g`.
 **(c) Invariance transfer (spec Lemma 2).** `π*μL` is `epAction`-invariant.
 ```lean
 lemma pushforward_epAction_invariant
-    (D : SectorData Sigma P G) (g : G) :
+    (D : SectorData SigmaSpace P G) (g : G) :
     MeasurePreserving (D.epAction g)
       (Measure.map D.π D.toOntic.μL) (Measure.map D.π D.toOntic.μL)
 ```
@@ -112,7 +112,7 @@ axiom invariant_measure_uniqueness
     ∃ c : ℝ≥0∞, μ = c • μFS
 
 theorem measure_bridge
-    (D : SectorData Sigma P G)
+    (D : SectorData SigmaSpace P G)
     (μFS : Measure P) [IsProbabilityMeasure μFS]
     (hμFS_inv : ∀ g, MeasurePreserving (D.epAction g) μFS μFS) :
     ∃ c : ℝ≥0∞, Measure.map D.π D.toOntic.μL = c • μFS
@@ -133,8 +133,8 @@ structure MeasurablePartition (P : Type*) [MeasurableSpace P] (μFS : Measure P)
 
 /-- Projective weight of outcome region O under the pushforward of a preparation. -/
 noncomputable def projectiveWeight
-    (D : SectorData Sigma P G)
-    (μprep : Measure Sigma)
+    (D : SectorData SigmaSpace P G)
+    (μprep : Measure SigmaSpace)
     (O : Set P) : ℝ≥0∞ :=
   (Measure.map D.π μprep) O
 
@@ -143,8 +143,8 @@ lemma projectiveWeight_nonneg : ... -- trivial, here for completeness
 
 /-- Weights sum to 1 when μprep is a probability measure and the partition covers. -/
 theorem weights_sum_eq_one
-    (D : SectorData Sigma P G) {n : ℕ}
-    (μprep : Measure Sigma) [IsProbabilityMeasure μprep]
+    (D : SectorData SigmaSpace P G) {n : ℕ}
+    (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
     (π_part : MeasurablePartition P (Measure.map D.π μprep) n) :
     ∑ i, projectiveWeight D μprep (π_part.parts i) = 1
 ```
@@ -300,8 +300,8 @@ The cleanest theorem in the stack:
 /-- The LF1 ontic weight of a pulled-back outcome region equals the LF2
     projective weight of that region. Immediate from `Measure.map_apply`. -/
 theorem lf1_weight_eq_projective_weight
-    (D : SectorData Sigma P G)
-    (μprep : Measure Sigma)
+    (D : SectorData SigmaSpace P G)
+    (μprep : Measure SigmaSpace)
     (Oep : Set P) (hOep : MeasurableSet Oep) :
     μprep (D.π ⁻¹' Oep) = projectiveWeight D μprep Oep := by
   simp [projectiveWeight, Measure.map_apply D.measurable_π hOep]

@@ -942,7 +942,7 @@ Capstone theorem packaging the chain:
     M_{st}-effect, which equals the LF1 a.s. limit of repeated-trial
     indicator frequencies for the pulled-back outcome region. -/
 theorem LF3_singlet_frequency_convergence
-    (D : CSD.LF2.SectorData Sigma P G)
+    (D : CSD.LF2.SectorData SigmaSpace P G)
     (ctx : MeasurementContext)
     -- LF1 trial model produced by the LF3 measurement setup:
     (T : CSD.LF1.OnticSetup.TrialModel D.toOntic)
@@ -981,7 +981,7 @@ The pre-Born capstone above lands on the real number `(1 − st a·b)/4`. A sepa
     definitional unfolding of `cAmp`. Axiom-clean from the LF3 side; does
     not consume `LF2.pure_state_born_weights_of_certainty`. -/
 theorem LF3_singlet_frequency_convergence_born
-    (D : CSD.LF2.SectorData Sigma P G)
+    (D : CSD.LF2.SectorData SigmaSpace P G)
     (ctx : MeasurementContext)
     (T : CSD.LF1.OnticSetup.TrialModel D.toOntic)
     (O_st : Sign → Sign → Set P)

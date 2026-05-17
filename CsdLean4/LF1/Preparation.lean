@@ -9,43 +9,43 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] (S : OnticSetup SigmaSpace)
 
 /-- The finite measure obtained by restricting `μL` to the preparation region `Ω0`. -/
-noncomputable def prepFiniteMeasure : MeasureTheory.FiniteMeasure Sigma :=
-  ⟨((S.μL : Measure Sigma).restrict S.Ω0), by
+noncomputable def prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace :=
+  ⟨((S.μL : Measure SigmaSpace).restrict S.Ω0), by
     -- finiteness follows from finiteness of μL
     haveI := S.μL.isFiniteMeasure
     infer_instance
   ⟩
 
 /-- The preparation probability measure, obtained by normalizing the restricted measure. -/
-noncomputable def prepMeasure : MeasureTheory.ProbabilityMeasure Sigma :=
+noncomputable def prepMeasure : MeasureTheory.ProbabilityMeasure SigmaSpace :=
   (S.prepFiniteMeasure).normalize
 
 @[simp]
 lemma prepFiniteMeasure_toMeasure :
-    ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure Sigma) : Measure Sigma) =
-      (S.μL : Measure Sigma).restrict S.Ω0 := rfl
+    ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace) : Measure SigmaSpace) =
+      (S.μL : Measure SigmaSpace).restrict S.Ω0 := rfl
 
 /-- The restricted preparation measure is nonzero because `μL Ω0 ≠ 0`. -/
 lemma prepFiniteMeasure_ne_zero :
-    ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure Sigma) : Measure Sigma) ≠ 0 := by
+    ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace) : Measure SigmaSpace) ≠ 0 := by
   rw [prepFiniteMeasure_toMeasure, Ne, Measure.restrict_eq_zero]
   exact S.hΩ0_nonzero
 
 /-- Since the restricted measure is nonzero, normalization gives back the usual
 conditional preparation law on `Ω0`. -/
 lemma prepMeasure_toMeasure_eq :
-    ((S.prepMeasure : MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) =
-      (((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure Sigma).normalize :
-        MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) := rfl
+    ((S.prepMeasure : MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) =
+      (((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace).normalize :
+        MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) := rfl
 
 /-- The mass of `prepFiniteMeasure`, coerced to `ENNReal`, equals `µL(Ω0)`.
 Isolated so a Mathlib refactor of `FiniteMeasure.ennreal_mass` or
 `Measure.restrict_apply` lands in one place. -/
 lemma prepFiniteMeasure_mass_eq :
-    (S.prepFiniteMeasure.mass : ENNReal) = (S.μL : Measure Sigma) S.Ω0 := by
+    (S.prepFiniteMeasure.mass : ENNReal) = (S.μL : Measure SigmaSpace) S.Ω0 := by
   rw [FiniteMeasure.ennreal_mass, prepFiniteMeasure_toMeasure,
       Measure.restrict_apply MeasurableSet.univ, Set.univ_inter]
 
@@ -73,9 +73,9 @@ The proof routes through three named intermediate facts
 `Measure.restrict_apply`). A future Mathlib rename of any of the latter is
 localised to this one proof.
 -/
-lemma prepMeasure_apply (A : Set Sigma) (hA : MeasurableSet A) :
-    ((S.prepMeasure : MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) A =
-      (S.μL : Measure Sigma) (A ∩ S.Ω0) / (S.μL : Measure Sigma) S.Ω0 := by
+lemma prepMeasure_apply (A : Set SigmaSpace) (hA : MeasurableSet A) :
+    ((S.prepMeasure : MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) A =
+      (S.μL : Measure SigmaSpace) (A ∩ S.Ω0) / (S.μL : Measure SigmaSpace) S.Ω0 := by
   obtain ⟨hne_fm, hmass_ne⟩ := S.prepFiniteMeasure_ne_zero_pair
   rw [prepMeasure_toMeasure_eq,
       FiniteMeasure.toMeasure_normalize_eq_of_nonzero S.prepFiniteMeasure hne_fm,

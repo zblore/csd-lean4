@@ -21,8 +21,8 @@ open MeasureTheory Set Filter
 namespace CSD
 namespace LF2
 
-variable {Sigma P G : Type*}
-  [MeasurableSpace Sigma] [Nonempty Sigma]
+variable {SigmaSpace P G : Type*}
+  [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
 
@@ -30,8 +30,8 @@ variable {Sigma P G : Type*}
     pulled-back outcome region under a preparation measure equals the
     projective weight of that region under the pushforward preparation. -/
 theorem lf1_weight_eq_projective_weight
-    (D : SectorData Sigma P G)
-    (μprep : Measure Sigma)
+    (D : SectorData SigmaSpace P G)
+    (μprep : Measure SigmaSpace)
     {Oep : Set P} (hOep : MeasurableSet Oep) :
     μprep (D.π ⁻¹' Oep) = projectiveWeight D μprep Oep := by
   rw [projectiveWeight, Measure.map_apply D.measurable_π hOep]
@@ -42,13 +42,13 @@ theorem lf1_weight_eq_projective_weight
     `T : S.TrialModel Ω` and wants to reinterpret the limiting ontic weight
     as a projective weight. -/
 theorem lf1_prepMeasure_weight_eq_projective_weight
-    (D : SectorData Sigma P G)
+    (D : SectorData SigmaSpace P G)
     {Oep : Set P} (hOep : MeasurableSet Oep) :
     ((D.toOntic.prepMeasure :
-        MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) (D.π ⁻¹' Oep)
+        MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) (D.π ⁻¹' Oep)
       = projectiveWeight D
           ((D.toOntic.prepMeasure :
-              MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) Oep :=
+              MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) Oep :=
   lf1_weight_eq_projective_weight D _ hOep
 
 /-- **Combined LF1 + LF2 main theorem.**  Under the LF1 repeated-trial model
@@ -69,7 +69,7 @@ theorem lf1_prepMeasure_weight_eq_projective_weight
     preparations and Hilbert-space unit vectors, which LF2 does not
     formalise.  See spec §6.4 and §8.5. -/
 theorem LF1_main_theorem_projective
-    (D : SectorData Sigma P G)
+    (D : SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (O : D.toOntic.OutcomeRegion)
@@ -88,22 +88,22 @@ theorem LF1_main_theorem_projective
           (ENNReal.toReal
             (projectiveWeight D
               ((D.toOntic.prepMeasure :
-                  MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+                  MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
               Oep))) := by
   have hW :
       O.weightReal =
         ENNReal.toReal
           (projectiveWeight D
             ((D.toOntic.prepMeasure :
-                MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+                MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
             Oep) := by
     unfold CSD.LF1.OnticSetup.OutcomeRegion.weightReal
     congr 1
     show ((D.toOntic.prepMeasure :
-              MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma) O.preEvent
+              MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) O.preEvent
       = projectiveWeight D
           ((D.toOntic.prepMeasure :
-              MeasureTheory.ProbabilityMeasure Sigma) : Measure Sigma)
+              MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
           Oep
     rw [hCorresp]
     exact lf1_weight_eq_projective_weight D _ hOep

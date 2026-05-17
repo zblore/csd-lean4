@@ -35,25 +35,25 @@ namespace OnticSetup
 
 /-- A single measurable outcome region in the ontic state space.
     Parameterized by `S` so that `S.OutcomeRegion` works as dot notation. -/
-structure OutcomeRegion {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma]
-    (_S : OnticSetup Sigma) where
-  Ω : Set Sigma
+structure OutcomeRegion {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
+    (_S : OnticSetup SigmaSpace) where
+  Ω : Set SigmaSpace
   hΩ_meas : MeasurableSet Ω
 
 namespace OutcomeRegion
 
-variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma]
-         {S : OnticSetup Sigma} (O : OutcomeRegion S)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
+         {S : OnticSetup SigmaSpace} (O : OutcomeRegion S)
 
 /-- The pullback event of an outcome region under the deterministic flow `Φ`. -/
-noncomputable def preEvent : Set Sigma :=
+noncomputable def preEvent : Set SigmaSpace :=
   S.Φ ⁻¹' O.Ω
 
 lemma measurable_preEvent : MeasurableSet O.preEvent :=
   O.hΩ_meas.preimage S.measurable_Φ
 
 /-- The preparation-side version of the event. -/
-noncomputable def prepEvent : Set Sigma :=
+noncomputable def prepEvent : Set SigmaSpace :=
   S.Ω0 ∩ O.preEvent
 
 lemma measurable_prepEvent : MeasurableSet O.prepEvent :=
@@ -61,7 +61,7 @@ lemma measurable_prepEvent : MeasurableSet O.prepEvent :=
 
 /-- The outcome weight under the preparation probability measure. -/
 noncomputable def weight : ENNReal :=
-  ((S.prepMeasure : ProbabilityMeasure Sigma) : Measure Sigma) O.preEvent
+  ((S.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) O.preEvent
 
 /-- The outcome weight as a real number, for use in convergence statements. -/
 noncomputable def weightReal : ℝ :=
@@ -77,7 +77,7 @@ evolution lands in the outcome region.
 -/
 lemma weight_eq_prepEvent_div :
     O.weight (S := S) =
-      (S.μL : Measure Sigma) O.prepEvent / (S.μL : Measure Sigma) S.Ω0 := by
+      (S.μL : Measure SigmaSpace) O.prepEvent / (S.μL : Measure SigmaSpace) S.Ω0 := by
   unfold weight prepEvent
   rw [S.prepMeasure_apply O.preEvent O.measurable_preEvent]
   congr 1

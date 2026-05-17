@@ -29,15 +29,15 @@ open MeasureTheory Set
 namespace CSD
 namespace LF2
 
-variable {Sigma P G : Type*}
-  [MeasurableSpace Sigma] [Nonempty Sigma]
+variable {SigmaSpace P G : Type*}
+  [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
 
 /-- Pushforward rewrite for the projection, specialised form of
     `Measure.map_apply`. -/
 lemma SectorData.pushforward_apply
-    (D : SectorData Sigma P G) {A : Set P} (hA : MeasurableSet A) :
+    (D : SectorData SigmaSpace P G) {A : Set P} (hA : MeasurableSet A) :
     (Measure.map D.π D.μL) A = D.μL (D.π ⁻¹' A) :=
   Measure.map_apply D.measurable_π hA
 
@@ -45,7 +45,7 @@ lemma SectorData.pushforward_apply
     epistemic orbit along `π` equals pushing the preimage through the ontic
     action. Consequence of `π`-equivariance + bijectivity of the action. -/
 lemma SectorData.preimage_action_eq
-    (D : SectorData Sigma P G) (g : G) (A : Set P) :
+    (D : SectorData SigmaSpace P G) (g : G) (A : Set P) :
     D.π ⁻¹' (D.epAction g '' A) = (D.onticAction g) '' (D.π ⁻¹' A) := by
   ext x
   simp only [mem_preimage, mem_image]
@@ -65,12 +65,12 @@ lemma SectorData.preimage_action_eq
 /-- **Lemma 2 of the spec.** The pushforward measure `π*μL` is invariant under
     the induced `G`-action on `P`. -/
 lemma SectorData.pushforward_epAction_invariant
-    (D : SectorData Sigma P G) (g : G) :
+    (D : SectorData SigmaSpace P G) (g : G) :
     MeasurePreserving (D.epAction g)
       (Measure.map D.π D.μL) (Measure.map D.π D.μL) := by
   refine ⟨(D.epAction g).measurable, ?_⟩
   rw [Measure.map_map (D.epAction g).measurable D.measurable_π]
-  have heq : (D.epAction g : P → P) ∘ D.π = D.π ∘ (D.onticAction g : Sigma → Sigma) := by
+  have heq : (D.epAction g : P → P) ∘ D.π = D.π ∘ (D.onticAction g : SigmaSpace → SigmaSpace) := by
     funext x; exact (D.hπ_equiv g x).symm
   rw [heq]
   rw [← Measure.map_map D.measurable_π (D.onticAction g).measurable]
@@ -99,7 +99,7 @@ axiom invariant_measure_uniqueness
     `π` is a constant multiple of the reference measure `μFS`. The constant is
     pinned down by comparing total masses. -/
 theorem measure_bridge
-    (D : SectorData Sigma P G)
+    (D : SectorData SigmaSpace P G)
     (μFS : Measure P) [IsProbabilityMeasure μFS]
     (hμFS_inv : ∀ g, MeasurePreserving (D.epAction g) μFS μFS) :
     ∃ c : ENNReal, Measure.map D.π D.μL = c • μFS :=

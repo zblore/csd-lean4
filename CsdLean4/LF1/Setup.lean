@@ -9,11 +9,11 @@ namespace LF1
 
 /-- Ambient ontic data for LF1.
 
-`Sigma` is an abstract measurable space standing in for the ontic phase space.  It is
+`SigmaSpace` is an abstract measurable space standing in for the ontic phase space.  It is
 **not** required to be `ℝ^{2n}` or a symplectic manifold; the physical grounding
 (Liouville measure from a symplectic form, flow from Hamilton's equations) is encoded
 as hypotheses rather than derived from first principles.  LF2 and later papers are
-expected to instantiate `Sigma` with a concrete mechanical phase space.
+expected to instantiate `SigmaSpace` with a concrete mechanical phase space.
 
 ## Physical inputs vs. proof-used assumptions
 
@@ -53,14 +53,14 @@ mathematical content. This connects to D1 (the preparation-measure origin
 problem in Paper A's framing): µ_L is asserted, the flow is asserted to
 preserve it, and neither is derived in v1.00.
 -/
-structure OnticSetup (Sigma : Type*) [MeasurableSpace Sigma] [Nonempty Sigma] where
+structure OnticSetup (SigmaSpace : Type*) [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] where
   /-- The Liouville measure on the ontic phase space.
       Assumed finite; in concrete settings this is the restriction of Lebesgue measure
       (or the symplectic volume form) to a bounded region of phase space. -/
-  μL : MeasureTheory.FiniteMeasure Sigma
+  μL : MeasureTheory.FiniteMeasure SigmaSpace
   /-- The deterministic ontic flow.
       In concrete settings this is the time-`t` map of Hamilton's equations. -/
-  Φ  : Sigma → Sigma
+  Φ  : SigmaSpace → SigmaSpace
   /-- Liouville's theorem: the flow `Φ` preserves the Liouville measure `μL`.
       Assumed as a hypothesis; derivable from a symplectic / Kähler structure in
       a concrete LF4 instantiation. Within LF1, LF2, and LF3 only measurability
@@ -68,18 +68,18 @@ structure OnticSetup (Sigma : Type*) [MeasurableSpace Sigma] [Nonempty Sigma] wh
       measure-preservation content is currently structural payload, carried for
       physical admissibility of the ontic model. It becomes load-bearing only
       when LF4 derives `μL` from a concrete volume form. -/
-  hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure Sigma) (μL : Measure Sigma)
+  hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure SigmaSpace) (μL : Measure SigmaSpace)
   /-- The preparation region: the measurable subset of phase space consistent with the
       experimental preparation procedure. -/
-  Ω0 : Set Sigma
+  Ω0 : Set SigmaSpace
   /-- The preparation region is measurable. -/
   hΩ0_meas : MeasurableSet Ω0
   /-- The preparation region has nonzero Liouville measure, so normalisation is well-defined. -/
-  hΩ0_nonzero : (μL : Measure Sigma) Ω0 ≠ 0
+  hΩ0_nonzero : (μL : Measure SigmaSpace) Ω0 ≠ 0
 
 namespace OnticSetup
 
-variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] (S : OnticSetup SigmaSpace)
 
 /-- Measurability of the deterministic flow.
 

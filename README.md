@@ -154,7 +154,7 @@ Thus LF1 should be understood as the machine-verified statistical backbone of de
 
 ## Scope and limitations
 
-`OnticSetup` takes an abstract measurable space `Sigma : Type*` — it is **not**
+`OnticSetup` takes an abstract measurable space `SigmaSpace : Type*` — it is **not**
 specialised to `ℝ^{2n}`, a symplectic manifold, or any other concrete phase space.
 The physical grounding of each field is:
 
@@ -175,7 +175,7 @@ LF2 sits directly on top of LF1. It formalises the finite-dimensional measure-an
 
 ### What LF2 delivers
 
-Under a `SectorData Sigma P G` — the LF1 `OnticSetup` bundled with an abstract measurable projective target `P`, a measurable projection `π : Σ → P`, and a group `G` acting measurably on both with `μL`-invariance and `π`-equivariance — LF2 proves:
+Under a `SectorData SigmaSpace P G` — the LF1 `OnticSetup` bundled with an abstract measurable projective target `P`, a measurable projection `π : Σ → P`, and a group `G` acting measurably on both with `μL`-invariance and `π`-equivariance — LF2 proves:
 
 1. **Measure bridge.** `π_* μL = c · μFS` for some `c : ENNReal`, where `μFS` is any `G`-invariant probability reference measure on `P`. LF2 proves internally that `π_* μL` is `G`-invariant (`pushforward_epAction_invariant`) and then invokes the imported invariant-measure uniqueness axiom.
 
@@ -202,7 +202,7 @@ LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.cho
 
 ### Design choices in LF2
 
-- `SectorData` is parametric in `(Sigma, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure is constructed. Concrete instantiation is LF4's job.
+- `SectorData` is parametric in `(SigmaSpace, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure is constructed. Concrete instantiation is LF4's job.
 - The reference measure `μFS` is not a field of `SectorData`; it enters `measure_bridge` as an explicit argument, keeping `SectorData` `μFS`-agnostic.
 - `Effect` and `DensityOperator` are concrete `Matrix (Fin N) (Fin N) ℂ` structures (not opaque stubs). This gives `born_quadratic` real Lean content rather than leaving it narrative.
 - `Effect.add` takes the `le_one` hypothesis `(1 - (E.M + F.M)).PosSemidef` as an explicit argument — avoids `Option`-valued addition and `Decidable (PosSemidef _)`.

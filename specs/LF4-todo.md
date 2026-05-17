@@ -100,7 +100,7 @@ Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the
 
 ## 7. Outcome specification: ontic-first vs projective-first
 
-**Status:** LF1's `OutcomeRegion` has `Ω : Set Sigma` (ontic-first). LF2's `LF1_main_theorem_projective` takes a correspondence hypothesis `O.preEvent = D.π ⁻¹' Oep` linking them.
+**Status:** LF1's `OutcomeRegion` has `Ω : Set SigmaSpace` (ontic-first). LF2's `LF1_main_theorem_projective` takes a correspondence hypothesis `O.preEvent = D.π ⁻¹' Oep` linking them.
 
 **Why deferred:** A cleaner LF4 architecture would let callers specify outcomes projectively and derive the ontic counterpart. Currently the caller must supply both and prove the correspondence.
 
@@ -110,15 +110,30 @@ Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the
 
 ---
 
-## 8. Concrete Sigma / P / G instantiation
+## 8. Concrete SigmaSpace / P / G instantiation
 
-**Status:** LF2's `SectorData` is abstract in `(Sigma, P, G)`. LF4 will want a concrete realisation.
+**Status:** LF2's `SectorData` is abstract in `(SigmaSpace, P, G)`. LF4 will want a concrete realisation.
 
 **Pickup:**
-1. In LF4, take `Sigma := ` a specific phase space (or continue abstract).
+1. In LF4, take `SigmaSpace := ` a specific phase space (or continue abstract).
 2. `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` with `[Fintype (Fin N)]`, `[DecidableEq (Fin N)]`.
 3. `G := Matrix.specialUnitaryGroup (Fin N) ℂ` (or `Matrix.unitaryGroup` for the full unitary case).
 4. Construct the Fubini–Study measure `μFS` as a probability measure on `P` (concretely: via the normalised round measure on the sphere, pushed forward through the quotient `S^{2N-1} → CP^{N-1}`).
 5. Verify the invariance / equivariance hypotheses of `SectorData`.
 
 **Depends on:** `Mathlib.LinearAlgebra.Projectivization.Basic`, `Matrix.specialUnitaryGroup` (if available; otherwise construct), the quotient measure theory for compact groups.
+
+---
+
+## 9. Unify `MeasurablePartition` (LF2) with LF1's "intersect full-measure sets" sketch
+
+**Status:** LF1's `OutcomeRegion` formalises one measurable region at a time; the joint almost-sure statement for a finite partition is sketched in the LF1 docstring as "apply the theorem once per element and intersect the resulting full-measure sets" but not written as a lemma. LF2's `Weights.lean` defines `MeasurablePartition` as the partition object the LF1 docstring defers. The two are not yet linked.
+
+**Why deferred:** LF1 deliberately avoided introducing a partition type ("a partition type may become necessary at LF2/LF4 for POVM completeness", per the LF1 `Outcomes.lean` docstring). LF2 introduced `MeasurablePartition` for projective-weight normalisation. The link, "given a `MeasurablePartition`, the LF1 joint almost-sure convergence statement follows from per-element applications of `LF1_main_theorem_ae`", was not written because LF1's frequency theorem is for a single region and no LF2/LF3 consumer needed the joint version.
+
+**Pickup:**
+1. In LF4, write a lemma `MeasurablePartition.LF1_joint_convergence` consuming an LF2 `MeasurablePartition π_part` and an LF1 `TrialModel` and yielding the joint almost-sure convergence statement: `∀ᵐ ω, ∀ i, Tendsto (T.empiricalFreq (partElement i) · ω) atTop (nhds (partElement i).weightReal)`.
+2. The proof is finite-intersection-of-full-measure-sets, exactly as the LF1 docstring sketches. No new mathematics; just write down the lemma.
+3. Once written, the LF3 chain capstones that currently apply `LF1_main_theorem_ae` once per `(s, t) ∈ Sign × Sign` can route through this lemma instead.
+
+**Depends on:** nothing structural; LF1 and LF2 already provide all ingredients. This is bookkeeping that LF4 should land before consuming joint-partition statements at scale.

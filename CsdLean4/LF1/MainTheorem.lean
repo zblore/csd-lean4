@@ -36,7 +36,7 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] (S : OnticSetup SigmaSpace)
 
 namespace TrialModel
 

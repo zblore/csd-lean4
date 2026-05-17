@@ -36,31 +36,31 @@ structure MeasurablePartition (P : Type*) [MeasurableSpace P]
   /-- The complement of the union is null. -/
   cover_null    : μ ((⋃ i, parts i)ᶜ) = 0
 
-variable {Sigma P G : Type*}
-  [MeasurableSpace Sigma] [Nonempty Sigma]
+variable {SigmaSpace P G : Type*}
+  [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
 
 /-- Projective weight of an outcome region `O ⊆ P` under the pushforward of
     a preparation measure. -/
 noncomputable def projectiveWeight
-    (D : SectorData Sigma P G)
-    (μprep : Measure Sigma)
+    (D : SectorData SigmaSpace P G)
+    (μprep : Measure SigmaSpace)
     (O : Set P) : ENNReal :=
   (Measure.map D.π μprep) O
 
 /-- Unfolding lemma: `projectiveWeight` is the pushforward measure of the
     region. -/
 @[simp] lemma projectiveWeight_def
-    (D : SectorData Sigma P G) (μprep : Measure Sigma) (O : Set P) :
+    (D : SectorData SigmaSpace P G) (μprep : Measure SigmaSpace) (O : Set P) :
     projectiveWeight D μprep O = (Measure.map D.π μprep) O := rfl
 
 /-- **Spec §4.3 normalisation.** For a probability preparation measure and a
     measurable partition of `P` up to `π*μprep`-null sets, the weights sum
     to one. -/
 theorem weights_sum_eq_one
-    (D : SectorData Sigma P G) {n : ℕ}
-    (μprep : Measure Sigma) [IsProbabilityMeasure μprep]
+    (D : SectorData SigmaSpace P G) {n : ℕ}
+    (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
     (π_part : MeasurablePartition P (Measure.map D.π μprep) n) :
     ∑ i : Fin n, projectiveWeight D μprep (π_part.parts i) = 1 := by
   haveI : IsProbabilityMeasure (Measure.map D.π μprep) :=

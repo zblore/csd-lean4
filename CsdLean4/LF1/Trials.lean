@@ -19,7 +19,7 @@ namespace LF1
 
 namespace OnticSetup
 
-variable {Sigma : Type*} [MeasurableSpace Sigma] [Nonempty Sigma] (S : OnticSetup Sigma)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] (S : OnticSetup SigmaSpace)
 
 /--
 A repeated-trial model for LF1.
@@ -34,11 +34,11 @@ hypotheses in `Convergence.lean`, where the law of large numbers is applied.
 -/
 structure TrialModel (Ω : Type*) [MeasurableSpace Ω] where
   P : ProbabilityMeasure Ω
-  X : ℕ → Ω → Sigma
+  X : ℕ → Ω → SigmaSpace
   hX_measurable : ∀ n, Measurable (X n)
   hLaw : ∀ n,
     Measure.map (X n) ((P : ProbabilityMeasure Ω) : Measure Ω) =
-      ((S.prepMeasure : ProbabilityMeasure Sigma) : Measure Sigma)
+      ((S.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
 
 namespace TrialModel
 

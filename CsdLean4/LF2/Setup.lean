@@ -28,24 +28,24 @@ namespace LF2
     projection `π` and a `G`-action satisfying `μL`-invariance and
     `π`-equivariance. -/
 structure SectorData
-    (Sigma P G : Type*)
-    [MeasurableSpace Sigma] [Nonempty Sigma]
+    (SigmaSpace P G : Type*)
+    [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
     [MeasurableSpace P]
     [Group G] where
   /-- Underlying LF1 ontic data (Σ, μL, Φ, Ω0, plus their measurability /
       nonzero-volume / measure-preservation hypotheses). -/
-  toOntic      : CSD.LF1.OnticSetup Sigma
+  toOntic      : CSD.LF1.OnticSetup SigmaSpace
   /-- The epistemic projection from ontic state space to the abstract
       projective target. -/
-  π            : Sigma → P
+  π            : SigmaSpace → P
   /-- Measurability of the projection. -/
   measurable_π : Measurable π
   /-- The lifted `G`-action on `Σ`, as a family of measurable equivalences. -/
-  onticAction     : G → Sigma ≃ᵐ Sigma
+  onticAction     : G → SigmaSpace ≃ᵐ SigmaSpace
   /-- The `G`-action on `P`, as a family of measurable equivalences. -/
   epAction        : G → P ≃ᵐ P
   /-- Identity element of `G` acts as the identity on `Σ`. -/
-  onticAction_one : onticAction 1 = MeasurableEquiv.refl Sigma
+  onticAction_one : onticAction 1 = MeasurableEquiv.refl SigmaSpace
   /-- Left-action composition on `Σ`: `(g * h) · x = g · (h · x)`.  Recall
       `(e.trans f) x = f (e x)`, so the right-hand side below applies `h` first
       and then `g`, matching the left-action convention. -/
@@ -58,21 +58,21 @@ structure SectorData
                       epAction (g * h) = (epAction h).trans (epAction g)
   /-- Liouville invariance: each `onticAction g` preserves `μL`. -/
   hμL_inv         : ∀ g, MeasurePreserving (onticAction g)
-                           (toOntic.μL : Measure Sigma)
-                           (toOntic.μL : Measure Sigma)
+                           (toOntic.μL : Measure SigmaSpace)
+                           (toOntic.μL : Measure SigmaSpace)
   /-- Equivariance: `π` intertwines the ontic and epistemic actions. -/
   hπ_equiv        : ∀ g x, π (onticAction g x) = epAction g (π x)
 
 namespace SectorData
 
-variable {Sigma P G : Type*}
-  [MeasurableSpace Sigma] [Nonempty Sigma]
+variable {SigmaSpace P G : Type*}
+  [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
-  (D : SectorData Sigma P G)
+  (D : SectorData SigmaSpace P G)
 
 /-- Convenience re-export of the ontic Liouville measure as a `Measure`. -/
-abbrev μL : Measure Sigma := (D.toOntic.μL : Measure Sigma)
+abbrev μL : Measure SigmaSpace := (D.toOntic.μL : Measure SigmaSpace)
 
 end SectorData
 
