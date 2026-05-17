@@ -367,6 +367,12 @@ CsdLean4/
                             --   with transitional ofHypothesis constructor
     Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
                             --   LF3_singlet_frequency_convergence (+ Born, + inner variants)
+  Tests/
+    AxiomAudit.lean         -- #guard_msgs regression suite for every theorem
+                            --   in AXIOMS.md §5; build-fails on axiom drift
+    Examples.lean           -- LF1 coin-toss OnticSetup; LF2 Born-form edge
+                            --   cases (orthogonal -> 0, same-state -> 1);
+                            --   LF3 chain capstone API smoke
   Basic.lean                -- Pkg.Basic convenience re-export
 CsdLean4.lean               -- canonical top-level import (explicit module list)
 specs/

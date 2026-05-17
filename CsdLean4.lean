@@ -25,6 +25,8 @@ import CsdLean4.LF3.Singlet.Leakage
 import CsdLean4.LF3.ContextMap
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.Interface
+import CsdLean4.Tests.AxiomAudit
+import CsdLean4.Tests.Examples
 
 /-!
 # CSD
