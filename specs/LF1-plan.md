@@ -47,7 +47,11 @@ Root imports: `CsdLean4.lean` lists every module explicitly; `CsdLean4/Basic.lea
 theorem LF1_main_theorem_ae
     (T : S.TrialModel Ω)
     (O : S.OutcomeRegion)
-    (hindep : Pairwise (IndepFun on (T.indicatorRV O ·))) :
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => IndepFun f g T.trialMeasure)
+          (fun n => T.indicatorRV (S := S) O n))) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto (T.empiricalFreq O · ω) atTop (nhds O.weightReal)
 ```

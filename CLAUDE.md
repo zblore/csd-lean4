@@ -53,12 +53,16 @@ All definitions live under the `CSD.LF1` namespace, with sub-namespaces `OnticSe
 theorem LF1_main_theorem_ae
     (T : S.TrialModel Ω)
     (O : S.OutcomeRegion)
-    (hindep : Pairwise (IndepFun on (T.indicatorRV O ·))) :
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => IndepFun f g T.trialMeasure)
+          (fun n => T.indicatorRV (S := S) O n))) :
     ∀ᵐ ω ∂ T.trialMeasure,
       Tendsto (T.empiricalFreq O · ω) atTop (nhds O.weightReal)
 ```
 
-The only hypothesis the caller must supply is pairwise independence of trial indicators (`hindep`). Integrability and identical distribution are proved internally.
+The only hypothesis the caller must supply is pairwise independence of trial indicators (`hindep`). Integrability and identical distribution are proved internally. The `Function.onFun` wrapping is the standard Mathlib spelling for `Pairwise` applied to a binary relation `IndepFun · · μ` lifted along the indexing `n ↦ T.indicatorRV O n`; no CSD-namespace abbreviation is introduced.
 
 The theorem is deliberately stated for a **single** `O : OutcomeRegion` rather than a formalised partition family. The joint almost-sure statement for a finite measurable outcome partition `{Ω_i^Σ}` follows by applying the theorem once per element and intersecting the resulting full-measure sets. Do not refactor this into a partition type at the LF1 layer — the single-outcome form is intentional (see the docstring of `MainTheorem.lean`). A partition type may become necessary at LF2/LF4 for POVM completeness.
 
