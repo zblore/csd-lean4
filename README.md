@@ -1,5 +1,7 @@
 # csd-lean4
 
+[![CI](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml)
+
 Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials), **LF2** (sector-conditional measure bridge and Born-weight wrapper), and **LF3** (singlet kernel and the LF1↔LF2↔LF3 empirical chain) are merged and machine-verified; LF4 is the next target.
 
 ## Overview
@@ -37,7 +39,7 @@ Accordingly, LF1 should be read as a deterministic typicality theorem with a pro
 
 ## Scope
 
-Two layers are currently formalised:
+Three layers are currently formalised:
 
 **LF1** — deterministic repeated-trial typicality theorem. Formalises:
 
@@ -66,7 +68,7 @@ Two layers are currently formalised:
 - the Bell singlet `|ψ⁻⟩ = (1/√2)(|+-⟩ − |-+⟩)`, with `singlet_norm` proved
 - the abstract `TensorFactorReadoutAlgebra` (commuting local Hamiltonians as structural data) and `MeasurementUnitary` (full + per-wing unitaries as `LinearIsometryEquiv`s, factorisation `U = uA ∘ uB` and impulsive eigenstate-action as fields)
 - branch states and the four-term branch decomposition of the final state, with `branch_separation_leakage_bound`
-- the abstract pointer-sector projective algebra `ProjectorAlgebra` and the operator-form `branchWeight`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
+- the pointer-sector projective algebra `ProjectorAlgebra` (available either as abstract structural data, or derived through `ProjectorAlgebra.ofTensorEmbedding` from a `TensorEmbedding K_A K_B H_SA` plus the `SystemApparatusSetup`'s per-wing `BinaryPointerProjectors`, in `LF3/Projectors/TensorModel.lean`) and the operator-form `branchWeight`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
 - the LF3→LF2 Born-form bridge `branchWeight_eq_LF2_Born` (trace-inner core identity proved against the existing LF2 `traceForm`)
 - the **singlet kernel algebraic core** `cst_squared_eq : ‖cAmp s t (a, b)‖² = (1 − st a·b)/4`, the correlation `−a·b`, marginals `1/2`, no-signalling on each side, and finite-leakage versions of all four
 - the **headline LF1↔LF2↔LF3 chain capstones**: `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²` where `cAmp = √P_st`), and `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`), composing `LF1_main_theorem_ae` + `lf1_weight_eq_projective_weight` + `cst_squared_eq` under an external `hLF2` hypothesis discharged by LF4-todo §2 + §7
@@ -200,7 +202,7 @@ LF2 has exactly **three named axioms**:
 | `busch_effect_gleason` | Effect-additive probability on finite-dim `N ≥ 2` admits a unique trace-form density | Spec-mandated (§7.4); not in Mathlib |
 | `rankOneDensity_unique_of_certainty` | A density operator with `⟨ψ\|ρ\|ψ⟩ = 1` is `\|ψ⟩⟨ψ\|` | Standard spectral-theorem corollary; axiomatised pending Mathlib integration, full proof sketch in module docstring |
 
-LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.choice`, `Quot.sound`). `#print axioms` on each LF2 theorem legibly names exactly which of the three axioms it cites; several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **none** of them.
+LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.choice`, `Quot.sound`). `#print axioms` on each LF2 theorem legibly names exactly which of the three axioms it cites; several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **none** of them. For the full per-theorem audit see [`AXIOMS.md`](AXIOMS.md).
 
 ### Design choices in LF2
 
@@ -265,7 +267,8 @@ LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classica
 - `MeasurementUnitary` carries the full and per-wing unitaries as `LinearIsometryEquiv`, encoding unitarity in the type.
 - `cAmp` is defined in closed form as `(Real.sqrt (P_st a b s t) : ℂ)`. This sidesteps the explicit construction of joint spin eigenstates; downstream theorems consume only `‖cAmp‖²`. The bra-ket equivalence is exposed via `cAmp_norm_sq_eq_inner_norm_sq` under a rank-1 projector hypothesis on `jointSpinProj`.
 - Self-adjointness on continuous linear maps is stated via the inner-product equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` rather than Mathlib's `IsSelfAdjoint T`. This is forced: `Star (H →L[ℂ] H)` typeclass synthesis on a finite-dim complex inner-product space fails even with `Mathlib.Analysis.InnerProductSpace.Adjoint` imported. The inner-product spelling is mathematically equivalent and avoids the synthesis dead-end.
-- `ProjectorAlgebra` is taken as axiomatised structural data (the four pointer-sector projectors satisfy the four projection identities as fields). Deriving it from a concrete tensor-factor decomposition is a v2 task.
+- `ProjectorAlgebra` is available in two forms. The abstract `ProjectorAlgebra` structure (`LF3/Projectors/Core.lean`) takes the four projection identities (self-adjointness, idempotence, mutual orthogonality, completeness) as fields, suitable for callers without a tensor decomposition of `H_SA`. A derived constructor `ProjectorAlgebra.ofTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the same structure from a `TensorEmbedding K_A K_B H_SA` (per-wing algebra-homomorphism lifts with commuting images) plus the per-wing `BinaryPointerProjectors`, with the four fields derived as theorems. The two coexist; the additive module is non-invasive.
+- `MeasurementUnitary` is similarly available in two forms. The abstract structure (`LF3/Hamiltonian.lean`) carries the factorisation `u = uA ∘ uB` and the impulsive-readout eigenstate-action as fields. A derived constructor `MeasurementUnitary.ofUnitaryTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the structure from a `UnitaryTensorEmbedding K_A K_B H_SA` (per-wing unitary lifts with commuting images) plus per-wing unitaries `vA`, `vB` and the caller-supplied eigenstate-action data, with `factorises` discharged by `rfl`. The eigenstate-action field `action` remains caller-supplied: it requires operator-exponential / Stone machinery (`exp(-iHt)`) and is explicitly an LF4-or-later carve-out per spec §9.5.
 
 ### What LF3 does not prove
 
@@ -273,6 +276,55 @@ LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classica
 - a projective-first outcome specification that would make `hLF2` unnecessary (LF4-todo §7);
 - the constructed joint spin eigenstate `jointSpinEig` (currently the `_inner` capstone takes `v` as an external parameter; v2 plan: spectral decomposition of `jointSpinProj`);
 - mixed states, POVMs, subsystem reduction, sequential update (LF4/LF5 territory).
+
+## Theorem inventory
+
+Exported theorems and their dependencies. The "Axioms" column lists CSD-specific axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`); these are always present via Mathlib and not separately listed. For a full audit see [`AXIOMS.md`](AXIOMS.md).
+
+### LF1 (Paper A — deterministic repeated-trial frequency theorem)
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `LF1_main_theorem_ae` | `LF1/MainTheorem.lean` | Empirical frequencies converge `μ`-almost surely to the real-valued ontic weight `O.weightReal` under repeated preparation with pairwise-independent trial indicators. | none |
+| `expectation_eq_weight` | `LF1/MainTheorem.lean` | `E[𝟙_O(X_n)] = O.weightReal` for every trial `n`. | none |
+| `prepMeasure_apply` | `LF1/Preparation.lean` | `μprep(A) = μL(A ∩ Ω0) / μL(Ω0)` for measurable `A` (the explicit conditional measure formula). | none |
+| `weight_eq_prepEvent_div` | `LF1/Outcomes.lean` | `O.weight = μL(O.prepEvent) / μL(Ω0)`, the volume-typicality reading of `O.weightReal`. | none |
+| `trialEvent_eq_comp_preimage` | `LF1/Trials.lean` | The deterministic structure made explicit: `T.trialEvent O n = (Φ ∘ X n)⁻¹(O.Ω)`. | none |
+
+### LF2 (Paper B — sector-conditional measure bridge and Born-weight wrapper)
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `measure_bridge` | `LF2/MeasureBridge.lean` | `π_* μL = c · μFS` for some `c : ENNReal`, under symmetry-compatible `SectorData`. | `invariant_measure_uniqueness` |
+| `pushforward_epAction_invariant` | `LF2/MeasureBridge.lean` | The pushforward `π_* μL` is `G`-invariant under the epistemic action. | none |
+| `weights_sum_eq_one` | `LF2/Weights.lean` | Projective weights of a measurable partition of `P` sum to 1 under a probability measure. | none |
+| `born_quadratic` | `LF2/BornWrapper.lean` | `Tr(\|ψ⟩⟨ψ\| · \|φ⟩⟨φ\|) = ‖⟨ψ, φ⟩‖²` for unit vectors `ψ, φ : EuclideanSpace ℂ (Fin N)`. | none |
+| `pure_state_born_weights` | `LF2/BornWrapper.lean` | Given an operational package whose trace-form density is `\|ψ⟩⟨ψ\|`, the probability of `\|φ⟩⟨φ\|` is `‖⟨ψ, φ⟩‖²`. | none |
+| `pure_state_born_weights_of_certainty` | `LF2/BornWrapper.lean` | Strengthening: derives the density-operator hypothesis from a purity hypothesis (`OP.p (rankOneEffect ψ) = 1`). | `busch_effect_gleason`, `rankOneDensity_unique_of_certainty` |
+| `lf1_weight_eq_projective_weight` | `LF2/Interface.lean` | `μprep(π⁻¹(O_ep)) = projectiveWeight D μprep O_ep` (the LF1↔LF2 measure-identity hinge). | none |
+| `LF1_main_theorem_projective` | `LF2/Interface.lean` | LF1 empirical frequency converges almost surely to the real-valued projective weight, under the outcome correspondence `O.preEvent = π⁻¹(O_ep)`. | none |
+
+### LF3 (Paper D — singlet kernel, pointer-sector decomposition, empirical chain)
+
+All LF3 capstone exports are fully axiom-clean: LF2's three axioms are not invoked anywhere in the LF3 chain.
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `singlet_pauli_correlation` | `LF3/Singlet/Expectations.lean` | `⟨ψ⁻ \| σ·a ⊗ σ·b \| ψ⁻⟩ = −a·b` on the Bell singlet. | none |
+| `cst_squared_eq` | `LF3/Singlet/Kernel.lean` | `‖cAmp s t (a, b)‖² = (1 − s·t·a·b) / 4` (algebraic core of the singlet kernel). | none |
+| `correlation_eq_neg_dot` | `LF3/Singlet/Kernel.lean` | `∑ s t, s·t · P_st(a, b) = −a·b`. | none |
+| `marginal_a_eq_half`, `marginal_b_eq_half` | `LF3/Singlet/Kernel.lean` | Both wing marginals of `P_st(a, b)` equal `1/2`. | none |
+| `no_signalling_strong_readout_a`, `..._b` | `LF3/Singlet/Kernel.lean` | Each wing's marginal is independent of the other wing's detector setting. | none |
+| `branchWeight_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form branch weight equals LF2's trace-form Born weight on rank-1 effects. | none |
+| `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package: kernel, correlation, marginals, no-signalling, pointer-completeness. | none |
+| `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities with bound `εA + εB + εA·εB` (and prefactors). | none |
+| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone: LF1 empirical frequency converges to `(1 − s·t·a·b)/4` under `hLF2`. | none |
+| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant: lands on `‖cAmp s t (a, b)‖²`. | none |
+| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant: lands on `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`. | none |
+| `ProjectorAlgebra.ofTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `ProjectorAlgebra` from a `TensorEmbedding`; the four projection fields are theorems, not data. | none |
+| `MeasurementUnitary.ofUnitaryTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `MeasurementUnitary` from a `UnitaryTensorEmbedding` plus per-wing unitaries; `factorises` discharged by `rfl`. | none |
+
+The three LF3 chain capstones take an external `hLF2` hypothesis relating projective outcome weights to `ENNReal.ofReal P_st`; this is the LF4-todo §2 + §7 boundary.
 
 ## Repository structure
 
@@ -301,6 +353,9 @@ CsdLean4/
       Core.lean             -- ProjectorAlgebra, mHat, projection field re-exports
       BranchWeight.lean     -- branchWeight, StrongReadoutCompat, LeakageCompat
       LF2Interface.lean     -- branchWeight_eq_LF2_Born (LF3 → LF2 Born-form bridge)
+      TensorModel.lean      -- TensorEmbedding, UnitaryTensorEmbedding,
+                            --   ProjectorAlgebra.ofTensorEmbedding,
+                            --   MeasurementUnitary.ofUnitaryTensorEmbedding
     Singlet/
       State.lean            -- singlet, singlet_norm, expectation
       Expectations.lean     -- ⟨ψ⁻|σ·a ⊗ I|ψ⁻⟩, ⟨ψ⁻|I ⊗ σ·b|ψ⁻⟩, ⟨ψ⁻|σ·a ⊗ σ·b|ψ⁻⟩
@@ -321,5 +376,6 @@ specs/
   LF3-v1.00.pdf             -- LF3 preprint (canonical)
   LF3-v1.00.txt             -- extracted plain-text sidecar
   LF3-plan.md               -- implementation plan
-  LF4-todo.md               -- eight items deferred from LF2 (and LF3) to LF4
+  LF4-todo.md               -- nine items deferred from LF2 (and LF3) to LF4
+AXIOMS.md                   -- canonical per-theorem axiom audit
 ```
