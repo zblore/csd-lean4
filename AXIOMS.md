@@ -92,9 +92,15 @@ This carries the **V ≈ 1 − I debt** explicitly. Structural discharge is gate
 
 The eigenstate-action field of `MeasurementUnitary` (the impulsive-readout idealisation `u (jointEig (s, t) φA φB) = jointEig (s, t) (ptrTransA s φA) (ptrTransB t φB)`) is caller-supplied. Spec §9.5 explicitly carves this out of v1.00: the operator-exponential `exp(-iHt)` derivation requires Mathlib-level Stone-on-bounded-self-adjoint-operators infrastructure and is LF4-or-later.
 
-### 3.6 `hLF2` on the LF3 chain capstones
+### 3.6 `PureSingletPreparation` bundle on the LF3 chain capstones
 
-The three LF3 chain capstones take an external `hLF2` hypothesis relating projective outcome weights of the pointer-sector outcome regions to `ENNReal.ofReal P_st`. This is the LF1↔LF2↔LF3 boundary. Discharged in LF4 via the preparation-to-Hilbert correspondence + projective-first outcome specification (`specs/LF4-todo.md` §2 + §7). Author has ruled out leaving `hLF2` as an indefinite hypothesis; LF4 must land either a bundled `PurePreparation` structure or a `Born-ready` typeclass that supplies the hypothesis.
+The three LF3 chain capstones consume a `PureSingletPreparation D ctx` structure (`CsdLean4/LF3/PurePreparation.lean`) bundling the projective outcome family, its ontic correspondence, and the Born identity
+`projectiveWeight D μprep (O_st s t) = ENNReal.ofReal (P_st ctx.a ctx.b s t)`
+as a single typed argument. This is the LF1↔LF2↔LF3 boundary in packaged form. The transitional constructor `PureSingletPreparation.ofHypothesis` accepts the raw field set for callers who already have an `hLF2`-style equality.
+
+LF4 will discharge the bundle structurally via the preparation-to-Hilbert correspondence + projective-first outcome specification (`specs/LF4-todo.md` §2 + §7), supplying a concrete constructor `PureSingletPreparation.ofKählerPreparation` from a Kähler `SectorData` instantiation (per `specs/LF4-todo.md` §8, the Q1 answer of 2026-05-17). Per the Q4 answer of 2026-05-17, this is a **rewrite** of the capstone bodies, not a wrap: when LF4 lands, the `ofHypothesis` transitional constructor is retired and the LF4 constructor becomes the single entry point.
+
+This bundle is a hypothesis structure, not an axiom: callers must supply the discharge content. It is listed here for the same reason as the other physical-assumption entries: it is load-bearing for the chain capstones and not derived inside the Lean tree.
 
 ## 4. Deferred items (LF4 and later)
 
@@ -135,6 +141,7 @@ For each headline exported theorem, the legible axiom citation:
 | `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound` |
 | `LF3_singlet_frequency_convergence_born` | `propext, Classical.choice, Quot.sound` |
 | `LF3_singlet_frequency_convergence_born_inner` | `propext, Classical.choice, Quot.sound` |
+| `PureSingletPreparation.ofHypothesis` | `propext, Classical.choice, Quot.sound` |
 | `ProjectorAlgebra.ofTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 

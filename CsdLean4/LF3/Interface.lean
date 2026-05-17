@@ -9,6 +9,7 @@ import CsdLean4.LF3.Singlet.Expectations
 import CsdLean4.LF3.Singlet.Kernel
 import CsdLean4.LF3.Singlet.Leakage
 import CsdLean4.LF3.ContextMap
+import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF2.Interface
 
@@ -144,45 +145,37 @@ variable {SigmaSpace P G : Type*}
   [Group G]
 
 /-- **Pre-Born form of the empirical chain.** For each `(s, t)` pointer
-    sector, the empirical frequency of `D.π ⁻¹' (O_st s t)` over repeated
-    trials converges almost surely to `P_{st}(a, b) = (1 − st a·b)/4`,
+    sector, the empirical frequency of `D.π ⁻¹' (prep.O_st s t)` over
+    repeated trials converges almost surely to `P_{st}(a, b) = (1 − st a·b)/4`,
     given:
     - an LF2 sector structure `D` with projection `π`,
     - an LF1 trial model `T` over `D.toOntic`,
-    - an `OutcomeRegion`-family `O_region s t` linked to a projective
-      outcome family `O_st : Sign → Sign → Set P` by pullback,
-    - pairwise independence of the trial indicators,
-    - and (the `hLF2` external hypothesis) the LF2 ↔ LF3 weight identity
-      relating `projectiveWeight (O_st s t)` to `P_st ctx.a ctx.b s t`. -/
+    - a `PureSingletPreparation D ctx` bundle supplying the projective
+      outcome family, its ontic counterpart, the correspondence between
+      them, and the LF2 → LF3 Born identity (this is the discharge
+      target for LF4-todo §2 + §7; see `PurePreparation.lean`),
+    - pairwise independence of the trial indicators on the
+      `prep.O_region s t` family. -/
 theorem LF3_singlet_frequency_convergence
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext)
-    (O_region : Sign → Sign → D.toOntic.OutcomeRegion)
-    (O_st : Sign → Sign → Set P)
-    (hOmeas : ∀ s t, MeasurableSet (O_st s t))
-    (hCorresp : ∀ s t, (O_region s t).preEvent = D.π ⁻¹' (O_st s t))
+    (prep : PureSingletPreparation D ctx)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (O_region s t) n)))
-    (hLF2 : ∀ s t,
-       CSD.LF2.projectiveWeight D
-         ((D.toOntic.prepMeasure :
-             MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
-         (O_st s t)
-       = ENNReal.ofReal (P_st ctx.a ctx.b s t)) :
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
     ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (O_region s t) n ω)
+         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
          atTop
          (nhds (P_st ctx.a ctx.b s t)) := by
   intro s t
-  have h_proj := CSD.LF2.LF1_main_theorem_projective D T (O_region s t)
-    (hindep s t) (hOmeas s t) (hCorresp s t)
-  rw [hLF2 s t] at h_proj
+  have h_proj := CSD.LF2.LF1_main_theorem_projective D T (prep.O_region s t)
+    (hindep s t) (prep.O_st_measurable s t) (prep.correspondence s t)
+  rw [prep.weight_eq_P_st s t] at h_proj
   rwa [ENNReal.toReal_ofReal (P_st_nonneg ctx.a ctx.b s t)] at h_proj
 
 /-- **Born-mediated form of the empirical chain (closed-form amplitude).**
@@ -196,29 +189,19 @@ theorem LF3_singlet_frequency_convergence_born
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext)
-    (O_region : Sign → Sign → D.toOntic.OutcomeRegion)
-    (O_st : Sign → Sign → Set P)
-    (hOmeas : ∀ s t, MeasurableSet (O_st s t))
-    (hCorresp : ∀ s t, (O_region s t).preEvent = D.π ⁻¹' (O_st s t))
+    (prep : PureSingletPreparation D ctx)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (O_region s t) n)))
-    (hLF2 : ∀ s t,
-       CSD.LF2.projectiveWeight D
-         ((D.toOntic.prepMeasure :
-             MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
-         (O_st s t)
-       = ENNReal.ofReal (P_st ctx.a ctx.b s t)) :
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
     ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (O_region s t) n ω)
+         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
          atTop
          (nhds (‖cAmp ctx.a ctx.b s t‖ ^ 2)) := by
   intro s t
-  have h_pre := LF3_singlet_frequency_convergence D T ctx
-    O_region O_st hOmeas hCorresp hindep hLF2 s t
+  have h_pre := LF3_singlet_frequency_convergence D T ctx prep hindep s t
   rw [← cst_squared_eq ctx.a ctx.b s t] at h_pre
   exact h_pre
 
@@ -238,32 +221,22 @@ theorem LF3_singlet_frequency_convergence_born_inner
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext)
-    (O_region : Sign → Sign → D.toOntic.OutcomeRegion)
-    (O_st : Sign → Sign → Set P)
-    (hOmeas : ∀ s t, MeasurableSet (O_st s t))
-    (hCorresp : ∀ s t, (O_region s t).preEvent = D.π ⁻¹' (O_st s t))
+    (prep : PureSingletPreparation D ctx)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (O_region s t) n)))
-    (hLF2 : ∀ s t,
-       CSD.LF2.projectiveWeight D
-         ((D.toOntic.prepMeasure :
-             MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
-         (O_st s t)
-       = ENNReal.ofReal (P_st ctx.a ctx.b s t))
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n)))
     (jointSpinEig : Sign → Sign → EuclideanSpace ℂ (Fin 2 × Fin 2))
     (h_inner : ∀ s t,
         ‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2 = P_st ctx.a ctx.b s t) :
     ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (O_region s t) n ω)
+         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
          atTop
          (nhds (‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2)) := by
   intro s t
-  have h_pre := LF3_singlet_frequency_convergence D T ctx
-    O_region O_st hOmeas hCorresp hindep hLF2 s t
+  have h_pre := LF3_singlet_frequency_convergence D T ctx prep hindep s t
   rw [← h_inner s t] at h_pre
   exact h_pre
 

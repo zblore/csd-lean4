@@ -272,8 +272,8 @@ LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classica
 
 ### What LF3 does not prove
 
-- The preparation-to-Hilbert-vector correspondence needed to discharge `hLF2` (LF4-todo §2);
-- a projective-first outcome specification that would make `hLF2` unnecessary (LF4-todo §7);
+- The preparation-to-Hilbert-vector correspondence supplying a structural `PureSingletPreparation` (LF4-todo §2; for now, callers either build the bundle from raw outcome / correspondence / Born-identity fields via `PureSingletPreparation.ofHypothesis`, or wait for the LF4 constructor);
+- a projective-first outcome specification (LF4-todo §7);
 - the constructed joint spin eigenstate `jointSpinEig` (currently the `_inner` capstone takes `v` as an external parameter; v2 plan: spectral decomposition of `jointSpinProj`);
 - mixed states, POVMs, subsystem reduction, sequential update (LF4/LF5 territory).
 
@@ -318,13 +318,14 @@ All LF3 capstone exports are fully axiom-clean: LF2's three axioms are not invok
 | `branchWeight_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form branch weight equals LF2's trace-form Born weight on rank-1 effects. | none |
 | `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package: kernel, correlation, marginals, no-signalling, pointer-completeness. | none |
 | `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities with bound `εA + εB + εA·εB` (and prefactors). | none |
-| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone: LF1 empirical frequency converges to `(1 − s·t·a·b)/4` under `hLF2`. | none |
+| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone: LF1 empirical frequency converges to `(1 − s·t·a·b)/4` given a `PureSingletPreparation D ctx`. | none |
 | `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant: lands on `‖cAmp s t (a, b)‖²`. | none |
 | `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant: lands on `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`. | none |
+| `PureSingletPreparation.ofHypothesis` | `LF3/PurePreparation.lean` | Transitional constructor: builds a `PureSingletPreparation D ctx` bundle from the raw outcome / correspondence / Born-identity field set. LF4 supplies the structural constructor. | none |
 | `ProjectorAlgebra.ofTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `ProjectorAlgebra` from a `TensorEmbedding`; the four projection fields are theorems, not data. | none |
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `MeasurementUnitary` from a `UnitaryTensorEmbedding` plus per-wing unitaries; `factorises` discharged by `rfl`. | none |
 
-The three LF3 chain capstones take an external `hLF2` hypothesis relating projective outcome weights to `ENNReal.ofReal P_st`; this is the LF4-todo §2 + §7 boundary.
+The three LF3 chain capstones consume a `PureSingletPreparation D ctx` bundle (`LF3/PurePreparation.lean`) carrying the projective outcome family, its ontic correspondence, and the Born identity `projectiveWeight = ENNReal.ofReal P_st`; the bundle is the LF4-todo §2 + §7 boundary in packaged form. The transitional `PureSingletPreparation.ofHypothesis` constructor accepts the raw field set so existing callers can migrate without yet having LF4 content; LF4 will supply a structural constructor `PureSingletPreparation.ofKählerPreparation` from a concrete Kähler `SectorData` instantiation.
 
 ## Repository structure
 
@@ -362,6 +363,8 @@ CsdLean4/
       Kernel.lean           -- P_st, cAmp, cst_squared_eq, correlation/marginals
       Leakage.lean          -- finite-leakage versions of all four quantities
     ContextMap.lean         -- MeasurementContext, GlobalCHSHAssignment, six context-form theorems
+    PurePreparation.lean    -- PureSingletPreparation: bundled hLF2 discharge target,
+                            --   with transitional ofHypothesis constructor
     Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
                             --   LF3_singlet_frequency_convergence (+ Born, + inner variants)
   Basic.lean                -- Pkg.Basic convenience re-export
