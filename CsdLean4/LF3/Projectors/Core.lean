@@ -29,8 +29,26 @@ variable {K_A K_B H_SA : Type*}
 /-- Axiomatised projective decomposition of `H_SA` into pointer sectors
     `(s, t) : Sign × Sign`. Each `lift s t` is the operator
     `I_AB ⊗ Q^A_s ⊗ Q^B_t` lifted to `H_SA` through the abstract tensor-factor
-    structure. In v1.00 this is taken as data (spec §9.7); in a future v2 it
-    becomes a derived construction from a concrete tensor model. -/
+    structure.
+
+    **D4 / G6 disclosure.** In v1.00 this is taken as data (spec §9.7): the
+    four projection identities (`selfAdjoint`, `idem`, `orthogonal`,
+    `complete`) are fields rather than theorems. The composite tensor
+    structure debt (D4 / G6 in the corpus) is the gap between this abstract
+    `ProjectorAlgebra` and a derived construction.
+
+    **Named v2 derivation target.** A future module
+    `CsdLean4/LF3/Projectors/TensorModel.lean` should introduce a
+    `TensorEmbedding K_A K_B H_SA` structure expressing the factorisation
+    `H_SA ≅ H_AB ⊗ K_A ⊗ K_B` (or the relevant variant), and derive a
+    `ProjectorAlgebra.ofTensorEmbedding : TensorEmbedding → BinaryPointerProjectors
+    K_A → BinaryPointerProjectors K_B → ProjectorAlgebra S` constructor whose
+    four output fields are theorems rather than data. The abstract
+    `ProjectorAlgebra` remains available for callers without a tensor
+    embedding; the constructor builds one from the embedding plus per-wing
+    binary projectors. The derivation itself is pure tensor-product linear
+    algebra and does not require LF4 prerequisites; see
+    `specs/LF4-todo.md` for sequencing. -/
 structure ProjectorAlgebra (S : SystemApparatusSetup K_A K_B H_SA) where
   /-- The four pointer-sector projectors, indexed by `(s, t) : Sign × Sign`. -/
   lift          : Sign → Sign → H_SA →L[ℂ] H_SA

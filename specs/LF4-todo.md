@@ -37,6 +37,14 @@ Items LF2 deliberately left for LF4, with rationale and concrete pickup notes.
 
 **Depends on:** Mathlib's `Projectivization`, Radon–Nikodym derivatives, Haar-measure / Dirac-concentration arguments.
 
+**Design-space constraint (confirmed 2026-05-17).** The three LF3 chain capstones in `LF3/Interface.lean` currently take an external `hLF2` hypothesis discharged by this item + §7. There are three candidate factorisations for the discharge:
+
+- (a) Keep `hLF2` as a permanent hypothesis and document it as a programme-level open problem.
+- (b) Bundle the discharge into a `PurePreparation` structure whose elimination rule supplies `hLF2`.
+- (c) Absorb `hLF2` into a `Born-ready preparation` typeclass.
+
+Option **(a) is ruled out**: the chain capstones must reach a discharged form in LF4. The LF4 plan must choose between (b) and (c). The latter two differ in cost and downstream feel; the choice is open and should be made at LF4 plan time, not now.
+
 ---
 
 ## 3. Rank-1 effects from projective points (not from unit vectors)

@@ -162,12 +162,14 @@ The physical grounding of each field is:
 |---|---|---|
 | `μL` | Liouville measure | *assumed* as a finite measure |
 | `Φ` | Hamiltonian flow | *assumed* as a measurable map |
-| `hΦ_pres` | Liouville's theorem | *assumed* as a hypothesis |
+| `hΦ_pres` | Liouville's theorem | *assumed* as a hypothesis; structurally inert through LF3 (see `LF1/Setup.lean`) |
 | `Ω0` | Preparation region | *assumed* as a measurable set |
 
 Deriving these from symplectic geometry or Hamilton's equations is outside the scope
 of LF1. LF2 and later papers are expected to instantiate `OnticSetup` with a concrete
 mechanical phase space when bridging to Born weights.
+
+**Structural debt D1 (preparation-measure origin).** The "assumed" entries above are not deficiencies of the Lean tree; they carry the debt D1 from Paper A's framing in the formal apparatus. `μL` is asserted as a finite measure, the flow `Φ` is asserted to preserve it, and neither is derived from a symplectic / Kähler volume form in v1.00. The LF1 frequency theorem is correspondingly more general than the physical reading suggests: it works for any measurable `Φ`, not only `μL`-preserving ones. D1 discharges at the Lean level when LF4 instantiates `SigmaSpace` as a compact Kähler manifold and constructs `μL` from `ω^n / n!`; until then the assertion is honest structural input, not a derived property.
 
 ## LF2: measure bridge and Born-weight wrapper
 

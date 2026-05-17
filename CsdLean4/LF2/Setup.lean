@@ -26,7 +26,24 @@ namespace LF2
 
 /-- LF2 sector data. Groups the LF1 ontic setup together with the epistemic
     projection `π` and a `G`-action satisfying `μL`-invariance and
-    `π`-equivariance. -/
+    `π`-equivariance.
+
+    **A5 structural data, not a derivation.** Both `π : SigmaSpace → P` and the
+    group `G` are taken as structural inputs. Nothing in `SectorData` constrains
+    `π` to project onto the quantum-effective sector specifically: any
+    measurable map with the two coherence conditions
+    (`μL`-invariance of the ontic action, `π`-equivariance) qualifies.
+    Similarly, `G` is any group acting measurably on both spaces with the two
+    coherence conditions. The natural reading is `G = SU(N)` acting on `Σ` via
+    the lift of its action on `CP^{N-1}`, with `π` the standard projection,
+    but no field forces this.
+
+    This labelling carries A5 in Paper B's framing: the physical motivation
+    for the quantum-effective sector assumption is a load-bearing external
+    input to the corpus, not derived in v1.00. Concrete instantiation
+    (`P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))`,
+    `G := Matrix.specialUnitaryGroup (Fin N) ℂ`, plus the explicit `π`) is
+    deferred to LF4-todo §8. -/
 structure SectorData
     (SigmaSpace P G : Type*)
     [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]

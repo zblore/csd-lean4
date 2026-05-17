@@ -134,7 +134,17 @@ Bounds the deviation of the branch weight from `‖cAmp s t‖²` in absolute
 terms by `εA + εB + εA·εB`. The per-side leakage parameters and the bound
 itself enter as fields; the underlying Cauchy–Schwarz / per-sector overlap
 argument is packaged here as a v1.00 structural-data interface (spec §9.7
-/ §9.11), to be derived in v2 from a concrete tensor decomposition. -/
+/ §9.11), to be derived in v2 from a concrete tensor decomposition.
+
+**V ≈ 1 − I disclosure.** `εA` and `εB` are stipulated stability parameters,
+not derived from any physical isolation quantity `I`. The bound
+`εA + εB + εA·εB` matches the V ≈ 1 − I phenomenology to leading order, but
+the link from the per-side leakages to an underlying isolation parameter is
+not formalised in this v1.00 module. Carries the V ≈ 1 − I structural debt
+explicitly: the leakage Compat is honest as a stability statement (any caller
+supplying `εA, εB` and discharging `branchWeight_dev` obtains the bound), but
+deriving `εA, εB` from first principles is open and not currently scheduled
+in the Lean tree. -/
 structure LeakageCompat (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
     (φA0 : K_A) (φB0 : K_B) where
   /-- A-wing leakage parameter. -/

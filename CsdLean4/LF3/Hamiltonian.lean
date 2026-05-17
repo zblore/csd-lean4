@@ -60,10 +60,25 @@ theorem hA_commute_hB {S : SystemApparatusSetup K_A K_B H_SA}
 /-- A measurement unitary, its single-wing factors, the factorisation law,
     and the action on joint spin/pointer eigenstates.
 
-    Per spec §9.5: `u` / `uA` / `uB` are not derived from `exp(-iHt)` in
-    v1.00. They are supplied as a `LinearIsometryEquiv` triple (unitarity
-    is part of the type) satisfying the factorisation and eigenstate-action
-    laws stated in §3.6–§3.7. -/
+    **D4 / G6 disclosure.** Per spec §9.5: `u` / `uA` / `uB` are **not**
+    derived from `exp(-iHt)` in v1.00. They are supplied as a
+    `LinearIsometryEquiv` triple (unitarity is part of the type) satisfying
+    the factorisation and eigenstate-action laws (paper §3.6–§3.7) as
+    structural fields rather than as theorems. Together with the abstract
+    `ProjectorAlgebra` (`LF3/Projectors/Core.lean`), this carries the
+    composite-tensor-structure debt D4 / G6 in Lean form.
+
+    **Named v2 derivation target, partial.** The factorisation field
+    `factorises : ∀ x, u x = uA (uB x)` could be derived from a concrete
+    `TensorEmbedding K_A K_B H_SA` (see `LF3/Projectors/Core.lean` for the
+    same target structure) plus per-wing unitaries. The
+    eigenstate-action field `action`, encoding the impulsive-readout
+    idealisation, requires `exp(-iHt)` machinery (operator exponential, Stone
+    on bounded self-adjoint operators); spec §9.5 explicitly carves this out
+    of v1.00. The factorisation half of this structure is therefore feasible
+    as a v2 derivation alongside the tensor-model module; the
+    eigenstate-action half is LF4 or later, gated on the operator-exponential
+    pickup. -/
 structure MeasurementUnitary (S : SystemApparatusSetup K_A K_B H_SA) where
   /-- The full measurement unitary on `H_SA`. -/
   u          : H_SA ≃ₗᵢ[ℂ] H_SA
