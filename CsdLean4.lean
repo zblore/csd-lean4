@@ -17,6 +17,7 @@ import CsdLean4.LF3.BranchSeparation
 import CsdLean4.LF3.Projectors.Core
 import CsdLean4.LF3.Projectors.BranchWeight
 import CsdLean4.LF3.Projectors.LF2Interface
+import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF3.Singlet.State
 import CsdLean4.LF3.Singlet.Expectations
 import CsdLean4.LF3.Singlet.Kernel

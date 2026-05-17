@@ -2,6 +2,7 @@ import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.Interface
 import CsdLean4.LF3.Interface
+import CsdLean4.LF3.Projectors.TensorModel
 
 /-!
 # CsdLean4.Basic
@@ -18,8 +19,14 @@ explicitly. This file re-exports the deepest leaves of each layer:
 - `LF2.Interface` transitively pulls in the rest of the LF2 chain (Setup →
   MeasureBridge → Weights → Interface).
 - `LF3.Interface` transitively pulls in the full LF3 chain (Setup, Hamiltonian,
-  BranchSeparation, Projectors/*, Singlet/*, ContextMap) and re-exposes the four
+  BranchSeparation, Projectors/Core, Projectors/BranchWeight,
+  Projectors/LF2Interface, Singlet/*, ContextMap) and re-exposes the four
   capstone theorems including the LF1↔LF2↔LF3 empirical chain.
+- `LF3.Projectors.TensorModel` is the v2 derivation target for D4 / G6: it
+  introduces `TensorEmbedding K_A K_B H_SA` and supplies
+  `ProjectorAlgebra.ofTensorEmbedding`, whose four output fields are theorems
+  rather than data. Not reachable through `LF3.Interface` (additive module,
+  not on the capstone chain), so imported separately.
 
 ## Invariant
 

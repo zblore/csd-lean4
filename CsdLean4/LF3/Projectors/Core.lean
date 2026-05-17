@@ -37,18 +37,17 @@ variable {K_A K_B H_SA : Type*}
     structure debt (D4 / G6 in the corpus) is the gap between this abstract
     `ProjectorAlgebra` and a derived construction.
 
-    **Named v2 derivation target.** A future module
-    `CsdLean4/LF3/Projectors/TensorModel.lean` should introduce a
-    `TensorEmbedding K_A K_B H_SA` structure expressing the factorisation
-    `H_SA ≅ H_AB ⊗ K_A ⊗ K_B` (or the relevant variant), and derive a
-    `ProjectorAlgebra.ofTensorEmbedding : TensorEmbedding → BinaryPointerProjectors
-    K_A → BinaryPointerProjectors K_B → ProjectorAlgebra S` constructor whose
-    four output fields are theorems rather than data. The abstract
-    `ProjectorAlgebra` remains available for callers without a tensor
-    embedding; the constructor builds one from the embedding plus per-wing
-    binary projectors. The derivation itself is pure tensor-product linear
-    algebra and does not require LF4 prerequisites; see
-    `specs/LF4-todo.md` for sequencing. -/
+    **v2 derivation landed.** `CsdLean4/LF3/Projectors/TensorModel.lean`
+    introduces a `TensorEmbedding K_A K_B H_SA` structure encoding the
+    bipartite tensor-factor structure of `H_SA` through unital algebra-
+    homomorphism lift functions `liftA`, `liftB` with commuting images,
+    and supplies `ProjectorAlgebra.ofTensorEmbedding : TensorEmbedding K_A
+    K_B H_SA → ProjectorAlgebra S` whose four output fields are theorems
+    rather than data. The abstract `ProjectorAlgebra` remains available
+    for callers without a tensor embedding; the constructor builds one
+    from the embedding plus the `SystemApparatusSetup`'s per-wing
+    `BinaryPointerProjectors`. The ProjectorAlgebra half of D4 / G6 is
+    therefore discharged at the Lean level. -/
 structure ProjectorAlgebra (S : SystemApparatusSetup K_A K_B H_SA) where
   /-- The four pointer-sector projectors, indexed by `(s, t) : Sign × Sign`. -/
   lift          : Sign → Sign → H_SA →L[ℂ] H_SA
