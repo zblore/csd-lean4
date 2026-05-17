@@ -17,6 +17,10 @@ The main goal of LF1 is to show that empirical frequencies converge to the corre
 
 LF1 is a frequency theorem. It is **not** a full Born-rule derivation.
 
+## Genealogy
+
+The LLN-based typicality framing used in LF1 and the geometric quantum mechanics structure on `CP^{N-1}` consumed by LF2 match structures developed independently in the Dürr / Goldstein / Zanghì typicality line and the Kibble / Heslot / Anandan / Ashtekar-Schilling geometric quantum mechanics line respectively. The CSD corpus uses the standard mathematical machinery shared with those programmes (measure theory, finite-dimensional inner-product geometry, the symplectic-Kähler structure on `CP^{N-1}`), and the Lean tree imports Mathlib accordingly. What is independently rediscovered is the structural choice of objects: typicality measures on the ontic phase space for LF1, and the Born quadratic form on projective Hilbert space for LF2. The corpus arrives at those choices from its own internal logic rather than by inferential dependence on the conclusions of those programmes, and the convergence is offered as a credibility signal rather than as a claim of priority.
+
 ## Deterministic content of LF1
 
 LF1 is not merely a formalisation of a law of large numbers on an abstract probability space.
