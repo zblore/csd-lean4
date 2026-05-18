@@ -55,6 +55,72 @@ theorem lf1_prepMeasure_weight_eq_projective_weight
               MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) Oep :=
   lf1_weight_eq_projective_weight D _ hOep
 
+/-! ### Projective-first outcome constructor
+
+`SectorData.outcomeOfProjective` removes the caller burden in
+`LF1_main_theorem_projective` and downstream chain capstones: given a
+measurable projective region `Oep ⊆ P` and the **flow-projection
+compatibility** hypothesis `∀ x, D.π (D.toOntic.Φ x) = D.π x` (CSD's
+constraint-surface preservation reading — the ontic flow preserves
+projective rays), the constructor returns an ontic `OutcomeRegion`
+whose pre-event is exactly `D.π ⁻¹' Oep` and whose weight is the
+projective weight of `Oep` under the LF2 measure bridge.
+
+The Φ-π compatibility hypothesis is supplied as a constructor argument
+rather than as a field on `SectorData` — adding a field would commit
+all `SectorData` instances to the constraint-surface reading, which is
+LF4 instantiation work. Keeping it on the constructor lets the
+projective-first outcome family be built at the LF3 chain capstone with
+a single CSD-foundational hypothesis. -/
+
+/-- **Projective-first outcome constructor.** Given a measurable
+    projective region `Oep ⊆ P` and the flow-projection compatibility
+    hypothesis `h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = D.π x`, returns the
+    ontic `OutcomeRegion` with `Ω := D.π ⁻¹' Oep`. The companion lemmas
+    `outcomeOfProjective_preEvent` and
+    `outcomeOfProjective_weight_eq_projectiveWeight` give the projective-
+    side reformulations of `preEvent` and `weight` respectively. -/
+noncomputable def SectorData.outcomeOfProjective
+    (D : SectorData SigmaSpace P G)
+    {Oep : Set P} (hOep : MeasurableSet Oep) :
+    D.toOntic.OutcomeRegion where
+  Ω := D.π ⁻¹' Oep
+  hΩ_meas := D.measurable_π hOep
+
+/-- Unfolding lemma: the ontic outcome region's underlying set is the
+    projection preimage. -/
+@[simp] lemma SectorData.outcomeOfProjective_Ω
+    (D : SectorData SigmaSpace P G)
+    {Oep : Set P} (hOep : MeasurableSet Oep) :
+    (D.outcomeOfProjective hOep).Ω = D.π ⁻¹' Oep := rfl
+
+/-- **Pre-event of `outcomeOfProjective` equals `π⁻¹(Oep)`** under the
+    flow-projection compatibility hypothesis. This is the lemma that
+    discharges the `hCorresp` argument of `LF1_main_theorem_projective`
+    for the constructor-built outcome region. -/
+lemma SectorData.outcomeOfProjective_preEvent
+    (D : SectorData SigmaSpace P G)
+    (h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = D.π x)
+    {Oep : Set P} (hOep : MeasurableSet Oep) :
+    (D.outcomeOfProjective hOep).preEvent = D.π ⁻¹' Oep := by
+  ext x
+  show D.toOntic.Φ x ∈ D.π ⁻¹' Oep ↔ x ∈ D.π ⁻¹' Oep
+  rw [Set.mem_preimage, Set.mem_preimage, h_flow_π]
+
+/-- **Weight of `outcomeOfProjective` equals the projective weight of
+    `Oep`** under the flow-projection compatibility hypothesis. Direct
+    consequence of `outcomeOfProjective_preEvent` and
+    `lf1_weight_eq_projective_weight`. -/
+lemma SectorData.outcomeOfProjective_weight_eq_projectiveWeight
+    (D : SectorData SigmaSpace P G)
+    (h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = D.π x)
+    (μprep : Measure SigmaSpace)
+    {Oep : Set P} (hOep : MeasurableSet Oep) :
+    μprep ((D.outcomeOfProjective hOep).preEvent)
+      = projectiveWeight D μprep Oep := by
+  rw [D.outcomeOfProjective_preEvent h_flow_π hOep]
+  exact lf1_weight_eq_projective_weight D μprep hOep
+
 /-- **Combined LF1 + LF2 main theorem.**  Under the LF1 repeated-trial model
     and an LF2 sector structure with projection `π`, if an LF1 outcome
     region's pre-event coincides with the `π`-preimage of a projective

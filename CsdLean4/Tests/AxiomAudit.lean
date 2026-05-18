@@ -46,6 +46,19 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.LF2.lf1_weight_eq_projective_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms lf1_weight_eq_projective_weight
 
+/-- info: 'CSD.LF2.SectorData.outcomeOfProjective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms SectorData.outcomeOfProjective
+
+/-- info: 'CSD.LF2.SectorData.outcomeOfProjective_preEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms SectorData.outcomeOfProjective_preEvent
+
+/--
+info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms SectorData.outcomeOfProjective_weight_eq_projectiveWeight
+
 /-- info: 'CSD.LF2.measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound, invariant_measure_uniqueness] -/
 #guard_msgs in #print axioms measure_bridge
 
