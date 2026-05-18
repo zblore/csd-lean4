@@ -287,6 +287,7 @@ Exported theorems and their dependencies. The "Axioms" column lists CSD-specific
 |---|---|---|---|
 | `LF1_main_theorem_ae` | `LF1/MainTheorem.lean` | Empirical frequencies converge `μ`-almost surely to the real-valued ontic weight `O.weightReal` under repeated preparation with pairwise-independent trial indicators. | none |
 | `expectation_eq_weight` | `LF1/MainTheorem.lean` | `E[𝟙_O(X_n)] = O.weightReal` for every trial `n`. | none |
+| `expectation_constant_across_trials` | `LF1/MainTheorem.lean` | `E[𝟙_O(X_n)] = E[𝟙_O(X_0)]` for every `n` (trials are identically distributed). | none |
 | `prepMeasure_apply` | `LF1/Preparation.lean` | `μprep(A) = μL(A ∩ Ω0) / μL(Ω0)` for measurable `A` (the explicit conditional measure formula). | none |
 | `weight_eq_prepEvent_div` | `LF1/Outcomes.lean` | `O.weight = μL(O.prepEvent) / μL(Ω0)`, the volume-typicality reading of `O.weightReal`. | none |
 | `trialEvent_eq_comp_preimage` | `LF1/Trials.lean` | The deterministic structure made explicit: `T.trialEvent O n = (Φ ∘ X n)⁻¹(O.Ω)`. | none |
