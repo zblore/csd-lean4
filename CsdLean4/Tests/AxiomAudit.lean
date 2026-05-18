@@ -1,6 +1,7 @@
 import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.Interface
+import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.Projectors.TensorModel
@@ -61,6 +62,15 @@ info: 'CSD.LF2.pure_state_born_weights_of_certainty' depends on axioms: [propext
  busch_effect_gleason]
 -/
 #guard_msgs in #print axioms pure_state_born_weights_of_certainty
+
+/-- info: 'CSD.LF2.PurePreparation.OP_certain_at_ψ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms PurePreparation.OP_certain_at_ψ
+
+/-- info: 'CSD.LF2.PurePreparation.born_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+#guard_msgs in #print axioms PurePreparation.born_rank_one
+
+/-- info: 'CSD.LF2.PurePreparation.born_rank_one_direct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms PurePreparation.born_rank_one_direct
 
 /-! ### LF3 -/
 
