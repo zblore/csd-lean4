@@ -11,6 +11,7 @@ import CsdLean4.LF2.Setup
 import CsdLean4.LF2.MeasureBridge
 import CsdLean4.LF2.Weights
 import CsdLean4.LF2.BornWrapper
+import CsdLean4.LF2.PhaseInvariance
 import CsdLean4.LF2.Interface
 import CsdLean4.LF3.Setup
 import CsdLean4.LF3.Hamiltonian
