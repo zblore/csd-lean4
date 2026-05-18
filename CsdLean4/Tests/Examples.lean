@@ -196,17 +196,88 @@ example (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) :
       = ‖inner ℂ ψ e1‖ ^ 2 :=
   born_quadratic ψ e1 hψ e1_unit
 
-/- **TODO (Level 2 cat test).** The natural follow-up is a worked
-   computation on the equal-superposition cat
-   `|cat⟩ = (|alive⟩ + |dead⟩)/√2`, demonstrating that the Born form
-   gives alive-prob = dead-prob = 1/2. This requires three small
-   Mathlib lemma routings (`norm_sq_eq_inner` or equivalent for going
-   between `‖x‖²` and `re ⟨x, x⟩`, the conjugate-on-real-cast spelling,
-   and an `inner ℂ e1 e0 = 0` symmetric companion to `inner_e0_e1`)
-   that did not match my first guess at simp-normal forms. The
-   computation itself is straightforward — `α² + α² = 1` with
-   `α = 1/√2` and Born prob = `‖inner cat |0⟩‖² = ‖α‖² = 1/2` — but
-   the Lean spelling needs iteration. Deferred. -/
+/-! ### Equal-superposition cat: worked Born computation
+
+`|cat⟩ = (|alive⟩ + |dead⟩) / √2` with `α := 1/√2` as the shared
+coefficient. Demonstrates that the Born form lands on `‖α‖² = 1/2`
+for both outcomes, using the orthogonal Pythagorean form
+`‖α•e₀ + α•e₁‖² = ‖α•e₀‖² + ‖α•e₁‖²` (avoiding inner-product
+expansion of the full norm-squared). -/
+
+/-- Equal-superposition coefficient `α = 1/√2` cast to `ℂ`. -/
+noncomputable def α : ℂ := ((1 / Real.sqrt 2 : ℝ) : ℂ)
+
+/-- The equal-superposition cat state. -/
+noncomputable def catEqual : EuclideanSpace ℂ (Fin 2) := α • e0 + α • e1
+
+/-- `(1/√2)² = 1/2` in `ℝ`. -/
+lemma α_sq_real : ((1 / Real.sqrt 2 : ℝ))^2 = 1/2 := by
+  rw [div_pow, one_pow, Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]
+
+/-- `‖α‖² = 1/2` in `ℂ`. -/
+lemma α_norm_sq : ‖α‖^2 = 1/2 := by
+  unfold α
+  rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+  exact α_sq_real
+
+/-- `(starRingEnd ℂ) α = α` since `α` is real. -/
+lemma α_star : (starRingEnd ℂ) α = α := by
+  unfold α
+  exact Complex.conj_ofReal _
+
+/-- Symmetric companion to `inner_e0_e1`: inner product is conjugate
+    symmetric, so swapping arguments preserves the zero value. -/
+lemma inner_e1_e0 : inner ℂ e1 e0 = (0 : ℂ) := by
+  rw [← inner_conj_symm, inner_e0_e1, map_zero]
+
+/-- Inner product of `e₁` with itself is `1` (basis-vector unitarity). -/
+lemma inner_e1_e1 : inner ℂ e1 e1 = (1 : ℂ) := by
+  simp [e1, EuclideanSpace.single]
+
+/-- The equal-superposition cat is unit-norm. Uses orthogonal
+    Pythagorean: `‖α•e₀ + α•e₁‖² = ‖α‖² + ‖α‖² = 1/2 + 1/2 = 1`.
+    Mathlib's Pythagorean lemma is stated in `mul_self` form, so this
+    proof routes through `‖x‖ * ‖x‖` rather than `‖x‖^2`. -/
+lemma catEqual_unit : ‖catEqual‖ = 1 := by
+  have h_ortho : inner ℂ (α • e0) (α • e1) = (0 : ℂ) := by
+    rw [inner_smul_left, inner_smul_right, inner_e0_e1]
+    ring
+  have h_mul : ‖catEqual‖ * ‖catEqual‖ = 1 := by
+    show ‖α • e0 + α • e1‖ * ‖α • e0 + α • e1‖ = 1
+    rw [norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ h_ortho,
+        norm_smul, norm_smul, e0_unit, e1_unit, mul_one]
+    have hα : ‖α‖ * ‖α‖ = 1/2 := by rw [← sq]; exact α_norm_sq
+    linarith
+  have h_nn : 0 ≤ ‖catEqual‖ := norm_nonneg _
+  calc ‖catEqual‖
+      = Real.sqrt (‖catEqual‖ * ‖catEqual‖) := (Real.sqrt_mul_self h_nn).symm
+    _ = Real.sqrt 1 := by rw [h_mul]
+    _ = 1 := Real.sqrt_one
+
+/-- **Alive Born probability = 1/2** for the equal-superposition cat.
+    The classic "either-or" outcome on a balanced superposition. -/
+example : traceForm (rankOneDensity catEqual catEqual_unit)
+                    (rankOneEffect e0 e0_unit) = 1/2 := by
+  rw [born_quadratic]
+  have h_inner : inner ℂ catEqual e0 = α := by
+    show inner ℂ (α • e0 + α • e1) e0 = α
+    rw [inner_add_left, inner_smul_left, inner_smul_left,
+        inner_e0_e0, inner_e1_e0, mul_one, mul_zero, add_zero]
+    exact α_star
+  rw [h_inner]
+  exact α_norm_sq
+
+/-- **Dead Born probability = 1/2** for the equal-superposition cat. -/
+example : traceForm (rankOneDensity catEqual catEqual_unit)
+                    (rankOneEffect e1 e1_unit) = 1/2 := by
+  rw [born_quadratic]
+  have h_inner : inner ℂ catEqual e1 = α := by
+    show inner ℂ (α • e0 + α • e1) e1 = α
+    rw [inner_add_left, inner_smul_left, inner_smul_left,
+        inner_e0_e1, inner_e1_e1, mul_zero, mul_one, zero_add]
+    exact α_star
+  rw [h_inner]
+  exact α_norm_sq
 
 end LF2Cat
 
