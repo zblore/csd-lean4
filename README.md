@@ -368,11 +368,14 @@ CsdLean4/
                             --   with transitional ofHypothesis constructor
     Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
                             --   LF3_singlet_frequency_convergence (+ Born, + inner variants)
-  Tests/
+  Tests/                    -- Separate Lake target `CsdLeanTests` (not pulled
+                            --   in by `import CsdLean4`); build via
+                            --   `lake build CsdLeanTests`
     AxiomAudit.lean         -- #guard_msgs regression suite for every theorem
                             --   in AXIOMS.md §5; build-fails on axiom drift
     Examples.lean           -- LF1 coin-toss OnticSetup; LF2 Born-form edge
                             --   cases (orthogonal -> 0, same-state -> 1);
+                            --   Schrödinger cat (equal + parametric);
                             --   LF3 chain capstone API smoke
   Mathlib/                  -- Cat-1: CSD-free helper lemmas staged as Mathlib
                             --   upstream candidates; declarations live in

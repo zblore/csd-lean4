@@ -5,8 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 
 ```bash
-# Build the full project
+# Build the library (CsdLean4 target — LF1/LF2/LF3, no tests)
 lake build
+
+# Build the test target (AxiomAudit + Examples; required to fire #guard_msgs)
+lake build CsdLeanTests
 
 # Check a single file
 lake env lean CsdLean4/LF1/MainTheorem.lean
@@ -15,9 +18,9 @@ lake env lean CsdLean4/LF1/MainTheorem.lean
 lake update
 ```
 
-The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` with no errors and no `sorry`s constitutes a verified proof.
+The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` plus a clean `lake build CsdLeanTests` with no errors and no `sorry`s constitutes a verified proof plus a green regression suite.
 
-CI (`.github/workflows/ci.yml`) runs `leanprover/lean-action@v1` with `build: true` on push to `main`/`master` and on all PRs.
+CI (`.github/workflows/ci.yml`) builds both targets on push to `main`/`master` and on all PRs. The library target uses `leanprover/lean-action@v1`; the test target is built with a direct `lake build CsdLeanTests` step.
 
 ## Architecture
 

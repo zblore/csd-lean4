@@ -17,8 +17,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Run Lean build
+      - name: Build CsdLean4 (library)
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
           build: true
+          build-args: "CsdLean4"
+
+      - name: Build CsdLeanTests (regression suite + examples)
+        run: lake build CsdLeanTests
