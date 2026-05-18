@@ -14,7 +14,7 @@ Every Lean module in this repository belongs to exactly one of three categories.
 
 **Placement.** `CsdLean4/Mathlib/<Mathlib-natural-path>/<Module>.lean`. The path mirrors where the module would eventually live in Mathlib. Example: a tensor-product-of-CLM module goes to `CsdLean4/Mathlib/Analysis/InnerProductSpace/TensorProductOps.lean`.
 
-**Namespace.** `CsdLean4.Mathlib.<Mathlib-natural-path>`. Shim form: when upstreamed, a one-time rename pass replaces `CsdLean4.Mathlib.` with `Mathlib.`. Chosen over direct `Mathlib.*` namespace to avoid homonym collisions if Mathlib later adds the same name.
+**Namespace.** Declarations live in their **natural Mathlib symbol namespace** (e.g. `ContinuousLinearMap` for `ContinuousLinearMap` lemmas), so dot notation is preserved. The file path `CsdLean4/Mathlib/<path>/` is the staging signal; when upstreamed, the file moves to or is appended onto the matching Mathlib path with no symbol rename. This is the Aesop / `Std4` convention. Earlier drafts of this document specified a `CsdLean4.Mathlib.<path>` outer-namespace wrapper to avoid Mathlib homonym collisions; in practice the cost (loss of dot notation, every lemma path is verbose) outweighs the benefit (rare collisions are easier to handle by renaming the specific lemma at upstream time).
 
 **Allowed imports.** Mathlib only. No imports from `CsdLean4/Framework/`, `CsdLean4/LF*/`, `CsdLean4/Tests/`, or other CSD-specific subtrees.
 

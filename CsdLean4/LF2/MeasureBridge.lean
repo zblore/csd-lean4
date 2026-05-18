@@ -114,8 +114,10 @@ axiom invariant_measure_uniqueness
 
 /-- **Theorem 1 of the spec (the measure bridge).** Under the sector-compatible
     data of `SectorData`, the pushforward of the ontic Liouville measure along
-    `π` is a constant multiple of the reference measure `μFS`. The constant is
-    pinned down by comparing total masses. -/
+    `π` is a constant multiple of the reference measure `μFS`. The theorem
+    only asserts existence of the scaling constant `c`; computing or pinning
+    down `c = D.μL Set.univ` (the obvious comparison of total masses) is a
+    separate step not in scope of v1.00 and not required by LF3 consumers. -/
 theorem measure_bridge
     (D : SectorData SigmaSpace P G)
     (μFS : Measure P) [IsProbabilityMeasure μFS]

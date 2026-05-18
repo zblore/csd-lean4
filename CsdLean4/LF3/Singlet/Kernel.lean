@@ -101,9 +101,11 @@ rank-1 projector identity `jointSpinProj = |v⟩⟨v|`. -/
 /-- **Closed-form / bra-ket equivalence.** If `v : EuclideanSpace ℂ (Fin 2 ×
     Fin 2)` is a vector whose bra-ket inner product with the singlet has
     squared norm equal to `P_{st}(a, b)`, then `‖cAmp s t (a, b)‖² = ‖⟨v,
-    ψ⁻⟩‖²`. The hypothesis is precisely the rank-1 projector identity at
-    `jointSpinProj`; a v2 construction of `jointSpinEig` from the spectral
-    decomposition of `jointSpinProj` would discharge it. -/
+    ψ⁻⟩‖²`. The hypothesis `h_inner` is the inner-product-norm equality that
+    a rank-1 projector identity `jointSpinProj = |v⟩⟨v|` would entail (via a
+    spectral argument); the theorem here consumes that conclusion directly.
+    A v2 construction of `jointSpinEig` from the spectral decomposition of
+    `jointSpinProj` would discharge `h_inner` automatically. -/
 theorem cAmp_norm_sq_eq_inner_norm_sq (a b : DetectorSetting) (s t : Sign)
     (v : EuclideanSpace ℂ (Fin 2 × Fin 2))
     (h_inner : ‖inner ℂ v singlet‖ ^ 2 = P_st a b s t) :

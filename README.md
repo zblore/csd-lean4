@@ -245,7 +245,7 @@ LF3 sits directly on top of LF2. It instantiates the abstract Born-weight machin
    - pointer-completeness on each wing.
    All eight are bundled in `LF3_main_theorem`.
 
-2. **Finite-leakage stability** (§9.13 + §7). Under per-side leakage parameters `εA, εB`, each of the four quantities (pointer-sector probability, correlation, A-marginal, B-marginal) deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors 1, 4, 2, 2). Strong-readout exactness is the `εA = εB = 0` limit.
+2. **Finite-leakage stability** (§9.13 + §7). Under per-side leakage parameters `εA, εB`, each of the four quantities (pointer-sector probability, correlation, A-marginal, B-marginal) deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors 1, 4, 2, 2). Strong-readout exactness is the `εA = εB = 0` limit. **Packaging caveat.** The deviation bound enters as a *field* (`branchWeight_dev`) of the `LeakageCompat` structure rather than as a derived theorem; `LF3_finite_leakage_theorem` is therefore a packaging theorem (a triangle inequality over `Sign × Sign` summing the assumed per-branch bound), not a derivation from projector / pointer hypotheses. A v2 derivation from a concrete tensor decomposition is owed (spec §9.7 / §9.11); the v1.00 statement is honest stability-from-assumption, not stability-from-first-principles.
 
 3. **Born quadratic form on the singlet.** The closed-form amplitude `cAmp s t (a, b) := √P_st` satisfies `‖cAmp‖² = P_st`. Under the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` for a caller-supplied unit vector `v` (a joint spin eigenstate), `‖cAmp‖² = ‖⟨v, ψ⁻⟩‖²`.
 
@@ -258,7 +258,7 @@ All three capstones consume an external `hLF2` hypothesis relating the projectiv
 
 ### LF3 axiom posture
 
-LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`). The three LF2 axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`, `rankOneDensity_unique_of_certainty`) are not invoked anywhere in LF3's exports: the singlet is concretely given as a Hilbert vector rather than extracted from a Busch operational package, and the pre-Born capstone routes around the Born wrapper entirely. `#print axioms LF3_main_theorem` and `#print axioms LF3_singlet_frequency_convergence_born_inner` both legibly return the foundational triple only. The axiom posture across all three layers is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every headline theorem; the build fails on drift.
+LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`). The three LF2 axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`, `rankOneDensity_unique_of_certainty`) are not invoked anywhere in LF3's exports: the singlet is concretely given as a Hilbert vector rather than extracted from a Busch operational package, and the pre-Born capstone routes around the Born wrapper entirely. `#print axioms LF3_main_theorem` and `#print axioms LF3_singlet_frequency_convergence_born_inner` both legibly return the foundational triple only. The axiom posture across all three layers is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every theorem listed in [`AXIOMS.md §5`](AXIOMS.md); the build fails on drift. The §5 shortlist is a curated subset of the full theorem inventory below — inventory entries omitted from §5 (e.g. `expectation_eq_weight`, `weights_sum_eq_one`, `singlet_pauli_correlation`) are not guard-pinned and their stated axiom column rests on review rather than build-time enforcement.
 
 ### Design choices in LF3
 
@@ -267,7 +267,7 @@ LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classica
 - `MeasurementUnitary` carries the full and per-wing unitaries as `LinearIsometryEquiv`, encoding unitarity in the type.
 - `cAmp` is defined in closed form as `(Real.sqrt (P_st a b s t) : ℂ)`. This sidesteps the explicit construction of joint spin eigenstates; downstream theorems consume only `‖cAmp‖²`. The bra-ket equivalence is exposed via `cAmp_norm_sq_eq_inner_norm_sq` under a rank-1 projector hypothesis on `jointSpinProj`.
 - Self-adjointness on continuous linear maps is stated via the inner-product equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` rather than Mathlib's `IsSelfAdjoint T`. This is forced: `Star (H →L[ℂ] H)` typeclass synthesis on a finite-dim complex inner-product space fails even with `Mathlib.Analysis.InnerProductSpace.Adjoint` imported. The inner-product spelling is mathematically equivalent and avoids the synthesis dead-end.
-- `ProjectorAlgebra` is available in two forms. The abstract `ProjectorAlgebra` structure (`LF3/Projectors/Core.lean`) takes the four projection identities (self-adjointness, idempotence, mutual orthogonality, completeness) as fields, suitable for callers without a tensor decomposition of `H_SA`. A derived constructor `ProjectorAlgebra.ofTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the same structure from a `TensorEmbedding K_A K_B H_SA` (per-wing algebra-homomorphism lifts with commuting images) plus the per-wing `BinaryPointerProjectors`, with the four fields derived as theorems. The two coexist; the additive module is non-invasive. The orthogonality field is discharged via `CSD.Util.ContinuousLinearMap.comp_complement_of_idem` (a CSD-free lemma in `CsdLean4/Util/MathlibCandidates.lean` staged as a Mathlib upstream candidate).
+- `ProjectorAlgebra` is available in two forms. The abstract `ProjectorAlgebra` structure (`LF3/Projectors/Core.lean`) takes the four projection identities (self-adjointness, idempotence, mutual orthogonality, completeness) as fields, suitable for callers without a tensor decomposition of `H_SA`. A derived constructor `ProjectorAlgebra.ofTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the same structure from a `TensorEmbedding K_A K_B H_SA` (per-wing algebra-homomorphism lifts with commuting images) plus the per-wing `BinaryPointerProjectors`, with the four fields derived as theorems. The two coexist; the additive module is non-invasive. The orthogonality field is discharged via `ContinuousLinearMap.comp_complement_of_idem` (a CSD-free Cat-1 lemma at `CsdLean4/Mathlib/Topology/Algebra/Module/LinearMap.lean` staged as a Mathlib upstream candidate).
 - `MeasurementUnitary` is similarly available in two forms. The abstract structure (`LF3/Hamiltonian.lean`) carries the factorisation `u = uA ∘ uB` and the impulsive-readout eigenstate-action as fields. A derived constructor `MeasurementUnitary.ofUnitaryTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the structure from a `UnitaryTensorEmbedding K_A K_B H_SA` (per-wing unitary lifts with commuting images) plus per-wing unitaries `vA`, `vB` and the caller-supplied eigenstate-action data, with `factorises` discharged by `rfl`. The eigenstate-action field `action` remains caller-supplied: it requires operator-exponential / Stone machinery (`exp(-iHt)`) and is explicitly an LF4-or-later carve-out per spec §9.5.
 
 ### What LF3 does not prove
@@ -373,10 +373,13 @@ CsdLean4/
     Examples.lean           -- LF1 coin-toss OnticSetup; LF2 Born-form edge
                             --   cases (orthogonal -> 0, same-state -> 1);
                             --   LF3 chain capstone API smoke
-  Util/
-    MathlibCandidates.lean  -- generalised, CSD-free helper lemmas staged as
-                            --   Mathlib upstream candidates; consumed by
-                            --   LF3/Projectors/TensorModel.lean
+  Mathlib/                  -- Cat-1: CSD-free helper lemmas staged as Mathlib
+                            --   upstream candidates; declarations live in
+                            --   their natural Mathlib symbol namespace, file
+                            --   paths mirror the eventual Mathlib location
+    Topology/Algebra/Module/
+      LinearMap.lean        -- ContinuousLinearMap complement-of-idempotent
+                            --   lemmas; consumed by LF3/Projectors/TensorModel
   Basic.lean                -- Pkg.Basic convenience re-export
 CsdLean4.lean               -- canonical top-level import (explicit module list)
 specs/

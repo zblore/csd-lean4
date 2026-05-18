@@ -1,19 +1,22 @@
 import Mathlib.Topology.Algebra.Module.LinearMap
 
 /-!
-# Mathlib upstream candidates
+# Mathlib upstream candidates: `ContinuousLinearMap` complement lemmas
 
 **Category:** 1-Mathlib (CSD-free helper lemmas staged as Mathlib upstream candidates).
 
 Generalised forms of helper lemmas currently used in CSD-specific modules.
-Each lemma here is stated in maximum-general Mathlib idiom: it depends on
-no CSD-specific structure, names follow Mathlib snake_case conventions,
-imports are minimal.
+Each lemma here is stated in maximum-general Mathlib idiom: no CSD-specific
+structure, Mathlib snake_case names, minimal imports.
+
+Declarations live in their natural Mathlib symbol namespace (here:
+`ContinuousLinearMap`), so dot notation is preserved and upstreaming
+requires no symbol rename — only a file move to (or append onto)
+`Mathlib/Topology/Algebra/Module/LinearMap.lean`.
 
 If Mathlib already contains an equivalent lemma, the local helper here can
-be replaced by the Mathlib citation. If not, these are PR candidates.
-
-Provenance notes are inline.
+be replaced by the Mathlib citation. Provenance notes are inline so a
+future upstreaming PR can write itself.
 
 ## Candidates in this file
 
@@ -25,7 +28,7 @@ Provenance notes are inline.
   composition on the left.
 -/
 
-namespace CSD.Util
+namespace ContinuousLinearMap
 
 variable {𝕜 : Type*} [Ring 𝕜]
 variable {M : Type*} [AddCommGroup M] [Module 𝕜 M] [TopologicalSpace M]
@@ -41,7 +44,7 @@ Proof: `Q ∘L P = Q ∘L (1 - Q) = Q ∘L 1 - Q ∘L Q = Q - Q = 0`.
 direction of pointer-projector orthogonality from completeness plus
 idempotence. The generalised form here depends on no CSD-specific
 structure. -/
-theorem ContinuousLinearMap.comp_complement_of_idem
+theorem comp_complement_of_idem
     (P Q : M →L[𝕜] M) (hQ_idem : Q ∘L Q = Q) (h_complete : P + Q = 1) :
     Q ∘L P = 0 := by
   have hP : P = 1 - Q := eq_sub_of_add_eq h_complete
@@ -55,7 +58,7 @@ theorem ContinuousLinearMap.comp_complement_of_idem
 
 This is the version where `P` is the complement and we compose on the
 *left* with `Q`. The proof mirrors `comp_complement_of_idem`. -/
-theorem ContinuousLinearMap.complement_comp_of_idem
+theorem complement_comp_of_idem
     (P Q : M →L[𝕜] M) (hQ_idem : Q ∘L Q = Q) (h_complete : P + Q = 1) :
     P ∘L Q = 0 := by
   have hP : P = 1 - Q := eq_sub_of_add_eq h_complete
@@ -64,4 +67,4 @@ theorem ContinuousLinearMap.complement_comp_of_idem
       ContinuousLinearMap.id_comp, hQ_idem]
   exact sub_self _
 
-end CSD.Util
+end ContinuousLinearMap

@@ -20,23 +20,34 @@ import CsdLean4.LF2.Interface
 
 Paper §9.13 / spec §10.5.
 
-Four exported theorems, in descending order of programme-level importance:
+Five exported theorems, in descending order of programme-level importance:
 
 1. `LF3_singlet_frequency_convergence_born`: repeated singlet trials produce
    frequencies that converge a.s. to `‖cAmp s t (a, b)‖²`. The Born-rule
    form of the empirical chain — the reason LF3 exists.
 2. `LF3_singlet_frequency_convergence`: the pre-Born form of the same chain,
    landing on `P_{st}(a, b) = (1 − st a·b)/4`.
-3. `LF3_main_theorem`: eight-conjunct strong-readout package (kernel,
+3. `LF3_singlet_frequency_convergence_born_inner`: bra-ket variant landing on
+   `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`.
+4. `LF3_main_theorem`: eight-conjunct strong-readout package (kernel,
    correlation, A-marginal, B-marginal, no-signalling on each side,
    pointer-completeness on each side).
-4. `LF3_finite_leakage_theorem`: four-conjunct finite-leakage stability.
+5. `LF3_finite_leakage_theorem`: four-conjunct finite-leakage stability.
 
-The chain composes:
+The conceptual chain (what a fully discharged `PureSingletPreparation` would
+compose) is:
+
 - `Projectors.LF2Interface.branchWeight_eq_LF2_Born` (LF3 → LF2 Born form)
 - `LF2.Interface.LF1_main_theorem_projective` (LF2 → LF1 frequency limit)
 - `LF1.MainTheorem.LF1_main_theorem_ae` (LF1 a.s. convergence)
 - `Singlet.Kernel.cst_squared_eq` (algebraic core, axiom-free)
+
+The actual proof bodies below currently consume the bundled `PureSingletPreparation`
+field `prep.weight_eq_P_st`, which packages the first two components above into
+a single hypothesis pending LF4 discharge. The chain capstones therefore compose
+`LF1_main_theorem_projective` + `prep.weight_eq_P_st` + `cst_squared_eq`
+directly; `branchWeight_eq_LF2_Born` enters through `weight_eq_P_st` once LF4
+supplies the structural constructor.
 -/
 
 open scoped BigOperators

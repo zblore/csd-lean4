@@ -148,3 +148,31 @@ For each headline exported theorem, the legible axiom citation:
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
+
+## 6. LF3 structural-data carve-outs
+
+LF3 imports **no** axioms beyond Lean's foundational set, but it does take certain structural facts as fields of caller-supplied data rather than as derived theorems. These are not axioms in Lean's sense (they do not appear in `#print axioms` output), but they are load-bearing inputs that downstream proofs consume without verifying. Listed here so the corpus is honest about which v1.00 results are stability-from-assumption rather than stability-from-first-principles.
+
+### 6.1 `LeakageCompat.branchWeight_dev`
+
+**Location.** `CsdLean4/LF3/Projectors/BranchWeight.lean`.
+
+**What it is.** A field of the `LeakageCompat` structure asserting that the operator-form branch weight deviates from `‖cAmp s t‖²` by at most `εA + εB + εA·εB`.
+
+**What it should be (v2).** A theorem derived from a concrete tensor decomposition of `H_SA` plus per-side overlap bounds (Cauchy-Schwarz on the wrong-pointer leakage mass). Spec §9.7 / §9.11.
+
+**Why it matters.** `LF3_finite_leakage_theorem` is a triangle-inequality over `Sign × Sign` summing this field with appropriate prefactors. It is therefore a packaging theorem from this assumption, not a derivation from projector / pointer / Hamiltonian hypotheses.
+
+**Status.** v1.00 carries the deviation bound as caller-supplied data; v2 should derive it. Tracked in the LF3 design-choices section of README and in `specs/LF4-todo.md`.
+
+### 6.2 `PureSingletPreparation.weight_eq_P_st`
+
+**Location.** `CsdLean4/LF3/PurePreparation.lean`.
+
+**What it is.** A field of the `PureSingletPreparation` bundle asserting that the LF2 projective weight of the pointer-sector outcome region equals `ENNReal.ofReal (P_st a b s t)`.
+
+**What it should be (LF4).** A theorem derived from the chain `branchWeight_eq_LF2_Born` + `lf1_weight_eq_projective_weight` + `cst_squared_eq` once LF4 supplies a concrete preparation-to-Hilbert correspondence (LF4-todo §2 + §7).
+
+**Why it matters.** The three LF3 frequency-convergence capstones consume this field directly. The "chain" listed in the LF3 Interface module docstring is what `weight_eq_P_st` *will* be derived from in LF4, not what the proof bodies currently invoke.
+
+**Status.** v1.00 carries the identity as caller-supplied bundle field via the transitional `PureSingletPreparation.ofHypothesis` constructor. LF4 supplies a structural constructor `PureSingletPreparation.ofKählerPreparation` that derives the field.

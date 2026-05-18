@@ -1,6 +1,6 @@
 import CsdLean4.LF3.Projectors.Core
 import CsdLean4.LF3.Hamiltonian
-import CsdLean4.Util.MathlibCandidates
+import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
 
 /-!
 # LF3 Projectors / TensorModel: derive ProjectorAlgebra from a tensor structure
@@ -74,7 +74,7 @@ lemma BinaryPointerProjectors.orthogonal_rev {K : Type*}
     [NormedAddCommGroup K] [InnerProductSpace ℂ K] [FiniteDimensional ℂ K]
     (P : BinaryPointerProjectors K) :
     P.proj .minus ∘L P.proj .plus = 0 :=
-  CSD.Util.ContinuousLinearMap.comp_complement_of_idem
+  ContinuousLinearMap.comp_complement_of_idem
     (P.proj .plus) (P.proj .minus) (P.idem .minus) P.complete
 
 /-! ### TensorEmbedding -/
