@@ -4,6 +4,7 @@ import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
 import CsdLean4.LF3.PurePreparation
+import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
 
 /-!
@@ -107,6 +108,26 @@ info: 'CSD.LF2.pure_state_born_weights_of_certainty' depends on axioms: [propext
 
 /-- info: 'CSD.LF3.ProjectorAlgebra.ofTensorEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ProjectorAlgebra.ofTensorEmbedding
+
+/--
+info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_measurable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms MeasurementJointEig.singletProjectiveOutcome_measurable
+
+/--
+info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct
+
+/-- info: 'CSD.LF3.OP_p_at_jointEig_eq_P_st' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+#guard_msgs in #print axioms OP_p_at_jointEig_eq_P_st
+
+/-- info: 'CSD.LF3.OP_p_at_jointEig_eq_P_st_direct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms OP_p_at_jointEig_eq_P_st_direct
 
 /-- info: 'CSD.LF3.MeasurementUnitary.ofUnitaryTensorEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms MeasurementUnitary.ofUnitaryTensorEmbedding
