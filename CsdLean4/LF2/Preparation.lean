@@ -79,7 +79,7 @@ noncomputable def MeasureBridgeData.ofSectorData
 /-! ### Operational package from a preparation
 
 `OperationalPackage.fromPreparation` constructs the operational
-probability assignment by integrating the volume-forward effect function
+probability assignment by integrating the volume-ratio effect function
 `effectProjFn rep E` against the pushforward `Measure.map D.π μprep`.
 The four operational-axiom fields (`nonneg`, `le_one`, `total_one`,
 `additivity`) follow from the pointwise content of `effectProjFn` plus
@@ -96,7 +96,7 @@ symmetry axiom into the chain capstones.
 
 variable {N : ℕ}
 
-/-- **`OperationalPackage.fromPreparation` (the volume-forward Born
+/-- **`OperationalPackage.fromPreparation` (the volume-ratio Born
     wrapper, structural form).** Given a `SectorData`, the bridge data
     `bridge : MeasureBridgeData D μFS`, a probability preparation
     measure `μprep`, and a unit-norm measurable representative
@@ -170,7 +170,7 @@ Two Born theorems are proved:
   step (`OP_certain_at_ψ`) with the Busch packaging step
   (`pure_state_born_weights_of_certainty`). Matches spec §5.4 four-
   ingredient combinatorial framing.
-- `PurePreparation.born_rank_one_direct` (volume-forward auxiliary) —
+- `PurePreparation.born_rank_one_direct` (volume-ratio auxiliary) —
   derives the same conclusion by direct Dirac integration of
   `effectProjFn rep (rankOneEffect φ hφ)` against `Measure.dirac ray_point`,
   without invoking `busch_effect_gleason`. Tagged as the **eventual
@@ -277,12 +277,12 @@ theorem born_rank_one
     (PP.OP_certain_at_ψ D μFS bridge μprep)
     φ hφ
 
-/-- **Born quadratic form for pure preparations (volume-forward direct
+/-- **Born quadratic form for pure preparations (volume-ratio direct
     auxiliary).** Same conclusion as `born_rank_one`, but proved by direct
     Dirac integration of `effectProjFn rep (rankOneEffect φ hφ)` against
     `Measure.dirac ray_point`, without invoking `busch_effect_gleason`.
 
-    This is the **CSD volume-forward foundational form**: the Born value
+    This is the **CSD volume-ratio foundational form**: the Born value
     emerges from the volume integral alone, with no trace-form
     characterisation step.
 
@@ -313,7 +313,7 @@ theorem born_rank_one
     **Tagged as the eventual migration target** for the chain capstones
     once downstream consumers accommodate the leaner cite set; v1.00
     chain stays Busch-mediated per spec §5.4. Useful pedagogically as
-    the explicit volume-forward statement, and as the migration point
+    the explicit volume-ratio statement, and as the migration point
     for future revisions of the chain capstones.
 
     `#print axioms PurePreparation.born_rank_one_direct` cites only the

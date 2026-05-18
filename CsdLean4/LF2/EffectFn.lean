@@ -5,9 +5,9 @@ import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
 import Mathlib.MeasureTheory.Integral.IntegrableOn
 
 /-!
-# Volume-forward projective effect function
+# Volume-ratio projective effect function
 
-**Category:** 3-Local (pre-LF4 plan Phase 2 — the volume-forward
+**Category:** 3-Local (pre-LF4 plan Phase 2 — the volume-ratio
 foundational object: given a unit-vector representative map
 `rep : P → EuclideanSpace ℂ (Fin N)` from an abstract projective space
 `P` and a finite-dimensional `Effect`, `effectProjFn rep E p` returns
@@ -32,7 +32,7 @@ namespace LF2
 
 variable {N : ℕ} {P : Type*}
 
-/-- **Volume-forward projective effect function.** Given a unit-vector
+/-- **Volume-ratio projective effect function.** Given a unit-vector
     representative map `rep : P → EuclideanSpace ℂ (Fin N)` and a
     finite-dimensional `Effect E`, returns the real number
     `RCLike.re (star v ⬝ᵥ E.M *ᵥ v)` where `v = (rep p).ofLp` is the
@@ -44,7 +44,7 @@ noncomputable def effectProjFn
     RCLike.re (star (WithLp.ofLp (rep p) : Fin N → ℂ) ⬝ᵥ
                 E.M *ᵥ WithLp.ofLp (rep p))
 
-/-- For the rank-1 effect `|φ⟩⟨φ|`, the volume-forward effect function
+/-- For the rank-1 effect `|φ⟩⟨φ|`, the volume-ratio effect function
     evaluates pointwise to `‖⟨rep p, φ⟩‖²`. This is the standard Born
     quadratic form at the representative vector. -/
 lemma effectProjFn_rankOne
@@ -75,14 +75,14 @@ lemma effectProjFn_rankOne
   rw [h_conj, ← h_inner, RCLike.mul_conj]
   norm_cast
 
-/-- The zero effect's volume-forward function is identically zero. -/
+/-- The zero effect's volume-ratio function is identically zero. -/
 @[simp]
 lemma effectProjFn_zero (rep : P → EuclideanSpace ℂ (Fin N)) :
     effectProjFn rep (Effect.zero : Effect N) = 0 := by
   funext p
   simp [effectProjFn, Effect.zero]
 
-/-- The identity effect's volume-forward function is `‖rep p‖²` pointwise.
+/-- The identity effect's volume-ratio function is `‖rep p‖²` pointwise.
     For unit-norm `rep p` this is `1`. -/
 lemma effectProjFn_one (rep : P → EuclideanSpace ℂ (Fin N)) (p : P) :
     effectProjFn rep (Effect.one : Effect N) p = ‖rep p‖ ^ 2 := by
@@ -97,7 +97,7 @@ lemma effectProjFn_one (rep : P → EuclideanSpace ℂ (Fin N)) (p : P) :
   rw [hnorm]
   norm_cast
 
-/-- The volume-forward effect function is additive in the effect argument
+/-- The volume-ratio effect function is additive in the effect argument
     (when the sum is itself an effect). -/
 lemma effectProjFn_add
     (rep : P → EuclideanSpace ℂ (Fin N)) (E F : Effect N)
@@ -108,11 +108,11 @@ lemma effectProjFn_add
 
 /-! ### Bounds
 
-The volume-forward effect function is non-negative (from `E.nonneg`) and
+The volume-ratio effect function is non-negative (from `E.nonneg`) and
 bounded by `1` for unit-norm `rep p` (from `E.le_one`).
 -/
 
-/-- The volume-forward effect function is pointwise non-negative.
+/-- The volume-ratio effect function is pointwise non-negative.
     Routes through `Matrix.PosSemidef.re_dotProduct_nonneg` applied to
     `E.M`'s PSD content. -/
 lemma effectProjFn_nonneg
@@ -120,7 +120,7 @@ lemma effectProjFn_nonneg
     0 ≤ effectProjFn rep E p :=
   E.nonneg.re_dotProduct_nonneg (WithLp.ofLp (rep p))
 
-/-- The volume-forward effect function is pointwise bounded by `‖rep p‖²`.
+/-- The volume-ratio effect function is pointwise bounded by `‖rep p‖²`.
     For unit-norm `rep p` this is `1`. Routes through `E.le_one` applied
     via the same `re_dotProduct_nonneg` mechanism on `1 - E.M`. -/
 lemma effectProjFn_le_norm_sq
@@ -162,7 +162,7 @@ function decomposes as `rep` composed with a continuous map
 finite-dim normed spaces all polynomial expressions are continuous.
 -/
 
-/-- The volume-forward effect function is measurable in its argument
+/-- The volume-ratio effect function is measurable in its argument
     when `rep` is measurable. -/
 @[fun_prop]
 lemma effectProjFn_measurable
@@ -199,7 +199,7 @@ lemma effectProjFn_measurable
     WithLp.measurable_ofLp 2 (Fin N → ℂ)
   exact h_F_meas.comp (h_ofLp_meas.comp hrep_meas)
 
-/-- The volume-forward effect function is integrable against any finite
+/-- The volume-ratio effect function is integrable against any finite
     measure when `rep` is measurable and unit-norm. Routes via
     `Integrable.of_bound`: measurable + pointwise bounded by 1 (via
     `effectProjFn_le_one`) + finite measure ⟹ integrable. -/

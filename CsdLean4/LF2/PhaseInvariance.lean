@@ -12,7 +12,7 @@ equals `|φ⟩⟨φ|`. The rank-1 projector through a unit vector depends
 only on the projective ray of the vector, not on its specific
 unit-vector representative.
 
-Used downstream by the volume-forward effect function `effectProjFn`
+Used downstream by the volume-ratio effect function `effectProjFn`
 (pre-LF4 plan Phase 2) to justify well-definedness under a caller-
 supplied phase-arbitrary `rep : P → EuclideanSpace ℂ (Fin N)` map.
 -/
