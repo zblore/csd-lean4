@@ -9,9 +9,11 @@ import CsdLean4.LF3.Singlet.Expectations
 import CsdLean4.LF3.Singlet.Kernel
 import CsdLean4.LF3.Singlet.Leakage
 import CsdLean4.LF3.ContextMap
+import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF2.Interface
+import CsdLean4.LF2.Preparation
 
 /-!
 # LF3 Interface: the LF1 ↔ LF2 ↔ LF3 chain closure
@@ -136,21 +138,27 @@ theorem LF3_finite_leakage_theorem
 
 /-! ### LF1 ↔ LF2 ↔ LF3 empirical chain (paper §9.13, spec §10.5)
 
-The full empirical interpretation chain:
+The full empirical interpretation chain, under the option (B) design
+(2026-05-18):
 
 ```
 LF3 pointer-sector weight P_st(a, b)
-  = (via projectiveWeight identity, hLF2 hypothesis)
-  LF2 projective weight over outcome region O_{st}
-  = (via LF2.Interface.lf1_weight_eq_projective_weight)
-  LF1 pulled-back ontic weight μprep(D.π⁻¹ O_{st})
+  = (via born_rank_one + jed.born_eq_P_st = OP_p_at_jointEig_eq_P_st)
+  OP.p (rankOneEffect (jed.eig s t))
+  = (via prep.bridge_op_p, the LF4 discharge target)
+  prepMeasure((prep.O_region s t).preEvent)
   = (via LF1.MainTheorem.LF1_main_theorem_ae)
   LF1 trial-frequency limit lim n→∞ (1/n) ∑ 𝟙_{O_{st}}(ω_k)
 ```
 
-The `hLF2` hypothesis supplies the LF2/LF3 connection at the rank-1 singlet;
-it is the composition of LF4-todo §2 (preparation ↔ Hilbert correspondence)
-and LF4-todo §7 (projective-first outcomes) — see `specs/LF4-todo.md`. -/
+The chain bridge `prep.bridge_op_p` discharges the LF1 ontic outcome
+weight as `ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))`, where
+the OP is built from `μFS + bridge + prepMeasure + PP.rep` via
+`LF2.OperationalPackage.fromPreparation`. The `OP.p ↔ P_st` identity is
+discharged by `LF3.OP_p_at_jointEig_eq_P_st` (cites `busch_effect_gleason`
+via `LF2.pure_state_born_weights_of_certainty`). LF4-todo §2
+(preparation ↔ Hilbert correspondence) and §7 (projective-first outcomes)
+are the two LF4 work items behind the `bridge_op_p` hypothesis. -/
 
 variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
@@ -160,23 +168,26 @@ variable {SigmaSpace P G : Type*}
   [MulAction.IsPretransitive G P]
 
 /-- **Pre-Born form of the empirical chain.** For each `(s, t)` pointer
-    sector, the empirical frequency of `D.π ⁻¹' (prep.O_st s t)` over
+    sector, the empirical frequency of `prep.O_region s t` over
     repeated trials converges almost surely to `P_{st}(a, b) = (1 − st a·b)/4`,
     given:
     - an LF2 sector structure `D` with projection `π`,
     - an LF1 trial model `T` over `D.toOntic`,
-    - a `PureSingletPreparation D ctx` bundle supplying the projective
-      outcome family, its ontic counterpart, the correspondence between
-      them, and the LF2 → LF3 Born identity (this is the discharge
-      target for LF4-todo §2 + §7; see `PurePreparation.lean`),
+    - a `PureSingletPreparation D ctx N` bundle (option (B)) supplying:
+      the projective reference measure `μFS` + measure bridge, the static
+      pure preparation `PP` with rep + Dirac concentration, the joint
+      spin eigenstate data `jed` for `ctx` (with the Born identity
+      `‖⟨PP.ψ, eig s t⟩‖² = P_st`), the ontic outcome regions, and the
+      bridge `prepMeasure((O_region s t).preEvent) = OP.p ↔ rank-1 sector
+      effect` (LF4 discharge target),
     - pairwise independence of the trial indicators on the
       `prep.O_region s t` family. -/
 theorem LF3_singlet_frequency_convergence
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
-    (ctx : MeasurementContext)
-    (prep : PureSingletPreparation D ctx)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
@@ -188,10 +199,14 @@ theorem LF3_singlet_frequency_convergence
          atTop
          (nhds (P_st ctx.a ctx.b s t)) := by
   intro s t
-  have h_proj := CSD.LF2.LF1_main_theorem_projective D T (prep.O_region s t)
-    (hindep s t) (prep.O_st_measurable s t) (prep.correspondence s t)
-  rw [prep.weight_eq_P_st s t] at h_proj
-  rwa [ENNReal.toReal_ofReal (P_st_nonneg ctx.a ctx.b s t)] at h_proj
+  have h_ae := D.toOntic.LF1_main_theorem_ae T (prep.O_region s t) (hindep s t)
+  have h_weight : (prep.O_region s t).weightReal = P_st ctx.a ctx.b s t := by
+    show ENNReal.toReal (((D.toOntic.prepMeasure :
+            MeasureTheory.ProbabilityMeasure SigmaSpace) : MeasureTheory.Measure SigmaSpace)
+              (prep.O_region s t).preEvent) = _
+    rw [prep.weight_eq_P_st s t]
+    exact ENNReal.toReal_ofReal (P_st_nonneg ctx.a ctx.b s t)
+  rwa [h_weight] at h_ae
 
 /-- **Born-mediated form of the empirical chain (closed-form amplitude).**
     Identifies the pre-Born target `P_{st}(a, b)` with the squared
@@ -203,8 +218,8 @@ theorem LF3_singlet_frequency_convergence_born
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
-    (ctx : MeasurementContext)
-    (prep : PureSingletPreparation D ctx)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
@@ -235,8 +250,8 @@ theorem LF3_singlet_frequency_convergence_born_inner
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
-    (ctx : MeasurementContext)
-    (prep : PureSingletPreparation D ctx)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun

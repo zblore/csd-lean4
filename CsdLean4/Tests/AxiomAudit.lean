@@ -94,17 +94,40 @@ info: 'CSD.LF2.pure_state_born_weights_of_certainty' depends on axioms: [propext
 /-- info: 'CSD.LF3.LF3_finite_leakage_theorem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_finite_leakage_theorem
 
-/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/--
+info: 'CSD.LF3.LF3_singlet_frequency_convergence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound,
+ busch_effect_gleason]
+-/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence
 
-/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/--
+info: 'CSD.LF3.LF3_singlet_frequency_convergence_born' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound,
+ busch_effect_gleason]
+-/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_born
 
-/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/--
+info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound,
+ busch_effect_gleason]
+-/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_born_inner
 
 /-- info: 'CSD.LF3.PureSingletPreparation.ofHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms PureSingletPreparation.ofHypothesis
+
+/--
+info: 'CSD.LF3.PureSingletPreparation.weight_eq_P_st' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound,
+ busch_effect_gleason]
+-/
+#guard_msgs in #print axioms PureSingletPreparation.weight_eq_P_st
 
 /-- info: 'CSD.LF3.ProjectorAlgebra.ofTensorEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ProjectorAlgebra.ofTensorEmbedding

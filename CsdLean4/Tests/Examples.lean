@@ -391,8 +391,8 @@ example
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
-    (ctx : MeasurementContext)
-    (prep : PureSingletPreparation D ctx)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
@@ -416,8 +416,8 @@ example
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
-    (ctx : MeasurementContext)
-    (prep : PureSingletPreparation D ctx)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun

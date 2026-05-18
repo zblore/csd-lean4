@@ -1,50 +1,71 @@
 import CsdLean4.LF3.ContextMap
+import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF2.Interface
 
 /-!
-# LF3 PurePreparation: bundled hLF2 discharge target
+# LF3 PureSingletPreparation: option (B) singlet OP-bridge bundle
 
-**Category:** 3-Local (LF3 `PureSingletPreparation` bundle: ontic ↔ projective outcome correspondence plus Born identity, hLF2 discharge target for LF4).
+**Category:** 3-Local (LF3 `PureSingletPreparation` bundle: pure-state
+data + measurement-context joint eigenstate data + ontic-weight ↔ OP.p
+bridge, hLF2 discharge target for LF4).
 
-Paper boundary at the LF1 ↔ LF2 ↔ LF3 capstone (spec §10.5 / LF4-todo §2 + §7).
+Paper boundary at the LF1 ↔ LF2 ↔ LF3 capstone (spec §10.5 / LF4-todo
+§2 + §7).
 
-The three `LF3_singlet_frequency_convergence*` capstones in `Interface.lean`
-each take a load-bearing external hypothesis tying the LF2 projective weight
-of the pointer-sector outcome region to the singlet kernel value
-`P_st ctx.a ctx.b s t`. This module bundles that hypothesis, together with
-the ontic ↔ projective outcome correspondence, into a single structure
-`PureSingletPreparation D ctx`. The chain capstones consume the bundle;
+The three `LF3_singlet_frequency_convergence*` capstones in
+`Interface.lean` each take a load-bearing external hypothesis tying the
+ontic outcome weight to the singlet kernel value `P_st ctx.a ctx.b s t`.
+This module bundles that hypothesis under the **option (B) chain
+design** (2026-05-18): the bridge is the LF1 ontic weight to LF2 OP.p
+identity, not the direct projective-measure form of v1.x. This matches
+CSD's volume-ratio reading (probability is OP integration of
+`effectProjFn` against the projective measure bridge) and preserves the
+structural separation between the static pure preparation
+(`LF2.PurePreparation`) and the measurement-context joint eigenstate
+data (`LF3.MeasurementJointEig`).
+
 LF4 will eventually supply a concrete constructor
 `PureSingletPreparation.ofKählerPreparation` from a concrete Kähler
-`SectorData` instantiation (per LF4-todo §8, Q1 answer 2026-05-17) plus
-the preparation-to-Hilbert correspondence (LF4-todo §2).
+`SectorData` instantiation (per LF4-todo §8) plus the preparation-to-
+Hilbert correspondence (LF4-todo §2). At v1.x the bundle is the carrier
+for the structural hypotheses.
 
 ## Three-category posture
 
-- **Proved internally.** The structure definition and the transitional
+- **Proved internally.** The structure definition and a transitional
   constructor `ofHypothesis`. No theorems proved here; the module
   bundles hypotheses.
-- **Imported from upstream.** `MeasurementContext` (LF3.ContextMap),
-  `P_st` (LF3.Singlet.Kernel), `CSD.LF2.SectorData`,
-  `CSD.LF2.projectiveWeight`, LF1 `OutcomeRegion` and `prepMeasure`.
-- **Axiomatised at an explicit boundary.** None. This module carries no
-  axioms; it carries the LF2 ↔ LF3 calibration as a structural
-  hypothesis bundle, with discharge deferred to LF4. See
-  [`AXIOMS.md`](../../AXIOMS.md) §3.6 for the corresponding entry.
+- **Imported from upstream.** `MeasurementContext`, `MeasurementJointEig`,
+  `LF2.PurePreparation`, `LF2.MeasureBridgeData`,
+  `LF2.OperationalPackage.fromPreparation`.
+- **Axiomatised at an explicit boundary.** Indirectly via the bridge:
+  the LF3 chain capstones, after Phase 7, cite both
+  `busch_effect_gleason` (via `pure_state_born_weights_of_certainty`
+  inside the chain proof's OP.p ↔ Born identity step) and the foundational
+  triple. `invariant_measure_uniqueness` propagates by type signature
+  when callers construct `MeasureBridgeData` via
+  `MeasureBridgeData.ofSectorData`.
 
 ## API shape
 
-The structure has four fields:
-- `O_st : Sign → Sign → Set P` (projective outcome regions),
-- `O_st_measurable` (measurability),
-- `O_region : Sign → Sign → D.toOntic.OutcomeRegion` (ontic outcomes),
-- `correspondence : ∀ s t, (O_region s t).preEvent = D.π ⁻¹' (O_st s t)`,
-- `weight_eq_P_st : ∀ s t, projectiveWeight D μprep (O_st s t)
-                          = ENNReal.ofReal (P_st ctx.a ctx.b s t)`.
+Six fields plus the auxiliary OP-construction data:
+- `μFS : Measure P` — projective reference measure for the OP integral.
+- `hμFS_prob : IsProbabilityMeasure μFS` — μFS is a probability measure.
+- `bridge : LF2.MeasureBridgeData D μFS` — the measure bridge.
+- `PP : LF2.PurePreparation D prepMeasure N` — the static pure
+  preparation (ψ = singlet after re-indexing).
+- `hN : 2 ≤ N` — dimension bound (needed for `busch_effect_gleason`).
+- `jed : MeasurementJointEig ctx PP.ψ` — joint spin eigenstate data
+  for the measurement context, with the Born identity
+  `‖⟨PP.ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t`.
+- `O_region : Sign → Sign → D.toOntic.OutcomeRegion` — ontic outcome
+  regions for the (s, t) sectors.
+- `bridge_op_p : ∀ s t, prepMeasure((O_region s t).preEvent)
+                      = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))`
+  — the ontic weight ↔ OP.p bridge. **LF4 discharge target.**
 
-The transitional constructor `ofHypothesis` accepts the raw field set so
-existing call sites of the old verbose capstone signatures can be
-migrated mechanically.
+The transitional constructor `ofHypothesis` accepts the raw field set
+for migrating existing callsites.
 -/
 
 open MeasureTheory
@@ -59,63 +80,109 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- Bundled LF2 ↔ LF3 calibration data: the projective outcome family,
-    its ontic counterpart, the correspondence between them, and the Born
-    identity `projectiveWeight (O_st s t) = P_st ctx.a ctx.b s t`.
+/-- Bundled LF2 ↔ LF3 calibration data under the option (B) design:
+    static pure preparation `PP`, measurement-context joint eigenstate
+    data `jed`, ontic outcome regions, and the ontic-weight ↔ OP.p
+    bridge `bridge_op_p` tying `prepMeasure((O_region s t).preEvent)` to
+    the operational-package probability of the rank-1 sector effect
+    through `jed.eig s t`.
 
-    A v1.x carrier of the LF4 discharge target. LF4 will supply a concrete
-    constructor; the transitional `ofHypothesis` constructor below lets
-    existing callers migrate without yet having the LF4 content. -/
+    A v1.x carrier of the LF4 discharge target. LF4 will supply a
+    concrete constructor; the transitional `ofHypothesis` constructor
+    below lets callers migrate without yet having the LF4 content. -/
 structure PureSingletPreparation
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    (ctx : MeasurementContext) where
-  /-- Projective outcome region, indexed by pointer sector `(s, t)`. -/
-  O_st           : Sign → Sign → Set P
-  /-- Each projective outcome region is measurable in `P`. -/
-  O_st_measurable : ∀ s t, MeasurableSet (O_st s t)
-  /-- LF1 ontic outcome region, paralleling the projective family. -/
-  O_region       : Sign → Sign → D.toOntic.OutcomeRegion
-  /-- The ontic outcome's pulled-back event is the `π`-preimage of the
-      projective outcome (LF4-todo §7: projective-first outcomes). -/
-  correspondence : ∀ s t, (O_region s t).preEvent = D.π ⁻¹' (O_st s t)
-  /-- The Born identity: the LF2 projective weight of `O_st s t` under
-      the LF1 preparation measure equals `P_st ctx.a ctx.b s t`
-      (LF4-todo §2: preparation-to-Hilbert correspondence). -/
-  weight_eq_P_st : ∀ s t,
-    CSD.LF2.projectiveWeight D
-      ((D.toOntic.prepMeasure :
-          ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
-      (O_st s t)
-    = ENNReal.ofReal (P_st ctx.a ctx.b s t)
+    (ctx : MeasurementContext) (N : ℕ) where
+  /-- Projective reference measure for the OP construction. -/
+  μFS              : Measure P
+  /-- `μFS` is a probability measure. -/
+  hμFS_prob        : IsProbabilityMeasure μFS
+  /-- Measure bridge data. -/
+  bridge           : CSD.LF2.MeasureBridgeData D μFS
+  /-- LF2 pure preparation: ψ = singlet (after re-indexing into `Fin N`),
+      with rep and Dirac-concentration content. -/
+  PP               : CSD.LF2.PurePreparation D
+    ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) N
+  /-- Dimension bound, required for `busch_effect_gleason`. -/
+  hN               : 2 ≤ N
+  /-- Measurement-context joint eigenstate data: the four (s, t) joint
+      spin eigenstates with unit-norm, distinctness, and Born identity
+      `‖⟨PP.ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t`. -/
+  jed              : MeasurementJointEig ctx PP.ψ
+  /-- Per-sector ontic outcome regions. -/
+  O_region         : Sign → Sign → D.toOntic.OutcomeRegion
+  /-- **Ontic-weight ↔ OP.p bridge (LF4 discharge target).** The ontic
+      `prepMeasure` of the pulled-back outcome event equals the
+      operational-package probability of the rank-1 sector effect
+      through `jed.eig s t`. Combined with
+      `LF3.OP_p_at_jointEig_eq_P_st`, this gives convergence of trial
+      frequencies to `P_st ctx.a ctx.b s t`. -/
+  bridge_op_p      : ∀ s t,
+    ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
+        (O_region s t).preEvent
+    = ENNReal.ofReal
+        ((haveI := hμFS_prob
+          CSD.LF2.OperationalPackage.fromPreparation D μFS bridge
+            ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
+            PP.rep PP.hrep_unit PP.hrep_meas).p
+          (CSD.LF2.rankOneEffect (jed.eig s t) (jed.eig_unit s t)))
 
 namespace PureSingletPreparation
 
 /-- Transitional constructor: build a `PureSingletPreparation` from the
-    raw field set that the old `LF3_singlet_frequency_convergence*`
-    signatures consumed as separate hypotheses. Existing callsites
-    migrate by wrapping their four hypotheses in this constructor. LF4
-    will replace its use with `PureSingletPreparation.ofKählerPreparation`
+    raw field set. Existing callsites migrate by supplying their bridge
+    + PP + jed + outcome regions + bridge_op_p hypothesis explicitly.
+    LF4 will replace its use with `PureSingletPreparation.ofKählerPreparation`
     or similar, derived from a concrete `SectorData` instantiation plus
     the preparation-to-Hilbert correspondence. -/
 def ofHypothesis
     {D : CSD.LF2.SectorData SigmaSpace P G}
-    {ctx : MeasurementContext}
-    (O_st : Sign → Sign → Set P)
-    (O_st_measurable : ∀ s t, MeasurableSet (O_st s t))
+    {ctx : MeasurementContext} {N : ℕ}
+    (μFS : Measure P) (hμFS_prob : IsProbabilityMeasure μFS)
+    (bridge : CSD.LF2.MeasureBridgeData D μFS)
+    (PP : CSD.LF2.PurePreparation D
+      ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) N)
+    (hN : 2 ≤ N)
+    (jed : MeasurementJointEig ctx PP.ψ)
     (O_region : Sign → Sign → D.toOntic.OutcomeRegion)
-    (correspondence : ∀ s t, (O_region s t).preEvent = D.π ⁻¹' (O_st s t))
-    (weight_eq_P_st : ∀ s t,
-      CSD.LF2.projectiveWeight D
-        ((D.toOntic.prepMeasure :
-            ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
-        (O_st s t)
-      = ENNReal.ofReal (P_st ctx.a ctx.b s t)) :
-    PureSingletPreparation D ctx :=
-  { O_st := O_st
-    O_st_measurable := O_st_measurable
+    (bridge_op_p : ∀ s t,
+      ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
+          (O_region s t).preEvent
+      = ENNReal.ofReal
+          ((haveI := hμFS_prob
+            CSD.LF2.OperationalPackage.fromPreparation D μFS bridge
+              ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
+              PP.rep PP.hrep_unit PP.hrep_meas).p
+            (CSD.LF2.rankOneEffect (jed.eig s t) (jed.eig_unit s t)))) :
+    PureSingletPreparation D ctx N :=
+  { μFS := μFS
+    hμFS_prob := hμFS_prob
+    bridge := bridge
+    PP := PP
+    hN := hN
+    jed := jed
     O_region := O_region
-    correspondence := correspondence
-    weight_eq_P_st := weight_eq_P_st }
+    bridge_op_p := bridge_op_p }
+
+/-- **Ontic weight ↔ `P_st` identity (composed).** Combines
+    `bridge_op_p` (the LF4 discharge target tying ontic outcome weight to
+    the OP-derived integral) with `LF3.OP_p_at_jointEig_eq_P_st` (the
+    Born-mediated algebra inside the OP integral). Result: the ontic
+    `prepMeasure` of the pulled-back outcome event equals
+    `ENNReal.ofReal (P_st ctx.a ctx.b s t)`. Cites `busch_effect_gleason`
+    (via `OP_p_at_jointEig_eq_P_st`). -/
+theorem weight_eq_P_st
+    {D : CSD.LF2.SectorData SigmaSpace P G}
+    {ctx : MeasurementContext} {N : ℕ}
+    (prep : PureSingletPreparation D ctx N) (s t : Sign) :
+    ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
+        (prep.O_region s t).preEvent
+      = ENNReal.ofReal (P_st ctx.a ctx.b s t) := by
+  haveI := prep.hμFS_prob
+  rw [prep.bridge_op_p s t,
+      OP_p_at_jointEig_eq_P_st D prep.μFS prep.bridge
+        ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
+        prep.PP prep.hN prep.jed s t]
 
 end PureSingletPreparation
 
