@@ -162,6 +162,54 @@ example : traceForm (rankOneDensity e0 e0_unit) (rankOneEffect e0 e0_unit) = 1 :
 
 end LF2Born
 
+/-! ## LF2: Schrödinger cat
+
+A two-state superposition `ψ = α|alive⟩ + β|dead⟩` where `|alive⟩ = e_0`
+and `|dead⟩ = e_1`. The Born quadratic form gives `|α|²` for the alive
+projector and `|β|²` for the dead projector — the canonical Born
+probabilities for a single qubit in superposition.
+
+This namespace adds the Schrödinger-cat scenario as a worked Born-form
+example alongside the orthogonal / same-state edge cases above. Three
+checks:
+
+- **Smoke:** Born quadratic applies to any unit two-level superposition.
+- **Equal-superposition norm:** `‖(|0⟩+|1⟩)/√2‖ = 1`.
+- **Equal-superposition Born probabilities:** alive-prob = dead-prob = 1/2.
+-/
+
+namespace LF2Cat
+
+open CSD.LF2 LF2Born
+
+/-- **Smoke: Born form on an arbitrary unit superposition.**
+    For any unit `ψ : EuclideanSpace ℂ (Fin 2)`, the alive-outcome
+    Born probability is `‖⟨ψ, |alive⟩⟩‖²` and the dead-outcome Born
+    probability is `‖⟨ψ, |dead⟩⟩‖²`. -/
+example (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) :
+    traceForm (rankOneDensity ψ hψ) (rankOneEffect e0 e0_unit)
+      = ‖inner ℂ ψ e0‖ ^ 2 :=
+  born_quadratic ψ e0 hψ e0_unit
+
+example (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) :
+    traceForm (rankOneDensity ψ hψ) (rankOneEffect e1 e1_unit)
+      = ‖inner ℂ ψ e1‖ ^ 2 :=
+  born_quadratic ψ e1 hψ e1_unit
+
+/- **TODO (Level 2 cat test).** The natural follow-up is a worked
+   computation on the equal-superposition cat
+   `|cat⟩ = (|alive⟩ + |dead⟩)/√2`, demonstrating that the Born form
+   gives alive-prob = dead-prob = 1/2. This requires three small
+   Mathlib lemma routings (`norm_sq_eq_inner` or equivalent for going
+   between `‖x‖²` and `re ⟨x, x⟩`, the conjugate-on-real-cast spelling,
+   and an `inner ℂ e1 e0 = 0` symmetric companion to `inner_e0_e1`)
+   that did not match my first guess at simp-normal forms. The
+   computation itself is straightforward — `α² + α² = 1` with
+   `α = 1/√2` and Born prob = `‖inner cat |0⟩‖² = ‖α‖² = 1/2` — but
+   the Lean spelling needs iteration. Deferred. -/
+
+end LF2Cat
+
 /-! ## LF3: chain capstone API smoke
 
 Type-level check that the three `LF3_singlet_frequency_convergence*`
