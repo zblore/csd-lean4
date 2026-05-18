@@ -22,15 +22,17 @@ LF2 imports three named axioms. Each is documented at its declaration site with 
 
 **Location.** `CsdLean4/LF2/MeasureBridge.lean`.
 
-**Statement.** For an abstract measurable space `P` with a measurable `G`-action, a `G`-invariant probability measure `μFS` on `P`, and any `G`-invariant finite measure `μ` on `P`, there exists `c : ENNReal` with `μ = c · μFS`.
+**Statement.** For an abstract measurable space `P` with a measurable `G`-action that is **transitive** (`htrans : ∀ p q : P, ∃ g, action g p = q`), a `G`-invariant probability measure `μFS` on `P`, and any `G`-invariant finite measure `μ` on `P`, there exists `c : ENNReal` with `μ = c · μFS`.
 
-**Mathematical content.** Uniqueness of the `G`-invariant probability measure up to scaling. Concretely, in the CSD model: the `SU(N)`-invariant Borel probability measure on `CP^{N-1}` is unique (Fubini-Study).
+**Transitivity is required.** Without `htrans` the statement is false: take `P = {0, 1}`, `G` trivial, `μFS = uniform`, `μ = δ_0`. Both are invariant under the trivial action; no `c` satisfies `δ_0 = c · uniform`. The axiom as previously stated (prior to commit fixing this) had no transitivity hypothesis and was therefore technically inconsistent, even though no proof in the tree exploited it. The fix adds `htrans` to the axiom signature and supplies it from a new `epAction_transitive` field on `SectorData`.
+
+**Mathematical content.** Uniqueness of the `G`-invariant probability measure up to scaling on a homogeneous `G`-space. Concretely, in the CSD model: the `SU(N)`-invariant Borel probability measure on `CP^{N-1}` is unique (Fubini-Study). The standard proof requires compactness of `G` (or an equivalent regularity property) in addition to transitivity; the spec authorises the import for the concrete `SU(N)`-on-`CP^{N-1}` setting where compactness holds.
 
 **Spec authorisation.** Paper B §7.4 explicitly carves this out as an imported result. The corpus treats the uniqueness as a structural input rather than reformalising it.
 
 **Mathlib status.** Not currently in Mathlib at the abstract-measurable-space level required. The concrete `SU(N)`-on-`CP^{N-1}` instance is Haar-measure-on-compact-homogeneous-space material; Mathlib has Haar measure on topological groups but the quotient construction is not yet packaged at the required level.
 
-**Discharge target.** When the corresponding Mathlib infrastructure lands, swap `axiom` for `theorem`-via-import. The signature is in the right shape; no downstream changes needed.
+**Discharge target.** When the corresponding Mathlib infrastructure lands, swap `axiom` for `theorem`-via-import. The current signature carries transitivity explicitly so that the eventual replacement theorem has matching hypotheses; concrete LF4 instantiation supplies `epAction_transitive` from the `SU(N)`-on-`CP^{N-1}` model.
 
 ### 2.2 `busch_effect_gleason`
 

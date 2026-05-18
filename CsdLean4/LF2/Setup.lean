@@ -81,6 +81,12 @@ structure SectorData
                            (toOntic.μL : Measure SigmaSpace)
   /-- Equivariance: `π` intertwines the ontic and epistemic actions. -/
   hπ_equiv        : ∀ g x, π (onticAction g x) = epAction g (π x)
+  /-- Transitivity of the epistemic action on `P`. Required to soundly invoke
+      `invariant_measure_uniqueness`: without it the uniqueness statement is
+      false in general (counterexample: trivial action on a multi-point space).
+      In the concrete CSD model this is automatic: `SU(N)` acts transitively
+      on `CP^{N-1}`. -/
+  epAction_transitive : ∀ p q : P, ∃ g : G, epAction g p = q
 
 namespace SectorData
 

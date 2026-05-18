@@ -79,17 +79,33 @@ lemma SectorData.pushforward_epAction_invariant
   rw [(D.hμL_inv g).map_eq]
 
 /-- **Imported axiom (spec §7.4).** Uniqueness of the `G`-invariant probability
-    measure on the abstract projective target up to scaling: any finite
-    `G`-invariant Borel measure is a constant multiple of the reference
-    measure `μFS`.
+    measure on the abstract projective target up to scaling: when the action
+    is transitive, any finite `G`-invariant Borel measure is a constant
+    multiple of the reference measure `μFS`.
 
     In the concrete CSD model this is the classical statement that the
     `SU(N)`-invariant Borel probability measure on `CP^{N-1}` is unique (the
     Fubini–Study measure). It is imported rather than constructed because LF2
-    leaves `P` abstract. -/
+    leaves `P` abstract.
+
+    **Transitivity is required.** Without `htrans`, the statement is false in
+    general: take `P = {0, 1}`, `G` the trivial group, `μFS = uniform`,
+    `μ = δ_0`. Both are invariant under the trivial action; no `c : ENNReal`
+    satisfies `δ_0 = c • uniform`. Transitivity rules out this and related
+    pathological actions. The standard proof additionally requires
+    compactness of `G` or an equivalent regularity property; the spec
+    authorises the import for the concrete `SU(N)` on `CP^{N-1}` setting
+    where compactness holds and `μFS` is Fubini–Study Haar.
+
+    **Caveat.** This axiom carries strictly the assumptions of the standard
+    Haar-on-compact-homogeneous-space theorem (Mathlib has Haar measure on
+    topological groups; the homogeneous-quotient construction is not yet
+    packaged at the required abstraction level). When that infrastructure
+    lands, swap `axiom` for `theorem`-via-import. -/
 axiom invariant_measure_uniqueness
     {P G : Type*} [MeasurableSpace P] [Group G]
     (action : G → P ≃ᵐ P)
+    (htrans : ∀ p q : P, ∃ g : G, action g p = q)
     (μFS : Measure P) [IsProbabilityMeasure μFS]
     (hμFS_inv : ∀ g, MeasurePreserving (action g) μFS μFS)
     (μ : Measure P) [IsFiniteMeasure μ]
@@ -105,7 +121,7 @@ theorem measure_bridge
     (μFS : Measure P) [IsProbabilityMeasure μFS]
     (hμFS_inv : ∀ g, MeasurePreserving (D.epAction g) μFS μFS) :
     ∃ c : ENNReal, Measure.map D.π D.μL = c • μFS :=
-  invariant_measure_uniqueness D.epAction μFS hμFS_inv
+  invariant_measure_uniqueness D.epAction D.epAction_transitive μFS hμFS_inv
     (Measure.map D.π D.μL) (fun g => D.pushforward_epAction_invariant g)
 
 end LF2
