@@ -234,3 +234,23 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 **Alternative:** wait for Mathlib's instance synthesis to chain `FiniteDimensional ℂ → CompleteSpace`. If that lands, the refactor becomes a no-op rename (`IsSelfAdjoint T` synthesizes without adding `[CompleteSpace _]` arguments).
 
 **Depends on:** the Framework/ extraction (§10) being underway. Standalone refactor is mechanical but cost is the typeclass-argument cascade.
+
+---
+
+## 12. `Projectivization` topology / measure / lift API in Mathlib
+
+**Status:** Identified as a Mathlib gap via the pre-LF4 spike on 2026-05-18 (see `specs/pre-LF4-plan.md` Spike 1). The pre-LF4 option-(b) chain initially scoped a commitment `ProjectiveHilbert N := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` at the LF2 level; the spike found Mathlib has no `TopologicalSpace`, `MeasurableSpace`, or `BorelSpace` instance on `Projectivization` outside the projective-line case (`OnePoint/ProjectiveLine.lean`). The architectural workaround keeps `SectorData.P` abstract and supplies a caller-side `representative : P → EuclideanSpace ℂ (Fin N)` map.
+
+**Why deferred:** Building the quotient-topology + Borel-structure + `Projectivization.lift`-measurability stack for arbitrary `K`, `V` is a multi-day Mathlib contribution, not a pre-LF4 critical-path item. The abstract-`P` workaround is general and gives LF4 full freedom to pick concrete realisations (Kähler quotient, sphere quotient, or `Projectivization` once landed).
+
+**Pickup (Cat-1 Mathlib contribution, when scheduled):**
+
+1. Define `TopologicalSpace (Projectivization K V)` as the quotient topology from `{v : V // v ≠ 0}` carrying the subspace topology.
+2. Prove `BorelSpace (Projectivization K V)` for the appropriate `K`-and-`V`-flavoured cases (`K = ℂ`, `V` a finite-dimensional inner-product space is the only case we structurally need; `K = ℝ` for completeness).
+3. Prove `MeasurableSingletonClass (Projectivization K V)` (needed for `MeasureTheory.integral_dirac` rather than `integral_dirac'`).
+4. Prove `Projectivization.lift_measurable`: if `f : V \ {0} → α` is measurable and `f`-phase-invariant, then `Projectivization.lift f hf : Projectivization K V → α` is measurable.
+5. Land in `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Measure.lean` per CONVENTIONS.md `1-Mathlib` tagging. Stage as upstream candidate.
+
+**Effect on pre-LF4 / LF4 work:** Until landed, `SectorData.P` stays abstract and `OperationalPackage.fromPreparation` takes a caller-supplied `rep : P → EuclideanSpace ℂ (Fin N)`. When this lands, LF4 can specialise `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` and the `rep` argument resolves to `Projectivization.rep` or similar. No retrofit needed; the abstract API is monomorphic in `P` so any concrete `P` works at instantiation time.
+
+**Depends on:** nothing in CSD; this is a self-contained Mathlib contribution that other projectivization-using formalisations (algebraic geometry, projective representations of Lie groups, etc.) would also benefit from.
