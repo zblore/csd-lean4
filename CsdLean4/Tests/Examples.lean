@@ -279,6 +279,91 @@ example : traceForm (rankOneDensity catEqual catEqual_unit)
   rw [h_inner]
   exact α_norm_sq
 
+/-! ### Parametric cat: cos(θ)|alive⟩ + sin(θ)|dead⟩
+
+Generalises the equal-superposition cat to arbitrary angle `θ : ℝ`. The
+Born probabilities are `cos²(θ)` for alive and `sin²(θ)` for dead, summing
+to 1 by the Pythagorean trig identity. The equal-superposition case
+corresponds to `θ = π/4`. -/
+
+/-- Parametric cat coefficient `cos(θ) : ℂ`. -/
+noncomputable def catCos (θ : ℝ) : ℂ := ((Real.cos θ : ℝ) : ℂ)
+
+/-- Parametric cat coefficient `sin(θ) : ℂ`. -/
+noncomputable def catSin (θ : ℝ) : ℂ := ((Real.sin θ : ℝ) : ℂ)
+
+/-- Parametric cat state `cos(θ)|alive⟩ + sin(θ)|dead⟩`. -/
+noncomputable def catParam (θ : ℝ) : EuclideanSpace ℂ (Fin 2) :=
+  catCos θ • e0 + catSin θ • e1
+
+/-- `‖cos(θ) : ℂ‖² = cos²(θ)`. -/
+lemma catCos_norm_sq (θ : ℝ) : ‖catCos θ‖^2 = (Real.cos θ)^2 := by
+  unfold catCos
+  rw [Complex.norm_real, Real.norm_eq_abs]
+  exact sq_abs _
+
+/-- `‖sin(θ) : ℂ‖² = sin²(θ)`. -/
+lemma catSin_norm_sq (θ : ℝ) : ‖catSin θ‖^2 = (Real.sin θ)^2 := by
+  unfold catSin
+  rw [Complex.norm_real, Real.norm_eq_abs]
+  exact sq_abs _
+
+/-- `(starRingEnd ℂ) (cos θ : ℂ) = (cos θ : ℂ)` since `cos θ` is real. -/
+lemma catCos_star (θ : ℝ) : (starRingEnd ℂ) (catCos θ) = catCos θ := by
+  unfold catCos; exact Complex.conj_ofReal _
+
+/-- `(starRingEnd ℂ) (sin θ : ℂ) = (sin θ : ℂ)` since `sin θ` is real. -/
+lemma catSin_star (θ : ℝ) : (starRingEnd ℂ) (catSin θ) = catSin θ := by
+  unfold catSin; exact Complex.conj_ofReal _
+
+/-- The parametric cat is unit-norm. Uses the Pythagorean trig identity
+    `cos²(θ) + sin²(θ) = 1`. -/
+lemma catParam_unit (θ : ℝ) : ‖catParam θ‖ = 1 := by
+  have h_ortho : inner ℂ (catCos θ • e0) (catSin θ • e1) = (0 : ℂ) := by
+    rw [inner_smul_left, inner_smul_right, inner_e0_e1]
+    ring
+  have h_mul : ‖catParam θ‖ * ‖catParam θ‖ = 1 := by
+    show ‖catCos θ • e0 + catSin θ • e1‖ * ‖catCos θ • e0 + catSin θ • e1‖ = 1
+    rw [norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ h_ortho]
+    simp only [norm_smul, e0_unit, e1_unit, mul_one]
+    have hcos : ‖catCos θ‖ * ‖catCos θ‖ = (Real.cos θ)^2 := by
+      rw [← sq]; exact catCos_norm_sq θ
+    have hsin : ‖catSin θ‖ * ‖catSin θ‖ = (Real.sin θ)^2 := by
+      rw [← sq]; exact catSin_norm_sq θ
+    rw [hcos, hsin]
+    exact Real.cos_sq_add_sin_sq θ
+  have h_nn : 0 ≤ ‖catParam θ‖ := norm_nonneg _
+  calc ‖catParam θ‖
+      = Real.sqrt (‖catParam θ‖ * ‖catParam θ‖) := (Real.sqrt_mul_self h_nn).symm
+    _ = Real.sqrt 1 := by rw [h_mul]
+    _ = 1 := Real.sqrt_one
+
+/-- **Alive Born probability = cos²(θ)** for the parametric cat. -/
+example (θ : ℝ) :
+    traceForm (rankOneDensity (catParam θ) (catParam_unit θ))
+              (rankOneEffect e0 e0_unit) = (Real.cos θ)^2 := by
+  rw [born_quadratic]
+  have h_inner : inner ℂ (catParam θ) e0 = catCos θ := by
+    show inner ℂ (catCos θ • e0 + catSin θ • e1) e0 = catCos θ
+    rw [inner_add_left, inner_smul_left, inner_smul_left,
+        inner_e0_e0, inner_e1_e0, mul_one, mul_zero, add_zero]
+    exact catCos_star θ
+  rw [h_inner]
+  exact catCos_norm_sq θ
+
+/-- **Dead Born probability = sin²(θ)** for the parametric cat. -/
+example (θ : ℝ) :
+    traceForm (rankOneDensity (catParam θ) (catParam_unit θ))
+              (rankOneEffect e1 e1_unit) = (Real.sin θ)^2 := by
+  rw [born_quadratic]
+  have h_inner : inner ℂ (catParam θ) e1 = catSin θ := by
+    show inner ℂ (catCos θ • e0 + catSin θ • e1) e1 = catSin θ
+    rw [inner_add_left, inner_smul_left, inner_smul_left,
+        inner_e0_e1, inner_e1_e1, mul_zero, mul_one, zero_add]
+    exact catSin_star θ
+  rw [h_inner]
+  exact catSin_norm_sq θ
+
 end LF2Cat
 
 /-! ## LF3: chain capstone API smoke
