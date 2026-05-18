@@ -45,12 +45,24 @@ namespace LF2
     input to the corpus, not derived in v1.00. Concrete instantiation
     (`P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))`,
     `G := Matrix.specialUnitaryGroup (Fin N) ℂ`, plus the explicit `π`) is
-    deferred to LF4-todo §8. -/
+    deferred to LF4-todo §8.
+
+    **MulAction-based encoding.** The `G`-action is encoded via Mathlib's
+    `MulAction G _` typeclasses on both `SigmaSpace` and `P`, with transitivity
+    encoded by `MulAction.IsPretransitive G P` (the Mathlib-idiomatic spelling
+    of "any two points in `P` are related by some group element"). This replaces
+    the earlier `onticAction : G → _ ≃ᵐ _` field encoding plus the four
+    `_one` / `_mul` coherence fields and the `epAction_transitive` field: the
+    group-action laws follow from the `MulAction` typeclass, and transitivity
+    from `IsPretransitive`. Measurability of each action is supplied as
+    structure fields (`measurable_smul_σ`, `measurable_smul_P`). -/
 structure SectorData
     (SigmaSpace P G : Type*)
     [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
     [MeasurableSpace P]
-    [Group G] where
+    [Group G]
+    [MulAction G SigmaSpace] [MulAction G P]
+    [MulAction.IsPretransitive G P] where
   /-- Underlying LF1 ontic data (Σ, μL, Φ, Ω0, plus their measurability /
       nonzero-volume / measure-preservation hypotheses). -/
   toOntic      : CSD.LF1.OnticSetup SigmaSpace
@@ -59,34 +71,16 @@ structure SectorData
   π            : SigmaSpace → P
   /-- Measurability of the projection. -/
   measurable_π : Measurable π
-  /-- The lifted `G`-action on `Σ`, as a family of measurable equivalences. -/
-  onticAction     : G → SigmaSpace ≃ᵐ SigmaSpace
-  /-- The `G`-action on `P`, as a family of measurable equivalences. -/
-  epAction        : G → P ≃ᵐ P
-  /-- Identity element of `G` acts as the identity on `Σ`. -/
-  onticAction_one : onticAction 1 = MeasurableEquiv.refl SigmaSpace
-  /-- Left-action composition on `Σ`: `(g * h) · x = g · (h · x)`.  Recall
-      `(e.trans f) x = f (e x)`, so the right-hand side below applies `h` first
-      and then `g`, matching the left-action convention. -/
-  onticAction_mul : ∀ g h : G,
-                      onticAction (g * h) = (onticAction h).trans (onticAction g)
-  /-- Identity element of `G` acts as the identity on `P`. -/
-  epAction_one    : epAction 1 = MeasurableEquiv.refl P
-  /-- Left-action composition on `P`. -/
-  epAction_mul    : ∀ g h : G,
-                      epAction (g * h) = (epAction h).trans (epAction g)
-  /-- Liouville invariance: each `onticAction g` preserves `μL`. -/
-  hμL_inv         : ∀ g, MeasurePreserving (onticAction g)
+  /-- Measurability of each ontic action map `g • · : SigmaSpace → SigmaSpace`. -/
+  measurable_smul_σ : ∀ g : G, Measurable ((g • ·) : SigmaSpace → SigmaSpace)
+  /-- Measurability of each epistemic action map `g • · : P → P`. -/
+  measurable_smul_P : ∀ g : G, Measurable ((g • ·) : P → P)
+  /-- Liouville invariance: each ontic action `g • ·` preserves `μL`. -/
+  hμL_inv         : ∀ g : G, MeasurePreserving ((g • ·) : SigmaSpace → SigmaSpace)
                            (toOntic.μL : Measure SigmaSpace)
                            (toOntic.μL : Measure SigmaSpace)
   /-- Equivariance: `π` intertwines the ontic and epistemic actions. -/
-  hπ_equiv        : ∀ g x, π (onticAction g x) = epAction g (π x)
-  /-- Transitivity of the epistemic action on `P`. Required to soundly invoke
-      `invariant_measure_uniqueness`: without it the uniqueness statement is
-      false in general (counterexample: trivial action on a multi-point space).
-      In the concrete CSD model this is automatic: `SU(N)` acts transitively
-      on `CP^{N-1}`. -/
-  epAction_transitive : ∀ p q : P, ∃ g : G, epAction g p = q
+  hπ_equiv        : ∀ (g : G) (x : SigmaSpace), π (g • x) = g • π x
 
 namespace SectorData
 
@@ -94,6 +88,8 @@ variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
   (D : SectorData SigmaSpace P G)
 
 /-- Convenience re-export of the ontic Liouville measure as a `Measure`. -/

@@ -35,6 +35,8 @@ variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
 
 /-- Pushforward rewrite for the projection, specialised form of
     `Measure.map_apply`. -/
@@ -48,19 +50,16 @@ lemma SectorData.pushforward_apply
     action. Consequence of `π`-equivariance + bijectivity of the action. -/
 lemma SectorData.preimage_action_eq
     (D : SectorData SigmaSpace P G) (g : G) (A : Set P) :
-    D.π ⁻¹' (D.epAction g '' A) = (D.onticAction g) '' (D.π ⁻¹' A) := by
+    D.π ⁻¹' ((g • ·) '' A) = ((g • ·) : SigmaSpace → SigmaSpace) '' (D.π ⁻¹' A) := by
   ext x
   simp only [mem_preimage, mem_image]
   constructor
   · rintro ⟨y, hy, hyeq⟩
-    refine ⟨(D.onticAction g).symm x, ?_, (D.onticAction g).apply_symm_apply x⟩
-    have key : D.π ((D.onticAction g).symm x) = y := by
-      apply (D.epAction g).injective
-      rw [← D.hπ_equiv g]
-      rw [(D.onticAction g).apply_symm_apply]
-      exact hyeq.symm
-    rw [key]; exact hy
+    -- π x = g • y. So g⁻¹ • π x = y. By equivariance, π (g⁻¹ • x) = g⁻¹ • π x = y.
+    refine ⟨g⁻¹ • x, ?_, smul_inv_smul g x⟩
+    rw [D.hπ_equiv, hyeq.symm, inv_smul_smul]; exact hy
   · rintro ⟨z, hz, hzeq⟩
+    -- z ∈ π⁻¹ A, x = g • z. Then π x = π (g • z) = g • π z by equivariance.
     refine ⟨D.π z, hz, ?_⟩
     rw [← hzeq, D.hπ_equiv]
 
@@ -68,14 +67,14 @@ lemma SectorData.preimage_action_eq
     the induced `G`-action on `P`. -/
 lemma SectorData.pushforward_epAction_invariant
     (D : SectorData SigmaSpace P G) (g : G) :
-    MeasurePreserving (D.epAction g)
+    MeasurePreserving ((g • ·) : P → P)
       (Measure.map D.π D.μL) (Measure.map D.π D.μL) := by
-  refine ⟨(D.epAction g).measurable, ?_⟩
-  rw [Measure.map_map (D.epAction g).measurable D.measurable_π]
-  have heq : (D.epAction g : P → P) ∘ D.π = D.π ∘ (D.onticAction g : SigmaSpace → SigmaSpace) := by
+  refine ⟨D.measurable_smul_P g, ?_⟩
+  rw [Measure.map_map (D.measurable_smul_P g) D.measurable_π]
+  have heq : ((g • ·) : P → P) ∘ D.π = D.π ∘ ((g • ·) : SigmaSpace → SigmaSpace) := by
     funext x; exact (D.hπ_equiv g x).symm
   rw [heq]
-  rw [← Measure.map_map D.measurable_π (D.onticAction g).measurable]
+  rw [← Measure.map_map D.measurable_π (D.measurable_smul_σ g)]
   rw [(D.hμL_inv g).map_eq]
 
 /-- **Imported axiom (spec §7.4).** Uniqueness of the `G`-invariant probability
@@ -104,12 +103,11 @@ lemma SectorData.pushforward_epAction_invariant
     lands, swap `axiom` for `theorem`-via-import. -/
 axiom invariant_measure_uniqueness
     {P G : Type*} [MeasurableSpace P] [Group G]
-    (action : G → P ≃ᵐ P)
-    (htrans : ∀ p q : P, ∃ g : G, action g p = q)
+    [MulAction G P] [MulAction.IsPretransitive G P]
     (μFS : Measure P) [IsProbabilityMeasure μFS]
-    (hμFS_inv : ∀ g, MeasurePreserving (action g) μFS μFS)
+    (hμFS_inv : ∀ g : G, MeasurePreserving ((g • ·) : P → P) μFS μFS)
     (μ : Measure P) [IsFiniteMeasure μ]
-    (hμ_inv : ∀ g, MeasurePreserving (action g) μ μ) :
+    (hμ_inv : ∀ g : G, MeasurePreserving ((g • ·) : P → P) μ μ) :
     ∃ c : ENNReal, μ = c • μFS
 
 /-- **Theorem 1 of the spec (the measure bridge).** Under the sector-compatible
@@ -121,9 +119,9 @@ axiom invariant_measure_uniqueness
 theorem measure_bridge
     (D : SectorData SigmaSpace P G)
     (μFS : Measure P) [IsProbabilityMeasure μFS]
-    (hμFS_inv : ∀ g, MeasurePreserving (D.epAction g) μFS μFS) :
+    (hμFS_inv : ∀ g : G, MeasurePreserving ((g • ·) : P → P) μFS μFS) :
     ∃ c : ENNReal, Measure.map D.π D.μL = c • μFS :=
-  invariant_measure_uniqueness D.epAction D.epAction_transitive μFS hμFS_inv
+  invariant_measure_uniqueness μFS hμFS_inv
     (Measure.map D.π D.μL) (fun g => D.pushforward_epAction_invariant g)
 
 end LF2

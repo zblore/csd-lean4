@@ -27,6 +27,8 @@ variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
 
 /-- **Spec §6.2 — the LF1 ↔ LF2 weight identity.** The ontic mass of the
     pulled-back outcome region under a preparation measure equals the

@@ -42,6 +42,8 @@ variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
 
 /-- Projective weight of an outcome region `O ⊆ P` under the pushforward of
     a preparation measure. -/

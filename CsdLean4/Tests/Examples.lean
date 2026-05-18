@@ -301,6 +301,8 @@ example
     {SigmaSpace P G : Type*}
     [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
     [MeasurableSpace P] [Group G]
+    [MulAction G SigmaSpace] [MulAction G P]
+    [MulAction.IsPretransitive G P]
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)
@@ -324,6 +326,8 @@ example
     {SigmaSpace P G : Type*}
     [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
     [MeasurableSpace P] [Group G]
+    [MulAction G SigmaSpace] [MulAction G P]
+    [MulAction.IsPretransitive G P]
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
     (T : D.toOntic.TrialModel Ω)

@@ -156,6 +156,8 @@ variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
 
 /-- **Pre-Born form of the empirical chain.** For each `(s, t)` pointer
     sector, the empirical frequency of `D.π ⁻¹' (prep.O_st s t)` over

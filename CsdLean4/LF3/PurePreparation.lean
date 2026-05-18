@@ -56,6 +56,8 @@ variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
   [MeasurableSpace P]
   [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
 
 /-- Bundled LF2 ↔ LF3 calibration data: the projective outcome family,
     its ontic counterpart, the correspondence between them, and the Born
