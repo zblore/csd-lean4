@@ -2,6 +2,7 @@ import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.PhaseInvariance
 import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
+import Mathlib.MeasureTheory.Integral.IntegrableOn
 
 /-!
 # Volume-forward projective effect function
@@ -163,6 +164,7 @@ finite-dim normed spaces all polynomial expressions are continuous.
 
 /-- The volume-forward effect function is measurable in its argument
     when `rep` is measurable. -/
+@[fun_prop]
 lemma effectProjFn_measurable
     {Q : Type*} [MeasurableSpace Q] (rep : Q → EuclideanSpace ℂ (Fin N))
     (hrep_meas : Measurable rep) (E : Effect N) :
@@ -196,6 +198,21 @@ lemma effectProjFn_measurable
       (WithLp.ofLp v : Fin N → ℂ)) :=
     WithLp.measurable_ofLp 2 (Fin N → ℂ)
   exact h_F_meas.comp (h_ofLp_meas.comp hrep_meas)
+
+/-- The volume-forward effect function is integrable against any finite
+    measure when `rep` is measurable and unit-norm. Routes via
+    `Integrable.of_bound`: measurable + pointwise bounded by 1 (via
+    `effectProjFn_le_one`) + finite measure ⟹ integrable. -/
+lemma effectProjFn_integrable
+    {Q : Type*} [MeasurableSpace Q] (rep : Q → EuclideanSpace ℂ (Fin N))
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (E : Effect N) (μ : MeasureTheory.Measure Q) [MeasureTheory.IsFiniteMeasure μ] :
+    MeasureTheory.Integrable (effectProjFn rep E) μ := by
+  refine MeasureTheory.Integrable.of_bound ?_ 1 ?_
+  · exact (effectProjFn_measurable rep hrep_meas E).aestronglyMeasurable
+  · refine MeasureTheory.ae_of_all _ fun p => ?_
+    rw [Real.norm_of_nonneg (effectProjFn_nonneg rep E p)]
+    exact effectProjFn_le_one rep hrep_unit E p
 
 end LF2
 end CSD
