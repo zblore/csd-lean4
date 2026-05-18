@@ -115,7 +115,19 @@ theorem finalState_branch_decomposition
 
 /-- Wrong-pointer readout mass is bounded by `εA + εB` given amplitude
     normalisation (paper §4.11). The proof sums the per-side leakage bounds
-    weighted by `‖cAmp st‖²` and uses `∑ ‖cAmp st‖² ≤ 1`. -/
+    weighted by `‖cAmp st‖²` and uses `∑ ‖cAmp st‖² ≤ 1`.
+
+    **Disclosure-infrastructure status.** This theorem is standalone in
+    the current Lean tree: no LF3 export consumes it. `LF3_finite_leakage_theorem`
+    routes through the operator-form `LeakageCompat.branchWeight_dev` field
+    (in `Projectors/BranchWeight.lean`) instead, which is structurally a
+    more direct bound on the quantity the chain capstones actually consume.
+    The geometric `branch_separation_leakage_bound` here is kept as paper-side
+    disclosure infrastructure: it makes the §4.11 inequality formally available
+    even though the operator-form path supersedes it in the v1.00 chain. A v2
+    refactor connecting the two would replace `LeakageCompat.branchWeight_dev`
+    with a derived form using this lemma plus a Cauchy-Schwarz step. Not
+    scheduled for LF4. -/
 theorem branch_separation_leakage_bound
     (M : MeasurementUnitary S) (cAmp : Sign → Sign → ℂ)
     (φA0 : K_A) (φB0 : K_B)

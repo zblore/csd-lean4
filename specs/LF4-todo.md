@@ -145,3 +145,45 @@ Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the
 3. Once written, the LF3 chain capstones that currently apply `LF1_main_theorem_ae` once per `(s, t) ∈ Sign × Sign` can route through this lemma instead.
 
 **Depends on:** nothing structural; LF1 and LF2 already provide all ingredients. This is bookkeeping that LF4 should land before consuming joint-partition statements at scale.
+
+---
+
+## 10. Framework/ extraction candidates (post-CONVENTIONS.md adoption)
+
+**Status:** All current LF1/LF2/LF3 modules are tagged `Category: 3-Local` per `CONVENTIONS.md`. The initial pass classified by current location, not conceptual category. Several modules are conceptually Cat-2 (framework-level, CSD-adjacent but reusable beyond CSD) and should be extracted to `CsdLean4/Framework/` when LF4 needs them in CSD-free form.
+
+This section is a punch list of the specific modules to consider for extraction, surfaced by the 2026-05-18 OpenAI Codex CLI review. Do not bulk-refactor; reclassify a module only when LF4 has a concrete consumer that needs it CSD-free.
+
+### 10.1 `LF2/BornWrapper.lean` — split into Cat-1 and Cat-2
+
+The matrix lemmas (`outerProduct_posSemidef`, `traceForm`, `mul_conj` and related rank-1 matrix identities) are Cat-1: pure linear-algebra facts on `Matrix (Fin N) (Fin N) ℂ`, no CSD content. They belong at `CsdLean4/Mathlib/LinearAlgebra/Matrix/RankOne.lean` (or a similar Mathlib-natural path) eventually.
+
+The structural machinery (`Effect`, `DensityOperator`, `OperationalPackage`, `rankOneEffect`, `rankOneDensity`, `born_quadratic`) is Cat-2: it encodes the operational-package interface and the Born quadratic form for finite-dimensional effect algebras. Any formalisation programme that needs the Born wrapper would consume this; it does not depend on CSD's ontic typicality story.
+
+**Pickup:**
+1. Identify which lemmas are pure matrix algebra vs which carry operational-package structure. Most pure-matrix lemmas are at the top of the file; the `Effect`/`DensityOperator`/`OperationalPackage` block starts further down.
+2. Move the Cat-1 lemmas to `CsdLean4/Mathlib/LinearAlgebra/Matrix/RankOne.lean` (or appropriate path). Stage as Mathlib upstream candidates.
+3. Move the Cat-2 block to `CsdLean4/Framework/OperationalPackage.lean`. Adjust imports in `LF3/Projectors/LF2Interface.lean` and downstream consumers.
+
+### 10.2 `LF3/Setup.lean::BinaryPointerProjectors` + `LF3/Projectors/Core.lean::ProjectorAlgebra`
+
+`BinaryPointerProjectors` is a framework-level pointer-algebra structure (two-element projective decomposition on an inner-product space). `ProjectorAlgebra` is the corresponding four-element structure for the bipartite case. Together with `StrongReadoutCompat` and `LeakageCompat`, these encode the abstract pointer-readout pattern that any measurement-model formalisation would need — they do not depend on Bell singlet content.
+
+**Pickup:**
+1. Move `BinaryPointerProjectors` (and its theorems) to `CsdLean4/Framework/Measurement/BinaryPointer.lean`.
+2. Move `ProjectorAlgebra`, `StrongReadoutCompat`, `LeakageCompat` to `CsdLean4/Framework/Measurement/ProjectorAlgebra.lean`.
+3. Keep `mHat`, `branchWeight`, and other LF3-specific consumers in `LF3/Projectors/`. They depend on Framework but stay Cat-3.
+
+### 10.3 `LF3/Projectors/TensorModel.lean::TensorEmbedding`
+
+`TensorEmbedding K_A K_B H_SA` is an abstract bipartite tensor-factor interface (per-wing algebra-homomorphism lifts with commuting images). Not Bell-singlet-specific; usable for any bipartite quantum-system formalisation.
+
+`UnitaryTensorEmbedding` is the same pattern at the unitary-equivalence level.
+
+**Pickup:**
+1. Move `TensorEmbedding` and `UnitaryTensorEmbedding` (with their construction lemmas `ProjectorAlgebra.ofTensorEmbedding` and `MeasurementUnitary.ofUnitaryTensorEmbedding`) to `CsdLean4/Framework/TensorProduct/BipartiteEmbedding.lean`.
+2. If sufficiently general, these could eventually become Cat-1 — the tensor-product-of-CLM machinery they encode is Mathlib-track material. Defer that promotion until they have actually been used by a non-CSD consumer.
+
+### Ordering note
+
+These three extractions are independent. Do them on demand as LF4 produces specific Framework-level consumers, not preemptively. Bulk reclassification risks regressing the axiom-clean / tagged-release stability of LF1-3 without proportionate benefit. The CONVENTIONS.md "initial pass by current location" policy was chosen precisely to avoid that risk.
