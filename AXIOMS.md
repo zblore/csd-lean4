@@ -12,11 +12,11 @@ Every Mathlib-dependent Lean development uses these three axioms. They are inspe
 | `Classical.choice` | The (non-constructive) axiom of choice. |
 | `Quot.sound` | Soundness of quotient-type formation. |
 
-LF1 and LF3 theorems (including all LF3 chain capstones) cite only these three. `#print axioms LF1_main_theorem_ae`, `#print axioms LF3_singlet_frequency_convergence_born_inner`, and similar checks return the foundational triple only.
+LF1 theorems cite only these three. LF3's strong-readout and finite-leakage main theorems (`LF3_main_theorem`, `LF3_finite_leakage_theorem`) cite only these three. **The three LF3 chain capstones** (`LF3_singlet_frequency_convergence`, `_born`, `_born_inner`, plus their joint-partition variants from Phase 8) cite the foundational triple **plus** `busch_effect_gleason` — see §2.2 below and the option (B) chain rewrite in §3.6 for the rationale (the chain now routes via OP.p Born identity, which extensionally invokes the Busch axiom through `pure_state_born_weights_of_certainty`).
 
 ## 2. LF2 imported mathematical axioms
 
-LF2 imports two named axioms. Each is documented at its declaration site with a docstring linking back to the spec section that authorises the import. Neither propagates into LF1; LF3's chain capstones likewise do not depend on either (the singlet is concretely given as a Hilbert vector, not extracted from a Busch operational package).
+LF2 imports two named axioms. Each is documented at its declaration site with a docstring linking back to the spec section that authorises the import. Neither propagates into LF1. Both propagate into the LF3 chain capstones after the 2026-05-18 option (B) chain rewrite: `busch_effect_gleason` enters extensionally via `pure_state_born_weights_of_certainty` inside the OP.p Born identity step, and `invariant_measure_uniqueness` enters at any LF4 instantiation site that constructs `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` (the option (b) structural propagation mechanism — the axiom does not appear extensionally on the chain capstone definitions themselves because the bridge enters as a generic structure argument). LF3's `LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean.
 
 A third axiom, `rankOneDensity_unique_of_certainty`, was carried in earlier
 revisions and discharged on 2026-05-18 (see commit landing the
@@ -86,15 +86,27 @@ This carries the **V ≈ 1 − I debt** explicitly. Structural discharge is gate
 
 The eigenstate-action field of `MeasurementUnitary` (the impulsive-readout idealisation `u (jointEig (s, t) φA φB) = jointEig (s, t) (ptrTransA s φA) (ptrTransB t φB)`) is caller-supplied. Spec §9.5 explicitly carves this out of v1.00: the operator-exponential `exp(-iHt)` derivation requires Mathlib-level Stone-on-bounded-self-adjoint-operators infrastructure and is LF4-or-later.
 
-### 3.6 `PureSingletPreparation` bundle on the LF3 chain capstones
+### 3.6 `PureSingletPreparation` bundle on the LF3 chain capstones (Phase 7 option (B) form)
 
-The three LF3 chain capstones consume a `PureSingletPreparation D ctx` structure (`CsdLean4/LF3/PurePreparation.lean`) bundling the projective outcome family, its ontic correspondence, and the Born identity
-`projectiveWeight D μprep (O_st s t) = ENNReal.ofReal (P_st ctx.a ctx.b s t)`
-as a single typed argument. This is the LF1↔LF2↔LF3 boundary in packaged form. The transitional constructor `PureSingletPreparation.ofHypothesis` accepts the raw field set for callers who already have an `hLF2`-style equality.
+The three LF3 chain capstones consume a `PureSingletPreparation D ctx N` structure (`CsdLean4/LF3/PurePreparation.lean`) bundling, under the option (B) design adopted 2026-05-18:
+
+- The projective reference measure `μFS` + its `IsProbabilityMeasure` instance.
+- The measure bridge data `bridge : LF2.MeasureBridgeData D μFS`.
+- The static pure preparation `PP : LF2.PurePreparation D prepMeasure N` (Hilbert-side ψ + Dirac concentration of `Measure.map D.π prepMeasure` on the projective ray of ψ).
+- The dimension bound `hN : 2 ≤ N` (required for `busch_effect_gleason`).
+- The measurement-context joint eigenstate data `jed : MeasurementJointEig ctx PP.ψ` (the four (s, t) joint spin eigenstates with unit norm, pairwise distinctness, and the Born identity `‖⟨PP.ψ, jed.eig s t⟩‖² = P_st ctx.a ctx.b s t`).
+- The per-sector ontic outcome regions `O_region : Sign → Sign → D.toOntic.OutcomeRegion`.
+- The **ontic weight ↔ OP.p bridge** `bridge_op_p : ∀ s t, prepMeasure((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))` where `OP = LF2.OperationalPackage.fromPreparation D μFS bridge prepMeasure PP.rep PP.hrep_unit PP.hrep_meas`.
+
+This is the LF1↔LF2↔LF3 boundary in packaged form. The transitional constructor `PureSingletPreparation.ofHypothesis` accepts the raw field set for callers who already have an `hLF2`-style equality (rewritten to match the new field set during Phase 7).
+
+The convenience theorem `PureSingletPreparation.weight_eq_P_st` composes `bridge_op_p` with `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6 algebraic identity, cites `busch_effect_gleason` via `LF2.PurePreparation.born_rank_one`) to give the full ontic weight ↔ `P_st` identity. The chain capstones consume this composed form.
 
 LF4 will discharge the bundle structurally via the preparation-to-Hilbert correspondence + projective-first outcome specification (`specs/LF4-todo.md` §2 + §7), supplying a concrete constructor `PureSingletPreparation.ofKählerPreparation` from a Kähler `SectorData` instantiation (per `specs/LF4-todo.md` §8, the Q1 answer of 2026-05-17). Per the Q4 answer of 2026-05-17, this is a **rewrite** of the capstone bodies, not a wrap: when LF4 lands, the `ofHypothesis` transitional constructor is retired and the LF4 constructor becomes the single entry point.
 
 This bundle is a hypothesis structure, not an axiom: callers must supply the discharge content. It is listed here for the same reason as the other physical-assumption entries: it is load-bearing for the chain capstones and not derived inside the Lean tree.
+
+**Why the OP.p bridge (option (B)) rather than direct projectiveWeight.** The previous (v0.3.4-lf3) bundle had a `weight_eq_P_st : projectiveWeight D μprep (O_st s t) = ENNReal.ofReal P_st` field — direct measure equality on a projective outcome region. Under the Phase 4 Dirac model of `PurePreparation`, `Measure.map D.π μprep = Dirac ray_point`, and the direct measure of a projective outcome region is 0 or 1, not a generic `P_st ∈ (0, 1)`. The OP.p bridge resolves this: probability is the OP-integral of `effectProjFn` (the CSD-foundational object in the volume-ratios reading), and `OP.p (rankOneEffect (jed.eig s t)) = ‖⟨ψ, jed.eig s t⟩‖² = P_st` via `born_rank_one` + the Born identity, both for a Dirac `μprep`. The bridge_op_p field ties the ontic outcome weight to this OP-integral content; concretely, what LF4 discharges is the structural relationship between the ontic outcome region's preEvent volume and the OP integration. Spec §5.4 four-ingredient combinatorial framing applies.
 
 ## 4. Deferred items (LF4 and later)
 
@@ -132,10 +144,20 @@ For each headline exported theorem, the legible axiom citation:
 | `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `LF3_main_theorem` | `propext, Classical.choice, Quot.sound` |
 | `LF3_finite_leakage_theorem` | `propext, Classical.choice, Quot.sound` |
-| `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound` |
-| `LF3_singlet_frequency_convergence_born` | `propext, Classical.choice, Quot.sound` |
-| `LF3_singlet_frequency_convergence_born_inner` | `propext, Classical.choice, Quot.sound` |
+| `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_inner` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_joint` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_joint` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_inner_joint` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `PureSingletPreparation.ofHypothesis` | `propext, Classical.choice, Quot.sound` |
+| `PureSingletPreparation.weight_eq_P_st` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF2.PurePreparation.born_rank_one` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF2.PurePreparation.born_rank_one_direct` | `propext, Classical.choice, Quot.sound` |
+| `LF2.PurePreparation.OP_certain_at_ψ` | `propext, Classical.choice, Quot.sound` |
+| `LF2.SectorData.outcomeOfProjective` | `propext, Classical.choice, Quot.sound` |
+| `LF3.OP_p_at_jointEig_eq_P_st` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3.OP_p_at_jointEig_eq_P_st_direct` | `propext, Classical.choice, Quot.sound` |
 | `ProjectorAlgebra.ofTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 
@@ -157,14 +179,19 @@ LF3 imports **no** axioms beyond Lean's foundational set, but it does take certa
 
 **Status.** v1.00 carries the deviation bound as caller-supplied data; v2 should derive it. Tracked in the LF3 design-choices section of README and in `specs/LF4-todo.md`.
 
-### 6.2 `PureSingletPreparation.weight_eq_P_st`
+### 6.2 `PureSingletPreparation.bridge_op_p` and `MeasurementJointEig.born_eq_P_st` (Phase 7 option (B) split)
 
-**Location.** `CsdLean4/LF3/PurePreparation.lean`.
+**Location.** `CsdLean4/LF3/PurePreparation.lean` (the `bridge_op_p` field) and `CsdLean4/LF3/SingletProjective.lean` (the `MeasurementJointEig.born_eq_P_st` field).
 
-**What it is.** A field of the `PureSingletPreparation` bundle asserting that the LF2 projective weight of the pointer-sector outcome region equals `ENNReal.ofReal (P_st a b s t)`.
+**What they are (post-Phase-7 split).** The single `weight_eq_P_st` field in the pre-Phase-7 bundle has been factored into two structurally distinct hypotheses, reflecting the option (B) chain design:
 
-**What it should be (LF4).** A theorem derived from the chain `branchWeight_eq_LF2_Born` + `lf1_weight_eq_projective_weight` + `cst_squared_eq` once LF4 supplies a concrete preparation-to-Hilbert correspondence (LF4-todo §2 + §7).
+- `MeasurementJointEig.born_eq_P_st : ∀ s t, ‖inner ℂ ψ (eig s t)‖² = P_st ctx.a ctx.b s t` — the **Born identity** for the (s, t) joint eigenstate. Discharge target: LF4-todo §3 (rank-1 effects from projective points) + spectral construction of joint spin eigenstates from `jointSpinProj`. Carried on the measurement-context-driven structure `MeasurementJointEig`, separate from the static pure preparation.
+- `PureSingletPreparation.bridge_op_p : ∀ s t, prepMeasure((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (eig s t)))` — the **ontic-weight ↔ OP.p bridge**. Discharge target: LF4-todo §2 (preparation-to-Hilbert correspondence) + §7 (projective-first outcomes). Carried on the singlet bundle, ties the LF1 ontic outcome weight to the LF2 OP integral.
 
-**Why it matters.** The three LF3 frequency-convergence capstones consume this field directly. The "chain" listed in the LF3 Interface module docstring is what `weight_eq_P_st` *will* be derived from in LF4, not what the proof bodies currently invoke.
+The composition is `PureSingletPreparation.weight_eq_P_st` (a proved theorem on the bundle), which combines `bridge_op_p` with `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6) and cites `busch_effect_gleason`. The three chain capstones consume `weight_eq_P_st` via `LF1_main_theorem_ae` + `ENNReal.toReal_ofReal`.
 
-**Status.** v1.00 carries the identity as caller-supplied bundle field via the transitional `PureSingletPreparation.ofHypothesis` constructor. LF4 supplies a structural constructor `PureSingletPreparation.ofKählerPreparation` that derives the field.
+**What they should be (LF4).** Both fields become theorems derived from a concrete preparation-to-Hilbert correspondence + projective-first outcome specification + spectral construction. LF4-todo §2, §3, §7 are the discharge targets.
+
+**Why this matters.** The Phase 7 split preserves the CSD pure / measurement-context-driven structural separation: the static pure preparation (`PP`) is context-independent; the measurement-context data (`jed`, `O_region`, `bridge_op_p`) depends on the chosen measurement context (a, b). The option (B) chain routes via OP integration (the CSD-foundational content of `effectProjFn`), matching spec §5.4 four-ingredient framing.
+
+**Status.** v1.x carries both fields as caller-supplied bundle hypotheses via the transitional `PureSingletPreparation.ofHypothesis` constructor (and `MeasurementJointEig`'s field set, no constructor needed). LF4 supplies a structural constructor that derives both.

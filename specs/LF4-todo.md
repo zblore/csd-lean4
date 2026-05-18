@@ -22,43 +22,44 @@ Items LF2 deliberately left for LF4, with rationale and concrete pickup notes.
 
 ---
 
-## 2. Preparation-to-Hilbert-vector correspondence
+## 2. Preparation-to-Hilbert-vector correspondence — **PARTIAL (pre-LF4 Phase 4 + Phase 7, 2026-05-18)**
 
-**Status:** Not addressed in LF2. This is the missing piece for a full LF1 → Born-form chain.
+**Status:** Substantial structural progress. Pre-LF4 work landed:
 
-**Why deferred:** LF1's `μprep : Measure Σ` and LF2-BornWrapper's `ψ : EuclideanSpace ℂ (Fin N)` live in disjoint type universes. Connecting them requires introducing `P ↔ Projectivization ℂ (EuclideanSpace ℂ (Fin N))` and a concentration argument.
+- `LF2.PurePreparation` (`CsdLean4/LF2/Preparation.lean`, Phase 4) carries the static pure-preparation data: `ψ` (unit vector), `rep : P → EuclideanSpace ℂ (Fin N)` (caller-supplied projective representative), `ray_point : P`, `rep_at_ray : rep ray_point = ψ`, and the Dirac concentration `push_dirac : Measure.map D.π μprep = Measure.dirac ray_point`.
+- `LF2.PurePreparation.born_rank_one` and `LF2.PurePreparation.born_rank_one_direct` (Phase 4) prove `OP.p (rankOneEffect φ hφ) = ‖⟨ψ, φ⟩‖²` for the OP built by `OperationalPackage.fromPreparation`.
+- `LF3.PureSingletPreparation` (`CsdLean4/LF3/PurePreparation.lean`, Phase 7) rewrote the LF3 chain bundle in option (B) form: carries `LF2.PurePreparation` + `MeasurementJointEig` + ontic outcome regions + the **ontic-weight ↔ OP.p bridge** `bridge_op_p` as the new LF4 discharge target.
 
-**Pickup sketch:**
-1. In LF4, specialise LF2's abstract `P` to `Projectivization ℂ (EuclideanSpace ℂ (Fin N))`.
-2. Introduce a "pure preparation" predicate on `μprep`: something like "the pushforward `π * μprep` is a Dirac measure at a projective point `[ψ] ∈ CP^{N-1}`."
-3. Lift `[ψ]` to a unit vector `ψ : EuclideanSpace ℂ (Fin N)` (choice of representative mod phase).
-4. Connect the resulting `OperationalPackage` (derived from `μprep` via the measure bridge + Radon–Nikodym) to `rankOneDensity ψ` via `busch_effect_gleason` + `rankOneDensity_unique_of_certainty`.
-5. Chain with `LF1_main_theorem_projective` and `pure_state_born_weights_of_certainty` to obtain: **LF1 frequency → ‖⟨ψ, φ⟩‖²**.
+**Design-space decision (resolved 2026-05-18).** Option (b) of the 2026-05-17 design discussion (bundle the discharge into a preparation structure) was adopted. Option (a) — permanent hypothesis — was ruled out per the 2026-05-17 decision. Option (c) — Born-ready typeclass — was rejected at pre-LF4 plan time on ergonomic grounds.
 
-**Depends on:** Mathlib's `Projectivization`, Radon–Nikodym derivatives, Haar-measure / Dirac-concentration arguments.
+**Remaining LF4 work (the actual discharge):**
 
-**Design-space constraint (confirmed 2026-05-17).** The three LF3 chain capstones in `LF3/Interface.lean` currently take an external `hLF2` hypothesis discharged by this item + §7. There are three candidate factorisations for the discharge:
+1. Specialise LF2's abstract `P` to `Projectivization ℂ (EuclideanSpace ℂ (Fin N))` (waits on §12: `Projectivization` topology / measure API).
+2. Construct `LF2.PurePreparation` from a concrete preparation `μprep` whose pushforward `Measure.map D.π μprep` concentrates Dirac on `[ψ]`. This is the **`bridge_op_p` discharge proper**: in a concrete `(Σ, π, Φ, μprep)` instantiation, prove
+   `prepMeasure((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t) _))`.
+3. Construct `LF3.PureSingletPreparation.ofKählerPreparation` from a concrete Kähler `SectorData` (per §8).
 
-- (a) Keep `hLF2` as a permanent hypothesis and document it as a programme-level open problem.
-- (b) Bundle the discharge into a `PurePreparation` structure whose elimination rule supplies `hLF2`.
-- (c) Absorb `hLF2` into a `Born-ready preparation` typeclass.
-
-Option **(a) is ruled out**: the chain capstones must reach a discharged form in LF4. The LF4 plan must choose between (b) and (c). The latter two differ in cost and downstream feel; the choice is open and should be made at LF4 plan time, not now.
+The Phase 4 + 7 work staged the *structural shape* of the chain. The actual measure-theoretic content discharging `bridge_op_p` is LF4 work pending §8 + §12. See also `specs/pre-LF4-plan.md` for the full execution log.
 
 ---
 
-## 3. Rank-1 effects from projective points (not from unit vectors)
+## 3. Rank-1 effects from projective points (not from unit vectors) — **PARTIAL (pre-LF4 Phase 1, 2026-05-18)**
 
-**Status:** `rankOneEffect`, `rankOneDensity` take `EuclideanSpace ℂ (Fin N)` unit vectors, not projective points.
+**Status:** Step 1 (phase invariance) **DONE**. Steps 2-3 (projective-point lifts) deferred to LF4 + §12 (`Projectivization` topology API).
 
-**Why deferred:** LF4 needs outcomes specified projectively (`[φ] ∈ CP^{N-1}`), not as unit vectors. Currently a phase-dependent vector is required. Phase-invariance of the outer product `|φ⟩⟨φ|` makes this sound, but LF2 doesn't expose it.
+Pre-LF4 Phase 1 delivered (`CsdLean4/LF2/PhaseInvariance.lean`):
 
-**Pickup:**
-1. Prove `rankOneEffect φ hφ = rankOneEffect (c • φ) hφ'` for `|c| = 1` (phase invariance of the outer product). One-line calculation: `(c • φ) * star (c • φ) = c · star c · (φ * star φ) = ‖c‖² · (φ * star φ) = φ * star φ`.
-2. Lift to projective points: for `[φ] : Projectivization ℂ (EuclideanSpace ℂ (Fin N))`, define `rankOneEffectProj [φ]` via choice of unit-vector representative, using the phase-invariance lemma to show well-definedness.
+- `outerProduct_phase_invariant : ‖c‖ = 1 → outerProduct (c • φ) = outerProduct φ` — the algebraic phase invariance of the outer product. Algebraic content: `(c • φ) ⊗ (c • φ)* = c · c̄ · (φ ⊗ φ*) = ‖c‖² · (φ ⊗ φ*) = φ ⊗ φ*`.
+- `rankOneEffect_phase_invariant` and `rankOneDensity_phase_invariant` — phase invariance of the structure-level wrappers.
+
+Additionally, the LF3 measurement-context bundle (`LF3.MeasurementJointEig`, Phase 6) is parametric in the abstract joint eigenstate vectors rather than requiring projective points; it stages the projective lift as an LF4-discharge target without committing to a `Projectivization` realisation pre-LF4.
+
+**Remaining LF4 work:**
+
+2. Lift to projective points: for `[φ] : Projectivization ℂ (EuclideanSpace ℂ (Fin N))`, define `rankOneEffectProj [φ]` via `Projectivization.lift` + `outerProduct_phase_invariant`. Waits on §12 (Mathlib `Projectivization.lift` measurability API).
 3. Similarly for `rankOneDensityProj`.
 
-**Depends on:** `Mathlib.LinearAlgebra.Projectivization.Basic`.
+**Depends on:** §12 (`Projectivization` topology / measure API as a Cat-1 Mathlib contribution).
 
 ---
 
@@ -127,15 +128,17 @@ under our context. The PSD inner-product route above bypasses the issue.
 
 ---
 
-## 7. Outcome specification: ontic-first vs projective-first
+## 7. Outcome specification: ontic-first vs projective-first — **DONE (pre-LF4 Phase 5, 2026-05-18)**
 
-**Status:** LF1's `OutcomeRegion` has `Ω : Set SigmaSpace` (ontic-first). LF2's `LF1_main_theorem_projective` takes a correspondence hypothesis `O.preEvent = D.π ⁻¹' Oep` linking them.
+**Status:** Both pickup items delivered in `CsdLean4/LF2/Interface.lean` (Phase 5).
 
-**Why deferred:** A cleaner LF4 architecture would let callers specify outcomes projectively and derive the ontic counterpart. Currently the caller must supply both and prove the correspondence.
+- `SectorData.outcomeOfProjective : {Oep : Set P} → MeasurableSet Oep → D.toOntic.OutcomeRegion` constructs the ontic outcome region with `Ω := D.π ⁻¹' Oep`.
+- `SectorData.outcomeOfProjective_preEvent` discharges the correspondence: under the **flow-projection compatibility** hypothesis `h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = D.π x` (CSD's constraint-surface preservation reading — the ontic flow preserves projective rays), the constructor-built outcome's pre-event equals `D.π ⁻¹' Oep` exactly. Callers of `LF1_main_theorem_projective` no longer need to supply `hCorresp` manually for the constructor-built outcome.
+- `SectorData.outcomeOfProjective_weight_eq_projectiveWeight` gives the full weight-side identity by composition with `lf1_weight_eq_projective_weight`.
 
-**Pickup:**
-1. Build a helper `SectorData.outcomeOfProjective : {Oep : Set P} → MeasurableSet Oep → D.toOntic.OutcomeRegion` that constructs the LF1-side outcome from a projective outcome region (with `Ω := Φ⁻¹(π⁻¹(Oep))` or similar).
-2. Prove the correspondence automatically so callers don't need to supply `hCorresp`.
+The flow-projection compatibility hypothesis `h_flow_π` is taken as a constructor argument rather than a `SectorData` field; adding it as a field would commit all `SectorData` instances to the constraint-surface reading at v1.x. LF4 instantiations may elect to promote it to a structural field.
+
+All three exports are foundational-axiom-only; `#guard_msgs` regressions in AxiomAudit pin them.
 
 ---
 

@@ -424,19 +424,43 @@ user has not requested it. Including here as deferred-with-rationale to
 keep the option clear; revisit at LF4 proper if POVM completeness needs
 the joint statement at scale. **Not part of the option-(b) critical path.**
 
-### Phase 9 — `MeasurementUnitary` tensor constructor (LF4-todo §10.x / D4-G6 continuation)
+### Phase 9 — `MeasurementUnitary` tensor constructor (LF4-todo §10.x / D4-G6 continuation) — **DONE**
 
-`TensorModel.lean` already has `ProjectorAlgebra.ofTensorEmbedding`. The
-remaining D4/G6 debt is the `MeasurementUnitary` side. Independent of the
-option-(b) chain; can run as a parallel small thread. ~3-5 h.
+`TensorModel.lean` carries both halves of the v2 derivation:
+`ProjectorAlgebra.ofTensorEmbedding` (the operator-algebra-hom side) and
+`MeasurementUnitary.ofUnitaryTensorEmbedding` (the unitary side). Both
+have `#guard_msgs` regressions in `Tests/AxiomAudit.lean` and depend
+only on the foundational triple.
 
-- `TensorEmbedding.liftUnitaryA`, `TensorEmbedding.liftUnitaryB`.
-- `MeasurementUnitary.ofTensorEmbedding`.
-- `MeasurementUnitary.factorises_ofTensorEmbedding`.
+Delivered (under actual implementation names; the earlier plan draft
+used different names that did not survive implementation):
 
-Do **not** prove the eigenstate-action field. That requires operator
-exponentials / Stone-on-bounded-self-adjoint-operators infrastructure and
-is LF4-or-later (spec §9.5).
+- `UnitaryTensorEmbedding.liftA_unitary`, `UnitaryTensorEmbedding.liftB_unitary`
+  (named `TensorEmbedding.liftUnitaryA` / `liftUnitaryB` in the earlier
+  draft; the actual structure is `UnitaryTensorEmbedding`, separate from
+  `TensorEmbedding` to keep preconditions minimal — see the
+  `UnitaryTensorEmbedding` docstring).
+- `MeasurementUnitary.ofUnitaryTensorEmbedding` (named
+  `MeasurementUnitary.ofTensorEmbedding` in the earlier draft;
+  parameterised on a `UnitaryTensorEmbedding` plus per-wing unitaries
+  `(vA, vB)` plus the joint-eigenstate / pointer-translation data plus
+  the `action` proof).
+- The factorisation field `factorises : ∀ x, u x = uA (uB x)` is
+  discharged inside `ofUnitaryTensorEmbedding` by `rfl` (the definition
+  `u := (liftB_unitary vB).trans (liftA_unitary vA)` makes factorisation
+  hold definitionally; no separate `factorises_ofTensorEmbedding`
+  theorem needed).
+
+Eigenstate-action field (`action`) **not** discharged. That requires
+operator exponentials / Stone-on-bounded-self-adjoint-operators
+infrastructure and is LF4-or-later per spec §9.5; the field remains
+caller-supplied data.
+
+Optional refinement (not part of Phase 9 scope): a combined
+`BipartiteTensorStructure` extending both `TensorEmbedding` and
+`UnitaryTensorEmbedding` with a coherence field. The current split
+keeps preconditions minimal; refinement is a judgement call, not a
+debt.
 
 ### Phase 10 — Unitary covariance of `OperationalPackage` (LF4-todo §1)
 

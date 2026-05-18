@@ -71,10 +71,10 @@ Three layers are currently formalised:
 - the pointer-sector projective algebra `ProjectorAlgebra` (available either as abstract structural data, or derived through `ProjectorAlgebra.ofTensorEmbedding` from a `TensorEmbedding K_A K_B H_SA` plus the `SystemApparatusSetup`'s per-wing `BinaryPointerProjectors`, in `LF3/Projectors/TensorModel.lean`) and the operator-form `branchWeight`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
 - the LF3→LF2 Born-form bridge `branchWeight_eq_LF2_Born` (trace-inner core identity proved against the existing LF2 `traceForm`)
 - the **singlet kernel algebraic core** `cst_squared_eq : ‖cAmp s t (a, b)‖² = (1 − st a·b)/4`, the correlation `−a·b`, marginals `1/2`, no-signalling on each side, and finite-leakage versions of all four
-- the **headline LF1↔LF2↔LF3 chain capstones**: `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²` where `cAmp = √P_st`), and `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`), composing `LF1_main_theorem_ae` + `lf1_weight_eq_projective_weight` + `cst_squared_eq` under an external `hLF2` hypothesis discharged by LF4-todo §2 + §7
+- the **headline LF1↔LF2↔LF3 chain capstones** (six total post-Phase-8): three per-sector — `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²`), `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`) — plus three joint-partition AE variants (`..._joint`, `..._born_joint`, `..._born_inner_joint`) using `MeasureTheory.ae_all_iff` over the finite `Sign × Sign` partition. The chain consumes a `PureSingletPreparation D ctx N` bundle (option (B) form post-Phase-7) whose load-bearing hypotheses split into `MeasurementJointEig.born_eq_P_st` (the Born identity for joint spin eigenstates, LF4-todo §3) and `PureSingletPreparation.bridge_op_p` (the ontic-weight ↔ OP.p bridge, LF4-todo §2 + §7)
 - the **closed-form / bra-ket equivalence** `cAmp_norm_sq_eq_inner_norm_sq`: the closed-form `cAmp = √P_st` agrees with the genuine Hilbert-space inner product `⟨v, ψ⁻⟩` on squared norms, given the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` as a hypothesis (discharged in v2 from a constructed `jointSpinEig`)
 
-All five LF3 capstone exports are fully axiom-clean: `#print axioms` returns only `propext`, `Classical.choice`, `Quot.sound`. None of LF2's two axioms appear anywhere in the chain.
+**Post-Phase-7 axiom posture (2026-05-18).** `LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean. The six chain capstones cite `propext, Classical.choice, Quot.sound, busch_effect_gleason`: the chain bridge now routes via OP.p (option (B) chain design), which extensionally invokes `pure_state_born_weights_of_certainty` (cites Busch). `invariant_measure_uniqueness` enters at LF4 instantiation sites that build `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` — option (b) structural propagation, not extensional citation. The spec §5.4 four-ingredient framing is realised at the Lean level. See [`AXIOMS.md`](AXIOMS.md) §3.6 and §5 for the full audit.
 
 The closed-form `cAmp := √P_st` is a v1.00 representative; the v2 plan is to construct `jointSpinEig` from the spectral decomposition of `jointSpinProj` so that `cAmp` becomes a derived `inner ℂ jointSpinEig singlet` rather than the closed-form sqrt. The `_inner` capstone variant already states the physically faithful form for callers who supply their own eigenstate.
 
@@ -255,11 +255,11 @@ LF3 sits directly on top of LF2. It instantiates the abstract Born-weight machin
    - `LF3_singlet_frequency_convergence_born` — closed-form Born variant landing on `‖cAmp s t (a, b)‖²`.
    - `LF3_singlet_frequency_convergence_born_inner` — physically faithful bra-ket variant landing on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`.
 
-All three capstones consume an external `hLF2` hypothesis relating the projective weight of the pointer-sector outcome region to `ENNReal.ofReal P_st`. This is the LF2↔LF3 boundary discharged by LF4-todo §2 (preparation ↔ Hilbert) + §7 (projective-first outcomes).
+All six capstones (three per-sector + three Phase 8 joint-partition variants) consume a `PureSingletPreparation D ctx N` bundle whose load-bearing hypotheses are the option (B) split: `MeasurementJointEig.born_eq_P_st` (Born identity for joint spin eigenstates, LF4-todo §3 discharge target) and `PureSingletPreparation.bridge_op_p` (ontic-weight ↔ OP.p bridge, LF4-todo §2 + §7 discharge target). The bundle's `weight_eq_P_st` theorem composes the two via `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6).
 
-### LF3 axiom posture
+### LF3 axiom posture (post Phase 7 rewrite, 2026-05-18)
 
-LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`). The two LF2 axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`) are not invoked anywhere in LF3's exports: the singlet is concretely given as a Hilbert vector rather than extracted from a Busch operational package, and the pre-Born capstone routes around the Born wrapper entirely. `#print axioms LF3_main_theorem` and `#print axioms LF3_singlet_frequency_convergence_born_inner` both legibly return the foundational triple only. The axiom posture across all three layers is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every theorem listed in [`AXIOMS.md §5`](AXIOMS.md); the build fails on drift. The §5 shortlist is a curated subset of the full theorem inventory below — inventory entries omitted from §5 (e.g. `expectation_eq_weight`, `weights_sum_eq_one`, `singlet_pauli_correlation`) are not guard-pinned and their stated axiom column rests on review rather than build-time enforcement.
+`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite only the foundational triple. The six chain capstones cite the foundational triple **plus** `busch_effect_gleason`: the chain bridge now routes via OP.p (option (B) chain design — see [`specs/pre-LF4-plan.md`](specs/pre-LF4-plan.md)), and the OP.p Born identity extensionally invokes `LF2.pure_state_born_weights_of_certainty` which cites Busch. `invariant_measure_uniqueness` does not appear extensionally on the chain capstone definitions — it enters at LF4 instantiation sites that build `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` (option (b) structural propagation). This is the spec §5.4 four-ingredient combinatorial framing realised at the Lean level. The axiom posture is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every theorem listed in [`AXIOMS.md §5`](AXIOMS.md); the build fails on drift. The §5 shortlist is a curated subset of the full theorem inventory below — inventory entries omitted from §5 (e.g. `expectation_eq_weight`, `weights_sum_eq_one`, `singlet_pauli_correlation`) are not guard-pinned and their stated axiom column rests on review rather than build-time enforcement.
 
 ### Design choices in LF3
 
@@ -273,9 +273,9 @@ LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classica
 
 ### What LF3 does not prove
 
-- The preparation-to-Hilbert-vector correspondence supplying a structural `PureSingletPreparation` (LF4-todo §2; for now, callers either build the bundle from raw outcome / correspondence / Born-identity fields via `PureSingletPreparation.ofHypothesis`, or wait for the LF4 constructor);
-- a projective-first outcome specification (LF4-todo §7);
-- the constructed joint spin eigenstate `jointSpinEig` (currently the `_inner` capstone takes `v` as an external parameter; v2 plan: spectral decomposition of `jointSpinProj`);
+- The preparation-to-Hilbert-vector correspondence supplying a structural `PureSingletPreparation` (LF4-todo §2; for now, callers either build the bundle from raw `μFS` + `bridge` + `PP` + `jed` + `O_region` + `bridge_op_p` field set via `PureSingletPreparation.ofHypothesis`, or wait for the LF4 constructor);
+- a projective-first outcome specification (LF4-todo §7) — partially staged via `LF2.SectorData.outcomeOfProjective` (Phase 5) which discharges the `O.preEvent = π⁻¹(O_ep)` correspondence under a Φ-π compatibility hypothesis;
+- the constructed joint spin eigenstate `jointSpinEig` and the Born identity `‖⟨singlet, jointSpinEig s t⟩‖² = P_st` (currently caller-supplied via `MeasurementJointEig.born_eq_P_st`; v2 plan: spectral decomposition of `jointSpinProj`);
 - mixed states, POVMs, subsystem reduction, sequential update (LF4/LF5 territory).
 
 ## Theorem inventory
@@ -305,10 +305,18 @@ Exported theorems and their dependencies. The "Axioms" column lists CSD-specific
 | `pure_state_born_weights_of_certainty` | `LF2/BornWrapper.lean` | Strengthening: derives the density-operator hypothesis from a purity hypothesis (`OP.p (rankOneEffect ψ) = 1`). | `busch_effect_gleason` |
 | `lf1_weight_eq_projective_weight` | `LF2/Interface.lean` | `μprep(π⁻¹(O_ep)) = projectiveWeight D μprep O_ep` (the LF1↔LF2 measure-identity hinge). | none |
 | `LF1_main_theorem_projective` | `LF2/Interface.lean` | LF1 empirical frequency converges almost surely to the real-valued projective weight, under the outcome correspondence `O.preEvent = π⁻¹(O_ep)`. | none |
+| `SectorData.outcomeOfProjective` | `LF2/Interface.lean` | (Phase 5) Projective-first outcome constructor: from `Oep : Set P` measurable + flow-projection compatibility, builds an ontic `OutcomeRegion`. | none |
+| `outerProduct_phase_invariant` | `LF2/PhaseInvariance.lean` | (Phase 1) `outerProduct (c • φ) = outerProduct φ` for unit-modulus `c`. | none |
+| `effectProjFn_rankOne` | `LF2/EffectFn.lean` | (Phase 2) `effectProjFn rep (rankOneEffect φ) p = ‖⟨rep p, φ⟩‖²` — the volume-ratio Born identity on the foundational effect function. | none |
+| `MeasureBridgeData.ofSectorData` | `LF2/Preparation.lean` | (Phase 3a) Primary `MeasureBridgeData` constructor from a `SectorData` plus an invariant `μFS`; cites `measure_bridge`. | `invariant_measure_uniqueness` |
+| `OperationalPackage.fromPreparation` | `LF2/Preparation.lean` | (Phase 3c) Constructs an `OperationalPackage` from a `MeasureBridgeData` + preparation measure + caller-supplied `rep` via `effectProjFn` integration. | none |
+| `LF2.PurePreparation.OP_certain_at_ψ` | `LF2/Preparation.lean` | (Phase 4) For a `PurePreparation`, the OP built by `fromPreparation` is certain at ψ (direct Dirac evaluation). | none |
+| `LF2.PurePreparation.born_rank_one` | `LF2/Preparation.lean` | (Phase 4) `OP.p (rankOneEffect φ) = ‖⟨ψ, φ⟩‖²` for a `PurePreparation`, chain critical path via Busch packaging. | `busch_effect_gleason` |
+| `LF2.PurePreparation.born_rank_one_direct` | `LF2/Preparation.lean` | (Phase 4) Same conclusion via direct Dirac integration; volume-ratio auxiliary, no Busch. | none |
 
 ### LF3 (Paper D — singlet kernel, pointer-sector decomposition, empirical chain)
 
-All LF3 capstone exports are fully axiom-clean: LF2's two axioms are not invoked anywhere in the LF3 chain.
+`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite only the foundational triple. The six chain capstones cite the foundational triple **plus** `busch_effect_gleason` post Phase 7 (the option (B) chain bridge routes via OP.p Born identity, which extensionally invokes `pure_state_born_weights_of_certainty`).
 
 | Theorem | File | Mathematical meaning | Axioms |
 |---|---|---|---|
@@ -320,14 +328,20 @@ All LF3 capstone exports are fully axiom-clean: LF2's two axioms are not invoked
 | `branchWeight_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form branch weight equals LF2's trace-form Born weight on rank-1 effects. | none |
 | `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package: kernel, correlation, marginals, no-signalling, pointer-completeness. | none |
 | `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities with bound `εA + εB + εA·εB` (and prefactors). | none |
-| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone: LF1 empirical frequency converges to `(1 − s·t·a·b)/4` given a `PureSingletPreparation D ctx`. | none |
-| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant: lands on `‖cAmp s t (a, b)‖²`. | none |
-| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant: lands on `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`. | none |
-| `PureSingletPreparation.ofHypothesis` | `LF3/PurePreparation.lean` | Transitional constructor: builds a `PureSingletPreparation D ctx` bundle from the raw outcome / correspondence / Born-identity field set. LF4 supplies the structural constructor. | none |
+| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone (per-sector): LF1 empirical frequency converges to `(1 − s·t·a·b)/4` given a `PureSingletPreparation D ctx N`. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant: lands on `‖cAmp s t (a, b)‖²`. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant: lands on `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_joint` | `LF3/Interface.lean` | Phase 8 joint-partition variant of pre-Born capstone: `∀ᵐ ω, ∀ s t, ...`. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_joint` | `LF3/Interface.lean` | Joint variant of closed-form Born capstone. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_inner_joint` | `LF3/Interface.lean` | Joint variant of bra-ket Born capstone. | `busch_effect_gleason` |
+| `LF3.OP_p_at_jointEig_eq_P_st` | `LF3/SingletProjective.lean` | OP probability of the rank-1 sector effect equals `P_st`, given a pure preparation + measurement joint eigenstate data. Composes `LF2.PurePreparation.born_rank_one` + Born identity. | `busch_effect_gleason` |
+| `LF3.OP_p_at_jointEig_eq_P_st_direct` | `LF3/SingletProjective.lean` | Volume-ratio direct variant via `LF2.PurePreparation.born_rank_one_direct`. | none |
+| `PureSingletPreparation.weight_eq_P_st` | `LF3/PurePreparation.lean` | Convenience theorem composing `bridge_op_p` + `OP_p_at_jointEig_eq_P_st` to give the full ontic weight ↔ `P_st` identity. | `busch_effect_gleason` |
+| `PureSingletPreparation.ofHypothesis` | `LF3/PurePreparation.lean` | Transitional constructor: builds a `PureSingletPreparation D ctx N` bundle from the raw option (B) field set (μFS + bridge + PP + jed + O_region + bridge_op_p). LF4 supplies the structural constructor. | none |
 | `ProjectorAlgebra.ofTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `ProjectorAlgebra` from a `TensorEmbedding`; the four projection fields are theorems, not data. | none |
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `MeasurementUnitary` from a `UnitaryTensorEmbedding` plus per-wing unitaries; `factorises` discharged by `rfl`. | none |
 
-The three LF3 chain capstones consume a `PureSingletPreparation D ctx` bundle (`LF3/PurePreparation.lean`) carrying the projective outcome family, its ontic correspondence, and the Born identity `projectiveWeight = ENNReal.ofReal P_st`; the bundle is the LF4-todo §2 + §7 boundary in packaged form. The transitional `PureSingletPreparation.ofHypothesis` constructor accepts the raw field set so existing callers can migrate without yet having LF4 content; LF4 will supply a structural constructor `PureSingletPreparation.ofKählerPreparation` from a concrete Kähler `SectorData` instantiation.
+The six LF3 chain capstones consume a `PureSingletPreparation D ctx N` bundle (`LF3/PurePreparation.lean`) carrying the projective reference measure + bridge data, the static pure preparation `PP : LF2.PurePreparation`, the measurement-context joint eigenstate bundle `jed : MeasurementJointEig ctx PP.ψ`, the ontic outcome regions, and the ontic-weight ↔ OP.p bridge field `bridge_op_p`. The bundle is the LF4-todo §2 + §3 + §7 boundary in packaged form. The transitional `PureSingletPreparation.ofHypothesis` constructor accepts the raw field set so existing callers can migrate without yet having LF4 content; LF4 will supply a structural constructor `PureSingletPreparation.ofKählerPreparation` from a concrete Kähler `SectorData` instantiation.
 
 ## Repository structure
 
@@ -346,8 +360,16 @@ CsdLean4/
     Setup.lean              -- SectorData: OnticSetup + π + G-action (with coherence)
     MeasureBridge.lean      -- pushforward, invariance transfer, measure_bridge theorem
     Weights.lean            -- MeasurablePartition, projectiveWeight, normalisation
-    BornWrapper.lean        -- Effect, DensityOperator, Busch axiom, Born quadratic
+    BornWrapper.lean        -- Effect, DensityOperator, Busch axiom, Born quadratic,
+                            --   rankOneDensity_unique_of_certainty (proved 2026-05-18)
+    PhaseInvariance.lean    -- outerProduct / rankOneEffect / rankOneDensity phase
+                            --   invariance under unit-modulus scalar (Phase 1)
+    EffectFn.lean           -- effectProjFn volume-ratio projective effect function
+                            --   + measurability + Born rank-1 identity (Phase 2)
+    Preparation.lean        -- MeasureBridgeData + OperationalPackage.fromPreparation
+                            --   + PurePreparation + Born rank-1 theorems (Phases 3-4)
     Interface.lean          -- LF1 ↔ LF2 identity + combined LF1+LF2 theorem
+                            --   + SectorData.outcomeOfProjective (Phase 5)
   LF3/
     Setup.lean              -- Sign, DetectorSetting, pauliDot, spinProj, jointSpinProj
     Hamiltonian.lean        -- TensorFactorReadoutAlgebra, MeasurementUnitary
@@ -365,10 +387,17 @@ CsdLean4/
       Kernel.lean           -- P_st, cAmp, cst_squared_eq, correlation/marginals
       Leakage.lean          -- finite-leakage versions of all four quantities
     ContextMap.lean         -- MeasurementContext, GlobalCHSHAssignment, six context-form theorems
-    PurePreparation.lean    -- PureSingletPreparation: bundled hLF2 discharge target,
-                            --   with transitional ofHypothesis constructor
+    SingletProjective.lean  -- MeasurementJointEig bundle (joint spin eigenstate data
+                            --   with Born identity), SingletProjectiveOutcome,
+                            --   OP_p_at_jointEig_eq_P_st (Busch-mediated) + _direct
+                            --   variant (Phase 6)
+    PurePreparation.lean    -- PureSingletPreparation: option (B) bundle (Phase 7)
+                            --   carrying μFS + bridge + PP + jed + O_region + bridge_op_p
+                            --   with transitional ofHypothesis constructor +
+                            --   weight_eq_P_st convenience theorem
     Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
-                            --   LF3_singlet_frequency_convergence (+ Born, + inner variants)
+                            --   six chain capstones (three per-sector + three joint
+                            --   Phase 8 variants)
   Tests/                    -- Separate Lake target `CsdLeanTests` (not pulled
                             --   in by `import CsdLean4`); build via
                             --   `lake build CsdLeanTests`
