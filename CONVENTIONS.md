@@ -116,7 +116,20 @@ Future enforcement (deferred until `Framework/` exists):
 
 These are LF4-scope items, not v1.00 of the conventions doc.
 
-## 6. Relation to upstreaming
+## 6. Self-adjointness convention (LF3)
+
+LF3 modules state self-adjointness on continuous linear maps via the inner-product equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` rather than Mathlib's `IsSelfAdjoint T`. This is forced by typeclass synthesis at v4.29.0-rc8:
+
+- `Star (H →L[ℂ] H)` requires `[CompleteSpace H]`.
+- Mathlib does not automatically chain `[FiniteDimensional ℂ H] → [CompleteSpace H]` (the `FiniteDimensional.proper_real → CompleteSpace` chain exists for ℝ but does not navigate from ℂ-finite-dim through `NormedSpace ℝ ℂ` automatically).
+
+Diagnostic re-audit on 2026-05-18 confirmed: adding `[CompleteSpace H]` as an explicit typeclass argument resolves the issue, but cascades to every caller. The current `inner ℂ (T x) y = inner ℂ x (T y)` spelling is mathematically equivalent and avoids the cascade.
+
+**For new modules.** Use the inner-product equation spelling until Mathlib's instance chain navigates `FiniteDimensional ℂ → CompleteSpace`, or until you're extracting to `Framework/` and willing to add the `[CompleteSpace _]` typeclass burden throughout.
+
+**LF4 extraction note.** When LF3's pointer / projector / Hamiltonian structures move to `CsdLean4/Framework/Measurement/` (LF4-todo §10.2), the natural choice is to add `[CompleteSpace K]` typeclass arguments and switch to `IsSelfAdjoint T`. The Framework-level reusable form benefits from Mathlib-canonical naming; the typeclass cascade is acceptable when those modules are explicitly intended for reuse.
+
+## 7. Relation to upstreaming
 
 Cat-1 modules are eligible to be opened as Mathlib PRs once their content is stable. The repository does not block on upstreaming: Cat-1 modules live in `CsdLean4/Mathlib/` and are imported normally until and unless the upstreaming lands.
 

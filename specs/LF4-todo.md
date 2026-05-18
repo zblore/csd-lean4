@@ -187,3 +187,29 @@ The structural machinery (`Effect`, `DensityOperator`, `OperationalPackage`, `ra
 ### Ordering note
 
 These three extractions are independent. Do them on demand as LF4 produces specific Framework-level consumers, not preemptively. Bulk reclassification risks regressing the axiom-clean / tagged-release stability of LF1-3 without proportionate benefit. The CONVENTIONS.md "initial pass by current location" policy was chosen precisely to avoid that risk.
+
+---
+
+## 11. Self-adjointness convention switch (deferred to Framework extraction)
+
+**Status:** LF3 modules currently state self-adjointness on continuous linear maps via the inner-product equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)`. The canonical Mathlib spelling is `IsSelfAdjoint T`.
+
+**Why deferred:** Diagnostic re-audit on 2026-05-18 (against Mathlib at Lean 4.29.0-rc8) confirmed:
+
+- The `Star (H →L[ℂ] H)` instance required for `IsSelfAdjoint T` synthesis lives in a Mathlib section with `[CompleteSpace E]` as a section hypothesis.
+- Mathlib does NOT automatically chain `[FiniteDimensional ℂ H] → [CompleteSpace H]` via `FiniteDimensional.proper_real` (the chain exists for `ℝ`-finite-dim but doesn't navigate `ℂ`-finite-dim through the `NormedSpace ℝ ℂ` link in typeclass synthesis).
+- Adding `[CompleteSpace H]` as an explicit typeclass argument resolves the issue but cascades to every caller of LF3 structures.
+
+The inner-product-equation spelling avoids the cascade and is mathematically equivalent.
+
+**Pickup (when extracting to `Framework/Measurement/`):**
+
+1. Add `[CompleteSpace K]` to `BinaryPointerProjectors` (and to `K_A`, `K_B`, `H_SA` for the bipartite structures).
+2. Replace `selfAdjoint : ∀ x y, inner ℂ (proj s x) y = inner ℂ x (proj s y)` with `selfAdjoint : ∀ s, IsSelfAdjoint (proj s)`.
+3. Same pattern for `TensorFactorReadoutAlgebra.hA_selfAdjoint` / `hB_selfAdjoint`, `ProjectorAlgebra.selfAdjoint`, `mHat_isSelfAdjoint`.
+4. Update consumers — `IsSelfAdjoint T` unfolds to `T = star T`, equivalent via `ContinuousLinearMap.isSelfAdjoint_iff_isSymmetric` to `LinearMap.IsSymmetric (T : K →ₗ[ℂ] K)`, from which `inner` form follows by `IsSymmetric` field application.
+5. Concrete `Framework/` callers (typically `K = EuclideanSpace ℂ (Fin n)`) get `CompleteSpace` automatically via Mathlib's `EuclideanSpace.instCompleteSpace`.
+
+**Alternative:** wait for Mathlib's instance synthesis to chain `FiniteDimensional ℂ → CompleteSpace`. If that lands, the refactor becomes a no-op rename (`IsSelfAdjoint T` synthesizes without adding `[CompleteSpace _]` arguments).
+
+**Depends on:** the Framework/ extraction (§10) being underway. Standalone refactor is mechanical but cost is the typeclass-argument cascade.
