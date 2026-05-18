@@ -335,7 +335,41 @@ theorem pure_state_born_weights
     Chuang, "Quantum Computation and Quantum Information"). It is imported
     here as an axiom alongside `invariant_measure_uniqueness` and
     `busch_effect_gleason`; proving it via Mathlib's spectral theorem is an
-    LF4-scope task. -/
+    LF4-scope task.
+
+    **Lean proof scaffolding (LF4-todo §4).** The conjugation-by-(I-P)
+    argument routes as follows:
+
+    1.  Set `P = outerProduct ψ`, `Q = 1 - P`. Both are PSD Hermitian
+        idempotents on `EuclideanSpace ℂ (Fin N)`.
+    2.  `Q ρ.M Q` is PSD by `Matrix.PosSemidef.conjTranspose_mul_mul_same`
+        (`Q` is Hermitian so `Qᴴ = Q`).
+    3.  `Tr(Q ρ.M Q) = Tr(ρ.M Q²) = Tr(ρ.M Q) = Tr(ρ.M) - Tr(ρ.M P) =
+        1 - 1 = 0` (using `Q² = Q`, cyclicity of trace, `ρ.trace_one`, and
+        `h_certain` — the latter requires showing `(ρ.M * P).trace ∈ ℝ ⊆ ℂ`
+        with value `1`, via Hermitian-product trace being real).
+    4.  By `Matrix.PosSemidef.trace_eq_zero_iff`: `Q ρ.M Q = 0`.
+    5.  Write `ρ.M = (CFC.sqrt ρ.M) * (CFC.sqrt ρ.M)` using `CFC.sq_sqrt`
+        from `Mathlib.Analysis.Matrix.Order`. Since `CFC.sqrt ρ.M` is PSD
+        (hence Hermitian, hence self-adjoint), `Q ρ.M Q = (√ρ Q)ᴴ (√ρ Q) = 0`.
+    6.  By `Matrix.conjTranspose_mul_self_eq_zero`: `√ρ Q = 0`. Then
+        `ρ.M Q = √ρ * √ρ Q = 0`.
+    7.  So `ρ.M = ρ.M P`. Taking adjoints with `ρ.M`, `P` Hermitian:
+        `ρ.M = P ρ.M = P ρ.M P`.
+    8.  `P ρ.M P = ⟨ψ, ρ.M ψ⟩ · P` by direct rank-1 algebra. With
+        `⟨ψ, ρ.M ψ⟩ = 1`, we get `ρ.M = P = outerProduct ψ`.
+    9.  Structure equality (`DensityOperator.mk.injEq` collapses on Prop
+        fields) finishes.
+
+    Estimated effort: 3-5 hours of Lean work, dominated by step 5 (CFC.sqrt
+    setup on matrices) and step 8 (the trace-of-Hermitian-product real-value
+    lemma plus the rank-1 collapse). The infrastructure is all in Mathlib
+    (`Mathlib.Analysis.Matrix.Order`, `Mathlib.LinearAlgebra.Matrix.DotProduct`,
+    `Matrix.PosSemidef.trace_eq_zero_iff`); the work is gluing it together.
+
+    Carried as an axiom in v1.00 to keep the LF2 commit focused. Discharge
+    is the highest-leverage pre-LF4 work item (drops LF2 axiom count from
+    3 to 2). -/
 axiom rankOneDensity_unique_of_certainty
     {N : ℕ}
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
