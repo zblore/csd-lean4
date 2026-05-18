@@ -5,16 +5,22 @@ import Mathlib.LinearAlgebra.UnitaryGroup
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.RCLike.Basic
 import Mathlib.Analysis.Complex.Order
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.LinearAlgebra.Matrix.DotProduct
 
 /-!
 # LF2 Born-Weight Wrapper
 
-**Category:** 3-Local (LF2 matrix-based `Effect`/`DensityOperator`, Born quadratic form, and `busch_effect_gleason` / `rankOneDensity_unique_of_certainty` axioms).
+**Category:** 3-Local (LF2 matrix-based `Effect`/`DensityOperator`, Born quadratic form, and `busch_effect_gleason` axiom).
 
 Spec §5. Packages the finite-dimensional probability assignment using
 concrete matrix-based `Effect`/`DensityOperator` structures, an imported
-`busch_effect_gleason` axiom, and (downstream phases) a proved Born quadratic
-form for rank-1 outcomes on pure preparations.
+`busch_effect_gleason` axiom, and a proved Born quadratic
+form for rank-1 outcomes on pure preparations. The rank-1 uniqueness
+theorem `rankOneDensity_unique_of_certainty` was carried as an axiom in
+earlier revisions and was discharged on 2026-05-18 (no spectral theorem
+needed; PSD inner-product route).
 
 This file is built incrementally; see the companion plan at
 `specs/LF2-plan.md` §2.4.
@@ -167,6 +173,8 @@ theorem born_form_of_package
     ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
   busch_effect_gleason hN OP
 
+open scoped MatrixOrder
+
 /-! ### Rank-1 outer products
 
 The construction `|φ⟩⟨φ|` as an N×N complex matrix, together with its basic
@@ -309,73 +317,124 @@ theorem pure_state_born_weights
   rw [hρ]
   exact born_quadratic ψ φ hψ hφ
 
-/-- **Imported matrix fact — uniqueness of pure-state density from certainty.**
+/-- **Uniqueness of pure-state density from certainty.**
 
     A density operator `ρ` whose trace form pairs with `|ψ⟩⟨ψ|` to give `1`
-    is necessarily `|ψ⟩⟨ψ|` itself.  Equivalently, the only density operator
+    is necessarily `|ψ⟩⟨ψ|` itself. Equivalently, the only density operator
     that assigns probability one to the rank-1 projector through `ψ` is
     `rankOneDensity ψ`.
 
-    **Proof sketch** (standard, via the spectral theorem for Hermitian
-    matrices — formalizing it in Mathlib requires non-trivial plumbing via
-    `Matrix.IsHermitian.spectralTheorem` and PSD functional calculus, which
-    is deferred to later work; axiomatised here as standard linear algebra):
-
-    1.  The hypothesis `traceForm ρ (rankOneEffect ψ hψ) = 1` unfolds to
-        `⟨ψ, ρ ψ⟩ = 1` in `ℂ`.
-    2.  Using `ρ² ≤ ρ` (which holds for any density with spectrum in `[0,1]`)
-        and Cauchy–Schwarz, `‖ρψ - ψ‖² = 0`, hence `ρψ = ψ`.  So `ψ` is an
-        eigenvector of `ρ` with eigenvalue `1`.
-    3.  From `Tr(ρ) = 1` together with `⟨ψ, ρψ⟩ = 1`, the contribution of
-        `ψ^⊥` to the trace is zero.  By PSD, `ρ` vanishes on `ψ^⊥`.
-    4.  Therefore `ρ = |ψ⟩⟨ψ|` as matrices; structurally `ρ = rankOneDensity ψ hψ`.
-
-    The uniqueness is a standard consequence of the spectral theorem and is
-    included in any introductory quantum-information text (e.g. Nielsen &
-    Chuang, "Quantum Computation and Quantum Information"). It is imported
-    here as an axiom alongside `invariant_measure_uniqueness` and
-    `busch_effect_gleason`; proving it via Mathlib's spectral theorem is an
-    LF4-scope task.
-
-    **Lean proof scaffolding (LF4-todo §4).** The conjugation-by-(I-P)
-    argument routes as follows:
-
-    1.  Set `P = outerProduct ψ`, `Q = 1 - P`. Both are PSD Hermitian
-        idempotents on `EuclideanSpace ℂ (Fin N)`.
-    2.  `Q ρ.M Q` is PSD by `Matrix.PosSemidef.conjTranspose_mul_mul_same`
-        (`Q` is Hermitian so `Qᴴ = Q`).
-    3.  `Tr(Q ρ.M Q) = Tr(ρ.M Q²) = Tr(ρ.M Q) = Tr(ρ.M) - Tr(ρ.M P) =
-        1 - 1 = 0` (using `Q² = Q`, cyclicity of trace, `ρ.trace_one`, and
-        `h_certain` — the latter requires showing `(ρ.M * P).trace ∈ ℝ ⊆ ℂ`
-        with value `1`, via Hermitian-product trace being real).
-    4.  By `Matrix.PosSemidef.trace_eq_zero_iff`: `Q ρ.M Q = 0`.
-    5.  Write `ρ.M = (CFC.sqrt ρ.M) * (CFC.sqrt ρ.M)` using `CFC.sq_sqrt`
-        from `Mathlib.Analysis.Matrix.Order`. Since `CFC.sqrt ρ.M` is PSD
-        (hence Hermitian, hence self-adjoint), `Q ρ.M Q = (√ρ Q)ᴴ (√ρ Q) = 0`.
-    6.  By `Matrix.conjTranspose_mul_self_eq_zero`: `√ρ Q = 0`. Then
-        `ρ.M Q = √ρ * √ρ Q = 0`.
-    7.  So `ρ.M = ρ.M P`. Taking adjoints with `ρ.M`, `P` Hermitian:
-        `ρ.M = P ρ.M = P ρ.M P`.
-    8.  `P ρ.M P = ⟨ψ, ρ.M ψ⟩ · P` by direct rank-1 algebra. With
-        `⟨ψ, ρ.M ψ⟩ = 1`, we get `ρ.M = P = outerProduct ψ`.
-    9.  Structure equality (`DensityOperator.mk.injEq` collapses on Prop
-        fields) finishes.
-
-    Estimated effort: 3-5 hours of Lean work, dominated by step 5 (CFC.sqrt
-    setup on matrices) and step 8 (the trace-of-Hermitian-product real-value
-    lemma plus the rank-1 collapse). The infrastructure is all in Mathlib
-    (`Mathlib.Analysis.Matrix.Order`, `Mathlib.LinearAlgebra.Matrix.DotProduct`,
-    `Matrix.PosSemidef.trace_eq_zero_iff`); the work is gluing it together.
-
-    Carried as an axiom in v1.00 to keep the LF2 commit focused. Discharge
-    is the highest-leverage pre-LF4 work item (drops LF2 axiom count from
-    3 to 2). -/
-axiom rankOneDensity_unique_of_certainty
+    Carried as an axiom in earlier revisions; discharged on 2026-05-18 (see
+    `specs/LF4-todo.md` §4 and `AXIOMS.md` §2.3). The proof bypasses the
+    spectral theorem: the `(I − P) ρ (I − P)` sandwich is PSD with trace
+    zero, hence zero; the PSD inner-product identity
+    `Matrix.PosSemidef.dotProduct_mulVec_zero_iff` gives `ρ · (I − P) = 0`
+    without needing a square root; and the rank-1 sandwich identity
+    `P · M · P = Tr(M · P) • P` collapses ρ to `P`. -/
+theorem rankOneDensity_unique_of_certainty
     {N : ℕ}
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
     (ρ : DensityOperator N)
     (h_certain : traceForm ρ (rankOneEffect ψ hψ) = 1) :
-    ρ = rankOneDensity ψ hψ
+    ρ = rankOneDensity ψ hψ := by
+  -- Reduce structure equality to matrix equality.
+  suffices h_eq : ρ.M = (rankOneDensity ψ hψ).M by
+    obtain ⟨_, _, _, _⟩ := ρ
+    cases h_eq
+    rfl
+  show ρ.M = outerProduct ψ
+  -- Abbreviations and basic facts.
+  set P := outerProduct ψ with hP_def
+  have hρ_herm := ρ.isHermitian
+  have hρ_psd := ρ.nonneg
+  have hρ_tr := ρ.trace_one
+  have hP_herm : P.IsHermitian := outerProduct_isHermitian ψ
+  have hP_psd : P.PosSemidef := outerProduct_posSemidef ψ
+  have hP_idem : P * P = P := outerProduct_mul_self_of_unit_norm ψ hψ
+  have hP_trace : P.trace = 1 := outerProduct_trace_of_unit_norm ψ hψ
+  set Q : Matrix (Fin N) (Fin N) ℂ := 1 - P with hQ_def
+  have hQ_herm : Q.IsHermitian := Matrix.isHermitian_one.sub hP_herm
+  have hQ_psd : Q.PosSemidef := one_sub_outerProduct_posSemidef ψ hψ
+  have hQ_idem : Q * Q = Q := one_sub_outerProduct_mul_self_of_unit_norm ψ hψ
+  -- The trace of a product of two Hermitian matrices is real:
+  -- Tr((AB)ᴴ) = star (Tr(AB)), and (AB)ᴴ = BA, and Tr(BA) = Tr(AB).
+  have h_trace_real : star ((ρ.M * P).trace) = (ρ.M * P).trace :=
+    calc star ((ρ.M * P).trace)
+        = ((ρ.M * P)ᴴ).trace := (Matrix.trace_conjTranspose _).symm
+      _ = (P * ρ.M).trace := by
+          rw [Matrix.conjTranspose_mul, hP_herm.eq, hρ_herm.eq]
+      _ = (ρ.M * P).trace := Matrix.trace_mul_comm _ _
+  -- Combined with h_certain, this gives (ρ.M * P).trace = 1 (in ℂ).
+  have h_trace_eq_one : (ρ.M * P).trace = (1 : ℂ) := by
+    apply Complex.ext
+    · -- Real part: comes directly from h_certain after unfolding `traceForm`.
+      have h := h_certain
+      simp only [traceForm, rankOneEffect, ← hP_def] at h
+      exact h
+    · -- Imaginary part: zero by h_trace_real (Hermitian-product trace is real).
+      have h_conj : (starRingEnd ℂ) ((ρ.M * P).trace) = (ρ.M * P).trace := h_trace_real
+      have h_im : ((ρ.M * P).trace).im = 0 := Complex.conj_eq_iff_im.mp h_conj
+      simp [h_im]
+  -- Q ρ Q is PSD (sandwich of PSD by Hermitian).
+  have hQρQ_psd : (Q * ρ.M * Q).PosSemidef := by
+    have hsub : Qᴴ * ρ.M * Q = Q * ρ.M * Q := by rw [hQ_herm.eq]
+    rw [← hsub]
+    exact hρ_psd.conjTranspose_mul_mul_same Q
+  -- Tr(Q ρ Q) = Tr(ρ Q²) = Tr(ρ Q) = Tr(ρ) - Tr(ρ P) = 1 - 1 = 0.
+  have hQρQ_trace_zero : (Q * ρ.M * Q).trace = 0 := by
+    have h1 : (Q * ρ.M * Q).trace = (ρ.M * (Q * Q)).trace := by
+      rw [Matrix.mul_assoc, Matrix.trace_mul_comm Q (ρ.M * Q),
+          Matrix.mul_assoc]
+    have h3 : (ρ.M * Q).trace = ρ.M.trace - (ρ.M * P).trace := by
+      rw [hQ_def, Matrix.mul_sub, Matrix.mul_one, Matrix.trace_sub]
+    rw [h1, hQ_idem, h3, hρ_tr, h_trace_eq_one]
+    ring
+  have hQρQ_zero : Q * ρ.M * Q = 0 :=
+    (Matrix.PosSemidef.trace_eq_zero_iff hQρQ_psd).mp hQρQ_trace_zero
+  -- Routing through `Matrix.PosSemidef.dotProduct_mulVec_zero_iff`:
+  -- for any vector v, `ρ.M *ᵥ (Q *ᵥ v) = 0` because
+  -- `star (Q v) ⬝ᵥ ρ.M *ᵥ (Q v) = star v ⬝ᵥ (Q ρ.M Q) *ᵥ v = 0`.
+  have hρQ_zero : ρ.M * Q = 0 := by
+    rw [Matrix.ext_iff_mulVec]
+    intro v
+    rw [Matrix.zero_mulVec, ← Matrix.mulVec_mulVec]
+    apply (hρ_psd.dotProduct_mulVec_zero_iff _).mp
+    rw [Matrix.star_mulVec, hQ_herm.eq, ← Matrix.dotProduct_mulVec,
+        Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hQρQ_zero,
+        Matrix.zero_mulVec, dotProduct_zero]
+  -- ρ * (1 - P) = 0 ⟹ ρ = ρ * P.
+  have hρM_eq_ρP : ρ.M = ρ.M * P := by
+    have hexpand : ρ.M * Q = ρ.M - ρ.M * P := by
+      rw [hQ_def, Matrix.mul_sub, Matrix.mul_one]
+    have hsub : ρ.M - ρ.M * P = 0 := hexpand ▸ hρQ_zero
+    exact (sub_eq_zero.mp hsub)
+  -- Take adjoint: (ρ P)ᴴ = Pᴴ ρᴴ = P ρ. So ρ = ρ.ᴴ = (ρ P)ᴴ = P ρ.
+  have hρM_eq_Pρ : ρ.M = P * ρ.M := by
+    have hadj : (ρ.M * P)ᴴ = P * ρ.M := by
+      rw [Matrix.conjTranspose_mul, hP_herm.eq, hρ_herm.eq]
+    rw [← hadj, ← hρM_eq_ρP, hρ_herm.eq]
+  -- Therefore ρ = P ρ P.
+  have hρM_eq_PρP : ρ.M = P * ρ.M * P :=
+    calc ρ.M = P * ρ.M := hρM_eq_Pρ
+      _ = P * (ρ.M * P) := by rw [← hρM_eq_ρP]
+      _ = P * ρ.M * P := (Matrix.mul_assoc _ _ _).symm
+  -- Rank-1 sandwich: P * M * P = Tr(M * P) • P, since P = |ψ⟩⟨ψ|.
+  have hPρP_collapse : P * ρ.M * P = ((ρ.M * P).trace) • P := by
+    rw [hP_def]
+    ext i j
+    simp only [outerProduct, Matrix.smul_apply, smul_eq_mul,
+               Matrix.mul_apply, Matrix.vecMulVec_apply,
+               Matrix.trace, Matrix.diag_apply,
+               Finset.sum_mul]
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl (fun l _ => ?_)
+    refine Finset.sum_congr rfl (fun k _ => ?_)
+    ring
+  -- Conclude: ρ.M = (1 : ℂ) • P = P = outerProduct ψ.
+  calc ρ.M = P * ρ.M * P := hρM_eq_PρP
+    _ = ((ρ.M * P).trace) • P := hPρP_collapse
+    _ = (1 : ℂ) • P := by rw [h_trace_eq_one]
+    _ = P := one_smul _ _
 
 /-- **Strengthened composite endpoint.**  Given only a **purity hypothesis** —
     that the operational package assigns probability one to the rank-1

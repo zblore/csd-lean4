@@ -74,7 +74,7 @@ Three layers are currently formalised:
 - the **headline LF1↔LF2↔LF3 chain capstones**: `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²` where `cAmp = √P_st`), and `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`), composing `LF1_main_theorem_ae` + `lf1_weight_eq_projective_weight` + `cst_squared_eq` under an external `hLF2` hypothesis discharged by LF4-todo §2 + §7
 - the **closed-form / bra-ket equivalence** `cAmp_norm_sq_eq_inner_norm_sq`: the closed-form `cAmp = √P_st` agrees with the genuine Hilbert-space inner product `⟨v, ψ⁻⟩` on squared norms, given the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` as a hypothesis (discharged in v2 from a constructed `jointSpinEig`)
 
-All five LF3 capstone exports are fully axiom-clean: `#print axioms` returns only `propext`, `Classical.choice`, `Quot.sound`. None of LF2's three axioms appear anywhere in the chain.
+All five LF3 capstone exports are fully axiom-clean: `#print axioms` returns only `propext`, `Classical.choice`, `Quot.sound`. None of LF2's two axioms appear anywhere in the chain.
 
 The closed-form `cAmp := √P_st` is a v1.00 representative; the v2 plan is to construct `jointSpinEig` from the spectral decomposition of `jointSpinProj` so that `cAmp` becomes a derived `inner ℂ jointSpinEig singlet` rather than the closed-form sqrt. The `_inner` capstone variant already states the physically faithful form for callers who supply their own eigenstate.
 
@@ -190,19 +190,20 @@ Under a `SectorData SigmaSpace P G` — the LF1 `OnticSetup` bundled with an abs
 4. **Born quadratic form** (`born_quadratic`). For unit vectors `ψ, φ : EuclideanSpace ℂ (Fin N)`,
    `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ‖⟨ψ, φ⟩‖²`. Genuine Lean proof — trace-of-outer-product identity, conjugate symmetry of the inner product, and `RCLike.mul_conj`.
 
-5. **Pure-state Born weights from certainty** (`pure_state_born_weights_of_certainty`). Given an operational consistency package `OP` that is "certain" at `|ψ⟩` (i.e. `OP.p (rankOneEffect ψ hψ) = 1`), for every unit vector `φ` the probability satisfies `OP.p (rankOneEffect φ hφ) = ‖⟨ψ, φ⟩‖²`. Composes `busch_effect_gleason` + `rankOneDensity_unique_of_certainty` + `born_quadratic`.
+5. **Pure-state Born weights from certainty** (`pure_state_born_weights_of_certainty`). Given an operational consistency package `OP` that is "certain" at `|ψ⟩` (i.e. `OP.p (rankOneEffect ψ hψ) = 1`), for every unit vector `φ` the probability satisfies `OP.p (rankOneEffect φ hφ) = ‖⟨ψ, φ⟩‖²`. Composes `busch_effect_gleason` + `rankOneDensity_unique_of_certainty` (now a proved theorem) + `born_quadratic`.
 
 ### LF2 axiom posture
 
-LF2 has exactly **three named axioms**:
+LF2 has exactly **two named axioms**:
 
 | Axiom | Role | Source |
 |---|---|---|
 | `invariant_measure_uniqueness` | `G`-invariant probability measure on `P` is unique (Fubini–Study in the concrete CSD model) | Spec-mandated (§7.4); not in Mathlib |
 | `busch_effect_gleason` | Effect-additive probability on finite-dim `N ≥ 2` admits a unique trace-form density | Spec-mandated (§7.4); not in Mathlib |
-| `rankOneDensity_unique_of_certainty` | A density operator with `⟨ψ\|ρ\|ψ⟩ = 1` is `\|ψ⟩⟨ψ\|` | Standard spectral-theorem corollary; axiomatised pending Mathlib integration, full proof sketch in module docstring |
 
-LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.choice`, `Quot.sound`). `#print axioms` on each LF2 theorem legibly names exactly which of the three axioms it cites; several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **none** of them. For the full per-theorem audit see [`AXIOMS.md`](AXIOMS.md).
+`rankOneDensity_unique_of_certainty` (a density operator with `⟨ψ|ρ|ψ⟩ = 1` is `|ψ⟩⟨ψ|`) was carried as a third axiom in earlier revisions; it is now a proved theorem (discharged 2026-05-18 via the `Matrix.PosSemidef.dotProduct_mulVec_zero_iff` route — `(I − P) ρ (I − P) = 0` then ρ collapses on `ψ` by the rank-1 sandwich identity). The proof is in `CsdLean4/LF2/BornWrapper.lean`.
+
+LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.choice`, `Quot.sound`). `#print axioms` on each LF2 theorem legibly names exactly which of the two axioms it cites; several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **none** of them. For the full per-theorem audit see [`AXIOMS.md`](AXIOMS.md).
 
 ### Design choices in LF2
 
@@ -258,7 +259,7 @@ All three capstones consume an external `hLF2` hypothesis relating the projectiv
 
 ### LF3 axiom posture
 
-LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`). The three LF2 axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`, `rankOneDensity_unique_of_certainty`) are not invoked anywhere in LF3's exports: the singlet is concretely given as a Hilbert vector rather than extracted from a Busch operational package, and the pre-Born capstone routes around the Born wrapper entirely. `#print axioms LF3_main_theorem` and `#print axioms LF3_singlet_frequency_convergence_born_inner` both legibly return the foundational triple only. The axiom posture across all three layers is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every theorem listed in [`AXIOMS.md §5`](AXIOMS.md); the build fails on drift. The §5 shortlist is a curated subset of the full theorem inventory below — inventory entries omitted from §5 (e.g. `expectation_eq_weight`, `weights_sum_eq_one`, `singlet_pauli_correlation`) are not guard-pinned and their stated axiom column rests on review rather than build-time enforcement.
+LF3 imports **zero** axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`). The two LF2 axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`) are not invoked anywhere in LF3's exports: the singlet is concretely given as a Hilbert vector rather than extracted from a Busch operational package, and the pre-Born capstone routes around the Born wrapper entirely. `#print axioms LF3_main_theorem` and `#print axioms LF3_singlet_frequency_convergence_born_inner` both legibly return the foundational triple only. The axiom posture across all three layers is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every theorem listed in [`AXIOMS.md §5`](AXIOMS.md); the build fails on drift. The §5 shortlist is a curated subset of the full theorem inventory below — inventory entries omitted from §5 (e.g. `expectation_eq_weight`, `weights_sum_eq_one`, `singlet_pauli_correlation`) are not guard-pinned and their stated axiom column rests on review rather than build-time enforcement.
 
 ### Design choices in LF3
 
@@ -301,13 +302,13 @@ Exported theorems and their dependencies. The "Axioms" column lists CSD-specific
 | `weights_sum_eq_one` | `LF2/Weights.lean` | Projective weights of a measurable partition of `P` sum to 1 under a probability measure. | none |
 | `born_quadratic` | `LF2/BornWrapper.lean` | `Tr(\|ψ⟩⟨ψ\| · \|φ⟩⟨φ\|) = ‖⟨ψ, φ⟩‖²` for unit vectors `ψ, φ : EuclideanSpace ℂ (Fin N)`. | none |
 | `pure_state_born_weights` | `LF2/BornWrapper.lean` | Given an operational package whose trace-form density is `\|ψ⟩⟨ψ\|`, the probability of `\|φ⟩⟨φ\|` is `‖⟨ψ, φ⟩‖²`. | none |
-| `pure_state_born_weights_of_certainty` | `LF2/BornWrapper.lean` | Strengthening: derives the density-operator hypothesis from a purity hypothesis (`OP.p (rankOneEffect ψ) = 1`). | `busch_effect_gleason`, `rankOneDensity_unique_of_certainty` |
+| `pure_state_born_weights_of_certainty` | `LF2/BornWrapper.lean` | Strengthening: derives the density-operator hypothesis from a purity hypothesis (`OP.p (rankOneEffect ψ) = 1`). | `busch_effect_gleason` |
 | `lf1_weight_eq_projective_weight` | `LF2/Interface.lean` | `μprep(π⁻¹(O_ep)) = projectiveWeight D μprep O_ep` (the LF1↔LF2 measure-identity hinge). | none |
 | `LF1_main_theorem_projective` | `LF2/Interface.lean` | LF1 empirical frequency converges almost surely to the real-valued projective weight, under the outcome correspondence `O.preEvent = π⁻¹(O_ep)`. | none |
 
 ### LF3 (Paper D — singlet kernel, pointer-sector decomposition, empirical chain)
 
-All LF3 capstone exports are fully axiom-clean: LF2's three axioms are not invoked anywhere in the LF3 chain.
+All LF3 capstone exports are fully axiom-clean: LF2's two axioms are not invoked anywhere in the LF3 chain.
 
 | Theorem | File | Mathematical meaning | Axioms |
 |---|---|---|---|

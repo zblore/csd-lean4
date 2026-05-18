@@ -62,20 +62,41 @@ Option **(a) is ruled out**: the chain capstones must reach a discharged form in
 
 ---
 
-## 4. Prove `rankOneDensity_unique_of_certainty` (remove axiom)
+## 4. Prove `rankOneDensity_unique_of_certainty` (remove axiom) — DISCHARGED 2026-05-18
 
-**Status:** Axiomatised in LF2. Full proof sketch is in the module docstring.
+**Status:** Proved in `CsdLean4/LF2/BornWrapper.lean`. Axiom retired; the
+declaration is now a `theorem`. AxiomAudit regression updated to drop the
+axiom from `pure_state_born_weights_of_certainty`'s `#print axioms` output.
 
-**Why deferred:** Rigorous proof needs Mathlib's spectral theorem + PSD functional calculus. Significant Lean-level plumbing that isn't worth doing for LF2 alone.
+**How discharged.** The route avoided the spectral theorem entirely:
 
-**Pickup:**
-1. Use `Matrix.IsHermitian.spectralTheorem` to diagonalise `ρ`.
-2. Show `⟨ψ, ρ ψ⟩ = 1` + `Tr(ρ) = 1` + PSD imply `ρ` has eigenvalue 1 on `ψ` and 0 elsewhere.
-3. Reconstruct `ρ = |ψ⟩⟨ψ|` from the eigenstructure.
+1. **Trace-form to inner-product equation.** `traceForm ρ (rankOneEffect ψ hψ) = 1`
+   unfolds to `RCLike.re ((ρ.M * outerProduct ψ).trace) = 1`. Hermitian-product
+   trace is real (`Tr(AB)` = `Tr((AB)ᴴ)*` = `Tr(BA)`), so the imaginary part
+   is zero and `(ρ.M * P).trace = (1 : ℂ)` outright.
+2. **`(I − P) ρ (I − P)` is PSD with trace zero.** Trace cyclicity plus
+   `(I − P)² = (I − P)` gives `Tr((I−P) ρ (I−P)) = Tr(ρ) − Tr(ρ · P) = 1 − 1 = 0`.
+   `Matrix.PosSemidef.trace_eq_zero_iff` collapses this to `(I − P) ρ (I − P) = 0`.
+3. **`ρ · (I − P) = 0`.** Apply `Matrix.PosSemidef.dotProduct_mulVec_zero_iff`
+   to `ρ.M` (which is PSD): for any v, `star (Qv) ⬝ᵥ ρ Qv = star v ⬝ᵥ Q ρ Q v = 0`,
+   so `ρ Qv = 0` for all v; hence `ρ · Q = 0` (via `Matrix.ext_iff_mulVec`).
+4. **`ρ = ρ · P = P · ρ · P`.** Subtraction + Hermitian-adjoint reasoning.
+5. **Rank-1 sandwich.** `P · M · P = Tr(M · P) • P` for any `M`, proved
+   entry-wise from the `vecMulVec` definition of `outerProduct`. With
+   `Tr(ρ · P) = 1`, we get `ρ = 1 • P = P = outerProduct ψ`. Structure
+   equality closes.
 
-Alternative path: use the `ρ² ≤ ρ` + Cauchy–Schwarz route sketched in the axiom docstring, avoiding the full spectral theorem. Possibly cleaner if Mathlib lemmas line up.
+The key Mathlib infrastructure used: `Matrix.PosSemidef.trace_eq_zero_iff`,
+`Matrix.PosSemidef.dotProduct_mulVec_zero_iff`, `Matrix.ext_iff_mulVec`,
+`Matrix.vecMulVec_apply` + `Finset.sum_comm`. No spectral theorem; no CFC
+sqrt; no `Star (Matrix _ _ _ →L[ℂ] _)` synthesis. This makes the proof
+robust to the typeclass landscape at Lean 4.29.0-rc8.
 
-**Depends on:** `Matrix.IsHermitian.spectralTheorem`, PSD functional calculus, or the `ρ² ≤ ρ` inequality for densities (whichever lands first in Mathlib).
+**Note for future archaeology.** Earlier scaffolding in the module docstring
+sketched a CFC sqrt route. That route would have worked if Matrix had a
+`NonUnitalContinuousFunctionalCalculus ℝ (Matrix _ _ _) IsSelfAdjoint`
+instance, but Mathlib does not synthesize this for `Matrix (Fin N) (Fin N) ℂ`
+under our context. The PSD inner-product route above bypasses the issue.
 
 ---
 

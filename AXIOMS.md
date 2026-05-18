@@ -16,7 +16,13 @@ LF1 and LF3 theorems (including all LF3 chain capstones) cite only these three. 
 
 ## 2. LF2 imported mathematical axioms
 
-LF2 imports three named axioms. Each is documented at its declaration site with a docstring linking back to the spec section that authorises the import. None propagates into LF1; LF3's chain capstones likewise do not depend on any of the three (the singlet is concretely given as a Hilbert vector, not extracted from a Busch operational package).
+LF2 imports two named axioms. Each is documented at its declaration site with a docstring linking back to the spec section that authorises the import. Neither propagates into LF1; LF3's chain capstones likewise do not depend on either (the singlet is concretely given as a Hilbert vector, not extracted from a Busch operational package).
+
+A third axiom, `rankOneDensity_unique_of_certainty`, was carried in earlier
+revisions and discharged on 2026-05-18 (see commit landing the
+`Matrix.PosSemidef.dotProduct_mulVec_zero_iff` route in
+`CsdLean4/LF2/BornWrapper.lean`). It is now a proved theorem; the LF4-todo §4
+entry has been retired.
 
 ### 2.1 `invariant_measure_uniqueness`
 
@@ -47,20 +53,6 @@ LF2 imports three named axioms. Each is documented at its declaration site with 
 **Mathlib status.** Not in Mathlib. Effect-algebra / POVM machinery is an open Mathlib gap; the full proof requires Busch 2003's argument.
 
 **Discharge target.** Same as above: signature is stable; the axiom becomes a theorem when the Mathlib infrastructure is in place.
-
-### 2.3 `rankOneDensity_unique_of_certainty`
-
-**Location.** `CsdLean4/LF2/BornWrapper.lean`.
-
-**Statement.** A density operator `ρ` with `traceForm ρ (rankOneEffect ψ hψ) = 1` is `rankOneDensity ψ hψ`.
-
-**Mathematical content.** Standard linear-algebra corollary of the spectral theorem: if `ρ` is a density operator with `⟨ψ, ρψ⟩ = 1`, then `ρ = |ψ⟩⟨ψ|`. The proof routes through `ρ² ≤ ρ` for densities and Cauchy-Schwarz, giving `ρψ = ψ`; trace-one then forces `ρ` to vanish on `ψ^⊥`.
-
-**Spec authorisation.** Not spec-mandated. This is a provable matrix fact axiomatised pending Mathlib spectral-theorem integration (the proof sketch is in the module docstring).
-
-**Mathlib status.** The spectral theorem for Hermitian matrices is in Mathlib (`Matrix.IsHermitian.spectralTheorem`), but the PSD functional-calculus boilerplate needed for the cleanest proof is uneven. Hence the axiomatisation for v1.00.
-
-**Discharge target.** This is an LF4-or-earlier task that does not require external infrastructure beyond what is already in Mathlib. See [`specs/LF4-todo.md`](specs/LF4-todo.md) §4 for the pickup notes.
 
 ## 3. Physical assumptions not formalised
 
@@ -116,7 +108,7 @@ Nine concrete items are tracked in [`specs/LF4-todo.md`](specs/LF4-todo.md). The
 
 **Group B: axiom and OperationalPackage refinement**
 - §1 Unitary covariance clause of `OperationalPackage` (spec Def 5.1 clause 3).
-- §4 Prove `rankOneDensity_unique_of_certainty` from the spectral theorem (discharges 2.3 above).
+- §4 ~~Prove `rankOneDensity_unique_of_certainty` from the spectral theorem~~ — **discharged 2026-05-18**.
 - §5 Prove the two spec-mandated axioms 2.1 and 2.2 (Mathlib-scale, far-future).
 - §6 `σ`-additivity vs finite additivity of `OperationalPackage`.
 
@@ -137,7 +129,7 @@ For each headline exported theorem, the legible axiom citation:
 | `measure_bridge` | `propext, Classical.choice, Quot.sound, invariant_measure_uniqueness` |
 | `born_quadratic` | `propext, Classical.choice, Quot.sound` |
 | `pure_state_born_weights` | `propext, Classical.choice, Quot.sound` |
-| `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound, busch_effect_gleason, rankOneDensity_unique_of_certainty` |
+| `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `LF3_main_theorem` | `propext, Classical.choice, Quot.sound` |
 | `LF3_finite_leakage_theorem` | `propext, Classical.choice, Quot.sound` |
 | `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound` |

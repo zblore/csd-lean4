@@ -111,7 +111,7 @@ Interface.lean     — lf1_weight_eq_projective_weight and its specialisation
 ```
 
 **LF2 is the first layer with `axiom` declarations.** LF1 is
-axiom-and-sorry-free; LF2 has exactly three axioms:
+axiom-and-sorry-free; LF2 has exactly two axioms:
 
 - `invariant_measure_uniqueness` — invariant-measure uniqueness on the
   abstract projective target (concretely: SU(N)-invariant Borel probability
@@ -119,19 +119,21 @@ axiom-and-sorry-free; LF2 has exactly three axioms:
 - `busch_effect_gleason` — effect-additive probability on finite-dim
   operational packages admits a unique trace-form density operator.
   Spec-mandated (§7.4). Not in Mathlib.
-- `rankOneDensity_unique_of_certainty` — a density operator that assigns
-  probability one to a rank-1 projector `|ψ⟩⟨ψ|` is necessarily `|ψ⟩⟨ψ|`
-  itself. Standard corollary of the spectral theorem; used to strengthen
-  `pure_state_born_weights` so that the "OP is certain at ψ" hypothesis
-  suffices to conclude `|⟨ψ|φ⟩|²`. Imported as an axiom pending Mathlib
-  spectral-theorem integration (an LF4-scope task); the proof sketch is
-  in the module docstring.
 
-The first two are imported per the spec's explicit directive. The third is
-an auxiliary matrix fact that makes `pure_state_born_weights_of_certainty`
-work from a weaker purity hypothesis — without it, the pure-state endpoint
-requires the caller to already know `OP.p E = traceForm (rankOneDensity ψ) E`
-for every effect, which is almost the conclusion.
+Both are imported per the spec's explicit directive.
+
+`rankOneDensity_unique_of_certainty` was carried as a third axiom in earlier
+revisions (a density operator that assigns probability one to `|ψ⟩⟨ψ|` is
+`|ψ⟩⟨ψ|` itself); it is now a proved theorem (discharged 2026-05-18). The
+proof routes through `Matrix.PosSemidef.dotProduct_mulVec_zero_iff`: the
+sandwich `(I−P) ρ (I−P)` is PSD with trace zero (by trace cyclicity and the
+certainty hypothesis), hence zero; so `ρ · (I−P) = 0` and thus `ρ = P ρ P`.
+The rank-1 sandwich identity `P · M · P = Tr(M · P) • P` then collapses ρ
+to `1 • P = P`. Used to strengthen `pure_state_born_weights` so that the "OP
+is certain at ψ" hypothesis suffices to conclude `|⟨ψ|φ⟩|²` — without it,
+the pure-state endpoint requires the caller to already know `OP.p E =
+traceForm (rankOneDensity ψ) E` for every effect, which is almost the
+conclusion.
 
 Everything else is proved. Notably, `born_quadratic` is a genuine Lean proof
 (trace-of-outer-product identity + conjugate symmetry + `RCLike.mul_conj`),
@@ -239,11 +241,11 @@ Interface.lean          — LF3_main_theorem (8-conjunct),
 
 **LF3 axiom inheritance.** `LF3_main_theorem` is fully axiom-clean (only
 Mathlib foundational `propext`, `Classical.choice`, `Quot.sound`). The four
-exported theorems do **not** invoke `busch_effect_gleason`,
-`invariant_measure_uniqueness`, or `rankOneDensity_unique_of_certainty` —
-LF2's three axioms enter only through `LF2.pure_state_born_weights_of_certainty`,
-which LF3 does not consume (the singlet is concretely given as a Hilbert
-vector, not extracted from a Busch package).
+exported theorems do **not** invoke `busch_effect_gleason` or
+`invariant_measure_uniqueness` — LF2's two axioms enter only through
+`LF2.pure_state_born_weights_of_certainty`, which LF3 does not consume (the
+singlet is concretely given as a Hilbert vector, not extracted from a Busch
+package).
 
 **LF3 design choices:**
 
@@ -271,8 +273,8 @@ vector, not extracted from a Busch package).
 **LF3 is sorry-free.** All four capstone exports and every supporting lemma
 are fully axiom-clean — `#print axioms` returns only `propext`,
 `Classical.choice`, `Quot.sound` (the Mathlib foundational set). None of
-LF2's three axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`,
-`rankOneDensity_unique_of_certainty`) appear anywhere in the LF3 export.
+LF2's two axioms (`busch_effect_gleason`, `invariant_measure_uniqueness`)
+appear anywhere in the LF3 export.
 
 **LF3 self-adjointness convention.** `BinaryPointerProjectors`,
 `TensorFactorReadoutAlgebra`, `ProjectorAlgebra`, and `mHat_isSelfAdjoint`
