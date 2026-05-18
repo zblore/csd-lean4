@@ -5,74 +5,124 @@ of LF4 proper (mixed states, POVMs, subsystem reduction). Companion to
 [`LF4-todo.md`](LF4-todo.md), which records *deferred* items with rationale;
 this file is the *execution order* with phases, spikes, and exit criteria.
 
-The architectural commitment of this plan is **option (b)-volume-forward**
-("(b3)") from the 2026-05-18 design discussion: an OP-from-preparation
-construction that carries the symmetry axiom **structurally** via its
-type signature (`MeasureBridgeData` argument), with the chain capstone
-for the pure-state singlet case proved by **direct volume integration
-against the Dirac pushforward**, not via Busch / density-operator
-reformulation. Reasons:
+The architectural commitment of this plan is **option (b)** from the
+2026-05-18 design discussion, calibrated against LF2-v1.00 §5.4 and
+§9.1: the OP-from-preparation construction carries the symmetry axiom
+**structurally** via its type signature (`MeasureBridgeData` argument),
+and the chain capstone composes volume integration with the Busch
+packaging step — citing both LF2 axioms exactly as spec §5.4
+attributes the Born form ("arises from the combination of the measure
+bridge, the preparation-dependent density ρ_ep, the operational
+consistency package, the imported Busch effect-Gleason theorem").
+Reasons:
 
-1. **CSD's volume-forward foundational claim.** CSD is geometric quantum
-   mechanics: probability is volume ratio on Σ, pushed to P, integrated
-   against effect functions. Branch counting is not a thing; the trace
-   formula is a *reformulation*, not the foundation. The chain capstone
-   should reflect this. Routing the singlet chain through Busch (which
-   characterises probability assignments as trace-form expressions)
-   would be gratuitous reformulation when direct Dirac integration on
-   the pushforward measure evaluates to `|⟨ψ,φ⟩|²` on its own.
-2. **LF4 readiness without retrofit.** Mixed states, POVM completeness,
-   and the maximally-mixed / Fubini-Study identification *do* require
-   the symmetry axiom structurally. Carrying `MeasureBridgeData` on
-   `OperationalPackage.fromPreparation` means LF4 inherits the right
-   base. The trace-form reformulation (Busch + `born_quadratic`) is
-   available as a corollary for callers who want density-operator
-   language, but is **not on the chain critical path**.
-3. **No repeated rework.** The reviewer's option (a) carried the Dirac
+1. **Spec faithfulness.** LF2-v1.00 §5.4 verbatim:
+   > "This is the standard quadratic probability rule. In the present
+   > framework, it is not attributed to a single theorem. Rather, it
+   > arises from the combination of: the measure bridge..., the
+   > preparation-dependent density ρ_ep on CP^{N-1}, the operational
+   > consistency package, the imported Busch effect-Gleason theorem."
+
+   And §9.1: "The measure bridge identifies the canonical projective
+   measure. The Born-weight wrapper fixes the admissible probability
+   assignment relative to that measure." Two logically distinct
+   components per the spec, both required for the wrapper, both
+   load-bearing in the Lean tree.
+
+2. **CSD's volume-forward foundational claim preserved.** The
+   *content* of the Born formula is volume integration: probability is
+   volume ratio on Σ, pushed to P, integrated against effect
+   functions. The Busch step is *packaging* per §5.4, not a competing
+   foundation. The plan keeps the volume-forward content as the design
+   anchor of `effectProjFn` and as the proof body of an **auxiliary
+   theorem** `PurePreparation.born_rank_one_direct` (Route 1, cites
+   `invariant_measure_uniqueness` only) intended as the eventual
+   migration target. The **chain critical path** uses the Busch-mediated
+   composition theorem `PurePreparation.born_rank_one` (cites both
+   axioms), matching spec §5.4.
+
+3. **LF4 readiness without retrofit.** Mixed states, POVM completeness,
+   and the maximally-mixed / Fubini-Study identification all need both
+   axioms structurally. Spec §8.5 confirms these are LF4 territory.
+   Carrying both axioms through the chain capstone now means LF4
+   inherits the right base for the cases where the volume-forward
+   direct route does not work.
+
+4. **No repeated rework.** The reviewer's option (a) carried the Dirac
    concentration as a free hypothesis and shipped a Busch-only chain
-   capstone, leaving LF4 to redo the OP construction. (b3) provides the
-   right base now.
+   capstone, leaving LF4 to redo the OP construction. The (b3) revision
+   over-corrected by excluding Busch from the chain. Option (b) is the
+   spec-faithful path.
 
-For the trade-off in detail (volume-forward Route 1 vs Busch-mediated
-Route 2; what symmetry buys you in the pure-state case vs the mixed /
-POVM case), see the 2026-05-18 discussion summary at the bottom of this
-document.
+**Eventual migration target.** Once `PurePreparation.born_rank_one_direct`
+is proved (Phase 4, auxiliary), and once downstream consumers are
+satisfied with the cleaner cite set (`invariant_measure_uniqueness`
+only), the chain capstones can be re-routed through the direct theorem
+in a future revision. This is logged as an LF4-or-later option, not a
+pre-LF4 commitment: the spec at v1.00 attributes Born form to the
+combination including Busch, so v1.00 compliance keeps the chain
+Busch-mediated.
+
+For the trade-off in detail and the spec citations, see the design
+discussion summary at the bottom of this document.
 
 ## Goal
 
 The four LF3 chain capstones consume an `LF2.PurePreparation` directly
-and are proved by volume-forward integration:
+and are proved by Busch-mediated composition of volume integration with
+the trace-form characterisation, exactly as spec §5.4 frames it.
+
+**Chain critical path — `PurePreparation.born_rank_one`** (Busch-mediated):
+
+```
+OP.fromPreparation.p (rankOneEffect φ hφ)
+  -- Step A (volume content): the OP is certain at ψ. Established by
+  --   direct Dirac evaluation on the volume integral. This is the
+  --   "preparation-dependent density ρ_ep" content of spec §5.4
+  --   (third bullet).
+  ↓ via PurePreparation.OP_certain_at_ψ
+OP is certain at ψ
+  -- Step B (Busch packaging): the unique density operator
+  --   characterising OP is rankOneDensity ψ. Spec §5.4 fourth bullet.
+  --   Cites busch_effect_gleason via pure_state_born_weights_of_certainty.
+  ↓ via pure_state_born_weights_of_certainty + rankOneDensity_unique_of_certainty
+OP.p (rankOneEffect φ hφ) = traceForm (rankOneDensity ψ) (rankOneEffect φ)
+  -- Step C (trace algebra): born_quadratic identity.
+  ↓ via born_quadratic
+= ‖inner ℂ ψ φ‖²
+```
+
+`#print axioms PurePreparation.born_rank_one` cites both
+`busch_effect_gleason` (via `pure_state_born_weights_of_certainty`) and
+`invariant_measure_uniqueness` (via `OperationalPackage.fromPreparation`'s
+`MeasureBridgeData` argument type). Matches spec §5.4 four-ingredient
+combinatorial framing.
+
+**Auxiliary theorem — `PurePreparation.born_rank_one_direct`**
+(volume-forward, eventual migration target):
 
 ```
 OP.fromPreparation.p (rankOneEffect φ hφ)
   = ∫ p, effectProjFn rep (rankOneEffect φ hφ) p ∂(Measure.map D.π μprep)
-  = ∫ p, ‖⟨rep p, φ⟩‖² ∂(Measure.dirac PP.ray_point)   [PP.push_dirac]
-  = ‖⟨rep PP.ray_point, φ⟩‖²                            [integral_dirac']
-  = ‖⟨PP.ψ, φ⟩‖²                                        [PP.rep_at_ray]
+  = ∫ p, ‖inner ℂ (rep p) φ‖² ∂(Measure.dirac PP.ray_point)   [PP.push_dirac]
+  = ‖inner ℂ (rep PP.ray_point) φ‖²                            [integral_dirac']
+  = ‖inner ℂ PP.ψ φ‖²                                          [PP.rep_at_ray]
 ```
 
-`#print axioms` on `hLF2_of_singlet_purePreparation` cites
-`invariant_measure_uniqueness` (structurally, via the
-`MeasureBridgeData` argument's type) but **not** `busch_effect_gleason`
-(because Busch is not extensionally invoked in the volume-forward
-proof). The trace-form reformulation is shipped as a separate theorem
-(`PurePreparation.born_rank_one_via_trace_form`) for callers who want
-the density-operator language; it cites both axioms but is not on the
-chain critical path.
+`#print axioms PurePreparation.born_rank_one_direct` cites
+`invariant_measure_uniqueness` only. Made the eventual migration target
+for the chain capstones once spec or downstream consumers accommodate
+the leaner cite set; v1.00 chain remains Busch-mediated.
 
-Phase 7 retires `PureSingletPreparation.ofHypothesis` and rewrites the
-four LF3 chain capstones to consume `LF2.PurePreparation` directly.
-
-After Phase 7 the four LF3 capstones go from
-`propext, Classical.choice, Quot.sound` to
-`propext, Classical.choice, Quot.sound, invariant_measure_uniqueness`.
-This is a deliberate, honest regression: the chain previously parked
-its volume-bridge dependence in a free hypothesis (`hLF2`); now the
-hypothesis is discharged structurally and the symmetry axiom comes
-with. Operations (Busch) does **not** propagate into the chain; it
-remains in `pure_state_born_weights_of_certainty` / the trace-form
-reformulation theorem, used where mixed-state / POVM work actually
-needs it.
+**Phase 7 effect on chain capstones.** Retires
+`PureSingletPreparation.ofHypothesis` and rewrites the four LF3 chain
+capstones to consume `LF2.PurePreparation` directly. After Phase 7 the
+four LF3 capstones go from `propext, Classical.choice, Quot.sound` to
+`propext, Classical.choice, Quot.sound, busch_effect_gleason,
+invariant_measure_uniqueness`. This is a deliberate, honest regression:
+the chain previously parked its dependence in a free hypothesis
+(`hLF2`); now the hypothesis is discharged and the two LF2 axioms come
+with, exactly as spec §5.4 attributes the Born form.
 
 ## Module structure
 
@@ -193,9 +243,9 @@ operational-axiom fields prove, and a `#print axioms` test confirms
 invoked here** — `fromPreparation` is *the* volume-forward
 construction, not a wrapper around the Busch extraction.
 
-### Phase 4 — `PurePreparation` and direct volume-forward Born theorem
+### Phase 4 — `PurePreparation` and the Born theorem (Busch-mediated chain + volume-forward auxiliary)
 
-~2-3 h.
+~3-4 h.
 
 - `structure PurePreparation (D : SectorData SigmaSpace P G) (μprep : Measure SigmaSpace)` with fields:
   - `ψ : EuclideanSpace ℂ (Fin N)`,
@@ -206,16 +256,56 @@ construction, not a wrapper around the Busch extraction.
   - parametrised by the same `rep : P → EuclideanSpace ℂ (Fin N)` used
     at OP-construction time, with `rep_at_ray : rep ray_point = ψ`.
 
-- **Volume-forward Born theorem (Route 1 — chain critical path):**
+- **Intermediate (volume content): OP is certain at ψ.**
+  ```
+  theorem PurePreparation.OP_certain_at_ψ
+      (PP : PurePreparation D μprep) :
+    (OperationalPackage.fromPreparation D μFS bridge μprep rep
+       hrep_unit hrep_meas).p (rankOneEffect PP.ψ PP.unit_ψ) = 1 := by
+    simp only [OperationalPackage.fromPreparation]
+    rw [PP.push_dirac, MeasureTheory.integral_dirac' ...]
+    rw [effectProjFn_rankOne, PP.rep_at_ray]
+    simp [PP.unit_ψ]   -- ‖⟨ψ, ψ⟩‖² = ‖ψ‖⁴ = 1
+  ```
+  Proof is direct Dirac integration on the volume measure. This step
+  carries the "preparation-dependent density ρ_ep" content of spec
+  §5.4 (third bullet) and uses no axiom beyond
+  `invariant_measure_uniqueness` (structural, via the bridge type).
+
+- **Chain critical path — Busch-mediated Born theorem
+  (`PurePreparation.born_rank_one`):**
   ```
   theorem PurePreparation.born_rank_one
+      (PP : PurePreparation D μprep) (hN : 2 ≤ N)
+      (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (OperationalPackage.fromPreparation D μFS bridge μprep rep
+       hrep_unit hrep_meas).p (rankOneEffect φ hφ)
+      = ‖inner ℂ PP.ψ φ‖² := by
+    exact pure_state_born_weights_of_certainty hN
+      (OperationalPackage.fromPreparation D μFS bridge μprep rep
+         hrep_unit hrep_meas)
+      PP.ψ PP.unit_ψ (PP.OP_certain_at_ψ ...) φ hφ
+  ```
+  Composes the volume-content step (`OP_certain_at_ψ`) with the Busch
+  packaging step (`pure_state_born_weights_of_certainty`, which uses
+  `busch_effect_gleason` + the now-proved
+  `rankOneDensity_unique_of_certainty` + `born_quadratic`). Matches
+  spec §5.4 four-ingredient framing.
+  `#print axioms` cites both `busch_effect_gleason` (via Busch
+  packaging) and `invariant_measure_uniqueness` (via the bridge
+  argument's type).
+
+- **Auxiliary — volume-forward direct theorem
+  (`PurePreparation.born_rank_one_direct`):**
+  ```
+  theorem PurePreparation.born_rank_one_direct
       (PP : PurePreparation D μprep) (φ : EuclideanSpace ℂ (Fin N))
       (hφ : ‖φ‖ = 1) :
     (OperationalPackage.fromPreparation D μFS bridge μprep rep
        hrep_unit hrep_meas).p (rankOneEffect φ hφ)
       = ‖inner ℂ PP.ψ φ‖² := by
     simp only [OperationalPackage.fromPreparation]
-    rw [PP.push_dirac, MeasureTheory.integral_dirac' _ _ (by exact effectProjFn_stronglyMeasurable rep _ hrep_meas)]
+    rw [PP.push_dirac, MeasureTheory.integral_dirac' ...]
     rw [effectProjFn_rankOne, PP.rep_at_ray]
   ```
   Proof is direct Dirac integration: unfold OP definition, substitute
@@ -224,33 +314,29 @@ construction, not a wrapper around the Busch extraction.
   `#print axioms` shows
   `propext, Classical.choice, Quot.sound, invariant_measure_uniqueness`
   — symmetry propagates structurally via the `bridge` argument; Busch
-  does not appear.
+  does not appear. **Tagged as the eventual migration target** for the
+  chain capstones once downstream consumers accommodate the leaner
+  cite set; v1.00 chain stays Busch-mediated per spec §5.4.
 
-- **Trace-form reformulation (Route 2 — corollary, not on chain
-  critical path):**
-  ```
-  theorem PurePreparation.born_rank_one_via_trace_form
-      (PP : PurePreparation D μprep) (φ : EuclideanSpace ℂ (Fin N))
-      (hφ : ‖φ‖ = 1) :
-    (OperationalPackage.fromPreparation D μFS bridge μprep rep ...)
-      = traceForm (rankOneDensity PP.ψ PP.unit_ψ) (rankOneEffect φ hφ) := ...
-  ```
-  Composes Busch (via `busch_effect_gleason` + the rank-1 uniqueness
-  theorem from BornWrapper) to identify the OP-extracted density
-  operator as `|ψ⟩⟨ψ|`. Provides density-operator language for callers
-  who want it. `#print axioms` cites both LF2 axioms. Not on the chain
-  critical path; available for downstream POVM / mixed-state work.
+  Docstring should explicitly call this the **CSD volume-forward
+  foundational form**: the Born value emerges from the volume integral
+  alone, without invoking the Busch characterisation. This is what
+  `born_rank_one` would reduce to if spec §5.4 were rephrased without
+  the Busch step. Useful for pedagogical exposition and for callers
+  whose downstream needs are pure-preparation-only.
 
-**Exit criterion.** `#print axioms PurePreparation.born_rank_one`
-lists `invariant_measure_uniqueness` only (volume-forward path).
-`#print axioms PurePreparation.born_rank_one_via_trace_form` lists
-both axioms (reformulation path). Two `#guard_msgs` regressions added
-to `Tests/AxiomAudit.lean`.
+**Exit criterion.**
+- `#print axioms PurePreparation.born_rank_one` cites both LF2 axioms.
+- `#print axioms PurePreparation.born_rank_one_direct` cites
+  `invariant_measure_uniqueness` only.
+- Two `#guard_msgs` regressions added to `Tests/AxiomAudit.lean`.
+- A docstring on `born_rank_one_direct` explicitly flags it as the
+  migration target.
 
 **Maps to reviewer's plan.** §4 (pure preparation structure), realised
-in the option-(b3) volume-forward form. Reviewer's option-(a)
-short-circuit and option-(b2) Busch-mediated chain are both rejected;
-volume-forward Dirac evaluation is the foundational route.
+in option-(b) form (Busch-mediated chain matching spec §5.4) with the
+volume-forward direct theorem as an explicit auxiliary intended as the
+eventual migration target.
 
 ### Phase 5 — `SectorData.outcomeOfProjective`
 
@@ -298,8 +384,8 @@ The payoff. ~2-3 h.
 - `hLF2_of_singlet_purePreparation : ∀ ctx s t,
     projectiveWeight D μprep (SingletProjectiveOutcome ctx s t)
       = ENNReal.ofReal (P_st ctx.a ctx.b s t)`.
-  Volume-forward proof routing through `PurePreparation.born_rank_one`
-  (Route 1). Cites `invariant_measure_uniqueness` only.
+  Proof routes through `PurePreparation.born_rank_one` (Busch-mediated
+  chain critical path), matching spec §5.4. Cites both LF2 axioms.
 - **Refactor `LF3/PurePreparation.lean`.** Retire
   `PureSingletPreparation.ofHypothesis`. Replace with
   `PureSingletPreparation.ofPurePreparation` constructing the bundle from
@@ -315,16 +401,21 @@ The payoff. ~2-3 h.
   `PureSingletPreparation`.
 - **AxiomAudit update.** The four LF3 capstones go from
   `propext, Classical.choice, Quot.sound` to
-  `propext, Classical.choice, Quot.sound, invariant_measure_uniqueness`.
-  Update `Tests/AxiomAudit.lean` `#guard_msgs` lines in lockstep. This
-  is a deliberate, documented regression: the chain previously parked
-  its volume-bridge dependence in a free hypothesis (`hLF2`); now the
-  hypothesis is discharged structurally and the symmetry axiom comes
-  with. **Operations (Busch) does not propagate to the chain** — it
-  remains in `pure_state_born_weights_of_certainty` /
-  `PurePreparation.born_rank_one_via_trace_form`, available where
-  mixed-state / POVM work actually needs the density-operator
-  language.
+  `propext, Classical.choice, Quot.sound, busch_effect_gleason,
+   invariant_measure_uniqueness`. Update `Tests/AxiomAudit.lean`
+  `#guard_msgs` lines in lockstep. This is a deliberate, documented
+  regression: the chain previously parked its dependence in a free
+  hypothesis (`hLF2`); now the hypothesis is discharged and both LF2
+  axioms come with, exactly as spec §5.4 attributes the Born form to
+  the combination of measure bridge + preparation-dependent density +
+  operational consistency package + Busch effect-Gleason.
+
+**Eventual-migration option.** Once `PurePreparation.born_rank_one_direct`
+is in place (Phase 4 auxiliary) and downstream consumers do not need
+the trace-form characterisation, a future revision could re-route
+`hLF2_of_singlet_purePreparation` through the direct theorem and drop
+`busch_effect_gleason` from the LF3 capstones' cite set. Not pre-LF4
+work; logged here for record.
 
 ### Phase 8 — Joint partition convergence (LF4-todo §9)
 
@@ -395,26 +486,30 @@ the 2026-05-18 volume-forward discussion.
 After Phase 7 lands:
 
 - **`AXIOMS.md`** — add §2.x entry for the LF3 capstones now citing
-  `invariant_measure_uniqueness` (volume-bridge dependency, structural
-  via the `MeasureBridgeData` argument of `OperationalPackage.fromPreparation`).
-  Note explicitly that `busch_effect_gleason` does **not** propagate to
-  the chain capstones — operations is reserved for the trace-form
-  reformulation theorem and downstream mixed-state / POVM work. Remove
-  §3.6 (`PureSingletPreparation` bundle as physical assumption) since
-  the bundle is now constructed structurally. Update §5 table.
+  both LF2 axioms via the chain composition. Cite spec §5.4 verbatim
+  as the basis for the combinatorial framing: "the standard quadratic
+  probability rule... arises from the combination of the measure
+  bridge, the preparation-dependent density ρ_ep, the operational
+  consistency package, the imported Busch effect-Gleason theorem."
+  Note the existence of `PurePreparation.born_rank_one_direct` as the
+  volume-forward foundational form (cites symmetry only), tagged as
+  the eventual migration target. Remove §3.6 (`PureSingletPreparation`
+  bundle as physical assumption) since the bundle is now constructed
+  structurally. Update §5 table.
 - **`README.md`** — update LF3 axiom-posture text. Currently says "LF3
   imports zero axioms beyond Lean's foundational set." Honest after
-  Phase 7: LF3 capstones cite `invariant_measure_uniqueness` via the
-  `hLF2` discharge. Add the architectural reasoning (CSD's volume-forward
-  foundational claim + LF4 readiness for mixed states / POVMs) to the
-  LF3 axiom-posture paragraph. Frame the chain explicitly as volume
-  ratios on `Σ` → pushforward on `P` → integration against the
-  volume-forward effect function. The trace-form / density-operator
-  description is a reformulation, available via
-  `PurePreparation.born_rank_one_via_trace_form`.
+  Phase 7: LF3 capstones cite both LF2 axioms via the `hLF2` discharge,
+  per spec §5.4. Add an explicit framing paragraph: the volume-forward
+  content (probability is volume ratio on Σ, pushed to P, integrated
+  against the effect function) is the foundational mechanism; the
+  Busch packaging step (per spec §5.4) is structural in the chain.
+  The auxiliary `PurePreparation.born_rank_one_direct` theorem makes
+  the volume-forward foundational form explicit and is tagged as the
+  eventual migration target.
 - **`CLAUDE.md`** — same updates. Add a one-line note in the LF3
-  description that "branches" terminology is volume-based (per Phase 11
-  rename if done, or as a clarification if Phase 11 is deferred).
+  description that the chain capstones cite both LF2 axioms per
+  spec §5.4 (was: zero axioms), with `born_rank_one_direct` as the
+  volume-forward auxiliary intended for eventual migration.
 - **`specs/LF4-todo.md`** — retire §2 (preparation-to-Hilbert
   correspondence, done), §3 (projective rank-1 constructors, partially
   done — projective constructors deferred to §12 until Mathlib's
@@ -562,29 +657,38 @@ supplied at OP-construction time.
 
 ### Phase estimates after spike + volume-forward revision
 
-| Phase | Was (pre-spike, b2) | Now (post-spike, b3) |
+| Phase | Was (pre-spike) | Now (post-spike, option (b)) |
 |---|---|---|
 | 1 (algebraic / phase invariance) | ~2 h | ~30 min |
 | 2 (volume-forward effect function) | ~2-3 h | ~1-2 h |
 | 3 (`fromPreparation`) | ~5-7 h | ~5-7 h |
-| 4 (`PurePreparation` + Born theorem) | ~2-3 h | ~2-3 h |
+| 4 (`PurePreparation` + Born theorem + auxiliary direct) | ~2-3 h | ~3-4 h |
 | 5 (`outcomeOfProjective`) | ~2-3 h | ~2-3 h |
 | 6 (singlet projective outcomes) | ~3-4 h | ~3-4 h |
 | 7 (chain closure + retirement) | ~2-3 h | ~2-3 h |
-| **Total critical path** | **~17-22 h** | **~12-17 h** |
+| **Total critical path** | **~17-22 h** | **~13-18 h** |
 
 Phase 1 shrinks because the `Projectivization` commitment is deferred
 (Spike 1). Phase 2 simplifies because `effectProjFn` is now caller-
 parameterised by an abstract `rep : P → EuclideanSpace ℂ (Fin N)` map,
-no `Projectivization` measurability question to resolve. Phases 3-7
-estimates unchanged. The integration glue (Spike 2 outcome) is
-healthy; `integral_map` and `integral_dirac'` are the load-bearing
-Mathlib lemmas.
+no `Projectivization` measurability question to resolve. Phase 4 grows
+slightly (~1 h) because both the Busch-mediated `born_rank_one`
+(chain critical path) and the volume-forward `born_rank_one_direct`
+(auxiliary, eventual migration target) ship in pre-LF4. Phases 3, 5-7
+estimates unchanged.
 
-The volume-forward (b3) revision over the Busch-mediated (b2) version
-does not change time estimates — Route 1 (direct Dirac integration)
-and Route 2 (Busch composition) are comparable effort; the choice is
-architectural, not time-cost.
+The two-theorem split in Phase 4 ships:
+- `PurePreparation.born_rank_one` — chain critical path, Busch-mediated
+  composition matching spec §5.4. Cites both LF2 axioms.
+- `PurePreparation.born_rank_one_direct` — auxiliary, volume-forward
+  direct Dirac evaluation. Cites `invariant_measure_uniqueness` only.
+  Tagged as eventual migration target.
+
+The integration glue (Spike 2 outcome) is healthy; `integral_map` and
+`integral_dirac'` are the load-bearing Mathlib lemmas. Both theorems
+use the same `OperationalPackage.fromPreparation` construction; the
+difference is in the final proof step (composition with Busch packaging
+vs direct integration).
 
 ## Order and time
 
@@ -616,15 +720,15 @@ pre-LF4 critical path.
 
 **Recommended checkpoint tags:**
 - `v0.4.0-pre-lf4` after Phase 4 lands (`PurePreparation.born_rank_one`
-  proved volume-forward, citing `invariant_measure_uniqueness` only;
-  `PurePreparation.born_rank_one_via_trace_form` as reformulation
-  corollary citing both axioms; AxiomAudit `#guard_msgs` regressions
-  for both).
+  proved Busch-mediated, citing both LF2 axioms;
+  `PurePreparation.born_rank_one_direct` as volume-forward auxiliary
+  citing `invariant_measure_uniqueness` only; AxiomAudit `#guard_msgs`
+  regressions for both).
 - `v0.4.1-pre-lf4` after Phase 7 lands (LF3 capstones refactored,
   `PureSingletPreparation.ofHypothesis` retired, AxiomAudit updated to
-  cite `invariant_measure_uniqueness` on the four LF3 capstones).
+  cite both LF2 axioms on the four LF3 capstones, matching spec §5.4).
 - The major bump to `v0.5.0-lf4-base` is reserved for the start of LF4
-  proper (mixed states / POVMs / reduction), not for the option-(b3)
+  proper (mixed states / POVMs / reduction), not for the option-(b)
   base. Pre-LF4 is structural plumbing; LF4 proper is new mathematics.
 
 ## Triage of the reviewer's pre-LF4 plan (2026-05-18)
@@ -651,10 +755,10 @@ path of this document. The substantive divergence from the reviewer's
 plan is in §4: the reviewer proposed a `PurePreparation` structure
 carrying `push_dirac` as a hypothesis (option (a) in the design-space
 discussion). This plan instead routes the OP construction through
-`measure_bridge` (option (b3) volume-forward), so the chain capstones
-cite `invariant_measure_uniqueness` structurally and are proved by
-direct Dirac integration. Reason: CSD's volume-forward foundational
-claim + LF4 readiness for mixed states / POVMs.
+`measure_bridge` (option (b)), so the chain capstones cite both LF2
+axioms structurally per spec §5.4. The volume-forward direct theorem
+ships as a Phase 4 auxiliary, tagged as the eventual migration target
+once downstream consumers accommodate the leaner cite set.
 
 ## 2026-05-18 design discussion summary
 
@@ -688,9 +792,6 @@ The honest answer in three layers:
 > mechanics using volume as the key, not branches. Branch counting
 > should not be a thing. It should be volume ratios.
 
-This question revised the architectural choice from
-option (b)-Busch-mediated to option (b3)-volume-forward.
-
 The CSD foundational claim is volume-forward:
 - Probability is volume ratio on `Σ` (LF1: `prepMeasure_apply`).
 - Pushforward to `P` is volume on `P` (LF2: `measure_bridge`).
@@ -699,49 +800,81 @@ The CSD foundational claim is volume-forward:
   measure. The effect function `effectProjFn` is the CSD-foundational
   object that turns projective volume into probability.
 
-For rank-1 effects this integral evaluates directly:
-- Pure preparation: `π_*μprep = δ_{[ψ]}` (Dirac), so the integral is
+For rank-1 effects on pure preparation, this integral evaluates
+directly:
+- `π_*μprep = δ_{[ψ]}` (Dirac), so the integral is
   `effectProjFn rep (rankOneEffect φ hφ) ray_point = ‖⟨ψ, φ⟩‖²` by
-  Dirac evaluation. No density operator, no Busch, no trace.
+  Dirac evaluation. The mathematical content is volume integration;
+  no density operator strictly needed.
 
-The trace-form description (`Tr(ρE)`) is a *reformulation* of this
-volume integral, available via Busch + `born_quadratic` for callers
-who want density-operator language. It is not the foundation.
+This is the volume-forward foundational form, captured in
+`PurePreparation.born_rank_one_direct` (Phase 4 auxiliary).
 
-The earlier plan (option (b)-Busch-mediated) routed
-`PurePreparation.born_rank_one` through `pure_state_born_weights_of_certainty`,
-which would have invoked Busch unnecessarily and reformulated volume
-into trace before evaluating. The volume-forward revision (option (b3))
-proves the rank-1 Born theorem by direct Dirac integration, without
-Busch. The trace-form reformulation is shipped as a separate corollary.
+### Third question
 
-The chain capstones now cite `invariant_measure_uniqueness` only —
-symmetry propagates structurally via the `MeasureBridgeData` argument.
-`busch_effect_gleason` does **not** propagate to the chain. This is
-faithful to the volume-forward foundational claim and aligns the Lean
-tree's `#print axioms` output with what the chain actually invokes.
+> Does the revised plan diverge from the spec or match the CSD
+> programme?
 
-### Where both axioms enter
+Yes, the earlier (b3) revision diverged from spec §5.4. Verbatim:
 
-For *mixed states* and *general POVMs*, the volume integral against
-non-Dirac `π_*μprep` requires identifying the projective measure
-structure (where `invariant_measure_uniqueness` enters), and Busch's
-characterisation of effect-additive probabilities as trace-form
-expressions becomes load-bearing. That is LF4 territory. The
-trace-form reformulation theorem (`PurePreparation.born_rank_one_via_trace_form`)
-ships in pre-LF4 as the corollary that LF4 will build on for the
-mixed-state case.
+> "This is the standard quadratic probability rule. In the present
+> framework, it is not attributed to a single theorem. Rather, it
+> arises from the combination of: the measure bridge..., the
+> preparation-dependent density ρ_ep on CP^{N-1}, the operational
+> consistency package, the imported Busch effect-Gleason theorem."
+
+Spec §9.1 separates the measure bridge and the Born-weight wrapper as
+"logically distinct" components, both required. Excluding Busch from
+the chain capstone (option (b3)) would have made the Lean tree
+divergent from the spec's stated combinatorial framing.
+
+### Reconciliation
+
+The volume-forward foundational claim and the spec §5.4 combinatorial
+framing are NOT in tension:
+
+- **Volume integration is the *content*** — what the probability
+  actually is. The effect function `effectProjFn` is the
+  CSD-foundational object. This is the volume-forward foundational
+  claim.
+- **Busch is the *packaging*** — what spec §5.4 attributes the Born
+  form to as the fourth ingredient. It characterises the OP as
+  trace-form, which is the wrapper layer's contribution.
+
+Both are part of the formalised Born-weight wrapper per spec §5.4.
+Option (b) (Busch-mediated chain, both axioms cited) is the
+spec-faithful version. The volume-forward direct theorem
+(`PurePreparation.born_rank_one_direct`) ships as an auxiliary fact
+making the foundational form explicit, tagged as the eventual
+migration target for a future revision when downstream consumers
+accommodate the leaner cite set.
 
 ### Decision log
 
 - **Option (a)** (Dirac as free hypothesis, Busch-only chain): rejected
   on the "build on it over and over again" anti-pattern.
 - **Option (b)-Busch-mediated** (Busch in chain, both axioms cited):
-  rejected for being foundational-reformulation rather than
-  foundational-direct. Cites Busch gratuitously for the pure-state case.
-- **Option (b3)-volume-forward** (Direct Dirac integration, symmetry
-  structural via bridge type, Busch reserved for reformulation
-  corollary): adopted. Matches CSD's volume-forward foundational claim.
+  **adopted.** Matches spec §5.4 four-ingredient combinatorial framing.
+- **Option (b3)-volume-forward exclusive** (Direct Dirac integration,
+  Busch excluded from chain): rejected on spec divergence. The
+  volume-forward direct theorem is preserved as a Phase 4 auxiliary
+  (`born_rank_one_direct`) and tagged as the eventual migration
+  target, but is not on the chain critical path at v1.00.
+
+### Where both axioms enter
+
+The four LF3 chain capstones cite both LF2 axioms after Phase 7:
+- `invariant_measure_uniqueness` via the `MeasureBridgeData` argument
+  of `OperationalPackage.fromPreparation` (volume-bridge structural
+  dependency).
+- `busch_effect_gleason` via `pure_state_born_weights_of_certainty`
+  in the `born_rank_one` proof body (Busch packaging step per spec
+  §5.4).
+
+For mixed states and general POVMs (LF4 territory per spec §8.5),
+both axioms become extensionally load-bearing as well as structurally
+load-bearing. The pre-LF4 plan establishes both as part of the chain
+exactly so LF4 inherits the right cite set.
 
 ### LF3 terminology
 
@@ -750,4 +883,4 @@ Everettian-suggestive names but volume-based content. The rename pass
 to `eigenSectorState` / `sectorVolume` / `SectorSeparation` (Phase 11)
 aligns terminology with the volume-forward foundational claim. Cost
 ~3-4 h; ideally done pre-LF4 before POVM / mixed-state work adds more
-consumers.
+consumers. Spec uses "weight" predominantly, not "branch".
