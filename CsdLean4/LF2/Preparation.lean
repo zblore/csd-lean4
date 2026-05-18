@@ -1,5 +1,6 @@
 import CsdLean4.LF2.MeasureBridge
 import CsdLean4.LF2.EffectFn
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!
 # OP-from-preparation construction (pre-LF4 Phase 3)
@@ -74,6 +75,85 @@ noncomputable def MeasureBridgeData.ofSectorData
   is_inv := hμFS_inv
   c := (measure_bridge D μFS hμFS_inv).choose
   bridge_eq := (measure_bridge D μFS hμFS_inv).choose_spec
+
+/-! ### Operational package from a preparation
+
+`OperationalPackage.fromPreparation` constructs the operational
+probability assignment by integrating the volume-forward effect function
+`effectProjFn rep E` against the pushforward `Measure.map D.π μprep`.
+The four operational-axiom fields (`nonneg`, `le_one`, `total_one`,
+`additivity`) follow from the pointwise content of `effectProjFn` plus
+standard Bochner integration facts.
+
+The `MeasureBridgeData` argument is structural: even though the
+`fromPreparation` proof body does not extensionally invoke
+`bridge.bridge_eq` for the operational-axiom checks, callers must
+construct a `MeasureBridgeData` to instantiate this definition, and
+`MeasureBridgeData.ofSectorData` cites `invariant_measure_uniqueness`.
+By the option (b) architectural commitment, this propagates the
+symmetry axiom into the chain capstones.
+-/
+
+variable {N : ℕ}
+
+/-- **`OperationalPackage.fromPreparation` (the volume-forward Born
+    wrapper, structural form).** Given a `SectorData`, the bridge data
+    `bridge : MeasureBridgeData D μFS`, a probability preparation
+    measure `μprep`, and a unit-norm measurable representative
+    `rep : P → EuclideanSpace ℂ (Fin N)`, the operational probability
+    assignment is integration of `effectProjFn rep E` against the
+    pushforward `π_*μprep`. -/
+noncomputable def OperationalPackage.fromPreparation
+    (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
+    (bridge : MeasureBridgeData D μFS)
+    (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
+    (rep : P → EuclideanSpace ℂ (Fin N))
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep) :
+    OperationalPackage N :=
+  -- `bridge` is structurally present (its type propagates the symmetry-axiom
+  -- citation by signature) but its bridge_eq content is not extensionally
+  -- invoked by the operational-axiom field proofs. This is by design per
+  -- the option (b) architectural commitment.
+  let _ : MeasureBridgeData D μFS := bridge
+  let μP : Measure P := Measure.map D.π μprep
+  haveI : IsProbabilityMeasure μP :=
+    Measure.isProbabilityMeasure_map D.measurable_π.aemeasurable
+  {
+    p := fun E => ∫ p, effectProjFn rep E p ∂μP
+    nonneg := fun E =>
+      MeasureTheory.integral_nonneg (fun p => effectProjFn_nonneg rep E p)
+    le_one := fun E => by
+      have h_le : ∀ p, effectProjFn rep E p ≤ 1 :=
+        effectProjFn_le_one rep hrep_unit E
+      have h_int_E : Integrable (effectProjFn rep E) μP :=
+        effectProjFn_integrable rep hrep_unit hrep_meas E μP
+      have h_int_one : Integrable (fun _ : P => (1 : ℝ)) μP :=
+        integrable_const 1
+      calc ∫ p, effectProjFn rep E p ∂μP
+          ≤ ∫ _ : P, (1 : ℝ) ∂μP :=
+            MeasureTheory.integral_mono h_int_E h_int_one h_le
+        _ = (μP.real Set.univ) * 1 := by
+            rw [MeasureTheory.integral_const, smul_eq_mul]
+        _ = 1 := by simp
+    total_one := by
+      show ∫ p, effectProjFn rep Effect.one p ∂μP = 1
+      have h_const : (fun p => effectProjFn rep Effect.one p) = (fun _ : P => (1 : ℝ)) := by
+        funext p
+        rw [effectProjFn_one, hrep_unit p]
+        norm_num
+      rw [h_const, MeasureTheory.integral_const, smul_eq_mul]
+      simp
+    additivity := fun E F hLe => by
+      show ∫ p, effectProjFn rep (Effect.add E F hLe) p ∂μP
+            = (∫ p, effectProjFn rep E p ∂μP) + (∫ p, effectProjFn rep F p ∂μP)
+      have h_add : (fun p => effectProjFn rep (Effect.add E F hLe) p)
+                 = (fun p => effectProjFn rep E p + effectProjFn rep F p) :=
+        funext (fun p => effectProjFn_add rep E F hLe p)
+      rw [h_add]
+      exact MeasureTheory.integral_add
+        (effectProjFn_integrable rep hrep_unit hrep_meas E μP)
+        (effectProjFn_integrable rep hrep_unit hrep_meas F μP)
+  }
 
 end LF2
 end CSD
