@@ -270,5 +270,105 @@ theorem LF3_singlet_frequency_convergence_born_inner
   rw [← h_inner s t] at h_pre
   exact h_pre
 
+/-! ### Joint partition convergence (Phase 8)
+
+The per-sector capstones above give `∀ s t, ∀ᵐ ω, Tendsto ...` — the
+order is "for each sector, a.s. convergence to that sector's P_st".
+For chain consumers that need the joint a.s. statement — "almost surely,
+for *every* sector simultaneously the empirical frequency converges to
+the corresponding P_st" — the order swaps to `∀ᵐ ω, ∀ s t, Tendsto ...`.
+
+The swap is a finite-intersection-of-full-measure-sets argument:
+`Sign × Sign` is finite (hence countable), and Mathlib's
+`MeasureTheory.ae_all_iff` provides the swap for countable index types.
+This is the standard "joint vs per-element" upgrade pattern. -/
+
+/-- **Joint partition convergence (pre-Born form).** Almost surely on
+    the trial-sequence probability space, for *every* pointer sector
+    `(s, t)` simultaneously the empirical frequency of
+    `prep.O_region s t` converges to `P_st ctx.a ctx.b s t`. Cf.
+    `LF3_singlet_frequency_convergence` which gives the per-sector
+    statement. -/
+theorem LF3_singlet_frequency_convergence_joint
+    (D : CSD.LF2.SectorData SigmaSpace P G)
+    {Ω : Type*} [MeasurableSpace Ω]
+    (T : D.toOntic.TrialModel Ω)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
+    (hindep : ∀ s t,
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
+    ∀ᵐ ω ∂ T.trialMeasure,
+       ∀ s t,
+         Tendsto
+           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           atTop
+           (nhds (P_st ctx.a ctx.b s t)) := by
+  rw [MeasureTheory.ae_all_iff]
+  intro s
+  rw [MeasureTheory.ae_all_iff]
+  intro t
+  exact LF3_singlet_frequency_convergence D T ctx prep hindep s t
+
+/-- **Joint partition convergence (Born form, closed-form amplitude).**
+    Almost surely, for every `(s, t)` the empirical frequency converges
+    to `‖cAmp ctx.a ctx.b s t‖²`. Joint version of
+    `LF3_singlet_frequency_convergence_born`. -/
+theorem LF3_singlet_frequency_convergence_born_joint
+    (D : CSD.LF2.SectorData SigmaSpace P G)
+    {Ω : Type*} [MeasurableSpace Ω]
+    (T : D.toOntic.TrialModel Ω)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
+    (hindep : ∀ s t,
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
+    ∀ᵐ ω ∂ T.trialMeasure,
+       ∀ s t,
+         Tendsto
+           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           atTop
+           (nhds (‖cAmp ctx.a ctx.b s t‖ ^ 2)) := by
+  rw [MeasureTheory.ae_all_iff]
+  intro s
+  rw [MeasureTheory.ae_all_iff]
+  intro t
+  exact LF3_singlet_frequency_convergence_born D T ctx prep hindep s t
+
+/-- **Joint partition convergence (Born form, bra-ket amplitude).**
+    Almost surely, for every `(s, t)` the empirical frequency converges
+    to `‖⟨jointSpinEig s t, singlet⟩‖²`. Joint version of
+    `LF3_singlet_frequency_convergence_born_inner`. -/
+theorem LF3_singlet_frequency_convergence_born_inner_joint
+    (D : CSD.LF2.SectorData SigmaSpace P G)
+    {Ω : Type*} [MeasurableSpace Ω]
+    (T : D.toOntic.TrialModel Ω)
+    (ctx : MeasurementContext) {N : ℕ}
+    (prep : PureSingletPreparation D ctx N)
+    (hindep : ∀ s t,
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n)))
+    (jointSpinEig : Sign → Sign → EuclideanSpace ℂ (Fin 2 × Fin 2))
+    (h_inner : ∀ s t,
+        ‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2 = P_st ctx.a ctx.b s t) :
+    ∀ᵐ ω ∂ T.trialMeasure,
+       ∀ s t,
+         Tendsto
+           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           atTop
+           (nhds (‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2)) := by
+  rw [MeasureTheory.ae_all_iff]
+  intro s
+  rw [MeasureTheory.ae_all_iff]
+  intro t
+  exact LF3_singlet_frequency_convergence_born_inner D T ctx prep hindep
+    jointSpinEig h_inner s t
+
 end LF3
 end CSD
