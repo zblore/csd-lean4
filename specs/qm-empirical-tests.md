@@ -115,10 +115,20 @@ content is sealed behind the LF4 discharge.
 
 | # | Prediction | Status |
 |---|---|---|
-| B2 | No-cloning: no `U : H ⊗ H → H ⊗ H` unitary with `U(|ψ⟩ ⊗ |0⟩) = |ψ⟩ ⊗ |ψ⟩` for all `|ψ⟩` | READY (Cat-2 candidate; ~1 day) |
+| B2 | No-cloning (two-state form): if isometry `U` clones `ψ, φ` from a unit blank, then `⟨ψ, φ⟩ ∈ {0, 1}` | **DONE 2026-05-19** (`no_cloning_two_state`); Cat-2 (QM-generic) |
+| B2 (corollary) | No universal cloner: no isometry can clone every unit state | **DONE 2026-05-19** (`no_universal_cloner_of_witness`); Cat-2 |
 
-Proof: contradiction from linearity plus `‖|ψ⟩ ⊗ |0⟩‖ = ‖|ψ⟩ ⊗ |ψ⟩‖`
-applied to two non-orthogonal states.
+**Source:** Wootters-Zurek 1982, *Nature* **299**, 802; Dieks 1982,
+*Phys. Lett. A* **92**, 271.
+
+The theorem is stated abstractly over the tensor structure: `tensor :
+H → H → Htensor` with the inner-product factorisation `⟨tensor a b,
+tensor c d⟩ = ⟨a, c⟩ · ⟨b, d⟩` as a hypothesis. Concrete instances
+(Kronecker on `EuclideanSpace ℂ (Fin n × Fin n)`, Mathlib's
+`TensorProduct ℂ H H` once equipped with the standard inner product)
+discharge the hypothesis. The QM no-cloning content is then immediate.
+
+Foundational-triple-only; AxiomAudit pinned.
 
 ### 2.4 `BornNumerical.lean` — Born rule for named 2-qubit states
 

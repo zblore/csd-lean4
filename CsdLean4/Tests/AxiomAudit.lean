@@ -7,6 +7,7 @@ import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.Empirical.Bell
+import CsdLean4.Empirical.NoCloning
 
 /-!
 # Axiom regression suite
@@ -216,5 +217,13 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.Bell.chsh_qm_tsirelson_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.Bell.chsh_qm_tsirelson_bound
+
+/-! ### Empirical predictions (no-cloning, Phase B2) -/
+
+/-- info: 'CSD.Empirical.NoCloning.no_cloning_two_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.NoCloning.no_cloning_two_state
+
+/-- info: 'CSD.Empirical.NoCloning.no_universal_cloner_of_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.NoCloning.no_universal_cloner_of_witness
 
 end CSD.Tests.AxiomAudit
