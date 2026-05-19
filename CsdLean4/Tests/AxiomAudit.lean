@@ -6,6 +6,7 @@ import CsdLean4.LF3.Interface
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
+import CsdLean4.Empirical.Bell
 
 /-!
 # Axiom regression suite
@@ -178,5 +179,36 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 
 /-- info: 'CSD.LF3.MeasurementUnitary.ofUnitaryTensorEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms MeasurementUnitary.ofUnitaryTensorEmbedding
+
+/-! ### Empirical predictions (Bell family, Phase A1-A5)
+
+All Phase A1-A5 predictions cite only the foundational triple: the LF3
+content they re-export does too (LF3 algebraic core in `Singlet/Kernel.lean`
+is axiom-clean), and the new CHSH-at-Tsirelson computation is pure
+arithmetic. -/
+
+/-- info: 'CSD.Empirical.Bell.correlation_eq_neg_dot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.correlation_eq_neg_dot
+
+/-- info: 'CSD.Empirical.Bell.no_signalling_alice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.no_signalling_alice
+
+/-- info: 'CSD.Empirical.Bell.no_signalling_bob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.no_signalling_bob
+
+/-- info: 'CSD.Empirical.Bell.singlet_marginal_alice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.singlet_marginal_alice
+
+/-- info: 'CSD.Empirical.Bell.singlet_marginal_bob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.singlet_marginal_bob
+
+/-- info: 'CSD.Empirical.Bell.chsh_classical_bound_violated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.chsh_classical_bound_violated
+
+/-- info: 'CSD.Empirical.Bell.chsh_singlet_at_optimal_angles' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.chsh_singlet_at_optimal_angles
+
+/-- info: 'CSD.Empirical.Bell.chsh_singlet_tsirelson_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Bell.chsh_singlet_tsirelson_bound
 
 end CSD.Tests.AxiomAudit

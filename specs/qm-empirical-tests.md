@@ -46,12 +46,12 @@ is Tsirelson (A6); A1–A5 are packaging.
 
 | # | Prediction | Statement | Status | Source / verification |
 |---|---|---|---|---|
-| A1 | CHSH at Tsirelson bound | `∃ unit a a' b b' : Sphere ℝ³, |S(a,a',b,b')| = 2√2` on the singlet, where `S = E(a,b) − E(a,b') + E(a',b) + E(a',b')` | READY (~1h) | Bell 1964 (bound), Tsirelson 1980 (saturation), Aspect 1982 (experimental) |
-| A2 | CHSH classical bound violated | `2√2 > 2`, named as the empirical violation gap | READY (trivial) | Bell 1964 |
-| A3 | No-signalling, side A | Marginal of A independent of B's setting | PROVED-LF3 (re-export) | Standard locality |
-| A4 | No-signalling, side B | Symmetric | PROVED-LF3 (re-export) | Standard locality |
-| A5 | Singlet marginal uniform | `P(A = +|a) = 1/2` for any unit `a` | PROVED-LF3 (re-export) | Textbook |
-| A6 | Tsirelson upper bound | For any pure 2-qubit `|ψ⟩` and unit `a, a', b, b'`, `|S(a,a',b,b')| ≤ 2√2` | READY (~1 day; Cat-2 candidate) | Tsirelson 1980 |
+| A1 | CHSH at Tsirelson bound | `∃ a a' b b' : DetectorSetting, |S(a,a',b,b')| = 2√2` on the singlet | **DONE 2026-05-19** (`chsh_singlet_tsirelson_bound`) | Bell 1964 (bound), Tsirelson 1980 (saturation), Aspect 1982 (experimental) |
+| A2 | CHSH classical bound violated | `2√2 > 2`, named as the empirical violation gap | **DONE 2026-05-19** (`chsh_classical_bound_violated`) | Bell 1964 |
+| A3 | No-signalling, side A | Marginal of A independent of B's setting | **DONE 2026-05-19** (`no_signalling_alice`) | Aspect 1982; loophole-free: Hensen 2015, Giustina 2015, Shalm 2015 |
+| A4 | No-signalling, side B | Symmetric | **DONE 2026-05-19** (`no_signalling_bob`) | same |
+| A5 | Singlet marginal uniform | `P(A = +|a) = 1/2` for any unit `a` | **DONE 2026-05-19** (`singlet_marginal_alice`, `singlet_marginal_bob`) | Textbook |
+| A6 | Tsirelson upper bound | For any pure 2-qubit `|ψ⟩` and unit `a, a', b, b'`, `|S(a,a',b,b')| ≤ 2√2` | pending (~1 day; Cat-2 candidate) | Tsirelson 1980 |
 
 A6 routes through the operator identity `(σ_a + σ_{a'})² + (σ_a − σ_{a'})² ≤ 4`
 plus Cauchy-Schwarz on `⟨ψ | · | ψ⟩`. It is QM-generic (no CSD
@@ -62,6 +62,14 @@ classification call until the proof is in place.
 named, docstringed with experimental provenance (year + reference),
 and pinned in AxiomAudit. The Bell paragraph in `README.md` is
 updated.
+
+**Phase A1-A5 landed 2026-05-19** in commit `<filled at commit time>`.
+A1-A5 are foundational-triple-only (eight AxiomAudit `#guard_msgs`
+regressions added under `### Empirical predictions (Bell family,
+Phase A1-A5)` in `Tests/AxiomAudit.lean`). Library build `lake build`
+(2956 jobs) clean; test build `lake build CsdLeanTests` (2955 jobs)
+clean. A6 (Tsirelson upper bound) remains as the only Phase A item
+open.
 
 ## 2. Phase B — single-experiment Born predictions (LF4-blocked)
 
