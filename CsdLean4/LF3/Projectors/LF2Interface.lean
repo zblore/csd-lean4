@@ -1,14 +1,15 @@
-import CsdLean4.LF3.Projectors.BranchWeight
+import CsdLean4.LF3.Projectors.SectorVolume
 import CsdLean4.LF2.BornWrapper
 
 /-!
-# LF3 Projectors / LF2 interface: branch weight ↔ LF2 Born form
+# LF3 Projectors / LF2 interface: sector volume ↔ LF2 Born form
 
-**Category:** 3-Local (LF3 → LF2 bridge: branch weight equals LF2 trace-form Born weight on rank-1 effects).
+**Category:** 3-Local (LF3 → LF2 bridge: sector volume equals LF2 trace-form Born weight on rank-1 effects).
 
-Paper §5.14 / §9.7.
+Paper §5.14 / §9.7. (Renamed from branch-weight terminology in Phase 11,
+2026-05-18, to align with the volume-ratios reading.)
 
-Bridges the abstract `H_SA`-level branch weight to LF2's concrete matrix-based
+Bridges the abstract `H_SA`-level sector volume to LF2's concrete matrix-based
 Born form. The basis isomorphism `H_SA ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N)` and the
 matrix representation of `mHat P s t` under that iso enter as **explicit
 hypotheses** of the bridge theorem, matching Mathlib's idiom for cross-API
@@ -81,10 +82,10 @@ lemma trace_outerProduct_mul_eq_inner {N : ℕ}
 /-- LF3 ↔ LF2 bridge. Given a basis isomorphism `basisIso` and a matrix `M`
     representing `mHat P s t` under that iso (i.e. `M` is the matrix of the
     pointer-sector projector in the chosen basis, plus standard effect
-    properties), the operator-form branch weight equals the LF2 Born-form
+    properties), the operator-form sector volume equals the LF2 Born-form
     trace pairing of the rank-1 density `|basisIso Ψ⟩⟨basisIso Ψ|` with the
     effect `M`. -/
-theorem branchWeight_eq_LF2_Born
+theorem sectorVolume_eq_LF2_Born
     {N : ℕ} (P : ProjectorAlgebra S) (s t : Sign)
     (basisIso : BasisIso H_SA N)
     (Ψ : H_SA) (hΨ : ‖Ψ‖ = 1)
@@ -93,12 +94,12 @@ theorem branchWeight_eq_LF2_Born
       basisIso (mHat P s t x) = (Matrix.toEuclideanLin M) (basisIso x))
     (hM1 : M.IsHermitian) (hM2 : M.PosSemidef)
     (hM3 : (1 - M).PosSemidef) :
-    branchWeight P Ψ s t
+    sectorVolume P Ψ s t
       = CSD.LF2.traceForm
           (rankOneStateOfΨ (basisIso Ψ)
             (by rw [LinearIsometryEquiv.norm_map]; exact hΨ))
           (effectOfM M hM1 hM2 hM3) := by
-  unfold branchWeight CSD.LF2.traceForm rankOneStateOfΨ effectOfM
+  unfold sectorVolume CSD.LF2.traceForm rankOneStateOfΨ effectOfM
   -- LHS: re ⟨Ψ, mHat P s t Ψ⟩
   -- RHS: re ((rankOneDensity (basisIso Ψ) _).M * M).trace
   --    = re (outerProduct (basisIso Ψ) * M).trace

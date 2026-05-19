@@ -1,4 +1,4 @@
-import CsdLean4.LF3.BranchSeparation
+import CsdLean4.LF3.SectorSeparation
 
 /-!
 # LF3 Projectors / Core: abstract pointer-sector projective algebra

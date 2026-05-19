@@ -17,9 +17,9 @@ import CsdLean4.LF2.Preparation
 import CsdLean4.LF2.Interface
 import CsdLean4.LF3.Setup
 import CsdLean4.LF3.Hamiltonian
-import CsdLean4.LF3.BranchSeparation
+import CsdLean4.LF3.SectorSeparation
 import CsdLean4.LF3.Projectors.Core
-import CsdLean4.LF3.Projectors.BranchWeight
+import CsdLean4.LF3.Projectors.SectorVolume
 import CsdLean4.LF3.Projectors.LF2Interface
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF3.Singlet.State

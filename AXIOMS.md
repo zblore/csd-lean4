@@ -167,13 +167,13 @@ Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
 LF3 imports **no** axioms beyond Lean's foundational set, but it does take certain structural facts as fields of caller-supplied data rather than as derived theorems. These are not axioms in Lean's sense (they do not appear in `#print axioms` output), but they are load-bearing inputs that downstream proofs consume without verifying. Listed here so the corpus is honest about which v1.00 results are stability-from-assumption rather than stability-from-first-principles.
 
-### 6.1 `LeakageCompat.branchWeight_dev`
+### 6.1 `LeakageCompat.sectorVolume_dev`
 
-**Location.** `CsdLean4/LF3/Projectors/BranchWeight.lean`.
+**Location.** `CsdLean4/LF3/Projectors/SectorVolume.lean`. (Renamed from `LeakageCompat.branchWeight_dev` in Phase 11, 2026-05-18, to align with the volume-ratios reading.)
 
-**What it is.** A field of the `LeakageCompat` structure asserting that the operator-form branch weight deviates from `‖cAmp s t‖²` by at most `εA + εB + εA·εB`.
+**What it is.** A field of the `LeakageCompat` structure asserting that the operator-form sector volume deviates from `‖cAmp s t‖²` by at most `εA + εB + εA·εB`.
 
-**What it should be (v2).** A theorem derived from a concrete tensor decomposition of `H_SA` plus per-side overlap bounds (Cauchy-Schwarz on the wrong-pointer leakage mass). Spec §9.7 / §9.11.
+**What it should be (v2).** A theorem derived from a concrete tensor decomposition of `H_SA` plus per-side overlap bounds (Cauchy-Schwarz on the cross-sector readout mass). Spec §9.7 / §9.11.
 
 **Why it matters.** `LF3_finite_leakage_theorem` is a triangle-inequality over `Sign × Sign` summing this field with appropriate prefactors. It is therefore a packaging theorem from this assumption, not a derivation from projector / pointer / Hamiltonian hypotheses.
 

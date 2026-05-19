@@ -67,9 +67,9 @@ Three layers are currently formalised:
 - the concrete two-qubit `pauliDot` operators, `sigmaDotLeft/Right/Joint`, and the joint spin projector `jointSpinProj` on `Fin 2 × Fin 2`
 - the Bell singlet `|ψ⁻⟩ = (1/√2)(|+-⟩ − |-+⟩)`, with `singlet_norm` proved
 - the abstract `TensorFactorReadoutAlgebra` (commuting local Hamiltonians as structural data) and `MeasurementUnitary` (full + per-wing unitaries as `LinearIsometryEquiv`s, factorisation `U = uA ∘ uB` and impulsive eigenstate-action as fields)
-- branch states and the four-term branch decomposition of the final state, with `branch_separation_leakage_bound`
-- the pointer-sector projective algebra `ProjectorAlgebra` (available either as abstract structural data, or derived through `ProjectorAlgebra.ofTensorEmbedding` from a `TensorEmbedding K_A K_B H_SA` plus the `SystemApparatusSetup`'s per-wing `BinaryPointerProjectors`, in `LF3/Projectors/TensorModel.lean`) and the operator-form `branchWeight`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
-- the LF3→LF2 Born-form bridge `branchWeight_eq_LF2_Born` (trace-inner core identity proved against the existing LF2 `traceForm`)
+- sector states and the four-term sector decomposition of the final state, with `sector_separation_leakage_bound` (Phase 11 rename: previously branch states / branch decomposition)
+- the pointer-sector projective algebra `ProjectorAlgebra` (available either as abstract structural data, or derived through `ProjectorAlgebra.ofTensorEmbedding` from a `TensorEmbedding K_A K_B H_SA` plus the `SystemApparatusSetup`'s per-wing `BinaryPointerProjectors`, in `LF3/Projectors/TensorModel.lean`) and the operator-form `sectorVolume`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
+- the LF3→LF2 Born-form bridge `sectorVolume_eq_LF2_Born` (trace-inner core identity proved against the existing LF2 `traceForm`)
 - the **singlet kernel algebraic core** `cst_squared_eq : ‖cAmp s t (a, b)‖² = (1 − st a·b)/4`, the correlation `−a·b`, marginals `1/2`, no-signalling on each side, and finite-leakage versions of all four
 - the **headline LF1↔LF2↔LF3 chain capstones** (six total post-Phase-8): three per-sector — `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²`), `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`) — plus three joint-partition AE variants (`..._joint`, `..._born_joint`, `..._born_inner_joint`) using `MeasureTheory.ae_all_iff` over the finite `Sign × Sign` partition. The chain consumes a `PureSingletPreparation D ctx N` bundle (option (B) form post-Phase-7) whose load-bearing hypotheses split into `MeasurementJointEig.born_eq_P_st` (the Born identity for joint spin eigenstates, LF4-todo §3) and `PureSingletPreparation.bridge_op_p` (the ontic-weight ↔ OP.p bridge, LF4-todo §2 + §7)
 - the **closed-form / bra-ket equivalence** `cAmp_norm_sq_eq_inner_norm_sq`: the closed-form `cAmp = √P_st` agrees with the genuine Hilbert-space inner product `⟨v, ψ⁻⟩` on squared norms, given the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` as a hypothesis (discharged in v2 from a constructed `jointSpinEig`)
@@ -246,7 +246,7 @@ LF3 sits directly on top of LF2. It instantiates the abstract Born-weight machin
    - pointer-completeness on each wing.
    All eight are bundled in `LF3_main_theorem`.
 
-2. **Finite-leakage stability** (§9.13 + §7). Under per-side leakage parameters `εA, εB`, each of the four quantities (pointer-sector probability, correlation, A-marginal, B-marginal) deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors 1, 4, 2, 2). Strong-readout exactness is the `εA = εB = 0` limit. **Packaging caveat.** The deviation bound enters as a *field* (`branchWeight_dev`) of the `LeakageCompat` structure rather than as a derived theorem; `LF3_finite_leakage_theorem` is therefore a packaging theorem (a triangle inequality over `Sign × Sign` summing the assumed per-branch bound), not a derivation from projector / pointer hypotheses. A v2 derivation from a concrete tensor decomposition is owed (spec §9.7 / §9.11); the v1.00 statement is honest stability-from-assumption, not stability-from-first-principles.
+2. **Finite-leakage stability** (§9.13 + §7). Under per-side leakage parameters `εA, εB`, each of the four quantities (pointer-sector probability, correlation, A-marginal, B-marginal) deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors 1, 4, 2, 2). Strong-readout exactness is the `εA = εB = 0` limit. **Packaging caveat.** The deviation bound enters as a *field* (`sectorVolume_dev`) of the `LeakageCompat` structure rather than as a derived theorem; `LF3_finite_leakage_theorem` is therefore a packaging theorem (a triangle inequality over `Sign × Sign` summing the assumed per-sector bound), not a derivation from projector / pointer hypotheses. A v2 derivation from a concrete tensor decomposition is owed (spec §9.7 / §9.11); the v1.00 statement is honest stability-from-assumption, not stability-from-first-principles.
 
 3. **Born quadratic form on the singlet.** The closed-form amplitude `cAmp s t (a, b) := √P_st` satisfies `‖cAmp‖² = P_st`. Under the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` for a caller-supplied unit vector `v` (a joint spin eigenstate), `‖cAmp‖² = ‖⟨v, ψ⁻⟩‖²`.
 
@@ -325,7 +325,7 @@ Exported theorems and their dependencies. The "Axioms" column lists CSD-specific
 | `correlation_eq_neg_dot` | `LF3/Singlet/Kernel.lean` | `∑ s t, s·t · P_st(a, b) = −a·b`. | none |
 | `marginal_a_eq_half`, `marginal_b_eq_half` | `LF3/Singlet/Kernel.lean` | Both wing marginals of `P_st(a, b)` equal `1/2`. | none |
 | `no_signalling_strong_readout_a`, `..._b` | `LF3/Singlet/Kernel.lean` | Each wing's marginal is independent of the other wing's detector setting. | none |
-| `branchWeight_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form branch weight equals LF2's trace-form Born weight on rank-1 effects. | none |
+| `sectorVolume_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form sector volume equals LF2's trace-form Born weight on rank-1 effects. | none |
 | `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package: kernel, correlation, marginals, no-signalling, pointer-completeness. | none |
 | `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities with bound `εA + εB + εA·εB` (and prefactors). | none |
 | `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone (per-sector): LF1 empirical frequency converges to `(1 − s·t·a·b)/4` given a `PureSingletPreparation D ctx N`. | `busch_effect_gleason` |
@@ -373,11 +373,11 @@ CsdLean4/
   LF3/
     Setup.lean              -- Sign, DetectorSetting, pauliDot, spinProj, jointSpinProj
     Hamiltonian.lean        -- TensorFactorReadoutAlgebra, MeasurementUnitary
-    BranchSeparation.lean   -- branchState, finalState, pointer overlaps, leakage bound
+    SectorSeparation.lean   -- sectorState, finalState, pointer overlaps, leakage bound
     Projectors/
       Core.lean             -- ProjectorAlgebra, mHat, projection field re-exports
-      BranchWeight.lean     -- branchWeight, StrongReadoutCompat, LeakageCompat
-      LF2Interface.lean     -- branchWeight_eq_LF2_Born (LF3 → LF2 Born-form bridge)
+      SectorVolume.lean     -- sectorVolume, StrongReadoutCompat, LeakageCompat
+      LF2Interface.lean     -- sectorVolume_eq_LF2_Born (LF3 → LF2 Born-form bridge)
       TensorModel.lean      -- TensorEmbedding, UnitaryTensorEmbedding,
                             --   ProjectorAlgebra.ofTensorEmbedding,
                             --   MeasurementUnitary.ofUnitaryTensorEmbedding

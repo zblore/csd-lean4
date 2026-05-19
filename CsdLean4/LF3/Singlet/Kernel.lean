@@ -1,5 +1,5 @@
 import CsdLean4.LF3.Singlet.Expectations
-import CsdLean4.LF3.Projectors.BranchWeight
+import CsdLean4.LF3.Projectors.SectorVolume
 
 /-!
 # LF3 Singlet / Kernel: pointer-sector kernel, correlation, marginals
@@ -74,7 +74,7 @@ lemma P_st_nonneg (a b : DetectorSetting) (s t : Sign) : 0 ≤ P_st a b s t := b
 /-- The singlet amplitude `c_{st}(a, b)`, defined in closed form as the real
     square root of `P_{st}(a, b)`. This is one canonical representative of
     the bra-ket form `⟨s_a, t_b | ψ⁻⟩`; only `‖cAmp‖²` is consumed downstream
-    (in `branchWeight_strong_readout` and the LF1↔LF2↔LF3 chain). -/
+    (in `sectorVolume_strong_readout` and the LF1↔LF2↔LF3 chain). -/
 noncomputable def cAmp (a b : DetectorSetting) (s t : Sign) : ℂ :=
   ((Real.sqrt (P_st a b s t) : ℝ) : ℂ)
 
@@ -166,17 +166,17 @@ variable {K_A K_B H_SA : Type*}
   [NormedAddCommGroup H_SA] [InnerProductSpace ℂ H_SA] [FiniteDimensional ℂ H_SA]
   {S : SystemApparatusSetup K_A K_B H_SA}
 
-/-- The strong-readout branch weight at the singlet equals the singlet kernel
-    `P_{st}(a, b)`. Composes `branchWeight_strong_readout` (operator-level
-    branch weight on a `StrongReadoutCompat`-equipped projector algebra and
+/-- The strong-readout sector volume at the singlet equals the singlet kernel
+    `P_{st}(a, b)`. Composes `sectorVolume_strong_readout` (operator-level
+    sector volume on a `StrongReadoutCompat`-equipped projector algebra and
     measurement unitary) with `cst_squared_eq` (the closed-form algebraic
     core for the singlet amplitude). -/
-theorem abstract_branchWeight_eq_P_st_at_singlet
+theorem abstract_sectorVolume_eq_P_st_at_singlet
     (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
     (φA0 : K_A) (φB0 : K_B) (a b : DetectorSetting)
     (compat : StrongReadoutCompat P M φA0 φB0) (s t : Sign) :
-    branchWeight P (finalState M (cAmp a b) φA0 φB0) s t = P_st a b s t := by
-  rw [branchWeight_strong_readout P M φA0 φB0 (cAmp a b) compat s t]
+    sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t = P_st a b s t := by
+  rw [sectorVolume_strong_readout P M φA0 φB0 (cAmp a b) compat s t]
   exact cst_squared_eq a b s t
 
 end LF3

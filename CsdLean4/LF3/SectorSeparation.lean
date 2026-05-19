@@ -1,21 +1,23 @@
 import CsdLean4.LF3.Hamiltonian
 
 /-!
-# LF3 BranchSeparation: branch-state decomposition and pointer-leakage bounds
+# LF3 SectorSeparation: sector-state decomposition and pointer-leakage bounds
 
-**Category:** 3-Local (LF3 branch-separated final state, per-wing pointer overlaps, leakage bound).
+**Category:** 3-Local (LF3 sector-separated final state, per-wing pointer overlaps, leakage bound).
 
-Paper §4 / §9.6.
+Paper §4 / §9.6. (Renamed from `BranchSeparation` in Phase 11, 2026-05-18,
+to align with the volume-ratios reading: the four `(s, t)` regions are
+eigensectors / volume domains, not Everettian branches.)
 
-Defines the branch-separated final state, the per-wing pointer-overlap
-observables, and the wrong-pointer leakage mass; bundles the per-side leakage
-parameters as `PointerLeakageBounds`; proves the branch-decomposition law
+Defines the sector-separated final state, the per-wing pointer-overlap
+observables, and the cross-sector readout mass; bundles the per-side leakage
+parameters as `PointerLeakageBounds`; proves the sector-decomposition law
 (definitional under `MeasurementUnitary.action`) and the operational
 distinguishability bound.
 
 The amplitude `cAmp : Sign → Sign → ℂ` is carried as an external parameter; the
 concrete singlet amplitude is supplied later in `Singlet/State.lean` so the
-import direction stays `BranchSeparation → Singlet/State`.
+import direction stays `SectorSeparation → Singlet/State`.
 -/
 
 open scoped BigOperators
@@ -29,22 +31,22 @@ variable {K_A K_B H_SA : Type*}
   [NormedAddCommGroup H_SA] [InnerProductSpace ℂ H_SA] [FiniteDimensional ℂ H_SA]
   {S : SystemApparatusSetup K_A K_B H_SA}
 
-/-- Branch state `|B_{st}⟩ = |s, t⟩ ⊗ uA|φ_A⁰⟩ ⊗ uB|φ_B⁰⟩`, packaged through
-    the joint eigenstate field of `MeasurementUnitary`. Each branch labels one
-    of the four spin sectors `(s, t) ∈ Sign × Sign`. -/
-noncomputable def branchState
+/-- Sector state `|B_{st}⟩ = |s, t⟩ ⊗ uA|φ_A⁰⟩ ⊗ uB|φ_B⁰⟩`, packaged through
+    the joint eigenstate field of `MeasurementUnitary`. Each sector labels
+    one of the four spin pointer-eigenspaces `(s, t) ∈ Sign × Sign`. -/
+noncomputable def sectorState
     (M : MeasurementUnitary S) (s t : Sign)
     (φA0 : K_A) (φB0 : K_B) : H_SA :=
   M.jointEig (s, t) (M.ptrTransA s φA0) (M.ptrTransB t φB0)
 
-/-- Branch-separated final state after the measurement unitary acts on the
+/-- Sector-separated final state after the measurement unitary acts on the
     initial pointer state, with the amplitude `cAmp` (carrying the
     detector-setting dependence) supplied externally. -/
 noncomputable def finalState
     (M : MeasurementUnitary S)
     (cAmp : Sign → Sign → ℂ)
     (φA0 : K_A) (φB0 : K_B) : H_SA :=
-  ∑ st : Sign × Sign, cAmp st.1 st.2 • branchState M st.1 st.2 φA0 φB0
+  ∑ st : Sign × Sign, cAmp st.1 st.2 • sectorState M st.1 st.2 φA0 φB0
 
 /-- `s'`-sector Born weight of the A-pointer translated by `M.ptrTransA s`
     starting from `φA0`. -/
@@ -60,10 +62,10 @@ noncomputable def pointerOverlapB
     (φB0 : K_B) (t' t : Sign) : ℝ :=
   ‖S.ptrB.proj t' (M.ptrTransB t φB0)‖ ^ 2
 
-/-- Total Born mass landing on a wrong-pointer sector after measurement: for
-    each spin branch `(s, t)` with amplitude `cAmp s t`, the squared amplitude
-    is weighted by the wrong-sector overlap mass on each side. -/
-noncomputable def wrongPointerReadoutMass
+/-- Total Born mass landing on a cross-sector readout after measurement: for
+    each spin sector `(s, t)` with amplitude `cAmp s t`, the squared amplitude
+    is weighted by the cross-sector overlap mass on each side. -/
+noncomputable def crossSectorReadoutMass
     (S : SystemApparatusSetup K_A K_B H_SA) (M : MeasurementUnitary S)
     (cAmp : Sign → Sign → ℂ) (φA0 : K_A) (φB0 : K_B) : ℝ :=
   ∑ st : Sign × Sign,
@@ -103,38 +105,38 @@ structure PointerLeakageBounds
 
 /-! ### Theorem targets (paper §4.11 / spec §9.6) -/
 
-/-- Branch decomposition of the final state (paper §4.5): the final state is
-    the four-term sum of branch states weighted by `cAmp`. Definitional
+/-- Sector decomposition of the final state (paper §4.5): the final state is
+    the four-term sum of sector states weighted by `cAmp`. Definitional
     unfolding of `finalState`. -/
-theorem finalState_branch_decomposition
+theorem finalState_sector_decomposition
     (M : MeasurementUnitary S) (cAmp : Sign → Sign → ℂ)
     (φA0 : K_A) (φB0 : K_B) :
     finalState M cAmp φA0 φB0
       = ∑ st : Sign × Sign,
-          cAmp st.1 st.2 • branchState M st.1 st.2 φA0 φB0 := rfl
+          cAmp st.1 st.2 • sectorState M st.1 st.2 φA0 φB0 := rfl
 
-/-- Wrong-pointer readout mass is bounded by `εA + εB` given amplitude
+/-- Cross-sector readout mass is bounded by `εA + εB` given amplitude
     normalisation (paper §4.11). The proof sums the per-side leakage bounds
     weighted by `‖cAmp st‖²` and uses `∑ ‖cAmp st‖² ≤ 1`.
 
     **Disclosure-infrastructure status.** This theorem is standalone in
     the current Lean tree: no LF3 export consumes it. `LF3_finite_leakage_theorem`
-    routes through the operator-form `LeakageCompat.branchWeight_dev` field
-    (in `Projectors/BranchWeight.lean`) instead, which is structurally a
+    routes through the operator-form `LeakageCompat.sectorVolume_dev` field
+    (in `Projectors/SectorVolume.lean`) instead, which is structurally a
     more direct bound on the quantity the chain capstones actually consume.
-    The geometric `branch_separation_leakage_bound` here is kept as paper-side
+    The geometric `sector_separation_leakage_bound` here is kept as paper-side
     disclosure infrastructure: it makes the §4.11 inequality formally available
     even though the operator-form path supersedes it in the v1.00 chain. A v2
-    refactor connecting the two would replace `LeakageCompat.branchWeight_dev`
+    refactor connecting the two would replace `LeakageCompat.sectorVolume_dev`
     with a derived form using this lemma plus a Cauchy-Schwarz step. Not
     scheduled for LF4. -/
-theorem branch_separation_leakage_bound
+theorem sector_separation_leakage_bound
     (M : MeasurementUnitary S) (cAmp : Sign → Sign → ℂ)
     (φA0 : K_A) (φB0 : K_B)
     (L : PointerLeakageBounds S M φA0 φB0)
     (hAmp : ∑ st : Sign × Sign, ‖cAmp st.1 st.2‖ ^ 2 ≤ 1) :
-    wrongPointerReadoutMass S M cAmp φA0 φB0 ≤ L.εA + L.εB := by
-  unfold wrongPointerReadoutMass
+    crossSectorReadoutMass S M cAmp φA0 φB0 ≤ L.εA + L.εB := by
+  unfold crossSectorReadoutMass
   have hSum_le :
       (∑ st : Sign × Sign,
           ‖cAmp st.1 st.2‖ ^ 2

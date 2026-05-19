@@ -470,37 +470,43 @@ structurally, and no current chain capstone consumes it. **Not part of
 option-(b) critical path.** Revisit at LF4 proper when unitary evolution
 enters non-trivially.
 
-### Phase 11 — LF3 terminology audit (branch → volume rename)
+### Phase 11 — LF3 terminology audit (branch → sector rename) — **DONE**
 
-Optional pre-LF4 churn, ~3-4 h. The goal is to align LF3's naming with
-CSD's geometric-quantum-mechanics framing: volume ratios are the
-foundational quantity, "branches" are not. LF3 currently carries
-`branchState`, `branchWeight`, `BranchSeparation`,
-`wrongPointerReadoutMass`, etc. Mechanically the content is
-volume-based — `branchWeight s t` is the norm-squared of the
-post-measurement state on the `(s, t)` eigenspace, a volume in
-projective amplitude space, not a count. But the **terminology**
-invites Everettian / many-worlds reading and obscures the volume claim.
+Executed in pre-LF4. The rename aligns LF3's naming with CSD's
+volume-ratios reading: each `(s, t)` region is an eigensector / volume
+domain, not an Everettian branch. The mathematical content was unchanged;
+only identifiers and prose moved.
 
-**Rename targets (proposal):**
+**Renames delivered (2026-05-19):**
 
-- `branchState` → `eigenSectorState` or `sectorState`.
-- `branchWeight` → `sectorVolume` or `eigenSectorVolume`.
-- `BranchSeparation.lean` → `SectorSeparation.lean`.
+- `branchState` → `sectorState`.
+- `branchWeight` → `sectorVolume` (chosen over `sectorWeight` to
+  reinforce the volume-ratios framing per 2026-05-18 user feedback;
+  the LF1 `weight`/`weightReal` vs LF3 `sectorVolume` asymmetry is
+  acceptable because the quantities are at different abstraction levels).
+- `branchNorm`/`branchOrth` (fields of `StrongReadoutCompat`) →
+  `sectorNorm`/`sectorOrth`.
+- `branchWeight_dev` (field of `LeakageCompat`) → `sectorVolume_dev`.
+- `branchWeight_strong_readout` → `sectorVolume_strong_readout`.
+- `branchWeight_finite_leakage` → `sectorVolume_finite_leakage`.
+- `branchWeight_eq_LF2_Born` → `sectorVolume_eq_LF2_Born`.
+- `abstract_branchWeight_eq_P_st_at_singlet` → `abstract_sectorVolume_eq_P_st_at_singlet`.
+- `finalState_branch_decomposition` → `finalState_sector_decomposition`.
+- `inner_finalState_branchState` → `inner_finalState_sectorState`.
 - `branch_separation_leakage_bound` → `sector_separation_leakage_bound`.
 - `wrongPointerReadoutMass` → `crossSectorReadoutMass`.
+- File rename: `LF3/BranchSeparation.lean` → `LF3/SectorSeparation.lean`.
+- File rename: `LF3/Projectors/BranchWeight.lean` → `LF3/Projectors/SectorVolume.lean`.
 
-**Scope and risk.** Rename is mechanical (`Find All`/`Replace All` with
-Lean awareness). Risk is breakage of consumers in `LF3/Projectors/`,
-`LF3/Singlet/`, `LF3/Interface.lean`. A clean rename pass + `lake build`
-+ AxiomAudit verification is the workflow.
+**Not renamed (deliberately):**
 
-**Decision needed pre-LF4.** Do this in pre-LF4 (reader gets the
-volume-forward terminology aligned with the foundational claim) or
-defer to LF4 (one churn pass at LF4 start time alongside other
-refactors). My read: **do it pre-LF4** — the cost is bounded
-(~3-4 h) and it's much harder to do consistently once LF4 adds POVM /
-mixed-state machinery on top. If deferred, log as LF4-todo §13.
+- `PointerLeakageBounds` — named for the pointer-leakage content, not
+  for "branch"; preserved as-is per the Phase 11 plan decision.
+
+**Historical docs (`specs/LF3-plan.md`, `specs/LF3-v1.00.txt`,
+`specs/spec-to-lean.md`)** retain the original branch-* names as
+historical records of the spec mapping. A one-line note at the top of
+`specs/LF3-plan.md` flags the Phase 11 rename for finding-aid purposes.
 
 **Maps to reviewer's plan.** Not on the reviewer's list — surfaced by
 the 2026-05-18 volume-forward discussion.

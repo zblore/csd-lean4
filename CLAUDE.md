@@ -223,16 +223,16 @@ Setup.lean              — Sign, DetectorSetting, BinaryPointerProjectors,
                           spinProj, jointSpinProj
 Hamiltonian.lean        — TensorFactorReadoutAlgebra, MeasurementUnitary
                           (abstract factorisation + eigenstate-action fields)
-BranchSeparation.lean   — branchState, finalState, pointerOverlapA/B,
-                          wrongPointerReadoutMass, PointerLeakageBounds,
-                          branch_separation_leakage_bound
+SectorSeparation.lean   — sectorState, finalState, pointerOverlapA/B,
+                          crossSectorReadoutMass, PointerLeakageBounds,
+                          sector_separation_leakage_bound
 Projectors/
   Core.lean             — ProjectorAlgebra, mHat, four field re-exports
-  BranchWeight.lean     — branchWeight, StrongReadoutCompat, LeakageCompat,
-                          branchWeight_strong_readout, branchWeight_finite_leakage
+  SectorVolume.lean     — sectorVolume, StrongReadoutCompat, LeakageCompat,
+                          sectorVolume_strong_readout, sectorVolume_finite_leakage
   LF2Interface.lean     — BasisIso, rankOneStateOfΨ, effectOfM,
                           trace_outerProduct_mul_eq_inner,
-                          branchWeight_eq_LF2_Born
+                          sectorVolume_eq_LF2_Born
 Singlet/
   State.lean            — singlet, singlet_norm, expectation
   Expectations.lean     — singlet_left/right_pauli_expectation_zero,
@@ -242,7 +242,7 @@ Singlet/
                           cst_squared_eq (algebraic core, derived from
                           closed-form cAmp), correlation_eq_neg_dot,
                           marginal_a/b_eq_half, no_signalling_strong_readout_a/b,
-                          abstract_branchWeight_eq_P_st_at_singlet
+                          abstract_sectorVolume_eq_P_st_at_singlet
   Leakage.lean          — singlet_pointer_probability_finite_leakage,
                           correlation_finite_leakage_bound,
                           marginal_a/b_finite_leakage_bound

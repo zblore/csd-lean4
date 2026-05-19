@@ -8,9 +8,9 @@ import CsdLean4.LF3.Singlet.Kernel
 Paper §7.
 
 Each finite-leakage bound is a triangle inequality on the appropriate finite
-sum over `Sign × Sign` or `Sign`, with the per-branch deviation supplied by
-`branchWeight_finite_leakage` and `LeakageCompat`. Composes
-`branchWeight_finite_leakage` from `Projectors/BranchWeight.lean` with the
+sum over `Sign × Sign` or `Sign`, with the per-sector deviation supplied by
+`sectorVolume_finite_leakage` and `LeakageCompat`. Composes
+`sectorVolume_finite_leakage` from `Projectors/SectorVolume.lean` with the
 `cst_squared_eq` algebraic core.
 -/
 
@@ -27,15 +27,15 @@ variable {K_A K_B H_SA : Type*}
 
 /-- **Singlet pointer-probability finite-leakage bound** (paper §7.5). The
     measured pointer-sector frequency deviates from `P_{st}(a, b)` by at most
-    `εA + εB + εA · εB`. Composes `branchWeight_finite_leakage` (operator
+    `εA + εB + εA · εB`. Composes `sectorVolume_finite_leakage` (operator
     layer) with `cst_squared_eq` (algebraic-core identity). -/
 theorem singlet_pointer_probability_finite_leakage
     (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
     (φA0 : K_A) (φB0 : K_B) (a b : DetectorSetting)
     (L : LeakageCompat P M φA0 φB0) (s t : Sign) :
-    |branchWeight P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t|
+    |sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t|
       ≤ L.εA + L.εB + L.εA * L.εB := by
-  have h_branch := branchWeight_finite_leakage P M φA0 φB0 (cAmp a b) L s t
+  have h_branch := sectorVolume_finite_leakage P M φA0 φB0 (cAmp a b) L s t
   have h_kernel : ‖cAmp a b s t‖ ^ 2 = P_st a b s t := cst_squared_eq a b s t
   rw [h_kernel] at h_branch
   exact h_branch
@@ -43,34 +43,34 @@ theorem singlet_pointer_probability_finite_leakage
 /-- **Singlet correlation finite-leakage bound** (paper §7.6). The measured
     correlation deviates from `−a·b` by at most `4(εA + εB + εA · εB)`.
     Triangle inequality on the four-term `Sign × Sign` sum, each term bounded
-    by the per-branch leakage. -/
+    by the per-sector leakage. -/
 theorem correlation_finite_leakage_bound
     (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
     (φA0 : K_A) (φB0 : K_B) (a b : DetectorSetting)
     (L : LeakageCompat P M φA0 φB0) :
     |(∑ st : Sign × Sign,
         st.1.val * st.2.val
-          * branchWeight P (finalState M (cAmp a b) φA0 φB0) st.1 st.2)
+          * sectorVolume P (finalState M (cAmp a b) φA0 φB0) st.1 st.2)
       - (-(dotR a b))|
       ≤ 4 * (L.εA + L.εB + L.εA * L.εB) := by
   -- Substitute correlation_eq_neg_dot to rewrite -a·b as ∑ st · P_st:
   rw [show -(dotR a b) = ∑ st : Sign × Sign, st.1.val * st.2.val * P_st a b st.1 st.2
        from (correlation_eq_neg_dot a b).symm]
-  -- Now the difference is a sum of four (st-weighted) per-branch deviations.
+  -- Now the difference is a sum of four (st-weighted) per-sector deviations.
   rw [← Finset.sum_sub_distrib]
   -- |∑ x| ≤ ∑ |x|, then bound each |xst| by the leakage.
   calc |∑ st : Sign × Sign,
             (st.1.val * st.2.val
-                * branchWeight P (finalState M (cAmp a b) φA0 φB0) st.1 st.2
+                * sectorVolume P (finalState M (cAmp a b) φA0 φB0) st.1 st.2
               - st.1.val * st.2.val * P_st a b st.1 st.2)|
       ≤ ∑ st : Sign × Sign,
             |st.1.val * st.2.val
-                * branchWeight P (finalState M (cAmp a b) φA0 φB0) st.1 st.2
+                * sectorVolume P (finalState M (cAmp a b) φA0 φB0) st.1 st.2
               - st.1.val * st.2.val * P_st a b st.1 st.2| := by
         exact Finset.abs_sum_le_sum_abs _ _
     _ = ∑ st : Sign × Sign,
             |st.1.val * st.2.val|
-              * |branchWeight P (finalState M (cAmp a b) φA0 φB0) st.1 st.2
+              * |sectorVolume P (finalState M (cAmp a b) φA0 φB0) st.1 st.2
                   - P_st a b st.1 st.2| := by
         apply Finset.sum_congr rfl
         intro st _
@@ -95,14 +95,14 @@ theorem marginal_a_finite_leakage_bound
     (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
     (φA0 : K_A) (φB0 : K_B) (a b : DetectorSetting)
     (L : LeakageCompat P M φA0 φB0) (s : Sign) :
-    |(∑ t : Sign, branchWeight P (finalState M (cAmp a b) φA0 φB0) s t) - 1/2|
+    |(∑ t : Sign, sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t) - 1/2|
       ≤ 2 * (L.εA + L.εB + L.εA * L.εB) := by
   rw [show (1/2 : ℝ) = ∑ t : Sign, P_st a b s t from (marginal_a_eq_half a b s).symm]
   rw [← Finset.sum_sub_distrib]
   calc |∑ t : Sign,
-            (branchWeight P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t)|
+            (sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t)|
       ≤ ∑ t : Sign,
-            |branchWeight P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t| :=
+            |sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t| :=
         Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ t : Sign, (L.εA + L.εB + L.εA * L.εB) := by
         apply Finset.sum_le_sum
@@ -116,14 +116,14 @@ theorem marginal_b_finite_leakage_bound
     (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
     (φA0 : K_A) (φB0 : K_B) (a b : DetectorSetting)
     (L : LeakageCompat P M φA0 φB0) (t : Sign) :
-    |(∑ s : Sign, branchWeight P (finalState M (cAmp a b) φA0 φB0) s t) - 1/2|
+    |(∑ s : Sign, sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t) - 1/2|
       ≤ 2 * (L.εA + L.εB + L.εA * L.εB) := by
   rw [show (1/2 : ℝ) = ∑ s : Sign, P_st a b s t from (marginal_b_eq_half a b t).symm]
   rw [← Finset.sum_sub_distrib]
   calc |∑ s : Sign,
-            (branchWeight P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t)|
+            (sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t)|
       ≤ ∑ s : Sign,
-            |branchWeight P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t| :=
+            |sectorVolume P (finalState M (cAmp a b) φA0 φB0) s t - P_st a b s t| :=
         Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ s : Sign, (L.εA + L.εB + L.εA * L.εB) := by
         apply Finset.sum_le_sum

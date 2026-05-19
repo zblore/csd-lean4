@@ -1,8 +1,8 @@
 import CsdLean4.LF3.Setup
 import CsdLean4.LF3.Hamiltonian
-import CsdLean4.LF3.BranchSeparation
+import CsdLean4.LF3.SectorSeparation
 import CsdLean4.LF3.Projectors.Core
-import CsdLean4.LF3.Projectors.BranchWeight
+import CsdLean4.LF3.Projectors.SectorVolume
 import CsdLean4.LF3.Projectors.LF2Interface
 import CsdLean4.LF3.Singlet.State
 import CsdLean4.LF3.Singlet.Expectations
@@ -39,7 +39,7 @@ Five exported theorems, in descending order of programme-level importance:
 The conceptual chain (what a fully discharged `PureSingletPreparation` would
 compose) is:
 
-- `Projectors.LF2Interface.branchWeight_eq_LF2_Born` (LF3 → LF2 Born form)
+- `Projectors.LF2Interface.sectorVolume_eq_LF2_Born` (LF3 → LF2 Born form)
 - `LF2.Interface.LF1_main_theorem_projective` (LF2 → LF1 frequency limit)
 - `LF1.MainTheorem.LF1_main_theorem_ae` (LF1 a.s. convergence)
 - `Singlet.Kernel.cst_squared_eq` (algebraic core, axiom-free)
@@ -48,7 +48,7 @@ The actual proof bodies below currently consume the bundled `PureSingletPreparat
 field `prep.weight_eq_P_st`, which packages the first two components above into
 a single hypothesis pending LF4 discharge. The chain capstones therefore compose
 `LF1_main_theorem_projective` + `prep.weight_eq_P_st` + `cst_squared_eq`
-directly; `branchWeight_eq_LF2_Born` enters through `weight_eq_P_st` once LF4
+directly; `sectorVolume_eq_LF2_Born` enters through `weight_eq_P_st` once LF4
 supplies the structural constructor.
 -/
 
@@ -114,22 +114,22 @@ theorem LF3_finite_leakage_theorem
     (L : LeakageCompat P M φA0 φB0) :
     -- (1) Pointer-sector probability deviation
     (∀ s t : Sign,
-      |branchWeight P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) s t
+      |sectorVolume P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) s t
         - P_st ctx.a ctx.b s t|
         ≤ L.εA + L.εB + L.εA * L.εB)
     -- (2) Correlation deviation
     ∧ |(∑ st : Sign × Sign,
           st.1.val * st.2.val
-            * branchWeight P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) st.1 st.2)
+            * sectorVolume P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) st.1 st.2)
        - (-(dotR ctx.a ctx.b))|
        ≤ 4 * (L.εA + L.εB + L.εA * L.εB)
     -- (3) A-marginal deviation
     ∧ (∀ s : Sign,
-        |(∑ t : Sign, branchWeight P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) s t) - 1/2|
+        |(∑ t : Sign, sectorVolume P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) s t) - 1/2|
           ≤ 2 * (L.εA + L.εB + L.εA * L.εB))
     -- (4) B-marginal deviation
     ∧ (∀ t : Sign,
-        |(∑ s : Sign, branchWeight P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) s t) - 1/2|
+        |(∑ s : Sign, sectorVolume P (finalState M (cAmp ctx.a ctx.b) φA0 φB0) s t) - 1/2|
           ≤ 2 * (L.εA + L.εB + L.εA * L.εB)) :=
   ⟨fun s t => singlet_pointer_probability_finite_leakage P M φA0 φB0 ctx.a ctx.b L s t,
    correlation_finite_leakage_bound P M φA0 φB0 ctx.a ctx.b L,

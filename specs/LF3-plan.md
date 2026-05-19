@@ -3,6 +3,17 @@
 Companion to `specs/LF3-v1.00.pdf` (extracted text: `specs/LF3-v1.00.txt`).
 Drives implementation under `CsdLean4/LF3/`.
 
+> **Note (2026-05-19, Phase 11 rename).** This document uses the original
+> branch-* identifier names (`branchState`, `branchWeight`,
+> `BranchSeparation`, `wrongPointerReadoutMass`, etc.). The Lean tree
+> was renamed to sector-* identifiers (`sectorState`, `sectorVolume`,
+> `SectorSeparation`, `crossSectorReadoutMass`, file paths
+> `LF3/SectorSeparation.lean` / `LF3/Projectors/SectorVolume.lean`) in
+> pre-LF4 Phase 11 to align with CSD's volume-ratios reading. See
+> `specs/pre-LF4-plan.md` Phase 11 section for the full rename list
+> and rationale. This document is preserved as a historical record of
+> the original spec mapping.
+
 ## 0. Scope and design choices (confirmed)
 
 - **Why LF3 exists: closing the LF1↔LF2↔LF3 empirical chain.** The point of LF3 is **not** the singlet kernel calculation in isolation, that is an algebraic identity any quantum-mechanics textbook reproduces. The point is to compose three previously separate Lean modules into a single machine-checked empirical chain:

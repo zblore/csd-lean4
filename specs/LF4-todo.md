@@ -196,7 +196,7 @@ The structural machinery (`Effect`, `DensityOperator`, `OperationalPackage`, `ra
 **Pickup:**
 1. Move `BinaryPointerProjectors` (and its theorems) to `CsdLean4/Framework/Measurement/BinaryPointer.lean`.
 2. Move `ProjectorAlgebra`, `StrongReadoutCompat`, `LeakageCompat` to `CsdLean4/Framework/Measurement/ProjectorAlgebra.lean`.
-3. Keep `mHat`, `branchWeight`, and other LF3-specific consumers in `LF3/Projectors/`. They depend on Framework but stay Cat-3.
+3. Keep `mHat`, `sectorVolume`, and other LF3-specific consumers in `LF3/Projectors/`. They depend on Framework but stay Cat-3.
 
 ### 10.3 `LF3/Projectors/TensorModel.lean::TensorEmbedding`
 
