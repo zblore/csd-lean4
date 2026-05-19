@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml)
 
-Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials), **LF2** (sector-conditional measure bridge and Born-weight wrapper), and **LF3** (singlet kernel and the LF1↔LF2↔LF3 empirical chain) are merged and machine-verified; LF4 scope is recorded in [`specs/LF4-todo.md`](specs/LF4-todo.md).
+Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials), **LF2** (sector-conditional measure bridge and Born-weight wrapper), and **LF3** (singlet kernel and the LF1↔LF2↔LF3 empirical chain) are merged and machine-verified; an **Empirical** module (Bell-family + no-cloning at the QM-validity layer) provides the experimental-prediction regression suite. LF4 scope is recorded in [`specs/LF4-todo.md`](specs/LF4-todo.md); the empirical-test plan is in [`specs/qm-empirical-tests.md`](specs/qm-empirical-tests.md).
 
 ## Overview
 
@@ -78,12 +78,26 @@ Three layers are currently formalised:
 
 The closed-form `cAmp := √P_st` is a v1.00 representative; the v2 plan is to construct `jointSpinEig` from the spectral decomposition of `jointSpinProj` so that `cAmp` becomes a derived `inner ℂ jointSpinEig singlet` rather than the closed-form sqrt. The `_inner` capstone variant already states the physically faithful form for callers who supply their own eigenstate.
 
+**Empirical** — experimental-prediction regression suite. Formalises:
+
+- **Bell family** (`CsdLean4/Empirical/Bell.lean`): CHSH at the Tsirelson bound on the singlet (A1, named-witness form `chsh_singlet_at_optimal_angles` plus existential `chsh_singlet_tsirelson_bound`), classical-bound violation gap (A2, `chsh_classical_bound_violated`), no-signalling on each side (A3 / A4), singlet marginals uniform at `1/2` (A5), the algebraic Khalfin-Tsirelson upper bound `|Re⟨α, β⟩ − Re⟨α, β'⟩ + Re⟨α', β⟩ + Re⟨α', β'⟩| ≤ 2√2` on any complex inner product space (A6 algebraic, `chsh_inner_bound`), and its QM-application lift to the bipartite-Pauli expectation `|Re⟨ψ, σ·a ⊗ σ·b − … ψ⟩| ≤ 2√2` for any unit `ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)` (A6 QM-form, `chsh_qm_tsirelson_bound`).
+- **No-cloning** (`CsdLean4/Empirical/NoCloning.lean`): Wootters-Zurek 1982 / Dieks 1982 two-state no-cloning theorem (`no_cloning_two_state`), stated abstractly over a tensor structure `H → H → Htensor` with inner-product factorisation as a hypothesis, plus the universal-cloner corollary (`no_universal_cloner_of_witness`). Cat-2 Framework candidate (QM-generic).
+
+Every Empirical theorem is foundational-triple-only and AxiomAudit-pinned (`#guard_msgs` regressions in `CsdLean4/Tests/AxiomAudit.lean` under `### Empirical predictions (Bell family, Phase A1-A5)`, `... A6` and `... no-cloning, Phase B2`).
+
+### Two-layer model: QM-validity vs CSD-ontic
+
+The Empirical module is a **QM-validity-layer** regression suite. Each theorem proves that the standard QM formalisation produces the predicted experimental number; the proofs are linear algebra and inner-product geometry, with no ontic substrate at the proof level. CSD's foundational claim — that QM emerges from volume ratios on Σ — is verified at the **CSD-ontic layer** by the LF1↔LF2↔LF3 chain capstones (`LF3_singlet_frequency_convergence*`), which currently exist only for the singlet kernel `P_st(a, b)`.
+
+The QM-validity layer is prerequisite to the CSD-ontic layer: LF4 §8 (Kähler instantiation) lifts each QM-validity statement to a CSD-ontic statement via the same wrapping pattern as the existing LF3 singlet capstones. The Empirical module is therefore both an experimental-validation suite for the current pre-LF4 work *and* the prerequisite layer for LF4-and-beyond CSD-ontic predictions. See [`specs/qm-empirical-tests.md`](specs/qm-empirical-tests.md) §0.1 for the full statement.
+
 Later formalisation targets (not yet started):
 
-- **LF4**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 (and the LF3 `hLF2` discharge) are listed in [`specs/LF4-todo.md`](specs/LF4-todo.md).
+- **LF4**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 (and the LF3 `hLF2` discharge) are listed in [`specs/LF4-todo.md`](specs/LF4-todo.md). Also discharges D1 (preparation-measure origin via compact Kähler instantiation, per `[[project-lf4-decisions]]` Q1) and provides the chain-wrap mechanism for lifting Empirical QM-validity statements to CSD-ontic statements.
 - **LF5**: outcome-conditioned update and sequential circuits.
+- **Empirical Phase B / C / D**: Stern-Gerlach, Malus, Mach-Zehnder (B); paradoxes including GHZ, Hardy, Mermin, Kochen-Specker (C); quantum algorithms including Deutsch-Jozsa, Grover, QFT, Shor (D). Each requires either LF4 setup, new infrastructure, or both; see `specs/qm-empirical-tests.md` for the per-item route.
 
-Canonical spec preprints, plain-text sidecars, per-layer implementation plans, and the LF4 TODO list live in [`specs/`](specs/).
+Canonical spec preprints, plain-text sidecars, per-layer implementation plans, the LF4 TODO list, and the empirical-test plan live in [`specs/`](specs/).
 
 ## Mathematical target of LF1
 
@@ -398,6 +412,15 @@ CsdLean4/
     Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
                             --   six chain capstones (three per-sector + three joint
                             --   Phase 8 variants)
+  Empirical/                -- QM-validity-layer experimental-prediction
+                            --   regression suite (Phase A + B2)
+    Bell.lean               -- Bell-family: CHSH at Tsirelson (A1), classical
+                            --   violation gap (A2), no-signalling A/B (A3, A4),
+                            --   singlet marginals (A5), Khalfin-Tsirelson
+                            --   algebraic + QM-form upper bound (A6)
+    NoCloning.lean          -- Wootters-Zurek + Dieks 1982 two-state no-cloning
+                            --   theorem stated abstractly over the tensor
+                            --   structure (Cat-2 Framework candidate)
   Tests/                    -- Separate Lake target `CsdLeanTests` (not pulled
                             --   in by `import CsdLean4`); build via
                             --   `lake build CsdLeanTests`
@@ -411,6 +434,11 @@ CsdLean4/
                             --   upstream candidates; declarations live in
                             --   their natural Mathlib symbol namespace, file
                             --   paths mirror the eventual Mathlib location
+    LinearAlgebra/Projectivization/
+      Topology.lean         -- Quotient topology + openness + IsOpenQuotientMap
+                            --   of mk' on `Projectivization K V` (Group 1 of
+                            --   the §12 plan; T2 + Compact + MeasureSpace
+                            --   deferred — see specs/projectivization-plan.md)
     Topology/Algebra/Module/
       LinearMap.lean        -- ContinuousLinearMap complement-of-idempotent
                             --   lemmas; consumed by LF3/Projectors/TensorModel
@@ -426,6 +454,12 @@ specs/
   LF3-v1.00.pdf             -- LF3 preprint (canonical)
   LF3-v1.00.txt             -- extracted plain-text sidecar
   LF3-plan.md               -- implementation plan
-  LF4-todo.md               -- nine items deferred from LF2 (and LF3) to LF4
+  LF4-todo.md               -- twelve items deferred from LF2 / LF3 to LF4
+  pre-LF4-plan.md           -- pre-LF4 execution log (Phases 1–11)
+  projectivization-plan.md  -- LF4-todo §12: Projectivization Mathlib API plan
+  qm-empirical-tests.md     -- QM empirical-test regression suite plan
+                            --   (Phase A / B / C-paradoxes / D-algorithms)
 AXIOMS.md                   -- canonical per-theorem axiom audit
+CONVENTIONS.md              -- Three-category framing (Cat-1 Mathlib-track,
+                            --   Cat-2 Framework, Cat-3 Programme-specific)
 ```

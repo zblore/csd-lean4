@@ -18,21 +18,88 @@ unblocked Lean thread parallel to `specs/projectivization-plan.md`.
 2. Foundational QM theorems with empirical content (Tsirelson bound, no-cloning, no-signalling).
 3. Quantum algorithms in the CSD reading (Deutsch-Jozsa, Grover, QFT, Shor).
 
+## 0.1 Two-layer model: QM-validity vs CSD-ontic
+
+Every empirical prediction in this suite admits two Lean formulations.
+The distinction is load-bearing and easy to confuse.
+
+**QM-validity layer.** A pure theorem about specific Hilbert spaces,
+vectors, and operators. Inputs are abstract: `EuclideanSpace ℂ (Fin n)`,
+unit vectors, Pauli matrices, isometries. Proofs are linear algebra
+and inner-product geometry. **No ontic substrate appears at the proof
+level.** This layer answers: "Does the standard QM formalisation
+produce the predicted number?"
+
+**CSD-ontic layer.** The same numerical prediction wrapped in the
+LF1↔LF2↔LF3 chain so that the QM expectation is *derived from*
+empirical frequencies via volume ratios on Σ. Inputs include
+`OnticSetup`, `SectorData`, `MeasureBridgeData`, `PurePreparation`. The
+proof routes through `LF1_main_theorem_ae` + `measure_bridge` + Born
+wrapper. This layer answers: "Does CSD's ontic account produce the same
+number that QM does?"
+
+**Current state.** Only one prediction has a CSD-ontic-layer
+formalisation: the singlet kernel `P_st(a, b) = (1 − st·a·b)/4`, via
+the six `LF3_singlet_frequency_convergence*` capstones. Everything
+else in this document — Bell A1–A6, NoCloning B2, Stern-Gerlach,
+Mach-Zehnder, GHZ, Hardy, Mermin, KS, algorithms — is QM-validity
+layer only at any "actionable now" status.
+
+**Why the QM-validity layer is still load-bearing pre-LF4.**
+
+1. **Prerequisite for LF4 lift.** The LF3 singlet capstones exist
+   because the QM-validity `P_st` content existed first. LF4 §8 wraps
+   the QM-validity statement; it does not replace it. Any
+   `LF4_<prediction>_frequency_convergence` capstone will instantiate
+   the same chain pattern over a corresponding QM-validity theorem.
+2. **Verification that the projective side is correctly formalised.**
+   CSD's foundational claim is `QM = volume ratios on Σ`. The
+   QM-validity layer in Lean verifies the LHS independently — without
+   it, an LF4 derivation could land at a numerically wrong target
+   while passing internal consistency checks.
+3. **Cross-reference against published QM and laboratory experiment.**
+   Every QM-validity theorem is checkable against textbook QM and
+   experimental papers. If the Lean version of CHSH disagrees with
+   Aspect's `S ≈ 2√2`, the bug is in the Lean. The CSD-ontic side is
+   downstream of that check.
+
+**What "tractable now" means in this document.** It means *QM-validity
+layer only*. The CSD-ontic lift for any "tractable now" item is the
+same LF4 §8 obligation that the singlet capstones already carry. When
+LF4 §8 lands, the lift mechanism is the same wrapping pattern as the
+existing `LF3_singlet_frequency_convergence_born_inner` — one capstone
+per prediction, consuming a `PurePreparation` bundle and outputting a
+QM-validity statement composed with the LF1 SLLN.
+
+**Status tags below.** Each prediction below has *two* statuses
+implicitly: a QM-validity-layer status and a CSD-ontic-layer status.
+The tables show the QM-validity status; the CSD-ontic status for every
+item except the existing LF3 capstones is "LF4-blocked" (specifically,
+blocked on §8 Kähler instantiation + chain wrapping).
+
+## 0.2 Scope rule
+
 **Scope rule.** Each prediction is a Lean `theorem` whose statement
-expresses the experimental quantity in CSD-foundational form (volume
-ratios of effect functions against pushed-forward preparation measures,
-per LF2's `effectProjFn` and `OperationalPackage.fromPreparation`),
-*not* a textbook re-derivation in matrix QM. The CSD-specific question
-is whether the volume-ratio account reproduces the QM numerics; the
-empirical-test suite is the regression that answers it.
+expresses the experimental quantity (a probability, expectation, or
+constraint) at the appropriate Hilbert-space level. The proof routes
+through whichever combination of LF1 + LF2 + LF3 + Bell/NoCloning
+infrastructure is available; the proof body does not need to invoke the
+ontic chain unless the theorem is explicitly CSD-ontic-layer.
 
 **Layered status.** Predictions are tagged:
 
-- **PROVED** — Lean theorem in place, AxiomAudit-pinned.
+- **PROVED** — QM-validity-layer Lean theorem in place, AxiomAudit-pinned.
 - **PROVED-LF3** — content exists inside LF3 but not yet named as
   an empirical-test export.
-- **READY** — actionable now without LF4, no new structural debt.
-- **LF4-blocked** — requires concrete ontic instantiation per LF4 §8.
+- **READY** — actionable now at QM-validity layer, no new structural debt.
+- **LF4-blocked** — even the QM-validity layer requires concrete LF4
+  setup (single-qubit `SectorData`, two-mode infrastructure, etc.).
+- **INFRA-blocked** — requires new mathematical infrastructure beyond
+  LF4 (weak-measurement formalism, n-qubit chains, QFT, etc.).
+
+The CSD-ontic-layer status for every item except the existing LF3
+singlet capstones is implicitly "blocked on LF4 §8" and will not be
+repeated in each row.
 - **INFRA-blocked** — requires new infrastructure (multi-qubit, QFT,
   modular arithmetic, etc.) beyond LF4.
 
