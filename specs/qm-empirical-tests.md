@@ -74,20 +74,21 @@ inequality `|Re⟨α,β⟩ − Re⟨α,β'⟩ + Re⟨α',β⟩ + Re⟨α',β'⟩
 any four unit vectors in a complex inner product space. Foundational
 triple only.
 
-**A6 QM-application lift (pending).** Going from the algebraic form
-to the *QM* Tsirelson bound `|⟨ψ, (σ·a ⊗ σ·b − σ·a ⊗ σ·b' + σ·a' ⊗ σ·b
-+ σ·a' ⊗ σ·b') ψ⟩| ≤ 2√2` requires either:
-
-- the missing `IsOrderedModule ℝ (Matrix n n ℂ)` Mathlib instance
-  (and then a direct application of Mathlib's `tsirelson_inequality`), or
-- the Tsirelson construction `α(a) := (σ·a ⊗ I)ψ`, `β(b) := (I ⊗ σ·b)ψ`
-  plus `‖α(a)‖ = 1` (uses `(σ·a)² = I`) plus `⟨α(a), β(b)⟩ = ⟨ψ, σ·a ⊗
-  σ·b · ψ⟩` (uses Hermiticity), then applying `chsh_inner_bound`.
-
-The latter is the cleaner route on the current Lean infrastructure; it
-is a separate sub-task on the order of half a day's focused work. The
-algebraic core (the load-bearing inequality) is done; only the
-QM-to-Hilbert-vector translation is pending.
+**A6 QM-application lift (DONE 2026-05-19).** `chsh_qm_tsirelson_bound`
+delivers the QM form: for any unit `ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)`
+and any unit detector settings,
+```
+|Re⟨ψ, (σ·a ⊗ σ·b)ψ⟩ − Re⟨ψ, (σ·a ⊗ σ·b')ψ⟩
+   + Re⟨ψ, (σ·a' ⊗ σ·b)ψ⟩ + Re⟨ψ, (σ·a' ⊗ σ·b')ψ⟩| ≤ 2√2.
+```
+Proved by the Tsirelson construction (`alphaVec a ψ := (σ·a ⊗ I)ψ`,
+`betaVec b ψ := (I ⊗ σ·b)ψ`) reducing to `chsh_inner_bound`. Norm
+preservation `‖alphaVec a ψ‖ = ‖ψ‖` follows from
+`(σ·a ⊗ I)² = I` (Hermitian involution); the inner-product identity
+`⟨alphaVec a ψ, betaVec b ψ⟩ = ⟨ψ, (σ·a ⊗ σ·b) ψ⟩` follows from the
+Hermitian-adjoint property of `σ·a ⊗ I` plus the Kronecker product
+identity `(σ·a ⊗ I)·(I ⊗ σ·b) = σ·a ⊗ σ·b`. Foundational-triple only;
+AxiomAudit pinned.
 
 ## 2. Phase B — single-experiment Born predictions (LF4-blocked)
 

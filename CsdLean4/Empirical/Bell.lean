@@ -1,5 +1,7 @@
 import CsdLean4.LF3.Singlet.Kernel
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # Empirical: Bell-family predictions on the bipartite singlet
@@ -418,6 +420,173 @@ theorem chsh_inner_bound
           abs_add_le _ _
       _ ≤ ‖β - β'‖ + ‖β + β'‖ := by linarith
   linarith
+
+/-! ### A6 QM-application lift: Tsirelson bound on QM expectation
+
+The algebraic `chsh_inner_bound` lifts to the QM CHSH expectation via the
+standard Tsirelson construction:
+
+```
+α(a, ψ) := (σ·a ⊗ I) ψ,        β(b, ψ) := (I ⊗ σ·b) ψ
+```
+
+For unit `ψ`, each of `α(a), α(a'), β(b), β(b')` is a unit vector
+(since `(σ·a ⊗ I)² = I` is a Hermitian involution, which preserves
+norms). The inner-product identity
+
+```
+⟨α(a, ψ), β(b, ψ)⟩  =  ⟨ψ, (σ·a ⊗ σ·b) ψ⟩
+```
+
+(from Hermiticity of `σ·a ⊗ I` plus the Kronecker product identity
+`(σ·a ⊗ I) · (I ⊗ σ·b) = σ·a ⊗ σ·b`) then turns the QM CHSH expectation
+into the inner-product form, and `chsh_inner_bound` gives `≤ 2√2`.
+-/
+
+open scoped Kronecker
+
+/-- `(σ·a ⊗ I)² = I` as a matrix identity. The kernel of the involution
+property that underlies norm preservation by the Tsirelson Alice-side
+operator. -/
+private lemma sigmaDotLeft_sq (a : DetectorSetting) :
+    sigmaDotLeft a * sigmaDotLeft a = 1 := by
+  unfold sigmaDotLeft
+  rw [← Matrix.mul_kronecker_mul, pauliDot_sq, one_mul, Matrix.one_kronecker_one]
+
+/-- `(I ⊗ σ·b)² = I`. -/
+private lemma sigmaDotRight_sq (b : DetectorSetting) :
+    sigmaDotRight b * sigmaDotRight b = 1 := by
+  unfold sigmaDotRight
+  rw [← Matrix.mul_kronecker_mul, pauliDot_sq, one_mul, Matrix.one_kronecker_one]
+
+/-- `σ·a ⊗ I` is Hermitian. -/
+private lemma sigmaDotLeft_isHermitian (a : DetectorSetting) :
+    (sigmaDotLeft a).IsHermitian := by
+  unfold sigmaDotLeft Matrix.IsHermitian
+  rw [Matrix.conjTranspose_kronecker, (pauliDot_isHermitian a).eq,
+      Matrix.conjTranspose_one]
+
+/-- `I ⊗ σ·b` is Hermitian. -/
+private lemma sigmaDotRight_isHermitian (b : DetectorSetting) :
+    (sigmaDotRight b).IsHermitian := by
+  unfold sigmaDotRight Matrix.IsHermitian
+  rw [Matrix.conjTranspose_kronecker, (pauliDot_isHermitian b).eq,
+      Matrix.conjTranspose_one]
+
+/-- Kronecker product identity: `(σ·a ⊗ I) · (I ⊗ σ·b) = σ·a ⊗ σ·b`. -/
+private lemma sigmaDotLeft_mul_sigmaDotRight (a b : DetectorSetting) :
+    sigmaDotLeft a * sigmaDotRight b = sigmaDotJoint a b := by
+  unfold sigmaDotLeft sigmaDotRight sigmaDotJoint
+  rw [← Matrix.mul_kronecker_mul, mul_one, one_mul]
+
+/-- The Tsirelson construction vector `α(a, ψ) := (σ·a ⊗ I) ψ`. -/
+noncomputable def alphaVec (a : DetectorSetting)
+    (ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)) : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
+  Matrix.toEuclideanLin (sigmaDotLeft a) ψ
+
+/-- The Tsirelson construction vector `β(b, ψ) := (I ⊗ σ·b) ψ`. -/
+noncomputable def betaVec (b : DetectorSetting)
+    (ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)) : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
+  Matrix.toEuclideanLin (sigmaDotRight b) ψ
+
+/-- `‖α(a, ψ)‖ = ‖ψ‖`: the Alice-side Tsirelson vector preserves the
+norm of `ψ`, because `σ·a ⊗ I` is a Hermitian involution. -/
+lemma norm_alphaVec (a : DetectorSetting)
+    (ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)) : ‖alphaVec a ψ‖ = ‖ψ‖ := by
+  -- ‖T ψ‖² = ⟨T ψ, T ψ⟩ = ⟨ψ, T (T ψ)⟩ = ⟨ψ, ψ⟩ = ‖ψ‖²; norms non-negative.
+  have key : ‖alphaVec a ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
+    rw [@norm_sq_eq_re_inner ℂ _ _ _ _, @norm_sq_eq_re_inner ℂ _ _ _ _]
+    congr 1
+    show inner ℂ (Matrix.toEuclideanLin (sigmaDotLeft a) ψ)
+                 (Matrix.toEuclideanLin (sigmaDotLeft a) ψ)
+       = inner ℂ ψ ψ
+    rw [← LinearMap.adjoint_inner_right (Matrix.toEuclideanLin (sigmaDotLeft a))]
+    rw [show (Matrix.toEuclideanLin (sigmaDotLeft a)).adjoint
+            = Matrix.toEuclideanLin (sigmaDotLeft a) from by
+          rw [← Matrix.toEuclideanLin_conjTranspose_eq_adjoint,
+              (sigmaDotLeft_isHermitian a).eq]]
+    rw [show Matrix.toEuclideanLin (sigmaDotLeft a)
+              (Matrix.toEuclideanLin (sigmaDotLeft a) ψ)
+          = Matrix.toEuclideanLin (sigmaDotLeft a * sigmaDotLeft a) ψ from by
+          rw [Matrix.toLpLin_mul_same]; rfl]
+    rw [sigmaDotLeft_sq, Matrix.toLpLin_one]
+    rfl
+  have h1 : 0 ≤ ‖alphaVec a ψ‖ := norm_nonneg _
+  have h2 : 0 ≤ ‖ψ‖ := norm_nonneg _
+  nlinarith [sq_nonneg (‖alphaVec a ψ‖ - ‖ψ‖), sq_nonneg (‖alphaVec a ψ‖ + ‖ψ‖)]
+
+/-- `‖β(b, ψ)‖ = ‖ψ‖`. -/
+lemma norm_betaVec (b : DetectorSetting)
+    (ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)) : ‖betaVec b ψ‖ = ‖ψ‖ := by
+  have key : ‖betaVec b ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
+    rw [@norm_sq_eq_re_inner ℂ _ _ _ _, @norm_sq_eq_re_inner ℂ _ _ _ _]
+    congr 1
+    show inner ℂ (Matrix.toEuclideanLin (sigmaDotRight b) ψ)
+                 (Matrix.toEuclideanLin (sigmaDotRight b) ψ)
+       = inner ℂ ψ ψ
+    rw [← LinearMap.adjoint_inner_right (Matrix.toEuclideanLin (sigmaDotRight b))]
+    rw [show (Matrix.toEuclideanLin (sigmaDotRight b)).adjoint
+            = Matrix.toEuclideanLin (sigmaDotRight b) from by
+          rw [← Matrix.toEuclideanLin_conjTranspose_eq_adjoint,
+              (sigmaDotRight_isHermitian b).eq]]
+    rw [show Matrix.toEuclideanLin (sigmaDotRight b)
+              (Matrix.toEuclideanLin (sigmaDotRight b) ψ)
+          = Matrix.toEuclideanLin (sigmaDotRight b * sigmaDotRight b) ψ from by
+          rw [Matrix.toLpLin_mul_same]; rfl]
+    rw [sigmaDotRight_sq, Matrix.toLpLin_one]
+    rfl
+  nlinarith [sq_nonneg (‖betaVec b ψ‖ - ‖ψ‖), sq_nonneg (‖betaVec b ψ‖ + ‖ψ‖),
+             norm_nonneg (betaVec b ψ), norm_nonneg ψ]
+
+/-- The inner-product identity at the heart of the Tsirelson construction:
+`⟨α(a, ψ), β(b, ψ)⟩ = ⟨ψ, (σ·a ⊗ σ·b) ψ⟩`. -/
+lemma inner_alphaVec_betaVec
+    (a b : DetectorSetting) (ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)) :
+    inner ℂ (alphaVec a ψ) (betaVec b ψ)
+      = inner ℂ ψ (Matrix.toEuclideanLin (sigmaDotJoint a b) ψ) := by
+  show inner ℂ (Matrix.toEuclideanLin (sigmaDotLeft a) ψ)
+               (Matrix.toEuclideanLin (sigmaDotRight b) ψ) = _
+  rw [← LinearMap.adjoint_inner_right (Matrix.toEuclideanLin (sigmaDotLeft a))]
+  rw [show (Matrix.toEuclideanLin (sigmaDotLeft a)).adjoint
+          = Matrix.toEuclideanLin (sigmaDotLeft a) from by
+        rw [← Matrix.toEuclideanLin_conjTranspose_eq_adjoint,
+            (sigmaDotLeft_isHermitian a).eq]]
+  rw [show Matrix.toEuclideanLin (sigmaDotLeft a)
+            (Matrix.toEuclideanLin (sigmaDotRight b) ψ)
+        = Matrix.toEuclideanLin (sigmaDotLeft a * sigmaDotRight b) ψ from by
+        rw [Matrix.toLpLin_mul_same]; rfl]
+  rw [sigmaDotLeft_mul_sigmaDotRight]
+
+/-- **A6 QM form: Tsirelson upper bound on bipartite Pauli CHSH
+expectation.** For any unit `ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)` and
+any unit detector settings `a, a', b, b' : DetectorSetting`,
+```
+|Re⟨ψ, (σ·a ⊗ σ·b)ψ⟩ − Re⟨ψ, (σ·a ⊗ σ·b')ψ⟩ + Re⟨ψ, (σ·a' ⊗ σ·b)ψ⟩
+   + Re⟨ψ, (σ·a' ⊗ σ·b')ψ⟩| ≤ 2√2.
+```
+
+Proved by the standard Tsirelson construction `α(a, ψ) := (σ·a ⊗ I)ψ`,
+`β(b, ψ) := (I ⊗ σ·b)ψ`, followed by the algebraic `chsh_inner_bound`.
+
+**Experimental verification:** Tsirelson 1980, *Lett. Math. Phys.* **4**,
+93. Saturation by the singlet (`ψ = singlet`) at canonical angles
+(`chsh_singlet_at_optimal_angles`). -/
+theorem chsh_qm_tsirelson_bound
+    (a a' b b' : DetectorSetting)
+    (ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)) (hψ : ‖ψ‖ = 1) :
+    |Complex.re (inner ℂ ψ (Matrix.toEuclideanLin (sigmaDotJoint a b) ψ))
+        - Complex.re (inner ℂ ψ (Matrix.toEuclideanLin (sigmaDotJoint a b') ψ))
+        + Complex.re (inner ℂ ψ (Matrix.toEuclideanLin (sigmaDotJoint a' b) ψ))
+        + Complex.re (inner ℂ ψ (Matrix.toEuclideanLin (sigmaDotJoint a' b') ψ))|
+    ≤ 2 * Real.sqrt 2 := by
+  rw [← inner_alphaVec_betaVec, ← inner_alphaVec_betaVec,
+      ← inner_alphaVec_betaVec, ← inner_alphaVec_betaVec]
+  exact chsh_inner_bound (alphaVec a ψ) (alphaVec a' ψ)
+    (betaVec b ψ) (betaVec b' ψ)
+    (by rw [norm_alphaVec]; exact hψ)
+    (by rw [norm_alphaVec]; exact hψ)
+    (by rw [norm_betaVec]; exact hψ)
+    (by rw [norm_betaVec]; exact hψ)
 
 end Bell
 end Empirical
