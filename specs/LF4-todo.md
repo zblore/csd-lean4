@@ -240,19 +240,37 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 
 ---
 
-## 12. `Projectivization` topology / measure / lift API in Mathlib
+## 12. `Projectivization` topology / measure / lift API in Mathlib — **PARTIAL (Group 1, 2026-05-19)**
 
 **Status:** Identified as a Mathlib gap via the pre-LF4 spike on 2026-05-18 (see `specs/pre-LF4-plan.md` Spike 1). The pre-LF4 option-(b) chain initially scoped a commitment `ProjectiveHilbert N := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` at the LF2 level; the spike found Mathlib has no `TopologicalSpace`, `MeasurableSpace`, or `BorelSpace` instance on `Projectivization` outside the projective-line case (`OnePoint/ProjectiveLine.lean`). The architectural workaround keeps `SectorData.P` abstract and supplies a caller-side `representative : P → EuclideanSpace ℂ (Fin N)` map.
 
-**Why deferred:** Building the quotient-topology + Borel-structure + `Projectivization.lift`-measurability stack for arbitrary `K`, `V` is a multi-day Mathlib contribution, not a pre-LF4 critical-path item. The abstract-`P` workaround is general and gives LF4 full freedom to pick concrete realisations (Kähler quotient, sphere quotient, or `Projectivization` once landed).
+**Group 1 delivered 2026-05-19** in `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean` (Cat-1, namespace `Projectivization`, no CSD prefix, strict Mathlib style). Covers items 3.1–3.4 of the `specs/projectivization-plan.md` execution plan:
+
+- `Projectivization.instTopologicalSpace`: explicit forwarding of the quotient topology instance (required because `Projectivization` is a `def`, not `@[reducible]`).
+- `Projectivization.continuous_mk'`: continuity of the canonical surjection `{v : V // v ≠ 0} → ℙ K V`.
+- `Projectivization.scaleNonzero` + `scaleNonzeroHomeo`: the `Kˣ`-scaling action on the nonzero subtype as a self-homeomorphism (gated on `[TopologicalSpace V] [ContinuousConstSMul K V]`).
+- `Projectivization.mk'_preimage_mk'_image`: saturation lemma `mk' ⁻¹' (mk' '' U) = ⋃ a : Kˣ, scaleNonzero a '' U` (the projectivization analogue of `MulAction.quotient_preimage_image_eq_union_mul`).
+- `Projectivization.isOpenMap_mk'`: openness of the canonical surjection.
+- `Projectivization.isQuotientMap_mk'` + `isOpenQuotientMap_mk'`: quotient-map and open-quotient-map characterisations.
+
+Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [TopologicalSpace V] [ContinuousConstSMul K V]` for the topological-action lemmas (continuity / openness); algebraic infrastructure (`scaleNonzero_mul`, `scaleNonzero_one`, `mk'_preimage_mk'_image`) does not require any topology. No topology on K is needed — `ContinuousConstSMul K V` is purely a property of the `V`-side action.
+
+**Remaining Groups (3.5–3.6 + MeasureSpace.lean 4.1–4.6):**
+
+- **Group 2 (Topology 3.5 T2Space + 3.6 CompactSpace).** Awaits a scalar-hypothesis decision: the surjectivity-onto-unit-sphere proof needs normalisation by `‖v‖⁻¹ : ℝ`, which requires `[NormedSpace ℝ V]` alongside `[NormedSpace K V]` (via `[NormedAlgebra ℝ K]` or directly `[RCLike K]`). T2 additionally needs the K-collinearity-relation closedness argument (per plan §6.2 — pattern after `t2Space_quotient_mulAction_of_properSMul` proof body, or via wedge-product / 2×2-minors). Estimate: ~1 day focused. **Blocks Group 3 (`MeasurableSingletonClass` requires T2).**
+- **Group 3–5 (`MeasureSpace.lean` 4.1–4.6).** Borel σ-algebra instance + coincidence lemma + `MeasurableSingletonClass` + `measurable_mk'` + `lift_measurable` + characterisation. Estimate: ~1.5 days focused. Depends on Group 2 T2 for `MeasurableSingletonClass`.
+
+**Pickup pointer:** see `specs/projectivization-plan.md` for the per-section design plan; `specs/projectivization-plan.md` §6 records the resolved Mathlib infrastructure investigations.
+
+**Why partial:** Building the full quotient-topology + Borel-structure + `Projectivization.lift`-measurability stack for arbitrary `K`, `V` is a multi-day Mathlib contribution. Group 1 (the openness-of-canonical-surjection backbone) is landed; the remaining Groups 2–5 are blocked on a scalar-hypothesis decision and a non-trivial closedness proof.
 
 **Pickup (Cat-1 Mathlib contribution, when scheduled):**
 
-1. Define `TopologicalSpace (Projectivization K V)` as the quotient topology from `{v : V // v ≠ 0}` carrying the subspace topology.
+1. ~~Define `TopologicalSpace (Projectivization K V)`.~~ **DONE 2026-05-19 (Group 1).**
 2. Prove `BorelSpace (Projectivization K V)` for the appropriate `K`-and-`V`-flavoured cases (`K = ℂ`, `V` a finite-dimensional inner-product space is the only case we structurally need; `K = ℝ` for completeness).
 3. Prove `MeasurableSingletonClass (Projectivization K V)` (needed for `MeasureTheory.integral_dirac` rather than `integral_dirac'`).
 4. Prove `Projectivization.lift_measurable`: if `f : V \ {0} → α` is measurable and `f`-phase-invariant, then `Projectivization.lift f hf : Projectivization K V → α` is measurable.
-5. Land in `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Measure.lean` per CONVENTIONS.md `1-Mathlib` tagging. Stage as upstream candidate.
+5. Land in `CsdLean4/Mathlib/LinearAlgebra/Projectivization/MeasureSpace.lean` per CONVENTIONS.md `1-Mathlib` tagging. Stage as upstream candidate.
 
 **Effect on pre-LF4 / LF4 work:** Until landed, `SectorData.P` stays abstract and `OperationalPackage.fromPreparation` takes a caller-supplied `rep : P → EuclideanSpace ℂ (Fin N)`. When this lands, LF4 can specialise `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` and the `rep` argument resolves to `Projectivization.rep` or similar. No retrofit needed; the abstract API is monomorphic in `P` so any concrete `P` works at instantiation time.
 
