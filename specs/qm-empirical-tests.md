@@ -51,7 +51,7 @@ is Tsirelson (A6); A1–A5 are packaging.
 | A3 | No-signalling, side A | Marginal of A independent of B's setting | **DONE 2026-05-19** (`no_signalling_alice`) | Aspect 1982; loophole-free: Hensen 2015, Giustina 2015, Shalm 2015 |
 | A4 | No-signalling, side B | Symmetric | **DONE 2026-05-19** (`no_signalling_bob`) | same |
 | A5 | Singlet marginal uniform | `P(A = +|a) = 1/2` for any unit `a` | **DONE 2026-05-19** (`singlet_marginal_alice`, `singlet_marginal_bob`) | Textbook |
-| A6 | Tsirelson upper bound | For any pure 2-qubit `|ψ⟩` and unit `a, a', b, b'`, `|S(a,a',b,b')| ≤ 2√2` | pending (~1 day; Cat-2 candidate) | Tsirelson 1980 |
+| A6 | Tsirelson upper bound (algebraic form) | For any 4 unit vectors `α, α', β, β'` in a complex inner product space, `|Re⟨α,β⟩ − Re⟨α,β'⟩ + Re⟨α',β⟩ + Re⟨α',β'⟩| ≤ 2√2` | **DONE 2026-05-19** (`chsh_inner_bound`); QM-application lift pending (see below) | Tsirelson 1980 |
 
 A6 routes through the operator identity `(σ_a + σ_{a'})² + (σ_a − σ_{a'})² ≤ 4`
 plus Cauchy-Schwarz on `⟨ψ | · | ψ⟩`. It is QM-generic (no CSD
@@ -63,13 +63,31 @@ named, docstringed with experimental provenance (year + reference),
 and pinned in AxiomAudit. The Bell paragraph in `README.md` is
 updated.
 
-**Phase A1-A5 landed 2026-05-19** in commit `<filled at commit time>`.
-A1-A5 are foundational-triple-only (eight AxiomAudit `#guard_msgs`
-regressions added under `### Empirical predictions (Bell family,
-Phase A1-A5)` in `Tests/AxiomAudit.lean`). Library build `lake build`
-(2956 jobs) clean; test build `lake build CsdLeanTests` (2955 jobs)
-clean. A6 (Tsirelson upper bound) remains as the only Phase A item
-open.
+**Phase A1-A5 landed 2026-05-19** in commit `b8c31da`. A1-A5 are
+foundational-triple-only (eight AxiomAudit `#guard_msgs` regressions
+added under `### Empirical predictions (Bell family, Phase A1-A5)`
+in `Tests/AxiomAudit.lean`).
+
+**Phase A6 (algebraic form) landed 2026-05-19** in a follow-up commit.
+`chsh_inner_bound` proves the pure-Hilbert-space Khalfin-Tsirelson
+inequality `|Re⟨α,β⟩ − Re⟨α,β'⟩ + Re⟨α',β⟩ + Re⟨α',β'⟩| ≤ 2√2` for
+any four unit vectors in a complex inner product space. Foundational
+triple only.
+
+**A6 QM-application lift (pending).** Going from the algebraic form
+to the *QM* Tsirelson bound `|⟨ψ, (σ·a ⊗ σ·b − σ·a ⊗ σ·b' + σ·a' ⊗ σ·b
++ σ·a' ⊗ σ·b') ψ⟩| ≤ 2√2` requires either:
+
+- the missing `IsOrderedModule ℝ (Matrix n n ℂ)` Mathlib instance
+  (and then a direct application of Mathlib's `tsirelson_inequality`), or
+- the Tsirelson construction `α(a) := (σ·a ⊗ I)ψ`, `β(b) := (I ⊗ σ·b)ψ`
+  plus `‖α(a)‖ = 1` (uses `(σ·a)² = I`) plus `⟨α(a), β(b)⟩ = ⟨ψ, σ·a ⊗
+  σ·b · ψ⟩` (uses Hermiticity), then applying `chsh_inner_bound`.
+
+The latter is the cleaner route on the current Lean infrastructure; it
+is a separate sub-task on the order of half a day's focused work. The
+algebraic core (the load-bearing inequality) is done; only the
+QM-to-Hilbert-vector translation is pending.
 
 ## 2. Phase B — single-experiment Born predictions (LF4-blocked)
 
@@ -108,9 +126,68 @@ applied to two non-orthogonal states.
 | B5a | Bell-basis Born numerics: explicit probability tables for |Φ±⟩, |Ψ±⟩ under standard projective measurements | LF4 §8 + LF3 → LF2 chain wiring |
 | B5b | Werner state predictions: depolarising-noise spectrum `p|ψ⟩⟨ψ| + (1−p)I/4` | LF4 §8 |
 
-## 3. Phase C — multipartite and algorithms (INFRA-blocked + LF4-blocked)
+## 3. Phase C — QM paradoxes (mixed INFRA-blocked / LF4-blocked)
 
-### 3.1 `Multipartite/GHZ.lean`
+QM has a substantial catalogue of paradoxes — statements that look
+inconsistent but are predicted by QM and have been empirically verified.
+They complement the Bell family: where Bell-type inequalities falsify
+local realism *statistically*, paradoxes typically falsify it
+*structurally* (single-shot impossibility statements).
+
+A separate subdirectory `CsdLean4/Empirical/Paradoxes/` houses these,
+to keep the single-experiment vs paradox structure visible in the
+file layout.
+
+### 3.1 Single-system paradoxes (mostly LF4-blocked, some QM-generic)
+
+| # | Paradox | Lean target | Status | Experimental verification |
+|---|---|---|---|---|
+| D1 | Quantum Zeno effect | Frequent measurement of a slowly evolving state freezes the survival probability; `lim_{N→∞} P_survive(N measurements over [0, T]) = 1` | LF4-blocked (needs single-qubit evolution + sequential projective measurement) | Itano et al. 1990, *Phys. Rev. A* **41**, 2295 |
+| D2 | Quantum eraser | Marking which-path destroys interference; erasing the mark recovers it | LF4-blocked (single-photon, two-mode, plus environment) | Scully, Englert, Walther 1991; Kim et al. 2000 |
+| D3 | Three-box paradox (Aharonov-Vaidman) | Pre/post-selected particle "in box A with probability 1 AND in box B with probability 1" | LF4-blocked (3-state system, weak/strong measurement) | Resch et al. 2004 |
+| D4 | Quantum Cheshire Cat | Property (spin) detected without bearer (particle) | INFRA-blocked (weak-measurement formalism) | Denkmayr et al. 2014 |
+| D5 | Schrödinger's cat (mesoscopic regime) | Macroscopic superposition observable | INFRA-blocked (open-quantum-system, decoherence model) | NIST 1996 (Be⁺ ion); Arndt et al. (C60 molecules) |
+
+### 3.2 Multipartite paradoxes (`Empirical/Multipartite/`)
+
+| # | Paradox | Lean target | Status | Experimental verification |
+|---|---|---|---|---|
+| D6 | GHZ paradox (Mermin form) | 3-qubit `(|000⟩ + |111⟩)/√2`: classical local-realism cannot reproduce `⟨σ_x σ_x σ_x⟩ = −1` and the three permutations `⟨σ_x σ_y σ_y⟩ = +1` simultaneously | INFRA-blocked (3-qubit Hilbert space + multi-Pauli observables) | Pan et al. 2000, *Nature* **403**, 515 |
+| D7 | Hardy's 9% paradox | Non-maximally entangled 2-qubit state; specific outcome combination occurs ~9% of the time though classically impossible | LF4-blocked + LF3 extension | Lundeen, Steinberg 2009 |
+| D8 | Mermin's pentagram (KS contextuality) | Five mutually compatible measurements forming a KS configuration cannot all be assigned values consistently | INFRA-blocked (5-context infrastructure) | Bartosik et al. 2009 (neutrons); Kirchmair et al. 2009 (trapped ions) |
+| D9 | Kochen-Specker theorem | No non-contextual hidden-variable assignment consistent with QM on projection observables in dim ≥ 3 | INFRA-blocked (specific 18-vector or 117-vector configurations); QM-generic, Cat-2 candidate | Cabello 1996 (theoretical); experimental: Kirchmair 2009, others |
+
+### 3.3 Observer-dependence paradoxes (foundational, post-LF4)
+
+| # | Paradox | Lean target | Status | Experimental verification |
+|---|---|---|---|---|
+| D10 | Wigner's friend | Observer and friend assign different states; QM gives different predictions | post-LF4 (consciousness/measurement-cut question; CSD-relevant since CSD claims an ontic state independent of observer) | Conceptual; some experimental tests (Massimiliano Proietti 2019) |
+| D11 | Frauchiger-Renner | Extended Wigner's friend: contradiction from assuming all observers' QM reasoning is consistent | post-LF4 (CSD's ontic foundation may give a sharper answer than QM here) | Theoretical 2018; no decisive experimental test |
+
+These two are the most philosophically loaded and most directly engage
+CSD's ontic claim. A CSD-perspective paper on Wigner's friend /
+Frauchiger-Renner is a natural late-stage deliverable; the Lean
+formalisation tracks behind the paper.
+
+### 3.4 Paradox / CSD-prediction divergence (placeholder)
+
+Some paradoxes may be *resolved* by CSD's ontic account in a way that
+makes them no-longer-paradoxical. The structural-debt items
+(`[[project-structural-debts]]`: V ≈ 1 − I, G3b) are candidates: their
+resolution under the Kähler ontic instantiation may sharpen or relax
+specific paradox statements. Watch for these as LF4 → TN4 + Sigma1 +
+LF4-paper drafting proceeds.
+
+## 4. Phase D — quantum algorithms (INFRA-blocked + LF4-blocked, long-term)
+
+### 4.1 `Multipartite/GHZ.lean` (now subsumed under §3.2 D6)
+
+The original Phase C GHZ and Hardy items now live under Phase C
+paradoxes (§3.2 D6, D7). They are retained as `Empirical/Multipartite/`
+files since the bipartite/tripartite split is also useful as a structural
+organisation. See §3.2 for the paradox-framed statements.
+
+### 4.2 `Algorithms/`
 
 | # | Prediction | Status |
 |---|---|---|
