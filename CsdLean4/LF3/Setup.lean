@@ -2,6 +2,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.LinearAlgebra.Matrix.Trace
+import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # LF3 Setup: signs, detector settings, system-apparatus interfaces, two-qubit Pauli layer
@@ -56,18 +57,6 @@ lemma sum_univ {α : Type*} [AddCommMonoid α] (f : Sign → α) :
   rw [Finset.sum_insert (by decide), Finset.sum_singleton]
 
 end Sign
-
-/-! ### Matrix-vector adapter (non-deprecated)
-
-`Matrix.ofLp_toEuclideanLin_apply` (used by the LF3 bridge proofs) was
-deprecated in favour of `Matrix.ofLp_toLpLin` in a recent Mathlib refresh.
-Provide a local `rfl`-alias to avoid both the deprecation warning and the
-type-class friction of the new lemma (which exposes the `p q : ENNReal` Lp
-parameters and routes through `Matrix.toLin'`). -/
-
-theorem Matrix.ofLp_toEuclideanLin {m n : Type*} [Fintype n] [DecidableEq n]
-    (M : Matrix m n ℂ) (v : EuclideanSpace ℂ n) :
-    ((Matrix.toEuclideanLin M) v).ofLp = M *ᵥ v.ofLp := rfl
 
 /-! ### Detector settings -/
 

@@ -54,8 +54,12 @@ noncomputable def projectiveWeight
   (Measure.map D.π μprep) O
 
 /-- Unfolding lemma: `projectiveWeight` is the pushforward measure of the
-    region. -/
-@[simp] lemma projectiveWeight_def
+    region. Not `@[simp]` — leaving `projectiveWeight` as a named
+    abstraction makes downstream proofs and theorem statements
+    readable; callers `unfold projectiveWeight` (or rewrite with this
+    lemma explicitly) when they need to expose the underlying
+    pushforward. -/
+lemma projectiveWeight_def
     (D : SectorData SigmaSpace P G) (μprep : Measure SigmaSpace) (O : Set P) :
     projectiveWeight D μprep O = (Measure.map D.π μprep) O := rfl
 

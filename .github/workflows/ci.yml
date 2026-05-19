@@ -23,6 +23,7 @@ jobs:
           auto-config: false
           build: true
           build-args: "CsdLean4"
+          use-mathlib-cache: true
 
       - name: Build CsdLeanTests (regression suite + examples)
         run: lake build CsdLeanTests

@@ -95,7 +95,8 @@ that `OnticSetup` need not carry measurability as a separate field. The full
 content of `hΦ_pres`, that `Φ` actually preserves `μL`, is not invoked
 anywhere in the current corpus. See the `OnticSetup` docstring for the honest
 disclosure on this. -/
-@[simp] lemma measurable_Φ : Measurable S.Φ := S.hΦ_pres.measurable
+@[measurability, fun_prop]
+lemma measurable_Φ : Measurable S.Φ := S.hΦ_pres.measurable
 
 end OnticSetup
 
