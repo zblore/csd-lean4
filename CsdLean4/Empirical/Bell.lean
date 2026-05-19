@@ -26,12 +26,21 @@ Phase A items (per `specs/qm-empirical-tests.md`):
   setting; symmetric for Bob.
 - **A5: Singlet marginals uniform.** `P(A = +) = P(B = +) = 1/2`.
 
-- **A6: Tsirelson upper bound (operator-form).** For any unit detector
-  settings `a, a', b, b'` the bipartite-Pauli CHSH observable on the
-  4-dimensional system algebra satisfies
-  `σ·a ⊗ σ·b + σ·a ⊗ σ·b' + σ·a' ⊗ σ·b − σ·a' ⊗ σ·b' ≤ 2√2 · 1`
-  in the Loewner (matrix-PSD) order. Routed through Mathlib's
-  `tsirelson_inequality` after building the requisite `IsCHSHTuple`.
+- **A6: Tsirelson upper bound (inner-product / expectation form).** Two
+  forms are exported. The **algebraic Khalfin-Tsirelson** form
+  (`chsh_inner_bound`) bounds
+  `|Re⟨α, β⟩ − Re⟨α, β'⟩ + Re⟨α', β⟩ + Re⟨α', β'⟩| ≤ 2√2` for any
+  four unit vectors `α, α', β, β'` in a complex inner product space,
+  proved via the parallelogram law + Cauchy-Schwarz on `ℝ²`. The
+  **QM-expectation lift** (`chsh_qm_tsirelson_bound`) lifts this to the
+  bipartite-Pauli CHSH expectation
+  `|Re⟨ψ, (σ·a ⊗ σ·b)ψ⟩ ± …| ≤ 2√2` for any unit `ψ ∈ ℂ² ⊗ ℂ²`, via the
+  standard Tsirelson construction `α(a, ψ) := (σ·a ⊗ I)ψ`,
+  `β(b, ψ) := (I ⊗ σ·b)ψ`. (The operator-form Loewner-order statement
+  via Mathlib's `tsirelson_inequality` was the original target but is
+  currently blocked on a missing `IsOrderedModule ℝ (Matrix n n ℂ)`
+  instance upstream; the algebraic + lift route is mathematically
+  equivalent and lands the same expectation bound.)
 
 ## Experimental provenance
 
@@ -146,20 +155,31 @@ hidden-variable assignment is `|S| ≤ 2`. The QM prediction `|S| = 2√2`
 this bound. The named gap is the empirical falsification of local
 realism. -/
 
-/-- **Bell classical bound on the CHSH operator** (Bell 1964): under any
-local hidden-variable model, `|S| ≤ 2`. -/
-def bellClassicalBound : ℝ := 2
+/-- **The numerical value `2` of the Bell-1964 classical (LHV) CHSH
+bound.** This is a named constant carrying the value `2`, not a
+theorem that any local-hidden-variable model satisfies `|S| ≤ 2`. The
+LHV inequality itself is **not** formalised in this module — doing so
+would require modelling a probability space of hidden variables and a
+factorisable joint distribution, which is outside the current scope.
 
-/-- **A2: Classical CHSH bound is strictly violated by the quantum
-Tsirelson bound.** The numerical gap `2√2 > 2` is the empirical
+The constant is named `bellClassicalBoundValue` (with the trailing
+`Value` to make the un-formalised LHV-theorem status visible) and
+exists solely so that the gap theorem `chsh_classical_bound_violated`
+can state `value < 2√2` rather than open-coding the literal. -/
+def bellClassicalBoundValue : ℝ := 2
+
+/-- **A2: The Bell-classical-bound value `2` is strictly less than the
+quantum Tsirelson bound `2√2`.** The numerical gap is the empirical
 falsification of local realism realised by the singlet at canonical
-angles.
+angles — under the **un-formalised** premise that any LHV model
+satisfies `|S| ≤ 2` (Bell 1964). The Lean statement is purely
+numerical (`2 < 2√2`).
 
 **Experimental verification:** Aspect, Grangier, Roger 1982,
 *Phys. Rev. Lett.* **49**, 91 (and many subsequent loophole-free
 experiments). -/
-theorem chsh_classical_bound_violated : bellClassicalBound < 2 * Real.sqrt 2 := by
-  unfold bellClassicalBound
+theorem chsh_classical_bound_violated : bellClassicalBoundValue < 2 * Real.sqrt 2 := by
+  unfold bellClassicalBoundValue
   have h2 : (1 : ℝ) < Real.sqrt 2 := by
     have : Real.sqrt 1 < Real.sqrt 2 :=
       Real.sqrt_lt_sqrt (by norm_num) (by norm_num)

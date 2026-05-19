@@ -160,7 +160,15 @@ structure LeakageCompat (P : ProjectorAlgebra S) (M : MeasurementUnitary S)
   εA_nn : 0 ≤ εA
   /-- The B-wing leakage parameter is non-negative. -/
   εB_nn : 0 ≤ εB
-  /-- Quantitative deviation bound for the branch weight from `‖cAmp s t‖²`. -/
+  /-- **Caller-supplied bound (data field, not a derivation).** The
+      quantitative deviation of the branch weight from `‖cAmp s t‖²`,
+      bounded by `εA + εB + εA·εB` for every `(s, t)`. This field
+      *packages* the per-sector Cauchy-Schwarz / overlap argument as
+      a v1.00 structural interface (spec §9.7 / §9.11); the bound is
+      not derived inside this module. A v2 (and concretely a v2 with
+      a Kähler-instantiated `SectorData`) will derive it from a
+      concrete tensor decomposition and turn this field into a proved
+      lemma. -/
   sectorVolume_dev :
     ∀ (cAmp : Sign → Sign → ℂ) (s t : Sign),
       |RCLike.re (inner ℂ (finalState M cAmp φA0 φB0)

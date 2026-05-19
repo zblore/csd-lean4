@@ -87,20 +87,53 @@ lemma SectorData.pushforward_epAction_invariant
     Fubini–Study measure). It is imported rather than constructed because LF2
     leaves `P` abstract.
 
-    **Transitivity is required.** Without `htrans`, the statement is false in
-    general: take `P = {0, 1}`, `G` the trivial group, `μFS = uniform`,
-    `μ = δ_0`. Both are invariant under the trivial action; no `c : ENNReal`
-    satisfies `δ_0 = c • uniform`. Transitivity rules out this and related
-    pathological actions. The standard proof additionally requires
-    compactness of `G` or an equivalent regularity property; the spec
-    authorises the import for the concrete `SU(N)` on `CP^{N-1}` setting
-    where compactness holds and `μFS` is Fubini–Study Haar.
+    ## Hypotheses the axiom *should* carry but currently does not
 
-    **Caveat.** This axiom carries strictly the assumptions of the standard
-    Haar-on-compact-homogeneous-space theorem (Mathlib has Haar measure on
-    topological groups; the homogeneous-quotient construction is not yet
-    packaged at the required abstraction level). When that infrastructure
-    lands, swap `axiom` for `theorem`-via-import. -/
+    The intended theorem is the standard Haar-on-compact-homogeneous-space
+    classification, which additionally requires:
+
+    - `G` is a topological group, with a compatible measurable structure;
+    - `G` is **compact** (the source of measure uniqueness — without
+      compactness, non-compact unimodular cases need a different proof);
+    - The action `G × P → P` is **continuous** (or at least Borel
+      measurable jointly);
+    - `μFS` is an **inner-regular Borel probability measure** on a
+      Hausdorff `P` (or, equivalently, a Radon measure);
+    - `μ` is similarly Borel regular and inner regular.
+
+    None of these hypotheses are encoded in the axiom signature below.
+    The axiom as stated is therefore **stronger than the classical
+    theorem it is meant to import**: a hostile interpretation in an
+    abstract `(P, G)` setting without the above structure could in
+    principle render the statement inconsistent.
+
+    ## Transitivity is required
+
+    Without `IsPretransitive`, the statement is false even in the
+    intended (compact group + Haar) setting: take `P = {0, 1}`, `G` the
+    trivial group, `μFS = uniform`, `μ = δ_0`. Both are invariant under
+    the trivial action; no `c : ENNReal` satisfies `δ_0 = c • uniform`.
+    Transitivity rules out this and related pathological actions.
+
+    ## LF4 discharge plan
+
+    LF4 instantiates `SectorData` with concrete `P := ℙ ℂ (Fin N → ℂ)`
+    (or a Kähler manifold variant), `G := SU(N)`, both with their
+    natural topology, and `μFS := Fubini–Study`. At that point:
+
+    - `[CompactSpace G]`, `[TopologicalSpace P]`, `[ContinuousSMul G P]`,
+      `[BorelSpace P]`, `[IsHaarMeasure μFS]` all become available.
+    - The classical theorem applies (Mathlib has Haar measure on
+      topological groups; the homogeneous-quotient construction is
+      partially available via `Mathlib.MeasureTheory.Measure.Haar.*`).
+    - Swap `axiom` for `theorem`-via-import; thread the new typeclass
+      instances through `SectorData` so `MeasureBridgeData.ofSectorData`
+      callers acquire them by signature.
+
+    Until then, this axiom is **a documented spec-level import** rather
+    than a Mathlib-derived theorem. The honest reading: the LF2 chain
+    is conditional on the LF4 instantiation supplying the hypotheses
+    needed to make this a theorem. -/
 axiom invariant_measure_uniqueness
     {P G : Type*} [MeasurableSpace P] [Group G]
     [MulAction G P] [MulAction.IsPretransitive G P]

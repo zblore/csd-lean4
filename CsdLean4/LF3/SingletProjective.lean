@@ -114,7 +114,9 @@ lemma singletProjectiveOutcome_measurable
     MeasurableSet (jed.SingletProjectiveOutcome rep s t) :=
   hrep_meas (MeasurableSet.singleton _)
 
-set_option linter.unusedSectionVars false in
+omit [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] [MeasurableSpace P]
+  [Group G] [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P] in
 /-- The `SingletProjectiveOutcome` family is pairwise disjoint: regions
     at distinct sectors `(s, t) ≠ (s', t')` are disjoint. Routes through
     `eig_distinct` and singleton-preimage disjointness. -/
@@ -135,18 +137,25 @@ end MeasurementJointEig
 
 /-! ### OP.p ↔ P_st identity (option (B) chain bridge content) -/
 
-/-- **Operational-package probability of the rank-1 sector effect equals
-    `P_st` (Busch-mediated chain critical path).** For a pure
-    preparation `PP` and joint eigenstate data `jed` keyed to `PP.ψ`,
-    the OP probability of the rank-1 effect through `jed.eig s t`
-    equals `P_st ctx.a ctx.b s t`. Composes
-    `LF2.PurePreparation.born_rank_one` (cites `busch_effect_gleason`)
-    with `MeasurementJointEig.born_eq_P_st`.
+/-- **Repackaging lemma: OP probability of the rank-1 sector effect
+    equals `P_st`, via `born_rank_one` ∘ `jed.born_eq_P_st`.**
 
-    This is the chain bridge content under the option (B) design: the
-    OP integration of the rank-1 sector effect against the projective
-    measure bridge gives the singlet kernel value. Spec §5.4 four-
-    ingredient combinatorial framing applies. -/
+    This theorem **derives nothing new**. It is a one-step composition of:
+    - `LF2.PurePreparation.born_rank_one PP (jed.eig s t) (jed.eig_unit s t)`
+      `: OP.p (rankOneEffect (jed.eig s t)) = ‖⟨PP.ψ, jed.eig s t⟩‖²`
+      — the Born quadratic form for pure preparations on rank-1 effects
+      (Busch-mediated; cites `busch_effect_gleason`).
+    - `jed.born_eq_P_st s t : ‖⟨PP.ψ, jed.eig s t⟩‖² = P_st ctx.a ctx.b s t`
+      — the **caller-supplied hypothesis** packaged into the
+      `MeasurementJointEig` bundle (the LF4-todo §2 + §7 discharge target).
+
+    The Born identity itself is **not derived here**; it is the structural
+    hypothesis `jed.born_eq_P_st` carried by the `MeasurementJointEig`
+    bundle and discharged at LF4 instantiation time. This lemma exists
+    to bind the two ingredients in a single named composition for chain
+    consumers; the chain bridge content is the Busch-mediated Born step
+    plus the Born identity hypothesis, applied to the option (B) chain
+    design. Spec §5.4 four-ingredient combinatorial framing applies. -/
 theorem OP_p_at_jointEig_eq_P_st
     (D : LF2.SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : LF2.MeasureBridgeData D μFS)
@@ -162,14 +171,19 @@ theorem OP_p_at_jointEig_eq_P_st
   rw [PP.born_rank_one D μFS bridge μprep hN (jed.eig s t) (jed.eig_unit s t)]
   exact jed.born_eq_P_st s t
 
-/-- **Volume-ratio direct form (auxiliary).** Same conclusion as
-    `OP_p_at_jointEig_eq_P_st`, but proved via the direct Dirac
-    integration form `LF2.PurePreparation.born_rank_one_direct`. Cites
-    only the foundational triple (no `busch_effect_gleason`).
+/-- **Volume-ratio direct form (auxiliary, Busch-free).** Same
+    conclusion as `OP_p_at_jointEig_eq_P_st`, but proved via the direct
+    Dirac integration form `LF2.PurePreparation.born_rank_one_direct`.
+    Cites only the foundational triple (no `busch_effect_gleason`).
 
-    Tagged as the eventual migration target for the chain capstones
-    once downstream consumers accommodate the leaner cite set; v1.00
-    chain stays Busch-mediated per spec §5.4. -/
+    **The Busch citation in the headline form is a spec-faithfulness
+    choice, not a mathematical necessity.** The chain capstones can in
+    principle be re-routed through this Busch-free form; the choice to
+    keep them Busch-mediated in v1.00 is to mirror spec §5.4's
+    four-ingredient combinatorial framing literally and to export the
+    trace-form characterisation of the operational package. See
+    `LF2.PurePreparation.born_rank_one` for the parallel framing
+    discussion. -/
 theorem OP_p_at_jointEig_eq_P_st_direct
     (D : LF2.SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : LF2.MeasureBridgeData D μFS)

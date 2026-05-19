@@ -57,29 +57,35 @@ theorem lf1_prepMeasure_weight_eq_projective_weight
 
 /-! ### Projective-first outcome constructor
 
-`SectorData.outcomeOfProjective` removes the caller burden in
-`LF1_main_theorem_projective` and downstream chain capstones: given a
-measurable projective region `Oep ⊆ P` and the **flow-projection
-compatibility** hypothesis `∀ x, D.π (D.toOntic.Φ x) = D.π x` (CSD's
-constraint-surface preservation reading — the ontic flow preserves
-projective rays), the constructor returns an ontic `OutcomeRegion`
-whose pre-event is exactly `D.π ⁻¹' Oep` and whose weight is the
-projective weight of `Oep` under the LF2 measure bridge.
+`SectorData.outcomeOfProjective` builds an LF1 ontic `OutcomeRegion`
+from a measurable projective region `Oep ⊆ P` by taking the `π`-preimage:
+`Ω := D.π ⁻¹' Oep`. The constructor itself requires only measurability
+of `Oep`.
 
-The Φ-π compatibility hypothesis is supplied as a constructor argument
-rather than as a field on `SectorData` — adding a field would commit
-all `SectorData` instances to the constraint-surface reading, which is
-LF4 instantiation work. Keeping it on the constructor lets the
-projective-first outcome family be built at the LF3 chain capstone with
-a single CSD-foundational hypothesis. -/
+The **flow-projection compatibility** hypothesis
+`∀ x, D.π (D.toOntic.Φ x) = D.π x` (CSD's constraint-surface
+preservation reading — the ontic flow preserves projective rays) is
+**not** consumed by the constructor itself. It is consumed by the
+companion lemma `outcomeOfProjective_preEvent` to identify
+`preEvent = Ω` (i.e. to fold the LF1 one-step-ahead pullback into the
+plain preimage), which is what `LF1_main_theorem_projective` and the
+LF3 chain capstones need.
+
+Architectural rationale: the Φ-π compatibility hypothesis is supplied
+as a *lemma* argument rather than as a field on `SectorData` —
+adding a field would commit all `SectorData` instances to the
+constraint-surface reading, which is LF4 instantiation work. Keeping
+it on the per-lemma side lets the projective-first outcome family be
+built at the LF3 chain capstone with a single CSD-foundational
+hypothesis. -/
 
 /-- **Projective-first outcome constructor.** Given a measurable
-    projective region `Oep ⊆ P` and the flow-projection compatibility
-    hypothesis `h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = D.π x`, returns the
-    ontic `OutcomeRegion` with `Ω := D.π ⁻¹' Oep`. The companion lemmas
-    `outcomeOfProjective_preEvent` and
-    `outcomeOfProjective_weight_eq_projectiveWeight` give the projective-
-    side reformulations of `preEvent` and `weight` respectively. -/
+    projective region `Oep ⊆ P`, returns the ontic `OutcomeRegion`
+    with `Ω := D.π ⁻¹' Oep`. The constructor requires only `hOep`;
+    flow-projection compatibility is consumed by the companion lemma
+    `outcomeOfProjective_preEvent`, which identifies `preEvent = Ω`.
+    The companion lemma `outcomeOfProjective_weight_eq_projectiveWeight`
+    gives the projective-side reformulation of the LF1 outcome weight. -/
 noncomputable def SectorData.outcomeOfProjective
     (D : SectorData SigmaSpace P G)
     {Oep : Set P} (hOep : MeasurableSet Oep) :

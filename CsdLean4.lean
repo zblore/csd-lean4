@@ -40,7 +40,10 @@ import CsdLean4.Empirical.NoCloning
 /-!
 # CSD
 
-**Category:** Special (canonical top-level import; explicit module list across LF1 + LF2 + LF3 + Util + Tests).
+**Category:** Special (canonical top-level import; explicit module list across LF1 + LF2 + LF3 + Empirical + Mathlib upstream-tracking).
+
+Tests/ is deliberately excluded from this consumer-facing root — build
+the regression suite separately via `lake build CsdLeanTests`.
 
 Top-level import file for the Constraint-Surface Dynamics Lean4 project.
 
@@ -56,4 +59,11 @@ This file exports:
   completeness, with finite-leakage stability), and the LF1↔LF2↔LF3 empirical
   chain capstone (`LF3_singlet_frequency_convergence`,
   `LF3_singlet_frequency_convergence_born`).
+- **Empirical**: named experimentally-verified predictions — the Bell-family
+  CHSH content (Phase A1–A6) and the no-cloning theorem (Phase B2). The
+  Bell items re-export the LF3 singlet kernel content under
+  empirical-prediction names with experimental provenance; the no-cloning
+  theorem is QM-generic Hilbert-space content.
+- **Mathlib**: project-side patches to Mathlib (currently the
+  `Projectivization` quotient-topology infrastructure pending upstream).
 -/

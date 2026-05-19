@@ -3,8 +3,13 @@ import Mathlib.Analysis.InnerProductSpace.LinearMap
 /-!
 # Empirical: No-cloning theorem
 
-**Category:** 2-Framework (QM-generic; no CSD content, suitable for
-upstreaming or for use by any QM formalisation).
+**Category:** 3-Local (currently placed under `CsdLean4/Empirical/`
+alongside CSD-specific empirical-prediction re-exports). The content
+itself is QM-generic — no CSD ontology, no `OnticSetup` / `SectorData`
+/ singlet machinery — and is **promotion-ready to 2-Framework** (or
+even 1-Mathlib) on demand. Extraction to `CsdLean4/Framework/QM/` or
+upstreaming to `Mathlib/QuantumMechanics/NoCloning.lean` is deferred
+until LF4 creates the `Framework/` subtree (CONVENTIONS.md §1.Cat-2).
 
 Wootters-Zurek 1982 no-cloning theorem: in quantum mechanics, there is
 no unitary operation on a joint Hilbert space `H ⊗ H` that, for an
@@ -69,9 +74,17 @@ pairing whose inner-product factorises as `⟨tensor a b, tensor c d⟩
 = ⟨a, c⟩ · ⟨b, d⟩`, and `e0 : H` a fixed unit "blank" state.
 
 If `U : Htensor → Htensor` is an isometry (preserves inner products)
-that clones two unit states `ψ, φ : H` from the same blank, i.e.
-`U(tensor ψ e0) = tensor ψ ψ` and `U(tensor φ e0) = tensor φ φ`, then
-`⟨ψ, φ⟩ ∈ {0, 1}`.
+that clones two unit states `ψ, φ : H` (with `‖ψ‖ = ‖φ‖ = 1`) from the
+same blank, i.e. `U(tensor ψ e0) = tensor ψ ψ` and
+`U(tensor φ e0) = tensor φ φ`, then `⟨ψ, φ⟩ ∈ {0, 1}`.
+
+**On the unit-norm hypotheses.** The algebraic step
+`⟨ψ, φ⟩ = ⟨ψ, φ⟩²` and its consequence `⟨ψ, φ⟩ ∈ {0, 1}` go through
+regardless of normalisation. The unit-norm hypotheses are stated to
+match the Wootters-Zurek operational reading ("orthogonal or equal up
+to phase"), which requires `‖ψ‖ = ‖φ‖ = 1` for the second alternative
+to mean what it says — only at unit norm does `⟨ψ, φ⟩ = 1` force
+`φ = ψ` (Cauchy-Schwarz saturation).
 
 **Proof.** Isometry preservation gives
 ```
@@ -88,7 +101,7 @@ theorem no_cloning_two_state
     (h_tensor_inner : ∀ a b c d : H,
       inner ℂ (tensor a b) (tensor c d) = inner ℂ a c * inner ℂ b d)
     (e0 : H) (he0 : ‖e0‖ = 1)
-    (ψ φ : H)
+    (ψ φ : H) (_hψ : ‖ψ‖ = 1) (_hφ : ‖φ‖ = 1)
     (U : Htensor → Htensor)
     (hU : ∀ x y : Htensor, inner ℂ (U x) (U y) = inner ℂ x y)
     (h_clone_ψ : U (tensor ψ e0) = tensor ψ ψ)
@@ -131,14 +144,15 @@ theorem no_universal_cloner_of_witness
     (h_tensor_inner : ∀ a b c d : H,
       inner ℂ (tensor a b) (tensor c d) = inner ℂ a c * inner ℂ b d)
     (e0 : H) (he0 : ‖e0‖ = 1)
-    (ψ φ : H)
+    (ψ φ : H) (hψ_unit : ‖ψ‖ = 1) (hφ_unit : ‖φ‖ = 1)
     (h_neither : inner ℂ ψ φ ≠ 0 ∧ inner ℂ ψ φ ≠ 1) :
     ¬ ∃ U : Htensor → Htensor,
         (∀ x y, inner ℂ (U x) (U y) = inner ℂ x y) ∧
         U (tensor ψ e0) = tensor ψ ψ ∧
         U (tensor φ e0) = tensor φ φ := by
   rintro ⟨U, hU, hψ, hφ⟩
-  obtain h | h := no_cloning_two_state tensor h_tensor_inner e0 he0 ψ φ U hU hψ hφ
+  obtain h | h := no_cloning_two_state tensor h_tensor_inner e0 he0
+    ψ φ hψ_unit hφ_unit U hU hψ hφ
   · exact h_neither.1 h
   · exact h_neither.2 h
 

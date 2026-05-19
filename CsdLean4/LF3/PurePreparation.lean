@@ -111,12 +111,24 @@ structure PureSingletPreparation
   jed              : MeasurementJointEig ctx PP.ψ
   /-- Per-sector ontic outcome regions. -/
   O_region         : Sign → Sign → D.toOntic.OutcomeRegion
-  /-- **Ontic-weight ↔ OP.p bridge (LF4 discharge target).** The ontic
-      `prepMeasure` of the pulled-back outcome event equals the
-      operational-package probability of the rank-1 sector effect
-      through `jed.eig s t`. Combined with
+  /-- **Major empirical hypothesis (LF4 discharge target): ontic-weight
+      ↔ OP.p bridge.** The ontic `prepMeasure` of the pulled-back
+      outcome event equals the operational-package probability of the
+      rank-1 sector effect through `jed.eig s t`. Combined with
       `LF3.OP_p_at_jointEig_eq_P_st`, this gives convergence of trial
-      frequencies to `P_st ctx.a ctx.b s t`. -/
+      frequencies to `P_st ctx.a ctx.b s t`.
+
+      **Status: load-bearing, externally supplied, undischarged.**
+      This field is the *single largest external hypothesis* in the
+      LF1↔LF2↔LF3 empirical chain pre-LF4. It encodes the
+      preparation-to-projective bridge plus the
+      preparation-to-Hilbert correspondence (LF4-todo §2) plus the
+      projective-first outcome construction (LF4-todo §7); the
+      LF3 chain capstones are conditional on this hypothesis until
+      LF4 supplies a concrete `SectorData` instantiation from which
+      `bridge_op_p` follows. Callers should treat this field with
+      the same scrutiny they would apply to an `axiom` — the bundle
+      defers the question rather than answering it. -/
   bridge_op_p      : ∀ s t,
     ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
         (O_region s t).preEvent

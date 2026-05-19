@@ -24,7 +24,14 @@ Every Lean module in this repository belongs to exactly one of three categories.
 
 **Examples currently in the repository.**
 
-- `CsdLean4/Util/MathlibCandidates.lean` (will move to `CsdLean4/Mathlib/Topology/Algebra/Module/LinearMap.lean` or similar when content grows past 3-4 lemmas).
+- `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean` —
+  declarations live under `namespace Projectivization` (Mathlib's
+  natural symbol namespace), not `CsdLean4.Mathlib.LinearAlgebra.Projectivization.*`.
+  This is intentional and matches the convention above (preserve dot
+  notation; the `CsdLean4/Mathlib/...` *path* is the staging signal,
+  not an outer-namespace wrapper).
+- `CsdLean4/Mathlib/Topology/Algebra/Module/LinearMap.lean` —
+  declarations under `namespace ContinuousLinearMap`, same rationale.
 
 ### Category 2: CSD-adjacent framework infrastructure
 

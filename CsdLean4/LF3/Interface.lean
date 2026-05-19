@@ -30,26 +30,59 @@ Five exported theorems, in descending order of programme-level importance:
 2. `LF3_singlet_frequency_convergence`: the pre-Born form of the same chain,
    landing on `P_{st}(a, b) = (1 − st a·b)/4`.
 3. `LF3_singlet_frequency_convergence_born_inner`: bra-ket variant landing on
-   `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`.
+   `‖⟨prep.PP.ψ, prep.jed.eig s t⟩‖²` — the genuine Hilbert-space inner
+   product between the bundle's pure-preparation vector and the bundle's
+   joint spin eigenstate, via `prep.jed.born_eq_P_st`.
 4. `LF3_main_theorem`: eight-conjunct strong-readout package (kernel,
    correlation, A-marginal, B-marginal, no-signalling on each side,
    pointer-completeness on each side).
 5. `LF3_finite_leakage_theorem`: four-conjunct finite-leakage stability.
 
-The conceptual chain (what a fully discharged `PureSingletPreparation` would
-compose) is:
+## Two-layer architecture: bundle (data) vs theorem (composition)
+
+The chain capstones in this module follow a deliberate **bundle +
+theorem** separation:
+
+- **The `PureSingletPreparation D ctx N` bundle**
+  (`LF3.PurePreparation`) carries the **load-bearing hypotheses**
+  needed by the empirical chain: the projective reference measure +
+  measure bridge, the static pure preparation `PP` (with Dirac
+  concentration), the joint spin eigenstate data `jed` (with the
+  Born identity hypothesis `‖⟨PP.ψ, eig s t⟩‖² = P_st`), and the
+  major hypothesis `bridge_op_p` (ontic outcome weight ↔ OP.p — the
+  LF4-todo §2 + §7 discharge target). The bundle's fields are *data*:
+  they encode what the caller must supply to apply the theorem.
+
+- **The chain capstone theorems** (`LF3_singlet_frequency_convergence`,
+  `_born`, `_born_inner`, plus the `_joint` variants) are *theorem
+  compositions* on top of the bundle. Their proof bodies compose
+  the bundle's hypotheses with three external pieces:
+  + `LF1.MainTheorem.LF1_main_theorem_ae` — LF1 a.s. SLLN;
+  + `LF3.OP_p_at_jointEig_eq_P_st` — Busch-mediated rank-1 step
+    (cites `busch_effect_gleason`);
+  + `LF3.Singlet.Kernel.cst_squared_eq` — algebraic
+    `P_st = ‖cAmp‖²` (axiom-free).
+  The two further conceptual pieces named below
+  (`sectorVolume_eq_LF2_Born`, `LF1_main_theorem_projective`) are
+  what `prep.weight_eq_P_st` (and thereby `bridge_op_p`) packages
+  for the theorem composition.
+
+A fully discharged chain at LF4 would unfold the bundle into the
+following composition:
 
 - `Projectors.LF2Interface.sectorVolume_eq_LF2_Born` (LF3 → LF2 Born form)
 - `LF2.Interface.LF1_main_theorem_projective` (LF2 → LF1 frequency limit)
 - `LF1.MainTheorem.LF1_main_theorem_ae` (LF1 a.s. convergence)
 - `Singlet.Kernel.cst_squared_eq` (algebraic core, axiom-free)
 
-The actual proof bodies below currently consume the bundled `PureSingletPreparation`
-field `prep.weight_eq_P_st`, which packages the first two components above into
-a single hypothesis pending LF4 discharge. The chain capstones therefore compose
-`LF1_main_theorem_projective` + `prep.weight_eq_P_st` + `cst_squared_eq`
-directly; `sectorVolume_eq_LF2_Born` enters through `weight_eq_P_st` once LF4
-supplies the structural constructor.
+Pre-LF4, the proof bodies below consume the bundle's
+`weight_eq_P_st` theorem (which itself composes `bridge_op_p` with
+`OP_p_at_jointEig_eq_P_st`); `sectorVolume_eq_LF2_Born` enters
+through `weight_eq_P_st` once LF4 supplies the structural
+constructor. The reader should track:
+
+- *What's proven*: the theorem composition machinery, sorry-free.
+- *What's assumed*: everything packed into `prep : PureSingletPreparation`.
 -/
 
 open scoped BigOperators
@@ -236,16 +269,17 @@ theorem LF3_singlet_frequency_convergence_born
   exact h_pre
 
 /-- **Born-form empirical chain with a genuine bra-ket amplitude.** The
-    empirical frequency converges to `‖⟨v_{st}, ψ⁻⟩‖²` where `v_{st}` is an
-    actual joint spin eigenstate `|s_a, t_b⟩` supplied by the caller. The
-    `h_inner` hypothesis says `‖⟨v_{st}, ψ⁻⟩‖² = P_{st}(a, b)`, which is the
-    rank-1 projector identity (`jointSpinProj = |v⟩⟨v|`) plus the
-    expectation calculation; a v2 with a constructed `jointSpinEig` from the
-    spectral decomposition of `jointSpinProj` discharges it.
+    empirical frequency converges to `‖⟨ψ, eig s t⟩‖²` where `eig s t` is
+    the joint spin eigenstate `|s_a, t_b⟩` supplied by the bundle's
+    `prep.jed`, and `ψ = prep.PP.ψ` is the pure-preparation Hilbert vector.
+    The Born identity `‖⟨PP.ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t` is the
+    bundled field `prep.jed.born_eq_P_st` (the LF4-todo §2 + §7 discharge
+    target carried as a structural hypothesis pre-LF4).
 
     This is the **physically faithful** form of the LF1↔LF2↔LF3 chain: the
-    RHS `‖⟨v, ψ⁻⟩‖²` is a genuine Hilbert-space inner product, not a
-    closed-form repackaging. -/
+    RHS is a genuine Hilbert-space inner product between the bundle's
+    pure-preparation vector and the bundle's joint spin eigenstate, not a
+    closed-form repackaging and not an unbound caller-supplied vector. -/
 theorem LF3_singlet_frequency_convergence_born_inner
     (D : CSD.LF2.SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]
@@ -256,18 +290,15 @@ theorem LF3_singlet_frequency_convergence_born_inner
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n)))
-    (jointSpinEig : Sign → Sign → EuclideanSpace ℂ (Fin 2 × Fin 2))
-    (h_inner : ∀ s t,
-        ‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2 = P_st ctx.a ctx.b s t) :
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
     ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
        Tendsto
          (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
          atTop
-         (nhds (‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2)) := by
+         (nhds (‖inner ℂ prep.PP.ψ (prep.jed.eig s t)‖ ^ 2)) := by
   intro s t
   have h_pre := LF3_singlet_frequency_convergence D T ctx prep hindep s t
-  rw [← h_inner s t] at h_pre
+  rw [← prep.jed.born_eq_P_st s t] at h_pre
   exact h_pre
 
 /-! ### Joint partition convergence (Phase 8)
@@ -341,7 +372,7 @@ theorem LF3_singlet_frequency_convergence_born_joint
 
 /-- **Joint partition convergence (Born form, bra-ket amplitude).**
     Almost surely, for every `(s, t)` the empirical frequency converges
-    to `‖⟨jointSpinEig s t, singlet⟩‖²`. Joint version of
+    to `‖⟨prep.PP.ψ, prep.jed.eig s t⟩‖²`. Joint version of
     `LF3_singlet_frequency_convergence_born_inner`. -/
 theorem LF3_singlet_frequency_convergence_born_inner_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
@@ -353,22 +384,18 @@ theorem LF3_singlet_frequency_convergence_born_inner_joint
       Pairwise
         (Function.onFun
           (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n)))
-    (jointSpinEig : Sign → Sign → EuclideanSpace ℂ (Fin 2 × Fin 2))
-    (h_inner : ∀ s t,
-        ‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2 = P_st ctx.a ctx.b s t) :
+          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
     ∀ᵐ ω ∂ T.trialMeasure,
        ∀ s t,
          Tendsto
            (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
            atTop
-           (nhds (‖inner ℂ (jointSpinEig s t) singlet‖ ^ 2)) := by
+           (nhds (‖inner ℂ prep.PP.ψ (prep.jed.eig s t)‖ ^ 2)) := by
   rw [MeasureTheory.ae_all_iff]
   intro s
   rw [MeasureTheory.ae_all_iff]
   intro t
-  exact LF3_singlet_frequency_convergence_born_inner D T ctx prep hindep
-    jointSpinEig h_inner s t
+  exact LF3_singlet_frequency_convergence_born_inner D T ctx prep hindep s t
 
 end LF3
 end CSD
