@@ -240,7 +240,7 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 
 ---
 
-## 12. `Projectivization` topology / measure / lift API in Mathlib — **PARTIAL (Groups 1–2 + measure-core 4.1+4.3+4.4 + SecondCountableTopology, 2026-05-19/2026-05-20)**
+## 12. `Projectivization` topology / measure / lift API in Mathlib — **PARTIAL (Groups 1–2 + full MeasureSpace.lean except 4.6 polish, 2026-05-19/2026-05-20)**
 
 **Status:** Identified as a Mathlib gap via the pre-LF4 spike on 2026-05-18 (see `specs/pre-LF4-plan.md` Spike 1). The pre-LF4 option-(b) chain initially scoped a commitment `ProjectiveHilbert N := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` at the LF2 level; the spike found Mathlib has no `TopologicalSpace`, `MeasurableSpace`, or `BorelSpace` instance on `Projectivization` outside the projective-line case (`OnePoint/ProjectiveLine.lean`). The architectural workaround keeps `SectorData.P` abstract and supplies a caller-side `representative : P → EuclideanSpace ℂ (Fin N)` map.
 
@@ -269,15 +269,15 @@ Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [
 - `Projectivization.measurable_mk'`: the canonical surjection is measurable, via `continuous_mk'.measurable`. Caller supplies `[MeasurableSpace V] [BorelSpace V]` so the source subtype inherits a Borel structure.
 - `Projectivization.instSecondCountableTopology`: free consequence of `isQuotientMap_mk'` + `isOpenMap_mk'` + `secondCountable_of_proper`.
 
-**Remaining (`MeasureSpace.lean` 4.2 + 4.5 + 4.6):**
+**Group 4 + Group 5 delivered 2026-05-20** in the same `MeasureSpace.lean` file:
 
-- **Group 4 (4.2 Borel-vs-coinduced coincidence lemma).** Show the Borel σ-algebra on the quotient equals the coinduced σ-algebra `MeasurableSpace.map mk' (borel V₀)`. Standard measure-theoretic fact under second-countable + open continuous surjection + Polish source. Mathlib has `Continuous.map_eq_borel` (in `Mathlib.MeasureTheory.Constructions.Polish.Basic`) which discharges this given `[PolishSpace {v : V // v ≠ 0}]`, available via `IsOpen.polishSpace` applied to the complement of the singleton `{0}`. Estimate: ~3-4 h.
-- **Group 5 (4.5 `lift_measurable` + 4.6 measurability-characterisation).** Routes through 4.2 + `measurable_from_quotient`. Depends on 4.2. Estimate: ~30 min after 4.2.
+- `Projectivization.borel_eq_map_mk'`: the coincidence lemma. The Borel σ-algebra on `ℙ K V` equals `MeasurableSpace.map mk' (borel V₀)`. Routes through Mathlib's `Continuous.map_borel_eq` (`Mathlib.MeasureTheory.Constructions.Polish.Basic`), given `PolishSpace V` (automatic from `FiniteDimensional.proper_rclike K V` + `secondCountable_of_proper` + the `Polish.lean:65` instance for separable + completely metrizable) and `PolishSpace {v : V // v ≠ 0}` (via `IsOpen.polishSpace` applied to `isClosed_singleton.isOpen_compl`).
+- `Projectivization.lift_measurable`: the **load-bearing user-facing lemma for LF4 §3 + §8**. Lets callers derive measurability of `Projectivization.lift f hf` from measurability of `f` and the scale-invariance hypothesis. Routes through `borel_eq_map_mk'` + `MeasurableSpace.map_def`.
+- `Projectivization.measurable_iff_measurable_comp_mk'`: companion characterisation. A function out of `ℙ K V` is measurable iff its precomposition with `mk'` is.
 
-`lift_measurable` is the load-bearing user-facing lemma for LF4 §3 + §8 callers who want to derive measurability of a projective function from measurability of its lift on `V \ {0}`. Until 4.2 lands, callers can either:
-- Take measurability as a hypothesis at the chain capstone (current LF3 pattern, via `rep` + `hrep_meas`).
-- Use `mk_eq_mk_iff'` to reformulate the function without `lift`.
-- Wait for the coincidence lemma in a follow-up commit.
+Both `lift_measurable` and `measurable_iff_measurable_comp_mk'` take additional `[MeasurableSpace V] [BorelSpace V]` hypotheses so the source subtype's `Subtype.instMeasurableSpace` coincides with `borel _` via the `Subtype.borelSpace` instance. The `‹BorelSpace ({v // v ≠ 0})›.measurable_eq` bridge inside the proofs handles the conversion.
+
+The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use `lift_measurable` directly to lift measurable scale-invariant functions on `V \ {0}` to measurable functions on `ℙ K V`, rather than carrying `hrep_meas` as a structural hypothesis at the chain capstone. The pre-LF4 chain (LF3 `PurePreparation` etc.) currently still threads `hrep_meas`; the LF4 instantiation can switch to `lift_measurable` once the concrete `SectorData` is in place.
 
 **Pickup pointer:** see `specs/projectivization-plan.md` for the per-section design plan; `specs/projectivization-plan.md` §6 records the resolved Mathlib infrastructure investigations.
 
@@ -289,7 +289,7 @@ Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [
 1b. ~~T2Space + CompactSpace under `[RCLike K]` + finite-dim normed `V`.~~ **DONE 2026-05-20 (Group 2).**
 2. ~~Prove `BorelSpace (Projectivization K V)` for the appropriate `K`-and-`V`-flavoured cases.~~ **DONE 2026-05-20 (measure-core).**
 3. ~~Prove `MeasurableSingletonClass (Projectivization K V)`.~~ **DONE 2026-05-20 (measure-core).**
-4. Prove `Projectivization.lift_measurable`: if `f : V \ {0} → α` is measurable and `f`-phase-invariant, then `Projectivization.lift f hf : Projectivization K V → α` is measurable. **PENDING — needs the Borel-vs-coinduced coincidence lemma (4.2) which routes through `Mathlib.MeasureTheory.Constructions.Polish.Basic`'s `Continuous.map_eq_borel`. Estimate ~3-4 h focused.**
+4. ~~Prove `Projectivization.lift_measurable`: if `f : V \ {0} → α` is measurable and `f`-phase-invariant, then `Projectivization.lift f hf : Projectivization K V → α` is measurable.~~ **DONE 2026-05-20** (with the coincidence lemma `borel_eq_map_mk'` + companion `measurable_iff_measurable_comp_mk'`).
 5. ~~Land in `CsdLean4/Mathlib/LinearAlgebra/Projectivization/MeasureSpace.lean` per CONVENTIONS.md `1-Mathlib` tagging.~~ **DONE 2026-05-20.**
 
 **Effect on pre-LF4 / LF4 work:** Until landed, `SectorData.P` stays abstract and `OperationalPackage.fromPreparation` takes a caller-supplied `rep : P → EuclideanSpace ℂ (Fin N)`. When this lands, LF4 can specialise `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` and the `rep` argument resolves to `Projectivization.rep` or similar. No retrofit needed; the abstract API is monomorphic in `P` so any concrete `P` works at instantiation time.
