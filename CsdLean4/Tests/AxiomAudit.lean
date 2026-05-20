@@ -9,6 +9,7 @@ import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.Empirical.Bell
 import CsdLean4.Empirical.NoCloning
 import CsdLean4.Empirical.Multipartite.GHZ
+import CsdLean4.Empirical.Contextuality.KS18
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 
@@ -248,6 +249,26 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.GHZ.no_lhv_assignment_for_ghz' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.GHZ.no_lhv_assignment_for_ghz
+
+/-! ### Empirical predictions (Kochen-Specker, Phase D9 / Cabello 1996 18-vector form)
+
+The abstract combinatorial impossibility and the concrete Cabello-18
+instance. The abstract form is genuinely Cat-2 (CSD-free, Hilbert-
+space-free); the instance is Cat-3 only because it lives under
+`Empirical/`. Both pinned to the foundational triple. -/
+
+/-- info: 'CSD.Empirical.KochenSpecker.no_value_assignment_18_9' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.KochenSpecker.no_value_assignment_18_9
+
+/-- info: 'CSD.Empirical.KochenSpecker.cabelloBasis_appears_twice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.KochenSpecker.cabelloBasis_appears_twice
+
+/--
+info: 'CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18
 
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 

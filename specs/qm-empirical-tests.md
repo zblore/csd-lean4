@@ -233,7 +233,7 @@ file layout.
 | D6 | GHZ paradox (Mermin form) | 3-qubit `(|000⟩ + |111⟩)/√2`: classical local-realism cannot reproduce `⟨σ_x σ_x σ_x⟩ = +1` and the three permutations `⟨σ_x σ_y σ_y⟩ = ⟨σ_y σ_x σ_y⟩ = ⟨σ_y σ_y σ_x⟩ = −1` simultaneously | **DONE 2026-05-20** (`Empirical/Multipartite/GHZ.lean`: `ghz_expectation_xxx`, `_xyy`, `_yxy`, `_yyx`, `no_lhv_assignment_for_ghz`) | Pan et al. 2000, *Nature* **403**, 515 |
 | D7 | Hardy's 9% paradox | Non-maximally entangled 2-qubit state; specific outcome combination occurs ~9% of the time though classically impossible | LF4-blocked + LF3 extension | Lundeen, Steinberg 2009 |
 | D8 | Mermin's pentagram (KS contextuality) | Five mutually compatible measurements forming a KS configuration cannot all be assigned values consistently | INFRA-blocked (5-context infrastructure) | Bartosik et al. 2009 (neutrons); Kirchmair et al. 2009 (trapped ions) |
-| D9 | Kochen-Specker theorem | No non-contextual hidden-variable assignment consistent with QM on projection observables in dim ≥ 3 | INFRA-blocked (specific 18-vector or 117-vector configurations); QM-generic, Cat-2 candidate | Cabello 1996 (theoretical); experimental: Kirchmair 2009, others |
+| D9 | Kochen-Specker theorem | No non-contextual hidden-variable assignment consistent with QM on projection observables in dim ≥ 3 | **DONE 2026-05-20** (combinatorial core, `Empirical/Contextuality/KS18.lean`: `no_value_assignment_18_9` + `ks_no_value_assignment_cabello18` for the Cabello-Estebaranz-García-Alcaine 1996 18-vector basis structure; vector data + orthogonality verification deferred to a follow-up); QM-generic, Cat-2 candidate | Cabello 1996 (theoretical); experimental: Kirchmair 2009, others |
 
 ### 3.3 Observer-dependence paradoxes (foundational, post-LF4)
 

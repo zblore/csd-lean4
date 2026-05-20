@@ -183,6 +183,9 @@ For each headline exported theorem, the legible axiom citation:
 | `Empirical.GHZ.ghz_expectation_yxy` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.GHZ.ghz_expectation_yyx` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.GHZ.no_lhv_assignment_for_ghz` | `propext, Quot.sound` (no `Classical.choice` — pure finite-state arithmetic contradiction) |
+| `Empirical.KochenSpecker.no_value_assignment_18_9` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.KochenSpecker.cabelloBasis_appears_twice` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.KochenSpecker.ks_no_value_assignment_cabello18` | `propext, Classical.choice, Quot.sound` |
 
 ### Mathlib upstream candidates (Projectivization §12)
 
