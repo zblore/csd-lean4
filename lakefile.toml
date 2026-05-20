@@ -1,0 +1,24 @@
+name = "csd-lean4"
+defaultTargets = ["CsdLean4"]
+
+# Pin Mathlib to a specific commit for reproducible builds.
+# Bump in lockstep with `lean-toolchain` (currently v4.29.0-rc8).
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "0e301e814c705e296fbd6b76905fa8a9defd58cf"
+
+# Library target: LF1 + LF2 + LF3 + Empirical + Mathlib upstream-tracking.
+# Consumers `import CsdLean4` or `import CsdLean4.Basic` get the full
+# development. The Tests/ subtree is excluded from this target.
+[[lean_lib]]
+name = "CsdLean4"
+
+# Test target: AxiomAudit regression suite (`#guard_msgs` pins on
+# `#print axioms` for every headline theorem) and Examples worked
+# computations. Build with `lake build CsdLeanTests`. CI exercises
+# both targets (see `.github/workflows/ci.yml`); drift detection
+# requires this target to be built, not just the library.
+[[lean_lib]]
+name = "CsdLeanTests"
+roots = ["CsdLean4.Tests.AxiomAudit", "CsdLean4.Tests.Examples"]

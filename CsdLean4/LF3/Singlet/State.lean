@@ -50,11 +50,16 @@ theorem singlet_norm : ‖singlet‖ = 1 := by
   have h10 : singlet (1, 0) = -((Real.sqrt 2 : ℂ)⁻¹) := by
     simp [singlet, EuclideanSpace.single]
   have h11 : singlet (1, 1) = 0 := by simp [singlet, EuclideanSpace.single]
+  have h_norm_inv : ‖((Real.sqrt 2 : ℂ)⁻¹)‖ ^ 2 = (2 : ℝ)⁻¹ := by
+    rw [norm_inv, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
+        Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
   rw [Fintype.sum_prod_type]
-  simp only [Fin.sum_univ_two]
-  rw [h00, h01, h10, h11]
-  simp
-  norm_num
+  simp only [Fin.sum_univ_two, h00, h01, h10, h11,
+             norm_zero, norm_neg, ne_eq, OfNat.ofNat_ne_zero,
+             not_false_eq_true, zero_pow, add_zero, zero_add, h_norm_inv]
+  -- Goal: Real.sqrt (2⁻¹ + 2⁻¹) = 1
+  rw [show ((2 : ℝ)⁻¹ + (2 : ℝ)⁻¹) = 1 from by norm_num, Real.sqrt_one]
 
 end LF3
 end CSD

@@ -1,5 +1,4 @@
 import CsdLean4.LF3.Singlet.Kernel
-import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Lp.Matrix
 

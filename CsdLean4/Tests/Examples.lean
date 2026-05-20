@@ -67,7 +67,8 @@ lemma μ_coin_univ : (μ_coin : Measure Bool) Set.univ = 2 := by
   show (Measure.dirac true + Measure.dirac false) Set.univ = 2
   rw [Measure.add_apply, Measure.dirac_apply' _ MeasurableSet.univ,
       Measure.dirac_apply' _ MeasurableSet.univ]
-  simp; norm_num
+  simp only [Set.mem_univ, Set.indicator_of_mem]
+  norm_num
 
 /-- The concrete coin-toss `OnticSetup`. Two outcomes, identity flow
     (the deterministic content is: outcome is fully determined by the
@@ -152,13 +153,13 @@ lemma inner_e0_e0 : inner ℂ e0 e0 = (1 : ℂ) := by
     standard basis vectors. -/
 example : traceForm (rankOneDensity e0 e0_unit) (rankOneEffect e1 e1_unit) = 0 := by
   rw [born_quadratic, inner_e0_e1]
-  simp
+  norm_num
 
 /-- **Same-state edge case.** The Born form gives `1` between a vector
     and itself. -/
 example : traceForm (rankOneDensity e0 e0_unit) (rankOneEffect e0 e0_unit) = 1 := by
   rw [born_quadratic, inner_e0_e0]
-  simp
+  norm_num
 
 end LF2Born
 
