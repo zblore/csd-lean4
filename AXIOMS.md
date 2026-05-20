@@ -161,6 +161,41 @@ For each headline exported theorem, the legible axiom citation:
 | `ProjectorAlgebra.ofTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 
+### Empirical-prediction headline theorems
+
+| Theorem | `#print axioms` output |
+|---|---|
+| `Empirical.Bell.correlation_eq_neg_dot` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.no_signalling_alice` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.no_signalling_bob` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.singlet_marginal_alice` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.singlet_marginal_bob` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.chsh_classical_bound_violated` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.chsh_singlet_at_optimal_angles` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.chsh_singlet_tsirelson_bound` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.chsh_inner_bound` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Bell.chsh_qm_tsirelson_bound` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.NoCloning.no_cloning_two_state` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.NoCloning.no_universal_cloner_of_witness` | `propext, Classical.choice, Quot.sound` |
+
+### Mathlib upstream candidates (Projectivization §12)
+
+These are CSD-free Mathlib-track lemmas staged under
+`CsdLean4/Mathlib/LinearAlgebra/Projectivization/`. Any axiom acquisition
+would be an upstream regression and a blocker for the eventual Mathlib PR.
+
+| Theorem | `#print axioms` output |
+|---|---|
+| `Projectivization.continuous_mk'` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.isOpenMap_mk'` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.isOpenQuotientMap_mk'` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.instT2Space` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.instCompactSpace` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.instMeasurableSingletonClass` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.borel_eq_map_mk'` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.lift_measurable` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.measurable_iff_measurable_comp_mk'` | `propext, Classical.choice, Quot.sound` |
+
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
 ## 6. LF3 structural-data carve-outs

@@ -8,6 +8,8 @@ import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.Empirical.Bell
 import CsdLean4.Empirical.NoCloning
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 
 /-!
 # Axiom regression suite
@@ -225,5 +227,39 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.NoCloning.no_universal_cloner_of_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.NoCloning.no_universal_cloner_of_witness
+
+/-! ### Mathlib upstream candidates (Projectivization, §12)
+
+These are CSD-free Mathlib-track lemmas staged under
+`CsdLean4/Mathlib/LinearAlgebra/Projectivization/`. They cite the
+foundational triple only — any axiom acquisition would be an upstream
+regression and a blocker for the eventual Mathlib PR. -/
+
+/-- info: 'Projectivization.continuous_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.continuous_mk'
+
+/-- info: 'Projectivization.isOpenMap_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.isOpenMap_mk'
+
+/-- info: 'Projectivization.isOpenQuotientMap_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.isOpenQuotientMap_mk'
+
+/-- info: 'Projectivization.instT2Space' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.instT2Space
+
+/-- info: 'Projectivization.instCompactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.instCompactSpace
+
+/-- info: 'Projectivization.instMeasurableSingletonClass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.instMeasurableSingletonClass
+
+/-- info: 'Projectivization.borel_eq_map_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.borel_eq_map_mk'
+
+/-- info: 'Projectivization.lift_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.lift_measurable
+
+/-- info: 'Projectivization.measurable_iff_measurable_comp_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.measurable_iff_measurable_comp_mk'
 
 end CSD.Tests.AxiomAudit

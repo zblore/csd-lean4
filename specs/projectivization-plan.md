@@ -388,8 +388,8 @@ The composition `Projectivization.lift f hf ∘ mk' = f` is definitional.
 | Group 3 (MeasureSpace 4.1: Borel instance + 4.3: singleton class + 4.4: measurable_mk') | 0.5 day | 2 days | **DONE 2026-05-20** (+ free SecondCountableTopology) |
 | Group 4 (MeasureSpace 4.2: coincidence lemma) | 0.5 day | 2.5 days | **DONE 2026-05-20** |
 | Group 5 (MeasureSpace 4.5: lift_measurable + 4.6: characterisation) | 0.5 day | 3 days | **DONE 2026-05-20** |
-| Group 6 (polish + AxiomAudit + build verification + provenance docstrings) | 0.5 day | 3.5 days | pending |
-| **Total** | **3.5 days focused** | | **3 of 3.5 days landed; only Group 6 polish remains** |
+| Group 6 (polish + AxiomAudit + build verification + provenance docstrings) | 0.5 day | 3.5 days | **DONE 2026-05-20** |
+| **Total** | **3.5 days focused** | | **3.5 of 3.5 days landed — §12 COMPLETE** |
 
 Down from the initial 5-day estimate because §6 investigations resolved
 the highest-uncertainty items (Mathlib's `Quotient.instMeasurableSpace`

@@ -36,18 +36,25 @@ Staged as upstream Mathlib material. All declarations live under
 `namespace Projectivization` with no `CsdLean4`-namespace prefix; the
 file is intended to land in
 `Mathlib/LinearAlgebra/Projectivization/MeasureSpace.lean` once usage
-stabilises. Discharges items 4.1, 4.3, 4.4 of `specs/projectivization-plan.md`.
+stabilises. Discharges items 4.1–4.6 of `specs/projectivization-plan.md`
+(the full `MeasureSpace.lean` mathematical scope).
 
 ## Hypothesis pattern
 
 `[RCLike K] [NormedAddCommGroup V] [NormedSpace K V] [FiniteDimensional K V]`,
 matching the `Topology.lean` `NormedFiniteDim` section. Under these
 hypotheses, `ℙ K V` is a compact Hausdorff space; the Borel σ-algebra is
-the natural measurable structure.
+the natural measurable structure. `lift_measurable` and
+`measurable_iff_measurable_comp_mk'` additionally take
+`[MeasurableSpace V] [BorelSpace V]` so the source subtype
+`{v : V // v ≠ 0}` inherits a Borel structure via `Subtype.borelSpace`
+that agrees with the Mathlib-canonical `borel _` (callers typically
+`borelize V`).
 
 ## Tags
 
-projectivization, projective space, Borel measurable space
+projectivization, projective space, Borel measurable space,
+quotient measurable space, scale-invariant measurable function
 -/
 
 open MeasureTheory Topology

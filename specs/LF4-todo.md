@@ -240,7 +240,7 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 
 ---
 
-## 12. `Projectivization` topology / measure / lift API in Mathlib — **PARTIAL (Groups 1–2 + full MeasureSpace.lean except 4.6 polish, 2026-05-19/2026-05-20)**
+## 12. `Projectivization` topology / measure / lift API in Mathlib — **DONE (Groups 1–6, 2026-05-19/2026-05-20)**
 
 **Status:** Identified as a Mathlib gap via the pre-LF4 spike on 2026-05-18 (see `specs/pre-LF4-plan.md` Spike 1). The pre-LF4 option-(b) chain initially scoped a commitment `ProjectiveHilbert N := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` at the LF2 level; the spike found Mathlib has no `TopologicalSpace`, `MeasurableSpace`, or `BorelSpace` instance on `Projectivization` outside the projective-line case (`OnePoint/ProjectiveLine.lean`). The architectural workaround keeps `SectorData.P` abstract and supplies a caller-side `representative : P → EuclideanSpace ℂ (Fin N)` map.
 
