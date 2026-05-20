@@ -270,6 +270,13 @@ info: 'CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18' depends on 
 -/
 #guard_msgs in #print axioms CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18
 
+/--
+info: 'CSD.Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms CSD.Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis
+
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 
 These are CSD-free Mathlib-track lemmas staged under

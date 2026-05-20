@@ -186,6 +186,7 @@ For each headline exported theorem, the legible axiom citation:
 | `Empirical.KochenSpecker.no_value_assignment_18_9` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.KochenSpecker.cabelloBasis_appears_twice` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.KochenSpecker.ks_no_value_assignment_cabello18` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis` | `propext, Classical.choice, Quot.sound` |
 
 ### Mathlib upstream candidates (Projectivization §12)
 

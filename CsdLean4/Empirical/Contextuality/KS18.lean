@@ -1,6 +1,7 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Finset.Card
 import Mathlib.Tactic.FinCases
@@ -73,21 +74,21 @@ is deferred to a future revision.
 - Bartosik, Klepp, Schmitzer, Sponar, Cabello, Rauch, Hasegawa 2009:
   *Phys. Rev. Lett.* **103**, 040403 (neutron experimental test).
 
-## Future work: vector data + orthogonality verification
+## Vector data + orthogonality verification
 
-A follow-up commit will add:
-
-- 18 unit vectors `cabelloVec : Fin 18 → EuclideanSpace ℝ (Fin 4)`
-  with rational components (e.g. `cabelloVec 0 = (0, 0, 0, 1)`, etc.).
-- 36 pairwise orthogonality lemmas (one per orthogonal pair within
-  each of the 9 bases; `decide`/`norm_num` closeable from rational
-  components).
-- A QM-bridge corollary identifying the Cabello-18 configuration with
-  9 complete orthonormal bases of `ℝ⁴ ↪ ℂ⁴`.
+The 18 vectors `cabelloVec : Fin 18 → EuclideanSpace ℝ (Fin 4)` are
+defined explicitly with integer components (un-normalised; the 9-basis
+orthogonality is scale-invariant). The pairwise orthogonality within
+each of the 9 bases is verified by `cabello_pairwise_orthogonal_in_basis`
+via case-split on the basis index + the four-component inner-product
+computation. The QM-bridge interpretation ("each `cabelloBasis B` is
+a complete orthogonal 4-tuple in `ℝ⁴`") follows immediately.
 
 The headline `ks_no_value_assignment_cabello18` impossibility holds
-without any of this geometric content: it is a purely combinatorial
-consequence of `cabelloBasis` + `cabelloBasis_appears_twice`.
+without this geometric content: it is a purely combinatorial
+consequence of `cabelloBasis` + `cabelloBasis_appears_twice`. The
+orthogonality verification ties the abstract impossibility to genuine
+QM eigenvalue content.
 -/
 
 open scoped BigOperators
@@ -261,6 +262,116 @@ theorem ks_no_value_assignment_cabello18 :
     ¬ ∃ lambda : Fin 18 → Bool,
       ∀ B : Fin 9, ((cabelloBasis B).filter (fun v => lambda v = true)).card = 1 :=
   no_value_assignment_18_9 cabelloBasis cabelloBasis_appears_twice
+
+/-! ## Cabello-18 vector data + orthogonality verification (geometric content)
+
+The 18 Cabello-Estebaranz-García-Alcaine vectors in `ℝ⁴` (un-normalised).
+Each is a 4-tuple of integers in `{-1, 0, 1}`; the orthogonality
+predicate `inner v w = 0` is scale-invariant, so normalisation is
+deferred. -/
+
+/-- The 18 Cabello vectors as un-normalised components in `ℝ⁴`,
+stored as a `Matrix (Fin 18) (Fin 4) ℝ`. Each row is one vector:
+
+```
+row 0  = (0, 0, 0, 1)         row 9  = (0, 0, 1, 1)
+row 1  = (0, 0, 1, 0)         row 10 = (1, 1, 1, 1)
+row 2  = (1, 1, 0, 0)         row 11 = (0, 1, 0, -1)
+row 3  = (1, -1, 0, 0)        row 12 = (1, 0, 0, 1)
+row 4  = (0, 1, 0, 0)         row 13 = (1, 0, 0, -1)
+row 5  = (1, 0, 1, 0)         row 14 = (0, 1, -1, 0)
+row 6  = (1, 0, -1, 0)        row 15 = (1, 1, -1, 1)
+row 7  = (1, -1, 1, -1)       row 16 = (1, 1, 1, -1)
+row 8  = (1, -1, -1, 1)       row 17 = (-1, 1, 1, 1)
+```
+-/
+def cabelloMat : Matrix (Fin 18) (Fin 4) ℝ :=
+  !![0,  0,  0,  1;
+     0,  0,  1,  0;
+     1,  1,  0,  0;
+     1, -1,  0,  0;
+     0,  1,  0,  0;
+     1,  0,  1,  0;
+     1,  0, -1,  0;
+     1, -1,  1, -1;
+     1, -1, -1,  1;
+     0,  0,  1,  1;
+     1,  1,  1,  1;
+     0,  1,  0, -1;
+     1,  0,  0,  1;
+     1,  0,  0, -1;
+     0,  1, -1,  0;
+     1,  1, -1,  1;
+     1,  1,  1, -1;
+    -1,  1,  1,  1]
+
+/-- The 18 Cabello vectors as `EuclideanSpace ℝ (Fin 4)` values
+(un-normalised; the 9-basis orthogonality is scale-invariant). -/
+noncomputable def cabelloVec (i : Fin 18) : EuclideanSpace ℝ (Fin 4) :=
+  WithLp.toLp 2 (cabelloMat i)
+
+/-! ### Row-evaluation lemmas
+
+Each row of `cabelloMat` evaluates to an explicit four-component
+`Fin 4 → ℝ` tuple definitionally. The 18 `cabelloMat_row_*` lemmas
+expose this to `simp` so the orthogonality proof can use the row
+values without peeling 17 levels of `Matrix.vecCons` recursively. -/
+@[simp] lemma cabelloMat_row_0 : cabelloMat 0 = ![0, 0, 0, 1] := rfl
+@[simp] lemma cabelloMat_row_1 : cabelloMat 1 = ![0, 0, 1, 0] := rfl
+@[simp] lemma cabelloMat_row_2 : cabelloMat 2 = ![1, 1, 0, 0] := rfl
+@[simp] lemma cabelloMat_row_3 : cabelloMat 3 = ![1, -1, 0, 0] := rfl
+@[simp] lemma cabelloMat_row_4 : cabelloMat 4 = ![0, 1, 0, 0] := rfl
+@[simp] lemma cabelloMat_row_5 : cabelloMat 5 = ![1, 0, 1, 0] := rfl
+@[simp] lemma cabelloMat_row_6 : cabelloMat 6 = ![1, 0, -1, 0] := rfl
+@[simp] lemma cabelloMat_row_7 : cabelloMat 7 = ![1, -1, 1, -1] := rfl
+@[simp] lemma cabelloMat_row_8 : cabelloMat 8 = ![1, -1, -1, 1] := rfl
+@[simp] lemma cabelloMat_row_9 : cabelloMat 9 = ![0, 0, 1, 1] := rfl
+@[simp] lemma cabelloMat_row_10 : cabelloMat 10 = ![1, 1, 1, 1] := rfl
+@[simp] lemma cabelloMat_row_11 : cabelloMat 11 = ![0, 1, 0, -1] := rfl
+@[simp] lemma cabelloMat_row_12 : cabelloMat 12 = ![1, 0, 0, 1] := rfl
+@[simp] lemma cabelloMat_row_13 : cabelloMat 13 = ![1, 0, 0, -1] := rfl
+@[simp] lemma cabelloMat_row_14 : cabelloMat 14 = ![0, 1, -1, 0] := rfl
+@[simp] lemma cabelloMat_row_15 : cabelloMat 15 = ![1, 1, -1, 1] := rfl
+@[simp] lemma cabelloMat_row_16 : cabelloMat 16 = ![1, 1, 1, -1] := rfl
+@[simp] lemma cabelloMat_row_17 : cabelloMat 17 = ![-1, 1, 1, 1] := rfl
+
+set_option maxHeartbeats 2000000 in
+/-- **Cabello-18 pairwise orthogonality.** Within each of the 9 bases of
+`cabelloBasis`, any two distinct vectors are orthogonal in `ℝ⁴`.
+
+This is the geometric content tying the abstract combinatorial KS
+impossibility (`no_value_assignment_18_9`) to the QM eigenvalue
+structure: each `cabelloBasis B` is a complete orthogonal 4-tuple,
+hence (after normalisation) an orthonormal basis of `ℝ⁴ ↪ ℂ⁴`. QM
+then requires exactly one of the four basis vectors to be assigned
+eigenvalue `1` per measurement of that basis, which is the
+per-basis-exactly-one constraint ruled out by
+`ks_no_value_assignment_cabello18`.
+
+Proved by exhaustive case-split on the 9 bases × 4 × 4 vector indices,
+filtered by `i ≠ j`. Each surviving case is a four-component
+inner-product computation closed by `norm_num` over the integer
+component values. Heartbeats bumped because the 9 × 16 = 144-case
+sweep with per-case `simp`+`norm_num` exceeds the default 200000. -/
+theorem cabello_pairwise_orthogonal_in_basis :
+    ∀ B : Fin 9, ∀ i ∈ cabelloBasis B, ∀ j ∈ cabelloBasis B, i ≠ j →
+      inner ℝ (cabelloVec i) (cabelloVec j) = 0 := by
+  intro B i hi j hj hij
+  fin_cases B <;>
+    (fin_cases hi <;> fin_cases hj <;>
+      first
+        | exact absurd rfl hij
+        | (simp only [cabelloVec, PiLp.inner_apply, RCLike.inner_apply,
+                     Fin.sum_univ_four, PiLp.toLp_apply,
+                     cabelloMat_row_0, cabelloMat_row_1, cabelloMat_row_2,
+                     cabelloMat_row_3, cabelloMat_row_4, cabelloMat_row_5,
+                     cabelloMat_row_6, cabelloMat_row_7, cabelloMat_row_8,
+                     cabelloMat_row_9, cabelloMat_row_10, cabelloMat_row_11,
+                     cabelloMat_row_12, cabelloMat_row_13, cabelloMat_row_14,
+                     cabelloMat_row_15, cabelloMat_row_16, cabelloMat_row_17,
+                     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+                     Matrix.cons_val_three, Matrix.head_cons, Matrix.tail_cons]
+           norm_num))
 
 end KochenSpecker
 end Empirical
