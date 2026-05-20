@@ -8,6 +8,7 @@ import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.Empirical.Bell
 import CsdLean4.Empirical.NoCloning
+import CsdLean4.Empirical.Multipartite.GHZ
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 
@@ -227,6 +228,26 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.NoCloning.no_universal_cloner_of_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.NoCloning.no_universal_cloner_of_witness
+
+/-! ### Empirical predictions (GHZ paradox, Phase D6 / Mermin all-or-nothing) -/
+
+/-- info: 'CSD.Empirical.GHZ.ghz_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.GHZ.ghz_norm
+
+/-- info: 'CSD.Empirical.GHZ.ghz_expectation_xxx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.GHZ.ghz_expectation_xxx
+
+/-- info: 'CSD.Empirical.GHZ.ghz_expectation_xyy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.GHZ.ghz_expectation_xyy
+
+/-- info: 'CSD.Empirical.GHZ.ghz_expectation_yxy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.GHZ.ghz_expectation_yxy
+
+/-- info: 'CSD.Empirical.GHZ.ghz_expectation_yyx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.GHZ.ghz_expectation_yyx
+
+/-- info: 'CSD.Empirical.GHZ.no_lhv_assignment_for_ghz' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.GHZ.no_lhv_assignment_for_ghz
 
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 

@@ -177,6 +177,12 @@ For each headline exported theorem, the legible axiom citation:
 | `Empirical.Bell.chsh_qm_tsirelson_bound` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.NoCloning.no_cloning_two_state` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.NoCloning.no_universal_cloner_of_witness` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.GHZ.ghz_norm` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.GHZ.ghz_expectation_xxx` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.GHZ.ghz_expectation_xyy` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.GHZ.ghz_expectation_yxy` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.GHZ.ghz_expectation_yyx` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.GHZ.no_lhv_assignment_for_ghz` | `propext, Quot.sound` (no `Classical.choice` — pure finite-state arithmetic contradiction) |
 
 ### Mathlib upstream candidates (Projectivization §12)
 

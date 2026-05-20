@@ -35,6 +35,7 @@ import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.Interface
 import CsdLean4.Empirical.Bell
 import CsdLean4.Empirical.NoCloning
+import CsdLean4.Empirical.Multipartite.GHZ
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.
