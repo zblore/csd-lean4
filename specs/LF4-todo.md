@@ -240,7 +240,7 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 
 ---
 
-## 12. `Projectivization` topology / measure / lift API in Mathlib — **PARTIAL (Group 1, 2026-05-19)**
+## 12. `Projectivization` topology / measure / lift API in Mathlib — **PARTIAL (Groups 1–2, 2026-05-19/2026-05-20)**
 
 **Status:** Identified as a Mathlib gap via the pre-LF4 spike on 2026-05-18 (see `specs/pre-LF4-plan.md` Spike 1). The pre-LF4 option-(b) chain initially scoped a commitment `ProjectiveHilbert N := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` at the LF2 level; the spike found Mathlib has no `TopologicalSpace`, `MeasurableSpace`, or `BorelSpace` instance on `Projectivization` outside the projective-line case (`OnePoint/ProjectiveLine.lean`). The architectural workaround keeps `SectorData.P` abstract and supplies a caller-side `representative : P → EuclideanSpace ℂ (Fin N)` map.
 
@@ -255,10 +255,15 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 
 Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [TopologicalSpace V] [ContinuousConstSMul K V]` for the topological-action lemmas (continuity / openness); algebraic infrastructure (`scaleNonzero_mul`, `scaleNonzero_one`, `mk'_preimage_mk'_image`) does not require any topology. No topology on K is needed — `ContinuousConstSMul K V` is purely a property of the `V`-side action.
 
-**Remaining Groups (3.5–3.6 + MeasureSpace.lean 4.1–4.6):**
+**Group 2 delivered 2026-05-20** in the same `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean` file, under a new `section NormedFiniteDim`. Adopted the `[RCLike K]` scalar-hypothesis option (per plan §7.2): simpler proofs and sufficient for the LF4 critical path. The earlier sections were enclosed in a new `section AlgebraicTopology` so the `[AddCommGroup V]` from the outer variable block does not create an instance diamond with `[NormedAddCommGroup V]` in the new section. Covers items 3.5–3.6:
 
-- **Group 2 (Topology 3.5 T2Space + 3.6 CompactSpace).** Awaits a scalar-hypothesis decision: the surjectivity-onto-unit-sphere proof needs normalisation by `‖v‖⁻¹ : ℝ`, which requires `[NormedSpace ℝ V]` alongside `[NormedSpace K V]` (via `[NormedAlgebra ℝ K]` or directly `[RCLike K]`). T2 additionally needs the K-collinearity-relation closedness argument (per plan §6.2 — pattern after `t2Space_quotient_mulAction_of_properSMul` proof body, or via wedge-product / 2×2-minors). Estimate: ~1 day focused. **Blocks Group 3 (`MeasurableSingletonClass` requires T2).**
-- **Group 3–5 (`MeasureSpace.lean` 4.1–4.6).** Borel σ-algebra instance + coincidence lemma + `MeasurableSingletonClass` + `measurable_mk'` + `lift_measurable` + characterisation. Estimate: ~1.5 days focused. Depends on Group 2 T2 for `MeasurableSingletonClass`.
+- `Projectivization.instT2Space`: Hausdorffness via the open-quotient-map criterion `t2Space_iff_of_isOpenQuotientMap` applied to `isOpenQuotientMap_mk'`, reducing T2 to closedness of the K-collinearity relation `{(v, w) | mk' v = mk' w}`. Closedness routes through `LinearIndependent.pair_iff'` + `isOpen_setOf_linearIndependent` (the set of linearly independent pairs is open in finite-dim normed K-modules over `[RCLike K]`).
+- `Projectivization.instCompactSpace`: compactness via continuous surjection from the unit sphere. The sphere `Metric.sphere (0 : V) 1` is compact (`isCompact_sphere` + `FiniteDimensional.proper_rclike`); the map `g : sphere → ℙ K V, v ↦ mk K v hv` is continuous; surjectivity uses normalisation `((‖p.rep‖⁻¹ : ℝ) : K) • p.rep` of the representative.
+- `Projectivization.isClosed_collinearity_relation`: closedness of the K-collinearity relation, the supporting lemma for T2.
+
+**Remaining Groups (`MeasureSpace.lean` 4.1–4.6):**
+
+- **Group 3–5 (`MeasureSpace.lean` 4.1–4.6).** Borel σ-algebra instance + coincidence lemma + `MeasurableSingletonClass` + `measurable_mk'` + `lift_measurable` + characterisation. Estimate: ~1.5 days focused. T2 (Group 2) is now in scope, so `MeasurableSingletonClass` is unblocked.
 
 **Pickup pointer:** see `specs/projectivization-plan.md` for the per-section design plan; `specs/projectivization-plan.md` §6 records the resolved Mathlib infrastructure investigations.
 
@@ -267,6 +272,7 @@ Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [
 **Pickup (Cat-1 Mathlib contribution, when scheduled):**
 
 1. ~~Define `TopologicalSpace (Projectivization K V)`.~~ **DONE 2026-05-19 (Group 1).**
+1b. ~~T2Space + CompactSpace under `[RCLike K]` + finite-dim normed `V`.~~ **DONE 2026-05-20 (Group 2).**
 2. Prove `BorelSpace (Projectivization K V)` for the appropriate `K`-and-`V`-flavoured cases (`K = ℂ`, `V` a finite-dimensional inner-product space is the only case we structurally need; `K = ℝ` for completeness).
 3. Prove `MeasurableSingletonClass (Projectivization K V)` (needed for `MeasureTheory.integral_dirac` rather than `integral_dirac'`).
 4. Prove `Projectivization.lift_measurable`: if `f : V \ {0} → α` is measurable and `f`-phase-invariant, then `Projectivization.lift f hf : Projectivization K V → α` is measurable.

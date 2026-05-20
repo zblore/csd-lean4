@@ -384,12 +384,12 @@ The composition `Projectivization.lift f hf ∘ mk' = f` is definitional.
 |---|---|---|---|
 | Pre-work: investigations §6 | DONE | — | DONE 2026-05-19 |
 | Group 1 (Topology 3.1–3.4: continuity, openness, quotient map) | 0.5 day | 0.5 day | **DONE 2026-05-19** |
-| Group 2 (Topology 3.5–3.6: T2 + compact, normed finite-dim) | 1 day | 1.5 days | pending |
+| Group 2 (Topology 3.5–3.6: T2 + compact, normed finite-dim) | 1 day | 1.5 days | **DONE 2026-05-20** |
 | Group 3 (MeasureSpace 4.1: Borel instance + 4.3: singleton class + 4.4: measurable_mk') | 0.5 day | 2 days | pending (blocked on Group 2 T2 for 4.3) |
 | Group 4 (MeasureSpace 4.2: coincidence lemma) | 0.5 day | 2.5 days | pending |
 | Group 5 (MeasureSpace 4.5: lift_measurable + 4.6: characterisation) | 0.5 day | 3 days | pending |
 | Group 6 (polish + AxiomAudit + build verification + provenance docstrings) | 0.5 day | 3.5 days | pending |
-| **Total** | **3.5 days focused** | | **0.5 of 3.5 days landed** |
+| **Total** | **3.5 days focused** | | **1.5 of 3.5 days landed** |
 
 Down from the initial 5-day estimate because §6 investigations resolved
 the highest-uncertainty items (Mathlib's `Quotient.instMeasurableSpace`
@@ -406,15 +406,15 @@ Group 1 landed in `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean
 - **No topology on K required.** `ContinuousConstSMul K V` is purely a property of the `V`-side action; the unit-scaling self-maps are continuous without topology on K. This relaxes the original plan hypothesis pattern.
 - **`open Topology` in the file header.** `IsQuotientMap` and `IsOpenQuotientMap` live in `namespace Topology`; without `open Topology` they don't resolve.
 
-### 7.2 Group 2 scalar-hypothesis decision (deferred)
+### 7.2 Group 2 execution notes (2026-05-20)
 
-Before starting Group 2, decide between the following hypothesis patterns for the normed finite-dim section:
+Group 2 (`T2Space` + `CompactSpace`) landed in the same `Topology.lean`. Adopted option (a) `[RCLike K]` per the deferred-decision recommendation. Execution details:
 
-- **(a) `[RCLike K]`.** Specialises to `K ∈ {ℝ, ℂ}`. Gives `[NormedAlgebra ℝ K]` and `[LocallyCompactSpace K]` automatically. Sufficient for LF4 (`K = ℂ`). Simpler proofs (normalise by `‖v‖⁻¹` viewed in K via `RCLike.ofReal` / `algebraMap ℝ K`).
-- **(b) `[NontriviallyNormedField K] [LocallyCompactSpace K] [NormedAlgebra ℝ K]`.** More general but requires `ℝ → K` algebra map; the surjectivity-onto-unit-sphere argument is the same as (a).
-- **(c) `[NontriviallyNormedField K] [LocallyCompactSpace K]` only.** Most general but does not admit the unit-sphere normalisation directly; would have to use a compact annulus (`closed_ball R \ open_ball r` for `r < R`) and a power-of-scalar argument. Materially more involved.
-
-Recommendation: (a) for the first pass — Mathlib upstream PR can relax to (b) or (c) later if non-RCLike consumers materialise. The LF4 critical path is unblocked under (a).
+- **Scalar hypothesis: `[RCLike K]`.** `RCLike` provides `[NormedAlgebra ℝ K]` and the `RCLike.ofReal` coercion needed to normalise representatives. `FiniteDimensional.proper_rclike` (in `Mathlib.Analysis.RCLike.Lemmas`) provides `ProperSpace V`, which in turn provides `Metric.sphere.compactSpace`.
+- **T2 routes through `t2Space_iff_of_isOpenQuotientMap`.** This Mathlib helper (`Mathlib.Topology.Separation.Hausdorff`) directly reduces `T2Space (ℙ K V)` to closedness of the K-collinearity relation `{(v, w) ∈ V₀ × V₀ | mk' v = mk' w}`. The collinearity relation is identified with the complement (in `V × V`) of `{(w, v) | LinearIndependent K ![w, v]}` via `mk_eq_mk_iff'` + `LinearIndependent.pair_iff'`, pulled back via a continuous map. Closedness of the open complement is then `isOpen_setOf_linearIndependent.isClosed_compl.preimage`.
+- **CompactSpace via continuous surjection from sphere.** The map `g : Metric.sphere (0 : V) 1 → ℙ K V, v ↦ mk K v (sphere ⟹ ≠ 0)` is continuous (continuity of `mk'` + subtype coercion). Surjectivity: any `p : ℙ K V` is the image of `((‖p.rep‖⁻¹ : ℝ) : K) • p.rep` (which lies on the sphere by `mem_sphere_zero_iff_norm`). Then `isCompact_range hg_cont` + `hg_surj.range_eq` give `IsCompact (Set.univ : Set (ℙ K V))`, equivalent to `CompactSpace`.
+- **Instance diamond mitigation.** Adding `[NormedAddCommGroup V]` to a section that also has `[AddCommGroup V]` (from the outer variable block) creates an `AddCommGroup V` diamond: the two instances are mathematically equal but typeclass synthesis sees two paths. Resolved by enclosing the earlier sections in `section AlgebraicTopology` with the algebraic variables scoped to that section, then opening a fresh `section NormedFiniteDim` with only the normed variables. This is a recurring pattern in mixed algebraic+normed Mathlib code; documented inline.
+- **Imports added.** `Mathlib.Analysis.Normed.Module.FiniteDimension` (for `isOpen_setOf_linearIndependent`), `Mathlib.Analysis.RCLike.Basic` + `Mathlib.Analysis.RCLike.Lemmas` (for `RCLike` and `FiniteDimensional.proper_rclike`), `Mathlib.LinearAlgebra.LinearIndependent.Lemmas` (for `LinearIndependent.pair_iff'`), `Mathlib.Topology.Separation.Hausdorff` (for `t2Space_iff_of_isOpenQuotientMap`).
 
 ## 8. Exit criteria
 
