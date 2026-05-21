@@ -200,6 +200,7 @@ reading reduces to QM without invoking Busch.
 |---|---|
 | `Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle` | `propext, Classical.choice, Quot.sound` |
 
 ### Mathlib upstream candidates (Projectivization §12)
 

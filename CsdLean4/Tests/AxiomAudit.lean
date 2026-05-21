@@ -13,6 +13,7 @@ import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
+import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 
@@ -301,6 +302,13 @@ info: 'CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence' depends 
 info: 'CSD.Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle' depends on axioms: [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs in #print axioms CSD.Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle
+
+/--
+info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle
 
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 

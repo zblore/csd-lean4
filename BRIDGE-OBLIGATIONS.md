@@ -95,6 +95,31 @@ identity. A structurally vacuous `True`-typed field would be an
 antipattern; the docstring on the structure carries the LF4-todo §13
 citation directly.
 
+### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
+
+Used by `Empirical/CSD/Contextuality/KS18.lean`.
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.KochenSpecker.CSDKSAssignmentBundle` | `partition_pairwise_null` | For each of the 9 Cabello bases B and each pair of distinct vectors v, w in B, `prepMeasure((O v).preEvent ∩ (O w).preEvent) = 0`. | §2 + §7 |
+| `Empirical.CSDBridge.KochenSpecker.CSDKSAssignmentBundle` | `partition_cover_null` | For each basis B, `prepMeasure(univ \ ⋃ v ∈ B, (O v).preEvent) = 0` (the union covers Σ up to null). | §2 + §7 |
+
+The two `partition_*` fields together encode per-basis measurable-
+partition discipline of the 18 ontic outcome regions. They are
+structurally identical to the per-sector partition content of
+`LF3.PureSingletPreparation` (Bell uses a 2×2 sector decomposition;
+KS uses a 4-cell partition repeated 9 times). Same discharge route:
+LF4-todo §2 + §7 via the concrete Kähler `SectorData` and the
+projective-first outcome construction.
+
+The pairwise-null + cover-null formulation is used in place of
+`LF2.MeasurablePartition` to avoid the `Finset (Fin 18) → Fin 4`
+indexing friction that the canonical-partition type would require.
+The combinatorial content is unchanged.
+
+No new LF4-todo entry was needed for this retrofit (unlike NoCloning,
+which required §13 for the ontic-isometry lift).
+
 ## 3. Pending bridge content (planned, not yet landed)
 
 Per `specs/empirical-csd-bridge-plan.md` §4, the following bridge
@@ -106,7 +131,7 @@ will be made in the respective landing PRs.
 | File | Expected new bundle(s) | Anticipated load-bearing fields | Anticipated LF4-todo |
 |---|---|---|---|
 | `Empirical/CSD/Multipartite/GHZ.lean` | `PureGHZPreparation`, `TripartiteJointEig` | `bridge_op_p` (tripartite), `born_eq_<sigma_x>_etc` | §2 + §7 (existing); possibly new tripartite-specific item |
-| `Empirical/CSD/Contextuality/KS18.lean` | `KSAssignmentBundle` | per-basis ontic-weight ↔ OP.p bridge (9 of them) | §2 + §7 (existing); possibly new projector-partition-specific item |
+| ~~`Empirical/CSD/Contextuality/KS18.lean`~~ | ~~`KSAssignmentBundle`~~ | ~~per-basis ontic-weight ↔ OP.p bridge (9 of them)~~ | **DONE 2026-05-21** (see §2.4 above; no new LF4-todo entry needed, reuses §2 + §7). |
 | ~~`Empirical/CSD/NoCloning.lean`~~ | ~~`CSDIsometryBundle`~~ | ~~π-equivariance of isometry candidate; non-existence target~~ | **DONE 2026-05-21** (see §2.3 above; LF4-todo §13 added in the same change-set per discipline rule §1.2). |
 
 The third item (`NoCloning`) is the only one anticipated to require a

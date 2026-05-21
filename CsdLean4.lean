@@ -40,6 +40,7 @@ import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
+import CsdLean4.Empirical.CSD.Contextuality.KS18
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.
