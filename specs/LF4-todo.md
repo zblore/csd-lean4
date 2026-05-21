@@ -325,3 +325,61 @@ The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use 
 **Effect on pre-LF4 / LF4 work:** Until landed, `SectorData.P` stays abstract and `OperationalPackage.fromPreparation` takes a caller-supplied `rep : P → EuclideanSpace ℂ (Fin N)`. When this lands, LF4 can specialise `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` and the `rep` argument resolves to `Projectivization.rep` or similar. No retrofit needed; the abstract API is monomorphic in `P` so any concrete `P` works at instantiation time.
 
 **Depends on:** nothing in CSD; this is a self-contained Mathlib contribution that other projectivization-using formalisations (algebraic geometry, projective representations of Lie groups, etc.) would also benefit from.
+
+## 13. Ontic-isometry ↔ Hilbert-isometry bridge for cloning (added 2026-05-21)
+
+**Status:** load-bearing, externally supplied, undischarged. Carried by
+`Empirical.CSDBridge.CSDCloningBundle.bridge_isometry` in
+`CsdLean4/Empirical/CSD/NoCloning.lean`.
+
+**Claim:** Under a concrete Kähler `SectorData` instantiation, a
+measure-preserving π-equivariant flow on `Σ × Σ → Σ × Σ` (the ontic
+operation hypothetically realising a cloning unitary) induces a Hilbert-
+space isometry on the tensor space `Htensor` (preservation of the inner
+product). Equivalently: the projective pushforward of the ontic flow is
+a Hilbert-space unitary up to phase, and tensor structure transfers
+across the bridge.
+
+**Why load-bearing.** The CSD-side no-cloning theorem
+(`no_csd_cloning_bundle`) reduces to the QM-side Wootters-Zurek result
+(`Empirical.QM.NoCloning.no_cloning_two_state`) only via this bridge:
+the bundle's measure-preservation + π-equivariance + cloning identities
+yield an *ontic* operation matching the cloning recipe, but to invoke
+the QM theorem we need a *Hilbert-space isometry* `U : Htensor → Htensor`
+with `⟨U x, U y⟩ = ⟨x, y⟩`. Inner-product preservation does not follow
+from measure-preservation + π-equivariance alone; it needs the concrete
+ontic-to-Hilbert lift that the Kähler instantiation supplies.
+
+**Discharge in principle.** Under the concrete Kähler `SectorData` from
+§8, the projective pushforward of a measure-preserving symplectomorphism
+of Σ is determined by its action on projective rays. For the cone over
+the projective ray, the symplectomorphism lifts to a complex-linear
+(unitary-up-to-phase) action on the tangent Hilbert space. The induced
+isometry on `Htensor` then follows from the tensor product of the
+single-system lifts.
+
+**Discharge prerequisites:**
+- §2 (preparation-to-Hilbert correspondence, PARTIAL).
+- §7 (projective-first outcomes, DONE).
+- §8 (concrete Kähler `SectorData`).
+- A new lemma "symplectomorphism of cone(ℂℙⁿ) lifts uniquely to a
+  unitary on ℂⁿ⁺¹ up to a global phase," which is standard for compact
+  Kähler manifolds with isometric group actions but is not currently in
+  Mathlib at the abstract level.
+
+**Effect on pre-LF4 / LF4 work:** Pre-LF4, `CSDCloningBundle` carries
+`bridge_isometry` as a structural field. Callers attempting to
+construct a `CSDCloningBundle` for any specific (ψ, φ, blank) must
+supply the isometry hypothesis explicitly. `no_csd_cloning_bundle`
+then shows the bundle is uninhabitable for non-orthogonal non-equal
+unit ψ, φ. Post-LF4, the `bridge_isometry` field becomes provable from
+the concrete Kähler `SectorData`'s pushforward properties, eliminating
+the need for explicit caller-supplied isometry.
+
+**Depends on:** §2, §7, §8 (load-bearing); §10 if the bridge is
+extracted as Cat-2 Framework infrastructure.
+
+**Audit:** Listed in `BRIDGE-OBLIGATIONS.md` §2.2 against the
+`bridge_isometry` field. Per the bridge-discipline rules at the top
+of this file, this entry was added in a separate PR before the
+`Empirical/CSD/NoCloning.lean` file landed.

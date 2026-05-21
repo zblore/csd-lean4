@@ -188,6 +188,19 @@ For each headline exported theorem, the legible axiom citation:
 | `Empirical.KochenSpecker.ks_no_value_assignment_cabello18` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis` | `propext, Classical.choice, Quot.sound` |
 
+### Empirical/CSD bridge readings
+
+CSD-side companions to the Empirical/QM/ predictions. The Bell-family
+readings re-export LF3 chain capstones; their axiom citations match
+the corresponding capstones (`busch_effect_gleason` propagates
+extensionally through `OP_p_at_jointEig_eq_P_st`). The no-cloning
+reading reduces to QM without invoking Busch.
+
+| Theorem | `#print axioms` output |
+|---|---|
+| `Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle` | `propext, Classical.choice, Quot.sound` |
+
 ### Mathlib upstream candidates (Projectivization §12)
 
 These are CSD-free Mathlib-track lemmas staged under

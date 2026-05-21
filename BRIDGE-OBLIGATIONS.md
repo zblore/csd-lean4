@@ -72,6 +72,29 @@ Note: `invariant_measure_uniqueness` is an LF2 axiom, not a bundle
 field — its provenance is in `AXIOMS.md §2.1`. The `bridge` field
 above is the *consumer* side of that axiom in the CSD framework.
 
+### 2.3 CSD cloning bundle (added 2026-05-21)
+
+Used by `Empirical/CSD/NoCloning.lean`.
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.NoCloning.CSDCloningBundle` | (whole bundle's CSD-realisability content) | the Hilbert-space `U` carried by the bundle arises as the projective-action lift of a measure-preserving π-equivariant flow on `Σ × Σ`, for the bundle's `SectorData D`; equivalently, `U` is "CSD-substrate-realisable" | §13 |
+
+Unlike `PureSingletPreparation.bridge_op_p` (which is a specific
+field carrying a specific identity), the `CSDCloningBundle`
+load-bearing content is implicit in the act of constructing the
+bundle — callers asserting "this is a `CSDCloningBundle`" implicitly
+commit to LF4-todo §13's realisability claim about the bundle's `U`
+field. Pre-LF4 this is structural; post-LF4 it becomes provable from
+the concrete Kähler `SectorData`.
+
+The bundle does not carry a dedicated `csd_realisation : Prop` field
+because the realisability is a property of the entire (`U`, ontic
+substrate, tensor structure) combination rather than a localised
+identity. A structurally vacuous `True`-typed field would be an
+antipattern; the docstring on the structure carries the LF4-todo §13
+citation directly.
+
 ## 3. Pending bridge content (planned, not yet landed)
 
 Per `specs/empirical-csd-bridge-plan.md` §4, the following bridge
@@ -84,7 +107,7 @@ will be made in the respective landing PRs.
 |---|---|---|---|
 | `Empirical/CSD/Multipartite/GHZ.lean` | `PureGHZPreparation`, `TripartiteJointEig` | `bridge_op_p` (tripartite), `born_eq_<sigma_x>_etc` | §2 + §7 (existing); possibly new tripartite-specific item |
 | `Empirical/CSD/Contextuality/KS18.lean` | `KSAssignmentBundle` | per-basis ontic-weight ↔ OP.p bridge (9 of them) | §2 + §7 (existing); possibly new projector-partition-specific item |
-| `Empirical/CSD/NoCloning.lean` | `CSDIsometryBundle` | π-equivariance of isometry candidate; non-existence target | New: "non-existence of cloning symplectomorphism on Σ" (would need its own LF4-todo entry) |
+| ~~`Empirical/CSD/NoCloning.lean`~~ | ~~`CSDIsometryBundle`~~ | ~~π-equivariance of isometry candidate; non-existence target~~ | **DONE 2026-05-21** (see §2.3 above; LF4-todo §13 added in the same change-set per discipline rule §1.2). |
 
 The third item (`NoCloning`) is the only one anticipated to require a
 new LF4-todo entry. Per rule §1.2, that PR must add the LF4-todo entry

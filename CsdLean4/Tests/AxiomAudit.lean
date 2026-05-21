@@ -10,6 +10,9 @@ import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
+import CsdLean4.Empirical.CSD.Framework
+import CsdLean4.Empirical.CSD.Bell
+import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 
@@ -276,6 +279,28 @@ info: 'CSD.Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis' depends
  Quot.sound]
 -/
 #guard_msgs in #print axioms CSD.Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis
+
+/-! ### Empirical/CSD bridge readings
+
+CSD-side companions to the Empirical/QM/ predictions. Each cites the
+foundational triple and the LF4-discharge axioms threaded through the
+shared `CSDBridge.Context` bundle.
+
+The Bell-family CSD readings are re-exports of LF3 chain capstones;
+their axiom citations match the corresponding LF3 capstones. -/
+
+/--
+info: 'CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound,
+ busch_effect_gleason]
+-/
+#guard_msgs in #print axioms CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence
+
+/--
+info: 'CSD.Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs in #print axioms CSD.Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle
 
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 
