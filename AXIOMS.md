@@ -211,6 +211,23 @@ though the underlying arithmetic content is unchanged. Same effect
 applies to `Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle`
 relative to its QM-side counterpart.
 
+### Tranche 1 Tier A gates (added 2026-05-22)
+
+Pure linear-algebra gate identities. All cite the foundational triple
+only.
+
+| Theorem | `#print axioms` output |
+|---|---|
+| `Empirical.QM.Gates.qmH_mul_self` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmS_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmT_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmCNOT_mul_self` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmSWAP_mul_self` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmCZ_mul_self` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmBellPrep_factorisation` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmToffoli_mul_self` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmFredkin_mul_self` | `propext, Classical.choice, Quot.sound` |
+
 ### Mathlib upstream candidates (Projectivization §12)
 
 These are CSD-free Mathlib-track lemmas staged under

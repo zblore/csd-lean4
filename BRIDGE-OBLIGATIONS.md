@@ -147,6 +147,37 @@ the four `csd_ghz_expectation_*` are re-exports of the QM-side
 Hilbert-Born content rather than per-sector frequency-convergence
 claims.
 
+### 2.6 CSD unitary bundle (Tranche 1 Tier A gates, added 2026-05-22)
+
+Used by `Empirical/CSD/Gates/{Framework, SingleQubit, TwoQubit,
+BellPrep, MultiQubit}.lean`.
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.Gates.CSDUnitaryBundle` | `U_isometry` | For the carried Hilbert-space unitary `U : H_n → H_n` on the N-qubit space, inner-product preservation `∀ x y, ⟨U x, U y⟩ = ⟨x, y⟩`. | §13.2 |
+| `Empirical.CSDBridge.Gates.CSDUnitaryBundle` | (bundle existence, no explicit field) | The carried unitary arises as the projective-action lift of a measure-preserving π-equivariant flow on `Σ^N` for the bundle's `SectorData D`. | §13.2 |
+
+LF4-todo §13 was renamed and subdivided in this commit's change-set:
+- §13.1 (existing): cloning case (tensor `Σ × Σ`); cited by
+  `CSDCloningBundle.bridge_isometry`.
+- §13.2 (new): general N-qubit case; cited by `CSDUnitaryBundle`.
+
+Both subitems share a discharge route via §2 + §7 + §8 + the
+symplectomorphism-lifts-to-unitary-up-to-phase lemma (standard for
+compact Kähler manifolds with isometric group actions, not currently
+in Mathlib at the abstract level).
+
+Per-gate realisability claims (`hadamard_realisable_for`,
+`cnot_realisable_for`, `toffoli_realisable_for`, etc.) instantiate
+the same `CSDUnitaryBundle` at the appropriate gate matrix; they
+do not carry separate LF4 obligations beyond §13.2.
+
+This is the first **positive-existence-conditional-on-LF4** polarity
+in the architecture; the previous five bundles used negative-
+existential (NoCloning, KS, GHZ) or positive-frequency-convergence
+(Bell) polarities. See `specs/empirical-csd-bridge-plan.md` for the
+four-polarity catalogue.
+
 ## 3. Pending bridge content (planned, not yet landed)
 
 Per `specs/empirical-csd-bridge-plan.md` §4, the following bridge

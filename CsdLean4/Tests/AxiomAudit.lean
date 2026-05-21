@@ -15,6 +15,11 @@ import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
+import CsdLean4.Empirical.QM.Gates.SingleQubit
+import CsdLean4.Empirical.QM.Gates.TwoQubit
+import CsdLean4.Empirical.QM.Gates.BellPrep
+import CsdLean4.Empirical.QM.Gates.MultiQubit
+import CsdLean4.Empirical.CSD.Gates.Framework
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 
@@ -313,6 +318,39 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 
 /-- info: 'CSD.Empirical.CSDBridge.GHZ.no_csd_ghz_lhv_bundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.CSDBridge.GHZ.no_csd_ghz_lhv_bundle
+
+/-! ### Tranche 1 Tier A gates (added 2026-05-22)
+
+Pure linear-algebra gate identities + CSD-side bundle framework.
+The unitarity proofs cite only the foundational triple; the
+`CSDUnitaryBundle` is a structure (no axioms). -/
+
+/-- info: 'CSD.Empirical.QM.Gates.qmH_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmH_mul_self
+
+/-- info: 'CSD.Empirical.QM.Gates.qmS_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmS_sq
+
+/-- info: 'CSD.Empirical.QM.Gates.qmT_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmT_sq
+
+/-- info: 'CSD.Empirical.QM.Gates.qmCNOT_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmCNOT_mul_self
+
+/-- info: 'CSD.Empirical.QM.Gates.qmSWAP_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmSWAP_mul_self
+
+/-- info: 'CSD.Empirical.QM.Gates.qmCZ_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmCZ_mul_self
+
+/-- info: 'CSD.Empirical.QM.Gates.qmBellPrep_factorisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmBellPrep_factorisation
+
+/-- info: 'CSD.Empirical.QM.Gates.qmToffoli_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmToffoli_mul_self
+
+/-- info: 'CSD.Empirical.QM.Gates.qmFredkin_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmFredkin_mul_self
 
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 

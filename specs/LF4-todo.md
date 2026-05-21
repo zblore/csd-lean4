@@ -326,11 +326,36 @@ The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use 
 
 **Depends on:** nothing in CSD; this is a self-contained Mathlib contribution that other projectivization-using formalisations (algebraic geometry, projective representations of Lie groups, etc.) would also benefit from.
 
-## 13. Ontic-isometry ↔ Hilbert-isometry bridge for cloning (added 2026-05-21)
+## 13. Ontic-isometry ↔ Hilbert-isometry bridge for unitaries (added 2026-05-21, generalised 2026-05-21)
 
-**Status:** load-bearing, externally supplied, undischarged. Carried by
-`Empirical.CSDBridge.CSDCloningBundle.bridge_isometry` in
-`CsdLean4/Empirical/CSD/NoCloning.lean`.
+**Status:** load-bearing, externally supplied, undischarged.
+
+Originally framed for cloning (§13.1 below); generalised to arbitrary
+N-qubit unitaries when the Tranche 1 Tier A gate work introduced
+`Empirical.CSDBridge.Gates.CSDUnitaryBundle` (§13.2 below). The two
+sub-items share a discharge route; LF4 closes both simultaneously.
+
+### 13.1 Cloning case (original framing)
+
+Carried by `Empirical.CSDBridge.NoCloning.CSDCloningBundle` in
+`CsdLean4/Empirical/CSD/NoCloning.lean`. Specifically: a
+measure-preserving π-equivariant flow on `Σ × Σ → Σ × Σ` (the ontic
+operation hypothetically realising a cloning unitary) induces a
+Hilbert-space isometry on the tensor space `Htensor`.
+
+### 13.2 General N-qubit case (added 2026-05-21 for Tranche 1 Tier A)
+
+Carried by `Empirical.CSDBridge.Gates.CSDUnitaryBundle` in
+`CsdLean4/Empirical/Gates/Framework.lean`. For any `N`-qubit unitary
+`U` on `H_n = EuclideanSpace ℂ (Fin (2^N))`, a measure-preserving
+π-equivariant flow on `Σ^N → Σ^N` induces a Hilbert-space isometry
+on `H_n` that realises the projective action of `U`.
+
+This is the generalisation of §13.1 from the cloning tensor structure
+to arbitrary unitaries. The 1-qubit case (Hadamard, phase gates) is
+the simplest instance; the 2-qubit case (CNOT, SWAP, CZ) generalises
+the cloning tensor `Htensor` to arbitrary 4-dimensional unitaries;
+the 3-qubit case (Toffoli, Fredkin) extends to `Σ^3`.
 
 **Claim:** Under a concrete Kähler `SectorData` instantiation, a
 measure-preserving π-equivariant flow on `Σ × Σ → Σ × Σ` (the ontic
