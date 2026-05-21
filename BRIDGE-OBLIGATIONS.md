@@ -120,6 +120,33 @@ The combinatorial content is unchanged.
 No new LF4-todo entry was needed for this retrofit (unlike NoCloning,
 which required §13 for the ontic-isometry lift).
 
+### 2.5 CSD GHZ LHV-assignment bundle (added 2026-05-21)
+
+Used by `Empirical/CSD/Multipartite/GHZ.lean`.
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.GHZ.CSDGHZAssignmentBundle` | `partition_pairwise_null` | For each (wing, axis) measurement, the two ±1-outcome regions on Σ have `prepMeasure`-null intersection. | §2 + §7 |
+| `Empirical.CSDBridge.GHZ.CSDGHZAssignmentBundle` | `partition_cover_null` | For each (wing, axis), the two ±1-outcome regions cover Σ up to `prepMeasure`-null. | §2 + §7 |
+
+Structurally identical to `CSDKSAssignmentBundle.partition_*` and
+`LF3.PureSingletPreparation`'s per-sector content. Same discharge
+route via LF4-todo §2 + §7 (concrete Kähler `SectorData` +
+projective-first outcome construction).
+
+The bundle is a 2-cell partition (over `Sign`) repeated 6 times
+(over `Fin 3 × PauliAxis`), giving 12 outcome regions total. This
+sits between Bell's 2×2 sector decomposition (4 regions) and KS's
+4-cell partition repeated 9 times (18 regions) on the partition-
+arity spectrum. The same LF4 discharge target covers all three.
+
+No new LF4-todo entry needed for this retrofit. A tripartite LF3
+chain (`LF3/Multipartite/GHZ/*`-style content paralleling
+`LF3/Singlet/*`) is explicitly deferred as post-LF4 ambition; pre-LF4
+the four `csd_ghz_expectation_*` are re-exports of the QM-side
+Hilbert-Born content rather than per-sector frequency-convergence
+claims.
+
 ## 3. Pending bridge content (planned, not yet landed)
 
 Per `specs/empirical-csd-bridge-plan.md` §4, the following bridge
@@ -130,7 +157,7 @@ will be made in the respective landing PRs.
 
 | File | Expected new bundle(s) | Anticipated load-bearing fields | Anticipated LF4-todo |
 |---|---|---|---|
-| `Empirical/CSD/Multipartite/GHZ.lean` | `PureGHZPreparation`, `TripartiteJointEig` | `bridge_op_p` (tripartite), `born_eq_<sigma_x>_etc` | §2 + §7 (existing); possibly new tripartite-specific item |
+| ~~`Empirical/CSD/Multipartite/GHZ.lean`~~ | ~~`PureGHZPreparation`, `TripartiteJointEig`~~ | ~~`bridge_op_p` (tripartite), `born_eq_<sigma_x>_etc`~~ | **DONE 2026-05-21** (see §2.5 above; took the KS-template LHV-only path; no new LF4-todo entry; no new LF3 tripartite chain content). |
 | ~~`Empirical/CSD/Contextuality/KS18.lean`~~ | ~~`KSAssignmentBundle`~~ | ~~per-basis ontic-weight ↔ OP.p bridge (9 of them)~~ | **DONE 2026-05-21** (see §2.4 above; no new LF4-todo entry needed, reuses §2 + §7). |
 | ~~`Empirical/CSD/NoCloning.lean`~~ | ~~`CSDIsometryBundle`~~ | ~~π-equivariance of isometry candidate; non-existence target~~ | **DONE 2026-05-21** (see §2.3 above; LF4-todo §13 added in the same change-set per discipline rule §1.2). |
 

@@ -201,6 +201,15 @@ reading reduces to QM without invoking Busch.
 | `Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.GHZ.no_csd_ghz_lhv_bundle` | `propext, Classical.choice, Quot.sound` |
+
+Note: the QM-side `Empirical.GHZ.no_lhv_assignment_for_ghz` cites only
+`[propext, Quot.sound]` (no `Classical.choice`). The CSD-side
+`no_csd_ghz_lhv_bundle` picks up `Classical.choice` from the
+existential-bundle destructure (`rintro ⟨_, lambda, ...⟩`), even
+though the underlying arithmetic content is unchanged. Same effect
+applies to `Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle`
+relative to its QM-side counterpart.
 
 ### Mathlib upstream candidates (Projectivization §12)
 
