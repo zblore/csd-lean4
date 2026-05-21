@@ -1,5 +1,5 @@
 import CsdLean4.LF3.Setup
-import CsdLean4.Empirical.Bell
+import CsdLean4.Empirical.QM.Bell
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Lp.Matrix
 

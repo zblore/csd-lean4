@@ -6,10 +6,10 @@ import CsdLean4.LF3.Interface
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
-import CsdLean4.Empirical.Bell
-import CsdLean4.Empirical.NoCloning
-import CsdLean4.Empirical.Multipartite.GHZ
-import CsdLean4.Empirical.Contextuality.KS18
+import CsdLean4.Empirical.QM.Bell
+import CsdLean4.Empirical.QM.NoCloning
+import CsdLean4.Empirical.QM.Multipartite.GHZ
+import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 

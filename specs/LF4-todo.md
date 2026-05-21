@@ -2,6 +2,36 @@
 
 Items LF2 deliberately left for LF4, with rationale and concrete pickup notes.
 
+## Bridge-discipline rules (added 2026-05-21)
+
+`Empirical/CSD/<phenomenon>.lean` files carry LF4-discharge hypotheses
+as bundle fields. Three discipline rules govern how those hypotheses
+interact with this LF4-todo list:
+
+1. **Every load-bearing Bridge bundle field carries a docstring
+   `**Status: load-bearing, externally supplied, undischarged.**`
+   marker + a one-line citation to a numbered item in this file.**
+   See `LF3.PureSingletPreparation.bridge_op_p` (cites §2 + §7) for
+   the canonical template.
+
+2. **No new LF4 obligations can be introduced by a Bridge file
+   landing PR.** If a new Bridge file needs a new obligation:
+   - Land a separate PR amending this file (`LF4-todo.md`) with
+     explicit justification.
+   - **Then** land the Bridge file referencing the new numbered item.
+
+   Prevents Bridge accretion from quietly expanding LF4 scope by
+   piecemeal addition.
+
+3. **`BRIDGE-OBLIGATIONS.md` is the canonical ledger** listing every
+   load-bearing Bridge field with its LF4-todo cross-reference. Audit
+   cross-Bridge-file drift per release. Updated in the same commit as
+   any change to a Bridge bundle field or to a numbered LF4-todo item.
+
+See `specs/empirical-csd-bridge-plan.md` §5 for the rationale, and
+`BRIDGE-OBLIGATIONS.md` for the current ledger state.
+
+
 ## 1. Unitary covariance clause of OperationalPackage (spec Def 5.1 clause 3)
 
 **Status:** LF2 omits the `unitary_covariance` field. `Effect.conjugateBy` is in place as the structural helper.

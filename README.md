@@ -412,15 +412,25 @@ CsdLean4/
     Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
                             --   six chain capstones (three per-sector + three joint
                             --   Phase 8 variants)
-  Empirical/                -- QM-validity-layer experimental-prediction
-                            --   regression suite (Phase A + B2)
-    Bell.lean               -- Bell-family: CHSH at Tsirelson (A1), classical
+  Empirical/                -- Two-perspective empirical-prediction tree
+                            --   per specs/empirical-csd-bridge-plan.md
+    QM/                     -- Pure linear-algebra QM-validity content
+      Bell.lean             -- Bell-family: CHSH at Tsirelson (A1), classical
                             --   violation gap (A2), no-signalling A/B (A3, A4),
                             --   singlet marginals (A5), Khalfin-Tsirelson
                             --   algebraic + QM-form upper bound (A6)
-    NoCloning.lean          -- Wootters-Zurek + Dieks 1982 two-state no-cloning
+      NoCloning.lean        -- Wootters-Zurek + Dieks 1982 two-state no-cloning
                             --   theorem stated abstractly over the tensor
                             --   structure (Cat-2 Framework candidate)
+      Multipartite/GHZ.lean -- GHZ paradox (Mermin all-or-nothing form, D6)
+      Contextuality/KS18.lean
+                            -- Kochen-Specker (Cabello 1996 18-vector, D9)
+    CSD/                    -- CSD volume-ratio readings (Empirical/QM/ companions)
+      Framework.lean        -- Shared CSDBridgeContext bundle (LF2-only;
+                            --   carries μFS + bridge data)
+      Bell.lean             -- CSD-side Bell-family chain capstones
+                            --   (re-exports LF3 chain capstones with
+                            --   empirical-prediction framing)
   Tests/                    -- Separate Lake target `CsdLeanTests` (not pulled
                             --   in by `import CsdLean4`); build via
                             --   `lake build CsdLeanTests`
