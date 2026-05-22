@@ -246,6 +246,12 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Projectivization.borel_eq_map_mk'` | `propext, Classical.choice, Quot.sound` |
 | `Projectivization.lift_measurable` | `propext, Classical.choice, Quot.sound` |
 | `Projectivization.measurable_iff_measurable_comp_mk'` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.continuous_iff_continuous_comp_mk'` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.continuous_lift` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.mapOfInjective_continuous` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.mapEquiv` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.mapEquiv_continuous` | `propext, Classical.choice, Quot.sound` |
+| `Projectivization.mapEquiv_continuous_of_finiteDim` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 

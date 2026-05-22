@@ -195,7 +195,89 @@ theorem isOpenQuotientMap_mk' :
     IsOpenQuotientMap (mk' K : { v : V // v ≠ 0 } → ℙ K V) :=
   ⟨Quot.mk_surjective, continuous_quotient_mk', isOpenMap_mk'⟩
 
+/-! ### Continuity descent
+
+Companions to the `lift_measurable` / `measurable_iff_measurable_comp_mk'`
+pair in `MeasureSpace.lean`: a function out of `ℙ K V` is continuous iff
+its precomposition with `mk'` is, and a scale-invariant continuous
+function on the nonzero subtype descends to a continuous function on
+`ℙ K V`. -/
+
+/-- A function out of `ℙ K V` is continuous iff its precomposition with
+`mk'` is continuous. Topological companion to
+`measurable_iff_measurable_comp_mk'` in `MeasureSpace.lean`. -/
+theorem continuous_iff_continuous_comp_mk' {α : Type*} [TopologicalSpace α]
+    (g : ℙ K V → α) :
+    Continuous g ↔ Continuous (g ∘ (mk' K : _ → ℙ K V)) :=
+  isQuotientMap_mk'.continuous_iff
+
+/-- A scale-invariant continuous function on the nonzero subtype
+descends to a continuous function on `ℙ K V`. Topological companion to
+`lift_measurable` in `MeasureSpace.lean`. -/
+theorem continuous_lift {α : Type*} [TopologicalSpace α]
+    (f : { v : V // v ≠ 0 } → α)
+    (hf : ∀ (a b : { v : V // v ≠ 0 }) (t : K), a = t • (b : V) → f a = f b)
+    (hf_cont : Continuous f) :
+    Continuous (Projectivization.lift f hf) := by
+  rw [continuous_iff_continuous_comp_mk']
+  exact hf_cont
+
 end TopologicalAction
+
+/-! ### Continuity of `Projectivization.map`
+
+A continuous injective linear map between modules descends to a
+continuous map between projectivizations. Builds on `continuous_lift`
+above via the standard `mk'` quotient-map characterisation of
+continuity. -/
+
+section MapContinuity
+
+variable [TopologicalSpace V] [ContinuousConstSMul K V]
+variable {W : Type*} [AddCommGroup W] [Module K W] [TopologicalSpace W]
+
+/-- A continuous injective linear map descends to a continuous map on
+projectivizations. -/
+theorem mapOfInjective_continuous
+    (f : V →ₗ[K] W) (hf : Function.Injective f) (hf_cont : Continuous f) :
+    Continuous (Projectivization.map f hf) := by
+  rw [continuous_iff_continuous_comp_mk']
+  -- The composition `(map f hf) ∘ mk' K` equals `mk' K ∘ f_sub` where
+  -- `f_sub` is the corestriction of `f` to the nonzero subtype (with
+  -- output non-zero via `hf`). Both factors are continuous: `mk'` by
+  -- `continuous_mk'`, and `f_sub` via `subtype_mk` applied to `f`'s
+  -- continuity composed with subtype projection.
+  exact continuous_mk'.comp
+    ((hf_cont.comp continuous_subtype_val).subtype_mk _)
+
+end MapContinuity
+
+/-! ### `LinearEquiv` action on projectivization
+
+A linear self-equivalence `e : V ≃ₗ[K] V` induces a self-map
+`mapEquiv e : ℙ K V → ℙ K V` via `Projectivization.map` and the
+canonical injectivity of an equivalence. The construction respects
+the group structure of `V ≃ₗ[K] V` via `Projectivization.map_id`
+and `Projectivization.map_comp`. -/
+
+section LinearEquivAction
+
+/-- A linear self-equivalence induces a self-map of the projectivization. -/
+def mapEquiv (e : V ≃ₗ[K] V) : ℙ K V → ℙ K V :=
+  Projectivization.map e.toLinearMap e.injective
+
+@[simp]
+lemma mapEquiv_refl : mapEquiv (LinearEquiv.refl K V) = id :=
+  Projectivization.map_id
+
+variable [TopologicalSpace V] [ContinuousConstSMul K V]
+
+/-- The `mapEquiv` of a continuous linear equivalence is continuous. -/
+theorem mapEquiv_continuous (e : V ≃ₗ[K] V) (he : Continuous (e : V → V)) :
+    Continuous (mapEquiv e) :=
+  mapOfInjective_continuous e.toLinearMap e.injective he
+
+end LinearEquivAction
 
 end AlgebraicTopology
 
@@ -296,6 +378,13 @@ instance instCompactSpace : CompactSpace (ℙ K V) := by
     rw [mk_eq_mk_iff' K _ _ _ hrep_ne]
     exact ⟨((‖p.rep‖⁻¹ : ℝ) : K), rfl⟩
   exact ⟨hg_surj.range_eq ▸ isCompact_range hg_cont⟩
+
+/-- In finite-dim normed setting over `RCLike`, every linear self-equivalence
+of `V` is continuous (Banach), so its induced projectivization map is
+continuous for free. -/
+theorem mapEquiv_continuous_of_finiteDim (e : V ≃ₗ[K] V) :
+    Continuous (mapEquiv e) :=
+  mapEquiv_continuous e (e : V →ₗ[K] V).continuous_of_finiteDimensional
 
 end NormedFiniteDim
 

@@ -389,4 +389,22 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.measurable_iff_measurable_comp_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.measurable_iff_measurable_comp_mk'
 
+/-- info: 'Projectivization.continuous_iff_continuous_comp_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.continuous_iff_continuous_comp_mk'
+
+/-- info: 'Projectivization.continuous_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.continuous_lift
+
+/-- info: 'Projectivization.mapOfInjective_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapOfInjective_continuous
+
+/-- info: 'Projectivization.mapEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapEquiv
+
+/-- info: 'Projectivization.mapEquiv_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapEquiv_continuous
+
+/-- info: 'Projectivization.mapEquiv_continuous_of_finiteDim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapEquiv_continuous_of_finiteDim
+
 end CSD.Tests.AxiomAudit
