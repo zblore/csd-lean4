@@ -24,6 +24,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
+import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 
 /-!
 # Axiom regression suite
@@ -450,5 +451,14 @@ regression and a blocker for the eventual Mathlib PR. -/
 
 /-- info: 'Matrix.UnitaryGroup.instBorelSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.instBorelSpace
+
+/-- info: 'Matrix.UnitaryGroup.unitaryHaar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaar
+
+/-- info: 'Matrix.UnitaryGroup.unitaryHaar_isHaarMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaar_isHaarMeasure
+
+/-- info: 'Matrix.UnitaryGroup.instIsFiniteMeasureUnitaryHaar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instIsFiniteMeasureUnitaryHaar
 
 end CSD.Tests.AxiomAudit

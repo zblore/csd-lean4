@@ -266,6 +266,9 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.instCompactSpace` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instMeasurableSpace` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instBorelSpace` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.unitaryHaar` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.unitaryHaar_isHaarMeasure` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.instIsFiniteMeasureUnitaryHaar` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
