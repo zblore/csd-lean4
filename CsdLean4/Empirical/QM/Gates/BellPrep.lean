@@ -69,30 +69,119 @@ noncomputable def qmKetPhiPlus : EuclideanSpace ℂ (Fin 4) :=
   ((Real.sqrt 2 : ℂ)⁻¹) •
     (EuclideanSpace.single 0 (1 : ℂ) + EuclideanSpace.single 3 (1 : ℂ))
 
-/-- **TAUTOLOGY (definitional unfold).** `qmBellPrepCircuit` is
-*defined* as `qmCNOT * qmH_tensor_I`, so this "theorem" reduces to
-`X = X` and is closed by `rfl`. The name exists only to give
-downstream consumers a labelled handle on the factorisation; it
-carries no information.
-
-**Status: tautology, placeholder for the deferred headline identity.**
-See `PLACEHOLDERS.md` for the canonical placeholder ledger.
-
-## The genuine identity is deferred
-
-The empirically meaningful identity is
-`(toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus` (the
-circuit transforms `|00⟩` into `|Φ⁺⟩`). It is provable by direct
-matrix-element computation but the proof under the current
-`Matrix.toEuclideanLin` / `Matrix.mulVec` machinery requires more
-care than was budgeted at Tranche 1 Tier A landing time. **TODO**:
-prove `qmBellPrep_yields_phiplus` as a follow-up commit. -/
+/-- **Definitional unfold of the Bell-prep circuit's factorisation.**
+A `rfl`-closed labelled handle on `qmBellPrepCircuit = qmCNOT * qmH_tensor_I`;
+exists for downstream consumers that prefer the factorised form. The
+genuine empirical identity is `qmBellPrep_yields_phiplus` below. -/
 theorem qmBellPrep_factorisation :
     qmBellPrepCircuit = qmCNOT * qmH_tensor_I := rfl
 
--- TODO: prove the headline identity.
--- theorem qmBellPrep_yields_phiplus :
---   (Matrix.toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus := ...
+/-! ### Column-0 entries of the composite circuit
+
+The 4×4 matrix `qmBellPrepCircuit = qmCNOT * qmH_tensor_I` has, in
+column 0 (the only column probed by `|00⟩ = e_0`):
+- entry 0: `(1/√2)` (from `CNOT[0,0] · (H⊗I)[0,0] = 1 · (1/√2)`),
+- entry 1: `0`,
+- entry 2: `0` (`CNOT[2,3] · (H⊗I)[3,0] = 1 · 0`),
+- entry 3: `(1/√2)` (`CNOT[3,2] · (H⊗I)[2,0] = 1 · (1/√2)`).
+
+These four entries are the matrix-element computations underlying
+`qmBellPrep_yields_phiplus`. -/
+
+lemma qmBellPrepCircuit_col0_zero :
+    qmBellPrepCircuit 0 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
+  simp [qmBellPrepCircuit, qmCNOT, qmH_tensor_I, Matrix.mul_apply,
+        Fin.sum_univ_succ, Matrix.of_apply]
+
+lemma qmBellPrepCircuit_col0_one :
+    qmBellPrepCircuit 1 0 = 0 := by
+  simp [qmBellPrepCircuit, qmCNOT, qmH_tensor_I, Matrix.mul_apply,
+        Fin.sum_univ_succ, Matrix.of_apply]
+
+lemma qmBellPrepCircuit_col0_two :
+    qmBellPrepCircuit 2 0 = 0 := by
+  simp [qmBellPrepCircuit, qmCNOT, qmH_tensor_I, Matrix.mul_apply,
+        Fin.sum_univ_succ, Matrix.of_apply]
+
+lemma qmBellPrepCircuit_col0_three :
+    qmBellPrepCircuit 3 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
+  simp [qmBellPrepCircuit, qmCNOT, qmH_tensor_I, Matrix.mul_apply,
+        Fin.sum_univ_succ, Matrix.of_apply]
+
+/-! ### Component-form expressions for `qmKet00` and `qmKetPhiPlus`
+
+Both vectors live in `EuclideanSpace ℂ (Fin 4)` and have explicit
+component expressions; we expose those for the headline proof.
+
+`qmKet00.ofLp` is `1` at index `0` and `0` elsewhere. `qmKetPhiPlus.ofLp`
+is `(1/√2)` at indices `0` and `3` and `0` elsewhere. -/
+
+private lemma qmKet00_ofLp_zero : qmKet00.ofLp 0 = (1 : ℂ) := by
+  simp [qmKet00, EuclideanSpace.single]
+
+private lemma qmKet00_ofLp_one : qmKet00.ofLp 1 = (0 : ℂ) := by
+  simp [qmKet00, EuclideanSpace.single]
+
+private lemma qmKet00_ofLp_two : qmKet00.ofLp 2 = (0 : ℂ) := by
+  simp [qmKet00, EuclideanSpace.single]
+
+private lemma qmKet00_ofLp_three : qmKet00.ofLp 3 = (0 : ℂ) := by
+  simp [qmKet00, EuclideanSpace.single]
+
+private lemma qmKetPhiPlus_ofLp_zero :
+    qmKetPhiPlus.ofLp 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
+  simp [qmKetPhiPlus, EuclideanSpace.single]
+
+private lemma qmKetPhiPlus_ofLp_one : qmKetPhiPlus.ofLp 1 = (0 : ℂ) := by
+  simp [qmKetPhiPlus, EuclideanSpace.single]
+
+private lemma qmKetPhiPlus_ofLp_two : qmKetPhiPlus.ofLp 2 = (0 : ℂ) := by
+  simp [qmKetPhiPlus, EuclideanSpace.single]
+
+private lemma qmKetPhiPlus_ofLp_three :
+    qmKetPhiPlus.ofLp 3 = (Real.sqrt 2 : ℂ)⁻¹ := by
+  simp [qmKetPhiPlus, EuclideanSpace.single]
+
+/-- For any row index `k`, `(qmBellPrepCircuit *ᵥ qmKet00.ofLp) k`
+    collapses to the column-0 entry `qmBellPrepCircuit k 0`, because
+    `qmKet00.ofLp` is `1` at index `0` and `0` elsewhere. -/
+private lemma qmBellPrepCircuit_mulVec_qmKet00 (k : Fin 4) :
+    (qmBellPrepCircuit *ᵥ qmKet00.ofLp) k = qmBellPrepCircuit k 0 := by
+  show qmBellPrepCircuit k ⬝ᵥ qmKet00.ofLp = qmBellPrepCircuit k 0
+  show ∑ j, qmBellPrepCircuit k j * qmKet00.ofLp j = qmBellPrepCircuit k 0
+  rw [Fin.sum_univ_four, qmKet00_ofLp_zero, qmKet00_ofLp_one,
+      qmKet00_ofLp_two, qmKet00_ofLp_three]
+  ring
+
+/-- **Bell-prep headline identity: `(CNOT ∘ (H ⊗ I)) |00⟩ = |Φ⁺⟩`.**
+
+The matrix `qmBellPrepCircuit` applied to the `|00⟩` standard basis
+vector produces the Bell state `|Φ⁺⟩ = (|00⟩ + |11⟩)/√2`. This is the
+genuine empirical identity the Bell-state-preparation circuit
+encodes; the factorisation `qmBellPrep_factorisation` above is the
+defining decomposition.
+
+**Proof.** Componentwise via `ext`: expose the matrix-mulVec form
+via `Matrix.toLpLin_apply`, then collapse the mulVec to column 0 via
+`qmBellPrepCircuit_mulVec_qmKet00`, and compare to `qmKetPhiPlus.ofLp i`
+via the four column-0 and `qmKetPhiPlus_ofLp_*` lemmas. -/
+theorem qmBellPrep_yields_phiplus :
+    (Matrix.toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus := by
+  ext i
+  show (Matrix.toLpLin 2 2 qmBellPrepCircuit) qmKet00 i = qmKetPhiPlus i
+  rw [Matrix.toLpLin_apply]
+  show (qmBellPrepCircuit *ᵥ qmKet00.ofLp) i = qmKetPhiPlus.ofLp i
+  rw [qmBellPrepCircuit_mulVec_qmKet00]
+  -- Goal: qmBellPrepCircuit i 0 = qmKetPhiPlus.ofLp i.
+  fin_cases i
+  · change qmBellPrepCircuit 0 0 = qmKetPhiPlus.ofLp 0
+    rw [qmBellPrepCircuit_col0_zero, qmKetPhiPlus_ofLp_zero]
+  · change qmBellPrepCircuit 1 0 = qmKetPhiPlus.ofLp 1
+    rw [qmBellPrepCircuit_col0_one, qmKetPhiPlus_ofLp_one]
+  · change qmBellPrepCircuit 2 0 = qmKetPhiPlus.ofLp 2
+    rw [qmBellPrepCircuit_col0_two, qmKetPhiPlus_ofLp_two]
+  · change qmBellPrepCircuit 3 0 = qmKetPhiPlus.ofLp 3
+    rw [qmBellPrepCircuit_col0_three, qmKetPhiPlus_ofLp_three]
 
 end Gates
 end QM

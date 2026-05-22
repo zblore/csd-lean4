@@ -98,17 +98,14 @@ Plus the composite **Bell-prep realisability**:
 
 ## 2. Tautologies
 
-| File | Theorem | Status | Replacement target |
+| File | Theorem | Status | Replacement / discharge |
 |---|---|---|---|
-| `Empirical/QM/Gates/BellPrep.lean` | `qmBellPrep_factorisation` | tautology (`qmBellPrepCircuit = qmCNOT * qmH_tensor_I`, where LHS is *defined* as RHS — reduces to `rfl`) | `qmBellPrep_yields_phiplus` (deferred; the genuine empirical identity `(toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus`) |
-| `Empirical/CSD/Gates/BellPrep.lean` | `csd_qmBellPrep_factorisation` | re-export of the tautology under the CSD namespace; inherits the tautology label | inherits the replacement target from the QM-side row above |
+| `Empirical/QM/Gates/BellPrep.lean` | `qmBellPrep_factorisation` | definitional unfold (`qmBellPrepCircuit = qmCNOT * qmH_tensor_I`, where LHS is *defined* as RHS — reduces to `rfl`). Carried as a labelled handle for downstream consumers; the genuine empirical identity is the proved theorem below. | **DISCHARGED 2026-05-22**: `qmBellPrep_yields_phiplus` proves the genuine empirical identity `(toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus`. The factorisation `rfl`-theorem is retained as a labelled handle on the decomposition. |
+| `Empirical/CSD/Gates/BellPrep.lean` | `csd_qmBellPrep_factorisation` | re-export of the QM-side definitional unfold | inherits the QM-side row above; **TRANSPORT-ONLY** per §3 |
 
-**Each tautology carries:**
-
-- A docstring marker `**TAUTOLOGY (definitional unfold).**`.
-- An explicit note on what the genuine identity *would* be, and what
-  is blocking its proof.
-- A `-- TODO:` comment line above the unproved replacement target.
+The genuine identity `qmBellPrep_yields_phiplus` is pinned in
+`AxiomAudit.lean` and cites only the foundational triple
+`[propext, Classical.choice, Quot.sound]`.
 
 ## 3. Re-export aliases
 

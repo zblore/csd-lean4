@@ -225,6 +225,7 @@ only.
 | `Empirical.QM.Gates.qmSWAP_mul_self` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.QM.Gates.qmCZ_mul_self` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.QM.Gates.qmBellPrep_factorisation` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.QM.Gates.qmBellPrep_yields_phiplus` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.QM.Gates.qmToffoli_mul_self` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.QM.Gates.qmFredkin_mul_self` | `propext, Classical.choice, Quot.sound` |
 

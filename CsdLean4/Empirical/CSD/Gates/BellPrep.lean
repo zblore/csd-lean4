@@ -88,14 +88,23 @@ noncomputable def bell_prep_compose
     CSDUnitaryBundle D 2 (EuclideanSpace ℂ (Fin 4)) :=
   b_CNOT.comp b_HI
 
-/-! ## QM-side factorisation re-export -/
+/-! ## QM-side re-exports -/
 
-/-- **The Bell-prep circuit factorisation (re-export).** Trivial
-`rfl` unfolding from the QM side. -/
+/-- **TRANSPORT-ONLY: re-export of the QM-side factorisation handle.**
+Definitional unfold; see `PLACEHOLDERS.md §3`. -/
 theorem csd_qmBellPrep_factorisation :
     CSD.Empirical.QM.Gates.qmBellPrepCircuit
       = CSD.Empirical.QM.Gates.qmCNOT * CSD.Empirical.QM.Gates.qmH_tensor_I :=
   CSD.Empirical.QM.Gates.qmBellPrep_factorisation
+
+/-- **TRANSPORT-ONLY: re-export of the QM-side Bell-prep headline
+identity.** `(CNOT ∘ (H ⊗ I)) |00⟩ = |Φ⁺⟩`; proof body in
+`Empirical/QM/Gates/BellPrep.lean`. -/
+theorem csd_qmBellPrep_yields_phiplus :
+    (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmBellPrepCircuit)
+        CSD.Empirical.QM.Gates.qmKet00
+      = CSD.Empirical.QM.Gates.qmKetPhiPlus :=
+  CSD.Empirical.QM.Gates.qmBellPrep_yields_phiplus
 
 end BellPrep
 end Gates
