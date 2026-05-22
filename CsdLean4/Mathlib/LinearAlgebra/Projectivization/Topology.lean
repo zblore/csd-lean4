@@ -270,6 +270,39 @@ def mapEquiv (e : V ≃ₗ[K] V) : ℙ K V → ℙ K V :=
 lemma mapEquiv_refl : mapEquiv (LinearEquiv.refl K V) = id :=
   Projectivization.map_id
 
+/-- The induced map of the identity equivalence is the identity.
+Syntactic alias for `mapEquiv_refl` under the `Group` notation `1`
+for `LinearEquiv.refl` (definitionally equal via
+`LinearEquiv.one_eq_refl`). -/
+@[simp]
+lemma mapEquiv_one : mapEquiv (1 : V ≃ₗ[K] V) = id :=
+  mapEquiv_refl
+
+/-- The induced map of a product of linear self-equivalences equals
+the composition of the induced maps. Discharged via
+`Projectivization.map_comp` applied to the toLinearMap composition:
+`(e₁ * e₂).toLinearMap = e₁.toLinearMap.comp e₂.toLinearMap` (= `*`
+in the linear-endomorphism ring; both equal by `rfl` via
+`LinearEquiv.coe_toLinearMap_mul` + `LinearMap.mul_eq_comp`). -/
+lemma mapEquiv_mul (e₁ e₂ : V ≃ₗ[K] V) :
+    mapEquiv (e₁ * e₂) = mapEquiv e₁ ∘ mapEquiv e₂ :=
+  Projectivization.map_comp e₂.toLinearMap e₂.injective
+    e₁.toLinearMap e₁.injective
+
+/-- `V ≃ₗ[K] V` acts on `Projectivization K V` via `mapEquiv`.
+
+The group structure on `V ≃ₗ[K] V` (`LinearEquiv.automorphismGroup`,
+with `1 = refl` and `e₁ * e₂ = e₂.trans e₁`) transports to a
+`MulAction` on `ℙ K V` because `Projectivization.map_id` discharges
+`one_smul` and `Projectivization.map_comp` discharges `mul_smul`. -/
+instance instMulAction : MulAction (V ≃ₗ[K] V) (ℙ K V) where
+  smul := mapEquiv
+  one_smul p := congrFun mapEquiv_one p
+  mul_smul e₁ e₂ p := congrFun (mapEquiv_mul e₁ e₂) p
+
+@[simp]
+lemma mapEquiv_smul_eq (e : V ≃ₗ[K] V) (p : ℙ K V) : e • p = mapEquiv e p := rfl
+
 variable [TopologicalSpace V] [ContinuousConstSMul K V]
 
 /-- The `mapEquiv` of a continuous linear equivalence is continuous. -/
@@ -385,6 +418,16 @@ continuous for free. -/
 theorem mapEquiv_continuous_of_finiteDim (e : V ≃ₗ[K] V) :
     Continuous (mapEquiv e) :=
   mapEquiv_continuous e (e : V →ₗ[K] V).continuous_of_finiteDimensional
+
+/-- Each individual `(V ≃ₗ[K] V)`-action on `ℙ K V` is continuous in
+the finite-dim normed setting. This is `ContinuousConstSMul`, which
+captures continuity in the action argument for every fixed group
+element. Joint continuity in both arguments (`ContinuousSMul`) is a
+strictly stronger statement requiring a topology on `V ≃ₗ[K] V`
+itself; deferred. -/
+instance instContinuousConstSMul :
+    ContinuousConstSMul (V ≃ₗ[K] V) (ℙ K V) where
+  continuous_const_smul e := mapEquiv_continuous_of_finiteDim e
 
 end NormedFiniteDim
 

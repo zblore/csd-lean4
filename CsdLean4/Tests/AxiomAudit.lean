@@ -407,4 +407,16 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.mapEquiv_continuous_of_finiteDim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.mapEquiv_continuous_of_finiteDim
 
+/-- info: 'Projectivization.mapEquiv_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapEquiv_one
+
+/-- info: 'Projectivization.mapEquiv_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapEquiv_mul
+
+/-- info: 'Projectivization.instMulAction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.instMulAction
+
+/-- info: 'Projectivization.instContinuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.instContinuousConstSMul
+
 end CSD.Tests.AxiomAudit
