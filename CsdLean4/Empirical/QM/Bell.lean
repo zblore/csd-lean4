@@ -323,11 +323,13 @@ construction: set `α(a) := (σ·a ⊗ I)ψ`, `β(b) := (I ⊗ σ·b)ψ` for uni
 `⟨ψ, (σ·a ⊗ σ·b)ψ⟩ = ⟨α(a), β(b)⟩` (Hermiticity). Applying the
 algebraic K-T lemma below yields the QM CHSH bound.
 
-The QM-application lift is deferred: it requires either Mathlib's
-`tsirelson_inequality` (currently blocked on the missing
-`IsOrderedModule ℝ (Matrix n n ℂ)` instance) or the direct K-T
-construction (Hilbert-vector setup + Hermitian-adjoint manipulations).
-Neither is in scope for this commit.
+The QM-application lift is the `chsh_qm_tsirelson_bound` theorem
+below, which discharges the construction by hand via four auxiliary
+lemmas (`sigmaDotLeft_sq`, `sigmaDotLeft_isHermitian`,
+`sigmaDotLeft_mul_sigmaDotRight`, and analogous on the right). It
+does **not** route through Mathlib's `tsirelson_inequality` (which is
+currently blocked on the missing `IsOrderedModule ℝ (Matrix n n ℂ)`
+instance).
 
 **Why the algebraic form is the load-bearing content.** Tsirelson's
 original 1980 result is, up to relabeling, exactly the algebraic

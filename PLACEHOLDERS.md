@@ -157,7 +157,30 @@ TODO comments above declaration bodies, ledger updated in the same
 commit as any change to placeholder content. New placeholders may only
 land if simultaneously catalogued here.
 
-## 6. Discharge protocol
+## 6. Stale docstrings (caught by the 2026-05-22 second-pass audit)
+
+Two files were carrying docstring text that claimed work was **deferred**
+when the work had actually been completed in the same commit that
+introduced the docstring. These are not placeholders — they are
+misleading docstrings in the *opposite* direction (under-claiming
+rather than over-claiming). Fixed in the same commit as this §6 was
+added.
+
+| File | Stale claim | Reality |
+|---|---|---|
+| `Empirical/QM/Bell.lean` | "The QM-application lift is deferred: it requires either Mathlib's `tsirelson_inequality` (currently blocked …) or the direct K-T construction. Neither is in scope for this commit." | `chsh_qm_tsirelson_bound` (further down in the same file) **does** discharge the construction by hand via four auxiliary lemmas (`sigmaDotLeft_sq`, `sigmaDotLeft_isHermitian`, `sigmaDotLeft_mul_sigmaDotRight`, and analogues on the right). The docstring was written before the lift was completed and never updated. |
+| `Empirical/QM/Contextuality/KS18.lean` | Six separate mentions claiming "Lean formalisation [of the orthogonality verification] is deferred to a follow-up", "geometric verification is deferred to a future revision", etc. | `cabello_pairwise_orthogonal_in_basis` (in the same file's "Vector data + orthogonality verification" section) **does** verify pairwise orthogonality via a 144-case `fin_cases` + `norm_num` sweep. The docstring was written before this section was added and never updated. |
+
+**Why this section exists.** A docstring that under-claims the file's
+content is as much of an audit failure as a placeholder Prop is — the
+reader's mental model of what is and isn't proved becomes wrong in
+either direction. Future placeholder audits should grep for `deferred`
+across the corpus and verify each occurrence either (a) cites
+specific load-bearing missing content with an LF4-todo number, or
+(b) describes legitimate external scope (e.g., upstreaming to Mathlib,
+post-LF4 tripartite chain construction).
+
+## 7. Discharge protocol
 
 When a placeholder is discharged:
 

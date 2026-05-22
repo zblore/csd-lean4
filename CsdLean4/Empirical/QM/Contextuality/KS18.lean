@@ -39,7 +39,8 @@ orthogonal 4-tuples, with each vector appearing in **exactly 2** of the
 9 bases. The 18 vectors (cited in the docstring of `cabelloBasis`
 below) and their 9-basis structure are an explicit construction;
 verifying their pairwise orthogonality in ℝ⁴ is a separate geometric
-check whose Lean formalisation is deferred to a follow-up.
+check, discharged by `cabello_pairwise_orthogonal_in_basis` (below)
+via a 144-case `fin_cases` + `norm_num` sweep.
 
 The combinatorial impossibility argument: under any `{0, 1}` assignment
 satisfying "exactly one vector per basis is assigned `1`", summing over
@@ -50,8 +51,8 @@ same total equals `2 · k` where `k` is the number of vectors assigned
 This is a **pure finite combinatorial argument**: the QM content
 (Hilbert space, orthogonality, eigenvalue structure) is needed only to
 verify that the 18 vectors do form 9 orthonormal bases in `ℝ⁴`; the
-contradiction itself is dimension-free and the geometric verification
-is deferred to a future revision.
+contradiction itself is dimension-free, and the geometric verification
+is discharged by `cabello_pairwise_orthogonal_in_basis`.
 
 ## Distinction from CHSH and GHZ
 
@@ -85,10 +86,10 @@ computation. The QM-bridge interpretation ("each `cabelloBasis B` is
 a complete orthogonal 4-tuple in `ℝ⁴`") follows immediately.
 
 The headline `ks_no_value_assignment_cabello18` impossibility holds
-without this geometric content: it is a purely combinatorial
-consequence of `cabelloBasis` + `cabelloBasis_appears_twice`. The
-orthogonality verification ties the abstract impossibility to genuine
-QM eigenvalue content.
+without the geometric content: it is a purely combinatorial consequence
+of `cabelloBasis` + `cabelloBasis_appears_twice`. The orthogonality
+verification (`cabello_pairwise_orthogonal_in_basis`) is what ties
+the abstract impossibility to genuine QM eigenvalue content.
 -/
 
 open scoped BigOperators
@@ -111,9 +112,9 @@ the appearance-count hypothesis (Fubini swap). So `9 = 2k`, impossible.
 This is the combinatorial core of the Kochen-Specker theorem: the
 contradiction is dimension-free and Hilbert-space-free. The geometric
 content (that the Cabello-18 configuration actually realises a 9-basis
-appearance-2 structure in `ℝ⁴`) is verified separately in
-`cabelloBasis_appears_twice` below; full orthogonality verification is
-deferred per the module docstring's "Future work" section. -/
+appearance-2 structure in `ℝ⁴`) is verified by `cabelloBasis_appears_twice`
+below, and the full pairwise orthogonality by
+`cabello_pairwise_orthogonal_in_basis`. -/
 theorem no_value_assignment_18_9
     (bases : Fin 9 → Finset (Fin 18))
     (h_appears : ∀ v : Fin 18,
@@ -187,7 +188,7 @@ theorem no_value_assignment_18_9
 The 9 orthogonal 4-tuples of the 18-vector configuration, indexed by
 `Fin 18 → Fin 9 → Bool` membership.
 
-The underlying vectors (deferred per the module docstring):
+The underlying vectors (formalised in §"Vector data + orthogonality verification" below):
 
 ```
 v0  = (0, 0, 0, 1)         v9  = (0, 0, 1, 1)
@@ -202,7 +203,7 @@ v8  = (1, -1, -1, 1)       v17 = (-1, 1, 1, 1)
 ```
 
 The 9 orthogonal 4-tuples (each is a complete orthogonal basis of
-ℝ⁴; orthogonality verification deferred):
+ℝ⁴; orthogonality verified by `cabello_pairwise_orthogonal_in_basis`):
 
 ```
 B₀ = {v0, v1, v2, v3}     B₅ = {v8, v10, v13, v14}
