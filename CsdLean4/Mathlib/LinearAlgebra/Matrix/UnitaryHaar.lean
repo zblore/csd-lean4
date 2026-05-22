@@ -87,4 +87,58 @@ example {N : ℕ} : T2Space (Matrix.unitaryGroup (Fin N) ℂ) := inferInstance
 example {N : ℕ} : Measure.IsHaarMeasure (Measure.haar : Measure (Matrix.unitaryGroup (Fin N) ℂ)) :=
   inferInstance
 
+/-! ## Normalisation to a probability measure
+
+`unitaryHaar` is finite (compact group) and gives positive mass to
+the whole space (Haar measure on a nonempty open set is positive).
+We can therefore rescale by `(unitaryHaar Set.univ)⁻¹` to obtain a
+probability measure that is still Haar (Haar property is preserved
+under positive finite scaling).
+
+The resulting `unitaryHaarProb` is the canonical SU(N)-invariant
+probability measure on the matrix unitary group, and the
+ingredient that the Fubini-Study measure on `ℂℙ^{N-1}` will be
+constructed from via pushforward (next tranche).
+-/
+
+/-- The total mass `unitaryHaar Set.univ` is nonzero, because `Set.univ`
+is a nonempty open set and Haar measure is `IsOpenPosMeasure`. -/
+lemma unitaryHaar_univ_ne_zero :
+    unitaryHaar (Set.univ : Set (Matrix.unitaryGroup (Fin N) ℂ)) ≠ 0 :=
+  isOpen_univ.measure_ne_zero unitaryHaar Set.univ_nonempty
+
+/-- The total mass `unitaryHaar Set.univ` is finite, because the group
+is compact and Haar measure is `IsFiniteMeasureOnCompacts`. -/
+lemma unitaryHaar_univ_ne_top :
+    unitaryHaar (Set.univ : Set (Matrix.unitaryGroup (Fin N) ℂ)) ≠ ⊤ :=
+  measure_ne_top _ _
+
+/-- The probability-normalised Haar measure on the matrix unitary group.
+
+Defined as `(unitaryHaar Set.univ)⁻¹ • unitaryHaar`. Both `IsProbabilityMeasure`
+and `IsHaarMeasure` are instances; see `instIsProbabilityMeasureUnitaryHaarProb`
+and `unitaryHaarProb_isHaarMeasure` below. -/
+noncomputable def unitaryHaarProb : Measure (Matrix.unitaryGroup (Fin N) ℂ) :=
+  ((unitaryHaar : Measure (Matrix.unitaryGroup (Fin N) ℂ)) Set.univ)⁻¹ •
+    (unitaryHaar : Measure (Matrix.unitaryGroup (Fin N) ℂ))
+
+/-- `unitaryHaarProb` is a probability measure. -/
+instance instIsProbabilityMeasureUnitaryHaarProb :
+    IsProbabilityMeasure
+      (unitaryHaarProb : Measure (Matrix.unitaryGroup (Fin N) ℂ)) where
+  measure_univ := by
+    unfold unitaryHaarProb
+    rw [Measure.smul_apply, smul_eq_mul]
+    exact ENNReal.inv_mul_cancel unitaryHaar_univ_ne_zero unitaryHaar_univ_ne_top
+
+/-- `unitaryHaarProb` is a Haar measure (scaling by a finite positive
+constant preserves the Haar property via `IsHaarMeasure.smul`). -/
+instance unitaryHaarProb_isHaarMeasure :
+    Measure.IsHaarMeasure
+      (unitaryHaarProb : Measure (Matrix.unitaryGroup (Fin N) ℂ)) := by
+  unfold unitaryHaarProb
+  exact Measure.IsHaarMeasure.smul unitaryHaar
+    (ENNReal.inv_ne_zero.mpr unitaryHaar_univ_ne_top)
+    (ENNReal.inv_ne_top.mpr unitaryHaar_univ_ne_zero)
+
 end Matrix.UnitaryGroup

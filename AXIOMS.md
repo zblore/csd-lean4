@@ -269,6 +269,11 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.unitaryHaar` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.unitaryHaar_isHaarMeasure` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instIsFiniteMeasureUnitaryHaar` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.unitaryHaar_univ_ne_zero` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.unitaryHaar_univ_ne_top` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.unitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.instIsProbabilityMeasureUnitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.unitaryHaarProb_isHaarMeasure` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
