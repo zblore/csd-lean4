@@ -23,6 +23,7 @@ import CsdLean4.Empirical.CSD.Gates.Framework
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
+import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 
 /-!
 # Axiom regression suite
@@ -431,5 +432,23 @@ regression and a blocker for the eventual Mathlib PR. -/
 
 /-- info: 'Matrix.UnitaryGroup.instProjectivizationContinuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.instProjectivizationContinuousConstSMul
+
+/-- info: 'Matrix.UnitaryGroup.sum_norm_sq_col' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.sum_norm_sq_col
+
+/-- info: 'Matrix.UnitaryGroup.val_norm_apply_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.val_norm_apply_le_one
+
+/-- info: 'Matrix.UnitaryGroup.val_norm_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.val_norm_le_one
+
+/-- info: 'Matrix.UnitaryGroup.instCompactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instCompactSpace
+
+/-- info: 'Matrix.UnitaryGroup.instMeasurableSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instMeasurableSpace
+
+/-- info: 'Matrix.UnitaryGroup.instBorelSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instBorelSpace
 
 end CSD.Tests.AxiomAudit

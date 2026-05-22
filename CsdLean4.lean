@@ -2,6 +2,7 @@ import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
+import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
 import CsdLean4.LF1.Setup
 import CsdLean4.LF1.Preparation
