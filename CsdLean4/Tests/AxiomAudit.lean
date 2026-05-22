@@ -22,6 +22,7 @@ import CsdLean4.Empirical.QM.Gates.MultiQubit
 import CsdLean4.Empirical.CSD.Gates.Framework
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 
 /-!
 # Axiom regression suite
@@ -418,5 +419,17 @@ regression and a blocker for the eventual Mathlib PR. -/
 
 /-- info: 'Projectivization.instContinuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instContinuousConstSMul
+
+/-- info: 'Matrix.UnitaryGroup.toEuclideanLinearEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.toEuclideanLinearEquiv
+
+/-- info: 'Matrix.UnitaryGroup.toEuclideanLinearEquivHom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.toEuclideanLinearEquivHom
+
+/-- info: 'Matrix.UnitaryGroup.instProjectivizationMulAction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instProjectivizationMulAction
+
+/-- info: 'Matrix.UnitaryGroup.instProjectivizationContinuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instProjectivizationContinuousConstSMul
 
 end CSD.Tests.AxiomAudit

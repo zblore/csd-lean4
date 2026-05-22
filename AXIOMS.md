@@ -256,6 +256,10 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Projectivization.mapEquiv_mul` | `propext, Classical.choice, Quot.sound` |
 | `Projectivization.instMulAction` | `propext, Classical.choice, Quot.sound` |
 | `Projectivization.instContinuousConstSMul` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.toEuclideanLinearEquiv` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.toEuclideanLinearEquivHom` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.instProjectivizationMulAction` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.instProjectivizationContinuousConstSMul` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
