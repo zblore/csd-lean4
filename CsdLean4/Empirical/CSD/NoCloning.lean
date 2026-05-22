@@ -103,7 +103,20 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **CSD cloning bundle.** Structural carrier for the data of a
+/-- **SCHEMA-MISMATCH: docstring claims CSD-side content the type does not carry.**
+
+The fields below — `tensor`, `h_tensor_inner`, `blank`, `h_blank_unit`,
+`ψ`, `φ`, `hψ`, `hφ`, `U`, `U_isometry`, `clone_ψ`, `clone_φ` — are
+**all QM-side data**. No field carries a `Σ × Σ` flow, no field asserts
+`π`-equivariance, no field asserts measure-preservation. The
+"projective-action lift of a measure-preserving π-equivariant flow on
+`Σ × Σ`" claim below is **non-syntactic prose**; Lean cannot check it.
+
+See `PLACEHOLDERS.md §7` for the canonical schema-mismatch ledger.
+
+## Original (over-claiming) docstring follows
+
+**CSD cloning bundle.** Structural carrier for the data of a
 hypothetical cloning operation realised through CSD's ontic substrate
 on a `SectorData D`. The bundle extends `CSDBridge.Context D` (carrying
 the LF2-level discharge data: `μFS`, the probability witness, the
@@ -114,7 +127,7 @@ The fields match the argument list of
 which is what enables the proof reduction in
 `no_csd_cloning_bundle` below.
 
-## LF4-discharge content
+## LF4-discharge content (prose-only; no field encodes this)
 
 By calling the structure `CSDCloningBundle`, callers implicitly assert
 that the carried `U` arises as the projective-action lift of a
@@ -124,7 +137,12 @@ post-LF4, it follows from the concrete Kähler instantiation
 discharging LF4-todo §13.
 
 **Status: load-bearing, externally supplied, undischarged.**
-LF4-todo §13. -/
+LF4-todo §13.
+
+(The above "status" applies to the *prose claim*, not to any field of
+this structure. See `PLACEHOLDERS.md §7` discharge route for the
+fields that would need to be added for the type to actually carry the
+CSD-side claim.) -/
 structure CSDCloningBundle
     (D : CSD.LF2.SectorData SigmaSpace P G) (N : ℕ)
     (Htensor : Type*) [NormedAddCommGroup Htensor] [InnerProductSpace ℂ Htensor]
@@ -152,7 +170,12 @@ structure CSDCloningBundle
   /-- `U` clones `φ` from `blank`. -/
   clone_φ         : U (tensor φ blank) = tensor φ φ
 
-/-- **No CSD cloning bundle exists for non-orthogonal non-equal unit
+/-- **TRANSPORT-ONLY: proof body unpacks the bundle's QM-side fields
+and calls the QM-side theorem.** See `PLACEHOLDERS.md §7` (the bundle
+this quantifies over is a schema-mismatch bundle, so the proof can
+only consume QM-side content).
+
+**No CSD cloning bundle exists for non-orthogonal non-equal unit
 states.** The CSD volume-ratio companion to
 `Empirical.QM.NoCloning.no_cloning_two_state`.
 

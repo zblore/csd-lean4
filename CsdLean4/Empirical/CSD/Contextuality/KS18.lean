@@ -115,7 +115,22 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **CSD Kochen-Specker assignment bundle.** Structural carrier for
+/-- **PARTIALLY-DECORATIVE BUNDLE: load-bearing fields not consumed in
+the headline theorem.**
+
+The `partition_pairwise_null` and `partition_cover_null` fields are
+tagged as load-bearing by their own status markers, but
+`no_csd_ks_assignment_bundle` uses only the bundle's `bases_eq` field
+(trivial rewrite to align with the QM-side `cabelloBasis`). The two
+partition fields are **inert** in the proof. (Compare GHZ where the
+entire bundle is decorative; KS is milder because `bases_eq` is at
+least touched.)
+
+See `PLACEHOLDERS.md §8` for the canonical decorative-bundle ledger.
+
+## Original (over-claiming) docstring follows
+
+**CSD Kochen-Specker assignment bundle.** Structural carrier for
 the data of a hypothetical non-contextual ontic-outcome assignment to
 the Cabello-18 configuration on a `SectorData D`.
 
@@ -173,7 +188,12 @@ structure CSDKSAssignmentBundle
       ((D.toOntic.prepMeasure : ProbabilityMeasure SigmaSpace) : Measure SigmaSpace)
         (Set.univ \ ⋃ v ∈ bases B, (O v).preEvent) = 0
 
-/-- **No CSD Kochen-Specker assignment bundle is satisfiable.** The
+/-- **TRANSPORT-ONLY (mostly): proof uses only `b.bases_eq` (a trivial
+rewrite) and then calls QM-side `ks_no_value_assignment_cabello18` on
+the bare lambda.** The bundle's `partition_*` fields are inert. See
+`PLACEHOLDERS.md §8`.
+
+**No CSD Kochen-Specker assignment bundle is satisfiable.** The
 CSD volume-ratio companion to
 `CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18`.
 
@@ -222,7 +242,10 @@ new geometric content; we re-export the QM-side theorem for symmetry
 with `Empirical/CSD/Bell.lean`'s pattern of re-exporting LF3 chain
 capstones into the CSD namespace. -/
 
-/-- **Cabello-18 pairwise orthogonality (re-export).** Within each of
+/-- **TRANSPORT-ONLY: proof body is the QM-side theorem.** See
+`PLACEHOLDERS.md §3`.
+
+**Cabello-18 pairwise orthogonality (re-export).** Within each of
 the 9 bases of `cabelloBasis`, any two distinct vectors are orthogonal
 in ℝ⁴. Direct re-export of
 `CSD.Empirical.KochenSpecker.cabello_pairwise_orthogonal_in_basis`. -/

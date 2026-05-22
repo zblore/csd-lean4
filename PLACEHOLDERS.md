@@ -157,7 +157,120 @@ TODO comments above declaration bodies, ledger updated in the same
 commit as any change to placeholder content. New placeholders may only
 land if simultaneously catalogued here.
 
-## 6. Stale docstrings (caught by the 2026-05-22 second-pass audit)
+## 7. Schema-mismatch bundles (third-pass audit, 2026-05-22)
+
+A **schema-mismatch bundle** is a `structure` whose fields encode one
+set of content but whose docstring claims a *different*, broader set of
+content. Lean can only check the propositions encoded in the type; any
+claim in the docstring that does not appear as a field is non-syntactic
+and the typechecker cannot verify it.
+
+| Structure | File | Fields in type | Claim in docstring |
+|---|---|---|---|
+| `CSDCloningBundle` | `Empirical/CSD/NoCloning.lean` | tensor pairing, blank state, ψ, φ, U, isometry, two cloning identities — **all QM-side data** | "the carried `U` arises as the projective-action lift of a measure-preserving π-equivariant flow on `Σ × Σ`" |
+| `CSDUnitaryBundle` | `Empirical/CSD/Gates/Framework.lean` | `U : H_n → H_n`, `U_isometry` (inner-product preservation) — **only QM-side isometry** | "the carried unitary arises as the projective-action lift of a measure-preserving π-equivariant flow on `Σ^N`" |
+
+In both cases, no field carries a `Σ`-side flow, no field asserts
+`π`-equivariance, no field asserts measure-preservation. The CSD-side
+ontic claim lives entirely in the docstring prose. A reader inspecting
+`#check CSDCloningBundle` would see a Hilbert-space cloning data
+structure plus an LF2 `Context`.
+
+**Honest reading.** These bundles are QM-side data structures with a
+CSD-namespace prefix. The "CSD-realisability" claim is not propositional.
+
+**Discharge route.** Add real CSD-side fields (post-LF4) — e.g. a
+`flow : Σ^N → Σ^N` with `flow_measure_preserving` and `flow_π_equivariant`
+hypotheses whose composition under `π` projects to `U`. Until then,
+each bundle's docstring carries the marker
+**SCHEMA-MISMATCH: docstring claims CSD-side content the type does not carry.**
+
+## 8. Decorative bundles (third-pass audit, 2026-05-22)
+
+A **decorative bundle** is one quantified over in a theorem statement
+(`¬ ∃ b : Bundle, ...`, or `(b : Bundle) → ...`) whose load-bearing
+fields are **not consumed** in the theorem's proof. The bundle's
+existence in the theorem statement adds syntactic weight without
+adding proof obligations the bundle's content discharges.
+
+| Bundle | Headline theorem | Fields used in proof | Fields tagged load-bearing but unused |
+|---|---|---|---|
+| `CSDGHZAssignmentBundle` | `no_csd_ghz_lhv_bundle` | **none** (bundle destructured as `⟨_, λ, ...⟩` and discarded) | `partition_pairwise_null`, `partition_cover_null` |
+| `CSDKSAssignmentBundle` | `no_csd_ks_assignment_bundle` | only `bases_eq` (trivial rewrite to align with QM-side `cabelloBasis`) | `partition_pairwise_null`, `partition_cover_null` |
+
+In the GHZ case the bundle is completely decorative: the headline
+`¬ ∃ (b : Bundle) (λ : ...), MerminConstraints λ` is provably equivalent
+to the QM-side `¬ ∃ λ, MerminConstraints λ` wrapped in a vacuous
+quantifier, because the proof never touches `b`. In the KS case, the
+proof uses `b.bases_eq` (bookkeeping) but the `partition_*` fields
+are inert.
+
+The bundle docstrings honestly state "the `partition_*` fields are
+not used in the proof but are load-bearing for the *interpretation*
+of the bundle". The third-pass audit insists this is not the same as
+load-bearing for the *theorem*: an interpretive role does not constrain
+the proof obligation.
+
+**Honest reading.** The headline theorems' bundle quantifiers are
+dead weight in the propositions Lean checks. The CSD-side reading of
+GHZ and KS is, propositionally, the QM-side reading. The bundles
+*describe* an interpretation; they don't *prove* anything about it.
+
+**Discharge route.** Either (a) restate each theorem to actually
+consume the `partition_*` fields in its proof body — e.g. derive the
+combinatorial contradiction *via* the per-cell `prepMeasure` mass
+discipline rather than around it — or (b) drop the bundle from the
+theorem statement and cite the QM-side theorem with an explicit
+prose-only CSD interpretation. Each decorative bundle's docstring
+carries the marker
+**DECORATIVE BUNDLE: load-bearing fields not consumed in any theorem.**
+
+## 9. Packaging theorems sold as headlines (third-pass audit, 2026-05-22)
+
+A **packaging theorem** is one whose entire proof body is an
+anonymous-record `⟨conjunct1, conjunct2, ..., conjunctN⟩` over already-
+exported separate theorems. The packaging adds zero new content; it
+provides a labelled handle on existing material.
+
+| Theorem | File | Conjuncts | New content |
+|---|---|---|---|
+| `LF3_main_theorem` | `LF3/Interface.lean` | 8 (kernel, correlation, A-marginal, B-marginal, no-signalling A, no-signalling B, pointer-completeness A, pointer-completeness B) | **zero** — all eight are exported separately as `context_singlet_kernel`, `context_correlation_eq_neg_dot`, `context_marginal_a`, `context_marginal_b`, `no_signalling_strong_readout_a`, `no_signalling_strong_readout_b`, `pointer_a_complete`, `pointer_b_complete` |
+| `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | 4 (sector probability, correlation, A-marginal, B-marginal deviation bounds) | **zero** — all four are exported separately as `singlet_pointer_probability_finite_leakage`, `correlation_finite_leakage_bound`, `marginal_a_finite_leakage_bound`, `marginal_b_finite_leakage_bound` |
+
+These are not placeholders (the conjuncts are real theorems with real
+proofs) but they are **packagings sold as headlines**. The "main
+theorem" label oversells.
+
+**Honest reading.** The headlines are tables-of-contents. Each
+conjunct does load-bearing work; the headline composing them does not.
+
+**Discharge route.** Either rename to `*_package` / `*_strong_readout_package`
+or keep the names but add explicit `**PACKAGING-ONLY**` markers
+disclosing that no proof content is added beyond the conjunction.
+
+## 10. Hypothesis-does-the-work theorems (third-pass audit, 2026-05-22)
+
+A **hypothesis-does-the-work** theorem `(h : P) → Q` is one where `h`
+is a strong hypothesis essentially equivalent to `Q` (or its key
+content) and the proof body simply unpacks `h`. Such a theorem is
+*Lean-honest* if and only if `h` is explicitly catalogued as a
+load-bearing obligation.
+
+| Theorem | File | Load-bearing hypothesis | Catalogued in |
+|---|---|---|---|
+| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | `prep.jed.born_eq_P_st : ‖⟨ψ, eig s t⟩‖² = P_st` (a field of `MeasurementJointEig`) | `BRIDGE-OBLIGATIONS.md §2.1` (LF4-todo §2 + §7) |
+
+The theorem composes `LF3_singlet_frequency_convergence` (which gives
+convergence to `P_st`) with a rewrite via `prep.jed.born_eq_P_st`, so
+the conclusion `Tendsto … (‖⟨ψ, eig s t⟩‖²)` is *equivalent* to the
+pre-Born conclusion under the bundled identity. The Born identity is
+the entire content of the rewrite step.
+
+The disclosure already lives in the existing docstring + the
+`BRIDGE-OBLIGATIONS.md` ledger. The third-pass audit adds a uniform
+**HYPOTHESIS-DOES-THE-WORK** marker for consistency with §7-9.
+
+## 11. Stale docstrings (caught by the 2026-05-22 second-pass audit)
 
 Two files were carrying docstring text that claimed work was **deferred**
 when the work had actually been completed in the same commit that
@@ -180,7 +293,7 @@ specific load-bearing missing content with an LF4-todo number, or
 (b) describes legitimate external scope (e.g., upstreaming to Mathlib,
 post-LF4 tripartite chain construction).
 
-## 7. Discharge protocol
+## 12. Discharge protocol
 
 When a placeholder is discharged:
 

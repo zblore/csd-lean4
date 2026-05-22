@@ -70,7 +70,21 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **CSD unitary bundle.** Structural carrier for a hypothetical
+/-- **SCHEMA-MISMATCH: docstring claims CSD-side content the type does not carry.**
+
+The only non-`Context` fields in the type are `U : H_n → H_n` (a
+function) and `U_isometry` (inner-product preservation). Neither
+encodes any `Σ`-side flow, `π`-equivariance, or measure-preservation
+hypothesis. The "projective-action lift of a measure-preserving
+π-equivariant flow on `Σ^N`" claim below is **non-syntactic prose**;
+Lean cannot check it. The type, as a proposition, is equivalent to
+"there exists a `Context D` plus a Hilbert-space isometry on `H_n`."
+
+See `PLACEHOLDERS.md §7` for the canonical schema-mismatch ledger.
+
+## Original (over-claiming) docstring follows
+
+**CSD unitary bundle.** Structural carrier for a hypothetical
 `N`-qubit unitary realised through CSD's ontic substrate on a
 `SectorData D`.
 
@@ -82,7 +96,7 @@ and adds:
 - `U`: the carried unitary as a function `H_n → H_n`.
 - `U_isometry`: inner-product preservation (the LF4-§13.2 obligation).
 
-## LF4-discharge content
+## LF4-discharge content (prose-only; no field encodes this)
 
 By calling the structure `CSDUnitaryBundle`, callers implicitly assert
 that `U` arises as the projective-action lift of a measure-preserving
@@ -91,7 +105,10 @@ post-LF4 it follows from the concrete Kähler `SectorData` discharging
 LF4-todo §13.2 (+ §2 + §7 + §8).
 
 **Status: load-bearing, externally supplied, undischarged.**
-LF4-todo §13.2. -/
+LF4-todo §13.2.
+
+(The above "status" applies to the *prose claim*, not to any field of
+this structure. See `PLACEHOLDERS.md §7` discharge route.) -/
 structure CSDUnitaryBundle
     (D : CSD.LF2.SectorData SigmaSpace P G) (N : ℕ)
     (H_n : Type*) [NormedAddCommGroup H_n] [InnerProductSpace ℂ H_n]

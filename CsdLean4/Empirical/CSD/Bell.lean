@@ -86,9 +86,14 @@ variable {SigmaSpace P G : Type*}
 
 /-! ## CSD-side Bell-family chain capstones (re-exports of LF3)
 
-Each theorem below names a `LF3_singlet_frequency_convergence*` capstone
-with empirical-prediction framing. The capstone signatures, proofs, and
-axiom-citations are unchanged. -/
+**STATUS: TRANSPORT-ONLY (all six theorems in this section).** Each
+theorem below has a one-line proof body invoking the corresponding LF3
+chain capstone. The CSD-side files in this directory add empirical-
+prediction framing in their docstrings; they do not add new proof
+content. The real content sits in `CsdLean4/LF3/Interface.lean` and
+the `PureSingletPreparation` bundle's load-bearing fields.
+
+See `PLACEHOLDERS.md §3` for the canonical transport-only ledger. -/
 
 /-- **Bell singlet frequency convergence (CSD pre-Born form).**
 

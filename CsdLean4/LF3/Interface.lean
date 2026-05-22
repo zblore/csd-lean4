@@ -98,7 +98,15 @@ variable {K_A K_B H_SA : Type*}
 
 /-! ### Strong-readout main theorem (paper §9.13) -/
 
-/-- **`LF3_main_theorem`** — eight-conjunct strong-readout package.
+/-- **PACKAGING-ONLY: zero new content.** Body is an anonymous-record
+`⟨context_singlet_kernel, context_correlation_eq_neg_dot, context_marginal_a,
+context_marginal_b, no_signalling_strong_readout_a, no_signalling_strong_readout_b,
+pointer_a_complete, pointer_b_complete⟩` over eight separately-exported
+theorems. The "main theorem" label is a labelled handle on existing
+content; no proof obligation is discharged here that is not discharged
+by the conjuncts individually. See `PLACEHOLDERS.md §9`.
+
+**`LF3_main_theorem`** — eight-conjunct strong-readout package.
 
 Conjuncts (paper §9.13 + §7.10 + §2.8):
   1. Singlet kernel `P_st = (1 − st·a·b)/4`.
@@ -133,7 +141,14 @@ theorem LF3_main_theorem
 
 /-! ### Finite-leakage main theorem (paper §9.13 §7) -/
 
-/-- **`LF3_finite_leakage_theorem`** — four-conjunct finite-leakage stability.
+/-- **PACKAGING-ONLY: zero new content.** Body is an anonymous-record
+over four separately-exported theorems
+(`singlet_pointer_probability_finite_leakage`, `correlation_finite_leakage_bound`,
+`marginal_a_finite_leakage_bound`, `marginal_b_finite_leakage_bound`).
+The "theorem" label is a labelled handle on existing content. See
+`PLACEHOLDERS.md §9`.
+
+**`LF3_finite_leakage_theorem`** — four-conjunct finite-leakage stability.
 
 Each conjunct gives a quantitative deviation bound from the strong-readout
 ideal. The leakage parameters `εA`, `εB` are supplied through a
@@ -268,7 +283,15 @@ theorem LF3_singlet_frequency_convergence_born
   rw [← cst_squared_eq ctx.a ctx.b s t] at h_pre
   exact h_pre
 
-/-- **Born-form empirical chain with a genuine bra-ket amplitude.** The
+/-- **HYPOTHESIS-DOES-THE-WORK: rewrites the pre-Born conclusion via
+the bundle field `prep.jed.born_eq_P_st`**, which IS the Born identity
+for the joint spin eigenstate. The conclusion `Tendsto … (‖⟨ψ, eig s t⟩‖²)`
+is equivalent to the pre-Born conclusion under this bundled identity.
+The Born identity is the entire content of the rewrite. See
+`PLACEHOLDERS.md §10`. The bundle field is catalogued at
+`BRIDGE-OBLIGATIONS.md §2.1` (LF4-todo §2 + §7).
+
+**Born-form empirical chain with a genuine bra-ket amplitude.** The
     empirical frequency converges to `‖⟨ψ, eig s t⟩‖²` where `eig s t` is
     the joint spin eigenstate `|s_a, t_b⟩` supplied by the bundle's
     `prep.jed`, and `ψ = prep.PP.ψ` is the pure-preparation Hilbert vector.

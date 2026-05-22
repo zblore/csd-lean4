@@ -124,7 +124,20 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **CSD GHZ LHV-assignment bundle.** Structural carrier for the
+/-- **DECORATIVE BUNDLE: load-bearing fields not consumed in any theorem.**
+
+The `partition_pairwise_null` and `partition_cover_null` fields are
+tagged as load-bearing by their own status markers, but the headline
+theorem `no_csd_ghz_lhv_bundle` **destructures the bundle as `⟨_, λ, ...⟩`
+and discards it** — not one field of this bundle flows into the proof.
+The bundle's interpretive role (encoding "exactly one ±1 outcome per
+(wing, axis)") is described in prose only.
+
+See `PLACEHOLDERS.md §8` for the canonical decorative-bundle ledger.
+
+## Original (over-claiming) docstring follows
+
+**CSD GHZ LHV-assignment bundle.** Structural carrier for the
 data of a hypothetical non-contextual ontic-outcome assignment to
 the six (wing, axis) Mermin measurements on a `SectorData D`.
 
@@ -175,7 +188,12 @@ structure CSDGHZAssignmentBundle
         (Set.univ \ ((O i ax CSD.LF3.Sign.plus).preEvent ∪
                      (O i ax CSD.LF3.Sign.minus).preEvent)) = 0
 
-/-- **No CSD GHZ LHV assignment is satisfiable.** The CSD volume-
+/-- **TRANSPORT-ONLY: proof discards the bundle and calls QM-side
+`no_lhv_assignment_for_ghz` on the bare lambda.** The `∃ b : Bundle`
+quantifier is vacuous in the proposition Lean actually checks. See
+`PLACEHOLDERS.md §8`.
+
+**No CSD GHZ LHV assignment is satisfiable.** The CSD volume-
 ratio companion to `Empirical.GHZ.no_lhv_assignment_for_ghz`.
 
 For any bundle `b : CSDGHZAssignmentBundle D` and any ±1 LHV
@@ -226,6 +244,11 @@ theorem no_csd_ghz_lhv_bundle
     ⟨lambda, hpm, hxxx, hxyy, hyxy, hyyx⟩
 
 /-! ## Hilbert-side expectation values (re-exports)
+
+**STATUS: TRANSPORT-ONLY (all four theorems in this section).** Each
+theorem's proof body is the QM-side theorem under renaming. The CSD-
+side files add no proof content; the existing docstring is honest
+about this. See `PLACEHOLDERS.md §3`.
 
 The four QM-side Mermin expectation theorems are Born predictions on
 the 3-qubit GHZ state. They have no CSD-ontic content of their own
