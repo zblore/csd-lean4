@@ -274,6 +274,15 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.unitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instIsProbabilityMeasureUnitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.unitaryHaarProb_isHaarMeasure` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.toEuclideanLin_apply_continuous` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.toEuclideanLin_unitary_apply_ne_zero` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.orbitMap` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.orbit_map_continuous` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.orbit_map_measurable` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.fubiniStudyMeasure` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.smul_comp_orbitMap` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 

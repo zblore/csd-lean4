@@ -25,6 +25,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 
 /-!
 # Axiom regression suite
@@ -475,5 +476,36 @@ regression and a blocker for the eventual Mathlib PR. -/
 
 /-- info: 'Matrix.UnitaryGroup.unitaryHaarProb_isHaarMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaarProb_isHaarMeasure
+
+/-- info: 'Matrix.UnitaryGroup.toEuclideanLin_apply_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.toEuclideanLin_apply_continuous
+
+/-- info: 'Matrix.UnitaryGroup.toEuclideanLin_unitary_apply_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.toEuclideanLin_unitary_apply_ne_zero
+
+/-- info: 'Matrix.UnitaryGroup.orbitMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.orbitMap
+
+/-- info: 'Matrix.UnitaryGroup.orbit_map_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.orbit_map_continuous
+
+/-- info: 'Matrix.UnitaryGroup.orbit_map_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.orbit_map_measurable
+
+/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure
+
+/--
+info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure
+
+/-- info: 'Matrix.UnitaryGroup.smul_comp_orbitMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.smul_comp_orbitMap
+
+/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant
 
 end CSD.Tests.AxiomAudit
