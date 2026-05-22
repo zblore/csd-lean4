@@ -3,7 +3,9 @@
 Ledger of every load-bearing structural field across all
 `CsdLean4/Empirical/CSD/` bridge files, with its `specs/LF4-todo.md`
 cross-reference. Parallel to [`AXIOMS.md`](AXIOMS.md) (per-theorem
-axiom audit) and managed under the same discipline.
+axiom audit) and [`PLACEHOLDERS.md`](PLACEHOLDERS.md) (claim-shaped
+declarations without proofs); all three are managed under the same
+discipline.
 
 This file is the canonical record of every externally-supplied
 hypothesis that CSD-side bridge bundles carry pre-LF4. The intent is
@@ -171,6 +173,13 @@ Per-gate realisability claims (`hadamard_realisable_for`,
 `cnot_realisable_for`, `toffoli_realisable_for`, etc.) instantiate
 the same `CSDUnitaryBundle` at the appropriate gate matrix; they
 do not carry separate LF4 obligations beyond §13.2.
+
+**Honest reading.** The nine per-gate `*_realisable_for` Props are
+**unproved claim-shaped placeholders** for the LF4-§13.2 obligation:
+pre-LF4, no concrete `D` exists for which any of them is shown to
+hold. They are catalogued in `PLACEHOLDERS.md §1` with explicit
+TODO markers, and the BellPrep tautology + its CSD re-export are
+catalogued in `PLACEHOLDERS.md §2`.
 
 This is the first **positive-existence-conditional-on-LF4** polarity
 in the architecture; the previous five bundles used negative-

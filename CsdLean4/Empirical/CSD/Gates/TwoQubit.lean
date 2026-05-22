@@ -31,21 +31,27 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **CSD realisability for CNOT.** -/
+/-- **PLACEHOLDER (Prop definition, not proved).**
+CSD realisability for CNOT. See `PLACEHOLDERS.md`. -/
+-- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def cnot_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 2 (EuclideanSpace ℂ (Fin 4)),
     ∀ v : EuclideanSpace ℂ (Fin 4),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmCNOT) v
 
-/-- **CSD realisability for SWAP.** -/
+/-- **PLACEHOLDER (Prop definition, not proved).**
+CSD realisability for SWAP. See `PLACEHOLDERS.md`. -/
+-- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def swap_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 2 (EuclideanSpace ℂ (Fin 4)),
     ∀ v : EuclideanSpace ℂ (Fin 4),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmSWAP) v
 
-/-- **CSD realisability for CZ.** -/
+/-- **PLACEHOLDER (Prop definition, not proved).**
+CSD realisability for CZ. See `PLACEHOLDERS.md`. -/
+-- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def cz_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 2 (EuclideanSpace ℂ (Fin 4)),

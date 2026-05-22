@@ -73,23 +73,34 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **CSD realisability for the Hadamard gate.** The QM-side
+/-- **PLACEHOLDER (Prop definition, not proved).**
+CSD realisability for the Hadamard gate. The QM-side
 `CSD.Empirical.QM.Gates.qmH` matrix admits a `CSDUnitaryBundle D 1 _`
-realisation under the Kähler `SectorData D` (LF4-todo §13.2). -/
+realisation under the Kähler `SectorData D`.
+
+**Status: claim-shaped, undischarged.** This is a `Prop` definition,
+not a theorem. Pre-LF4 there is no construction of any `D` for which
+`hadamard_realisable_for D` holds; the claim is recorded as an
+LF4-§13.2 obligation. See `PLACEHOLDERS.md`. -/
+-- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def hadamard_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 1 (EuclideanSpace ℂ (Fin 2)),
     ∀ v : EuclideanSpace ℂ (Fin 2),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmH) v
 
-/-- **CSD realisability for the Phase S gate.** -/
+/-- **PLACEHOLDER (Prop definition, not proved).**
+CSD realisability for the Phase S gate. See `PLACEHOLDERS.md`. -/
+-- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def phaseS_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 1 (EuclideanSpace ℂ (Fin 2)),
     ∀ v : EuclideanSpace ℂ (Fin 2),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmS) v
 
-/-- **CSD realisability for the Phase T gate.** -/
+/-- **PLACEHOLDER (Prop definition, not proved).**
+CSD realisability for the Phase T gate. See `PLACEHOLDERS.md`. -/
+-- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def phaseT_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 1 (EuclideanSpace ℂ (Fin 2)),

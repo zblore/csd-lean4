@@ -51,14 +51,32 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **Bell-state preparation circuit realisability.** Given CSD
-unitary bundles for `H ⊗ I` and `CNOT` on the 2-qubit space, the
-Bell-state preparation circuit `CNOT ∘ (H ⊗ I)` has a corresponding
-CSD bundle via `CSDUnitaryBundle.comp`. -/
+/-- **PLACEHOLDER (Prop definition, not proved).**
+
+Bell-state preparation circuit realisability: there exist CSD
+unitary bundles for the Hadamard-on-qubit-0 operation `H ⊗ I` and
+for `CNOT`, whose `U` fields agree with the QM-side gate matrices.
+The bundle composition `b_CNOT.comp b_HI` then realises the
+Bell-state preparation circuit.
+
+**Status: claim-shaped, undischarged.** This is a `Prop` definition,
+not a theorem. Pre-LF4 there is no proof that `bell_prep_realisable_for D`
+holds for any concrete `D`; the claim is recorded as an LF4-§13.2
+obligation (post-LF4, the Kähler `SectorData` would discharge both
+bundle existences). See `PLACEHOLDERS.md` for the canonical
+placeholder ledger.
+
+The earlier formulation `∃ b_HI b_CNOT, True` was a vacuous Prop
+(satisfied by any two bundles); rewritten 2026-05-22 to constrain
+both bundles' `U` to the QM-side matrices, making the Prop
+non-vacuous. -/
 def bell_prep_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ (b_HI b_CNOT : CSDUnitaryBundle D 2 (EuclideanSpace ℂ (Fin 4))),
-    True  -- The composition `b_CNOT.comp b_HI` exists by Framework.lean.
+    (∀ v, b_HI.U v
+        = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmH_tensor_I) v) ∧
+    (∀ v, b_CNOT.U v
+        = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmCNOT) v)
 
 /-- **Composition instance.** Given two `CSDUnitaryBundle`s on
 the same context + qubit count, their `comp` is well-defined. Just

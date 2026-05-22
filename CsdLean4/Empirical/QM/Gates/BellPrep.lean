@@ -69,20 +69,30 @@ noncomputable def qmKetPhiPlus : EuclideanSpace ℂ (Fin 4) :=
   ((Real.sqrt 2 : ℂ)⁻¹) •
     (EuclideanSpace.single 0 (1 : ℂ) + EuclideanSpace.single 3 (1 : ℂ))
 
-/-- **The Bell-state preparation circuit equals `CNOT ∘ (H ⊗ I)` by
-definition.** Trivial unfolding, but stated as a named theorem for
-downstream consumers that want to reason about the circuit's
-factorisation.
+/-- **TAUTOLOGY (definitional unfold).** `qmBellPrepCircuit` is
+*defined* as `qmCNOT * qmH_tensor_I`, so this "theorem" reduces to
+`X = X` and is closed by `rfl`. The name exists only to give
+downstream consumers a labelled handle on the factorisation; it
+carries no information.
 
-The headline empirical identity
+**Status: tautology, placeholder for the deferred headline identity.**
+See `PLACEHOLDERS.md` for the canonical placeholder ledger.
+
+## The genuine identity is deferred
+
+The empirically meaningful identity is
 `(toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus` (the
-circuit transforms `|00⟩` into `|Φ⁺⟩`) is provable by matrix-element
-computation but the proof is fiddly under the current
-`Matrix.toEuclideanLin` / `Matrix.mulVec` machinery; deferred to a
-follow-up. The circuit factorisation theorem below is sufficient for
-the CSD-side companion's bundle-composition use. -/
+circuit transforms `|00⟩` into `|Φ⁺⟩`). It is provable by direct
+matrix-element computation but the proof under the current
+`Matrix.toEuclideanLin` / `Matrix.mulVec` machinery requires more
+care than was budgeted at Tranche 1 Tier A landing time. **TODO**:
+prove `qmBellPrep_yields_phiplus` as a follow-up commit. -/
 theorem qmBellPrep_factorisation :
     qmBellPrepCircuit = qmCNOT * qmH_tensor_I := rfl
+
+-- TODO: prove the headline identity.
+-- theorem qmBellPrep_yields_phiplus :
+--   (Matrix.toEuclideanLin qmBellPrepCircuit) qmKet00 = qmKetPhiPlus := ...
 
 end Gates
 end QM
