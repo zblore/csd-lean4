@@ -290,6 +290,7 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.instIsPretransitive_projectivization` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instContinuousSMul_projectivization` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instIsMulRightInvariantUnitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.haar_orbit_indicator_eq` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 

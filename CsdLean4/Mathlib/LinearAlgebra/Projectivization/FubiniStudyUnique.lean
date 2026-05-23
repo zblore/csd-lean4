@@ -118,4 +118,43 @@ instance instIsMulRightInvariantUnitaryHaarProb (N : ℕ) :
         (continuous_mul_const g).measurable.aemeasurable
     exact MeasureTheory.Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
+/-! ## Phase G3 — Haar-orbit-indicator key lemma
+
+The Haar-measure mass of the set of unitaries mapping a fixed point
+`p` into a target Borel set `B` is independent of `p`. By transitivity
+(Phase F), any two base points are related by some unitary `V`;
+by right-invariance of Haar (Phase G2), the right-translation by `V`
+preserves the measure. -/
+
+/-- **Phase G3.** For any Borel set `B ⊆ ℙ ℂ V` and any two base points
+`p₀, p`, the Haar mass of the set `{U | U • p ∈ B}` equals that of
+`{U | U • p₀ ∈ B}`.
+
+Proof: take `V_p` with `V_p • p₀ = p` (from `IsPretransitive`, which
+auto-includes `[NeZero N]` from the section variable). Then
+`{U | U • p ∈ B} = (· * V_p) ⁻¹' {U | U • p₀ ∈ B}` by `smul_smul`.
+Right-invariance of Haar (Phase G2) discharges the measure equality. -/
+lemma haar_orbit_indicator_eq
+    {B : Set (ℙ ℂ (EuclideanSpace ℂ (Fin N)))} (hB : MeasurableSet B)
+    (p₀ p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p ∈ B}
+      = unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} := by
+  -- Get a unitary V_p with V_p • p₀ = p via transitivity.
+  obtain ⟨V_p, hV_p⟩ :=
+    MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) p₀ p
+  -- Set equality: {U | U • p ∈ B} = (· * V_p) ⁻¹' {U | U • p₀ ∈ B}.
+  have h_set_eq :
+      {U : Matrix.unitaryGroup (Fin N) ℂ | U • p ∈ B}
+        = (· * V_p) ⁻¹' {U | U • p₀ ∈ B} := by
+    ext U
+    simp only [Set.mem_setOf_eq, Set.mem_preimage]
+    rw [← hV_p, smul_smul]
+  -- Measurability of the inner set (orbit map preimage of Borel).
+  have h_S_meas :
+      MeasurableSet {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} :=
+    orbit_map_measurable p₀ hB
+  rw [h_set_eq, ← MeasureTheory.Measure.map_apply
+        (continuous_mul_const V_p).measurable h_S_meas,
+      MeasureTheory.map_mul_right_eq_self]
+
 end Matrix.UnitaryGroup

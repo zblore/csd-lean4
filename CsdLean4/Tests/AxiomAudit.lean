@@ -531,4 +531,7 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.instIsMulRightInvariantUnitaryHaarProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.instIsMulRightInvariantUnitaryHaarProb
 
+/-- info: 'Matrix.UnitaryGroup.haar_orbit_indicator_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.haar_orbit_indicator_eq
+
 end CSD.Tests.AxiomAudit
