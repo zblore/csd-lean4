@@ -2,6 +2,9 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
+import Mathlib.LinearAlgebra.Matrix.Kronecker
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Data.Complex.Basic
 
 /-!
 # Empirical: Mermin–Peres magic square (no LHV assignment)
@@ -151,6 +154,145 @@ theorem no_lhv_mermin_peres :
           * (lambda 0 2 * lambda 1 2 * lambda 2 2) := by ring
   rw [h_rows, h_cols] at h_eq
   exact absurd h_eq (by norm_num)
+
+/-! ## QM-side operator identities
+
+The 9 two-qubit Pauli observables in the Mermin–Peres grid, with the
+row/column product identities `R0..R2, C0..C2`. The QM constraints
+in `no_lhv_mermin_peres` are exactly the eigenvalue products that
+follow from these operator identities (e.g., R0 `= +I` forces row 0's
+outcome product to be `+1`; C2 `= -I` forces column 2's outcome product
+to be `-1`).
+
+Self-contained: defines `sigmaX, sigmaY, sigmaZ : Matrix (Fin 2) (Fin 2) ℂ`
+directly via `!![..]` notation; does not depend on the LF3 `pauliDot`
+framework. The proof pattern uses `Matrix.mul_kronecker_mul` to reduce
+each 4×4 product to two 2×2 Pauli-algebra computations.
+-/
+
+open scoped Kronecker
+open Matrix Complex
+
+/-- The Pauli X matrix. -/
+def sigmaX : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1; 1, 0]
+
+/-- The Pauli Y matrix. -/
+noncomputable def sigmaY : Matrix (Fin 2) (Fin 2) ℂ := !![0, -I; I, 0]
+
+/-- The Pauli Z matrix. -/
+def sigmaZ : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
+
+/-! ### Pauli algebraic identities -/
+
+@[simp] lemma sigmaX_sq : sigmaX * sigmaX = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [sigmaX, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
+
+@[simp] lemma sigmaY_sq : sigmaY * sigmaY = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [sigmaY, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply,
+          Complex.I_mul_I]
+
+@[simp] lemma sigmaZ_sq : sigmaZ * sigmaZ = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [sigmaZ, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
+
+/-- `σ_x σ_y = i · σ_z`. -/
+lemma sigmaX_mul_sigmaY : sigmaX * sigmaY = I • sigmaZ := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [sigmaX, sigmaY, sigmaZ, Matrix.mul_apply, Fin.sum_univ_succ,
+          Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
+
+/-- `σ_y σ_x = -i · σ_z`. -/
+lemma sigmaY_mul_sigmaX : sigmaY * sigmaX = (-I) • sigmaZ := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [sigmaX, sigmaY, sigmaZ, Matrix.mul_apply, Fin.sum_univ_succ,
+          Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
+
+/-! ### Row product identities
+
+Each row of the Mermin–Peres grid:
+- Row 0: `(σ_x ⊗ I)(I ⊗ σ_x)(σ_x ⊗ σ_x) = +I`
+- Row 1: `(I ⊗ σ_y)(σ_y ⊗ I)(σ_y ⊗ σ_y) = +I`
+- Row 2: `(σ_x ⊗ σ_y)(σ_y ⊗ σ_x)(σ_z ⊗ σ_z) = +I`
+
+The first two reduce to `σ_a² ⊗ σ_a² = I` after `mul_kronecker_mul`.
+The third uses `σ_x σ_y σ_z = i·I` and `σ_y σ_x σ_z = -i·I`,
+giving `(i)(-i) = +1` in the scalar factor and `I ⊗ I = I`. -/
+
+/-- **Row 0 product**: `(σ_x ⊗ I)(I ⊗ σ_x)(σ_x ⊗ σ_x) = I`. -/
+lemma mermin_peres_R0 :
+    (sigmaX ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
+      ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaX) *
+        (sigmaX ⊗ₖ sigmaX) = 1 := by
+  rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
+      ← Matrix.mul_kronecker_mul, sigmaX_sq, Matrix.one_kronecker_one]
+
+/-- **Row 1 product**: `(I ⊗ σ_y)(σ_y ⊗ I)(σ_y ⊗ σ_y) = I`. -/
+lemma mermin_peres_R1 :
+    ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaY) *
+      (sigmaY ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
+        (sigmaY ⊗ₖ sigmaY) = 1 := by
+  rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
+      ← Matrix.mul_kronecker_mul, sigmaY_sq, Matrix.one_kronecker_one]
+
+/-- **Row 2 product**: `(σ_x ⊗ σ_y)(σ_y ⊗ σ_x)(σ_z ⊗ σ_z) = I`.
+
+Uses `σ_x σ_y σ_z = (i·σ_z) σ_z = i·I` and `σ_y σ_x σ_z = (-i·σ_z) σ_z = -i·I`,
+giving the scalar factor `i · (-i) = 1` and `I ⊗ I = I`. -/
+lemma mermin_peres_R2 :
+    (sigmaX ⊗ₖ sigmaY) * (sigmaY ⊗ₖ sigmaX) * (sigmaZ ⊗ₖ sigmaZ) = 1 := by
+  rw [← Matrix.mul_kronecker_mul, sigmaX_mul_sigmaY, sigmaY_mul_sigmaX,
+      ← Matrix.mul_kronecker_mul]
+  simp only [Matrix.smul_mul, sigmaZ_sq,
+             Matrix.smul_kronecker, Matrix.kronecker_smul, smul_smul,
+             Matrix.one_kronecker_one]
+  rw [show (-I : ℂ) * I = 1 from by rw [neg_mul, I_mul_I]; ring, one_smul]
+
+/-! ### Column product identities
+
+- Col 0: `(σ_x ⊗ I)(I ⊗ σ_y)(σ_x ⊗ σ_y) = +I`
+- Col 1: `(I ⊗ σ_x)(σ_y ⊗ I)(σ_y ⊗ σ_x) = +I`
+- Col 2: `(σ_x ⊗ σ_x)(σ_y ⊗ σ_y)(σ_z ⊗ σ_z) = -I`
+
+C0 and C1 reduce to `σ_a² ⊗ σ_a² = I`. C2 — the load-bearing one for
+the LHV contradiction — uses `(σ_x σ_y σ_z)² = (i·I)² = -I`. -/
+
+/-- **Column 0 product**: `(σ_x ⊗ I)(I ⊗ σ_y)(σ_x ⊗ σ_y) = I`. -/
+lemma mermin_peres_C0 :
+    (sigmaX ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
+      ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaY) *
+        (sigmaX ⊗ₖ sigmaY) = 1 := by
+  rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
+      ← Matrix.mul_kronecker_mul, sigmaX_sq, sigmaY_sq,
+      Matrix.one_kronecker_one]
+
+/-- **Column 1 product**: `(I ⊗ σ_x)(σ_y ⊗ I)(σ_y ⊗ σ_x) = I`. -/
+lemma mermin_peres_C1 :
+    ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaX) *
+      (sigmaY ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
+        (sigmaY ⊗ₖ sigmaX) = 1 := by
+  rw [← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul,
+      ← Matrix.mul_kronecker_mul, sigmaY_sq, sigmaX_sq,
+      Matrix.one_kronecker_one]
+
+/-- **Column 2 product**: `(σ_x ⊗ σ_x)(σ_y ⊗ σ_y)(σ_z ⊗ σ_z) = -I`.
+
+The load-bearing identity. Both factors `σ_x σ_y σ_z = i·I` give
+a scalar factor of `i·i = -1` and `I ⊗ I = I`. -/
+lemma mermin_peres_C2 :
+    (sigmaX ⊗ₖ sigmaX) * (sigmaY ⊗ₖ sigmaY) * (sigmaZ ⊗ₖ sigmaZ) = -1 := by
+  rw [← Matrix.mul_kronecker_mul, sigmaX_mul_sigmaY,
+      ← Matrix.mul_kronecker_mul]
+  simp only [Matrix.smul_mul, sigmaZ_sq,
+             Matrix.smul_kronecker, Matrix.kronecker_smul, smul_smul,
+             Matrix.one_kronecker_one, I_mul_I]
+  exact neg_one_smul ℂ _
 
 end MerminPeres
 end Empirical

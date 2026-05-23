@@ -293,6 +293,17 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.haar_orbit_indicator_eq` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.fubiniStudyMeasure_unique` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.MerminPeres.no_lhv_mermin_peres` | `propext, Quot.sound` |
+| `Empirical.MerminPeres.sigmaX_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.sigmaY_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.sigmaZ_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.sigmaX_mul_sigmaY` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.sigmaY_mul_sigmaX` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.mermin_peres_R0` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.mermin_peres_R1` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.mermin_peres_R2` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.mermin_peres_C0` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.mermin_peres_C1` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.mermin_peres_C2` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
