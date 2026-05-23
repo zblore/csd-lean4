@@ -157,4 +157,98 @@ lemma haar_orbit_indicator_eq
         (continuous_mul_const V_p).measurable h_S_meas,
       MeasureTheory.map_mul_right_eq_self]
 
+/-! ## Phase G4 — uniqueness of the SU(N)-invariant probability measure
+
+Headline theorem: any SU(N)-invariant probability measure on
+`ℂℙ^(N-1)` equals `fubiniStudyMeasure p₀` for any reference point `p₀`.
+
+Proof via Fubini chain:
+
+  μ B = ∫⁻ U, μ B ∂λ                          -- λ is prob
+      = ∫⁻ U, ∫⁻ p, B.indicator 1 (U • p) ∂μ ∂λ  -- invariance of μ
+      = ∫⁻ p, ∫⁻ U, B.indicator 1 (U • p) ∂λ ∂μ  -- Fubini swap
+      = ∫⁻ p, ν B ∂μ                          -- Phase G3
+      = ν B                                    -- μ is prob
+
+where λ = `unitaryHaarProb`, ν = `fubiniStudyMeasure p₀`.
+-/
+
+/-- **Phase G4.** Uniqueness of the SU(N)-invariant probability measure
+on `ℂℙ^(N-1)`: any invariant probability measure `μ` equals
+`fubiniStudyMeasure p₀`. (`[NeZero N]` is required by the implicit
+transitivity-instance synthesis through `haar_orbit_indicator_eq`,
+auto-included from the section variable.) -/
+theorem fubiniStudyMeasure_unique
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
+    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    [MeasureTheory.IsProbabilityMeasure μ]
+    (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+       MeasureTheory.Measure.map (fun p => U • p) μ = μ) :
+    μ = fubiniStudyMeasure p₀ := by
+  apply MeasureTheory.Measure.ext
+  intro B hB
+  -- Joint measurability of (U, p) ↦ U • p, derived from G1's ContinuousSMul.
+  have h_smul_meas : Measurable
+      (fun Up : Matrix.unitaryGroup (Fin N) ℂ
+            × ℙ ℂ (EuclideanSpace ℂ (Fin N)) => Up.1 • Up.2) :=
+    continuous_smul.measurable
+  -- Measurability of the indicator function `B.indicator (fun _ => 1)`.
+  have h_ind_meas :
+      Measurable (B.indicator (fun _ : ℙ ℂ (EuclideanSpace ℂ (Fin N)) =>
+                                  (1 : ENNReal))) :=
+    measurable_const.indicator hB
+  -- The integrand f(U, p) := B.indicator 1 (U • p) is measurable (joint).
+  have h_indicator_meas : Measurable
+      (fun Up : Matrix.unitaryGroup (Fin N) ℂ
+            × ℙ ℂ (EuclideanSpace ℂ (Fin N)) =>
+        B.indicator (fun _ => (1 : ENNReal)) (Up.1 • Up.2)) :=
+    h_ind_meas.comp h_smul_meas
+  -- Inner integral over μ, with U fixed: equals μ B by invariance.
+  have h_inner_mu (U : Matrix.unitaryGroup (Fin N) ℂ) :
+      ∫⁻ p, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂μ = μ B := by
+    have hcont : Measurable (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) :=
+      (continuous_const_smul U).measurable
+    rw [← MeasureTheory.lintegral_map h_ind_meas hcont, hμ_inv U,
+        MeasureTheory.lintegral_indicator_const hB 1, one_mul]
+  -- fubiniStudyMeasure p₀ in terms of unitaryHaarProb (unfold the def).
+  have h_fubini_def : fubiniStudyMeasure p₀ B
+      = unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} := by
+    show (MeasureTheory.Measure.map (orbitMap p₀) unitaryHaarProb) B = _
+    rw [MeasureTheory.Measure.map_apply (orbit_map_measurable p₀) hB]
+    rfl
+  -- Inner integral over λ, with p fixed: equals fubiniStudyMeasure p₀ B by G3.
+  have h_inner_haar (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+      ∫⁻ U : Matrix.unitaryGroup (Fin N) ℂ,
+          B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂unitaryHaarProb
+        = fubiniStudyMeasure p₀ B := by
+    have hcont : Measurable (fun U : Matrix.unitaryGroup (Fin N) ℂ => U • p) :=
+      (orbit_map_continuous p).measurable
+    rw [← MeasureTheory.lintegral_map h_ind_meas hcont,
+        MeasureTheory.lintegral_indicator_const hB 1, one_mul,
+        MeasureTheory.Measure.map_apply hcont hB]
+    show unitaryHaarProb {U | U • p ∈ B} = fubiniStudyMeasure p₀ B
+    rw [haar_orbit_indicator_eq hB p₀ p, h_fubini_def]
+  -- λ univ = 1 (probability measure).
+  have h_lam_univ : unitaryHaarProb
+      (Set.univ : Set (Matrix.unitaryGroup (Fin N) ℂ)) = 1 :=
+    MeasureTheory.measure_univ
+  -- μ univ = 1 (probability measure).
+  have h_mu_univ : μ (Set.univ : Set (ℙ ℂ (EuclideanSpace ℂ (Fin N)))) = 1 :=
+    MeasureTheory.measure_univ
+  -- Compose the chain via Fubini.
+  calc μ B
+      = ∫⁻ _ : Matrix.unitaryGroup (Fin N) ℂ, μ B ∂unitaryHaarProb := by
+            rw [MeasureTheory.lintegral_const, h_lam_univ, mul_one]
+    _ = ∫⁻ U, ∫⁻ p, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂μ
+            ∂unitaryHaarProb := by
+            congr 1 with U
+            exact (h_inner_mu U).symm
+    _ = ∫⁻ p, ∫⁻ U, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂unitaryHaarProb ∂μ :=
+            MeasureTheory.lintegral_lintegral_swap h_indicator_meas.aemeasurable
+    _ = ∫⁻ _ : ℙ ℂ (EuclideanSpace ℂ (Fin N)), fubiniStudyMeasure p₀ B ∂μ := by
+            congr 1 with p
+            exact h_inner_haar p
+    _ = fubiniStudyMeasure p₀ B := by
+            rw [MeasureTheory.lintegral_const, h_mu_univ, mul_one]
+
 end Matrix.UnitaryGroup
