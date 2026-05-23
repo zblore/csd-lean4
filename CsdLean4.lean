@@ -43,6 +43,7 @@ import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
+import CsdLean4.Empirical.QM.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning

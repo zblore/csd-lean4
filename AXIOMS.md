@@ -292,6 +292,7 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.instIsMulRightInvariantUnitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.haar_orbit_indicator_eq` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.fubiniStudyMeasure_unique` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.MerminPeres.no_lhv_mermin_peres` | `propext, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 

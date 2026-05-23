@@ -10,6 +10,7 @@ import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
+import CsdLean4.Empirical.QM.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
@@ -278,6 +279,9 @@ space-free); the instance is Cat-3 only because it lives under
 
 /-- info: 'CSD.Empirical.KochenSpecker.cabelloBasis_appears_twice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.KochenSpecker.cabelloBasis_appears_twice
+
+/-- info: 'CSD.Empirical.MerminPeres.no_lhv_mermin_peres' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.MerminPeres.no_lhv_mermin_peres
 
 /--
 info: 'CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18' depends on axioms: [propext,
