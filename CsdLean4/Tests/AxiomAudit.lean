@@ -27,6 +27,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
 # Axiom regression suite
@@ -523,5 +524,8 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 
 /-- info: 'Matrix.UnitaryGroup.instIsPretransitive_projectivization' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.instIsPretransitive_projectivization
+
+/-- info: 'Matrix.UnitaryGroup.instContinuousSMul_projectivization' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instContinuousSMul_projectivization
 
 end CSD.Tests.AxiomAudit
