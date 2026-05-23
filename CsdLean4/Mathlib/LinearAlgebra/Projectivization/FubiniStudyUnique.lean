@@ -1,5 +1,6 @@
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+import Mathlib.MeasureTheory.Measure.Haar.Unique
 import Mathlib.Topology.Instances.Matrix
 
 /-!
@@ -88,5 +89,33 @@ instance instContinuousSMul_projectivization :
     · -- Continuous (fun Uv => Uv.2.val.ofLp) — ofLp ∘ subtype_val ∘ snd
       exact (PiLp.continuous_ofLp _ _).comp
               (continuous_subtype_val.comp continuous_snd)
+
+/-! ## Phase G2 — right-invariance of `unitaryHaarProb`
+
+On a compact group, every Haar probability measure is both left- and
+right-invariant. Mathlib gives left-invariance directly (via
+`IsHaarMeasure`); we obtain right-invariance via Haar uniqueness:
+the right-translate `Measure.map (· * g) unitaryHaarProb` is again a
+Haar probability measure, hence equal to `unitaryHaarProb`.
+-/
+
+/-- `unitaryHaarProb` is right-invariant under group multiplication.
+
+Proof: `Measure.map (· * g) unitaryHaarProb` is `IsHaarMeasure` (via
+`isHaarMeasure_map_mul_right`, an instance) and `IsProbabilityMeasure`
+(via `Measure.isProbabilityMeasure_map`, since `(· * g)` is measurable).
+`unitaryHaarProb` itself is both. By Haar uniqueness on compact groups
+(`isHaarMeasure_eq_of_isProbabilityMeasure`), the two measures coincide. -/
+instance instIsMulRightInvariantUnitaryHaarProb (N : ℕ) :
+    MeasureTheory.Measure.IsMulRightInvariant
+      (unitaryHaarProb : MeasureTheory.Measure (Matrix.unitaryGroup (Fin N) ℂ)) where
+  map_mul_right_eq_self g := by
+    haveI : MeasureTheory.IsProbabilityMeasure
+        (MeasureTheory.Measure.map (· * g)
+          (unitaryHaarProb : MeasureTheory.Measure
+            (Matrix.unitaryGroup (Fin N) ℂ))) :=
+      MeasureTheory.Measure.isProbabilityMeasure_map
+        (continuous_mul_const g).measurable.aemeasurable
+    exact MeasureTheory.Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
 end Matrix.UnitaryGroup
