@@ -515,4 +515,13 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.exists_unitary_map_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.exists_unitary_map_unit
 
+/-- info: 'Matrix.UnitaryGroup.exists_unitary_mapping_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.exists_unitary_mapping_nonzero
+
+/-- info: 'Matrix.UnitaryGroup.smul_mk_eq_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.smul_mk_eq_mk
+
+/-- info: 'Matrix.UnitaryGroup.instIsPretransitive_projectivization' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instIsPretransitive_projectivization
+
 end CSD.Tests.AxiomAudit

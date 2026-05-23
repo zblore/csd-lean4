@@ -144,4 +144,86 @@ lemma exists_unitary_map_unit [NeZero N]
   rw [h_simp]
   exact hM_w
 
+/-- A unitary matrix's `toEuclideanLin` action preserves non-zero. -/
+private lemma toEuclideanLin_unitary_ne_zero
+    (U : Matrix.unitaryGroup (Fin N) ℂ)
+    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
+    (Matrix.toEuclideanLin U.val) v ≠ 0 := by
+  intro h
+  apply hv
+  exact (toEuclideanLinearEquiv U).injective (h.trans (LinearEquiv.map_zero _).symm)
+
+/-- For any two nonzero vectors `v, w`, there exists a unitary matrix
+`U` and a nonzero complex scalar `c` with `(toEuclideanLin U.val) v = c • w`. -/
+lemma exists_unitary_mapping_nonzero [NeZero N]
+    {v w : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) (hw : w ≠ 0) :
+    ∃ (U : Matrix.unitaryGroup (Fin N) ℂ) (c : ℂ), c ≠ 0 ∧
+      (Matrix.toEuclideanLin U.val) v = c • w := by
+  -- Normalise both vectors.
+  have hv_norm : ‖v‖ ≠ 0 := norm_ne_zero_iff.mpr hv
+  have hw_norm : ‖w‖ ≠ 0 := norm_ne_zero_iff.mpr hw
+  have hv_norm_cx : ((‖v‖ : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hv_norm
+  have hw_norm_cx : ((‖w‖ : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hw_norm
+  have hw_norm_inv_cx : ((‖w‖⁻¹ : ℝ) : ℂ) ≠ 0 := by
+    rw [Complex.ofReal_inv]
+    exact inv_ne_zero hw_norm_cx
+  set v' : EuclideanSpace ℂ (Fin N) := ((‖v‖⁻¹ : ℝ) : ℂ) • v with v'_def
+  set w' : EuclideanSpace ℂ (Fin N) := ((‖w‖⁻¹ : ℝ) : ℂ) • w with w'_def
+  have hv' : ‖v'‖ = 1 := by
+    rw [v'_def, norm_smul, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_pos (inv_pos.mpr (norm_pos_iff.mpr hv)), inv_mul_cancel₀ hv_norm]
+  have hw' : ‖w'‖ = 1 := by
+    rw [w'_def, norm_smul, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_pos (inv_pos.mpr (norm_pos_iff.mpr hw)), inv_mul_cancel₀ hw_norm]
+  obtain ⟨U, hU⟩ := exists_unitary_map_unit v' w' hv' hw'
+  refine ⟨U, ((‖v‖ : ℂ) * (‖w‖⁻¹ : ℂ)), ?_, ?_⟩
+  · -- c ≠ 0
+    exact mul_ne_zero hv_norm_cx (inv_ne_zero hw_norm_cx)
+  · -- (toEuclideanLin U.val) v = c • w
+    have h_v_recover : v = ((‖v‖ : ℝ) : ℂ) • v' := by
+      rw [v'_def, ← smul_assoc, smul_eq_mul, Complex.ofReal_inv,
+          mul_inv_cancel₀ hv_norm_cx, one_smul]
+    calc (Matrix.toEuclideanLin U.val) v
+        = (Matrix.toEuclideanLin U.val) (((‖v‖ : ℝ) : ℂ) • v') := by
+            conv_lhs => rw [h_v_recover]
+      _ = ((‖v‖ : ℝ) : ℂ) • (Matrix.toEuclideanLin U.val) v' := by
+            rw [map_smul]
+      _ = ((‖v‖ : ℝ) : ℂ) • w' := by rw [hU]
+      _ = ((‖v‖ : ℝ) : ℂ) • (((‖w‖⁻¹ : ℝ) : ℂ) • w) := rfl
+      _ = (((‖v‖ : ℝ) : ℂ) * ((‖w‖⁻¹ : ℝ) : ℂ)) • w := by rw [smul_smul]
+      _ = ((‖v‖ : ℂ) * (‖w‖⁻¹ : ℂ)) • w := by rw [Complex.ofReal_inv]
+
+/-- For unitary `U` and nonzero `v`, the projective action is given by
+`mk` of the matrix action on `v`. Both sides reduce to the same
+`Quotient.mk''` term by definitional unfolding of `MulAction.compHom`,
+`mapEquiv`, and `Projectivization.map`. -/
+lemma smul_mk_eq_mk [NeZero N]
+    (U : Matrix.unitaryGroup (Fin N) ℂ)
+    (v : EuclideanSpace ℂ (Fin N)) (hv : v ≠ 0) :
+    U • Projectivization.mk ℂ v hv
+      = Projectivization.mk ℂ ((Matrix.toEuclideanLin U.val) v)
+          (toEuclideanLin_unitary_ne_zero U hv) :=
+  rfl
+
+/-- **Transitivity of the matrix unitary group action on `ℂℙ^(N-1)`.**
+For any two projective points, there is a unitary mapping one to the other. -/
+instance instIsPretransitive_projectivization [NeZero N] :
+    MulAction.IsPretransitive (Matrix.unitaryGroup (Fin N) ℂ)
+      (ℙ ℂ (EuclideanSpace ℂ (Fin N))) where
+  exists_smul_eq p q := by
+    obtain ⟨U, c, hc, hUv⟩ :=
+      exists_unitary_mapping_nonzero p.rep_nonzero q.rep_nonzero
+    refine ⟨U, ?_⟩
+    -- Goal: U • p = q. Rewrite both sides via mk_rep.
+    conv_lhs => rw [← p.mk_rep]
+    conv_rhs => rw [← q.mk_rep]
+    rw [smul_mk_eq_mk]
+    -- Goal: mk ℂ ((toEuclideanLin U.val) p.rep) (...) = mk ℂ q.rep q.rep_nonzero
+    -- Use hUv : (toEuclideanLin U.val) p.rep = c • q.rep, then mk_eq_mk_iff' with a := c.
+    -- The `rw` form trips the motive check (the `mk`'s non-vanishing proof is
+    -- proof-irrelevant but Lean can't abstract); apply `.mpr` directly.
+    exact (Projectivization.mk_eq_mk_iff' ℂ _ _
+            (hUv ▸ toEuclideanLin_unitary_ne_zero U p.rep_nonzero)
+            q.rep_nonzero).mpr ⟨c, hUv.symm⟩
+
 end Matrix.UnitaryGroup
