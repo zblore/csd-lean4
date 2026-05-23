@@ -26,6 +26,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 
 /-!
 # Axiom regression suite
@@ -507,5 +508,11 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 
 /-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant
+
+/-- info: 'Matrix.UnitaryGroup.exists_unitary_e_zero_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.exists_unitary_e_zero_eq
+
+/-- info: 'Matrix.UnitaryGroup.exists_unitary_map_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.exists_unitary_map_unit
 
 end CSD.Tests.AxiomAudit

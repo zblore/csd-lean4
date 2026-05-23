@@ -283,6 +283,8 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.smul_comp_orbitMap` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.exists_unitary_e_zero_eq` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.exists_unitary_map_unit` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
