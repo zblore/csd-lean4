@@ -310,6 +310,14 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Empirical.Hardy.HardyQM.hardyAmp_A'minus_B` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.HardyQM.hardyAmp_A'_B'` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.HardyQM.exists_hardy_realisation` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.phi_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.phi_cube` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.sqrtPhi_sq` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.hardyMaxAmp_AB` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A_B'minus` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A'minus_B` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A'_B'` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.exists_hardy_realisation_max` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
