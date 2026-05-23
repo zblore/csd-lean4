@@ -1,6 +1,8 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Fintype.Prod
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Linarith
@@ -193,6 +195,120 @@ theorem no_lhv_hardy :
     simp [mem_filter, hxA', hxB']
   have hpx_zero : p x = 0 := hA'B'_all_zero x hx_in_A'B'
   linarith
+
+/-! ## QM-side Hardy realisation
+
+A specific 2-qubit state and four observables (Pauli `Z` and `X` on each
+side) realising the four Hardy probabilities predicted by QM.
+
+**State** (unnormalised; the normalisation factor `1/√12` cancels in
+"= 0" vs "≠ 0" reasoning):
+```
+|ψ⟩ ∝ |00⟩ + |01⟩ + |10⟩ - 3|11⟩
+```
+
+**Observables**: `A = B = Z` (computational basis, `+1` eigenstate `|0⟩`);
+`A' = B' = X` (Hadamard basis, `+1` eigenstate `|+⟩ = |0⟩ + |1⟩`).
+
+**Four amplitude identities** (squared moduli are the Hardy probabilities):
+- `⟨0,0|ψ⟩ = 1` (proportional to `P(A=+1, B=+1) = 1/12 > 0`)
+- `⟨0,−|ψ⟩ = 0` (`P(A=+1, B'=-1) = 0`)
+- `⟨−,0|ψ⟩ = 0` (`P(A'=-1, B=+1) = 0`)
+- `⟨+,+|ψ⟩ = 0` (`P(A'=+1, B'=+1) = 0`)
+
+The fourth (load-bearing) identity reduces to the integer sum
+`1 + 1 + 1 + (−3) = 0`. This is why the |11⟩-amplitude `δ = −3` is
+load-bearing: the general Hardy algebraic condition
+`α(α² + β² + γ²) + βγδ = 0` (derived from setting `⟨+,+|ψ⟩ = 0`)
+becomes `3 + δ = 0` with `α = β = γ = 1`.
+
+The construction here is not Hardy's maximum (≈ 9% from the golden-ratio
+state); the integer-amplitude variant gives Hardy probability `1/12 ≈
+8.3%`. The choice is for cleanest Lean algebra — no square-root
+manipulation, all amplitudes ℤ.
+
+Together with `no_lhv_hardy`, this closes the Hardy story: QM realises
+the four constraints; no LHV distribution can.
+-/
+
+namespace HardyQM
+
+open Finset
+
+/-- The (unnormalised) Hardy state:
+`|ψ⟩ = |00⟩ + |01⟩ + |10⟩ − 3|11⟩`. -/
+def hardyVec : Fin 2 × Fin 2 → ℂ
+  | (⟨0, _⟩, ⟨0, _⟩) => 1
+  | (⟨0, _⟩, ⟨1, _⟩) => 1
+  | (⟨1, _⟩, ⟨0, _⟩) => 1
+  | (⟨1, _⟩, ⟨1, _⟩) => -3
+
+/-- `|0⟩`: the `+1` eigenstate of `Z`. -/
+def zPlus : Fin 2 → ℂ := ![1, 0]
+
+/-- `|+⟩ = |0⟩ + |1⟩` (unnormalised): the `+1` eigenstate of `X`. -/
+def xPlus : Fin 2 → ℂ := ![1, 1]
+
+/-- `|−⟩ = −|0⟩ + |1⟩` (unnormalised): the `−1` eigenstate of `X`. -/
+def xMinus : Fin 2 → ℂ := ![-1, 1]
+
+/-- Joint amplitude `⟨a ⊗ b | ψ⟩` for `ψ : Fin 2 × Fin 2 → ℂ` and
+single-qubit bras `a, b : Fin 2 → ℂ`. -/
+def jointAmplitude (a b : Fin 2 → ℂ) (ψ : Fin 2 × Fin 2 → ℂ) : ℂ :=
+  ∑ p : Fin 2 × Fin 2, star (a p.1) * star (b p.2) * ψ p
+
+/-- **Hardy amplitude 1**: `⟨0, 0 | ψ⟩ = 1` (proportional to the
+positive Hardy probability `P(A=+1, B=+1) = 1/12`). -/
+theorem hardyAmp_AB : jointAmplitude zPlus zPlus hardyVec = 1 := by
+  simp [jointAmplitude, Fintype.sum_prod_type, Fin.sum_univ_two,
+        zPlus, hardyVec]
+
+/-- **Hardy amplitude 2**: `⟨0, − | ψ⟩ = 0` (`P(A=+1, B'=-1) = 0`).
+
+The only contributing terms have `i = 0` (since `zPlus 1 = 0`):
+`star(−1)·ψ(0,0) + star(1)·ψ(0,1) = −1·1 + 1·1 = 0`. -/
+theorem hardyAmp_A_B'minus :
+    jointAmplitude zPlus xMinus hardyVec = 0 := by
+  simp [jointAmplitude, Fintype.sum_prod_type, Fin.sum_univ_two,
+        zPlus, xMinus, hardyVec]
+
+/-- **Hardy amplitude 3**: `⟨−, 0 | ψ⟩ = 0` (`P(A'=-1, B=+1) = 0`).
+
+Symmetric to the previous: only `j = 0` contributes,
+`star(−1)·ψ(0,0) + star(1)·ψ(1,0) = −1·1 + 1·1 = 0`. -/
+theorem hardyAmp_A'minus_B :
+    jointAmplitude xMinus zPlus hardyVec = 0 := by
+  simp [jointAmplitude, Fintype.sum_prod_type, Fin.sum_univ_two,
+        zPlus, xMinus, hardyVec]
+
+/-- **Hardy amplitude 4** (load-bearing): `⟨+, + | ψ⟩ = 0`
+(`P(A'=+1, B'=+1) = 0`).
+
+All four `ψ` terms contribute: `1 + 1 + 1 + (−3) = 0`. This is the
+specific reason `δ = −3` is the |11⟩-amplitude. -/
+theorem hardyAmp_A'_B' :
+    jointAmplitude xPlus xPlus hardyVec = 0 := by
+  simp [jointAmplitude, Fintype.sum_prod_type, Fin.sum_univ_two,
+        xPlus, hardyVec]
+  ring
+
+/-- **QM realises the Hardy constraints.** A specific 2-qubit state
+and four observables exhibit the four Hardy probability identities,
+demonstrating that the LHV-impossibility theorem `no_lhv_hardy` has
+empirical content (QM violates LHV on this Hardy instance). -/
+theorem exists_hardy_realisation :
+    ∃ (ψ : Fin 2 × Fin 2 → ℂ) (a aPrime b bPrime aPrime_perp bPrime_perp : Fin 2 → ℂ),
+      jointAmplitude a b ψ ≠ 0 ∧
+      jointAmplitude a bPrime_perp ψ = 0 ∧
+      jointAmplitude aPrime_perp b ψ = 0 ∧
+      jointAmplitude aPrime bPrime ψ = 0 :=
+  ⟨hardyVec, zPlus, xPlus, zPlus, xPlus, xMinus, xMinus,
+   by rw [hardyAmp_AB]; norm_num,
+   hardyAmp_A_B'minus,
+   hardyAmp_A'minus_B,
+   hardyAmp_A'_B'⟩
+
+end HardyQM
 
 end Hardy
 end Empirical

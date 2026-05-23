@@ -305,6 +305,11 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Empirical.MerminPeres.mermin_peres_C1` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.MerminPeres.mermin_peres_C2` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.no_lhv_hardy` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQM.hardyAmp_AB` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQM.hardyAmp_A_B'minus` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQM.hardyAmp_A'minus_B` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQM.hardyAmp_A'_B'` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQM.exists_hardy_realisation` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
