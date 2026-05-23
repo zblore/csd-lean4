@@ -318,6 +318,12 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A'minus_B` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A'_B'` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.HardyQMMax.exists_hardy_realisation_max` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.SternGerlach.born_zPlus_zPlus` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.SternGerlach.born_zMinus_zPlus` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.SternGerlach.born_xPlus_zPlus` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.SternGerlach.born_xMinus_zPlus` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.SternGerlach.born_z_basis_complete` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.SternGerlach.born_x_basis_complete` | `propext, Classical.choice, Quot.sound` |
 
 Run `#print axioms <theorem-name>` in any Lean session to verify directly.
 
