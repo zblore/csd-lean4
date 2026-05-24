@@ -362,8 +362,8 @@ theorem cabello_pairwise_orthogonal_in_basis :
     (fin_cases hi <;> fin_cases hj <;>
       first
         | exact absurd rfl hij
-        | (simp only [cabelloVec, PiLp.inner_apply, RCLike.inner_apply,
-                     Fin.sum_univ_four, PiLp.toLp_apply,
+        | (simp only [cabelloVec, PiLp.inner_apply,
+                     Fin.sum_univ_four,
                      cabelloMat_row_0, cabelloMat_row_1, cabelloMat_row_2,
                      cabelloMat_row_3, cabelloMat_row_4, cabelloMat_row_5,
                      cabelloMat_row_6, cabelloMat_row_7, cabelloMat_row_8,

@@ -43,8 +43,7 @@ noncomputable def qmCNOT : Matrix (Fin 4) (Fin 4) ℂ :=
 theorem qmCNOT_mul_self : qmCNOT * qmCNOT = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [qmCNOT, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply,
-          Matrix.one_apply]
+    simp [qmCNOT, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
 
 /-- SWAP gate on `Fin 4`. -/
 noncomputable def qmSWAP : Matrix (Fin 4) (Fin 4) ℂ :=
@@ -60,8 +59,7 @@ noncomputable def qmSWAP : Matrix (Fin 4) (Fin 4) ℂ :=
 theorem qmSWAP_mul_self : qmSWAP * qmSWAP = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [qmSWAP, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply,
-          Matrix.one_apply]
+    simp [qmSWAP, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
 
 /-- Controlled-Z gate: phase-flip on `|11⟩`. -/
 noncomputable def qmCZ : Matrix (Fin 4) (Fin 4) ℂ :=
@@ -77,8 +75,7 @@ noncomputable def qmCZ : Matrix (Fin 4) (Fin 4) ℂ :=
 theorem qmCZ_mul_self : qmCZ * qmCZ = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [qmCZ, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply,
-          Matrix.one_apply]
+    simp [qmCZ, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
 
 end Gates
 end QM

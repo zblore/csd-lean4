@@ -44,8 +44,7 @@ set_option maxHeartbeats 1000000 in
 theorem qmToffoli_mul_self : qmToffoli * qmToffoli = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [qmToffoli, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply,
-          Matrix.one_apply]
+    simp [qmToffoli, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
 
 /-- Fredkin (CSWAP) gate on `Fin 8`. Permutes `|101⟩` ↔ `|110⟩`,
 acts as identity elsewhere. -/
@@ -63,8 +62,7 @@ set_option maxHeartbeats 1000000 in
 theorem qmFredkin_mul_self : qmFredkin * qmFredkin = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [qmFredkin, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply,
-          Matrix.one_apply]
+    simp [qmFredkin, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.of_apply]
 
 end Gates
 end QM

@@ -62,7 +62,7 @@ theorem qmH_mul_self : qmH * qmH = 1 := by
     norm_num]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+    simp <;> ring
 
 /-! ## Phase S -/
 
