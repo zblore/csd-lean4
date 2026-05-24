@@ -8,6 +8,7 @@ import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
+import CsdLean4.Empirical.QM.NoDeleting
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.QM.Contextuality.MerminPeres
@@ -248,6 +249,12 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.NoCloning.no_universal_cloner_of_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.NoCloning.no_universal_cloner_of_witness
+
+/-- info: 'CSD.Empirical.NoDeleting.no_deleting_two_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.NoDeleting.no_deleting_two_state
+
+/-- info: 'CSD.Empirical.NoDeleting.no_universal_deleter_of_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.NoDeleting.no_universal_deleter_of_witness
 
 /-! ### Empirical predictions (GHZ paradox, Phase D6 / Mermin all-or-nothing) -/
 

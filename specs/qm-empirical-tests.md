@@ -290,6 +290,82 @@ The goal here is *not* to reproduce textbook QM derivations but to express the a
 
 Each of these will likely become its own paper-and-Lean track. Listed here so the LF4 infrastructure choices don't accidentally close off the natural multi-qubit + circuit-model extensions.
 
+## 3bis. Phase E — quantum information & cryptography
+
+The original plan stopped at Bell, single-experiment Born, paradoxes,
+and algorithms. This section adds the quantum-information-resource and
+cryptography track. **Most of it composes theorems already in the
+corpus** rather than requiring new infrastructure: no-cloning
+(`no_cloning_two_state`) is the security root of the prepare-and-measure
+(BB84) family, and CHSH at the Tsirelson bound (`chsh_qm_tsirelson_bound`)
+is the security root of the device-independent (E91) family.
+
+### 3bis.1 No-go cluster (`Empirical/QM/`)
+
+These are the impossibility theorems. They are QM-generic (Cat-3,
+promotion-ready to Cat-2) and stated in the same abstract-tensor /
+inner-product style as `NoCloning.lean`.
+
+| # | Theorem | Statement | Status | Source |
+|---|---|---|---|---|
+| E1 | No-deleting (two-state) | isometry `ψ⊗ψ ↦ ψ⊗e0` for two states forces `⟨ψ,φ⟩ ∈ {0,1}` | **DONE 2026-05-24** (`Empirical/QM/NoDeleting.lean`: `no_deleting_two_state`, `no_universal_deleter_of_witness`) | Pati-Braunstein 2000, *Nature* **404**, 164 |
+| E2 | No-broadcasting | mixed-state generalisation of no-cloning; needs LF2 `DensityOperator` | READY (first use of `DensityOperator` outside Born) | Barnum et al. 1996 |
+| E3 | No-communication (operational) | local operation on one half of an entangled state leaves the remote reduced state invariant; needs partial trace on the tensor factor | READY | Standard; stronger than the statistical Bell-marginal no-signalling already proved (`no_signalling_alice/bob`) |
+
+**CSD-specific angle (load-bearing, not packaging).** The no-go cluster
+is the sharpest test of CSD's ontic claim. An ontic theory naively
+looks like it should permit cloning — just copy the microstate. CSD
+must explain why copying a sampled microstate does not clone the
+quantum state; the answer is structural: the quantum state is a
+volume/measure on Σ, not a microstate, so no microstate-copy reproduces
+the measure. Each no-go bundle is where a real Σ-side field (`flow`,
+`π`-equivariance, measure-preservation) would first earn its keep
+instead of living in docstring prose (cf. `PLACEHOLDERS.md §7`
+schema-mismatch bundles).
+
+### 3bis.2 Entanglement-as-resource (`Empirical/QM/Resources/`)
+
+| # | Theorem | Statement | Status | Source |
+|---|---|---|---|---|
+| E4 | Superdense coding | the four local-Pauli images of `|Φ⁺⟩` are the four Bell states (2 classical bits via 1 qubit + shared entanglement) | READY (reuses `Empirical/QM/Gates/BellPrep.lean` Bell states + Pauli⊗I) | Bennett-Wiesner 1992 |
+| E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | READY (3-qubit tensor; GHZ already exercised `Fin 2 × Fin 2 × Fin 2`) | Bennett et al. 1993 |
+| E6 | Robertson uncertainty | `⟨ΔA⟩⟨ΔB⟩ ≥ ½|⟨[A,B]⟩|` | READY (QM-generic; operator inequality + Cauchy-Schwarz) | Robertson 1929 |
+
+### 3bis.3 Cryptography (`Empirical/QM/Crypto/`)
+
+| # | Item | Statement | Status | Source |
+|---|---|---|---|---|
+| E7 | E91 security witness | CHSH > 2 ⟹ no LHV ⟹ eavesdropper detectable | READY (composition of A1–A6 + no-signalling; near-free) | Ekert 1991 |
+| E8 | Quantum money unforgeability | forgery ⟹ cloning, contradiction | READY (composes `no_cloning_two_state`) | Wiesner 1983 |
+| E9 | BB84 / B92 protocols | basis-choice / encode / measure / sift structures; security reduction to no-cloning + measurement disturbance | **structure-now** (the disturbance half needs the LF5 measurement-update notion; scaffold the type, carry the security theorem as the obligation) | Bennett-Brassard 1984 |
+
+### 3bis.4 INFRA-blocked (new mathematics)
+
+- **Holevo bound, Schumacher compression** — need von Neumann entropy
+  of density operators (concavity, subadditivity). Check Mathlib
+  matrix-entropy coverage first.
+- **Schmidt decomposition, purification** — need SVD / spectral theorem
+  on the bipartite split; purification is the more tractable.
+- **Strong subadditivity (Lieb-Ruskai), monogamy (CKW)** — far out.
+- **No-bit-commitment (Mayers-Lo-Chau)** — needs purification + fidelity
+  machinery.
+
+**Note on the second axiom.** Gleason's theorem is itself a QI result.
+The Busch–Gleason statement axiomatised in LF2 (`busch_effect_gleason`)
+would have its concrete-content thread here: a finite-dimensional
+Gleason/Busch formalisation is the analogue, for the *second* LF2 axiom,
+of the projectivization thread that produced
+`invariant_measure_uniqueness_cpn` for the first. Heavy; INFRA-blocked.
+
+### 3bis.5 Execution order for Phase E
+
+1. **No-deleting (E1)** — DONE; cheapest, mirrors no-cloning.
+2. **Superdense coding (E4)** — Bell-state Pauli identity, low cost.
+3. **No-broadcasting (E2)** — first `DensityOperator` consumer.
+4. **E91 witness (E7) + quantum money (E8)** — pure composition.
+5. **No-communication (E3), Robertson (E6), teleportation (E5).**
+6. **Pause for LF5** on BB84/B92 security (measurement update).
+
 ## 4. Recommended execution order
 
 1. **Spec doc landed (this file).**
