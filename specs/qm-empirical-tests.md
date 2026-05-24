@@ -329,7 +329,7 @@ schema-mismatch bundles).
 |---|---|---|---|---|
 | E4 | Superdense coding | the four local-Pauli images of `|Φ⁺⟩` are the four Bell states (2 classical bits via 1 qubit + shared entanglement) | **DONE 2026-05-24** (`Empirical/QM/Resources/SuperdenseCoding.lean`: `encode_I/X/Z/XZ` image identities + `bell_basis_orthonormal`) | Bennett-Wiesner 1992 |
 | E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | READY (3-qubit tensor; GHZ already exercised `Fin 2 × Fin 2 × Fin 2`) | Bennett et al. 1993 |
-| E6 | Robertson uncertainty | `⟨ΔA⟩⟨ΔB⟩ ≥ ½|⟨[A,B]⟩|` | READY (QM-generic; operator inequality + Cauchy-Schwarz) | Robertson 1929 |
+| E6 | Robertson uncertainty | `Var(A)·Var(B) ≥ ¼|⟨[A,B]⟩|²` | **DONE 2026-05-24** (`Empirical/QM/Uncertainty.lean`: `robertson_uncertainty`, over `Module.End ℂ H` with `IsSymmetric`; `robertson_core` is the Cauchy-Schwarz heart) | Robertson 1929 |
 
 ### 3bis.3 Cryptography (`Empirical/QM/Crypto/`)
 
@@ -364,7 +364,7 @@ of the projectivization thread that produced
 3. **Quantum money (E8)** — DONE; composes no-cloning with a concrete Wiesner witness.
 4. **No-broadcasting (E2), no-communication (E3)** — need a partial-trace infra build first (not in Mathlib); promote to an infra tranche.
 5. **E91 witness (E7)** — needs an LHV-model build (the `≤ 2` bound is un-formalised); LHV tranche, not a composition.
-6. **Robertson (E6), teleportation (E5).**
+6. **Robertson (E6)** — DONE; QM-generic operator inequality. Teleportation (E5) remains.
 6. **Pause for LF5** on BB84/B92 security (measurement update).
 
 ## 4. Recommended execution order
