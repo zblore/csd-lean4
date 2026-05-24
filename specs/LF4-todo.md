@@ -175,9 +175,26 @@ All three exports are foundational-axiom-only; `#guard_msgs` regressions in Axio
 
 ## 8. Concrete SigmaSpace / P / G instantiation
 
-**Status:** LF2's `SectorData` is abstract in `(SigmaSpace, P, G)`. LF4 will want a concrete realisation.
+**Status:** **Structural part DONE 2026-05-24** (`CsdLean4/LF4/Instance.lean`).
+`CSD.LF4.cpSectorData` is the first concrete `SectorData` (`Σ = P = ℂℙ^{N-1}`,
+`G = U(N)`, `π = id`, `μL = fubiniStudyMeasure`), proving LF2's abstract
+framework is **inhabited** (it never had been). `cp_measure_bridge` holds
+**axiom-free** for the instance (foundational triple only; the abstract
+`measure_bridge` carries `invariant_measure_uniqueness`). Both AxiomAudit-pinned.
 
-**Pickup:**
+**Honest scope of the base case.** `π = id` ⇒ trivial (point) fibres, bridge
+constant `c = 1`. It does *not* reproduce any Born prediction. Two pieces
+remain:
+
+- **Non-trivial fibres (next):** `Σ := ℂℙ^{N-1} × ℂℙ^{N-1}`, diagonal `U(N)`,
+  `π := pr₁`. Genuine unresolved ontic DOF; the bridge `π∗μL = c·μFS` becomes
+  a real statement discharged via `invariant_measure_uniqueness_cpn`. All
+  instances exist via `Prod`.
+- **De-isolation → Born (the hard, separate piece):** Sigma0 §5/§9.5. This is
+  what turns volume ratios into Born weights and is *not* unblocked by the
+  shell; the shell is only the scaffold it attaches to.
+
+**Original pickup notes (for the deeper realisation):**
 1. In LF4, take `SigmaSpace := ` a specific phase space (or continue abstract).
 2. `P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))` with `[Fintype (Fin N)]`, `[DecidableEq (Fin N)]`.
 3. `G := Matrix.specialUnitaryGroup (Fin N) ℂ` (or `Matrix.unitaryGroup` for the full unitary case).

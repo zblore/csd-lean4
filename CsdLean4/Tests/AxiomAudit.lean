@@ -6,6 +6,7 @@ import CsdLean4.LF3.Interface
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
+import CsdLean4.LF4.Instance
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -701,5 +702,20 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn
+
+/-! ### LF4 §8 ontic-shell instantiation
+
+The first concrete `SectorData` instance and its axiom-free measure bridge.
+Both cite only the foundational triple — in particular `cp_measure_bridge`
+does **not** carry `invariant_measure_uniqueness` (cf. the abstract
+`measure_bridge`, which does). -/
+
+/-- info: 'CSD.LF4.cpSectorData' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cpSectorData
+
+/-- info: 'CSD.LF4.cp_measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cp_measure_bridge
 
 end CSD.Tests.AxiomAudit
