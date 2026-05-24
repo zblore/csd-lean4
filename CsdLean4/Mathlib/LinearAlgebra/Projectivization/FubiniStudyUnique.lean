@@ -251,4 +251,82 @@ theorem fubiniStudyMeasure_unique
     _ = fubiniStudyMeasure p₀ B := by
             rw [MeasureTheory.lintegral_const, h_mu_univ, mul_one]
 
+/-! ## Phase G5 — invariant finite measures are scalar multiples of Fubini–Study
+
+`fubiniStudyMeasure_unique` pins every *probability* measure invariant under
+the unitary action to `fubiniStudyMeasure p₀`. The two corollaries below
+extend that to arbitrary **finite** invariant measures (normalising by the
+total mass) and re-express the result in the `∃ c, μ = c • μFS` shape carried
+by the LF2 spec axiom `CSD.LF2.invariant_measure_uniqueness`.
+
+This is the **concrete realisation** of that axiom's content for the
+`ℂℙ^{N-1}` / `U(N)` instantiation. The abstract axiom (stated over an
+arbitrary pretransitive `(P, G)` with no topology, hence deliberately
+stronger than any provable theorem) is *not* discharged by these lemmas;
+rather, when LF4 instantiates `SectorData` with
+`P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ`,
+and `μFS := fubiniStudyMeasure p₀`, the concrete `measure_bridge` can route
+through `invariant_measure_uniqueness_cpn` and cite no axiom. The
+mathematical core is proved here; the count drop is the mechanical wiring at
+the LF4 instantiation site. -/
+
+/-- **Phase G5.** Any finite measure on `ℂℙ^{N-1}` invariant under the unitary
+action is a scalar multiple of the Fubini–Study measure at any reference
+point. The scalar is the total mass `μ Set.univ`.
+
+Proof: if the total mass is zero the measure is zero; otherwise normalise by
+the total mass to obtain an invariant *probability* measure, pin it to
+`fubiniStudyMeasure p₀` via `fubiniStudyMeasure_unique`, and scale back. -/
+theorem invariant_finiteMeasure_eq_smul_fubiniStudy
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
+    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    [MeasureTheory.IsFiniteMeasure μ]
+    (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+        MeasureTheory.MeasurePreserving (fun p => U • p) μ μ) :
+    ∃ c : ENNReal, μ = c • fubiniStudyMeasure p₀ := by
+  rcases eq_or_ne (μ Set.univ) 0 with h0 | h0
+  · exact ⟨0, by rw [zero_smul]; exact MeasureTheory.Measure.measure_univ_eq_zero.mp h0⟩
+  · have htop : μ Set.univ ≠ ⊤ := MeasureTheory.measure_ne_top μ Set.univ
+    -- The mass-normalised measure is a probability measure.
+    haveI hprob : MeasureTheory.IsProbabilityMeasure ((μ Set.univ)⁻¹ • μ) := by
+      refine ⟨?_⟩
+      rw [MeasureTheory.Measure.smul_apply, smul_eq_mul]
+      exact ENNReal.inv_mul_cancel h0 htop
+    -- Scaling preserves invariance, so the normalised measure is invariant.
+    have hinv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+        MeasureTheory.Measure.map (fun p => U • p) ((μ Set.univ)⁻¹ • μ)
+          = (μ Set.univ)⁻¹ • μ := by
+      intro U
+      rw [MeasureTheory.Measure.map_smul, (hμ_inv U).map_eq]
+    -- Uniqueness pins the normalised measure to Fubini–Study.
+    have heq : ((μ Set.univ)⁻¹ • μ) = fubiniStudyMeasure p₀ :=
+      fubiniStudyMeasure_unique p₀ ((μ Set.univ)⁻¹ • μ) hinv
+    refine ⟨μ Set.univ, ?_⟩
+    rw [← heq, smul_smul, ENNReal.mul_inv_cancel h0 htop, one_smul]
+
+/-- **Phase G5 — concrete realisation of `CSD.LF2.invariant_measure_uniqueness`.**
+For the `ℂℙ^{N-1}` / `U(N)` instantiation, any unitary-invariant probability
+measure `μFS` and any unitary-invariant finite measure `μ` satisfy
+`∃ c, μ = c • μFS`. This matches the LF2 spec axiom's conclusion shape (with
+the reference point `p₀` made explicit), and is proved — no axiom — from
+`fubiniStudyMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy`.
+
+`μFS` is pinned to `fubiniStudyMeasure p₀` by uniqueness; `μ` is a scalar
+multiple of the same; composing gives `μ = c • μFS`. -/
+theorem invariant_measure_uniqueness_cpn
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
+    (μFS : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    [MeasureTheory.IsProbabilityMeasure μFS]
+    (hμFS_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+        MeasureTheory.MeasurePreserving (fun p => U • p) μFS μFS)
+    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    [MeasureTheory.IsFiniteMeasure μ]
+    (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+        MeasureTheory.MeasurePreserving (fun p => U • p) μ μ) :
+    ∃ c : ENNReal, μ = c • μFS := by
+  have hFS : μFS = fubiniStudyMeasure p₀ :=
+    fubiniStudyMeasure_unique p₀ μFS (fun U => (hμFS_inv U).map_eq)
+  obtain ⟨c, hc⟩ := invariant_finiteMeasure_eq_smul_fubiniStudy p₀ μ hμ_inv
+  exact ⟨c, by rw [hc, hFS]⟩
+
 end Matrix.UnitaryGroup

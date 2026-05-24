@@ -38,7 +38,11 @@ entry has been retired.
 
 **Mathlib status.** Not currently in Mathlib at the abstract-measurable-space level required. The concrete `SU(N)`-on-`CP^{N-1}` instance is Haar-measure-on-compact-homogeneous-space material; Mathlib has Haar measure on topological groups but the quotient construction is not yet packaged at the required level.
 
-**Discharge target.** When the corresponding Mathlib infrastructure lands, swap `axiom` for `theorem`-via-import. The current signature carries transitivity explicitly so that the eventual replacement theorem has matching hypotheses; concrete LF4 instantiation supplies `epAction_transitive` from the `SU(N)`-on-`CP^{N-1}` model.
+**Concrete realisation PROVED (2026-05-24).** The axiom's *content* for the `CP^{N-1}` / `U(N)` instantiation is now a proved, axiom-free theorem in the Mathlib-side projectivization tree: `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`) reproduces the axiom's `∃ c, μ = c • μFS` conclusion for `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ` (with the reference point made explicit), built from `fubiniStudyMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy` (the finite-measure normalisation step). Both cite only the foundational triple; AxiomAudit-pinned.
+
+This does **not** discharge the abstract axiom: as stated over an arbitrary pretransitive `(P, G)` with no topology, the axiom is deliberately stronger than any provable theorem (it omits the compactness/regularity hypotheses the classical result needs — see the declaration docstring), so the concrete theorem cannot prove it. What changed is that the mathematical core is no longer an open problem; only the wiring remains.
+
+**Discharge target.** When LF4 instantiates `SectorData` with `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := U(N)`, `μFS := fubiniStudyMeasure p₀`, the concrete `measure_bridge` routes through `invariant_measure_uniqueness_cpn` instead of the axiom, and the LF2 axiom count drops from two to one at that instantiation site. The current abstract signature carries transitivity explicitly so the concrete instantiation supplies `epAction_transitive` from the `SU(N)`-on-`CP^{N-1}` model with matching hypotheses.
 
 ### 2.2 `busch_effect_gleason`
 

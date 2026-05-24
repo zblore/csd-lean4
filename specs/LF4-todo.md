@@ -137,12 +137,13 @@ under our context. The PSD inner-product route above bypasses the issue.
 
 **Why deferred:** Each is a Mathlib-scale contribution.
 
-- `invariant_measure_uniqueness` — Haar measure on compact homogeneous spaces (`SU(N)/U(N-1) ≅ CP^{N-1}`). Mathlib has Haar on topological groups; the quotient/homogeneous-space case requires more work. Months of Mathlib contribution.
+- `invariant_measure_uniqueness` — Haar measure on compact homogeneous spaces (`SU(N)/U(N-1) ≅ CP^{N-1}`). Mathlib has Haar on topological groups; the quotient/homogeneous-space case requires more work. **Concrete realisation PROVED 2026-05-24**: the `CP^{N-1}` / `U(N)` content of this axiom is now an axiom-free theorem, `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`), built on the §12 projectivization API + `fubiniStudyMeasure_unique` (Phase G4) + `invariant_finiteMeasure_eq_smul_fubiniStudy` (Phase G5, finite-measure normalisation). The abstract axiom is **not** discharged (it is stated over an arbitrary pretransitive `(P, G)` with no topology, so is strictly stronger than provable); the remaining work is the §8 instantiation that lets LF2's `measure_bridge` route through the concrete theorem. See `AXIOMS.md §2.1`.
 
-- `busch_effect_gleason` — effect-algebra infrastructure (not currently in Mathlib), plus Busch 2003's proof. Larger task; full effect-algebra / POVM machinery is an open Mathlib gap.
+- `busch_effect_gleason` — effect-algebra infrastructure (not currently in Mathlib), plus Busch 2003's proof. Larger task; full effect-algebra / POVM machinery is an open Mathlib gap. No concrete-realisation thread yet (cf. the projectivization thread for the other axiom; the analogous target here is a finite-dimensional Gleason/Busch formalisation).
 
 **Pickup:**
-- Both remain axioms until Mathlib integration makes them theorems. When one lands, swap `axiom` for `theorem`-via-import in LF2. Signatures are already in the right shape — no downstream changes needed.
+- `invariant_measure_uniqueness`: the math core is done. The count drop (two axioms → one) happens at §8 instantiation — set `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := U(N)`, `μFS := fubiniStudyMeasure p₀`, and add a concrete `measure_bridge` citing `invariant_measure_uniqueness_cpn` rather than the axiom. Signatures are already shape-compatible.
+- `busch_effect_gleason`: remains an axiom until Mathlib integration. When it lands, swap `axiom` for `theorem`-via-import in LF2.
 
 ---
 

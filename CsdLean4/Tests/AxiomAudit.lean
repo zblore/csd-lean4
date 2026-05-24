@@ -645,4 +645,15 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_unique
 
+-- `whitespace := lax` because the long theorem names push the axiom list
+-- past the pretty-printer width, wrapping it across lines; lax collapses
+-- the wrap so a single-line docstring matches.
+/-- info: 'Matrix.UnitaryGroup.invariant_finiteMeasure_eq_smul_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.UnitaryGroup.invariant_finiteMeasure_eq_smul_fubiniStudy
+
+/-- info: 'Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn
+
 end CSD.Tests.AxiomAudit

@@ -30,10 +30,17 @@ unitary group on the projective space of Euclidean space.
 
 ## What this unlocks
 
-These instances are the substrate for the eventual SU(N)-invariant Borel
-probability measure on `ℂℙ^{N-1}` and the associated uniqueness theorem,
-which together discharge the `invariant_measure_uniqueness` axiom carried
-by LF2.
+These instances are the substrate for the SU(N)-invariant Borel
+probability measure on `ℂℙ^{N-1}` (`fubiniStudyMeasure`) and the associated
+uniqueness theorem (`fubiniStudyMeasure_unique`). Together with the
+finite-measure normalisation `invariant_measure_uniqueness_cpn`
+(`FubiniStudyUnique.lean`), they provide the proved concrete realisation of
+the `invariant_measure_uniqueness` axiom carried by LF2 — for the
+`ℂℙ^{N-1}` / `U(N)` instantiation. The abstract axiom itself remains (it is
+stated over an arbitrary pretransitive `(P, G)` with no topology, hence is
+not provable in that generality); LF4's concrete instantiation routes the
+`measure_bridge` through `invariant_measure_uniqueness_cpn` and so cites no
+axiom at that site.
 
 ## Provenance
 
