@@ -2,6 +2,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Real.Sqrt
 import Mathlib.Data.Complex.Basic
+import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Fintype.Prod
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -257,7 +258,7 @@ def xMinus : Fin 2 → ℂ := ![-1, 1]
 
 /-- Joint amplitude `⟨a ⊗ b | ψ⟩` for `ψ : Fin 2 × Fin 2 → ℂ` and
 single-qubit bras `a, b : Fin 2 → ℂ`. -/
-def jointAmplitude (a b : Fin 2 → ℂ) (ψ : Fin 2 × Fin 2 → ℂ) : ℂ :=
+noncomputable def jointAmplitude (a b : Fin 2 → ℂ) (ψ : Fin 2 × Fin 2 → ℂ) : ℂ :=
   ∑ p : Fin 2 × Fin 2, star (a p.1) * star (b p.2) * ψ p
 
 /-- **Hardy amplitude 1**: `⟨0, 0 | ψ⟩ = 1` (proportional to the
@@ -446,6 +447,58 @@ theorem exists_hardy_realisation_max :
    hardyMaxAmp_A_B'minus,
    hardyMaxAmp_A'minus_B,
    hardyMaxAmp_A'_B'⟩
+
+/-! ### Hardy maximum probability value
+
+The Hardy probability for the golden-ratio state evaluates to the
+closed-form maximum `(5√5 − 11)/2 ≈ 9.017%`. Three steps:
+
+1. `normSq_hardyMaxVec`: `‖ψ_max‖² = 5φ + 3` (uses `sqrtPhi_sq`, `phi_sq`).
+2. `hardyMax_value`: `1/(5φ + 3) = (5√5 − 11)/2` (rationalisation
+   identity, via `(5√5)² = 25·5 = 125` and `(5√5−11)(11+5√5) = 4`).
+3. `hardyMax_probability_eq`: combines via `hardyMaxAmp_AB`.
+-/
+
+/-- The squared norm of a 2-qubit state vector. -/
+noncomputable def normSq (ψ : Fin 2 × Fin 2 → ℂ) : ℝ := ∑ p, ‖ψ p‖ ^ 2
+
+/-- `‖ψ_max‖² = 5φ + 3`. Expands the four-term sum:
+`1 + (√φ)² + (√φ)² + (φ²)² = 1 + φ + φ + (3φ + 2) = 5φ + 3`. -/
+lemma normSq_hardyMaxVec : normSq hardyMaxVec = 5 * phi + 3 := by
+  have hsq : sqrtPhi ^ 2 = phi := sqrtPhi_sq
+  have hpsq : phi ^ 2 = phi + 1 := phi_sq
+  have hsqrtPhi_nn : 0 ≤ sqrtPhi := Real.sqrt_nonneg _
+  have hphisq_nn : 0 ≤ phi ^ 2 := sq_nonneg _
+  simp [normSq, hardyMaxVec, Fintype.sum_prod_type, Fin.sum_univ_two,
+        Complex.norm_real, abs_of_nonneg hsqrtPhi_nn]
+  nlinarith [hsq, hpsq]
+
+/-- The rationalisation identity `1 / (5φ + 3) = (5√5 − 11)/2`.
+
+The proof routes via the difference-of-squares
+`(5√5 − 11)(11 + 5√5) = 25·(√5)² − 121 = 125 − 121 = 4` and the
+substitution `5φ + 3 = (11 + 5√5)/2`. -/
+lemma hardyMax_value :
+    1 / (5 * phi + 3) = (5 * Real.sqrt 5 - 11) / 2 := by
+  have h5 : Real.sqrt 5 * Real.sqrt 5 = 5 :=
+    Real.mul_self_sqrt (by norm_num : (5 : ℝ) ≥ 0)
+  have hsqrt_nn : 0 ≤ Real.sqrt 5 := Real.sqrt_nonneg _
+  have hne : (5 * phi + 3 : ℝ) ≠ 0 := by
+    unfold phi; nlinarith
+  rw [div_eq_div_iff hne (by norm_num : (2 : ℝ) ≠ 0)]
+  unfold phi
+  nlinarith [h5, hsqrt_nn]
+
+/-- **Hardy's maximum probability value**: the QM joint probability
+`|⟨0, 0 | ψ_max⟩|² / ‖ψ_max‖²` for the golden-ratio Hardy state
+equals the closed-form maximum `(5√5 − 11)/2 ≈ 9.017%`. -/
+theorem hardyMax_probability_eq :
+    ‖HardyQM.jointAmplitude HardyQM.zPlus HardyQM.zPlus hardyMaxVec‖ ^ 2
+      / normSq hardyMaxVec = (5 * Real.sqrt 5 - 11) / 2 := by
+  rw [hardyMaxAmp_AB, normSq_hardyMaxVec]
+  rw [show (‖(1 : ℂ)‖ ^ 2 : ℝ) = 1 by simp]
+  rw [show ((1 : ℝ) / (5 * phi + 3) = (1 : ℝ) / (5 * phi + 3)) from rfl]
+  exact hardyMax_value
 
 end HardyQMMax
 

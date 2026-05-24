@@ -318,6 +318,9 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A'minus_B` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.HardyQMMax.hardyMaxAmp_A'_B'` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.Hardy.HardyQMMax.exists_hardy_realisation_max` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.normSq_hardyMaxVec` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.hardyMax_value` | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Hardy.HardyQMMax.hardyMax_probability_eq` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.SternGerlach.born_zPlus_zPlus` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.SternGerlach.born_zMinus_zPlus` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.SternGerlach.born_xPlus_zPlus` | `propext, Classical.choice, Quot.sound` |
