@@ -335,8 +335,8 @@ schema-mismatch bundles).
 
 | # | Item | Statement | Status | Source |
 |---|---|---|---|---|
-| E7 | E91 security witness | CHSH > 2 ⟹ no LHV ⟹ eavesdropper detectable | READY (composition of A1–A6 + no-signalling; near-free) | Ekert 1991 |
-| E8 | Quantum money unforgeability | forgery ⟹ cloning, contradiction | READY (composes `no_cloning_two_state`) | Wiesner 1983 |
+| E7 | E91 security witness | CHSH > 2 ⟹ no LHV ⟹ eavesdropper detectable | **NOT cheap (reclassified 2026-05-24)**: the LHV bound `|S| ≤ 2` is deliberately *un-formalised* in `Empirical/QM/Bell.lean` (`bellClassicalBoundValue` is a named constant `2`, not a theorem about local-hidden-variable models — see its docstring). A genuine "no LHV" witness needs an LHV factorisable-correlation model + the `≤ 2` proof, i.e. an infra build; writing it without that would be a thin repackage of `chsh_classical_bound_violated`. Deferred to an LHV-model tranche. | Ekert 1991 |
+| E8 | Quantum money unforgeability | forgery ⟹ cloning, contradiction | **DONE 2026-05-24** (`Empirical/QM/Crypto/QuantumMoney.lean`: `quantum_money_unforgeable` via `no_universal_cloner_of_witness`, with concrete Wiesner states `|0⟩,|+⟩` and the proved witness `wiesner_nonorthogonal : ⟨0|+⟩ = 1/√2 ∉ {0,1}`) | Wiesner 1983 |
 | E9 | BB84 / B92 protocols | basis-choice / encode / measure / sift structures; security reduction to no-cloning + measurement disturbance | **structure-now** (the disturbance half needs the LF5 measurement-update notion; scaffold the type, carry the security theorem as the obligation) | Bennett-Brassard 1984 |
 
 ### 3bis.4 INFRA-blocked (new mathematics)
@@ -361,9 +361,10 @@ of the projectivization thread that produced
 
 1. **No-deleting (E1)** — DONE; cheapest, mirrors no-cloning.
 2. **Superdense coding (E4)** — DONE; Bell-state Pauli identities + orthonormality.
-3. **No-broadcasting (E2)** — first `DensityOperator` consumer.
-4. **E91 witness (E7) + quantum money (E8)** — pure composition.
-5. **No-communication (E3), Robertson (E6), teleportation (E5).**
+3. **Quantum money (E8)** — DONE; composes no-cloning with a concrete Wiesner witness.
+4. **No-broadcasting (E2), no-communication (E3)** — need a partial-trace infra build first (not in Mathlib); promote to an infra tranche.
+5. **E91 witness (E7)** — needs an LHV-model build (the `≤ 2` bound is un-formalised); LHV tranche, not a composition.
+6. **Robertson (E6), teleportation (E5).**
 6. **Pause for LF5** on BB84/B92 security (measurement update).
 
 ## 4. Recommended execution order

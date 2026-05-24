@@ -10,6 +10,7 @@ import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
 import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
+import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.QM.Contextuality.MerminPeres
@@ -272,6 +273,18 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.SuperdenseCoding.bell_basis_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.SuperdenseCoding.bell_basis_orthonormal
+
+/-- info: 'CSD.Empirical.QuantumMoney.wiesner_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumMoney.wiesner_inner
+
+/-- info: 'CSD.Empirical.QuantumMoney.wiesner_nonorthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumMoney.wiesner_nonorthogonal
+
+/-- info: 'CSD.Empirical.QuantumMoney.quantum_money_unforgeable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumMoney.quantum_money_unforgeable
 
 /-! ### Empirical predictions (GHZ paradox, Phase D6 / Mermin all-or-nothing) -/
 
