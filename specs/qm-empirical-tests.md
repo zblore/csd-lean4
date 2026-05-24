@@ -327,7 +327,7 @@ schema-mismatch bundles).
 
 | # | Theorem | Statement | Status | Source |
 |---|---|---|---|---|
-| E4 | Superdense coding | the four local-Pauli images of `|Φ⁺⟩` are the four Bell states (2 classical bits via 1 qubit + shared entanglement) | READY (reuses `Empirical/QM/Gates/BellPrep.lean` Bell states + Pauli⊗I) | Bennett-Wiesner 1992 |
+| E4 | Superdense coding | the four local-Pauli images of `|Φ⁺⟩` are the four Bell states (2 classical bits via 1 qubit + shared entanglement) | **DONE 2026-05-24** (`Empirical/QM/Resources/SuperdenseCoding.lean`: `encode_I/X/Z/XZ` image identities + `bell_basis_orthonormal`) | Bennett-Wiesner 1992 |
 | E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | READY (3-qubit tensor; GHZ already exercised `Fin 2 × Fin 2 × Fin 2`) | Bennett et al. 1993 |
 | E6 | Robertson uncertainty | `⟨ΔA⟩⟨ΔB⟩ ≥ ½|⟨[A,B]⟩|` | READY (QM-generic; operator inequality + Cauchy-Schwarz) | Robertson 1929 |
 
@@ -360,7 +360,7 @@ of the projectivization thread that produced
 ### 3bis.5 Execution order for Phase E
 
 1. **No-deleting (E1)** — DONE; cheapest, mirrors no-cloning.
-2. **Superdense coding (E4)** — Bell-state Pauli identity, low cost.
+2. **Superdense coding (E4)** — DONE; Bell-state Pauli identities + orthonormality.
 3. **No-broadcasting (E2)** — first `DensityOperator` consumer.
 4. **E91 witness (E7) + quantum money (E8)** — pure composition.
 5. **No-communication (E3), Robertson (E6), teleportation (E5).**

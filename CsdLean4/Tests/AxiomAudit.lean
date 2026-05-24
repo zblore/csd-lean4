@@ -9,6 +9,7 @@ import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
+import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.QM.Contextuality.MerminPeres
@@ -255,6 +256,22 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.NoDeleting.no_universal_deleter_of_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.NoDeleting.no_universal_deleter_of_witness
+
+/-- info: 'CSD.Empirical.QM.SuperdenseCoding.encode_X' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.SuperdenseCoding.encode_X
+
+/-- info: 'CSD.Empirical.QM.SuperdenseCoding.encode_Z' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.SuperdenseCoding.encode_Z
+
+/-- info: 'CSD.Empirical.QM.SuperdenseCoding.encode_XZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.SuperdenseCoding.encode_XZ
+
+/-- info: 'CSD.Empirical.QM.SuperdenseCoding.encode_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.SuperdenseCoding.encode_I
+
+/-- info: 'CSD.Empirical.QM.SuperdenseCoding.bell_basis_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.SuperdenseCoding.bell_basis_orthonormal
 
 /-! ### Empirical predictions (GHZ paradox, Phase D6 / Mermin all-or-nothing) -/
 

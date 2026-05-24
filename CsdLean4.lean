@@ -42,6 +42,7 @@ import CsdLean4.LF3.Interface
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
+import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.QM.Contextuality.MerminPeres
