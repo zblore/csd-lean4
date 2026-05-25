@@ -7,6 +7,7 @@ import CsdLean4.LF3.Interface
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Singlet.JointProjector
+import CsdLean4.LF3.Singlet.JointEig
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.OnticBorn
@@ -186,6 +187,12 @@ info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner_joint' depends on ax
 -- ⟨ψ⁻ | Πˢ(a)⊗Πᵗ(b) | ψ⁻⟩ = P_st. Pure matrix algebra, foundational triple only.
 /-- info: 'CSD.LF3.singlet_jointSpinProj_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms singlet_jointSpinProj_expectation
+
+-- The Born identity for the GENUINE joint spin eigenstate (LF4-todo §3 discharged):
+-- ‖⟨ψ⁻, singletJointEig s t⟩‖² = P_st, with singletJointEig the actual normalised
+-- projection of the singlet onto the sector. Foundational triple only.
+/-- info: 'CSD.LF3.singletJointEig_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms singletJointEig_born
 
 /--
 info: 'CSD.LF3.PureSingletPreparation.weight_eq_P_st' depends on axioms: [propext,

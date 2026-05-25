@@ -36,6 +36,7 @@ import CsdLean4.LF3.Singlet.State
 import CsdLean4.LF3.Singlet.Expectations
 import CsdLean4.LF3.Singlet.Kernel
 import CsdLean4.LF3.Singlet.JointProjector
+import CsdLean4.LF3.Singlet.JointEig
 import CsdLean4.LF3.Singlet.Leakage
 import CsdLean4.LF3.ContextMap
 import CsdLean4.LF3.SingletProjective
