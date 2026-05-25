@@ -113,21 +113,26 @@ follow-ups); the pointer-sector frequencies are what the Alice/Bob
 joint outcome counts measure. -/
 theorem bell_singlet_frequency_convergence
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : CSD.LF3.MeasurementContext) {N : ℕ}
     (prep : CSD.LF3.PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+         (fun M : ℕ =>
+           (∑ i ∈ Finset.range M,
+               Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+             / (M : ℝ))
          atTop
          (nhds (CSD.LF3.P_st ctx.a ctx.b s t)) :=
-  CSD.LF3.LF3_singlet_frequency_convergence D T ctx prep hindep
+  CSD.LF3.LF3_singlet_frequency_convergence D ctx prep hX hlaw hindep
 
 /-- **Bell singlet frequency convergence (CSD Born form, closed-form
 amplitude).**
@@ -138,21 +143,26 @@ Identifies the pre-Born target `P_{st}(a, b)` with the Born form via
 `cst_squared_eq`. -/
 theorem bell_singlet_frequency_convergence_born
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : CSD.LF3.MeasurementContext) {N : ℕ}
     (prep : CSD.LF3.PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+         (fun M : ℕ =>
+           (∑ i ∈ Finset.range M,
+               Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+             / (M : ℝ))
          atTop
          (nhds (‖CSD.LF3.cAmp ctx.a ctx.b s t‖ ^ 2)) :=
-  CSD.LF3.LF3_singlet_frequency_convergence_born D T ctx prep hindep
+  CSD.LF3.LF3_singlet_frequency_convergence_born D ctx prep hX hlaw hindep
 
 /-- **Bell singlet frequency convergence (CSD Born form, bra-ket
 amplitude).**
@@ -165,83 +175,103 @@ eigenstate. Pairs with `Empirical/QM/Bell.lean`'s `chsh_qm_tsirelson_bound`
 same physical content via different mathematical phrasings. -/
 theorem bell_singlet_frequency_convergence_born_inner
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : CSD.LF3.MeasurementContext) {N : ℕ}
     (prep : CSD.LF3.PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+         (fun M : ℕ =>
+           (∑ i ∈ Finset.range M,
+               Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+             / (M : ℝ))
          atTop
          (nhds (‖inner ℂ prep.PP.ψ (prep.jed.eig s t)‖ ^ 2)) :=
-  CSD.LF3.LF3_singlet_frequency_convergence_born_inner D T ctx prep hindep
+  CSD.LF3.LF3_singlet_frequency_convergence_born_inner D ctx prep hX hlaw hindep
 
 /-! ### Joint partition variants -/
 
 /-- **Joint a.s. version of `bell_singlet_frequency_convergence`.** -/
 theorem bell_singlet_frequency_convergence_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : CSD.LF3.MeasurementContext) {N : ℕ}
     (prep : CSD.LF3.PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
        ∀ s t,
          Tendsto
-           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           (fun M : ℕ =>
+             (∑ i ∈ Finset.range M,
+                 Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+               / (M : ℝ))
            atTop
            (nhds (CSD.LF3.P_st ctx.a ctx.b s t)) :=
-  CSD.LF3.LF3_singlet_frequency_convergence_joint D T ctx prep hindep
+  CSD.LF3.LF3_singlet_frequency_convergence_joint D ctx prep hX hlaw hindep
 
 /-- **Joint a.s. version of `bell_singlet_frequency_convergence_born`.** -/
 theorem bell_singlet_frequency_convergence_born_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : CSD.LF3.MeasurementContext) {N : ℕ}
     (prep : CSD.LF3.PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
        ∀ s t,
          Tendsto
-           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           (fun M : ℕ =>
+             (∑ i ∈ Finset.range M,
+                 Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+               / (M : ℝ))
            atTop
            (nhds (‖CSD.LF3.cAmp ctx.a ctx.b s t‖ ^ 2)) :=
-  CSD.LF3.LF3_singlet_frequency_convergence_born_joint D T ctx prep hindep
+  CSD.LF3.LF3_singlet_frequency_convergence_born_joint D ctx prep hX hlaw hindep
 
 /-- **Joint a.s. version of `bell_singlet_frequency_convergence_born_inner`.** -/
 theorem bell_singlet_frequency_convergence_born_inner_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : CSD.LF3.MeasurementContext) {N : ℕ}
     (prep : CSD.LF3.PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
        ∀ s t,
          Tendsto
-           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           (fun M : ℕ =>
+             (∑ i ∈ Finset.range M,
+                 Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+               / (M : ℝ))
            atTop
            (nhds (‖inner ℂ prep.PP.ψ (prep.jed.eig s t)‖ ^ 2)) :=
-  CSD.LF3.LF3_singlet_frequency_convergence_born_inner_joint D T ctx prep hindep
+  CSD.LF3.LF3_singlet_frequency_convergence_born_inner_joint D ctx prep hX hlaw hindep
 
 end Bell
 end CSDBridge

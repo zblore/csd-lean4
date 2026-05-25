@@ -390,21 +390,26 @@ example
     [MulAction G SigmaSpace] [MulAction G P]
     [MulAction.IsPretransitive G P]
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
       Tendsto
-        (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+            / (M : ℝ))
         atTop
         (nhds (P_st ctx.a ctx.b s t)) :=
-  LF3_singlet_frequency_convergence D T ctx prep hindep
+  LF3_singlet_frequency_convergence D ctx prep hX hlaw hindep
 
 /-- **Smoke: Born-form chain capstone.** Same as above, landing on
     `‖cAmp s t (a, b)‖²` rather than `P_st`. -/
@@ -415,21 +420,26 @@ example
     [MulAction G SigmaSpace] [MulAction G P]
     [MulAction.IsPretransitive G P]
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => IndepFun f g T.trialMeasure)
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
       Tendsto
-        (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+            / (M : ℝ))
         atTop
         (nhds (‖cAmp ctx.a ctx.b s t‖ ^ 2)) :=
-  LF3_singlet_frequency_convergence_born D T ctx prep hindep
+  LF3_singlet_frequency_convergence_born D ctx prep hX hlaw hindep
 
 end LF3Chain
 

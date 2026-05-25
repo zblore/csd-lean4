@@ -254,8 +254,10 @@ SingletProjective.lean  — MeasurementJointEig (joint spin eigenstate
                           (rep-preimage projective region), measurability,
                           disjointness, OP_p_at_jointEig_eq_P_st
                           (Busch-mediated) + _direct variant (Phase 6)
-PurePreparation.lean    — PureSingletPreparation bundle (option (B) form):
-                          μFS + bridge + PP + jed + O_region + bridge_op_p
+PurePreparation.lean    — PureSingletPreparation bundle (option (B),
+                          posited-fibre-measure form 2026-05-25):
+                          μψ (posited fibre trial law) + μFS + bridge +
+                          PP (over μψ) + jed + O_region + bridge_op_p
                           (LF4 discharge target), weight_eq_P_st convenience
                           theorem (Phase 7)
 Interface.lean          — LF3_main_theorem (8-conjunct),
@@ -300,11 +302,18 @@ combinatorial framing realised at the Lean level.
   bundle whose load-bearing hypotheses are the option (B) split:
   `MeasurementJointEig.born_eq_P_st : ‖⟨ψ, eig s t⟩‖² = P_st` (the Born
   identity for the joint spin eigenstate, LF4-todo §3 discharge target)
-  and `PureSingletPreparation.bridge_op_p : prepMeasure(preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (eig s t)))`
+  and `PureSingletPreparation.bridge_op_p : μψ(preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (eig s t)))`
   (the ontic-weight ↔ OP.p bridge, LF4-todo §2 + §7 discharge target).
   The bundle's `weight_eq_P_st` theorem composes the two via
   `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6) which cites
-  `LF2.PurePreparation.born_rank_one` (which cites Busch).
+  `LF2.PurePreparation.born_rank_one` (which cites Busch). **The
+  preparation primitive is a posited fibre trial law `μψ`, not the ambient
+  `μL`-conditional `prepMeasure`** (posited-fibre-measure migration,
+  2026-05-25): under the continuous measure bridge `π∗μL = c·μFS` every
+  state's fibre is `μL`-null, so a `μL`-conditional pure preparation is
+  uninhabitable. The capstones take i.i.d. trials with common law `μψ` and
+  route through `LF1.freq_tendsto_of_iid` (not `LF1_main_theorem_ae`). See
+  `LF4-todo §8`.
 
 **LF3 is sorry-free.** All capstone exports and supporting lemmas are
 sorry-free. The chain capstones cite `propext, Classical.choice,

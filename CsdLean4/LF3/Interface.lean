@@ -12,6 +12,7 @@ import CsdLean4.LF3.ContextMap
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF1.MainTheorem
+import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 
@@ -45,19 +46,25 @@ theorem** separation:
 
 - **The `PureSingletPreparation D ctx N` bundle**
   (`LF3.PurePreparation`) carries the **load-bearing hypotheses**
-  needed by the empirical chain: the projective reference measure +
-  measure bridge, the static pure preparation `PP` (with Dirac
-  concentration), the joint spin eigenstate data `jed` (with the
-  Born identity hypothesis `‖⟨PP.ψ, eig s t⟩‖² = P_st`), and the
-  major hypothesis `bridge_op_p` (ontic outcome weight ↔ OP.p — the
-  LF4-todo §2 + §7 discharge target). The bundle's fields are *data*:
-  they encode what the caller must supply to apply the theorem.
+  needed by the empirical chain: the posited fibre trial law `μψ`, the
+  projective reference measure + measure bridge, the static pure
+  preparation `PP` over `μψ` (with Dirac concentration), the joint spin
+  eigenstate data `jed` (with the Born identity hypothesis
+  `‖⟨PP.ψ, eig s t⟩‖² = P_st`), and the major hypothesis `bridge_op_p`
+  (ontic outcome weight ↔ OP.p — the LF4-todo §2 + §7 discharge target).
+  The bundle's fields are *data*: they encode what the caller must
+  supply to apply the theorem.
 
 - **The chain capstone theorems** (`LF3_singlet_frequency_convergence`,
   `_born`, `_born_inner`, plus the `_joint` variants) are *theorem
-  compositions* on top of the bundle. Their proof bodies compose
-  the bundle's hypotheses with three external pieces:
-  + `LF1.MainTheorem.LF1_main_theorem_ae` — LF1 a.s. SLLN;
+  compositions* on top of the bundle. They take i.i.d. trials
+  `X : ℕ → Ω → Σ` with common law `μψ` (the posited fibre law) and
+  compose the bundle's hypotheses with three external pieces:
+  + `LF1.GeneralFrequency.freq_tendsto_of_iid` — the law-agnostic SLLN
+    frequency limit (axiom-free; the posited-fibre replacement for
+    `LF1_main_theorem_ae`, whose `μL`-conditional `prepMeasure` cannot
+    model a fibre-concentrated pure preparation under the measure
+    bridge);
   + `LF3.OP_p_at_jointEig_eq_P_st` — Busch-mediated rank-1 step
     (cites `busch_effect_gleason`);
   + `LF3.Singlet.Kernel.cst_squared_eq` — algebraic
@@ -72,7 +79,7 @@ following composition:
 
 - `Projectors.LF2Interface.sectorVolume_eq_LF2_Born` (LF3 → LF2 Born form)
 - `LF2.Interface.LF1_main_theorem_projective` (LF2 → LF1 frequency limit)
-- `LF1.MainTheorem.LF1_main_theorem_ae` (LF1 a.s. convergence)
+- `LF1.GeneralFrequency.freq_tendsto_of_iid` (fibre-law a.s. convergence)
 - `Singlet.Kernel.cst_squared_eq` (algebraic core, axiom-free)
 
 Pre-LF4, the proof bodies below consume the bundle's
@@ -194,19 +201,25 @@ LF3 pointer-sector weight P_st(a, b)
   = (via born_rank_one + jed.born_eq_P_st = OP_p_at_jointEig_eq_P_st)
   OP.p (rankOneEffect (jed.eig s t))
   = (via prep.bridge_op_p, the LF4 discharge target)
-  prepMeasure((prep.O_region s t).preEvent)
-  = (via LF1.MainTheorem.LF1_main_theorem_ae)
-  LF1 trial-frequency limit lim n→∞ (1/n) ∑ 𝟙_{O_{st}}(ω_k)
+  μψ((prep.O_region s t).preEvent)
+  = (via LF1.GeneralFrequency.freq_tendsto_of_iid)
+  fibre trial-frequency limit lim M→∞ (1/M) ∑ 𝟙_{O_{st}}(X i ω)
 ```
 
-The chain bridge `prep.bridge_op_p` discharges the LF1 ontic outcome
-weight as `ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))`, where
-the OP is built from `μFS + bridge + prepMeasure + PP.rep` via
+The chain bridge `prep.bridge_op_p` discharges the ontic outcome weight
+under the **posited fibre law** `μψ` as
+`ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))`, where the OP is
+built from `μFS + bridge + μψ + PP.rep` via
 `LF2.OperationalPackage.fromPreparation`. The `OP.p ↔ P_st` identity is
 discharged by `LF3.OP_p_at_jointEig_eq_P_st` (cites `busch_effect_gleason`
-via `LF2.pure_state_born_weights_of_certainty`). LF4-todo §2
-(preparation ↔ Hilbert correspondence) and §7 (projective-first outcomes)
-are the two LF4 work items behind the `bridge_op_p` hypothesis. -/
+via `LF2.pure_state_born_weights_of_certainty`). The frequency limit is
+`LF1.freq_tendsto_of_iid` applied to i.i.d. trials `X : ℕ → Ω → Σ` with
+common law `μψ` — **not** `LF1_main_theorem_ae`, whose `μL`-conditional
+`prepMeasure` is incompatible with a fibre-concentrated pure preparation
+under the continuous measure bridge (see `PurePreparation.lean` and
+`LF4-todo §8`). LF4-todo §2 (preparation ↔ Hilbert correspondence) and §7
+(projective-first outcomes) are the two LF4 work items behind the
+`bridge_op_p` hypothesis. -/
 
 variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
@@ -220,41 +233,43 @@ variable {SigmaSpace P G : Type*}
     repeated trials converges almost surely to `P_{st}(a, b) = (1 − st a·b)/4`,
     given:
     - an LF2 sector structure `D` with projection `π`,
-    - an LF1 trial model `T` over `D.toOntic`,
     - a `PureSingletPreparation D ctx N` bundle (option (B)) supplying:
-      the projective reference measure `μFS` + measure bridge, the static
-      pure preparation `PP` with rep + Dirac concentration, the joint
-      spin eigenstate data `jed` for `ctx` (with the Born identity
+      the **posited fibre trial law** `μψ`, the projective reference
+      measure `μFS` + measure bridge, the static pure preparation `PP`
+      over `μψ` with rep + Dirac concentration, the joint spin eigenstate
+      data `jed` for `ctx` (with the Born identity
       `‖⟨PP.ψ, eig s t⟩‖² = P_st`), the ontic outcome regions, and the
-      bridge `prepMeasure((O_region s t).preEvent) = OP.p ↔ rank-1 sector
+      bridge `μψ((O_region s t).preEvent) = OP.p ↔ rank-1 sector
       effect` (LF4 discharge target),
+    - i.i.d. trials `X : ℕ → Ω → Σ` over a probability space `Pr` whose
+      common law is the fibre law `μψ` (`hlaw`),
     - pairwise independence of the trial indicators on the
-      `prep.O_region s t` family. -/
+      `(prep.O_region s t).preEvent` family. -/
 theorem LF3_singlet_frequency_convergence
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+         (fun M : ℕ =>
+           (∑ i ∈ Finset.range M,
+               Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+             / (M : ℝ))
          atTop
          (nhds (P_st ctx.a ctx.b s t)) := by
   intro s t
-  have h_ae := D.toOntic.LF1_main_theorem_ae T (prep.O_region s t) (hindep s t)
-  have h_weight : (prep.O_region s t).weightReal = P_st ctx.a ctx.b s t := by
-    show ENNReal.toReal (((D.toOntic.prepMeasure :
-            MeasureTheory.ProbabilityMeasure SigmaSpace) : MeasureTheory.Measure SigmaSpace)
-              (prep.O_region s t).preEvent) = _
-    rw [prep.weight_eq_P_st s t]
-    exact ENNReal.toReal_ofReal (P_st_nonneg ctx.a ctx.b s t)
-  rwa [h_weight] at h_ae
+  have hfreq :=
+    LF1.freq_tendsto_of_iid hX hlaw (prep.O_region s t).measurable_preEvent (hindep s t)
+  rwa [prep.weight_eq_P_st s t, ENNReal.toReal_ofReal (P_st_nonneg ctx.a ctx.b s t)] at hfreq
 
 /-- **Born-mediated form of the empirical chain (closed-form amplitude).**
     Identifies the pre-Born target `P_{st}(a, b)` with the squared
@@ -264,22 +279,27 @@ theorem LF3_singlet_frequency_convergence
     below, given an actual joint spin eigenstate `v`. -/
 theorem LF3_singlet_frequency_convergence_born
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+         (fun M : ℕ =>
+           (∑ i ∈ Finset.range M,
+               Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+             / (M : ℝ))
          atTop
          (nhds (‖cAmp ctx.a ctx.b s t‖ ^ 2)) := by
   intro s t
-  have h_pre := LF3_singlet_frequency_convergence D T ctx prep hindep s t
+  have h_pre := LF3_singlet_frequency_convergence D ctx prep hX hlaw hindep s t
   rw [← cst_squared_eq ctx.a ctx.b s t] at h_pre
   exact h_pre
 
@@ -305,22 +325,27 @@ The Born identity is the entire content of the rewrite. See
     closed-form repackaging and not an unbound caller-supplied vector. -/
 theorem LF3_singlet_frequency_convergence_born_inner
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ s t, ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ s t, ∀ᵐ ω ∂ Pr,
        Tendsto
-         (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+         (fun M : ℕ =>
+           (∑ i ∈ Finset.range M,
+               Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+             / (M : ℝ))
          atTop
          (nhds (‖inner ℂ prep.PP.ψ (prep.jed.eig s t)‖ ^ 2)) := by
   intro s t
-  have h_pre := LF3_singlet_frequency_convergence D T ctx prep hindep s t
+  have h_pre := LF3_singlet_frequency_convergence D ctx prep hX hlaw hindep s t
   rw [← prep.jed.born_eq_P_st s t] at h_pre
   exact h_pre
 
@@ -345,26 +370,31 @@ This is the standard "joint vs per-element" upgrade pattern. -/
     statement. -/
 theorem LF3_singlet_frequency_convergence_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
        ∀ s t,
          Tendsto
-           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           (fun M : ℕ =>
+             (∑ i ∈ Finset.range M,
+                 Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+               / (M : ℝ))
            atTop
            (nhds (P_st ctx.a ctx.b s t)) := by
   rw [MeasureTheory.ae_all_iff]
   intro s
   rw [MeasureTheory.ae_all_iff]
   intro t
-  exact LF3_singlet_frequency_convergence D T ctx prep hindep s t
+  exact LF3_singlet_frequency_convergence D ctx prep hX hlaw hindep s t
 
 /-- **Joint partition convergence (Born form, closed-form amplitude).**
     Almost surely, for every `(s, t)` the empirical frequency converges
@@ -372,26 +402,31 @@ theorem LF3_singlet_frequency_convergence_joint
     `LF3_singlet_frequency_convergence_born`. -/
 theorem LF3_singlet_frequency_convergence_born_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
        ∀ s t,
          Tendsto
-           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           (fun M : ℕ =>
+             (∑ i ∈ Finset.range M,
+                 Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+               / (M : ℝ))
            atTop
            (nhds (‖cAmp ctx.a ctx.b s t‖ ^ 2)) := by
   rw [MeasureTheory.ae_all_iff]
   intro s
   rw [MeasureTheory.ae_all_iff]
   intro t
-  exact LF3_singlet_frequency_convergence_born D T ctx prep hindep s t
+  exact LF3_singlet_frequency_convergence_born D ctx prep hX hlaw hindep s t
 
 /-- **Joint partition convergence (Born form, bra-ket amplitude).**
     Almost surely, for every `(s, t)` the empirical frequency converges
@@ -399,26 +434,31 @@ theorem LF3_singlet_frequency_convergence_born_joint
     `LF3_singlet_frequency_convergence_born_inner`. -/
 theorem LF3_singlet_frequency_convergence_born_inner_joint
     (D : CSD.LF2.SectorData SigmaSpace P G)
-    {Ω : Type*} [MeasurableSpace Ω]
-    (T : D.toOntic.TrialModel Ω)
     (ctx : MeasurementContext) {N : ℕ}
     (prep : PureSingletPreparation D ctx N)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → SigmaSpace} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = prep.μψ)
     (hindep : ∀ s t,
       Pairwise
         (Function.onFun
-          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g (T.trialMeasure))
-          (fun n => T.indicatorRV (S := D.toOntic) (prep.O_region s t) n))) :
-    ∀ᵐ ω ∂ T.trialMeasure,
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
        ∀ s t,
          Tendsto
-           (fun n : ℕ => T.empiricalFreq (S := D.toOntic) (prep.O_region s t) n ω)
+           (fun M : ℕ =>
+             (∑ i ∈ Finset.range M,
+                 Set.indicator (X i ⁻¹' (prep.O_region s t).preEvent) (fun _ => (1 : ℝ)) ω)
+               / (M : ℝ))
            atTop
            (nhds (‖inner ℂ prep.PP.ψ (prep.jed.eig s t)‖ ^ 2)) := by
   rw [MeasureTheory.ae_all_iff]
   intro s
   rw [MeasureTheory.ae_all_iff]
   intro t
-  exact LF3_singlet_frequency_convergence_born_inner D T ctx prep hindep s t
+  exact LF3_singlet_frequency_convergence_born_inner D ctx prep hX hlaw hindep s t
 
 end LF3
 end CSD

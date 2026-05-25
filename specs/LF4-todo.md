@@ -209,11 +209,21 @@ machinery is required; `μ_[ψ]` is the trial law directly).
   (`h_bridge`); Born form *derived* via the Busch axiom. Cites
   `[propext, Classical.choice, Quot.sound, busch_effect_gleason]`.
 
-**Migration owed:** the LF3 `PureSingletPreparation` bundle should be re-expressed
-in the posited-fibre-measure form (trial law `μ_[ψ]`) used by `ontic_born_frequency`,
-retiring its uninhabitable `μL`-conditional `push_dirac` field. Tracked here; LF3
-capstones currently remain on the old bundle (green, but conditional on an
-uninhabitable bundle).
+**Migration DONE (2026-05-25).** The LF3 `PureSingletPreparation` bundle has been
+re-expressed in the posited-fibre-measure form. It now carries a posited trial law
+`μψ : Measure SigmaSpace` (+ `hμψ_prob`) with `PP : LF2.PurePreparation D μψ N` and
+`bridge_op_p : μψ((O_region s t).preEvent) = ENNReal.ofReal (OP.p …)` built from `μψ`;
+the uninhabitable `μL`-conditional `prepMeasure` is gone. The six chain capstones in
+`LF3/Interface.lean` (3 per-sector + 3 joint) now take i.i.d. trials
+`X : ℕ → Ω → SigmaSpace` with common law `μψ` (`hlaw : map (X n) Pr = prep.μψ`) and
+route through `LF1.freq_tendsto_of_iid` instead of `LF1_main_theorem_ae`, landing on
+the raw indicator-sum frequency. `weight_eq_P_st` and all capstones keep their axiom
+pins `[propext, Classical.choice, Quot.sound, busch_effect_gleason]`; `ofHypothesis`
+stays foundational-triple-only. The `Empirical/CSD/Bell.lean` wrappers and the
+`Tests/Examples.lean` smoke tests were updated to the new signature. The bundle now
+inhabits the same model as `ontic_born_frequency`: a posited fibre measure pushing to
+a Dirac on `[ψ]`, with the continuous measure bridge living on the ambient `μL`
+separately — no contradiction.
 
 **Still open (the genuinely hard part):** deriving the outcome regions / the fibre
 measure from deterministic dynamics so the Born weights come out *without* positing

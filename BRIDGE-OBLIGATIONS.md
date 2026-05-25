@@ -54,7 +54,7 @@ the LF3 chain capstones it re-exports).
 
 | Bundle | Field | What it asserts | LF4-todo |
 |---|---|---|---|
-| `LF3.PureSingletPreparation` | `bridge_op_p` | `∀ s t, prepMeasure((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))` | §2 + §7 |
+| `LF3.PureSingletPreparation` | `bridge_op_p` | `∀ s t, μψ((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))` (posited-fibre-law form, 2026-05-25; was `prepMeasure(...)`) | §2 + §7 |
 | `LF3.MeasurementJointEig` | `born_eq_P_st` | `∀ s t, ‖inner ℂ ψ (eig s t)‖ ^ 2 = P_st ctx.a ctx.b s t` | §2 + §7 |
 
 Both fields are carried inside `CsdLean4/LF3/PurePreparation.lean` and
