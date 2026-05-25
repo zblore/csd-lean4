@@ -1,4 +1,5 @@
 import CsdLean4.LF1.MainTheorem
+import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
@@ -68,6 +69,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.LF1.OnticSetup.LF1_main_theorem_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF1_main_theorem_ae
+
+/-- info: 'CSD.LF1.freq_tendsto_of_iid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF1.freq_tendsto_of_iid
 
 /-! ### LF2 -/
 

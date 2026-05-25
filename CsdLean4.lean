@@ -16,6 +16,7 @@ import CsdLean4.LF1.Indicators
 import CsdLean4.LF1.Expectation
 import CsdLean4.LF1.Convergence
 import CsdLean4.LF1.MainTheorem
+import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.Setup
 import CsdLean4.LF2.MeasureBridge
 import CsdLean4.LF2.Weights
