@@ -10,6 +10,7 @@ import CsdLean4.LF3.Singlet.JointProjector
 import CsdLean4.LF3.Singlet.JointEig
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
+import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -736,6 +737,16 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.cp_measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.cp_measure_bridge
+
+-- The non-trivial-fibre compact-Kähler instance Σ = ℂℙ^{N-1} × T² and its
+-- axiom-free marginal bridge π∗μL = μFS (c = 1). No invariant_measure_uniqueness.
+/-- info: 'CSD.LF4.kSectorData' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorData
+
+/-- info: 'CSD.LF4.k_measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.k_measure_bridge
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
