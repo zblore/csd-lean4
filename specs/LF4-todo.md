@@ -183,16 +183,42 @@ framework is **inhabited** (it never had been). `cp_measure_bridge` holds
 `measure_bridge` carries `invariant_measure_uniqueness`). Both AxiomAudit-pinned.
 
 **Honest scope of the base case.** `π = id` ⇒ trivial (point) fibres, bridge
-constant `c = 1`. It does *not* reproduce any Born prediction. Two pieces
-remain:
+constant `c = 1`. It does *not* reproduce any Born prediction.
 
-- **Non-trivial fibres (next):** `Σ := ℂℙ^{N-1} × ℂℙ^{N-1}`, diagonal `U(N)`,
-  `π := pr₁`. Genuine unresolved ontic DOF; the bridge `π∗μL = c·μFS` becomes
-  a real statement discharged via `invariant_measure_uniqueness_cpn`. All
-  instances exist via `Prod`.
-- **De-isolation → Born (the hard, separate piece):** Sigma0 §5/§9.5. This is
-  what turns volume ratios into Born weights and is *not* unblocked by the
-  shell; the shell is only the scaffold it attaches to.
+**Ambient/fibre finding (2026-05-25) and the preparation-primitive fix.** The
+naive "non-trivial fibres via a product `ℂℙ^{N-1} × ℂℙ^{N-1}`" route **fails**:
+under the continuous measure bridge `π∗μL = c·μFS`, every single quantum state's
+fibre is `μL`-null (`μL(π⁻¹([ψ])) = c·μFS({[ψ]}) = 0`), so a pure-state
+preparation cannot be a positive-measure `μL`-conditional. The measure bridge and
+positive-measure pure-state preparation are **incompatible on one `Σ`**. This also
+means the LF3 `PureSingletPreparation` bundle (carrying `push_dirac` *via* a
+`μL`-conditional + the bridge) is **uninhabitable as designed**. Resolution (Paper
+A / Σ0, revised): the preparation is a **probability measure**, ambient
+`μL`-conditional for mixed states and a **posited fibre measure `μ_[ψ]`** for pure
+states (extra ontic structure, not a `μL`-conditional — so no disintegration
+machinery is required; `μ_[ψ]` is the trial law directly).
+
+**Lean discharge (Phases 1–3, 2026-05-25):**
+- `CSD.LF1.freq_tendsto_of_iid` (`LF1/GeneralFrequency.lean`) — the law-agnostic
+  frequency theorem: i.i.d. trials with *any* common law `μp` ⇒ frequencies →
+  `(μp O).toReal`. Additive; foundational-triple-only.
+- `CSD.LF4.ontic_born_frequency` (`LF4/OnticBorn.lean`) — the **non-vacuous**
+  general pure-state ontic Born capstone: composes `freq_tendsto_of_iid` with
+  `pure_state_born_weights_of_certainty` to give frequencies → `|⟨ψ,φ⟩|²`.
+  Conditional on operational consistency (`OP`, `h_certain`) + the eq-12 bridge
+  (`h_bridge`); Born form *derived* via the Busch axiom. Cites
+  `[propext, Classical.choice, Quot.sound, busch_effect_gleason]`.
+
+**Migration owed:** the LF3 `PureSingletPreparation` bundle should be re-expressed
+in the posited-fibre-measure form (trial law `μ_[ψ]`) used by `ontic_born_frequency`,
+retiring its uninhabitable `μL`-conditional `push_dirac` field. Tracked here; LF3
+capstones currently remain on the old bundle (green, but conditional on an
+uninhabitable bundle).
+
+**Still open (the genuinely hard part):** deriving the outcome regions / the fibre
+measure from deterministic dynamics so the Born weights come out *without* positing
+`h_bridge` (Sigma0 §5/§9.5). The capstone is conditional on operational consistency,
+which is the legitimate stopping line (no theory derives its own objects).
 
 **Original pickup notes (for the deeper realisation):**
 1. In LF4, take `SigmaSpace := ` a specific phase space (or continue abstract).

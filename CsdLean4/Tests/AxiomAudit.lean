@@ -8,6 +8,7 @@ import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.SingletProjective
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
+import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -722,5 +723,12 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.cp_measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.cp_measure_bridge
+
+-- The pure-state ontic Born capstone composes LF1 frequency convergence with the
+-- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
+-- beyond the foundational triple).
+/-- info: 'CSD.LF4.ontic_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ontic_born_frequency
 
 end CSD.Tests.AxiomAudit
