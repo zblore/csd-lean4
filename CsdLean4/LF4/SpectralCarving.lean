@@ -108,7 +108,7 @@ noncomputable def cumWeights {N : ℕ} (w : Fin N → ℝ) (k : Fin (N + 1)) : �
 lemma cumWeights_zero {N : ℕ} (w : Fin N → ℝ) :
     cumWeights w 0 = 0 := by
   unfold cumWeights
-  simp [Fin.val_zero]
+  simp
 
 lemma cumWeights_succ_castSucc {N : ℕ} (w : Fin N → ℝ) (i : Fin N) :
     cumWeights w i.succ = cumWeights w i.castSucc + w i := by
@@ -136,7 +136,7 @@ lemma cumWeights_last {N : ℕ} (w : Fin N → ℝ) :
   rw [show ((Finset.univ : Finset (Fin N)).filter (·.val < (Fin.last N).val))
         = (Finset.univ : Finset (Fin N)) from by
         ext j
-        simp [Fin.val_last, j.isLt]]
+        simp [Fin.val_last]]
 
 lemma cumWeights_mono {N : ℕ} {w : Fin N → ℝ} (hw : ∀ i, 0 ≤ w i) :
     Monotone (cumWeights w) := by

@@ -48,7 +48,7 @@ lemma pauliDot_zPlus_norm_sq (a : DetectorSetting) :
   -- Entry-wise: pauliDot a · |0⟩ has entries (a_z, a_x + i·a_y).
   have h0 : ((pauliDot a).toEuclideanLin zPlusVec).ofLp 0 = ((a.vec 2 : ℝ) : ℂ) := by
     rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
-    simp [pauliDot, Matrix.mulVec, dotProduct, Fin.sum_univ_two,
+    simp [pauliDot, Matrix.mulVec, dotProduct,
           zPlusVec, EuclideanSpace.single]
   have h1 : ((pauliDot a).toEuclideanLin zPlusVec).ofLp 1
        = ((a.vec 0 : ℝ) : ℂ) + Complex.I * ((a.vec 1 : ℝ) : ℂ) := by
@@ -108,8 +108,7 @@ private lemma toEuclideanLin_mul_apply (A B : Matrix (Fin 2) (Fin 2) ℂ)
 lemma pauliDot_commutator_matrix_00 (a b : DetectorSetting) :
     (pauliDot a * pauliDot b - pauliDot b * pauliDot a) 0 0
       = 2 * Complex.I * (((a.vec 0 * b.vec 1 - a.vec 1 * b.vec 0 : ℝ)) : ℂ) := by
-  simp [Matrix.sub_apply, Matrix.mul_apply, Fin.sum_univ_two, pauliDot]
-  push_cast
+  simp [Matrix.sub_apply, pauliDot]
   ring
 
 /-! ### Commutator inner product on |0⟩ -/

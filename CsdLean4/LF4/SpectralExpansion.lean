@@ -85,14 +85,10 @@ theorem hermitian_inner_spectral_expansion
     (Matrix.isHermitian_iff_isSymmetric).mp hA
   have hEigAct : A.toEuclideanLin (hA.eigenvectorBasis i)
       = (hA.eigenvalues i : ℂ) • hA.eigenvectorBasis i := by
-    -- Use the linear-map spectral-API directly via `IsSymmetric.apply_eigenvectorBasis`,
-    -- which already produces the `(λ : 𝕜) • ·` form. Bridge the Matrix-level reindexed
-    -- eigenvectorBasis/eigenvalues to the LinearMap-level forms via the reindex equiv;
-    -- this matches the calling pattern Mathlib uses internally in `Matrix.Spectrum`.
-    have := hSym.apply_eigenvectorBasis finrank_euclideanSpace
-              ((Fintype.equivOfCardEq (Fintype.card_fin _)).symm i)
-    simpa [Matrix.IsHermitian.eigenvectorBasis, Matrix.IsHermitian.eigenvalues,
-           Matrix.IsHermitian.eigenvalues₀, OrthonormalBasis.coe_reindex] using this
+    -- `simp` discharges the eigenvalue equation `A uᵢ = λᵢ • uᵢ` directly via the
+    -- Matrix.Spectrum `eigenvectorBasis` / `eigenvalues` simp lemmas.
+    simp [Matrix.IsHermitian.eigenvectorBasis, Matrix.IsHermitian.eigenvalues,
+          Matrix.IsHermitian.eigenvalues₀, OrthonormalBasis.coe_reindex]
   -- ⟨uᵢ, A ψ⟩ = ⟨A uᵢ, ψ⟩ (self-adjoint) = ⟨(λᵢ : ℂ) • uᵢ, ψ⟩ = conj(λᵢ : ℂ) · ⟨uᵢ, ψ⟩
   --        = (λᵢ : ℂ) · ⟨uᵢ, ψ⟩    (λᵢ real so its complex coercion is self-conjugate).
   have hInner_uA :

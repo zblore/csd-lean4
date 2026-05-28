@@ -139,7 +139,7 @@ observables than QM is.
 Bartosik 2009 (see module docstring). -/
 theorem no_csd_mermin_peres_assignment
     {D : CSD.LF2.SectorData SigmaSpace P G} :
-    ¬ ∃ b : CSDMerminPeresBundle D, True := by
+    ¬ ∃ _b : CSDMerminPeresBundle D, True := by
   rintro ⟨b, _⟩
   exact CSD.Empirical.MerminPeres.no_lhv_mermin_peres
     ⟨b.lambda, b.pm, b.r0, b.r1, b.r2, b.c0, b.c1, b.c2⟩

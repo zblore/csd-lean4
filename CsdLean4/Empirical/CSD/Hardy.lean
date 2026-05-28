@@ -143,7 +143,7 @@ coincidences observed); cf. the golden-ratio max `(5√5 − 11)/2 ≈ 0.0902`
 on the QM side. -/
 theorem no_csd_hardy_assignment
     {D : CSD.LF2.SectorData SigmaSpace P G} :
-    ¬ ∃ b : CSDHardyBundle D, True := by
+    ¬ ∃ _b : CSDHardyBundle D, True := by
   rintro ⟨b, _⟩
   exact CSD.Empirical.Hardy.no_lhv_hardy
     ⟨b.p, b.p_nonneg, b.hardy_AB_pos, b.hardy_AB'_zero,

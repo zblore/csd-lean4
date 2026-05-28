@@ -87,8 +87,7 @@ lemma pauliX_isHermitian : pauliX.IsHermitian := by
   unfold Matrix.IsHermitian
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [pauliX, Matrix.conjTranspose_apply, Matrix.star_apply,
-          starRingEnd_apply]
+    simp [pauliX, Matrix.conjTranspose_apply]
 
 lemma pauliY_isHermitian : pauliY.IsHermitian := by
   show pauliYᴴ = pauliY
@@ -110,9 +109,7 @@ lemma pauliX_apply_zPlusVec :
   rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
-    simp [pauliX, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
-          Fin.sum_univ_two, EuclideanSpace.single, zPlusVec_entry_0,
-          zPlusVec_entry_1, zMinusVec_entry_0, zMinusVec_entry_1]
+    simp [pauliX, zPlusVec, zMinusVec, EuclideanSpace.single]
 
 lemma pauliX_apply_zMinusVec :
     pauliX.toEuclideanLin zMinusVec = zPlusVec := by
@@ -120,9 +117,7 @@ lemma pauliX_apply_zMinusVec :
   rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
-    simp [pauliX, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
-          Fin.sum_univ_two, EuclideanSpace.single, zMinusVec_entry_0,
-          zMinusVec_entry_1, zPlusVec_entry_0, zPlusVec_entry_1]
+    simp [pauliX, zPlusVec, zMinusVec, EuclideanSpace.single]
 
 lemma pauliY_apply_zPlusVec :
     pauliY.toEuclideanLin zPlusVec = Complex.I • zMinusVec := by
@@ -130,9 +125,7 @@ lemma pauliY_apply_zPlusVec :
   rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
-    simp [pauliY, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
-          Fin.sum_univ_two, EuclideanSpace.single, zPlusVec_entry_0,
-          zPlusVec_entry_1, zMinusVec_entry_0, zMinusVec_entry_1,
+    simp [pauliY, zPlusVec, zMinusVec, EuclideanSpace.single,
           PiLp.smul_apply, smul_eq_mul]
 
 lemma pauliY_apply_zMinusVec :
@@ -141,9 +134,7 @@ lemma pauliY_apply_zMinusVec :
   rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
-    simp [pauliY, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
-          Fin.sum_univ_two, EuclideanSpace.single, zMinusVec_entry_0,
-          zMinusVec_entry_1, zPlusVec_entry_0, zPlusVec_entry_1,
+    simp [pauliY, zPlusVec, zMinusVec, EuclideanSpace.single,
           PiLp.smul_apply, smul_eq_mul]
 
 /-! ### Expectations on |0⟩ -/

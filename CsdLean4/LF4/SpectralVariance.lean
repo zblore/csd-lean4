@@ -74,10 +74,8 @@ lemma inner_eigenvector_image {N : ℕ} {A : Matrix (Fin N) (Fin N) ℂ}
     (Matrix.isHermitian_iff_isSymmetric).mp hA
   have hEigAct : A.toEuclideanLin (hA.eigenvectorBasis i)
       = (hA.eigenvalues i : ℂ) • hA.eigenvectorBasis i := by
-    have := hSym.apply_eigenvectorBasis finrank_euclideanSpace
-              ((Fintype.equivOfCardEq (Fintype.card_fin _)).symm i)
-    simpa [Matrix.IsHermitian.eigenvectorBasis, Matrix.IsHermitian.eigenvalues,
-           Matrix.IsHermitian.eigenvalues₀, OrthonormalBasis.coe_reindex] using this
+    simp [Matrix.IsHermitian.eigenvectorBasis, Matrix.IsHermitian.eigenvalues,
+          Matrix.IsHermitian.eigenvalues₀, OrthonormalBasis.coe_reindex]
   rw [← hSym (hA.eigenvectorBasis i) ψ, hEigAct, inner_smul_left,
       Complex.conj_ofReal]
 

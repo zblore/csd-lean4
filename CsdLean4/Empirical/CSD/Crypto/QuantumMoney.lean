@@ -139,7 +139,7 @@ substrate is no more permissive of quantum-money forgery than QM is.
 theorem no_csd_quantum_money_forger
     {D : CSD.LF2.SectorData SigmaSpace P G}
     {Htensor : Type*} [NormedAddCommGroup Htensor] [InnerProductSpace ℂ Htensor] :
-    ¬ ∃ b : CSDQuantumMoneyBundle D Htensor, True := by
+    ¬ ∃ _b : CSDQuantumMoneyBundle D Htensor, True := by
   rintro ⟨b, _⟩
   exact CSD.Empirical.QuantumMoney.quantum_money_unforgeable
     b.tensor b.h_tensor_inner b.blank b.h_blank_unit
