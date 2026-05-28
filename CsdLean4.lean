@@ -51,6 +51,7 @@ import CsdLean4.LF4.HardyKahler
 import CsdLean4.LF4.SpectralExpansion
 import CsdLean4.LF4.SpectralCarving
 import CsdLean4.LF4.SpectralVariance
+import CsdLean4.LF4.UncertaintyKahler
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning

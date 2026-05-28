@@ -707,12 +707,45 @@ identity needs only the direct form.
 AxiomAudit-pinned (4 new pins: `hilbert_norm_sq_apply_hermitian`,
 `spectralVariance_eq_hilbert_norm_sq_diff`, `integral_spectralOnticCentered_eq_variance`,
 `integral_spectralOnticCentered_eq_hilbert_norm_sq_diff`). All
-foundational triple. Unblocks the Uncertainty bundle's ontic-variance
-match: pre-LF4 `csd_robertson_uncertainty` is a transport theorem; with
-the variance identity above the **physical content** (ontic variance
-satisfies the Robertson bound, not just Hilbert variance) is realisable
-on the Kähler instance for any concrete pair of bounded Hermitian
-observables.
+foundational triple.
+
+**Robertson uncertainty on the Kähler instance (DONE 2026-05-28).**
+`CsdLean4/LF4/UncertaintyKahler.lean` connects the variance identity
+above to `Empirical/QM/Uncertainty.lean`'s Robertson bound. For any
+Hermitian `A, B : Matrix (Fin N) (Fin N) ℂ` and unit
+`ψ : EuclideanSpace ℂ (Fin N)`, on any Kähler instance `KSigma M` with
+preparation `(Dirac p₀) × vol_T²`:
+
+- `variance_eq_norm_sq_sub_expectation_sq` (generic): for symmetric `T`
+  and unit `ψ`, `Var T ψ = ‖T ψ‖² − (re ⟨ψ, T ψ⟩)²`. Proves the
+  standard QM `Var = ⟨A²⟩ − ⟨A⟩²` via `norm_sub_sq` + `RCLike.mul_conj`
+  + self-adjoint expectation real (`Complex.conj_eq_iff_im`).
+- `QM_variance_eq_spectralVariance` (the bridge):
+  `Empirical.Uncertainty.variance A.toEuclideanLin ψ = spectralVariance hA ψ`.
+- `QM_variance_eq_integral_spectralOnticCentered` (the composition):
+  `Empirical.Uncertainty.variance A.toEuclideanLin ψ
+    = ∫ spectralOnticCentered hA ψ dμψ`.
+- **`kahler_robertson_ontic_variance`** (the headline ontic-variance
+  Robertson bound): for Hermitian `A, B` and unit `ψ`,
+  ```
+  (∫ spectralOnticCentered hA ψ dμψ) · (∫ spectralOnticCentered hB ψ dμψ)
+    ≥ ¼ ‖⟨ψ, [A.toEuclideanLin, B.toEuclideanLin] ψ⟩‖²
+  ```
+  on the Kähler instance. The LHS is purely ontic-side (per-observable
+  integrals of the centered indicator-sum); the RHS is the Hilbert
+  commutator overlap (the Robertson lower bound, QM-side). Composes
+  `QM_variance_eq_integral_spectralOnticCentered` (applied to A and B)
+  with `Empirical.Uncertainty.robertson_uncertainty`.
+
+This is the **LF4 §14.2 unlock for the Uncertainty bundle**. Pre-LF4
+`csd_robertson_uncertainty` was a transport theorem (any Hilbert state
+satisfies Robertson). With `kahler_robertson_ontic_variance`, the
+**physical content** (ontic variances satisfy the Robertson bound,
+not just Hilbert variances) is realisable on the Kähler instance for
+any concrete pair of bounded Hermitian observables.
+
+Two additional AxiomAudit pins (`QM_variance_eq_spectralVariance` and
+`kahler_robertson_ontic_variance`); both foundational triple.
 
 ---
 

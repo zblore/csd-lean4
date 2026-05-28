@@ -18,6 +18,7 @@ import CsdLean4.LF4.HardyKahler
 import CsdLean4.LF4.SpectralExpansion
 import CsdLean4.LF4.SpectralCarving
 import CsdLean4.LF4.SpectralVariance
+import CsdLean4.LF4.UncertaintyKahler
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -929,6 +930,16 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.integral_spectralOnticCentered_eq_hilbert_norm_sq_diff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.integral_spectralOnticCentered_eq_hilbert_norm_sq_diff
+
+-- LF4 §14.2 Robertson uncertainty on the Kähler instance: ontic-variance
+-- bridge to QM variance, and the headline ontic-variance Robertson bound.
+/-- info: 'CSD.LF4.QM_variance_eq_spectralVariance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.QM_variance_eq_spectralVariance
+
+/-- info: 'CSD.LF4.kahler_robertson_ontic_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kahler_robertson_ontic_variance
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
