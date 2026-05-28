@@ -82,6 +82,7 @@ Used by `Empirical/CSD/NoCloning.lean`.
 |---|---|---|---|
 | `Empirical.CSDBridge.NoCloning.CSDCloningBundle` | (whole bundle's CSD-realisability content) | the Hilbert-space `U` carried by the bundle arises as the projective-action lift of a measure-preserving π-equivariant flow on `Σ × Σ`, for the bundle's `SectorData D`; equivalently, `U` is "CSD-substrate-realisable" | §13 |
 | `Empirical.CSDBridge.NoDeleting.CSDDeletingBundle` | (whole bundle's CSD-realisability content) | same realisability content as the cloning bundle, applied to the deletion isometry (the logical dual; Pati-Braunstein 2000) | §13.3 |
+| `Empirical.CSDBridge.QuantumMoney.CSDQuantumMoneyBundle` | (whole bundle's CSD-realisability content) | same realisability content as the cloning bundle, applied to a forging isometry for the Wiesner money states `|0⟩, |+⟩` (Wiesner 1983) | §13.1 |
 
 Unlike `PureSingletPreparation.bridge_op_p` (which is a specific
 field carrying a specific identity), the `CSDCloningBundle`
