@@ -839,6 +839,12 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.sg_frequency_convergence
 
+-- LF4 §14.2 first step beyond projectors: Pauli observable σ·a via the
+-- spectral-decomposition signed-indicator construction. Foundational triple only.
+/-- info: 'CSD.LF4.pauliDot_observable_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pauliDot_observable_correspondence
+
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
 -- beyond the foundational triple).

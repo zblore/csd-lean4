@@ -583,15 +583,34 @@ is now non-vacuous in the strong sense: the LF3 chain has a concrete
 exhibited inhabitant. AxiomAudit-pinned (both theorems, foundational
 triple).
 
-### 14.2 General self-adjoint case (open)
+### 14.2 General self-adjoint case (PARTIAL — Pauli step DONE 2026-05-28)
 
 The projector discharge lifts to arbitrary bounded self-adjoint
-observables by spectral decomposition `A = ∑ λᵢ Pᵢ` (Mathlib has the
-spectral theorem for Hermitian matrices via
-`Matrix.IsHermitian.spectralTheorem`). Linearity of integration in
-`μψ` + Hilbert linearity in the `Pᵢ` gives the general identity. Not
-formalised here; deferred until a concrete consumer needs it (Uncertainty
-on a specific bounded `A, B` pair would be the natural call site).
+observables by spectral decomposition `A = ∑ λᵢ Pᵢ`.
+
+**First step beyond projectors (DONE 2026-05-28).** The Pauli observable
+`σ·a` has two-eigenvalue spectral decomposition `(+1)·spinProj(+a) +
+(−1)·spinProj(−a)`. Its ontic counterpart is the signed indicator
+`pauliDotOntic a σ := 2·1_{R_+(a)}(σ) − 1` — `+1` on the `+`-outcome
+region, `−1` everywhere else (the `−`-outcome region by measurable
+partition). The integral identity
+
+```
+∫ pauliDotOntic a dμψ = a_z = ⟨zPlus, (toEuclideanLin (pauliDot a)) zPlus⟩
+```
+
+is `pauliDot_observable_correspondence` in `CsdLean4/LF4/SingleQubitKahler.lean`.
+Foundational triple; AxiomAudit-pinned. This demonstrates the spectral-
+decomposition pattern at the simplest non-projector case (two
+eigenvalues, signed indicator).
+
+**General N×N case (still open).** Lifts via Mathlib's
+`Matrix.IsHermitian.spectralTheorem`: decompose `A = ∑ᵢ λᵢ |uᵢ⟩⟨uᵢ|`,
+define `A_ontic σ := ∑ᵢ λᵢ · 1_{Rᵢ}(σ)` with `Rᵢ` the §14.1 outcome
+regions for `|uᵢ⟩⟨uᵢ|`, integrate term-by-term. Mechanical on top of
+the projector case + the Pauli pattern. Not formalised here; deferred
+until a concrete consumer needs it (Uncertainty on a specific bounded
+`A, B` pair would be the natural call site).
 
 ---
 

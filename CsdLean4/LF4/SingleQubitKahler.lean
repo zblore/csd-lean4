@@ -238,5 +238,66 @@ theorem sg_frequency_convergence
     LF1.freq_tendsto_of_iid hX hlaw (sgRegion_measurable s a) hindep
   rwa [sgMuPsi_sgRegion, ENNReal.toReal_ofReal (sgBorn_nonneg s a)] at hfreq
 
+/-! ### §14.2 single-qubit Pauli observable
+
+Beyond the §14.1 projector case. The Pauli observable `σ·a` has eigenvalues
+`±1` and the spectral decomposition `σ·a = (+1)·spinProj(+a) + (−1)·spinProj(−a)`.
+Its ontic counterpart is the signed indicator `2·1_{R_+(a)} − 1`, which equals
+`+1` on the `+`-outcome region and `−1` everywhere else (which is the
+`−`-outcome region by measurable partition). The integral against `μψ` matches
+the Hilbert expectation `⟨zPlus, σ·a · zPlus⟩ = a_z`.
+
+This is the **first concrete §14.2 step beyond projectors**, demonstrating
+the spectral-decomposition pattern at single-qubit level. Generalisation to
+arbitrary bounded self-adjoint via Mathlib's spectral theorem is mechanical
+on top. -/
+
+/-- **Ontic counterpart of `pauliDot a`** on the `|+z⟩` preparation: `+1` on
+the `+`-outcome region `sgRegion + a`, `−1` elsewhere (the `−`-outcome region
+by measurable partition). The signed-indicator decomposition
+`2·1_{R_+} − 1` is the simplest two-eigenvalue spectral-decomposition form. -/
+noncomputable def pauliDotOntic (a : DetectorSetting) : KSigma 2 → ℝ :=
+  fun σ => 2 * Set.indicator (sgRegion Sign.plus a) (fun _ => (1 : ℝ)) σ - 1
+
+lemma pauliDotOntic_measurable (a : DetectorSetting) :
+    Measurable (pauliDotOntic a) := by
+  unfold pauliDotOntic
+  refine Measurable.sub ?_ measurable_const
+  refine Measurable.const_mul ?_ 2
+  exact (measurable_const : Measurable (fun _ : KSigma 2 => (1 : ℝ))).indicator
+    (sgRegion_measurable Sign.plus a)
+
+/-- **Integral of the Pauli ontic counterpart.** `∫ pauliDotOntic a dμψ = a_z`,
+matching `⟨zPlus, pauliDot a zPlus⟩ = a_z` (the Hilbert expectation). -/
+lemma pauliDotOntic_integral (a : DetectorSetting) :
+    ∫ σ, pauliDotOntic a σ ∂sgMuPsi = a.vec 2 := by
+  unfold pauliDotOntic
+  have hint_R : Integrable
+      (Set.indicator (sgRegion Sign.plus a) (fun _ : KSigma 2 => (1 : ℝ))) sgMuPsi :=
+    (integrable_const (1 : ℝ)).indicator (sgRegion_measurable Sign.plus a)
+  have hint_2R : Integrable
+      (fun σ => 2 * Set.indicator (sgRegion Sign.plus a)
+        (fun _ : KSigma 2 => (1 : ℝ)) σ) sgMuPsi :=
+    hint_R.const_mul 2
+  have hint_1 : Integrable (fun _ : KSigma 2 => (1 : ℝ)) sgMuPsi := integrable_const _
+  rw [integral_sub hint_2R hint_1, integral_const_mul,
+      integral_indicator (sgRegion_measurable Sign.plus a),
+      setIntegral_const, integral_const, smul_eq_mul, smul_eq_mul,
+      Measure.real, Measure.real, sgMuPsi_sgRegion, measure_univ,
+      ENNReal.toReal_ofReal (sgBorn_nonneg Sign.plus a), ENNReal.toReal_one]
+  unfold sgBorn
+  simp [Sign.val]
+  ring
+
+/-- **§14.2 observable correspondence for `pauliDot a`** (first non-projector
+case). The Hilbert expectation of `σ·a` on `|+z⟩` equals the `μψ`-integral
+of its ontic counterpart. Both sides equal `a_z`: the Hilbert side via the
+`(0,0)` entry of `pauliDot a` (`pauliDot_apply_00`), the ontic side via the
+signed-indicator integration (`pauliDotOntic_integral`). -/
+theorem pauliDot_observable_correspondence (a : DetectorSetting) :
+    inner ℂ zPlusVec (toEuclideanLin (pauliDot a) zPlusVec)
+      = ((∫ σ, pauliDotOntic a σ ∂sgMuPsi : ℝ) : ℂ) := by
+  rw [zPlus_expectation, pauliDot_apply_00, pauliDotOntic_integral]
+
 end LF4
 end CSD
