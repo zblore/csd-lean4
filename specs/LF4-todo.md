@@ -778,6 +778,52 @@ example — Pauli observables `σ_x, σ_y` on the spin-up state `|0⟩`:
 
 AxiomAudit pin: `pauli_xy_robertson_saturation` (foundational triple).
 
+**Parametric Robertson on |0⟩ (DONE 2026-05-28).**
+`CsdLean4/LF4/PauliDotRobertson.lean` extends `pauli_xy_robertson_saturation`
+to arbitrary unit-vector axes `â, b̂` (the `DetectorSetting` constraint).
+The Robertson bound becomes a **geometric inequality** between component
+polynomials:
+
+  `(1 − a_z²)(1 − b_z²) ≥ (a_x b_y − a_y b_x)²`.
+
+Both sides are explicit polynomials in `â.vec 0, â.vec 1, â.vec 2`
+(similarly for `b̂`). Equality holds when both axes lie in the xy-plane
+and are perpendicular — `pauli_xy_robertson_saturation` recovered as
+the special case.
+
+Key lemmas:
+- `pauliDot_zPlus_norm_sq â : ‖(σ·â).toEuclideanLin · |0⟩‖² = 1` via
+  entry-wise computation of `pauliDot a · zPlusVec.ofLp` (entries
+  `(a_z, a_x + i·a_y)`) + `Complex.normSq_apply` + the unit-vector
+  property `a.sum_sq_components_eq_one`.
+- `pauliDot_zPlus_spectralVariance â : spectralVariance _ |0⟩ = 1 − a_z²`
+  via `spectralVariance_eq_hilbert_norm_sq_diff` + `zPlus_expectation`
+  + `pauliDot[0,0] = ((a.vec 2 : ℝ) : ℂ)` + `RCLike.ofReal_re`.
+- `pauliDot_zPlus_ontic_integral â p₀ : ∫ spectralOnticCentered · dμψ
+  = 1 − a_z²` via `integral_spectralOnticCentered_eq_variance`.
+- `toEuclideanLin_mul_apply` (private bridge):
+  `(A * B).toEuclideanLin v = A.toEuclideanLin (B.toEuclideanLin v)`
+  via `Matrix.mulVec_mulVec`.
+- `pauliDot_commutator_matrix_00 â b̂ : (pauliDot â * pauliDot b̂
+  − pauliDot b̂ * pauliDot â) 0 0 = 2i (a_x b_y − a_y b_x)` via
+  `Matrix.mul_apply` + `Fin.sum_univ_two` + `push_cast; ring`.
+- `pauliDot_commutator_inner_zPlus â b̂` (Module.End form): bridge
+  via `Module.End.mul_apply` + `← toEuclideanLin_mul_apply` + `map_sub`,
+  then `zPlus_expectation` + matrix-entry lemma.
+- `pauliDot_commutator_inner_zPlus_norm_sq â b̂ : ‖2i(a_x b_y − a_y b_x)‖²
+  = 4(a_x b_y − a_y b_x)²` via factoring out `Complex.I` + `Complex.norm_I
+  + Complex.norm_real`.
+- **HEADLINE** `pauliDot_robertson_zPlus â b̂ p₀`:
+    `(1 − a_z²)(1 − b_z²) ≥ (a_x b_y − a_y b_x)²`
+  via `kahler_robertson_ontic_variance` + rewrites + `linarith`.
+
+AxiomAudit pin: `pauliDot_robertson_zPlus` (foundational triple).
+Both `pauli_xy_robertson_saturation` (the saturated special case at
+`â = x̂, b̂ = ŷ`) and `pauliDot_robertson_zPlus` (the parametric family)
+are now in place, giving the spin-½ Robertson uncertainty bound at both
+endpoints — the canonical textbook saturation and the geometric
+parametric form.
+
 ---
 
 ### 14 — original framing (pre-discharge)
