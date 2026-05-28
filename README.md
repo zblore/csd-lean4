@@ -2,130 +2,154 @@
 
 [![CI](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml)
 
-Lean4 formalisation of Constraint-Surface Dynamics. **LF1** (volume typicality and frequency convergence for deterministic repeated trials), **LF2** (sector-conditional measure bridge and Born-weight wrapper), and **LF3** (singlet kernel and the LF1↔LF2↔LF3 empirical chain) are merged and machine-verified; an **Empirical** module (Bell-family + no-cloning at the QM-validity layer) provides the experimental-prediction regression suite. LF4 scope is recorded in [`specs/LF4-todo.md`](specs/LF4-todo.md); the empirical-test plan is in [`specs/qm-empirical-tests.md`](specs/qm-empirical-tests.md).
+Lean 4 formalisation of Constraint-Surface Dynamics. **LF1**, **LF2**, **LF3**, and **LF4 §14.2** (the observable-correspondence layer — Hilbert spectral expansion, ontic-side multi-region carving, ontic ↔ Hilbert variance correspondence, and Robertson uncertainty at the ontic-integration level, including two concrete witnesses) are merged and machine-verified. An **Empirical** module provides the QM-validity regression suite (Bell family, no-cloning, no-deleting, Uncertainty, Stern-Gerlach, superdense coding, quantum money, contextuality, Hardy, GHZ, gates).
 
-## Overview
+The repo is sorry-free and `lake build CsdLeanTests` green (3038 jobs at this writing). Axiom posture is the foundational Lean triple + two spec-mandated Mathlib-external axioms (`invariant_measure_uniqueness`, `busch_effect_gleason`). See [`AXIOMS.md`](AXIOMS.md) for the per-theorem ledger and [`specs/LF4-todo.md`](specs/LF4-todo.md) for the LF4 backlog.
 
-This repository contains the Lean4 development for the finite-dimensional formalisation branch of the Constraint-Surface Dynamics (CSD) programme.
+## What's machine-verified
 
-The first target is **LF1**, which formalises the repeated-trial frequency theorem underlying volume-based deterministic accounts of quantum statistics. In this setting, a finite-measure ontic state space is equipped with:
+| Layer | Headline | Carving | Axioms beyond foundational triple |
+|---|---|---|---|
+| **LF4 §14.2** | `kahler_robertson_ontic_variance` — Robertson bound on ontic-side integrals for any Hermitian observables on `EuclideanSpace ℂ (Fin N)`, with concrete witnesses `pauli_xy_robertson_saturation` (saturation at \|0⟩) and `pauliDot_robertson_zPlus` (parametric over axes) | Compact Kähler `KSigma M = ℂℙ^{M-1} × T²`; N-arc fibre partition via `spectralRegion`; integration headline `∫ spectralOnticCentered dμψ = ‖A ψ‖² − ⟨A⟩²` | none |
+| **LF3** | Singlet kernel `P_st = (1 − st a·b)/4`; LF1↔LF2↔LF3 chain capstones (6 variants); finite-leakage stability | Posited fibre law `μψ` (option (B) chain design, post-Phase-7) | `busch_effect_gleason` (chain capstones only) |
+| **LF2** | `measure_bridge` (`π∗μL = c·μFS`); `born_quadratic` (`Tr(\|ψ⟩⟨ψ\|·\|φ⟩⟨φ\|) = ‖⟨ψ,φ⟩‖²`); `pure_state_born_weights_of_certainty`; `LF1_main_theorem_projective` | Abstract projective target `P` (concrete instantiation deferred to LF4 §8) | `invariant_measure_uniqueness`; `busch_effect_gleason` (purity-form Born only) |
+| **LF1** | `LF1_main_theorem_ae` — empirical frequencies converge a.s. to ontic weight under deterministic flow + pairwise-independent i.i.d. preparation | Abstract measurable `SigmaSpace` (no symplectic / Kähler structure assumed) | none |
+| **Empirical** | Bell + No-cloning + No-deleting + Uncertainty + Stern-Gerlach + Superdense coding + Quantum money + Mermin-Peres + Hardy + GHZ + Single/Two/Multi-qubit gates (Phases A1-A6, B1-B5, C1-C3, D-gates) | Two-layer: QM-validity (inner-product geometry) + CSD-side (transport bundles for the same predictions) | foundational triple only on every Empirical pin |
 
-- a measurable preparation region
-- a measurable outcome partition `{Ω_i^Σ}`, with the frequency theorem stated for a chosen outcome region
-- a deterministic measure-preserving flow
-- a repeated-trial preparation model
+Every theorem listed is AxiomAudit-pinned via `#guard_msgs` in `CsdLean4/Tests/AxiomAudit.lean`; the build fails on axiom drift.
 
-The main goal of LF1 is to show that empirical frequencies converge to the corresponding normalised volume weights under repeated preparation.
+## Quick start
 
-LF1 is a frequency theorem. It is **not** a full Born-rule derivation.
+```bash
+# Library (LF1+LF2+LF3+LF4+Empirical, no tests):
+lake build
 
-## Genealogy
+# Tests target (AxiomAudit pins + Examples):
+lake build CsdLeanTests
 
-The LLN-based typicality framing used in LF1 and the geometric quantum mechanics structure on `CP^{N-1}` consumed by LF2 match structures developed independently in the Dürr / Goldstein / Zanghì typicality line and the Kibble / Heslot / Anandan / Ashtekar-Schilling geometric quantum mechanics line respectively. The CSD corpus uses the standard mathematical machinery shared with those programmes (measure theory, finite-dimensional inner-product geometry, the symplectic-Kähler structure on `CP^{N-1}`), and the Lean tree imports Mathlib accordingly. What is independently rediscovered is the structural choice of objects: typicality measures on the ontic phase space for LF1, and the Born quadratic form on projective Hilbert space for LF2. The corpus arrives at those choices from its own internal logic rather than by inferential dependence on the conclusions of those programmes, and the convergence is offered as a credibility signal rather than as a claim of priority.
-
-## Deterministic content of LF1
-
-LF1 is not merely a formalisation of a law of large numbers on an abstract probability space.
-
-Its physical content is deterministic at the ontic level:
-
-- each single trial is generated by a deterministic measurable flow `Φ_t : Σ → Σ`
-- the outcome of a single trial is determined by the initial microstate `x ∈ Σ`
-- the outcome event is represented by membership in the pulled-back region `Φ_t⁻¹(Ω_i^Σ)`
-
-No stochastic evolution is introduced at the ontic level. The only probabilistic ingredient is the repeated-trial preparation model, in which each run begins from an initial microstate sampled independently from the conditional preparation measure on `Ω0`.
-
-Accordingly, LF1 should be read as a deterministic typicality theorem with a probabilistic preparation model, not as an intrinsic-randomness theorem.
-
-## Scope
-
-Three layers are currently formalised:
-
-**LF1** — deterministic repeated-trial typicality theorem. Formalises:
-
-- the ontic measurable setup
-- the preparation probability measure
-- measurable outcome events
-- repeated trials
-- indicator observables on the repeated-trial sample space
-- the expectation-to-weight bridge
-- frequency convergence via a law of large numbers
-
-**LF2** — sector-conditional measure bridge and Born-weight wrapper. Formalises:
-
-- the `SectorData` bundling LF1's `OnticSetup` with an abstract projective target, a measurable projection, and a symmetry-group action
-- the pushforward measure bridge `π_* μL = c · μFS` under symmetry-compatible hypotheses + one imported axiom
-- projective weights and their normalisation on a measurable partition
-- concrete matrix-based `Effect` and `DensityOperator` structures, with `Effect.one` / `Effect.add` / `Effect.conjugateBy` helpers
-- the Born quadratic form `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ‖⟨ψ, φ⟩‖²` as a genuine Lean proof
-- pure-state Born weights derived from a purity hypothesis via the imported Busch effect-Gleason axiom
-- the LF1 ↔ LF2 weight identity and a combined LF1+LF2 headline theorem
-
-**LF3** — singlet kernel, pointer-sector decomposition, and the LF1↔LF2↔LF3 empirical chain. Formalises:
-
-- `Sign`, `DetectorSetting`, abstract pointer-readout algebra (`BinaryPointerProjectors`), and the system-apparatus container `SystemApparatusSetup`
-- the concrete two-qubit `pauliDot` operators, `sigmaDotLeft/Right/Joint`, and the joint spin projector `jointSpinProj` on `Fin 2 × Fin 2`
-- the Bell singlet `|ψ⁻⟩ = (1/√2)(|+-⟩ − |-+⟩)`, with `singlet_norm` proved
-- the abstract `TensorFactorReadoutAlgebra` (commuting local Hamiltonians as structural data) and `MeasurementUnitary` (full + per-wing unitaries as `LinearIsometryEquiv`s, factorisation `U = uA ∘ uB` and impulsive eigenstate-action as fields)
-- sector states and the four-term sector decomposition of the final state, with `sector_separation_leakage_bound` (Phase 11 rename: previously branch states / branch decomposition)
-- the pointer-sector projective algebra `ProjectorAlgebra` (available either as abstract structural data, or derived through `ProjectorAlgebra.ofTensorEmbedding` from a `TensorEmbedding K_A K_B H_SA` plus the `SystemApparatusSetup`'s per-wing `BinaryPointerProjectors`, in `LF3/Projectors/TensorModel.lean`) and the operator-form `sectorVolume`, with strong-readout exactness and finite-leakage stability (`StrongReadoutCompat`, `LeakageCompat`)
-- the LF3→LF2 Born-form bridge `sectorVolume_eq_LF2_Born` (trace-inner core identity proved against the existing LF2 `traceForm`)
-- the **singlet kernel algebraic core** `cst_squared_eq : ‖cAmp s t (a, b)‖² = (1 − st a·b)/4`, the correlation `−a·b`, marginals `1/2`, no-signalling on each side, and finite-leakage versions of all four
-- the **headline LF1↔LF2↔LF3 chain capstones** (six total post-Phase-8): three per-sector — `LF3_singlet_frequency_convergence` (pre-Born; lands on `(1 − st a·b)/4`), `LF3_singlet_frequency_convergence_born` (Born-mediated, closed-form; lands on `‖cAmp s t (a, b)‖²`), `LF3_singlet_frequency_convergence_born_inner` (genuine bra-ket form; lands on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`) — plus three joint-partition AE variants (`..._joint`, `..._born_joint`, `..._born_inner_joint`) using `MeasureTheory.ae_all_iff` over the finite `Sign × Sign` partition. The chain consumes a `PureSingletPreparation D ctx N` bundle (option (B) form post-Phase-7) whose load-bearing hypotheses split into `MeasurementJointEig.born_eq_P_st` (the Born identity for joint spin eigenstates, LF4-todo §3) and `PureSingletPreparation.bridge_op_p` (the ontic-weight ↔ OP.p bridge, LF4-todo §2 + §7)
-- the **closed-form / bra-ket equivalence** `cAmp_norm_sq_eq_inner_norm_sq`: the closed-form `cAmp = √P_st` agrees with the genuine Hilbert-space inner product `⟨v, ψ⁻⟩` on squared norms, given the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` as a hypothesis (discharged in v2 from a constructed `jointSpinEig`)
-
-**Post-Phase-7 axiom posture (2026-05-18).** `LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean. The six chain capstones cite `propext, Classical.choice, Quot.sound, busch_effect_gleason`: the chain bridge now routes via OP.p (option (B) chain design), which extensionally invokes `pure_state_born_weights_of_certainty` (cites Busch). `invariant_measure_uniqueness` enters at LF4 instantiation sites that build `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` — option (b) structural propagation, not extensional citation. The spec §5.4 four-ingredient framing is realised at the Lean level. See [`AXIOMS.md`](AXIOMS.md) §3.6 and §5 for the full audit.
-
-The closed-form `cAmp := √P_st` is a v1.00 representative; the v2 plan is to construct `jointSpinEig` from the spectral decomposition of `jointSpinProj` so that `cAmp` becomes a derived `inner ℂ jointSpinEig singlet` rather than the closed-form sqrt. The `_inner` capstone variant already states the physically faithful form for callers who supply their own eigenstate.
-
-**Empirical** — experimental-prediction regression suite. Formalises:
-
-- **Bell family** (`CsdLean4/Empirical/Bell.lean`): CHSH at the Tsirelson bound on the singlet (A1, named-witness form `chsh_singlet_at_optimal_angles` plus existential `chsh_singlet_tsirelson_bound`), classical-bound violation gap (A2, `chsh_classical_bound_violated`), no-signalling on each side (A3 / A4), singlet marginals uniform at `1/2` (A5), the algebraic Khalfin-Tsirelson upper bound `|Re⟨α, β⟩ − Re⟨α, β'⟩ + Re⟨α', β⟩ + Re⟨α', β'⟩| ≤ 2√2` on any complex inner product space (A6 algebraic, `chsh_inner_bound`), and its QM-application lift to the bipartite-Pauli expectation `|Re⟨ψ, σ·a ⊗ σ·b − … ψ⟩| ≤ 2√2` for any unit `ψ : EuclideanSpace ℂ (Fin 2 × Fin 2)` (A6 QM-form, `chsh_qm_tsirelson_bound`).
-- **No-cloning** (`CsdLean4/Empirical/NoCloning.lean`): Wootters-Zurek 1982 / Dieks 1982 two-state no-cloning theorem (`no_cloning_two_state`), stated abstractly over a tensor structure `H → H → Htensor` with inner-product factorisation as a hypothesis, plus the universal-cloner corollary (`no_universal_cloner_of_witness`). Cat-2 Framework candidate (QM-generic).
-
-Every Empirical theorem is foundational-triple-only and AxiomAudit-pinned (`#guard_msgs` regressions in `CsdLean4/Tests/AxiomAudit.lean` under `### Empirical predictions (Bell family, Phase A1-A5)`, `... A6` and `... no-cloning, Phase B2`).
-
-### Two-layer model: QM-validity vs CSD-ontic
-
-The Empirical module is a **QM-validity-layer** regression suite. Each theorem proves that the standard QM formalisation produces the predicted experimental number; the proofs are linear algebra and inner-product geometry, with no ontic substrate at the proof level. CSD's foundational claim — that QM emerges from volume ratios on Σ — is verified at the **CSD-ontic layer** by the LF1↔LF2↔LF3 chain capstones (`LF3_singlet_frequency_convergence*`), which currently exist only for the singlet kernel `P_st(a, b)`.
-
-The QM-validity layer is prerequisite to the CSD-ontic layer: LF4 §8 (Kähler instantiation) lifts each QM-validity statement to a CSD-ontic statement via the same wrapping pattern as the existing LF3 singlet capstones. The Empirical module is therefore both an experimental-validation suite for the current pre-LF4 work *and* the prerequisite layer for LF4-and-beyond CSD-ontic predictions. See [`specs/qm-empirical-tests.md`](specs/qm-empirical-tests.md) §0.1 for the full statement.
-
-Later formalisation targets (not yet started):
-
-- **LF4**: mixed states, POVMs, and reduction. Concrete pickup items deferred from LF2 (and the LF3 `hLF2` discharge) are listed in [`specs/LF4-todo.md`](specs/LF4-todo.md). Also discharges D1 (preparation-measure origin via compact Kähler instantiation, per `[[project-lf4-decisions]]` Q1) and provides the chain-wrap mechanism for lifting Empirical QM-validity statements to CSD-ontic statements.
-- **LF5**: outcome-conditioned update and sequential circuits.
-- **Empirical Phase B / C / D**: Stern-Gerlach, Malus, Mach-Zehnder (B); paradoxes including GHZ, Hardy, Mermin, Kochen-Specker (C); quantum algorithms including Deutsch-Jozsa, Grover, QFT, Shor (D). Each requires either LF4 setup, new infrastructure, or both; see `specs/qm-empirical-tests.md` for the per-item route.
-
-Canonical spec preprints, plain-text sidecars, per-layer implementation plans, the LF4 TODO list, and the empirical-test plan live in [`specs/`](specs/).
-
-## Mathematical target of LF1
-
-For a finite-measure ontic state space `(Σ, μL)`, measurable preparation region `Ω0 ⊂ Σ`, measurable outcome partition `{Ω_i^Σ}` of `Σ`, and deterministic `μL`-preserving flow `Φ_t`, LF1 studies repeated trials whose initial microstates are sampled independently from the conditional preparation measure on `Ω0`. The frequency theorem is stated and proved for a chosen element `Ω_i^Σ` of that partition; the joint almost-sure statement for the full partition follows by finite intersection of full-measure sets.
-
-The deterministic structure is essential:
-
-1. a single trial begins from an ontic microstate `x ∈ Σ`
-2. the system evolves deterministically under `Φ_t`
-3. the realised outcome is determined by whether `Φ_t(x)` lies in `Ω_i^Σ`
-4. equivalently, the relevant initial-condition event is `x ∈ Φ_t⁻¹(Ω_i^Σ)`
-
-The repeated-trial probability space is introduced only to model repeated preparation. It does not represent stochastic ontic dynamics. The corresponding indicator random variables are therefore deterministic pullbacks of ontic outcome events along the measurable flow.
-
-At the current implementation stage, the formal development is organised so that:
-
-1. the preparation measure is defined explicitly
-2. outcome events are pulled back through the deterministic flow
-3. indicator random variables are constructed on the repeated-trial sample space
-4. convergence is obtained from a law of large numbers
-5. the expectation of the indicator is identified with the corresponding ontic weight
-
-## Key theorem signature
-
-The main exported result is `LF1_main_theorem_ae`:
-
+# Type-check a single file:
+lake env lean CsdLean4/LF4/PauliDotRobertson.lean
 ```
-LF1_main_theorem_ae
+
+Toolchain: Lean 4.29.0-rc8 (see `lean-toolchain`); Mathlib4. CI builds both targets on every push to `main` and on PRs.
+
+The canonical top-level import is `CsdLean4` (explicit module list — not glob). For downstream consumers `import CsdLean4.Basic` transitively pulls in the LF1 → LF2 → LF3 → LF4 → Empirical chain.
+
+---
+
+## LF4 — observable correspondence and Robertson uncertainty (§14.2)
+
+LF4 is the layer where projective objects acquire ontic content via a concrete Kähler instance. The §14.2 sub-target — the **observable-correspondence theorem**, lifting self-adjoint Hilbert operators to measurable Σ-valued functions whose integral against the preparation measure matches the Hilbert expectation — is fully discharged on the existing compact Kähler instance, with concrete witnesses.
+
+### The §14.2 chain (six commits)
+
+| Commit | Module | Headline |
+|---|---|---|
+| `eeec1e8` | `LF4/SpectralExpansion.lean` | `hermitian_inner_spectral_expansion` — `⟨ψ, A ψ⟩ = ∑ᵢ λᵢ · ‖⟨uᵢ, ψ⟩‖²` for any Hermitian `A : Matrix (Fin N) (Fin N) ℂ`. Proof: Parseval (`OrthonormalBasis.sum_inner_mul_inner`) + self-adjointness (`Matrix.isHermitian_iff_isSymmetric`) + eigenvalue equation (`LinearMap.IsSymmetric.apply_eigenvectorBasis`, bridged to the Matrix-level reindexed basis as Mathlib's `Matrix.Spectrum` does internally) |
+| `dec11e5` | `LF4/SpectralCarving.lean` | Multi-region carving infrastructure (`fibreShiftedArc`, `cumWeights`, `spectralRegion`) + integration headline `integral_spectralOntic_eq_inner_re` — `∫ spectralOntic dμψ = re ⟨ψ, A ψ⟩`. The pre-existing `fibreArc ℓ = (0, ℓ]` is anchored at 0, so distinct arcs are nested; the shifted-anchor primitive gives genuinely disjoint N-arc partitions |
+| `fe717ed` | `LF4/SpectralVariance.lean` | `spectralVariance := ∑ᵢ (λᵢ − ⟨A⟩)² · bornWeights i` and the composite headline `integral_spectralOnticCentered_eq_hilbert_norm_sq_diff` — `∫ spectralOnticCentered dμψ = ‖A ψ‖² − ⟨A⟩²` (the standard QM variance form for self-adjoint A) |
+| `63fe1b0` | `LF4/UncertaintyKahler.lean` | `kahler_robertson_ontic_variance` — Robertson bound with **ontic-side LHS**: `(∫ spectralOnticCentered hA ψ dμψ) · (∫ spectralOnticCentered hB ψ dμψ) ≥ ¼ ‖⟨ψ, [A, B] ψ⟩‖²`. Bridges QM-side `variance` (norm-sub-sq form) to spectral form via `variance_eq_norm_sq_sub_expectation_sq` and composes with `Empirical.Uncertainty.robertson_uncertainty` |
+| `59eba66` | `LF4/PauliRobertson.lean` | First concrete witness: `pauli_xy_robertson_saturation` — `σ_x, σ_y` on `|0⟩` saturates Robertson with both sides equal to 1. The canonical textbook example, machine-verified |
+| `c5eed61` | `LF4/PauliDotRobertson.lean` | Parametric generalisation: `pauliDot_robertson_zPlus â b̂ p₀` — `(1 − a_z²)(1 − b_z²) ≥ (a_x b_y − a_y b_x)²` for arbitrary unit-vector axes (the `DetectorSetting` constraint). Both sides explicit polynomials in the axis components |
+
+The Kähler instance is `KSigma M = CPN M × KTorus = ℂℙ^{M-1} × (AddCircle 1 × AddCircle 1)` with `kMuL = fubiniStudyMeasure p₀ ⊗ vol_T²`. The preparation measure for §14.2 is `(Measure.dirac p₀) ⊗ vol_T²` (Dirac on the base ray × Haar on the fibre).
+
+### What §14.2 unlocks
+
+- **Uncertainty bundle's ontic-variance match**: pre-LF4 `csd_robertson_uncertainty` was a transport theorem (any Hilbert state satisfies Robertson). With `kahler_robertson_ontic_variance`, the physical content — ontic variances satisfy Robertson, not just Hilbert variances — is realisable for any concrete pair of bounded Hermitian observables.
+- **Any multi-eigenvalue observable**: spin-1 components, GHZ stabiliser generators, generic Hermitian operators. The spectral pattern works beyond ±1 / projector cases.
+- **Variance identity in spectral form**: `Var_ψ(A) = ∑ᵢ (λᵢ − ⟨A⟩)² · ‖⟨uᵢ, ψ⟩‖²`, with `bornWeights ψ A i = ‖⟨uᵢ, ψ⟩‖²` summing to `‖ψ‖²` via `OrthonormalBasis.sum_sq_norm_inner_right`.
+
+### LF4 design choices (post-§14.2)
+
+- `SectorData` (LF2) is the abstract layer; the compact Kähler instance is `KSigma M` defined in `LF4/KahlerInstance.lean`, with `fubiniStudyMeasure p₀` (Dirac at `p₀ : CPN M`) and `vol_T²` (Haar on the flat torus). Fibre arcs are subsets of `AddCircle 1` carved via `equivIoc 1 0`.
+- The `fibreShiftedArc c ℓ := (equivIoc 1 0)⁻¹' (Ioc c (c+ℓ))` primitive replaces the nested `fibreArc ℓ = (0, ℓ]` from `SingletKahler.lean` for genuinely-disjoint N-arc partitions. Volume = `ENNReal.ofReal ℓ` for `[c, c+ℓ] ⊆ [0,1]`; disjoint when underlying intervals are disjoint.
+- `cumWeights w : Fin (N+1) → ℝ` is defined via `Finset.filter` (not `Nat.rec`) for clean `Finset.sum_insert` proofs of the succ-castSucc step and `cumWeights_last = ∑ w`.
+- The variance bridge `variance_eq_norm_sq_sub_expectation_sq` uses `norm_sub_sq` + `Complex.mul_conj` + `Complex.normSq_apply` to derive `Var = ‖Aψ‖² − (re ⟨A⟩)²` from the standard QM `Var = ‖Aψ − ⟨A⟩ψ‖²` definition for symmetric `T` and unit `ψ`.
+- Robertson on ontic variances is `kahler_robertson_ontic_variance`; its proof composes `QM_variance_eq_integral_spectralOnticCentered` (the spectral bridge applied twice) with the existing QM-side `Empirical.Uncertainty.robertson_uncertainty` (Cauchy-Schwarz + commutator algebra).
+
+### LF4 backlog (`specs/LF4-todo.md`)
+
+§14.2 is **closed**. Remaining LF4 work:
+
+- **§13** — isometry realisability (cloning / deletion / N-qubit unitaries as Σ-flows). Partial; cloning + deletion bundles in place.
+- **§8** — concrete `SectorData` constructions for additional preparation classes (mixed-state, multi-particle).
+- **§1-§11** — see `specs/LF4-todo.md` for the full backlog (preparation-to-Hilbert correspondence, projective-first outcome specification, etc.).
+
+---
+
+## LF3 — singlet kernel and the LF1↔LF2↔LF3 empirical chain
+
+LF3 sits on top of LF2 and delivers the **first concrete CSD-ontic prediction** beyond the abstract `SectorData` layer: the singlet kernel `P_st(a, b) = (1 − s·t·a·b)/4` and its four operational consequences (correlation `−a·b`, marginals `1/2`, no-signalling on each side, pointer-completeness), with finite-leakage stability of all four.
+
+### Headline deliverables
+
+1. **Singlet kernel algebraic core** — `cst_squared_eq : ‖cAmp s t (a, b)‖² = (1 − st·a·b)/4`, with `cAmp := (Real.sqrt P_st : ℂ)` as the v1.00 closed-form representative.
+2. **Eight-conjunct strong-readout package** — `LF3_main_theorem`. Kernel + correlation + marginals + no-signalling + pointer-completeness in one statement.
+3. **Finite-leakage four-conjunct package** — `LF3_finite_leakage_theorem`. Each quantity deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors). Stability-from-assumption (the deviation bound enters as a field of `LeakageCompat`, not a first-principles derivation).
+4. **Six chain capstones** — three per-sector + three joint-partition Phase 8 variants:
+   - `LF3_singlet_frequency_convergence` (pre-Born, lands on `P_st`),
+   - `LF3_singlet_frequency_convergence_born` (closed-form Born, lands on `‖cAmp‖²`),
+   - `LF3_singlet_frequency_convergence_born_inner` (bra-ket form, lands on `‖⟨v, ψ⁻⟩‖²` for caller-supplied joint spin eigenstate `v`),
+   - plus `..._joint`, `..._born_joint`, `..._born_inner_joint` (joint AE over `Sign × Sign`).
+
+All six chain capstones consume a `PureSingletPreparation D ctx N` bundle (option (B) form, post-Phase 7), whose load-bearing hypotheses are `MeasurementJointEig.born_eq_P_st` (Born identity for joint spin eigenstates) and `PureSingletPreparation.bridge_op_p` (ontic-weight ↔ OP.p bridge). The bundle's `weight_eq_P_st` theorem composes the two.
+
+### LF3 axiom posture (post Phase 7, 2026-05-18)
+
+- `LF3_main_theorem` and `LF3_finite_leakage_theorem` cite **only** the foundational triple.
+- The six chain capstones cite the foundational triple **plus** `busch_effect_gleason`: the chain bridge routes via OP.p (option (B) chain design), which extensionally invokes `pure_state_born_weights_of_certainty`. See `specs/pre-LF4-plan.md` for the design rationale.
+- `invariant_measure_uniqueness` does **not** appear extensionally on the chain capstone definitions — it enters at LF4 instantiation sites via `MeasureBridgeData.ofSectorData` (option (b) structural propagation).
+
+The full per-theorem audit is in [`AXIOMS.md`](AXIOMS.md) §3.6 and §5. Regression-protection via `CsdLean4/Tests/AxiomAudit.lean`'s `#guard_msgs` against `#print axioms`.
+
+### Posted-fibre-measure migration (2026-05-25)
+
+The preparation primitive at LF3 is a posited fibre trial law `μψ` (option (B)), not the ambient `μL`-conditional `prepMeasure`: under the continuous measure bridge `π∗μL = c·μFS`, every state's fibre is μL-null, so a μL-conditional pure preparation is uninhabitable. The capstones take i.i.d. trials with common law `μψ` and route through `LF1.freq_tendsto_of_iid` (not `LF1_main_theorem_ae`). See `LF4-todo §8`.
+
+---
+
+## LF2 — sector-conditional measure bridge and Born-weight wrapper
+
+LF2 connects LF1's ontic volume weights to projective Born-form probabilities under explicit symmetry and operational hypotheses.
+
+### What LF2 delivers
+
+1. **Measure bridge** — `π∗ μL = c · μFS` for some `c : ENNReal`, under symmetry-compatible `SectorData`. Internal proof of `G`-invariance of `π∗ μL`, then invocation of `invariant_measure_uniqueness`.
+2. **LF1 ↔ LF2 weight identity** — `μprep(π⁻¹(O_ep)) = projectiveWeight D μprep O_ep`. The structural hinge.
+3. **Combined LF1 + LF2 theorem** — `LF1_main_theorem_projective`. LF1 empirical frequency converges almost surely to the real-valued projective weight under the outcome correspondence `O.preEvent = π⁻¹(O_ep)`.
+4. **Born quadratic form** — `born_quadratic`. For unit `ψ, φ : EuclideanSpace ℂ (Fin N)`, `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ‖⟨ψ, φ⟩‖²`. Genuine Lean proof via trace-of-outer-product + `Complex.mul_conj`.
+5. **Pure-state Born weights from certainty** — `pure_state_born_weights_of_certainty`. Given an `OP` that is "certain" at `|ψ⟩`, for every unit `φ` the probability is `‖⟨ψ, φ⟩‖²`. Composes `busch_effect_gleason` + `rankOneDensity_unique_of_certainty` (now proved, no longer axiomatic) + `born_quadratic`.
+
+### LF2 axiom posture
+
+| Axiom | Role | Source |
+|---|---|---|
+| `invariant_measure_uniqueness` | `G`-invariant probability measure on `P` is unique (Fubini–Study in the concrete CSD model) | Spec-mandated (§7.4); not in Mathlib |
+| `busch_effect_gleason` | Effect-additive probability on finite-dim `N ≥ 2` admits a unique trace-form density | Spec-mandated (§7.4); not in Mathlib |
+
+`rankOneDensity_unique_of_certainty` was carried as a third axiom in earlier revisions; **now a proved theorem** (discharged 2026-05-18) via `Matrix.PosSemidef.dotProduct_mulVec_zero_iff` — `(I − P) ρ (I − P) = 0` from the certainty hypothesis, then `ρ = P ρ P = Tr(M·P) • P` via the rank-1 sandwich identity. Proof in `CsdLean4/LF2/BornWrapper.lean`.
+
+LF1 theorems remain axiom-free beyond Lean's standard triple. Several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **neither** of the two LF2 axioms.
+
+### Design choices in LF2
+
+- `SectorData` is parametric in `(SigmaSpace, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure constructed. Concrete instantiation is LF4 §8's job.
+- `μFS` is **not** a field of `SectorData`; it enters `measure_bridge` as an explicit argument, keeping `SectorData` `μFS`-agnostic.
+- `Effect` and `DensityOperator` are concrete `Matrix (Fin N) (Fin N) ℂ` structures (not opaque stubs). This gives `born_quadratic` real Lean content.
+- `Effect.add` takes the `le_one` hypothesis explicitly; avoids `Option`-valued addition.
+- Spec Def 5.1 clause 3 (unitary covariance) is **not** a field on `OperationalPackage` — the literal invariance over-constrains, the covariant reading is type-heavy. Deferred to LF4.
+
+---
+
+## LF1 — deterministic repeated-trial typicality theorem
+
+For a finite-measure ontic state space `(Σ, μL)`, measurable preparation region `Ω0 ⊂ Σ`, measurable outcome partition `{Ω_i^Σ}`, and deterministic `μL`-preserving flow `Φ_t`: LF1 studies repeated trials whose initial microstates are sampled independently from the conditional preparation measure on `Ω0`.
+
+### Headline theorem
+
+```lean
+theorem LF1_main_theorem_ae
     (T : S.TrialModel Ω)
     (O : S.OutcomeRegion)
     (hindep :
@@ -137,339 +161,173 @@ LF1_main_theorem_ae
       Tendsto (T.empiricalFreq O · ω) atTop (nhds O.weightReal)
 ```
 
-The `Function.onFun` wrapping is standard Mathlib spelling for `Pairwise` applied to a binary relation lifted along an indexing; no CSD-namespace abbreviation is introduced.
+Empirical frequencies converge `μ`-almost surely to the real-valued ontic weight under repeated preparation with **pairwise-independent trial indicators**. Pairwise independence is the only non-trivial repeated-trial hypothesis; integrability and identical distribution are automatic from the `TrialModel` structure.
 
-The theorem is stated on the repeated-trial sample space, but its physical meaning is deterministic.
+### Deterministic content
 
-The theorem is stated for a single chosen element `O : OutcomeRegion` of the outcome partition — one `Ω_i^Σ` at a time. The quantity `T.indicatorRV O j` is the indicator of a deterministic ontic event for the `j`-th trial: the `j`-th sampled microstate evolves under the measurable flow and either does or does not land in `O`. The probabilistic structure comes only from the repeated-preparation model on the initial conditions. Applying the theorem once per partition element and intersecting the resulting full-measure sets yields the joint almost-sure statement for the full partition.
+LF1 is not merely a law-of-large-numbers on an abstract probability space. The physical content is **deterministic at the ontic level**:
 
-Pairwise independence of the trial indicator random variables is therefore the **only non-trivial repeated-trial hypothesis**. Integrability and identical distribution are automatic consequences of the `TrialModel` structure.
+- Each single trial is generated by a deterministic measurable flow `Φ_t : Σ → Σ`.
+- The outcome of a single trial is determined by the initial microstate `x ∈ Σ`.
+- The outcome event is `x ∈ Φ_t⁻¹(Ω_i^Σ)`.
 
-`Preparation.lean` also provides `prepMeasure_apply`, the explicit rewriting formula
-`μprep(A) = μL(A ∩ Ω0) / μL(Ω0)`,
-as infrastructure for LF2 and later papers.
+No stochastic evolution at the ontic level. The only probabilistic ingredient is the repeated-trial preparation model. LF1 is a **deterministic typicality theorem with a probabilistic preparation model**, not an intrinsic-randomness theorem.
 
-## What LF1 proves and what it does not prove
+### Scope and limitations
 
-LF1 proves a deterministic repeated-trial typicality theorem.
+`OnticSetup` takes an abstract `SigmaSpace : Type*` — **not** specialised to `ℝ^{2n}`, a symplectic manifold, or any concrete phase space. Physical meanings:
 
-It proves that:
-
-- ontic outcomes are determined by measurable basin membership after deterministic evolution
-- repeated preparation from the conditional measure produces a repeated-trial probability model
-- empirical frequencies converge almost surely to the corresponding normalised ontic weights
-
-LF1 does not prove:
-
-- the projective measure bridge `π_* μL = c μFS`
-- the Born-form probability rule on `CP^{N-1}`
-- mixed states, POVMs, subsystem reduction, or sequential update
-- symplectic or Hamiltonian foundations beyond the abstract measurable-flow assumptions used here
-
-Thus LF1 should be understood as the machine-verified statistical backbone of deterministic volume typicality, not as the full probability layer of finite-dimensional CSD.
-
-## Scope and limitations
-
-`OnticSetup` takes an abstract measurable space `SigmaSpace : Type*` — it is **not**
-specialised to `ℝ^{2n}`, a symplectic manifold, or any other concrete phase space.
-The physical grounding of each field is:
-
-| Field | Physical meaning | Status in this formalization |
+| Field | Physical meaning | Status in v1.00 |
 |---|---|---|
 | `μL` | Liouville measure | *assumed* as a finite measure |
 | `Φ` | Hamiltonian flow | *assumed* as a measurable map |
-| `hΦ_pres` | Liouville's theorem | *assumed* as a hypothesis; structurally inert through LF3 (see `LF1/Setup.lean`) |
+| `hΦ_pres` | Liouville's theorem | *assumed*; structurally inert through LF3 (see `LF1/Setup.lean`) |
 | `Ω0` | Preparation region | *assumed* as a measurable set |
 
-Deriving these from symplectic geometry or Hamilton's equations is outside the scope
-of LF1. LF2 and later papers are expected to instantiate `OnticSetup` with a concrete
-mechanical phase space when bridging to Born weights.
+**Structural debt D1** (preparation-measure origin): `μL` is asserted as a finite measure; the flow `Φ` is asserted to preserve it; neither is derived from a symplectic / Kähler volume form in v1.00. The LF1 frequency theorem is correspondingly more general than the physical reading suggests. D1 discharges at the Lean level when LF4 instantiates `SigmaSpace` as a compact Kähler manifold and constructs `μL` from `ω^n / n!` — **partially done** by `LF4/KahlerInstance.lean`, which provides `KSigma M = ℂℙ^{M-1} × T²` with `fubiniStudyMeasure` and `vol_T²` as the concrete instance for §14.2.
 
-**Structural debt D1 (preparation-measure origin).** The "assumed" entries above are not deficiencies of the Lean tree; they carry the debt D1 from Paper A's framing in the formal apparatus. `μL` is asserted as a finite measure, the flow `Φ` is asserted to preserve it, and neither is derived from a symplectic / Kähler volume form in v1.00. The LF1 frequency theorem is correspondingly more general than the physical reading suggests: it works for any measurable `Φ`, not only `μL`-preserving ones. D1 discharges at the Lean level when LF4 instantiates `SigmaSpace` as a compact Kähler manifold and constructs `μL` from `ω^n / n!`; until then the assertion is honest structural input, not a derived property.
+---
 
-## LF2: measure bridge and Born-weight wrapper
+## Empirical — QM-validity regression suite
 
-LF2 sits directly on top of LF1. It formalises the finite-dimensional measure-and-weight interface that connects LF1's ontic volume weights to projective Born-form probabilities under explicit symmetry and operational assumptions.
+The Empirical module is a **QM-validity layer** regression suite. Each theorem proves that the standard QM formalisation produces the predicted experimental number; the proofs are linear algebra and inner-product geometry, with no ontic substrate at the proof level. CSD's foundational claim — that QM emerges from volume ratios on Σ — is verified at the **CSD-ontic layer** by the LF3 chain capstones and (now) the LF4 §14.2 carving / variance / Robertson chain.
 
-### What LF2 delivers
+### Current Empirical phases
 
-Under a `SectorData SigmaSpace P G` — the LF1 `OnticSetup` bundled with an abstract measurable projective target `P`, a measurable projection `π : Σ → P`, and a group `G` acting measurably on both with `μL`-invariance and `π`-equivariance — LF2 proves:
-
-1. **Measure bridge.** `π_* μL = c · μFS` for some `c : ENNReal`, where `μFS` is any `G`-invariant probability reference measure on `P`. LF2 proves internally that `π_* μL` is `G`-invariant (`pushforward_epAction_invariant`) and then invokes the imported invariant-measure uniqueness axiom.
-
-2. **LF1 ↔ LF2 weight identity.** `μprep(π⁻¹(O_ep)) = (π_* μprep)(O_ep)` — one line via `Measure.map_apply`. The structural hinge linking LF1's ontic weights to LF2's projective weights.
-
-3. **Combined LF1 + LF2 theorem** (`LF1_main_theorem_projective`). Under the correspondence `O.preEvent = π⁻¹(O_ep)`, the LF1 empirical frequency converges almost surely to the real-valued projective weight of `O_ep`.
-
-4. **Born quadratic form** (`born_quadratic`). For unit vectors `ψ, φ : EuclideanSpace ℂ (Fin N)`,
-   `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = ‖⟨ψ, φ⟩‖²`. Genuine Lean proof — trace-of-outer-product identity, conjugate symmetry of the inner product, and `RCLike.mul_conj`.
-
-5. **Pure-state Born weights from certainty** (`pure_state_born_weights_of_certainty`). Given an operational consistency package `OP` that is "certain" at `|ψ⟩` (i.e. `OP.p (rankOneEffect ψ hψ) = 1`), for every unit vector `φ` the probability satisfies `OP.p (rankOneEffect φ hφ) = ‖⟨ψ, φ⟩‖²`. Composes `busch_effect_gleason` + `rankOneDensity_unique_of_certainty` (now a proved theorem) + `born_quadratic`.
-
-### LF2 axiom posture
-
-LF2 has exactly **two named axioms**:
-
-| Axiom | Role | Source |
+| Phase | Predictions | Files |
 |---|---|---|
-| `invariant_measure_uniqueness` | `G`-invariant probability measure on `P` is unique (Fubini–Study in the concrete CSD model) | Spec-mandated (§7.4); not in Mathlib |
-| `busch_effect_gleason` | Effect-additive probability on finite-dim `N ≥ 2` admits a unique trace-form density | Spec-mandated (§7.4); not in Mathlib |
+| **A** (Bell) | CHSH at Tsirelson bound, classical-violation gap, no-signalling, marginals, Khalfin-Tsirelson upper bound | `Empirical/QM/Bell.lean`, `Empirical/CSD/Bell.lean` |
+| **B** (Resources) | No-cloning (Wootters-Zurek + Dieks 1982), no-deleting (Pati-Braunstein 2000), superdense coding, quantum money, Stern-Gerlach | `Empirical/QM/{NoCloning,NoDeleting,Resources/SuperdenseCoding,Crypto/QuantumMoney,SternGerlach,Uncertainty}.lean` |
+| **C** (Contextuality / Paradoxes) | Kochen-Specker 18-vector (Cabello 1996), Mermin-Peres magic square, GHZ all-or-nothing (Mermin form), Hardy non-locality | `Empirical/QM/{Contextuality/KS18,Contextuality/MerminPeres,Multipartite/GHZ,Hardy}.lean` |
+| **D** (Gates) | Single-qubit gates, two-qubit gates, Bell preparation, multi-qubit gate semantics | `Empirical/QM/Gates/*.lean` |
 
-`rankOneDensity_unique_of_certainty` (a density operator with `⟨ψ|ρ|ψ⟩ = 1` is `|ψ⟩⟨ψ|`) was carried as a third axiom in earlier revisions; it is now a proved theorem (discharged 2026-05-18 via the `Matrix.PosSemidef.dotProduct_mulVec_zero_iff` route — `(I − P) ρ (I − P) = 0` then ρ collapses on `ψ` by the rank-1 sandwich identity). The proof is in `CsdLean4/LF2/BornWrapper.lean`.
+Every Empirical theorem is **foundational-triple-only** and AxiomAudit-pinned. The CSD-side companions in `Empirical/CSD/` transport each QM-validity statement through a `CSDBridge.Context D` bundle, carrying the LF2 `SectorData` + measure-bridge data, providing the structural slot for the CSD-ontic interpretation that LF4 will eventually instantiate via `kahler_robertson_ontic_variance` and similar §14.2 mechanisms.
 
-LF1 theorems remain axiom-free beyond Lean's standard (`propext`, `Classical.choice`, `Quot.sound`). `#print axioms` on each LF2 theorem legibly names exactly which of the two axioms it cites; several LF2 theorems — including `born_quadratic` and `LF1_main_theorem_projective` — depend on **none** of them. For the full per-theorem audit see [`AXIOMS.md`](AXIOMS.md).
+### Two-layer model: QM-validity vs CSD-ontic
 
-### Design choices in LF2
+The QM-validity layer is **prerequisite** to the CSD-ontic layer. LF4 §14.2's spectral expansion + carving + integration headline + Robertson chain provides the **lifting mechanism**: any QM-validity statement about expectations and variances of bounded Hermitian observables on `EuclideanSpace ℂ (Fin N)` has a corresponding CSD-ontic statement on `KSigma M`, with the same numerical prediction realised via spectral indicator sums integrated against the preparation measure.
 
-- `SectorData` is parametric in `(SigmaSpace, P, G)`. The projective target is kept abstract — no `Projectivization`, no Fubini–Study measure is constructed. Concrete instantiation is LF4's job.
-- The reference measure `μFS` is not a field of `SectorData`; it enters `measure_bridge` as an explicit argument, keeping `SectorData` `μFS`-agnostic.
-- `Effect` and `DensityOperator` are concrete `Matrix (Fin N) (Fin N) ℂ` structures (not opaque stubs). This gives `born_quadratic` real Lean content rather than leaving it narrative.
-- `Effect.add` takes the `le_one` hypothesis `(1 - (E.M + F.M)).PosSemidef` as an explicit argument — avoids `Option`-valued addition and `Decidable (PosSemidef _)`.
-- `SectorData` carries group-action coherence fields (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`). LF2's own proofs do not consume them; they are staged for LF4 work on transitivity/orbits/Haar measure.
-- Spec Def 5.1 clause 3 (unitary covariance) is deliberately **not** added as a field on `OperationalPackage` — the literal invariance reading over-constrains, the covariant reading is type-heavy. Deferred to LF4.
+See `specs/qm-empirical-tests.md` §0.1 for the full two-layer correspondence statement, and `specs/empirical-csd-bridge-plan.md` for the CSDBridge architecture.
 
-### What LF2 does not prove
+---
 
-LF2 is a wrapper paper in the spec's sense (§1.4). It does **not** provide:
+## Genealogy
 
-- a proof of either of the two spec-mandated axioms;
-- a first-principles derivation of the Born rule;
-- a preparation-measure-to-Hilbert-vector correspondence, which is what would be needed to close the full chain from the LF1 frequency limit to `|⟨ψ, φ⟩|²` in a single theorem (deferred to LF4);
-- mixed states, POVMs, sequential measurement, or subsystem reduction (LF3/LF4/LF5 territory).
+The LLN-based typicality framing used in LF1 and the geometric quantum mechanics structure on `CP^{N-1}` consumed by LF2 match structures developed independently in the Dürr / Goldstein / Zanghì typicality line and the Kibble / Heslot / Anandan / Ashtekar-Schilling geometric quantum mechanics line. The CSD corpus uses the standard mathematical machinery shared with those programmes (measure theory, finite-dim inner-product geometry, the symplectic-Kähler structure on `CP^{N-1}`), and the Lean tree imports Mathlib accordingly. What is independently rediscovered is the **structural choice of objects**: typicality measures on the ontic phase space for LF1, the Born quadratic form on projective Hilbert space for LF2, and (as of §14.2) the eigenvalue-weighted indicator sum integrated against the fibre measure as the ontic counterpart of Hilbert expectation values. The corpus arrives at those choices from its own internal logic; convergence is offered as a credibility signal rather than a claim of priority.
 
-## LF1 ↔ LF2 interface
-
-Implemented in `CsdLean4/LF2/Interface.lean`:
-
-- `lf1_weight_eq_projective_weight (D : SectorData Σ P G) (μprep : Measure Σ) (hOep : MeasurableSet O_ep) : μprep (D.π ⁻¹' O_ep) = projectiveWeight D μprep O_ep` — the raw measure identity.
-- `LF1_main_theorem_projective` — the headline combined theorem: given LF1 trial data, an LF2 sector, and an outcome correspondence `O.preEvent = D.π ⁻¹' O_ep`, the empirical frequency converges almost surely to the projective weight (real-valued).
-
-The second is the point at which LF2 genuinely consumes LF1 at the theorem level, not merely by structural embedding.
-
-## LF3: singlet kernel, pointer-sector decomposition, and the LF1↔LF2↔LF3 empirical chain
-
-LF3 sits directly on top of LF2. It instantiates the abstract Born-weight machinery on the concrete two-qubit singlet, derives the singlet kernel `P_st(a, b) = (1 − s·t·a·b)/4` together with its four operational consequences, proves finite-leakage stability of all four, and exposes the headline LF1↔LF2↔LF3 empirical chain capstones.
-
-### What LF3 delivers
-
-1. **Singlet kernel and operational consequences** (§9.13). For Bell singlet `|ψ⁻⟩`, detector settings `a, b : DetectorSetting`, and outcome signs `s, t : Sign`:
-   - kernel `P_st(a, b) = (1 − s·t·a·b)/4`,
-   - correlation `∑ s·t·P_st = −a·b`,
-   - A- and B-marginals `1/2`,
-   - operational no-signalling on each side,
-   - pointer-completeness on each wing.
-   All eight are bundled in `LF3_main_theorem`.
-
-2. **Finite-leakage stability** (§9.13 + §7). Under per-side leakage parameters `εA, εB`, each of the four quantities (pointer-sector probability, correlation, A-marginal, B-marginal) deviates from its strong-readout value by at most `εA + εB + εA·εB` (with explicit prefactors 1, 4, 2, 2). Strong-readout exactness is the `εA = εB = 0` limit. **Packaging caveat.** The deviation bound enters as a *field* (`sectorVolume_dev`) of the `LeakageCompat` structure rather than as a derived theorem; `LF3_finite_leakage_theorem` is therefore a packaging theorem (a triangle inequality over `Sign × Sign` summing the assumed per-sector bound), not a derivation from projector / pointer hypotheses. A v2 derivation from a concrete tensor decomposition is owed (spec §9.7 / §9.11); the v1.00 statement is honest stability-from-assumption, not stability-from-first-principles.
-
-3. **Born quadratic form on the singlet.** The closed-form amplitude `cAmp s t (a, b) := √P_st` satisfies `‖cAmp‖² = P_st`. Under the rank-1 projector identity `jointSpinProj = |v⟩⟨v|` for a caller-supplied unit vector `v` (a joint spin eigenstate), `‖cAmp‖² = ‖⟨v, ψ⁻⟩‖²`.
-
-4. **LF1↔LF2↔LF3 empirical chain capstones.** Composing `LF1_main_theorem_ae` + `lf1_weight_eq_projective_weight` + `cst_squared_eq`:
-   - `LF3_singlet_frequency_convergence` — pre-Born form. Empirical frequencies of pointer outcomes `(s, t)` under repeated preparation converge almost surely to `P_st(a, b) = (1 − s·t·a·b)/4`.
-   - `LF3_singlet_frequency_convergence_born` — closed-form Born variant landing on `‖cAmp s t (a, b)‖²`.
-   - `LF3_singlet_frequency_convergence_born_inner` — physically faithful bra-ket variant landing on `‖⟨v, ψ⁻⟩‖²` for any caller-supplied joint spin eigenstate `v`.
-
-All six capstones (three per-sector + three Phase 8 joint-partition variants) consume a `PureSingletPreparation D ctx N` bundle whose load-bearing hypotheses are the option (B) split: `MeasurementJointEig.born_eq_P_st` (Born identity for joint spin eigenstates, LF4-todo §3 discharge target) and `PureSingletPreparation.bridge_op_p` (ontic-weight ↔ OP.p bridge, LF4-todo §2 + §7 discharge target). The bundle's `weight_eq_P_st` theorem composes the two via `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6).
-
-### LF3 axiom posture (post Phase 7 rewrite, 2026-05-18)
-
-`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite only the foundational triple. The six chain capstones cite the foundational triple **plus** `busch_effect_gleason`: the chain bridge now routes via OP.p (option (B) chain design — see [`specs/pre-LF4-plan.md`](specs/pre-LF4-plan.md)), and the OP.p Born identity extensionally invokes `LF2.pure_state_born_weights_of_certainty` which cites Busch. `invariant_measure_uniqueness` does not appear extensionally on the chain capstone definitions — it enters at LF4 instantiation sites that build `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` (option (b) structural propagation). This is the spec §5.4 four-ingredient combinatorial framing realised at the Lean level. The axiom posture is regression-protected by `CsdLean4/Tests/AxiomAudit.lean`, which uses `#guard_msgs` against `#print axioms` for every theorem listed in [`AXIOMS.md §5`](AXIOMS.md); the build fails on drift. The §5 shortlist is a curated subset of the full theorem inventory below — inventory entries omitted from §5 (e.g. `expectation_eq_weight`, `weights_sum_eq_one`, `singlet_pauli_correlation`) are not guard-pinned and their stated axiom column rests on review rather than build-time enforcement.
-
-### Design choices in LF3
-
-- `Sign` is a two-element inductive `| plus | minus` (spec §9.4), with `val : Sign → ℝ` giving `±1`.
-- The two-qubit factor `HAB` is `EuclideanSpace ℂ (Fin 2 × Fin 2)` (matching the indexing on `pauliDot ⊗ pauliDot`).
-- `MeasurementUnitary` carries the full and per-wing unitaries as `LinearIsometryEquiv`, encoding unitarity in the type.
-- `cAmp` is defined in closed form as `(Real.sqrt (P_st a b s t) : ℂ)`. This sidesteps the explicit construction of joint spin eigenstates; downstream theorems consume only `‖cAmp‖²`. The bra-ket equivalence is exposed via `cAmp_norm_sq_eq_inner_norm_sq` under a rank-1 projector hypothesis on `jointSpinProj`.
-- Self-adjointness on continuous linear maps is stated via the inner-product equation `∀ x y, inner ℂ (T x) y = inner ℂ x (T y)` rather than Mathlib's `IsSelfAdjoint T`. **Diagnostic at v4.29.0-rc8** (re-audited 2026-05-18): the `Star (H →L[ℂ] H)` instance requires `[CompleteSpace H]`, and Mathlib does not chain `[FiniteDimensional ℂ H] → [CompleteSpace H]` through `FiniteDimensional.proper_real` automatically. With `[CompleteSpace H]` added as an explicit typeclass argument, `IsSelfAdjoint T` works; without it, synthesis fails. The inner-product-equation spelling avoids the typeclass-burden cascade. An LF4 extraction of these structures to `Framework/` (LF4-todo §10.2) is the natural opportunity to either add `[CompleteSpace _]` arguments throughout or wait for a Mathlib instance-chain improvement.
-- `ProjectorAlgebra` is available in two forms. The abstract `ProjectorAlgebra` structure (`LF3/Projectors/Core.lean`) takes the four projection identities (self-adjointness, idempotence, mutual orthogonality, completeness) as fields, suitable for callers without a tensor decomposition of `H_SA`. A derived constructor `ProjectorAlgebra.ofTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the same structure from a `TensorEmbedding K_A K_B H_SA` (per-wing algebra-homomorphism lifts with commuting images) plus the per-wing `BinaryPointerProjectors`, with the four fields derived as theorems. The two coexist; the additive module is non-invasive. The orthogonality field is discharged via `ContinuousLinearMap.comp_complement_of_idem` (a CSD-free Cat-1 lemma at `CsdLean4/Mathlib/Topology/Algebra/Module/LinearMap.lean` staged as a Mathlib upstream candidate).
-- `MeasurementUnitary` is similarly available in two forms. The abstract structure (`LF3/Hamiltonian.lean`) carries the factorisation `u = uA ∘ uB` and the impulsive-readout eigenstate-action as fields. A derived constructor `MeasurementUnitary.ofUnitaryTensorEmbedding` in `LF3/Projectors/TensorModel.lean` builds the structure from a `UnitaryTensorEmbedding K_A K_B H_SA` (per-wing unitary lifts with commuting images) plus per-wing unitaries `vA`, `vB` and the caller-supplied eigenstate-action data, with `factorises` discharged by `rfl`. The eigenstate-action field `action` remains caller-supplied: it requires operator-exponential / Stone machinery (`exp(-iHt)`) and is explicitly an LF4-or-later carve-out per spec §9.5.
-
-### What LF3 does not prove
-
-- The preparation-to-Hilbert-vector correspondence supplying a structural `PureSingletPreparation` (LF4-todo §2; for now, callers either build the bundle from raw `μFS` + `bridge` + `PP` + `jed` + `O_region` + `bridge_op_p` field set via `PureSingletPreparation.ofHypothesis`, or wait for the LF4 constructor);
-- a projective-first outcome specification (LF4-todo §7) — partially staged via `LF2.SectorData.outcomeOfProjective` (Phase 5) which discharges the `O.preEvent = π⁻¹(O_ep)` correspondence under a Φ-π compatibility hypothesis;
-- the constructed joint spin eigenstate `jointSpinEig` and the Born identity `‖⟨singlet, jointSpinEig s t⟩‖² = P_st` (currently caller-supplied via `MeasurementJointEig.born_eq_P_st`; v2 plan: spectral decomposition of `jointSpinProj`);
-- mixed states, POVMs, subsystem reduction, sequential update (LF4/LF5 territory).
+---
 
 ## Theorem inventory
 
-Exported theorems and their dependencies. The "Axioms" column lists CSD-specific axioms beyond Lean's foundational set (`propext`, `Classical.choice`, `Quot.sound`); these are always present via Mathlib and not separately listed. For a full audit see [`AXIOMS.md`](AXIOMS.md).
+Exported theorems and their dependencies. The "Axioms" column lists CSD-specific axioms beyond Lean's foundational triple (`propext`, `Classical.choice`, `Quot.sound`); these are always present via Mathlib and not separately listed. For the full audit see [`AXIOMS.md`](AXIOMS.md).
 
-### LF1 (Paper A — deterministic repeated-trial frequency theorem)
-
-| Theorem | File | Mathematical meaning | Axioms |
-|---|---|---|---|
-| `LF1_main_theorem_ae` | `LF1/MainTheorem.lean` | Empirical frequencies converge `μ`-almost surely to the real-valued ontic weight `O.weightReal` under repeated preparation with pairwise-independent trial indicators. | none |
-| `expectation_eq_weight` | `LF1/MainTheorem.lean` | `E[𝟙_O(X_n)] = O.weightReal` for every trial `n`. | none |
-| `expectation_constant_across_trials` | `LF1/MainTheorem.lean` | `E[𝟙_O(X_n)] = E[𝟙_O(X_0)]` for every `n` (trials are identically distributed). | none |
-| `prepMeasure_apply` | `LF1/Preparation.lean` | `μprep(A) = μL(A ∩ Ω0) / μL(Ω0)` for measurable `A` (the explicit conditional measure formula). | none |
-| `weight_eq_prepEvent_div` | `LF1/Outcomes.lean` | `O.weight = μL(O.prepEvent) / μL(Ω0)`, the volume-typicality reading of `O.weightReal`. | none |
-| `trialEvent_eq_comp_preimage` | `LF1/Trials.lean` | The deterministic structure made explicit: `T.trialEvent O n = (Φ ∘ X n)⁻¹(O.Ω)`. | none |
-
-### LF2 (Paper B — sector-conditional measure bridge and Born-weight wrapper)
+### LF4 §14.2 (observable correspondence + Robertson on Kähler instance)
 
 | Theorem | File | Mathematical meaning | Axioms |
 |---|---|---|---|
-| `measure_bridge` | `LF2/MeasureBridge.lean` | `π_* μL = c · μFS` for some `c : ENNReal`, under symmetry-compatible `SectorData`. | `invariant_measure_uniqueness` |
-| `pushforward_epAction_invariant` | `LF2/MeasureBridge.lean` | The pushforward `π_* μL` is `G`-invariant under the epistemic action. | none |
-| `weights_sum_eq_one` | `LF2/Weights.lean` | Projective weights of a measurable partition of `P` sum to 1 under a probability measure. | none |
-| `born_quadratic` | `LF2/BornWrapper.lean` | `Tr(\|ψ⟩⟨ψ\| · \|φ⟩⟨φ\|) = ‖⟨ψ, φ⟩‖²` for unit vectors `ψ, φ : EuclideanSpace ℂ (Fin N)`. | none |
-| `pure_state_born_weights` | `LF2/BornWrapper.lean` | Given an operational package whose trace-form density is `\|ψ⟩⟨ψ\|`, the probability of `\|φ⟩⟨φ\|` is `‖⟨ψ, φ⟩‖²`. | none |
-| `pure_state_born_weights_of_certainty` | `LF2/BornWrapper.lean` | Strengthening: derives the density-operator hypothesis from a purity hypothesis (`OP.p (rankOneEffect ψ) = 1`). | `busch_effect_gleason` |
-| `lf1_weight_eq_projective_weight` | `LF2/Interface.lean` | `μprep(π⁻¹(O_ep)) = projectiveWeight D μprep O_ep` (the LF1↔LF2 measure-identity hinge). | none |
-| `LF1_main_theorem_projective` | `LF2/Interface.lean` | LF1 empirical frequency converges almost surely to the real-valued projective weight, under the outcome correspondence `O.preEvent = π⁻¹(O_ep)`. | none |
-| `SectorData.outcomeOfProjective` | `LF2/Interface.lean` | (Phase 5) Projective-first outcome constructor: from `Oep : Set P` measurable + flow-projection compatibility, builds an ontic `OutcomeRegion`. | none |
-| `outerProduct_phase_invariant` | `LF2/PhaseInvariance.lean` | (Phase 1) `outerProduct (c • φ) = outerProduct φ` for unit-modulus `c`. | none |
-| `effectProjFn_rankOne` | `LF2/EffectFn.lean` | (Phase 2) `effectProjFn rep (rankOneEffect φ) p = ‖⟨rep p, φ⟩‖²` — the volume-ratio Born identity on the foundational effect function. | none |
-| `MeasureBridgeData.ofSectorData` | `LF2/Preparation.lean` | (Phase 3a) Primary `MeasureBridgeData` constructor from a `SectorData` plus an invariant `μFS`; cites `measure_bridge`. | `invariant_measure_uniqueness` |
-| `OperationalPackage.fromPreparation` | `LF2/Preparation.lean` | (Phase 3c) Constructs an `OperationalPackage` from a `MeasureBridgeData` + preparation measure + caller-supplied `rep` via `effectProjFn` integration. | none |
-| `LF2.PurePreparation.OP_certain_at_ψ` | `LF2/Preparation.lean` | (Phase 4) For a `PurePreparation`, the OP built by `fromPreparation` is certain at ψ (direct Dirac evaluation). | none |
-| `LF2.PurePreparation.born_rank_one` | `LF2/Preparation.lean` | (Phase 4) `OP.p (rankOneEffect φ) = ‖⟨ψ, φ⟩‖²` for a `PurePreparation`, chain critical path via Busch packaging. | `busch_effect_gleason` |
-| `LF2.PurePreparation.born_rank_one_direct` | `LF2/Preparation.lean` | (Phase 4) Same conclusion via direct Dirac integration; volume-ratio auxiliary, no Busch. | none |
+| `hermitian_inner_spectral_expansion` | `LF4/SpectralExpansion.lean` | `⟨ψ, A ψ⟩ = ∑ᵢ (λᵢ : ℂ) · ‖⟨uᵢ, ψ⟩‖²` for Hermitian `A : Matrix (Fin N) (Fin N) ℂ`. | none |
+| `hermitian_inner_spectral_expansion_re` | `LF4/SpectralExpansion.lean` | Real-valued form: `re ⟨ψ, A ψ⟩ = ∑ᵢ λᵢ · ‖⟨uᵢ, ψ⟩‖²`. | none |
+| `fibreShiftedArc_volume` | `LF4/SpectralCarving.lean` | Shifted-anchor primitive: `vol (fibreShiftedArc c ℓ) = ofReal ℓ` for `[c, c+ℓ] ⊆ [0,1]`. | none |
+| `diracProd_spectralRegion` | `LF4/SpectralCarving.lean` | Per-region carving identity: `(Dirac p₀ ⊗ vol_T²)(spectralRegion w i) = ofReal (w i)` for nonneg `w` with `∑ w ≤ 1`. | none |
+| `integral_spectralOntic_eq_inner_re` | `LF4/SpectralCarving.lean` | Integration headline: `∫ spectralOntic dμψ = re ⟨ψ, A ψ⟩` for unit `ψ`. | none |
+| `hilbert_norm_sq_apply_hermitian` | `LF4/SpectralVariance.lean` | `‖A ψ‖² = ∑ᵢ λᵢ² · bornWeights i` for Hermitian `A`. | none |
+| `spectralVariance_eq_hilbert_norm_sq_diff` | `LF4/SpectralVariance.lean` | `spectralVariance = ‖A ψ‖² − (re ⟨A⟩)²` under unit `ψ`. | none |
+| `integral_spectralOnticCentered_eq_variance` | `LF4/SpectralVariance.lean` | `∫ spectralOnticCentered dμψ = spectralVariance` under unit `ψ`. | none |
+| `integral_spectralOnticCentered_eq_hilbert_norm_sq_diff` | `LF4/SpectralVariance.lean` | Composite: `∫ spectralOnticCentered dμψ = ‖A ψ‖² − ⟨A⟩²`. | none |
+| `QM_variance_eq_spectralVariance` | `LF4/UncertaintyKahler.lean` | Bridge: `Empirical.Uncertainty.variance A.toEuclideanLin ψ = spectralVariance hA ψ`. | none |
+| `kahler_robertson_ontic_variance` | `LF4/UncertaintyKahler.lean` | **Robertson on ontic variances**: `(∫ spectralOnticCentered hA ψ dμψ) · (∫ spectralOnticCentered hB ψ dμψ) ≥ ¼ ‖⟨ψ, [A, B] ψ⟩‖²`. | none |
+| `pauli_xy_robertson_saturation` | `LF4/PauliRobertson.lean` | First concrete witness: `σ_x, σ_y` on `|0⟩` saturates Robertson; both sides equal 1. | none |
+| `pauliDot_robertson_zPlus` | `LF4/PauliDotRobertson.lean` | Parametric: `(1 − a_z²)(1 − b_z²) ≥ (a_x b_y − a_y b_x)²` for unit-vector axes `â, b̂`. | none |
 
-### LF3 (Paper D — singlet kernel, pointer-sector decomposition, empirical chain)
+### LF3 (singlet kernel, pointer-sector decomposition, empirical chain)
 
-`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite only the foundational triple. The six chain capstones cite the foundational triple **plus** `busch_effect_gleason` post Phase 7 (the option (B) chain bridge routes via OP.p Born identity, which extensionally invokes `pure_state_born_weights_of_certainty`).
+`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite **only** the foundational triple. The six chain capstones cite **`busch_effect_gleason`** (option (B) chain bridge routes via OP.p Born identity, post Phase 7).
 
 | Theorem | File | Mathematical meaning | Axioms |
 |---|---|---|---|
-| `singlet_pauli_correlation` | `LF3/Singlet/Expectations.lean` | `⟨ψ⁻ \| σ·a ⊗ σ·b \| ψ⁻⟩ = −a·b` on the Bell singlet. | none |
-| `cst_squared_eq` | `LF3/Singlet/Kernel.lean` | `‖cAmp s t (a, b)‖² = (1 − s·t·a·b) / 4` (algebraic core of the singlet kernel). | none |
+| `singlet_pauli_correlation` | `LF3/Singlet/Expectations.lean` | `⟨ψ⁻ \| σ·a ⊗ σ·b \| ψ⁻⟩ = −a·b`. | none |
+| `cst_squared_eq` | `LF3/Singlet/Kernel.lean` | `‖cAmp s t (a, b)‖² = (1 − s·t·a·b) / 4`. | none |
 | `correlation_eq_neg_dot` | `LF3/Singlet/Kernel.lean` | `∑ s t, s·t · P_st(a, b) = −a·b`. | none |
-| `marginal_a_eq_half`, `marginal_b_eq_half` | `LF3/Singlet/Kernel.lean` | Both wing marginals of `P_st(a, b)` equal `1/2`. | none |
-| `no_signalling_strong_readout_a`, `..._b` | `LF3/Singlet/Kernel.lean` | Each wing's marginal is independent of the other wing's detector setting. | none |
-| `sectorVolume_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form sector volume equals LF2's trace-form Born weight on rank-1 effects. | none |
-| `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package: kernel, correlation, marginals, no-signalling, pointer-completeness. | none |
-| `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities with bound `εA + εB + εA·εB` (and prefactors). | none |
-| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone (per-sector): LF1 empirical frequency converges to `(1 − s·t·a·b)/4` given a `PureSingletPreparation D ctx N`. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant: lands on `‖cAmp s t (a, b)‖²`. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant: lands on `‖⟨v, ψ⁻⟩‖²` for a caller-supplied joint spin eigenstate `v`. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_joint` | `LF3/Interface.lean` | Phase 8 joint-partition variant of pre-Born capstone: `∀ᵐ ω, ∀ s t, ...`. | `busch_effect_gleason` |
+| `marginal_a_eq_half`, `marginal_b_eq_half` | `LF3/Singlet/Kernel.lean` | Both wing marginals equal `1/2`. | none |
+| `no_signalling_strong_readout_a`, `..._b` | `LF3/Singlet/Kernel.lean` | Each wing's marginal independent of the other wing's setting. | none |
+| `sectorVolume_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form sector volume = LF2 Born weight on rank-1 effects. | none |
+| `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package. | none |
+| `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities. | none |
+| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone (per-sector). | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence_joint` | `LF3/Interface.lean` | Phase 8 joint-partition variant of pre-Born capstone. | `busch_effect_gleason` |
 | `LF3_singlet_frequency_convergence_born_joint` | `LF3/Interface.lean` | Joint variant of closed-form Born capstone. | `busch_effect_gleason` |
 | `LF3_singlet_frequency_convergence_born_inner_joint` | `LF3/Interface.lean` | Joint variant of bra-ket Born capstone. | `busch_effect_gleason` |
-| `LF3.OP_p_at_jointEig_eq_P_st` | `LF3/SingletProjective.lean` | OP probability of the rank-1 sector effect equals `P_st`, given a pure preparation + measurement joint eigenstate data. Composes `LF2.PurePreparation.born_rank_one` + Born identity. | `busch_effect_gleason` |
-| `LF3.OP_p_at_jointEig_eq_P_st_direct` | `LF3/SingletProjective.lean` | Volume-ratio direct variant via `LF2.PurePreparation.born_rank_one_direct`. | none |
-| `PureSingletPreparation.weight_eq_P_st` | `LF3/PurePreparation.lean` | Convenience theorem composing `bridge_op_p` + `OP_p_at_jointEig_eq_P_st` to give the full ontic weight ↔ `P_st` identity. | `busch_effect_gleason` |
-| `PureSingletPreparation.ofHypothesis` | `LF3/PurePreparation.lean` | Transitional constructor: builds a `PureSingletPreparation D ctx N` bundle from the raw option (B) field set (μFS + bridge + PP + jed + O_region + bridge_op_p). LF4 supplies the structural constructor. | none |
-| `ProjectorAlgebra.ofTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `ProjectorAlgebra` from a `TensorEmbedding`; the four projection fields are theorems, not data. | none |
-| `MeasurementUnitary.ofUnitaryTensorEmbedding` | `LF3/Projectors/TensorModel.lean` | Constructs a `MeasurementUnitary` from a `UnitaryTensorEmbedding` plus per-wing unitaries; `factorises` discharged by `rfl`. | none |
+| `PureSingletPreparation.weight_eq_P_st` | `LF3/PurePreparation.lean` | Composes `bridge_op_p` + `OP_p_at_jointEig_eq_P_st`. | `busch_effect_gleason` |
 
-The six LF3 chain capstones consume a `PureSingletPreparation D ctx N` bundle (`LF3/PurePreparation.lean`) carrying the projective reference measure + bridge data, the static pure preparation `PP : LF2.PurePreparation`, the measurement-context joint eigenstate bundle `jed : MeasurementJointEig ctx PP.ψ`, the ontic outcome regions, and the ontic-weight ↔ OP.p bridge field `bridge_op_p`. The bundle is the LF4-todo §2 + §3 + §7 boundary in packaged form. The transitional `PureSingletPreparation.ofHypothesis` constructor accepts the raw field set so existing callers can migrate without yet having LF4 content; LF4 will supply a structural constructor `PureSingletPreparation.ofKählerPreparation` from a concrete Kähler `SectorData` instantiation.
+### LF2 (sector-conditional measure bridge and Born-weight wrapper)
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `measure_bridge` | `LF2/MeasureBridge.lean` | `π_* μL = c · μFS` for some `c : ENNReal`. | `invariant_measure_uniqueness` |
+| `pushforward_epAction_invariant` | `LF2/MeasureBridge.lean` | `π_* μL` is `G`-invariant under the epistemic action. | none |
+| `weights_sum_eq_one` | `LF2/Weights.lean` | Projective weights of a measurable partition sum to 1. | none |
+| `born_quadratic` | `LF2/BornWrapper.lean` | `Tr(\|ψ⟩⟨ψ\| · \|φ⟩⟨φ\|) = ‖⟨ψ, φ⟩‖²`. | none |
+| `pure_state_born_weights` | `LF2/BornWrapper.lean` | Density-form purity → `‖⟨ψ, φ⟩‖²`. | none |
+| `pure_state_born_weights_of_certainty` | `LF2/BornWrapper.lean` | Strengthening from a purity (certainty) hypothesis. | `busch_effect_gleason` |
+| `lf1_weight_eq_projective_weight` | `LF2/Interface.lean` | LF1 ↔ LF2 measure-identity hinge. | none |
+| `LF1_main_theorem_projective` | `LF2/Interface.lean` | LF1 frequency convergence on projective weight. | none |
+| `effectProjFn_rankOne` | `LF2/EffectFn.lean` | Volume-ratio Born identity on the foundational effect function. | none |
+| `MeasureBridgeData.ofSectorData` | `LF2/Preparation.lean` | Primary `MeasureBridgeData` constructor. | `invariant_measure_uniqueness` |
+| `LF2.PurePreparation.born_rank_one` | `LF2/Preparation.lean` | `OP.p (rankOneEffect φ) = ‖⟨ψ, φ⟩‖²` (chain critical path). | `busch_effect_gleason` |
+| `LF2.PurePreparation.born_rank_one_direct` | `LF2/Preparation.lean` | Same conclusion via direct Dirac integration; no Busch. | none |
+
+### LF1 (deterministic repeated-trial frequency theorem)
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `LF1_main_theorem_ae` | `LF1/MainTheorem.lean` | Empirical frequencies converge `μ`-almost surely to ontic weight under pairwise-independent trials. | none |
+| `expectation_eq_weight` | `LF1/MainTheorem.lean` | `E[𝟙_O(X_n)] = O.weightReal`. | none |
+| `prepMeasure_apply` | `LF1/Preparation.lean` | `μprep(A) = μL(A ∩ Ω0) / μL(Ω0)`. | none |
+| `weight_eq_prepEvent_div` | `LF1/Outcomes.lean` | `O.weight = μL(O.prepEvent) / μL(Ω0)`. | none |
+| `trialEvent_eq_comp_preimage` | `LF1/Trials.lean` | Deterministic structure: `T.trialEvent O n = (Φ ∘ X n)⁻¹(O.Ω)`. | none |
+
+---
 
 ## Repository structure
 
 ```text
 CsdLean4/
-  LF1/
-    Setup.lean              -- ontic space, μL, Φ, Ω0
-    Preparation.lean        -- conditional preparation measure + prepMeasure_apply
-    Outcomes.lean           -- outcome regions, weights
-    Trials.lean             -- TrialModel: i.i.d. repeated-trial probability space
-    Indicators.lean         -- indicatorRV, empiricalFreq
-    Expectation.lean        -- E[indicator] = weightReal bridge
-    Convergence.lean        -- strong law of large numbers application
-    MainTheorem.lean        -- LF1 main theorem and corollaries
-  LF2/
-    Setup.lean              -- SectorData: OnticSetup + π + G-action (with coherence)
-    MeasureBridge.lean      -- pushforward, invariance transfer, measure_bridge theorem
-    Weights.lean            -- MeasurablePartition, projectiveWeight, normalisation
-    BornWrapper.lean        -- Effect, DensityOperator, Busch axiom, Born quadratic,
-                            --   rankOneDensity_unique_of_certainty (proved 2026-05-18)
-    PhaseInvariance.lean    -- outerProduct / rankOneEffect / rankOneDensity phase
-                            --   invariance under unit-modulus scalar (Phase 1)
-    EffectFn.lean           -- effectProjFn volume-ratio projective effect function
-                            --   + measurability + Born rank-1 identity (Phase 2)
-    Preparation.lean        -- MeasureBridgeData + OperationalPackage.fromPreparation
-                            --   + PurePreparation + Born rank-1 theorems (Phases 3-4)
-    Interface.lean          -- LF1 ↔ LF2 identity + combined LF1+LF2 theorem
-                            --   + SectorData.outcomeOfProjective (Phase 5)
-  LF3/
-    Setup.lean              -- Sign, DetectorSetting, pauliDot, spinProj, jointSpinProj
-    Hamiltonian.lean        -- TensorFactorReadoutAlgebra, MeasurementUnitary
-    SectorSeparation.lean   -- sectorState, finalState, pointer overlaps, leakage bound
-    Projectors/
-      Core.lean             -- ProjectorAlgebra, mHat, projection field re-exports
-      SectorVolume.lean     -- sectorVolume, StrongReadoutCompat, LeakageCompat
-      LF2Interface.lean     -- sectorVolume_eq_LF2_Born (LF3 → LF2 Born-form bridge)
-      TensorModel.lean      -- TensorEmbedding, UnitaryTensorEmbedding,
-                            --   ProjectorAlgebra.ofTensorEmbedding,
-                            --   MeasurementUnitary.ofUnitaryTensorEmbedding
-    Singlet/
-      State.lean            -- singlet, singlet_norm, expectation
-      Expectations.lean     -- ⟨ψ⁻|σ·a ⊗ I|ψ⁻⟩, ⟨ψ⁻|I ⊗ σ·b|ψ⁻⟩, ⟨ψ⁻|σ·a ⊗ σ·b|ψ⁻⟩
-      Kernel.lean           -- P_st, cAmp, cst_squared_eq, correlation/marginals
-      Leakage.lean          -- finite-leakage versions of all four quantities
-    ContextMap.lean         -- MeasurementContext, GlobalCHSHAssignment, six context-form theorems
-    SingletProjective.lean  -- MeasurementJointEig bundle (joint spin eigenstate data
-                            --   with Born identity), SingletProjectiveOutcome,
-                            --   OP_p_at_jointEig_eq_P_st (Busch-mediated) + _direct
-                            --   variant (Phase 6)
-    PurePreparation.lean    -- PureSingletPreparation: option (B) bundle (Phase 7)
-                            --   carrying μFS + bridge + PP + jed + O_region + bridge_op_p
-                            --   with transitional ofHypothesis constructor +
-                            --   weight_eq_P_st convenience theorem
-    Interface.lean          -- LF3_main_theorem, LF3_finite_leakage_theorem,
-                            --   six chain capstones (three per-sector + three joint
-                            --   Phase 8 variants)
-  Empirical/                -- Two-perspective empirical-prediction tree
-                            --   per specs/empirical-csd-bridge-plan.md
-    QM/                     -- Pure linear-algebra QM-validity content
-      Bell.lean             -- Bell-family: CHSH at Tsirelson (A1), classical
-                            --   violation gap (A2), no-signalling A/B (A3, A4),
-                            --   singlet marginals (A5), Khalfin-Tsirelson
-                            --   algebraic + QM-form upper bound (A6)
-      NoCloning.lean        -- Wootters-Zurek + Dieks 1982 two-state no-cloning
-                            --   theorem stated abstractly over the tensor
-                            --   structure (Cat-2 Framework candidate)
-      Multipartite/GHZ.lean -- GHZ paradox (Mermin all-or-nothing form, D6)
-      Contextuality/KS18.lean
-                            -- Kochen-Specker (Cabello 1996 18-vector, D9)
-    CSD/                    -- CSD volume-ratio readings (Empirical/QM/ companions)
-      Framework.lean        -- Shared CSDBridgeContext bundle (LF2-only;
-                            --   carries μFS + bridge data)
-      Bell.lean             -- CSD-side Bell-family chain capstones
-                            --   (re-exports LF3 chain capstones with
-                            --   empirical-prediction framing)
-  Tests/                    -- Separate Lake target `CsdLeanTests` (not pulled
-                            --   in by `import CsdLean4`); build via
-                            --   `lake build CsdLeanTests`
-    AxiomAudit.lean         -- #guard_msgs regression suite for every theorem
-                            --   in AXIOMS.md §5; build-fails on axiom drift
-    Examples.lean           -- LF1 coin-toss OnticSetup; LF2 Born-form edge
-                            --   cases (orthogonal -> 0, same-state -> 1);
-                            --   Schrödinger cat (equal + parametric);
-                            --   LF3 chain capstone API smoke
-  Mathlib/                  -- Cat-1: CSD-free helper lemmas staged as Mathlib
-                            --   upstream candidates; declarations live in
-                            --   their natural Mathlib symbol namespace, file
-                            --   paths mirror the eventual Mathlib location
-    LinearAlgebra/Projectivization/
-      Topology.lean         -- Quotient topology + openness + IsOpenQuotientMap
-                            --   of mk' on `Projectivization K V` (Group 1 of
-                            --   the §12 plan; T2 + Compact + MeasureSpace
-                            --   deferred — see specs/projectivization-plan.md)
-    Topology/Algebra/Module/
-      LinearMap.lean        -- ContinuousLinearMap complement-of-idempotent
-                            --   lemmas; consumed by LF3/Projectors/TensorModel
-  Basic.lean                -- Pkg.Basic convenience re-export
-CsdLean4.lean               -- canonical top-level import (explicit module list)
+  LF1/                 -- ontic setup, preparation measure, outcomes, trials,
+                       --   indicators, expectation bridge, LLN application,
+                       --   LF1 main theorem and corollaries
+  LF2/                 -- SectorData, measure bridge, weights, BornWrapper,
+                       --   PhaseInvariance, EffectFn, Preparation, Interface
+  LF3/                 -- Sign, DetectorSetting, pauliDot, Hamiltonian,
+                       --   SectorSeparation, Projectors/, Singlet/,
+                       --   ContextMap, SingletProjective, PurePreparation,
+                       --   Interface
+  LF4/                 -- Instance, KahlerInstance, SingletKahler,
+                       --   SingleQubitKahler, SingletObservables, HardyKahler,
+                       --   SpectralExpansion, SpectralCarving, SpectralVariance,
+                       --   UncertaintyKahler, PauliRobertson, PauliDotRobertson,
+                       --   OnticBorn
+  Empirical/
+    QM/                -- Pure QM-validity content (no CSD ontology)
+    CSD/               -- CSD volume-ratio readings (transport bundles)
+  Tests/
+    AxiomAudit.lean    -- #guard_msgs regression suite (build-fails on drift)
+    Examples.lean      -- LF1 coin-toss, LF2 Born-form edge cases, LF3 chain smoke
+  Mathlib/             -- Cat-1: CSD-free helpers staged as Mathlib upstream candidates
+  Basic.lean           -- Pkg.Basic convenience re-export
+CsdLean4.lean          -- canonical top-level import (explicit module list)
 specs/
-  LF1-v1.01.pdf             -- LF1 preprint (canonical)
-  LF1-v1.01.txt             -- extracted plain-text sidecar
-  LF1-plan.md               -- retrospective design record
-  LF2-v1.00.pdf             -- LF2 preprint (canonical)
-  LF2-v1.00.txt             -- extracted plain-text sidecar
-  LF2-plan.md               -- implementation plan
-  LF3-v1.00.pdf             -- LF3 preprint (canonical)
-  LF3-v1.00.txt             -- extracted plain-text sidecar
-  LF3-plan.md               -- implementation plan
-  LF4-todo.md               -- twelve items deferred from LF2 / LF3 to LF4
-  pre-LF4-plan.md           -- pre-LF4 execution log (Phases 1–11)
-  projectivization-plan.md  -- LF4-todo §12: Projectivization Mathlib API plan
-  qm-empirical-tests.md     -- QM empirical-test regression suite plan
-                            --   (Phase A / B / C-paradoxes / D-algorithms)
-AXIOMS.md                   -- canonical per-theorem axiom audit
-CONVENTIONS.md              -- Three-category framing (Cat-1 Mathlib-track,
-                            --   Cat-2 Framework, Cat-3 Programme-specific)
+  LF1-v1.01.{pdf,txt,plan.md}
+  LF2-v1.00.{pdf,txt,plan.md}
+  LF3-v1.00.{pdf,txt,plan.md}
+  LF4-todo.md          -- twelve+ items deferred from LF2 / LF3 to LF4
+                       --   (§14.2 now closed; §13, §8, §1-§11 remain)
+  pre-LF4-plan.md      -- pre-LF4 execution log
+  qm-empirical-tests.md -- QM empirical regression suite plan
+  empirical-csd-bridge-plan.md -- CSDBridge architecture
+AXIOMS.md              -- per-theorem axiom audit
+CONVENTIONS.md         -- three-category framing (Cat-1 / Cat-2 / Cat-3)
+BRIDGE-OBLIGATIONS.md  -- per-Empirical-CSD-bundle obligations ledger
+PLACEHOLDERS.md        -- schema-mismatch acknowledgements
 ```
