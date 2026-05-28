@@ -62,6 +62,7 @@ import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.NoDeleting
 import CsdLean4.Empirical.CSD.Uncertainty
+import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Gates.SingleQubit

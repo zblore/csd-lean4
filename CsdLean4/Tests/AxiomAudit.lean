@@ -29,6 +29,7 @@ import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.NoDeleting
 import CsdLean4.Empirical.CSD.Uncertainty
+import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Gates.SingleQubit
@@ -503,6 +504,20 @@ info: 'CSD.Empirical.CSDBridge.Uncertainty.csd_robertson_uncertainty' depends on
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Uncertainty.csd_robertson_uncertainty
+
+-- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
+-- All six transport theorems share the same foundational-triple axiom set.
+/--
+info: 'CSD.Empirical.CSDBridge.SternGerlach.csd_sg_born_xPlus_zPlus' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlach.csd_sg_born_xPlus_zPlus
+
+/--
+info: 'CSD.Empirical.CSDBridge.SternGerlach.csd_sg_born_x_basis_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlach.csd_sg_born_x_basis_complete
 
 /--
 info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depends on axioms: [propext,

@@ -111,6 +111,14 @@ realised as Σ-flows; §14 is about self-adjoint operators realised
 as measurable Σ-valued functions. One discharge does not subsume the
 other.
 
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.SternGerlach.CSDSternGerlachBundle` | (whole bundle's CSD-realisability content) | The spin-1/2 SG configuration -- prep `|+_z⟩`, measurements in the `Z` and `X` bases -- is realised through CSD's ontic substrate via the §14 observable correspondence applied to `σ_z` and `σ_x`. | §14 |
+
+The SG bundle is a **tag bundle** (no fields beyond `Context D`); its
+existence is the realisability assertion. Same §14 discharge route
+as the uncertainty bundle.
+
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 
 Used by `Empirical/CSD/Contextuality/KS18.lean`.
