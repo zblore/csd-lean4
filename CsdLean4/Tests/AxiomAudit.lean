@@ -19,6 +19,7 @@ import CsdLean4.LF4.SpectralExpansion
 import CsdLean4.LF4.SpectralCarving
 import CsdLean4.LF4.SpectralVariance
 import CsdLean4.LF4.UncertaintyKahler
+import CsdLean4.LF4.PauliRobertson
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -940,6 +941,11 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.kahler_robertson_ontic_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.kahler_robertson_ontic_variance
+
+-- LF4 §14.2 concrete instance: σ_x, σ_y Robertson saturation on |0⟩.
+/-- info: 'CSD.LF4.pauli_xy_robertson_saturation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pauli_xy_robertson_saturation
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,

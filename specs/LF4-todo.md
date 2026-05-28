@@ -747,6 +747,37 @@ any concrete pair of bounded Hermitian observables.
 Two additional AxiomAudit pins (`QM_variance_eq_spectralVariance` and
 `kahler_robertson_ontic_variance`); both foundational triple.
 
+**First concrete witness (DONE 2026-05-28).** `CsdLean4/LF4/PauliRobertson.lean`
+instantiates `kahler_robertson_ontic_variance` for the canonical textbook
+example — Pauli observables `σ_x, σ_y` on the spin-up state `|0⟩`:
+
+- `pauliX`, `pauliY` defined as raw `Matrix (Fin 2) (Fin 2) ℂ`.
+- `pauliX_isHermitian`, `pauliY_isHermitian` via direct entry-wise
+  `Matrix.conjTranspose_apply` + `Complex.conj_I` + `star_neg`.
+- `pauliX_apply_zPlusVec : pauliX · |0⟩ = |1⟩`, `pauliX_apply_zMinusVec : |1⟩ → |0⟩`.
+- `pauliY_apply_zPlusVec : pauliY · |0⟩ = i·|1⟩`, `pauliY_apply_zMinusVec : |1⟩ → -i·|0⟩`.
+- Expectations `⟨0,σ_x 0⟩ = ⟨0,σ_y 0⟩ = 0` via `zPlus_expectation` +
+  matrix `(0,0)` entries.
+- Norm-squareds `‖σ_x|0⟩‖² = ‖σ_y|0⟩‖² = 1` via `‖|1⟩‖ = 1` and `‖i‖ = 1`.
+- Spectral variances `spectralVariance hA |0⟩ = 1` for both, via
+  `spectralVariance_eq_hilbert_norm_sq_diff`.
+- Ontic integrals `∫ spectralOnticCentered hA |0⟩ dμψ = 1` for both, via
+  `integral_spectralOnticCentered_eq_variance`.
+- Commutator action `[σ_x, σ_y] |0⟩ = 2i·|0⟩` via two-step composition
+  (σ_x σ_y |0⟩ = i|0⟩, σ_y σ_x |0⟩ = -i|0⟩, subtract).
+- Commutator inner `⟨0, [σ_x, σ_y] 0⟩ = 2i` via `inner_smul_right` +
+  `inner_self_eq_norm_sq_to_K` + `‖|0⟩‖ = 1`.
+- Commutator norm-squared `‖2i‖² = 4` via `Complex.norm_I` + `norm_mul`.
+- **HEADLINE** `pauli_xy_robertson_saturation`:
+    `(∫ spectralOnticCentered σ_x |0⟩ dμψ) · (∫ spectralOnticCentered σ_y |0⟩ dμψ)
+      = (1/4) · ‖⟨0, [σ_x, σ_y] 0⟩‖² = 1`.
+  Both sides equal `1`; the inequality of `kahler_robertson_ontic_variance`
+  is saturated to equality. `|0⟩` is a minimum-uncertainty state for the
+  pair `(σ_x, σ_y)` — the canonical textbook example, realised at the
+  ontic level on the Kähler instance.
+
+AxiomAudit pin: `pauli_xy_robertson_saturation` (foundational triple).
+
 ---
 
 ### 14 — original framing (pre-discharge)
