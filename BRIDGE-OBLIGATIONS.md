@@ -114,6 +114,7 @@ other.
 | Bundle | Field | What it asserts | LF4-todo |
 |---|---|---|---|
 | `Empirical.CSDBridge.SternGerlach.CSDSternGerlachBundle` | (whole bundle's CSD-realisability content) | The spin-1/2 SG configuration -- prep `|+_z⟩`, measurements in the `Z` and `X` bases -- is realised through CSD's ontic substrate via the §14 observable correspondence applied to `σ_z` and `σ_x`. | §14 |
+| `Empirical.CSDBridge.SuperdenseCoding.CSDSuperdenseCodingBundle` | (whole bundle's CSD-realisability content) | The three encoding unitaries `X⊗I`, `Z⊗I`, `XZ⊗I` on the 2-qubit space are realised as Σ²-flows (§13.2), and the four Bell-state projectors are realised via §14. | §13.2 + §14 |
 
 The SG bundle is a **tag bundle** (no fields beyond `Context D`); its
 existence is the realisability assertion. Same §14 discharge route
