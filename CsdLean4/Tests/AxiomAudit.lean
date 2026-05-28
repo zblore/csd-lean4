@@ -12,6 +12,7 @@ import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.SingletKahler
+import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -825,6 +826,18 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.ofKählerPreparation_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ofKählerPreparation_singlet_frequency_convergence
+
+-- LF4 §14 discharge (projector observables, single-qubit Stern-Gerlach):
+-- the Hilbert ↔ ontic-measure identity, foundational triple only.
+/-- info: 'CSD.LF4.sg_observable_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.sg_observable_correspondence
+
+-- The non-vacuous LF3-chain Stern-Gerlach capstone (N = 2 analog of
+-- ofKählerPreparation_singlet_frequency_convergence). Foundational triple only.
+/-- info: 'CSD.LF4.sg_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.sg_frequency_convergence
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,

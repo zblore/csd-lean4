@@ -545,10 +545,57 @@ cone-symplectomorphism lemma.
 
 ## 14. Observable correspondence (added 2026-05-28)
 
-**Status:** New realisability obligation, distinct from §13. Carried by
+**Status:** **PROJECTOR-LEVEL DISCHARGE DONE 2026-05-28**
+(`CsdLean4/LF4/SingleQubitKahler.lean`). Full self-adjoint case via
+spectral decomposition remains; the projector case suffices for the
+Stern-Gerlach LF3-chain lift, which is the concrete payoff.
+
+New realisability obligation, distinct from §13. Carried by
 `Empirical.CSDBridge.Uncertainty.CSDUncertaintyBundle` in
-`CsdLean4/Empirical/CSD/Uncertainty.lean`. Pre-LF4 structural; post-LF4
-a discharge target.
+`CsdLean4/Empirical/CSD/Uncertainty.lean` and four other §14-dependent
+CSD bridge bundles (SternGerlach, SuperdenseCoding's Bell-projector
+half, MerminPeres, Hardy).
+
+### 14.1 Projector-level discharge (DONE 2026-05-28)
+
+`CsdLean4/LF4/SingleQubitKahler.lean` discharges §14 for **single-qubit
+projector observables on the `|+z⟩` preparation**:
+
+- `sg_observable_correspondence (s : Sign) (a : DetectorSetting)`:
+  `inner ℂ zPlusVec (toEuclideanLin (spinProj s a) zPlusVec)
+       = ((sgMuPsi (sgRegion s a)).toReal : ℂ)`.
+  Both sides equal `sgBorn s a := (1 + s · a_z)/2`; the Hilbert side
+  via the `(0,0)` entry of `spinProj s a`, the ontic side via the
+  carving identity `sgMuPsi_sgRegion`. Foundational triple only.
+
+- `sg_frequency_convergence (s a) (X) (hX) (hlaw) (hindep)`: the
+  **non-vacuous LF3-chain Stern-Gerlach capstone**. For i.i.d. trials
+  with the posited fibre law `sgMuPsi`, empirical frequencies converge
+  a.s. to `(1 + s · a_z)/2`. Parallel to
+  `ofKählerPreparation_singlet_frequency_convergence` at `N = 4`, but
+  at the single-qubit level (`N = 2`) and via direct
+  `freq_tendsto_of_iid` + carving (no Busch routing, so the chain is
+  Busch-free at this layer; the LF3 singlet chain still routes via
+  Busch through `pure_state_born_weights_of_certainty`).
+
+The Stern-Gerlach bridge bundle in `Empirical/CSD/SternGerlach.lean`
+is now non-vacuous in the strong sense: the LF3 chain has a concrete
+exhibited inhabitant. AxiomAudit-pinned (both theorems, foundational
+triple).
+
+### 14.2 General self-adjoint case (open)
+
+The projector discharge lifts to arbitrary bounded self-adjoint
+observables by spectral decomposition `A = ∑ λᵢ Pᵢ` (Mathlib has the
+spectral theorem for Hermitian matrices via
+`Matrix.IsHermitian.spectralTheorem`). Linearity of integration in
+`μψ` + Hilbert linearity in the `Pᵢ` gives the general identity. Not
+formalised here; deferred until a concrete consumer needs it (Uncertainty
+on a specific bounded `A, B` pair would be the natural call site).
+
+---
+
+### 14 — original framing (pre-discharge)
 
 **Claim.** A self-adjoint Hilbert operator `A : H →ₗ[ℂ] H` arises as the
 Hilbert-space lift of a measurable function `A_ontic : Σ → ℝ`, with the

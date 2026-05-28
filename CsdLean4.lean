@@ -45,6 +45,7 @@ import CsdLean4.LF3.Interface
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.SingletKahler
+import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
