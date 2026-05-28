@@ -178,6 +178,14 @@ lemma hardyBorn_AB_in_Icc : hardyBorn_AB ∈ Set.Icc (0 : ℝ) 1 := by
 lemma hardyBorn_zero_in_Icc : (0 : ℝ) ∈ Set.Icc (0 : ℝ) 1 := by
   constructor <;> norm_num
 
+lemma hardyBorn_AB_nonneg : 0 ≤ hardyBorn_AB := hardyBorn_AB_in_Icc.1
+lemma hardyBorn_AB'minus_nonneg : 0 ≤ hardyBorn_AB'minus := by
+  unfold hardyBorn_AB'minus; exact le_refl 0
+lemma hardyBorn_A'minus_B_nonneg : 0 ≤ hardyBorn_A'minus_B := by
+  unfold hardyBorn_A'minus_B; exact le_refl 0
+lemma hardyBorn_A'_B'_nonneg : 0 ≤ hardyBorn_A'_B' := by
+  unfold hardyBorn_A'_B'; exact le_refl 0
+
 /-! #### The four Hardy outcome regions -/
 
 /-- Outcome region for `(A=+1, B=+1)`: a fibre arc of measure `1/12`. -/
@@ -342,6 +350,211 @@ theorem hardy_freq_convergence_A'_B'
         atTop
         (nhds hardyBorn_A'_B') :=
   hardy_freq_convergence hardyBorn_zero_in_Icc hX hlaw hindep
+
+/-! ### Phase E: QM ↔ LF4 amplitude loop — Hilbert Born identities
+
+Closes the loop between the posited Hardy Born values (1/12, 0, 0, 0) and
+the Hilbert quantities `‖⟨hardyPsi, |a ⊗ b⟩‖²` for the four Hardy joint
+outcomes. Each Hardy Born value is shown to equal a Hilbert inner-product
+squared, by direct entry computation through `hardyVecE_ofLp_*` and
+`LinearIsometryEquiv.inner_map_map` (the `kReindex` transport).
+
+The four joint outcome vectors are the QM `Empirical/QM/Hardy.lean`
+`zPlus, xPlus, xMinus` (single-qubit eigenstates of `Z` and `X`) tensored
+and normalised:
+
+| Outcome           | Joint state (unnormalised)            | Normalisation |
+|-------------------|----------------------------------------|---------------|
+| `(A=+1, B=+1)`    | `|00⟩`                                | `1` (already unit) |
+| `(A=+1, B'=−1)`   | `|0⟩ ⊗ (−|0⟩ + |1⟩)`                  | `1/√2` |
+| `(A'=−1, B=+1)`   | `(−|0⟩ + |1⟩) ⊗ |0⟩`                  | `1/√2` |
+| `(A'=+1, B'=+1)`  | `(|0⟩ + |1⟩) ⊗ (|0⟩ + |1⟩)`           | `1/2` |
+
+These are re-indexed via `kReindex` from `EuclideanSpace ℂ (Fin 2 × Fin 2)`
+to `EuclideanSpace ℂ (Fin 4)`, matching `hardyPsi`.
+
+The four Born identities use the explicit `hardyVecE` entries
+`(1, 1, 1, −3)`; the algebra agrees with the QM-side `hardyAmp_*`
+theorems (`= 1, 0, 0, 0` for the unnormalised amplitudes; after
+normalisation `‖inner‖² = 1/12, 0, 0, 0` matching `hardyBorn_*`). -/
+
+/-! #### Four Hardy joint outcome vectors -/
+
+/-- Joint outcome `|00⟩` in `EuclideanSpace ℂ (Fin 4)`. -/
+noncomputable def hardyOutcome_AB : EuclideanSpace ℂ (Fin 4) :=
+  kReindex (EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ))
+
+/-- Joint outcome `|0⟩ ⊗ (1/√2)(−|0⟩ + |1⟩) = (1/√2)(−|00⟩ + |01⟩)`. -/
+noncomputable def hardyOutcome_AB'minus : EuclideanSpace ℂ (Fin 4) :=
+  ((Real.sqrt 2 : ℂ))⁻¹ •
+    kReindex (- EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
+              + EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ))
+
+/-- Joint outcome `(1/√2)(−|0⟩ + |1⟩) ⊗ |0⟩ = (1/√2)(−|00⟩ + |10⟩)`. -/
+noncomputable def hardyOutcome_A'minus_B : EuclideanSpace ℂ (Fin 4) :=
+  ((Real.sqrt 2 : ℂ))⁻¹ •
+    kReindex (- EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
+              + EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ))
+
+/-- Joint outcome `(1/√2)(|0⟩+|1⟩) ⊗ (1/√2)(|0⟩+|1⟩) =
+`(1/2)(|00⟩+|01⟩+|10⟩+|11⟩)`. -/
+noncomputable def hardyOutcome_A'_B' : EuclideanSpace ℂ (Fin 4) :=
+  ((2 : ℂ))⁻¹ •
+    kReindex (EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
+            + EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ)
+            + EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ)
+            + EuclideanSpace.single ((1, 1) : Fin 2 × Fin 2) (1 : ℂ))
+
+/-! #### Four Hilbert Born identities
+
+Each `‖⟨hardyPsi, hardyOutcome_*⟩‖² = hardyBorn_*` by direct computation.
+The inner product on `EuclideanSpace ℂ (Fin 4)` reduces (via `kReindex`
+isometry transport) to an inner product on `EuclideanSpace ℂ (Fin 2 × Fin 2)`,
+which is a sum of `hardyVecE`'s explicit entries against the joint
+outcome's `EuclideanSpace.single` components. -/
+
+/-- Helper: `inner ℂ hardyVecE (single i 1) = star (hardyVecE.ofLp i)`,
+giving the four explicit values via the entry lemmas. -/
+private lemma inner_hardyVecE_single_apply
+    (i : Fin 2 × Fin 2) :
+    inner ℂ hardyVecE (EuclideanSpace.single i (1 : ℂ))
+      = (starRingEnd ℂ) (hardyVecE.ofLp i) := by
+  rw [← inner_conj_symm, EuclideanSpace.inner_single_left]
+  simp
+
+private lemma inner_hardyVecE_single_00 :
+    inner ℂ hardyVecE (EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ))
+      = (1 : ℂ) := by
+  rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_00]; simp
+
+private lemma inner_hardyVecE_single_01 :
+    inner ℂ hardyVecE (EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ))
+      = (1 : ℂ) := by
+  rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_01]; simp
+
+private lemma inner_hardyVecE_single_10 :
+    inner ℂ hardyVecE (EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ))
+      = (1 : ℂ) := by
+  rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_10]; simp
+
+private lemma inner_hardyVecE_single_11 :
+    inner ℂ hardyVecE (EuclideanSpace.single ((1, 1) : Fin 2 × Fin 2) (1 : ℂ))
+      = (-3 : ℂ) := by
+  rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_11]
+  -- Goal: (starRingEnd ℂ) (-3 : ℂ) = -3
+  -- `(-3 : ℂ) = ((-3 : ℝ) : ℂ)`; conj of real = real.
+  rw [show ((-3 : ℂ)) = (((-3 : ℝ)) : ℂ) by push_cast; ring,
+      Complex.conj_ofReal]
+
+/-- Helper: `star ((√12 : ℂ)⁻¹) = (√12 : ℂ)⁻¹` (real number is self-conjugate). -/
+private lemma conj_sqrt12_inv :
+    (starRingEnd ℂ) ((Real.sqrt 12 : ℂ))⁻¹ = ((Real.sqrt 12 : ℂ))⁻¹ := by
+  rw [map_inv₀, Complex.conj_ofReal]
+
+/-- `‖((√12 : ℂ))⁻¹‖² = 1/12`. -/
+private lemma sqrt12_inv_normSq :
+    ‖((Real.sqrt 12 : ℂ))⁻¹‖ ^ 2 = 1 / 12 := by
+  rw [norm_inv, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
+      Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 12)]
+  norm_num
+
+/-- **Hardy Hilbert Born identity 1**: `‖⟨hardyPsi, |00⟩⟩‖² = 1/12` (the
+positive coincidence). -/
+theorem hardyBorn_AB_eq_inner_sq :
+    ‖inner ℂ hardyPsi hardyOutcome_AB‖ ^ 2 = hardyBorn_AB := by
+  unfold hardyPsi hardyOutcome_AB hardyBorn_AB
+  rw [inner_smul_left, LinearIsometryEquiv.inner_map_map,
+      inner_hardyVecE_single_00, mul_one, conj_sqrt12_inv]
+  exact sqrt12_inv_normSq
+
+/-- Helper: the (−|00⟩ + |01⟩) outcome's inner with hardyVecE vanishes. -/
+private lemma inner_hardyVecE_AB'minus_raw :
+    inner ℂ hardyVecE
+        (- EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
+         + EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ)) = (0 : ℂ) := by
+  rw [inner_add_right, inner_neg_right,
+      inner_hardyVecE_single_00, inner_hardyVecE_single_01]
+  ring
+
+private lemma inner_hardyVecE_A'minus_B_raw :
+    inner ℂ hardyVecE
+        (- EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
+         + EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ)) = (0 : ℂ) := by
+  rw [inner_add_right, inner_neg_right,
+      inner_hardyVecE_single_00, inner_hardyVecE_single_10]
+  ring
+
+private lemma inner_hardyVecE_A'_B'_raw :
+    inner ℂ hardyVecE
+        (EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
+       + EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ)
+       + EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ)
+       + EuclideanSpace.single ((1, 1) : Fin 2 × Fin 2) (1 : ℂ)) = (0 : ℂ) := by
+  rw [inner_add_right, inner_add_right, inner_add_right,
+      inner_hardyVecE_single_00, inner_hardyVecE_single_01,
+      inner_hardyVecE_single_10, inner_hardyVecE_single_11]
+  ring
+
+/-- **Hardy Hilbert Born identity 2**: `‖⟨hardyPsi, |0⟩⊗(−|0⟩+|1⟩)/√2⟩‖² = 0`. -/
+theorem hardyBorn_AB'minus_eq_inner_sq :
+    ‖inner ℂ hardyPsi hardyOutcome_AB'minus‖ ^ 2 = hardyBorn_AB'minus := by
+  unfold hardyPsi hardyOutcome_AB'minus hardyBorn_AB'minus
+  rw [inner_smul_left, inner_smul_right, LinearIsometryEquiv.inner_map_map,
+      inner_hardyVecE_AB'minus_raw]
+  simp
+
+/-- **Hardy Hilbert Born identity 3**: `‖⟨hardyPsi, (−|0⟩+|1⟩)/√2 ⊗ |0⟩⟩‖² = 0`. -/
+theorem hardyBorn_A'minus_B_eq_inner_sq :
+    ‖inner ℂ hardyPsi hardyOutcome_A'minus_B‖ ^ 2 = hardyBorn_A'minus_B := by
+  unfold hardyPsi hardyOutcome_A'minus_B hardyBorn_A'minus_B
+  rw [inner_smul_left, inner_smul_right, LinearIsometryEquiv.inner_map_map,
+      inner_hardyVecE_A'minus_B_raw]
+  simp
+
+/-- **Hardy Hilbert Born identity 4** (load-bearing): `‖⟨hardyPsi, |++⟩⟩‖² = 0`.
+Uses all four `hardyVecE` entries `(1, 1, 1, −3)`; sum `1 + 1 + 1 − 3 = 0`. -/
+theorem hardyBorn_A'_B'_eq_inner_sq :
+    ‖inner ℂ hardyPsi hardyOutcome_A'_B'‖ ^ 2 = hardyBorn_A'_B' := by
+  unfold hardyPsi hardyOutcome_A'_B' hardyBorn_A'_B'
+  rw [inner_smul_left, inner_smul_right, LinearIsometryEquiv.inner_map_map,
+      inner_hardyVecE_A'_B'_raw]
+  simp
+
+/-! ### Full §14 observable correspondence for the four Hardy outcomes
+
+Composing the Hilbert Born identities (Phase E above) with the carving
+identities (Phase B), each Hardy Born value equals **both** the Hilbert
+inner-product squared **and** the ontic measure of the carved outcome
+region. The §14 correspondence for Hardy at the projector level. -/
+
+/-- **Hardy §14 observable correspondence (A=+1, B=+1).** -/
+theorem hardy_observable_correspondence_AB :
+    ‖inner ℂ hardyPsi hardyOutcome_AB‖ ^ 2 = (hardyMuPsi hardyRegion_AB).toReal := by
+  rw [hardyBorn_AB_eq_inner_sq, hardyMuPsi_hardyRegion_AB,
+      ENNReal.toReal_ofReal hardyBorn_AB_in_Icc.1]
+
+/-- **Hardy §14 observable correspondence (A=+1, B'=−1).** -/
+theorem hardy_observable_correspondence_AB'minus :
+    ‖inner ℂ hardyPsi hardyOutcome_AB'minus‖ ^ 2
+      = (hardyMuPsi hardyRegion_AB'minus).toReal := by
+  rw [hardyBorn_AB'minus_eq_inner_sq, hardyMuPsi_hardyRegion_AB'minus,
+      ENNReal.toReal_ofReal hardyBorn_AB'minus_nonneg]
+
+/-- **Hardy §14 observable correspondence (A'=−1, B=+1).** -/
+theorem hardy_observable_correspondence_A'minus_B :
+    ‖inner ℂ hardyPsi hardyOutcome_A'minus_B‖ ^ 2
+      = (hardyMuPsi hardyRegion_A'minus_B).toReal := by
+  rw [hardyBorn_A'minus_B_eq_inner_sq, hardyMuPsi_hardyRegion_A'minus_B,
+      ENNReal.toReal_ofReal hardyBorn_A'minus_B_nonneg]
+
+/-- **Hardy §14 observable correspondence (A'=+1, B'=+1).** The
+load-bearing zero. -/
+theorem hardy_observable_correspondence_A'_B' :
+    ‖inner ℂ hardyPsi hardyOutcome_A'_B'‖ ^ 2
+      = (hardyMuPsi hardyRegion_A'_B').toReal := by
+  rw [hardyBorn_A'_B'_eq_inner_sq, hardyMuPsi_hardyRegion_A'_B',
+      ENNReal.toReal_ofReal hardyBorn_A'_B'_nonneg]
 
 end LF4
 end CSD

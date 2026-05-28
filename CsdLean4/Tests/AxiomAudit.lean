@@ -872,6 +872,17 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.hardy_freq_convergence_A'_B'
 
+-- Hardy §14 observable correspondence (Hilbert ↔ ontic): closes the QM ↔ LF4
+-- amplitude loop. Headline pin (the positive-coincidence Hilbert ↔ ontic match)
+-- + the load-bearing zero observable correspondence.
+/-- info: 'CSD.LF4.hardy_observable_correspondence_AB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hardy_observable_correspondence_AB
+
+/-- info: 'CSD.LF4.hardy_observable_correspondence_A'_B'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hardy_observable_correspondence_A'_B'
+
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
 -- beyond the foundational triple).
