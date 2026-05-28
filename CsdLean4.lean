@@ -67,6 +67,7 @@ import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
+import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit

@@ -33,6 +33,7 @@ import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
+import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Gates.SingleQubit
@@ -546,6 +547,12 @@ info: 'CSD.Empirical.CSDBridge.MerminPeres.no_csd_mermin_peres_assignment' depen
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.MerminPeres.no_csd_mermin_peres_assignment
+
+/--
+info: 'CSD.Empirical.CSDBridge.Hardy.no_csd_hardy_assignment' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Hardy.no_csd_hardy_assignment
 
 /--
 info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depends on axioms: [propext,

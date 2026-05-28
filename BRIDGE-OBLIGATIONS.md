@@ -117,6 +117,7 @@ other.
 | `Empirical.CSDBridge.SternGerlach.CSDSternGerlachBundle` | (whole bundle's CSD-realisability content) | The spin-1/2 SG configuration -- prep `|+_z⟩`, measurements in the `Z` and `X` bases -- is realised through CSD's ontic substrate via the §14 observable correspondence applied to `σ_z` and `σ_x`. | §14 |
 | `Empirical.CSDBridge.SuperdenseCoding.CSDSuperdenseCodingBundle` | (whole bundle's CSD-realisability content) | The three encoding unitaries `X⊗I`, `Z⊗I`, `XZ⊗I` on the 2-qubit space are realised as Σ²-flows (§13.2), and the four Bell-state projectors are realised via §14. | §13.2 + §14 |
 | `Empirical.CSDBridge.MerminPeres.CSDMerminPeresBundle` | (whole bundle's CSD-realisability content) | The 9 two-qubit Pauli observables in the Mermin–Peres 3×3 grid are realised as measurable Σ→ℤ functions through §14, with the carried `lambda` representing the ontic values. | §14 |
+| `Empirical.CSDBridge.Hardy.CSDHardyBundle` | (whole bundle's CSD-realisability content) | The four Alice/Bob Pauli observables (`A`, `A'`, `B`, `B'`) in the Hardy 9% paradox are realised via §14; the carried `p` represents the joint `μψ`-measure of outcome quadruples. | §14 |
 
 The SG bundle is a **tag bundle** (no fields beyond `Context D`); its
 existence is the realisability assertion. Same §14 discharge route
