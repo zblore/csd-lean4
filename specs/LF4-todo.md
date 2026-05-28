@@ -225,10 +225,55 @@ inhabits the same model as `ontic_born_frequency`: a posited fibre measure pushi
 a Dirac on `[ψ]`, with the continuous measure bridge living on the ambient `μL`
 separately — no contradiction.
 
+**Constructor DONE (2026-05-28).** The full `ofKählerPreparation` tranche
+landed: a concrete `LF3.PureSingletPreparation` for the singlet on the
+non-trivial-fibre compact-Kähler instance `Σ = ℂℙ³ × T²`, with every
+load-bearing field discharged as a **theorem**.
+
+The four committed modules:
+
+- `CsdLean4/LF3/Singlet/JointProjector.lean` — `singlet_jointSpinProj_expectation`,
+  the genuine Born identity `⟨ψ⁻|Πˢ(a)⊗Πᵗ(b)|ψ⁻⟩ = P_st`, proved from matrix
+  entries. Foundational triple.
+- `CsdLean4/LF3/Singlet/JointEig.lean` — `singletJointEig s t` (the actual
+  normalised projection eigenstate) with `singletJointEig_norm`,
+  `singletJointEig_born` (the joint-spin Born identity for genuine eigenvectors),
+  `singletJointEig_orthogonal` — all theorems. Foundational triple.
+- `CsdLean4/LF4/KahlerInstance.lean` — `kSectorData : SectorData (ℂℙ^{N-1} × T²) …`,
+  the first non-trivial-fibre, genuinely compact-Kähler `SectorData`;
+  `k_measure_bridge : π∗μL = μFS` (`c = 1`), axiom-free marginal bridge via
+  `Measure.fst_prod`. Foundational triple.
+- `CsdLean4/LF4/SingletKahler.lean` — `ofKählerPreparation`, the constructor:
+  re-index isometry `Fin 2×Fin 2 → Fin 4`, the `AddCircle` arc carving
+  (`fibreArc_volume = ENNReal.ofReal ℓ` for `ℓ ∈ [0,1]`), the constant
+  representative `rep := singletPsi` (Dirac integration makes the value at
+  `ray_point` the only one that matters — no measurable-section rabbit hole),
+  the axiom-free `kBridge`, the `MeasurementJointEig` assembly, and
+  `bridge_op_p` proved Busch-free via `born_rank_one_direct` +
+  `kMuPsi_kRegion` + `kEig_born`. Foundational triple. AxiomAudit-pinned.
+- Concrete capstone `ofKählerPreparation_singlet_frequency_convergence`:
+  applies `LF3_singlet_frequency_convergence` to the constructed prep,
+  giving a non-parametric a.s. statement; cites
+  `[propext, Classical.choice, Quot.sound, busch_effect_gleason]`.
+
+Restricted to **generic contexts** `|a·b| < 1` (all four `P_st > 0`);
+all Bell-test settings qualify.
+
+The LF3 chain is now **non-vacuous on a genuinely compact-Kähler `Σ`**: the
+capstone has a concrete exhibited inhabitant.
+
+**Honest framing (Tier-2, per the 2026-05-25 "correct, not vacuous" call).**
+`bridge_op_p` holds because the outcome regions are *carved* to fibre-volume
+`P_st`. This realises Paper B's eq-12 (Born = volume ratio) concretely on a
+compact-Kähler manifold, but does not *derive* `P_st` from independent
+geometry. The Kähler dressing is a faithful realisation, not a derivation.
+
 **Still open (the genuinely hard part):** deriving the outcome regions / the fibre
-measure from deterministic dynamics so the Born weights come out *without* positing
-`h_bridge` (Sigma0 §5/§9.5). The capstone is conditional on operational consistency,
-which is the legitimate stopping line (no theory derives its own objects).
+measure from deterministic dynamics so the Born weights come out *without* the
+construction encoding them (the constraint-surface-dynamics content;
+Sigma0 §5/§9.5; Papers C/D / TN-series). The capstone is conditional on
+operational consistency, which is the legitimate stopping line (no theory
+derives its own objects).
 
 **Original pickup notes (for the deeper realisation):**
 1. In LF4, take `SigmaSpace := ` a specific phase space (or continue abstract).
