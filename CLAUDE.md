@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 
 ```bash
-# Build the library (CsdLean4 target — LF1/LF2/LF3, no tests)
+# Build the library (CsdLean4 target — LF1/LF2/LF3/LF4/Empirical/Mathlib, no tests)
 lake build
 
 # Build the test target (AxiomAudit + Examples; required to fire #guard_msgs)
@@ -14,9 +14,12 @@ lake build CsdLeanTests
 # Check a single file
 lake env lean CsdLean4/LF1/MainTheorem.lean
 
-# Update dependencies (after editing lakefile.lean)
+# Update dependencies (after editing lakefile.toml)
 lake update
 ```
+
+The build configuration lives in `lakefile.toml` (not `lakefile.lean`); Mathlib
+is pinned by `rev` there, bumped in lockstep with `lean-toolchain`.
 
 The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` plus a clean `lake build CsdLeanTests` with no errors and no `sorry`s constitutes a verified proof plus a green regression suite.
 
@@ -24,7 +27,21 @@ CI (`.github/workflows/ci.yml`) builds both targets on push to `main`/`master` a
 
 ## Architecture
 
-This project formalizes **LF1: a deterministic repeated-trial frequency theorem** (Constraint-Surface Dynamics, Layer 1). The core claim: empirical frequencies of outcomes in deterministic repeated-trial experiments converge almost surely to ontic volume weights.
+This project formalizes **Constraint-Surface Dynamics (CSD)** as a linear stack
+of layers. **LF1** (deterministic repeated-trial frequency theorem), **LF2**
+(sector-conditional measure bridge + Born-weight wrapper), **LF3** (singlet
+kernel + the LF1↔LF2↔LF3 empirical chain), and **LF4 §14.2** (observable
+correspondence + Robertson uncertainty on a concrete compact-Kähler instance)
+are all merged and machine-verified, alongside an **Empirical** QM-validity
+regression suite. The LF1 core claim: empirical frequencies of outcomes in
+deterministic repeated-trial experiments converge almost surely to ontic volume
+weights. Each higher layer instantiates / consumes the previous (LF2's
+`SectorData.toOntic` produces an LF1 `OnticSetup`; LF4 instantiates `SectorData`
+on `ℂℙ^{M-1} × T²`).
+
+The detailed per-layer architecture for LF1, LF2, and LF3 follows; LF4 and
+Empirical are summarised at the end. The README is the current authoritative
+status overview; this file is the working-with-the-code guide.
 
 ### Key design choice: determinism
 
@@ -46,7 +63,7 @@ MainTheorem.lean    — LF1_main_theorem_ae and corollaries
 
 `CsdLean4.lean` (the root file) is the canonical top-level import — it lists every module explicitly. `CsdLean4/Basic.lean` is the conventional `Pkg.Basic` convenience re-export that transitively pulls in the chain via `MainTheorem`. Downstream layers and external consumers should `import CsdLean4.Basic`; edits inside the package should modify the explicit list in `CsdLean4.lean`.
 
-Future layers (LF2, LF4, …) become sibling directories `CsdLean4/LF2/`, each instantiating `OnticSetup`. New top-level modules must be added explicitly to `CsdLean4.lean` — that file is not glob-based.
+Higher layers are sibling directories (`CsdLean4/LF2/`, `LF3/`, `LF4/`, `Empirical/`, `Mathlib/`), each instantiating or consuming the previous. New top-level modules must be added explicitly to `CsdLean4.lean` — that file is not glob-based.
 
 All definitions live under the `CSD.LF1` namespace, with sub-namespaces `OnticSetup` and `OnticSetup.TrialModel`. New lemmas should follow this pattern.
 
@@ -332,20 +349,97 @@ doesn't synthesise for our `[NormedAddCommGroup H] [InnerProductSpace ℂ H]
 [FiniteDimensional ℂ H]` setup). The inner-product spelling is
 mathematically equivalent and avoids the synthesis dead-end.
 
-### Planned future layers
+### LF4: concrete compact-Kähler instance and §14.2 observable correspondence
 
-LF1, LF2, and LF3 are in place. The README outlines LF4 (mixed states,
-POVMs, reduction) and LF5 (outcome-conditioned update and sequential
-circuits). Each future layer will instantiate `OnticSetup` (via
-`SectorData.toOntic`) and consume `prepMeasure_apply` from LF1 plus
-`measure_bridge` / `lf1_weight_eq_projective_weight` from LF2.
+LF4 is the layer where the abstract `SectorData` framework acquires a concrete
+inhabitant and projective objects acquire ontic content. It instantiates
+`SectorData` on a genuinely compact-Kähler `Σ` and discharges the
+observable-correspondence target (spec §14.2).
 
-**LF4 TODO list:** concrete items deferred from LF2 (and now LF3) are
-recorded in `specs/LF4-todo.md`. The LF3 chain bundle hypotheses
-(`MeasurementJointEig.born_eq_P_st` and `PureSingletPreparation.bridge_op_p`,
-the option (B) form post-Phase-7) discharge through items §2, §3, §7
-there. Read that file before starting LF4 work. The pre-LF4 plan and
-execution log live at `specs/pre-LF4-plan.md`.
+LF4 module chain (under `CsdLean4/LF4/`, namespace `CSD.LF4`):
+
+```
+Instance.lean          — cpSectorData: first concrete SectorData (Σ = P =
+                         ℂℙ^{N-1}, G = U(N), π = id, μL = fubiniStudyMeasure);
+                         cp_measure_bridge (axiom-free for the instance).
+                         Honest scope: π = id ⇒ point fibres, c = 1, no Born
+                         prediction reproduced (base case proving the framework
+                         is inhabited)
+KahlerInstance.lean    — kSectorData on KSigma M = ℂℙ^{M-1} × T² with
+                         kMuL = fubiniStudyMeasure ⊗ vol_T²; k_measure_bridge
+                         (c = 1, axiom-free marginal bridge). First
+                         non-trivial-fibre, genuinely compact-Kähler SectorData
+SingletKahler.lean     — ofKählerPreparation: concrete LF3 PureSingletPreparation
+                         for the singlet on KSigma; bridge_op_p proved Busch-free
+                         via fibre-arc carving (see Tier-2 note below)
+SingleQubitKahler.lean — Stern-Gerlach single-qubit carving + capstone;
+                         zPlus_expectation and Pauli-on-|0⟩ shortcuts
+SingletObservables,
+HardyKahler           — N=4 two-qubit Pauli correspondences; Hardy lift
+SpectralExpansion.lean — hermitian_inner_spectral_expansion:
+                         ⟨ψ,Aψ⟩ = ∑ᵢ λᵢ‖⟨uᵢ,ψ⟩‖² for any Hermitian N×N (Hilbert
+                         side; genuine Parseval + spectral content)
+SpectralCarving.lean   — fibreShiftedArc, cumWeights, spectralRegion (genuinely
+                         disjoint N-arc fibre partition) + integral headline
+                         ∫ spectralOntic dμψ = re⟨ψ,Aψ⟩ (ontic side)
+SpectralVariance.lean  — spectralVariance + ∫ spectralOnticCentered = ‖Aψ‖²−⟨A⟩²
+UncertaintyKahler.lean — kahler_robertson_ontic_variance (ontic-side LHS Robertson)
+PauliRobertson.lean    — pauli_xy_robertson_saturation (σx,σy on |0⟩, both = 1)
+PauliDotRobertson.lean — pauliDot_robertson_zPlus (parametric over unit axes)
+OnticBorn.lean         — ontic_born_frequency (general pure-state ontic Born
+                         capstone via freq_tendsto_of_iid + Busch)
+```
+
+**§14.2 is closed.** The observable-correspondence chain (six commits,
+`eeec1e8`→`c5eed61`) is fully verified, foundational-triple-only on every pin,
+with two concrete Robertson witnesses.
+
+**Tier-2 honesty (load-bearing).** Every LF4 result that lands on a specific
+Born weight does so on a fibre partition **carved by construction** to that
+value: `kMuPsi_kRegion` makes `fibreArc (P_st)` have volume `P_st`;
+`spectralRegion` is cut to length `‖⟨uᵢ,ψ⟩‖²`. So `bridge_op_p` and
+`diracProd_spectralRegion` are *proved* but realise the Born value rather than
+*derive* it. The genuine content is (a) the partition is genuinely disjoint, and
+(b) the ontic Lebesgue-integral route and the Hilbert Parseval route meet at the
+same number through structurally distinct machinery. **`Φ := id` in every
+concrete `SectorData`** — no dynamics is exercised (structural debt D1, wide
+open). LF4 is a faithful *realisation* on a compact-Kähler Σ, not a *derivation*
+of quantum weights from deterministic dynamics. Say which side of that line any
+new result sits on.
+
+### Empirical: QM-validity regression suite
+
+Under `CsdLean4/Empirical/`, namespace `Empirical`. Two branches:
+
+- `Empirical/QM/` — pure QM-validity content (inner-product geometry, no CSD
+  ontology). Bell/CHSH at Tsirelson, no-cloning (Wootters-Zurek + Dieks),
+  no-deleting (Pati-Braunstein), superdense coding, quantum money, Stern-Gerlach,
+  uncertainty, Kochen-Specker (Cabello-18), Mermin-Peres, GHZ, Hardy, and
+  single/two/multi-qubit gates. Every theorem foundational-triple-only and
+  AxiomAudit-pinned.
+- `Empirical/CSD/` — CSD volume-ratio readings: transport each QM-validity
+  statement through a `CSDBridge.Context D` bundle carrying the LF2 `SectorData`
+  + measure-bridge data, providing the structural slot for the CSD-ontic
+  interpretation. Several bundles carry load-bearing undischarged realisability
+  fields (`bridge_isometry`, observable-correspondence; LF4-todo §13/§14) marked
+  with `Status: load-bearing, externally supplied, undischarged`.
+
+### `Mathlib/` staging tree
+
+`CsdLean4/Mathlib/` holds Cat-1 (CSD-free) helpers staged as Mathlib upstream
+candidates — `Projectivization` topology/measure/lift API and the
+`UnitaryGroup` / Fubini-Study uniqueness chain (which gives the axiom-free
+concrete realisation `invariant_measure_uniqueness_cpn`). These files keep the
+**natural Mathlib namespace** (`namespace Projectivization`, `namespace Matrix`),
+not a CSD wrapper; the `CsdLean4/Mathlib/<path>/` location is the only staging
+signal (CONVENTIONS.md §1 Cat-1).
+
+**LF4 TODO list:** items deferred from LF2 / LF3 to LF4 are recorded in
+`specs/LF4-todo.md` (§14.2 now closed; §13 isometry realisability, §8 additional
+preparation classes, §1-§11 remaining). The LF3 chain bundle hypotheses
+(`MeasurementJointEig.born_eq_P_st`, `PureSingletPreparation.bridge_op_p`)
+discharge through items §2, §3, §7. Read that file before starting LF4 work; the
+pre-LF4 plan and execution log live at `specs/pre-LF4-plan.md`.
 
 ## Lean / Mathlib conventions
 
@@ -354,4 +448,4 @@ execution log live at `specs/pre-LF4-plan.md`.
 - When adding new lemmas, place them in the module where their primary definition lives; keep the dependency chain linear (no circular imports).
 - `hΩ0_nonzero : (μL : Measure SigmaSpace) Ω0 ≠ 0` is a hypothesis threaded through many definitions — it prevents division-by-zero in `prepMeasure` and is required wherever conditional measure values are rewritten.
 - `hΦ_pres : MeasurePreserving Φ μL μL` (Liouville's theorem) is structural ontic input on `OnticSetup`, but inside LF1, LF2, and LF3 **only its measurability content is used** (extracted via `measurable_Φ`). Grep confirms no current proof in the corpus invokes the preservation content. The full property is carried for physical admissibility of the ontic model and becomes load-bearing only when LF4 derives `μL` from a concrete symplectic / Kähler volume form. Until then `hΦ_pres` is structural payload; the LF1 proof is strictly more general than the physical reading suggests. See the `OnticSetup` module docstring in `LF1/Setup.lean` for the honest disclosure.
-- `SigmaSpace` in `OnticSetup` is an abstract `MeasurableSpace` — it is **not** specialised to `ℝ^{2n}`, a symplectic manifold, or any concrete phase space. Do not add assumptions that implicitly assume one; concrete instantiation is LF2's job.
+- `SigmaSpace` in `OnticSetup` is an abstract `MeasurableSpace` — it is **not** specialised to `ℝ^{2n}`, a symplectic manifold, or any concrete phase space. Do not add assumptions that implicitly assume one; concrete instantiation is LF4's job (LF2 keeps `SigmaSpace`/`P`/`G` abstract; `LF4/KahlerInstance.lean` provides the concrete `ℂℙ^{M-1} × T²`).
