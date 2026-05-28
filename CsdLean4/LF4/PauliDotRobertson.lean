@@ -47,12 +47,12 @@ lemma pauliDot_zPlus_norm_sq (a : DetectorSetting) :
     ‖(pauliDot a).toEuclideanLin zPlusVec‖ ^ 2 = 1 := by
   -- Entry-wise: pauliDot a · |0⟩ has entries (a_z, a_x + i·a_y).
   have h0 : ((pauliDot a).toEuclideanLin zPlusVec).ofLp 0 = ((a.vec 2 : ℝ) : ℂ) := by
-    rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+    rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
     simp [pauliDot, Matrix.mulVec, dotProduct, Fin.sum_univ_two,
           zPlusVec, EuclideanSpace.single]
   have h1 : ((pauliDot a).toEuclideanLin zPlusVec).ofLp 1
        = ((a.vec 0 : ℝ) : ℂ) + Complex.I * ((a.vec 1 : ℝ) : ℂ) := by
-    rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+    rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
     simp [pauliDot, Matrix.mulVec, dotProduct,
           zPlusVec, EuclideanSpace.single]
   rw [EuclideanSpace.norm_eq,
@@ -97,8 +97,8 @@ private lemma toEuclideanLin_mul_apply (A B : Matrix (Fin 2) (Fin 2) ℂ)
     (v : EuclideanSpace ℂ (Fin 2)) :
     (A * B).toEuclideanLin v = A.toEuclideanLin (B.toEuclideanLin v) := by
   apply (WithLp.equiv 2 (Fin 2 → ℂ)).injective
-  rw [Matrix.toEuclideanLin_apply, Matrix.toEuclideanLin_apply,
-      Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp, WithLp.ofLp_toLp,
+  rw [Matrix.toLpLin_apply, Matrix.toLpLin_apply,
+      Matrix.toLpLin_apply, WithLp.ofLp_toLp, WithLp.ofLp_toLp,
       ← Matrix.mulVec_mulVec]
 
 /-! ### Commutator matrix entry (0,0) -/

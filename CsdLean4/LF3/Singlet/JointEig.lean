@@ -48,7 +48,7 @@ lemma toEuclideanLin_mul_apply
     (v : EuclideanSpace ℂ (Fin 2 × Fin 2)) :
     Matrix.toEuclideanLin (M * N) v
       = Matrix.toEuclideanLin M (Matrix.toEuclideanLin N v) := by
-  simp only [Matrix.toEuclideanLin_apply, Matrix.mulVec_mulVec]
+  simp only [Matrix.toLpLin_apply, Matrix.mulVec_mulVec]
 
 /-- The joint projector acts idempotently on vectors. -/
 lemma toEuclideanLin_jointSpinProj_idem

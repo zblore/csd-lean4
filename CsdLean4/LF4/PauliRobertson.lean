@@ -107,7 +107,7 @@ lemma pauliY_00 : pauliY 0 0 = 0 := by simp [pauliY]
 lemma pauliX_apply_zPlusVec :
     pauliX.toEuclideanLin zPlusVec = zMinusVec := by
   apply (WithLp.equiv 2 (Fin 2 → ℂ)).injective
-  rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+  rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
     simp [pauliX, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
@@ -117,7 +117,7 @@ lemma pauliX_apply_zPlusVec :
 lemma pauliX_apply_zMinusVec :
     pauliX.toEuclideanLin zMinusVec = zPlusVec := by
   apply (WithLp.equiv 2 (Fin 2 → ℂ)).injective
-  rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+  rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
     simp [pauliX, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
@@ -127,7 +127,7 @@ lemma pauliX_apply_zMinusVec :
 lemma pauliY_apply_zPlusVec :
     pauliY.toEuclideanLin zPlusVec = Complex.I • zMinusVec := by
   apply (WithLp.equiv 2 (Fin 2 → ℂ)).injective
-  rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+  rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
     simp [pauliY, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
@@ -138,7 +138,7 @@ lemma pauliY_apply_zPlusVec :
 lemma pauliY_apply_zMinusVec :
     pauliY.toEuclideanLin zMinusVec = -Complex.I • zPlusVec := by
   apply (WithLp.equiv 2 (Fin 2 → ℂ)).injective
-  rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+  rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp]
   ext i
   fin_cases i <;>
     simp [pauliY, zPlusVec, zMinusVec, Matrix.mulVec, dotProduct,
