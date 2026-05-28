@@ -15,6 +15,7 @@ import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler
+import CsdLean4.LF4.SpectralExpansion
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -882,6 +883,18 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.hardy_observable_correspondence_A'_B'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.hardy_observable_correspondence_A'_B'
+
+-- LF4 §14.2 general N×N spectral expansion of the Hilbert expectation.
+-- The Hilbert-side spectral identity ⟨ψ, A ψ⟩ = ∑ᵢ λᵢ · ‖⟨uᵢ, ψ⟩‖²
+-- for any Hermitian A and any state ψ — unlocks variance / uncertainty
+-- ontic correspondences beyond the projector / ±1-eigenvalue case.
+/-- info: 'CSD.LF4.hermitian_inner_spectral_expansion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hermitian_inner_spectral_expansion
+
+/-- info: 'CSD.LF4.hermitian_inner_spectral_expansion_re' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hermitian_inner_spectral_expansion_re
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,

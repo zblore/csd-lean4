@@ -583,7 +583,7 @@ is now non-vacuous in the strong sense: the LF3 chain has a concrete
 exhibited inhabitant. AxiomAudit-pinned (both theorems, foundational
 triple).
 
-### 14.2 General self-adjoint case (PARTIAL — Pauli step DONE 2026-05-28)
+### 14.2 General self-adjoint case (PARTIAL — Hilbert-side spectral identity DONE 2026-05-28)
 
 The projector discharge lifts to arbitrary bounded self-adjoint
 observables by spectral decomposition `A = ∑ λᵢ Pᵢ`.
@@ -604,13 +604,40 @@ Foundational triple; AxiomAudit-pinned. This demonstrates the spectral-
 decomposition pattern at the simplest non-projector case (two
 eigenvalues, signed indicator).
 
-**General N×N case (still open).** Lifts via Mathlib's
-`Matrix.IsHermitian.spectralTheorem`: decompose `A = ∑ᵢ λᵢ |uᵢ⟩⟨uᵢ|`,
-define `A_ontic σ := ∑ᵢ λᵢ · 1_{Rᵢ}(σ)` with `Rᵢ` the §14.1 outcome
-regions for `|uᵢ⟩⟨uᵢ|`, integrate term-by-term. Mechanical on top of
-the projector case + the Pauli pattern. Not formalised here; deferred
-until a concrete consumer needs it (Uncertainty on a specific bounded
-`A, B` pair would be the natural call site).
+**General N×N Hilbert-side spectral identity (DONE 2026-05-28).** The
+Hilbert-side spectral expansion
+
+```
+⟨ψ, A ψ⟩ = ∑ᵢ (λᵢ : ℂ) · ‖⟨uᵢ, ψ⟩‖²
+```
+
+for arbitrary Hermitian `A : Matrix (Fin N) (Fin N) ℂ` and any state
+`ψ : EuclideanSpace ℂ (Fin N)` is `hermitian_inner_spectral_expansion`
+in `CsdLean4/LF4/SpectralExpansion.lean` (real-valued form
+`hermitian_inner_spectral_expansion_re` for variance / uncertainty
+consumers). Proof route: Parseval on the eigenbasis via
+`OrthonormalBasis.sum_inner_mul_inner` + self-adjointness via
+`Matrix.isHermitian_iff_isSymmetric` + eigenvalue equation via
+`LinearMap.IsSymmetric.apply_eigenvectorBasis` (bridged to the
+Matrix-level reindexed eigenbasis as Mathlib's `Matrix.Spectrum`
+does internally). Foundational triple; AxiomAudit-pinned.
+
+**General N×N ontic-side counterpart (still open).** Given the
+Hilbert-side spectral identity above, the ontic counterpart is
+`A_ontic σ := ∑ᵢ λᵢ · 1_{Rᵢ}(σ)` with `Rᵢ` the §14.1 outcome regions
+for `|uᵢ⟩⟨uᵢ|`. The carving requires partitioning the fibre into N
+arcs of lengths `‖⟨uᵢ, ψ⟩‖²` (orthonormality ensures these sum to one,
+mirroring how the four singlet sectors / four Hardy regions partition
+the existing fibre). The integration identity
+`∫ A_ontic dμψ = ∑ᵢ λᵢ · ‖⟨uᵢ, ψ⟩‖² = ⟨ψ, A ψ⟩` is then mechanical:
+indicator-sum integral collapses to the Hilbert-side expansion.
+
+Mechanical on top of the Hilbert-side identity + multi-region fibre
+carving infrastructure. Not formalised here; deferred until a concrete
+consumer needs it (Uncertainty on a specific bounded `A, B` pair would
+be the natural call site — and the Hilbert-side variance identity
+`Var_ψ(A) = ∑ᵢ (λᵢ − ⟨A⟩)² · ‖⟨uᵢ, ψ⟩‖²` already follows by applying
+the spectral expansion to `A` and `A² = ∑ᵢ λᵢ² · |uᵢ⟩⟨uᵢ|`).
 
 ---
 
