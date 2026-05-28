@@ -11,6 +11,7 @@ import CsdLean4.LF3.Singlet.JointEig
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
+import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -747,6 +748,20 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.k_measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.k_measure_bridge
+
+-- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
+-- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
+-- Busch-free via born_rank_one_direct + the carving identity kMuPsi_kRegion,
+-- so the constructor stays foundational-triple only.
+/-- info: 'CSD.LF4.ofKählerPreparation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ofKählerPreparation
+
+-- Applying the LF3 chain capstone to the concrete prep gives a non-vacuous
+-- empirical statement; cites busch_effect_gleason through the chain.
+/-- info: 'CSD.LF4.ofKählerPreparation_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ofKählerPreparation_singlet_frequency_convergence
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
