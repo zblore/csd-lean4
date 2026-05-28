@@ -507,3 +507,36 @@ extracted as Cat-2 Framework infrastructure.
 `bridge_isometry` field. Per the bridge-discipline rules at the top
 of this file, this entry was added in a separate PR before the
 `Empirical/CSD/NoCloning.lean` file landed.
+
+### 13.3 Deletion case (added 2026-05-28)
+
+Carried by `Empirical.CSDBridge.NoDeleting.CSDDeletingBundle` in
+`CsdLean4/Empirical/CSD/NoDeleting.lean`. Logical dual of §13.1:
+a measure-preserving π-equivariant flow on `Σ × Σ → Σ × Σ`
+hypothetically realising a Pati-Braunstein 2000 deletion isometry
+(`U(tensor ψ ψ) = tensor ψ blank`) induces a Hilbert-space isometry
+on `Htensor`. Identical realisability content to §13.1, applied to
+the deletion direction instead of the cloning direction.
+
+**Why load-bearing.** Same as §13.1: the CSD-side no-deleting theorem
+(`no_csd_deleting_bundle`) reduces to the QM-side Pati-Braunstein result
+(`Empirical.QM.NoDeleting.no_universal_deleter_of_witness`) only via
+the ontic-to-Hilbert isometry lift the Kähler instantiation supplies.
+
+**Discharge:** identical to §13.1 (cone-of-CPⁿ symplectomorphism →
+unitary-up-to-phase lemma). One single discharge addresses §13.1, §13.2
+*and* §13.3 simultaneously, since all three are instances of the same
+"ontic flow on `Σ^k` induces Hilbert-space isometry" content with
+different downstream identities (cloning, general unitary, deletion).
+
+**Effect on pre-LF4 / LF4 work:** Pre-LF4, `CSDDeletingBundle` extends
+`CSDBridge.Context D` and carries the same QM-side fields as
+`CSDCloningBundle` with `clone_ψ/φ` swapped for `delete_ψ/φ`.
+`no_csd_deleting_bundle` is uninhabitable for non-orthogonal non-equal
+unit `ψ, φ`. Post-LF4, the realisability is provable from the concrete
+Kähler `SectorData`'s pushforward properties.
+
+**Depends on:** §13.1 (same proof structure), §2 + §7 + §8 + the
+cone-symplectomorphism lemma.
+
+**Audit:** Listed in `BRIDGE-OBLIGATIONS.md` §2.3 (deletion row).
