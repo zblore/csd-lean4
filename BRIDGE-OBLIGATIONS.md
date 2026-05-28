@@ -98,6 +98,19 @@ identity. A structurally vacuous `True`-typed field would be an
 antipattern; the docstring on the structure carries the LF4-todo §13
 citation directly.
 
+### 2.3.1 CSD observable-correspondence bundle (added 2026-05-28)
+
+Used by `Empirical/CSD/Uncertainty.lean`.
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.Uncertainty.CSDUncertaintyBundle` | (whole bundle's CSD-realisability content) | The Hilbert state `ψ` arises as the lift of a CSD preparation `μψ`, and each self-adjoint observable `A, B` arises as the Hilbert lift of a measurable function `Σ → ℝ` with `⟨ψ, A ψ⟩ = ∫ A_ontic dμψ` (and likewise for `B`). | §14 (new) |
+
+Distinct realisability content from §13: §13.x is about isometries
+realised as Σ-flows; §14 is about self-adjoint operators realised
+as measurable Σ-valued functions. One discharge does not subsume the
+other.
+
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 
 Used by `Empirical/CSD/Contextuality/KS18.lean`.

@@ -540,3 +540,61 @@ Kähler `SectorData`'s pushforward properties.
 cone-symplectomorphism lemma.
 
 **Audit:** Listed in `BRIDGE-OBLIGATIONS.md` §2.3 (deletion row).
+
+---
+
+## 14. Observable correspondence (added 2026-05-28)
+
+**Status:** New realisability obligation, distinct from §13. Carried by
+`Empirical.CSDBridge.Uncertainty.CSDUncertaintyBundle` in
+`CsdLean4/Empirical/CSD/Uncertainty.lean`. Pre-LF4 structural; post-LF4
+a discharge target.
+
+**Claim.** A self-adjoint Hilbert operator `A : H →ₗ[ℂ] H` arises as the
+Hilbert-space lift of a measurable function `A_ontic : Σ → ℝ`, with the
+expectation identity `⟨ψ, A ψ⟩ = ∫ A_ontic dμψ` whenever `ψ` is the
+Hilbert-space lift of the CSD preparation `μψ`. The variance identity
+`Var_ψ(A) = Var_{μψ}(A_ontic)` follows.
+
+**Why distinct from §13.** §13.x is about *isometries / unitaries*
+realised as measure-preserving π-equivariant Σ-flows. §14 is about
+*self-adjoint operators* realised as measurable Σ-valued functions
+(the ontic counterpart of observables). These are different kinds of
+mathematical object (operator on `H` vs function on `Σ`) and the
+discharge routes differ accordingly.
+
+**Why load-bearing.** The CSD-side Robertson uncertainty
+(`csd_robertson_uncertainty`) reduces to the QM-side `robertson_uncertainty`
+by direct field extraction, but the *physical content* (ontic
+variances satisfy the bound, not just Hilbert variances) requires the
+observable correspondence to relate Hilbert variance to ontic variance.
+
+**Discharge in principle.** Under the concrete Kähler `SectorData` from
+§8, the observable correspondence is realised by the Hilbert-space
+lift of `effectProjFn` (the volume-ratio effect function) and its
+self-adjoint analog for unbounded operators. For bounded self-adjoint
+`A`, the corresponding ontic function is `A_ontic : Σ → ℝ` defined via
+`A_ontic σ := ⟨rep(π σ), A rep(π σ)⟩` (the expectation in the lifted
+state at the projective ray, taking the real part). The
+expectation-integral identity then follows from `OP.p = ∫ effectProjFn`
+applied to the spectral decomposition of `A`.
+
+**Discharge prerequisites:**
+- §8 (concrete Kähler `SectorData`) — DONE.
+- §2 (preparation-to-Hilbert correspondence, PARTIAL).
+- Spectral-theorem infrastructure for bounded self-adjoint operators on
+  finite-dim complex inner-product spaces (Mathlib has this for
+  matrices via `Matrix.IsHermitian.spectralTheorem`; lifts to
+  `Module.End` exist for the finite-dim case).
+
+**Effect on pre-LF4 work:** Pre-LF4, `CSDUncertaintyBundle` carries
+the Hilbert state + observables and the realisability is prose-only.
+`csd_robertson_uncertainty` is a transport-only theorem proving the
+QM-side Robertson bound for any bundle. Post-LF4, the observable
+correspondence is provable from the concrete `SectorData`'s spectral
+machinery + the lifted preparation, and the ontic variance identity
+becomes a theorem rather than a prose claim.
+
+**Depends on:** §8 (done), §2 (partial), spectral-theorem infrastructure.
+
+**Audit:** Listed in `BRIDGE-OBLIGATIONS.md` §2.3.1.
