@@ -669,13 +669,50 @@ theoretic integral and combined with the Hilbert-side spectral expansion
 self-adjointness + eigenvalue equation. Both ends compute the same value
 through structurally distinct machinery.
 
-**Variance identity (still open, but cheap).** With the Phase D
-infrastructure in hand, `Var_ψ(A) = ∑ᵢ (λᵢ − ⟨A⟩)² · ‖⟨uᵢ, ψ⟩‖²` follows
-by applying the spectral expansion to `A` and `A² = ∑ᵢ λᵢ² · |uᵢ⟩⟨uᵢ|`,
-plus an `(A_ontic − ⟨A⟩)²` ↔ `∑ᵢ (λᵢ − ⟨A⟩)² · 1_{R_i}` indicator-square
-identity (disjointness of the R_i is what makes the indicator-square
-collapse to a single-indicator sum). Natural follow-up tranche for the
-Uncertainty bundle's ontic variance correspondence.
+**Variance identity (DONE 2026-05-28).** `CsdLean4/LF4/SpectralVariance.lean`
+delivers both the Hilbert-side spectral form and the ontic ↔ Hilbert
+correspondence at the integration level:
+
+- `inner_eigenvector_image` (extracted helper): `⟨uᵢ, A ψ⟩ = (λᵢ : ℂ) · ⟨uᵢ, ψ⟩`
+  for Hermitian `A` and eigenvector `uᵢ`. Used by `hilbert_norm_sq_apply_hermitian`
+  and exported for downstream consumers.
+- `hilbert_norm_sq_apply_hermitian`: `‖A ψ‖² = ∑ᵢ λᵢ² · bornWeights i` via
+  `OrthonormalBasis.sum_sq_norm_inner_right` + `inner_eigenvector_image`.
+- `spectralVariance := ∑ᵢ (λᵢ − ⟨A⟩)² · bornWeights i` (the spectral form).
+- `spectralVariance_nonneg` (trivially, sum of nonneg terms).
+- `spectralVariance_eq_hilbert_norm_sq_diff` (under `‖ψ‖ = 1`):
+  `spectralVariance = ‖A ψ‖² − ⟨A⟩²`. Composes `hilbert_norm_sq_apply_hermitian`
+  + `hermitian_inner_spectral_expansion_re` + `bornWeights_sum_eq_one` +
+  algebraic expansion `(λᵢ − μ)² = λᵢ² − 2λᵢμ + μ²` distributed over the sum.
+  For self-adjoint `A`, `‖A ψ‖² = re ⟨ψ, A² ψ⟩`, so this matches the standard
+  QM `Var = ⟨A²⟩ − ⟨A⟩²`.
+- `spectralOnticCentered := ∑ᵢ (λᵢ − ⟨A⟩)² · 1_{R_i}` (ontic centered observable).
+- `integral_spectralOnticCentered_eq_variance` (under `‖ψ‖ = 1`, headline):
+  `∫ spectralOnticCentered dμψ = spectralVariance hA ψ`.
+- `integral_spectralOnticCentered_eq_hilbert_norm_sq_diff` (composite headline):
+  `∫ spectralOnticCentered dμψ = ‖A ψ‖² − ⟨A⟩²` — the **ontic variance ↔
+  Hilbert variance correspondence at the integration level**.
+
+Tier-2 honesty unchanged: `spectralVariance` is *defined* as the spectral
+form. The Hilbert ↔ spectral identity is a genuine algebraic theorem;
+the ontic ↔ spectral identity is a genuine measure-theoretic theorem
+(via the Phase C carving + integral linearity). Both ends meet at the
+same value through structurally distinct machinery. The squared-indicator
+identity `(A_ontic − ⟨A⟩)² ↔ ∑ᵢ (λᵢ − ⟨A⟩)² · 1_{R_i}` is sidestepped
+by defining `spectralOnticCentered` directly; the a.e. equivalence to
+`(spectralOntic − ⟨A⟩)²` follows on the full-measure region `⋃ᵢ R_i`
+(under `‖ψ‖ = 1`), but is not currently formalised since the integration
+identity needs only the direct form.
+
+AxiomAudit-pinned (4 new pins: `hilbert_norm_sq_apply_hermitian`,
+`spectralVariance_eq_hilbert_norm_sq_diff`, `integral_spectralOnticCentered_eq_variance`,
+`integral_spectralOnticCentered_eq_hilbert_norm_sq_diff`). All
+foundational triple. Unblocks the Uncertainty bundle's ontic-variance
+match: pre-LF4 `csd_robertson_uncertainty` is a transport theorem; with
+the variance identity above the **physical content** (ontic variance
+satisfies the Robertson bound, not just Hilbert variance) is realisable
+on the Kähler instance for any concrete pair of bounded Hermitian
+observables.
 
 ---
 
