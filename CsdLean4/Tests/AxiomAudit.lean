@@ -14,6 +14,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
+import CsdLean4.LF4.HardyKahler
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -859,6 +860,17 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.sigmaDotJoint_observable_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.sigmaDotJoint_observable_correspondence
+
+-- Hardy LF3-chain capstones: the four Hardy probability constraints lifted to
+-- ontic frequency-convergence theorems on the Hardy-state Kähler preparation.
+-- Headline pin (positive coincidence) + load-bearing zero (A'=+1, B'=+1).
+/-- info: 'CSD.LF4.hardy_freq_convergence_AB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hardy_freq_convergence_AB
+
+/-- info: 'CSD.LF4.hardy_freq_convergence_A'_B'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hardy_freq_convergence_A'_B'
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
 -- LF2 operational Born derivation, so it cites the Busch axiom (and only it,

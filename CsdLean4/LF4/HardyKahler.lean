@@ -219,5 +219,129 @@ lemma hardyMuPsi_hardyRegion_A'_B' :
     hardyMuPsi hardyRegion_A'_B' = ENNReal.ofReal hardyBorn_A'_B' :=
   hardyMuPsi_hardyFibreRegion hardyBorn_zero_in_Icc
 
+/-! ### Phase C: Hardy LF3-chain frequency-convergence capstones
+
+For i.i.d. trials with law `hardyMuPsi` (the Hardy preparation on the
+non-trivial-fibre compact-Kähler instance), the empirical frequency of
+each Hardy outcome region converges almost surely to the QM-predicted
+Born value. Four corollaries — one per Hardy constraint — composed from
+a single parametric helper `hardy_freq_convergence`.
+
+Parallel to `sg_frequency_convergence` (single-qubit case) and
+`ofKählerPreparation_singlet_frequency_convergence` (singlet case).
+Foundational triple only. -/
+
+open Filter Topology in
+/-- **Parametric Hardy frequency-convergence helper.** For any
+`v ∈ [0, 1]`, i.i.d. trials with law `hardyMuPsi` have empirical
+frequency of `hardyFibreRegion v` converging a.s. to `v`. -/
+theorem hardy_freq_convergence
+    {v : ℝ} (hv : v ∈ Set.Icc (0 : ℝ) 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → KSigma 4} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = hardyMuPsi)
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n => Set.indicator (X n ⁻¹' hardyFibreRegion v) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' hardyFibreRegion v) (fun _ => (1 : ℝ)) ω) / (M : ℝ))
+        atTop
+        (nhds v) := by
+  have hfreq :=
+    LF1.freq_tendsto_of_iid hX hlaw (hardyFibreRegion_measurable v) hindep
+  rwa [hardyMuPsi_hardyFibreRegion hv, ENNReal.toReal_ofReal hv.1] at hfreq
+
+open Filter Topology in
+/-- **Hardy chain capstone 1**: empirical frequency of `(A=+1, B=+1)`
+converges to `1/12` (the positive Hardy coincidence). -/
+theorem hardy_freq_convergence_AB
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → KSigma 4} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = hardyMuPsi)
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n => Set.indicator (X n ⁻¹' hardyRegion_AB) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' hardyRegion_AB) (fun _ => (1 : ℝ)) ω) / (M : ℝ))
+        atTop
+        (nhds hardyBorn_AB) :=
+  hardy_freq_convergence hardyBorn_AB_in_Icc hX hlaw hindep
+
+open Filter Topology in
+/-- **Hardy chain capstone 2**: empirical frequency of `(A=+1, B'=−1)`
+converges to `0` (QM-forbidden outcome). -/
+theorem hardy_freq_convergence_AB'minus
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → KSigma 4} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = hardyMuPsi)
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' hardyRegion_AB'minus) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' hardyRegion_AB'minus) (fun _ => (1 : ℝ)) ω) / (M : ℝ))
+        atTop
+        (nhds hardyBorn_AB'minus) :=
+  hardy_freq_convergence hardyBorn_zero_in_Icc hX hlaw hindep
+
+open Filter Topology in
+/-- **Hardy chain capstone 3**: empirical frequency of `(A'=−1, B=+1)`
+converges to `0`. -/
+theorem hardy_freq_convergence_A'minus_B
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → KSigma 4} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = hardyMuPsi)
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n =>
+            Set.indicator (X n ⁻¹' hardyRegion_A'minus_B) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' hardyRegion_A'minus_B) (fun _ => (1 : ℝ)) ω) / (M : ℝ))
+        atTop
+        (nhds hardyBorn_A'minus_B) :=
+  hardy_freq_convergence hardyBorn_zero_in_Icc hX hlaw hindep
+
+open Filter Topology in
+/-- **Hardy chain capstone 4**: empirical frequency of `(A'=+1, B'=+1)`
+converges to `0` (the load-bearing QM-forbidden outcome that drives
+`no_lhv_hardy`). -/
+theorem hardy_freq_convergence_A'_B'
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    {X : ℕ → Ω → KSigma 4} (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = hardyMuPsi)
+    (hindep :
+      Pairwise
+        (Function.onFun
+          (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+          (fun n => Set.indicator (X n ⁻¹' hardyRegion_A'_B') (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator (X i ⁻¹' hardyRegion_A'_B') (fun _ => (1 : ℝ)) ω) / (M : ℝ))
+        atTop
+        (nhds hardyBorn_A'_B') :=
+  hardy_freq_convergence hardyBorn_zero_in_Icc hX hlaw hindep
+
 end LF4
 end CSD
