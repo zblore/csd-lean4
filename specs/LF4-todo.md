@@ -583,7 +583,7 @@ is now non-vacuous in the strong sense: the LF3 chain has a concrete
 exhibited inhabitant. AxiomAudit-pinned (both theorems, foundational
 triple).
 
-### 14.2 General self-adjoint case (PARTIAL — Hilbert-side spectral identity DONE 2026-05-28)
+### 14.2 General self-adjoint case (DONE 2026-05-28 — Hilbert + ontic + integration)
 
 The projector discharge lifts to arbitrary bounded self-adjoint
 observables by spectral decomposition `A = ∑ λᵢ Pᵢ`.
@@ -622,22 +622,60 @@ consumers). Proof route: Parseval on the eigenbasis via
 Matrix-level reindexed eigenbasis as Mathlib's `Matrix.Spectrum`
 does internally). Foundational triple; AxiomAudit-pinned.
 
-**General N×N ontic-side counterpart (still open).** Given the
-Hilbert-side spectral identity above, the ontic counterpart is
-`A_ontic σ := ∑ᵢ λᵢ · 1_{Rᵢ}(σ)` with `Rᵢ` the §14.1 outcome regions
-for `|uᵢ⟩⟨uᵢ|`. The carving requires partitioning the fibre into N
-arcs of lengths `‖⟨uᵢ, ψ⟩‖²` (orthonormality ensures these sum to one,
-mirroring how the four singlet sectors / four Hardy regions partition
-the existing fibre). The integration identity
-`∫ A_ontic dμψ = ∑ᵢ λᵢ · ‖⟨uᵢ, ψ⟩‖² = ⟨ψ, A ψ⟩` is then mechanical:
-indicator-sum integral collapses to the Hilbert-side expansion.
+**General N×N ontic-side carving (DONE 2026-05-28).** The Hilbert-side
+spectral expansion is composed with a genuine N-arc fibre partition in
+`CsdLean4/LF4/SpectralCarving.lean`:
 
-Mechanical on top of the Hilbert-side identity + multi-region fibre
-carving infrastructure. Not formalised here; deferred until a concrete
-consumer needs it (Uncertainty on a specific bounded `A, B` pair would
-be the natural call site — and the Hilbert-side variance identity
-`Var_ψ(A) = ∑ᵢ (λᵢ − ⟨A⟩)² · ‖⟨uᵢ, ψ⟩‖²` already follows by applying
-the spectral expansion to `A` and `A² = ∑ᵢ λᵢ² · |uᵢ⟩⟨uᵢ|`).
+- **Phase A**: `fibreShiftedArc c ℓ := (equivIoc 1 0)⁻¹ (Ioc c (c+ℓ))` — a
+  shifted-anchor primitive that fixes the nesting issue of the original
+  `fibreArc ℓ = (0, ℓ]`. Measurability, volume `= ofReal ℓ` for
+  `[c, c+ℓ] ⊆ [0,1]`, and pairwise disjointness via `Set.Ioc_disjoint_Ioc_of_le`.
+
+- **Phase B**: `cumWeights w : Fin (N+1) → ℝ` via `Finset.filter`. Clean
+  proofs of `cumWeights_zero`, `cumWeights_succ_castSucc` (the recursive
+  step), `cumWeights_last` (`= ∑ w`), monotonicity, and the carving bound
+  `cumWeights w i.castSucc + w i ≤ 1` when `∑ w ≤ 1`.
+
+- **Phase C**: `spectralRegion (w : Fin N → ℝ) (i : Fin N) : Set (KSigma M)`
+  with measurability, `diracProd_spectralRegion` (the per-region carving
+  identity), and `spectralRegion_pairwise_disjoint`. The N regions are
+  genuinely disjoint (unlike the existing Hardy four-region setup, where
+  three of the four arcs are zero-length and disjointness is vacuous).
+
+- **Phase D**: `bornWeights hA ψ i := ‖⟨uᵢ, ψ⟩‖²` (with `Parseval` /
+  `OrthonormalBasis.sum_sq_norm_inner_right` giving `∑ = ‖ψ‖²`),
+  `spectralOntic := ∑ᵢ λᵢ · 1_{R_i}` with measurability and integrability,
+  and the headline
+  `integral_spectralOntic_eq_inner_re : ∫ spectralOntic dμψ = re ⟨ψ, A ψ⟩`
+  for any Hermitian `A`, unit `ψ`, and any base ray `p₀ : CPN M`. Composes
+  `diracProd_spectralRegion` (per-region carving) with
+  `hermitian_inner_spectral_expansion_re` (Hilbert spectral expansion)
+  through `integral_finset_sum`, `integral_indicator_one`,
+  `measureReal_def`, and `ENNReal.toReal_ofReal`.
+
+The headline at Phase D is the **§14.2 ontic-Hilbert observable
+correspondence at the integration level**, fully discharged on the
+existing Kähler instance for any concrete Dirac × T² preparation.
+Foundational triple; AxiomAudit-pinned (`fibreShiftedArc_volume`,
+`diracProd_spectralRegion`, `integral_spectralOntic_eq_inner_re`).
+
+Tier-2 honesty: the N-arc fibre partition is carved to the Born weights
+**by construction** (the i-th arc has length `‖⟨uᵢ, ψ⟩‖²` because the
+cumulative-sum boundaries are defined that way). What the integration
+theorem proves is that this construction, fed through Mathlib's measure-
+theoretic integral and combined with the Hilbert-side spectral expansion
+(genuine spectral content), recovers `re ⟨ψ, A ψ⟩` via independent routes
+— ontic via partition sum + Lebesgue integral, Hilbert via Parseval +
+self-adjointness + eigenvalue equation. Both ends compute the same value
+through structurally distinct machinery.
+
+**Variance identity (still open, but cheap).** With the Phase D
+infrastructure in hand, `Var_ψ(A) = ∑ᵢ (λᵢ − ⟨A⟩)² · ‖⟨uᵢ, ψ⟩‖²` follows
+by applying the spectral expansion to `A` and `A² = ∑ᵢ λᵢ² · |uᵢ⟩⟨uᵢ|`,
+plus an `(A_ontic − ⟨A⟩)²` ↔ `∑ᵢ (λᵢ − ⟨A⟩)² · 1_{R_i}` indicator-square
+identity (disjointness of the R_i is what makes the indicator-square
+collapse to a single-indicator sum). Natural follow-up tranche for the
+Uncertainty bundle's ontic variance correspondence.
 
 ---
 
