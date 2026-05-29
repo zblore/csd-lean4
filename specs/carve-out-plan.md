@@ -206,6 +206,36 @@ Original framing (retained):
   step at L1. LF4-todo §5. Multi-month Mathlib contribution; independent of
   A/B. Highest single credibility item, lowest tractability.
 
+### Tranche M — Born weights as the torus moment map (Lean-first, backportable)
+
+A route the corpus does **not** use: the canonical moment map of the maximal
+torus action on `ℂℙ^{N-1}`, `Φ([z])ᵢ = |zᵢ|²/‖z‖²`, whose coordinates **are** the
+Born weights, with Duistermaat–Heckman relating the FS Liouville volume to the
+uniform simplex measure. This exhibits Born as a *forced* symplectic invariant of
+the Kähler structure the programme takes as primitive — stronger than both the
+arc-carving and the Gleason/Busch import. The honest limit: it gives Born as a
+moment *coordinate* of the preparation point, not a ψ-independent volume ratio;
+the ψ-dependence still enters via `μψ` (the open `G3b` content). Worth building in
+Lean and backporting to a TN once the technicalities are confirmed.
+
+- **Slice 1 — DONE 2026-05-29** (`CsdLean4/LF4/MomentMap.lean`, foundational
+  triple, AxiomAudit-pinned): `momentMap`, `momentMap_nonneg`,
+  `momentMap_sum_eq_one` (lands in the simplex / probability vector), and the
+  headline `momentMap_mk_eq_inner_sq` — `Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²` at a unit `ψ`.
+- **Slice 2 (research):** Duistermaat–Heckman pushforward `Φ∗μ_FS = uniform_Δ`.
+  Needs symplectic-volume + DH machinery absent from Mathlib. Substantial.
+- **Slice 3 (the frontier):** test a principled candidate `μψ` (toric fibre
+  measure, coadjoint-orbit Liouville, symplectic reduction) and check
+  `μψ(Σᵢ) = ‖⟨ψ,φᵢ⟩|²` falls out *without* the identity being baked in. This is
+  where Lean earns its keep as a discovery instrument; a positive result is a
+  genuine derivation to backport, a negative result is itself worth recording.
+
+**Decision gating slices 2-3.** What is the ontic primitive? If the Kähler
+structure (metric ≡ inner product) is primitive, Tranche M *is* a derivation of
+Born from the ontic geometry and supersedes the Gleason import. If a metric-free
+origin is required, slice 3 is likely impossible and the valuable output is the
+precise impossibility statement.
+
 ## 5. Recommended ordering and the honest stopping line
 
 1. **Tranche A** — DONE (`LF4/KahlerFlow.lean`). Removed the `Φ = id` vacuity.
