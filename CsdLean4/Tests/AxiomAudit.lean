@@ -13,6 +13,7 @@ import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
+import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -847,6 +848,22 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.momentMap_mk_eq_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_mk_eq_inner_sq
+
+-- Tranche M slice 3: the Born weight as a barycentric volume ratio. The i-th
+-- subdivision region of the moment polytope at Φ([ψ]) has Lebesgue-volume
+-- fraction ‖⟨eᵢ,ψ⟩‖² (vertex-replacement map det = barycentric coord, via Cramer
+-- + addHaar_image_linearMap). Geometric region, not carved; no operational axiom.
+/-- info: 'CSD.LF4.replaceMap_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.replaceMap_det
+
+/-- info: 'CSD.LF4.replaceMap_image_volume_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.replaceMap_image_volume_sum
+
+/-- info: 'CSD.LF4.born_eq_volume_ratio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.born_eq_volume_ratio
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved

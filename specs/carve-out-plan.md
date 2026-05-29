@@ -224,11 +224,31 @@ Lean and backporting to a TN once the technicalities are confirmed.
   headline `momentMap_mk_eq_inner_sq` — `Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²` at a unit `ψ`.
 - **Slice 2 (research):** Duistermaat–Heckman pushforward `Φ∗μ_FS = uniform_Δ`.
   Needs symplectic-volume + DH machinery absent from Mathlib. Substantial.
-- **Slice 3 (the frontier):** test a principled candidate `μψ` (toric fibre
-  measure, coadjoint-orbit Liouville, symplectic reduction) and check
-  `μψ(Σᵢ) = ‖⟨ψ,φᵢ⟩|²` falls out *without* the identity being baked in. This is
-  where Lean earns its keep as a discovery instrument; a positive result is a
-  genuine derivation to backport, a negative result is itself worth recording.
+- **Slice 3 — DONE 2026-05-29** (`CsdLean4/LF4/BornVolume.lean`, foundational
+  triple, AxiomAudit-pinned). Candidate refined during the work: the toric fibre
+  Haar measure does **not** cleanly partition into Born weights (the moment map
+  gives `b` as a *coordinate*, not sub-volumes of a fibre). The construction that
+  works is **barycentric**: subdivide the moment polytope `Δ` at `b = Φ([ψ])`; the
+  `i`-th sub-simplex is `replaceMap b i '' Δ` (the vertex-replacement linear map),
+  whose Lebesgue-volume fraction is exactly `bᵢ`.
+  - `replaceMap_det : LinearMap.det (replaceMap b i) = bᵢ` (Cramer on the
+    identity: `cramer_one` + `cramer_apply`).
+  - `replaceMap_image_volume : volume (replaceMap b i '' s) = ofReal bᵢ · volume s`
+    (via `addHaar_image_linearMap`) — the genuine Lebesgue-volume ratio.
+  - `replaceMap_image_volume_sum : ∑ᵢ … = volume s` (normalisation, since `∑bᵢ=1`).
+  - `born_eq_volume_ratio` (headline): at unit `ψ`, the `i`-th region carries
+    volume fraction `‖⟨eᵢ,ψ⟩‖²` — the Born weight as a Lebesgue-volume ratio of a
+    geometrically-defined region. No carving (contrast `kMuPsi_kRegion`), no
+    operational axiom. The literal realisation of Sigma0 §5.7's slogan.
+
+  **Honest scope unchanged.** `b` is the moment coordinate (slice 1), so this is
+  "Born = volume ratio" *given* the Kähler structure as primitive — not Born from
+  a metric-free object. The volume is Lebesgue volume on the polytope coordinates
+  (ratio identical for parallelepiped and simplex); the lift to the μ_FS-volume on
+  the ontic `Σ = ℂℙ^{N-1}` itself is the Duistermaat–Heckman pushforward (slice 2,
+  Mathlib gap). Net: the carve-out is now realised as a genuine non-carved volume
+  ratio at the polytope level; closing it on `Σ` needs slice 2, and deriving `b`
+  from metric-free structure remains ruled out (G3b).
 
 **Decision gating slices 2-3.** What is the ontic primitive? If the Kähler
 structure (metric ≡ inner product) is primitive, Tranche M *is* a derivation of
