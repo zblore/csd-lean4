@@ -43,14 +43,18 @@ Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
 - **L4** — `gaussianCP = fubiniStudyMeasure p₀`, by `fubiniStudyMeasure_unique`
   (L2 gives the probability instance, L3 the invariance hypothesis).
 
-**ℝ/ℂ friction (the one setup snag).** `stdGaussian` needs `[InnerProductSpace ℝ H]`.
-`H` is a complex IPS; the real structure is `InnerProductSpace.rclikeToReal`,
-which is **not** a global instance (diamond risk). Two ways:
-  (a) work in `EuclideanSpace ℝ (Fin 4)` with a fixed `ℝ`-linear isometry
-      `e : ℝ⁴ ≃ₗᵢ[ℝ] H` and carry `e` through; or
-  (b) supply the `rclikeToReal` instance locally and check no diamond bites.
-Prefer (a) if (b) causes instance clashes. The `U(2)` action becomes an `O(4)`
-action on `ℝ⁴` under `e`; `stdGaussian (ℝ⁴)` is invariant under it.
+**ℝ/ℂ friction — findings from probing (2026-05-29):**
+- `stdGaussian (EuclideanSpace ℂ (Fin 2))` **elaborates directly** — both
+  `InnerProductSpace ℝ` and `FiniteDimensional ℝ` resolve through the existing
+  imports. So **no `ℝ⁴` bridge is needed**; work on `H = EuclideanSpace ℂ (Fin 2)`.
+- The remaining snag is **L3**: `stdGaussian_map` needs the `U(2)` action as a
+  `≃ₗᵢ[ℝ]`. `(toEuclideanLinearEquiv U).restrictScalars ℝ` fails — missing
+  `LinearMap.CompatibleSMul H H ℝ ℂ` (i.e. `IsScalarTower ℝ ℂ H`). Fix: either
+  supply that instance (`IsScalarTower ℝ ℂ H` should hold for the ℝ→ℂ→module
+  tower; check no diamond), or build the `≃ₗᵢ[ℝ]` by hand — same `toFun` as
+  `toEuclideanLinearEquiv U`, ℝ-linearity is free (ℂ-linear ⟹ ℝ-linear),
+  `norm_map'` from `‖U v‖ = ‖v‖` (unitary preserves the norm). The latter is the
+  safer route if the instance route diamonds.
 
 Part 1 is a committable, foundational-triple increment on its own (identifies
 `fubiniStudyMeasure` as the Gaussian-induced measure — reusable).
