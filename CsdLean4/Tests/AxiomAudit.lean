@@ -20,6 +20,7 @@ import CsdLean4.LF4.QubitBornFrequency
 import CsdLean4.LF4.BornFrequencyPartition
 import CsdLean4.LF4.MomentMarginal
 import CsdLean4.LF4.DuistermaatHeckman
+import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -917,6 +918,12 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.fs_moment_pushforward_uniform' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_moment_pushforward_uniform
+
+-- Plan B Part 1 step: a unitary matrix's toEuclideanLin preserves the Euclidean
+-- norm (the matrix-analytic core for the Gaussian unitary-invariance step).
+/-- info: 'CSD.LF4.unitary_norm_preserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitary_norm_preserving
 
 /-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
 #guard_msgs (whitespace := lax) in

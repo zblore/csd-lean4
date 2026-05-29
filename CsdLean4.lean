@@ -53,6 +53,7 @@ import CsdLean4.LF4.QubitBornFrequency
 import CsdLean4.LF4.BornFrequencyPartition
 import CsdLean4.LF4.MomentMarginal
 import CsdLean4.LF4.DuistermaatHeckman
+import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables

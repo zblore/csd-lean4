@@ -27,6 +27,20 @@ Two key Mathlib/project tools make this the cleanest route:
 So we identify `fubiniStudyMeasure` with the Gaussian-induced measure on `ℂℙ¹`,
 where the moment marginal is the classical `Beta(1,1)` computation.
 
+## Progress (2026-05-29)
+
+- **`unitary_norm_preserving`** (`CsdLean4/LF4/GaussianFS.lean`, done,
+  AxiomAudit-pinned): a unitary matrix's `toEuclideanLin` preserves the Euclidean
+  norm (`‖U v‖ = ‖v‖`), from `Uᴴ U = 1`. The matrix-analytic core for L3.
+- **`unitaryIsomC`** (done): the `U(2)` action as a **complex** `≃ₗᵢ[ℂ]`.
+- **Blocker on L3:** `(unitaryIsomC U).restrictScalars ℝ` (to feed
+  `stdGaussian_map`) needs `LinearMap.CompatibleSMul … ℝ ℂ` /
+  `IsScalarTower ℝ ℂ (EuclideanSpace ℂ (Fin 2))` + `FiniteDimensional ℝ (…)`.
+  These **resolve in a minimal import context but fail inside the full LF4 import
+  chain** (instance-resolution ambiguity from the large environment). Next:
+  either supply the real-scalar instances explicitly, or take the `ℝ⁴`-isometry
+  route (option (a) below) — a genuine real space, no ℝ-over-ℂ instances.
+
 ## Part 1 — `gaussianCP = fubiniStudyMeasure` (B.2; tractable)
 
 Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
