@@ -19,6 +19,7 @@ import CsdLean4.LF4.BornFS
 import CsdLean4.LF4.QubitBornFrequency
 import CsdLean4.LF4.BornFrequencyPartition
 import CsdLean4.LF4.MomentMarginal
+import CsdLean4.LF4.DuistermaatHeckman
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -908,6 +909,22 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.momentMap_pushforward_eq_haar_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_pushforward_eq_haar_marginal
+
+-- The Duistermaat-Heckman / Archimedes geometry axiom (qubit instance) and the
+-- unconditional qubit Born-from-Kähler-volume results it discharges. The axiom is
+-- a geometry fact about μ_FS (NOT a Born import like busch_effect_gleason);
+-- documented Mathlib-external boundary, plan-B discharge target. See AXIOMS.md §2.3.
+/-- info: 'CSD.LF4.fs_moment_pushforward_uniform' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_moment_pushforward_uniform
+
+/-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_born_volume_ratio_qubit_uncond
+
+/-- info: 'CSD.LF4.qubit_born_frequency_convergence_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.qubit_born_frequency_convergence_uncond
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved

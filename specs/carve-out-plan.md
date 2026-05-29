@@ -251,8 +251,18 @@ Lean and backporting to a TN once the technicalities are confirmed.
     is the pullback of `[0, b₀(ψ)]`, FS-measure = length = Born weight. Genuine
     `fubiniStudyMeasure` on the ontic `Σ = ℂℙ¹`; no carving, no Busch.
 
-  **Option B — the remaining discharge (DEFERRED, to address later — user call
-  2026-05-29):** prove `h_uniform` itself, i.e.
+  **Option A — DONE 2026-05-29** (`CsdLean4/LF4/DuistermaatHeckman.lean`,
+  `AXIOMS.md §2.3`): `h_uniform` is now named as a documented Mathlib-external
+  **geometry axiom** `fs_moment_pushforward_uniform` (the `N=2` DH/Archimedes
+  pushforward — a fact about `μ_FS`, **not** a Born import like Busch), with the
+  reduction `momentMap_pushforward_eq_haar_marginal` (step 1) as the in-Lean link
+  to the Haar marginal. The qubit results now have **unconditional** forms
+  `fs_born_volume_ratio_qubit_uncond` / `qubit_born_frequency_convergence_uncond`
+  citing only the foundational triple + this geometry axiom. Conditional
+  (`h_uniform`-hypothesis) forms remain, foundational-triple-only.
+
+  **Option B — the remaining discharge (the axiom's proof; deferred — user call
+  2026-05-29):** prove `fs_moment_pushforward_uniform` itself, i.e.
   `(momentMap · 0)∗ fubiniStudyMeasure = uniform[0,1]` = "`|U₀₀|²` is
   `Uniform[0,1]` for Haar `U(2)`". Research-grade (Dirichlet/Archimedes; Mathlib
   gap). Two hard links, neither packaged in Mathlib: (1) Haar-orbit → uniform
