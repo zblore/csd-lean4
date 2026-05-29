@@ -134,23 +134,65 @@ Original framing (retained):
 
 ### Tranche B — region from dynamics (L2 / G3b): the load-bearing non-circular step
 
-- **B0 (read first):** read `specs/TN3___1_00.pdf` and Papers C/D to determine
-  whether TN3's constructive quantum-pointer Hamiltonian **derives** the pointer
-  basin volumes independently, or **imports** the projective Born weights for
-  them. This decides what B can honestly deliver.
-- **If TN3 derives the basin volumes:** formalise the construction — define
-  `Σᵢ` as pointer basins of the deterministic SA flow, prove
-  `μL(Σᵢ)/μL(Ω₀) = P_st` from the dynamics + Kähler geometry, no carving. This
-  is the §9.5 target `HSA + pointer stability + null-boundary ⟹ {Σᵢ}` realised
-  for the singlet. It would let a future revision drop the "constructed-to-fit"
-  caveat.
-- **If TN3 imports the Born weights:** then L2 is genuinely open even in the
-  corpus, and B's achievable deliverable is to **surface the import as an
-  explicit named hypothesis** on a *dynamically defined* partition
-  (`basin_volume_eq_born : μL(Σᵢ)/μL(Ω₀) = P_st` as a load-bearing field, marked
-  per the bridge-discipline rules), rather than encoding it silently in arc
-  lengths. This is a real improvement in honesty even though it is not a
-  derivation.
+- **B0 — DONE 2026-05-29. Verdict: IMPORTS, across the whole corpus, explicitly.**
+  (PDF text extracted with `pdftotext`; the Read tool's `pdftoppm` path is
+  unavailable in this environment. Extracts left at `specs/TN3___1_00.txt`,
+  `Paper_C___1_05.txt`, `Paper_D___1_11.txt`.)
+  - **TN3** (the constructive note) computes pointer-sector weights by the
+    operator-form rule `P_st(a,b) = ⟨ψ_T | M_s^t(a,b) | ψ_T⟩` and, in the
+    strong-readout limit, `= |c_st(a,b)|²` (§5.3, the squared amplitude / Born
+    weight). It **explicitly disclaims** volume derivation: §5.5 "No Use of
+    Fubini-Study Voronoi Volumes" — "Their weights are not computed by geometric
+    cell volumes." And §5.4 names the gap by its label: "the dynamics-based
+    classification problem for measurement partitions, tracked in the programme
+    dependency map as **G3b**. The present note ... does not claim a general
+    classification theorem"; "does not independently derive that selection rule."
+    TN3 supplies a genuine *flow* (von Neumann measurement Hamiltonian, branch
+    separation under Hamiltonian flow via Ashtekar-Schilling, §4) but the
+    *weights* are the standard Born projector weights, not derived volumes.
+  - **Paper B** derives the Born weights via a **Gleason-class argument** from
+    symmetry + operational consistency (§3), i.e. the `busch_effect_gleason`
+    import — not a volume computation.
+  - **Paper C** realises outcome regions as FS-Voronoi cells (Appendix D), but
+    §3.7 is explicit: `P(Σᵢ) = ∫_{Σᵢ} ρ_ep dμ_FS = Tr(ρ̂_[ψ] Πᵢ)` with `ρ_ep`
+    the Born density, and "The role of the Fubini-Study geometry here is to
+    provide the canonical invariant epistemic measure and a natural measurable
+    realisation of outcome regions, **not to identify generic sharp-state
+    probabilities with raw neighbourhood-volume intersections**." The functional
+    is "fixed by symmetry and operational consistency" (Paper B).
+  - **Conclusion.** The corpus nowhere derives the Born weight from raw
+    ontic/geometric volume independently of operational consistency; both the
+    operator-form route (TN3) and the FS-Voronoi route (Paper C) import via the
+    Gleason/Busch functional. The Lean carve-out faithfully mirrors this. The
+    genuine derivation is G3b — open by the corpus's own explicit statement
+    (Sigma0 §9.5, TN3 §5.4). **No Lean tranche can close it without new physics.**
+
+  Therefore only the **honesty-improvement form (b)** below is achievable; the
+  genuine-derivation form (a) is ruled out by B0.
+- **Form (a) — genuine derivation: RULED OUT by B0.** Deriving
+  `μL(Σᵢ)/μL(Ω₀) = P_st` from dynamics/geometry with no Born import is the §9.5
+  target `HSA + pointer stability + null-boundary ⟹ {Σᵢ}`; the corpus does not
+  do it (G3b, open). Not formalisable as a derivation.
+- **Form (b) — honesty improvement: the achievable Tranche B.** Reproduce TN3's
+  construction in Lean: outcome regions defined by **physical pointer-sector
+  projectors** `M_s^t(a,b)` (TN3 §5.1-5.2) realised by the measurement-Hamiltonian
+  flow (TN3 §4 branch separation), as ontic pullbacks `Σ_st = π⁻¹(O_ep^{st})`
+  (TN3 §5.4), with the weight carried as the **operator-form Born identity**
+  `⟨ψ | M_s^t | ψ⟩ = P_st` — the existing LF2/LF3 Born machinery, marked as an
+  import per the bridge-discipline rules — *not* a carved arc length and *not* a
+  derived volume. Gain over the current `SingletKahler` carving: the partition is
+  tied to physical projectors realised by a genuine flow, and the import is the
+  named Born step (operator-form / Gleason-Busch) the corpus actually makes,
+  rather than an opaque arc cut to length `P_st`. It does **not** close the
+  carve-out; it relocates the import to where TN3 puts it.
+- **Large reuse available.** LF3 already formalises most of TN3's strong-readout
+  pointer layer: `BinaryPointerProjectors`, `ProjectorAlgebra`, `sectorVolume`,
+  `StrongReadoutCompat`, `SingletProjectiveOutcome` (the pullback regions), and
+  `sectorVolume_eq_LF2_Born` / `OP_p_at_jointEig_eq_P_st` (the operator-form Born
+  identity). The missing piece is the **flow** `Φ` realising branch separation —
+  currently `MeasurementUnitary.action` is a structural field (D4/G6) and `Φ=id`.
+  Tranche A's `kFlow` machinery is the seed; Tranche B connects an (impulsive-limit)
+  measurement flow to the LF3 pointer-sector partition.
 - **Prerequisites / Mathlib gaps:** the SA flow needs `exp(-iHt)` + Stone's
   theorem on bounded self-adjoint operators — the `MeasurementUnitary.action`
   field, debt **D4/G6**, explicitly LF4-or-later per spec §9.5. Pointer-basin
@@ -166,16 +208,13 @@ Original framing (retained):
 
 ## 5. Recommended ordering and the honest stopping line
 
-1. **Tranche A** first: cheap, removes the most embarrassing vacuity (`Φ = id`),
-   and makes the LF1 deterministic-typicality claim non-trivial on the concrete
-   instance. Low Mathlib risk.
-2. **B0** (read TN3 + Papers C/D) before committing to B. The corpus may not yet
-   derive basin volumes, in which case the achievable B-deliverable is
-   "dynamically-defined partition + Born weight surfaced as an explicit
-   hypothesis," not a full derivation. Decide scope from what TN3 actually
-   proves.
-3. **Tranche B** proper if and only if TN3 supplies an independent basin-volume
-   computation; otherwise the honesty-improvement form of B.
+1. **Tranche A** — DONE (`LF4/KahlerFlow.lean`). Removed the `Φ = id` vacuity.
+2. **B0** — DONE. Verdict: IMPORTS (see Tranche B). Genuine-derivation form (a)
+   is ruled out; only the honesty-improvement form (b) is achievable.
+3. **Tranche B (form b)** — the next substantive step: a measurement-flow-realised
+   pointer-sector partition with the operator-form Born weight surfaced as a named
+   import, reusing the LF3 pointer machinery. Gated on a flow `Φ` for branch
+   separation (impulsive limit, or the D4/G6 `exp(-iHt)`/Stone gap).
 4. **Tranche C** is long-term and parallel.
 
 **Honest stopping line (matches Sigma0 §9.5).** No physical theory derives its
