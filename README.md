@@ -4,12 +4,15 @@
 
 Lean 4 formalisation of Constraint-Surface Dynamics. **LF1**, **LF2**, **LF3**, and **LF4 §14.2** (the observable-correspondence layer — Hilbert spectral expansion, ontic-side multi-region carving, ontic ↔ Hilbert variance correspondence, and Robertson uncertainty at the ontic-integration level, including two concrete witnesses) are merged and machine-verified. An **Empirical** module provides the QM-validity regression suite (Bell family, no-cloning, no-deleting, Uncertainty, Stern-Gerlach, superdense coding, quantum money, contextuality, Hardy, GHZ, gates).
 
-The repo is sorry-free and `lake build CsdLeanTests` green (3038 jobs at this writing). Axiom posture is the foundational Lean triple + two spec-mandated Mathlib-external axioms (`invariant_measure_uniqueness`, `busch_effect_gleason`). See [`AXIOMS.md`](AXIOMS.md) for the per-theorem ledger and [`specs/LF4-todo.md`](specs/LF4-todo.md) for the LF4 backlog.
+**Notable result (the Born rule as a Kähler volume ratio).** A new LF4 module cluster derives the Born weight `‖⟨eᵢ, ψ⟩‖²` from the Fubini–Study Kähler geometry — as the **torus moment-map coordinate** (`momentMap_mk_eq_inner_sq`), as a **barycentric Lebesgue-volume ratio** (`born_eq_volume_ratio`, general `N`), and for the qubit as a **genuine `fubiniStudyMeasure` volume ratio on the ontic `Σ = ℂℙ¹`** (`fs_born_volume_ratio_qubit`). This yields a **Busch-free empirical chain** `qubit_born_frequency_convergence`: deterministic repeated-trial typicality (LF1) + Born = Fubini–Study volume ratio ⟹ frequencies converge a.s. to the Born weight, with the Born value *derived from the Kähler volume* rather than imported via Gleason/Busch. This is a foundational strengthening (where the Born numbers come from), upstream of the Empirical suite; it is **not** an empirical-parity result. Conditional on one explicit, classically-true hypothesis `h_uniform` (the `N=2` Duistermaat–Heckman fact, deferred — see [`specs/carve-out-plan.md`](specs/carve-out-plan.md)).
+
+The repo is sorry-free and `lake build CsdLeanTests` green (3044 jobs at this writing). Axiom posture is the foundational Lean triple + two spec-mandated Mathlib-external axioms (`invariant_measure_uniqueness`, `busch_effect_gleason`). See [`AXIOMS.md`](AXIOMS.md) for the per-theorem ledger and [`specs/LF4-todo.md`](specs/LF4-todo.md) for the LF4 backlog.
 
 ## What's machine-verified
 
 | Layer | Headline | Carving | Axioms beyond foundational triple |
 |---|---|---|---|
+| **LF4 Born-from-volume** | Born weight `‖⟨eᵢ,ψ⟩‖²` = torus moment-map coordinate (`momentMap_mk_eq_inner_sq`) = barycentric volume ratio (`born_eq_volume_ratio`, general `N`) = genuine FS-volume ratio on `Σ=ℂℙ¹` (`fs_born_volume_ratio_qubit`); Busch-free empirical chain `qubit_born_frequency_convergence` (frequencies → Born via the Kähler volume) | **No carving** — geometric regions (moment sublevel / barycentric sub-simplex); Born value derived, not cut to fit. Qubit on-`Σ` + empirical chain conditional on `h_uniform` (`N=2` Duistermaat–Heckman, deferred plan B) | none (`h_uniform` is a hypothesis, **not** `busch_effect_gleason`) |
 | **LF4 §14.2** | `kahler_robertson_ontic_variance` — Robertson bound on ontic-side integrals for any Hermitian observables on `EuclideanSpace ℂ (Fin N)`, with concrete witnesses `pauli_xy_robertson_saturation` (saturation at \|0⟩) and `pauliDot_robertson_zPlus` (parametric over axes) | Compact Kähler `KSigma M = ℂℙ^{M-1} × T²`; N-arc fibre partition via `spectralRegion`; integration headline `∫ spectralOnticCentered dμψ = ‖A ψ‖² − ⟨A⟩²` | none |
 | **LF3** | Singlet kernel `P_st = (1 − st a·b)/4`; LF1↔LF2↔LF3 chain capstones (6 variants); finite-leakage stability | Posited fibre law `μψ` (option (B) chain design, post-Phase-7) | `busch_effect_gleason` (chain capstones only) |
 | **LF2** | `measure_bridge` (`π∗μL = c·μFS`); `born_quadratic` (`Tr(\|ψ⟩⟨ψ\|·\|φ⟩⟨φ\|) = ‖⟨ψ,φ⟩‖²`); `pure_state_born_weights_of_certainty`; `LF1_main_theorem_projective` | Abstract projective target `P` (concrete instantiation deferred to LF4 §8) | `invariant_measure_uniqueness`; `busch_effect_gleason` (purity-form Born only) |
@@ -238,6 +241,19 @@ Exported theorems and their dependencies. The "Axioms" column lists CSD-specific
 | `kahler_robertson_ontic_variance` | `LF4/UncertaintyKahler.lean` | **Robertson on ontic variances**: `(∫ spectralOnticCentered hA ψ dμψ) · (∫ spectralOnticCentered hB ψ dμψ) ≥ ¼ ‖⟨ψ, [A, B] ψ⟩‖²`. | none |
 | `pauli_xy_robertson_saturation` | `LF4/PauliRobertson.lean` | First concrete witness: `σ_x, σ_y` on `|0⟩` saturates Robertson; both sides equal 1. | none |
 | `pauliDot_robertson_zPlus` | `LF4/PauliDotRobertson.lean` | Parametric: `(1 − a_z²)(1 − b_z²) ≥ (a_x b_y − a_y b_x)²` for unit-vector axes `â, b̂`. | none |
+
+### LF4 Born-from-Kähler-volume (the moment-map cluster)
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `kFlow_measurePreserving`, `kFlow_frequency_convergence` | `LF4/KahlerFlow.lean` | First non-trivial measure-preserving flow `Φ≠id` (fibre translation); LF1 typicality non-vacuous, `hΦ_pres` load-bearing. | none |
+| `momentMap_mk_eq_inner_sq` | `LF4/MomentMap.lean` | Born weight = torus moment-map coordinate `Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²` (forced symplectic invariant). | none |
+| `born_eq_volume_ratio` | `LF4/BornVolume.lean` | Born weight = barycentric Lebesgue-volume ratio of the vertex-replacement image (general `N`). | none |
+| `momentMap_orbit` | `LF4/MomentPushforward.lean` | Reduces `Φ∗μ_FS = uniform_Δ` to the Haar marginal (μ_FS = Haar-on-`U(N)` pushforward). | none |
+| `fs_born_volume_ratio_qubit` | `LF4/BornFS.lean` | Born weight = genuine `fubiniStudyMeasure` volume ratio on `Σ=ℂℙ¹`, modulo `h_uniform`. | none |
+| `qubit_born_frequency_convergence` | `LF4/QubitBornFrequency.lean` | **Busch-free** empirical chain: frequencies → `‖⟨e₀,ψ⟩‖²` via the FS volume, modulo `h_uniform`. | none |
+
+`h_uniform` (the `N=2` Duistermaat–Heckman fact) is an explicit theorem **hypothesis**, not an axiom; the pins above are foundational-triple-only. Discharging it is the deferred plan B (`specs/carve-out-plan.md`).
 
 ### LF3 (singlet kernel, pointer-sector decomposition, empirical chain)
 

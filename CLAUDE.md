@@ -388,6 +388,21 @@ PauliRobertson.lean    — pauli_xy_robertson_saturation (σx,σy on |0⟩, both
 PauliDotRobertson.lean — pauliDot_robertson_zPlus (parametric over unit axes)
 OnticBorn.lean         — ontic_born_frequency (general pure-state ontic Born
                          capstone via freq_tendsto_of_iid + Busch)
+KahlerFlow.lean        — kFlow: first non-trivial measure-preserving flow Φ≠id
+                         (fibre translation on T²); kFlow_frequency_convergence
+                         (LF1 typicality non-vacuous; hΦ_pres load-bearing)
+MomentMap.lean         — momentMap (torus moment map); momentMap_mk_eq_inner_sq:
+                         Born weight = moment coordinate Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²
+                         (forced symplectic invariant, no carving, no Busch)
+BornVolume.lean        — replaceMap (vertex-replacement); born_eq_volume_ratio:
+                         Born weight = barycentric Lebesgue-volume ratio
+                         (det = barycentric coord via Cramer + addHaar)
+MomentPushforward.lean — momentMap_orbit: reduces Φ∗μ_FS = uniform_Δ to the Haar
+                         marginal (the project's μ_FS is the Haar-on-U(N) pushforward)
+BornFS.lean            — fs_born_volume_ratio_qubit: Born = genuine FS-volume ratio
+                         on the ontic Σ = ℂℙ¹, modulo h_uniform; momentMap_measurable
+QubitBornFrequency.lean— qubit_born_frequency_convergence: Busch-free empirical →
+                         Born chain (frequencies → ‖⟨e₀,ψ⟩‖² via the FS volume)
 ```
 
 **§14.2 is closed.** The observable-correspondence chain (six commits,
@@ -406,6 +421,33 @@ concrete `SectorData`** — no dynamics is exercised (structural debt D1, wide
 open). LF4 is a faithful *realisation* on a compact-Kähler Σ, not a *derivation*
 of quantum weights from deterministic dynamics. Say which side of that line any
 new result sits on.
+
+**Carve-out / Born-from-Kähler-volume programme (the moment-map cluster).** The
+modules `KahlerFlow`, `MomentMap`, `BornVolume`, `MomentPushforward`, `BornFS`,
+`QubitBornFrequency` address the carve-out issue (the Tier-2 note above: LF4
+results land on Born weights via *carved* regions). They establish, on the
+genuine Fubini–Study Kähler structure, **not** by carving and **not** via
+`busch_effect_gleason`:
+
+- Born weight = torus moment-map coordinate `Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²`
+  (`momentMap_mk_eq_inner_sq`) — a forced symplectic invariant.
+- Born weight = barycentric Lebesgue-volume ratio (`born_eq_volume_ratio`),
+  general `N`, unconditional.
+- For the qubit, Born weight = genuine `fubiniStudyMeasure` volume ratio on
+  `Σ = ℂℙ¹` (`fs_born_volume_ratio_qubit`) and the **Busch-free empirical chain**
+  `qubit_born_frequency_convergence` (LF1 typicality + Born = FS volume ⟹
+  frequencies → Born), both modulo one explicit hypothesis `h_uniform` (the `N=2`
+  Duistermaat–Heckman fact `Φ∗μ_FS = uniform[0,1]`).
+
+This is a *foundational* strengthening (where the Born numbers come from), upstream
+of both Empirical branches: the QM branch takes Born probabilities as inner
+products; the CSD-bridge branch imports them via Busch/operational consistency;
+this cluster *derives* the Born weight from the Kähler volume for the qubit
+(modulo `h_uniform`). The honest residue: `h_uniform` is deferred (a genuine
+Mathlib-gap measure computation; see `specs/carve-out-plan.md` Tranche M plan B),
+the metric/basis is the accepted ontic primitive (debts A5/G3b), and general-`N`
+on-`Σ` needs the full `Φ∗μ_FS = uniform_Δ`. The full plan and per-result honesty
+ledger live in `specs/carve-out-plan.md`.
 
 ### Empirical: QM-validity regression suite
 
