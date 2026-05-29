@@ -71,6 +71,13 @@ lemma momentMap_sum_eq_one (p : CPN N) : ∑ i, momentMap p i = 1 := by
   unfold momentMap
   rw [← Finset.sum_div, ← euclidean_norm_sq_eq_sum, div_self hrep2]
 
+/-- Each moment coordinate is at most one (`‖p.rep i‖² ≤ ∑ⱼ ‖p.rep j‖² = ‖p.rep‖²`). -/
+lemma momentMap_le_one (p : CPN N) (i : Fin N) : momentMap p i ≤ 1 := by
+  have hpos : 0 < ‖p.rep‖ ^ 2 := pow_pos (norm_pos_iff.mpr p.rep_nonzero) 2
+  rw [momentMap, div_le_one hpos, euclidean_norm_sq_eq_sum]
+  exact Finset.single_le_sum (f := fun j => ‖p.rep j‖ ^ 2)
+    (fun j _ => sq_nonneg _) (Finset.mem_univ i)
+
 /-- The coordinate ratio `‖vᵢ‖²/‖v‖²` is invariant under nonzero rescaling of
 `v` (the projective well-definedness of `momentMap`). -/
 lemma momentRatio_smul (c : ℂ) (hc : c ≠ 0) (v : EuclideanSpace ℂ (Fin N)) (i : Fin N) :

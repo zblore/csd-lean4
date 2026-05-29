@@ -237,11 +237,25 @@ Lean and backporting to a TN once the technicalities are confirmed.
 
   For `N=2` this is "`|U₀₀|²` is `Uniform[0,1]` for Haar `U(2)`" (= Archimedes on
   the Bloch sphere). **No Mathlib support** (no sphere change-of-variables /
-  Dirichlet law); it is a genuine multi-session measure-theory build. Options to
-  close it: (B) prove the Dirichlet marginal directly (research-grade), or state
-  the pushforward as an explicit *hypothesis* on an on-`Σ` Born-volume theorem
-  (axiom-clean, names the precise gap; the project's load-bearing-hypothesis
-  pattern).
+  Dirichlet law); it is a genuine multi-session measure-theory build.
+
+  **Option C — DONE 2026-05-29** (`CsdLean4/LF4/BornFS.lean`, axiom-clean,
+  AxiomAudit-pinned): the on-`Σ` Born = FS-volume-ratio statement for the qubit,
+  modulo the explicit `h_uniform` hypothesis.
+  - `momentMap_measurable` — `momentMap · i` measurable (via §12
+    `measurable_iff_measurable_comp_mk'` + `EuclideanSpace.proj` for the coords).
+  - `fs_born_volume_ratio_qubit` (headline): for unit `ψ : ℂ²`, given
+    `(fun p => momentMap p 0)∗ fubiniStudyMeasure = uniform[0,1]`, then
+    `fubiniStudyMeasure {p | momentMap p 0 ≤ momentMap [ψ] 0} = ‖⟨e₀,ψ⟩‖²`. The
+    outcome region is the moment **sublevel set**; for `N=2` (1-dim polytope) it
+    is the pullback of `[0, b₀(ψ)]`, FS-measure = length = Born weight. Genuine
+    `fubiniStudyMeasure` on the ontic `Σ = ℂℙ¹`; no carving, no Busch.
+
+  **Option B — the remaining discharge:** prove `h_uniform` itself, i.e.
+  `(momentMap · 0)∗ fubiniStudyMeasure = uniform[0,1]` = "`|U₀₀|²` is
+  `Uniform[0,1]` for Haar `U(2)`". Research-grade (Dirichlet/Archimedes; Mathlib
+  gap). The sublevel-set form is special to `N=2`; general `N` uses the
+  barycentric regions of `BornVolume.lean` with the full `Φ∗μ_FS = uniform_Δ`.
 - **Slice 3 — DONE 2026-05-29** (`CsdLean4/LF4/BornVolume.lean`, foundational
   triple, AxiomAudit-pinned). Candidate refined during the work: the toric fibre
   Haar measure does **not** cleanly partition into Born weights (the moment map

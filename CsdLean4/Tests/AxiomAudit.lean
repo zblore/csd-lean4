@@ -15,6 +15,7 @@ import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.MomentPushforward
+import CsdLean4.LF4.BornFS
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -872,6 +873,18 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.momentMap_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_orbit
+
+-- Tranche M slice 2 (option C): Born = Fubini-Study volume ratio on the ontic
+-- Kähler Σ = ℂℙ¹, modulo the explicit N=2 Duistermaat-Heckman hypothesis
+-- (the 0-coordinate marginal of the genuine FS measure is uniform[0,1]).
+-- Axiom-clean (hypothesis-gated); momentMap measurable via the §12 lift API.
+/-- info: 'CSD.LF4.momentMap_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.momentMap_measurable
+
+/-- info: 'CSD.LF4.fs_born_volume_ratio_qubit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_born_volume_ratio_qubit
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
