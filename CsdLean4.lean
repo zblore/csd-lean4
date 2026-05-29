@@ -49,6 +49,7 @@ import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.BornFS
+import CsdLean4.LF4.QubitBornFrequency
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables

@@ -251,11 +251,21 @@ Lean and backporting to a TN once the technicalities are confirmed.
     is the pullback of `[0, b₀(ψ)]`, FS-measure = length = Born weight. Genuine
     `fubiniStudyMeasure` on the ontic `Σ = ℂℙ¹`; no carving, no Busch.
 
-  **Option B — the remaining discharge:** prove `h_uniform` itself, i.e.
+  **Option B — the remaining discharge (DEFERRED, to address later — user call
+  2026-05-29):** prove `h_uniform` itself, i.e.
   `(momentMap · 0)∗ fubiniStudyMeasure = uniform[0,1]` = "`|U₀₀|²` is
   `Uniform[0,1]` for Haar `U(2)`". Research-grade (Dirichlet/Archimedes; Mathlib
-  gap). The sublevel-set form is special to `N=2`; general `N` uses the
-  barycentric regions of `BornVolume.lean` with the full `Φ∗μ_FS = uniform_Δ`.
+  gap). Two hard links, neither packaged in Mathlib: (1) Haar-orbit → uniform
+  sphere `S³` (an invariant-measure-uniqueness argument à la
+  `invariant_measure_uniqueness_cpn`); (2) uniform `S³` → `Uniform[0,1]`
+  (Archimedes/Dirichlet `Beta(1,1)`). Available tools:
+  `MeasureTheory.Constructions.HaarToSphere` (`Measure.toSphere`,
+  `measurePreserving_homeomorphUnitSphereProd`), `Probability.Distributions.Beta`
+  / `…Gaussian`. Suggested entry: link (2) via the Gaussian route
+  (iid complex Gaussians → `Beta(1,1)` ratio; normalised Gaussian → uniform
+  sphere). Multi-session, plausibly a standalone Mathlib contribution. The
+  sublevel-set form is special to `N=2`; general `N` uses the barycentric regions
+  of `BornVolume.lean` with the full `Φ∗μ_FS = uniform_Δ`.
 - **Slice 3 — DONE 2026-05-29** (`CsdLean4/LF4/BornVolume.lean`, foundational
   triple, AxiomAudit-pinned). Candidate refined during the work: the toric fibre
   Haar measure does **not** cleanly partition into Born weights (the moment map
