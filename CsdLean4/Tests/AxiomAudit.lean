@@ -18,6 +18,7 @@ import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.BornFS
 import CsdLean4.LF4.QubitBornFrequency
 import CsdLean4.LF4.BornFrequencyPartition
+import CsdLean4.LF4.MomentMarginal
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -900,6 +901,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.born_frequency_convergence_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.born_frequency_convergence_partition
+
+-- Plan B step 1: the moment marginal of μ_FS = the Haar law of the
+-- squared-modulus ratio of U·rep. Reduces h_uniform to the (deferred) Dirichlet
+-- marginal "|U₀₀|² ~ Uniform[0,1] for Haar U(2)".
+/-- info: 'CSD.LF4.momentMap_pushforward_eq_haar_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.momentMap_pushforward_eq_haar_marginal
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
