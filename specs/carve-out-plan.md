@@ -276,6 +276,26 @@ Lean and backporting to a TN once the technicalities are confirmed.
   sphere). Multi-session, plausibly a standalone Mathlib contribution. The
   sublevel-set form is special to `N=2`; general `N` uses the barycentric regions
   of `BornVolume.lean` with the full `Φ∗μ_FS = uniform_Δ`.
+
+  **Plan B execution DAG (Gaussian route):**
+  - **B.1 — DONE** (`MomentMarginal.lean`): the reduction — target ⟺
+    `(fun U => ‖(U·rep)₀‖²/‖U·rep‖²)∗ unitaryHaarProb = uniform[0,1]`.
+  - **B.2 (Haar-orbit → uniform sphere):** `(fun U => U·v₀)∗ unitaryHaarProb`
+    is the `U(2)`-invariant prob measure on the sphere of `ℂ²`. Via the standard
+    multivariate Gaussian on `ℝ⁴` (`Gaussian/Multivariate.lean`):
+    unitary-invariance ⟹ its normalisation to the sphere is the invariant measure.
+    **Gap:** Gaussian rotation-invariance → uniform sphere not packaged.
+  - **B.3 (sphere marginal → `Uniform[0,1]`):** `(w ↦ |w₀|²)∗ uniformSphere =
+    uniform[0,1]`. `|z₀|², |z₁|²` iid `Exp`; `|z₀|²/(|z₀|²+|z₁|²) ~ Beta(1,1) =
+    Uniform` (`Beta`/`Gamma`/`Exponential`). **Gap:** the Gamma-ratio = Beta
+    change-of-variables.
+  - **B.4 (assemble):** compose B.2 ∘ B.3, identify the normalised first
+    squared-modulus with the moment marginal, discharge the axiom.
+
+  Building blocks present: `Gaussian/Multivariate`, `Beta`, `Gamma`,
+  `Exponential`, `HaarToSphere`. The two gaps (B.2, B.3) are each a real
+  construction; **no quick committable increment exists beyond B.1**. Dedicated
+  multi-session effort, plausibly upstreamable.
 - **Slice 3 — DONE 2026-05-29** (`CsdLean4/LF4/BornVolume.lean`, foundational
   triple, AxiomAudit-pinned). Candidate refined during the work: the toric fibre
   Haar measure does **not** cleanly partition into Born weights (the moment map
