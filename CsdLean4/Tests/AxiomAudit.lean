@@ -17,6 +17,7 @@ import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.BornFS
 import CsdLean4.LF4.QubitBornFrequency
+import CsdLean4.LF4.BornFrequencyPartition
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -893,6 +894,12 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.qubit_born_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.qubit_born_frequency_convergence
+
+-- General-N joint Busch-free Born frequency convergence over a finite outcome
+-- family (Born = ontic volume as hypothesis hborn). Closes LF4-todo §9.
+/-- info: 'CSD.LF4.born_frequency_convergence_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.born_frequency_convergence_partition
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved

@@ -286,9 +286,23 @@ derives its own objects).
 
 ---
 
-## 9. Unify `MeasurablePartition` (LF2) with LF1's "intersect full-measure sets" sketch
+## 9. Unify `MeasurablePartition` (LF2) with LF1's "intersect full-measure sets" sketch — **DONE 2026-05-29**
 
-**Status:** LF1's `OutcomeRegion` formalises one measurable region at a time; the joint almost-sure statement for a finite partition is sketched in the LF1 docstring as "apply the theorem once per element and intersect the resulting full-measure sets" but not written as a lemma. LF2's `Weights.lean` defines `MeasurablePartition` as the partition object the LF1 docstring defers. The two are not yet linked.
+**Status: DISCHARGED.** `CSD.LF4.born_frequency_convergence_partition`
+(`CsdLean4/LF4/BornFrequencyPartition.lean`, foundational triple,
+AxiomAudit-pinned) writes the joint a.e. convergence lemma: for a finite
+(`[Countable ι]`) family of measurable outcome regions `region i` with
+`(μ (region i)).toReal = b i`, i.i.d. trials give
+`∀ᵐ ω, ∀ i, Tendsto (freq i) atTop (nhds (b i))`. Proof is exactly the sketched
+`ae_all_iff` (intersect full-measure sets) + `freq_tendsto_of_iid` per index.
+Stated law-agnostically (any common law `μ`, à la `freq_tendsto_of_iid`) rather
+than via an LF2 `MeasurablePartition`/`TrialModel`, so it applies to the
+posited-fibre-law chain and the Kähler instance uniformly. The "Born = ontic
+measure" content is the hypothesis `hborn`, discharged for the qubit by
+`fs_born_volume_ratio_qubit`; general-`N` awaits the `(N-1)`-barycentric +
+Duistermaat–Heckman (carve-out plan, Tranche M).
+
+**Original framing (retained):** LF1's `OutcomeRegion` formalises one measurable region at a time; the joint almost-sure statement for a finite partition is sketched in the LF1 docstring as "apply the theorem once per element and intersect the resulting full-measure sets" but not written as a lemma. LF2's `Weights.lean` defines `MeasurablePartition` as the partition object the LF1 docstring defers. The two are not yet linked.
 
 **Why deferred:** LF1 deliberately avoided introducing a partition type ("a partition type may become necessary at LF2/LF4 for POVM completeness", per the LF1 `Outcomes.lean` docstring). LF2 introduced `MeasurablePartition` for projective-weight normalisation. The link, "given a `MeasurablePartition`, the LF1 joint almost-sure convergence statement follows from per-element applications of `LF1_main_theorem_ae`", was not written because LF1's frequency theorem is for a single region and no LF2/LF3 consumer needed the joint version.
 
