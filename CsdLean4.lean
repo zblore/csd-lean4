@@ -44,6 +44,7 @@ import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.Interface
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
+import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables

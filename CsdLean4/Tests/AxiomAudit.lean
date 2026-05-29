@@ -11,6 +11,7 @@ import CsdLean4.LF3.Singlet.JointEig
 import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
+import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -820,6 +821,20 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.k_measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.k_measure_bridge
+
+-- Tranche A: a non-trivial measure-preserving flow on the Kähler fibre (Φ ≠ id),
+-- making the LF1 deterministic-typicality theorem non-vacuous on the instance.
+/-- info: 'CSD.LF4.kFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kFlow_measurePreserving
+
+/-- info: 'CSD.LF4.kFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kFlow_ne_id
+
+/-- info: 'CSD.LF4.kFlow_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kFlow_frequency_convergence
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved

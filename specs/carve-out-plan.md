@@ -87,7 +87,26 @@ the verification.
 
 ## 4. Tranches
 
-### Tranche A — exercise dynamics, kill the `Φ = id` vacuity (achievable now)
+### Tranche A — exercise dynamics, kill the `Φ = id` vacuity — **DONE 2026-05-29**
+
+Delivered in `CsdLean4/LF4/KahlerFlow.lean` (foundational triple, AxiomAudit-pinned):
+
+- `kFlow sh : (p, t) ↦ (p, sh + t)` — fibre-translation flow on `KSigma N`.
+- `kFlow_measurePreserving` — `kFlow sh` preserves `kMuL = μFS ⊗ vol_{T²}`
+  (Haar-invariance of `T²` translation × identity on the base). This is the
+  genuine `hΦ_pres` content for a non-identity flow.
+- `kFlow_ne_id` — `kFlow sh ≠ id` for `sh ≠ 0` (dynamics genuinely present).
+- `kFlow_preserves_rays` — `(kFlow sh p).1 = p.1`, i.e. `π ∘ kFlow = π` (the flow
+  moves only within a fibre over a fixed `[ψ]`; constraint-surface compatibility).
+- `kFlow_frequency_convergence` — LF1 frequency convergence on the **evolved**
+  trials `kFlow sh ∘ sampleₙ`; `kFlow_measurePreserving` is load-bearing (it pins
+  `law(kFlow sh ∘ sampleₙ) = kMuL p₀`, hence the limit to the volume ratio).
+
+This makes the LF1 deterministic-typicality theorem non-vacuous on the concrete
+Kähler instance, and `hΦ_pres` load-bearing for the first time. As anticipated
+below, it does **not** escape carving: the limit is the chosen volume of `O`.
+
+Original framing (retained):
 
 - Put a non-trivial **measure-preserving** flow on the existing `T²` factor of
   `KSigma` (a linear / irrational-rotation flow), giving `Φ ≠ id` that
