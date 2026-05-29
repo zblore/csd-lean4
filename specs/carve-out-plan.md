@@ -222,8 +222,26 @@ Lean and backporting to a TN once the technicalities are confirmed.
   triple, AxiomAudit-pinned): `momentMap`, `momentMap_nonneg`,
   `momentMap_sum_eq_one` (lands in the simplex / probability vector), and the
   headline `momentMap_mk_eq_inner_sq` — `Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²` at a unit `ψ`.
-- **Slice 2 (research):** Duistermaat–Heckman pushforward `Φ∗μ_FS = uniform_Δ`.
-  Needs symplectic-volume + DH machinery absent from Mathlib. Substantial.
+- **Slice 2 — reduction DONE 2026-05-29, analytic core OPEN**
+  (`CsdLean4/LF4/MomentPushforward.lean`). The keystone is the DH pushforward
+  `Φ∗ fubiniStudyMeasure = uniform_Δ`, which would lift `born_eq_volume_ratio`
+  from a Lebesgue ratio on the polytope to a genuine μ_FS ratio on the ontic `Σ`.
+  Key finding: the project's `fubiniStudyMeasure` is the **Haar-on-U(N)
+  pushforward** (`U ↦ U•p₀`), so the keystone is **not** a one-line Archimedes
+  invocation. `momentMap_orbit` reduces it precisely: along the orbit,
+  `momentMap (U • p₀) i = ‖(U·rep)ᵢ‖²/‖U·rep‖²`, so
+
+  ```
+  Φ∗ fubiniStudyMeasure = uniform_Δ  ⟺  squared-moduli of a Haar-random unit column ~ Dirichlet(1ᴺ).
+  ```
+
+  For `N=2` this is "`|U₀₀|²` is `Uniform[0,1]` for Haar `U(2)`" (= Archimedes on
+  the Bloch sphere). **No Mathlib support** (no sphere change-of-variables /
+  Dirichlet law); it is a genuine multi-session measure-theory build. Options to
+  close it: (B) prove the Dirichlet marginal directly (research-grade), or state
+  the pushforward as an explicit *hypothesis* on an on-`Σ` Born-volume theorem
+  (axiom-clean, names the precise gap; the project's load-bearing-hypothesis
+  pattern).
 - **Slice 3 — DONE 2026-05-29** (`CsdLean4/LF4/BornVolume.lean`, foundational
   triple, AxiomAudit-pinned). Candidate refined during the work: the toric fibre
   Haar measure does **not** cleanly partition into Born weights (the moment map

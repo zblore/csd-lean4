@@ -47,6 +47,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.BornVolume
+import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables

@@ -14,6 +14,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.BornVolume
+import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -864,6 +865,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.born_eq_volume_ratio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.born_eq_volume_ratio
+
+-- Tranche M slice 2 (reduction): the moment map along the U(N) orbit reduces the
+-- Fubini-Study pushforward to the Haar law of the squared-moduli of U·rep (the
+-- Dirichlet keystone; N=2 = "|U₀₀|² uniform"). Bridge lemma toward Φ∗μ_FS=uniform.
+/-- info: 'CSD.LF4.momentMap_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.momentMap_orbit
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
