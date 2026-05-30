@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(wc *)",
+      "Bash(lake build)",
+      "Bash(lake build *)",
+      "Bash(lake env lean *)",
+      "Bash(pdftotext *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push origin *)",
+      "Bash(git tag *)",
+      "Bash(git mv *)",
+      "Bash(git rm *)",
+      "Bash(git stash *)",
+      "Bash(git restore *)",
+      "Bash(git switch *)",
+      "Bash(kill *)",
+      "Bash(taskkill *)",
+      "PowerShell(gh *)"
+    ]
+  }
+}
