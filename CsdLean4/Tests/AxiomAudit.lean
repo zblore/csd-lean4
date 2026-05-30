@@ -22,6 +22,7 @@ import CsdLean4.LF4.MomentMarginal
 import CsdLean4.LF4.DuistermaatHeckman
 import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.GaussianCP
+import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -951,6 +952,22 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.gaussianCP_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.gaussianCP_eq_fubiniStudy
+
+-- Plan B Part 2, Slice 1 (L5.1): the single-block squared-norm law is Exp(1/2).
+-- `‖·‖²∗ N(0,I₂) = Exp(1/2)` on plain ℝ × ℝ, via polarCoord + the 1-D s=r²
+-- Jacobian change of variables. Foundational triple; entry slice of the route
+-- discharging `fs_moment_pushforward_uniform`.
+/-- info: 'CSD.LF4.gaussian2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.gaussian2
+
+/-- info: 'CSD.LF4.expHalf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.expHalf
+
+/-- info: 'CSD.LF4.sqNorm_map_gaussian2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.sqNorm_map_gaussian2
 
 /-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
 #guard_msgs (whitespace := lax) in
