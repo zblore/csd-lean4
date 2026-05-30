@@ -272,7 +272,51 @@ it. If a cleaner path emerges via `iIndepFun` from `Measure.pi`
 
 **Recommended entry: Slice 1.** Smallest self-contained increment, lands a
 reusable distributional fact, and de-risks the polarCoord route before the harder
-Jacobian work in Slice 3.
+Jacobian work in Slice 3. **(DONE — commit f7e1bdd.)**
+
+### Slice 2 — DETAILED PLAN (2026-05-30)
+
+**Recon verdict: the block-product (independence) content is CLEAN; the
+`stdGaussian(EuclideanSpace ℝ (Fin 4))` regrouping is the only bookkeeping cost,
+and is deferred to Slice 4.** All tools exist. Two lemmas, both in
+`MomentMarginalUniform.lean` (extending Slice 1):
+
+- **L5.2a (2-D bridge, reusable).**
+  `gaussian2 = (gaussianReal 0 1).prod (gaussianReal 0 1)`.
+  Proof: `gaussianReal_of_var_ne_zero` (Mathlib `Gaussian/Real.lean:203`,
+  `gaussianReal 0 1 = volume.withDensity (gaussianPDF 0 1)`); then
+  `MeasureTheory.prod_withDensity` (`WithDensity.lean:711`,
+  `(μ.withDensity f).prod (ν.withDensity g) = (μ.prod ν).withDensity
+   (p ↦ f p.1 * g p.2)`); `Measure.volume_eq_prod` to fold `volume.prod volume
+   = volume` on `ℝ × ℝ`; then density algebra
+  `gaussianPDF 0 1 x * gaussianPDF 0 1 y = ENNReal.ofReal ((1/2π) e^{-(x²+y²)/2})`
+  via `ENNReal.ofReal_mul` and `(1/√(2π))·(1/√(2π)) = 1/(2π)`
+  (`Real.sqrt`/`Real.mul_self_sqrt`, `2π ≥ 0`). Risk: **MED** (the `1/√(2π)`
+  squaring + `ENNReal.ofReal` product bookkeeping; everything nonneg so clean).
+
+- **L5.2b (block product = independence).**
+  `Measure.map (Prod.map Lsq Lsq) (gaussian2.prod gaussian2) = expHalf.prod expHalf`,
+  where `Lsq p = p.1² + p.2²` and
+  `Prod.map Lsq Lsq : (ℝ×ℝ)×(ℝ×ℝ) → ℝ×ℝ`. Proof: `Measure.map_prod_map`
+  (Mathlib `Measure/Prod.lean`,
+  `map (Prod.map f g) (μ.prod ν) = (μ.map f).prod (ν.map g)`; needs the two
+  factor maps measurable) + `sqNorm_map_gaussian2` (Slice 1) on each factor.
+  ~10 lines. Risk: LOW. **This is the independence statement** — the joint law of
+  the two block squared-norms is the product, no separate `IndepFun` needed.
+
+**Deferred to Slice 4 (NOT Slice 2): L5.2c — the EuclideanSpace bridge.**
+`stdGaussian(EuclideanSpace ℝ (Fin 4))` transported to `gaussian2.prod gaussian2`.
+Route: `map_pi_eq_stdGaussian` (`stdGaussian = (Measure.pi (fun _ => gaussianReal
+0 1)).map (toLp 2)`) + `measurePreserving_piEquivPiSubtypeProd` (`Pi.lean:727`,
+splits `Measure.pi (Fin 4)` into the `{i<2}`/`{i≥2}` block product) +
+`measurePreserving_piCongrLeft` reindex each `Fin 2` block + L5.2a per block. This
+is index/reindex bookkeeping (`Fin 4 ↔ (Fin 2→ℝ)×(Fin 2→ℝ) ↔ (ℝ×ℝ)×(ℝ×ℝ)`,
+through `toLp`/`ofLp`), more fiddly than deep — so it lives in Slice 4 alongside
+the `coords`/`momentMap` composition, the `{0}`-null handling, and the axiom
+retirement, where all the "connect to Part 1" plumbing is concentrated.
+
+**Slice 2 scope = L5.2a + L5.2b only** (self-contained, no EuclideanSpace/`pi`
+gymnastics; ~40-60 lines total). Foundational-triple, AxiomAudit-pinned.
 
 **Honesty note.** This route proves the axiom outright (no new axiom, no carving)
 — `fs_moment_pushforward_uniform` becomes a theorem and the uncond qubit Born
