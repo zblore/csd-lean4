@@ -152,19 +152,89 @@ Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
 Part 1 is a committable, foundational-triple increment on its own (identifies
 `fubiniStudyMeasure` as the Gaussian-induced measure — reusable).
 
-## Part 2 — the moment marginal is uniform (B.3; the hard gap)
+## Part 2 — the moment marginal is uniform (B.3) — DETAILED PLAN (2026-05-30)
 
-- **L5** — `(fun v : H => ‖v 0‖²/‖v‖²)∗ stdGaussian H = (volume).restrict [0,1]`.
-  Mathematically: for `z = (z₀,z₁)` iid complex standard Gaussian,
-  `|z₀|², |z₁|²` are iid `Exp` (each a chi-squared on 2 real dof), and
-  `|z₀|²/(|z₀|²+|z₁|²) ~ Beta(1,1) = Uniform[0,1]`.
-  **Mathlib gap.** Building blocks: `Probability.Distributions.{Beta,Gamma,Exponential}`,
-  `gaussianReal`. Missing: (i) `|z|² ~ Gamma/Exp` for complex Gaussian `z`
-  (sum of two squared `gaussianReal`s); (ii) independence of the two coordinates'
-  squared moduli; (iii) the ratio identity `Gamma(α)/(Gamma(α)+Gamma(β)) ~
-  Beta(α,β)` at `α=β=1`; (iv) `Beta(1,1) = Uniform[0,1]`. Each is a real
-  probability-theory construction. This is the bulk of the multi-session effort
-  and the genuine Mathlib contribution.
+**Headline (L5).** `T∗ stdGaussian(ℝ⁴) = volume.restrict (Ioo 0 1)`, where
+`T : EuclideanSpace ℝ (Fin 4) → ℝ`, `T y = (y0²+y1²)/(y0²+y1²+y2²+y3²)`. (Via
+`coords`, `T y = ‖(coords y) 0‖²/‖coords y‖² = momentMap (mk (coords y)) 0`, so
+L5 on ℝ⁴ is exactly the moment marginal — see L6.) Target measure note:
+`betaPDFReal 1 1 x = 1/beta(1,1) = 1` on `(0,1)`, so `betaMeasure 1 1 =
+volume.restrict (Ioo 0 1)` is a one-screen computation; **we never need general
+`Beta(α,β)` theory** — the analytic content is the two pushforwards below.
+
+**Reconnaissance verdict (2026-05-30): NOT a blocked foundational gap.** Every
+load-bearing Mathlib tool exists; Part 2 is the *assembly* (the upstreamable
+contribution). Pillars, with exact names:
+- `Mathlib/Analysis/SpecialFunctions/PolarCoord.lean`: `polarCoord`
+  (`OpenPartialHomeomorph (ℝ×ℝ) (ℝ×ℝ)`), `hasFDerivAt_polarCoord_symm`,
+  `lintegral_comp_polarCoord_symm (f : ℝ×ℝ → ℝ≥0∞)`,
+  `integral_comp_polarCoord_symm`, `polarCoord_source_ae_eq_univ`.
+- `Mathlib/MeasureTheory/Function/Jacobian.lean:1133`
+  `map_withDensity_abs_det_fderiv_eq_addHaar (hs : NullMeasurableSet s μ)
+   (hf' : ∀ x∈s, HasFDerivWithinAt f (f' x) s x) (hf : InjOn f s) :
+   Measure.map f ((μ.restrict s).withDensity fun x => ENNReal.ofReal |(f' x).det|)
+     = μ.restrict (f '' s)` — and the integral form
+  `lintegral_image_eq_lintegral_abs_det_fderiv_mul` (Jacobian.lean:1189).
+- `Mathlib/MeasureTheory/Integral/Gamma.lean`: `integral_rpow_mul_exp_neg_mul_rpow`
+  / `integral_exp_neg_mul_rpow` for the 1-D radial integrals (the `∫ S e^{-S/2}=4`
+  marginalisation constant).
+- `map_pi_eq_stdGaussian` (already used in Part 1): `stdGaussian(EuclideanSpace ℝ ι)
+  = (Measure.pi fun _ => gaussianReal 0 1).map (toLp 2)` — gives the product/block
+  structure and per-coordinate density `gaussianReal 0 1 = volume.withDensity gaussianPDF`.
+
+**Lemma DAG (`CsdLean4/LF4/MomentMarginalUniform.lean`, new file).**
+
+- **L5.0 (base rewrite).** Reduce `T∗ stdGaussian(ℝ⁴)` to a Lebesgue-density
+  pushforward on `Fin 4 → ℝ`: via `map_pi_eq_stdGaussian` + `Measure.map_map`,
+  `T∗ stdGaussian(ℝ⁴) = (T ∘ toLp)∗ (Measure.pi (gaussianReal 0 1))`, and
+  `Measure.pi (gaussianReal 0 1) = (volume : Measure (Fin 4 → ℝ)).withDensity
+  (∏ i, gaussianPDF (x i))` (pi-of-withDensity). Risk: LOW-MED (the pi↔volume
+  density identification; check `Measure.pi` of `withDensity` lemmas /
+  `volume_pi`).
+
+- **L5.1 (single-block law = Exp(1/2)).** `Lsq∗ stdGaussian(ℝ²) = expHalf`, where
+  `Lsq p = ‖p‖²` and `expHalf := volume.withDensity (s ↦ ENNReal.ofReal
+  (if 0<s then (1/2)·Real.exp (-s/2) else 0))`. **Proof via `polarCoord`:** for
+  test `g ≥ 0`, `∫⁻ g d(Lsq∗ μ) = ∫⁻ p, g(‖p‖²) ∂stdGaussian(ℝ²)`; rewrite
+  `stdGaussian(ℝ²)` to `volume.withDensity ((1/2π)e^{-‖p‖²/2})` and apply
+  `lintegral_comp_polarCoord_symm` (Jacobian `r`): `= ∫⁻ r in Ioi 0, ∫⁻ θ in
+  Ioo (-π) π, g(r²)·(1/2π)e^{-r²/2}·r dθ dr = ∫⁻ r in Ioi 0, g(r²)·e^{-r²/2}·r dr`
+  (θ-integral kills 2π); substitute `s = r²` (1-D CoV, `ds = 2r dr`) to get
+  `∫⁻ s in Ioi 0, g(s)·(1/2)e^{-s/2} ds = ∫⁻ g d expHalf`. Conclude by
+  `Measure.ext`/`lintegral`-characterisation. Risk: **MED** (the θ-marginal and
+  the 1-D `s=r²` substitution; the `stdGaussian(ℝ²) = volume.withDensity …`
+  density form must be pinned — check `stdGaussian` density lemmas or build from
+  `map_pi_eq_stdGaussian` + `gaussianReal` density).
+
+- **L5.2 (block product).** `P∗ stdGaussian(ℝ⁴) = expHalf.prod expHalf`, where
+  `P y = (y0²+y1², y2²+y3²)`. Factor `Measure.pi (Fin 4)` into the `{0,1}` and
+  `{2,3}` block product (`Measure.pi` reindex / `MeasurePreserving` block split),
+  then `(P)∗(block₁ × block₂) = (Lsq∗block₁).prod (Lsq∗block₂)` via
+  `Measure.map_prod_map` (each factor = `expHalf` by L5.1). Risk: MED (the 4↦2×2
+  block reindexing bookkeeping).
+
+- **L5.3 (ratio → uniform; THE CRUX).** `R∗ (expHalf.prod expHalf) =
+  volume.restrict (Ioo 0 1)`, where `R q = q.1/(q.1+q.2)`. **Proof:** for test
+  `g ≥ 0`, `∫⁻ g d(R∗ μ) = ∫⁻_(Q) g(A/(A+B))·(1/4)e^{-(A+B)/2} dA dB`
+  (`Q = Ioi 0 ×ˢ Ioi 0`). Apply the 2-D change of variables (the diffeo
+  `Φ(A,B) = (A/(A+B), A+B)` on `Q`, onto `Ioo 0 1 ×ˢ Ioi 0`, inverse
+  `(T,S)↦(T·S,(1-T)·S)`, `|det Φ⁻¹'| = S`) via
+  `lintegral_image_eq_lintegral_abs_det_fderiv_mul` (or `map_withDensity_…`):
+  `= ∫⁻_(Ioo 0 1) ∫⁻_(Ioi 0) g(T)·(1/4)e^{-S/2}·S dS dT` (Tonelli)
+  `= ∫⁻_(Ioo 0 1) g(T)·[(1/4)·∫_{S>0} S e^{-S/2} dS] dT = ∫⁻_(Ioo 0 1) g(T) dT`,
+  using `∫_{S>0} S e^{-S/2} dS = 4` (`Integral/Gamma.lean`). Risk: **MED-HIGH**
+  (set up `Φ`/`Φ⁻¹` as the diffeo, its `fderiv`/`det = S`, `InjOn`, image
+  `= Ioo 0 1 ×ˢ Ioi 0`; this is the single hardest lemma).
+
+- **L5 (assemble).** `T = R ∘ P` (off the null `{‖y‖=0}`); compose L5.2 + L5.3
+  via `Measure.map_map`. Handle the `A+B=0` null set (= `{y=0}`, `stdGaussian`-null
+  by the `instNoAtomsStdGaussian4` already built in Part 1) so `R∘P` agrees a.e.
+  with `T`.
+
+**Independence framing note.** L5.2 *is* the independence statement (joint law =
+product), so no separate `IndepFun` lemma is needed — the product measure carries
+it. If a cleaner path emerges via `iIndepFun` from `Measure.pi`
+(`Mathlib/Probability/Independence/*`), it is interchangeable with L5.2.
 
 ## Part 3 — assemble (B.4)
 
@@ -178,6 +248,34 @@ Part 1 is a committable, foundational-triple increment on its own (identifies
 ## Status / sequencing
 
 - B.1 (reduction `momentMap_pushforward_eq_haar_marginal`) — DONE (`MomentMarginal.lean`).
-- Part 1 (L1–L4) — tractable; implement first. Lands `gaussianCP = fubiniStudyMeasure`.
-- Part 2 (L5) — the hard `Beta(1,1)` gap; the multi-session core.
-- Part 3 (L6) — trivial assembly once Parts 1–2 land; then retire the axiom.
+- Part 1 (C1–C5) — DONE (commit da8f9e0): `gaussianCP_eq_fubiniStudy`. Foundational
+  triple, AxiomAudit-pinned.
+- Part 2 (L5) — detailed DAG above; the multi-session core. **Tools all exist**
+  (polarCoord, Jacobian CoV, Integral/Gamma); it is assembly, not a blocked gap.
+- Part 3 (L6) — trivial assembly once L5 lands; then retire the axiom.
+
+**Committable slices for Part 2 (each foundational-triple, AxiomAudit-pinned):**
+1. **Slice 1 — L5.1 (single-block law = Exp(1/2)).** Self-contained, reusable,
+   genuinely upstreamable (`‖·‖²∗ stdGaussian(ℝ²) = Exp(1/2)`). Best first target:
+   exercises the polarCoord + 1-D substitution machinery in isolation. Includes
+   L5.0 base rewrite as a prerequisite helper.
+2. **Slice 2 — L5.2 (block product).** Depends on Slice 1; pure measure-algebra
+   (pi block split + `map_prod_map`).
+3. **Slice 3 — L5.3 (ratio → uniform).** The crux; independent of Slices 1–2 (can
+   be developed in parallel against the abstract `expHalf.prod expHalf`). Highest
+   risk; the diffeo `Φ` + its Jacobian determinant is the hard nut.
+4. **Slice 4 — L5 + L6 assembly.** Compose, discharge the `{0}` null set, rewrite
+   `fubiniStudyMeasure` by `gaussianCP_eq_fubiniStudy`, retire
+   `fs_moment_pushforward_uniform` from `AXIOMS.md §2.3`; flip
+   `fs_born_volume_ratio_qubit_uncond` / `qubit_born_frequency_convergence_uncond`
+   to foundational-triple-only in AxiomAudit.
+
+**Recommended entry: Slice 1.** Smallest self-contained increment, lands a
+reusable distributional fact, and de-risks the polarCoord route before the harder
+Jacobian work in Slice 3.
+
+**Honesty note.** This route proves the axiom outright (no new axiom, no carving)
+— `fs_moment_pushforward_uniform` becomes a theorem and the uncond qubit Born
+results become foundational-triple-only. It does NOT touch the deeper structural
+debts (D1 dynamics `Φ=id`; the metric/basis ontic primitive A5/G3b); it discharges
+exactly the one geometry axiom on the qubit Born-from-volume chain.
