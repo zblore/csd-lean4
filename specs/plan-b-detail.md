@@ -27,6 +27,60 @@ Two key Mathlib/project tools make this the cleanest route:
 So we identify `fubiniStudyMeasure` with the Gaussian-induced measure on `ℂℙ¹`,
 where the moment marginal is the classical `Beta(1,1)` computation.
 
+## Progress (2026-05-30) — Part 1 CLOSED
+
+**`gaussianCP p₀ = fubiniStudyMeasure p₀` is proved, foundational-triple-only.**
+All of C1–C5 in `CsdLean4/LF4/GaussianCP.lean` compile clean (no `sorry`, no
+warnings); `lake build CsdLean4.LF4.GaussianCP` and `lake build CsdLeanTests`
+are green. AxiomAudit pins added for `coords` (C1), `conjR`, `gaussianH_map_unitary`,
+`gaussianCP_smul_invariant`, `gaussianCP_eq_fubiniStudy`.
+
+- **C1–C3 repaired.** The committed (`d5425f7`) file did not build against the
+  pinned Mathlib. Fixes:
+  - `coords.map_smul'`: the surviving `c • (z : ℂ)` on the RHS uses the
+    `Module ℝ ℂ`/C*-algebra smul instance term, NOT `Complex.instSMulRealComplex`,
+    so `Complex.real_smul` / `Algebra.smul_def` / `Complex.smul_re` all refuse to
+    fire (simp and `rw` key on the instance term, defeq is not enough). The fix
+    is `change _ = (c : ℂ) * _` (defeq-coerces the smul to multiplication) after
+    pushing the smul through `WithLp.ofLp_smul` + `Pi.smul_apply`; then
+    `push_cast; ring`.
+  - `coords.norm_map'`: `(struct y).ofLp i` did not reduce under simp because the
+    half-built `LinearIsometryEquiv` literal's FunLike coe has no construction-time
+    simp lemma. Fixed with an explicit `show` exposing
+    `(WithLp.equiv 2 _).symm ![…]`, then `WithLp.ofLp_toLp` + matrix `cons_val` +
+    `Complex.normSq_apply` + `ring`.
+  - `isProbabilityMeasure_map` → `Measure.isProbabilityMeasure_map` (namespace
+    `MeasureTheory.Measure`).
+  - `measurable_gaussianProj`: dropped `borelize` (EuclideanSpace ℂ already a
+    BorelSpace; `borelize` clashed with `WithLp.measurableSpace`). The total
+    `dite` junk-at-0 map is handled via `measurable_of_measurable_on_compl_singleton 0`
+    + `Projectivization.measurable_mk'` on the `{v ≠ 0}` restriction (the note's
+    "total `Projectivization.mk'`" does not exist; `mk'` is the subtype map).
+- **C4 `conjR` route: by-hand, NOT `restrictScalars`.** Probed
+  `(unitaryIsomC U).restrictScalars ℝ` in the full LF4 import context: it
+  diamonds (synthInstance failure on `LinearMap.CompatibleSMul … ℝ ℂ`), exactly
+  as flagged. `conjR U : ℝ⁴ ≃ₗᵢ[ℝ] ℝ⁴` is built by hand as
+  `y ↦ coords.symm (toEuclideanLin U.val (coords y))`, inverse via `Uᴴ`; ℝ-linearity
+  via a `toEuclideanLin_real_smul` helper (`mulVec` commutes with the ℝ-scalar
+  through `WithLp.ofLp_smul` + `Matrix.mulVec_smul`); `norm_map'` from
+  `coords.norm_map` + `unitary_norm_preserving`; inverses from `Uᴴ U = U Uᴴ = 1`.
+  `gaussianH_map_unitary` then rewrites `toEuclideanLin U.val ∘ coords =
+  coords ∘ conjR U` and kills the inner map by `stdGaussian_map (conjR U)`.
+- **C4 invariance + singleton-null.** `gaussianCP_smul_invariant` uses the a.e.
+  agreement of `(U • ·) ∘ gaussianProj` and `gaussianProj ∘ toEuclideanLin U.val`
+  off `{0}`, via `smul_mk_eq_mk` + `toEuclideanLin_ne_zero`. The null-set fact
+  `gaussianH {0} = 0` routes through `coords⁻¹'{0} = {0}` (linear-equiv,
+  `map_eq_zero_iff`) and `stdGaussian (ℝ⁴) {0} = 0`; the latter via a one-off
+  `NoAtoms (stdGaussian ℝ⁴)` instance from `ProbabilityTheory.IsGaussian.noAtoms`
+  with the non-Dirac witness `Var[innerSL ℝ (single 0 1)] = ‖single 0 1‖² = 1 ≠ 0`
+  (`variance_dual_stdGaussian` vs `variance_dirac`).
+- **C5.** `gaussianCP_eq_fubiniStudy := fubiniStudyMeasure_unique p₀ (gaussianCP p₀)
+  gaussianCP_smul_invariant` (the `IsProbabilityMeasure` instance and `[NeZero 2]`
+  are inferred; `CPN 2 = ℙ ℂ (EuclideanSpace ℂ (Fin 2))` lines up definitionally).
+
+Remaining for the axiom retirement: Part 2 (L5, the `Beta(1,1)` moment-marginal
+gap) and Part 3 (L6 assembly).
+
 ## Progress (2026-05-29)
 
 - **`unitary_norm_preserving`** (`CsdLean4/LF4/GaussianFS.lean`, done,
@@ -41,7 +95,32 @@ where the moment marginal is the classical `Beta(1,1)` computation.
   either supply the real-scalar instances explicitly, or take the `ℝ⁴`-isometry
   route (option (a) below) — a genuine real space, no ℝ-over-ℂ instances.
 
-## Part 1 — `gaussianCP = fubiniStudyMeasure` (B.2; tractable)
+## Part 1 — explicit-coords route (Option 2, chosen; avoids the ℝ/ℂ diamond)
+
+Keep `stdGaussian` on the clean real `EuclideanSpace ℝ (Fin 4)` (so no
+`complexToReal` import → `IsScalarTower ℝ ℂ` stays available; no diamond). Lemma
+list (`CsdLean4/LF4/GaussianCP.lean`):
+
+- **C1 `coords`** : `EuclideanSpace ℝ (Fin 4) ≃ₗᵢ[ℝ] EuclideanSpace ℂ (Fin 2)`,
+  hand-built: `y ↦ ![y0 + y1·I, y2 + y3·I]`, inverse `z ↦ ![re z0, im z0, re z1, im z1]`.
+  Fields: `map_add'`, `map_smul'` (over ℝ), `left/right_inv`, `norm_map'`
+  (`‖z‖² = |z0|²+|z1|² = y0²+y1²+y2²+y3² = ‖y‖²`).
+- **C2 `gaussianH := (stdGaussian (EuclideanSpace ℝ (Fin 4))).map coords`** — a
+  probability measure on `ℂ²`.
+- **C3 `gaussianCP := gaussianH.map (projectivization)`** (`mk`, junk at 0;
+  measurable) — a probability measure on `ℂℙ¹`.
+- **C4 invariance** : `∀ U, gaussianCP.map (U • ·) = gaussianCP`. Reduce (mk
+  equivariance + `gaussianH`-a.e.) to `gaussianH.map (toEuclideanLin U.val) =
+  gaussianH`, i.e. `((coords.symm).trans ((unitary as fn).trans coords))` is an
+  `ℝ⁴`-isometry preserving `stdGaussian ℝ⁴` (`stdGaussian_map`, clean). The
+  unitary-as-`ℝ⁴`-isometry conjugate avoids `ℂ²`'s real-module diamond because the
+  composite is built/typed on `ℝ⁴`; norm transfer uses `unitary_norm_preserving`
+  + `coords.norm_map`.
+- **C5 `gaussianCP = fubiniStudyMeasure p₀`** by `fubiniStudyMeasure_unique`.
+
+Then Part 3 (L6) composes with B.1 + the (Part 2) Beta marginal.
+
+## Part 1 — `gaussianCP = fubiniStudyMeasure` (B.2; original sketch)
 
 Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
 

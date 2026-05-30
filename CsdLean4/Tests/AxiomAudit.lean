@@ -932,6 +932,26 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.coords
 
+-- Plan B Part 1 (Option 2) C4-C5: gaussianCP = fubiniStudyMeasure on ℂℙ¹, via the
+-- by-hand real conjugate isometry conjR (restrictScalars ℝ diamonds in the full LF4
+-- import context), unitary-invariance of the Gaussian-induced measure, and the
+-- axiom-free Fubini-Study uniqueness theorem. All foundational-triple-only.
+/-- info: 'CSD.LF4.conjR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.conjR
+
+/-- info: 'CSD.LF4.gaussianH_map_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.gaussianH_map_unitary
+
+/-- info: 'CSD.LF4.gaussianCP_smul_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.gaussianCP_smul_invariant
+
+/-- info: 'CSD.LF4.gaussianCP_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.gaussianCP_eq_fubiniStudy
+
 /-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_born_volume_ratio_qubit_uncond
