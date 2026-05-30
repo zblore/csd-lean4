@@ -60,5 +60,33 @@ noncomputable def coords :
       Complex.ofReal_im, Real.norm_eq_abs, sq_abs]
     ring
 
+/-- **C2.** The standard Gaussian transported to `ℂ²` via the coordinate
+isometry. A probability measure on `ℂ²` (kept off the diamond-prone direct
+`stdGaussian (EuclideanSpace ℂ (Fin 2))`). -/
+noncomputable def gaussianH : Measure (EuclideanSpace ℂ (Fin 2)) :=
+  Measure.map coords (stdGaussian (EuclideanSpace ℝ (Fin 4)))
+
+instance instProbGaussianH : IsProbabilityMeasure gaussianH := by
+  unfold gaussianH
+  exact isProbabilityMeasure_map coords.continuous.measurable.aemeasurable
+
+/-- The projectivization map `ℂ² → ℂℙ¹`, with junk value `p₀` at `0` (which is
+`gaussianH`-null). -/
+noncomputable def gaussianProj (p₀ : CPN 2) (v : EuclideanSpace ℂ (Fin 2)) : CPN 2 :=
+  if h : v = 0 then p₀ else Projectivization.mk ℂ v h
+
+lemma measurable_gaussianProj (p₀ : CPN 2) : Measurable (gaussianProj p₀) := by
+  borelize (EuclideanSpace ℂ (Fin 2))
+  exact Measurable.dite measurable_const Projectivization.measurable_mk'
+    (measurableSet_singleton 0)
+
+/-- **C3.** The projectivized Gaussian on `ℂℙ¹`. -/
+noncomputable def gaussianCP (p₀ : CPN 2) : Measure (CPN 2) :=
+  Measure.map (gaussianProj p₀) gaussianH
+
+instance instProbGaussianCP (p₀ : CPN 2) : IsProbabilityMeasure (gaussianCP p₀) := by
+  unfold gaussianCP
+  exact isProbabilityMeasure_map (measurable_gaussianProj p₀).aemeasurable
+
 end LF4
 end CSD
