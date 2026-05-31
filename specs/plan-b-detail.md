@@ -264,6 +264,27 @@ it. If a cleaner path emerges via `iIndepFun` from `Measure.pi`
 3. **Slice 3 — L5.3 (ratio → uniform).** The crux; independent of Slices 1–2 (can
    be developed in parallel against the abstract `expHalf.prod expHalf`). Highest
    risk; the diffeo `Φ` + its Jacobian determinant is the hard nut.
+   **(DONE — 2026-05-31.)** `ratioSqNorm_map_expHalf_prod` in
+   `CsdLean4/LF4/MomentRatioUniform.lean`, foundational-triple, AxiomAudit-pinned.
+   Five ingredients + assembly:
+   - `lintegral_radial_const`: `∫⁻_{S>0} (1/4)·S·e^{−S/2} = 1` (Gamma 2 = 1 via
+     `integral_rpow_mul_exp_neg_mul_Ioi` + `ofReal_integral_eq_lintegral_ofReal`;
+     integrability from `integrableOn_rpow_mul_exp_neg_mul_rpow`).
+   - `Psi (T,S) = (T·S,(1−T)·S)`, `hasFDerivAt_Psi` (single `exact` from
+     `HasFDerivAt.mul`/`.prodMk`; `psiFDeriv` shaped to match the produced deriv),
+     `psiFDeriv_det = S` (via `Module.Basis.finTwoProd` + `LinearMap.det_toMatrix`
+     + `Matrix.det_fin_two`; needs `open Module`).
+   - `injOn_Psi` (`linear_combination` + `mul_right_cancel₀`), `image_Psi`
+     (preimage `(A/(A+B), A+B)`).
+   - Assembly: `Measure.ext_of_lintegral` → `lintegral_map` → `prod_withDensity`
+     → restrict-to-quadrant via `lintegral_indicator` → `← image_Psi` +
+     `lintegral_image_eq_lintegral_abs_det_fderiv_mul` (μ = volume explicit) →
+     `setLIntegral_prod` (Tonelli) → `lintegral_mul_const` + `lintegral_radial_const`.
+   Key frictions resolved: `lintegral_withDensity_eq_lintegral_mul` fixes its
+   test/density functions from the supplied measurability proofs, so those must be
+   shaped to the goal (type-ascribed, not `∘`-composed); the post-density integrand
+   is folded to `d`-form by a defeq `show`; pair projections `(T,y).1/.2` reduced
+   by a defeq `show`.
 4. **Slice 4 — L5 + L6 assembly.** Compose, discharge the `{0}` null set, rewrite
    `fubiniStudyMeasure` by `gaussianCP_eq_fubiniStudy`, retire
    `fs_moment_pushforward_uniform` from `AXIOMS.md §2.3`; flip

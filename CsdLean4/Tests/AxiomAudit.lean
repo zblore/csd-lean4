@@ -23,6 +23,7 @@ import CsdLean4.LF4.DuistermaatHeckman
 import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.GaussianCP
 import CsdLean4.LF4.MomentMarginalUniform
+import CsdLean4.LF4.MomentRatioUniform
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -980,6 +981,22 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.blockSqNorm_map_gaussian2_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.blockSqNorm_map_gaussian2_prod
+
+-- Plan B Part 2, Slice 3 (L5.3, the crux): the ratio map sends expHalf × expHalf
+-- to uniform on (0,1). 2-D change of variables through the diffeo Ψ(T,S) =
+-- (T·S,(1−T)·S) (Jacobian det = S), with the radial S-integral collapsing to 1.
+-- Foundational triple.
+/-- info: 'CSD.LF4.lintegral_radial_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.lintegral_radial_const
+
+/-- info: 'CSD.LF4.psiFDeriv_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.psiFDeriv_det
+
+/-- info: 'CSD.LF4.ratioSqNorm_map_expHalf_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ratioSqNorm_map_expHalf_prod
 
 /-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
 #guard_msgs (whitespace := lax) in

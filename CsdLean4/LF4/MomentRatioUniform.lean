@@ -21,7 +21,8 @@ substitution the `S`-integral factors out as the radial constant
 `g(T)` integral over `Ioo 0 1`.
 
 This file builds the four independent ingredients (radial constant, the `fderiv`
-and its determinant, injectivity, image) and assembles them. See
+and its determinant, injectivity, image) and assembles them into
+`ratioSqNorm_map_expHalf_prod`. Foundational-triple-only. See
 `specs/plan-b-detail.md` Part 2, Slice 3.
 -/
 
@@ -139,6 +140,91 @@ theorem image_Psi :
     · rw [div_lt_one (by positivity)]; linarith
     · field_simp
     · field_simp; ring
+
+/-! ## L5.3: the ratio map sends `expHalf × expHalf` to uniform on `(0,1)` -/
+
+/-- **L5.3 (the crux).** The ratio `R q = q.1/(q.1+q.2)` pushes `expHalf × expHalf`
+to the uniform measure on `(0,1)`. The change of variables through `Ψ` turns the
+density into `(1/4)·S·e^{−S/2}` and the radial `S`-integral collapses to `1`
+(`lintegral_radial_const`), leaving the bare `g(T)` integral over `(0,1)`. -/
+theorem ratioSqNorm_map_expHalf_prod :
+    Measure.map (fun q : ℝ × ℝ => q.1 / (q.1 + q.2)) (expHalf.prod expHalf)
+      = volume.restrict (Ioo (0 : ℝ) 1) := by
+  have hR_meas : Measurable (fun q : ℝ × ℝ => q.1 / (q.1 + q.2)) :=
+    measurable_fst.div (measurable_fst.add measurable_snd)
+  refine Measure.ext_of_lintegral _ (fun g hg => ?_)
+  rw [lintegral_map hg hR_meas, expHalf,
+    prod_withDensity measurable_expHalf_density measurable_expHalf_density,
+    ← Measure.volume_eq_prod,
+    lintegral_withDensity_eq_lintegral_mul _
+      (show Measurable (fun z : ℝ × ℝ =>
+          ENNReal.ofReal (if 0 < z.1 then (1 / 2) * Real.exp (-z.1 / 2) else 0)
+            * ENNReal.ofReal (if 0 < z.2 then (1 / 2) * Real.exp (-z.2 / 2) else 0)) from
+        (measurable_expHalf_density.comp measurable_fst).mul
+          (measurable_expHalf_density.comp measurable_snd))
+      (by fun_prop : Measurable fun a : ℝ × ℝ => g (a.1 / (a.1 + a.2)))]
+  simp only [Pi.mul_apply]
+  -- The post-density integrand `F q = d q.1 · d q.2 · g(R q)` (folded by defeq).
+  set d : ℝ → ℝ≥0∞ :=
+    fun s => ENNReal.ofReal (if 0 < s then (1 / 2) * Real.exp (-s / 2) else 0) with hd
+  have hd0 : ∀ s : ℝ, ¬ 0 < s → d s = 0 := fun s hs => by rw [hd]; simp [if_neg hs]
+  have hdpos : ∀ s : ℝ, 0 < s → d s = ENNReal.ofReal ((1 / 2) * Real.exp (-s / 2)) :=
+    fun s hs => by rw [hd]; simp [if_pos hs]
+  -- Step B: the integrand is supported on the open quadrant; restrict to it.
+  have hFeqInd :
+      (fun q : ℝ × ℝ => d q.1 * d q.2 * g (q.1 / (q.1 + q.2)))
+        = (Ioi (0 : ℝ) ×ˢ Ioi (0 : ℝ)).indicator
+            (fun q => d q.1 * d q.2 * g (q.1 / (q.1 + q.2))) := by
+    ext q
+    rw [Set.indicator_apply]
+    by_cases hq : q ∈ Ioi (0 : ℝ) ×ˢ Ioi (0 : ℝ)
+    · rw [if_pos hq]
+    · rw [if_neg hq]
+      rw [Set.mem_prod, mem_Ioi, mem_Ioi, not_and_or] at hq
+      rcases hq with h | h
+      · rw [hd0 q.1 h]; simp
+      · rw [hd0 q.2 h]; simp
+  -- The pointwise integrand identity on `D = Ioo 0 1 ×ˢ Ioi 0` after the substitution.
+  have hcongr :
+      ∀ x ∈ Ioo (0 : ℝ) 1 ×ˢ Ioi (0 : ℝ),
+        ENNReal.ofReal |(psiFDeriv x).det|
+            * (d (Psi x).1 * d (Psi x).2
+                * g ((Psi x).1 / ((Psi x).1 + (Psi x).2)))
+          = ENNReal.ofReal ((1 / 4) * x.2 * Real.exp (-x.2 / 2)) * g x.1 := by
+    intro x hx
+    rw [Set.mem_prod, mem_Ioo, mem_Ioi] at hx
+    obtain ⟨⟨hT0, hT1⟩, hS⟩ := hx
+    have hPsi1 : (Psi x).1 = x.1 * x.2 := rfl
+    have hPsi2 : (Psi x).2 = (1 - x.1) * x.2 := rfl
+    have hpos1 : 0 < x.1 * x.2 := mul_pos hT0 hS
+    have hpos2 : 0 < (1 - x.1) * x.2 := mul_pos (by linarith) hS
+    rw [psiFDeriv_det, abs_of_pos hS, hPsi1, hPsi2, hdpos _ hpos1, hdpos _ hpos2,
+      show x.1 * x.2 / (x.1 * x.2 + (1 - x.1) * x.2) = x.1 from by
+        rw [show x.1 * x.2 + (1 - x.1) * x.2 = x.2 from by ring, mul_div_assoc,
+          div_self (ne_of_gt hS), mul_one],
+      ← ENNReal.ofReal_mul (by positivity), ← mul_assoc,
+      ← ENNReal.ofReal_mul hS.le]
+    congr 2
+    rw [show (1 / 2 * Real.exp (-(x.1 * x.2) / 2)) * (1 / 2 * Real.exp (-((1 - x.1) * x.2) / 2))
+          = (1 / 4) * (Real.exp (-(x.1 * x.2) / 2) * Real.exp (-((1 - x.1) * x.2) / 2)) from by
+        ring,
+      ← Real.exp_add,
+      show -(x.1 * x.2) / 2 + -((1 - x.1) * x.2) / 2 = -x.2 / 2 from by ring]
+    ring
+  show ∫⁻ (a : ℝ × ℝ), d a.1 * d a.2 * g (a.1 / (a.1 + a.2)) ∂volume = _
+  rw [hFeqInd, lintegral_indicator (measurableSet_Ioi.prod measurableSet_Ioi),
+    ← image_Psi,
+    lintegral_image_eq_lintegral_abs_det_fderiv_mul volume
+      (measurableSet_Ioo.prod measurableSet_Ioi)
+      (fun x _ => (hasFDerivAt_Psi x).hasFDerivWithinAt) injOn_Psi
+      (fun q => d q.1 * d q.2 * g (q.1 / (q.1 + q.2))),
+    setLIntegral_congr_fun (measurableSet_Ioo.prod measurableSet_Ioi) hcongr,
+    Measure.volume_eq_prod,
+    setLIntegral_prod _ (by apply Measurable.aemeasurable; fun_prop)]
+  -- Step E: collapse the inner radial integral to `1`, leaving `∫ g over (0,1)`.
+  refine setLIntegral_congr_fun measurableSet_Ioo (fun T _ => ?_)
+  show ∫⁻ y in Ioi (0 : ℝ), ENNReal.ofReal (1 / 4 * y * Real.exp (-y / 2)) * g T = g T
+  rw [lintegral_mul_const _ (by fun_prop), lintegral_radial_const, one_mul]
 
 end LF4
 end CSD
