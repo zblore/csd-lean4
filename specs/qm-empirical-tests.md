@@ -331,7 +331,7 @@ schema-mismatch bundles).
 | # | Theorem | Statement | Status | Source |
 |---|---|---|---|---|
 | E4 | Superdense coding | the four local-Pauli images of `|Φ⁺⟩` are the four Bell states (2 classical bits via 1 qubit + shared entanglement) | **DONE 2026-05-24** (`Empirical/QM/Resources/SuperdenseCoding.lean`: `encode_I/X/Z/XZ` image identities + `bell_basis_orthonormal`) | Bennett-Wiesner 1992 |
-| E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | READY (3-qubit tensor; GHZ already exercised `Fin 2 × Fin 2 × Fin 2`) | Bennett et al. 1993 |
+| E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | **DONE 2026-05-31** (`Empirical/QM/Resources/Teleportation.lean`: `teleState_factorises` (input = \|ψ⟩⊗\|Φ⁺⟩), `teleportation_bell_expansion` (Bell-basis expansion → Pauli image per branch), `teleportation_recovers_input` (four corrections {I,Z,X,ZX} recover ψ); branch-conditional QM-validity layer). The measurement-collapse step + no-signalling marginal need LF5 / partial trace; documented in-file. | Bennett et al. 1993 |
 | E6 | Robertson uncertainty | `Var(A)·Var(B) ≥ ¼|⟨[A,B]⟩|²` | **DONE 2026-05-24** (`Empirical/QM/Uncertainty.lean`: `robertson_uncertainty`, over `Module.End ℂ H` with `IsSymmetric`; `robertson_core` is the Cauchy-Schwarz heart) | Robertson 1929 |
 
 ### 3bis.3 Cryptography (`Empirical/QM/Crypto/`)
@@ -367,8 +367,9 @@ of the projectivization thread that produced
 3. **Quantum money (E8)** — DONE; composes no-cloning with a concrete Wiesner witness.
 4. **No-broadcasting (E2), no-communication (E3)** — need a partial-trace infra build first (not in Mathlib); promote to an infra tranche.
 5. **E91 witness (E7)** — needs an LHV-model build (the `≤ 2` bound is un-formalised); LHV tranche, not a composition.
-6. **Robertson (E6)** — DONE; QM-generic operator inequality. Teleportation (E5) remains.
-6. **Pause for LF5** on BB84/B92 security (measurement update).
+6. **Robertson (E6)** — DONE; QM-generic operator inequality.
+7. **Teleportation (E5)** — DONE 2026-05-31; branch-conditional form (dual of E4).
+8. **Pause for LF5** on BB84/B92 security (measurement update).
 
 ## 4. Recommended execution order
 
@@ -449,9 +450,10 @@ CsdLean4/Empirical/CSD/Resources/SuperdenseCoding.lean
 CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean
 CsdLean4/Empirical/CSD/Gates/{Framework,SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
 
+CsdLean4/Empirical/QM/Resources/Teleportation.lean    -- Phase E: E5 (DONE 2026-05-31)
+
 # Planned but not yet created (see phase tables above)
-#   QM/Resources/Teleportation.lean    -- Phase E: E5 (READY)
-#   QM/NoCommunication.lean            -- Phase E: E3 (READY, needs partial-trace infra)
+#   QM/NoCommunication.lean            -- Phase E: E3 (split: E3a marginal-form READY; E3b needs partial-trace infra)
 #   QM/Crypto/E91.lean                 -- Phase E: E7 (deferred, needs LHV-model build)
 #   Interference.lean / BornNumerical.lean / Algorithms/*  -- LF4/INFRA-blocked
 ```
