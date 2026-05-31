@@ -52,53 +52,17 @@ open scoped LinearAlgebra.Projectivization
 namespace CSD
 namespace LF4
 
-/-- **Duistermaat–Heckman / Archimedes axiom (qubit instance).** The moment-map
-coordinate pushes the Fubini–Study measure on `ℂℙ¹` to the uniform measure on
-`[0,1]`. Classically true (the `N=2` DH pushforward / Archimedes' hat-box);
-Mathlib-external. A geometry fact about `μ_FS`, **not** a Born import. Discharge
-target of plan B (`specs/carve-out-plan.md`). -/
-axiom fs_moment_pushforward_uniform (p₀ : CPN 2) :
-    Measure.map (fun p => momentMap p 0) (fubiniStudyMeasure p₀)
-      = (volume : Measure ℝ).restrict (Set.Icc 0 1)
+/-! ## Discharged (2026-05-31): no longer an axiom.
 
-/-- **Unconditional qubit Born = Fubini–Study volume ratio on `ℂℙ¹`.** The
-genuine `fubiniStudyMeasure` of the moment sublevel set at `[ψ]` equals the Born
-weight `‖⟨e₀, ψ⟩‖²`. Cites the foundational triple + `fs_moment_pushforward_uniform`
-(the DH/Archimedes geometry axiom); **no** `busch_effect_gleason`. -/
-theorem fs_born_volume_ratio_qubit_uncond
-    (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    fubiniStudyMeasure p₀
-        {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0}
-      = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) ψ‖ ^ 2) :=
-  fs_born_volume_ratio_qubit p₀ ψ hψ0 hψ (fs_moment_pushforward_uniform p₀)
-
-/-- **Unconditional Busch-free qubit Born frequency convergence.** For i.i.d.
-trials from the Fubini–Study measure on `ℂℙ¹`, the empirical frequency of the
-moment sublevel outcome converges almost surely to the Born weight `‖⟨e₀, ψ⟩‖²`.
-Cites the foundational triple + `fs_moment_pushforward_uniform`; **no**
-`busch_effect_gleason`. The CSD thesis realised unconditionally for the qubit:
-deterministic typicality + Born = Kähler volume ⟹ frequencies → Born. -/
-theorem qubit_born_frequency_convergence_uncond
-    (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
-    (hindep :
-      Pairwise
-        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-          (fun n => Set.indicator
-            ((X n) ⁻¹' {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0})
-            (fun _ => (1 : ℝ))))) :
-    ∀ᵐ ω ∂ Pr,
-      Filter.Tendsto
-        (fun M : ℕ =>
-          (∑ i ∈ Finset.range M,
-              Set.indicator
-                ((X i) ⁻¹' {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0})
-                (fun _ => (1 : ℝ)) ω) / (M : ℝ))
-        Filter.atTop
-        (nhds (‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) ψ‖ ^ 2)) :=
-  qubit_born_frequency_convergence p₀ ψ hψ0 hψ (fs_moment_pushforward_uniform p₀) X hX hlaw hindep
+The Duistermaat–Heckman / Archimedes fact for the qubit —
+`(momentMap · 0)∗ fubiniStudyMeasure p₀ = volume.restrict (Icc 0 1)` — was carried
+here as `axiom fs_moment_pushforward_uniform`. It is now a *theorem* of the same
+name, proved in `CsdLean4/LF4/MomentUniform.lean` (plan B: Gaussian-induced `μ_FS`
++ moment-marginal change of variables), alongside the foundational-triple-only
+unconditional qubit Born results `fs_born_volume_ratio_qubit_uncond` and
+`qubit_born_frequency_convergence_uncond`. This file no longer introduces any
+axiom; its content moved downstream to break the import cycle (the discharge needs
+`GaussianCP`/`MomentRatioUniform`, which would cycle if proved here). -/
 
 end LF4
 end CSD

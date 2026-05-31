@@ -24,6 +24,7 @@ import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.GaussianCP
 import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.LF4.MomentRatioUniform
+import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -914,13 +915,9 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_pushforward_eq_haar_marginal
 
--- The Duistermaat-Heckman / Archimedes geometry axiom (qubit instance) and the
--- unconditional qubit Born-from-Kähler-volume results it discharges. The axiom is
--- a geometry fact about μ_FS (NOT a Born import like busch_effect_gleason);
--- documented Mathlib-external boundary, plan-B discharge target. See AXIOMS.md §2.3.
-/-- info: 'CSD.LF4.fs_moment_pushforward_uniform' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.fs_moment_pushforward_uniform
+-- (The qubit Duistermaat–Heckman fact `fs_moment_pushforward_uniform` is now a
+-- THEOREM, discharged in MomentUniform.lean; its foundational-triple pin lives in
+-- the Slice 4 block below, together with the two unconditional Born consumers.)
 
 -- Plan B Part 1 step: a unitary matrix's toEuclideanLin preserves the Euclidean
 -- norm (the matrix-analytic core for the Gaussian unitary-invariance step).
@@ -998,11 +995,30 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ratioSqNorm_map_expHalf_prod
 
-/-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
+-- Plan B Part 2, Slice 4 (assembly + discharge): `fs_moment_pushforward_uniform`
+-- (the qubit Duistermaat–Heckman fact) is now a THEOREM, not an axiom. The bridge
+-- `regroup4∗ (pi gaussianReal) = gaussian2 × gaussian2` (finSumFinEquiv reindex),
+-- the moment marginal `Tpi∗ (pi gaussianReal) = uniform`, and the discharge all
+-- depend only on the foundational triple.
+/-- info: 'CSD.LF4.regroupPi_map' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.regroupPi_map
+
+/-- info: 'CSD.LF4.moment_marginal_uniform_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.moment_marginal_uniform_pi
+
+/-- info: 'CSD.LF4.fs_moment_pushforward_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_moment_pushforward_uniform
+
+-- Now foundational-triple-only (the DH input is discharged); previously these
+-- carried `fs_moment_pushforward_uniform` as an axiom.
+/-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_born_volume_ratio_qubit_uncond
 
-/-- info: 'CSD.LF4.qubit_born_frequency_convergence_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
+/-- info: 'CSD.LF4.qubit_born_frequency_convergence_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.qubit_born_frequency_convergence_uncond
 

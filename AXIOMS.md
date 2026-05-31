@@ -16,7 +16,7 @@ LF1 theorems cite only these three. LF3's strong-readout and finite-leakage main
 
 ## 2. Imported mathematical axioms (LF2 + LF4)
 
-LF2 imports two named axioms (§2.1, §2.2); LF4 adds one named geometry axiom (§2.3, the Duistermaat–Heckman pushforward used by the unconditional qubit Born-from-volume results). Each is documented at its declaration site with a docstring linking back to the spec section or geometric fact that authorises it. Neither propagates into LF1. Both propagate into the LF3 chain capstones after the 2026-05-18 option (B) chain rewrite: `busch_effect_gleason` enters extensionally via `pure_state_born_weights_of_certainty` inside the OP.p Born identity step, and `invariant_measure_uniqueness` enters at any LF4 instantiation site that constructs `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` (the option (b) structural propagation mechanism — the axiom does not appear extensionally on the chain capstone definitions themselves because the bridge enters as a generic structure argument). LF3's `LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean.
+LF2 imports two named axioms (§2.1, §2.2); LF4 introduces **no** axioms (the Duistermaat–Heckman pushforward formerly carried in §2.3 was discharged 2026-05-31 and is now a foundational-triple theorem). Each LF2 axiom is documented at its declaration site with a docstring linking back to the spec section or geometric fact that authorises it. Neither propagates into LF1. Both propagate into the LF3 chain capstones after the 2026-05-18 option (B) chain rewrite: `busch_effect_gleason` enters extensionally via `pure_state_born_weights_of_certainty` inside the OP.p Born identity step, and `invariant_measure_uniqueness` enters at any LF4 instantiation site that constructs `MeasureBridgeData` via `MeasureBridgeData.ofSectorData` (the option (b) structural propagation mechanism — the axiom does not appear extensionally on the chain capstone definitions themselves because the bridge enters as a generic structure argument). LF3's `LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean.
 
 A third axiom, `rankOneDensity_unique_of_certainty`, was carried in earlier
 revisions and discharged on 2026-05-18 (see commit landing the
@@ -58,19 +58,17 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 
 **Discharge target.** Same as above: signature is stable; the axiom becomes a theorem when the Mathlib infrastructure is in place.
 
-### 2.3 `fs_moment_pushforward_uniform` (LF4 Duistermaat–Heckman, qubit instance)
+### 2.3 `fs_moment_pushforward_uniform` (LF4 Duistermaat–Heckman, qubit instance) — DISCHARGED 2026-05-31
 
-**Location.** `CsdLean4/LF4/DuistermaatHeckman.lean`.
+**Status: NO LONGER AN AXIOM.** Now a foundational-triple **theorem**
+`CSD.LF4.fs_moment_pushforward_uniform` in `CsdLean4/LF4/MomentUniform.lean`.
+`DuistermaatHeckman.lean` no longer introduces any axiom; **LF4 introduces no axioms.**
 
-**Statement.** `(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = volume.restrict (Set.Icc 0 1)` on `CPN 2 = ℂℙ¹` — the moment-map coordinate pushes the Fubini–Study measure to the uniform measure on the moment polytope `[0,1]`.
+**Statement.** `(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = volume.restrict (Set.Icc 0 1)` on `CPN 2 = ℂℙ¹` — the moment-map coordinate pushes the Fubini–Study measure to the uniform measure on the moment polytope `[0,1]`. The `N = 2` Duistermaat–Heckman / Archimedes hat-box fact.
 
-**Mathematical content.** The `N = 2` instance of the Duistermaat–Heckman theorem (the moment map of a toric Kähler manifold pushes the Liouville measure to Lebesgue on the moment polytope). By `momentMap_pushforward_eq_haar_marginal` it is equivalently "`|U₀₀|²` is `Uniform[0,1]` for Haar `U(2)`" — Archimedes' hat-box theorem on the Bloch sphere. Classically true and elementary.
+**How it was discharged (plan B; `specs/plan-b-detail.md`).** Identify `fubiniStudyMeasure` with the Gaussian-induced measure on `ℂℙ¹` (`gaussianCP_eq_fubiniStudy`, Part 1: `μ_FS` is the unique `U(2)`-invariant probability measure, and the projectivised standard Gaussian is `U(2)`-invariant), then compute the moment marginal by a change of variables: `‖·‖²∗ N(0,I₂) = Exp(1/2)` (Slice 1, polarCoord), the block-product/independence step (Slice 2), the ratio→uniform crux through the diffeo `Ψ(T,S) = (T·S,(1−T)·S)` (Slice 3, Jacobian determinant `S` + radial `Gamma 2 = 1`), and the `Fin 4 → ℝ ≃ (ℝ²)²` reindex bridge (Slice 4, `finSumFinEquiv`). Foundational-triple-only throughout.
 
-**Why this is a geometry boundary, not a Born import.** Unlike `busch_effect_gleason`, which encodes the Born/trace-form rule, this axiom is a statement about `μ_FS` and the moment map *only* — the Born rule `‖⟨e₀,ψ⟩‖²` does not appear in it. The qubit results (`fs_born_volume_ratio_qubit_uncond`, `qubit_born_frequency_convergence_uncond`) derive Born from {Fubini–Study Kähler volume + this Duistermaat–Heckman geometry + the *proved* moment-map identity `momentMap_mk_eq_inner_sq`}. So Born is genuinely derived from the Kähler structure, with the geometric input named — exactly as `invariant_measure_uniqueness` (§2.1) is a named geometric boundary.
-
-**Mathlib status.** Not in Mathlib. The supporting measure theory (uniform sphere / Dirichlet pushforwards; toric coarea) is absent.
-
-**Discharge target (plan B).** `momentMap_pushforward_eq_haar_marginal` already reduces it, in Lean, to the Haar marginal `|U₀₀|² ~ Uniform[0,1]`. The remaining build (sphere/Gaussian/`Beta(1,1)`) is the scheduled Mathlib-infrastructure effort; see `specs/carve-out-plan.md` Tranche M, plan B. The qubit results that cite this axiom (`fs_born_volume_ratio_qubit_uncond`, `qubit_born_frequency_convergence_uncond`) become axiom-clean modulo the foundational triple once it lands. The conditional forms (`fs_born_volume_ratio_qubit`, `qubit_born_frequency_convergence`, with `h_uniform` as an explicit hypothesis) remain available and are foundational-triple-only.
+**Consequence.** `fs_born_volume_ratio_qubit_uncond` and `qubit_born_frequency_convergence_uncond` (moved to `MomentUniform.lean`) are now foundational-triple-only — Born derived from the Kähler volume for the qubit with **no** named geometry axiom and **no** `busch_effect_gleason`. The conditional forms (`fs_born_volume_ratio_qubit`, `qubit_born_frequency_convergence`, with `h_uniform` as an explicit hypothesis) remain available.
 
 ## 3. Physical assumptions not formalised
 
@@ -183,8 +181,8 @@ For each headline exported theorem, the legible axiom citation:
 | `LF4.fs_born_volume_ratio_qubit` (conditional on `h_uniform`) | `propext, Classical.choice, Quot.sound` |
 | `LF4.qubit_born_frequency_convergence` (conditional on `h_uniform`) | `propext, Classical.choice, Quot.sound` |
 | `LF4.born_frequency_convergence_partition` | `propext, Classical.choice, Quot.sound` |
-| `LF4.fs_born_volume_ratio_qubit_uncond` | `propext, Classical.choice, Quot.sound, fs_moment_pushforward_uniform` |
-| `LF4.qubit_born_frequency_convergence_uncond` | `propext, Classical.choice, Quot.sound, fs_moment_pushforward_uniform` |
+| `LF4.fs_born_volume_ratio_qubit_uncond` | `propext, Classical.choice, Quot.sound` (DH discharged 2026-05-31) |
+| `LF4.qubit_born_frequency_convergence_uncond` | `propext, Classical.choice, Quot.sound` (DH discharged 2026-05-31) |
 
 ### Empirical-prediction headline theorems
 

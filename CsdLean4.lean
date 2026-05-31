@@ -57,6 +57,7 @@ import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.GaussianCP
 import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.LF4.MomentRatioUniform
+import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
