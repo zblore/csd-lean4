@@ -245,7 +245,20 @@ it. If a cleaner path emerges via `iIndepFun` from `Measure.pi`
   `(momentMap·0)(gaussianProj v) = ‖v 0‖²/‖v‖²` (by `momentMap_mk`, a.e. on `v≠0`);
   conclude by L5.
 
-### Slice 4 — DETAILED PLAN (2026-05-31) — the remaining work
+### Slice 4 — CLOSED (2026-05-31, commit c2d6536). Axiom retired; LF4 axiom-free.
+
+`fs_moment_pushforward_uniform` is now a foundational-triple **theorem**
+(`CsdLean4/LF4/MomentUniform.lean`): `regroupPi_map` (bridge via
+`finSumFinEquiv` + `measurePreserving_sumPiEquivProdPi` — which *does* exist; the
+recon below missed it), `moment_marginal_uniform_pi` (L5), and L6 via
+`gaussianCP_eq_fubiniStudy` + `Measure.map_congr` (moment-map = `Tpi` a.e. off
+`{0}`) + `Ioo_ae_eq_Icc`. The two `_uncond` consumers moved to `MomentUniform.lean`
+(`DuistermaatHeckman.lean` now axiom-free); AxiomAudit pins flipped to the
+foundational triple; `AXIOMS.md §2.3` DISCHARGED. `lake build CsdLeanTests` green.
+(`regroupPi_map`/L6 need `set_option maxHeartbeats 1000000` — heavy
+`piCongrLeft`/`finSumFinEquiv` defeq.) The detailed plan below is historical.
+
+### Slice 4 — DETAILED PLAN (2026-05-31) — the remaining work (historical)
 
 **Status: NOT a clean assembly; the L5.2c bridge has no Mathlib MP shortcut.**
 Slices 1–3 (L5.1, L5.2a/b, L5.3) are CLOSED and reusable. The remainder is three
