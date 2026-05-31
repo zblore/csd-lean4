@@ -105,8 +105,9 @@ repeated in each row.
 
 ## 1. Phase A — Bell family (actionable now, no LF4 dependency)
 
-All Phase A content lives in `CsdLean4/Empirical/Bell.lean` (Cat-3
-unless promoted to Framework Cat-2, see per-item notes). Consumes
+All Phase A content lives in `CsdLean4/Empirical/QM/Bell.lean` (Cat-3
+unless promoted to Framework Cat-2, see per-item notes), with the
+CSD-ontic bridge reading in `CsdLean4/Empirical/CSD/Bell.lean`. Consumes
 LF3's `correlation_eq_neg_dot`, `marginal_a_eq_half`,
 `marginal_b_eq_half`, `no_signalling_strong_readout_a/b`. The new work
 is Tsirelson (A6); A1–A5 are packaging.
@@ -212,9 +213,11 @@ They complement the Bell family: where Bell-type inequalities falsify
 local realism *statistically*, paradoxes typically falsify it
 *structurally* (single-shot impossibility statements).
 
-A separate subdirectory `CsdLean4/Empirical/Paradoxes/` houses these,
-to keep the single-experiment vs paradox structure visible in the
-file layout.
+Paradoxes are housed by topic under `CsdLean4/Empirical/QM/` (and their
+`CSD/` counterparts): `Multipartite/GHZ.lean`, `Contextuality/KS18.lean`
+and `Contextuality/MerminPeres.lean`, `Hardy.lean`. (The original plan
+proposed a flat `Empirical/Paradoxes/` subdirectory; the by-topic layout
+under the `QM/`÷`CSD/` split was adopted instead.)
 
 ### 3.1 Single-system paradoxes (mostly LF4-blocked, some QM-generic)
 
@@ -413,19 +416,50 @@ not to assume CSD = QM identically.
 
 ## 7. Files index
 
+**Layout (updated 2026-05-31).** The tree splits into two parallel branches:
+`Empirical/QM/` (pure QM-validity theorems, §0.1) and `Empirical/CSD/` (the
+volume-ratio bridge readings — each `QM/` file has a `CSD/` counterpart carrying
+a `CSDBridge.Context D` bundle). Both branches are imported explicitly in
+`CsdLean4.lean` (lines 70–100); there is no `Empirical.lean` aggregator.
+
 ```
-specs/qm-empirical-tests.md           -- this file
-CsdLean4/Empirical/Bell.lean          -- Phase A: A1-A6
-CsdLean4/Empirical/SingleQubit.lean   -- Phase B: B1, B3
-CsdLean4/Empirical/Interference.lean  -- Phase B: B4
-CsdLean4/Empirical/NoCloning.lean     -- Phase B: B2
-CsdLean4/Empirical/BornNumerical.lean -- Phase B: B5
-CsdLean4/Empirical/Multipartite/GHZ.lean
-CsdLean4/Empirical/Multipartite/Hardy.lean
-CsdLean4/Empirical/Algorithms/DeutschJozsa.lean
-CsdLean4/Empirical/Algorithms/Grover.lean
-CsdLean4/Empirical/Algorithms/QFT.lean
-CsdLean4/Empirical/Algorithms/Shor.lean
+specs/qm-empirical-tests.md                            -- this file (the roadmap)
+
+# QM-validity branch (Empirical/QM/)
+CsdLean4/Empirical/QM/Bell.lean                        -- Phase A: A1-A6 (CHSH, Tsirelson, no-signalling)
+CsdLean4/Empirical/QM/NoCloning.lean                   -- Phase B: B2  (namespace CSD.Empirical.NoCloning)
+CsdLean4/Empirical/QM/NoDeleting.lean                  -- Phase E: E1
+CsdLean4/Empirical/QM/Uncertainty.lean                 -- Phase E: E6 (Robertson)
+CsdLean4/Empirical/QM/SternGerlach.lean                -- Phase B: B1
+CsdLean4/Empirical/QM/Hardy.lean                       -- Phase C: D7 (QM-validity layer)
+CsdLean4/Empirical/QM/Multipartite/GHZ.lean            -- Phase C: D6
+CsdLean4/Empirical/QM/Contextuality/KS18.lean          -- Phase C: D9 (Kochen-Specker, Cabello-18)
+CsdLean4/Empirical/QM/Contextuality/MerminPeres.lean   -- Phase C: Mermin-Peres square
+CsdLean4/Empirical/QM/Resources/SuperdenseCoding.lean  -- Phase E: E4
+CsdLean4/Empirical/QM/Crypto/QuantumMoney.lean         -- Phase E: E8 (Wiesner, via no-cloning)
+CsdLean4/Empirical/QM/Gates/{SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
+                                                       -- gate library (Hadamard/Pauli/phase, CNOT/SWAP/CZ, Toffoli; Bell prep)
+
+# CSD-ontic bridge branch (Empirical/CSD/) — one file per QM/ counterpart
+CsdLean4/Empirical/CSD/Framework.lean                  -- CSDBridge.Context D bundle + transport scaffolding
+CsdLean4/Empirical/CSD/{Bell,NoCloning,NoDeleting,Uncertainty,SternGerlach,Hardy}.lean
+CsdLean4/Empirical/CSD/Multipartite/GHZ.lean
+CsdLean4/Empirical/CSD/Contextuality/{KS18,MerminPeres}.lean
+CsdLean4/Empirical/CSD/Resources/SuperdenseCoding.lean
+CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean
+CsdLean4/Empirical/CSD/Gates/{Framework,SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
+
+# Planned but not yet created (see phase tables above)
+#   QM/Resources/Teleportation.lean    -- Phase E: E5 (READY)
+#   QM/NoCommunication.lean            -- Phase E: E3 (READY, needs partial-trace infra)
+#   QM/Crypto/E91.lean                 -- Phase E: E7 (deferred, needs LHV-model build)
+#   Interference.lean / BornNumerical.lean / Algorithms/*  -- LF4/INFRA-blocked
 ```
 
-`Tests/AxiomAudit.lean` gets a new `/-! ## Empirical predictions -/` section as items land.
+**Namespace note.** Most `QM/` files use `CSD.Empirical.QM.<Topic>`, but the two
+earliest (`NoCloning`, and the `NoDeleting` it seeded) use `CSD.Empirical.<Topic>`
+(no `QM` segment) for historical reasons — check the file before referencing a
+fully-qualified name.
+
+`Tests/AxiomAudit.lean` carries the `#guard_msgs` pins; empirical entries are
+grouped under `### Empirical predictions`.
