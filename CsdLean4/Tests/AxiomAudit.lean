@@ -969,6 +969,18 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.sqNorm_map_gaussian2
 
+-- Plan B Part 2, Slice 2 (L5.2): block product = independence.
+-- `gaussian2` is the product of two 1-D standard Gaussians, and the joint law of
+-- the two block squared-norms factors as `expHalf × expHalf` (the independence
+-- statement; the product measure carries it). Foundational triple.
+/-- info: 'CSD.LF4.gaussian2_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.gaussian2_eq_prod
+
+/-- info: 'CSD.LF4.blockSqNorm_map_gaussian2_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.blockSqNorm_map_gaussian2_prod
+
 /-- info: 'CSD.LF4.fs_born_volume_ratio_qubit_uncond' depends on axioms: [propext, Classical.choice, Quot.sound, LF4.fs_moment_pushforward_uniform] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_born_volume_ratio_qubit_uncond

@@ -318,6 +318,18 @@ retirement, where all the "connect to Part 1" plumbing is concentrated.
 **Slice 2 scope = L5.2a + L5.2b only** (self-contained, no EuclideanSpace/`pi`
 gymnastics; ~40-60 lines total). Foundational-triple, AxiomAudit-pinned.
 
+**(DONE — 2026-05-31.)** Both lemmas land in `MomentMarginalUniform.lean`,
+foundational-triple, AxiomAudit-pinned, `lake build CsdLeanTests` green:
+- `gaussianPDFReal_zero_one` (helper): `gaussianPDFReal 0 1 x = (√(2π))⁻¹·e^{-x²/2}`.
+- `gaussian2_eq_prod` (L5.2a): `gaussian2 = (gaussianReal 0 1).prod (gaussianReal 0 1)`,
+  via `gaussianReal_of_var_ne_zero` + `prod_withDensity` + `Measure.volume_eq_prod`,
+  closing on the density identity `(1/2π)e^{-(x²+y²)/2} = pdf(x)·pdf(y)`
+  (`(√(2π))⁻¹·(√(2π))⁻¹ = 1/(2π)` via `Real.mul_self_sqrt`; `exp` factors kept atomic).
+- `blockSqNorm_map_gaussian2_prod` (L5.2b): `(Prod.map ‖·‖² ‖·‖²)∗ (gaussian2 × gaussian2)
+  = expHalf × expHalf`, via `← Measure.map_prod_map` + `sqNorm_map_gaussian2` (Slice 1);
+  `SFinite gaussian2` discharged by `unfold gaussian2; infer_instance`
+  (`Measure.withDensity.instSFinite`). This is the independence statement.
+
 **Honesty note.** This route proves the axiom outright (no new axiom, no carving)
 — `fs_moment_pushforward_uniform` becomes a theorem and the uncond qubit Born
 results become foundational-triple-only. It does NOT touch the deeper structural

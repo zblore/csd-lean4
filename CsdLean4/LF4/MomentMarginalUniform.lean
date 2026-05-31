@@ -2,6 +2,7 @@ import Mathlib.Analysis.SpecialFunctions.PolarCoord
 import Mathlib.MeasureTheory.Function.JacobianOneDim
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Probability.Distributions.Gaussian.Real
 
 /-!
 # LF4 plan B, Part 2, Slice 1 (L5.1): the single-block squared-norm law is Exp(1/2)
@@ -201,3 +202,59 @@ theorem sqNorm_map_gaussian2 :
   · -- AEMeasurability of the product integrand.
     apply Measurable.aemeasurable
     fun_prop
+
+/-! ## Slice 2 (L5.2): block product = independence
+
+`gaussian2` is the product of two 1-D standard Gaussians (`gaussianReal 0 1`),
+and the joint law of the two block squared-norms of a 4-D standard Gaussian is
+`expHalf.prod expHalf` — the joint law factors, which is exactly the
+independence statement (no separate `IndepFun` needed; the product measure
+carries it). See `specs/plan-b-detail.md` Part 2, Slice 2. -/
+
+open ProbabilityTheory
+
+/-- `gaussianPDFReal 0 1` in explicit form: `(√(2π))⁻¹·exp(-x²/2)`. -/
+theorem gaussianPDFReal_zero_one (x : ℝ) :
+    gaussianPDFReal 0 1 x = (Real.sqrt (2 * Real.pi))⁻¹ * Real.exp (-x ^ 2 / 2) := by
+  rw [gaussianPDFReal]
+  simp only [NNReal.coe_one, mul_one, sub_zero]
+
+/-- **L5.2a (2-D bridge).** The explicit-density `gaussian2` is the product of two
+1-D standard Gaussians `gaussianReal 0 1`. -/
+theorem gaussian2_eq_prod :
+    gaussian2 = (gaussianReal 0 1).prod (gaussianReal 0 1) := by
+  rw [gaussianReal_of_var_ne_zero 0 one_ne_zero,
+    prod_withDensity (measurable_gaussianPDF 0 1) (measurable_gaussianPDF 0 1),
+    ← Measure.volume_eq_prod, gaussian2]
+  congr 1
+  ext p
+  -- Pointwise density identity: `(1/2π)·e^{-(x²+y²)/2} = pdf(x)·pdf(y)`.
+  rw [gaussianPDF, gaussianPDF, gaussianPDFReal_zero_one, gaussianPDFReal_zero_one,
+    ← ENNReal.ofReal_mul (by positivity)]
+  congr 1
+  have hfact : (Real.sqrt (2 * Real.pi))⁻¹ * (Real.sqrt (2 * Real.pi))⁻¹
+      = 1 / (2 * Real.pi) := by
+    rw [← mul_inv, Real.mul_self_sqrt (by positivity), one_div]
+  -- Split the joint exponent into the two block exponents, then collapse the two
+  -- `(√(2π))⁻¹` factors to `1/(2π)`; `exp` factors stay atomic throughout.
+  rw [show (-(p.1 ^ 2 + p.2 ^ 2) / 2 : ℝ) = -p.1 ^ 2 / 2 + -p.2 ^ 2 / 2 by ring,
+    Real.exp_add,
+    show (Real.sqrt (2 * Real.pi))⁻¹ * Real.exp (-p.1 ^ 2 / 2) *
+        ((Real.sqrt (2 * Real.pi))⁻¹ * Real.exp (-p.2 ^ 2 / 2))
+      = (Real.sqrt (2 * Real.pi))⁻¹ * (Real.sqrt (2 * Real.pi))⁻¹ *
+          (Real.exp (-p.1 ^ 2 / 2) * Real.exp (-p.2 ^ 2 / 2)) by ring,
+    hfact]
+
+/-- **L5.2b (block product = independence).** The joint law of the two block
+squared-norms factors:
+`(Prod.map ‖·‖² ‖·‖²)∗ (gaussian2 × gaussian2) = expHalf × expHalf`.
+This is the independence statement — the product measure on the right carries it,
+so no separate `IndepFun` lemma is required. -/
+theorem blockSqNorm_map_gaussian2_prod :
+    Measure.map
+        (Prod.map (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2) (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2))
+        (gaussian2.prod gaussian2)
+      = expHalf.prod expHalf := by
+  have hLsq_meas : Measurable (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2) := by fun_prop
+  haveI : SFinite gaussian2 := by unfold gaussian2; infer_instance
+  rw [← Measure.map_prod_map gaussian2 gaussian2 hLsq_meas hLsq_meas, sqNorm_map_gaussian2]
