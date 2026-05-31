@@ -245,6 +245,56 @@ it. If a cleaner path emerges via `iIndepFun` from `Measure.pi`
   `(momentMap·0)(gaussianProj v) = ‖v 0‖²/‖v‖²` (by `momentMap_mk`, a.e. on `v≠0`);
   conclude by L5.
 
+### Slice 4 — DETAILED PLAN (2026-05-31) — the remaining work
+
+**Status: NOT a clean assembly; the L5.2c bridge has no Mathlib MP shortcut.**
+Slices 1–3 (L5.1, L5.2a/b, L5.3) are CLOSED and reusable. The remainder is three
+sub-tasks, the first of which is genuine custom plumbing:
+
+- **L5.2c (the bridge) — fiddliest, no library shortcut.**
+  `regroup∗ stdGaussian(ℝ⁴) = gaussian2.prod gaussian2`, where
+  `regroup y = ((y 0, y 1), (y 2, y 3)) : (ℝ×ℝ)×(ℝ×ℝ)`.
+  Route: `map_pi_eq_stdGaussian` gives `stdGaussian(EuclideanSpace ℝ (Fin 4)) =
+  (Measure.pi (fun _ : Fin 4 => gaussianReal 0 1)).map (toLp 2)`, so it reduces to
+  `m∗ (pi (Fin 4) gaussianReal) = gaussian2.prod gaussian2` with
+  `m y = ((y 0,y 1),(y 2,y 3))` and `gaussian2 = (gaussianReal 0 1).prod
+  (gaussianReal 0 1)` (Slice 2 L5.2a). **Findings (reconnaissance):**
+  - `measurePreserving_piEquivPiSubtypeProd (·<2)` splits `pi (Fin 4)` into a
+    product over the 2-element *subtypes* `{i:Fin4 // i<2}` and `{i // ¬i<2}`;
+    reindexing each subtype to `Fin 2` (`measurePreserving_piCongrLeft` +
+    `Fintype.equivFin`/card-2 proof) then `measurePreserving_finTwoArrow` to `ℝ×ℝ`
+    is available, but the *composite* equiv's concrete action is hard to pin to
+    exactly `y ↦ ((y0,y1),(y2,y3))`, so proving `m = E` (composite) is itself painful.
+  - There is **no** `measurePreserving_sumPiEquivProdPi` (only `Equiv`/`LinearEquiv`
+    `sumPiEquivProdPi`), so the cleaner `Fin 2 ⊕ Fin 2 ≃ Fin 4` route needs a
+    hand-built `MeasurableEquiv` + MP proof.
+  - `Measure.prod_eq` rectangle route needs `pi{y | (y0,y1)∈C ∧ (y2,y3)∈D}` to
+    factor for *general* measurable `C,D` — i.e. block-independence of the pi
+    measure — which again routes back through the equiv split.
+  Recommended: build the composite `MeasurableEquiv (Fin 4 → ℝ) ((ℝ×ℝ)×(ℝ×ℝ))` via
+  `piEquivPiSubtypeProd` + per-block (`piCongrLeft` to `Fin 2`) + `finTwoArrow`,
+  prove `MeasurePreserving` by `.comp`/`.prod`, then show `m` equals it on a
+  `funext`/`Fin.cases`. ~50–80 lines.
+
+- **L5 (compose).** `T∗ stdGaussian(ℝ⁴) = volume.restrict (Ioo 0 1)`,
+  `T = (fun q => q.1/(q.1+q.2)) ∘ (Prod.map Lsq Lsq) ∘ regroup ∘ toLp`-ish:
+  `map_pi_eq_stdGaussian` → `Measure.map_map` → L5.2c → L5.2b
+  (`blockSqNorm_map_gaussian2_prod`) → L5.3 (`ratioSqNorm_map_expHalf_prod`).
+
+- **L6 + retirement.** Chain L5 with `gaussianCP_eq_fubiniStudy` (Part 1),
+  `Measure.map_map`, `momentMap_mk` (`(momentMap·0)(gaussianProj(coords y)) =
+  ‖coords y 0‖²/‖coords y‖² = (y0²+y1²)/‖y‖²`, a.e. off the `stdGaussian`-null
+  `{0}`), and `volume.restrict (Ioo 0 1) = volume.restrict (Icc 0 1)` (endpoints
+  null: `Measure.restrict_congr_set` with `Ioo =ᵐ Icc`). **Import restructuring:**
+  the axiom lives in `DuistermaatHeckman.lean` and is consumed by
+  `fs_born_volume_ratio_qubit_uncond` / `qubit_born_frequency_convergence_uncond`
+  there; to make it a *theorem*, add the L5-proving file's import to
+  `DuistermaatHeckman.lean` and verify no cycle (`GaussianCP`,
+  `MomentRatioUniform`, `MomentMarginalUniform`, `MomentMap` must not import
+  `DuistermaatHeckman`). Then flip the two `_uncond` AxiomAudit pins from
+  `[…, LF4.fs_moment_pushforward_uniform]` to `[propext, Classical.choice,
+  Quot.sound]` and drop the axiom from `AXIOMS.md §2.3`.
+
 ## Status / sequencing
 
 - B.1 (reduction `momentMap_pushforward_eq_haar_marginal`) — DONE (`MomentMarginal.lean`).
