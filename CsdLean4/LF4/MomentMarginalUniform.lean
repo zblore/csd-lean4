@@ -258,3 +258,35 @@ theorem blockSqNorm_map_gaussian2_prod :
   have hLsq_meas : Measurable (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2) := by fun_prop
   haveI : SFinite gaussian2 := by unfold gaussian2; infer_instance
   rw [← Measure.map_prod_map gaussian2 gaussian2 hLsq_meas hLsq_meas, sqNorm_map_gaussian2]
+
+/-! ## Slice C (Part 2a, general N): the N-fold block law
+
+The general-`N` analogue of `blockSqNorm_map_gaussian2_prod`: the joint law of the
+`N` block squared-norms of an `N`-fold product of 2-D Gaussians factors as the
+`N`-fold product of `Exp(1/2)` measures. Clean `Measure.pi_map_pi` application,
+each factor closed by Slice 1 (`sqNorm_map_gaussian2`). The
+`EuclideanSpace ℝ (Fin N × Fin 2) ↔ Measure.pi (Fin N) gaussian2` bridge (the
+`stdGaussian` reindex plumbing) is deferred to the assembly slice, exactly as the
+qubit deferred its `EuclideanSpace` bridge from Slice 2 to Slice 4. -/
+
+/-- `gaussian2` is a probability measure (explicit Gaussian density integrates to 1). -/
+instance instProbGaussian2 : IsProbabilityMeasure gaussian2 := by
+  rw [gaussian2_eq_prod]; infer_instance
+
+/-- `expHalf` is a probability measure (it is the squared-norm pushforward of
+`gaussian2`, a probability measure). -/
+instance instProbExpHalf : IsProbabilityMeasure expHalf := by
+  rw [← sqNorm_map_gaussian2]
+  exact Measure.isProbabilityMeasure_map (by fun_prop)
+
+/-- **Slice C (general N): the N-fold block law.** The joint law of the `N` block
+squared-norms factors as the `N`-fold product `Exp(1/2)^{⊗N}`:
+`(fun q i => (q i).1² + (q i).2²)∗ (pi gaussian2) = pi expHalf`. The independence
+statement at general `N` — the product measure carries it. -/
+theorem blockSqNorm_map_gaussianN_pi {N : ℕ} :
+    Measure.map (fun q : Fin N → ℝ × ℝ => fun i => (q i).1 ^ 2 + (q i).2 ^ 2)
+        (Measure.pi (fun _ : Fin N => gaussian2))
+      = Measure.pi (fun _ : Fin N => expHalf) := by
+  have hLsq_meas : Measurable (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2) := by fun_prop
+  rw [Measure.pi_map_pi (fun _ => hLsq_meas.aemeasurable)]
+  simp only [sqNorm_map_gaussian2]

@@ -139,4 +139,19 @@ piece of `GaussianCP.lean`:
 The discharged qubit `GaussianCP.lean` is left untouched (parallel development, not
 a refactor — its `Fin 4` machinery is load-bearing for the retired axiom).
 Dependencies (`unitary_norm_preserving`, `fubiniStudyMeasure_unique`,
-`smul_mk_eq_mk`) were already general-N. Next: Slice C (block law, Part 2a).
+`smul_mk_eq_mk`) were already general-N.
+
+## Progress (2026-06-01) — Slice C DONE
+
+`MomentMarginalUniform.lean`, `blockSqNorm_map_gaussianN_pi {N} :
+(fun q i => (q i).1² + (q i).2²)∗ (pi (fun _ : Fin N => gaussian2))
+= pi (fun _ : Fin N => expHalf)`. Foundational triple, AxiomAudit-pinned. The
+N-fold analogue of `blockSqNorm_map_gaussian2_prod`: a clean `Measure.pi_map_pi`
+application, each factor closed by Slice 1 (`sqNorm_map_gaussian2`). Added the
+supporting `instProbGaussian2` / `instProbExpHalf` probability instances. Came in
+~20 lines as planned (LOW risk; the only fix was the `Measure.isProbabilityMeasure_map`
+name). The `EuclideanSpace ℝ (Fin N × Fin 2) ↔ pi (Fin N) gaussian2` reindex bridge
+is deferred to assembly (Slice E), as the qubit deferred its bridge to Slice 4.
+
+Next: Slice D (the crux — N-dim Gamma→Dirichlet, Jacobian `det = S^{N−1}`;
+research-grade, its own multi-session effort).

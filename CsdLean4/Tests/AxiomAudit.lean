@@ -1063,6 +1063,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.blockSqNorm_map_gaussian2_prod
 
+-- General-N DH Slice C (Part 2a): the N-fold block law. The joint law of the N
+-- block squared-norms factors as Exp(1/2)^{⊗N} (Measure.pi_map_pi + Slice 1 per
+-- block) — the independence statement at general N. Foundational triple.
+/-- info: 'CSD.LF4.blockSqNorm_map_gaussianN_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.blockSqNorm_map_gaussianN_pi
+
 -- Plan B Part 2, Slice 3 (L5.3, the crux): the ratio map sends expHalf × expHalf
 -- to uniform on (0,1). 2-D change of variables through the diffeo Ψ(T,S) =
 -- (T·S,(1−T)·S) (Jacobian det = S), with the radial S-integral collapsing to 1.
