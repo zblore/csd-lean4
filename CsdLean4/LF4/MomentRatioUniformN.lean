@@ -172,5 +172,107 @@ theorem psiMat_det (S : ℝ) (t : Fin M → ℝ) : (psiMat S t).det = S ^ M := b
       Fintype.card_subtype_compl, Fintype.card_fin, Fintype.card_subtype_eq, Nat.add_sub_cancel]
   rw [hbig, hcorner, mul_one]
 
+/-! ## D.2 — the stick-breaking diffeo `Ψ_N` and its derivative
+
+`Ψ_N : (Fin (M+1) → ℝ) → (Fin (M+1) → ℝ)`,
+`y ↦ (k ↦ y(castSucc k)·y(last))` on the first `M` coordinates and
+`(1−∑_k y(castSucc k))·y(last)` on the last. On the domain `openSimplex ×ˢ Ioi 0`
+(reading `y(last) = S`, `y(castSucc ·) = t`) this is the inverse substitution of the
+Gamma→Dirichlet change of variables; its Jacobian is `psiMat S t` (D.3), det `S^M`. -/
+
+/-- The stick-breaking substitution map on `Fin (M+1) → ℝ`. -/
+noncomputable def PsiN (y : Fin (M + 1) → ℝ) : Fin (M + 1) → ℝ :=
+  Fin.lastCases ((1 - ∑ k, y (Fin.castSucc k)) * y (Fin.last M))
+    (fun k => y (Fin.castSucc k) * y (Fin.last M))
+
+/-- The candidate Fréchet derivative of `Ψ_N` at `y`: the linear map of the
+Jacobian matrix `psiMat (y last) (y ∘ castSucc)` (D.3). -/
+noncomputable def psiFDerivN (y : Fin (M + 1) → ℝ) : (Fin (M + 1) → ℝ) →L[ℝ] (Fin (M + 1) → ℝ) :=
+  (Matrix.toLin' (psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k)))).toContinuousLinearMap
+
+/-- **Jacobian determinant of `Ψ_N`.** `det (psiFDerivN y) = (y last)^M`. Immediate
+from `psiMat_det` (D.3) via `LinearMap.det_toLin'`. -/
+theorem psiFDerivN_det (y : Fin (M + 1) → ℝ) :
+    (psiFDerivN y).det = (y (Fin.last M)) ^ M := by
+  rw [psiFDerivN, ContinuousLinearMap.det, LinearMap.coe_toContinuousLinearMap,
+    LinearMap.det_toLin', psiMat_det]
+
+/-- `Ψ_N` is Fréchet differentiable everywhere with derivative `psiFDerivN`. Proved
+componentwise (`hasFDerivAt_pi`): each output coordinate is a product/affine
+polynomial in the `y`-coordinates; the assembled derivative's matrix is `psiMat`. -/
+theorem hasFDerivAt_PsiN (y : Fin (M + 1) → ℝ) : HasFDerivAt PsiN (psiFDerivN y) y := by
+  -- `psiFDerivN y = pi (fun i => (proj i).comp (psiFDerivN y))`, so it suffices to
+  -- prove each component `(PsiN · i)` has derivative `(proj i).comp (psiFDerivN y)`.
+  have hpi : psiFDerivN y
+      = ContinuousLinearMap.pi (fun i =>
+          (ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin (M + 1) => ℝ) i).comp
+            (psiFDerivN y)) := by
+    ext v i; rfl
+  rw [hpi, hasFDerivAt_pi]
+  intro i
+  -- Component derivative equals `(proj i).comp (psiFDerivN y)`; prove by matching the
+  -- explicit `.mul`/affine derivative to the matrix row (the `psiMat` row evaluation).
+  induction i using Fin.lastCases with
+  | last =>
+    -- component: y ↦ (1 − ∑ y∘castSucc) · y last
+    have hcomp : (fun x : Fin (M + 1) → ℝ => PsiN x (Fin.last M))
+        = fun x => (1 - ∑ k, x (Fin.castSucc k)) * x (Fin.last M) := by
+      funext x; simp [PsiN]
+    rw [hcomp]
+    have hbase :
+        HasFDerivAt (fun x : Fin (M + 1) → ℝ => (1 - ∑ k, x (Fin.castSucc k)) * x (Fin.last M))
+          ((((1 : ℝ) - ∑ k, y (Fin.castSucc k)) •
+              ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin (M + 1) => ℝ) (Fin.last M))
+            + (y (Fin.last M)) •
+              (((0 : (Fin (M + 1) → ℝ) →L[ℝ] ℝ)) -
+                ∑ k, ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin (M + 1) => ℝ)
+                  (Fin.castSucc k))) y := by
+      apply HasFDerivAt.mul
+      · exact (hasFDerivAt_const (1 : ℝ) y).sub
+          (HasFDerivAt.fun_sum (fun k _ => hasFDerivAt_apply (𝕜 := ℝ) (Fin.castSucc k) y))
+      · exact hasFDerivAt_apply (𝕜 := ℝ) (Fin.last M) y
+    refine hbase.congr_fderiv ?_
+    ext v
+    show _ = (psiFDerivN y v) (Fin.last M)
+    rw [psiFDerivN]
+    show _ = (Matrix.toLin' (psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k))) v) (Fin.last M)
+    rw [Matrix.toLin'_apply]
+    show _ = ∑ j, psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k)) (Fin.last M) j * v j
+    rw [Fin.sum_univ_castSucc]
+    simp only [psiMat, Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last,
+      ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
+      ContinuousLinearMap.sub_apply, ContinuousLinearMap.zero_apply,
+      ContinuousLinearMap.coe_sum', Finset.sum_apply, ContinuousLinearMap.proj_apply,
+      smul_eq_mul]
+    simp only [zero_sub, Finset.mul_sum, mul_neg, neg_mul, Finset.sum_neg_distrib]
+    ring
+  | cast k =>
+    have hcomp : (fun x : Fin (M + 1) → ℝ => PsiN x (Fin.castSucc k))
+        = fun x => x (Fin.castSucc k) * x (Fin.last M) := by
+      funext x; simp [PsiN]
+    rw [hcomp]
+    have hbase :
+        HasFDerivAt (fun x : Fin (M + 1) → ℝ => x (Fin.castSucc k) * x (Fin.last M))
+          (y (Fin.castSucc k) •
+              ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin (M + 1) => ℝ) (Fin.last M)
+            + y (Fin.last M) •
+              ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin (M + 1) => ℝ) (Fin.castSucc k)) y :=
+      (hasFDerivAt_apply (𝕜 := ℝ) (Fin.castSucc k) y).mul (hasFDerivAt_apply (𝕜 := ℝ) (Fin.last M) y)
+    refine hbase.congr_fderiv ?_
+    ext v
+    show _ = (psiFDerivN y v) (Fin.castSucc k)
+    rw [psiFDerivN]
+    show _ = (Matrix.toLin' (psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k))) v) (Fin.castSucc k)
+    rw [Matrix.toLin'_apply]
+    show _ = ∑ j, psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k)) (Fin.castSucc k) j * v j
+    rw [Fin.sum_univ_castSucc]
+    simp only [psiMat, Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last,
+      ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
+      ContinuousLinearMap.proj_apply, smul_eq_mul]
+    rw [Finset.sum_eq_single k]
+    · simp; ring
+    · intro b _ hb; simp [Ne.symm hb]
+    · intro h; exact absurd (Finset.mem_univ k) h
+
 end LF4
 end CSD

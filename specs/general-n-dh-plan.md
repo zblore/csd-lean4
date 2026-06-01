@@ -193,7 +193,21 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
   (fixed with explicit `show`), `-1 < ↑n` not a `positivity` goal (used
   `Nat.cast_nonneg` + `linarith`).
 
-- **D.2 The substitution diffeo `Ψ_N` and its inverse.**
+- **D.2 the diffeo `Ψ_N` + its `fderiv`/det — DONE 2026-06-01**
+  (`MomentRatioUniformN.lean`, `PsiN`, `psiFDerivN`, `hasFDerivAt_PsiN`,
+  `psiFDerivN_det`). `PsiN y = lastCases ((1−∑t)·S) (fun k => t k · S)` (`S = y last`,
+  `t = y∘castSucc`). Candidate derivative `psiFDerivN y := (toLin' (psiMat S t)).toCLM`
+  — so `psiFDerivN_det = (y last)^M` is *immediate* from D.3 via `LinearMap.det_toLin'`
+  (the payoff of having isolated D.3 as a pure matrix lemma). `hasFDerivAt_PsiN`
+  proved componentwise (`hasFDerivAt_pi`): each output coord is `.mul`/affine of
+  `proj`s (`hasFDerivAt_apply`), and the produced derivative matches `(proj i).comp
+  (psiFDerivN y)` (= `psiMat` row `i`) via `Matrix.toLin'_apply` + the row evaluation.
+  Foundational triple, AxiomAudit-pinned. MED as planned; frictions: `proj` needs
+  pinned `(R := ℝ)(φ := …)`, `.mul` derivative order, `HasFDerivAt.fun_sum` (not
+  `.sum`) for the `fun x => ∑` form, `Finset.sum_neg_distrib` for the last-row algebra.
+  Note D.4's `InjOn`/image is still owed (folded into D.2's plan slot but separate work).
+
+- **D.2-orig The substitution diffeo `Ψ_N` and its inverse (original framing).**
   `Ψ_N : (Fin (N-1) → ℝ) × ℝ → (Fin N → ℝ)`,
   `(t, S) ↦ fun i => if h : i = last then (1 − ∑ t) · S else t (i.castPred) · S`
   (the "stick-breaking" parametrisation). Domain `openSimplex ×ˢ Ioi 0`, image the
