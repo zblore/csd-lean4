@@ -43,6 +43,7 @@ import CsdLean4.Empirical.QM.NoDeleting
 import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Resources.Teleportation
 import CsdLean4.Empirical.QM.NoCommunication
+import CsdLean4.Empirical.QM.NoBroadcasting
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
@@ -391,6 +392,15 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.NoCommunication.reducedLeft_aliceConj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.NoCommunication.reducedLeft_aliceConj_eq
+
+-- E2: No-broadcasting, pure-marginal confinement core. A bipartite PSD operator
+-- with a pure first-factor marginal |ψ⟩⟨ψ| is confined to that pure sector
+-- ((P⊗I)·ρ·(P⊗I) = ρ) — the obstruction to broadcasting a pure state. Built on the
+-- partial-trace module laws + PSD block-vanishing. Foundational triple. The full
+-- BCFJS commuting-states theorem is fidelity-gated (deferred QI-infra tranche).
+/-- info: 'CSD.Empirical.QM.NoBroadcasting.pure_marginal_confinement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoBroadcasting.pure_marginal_confinement
 
 /-- info: 'CSD.Empirical.QuantumMoney.wiesner_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

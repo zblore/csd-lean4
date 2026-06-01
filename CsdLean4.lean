@@ -77,6 +77,7 @@ import CsdLean4.Empirical.QM.NoDeleting
 import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Resources.Teleportation
 import CsdLean4.Empirical.QM.NoCommunication
+import CsdLean4.Empirical.QM.NoBroadcasting
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ

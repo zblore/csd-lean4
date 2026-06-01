@@ -258,4 +258,48 @@ theorem traceLeft_conjTranspose_kronecker_one
 
 end UnitaryInvariance
 
+section Bimodule
+variable [Semiring R]
+
+/-- **Partial trace is a left module map over `X ⊗ I`.** Pulling a first-factor
+operator `X ⊗ I` out of `traceRight`:
+`traceRight ((X ⊗ₖ I) · M) = X · traceRight M`. The `I` on the Bob factor lets the
+`X` commute straight through the partial trace over Bob's index. -/
+theorem traceRight_kronecker_one_mul [DecidableEq n]
+    (X : Matrix m m R) (M : Matrix (m × n) (m × n) R) :
+    traceRight ((X ⊗ₖ (1 : Matrix n n R)) * M) = X * traceRight M := by
+  ext i j
+  rw [Matrix.mul_apply]
+  -- RHS = ∑ a, X i a * (∑ k, M (a,k)(j,k)); LHS collapses the (X⊗I) Bob-delta.
+  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+    Fintype.sum_prod_type, Finset.mul_sum]
+  -- LHS: ∑ k, ∑ a, ∑ b, (if a=? ...) — collapse the inner Bob-delta `b = k`.
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun a _ => ?_)
+  refine Finset.sum_congr rfl (fun k _ => ?_)
+  rw [Finset.sum_eq_single k]
+  · simp
+  · intro b _ hb; simp [Ne.symm hb]
+  · intro h; exact absurd (Finset.mem_univ k) h
+
+/-- **Partial trace is a right module map over `X ⊗ I`.**
+`traceRight (M · (X ⊗ₖ I)) = traceRight M · X`. -/
+theorem traceRight_mul_kronecker_one [DecidableEq n]
+    (M : Matrix (m × n) (m × n) R) (X : Matrix m m R) :
+    traceRight (M * (X ⊗ₖ (1 : Matrix n n R))) = traceRight M * X := by
+  ext i j
+  rw [Matrix.mul_apply]
+  -- RHS = ∑ a, (∑ k, M (i,k)(a,k)) * X a j; LHS collapses the (X⊗I) Bob-delta.
+  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+    Fintype.sum_prod_type, mul_ite, mul_zero, mul_one, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun a _ => ?_)
+  refine Finset.sum_congr rfl (fun k _ => ?_)
+  rw [Finset.sum_eq_single k]
+  · simp
+  · intro b _ hb; simp [hb]
+  · intro h; exact absurd (Finset.mem_univ k) h
+
+end Bimodule
+
 end Matrix

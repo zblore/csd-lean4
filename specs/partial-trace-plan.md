@@ -112,6 +112,25 @@ Both AxiomAudit-pinned. Remaining: E3b (step 3), then E2 (step 4, separate tranc
 
 Remaining: E2 no-broadcasting + the general-CPTP E3b (separate tranche).
 
+## Progress (2026-06-01) — E2 pure-marginal core DONE
+
+- **Layer 1 add** (Bimodule section): `traceRight_kronecker_one_mul`
+  (`traceRight ((X ⊗ₖ I)·M) = X · traceRight M`) and `traceRight_mul_kronecker_one`
+  (right version) — partial trace is a bimodule map over `X ⊗ I`. Upstreamable.
+- **E2** `CsdLean4/Empirical/QM/NoBroadcasting.lean`:
+  - `traceForm_complement_block_zero`: `Tr((Q⊗I)·ρ·(Q⊗I)) = 0` for a pure-marginal
+    `ρ` (`Q = I − |ψ⟩⟨ψ|`), via the right-module law + `Tr(P·Q) = 0`.
+  - `pure_marginal_confinement` (headline): a bipartite PSD `ρ` with
+    `traceRight ρ = |ψ⟩⟨ψ|` satisfies `(P⊗I)·ρ·(P⊗I) = ρ` — confined to the pure
+    sector. PSD block-vanishing (mirrors `LF2.rankOneDensity_unique_of_certainty`).
+  Foundational triple, AxiomAudit-pinned.
+
+**Honest scope:** this is the pure-state structural core, NOT the full BCFJS
+commuting-states iff (fidelity / channel-monotonicity-gated; Mathlib lacks
+fidelity / relative entropy / CPTP-Kraus — deferred to the QI-infra tranche with
+E7/E91). The general-CPTP E3b shares that tranche. Partial-trace tranche complete
+for now.
+
 ## Honesty
 
 Real Mathlib-track infrastructure, foundational-triple throughout. Does NOT touch
