@@ -204,7 +204,22 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
   `Fin` arithmetic). `Fin.snoc` is likely cleaner for both the map and its `fderiv`.
   **Risk: MED** — `Fin` bookkeeping, but no deep content.
 
-- **D.3 `fderiv` and the determinant `= S^{N−1}` (THE NUT).**
+- **D.3 the determinant `= S^M` — DONE 2026-06-01** (`MomentRatioUniformN.lean`,
+  `psiMat` + `psiMat_col_sum` + `psiMat_det`). The gate is through. Encoded the
+  Jacobian as an explicit `Matrix.of` bordered matrix `psiMat S t` (dim `M+1`,
+  `N = M+1`) — `S·I` block, last col `t`/`1−∑t`, last row `−S`/`1−∑t` — using
+  `Fin.lastCases` (which reduces cleanly under `simp`, verified). Proof exactly as
+  planned: `psiMat_col_sum` (every column sums to `[j=last]`: `S+(−S)=0` on castSucc
+  cols, `∑t+(1−∑t)=1` on the last) → row op via `Matrix.det_updateRow_sum` (coeff 1,
+  det invariant) making the last row `e_last` → `twoBlockTriangular_det` (`p := ·≠last`)
+  → corner block `1` (`det_eq_elem_of_subsingleton`) × big block `det (diagonal S)
+  = S^M` (`Fintype.card_subtype_compl`). Foundational triple, AxiomAudit-pinned.
+  **Came in cleaner than budgeted** (the planned-HIGH risk) by isolating it as a
+  pure matrix lemma (no `fderiv`/CLM machinery) — that connection is now D.2's job
+  (`LinearMap.det_toMatrix` linking `psiFDeriv_N` to `psiMat`). The original NUT
+  framing follows.
+
+- **D.3-orig `fderiv` and the determinant `= S^{N−1}` (THE NUT — original framing).**
   `HasFDerivAt Ψ_N (Ψ_N_fderiv (t,S)) (t,S)`, then `det = S^{N-1}`. The Jacobian (in
   the basis `(t_0,…,t_{N−2}, S)`) is the N×N matrix:
   - `∂(t_k S)/∂t_j = S·δ_{kj}`, `∂(t_k S)/∂S = t_k`   (rows `k < N−1`)

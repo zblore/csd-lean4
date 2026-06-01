@@ -1087,6 +1087,19 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.lintegral_radial_moment
 
+-- General-N DH Slice D.3 (the crux/gate): the Jacobian determinant of the
+-- stick-breaking substitution Ψ_{M+1} is S^M. The bordered matrix (S·I block +
+-- border) via the row operation "add all castSucc rows into the last" (det
+-- invariant, psiMat_col_sum) → two-block-triangular. The genuine general-N content
+-- (no direct Mathlib lemma). Foundational triple.
+/-- info: 'CSD.LF4.psiMat_col_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.psiMat_col_sum
+
+/-- info: 'CSD.LF4.psiMat_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.psiMat_det
+
 /-- info: 'CSD.LF4.psiFDeriv_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.psiFDeriv_det
