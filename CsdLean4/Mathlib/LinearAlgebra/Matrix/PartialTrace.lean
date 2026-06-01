@@ -202,4 +202,60 @@ theorem PosSemidef.traceLeft {A : Matrix (m × n) (m × n) R} (hA : A.PosSemidef
 
 end PosSemidef
 
+section UnitaryInvariance
+variable [DecidableEq m] [DecidableEq n] [CommRing R] [StarRing R]
+
+/-- **Partial trace is invariant under a unitary on the traced-out factor.** If
+`U` is unitary (`Uᴴ U = 1`) then conjugating `M` by `U ⊗ I` does not change the
+partial trace over the *first* factor:
+`traceLeft ((U ⊗ₖ I) · M · (U ⊗ₖ I)ᴴ) = traceLeft M`.
+
+This is the matrix form of "a local unitary on Alice's subsystem leaves Bob's
+reduced state invariant" — the no-communication / no-signalling content. The two
+Kronecker `I` factors pin the Bob indices; the Alice factors collapse through
+`Uᴴ U = I`. -/
+theorem traceLeft_conjTranspose_kronecker_one
+    {U : Matrix m m R} (hU : Uᴴ * U = 1) (M : Matrix (m × n) (m × n) R) :
+    traceLeft ((U ⊗ₖ (1 : Matrix n n R)) * M * (U ⊗ₖ (1 : Matrix n n R))ᴴ)
+      = traceLeft M := by
+  ext i j
+  rw [traceLeft_apply, traceLeft_apply]
+  -- Each `(K M Kᴴ)(k,i)(k,j)` expands; summing over `k` recombines the Alice
+  -- factors into `(Uᴴ U) = 1`, collapsing to `∑ a, M (a,i) (a,j)`.
+  have hexp : ∀ k : m,
+      ((U ⊗ₖ (1 : Matrix n n R)) * M * (U ⊗ₖ (1 : Matrix n n R))ᴴ) (k, i) (k, j)
+        = ∑ c : m, ∑ a : m, U k a * star (U k c) * M (a, i) (c, j) := by
+    intro k
+    simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, one_apply,
+      Fintype.sum_prod_type, apply_ite star, star_zero, mul_ite, ite_mul,
+      mul_zero, zero_mul, mul_one, Finset.sum_ite_eq,
+      Finset.mem_univ, if_true]
+    -- Bob deltas collapsed (b = i, d = j); after collapse the outer index is the
+    -- Bob-`d` survivor `c`, the inner `Finset.sum_mul` exposes the Alice index `a`.
+    refine Finset.sum_congr rfl (fun c _ => ?_)
+    rw [Finset.sum_mul]
+    refine Finset.sum_congr rfl (fun a _ => by ring)
+  -- Goal: ∑ k, (K M Kᴴ)(k,i)(k,j) = ∑ a, M (a,i)(a,j).
+  -- Push the `k`-sum all the way in to recombine the Alice factors into `(Uᴴ U)`.
+  simp only [hexp]
+  rw [Finset.sum_comm]                     -- ∑ c, ∑ k, ∑ a, …
+  rw [show (∑ c : m, ∑ k : m, ∑ a : m, U k a * star (U k c) * M (a, i) (c, j))
+        = ∑ c : m, ∑ a : m, (Uᴴ * U) c a * M (a, i) (c, j) from by
+      refine Finset.sum_congr rfl (fun c _ => ?_)
+      rw [Finset.sum_comm]
+      refine Finset.sum_congr rfl (fun a _ => ?_)
+      rw [Matrix.mul_apply, Finset.sum_mul]
+      refine Finset.sum_congr rfl (fun k _ => ?_)
+      simp only [conjTranspose_apply]; ring]
+  rw [hU]
+  -- ∑ c, ∑ a, (1 : Matrix) c a · M (a,i)(c,j) ; collapse `c`-delta to c = a.
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun a _ => ?_)
+  rw [Finset.sum_eq_single a]
+  · rw [one_apply_eq, one_mul]
+  · intro c _ hc; rw [one_apply_ne hc, zero_mul]
+  · intro h; exact absurd (Finset.mem_univ a) h
+
+end UnitaryInvariance
+
 end Matrix

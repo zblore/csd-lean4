@@ -376,6 +376,22 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.NoCommunication.bob_expectation_invariant
 
+-- E3b: No-communication, reduced-density form. Alice's local unitary U⊗I leaves
+-- Bob's reduced state (traceLeft ρ) invariant, via the partial-trace cyclicity
+-- lemma. The structured form lands on the LF2 DensityOperatorIx.reducedLeft.
+-- Foundational triple.
+/-- info: 'Matrix.traceLeft_conjTranspose_kronecker_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceLeft_conjTranspose_kronecker_one
+
+/-- info: 'CSD.Empirical.QM.NoCommunication.no_communication_reduced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoCommunication.no_communication_reduced
+
+/-- info: 'CSD.Empirical.QM.NoCommunication.reducedLeft_aliceConj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoCommunication.reducedLeft_aliceConj_eq
+
 /-- info: 'CSD.Empirical.QuantumMoney.wiesner_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumMoney.wiesner_inner

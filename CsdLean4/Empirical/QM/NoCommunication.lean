@@ -2,6 +2,7 @@ import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Lp.Matrix
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import CsdLean4.LF2.ReducedDensity
 
 /-!
 # Empirical/QM: No-communication theorem (E3a, marginal form)
@@ -118,6 +119,35 @@ theorem bob_expectation_invariant
         (Matrix.toEuclideanLin (bobOp Q) (Matrix.toEuclideanLin (aliceOp U) ψ))).re
       = (inner ℂ ψ (Matrix.toEuclideanLin (bobOp Q) ψ)).re := by
   rw [no_communication U Q hU ψ]
+
+/-! ## E3b: reduced-density form
+
+The full operator-state statement, now that partial trace is available
+(`CsdLean4/Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`): Alice's local unitary
+leaves **Bob's reduced density operator** invariant — the strongest no-signalling
+form short of a general CPTP map. Alice acts on factor 1 (`aliceOp U = U ⊗ I`), so
+Bob's reduced state is the partial trace over the first factor, `traceLeft`. -/
+
+/-- **No-communication, reduced-density form (E3b).** For a bipartite density
+operator `ρ` on `ℂ^m ⊗ ℂ^n` and a unitary Alice-side operation `U`, conjugating by
+`U ⊗ I` leaves Bob's reduced state `Tr_A ρ = traceLeft ρ` unchanged. Specialises
+the partial-trace cyclicity lemma `Matrix.traceLeft_conjTranspose_kronecker_one`
+to `aliceOp U = U ⊗ₖ I`. -/
+theorem no_communication_reduced
+    (U : Matrix (Fin m) (Fin m) ℂ) (hU : Uᴴ * U = 1)
+    (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
+    Matrix.traceLeft (aliceOp U * ρ * (aliceOp U)ᴴ) = Matrix.traceLeft ρ :=
+  Matrix.traceLeft_conjTranspose_kronecker_one hU ρ
+
+/-- **No-communication on a density operator (E3b, structured).** Stated on the
+LF2 `DensityOperatorIx`: Alice's local unitary `U ⊗ I` leaves Bob's reduced
+density operator (`reducedLeft`, the partial trace over Alice's factor) unchanged
+at the matrix level. -/
+theorem reducedLeft_aliceConj_eq
+    (U : Matrix (Fin m) (Fin m) ℂ) (hU : Uᴴ * U = 1)
+    (ρ : CSD.LF2.DensityOperatorIx (Fin m × Fin n)) :
+    Matrix.traceLeft (aliceOp U * ρ.M * (aliceOp U)ᴴ) = (ρ.reducedLeft).M :=
+  Matrix.traceLeft_conjTranspose_kronecker_one hU ρ.M
 
 end NoCommunication
 end QM

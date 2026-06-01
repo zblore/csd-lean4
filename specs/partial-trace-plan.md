@@ -97,6 +97,21 @@ Foundational triple; AxiomAudit-pinned.
 
 Both AxiomAudit-pinned. Remaining: E3b (step 3), then E2 (step 4, separate tranche).
 
+## Progress (2026-06-01) — E3b DONE (unitary form)
+
+- **Layer 1 add** `Matrix.traceLeft_conjTranspose_kronecker_one` (new
+  `UnitaryInvariance` section): `Uᴴ U = 1 → traceLeft ((U ⊗ₖ I)·M·(U ⊗ₖ I)ᴴ)
+  = traceLeft M` — partial trace is cyclic in the traced-out factor under a unitary
+  there. The genuine work (the 4-fold-sum Kronecker-delta collapse recombining the
+  Alice factors into `(Uᴴ U) = 1`); upstreamable. Foundational triple.
+- **E3b** `CsdLean4/Empirical/QM/NoCommunication.lean`: `no_communication_reduced`
+  (matrix form: `traceLeft (aliceOp U · ρ · (aliceOp U)ᴴ) = traceLeft ρ`) and
+  `reducedLeft_aliceConj_eq` (structured form, landing on
+  `DensityOperatorIx.reducedLeft`). Both one-line specialisations of the Layer-1
+  lemma. Foundational triple, AxiomAudit-pinned.
+
+Remaining: E2 no-broadcasting + the general-CPTP E3b (separate tranche).
+
 ## Honesty
 
 Real Mathlib-track infrastructure, foundational-triple throughout. Does NOT touch
