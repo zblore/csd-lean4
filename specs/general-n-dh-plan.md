@@ -259,13 +259,34 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
   last term `s(last)/S > 0`). Foundational triple, AxiomAudit-pinned. **Built first
   try** (probe-first + close N=2 template). MED as planned.
 
-- **D.5 Assemble.** `Measure.ext_of_lintegral` → `lintegral_map` → restrict to the
-  quadrant (the per-coordinate `expHalf` densities are supported on `Ioi 0`) →
-  `lintegral_image_eq_lintegral_abs_det_fderiv_mul` (D.3) → Tonelli/`setLIntegral`
-  over `openSimplex ×ˢ Ioi 0` → the `S`-integral collapses by D.1, leaving the bare
-  `g(t)` integral over `openSimplex`. Generalises `ratioSqNorm_map_expHalf_prod`'s
-  assembly. **Risk: MED-HIGH** — the multi-dimensional product-density bookkeeping
-  (`pi` of `withDensity` → joint density on `ℝ^N`) is heavier than the N=2 `prod`.
+- **D.5 Assemble — SCOPED, NOT YET BUILT (2026-06-01).** The recon for the
+  assembly turned up **two missing Mathlib lemmas** that the qubit's `prod`-based
+  D.5 got for free, so D.5 splits into three:
+  - **D.5a — lintegral product over `Measure.pi`:**
+    `∫⁻ (∏ᵢ gᵢ(xᵢ)) ∂(Measure.pi μ) = ∏ᵢ ∫⁻ gᵢ ∂μᵢ`. **Mathlib has only the Bochner
+    version** (`integral_fintype_prod_eq_prod`, `Integral/Pi.lean`); no `lintegral`
+    analogue. Provable by `pi_pi` on indicator/simple functions + induction, or by
+    transfer from the Bochner version using nonnegativity. Upstreamable. MED.
+  - **D.5b — the pi-withDensity bridge:**
+    `Measure.pi (fun i => (μ i).withDensity (gᵢ)) = (Measure.pi μ).withDensity
+    (fun x => ∏ᵢ gᵢ(xᵢ))`. **No Mathlib analogue of `prod_withDensity`** for `pi`.
+    Proof: `Measure.pi_eq` on rectangles → LHS `= ∏ᵢ ∫_{sᵢ} gᵢ` (`withDensity_apply`
+    + `pi_pi`), RHS `= ∫_{pi s} ∏ gᵢ` (`withDensity_apply`) `= ∏ᵢ ∫_{sᵢ} gᵢ` by D.5a.
+    Upstreamable. MED. (Both D.5a/D.5b are genuine Cat-1 Mathlib-gap contributions.)
+  - **D.5c — the assembly proper.** With D.5b: `Measure.ext_of_lintegral` →
+    `lintegral_map` → expose joint density (D.5b) → restrict to `posQuadrant`
+    (`image_PsiN`) → `lintegral_image_eq_lintegral_abs_det_fderiv_mul`
+    (`hasFDerivAt_PsiN` + `psiFDerivN_det = S^M` + `injOn_PsiN`) → Tonelli over
+    `domainN` (free coords × `Ioi 0`) → the `S`-integral collapses by D.1
+    (`lintegral_radial_moment`, the `(1/2)^N/M!` prefactor giving the `M!` Dirichlet
+    constant), leaving the bare `g(t)` integral over the open simplex. Generalises
+    `ratioSqNorm_map_expHalf_prod`'s assembly. MED-HIGH.
+  **Target:** `ratioSqNorm_map_expHalf_pi : Measure.map ratioN (Measure.pi (fun _ =>
+  expHalf)) = (M.factorial : ℝ≥0∞) • volume.restrict (openSimplexFree)` where
+  `ratioN s k = s(castSucc k)/∑s`, `openSimplexFree = {t : Fin M → ℝ | (∀ k, 0<t k)
+  ∧ ∑ t < 1}`. (N=2 = `ratioSqNorm_map_expHalf_prod`, `M=1`, `1! = 1`, Uniform.)
+  D.1–D.4 (incl. the research-grade gate D.3) are all banked; D.5 is the remaining
+  measure-theoretic plumbing, gated on the two standard-but-missing pi lemmas above.
 
 ### Honest budget
 
