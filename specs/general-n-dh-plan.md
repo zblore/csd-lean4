@@ -286,14 +286,27 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
     `[∀ i, SigmaFinite ((μ i).withDensity gᵢ)]` (withDensity isn't auto-σ-finite for
     general `ℝ≥0∞` densities — discharged at the D.5c callsite via `expHalf` finiteness).
     (Both D.5a/D.5b are genuine Cat-1 Mathlib-gap contributions.)
-  - **D.5c — the assembly proper.** With D.5b: `Measure.ext_of_lintegral` →
-    `lintegral_map` → expose joint density (D.5b) → restrict to `posQuadrant`
-    (`image_PsiN`) → `lintegral_image_eq_lintegral_abs_det_fderiv_mul`
-    (`hasFDerivAt_PsiN` + `psiFDerivN_det = S^M` + `injOn_PsiN`) → Tonelli over
-    `domainN` (free coords × `Ioi 0`) → the `S`-integral collapses by D.1
-    (`lintegral_radial_moment`, the `(1/2)^N/M!` prefactor giving the `M!` Dirichlet
-    constant), leaving the bare `g(t)` integral over the open simplex. Generalises
-    `ratioSqNorm_map_expHalf_prod`'s assembly. MED-HIGH.
+  - **D.5c — the assembly proper — DONE 2026-06-01** (`MomentRatioUniformN.lean`,
+    `ratioSqNorm_map_expHalf_pi`). **Closes Slice D.** `Measure.ext_of_lintegral` →
+    `lintegral_map` → expose joint density (D.5b `pi_withDensity`, σ-finite from
+    `expHalf` prob) → restrict to `posQuadrant` (`image_PsiN`) →
+    `lintegral_image_eq_lintegral_abs_det_fderiv_mul` (`hasFDerivAt_PsiN` +
+    `psiFDerivN_det = S^M` + `injOn_PsiN`) → reindex `domainN` as `e ⁻¹' (Ioi 0 ×ˢ
+    openSimplexFree)` via `piFinSuccAbove (last M)` (the structurally-novel step; the
+    qubit had `ℝ×ℝ` free) → `setLIntegral_comp_preimage_emb` + `setLIntegral_prod`
+    (Tonelli) → pull the radial factor out of the inner simplex integral
+    (`lintegral_const_mul`) → outer `S`-integral = `M!` via D.1
+    (`lintegral_radial_moment`: `∫ S^M e^{-S/2} = 2^{M+1} M!`, times `(1/2)^{M+1}`)
+    → `M! • vol.restrict` via `lintegral_smul_measure` + `smul_eq_mul`. Foundational
+    triple, AxiomAudit-pinned. The longest proof in the slice (the assembly threads
+    all seven D-ingredients); many small bookkeeping frictions (eta, `Decidable`,
+    `Finset.sum_neg_distrib`, `Pi.mul` folding, `setLIntegral_comp_preimage_emb`
+    direction) but no math unknowns — every sub-fact was probe-verified first.
+
+  **SLICE D COMPLETE.** `ratioSqNorm_map_expHalf_pi` (the general-N Dirichlet law)
+  is proved, foundational-triple, AxiomAudit-pinned. Remaining for the programme:
+  Slice E (compose B+C+D → `fs_moment_joint_dirichlet_N`; lift `born_eq_volume_ratio`
+  to FS-volume on Σ for general N).
   **Target:** `ratioSqNorm_map_expHalf_pi : Measure.map ratioN (Measure.pi (fun _ =>
   expHalf)) = (M.factorial : ℝ≥0∞) • volume.restrict (openSimplexFree)` where
   `ratioN s k = s(castSucc k)/∑s`, `openSimplexFree = {t : Fin M → ℝ | (∀ k, 0<t k)

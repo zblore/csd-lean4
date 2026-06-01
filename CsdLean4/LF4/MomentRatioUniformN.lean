@@ -4,6 +4,7 @@ import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.LinearAlgebra.Matrix.Block
 import CsdLean4.LF4.MomentMarginalUniform
+import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 
 /-!
 # LF4 general-N DH, Slice D (the crux): the ratio map sends `expHalf^{⊗N}` to Dirichlet
@@ -288,6 +289,19 @@ def domainN : Set (Fin (M + 1) → ℝ) :=
 /-- The open positive quadrant in `Fin (M+1) → ℝ`. -/
 def posQuadrant : Set (Fin (M + 1) → ℝ) := {s | ∀ i, 0 < s i}
 
+theorem measurableSet_domainN : MeasurableSet (domainN (M := M)) := by
+  have h1 : MeasurableSet {y : Fin (M + 1) → ℝ | ∀ k, 0 < y (Fin.castSucc k)} := by
+    rw [Set.setOf_forall]
+    exact MeasurableSet.iInter fun k => measurableSet_lt measurable_const (measurable_pi_apply _)
+  have hsum : Measurable (fun y : Fin (M + 1) → ℝ => ∑ k, y (Fin.castSucc k)) :=
+    Finset.measurable_sum Finset.univ fun k _ => measurable_pi_apply _
+  refine h1.inter (.inter (measurableSet_lt hsum measurable_const)
+    (measurableSet_lt measurable_const (measurable_pi_apply _)))
+
+theorem measurableSet_posQuadrant : MeasurableSet (posQuadrant (M := M)) := by
+  rw [posQuadrant, Set.setOf_forall]
+  exact MeasurableSet.iInter fun i => measurableSet_lt measurable_const (measurable_pi_apply i)
+
 /-- **Total-sum recovery.** `∑ i, Ψ_N(y) i = y last = S`. The inverse-map crux:
 `(∑_k t_k)·S + (1−∑t)·S = S`. -/
 theorem PsiN_sum (y : Fin (M + 1) → ℝ) : ∑ i, PsiN y i = y (Fin.last M) := by
@@ -355,6 +369,183 @@ theorem image_PsiN : PsiN '' (domainN : Set (Fin (M + 1) → ℝ)) = posQuadrant
       | cast k =>
         simp only [PsiN, Fin.lastCases_castSucc, Fin.lastCases_last]
         rw [div_mul_cancel₀ _ (ne_of_gt hSpos)]
+
+/-! ## D.5c — assembly: the ratio map sends `expHalf^{⊗N}` to Dirichlet(1,…,1)
+
+The capstone of Slice D, generalising the qubit `ratioSqNorm_map_expHalf_prod`. -/
+
+/-- The free-coordinate ratio map `s ↦ (k ↦ s(castSucc k)/∑s)`. -/
+noncomputable def ratioN (s : Fin (M + 1) → ℝ) : Fin M → ℝ :=
+  fun k => s (Fin.castSucc k) / (∑ i, s i)
+
+/-- The open simplex in free coordinates `{t : Fin M → ℝ | (∀ k, 0 < t k) ∧ ∑ t < 1}`. -/
+def openSimplexFree : Set (Fin M → ℝ) := {t | (∀ k, 0 < t k) ∧ ∑ k, t k < 1}
+
+theorem measurableSet_openSimplexFree : MeasurableSet (openSimplexFree (M := M)) := by
+  have h1 : MeasurableSet {t : Fin M → ℝ | ∀ k, 0 < t k} := by
+    rw [Set.setOf_forall]
+    exact MeasurableSet.iInter fun k => measurableSet_lt measurable_const (measurable_pi_apply k)
+  have h2 : Measurable (fun t : Fin M → ℝ => ∑ k, t k) :=
+    Finset.measurable_sum Finset.univ fun k _ => measurable_pi_apply _
+  exact h1.inter (measurableSet_lt h2 measurable_const)
+
+/-- The single-coordinate `Exp(1/2)` density. -/
+private noncomputable def dExp (s : ℝ) : ℝ≥0∞ :=
+  ENNReal.ofReal (if 0 < s then (1 / 2) * Real.exp (-s / 2) else 0)
+
+private theorem measurable_dExp : Measurable dExp := measurable_expHalf_density
+
+private theorem expHalf_eq_withDensity_dExp : expHalf = volume.withDensity dExp := rfl
+
+/-- **D.5c (the general-N Dirichlet law).** The free-coordinate ratio map pushes
+the `N`-fold product `Exp(1/2)^{⊗N}` (`N = M+1`) to `M!` times the uniform measure
+on the open simplex — the Dirichlet(1,…,1) law. The qubit
+`ratioSqNorm_map_expHalf_prod` is the `M = 1` case (`1! = 1`, uniform on `(0,1)`). -/
+theorem ratioSqNorm_map_expHalf_pi :
+    Measure.map ratioN (Measure.pi (fun _ : Fin (M + 1) => expHalf))
+      = (Nat.factorial M : ℝ≥0∞) • volume.restrict openSimplexFree := by
+  have hsum_meas : Measurable (fun s : Fin (M + 1) → ℝ => ∑ i, s i) :=
+    Finset.measurable_sum Finset.univ (fun i _ => measurable_pi_apply i)
+  have hratio_meas : Measurable (ratioN (M := M)) :=
+    measurable_pi_lambda _ (fun k => (measurable_pi_apply _).div hsum_meas)
+  have hprod_meas : Measurable (fun x : Fin (M + 1) → ℝ => ∏ i, dExp (x i)) :=
+    Finset.measurable_prod _ fun i _ => measurable_dExp.comp (measurable_pi_apply i)
+  -- σ-finite of `expHalf` (probability measure) for the pi-withDensity bridge.
+  haveI hsf : SigmaFinite ((volume : Measure ℝ).withDensity dExp) := by
+    rw [← expHalf_eq_withDensity_dExp]; infer_instance
+  -- `pi expHalf = volume.withDensity (∏ dExp)` (D.5b + volume_pi).
+  have hpiexp : (Measure.pi (fun _ : Fin (M + 1) => expHalf))
+      = (volume : Measure (Fin (M + 1) → ℝ)).withDensity (fun x => ∏ i, dExp (x i)) := by
+    simp_rw [expHalf_eq_withDensity_dExp]
+    rw [MeasureTheory.pi_withDensity (fun _ : Fin (M + 1) => volume) (fun _ => dExp)
+      (fun _ => measurable_dExp), volume_pi]
+  refine Measure.ext_of_lintegral _ (fun g hg => ?_)
+  -- Step 1-3: push through `ratioN`, expose the joint density.
+  rw [lintegral_map hg hratio_meas, hpiexp]
+  rw [lintegral_withDensity_eq_lintegral_mul (f := fun x => ∏ i, dExp (x i)) _ hprod_meas
+    (show Measurable (fun s : Fin (M + 1) → ℝ => g (ratioN s)) from hg.comp hratio_meas)]
+  -- Fold the `Pi.mul` form into a single `fun s => _ * _` (so `set F` matches).
+  show (∫⁻ s, (fun s => (∏ i, dExp (s i)) * g (ratioN s)) s ∂volume) = _
+  -- The post-density integrand.
+  set F : (Fin (M + 1) → ℝ) → ℝ≥0∞ :=
+    fun s => (∏ i, dExp (s i)) * g (ratioN s) with hF
+  -- Step 4: F is supported on the positive quadrant.
+  have hFsupp : F = (posQuadrant (M := M)).indicator F := by
+    classical
+    funext s
+    rw [Set.indicator_apply]
+    by_cases hs : s ∈ posQuadrant
+    · rw [if_pos hs]
+    · rw [if_neg hs, hF]
+      simp only [posQuadrant, Set.mem_setOf_eq, not_forall, not_lt] at hs
+      obtain ⟨i, hi⟩ := hs
+      refine mul_eq_zero.mpr (Or.inl ?_)
+      refine Finset.prod_eq_zero (Finset.mem_univ i) ?_
+      rw [dExp, if_neg (not_lt.mpr hi), ENNReal.ofReal_zero]
+  -- Pointwise integrand after the substitution, on `domainN`.
+  have hcongr : ∀ y ∈ domainN (M := M),
+      ENNReal.ofReal |(psiFDerivN y).det| * F (PsiN y)
+        = ENNReal.ofReal ((1 / 2) ^ (M + 1) * (y (Fin.last M)) ^ M
+            * Real.exp (-(y (Fin.last M)) / 2)) * g (fun k => y (Fin.castSucc k)) := by
+    intro y hy
+    obtain ⟨ht, hsum, hS⟩ := hy
+    -- |det| = S^M (S = y last > 0).
+    rw [psiFDerivN_det, abs_of_nonneg (pow_nonneg hS.le M)]
+    -- all coordinates of `PsiN y` are positive.
+    have hposPsi : ∀ i, 0 < PsiN y i := by
+      intro i
+      induction i using Fin.lastCases with
+      | last => simp only [PsiN, Fin.lastCases_last]; exact mul_pos (by linarith) hS
+      | cast k => simp only [PsiN, Fin.lastCases_castSucc]; exact mul_pos (ht k) hS
+    -- ratioN (PsiN y) = y ∘ castSucc.
+    have hratioPsi : ratioN (PsiN y) = fun k => y (Fin.castSucc k) := by
+      funext k; rw [ratioN, PsiN_sum]
+      simp only [PsiN, Fin.lastCases_castSucc]
+      rw [mul_div_assoc, div_self (ne_of_gt hS), mul_one]
+    -- density product collapse: ∏ dExp(PsiN y) = ofReal ((1/2)^(M+1) exp(-S/2)).
+    have hprodPsi : (∏ i, dExp (PsiN y i))
+        = ENNReal.ofReal ((1 / 2) ^ (M + 1) * Real.exp (-(y (Fin.last M)) / 2)) := by
+      have hpos : ∀ i, dExp (PsiN y i) = ENNReal.ofReal ((1 / 2) * Real.exp (-(PsiN y i) / 2)) :=
+        fun i => by rw [dExp, if_pos (hposPsi i)]
+      simp_rw [hpos]
+      rw [← ENNReal.ofReal_prod_of_nonneg (fun i _ => by positivity),
+        Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin,
+        ← Real.exp_sum]
+      congr 2
+      rw [← Finset.sum_div]
+      congr 1
+      rw [Finset.sum_neg_distrib, PsiN_sum]
+    show ENNReal.ofReal (y (Fin.last M) ^ M) * ((∏ i, dExp (PsiN y i)) * g (ratioN (PsiN y))) = _
+    rw [hprodPsi, hratioPsi, ← mul_assoc, ← ENNReal.ofReal_mul (by positivity)]
+    congr 2
+    ring
+  -- Step 5: change of variables; Step 4 restricts to posQuadrant = PsiN '' domainN.
+  rw [hFsupp, lintegral_indicator measurableSet_posQuadrant, ← image_PsiN,
+    lintegral_image_eq_lintegral_abs_det_fderiv_mul volume measurableSet_domainN
+      (fun y _ => (hasFDerivAt_PsiN y).hasFDerivWithinAt) injOn_PsiN F,
+    setLIntegral_congr_fun measurableSet_domainN hcongr]
+  -- Reindex `domainN` as a preimage of `Ioi 0 ×ˢ openSimplexFree` under the
+  -- measure-preserving `piFinSuccAbove (last M)`, then Tonelli + radial collapse.
+  set e := MeasurableEquiv.piFinSuccAbove (fun _ : Fin (M + 1) => ℝ) (Fin.last M) with he_def
+  have he : ∀ y, e y = (y (Fin.last M), fun k => y (Fin.castSucc k)) := by
+    intro y; simp [he_def, MeasurableEquiv.piFinSuccAbove_apply, Fin.init_def]
+  have hdom : domainN (M := M) = e ⁻¹' (Set.Ioi 0 ×ˢ openSimplexFree) := by
+    ext y
+    simp only [domainN, openSimplexFree, Set.mem_preimage, he, Set.mem_prod, Set.mem_Ioi,
+      Set.mem_setOf_eq]
+    exact ⟨fun ⟨h1, h2, h3⟩ => ⟨h3, h1, h2⟩, fun ⟨h3, h1, h2⟩ => ⟨h1, h2, h3⟩⟩
+  -- Volume MP for `e`.
+  have hmp : MeasurePreserving e (volume : Measure (Fin (M + 1) → ℝ))
+      (volume.prod (volume : Measure (Fin M → ℝ))) := by
+    have h := measurePreserving_piFinSuccAbove (fun _ : Fin (M + 1) => (volume : Measure ℝ))
+      (Fin.last M)
+    rwa [show (Measure.pi (fun _ : Fin (M + 1) => (volume : Measure ℝ)))
+          = (volume : Measure (Fin (M + 1) → ℝ)) from volume_pi,
+      show (Measure.pi (fun _ : Fin M => (volume : Measure ℝ)))
+          = (volume : Measure (Fin M → ℝ)) from volume_pi] at h
+  -- Express the integrand as `F' ∘ e` with `F' (S,t) = ofReal(...S^M...) · g t`.
+  set F' : ℝ × (Fin M → ℝ) → ℝ≥0∞ :=
+    fun p => ENNReal.ofReal ((1 / 2) ^ (M + 1) * p.1 ^ M * Real.exp (-p.1 / 2)) * g p.2 with hF'
+  rw [hdom,
+    show (fun x : Fin (M + 1) → ℝ =>
+        ENNReal.ofReal ((1 / 2) ^ (M + 1) * x (Fin.last M) ^ M * Real.exp (-x (Fin.last M) / 2))
+          * g (fun k => x (Fin.castSucc k)))
+      = fun x => F' (e x) from by funext x; rw [hF', he],
+    hmp.setLIntegral_comp_preimage_emb e.measurableEmbedding F']
+  -- `setLIntegral_prod` (Tonelli): outer over `Ioi 0`, inner over `openSimplexFree`.
+  rw [setLIntegral_prod _ (by refine Measurable.aemeasurable ?_; rw [hF']; fun_prop)]
+  -- Inner integral pulls out the `S`-factor; outer is the radial moment (D.1).
+  simp only [hF']
+  -- RHS: M! • vol.restrict → (M! : ℝ≥0∞) * ∫⁻_{simplex} g.
+  rw [lintegral_smul_measure]
+  -- Inner integral: pull the (constant-in-`y`) radial factor out of `∫⁻_{simplex}`.
+  have hinner : ∀ S : ℝ,
+      (∫⁻ y in openSimplexFree, ENNReal.ofReal ((1 / 2) ^ (M + 1) * S ^ M * Real.exp (-S / 2))
+          * g y)
+        = ENNReal.ofReal ((1 / 2) ^ (M + 1) * S ^ M * Real.exp (-S / 2))
+            * ∫⁻ y in openSimplexFree, g y := by
+    intro S; rw [lintegral_const_mul _ hg]
+  simp_rw [hinner]
+  -- Outer: ∫⁻_{S>0} ofReal((1/2)^{M+1} S^M e^{-S/2}) dS · (∫⁻ g) = M! · (∫⁻ g).
+  rw [lintegral_mul_const _ (by fun_prop)]
+  -- The radial factor evaluates to `M!`.
+  have hradial : (∫⁻ S in Set.Ioi (0 : ℝ),
+        ENNReal.ofReal ((1 / 2) ^ (M + 1) * S ^ M * Real.exp (-S / 2)))
+      = (Nat.factorial M : ℝ≥0∞) := by
+    -- Factor out the constant `(1/2)^{M+1}`, apply D.1, then `(1/2)^{M+1}·2^{M+1} = 1`.
+    have hfac : ∀ S : ℝ, ENNReal.ofReal ((1 / 2) ^ (M + 1) * S ^ M * Real.exp (-S / 2))
+        = ENNReal.ofReal ((1 / 2) ^ (M + 1)) * ENNReal.ofReal (S ^ M * Real.exp (-S / 2)) := by
+      intro S
+      rw [mul_assoc, ENNReal.ofReal_mul (by positivity)]
+    simp_rw [hfac]
+    rw [lintegral_const_mul _ (by fun_prop), lintegral_radial_moment,
+      ← ENNReal.ofReal_mul (by positivity)]
+    rw [show (1 / 2 : ℝ) ^ (M + 1) * (2 ^ (M + 1) * (Nat.factorial M : ℝ))
+          = (Nat.factorial M : ℝ) from by
+        rw [show (1 / 2 : ℝ) ^ (M + 1) = (2 ^ (M + 1))⁻¹ by rw [one_div, inv_pow]]
+        field_simp,
+      ENNReal.ofReal_natCast]
+  rw [hradial, smul_eq_mul]
 
 end LF4
 end CSD

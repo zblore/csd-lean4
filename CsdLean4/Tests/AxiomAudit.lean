@@ -1129,6 +1129,14 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.psiFDerivN_det
 
+-- General-N DH Slice D.5c (capstone): the ratio map sends Exp(1/2)^{⊗N} to the
+-- Dirichlet(1,…,1) law — M! times uniform on the open simplex (free coords). The
+-- general-N analogue of ratioSqNorm_map_expHalf_prod; the genuine general-N DH
+-- content, composing D.1-D.5b. Foundational triple. Closes Slice D.
+/-- info: 'CSD.LF4.ratioSqNorm_map_expHalf_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ratioSqNorm_map_expHalf_pi
+
 -- General-N DH Slice D.4: Ψ_N is a bijection domainN (open simplex × Ioi 0) →
 -- posQuadrant. PsiN_sum (∑ᵢ Ψ_N(y)ᵢ = S, the inverse-map crux), injOn_PsiN,
 -- image_PsiN. Foundational triple.
