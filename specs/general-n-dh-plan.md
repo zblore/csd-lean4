@@ -273,12 +273,19 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
     `lintegral_prod_mul` needed explicit `(μ:=)(ν:=)(f:=)(g:=)` + a beta-reduce
     (`simp only at hmul`) before matching; the recursion's `Fin.prod_univ_succ`
     binder alpha-equivalence closed via `exact hmul` (not `rw`).
-  - **D.5b — the pi-withDensity bridge:**
-    `Measure.pi (fun i => (μ i).withDensity (gᵢ)) = (Measure.pi μ).withDensity
-    (fun x => ∏ᵢ gᵢ(xᵢ))`. **No Mathlib analogue of `prod_withDensity`** for `pi`.
-    Proof: `Measure.pi_eq` on rectangles → LHS `= ∏ᵢ ∫_{sᵢ} gᵢ` (`withDensity_apply`
-    + `pi_pi`), RHS `= ∫_{pi s} ∏ gᵢ` (`withDensity_apply`) `= ∏ᵢ ∫_{sᵢ} gᵢ` by D.5a.
-    Upstreamable. MED. (Both D.5a/D.5b are genuine Cat-1 Mathlib-gap contributions.)
+  - **D.5b — the pi-withDensity bridge — DONE 2026-06-01**
+    (`LintegralFintypeProd.lean`, `pi_withDensity`):
+    `Measure.pi (fun i => (μ i).withDensity gᵢ) = (Measure.pi μ).withDensity
+    (fun x => ∏ᵢ gᵢ(xᵢ))`, the pi analogue of `prod_withDensity` (absent from Mathlib).
+    Proof: `Measure.pi_eq` on rectangles → `withDensity_apply` both sides → rewrite
+    the rectangle set-integral as `∫⁻ ∏ᵢ (sᵢ.indicator gᵢ)` (the indicator-product
+    identity) → factor by D.5a → match `∏ᵢ ∫_{sᵢ} gᵢ`. Foundational triple,
+    AxiomAudit-pinned. Friction: `withDensity_apply` (not `Measure.`-prefixed),
+    `pi_eq` orientation (no `.symm`), `classical` for the indicator `split_ifs`,
+    `Set.mem_univ_pi` unfolding. Carries an explicit
+    `[∀ i, SigmaFinite ((μ i).withDensity gᵢ)]` (withDensity isn't auto-σ-finite for
+    general `ℝ≥0∞` densities — discharged at the D.5c callsite via `expHalf` finiteness).
+    (Both D.5a/D.5b are genuine Cat-1 Mathlib-gap contributions.)
   - **D.5c — the assembly proper.** With D.5b: `Measure.ext_of_lintegral` →
     `lintegral_map` → expose joint density (D.5b) → restrict to `posQuadrant`
     (`image_PsiN`) → `lintegral_image_eq_lintegral_abs_det_fderiv_mul`

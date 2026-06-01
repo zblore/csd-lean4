@@ -80,4 +80,40 @@ theorem lintegral_fintype_prod_eq_prod {E : ι → Type*}
   simp_rw [← e.prod_comp, MeasurableEquiv.coe_piCongrLeft, Equiv.piCongrLeft_apply_apply]
   exact lintegral_fin_nat_prod_eq_prod (fun i => f (e i)) (fun i => hf _)
 
+/-- **The `pi`-`withDensity` bridge.** A finite product of measures, each given a
+density, is the product measure with the product density:
+`Measure.pi (fun i => (μ i).withDensity (g i))
+  = (Measure.pi μ).withDensity (fun x => ∏ i, g i (x i))`.
+The `pi` analogue of `MeasureTheory.prod_withDensity`. Proved by `Measure.pi_eq`
+on rectangles, using `lintegral_fintype_prod_eq_prod` (D.5a) to factor the
+product-density integral over the rectangle. -/
+theorem pi_withDensity {E : ι → Type*}
+    {mE : ∀ i, MeasurableSpace (E i)} (μ : (i : ι) → Measure (E i)) [∀ i, SigmaFinite (μ i)]
+    (g : (i : ι) → E i → ℝ≥0∞) (hg : ∀ i, Measurable (g i))
+    [∀ i, SigmaFinite ((μ i).withDensity (g i))] :
+    Measure.pi (fun i => (μ i).withDensity (g i))
+      = (Measure.pi μ).withDensity (fun x => ∏ i, g i (x i)) := by
+  refine Measure.pi_eq (μ := fun i => (μ i).withDensity (g i)) (fun s hs => ?_)
+  -- LHS on the rectangle: ∏ᵢ ((μ i).withDensity gᵢ) (s i) = ∏ᵢ ∫⁻_{sᵢ} gᵢ.
+  rw [withDensity_apply _ (MeasurableSet.univ_pi hs)]
+  -- Set-integral over the rectangle = ∫⁻ of the indicator-times-density.
+  rw [← lintegral_indicator (MeasurableSet.univ_pi hs)]
+  -- The integrand `(pi s).indicator (∏ g)` equals `∏ᵢ (sᵢ.indicator gᵢ)(xᵢ)`.
+  have hint : ((Set.univ.pi s).indicator (fun x => ∏ i, g i (x i)))
+      = fun x => ∏ i, (s i).indicator (g i) (x i) := by
+    classical
+    funext x
+    rw [Set.indicator_apply]
+    split_ifs with hx
+    · refine Finset.prod_congr rfl (fun i _ => ?_)
+      rw [Set.indicator_of_mem (Set.mem_univ_pi.mp hx i)]
+    · rw [Set.mem_univ_pi, not_forall] at hx
+      obtain ⟨i, hi⟩ := hx
+      exact (Finset.prod_eq_zero (Finset.mem_univ i)
+        (Set.indicator_of_notMem hi _)).symm
+  rw [hint, lintegral_fintype_prod_eq_prod (μ := μ)
+    (fun i => (s i).indicator (g i)) (fun i => (hg i).indicator (hs i))]
+  refine Finset.prod_congr rfl (fun i _ => ?_)
+  rw [withDensity_apply _ (hs i), lintegral_indicator (hs i)]
+
 end MeasureTheory

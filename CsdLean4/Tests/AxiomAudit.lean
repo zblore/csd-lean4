@@ -169,6 +169,12 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'MeasureTheory.lintegral_fintype_prod_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms MeasureTheory.lintegral_fintype_prod_eq_prod
 
+-- General-N DH Slice D.5b: the pi-withDensity bridge. Measure.pi (μ.withDensity gᵢ)
+-- = (Measure.pi μ).withDensity (∏ gᵢ) — the pi analogue of prod_withDensity (absent
+-- from Mathlib), via Measure.pi_eq on rectangles + D.5a. Foundational triple.
+/-- info: 'MeasureTheory.pi_withDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.pi_withDensity
+
 /-- info: 'CSD.LF2.pure_state_born_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms pure_state_born_weights
 
