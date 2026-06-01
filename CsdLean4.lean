@@ -4,6 +4,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
+import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
@@ -21,6 +22,7 @@ import CsdLean4.LF2.Setup
 import CsdLean4.LF2.MeasureBridge
 import CsdLean4.LF2.Weights
 import CsdLean4.LF2.BornWrapper
+import CsdLean4.LF2.ReducedDensity
 import CsdLean4.LF2.PhaseInvariance
 import CsdLean4.LF2.EffectFn
 import CsdLean4.LF2.Preparation

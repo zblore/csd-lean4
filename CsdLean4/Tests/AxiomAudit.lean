@@ -1,6 +1,7 @@
 import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.BornWrapper
+import CsdLean4.LF2.ReducedDensity
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -137,6 +138,22 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 /-- info: 'CSD.LF2.born_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms born_quadratic
+
+-- Partial trace (Cat-1 Mathlib staging) + the reduced density operator (LF2).
+-- traceRight/traceLeft trace out a tensor factor; the API (kronecker defining
+-- property, trace-preservation, Hermitian/PSD preservation) sends a density
+-- operator to its reduced density operator. Foundational triple. Unblocks E3b/E2.
+/-- info: 'Matrix.traceRight_kronecker' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.traceRight_kronecker
+
+/-- info: 'Matrix.trace_traceRight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.trace_traceRight
+
+/-- info: 'Matrix.PosSemidef.traceRight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.PosSemidef.traceRight
+
+/-- info: 'CSD.LF2.DensityOperatorIx.reduced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.DensityOperatorIx.reduced
 
 /-- info: 'CSD.LF2.pure_state_born_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms pure_state_born_weights
