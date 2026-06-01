@@ -313,7 +313,8 @@ inner-product style as `NoCloning.lean`.
 |---|---|---|---|---|
 | E1 | No-deleting (two-state) | isometry `ψ⊗ψ ↦ ψ⊗e0` for two states forces `⟨ψ,φ⟩ ∈ {0,1}` | **DONE 2026-05-24** (`Empirical/QM/NoDeleting.lean`: `no_deleting_two_state`, `no_universal_deleter_of_witness`) | Pati-Braunstein 2000, *Nature* **404**, 164 |
 | E2 | No-broadcasting | mixed-state generalisation of no-cloning; needs LF2 `DensityOperator` | READY (first use of `DensityOperator` outside Born) | Barnum et al. 1996 |
-| E3 | No-communication (operational) | local operation on one half of an entangled state leaves the remote reduced state invariant; needs partial trace on the tensor factor | READY | Standard; stronger than the statistical Bell-marginal no-signalling already proved (`no_signalling_alice/bob`) |
+| E3a | No-communication (marginal form) | Alice's local unitary `U⊗I` leaves every Bob-side expectation `⟨φ,(I⊗Q)φ⟩` invariant | **DONE 2026-06-01** (`Empirical/QM/NoCommunication.lean`: `aliceOp_conjugate`, `no_communication`, `bob_expectation_invariant`). Via the Kronecker mixed-product collapse `(U⊗I)ᴴ(I⊗Q)(U⊗I)=I⊗Q`; **no partial trace**. Strictly stronger than the singlet-only `no_signalling_alice/bob` (arbitrary state, arbitrary unitary, arbitrary observable). | Ghirardi-Rimini-Weber 1980; Eberhard 1978 |
+| E3b | No-communication (reduced-density form) | local CPTP map on one half leaves the remote reduced state `Tr_A(ρ)` invariant | **deferred**: needs a partial-trace construction absent from Mathlib; shared infra tranche with E2 (no-broadcasting) | Standard |
 
 **CSD-specific angle (load-bearing, not packaging).** The no-go cluster
 is the sharpest test of CSD's ontic claim. An ontic theory naively

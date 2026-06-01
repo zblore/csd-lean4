@@ -41,6 +41,7 @@ import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
 import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Resources.Teleportation
+import CsdLean4.Empirical.QM.NoCommunication
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
@@ -342,6 +343,21 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.Teleportation.teleportation_recovers_input' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Teleportation.teleportation_recovers_input
+
+-- E3a: No-communication (marginal form). Alice's local unitary U⊗I cannot change
+-- any Bob-side expectation ⟨φ,(I⊗Q)φ⟩; via the Kronecker mixed-product collapse
+-- (U⊗I)ᴴ(I⊗Q)(U⊗I) = I⊗Q. No partial trace. QM-validity; foundational triple.
+/-- info: 'CSD.Empirical.QM.NoCommunication.aliceOp_conjugate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoCommunication.aliceOp_conjugate
+
+/-- info: 'CSD.Empirical.QM.NoCommunication.no_communication' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoCommunication.no_communication
+
+/-- info: 'CSD.Empirical.QM.NoCommunication.bob_expectation_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoCommunication.bob_expectation_invariant
 
 /-- info: 'CSD.Empirical.QuantumMoney.wiesner_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
