@@ -26,6 +26,7 @@ import CsdLean4.LF4.GaussianCP
 import CsdLean4.LF4.GaussianCPN
 import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.LF4.MomentRatioUniform
+import CsdLean4.LF4.MomentRatioUniformN
 import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
@@ -1077,6 +1078,14 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.lintegral_radial_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.lintegral_radial_const
+
+-- General-N DH Slice D.1: the radial moment ∫⁻_{S>0} Sⁿ e^{−S/2} = 2^{n+1}·n!
+-- (Γ(n+1)=n!), the normalisation the post-substitution S-integral collapses to in
+-- the Gamma→Dirichlet change of variables. Generalises lintegral_radial_const
+-- (n=1). Foundational triple.
+/-- info: 'CSD.LF4.lintegral_radial_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.lintegral_radial_moment
 
 /-- info: 'CSD.LF4.psiFDeriv_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

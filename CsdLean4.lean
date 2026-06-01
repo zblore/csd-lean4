@@ -59,6 +59,7 @@ import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.GaussianCP
 import CsdLean4.LF4.GaussianCPN
 import CsdLean4.LF4.MomentMarginalUniform
+import CsdLean4.LF4.MomentRatioUniformN
 import CsdLean4.LF4.MomentRatioUniform
 import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.SingletKahler

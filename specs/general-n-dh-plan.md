@@ -181,14 +181,17 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
 
 ### Lemma DAG (new file `CsdLean4/LF4/MomentRatioUniformN.lean`)
 
-- **D.1 Radial constant, general N.**
-  `∫⁻ S in Ioi 0, ENNReal.ofReal ((1/2)^N / (N-1)! · S^{N-1} · e^{−S/2}) = 1`
-  (the chi-squared(2N)/normalisation; collapses the S-integral after substitution).
-  Generalises `lintegral_radial_const`. Route: `integral_rpow_mul_exp_neg_mul_Ioi`
-  with `a = N`, `r = 1/2` ⟹ `∫ S^{N-1} e^{−S/2} = 2^N · Γ(N) = 2^N (N−1)!`; then
-  `ofReal_integral_eq_lintegral_ofReal` bridge (verbatim structure from N=2).
-  **Risk: LOW-MED** — the `Γ(N) = (N−1)!` step is `Real.Gamma_nat_eq_factorial`;
-  the rest mirrors the N=2 radial lemma line-for-line.
+- **D.1 Radial moment, general N — DONE 2026-06-01** (`MomentRatioUniformN.lean`,
+  `lintegral_radial_moment`). `∫⁻_{S>0} Sⁿ·e^{−S/2} = 2^{n+1}·n!` (the `n`-th
+  moment base; with `n = N−1` it is the normalisation the post-substitution
+  S-integral collapses to). Route as planned: `integral_rpow_mul_exp_neg_mul_Ioi`
+  (`a = n+1`, `r = 1/2`) ⟹ `2^{n+1}·Γ(n+1)`, `Real.Gamma_nat_eq_factorial`,
+  `ofReal`↔`lintegral` bridge — mirrors `lintegral_radial_const` (n=1). Foundational
+  triple, AxiomAudit-pinned. (Stated as the moment `= 2^{n+1}·n!` rather than the
+  normalised `= 1`, so the `(1/2)^N/(N−1)!` prefactor can be applied at assembly;
+  cleaner than baking it in.) Friction: beta-redex blocking the integrand `rw`
+  (fixed with explicit `show`), `-1 < ↑n` not a `positivity` goal (used
+  `Nat.cast_nonneg` + `linarith`).
 
 - **D.2 The substitution diffeo `Ψ_N` and its inverse.**
   `Ψ_N : (Fin (N-1) → ℝ) × ℝ → (Fin N → ℝ)`,
