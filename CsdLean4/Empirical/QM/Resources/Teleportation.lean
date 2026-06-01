@@ -127,8 +127,7 @@ noncomputable def teleZX : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1; -1, 0]
 theorem teleState_factorises (α β : ℂ) (a b c : Fin 2) :
     teleState α β (a, b, c) = teleInput α β a * bellPhiPlus (b, c) := by
   fin_cases a <;> fin_cases b <;> fin_cases c <;>
-    simp [teleState, teleInput, bellPhiPlus, EuclideanSpace.single, PiLp.single_apply,
-      Prod.ext_iff, Fin.ext_iff] <;> ring
+    simp [teleState, teleInput, bellPhiPlus, EuclideanSpace.single] <;> ring
 
 /-! ## The teleportation identity (Bell-basis expansion) -/
 
@@ -148,7 +147,7 @@ theorem teleportation_bell_expansion (α β : ℂ) (a b c : Fin 2) :
   fin_cases a <;> fin_cases b <;> fin_cases c <;>
     simp [teleState, bellPhiPlus, bellPhiMinus, bellPsiPlus, bellPsiMinus,
       bobPhiPlus, bobPhiMinus, bobPsiPlus, bobPsiMinus, teleInput,
-      EuclideanSpace.single, PiLp.single_apply, Prod.ext_iff, Fin.ext_iff] <;>
+      EuclideanSpace.single] <;>
     ring
 
 /-! ## Per-branch recovery -/
@@ -170,8 +169,7 @@ theorem recover_phiPlus (α β : ℂ) :
   show ((1 : Matrix (Fin 2) (Fin 2) ℂ) *ᵥ (bobPhiPlus α β).ofLp) i = (teleInput α β).ofLp i
   rw [mulVec_fin2]
   fin_cases i <;>
-    simp [bobPhiPlus, teleInput, EuclideanSpace.single, PiLp.single_apply,
-      Matrix.one_apply, Fin.ext_iff] <;> ring
+    simp [bobPhiPlus, teleInput, EuclideanSpace.single, Matrix.one_apply]
 
 /-- **Branch `|Φ⁻⟩` recovery:** `Z · (Z|ψ⟩) = |ψ⟩`. -/
 theorem recover_phiMinus (α β : ℂ) :
@@ -182,8 +180,8 @@ theorem recover_phiMinus (α β : ℂ) :
   show (teleZ *ᵥ (bobPhiMinus α β).ofLp) i = (teleInput α β).ofLp i
   rw [mulVec_fin2]
   fin_cases i <;>
-    simp [teleZ, bobPhiMinus, teleInput, EuclideanSpace.single, PiLp.single_apply,
-      Matrix.of_apply, Fin.ext_iff] <;> ring
+    simp [teleZ, bobPhiMinus, teleInput, EuclideanSpace.single,
+      Matrix.of_apply]
 
 /-- **Branch `|Ψ⁺⟩` recovery:** `X · (X|ψ⟩) = |ψ⟩`. -/
 theorem recover_psiPlus (α β : ℂ) :
@@ -194,8 +192,8 @@ theorem recover_psiPlus (α β : ℂ) :
   show (teleX *ᵥ (bobPsiPlus α β).ofLp) i = (teleInput α β).ofLp i
   rw [mulVec_fin2]
   fin_cases i <;>
-    simp [teleX, bobPsiPlus, teleInput, EuclideanSpace.single, PiLp.single_apply,
-      Matrix.of_apply, Fin.ext_iff] <;> ring
+    simp [teleX, bobPsiPlus, teleInput, EuclideanSpace.single,
+      Matrix.of_apply]
 
 /-- **Branch `|Ψ⁻⟩` recovery:** `ZX · (XZ|ψ⟩) = |ψ⟩`. -/
 theorem recover_psiMinus (α β : ℂ) :
@@ -206,8 +204,8 @@ theorem recover_psiMinus (α β : ℂ) :
   show (teleZX *ᵥ (bobPsiMinus α β).ofLp) i = (teleInput α β).ofLp i
   rw [mulVec_fin2]
   fin_cases i <;>
-    simp [teleZX, bobPsiMinus, teleInput, EuclideanSpace.single, PiLp.single_apply,
-      Matrix.of_apply, Fin.ext_iff] <;> ring
+    simp [teleZX, bobPsiMinus, teleInput, EuclideanSpace.single,
+      Matrix.of_apply]
 
 /-- **Teleportation recovers the input in every branch.** Bundles the four
 per-branch corrections: with the two-bit Bell-measurement outcome, Bob's Pauli
@@ -225,9 +223,9 @@ theorem teleportation_recovers_input (α β : ℂ) :
 theorem teleInput_norm (α β : ℂ) (h : ‖α‖ ^ 2 + ‖β‖ ^ 2 = 1) :
     ‖teleInput α β‖ = 1 := by
   have h0 : (teleInput α β).ofLp 0 = α := by
-    simp [teleInput, EuclideanSpace.single, PiLp.single_apply]
+    simp [teleInput, EuclideanSpace.single]
   have h1 : (teleInput α β).ofLp 1 = β := by
-    simp [teleInput, EuclideanSpace.single, PiLp.single_apply]
+    simp [teleInput, EuclideanSpace.single]
   rw [EuclideanSpace.norm_eq, Fin.sum_univ_two, h0, h1, h, Real.sqrt_one]
 
 end Teleportation

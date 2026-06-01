@@ -40,6 +40,7 @@ import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
 import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
+import CsdLean4.Empirical.QM.Resources.Teleportation
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
@@ -326,6 +327,21 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.SuperdenseCoding.bell_basis_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.SuperdenseCoding.bell_basis_orthonormal
+
+-- E5: Quantum teleportation (branch-conditional form). teleState = |ψ⟩⊗|Φ⁺⟩
+-- factorises; the Bell-basis expansion sends each branch to a Pauli image of ψ;
+-- the four corrections {I,Z,X,ZX} recover ψ exactly. QM-validity; foundational triple.
+/-- info: 'CSD.Empirical.QM.Teleportation.teleState_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Teleportation.teleState_factorises
+
+/-- info: 'CSD.Empirical.QM.Teleportation.teleportation_bell_expansion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Teleportation.teleportation_bell_expansion
+
+/-- info: 'CSD.Empirical.QM.Teleportation.teleportation_recovers_input' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Teleportation.teleportation_recovers_input
 
 /-- info: 'CSD.Empirical.QuantumMoney.wiesner_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
