@@ -23,6 +23,7 @@ import CsdLean4.LF4.MomentMarginal
 import CsdLean4.LF4.DuistermaatHeckman
 import CsdLean4.LF4.GaussianFS
 import CsdLean4.LF4.GaussianCP
+import CsdLean4.LF4.GaussianCPN
 import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.LF4.MomentRatioUniform
 import CsdLean4.LF4.MomentUniform
@@ -1025,6 +1026,14 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.gaussianCP_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.gaussianCP_eq_fubiniStudy
+
+-- General-N Part 1 (Slice B): the projectivised standard Gaussian on ℂ^N is the
+-- Fubini-Study measure on ℂℙ^{N-1}, via the real coordinate isometry
+-- coordsN : ℝ^{N×2} ≃ₗᵢ ℂ^N + stdGaussian U(N)-invariance + fubiniStudyMeasure_unique.
+-- The N-general analogue of gaussianCP_eq_fubiniStudy. Foundational triple.
+/-- info: 'CSD.LF4.gaussianCPN_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.gaussianCPN_eq_fubiniStudy
 
 -- Plan B Part 2, Slice 1 (L5.1): the single-block squared-norm law is Exp(1/2).
 -- `‖·‖²∗ N(0,I₂) = Exp(1/2)` on plain ℝ × ℝ, via polarCoord + the 1-D s=r²

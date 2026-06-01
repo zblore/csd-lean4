@@ -120,3 +120,23 @@ volume on Σ (both live on Lebesgue coordinates).
 does not advance the Born result; skip it unless we want the distributional fact for
 its own sake. The crux (Slice D) should be scoped as its own multi-session effort
 once B+C land.
+
+## Progress (2026-06-01) — Slice B DONE
+
+`CsdLean4/LF4/GaussianCPN.lean`, `gaussianCPN_eq_fubiniStudy [NeZero N] (p₀ : CPN N)
+: gaussianCPN p₀ = fubiniStudyMeasure p₀`. Foundational triple, AxiomAudit-pinned.
+The general-N analogue of `gaussianCP_eq_fubiniStudy`, generalising every C1–C5
+piece of `GaussianCP.lean`:
+- `coordsN : ℝ^{N×2} ≃ₗᵢ[ℝ] ℂ^N` (real space indexed by `Fin N × Fin 2`, so coord
+  `i` reads its re/im off `(i,0)`/`(i,1)` — no `2i`/`2i+1` arithmetic).
+- `gaussianHN`/`gaussianProjN`/`gaussianCPN` + probability instances.
+- `conjRN` real-conjugate isometry + `gaussianHN_map_unitary` (U(N)-invariance of
+  the transported Gaussian, via `stdGaussian_map`).
+- `stdGaussianN_ne_dirac` + `instNoAtomsStdGaussianN` (needs `[NeZero N]` for a
+  nonempty index) ⟹ origin is `gaussianHN`-null.
+- `gaussianCPN_smul_invariant` ⟹ `gaussianCPN_eq_fubiniStudy` via
+  `fubiniStudyMeasure_unique`.
+The discharged qubit `GaussianCP.lean` is left untouched (parallel development, not
+a refactor — its `Fin 4` machinery is load-bearing for the retired axiom).
+Dependencies (`unitary_norm_preserving`, `fubiniStudyMeasure_unique`,
+`smul_mk_eq_mk`) were already general-N. Next: Slice C (block law, Part 2a).
