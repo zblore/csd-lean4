@@ -250,10 +250,14 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
   multi-session core; budget the bulk of Slice D here. No Mathlib lemma gives it
   directly; it is a genuine determinant computation.
 
-- **D.4 `InjOn` + image.** `InjOn Ψ_N (openSimplex ×ˢ Ioi 0)` (recover `S = ∑ sᵢ`,
-  then `t`); image `= {s | ∀ i, 0 < s i}`. Generalises `injOn_Psi`/`image_Psi`.
-  **Risk: MED** — `Fin`/sum bookkeeping; the `S = ∑ sᵢ` recovery is the crux of
-  injectivity.
+- **D.4 `InjOn` + image — DONE 2026-06-01** (`MomentRatioUniformN.lean`, `domainN`,
+  `posQuadrant`, `PsiN_sum`, `injOn_PsiN`, `image_PsiN`). `Ψ_N` is a bijection
+  `domainN` (open simplex in free coords × `Ioi 0`) → `posQuadrant` (`∀ i, 0 < s i`).
+  Crux `PsiN_sum : ∑ᵢ Ψ_N(y)ᵢ = y last` (the `(∑t)S + (1−∑t)S = S` cancel) drives
+  both injectivity (sum recovers `S`, then `castSucc` coords cancel `S>0`) and the
+  image inverse (`S := ∑ s`, `t_k := s(castSucc k)/S`; `∑ t < 1` because the omitted
+  last term `s(last)/S > 0`). Foundational triple, AxiomAudit-pinned. **Built first
+  try** (probe-first + close N=2 template). MED as planned.
 
 - **D.5 Assemble.** `Measure.ext_of_lintegral` → `lintegral_map` → restrict to the
   quadrant (the per-coordinate `expHalf` densities are supported on `Ioi 0`) →

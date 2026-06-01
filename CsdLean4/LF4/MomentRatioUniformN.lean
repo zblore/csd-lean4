@@ -274,5 +274,87 @@ theorem hasFDerivAt_PsiN (y : Fin (M + 1) → ℝ) : HasFDerivAt PsiN (psiFDeriv
     · intro b _ hb; simp [Ne.symm hb]
     · intro h; exact absurd (Finset.mem_univ k) h
 
+/-! ## D.4 — injectivity and image of `Ψ_N`
+
+`Ψ_N` is a bijection from the domain (open simplex in free coordinates × `Ioi 0`)
+onto the open positive quadrant `{s | ∀ i, 0 < s i}`. The inverse sends `s` to
+`S := ∑ s`, `t_k := s(castSucc k)/S`. -/
+
+/-- The domain of the substitution, in `Fin (M+1) → ℝ` coordinates: the first `M`
+coordinates form the open simplex (`t_k > 0`, `∑ t < 1`), the last is `S > 0`. -/
+def domainN : Set (Fin (M + 1) → ℝ) :=
+  {y | (∀ k, 0 < y (Fin.castSucc k)) ∧ (∑ k, y (Fin.castSucc k) < 1) ∧ 0 < y (Fin.last M)}
+
+/-- The open positive quadrant in `Fin (M+1) → ℝ`. -/
+def posQuadrant : Set (Fin (M + 1) → ℝ) := {s | ∀ i, 0 < s i}
+
+/-- **Total-sum recovery.** `∑ i, Ψ_N(y) i = y last = S`. The inverse-map crux:
+`(∑_k t_k)·S + (1−∑t)·S = S`. -/
+theorem PsiN_sum (y : Fin (M + 1) → ℝ) : ∑ i, PsiN y i = y (Fin.last M) := by
+  rw [Fin.sum_univ_castSucc]
+  simp only [PsiN, Fin.lastCases_castSucc, Fin.lastCases_last]
+  rw [← Finset.sum_mul]
+  ring
+
+/-- **D.4a: `Ψ_N` is injective on the domain.** From `Ψ_N y = Ψ_N y'`, summing
+recovers `S = S'` (`PsiN_sum`); then each `castSucc` coordinate cancels `S > 0`,
+and the last coordinate is `S`. -/
+theorem injOn_PsiN : InjOn (PsiN (M := M)) domainN := by
+  intro y hy y' hy' heq
+  obtain ⟨_, _, hS⟩ := hy
+  -- S = S' from the total sum.
+  have hSeq : y (Fin.last M) = y' (Fin.last M) := by
+    rw [← PsiN_sum y, ← PsiN_sum y', heq]
+  -- Extensionality via Fin.lastCases: last coord is S, castSucc coords cancel.
+  funext i
+  induction i using Fin.lastCases with
+  | last => exact hSeq
+  | cast k =>
+    have hk : PsiN y (Fin.castSucc k) = PsiN y' (Fin.castSucc k) := by rw [heq]
+    simp only [PsiN, Fin.lastCases_castSucc] at hk
+    rw [hSeq] at hk
+    exact mul_right_cancel₀ (ne_of_gt (hSeq ▸ hS)) hk
+
+/-- **D.4b: the image of `Ψ_N` over the domain is the positive quadrant.** -/
+theorem image_PsiN : PsiN '' (domainN : Set (Fin (M + 1) → ℝ)) = posQuadrant := by
+  ext s
+  simp only [mem_image, domainN, posQuadrant, Set.mem_setOf_eq]
+  constructor
+  · -- (⊆) every coordinate of Ψ_N y is positive on the domain.
+    rintro ⟨y, ⟨ht, hsum, hS⟩, rfl⟩ i
+    induction i using Fin.lastCases with
+    | last =>
+      simp only [PsiN, Fin.lastCases_last]
+      exact mul_pos (by linarith) hS
+    | cast k =>
+      simp only [PsiN, Fin.lastCases_castSucc]
+      exact mul_pos (ht k) hS
+  · -- (⊇) given positive s, the inverse is S = ∑ s, t_k = s(castSucc k)/S.
+    intro hs
+    set S : ℝ := ∑ i, s i with hSdef
+    have hSpos : 0 < S := Finset.sum_pos (fun i _ => hs i) ⟨Fin.last M, Finset.mem_univ _⟩
+    refine ⟨Fin.lastCases S (fun k => s (Fin.castSucc k) / S), ⟨?_, ?_, ?_⟩, ?_⟩
+    · -- t_k = s(castSucc k)/S > 0
+      intro k; simp only [Fin.lastCases_castSucc]; exact div_pos (hs _) hSpos
+    · -- ∑_k s(castSucc k)/S < 1: the omitted last term s(last)/S is positive.
+      simp only [Fin.lastCases_castSucc, ← Finset.sum_div]
+      rw [div_lt_one hSpos]
+      have hsplit : S = (∑ k, s (Fin.castSucc k)) + s (Fin.last M) := by
+        rw [hSdef, Fin.sum_univ_castSucc]
+      rw [hsplit]; linarith [hs (Fin.last M)]
+    · -- last coord = S > 0
+      simp only [Fin.lastCases_last]; exact hSpos
+    · -- Ψ_N (inverse) = s
+      funext i
+      induction i using Fin.lastCases with
+      | last =>
+        simp only [PsiN, Fin.lastCases_last, Fin.lastCases_castSucc, ← Finset.sum_div]
+        rw [sub_mul, div_mul_cancel₀ _ (ne_of_gt hSpos), one_mul, hSdef,
+          Fin.sum_univ_castSucc]
+        ring
+      | cast k =>
+        simp only [PsiN, Fin.lastCases_castSucc, Fin.lastCases_last]
+        rw [div_mul_cancel₀ _ (ne_of_gt hSpos)]
+
 end LF4
 end CSD
