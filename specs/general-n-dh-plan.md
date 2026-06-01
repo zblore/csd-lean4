@@ -155,3 +155,96 @@ is deferred to assembly (Slice E), as the qubit deferred its bridge to Slice 4.
 
 Next: Slice D (the crux — N-dim Gamma→Dirichlet, Jacobian `det = S^{N−1}`;
 research-grade, its own multi-session effort).
+
+## Slice D — DETAILED PLAN (the crux: Gamma → Dirichlet in free coordinates)
+
+**Target.** The N-fold ratio map sends `expHalf^{⊗N}` to the Dirichlet(1,…,1) law,
+expressed (to dodge the missing simplex surface measure) as the constant `(N−1)!`
+density on the open simplex in free coordinates `ℝ^{N−1}`:
+
+```
+ratioSqNorm_map_expHalf_pi {N} :
+  Measure.map R_N (Measure.pi (fun _ : Fin N => expHalf))
+    = ((Nat.factorial (N-1) : ℝ≥0∞)) • volume.restrict (openSimplex)
+  where  R_N (s : Fin N → ℝ) : Fin (N-1) → ℝ := fun k => s (castSucc k) / (∑ i, s i)
+         openSimplex : Set (Fin (N-1) → ℝ) := {t | (∀ k, 0 < t k) ∧ ∑ k, t k < 1}
+```
+
+N=2 is exactly `ratioSqNorm_map_expHalf_prod` (`Beta(1,1)=Uniform[0,1]`, `(N−1)!=1`).
+This is the genuine general-N DH content; everything else (Slices B, C, E) is bridge.
+
+**Why this is the wall.** The N=2 proof (`MomentRatioUniform.lean`) was already the
+hardest single piece of the qubit discharge — the 2-D diffeo `Ψ`, its `fderiv`,
+`psiFDeriv_det = S`, `injOn_Psi`, `image_Psi`, and the radial collapse. Slice D is
+the N-dimensional version of *every* one of those, and the determinant step is a
+real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
+
+### Lemma DAG (new file `CsdLean4/LF4/MomentRatioUniformN.lean`)
+
+- **D.1 Radial constant, general N.**
+  `∫⁻ S in Ioi 0, ENNReal.ofReal ((1/2)^N / (N-1)! · S^{N-1} · e^{−S/2}) = 1`
+  (the chi-squared(2N)/normalisation; collapses the S-integral after substitution).
+  Generalises `lintegral_radial_const`. Route: `integral_rpow_mul_exp_neg_mul_Ioi`
+  with `a = N`, `r = 1/2` ⟹ `∫ S^{N-1} e^{−S/2} = 2^N · Γ(N) = 2^N (N−1)!`; then
+  `ofReal_integral_eq_lintegral_ofReal` bridge (verbatim structure from N=2).
+  **Risk: LOW-MED** — the `Γ(N) = (N−1)!` step is `Real.Gamma_nat_eq_factorial`;
+  the rest mirrors the N=2 radial lemma line-for-line.
+
+- **D.2 The substitution diffeo `Ψ_N` and its inverse.**
+  `Ψ_N : (Fin (N-1) → ℝ) × ℝ → (Fin N → ℝ)`,
+  `(t, S) ↦ fun i => if h : i = last then (1 − ∑ t) · S else t (i.castPred) · S`
+  (the "stick-breaking" parametrisation). Domain `openSimplex ×ˢ Ioi 0`, image the
+  open quadrant `{s | ∀ i, 0 < s i}`. Inverse `s ↦ ((fun k => s (castSucc k) / ∑ s), ∑ s)`.
+  **Decision to make at build time:** index management — whether to carry the
+  `Fin (N-1)`/`Fin N` split via `Fin.lastCases`/`Fin.snoc` (clean recursion, the
+  recommended route) or `Fin.castSucc`/`Fin.last` projections (more explicit, more
+  `Fin` arithmetic). `Fin.snoc` is likely cleaner for both the map and its `fderiv`.
+  **Risk: MED** — `Fin` bookkeeping, but no deep content.
+
+- **D.3 `fderiv` and the determinant `= S^{N−1}` (THE NUT).**
+  `HasFDerivAt Ψ_N (Ψ_N_fderiv (t,S)) (t,S)`, then `det = S^{N-1}`. The Jacobian (in
+  the basis `(t_0,…,t_{N−2}, S)`) is the N×N matrix:
+  - `∂(t_k S)/∂t_j = S·δ_{kj}`, `∂(t_k S)/∂S = t_k`   (rows `k < N−1`)
+  - `∂((1−∑t)S)/∂t_j = −S`,     `∂((1−∑t)S)/∂S = 1−∑t` (last row)
+  i.e. a **bordered matrix**: top-left `(N−1)×(N−1)` block `S·I`, last column
+  `(t_0,…,t_{N−2}, 1−∑t)`, last row `(−S,…,−S, 1−∑t)`. Its determinant is `S^{N−1}`
+  (add all first `N−1` rows scaled appropriately into the last, or cofactor on the
+  last column; the `S·I` block gives `S^{N−1}` and the border contributes the
+  `∑ t_k + (1−∑t) = 1` collapse). **This is the genuine theorem.** Options:
+  (a) compute via `Matrix.det` of the explicit `updateRow`/`updateCol` form +
+  `Matrix.det_succ_row_zero` cofactor expansion or a block-triangular argument;
+  (b) recognise it as `S^{N−1}` times a rank-one update determinant
+  (`Matrix.det_one_add_col_mul_row`-style). **Risk: HIGH** — this is the
+  multi-session core; budget the bulk of Slice D here. No Mathlib lemma gives it
+  directly; it is a genuine determinant computation.
+
+- **D.4 `InjOn` + image.** `InjOn Ψ_N (openSimplex ×ˢ Ioi 0)` (recover `S = ∑ sᵢ`,
+  then `t`); image `= {s | ∀ i, 0 < s i}`. Generalises `injOn_Psi`/`image_Psi`.
+  **Risk: MED** — `Fin`/sum bookkeeping; the `S = ∑ sᵢ` recovery is the crux of
+  injectivity.
+
+- **D.5 Assemble.** `Measure.ext_of_lintegral` → `lintegral_map` → restrict to the
+  quadrant (the per-coordinate `expHalf` densities are supported on `Ioi 0`) →
+  `lintegral_image_eq_lintegral_abs_det_fderiv_mul` (D.3) → Tonelli/`setLIntegral`
+  over `openSimplex ×ˢ Ioi 0` → the `S`-integral collapses by D.1, leaving the bare
+  `g(t)` integral over `openSimplex`. Generalises `ratioSqNorm_map_expHalf_prod`'s
+  assembly. **Risk: MED-HIGH** — the multi-dimensional product-density bookkeeping
+  (`pi` of `withDensity` → joint density on `ℝ^N`) is heavier than the N=2 `prod`.
+
+### Honest budget
+
+D.3 (the determinant) is the research-grade theorem and the single largest risk —
+plausibly a session by itself. D.1/D.2/D.4/D.5 are MED-risk generalisations of
+existing N=2 lemmas (real work, but the shape is known). Recommended order:
+D.1 (warm-up, near-mechanical) → D.3 (the determinant, the gate) → D.2/D.4 (diffeo
++ inj/image) → D.5 (assembly). If D.3 stalls, the whole slice stalls, so attack it
+early and consider proving the determinant identity standalone first.
+
+### After Slice D — Slice E (assembly to the Born result)
+
+`fs_moment_joint_dirichlet_N` via: `gaussianCPN_eq_fubiniStudy` (Slice B) +
+`map_pi_eq_stdGaussian` + the `EuclideanSpace ℝ (Fin N × Fin 2) ↔ pi gaussian2`
+reindex bridge (deferred from C) + Slice C + Slice D + the a.e.-off-`{0}`
+`momentMap = R_N ∘ blockLsq ∘ coordsN` identity. Then lift `born_eq_volume_ratio`
+from Lebesgue-polytope to FS-volume on Σ for general N. **Risk: MED** (assembly,
+known shape from `MomentUniform.lean`).
