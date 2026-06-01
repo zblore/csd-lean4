@@ -262,11 +262,17 @@ real linear-algebra theorem rather than a `Matrix.det_fin_two` one-liner.
 - **D.5 Assemble — SCOPED, NOT YET BUILT (2026-06-01).** The recon for the
   assembly turned up **two missing Mathlib lemmas** that the qubit's `prod`-based
   D.5 got for free, so D.5 splits into three:
-  - **D.5a — lintegral product over `Measure.pi`:**
-    `∫⁻ (∏ᵢ gᵢ(xᵢ)) ∂(Measure.pi μ) = ∏ᵢ ∫⁻ gᵢ ∂μᵢ`. **Mathlib has only the Bochner
-    version** (`integral_fintype_prod_eq_prod`, `Integral/Pi.lean`); no `lintegral`
-    analogue. Provable by `pi_pi` on indicator/simple functions + induction, or by
-    transfer from the Bochner version using nonnegativity. Upstreamable. MED.
+  - **D.5a — lintegral product over `Measure.pi` — DONE 2026-06-01**
+    (`CsdLean4/Mathlib/MeasureTheory/LintegralFintypeProd.lean`, Cat-1):
+    `lintegral_fin_nat_prod_eq_prod` (`Fin n`, by induction via
+    `measurePreserving_piFinSuccAbove` + `lintegral_prod_mul`) and
+    `lintegral_fintype_prod_eq_prod` (general index, transferred via `equivFin` +
+    `measurePreserving_piCongrLeft.lintegral_comp_emb`). The `lintegral` analogue of
+    the Bochner `integral_fintype_prod_eq_prod`, ported step-for-step. Foundational
+    triple, AxiomAudit-pinned. Friction: `≥0∞` needs `open scoped ENNReal`;
+    `lintegral_prod_mul` needed explicit `(μ:=)(ν:=)(f:=)(g:=)` + a beta-reduce
+    (`simp only at hmul`) before matching; the recursion's `Fin.prod_univ_succ`
+    binder alpha-equivalence closed via `exact hmul` (not `rw`).
   - **D.5b — the pi-withDensity bridge:**
     `Measure.pi (fun i => (μ i).withDensity (gᵢ)) = (Measure.pi μ).withDensity
     (fun x => ∏ᵢ gᵢ(xᵢ))`. **No Mathlib analogue of `prod_withDensity`** for `pi`.

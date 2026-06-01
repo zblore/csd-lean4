@@ -2,6 +2,7 @@ import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
+import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -157,6 +158,16 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 /-- info: 'CSD.LF2.DensityOperatorIx.reduced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.DensityOperatorIx.reduced
+
+-- General-N DH Slice D.5a: Tonelli for a product over a finite index (lintegral).
+-- ∫⁻ ∏ᵢ fᵢ(xᵢ) ∂(pi μ) = ∏ᵢ ∫⁻ fᵢ ∂μᵢ — the lintegral analogue of the Bochner
+-- integral_fintype_prod_eq_prod (Mathlib has only the Bochner version). Cat-1
+-- staging; needed for the pi-withDensity bridge (D.5b). Foundational triple.
+/-- info: 'MeasureTheory.lintegral_fin_nat_prod_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.lintegral_fin_nat_prod_eq_prod
+
+/-- info: 'MeasureTheory.lintegral_fintype_prod_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.lintegral_fintype_prod_eq_prod
 
 /-- info: 'CSD.LF2.pure_state_born_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms pure_state_born_weights

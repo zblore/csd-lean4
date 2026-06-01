@@ -5,6 +5,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
