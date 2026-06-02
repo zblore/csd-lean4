@@ -38,12 +38,26 @@ proof routes through `LF1_main_theorem_ae` + `measure_bridge` + Born
 wrapper. This layer answers: "Does CSD's ontic account produce the same
 number that QM does?"
 
-**Current state.** Only one prediction has a CSD-ontic-layer
-formalisation: the singlet kernel `P_st(a, b) = (1 − st·a·b)/4`, via
-the six `LF3_singlet_frequency_convergence*` capstones. Everything
-else in this document — Bell A1–A6, NoCloning B2, Stern-Gerlach,
-Mach-Zehnder, GHZ, Hardy, Mermin, KS, algorithms — is QM-validity
-layer only at any "actionable now" status.
+**Current state (updated 2026-06-02).** Several predictions now have a
+CSD-ontic-layer formalisation, and a subset are **grounded** (carving-free,
+Gleason-free, and *unconditional* — not riding on the undischarged
+`PureSingletPreparation` bundle) via the moment-map / Duistermaat–Heckman
+"Born = Fubini–Study volume" derivation:
+
+- the singlet kernel `P_st(a, b) = (1 − st·a·b)/4` via the six
+  `LF3_singlet_frequency_convergence*` capstones (bundle-conditional);
+- single-qubit Stern-Gerlach (`Empirical/CSD/SternGerlachVolume.lean`,
+  grounded) and Malus's law (`Empirical/CSD/MalusVolume.lean`, grounded);
+- **the Bell singlet joint probabilities, grounded**
+  (`Empirical/CSD/BellVolume.lean` `bell_singlet_born_frequency_volume`):
+  the four joint Born weights `(1 ∓ cos θ)/4` as genuine FS volumes on `ℂℙ³`
+  via `LF4.born_frequency_convergence_N`, with `bell_singlet_volume_correlation`
+  recovering `⟨σ_a σ_b⟩ = −cos θ`. No Busch, no carving, no bundle.
+
+Everything else in this document — NoCloning B2, Mach-Zehnder, GHZ, Hardy,
+Mermin, KS, algorithms — is QM-validity layer only at any "actionable now"
+status. The grounding pattern (instantiate `born_frequency_convergence_N` at the
+prediction's measurement basis) extends to GHZ/KS next.
 
 **Why the QM-validity layer is still load-bearing pre-LF4.**
 
