@@ -66,6 +66,7 @@ import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.NoDeleting
 import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
+import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
@@ -610,6 +611,23 @@ info: 'CSD.Empirical.CSDBridge.SternGerlach.csd_sg_born_x_basis_complete' depend
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SternGerlach.csd_sg_born_x_basis_complete
+
+-- Stern-Gerlach Born values as DERIVED Kähler-volume frequencies (carving-free,
+-- Gleason-free CSD-ontic layer): the moment-sublevel frequency → Born number
+-- via fs_moment_pushforward_uniform (DH theorem). Strictly above both the
+-- transport tag (csd_sg_*) and the carved LF4 capstone (sg_frequency_convergence).
+-- Foundational triple only; NO busch_effect_gleason, NO invariant_measure_uniqueness.
+/--
+info: 'CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_certain' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_certain
+
+/--
+info: 'CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_half
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--

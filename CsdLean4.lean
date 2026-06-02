@@ -99,6 +99,7 @@ import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.NoDeleting
 import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
+import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.KS18

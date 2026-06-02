@@ -170,8 +170,8 @@ content is sealed behind the LF4 discharge.
 
 | # | Prediction | LF4 prerequisite |
 |---|---|---|
-| B1 | Stern-Gerlach: `P(↑|ẑ, |+ẑ⟩) = 1`, `P(↓|ẑ, |+ẑ⟩) = 0`, `P(↑|x̂, |+ẑ⟩) = 1/2` | N=2 `SectorData` instantiation |
-| B3 | Malus's law (operational form): `P(↑|θ, |+ẑ⟩) = cos²(θ/2)` | N=2 `SectorData` + angle parameterisation |
+| B1 | Stern-Gerlach: `P(↑|ẑ, |+ẑ⟩) = 1`, `P(↓|ẑ, |+ẑ⟩) = 0`, `P(↑|x̂, |+ẑ⟩) = 1/2` | **DONE at three strengths.** (i) transport tag `Empirical/CSD/SternGerlach.lean`; (ii) carved LF3-chain capstone `LF4/SingleQubitKahler.lean` `sg_frequency_convergence`; (iii) **DERIVED, carving-free, Gleason-free** `Empirical/CSD/SternGerlachVolume.lean` `csd_sg_volume_certain` (→1) + `csd_sg_volume_half` (→1/2), routed through `qubit_born_frequency_convergence_uncond` (moment-volume = Born via the DH theorem `fs_moment_pushforward_uniform`). Boundary: the moment-region → physical-outcome labelling is still §14. Foundational-triple-only; AxiomAudit-pinned (2026-06-02). |
+| B3 | Malus's law (operational form): `P(↑|θ, |+ẑ⟩) = cos²(θ/2)` | N=2 `SectorData` + angle parameterisation. Now directly within reach: `csd_sg_volume_half`'s `balVec` generalises to a `θ`-parameterised unit vector with `‖⟨e₀,ψ_θ⟩‖² = cos²(θ/2)`; same volume route. |
 
 ### 2.2 `Interference.lean` — single-photon two-mode
 
