@@ -323,11 +323,38 @@ D.1 (warm-up, near-mechanical) → D.3 (the determinant, the gate) → D.2/D.4 (
 + inj/image) → D.5 (assembly). If D.3 stalls, the whole slice stalls, so attack it
 early and consider proving the determinant identity standalone first.
 
-### After Slice D — Slice E (assembly to the Born result)
+### Slice E (assembly to the Born result) — DONE (2026-06-02)
 
-`fs_moment_joint_dirichlet_N` via: `gaussianCPN_eq_fubiniStudy` (Slice B) +
-`map_pi_eq_stdGaussian` + the `EuclideanSpace ℝ (Fin N × Fin 2) ↔ pi gaussian2`
-reindex bridge (deferred from C) + Slice C + Slice D + the a.e.-off-`{0}`
-`momentMap = R_N ∘ blockLsq ∘ coordsN` identity. Then lift `born_eq_volume_ratio`
-from Lebesgue-polytope to FS-volume on Σ for general N. **Risk: MED** (assembly,
-known shape from `MomentUniform.lean`).
+**Headline `fs_moment_joint_dirichlet_N`** (`MomentDirichletN.lean`):
+`(ratioN ∘ momentMap)∗ μ_FS = M! · vol|_{openSimplexFree}` on `ℂℙ^M`, the joint
+Dirichlet(1,…,1) law. Assembly: `gaussianCPN_eq_fubiniStudy` (Slice B) +
+`map_pi_eq_stdGaussian` (Mathlib) + the product-index curry bridge
+`blockSqNormCurry_map_pi` (`MomentBridgeN.lean`, E1/E2 — **bypasses Slice C**,
+landing directly on `Exp(1/2)^{⊗N}` via `map_curryProd_pi` + `Measure.pi_map_pi`) +
+Slice D `ratioSqNorm_map_expHalf_pi` + the a.e.-off-`{0}` normalised-vs-unnormalised
+ratio identity.
+
+**New Cat-1 gap** (`Mathlib/MeasureTheory/PiCurry.lean`): `measurePreserving_piCurry`
+/ `map_curryProd_pi` — currying a sigma/product index preserves `Measure.pi`. Mathlib
+proves `piCurry` measurable but had no measure-preserving statement. Proved via
+`pi_eq_generateFrom` on the box-of-boxes π-system. Third Cat-1 gap of the programme
+(after the D.5a/D.5b lintegral-Fubini lemmas). Upstream candidate.
+
+**Born lift** (`MomentBornN.lean`), all **unconditional** (the qubit `h_uniform` is
+now the proved headline):
+- `fs_volume_eq_dirichlet` (E4a): the DH volume law on Σ — `μ_FS` of a measurable
+  moment region `R ⊆ openSimplexFree` = `M! · vol(R)`.
+- `volume_openSimplexFree` (E4b): the free simplex has volume `(M!)⁻¹` (forced by
+  `μ_FS` being a probability measure).
+- `fs_born_volume_ratio_N` (E4c): for each free coordinate `i : Fin M`, the FS measure
+  of the `i`-th barycentric region (`replaceMap`, pulled back through the moment map)
+  = the Born weight `‖⟨e_{castSucc i}, ψ⟩‖²`. Region is the homeomorphic image of the
+  open simplex (`det = bᵢ ≠ 0 ⇒ open ⇒ measurable`) and stays inside (interior-point
+  subdivision).
+
+**Honest residue.** E4c lands Born on the `N-1` **free** coordinates (qubit gave 1 of
+2; this gives N-1 of N). The dropped **apex** coordinate (index `M`) needs the affine
+apex map (`det(I − b'⊗𝟙) = 1 − ∑b'`) or an a.e.-partition argument — the documented
+remaining sliver. Genericity hypothesis on E4c: `ψ` has no vanishing amplitude.
+
+All foundational-triple-only; AxiomAudit-pinned; both `lake build` targets green.
