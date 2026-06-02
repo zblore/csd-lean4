@@ -3,3 +3,9 @@
 !.claude/settings.json
 .build.log
 .cache.log
+
+# Internal source documents (preprints / papers) — inputs, never to be tracked in
+# this public code repo. Re-add explicitly any document intended for publication.
+specs/*.pdf
+specs/*.txt
+specs/*.docx
