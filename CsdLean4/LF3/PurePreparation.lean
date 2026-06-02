@@ -219,11 +219,16 @@ def ofHypothesis
 
 /-- **Ontic weight ↔ `P_st` identity (composed).** Combines
     `bridge_op_p` (the LF4 discharge target tying ontic outcome weight to
-    the OP-derived integral) with `LF3.OP_p_at_jointEig_eq_P_st` (the
-    Born-mediated algebra inside the OP integral). Result: the ontic
-    `prepMeasure` of the pulled-back outcome event equals
-    `ENNReal.ofReal (P_st ctx.a ctx.b s t)`. Cites `busch_effect_gleason`
-    (via `OP_p_at_jointEig_eq_P_st`). -/
+    the OP-derived integral) with the **Busch-free** Born step
+    `LF3.OP_p_at_jointEig_eq_P_st_direct` (direct Dirac integration of the
+    volume-ratio effect function, no `busch_effect_gleason`). Result: the
+    ontic `prepMeasure` of the pulled-back outcome event equals
+    `ENNReal.ofReal (P_st ctx.a ctx.b s t)`. **Foundational-triple-only.**
+
+    This is the ontic-stratum routing (Born = volume ratio). The
+    Busch-mediated twin `OP_p_at_jointEig_eq_P_st` remains in the corpus as
+    the operational-stratum statement; see its docstring and `AXIOMS.md` §2.4
+    for the two-strata posture. -/
 theorem weight_eq_P_st
     {D : CSD.LF2.SectorData SigmaSpace P G}
     {ctx : MeasurementContext} {N : ℕ}
@@ -233,8 +238,8 @@ theorem weight_eq_P_st
   haveI := prep.hμFS_prob
   haveI := prep.hμψ_prob
   rw [prep.bridge_op_p s t,
-      OP_p_at_jointEig_eq_P_st D prep.μFS prep.bridge prep.μψ
-        prep.PP prep.hN prep.jed s t]
+      OP_p_at_jointEig_eq_P_st_direct D prep.μFS prep.bridge prep.μψ
+        prep.PP prep.jed s t]
 
 end PureSingletPreparation
 

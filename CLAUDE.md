@@ -285,14 +285,23 @@ Interface.lean          — LF3_main_theorem (8-conjunct),
                           variants (Phase 8 _joint suffixes)
 ```
 
-**LF3 axiom inheritance (post Phase 7 rewrite, 2026-05-18).**
+**LF3 axiom inheritance (re-routed off Busch 2026-06-02).**
 `LF3_main_theorem` and `LF3_finite_leakage_theorem` are fully axiom-clean
 (only the Mathlib foundational triple). The six chain capstones (three
-per-sector + three joint variants) cite the foundational triple **plus**
-`busch_effect_gleason`: the chain bridge now routes via OP.p (option (B)
-chain design — see `specs/pre-LF4-plan.md`), and the OP.p Born identity
-extensionally invokes `LF2.pure_state_born_weights_of_certainty` which
-cites Busch. `invariant_measure_uniqueness` enters at LF4 instantiation
+per-sector + three joint variants) are **now also foundational-triple-only**:
+`weight_eq_P_st` routes the chain bridge through the Busch-free
+`OP_p_at_jointEig_eq_P_st_direct` (the ontic-stratum, direct volume-ratio Born
+step via `LF2.PurePreparation.born_rank_one_direct`) instead of the
+Busch-mediated `OP_p_at_jointEig_eq_P_st`. So the LF3 empirical chain (and the
+LF4 `ofKählerPreparation_singlet_frequency_convergence` capstone, and the
+Empirical `bell_singlet_frequency_convergence` re-export) is Gleason-free.
+`busch_effect_gleason` is retained as the **operational-stratum** statement,
+still cited by `pure_state_born_weights_of_certainty`, `born_rank_one`,
+`OP_p_at_jointEig_eq_P_st`, and `ontic_born_frequency`. (Earlier, post-Phase-7,
+the chain was deliberately Busch-mediated per spec §5.4; the 2026-06-02 re-route
+realises the two-strata posture of AXIOMS.md §2.4 — operational route kept,
+ontic chain moved onto the volume derivation.)
+`invariant_measure_uniqueness` enters at LF4 instantiation
 sites that build `MeasureBridgeData` via `MeasureBridgeData.ofSectorData`
 (option (b) structural propagation) — not extensionally on the chain
 capstones themselves. This is the spec §5.4 four-ingredient
@@ -333,9 +342,10 @@ combinatorial framing realised at the Lean level.
   `LF4-todo §8`.
 
 **LF3 is sorry-free.** All capstone exports and supporting lemmas are
-sorry-free. The chain capstones cite `propext, Classical.choice,
-Quot.sound, busch_effect_gleason` per the post-Phase-7 option (B) form;
-`LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean.
+sorry-free. The chain capstones are **foundational-triple-only** (cite
+`propext, Classical.choice, Quot.sound`) after the 2026-06-02 re-route off
+Busch; `LF3_main_theorem` and `LF3_finite_leakage_theorem` were already
+axiom-clean.
 
 **LF3 self-adjointness convention.** `BinaryPointerProjectors`,
 `TensorFactorReadoutAlgebra`, `ProjectorAlgebra`, and `mHat_isSelfAdjoint`

@@ -208,52 +208,27 @@ info: 'CSD.LF2.pure_state_born_weights_of_certainty' depends on axioms: [propext
 /-- info: 'CSD.LF3.LF3_finite_leakage_theorem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_finite_leakage_theorem
 
-/--
-info: 'CSD.LF3.LF3_singlet_frequency_convergence' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+-- Re-routed off Busch (2026-06-02): the chain bridge now goes through the
+-- foundational-triple `weight_eq_P_st` → `OP_p_at_jointEig_eq_P_st_direct` (the
+-- ontic-stratum, volume-ratio Born step). All six capstones are now
+-- foundational-triple-only; the Busch-mediated `OP_p_at_jointEig_eq_P_st` stays as
+-- the operational-stratum statement. See AXIOMS.md §2.4.
+/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence
 
-/--
-info: 'CSD.LF3.LF3_singlet_frequency_convergence_born' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_born
 
-/--
-info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_born_inner
 
-/--
-info: 'CSD.LF3.LF3_singlet_frequency_convergence_joint' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_joint
 
-/--
-info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_joint' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_born_joint
 
-/--
-info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner_joint' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+/-- info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF3_singlet_frequency_convergence_born_inner_joint
 
 /-- info: 'CSD.LF3.PureSingletPreparation.ofHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -270,12 +245,7 @@ info: 'CSD.LF3.LF3_singlet_frequency_convergence_born_inner_joint' depends on ax
 /-- info: 'CSD.LF3.singletJointEig_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms singletJointEig_born
 
-/--
-info: 'CSD.LF3.PureSingletPreparation.weight_eq_P_st' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+/-- info: 'CSD.LF3.PureSingletPreparation.weight_eq_P_st' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms PureSingletPreparation.weight_eq_P_st
 
 /-- info: 'CSD.LF3.ProjectorAlgebra.ofTensorEmbedding' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -607,13 +577,8 @@ shared `CSDBridge.Context` bundle.
 The Bell-family CSD readings are re-exports of LF3 chain capstones;
 their axiom citations match the corresponding LF3 capstones. -/
 
-/--
-info: 'CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
-#guard_msgs in #print axioms CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence
+/-- info: 'CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence
 
 /--
 info: 'CSD.Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -1262,8 +1227,10 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #print axioms CSD.LF4.ofKählerPreparation
 
 -- Applying the LF3 chain capstone to the concrete prep gives a non-vacuous
--- empirical statement; cites busch_effect_gleason through the chain.
-/-- info: 'CSD.LF4.ofKählerPreparation_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+-- empirical statement. Now foundational-triple-only (2026-06-02): the chain bridge
+-- was re-routed off Busch onto the volume-ratio Born step, so this end-to-end
+-- ontic capstone no longer cites busch_effect_gleason.
+/-- info: 'CSD.LF4.ofKählerPreparation_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ofKählerPreparation_singlet_frequency_convergence
 

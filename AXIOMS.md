@@ -78,7 +78,7 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 - `fs_born_volume_ratio_N` (+ `_apex`) (`MomentBornN.lean`): Born = genuine FS-volume ratio of the barycentric regions, **all `N` coordinates**, unconditional.
 - `born_frequency_convergence_N` (`BornFrequencyN.lean`): the general-`N` Busch-free empirical chain — frequencies → the full Born vector jointly a.s. **No `busch_effect_gleason`.**
 
-**Posture note.** This does **not** remove `busch_effect_gleason` (§2.2) from the corpus — the LF3 chain capstones still cite it. It establishes a *parallel, Gleason-free* derivation of the Born weights from the symplectic geometry, now at general `N` rather than only the qubit. Plan + per-result honesty ledger: `specs/general-n-dh-plan.md`. The only standing axioms remain the two of §2.1–§2.2; **LF4 introduces no axioms.**
+**Posture note.** This does **not** remove `busch_effect_gleason` (§2.2) from the corpus. It establishes a *parallel, Gleason-free* derivation of the Born weights from the symplectic geometry, at general `N`. As of 2026-06-02 the **LF3 empirical chain was re-routed onto this ontic derivation**: `PureSingletPreparation.weight_eq_P_st` now goes through the Busch-free `OP_p_at_jointEig_eq_P_st_direct`, so the six chain capstones, the LF4 `ofKählerPreparation_singlet_frequency_convergence` capstone, and the Empirical `bell_singlet_frequency_convergence` re-export are all foundational-triple-only. `busch_effect_gleason` is now cited **only by the operational-stratum statements**: `pure_state_born_weights_of_certainty`, `PurePreparation.born_rank_one`, `LF3.OP_p_at_jointEig_eq_P_st`, and `LF4.ontic_born_frequency`. Plan + per-result honesty ledger: `specs/general-n-dh-plan.md`. The only standing axioms remain the two of §2.1–§2.2; **LF4 introduces no axioms.**
 
 #### Foundational reading: two strata, and where the Born weights come from
 
@@ -143,7 +143,7 @@ The three LF3 chain capstones consume a `PureSingletPreparation D ctx N` structu
 
 This is the LF1↔LF2↔LF3 boundary in packaged form. The transitional constructor `PureSingletPreparation.ofHypothesis` accepts the raw field set for callers who already have an `hLF2`-style equality (rewritten to match the new field set during Phase 7).
 
-The convenience theorem `PureSingletPreparation.weight_eq_P_st` composes `bridge_op_p` with `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6 algebraic identity, cites `busch_effect_gleason` via `LF2.PurePreparation.born_rank_one`) to give the full ontic weight ↔ `P_st` identity. The chain capstones consume this composed form.
+The convenience theorem `PureSingletPreparation.weight_eq_P_st` composes `bridge_op_p` with `LF3.OP_p_at_jointEig_eq_P_st_direct` (the Busch-free, direct volume-ratio Born step via `LF2.PurePreparation.born_rank_one_direct`) to give the full ontic weight ↔ `P_st` identity. The chain capstones consume this composed form and are therefore foundational-triple-only (re-routed off Busch 2026-06-02; the Busch-mediated `OP_p_at_jointEig_eq_P_st` is retained as the operational-stratum statement).
 
 LF4 will discharge the bundle structurally via the preparation-to-Hilbert correspondence + projective-first outcome specification (`specs/LF4-todo.md` §2 + §7), supplying a concrete constructor `PureSingletPreparation.ofKählerPreparation` from a Kähler `SectorData` instantiation (per `specs/LF4-todo.md` §8, the Q1 answer of 2026-05-17). Per the Q4 answer of 2026-05-17, this is a **rewrite** of the capstone bodies, not a wrap: when LF4 lands, the `ofHypothesis` transitional constructor is retired and the LF4 constructor becomes the single entry point.
 
@@ -187,14 +187,15 @@ For each headline exported theorem, the legible axiom citation:
 | `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `LF3_main_theorem` | `propext, Classical.choice, Quot.sound` |
 | `LF3_finite_leakage_theorem` | `propext, Classical.choice, Quot.sound` |
-| `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_inner` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_joint` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_joint` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_inner_joint` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound` (re-routed off Busch 2026-06-02) |
+| `LF3_singlet_frequency_convergence_born` | `propext, Classical.choice, Quot.sound` |
+| `LF3_singlet_frequency_convergence_born_inner` | `propext, Classical.choice, Quot.sound` |
+| `LF3_singlet_frequency_convergence_joint` | `propext, Classical.choice, Quot.sound` |
+| `LF3_singlet_frequency_convergence_born_joint` | `propext, Classical.choice, Quot.sound` |
+| `LF3_singlet_frequency_convergence_born_inner_joint` | `propext, Classical.choice, Quot.sound` |
 | `PureSingletPreparation.ofHypothesis` | `propext, Classical.choice, Quot.sound` |
-| `PureSingletPreparation.weight_eq_P_st` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `PureSingletPreparation.weight_eq_P_st` | `propext, Classical.choice, Quot.sound` (via `OP_p_at_jointEig_eq_P_st_direct`) |
+| `LF3.OP_p_at_jointEig_eq_P_st` (operational-stratum, retained) | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `LF2.PurePreparation.born_rank_one` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
 | `LF2.PurePreparation.born_rank_one_direct` | `propext, Classical.choice, Quot.sound` |
 | `LF2.PurePreparation.OP_certain_at_ψ` | `propext, Classical.choice, Quot.sound` |
@@ -252,7 +253,7 @@ reading reduces to QM without invoking Busch.
 
 | Theorem | `#print axioms` output |
 |---|---|
-| `Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `Empirical.CSDBridge.Bell.bell_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound` (re-routed off Busch 2026-06-02) |
 | `Empirical.CSDBridge.NoCloning.no_csd_cloning_bundle` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.CSDBridge.GHZ.no_csd_ghz_lhv_bundle` | `propext, Classical.choice, Quot.sound` |
@@ -409,7 +410,7 @@ LF3 imports **no** axioms beyond Lean's foundational set, but it does take certa
 - `MeasurementJointEig.born_eq_P_st : ∀ s t, ‖inner ℂ ψ (eig s t)‖² = P_st ctx.a ctx.b s t` — the **Born identity** for the (s, t) joint eigenstate. Discharge target: LF4-todo §3 (rank-1 effects from projective points) + spectral construction of joint spin eigenstates from `jointSpinProj`. Carried on the measurement-context-driven structure `MeasurementJointEig`, separate from the static pure preparation.
 - `PureSingletPreparation.bridge_op_p : ∀ s t, prepMeasure((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (eig s t)))` — the **ontic-weight ↔ OP.p bridge**. Discharge target: LF4-todo §2 (preparation-to-Hilbert correspondence) + §7 (projective-first outcomes). Carried on the singlet bundle, ties the LF1 ontic outcome weight to the LF2 OP integral.
 
-The composition is `PureSingletPreparation.weight_eq_P_st` (a proved theorem on the bundle), which combines `bridge_op_p` with `LF3.OP_p_at_jointEig_eq_P_st` (Phase 6) and cites `busch_effect_gleason`. The three chain capstones consume `weight_eq_P_st` via `LF1_main_theorem_ae` + `ENNReal.toReal_ofReal`.
+The composition is `PureSingletPreparation.weight_eq_P_st` (a proved theorem on the bundle), which combines `bridge_op_p` with the Busch-free `LF3.OP_p_at_jointEig_eq_P_st_direct` (re-routed 2026-06-02; foundational-triple-only). The three chain capstones consume `weight_eq_P_st` via `LF1_main_theorem_ae` + `ENNReal.toReal_ofReal`.
 
 **What they should be (LF4).** Both fields become theorems derived from a concrete preparation-to-Hilbert correspondence + projective-first outcome specification + spectral construction. LF4-todo §2, §3, §7 are the discharge targets.
 

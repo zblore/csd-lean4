@@ -12,9 +12,9 @@ The repo is sorry-free and `lake build CsdLeanTests` green (3047 jobs at this wr
 
 | Layer | Headline | Carving | Axioms beyond foundational triple |
 |---|---|---|---|
-| **LF4 Born-from-volume** | Born weight `‖⟨eᵢ,ψ⟩‖²` = torus moment-map coordinate (`momentMap_mk_eq_inner_sq`) = barycentric volume ratio (`born_eq_volume_ratio`, general `N`) = genuine FS-volume ratio on `Σ=ℂℙ¹` (`fs_born_volume_ratio_qubit`); Busch-free empirical chain (`qubit_born_frequency_convergence`; general-`N` joint form `born_frequency_convergence_partition`) — frequencies → Born via the Kähler volume; unconditional qubit forms `*_uncond` | **No carving** — geometric regions (moment sublevel / barycentric sub-simplex); Born value derived, not cut to fit | conditional forms: none. Unconditional qubit forms: `fs_moment_pushforward_uniform` (a **geometry** axiom about `μ_FS`, **not** `busch_effect_gleason`; `N=2` DH, dischargeable via plan B) |
+| **LF4 Born-from-volume** | Born weight `‖⟨eᵢ,ψ⟩‖²` = torus moment-map coordinate (`momentMap_mk_eq_inner_sq`) = barycentric volume ratio (`born_eq_volume_ratio`, general `N`) = genuine FS-volume ratio on `Σ=ℂℙ¹` (`fs_born_volume_ratio_qubit`); Busch-free empirical chain (`qubit_born_frequency_convergence`; general-`N` joint form `born_frequency_convergence_partition`) — frequencies → Born via the Kähler volume; unconditional qubit forms `*_uncond` | **No carving** — geometric regions (moment sublevel / barycentric sub-simplex); Born value derived, not cut to fit | none (the `N=2` DH fact `fs_moment_pushforward_uniform` is a discharged **theorem**, plan B closed; the general-`N` extension `fs_moment_joint_dirichlet_N` / `fs_born_volume_ratio_N` / `born_frequency_convergence_N` is likewise foundational-triple-only) |
 | **LF4 §14.2** | `kahler_robertson_ontic_variance` — Robertson bound on ontic-side integrals for any Hermitian observables on `EuclideanSpace ℂ (Fin N)`, with concrete witnesses `pauli_xy_robertson_saturation` (saturation at \|0⟩) and `pauliDot_robertson_zPlus` (parametric over axes) | Compact Kähler `KSigma M = ℂℙ^{M-1} × T²`; N-arc fibre partition via `spectralRegion`; integration headline `∫ spectralOnticCentered dμψ = ‖A ψ‖² − ⟨A⟩²` | none |
-| **LF3** | Singlet kernel `P_st = (1 − st a·b)/4`; LF1↔LF2↔LF3 chain capstones (6 variants); finite-leakage stability | Posited fibre law `μψ` (option (B) chain design, post-Phase-7) | `busch_effect_gleason` (chain capstones only) |
+| **LF3** | Singlet kernel `P_st = (1 − st a·b)/4`; LF1↔LF2↔LF3 chain capstones (6 variants); finite-leakage stability | Posited fibre law `μψ` (option (B) chain design, post-Phase-7) | none (chain re-routed off Busch 2026-06-02; `busch_effect_gleason` retained for the operational-stratum statements) |
 | **LF2** | `measure_bridge` (`π∗μL = c·μFS`); `born_quadratic` (`Tr(\|ψ⟩⟨ψ\|·\|φ⟩⟨φ\|) = ‖⟨ψ,φ⟩‖²`); `pure_state_born_weights_of_certainty`; `LF1_main_theorem_projective` | Abstract projective target `P` (concrete instantiation deferred to LF4 §8) | `invariant_measure_uniqueness`; `busch_effect_gleason` (purity-form Born only) |
 | **LF1** | `LF1_main_theorem_ae` — empirical frequencies converge a.s. to ontic weight under deterministic flow + pairwise-independent i.i.d. preparation | Abstract measurable `SigmaSpace` (no symplectic / Kähler structure assumed) | none |
 | **Empirical** | Bell + No-cloning + No-deleting + Uncertainty + Stern-Gerlach + Superdense coding + Quantum money + Mermin-Peres + Hardy + GHZ + Single/Two/Multi-qubit gates (Phases A1-A6, B1-B5, C1-C3, D-gates) | Two-layer: QM-validity (inner-product geometry) + CSD-side (transport bundles for the same predictions) | foundational triple only on every Empirical pin |
@@ -101,7 +101,7 @@ All six chain capstones consume a `PureSingletPreparation D ctx N` bundle (optio
 ### LF3 axiom posture (post Phase 7, 2026-05-18)
 
 - `LF3_main_theorem` and `LF3_finite_leakage_theorem` cite **only** the foundational triple.
-- The six chain capstones cite the foundational triple **plus** `busch_effect_gleason`: the chain bridge routes via OP.p (option (B) chain design), which extensionally invokes `pure_state_born_weights_of_certainty`. See `specs/pre-LF4-plan.md` for the design rationale.
+- The six chain capstones are now **foundational-triple-only** (re-routed off Busch, 2026-06-02): `weight_eq_P_st` routes the chain bridge through the Busch-free `OP_p_at_jointEig_eq_P_st_direct` (the ontic-stratum, direct volume-ratio Born step). The Busch-mediated twin `OP_p_at_jointEig_eq_P_st` remains as the operational-stratum statement. So the LF3 empirical chain is Gleason-free; `busch_effect_gleason` is now cited only by the operational-stratum statements (`pure_state_born_weights_of_certainty`, `born_rank_one`, `OP_p_at_jointEig_eq_P_st`, `ontic_born_frequency`). See [`AXIOMS.md`](AXIOMS.md) §2.4.
 - `invariant_measure_uniqueness` does **not** appear extensionally on the chain capstone definitions — it enters at LF4 instantiation sites via `MeasureBridgeData.ofSectorData` (option (b) structural propagation).
 
 The full per-theorem audit is in [`AXIOMS.md`](AXIOMS.md) §3.6 and §5. Regression-protection via `CsdLean4/Tests/AxiomAudit.lean`'s `#guard_msgs` against `#print axioms`.
@@ -274,7 +274,7 @@ The qubit's former `h_uniform` hypothesis is now the **theorem** `fs_moment_join
 
 ### LF3 (singlet kernel, pointer-sector decomposition, empirical chain)
 
-`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite **only** the foundational triple. The six chain capstones cite **`busch_effect_gleason`** (option (B) chain bridge routes via OP.p Born identity, post Phase 7).
+`LF3_main_theorem` and `LF3_finite_leakage_theorem` cite **only** the foundational triple. The six chain capstones are now **foundational-triple-only** too (re-routed off Busch, 2026-06-02): `weight_eq_P_st` routes the chain bridge through the Busch-free `OP_p_at_jointEig_eq_P_st_direct`. `busch_effect_gleason` is retained only for the operational-stratum statements.
 
 | Theorem | File | Mathematical meaning | Axioms |
 |---|---|---|---|
@@ -286,13 +286,14 @@ The qubit's former `h_uniform` hypothesis is now the **theorem** `fs_moment_join
 | `sectorVolume_eq_LF2_Born` | `LF3/Projectors/LF2Interface.lean` | LF3 operator-form sector volume = LF2 Born weight on rank-1 effects. | none |
 | `LF3_main_theorem` | `LF3/Interface.lean` | Eight-conjunct strong-readout package. | none |
 | `LF3_finite_leakage_theorem` | `LF3/Interface.lean` | Finite-leakage stability of all four kernel quantities. | none |
-| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone (per-sector). | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_joint` | `LF3/Interface.lean` | Phase 8 joint-partition variant of pre-Born capstone. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_joint` | `LF3/Interface.lean` | Joint variant of closed-form Born capstone. | `busch_effect_gleason` |
-| `LF3_singlet_frequency_convergence_born_inner_joint` | `LF3/Interface.lean` | Joint variant of bra-ket Born capstone. | `busch_effect_gleason` |
-| `PureSingletPreparation.weight_eq_P_st` | `LF3/PurePreparation.lean` | Composes `bridge_op_p` + `OP_p_at_jointEig_eq_P_st`. | `busch_effect_gleason` |
+| `LF3_singlet_frequency_convergence` | `LF3/Interface.lean` | Pre-Born chain capstone (per-sector). | none |
+| `LF3_singlet_frequency_convergence_born` | `LF3/Interface.lean` | Closed-form Born variant. | none |
+| `LF3_singlet_frequency_convergence_born_inner` | `LF3/Interface.lean` | Bra-ket variant. | none |
+| `LF3_singlet_frequency_convergence_joint` | `LF3/Interface.lean` | Phase 8 joint-partition variant of pre-Born capstone. | none |
+| `LF3_singlet_frequency_convergence_born_joint` | `LF3/Interface.lean` | Joint variant of closed-form Born capstone. | none |
+| `LF3_singlet_frequency_convergence_born_inner_joint` | `LF3/Interface.lean` | Joint variant of bra-ket Born capstone. | none |
+| `PureSingletPreparation.weight_eq_P_st` | `LF3/PurePreparation.lean` | Composes `bridge_op_p` + the Busch-free `OP_p_at_jointEig_eq_P_st_direct`. | none |
+| `OP_p_at_jointEig_eq_P_st` | `LF3/SingletProjective.lean` | Operational-stratum Born step (retained). | `busch_effect_gleason` |
 
 ### LF2 (sector-conditional measure bridge and Born-weight wrapper)
 
