@@ -32,6 +32,7 @@ import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.MomentBridgeN
 import CsdLean4.LF4.MomentDirichletN
 import CsdLean4.LF4.MomentBornN
+import CsdLean4.LF4.BornFrequencyN
 import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
@@ -1242,6 +1243,15 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.fs_born_volume_ratio_N_apex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_born_volume_ratio_N_apex
+
+-- General-N Busch-free capstone: i.i.d. trials from μ_FS on ℂℙ^M, empirical frequencies
+-- of the N barycentric Born regions → the Born weights ‖⟨eᵢ,ψ⟩‖² jointly a.s. The Born
+-- values come from fs_born_volume_ratio_N(_apex) (the volume route), so the chain is
+-- foundational-triple-only — NO busch_effect_gleason. The general-N analogue of
+-- qubit_born_frequency_convergence_uncond; the headline empirical payoff.
+/-- info: 'CSD.LF4.born_frequency_convergence_N' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.born_frequency_convergence_N
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved

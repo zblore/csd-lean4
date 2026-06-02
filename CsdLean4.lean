@@ -66,6 +66,7 @@ import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.MomentBridgeN
 import CsdLean4.LF4.MomentDirichletN
 import CsdLean4.LF4.MomentBornN
+import CsdLean4.LF4.BornFrequencyN
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables

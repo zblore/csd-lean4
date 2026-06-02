@@ -363,3 +363,15 @@ qubit gave 1 of 2). Genericity hypothesis: `ψ` has no vanishing amplitude.
 
 All foundational-triple-only; AxiomAudit-pinned; both `lake build` targets green.
 **The general-N Born-from-Kähler-volume programme is geometrically total.**
+
+**Empirical capstone DONE (2026-06-02).** `born_frequency_convergence_N`
+(`BornFrequencyN.lean`): i.i.d. trials from `μ_FS` on `ℂℙ^M`, the empirical frequencies
+of the `N` barycentric Born regions (`bornRegion`, `Fin.lastCases` of the `replaceMap`
+free regions + the affine apex region) converge **jointly** a.s. to the Born weights
+`‖⟨eᵢ,ψ⟩‖²`. One-line application of `born_frequency_convergence_partition`
+(`LF1.freq_tendsto_of_iid` per index), with `hborn` from `fs_born_volume_ratio_N`/`_apex`
+and `hmeas` from the open-image lemmas. **Foundational-triple-only — NO
+`busch_effect_gleason`** (contrast the LF3 chain capstones). The general-N analogue of
+`qubit_born_frequency_convergence_uncond`; the headline empirical payoff: deterministic
+LF1 typicality + Born = Kähler volume ⟹ frequencies → Born, Born derived from the
+symplectic geometry, not imported via Gleason.
