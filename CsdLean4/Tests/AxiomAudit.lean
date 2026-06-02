@@ -33,6 +33,7 @@ import CsdLean4.LF4.MomentBridgeN
 import CsdLean4.LF4.MomentDirichletN
 import CsdLean4.LF4.MomentBornN
 import CsdLean4.LF4.BornFrequencyN
+import CsdLean4.LF4.QubitConsistency
 import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
@@ -1217,6 +1218,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.born_frequency_convergence_N' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.born_frequency_convergence_N
+
+-- N=2 consistency cross-check: the qubit fs_moment_pushforward_uniform is kernel-derived
+-- from the general-N fs_moment_joint_dirichlet_N (M:=1). Machine-confirms the general-N
+-- statement faithfully generalises the independently-proved qubit result. Foundational triple.
+/-- info: 'CSD.LF4.fs_moment_pushforward_uniform_of_joint_dirichlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_moment_pushforward_uniform_of_joint_dirichlet
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
