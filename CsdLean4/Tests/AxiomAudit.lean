@@ -31,6 +31,7 @@ import CsdLean4.LF4.MomentRatioUniformN
 import CsdLean4.LF4.MomentUniform
 import CsdLean4.LF4.MomentBridgeN
 import CsdLean4.LF4.MomentDirichletN
+import CsdLean4.LF4.MomentBornN
 import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
@@ -1216,6 +1217,24 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.fs_moment_joint_dirichlet_N' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_moment_joint_dirichlet_N
+
+-- General-N DH Slice E (Born lift). E4a: the Duistermaat–Heckman volume law on Σ
+-- (μ_FS of a moment region = M!·its Lebesgue volume). E4b: the standard simplex has
+-- volume (M!)⁻¹ (forced by μ_FS being a probability measure). E4c: Born weight =
+-- FS volume ratio of the i-th barycentric region, for the N-1 free coordinates,
+-- now UNCONDITIONAL (the qubit h_uniform is the proved headline). Foundational triple;
+-- no busch_effect_gleason.
+/-- info: 'CSD.LF4.fs_volume_eq_dirichlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_volume_eq_dirichlet
+
+/-- info: 'CSD.LF4.volume_openSimplexFree' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.volume_openSimplexFree
+
+/-- info: 'CSD.LF4.fs_born_volume_ratio_N' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_born_volume_ratio_N
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
