@@ -403,6 +403,21 @@ BornFS.lean            — fs_born_volume_ratio_qubit: Born = genuine FS-volume 
                          on the ontic Σ = ℂℙ¹, modulo h_uniform; momentMap_measurable
 QubitBornFrequency.lean— qubit_born_frequency_convergence: Busch-free empirical →
                          Born chain (frequencies → ‖⟨e₀,ψ⟩‖² via the FS volume)
+MomentUniform.lean     — fs_moment_pushforward_uniform (qubit DH, now a THEOREM);
+                         fs_born_volume_ratio_qubit_uncond,
+                         qubit_born_frequency_convergence_uncond (unconditional)
+GaussianCPN.lean       — gaussianCPN_eq_fubiniStudy (Slice B, general N)
+MomentMarginalUniform.lean / MomentRatioUniformN.lean — Gaussian→Dirichlet machinery
+                         (Slices C/D): blockSqNorm_map_gaussianN_pi, ratioSqNorm_map_expHalf_pi
+MomentBridgeN.lean     — blockSqNormCurry_map_pi (Slice E bridge: ℝ^{N×2} Gaussian
+                         → Exp(1/2)^{⊗N} via the product-index curry)
+MomentDirichletN.lean  — fs_moment_joint_dirichlet_N: the JOINT DH law on ℂℙ^M
+                         (ratioN∘momentMap)∗ μ_FS = M!·vol|_simplex (general N)
+MomentBornN.lean       — fs_volume_eq_dirichlet, volume_openSimplexFree,
+                         fs_born_volume_ratio_N (+ _apex): Born = FS-volume ratio,
+                         all N coordinates, UNCONDITIONAL
+BornFrequencyN.lean    — born_frequency_convergence_N: general-N Busch-free
+                         frequencies → full Born vector jointly a.s.
 ```
 
 **§14.2 is closed.** The observable-correspondence chain (six commits,
@@ -436,18 +451,44 @@ genuine Fubini–Study Kähler structure, **not** by carving and **not** via
 - For the qubit, Born weight = genuine `fubiniStudyMeasure` volume ratio on
   `Σ = ℂℙ¹` (`fs_born_volume_ratio_qubit`) and the **Busch-free empirical chain**
   `qubit_born_frequency_convergence` (LF1 typicality + Born = FS volume ⟹
-  frequencies → Born), both modulo one explicit hypothesis `h_uniform` (the `N=2`
-  Duistermaat–Heckman fact `Φ∗μ_FS = uniform[0,1]`).
+  frequencies → Born), each carried in two forms: conditional on `h_uniform` (the
+  `N=2` Duistermaat–Heckman fact `Φ∗μ_FS = uniform[0,1]`) and **unconditional**
+  (`*_uncond` in `MomentUniform.lean`) since `h_uniform` was discharged to the
+  theorem `fs_moment_pushforward_uniform` (plan B CLOSED 2026-05-31, Gaussian +
+  FS-uniqueness route).
+
+**General-`N` Duistermaat–Heckman / Born-from-Kähler-volume CLOSED (2026-06-02).**
+The qubit result above is extended to all `N` (files `MomentBridgeN`,
+`MomentDirichletN`, `MomentBornN`, `BornFrequencyN`, and the Cat-1 staging
+`Mathlib/MeasureTheory/PiCurry.lean`), **unconditionally** — the qubit `h_uniform`
+is now the proved headline:
+
+- `fs_moment_joint_dirichlet_N` (`MomentDirichletN.lean`): the **joint** DH law
+  `(ratioN ∘ momentMap)∗ μ_FS = M!·vol|_{simplex}` on `ℂℙ^M` (Dirichlet(1,…,1)).
+  Route: Gaussian→Dirichlet (`gaussianCPN = fubiniStudy` + `map_pi_eq_stdGaussian`
+  + the product-index curry `blockSqNormCurry_map_pi` → `Exp(1/2)^{⊗N}` + the ratio
+  → Dirichlet crux). The scalar marginal is only `Beta(1,N−1)` for `N≥3`; only the
+  joint law feeds Born.
+- `fs_born_volume_ratio_N` + `fs_born_volume_ratio_N_apex` (`MomentBornN.lean`):
+  Born = genuine FS-volume ratio of the barycentric regions, **all `N` coordinates**
+  (free coords via `replaceMap`, the dropped apex via the affine apex map,
+  `det = 1 − ∑b' = b_M`). Unconditional.
+- `born_frequency_convergence_N` (`BornFrequencyN.lean`): the general-`N` analogue
+  of `qubit_born_frequency_convergence_uncond` — i.i.d. trials from `μ_FS` ⟹
+  frequencies → the full Born vector jointly a.s. **Foundational-triple-only, no
+  `busch_effect_gleason`.**
 
 This is a *foundational* strengthening (where the Born numbers come from), upstream
 of both Empirical branches: the QM branch takes Born probabilities as inner
 products; the CSD-bridge branch imports them via Busch/operational consistency;
-this cluster *derives* the Born weight from the Kähler volume for the qubit
-(modulo `h_uniform`). The honest residue: `h_uniform` is deferred (a genuine
-Mathlib-gap measure computation; see `specs/carve-out-plan.md` Tranche M plan B),
-the metric/basis is the accepted ontic primitive (debts A5/G3b), and general-`N`
-on-`Σ` needs the full `Φ∗μ_FS = uniform_Δ`. The full plan and per-result honesty
-ledger live in `specs/carve-out-plan.md`.
+this cluster now *derives* the Born weight from the Kähler volume **for every `N`**,
+unconditionally and Gleason-free. The honest residue: the metric/basis is the
+accepted ontic primitive (debts A5/G3b); the general-`N` Born-region forms assume a
+fully-generic `ψ` (no vanishing amplitude), with the degenerate case the remaining
+sliver. `busch_effect_gleason` still lives in the corpus (the LF3 chain capstones
+use it); this cluster is the *parallel Gleason-free route*, not a removal of Busch.
+The full plan and per-result honesty ledger live in `specs/general-n-dh-plan.md`
+(general `N`) and `specs/carve-out-plan.md` (qubit / diagnosis).
 
 ### Empirical: QM-validity regression suite
 

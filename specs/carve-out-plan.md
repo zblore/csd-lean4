@@ -277,6 +277,13 @@ Lean and backporting to a TN once the technicalities are confirmed.
   sublevel-set form is special to `N=2`; general `N` uses the barycentric regions
   of `BornVolume.lean` with the full `Φ∗μ_FS = uniform_Δ`.
 
+  **UPDATE 2026-06-02 — general `N` CLOSED.** The full `Φ∗μ_FS = uniform_Δ` is now
+  the theorem `fs_moment_joint_dirichlet_N` (`MomentDirichletN.lean`), and the
+  barycentric-region Born ratios + Busch-free empirical chain are proved for all `N`
+  (`fs_born_volume_ratio_N`/`_apex` in `MomentBornN.lean`, `born_frequency_convergence_N`
+  in `BornFrequencyN.lean`), unconditional and foundational-triple-only. See
+  `specs/general-n-dh-plan.md`. The qubit-only framing below is superseded.
+
   **Plan B execution DAG (Gaussian route):**
   - **B.1 — DONE** (`MomentMarginal.lean`): the reduction — target ⟺
     `(fun U => ‖(U·rep)₀‖²/‖U·rep‖²)∗ unitaryHaarProb = uniform[0,1]`.

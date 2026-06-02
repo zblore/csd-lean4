@@ -70,6 +70,16 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 
 **Consequence.** `fs_born_volume_ratio_qubit_uncond` and `qubit_born_frequency_convergence_uncond` (moved to `MomentUniform.lean`) are now foundational-triple-only — Born derived from the Kähler volume for the qubit with **no** named geometry axiom and **no** `busch_effect_gleason`. The conditional forms (`fs_born_volume_ratio_qubit`, `qubit_born_frequency_convergence`, with `h_uniform` as an explicit hypothesis) remain available.
 
+### 2.4 General-`N` Duistermaat–Heckman / Born-from-Kähler-volume — CLOSED 2026-06-02 (no axioms)
+
+**Not an axiom; an extension.** The qubit discharge above (§2.3) is extended to all `N`, introducing **no axioms** — every result is foundational-triple-only. Files: `MomentBridgeN.lean`, `MomentDirichletN.lean`, `MomentBornN.lean`, `BornFrequencyN.lean`, and the Cat-1 staging `Mathlib/MeasureTheory/PiCurry.lean`.
+
+- `fs_moment_joint_dirichlet_N` (`MomentDirichletN.lean`): the **joint** DH law `(ratioN ∘ momentMap)∗ μ_FS = M!·vol|_{simplex}` on `ℂℙ^M` (Dirichlet(1,…,1)). This is the general-`N` analogue of the discharged qubit fact — itself a theorem, not an axiom.
+- `fs_born_volume_ratio_N` (+ `_apex`) (`MomentBornN.lean`): Born = genuine FS-volume ratio of the barycentric regions, **all `N` coordinates**, unconditional.
+- `born_frequency_convergence_N` (`BornFrequencyN.lean`): the general-`N` Busch-free empirical chain — frequencies → the full Born vector jointly a.s. **No `busch_effect_gleason`.**
+
+**Posture note.** This does **not** remove `busch_effect_gleason` (§2.2) from the corpus — the LF3 chain capstones still cite it. It establishes a *parallel, Gleason-free* derivation of the Born weights from the symplectic geometry, now at general `N` rather than only the qubit. Plan + per-result honesty ledger: `specs/general-n-dh-plan.md`. The only standing axioms remain the two of §2.1–§2.2; **LF4 introduces no axioms.**
+
 ## 3. Physical assumptions not formalised
 
 Beyond Mathlib's axioms and LF2's three imports, the formalisation carries several physical assumptions as structural data on its types rather than as named axioms. They are honest assumptions about which class of mathematical objects the corpus is talking about; they are not derived inside the Lean tree.
@@ -183,6 +193,10 @@ For each headline exported theorem, the legible axiom citation:
 | `LF4.born_frequency_convergence_partition` | `propext, Classical.choice, Quot.sound` |
 | `LF4.fs_born_volume_ratio_qubit_uncond` | `propext, Classical.choice, Quot.sound` (DH discharged 2026-05-31) |
 | `LF4.qubit_born_frequency_convergence_uncond` | `propext, Classical.choice, Quot.sound` (DH discharged 2026-05-31) |
+| `LF4.fs_moment_joint_dirichlet_N` (general-`N` joint DH) | `propext, Classical.choice, Quot.sound` |
+| `LF4.fs_born_volume_ratio_N` (+ `_apex`) | `propext, Classical.choice, Quot.sound` |
+| `LF4.born_frequency_convergence_N` (general-`N` Busch-free) | `propext, Classical.choice, Quot.sound` |
+| `MeasureTheory.measurePreserving_piCurry` / `map_curryProd_pi` (Cat-1 staging) | `propext, Classical.choice, Quot.sound` |
 
 ### Empirical-prediction headline theorems
 

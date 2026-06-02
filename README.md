@@ -254,10 +254,21 @@ Exported theorems and their dependencies. The "Axioms" column lists CSD-specific
 | `qubit_born_frequency_convergence` | `LF4/QubitBornFrequency.lean` | **Busch-free** empirical chain: frequencies → `‖⟨e₀,ψ⟩‖²` via the FS volume, modulo `h_uniform`. | none |
 | `born_frequency_convergence_partition` | `LF4/BornFrequencyPartition.lean` | General-`N` joint Busch-free chain: frequencies → Born weights over a finite outcome family (Born = ontic volume as hypothesis). Closes LF4-todo §9. | none |
 | `momentMap_pushforward_eq_haar_marginal` | `LF4/MomentMarginal.lean` | Plan B step 1: the moment marginal = the Haar law of `‖(U·rep)ᵢ‖²/‖U·rep‖²`. | none |
-| `fs_born_volume_ratio_qubit_uncond` | `LF4/DuistermaatHeckman.lean` | **Unconditional** qubit Born = FS-volume ratio on `ℂℙ¹`. | `fs_moment_pushforward_uniform` |
-| `qubit_born_frequency_convergence_uncond` | `LF4/DuistermaatHeckman.lean` | **Unconditional** Busch-free qubit Born frequency convergence. | `fs_moment_pushforward_uniform` |
+| `fs_moment_pushforward_uniform` | `LF4/MomentUniform.lean` | The `N=2` Duistermaat–Heckman fact `Φ₀∗μ_FS = uniform[0,1]`, **discharged to a theorem** (plan B, Gaussian + FS-uniqueness route). | none |
+| `fs_born_volume_ratio_qubit_uncond` | `LF4/MomentUniform.lean` | **Unconditional** qubit Born = FS-volume ratio on `ℂℙ¹`. | none |
+| `qubit_born_frequency_convergence_uncond` | `LF4/MomentUniform.lean` | **Unconditional** Busch-free qubit Born frequency convergence. | none |
 
-`h_uniform` (the `N=2` Duistermaat–Heckman fact) appears two ways: as an explicit theorem **hypothesis** in the conditional forms (foundational-triple-only), and as the named **geometry axiom** `fs_moment_pushforward_uniform` (a fact about `μ_FS`, not a Born import) cited by the `*_uncond` forms. Discharging it is the scheduled plan B (`specs/carve-out-plan.md`); see [`AXIOMS.md`](AXIOMS.md) §2.3.
+**General-`N` Duistermaat–Heckman / Born-from-Kähler-volume (the qubit result extended to all `N`, 2026-06-02):**
+
+| Theorem | File | Mathematical meaning | Axioms |
+|---|---|---|---|
+| `fs_moment_joint_dirichlet_N` | `LF4/MomentDirichletN.lean` | **Joint Duistermaat–Heckman law, general `N`**: `(ratioN ∘ momentMap)∗ μ_FS = M!·vol\|_{simplex}` on `ℂℙ^M` (the Dirichlet(1,…,1) law). The qubit scalar marginal is only `Beta(1,N−1)` for `N≥3`; the joint simplex law is what feeds Born. | none |
+| `fs_volume_eq_dirichlet`, `volume_openSimplexFree` | `LF4/MomentBornN.lean` | The DH volume law on `Σ` (`μ_FS` of a moment region `= M!·`its Lebesgue volume); the free simplex has volume `(M!)⁻¹`. | none |
+| `fs_born_volume_ratio_N`, `fs_born_volume_ratio_N_apex` | `LF4/MomentBornN.lean` | **Unconditional** Born = FS-volume ratio of the `i`-th barycentric region, **all `N` coordinates** (free coords + the affine apex). | none |
+| `born_frequency_convergence_N` | `LF4/BornFrequencyN.lean` | **Unconditional Busch-free general-`N` empirical chain**: i.i.d. trials from `μ_FS` on `ℂℙ^M` ⟹ frequencies → the full Born vector `‖⟨eᵢ,ψ⟩‖²` jointly a.s. | none |
+| `measurePreserving_piCurry`, `map_curryProd_pi` | `Mathlib/MeasureTheory/PiCurry.lean` | Cat-1 Mathlib-gap: currying a sigma/product index preserves `Measure.pi`. | none |
+
+The qubit's former `h_uniform` hypothesis is now the **theorem** `fs_moment_joint_dirichlet_N`, so the general-`N` Born-from-volume chain is **unconditional and foundational-triple-only — no `busch_effect_gleason`**. The CSD thesis is realised end-to-end for general `N`: deterministic LF1 typicality + Born = Kähler volume ⟹ frequencies → Born, with Born *derived* from the symplectic geometry rather than imported via Gleason. Plan and honesty ledger: `specs/general-n-dh-plan.md`. Genericity hypothesis on the Born-region forms: `ψ` has no vanishing amplitude.
 
 ### LF3 (singlet kernel, pointer-sector decomposition, empirical chain)
 
