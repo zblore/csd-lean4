@@ -67,6 +67,7 @@ import CsdLean4.Empirical.CSD.NoDeleting
 import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
+import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
@@ -628,6 +629,15 @@ info: 'CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_half' depends on
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_half
+
+-- Malus's law (parametric generalisation of the two SG values) as a DERIVED
+-- Kähler-volume frequency: freq → cos²(θ/2) via the same volume route.
+-- Foundational triple only; NO busch_effect_gleason.
+/--
+info: 'CSD.Empirical.CSDBridge.MalusVolume.csd_malus_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MalusVolume.csd_malus_law
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--

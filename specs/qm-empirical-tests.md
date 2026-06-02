@@ -171,7 +171,7 @@ content is sealed behind the LF4 discharge.
 | # | Prediction | LF4 prerequisite |
 |---|---|---|
 | B1 | Stern-Gerlach: `P(↑|ẑ, |+ẑ⟩) = 1`, `P(↓|ẑ, |+ẑ⟩) = 0`, `P(↑|x̂, |+ẑ⟩) = 1/2` | **DONE at three strengths.** (i) transport tag `Empirical/CSD/SternGerlach.lean`; (ii) carved LF3-chain capstone `LF4/SingleQubitKahler.lean` `sg_frequency_convergence`; (iii) **DERIVED, carving-free, Gleason-free** `Empirical/CSD/SternGerlachVolume.lean` `csd_sg_volume_certain` (→1) + `csd_sg_volume_half` (→1/2), routed through `qubit_born_frequency_convergence_uncond` (moment-volume = Born via the DH theorem `fs_moment_pushforward_uniform`). Boundary: the moment-region → physical-outcome labelling is still §14. Foundational-triple-only; AxiomAudit-pinned (2026-06-02). |
-| B3 | Malus's law (operational form): `P(↑|θ, |+ẑ⟩) = cos²(θ/2)` | N=2 `SectorData` + angle parameterisation. Now directly within reach: `csd_sg_volume_half`'s `balVec` generalises to a `θ`-parameterised unit vector with `‖⟨e₀,ψ_θ⟩‖² = cos²(θ/2)`; same volume route. |
+| B3 | Malus's law (operational form): `P(↑|θ, |+ẑ⟩) = cos²(θ/2)` | **DONE (derived, carving-free, Gleason-free)** `Empirical/CSD/MalusVolume.lean` `csd_malus_law` → `cos²(θ/2)` via `qubit_born_frequency_convergence_uncond` on the spin-`θ` eigenstate `cos(θ/2)|0⟩+sin(θ/2)|1⟩`. The parametric generalisation of the two SG values (θ=0→1, θ=π/2→1/2). Boundary: region → physical-outcome labelling still §14. Foundational-triple-only; AxiomAudit-pinned (2026-06-02). |
 
 ### 2.2 `Interference.lean` — single-photon two-mode
 
