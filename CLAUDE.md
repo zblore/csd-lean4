@@ -482,13 +482,23 @@ This is a *foundational* strengthening (where the Born numbers come from), upstr
 of both Empirical branches: the QM branch takes Born probabilities as inner
 products; the CSD-bridge branch imports them via Busch/operational consistency;
 this cluster now *derives* the Born weight from the Kähler volume **for every `N`**,
-unconditionally and Gleason-free. The honest residue: the metric/basis is the
-accepted ontic primitive (debts A5/G3b); the general-`N` Born-region forms assume a
-fully-generic `ψ` (no vanishing amplitude), with the degenerate case the remaining
-sliver. `busch_effect_gleason` still lives in the corpus (the LF3 chain capstones
-use it); this cluster is the *parallel Gleason-free route*, not a removal of Busch.
-The full plan and per-result honesty ledger live in `specs/general-n-dh-plan.md`
-(general `N`) and `specs/carve-out-plan.md` (qubit / diagnosis).
+unconditionally and Gleason-free. **This is a relocation of the primitive, not its
+elimination.** The ontic derivation produces Born from the posited quantum-effective
+sector symmetry, which is the **A5** datum (`SectorData.(π, G)`, AXIOMS.md §3.3), not
+from nothing. Honest hierarchy: **G3b** (Born as a volume ratio) is dischargeable now
+for rank-1 projective measurements *modulo* **A5**; **A5** (the `(π, G)` sector posited)
+is the residual primitive, instantiated-but-not-discharged in LF4; **A5 reduces to D1**
+(the sector from deterministic dynamics, `Φ = id` today, the deepest open debt). So the
+honest payoff is "Born is a theorem of the sector symmetry," with the cost named
+(primitive moves from operational effect-additivity to the geometric sector posit). The
+general-`N` Born-region forms assume a fully-generic `ψ` (no vanishing amplitude);
+**general POVMs are not yet covered geometrically** (the Naimark-dilation +
+partial-trace route via `Mathlib/LinearAlgebra/Matrix/PartialTrace.lean` is open LF4
+work). `busch_effect_gleason` still lives in the corpus as the *operational-stratum*
+closure (the LF3 chain capstones and the LF2 general-effect representation use it); this
+cluster is the *ontic-stratum, Gleason-free route*, not a removal of Busch. The full
+plan and per-result honesty ledger live in `specs/general-n-dh-plan.md` (general `N`)
+and `specs/carve-out-plan.md` (qubit / diagnosis).
 
 ### Empirical: QM-validity regression suite
 

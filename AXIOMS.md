@@ -80,6 +80,23 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 
 **Posture note.** This does **not** remove `busch_effect_gleason` (§2.2) from the corpus — the LF3 chain capstones still cite it. It establishes a *parallel, Gleason-free* derivation of the Born weights from the symplectic geometry, now at general `N` rather than only the qubit. Plan + per-result honesty ledger: `specs/general-n-dh-plan.md`. The only standing axioms remain the two of §2.1–§2.2; **LF4 introduces no axioms.**
 
+#### Foundational reading: two strata, and where the Born weights come from
+
+The corpus reaches the Born weights by two distinct derivations, and they belong to two distinct strata. Keeping both is deliberate.
+
+- **Operational / non-ontic stratum.** Given the Hilbert-space formalism alone, effect-additive probability is forced to the trace form. This is the Gleason-class argument (Paper B §3), formalised as the import `busch_effect_gleason` (§2.2). It assumes no configuration space and covers arbitrary effects/POVMs. It is retained here as the operational closure of the formalism.
+- **Ontic stratum.** Taking the quantum-effective sector with its symmetry as the primitive, the Born weight is the Fubini–Study volume ratio: the U(N) symmetry fixes `μ_FS` uniquely (axiom-free concretely, via the Haar / FS-uniqueness chain `invariant_measure_uniqueness_cpn`), and the moment map identifies the weight with that volume (`fs_born_volume_ratio_N`). This is the CSD-native derivation (Paper B onward, LF2 → LF3 → LF4). It is **foundational-triple-only** and does **not** use `busch_effect_gleason`.
+
+**This is a relocation of the primitive, not its elimination.** The ontic derivation does not produce Born from nothing; it produces Born from the posited sector symmetry. That posit is the **A5** structural datum (§3.3): `SectorData.(π, G)`, the projection onto the quantum-effective sector and its U(N) symmetry. So the honest hierarchy is:
+
+> **G3b** (Born as a volume ratio): dischargeable now, for rank-1 projective measurements at general `N`, **modulo A5**. (TN3 §5.5 named G3b as the absence of exactly this derivation; the projective case is now a theorem.)
+> **A5** (the `(π, G)` sector posited, §3.3): the residual primitive the ontic derivation rests on. Not discharged in LF4; LF4 instantiates the canonical `(π, G)` and proves Born for it.
+> **D1** (the sector / volume from deterministic dynamics): A5 reduces to D1. With `Φ = id` in every concrete instance, A5 stands independent; this is the deepest open debt.
+
+The payoff is real and stateable without overclaim: in the ontic stratum the Born rule is a **theorem of the posited sector symmetry**, not an independent probability postulate. The cost is named: the primitive moves from operational effect-additivity (Gleason) to the geometric sector posit (A5), and the question "why this sector" becomes D1.
+
+**Scope and the open POVM step.** The ontic derivation as proven covers rank-1 **projective** (von Neumann) measurements. General POVMs are not yet covered geometrically; the intended route is Naimark dilation onto a larger ontic configuration space followed by partial-trace reduction (`CsdLean4/Mathlib/LinearAlgebra/Matrix/PartialTrace.lean` is the reduction tool), which is open LF4 work. Until that lands, `busch_effect_gleason` remains the only route to the general-effect representation, and the ontic stratum stands alone only for projective measurements.
+
 ## 3. Physical assumptions not formalised
 
 Beyond Mathlib's axioms and LF2's three imports, the formalisation carries several physical assumptions as structural data on its types rather than as named axioms. They are honest assumptions about which class of mathematical objects the corpus is talking about; they are not derived inside the Lean tree.
