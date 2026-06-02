@@ -22,8 +22,9 @@ This file delivers the **algebraic core** — the branch-conditional form
    `Ψ = ½ Σₖ |Bellₖ⟩₁₂ ⊗ (Cₖ|ψ⟩)₃`, with `Cₖ ∈ {I, Z, X, XZ}` the Pauli image
    in branch `k`. So in each Bell-measurement branch Bob holds a Pauli image of
    `|ψ⟩`.
-3. `teleportation_recovers_input` — applying the branch correction recovers
-   `|ψ⟩` exactly in all four branches.
+3. `teleportation_branch_recovers_input` — applying the branch correction recovers
+   `|ψ⟩` exactly in all four branches (branch-conditional; the measurement-collapse /
+   ¼-branch-probability layer is out of scope, see the honesty note below).
 
 The three qubits live in `EuclideanSpace ℂ (Fin 2 × Fin 2 × Fin 2)` (matching
 `Empirical/QM/Multipartite/GHZ.lean`), with qubit 1 = Alice's input, qubit 2 =
@@ -210,7 +211,7 @@ theorem recover_psiMinus (α β : ℂ) :
 /-- **Teleportation recovers the input in every branch.** Bundles the four
 per-branch corrections: with the two-bit Bell-measurement outcome, Bob's Pauli
 correction returns `|ψ⟩` exactly. -/
-theorem teleportation_recovers_input (α β : ℂ) :
+theorem teleportation_branch_recovers_input (α β : ℂ) :
     (Matrix.toEuclideanLin (1 : Matrix (Fin 2) (Fin 2) ℂ)) (bobPhiPlus α β) = teleInput α β ∧
     (Matrix.toEuclideanLin teleZ) (bobPhiMinus α β) = teleInput α β ∧
     (Matrix.toEuclideanLin teleX) (bobPsiPlus α β) = teleInput α β ∧

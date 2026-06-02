@@ -332,7 +332,7 @@ schema-mismatch bundles).
 | # | Theorem | Statement | Status | Source |
 |---|---|---|---|---|
 | E4 | Superdense coding | the four local-Pauli images of `|Φ⁺⟩` are the four Bell states (2 classical bits via 1 qubit + shared entanglement) | **DONE 2026-05-24** (`Empirical/QM/Resources/SuperdenseCoding.lean`: `encode_I/X/Z/XZ` image identities + `bell_basis_orthonormal`) | Bennett-Wiesner 1992 |
-| E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | **DONE 2026-05-31** (`Empirical/QM/Resources/Teleportation.lean`: `teleState_factorises` (input = \|ψ⟩⊗\|Φ⁺⟩), `teleportation_bell_expansion` (Bell-basis expansion → Pauli image per branch), `teleportation_recovers_input` (four corrections {I,Z,X,ZX} recover ψ); branch-conditional QM-validity layer). The measurement-collapse step + no-signalling marginal need LF5 / partial trace; documented in-file. | Bennett et al. 1993 |
+| E5 | Teleportation | post-Bell-measurement-and-correction state equals the input; 3-qubit identity | **DONE 2026-05-31** (`Empirical/QM/Resources/Teleportation.lean`: `teleState_factorises` (input = \|ψ⟩⊗\|Φ⁺⟩), `teleportation_bell_expansion` (Bell-basis expansion → Pauli image per branch), `teleportation_branch_recovers_input` (four corrections {I,Z,X,ZX} recover ψ); branch-conditional QM-validity layer). The measurement-collapse step + no-signalling marginal need LF5 / partial trace; documented in-file. | Bennett et al. 1993 |
 | E6 | Robertson uncertainty | `Var(A)·Var(B) ≥ ¼|⟨[A,B]⟩|²` | **DONE 2026-05-24** (`Empirical/QM/Uncertainty.lean`: `robertson_uncertainty`, over `Module.End ℂ H` with `IsSymmetric`; `robertson_core` is the Cauchy-Schwarz heart) | Robertson 1929 |
 
 ### 3bis.3 Cryptography (`Empirical/QM/Crypto/`)

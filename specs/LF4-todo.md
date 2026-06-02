@@ -2,6 +2,29 @@
 
 Items LF2 deliberately left for LF4, with rationale and concrete pickup notes.
 
+> **Orientation:** see [`INDEX.md`](INDEX.md) for the full doc map. The next major
+> tranche is the POVM extension — [`povm-plan.md`](povm-plan.md).
+
+## Status header (updated 2026-06-02)
+
+Recent closures, so this ledger is read in context:
+
+- **§14.2 observable correspondence + Robertson** — CLOSED (six commits, two witnesses).
+- **General-N Duistermaat–Heckman / Born-from-Kähler-volume** — CLOSED. Born = FS
+  typicality volume on `ℂℙ^{N-1}` for general `N`, Gleason-free, with the empirical
+  capstone `born_frequency_convergence_N` and the N=2 reduction cross-check. See
+  [`general-n-dh-plan.md`](general-n-dh-plan.md).
+- **LF3 empirical chain re-routed off Busch** (2026-06-02) — `weight_eq_P_st` now goes
+  through `OP_p_at_jointEig_eq_P_st_direct`; the six chain capstones + the LF4 singlet
+  instance + the Empirical Bell re-export are foundational-triple-only.
+  `busch_effect_gleason` is retained only as the **operational-stratum** statement
+  (`pure_state_born_weights_of_certainty`, `born_rank_one`, `OP_p_at_jointEig_eq_P_st`,
+  `ontic_born_frequency`). Two-strata reading: [`../AXIOMS.md`](../AXIOMS.md) §2.4.
+- **Next:** POVMs ([`povm-plan.md`](povm-plan.md)) — the one thing keeping Busch
+  load-bearing in the ontic reading. Open frontier: D1 ([`carve-out-plan.md`](carve-out-plan.md)).
+
+The numbered items below (§1–§14) remain as the standing ledger.
+
 ## Bridge-discipline rules (added 2026-05-21)
 
 `Empirical/CSD/<phenomenon>.lean` files carry LF4-discharge hypotheses

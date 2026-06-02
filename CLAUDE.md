@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Where to start (plans & todos)
+
+**[`specs/INDEX.md`](specs/INDEX.md) is the orientation map** for every plan / todo /
+reference doc, with one-line status on each. Read it first when picking up work. The next
+open tranche is **POVMs** ([`specs/povm-plan.md`](specs/povm-plan.md)); the open frontier
+is **D1** ([`specs/carve-out-plan.md`](specs/carve-out-plan.md)). Axiom posture and the
+two-strata (operational Gleason vs ontic volume) reading live in
+[`AXIOMS.md`](AXIOMS.md) §2.
+
 ## Build Commands
 
 ```bash

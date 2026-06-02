@@ -353,9 +353,9 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Teleportation.teleportation_bell_expansion
 
-/-- info: 'CSD.Empirical.QM.Teleportation.teleportation_recovers_input' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.Empirical.QM.Teleportation.teleportation_branch_recovers_input' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.Teleportation.teleportation_recovers_input
+#print axioms CSD.Empirical.QM.Teleportation.teleportation_branch_recovers_input
 
 -- E3a: No-communication (marginal form). Alice's local unitary U⊗I cannot change
 -- any Bob-side expectation ⟨φ,(I⊗Q)φ⟩; via the Kronecker mixed-product collapse
