@@ -1,0 +1,1267 @@
+FIXING THE MEASURE: DERIVING ||2 FROM SYMMETRY IN
+                    DETERMINISTIC GEOMETRY
+
+                                                           A PREPRINT
+
+                                                    zayn.blore@ou.ac.uk
+                                            www.constraintsurfacedynamics.com
+
+                                                    May 10, 2026
+
+                                           ABSTRACT
+
+We present a symmetry-first account of Born weights for finite-dimensional quantum systems that
+does not take probabilistic postulates as primitive. The core observation is geometric: pure states
+are rays in Cn, hence the operational state space is complex projective space CP n-1, equipped with
+its natural SU (n) action. We show that this symmetry fixes, up to normalisation, a unique SU (n)-
+invariant Borel probability measure on CP n-1, namely the Fubini­Study measure µFS (Kibble 1979;
+Ashtekar & Schilling 1999). Symmetry alone, however, does not determine how weights attach to
+specific outcome projectors. To close this gap without appealing to stochastic axioms, we introduce
+minimal operational consistency requirements for a probability assignment p(P | ) over projectors:
+normalisation on orthonormal resolutions, additivity on orthogonal projectors, noncontextuality, and
+unitary covariance. Here `noncontextuality' is meant in the Gleason sense: the weight assigned to
+a projector depends only on that projector, not on which orthogonal resolution it appears in. No
+global noncontextual value assignment across incompatible contexts is assumed. For n  3 these
+assumptions imply the quadratic form p(P | ) = |P | by a Gleason-class theorem (Gleason
+1957), and the qubit case is handled by a standard strengthening such as extension to POVMs (Busch
+2003). Finally, combining these Born weights with deterministic volume-typicality results from our
+companion work (Paper A) yields observed outcome frequencies as long-run volume ratios under
+measure-preserving dynamics. The result is a compact, finite-dimensional foundation in which Born
+statistics arise from symmetry plus operational consistency, with empirical content residing in the
+typicality and invariance assumptions.
+
+Contents
+
+1 Introduction                                                                                        3
+
+1.1 Framework Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+
+1.2 Postulates addressed . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+
+2 Symmetry and the invariant measure                                                                  5
+
+2.1 State Space, Evolution, and Outcome Regions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+2.2 SU(n) covariance and measure invariance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+2.3 Worked Example: qubit state space and the invariant measure . . . . . . . . . . . . . . . . . . . . . . 6
+
+2.4 General Properties of Volume-Based Outcome Weights . . . . . . . . . . . . . . . . . . . . . . . . . 6
+
+2.5 Robustness properties of volume-based weights . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+2.6 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+              Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+3 Symmetry, Operations, and the Probability Rule                                        9
+
+3.1 States, Outcomes, and Probability Assignments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+3.2 Operational Symmetry Postulates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+
+3.3 Additivity, Normalisation, and Contextual Consistency . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+3.4 Uniqueness of the Probability Rule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+3.5 The Qubit Case and POVM Extension . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+3.6 Mixed States and Subsystems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+4 Discussion                                                                            11
+
+4.1 Volume-Typicality and Frequencies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+4.2 Comparison with Quantum Postulates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+4.3 Limitations and Open Questions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+5 Falsifiability and Empirical Tests                                                    13
+
+5.1 What Could Be Falsified . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+5.2 Prospects and Constraints . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+6 Conclusion                                                                            14
+
+A Comparison with Other Approaches                                                      15
+
+A.1 Everettian (Many-Worlds) Derivations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+A.2 Envariance and Decoherence-Based Arguments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+A.3 Gleason-Type Theorems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+A.4 Hidden-Variable Theories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+B Geometric Interpretation of the Probability Rule                                      17
+
+B.1 Projective State Space and Invariant Measure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+B.2 Measurement Outcomes as Geometric Partitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+B.3 Probability as Relative Geometric Measure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+B.4 Scope and Interpretation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+C Deterministic Volume Typicality and Outcome Robustness                                17
+
+C.1 Deterministic State Space and Invariant Measure . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+C.2 Outcome Regions and Coarse-Graining . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+C.3 Typicality and Emergence of Frequencies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+C.4 Robustness Under Environmental Coupling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+C.5 Relation to the Operational Probability Rule . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+D Glossary of Key Terms                                                                 18
+
+                                                    2
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+1 Introduction
+
+In standard quantum mechanics, the Born rule is introduced as a postulate: for a measurement with orthonormal
+outcome rays {|i}, the probability of outcome i for a pure state | is | i| |2. Although empirically successful, the
+Born rule is usually not derived from more primitive structural requirements. Why should long-run outcome frequencies
+match squared overlaps, and why does the same functional form arise across disparate quantum systems?
+
+This paper gives a symmetry-first explanation in the finite-dimensional setting. We consider a complex Hilbert space
+H = Cn and focus on pure states as rays, so that the operational pure-state space is complex projective space CP n-1.
+The projective space carries a natural SU (n) action, reflecting the absence of any preferred basis in the operational
+description of preparations and measurements.
+
+Our first result is geometric. We identify the epistemic measure on CP n-1 by imposing a single symmetry requirement:
+invariance under the SU (n) action. Under mild regularity conditions, this fixes a unique SU (n)-invariant Borel
+probability measure on CP n-1, namely the Fubini­Study measure µFS, up to normalisation (Kibble 1979; Ashtekar &
+Schilling 1999). This step is purely structural and does not assume probabilistic postulates, stochastic dynamics, hidden
+variables, or interpretive additions. The role of complex rescaling    is to define rays and hence the projective
+state space. It is not an additional symmetry acting nontrivially on CP n-1.
+
+Symmetry alone does not determine how weights attach to particular outcome projectors. To close this gap while
+remaining within an operational framework, we introduce standard consistency requirements for a probability assignment
+p(P | ) on projectors P : normalisation on orthonormal resolutions of the identity, additivity on orthogonal projectors,
+noncontextuality, and unitary covariance. For n  3, these assumptions imply the quadratic form p(P | ) = | P |
+by a Gleason-class theorem (Gleason 1957). The qubit case n = 2 is handled by a standard strengthening such as
+extension from projective measurements to POVMs (Busch 2003). Taken together, SU(n)-invariant projective geometry
+fixes the canonical reference measure on CP n-1, while the operational consistency requirements fix the probability
+functional to the Born form for finite-dimensional systems.
+
+Finally, we connect weights to empirical frequencies using deterministic volume-typicality results developed in the
+companion work (Paper A). In that framework, the system evolves deterministically under a measure-preserving flow
+on the underlying state space, and outcome frequencies arise as long-run volume ratios for typical initial microstates.
+Paper B provides the missing link that identifies the relevant operational weights with the Born form, thereby explaining
+why the volume-based frequencies match squared overlaps in standard quantum mechanics.
+
+We work in finite n because every laboratory apparatus resolves only a finite set of distinguishable outcomes, yielding
+an effective finite-dimensional operational description. Appendix B sketches, at a heuristic level, how parts of the
+symmetry argument may extend under inductive limits; no infinite-dimensional uniqueness theorem is claimed in the
+main text.
+
+The paper is structured as follows. Section 2 fixes the SU (n)-invariant measure on CP n-1 and records the relevant
+geometric consequences. Section 3 states the operational consistency assumptions and derives the Born weights via a
+Gleason-class argument, including the n = 2 case. Section 4 links these weights to observed frequencies using the
+deterministic typicality framework of Paper A. Section 5 discusses scope, limitations, and falsifiable assumptions, and
+outlines potential empirical tests.
+
+1.1 Framework Overview
+
+We work with a finite-dimensional complex Hilbert space H = Cn. Pure states are identified with rays, so the
+operational pure-state space is the complex projective manifold CP n-1. A measurement context is represented by a set
+of mutually orthogonal projectors {Pi} with i Pi = I, corresponding to a finite set of distinguishable outcomes.
+
+Our objective is to explain why outcome weights take the Born form without introducing probabilistic postulates as
+primitives. The strategy has two components.
+
+(i) Symmetry fixes the epistemic measure on state space: The unitary group acts transitively on CP n-1, expressing
+the absence of any preferred basis in the operational description. We impose the requirement that the epistemic measure
+on CP n-1 is invariant under this action. Under mild regularity assumptions, this identifies a unique SU (n)-invariant
+Borel probability measure on CP n-1, namely the Fubini­Study measure µFS, up to normalisation (Kibble 1979;
+Ashtekar & Schilling 1999). This step is purely geometric. Complex rescaling    plays only the role of defining
+rays and hence the projective space.
+
+                                                                      3
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+(ii) Operational consistency fixes the functional form of outcome weights: Symmetry and projective geometry do
+
+not, by themselves, determine how weights attach to particular outcome projectors {Pi}. To obtain a unique weight
+
+rule, we introduce a probability assignment
+
+                                             p(P | )  [0, 1],             (1)
+
+defined for projectors P and rays []  CP n-1, satisfying standard operational consistency requirements: (a)
+
+normalisation on each orthogonal resolution of the identity, (b) additivity on orthogonal projectors, (c) noncontextuality,
+
+and (d) unitary covariance. For n  3, a Gleason-class theorem implies that these conditions force the quadratic form
+
+                                             p(P | ) = | P |              (2)
+
+(Gleason 1957). The qubit case n = 2 is treated by a standard strengthening such as extending the assignment from
+projective measurements to POVMs (Busch 2003).
+
+The present paper determines the operational weights. To connect weights to observed frequencies in repeated trials, we
+rely on deterministic volume-typicality results established in the companion work (Paper A). There, the underlying
+microstate evolves under a measure-preserving flow, and long-run frequencies coincide with volume ratios for typical
+initial conditions. Combining that typicality principle with the uniquely fixed weights above yields the Born statistics
+for finite-dimensional quantum systems, conditional on the stated symmetry and operational assumptions.
+
+In summary, the contribution of this paper is to separate the Born rule problem into a geometric part, which fixes the
+natural invariant measure on CP n-1, and an operational part, which fixes the quadratic weight rule. Paper A then
+
+supplies the deterministic typicality link from weights to observed frequencies.
+
+The logical division of labour is therefore explicit. Paper A establishes the deterministic frequency-from-volume link
+
+for repeated trials under measure-preserving dynamics. The present paper does not reprove that result. Its role is
+narrower: it fixes the operational weight assignment on CP n-1. Symmetry identifies the canonical reference measure
+
+µF S, and standard operational consistency requirements fix the Born-form rule p(P | []) = |P |. When these
+two ingredients are combined, one recovers Born statistics in the finite-dimensional setting.
+
+1.2 Postulates addressed
+
+Standard presentations of finite-dimensional quantum mechanics organise the formalism into a small set of postulates.
+In this setting, these are commonly stated as: (i) pure states are represented by rays in a complex Hilbert space, (ii)
+measurement contexts are represented by orthogonal resolutions of the identity {Pi}, and (iii) outcome weights are
+given by the Born rule. The present work does not seek to replace the kinematic architecture of finite-dimensional
+quantum theory. Rather, it targets the specific question of why the Born weights take the quadratic form.
+
+Accordingly, we treat the Hilbert-space and projective-state-space structure as background. We also assume that
+operational statistics are covariant under changes of basis, expressed by the natural SU (n) action on CP n-1. Within
+
+this setting, the postulate we aim to eliminate as primitive is the probability postulate.
+
+More precisely, this paper addresses the following components.
+
+Given a measurement context represented by a set of mutually orthogonal projectors {Pi} with i Pi = I, the Born
+rule assigns
+
+                                             pi = | Pi | .                (3)
+
+Our aim is to show that this quadratic functional form is fixed by symmetry of the projective state space together with
+standard operational consistency requirements for probability assignments.
+
+The map from weights to observed long-run frequencies in repeated trials is not assumed as an independent stochastic
+axiom. Instead, we adopt the deterministic typicality framework developed in the companion work (Paper A), in which
+a measure-preserving flow on the underlying microstate space yields empirical frequencies as typical volume ratios.
+The present paper supplies the missing identification of the operational weights with the Born form; Paper A supplies
+the frequency interpretation.
+
+At no point do we assume irreducible randomness, collapse dynamics, or any additional hidden-variable stochasticity
+beyond the deterministic measure-preserving framework invoked in the companion typicality result. We also do not
+require interpretive commitments about wavefunction ontology. The argument is finite-dimensional and does not claim
+to resolve issues that arise uniquely in infinite-dimensional settings, relativistic quantum field theory, or thermodynamic
+limits.
+
+In summary, the logical role of the present work is to replace the Born probability postulate with a derivation from
+symmetry and operational consistency, while leaving the remaining finite-dimensional kinematics intact, and to connect
+those derived weights to empirical frequencies via the deterministic typicality results of Paper A.
+
+                                             4
+          Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry         A PREPRINT
+
+Standard postulate                        Status                                           Location
+                                          Blore [2025]                                     this work
+1. Measurement outcomes are stochastic
+and replaced: Outcomes arise from deter-  Replaced: Frequencies emerge from volume ratios  Blore [2025]
+ministic branching structure              in deterministic geometry
+
+2. Probability (interpretive rule)
+
+2 Symmetry and the invariant measure
+
+This section fixes the natural measure on the operational pure-state space. The key principle is basis-independence: if
+a preparation is described only up to a choice of coordinates in H = Cn, then the statistical weight assigned to sets
+of rays should not depend on how we label the underlying degrees of freedom. Mathematically, this is expressed as
+invariance under the natural SU (n) action on CP n-1.
+
+We proceed in two steps. First, we state the symmetry requirement precisely as invariance of a Borel probability measure
+under the SU (n) action. Second, we record the standard uniqueness result: there is a unique SU (n)-invariant Borel
+probability measure on CP n-1, namely the Fubini­Study measure µFS. This provides the geometric input needed
+for the subsequent derivation of Born weights, where operational consistency requirements will fix the functional
+dependence of outcome probabilities on projectors and states.
+
+2.1 State Space, Evolution, and Outcome Regions
+
+Let H = Cn be a complex Hilbert space with inner product ·, ·. We restrict attention to pure states. A nonzero vector
+  H \ {0} represents the same physical pure state as  for any   C, so pure states are identified with rays. The
+
+resulting operational pure-state space is complex projective space
+
+                                          CP n-1 = H \ {0} C.                                            (4)
+
+Equivalently, one may work on the unit sphere S2n-1 = {  H :  = 1} and quotient by global phase U (1),
+
+yielding
+
+                                          CP n-1 = S2n-1/U (1).                                          (5)
+
+We write []  CP n-1 for the ray containing , and denote by
+
+                               : S2n-1  CP n-1, () = [],                                                 (6)
+
+the canonical projection map.
+
+A measurement context is represented by an orthogonal resolution of the identity {Pi}m i=1 on H, where PiPj = ijPi
+and i Pi = I. When convenient, we also refer to a corresponding orthonormal basis of outcome rays {|i} in the
+nondegenerate case, with Pi = |i i|.
+
+Our central geometric object is a Borel probability measure µ on CP n-1, interpreted as the epistemic measure on
+pure states. Our central geometric object is a Borel probability measure µ on CP n-1, interpreted as the epistemic
+measure on pure states.1 For a measurable set A  CP n-1, µ(A) denotes its weight. In the next subsection we impose
+symmetry requirements that single out µ uniquely as the Fubini­Study measure.
+
+2.2 SU(n) covariance and measure invariance
+
+The special unitary group SU (n) acts on H = Cn by   U , preserving the inner product. This induces a
+
+well-defined action on rays,
+
+                              U · [] := [U ], U  SU (n), []  CP n-1,                                     (7)
+
+since U () = (U ) for all   C. We interpret this action as expressing basis-independence of the operational
+description: relabelling the coordinates of H by a unitary transformation should not change the statistical weights
+assigned to sets of pure states.
+
+    1In the broader CSD programme, this projective measure is linked to the ontic Liouville measure by a sector-conditional
+pushforward relation µL = c µF S in the quantum-effective symmetry sector. The present paper uses only the resulting SU (n)-
+invariant projective measure.
+
+                                                 5
+                     Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+Let B(CP n-1) denote the Borel -algebra on CP n-1. A Borel probability measure µ on CP n-1 is called SU (n)-
+invariant if, for every measurable set A  B(CP n-1) and every U  SU (n),
+
+                                             µ(U · A) = µ(A),                                  (8)
+
+where U · A := {U · x : x  A}. This invariance condition is the sole symmetry requirement used to fix the measure
+on the operational pure-state space.
+
+Operational basis-independence is therefore implemented as SU (n)-invariance of µ. This reduces the measure-selection
+problem to the classification of SU (n)-invariant Borel probability measures on CP n-1. In the next subsection we use
+the standard uniqueness result to conclude that µ must coincide with µFS.
+
+2.3 Worked Example: qubit state space and the invariant measure
+
+We illustrate the invariance requirement of Section 2.1 in the simplest nontrivial case, n = 2. For a qubit, the operational
+
+pure-state space is                          CP 1 = S2,
+
+                                                                                               (9)
+
+the Bloch sphere. Concretely, each ray []  CP 1 corresponds to a unique Bloch vector r  R3 with r = 1, defined
+
+by  = | | =          1  I +r·  , where  are the Pauli matrices.
+                     2
+
+The action of SU (2) on rays, []  [U ], induces an action on Bloch vectors by spatial rotations. More precisely, the
+adjoint action U U  corresponds to r  RU r for some RU  SO(3), and every rotation arises from two unitaries
+±U . Thus the invariance condition
+
+                                   µ(U · A) = µ(A), A  B(CP 1),                                (10)
+
+is equivalent, under the identification CP 1 = S2, to invariance of the corresponding measure under all rotations of the
+sphere.
+
+Rotation invariance fixes the measure uniquely. Let µ~ be the pushforward of µ under the identification CP 1 = S2. If µ~
+is a Borel probability measure on S2 invariant under SO(3), then for any two spherical caps of equal solid angle the
+
+invariance implies they have equal µ~-measure. By standard arguments, this forces µ~ to coincide with the normalised
+
+area measure on S2, hence
+
+                                                1
+                                             dµ~(r) = d,                                       (11)
+                                                4
+
+where d is the solid-angle element. Under the identification CP 1 = S2, this normalised area measure is precisely the
+Fubini­Study measure µFS on CP 1.
+
+It is useful to visualise how measurement contexts transform under this symmetry. For the standard qubit measurement
+
+{P0 = |0 0| , P1 = |1 1|}, the outcome rays correspond to the north and south poles of the Bloch sphere. Applying
+U  SU (2) rotates this measurement axis and maps the pair of outcome rays accordingly. The invariance requirement
+
+asserts that the statistical weight assigned by µ to any set of rays is unchanged under such transformations. In higher
+dimensions, the same basis-independence principle is expressed by SU (n)-invariance on CP n-1 and leads to the
+
+unique invariant measure µFS.
+
+2.4 General Properties of Volume-Based Outcome Weights
+
+Section 2.3 illustrates the symmetry principle used in this paper: basis-independence is implemented as invariance of
+a Borel probability measure on CP n-1 under the natural SU (n) action. This section introduces the volume-based
+
+weights that will be used to connect the symmetry-fixed state-space structure to empirical frequencies, following the
+
+deterministic typicality framework developed in the companion work (Paper A).
+
+In that framework, a measurement context induces a measurable partition {i}m i=1 of an outcome-relevant region 0 in
+the underlying microstate space. Given a reference measure  on that space, the corresponding outcome weights are
+
+defined by the normalised volumes
+
+                               wi  =  (i) ,  i  0,                m                            (12)
+                                      (0)
+                                                                     i = 0.
+
+                                                                 i=1
+
+The role of the present paper is to determine the functional form of these operational weights for finite-dimensional
+quantum measurements from symmetry and operational consistency requirements. The role of Paper A is to justify the
+identification of such weights with observed long-run frequencies under repeated macroscopic preparations.
+
+                                             6
+             Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry    A PREPRINT
+
+More precisely, volume-typicality results imply that if the underlying dynamics preserves  and preparations sample
+typical initial conditions within 0, then the relative volumes wi coincide with outcome frequencies in the limit of
+many trials (Blore 2025). In this sense, empirical frequency data probe the assumptions of typicality and measure
+preservation, while the present paper fixes the operational weight rule to which those frequencies are compared.
+
+2.5 Robustness properties of volume-based weights
+
+We collect several basic invariance and robustness properties of the volume-based outcome weights defined in Section 2.4.
+
+Let (, F, ) denote the underlying microstate space, equipped with a -algebra F and a reference measure . Let
+
+0  F be an outcome-relevant region and let {i}m i=1 be a measurable partition of 0 with  i i = 0. The weights
+                                                                                                                (13)
+are                                                (i) .
+                                                   (0)
+                    wi  =
+
+Invariance under measure-preserving reparameterisation: If  :    is a measurable bijection whose
+pushforward preserves , in the sense that ((A)) = (A) for all A  F, then
+
+             ((i)) = (i), ((0)) = (0),                                                                           (14)
+
+and hence the weights are unchanged. This expresses coordinate-independence: the predictions depend only on the
+measure-class and the partition, not on an arbitrary choice of parametrisation of .
+
+Dependence on the observable partition: The regions i depend on the measurement context, which can be
+represented abstractly by a measurable map f : 0  O to a finite outcome set O = {oi}, with i = f -1(oi). Different
+coarse-grainings generally yield different partitions and therefore different weights. However, if two measurement
+contexts are related by a symmetry G :    that preserves , and the preparation is transformed accordingly, then
+the induced partitions have equal weights:
+
+             wi  =  (i)                            =  (G(i)) .                                                   (15)
+                    (0)                               (G(0))
+
+This formalises the requirement that physically equivalent measurements yield the same statistical predictions.
+
+Stability under measure-preserving evolution: Let {t}tR be a measurable flow on  that preserves , so that
+(t(A)) = (A) for all A  F and all t. Then
+
+                 (t(i)) = (i),                                                                                   (16)
+
+and the weights are time-invariant. This expresses stationarity of the volume-based weights under measure-preserving
+deterministic dynamics.
+
+Boundary insensitivity: If i and i differ only by a set of -measure zero, that is, (ii ) = 0, then they define
+the same weights. In particular, modifications of partition boundaries that remain contained within a -null set do
+
+not affect the predictions. This is the basic robustness requirement that microscopic boundary refinements should not
+
+change empirical weights.
+
+2.6 Summary
+
+We have fixed the geometric setting for the finite-dimensional problem. Pure states are rays, so the operational pure-state
+space is CP n-1 (Section 2.1). Basis-independence is implemented as invariance under the natural SU (n) action on
+CP n-1 (Section 2.2). The qubit case CP 1 = S2 illustrates this invariance concretely: SU (2) covariance corresponds
+
+to rotational invariance on the Bloch sphere, which uniquely selects the uniform probability measure, identified with the
+
+normalised Fubini­Study measure µFS (Section 2.3).
+
+Separately, following the deterministic typicality framework of the companion work (Paper A), we introduced volume-
+based outcome weights as normalised measures of outcome regions in an underlying microstate space (, F, ):
+
+                    wi  =                          (i) .                                                         (17)
+                                                   (0)
+
+These weights obey the formal properties of probability assignments and enjoy robustness under measure-preserving
+reparameterisations, symmetries, and measure-preserving evolution (Sections 2.4­2.5). No stochastic input is required
+at the level of their definition.
+
+                                                   7
+        Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+What remains is to connect the geometric and operational structures to the specific functional form of quantum weights.
+Section 3 therefore analyses the conditions under which a probability assignment p(P | ) for projectors P and rays
+[]  CP n-1 is uniquely fixed. Symmetry fixes the natural invariant measure on state space, but to determine the
+
+dependence of weights on projectors one also requires standard operational consistency conditions such as normalisation
+
+on orthogonal resolutions, additivity on orthogonal projectors, noncontextuality, and unitary covariance. A Gleason-class
+theorem will then imply the Born form for n  3, with the qubit case handled by a standard strengthening.
+
+Symbol       Table 1: Glossary Table
+
+        Meaning
+t
+        Underlying microstate space in the deterministic typicality frame-
+O       work (Paper A)
+f
+i       Measure-preserving flow on : t :   
+wi      Reference measure on , preserved by t
+H       Finite outcome set O = {o1, . . . , om}
+SU (n)  Outcome map (measurement context) f : 0  O
+        Outcome region i = f -1(oi)  0  
+CP n-1  Volume-based weight wi = (i)/(0)
+        Finite-dimensional Hilbert space H = Cn
+µFS     Special unitary group acting on H and inducing an action on
+        CP n-1
+
+        Complex projective space of rays [], the operational pure-state
+        space
+
+        Fubini­Study (normalised) SU (n)-invariant probability measure
+        on CP n-1
+
+        8
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+3 Symmetry, Operations, and the Probability Rule
+
+This section constrains the form of the quantum probability rule from operational symmetry considerations. The object
+of analysis is the assignment of probabilities to measurement outcomes given a prepared quantum state. States are
+treated as equivalence classes under physically irrelevant transformations, represented by rays [] in a finite-dimensional
+Hilbert space, while measurement outcomes are represented by projectors or, more generally, by effects.
+
+Probabilities are viewed as functions p(E | []) of the prepared state and the chosen measurement operation. We
+impose invariance under transformations that correspond to changes in description or experimental implementation
+without observable consequence. These include global phase transformations of state representatives and unitary
+changes of measurement context, under which corresponding outcomes and states are related covariantly. Together with
+normalisation and additivity over exclusive outcomes, these operational symmetries uniquely constrain the admissible
+probability assignments.
+
+This section does not attempt to derive the Schrödinger equation, the linearity of quantum dynamics, or any autonomous
+evolution equation for ||2. Phase information is essential for quantum dynamics and is not removed by the present
+analysis. The result obtained here concerns only the unique probability functional compatible with the stated operational
+symmetries and consistency requirements.
+
+3.1 States, Outcomes, and Probability Assignments
+
+We work in a finite-dimensional complex Hilbert space H = Cn. A physical state preparation is represented by a ray
+[], defined as an equivalence class of nonzero vectors   H under multiplication by a nonzero complex scalar. This
+reflects the operational irrelevance of global phase and overall normalization for probability assignments.
+
+Measurement outcomes are represented by projectors P acting on H in the case of sharp measurements, or more
+generally by positive operators E satisfying 0  E  I, corresponding to effects in a positive-operator-valued measure.
+A measurement context is specified by a set of mutually exclusive outcomes {Ei} satisfying i Ei = I.
+
+The central object of this section is a probability assignment
+
+                                                           p(E | [])  [0, 1],
+
+giving the probability of observing outcome E when the system is prepared in state []. This assignment is assumed
+to depend only on the ray [] and on the operationally defined measurement outcome E, and not on the particular
+choice of state representative or on details of the experimental implementation. For each measurement context {Ei},
+the probabilities are required to satisfy normalisation,
+
+                                                  p(Ei | []) = 1,
+
+                                               i
+
+without yet specifying their functional form.
+
+3.2 Operational Symmetry Postulates
+
+We now specify the operational symmetries that constrain admissible probability assignments. These symmetries
+express the requirement that probabilities be invariant under transformations corresponding to physically irrelevant
+changes in description or experimental implementation.
+
+First, probabilities must be invariant under global phase transformations of the state representative. Since global phase
+has no operational significance, the probability assignment satisfies
+
+                                                      p(E | []) = p(E | [ei])
+
+for all real .
+
+Second, probabilities must be covariant under unitary transformations that represent changes of measurement context or
+descriptive basis. If a state preparation and a measurement outcome are transformed jointly by a unitary operator U , the
+corresponding probabilities are required to be preserved:
+
+                                                    p(E | []) = p(U EU  | [U ]).
+
+Here, unitary transformations are taken as the symmetry operations that relate experimentally equivalent implementa-
+tions, not as dynamical evolutions derived within the present framework.
+
+These symmetry postulates ensure that probability assignments depend only on operationally meaningful features of the
+preparation and measurement, and not on arbitrary representational choices.
+
+                                                   9
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry                            A PREPRINT
+
+3.3 Additivity, Normalisation, and Contextual Consistency
+
+In addition to the operational symmetry requirements specified above, admissible probability assignments must satisfy
+basic consistency conditions reflecting the structure of measurement outcomes.
+
+For any measurement context defined by a finite set of mutually exclusive outcomes {Ei} satisfying  i Ei = I,
+probabilities are required to be normalised,
+
+                                                               p(Ei | []) = 1.
+
+                                                                                      i
+
+Probabilities must also be additive over mutually exclusive outcomes within a given measurement context. If two effects
+E and F correspond to exclusive outcomes in the same context, so that EF = 0, then the probability assigned to their
+coarse-grained outcome satisfies
+
+p(E + F | []) = p(E | []) + p(F | []).
+
+These additivity and normalisation conditions are imposed as operational consistency requirements on probability
+assignments within each measurement context. They do not presuppose any specific functional form for p(E | []), nor
+do they impose relations between probabilities associated with incompatible measurement contexts.
+
+3.4 Uniqueness of the Probability Rule
+
+We now combine the operational symmetry and consistency conditions specified above to constrain the admissible
+probability assignments. The result is a uniqueness statement for the probability rule associated with sharp measurement
+outcomes. In what follows, the projective-measurement argument applies directly for n  3; the n=2 (qubit) case
+requires the standard POVM-strengthening treated separately in Section 3.5.
+
+Consider a fixed measurement context defined by a finite set of mutually orthogonal projectors {Pi} satisfying
+   i Pi = I. The assignment p(Pi | []) defines a frame function on the lattice of projectors, satisfying normalisation
+
+and finite additivity within each context. Together with unitary covariance, this ensures that the probability assignment
+depends on the state only through the ray [] and transforms consistently under changes of measurement basis.
+
+For Hilbert spaces of dimension n  3, these conditions fall within the scope of Gleason-type representation theorems.
+Under the standard assumptions of finite additivity, boundedness, and noncontextuality within measurement contexts,
+such theorems imply that there exists a unique density operator [] associated with each ray [] such that
+
+                                                        p(P | []) = Tr([]P )
+
+for all projectors P . For pure state preparations, [] = ||, yielding the familiar Born form
+
+                                                         p(P | []) = |P |.
+
+This result is invoked as a constraint on admissible probability assignments given the stated operational symmetries and
+consistency requirements. No claim is made here regarding the dynamics of quantum states or the ontological status of
+.
+
+3.5 The Qubit Case and POVM Extension
+
+The uniqueness result of the previous subsection relies on representation theorems that apply directly to Hilbert spaces
+of dimension n  3. The two-dimensional case therefore requires separate consideration.
+
+For qubit systems, restriction to projective measurements alone is insufficient to uniquely fix the probability rule.
+We adopt the standard POVM-extension route because it is the minimal operational strengthening that restores a
+Gleason-type uniqueness theorem in dimension two while preserving the finite-dimensional focus of the present paper.
+
+Allowing POVMs constitutes an operational strengthening of the measurement framework rather than a change of
+physical assumptions. Under this extension, Gleason-type representation results apply also in dimension two, implying
+that admissible probability assignments admit a trace representation,
+
+                                                        p(E | []) = Tr([]E),
+
+for all effects E. For pure state preparations, [] = ||, yielding the Born form for qubit measurements as well.
+
+Thus, once operational symmetry and consistency requirements are imposed uniformly across all admissible measure-
+ment procedures, the probability rule is uniquely fixed in all finite dimensions.
+
+10
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+3.6 Mixed States and Subsystems
+
+The preceding analysis has focused on probability assignments associated with pure state preparations. In experimental
+practice, however, preparations may involve classical uncertainty or access to only a subsystem of a larger composite
+system. It is therefore necessary to extend the probability rule to mixed states.
+Operationally, a mixed state is represented by a density operator , encoding either a classical mixture of preparation
+procedures or the effective description of a subsystem obtained by tracing over inaccessible degrees of freedom. Given
+a measurement outcome represented by an effect E, the probability assignment is
+
+                                                          p(E | ) = Tr(E).
+
+This extension is consistent with the operational symmetry and additivity requirements imposed above. In particular,
+convex combinations of preparation procedures correspond to convex combinations of probability assignments,
+
+                                  p(E | 1 + (1 - )2) =  p(E | 1) + (1 - ) p(E | 2),
+
+reflecting classical uncertainty at the level of preparation rather than any additional quantum structure.
+
+The trace form of the probability rule thus extends uniformly to mixed states and subsystems without introducing new
+assumptions beyond operational consistency.
+
+4 Discussion
+
+The analysis above isolates two structural constraints in the finite-dimensional setting: SU(n) invariance fixes the
+canonical measure on CP n-1, and a standard operational consistency package fixes the admissible probability functional
+to the Born form. A separate typicality argument then links these weights to long-run frequencies in deterministic
+models where outcome regions are well-defined.
+
+First, we clarify how volume-typicality connects to observable outcome frequencies, and why no probability postulate is
+needed (Section 4.1). Next, we compare this approach with the conventional axioms of quantum mechanics, identifying
+which postulates are replaced or made redundant (Section 4.2). Finally, we outline the limitations of the current
+framework and identify key open questions for future work (Section 4.3).
+
+Throughout, the focus remains on what this derivation requires and what it does not. The success of the volume-weighted
+approach does not depend on philosophical stance. It is a structural result grounded in symmetry, continuity, and the
+intrinsic geometry of the state space.
+
+4.1 Volume-Typicality and Frequencies
+
+The outcome weights wi = µ(i)/µ(0) derived in Sections 2 and 3 have the form of a probability distribution but
+arise from purely geometric and deterministic considerations. No stochastic dynamics or collapse process is involved in
+their definition. Instead, these weights describe the relative volume of each outcome region under a measure-preserving
+flow on a compact state space.
+
+This supports the notion of volume-typicality introduced in Blore [2025], where observed outcome frequencies are
+understood as long-run frequencies generated by a deterministic system under repeated macroscopic preparation. More
+precisely, the companion result is formulated for repeated trials together with the reset structure specified in Paper
+A, not as a general claim about arbitrary single-trajectory ergodic averaging. Under the stated measure-preserving
+and typicality assumptions, the observed frequency of each outcome approaches wi for almost all admissible initial
+microstates.
+
+This approach to frequency is entirely deterministic:
+
+        · The system evolves predictably from each microstate via the flow t.
+        · The partition {i} is defined geometrically by the observable.
+        · The outcome label i is a deterministic function of the initial microstate.
+        · The outcome weights arise solely from the relative measure of the outcome regions.
+
+What appears probabilistic at the macroscopic level is thus the consequence of two factors: our ignorance of the specific
+microstate, and the fact that outcome labels arise from coarse-graining a continuous state space. The term "typicality"
+reflects this: most microstates consistent with a given preparation lie in outcome regions in proportion to their volume.
+
+                                                                     11
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+Importantly, this view differs sharply from conventional probabilistic interpretations of quantum mechanics. Here,
+frequencies emerge not from intrinsic indeterminism, but from the geometric structure of the dynamical system and its
+symmetries.
+
+This closes the explanatory loop: the Born rule is recovered not by assumption or statistical postulate, but by identifying
+how deterministic systems produce stable ensemble frequencies under well-defined geometric constraints.
+
+4.2 Comparison with Quantum Postulates
+
+Standard formulations of quantum mechanics rely on several core postulates, including:
+
+       1. State Postulate: A system is fully described by a unit vector | in a Hilbert space H.
+       2. Observable Postulate: Physical observables correspond to Hermitian operators on H, with eigenvalues
+
+           representing possible outcomes.
+       3. Evolution Postulate: The state evolves unitarily via the Schrödinger equation.
+       4. Measurement Postulate (Born Rule): Upon measurement in basis {|i}, the probability of outcome i is
+
+           given by P (i) = |i||2.
+       5. Collapse Postulate: After measurement, the system collapses to the eigenstate corresponding to the observed
+
+           outcome.
+
+The framework presented in this paper recovers the outcome statistics implied by Postulate 4 but does so without
+invoking it. Instead, the result wi = |i||2 emerges from deterministic dynamics and symmetry-constrained
+geometry alone.
+
+Specifically:
+
+        · The Born rule is fixed by SU(n)-invariant projective geometry together with operational consistency (Gleason-
+           class, with the qubit POVM strengthening); volume-typicality then links these weights to observed frequencies.
+
+        · No probabilistic interpretation is invoked. Frequencies arise from volume ratios over coarse-grained outcome
+           regions, not from stochastic collapse or epistemic randomness.
+
+        · The derivation is agnostic to ontological commitments. It does not rely on hidden variables, wavefunction
+           branching, or subjective belief updating.
+
+This geometric account thus provides an explanatory foundation for outcome frequencies that is logically prior to the
+standard postulates. It suggests that if the quantum formalism is an emergent statistical description of an underlying
+deterministic system, then the Born rule need not be fundamental, it can be derived.
+
+Moreover, by grounding outcome statistics in measurable geometric volumes on a symmetric state space, the approach
+sidesteps long-standing controversies over collapse and interpretation. It offers a clear distinction between what
+is observed (frequencies) and what is explained (volume typicality), without needing to assert how or whether the
+wavefunction itself is ontic.
+
+In this way, the approach complements the operational success of standard quantum theory while offering a deeper
+structural account of one of its most fundamental statistical rules.
+
+4.3 Limitations and Open Questions
+
+While this paper establishes that the Born rule is the unique probability rule compatible with SU(n)-invariant projective
+geometry together with standard operational consistency constraints, several important limitations remain. These
+concern the scope of applicability, the treatment of composite systems, and the possible extension to more general
+observables.
+
+Finite-Dimensional Systems
+
+The derivation presented here is restricted to systems represented by finite-dimensional state spaces. The symmetry
+constraints used in Section 3 rely on the compactness of the projective state space and the unitary invariance of the
+measure µ.
+While this derivation is restricted to finite-dimensional systems with compact projective state space S = CP n-1,
+extensions beyond finite n are not claimed here. Any continuum or infinite-dimensional limit would require separate
+
+                                                                     12
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+work to establish the appropriate invariant measure, the relevant symmetry group, and the persistence of the operational
+consistency constraints under the limit.
+
+Beyond Projective Measurements
+
+The main derivation treats sharp projective measurements. The qubit case n=2 uses the standard strengthening to
+POVMs (Section 3.5) to recover the same quadratic form.
+
+Empirical Signatures
+
+Although the volume-based framework reproduces the Born rule under well-defined assumptions, it currently makes no
+novel empirical predictions. This limits its immediate falsifiability.
+
+Summary
+
+This paper establishes that deterministic evolution on a symmetry-constrained state space yields outcome frequencies
+matching the Born rule, with no need for stochastic postulates. What remains is to extend, test, and refine the model:
+
+        · Can the framework accommodate entanglement, decoherence, or information flow?
+        · Can or should it be generalised to infinite dimensions or continuous spectra?
+        · Are there regimes, cosmological, mesoscopic, or gravitational, where deviations might appear?
+
+These questions define the natural next steps for a volume-based approach to quantum foundations.
+
+5 Falsifiability and Empirical Tests
+
+Any proposed explanation of the Born rule must be subject to empirical scrutiny. While the standard quantum formalism
+takes P (i) = |i||2 as an axiom, the present framework derives it from deterministic geometry. This opens the door
+to testing the assumptions under which the derivation holds.
+The key empirical claim is this:
+If macroscopic preparation procedures select microstates uniformly (with respect to a symmetry-invariant, volume-
+preserving measure µ) over the state space S, and if observable outcomes correspond to well-defined partitions {i},
+then the frequency of each outcome should converge to wi = µ(i)/µ(0) = |i||2.
+Any persistent deviation from this rule, under controlled, repeatable conditions, would falsify one or more assumptions
+of the volume-typicality framework.
+For example, Interferometry as a Test of the Measure:
+The geometric symmetry-based framework predicts outcome frequencies proportional to ||2 for all quantum systems.
+One feasible test platform is quantum interferometry, such as a Mach­Zehnder interferometer with adjustable phase
+delay. A single-photon source prepares quantum states with tunable path amplitudes, and detectors at the output arms
+record relative frequencies.
+To test for deviations, one can prepare a known input state | =  |0 +  |1, vary the phase , and record output
+detection rates. By comparing empirical frequencies one can detect or constrain non-quadratic scaling in the effective
+probability rule.
+
+                                                                                                                             
+Current photon-counting experiments can detect deviations in balanced configurations (|| = || = 1/ 2). No such
+deviations have been observed, but improved precision could probe closer to the symmetry-derived limit.
+Another example, Experimental Implementation in Superconducting Qubit Arrays:
+Here high-fidelity unitary operations and repeated state preparation are now routine. These systems allow precise
+engineering of states |  Cd, with control over initialization, entanglement, and measurement axes via microwave
+gate sequences.
+To test the volume-based prediction µ  ||2, one can:
+
+        · Prepare superpositions of known amplitudes (e.g. | =  |0 +  |1),
+
+                                                                     13
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+        · Measure in multiple bases via tomographic rotation gates,
+        · Compare the empirical frequencies of outcomes across repeated trials to the expected Born-rule predictions.
+
+This experimental route tests the core claim of the paper: that the ||2 rule follows from geometric symmetry constraints,
+not from axiomatic postulates or probabilistic collapse.
+
+5.1 What Could Be Falsified
+
+There are several concrete ways in which the framework could, in principle, fail:
+
+        · Asymmetry in Microstate Sampling: If physical preparation procedures do not yield an invariant ensemble
+           of microstates, but instead bias toward specific regions of , the resulting outcome frequencies would deviate
+           from those predicted by µ(i). High-precision preparation and tomography could test this.
+
+        · Violation of Volume Preservation: If the dynamics t fail to preserve volume (e.g. due to dissipation,
+           decoherence, or external interaction), then weights computed from µ(i) would not remain stable. Time-
+           dependent statistical drift could indicate such effects.
+
+        · Failure of Coarse-Graining Consistency: If the macroscopic observable does not yield a sharp partition of
+          , or if microscopic ambiguity leads to smeared outcomes, then deviations from the sharp-volume rule may
+           arise. This could be probed by increasing measurement resolution.
+
+        · Incompatibility in Composite Systems: If experiments on entangled systems reveal correlations inconsistent
+          with any SU (n)-invariant volume assignment across tensor products of , the framework would require
+           modification.
+
+5.2 Prospects and Constraints
+
+At present, no empirical deviation from the Born rule has been confirmed. The volume-based derivation aligns perfectly
+with standard outcome statistics wherever they have been tested. However, the framework provides a conceptual
+advantage: its assumptions are visible, structural, and testable. This is in contrast to postulates treated as fundamental
+or axiomatic.
+
+The challenge for future work is to identify realistic experimental contexts, possibly involving decoherence, gravitational
+effects, or high-precision state preparation, where deviations from the assumed geometry might occur.
+
+6 Conclusion
+
+This paper has shown how Born weights can be fixed in a finite-dimensional setting from symmetry and operational
+consistency, without taking probabilistic postulates as primitive. The geometric starting point is that pure states are
+rays, so the operational pure-state space is complex projective space CP n-1. Basis-independence is implemented as
+invariance under the natural SU (n) action on CP n-1, which uniquely selects the normalised Fubini­Study measure
+µFS as the invariant probability measure on state space.
+
+Symmetry alone does not determine how weights attach to particular outcome projectors. To fix the functional form of
+outcome weights, we introduced standard operational consistency requirements for a probability assignment p(P | )
+on projectors, including normalisation on orthogonal resolutions, additivity on orthogonal projectors, noncontextuality,
+and unitary covariance. For n  3 these conditions imply the quadratic form p(P | ) = | P | by a Gleason-class
+theorem, with the qubit case handled by a standard strengthening such as extension to POVMs. In this sense the Born
+form is not assumed, but singled out by symmetry together with operational coherence.
+
+The link from weights to observed long-run frequencies is supplied by the deterministic volume-typicality framework
+developed in the companion work (Paper A). There, measurement contexts induce measurable outcome partitions
+of an underlying microstate space, and under measure-preserving dynamics typical initial conditions yield empirical
+frequencies equal to the corresponding volume ratios. The present paper identifies the unique operational weight rule to
+which those volume-based frequencies should be compared.
+
+The framework is intentionally finite-dimensional and makes no claims of an infinite-dimensional uniqueness theorem,
+nor of an immediate extension to relativistic quantum field theory. Its empirical content resides in the stated invariance
+and operational assumptions and in the typicality and measure-preservation conditions required for the frequency link.
+Within that scope, the result supports a deterministic foundation in which Born statistics arise from symmetry and
+operational consistency, and observed randomness is understood as typicality under measure-preserving evolution rather
+than as a fundamental stochastic postulate.
+
+                                                                     14
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+A Comparison with Other Approaches
+
+Numerous attempts have been made to derive or justify the Born rule from deeper principles. While differing in
+assumptions, scope, and interpretation, these approaches share the goal of explaining quantum outcome statistics
+without postulating them. Below, we briefly compare the present volume-based framework with several leading
+alternatives.
+
+A.1 Everettian (Many-Worlds) Derivations
+
+In Everettian frameworks, all outcomes occur, and probabilities are interpreted as branch weights. Modern versions
+appeal to decision theory [Deutsch, 1999, Wallace, 2012] or typicality over branches [Vaidman, 2022].
+
+        · Strength: Retains the full formalism of quantum theory.
+        · Limitation: Requires interpretational commitments (e.g. branching reality, rational agents).
+        · Comparison: The present framework fixes the Born form as the unique operationally coherent weight rule in
+
+           finite dimensions (Gleason-class, with a qubit strengthening) and treats the link to observed frequencies via
+           deterministic volume-typicality in the companion work (Paper A).
+
+A.2 Envariance and Decoherence-Based Arguments
+
+Zurek's envariance program [Zurek, 2003] uses entanglement symmetry to argue that amplitudes must square to produce
+consistent reduced states. Decoherence is invoked to explain effective outcome separation.
+
+        · Strength: Tied to physical processes like entanglement and environment.
+        · Limitation: Envariance is subtle, and derivations often assume partial trace properties or reduced-state
+
+           normalisation.
+        · Comparison: The volume-based approach obtains the Born form from symmetry plus operational coherence
+
+           constraints in finite dimensions (Gleason-class, with a qubit strengthening) and treats the frequency link
+           separately via deterministic volume-typicality in the companion work (Paper A).
+
+A.3 Gleason-Type Theorems
+
+Gleason's theorem [Gleason, 1957] and its generalisations show that, under certain conditions, any probability measure
+on projectors must match the Born rule.
+
+        · Strength: Rigorous mathematical constraint from Hilbert space axioms.
+        · Limitation: Assumes the Hilbert space formalism and measure additivity from the outset.
+        · Comparison: This paper adopts these coherence constraints but embed them in a symmetry-fixed projective
+
+           geometry, using SU (n) invariance to select µFS and Paper A typicality to interpret the resulting weights as
+           long-run frequencies.
+
+A.4 Hidden-Variable Theories
+
+In deterministic models like Bohmian mechanics [Bohm, 1952a,b], the Born rule is typically imposed as an initial
+condition on the distribution of hidden variables.
+
+        · Strength: Provides a deterministic ontology.
+        · Limitation: Requires a postulated equilibrium distribution, typically not derived.
+        · Comparison: Our framework does not introduce additional ontic variables beyond the operational state
+
+           description, and instead fix the Born form from symmetry plus operational coherence (Gleason-class, with a
+           qubit strengthening), with frequencies linked via deterministic volume-typicality in Paper A.
+
+The volume-typicality framework uniquely combines:
+
+        · Determinism,
+        · No hidden structure,
+
+                                                                     15
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry        A PREPRINT
+
+· No appeal to rational agents,
+
+· And a self-contained derivation of the Born rule from geometry and symmetry.
+                                                             16
+                     Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry                     A PREPRINT
+
+B Geometric Interpretation of the Probability Rule
+
+This appendix provides a geometric interpretation of the probability rule established operationally in Section 3. The
+purpose of this construction is explanatory rather than deductive. It illustrates how the Born form naturally arises when
+probability assignments are realised as measures on state space that respect the same operational symmetries imposed
+in the main text.
+
+No new assumptions are introduced here, and no independent derivation of the probability rule is claimed. The
+uniqueness of the probability assignment follows from the operational analysis of Section 3. The geometric picture
+presented below is compatible with that result and provides an intuitive realisation of it.
+
+B.1 Projective State Space and Invariant Measure
+
+Let H = Cn be a finite-dimensional Hilbert space. Pure physical states are represented by rays [], forming the
+
+complex  projective  space       n-1  .  This  space  carries  a  natural  Riemannian  structure  given  by  the  Fubini­Study  metric,
+
+                            CP
+
+which is invariant under the action of the unitary group SU (n).
+
+Associated with this metric is a unique unitarily invariant volume measure µFS on CPn-1, normalised so that
+µFS(CPn-1) = 1. This measure provides a canonical notion of uniformity over pure states, consistent with the
+
+operational symmetries imposed in Section 3.
+
+B.2 Measurement Outcomes as Geometric Partitions
+
+Consider a sharp measurement defined by a set of mutually orthogonal projectors {Pi} satisfying i Pi = I. Each
+projector defines a subset of projective space associated with the corresponding outcome.
+
+Operationally, a measurement context induces a partition of CPn-1 into disjoint regions {i}, where each region i
+corresponds to outcome Pi. These regions are defined relative to the measurement context and transform covariantly
+under unitary transformations. No physical dynamics on CPn-1 is assumed or required.
+
+B.3 Probability as Relative Geometric Measure
+
+Within this geometric framework, the probability assigned to outcome Pi for a prepared state [] may be interpreted as
+the relative measure of the region i with respect to the invariant measure µFS, conditioned on the preparation.
+Imposing unitary invariance and additivity over mutually exclusive outcomes uniquely fixes the dependence of this
+measure on the prepared ray. The resulting probability assignment takes the form
+
+                                                        p(Pi | []) = |Pi|,
+
+in agreement with the Born rule obtained operationally in Section 3.
+
+B.4 Scope and Interpretation
+
+The geometric construction presented here does not posit an autonomous dynamics for probabilities, nor does it interpret
+quantum evolution as motion on projective space. Geometry enters solely as a means of representing operationally
+invariant probability assignments.
+
+Accordingly, this appendix should be read as providing an intuitive geometric realisation of the probability rule already
+fixed by operational symmetry and consistency, rather than as an independent derivation or physical model.
+
+C Deterministic Volume Typicality and Outcome Robustness
+
+This appendix collects the deterministic and measure-theoretic assumptions underlying the volume-based interpretation
+of outcome weights used in this paper. These assumptions are not required for the operational uniqueness result
+established in Section 3. Rather, they provide a concrete physical realisation of how the uniquely fixed probability rule
+may arise from deterministic dynamics on an underlying state space.
+
+                                                                  17
+                   Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+C.1 Deterministic State Space and Invariant Measure
+
+Let  be a smooth, compact, finite-dimensional manifold representing the microstate space of the system. We assume
+the existence of a deterministic flow
+
+                                                               t :   
+generated by a smooth vector field and preserving a normalised measure µ,
+
+                                                           µ(t(A)) = µ(A)
+for all measurable subsets A   and all times t. No assumption of ergodicity is required. The invariant measure µ
+defines a notion of typicality on .
+
+C.2 Outcome Regions and Coarse-Graining
+
+Measurement is modelled as a coarse-graining map
+
+                                                  f :   O,
+
+where O = {oi} is a finite set of macroscopically distinguishable outcomes. Each outcome oi corresponds to a
+
+measurable region                        i = f -1(oi)  ,
+
+with the regions {i} forming a partition of a reference region 0  .
+
+Outcome weights are defined as relative volumes,
+
+                                                  wi  =  µ(i) .
+                                                         µ(0)
+
+C.3 Typicality and Emergence of Frequencies
+
+Under deterministic, measure-preserving dynamics, standard typicality arguments imply that for µ almost all i.i.d. se-
+quences of initial conditions drawn from the preparation ensemble, empirical frequencies converge to the corresponding
+weights wi. The appearance of probabilistic frequencies thus reflects the predominance of typical microstates rather
+than intrinsic stochasticity.
+
+C.4 Robustness Under Environmental Coupling
+
+In realistic settings, systems interact with additional degrees of freedom. We model this by extending the state space to
+                                                          tot = sys × env,
+
+with joint dynamics preserving the product measure µtot = µsys × µenv.
+Outcome regions extend to product regions
+
+                                                              i = i × Ei,
+where Ei  env represent correlated environmental configurations. Provided the system-level regions i remain
+disjoint and macroscopically stable, the relative volume ratios remain approximately invariant,
+
+                                                           µtot(i)  µ(i) .
+                                                           µtot(0) µ(0)
+
+C.5 Relation to the Operational Probability Rule
+
+When the invariant measure on the effective state space is identified with a unitarily invariant measure on projective
+Hilbert space, and outcome regions are defined compatibly with quantum observables, the volume-based weights wi
+coincide numerically with the probability rule fixed operationally in Section 3.
+
+Accordingly, this appendix provides a deterministic realisation of the operationally established probability rule, without
+introducing additional probabilistic postulates or modifying the symmetry-based analysis of the main text.
+
+D Glossary of Key Terms
+
+ (psi): A complex vector representing the state of a finite-dimensional quantum system. In this paper,   Cn is
+treated as an operational descriptor of system preparation, not a fundamental ontological object.
+
+                                                         18
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+Outcome region, i: A measurable, disjoint subset of the unit sphere in state space corresponding to a macroscopi-
+cally distinguishable outcome. Each i is constructed to align with a specific observable result.
+
+Volume-typicality: The principle that, in a deterministic system with branching, long-run frequencies of outcomes
+are determined by the invariant volume of each outcome region. A "typical" trajectory lies in the largest such region
+compatible with its history.
+
+Branching: The partitioning of state space into disjoint regions as the system evolves, representing distinct future
+outcomes. Branching is deterministic and geometric, not probabilistic.
+
+Invariant measure, µ: A volume measure on state space preserved under the system's deterministic dynamics.
+Frequencies of outcomes are given by µ(i)/µ(0), where 0 is the full accessible state region.
+
+Symmetry constraints: The physical invariances imposed on the system, specifically:
+
+        · Complex-scaling symmetry:    for   C
+        · Unitary covariance:   U  for U  SU (n)
+
+These ensure the measure respects physical indistinguishability of rescaled, rotated, or phase-shifted states.
+
+Deterministic flow, t: A smooth, volume-preserving evolution map t :    that governs how states evolve
+over time. Used in Blore [2025] to track branching and outcome region volumes.
+
+References
+
+Vladimir I. Arnold. Mathematical Methods of Classical Mechanics. Springer, New York, 2nd edition, 1989. ISBN
+   9780387968902.
+
+Vladimir Igorevich Arnold and A. (André) Avez. Ergodic problems of classical mechanics. The mathematical physics
+   monograph series. Benjamin, 1968. URL https://cir.nii.ac.jp/crid/1130282273312514176.
+
+Abhay Ashtekar and Troy A. Schilling. Geometrical formulation of quantum mechanics. In On Einstein's Path, page
+   23­65. Springer, 1999. doi:10.1007/978-1-4612-1438-0_2.
+
+J. S. Bell. On the einstein podolsky rosen paradox. Physics Physique, 1(3):195­200, November 1964. ISSN 0554-128X.
+   doi:10.1103/physicsphysiquefizika.1.195. URL http://dx.doi.org/10.1103/PhysicsPhysiqueFizika.1.
+   195.
+
+Ingemar Bengtsson and Karol Z yczkowski. Geometry of Quantum States: An Introduction to Quantum Entanglement.
+   Cambridge University Press, Cambridge, 2006. ISBN 9780521814515.
+
+Zayn Blore. Volume-based probability: Outcome frequencies from deterministic geometry, 2025. URL https:
+  //zenodo.org/doi/10.5281/zenodo.15564079.
+
+David Bohm. A suggested interpretation of the quantum theory in terms of "hidden" variables. i. Physical Review,
+   85(2):166­179, January 1952a. ISSN 0031-899X. doi:10.1103/physrev.85.166. URL http://dx.doi.org/10.
+   1103/PhysRev.85.166.
+
+David Bohm. A suggested interpretation of the quantum theory in terms of "hidden" variables. ii. Physical Review,
+   85(2):180­193, January 1952b. ISSN 0031-899X. doi:10.1103/physrev.85.180. URL http://dx.doi.org/10.
+   1103/PhysRev.85.180.
+
+Max Born. Quantenmechanik der stovorgnge. Zeitschrift fr Physik, 38(11­12):803­827, November 1926. ISSN
+  1434-601X. doi:10.1007/bf01397184. URL http://dx.doi.org/10.1007/BF01397184.
+
+Sean Carroll. Something deeply hidden. Dutton, London, England, September 2019.
+Sean M. Carroll and Ashmeet Singh. Mad-Dog Everettianism: Quantum Mechanics at Its Most Minimal, page
+
+   95­104. Springer International Publishing, 2019. ISBN 9783030113018. doi:10.1007/978-3-030-11301-8_10. URL
+   http://dx.doi.org/10.1007/978-3-030-11301-8_10.
+David Deutsch. Quantum theory of probability and decisions. Proceedings of the Royal Society of London. Series
+  A: Mathematical, Physical and Engineering Sciences, 455(1988):3129­3137, August 1999. ISSN 1471-2946.
+   doi:10.1098/rspa.1999.0443. URL http://dx.doi.org/10.1098/rspa.1999.0443.
+Hugh Everett. "relative state" formulation of quantum mechanics. Reviews of Modern Physics, 29(3):454­462, July 1957.
+   ISSN 0034-6861. doi:10.1103/revmodphys.29.454. URL http://dx.doi.org/10.1103/RevModPhys.29.454.
+
+                                                                     19
+Fixing the Measure: Deriving ||2 from Symmetry in Deterministic Geometry  A PREPRINT
+
+Kazuo Fujikawa. Path-integral measure for gauge-invariant fermion theories. Physical Review Letters, 42(18):
+  1195­1198, April 1979. ISSN 0031-9007. doi:10.1103/physrevlett.42.1195. URL http://dx.doi.org/10.1103/
+   PhysRevLett.42.1195.
+
+Andrew M. Gleason. Measures on the closed subspaces of a hilbert space. Journal of Mathematics and Mechanics, 6:
+   885­893, 1957.
+
+Andrew M. Gleason. Measures on the Closed Subspaces of a Hilbert Space, page 123­133. Springer Nether-
+   lands, 1975. ISBN 9789401017954. doi:10.1007/978-94-010-1795-4_7. URL http://dx.doi.org/10.1007/
+   978-94-010-1795-4_7.
+
+James Glimm and Arthur Jaffe. Quantum physics. Springer, New York, NY, 2 edition, May 1987.
+
+Sheldon Goldstein. Typicality and Notions of Probability in Physics, page 59­71. Springer Berlin Heidelberg,
+  August 2011. ISBN 9783642213298. doi:10.1007/978-3-642-21329-8_4. URL http://dx.doi.org/10.1007/
+   978-3-642-21329-8_4.
+
+Lucien Hardy. Quantum theory from five reasonable axioms, 2001.
+
+T. W. B. Kibble. Geometrization of quantum mechanics. Communications in Mathematical Physics, 65(2):189­201,
+  1979. doi:10.1007/BF01178148.
+
+A N Kolmogorov. Foundations of the theory of probability: Second English edition. Courier Dover Publications, March
+   2018.
+
+Hui-Hsiung Kuo. Gaussian Measures in Banach Spaces. Springer Berlin Heidelberg, 1975. ISBN 9783540375081.
+   doi:10.1007/bfb0082007. URL http://dx.doi.org/10.1007/BFb0082007.
+
+John M. Lee. Introduction to Smooth Manifolds. Springer, New York, 2nd edition, 2012. ISBN 9781441999818.
+
+Yu. V. Prokhorov. Convergence of random processes and limit theorems in probability theory. Theory of Probability
+  & Its Applications, 1(2):157­214, January 1956. ISSN 1095-7219. doi:10.1137/1101016. URL http://dx.doi.
+   org/10.1137/1101016.
+
+Walter Rudin. Real and Complex Analysis. McGraw-Hill, New York, 3rd edition, 1987. ISBN 9780070542341.
+
+Charles T. Sebens and Sean M. Carroll. Self-locating uncertainty and the origin of probability in everettian quantum
+   mechanics. The British Journal for the Philosophy of Science, 69(1):25­74, March 2018. ISSN 1464-3537.
+   doi:10.1093/bjps/axw004. URL http://dx.doi.org/10.1093/bjps/axw004.
+
+Lev Vaidman. Why the many-worlds interpretation? Quantum Reports, 4(3):264­271, 2022. ISSN 2624-960X.
+   doi:10.3390/quantum4030018. URL https://www.mdpi.com/2624-960X/4/3/18.
+
+John Von Neumann. Mathematical foundations of quantum mechanics. Princeton Landmarks in Mathematics and
+   Physics. Princeton University Press, Princeton, NJ, October 1996.
+
+David Wallace. The Emergent Multiverse: Quantum Theory according to the Everett Interpretation. OUP Oxford, May
+   2012.
+
+Kenneth G. Wilson. Confinement of quarks. Physical Review D, 10(8):2445­2459, October 1974. ISSN 0556-2821.
+   doi:10.1103/physrevd.10.2445. URL http://dx.doi.org/10.1103/PhysRevD.10.2445.
+
+Wojciech Hubert Zurek. Environment-assisted invariance, entanglement, and probabilities in quantum physics. Physical
+  Review Letters, 90(12), March 2003. ISSN 1079-7114. doi:10.1103/physrevlett.90.120404. URL http://dx.doi.
+   org/10.1103/PhysRevLett.90.120404.
+
+Gerard 't Hooft. The Cellular Automaton Interpretation of Quantum Mechanics. Springer International Publish-
+   ing, 2016. ISBN 9783319412856. doi:10.1007/978-3-319-41285-6. URL http://dx.doi.org/10.1007/
+   978-3-319-41285-6.
+
+20
+

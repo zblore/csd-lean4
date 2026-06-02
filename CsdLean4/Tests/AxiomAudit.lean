@@ -29,6 +29,9 @@ import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.LF4.MomentRatioUniform
 import CsdLean4.LF4.MomentRatioUniformN
 import CsdLean4.LF4.MomentUniform
+import CsdLean4.LF4.MomentBridgeN
+import CsdLean4.LF4.MomentDirichletN
+import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
@@ -1186,6 +1189,33 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.qubit_born_frequency_convergence_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.qubit_born_frequency_convergence_uncond
+
+-- General-N DH Slice E (Cat-1 gap): currying a product index preserves Measure.pi.
+-- Mathlib proves piCurry measurable but has no measure-preserving statement; both
+-- the sigma-index and product-index forms are proved here (pi_eq_generateFrom on the
+-- box-of-boxes π-system). Foundational triple. Upstream candidate.
+/-- info: 'MeasureTheory.map_curryProd_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.map_curryProd_pi
+
+/-- info: 'MeasureTheory.measurePreserving_piCurry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurePreserving_piCurry
+
+-- General-N DH Slice E (bridge): the per-block squared-norm map sends the ℝ^{N×2}
+-- standard Gaussian to Exp(1/2)^{⊗N}, via the product-index curry + Measure.pi_map_pi
+-- + the single-block fact gBlock_map_pi. Bypasses Slice C. Foundational triple.
+/-- info: 'CSD.LF4.blockSqNormCurry_map_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.blockSqNormCurry_map_pi
+
+-- General-N DH Slice E (headline): the free-coordinate moment map ratioN ∘ momentMap
+-- pushes the genuine Fubini–Study measure on ℂℙ^M to M! · uniform on the open simplex
+-- (the joint Dirichlet(1,…,1) law). The general-N analogue of fs_moment_pushforward_uniform
+-- (the qubit could give only the scalar Beta marginal). Foundational triple; no Busch.
+/-- info: 'CSD.LF4.fs_moment_joint_dirichlet_N' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_moment_joint_dirichlet_N
 
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
