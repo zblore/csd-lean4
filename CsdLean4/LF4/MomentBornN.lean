@@ -17,15 +17,17 @@ The general-N analogue of `fs_born_volume_ratio_qubit` (qubit, `N = 2`), now
 * **E4c `fs_born_volume_ratio_N`** — for each free coordinate `i : Fin M`, the FS
   measure of the `i`-th barycentric region (pulled back through the moment map) equals
   the Born weight `‖⟨e_{castSucc i}, ψ⟩‖²`. No carving, no `busch_effect_gleason`.
+* **`fs_born_volume_ratio_N_apex`** — the last coordinate (the dropped apex, index `M`),
+  via the affine apex map `A(x) = L(x) + b'` with `det L = 1 − ∑b' = b_M`. Together with
+  E4c this covers **all `N`** coordinates.
 
-## Honest scope
+## Scope
 
-This lands Born on the `N-1` free coordinates `castSucc i`, `i : Fin M` (the qubit
-gave `1` of `2`; this gives `N-1` of `N`). The last coordinate (the dropped apex,
-index `M`) requires the affine apex map or an a.e.-partition argument; it is the
-documented residual. The genericity hypothesis `∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²` (no vanishing
-amplitude) makes `freeBornVec ψ` an interior simplex point, so the barycentric region
-is a homeomorphic image of the open simplex (hence open, measurable) and stays inside.
+`fs_born_volume_ratio_N` + `fs_born_volume_ratio_N_apex` land Born on **all `N`**
+coordinates of a fully-generic preparation (the qubit gave `1` of `2`). The genericity
+hypothesis `∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²` (no vanishing amplitude) makes `freeBornVec ψ` an
+interior simplex point, so each barycentric region is a homeomorphic image of the open
+simplex (hence open, measurable) and stays inside it.
 -/
 
 open MeasureTheory ProbabilityTheory Set Matrix Matrix.UnitaryGroup
@@ -187,6 +189,119 @@ theorem fs_born_volume_ratio_N (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fi
   have hfac_top : (Nat.factorial M : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top _
   rw [← mul_assoc, mul_comm (Nat.factorial M : ℝ≥0∞)
       (ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single (Fin.castSucc i) (1 : ℂ)) ψ‖ ^ 2)),
+    mul_assoc, ENNReal.mul_inv_cancel hfac hfac_top, mul_one]
+
+/-! ### Apex coordinate (the dropped vertex, index `M`)
+
+The free-coordinate subdivision treats coordinate `M` (mapped to the origin in free
+coordinates) asymmetrically: its barycentric region is the corner simplex with apex
+moved from `0` to `b'`, the image under the **affine** map `A(x) = L(x) + b'` with
+linear part `L(x) = x − (∑x)•b'`, `det L = 1 − ∑b' = b_M`. This closes the last
+coordinate left open by `fs_born_volume_ratio_N`. -/
+
+/-- The linear part of the apex map: `L(x) = x − (∑ⱼxⱼ)•b`, matrix `1 − b⊗𝟙`. -/
+noncomputable def apexLin (b : Fin M → ℝ) : (Fin M → ℝ) →ₗ[ℝ] (Fin M → ℝ) :=
+  Matrix.toLin' (1 - Matrix.of (fun (k : Fin M) (_ : Fin M) => b k))
+
+/-- Coordinate formula for the apex linear part: `(apexLin b x) k = x k − (∑ x)·b k`. -/
+theorem apexLin_apply (b : Fin M → ℝ) (x : Fin M → ℝ) (k : Fin M) :
+    (apexLin b) x k = x k - (∑ j, x j) * b k := by
+  rw [apexLin, Matrix.toLin'_apply]
+  show ((1 - Matrix.of (fun (k : Fin M) (_ : Fin M) => b k)) *ᵥ x) k = _
+  rw [Matrix.sub_mulVec, Pi.sub_apply, Matrix.one_mulVec]
+  congr 1
+  simp only [Matrix.mulVec, Matrix.of_apply, dotProduct, ← Finset.mul_sum, mul_comm]
+
+/-- `det (apexLin b) = 1 − ∑ b` (matrix determinant lemma via `det_one_sub_mul_comm`). -/
+theorem apexLin_det (b : Fin M → ℝ) : LinearMap.det (apexLin b) = 1 - ∑ k, b k := by
+  rw [apexLin, LinearMap.det_toLin']
+  rw [show (Matrix.of (fun (k : Fin M) (_ : Fin M) => b k))
+        = (Matrix.of (fun (k : Fin M) (_ : Fin 1) => b k))
+          * (Matrix.of (fun (_ : Fin 1) (_ : Fin M) => (1 : ℝ))) from by
+      ext k j; simp [Matrix.mul_apply]]
+  rw [Matrix.det_one_sub_mul_comm, Matrix.det_fin_one]
+  simp [Matrix.mul_apply, Matrix.sub_apply]
+
+/-- The apex region stays inside the simplex when `b` is an interior point:
+`A(x) k = x k + (1 − ∑x)·b k`, and `∑ A(x) = ∑x + (1 − ∑x)∑b`, with
+`1 − ∑A(x) = (1 − ∑x)(1 − ∑b) > 0`. -/
+theorem apexMap_image_subset (b : Fin M → ℝ) (hb : b ∈ openSimplexFree) :
+    (fun x => apexLin b x + b) '' openSimplexFree ⊆ openSimplexFree := by
+  obtain ⟨hbpos, hbsum⟩ := hb
+  rintro _ ⟨t, ⟨htpos, htsum⟩, rfl⟩
+  have happ : ∀ k, (apexLin b t + b) k = t k + (1 - ∑ j, t j) * b k := by
+    intro k; rw [Pi.add_apply, apexLin_apply]; ring
+  refine ⟨fun k => ?_, ?_⟩
+  · show (0 : ℝ) < (apexLin b t + b) k
+    rw [happ]; nlinarith [htpos k, hbpos k, sub_pos.mpr htsum]
+  · show ∑ k, (apexLin b t + b) k < 1
+    simp_rw [happ]
+    rw [Finset.sum_add_distrib, ← Finset.mul_sum]
+    nlinarith [mul_pos (sub_pos.mpr htsum) (sub_pos.mpr hbsum)]
+
+/-- **Apex coordinate of E4c.** For the last coordinate (the dropped vertex, index `M`),
+the Fubini–Study measure of the apex barycentric region equals the Born weight
+`‖⟨e_{last M}, ψ⟩‖²`. Together with `fs_born_volume_ratio_N` this covers **all `N`
+coordinates** of a fully-generic preparation. Unconditional; no `busch_effect_gleason`. -/
+theorem fs_born_volume_ratio_N_apex (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) :
+    fubiniStudyMeasure p₀
+        ((fun p => ratioN (fun j => momentMap p j))
+          ⁻¹' ((fun x => apexLin (ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) x
+              + ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) '' openSimplexFree))
+      = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single (Fin.last M) (1 : ℂ)) ψ‖ ^ 2) := by
+  set b : Fin M → ℝ := ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j) with hb
+  -- `b k = ‖⟨e_{castSucc k}, ψ⟩‖²`, and `1 − ∑ b = ‖⟨e_{last}, ψ⟩‖²`.
+  have hbk : ∀ k, b k = ‖inner ℂ (EuclideanSpace.single (Fin.castSucc k) (1 : ℂ)) ψ‖ ^ 2 := by
+    intro k; rw [hb]; simp only [ratioN]
+    rw [show (∑ j, momentMap (Projectivization.mk ℂ ψ hψ0) j) = 1 from momentMap_sum_eq_one _,
+      div_one, momentMap_mk_eq_inner_sq ψ hψ0 hψ (Fin.castSucc k)]
+  have hlast : (1 : ℝ) - ∑ k, b k
+      = ‖inner ℂ (EuclideanSpace.single (Fin.last M) (1 : ℂ)) ψ‖ ^ 2 := by
+    have hsum1 : ∑ j, momentMap (Projectivization.mk ℂ ψ hψ0) j = 1 := momentMap_sum_eq_one _
+    rw [Fin.sum_univ_castSucc] at hsum1
+    have : ∑ k, b k = ∑ k : Fin M, momentMap (Projectivization.mk ℂ ψ hψ0) (Fin.castSucc k) := by
+      refine Finset.sum_congr rfl (fun k _ => ?_)
+      rw [hbk k, momentMap_mk_eq_inner_sq ψ hψ0 hψ (Fin.castSucc k)]
+    rw [this, momentMap_mk_eq_inner_sq ψ hψ0 hψ (Fin.last M)] at *
+    linarith
+  have hbmem : b ∈ openSimplexFree := by
+    refine ⟨fun k => ?_, ?_⟩
+    · rw [hbk k]; exact hpos _
+    · have : ∑ k, b k = 1 - ‖inner ℂ (EuclideanSpace.single (Fin.last M) (1 : ℂ)) ψ‖ ^ 2 := by
+        linarith [hlast]
+      rw [this]; linarith [hpos (Fin.last M)]
+  have hb_nonneg : 0 ≤ 1 - ∑ k, b k := by rw [hlast]; positivity
+  have hdet : LinearMap.det (apexLin b) ≠ 0 := by
+    rw [apexLin_det, hlast]; exact ne_of_gt (hpos _)
+  -- region = (· + b) '' (apexLin b '' openSimplexFree): open (homeomorphic image) ⇒ measurable.
+  have hregion : (fun x => apexLin b x + b) '' openSimplexFree
+      = (fun y => y + b) '' (apexLin b '' openSimplexFree) :=
+    (Set.image_image (fun y : Fin M → ℝ => y + b) (⇑(apexLin b)) openSimplexFree).symm
+  have hopenLin : IsOpen (apexLin b '' openSimplexFree) :=
+    LinearMap.isOpenMap_of_finiteDimensional _
+      (LinearMap.equivOfDetNeZero (apexLin b) hdet).surjective _ isOpen_openSimplexFree
+  have hopen : IsOpen ((fun x => apexLin b x + b) '' openSimplexFree) := by
+    rw [hregion]; exact (Homeomorph.addRight b).isOpenMap _ hopenLin
+  -- volume of the region = (1 − ∑b)·vol(openSimplexFree), via translation + det.
+  have htrans : volume ((fun y : Fin M → ℝ => y + b) '' (apexLin b '' openSimplexFree))
+      = volume (apexLin b '' openSimplexFree) := by
+    rw [show (fun y : Fin M → ℝ => y + b) '' (apexLin b '' openSimplexFree)
+          = (fun y => y + (-b)) ⁻¹' (apexLin b '' openSimplexFree) from by
+        ext y; simp only [Set.mem_image, Set.mem_preimage]
+        exact ⟨by rintro ⟨x, hx, rfl⟩; simpa using hx,
+          fun hy => ⟨y + (-b), hy, by abel⟩⟩,
+      measure_preimage_add_right]
+  have hvol : volume ((fun x => apexLin b x + b) '' openSimplexFree)
+      = ENNReal.ofReal (1 - ∑ k, b k) * volume (openSimplexFree (M := M)) := by
+    rw [hregion, htrans, Measure.addHaar_image_linearMap, apexLin_det, abs_of_nonneg hb_nonneg]
+  rw [fs_volume_eq_dirichlet p₀ hopen.measurableSet (apexMap_image_subset b hbmem), hvol,
+    volume_openSimplexFree, hlast]
+  have hfac : (Nat.factorial M : ℝ≥0∞) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero M
+  have hfac_top : (Nat.factorial M : ℝ≥0∞) ≠ ⊤ := ENNReal.natCast_ne_top _
+  rw [← mul_assoc, mul_comm (Nat.factorial M : ℝ≥0∞)
+      (ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single (Fin.last M) (1 : ℂ)) ψ‖ ^ 2)),
     mul_assoc, ENNReal.mul_inv_cancel hfac hfac_top, mul_one]
 
 end LF4

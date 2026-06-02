@@ -1236,6 +1236,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_born_volume_ratio_N
 
+-- Apex coordinate (the dropped vertex, index M): the affine apex map (det = 1 - ∑b
+-- = b_last via det_one_sub_mul_comm) closes the last Born coordinate. With
+-- fs_born_volume_ratio_N this covers all N coordinates. Foundational triple.
+/-- info: 'CSD.LF4.fs_born_volume_ratio_N_apex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_born_volume_ratio_N_apex
+
 -- The ofKählerPreparation constructor: a concrete LF3.PureSingletPreparation
 -- on the non-trivial-fibre compact-Kähler instance. bridge_op_p is proved
 -- Busch-free via born_rank_one_direct + the carving identity kMuPsi_kRegion,

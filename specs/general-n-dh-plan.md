@@ -352,9 +352,14 @@ now the proved headline):
   open simplex (`det = bᵢ ≠ 0 ⇒ open ⇒ measurable`) and stays inside (interior-point
   subdivision).
 
-**Honest residue.** E4c lands Born on the `N-1` **free** coordinates (qubit gave 1 of
-2; this gives N-1 of N). The dropped **apex** coordinate (index `M`) needs the affine
-apex map (`det(I − b'⊗𝟙) = 1 − ∑b'`) or an a.e.-partition argument — the documented
-remaining sliver. Genericity hypothesis on E4c: `ψ` has no vanishing amplitude.
+**Apex coordinate CLOSED (2026-06-02).** `fs_born_volume_ratio_N_apex`
+(`MomentBornN.lean`) handles the dropped apex (index `M`) via the affine apex map
+`A(x) = L(x) + b'`, `L(x) = x − (∑x)•b'`, with `det L = 1 − ∑b' = b_M`
+(`apexLin_det` via `Matrix.det_one_sub_mul_comm`: `b` as a column, `𝟙` as a row).
+Translation-invariance (`measure_preimage_add_right`) + `addHaar_image_linearMap` give
+the region volume `b_M·(M!)⁻¹`, collapsing to the Born weight `‖⟨e_{last M},ψ⟩‖²`.
+**Together with `fs_born_volume_ratio_N` this covers all `N` of `N` coordinates** (the
+qubit gave 1 of 2). Genericity hypothesis: `ψ` has no vanishing amplitude.
 
 All foundational-triple-only; AxiomAudit-pinned; both `lake build` targets green.
+**The general-N Born-from-Kähler-volume programme is geometrically total.**
