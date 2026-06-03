@@ -56,36 +56,121 @@ the CSD picture.
 - `CsdLean4/LF2/BornWrapper.lean` — the `Effect` type (PSD matrix `≤ 1`), `Effect.add`,
   `rankOneEffect`; the starting point for a POVM type.
 
-## Mathlib-gap recon needed first (the session's first action)
+## Recon findings (DONE 2026-06-03)
 
-The main unknown is how much dilation infrastructure Mathlib has. Likely thin. Probe:
+Read-only sweep of the pinned Mathlib (`Analysis/Matrix/*`, `LinearAlgebra/Matrix/*`,
+`Analysis/CStarAlgebra/*`). Verdicts:
 
-- Naimark / Stinespring dilation: search Mathlib for `Naimark`, `Stinespring`,
-  `isometry` + `POVM`, `CPMap`, completely-positive maps. **Expect this to be absent** —
-  if so, the dilation isometry must be constructed by hand (the standard block
-  construction: `V` built from the `√Eᵢ` so that `Πᵢ = |i⟩⟨i| ⊗ I` pulls back to `Eᵢ`).
-- The matrix square root `√E` for a PSD effect (needed for the canonical Naimark
-  isometry `Vψ = ∑ᵢ √Eᵢ ψ ⊗ |i⟩`): Mathlib has `Matrix.PosSemidef.sqrt` —
-  confirm and use.
-- Whether to dilate via tensor with `ℂ^K` (`Fin N × Fin K` indexing, matches
-  `traceRight`) or a direct sum. Tensor matches the partial-trace tooling.
+- **PSD square root: OBTAINABLE via CFC (not absent).** There is no
+  `Matrix.PosSemidef.sqrt`, but `Mathlib/Analysis/Matrix/HermitianFunctionalCalculus.lean`
+  provides `Matrix.IsHermitian.cfc : (ℝ → ℝ) → Matrix n n 𝕜` (a real continuous functional
+  calculus for Hermitian matrices; **not** deprecated), built on `IsHermitian.spectral_theorem`.
+  So `√E := hE.isHermitian.cfc Real.sqrt`. Fallback if its API is thin: the general
+  `cfc`/`CFC.sqrt` on `Matrix n n ℂ` as a C⋆-algebra, or a hand build from
+  `IsHermitian.eigenvalues` + `eigenvectorBasis` (`Analysis/Matrix/Spectrum.lean`).
+- **PSD preservation under conjugation: PRESENT.**
+  `Matrix.PosSemidef.conjTranspose_mul_mul_same` (`Bᴴ A B`) and `mul_mul_conjTranspose_same`
+  (`B A Bᴴ`) — already used in `LF2/BornWrapper.lean` `Effect.conjugateBy`. Gives `Eᵢ = Vᴴ Πᵢ V`
+  PSD for free.
+- **Matrix↔operator bridge: PRESENT.** `Matrix.toEuclideanLin` +
+  `Matrix.toEuclideanLin_conjTranspose_eq_adjoint` (the adjoint bridge) +
+  `LinearMap.isometryOfInner` / the `Vᴴ V = 1` characterisation — the isometry idiom is
+  exactly the one `Bell.lean`'s Tsirelson construction already uses.
+- **Kronecker + reindex: PRESENT.** `mul_kronecker_mul`, `one_kronecker_one`,
+  `trace_kronecker`, `kronecker_assoc'`; `finProdFinEquiv : Fin m × Fin n ≃ Fin (m*n)` and
+  `OrthonormalBasis.reindex` for transporting the dilated space to `Fin (N·K)`.
+- **Naimark / Stinespring / POVM / CPTP / quantum channel: ABSENT.** Confirmed zero hits.
+  `CompletelyPositiveMap` + GNS exist but are infinite-dim / `CStarMatrix`-level, **not**
+  usable for our finite `Matrix (Fin N) ℂ`. **Everything POVM-specific is hand-built.**
 
-## Proposed DAG (revise after recon)
+**Net effect on the plan.** The dilation must be hand-built (as expected), but the sqrt is a
+CFC wrapper rather than a from-scratch spectral build, so the *existence* half (P.5) is
+moderate, not heavy. The recon also confirms the clean decomposition below: a **conditional
+core** (P.1–P.4, sqrt-free, ships first) and an **existence half** (P.5, the CFC sqrt +
+canonical isometry) that makes the core unconditional.
 
-- **P.0 — recon** Mathlib for dilation / CP-map / sqrt infrastructure; decide hand-built
-  vs library. Output: a concrete construction choice.
-- **P.1 — POVM type.** A finite family `E : ι → Effect N` with `∑ᵢ (E i).M = 1`
-  (a `POVM N ι` structure). Cat-3 or Cat-2.
-- **P.2 — Naimark isometry.** `naimarkIsometry : ℂ^N → ℂ^N ⊗ ℂ^ι`,
-  `Vψ = ∑ᵢ (√Eᵢ ψ) ⊗ |i⟩`; prove it is an isometry (`V† V = I`, uses `∑ Eᵢ = I`), and
-  the pullback identity `V† (|i⟩⟨i| ⊗ I) V = Eᵢ` (the defining Naimark property).
-- **P.3 — Born transfer.** `⟨ψ, Eᵢ ψ⟩ = ‖((mk (Vψ)) projected onto the i-th block)‖²`
-  = projective Born weight on `ℂℙ^{Nι-1}`; compose with `fs_born_volume_ratio_N` to read
-  it as an FS-volume ratio on the dilated `Σ'`.
-- **P.4 — (optional) empirical capstone.** A POVM analogue of
-  `born_frequency_convergence_N`: i.i.d. trials, frequencies → `⟨ψ, Eᵢ ψ⟩` via the
-  dilated volume. May reuse `born_frequency_convergence_partition` with the dilated
-  regions.
+## Detailed DAG (recon-grounded 2026-06-03)
+
+Two phases. **Phase 1 (P.1–P.4)** is a complete, shippable, foundational-triple-only result
+that is *conditional on a supplied Naimark dilation* — matching the honest-scope note
+(dilations are non-unique / supplied, not forced). **Phase 2 (P.5)** discharges existence,
+making Phase 1 hold for every POVM. **Phase 3 (P.6)** is audit + docs. Pure-state `ψ`
+throughout (matches `born_frequency_convergence_N`); mixed `ρ` is a later extension.
+
+### Phase 1 — conditional core (sqrt-free, foundational triple)
+
+- **P.1 — POVM type.** New `CsdLean4/LF2/POVM.lean` (sits on `BornWrapper.lean`). Cat-3.
+  `structure POVM (N : ℕ) (ι : Type*) [Fintype ι]` = `E : ι → Effect N` with
+  `complete : ∑ i, (E i).M = 1`. Define `povmWeight (ψ) (i) := re ⟨ψ, (E i).M *ᵥ ψ⟩`
+  (or via `traceForm` of the pure density), and `povmWeights_sum_eq_one`
+  (`∑ i, povmWeight ψ i = ‖ψ‖²`, from `complete`). Small.
+
+- **P.2 — abstract Naimark data + Born transfer.** New `CsdLean4/LF4/POVMDilation.lean`.
+  `structure NaimarkDilation (P : POVM N ι)` carrying ancilla dim (use `ι` as the ancilla
+  index, dilated index `Fin N × ι`), isometry `V : Matrix (Fin N × ι) (Fin N) ℂ` with
+  `isom : Vᴴ * V = 1`, and the pullback field
+  `pullback : ∀ i, Vᴴ * blockProj i * V = (P.E i).M`, where
+  `blockProj i := (1 : Matrix (Fin N) (Fin N) ℂ) ⊗ₖ (single i i 1)` is the rank-`N`
+  ancilla-`i` projector `I_N ⊗ |i⟩⟨i|`.
+  - `born_transfer : povmWeight ψ i = re ⟨Vψ, blockProj i (Vψ)⟩` via the
+    `toEuclideanLin`/adjoint bridge (`⟨Vψ, Π Vψ⟩ = ⟨ψ, Vᴴ Π V ψ⟩ = ⟨ψ, Eᵢ ψ⟩`).
+    Foundational triple.
+
+- **P.3 — volume reading.** Same file (or `POVMVolume.lean`).
+  - `blockProj i` in the computational basis is `∑_{n} |e_{(n,i)}⟩⟨e_{(n,i)}|`, so
+    `⟨Vψ, blockProj i Vψ⟩ = ∑_{n} ‖⟨e_{(n,i)}, Vψ⟩‖²` (a coarse, rank-`N` outcome = a
+    *union* of rank-1 cells).
+  - Reindex `Fin N × ι ≃ Fin (N·K)` (`finProdFinEquiv`, `K = card ι`); transport `Vψ` to
+    `EuclideanSpace ℂ (Fin (N·K))`; each `‖⟨e_{(n,i)}, Vψ⟩‖²` is a rank-1 FS volume
+    (`fs_born_volume_ratio_N`). Sum over the block ⇒
+    `povm_born_eq_dilated_volume : povmWeight ψ i = FS-volume(ancilla-block i)` on
+    `Σ' = ℂℙ^{N·K−1}`. Foundational triple; **the headline conditional result.**
+
+- **P.4 — empirical capstone.** `povm_born_frequency_volume`: i.i.d. FS trials on `Σ'`,
+  frequency of landing in ancilla-block `i` → `povmWeight ψ i`. Compose
+  `born_frequency_convergence_N` (full rank-1 vector jointly a.s.) with a finite
+  block-sum (the block frequency is the sum of its cells' frequencies → sum of weights).
+  **Main design risk (investigate first):** `born_frequency_convergence_N` needs `hpos`
+  (*all* `N·K` dilated coordinates strictly positive). A POVM/ψ with a zero amplitude in
+  some cell violates it. Two outs: (a) restrict to generic `(P, ψ)` with `Vψ` interior and
+  carry a genericity caveat (cf. GHZ boundary); (b) prove a **block-coarsening** lemma over
+  the lower `born_frequency_convergence_partition` layer that needs only *block-sum*
+  positivity, not per-cell — check whether the partition layer tolerates zero-measure cells.
+  Prefer (b) if the partition theorem allows it; else ship (a) and note (b) as follow-up.
+
+### Phase 2 — existence (the CFC-sqrt half, makes Phase 1 unconditional)
+
+- **P.5a — PSD matrix square root.** New `CsdLean4/Mathlib/LinearAlgebra/Matrix/PosSemidefSqrt.lean`
+  (Cat-1, natural `namespace Matrix`). `PosSemidef.sqrt := hM.isHermitian.cfc Real.sqrt`; prove
+  `sqrt_posSemidef`, `sqrt_isHermitian`, and the load-bearing `sqrt_mul_self : √M * √M = M`
+  (CFC multiplicativity `cfc(f)·cfc(g)=cfc(fg)` + `Real.sqrt`-squared-on-`[0,∞)` = id on the
+  spectrum). **Decision point:** if `IsHermitian.cfc`'s API lacks a usable `cfc_mul`, switch
+  to the general `cfc`/`CFC.sqrt` (needs the `Matrix n n ℂ` C⋆-CFC instance) or the
+  `eigenvectorBasis` hand build. Probe the three options in this order at P.5a start.
+
+- **P.5b — canonical Naimark isometry.** `CsdLean4/LF4/POVMNaimark.lean`.
+  `naimarkV (P) : Matrix (Fin N × ι) (Fin N) ℂ` with column action
+  `(V ψ)_{(n,i)} = (√(E i) ψ)_n`, i.e. `V (n,i) m = (√(E i)) n m`. Prove
+  `Vᴴ V = ∑_i √Eᵢ √Eᵢ = ∑_i Eᵢ = 1` (isometry, uses `sqrt_mul_self` + `P.complete`) and
+  `Vᴴ (blockProj i) V = Eᵢ` (the pullback, `√Eᵢ I √Eᵢ = Eᵢ`). Output:
+  `canonicalNaimark (P) : NaimarkDilation P`, inhabiting P.2's structure for **every** POVM.
+  Then P.3/P.4 specialise to unconditional statements (modulo the P.4 genericity choice).
+
+### Phase 3 — close-out
+
+- **P.6 — audit + docs.** AxiomAudit-pin every export (`born_transfer`,
+  `povm_born_eq_dilated_volume`, `povm_born_frequency_volume`, `canonicalNaimark`,
+  `sqrt_mul_self`) to the foundational triple. Update `README.md` (POVM line under the
+  moment-map cluster), `specs/INDEX.md`, and this file's status. If `PosSemidefSqrt.lean` is
+  clean Cat-1, note it as a Mathlib upstream candidate alongside `PartialTrace.lean`.
+
+### Suggested commit slicing
+
+1. P.1 (POVM type + weights).  2. P.2 (NaimarkDilation + born_transfer).
+3. P.3 (volume reading) — **Phase-1 headline, shippable here.**  4. P.4 (empirical capstone).
+5. P.5a (CFC sqrt, Cat-1).  6. P.5b (canonical dilation) — **Phase-2 headline.**
+7. P.6 (audit + docs). Each commit builds + `lake build CsdLeanTests` green, pins to the
+triple. Phase 1 alone is a legitimate stopping point if Phase 2's sqrt API fights back.
 
 ## Honest scope to preserve
 
