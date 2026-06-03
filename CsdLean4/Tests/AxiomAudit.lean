@@ -1500,4 +1500,12 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.povm_born_eq_dilated_volume
 
+-- POVM tranche P.4 (empirical capstone): i.i.d. Fubini-Study trials on the dilated
+-- Σ' have the i-th POVM outcome's empirical frequency (the block sum of dilated
+-- cell frequencies) converge a.s. to the POVM Born weight pᵢ(ψ). The empirical →
+-- Born chain for a general POVM, carving-free and Gleason-free. Foundational triple.
+/-- info: 'CSD.LF4.povm_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_frequency_volume
+
 end CSD.Tests.AxiomAudit

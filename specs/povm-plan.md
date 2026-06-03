@@ -103,9 +103,18 @@ triple only, AxiomAudit-pinned:
   Takes the reindex `e : Fin N × ι ≃ Fin(M+1)`, unit `ψ'`, and genericity (`hpos`) as
   supplied (honest scope: dilation supplied, ancilla enlarges `Σ`).
 
-**Remaining:** P.4 (empirical capstone — i.i.d. frequencies → `pᵢ(ψ)`, via the block
-sum over `born_frequency_convergence_N`; the genericity/block-coarsening choice still
-applies), P.5 (CFC `√Eᵢ` + canonical dilation existence → unconditional), P.6 (docs).
+**Phase 1 COMPLETE — P.4 DONE** (`LF4/POVMVolume.lean` `povm_born_frequency_volume`):
+i.i.d. Fubini–Study trials on the dilated `Σ'` ⟹ the `i`-th POVM outcome's empirical
+frequency (the block sum of dilated cell frequencies) converges a.s. to `pᵢ(ψ)`. The
+empirical → Born chain for a general (non-projective) POVM, carving-free and
+Gleason-free. Composes `born_frequency_convergence_N` (joint per-cell a.s.) with the
+P.3a block sum via `tendsto_finset_sum`. The block frequency is taken as the sum of the
+cells' frequencies (Option A — no disjointness lemma needed; the cells are disjoint so
+this is the honest block count). Foundational triple only; AxiomAudit-pinned.
+
+**Remaining:** P.5 (CFC `√Eᵢ` + canonical dilation existence → makes Phase 1
+unconditional, every POVM has a dilation), P.6 (README/INDEX/docs). The whole Phase 1
+is conditional on a *supplied* Naimark dilation; P.5 discharges existence.
 
 ## Detailed DAG (recon-grounded 2026-06-03)
 

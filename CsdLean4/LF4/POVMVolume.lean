@@ -22,7 +22,7 @@ Fubini–Study volume on `ℂℙ^{N·|ι|−1}` (the FS-volume identification, P
 on top of this via the `Fin N × ι ≃ Fin (N·|ι|)` reindex).
 -/
 
-open Matrix Matrix.UnitaryGroup MeasureTheory
+open Matrix Matrix.UnitaryGroup MeasureTheory ProbabilityTheory Filter
 open scoped Kronecker LinearAlgebra.Projectivization
 
 namespace CSD
@@ -31,6 +31,16 @@ namespace LF4
 open CSD.LF2
 
 variable {N : ℕ} {ι : Type*} [Fintype ι] [DecidableEq ι]
+
+/-- **The reindex isometry preserves computational-basis Born weights.** For the
+`piLpCongrLeft e` reindex isometry `L`, `‖⟨e_{e p}, L w⟩‖² = ‖⟨e_p, w⟩‖²` — the cell
+`p` maps to the coordinate `e p` with the Born weight unchanged. -/
+lemma piLpCongrLeft_inner_single_sq {α κ : Type*} [Fintype α] [DecidableEq α]
+    [Fintype κ] [DecidableEq κ] (e : α ≃ κ) (w : EuclideanSpace ℂ α) (p : α) :
+    ‖inner ℂ (EuclideanSpace.single (e p) (1 : ℂ))
+        (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e w)‖ ^ 2
+      = ‖inner ℂ (EuclideanSpace.single p (1 : ℂ)) w‖ ^ 2 := by
+  rw [← EuclideanSpace.piLpCongrLeft_single e p (1 : ℂ), LinearIsometryEquiv.inner_map_map]
 
 /-- `‖⟨e_p, w⟩‖² = ‖w_p‖²` on the dilated `EuclideanSpace ℂ (Fin N × ι)`. -/
 private lemma normSq_inner_single (w : EuclideanSpace ℂ (Fin N × ι)) (p : Fin N × ι) :
@@ -144,6 +154,53 @@ theorem povm_born_eq_dilated_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilati
   rw [povm_born_eq_block_sum P D ψ i]
   refine Finset.sum_congr rfl (fun n _ => ?_)
   rw [bornRegion_fs_measure p₀ ψ' hψ'0 hnorm hpos (e (n, i)), hinner n]
+
+/-- **POVM empirical frequencies as a dilated Kähler-volume convergence (P.4).**
+The observable capstone. For i.i.d. trials drawing microstates from the
+Fubini–Study typicality measure on the dilated ontic `Σ' = ℂℙ^{N·|ι|−1}` (the
+reindexed dilated state `ψ' = L (Vψ)` being a unit, fully-generic preparation), the
+empirical frequency of the `i`-th POVM outcome — the sum, over the `i`-th ancilla
+block, of the dilated barycentric-cell frequencies — converges, on a single
+almost-sure event, to the POVM Born weight `pᵢ(ψ)`.
+
+Composes the general-`N` per-cell convergence `born_frequency_convergence_N` (joint
+a.s. over all `M+1` cells) with the finite block sum (`tendsto_finset_sum`), landing
+the limit on `pᵢ(ψ)` via the P.3a block decomposition. Carving-free, Gleason-free —
+the empirical → Born chain for a general (non-projective) POVM runs entirely on the
+ontic FS-volume derivation, no `busch_effect_gleason`. Honest scope: dilation
+supplied; the block frequency is the sum of the cells' frequencies (the cells are
+the rank-1 dilated outcomes), and genericity (`hpos`) is assumed. -/
+theorem povm_born_frequency_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilation P)
+    (ψ : EuclideanSpace ℂ (Fin N)) (e : (Fin N × ι) ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
+    (hpos : ∀ j : Fin (M + 1), 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
+    (p₀ : CPN (M + 1))
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ j : Fin (M + 1),
+      Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr, ∀ i : ι,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ n : Fin N,
+            (∑ k ∈ Finset.range m,
+                Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, i))) (fun _ => (1 : ℝ)) ω)
+              / (m : ℝ))
+        atTop
+        (nhds (P.weight ψ i)) := by
+  filter_upwards [born_frequency_convergence_N p₀ ψ' hψ'0 hnorm hpos X hX hlaw hindep]
+    with ω hω
+  intro i
+  have hlim := tendsto_finset_sum (Finset.univ : Finset (Fin N))
+    (fun n (_ : n ∈ Finset.univ) => hω (e (n, i)))
+  rwa [show (∑ n : Fin N, ‖inner ℂ (EuclideanSpace.single (e (n, i)) (1 : ℂ)) ψ'‖ ^ 2)
+        = P.weight ψ i from by
+      rw [povm_born_eq_block_sum P D ψ i, hψ'eq]
+      exact Finset.sum_congr rfl (fun n _ => piLpCongrLeft_inner_single_sq e _ (n, i))] at hlim
 
 end LF4
 end CSD
