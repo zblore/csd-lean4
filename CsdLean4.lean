@@ -81,6 +81,7 @@ import CsdLean4.LF4.PauliRobertson
 import CsdLean4.LF4.PauliDotRobertson
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.LF4.POVMDilation
+import CsdLean4.LF4.POVMVolume
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting

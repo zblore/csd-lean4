@@ -48,6 +48,7 @@ import CsdLean4.LF4.PauliDotRobertson
 import CsdLean4.LF4.OnticBorn
 import CsdLean4.LF2.POVM
 import CsdLean4.LF4.POVMDilation
+import CsdLean4.LF4.POVMVolume
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -1481,5 +1482,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.NaimarkDilation.born_transfer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.NaimarkDilation.born_transfer
+
+-- POVM tranche P.3a (block decomposition): the POVM Born weight is the sum, over
+-- the i-th ancilla block, of the dilated computational-basis (rank-1) Born
+-- weights — each of which the general-N result reads as a Fubini-Study volume.
+-- Foundational triple only.
+/-- info: 'CSD.LF4.povm_born_eq_block_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_eq_block_sum
 
 end CSD.Tests.AxiomAudit
