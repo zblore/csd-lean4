@@ -70,6 +70,7 @@ import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
+import CsdLean4.Empirical.CSD.HardyVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
@@ -672,6 +673,22 @@ info: 'CSD.Empirical.CSDBridge.GHZVolume.ghz_volume_correlation' depends on axio
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.GHZVolume.ghz_volume_correlation
+
+-- Hardy's maximal probability (5√5−11)/2 ≈ 9.017% as a DERIVED Kähler-volume
+-- frequency (N=4 surfacing of born_frequency_convergence_N at the golden-ratio
+-- Hardy state, an interior simplex point — no boundary obstruction): carving-free,
+-- Gleason-free, unconditional. Foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.HardyVolume.hardy_max_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.HardyVolume.hardy_max_born_frequency_volume
+
+/--
+info: 'CSD.Empirical.CSDBridge.HardyVolume.hardy_max_volume_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.HardyVolume.hardy_max_volume_probability
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
