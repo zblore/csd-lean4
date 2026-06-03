@@ -102,6 +102,7 @@ import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.CSD.BellVolume
+import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.KS18

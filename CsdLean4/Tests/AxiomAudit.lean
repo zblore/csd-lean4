@@ -69,6 +69,7 @@ import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.CSD.BellVolume
+import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
@@ -655,6 +656,22 @@ info: 'CSD.Empirical.CSDBridge.BellVolume.bell_singlet_volume_correlation' depen
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.BellVolume.bell_singlet_volume_correlation
+
+-- GHZ three-qubit joint frequencies as DERIVED Kähler-volume convergence (N=8
+-- surfacing of born_frequency_convergence_N, generic xy-plane basis): carving-free,
+-- Gleason-free, unconditional. Plus the recovered three-point correlation cos Φ
+-- (Mermin values are the excluded Φ=0,π boundary). Foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.GHZVolume.ghz_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.GHZVolume.ghz_born_frequency_volume
+
+/--
+info: 'CSD.Empirical.CSDBridge.GHZVolume.ghz_volume_correlation' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.GHZVolume.ghz_volume_correlation
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
