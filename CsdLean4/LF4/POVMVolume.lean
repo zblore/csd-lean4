@@ -22,8 +22,8 @@ Fubini–Study volume on `ℂℙ^{N·|ι|−1}` (the FS-volume identification, P
 on top of this via the `Fin N × ι ≃ Fin (N·|ι|)` reindex).
 -/
 
-open Matrix
-open scoped Kronecker
+open Matrix Matrix.UnitaryGroup MeasureTheory
+open scoped Kronecker LinearAlgebra.Projectivization
 
 namespace CSD
 namespace LF4
@@ -95,6 +95,55 @@ theorem povm_born_eq_block_sum (P : POVM N ι) (D : NaimarkDilation P)
           ‖inner ℂ (EuclideanSpace.single ((n, i) : Fin N × ι) (1 : ℂ))
             (Matrix.toEuclideanLin D.V ψ)‖ ^ 2 := by
   rw [D.born_transfer P ψ i, blockProj_born_eq_block_sum]
+
+/-- **POVM Born weight as a sum of Fubini–Study volumes (P.3b).** Given a reindex
+`e : Fin N × ι ≃ Fin (M+1)` of the dilated index (concretely `finProdFinEquiv`
+after `ι ≃ Fin |ι|`, so `N·|ι| = M+1`) and the induced reindex isometry
+`L = piLpCongrLeft e`, write `ψ' = L (Vψ)` for the reindexed dilated state on
+`ℂℙ^M`. When `ψ'` is a unit, fully-generic preparation (all `M+1` amplitudes
+nonzero — the dilation genericity condition), the POVM Born weight is the sum,
+over the `i`-th ancilla block, of the **genuine Fubini–Study typicality volumes**
+of the dilated barycentric cells:
+
+```
+pᵢ(ψ)  =  ∑ₙ  μ_FS( bornRegion ψ' (e (n, i)) ).
+```
+
+This is the headline of the ontic POVM reading: the (non-projective) POVM Born
+weight is a Kähler volume on the dilated configuration space `Σ' = ℂℙ^{N·|ι|−1}`,
+carving-free and **Gleason-free** — it composes the Naimark Born transfer with the
+achieved general-`N` Born = FS-volume result (`bornRegion_fs_measure`), no
+`busch_effect_gleason`. Honest scope: the dilation `V` is supplied (P.2), so this
+relocates POVM Born onto a larger posited configuration space (system + ancilla);
+genericity (`hpos`) excludes dilated states with a vanishing amplitude. -/
+theorem povm_born_eq_dilated_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilation P)
+    (ψ : EuclideanSpace ℂ (Fin N)) (i : ι)
+    (e : (Fin N × ι) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ)‖ = 1)
+    (hpos : ∀ j : Fin (M + 1),
+        0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ))
+          (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))‖ ^ 2) :
+    P.weight ψ i
+      = ∑ n : Fin N,
+          (fubiniStudyMeasure p₀
+            (bornRegion (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))
+              (by intro h; rw [h, norm_zero] at hnorm; exact one_ne_zero hnorm.symm)
+              (e (n, i)))).toReal := by
+  set ψ' := LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ) with hψ'
+  have hψ'0 : ψ' ≠ 0 := by
+    intro h; rw [h, norm_zero] at hnorm; exact one_ne_zero hnorm.symm
+  -- The reindex isometry maps the dilated cell `(n, i)` to the coordinate `e (n, i)`,
+  -- preserving the Born weight.
+  have hinner : ∀ n : Fin N,
+      ‖inner ℂ (EuclideanSpace.single (e (n, i)) (1 : ℂ)) ψ'‖ ^ 2
+        = ‖inner ℂ (EuclideanSpace.single ((n, i) : Fin N × ι) (1 : ℂ))
+            (Matrix.toEuclideanLin D.V ψ)‖ ^ 2 := by
+    intro n
+    rw [hψ', ← EuclideanSpace.piLpCongrLeft_single e (n, i) (1 : ℂ),
+      LinearIsometryEquiv.inner_map_map]
+  rw [povm_born_eq_block_sum P D ψ i]
+  refine Finset.sum_congr rfl (fun n _ => ?_)
+  rw [bornRegion_fs_measure p₀ ψ' hψ'0 hnorm hpos (e (n, i)), hinner n]
 
 end LF4
 end CSD

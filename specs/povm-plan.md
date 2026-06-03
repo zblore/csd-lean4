@@ -89,6 +89,24 @@ moderate, not heavy. The recon also confirms the clean decomposition below: a **
 core** (P.1–P.4, sqrt-free, ships first) and an **existence half** (P.5, the CFC sqrt +
 canonical isometry) that makes the core unconditional.
 
+## Progress (2026-06-03)
+
+**Phase 1 P.1–P.3 DONE** (commits `fc2e7af`, `a58e41e`, + P.3b), all foundational
+triple only, AxiomAudit-pinned:
+- P.1 `LF2/POVM.lean` — `POVM` type, `weight`, `weights_sum_eq_normSq/_one`.
+- P.2 `LF4/POVMDilation.lean` — `blockProj`, `NaimarkDilation`, `born_transfer`.
+- P.3a `LF4/POVMVolume.lean` — `blockProj_mulVec`, `blockProj_born_eq_block_sum`,
+  `povm_born_eq_block_sum` (POVM Born = ∑ dilated rank-1 cells).
+- P.3b `LF4/POVMVolume.lean` — `povm_born_eq_dilated_volume`: `pᵢ(ψ) = ∑ₙ μ_FS(bornRegion ψ' (e(n,i)))`,
+  the POVM Born weight as a sum of genuine FS volumes on `Σ' = ℂℙ^{N·|ι|−1}`, via the
+  `piLpCongrLeft` reindex isometry + `bornRegion_fs_measure`. Carving-free, Gleason-free.
+  Takes the reindex `e : Fin N × ι ≃ Fin(M+1)`, unit `ψ'`, and genericity (`hpos`) as
+  supplied (honest scope: dilation supplied, ancilla enlarges `Σ`).
+
+**Remaining:** P.4 (empirical capstone — i.i.d. frequencies → `pᵢ(ψ)`, via the block
+sum over `born_frequency_convergence_N`; the genericity/block-coarsening choice still
+applies), P.5 (CFC `√Eᵢ` + canonical dilation existence → unconditional), P.6 (docs).
+
 ## Detailed DAG (recon-grounded 2026-06-03)
 
 Two phases. **Phase 1 (P.1–P.4)** is a complete, shippable, foundational-triple-only result

@@ -1491,4 +1491,13 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.povm_born_eq_block_sum
 
+-- POVM tranche P.3b (FS-volume identification): the POVM Born weight is the sum,
+-- over the i-th ancilla block, of the genuine Fubini-Study typicality volumes of
+-- the dilated barycentric cells on Σ' = ℂℙ^{N·|ι|−1}. Composes P.3a with the
+-- general-N Born = FS-volume result through the reindex isometry. Carving-free,
+-- Gleason-free (no busch_effect_gleason); foundational triple only.
+/-- info: 'CSD.LF4.povm_born_eq_dilated_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_eq_dilated_volume
+
 end CSD.Tests.AxiomAudit
