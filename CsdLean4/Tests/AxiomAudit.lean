@@ -46,6 +46,8 @@ import CsdLean4.LF4.UncertaintyKahler
 import CsdLean4.LF4.PauliRobertson
 import CsdLean4.LF4.PauliDotRobertson
 import CsdLean4.LF4.OnticBorn
+import CsdLean4.LF2.POVM
+import CsdLean4.LF4.POVMDilation
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -1463,5 +1465,21 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.ontic_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ontic_born_frequency
+
+-- POVM tranche P.1 (POVM type + Born-weight completeness) and P.2 (Naimark
+-- dilation + Born transfer: POVM Born weight = projective Born weight of the
+-- dilated state against the ancilla block projector). Both foundational triple
+-- only — the dilation is supplied data, no Busch / invariant-measure axiom.
+/-- info: 'CSD.LF2.POVM.weights_sum_eq_normSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF2.POVM.weights_sum_eq_normSq
+
+/-- info: 'CSD.LF2.POVM.weights_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF2.POVM.weights_sum_eq_one
+
+/-- info: 'CSD.LF4.NaimarkDilation.born_transfer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.NaimarkDilation.born_transfer
 
 end CSD.Tests.AxiomAudit

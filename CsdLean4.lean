@@ -28,6 +28,7 @@ import CsdLean4.LF2.PhaseInvariance
 import CsdLean4.LF2.EffectFn
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF2.Interface
+import CsdLean4.LF2.POVM
 import CsdLean4.LF3.Setup
 import CsdLean4.LF3.Hamiltonian
 import CsdLean4.LF3.SectorSeparation
@@ -79,6 +80,7 @@ import CsdLean4.LF4.UncertaintyKahler
 import CsdLean4.LF4.PauliRobertson
 import CsdLean4.LF4.PauliDotRobertson
 import CsdLean4.LF4.OnticBorn
+import CsdLean4.LF4.POVMDilation
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
