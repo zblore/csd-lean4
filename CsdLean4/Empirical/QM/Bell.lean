@@ -155,16 +155,21 @@ this bound. The named gap is the empirical falsification of local
 realism. -/
 
 /-- **The numerical value `2` of the Bell-1964 classical (LHV) CHSH
-bound.** This is a named constant carrying the value `2`, not a
+bound.** This is a named constant carrying the value `2`, not itself a
 theorem that any local-hidden-variable model satisfies `|S| ≤ 2`. The
-LHV inequality itself is **not** formalised in this module — doing so
-would require modelling a probability space of hidden variables and a
-factorisable joint distribution, which is outside the current scope.
+LHV inequality is **not** formalised *in this module* (it would require
+modelling a probability space of hidden variables and a factorisable
+joint distribution).
 
-The constant is named `bellClassicalBoundValue` (with the trailing
-`Value` to make the un-formalised LHV-theorem status visible) and
-exists solely so that the gap theorem `chsh_classical_bound_violated`
-can state `value < 2√2` rather than open-coding the literal. -/
+**Now formalised elsewhere (2026-06-03).** The LHV `|S| ≤ 2` bound is
+proved in `Empirical/QM/Crypto/E91.lean` as
+`CSD.Empirical.QM.E91.lhvCHSH_abs_le_two`, over a genuine
+measure-theoretic hidden-variable model (probability space `(Λ, μ)` with
+`±1` local responses and factorisable correlations
+`E(a,b) = ∫ A(a,·)B(b,·) dμ`). So `bellClassicalBoundValue` is now backed
+by a theorem; this constant is retained because the gap theorem
+`chsh_classical_bound_violated` states `value < 2√2` rather than
+open-coding the literal. -/
 def bellClassicalBoundValue : ℝ := 2
 
 /-- **A2: The Bell-classical-bound value `2` is strictly less than the

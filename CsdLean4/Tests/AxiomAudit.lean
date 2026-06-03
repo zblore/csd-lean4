@@ -54,6 +54,7 @@ import CsdLean4.Empirical.QM.Resources.Teleportation
 import CsdLean4.Empirical.QM.NoCommunication
 import CsdLean4.Empirical.QM.NoBroadcasting
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
+import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
@@ -413,6 +414,23 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QuantumMoney.quantum_money_unforgeable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumMoney.quantum_money_unforgeable
+
+-- E91 device-independent security: the local-hidden-variable CHSH bound |S| ≤ 2
+-- (Bell 1964 / CHSH 1969, the previously un-formalised premise behind
+-- bellClassicalBoundValue), every LHV value strictly below the Tsirelson 2√2, and
+-- the device-independent witness (singlet attains 2√2; every LHV capped at 2).
+-- Foundational triple only.
+/-- info: 'CSD.Empirical.QM.E91.lhvCHSH_abs_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.lhvCHSH_abs_le_two
+
+/-- info: 'CSD.Empirical.QM.E91.lhvCHSH_lt_tsirelson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.lhvCHSH_lt_tsirelson
+
+/-- info: 'CSD.Empirical.QM.E91.e91_no_lhv_reproduces_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_no_lhv_reproduces_singlet
 
 /-- info: 'CSD.Empirical.Uncertainty.robertson_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

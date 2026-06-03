@@ -353,7 +353,7 @@ schema-mismatch bundles).
 
 | # | Item | Statement | Status | Source |
 |---|---|---|---|---|
-| E7 | E91 security witness | CHSH > 2 ⟹ no LHV ⟹ eavesdropper detectable | **NOT cheap (reclassified 2026-05-24)**: the LHV bound `|S| ≤ 2` is deliberately *un-formalised* in `Empirical/QM/Bell.lean` (`bellClassicalBoundValue` is a named constant `2`, not a theorem about local-hidden-variable models — see its docstring). A genuine "no LHV" witness needs an LHV factorisable-correlation model + the `≤ 2` proof, i.e. an infra build; writing it without that would be a thin repackage of `chsh_classical_bound_violated`. Deferred to an LHV-model tranche. | Ekert 1991 |
+| E7 | E91 security witness | CHSH > 2 ⟹ no LHV ⟹ eavesdropper detectable | **DONE 2026-06-03** (`Empirical/QM/Crypto/E91.lean`): the LHV model is now a genuine measure-theoretic object — a hidden-variable probability space `(Λ, μ)` with `±1` local response functions and factorisable correlations `E(a,b) = ∫ A(a,·)B(b,·) dμ`. `lhvCHSH_abs_le_two` proves the Bell/CHSH `|S| ≤ 2` bound (pointwise `±1` algebra + Bochner integral monotonicity), `lhvCHSH_lt_tsirelson` gives `< 2√2`, and `e91_no_lhv_reproduces_singlet` is the device-independent witness (singlet attains `2√2`; every LHV capped at `2`). This converts `bellClassicalBoundValue` from a named constant into a theorem. Foundational triple only; AxiomAudit-pinned. | Ekert 1991; CHSH 1969 |
 | E8 | Quantum money unforgeability | forgery ⟹ cloning, contradiction | **DONE 2026-05-24** (`Empirical/QM/Crypto/QuantumMoney.lean`: `quantum_money_unforgeable` via `no_universal_cloner_of_witness`, with concrete Wiesner states `|0⟩,|+⟩` and the proved witness `wiesner_nonorthogonal : ⟨0|+⟩ = 1/√2 ∉ {0,1}`) | Wiesner 1983 |
 | E9 | BB84 / B92 protocols | basis-choice / encode / measure / sift structures; security reduction to no-cloning + measurement disturbance | **structure-now** (the disturbance half needs the LF5 measurement-update notion; scaffold the type, carry the security theorem as the obligation) | Bennett-Brassard 1984 |
 
@@ -381,7 +381,7 @@ of the projectivization thread that produced
 2. **Superdense coding (E4)** — DONE; Bell-state Pauli identities + orthonormality.
 3. **Quantum money (E8)** — DONE; composes no-cloning with a concrete Wiesner witness.
 4. **No-broadcasting (E2), no-communication (E3)** — need a partial-trace infra build first (not in Mathlib); promote to an infra tranche.
-5. **E91 witness (E7)** — needs an LHV-model build (the `≤ 2` bound is un-formalised); LHV tranche, not a composition.
+5. **E91 witness (E7)** — DONE 2026-06-03 (`Crypto/E91.lean`): the LHV-model build (measure-theoretic hidden-variable space + the `|S| ≤ 2` Bell/CHSH bound) is in place; `bellClassicalBoundValue` is now backed by a theorem.
 6. **Robertson (E6)** — DONE; QM-generic operator inequality.
 7. **Teleportation (E5)** — DONE 2026-05-31; branch-conditional form (dual of E4).
 8. **Pause for LF5** on BB84/B92 security (measurement update).
