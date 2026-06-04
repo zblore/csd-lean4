@@ -34,7 +34,7 @@ entry has been retired.
 
 **Mathematical content.** Uniqueness of the `G`-invariant probability measure up to scaling on a homogeneous `G`-space. Concretely, in the CSD model: the `SU(N)`-invariant Borel probability measure on `CP^{N-1}` is unique (Fubini-Study). The standard proof requires compactness of `G` (or an equivalent regularity property) in addition to transitivity; the spec authorises the import for the concrete `SU(N)`-on-`CP^{N-1}` setting where compactness holds.
 
-**Spec authorisation.** Paper B §7.4 explicitly carves this out as an imported result. The corpus treats the uniqueness as a structural input rather than reformalising it.
+**Spec authorisation.** The spec explicitly carves this out as an imported result; the corpus treats the uniqueness as a structural input rather than reformalising it.
 
 **Mathlib status.** Not currently in Mathlib at the abstract-measurable-space level required. The concrete `SU(N)`-on-`CP^{N-1}` instance is Haar-measure-on-compact-homogeneous-space material; Mathlib has Haar measure on topological groups but the quotient construction is not yet packaged at the required level.
 
@@ -52,7 +52,7 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 
 **Mathematical content.** The Busch effect-Gleason theorem (Busch 2003): effect-additive probability assignments on a finite-dimensional effect algebra are realised by a unique trace-form density.
 
-**Spec authorisation.** Paper B §7.4 directs LF2 to import this rather than rederive.
+**Spec authorisation.** The spec directs LF2 to import this rather than rederive it.
 
 **Mathlib status.** Not in Mathlib. Effect-algebra / POVM machinery is an open Mathlib gap; the full proof requires Busch 2003's argument.
 
@@ -84,28 +84,28 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 
 The corpus reaches the Born weights by two distinct derivations, and they belong to two distinct strata. Keeping both is deliberate.
 
-- **Operational / non-ontic stratum.** Given the Hilbert-space formalism alone, effect-additive probability is forced to the trace form. This is the Gleason-class argument (Paper B §3), formalised as the import `busch_effect_gleason` (§2.2). It assumes no configuration space and covers arbitrary effects/POVMs. It is retained here as the operational closure of the formalism.
-- **Ontic stratum.** Taking the quantum-effective sector with its symmetry as the primitive, the Born weight is the Fubini–Study volume ratio: the U(N) symmetry fixes `μ_FS` uniquely (axiom-free concretely, via the Haar / FS-uniqueness chain `invariant_measure_uniqueness_cpn`), and the moment map identifies the weight with that volume (`fs_born_volume_ratio_N`). This is the CSD-native derivation (Paper B onward, LF2 → LF3 → LF4). It is **foundational-triple-only** and does **not** use `busch_effect_gleason`.
+- **Operational / non-ontic stratum.** Given the Hilbert-space formalism alone, effect-additive probability is forced to the trace form. This is the Gleason-class argument, formalised as the import `busch_effect_gleason` (§2.2). It assumes no configuration space and covers arbitrary effects/POVMs. It is retained here as the operational closure of the formalism.
+- **Ontic stratum.** Taking the quantum-effective sector with its symmetry as the primitive, the Born weight is the Fubini–Study volume ratio: the U(N) symmetry fixes `μ_FS` uniquely (axiom-free concretely, via the Haar / FS-uniqueness chain `invariant_measure_uniqueness_cpn`), and the moment map identifies the weight with that volume (`fs_born_volume_ratio_N`). This is the CSD-native derivation (LF2 → LF3 → LF4). It is **foundational-triple-only** and does **not** use `busch_effect_gleason`.
 
-**This is a relocation of the primitive, not its elimination.** The ontic derivation does not produce Born from nothing; it produces Born from the posited sector symmetry. That posit is the **A5** structural datum (§3.3): `SectorData.(π, G)`, the projection onto the quantum-effective sector and its U(N) symmetry. So the honest hierarchy is:
+**This is a relocation of the primitive, not its elimination.** The ontic derivation does not produce Born from nothing; it produces Born from the posited sector symmetry. That posit is the sector structural datum (§3.3): `SectorData.(π, G)`, the projection onto the quantum-effective sector and its U(N) symmetry. So the honest hierarchy is:
 
-> **G3b** (Born as a volume ratio): dischargeable now, for rank-1 projective measurements at general `N`, **modulo A5**. (TN3 §5.5 named G3b as the absence of exactly this derivation; the projective case is now a theorem.)
-> **A5** (the `(π, G)` sector posited, §3.3): the residual primitive the ontic derivation rests on. Not discharged in LF4; LF4 instantiates the canonical `(π, G)` and proves Born for it.
-> **D1** (the sector / volume from deterministic dynamics): A5 reduces to D1. With `Φ = id` in every concrete instance, A5 stands independent; this is the deepest open debt.
+> **Born as a volume ratio**: dischargeable now, for rank-1 projective measurements at general `N`, **modulo the sector posit** — the projective case is now a theorem.
+> **The `(π, G)` sector posit (§3.3)**: the residual primitive the ontic derivation rests on. Not discharged in LF4; LF4 instantiates the canonical `(π, G)` and proves Born for it.
+> **The underlying dynamics**: the sector posit would itself follow from a derivation of the sector/volume from the deterministic flow. With `Φ = id` in every concrete instance, the sector posit stands independent; this is the deepest open question — and one that calls for further theoretical development before the Lean side can advance.
 
-The payoff is real and stateable without overclaim: in the ontic stratum the Born rule is a **theorem of the posited sector symmetry**, not an independent probability postulate. The cost is named: the primitive moves from operational effect-additivity (Gleason) to the geometric sector posit (A5), and the question "why this sector" becomes D1.
+The payoff is real and stateable without overclaim: in the ontic stratum the Born rule is a **theorem of the posited sector symmetry**, not an independent probability postulate. The cost is named: the primitive moves from operational effect-additivity (Gleason) to the geometric sector posit, and the question "why this sector" becomes a question about the underlying deterministic dynamics.
 
-**Scope: the POVM step is closed (2026-06-03).** The ontic derivation covers rank-1 **projective** (von Neumann) measurements **and general POVMs**. The POVM case routes through **Naimark dilation** (`LF4/POVMNaimark.lean` `canonicalNaimark`, the dilation built from the CFC square roots `√Eᵢ = cfc Real.sqrt Eᵢ`, inhabiting `NaimarkDilation P` for every POVM) onto a larger ontic configuration space `Σ' = ℂℙ^{N·|ι|−1}`, where the achieved general-`N` result reads the POVM Born weight `⟨ψ,Eᵢψ⟩` as a **sum of Fubini–Study volumes** (`povm_born_eq_dilated_volume`) and the empirical chain lands `povm_born_frequency_volume` — carving-free, Gleason-free, unconditional. So the ontic stratum now stands alone for **arbitrary** quantum measurements, and `busch_effect_gleason` is no longer on the ontic Born path for *either* projective or POVM measurements; it survives only as the operational-stratum closure (§2.2). Honest cost: the POVM derivation **enlarges the posited sector (A5)** by the ancilla on `Σ'` (the apparatus/environment), and assumes genericity (`hpos`, no vanishing dilated amplitude). See `specs/povm-plan.md`.
+**Scope: the POVM step is closed (2026-06-03).** The ontic derivation covers rank-1 **projective** (von Neumann) measurements **and general POVMs**. The POVM case routes through **Naimark dilation** (`LF4/POVMNaimark.lean` `canonicalNaimark`, the dilation built from the CFC square roots `√Eᵢ = cfc Real.sqrt Eᵢ`, inhabiting `NaimarkDilation P` for every POVM) onto a larger ontic configuration space `Σ' = ℂℙ^{N·|ι|−1}`, where the achieved general-`N` result reads the POVM Born weight `⟨ψ,Eᵢψ⟩` as a **sum of Fubini–Study volumes** (`povm_born_eq_dilated_volume`) and the empirical chain lands `povm_born_frequency_volume` — carving-free, Gleason-free, unconditional. So the ontic stratum now stands alone for **arbitrary** quantum measurements, and `busch_effect_gleason` is no longer on the ontic Born path for *either* projective or POVM measurements; it survives only as the operational-stratum closure (§2.2). Honest cost: the POVM derivation **enlarges the posited sector structure** by the ancilla on `Σ'` (the apparatus/environment), and assumes genericity (`hpos`, no vanishing dilated amplitude). See `specs/povm-plan.md`.
 
 ## 3. Physical assumptions not formalised
 
 Beyond Mathlib's axioms and LF2's three imports, the formalisation carries several physical assumptions as structural data on its types rather than as named axioms. They are honest assumptions about which class of mathematical objects the corpus is talking about; they are not derived inside the Lean tree.
 
-### 3.1 `OnticSetup.μL` is a finite measure (carries D1)
+### 3.1 `OnticSetup.μL` is a finite measure (preparation-measure origin)
 
 `μL` is a structural field of `OnticSetup`. The Lean tree does not derive `μL` from a symplectic / Kähler volume form on `Σ`. The class of `OnticSetup`s the corpus cares about is `μL`-preserving deterministic flows, but the Lean abstraction is wider: it works for any measurable `Φ` and any finite `μL`. The LF1 frequency theorem is therefore strictly more general than the physical reading suggests.
 
-This is the **D1 debt** in the corpus's labelling (the preparation-measure origin problem in Paper A's framing). Discharge target: LF4 instantiation of `SigmaSpace` as a compact Kähler manifold, with `μL` constructed from the Kähler volume form.
+This is the **preparation-measure-origin assumption**. Discharge target: LF4 instantiation of `SigmaSpace` as a compact Kähler manifold, with `μL` constructed from the Kähler volume form (and, beyond that, the flow `Φ` itself derived rather than asserted — a theory-level question).
 
 ### 3.2 `OnticSetup.hΦ_pres` is structural payload (not consumed)
 
@@ -113,21 +113,21 @@ The Liouville-preservation field `MeasurePreserving Φ μL μL` is carried for p
 
 This becomes load-bearing only when LF4 derives `μL` from a volume form (whereupon `hΦ_pres` follows from Hamilton's equations and ceases to be a stipulation).
 
-### 3.3 `SectorData.(π, G)` is A5 structural data
+### 3.3 `SectorData.(π, G)` is posited structural data
 
 The projection `π : SigmaSpace → P` and the symmetry group `G` are taken as structural fields with only the two coherence conditions (`μL`-invariance of the ontic action, `π`-equivariance) constraining them. Nothing forces `π` to project onto the quantum-effective sector specifically, and nothing forces `G = SU(N)`. The natural reading is `G = SU(N)` acting on `Σ` via the lift of its action on `CP^{N-1}`, with `π` the standard projection, but no field forces this.
 
-This is the **A5 debt**: the physical motivation for the quantum-effective sector assumption is a load-bearing external input. Concrete instantiation is [`specs/LF4-todo.md`](specs/LF4-todo.md) §8.
+This is the **sector-posit assumption**: the physical motivation for the quantum-effective sector is a load-bearing external input. Concrete instantiation is [`specs/LF4-todo.md`](specs/LF4-todo.md) §8.
 
-### 3.4 `LeakageCompat` parameters `εA`, `εB` are stipulated (carries V ≈ 1 − I)
+### 3.4 `LeakageCompat` parameters `εA`, `εB` are stipulated
 
-The finite-leakage stability theorems take `εA`, `εB` as caller-supplied stability parameters; they are not derived from any physical isolation quantity. The bound `εA + εB + εA·εB` matches the V ≈ 1 − I phenomenology to leading order, but the link from per-side leakages to an underlying isolation parameter is not formalised.
+The finite-leakage stability theorems take `εA`, `εB` as caller-supplied stability parameters; they are not derived from any physical isolation quantity. The bound `εA + εB + εA·εB` matches the expected visibility-vs-isolation phenomenology to leading order, but the link from per-side leakages to an underlying isolation parameter is not formalised.
 
-This carries the **V ≈ 1 − I debt** explicitly. Structural discharge is gated on the TN0 V ≈ 1 − I forwarding remark being authored, which is far-future.
+This is a stipulated-parameter assumption. Its structural discharge is gated on theory-level work (relating leakage to an isolation parameter) that is far-future.
 
 ### 3.5 `MeasurementUnitary.action` is impulsive-readout data
 
-The eigenstate-action field of `MeasurementUnitary` (the impulsive-readout idealisation `u (jointEig (s, t) φA φB) = jointEig (s, t) (ptrTransA s φA) (ptrTransB t φB)`) is caller-supplied. Spec §9.5 explicitly carves this out of v1.00: the operator-exponential `exp(-iHt)` derivation requires Mathlib-level Stone-on-bounded-self-adjoint-operators infrastructure and is LF4-or-later.
+The eigenstate-action field of `MeasurementUnitary` (the impulsive-readout idealisation `u (jointEig (s, t) φA φB) = jointEig (s, t) (ptrTransA s φA) (ptrTransB t φB)`) is caller-supplied. The spec explicitly carves this out of v1.00: the operator-exponential `exp(-iHt)` derivation requires Mathlib-level Stone-on-bounded-self-adjoint-operators infrastructure and is LF4-or-later.
 
 ### 3.6 `PureSingletPreparation` bundle on the LF3 chain capstones (Phase 7 option (B) form)
 
@@ -149,7 +149,7 @@ LF4 will discharge the bundle structurally via the preparation-to-Hilbert corres
 
 This bundle is a hypothesis structure, not an axiom: callers must supply the discharge content. It is listed here for the same reason as the other physical-assumption entries: it is load-bearing for the chain capstones and not derived inside the Lean tree.
 
-**Why the OP.p bridge (option (B)) rather than direct projectiveWeight.** The previous (v0.3.4-lf3) bundle had a `weight_eq_P_st : projectiveWeight D μprep (O_st s t) = ENNReal.ofReal P_st` field — direct measure equality on a projective outcome region. Under the Phase 4 Dirac model of `PurePreparation`, `Measure.map D.π μprep = Dirac ray_point`, and the direct measure of a projective outcome region is 0 or 1, not a generic `P_st ∈ (0, 1)`. The OP.p bridge resolves this: probability is the OP-integral of `effectProjFn` (the CSD-foundational object in the volume-ratios reading), and `OP.p (rankOneEffect (jed.eig s t)) = ‖⟨ψ, jed.eig s t⟩‖² = P_st` via `born_rank_one` + the Born identity, both for a Dirac `μprep`. The bridge_op_p field ties the ontic outcome weight to this OP-integral content; concretely, what LF4 discharges is the structural relationship between the ontic outcome region's preEvent volume and the OP integration. Spec §5.4 four-ingredient combinatorial framing applies.
+**Why the OP.p bridge (option (B)) rather than direct projectiveWeight.** The previous (v0.3.4-lf3) bundle had a `weight_eq_P_st : projectiveWeight D μprep (O_st s t) = ENNReal.ofReal P_st` field — direct measure equality on a projective outcome region. Under the Phase 4 Dirac model of `PurePreparation`, `Measure.map D.π μprep = Dirac ray_point`, and the direct measure of a projective outcome region is 0 or 1, not a generic `P_st ∈ (0, 1)`. The OP.p bridge resolves this: probability is the OP-integral of `effectProjFn` (the CSD-foundational object in the volume-ratios reading), and `OP.p (rankOneEffect (jed.eig s t)) = ‖⟨ψ, jed.eig s t⟩‖² = P_st` via `born_rank_one` + the Born identity, both for a Dirac `μprep`. The bridge_op_p field ties the ontic outcome weight to this OP-integral content; concretely, what LF4 discharges is the structural relationship between the ontic outcome region's preEvent volume and the OP integration. The four-ingredient combinatorial framing applies.
 
 ## 4. Deferred items (LF4 and later)
 
@@ -395,7 +395,7 @@ LF3 imports **no** axioms beyond Lean's foundational set, but it does take certa
 
 **What it is.** A field of the `LeakageCompat` structure asserting that the operator-form sector volume deviates from `‖cAmp s t‖²` by at most `εA + εB + εA·εB`.
 
-**What it should be (v2).** A theorem derived from a concrete tensor decomposition of `H_SA` plus per-side overlap bounds (Cauchy-Schwarz on the cross-sector readout mass). Spec §9.7 / §9.11.
+**What it should be (v2).** A theorem derived from a concrete tensor decomposition of `H_SA` plus per-side overlap bounds (Cauchy-Schwarz on the cross-sector readout mass).
 
 **Why it matters.** `LF3_finite_leakage_theorem` is a triangle-inequality over `Sign × Sign` summing this field with appropriate prefactors. It is therefore a packaging theorem from this assumption, not a derivation from projector / pointer / Hamiltonian hypotheses.
 
@@ -414,6 +414,6 @@ The composition is `PureSingletPreparation.weight_eq_P_st` (a proved theorem on 
 
 **What they should be (LF4).** Both fields become theorems derived from a concrete preparation-to-Hilbert correspondence + projective-first outcome specification + spectral construction. LF4-todo §2, §3, §7 are the discharge targets.
 
-**Why this matters.** The Phase 7 split preserves the CSD pure / measurement-context-driven structural separation: the static pure preparation (`PP`) is context-independent; the measurement-context data (`jed`, `O_region`, `bridge_op_p`) depends on the chosen measurement context (a, b). The option (B) chain routes via OP integration (the CSD-foundational content of `effectProjFn`), matching spec §5.4 four-ingredient framing.
+**Why this matters.** The Phase 7 split preserves the CSD pure / measurement-context-driven structural separation: the static pure preparation (`PP`) is context-independent; the measurement-context data (`jed`, `O_region`, `bridge_op_p`) depends on the chosen measurement context (a, b). The option (B) chain routes via OP integration (the CSD-foundational content of `effectProjFn`), matching the four-ingredient combinatorial framing.
 
 **Status.** v1.x carries both fields as caller-supplied bundle hypotheses via the transitional `PureSingletPreparation.ofHypothesis` constructor (and `MeasurementJointEig`'s field set, no constructor needed). LF4 supplies a structural constructor that derives both.
