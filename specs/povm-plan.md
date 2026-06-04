@@ -112,9 +112,23 @@ P.3a block sum via `tendsto_finset_sum`. The block frequency is taken as the sum
 cells' frequencies (Option A — no disjointness lemma needed; the cells are disjoint so
 this is the honest block count). Foundational triple only; AxiomAudit-pinned.
 
-**Remaining:** P.5 (CFC `√Eᵢ` + canonical dilation existence → makes Phase 1
-unconditional, every POVM has a dilation), P.6 (README/INDEX/docs). The whole Phase 1
-is conditional on a *supplied* Naimark dilation; P.5 discharges existence.
+**Phase 2 COMPLETE — P.5 DONE** (`LF4/POVMNaimark.lean`): the canonical Naimark
+dilation `canonicalNaimark P : NaimarkDilation P` exists for **every** POVM, built from
+`√Eᵢ = cfc Real.sqrt Eᵢ` (the unital Hermitian CFC on `Matrix n n ℂ` — P.5a is a library
+call: `√Eᵢ √Eᵢ = Eᵢ` via `cfc_mul` + `√x·√x = x` on the nonneg spectrum
+(`spectrum_nonneg_of_nonneg`) + `cfc_id`; no hand-built spectral construction). The
+isometry `naimarkV_isom` (`Vᴴ V = ∑Eᵢ = I`) and pullback `naimarkV_pullback`
+(`Vᴴ Πᵢ V = Eᵢ`) both reduce to `∑ₙ conj(√Eᵢ)_{n,m}(√Eᵢ)_{n,m'} = (Eᵢ)_{m,m'}`. This makes
+the Phase-1 ontic POVM Born = Kähler-volume results **unconditional** — every POVM has a
+dilation. Foundational triple only; AxiomAudit-pinned.
+
+Note (impl): the non-unital `CFC.sqrt` is NOT wired for `Matrix` (no registered
+`CStarAlgebra` instance), so the unital `cfc Real.sqrt` is used instead — same result,
+slightly more plumbing (`spectrum ℝ`-nonneg via `spectrum_nonneg_of_nonneg`).
+
+**Remaining:** P.6 (README/INDEX/docs). The conditional-dilation caveat is discharged;
+what remains posited is the enlarged sector structure on `Σ'` (A5 on the ancilla) and the
+dynamics (D1).
 
 ## Detailed DAG (recon-grounded 2026-06-03)
 

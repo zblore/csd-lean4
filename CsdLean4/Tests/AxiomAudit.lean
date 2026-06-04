@@ -49,6 +49,7 @@ import CsdLean4.LF4.OnticBorn
 import CsdLean4.LF2.POVM
 import CsdLean4.LF4.POVMDilation
 import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.POVMNaimark
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -1507,5 +1508,22 @@ does **not** carry `invariant_measure_uniqueness` (cf. the abstract
 /-- info: 'CSD.LF4.povm_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.povm_born_frequency_volume
+
+-- POVM tranche P.5 (existence): the canonical Naimark dilation built from the CFC
+-- square roots √Eᵢ inhabits NaimarkDilation P for every POVM, making the Phase-1
+-- POVM Born = Kähler-volume results unconditional (no longer needing a supplied
+-- dilation). Foundational triple only — the CFC sqrt and isometry/pullback proofs
+-- add no axioms.
+/-- info: 'CSD.LF4.naimarkV_isom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.naimarkV_isom
+
+/-- info: 'CSD.LF4.naimarkV_pullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.naimarkV_pullback
+
+/-- info: 'CSD.LF4.canonicalNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.canonicalNaimark
 
 end CSD.Tests.AxiomAudit

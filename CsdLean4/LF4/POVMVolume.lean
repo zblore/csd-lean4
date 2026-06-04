@@ -47,29 +47,6 @@ private lemma normSq_inner_single (w : EuclideanSpace ℂ (Fin N × ι)) (p : Fi
     ‖inner ℂ (EuclideanSpace.single p (1 : ℂ)) w‖ ^ 2 = ‖w.ofLp p‖ ^ 2 := by
   rw [EuclideanSpace.inner_single_left, map_one, one_mul]
 
-/-- **Action of the ancilla-`i` block projector on a coordinate.** `Πᵢ` keeps the
-components whose ancilla index is `i` and zeroes the rest:
-`(Πᵢ v)_{(n,j)} = if j = i then v_{(n,i)} else 0`. -/
-lemma blockProj_mulVec (i : ι) (v : Fin N × ι → ℂ) (n : Fin N) (j : ι) :
-    (blockProj N i *ᵥ v) (n, j) = if j = i then v (n, i) else 0 := by
-  simp only [blockProj, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
-    Matrix.kronecker_apply, Matrix.one_apply]
-  rw [Finset.sum_eq_single n]
-  · rcases eq_or_ne j i with hj | hj
-    · subst hj
-      rw [Finset.sum_eq_single j]
-      · rw [Matrix.single_apply_same]; simp
-      · intro k _ hk
-        rw [Matrix.single_apply_of_col_ne _ _ (Ne.symm hk)]; ring
-      · intro h; exact absurd (Finset.mem_univ j) h
-    · simp only [if_neg hj]
-      apply Finset.sum_eq_zero
-      intro k _
-      rw [Matrix.single_apply_of_row_ne (Ne.symm hj)]; ring
-  · intro m _ hm
-    simp only [if_neg (Ne.symm hm), zero_mul, Finset.sum_const_zero]
-  · intro h; exact absurd (Finset.mem_univ n) h
-
 /-- **Block decomposition.** The projective Born weight of `w` against the
 ancilla-`i` projector is the sum of the rank-1 computational-basis Born weights
 over the `i`-th block:
