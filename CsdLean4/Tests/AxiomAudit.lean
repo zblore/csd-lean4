@@ -86,6 +86,7 @@ import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.SIC3Volume
+import CsdLean4.Empirical.CSD.MUB3Volume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
@@ -899,6 +900,33 @@ info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume' depends on
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume
+
+-- d=3 complete-MUB volume capstone: the 4 mutually unbiased bases in dimension 3
+-- (|⟨v,w⟩|²=1/3 across distinct bases) as a 12-outcome POVM via Naimark dilation to ℂℙ³⁵;
+-- foundational-triple only (carving-free, Gleason-free).
+/--
+info: 'CSD.Empirical.CSDBridge.MUB3Volume.mub3_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MUB3Volume.mub3_complete
+
+/--
+info: 'CSD.Empirical.CSDBridge.MUB3Volume.mub3_unbiased' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MUB3Volume.mub3_unbiased
+
+/--
+info: 'CSD.Empirical.CSDBridge.MUB3Volume.mub3_weight_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MUB3Volume.mub3_weight_eq
+
+/--
+info: 'CSD.Empirical.CSDBridge.MUB3Volume.mub3_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MUB3Volume.mub3_born_frequency_volume
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--

@@ -122,6 +122,7 @@ a non-projective qutrit POVM.
 | SIC POVM | `SICVolume.lean` | `sic_outer_sum`, `sic_inner_normSq`, `sic_weight_eq`, `sic_born_frequency_volume` | tetrahedral `pₖ=(1/2)‖⟨ψₖ,ψ⟩‖²`, equiangular `\|⟨ψⱼ,ψₖ⟩\|²=1/3`, on dilated `ℂℙ⁷` |
 | Unsharp qutrit POVM (**N=3**) | `QutritPOVMVolume.lean` | `noisy_complete`, `noisy_weight_eq`, `noisy_born_frequency_volume` | `Eₖ=(1−ε)\|k⟩⟨k\|+(ε/3)I₃`; `pₖ=(1−ε)‖⟨k,ψ⟩‖²+ε/3`, on dilated `ℂℙ⁸` (first non-qubit entry) |
 | d=3 SIC / Hesse POVM (**N=3**) | `SIC3Volume.lean` | `sic3_complete`, `sic3_inner_normSq`, `sic3_weight_eq`, `sic3_born_frequency_volume` | 9 Weyl–Heisenberg states `Eₖ=(1/3)\|ψₖ⟩⟨ψₖ\|`, equiangular `\|⟨ψⱼ,ψₖ⟩\|²=1/4`; `pₖ=(1/3)‖⟨ψₖ,ψ⟩‖²`, on dilated `ℂℙ²⁶` (first *symmetric* non-qubit entry) |
+| d=3 complete-MUB POVM (**N=3**) | `MUB3Volume.lean` | `mub3_complete`, `mub3_unbiased`, `mub3_weight_eq`, `mub3_born_frequency_volume` | 4 mutually unbiased bases (12 vectors) `Eₖ=(1/4)\|vₖ⟩⟨vₖ\|`, unbiased `\|⟨v,w⟩\|²=1/3` across bases; `pₖ=(1/4)‖⟨vₖ,ψ⟩‖²`, on dilated `ℂℙ³⁵` |
 
 The trine, USD, and SIC entries span the canonical minimal qubit POVM family: minimal
 symmetric (trine), unambiguous discrimination (USD), and symmetric informationally
