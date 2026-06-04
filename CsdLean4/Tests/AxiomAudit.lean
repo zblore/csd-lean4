@@ -79,6 +79,7 @@ import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
 import CsdLean4.Empirical.CSD.TrineVolume
+import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
@@ -761,6 +762,26 @@ info: 'CSD.Empirical.CSDBridge.TrineVolume.trine_weight_eq' depends on axioms: [
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.TrineVolume.trine_weight_eq
+
+-- USD volume capstone: the second non-projective (POVM) volume-frequency entry,
+-- foundational-triple only (carving-free, Gleason-free).
+/--
+info: 'CSD.Empirical.CSDBridge.USDVolume.usd_weight_e1' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.USDVolume.usd_weight_e1
+
+/--
+info: 'CSD.Empirical.CSDBridge.USDVolume.usd_weight_e2' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.USDVolume.usd_weight_e2
+
+/--
+info: 'CSD.Empirical.CSDBridge.USDVolume.usd_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.USDVolume.usd_born_frequency_volume
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
