@@ -730,6 +730,12 @@ info: 'CSD.Empirical.CSDBridge.TrineVolume.trine_born_frequency_volume' depends 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.TrineVolume.trine_born_frequency_volume
 
+/--
+info: 'CSD.Empirical.CSDBridge.TrineVolume.trine_weight_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.TrineVolume.trine_weight_eq
+
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
 info: 'CSD.Empirical.CSDBridge.SuperdenseCoding.csd_sdc_encode_X' depends on axioms: [propext, Classical.choice, Quot.sound]

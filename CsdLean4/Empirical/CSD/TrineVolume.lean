@@ -145,6 +145,35 @@ noncomputable def trinePOVM : POVM 2 (Fin 3) where
 
 /-! ### The trine Born weights as Kähler volumes -/
 
+/-- `Tr(|ψ⟩⟨ψ| · M) = ⟨ψ, M ψ⟩` — the trace-form / expectation bridge. -/
+lemma trace_outer_mul_eq_inner (ψ : EuclideanSpace ℂ (Fin N))
+    (M : Matrix (Fin N) (Fin N) ℂ) :
+    (outerProduct ψ * M).trace = inner ℂ ψ (Matrix.toEuclideanLin M ψ) := by
+  rw [Matrix.trace_mul_comm]
+  have hmul : M * outerProduct ψ
+      = Matrix.vecMulVec (M *ᵥ (fun i => ψ i)) (fun i => star (ψ i)) := by
+    ext i j
+    simp only [Matrix.mul_apply, outerProduct, Matrix.vecMulVec_apply, Matrix.mulVec,
+      dotProduct, Finset.sum_mul, mul_assoc]
+  rw [hmul, Matrix.trace_vecMulVec, EuclideanSpace.inner_eq_star_dotProduct,
+    Matrix.ofLp_toLpLin, Matrix.toLin'_apply]
+  rfl
+
+/-- **Closed-form trine Born weights:** for a unit preparation `ψ`,
+`pₖ(ψ) = (2/3)‖⟨ψ, ψₖ⟩‖²` — the symmetric 120°-measurement outcome probabilities. -/
+theorem trine_weight_eq (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) (k : Fin 3) :
+    trinePOVM.weight ψ k = 2 / 3 * ‖inner ℂ ψ (trineState k)‖ ^ 2 := by
+  show RCLike.re (inner ℂ ψ (Matrix.toEuclideanLin ((trineEffect k).M) ψ)) = _
+  rw [← trace_outer_mul_eq_inner]
+  have hM : (trineEffect k).M = ((2 / 3 : ℝ) : ℂ) • outerProduct (trineState k) := rfl
+  rw [hM, Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul,
+    show RCLike.re (((2 / 3 : ℝ) : ℂ) * (outerProduct ψ * outerProduct (trineState k)).trace)
+        = (2 / 3 : ℝ) * RCLike.re ((outerProduct ψ * outerProduct (trineState k)).trace) from
+      RCLike.re_ofReal_mul (2 / 3) _]
+  congr 1
+  have hbq := born_quadratic ψ (trineState k) hψ (trineState_norm k)
+  simpa only [traceForm, rankOneDensity, rankOneEffect] using hbq
+
 /-- The canonical Naimark dilation of the trine POVM (it exists, like every POVM's). -/
 noncomputable def trineNaimark : NaimarkDilation trinePOVM := canonicalNaimark trinePOVM
 
