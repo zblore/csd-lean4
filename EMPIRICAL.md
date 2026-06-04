@@ -121,12 +121,16 @@ a non-projective qutrit POVM.
 | USD POVM | `USDVolume.lean` | `usd_weight_e1`, `usd_weight_e2`, `usd_born_frequency_volume` | conclusive weights `a‖⟨ψₖ^⊥,ψ⟩‖²` on dilated `ℂℙ⁵` |
 | SIC POVM | `SICVolume.lean` | `sic_outer_sum`, `sic_inner_normSq`, `sic_weight_eq`, `sic_born_frequency_volume` | tetrahedral `pₖ=(1/2)‖⟨ψₖ,ψ⟩‖²`, equiangular `\|⟨ψⱼ,ψₖ⟩\|²=1/3`, on dilated `ℂℙ⁷` |
 | Unsharp qutrit POVM (**N=3**) | `QutritPOVMVolume.lean` | `noisy_complete`, `noisy_weight_eq`, `noisy_born_frequency_volume` | `Eₖ=(1−ε)\|k⟩⟨k\|+(ε/3)I₃`; `pₖ=(1−ε)‖⟨k,ψ⟩‖²+ε/3`, on dilated `ℂℙ⁸` (first non-qubit entry) |
+| d=3 SIC / Hesse POVM (**N=3**) | `SIC3Volume.lean` | `sic3_complete`, `sic3_inner_normSq`, `sic3_weight_eq`, `sic3_born_frequency_volume` | 9 Weyl–Heisenberg states `Eₖ=(1/3)\|ψₖ⟩⟨ψₖ\|`, equiangular `\|⟨ψⱼ,ψₖ⟩\|²=1/4`; `pₖ=(1/3)‖⟨ψₖ,ψ⟩‖²`, on dilated `ℂℙ²⁶` (first *symmetric* non-qubit entry) |
 
 The trine, USD, and SIC entries span the canonical minimal qubit POVM family: minimal
 symmetric (trine), unambiguous discrimination (USD), and symmetric informationally
-complete (SIC). The unsharp qutrit POVM is the first entry exercising the machinery past
-the qubit (`N = 3`, dilated `ℂℙ⁸`). The general (non-projective) ontic Born = Kähler-volume
-machinery they instantiate lives in `CsdLean4/LF4/POVM*.lean` (see `README.md` LF4 POVM row).
+complete (SIC). The unsharp and Hesse-SIC qutrit POVMs are the first entries exercising
+the machinery past the qubit (`N = 3`, dilated `ℂℙ⁸` and `ℂℙ²⁶`); the d=3 SIC is the
+genuine symmetric informationally-complete qutrit measurement (the Weyl–Heisenberg orbit
+of the Hesse fiducial, equiangular at `1/(d+1) = 1/4`). The general (non-projective) ontic
+Born = Kähler-volume machinery they instantiate lives in `CsdLean4/LF4/POVM*.lean` (see
+`README.md` LF4 POVM row).
 
 ---
 

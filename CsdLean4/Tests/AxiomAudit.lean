@@ -85,6 +85,7 @@ import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
+import CsdLean4.Empirical.CSD.SIC3Volume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
@@ -871,6 +872,33 @@ info: 'CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_born_frequency_volume' dep
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_born_frequency_volume
+
+-- d=3 SIC (Hesse) volume capstone: the first SYMMETRIC non-qubit (N=3) volume entry,
+-- foundational-triple only (carving-free, Gleason-free); the genuine dimension-3 SIC
+-- (9 Weyl-Heisenberg states, equiangular |⟨ψⱼ,ψₖ⟩|²=1/4) via Naimark dilation to ℂℙ²⁶.
+/--
+info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SIC3Volume.sic3_complete
+
+/--
+info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_inner_normSq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SIC3Volume.sic3_inner_normSq
+
+/--
+info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_weight_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SIC3Volume.sic3_weight_eq
+
+/--
+info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
