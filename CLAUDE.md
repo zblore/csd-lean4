@@ -5,11 +5,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Where to start (plans & todos)
 
 **[`specs/INDEX.md`](specs/INDEX.md) is the orientation map** for every plan / todo /
-reference doc, with one-line status on each. Read it first when picking up work. The next
-open tranche is **POVMs** ([`specs/povm-plan.md`](specs/povm-plan.md)); the open frontier
-is **D1** ([`specs/carve-out-plan.md`](specs/carve-out-plan.md)). Axiom posture and the
-two-strata (operational Gleason vs ontic volume) reading live in
-[`AXIOMS.md`](AXIOMS.md) §2.
+reference doc, with one-line status on each. Read it first when picking up work. The
+**POVM tranche is closed** ([`specs/povm-plan.md`](specs/povm-plan.md), DONE 2026-06-03 —
+the ontic Born derivation now covers general non-projective measurements via the canonical
+Naimark dilation, Gleason-free). The **single open frontier is now D1**
+([`specs/carve-out-plan.md`](specs/carve-out-plan.md) — exercising real measurement
+dynamics on `Σ`; `Φ = id` everywhere today). Axiom posture and the two-strata (operational
+Gleason vs ontic volume) reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
 ## Build Commands
 
@@ -437,7 +439,28 @@ MomentBornN.lean       — fs_volume_eq_dirichlet, volume_openSimplexFree,
                          all N coordinates, UNCONDITIONAL
 BornFrequencyN.lean    — born_frequency_convergence_N: general-N Busch-free
                          frequencies → full Born vector jointly a.s.
+POVMDilation.lean      — blockProj (I_N⊗|i⟩⟨i|), blockProj_mulVec, NaimarkDilation
+                         (supplied isometry V with Vᴴ Πᵢ V = Eᵢ), born_transfer
+                         (POVM Born weight = dilated projective Born weight)
+POVMVolume.lean        — povm_born_eq_block_sum (POVM Born = ∑ dilated rank-1 cells),
+                         povm_born_eq_dilated_volume (= ∑ FS volumes on Σ'),
+                         povm_born_frequency_volume (empirical → POVM Born, P.3/P.4)
+POVMNaimark.lean       — canonicalNaimark: the Naimark dilation from CFC square roots
+                         √Eᵢ = cfc Real.sqrt Eᵢ; naimarkV_isom (Vᴴ V = ∑Eᵢ = I),
+                         naimarkV_pullback (Vᴴ Πᵢ V = Eᵢ); makes the POVM Born =
+                         Kähler-volume results unconditional (P.5)
 ```
+
+**POVM tranche is closed (P.1–P.5, 2026-06-03).** The ontic Born = Kähler-volume
+derivation now covers general (non-projective) POVMs: every POVM acquires a canonical
+Naimark dilation onto a larger ontic `Σ' = ℂℙ^{N·|ι|−1}` (the ancilla is the
+apparatus/environment), where the achieved general-`N` result reads the POVM Born weight
+`⟨ψ,Eᵢψ⟩` as a sum of Fubini–Study volumes and empirical frequencies converge to it —
+**carving-free, Gleason-free, unconditional**. `busch_effect_gleason` is now fully off the
+ontic Born path (projective and POVM); it survives only as the operational-stratum
+statement. Honest residue: A5 (the sector posit, enlarged by the ancilla on `Σ'`) and D1
+(dynamics; `Φ = id`). The `POVM` type + Born-weight completeness live in `LF2/POVM.lean`.
+See `specs/povm-plan.md`.
 
 **§14.2 is closed.** The observable-correspondence chain (six commits,
 `eeec1e8`→`c5eed61`) is fully verified, foundational-triple-only on every pin,

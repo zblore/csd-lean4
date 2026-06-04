@@ -1,7 +1,10 @@
 # POVM tranche plan — extend the ontic Born derivation to general POVMs
 
-Status: planning doc, opened 2026-06-02. This is the **starting point for the next
-session**. Read `specs/INDEX.md` first for orientation; read this for the tranche.
+Status: **CLOSED 2026-06-03.** P.1–P.5 done (POVM type, Naimark dilation + Born transfer,
+volume reading, frequency capstone, canonical-dilation existence), P.6 (docs) done — all
+foundational-triple-only, Gleason-free. The ontic Born = Kähler-volume derivation now
+covers general (non-projective) measurements. See the Progress section below. The single
+open frontier is now **D1** (`specs/carve-out-plan.md`).
 
 ## Goal and why it matters
 
@@ -126,9 +129,12 @@ Note (impl): the non-unital `CFC.sqrt` is NOT wired for `Matrix` (no registered
 `CStarAlgebra` instance), so the unital `cfc Real.sqrt` is used instead — same result,
 slightly more plumbing (`spectrum ℝ`-nonneg via `spectrum_nonneg_of_nonneg`).
 
-**Remaining:** P.6 (README/INDEX/docs). The conditional-dilation caveat is discharged;
-what remains posited is the enlarged sector structure on `Σ'` (A5 on the ancilla) and the
-dynamics (D1).
+**Phase 3 — P.6 DONE** (docs): README headline + machine-verified table + theorem
+inventory updated to sell the POVM achievement; `INDEX.md`, `CLAUDE.md` (where-to-start +
+LF2/LF4 module chains), `AXIOMS.md` §2.4 (the open-POVM-step note rewritten — POVMs now
+covered, Busch off the ontic path) all refreshed. **Tranche complete.** The
+conditional-dilation caveat is discharged; what remains posited is the enlarged sector
+structure on `Σ'` (A5 on the ancilla) and the dynamics (D1, the open frontier).
 
 ## Detailed DAG (recon-grounded 2026-06-03)
 
