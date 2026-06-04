@@ -94,6 +94,7 @@ import CsdLean4.Empirical.QM.NoBroadcasting
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.USD
+import CsdLean4.Empirical.QM.QEC.ThreeQubit
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18

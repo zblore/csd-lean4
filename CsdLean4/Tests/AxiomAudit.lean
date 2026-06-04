@@ -61,6 +61,7 @@ import CsdLean4.Empirical.QM.NoBroadcasting
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.USD
+import CsdLean4.Empirical.QM.QEC.ThreeQubit
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
@@ -473,6 +474,25 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.USD.usdPOVM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.USD.usdPOVM
+
+-- QEC: the three-qubit bit-flip code (first QEC theorem; foundational-triple only).
+/--
+info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip
+
+/-- info: 'CSD.Empirical.QM.QEC.syndrome_X1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndrome_X1
+
+/-- info: 'CSD.Empirical.QM.QEC.syndrome_X2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndrome_X2
+
+/-- info: 'CSD.Empirical.QM.QEC.syndrome_X3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndrome_X3
 
 /-- info: 'CSD.Empirical.Uncertainty.robertson_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

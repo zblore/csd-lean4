@@ -57,6 +57,7 @@ status). For the axiom posture and the two-strata (operational vs ontic) reading
 | Quantum money | `Crypto/QuantumMoney.lean` | `quantum_money_unforgeable`, `wiesner_nonorthogonal` | Forgery would clone non-orthogonal Wiesner states, contradicting no-cloning | Wiesner 1983 |
 | E91 device-independent | `Crypto/E91.lean` | `lhvCHSH_abs_le_two`, `lhvCHSH_lt_tsirelson`, `e91_no_lhv_reproduces_singlet` | A measure-theoretic LHV model obeys the CHSH bound `\|S\|≤2`; the singlet attains `2√2`, so no LHV reproduces it (eavesdropper-detectable) | Ekert 1991; CHSH 1969 |
 | Gate library | `Gates/{SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean` | `qmH_mul_self`, `qmS_sq`, `qmT_sq`, `qmCNOT_mul_self`, `qmSWAP_mul_self`, `qmCZ_mul_self`, `qmToffoli_mul_self`, `qmFredkin_mul_self`, `qmBellPrep_yields_phiplus` | Hadamard/phase/Pauli involutions and orders; CNOT/SWAP/CZ/Toffoli/Fredkin self-inverse; Bell preparation yields `\|Φ⁺⟩` | Standard |
+| QEC: 3-qubit bit-flip code | `QEC/ThreeQubit.lean` | `three_qubit_corrects_single_bitflip`, `syndrome_X1`/`X2`/`X3`, `stab_*_fixes_logical` | `\|ψ⟩↦a\|000⟩+b\|111⟩` corrects any single `X` error: stabilisers `Z₁Z₂,Z₂Z₃` fix the codespace, the four errors give distinct syndromes `(±,±)`, and each `X` is self-inverse (recovery). The first QEC theorem. | Shor 1995 |
 
 Namespace note: the earliest files use `CSD.Empirical.<Topic>` (Bell, NoCloning, NoDeleting,
 Uncertainty, SternGerlach, Hardy, GHZ, KochenSpecker, MerminPeres, QuantumMoney); later
