@@ -52,20 +52,62 @@ CSD as a **finite EFT of an ontic structure**: a power-counting scheme with lead
 QM and corrections suppressed by a cutoff; "finite" = no UV divergences because
 `Σ = ℂℙ^{N−1}` is compact and finite-dimensional.
 
-- **Expansion parameter** — candidates: `1/N` (dimension / finite-N cutoff) and
-  `1/√(trials)` (finite-sample). The corpus's general-`N` Born-from-volume cluster is
-  currently *exact at each fixed `N`*: the leading order *for all N*, but **not yet an
-  expansion in `N`**. An EFT formalisation treats `N → ∞` as the QM limit and `1/N` as the
-  first correction tower. This is a genuinely new direction — `N` is a fixed parameter
-  today, not an EFT variable.
-- **Leading order = QM** — done.
-- **Subleading = the novel prediction** — owed, theory-gated; the leading correction *is* the
-  distinguishing experiment (feeds the G3b / V≈1−I handles in §1).
-- **"Finite" as a falsifiable claim** — no continuum/QFT UV catastrophe; a fundamental
-  finiteness testable in principle at extreme dimension/energy.
+### 3.1 What "finite" buys, and what it does not (the scale picture)
 
-Deepest theory-gated item: the EFT power-counting must be *defined* by the paper sequence
-before Lean can formalise a correction.
+The finiteness is naturally **grounded in cosmology, not posited arbitrarily**: a positive
+cosmological constant forces a finite-dimensional Hilbert space. The de Sitter horizon has
+finite entropy `S_dS = A/4 = π/(Λ ℓ_P²) ≈ 10¹²²` (Planck units), so by the holographic /
+Banks–Fischler–Bousso argument the Hilbert dimension of the observable universe is
+`dim ~ exp(S_dS) ~ exp(10¹²²)`, finite. The natural identification for CSD:
+
+```
+N  ↔  exp(S_dS) ~ exp(10¹²²),    Λ = the IR regulator making N finite,
+                                 ℓ_P = the UV resolution floor.
+```
+
+So "Planck (UV) to cosmological-constant (IR)" is exactly the window in which a finite `N`
+is *required*. The corpus's compact `Σ = ℂℙ^{N−1}` is the realisation. (This `N ↔ exp(S_dS)`
+identification is the steelman that the formalism + standard QG results *imply*; confirm it
+against the actual paper text before relying on it.)
+
+**What finite-`N` actually gives: bounded, discrete observable *spectra* — not lattice
+spacetime.** Every observable is a finite Hermitian matrix, so its spectrum is discrete and
+bounded (a maximum and minimum, finitely many levels); for astronomically large `N` the
+spacing looks continuous. So "continuous but limited" is correct *of observable values*, not
+of spacetime points. **"Lattice" is the wrong word:** a literal spacetime lattice breaks
+Lorentz invariance (preferred frame, modified dispersion — killed by astrophysical timing
+tests) and misplaces the discreteness in spacetime, whereas CSD's primitive is `Σ` (the
+ontic *state* space) and spacetime is meant to emerge from entanglement geometry. The right
+concept is **finite information capacity / a minimum-resolution continuum** (GUP-style
+minimum length, no sites): lattice-like in *counting* (finite cells), not in *structure*.
+
+### 3.2 The expansion parameter is `E/E_Planck`, not `1/N`
+
+`1/N`-as-Hilbert-dimension **fails as the EFT parameter in both directions**: the
+cosmological `N ~ exp(10¹²²)` makes `1/N` corrections `~ exp(−10¹²²)` (unobservable beyond
+meaning), while the *system* Hilbert dimension (`N = 2` for a qubit) would predict order-`1/2`
+deviations from Born that are manifestly not seen. So the corpus's general-`N` cluster being
+*exact at each fixed `N`* is correct and `1/N` is **not** the correction tower.
+
+The physically correct power-counting is the standard EFT ratio **`E/E_Planck`**: corrections
+suppressed by powers of energy over the UV cutoff, tiny at lab energies (`~10⁻¹⁷` at a TeV),
+visible only in high-energy / ultra-high-precision regimes. The finite-sample `1/√(trials)`
+(from the deterministic-substructure debt, §1) is a *separate*, near-term parameter that
+needs no Planck-scale energies.
+
+- **Leading order = QM** — done.
+- **Subleading = the novel prediction** — owed, theory-gated; the leading `E/E_Planck` term is
+  the distinguishing experiment (feeds the G3b / V≈1−I handles in §1).
+
+### 3.3 The honest consequence
+
+The finiteness tied to `Λ` is a **consistency virtue** (no UV catastrophe, finite
+information, well-defined Hilbert space) **rather than a source of visible departures** — its
+corrections are cosmologically suppressed. The *testable* departures come from a different
+place: `E/E_Planck` (extreme energy) or, more near-term, the deterministic-substructure /
+finite-sample statistics (§1), which require no Planck-scale energies at all. Deepest
+theory-gated item: the EFT power-counting (the operator tower and matching) must be *defined*
+by the paper sequence before Lean can formalise a correction.
 
 ## 4. The through-line (why this is the priority that is not yet Lean-ready)
 
