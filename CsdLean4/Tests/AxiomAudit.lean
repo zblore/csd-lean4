@@ -80,6 +80,7 @@ import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
 import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
+import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
@@ -782,6 +783,33 @@ info: 'CSD.Empirical.CSDBridge.USDVolume.usd_born_frequency_volume' depends on a
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.USDVolume.usd_born_frequency_volume
+
+-- SIC volume capstone: the third non-projective (POVM) volume-frequency entry,
+-- foundational-triple only (carving-free, Gleason-free); includes the equiangular
+-- SIC property and the tetrahedral tight-frame completeness.
+/--
+info: 'CSD.Empirical.CSDBridge.SICVolume.sic_outer_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SICVolume.sic_outer_sum
+
+/--
+info: 'CSD.Empirical.CSDBridge.SICVolume.sic_inner_normSq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SICVolume.sic_inner_normSq
+
+/--
+info: 'CSD.Empirical.CSDBridge.SICVolume.sic_weight_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SICVolume.sic_weight_eq
+
+/--
+info: 'CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
