@@ -67,13 +67,14 @@ are canonical.
 
 ## CSD-ontic branch (`CsdLean4/Empirical/CSD/`)
 
-**Coverage relative to the QM branch.** Most QM-validity tests have a CSD-branch
-counterpart (a bridge transport, a derived volume reading, or both). Four do **not** yet:
-no-broadcasting (E2), no-communication (E3), teleportation (E5), and E91 (E7) — the recent
-Phase-E quantum-information / cryptography additions, for which the bridge-transport file
-was never created. USD has no bridge transport but is covered by `USDVolume.lean` (the
-derived volume reading). The trine and SIC POVMs exist only in the CSD branch (their POVM
-content lives inside the volume files), with no separate `QM/` file.
+**Coverage relative to the QM branch.** Every QM-validity test now has a CSD-branch
+counterpart (a bridge transport, a derived volume reading, or both). USD has no bridge
+transport but is covered by `USDVolume.lean` (the derived volume reading). The trine and
+SIC POVMs exist only in the CSD branch (their POVM content lives inside the volume files),
+with no separate `QM/` file. The bridge transports reduce to their QM-side theorem by
+field extraction; the genuinely-ontic realisability is the disclosed LF4 obligation in
+[`BRIDGE-OBLIGATIONS.md`](BRIDGE-OBLIGATIONS.md) (E91 carries no such obligation, by
+design — see its row).
 
 ### Bridge transports (QM-validity statements carried through `CSDBridge.Context D`)
 
@@ -82,6 +83,10 @@ content lives inside the volume files), with no separate `QM/` file.
 | Bell singlet chain | `Bell.lean` | `bell_singlet_frequency_convergence` | Singlet kernel `(1 − st a·b)/4` via the LF1↔LF2↔LF3 chain |
 | No-cloning bundle | `NoCloning.lean` | `no_csd_cloning_bundle` | Ontic-bundle reading of no-cloning |
 | No-deleting bundle | `NoDeleting.lean` | `no_csd_deleting_bundle` | |
+| No-broadcasting | `NoBroadcasting.lean` | `csd_no_broadcasting` | Pure-marginal confinement on the CSD substrate |
+| No-communication | `NoCommunication.lean` | `csd_no_communication` | Bob's expectation invariant under Alice's local unitary |
+| Teleportation | `Resources/Teleportation.lean` | `csd_teleportation_branch_recovers_input` | Branch-conditional input recovery (LF5 for collapse) |
+| E91 security | `Crypto/E91.lean` | `csd_lhv_chsh_bound` | Any local-realist reading of the source obeys `\|S\|≤2`; CSD reaches `2√2` (no LF4 obligation) |
 | Robertson | `Uncertainty.lean` | `csd_robertson_uncertainty` | |
 | Stern-Gerlach | `SternGerlach.lean` | `csd_sg_born_xPlus_zPlus`, `csd_sg_born_x_basis_complete` | Transport tag (cf. the derived form below) |
 | Superdense coding | `Resources/SuperdenseCoding.lean` | `csd_sdc_encode_X`, `csd_sdc_bell_basis_orthonormal` | |

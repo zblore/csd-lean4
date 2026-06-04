@@ -71,6 +71,8 @@ import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.NoDeleting
+import CsdLean4.Empirical.CSD.NoBroadcasting
+import CsdLean4.Empirical.CSD.NoCommunication
 import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
@@ -82,7 +84,9 @@ import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
+import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
+import CsdLean4.Empirical.CSD.Crypto.E91
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Contextuality.KS18
@@ -652,6 +656,31 @@ info: 'CSD.Empirical.CSDBridge.Uncertainty.csd_robertson_uncertainty' depends on
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Uncertainty.csd_robertson_uncertainty
+
+-- Phase-E CSD bridges (transport readings; foundational-triple only).
+/--
+info: 'CSD.Empirical.CSDBridge.NoBroadcasting.csd_no_broadcasting' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.NoBroadcasting.csd_no_broadcasting
+
+/--
+info: 'CSD.Empirical.CSDBridge.NoCommunication.csd_no_communication' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.NoCommunication.csd_no_communication
+
+/--
+info: 'CSD.Empirical.CSDBridge.Teleportation.csd_teleportation_branch_recovers_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Teleportation.csd_teleportation_branch_recovers_input
+
+/--
+info: 'CSD.Empirical.CSDBridge.E91.csd_lhv_chsh_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.E91.csd_lhv_chsh_bound
 
 -- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
 -- All six transport theorems share the same foundational-triple axiom set.

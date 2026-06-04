@@ -104,6 +104,8 @@ import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
 import CsdLean4.Empirical.CSD.NoDeleting
+import CsdLean4.Empirical.CSD.NoBroadcasting
+import CsdLean4.Empirical.CSD.NoCommunication
 import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
@@ -115,7 +117,9 @@ import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
+import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
+import CsdLean4.Empirical.CSD.Crypto.E91
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Hardy

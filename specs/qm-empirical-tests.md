@@ -469,11 +469,11 @@ CsdLean4/Empirical/QM/Gates/{SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
 
 # CSD-ontic bridge branch (Empirical/CSD/) — one file per QM/ counterpart
 CsdLean4/Empirical/CSD/Framework.lean                  -- CSDBridge.Context D bundle + transport scaffolding
-CsdLean4/Empirical/CSD/{Bell,NoCloning,NoDeleting,Uncertainty,SternGerlach,Hardy}.lean
+CsdLean4/Empirical/CSD/{Bell,NoCloning,NoDeleting,NoBroadcasting,NoCommunication,Uncertainty,SternGerlach,Hardy}.lean
 CsdLean4/Empirical/CSD/Multipartite/GHZ.lean
 CsdLean4/Empirical/CSD/Contextuality/{KS18,MerminPeres}.lean
-CsdLean4/Empirical/CSD/Resources/SuperdenseCoding.lean
-CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean
+CsdLean4/Empirical/CSD/Resources/{SuperdenseCoding,Teleportation}.lean
+CsdLean4/Empirical/CSD/Crypto/{QuantumMoney,E91}.lean
 CsdLean4/Empirical/CSD/Gates/{Framework,SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
 
 # CSD-ontic volume-frequency series (Empirical/CSD/) — Born numbers DERIVED as FS volumes

@@ -123,6 +123,30 @@ The SG bundle is a **tag bundle** (no fields beyond `Context D`); its
 existence is the realisability assertion. Same §14 discharge route
 as the uncertainty bundle.
 
+### 2.3.2 CSD Phase-E bridges (added 2026-06-04)
+
+Used by `Empirical/CSD/{NoBroadcasting, NoCommunication,
+Resources/Teleportation, Crypto/E91}.lean`. These close the CSD-branch
+coverage of the QM Phase-E (quantum-information / cryptography) tests.
+Each headline theorem reduces to its QM-side theorem by field
+extraction (foundational-triple only); the realisability content reuses
+the existing §13 / §14 obligations (no new LF4-todo entry, per rule §1.2).
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.NoBroadcasting.CSDNoBroadcastingBundle` | (whole bundle's CSD-realisability content) | The bipartite density operator `ρ` (with pure first-factor marginal `|ψ⟩⟨ψ|`) is realised as a CSD bipartite state on `D`, its system-marginal reduction realising the pure `ψ`-sector. | §14 |
+| `Empirical.CSDBridge.NoCommunication.CSDNoCommunicationBundle` | (whole bundle's CSD-realisability content) | Alice's local unitary `U ⊗ I` is realised as a measure-preserving π-equivariant flow on her factor (§13), and Bob's observable `Q` as a CSD observable (§14). | §13 + §14 |
+| `Empirical.CSDBridge.Teleportation.CSDTeleportationBundle` | (whole bundle's CSD-realisability content) | The input qubit and shared `|Φ⁺⟩` resource are realised as CSD states (§14), and the four Pauli corrections as CSD-realised unitaries (§13). Branch-conditional (measurement collapse needs LF5, as on the QM side). | §13 + §14 |
+
+The E91 bridge (`Empirical/CSD/Crypto/E91.lean`,
+`Empirical.CSDBridge.E91.CSDLHVBundle` / `csd_lhv_chsh_bound`) carries
+**no** load-bearing realisability field and appears in no row above, by
+design: its LHV fields are deliberately *not* asserted to be
+CSD-realisable. The content is the opposite — the CHSH bound `|S| ≤ 2`
+certifies that a local-realist reading of the source cannot match CSD's
+*derived* Tsirelson value (`Empirical/CSD/BellVolume.lean`). The
+transport is a clean reduction with no externally-supplied ontic posit.
+
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 
 Used by `Empirical/CSD/Contextuality/KS18.lean`.
