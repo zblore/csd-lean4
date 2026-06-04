@@ -97,16 +97,16 @@ lemma kron3_mul (M N P M' N' P' : Matrix (Fin 2) (Fin 2) ℂ) :
 @[simp] lemma X3_mul_X3 : X3 * X3 = 1 := by
   rw [X3, kron3_mul, pX_mul_pX]; simp only [one_mul, kron3, Matrix.one_kronecker_one]
 
-private lemma kron3_neg_left (M N P : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma kron3_neg_left (M N P : Matrix (Fin 2) (Fin 2) ℂ) :
     kron3 (-M) N P = - kron3 M N P := by
   rw [kron3, kron3, ← neg_one_smul ℂ M, Matrix.smul_kronecker, neg_one_smul]
 
-private lemma kron3_neg_mid (M N P : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma kron3_neg_mid (M N P : Matrix (Fin 2) (Fin 2) ℂ) :
     kron3 M (-N) P = - kron3 M N P := by
   rw [kron3, kron3, ← neg_one_smul ℂ N, Matrix.smul_kronecker, Matrix.kronecker_smul,
     neg_one_smul]
 
-private lemma kron3_neg_right (M N P : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma kron3_neg_right (M N P : Matrix (Fin 2) (Fin 2) ℂ) :
     kron3 M N (-P) = - kron3 M N P := by
   rw [kron3, kron3, ← neg_one_smul ℂ P, Matrix.kronecker_smul, Matrix.kronecker_smul,
     neg_one_smul]
@@ -164,15 +164,15 @@ lemma stab_Z2Z3_fixes_logical (a b : ℂ) :
 
 /-! ### Syndromes, recovery, and the correction theorem -/
 
-private lemma tel_mul (M N : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ) (v : H3) :
+lemma tel_mul (M N : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ) (v : H3) :
     Matrix.toEuclideanLin (M * N) v
       = Matrix.toEuclideanLin M (Matrix.toEuclideanLin N v) := by
   simp only [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp, Matrix.mulVec_mulVec]
 
-private lemma tel_one (v : H3) : Matrix.toEuclideanLin 1 v = v := by
+lemma tel_one (v : H3) : Matrix.toEuclideanLin 1 v = v := by
   simp [Matrix.toEuclideanLin_apply]
 
-private lemma tel_neg (M : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ) (v : H3) :
+lemma tel_neg (M : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ) (v : H3) :
     Matrix.toEuclideanLin (-M) v = - Matrix.toEuclideanLin M v := by
   rw [map_neg, LinearMap.neg_apply]
 
