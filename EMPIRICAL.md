@@ -106,8 +106,9 @@ is [`BRIDGE-OBLIGATIONS.md`](BRIDGE-OBLIGATIONS.md)).
 
 Carving-free and Gleason-free: each Born value is realised as a Fubini-Study typicality
 volume on the ontic `Σ`, and empirical frequencies (LF1 strong law) converge to it.
-The first five are projective; the last three are non-projective (POVM) measurements via
-canonical Naimark dilation.
+The first five are projective qubit measurements; the next three are non-projective qubit
+POVMs via canonical Naimark dilation; the last is the first **non-qubit (`N = 3`)** entry,
+a non-projective qutrit POVM.
 
 | Test | File | Headline theorem(s) | Derived value |
 |---|---|---|---|
@@ -119,11 +120,13 @@ canonical Naimark dilation.
 | Trine POVM | `TrineVolume.lean` | `trine_complete`, `trine_weight_eq`, `trine_born_frequency_volume` | `pₖ=(2/3)‖⟨ψₖ,ψ⟩‖²` on dilated `ℂℙ⁵` (first non-projective entry) |
 | USD POVM | `USDVolume.lean` | `usd_weight_e1`, `usd_weight_e2`, `usd_born_frequency_volume` | conclusive weights `a‖⟨ψₖ^⊥,ψ⟩‖²` on dilated `ℂℙ⁵` |
 | SIC POVM | `SICVolume.lean` | `sic_outer_sum`, `sic_inner_normSq`, `sic_weight_eq`, `sic_born_frequency_volume` | tetrahedral `pₖ=(1/2)‖⟨ψₖ,ψ⟩‖²`, equiangular `\|⟨ψⱼ,ψₖ⟩\|²=1/3`, on dilated `ℂℙ⁷` |
+| Unsharp qutrit POVM (**N=3**) | `QutritPOVMVolume.lean` | `noisy_complete`, `noisy_weight_eq`, `noisy_born_frequency_volume` | `Eₖ=(1−ε)\|k⟩⟨k\|+(ε/3)I₃`; `pₖ=(1−ε)‖⟨k,ψ⟩‖²+ε/3`, on dilated `ℂℙ⁸` (first non-qubit entry) |
 
 The trine, USD, and SIC entries span the canonical minimal qubit POVM family: minimal
 symmetric (trine), unambiguous discrimination (USD), and symmetric informationally
-complete (SIC). The general (non-projective) ontic Born = Kähler-volume machinery they
-instantiate lives in `CsdLean4/LF4/POVM*.lean` (see `README.md` LF4 POVM row).
+complete (SIC). The unsharp qutrit POVM is the first entry exercising the machinery past
+the qubit (`N = 3`, dilated `ℂℙ⁸`). The general (non-projective) ontic Born = Kähler-volume
+machinery they instantiate lives in `CsdLean4/LF4/POVM*.lean` (see `README.md` LF4 POVM row).
 
 ---
 

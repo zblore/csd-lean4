@@ -84,6 +84,7 @@ import CsdLean4.Empirical.CSD.HardyVolume
 import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
+import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
@@ -849,6 +850,27 @@ info: 'CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume' depends on a
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume
+
+-- Qutrit POVM volume capstone: the first non-qubit (N=3) volume-frequency entry,
+-- foundational-triple only (carving-free, Gleason-free); a genuine non-projective
+-- qutrit POVM (the unsharp / white-noise measurement) via Naimark dilation to ℂℙ⁸.
+/--
+info: 'CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_complete
+
+/--
+info: 'CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_weight_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_weight_eq
+
+/--
+info: 'CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_born_frequency_volume
 
 -- Superdense coding: representative pins (one encoding + the orthonormality).
 /--
