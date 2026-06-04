@@ -67,6 +67,14 @@ are canonical.
 
 ## CSD-ontic branch (`CsdLean4/Empirical/CSD/`)
 
+**Coverage relative to the QM branch.** Most QM-validity tests have a CSD-branch
+counterpart (a bridge transport, a derived volume reading, or both). Four do **not** yet:
+no-broadcasting (E2), no-communication (E3), teleportation (E5), and E91 (E7) — the recent
+Phase-E quantum-information / cryptography additions, for which the bridge-transport file
+was never created. USD has no bridge transport but is covered by `USDVolume.lean` (the
+derived volume reading). The trine and SIC POVMs exist only in the CSD branch (their POVM
+content lives inside the volume files), with no separate `QM/` file.
+
 ### Bridge transports (QM-validity statements carried through `CSDBridge.Context D`)
 
 | Test | File | Headline theorem | Note |
