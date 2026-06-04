@@ -196,6 +196,8 @@ No stochastic evolution at the ontic level. The only probabilistic ingredient is
 
 The Empirical module is a **QM-validity layer** regression suite. Each theorem proves that the standard QM formalisation produces the predicted experimental number; the proofs are linear algebra and inner-product geometry, with no ontic substrate at the proof level. CSD's foundational claim — that QM emerges from volume ratios on Σ — is verified at the **CSD-ontic layer** by the LF3 chain capstones and (now) the LF4 §14.2 carving / variance / Robertson chain.
 
+**[`EMPIRICAL.md`](EMPIRICAL.md) is the per-test index** — every validation in both branches with its file, headline theorem, claim, and physics source. The phase table below is the abridged map; `EMPIRICAL.md` is the full enumeration.
+
 ### Current Empirical phases
 
 | Phase | Predictions | Files |
@@ -204,6 +206,8 @@ The Empirical module is a **QM-validity layer** regression suite. Each theorem p
 | **B** (Resources) | No-cloning (Wootters-Zurek + Dieks 1982), no-deleting (Pati-Braunstein 2000), superdense coding, quantum money, Stern-Gerlach | `Empirical/QM/{NoCloning,NoDeleting,Resources/SuperdenseCoding,Crypto/QuantumMoney,SternGerlach,Uncertainty}.lean` |
 | **C** (Contextuality / Paradoxes) | Kochen-Specker 18-vector (Cabello 1996), Mermin-Peres magic square, GHZ all-or-nothing (Mermin form), Hardy non-locality | `Empirical/QM/{Contextuality/KS18,Contextuality/MerminPeres,Multipartite/GHZ,Hardy}.lean` |
 | **D** (Gates) | Single-qubit gates, two-qubit gates, Bell preparation, multi-qubit gate semantics | `Empirical/QM/Gates/*.lean` |
+| **E** (QI / crypto) | No-broadcasting, no-communication, teleportation, Robertson uncertainty, E91 device-independent security, unambiguous discrimination (USD) | `Empirical/QM/{NoBroadcasting,NoCommunication,Resources/Teleportation,Uncertainty,Crypto/E91,USD}.lean` |
+| **V** (volume series) | Born numbers *derived* (not transported) as Fubini-Study volumes: Stern-Gerlach, Malus, Bell, GHZ, Hardy, and the trine / USD / SIC POVMs | `Empirical/CSD/{SternGerlach,Malus,Bell,GHZ,Hardy,Trine,USD,SIC}Volume.lean` |
 
 Every Empirical theorem is **foundational-triple-only** and AxiomAudit-pinned. The CSD-side companions in `Empirical/CSD/` transport each QM-validity statement through a `CSDBridge.Context D` bundle, carrying the LF2 `SectorData` + measure-bridge data, providing the structural slot for the CSD-ontic interpretation that LF4 will eventually instantiate via `kahler_robertson_ontic_variance` and similar §14.2 mechanisms.
 
@@ -211,7 +215,7 @@ Every Empirical theorem is **foundational-triple-only** and AxiomAudit-pinned. T
 
 The QM-validity layer is **prerequisite** to the CSD-ontic layer. LF4 §14.2's spectral expansion + carving + integration headline + Robertson chain provides the **lifting mechanism**: any QM-validity statement about expectations and variances of bounded Hermitian observables on `EuclideanSpace ℂ (Fin N)` has a corresponding CSD-ontic statement on `KSigma M`, with the same numerical prediction realised via spectral indicator sums integrated against the preparation measure.
 
-See `specs/qm-empirical-tests.md` §0.1 for the full two-layer correspondence statement, and `specs/empirical-csd-bridge-plan.md` for the CSDBridge architecture.
+See [`EMPIRICAL.md`](EMPIRICAL.md) for the per-test index, `specs/qm-empirical-tests.md` §0.1 for the full two-layer correspondence statement, and `specs/empirical-csd-bridge-plan.md` for the CSDBridge architecture.
 
 ---
 

@@ -33,6 +33,7 @@ LIVE doc for the tranche you are on.
 | [`expert-system-prompt.md`](expert-system-prompt.md) | The project's expert-posture / system-prompt reference. |
 | [`spec-to-lean.md`](spec-to-lean.md) | Spec-to-Lean mapping notes. |
 | [`../README.md`](../README.md) | Authoritative status overview (layers, theorem tables, axiom posture). |
+| [`../EMPIRICAL.md`](../EMPIRICAL.md) | Per-test index of the empirical suite (both branches: file, headline theorem, claim, source). |
 | [`../CLAUDE.md`](../CLAUDE.md) | Working-with-the-code guide (architecture, conventions, module chains). |
 | [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: the two standing axioms (§2.1–§2.2), discharged ones (§2.3–§2.4), structural assumptions (§3, incl. A5/D1/V≈1−I), per-theorem audit (§5). |
 | [`../CONVENTIONS.md`](../CONVENTIONS.md) | Three-category (Cat-1/2/3) discipline, naming, namespace rules. |

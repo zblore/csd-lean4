@@ -432,11 +432,17 @@ not to assume CSD = QM identically.
 
 ## 7. Files index
 
-**Layout (updated 2026-05-31).** The tree splits into two parallel branches:
+**The per-test reader index is [`../EMPIRICAL.md`](../EMPIRICAL.md)** (tracked, public) —
+every validation in both branches with file, headline theorem, claim, and source. This
+roadmap doc carries the *status tags* and *not-yet-done* items; `EMPIRICAL.md` carries the
+*done* enumeration. The file tree below is the abridged layout.
+
+**Layout (updated 2026-06-04).** The tree splits into two parallel branches:
 `Empirical/QM/` (pure QM-validity theorems, §0.1) and `Empirical/CSD/` (the
 volume-ratio bridge readings — each `QM/` file has a `CSD/` counterpart carrying
-a `CSDBridge.Context D` bundle). Both branches are imported explicitly in
-`CsdLean4.lean` (lines 70–100); there is no `Empirical.lean` aggregator.
+a `CSDBridge.Context D` bundle, plus the *derived* volume-frequency series). Both
+branches are imported explicitly in `CsdLean4.lean`; there is no `Empirical.lean`
+aggregator.
 
 ```
 specs/qm-empirical-tests.md                            -- this file (the roadmap)
@@ -451,10 +457,15 @@ CsdLean4/Empirical/QM/Hardy.lean                       -- Phase C: D7 (QM-validi
 CsdLean4/Empirical/QM/Multipartite/GHZ.lean            -- Phase C: D6
 CsdLean4/Empirical/QM/Contextuality/KS18.lean          -- Phase C: D9 (Kochen-Specker, Cabello-18)
 CsdLean4/Empirical/QM/Contextuality/MerminPeres.lean   -- Phase C: Mermin-Peres square
+CsdLean4/Empirical/QM/NoBroadcasting.lean              -- Phase E: E2 (pure-marginal core)
+CsdLean4/Empirical/QM/NoCommunication.lean             -- Phase E: E3a/E3b (marginal + reduced-density forms)
 CsdLean4/Empirical/QM/Resources/SuperdenseCoding.lean  -- Phase E: E4
+CsdLean4/Empirical/QM/Resources/Teleportation.lean     -- Phase E: E5 (branch-conditional)
 CsdLean4/Empirical/QM/Crypto/QuantumMoney.lean         -- Phase E: E8 (Wiesner, via no-cloning)
+CsdLean4/Empirical/QM/Crypto/E91.lean                  -- Phase E: E7 (LHV model + CHSH |S|≤2)
+CsdLean4/Empirical/QM/USD.lean                         -- unambiguous discrimination (the USD POVM)
 CsdLean4/Empirical/QM/Gates/{SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
-                                                       -- gate library (Hadamard/Pauli/phase, CNOT/SWAP/CZ, Toffoli; Bell prep)
+                                                       -- gate library (Hadamard/Pauli/phase, CNOT/SWAP/CZ, Toffoli/Fredkin; Bell prep)
 
 # CSD-ontic bridge branch (Empirical/CSD/) — one file per QM/ counterpart
 CsdLean4/Empirical/CSD/Framework.lean                  -- CSDBridge.Context D bundle + transport scaffolding
@@ -465,12 +476,13 @@ CsdLean4/Empirical/CSD/Resources/SuperdenseCoding.lean
 CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean
 CsdLean4/Empirical/CSD/Gates/{Framework,SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean
 
-CsdLean4/Empirical/QM/Resources/Teleportation.lean    -- Phase E: E5 (DONE 2026-05-31)
+# CSD-ontic volume-frequency series (Empirical/CSD/) — Born numbers DERIVED as FS volumes
+CsdLean4/Empirical/CSD/{SternGerlach,Malus,Bell,GHZ,Hardy}Volume.lean   -- projective
+CsdLean4/Empirical/CSD/{Trine,USD,SIC}Volume.lean                       -- non-projective (POVM, via Naimark)
 
 # Planned but not yet created (see phase tables above)
-#   QM/NoCommunication.lean            -- Phase E: E3 (split: E3a marginal-form READY; E3b needs partial-trace infra)
-#   QM/Crypto/E91.lean                 -- Phase E: E7 (deferred, needs LHV-model build)
 #   Interference.lean / BornNumerical.lean / Algorithms/*  -- LF4/INFRA-blocked
+#   BB84 / B92 security (disturbance half)                 -- needs LF5 measurement-update
 ```
 
 **Namespace note.** Most `QM/` files use `CSD.Empirical.QM.<Topic>`, but the two
