@@ -2,8 +2,9 @@
 
 Forward-looking roadmap for the quantum-information, quantum-error-correction, and
 quantum-algorithm branches, plus the project-structure decision for where they live. Sits
-alongside [`qm-empirical-tests.md`](qm-empirical-tests.md) (the existing empirical-suite
-roadmap) and [`carve-out-plan.md`](carve-out-plan.md) (the D1 frontier). Created 2026-06-04.
+alongside [`qm-empirical-tests.md`](qm-empirical-tests.md) (reproduce QM),
+[`csd-departures-eft.md`](csd-departures-eft.md) (where CSD could *differ* from QM + the EFT
+tower), and [`carve-out-plan.md`](carve-out-plan.md) (the D1 frontier). Created 2026-06-04.
 
 ## 0. Where the corpus is
 
@@ -83,9 +84,29 @@ literally a dynamics-on-`Σ` statement (and thus another D1 contact point).
 
 ## 3. Other branches not yet touched
 
+**Algorithms and state-stabilisation are special**: they are the *operational faces of the
+dynamics layer*. A quantum circuit is a designed measure-preserving flow `Φ` on `Σ`, and
+stabilisation is the statement that a sub-surface of `Σ` is an attractor of `Φ`. Both
+therefore *exercise* D1 rather than adding static examples — see §4.
+
+- **Algorithms as designed flows.** The success probability is a Born weight, hence a
+  Fubini–Study volume; the algorithm is the flow that concentrates the typicality measure
+  onto the marked region (Grover's `O(√N)` speedup = the concentration rate). The first
+  family of non-trivial, non-identity `Φ` with operational meaning. Deutsch–Jozsa is cheapest
+  (one query); Grover next (iteration/angle analysis); QFT/Shor far out (roots of unity +
+  modular arithmetic). The `n`-qubit tensor layer is shared with QEC — build once.
+- **State stabilisation** (possibly the most CSD-natural topic in QI): decoherence-free
+  subspaces = noise-flow-invariant sub-surfaces; dissipative preparation = engineering a
+  target sub-surface as a global **attractor** (convergence rate = the flow's spectral gap);
+  Zeno stabilisation = repeated measurement-conditioning (LF5); autonomous QEC = the
+  codespace as a *stable* manifold. "A state is stabilised" is awkward in Hilbert language
+  (a channel fixed point) but is the natural object in CSD (an attractor of `Φ`). Needs K2 +
+  K4; it *is* D1 work with a control-theory face.
+
 | Branch | Tractability | Note |
 |---|---|---|
-| Algorithms (Deutsch-Jozsa, Grover, QFT, Shor) | needs `n`-qubit + oracle infra | DJ / Grover reachable after a clean `n`-qubit tensor layer; QFT / Shor need roots-of-unity + modular arithmetic (far out). Already listed INFRA-blocked in `qm-empirical-tests.md` §4. |
+| Algorithms (Deutsch-Jozsa, Grover, QFT, Shor) | needs `n`-qubit + oracle infra | DJ / Grover reachable after a clean `n`-qubit tensor layer; QFT / Shor far out. INFRA-blocked in `qm-empirical-tests.md` §4. Operational face of D1 (above). |
+| State stabilisation (DFS, dissipative prep, Zeno, autonomous QEC) | needs K2 + K4 | **most CSD-natural** — attractor sub-surfaces of `Φ`; entirely a dynamics statement (D1). |
 | Open systems / decoherence (Lindblad, pointer states, einselection) | needs K2 | **CSD-central** — the classical-limit / measurement story; ties to D1 |
 | Quantum metrology (Fisher info, Heisenberg limit, Cramér-Rao) | QFI-adjacent (K1) | self-contained mid-size tranche |
 | Quantum thermodynamics (Landauer, Jarzynski, fluctuation thms) | needs K1 + K2 | Landauer connects entropy to the ontic measure directly |
