@@ -1,5 +1,6 @@
 import CsdLean4.LF4.POVMNaimark
 import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/CSD: the qubit trine POVM and its Born weights as Kähler volumes
@@ -35,42 +36,6 @@ namespace CSDBridge
 namespace TrineVolume
 
 open CSD.LF2 CSD.LF4
-
-variable {N : ℕ}
-
-/-! ### A scaled rank-1 effect `c|φ⟩⟨φ|` -/
-
-/-- `(c • M)` is positive semidefinite for `0 ≤ c` (real) and PSD `M`. Via the
-conjugation `(√c·I)ᴴ M (√c·I) = c·M`. -/
-lemma psd_smul {M : Matrix (Fin N) (Fin N) ℂ} (hM : M.PosSemidef) {c : ℝ} (hc : 0 ≤ c) :
-    ((c : ℂ) • M).PosSemidef := by
-  have hstar : star ((Real.sqrt c : ℝ) : ℂ) = ((Real.sqrt c : ℝ) : ℂ) := Complex.conj_ofReal _
-  have hsc : ((Real.sqrt c : ℝ) : ℂ) * ((Real.sqrt c : ℝ) : ℂ) = (c : ℂ) := by
-    rw [← Complex.ofReal_mul, Real.mul_self_sqrt hc]
-  have hb := hM.mul_mul_conjTranspose_same
-    (((Real.sqrt c : ℝ) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ))
-  have heq : (((Real.sqrt c : ℝ) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)) * M
-        * (((Real.sqrt c : ℝ) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ))ᴴ
-      = (c : ℂ) • M := by
-    rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_one, Matrix.smul_mul, Matrix.one_mul,
-      Matrix.mul_smul, Matrix.mul_one, smul_smul, hstar, hsc]
-  rwa [heq] at hb
-
-/-- `c|φ⟩⟨φ|` as an `Effect`, for `0 ≤ c ≤ 1` and a unit vector `φ`. The `c = 1`
-case is `rankOneEffect`. -/
-noncomputable def scaledRankOneEffect (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c ≤ 1)
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) : Effect N where
-  M := (c : ℂ) • outerProduct φ
-  isHermitian := (outerProduct_isHermitian φ).smul (k := (c : ℂ)) (Complex.conj_ofReal c)
-  nonneg := psd_smul (outerProduct_posSemidef φ) hc0
-  le_one := by
-    have hdecomp : (1 : Matrix (Fin N) (Fin N) ℂ) - (c : ℂ) • outerProduct φ
-        = ((1 - c : ℝ) : ℂ) • outerProduct φ + (1 - outerProduct φ) := by
-      rw [Complex.ofReal_sub, Complex.ofReal_one, sub_smul, one_smul]
-      abel
-    rw [hdecomp]
-    exact (psd_smul (outerProduct_posSemidef φ) (by linarith)).add
-      (one_sub_outerProduct_posSemidef φ hφ)
 
 /-! ### The trine states and POVM -/
 
@@ -145,34 +110,13 @@ noncomputable def trinePOVM : POVM 2 (Fin 3) where
 
 /-! ### The trine Born weights as Kähler volumes -/
 
-/-- `Tr(|ψ⟩⟨ψ| · M) = ⟨ψ, M ψ⟩` — the trace-form / expectation bridge. -/
-lemma trace_outer_mul_eq_inner (ψ : EuclideanSpace ℂ (Fin N))
-    (M : Matrix (Fin N) (Fin N) ℂ) :
-    (outerProduct ψ * M).trace = inner ℂ ψ (Matrix.toEuclideanLin M ψ) := by
-  rw [Matrix.trace_mul_comm]
-  have hmul : M * outerProduct ψ
-      = Matrix.vecMulVec (M *ᵥ (fun i => ψ i)) (fun i => star (ψ i)) := by
-    ext i j
-    simp only [Matrix.mul_apply, outerProduct, Matrix.vecMulVec_apply, Matrix.mulVec,
-      dotProduct, Finset.sum_mul, mul_assoc]
-  rw [hmul, Matrix.trace_vecMulVec, EuclideanSpace.inner_eq_star_dotProduct,
-    Matrix.ofLp_toLpLin, Matrix.toLin'_apply]
-  rfl
-
 /-- **Closed-form trine Born weights:** for a unit preparation `ψ`,
 `pₖ(ψ) = (2/3)‖⟨ψ, ψₖ⟩‖²` — the symmetric 120°-measurement outcome probabilities. -/
 theorem trine_weight_eq (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) (k : Fin 3) :
     trinePOVM.weight ψ k = 2 / 3 * ‖inner ℂ ψ (trineState k)‖ ^ 2 := by
   show RCLike.re (inner ℂ ψ (Matrix.toEuclideanLin ((trineEffect k).M) ψ)) = _
-  rw [← trace_outer_mul_eq_inner]
-  have hM : (trineEffect k).M = ((2 / 3 : ℝ) : ℂ) • outerProduct (trineState k) := rfl
-  rw [hM, Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul,
-    show RCLike.re (((2 / 3 : ℝ) : ℂ) * (outerProduct ψ * outerProduct (trineState k)).trace)
-        = (2 / 3 : ℝ) * RCLike.re ((outerProduct ψ * outerProduct (trineState k)).trace) from
-      RCLike.re_ofReal_mul (2 / 3) _]
-  congr 1
-  have hbq := born_quadratic ψ (trineState k) hψ (trineState_norm k)
-  simpa only [traceForm, rankOneDensity, rankOneEffect] using hbq
+  rw [trineEffect, scaledRankOneEffect_M]
+  exact scaledRankOne_quadratic (2 / 3) (trineState k) ψ (trineState_norm k) hψ
 
 /-- The canonical Naimark dilation of the trine POVM (it exists, like every POVM's). -/
 noncomputable def trineNaimark : NaimarkDilation trinePOVM := canonicalNaimark trinePOVM

@@ -1,4 +1,5 @@
 import CsdLean4.LF2.POVM
+import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/QM: unambiguous state discrimination (the IDP POVM)
@@ -43,66 +44,6 @@ namespace QM
 namespace USD
 
 open CSD.LF2
-
-variable {N : ℕ}
-
-/-! ### Reusable effect-construction helpers (scaled rank-1) -/
-
-/-- `(c • M)` is PSD for `0 ≤ c` (real) and PSD `M`, via `(√c·I)ᴴ M (√c·I) = c·M`. -/
-lemma psd_smul {M : Matrix (Fin N) (Fin N) ℂ} (hM : M.PosSemidef) {c : ℝ} (hc : 0 ≤ c) :
-    ((c : ℂ) • M).PosSemidef := by
-  have hstar : star ((Real.sqrt c : ℝ) : ℂ) = ((Real.sqrt c : ℝ) : ℂ) := Complex.conj_ofReal _
-  have hsc : ((Real.sqrt c : ℝ) : ℂ) * ((Real.sqrt c : ℝ) : ℂ) = (c : ℂ) := by
-    rw [← Complex.ofReal_mul, Real.mul_self_sqrt hc]
-  have hb := hM.mul_mul_conjTranspose_same
-    (((Real.sqrt c : ℝ) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ))
-  have heq : (((Real.sqrt c : ℝ) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)) * M
-        * (((Real.sqrt c : ℝ) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ))ᴴ
-      = (c : ℂ) • M := by
-    rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_one, Matrix.smul_mul, Matrix.one_mul,
-      Matrix.mul_smul, Matrix.mul_one, smul_smul, hstar, hsc]
-  rwa [heq] at hb
-
-/-- `c|φ⟩⟨φ|` as an `Effect`, for `0 ≤ c ≤ 1` and a unit vector `φ`. -/
-noncomputable def scaledRankOneEffect (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c ≤ 1)
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) : Effect N where
-  M := (c : ℂ) • outerProduct φ
-  isHermitian := (outerProduct_isHermitian φ).smul (k := (c : ℂ)) (Complex.conj_ofReal c)
-  nonneg := psd_smul (outerProduct_posSemidef φ) hc0
-  le_one := by
-    have hdecomp : (1 : Matrix (Fin N) (Fin N) ℂ) - (c : ℂ) • outerProduct φ
-        = ((1 - c : ℝ) : ℂ) • outerProduct φ + (1 - outerProduct φ) := by
-      rw [Complex.ofReal_sub, Complex.ofReal_one, sub_smul, one_smul]; abel
-    rw [hdecomp]
-    exact (psd_smul (outerProduct_posSemidef φ) (by linarith)).add
-      (one_sub_outerProduct_posSemidef φ hφ)
-
-/-- `Tr(|ψ⟩⟨ψ| · M) = ⟨ψ, M ψ⟩`. -/
-lemma trace_outer_mul_eq_inner (ψ : EuclideanSpace ℂ (Fin N))
-    (M : Matrix (Fin N) (Fin N) ℂ) :
-    (outerProduct ψ * M).trace = inner ℂ ψ (Matrix.toEuclideanLin M ψ) := by
-  rw [Matrix.trace_mul_comm]
-  have hmul : M * outerProduct ψ
-      = Matrix.vecMulVec (M *ᵥ (fun i => ψ i)) (fun i => star (ψ i)) := by
-    ext i j
-    simp only [Matrix.mul_apply, outerProduct, Matrix.vecMulVec_apply, Matrix.mulVec,
-      dotProduct, Finset.sum_mul, mul_assoc]
-  rw [hmul, Matrix.trace_vecMulVec, EuclideanSpace.inner_eq_star_dotProduct,
-    Matrix.ofLp_toLpLin, Matrix.toLin'_apply]
-  rfl
-
-/-- **Quadratic form of a scaled rank-1 effect:** `⟨ψ, (c|φ⟩⟨φ|) ψ⟩ = c‖⟨ψ,φ⟩‖²`. -/
-lemma scaledRankOne_quadratic (c : ℝ) (φ ψ : EuclideanSpace ℂ (Fin N))
-    (hφ : ‖φ‖ = 1) (hψ : ‖ψ‖ = 1) :
-    RCLike.re (inner ℂ ψ (Matrix.toEuclideanLin ((c : ℂ) • outerProduct φ) ψ))
-      = c * ‖inner ℂ ψ φ‖ ^ 2 := by
-  rw [← trace_outer_mul_eq_inner, Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul,
-    show RCLike.re (((c : ℝ) : ℂ) * (outerProduct ψ * outerProduct φ).trace)
-        = (c : ℝ) * RCLike.re ((outerProduct ψ * outerProduct φ).trace) from
-      RCLike.re_ofReal_mul c _]
-  congr 1
-  have hbq := born_quadratic ψ φ hψ hφ
-  simpa only [traceForm, rankOneDensity, rankOneEffect] using hbq
 
 /-! ### The USD states and conclusive effects -/
 
@@ -204,7 +145,7 @@ noncomputable def E2 (hs0 : 0 ≤ s) : Effect 2 :=
 fires on state 2, because `E₁` lives on the orthogonal complement of `ψ₂`. -/
 theorem usd_unambiguous_1 (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
     RCLike.re (inner ℂ (psi2 s) (Matrix.toEuclideanLin (E1 s hs0 hs1).M (psi2 s))) = 0 := by
-  rw [E1, scaledRankOneEffect,
+  rw [E1, scaledRankOneEffect_M,
     scaledRankOne_quadratic (usdA s) (psi2perp s) (psi2 s)
       (psi2perp_norm s hs1 (by linarith)) (psi2_norm s hs1 (by linarith)),
     show inner ℂ (psi2 s) (psi2perp s) = 0 from inner_psi2_psi2perp s]
@@ -213,7 +154,7 @@ theorem usd_unambiguous_1 (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
 /-- **Unambiguity (outcome 2):** `⟨ψ₁, E₂ ψ₁⟩ = 0`. -/
 theorem usd_unambiguous_2 (hs0 : 0 ≤ s) :
     RCLike.re (inner ℂ psi1 (Matrix.toEuclideanLin (E2 s hs0).M psi1)) = 0 := by
-  rw [E2, scaledRankOneEffect,
+  rw [E2, scaledRankOneEffect_M,
     scaledRankOne_quadratic (usdA s) psi1perp psi1 psi1perp_norm psi1_norm,
     show inner ℂ psi1 psi1perp = 0 from inner_psi1_psi1perp]
   simp
@@ -221,7 +162,7 @@ theorem usd_unambiguous_2 (hs0 : 0 ≤ s) :
 /-- **Success probability:** `⟨ψ₁, E₁ ψ₁⟩ = 1 − s` (the Ivanovic–Dieks–Peres rate). -/
 theorem usd_success (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
     RCLike.re (inner ℂ psi1 (Matrix.toEuclideanLin (E1 s hs0 hs1).M psi1)) = 1 - s := by
-  rw [E1, scaledRankOneEffect,
+  rw [E1, scaledRankOneEffect_M,
     scaledRankOne_quadratic (usdA s) (psi2perp s) psi1
       (psi2perp_norm s hs1 (by linarith)) psi1_norm,
     show inner ℂ psi1 (psi2perp s) = ((-sig s : ℝ) : ℂ) from inner_psi1_psi2perp s]

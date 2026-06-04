@@ -29,6 +29,7 @@ import CsdLean4.LF2.EffectFn
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.POVM
+import CsdLean4.LF2.EffectAux
 import CsdLean4.LF3.Setup
 import CsdLean4.LF3.Hamiltonian
 import CsdLean4.LF3.SectorSeparation
