@@ -453,6 +453,7 @@ CsdLean4/Empirical/QM/NoCloning.lean                   -- Phase B: B2  (namespac
 CsdLean4/Empirical/QM/NoDeleting.lean                  -- Phase E: E1
 CsdLean4/Empirical/QM/Uncertainty.lean                 -- Phase E: E6 (Robertson)
 CsdLean4/Empirical/QM/SternGerlach.lean                -- Phase B: B1
+CsdLean4/Empirical/QM/Malus.lean                       -- Phase B: B3 (spin-1/2 Malus cos²(θ/2))
 CsdLean4/Empirical/QM/Hardy.lean                       -- Phase C: D7 (QM-validity layer)
 CsdLean4/Empirical/QM/Multipartite/GHZ.lean            -- Phase C: D6
 CsdLean4/Empirical/QM/Contextuality/KS18.lean          -- Phase C: D9 (Kochen-Specker, Cabello-18)

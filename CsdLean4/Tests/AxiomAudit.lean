@@ -67,6 +67,7 @@ import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Empirical.QM.Contextuality.MerminPeres
 import CsdLean4.Empirical.QM.Hardy
 import CsdLean4.Empirical.QM.SternGerlach
+import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
@@ -614,6 +615,15 @@ space-free); the instance is Cat-3 only because it lives under
 
 /-- info: 'CSD.Empirical.SternGerlach.born_x_basis_complete' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.SternGerlach.born_x_basis_complete
+
+/-- info: 'CSD.Empirical.Malus.malus_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Malus.malus_law
+
+/-- info: 'CSD.Empirical.Malus.malus_basis_complete' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Malus.malus_basis_complete
+
+/-- info: 'CSD.Empirical.Malus.malus_pi_div_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.Malus.malus_pi_div_two
 
 /--
 info: 'CSD.Empirical.KochenSpecker.ks_no_value_assignment_cabello18' depends on axioms: [propext,
