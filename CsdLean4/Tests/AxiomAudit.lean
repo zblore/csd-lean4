@@ -59,6 +59,7 @@ import CsdLean4.Empirical.QM.NoCommunication
 import CsdLean4.Empirical.QM.NoBroadcasting
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
+import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
@@ -436,6 +437,22 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.E91.e91_no_lhv_reproduces_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.E91.e91_no_lhv_reproduces_singlet
+
+-- USD (unambiguous state discrimination), the POVM-essential QM-validity result:
+-- the unambiguity zeros ⟨ψ₂,E₁ψ₂⟩ = ⟨ψ₁,E₂ψ₁⟩ = 0 (zero-error discrimination,
+-- impossible projectively) and the IDP success probability 1 − s. Foundational
+-- triple only.
+/-- info: 'CSD.Empirical.QM.USD.usd_unambiguous_1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.USD.usd_unambiguous_1
+
+/-- info: 'CSD.Empirical.QM.USD.usd_unambiguous_2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.USD.usd_unambiguous_2
+
+/-- info: 'CSD.Empirical.QM.USD.usd_success' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.USD.usd_success
 
 /-- info: 'CSD.Empirical.Uncertainty.robertson_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
