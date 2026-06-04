@@ -255,8 +255,9 @@ noncomputable def kJED (hgen : ∀ s t : Sign, 0 < P_st ctx.a ctx.b s t) :
 /-! ### `MeasureBridgeData` for the Kähler instance (axiom-free, `c = 1`) -/
 
 /-- The (axiom-free) `MeasureBridgeData` for `kSectorData p₀`: `π∗μL = 1 · μFS`
-via `Measure.fst_prod`. Does NOT route through `MeasureBridgeData.ofSectorData`,
-so it stays foundational-triple-only (no `invariant_measure_uniqueness`). -/
+via `Measure.fst_prod`. Builds the bridge fields directly, so it stays
+foundational-triple-only (this is now the only route — the abstract
+`measure_bridge` / `invariant_measure_uniqueness` axiom were removed 2026-06-04). -/
 noncomputable def kBridge (p₀ : CPN 4) :
     LF2.MeasureBridgeData (kSectorData p₀) (fubiniStudyMeasure p₀) where
   is_inv := fun U =>

@@ -51,9 +51,8 @@ for the structural hypotheses.
   the LF3 chain capstones, after Phase 7, cite both
   `busch_effect_gleason` (via `pure_state_born_weights_of_certainty`
   inside the chain proof's OP.p ↔ Born identity step) and the foundational
-  triple. `invariant_measure_uniqueness` propagates by type signature
-  when callers construct `MeasureBridgeData` via
-  `MeasureBridgeData.ofSectorData`.
+  triple. The `MeasureBridgeData` argument carries no axiom — the concrete
+  instances supply it axiom-free.
 
 ## API shape
 

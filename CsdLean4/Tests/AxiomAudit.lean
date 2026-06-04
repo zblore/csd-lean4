@@ -166,9 +166,10 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 -/
 #guard_msgs in #print axioms SectorData.outcomeOfProjective_weight_eq_projectiveWeight
 
-/-- info: 'CSD.LF2.measure_bridge' depends on axioms: [propext, Classical.choice, Quot.sound, invariant_measure_uniqueness] -/
-#guard_msgs in #print axioms measure_bridge
-
+-- (The abstract `measure_bridge` + the `invariant_measure_uniqueness` axiom it carried
+-- were removed 2026-06-04; the bridge holds axiom-free on the concrete instances —
+-- `cp_measure_bridge` / `k_measure_bridge`, pinned below. Only `busch_effect_gleason`
+-- remains as an imported axiom.)
 /-- info: 'CSD.LF2.born_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms born_quadratic
 
@@ -1195,9 +1196,10 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.
-Both cite only the foundational triple — in particular `cp_measure_bridge`
-does **not** carry `invariant_measure_uniqueness` (cf. the abstract
-`measure_bridge`, which does). -/
+Both cite only the foundational triple; `cp_measure_bridge` realises the measure
+bridge `π∗μL = c • μFS` axiom-free (`c = 1`). This is now the *only* form of the
+bridge in the corpus — the abstract `measure_bridge` and the
+`invariant_measure_uniqueness` axiom it carried were removed 2026-06-04. -/
 
 /-- info: 'CSD.LF4.cpSectorData' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

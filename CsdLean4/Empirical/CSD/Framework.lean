@@ -34,9 +34,9 @@ Three fields, all LF2-only:
 - `μFS : Measure P` — projective reference measure for the OP integral.
 - `hμFS_prob : IsProbabilityMeasure μFS` — `μFS` is a probability measure.
 - `bridge : MeasureBridgeData D μFS` — the measure bridge data
-  (`π_*μL = c • μFS` + G-invariance), constructible via
-  `MeasureBridgeData.ofSectorData` from `measure_bridge` (which cites
-  `invariant_measure_uniqueness`).
+  (`π_*μL = c • μFS` + G-invariance), supplied directly; the concrete
+  instances build it **axiom-free** (`CSD.LF4.cp_measure_bridge`,
+  `k_measure_bridge`).
 
 ## What this file deliberately does *not* carry
 
@@ -91,9 +91,8 @@ projective reference measure `μFS`, the probability witness, and the
 measure bridge data — the three LF2-level ingredients common to every
 CSD-side reading of a QM construct.
 
-The bridge data carries `invariant_measure_uniqueness` by canonical
-constructor (`MeasureBridgeData.ofSectorData`); see
-`CsdLean4/LF2/Preparation.lean` for the propagation discipline. -/
+The bridge data is supplied directly; the concrete instances build it
+axiom-free (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`). -/
 structure Context
     {SigmaSpace P G : Type*}
     [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
@@ -106,8 +105,8 @@ structure Context
   μFS         : Measure P
   /-- `μFS` is a probability measure. -/
   hμFS_prob   : IsProbabilityMeasure μFS
-  /-- The measure-bridge data (`π_*μL = c • μFS` + G-invariance).
-      Constructible via `MeasureBridgeData.ofSectorData`. -/
+  /-- The measure-bridge data (`π_*μL = c • μFS` + G-invariance); supplied
+      directly, axiom-free on the concrete instances. -/
   bridge      : CSD.LF2.MeasureBridgeData D μFS
 
 end CSDBridge

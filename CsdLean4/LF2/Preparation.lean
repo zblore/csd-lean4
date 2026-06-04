@@ -8,44 +8,29 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 **Category:** 3-Local (pre-LF4 plan Phase 3 sub-component 3a —
 `MeasureBridgeData` bundle).
 
-This module hosts the structural composition of LF2's two named axioms
-through which `OperationalPackage.fromPreparation` will route in
-sub-phase 3c. The current sub-phase 3a defines:
+This module defines:
 
 - `MeasureBridgeData D μFS` — a structure bundling the projective
   reference measure `μFS`, its G-invariance, the bridge constant
   `c : ENNReal`, and the bridge equality
-  `Measure.map D.π D.μL = c • μFS`.
-- `MeasureBridgeData.ofSectorData` — the primary constructor, fed by
-  `measure_bridge`. Cites `invariant_measure_uniqueness`.
+  `Measure.map D.π D.μL = c • μFS`. **Passive data**: callers supply the
+  bridge equality directly, and the concrete instances supply it
+  **axiom-free** (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`).
+- `OperationalPackage.fromPreparation` — the volume-ratio Born wrapper,
+  which takes a `MeasureBridgeData D μFS` argument but does **not**
+  extensionally invoke its `bridge_eq` content in the operational-axiom
+  field proofs, so `#print axioms` on it reads only the foundational triple.
 
-## How the `invariant_measure_uniqueness` citation reaches consumers
+## History note (2026-06-04)
 
-`OperationalPackage.fromPreparation` takes a `MeasureBridgeData D μFS`
-argument but does **not** extensionally invoke its `bridge_eq` content
-inside the operational-axiom field proofs. The axiom therefore does
-**not** propagate into the consumer by Lean's normal extensional
-mechanism (`#print axioms` on `fromPreparation` alone reads only the
-foundational triple).
-
-What does propagate is a **code-organisation commitment**, not a
-mathematical one: per `specs/pre-LF4-plan.md` option (b), the only
-sanctioned construction route to a `MeasureBridgeData D μFS` for a
-`SectorData`-derived setup is `ofSectorData`, which cites
-`invariant_measure_uniqueness`. Callers who follow that policy build
-their consumer through a chain whose root constructor cites the axiom,
-so `#print axioms` on the assembled chain capstone reads
-`invariant_measure_uniqueness`. This is a discipline imposed by the
-module author (and visible in the `lake build` axiom audit), not a
-proof obligation Lean's elaborator enforces — a caller who synthesised
-a `MeasureBridgeData` by some other route (e.g. by hand-packing the
-fields) would bypass the citation entirely.
-
-The honest reading: `invariant_measure_uniqueness` is the chain's
-load-bearing symmetry import, and the canonical-constructor route is
-how we keep its citation in the audit. Sub-phase 3c uses this to thread
-the axiom citation into `OperationalPackage.fromPreparation` and
-thereby into the LF3 chain capstones (Phase 7).
+Earlier revisions carried an axiom-citing constructor
+`MeasureBridgeData.ofSectorData`, which derived the bridge fields from the
+abstract `measure_bridge` lemma and so cited the `invariant_measure_uniqueness`
+axiom; the option-(b) discipline of `specs/pre-LF4-plan.md` was to route the
+chain through it to keep the citation in the audit. Both the constructor and the
+abstract `measure_bridge`/axiom were **removed** once it was clear nothing
+downstream used them (the concrete instances build the bridge directly and
+axiom-free), leaving `busch_effect_gleason` as the corpus's only imported axiom.
 -/
 
 open MeasureTheory
@@ -62,14 +47,16 @@ variable {SigmaSpace P G : Type*}
 
 /-- **Measure-bridge data.** Bundles the projective reference measure
     `μFS`, its G-invariance, the bridge constant `c : ENNReal`, and the
-    bridge equality `Measure.map D.π D.μL = c • μFS`. The primary
-    constructor `ofSectorData` cites `invariant_measure_uniqueness` via
-    `measure_bridge`; downstream consumers that build through this
-    constructor inherit the axiom citation in their `#print axioms`
-    output. The bridge structure itself is passive — its fields are
-    not extensionally consumed by `OperationalPackage.fromPreparation`'s
-    operational-axiom proofs — but the canonical-constructor discipline
-    keeps the axiom citation in the audit trail (see module docstring).
+    bridge equality `Measure.map D.π D.μL = c • μFS`. The structure is
+    **passive data**: its fields are not extensionally consumed by
+    `OperationalPackage.fromPreparation`'s operational-axiom proofs, and
+    callers supply the bridge equality directly. The concrete instances
+    supply it **axiom-free** (`CSD.LF4.cp_measure_bridge`,
+    `k_measure_bridge` — `c = 1`, trivial / product-marginal fibres).
+
+    (The earlier axiom-citing constructor `ofSectorData`, which derived the
+    fields from the abstract `measure_bridge` / `invariant_measure_uniqueness`,
+    was removed 2026-06-04 — see `LF2/MeasureBridge.lean`. Nothing used it.)
 
     `μFS` is taken as an explicit (Type-level) field rather than carried
     in the structure because callers may want to instantiate the same
@@ -82,21 +69,6 @@ structure MeasureBridgeData (D : SectorData SigmaSpace P G) (μFS : Measure P) w
   c : ENNReal
   /-- The bridge equality. -/
   bridge_eq : Measure.map D.π D.μL = c • μFS
-
-/-- **Primary constructor for `MeasureBridgeData`.** Given a `SectorData`,
-    a G-invariant probability measure `μFS` on `P`, and the invariance
-    hypothesis, extracts the bridge data from `measure_bridge`. This
-    construction cites `invariant_measure_uniqueness` (via
-    `measure_bridge`); any caller of `MeasureBridgeData.ofSectorData`
-    inherits the axiom dependency. -/
-noncomputable def MeasureBridgeData.ofSectorData
-    (D : SectorData SigmaSpace P G) (μFS : Measure P)
-    [IsProbabilityMeasure μFS]
-    (hμFS_inv : ∀ g : G, MeasurePreserving ((g • ·) : P → P) μFS μFS) :
-    MeasureBridgeData D μFS where
-  is_inv := hμFS_inv
-  c := (measure_bridge D μFS hμFS_inv).choose
-  bridge_eq := (measure_bridge D μFS hμFS_inv).choose_spec
 
 /-! ### Operational package from a preparation
 
@@ -113,12 +85,9 @@ The `MeasureBridgeData` argument is **type-level only**: the
 Hence `#print axioms OperationalPackage.fromPreparation` itself reports
 only the foundational triple.
 
-Callers who build their `MeasureBridgeData` via the canonical
-constructor `MeasureBridgeData.ofSectorData` end up with a chain that
-cites `invariant_measure_uniqueness` — but this is the
-canonical-constructor discipline (a code-organisation commitment),
-not a Lean-enforced propagation. See the module docstring for the
-honest reading.
+`MeasureBridgeData` is supplied directly by the concrete instances, whose bridge
+proofs are axiom-free; nothing here forces the (now-removed) abstract bridge or
+its axiom. See the module docstring history note.
 -/
 
 variable {N : ℕ}
@@ -137,12 +106,10 @@ noncomputable def OperationalPackage.fromPreparation
     (rep : P → EuclideanSpace ℂ (Fin N))
     (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep) :
     OperationalPackage N :=
-  -- `bridge` is type-level only: it sits in the signature so the
-  -- canonical-constructor discipline (option (b) of pre-LF4-plan) keeps
-  -- `invariant_measure_uniqueness` in the assembled-chain axiom audit,
-  -- but `bridge_eq` is not extensionally consumed by the operational-axiom
-  -- field proofs. `#print axioms` on this definition alone reads only the
-  -- foundational triple.
+  -- `bridge` is type-level only: `bridge_eq` is not extensionally consumed by
+  -- the operational-axiom field proofs, so `#print axioms` on this definition
+  -- reads only the foundational triple. (Concrete instances supply `bridge`
+  -- axiom-free.)
   let _ : MeasureBridgeData D μFS := bridge
   let μP : Measure P := Measure.map D.π μprep
   haveI : IsProbabilityMeasure μP :=
@@ -312,11 +279,9 @@ theorem OP_certain_at_ψ
     Busch effect-Gleason (via `pure_state_born_weights_of_certainty`).
 
     `#print axioms PurePreparation.born_rank_one` cites
-    `busch_effect_gleason` (extensionally, via Busch packaging).
-    `invariant_measure_uniqueness` enters at caller sites that construct
-    the bridge argument via `MeasureBridgeData.ofSectorData` — the
-    canonical-constructor discipline per the option (b) architectural
-    commitment. -/
+    `busch_effect_gleason` (extensionally, via Busch packaging). The
+    `bridge` argument carries no axiom — the concrete instances supply it
+    axiom-free. -/
 theorem born_rank_one
     (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : MeasureBridgeData D μFS)
@@ -347,11 +312,9 @@ theorem born_rank_one
     two structural inputs that LF2 always required:
 
     - **Symmetry** enters via the `bridge : MeasureBridgeData D μFS`
-      argument. The only construction route to a `MeasureBridgeData`
-      for a `SectorData`-derived setup is `MeasureBridgeData.ofSectorData`,
-      which cites `invariant_measure_uniqueness` via `measure_bridge`.
-      Callers carrying the symmetry axiom propagate it into this
-      theorem by type signature.
+      argument (the `π*μL = c • μFS` bridge data). The concrete instances
+      supply this axiom-free (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`);
+      it is the structural symmetry datum, no longer an axiom.
     - **Operations** enter via the `OperationalPackage.fromPreparation`
       construction, whose `nonneg`/`le_one`/`total_one`/`additivity`
       fields formalise the operational consistency package of spec
@@ -360,24 +323,16 @@ theorem born_rank_one
 
     What the direct route avoids is the **trace-form characterisation
     step** (Busch's effect-Gleason theorem), not the symmetry-and-
-    operations base. The two LF2 axioms `invariant_measure_uniqueness`
-    and `busch_effect_gleason` correspond to "symmetry" and "the
-    trace-form characterisation of operations", respectively, not to
-    "symmetry" and "operations": operations are already encoded
-    structurally in `OperationalPackage`.
+    operations base. `busch_effect_gleason` corresponds to "the trace-form
+    characterisation of operations", not to "operations" themselves, which
+    are encoded structurally in `OperationalPackage`. The symmetry datum is
+    the `bridge` argument, supplied axiom-free by the concrete instances.
 
-    **Tagged as the eventual migration target** for the chain capstones
-    once downstream consumers accommodate the leaner cite set; v1.00
-    chain stays Busch-mediated per spec §5.4. Useful pedagogically as
-    the explicit volume-ratio statement, and as the migration point
-    for future revisions of the chain capstones.
+    This is the route the LF3 chain capstones now take (re-routed off Busch
+    2026-06-02), giving the explicit volume-ratio Born statement.
 
     `#print axioms PurePreparation.born_rank_one_direct` cites only the
-    foundational triple `[propext, Classical.choice, Quot.sound]`.
-    `invariant_measure_uniqueness` enters at caller sites that construct
-    the bridge argument via `MeasureBridgeData.ofSectorData` — this is
-    the type-signature propagation mechanism per the option (b)
-    architectural commitment. -/
+    foundational triple `[propext, Classical.choice, Quot.sound]`. -/
 theorem born_rank_one_direct
     (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : MeasureBridgeData D μFS)
