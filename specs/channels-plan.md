@@ -73,13 +73,19 @@ Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empiric
   triple). *Difficulty was: low–medium* (the √p scalar bookkeeping in mixed-unitary TP).
 
 ### C4 — the first payoffs
-- **No-communication CPTP form** (`Empirical/QM/NoCommunication.lean`):
-  `traceLeft((Φ_A ⊗ id) ρ) = traceLeft ρ` for any channel `Φ_A` — generalises the unitary
-  `no_communication_reduced`; the TP property is the key. **Retires E3's CPTP gap.**
-- **The QEC error channel**: the bit-flip error as a dephasing channel applied to a codeword
-  — the honest "error = decoherence" statement. (Full *correction* still needs the syndrome
-  measurement-update = LF5.)
-- *Difficulty: medium.*
+- **No-communication CPTP form** — **DONE 2026-06-05.**
+  (`Empirical/QM/NoCommunication.lean`: `channel_no_communication`):
+  `traceLeft((Φ_A ⊗ id) ρ) = traceLeft ρ` for *any* channel `Φ_A` — generalises the unitary
+  `no_communication_reduced`; the TP property `∑ᵢ Kᵢᴴ Kᵢ = 1` is the key. **Retires E3's CPTP
+  gap.** Built on two new pieces: the Cat-1 Kraus-summed partial-trace lemma
+  `Matrix.traceLeft_sum_conjTranspose_kronecker_one` (generalises the single-unitary
+  `traceLeft_conjTranspose_kronecker_one`) and the local channel
+  `QuantumInfo.Channel.tensorRight` (`Φ ⊗ id`). Foundational-triple-only, AxiomAudit-pinned.
+- **The QEC error channel** — *remaining C4 sub-item.* The bit-flip error as a
+  `mixedUnitaryChannel {I, X}` instance applied to a codeword — the honest "error =
+  decoherence" statement. (Full *correction* still needs the syndrome measurement-update =
+  LF5.)
+- *Difficulty was: medium* (the 4-sum reorder in the Kraus-summed partial-trace lemma).
 
 ### C5 — deferred / Mathlib-scale (later, some need K3)
 - Full complete-positivity characterisation (Choi-PSD ⟺ CP). *Note:* Kraus channels are CP

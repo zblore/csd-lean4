@@ -3,6 +3,7 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.Normed.Lp.Matrix
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import CsdLean4.LF2.ReducedDensity
+import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 
 /-!
 # Empirical/QM: No-communication theorem (E3a, marginal form)
@@ -138,6 +139,21 @@ theorem no_communication_reduced
     (ρ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
     Matrix.traceLeft (aliceOp U * ρ * (aliceOp U)ᴴ) = Matrix.traceLeft ρ :=
   Matrix.traceLeft_conjTranspose_kronecker_one hU ρ
+
+/-- **No-communication, CPTP form (E3, retires the CPTP gap).** For *any* quantum
+channel `Φ` (an arbitrary local CPTP map, not merely a unitary) applied on Alice's
+subsystem while Bob is idle (`Φ ⊗ id`), Bob's reduced state `Tr_A` is unchanged:
+`traceLeft ((Φ ⊗ id) ρ) = traceLeft ρ`. This is the strongest no-signalling form — it
+covers measurement, decoherence, and any noise Alice's lab applies. The Kraus operators
+recombine through the channel's trace-preserving identity `∑ᵢ Kᵢᴴ Kᵢ = 1`, via
+`Matrix.traceLeft_sum_conjTranspose_kronecker_one`. Generalises `no_communication_reduced`
+(the single-unitary case). -/
+theorem channel_no_communication {A A' B ι : Type*}
+    [Fintype A] [Fintype A'] [Fintype B] [Fintype ι] [DecidableEq A] [DecidableEq B]
+    (Φ : QuantumInfo.Channel A A' ι) (ρ : Matrix (A × B) (A × B) ℂ) :
+    Matrix.traceLeft ((Φ.tensorRight B).apply ρ) = Matrix.traceLeft ρ := by
+  rw [QuantumInfo.Channel.tensorRight_apply]
+  exact Matrix.traceLeft_sum_conjTranspose_kronecker_one Φ.tp ρ
 
 /-- **No-communication on a density operator (E3b, structured).** Stated on the
 LF2 `DensityOperatorIx`: Alice's local unitary `U ⊗ I` leaves Bob's reduced

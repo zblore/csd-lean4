@@ -256,6 +256,59 @@ theorem traceLeft_conjTranspose_kronecker_one
   · intro c _ hc; rw [one_apply_ne hc, zero_mul]
   · intro h; exact absurd (Finset.mem_univ a) h
 
+/-- **Partial trace is invariant under a local channel on the traced-out factor.**
+The Kraus-summed generalisation of `traceLeft_conjTranspose_kronecker_one`: for any
+finite family of (possibly rectangular) Kraus operators `K : ι → Matrix p m` that are
+**trace-preserving** (`∑ᵢ (K i)ᴴ (K i) = 1`),
+
+`traceLeft (∑ᵢ (K i ⊗ I) · M · (K i ⊗ I)ᴴ) = traceLeft M`.
+
+This is the **no-communication / no-signalling content for an arbitrary local CPTP map**:
+applying *any* channel (not just a unitary) on Alice's subsystem leaves Bob's reduced state
+`Tr_A` invariant. The Alice factors recombine through `∑ᵢ (K i)ᴴ (K i) = 1`; the two
+Kronecker `I` factors pin the Bob indices. -/
+theorem traceLeft_sum_conjTranspose_kronecker_one
+    {p ι : Type*} [Fintype p] [Fintype ι] {K : ι → Matrix p m R}
+    (hK : ∑ l, (K l)ᴴ * (K l) = 1) (M : Matrix (m × n) (m × n) R) :
+    traceLeft (∑ l, (K l ⊗ₖ (1 : Matrix n n R)) * M * (K l ⊗ₖ (1 : Matrix n n R))ᴴ)
+      = traceLeft M := by
+  ext i j
+  rw [traceLeft_apply, traceLeft_apply]
+  -- Per-Kraus expansion, collapsing the two Bob deltas (b = i, d = j).
+  have hexp : ∀ (l : ι) (k : p),
+      ((K l ⊗ₖ (1 : Matrix n n R)) * M * (K l ⊗ₖ (1 : Matrix n n R))ᴴ) (k, i) (k, j)
+        = ∑ c : m, ∑ a : m, K l k a * star (K l k c) * M (a, i) (c, j) := by
+    intro l k
+    simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, one_apply,
+      Fintype.sum_prod_type, apply_ite star, star_zero, mul_ite, ite_mul,
+      mul_zero, zero_mul, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    refine Finset.sum_congr rfl (fun c _ => ?_)
+    rw [Finset.sum_mul]
+    refine Finset.sum_congr rfl (fun a _ => by ring)
+  -- The Alice factors recombine into `(∑ l (K l)ᴴ (K l)) c a = (1) c a`.
+  have key : ∀ c a : m,
+      (∑ k : p, ∑ l : ι, K l k a * star (K l k c)) = (1 : Matrix m m R) c a := by
+    intro c a
+    rw [← hK, Matrix.sum_apply, Finset.sum_comm]
+    refine Finset.sum_congr rfl (fun l _ => ?_)
+    rw [Matrix.mul_apply]
+    refine Finset.sum_congr rfl (fun k _ => ?_)
+    rw [conjTranspose_apply]; ring
+  simp only [Matrix.sum_apply, hexp]
+  -- Reorder `∑ k ∑ l ∑ c ∑ a` to `∑ c ∑ a ∑ k ∑ l`, then fold `k,l` into `key`.
+  conv_lhs => enter [2]; ext k; rw [Finset.sum_comm]
+  rw [Finset.sum_comm]
+  conv_lhs => enter [2]; ext c; enter [2]; ext k; rw [Finset.sum_comm]
+  conv_lhs => enter [2]; ext c; rw [Finset.sum_comm]
+  simp only [← Finset.sum_mul]
+  simp_rw [key]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl (fun a _ => ?_)
+  rw [Finset.sum_eq_single a]
+  · rw [one_apply_eq, one_mul]
+  · intro c _ hc; rw [one_apply_ne hc, zero_mul]
+  · intro h; exact absurd (Finset.mem_univ a) h
+
 end UnitaryInvariance
 
 section Bimodule

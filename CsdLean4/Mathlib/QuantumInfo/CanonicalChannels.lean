@@ -25,7 +25,7 @@ The dephasing/depolarizing/bit-flip channels named in the plan are instances of
 -/
 
 open Matrix
-open scoped ComplexOrder
+open scoped ComplexOrder Kronecker
 
 -- Several lemmas use only a subset of the section instances; silence the section-var linter.
 set_option linter.unusedSectionVars false
@@ -103,6 +103,32 @@ noncomputable def mixedUnitaryChannel {ι : Type*} [Fintype ι] (U : ι → Matr
   simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
     star_ofReal_sqrt]
   rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hp0 i)]
+
+/-! ### Local channel: `Φ ⊗ id` (Alice acts, Bob idle) -/
+
+/-- Kronecker-with-identity commutes with finite sums on the left factor. -/
+private lemma sum_kronecker_one {p' n' ι' : Type*} [Fintype ι'] {b' : Type*} [DecidableEq b']
+    (f : ι' → Matrix p' n' ℂ) :
+    (∑ i, f i) ⊗ₖ (1 : Matrix b' b' ℂ) = ∑ i, (f i ⊗ₖ (1 : Matrix b' b' ℂ)) := by
+  ext x z
+  simp [Matrix.sum_apply, Finset.sum_mul]
+
+variable {p ι : Type*} [Fintype p] [Fintype ι]
+
+/-- The **local channel** `Φ ⊗ id_b`: Alice applies the channel `Φ` to her factor while
+Bob's factor `b` is left idle. Kraus operators `Φ.kraus i ⊗ I_b`. -/
+noncomputable def tensorRight (Φ : Channel n p ι) (b : Type*) [Fintype b] [DecidableEq b] :
+    Channel (n × b) (p × b) ι where
+  kraus i := Φ.kraus i ⊗ₖ (1 : Matrix b b ℂ)
+  tp := by
+    simp only [conjTranspose_kronecker, conjTranspose_one, ← mul_kronecker_mul, Matrix.mul_one]
+    rw [← sum_kronecker_one, Φ.tp, one_kronecker_one]
+
+@[simp] lemma tensorRight_apply (Φ : Channel n p ι) (b : Type*) [Fintype b] [DecidableEq b]
+    (ρ : Matrix (n × b) (n × b) ℂ) :
+    (Φ.tensorRight b).apply ρ
+      = ∑ i, (Φ.kraus i ⊗ₖ (1 : Matrix b b ℂ)) * ρ * (Φ.kraus i ⊗ₖ (1 : Matrix b b ℂ))ᴴ := by
+  rw [apply_def]; rfl
 
 end Channel
 end QuantumInfo

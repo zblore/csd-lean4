@@ -459,6 +459,22 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.NoCommunication.reducedLeft_aliceConj_eq
 
+-- E3 CPTP form (channels phase C4): an arbitrary local channel Φ ⊗ id on Alice's
+-- subsystem leaves Bob's reduced state traceLeft invariant (channel_no_communication),
+-- via the Kraus-summed partial-trace lemma (traceLeft_sum_conjTranspose_kronecker_one)
+-- and the local channel Φ ⊗ id (tensorRight). Retires the E3 CPTP gap. Foundational triple.
+/-- info: 'CSD.Empirical.QM.NoCommunication.channel_no_communication' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.NoCommunication.channel_no_communication
+
+/-- info: 'Matrix.traceLeft_sum_conjTranspose_kronecker_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceLeft_sum_conjTranspose_kronecker_one
+
+/-- info: 'QuantumInfo.Channel.tensorRight_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.tensorRight_apply
+
 -- E2: No-broadcasting, pure-marginal confinement core. A bipartite PSD operator
 -- with a pure first-factor marginal |ψ⟩⟨ψ| is confined to that pure sector
 -- ((P⊗I)·ρ·(P⊗I) = ρ) — the obstruction to broadcasting a pure state. Built on the
