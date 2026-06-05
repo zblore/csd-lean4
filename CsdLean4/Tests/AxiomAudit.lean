@@ -5,6 +5,7 @@ import CsdLean4.LF2.ReducedDensity
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.Mathlib.QuantumInfo.Stinespring
+import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -220,6 +221,20 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 /-- info: 'QuantumInfo.Channel.ofIsometry_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.ofIsometry_apply
+
+-- Canonical channels (Cat-1 staging; phase C3 of specs/channels-plan.md). The
+-- unitary channel (ρ ↦ UρUᴴ), the trace-out channel (ρ ↦ traceRight ρ, the literal
+-- discard-the-environment from C2's ofIsometry 1), and the mixed-unitary channel
+-- (ρ ↦ ∑ᵢ pᵢ • Uᵢ ρ Uᵢᴴ, the dephasing/depolarizing/bit-flip generaliser).
+-- Foundational triple.
+/-- info: 'QuantumInfo.Channel.unitaryChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.unitaryChannel_apply
+
+/-- info: 'QuantumInfo.Channel.traceOutChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.traceOutChannel_apply
+
+/-- info: 'QuantumInfo.Channel.mixedUnitaryChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.mixedUnitaryChannel_apply
 
 -- General-N DH Slice D.5a: Tonelli for a product over a finite index (lintegral).
 -- ∫⁻ ∏ᵢ fᵢ(xᵢ) ∂(pi μ) = ∏ᵢ ∫⁻ fᵢ ∂μᵢ — the lintegral analogue of the Bochner

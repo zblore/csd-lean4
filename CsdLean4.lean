@@ -8,6 +8,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.Mathlib.QuantumInfo.Stinespring
+import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique

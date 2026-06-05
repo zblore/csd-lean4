@@ -58,11 +58,19 @@ Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empiric
   AxiomAudit-pinned). This module realises "channel = env-averaged joint flow".
   *Difficulty was: medium* (reindex/block algebra; partial trace already built).
 
-### C3 — the canonical channels
-- `unitaryChannel U` (single Kraus); `traceOutChannel` (`A⊗B ↦ traceRight` — the literal
-  volume-loss-to-environment); `dephasingChannel` / `depolarizingChannel` (Kraus = scaled
-  Paulis — decoherence modelled directly, the einselection mechanism + the QEC error model).
-- *Difficulty: low–medium.*
+### C3 — the canonical channels — **DONE 2026-06-05**
+- `unitaryChannel U hU` (single Kraus, `apply ρ = U ρ Uᴴ`; generalises `Channel.id`);
+  `traceOutChannel s env` (`apply ρ = traceRight ρ` — the literal volume-loss-to-environment,
+  obtained for free as C2's `ofIsometry 1`); `mixedUnitaryChannel U hU p hp0 hp`
+  (`apply ρ = ∑ᵢ pᵢ • Uᵢ ρ Uᵢᴴ`, Kraus `√pᵢ • Uᵢ`).
+- **Deviation from plan:** instead of bespoke `dephasingChannel` / `depolarizingChannel`
+  (which would import a specific Pauli family), C3 ships the general **mixed-unitary**
+  channel — dephasing / depolarizing / bit-flip are its instances with a concrete Pauli
+  `U`, assembled by the consumer (the QEC files already carry Paulis). This keeps the Cat-1
+  staging file **Pauli-free**.
+- File `CsdLean4/Mathlib/QuantumInfo/CanonicalChannels.lean`; `unitaryChannel_apply` /
+  `traceOutChannel_apply` / `mixedUnitaryChannel_apply` AxiomAudit-pinned (foundational
+  triple). *Difficulty was: low–medium* (the √p scalar bookkeeping in mixed-unitary TP).
 
 ### C4 — the first payoffs
 - **No-communication CPTP form** (`Empirical/QM/NoCommunication.lean`):
