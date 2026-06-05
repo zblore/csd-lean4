@@ -7,29 +7,38 @@ import CsdLean4.Empirical.QM.QEC.ThreeQubit
 **Category:** 3-Local (CSD-side companion to `Empirical/QM/QEC/ThreeQubit.lean`).
 
 Pairs with the QM-validity bit-flip code (Shor 1995). The QM file proves error correction
-as pure matrix algebra: stabilisers fix the codespace, errors give distinct syndromes, and
-each `X` is self-inverse (recovery). This file states the **CSD reading**, and it is the
-first place in the corpus where error correction acquires a genuinely ontic meaning — one
-the Hilbert picture does not have, because *correcting an error is a statement about
-dynamics on `Σ`*:
+as pure matrix algebra: stabilisers fix the codespace, the discretised Pauli errors give
+distinct syndromes, and each `X` is self-inverse (recovery). This file states the **CSD
+reading** — but the ontic content is subtler than "a flow off the codespace", and getting
+it right is what makes QEC the corpus's sharpest pointer at the dynamics layer.
 
 - **The codespace is a sub-surface of `Σ`.** The `+1` joint eigenspace of the stabilisers
   is a 2-dimensional subspace of `ℂ⁸`, i.e. a `ℂℙ¹ ⊂ ℂℙ⁷` inside the ontic `Σ = ℂℙ⁷` of
   the three-qubit register — a *constraint surface within the constraint surface*.
-- **An error is a flow off the codespace** onto an orthogonal syndrome sub-surface (one per
-  syndrome); **recovery is the flow returning the errored microstates to the codespace.**
-  This is a dynamics statement — exactly the layer (`Φ ≠ id`) the corpus has not yet
-  exercised; it is the QEC face of the open dynamical-origin question.
-- **The syndrome measurement is a measurement on `Σ`** whose four outcome weights are
-  Fubini–Study volumes: each syndrome projector is a sum of two computational-basis
-  projectors, so its Born weight is the corresponding sum of FS volumes (a coarse-graining
-  of the general-`N` Born-from-volume result at `N = 8`). "Syndrome statistics as Kähler
-  volumes."
+- **The physical error is decoherence, which is volume flow — not a volume-preserving flow
+  on the system alone.** A *coherent* (stray-unitary) error would be a symplectomorphism of
+  `Σ_sys` (volume-preserving, no information lost). But the dominant error is the system
+  **entangling with the environment**, `|ψ_L⟩|e₀⟩ ↦ Σ_E (E|ψ_L⟩)|e_E⟩`: the *joint* flow
+  on `Σ_sys × Σ_env` is volume-preserving (Liouville — the `hΦ_pres` field), while the
+  system **marginal** spreads as its coherence leaks into system–environment correlation.
+  That is the "volume loss": lost *from the system to the environment*, conserved jointly.
+  The Pauli errors `{I, X₁, X₂, X₃}` formalised on the QM side are the **discretised**
+  representation of this channel (the QEC discretisation theorem), not coherent rotations.
+- **The syndrome measurement is the entropy-extraction step** — the part that actually
+  undoes decoherence. Measuring the stabilisers reads the environment's "which-error"
+  record, *re-concentrating* the system's spread reduced state back to a pure state in one
+  branch; the unitary recovery afterwards is the easy, volume-preserving return to the
+  codespace. The four syndrome weights *are* the decoherence probabilities, and each is a
+  sum of two computational-basis Fubini–Study volumes (a coarse-graining of the general-`N`
+  Born-from-volume result at `N = 8`): "syndrome statistics as Kähler volumes."
 
-As elsewhere in `Empirical/CSD/`, the theorem below is a **transport**: it reduces to the
-QM-side correction by extracting the bundle's Context, and the genuinely-ontic content
-above (codespace as sub-surface, recovery as flow, syndrome as `Σ`-volumes) is the
-load-bearing realisability obligation, not proved here.
+So the honest ontic statement of QEC needs the environment `Σ_env`, the joint Liouville
+flow, and partial trace — i.e. **CPTP channels** (the QI-infrastructure keystone, not yet
+built). The error model *is* a channel and the "volume loss" *is* the partial-trace step.
+The theorem below is therefore a **transport** of the discretised correctness statement; the
+genuinely-ontic content (decoherence as system→environment volume flow, syndrome as the
+recovery of that volume) is the load-bearing realisability obligation, gated on channels +
+the dynamical-origin (`Φ ≠ id`) layer, and not proved here.
 
 ## Source
 
@@ -53,14 +62,16 @@ variable {SigmaSpace P G : Type*}
 /-- **CSD three-qubit-code bundle.** A tag bundle asserting that the three-qubit bit-flip
 code is realised on the ontic substrate of a `SectorData D` (extends `CSDBridge.Context D`
 with the LF2-level discharge data). Its existence is the realisability assertion: the
-codespace is a sub-surface of `Σ`, errors and recovery are flows, and the syndrome
-measurement is a measurement on `Σ` whose outcome weights are Fubini–Study volumes.
+codespace is a sub-surface of `Σ`, the error is **decoherence** (system→environment volume
+flow, Liouville-conserved on the joint `Σ_sys × Σ_env`), the syndrome measurement extracts
+the environment's record and re-concentrates the system, and recovery is the unitary return
+to the codespace.
 
-**Status: load-bearing, externally supplied, undischarged.** The ontic realisations
-(codespace-as-sub-surface; recovery-as-flow; syndrome-as-volumes) are the dynamical-origin
-content of CSD — the same `Φ ≠ id` layer that is `id` in every concrete instance today.
-See `BRIDGE-OBLIGATIONS.md` and `PLACEHOLDERS.md §7` (the fields are QM-side; the ontic
-realisation is prose-only). -/
+**Status: load-bearing, externally supplied, undischarged.** The ontic realisation needs
+`Σ_env`, the joint Liouville flow, and partial trace — i.e. CPTP channels — plus the
+dynamical-origin (`Φ ≠ id`) layer that is `id` in every concrete instance today. The error
+model *is* a channel and the "volume loss" *is* the partial-trace step. See the module
+docstring, `BRIDGE-OBLIGATIONS.md`, and `PLACEHOLDERS.md §7`. -/
 structure CSDThreeQubitBundle (D : CSD.LF2.SectorData SigmaSpace P G)
   extends CSD.Empirical.CSDBridge.Context D
 
