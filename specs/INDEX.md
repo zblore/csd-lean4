@@ -8,7 +8,7 @@ LIVE doc for the tranche you are on.
 
 | Doc | What it is | Status |
 |---|---|---|
-| [`carve-out-plan.md`](carve-out-plan.md) → **D1** | **The open frontier.** Exercise real measurement *dynamics* on `Σ` (`Φ = id` everywhere today); the deepest structural debt, beneath A5. | **OPEN — next session starts here.** |
+| [`carve-out-plan.md`](carve-out-plan.md) → **D1** | **The open frontier.** Exercise real measurement *dynamics* on `Σ`; the deepest structural debt, beneath A5. | **OPEN.** First physically-meaningful `Φ≠id` done 2026-06-05 (`LF4/ObservableFlow.lean`: the measured observable's Hamiltonian flow, measure-preserving, Born weights = its conserved quantities). **Remaining half = the measurement *event* (collapse), i.e. LF5 / measurement-update.** |
 | [`povm-plan.md`](povm-plan.md) | **POVM tranche** (DONE 2026-06-03): the ontic Born derivation extended to general (non-projective) POVMs via Naimark dilation. | **CLOSED** — P.1–P.5 done (type, dilation + Born transfer, volume reading, frequency capstone, canonical-dilation existence); all foundational-triple-only, Gleason-free. P.6 docs done. |
 | [`LF4-todo.md`](LF4-todo.md) | Ledger of items deferred from LF2/LF3 to LF4, numbered §1–§14, with bridge-discipline rules. | LIVE ledger. §14.2 done; general-N DH + LF3 re-route done (see header). Remaining items still open. |
 | [`qm-empirical-tests.md`](qm-empirical-tests.md) | QM-validity regression-suite roadmap (Bell, no-cloning, teleportation, GHZ, Hardy, gates, crypto…). | LIVE. Many items done; E7/E91/BB84 + full no-broadcasting deferred (need fidelity/CPTP/LF5). |

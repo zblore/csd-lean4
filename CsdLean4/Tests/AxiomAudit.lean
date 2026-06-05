@@ -19,6 +19,7 @@ import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
+import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.BornFS
@@ -1362,6 +1363,18 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.momentMap_mk_eq_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_mk_eq_inner_sq
+
+-- The measured observable's Hamiltonian flow (the first physically-meaningful Φ≠id):
+-- measure-preserving (obsFlow_measurePreserving), and the Born weights are its conserved
+-- quantities (momentMap_obsFlow: momentMap (obsFlow p) = momentMap p). Ties the observable's
+-- dynamics to the Born volumes; the measurement event (collapse) is still LF5.
+/-- info: 'CSD.LF4.obsFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.obsFlow_measurePreserving
+
+/-- info: 'CSD.LF4.momentMap_obsFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.momentMap_obsFlow
 
 -- Tranche M slice 3: the Born weight as a barycentric volume ratio. The i-th
 -- subdivision region of the moment polytope at Φ([ψ]) has Lebesgue-volume
