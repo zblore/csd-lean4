@@ -485,6 +485,10 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceDist_eq_zero_iff
 
+/-- info: 'QuantumInfo.traceDist_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceDist_comm
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef

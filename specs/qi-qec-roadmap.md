@@ -52,16 +52,18 @@ bounds, channel discrimination, QEC fidelity. *Mathlib:* trace distance `‖ρ�
 assemblable from the trace norm; Uhlmann fidelity needs operator `√` (matrix CFC `√` is
 available) plus Uhlmann's theorem (not in Mathlib). Medium difficulty, Cat-1.
 
-**K3 v1 foundation DONE 2026-06-05** (`CsdLean4/Mathlib/QuantumInfo/TraceDistance.lean`):
+**K3 metric core DONE 2026-06-05** (`CsdLean4/Mathlib/QuantumInfo/TraceDistance.lean`):
 `traceNorm` (= `∑|λᵢ|`) and `traceDist` (`½‖ρ−σ‖₁`) defined; non-negativity; the
-**distinguishability headline** `traceDist ρ σ = 0 ↔ ρ = σ`; `traceNorm_of_posSemidef`
-(trace norm of a state = its trace). Foundational-triple-only, AxiomAudit-pinned.
-**Honest residue (deferred — Mathlib lacks the scaffolding):** *symmetry* + *triangle
-inequality* (need the eigenvalue multiset of `−B` = negation of `B`'s, a charpoly-root
-argument, plus Schatten-1 structure for the triangle) and the **CPTP data-processing
-inequality** `D(Φρ,Φσ) ≤ D(ρ,σ)` (needs the variational characterisation
-`D = max₀≤P≤I Tr(P(ρ−σ))`). These are the genuine K3 theorems and a multi-session build;
-the eigenvalue-sum definition here is what they build on.
+**distinguishability headline** `traceDist ρ σ = 0 ↔ ρ = σ`; **symmetry** `traceDist_comm`
+(via the functional-calculus bridge `traceNorm A = Re Tr(cfc |·| A)` + `cfc_comp_neg`, so
+`traceNorm(−B) = traceNorm B`); `traceNorm_of_posSemidef` (trace norm of a state = its
+trace). Foundational-triple-only, AxiomAudit-pinned. So the metric core short of the
+triangle inequality is complete.
+**Honest residue (deferred — Mathlib lacks the scaffolding):** the **triangle inequality**
+(needs the Schatten-1 norm subadditivity, absent from Mathlib) and the **CPTP
+data-processing inequality** `D(Φρ,Φσ) ≤ D(ρ,σ)` (needs the variational characterisation
+`D = max₀≤P≤I Tr(P(ρ−σ))`). These are the genuine deep K3 theorems and a multi-session
+build; the eigenvalue-sum definition + the cfc bridge here are what they build on.
 
 ### K4 — measurement update / "LF5" (Lüders rule `ρ ↦ ΠρΠ / Tr`)
 Unblocks: BB84 / B92 disturbance security, teleportation *collapse* (today
