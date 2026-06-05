@@ -81,11 +81,16 @@ Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empiric
   `Matrix.traceLeft_sum_conjTranspose_kronecker_one` (generalises the single-unitary
   `traceLeft_conjTranspose_kronecker_one`) and the local channel
   `QuantumInfo.Channel.tensorRight` (`Φ ⊗ id`). Foundational-triple-only, AxiomAudit-pinned.
-- **The QEC error channel** — *remaining C4 sub-item.* The bit-flip error as a
-  `mixedUnitaryChannel {I, X}` instance applied to a codeword — the honest "error =
-  decoherence" statement. (Full *correction* still needs the syndrome measurement-update =
-  LF5.)
+- **The QEC error channel** — **DONE 2026-06-05.**
+  (`Empirical/QM/QEC/BitFlipChannel.lean`: `bitFlipChannel`, `bitFlipChannel_apply`):
+  the bit-flip error `Φ(ρ) = (1−p)ρ + p·XρX` as a `mixedUnitaryChannel {I, X}` — the honest
+  "error = decoherence" statement behind the three-qubit bit-flip code. Foundational-triple-only,
+  AxiomAudit-pinned. (Full *correction* — the syndrome-conditioned measurement update — still
+  needs LF5.)
 - *Difficulty was: medium* (the 4-sum reorder in the Kraus-summed partial-trace lemma).
+
+**C4 closed (2026-06-05).** Both payoffs delivered. Remaining channels work is C5
+(full CP characterisation, data-processing — needs K3 trace distance), off the critical path.
 
 ### C5 — deferred / Mathlib-scale (later, some need K3)
 - Full complete-positivity characterisation (Choi-PSD ⟺ CP). *Note:* Kraus channels are CP

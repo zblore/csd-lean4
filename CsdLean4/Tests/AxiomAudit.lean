@@ -66,6 +66,7 @@ import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.QEC.ThreeQubit
 import CsdLean4.Empirical.QM.QEC.PhaseFlip
+import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 import CsdLean4.Empirical.QM.Uncertainty
 import CsdLean4.Empirical.QM.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Contextuality.KS18
@@ -561,6 +562,13 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on ax
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip
+
+-- The bit-flip error channel (channels phase C4): the single-qubit error as a CPTP
+-- mixedUnitaryChannel {I, X}, Φ(ρ) = (1-p)ρ + p XρX — the honest "error = decoherence"
+-- model behind the bit-flip code. Foundational triple.
+/-- info: 'CSD.Empirical.QM.QEC.bitFlipChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.bitFlipChannel_apply
 
 /-- info: 'CSD.Empirical.Uncertainty.robertson_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
