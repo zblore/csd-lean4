@@ -3,6 +3,7 @@ import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
+import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -191,6 +192,19 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 /-- info: 'CSD.LF2.DensityOperatorIx.reduced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.DensityOperatorIx.reduced
+
+-- Quantum channels in Kraus form (Cat-1 Mathlib staging; phase C1 of
+-- specs/channels-plan.md). The action is trace-preserving (apply_trace),
+-- PSD-preserving (apply_posSemidef), and Hermiticity-preserving — so a channel
+-- sends density operators to density operators. Foundational triple. On-ramp to Φ≠id.
+/-- info: 'QuantumInfo.Channel.apply_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.apply_trace
+
+/-- info: 'QuantumInfo.Channel.apply_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.apply_posSemidef
+
+/-- info: 'QuantumInfo.Channel.apply_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.apply_isHermitian
 
 -- General-N DH Slice D.5a: Tonelli for a product over a finite index (lintegral).
 -- ∫⁻ ∏ᵢ fᵢ(xᵢ) ∂(pi μ) = ∏ᵢ ∫⁻ fᵢ ∂μᵢ — the lintegral analogue of the Bochner

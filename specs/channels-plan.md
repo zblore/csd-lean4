@@ -1,0 +1,97 @@
+# K2 — CPTP channel infrastructure plan
+
+The channels keystone (K2 of [`qi-qec-roadmap.md`](qi-qec-roadmap.md)). A finite-dimensional
+quantum-channel framework, built on the corpus's existing Stinespring (`canonicalNaimark`)
+and partial-trace (`Matrix.traceRight`) primitives. Created 2026-06-05.
+
+## 0. Why
+
+Three drivers:
+1. **QEC errors are channels.** The honest ontic error model is decoherence (system→
+   environment volume flow), not a coherent flow on `Σ_sys`; the error model *is* a CPTP
+   channel and the "volume loss" *is* the partial-trace step (see `Empirical/CSD/QEC/`).
+2. **No-communication CPTP form** (completes E3 in `qm-empirical-tests.md`): Alice's general
+   *channel* — not just a unitary — leaves Bob's reduced state invariant.
+3. **The structural on-ramp to `Φ ≠ id`.** A channel's Stinespring dilation is a
+   measure-preserving flow on `Σ_sys × Σ_env`; channels are the first place the corpus
+   exhibits a non-trivial flow with operational meaning.
+
+## 1. Representation choice and location
+
+**Kraus** as the working definition (concrete, CP-by-construction), **Stinespring** as the
+dilation theorem (the ontic flow form) plus the Kraus↔Stinespring bridge. `apply` acts on
+general matrices (a linear map); density-operator preservation (Hermitian + PSD + trace) is
+a theorem.
+
+**Cat-1** (CSD-free, Mathlib-upstreamable) → `CsdLean4/Mathlib/QuantumInfo/Channel.lean`,
+namespace `QuantumInfo` (not `Matrix` — a channel is a quantum-info object, the directory is
+`QuantumInfo/`, and `namespace Matrix` is fragile here once `ℂ`/`ComplexOrder` instances are
+in play; upstream a channel would plausibly live under a `QuantumInfo` root too).
+Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empirical/`.
+
+## 2. Phases
+
+### C1 — the type + trace-preserving / positive core — **DONE 2026-06-05**
+- `QuantumInfo.Channel n m ι`: `kraus : ι → Matrix m n ℂ` with the TP constraint
+  `∑ᵢ (kraus i)ᴴ * (kraus i) = 1`.
+- `Channel.apply ρ := ∑ᵢ kraus i * ρ * (kraus i)ᴴ`; `apply_add`, `apply_smul` (linear).
+- `apply_trace` (`Tr(Φ ρ) = Tr ρ`, via TP + trace cyclicity), `apply_posSemidef`
+  (PSD-preserving), `apply_isHermitian`.
+- `Channel.id` (identity channel) as the inhabiting instance.
+- *Difficulty: low.* Pure matrix algebra reusing `PosSemidef.mul_mul_conjTranspose_same`,
+  `trace_mul_cycle`. **Built green; `apply_trace`/`apply_posSemidef`/`apply_isHermitian`
+  AxiomAudit-pinned (foundational triple).** Next: C3 unitary/trace-out, then C4 no-comm CPTP.
+
+### C2 — Stinespring dilation (the ontic flow form; reuse `PartialTrace`)
+- `Channel.ofIsometry (V) (hV : Vᴴ V = 1)`: `ρ ↦ traceRight (V * ρ * Vᴴ)` — unitary on
+  system⊗environment, then trace the environment. TP from the isometry.
+- `dilation_exists` (Kraus ⇒ Stinespring isometry, stacking the Kraus operators) and
+  `kraus_of_isometry` (the converse, Kraus = the env-blocks of `V`). Reuse `canonicalNaimark`
+  for the measurement-channel case.
+- *Difficulty: medium* (reindex/block algebra; partial trace already built). This module
+  realises "channel = env-averaged joint flow".
+
+### C3 — the canonical channels
+- `unitaryChannel U` (single Kraus); `traceOutChannel` (`A⊗B ↦ traceRight` — the literal
+  volume-loss-to-environment); `dephasingChannel` / `depolarizingChannel` (Kraus = scaled
+  Paulis — decoherence modelled directly, the einselection mechanism + the QEC error model).
+- *Difficulty: low–medium.*
+
+### C4 — the first payoffs
+- **No-communication CPTP form** (`Empirical/QM/NoCommunication.lean`):
+  `traceLeft((Φ_A ⊗ id) ρ) = traceLeft ρ` for any channel `Φ_A` — generalises the unitary
+  `no_communication_reduced`; the TP property is the key. **Retires E3's CPTP gap.**
+- **The QEC error channel**: the bit-flip error as a dephasing channel applied to a codeword
+  — the honest "error = decoherence" statement. (Full *correction* still needs the syndrome
+  measurement-update = LF5.)
+- *Difficulty: medium.*
+
+### C5 — deferred / Mathlib-scale (later, some need K3)
+- Full complete-positivity characterisation (Choi-PSD ⟺ CP). *Note:* Kraus channels are CP
+  by construction, so CP is available for everything in C1–C4 without this; only the abstract
+  equivalence is hard.
+- Data-processing inequality (channels contract trace distance) — needs **K3**.
+- Composition, identity, capacities.
+
+## 3. The CSD reading (`Empirical/CSD/`)
+
+A channel **is** the environment-averaged image of a measure-preserving flow on
+`Σ_sys × Σ_env`: the Stinespring isometry (C2) is the joint flow — a genuine `Φ ≠ id` on the
+enlarged `Σ` — and `traceRight` is the environment average. So C2 is the structural on-ramp
+to the dynamics frontier, and the QEC decoherence reading (error channel = the joint flow's
+environment-marginal; "volume loss" = the partial trace) becomes a real statement.
+
+## 4. Dependency graph and ordering
+
+```
+C1 (Kraus core) ──► C2 (Stinespring; reuses PartialTrace + canonicalNaimark)
+                      ├─► C3 (unitary / trace-out / dephasing channels)
+                      │     ├─► C4 no-comm CPTP (completes E3)  ← first real payoff
+                      │     └─► C4 QEC error channel
+                      └─► CSD reading (channel = env-averaged Φ on Σ_sys×Σ_env)
+C5 (full CP, data-processing) ── needs K3 (trace distance)
+```
+
+C1–C3 are tractable now (matrix algebra reusing existing primitives). C4 is the first genuine
+theorem and retires a standing gap (E3 CPTP). C5 is the Mathlib-scale residue, off the
+critical path. Recommended order: **C1 → (C3 unitary/trace-out) → C4 no-comm CPTP**.
