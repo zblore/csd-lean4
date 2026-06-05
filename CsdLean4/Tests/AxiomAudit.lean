@@ -6,6 +6,7 @@ import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.Mathlib.QuantumInfo.Stinespring
 import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -475,6 +476,18 @@ arithmetic. -/
 /-- info: 'QuantumInfo.Channel.tensorRight_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Channel.tensorRight_apply
+
+-- Trace distance foundation (Cat-1 staging; K3 of specs/qi-qec-roadmap.md). Trace norm
+-- = ∑|λᵢ| and trace distance ½‖ρ-σ‖₁; the distinguishability headline traceDist = 0 ↔ ρ=σ,
+-- and traceNorm of a PSD operator = its trace. Foundational triple. (Symmetry / triangle /
+-- data-processing deferred — need spectrum-multiset / Schatten machinery absent from Mathlib.)
+/-- info: 'QuantumInfo.traceDist_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceDist_eq_zero_iff
+
+/-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceNorm_of_posSemidef
 
 -- E2: No-broadcasting, pure-marginal confinement core. A bipartite PSD operator
 -- with a pure first-factor marginal |ψ⟩⟨ψ| is confined to that pure sector
