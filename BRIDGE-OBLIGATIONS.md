@@ -147,6 +147,16 @@ certifies that a local-realist reading of the source cannot match CSD's
 *derived* Tsirelson value (`Empirical/CSD/BellVolume.lean`). The
 transport is a clean reduction with no externally-supplied ontic posit.
 
+### 2.3.3 CSD three-qubit-code bundle (added 2026-06-04)
+
+Used by `Empirical/CSD/QEC/ThreeQubit.lean`. The first QEC reading.
+
+| Bundle | Field | What it asserts | LF4-todo |
+|---|---|---|---|
+| `Empirical.CSDBridge.QEC.CSDThreeQubitBundle` | (whole bundle's CSD-realisability content) | The three-qubit bit-flip code is realised on the substrate of `D`: the codespace is a sub-surface (`ℂℙ¹ ⊂ ℂℙ⁷`) of `Σ`, single-qubit errors and the recovery are **flows** on `Σ` (error correction as a return map to a constraint surface), and the syndrome measurement is a measurement on `Σ` whose four outcome weights are Fubini–Study volumes. | §13 (operation/flow realisability) + §14 (observable) — and load-bearingly the **dynamical-origin** content (`Φ ≠ id`), which is `id` in every concrete instance today. |
+
+This is a **tag bundle** (no fields beyond `Context D`); `csd_three_qubit_corrects_single_bitflip` transports the QM-side correction theorem by Context extraction. Distinctively, the realisability here is the most directly *dynamical* of all the bridge obligations: "recovery as a flow returning errored microstates to the codespace" is exactly the `Φ ≠ id` layer the corpus has not yet exercised. No new LF4-todo entry (reuses §13/§14 + the open dynamical-origin question).
+
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 
 Used by `Empirical/CSD/Contextuality/KS18.lean`.

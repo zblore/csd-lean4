@@ -93,6 +93,7 @@ import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Crypto.E91
+import CsdLean4.Empirical.CSD.QEC.ThreeQubit
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Contextuality.KS18
@@ -722,6 +723,12 @@ info: 'CSD.Empirical.CSDBridge.E91.csd_lhv_chsh_bound' depends on axioms: [prope
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.E91.csd_lhv_chsh_bound
+
+/--
+info: 'CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip
 
 -- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
 -- All six transport theorems share the same foundational-triple axiom set.

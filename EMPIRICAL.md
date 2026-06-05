@@ -98,6 +98,7 @@ design — see its row).
 | Hardy | `Hardy.lean` | `no_csd_hardy_assignment` | |
 | Kochen-Specker | `Contextuality/KS18.lean` | `no_csd_ks_assignment_bundle` | |
 | GHZ | `Multipartite/GHZ.lean` | `no_csd_ghz_lhv_bundle` | |
+| QEC: 3-qubit code | `QEC/ThreeQubit.lean` | `csd_three_qubit_corrects_single_bitflip` | First QEC reading: codespace = sub-surface of `Σ`, recovery = flow, syndrome = `Σ`-volumes (the dynamical-origin / `Φ≠id` obligation) |
 | Gates | `Gates/{Framework,SingleQubit,TwoQubit,MultiQubit,BellPrep}.lean` | (transport) | Bridge readings of the QM gate library |
 | Bridge scaffolding | `Framework.lean` | `CSDBridge.Context` | The bundle type itself (infrastructure, not a test) |
 
