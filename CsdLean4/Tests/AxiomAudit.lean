@@ -4,6 +4,7 @@ import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.QuantumInfo.Channel
+import CsdLean4.Mathlib.QuantumInfo.Stinespring
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -205,6 +206,20 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 /-- info: 'QuantumInfo.Channel.apply_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.apply_isHermitian
+
+-- Stinespring dilation (Cat-1 staging; phase C2 of specs/channels-plan.md). The
+-- Kraus ↔ Stinespring bridge: every channel's stacked-Kraus matrix is an isometry
+-- (stinespringIsom_isom) whose dilate-then-trace action is the Kraus action
+-- (apply_eq_traceRight_stinespring), and conversely the env-blocks of an isometry
+-- form a channel (ofIsometry_apply). The on-ramp to Φ≠id. Foundational triple.
+/-- info: 'QuantumInfo.Channel.stinespringIsom_isom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.stinespringIsom_isom
+
+/-- info: 'QuantumInfo.Channel.apply_eq_traceRight_stinespring' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.apply_eq_traceRight_stinespring
+
+/-- info: 'QuantumInfo.Channel.ofIsometry_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.ofIsometry_apply
 
 -- General-N DH Slice D.5a: Tonelli for a product over a finite index (lintegral).
 -- ∫⁻ ∏ᵢ fᵢ(xᵢ) ∂(pi μ) = ∏ᵢ ∫⁻ fᵢ ∂μᵢ — the lintegral analogue of the Bochner

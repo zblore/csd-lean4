@@ -42,14 +42,21 @@ Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empiric
   `trace_mul_cycle`. **Built green; `apply_trace`/`apply_posSemidef`/`apply_isHermitian`
   AxiomAudit-pinned (foundational triple).** Next: C3 unitary/trace-out, then C4 no-comm CPTP.
 
-### C2 — Stinespring dilation (the ontic flow form; reuse `PartialTrace`)
-- `Channel.ofIsometry (V) (hV : Vᴴ V = 1)`: `ρ ↦ traceRight (V * ρ * Vᴴ)` — unitary on
-  system⊗environment, then trace the environment. TP from the isometry.
-- `dilation_exists` (Kraus ⇒ Stinespring isometry, stacking the Kraus operators) and
-  `kraus_of_isometry` (the converse, Kraus = the env-blocks of `V`). Reuse `canonicalNaimark`
-  for the measurement-channel case.
-- *Difficulty: medium* (reindex/block algebra; partial trace already built). This module
-  realises "channel = env-averaged joint flow".
+### C2 — Stinespring dilation (the ontic flow form; reuse `PartialTrace`) — **DONE 2026-06-05**
+- `Channel.ofIsometry (V) (hV : Vᴴ V = 1)`: `ρ ↦ traceRight (V * ρ * Vᴴ)` — isometry into
+  system⊗environment, then trace the environment. TP from the isometry (`ofIsometry_apply`).
+- `dilation_exists` = `stinespringIsom` + `stinespringIsom_isom`
+  (`(stinespringIsom Φ)ᴴ (stinespringIsom Φ) = 1`) + `apply_eq_traceRight_stinespring`
+  (Kraus ⇒ Stinespring isometry, stacking the Kraus operators); `kraus_of_isometry` =
+  `ofIsometry` (the converse, Kraus = the env-blocks of `V`).
+- The whole bridge rests on one block identity for a general `V`: `krausBlock`,
+  `sum_krausBlock_conjTranspose_mul` (`∑ᵢ (krausBlock V i)ᴴ (krausBlock V i) = Vᴴ V`, so
+  isometry ⟺ TP) and `traceRight_conj_eq_sum_krausBlock` (env-averaged conjugation = Kraus
+  action). `canonicalNaimark` not needed (it specialises to the measurement-channel case).
+- File `CsdLean4/Mathlib/QuantumInfo/Stinespring.lean`, all foundational-triple-only
+  (`stinespringIsom_isom` / `apply_eq_traceRight_stinespring` / `ofIsometry_apply`
+  AxiomAudit-pinned). This module realises "channel = env-averaged joint flow".
+  *Difficulty was: medium* (reindex/block algebra; partial trace already built).
 
 ### C3 — the canonical channels
 - `unitaryChannel U` (single Kraus); `traceOutChannel` (`A⊗B ↦ traceRight` — the literal
