@@ -75,6 +75,20 @@ noncomputable def uniformState : QReg n := (Real.sqrt (databaseSize n))⁻¹ •
   rw [uniformState, WithLp.ofLp_smul, Pi.smul_apply, J_apply, Complex.real_smul, mul_one,
     Complex.ofReal_inv]
 
+/-- `√(2ⁿ) = (√2)ⁿ` (the principal root commutes with the nonnegative power). -/
+lemma sqrt_two_pow_eq (n : ℕ) : Real.sqrt ((2 : ℝ) ^ n) = Real.sqrt 2 ^ n := by
+  induction n with
+  | zero => simp
+  | succ k ih => rw [pow_succ, pow_succ, Real.sqrt_mul (by positivity), ih]
+
+/-- **The Grover entry point is the Hadamard output:** `uniformState = H^⊗n |0ⁿ⟩`. This ties the
+uniform superposition (defined here as the normalized all-ones vector) to the R2 Hadamard layer,
+where `Hn_apply_zero` gives the same amplitude `(√2⁻¹)ⁿ = (√(2ⁿ))⁻¹` on every basis state. -/
+lemma uniformState_eq_hadamard : (uniformState : QReg n) = applyHn (basisState 0) := by
+  ext z
+  rw [uniformState_apply, Hn_apply_zero, databaseSize, sqrt_two_pow_eq, Complex.ofReal_pow,
+    inv_pow]
+
 /-- The **oracle** `O_w = I - 2|w⟩⟨w|`: a phase flip on the marked item `w`. -/
 noncomputable def oracle (w : Fin n → Fin 2) (ψ : QReg n) : QReg n :=
   ψ - (2 * ψ w) • basisState w
@@ -367,3 +381,14 @@ theorem grover_success {n : ℕ} (hn : 1 ≤ n) (w : Fin n → Fin 2) (k : ℕ) 
   rw [uniformState_eq_rotState hn w hsin hcos, groverStep_iterate hn w hsin hcos, prob, rotState,
     symState_apply, if_pos rfl]
   rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
+
+/-- **Optimal iteration gives certainty:** when the accumulated angle hits `π/2`, i.e.
+`(2k+1)·θ = π/2`, the marked item is measured with probability `1`. (The integer `k` realising
+this exactly is `k = π/(4θ) - 1/2 ≈ (π/4)√N` for `sin θ = 1/√N`; the closest-integer rounding
+bound for general `N` is downstream arithmetic on the `sin²` closed form, not formalised here.) -/
+theorem grover_certain {n : ℕ} (hn : 1 ≤ n) (w : Fin n → Fin 2) (k : ℕ) (θ : ℝ)
+    (hsin : Real.sin θ = (Real.sqrt (2 ^ n))⁻¹)
+    (hcos : Real.cos θ = Real.sqrt (2 ^ n - 1) / Real.sqrt (2 ^ n))
+    (hopt : (2 * k + 1) * θ = Real.pi / 2) :
+    prob ((groverStep w)^[k] uniformState) w = 1 := by
+  rw [grover_success hn w k θ hsin hcos, hopt, Real.sin_pi_div_two, one_pow]

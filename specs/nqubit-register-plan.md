@@ -99,8 +99,12 @@ algorithms follow in sequence.
 - **Headline `grover_success` (capstone):**
   `prob ((groverStep w)^[k] uniformState) w = sin²((2k+1)θ)` for `n ≥ 1`. AxiomAudit-pinned,
   **foundational-triple-only.** File `CsdLean4/Empirical/QM/Algorithms/Grover.lean`. Both
-  targets green. The optimal iteration count / success-probability bound are downstream
-  arithmetic on this closed form, not formalised here.
+  targets green.
+- **Consolidations (2026-06-06):** `uniformState_eq_hadamard` (`uniformState = applyHn
+  (basisState 0)`, via `√(2ⁿ) = (√2)ⁿ` — ties the Grover entry point to the R2 Hadamard
+  layer) and `grover_certain` (when `(2k+1)θ = π/2` the marked item is measured with
+  probability `1`; the optimal `k ≈ (π/4)√N`). `grover_certain` AxiomAudit-pinned. The
+  closest-integer rounding bound for general `N` remains downstream arithmetic, not formalised.
 - **Honest scope.** QM-validity breadth on `QReg n = EuclideanSpace ℂ (Fin n → Fin 2)` (no
   `Fin (2^n)` fallback); `N = 2ⁿ` enters as the cardinality `∑_z (1:ℂ) = N`. Genuine Hilbert
   reflections, not degraded to plain `Fin _ → ℂ` functions.

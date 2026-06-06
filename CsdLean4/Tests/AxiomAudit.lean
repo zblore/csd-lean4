@@ -557,6 +557,12 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Grover.grover_success
 
+-- Grover optimal iteration: when the accumulated angle hits π/2 ((2k+1)θ = π/2) the marked
+-- item is measured with certainty (grover_certain, prob = 1). Foundational triple.
+/-- info: 'CSD.Empirical.QM.Grover.grover_certain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Grover.grover_certain
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef
