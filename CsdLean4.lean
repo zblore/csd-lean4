@@ -113,6 +113,7 @@ import CsdLean4.Empirical.QM.Hardy
 import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
+import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning

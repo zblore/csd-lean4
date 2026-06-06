@@ -80,6 +80,7 @@ import CsdLean4.Empirical.QM.Hardy
 import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
+import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
@@ -547,6 +548,14 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_balanced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_balanced
+
+-- Grover (R5+): amplitude amplification of a marked item w. The genuine reflection operators
+-- oracle = I - 2|w⟩⟨w| and diffusion = 2|s⟩⟨s| - I keep the evolution in the 2D (|w⟩, rest)
+-- plane, where one step is a rotation by 2θ (sin θ = 1/√N). The closed form for the success
+-- probability after k steps is sin²((2k+1)θ) (grover_success). Foundational triple.
+/-- info: 'CSD.Empirical.QM.Grover.grover_success' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Grover.grover_success
 
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

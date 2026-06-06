@@ -78,9 +78,32 @@ algorithms follow in sequence.
   `Mathlib/QuantumInfo/Fourier.lean`; `qft_unitary` AxiomAudit-pinned (foundational triple).
   Both targets green. A finite `N×N` unitary throughout — EFT-regime, never field theory.
 
-### R5+ — later (each a tranche)
-- **Grover** (oracle + diffusion, amplitude `sin((2k+1)θ)` iteration), independent of the
-  QFT. Medium–hard.
+### R5+ — Grover's search algorithm — **DONE 2026-06-06**
+- **Operators (genuine reflections on the `EuclideanSpace` inner-product structure):**
+  `oracle w ψ = ψ - 2·(ψ w)·|w⟩` (`I - 2|w⟩⟨w|`), `diffusion ψ = 2·⟨s,ψ⟩·|s⟩ - ψ`
+  (`2|s⟩⟨s| - I`, inversion about the mean), `groverStep = diffusion ∘ oracle`, with
+  `uniformState |s⟩ = (1/√N)∑_z|z⟩`. Carried as `ℂ`-vectors; amplitudes real-valued throughout.
+- **Symmetric-state plane:** `symState w a b = b·J + (a-b)·|w⟩` (`symState_apply`: amplitude `a`
+  on `w`, `b` elsewhere). The operator action lemmas compute the step as a linear coefficient
+  map: `oracle_symState` (`(a,b) ↦ (-a,b)`), `diffusion_symState` (mean inversion),
+  `groverStep_symState` (`(a,b) ↦ ((N-2)/N·a + 2(N-1)/N·b, -2/N·a + (N-2)/N·b)`). The diffusion
+  inner product is `⟨s, symState a b⟩ = (√N)⁻¹(a + (N-1)b)` (`inner_uniformState_symState`).
+- **2D rotation single-step lemma (`groverStep_rotates`):** with `sin θ = 1/√N`,
+  `cos θ = √(N-1)/√N`, one step is a rotation by `2θ`:
+  `groverStep w (rotState w γ) = rotState w (γ + 2θ)`, where
+  `rotState w γ = symState w (↑sin γ) (↑(cos γ/√(N-1)))`. Proved via the double-angle
+  identities `cos 2θ = (N-2)/N` (`cos_two_theta`), `sin 2θ = 2√(N-1)/N` (`sin_two_theta`)
+  and `sin/cos_add`. Iterate (`groverStep_iterate`) by induction:
+  `(groverStep w)^[k] (rotState w θ) = rotState w ((2k+1)θ)`;
+  `uniformState = rotState w θ` (`uniformState_eq_rotState`).
+- **Headline `grover_success` (capstone):**
+  `prob ((groverStep w)^[k] uniformState) w = sin²((2k+1)θ)` for `n ≥ 1`. AxiomAudit-pinned,
+  **foundational-triple-only.** File `CsdLean4/Empirical/QM/Algorithms/Grover.lean`. Both
+  targets green. The optimal iteration count / success-probability bound are downstream
+  arithmetic on this closed form, not formalised here.
+- **Honest scope.** QM-validity breadth on `QReg n = EuclideanSpace ℂ (Fin n → Fin 2)` (no
+  `Fin (2^n)` fallback); `N = 2ⁿ` enters as the cardinality `∑_z (1:ℂ) = N`. Genuine Hilbert
+  reflections, not degraded to plain `Fin _ → ℂ` functions.
 - **Shor**: QFT + modular exponentiation oracle + **continued-fraction period recovery** +
   success bound `Ω(1/log N)`. The quantum core is reachable post-QFT; the classical
   post-processing (continued fractions, the order-recovery probability) is a **large
@@ -90,7 +113,9 @@ algorithms follow in sequence.
 
 ```
 R1 register ─► R2 Hn|0ⁿ⟩=uniform ─► R3 char-orthogonality ⟹ Hn unitary ─► R4 Deutsch–Jozsa
-                                                                  └─► R5 QFT ─► Grover ─► Shor
+                                                                  └─► R5 QFT
+R1 register ─► Grover (oracle + diffusion, sin²((2k+1)θ) capstone)  [DONE; QFT-independent]
+                                                                          └─► Shor
 ```
 
 R1–R4 (Deutsch–Jozsa, first algorithm with legitimate probabilities): **~2–3 sessions**,
