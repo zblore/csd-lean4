@@ -35,12 +35,12 @@ algorithms follow in sequence.
 - File `CsdLean4/Mathlib/QuantumInfo/Register.lean`; `prob_eq_inner_sq` / `sum_prob_eq_one` /
   `prob_basisState` AxiomAudit-pinned (foundational triple). Both targets green.
 
-### R2 — Hadamard^⊗n and its action on |0…0⟩ (medium)
-- `hadEntry a b : ℂ := (-1)^(a*b) / √2`; `Hn x y := ∏ i, hadEntry (x i) (y i)`
-  ( = `(-1)^(x·y)/√(2^n)` ).
-- **`Hn_mulVec_zero` (key):** `(Hn *ᵥ basisState 0ⁿ) y = 1/√(2^n)` — the uniform
-  superposition. Via `mulVec_single` + `∏ᵢ hadEntry (yᵢ) 0 = ∏ᵢ (1/√2)`. (Does *not* need
-  unitarity.)
+### R2 — Hadamard^⊗n and its action on |0…0⟩ (medium) — **DONE 2026-06-05**
+- `hadEntry a b : ℂ := (-1)^(a*b) / √2`; `Hn x y := ∏ i, hadEntry (x i) (y i)`;
+  `applyHn ψ := toEuclideanLin Hn ψ`, `applyHn_apply` (coordinate sum form).
+- **`Hn_apply_zero` (key):** `applyHn (basisState 0) y = (√2⁻¹)ⁿ` for every `y` — the uniform
+  superposition. Via `Finset.sum_eq_single` collapse + `∏ᵢ hadEntry (yᵢ) 0 = ∏ᵢ (√2⁻¹)`.
+  (Does *not* need unitarity.) File `Hadamard.lean`; `Hn_apply_zero` AxiomAudit-pinned. Green.
 
 ### R3 — character orthogonality ⟹ Hn unitary (the meaty lemma, medium–hard)
 - **`hadamard_orthogonality`:** `∑ y : (Fin n → Fin 2), (-1)^((x ⊕ x')·y) = if x = x' then 2^n else 0`.

@@ -8,6 +8,7 @@ import CsdLean4.Mathlib.QuantumInfo.Stinespring
 import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import CsdLean4.Mathlib.QuantumInfo.Register
+import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -506,6 +507,13 @@ arithmetic. -/
 /-- info: 'QuantumInfo.prob_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.prob_basisState
+
+-- Hadamard transform (R2): Hn = H^⊗n with product entries; Hn|0ⁿ⟩ = uniform superposition
+-- (Hn_apply_zero, every amplitude = (1/√2)ⁿ). First step of every Hadamard algorithm.
+-- Foundational triple.
+/-- info: 'QuantumInfo.Hn_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Hn_apply_zero
 
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
