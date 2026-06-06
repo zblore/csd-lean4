@@ -78,6 +78,7 @@ import CsdLean4.Empirical.QM.Contextuality.MerminPeres
 import CsdLean4.Empirical.QM.Hardy
 import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
+import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
@@ -514,6 +515,17 @@ arithmetic. -/
 /-- info: 'QuantumInfo.Hn_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Hn_apply_zero
+
+-- Deutsch-Jozsa (R4): the circuit H^⊗n ∘ U_f ∘ H^⊗n on |0ⁿ⟩ discriminates constant from
+-- balanced f in one query — prob(measure 0ⁿ) = 1 if constant, 0 if balanced. Foundational
+-- triple. First algorithm in the quantum-algorithm branch.
+/-- info: 'CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_constant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_constant
+
+/-- info: 'CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_balanced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_balanced
 
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

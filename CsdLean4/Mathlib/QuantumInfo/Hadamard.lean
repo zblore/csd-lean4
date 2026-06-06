@@ -42,7 +42,7 @@ noncomputable def applyHn (ψ : QReg n) : QReg n := Matrix.toEuclideanLin Hn ψ
 
 lemma applyHn_apply (ψ : QReg n) (y : Fin n → Fin 2) :
     applyHn ψ y = ∑ x, Hn y x * ψ x := by
-  rw [applyHn, Matrix.toEuclideanLin_apply]
+  rw [applyHn, Matrix.toLpLin_apply]
   rfl
 
 /-- **Hadamard on the all-zeros state is the uniform superposition.**
