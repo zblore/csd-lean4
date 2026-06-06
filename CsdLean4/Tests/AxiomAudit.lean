@@ -516,6 +516,18 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Hn_apply_zero
 
+-- Hadamard unitarity (R3): character orthogonality ⟹ Hnᴴ * Hn = 1 (Hn_unitary), factored
+-- per-qubit through the single-qubit orthogonality; Hn is also an involution (Hn_mul_self,
+-- Hn * Hn = 1). Makes any Hadamard circuit's full output a legitimate probability vector.
+-- Foundational triple.
+/-- info: 'QuantumInfo.Hn_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Hn_unitary
+
+/-- info: 'QuantumInfo.Hn_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Hn_mul_self
+
 -- Deutsch-Jozsa (R4): the circuit H^⊗n ∘ U_f ∘ H^⊗n on |0ⁿ⟩ discriminates constant from
 -- balanced f in one query — prob(measure 0ⁿ) = 1 if constant, 0 if balanced. Foundational
 -- triple. First algorithm in the quantum-algorithm branch.
