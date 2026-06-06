@@ -42,13 +42,19 @@ algorithms follow in sequence.
   superposition. Via `Finset.sum_eq_single` collapse + `∏ᵢ hadEntry (yᵢ) 0 = ∏ᵢ (√2⁻¹)`.
   (Does *not* need unitarity.) File `Hadamard.lean`; `Hn_apply_zero` AxiomAudit-pinned. Green.
 
-### R3 — character orthogonality ⟹ Hn unitary (the meaty lemma, medium–hard)
-- **`hadamard_orthogonality`:** `∑ y : (Fin n → Fin 2), (-1)^((x ⊕ x')·y) = if x = x' then 2^n else 0`.
-  Route: `Finset.prod_univ_sum` to factor `∑_{y:Π} ∏ᵢ fᵢ(yᵢ) = ∏ᵢ ∑_{yᵢ} fᵢ(yᵢ)`, then each
-  qubit factor `∑_{b:Fin 2} (-1)^{(xᵢ⊕x'ᵢ)b} = 1 + (-1)^{xᵢ⊕x'ᵢ} = (2 if xᵢ=x'ᵢ else 0)`.
-- `Hn_unitary` (`Hnᴴ * Hn = 1`) from it, so the circuit's probabilities are legitimate.
-- *Risk:* the Pi-sum/product factoring + the `(-1)^…` bookkeeping over `Fin 2`. This is the
-  one genuinely fiddly lemma; everything downstream is assembly.
+### R3 — character orthogonality ⟹ Hn unitary (the meaty lemma, medium–hard) — **DONE 2026-06-06**
+- **`Hn_unitary` (`Hnᴴ * Hn = 1`):** the multi-qubit character orthogonality in matrix form;
+  entrywise `∑_y H(x,y) H(y,x') = [x = x']`. So any Hadamard circuit's full output is a
+  legitimate probability vector.
+- **Route deviation (documented in the file):** proved via the *per-qubit factorisation*
+  rather than a global XOR character sum — `Finset.prod_univ_sum` factors
+  `∑_{y:Π} ∏ᵢ fᵢ(yᵢ) = ∏ᵢ ∑_{yᵢ} fᵢ(yᵢ)`, reducing to `n` copies of the single-qubit
+  orthogonality `hadEntry_mul_sum : ∑_b H(b,a) H(b,a') = [a=a']`. This avoids defining
+  bitwise ⊕ on bitstrings; the per-qubit sum *is* the character sum on `Fin 2`.
+- Supporting: `hadEntry_comm` (symmetric), `hadEntry_conj` (real), `sqrt2_mul_self`,
+  `Hn_conjTranspose` (`Hnᴴ = Hn`, Hermitian), and the free corollary `Hn_mul_self`
+  (`Hn * Hn = 1`, `H^⊗n` is an involution). File `Hadamard.lean`; `Hn_unitary` +
+  `Hn_mul_self` AxiomAudit-pinned (foundational triple). Both targets green.
 
 ### R4 — phase oracle + Deutsch–Jozsa (the first algorithm, medium)
 - `phaseOracle (f : (Fin n → Fin 2) → Fin 2) := diagonal (fun x => (-1)^(f x))` (unitary,
