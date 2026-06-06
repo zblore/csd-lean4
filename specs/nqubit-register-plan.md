@@ -27,10 +27,13 @@ algorithms follow in sequence.
 
 ## 2. Phases
 
-### R1 — register + basis + Born probability (foundation, low)
+### R1 — register + basis + Born probability (foundation, low) — **DONE 2026-06-05**
 - `QReg n`, `basisState x := EuclideanSpace.single x 1`, `prob ψ z := ‖ψ z‖^2`.
-- API: `prob_eq_inner_sq` (`prob ψ z = ‖⟨basisState z, ψ⟩‖²`), `sum_prob_eq_one` for unit ψ,
-  basis inner products (`EuclideanSpace.inner_single_*`).
+- API: `prob_eq_inner_sq` (`prob ψ z = ‖⟨basisState z, ψ⟩‖²`), `normSq_eq_sum_prob`,
+  `sum_prob_eq_one` for unit ψ, `basisState_apply` / `basisState_norm` / `prob_basisState`
+  (a basis state is measured with certainty).
+- File `CsdLean4/Mathlib/QuantumInfo/Register.lean`; `prob_eq_inner_sq` / `sum_prob_eq_one` /
+  `prob_basisState` AxiomAudit-pinned (foundational triple). Both targets green.
 
 ### R2 — Hadamard^⊗n and its action on |0…0⟩ (medium)
 - `hadEntry a b : ℂ := (-1)^(a*b) / √2`; `Hn x y := ∏ i, hadEntry (x i) (y i)`
