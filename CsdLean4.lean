@@ -12,6 +12,7 @@ import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
+import CsdLean4.Mathlib.QuantumInfo.Fourier
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique

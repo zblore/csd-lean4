@@ -66,9 +66,21 @@ algorithms follow in sequence.
   (Uf diagonal; uses `Hn_mulVec_zero` both sides — character orthogonality only needed for
   the *probability legitimacy* via `Hn_unitary`).
 
+### R5 — Quantum Fourier transform, unitarity via roots-of-unity orthogonality — **DONE 2026-06-06**
+- **`qft_unitary` (`Fᴴ * F = 1`):** `F j k = (1/√N) ω^{jk}`, `ω = exp(2πi/N)` a primitive
+  `N`-th root of unity (`Complex.isPrimitiveRoot_exp`). Entrywise `(Fᴴ F) j j' = (1/N) ∑ₖ
+  ω^{k(j'-j)} = [j=j']` is the **roots-of-unity orthogonality** `∑_{k<N} ζᵏ = N·[ζ=1]`
+  (geometric series `geom_sum_eq`; `ζ^N=1` kills the `j≠j'` sum, `IsPrimitiveRoot.pow_inj`
+  gives `ζ=1 ⟺ j=j'`). The ℂ-analogue of the R3 `±1`-character sum.
+- Defined on a general level count `N` (not specialised to `2ⁿ`), so it is the discrete
+  Fourier unitary directly; qubit case is `N=2ⁿ`. Supporting: `qftω_primitive`,
+  `qftω_conj` (unimodular), `sqrtN_mul_self`, `qftMatrix_symm` (Fᵀ=F). File
+  `Mathlib/QuantumInfo/Fourier.lean`; `qft_unitary` AxiomAudit-pinned (foundational triple).
+  Both targets green. A finite `N×N` unitary throughout — EFT-regime, never field theory.
+
 ### R5+ — later (each a tranche)
-- **QFT** (`ωⁿ` matrix, unitarity via roots-of-unity orthogonality — a ℂ-analogue of R3),
-  then **Grover** (oracle + diffusion, amplitude `sin((2k+1)θ)` iteration). Medium–hard.
+- **Grover** (oracle + diffusion, amplitude `sin((2k+1)θ)` iteration), independent of the
+  QFT. Medium–hard.
 - **Shor**: QFT + modular exponentiation oracle + **continued-fraction period recovery** +
   success bound `Ω(1/log N)`. The quantum core is reachable post-QFT; the classical
   post-processing (continued fractions, the order-recovery probability) is a **large

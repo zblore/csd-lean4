@@ -9,6 +9,7 @@ import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
+import CsdLean4.Mathlib.QuantumInfo.Fourier
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -527,6 +528,14 @@ arithmetic. -/
 /-- info: 'QuantumInfo.Hn_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Hn_mul_self
+
+-- Quantum Fourier transform (R5): F j k = (1/√N) ω^{jk}, ω = exp(2πi/N) a primitive N-th
+-- root of unity; unitary (qft_unitary, Fᴴ * F = 1) via roots-of-unity orthogonality
+-- ∑ₖ ζᵏ = N·[ζ=1] (the ℂ-analogue of the Hadamard character sum). A finite N×N unitary.
+-- Foundational triple.
+/-- info: 'QuantumInfo.qft_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.qft_unitary
 
 -- Deutsch-Jozsa (R4): the circuit H^⊗n ∘ U_f ∘ H^⊗n on |0ⁿ⟩ discriminates constant from
 -- balanced f in one query — prob(measure 0ⁿ) = 1 if constant, 0 if balanced. Foundational
