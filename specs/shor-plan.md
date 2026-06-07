@@ -3,7 +3,8 @@
 The final item of the quantum-algorithm branch (`specs/nqubit-register-plan.md` R5+). Drafted
 2026-06-06, building on the completed register (R1), Hadamard (R2/R3), Deutsch-Jozsa (R4),
 QFT unitarity (R5), and Grover (R5+). Status: **M1 DONE 2026-06-06** (S1 + S2 + S3-core + the
-S2↔S3 bridge). M2/M3 not started.
+S2↔S3 bridge); **M1.5 DONE 2026-06-07** (the full ideal-case `r ∣ T` order-finding output
+distribution: the two-register joint state + uniform-`1/r` measurement marginal). M2/M3 not started.
 
 **M1 landed (`CsdLean4/Empirical/QM/Algorithms/ShorCore.lean`, namespace `CSD.Empirical.QM.Shor`,
 foundational-triple-only, AxiomAudit-pinned):**
@@ -22,10 +23,21 @@ foundational-triple-only, AxiomAudit-pinned):**
   `eigenPhase_eq_phaseColumn` (eigenvalue-`ω_r^s` phase state = QFT column `s·(T/r)`); headline
   `shor_order_readout : prob (applyQFTinv (eigenphase state)) ⟨s·(T/r), _⟩ = 1`.
 
-**M1 deferred (honest residue, next tranche):** the full two-register joint state
-`(1/√T) ∑_x |x⟩|a^x⟩` on `EuclideanSpace ℂ (Fin T × ZMod N)` and its **uniform-`1/r`** measurement
-marginal over `{s·T/r : s < r}`. M1 reads a **single eigenvalue branch** exactly; the uniform
-spread over the order's multiples (what order recovery uses) is **not yet assembled**.
+**M1.5 landed (`ShorCore.lean`, same namespace, foundational-triple-only, AxiomAudit-pinned):**
+the full two-register joint state and the ideal-case (`r ∣ T`) output distribution.
+- **Joint register.** `tensorCN φ ψ` (coordinate `φ c * ψ y`) on `EuclideanSpace ℂ (Fin T × ZMod N)`,
+  the counting-only inverse QFT `qftInvCount` with the key reduction
+  `qftInvCount_tensorCN : qftInvCount (tensorCN φ ψ) = tensorCN (applyQFTinv T φ) ψ`, and the Born
+  marginal `probCount Φ c = ∑_y ‖Φ (c, y)‖²`.
+- **Faithful state.** `jointModexp a` (`|x⟩|y⟩ ↦ |x⟩|a^x·y⟩`, a genuine permutation) with
+  `jointModexp_initial : jointModexp a (uniformCount ⊗ |1⟩) = postModexpState = (1/√T) ∑_x |x⟩|a^x⟩`.
+- **Eigenbasis.** `orbit_injective`, `eigU_norm : ‖u_s‖ = 1`, the roots-of-unity inversion
+  `basisState_apow_eq : |a^x⟩ = (1/√r) ∑_s ω^{sx} u_s` (dual to `sum_eigU`),
+  `postModexp_eq_eigenbasis = (1/√r) ∑_s (phase column s·T/r) ⊗ u_s`, and after the inverse QFT
+  `qftInvCount_postModexp = (1/√r) ∑_s |s·T/r⟩ ⊗ u_s`.
+- **Headline `shor_order_distribution`:** `probCount (qftInvCount postModexpState) ⟨s·(T/r)⟩ = 1/r`
+  for each `s < r` (via `eigU_norm` + `bridgeIndex_inj`), with `shor_order_distribution_zero`
+  giving `0` off the `r` multiples. This is the **uniform-`1/r`** marginal M1 deferred.
 
 Shor is **in scope**: it is finite-dimensional QM throughout (registers of dimension `2^t` and
 `ZMod N`, both finite) plus finite number theory over `ℤ/Nℤ`. Nothing here is Quantum Field
@@ -60,20 +72,23 @@ infra) or **[NT]** (classical number theory).
   the geometric-sum orthogonality). This is the hinge that turns order-finding into phase
   estimation.
 
-### S3 — Phase estimation, clean case `r ∣ T`  **[Q]**, medium — **S3-core + bridge DONE 2026-06-06**
+### S3 — Phase estimation, clean case `r ∣ T`  **[Q]**, medium — **DONE 2026-06-07 (full distribution)**
 - With `T = 2^t` and `r ∣ T`: starting from uniform counting register, applying the oracle
   (controlled powers = modexp), then `QFT⁻¹`, the measured value `c` is uniform on the `r`
   multiples `{s·T/r : s < r}`; `prob(c = s·T/r) = 1/r` exactly.
 - Proof is a finite geometric sum collapse, the same `∑_k ζ^k = T·[ζ=1]` orthogonality proved
   for `qft_unitary` (`Fourier.lean`). **No new hard analysis.** This is the genuine quantum
   core of Shor and the cleanest defensible "Shor's algorithm (ideal case)" deliverable.
-- **Landed (S3-core + bridge):** inverse-QFT exactness (`phase_estimation_exact`) and the
+- **Landed (S3-core + bridge, M1):** inverse-QFT exactness (`phase_estimation_exact`) and the
   eigenphase-to-column bridge (`shor_order_readout`): inverse-QFT of the eigenvalue-`ω_r^s`
   counting phase state yields the basis state `s·(T/r)` with `prob = 1`. This reads the order's
   phase `s/r` exactly off a **single** eigenvalue branch.
-- **Deferred:** the **uniform-`1/r`** distribution over `{s·T/r : s < r}` (the joint two-register
-  state + measurement marginal). The single-branch readout is exact; the uniform spread is not
-  yet assembled. Next tranche.
+- **Landed (full distribution, M1.5 DONE 2026-06-07):** the **uniform-`1/r`** distribution over
+  `{s·T/r : s < r}` on the genuine two-register modexp state. `shor_order_distribution`:
+  `probCount (qftInvCount postModexpState) ⟨s·(T/r)⟩ = 1/r`; `shor_order_distribution_zero`: `0`
+  off the `r` multiples. The joint register (`tensorCN`, `qftInvCount`), the faithful state
+  (`jointModexp_initial`), the roots-of-unity inversion (`basisState_apow_eq`), and `‖u_s‖ = 1`
+  (`eigU_norm`) are all in `ShorCore.lean`, foundational-triple-only.
 
 ### S4 — Phase estimation, general case `r ∤ T`  **[Q]**, medium-hard
 - `prob(c = round(s·T/r)) ≥ 4/π²` for each `s`. Dirichlet-kernel lower bound on
@@ -118,12 +133,14 @@ S7 random-a ≥ 1/2 ────────────────────
 
 ## 3. Milestones and honest recommendation
 
-- **M1 = S1+S2+S3 (quantum core, ideal `r ∣ T`). DONE 2026-06-06.** Self-contained, reuses
-  `Fourier.lean`'s roots-of-unity orthogonality directly, no new hard analysis. The in-character,
-  finite-QM heart of Shor. Landed in `ShorCore.lean` as S1 (oracle) + S2 (eigenstructure) +
-  S3-core/bridge (single-branch phase-estimation exactness). The only S3 piece not yet built is
-  the uniform-`1/r` joint marginal (deferred to the next tranche; needs the
-  `EuclideanSpace ℂ (Fin T × ZMod N)` joint register).
+- **M1 = S1+S2+S3 (quantum core, ideal `r ∣ T`). DONE 2026-06-06; M1.5 DONE 2026-06-07.**
+  Self-contained, reuses `Fourier.lean`'s roots-of-unity orthogonality directly, no new hard
+  analysis. The in-character, finite-QM heart of Shor. Landed in `ShorCore.lean` as S1 (oracle) +
+  S2 (eigenstructure) + S3-core/bridge (single-branch phase-estimation exactness) + **M1.5: the
+  full ideal-case output distribution** (the `EuclideanSpace ℂ (Fin T × ZMod N)` joint register,
+  the genuine modexp state, and the uniform-`1/r` measurement marginal `shor_order_distribution`).
+  S3 is now fully closed for `r ∣ T`. **S4 (general `r ∤ T`, the Dirichlet-kernel `≥ 4/π²` bound)
+  is the next open quantum piece.**
 - **M2 = +S4+S5 (order-finding for any `r`).** Adds the Dirichlet-kernel bound (real analysis)
   and the Legendre CF converse (Mathlib gap, must build).
 - **M3 = +S6+S7 (full factoring, `Ω(1/log N)`).** S7 (random-`a` ≥ 1/2 via CRT counting) is the

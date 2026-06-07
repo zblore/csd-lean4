@@ -583,6 +583,16 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.shor_order_readout
 
+-- Shor's algorithm, M1.5 (full ideal-case output distribution; specs/shor-plan.md). The genuine
+-- two-register modexp state postModexpState = (1/√T) ∑_x |x⟩|a^x⟩ (jointModexp_initial), expanded
+-- in the eigenbasis (basisState_apow_eq + postModexp_eq_eigenbasis), is read by the
+-- counting-register inverse QFT (qftInvCount_postModexp) so that measuring the counting register
+-- gives prob = 1/r on each multiple s·(T/r) (shor_order_distribution, the uniform-1/r marginal M1
+-- deferred). Foundational triple. General r ∤ T (S4) remains the open quantum piece.
+/-- info: 'CSD.Empirical.QM.Shor.shor_order_distribution' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.shor_order_distribution
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef
