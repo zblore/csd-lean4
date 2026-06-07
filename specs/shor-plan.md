@@ -163,12 +163,48 @@ infra) or **[NT]** (classical number theory).
   SOUND with the full `(ZMod 15)ˣ` witness (a=4, order 2, x=4 → gcd 3). This is the complete
   classical reduction **order-finding ⟹ factoring**.
 
-### S7 — Random-`a` success probability ≥ 1/2  **[NT]**, hard — **largest build, Mathlib gap**
-- For `N` odd with `m ≥ 2` distinct prime factors and `a` uniform in `(ZMod N)ˣ`:
-  `P[r even ∧ a^(r/2) ≢ -1] ≥ 1 - 1/2^m ≥ 1/2`. Standard proof: CRT decomposition
-  `(ZMod N)ˣ ≅ ∏ (ZMod p_i^{k_i})ˣ`, count via the 2-adic valuation of the per-factor orders.
-  This is a known-hard finite-group-theory theorem and is almost certainly **not** in Mathlib.
-  It is the real gate to a full factoring guarantee.
+### S7 — Random-`a` success probability ≥ 1/2  **[NT]**, hard — **PLANNED (decomposed) 2026-06-07**
+For `N` odd composite and `a` uniform in `(ZMod N)ˣ`: `P[r even ∧ a^(r/2) ≢ -1] ≥ 1/2`. Framed by
+**counting** (`2 · #GOOD ≥ #(ZMod N)ˣ`), no measure theory. The single largest tranche; pure
+finite group theory.
+
+**Mathlib coverage (grounded 2026-06-07):** the foundations exist —
+`MulEquiv.prodUnits` (`(M×N)ˣ ≃* Mˣ × Nˣ`) + `ZMod.chineseRemainder` (CRT for units),
+`ZMod.isCyclic_units` (`(ZMod pᵏ)ˣ` cyclic for odd prime `p`), `Nat.totient_even`,
+`orderOf_eq_totient` (count of order-`d` elements in a cyclic group = `φ(d)`). The v₂-distribution
+count and the `−1` characterisation are bespoke.
+
+**Design pivot:** the per-factor bound `#{a : v₂(ord a) = k} ≤ |G|/2` holds ONLY for **cyclic**
+`G` (it fails for `(Z/2)ⁿ`), so the proof needs the prime-power (cyclic) decomposition, not just any
+two coprime factors. **Milestone `S7★`: `N = p^α · q^β`, two distinct odd prime powers** (the
+RSA-semiprime case) — captures the full essence with exactly two cyclic factors, avoiding the
+indexed-product-over-all-primes machinery. General `m ≥ 2` (indexed `∏ᵢ`, bound `1 − 1/2^{m−1}`)
+is a generalisation flagged as stretch.
+
+**Sub-tranches (execute bottom-up; each a scoped two-agent loop):**
+- **S7b — per-cyclic-factor v₂-distribution bound [the meaty core, do FIRST; self-contained,
+  reusable].** In a finite cyclic group `G` of even order, `2 · #{a ∈ G : v₂(orderOf a) = k} ≤ |G|`
+  for every `k`. Route: count by order via `orderOf_eq_totient` (`#{ord = d} = φ(d)`); the
+  `v₂ = k` class has size `∑_{e | odd-part} φ(2^k · e) = φ(2^k) · u` where `|G| = 2^c · u`; with
+  `φ(2^k) ≤ 2^{c-1}` for `k ≤ c` (max at `k = c`: `φ(2^c) = 2^{c-1}`), the class is `≤ 2^{c-1} u =
+  |G|/2`. Medium-hard.
+- **S7c — the `−1` characterisation.** In a cyclic group of even order, `−1` is the unique order-2
+  element, and (per factor) `aᵢ^{r/2} = −1 ⟺ v₂(ord aᵢ) = v₂(r) = d`; `r` odd `⟺ d₁ = d₂ = 0`.
+  Combined over the two factors: BAD (`r` odd ∨ `a^{r/2} ≡ −1`) `⟺ d₁ = d₂`. Needs the lcm /
+  2-adic-valuation bookkeeping and `−1 = the order-2 element`. Hard.
+- **S7a — two-factor CRT framing.** `(ZMod N)ˣ ≃* G₁ × G₂` (`Gᵢ = (ZMod pᵢ^{αᵢ})ˣ`, cyclic even)
+  from `ZMod.chineseRemainder` + `MulEquiv.prodUnits`; transport `#GOOD`/`#BAD` to a count over
+  `G₁ × G₂`. Medium.
+- **S7d — assembly + headline `S7★`.** `#BAD = ∑_k #{d₁=k} · #{d₂=k}` (product structure via the
+  iso); bound by `(max_k #{d₁=k}) · ∑_k #{d₂=k} ≤ (|G₁|/2) · |G₂| = |G|/2` (S7b on the first
+  factor). Hence `2·#BAD ≤ |G|`, so `2·#GOOD ≥ |G|`. Medium.
+
+**Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
+number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;
+per-run phase concentration done); S7 is the *success-amplification* guarantee. Recommend executing
+**S7b first** (independent, reusable cyclic-group counting), then S7c, then S7a+S7d, each as a
+scoped expert+auditor loop — and reassessing after S7b whether to push to the full `S7★`/general-`m`
+or stop at a defensible milestone.
 
 ### Assembly — `shor_factors`
 - Combine S6 + (S3/S4 + S5) + S7: the algorithm outputs a nontrivial factor of `N` with
