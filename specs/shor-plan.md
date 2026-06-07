@@ -124,13 +124,26 @@ infra) or **[NT]** (classical number theory).
   closes the last *quantum* piece of order-finding; S5/S6/S7 (the classical number-theory tail)
   remain.
 
-### S5 — Continued-fraction recovery of `r`  **[NT]**, medium-hard — **Mathlib gap**
-- From `|c/T - s/r| ≤ 1/(2T)` with `r < √T` (choose `t ≈ 2 log₂ N`, so `T > N²`), `s/r` is a
-  convergent of `c/T`, recoverable by the CF algorithm.
-- **Mathlib has the forward bound (`abs_sub_convergents_le'`) but NOT the Legendre converse**
-  ("any `p/q` with `|x - p/q| < 1/(2q²)` is a convergent of `x`"). That converse must be built
-  on Mathlib's `GenContFract` API. This is the "continued-fraction period recovery" the plan
-  always flagged as a real cost.
+### S5 — Period recovery of `r`  **[NT]** — **DONE 2026-06-07 (uniqueness route)**
+- The measured count `c` **determines** the order `r`. Landed in `ShorRecovery.lean` (new
+  standalone file, namespace `CSD.Empirical.QM.Shor`, foundational-triple-only, AxiomAudit-pinned).
+- **Route deviation (documented in-file):** rather than build the Legendre converse on Mathlib's
+  `GenContFract` (Mathlib has only the forward `abs_sub_convergents_le'`), S5 proves the
+  recovery-correctness content by the elementary **uniqueness** argument:
+  - `abs_sub_rat_ge` — distinct fractions `a/b`, `c/d` (positive denominators) differ by at least
+    `1/(b·d)` (the numerator `a·d − c·b` is a nonzero integer).
+  - `approx_unique` — two fractions within `1/(2T)` of the same `x` with `b·d < T` coincide.
+  - **`shor_period_determined` (headline):** the true `s/r` and any candidate `s'/r'`, both in
+    lowest terms with `r·r' < T` and both within `1/(2T)` of `c/T`, satisfy `s = s'` and `r = r'`.
+    So `r` is the unique denominator consistent with the measurement. For Shor `T ≥ N² > r²`
+    gives `r, r' < √T`, so `r·r' < T` holds with slack and S4's `|s/r − c/T| ≤ 1/(2T)` feeds in.
+- **Honest scope:** this is the information-theoretic *determination* of `r` (why recovery is
+  possible: a unique consistent answer). It is NOT the constructive continued-fraction
+  *computation* of `r` from `c/T`; the constructive Legendre-on-`GenContFract` extraction is a
+  heavier, separately-scoped alternative, deferred.
+- **Composition with S4:** S4 gives `prob ≥ 4/π²` for the closest-integer event
+  `|c/T − s/r| ≤ 1/(2T)`; S5 shows that event determines `r`. So a single run determines `r` with
+  probability `≥ 4/π²`. (The combined cross-file theorem is a trivial follow-up.)
 
 ### S6 — Factoring from order: nontrivial square root of unity  **[NT]**, medium — **Mathlib gap**
 - `x² ≡ 1 (mod N)`, `x ≢ ±1` ⟹ `gcd(x-1, N)` is a nontrivial factor. Build on `ZMod`/`Nat.gcd`

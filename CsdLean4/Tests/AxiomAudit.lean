@@ -82,6 +82,7 @@ import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
+import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
@@ -604,6 +605,13 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.Shor.phase_estimation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.phase_estimation_lower_bound
+
+-- Shor S5 (period recovery, uniqueness route): the measured count determines the order r.
+-- Distinct lowest-terms fractions are ≥ 1/(b·d) apart, so a fraction within 1/(2T) of c/T with
+-- denominator product < T is unique (shor_period_determined). Foundational triple.
+/-- info: 'CSD.Empirical.QM.Shor.shor_period_determined' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.shor_period_determined
 
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
