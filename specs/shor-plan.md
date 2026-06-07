@@ -4,7 +4,12 @@ The final item of the quantum-algorithm branch (`specs/nqubit-register-plan.md` 
 2026-06-06, building on the completed register (R1), Hadamard (R2/R3), Deutsch-Jozsa (R4),
 QFT unitarity (R5), and Grover (R5+). Status: **M1 DONE 2026-06-06** (S1 + S2 + S3-core + the
 S2↔S3 bridge); **M1.5 DONE 2026-06-07** (the full ideal-case `r ∣ T` order-finding output
-distribution: the two-register joint state + uniform-`1/r` measurement marginal). M2/M3 not started.
+distribution: the two-register joint state + uniform-`1/r` measurement marginal); **S4 DONE
+2026-06-07** (the single-eigenvector / generic-`φ` Dirichlet-kernel `≥ 4/π²` phase-estimation lower
+bound, `phase_estimation_lower_bound` + `shor_phase_estimation_lower_bound`). **S4 closes the last
+*quantum* piece of order-finding.** What remains is the classical number-theory tail: S5 (CF Legendre
+converse), S6 (sqrt-of-unity factor), S7 (random-`a` ≥ 1/2). M2 (= S4+S5) is now S5-only; M3 not
+started.
 
 **M1 landed (`CsdLean4/Empirical/QM/Algorithms/ShorCore.lean`, namespace `CSD.Empirical.QM.Shor`,
 foundational-triple-only, AxiomAudit-pinned):**
@@ -89,12 +94,35 @@ infra) or **[NT]** (classical number theory).
   off the `r` multiples. The joint register (`tensorCN`, `qftInvCount`), the faithful state
   (`jointModexp_initial`), the roots-of-unity inversion (`basisState_apow_eq`), and `‖u_s‖ = 1`
   (`eigU_norm`) are all in `ShorCore.lean`, foundational-triple-only.
+- **S4 (general `r ∤ T`) DONE 2026-06-07:** the single-eigenvector Dirichlet-kernel `≥ 4/π²` lower
+  bound is now landed; see §S4 below.
 
-### S4 — Phase estimation, general case `r ∤ T`  **[Q]**, medium-hard
-- `prob(c = round(s·T/r)) ≥ 4/π²` for each `s`. Dirichlet-kernel lower bound on
-  `|∑_{x<T} ω^{x(c - sT/r)}|²`; needs the real-analysis estimate `|sin(Tα)/sin(α)|` /
-  `2/π ≤ sin(x)/x` type bounds. Mathlib has `Real.sin` bounds but the packaged Dirichlet
-  estimate must be assembled.
+### S4 — Phase estimation, general case `r ∤ T`  **[Q]**, medium-hard — **DONE 2026-06-07**
+- `prob(c) ≥ 4/π²` for `c` the closest integer to `φ·T` (single eigenvector, phase `φ`).
+  Dirichlet-kernel lower bound. Landed in `ShorCore.lean` (namespace `CSD.Empirical.QM.Shor`,
+  foundational-triple-only, AxiomAudit-pinned). Mathlib analytic support used exactly as scoped:
+  `Complex.norm_exp_I_mul_ofReal_sub_one`, `Real.mul_abs_le_abs_sin` (Jordan), `Real.abs_sin_le_abs`
+  (`|sin t| ≤ |t|`), `geom_sum_eq` (+ imports `Trigonometric/Bounds`, `Real/Pi/Bounds`).
+- **Landed exports:**
+  - `phaseStateR φ = (1/√T) ∑_x e^{2πi φ x} |x⟩` — the counting-register phase state for a real
+    phase `φ` (general-`r` analogue of the `eigenPhase` state, no longer required to be an exact
+    QFT column).
+  - `applyQFTinv_phaseStateR_apply` — the Dirichlet amplitude
+    `applyQFTinv (phaseStateR φ) c = (1/T) ∑_{x<T} e^{2πi(φ−c/T)x}` (the two `(√T)⁻¹` collapse to
+    `T⁻¹`; `e^{2πiφx}·conj(ω_T)^{xc}` merges to `e^{2πi(φ−c/T)x}`).
+  - `prob_phaseStateR_eq` — off-resonance closed form `prob = T⁻² · sin²(πδT)/sin²(πδ)` with
+    `δ = φ−c/T` (geom-sum + `norm_exp_I_mul_ofReal_sub_one`); the `sin(πδ) ≠ 0` side-hypothesis is
+    discharged inside the headline from `0 < |πδ| < π`.
+  - `phase_estimation_lower_bound (φ : ℝ) (c : Fin T) : |φ − c/T| ≤ 1/(2T) → 4/π² ≤ prob …` — the
+    HEADLINE. `δ=0` gives `prob=1 ≥ 4/π²` (via `Real.pi_gt_three`); else Jordan
+    (`sin²(πδT) ≥ (2δT)²`) over `sin²(πδ) ≤ (πδ)²` yields `≥ 4/π²`.
+  - `shor_phase_estimation_lower_bound {r} (hr : 0 < r) (s : Fin r) (c : Fin T)` — the Shor
+    corollary at `φ = s/r`.
+- **Honest scope (delivered as stated):** single-eigenvector / generic-`φ` bound. The full
+  two-register `r∤T` measurement marginal — controlling the cross-terms across the `r` eigen-branches
+  `u_s` to get the per-outcome probability of the *joint* state — is **beyond S4 and not done**. This
+  closes the last *quantum* piece of order-finding; S5/S6/S7 (the classical number-theory tail)
+  remain.
 
 ### S5 — Continued-fraction recovery of `r`  **[NT]**, medium-hard — **Mathlib gap**
 - From `|c/T - s/r| ≤ 1/(2T)` with `r < √T` (choose `t ≈ 2 log₂ N`, so `T > N²`), `s/r` is a
@@ -124,9 +152,9 @@ infra) or **[NT]** (classical number theory).
 ## 2. Dependency graph
 
 ```
-S1 oracle ─► S2 eigenstructure ─► S3 phase-est (r∣T)  ──┐  [M1: quantum core, ideal]
-                                  └► S4 phase-est (r∤T) ─┤
-                                       S5 CF recovery ───┤  [M2: order-finding, general]
+S1 oracle ─► S2 eigenstructure ─► S3 phase-est (r∣T)  ──┐  [M1: quantum core, ideal — DONE]
+                                  └► S4 phase-est (r∤T) ─┤  [S4 DONE: quantum core, general]
+                                       S5 CF recovery ───┤  [M2: order-finding, general — S5 open]
 S6 sqrt-of-unity factor ───────────────────────────────┤
 S7 random-a ≥ 1/2 ─────────────────────────────────────┴► Assembly shor_factors  [M3: factoring]
 ```
@@ -141,8 +169,9 @@ S7 random-a ≥ 1/2 ────────────────────
   the genuine modexp state, and the uniform-`1/r` measurement marginal `shor_order_distribution`).
   S3 is now fully closed for `r ∣ T`. **S4 (general `r ∤ T`, the Dirichlet-kernel `≥ 4/π²` bound)
   is the next open quantum piece.**
-- **M2 = +S4+S5 (order-finding for any `r`).** Adds the Dirichlet-kernel bound (real analysis)
-  and the Legendre CF converse (Mathlib gap, must build).
+- **M2 = +S4+S5 (order-finding for any `r`). S4 DONE 2026-06-07; S5 open.** The Dirichlet-kernel
+  `≥ 4/π²` lower bound (`phase_estimation_lower_bound`, the genuinely analytic real-analysis tranche)
+  is landed; the only remaining M2 piece is the Legendre CF converse (Mathlib gap, must build).
 - **M3 = +S6+S7 (full factoring, `Ω(1/log N)`).** S7 (random-`a` ≥ 1/2 via CRT counting) is the
   hardest piece and the most likely to stall; it is classical group theory, not physics.
 
