@@ -145,10 +145,19 @@ infra) or **[NT]** (classical number theory).
   `|c/T − s/r| ≤ 1/(2T)`; S5 shows that event determines `r`. So a single run determines `r` with
   probability `≥ 4/π²`. (The combined cross-file theorem is a trivial follow-up.)
 
-### S6 — Factoring from order: nontrivial square root of unity  **[NT]**, medium — **Mathlib gap**
-- `x² ≡ 1 (mod N)`, `x ≢ ±1` ⟹ `gcd(x-1, N)` is a nontrivial factor. Build on `ZMod`/`Nat.gcd`
-  /CRT. The exact lemma is not in Mathlib (related pieces exist: `orderOf` API is rich,
-  `ZMod.chineseRemainder`). Standalone and reusable.
+### S6 — Factoring from order: nontrivial square root of unity  **[NT]** — **DONE 2026-06-07**
+- `x² ≡ 1 (mod N)`, `x ≢ ±1` ⟹ `gcd(x-1, N)` is a proper nontrivial divisor. Landed in
+  `ShorRecovery.lean` (`nontrivial_factor`: `1 < Int.gcd (x-1) N ∧ Int.gcd (x-1) N < N ∧
+  Int.gcd (x-1) N ∣ N`), plus the existential corollary `N_has_nontrivial_factor`. Pure number
+  theory over ℤ; route: `N ∣ (x-1)(x+1)`, `g=N ⟹ N∣x-1` (contra), `g=1 ⟹ N coprime (x-1) ⟹
+  N∣x+1` (contra), via `Int.gcd_dvd_left/right`, `Int.isCoprime_iff_gcd_eq_one`,
+  `IsCoprime.dvd_of_dvd_mul_left`. Both AxiomAudit-pinned, foundational-triple-only.
+  Independently audited SOUND (non-vacuous at N=8→gcd 2, N=15→gcd 3; coprime-cancellation
+  direction verified). This is the reduction "order-finding ⟹ factoring": for even order `r`
+  of a unit `a` with `a^(r/2) ≢ ±1`, `x = a^(r/2)` satisfies the hypotheses.
+- Honest residue: the bridge `even_order_sqrt_unity` (that `x = a^(r/2)` actually satisfies
+  `hsq/hne1/hne2` from a `(ZMod N)ˣ` even-order setup) composing S6 with S5 is a separate
+  small tranche, not done.
 
 ### S7 — Random-`a` success probability ≥ 1/2  **[NT]**, hard — **largest build, Mathlib gap**
 - For `N` odd with `m ≥ 2` distinct prime factors and `a` uniform in `(ZMod N)ˣ`:

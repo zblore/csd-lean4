@@ -3,6 +3,7 @@ import Mathlib.Algebra.Order.Field.Basic
 import Mathlib.Algebra.Order.Ring.Int
 import Mathlib.Data.Int.GCD
 import Mathlib.Data.Nat.GCD.Basic
+import Mathlib.RingTheory.Int.Basic
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
@@ -32,6 +33,12 @@ Composition with S4 (`ShorCore.phase_estimation_lower_bound`): S4 gives `prob �
 closest-integer outcome, i.e. the event `|c/T - s/r| ≤ 1/(2T)`; S5 shows that on that event `r` is
 determined. For Shor with `T ≥ N² > r²` (so `r, r' < √T` and `r·r' < T` with slack) a single run
 determines `r` with probability `≥ 4/π²`.
+
+Tranche S6 (`nontrivial_factor`) adds the **classical reduction** "order-finding implies
+factoring": for an even order `r` of a unit `a` with `a^(r/2) ≢ ±1 (mod N)`, the element
+`x = a^(r/2)` is a nontrivial square root of unity (`N ∣ x²-1`, `N ∤ x±1`), and
+`gcd(x-1, N)` is then a proper nontrivial divisor of `N`. This is the step that turns the
+quantum period output into an actual factor.
 -/
 
 namespace CSD.Empirical.QM.Shor
@@ -134,5 +141,60 @@ theorem shor_period_determined (c T s r s' r' : ℕ) (hr : 0 < r) (hr' : 0 < r')
   refine ⟨?_, hreq⟩
   rw [← hreq] at hcross
   exact Nat.eq_of_mul_eq_mul_right hr hcross
+
+/-- **S6 — factoring from a nontrivial square root of unity (the classical Shor step).**
+If `x` is a nontrivial square root of `1` modulo `N` (so `N ∣ x²-1` but `N ∤ x-1` and
+`N ∤ x+1`), then `g := gcd(x-1, N)` is a proper nontrivial divisor of `N`:
+`1 < g`, `g < N`, and `g ∣ N`. Here `Int.gcd : ℤ → ℤ → ℕ`, so all three conjuncts are
+statements about the natural number `g`. This is the reduction that converts the quantum
+order-finding output into an actual factor of `N`. -/
+theorem nontrivial_factor (N : ℕ) (hN : 1 < N) (x : ℤ)
+    (hsq : (N : ℤ) ∣ x ^ 2 - 1) (hne1 : ¬ (N : ℤ) ∣ x - 1) (hne2 : ¬ (N : ℤ) ∣ x + 1) :
+    1 < Int.gcd (x - 1) (N : ℤ) ∧ Int.gcd (x - 1) (N : ℤ) < N ∧ Int.gcd (x - 1) (N : ℤ) ∣ N := by
+  set g := Int.gcd (x - 1) (N : ℤ) with hg
+  -- g ∣ N (in ℕ), bridged from the ℤ divisibility `↑g ∣ (N:ℤ)`
+  have hgZ : (g : ℤ) ∣ (N : ℤ) := Int.gcd_dvd_right (x - 1) (N : ℤ)
+  have hgN : g ∣ N := Int.natCast_dvd_natCast.mp hgZ
+  -- N ≠ 0
+  have hNpos : 0 < N := by omega
+  -- g ≤ N
+  have hle : g ≤ N := Nat.le_of_dvd hNpos hgN
+  -- g < N: else (N:ℤ) ∣ x-1, contradicting hne1
+  have hlt : g < N := by
+    rcases lt_or_eq_of_le hle with h | h
+    · exact h
+    · exfalso
+      have hgx : (g : ℤ) ∣ (x - 1) := Int.gcd_dvd_left (x - 1) (N : ℤ)
+      rw [h] at hgx
+      exact hne1 hgx
+  -- 1 < g
+  have hgpos : g ≠ 0 := by
+    intro h0
+    rw [hg, Int.gcd_eq_zero_iff] at h0
+    have : (N : ℤ) = 0 := h0.2
+    have : N = 0 := by exact_mod_cast this
+    omega
+  have hgne1 : g ≠ 1 := by
+    intro h1
+    -- g = 1 ⟹ IsCoprime (x-1) N
+    have hcop : IsCoprime (x - 1) (N : ℤ) := by
+      rw [Int.isCoprime_iff_gcd_eq_one]; rw [hg] at h1; exact h1
+    -- N ∣ (x-1)*(x+1)
+    have hfac : (N : ℤ) ∣ (x - 1) * (x + 1) := by
+      have : x ^ 2 - 1 = (x - 1) * (x + 1) := by ring
+      rwa [this] at hsq
+    -- coprime cancellation ⟹ N ∣ x+1, contradiction
+    have hcopN : IsCoprime (N : ℤ) (x - 1) := hcop.symm
+    exact hne2 (hcopN.dvd_of_dvd_mul_left hfac)
+  have h1lt : 1 < g := by omega
+  exact ⟨h1lt, hlt, hgN⟩
+
+/-- **S6 existential corollary:** a nontrivial square root of unity exhibits a proper
+nontrivial divisor of `N`. -/
+theorem N_has_nontrivial_factor (N : ℕ) (hN : 1 < N) (x : ℤ)
+    (hsq : (N : ℤ) ∣ x ^ 2 - 1) (hne1 : ¬ (N : ℤ) ∣ x - 1) (hne2 : ¬ (N : ℤ) ∣ x + 1) :
+    ∃ d : ℕ, d ∣ N ∧ 1 < d ∧ d < N := by
+  obtain ⟨h1, h2, h3⟩ := nontrivial_factor N hN x hsq hne1 hne2
+  exact ⟨Int.gcd (x - 1) (N : ℤ), h3, h1, h2⟩
 
 end CSD.Empirical.QM.Shor
