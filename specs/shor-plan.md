@@ -155,9 +155,13 @@ infra) or **[NT]** (classical number theory).
   Independently audited SOUND (non-vacuous at N=8→gcd 2, N=15→gcd 3; coprime-cancellation
   direction verified). This is the reduction "order-finding ⟹ factoring": for even order `r`
   of a unit `a` with `a^(r/2) ≢ ±1`, `x = a^(r/2)` satisfies the hypotheses.
-- Honest residue: the bridge `even_order_sqrt_unity` (that `x = a^(r/2)` actually satisfies
-  `hsq/hne1/hne2` from a `(ZMod N)ˣ` even-order setup) composing S6 with S5 is a separate
-  small tranche, not done.
+- **Bridge DONE 2026-06-07** (`ShorRecovery.lean`): `even_order_sqrt_unity` (for a unit `a` of
+  even order with `a^(r/2) ≢ ±1 mod N`, `x = a^(r/2)` satisfies S6's `hsq/hne1/hne2`, via
+  `(a^(r/2))² = a^r = 1` + `ZMod.intCast_zmod_eq_zero_iff_dvd`) and `shor_factor_of_even_order`
+  (composes the bridge with `nontrivial_factor`: even order ⟹ `gcd(a^(r/2)-1, N)` a proper
+  nontrivial divisor). Both AxiomAudit-pinned, foundational-triple-only. Independently audited
+  SOUND with the full `(ZMod 15)ˣ` witness (a=4, order 2, x=4 → gcd 3). This is the complete
+  classical reduction **order-finding ⟹ factoring**.
 
 ### S7 — Random-`a` success probability ≥ 1/2  **[NT]**, hard — **largest build, Mathlib gap**
 - For `N` odd with `m ≥ 2` distinct prime factors and `a` uniform in `(ZMod N)ˣ`:

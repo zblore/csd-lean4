@@ -8,6 +8,8 @@ import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.GCongr
+import Mathlib.Data.ZMod.Basic
+import Mathlib.GroupTheory.OrderOfElement
 
 /-!
 # Shor's algorithm — period recovery (S5, uniqueness route)
@@ -196,5 +198,57 @@ theorem N_has_nontrivial_factor (N : ℕ) (hN : 1 < N) (x : ℤ)
     ∃ d : ℕ, d ∣ N ∧ 1 < d ∧ d < N := by
   obtain ⟨h1, h2, h3⟩ := nontrivial_factor N hN x hsq hne1 hne2
   exact ⟨Int.gcd (x - 1) (N : ℤ), h3, h1, h2⟩
+
+/-- **Bridge from an even-order unit to S6's nontrivial-square-root hypotheses.**
+For a unit `a` of `(ZMod N)ˣ` of even order `r = orderOf a` with `a^(r/2) ≢ ±1 (mod N)`,
+the integer `x` lifting `y := a^(r/2)` satisfies the three hypotheses of `nontrivial_factor`:
+`N ∣ x²-1`, `N ∤ x-1`, `N ∤ x+1`. The square-root content is `y² = 1` (since
+`(r/2)·2 = r` and `a^r = 1`). -/
+theorem even_order_sqrt_unity (N : ℕ) [NeZero N] (a : (ZMod N)ˣ) (hr : Even (orderOf a))
+    (hy1 : ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) ≠ 1)
+    (hy2 : ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) ≠ -1)
+    (x : ℤ) (hx : (x : ZMod N) = ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N)) :
+    (N : ℤ) ∣ x ^ 2 - 1 ∧ ¬ (N : ℤ) ∣ x - 1 ∧ ¬ (N : ℤ) ∣ x + 1 := by
+  set y : ZMod N := ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) with hy
+  -- y² = 1: (a^(r/2))² = a^((r/2)·2) = a^r = 1, then coerce
+  have hysq : y ^ 2 = 1 := by
+    have hval : ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) = (a : ZMod N) ^ (orderOf a / 2) := by
+      push_cast; ring
+    have hmul : orderOf a / 2 * 2 = orderOf a := Nat.div_mul_cancel hr.two_dvd
+    rw [hy, hval, ← pow_mul, hmul]
+    have : (a : ZMod N) ^ orderOf a = ((a ^ orderOf a : (ZMod N)ˣ) : ZMod N) := by
+      push_cast; ring
+    rw [this, pow_orderOf_eq_one a, Units.val_one]
+  refine ⟨?_, ?_, ?_⟩
+  · -- N ∣ x²-1
+    rw [← ZMod.intCast_zmod_eq_zero_iff_dvd (x ^ 2 - 1) N]
+    push_cast
+    rw [hx, hysq]
+    ring
+  · -- N ∤ x-1
+    rw [← ZMod.intCast_zmod_eq_zero_iff_dvd (x - 1) N]
+    push_cast
+    rw [hx]
+    rw [show (¬ y - 1 = 0) = (y - 1 ≠ 0) from rfl, sub_ne_zero]
+    exact hy1
+  · -- N ∤ x+1
+    rw [← ZMod.intCast_zmod_eq_zero_iff_dvd (x + 1) N]
+    push_cast
+    rw [hx, add_eq_zero_iff_eq_neg]
+    exact hy2
+
+/-- **Even order ⟹ factor (the full classical reduction order-finding ⟹ factoring).**
+Composes `even_order_sqrt_unity` with `nontrivial_factor`: for an even order `r` of a unit `a`
+with `a^(r/2) ≢ ±1 (mod N)`, the natural number `gcd(a^(r/2)-1, N)` (via the integer lift `x`)
+is a proper nontrivial divisor of `N`. -/
+theorem shor_factor_of_even_order (N : ℕ) (hN : 1 < N) (a : (ZMod N)ˣ)
+    (hr : Even (orderOf a))
+    (hy1 : ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) ≠ 1)
+    (hy2 : ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) ≠ -1)
+    (x : ℤ) (hx : (x : ZMod N) = ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N)) :
+    1 < Int.gcd (x - 1) (N : ℤ) ∧ Int.gcd (x - 1) (N : ℤ) < N ∧ Int.gcd (x - 1) (N : ℤ) ∣ N := by
+  haveI : NeZero N := ⟨by omega⟩
+  obtain ⟨hsq, hn1, hn2⟩ := even_order_sqrt_unity N a hr hy1 hy2 x hx
+  exact nontrivial_factor N hN x hsq hn1 hn2
 
 end CSD.Empirical.QM.Shor
