@@ -2,7 +2,30 @@
 
 The final item of the quantum-algorithm branch (`specs/nqubit-register-plan.md` R5+). Drafted
 2026-06-06, building on the completed register (R1), Hadamard (R2/R3), Deutsch-Jozsa (R4),
-QFT unitarity (R5), and Grover (R5+). Status: **planned, not started.**
+QFT unitarity (R5), and Grover (R5+). Status: **M1 DONE 2026-06-06** (S1 + S2 + S3-core + the
+S2↔S3 bridge). M2/M3 not started.
+
+**M1 landed (`CsdLean4/Empirical/QM/Algorithms/ShorCore.lean`, namespace `CSD.Empirical.QM.Shor`,
+foundational-triple-only, AxiomAudit-pinned):**
+- **S1.** `mulOracle a : EuclideanSpace ℂ (ZMod N) → ...`, the genuine permutation `|y⟩ ↦ |a·y⟩`
+  for a unit `a : (ZMod N)ˣ` (coordinate pulled back along `a⁻¹·y`); `mulOracle_basisState`,
+  plus linearity (`mulOracle_smul`, `mulOracle_sum`). Genuine `ZMod N` work register, not a toy
+  `Fin r` shift.
+- **S2.** `ord a = orderOf a`, `omega a = qftω (ord a)`, `orbit j = a^j`, the cyclic shift
+  `cycShift` (`= +1 mod r`); eigenvector `eigU s = (1/√r) ∑_j conj(ω)^{sj} |a^j⟩`;
+  `mulOracle_eigU : mulOracle a (eigU s) = ω^s • eigU s` (reindex by `cycShift` + `conj ω = ω⁻¹`,
+  `ω^r = 1`); `sum_eigU : (1/√r) ∑_s eigU s = |1⟩` (roots-of-unity orthogonality, geom-sum collapse).
+- **S3.** `applyQFT`/`applyQFTinv` on `EuclideanSpace ℂ (Fin T)`; `phaseColumn`,
+  `phaseColumn_apply`; `applyQFTinv_phaseColumn` (inverse-QFT inverts QFT via `qft_unitary` +
+  `toLpLin_mul_same`/`toLpLin_one`); capstone `phase_estimation_exact : prob = 1`.
+- **Bridge.** `qftω_div : qftω r = qftω T ^ (T/r)` for `r ∣ T` (`Complex.exp_nat_mul`);
+  `eigenPhase_eq_phaseColumn` (eigenvalue-`ω_r^s` phase state = QFT column `s·(T/r)`); headline
+  `shor_order_readout : prob (applyQFTinv (eigenphase state)) ⟨s·(T/r), _⟩ = 1`.
+
+**M1 deferred (honest residue, next tranche):** the full two-register joint state
+`(1/√T) ∑_x |x⟩|a^x⟩` on `EuclideanSpace ℂ (Fin T × ZMod N)` and its **uniform-`1/r`** measurement
+marginal over `{s·T/r : s < r}`. M1 reads a **single eigenvalue branch** exactly; the uniform
+spread over the order's multiples (what order recovery uses) is **not yet assembled**.
 
 Shor is **in scope**: it is finite-dimensional QM throughout (registers of dimension `2^t` and
 `ZMod N`, both finite) plus finite number theory over `ℤ/Nℤ`. Nothing here is Quantum Field
@@ -23,27 +46,34 @@ recover `r` from `c/T` by continued fractions.
 Each is a self-contained, separately-verifiable unit. Tagged **[Q]** (finite QM, reuses our
 infra) or **[NT]** (classical number theory).
 
-### S1 — Modular-exponentiation oracle as a permutation unitary  **[Q]**, medium
+### S1 — Modular-exponentiation oracle as a permutation unitary  **[Q]**, medium — **DONE 2026-06-06**
 - Work register `EuclideanSpace ℂ (ZMod N)` (or `Fin N`). `mulOracle a : |y⟩ ↦ |a·y⟩` is the
   permutation induced by multiplication by the unit `a` on `ZMod N`; a genuine permutation
   matrix, hence unitary. Then `|x⟩|y⟩ ↦ |x⟩|a^x · y⟩` on the joint register.
 - Mathlib: `Equiv.mulLeft₀` / unit multiplication is a bijection; permutation matrices are
   unitary. Clean.
 
-### S2 — Eigenstructure of "multiply by a"  **[Q]**, medium
+### S2 — Eigenstructure of "multiply by a"  **[Q]**, medium — **DONE 2026-06-06**
 - `u s := (1/√r) ∑_{j<r} ω_r^{-sj} |a^j⟩` is an eigenvector of `mulOracle a` with eigenvalue
   `ω_r^s = exp(2πi s/r)`; and `(1/√r) ∑_{s<r} u s = |1⟩`.
 - Reuses `Fourier.qftω` and the roots-of-unity machinery from `Fourier.lean` (`qftω_primitive`,
   the geometric-sum orthogonality). This is the hinge that turns order-finding into phase
   estimation.
 
-### S3 — Phase estimation, clean case `r ∣ T`  **[Q]**, medium  ← **recommended first milestone (M1)**
+### S3 — Phase estimation, clean case `r ∣ T`  **[Q]**, medium — **S3-core + bridge DONE 2026-06-06**
 - With `T = 2^t` and `r ∣ T`: starting from uniform counting register, applying the oracle
   (controlled powers = modexp), then `QFT⁻¹`, the measured value `c` is uniform on the `r`
   multiples `{s·T/r : s < r}`; `prob(c = s·T/r) = 1/r` exactly.
 - Proof is a finite geometric sum collapse, the same `∑_k ζ^k = T·[ζ=1]` orthogonality proved
   for `qft_unitary` (`Fourier.lean`). **No new hard analysis.** This is the genuine quantum
   core of Shor and the cleanest defensible "Shor's algorithm (ideal case)" deliverable.
+- **Landed (S3-core + bridge):** inverse-QFT exactness (`phase_estimation_exact`) and the
+  eigenphase-to-column bridge (`shor_order_readout`): inverse-QFT of the eigenvalue-`ω_r^s`
+  counting phase state yields the basis state `s·(T/r)` with `prob = 1`. This reads the order's
+  phase `s/r` exactly off a **single** eigenvalue branch.
+- **Deferred:** the **uniform-`1/r`** distribution over `{s·T/r : s < r}` (the joint two-register
+  state + measurement marginal). The single-branch readout is exact; the uniform spread is not
+  yet assembled. Next tranche.
 
 ### S4 — Phase estimation, general case `r ∤ T`  **[Q]**, medium-hard
 - `prob(c = round(s·T/r)) ≥ 4/π²` for each `s`. Dirichlet-kernel lower bound on
@@ -88,9 +118,12 @@ S7 random-a ≥ 1/2 ────────────────────
 
 ## 3. Milestones and honest recommendation
 
-- **M1 = S1+S2+S3 (quantum core, ideal `r ∣ T`).** Self-contained, reuses `Fourier.lean`'s
-  roots-of-unity orthogonality directly, no new hard analysis. This is the in-character,
-  finite-QM heart of Shor and the recommended first executable tranche.
+- **M1 = S1+S2+S3 (quantum core, ideal `r ∣ T`). DONE 2026-06-06.** Self-contained, reuses
+  `Fourier.lean`'s roots-of-unity orthogonality directly, no new hard analysis. The in-character,
+  finite-QM heart of Shor. Landed in `ShorCore.lean` as S1 (oracle) + S2 (eigenstructure) +
+  S3-core/bridge (single-branch phase-estimation exactness). The only S3 piece not yet built is
+  the uniform-`1/r` joint marginal (deferred to the next tranche; needs the
+  `EuclideanSpace ℂ (Fin T × ZMod N)` joint register).
 - **M2 = +S4+S5 (order-finding for any `r`).** Adds the Dirichlet-kernel bound (real analysis)
   and the Legendre CF converse (Mathlib gap, must build).
 - **M3 = +S6+S7 (full factoring, `Ω(1/log N)`).** S7 (random-`a` ≥ 1/2 via CRT counting) is the

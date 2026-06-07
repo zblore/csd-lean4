@@ -81,6 +81,7 @@ import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.QM.Algorithms.Grover
+import CsdLean4.Empirical.QM.Algorithms.ShorCore
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning
@@ -562,6 +563,25 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.Grover.grover_certain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Grover.grover_certain
+
+-- Shor's algorithm, quantum core (M1 = S1+S2+S3-core; specs/shor-plan.md). The genuine
+-- multiply-by-a oracle |y⟩↦|a·y⟩ on EuclideanSpace ℂ (ZMod N) has eigenvectors u_s with
+-- eigenvalues ω_r^s (mulOracle_eigU, r = orderOf a); the QFT inverse inverts the QFT exactly so
+-- phase estimation reads a QFT column with certainty (phase_estimation_exact); and in the ideal
+-- case r ∣ T the eigenphase ω_r^s is read off as the basis state s·(T/r) with prob 1
+-- (shor_order_readout, the M1 headline). Foundational triple. The uniform-1/r joint marginal is
+-- deferred (next tranche).
+/-- info: 'CSD.Empirical.QM.Shor.mulOracle_eigU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.mulOracle_eigU
+
+/-- info: 'CSD.Empirical.QM.Shor.phase_estimation_exact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.phase_estimation_exact
+
+/-- info: 'CSD.Empirical.QM.Shor.shor_order_readout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.shor_order_readout
 
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
