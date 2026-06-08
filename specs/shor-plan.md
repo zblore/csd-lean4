@@ -230,11 +230,26 @@ is a generalisation flagged as stretch.
     `Finset.card_filter_add_card_filter_not` + `omega` ⟹ `|G₁||G₂| ≤ 2·#GOOD`. (`open Classical in`
     for the non-decidable filter; no axiom widening.) Audited SOUND: GOOD non-empty (`(g,1)`), bound
     bites (`16 ≤ 2·#GOOD`), direction + predicate genuine, `hz₁/hz₂` load-bearing.
-  - **S7d-2b-ii — the `(ZMod N)ˣ` headline `S7★`.** Transport `two_mul_card_good_ge` across
-    `unitsCRT` (GOOD over `(ZMod N)ˣ` ↔ product GOOD, `(z₁,z₂) = unitsCRT(−1)` via `unitsCRT_neg_one`
-    + `MulEquiv` orderOf/pow preservation), instantiate `m=p^α, n=q^β` odd prime powers
-    (`ZMod.isCyclic_units` + `Nat.totient_even`, `orderOf (−1) = 2`); conclude
-    `#(ZMod N)ˣ ≤ 2·#{a : Even (ord a) ∧ a^(ord a/2) ≠ −1}`. The remaining piece (last one for `S7★`).
+  - **S7d-2b-ii — the `(ZMod N)ˣ` headline `S7★` — DONE 2026-06-08** (`ShorRandomA.lean`,
+    foundational-triple-only, AxiomAudit-pinned). `shor_good_transport` (general coprime `m,n` with
+    cyclic units + `orderOf(−1)=2`): transports `two_mul_card_good_ge` across `unitsCRT` (predicate
+    preserved by `MulEquiv.orderOf_eq` + `map_pow` + `unitsCRT_neg_one`; cardinality by
+    `Finset.card_bij`) + `card_units_mul`. Headline **`shor_random_a_success`**: for distinct odd
+    primes `p,q` and `α,β ≥ 1`, `#(ZMod (p^α·q^β))ˣ ≤ 2·#{a : Even (ord a) ∧ a^(ord a/2) ≠ −1}` —
+    random `a` succeeds with probability ≥ ½. Instantiation: `ZMod.isCyclic_units_of_prime_pow`,
+    `orderOf_neg_one`+`orderOf_units`+`ZMod.ringChar_zmod_n` (⟹ `orderOf(−1)=2` for `p^α ≠ 2`),
+    `Nat.Coprime.pow`+`coprime_primes`. (`[Fact p.Prime] [Fact q.Prime]` binders added — needed for
+    `Fintype (ZMod (p^α·q^β))ˣ` elaboration; same content as `hp`/`hq`, not a weakening.) Audited
+    SOUND: bound bites at `N=15` (`#units=8`, so `#GOOD ≥ 4`; `2 ∈ GOOD`, `−1 ∈ BAD`); `hpq`
+    load-bearing (proved `N=9` prime-power has `#GOOD=0`, would fail `6 ≤ 0`); `hp2/hq2`/`hα/hβ`
+    consumed; correct direction + `≠ −1` success predicate.
+
+**`S7★` COMPLETE.** The whole Shor chain is now machine-checked end to end for two-prime-power `N`:
+quantum core (M1/M1.5/S4) → order-finding output → recovery (S5) → factoring (S6) → bridge
+(order⟹factor) → random-`a` success ≥ ½ (S7). Honest residue: the general-`m` extension (S7★-gen,
+arbitrary odd composite, by induction over the prime-power factorisation — `shor_good_transport` is
+already factor-agnostic) and a probability/`PMF` restatement of the counting bound (`#GOOD/#units ≥
+1/2`) are the only flagged optional follow-ups.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;

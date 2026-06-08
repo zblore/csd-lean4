@@ -3,6 +3,7 @@ import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.NumberTheory.Divisors
 import Mathlib.Data.ZMod.Basic
+import Mathlib.RingTheory.ZMod.UnitsCyclic
 import Mathlib.Algebra.Group.Units.Equiv
 import Mathlib.Algebra.Group.Prod
 import Mathlib.Algebra.Ring.Equiv
@@ -618,5 +619,144 @@ theorem two_mul_card_good_ge {G₁ G₂ : Type*}
         ≤ Fintype.card G₁ * Fintype.card G₂ := by
     rw [hcongr]; exact two_mul_card_diag_le h₂
   omega
+
+/-! ## S7d-2b-ii — the general coprime transport (S7★ closing piece)
+
+The abstract GOOD lower bound `two_mul_card_good_ge` (S7d-2b-i) is stated over a product of two
+finite cyclic groups with distinguished order-2 elements. To land it on the actual units group
+`(ZMod N)ˣ` of a composite `N = m·n` (coprime `m, n`), transport along the CRT units iso
+`unitsCRT` (S7a): the Shor per-pair predicate `Even (orderOf a) ∧ a^(orderOf a/2) ≠ -1` corresponds
+across `e := unitsCRT` to the product predicate against `(-1, -1)`, because `e` preserves `orderOf`
+(`unitsCRT_orderOf` / `MulEquiv.orderOf_eq`) and sends `-1 ↦ (-1, -1)` (`unitsCRT_neg_one`). A
+filter-card bijection (`Finset.card_bij` along `e`) plus the cardinality factorisation
+`card_units_mul` then carries the bound onto `(ZMod (m·n))ˣ`.
+-/
+
+open Classical in
+/-- **S7d-2b-ii — the general coprime transport.** For coprime `m, n` with cyclic unit groups
+each having `orderOf (-1) = 2`, the Shor "GOOD" event covers at least half of `(ZMod (m·n))ˣ`:
+```
+|(ZMod (m·n))ˣ| ≤ 2 · #{a : Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1}.
+```
+
+Route: transport `two_mul_card_good_ge` (S7d-2b-i) across `unitsCRT h : (ZMod (m·n))ˣ ≃*
+(ZMod m)ˣ × (ZMod n)ˣ` (S7a). The Shor predicate corresponds across the iso (`unitsCRT` preserves
+`orderOf` via `MulEquiv.orderOf_eq` and sends `-1 ↦ (-1, -1)` via `unitsCRT_neg_one`), giving a
+filter-card bijection (`Finset.card_bij`); `card_units_mul` factors `|(ZMod (m·n))ˣ|`. -/
+theorem shor_good_transport {m n : ℕ} [NeZero m] [NeZero n] (hmn : m.Coprime n)
+    [IsCyclic (ZMod m)ˣ] [IsCyclic (ZMod n)ˣ]
+    (hm : orderOf (-1 : (ZMod m)ˣ) = 2) (hn : orderOf (-1 : (ZMod n)ˣ) = 2) :
+    Fintype.card (ZMod (m * n))ˣ ≤
+      2 * (Finset.univ.filter (fun a : (ZMod (m * n))ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card := by
+  set e := unitsCRT hmn with he
+  have horder : ∀ a, orderOf (e a) = orderOf a := fun a => (e.orderOf_eq a)
+  have hneg : e (-1) = (-1, -1) := unitsCRT_neg_one hmn
+  -- predicate transport across the iso `e`
+  have hpred : ∀ a : (ZMod (m * n))ˣ,
+      (Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)
+        ↔ (Even (orderOf (e a)) ∧ (e a) ^ (orderOf (e a) / 2) ≠ (-1, -1)) := by
+    intro a
+    rw [horder a]
+    apply and_congr_right
+    intro _
+    constructor
+    · intro h hc
+      apply h
+      have : e (a ^ (orderOf a / 2)) = e (-1) := by rw [map_pow, hc, hneg]
+      exact (EmbeddingLike.apply_eq_iff_eq e).mp this
+    · intro h hc
+      apply h
+      rw [← hneg, ← hc, map_pow]
+  -- filter-card transport: `e` restricts to a bijection of the GOOD filters
+  have hcard :
+      (Finset.univ.filter (fun a : (ZMod (m * n))ˣ =>
+          Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card
+        = (Finset.univ.filter (fun b : (ZMod m)ˣ × (ZMod n)ˣ =>
+          Even (orderOf b) ∧ b ^ (orderOf b / 2) ≠ (-1, -1))).card := by
+    apply Finset.card_bij (fun a _ => e a)
+    · intro a ha
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ha ⊢
+      exact (hpred a).mp ha
+    · intro a₁ _ a₂ _ h
+      exact e.injective h
+    · intro b hb
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hb ⊢
+      refine ⟨e.symm b, ?_, ?_⟩
+      · rw [(hpred (e.symm b)), e.apply_symm_apply]; exact hb
+      · exact e.apply_symm_apply b
+  -- assemble: S7d-2b-i on the product, then factor the card and transport the filter
+  have hbound := two_mul_card_good_ge (G₁ := (ZMod m)ˣ) (G₂ := (ZMod n)ˣ) hm hn
+  rw [card_units_mul hmn, hcard]
+  convert hbound using 4
+
+/-! ## S7★ — the prime-power headline
+
+Instantiating the general coprime transport at `m = p^α`, `n = q^β` for distinct odd primes `p, q`
+gives the Shor random-`a` success bound on the actual units group of a (two-prime-power) composite
+modulus: a uniformly random unit is GOOD (yields a non-trivial factor via the order-finding step)
+with probability at least `1/2`.
+
+The per-factor hypotheses of `shor_good_transport` are discharged from primality: coprimality via
+`Nat.Coprime.pow` on `Nat.coprime_primes`; cyclicity via `ZMod.isCyclic_units_of_prime_pow`
+(the odd-prime-power units group is cyclic); and `orderOf (-1) = 2` via `orderOf_neg_one`
+(`= 2` since `ringChar (ZMod (p^α)) = p^α ≠ 2` for `p` an odd prime, `α ≥ 1`).
+-/
+
+/-- **S7★ — Shor random-`a` success, prime-power headline.** For distinct odd primes `p ≠ q` and
+exponents `α, β ≥ 1`, the Shor "GOOD" event covers at least half of `(ZMod (p^α·q^β))ˣ`:
+```
+|(ZMod (p^α·q^β))ˣ| ≤ 2 · #{a : Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1}.
+```
+
+A uniformly random unit `a` mod `N = p^α·q^β` has even multiplicative order and `a^(r/2) ≢ -1`
+(so the order-finding step yields a non-trivial factor of `N`) with probability `≥ 1/2`. Proof:
+instantiate `shor_good_transport` (S7d-2b-ii) at `m = p^α`, `n = q^β`, discharging coprimality
+(`Nat.Coprime.pow`), cyclicity (`ZMod.isCyclic_units_of_prime_pow`), and `orderOf (-1) = 2`
+(`orderOf_neg_one` with `ringChar = p^α ≠ 2`).
+
+The `[Fact p.Prime] [Fact q.Prime]` instance arguments are required only so the statement's
+`Fintype (ZMod (p^α·q^β))ˣ` synthesises (via `NeZero (p^α)`, derived from `Fact p.Prime`); they
+carry no content beyond the explicit `hp`, `hq`. -/
+theorem shor_random_a_success {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
+    (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hpq : p ≠ q) {α β : ℕ}
+    [Fact p.Prime] [Fact q.Prime] (hα : 1 ≤ α) (hβ : 1 ≤ β) :
+    Fintype.card (ZMod (p ^ α * q ^ β))ˣ ≤
+      2 * (Finset.univ.filter (fun a : (ZMod (p ^ α * q ^ β))ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card := by
+  have hcop : (p ^ α).Coprime (q ^ β) :=
+    Nat.Coprime.pow α β ((Nat.coprime_primes hp hq).mpr hpq)
+  have hcyc_m : IsCyclic (ZMod (p ^ α))ˣ := ZMod.isCyclic_units_of_prime_pow p hp hp2 α
+  have hcyc_n : IsCyclic (ZMod (q ^ β))ˣ := ZMod.isCyclic_units_of_prime_pow q hq hq2 β
+  -- orderOf (-1) = 2 in each odd-prime-power units group
+  have hm : orderOf (-1 : (ZMod (p ^ α))ˣ) = 2 := by
+    have hne2 : p ^ α ≠ 2 := by
+      have h3 : 3 ≤ p := by
+        rcases hp.eq_two_or_odd with h | h
+        · exact absurd h hp2
+        · have := hp.two_le; omega
+      have : 3 ≤ p ^ α := le_trans h3 (Nat.le_self_pow (by omega) p)
+      omega
+    have hfact : Fact (1 < p ^ α) := ⟨by
+      calc 1 < p := hp.one_lt
+        _ ≤ p ^ α := Nat.le_self_pow (by omega) p⟩
+    have : Nontrivial (ZMod (p ^ α)) := ZMod.nontrivial _
+    rw [← orderOf_units, Units.val_neg, Units.val_one, orderOf_neg_one,
+      ZMod.ringChar_zmod_n, if_neg hne2]
+  have hn : orderOf (-1 : (ZMod (q ^ β))ˣ) = 2 := by
+    have hne2 : q ^ β ≠ 2 := by
+      have h3 : 3 ≤ q := by
+        rcases hq.eq_two_or_odd with h | h
+        · exact absurd h hq2
+        · have := hq.two_le; omega
+      have : 3 ≤ q ^ β := le_trans h3 (Nat.le_self_pow (by omega) q)
+      omega
+    have hfact : Fact (1 < q ^ β) := ⟨by
+      calc 1 < q := hq.one_lt
+        _ ≤ q ^ β := Nat.le_self_pow (by omega) q⟩
+    have : Nontrivial (ZMod (q ^ β)) := ZMod.nontrivial _
+    rw [← orderOf_units, Units.val_neg, Units.val_one, orderOf_neg_one,
+      ZMod.ringChar_zmod_n, if_neg hne2]
+  exact shor_good_transport hcop hm hn
 
 end CSD.Empirical.QM.Shor
