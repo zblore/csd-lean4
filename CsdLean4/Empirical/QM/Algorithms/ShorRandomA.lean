@@ -997,4 +997,199 @@ theorem unitsPiCRT_neg_one {ι : Type*} [Fintype ι] (N : ι → ℕ)
     Units.val_neg, Units.val_one, map_neg, map_one, Pi.neg_apply, Pi.one_apply,
     Units.val_neg, Units.val_one]
 
+/-! ## gen-B — the `m`-fold Pi characterisation + abstract GOOD bound
+
+The general-`m` analogues of the two-factor S7d-2a/S7d-2b-i pair (`bad_iff_v2_eq` /
+`two_mul_card_good_ge`). For a finite indexed family of finite cyclic groups `(G i)` each carrying a
+distinguished order-2 element `z i` (the per-factor `−1`), Shor's per-tuple success witness is
+`Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z` (where `z = fun i => −1` after the `gen-A`
+`unitsPiCRT_neg_one` transport). The complementary BAD event is characterised purely arithmetically
+— it holds iff the components ALL share a common 2-adic valuation of order, equivalently each
+equals that of the distinguished index `i₀` — and the GOOD event then covers at least half the
+product group.
+
+Route. `orderOf_pi` (gen-A) gives `r := orderOf f = univ.lcm (orderOf ∘ f)`; the sup-helper
+`v2_finset_lcm_eq_sup` gives `v₂ r = univ.sup (v₂ ∘ orderOf ∘ f) =: S`. `Even r ↔ 1 ≤ S`
+(`even_iff_two_dvd` + `Nat.Prime.dvd_iff_one_le_factorization`). The product power splits
+componentwise (`Pi.pow_apply` + `funext_iff`); `pow_half_eq_orderTwo_iff` (S7c) per factor (with
+`orderOf (f i) ∣ r` from `Finset.dvd_lcm`) turns `f^(r/2) = z` into `∀ i, v₂(orderOf (f i)) = S`. A
+case split on `Even r` collapses both readings to `∀ i, v₂(orderOf (f i)) = v₂(orderOf (f i₀))`.
+The GOOD bound is then the mechanical complement against `two_mul_card_pi_diag_le` (gen-C) via
+`Finset.filter_congr` + `card_filter_add_card_filter_not` + `omega`.
+-/
+
+/-- **`v₂` of a `Finset.lcm` is the `sup` of the per-element `v₂` (gen-B helper).** For
+`g : ι → ℕ` with all `g i ≠ 0` on `s`, the 2-adic valuation of the finite lcm is the `sup` of the
+per-element valuations. `Finset.induction` on the binary `Nat.factorization_lcm` (whose Finsupp `⊔`
+is `max` at the prime `2`, `Finsupp.sup_apply`), with `Finset.lcm_insert` / `Finset.sup_insert` and
+the `GCDMonoid.lcm = Nat.lcm` bridge `lcm_eq_nat_lcm`. The nonzero side-condition needed by
+`Nat.factorization_lcm` is `finset_lcm_ne_zero`. Mathlib has no Finset-level `factorization_lcm`. -/
+private theorem finset_lcm_ne_zero {ι : Type*} (s : Finset ι) (g : ι → ℕ)
+    (hg : ∀ i ∈ s, g i ≠ 0) : s.lcm g ≠ 0 := by
+  classical
+  induction s using Finset.induction with
+  | empty => simp [Finset.lcm_empty]
+  | @insert b s hb ih =>
+    rw [Finset.lcm_insert, lcm_eq_nat_lcm]
+    have hbne : g b ≠ 0 := hg b (Finset.mem_insert_self b s)
+    have hsne : s.lcm g ≠ 0 := ih (fun i hi => hg i (Finset.mem_insert_of_mem hi))
+    exact Nat.lcm_ne_zero hbne hsne
+
+private theorem v2_finset_lcm_eq_sup {ι : Type*} (s : Finset ι) (g : ι → ℕ)
+    (hg : ∀ i ∈ s, g i ≠ 0) :
+    (s.lcm g).factorization 2 = s.sup (fun i => (g i).factorization 2) := by
+  classical
+  induction s using Finset.induction with
+  | empty => simp [Finset.lcm_empty]
+  | @insert b s hb ih =>
+    have hbne : g b ≠ 0 := hg b (Finset.mem_insert_self b s)
+    have hsne : s.lcm g ≠ 0 :=
+      finset_lcm_ne_zero s g (fun i hi => hg i (Finset.mem_insert_of_mem hi))
+    rw [Finset.lcm_insert, Finset.sup_insert, lcm_eq_nat_lcm,
+      Nat.factorization_lcm hbne hsne, Finsupp.sup_apply,
+      ih (fun i hi => hg i (Finset.mem_insert_of_mem hi))]
+
+/-- **gen-B — the `m`-fold BAD characterisation (Pi form).** For a finite indexed family of finite
+cyclic groups `(G i)` with distinguished order-2 elements `z i`, the Shor "BAD" event
+`¬ (Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z)` holds iff every component's order shares the
+2-adic valuation of the distinguished index `i₀`:
+```
+¬ (Even r ∧ f ^ (r/2) ≠ z)   ↔   ∀ i, v₂(orderOf (f i)) = v₂(orderOf (f i₀)),    r := orderOf f.
+```
+
+The `m`-fold analogue of `bad_iff_v2_eq` (S7d-2a). Route: `orderOf_pi` (gen-A) +
+`v2_finset_lcm_eq_sup` give `v₂ r = S := univ.sup (v₂ ∘ orderOf ∘ f)`; `Even r ↔ 1 ≤ S`; the Pi
+power splits componentwise (`Pi.pow_apply` + `funext_iff`), and per factor S7c
+(`pow_half_eq_orderTwo_iff`, fed `orderOf (f i) ∣ r` via `Finset.dvd_lcm`) gives
+`(f i)^(r/2) = z i ↔ v₂(orderOf (f i)) = S`. A case split on `Even r` collapses both disjuncts to
+`∀ i, v₂(orderOf (f i)) = v₂(orderOf (f i₀))` (using `Finset.sup_le` / `Finset.le_sup` to identify
+`S` with the common valuation, resp. force every valuation to `0` when `¬ Even r`). -/
+theorem bad_iff_v2_eq_pi {ι : Type*} [Fintype ι] (G : ι → Type*)
+    [∀ i, Group (G i)] [∀ i, Fintype (G i)] [∀ i, IsCyclic (G i)]
+    {z : Π i, G i} (hz : ∀ i, orderOf (z i) = 2) (i₀ : ι) (f : Π i, G i) :
+    (¬ (Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z))
+      ↔ ∀ i, (orderOf (f i)).factorization 2 = (orderOf (f i₀)).factorization 2 := by
+  classical
+  set r := orderOf f with hrdef
+  set d : ι → ℕ := fun i => (orderOf (f i)).factorization 2 with hddef
+  set S : ℕ := Finset.univ.sup d with hSdef
+  have hord_ne : ∀ i, orderOf (f i) ≠ 0 := fun i => (orderOf_pos (f i)).ne'
+  -- r = lcm of component orders (gen-A)
+  have hr_lcm : r = (Finset.univ : Finset ι).lcm (fun i => orderOf (f i)) := by
+    rw [hrdef]; exact orderOf_pi f
+  have hr0 : r ≠ 0 := (orderOf_pos f).ne'
+  -- v₂ r = S (sup-helper)
+  have hv2r : r.factorization 2 = S := by
+    rw [hr_lcm, v2_finset_lcm_eq_sup _ _ (fun i _ => hord_ne i)]
+  -- each component order divides r
+  have hdvd : ∀ i, orderOf (f i) ∣ r := by
+    intro i; rw [hr_lcm]; exact Finset.dvd_lcm (Finset.mem_univ i)
+  -- Pi power split
+  have hsplit : f ^ (r / 2) = z ↔ ∀ i, (f i) ^ (r / 2) = z i := by
+    rw [funext_iff]
+    constructor <;> intro h i <;> (have := h i; simpa [Pi.pow_apply] using this)
+  -- Even r ↔ 1 ≤ S
+  have hEvenIff : Even r ↔ 1 ≤ S := by
+    rw [even_iff_two_dvd, Nat.Prime.dvd_iff_one_le_factorization Nat.prime_two hr0, hv2r]
+  rw [not_and_or, not_not, hsplit]
+  by_cases hev : Even r
+  · -- Even r : reduce to the conjunction; per factor S7c
+    have hper : ∀ i, (f i) ^ (r / 2) = z i ↔ d i = S := by
+      intro i; rw [pow_half_eq_orderTwo_iff (hz i) hev hr0 (hdvd i), hv2r]
+    constructor
+    · rintro (h | h)
+      · exact absurd hev h
+      · intro i
+        show d i = d i₀
+        rw [(hper i).mp (h i), (hper i₀).mp (h i₀)]
+    · intro h
+      right
+      intro i
+      apply (hper i).mpr
+      -- S = d i₀ since d is constant = d i₀
+      have hSeq : S = d i₀ := by
+        apply le_antisymm
+        · exact Finset.sup_le (fun j _ => (h j).le)
+        · exact Finset.le_sup (Finset.mem_univ i₀)
+      have hi : d i = d i₀ := h i
+      rw [hi, hSeq]
+  · -- ¬ Even r ⟹ S = 0 ⟹ every valuation is 0
+    have hS0 : S = 0 := by
+      by_contra h; exact hev (hEvenIff.mpr (by omega))
+    constructor
+    · intro _ i
+      show d i = d i₀
+      have hi : d i = 0 := by
+        have := Finset.le_sup (f := d) (Finset.mem_univ i); omega
+      have hi₀ : d i₀ = 0 := by
+        have := Finset.le_sup (f := d) (Finset.mem_univ i₀); omega
+      rw [hi, hi₀]
+    · intro _
+      left
+      exact hev
+
+/-! ## gen-B (cont.) — the abstract `m`-fold GOOD lower bound
+
+The complement of the gen-B BAD characterisation against the gen-C diagonal count
+(`two_mul_card_pi_diag_le`). The Shor per-tuple GOOD event covers at least half the product group:
+```
+∏ i, |G i| ≤ 2 · #{f : Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z}.
+```
+The `m`-fold analogue of `two_mul_card_good_ge` (S7d-2b-i). The free-factor hypothesis
+`i₁ ≠ i₀` is the load-bearing datum gen-C requires (see its docstring's spec correction): without a
+second free index the diagonal bound `2·#diag ≤ ∏` is false for a singleton family.
+-/
+
+open Classical in
+/-- **gen-B — the abstract `m`-fold GOOD lower bound (Pi form).** For a finite indexed family of
+finite cyclic groups `(G i)` each with a distinguished order-2 element `z i`, and a free index
+`i₁ ≠ i₀`, the Shor "GOOD" event covers at least half the product group:
+```
+∏ i, |G i| ≤ 2 · #{f : Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z}.
+```
+
+Mechanical complement (no new math), mirroring `two_mul_card_good_ge` (S7d-2b-i): `bad_iff_v2_eq_pi`
+(gen-B) identifies the BAD filter (`¬ GOOD`) with the fully-matched diagonal filter via
+`Finset.filter_congr`; `card_filter_add_card_filter_not` gives `#GOOD + #BAD = |Π i, G i|`
+(`Fintype.card_pi`); `two_mul_card_pi_diag_le G i₀ h₀ i₁ hi` (gen-C) gives `2·#BAD ≤ ∏ i, |G i|`.
+`omega` on `A + B = C`, `2·B ≤ C` ⟹ `C ≤ 2·A`. The distinguished factor's even order `h₀` is
+derived from `hz i₀` (`orderOf_dvd_card`). -/
+theorem two_mul_card_good_pi_ge {ι : Type*} [Fintype ι] (G : ι → Type*)
+    [∀ i, Group (G i)] [∀ i, Fintype (G i)] [∀ i, IsCyclic (G i)]
+    {z : Π i, G i} (hz : ∀ i, orderOf (z i) = 2) (i₀ i₁ : ι) (hi : i₁ ≠ i₀) :
+    (∏ i, Fintype.card (G i)) ≤
+      2 * (Finset.univ.filter (fun f : Π i, G i =>
+        Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z)).card := by
+  classical
+  -- distinguished factor `i₀` has even order: `orderOf (z i₀) = 2 ∣ |G i₀|`
+  have h₀ : Even (Fintype.card (G i₀)) :=
+    even_iff_two_dvd.mpr (hz i₀ ▸ orderOf_dvd_card)
+  -- BAD filter (`¬ GOOD`) equals the fully-matched diagonal filter (gen-B)
+  have hcongr :
+      (Finset.univ.filter (fun f : Π i, G i =>
+          ¬ (Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z)))
+        = (Finset.univ.filter (fun f : Π i, G i =>
+            ∀ i, (orderOf (f i)).factorization 2 = (orderOf (f i₀)).factorization 2)) :=
+    Finset.filter_congr (fun f _ => bad_iff_v2_eq_pi G hz i₀ f)
+  -- GOOD + BAD = |Π i, G i| = ∏ i, |G i|
+  have hcomp :
+      (Finset.univ.filter (fun f : Π i, G i =>
+          Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z)).card
+        + (Finset.univ.filter (fun f : Π i, G i =>
+            ¬ (Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z))).card
+        = ∏ i, Fintype.card (G i) := by
+    have hsplit :=
+      Finset.card_filter_add_card_filter_not
+        (s := (Finset.univ : Finset (Π i, G i)))
+        (fun f : Π i, G i => Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z)
+    rw [Finset.card_univ, Fintype.card_pi] at hsplit
+    exact hsplit
+  -- 2 · #BAD ≤ ∏ i, |G i| (gen-C, rewritten to the BAD filter via `hcongr`)
+  have hdiag :
+      2 * (Finset.univ.filter (fun f : Π i, G i =>
+          ¬ (Even (orderOf f) ∧ f ^ (orderOf f / 2) ≠ z))).card
+        ≤ ∏ i, Fintype.card (G i) := by
+    rw [hcongr]; exact two_mul_card_pi_diag_le G i₀ h₀ i₁ hi
+  omega
+
 end CSD.Empirical.QM.Shor

@@ -273,9 +273,14 @@ quantum core (M1/M1.5/S4) → order-finding output → recovery (S5) → factori
     `(ZMod (∏ Nᵢ))ˣ ≃* Π (ZMod Nᵢ)ˣ` = `Units.mapEquiv (ZMod.prodEquivPi …).toMulEquiv |>.trans
     MulEquiv.piUnits`); `unitsPiCRT_neg_one` (`−1 ↦ const −1`). Audited SOUND: iso genuine
     (`7 ↦ (1,2)` at `N=![3,5]`), `−1 ↦ (2,4)`, `hcop` load-bearing.
-  - **gen-B** (Pi characterisation `BAD ⟺ all v₂(ord aₚ) equal` + abstract Pi GOOD bound
-    `∏|Gᵢ| ≤ 2·#GOOD` via gen-C + complement), then the general headline. Bound
-    `1 − 1/2^{m−1} ≥ 1/2` for `m ≥ 2`.
+  - **gen-B — Pi characterisation + abstract Pi GOOD bound — DONE 2026-06-08** (`ShorRandomA.lean`,
+    foundational-triple-only, AxiomAudit-pinned). `bad_iff_v2_eq_pi` (`¬(Even (orderOf f) ∧
+    f^(orderOf f/2) ≠ z) ⟺ ∀ i, v₂(ord (f i)) = v₂(ord (f i₀))`, via `orderOf_pi` + a built
+    `v₂(Finset.lcm)=sup` helper + per-factor S7c + case split) and `two_mul_card_good_pi_ge`
+    (`∏|Gᵢ| ≤ 2·#GOOD` via characterisation + gen-C + complement). Audited SOUND: iff two-directional
+    (both-true `fun _↦g`, both-false `![g, z]` on `(C₄)²`), bound bites (`16 ≤ 2·#GOOD ⟹ #GOOD≥8`).
+  - **general headline** — transport `two_mul_card_good_pi_ge` via `unitsPiCRT` (gen-D) +
+    instantiate `N.primeFactors` (odd prime powers). The last piece. Bound `1 − 1/2^{m−1} ≥ 1/2`.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;
