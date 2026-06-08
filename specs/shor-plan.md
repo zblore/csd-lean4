@@ -210,9 +210,19 @@ is a generalisation flagged as stretch.
   `card_units_mul` (`#(ZMod(m·n))ˣ = #(ZMod m)ˣ · #(ZMod n)ˣ`). Independently audited SOUND: iso
   confirmed the genuine CRT map (witness `7 ↦ (1,2)` rules out identity/swap), `-1 ↦ (2,4)`, card
   `8=2·4`, `lcm(2,4)=4≠8`, coprimality load-bearing.
-- **S7d — assembly + headline `S7★`.** `#BAD = ∑_k #{d₁=k} · #{d₂=k}` (product structure via the
-  iso); bound by `(max_k #{d₁=k}) · ∑_k #{d₂=k} ≤ (|G₁|/2) · |G₂| = |G|/2` (S7b on the first
-  factor). Hence `2·#BAD ≤ |G|`, so `2·#GOOD ≥ |G|`. Medium.
+- **S7d — assembly + headline `S7★` (split into S7d-1 + S7d-2).**
+  - **S7d-1 — diagonal count — DONE 2026-06-08** (`ShorRandomA.lean`, `two_mul_card_diag_le`,
+    foundational-triple-only, AxiomAudit-pinned). Abstract: for `G₁ × G₂` (`G₂` cyclic even),
+    `2 · #{p : v₂(ord p.1) = v₂(ord p.2)} ≤ |G₁|·|G₂|`. Route: `Fintype.sum_prod_type` +
+    `Finset.card_filter` decompose the product-filter into `∑_{a₁} #{a₂ : v₂(ord a₂)=v₂(ord a₁)}`,
+    each fiber bounded by S7b (`card_v2_orderOf_le` at `k = v₂(ord a₁)`), then `Finset.sum_const`.
+    Only `G₂` needs cyclic+even. Audited SOUND: diagonal non-empty (`(1,1)`), bound tight at `ℤ/2`
+    (`2·2 = 4`), `Even` hypothesis load-bearing (`ℤ/3` would give false `2·9 ≤ 9`).
+  - **S7d-2 — characterisation + `(ZMod N)ˣ` headline `S7★`.** BAD `⟺ v₂(ord a₁) = v₂(ord a₂)`
+    (S7c per factor with `z := −1`, `unitsCRT_orderOf` giving `v₂(lcm) = max`, `unitsCRT_neg_one`
+    for the `−1` split); transport the GOOD/BAD count via `unitsCRT`; instantiate `m = p^α`,
+    `n = q^β` (odd prime powers ⟹ `ZMod.isCyclic_units` + `Nat.totient_even`); conclude
+    `2·#GOOD ≥ #(ZMod N)ˣ`. The remaining piece.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;

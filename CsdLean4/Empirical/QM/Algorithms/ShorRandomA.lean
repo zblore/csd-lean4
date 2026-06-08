@@ -401,4 +401,67 @@ theorem card_units_mul {m n : ℕ} [NeZero m] [NeZero n] (h : m.Coprime n) :
   have : NeZero (m * n) := ⟨Nat.mul_ne_zero (NeZero.ne m) (NeZero.ne n)⟩
   rw [Fintype.card_congr (unitsCRT h).toEquiv, Fintype.card_prod]
 
+/-! ## S7d-1 — the diagonal count (abstract)
+
+The per-factor distribution bound `card_v2_orderOf_le` (S7b) summed over a second finite group.
+For a finite group `G₁` and a finite cyclic group `G₂` of even order, the "matched-v₂" diagonal
+`{(p₁, p₂) : v₂(orderOf p₁) = v₂(orderOf p₂)}` of the product is no more than half:
+```
+2 · #{(p₁, p₂) : v₂(orderOf p₁) = v₂(orderOf p₂)} ≤ |G₁| · |G₂|.
+```
+This is the abstract counting step the S7d assembly iterates against the prime-power factorisation:
+only the second factor needs cyclicity / even order; the first is an arbitrary finite group the
+count sums over.
+-/
+
+/-- **S7d-1 — the diagonal count (abstract).** For a finite group `G₁` and a finite cyclic group
+`G₂` of even order, the matched-2-adic-valuation diagonal of the product group is at most half:
+```
+2 · #{(p₁, p₂) : v₂(orderOf p₁) = v₂(orderOf p₂)} ≤ |G₁| · |G₂|.
+```
+
+Route: decompose the product-filter cardinality into a sum over the first coordinate
+(`Finset.card_filter` + `Fintype.sum_prod_type`), recognise each fiber as S7b's filter at
+`k = v₂(orderOf a₁)`, apply `card_v2_orderOf_le (G := G₂)` per fiber, and sum
+(`Finset.mul_sum` + `Finset.sum_le_sum` + `Finset.sum_const`). Only `G₂` carries
+`IsCyclic` / `Even`; `G₁` is the summation index. -/
+theorem two_mul_card_diag_le {G₁ G₂ : Type*}
+    [Group G₁] [Fintype G₁] [Group G₂] [Fintype G₂] [IsCyclic G₂]
+    (h₂ : Even (Fintype.card G₂)) :
+    2 * (Finset.univ.filter (fun p : G₁ × G₂ =>
+        (orderOf p.1).factorization 2 = (orderOf p.2).factorization 2)).card
+      ≤ Fintype.card G₁ * Fintype.card G₂ := by
+  classical
+  -- Step 1: decompose the product-filter card into a sum over the first coordinate.
+  -- `Finset.card_filter` turns the card into a sum of `if`-indicators, `Fintype.sum_prod_type`
+  -- splits the product sum, and `Finset.card_filter` recombines the inner sum. The inner
+  -- predicate `v₂(orderOf a₂) = v₂(orderOf a₁)` is the product predicate at `p = (a₁, a₂)`
+  -- read off-diagonally (`eq` is symmetric), handled in the per-summand `if`-branches.
+  have hdecomp :
+      (Finset.univ.filter (fun p : G₁ × G₂ =>
+          (orderOf p.1).factorization 2 = (orderOf p.2).factorization 2)).card
+        = ∑ a₁ : G₁, (Finset.univ.filter
+            (fun a₂ : G₂ => (orderOf a₂).factorization 2
+              = (orderOf a₁).factorization 2)).card := by
+    rw [Finset.card_filter, Fintype.sum_prod_type]
+    apply Finset.sum_congr rfl
+    intro a₁ _
+    rw [Finset.card_filter]
+    apply Finset.sum_congr rfl
+    intro a₂ _
+    by_cases h : (orderOf a₂).factorization 2 = (orderOf a₁).factorization 2
+    · rw [if_pos h, if_pos h.symm]
+    · rw [if_neg h, if_neg (fun hc => h hc.symm)]
+  rw [hdecomp, Finset.mul_sum]
+  -- Step 2/3: bound each fiber by S7b and sum the constant bound.
+  calc ∑ a₁ : G₁, 2 * (Finset.univ.filter
+            (fun a₂ : G₂ => (orderOf a₂).factorization 2
+              = (orderOf a₁).factorization 2)).card
+      ≤ ∑ _a₁ : G₁, Fintype.card G₂ := by
+          apply Finset.sum_le_sum
+          intro a₁ _
+          exact card_v2_orderOf_le (G := G₂) h₂ ((orderOf a₁).factorization 2)
+    _ = Fintype.card G₁ * Fintype.card G₂ := by
+          rw [Finset.sum_const, Finset.card_univ, smul_eq_mul]
+
 end CSD.Empirical.QM.Shor
