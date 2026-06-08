@@ -218,11 +218,17 @@ is a generalisation flagged as stretch.
     each fiber bounded by S7b (`card_v2_orderOf_le` at `k = v₂(ord a₁)`), then `Finset.sum_const`.
     Only `G₂` needs cyclic+even. Audited SOUND: diagonal non-empty (`(1,1)`), bound tight at `ℤ/2`
     (`2·2 = 4`), `Even` hypothesis load-bearing (`ℤ/3` would give false `2·9 ≤ 9`).
-  - **S7d-2 — characterisation + `(ZMod N)ˣ` headline `S7★`.** BAD `⟺ v₂(ord a₁) = v₂(ord a₂)`
-    (S7c per factor with `z := −1`, `unitsCRT_orderOf` giving `v₂(lcm) = max`, `unitsCRT_neg_one`
-    for the `−1` split); transport the GOOD/BAD count via `unitsCRT`; instantiate `m = p^α`,
-    `n = q^β` (odd prime powers ⟹ `ZMod.isCyclic_units` + `Nat.totient_even`); conclude
-    `2·#GOOD ≥ #(ZMod N)ˣ`. The remaining piece.
+  - **S7d-2a — the BAD characterisation (abstract) — DONE 2026-06-08** (`ShorRandomA.lean`,
+    `bad_iff_v2_eq`, foundational-triple-only, AxiomAudit-pinned). For `p : G₁×G₂` (both cyclic, with
+    order-2 `z₁,z₂`): `¬(Even (orderOf p) ∧ p^(orderOf p/2) ≠ (z₁,z₂)) ⟺ v₂(ord p.1) = v₂(ord p.2)`.
+    Route: `Prod.orderOf` (= lcm), `Nat.factorization_lcm` (v₂(lcm)=max), per-factor S7c
+    (`pow_half_eq_orderTwo_iff`), `omega` case split on `Even r`. Audited SOUND with both-true `(g,g)`
+    and both-false `(g,z)` witnesses (iff genuinely separates BAD/GOOD).
+  - **S7d-2b — abstract `2·#GOOD ≥ |G₁×G₂|` + `(ZMod N)ˣ` headline `S7★`.** `#BAD = #diagonal`
+    (`Finset.filter_congr` on `bad_iff_v2_eq`) + S7d-1 ⟹ `2·#BAD ≤ |G₁||G₂|`, complement ⟹
+    `2·#GOOD ≥ |G₁||G₂|`; then transport via `unitsCRT` (GOOD over `(ZMod N)ˣ` ↔ product GOOD with
+    `(z₁,z₂) = unitsCRT(−1)` from `unitsCRT_neg_one`), instantiate `m=p^α, n=q^β` odd prime powers
+    (`ZMod.isCyclic_units` + `Nat.totient_even`). The remaining piece.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;

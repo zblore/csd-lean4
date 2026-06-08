@@ -464,4 +464,94 @@ theorem two_mul_card_diag_le {G₁ G₂ : Type*}
     _ = Fintype.card G₁ * Fintype.card G₂ := by
           rw [Finset.sum_const, Finset.card_univ, smul_eq_mul]
 
+/-! ## S7d-2a — the BAD characterisation (abstract two-factor core)
+
+For a product `p = (p₁, p₂)` of two finite cyclic groups, each carrying a distinguished order-2
+element (`z₁`, `z₂`, playing the role of `−1`), Shor's per-pair success witness is `r` even and
+`p ^ (r/2) ≠ (z₁, z₂)` (where `r = orderOf p`). The complementary **BAD** event — the failure of
+that witness — is characterised purely arithmetically: it holds iff the two component orders share
+the same 2-adic valuation.
+
+This is the two-factor heart of S7d: combined with the CRT split (`unitsCRT*`, S7a) and the
+diagonal count (`two_mul_card_diag_le`, S7d-1) it turns the success-probability bound into the
+matched-`v₂` diagonal count.
+-/
+
+/-- **S7d-2a — the BAD characterisation (abstract).** For a pair `p = (p₁, p₂)` of finite cyclic
+groups with distinguished order-2 elements `z₁`, `z₂`, the Shor "BAD" event
+`¬ (Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂))` holds iff the two components share the
+same 2-adic valuation of order:
+```
+¬ (Even r ∧ p ^ (r/2) ≠ (z₁, z₂))   ↔   v₂(orderOf p₁) = v₂(orderOf p₂),    r := orderOf p.
+```
+
+Route: `Prod.orderOf` gives `r = lcm (orderOf p₁) (orderOf p₂)`, so (`Nat.factorization_lcm`)
+`v₂ r = max (v₂ orderOf p₁) (v₂ orderOf p₂)`. `Even r ↔ 1 ≤ v₂ r` (`even_iff_two_dvd` +
+`Nat.Prime.dvd_iff_one_le_factorization`). Splitting the product power componentwise
+(`Prod.pow_fst` / `Prod.pow_snd`) and applying `pow_half_eq_orderTwo_iff` (S7c) per factor (with
+the component-order divisibility `orderOf pᵢ ∣ r` from `Nat.dvd_lcm_left/right`) turns the
+"`p^(r/2) = (z₁,z₂)`" condition into `v₂ orderOf p₁ = v₂ r ∧ v₂ orderOf p₂ = v₂ r`. A case split on
+`Even r` plus `omega` (which handles `Nat.max`) collapses both disjuncts to `v₂ p₁ = v₂ p₂`. -/
+theorem bad_iff_v2_eq {G₁ G₂ : Type*}
+    [Group G₁] [Fintype G₁] [IsCyclic G₁] [Group G₂] [Fintype G₂] [IsCyclic G₂]
+    {z₁ : G₁} (hz₁ : orderOf z₁ = 2) {z₂ : G₂} (hz₂ : orderOf z₂ = 2)
+    (p : G₁ × G₂) :
+    (¬ (Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)))
+      ↔ (orderOf p.1).factorization 2 = (orderOf p.2).factorization 2 := by
+  classical
+  set a₁ := p.1 with ha₁
+  set a₂ := p.2 with ha₂
+  set d₁ := (orderOf a₁).factorization 2 with hd₁
+  set d₂ := (orderOf a₂).factorization 2 with hd₂
+  set r := orderOf p with hrdef
+  have ho₁ : orderOf a₁ ≠ 0 := (orderOf_pos a₁).ne'
+  have ho₂ : orderOf a₂ ≠ 0 := (orderOf_pos a₂).ne'
+  have hr0 : r ≠ 0 := (orderOf_pos p).ne'
+  -- r = lcm of component orders
+  have hr : r = Nat.lcm (orderOf a₁) (orderOf a₂) := by
+    rw [hrdef, Prod.orderOf]
+  -- v₂ r = max d₁ d₂
+  have hv2 : r.factorization 2 = max d₁ d₂ := by
+    rw [hr, Nat.factorization_lcm ho₁ ho₂, hd₁, hd₂]
+    rfl
+  -- Even r ↔ 1 ≤ max d₁ d₂
+  have hEvenIff : Even r ↔ 1 ≤ max d₁ d₂ := by
+    rw [even_iff_two_dvd,
+      Nat.Prime.dvd_iff_one_le_factorization Nat.prime_two hr0, hv2]
+  -- component divisibility
+  have hdvd₁ : orderOf a₁ ∣ r := hr ▸ Nat.dvd_lcm_left _ _
+  have hdvd₂ : orderOf a₂ ∣ r := hr ▸ Nat.dvd_lcm_right _ _
+  -- rewrite the LHS via `not_and_or`, `not_not`
+  rw [not_and_or, not_not]
+  -- componentwise power split
+  have hsplit : p ^ (r / 2) = (z₁, z₂) ↔ a₁ ^ (r / 2) = z₁ ∧ a₂ ^ (r / 2) = z₂ := by
+    rw [Prod.ext_iff, ha₁, ha₂, Prod.pow_fst, Prod.pow_snd]
+  rw [hsplit]
+  -- case split on `Even r`
+  by_cases hev : Even r
+  · -- Even r: the `¬ Even r` disjunct is false; reduce to the conjunction
+    have hmax : 1 ≤ max d₁ d₂ := hEvenIff.mp hev
+    have hc₁ := pow_half_eq_orderTwo_iff (z := z₁) hz₁ hev hr0 hdvd₁
+    have hc₂ := pow_half_eq_orderTwo_iff (z := z₂) hz₂ hev hr0 hdvd₂
+    rw [hv2] at hc₁ hc₂
+    -- hc₁ : a₁ ^ (r/2) = z₁ ↔ d₁ = max d₁ d₂ ; hc₂ similarly
+    rw [hc₁, hc₂]
+    constructor
+    · rintro (h | h)
+      · exact absurd hev h
+      · obtain ⟨e₁, e₂⟩ := h; omega
+    · intro h
+      right
+      omega
+  · -- ¬ Even r: the `¬ Even r` disjunct is true; both sides hold
+    have hmax : max d₁ d₂ = 0 := by
+      by_contra h
+      exact hev (hEvenIff.mpr (by omega))
+    constructor
+    · intro _
+      omega
+    · intro _
+      left
+      exact hev
+
 end CSD.Empirical.QM.Shor
