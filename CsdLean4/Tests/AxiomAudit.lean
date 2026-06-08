@@ -127,6 +127,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 
 /-!
 # Axiom regression suite
@@ -1665,6 +1666,26 @@ is the documented open target (not stated as an axiom or sorry). -/
 /-- info: 'Projectivization.transProb_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.transProb_eq_zero_iff
+
+/-! #### Step (1) of the Wigner / FS rigidity converse
+
+The `TransProbPreserving` predicate (injectivity + orthogonality preservation)
+and the `U(N) → TransProbPreserving` realisability inclusion. All
+foundational-triple-only. The Wigner converse itself remains the documented open
+target (semilinear extraction + antiunitary-branch elimination), stated neither
+as an axiom nor a sorry. -/
+
+/-- info: 'Projectivization.TransProbPreserving.injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.TransProbPreserving.injective
+
+/-- info: 'Projectivization.transProbPreserving_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProbPreserving_unitary
+
+/-- info: 'Projectivization.TransProbPreserving.orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.TransProbPreserving.orthogonal
 
 /-! ### LF4 §8 ontic-shell instantiation
 
