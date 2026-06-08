@@ -1,7 +1,7 @@
 # specs/ index — orientation map for plans, todos, and references
 
 **Start here.** This indexes every planning / todo / reference doc in the corpus, with
-one-line status. Updated 2026-06-02. When starting a session, read this first, then the
+one-line status. Updated 2026-06-08. When starting a session, read this first, then the
 LIVE doc for the tranche you are on.
 
 ## Live (actionable) — pick up work here
@@ -14,8 +14,8 @@ LIVE doc for the tranche you are on.
 | [`qm-empirical-tests.md`](qm-empirical-tests.md) | QM-validity regression-suite roadmap (Bell, no-cloning, teleportation, GHZ, Hardy, gates, crypto…). | LIVE. Many items done; E7/E91/BB84 + full no-broadcasting deferred (need fidelity/CPTP/LF5). |
 | [`qi-qec-roadmap.md`](qi-qec-roadmap.md) | Forward roadmap for the QI / QEC / algorithm branches: the four keystone gaps (entropy, channels, fidelity, LF5), the QEC tranche, algorithms + stabilisation as operational faces of D1, and the project-structure decision (topics as subfolders under QM+CSD; infra → Mathlib staging; LF5 as a new layer). | LIVE plan. **K2 channels DONE** (C1–C4); **K3 trace-distance metric core DONE** (`TraceDistance.lean`; defs + nonneg + distinguishability + symmetry; triangle/data-processing deferred); QEC 3-qubit codes + bit-flip channel DONE. Remaining keystones: K1 entropy, K4/LF5, K3 deep theorems. |
 | [`csd-departures-eft.md`](csd-departures-eft.md) | The "beyond reproducing QM" thread: candidate CSD-vs-QM departures (G3b → third-order/Sorkin interference, V≈1−I → complementarity, determinism → finite-sample statistics, finite-N), their physical-test handles, the CSD-specific negative tests, and the finite-EFT correction tower. | LIVE map. Theory-gated (corrections not pinned); leading order = QM is done, subleading owed by the paper sequence. |
-| [`nqubit-register-plan.md`](nqubit-register-plan.md) | Plan for the **n-qubit register** + quantum-algorithm branch (Deutsch–Jozsa → QFT → Grover → Shor). `QReg n = EuclideanSpace ℂ (Fin n → Fin 2)`; Cat-1 in `Mathlib/QuantumInfo/Register.lean`, algorithms in `Empirical/QM/Algorithms/`. | **R1–R5 + Grover DONE 2026-06-06** (register/Born; `Hn_apply_zero`; `Hn_unitary` via character orthogonality; Deutsch–Jozsa; `qft_unitary` via roots-of-unity orthogonality; Grover `sin²((2k+1)θ)` + `grover_certain`; all AxiomAudit-pinned, foundational-triple-only). Only **Shor** remains → see [`shor-plan.md`](shor-plan.md). Coverage breadth, not the thesis. |
-| [`shor-plan.md`](shor-plan.md) | Plan for **Shor's algorithm**, staged S1–S7 + assembly. In scope (finite QM + finite number theory, never field theory), but the bulk is the *classical* tail. Milestones: M1 quantum core (oracle + eigenstructure + phase-estimation ideal `r∣T`, reuses `Fourier.lean` orthogonality), M2 general order-finding (+Dirichlet bound +CF Legendre converse), M3 full factoring (+sqrt-of-unity factor +random-`a` ≥ 1/2 CRT counting). | **Planned, not started.** Mathlib gaps flagged: CF Legendre converse (S5), sqrt-of-unity factor (S6), random-`a` group counting (S7, hardest). Recommend executing **M1** first; re-decide on the classical tail vs D1/LF5 after. |
+| [`nqubit-register-plan.md`](nqubit-register-plan.md) | Plan for the **n-qubit register** + quantum-algorithm branch (Deutsch–Jozsa → QFT → Grover → Shor). `QReg n = EuclideanSpace ℂ (Fin n → Fin 2)`; Cat-1 in `Mathlib/QuantumInfo/Register.lean`, algorithms in `Empirical/QM/Algorithms/`. | **COMPLETE 2026-06-08.** R1–R5 + Grover done 2026-06-06; full Shor done 2026-06-07/08 → see [`shor-plan.md`](shor-plan.md). All AxiomAudit-pinned, foundational-triple-only. Coverage breadth, not the thesis. |
+| [`shor-plan.md`](shor-plan.md) | Plan for **Shor's algorithm**, staged S1–S7 + assembly. In scope (finite QM + finite number theory, never field theory). | **COMPLETE 2026-06-08 — entire chain machine-checked end to end.** Quantum core (M1/M1.5/S4, `ShorCore.lean`), recovery (S5, `ShorRecovery.lean`), factoring + bridge (S6, `ShorRecovery.lean`), random-`a` success ≥ 1/2 for arbitrary odd composite `N` (S7 + S7-gen, `ShorRandomA.lean`), factoring capstone (`ShorCapstone.lean`). All foundational-triple-only, AxiomAudit-pinned, Tier-A-audited SOUND. Honest-scope deferrals (not load-bearing): constructive CF computation of `r`; two-register `r∤T` joint marginal. |
 | [`trace-distance-triangle-plan.md`](trace-distance-triangle-plan.md) | Plan for the K3 trace-distance **triangle inequality** (= trace-norm subadditivity on Hermitian matrices), via the positive/negative-part decomposition + the TR-PSD linchpin (`0 ≤ Re Tr(S·P)` for PSD `S,P`), working with the `PosSemidef` predicate (Mathlib has no Loewner `≤`) and `IsHermitian.cfc` (defined for discontinuous `f`, dodging the `sgn` continuity gap). | **Planned, not started.** ~200–350 lines. Completes the metric core; the *data-processing* inequality is a separate, larger tranche. |
 | [`channels-plan.md`](channels-plan.md) | The K2 CPTP-channel infrastructure plan (Kraus core → Stinespring dilation → canonical channels → no-comm CPTP / QEC error channel). Built on the existing `canonicalNaimark` + `PartialTrace` primitives; the on-ramp to `Φ≠id`. | **C1–C4 DONE 2026-06-05** (`QuantumInfo.Channel`; TP/PSD/Hermitian core; Kraus↔Stinespring bridge; `unitaryChannel`/`traceOutChannel`/`mixedUnitaryChannel`; `tensorRight` + `channel_no_communication` **retiring the E3 CPTP gap**; `bitFlipChannel` error channel; all AxiomAudit-pinned). Only C5 (full CP / data-processing, needs K3) remains, off critical path. |
 | [`carve-out-plan.md`](carve-out-plan.md) | Carve-out diagnosis (Born = volume?) + the moment-map programme + the ontic-primitive (A5) / D1 frontier. | LIVE for the frontier (D1). Qubit Born-from-volume CLOSED; general-N superseded it (see in-file update). |
@@ -54,10 +54,14 @@ LF3 empirical chain runs on that derivation. The **POVM tranche is closed** (202
 the ontic Born derivation now covers general (non-projective) measurements via the
 canonical Naimark dilation — `povm_born_frequency_volume` lands the POVM Born weight as a
 sum of FS volumes on a dilated `Σ'`, unconditionally and Gleason-free. The corpus has
-exactly **two** standing axioms (`invariant_measure_uniqueness`, `busch_effect_gleason`),
-both spec-mandated; `busch_effect_gleason` is now confined to the **operational stratum**
-— it is no longer in the ontic Born path for *either* projective or POVM measurements. With
-POVMs closed, the **single open frontier is D1** (exercising real measurement dynamics on
-`Σ`; `Φ = id` everywhere today — see `carve-out-plan.md`). Axiom posture is
-regression-protected by `CsdLean4/Tests/AxiomAudit.lean` (`#guard_msgs` against
-`#print axioms`); build with `lake build` + `lake build CsdLeanTests`.
+exactly **one** standing axiom (`busch_effect_gleason`); `invariant_measure_uniqueness` was
+**removed 2026-06-04** (the abstract bridge it served was unused; the concrete `ℂℙ^{N-1}`
+uniqueness is a proved theorem). `busch_effect_gleason` is confined to the **operational
+stratum** — it is no longer in the ontic Born path for *either* projective or POVM
+measurements. The **quantum-algorithm branch** (Deutsch–Jozsa, QFT, Grover, full Shor) is
+**complete 2026-06-08** — coverage breadth, foundational-triple-only, Tier-A-audited SOUND.
+With POVMs and the algorithm branch closed, the **single open frontier is D1** (exercising
+real measurement dynamics on `Σ`; `Φ = id` in every concrete sector instance today — see
+`carve-out-plan.md`). Axiom posture is regression-protected by
+`CsdLean4/Tests/AxiomAudit.lean` (`#guard_msgs` against `#print axioms`); build with
+`lake build` + `lake build CsdLeanTests`.

@@ -60,6 +60,26 @@ status). For the axiom posture and the two-strata (operational vs ontic) reading
 | QEC: 3-qubit bit-flip code | `QEC/ThreeQubit.lean` | `three_qubit_corrects_single_bitflip`, `syndrome_X1`/`X2`/`X3`, `stab_*_fixes_logical` | `\|ψ⟩↦a\|000⟩+b\|111⟩` corrects any single `X` error: stabilisers `Z₁Z₂,Z₂Z₃` fix the codespace, the four errors give distinct syndromes `(±,±)`, and each `X` is self-inverse (recovery). The first QEC theorem. | Shor 1995 |
 | QEC: 3-qubit phase-flip code | `QEC/PhaseFlip.lean` | `three_qubit_corrects_single_phaseflip`, `syndromePF_*`, `stab_*_fixes_logicalPF` | The Hadamard dual: `\|ψ⟩↦a\|+++⟩+b\|---⟩` corrects any single `Z` error (stabilisers `X₁X₂,X₂X₃`, errors `{I,Z₁,Z₂,Z₃}`, same syndrome/recovery structure). | Shor 1995 |
 
+### Quantum algorithms (`CsdLean4/Empirical/QM/Algorithms/` + `Mathlib/QuantumInfo/`)
+
+The n-qubit register `QReg n = EuclideanSpace ℂ (Fin n → Fin 2)` (Cat-1 in
+`Mathlib/QuantumInfo/Register.lean`, with the genuine Born `prob ψ z = ‖ψ z‖²`) and the
+algorithm tier built on it. Finite-dimensional QM throughout (no field theory); the Quantum
+Fourier Transform is a finite unitary. All foundational-triple-only, AxiomAudit-pinned, and
+Tier-A adversarially audited SOUND (2026-06-08).
+
+| Test | File | Headline theorem(s) | Claim | Source |
+|---|---|---|---|---|
+| Hadamard transform | `Mathlib/QuantumInfo/Hadamard.lean` | `Hn_unitary`, `Hn_mul_self`, `Hn_apply_zero` | The `n`-fold Hadamard `Hⁿ` is genuinely unitary (`Hⁿᴴ·Hⁿ = 1`, `1/√2` normalised) and an involution; `Hⁿ\|0ⁿ⟩` is the uniform superposition `(1/√2)ⁿ` | Standard |
+| Deutsch-Jozsa | `Algorithms/DeutschJozsa.lean` | `deutsch_jozsa_constant`, `deutsch_jozsa_balanced` | One query decides constant vs balanced: a constant oracle returns the all-zeros string with Born prob `1`, a balanced oracle with prob `0` | Deutsch-Jozsa 1992 |
+| Quantum Fourier Transform | `Mathlib/QuantumInfo/Fourier.lean` | `qft_unitary` | The QFT matrix `F j k = (1/√N)·ω^{jk}` (`ω = e^{2πi/N}` a primitive root) is genuinely unitary `Fᴴ·F = 1`, via roots-of-unity character orthogonality | Coppersmith 1994 |
+| Grover search | `Algorithms/Grover.lean` | `grover_success`, `grover_certain` | Amplitude amplification: after `k` Grover steps the marked-item Born prob is `sin²((2k+1)θ)` (`sin θ = 1/√N`); exact certainty at the resonant `k` (e.g. 1-of-4 in one step) | Grover 1996 |
+| Shor: quantum core | `Algorithms/ShorCore.lean` | `shor_order_readout`, `shor_order_distribution`, `phase_estimation_lower_bound`, `shor_phase_estimation_lower_bound` | Order-finding by phase estimation: ideal `r∣T` reads `s·(T/r)` with prob `1`; the two-register modexp state gives the uniform `1/r` distribution; general `r∤T` has the Dirichlet `≥ 4/π²` lower bound | Shor 1994 |
+| Shor: period recovery | `Algorithms/ShorRecovery.lean` | `shor_period_determined`, `abs_sub_rat_ge`, `approx_unique` | The measured count determines the order `r` uniquely (distinct lowest-terms fractions are `≥ 1/(b·d)` apart); information-theoretic determination | Shor 1994 |
+| Shor: factoring + bridge | `Algorithms/ShorRecovery.lean` | `nontrivial_factor`, `even_order_sqrt_unity`, `shor_factor_of_even_order` | A nontrivial `√1 mod N` gives a proper divisor `gcd(x−1,N)`; an even-order unit `a` with `a^(r/2) ≢ ±1` yields a factor — the classical reduction order-finding ⟹ factoring | Shor 1994 |
+| Shor: random-`a` success | `Algorithms/ShorRandomA.lean` | `shor_random_a_success`, `shor_random_a_success_general`, `shor_success_prob_ge_general` | A random unit `a` is "good" (even order, `a^(r/2) ≠ −1`) with prob `≥ 1/2`, for **arbitrary odd composite `N`** — via the indexed-CRT 2-adic-valuation group-counting argument | Shor 1994 |
+| Shor: factoring capstone | `Algorithms/ShorCapstone.lean` | `shor_random_a_yields_factor`, `shor_factor_prob_ge` | End to end: a good `a` yields the explicit proper divisor `gcd(rep(a^(r/2))−1, N)`; a random `a` factors any odd composite `N` with prob `≥ 1/2` | Shor 1994 |
+
 Namespace note: the earliest files use `CSD.Empirical.<Topic>` (Bell, NoCloning, NoDeleting,
 Uncertainty, SternGerlach, Hardy, GHZ, KochenSpecker, MerminPeres, QuantumMoney); later
 files use `CSD.Empirical.QM.<Topic>` (NoBroadcasting, NoCommunication, USD, E91,

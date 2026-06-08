@@ -566,6 +566,17 @@ Under `CsdLean4/Empirical/`, namespace `Empirical`. Two branches:
   uncertainty, Kochen-Specker (Cabello-18), Mermin-Peres, GHZ, Hardy, and
   single/two/multi-qubit gates. Every theorem foundational-triple-only and
   AxiomAudit-pinned.
+- `Empirical/QM/Algorithms/` — the quantum-algorithm tier (complete 2026-06-08,
+  coverage breadth not the thesis). Built on the n-qubit register
+  `QReg n = EuclideanSpace ℂ (Fin n → Fin 2)` (Cat-1 in `Mathlib/QuantumInfo/`):
+  Deutsch-Jozsa (`DeutschJozsa.lean`), Grover (`Grover.lean`, `sin²((2k+1)θ)`),
+  and the full **Shor's algorithm** — quantum core (`ShorCore.lean`: oracle
+  eigenstructure + phase estimation ideal `r∣T` + Dirichlet `≥4/π²` bound),
+  recovery + factoring (`ShorRecovery.lean`), random-`a` success ≥ 1/2 for
+  arbitrary odd composite `N` (`ShorRandomA.lean`, indexed-CRT counting), and the
+  factoring capstone (`ShorCapstone.lean`). Finite-dimensional QM throughout (the
+  QFT is a finite unitary, `Mathlib/QuantumInfo/Fourier.lean`); no field theory.
+  Foundational-triple-only, AxiomAudit-pinned, Tier-A adversarially audited SOUND.
 - `Empirical/CSD/` — CSD volume-ratio readings: transport each QM-validity
   statement through a `CSDBridge.Context D` bundle carrying the LF2 `SectorData`
   + measure-bridge data, providing the structural slot for the CSD-ontic
@@ -578,10 +589,14 @@ Under `CsdLean4/Empirical/`, namespace `Empirical`. Two branches:
 `CsdLean4/Mathlib/` holds Cat-1 (CSD-free) helpers staged as Mathlib upstream
 candidates — `Projectivization` topology/measure/lift API and the
 `UnitaryGroup` / Fubini-Study uniqueness chain (which gives the axiom-free
-concrete realisation `invariant_measure_uniqueness_cpn`). These files keep the
-**natural Mathlib namespace** (`namespace Projectivization`, `namespace Matrix`),
-not a CSD wrapper; the `CsdLean4/Mathlib/<path>/` location is the only staging
-signal (CONVENTIONS.md §1 Cat-1).
+concrete realisation `invariant_measure_uniqueness_cpn`); the `QuantumInfo/`
+subtree (the n-qubit `Register`/`prob` Born, `Hadamard`, `Fourier`/QFT
+unitarity, CPTP `Channel`s, `TraceDistance`, `QEC/` codes) consumed by the
+algorithm tier; and `MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
+These files keep the **natural Mathlib namespace** (`namespace Projectivization`,
+`namespace Matrix`, `namespace QuantumInfo`), not a CSD wrapper; the
+`CsdLean4/Mathlib/<path>/` location is the only staging signal (CONVENTIONS.md §1
+Cat-1).
 
 **LF4 TODO list:** items deferred from LF2 / LF3 to LF4 are recorded in
 `specs/LF4-todo.md` (§14.2 now closed; §13 isometry realisability, §8 additional

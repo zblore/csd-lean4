@@ -19,6 +19,7 @@ The repo is sorry-free and `lake build CsdLeanTests` green. **What CSD commits y
 | **LF2** | measure bridge `π∗μL = c·μFS` (axiom-free on the concrete instances, `cp_measure_bridge` / `k_measure_bridge`); `born_quadratic` (`Tr(\|ψ⟩⟨ψ\|·\|φ⟩⟨φ\|) = ‖⟨ψ,φ⟩‖²`); `pure_state_born_weights_of_certainty`; `LF1_main_theorem_projective` | Abstract projective target `P` (concrete instantiation deferred to LF4 §8) | `busch_effect_gleason` (purity-form Born only; the abstract-bridge `invariant_measure_uniqueness` was removed 2026-06-04) |
 | **LF1** | `LF1_main_theorem_ae` — empirical frequencies converge a.s. to ontic weight under deterministic flow + pairwise-independent i.i.d. preparation | Abstract measurable `SigmaSpace` (no symplectic / Kähler structure assumed) | none |
 | **Empirical** | Bell + Tsirelson + No-cloning/-deleting/-broadcasting/-communication + **E91 device-independent security** (the LHV CHSH `\|S\|≤2` bound) + Robertson + Stern-Gerlach + USD + Superdense coding + Teleportation + Quantum money + Mermin-Peres + KS18 + Hardy + GHZ + gates; plus the **CSD volume-frequency series** (SG, Malus, Bell, GHZ, Hardy projective; trine, USD, SIC POVMs — Born values *derived* as FS volumes). Per-test index: [`EMPIRICAL.md`](EMPIRICAL.md) | Two-layer: QM-validity (inner-product geometry) + CSD-side (volume-ratio readings / transport bundles) | foundational triple only on every Empirical pin |
+| **Algorithms** | n-qubit register + **Deutsch-Jozsa** (1-query constant/balanced), **Grover** (`sin²((2k+1)θ)` amplitude amplification), **QFT** (`qft_unitary`, finite unitary via roots-of-unity orthogonality), and the **full Shor's algorithm** end to end: order-finding by phase estimation (ideal `r∣T` + Dirichlet `≥4/π²` bound), period recovery, factoring from a nontrivial `√1`, and random-`a` success `≥ 1/2` for *arbitrary odd composite `N`* (`shor_factor_prob_ge`). Per-test index: [`EMPIRICAL.md`](EMPIRICAL.md) | QM-validity (inner-product geometry; `prob = ‖·‖²`). Finite-dimensional throughout — no field theory | foundational triple only on every pin; Tier-A adversarially audited SOUND |
 
 Every theorem listed is AxiomAudit-pinned via `#guard_msgs` in `CsdLean4/Tests/AxiomAudit.lean`; the build fails on axiom drift.
 
@@ -207,6 +208,7 @@ The Empirical module is a **QM-validity layer** regression suite. Each theorem p
 | **D** (Gates) | Single-qubit gates, two-qubit gates, Bell preparation, multi-qubit gate semantics | `Empirical/QM/Gates/*.lean` |
 | **E** (QI / crypto) | No-broadcasting, no-communication, teleportation, Robertson uncertainty, E91 device-independent security, unambiguous discrimination (USD) | `Empirical/QM/{NoBroadcasting,NoCommunication,Resources/Teleportation,Uncertainty,Crypto/E91,USD}.lean` |
 | **V** (volume series) | Born numbers *derived* (not transported) as Fubini-Study volumes: Stern-Gerlach, Malus, Bell, GHZ, Hardy, and the trine / USD / SIC POVMs | `Empirical/CSD/{SternGerlach,Malus,Bell,GHZ,Hardy,Trine,USD,SIC}Volume.lean` |
+| **Alg** (algorithms) | n-qubit register; Deutsch-Jozsa; Grover `sin²((2k+1)θ)`; QFT unitarity; full Shor (quantum core + recovery + factoring + random-`a` ≥ 1/2 for arbitrary odd composite `N` + capstone) | `Mathlib/QuantumInfo/{Register,Hadamard,Fourier}.lean`, `Empirical/QM/Algorithms/{DeutschJozsa,Grover,ShorCore,ShorRecovery,ShorRandomA,ShorCapstone}.lean` |
 
 Every Empirical theorem is **foundational-triple-only** and AxiomAudit-pinned. The CSD-side companions in `Empirical/CSD/` transport each QM-validity statement through a `CSDBridge.Context D` bundle, carrying the LF2 `SectorData` + measure-bridge data, providing the structural slot for the CSD-ontic interpretation that LF4 will eventually instantiate via `kahler_robertson_ontic_variance` and similar §14.2 mechanisms.
 
@@ -361,11 +363,15 @@ CsdLean4/
                        --   OnticBorn
   Empirical/
     QM/                -- Pure QM-validity content (no CSD ontology)
+      Algorithms/      -- Deutsch-Jozsa, Grover, Shor (core + recovery +
+                       --   factoring + random-a success + capstone)
     CSD/               -- CSD volume-ratio readings (transport bundles)
   Tests/
     AxiomAudit.lean    -- #guard_msgs regression suite (build-fails on drift)
     Examples.lean      -- LF1 coin-toss, LF2 Born-form edge cases, LF3 chain smoke
   Mathlib/             -- Cat-1: CSD-free helpers staged as Mathlib upstream candidates
+                       --   (incl. QuantumInfo/ -- n-qubit register, Hadamard, QFT,
+                       --   channels, trace distance; QEC/ codes)
   Basic.lean           -- Pkg.Basic convenience re-export
 CsdLean4.lean          -- canonical top-level import (explicit module list)
 specs/

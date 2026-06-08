@@ -2,14 +2,32 @@
 
 The final item of the quantum-algorithm branch (`specs/nqubit-register-plan.md` R5+). Drafted
 2026-06-06, building on the completed register (R1), Hadamard (R2/R3), Deutsch-Jozsa (R4),
-QFT unitarity (R5), and Grover (R5+). Status: **M1 DONE 2026-06-06** (S1 + S2 + S3-core + the
-S2↔S3 bridge); **M1.5 DONE 2026-06-07** (the full ideal-case `r ∣ T` order-finding output
-distribution: the two-register joint state + uniform-`1/r` measurement marginal); **S4 DONE
-2026-06-07** (the single-eigenvector / generic-`φ` Dirichlet-kernel `≥ 4/π²` phase-estimation lower
-bound, `phase_estimation_lower_bound` + `shor_phase_estimation_lower_bound`). **S4 closes the last
-*quantum* piece of order-finding.** What remains is the classical number-theory tail: S5 (CF Legendre
-converse), S6 (sqrt-of-unity factor), S7 (random-`a` ≥ 1/2). M2 (= S4+S5) is now S5-only; M3 not
-started.
+QFT unitarity (R5), and Grover (R5+). Status: **COMPLETE 2026-06-08 — the entire Shor chain
+is machine-checked end to end, foundational-triple-only.**
+- **M1 DONE 2026-06-06** (S1 + S2 + S3-core + the S2↔S3 bridge);
+- **M1.5 DONE 2026-06-07** (the full ideal-case `r ∣ T` order-finding output distribution:
+  the two-register joint state + uniform-`1/r` measurement marginal);
+- **S4 DONE 2026-06-07** (the single-eigenvector / generic-`φ` Dirichlet-kernel `≥ 4/π²`
+  phase-estimation lower bound, `phase_estimation_lower_bound` +
+  `shor_phase_estimation_lower_bound` — the last *quantum* piece of order-finding);
+- **S5 DONE 2026-06-07** (`ShorRecovery.lean`, `shor_period_determined` — period recovery
+  by the elementary fraction-uniqueness route, not the CF Legendre converse; honest scope =
+  information-theoretic determination of `r`);
+- **S6 + bridge DONE 2026-06-07** (`ShorRecovery.lean`, `nontrivial_factor` +
+  `even_order_sqrt_unity` + `shor_factor_of_even_order` — the classical reduction
+  order-finding ⟹ factoring);
+- **S7 + S7-gen DONE 2026-06-08** (`ShorRandomA.lean`, `shor_random_a_success` for two
+  prime powers, then `shor_random_a_success_general` / `shor_success_prob_ge_general` for
+  **arbitrary odd composite `N`** via the indexed-CRT group-counting argument);
+- **factoring capstone DONE 2026-06-08** (`ShorCapstone.lean`, `shor_random_a_yields_factor`
+  + `shor_factor_prob_ge` — a random `a` factors any odd composite `N` with prob ≥ 1/2, end
+  to end).
+
+All headlines AxiomAudit-pinned in `CsdLean4/Tests/AxiomAudit.lean`. Honest-scope deferrals
+(not load-bearing): the constructive continued-fraction *computation* of `r` (S5 proves
+determination, not extraction) and the two-register `r ∤ T` joint marginal (S4 is the
+single-eigenvector bound). Tier-A adversarial audit (csd-lean-auditor): all headlines SOUND
+2026-06-08.
 
 **M1 landed (`CsdLean4/Empirical/QM/Algorithms/ShorCore.lean`, namespace `CSD.Empirical.QM.Shor`,
 foundational-triple-only, AxiomAudit-pinned):**

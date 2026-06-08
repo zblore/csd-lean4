@@ -1,8 +1,11 @@
 # n-qubit register + quantum-algorithm branch — plan
 
 The enabling infrastructure for the QM-validity algorithm tier (Deutsch–Jozsa, QFT, Grover,
-Shor). Drafted 2026-06-05. Status: **planned, not started.** This is deliberate coverage
-breadth (validity suite), separate from the D1/LF5 thesis work.
+Shor). Drafted 2026-06-05. Status: **COMPLETE 2026-06-08.** R1–R5 + Grover done 2026-06-06;
+the full **Shor's algorithm** (quantum core M1/M1.5/S4 + classical recovery S5 + factoring
+S6 + random-`a` success S7/S7-gen + factoring capstone) done 2026-06-07/08. See
+[`shor-plan.md`](shor-plan.md). This is deliberate coverage breadth (validity suite),
+separate from the D1/LF5 thesis work.
 
 ## 0. Why / scope
 
