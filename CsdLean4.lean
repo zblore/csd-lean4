@@ -117,6 +117,7 @@ import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
 import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
 import CsdLean4.Empirical.QM.Algorithms.ShorRandomA
+import CsdLean4.Empirical.QM.Algorithms.ShorCapstone
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.CSD.Bell
 import CsdLean4.Empirical.CSD.NoCloning

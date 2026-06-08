@@ -352,3 +352,14 @@ without committing to the large number-theory apparatus.
   theorem.
 - Available and reused: `orderOf` API, `ZMod.chineseRemainder`, `Complex.isPrimitiveRoot_exp`
   + our `Fourier.qftω` orthogonality, `GenContFract` forward approximation.
+
+### Algorithmic capstone — DONE 2026-06-08
+`ShorCapstone.lean` (foundational-triple-only, AxiomAudit-pinned), ties the GOOD predicate to an
+actual factor: `shor_random_a_yields_factor` (pointwise — a GOOD unit `a` of even order with
+`a^(r/2) ≠ -1` yields the proper nontrivial divisor `gcd(rep(a^(r/2))-1, N)`, composing
+`shor_factor_of_even_order` with the units↔ZMod `-1` bridge and the auto-derived `a^(r/2) ≠ 1`) and
+`shor_factor_prob_ge` (for odd `N` with ≥2 primes, `1/2 ≤ #{a yields a nontrivial factor} / #units`,
+via `GOOD ⊆ factor-set` + `shor_success_prob_ge_general`). Audited SOUND: at `N=15, a=2` the wrapper
+produces the genuine factor `3` (`gcd(4-1,15)=3`); the prob bound bites (`#factor-set ≥ 4`). This is
+the classical-postprocessing half meeting the quantum order-readout half (`shor_order_readout`) — the
+Shor S-series is algorithmically complete (a random `a` factors odd composite `N` with prob ≥ 1/2).
