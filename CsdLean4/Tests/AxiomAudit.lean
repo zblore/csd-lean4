@@ -126,6 +126,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 
 /-!
 # Axiom regression suite
@@ -1645,6 +1646,25 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn
+
+/-! ### Transition probability on ℂℙ^{N-1} (Wigner / FS rigidity foundation)
+
+The transition-probability API plus the forward (realisability) direction
+`U(N) ⊆ transition-preservers`, and the coincidence / orthogonality
+characterisations. All foundational-triple-only. The Wigner / FS converse
+is the documented open target (not stated as an axiom or sorry). -/
+
+/-- info: 'Projectivization.transProb_smul_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProb_smul_unitary
+
+/-- info: 'Projectivization.transProb_eq_one_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProb_eq_one_iff
+
+/-- info: 'Projectivization.transProb_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProb_eq_zero_iff
 
 /-! ### LF4 §8 ontic-shell instantiation
 
