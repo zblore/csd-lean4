@@ -752,6 +752,14 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.two_mul_card_good_pi_ge
 
+-- gen-D (shor_random_a_success_pi): the m-fold coprime transport (indexed S7d-2b-ii). For a
+-- pairwise-coprime family N : ι → ℕ of nonzero moduli with cyclic unit groups each having
+-- orderOf (-1) = 2 and a free index i₁ ≠ i₀, the Shor GOOD event covers at least half of
+-- (ZMod (∏ i, N i))ˣ (m-fold shor_good_transport, transported across unitsPiCRT); triple.
+/-- info: 'CSD.Empirical.QM.Shor.shor_random_a_success_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.shor_random_a_success_pi
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef

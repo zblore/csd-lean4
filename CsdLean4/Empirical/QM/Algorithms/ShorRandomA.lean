@@ -1192,4 +1192,95 @@ theorem two_mul_card_good_pi_ge {ι : Type*} [Fintype ι] (G : ι → Type*)
     rw [hcongr]; exact two_mul_card_pi_diag_le G i₀ h₀ i₁ hi
   omega
 
+/-! ## gen-D — the `m`-fold coprime transport (indexed S7d-2b-ii)
+
+The general-`m` analogue of `shor_good_transport` (S7d-2b-ii). The abstract `m`-fold GOOD lower
+bound `two_mul_card_good_pi_ge` (gen-B) is stated over an indexed product of finite cyclic groups
+with distinguished order-2 elements. To land it on the actual units group `(ZMod (∏ i, N i))ˣ` of a
+pairwise-coprime family `N : ι → ℕ`, transport along the indexed CRT units iso `unitsPiCRT` (gen-A):
+the Shor per-tuple predicate `Even (orderOf a) ∧ a^(orderOf a/2) ≠ -1` corresponds across
+`e := unitsPiCRT` to the product predicate against the constant tuple `fun i => -1`, because `e`
+preserves `orderOf` (`MulEquiv.orderOf_eq`) and sends `-1 ↦ fun i => -1` (`unitsPiCRT_neg_one`,
+gen-A). A filter-card bijection (`Finset.card_bij` along `e`) plus the cardinality factorisation
+(`Fintype.card_congr e.toEquiv` + `Fintype.card_pi`) then carries the bound onto
+`(ZMod (∏ i, N i))ˣ`. Exact Pi-form mirror of `shor_good_transport`.
+
+The `[NeZero (∏ i, N i)]` binder is carried explicitly: it is derivable from `[∀ i, NeZero (N i)]`
+(a product of nonzeros is nonzero, `Finset.prod_ne_zero_iff` + `NeZero.ne`), but Mathlib registers
+no instance for it, so the body's `Fintype (ZMod (∏ N))ˣ` cannot synthesise from the per-factor
+`NeZero`s alone. Unlike the two-factor `card_units_mul` / `shor_good_transport` (where
+`NeZero (m*n)` is derived inside via `Nat.mul_ne_zero`), the indexed product needs the instance in
+scope at the statement's Fintype, hence the binder. Callers discharge it with
+`haveI : NeZero (∏ i, N i) := ⟨Finset.prod_ne_zero_iff.mpr (fun i _ => NeZero.ne (N i))⟩`. -/
+
+open Classical in
+/-- **gen-D — the `m`-fold coprime transport (indexed S7d-2b-ii).** For a pairwise-coprime family
+`N : ι → ℕ` of nonzero moduli with cyclic unit groups each having `orderOf (-1) = 2`, and a free
+index `i₁ ≠ i₀`, the Shor "GOOD" event covers at least half of `(ZMod (∏ i, N i))ˣ`:
+```
+|(ZMod (∏ i, N i))ˣ| ≤ 2 · #{a : Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1}.
+```
+
+Route: transport `two_mul_card_good_pi_ge` (gen-B) across
+`unitsPiCRT N hcop : (ZMod (∏ i, N i))ˣ ≃* Π i, (ZMod (N i))ˣ` (gen-A). The Shor predicate
+corresponds across the iso (`unitsPiCRT` preserves `orderOf` via `MulEquiv.orderOf_eq` and sends
+`-1 ↦ fun i => -1` via `unitsPiCRT_neg_one`), giving a filter-card bijection (`Finset.card_bij`);
+`Fintype.card_congr e.toEquiv` + `Fintype.card_pi` factor `|(ZMod (∏ i, N i))ˣ|`. Exact Pi-form
+mirror of `shor_good_transport` (S7d-2b-ii). -/
+theorem shor_random_a_success_pi {ι : Type*} [Fintype ι] (N : ι → ℕ) [∀ i, NeZero (N i)]
+    [NeZero (∏ i, N i)]
+    (hcop : Pairwise (Function.onFun Nat.Coprime N))
+    [∀ i, IsCyclic (ZMod (N i))ˣ]
+    (hm : ∀ i, orderOf (-1 : (ZMod (N i))ˣ) = 2)
+    (i₀ i₁ : ι) (hi : i₁ ≠ i₀) :
+    Fintype.card (ZMod (∏ i, N i))ˣ ≤
+      2 * (Finset.univ.filter (fun a : (ZMod (∏ i, N i))ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card := by
+  classical
+  set e := unitsPiCRT N hcop with he
+  have horder : ∀ a, orderOf (e a) = orderOf a := fun a => (e.orderOf_eq a)
+  have hneg : e (-1) = fun _ => -1 := unitsPiCRT_neg_one N hcop
+  -- predicate transport across the iso `e`
+  have hpred : ∀ a : (ZMod (∏ i, N i))ˣ,
+      (Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)
+        ↔ (Even (orderOf (e a)) ∧ (e a) ^ (orderOf (e a) / 2) ≠ (fun _ => -1)) := by
+    intro a
+    rw [horder a]
+    apply and_congr_right
+    intro _
+    constructor
+    · intro h hc
+      apply h
+      have : e (a ^ (orderOf a / 2)) = e (-1) := by rw [map_pow, hc, hneg]
+      exact (EmbeddingLike.apply_eq_iff_eq e).mp this
+    · intro h hc
+      apply h
+      rw [← hneg, ← hc, map_pow]
+  -- filter-card transport: `e` restricts to a bijection of the GOOD filters
+  have hcard :
+      (Finset.univ.filter (fun a : (ZMod (∏ i, N i))ˣ =>
+          Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card
+        = (Finset.univ.filter (fun b : Π i, (ZMod (N i))ˣ =>
+          Even (orderOf b) ∧ b ^ (orderOf b / 2) ≠ (fun _ => -1))).card := by
+    apply Finset.card_bij (fun a _ => e a)
+    · intro a ha
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ha ⊢
+      exact (hpred a).mp ha
+    · intro a₁ _ a₂ _ h
+      exact e.injective h
+    · intro b hb
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hb ⊢
+      refine ⟨e.symm b, ?_, ?_⟩
+      · rw [(hpred (e.symm b)), e.apply_symm_apply]; exact hb
+      · exact e.apply_symm_apply b
+  -- card factorisation: |(ZMod (∏ N))ˣ| = ∏ i, |(ZMod (N i))ˣ|
+  have hcardprod : Fintype.card (ZMod (∏ i, N i))ˣ
+      = ∏ i, Fintype.card (ZMod (N i))ˣ := by
+    rw [Fintype.card_congr e.toEquiv, Fintype.card_pi]
+  -- assemble: gen-B on the product, then factor the card and transport the filter
+  have hbound := two_mul_card_good_pi_ge (G := fun i => (ZMod (N i))ˣ)
+    (z := fun i => (-1 : (ZMod (N i))ˣ)) (fun i => hm i) i₀ i₁ hi
+  rw [hcardprod, hcard]
+  convert hbound using 4
+
 end CSD.Empirical.QM.Shor
