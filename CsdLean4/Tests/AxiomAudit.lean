@@ -608,9 +608,22 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.phase_estimation_lower_bound
 
+/-- info: 'CSD.Empirical.QM.Shor.shor_phase_estimation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.shor_phase_estimation_lower_bound
+
 -- Shor S5 (period recovery, uniqueness route): the measured count determines the order r.
--- Distinct lowest-terms fractions are ≥ 1/(b·d) apart, so a fraction within 1/(2T) of c/T with
--- denominator product < T is unique (shor_period_determined). Foundational triple.
+-- Distinct lowest-terms fractions are ≥ 1/(b·d) apart (abs_sub_rat_ge), so a fraction within
+-- 1/(2T) of c/T with denominator product < T is unique (approx_unique ⟹ shor_period_determined).
+-- Foundational triple.
+/-- info: 'CSD.Empirical.QM.Shor.abs_sub_rat_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.abs_sub_rat_ge
+
+/-- info: 'CSD.Empirical.QM.Shor.approx_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.approx_unique
+
 /-- info: 'CSD.Empirical.QM.Shor.shor_period_determined' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.shor_period_determined
