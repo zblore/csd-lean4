@@ -267,8 +267,14 @@ quantum core (M1/M1.5/S4) → order-finding output → recovery (S5) → factori
     (`i₁ ≠ i₀`) — singleton `ι` makes the diagonal everything (`2N ≤ N`); and `h₀` (even order at
     `i₀`) is also load-bearing (odd ⟹ all v₂=0 ⟹ diagonal = all). Both hypotheses verified exactly
     necessary (counterexamples at `Unit` and `Bool × ZMod 3`). This is the `m ≥ 2` condition.
-  - **gen-A** (indexed units-CRT + `orderOf`-in-Π = lcm + `−1 ↦ const`), **gen-B** (Pi
-    characterisation `BAD ⟺ all v₂(ord aₚ) equal`), then the general headline. Bound
+  - **gen-A — indexed-product plumbing — DONE 2026-06-08** (`ShorRandomA.lean`,
+    foundational-triple-only, AxiomAudit-pinned). `orderOf_pi` (`orderOf f = univ.lcm (orderOf ∘ f)`
+    for finite Π — already in Mathlib as `Pi.orderOf`, aliased); `unitsPiCRT` (the indexed units-CRT
+    `(ZMod (∏ Nᵢ))ˣ ≃* Π (ZMod Nᵢ)ˣ` = `Units.mapEquiv (ZMod.prodEquivPi …).toMulEquiv |>.trans
+    MulEquiv.piUnits`); `unitsPiCRT_neg_one` (`−1 ↦ const −1`). Audited SOUND: iso genuine
+    (`7 ↦ (1,2)` at `N=![3,5]`), `−1 ↦ (2,4)`, `hcop` load-bearing.
+  - **gen-B** (Pi characterisation `BAD ⟺ all v₂(ord aₚ) equal` + abstract Pi GOOD bound
+    `∏|Gᵢ| ≤ 2·#GOOD` via gen-C + complement), then the general headline. Bound
     `1 − 1/2^{m−1} ≥ 1/2` for `m ≥ 2`.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure

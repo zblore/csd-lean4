@@ -6,7 +6,9 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.RingTheory.ZMod.UnitsCyclic
 import Mathlib.Algebra.Group.Units.Equiv
 import Mathlib.Algebra.Group.Prod
+import Mathlib.Algebra.Group.Pi.Units
 import Mathlib.Algebra.Ring.Equiv
+import Mathlib.Data.ZMod.QuotientRing
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
 
@@ -937,5 +939,62 @@ theorem two_mul_card_pi_diag_le {ι : Type*} [Fintype ι] (G : ι → Type*)
         Nat.mul_le_mul_left _ herased
     _ = ∏ i, Fintype.card (G i) := by
         rw [hN, Finset.mul_prod_erase Finset.univ (fun i => Fintype.card (G i)) (Finset.mem_univ i₀)]
+
+/-! ## gen-A — indexed-product plumbing for the general-`m` Shor bound
+
+Three reusable facts for the `m`-fold (`ι`-indexed) CRT framing, the indexed analogue of the
+two-factor S7a primitives (`unitsCRT*`):
+
+- `orderOf_pi`: the order of a tuple in a finite product is the `lcm` of component orders (the
+  `m`-fold `Prod.orderOf`);
+- `unitsPiCRT`: the indexed units-CRT iso `(ZMod (∏ N i))ˣ ≃* Π i, (ZMod (N i))ˣ`, built from the
+  ring CRT iso `ZMod.prodEquivPi` by the units functor (`Units.mapEquiv`) and the
+  units-of-a-product splitting (`MulEquiv.piUnits`) — the `m`-fold analogue of `unitsCRT` (S7a);
+- `unitsPiCRT_neg_one`: that iso sends the success witness `-1` to the constant tuple `fun _ => -1`
+  (the `m`-fold `unitsCRT_neg_one`).
+
+Cyclicity-agnostic: nothing here uses cyclicity of the factors (it enters only at the assembly,
+where `orderOf_pi` feeds the lcm into the `gen-C` diagonal count `two_mul_card_pi_diag_le`). -/
+
+/-- **`orderOf` in a finite indexed product = lcm of component orders (gen-A).** The order of a
+tuple `f : Π i, G i` in a finite product of finite monoids is the least common multiple of the
+component orders. This is exactly Mathlib's `Pi.orderOf`; re-exported here under the
+`CSD.Empirical.QM.Shor` namespace as the named `m`-fold analogue of `Prod.orderOf` (which drives
+`unitsCRT_orderOf`, S7a). -/
+theorem orderOf_pi {ι : Type*} [Fintype ι] {G : ι → Type*} [∀ i, Monoid (G i)]
+    [∀ i, Fintype (G i)] (f : Π i, G i) :
+    orderOf f = (Finset.univ : Finset ι).lcm (fun i => orderOf (f i)) :=
+  Pi.orderOf f
+
+/-- **The indexed units-CRT isomorphism (gen-A).** For a finite family `N : ι → ℕ` that is
+pairwise coprime, the units of `ZMod (∏ i, N i)` split as a product of the units of each factor:
+`(ZMod (∏ i, N i))ˣ ≃* Π i, (ZMod (N i))ˣ`.
+
+Built from the ring CRT iso `ZMod.prodEquivPi` by `Units.mapEquiv` (units functor on a `MulEquiv`)
+followed by `MulEquiv.piUnits` (units of a product = product of units). This is the `m`-fold
+analogue of the two-factor `unitsCRT` (S7a), mirroring its construction exactly. The coprimality
+hypothesis is in `ZMod.prodEquivPi`'s native spelling `Pairwise (Function.onFun Nat.Coprime N)`. -/
+noncomputable def unitsPiCRT {ι : Type*} [Fintype ι] (N : ι → ℕ)
+    (hcop : Pairwise (Function.onFun Nat.Coprime N)) :
+    (ZMod (∏ i, N i))ˣ ≃* Π i, (ZMod (N i))ˣ :=
+  (Units.mapEquiv (ZMod.prodEquivPi N hcop).toMulEquiv).trans MulEquiv.piUnits
+
+/-- **The `-1` split (gen-A).** The indexed units-CRT iso sends the success witness `-1` to the
+constant tuple `fun _ => -1`. The iso is induced from a ring isomorphism, which sends `-1 ↦ -1`;
+the units functor and `piUnits` preserve this componentwise. Proved by `funext`/`Units.ext`
+reduction to the underlying ring values at each `i`, where the `piUnits` component is defeq to the
+underlying coercion of `Units.mapEquiv (…)` at `i`, and `map_neg`/`map_one` of the ring iso fire.
+This is the `m`-fold analogue of `unitsCRT_neg_one` (S7a). -/
+theorem unitsPiCRT_neg_one {ι : Type*} [Fintype ι] (N : ι → ℕ)
+    (hcop : Pairwise (Function.onFun Nat.Coprime N)) :
+    unitsPiCRT N hcop (-1) = fun _ => -1 := by
+  funext i
+  apply Units.ext
+  -- the `piUnits` component is defeq to the underlying coercion of `Units.mapEquiv (…)` at `i`
+  show ((((Units.mapEquiv (ZMod.prodEquivPi N hcop).toMulEquiv) (-1)) : Π i, ZMod (N i)) i)
+      = ((-1 : (ZMod (N i))ˣ) : ZMod (N i))
+  rw [Units.coe_mapEquiv, RingEquiv.toMulEquiv_eq_coe, RingEquiv.coe_toMulEquiv,
+    Units.val_neg, Units.val_one, map_neg, map_one, Pi.neg_apply, Pi.one_apply,
+    Units.val_neg, Units.val_one]
 
 end CSD.Empirical.QM.Shor
