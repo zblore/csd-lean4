@@ -554,4 +554,69 @@ theorem bad_iff_v2_eq {G₁ G₂ : Type*}
       left
       exact hev
 
+/-! ## S7d-2b-i — the abstract GOOD lower bound
+
+The complement of the S7d-2a BAD characterisation against the S7d-1 diagonal count. The Shor
+per-pair **GOOD** event is `Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)` (`r` even and the
+half-power misses the joint `(z₁, z₂) = (−1, −1)` witness). GOOD is at least half:
+```
+|G₁| · |G₂| ≤ 2 · #GOOD.
+```
+-/
+
+open Classical in
+/-- **S7d-2b-i — the abstract GOOD lower bound.** For a pair of finite cyclic groups `G₁`, `G₂`
+each with a distinguished order-2 element (`z₁`, `z₂`), the Shor "GOOD" event
+`Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)` covers at least half the product group:
+```
+|G₁| · |G₂| ≤ 2 · #{p : Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)}.
+```
+
+Route (mechanical, no new math): `bad_iff_v2_eq` (S7d-2a) identifies the BAD filter (`¬ GOOD`) with
+the matched-`v₂` diagonal filter via `Finset.filter_congr`; `card_filter_add_card_filter_not` gives
+`#GOOD + #BAD = |G₁ × G₂|` (`Fintype.card_prod`); `two_mul_card_diag_le` (S7d-1) gives
+`2 · #BAD ≤ |G₁|·|G₂|`. `omega` on `A + B = C`, `2·B ≤ C` ⟹ `C ≤ 2·A`. Even order of `G₂` is
+derived from `hz₂` (`orderOf_dvd_card`). -/
+theorem two_mul_card_good_ge {G₁ G₂ : Type*}
+    [Group G₁] [Fintype G₁] [IsCyclic G₁] [Group G₂] [Fintype G₂] [IsCyclic G₂]
+    {z₁ : G₁} (hz₁ : orderOf z₁ = 2) {z₂ : G₂} (hz₂ : orderOf z₂ = 2) :
+    Fintype.card G₁ * Fintype.card G₂ ≤
+      2 * (Finset.univ.filter (fun p : G₁ × G₂ =>
+        Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂))).card := by
+  classical
+  -- `G₂` has even order: `orderOf z₂ = 2 ∣ |G₂|`.
+  have h₂ : Even (Fintype.card G₂) :=
+    even_iff_two_dvd.mpr (hz₂ ▸ orderOf_dvd_card)
+  -- The BAD filter (`¬ GOOD`) equals the matched-`v₂` diagonal filter (S7d-2a).
+  have hcongr :
+      (Finset.univ.filter (fun p : G₁ × G₂ =>
+          ¬ (Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂))))
+        = (Finset.univ.filter (fun p : G₁ × G₂ =>
+            (orderOf p.1).factorization 2 = (orderOf p.2).factorization 2)) :=
+    Finset.filter_congr (fun p _ => bad_iff_v2_eq hz₁ hz₂ p)
+  -- GOOD + BAD = |G₁ × G₂| = |G₁| · |G₂|.
+  have hcomp :
+      (Finset.univ.filter (fun p : G₁ × G₂ =>
+          Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂))).card
+        + (Finset.univ.filter (fun p : G₁ × G₂ =>
+            ¬ (Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)))).card
+        = Fintype.card G₁ * Fintype.card G₂ := by
+    have hsplit :
+        (Finset.univ.filter (fun p : G₁ × G₂ =>
+            Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂))).card
+          + (Finset.univ.filter (fun p : G₁ × G₂ =>
+              ¬ (Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)))).card
+          = (Finset.univ : Finset (G₁ × G₂)).card :=
+      Finset.card_filter_add_card_filter_not
+        (fun p : G₁ × G₂ => Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂))
+    rw [Finset.card_univ, Fintype.card_prod] at hsplit
+    exact hsplit
+  -- 2 · #BAD ≤ |G₁| · |G₂| (S7d-1, rewritten to the BAD filter via `← hcongr`).
+  have hdiag :
+      2 * (Finset.univ.filter (fun p : G₁ × G₂ =>
+          ¬ (Even (orderOf p) ∧ p ^ (orderOf p / 2) ≠ (z₁, z₂)))).card
+        ≤ Fintype.card G₁ * Fintype.card G₂ := by
+    rw [hcongr]; exact two_mul_card_diag_le h₂
+  omega
+
 end CSD.Empirical.QM.Shor

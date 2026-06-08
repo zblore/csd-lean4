@@ -224,11 +224,17 @@ is a generalisation flagged as stretch.
     Route: `Prod.orderOf` (= lcm), `Nat.factorization_lcm` (v₂(lcm)=max), per-factor S7c
     (`pow_half_eq_orderTwo_iff`), `omega` case split on `Even r`. Audited SOUND with both-true `(g,g)`
     and both-false `(g,z)` witnesses (iff genuinely separates BAD/GOOD).
-  - **S7d-2b — abstract `2·#GOOD ≥ |G₁×G₂|` + `(ZMod N)ˣ` headline `S7★`.** `#BAD = #diagonal`
-    (`Finset.filter_congr` on `bad_iff_v2_eq`) + S7d-1 ⟹ `2·#BAD ≤ |G₁||G₂|`, complement ⟹
-    `2·#GOOD ≥ |G₁||G₂|`; then transport via `unitsCRT` (GOOD over `(ZMod N)ˣ` ↔ product GOOD with
-    `(z₁,z₂) = unitsCRT(−1)` from `unitsCRT_neg_one`), instantiate `m=p^α, n=q^β` odd prime powers
-    (`ZMod.isCyclic_units` + `Nat.totient_even`). The remaining piece.
+  - **S7d-2b-i — abstract `2·#GOOD ≥ |G₁×G₂|` — DONE 2026-06-08** (`ShorRandomA.lean`,
+    `two_mul_card_good_ge`, foundational-triple-only, AxiomAudit-pinned). `#BAD = #diagonal`
+    (`Finset.filter_congr` on `bad_iff_v2_eq`) + S7d-1 (`two_mul_card_diag_le`) ⟹ `2·#BAD ≤ |G₁||G₂|`;
+    `Finset.card_filter_add_card_filter_not` + `omega` ⟹ `|G₁||G₂| ≤ 2·#GOOD`. (`open Classical in`
+    for the non-decidable filter; no axiom widening.) Audited SOUND: GOOD non-empty (`(g,1)`), bound
+    bites (`16 ≤ 2·#GOOD`), direction + predicate genuine, `hz₁/hz₂` load-bearing.
+  - **S7d-2b-ii — the `(ZMod N)ˣ` headline `S7★`.** Transport `two_mul_card_good_ge` across
+    `unitsCRT` (GOOD over `(ZMod N)ˣ` ↔ product GOOD, `(z₁,z₂) = unitsCRT(−1)` via `unitsCRT_neg_one`
+    + `MulEquiv` orderOf/pow preservation), instantiate `m=p^α, n=q^β` odd prime powers
+    (`ZMod.isCyclic_units` + `Nat.totient_even`, `orderOf (−1) = 2`); conclude
+    `#(ZMod N)ˣ ≤ 2·#{a : Even (ord a) ∧ a^(ord a/2) ≠ −1}`. The remaining piece (last one for `S7★`).
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;
