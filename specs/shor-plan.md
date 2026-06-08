@@ -202,9 +202,14 @@ is a generalisation flagged as stretch.
   (`C₄`: a=g,R=4) and both-false (a=z,R=4) witnesses (iff genuinely two-directional), reproduced on
   `C₈`; `hz`/`hdvd` proved load-bearing. The `z := −1`-in-each-cyclic-factor instantiation and the
   CRT `−1 ↔ (−1,−1)` split are deferred to S7a/S7d.
-- **S7a — two-factor CRT framing.** `(ZMod N)ˣ ≃* G₁ × G₂` (`Gᵢ = (ZMod pᵢ^{αᵢ})ˣ`, cyclic even)
-  from `ZMod.chineseRemainder` + `MulEquiv.prodUnits`; transport `#GOOD`/`#BAD` to a count over
-  `G₁ × G₂`. Medium.
+- **S7a — two-factor CRT framing — DONE 2026-06-08** (`ShorRandomA.lean`, foundational-triple-only,
+  AxiomAudit-pinned; cyclicity-agnostic, any coprime `m n`). `unitsCRT h : (ZMod (m·n))ˣ ≃*
+  (ZMod m)ˣ × (ZMod n)ˣ` (`Units.mapEquiv (ZMod.chineseRemainder h).toMulEquiv |>.trans
+  MulEquiv.prodUnits`); `unitsCRT_orderOf` (`ord a = lcm(ord a₁, ord a₂)` via `MulEquiv.orderOf_eq`
+  + `Prod.orderOf`); `unitsCRT_neg_one` (`-1 ↦ (-1,-1)`, via `Units.ext` + ring `map_neg`/`map_one`);
+  `card_units_mul` (`#(ZMod(m·n))ˣ = #(ZMod m)ˣ · #(ZMod n)ˣ`). Independently audited SOUND: iso
+  confirmed the genuine CRT map (witness `7 ↦ (1,2)` rules out identity/swap), `-1 ↦ (2,4)`, card
+  `8=2·4`, `lcm(2,4)=4≠8`, coprimality load-bearing.
 - **S7d — assembly + headline `S7★`.** `#BAD = ∑_k #{d₁=k} · #{d₂=k}` (product structure via the
   iso); bound by `(max_k #{d₁=k}) · ∑_k #{d₂=k} ≤ (|G₁|/2) · |G₂| = |G|/2` (S7b on the first
   factor). Hence `2·#BAD ≤ |G|`, so `2·#GOOD ≥ |G|`. Medium.

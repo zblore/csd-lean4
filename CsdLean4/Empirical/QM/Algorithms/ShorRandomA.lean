@@ -2,6 +2,10 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.NumberTheory.Divisors
+import Mathlib.Data.ZMod.Basic
+import Mathlib.Algebra.Group.Units.Equiv
+import Mathlib.Algebra.Group.Prod
+import Mathlib.Algebra.Ring.Equiv
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
 
@@ -326,5 +330,75 @@ theorem pow_half_eq_orderTwo_iff {G : Type*} [Group G] [Fintype G] [IsCyclic G]
     rcases hdich with h | h
     · exact absurd h hne1
     · exact h
+
+/-! ## S7a — two-factor CRT framing for units
+
+The Chinese Remainder Theorem gives a ring isomorphism `ZMod (m*n) ≃+* ZMod m × ZMod n`
+for coprime `m, n` (`ZMod.chineseRemainder`). Restricting to units and splitting the product
+gives a multiplicative isomorphism `(ZMod (m*n))ˣ ≃* (ZMod m)ˣ × (ZMod n)ˣ`. This is the
+two-factor framing the S7d assembly needs: it transports `orderOf` to an `lcm` of per-factor
+orders (`unitsCRT_orderOf`), sends the success witness `-1` to the per-factor `(-1, -1)`
+(`unitsCRT_neg_one`), and factors the group cardinality (`card_units_mul`).
+
+**Cyclicity-agnostic.** Nothing here uses cyclicity of the factors; it holds for any coprime
+`m, n`. Cyclicity of the per-prime-power factors enters only in S7d, where this framing is
+iterated against the prime-power factorisation of `N`. -/
+
+/-- **The CRT units isomorphism (S7a).** For coprime `m, n`, the units of `ZMod (m*n)` split
+as a product of the units of each factor:
+`(ZMod (m*n))ˣ ≃* (ZMod m)ˣ × (ZMod n)ˣ`.
+
+Built from the ring CRT iso `ZMod.chineseRemainder` by `Units.mapEquiv` (units functor on a
+`MulEquiv`) followed by `MulEquiv.prodUnits` (units of a product = product of units). This is the
+exact Mathlib idiom used in `Mathlib.RingTheory.ZMod.UnitsCyclic`. -/
+noncomputable def unitsCRT {m n : ℕ} (h : m.Coprime n) :
+    (ZMod (m * n))ˣ ≃* (ZMod m)ˣ × (ZMod n)ˣ :=
+  (Units.mapEquiv (ZMod.chineseRemainder h).toMulEquiv).trans MulEquiv.prodUnits
+
+/-- **`orderOf` transport across the CRT split (S7a).** The order of a unit of `ZMod (m*n)` is
+the least common multiple of the orders of its two CRT components:
+`orderOf a = lcm (orderOf (unitsCRT h a).1) (orderOf (unitsCRT h a).2)`.
+
+A `MulEquiv` preserves `orderOf` (`MulEquiv.orderOf_eq`), and `orderOf` of a pair is the `lcm`
+of the component orders (`Prod.orderOf`). This is the lcm fact the S7d counting bound consumes. -/
+theorem unitsCRT_orderOf {m n : ℕ} (h : m.Coprime n) (a : (ZMod (m * n))ˣ) :
+    orderOf a = Nat.lcm (orderOf (unitsCRT h a).1) (orderOf (unitsCRT h a).2) := by
+  rw [← (unitsCRT h).orderOf_eq a, Prod.orderOf]
+
+/-- **The `-1` split (S7a).** The CRT units iso sends the success witness `-1` to the per-factor
+`(-1, -1)`. The iso is induced from a ring isomorphism, which sends `-1 ↦ -1`; the units functor
+and `prodUnits` preserve this. Proved by `Units.ext`/`Prod.ext` reduction to the underlying ring
+values, where `RingEquiv.map_neg_one` (via `map_neg`, `map_one`) fires. -/
+theorem unitsCRT_neg_one {m n : ℕ} (h : m.Coprime n) :
+    unitsCRT h (-1) = (-1, -1) := by
+  apply Prod.ext
+  · -- first component, as units of `ZMod m`
+    apply Units.ext
+    show ((unitsCRT h (-1)).1 : ZMod m) = ((-1 : (ZMod m)ˣ) : ZMod m)
+    simp only [unitsCRT, MulEquiv.trans_apply, MulEquiv.prodUnits,
+      MulEquiv.coe_mk, Equiv.coe_fn_mk, MonoidHom.prod_apply, Units.coe_map,
+      MonoidHom.coe_fst, Units.coe_mapEquiv, RingEquiv.toMulEquiv_eq_coe,
+      RingEquiv.coe_toMulEquiv, MulEquiv.coe_mk, Units.val_neg, Units.val_one]
+    rw [map_neg, map_one, Prod.fst_neg, Prod.fst_one]
+  · -- second component, as units of `ZMod n`
+    apply Units.ext
+    show ((unitsCRT h (-1)).2 : ZMod n) = ((-1 : (ZMod n)ˣ) : ZMod n)
+    simp only [unitsCRT, MulEquiv.trans_apply, MulEquiv.prodUnits,
+      MulEquiv.coe_mk, Equiv.coe_fn_mk, MonoidHom.prod_apply, Units.coe_map,
+      MonoidHom.coe_snd, Units.coe_mapEquiv, RingEquiv.toMulEquiv_eq_coe,
+      RingEquiv.coe_toMulEquiv, MulEquiv.coe_mk, Units.val_neg, Units.val_one]
+    rw [map_neg, map_one, Prod.snd_neg, Prod.snd_one]
+
+/-- **Cardinality factorisation (S7a).** For coprime `m, n` (both nonzero), the number of units of
+`ZMod (m*n)` is the product of the per-factor unit counts:
+`#(ZMod (m*n))ˣ = #(ZMod m)ˣ · #(ZMod n)ˣ`.
+
+Transport the cardinality across `unitsCRT` (`Fintype.card_congr`) and split the product
+(`Fintype.card_prod`). (Equivalently `ZMod.card_units_eq_totient` + `Nat.totient_mul`.) -/
+theorem card_units_mul {m n : ℕ} [NeZero m] [NeZero n] (h : m.Coprime n) :
+    Fintype.card (ZMod (m * n))ˣ
+      = Fintype.card (ZMod m)ˣ * Fintype.card (ZMod n)ˣ := by
+  have : NeZero (m * n) := ⟨Nat.mul_ne_zero (NeZero.ne m) (NeZero.ne n)⟩
+  rw [Fintype.card_congr (unitsCRT h).toEquiv, Fintype.card_prod]
 
 end CSD.Empirical.QM.Shor
