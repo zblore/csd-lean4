@@ -279,8 +279,24 @@ quantum core (M1/M1.5/S4) → order-finding output → recovery (S5) → factori
     `v₂(Finset.lcm)=sup` helper + per-factor S7c + case split) and `two_mul_card_good_pi_ge`
     (`∏|Gᵢ| ≤ 2·#GOOD` via characterisation + gen-C + complement). Audited SOUND: iff two-directional
     (both-true `fun _↦g`, both-false `![g, z]` on `(C₄)²`), bound bites (`16 ≤ 2·#GOOD ⟹ #GOOD≥8`).
-  - **general headline** — transport `two_mul_card_good_pi_ge` via `unitsPiCRT` (gen-D) +
-    instantiate `N.primeFactors` (odd prime powers). The last piece. Bound `1 − 1/2^{m−1} ≥ 1/2`.
+  - **gen-D — Pi-family headline — DONE 2026-06-08** (`shor_random_a_success_pi`,
+    AxiomAudit-pinned, foundational-triple-only): transport `two_mul_card_good_pi_ge` across
+    `unitsPiCRT` (the m-fold analogue of `shor_good_transport`). For a pairwise-coprime family
+    `N : ι → ℕ` with each `(ZMod (N i))ˣ` cyclic + `orderOf(−1)=2` and ≥ 2 indices,
+    `#(ZMod (∏ Nᵢ))ˣ ≤ 2·#GOOD`. Audited SOUND (bites at `N=![3,5]`, recovers `N=15`).
+  - **gen-E — general odd-composite headline — DONE 2026-06-08** (`shor_random_a_success_general`
+    + `shor_success_prob_ge_general`, AxiomAudit-pinned, foundational-triple-only). Instantiates
+    gen-D at `N.primeFactors` (via `Nat.prod_pow_primeFactors_factorization` +
+    `Nat.pairwise_coprime_pow_primeFactors_factorization`, odd prime powers cyclic via
+    `ZMod.isCyclic_units_of_prime_pow`): for any **odd `N` with ≥ 2 distinct primes**,
+    `#(ZMod N)ˣ ≤ 2·#{a : Even (ord a) ∧ a^(ord a/2) ≠ −1}` and `1/2 ≤ #GOOD/#units`. Audited SOUND:
+    bites at `N=15` (`#units=8 ⟹ #GOOD≥4`); `hodd` load-bearing (forces every prime odd ⟹ cyclic
+    units); `hN` load-bearing (`N=9` prime-power excluded, would give `6 ≤ 0`).
+
+**`S7★-gen` COMPLETE.** The Shor random-`a` success bound (≥ 1/2) now holds for ARBITRARY odd
+composite `N`, both as a counting bound and as a ℚ probability. Together with `S7★` (two prime
+powers) and the earlier chain, the entire Shor pipeline is machine-checked end to end for general
+odd `N`. Both residual items (probability restatement + general-`m` extension) are closed.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;

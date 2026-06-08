@@ -1283,4 +1283,185 @@ theorem shor_random_a_success_pi {ι : Type*} [Fintype ι] (N : ι → ℕ) [∀
   rw [hcardprod, hcard]
   convert hbound using 4
 
+/-! ## gen-E — the general odd-composite headline (S7★-gen closing piece)
+
+Instantiating the `m`-fold coprime transport `shor_random_a_success_pi` (gen-D) at the prime-power
+factorisation of an arbitrary odd composite `N` closes the Shor random-`a` success bound for any
+odd `N` with at least two distinct prime factors. The indexing family is `↥N.primeFactors` (the
+Finset-as-subtype), with `N' p = p ^ (N.factorization p)`. The two product facts are ready-made in
+Mathlib (`Nat.prod_pow_primeFactors_factorization`, `Nat.pairwise_coprime_pow_primeFactors_factorization`);
+the gen-D side-conditions are discharged from primality exactly as in the two-prime-power headline
+`shor_random_a_success` (each `p ∈ N.primeFactors` is an odd prime since `p ∣ N` and `N` is odd, so
+its prime-power factor is cyclic with `orderOf (-1) = 2`). The free-index pair `i₁ ≠ i₀` comes from
+`Finset.one_lt_card` applied to `2 ≤ N.primeFactors.card`.
+-/
+
+open Classical in
+/-- **gen-E — Shor random-`a` success, general odd-composite headline (S7★-gen).** For an odd `N`
+with at least two distinct prime factors, the Shor "GOOD" event covers at least half of `(ZMod N)ˣ`:
+```
+|(ZMod N)ˣ| ≤ 2 · #{a : Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1}.
+```
+
+A uniformly random unit `a` mod `N` has even multiplicative order and `a^(r/2) ≢ -1` (so the
+order-finding step yields a non-trivial factor of `N`) with probability `≥ 1/2`. Proof: instantiate
+`shor_random_a_success_pi` (gen-D) at `ι := ↥N.primeFactors`, `N' p := p ^ (N.factorization p)`.
+The product `∏ N' = N` is `Nat.prod_pow_primeFactors_factorization`; the pairwise coprimality is
+`Nat.pairwise_coprime_pow_primeFactors_factorization`. Per-factor: each `p ∈ N.primeFactors` is an
+odd prime (`p ∣ N`, `N` odd), so `ZMod (p^α)`ˣ is cyclic (`ZMod.isCyclic_units_of_prime_pow`) and
+`orderOf (-1) = 2` (`orderOf_neg_one`, `ringChar = p^α ≠ 2`). The free index pair `i₁ ≠ i₀` comes
+from `Finset.one_lt_card.mp hN`. The conclusion is transported from `∏ N'` to `N` by `prod_pow…`. -/
+theorem shor_random_a_success_general (N : ℕ) [NeZero N] (hodd : Odd N)
+    (hN : 2 ≤ N.primeFactors.card) :
+    Fintype.card (ZMod N)ˣ ≤
+      2 * (Finset.univ.filter (fun a : (ZMod N)ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card := by
+  classical
+  -- `N ≠ 0` from the two-distinct-primes hypothesis
+  have hN0 : N ≠ 0 := by
+    have hne : N.primeFactors.Nonempty := Finset.card_pos.mp (by omega)
+    rw [Nat.nonempty_primeFactors] at hne
+    omega
+  -- the prime-power factorisation as an indexed family over `↥N.primeFactors`
+  set N' : N.primeFactors → ℕ := fun p => (p : ℕ) ^ N.factorization p with hN'def
+  -- ∏ N' = N
+  have hprod : N = ∏ p, N' p := Nat.prod_pow_primeFactors_factorization hN0
+  -- pairwise coprimality
+  have hcop : Pairwise (Function.onFun Nat.Coprime N') :=
+    Nat.pairwise_coprime_pow_primeFactors_factorization
+  -- each `p ∈ N.primeFactors` is an odd prime
+  have hp_prime : ∀ p : N.primeFactors, (p : ℕ).Prime := fun p =>
+    Nat.prime_of_mem_primeFactors p.2
+  have hp_ne2 : ∀ p : N.primeFactors, (p : ℕ) ≠ 2 := by
+    intro p hcon
+    have hdvd : (p : ℕ) ∣ N := Nat.dvd_of_mem_primeFactors p.2
+    rw [hcon] at hdvd
+    exact (Nat.not_even_iff_odd.mpr hodd) (even_iff_two_dvd.mpr hdvd)
+  -- per-factor NeZero
+  haveI hNZ : ∀ p : N.primeFactors, NeZero (N' p) := by
+    intro p
+    refine ⟨?_⟩
+    rw [hN'def]
+    exact pow_ne_zero _ (hp_prime p).ne_zero
+  -- NeZero of the product (= N)
+  haveI hNZprod : NeZero (∏ p, N' p) := ⟨by rw [← hprod]; exact hN0⟩
+  -- per-factor cyclicity of the units group
+  haveI hcyc : ∀ p : N.primeFactors, IsCyclic (ZMod (N' p))ˣ := by
+    intro p
+    rw [hN'def]
+    exact ZMod.isCyclic_units_of_prime_pow (p : ℕ) (hp_prime p) (hp_ne2 p) (N.factorization p)
+  -- per-factor `orderOf (-1) = 2`
+  have hm : ∀ p : N.primeFactors, orderOf (-1 : (ZMod (N' p))ˣ) = 2 := by
+    intro p
+    have hp := hp_prime p
+    have hp2 := hp_ne2 p
+    set α := N.factorization (p : ℕ) with hα
+    -- `p^α ≠ 2` (odd prime power)
+    have hne2 : (p : ℕ) ^ α ≠ 2 := by
+      have h3 : 3 ≤ (p : ℕ) := by
+        rcases hp.eq_two_or_odd with h | h
+        · exact absurd h hp2
+        · have := hp.two_le; omega
+      have hα1 : 1 ≤ α := by
+        rw [hα, ← Nat.Prime.dvd_iff_one_le_factorization hp hN0]
+        exact Nat.dvd_of_mem_primeFactors p.2
+      have : 3 ≤ (p : ℕ) ^ α := le_trans h3 (Nat.le_self_pow (by omega) (p : ℕ))
+      omega
+    have hfact : Fact (1 < (p : ℕ) ^ α) := ⟨by
+      have hα1 : 1 ≤ α := by
+        rw [hα, ← Nat.Prime.dvd_iff_one_le_factorization hp hN0]
+        exact Nat.dvd_of_mem_primeFactors p.2
+      calc 1 < (p : ℕ) := hp.one_lt
+        _ ≤ (p : ℕ) ^ α := Nat.le_self_pow (by omega) (p : ℕ)⟩
+    have : Nontrivial (ZMod ((p : ℕ) ^ α)) := ZMod.nontrivial _
+    show orderOf (-1 : (ZMod ((p : ℕ) ^ α))ˣ) = 2
+    rw [← orderOf_units, Units.val_neg, Units.val_one, orderOf_neg_one,
+      ZMod.ringChar_zmod_n, if_neg hne2]
+  -- the free-index pair `i₁ ≠ i₀` from `2 ≤ N.primeFactors.card`
+  obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp hN
+  set i₀ : N.primeFactors := ⟨a, ha⟩ with hi₀
+  set i₁ : N.primeFactors := ⟨b, hb⟩ with hi₁
+  have hi : i₁ ≠ i₀ := by
+    rw [hi₀, hi₁]
+    exact fun h => hab (congrArg Subtype.val h).symm
+  -- instantiate gen-D and transport the conclusion from `∏ N'` to `N`
+  have hbound := shor_random_a_success_pi N' hcop hm i₀ i₁ hi
+  -- `hprod : N = ∏ p, N' p`; transport the dependent `ZMod`/`Fintype` motive across the modulus
+  -- equality via the units MulEquiv `e : (ZMod N)ˣ ≃* (ZMod (∏ N'))ˣ` (a bare `rw`/`subst` on
+  -- `hprod` fails: the motive is not type-correct, the `Fintype` instance inside
+  -- `Fintype.card (ZMod N)ˣ` depends on `N`). `e` preserves `orderOf` and sends `-1 ↦ -1`, so the
+  -- GOOD filter cards agree, and `Fintype.card_congr e.toEquiv` factors the cardinality.
+  set M := ∏ p, N' p with hM
+  -- the ring iso `ZMod N ≃+* ZMod M` from the modulus equality `N = M`
+  have hNM : N = M := hprod
+  set φ : ZMod N ≃+* ZMod M := hNM ▸ RingEquiv.refl (ZMod N) with hφ
+  set e : (ZMod N)ˣ ≃* (ZMod M)ˣ := Units.mapEquiv φ.toMulEquiv with he
+  have hcardN : Fintype.card (ZMod N)ˣ = Fintype.card (ZMod M)ˣ :=
+    Fintype.card_congr e.toEquiv
+  have hgoodN :
+      (Finset.univ.filter (fun a : (ZMod N)ˣ =>
+          Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card
+        = (Finset.univ.filter (fun b : (ZMod M)ˣ =>
+          Even (orderOf b) ∧ b ^ (orderOf b / 2) ≠ -1)).card := by
+    have horder : ∀ a, orderOf (e a) = orderOf a := fun a => e.orderOf_eq a
+    have hneg : e (-1) = -1 := by
+      apply Units.ext
+      rw [he, Units.coe_mapEquiv, RingEquiv.toMulEquiv_eq_coe, RingEquiv.coe_toMulEquiv,
+        Units.val_neg, Units.val_one, map_neg, map_one, Units.val_neg, Units.val_one]
+    have hpred : ∀ a : (ZMod N)ˣ,
+        (Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)
+          ↔ (Even (orderOf (e a)) ∧ (e a) ^ (orderOf (e a) / 2) ≠ -1) := by
+      intro a
+      rw [horder a]
+      refine and_congr_right (fun _ => ?_)
+      constructor
+      · intro h hc
+        exact h ((EmbeddingLike.apply_eq_iff_eq e).mp (by rw [map_pow, hc, hneg]))
+      · intro h hc
+        exact h (by rw [← hneg, ← hc, map_pow])
+    apply Finset.card_bij (fun a _ => e a)
+    · intro a ha
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ha ⊢
+      exact (hpred a).mp ha
+    · intro a₁ _ a₂ _ h; exact e.injective h
+    · intro b hb
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hb ⊢
+      refine ⟨e.symm b, ?_, ?_⟩
+      · rw [(hpred (e.symm b)), e.apply_symm_apply]; exact hb
+      · exact e.apply_symm_apply b
+  rw [hcardN, hgoodN]
+  exact hbound
+
+/-- **gen-E — Shor random-`a` success, general odd-composite probability reading.** The counting
+bound `shor_random_a_success_general` restated as a probability: under uniform sampling of a unit
+`a` mod an odd `N` with at least two distinct prime factors, the success probability
+`#GOOD / #units` is at least `1/2`:
+```
+1/2 ≤ #{a : Even (orderOf a) ∧ a^(orderOf a/2) ≠ -1} / |(ZMod N)ˣ|.
+```
+
+Pure `ℚ`-arithmetic corollary of `shor_random_a_success_general` (`|units| ≤ 2·#GOOD`), mirroring
+`shor_success_prob_ge`: clear the denominator (`le_div_iff₀`, with `0 < |units|` from
+`Fintype.card_pos`), cast, and `linarith`. `N ≠ 0` (hence the `Fintype (ZMod N)`) is recovered from
+the two-distinct-primes hypothesis. -/
+theorem shor_success_prob_ge_general (N : ℕ) [NeZero N] (hodd : Odd N)
+    (hN : 2 ≤ N.primeFactors.card) :
+    (1 : ℚ) / 2 ≤
+      ((Finset.univ.filter (fun a : (ZMod N)ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card : ℚ)
+        / (Fintype.card (ZMod N)ˣ : ℚ) := by
+  classical
+  -- the counting bound: |units| ≤ 2 · #GOOD (same GOOD filter)
+  have hcard := shor_random_a_success_general N hodd hN
+  -- |units| > 0 : the units group is nonempty (`1` is a unit)
+  have hpos : 0 < Fintype.card (ZMod N)ˣ := Fintype.card_pos
+  have hposq : (0 : ℚ) < (Fintype.card (ZMod N)ˣ : ℚ) := by exact_mod_cast hpos
+  rw [le_div_iff₀ hposq]
+  -- goal: 1/2 * |units| ≤ #GOOD ; from |units| ≤ 2·#GOOD over ℕ, cast to ℚ
+  have hcardq : (Fintype.card (ZMod N)ˣ : ℚ)
+      ≤ 2 * ((Finset.univ.filter (fun a : (ZMod N)ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card : ℚ) := by
+    exact_mod_cast hcard
+  linarith
+
 end CSD.Empirical.QM.Shor
