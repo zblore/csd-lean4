@@ -570,14 +570,26 @@ single-system lifts.
     transition-preservers), and the converse hooks `transProb_eq_one_iff` /
     `transProb_eq_zero_iff` (equality + orthogonality characterisations). Foundational-
     triple-only, AxiomAudit-pinned, Tier-A audited SOUND.
-  - **Converse still OPEN** (the rigidity theorem proper). Decomposition: (1) a transProb-
-    preserving map preserves orthogonality and maps ONBs to ONBs [hook done]; (2) extract a
-    semilinear map agreeing with it (phase tracking via superposition states — the
-    coherence/cocycle step, the crux); (3) rule out the antiunitary branch via the Kähler
-    complex structure. **Audit watch (per the foundation audit):** the antiunitary-exclusion
-    step must DERIVE ℂ-linearity, not assume it as a hypothesis (smuggled linearity would
-    beg the question). Two completion routes are a posture decision for the maintainer:
-    a full sorry-free proof (multi-session; preserves the one-axiom posture), or a
+  - **Converse still OPEN** (the rigidity theorem proper). Decomposition:
+    - **(1) DONE 2026-06-08** (`Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean`):
+      the `TransProbPreserving` predicate, `.injective` (Wigner "no information loss", derived
+      from the predicate alone), the `U(N) → TransProbPreserving` realisability inclusion,
+      orthogonality preservation (`.orthogonal`, `.inner_rep_eq_zero_iff`), and
+      orthonormal-frame preservation (`.pairwise_orthogonal`,
+      `orthonormalBasis_pairwise_orthogonal`). Foundational-triple-only, AxiomAudit-pinned,
+      Tier-A audited SOUND (predicate satisfiable AND restrictive).
+    - **(2) OPEN — the crux.** Extract a semilinear map agreeing with `f` by phase-tracking
+      via superposition states (the coherence/cocycle step). Sub-decomposition: (2a) image of
+      an ONB is an ONB frame (pairwise-orthogonal + full cardinality ⟹ basis) — bounded,
+      next deliverable; (2b) candidate map on basis elements; (2c) phase-coordinate datum
+      from `f(mk(bᵢ+bⱼ))` as an explicit inspectable object — the genuine research-grade
+      crux; (2d) agreement + semilinearity.
+    - **(3) OPEN.** Rule out the antiunitary branch via the Kähler complex structure.
+    **Audit watch (per the foundation + step-1 audits):** step (3) must DERIVE ℂ-linearity,
+    not assume it as a hypothesis (smuggled linearity would beg the question — attempt to
+    inhabit the step-(2)/(3) hypotheses with an antiunitary witness to check).
+    Two completion routes are a posture decision for the maintainer: a full sorry-free proof
+    (multi-session; preserves the one-axiom posture — the chosen route, in progress), or a
     busch-style "library-debt" axiom `wigner_fs_rigidity` (closes §13 now but reintroduces a
     second imported axiom).
   - This step is additionally coupled to **D1**: the "ontic flow realising the unitary" in
