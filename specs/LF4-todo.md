@@ -556,13 +556,32 @@ isometry on `Htensor` then follows from the tensor product of the
 single-system lifts.
 
 **Discharge prerequisites:**
-- §2 (preparation-to-Hilbert correspondence, PARTIAL).
+- §2 (preparation-to-Hilbert correspondence) — **DONE for pure-state classes** (2026-06-08;
+  see §2). Not the real blocker.
 - §7 (projective-first outcomes, DONE).
 - §8 (concrete Kähler `SectorData`).
-- A new lemma "symplectomorphism of cone(ℂℙⁿ) lifts uniquely to a
-  unitary on ℂⁿ⁺¹ up to a global phase," which is standard for compact
-  Kähler manifolds with isometric group actions but is not currently in
-  Mathlib at the abstract level.
+- The real blocker: a **Wigner / Fubini–Study rigidity lemma** — "a transition-probability-
+  preserving self-map of `ℙ ℂ E` is induced by a unitary" (equivalently
+  `Isom(ℂℙⁿ) = PU(n+1)`; the cone-of-ℂℙⁿ symplectomorphism lifts to `U(n+1)` up to phase).
+  Not in Mathlib; genuinely multi-session.
+  - **Foundation + forward direction LANDED 2026-06-08**
+    (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/TransitionProbability.lean`): the
+    `transProb` API, the realisability half `transProb_smul_unitary` (`U(N) ⊆`
+    transition-preservers), and the converse hooks `transProb_eq_one_iff` /
+    `transProb_eq_zero_iff` (equality + orthogonality characterisations). Foundational-
+    triple-only, AxiomAudit-pinned, Tier-A audited SOUND.
+  - **Converse still OPEN** (the rigidity theorem proper). Decomposition: (1) a transProb-
+    preserving map preserves orthogonality and maps ONBs to ONBs [hook done]; (2) extract a
+    semilinear map agreeing with it (phase tracking via superposition states — the
+    coherence/cocycle step, the crux); (3) rule out the antiunitary branch via the Kähler
+    complex structure. **Audit watch (per the foundation audit):** the antiunitary-exclusion
+    step must DERIVE ℂ-linearity, not assume it as a hypothesis (smuggled linearity would
+    beg the question). Two completion routes are a posture decision for the maintainer:
+    a full sorry-free proof (multi-session; preserves the one-axiom posture), or a
+    busch-style "library-debt" axiom `wigner_fs_rigidity` (closes §13 now but reintroduces a
+    second imported axiom).
+  - This step is additionally coupled to **D1**: the "ontic flow realising the unitary" in
+    the §13 hypothesis is itself a `Φ≠id` dynamics, the open frontier.
 
 **Effect on pre-LF4 / LF4 work:** Pre-LF4, `CSDCloningBundle` carries
 `bridge_isometry` as a structural field. Callers attempting to
