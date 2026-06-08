@@ -182,12 +182,16 @@ indexed-product-over-all-primes machinery. General `m ≥ 2` (indexed `∏ᵢ`, 
 is a generalisation flagged as stretch.
 
 **Sub-tranches (execute bottom-up; each a scoped two-agent loop):**
-- **S7b — per-cyclic-factor v₂-distribution bound [the meaty core, do FIRST; self-contained,
-  reusable].** In a finite cyclic group `G` of even order, `2 · #{a ∈ G : v₂(orderOf a) = k} ≤ |G|`
-  for every `k`. Route: count by order via `orderOf_eq_totient` (`#{ord = d} = φ(d)`); the
-  `v₂ = k` class has size `∑_{e | odd-part} φ(2^k · e) = φ(2^k) · u` where `|G| = 2^c · u`; with
-  `φ(2^k) ≤ 2^{c-1}` for `k ≤ c` (max at `k = c`: `φ(2^c) = 2^{c-1}`), the class is `≤ 2^{c-1} u =
-  |G|/2`. Medium-hard.
+- **S7b — per-cyclic-factor v₂-distribution bound — DONE 2026-06-08** (`ShorRandomA.lean`,
+  `card_v2_orderOf_le`, foundational-triple-only, AxiomAudit-pinned). In a finite cyclic group `G`
+  of even order, `2 · #{a ∈ G : v₂(orderOf a) = k} ≤ |G|` for every `k`. **Route taken: generator**
+  (not totient) — the power map `t : Fin n ↦ g^t` is a bijection (`Equiv.ofBijective` via
+  `pow_injOn_Iio_orderOf`), the `v₂=k` class transports to a parity class of `Fin n`: the `k = c`
+  class (`c = v₂ n`) injects into the odd residues, every other class into the even residues, both
+  of size `n/2` (`card_odd_fin`/`card_even_fin`); valuation fact `v2_orderOf_pow`
+  (`v₂(orderOf g^t) = c − min(c, v₂ t)` via `orderOf_pow` + `Nat.factorization_div`/`_gcd`).
+  Independently audited SOUND: contentful and TIGHT at `ℤ/6` (`2·3 = 6`), and `hev` proved
+  load-bearing (theorem FALSE without it: `ℤ/3` gives `2·3 > 3`).
 - **S7c — the `−1` characterisation.** In a cyclic group of even order, `−1` is the unique order-2
   element, and (per factor) `aᵢ^{r/2} = −1 ⟺ v₂(ord aᵢ) = v₂(r) = d`; `r` odd `⟺ d₁ = d₂ = 0`.
   Combined over the two factors: BAD (`r` odd ∨ `a^{r/2} ≡ −1`) `⟺ d₁ = d₂`. Needs the lcm /
