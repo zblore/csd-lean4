@@ -644,6 +644,13 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.card_v2_orderOf_le
 
+-- S7c: the `−1` characterisation (abstract cyclic core). In a finite cyclic group the unique
+-- order-2 element `z` is hit by `a^(R/2)` iff v₂(orderOf a) = v₂(R). Per-cyclic-factor core of the
+-- Shor `a^(r/2) = -1` success condition. Pure finite group theory; foundational triple.
+/-- info: 'CSD.Empirical.QM.Shor.pow_half_eq_orderTwo_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Shor.pow_half_eq_orderTwo_iff
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef

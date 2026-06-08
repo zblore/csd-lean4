@@ -192,10 +192,16 @@ is a generalisation flagged as stretch.
   (`v₂(orderOf g^t) = c − min(c, v₂ t)` via `orderOf_pow` + `Nat.factorization_div`/`_gcd`).
   Independently audited SOUND: contentful and TIGHT at `ℤ/6` (`2·3 = 6`), and `hev` proved
   load-bearing (theorem FALSE without it: `ℤ/3` gives `2·3 > 3`).
-- **S7c — the `−1` characterisation.** In a cyclic group of even order, `−1` is the unique order-2
-  element, and (per factor) `aᵢ^{r/2} = −1 ⟺ v₂(ord aᵢ) = v₂(r) = d`; `r` odd `⟺ d₁ = d₂ = 0`.
-  Combined over the two factors: BAD (`r` odd ∨ `a^{r/2} ≡ −1`) `⟺ d₁ = d₂`. Needs the lcm /
-  2-adic-valuation bookkeeping and `−1 = the order-2 element`. Hard.
+- **S7c — the `−1` characterisation (abstract cyclic core) — DONE 2026-06-08** (`ShorRandomA.lean`,
+  `pow_half_eq_orderTwo_iff`, foundational-triple-only, AxiomAudit-pinned). In a finite cyclic group
+  with order-2 element `z`, for `R` even (`≠0`) with `ord a ∣ R`: `a^(R/2) = z ⟺ v₂(ord a) = v₂(R)`.
+  Route: `a^(R/2)` is a √1 (`a^R=1`), so `∈ {1,z}` (cyclic ⟹ order-2 singleton via
+  `IsCyclic.card_orderOf_eq_totient`, `φ(2)=1`); `a^(R/2)=1 ⟺ ord a ∣ R/2 ⟺ v₂(ord a) < v₂(R)`
+  (private ℕ-valuation helper `dvd_half_iff_v2_lt` via `Nat.factorization_le_iff_dvd` /
+  `Nat.factorization_div`); so `=z ⟺ ≠1 ⟺ v₂ equal`. Independently audited SOUND with both-true
+  (`C₄`: a=g,R=4) and both-false (a=z,R=4) witnesses (iff genuinely two-directional), reproduced on
+  `C₈`; `hz`/`hdvd` proved load-bearing. The `z := −1`-in-each-cyclic-factor instantiation and the
+  CRT `−1 ↔ (−1,−1)` split are deferred to S7a/S7d.
 - **S7a — two-factor CRT framing.** `(ZMod N)ˣ ≃* G₁ × G₂` (`Gᵢ = (ZMod pᵢ^{αᵢ})ˣ`, cyclic even)
   from `ZMod.chineseRemainder` + `MulEquiv.prodUnits`; transport `#GOOD`/`#BAD` to a count over
   `G₁ × G₂`. Medium.

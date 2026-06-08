@@ -216,4 +216,115 @@ theorem card_v2_orderOf_le {G : Type*} [Group G] [Fintype G] [IsCyclic G]
     rw [card_even_fin n hev] at hle
     omega
 
+/-! ## S7c — the `−1` characterisation (abstract cyclic core)
+
+In a finite cyclic group `G`, the unique order-2 element `z` (e.g. `-1` in a units group) is hit
+by `a ^ (R/2)` exactly when the 2-adic valuation of `orderOf a` equals that of `R`. This is the
+per-cyclic-factor core of Shor's "`a^(r/2) = -1`" success condition (S7).
+-/
+
+/-- **ℕ valuation lemma (Step A).** For `m ∣ R` with `R` even and both nonzero, `m` divides the
+half `R/2` iff its 2-adic valuation is *strictly* below that of `R`. The non-2 primes are
+unconstrained by halving (`m ∣ R` already bounds them); the `p = 2` slot drops by exactly one
+(`Nat.factorization_div` on the divisor `2`, `(2).factorization = single 2 1`). -/
+private theorem dvd_half_iff_v2_lt {m R : ℕ} (hm : m ≠ 0) (hR0 : R ≠ 0)
+    (h2R : 2 ∣ R) (hmR : m ∣ R) :
+    m ∣ (R / 2) ↔ m.factorization 2 < R.factorization 2 := by
+  have hR2 : R / 2 ≠ 0 := by
+    obtain ⟨k, hk⟩ := h2R; omega
+  have hvR1 : 1 ≤ R.factorization 2 :=
+    (Nat.Prime.dvd_iff_one_le_factorization Nat.prime_two hR0).mp h2R
+  have hfac : (R / 2).factorization = R.factorization - (2 : ℕ).factorization :=
+    Nat.factorization_div h2R
+  have hfac2 : (R / 2).factorization 2 = R.factorization 2 - 1 := by
+    rw [hfac, Finsupp.tsub_apply, Nat.Prime.factorization Nat.prime_two,
+      Finsupp.single_eq_same]
+  have hfacne : ∀ p, p ≠ 2 → (R / 2).factorization p = R.factorization p := by
+    intro p hp
+    rw [hfac, Finsupp.tsub_apply, Nat.Prime.factorization Nat.prime_two,
+      Finsupp.single_eq_of_ne hp, Nat.sub_zero]
+  have hmleR : ∀ p, m.factorization p ≤ R.factorization p := by
+    have := (Nat.factorization_le_iff_dvd hm hR0).mpr hmR
+    intro p; exact (Finsupp.le_def.mp this) p
+  rw [← Nat.factorization_le_iff_dvd hm hR2, Finsupp.le_def]
+  constructor
+  · intro h
+    have h2 := h 2
+    rw [hfac2] at h2
+    omega
+  · intro hlt p
+    by_cases hp2 : p = 2
+    · subst hp2; rw [hfac2]; omega
+    · rw [hfacne p hp2]; exact hmleR p
+
+/-- **Square-root-of-1 dichotomy in a finite cyclic group (Step B).** If `w ^ 2 = 1` and `z` is an
+order-2 element of the cyclic group, then `w` is either `1` or `z`: the order-2 elements form a
+singleton (`IsCyclic.card_orderOf_eq_totient`, `Nat.totient 2 = 1`), so `w` of order 2 must equal
+`z`. -/
+private theorem sqrt_one_dichotomy {G : Type*} [Group G] [Fintype G] [IsCyclic G]
+    {z : G} (hz : orderOf z = 2) {w : G} (hw : w ^ 2 = 1) :
+    w = 1 ∨ w = z := by
+  classical
+  have h2card : 2 ∣ Fintype.card G := hz ▸ orderOf_dvd_card
+  have hsing : (Finset.univ.filter (fun a : G => orderOf a = 2)).card = 1 := by
+    rw [IsCyclic.card_orderOf_eq_totient h2card]; decide
+  have hwdvd : orderOf w ∣ 2 := orderOf_dvd_iff_pow_eq_one.mpr hw
+  rcases (Nat.dvd_prime Nat.prime_two).mp hwdvd with h1 | h2
+  · left; exact orderOf_eq_one_iff.mp h1
+  · right
+    obtain ⟨x, hx⟩ := Finset.card_eq_one.mp hsing
+    have hwmem : w ∈ Finset.univ.filter (fun a : G => orderOf a = 2) := by
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]; exact h2
+    have hzmem : z ∈ Finset.univ.filter (fun a : G => orderOf a = 2) := by
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and]; exact hz
+    rw [hx, Finset.mem_singleton] at hwmem hzmem
+    rw [hwmem, hzmem]
+
+/-- **S7c — the `−1` characterisation, abstract cyclic core.**
+
+In a finite cyclic group `G` with unique order-2 element `z`, and `a` an element whose order
+divides an even `R ≠ 0`:
+```
+a ^ (R / 2) = z   ↔   v₂(orderOf a) = v₂(R).
+```
+`a ^ (R/2)` is a square-root of `1` (its square is `a ^ R = 1`), so by the cyclic dichotomy
+(`sqrt_one_dichotomy`) it is `1` or `z`. It is `1` exactly when `orderOf a ∣ R/2`, i.e.
+`v₂(orderOf a) < v₂(R)` (`dvd_half_iff_v2_lt`). Since `orderOf a ∣ R` forces
+`v₂(orderOf a) ≤ v₂(R)`, the negation of the strict inequality is precisely equality, which is
+therefore equivalent to hitting `z`. This is the per-cyclic-factor input to the Shor
+`a^(r/2) = -1` success condition. -/
+theorem pow_half_eq_orderTwo_iff {G : Type*} [Group G] [Fintype G] [IsCyclic G]
+    {z : G} (hz : orderOf z = 2)
+    {a : G} {R : ℕ} (hR : Even R) (hR0 : R ≠ 0) (hdvd : orderOf a ∣ R) :
+    a ^ (R / 2) = z ↔ (orderOf a).factorization 2 = R.factorization 2 := by
+  classical
+  set m := orderOf a with hm
+  have hm0 : m ≠ 0 := by rw [hm]; exact (orderOf_pos a).ne'
+  have h2R : 2 ∣ R := hR.two_dvd
+  have hmleR : m.factorization 2 ≤ R.factorization 2 := by
+    have := (Nat.factorization_le_iff_dvd hm0 hR0).mpr hdvd
+    exact (Finsupp.le_def.mp this) 2
+  have hz1 : z ≠ 1 := by
+    intro h; rw [h, orderOf_one] at hz; exact absurd hz (by decide)
+  have hsq : (a ^ (R / 2)) ^ 2 = 1 := by
+    rw [← pow_mul]
+    have : R / 2 * 2 = R := by omega
+    rw [this]
+    exact orderOf_dvd_iff_pow_eq_one.mp hdvd
+  have hdich := sqrt_one_dichotomy hz hsq
+  have heq1 : a ^ (R / 2) = 1 ↔ m.factorization 2 < R.factorization 2 := by
+    rw [← orderOf_dvd_iff_pow_eq_one, ← hm]
+    exact dvd_half_iff_v2_lt hm0 hR0 h2R hdvd
+  constructor
+  · intro hzeq
+    have hne1 : a ^ (R / 2) ≠ 1 := by rw [hzeq]; exact hz1
+    have : ¬ (m.factorization 2 < R.factorization 2) := fun h => hne1 (heq1.mpr h)
+    omega
+  · intro heq
+    have hnlt : ¬ (m.factorization 2 < R.factorization 2) := by omega
+    have hne1 : a ^ (R / 2) ≠ 1 := fun h => hnlt (heq1.mp h)
+    rcases hdich with h | h
+    · exact absurd h hne1
+    · exact h
+
 end CSD.Empirical.QM.Shor
