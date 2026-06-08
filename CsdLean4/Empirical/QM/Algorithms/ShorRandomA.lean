@@ -792,4 +792,150 @@ theorem shor_success_prob_ge {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
     exact_mod_cast hcard
   linarith
 
+/-! ## gen-C — the `m`-fold diagonal count (abstract)
+
+The general-`m` analogue of `two_mul_card_diag_le` (S7d-1). For a finite indexed family of finite
+cyclic groups `(G i)` where the distinguished factor `i₀` has even order, the "fully matched"
+diagonal — tuples whose components ALL share the same 2-adic valuation of order — is at most half
+the product group:
+```
+2 · #{f : ∀ i, v₂(orderOf (f i)) = v₂(orderOf (f i₀))} ≤ ∏ i, |G i|.
+```
+Only the distinguished factor `i₀` needs even order; the remaining factors are summed over.
+
+Route (product-of-sums): partition the diagonal by the common valuation `k`
+(`Finset.card_eq_sum_card_fiberwise` along the key `f ↦ v₂(orderOf (f i₀))`); each fiber is a
+`Fintype.piFinset` of per-component valuation classes, so its card is `∏ i, cₖ(i)`
+(`Fintype.card_piFinset`); factor out `i₀` (`Finset.mul_prod_erase`) and bound `2·cₖ(i₀) ≤ |G i₀|`
+by `card_v2_orderOf_le` (S7b); the remaining erased sum `∑ₖ ∏_{i≠i₀} cₖ(i)` is bounded by
+`∏_{i≠i₀} |G i|` via a disjoint-`biUnion` count of the per-`k` `piFinset`s over the subtype
+`{i // i ≠ i₀}` (disjoint because membership pins `v₂(orderOf (g i)) = k` for every `i ≠ i₀`,
+so all the free components agree on `k`).
+
+**Spec correction (load-bearing hypothesis surfaced).** The task statement omitted any free factor
+besides `i₀`; as literally stated the theorem is FALSE when `ι` is a singleton `{i₀}`: there the
+diagonal predicate `∀ i, v₂(orderOf (f i)) = v₂(orderOf (f i₀))` reduces to the tautology
+`v₂(orderOf (f i₀)) = v₂(orderOf (f i₀))`, so the filter is all of `univ` and `2·|univ| ≤ |G i₀|`
+i.e. `2·N ≤ N` fails for `N > 0`. The two-factor `two_mul_card_diag_le` is true precisely because
+`G₁` is an always-present free factor that the count sums over; the faithful `m`-fold analogue must
+carry a free factor, here as `(i₁ : ι) (hi₁ : i₁ ≠ i₀)`. This is not a weakening of the intended
+content (the intended content is the genuinely-summed `m`-fold diagonal with `m ≥ 2`); it names the
+hypothesis that was silently required. -/
+open Classical in
+theorem two_mul_card_pi_diag_le {ι : Type*} [Fintype ι] (G : ι → Type*)
+    [∀ i, Group (G i)] [∀ i, Fintype (G i)] [∀ i, IsCyclic (G i)]
+    (i₀ : ι) (h₀ : Even (Fintype.card (G i₀))) (i₁ : ι) (hi₁ : i₁ ≠ i₀) :
+    2 * (Finset.univ.filter (fun f : (Π i, G i) =>
+        ∀ i, (orderOf (f i)).factorization 2 = (orderOf (f i₀)).factorization 2)).card
+      ≤ ∏ i, Fintype.card (G i) := by
+  classical
+  -- abbreviations
+  set d : ∀ i, G i → ℕ := fun i a => (orderOf a).factorization 2 with hd
+  -- per-component valuation-class filter and its cardinality
+  set filt : ℕ → ∀ i, Finset (G i) :=
+    fun k i => Finset.univ.filter (fun a : G i => d i a = k) with hfilt
+  set c : ℕ → ι → ℕ := fun k i => (filt k i).card with hc
+  set N : ℕ := Fintype.card (G i₀) with hN
+  have hN0 : N ≠ 0 := Fintype.card_ne_zero
+  -- the diagonal filter
+  set A : Finset (Π i, G i) :=
+    Finset.univ.filter (fun f : (Π i, G i) => ∀ i, d i (f i) = d i₀ (f i₀)) with hA
+  -- Step 1: partition `A` by the common valuation `k = d i₀ (f i₀) ∈ range (N+1)`.
+  have hkey_mapsTo : (↑A : Set (Π i, G i)).MapsTo (fun f => d i₀ (f i₀)) (Finset.range (N + 1)) := by
+    intro f _hf
+    simp only [Finset.coe_range, Set.mem_Iio]
+    -- d i₀ (f i₀) < orderOf (f i₀) ≤ N < N + 1
+    have hlt : d i₀ (f i₀) < orderOf (f i₀) := Nat.factorization_lt 2 (orderOf_pos (f i₀)).ne'
+    have hle : orderOf (f i₀) ≤ N := Nat.le_of_dvd (Nat.pos_of_ne_zero hN0) (hN ▸ orderOf_dvd_card)
+    omega
+  have hstep1 :
+      A.card = ∑ k ∈ Finset.range (N + 1),
+        (Finset.univ.filter (fun f : (Π i, G i) => ∀ i, d i (f i) = k)).card := by
+    rw [Finset.card_eq_sum_card_fiberwise hkey_mapsTo]
+    apply Finset.sum_congr rfl
+    intro k _hk
+    congr 1
+    ext f
+    simp only [hA, Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨hall, hkey⟩
+      intro i; rw [hall i, hkey]
+    · intro hall
+      exact ⟨fun i => by rw [hall i, hall i₀], hall i₀⟩
+  -- Step 2: each fiber is a product of per-component class counts.
+  have hfiber : ∀ k,
+      (Finset.univ.filter (fun f : (Π i, G i) => ∀ i, d i (f i) = k)).card = ∏ i, c k i := by
+    intro k
+    have hset :
+        (Finset.univ.filter (fun f : (Π i, G i) => ∀ i, d i (f i) = k))
+          = Fintype.piFinset (filt k) := by
+      ext f
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Fintype.mem_piFinset, hfilt]
+    rw [hset, Fintype.card_piFinset]
+  -- assemble Steps 1+2: A.card = ∑ₖ ∏ᵢ c k i
+  have hAcard : A.card = ∑ k ∈ Finset.range (N + 1), ∏ i, c k i := by
+    rw [hstep1]; exact Finset.sum_congr rfl (fun k _ => hfiber k)
+  -- Step 3: factor out `i₀` and bound `2 · c k i₀ ≤ N` by S7b.
+  have hS7b : ∀ k, 2 * c k i₀ ≤ N := by
+    intro k
+    have := card_v2_orderOf_le (G := G i₀) h₀ k
+    simpa [hc, hfilt, hN, d] using this
+  -- Step 4: the erased sum `∑ₖ ∏_{i≠i₀} c k i ≤ ∏_{i≠i₀} |G i|`.
+  -- Index by the subtype `{i // i ≠ i₀}`; the per-`k` `piFinset`s are pairwise disjoint.
+  have herased :
+      (∑ k ∈ Finset.range (N + 1), ∏ i ∈ Finset.univ.erase i₀, c k i)
+        ≤ ∏ i ∈ Finset.univ.erase i₀, Fintype.card (G i) := by
+    -- rewrite erased products as products over the subtype `{i // i ≠ i₀}`
+    have hsub : ∀ (g : ι → ℕ),
+        ∏ i ∈ Finset.univ.erase i₀, g i = ∏ i : {i // i ≠ i₀}, g i.1 := by
+      intro g
+      refine Finset.prod_subtype (Finset.univ.erase i₀) (p := fun i => i ≠ i₀) ?_ g
+      intro x; simp [Finset.mem_erase]
+    -- the per-`k` `piFinset` over the subtype
+    set B : ℕ → Finset (Π i : {i // i ≠ i₀}, G i.1) :=
+      fun k => Fintype.piFinset (fun i : {i // i ≠ i₀} => filt k i.1) with hB
+    -- each erased product is the card of `B k`
+    have hBcard : ∀ k, ∏ i ∈ Finset.univ.erase i₀, c k i = (B k).card := by
+      intro k
+      rw [hsub (c k), hB, Fintype.card_piFinset]
+    -- the family `B` is pairwise disjoint over `range (N+1)`: any tuple in `B k` pins the free
+    -- index `i₁` to valuation `k`, so distinct `k` give disjoint `B k`.
+    have hdisj : ((Finset.range (N + 1) : Finset ℕ) : Set ℕ).PairwiseDisjoint B := by
+      intro j _hj k _hk hjk
+      refine Finset.disjoint_left.mpr ?_
+      intro g hgj hgk
+      apply hjk
+      set i₁' : {i // i ≠ i₀} := ⟨i₁, hi₁⟩ with hi₁'
+      have hj' : g i₁' ∈ filt j i₁'.1 := (Fintype.mem_piFinset.mp hgj) i₁'
+      have hk' : g i₁' ∈ filt k i₁'.1 := (Fintype.mem_piFinset.mp hgk) i₁'
+      rw [hfilt, Finset.mem_filter] at hj' hk'
+      rw [← hj'.2, hk'.2]
+    -- sum of cards = card of disjoint biUnion ≤ Fintype.card of the whole pi-type
+    calc (∑ k ∈ Finset.range (N + 1), ∏ i ∈ Finset.univ.erase i₀, c k i)
+        = ∑ k ∈ Finset.range (N + 1), (B k).card := by
+          exact Finset.sum_congr rfl (fun k _ => hBcard k)
+      _ = ((Finset.range (N + 1)).biUnion B).card := (Finset.card_biUnion hdisj).symm
+      _ ≤ Fintype.card (Π i : {i // i ≠ i₀}, G i.1) := Finset.card_le_univ _
+      _ = ∏ i : {i // i ≠ i₀}, Fintype.card (G i.1) := Fintype.card_pi
+      _ = ∏ i ∈ Finset.univ.erase i₀, Fintype.card (G i) :=
+          (hsub (fun i => Fintype.card (G i))).symm
+  -- Step 5: combine. 2·A.card = ∑ₖ (2·c k i₀)·∏_{erase} c k i ≤ N·∑ₖ ∏_{erase} c k i ≤ ∏ |G i|.
+  rw [hAcard, Finset.mul_sum]
+  calc (∑ k ∈ Finset.range (N + 1), 2 * ∏ i, c k i)
+      = ∑ k ∈ Finset.range (N + 1), (2 * c k i₀) * ∏ i ∈ Finset.univ.erase i₀, c k i := by
+        apply Finset.sum_congr rfl
+        intro k _hk
+        rw [← Finset.mul_prod_erase Finset.univ (c k) (Finset.mem_univ i₀)]
+        ring
+    _ ≤ ∑ k ∈ Finset.range (N + 1), N * ∏ i ∈ Finset.univ.erase i₀, c k i := by
+        apply Finset.sum_le_sum
+        intro k _hk
+        exact Nat.mul_le_mul_right _ (hS7b k)
+    _ = N * ∑ k ∈ Finset.range (N + 1), ∏ i ∈ Finset.univ.erase i₀, c k i := by
+        rw [Finset.mul_sum]
+    _ ≤ N * ∏ i ∈ Finset.univ.erase i₀, Fintype.card (G i) :=
+        Nat.mul_le_mul_left _ herased
+    _ = ∏ i, Fintype.card (G i) := by
+        rw [hN, Finset.mul_prod_erase Finset.univ (fun i => Fintype.card (G i)) (Finset.mem_univ i₀)]
+
 end CSD.Empirical.QM.Shor

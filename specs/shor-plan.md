@@ -256,11 +256,20 @@ quantum core (M1/M1.5/S4) → order-finding output → recovery (S5) → factori
   `shor_good_transport` is **two-factor and needs BOTH factors cyclic**, so it does NOT induct
   directly (splitting `N = p^α·M` leaves `(ZMod M)ˣ` non-cyclic). The genuine general-`m` proof needs
   the **m-fold indexed-product machinery**: Mathlib HAS the indexed ring-CRT
-  `ZMod n ≃+* Π (p : n.primeFactors), ZMod (p^(n.factorization p))`, so it is feasible. Three Pi-form
-  tranches — **gen-C** (abstract m-fold diagonal count `2·#{f : all v₂(ord fᵢ) equal} ≤ ∏|Gᵢ|`, via
-  S7b on one factor + the product-of-sums count; self-contained, do first), **gen-A** (indexed
-  units-CRT + `orderOf`-in-Π = lcm + `−1 ↦ const`), **gen-B** (Pi characterisation `BAD ⟺ all
-  v₂(ord aₚ) equal`), then the general headline. Bound `1 − 1/2^{m−1} ≥ 1/2` for `m ≥ 2`.
+  `ZMod n ≃+* Π (p : n.primeFactors), ZMod (p^(n.factorization p))`, so it is feasible.
+  - **gen-C — abstract m-fold diagonal count — DONE 2026-06-08** (`ShorRandomA.lean`,
+    `two_mul_card_pi_diag_le`, foundational-triple-only, AxiomAudit-pinned). In a Π of cyclic groups
+    with a distinguished even-order factor `i₀` AND ≥ 2 indices: `2·#{f : ∀ i, v₂(ord (f i)) =
+    v₂(ord (f i₀))} ≤ ∏ᵢ |Gᵢ|`. Route: `Finset.card_eq_sum_card_fiberwise` (by the `i₀`-key) +
+    `Fintype.card_piFinset` (fiber = product count) + `Finset.mul_prod_erase` (factor out `i₀`) +
+    S7b at `i₀` + disjoint-`biUnion` bound on the erased factors. **Spec correction surfaced by the
+    expert + confirmed by the auditor:** the statement is FALSE without a second index
+    (`i₁ ≠ i₀`) — singleton `ι` makes the diagonal everything (`2N ≤ N`); and `h₀` (even order at
+    `i₀`) is also load-bearing (odd ⟹ all v₂=0 ⟹ diagonal = all). Both hypotheses verified exactly
+    necessary (counterexamples at `Unit` and `Bool × ZMod 3`). This is the `m ≥ 2` condition.
+  - **gen-A** (indexed units-CRT + `orderOf`-in-Π = lcm + `−1 ↦ const`), **gen-B** (Pi
+    characterisation `BAD ⟺ all v₂(ord aₚ) equal`), then the general headline. Bound
+    `1 − 1/2^{m−1} ≥ 1/2` for `m ≥ 2`.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;
