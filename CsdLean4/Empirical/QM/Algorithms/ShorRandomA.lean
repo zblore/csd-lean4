@@ -759,4 +759,37 @@ theorem shor_random_a_success {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
       ZMod.ringChar_zmod_n, if_neg hne2]
   exact shor_good_transport hcop hm hn
 
+/-- **S7★ — Shor random-`a` success, probability reading.** The counting bound
+`shor_random_a_success` restated as a probability: under uniform sampling of a unit
+`a` mod `N = p^α·q^β` (distinct odd primes, `α, β ≥ 1`), the success probability
+`#GOOD / #units` is at least `1/2`:
+```
+1/2 ≤ #{a : Even (orderOf a) ∧ a^(orderOf a/2) ≠ -1} / |(ZMod N)ˣ|.
+```
+
+Pure `ℚ`-arithmetic corollary of `shor_random_a_success` (`|units| ≤ 2·#GOOD`): clear the
+denominator (`le_div_iff₀`, with `0 < |units|` from `Fintype.card_pos` — a units group is
+nonempty via `1`), `push_cast`, and `linarith` against the cast counting bound. -/
+theorem shor_success_prob_ge {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
+    (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hpq : p ≠ q) {α β : ℕ}
+    [Fact p.Prime] [Fact q.Prime] (hα : 1 ≤ α) (hβ : 1 ≤ β) :
+    (1 : ℚ) / 2 ≤
+      ((Finset.univ.filter (fun a : (ZMod (p ^ α * q ^ β))ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card : ℚ)
+        / (Fintype.card (ZMod (p ^ α * q ^ β))ˣ : ℚ) := by
+  -- the counting bound: |units| ≤ 2 · #GOOD (same GOOD filter)
+  have hcard := shor_random_a_success hp hq hp2 hq2 hpq hα hβ
+  -- |units| > 0 : the units group is nonempty (`1` is a unit)
+  have hpos : 0 < Fintype.card (ZMod (p ^ α * q ^ β))ˣ :=
+    Fintype.card_pos
+  have hposq : (0 : ℚ) < (Fintype.card (ZMod (p ^ α * q ^ β))ˣ : ℚ) := by
+    exact_mod_cast hpos
+  rw [le_div_iff₀ hposq]
+  -- goal: 1/2 * |units| ≤ #GOOD ; from |units| ≤ 2·#GOOD over ℕ, cast to ℚ
+  have hcardq : (Fintype.card (ZMod (p ^ α * q ^ β))ˣ : ℚ)
+      ≤ 2 * ((Finset.univ.filter (fun a : (ZMod (p ^ α * q ^ β))ˣ =>
+        Even (orderOf a) ∧ a ^ (orderOf a / 2) ≠ -1)).card : ℚ) := by
+    exact_mod_cast hcard
+  linarith
+
 end CSD.Empirical.QM.Shor

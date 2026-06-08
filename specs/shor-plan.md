@@ -246,10 +246,21 @@ is a generalisation flagged as stretch.
 
 **`S7★` COMPLETE.** The whole Shor chain is now machine-checked end to end for two-prime-power `N`:
 quantum core (M1/M1.5/S4) → order-finding output → recovery (S5) → factoring (S6) → bridge
-(order⟹factor) → random-`a` success ≥ ½ (S7). Honest residue: the general-`m` extension (S7★-gen,
-arbitrary odd composite, by induction over the prime-power factorisation — `shor_good_transport` is
-already factor-agnostic) and a probability/`PMF` restatement of the counting bound (`#GOOD/#units ≥
-1/2`) are the only flagged optional follow-ups.
+(order⟹factor) → random-`a` success ≥ ½ (S7).
+
+**Residual items:**
+- **Probability restatement — DONE 2026-06-08** (`shor_success_prob_ge`, AxiomAudit-pinned,
+  foundational-triple-only): `(1:ℚ)/2 ≤ #GOOD / #(ZMod (p^α·q^β))ˣ` — the success FRACTION under
+  uniform sampling, a direct ℚ corollary of `shor_random_a_success` + `#units > 0` (`le_div_iff₀`).
+- **S7★-gen (arbitrary odd composite, general `m`) — IN PROGRESS.** Correction to an earlier note:
+  `shor_good_transport` is **two-factor and needs BOTH factors cyclic**, so it does NOT induct
+  directly (splitting `N = p^α·M` leaves `(ZMod M)ˣ` non-cyclic). The genuine general-`m` proof needs
+  the **m-fold indexed-product machinery**: Mathlib HAS the indexed ring-CRT
+  `ZMod n ≃+* Π (p : n.primeFactors), ZMod (p^(n.factorization p))`, so it is feasible. Three Pi-form
+  tranches — **gen-C** (abstract m-fold diagonal count `2·#{f : all v₂(ord fᵢ) equal} ≤ ∏|Gᵢ|`, via
+  S7b on one factor + the product-of-sums count; self-contained, do first), **gen-A** (indexed
+  units-CRT + `orderOf`-in-Π = lcm + `−1 ↦ const`), **gen-B** (Pi characterisation `BAD ⟺ all
+  v₂(ord aₚ) equal`), then the general headline. Bound `1 − 1/2^{m−1} ≥ 1/2` for `m ≥ 2`.
 
 **Honest cost / recommendation:** even `S7★` is the largest single tranche of the Shor effort, pure
 number theory (not physics). Shor's *correctness* is already morally complete (order ⟹ factor done;
