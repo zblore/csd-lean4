@@ -57,13 +57,20 @@ available) plus Uhlmann's theorem (not in Mathlib). Medium difficulty, Cat-1.
 **distinguishability headline** `traceDist ρ σ = 0 ↔ ρ = σ`; **symmetry** `traceDist_comm`
 (via the functional-calculus bridge `traceNorm A = Re Tr(cfc |·| A)` + `cfc_comp_neg`, so
 `traceNorm(−B) = traceNorm B`); `traceNorm_of_posSemidef` (trace norm of a state = its
-trace). Foundational-triple-only, AxiomAudit-pinned. So the metric core short of the
-triangle inequality is complete.
-**Honest residue (deferred — Mathlib lacks the scaffolding):** the **triangle inequality**
-(needs the Schatten-1 norm subadditivity, absent from Mathlib) and the **CPTP
-data-processing inequality** `D(Φρ,Φσ) ≤ D(ρ,σ)` (needs the variational characterisation
-`D = max₀≤P≤I Tr(P(ρ−σ))`). These are the genuine deep K3 theorems and a multi-session
-build; the eigenvalue-sum definition + the cfc bridge here are what they build on.
+trace). Foundational-triple-only, AxiomAudit-pinned.
+**K3 metric COMPLETE 2026-06-08** — the **triangle inequality** `traceDist_triangle`
+(`D(ρ,τ) ≤ D(ρ,σ) + D(σ,τ)`) landed, reduced to trace-norm subadditivity `traceNorm_add_le`.
+Since Mathlib registers no Loewner order on matrices and `sgn`/the positive projector are
+discontinuous, it was proved via the Jordan decomposition built from `Matrix.IsHermitian.cfc`
+(defined for any `f`): named `posPart`/`negPart`/`posProj`, the PSD-product trace linchpin
+`tr_psd_mul_nonneg` (`0 ≤ Re Tr(S·P)` for PSD `S,P`, via `√S = cfc √ S`), and the operator
+bound `Re Tr(A·P) ≤ Re Tr(A₊)` for `0 ≤ P ≤ I`. Foundational-triple-only, AxiomAudit-pinned
+(incl. the linchpin), Tier-A adversarially audited SOUND.
+**Honest residue (deferred):** the **CPTP data-processing inequality** `D(Φρ,Φσ) ≤ D(ρ,σ)`
+(needs the variational characterisation `D = max₀≤P≤I Re Tr(P(ρ−σ))`). The `posProj` +
+`tr_psd_mul_nonneg` machinery already supplies its load-bearing half (the bound
+`Re Tr((ρ−σ)·P) ≤ Re Tr((ρ−σ)₊)`, achieved at `P = posProj (ρ−σ)`); the remaining work is the
+variational identity + the channel-monotonicity step (using `QuantumInfo/Channel` positivity).
 
 ### K4 — measurement update / "LF5" (Lüders rule `ρ ↦ ΠρΠ / Tr`)
 Unblocks: BB84 / B92 disturbance security, teleportation *collapse* (today

@@ -1,7 +1,15 @@
 # Trace-distance triangle inequality — plan
 
 Completes the K3 metric core (`CsdLean4/Mathlib/QuantumInfo/TraceDistance.lean`). Drafted
-2026-06-05. Status: **planned, not started.**
+2026-06-05. Status: **DONE 2026-06-08.** `traceNorm_add_le` + `traceDist_triangle` landed
+via the decomposition route below (L1–L9), foundational-triple-only, both AxiomAudit-pinned
+(plus the linchpin `tr_psd_mul_nonneg`), Tier-A adversarially audited SOUND. The Jordan
+primitives `posPart`/`negPart`/`posProj` + the `IsHermitian.cfc` algebra layer are exposed
+as named `QuantumInfo` decls (per §5) for reuse in the data-processing tranche. Notes on the
+realised proof: L1 reuses the L2 `IsHermitian.cfc` machinery to build `√S` (the generic
+`CFC.sqrt`/`cfc_mul`-with-`ContinuousOn` route did not resolve cleanly); L2 went through at
+the `conjStarAlgAut … diagonal` level without needing the L4-direct fallback. The metric is
+now complete; only the CPTP data-processing inequality (§"Not in scope") remains for K3.
 
 ## 0. Goal
 
