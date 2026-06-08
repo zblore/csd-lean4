@@ -20,8 +20,15 @@ Recent closures, so this ledger is read in context:
   `busch_effect_gleason` is retained only as the **operational-stratum** statement
   (`pure_state_born_weights_of_certainty`, `born_rank_one`, `OP_p_at_jointEig_eq_P_st`,
   `ontic_born_frequency`). Two-strata reading: [`../AXIOMS.md`](../AXIOMS.md) §2.4.
-- **Next:** POVMs ([`povm-plan.md`](povm-plan.md)) — the one thing keeping Busch
-  load-bearing in the ontic reading. Open frontier: D1 ([`carve-out-plan.md`](carve-out-plan.md)).
+- **POVMs CLOSED 2026-06-03** ([`povm-plan.md`](povm-plan.md)) — the ontic Born derivation
+  now covers general measurements via Naimark dilation; `busch_effect_gleason` is off the
+  ontic path entirely (operational-stratum only).
+- **§2 preparation-to-Hilbert correspondence — DONE for pure-state classes** (see §2 below,
+  2026-06-08 audit); mixed/multi-particle residue tracked under §8.
+- **Open frontier: D1** ([`carve-out-plan.md`](carve-out-plan.md)) — exercising real
+  measurement dynamics on `Σ` (`Φ = id` in every concrete sector instance today). §13
+  (ontic→Hilbert isometry lift) is coupled to it (needs the Wigner / FS-rigidity lemma + the
+  D1 flow), not to §2.
 
 The numbered items below (§1–§14) remain as the standing ledger.
 
@@ -75,7 +82,36 @@ See `specs/empirical-csd-bridge-plan.md` §5 for the rationale, and
 
 ---
 
-## 2. Preparation-to-Hilbert-vector correspondence — **PARTIAL (pre-LF4 Phase 4 + Phase 7, 2026-05-18)**
+## 2. Preparation-to-Hilbert-vector correspondence — **DONE for pure-state classes (LF4, 2026-06-08 audit); mixed/multi-particle residue tracked under §8**
+
+**Status update (2026-06-08).** The three "remaining LF4 work" items below were
+discharged by the LF4 §8 + moment-map work that postdates this entry's original
+2026-05-18 draft; verified in-code 2026-06-08:
+
+1. **Specialise `P` to `Projectivization` — DONE.** `cpSectorData` / `kSectorData`
+   instantiate `P := CPN N := ℙ ℂ (EuclideanSpace ℂ (Fin N))`
+   (`LF4/Instance.lean:47,70`, `LF4/KahlerInstance.lean:103`).
+2. **`bridge_op_p` discharge in a concrete instance — DONE.** Proved as a theorem in
+   `LF4/SingletKahler.lean:277-290` (foundational-triple-only), via the fibre-arc carving
+   identity. Tier-2 honesty: this *realises* the Born value (the fibre partition is cut to
+   the Born volume), it does not *derive* it; the carving-free *derivation* (Born = FS
+   volume, general `N`) is the separate moment-map cluster `born_frequency_convergence_N`.
+   Note the target was revised by the 2026-05-25 posited-fibre migration — discharged
+   against the posited fibre law `μψ`, not `prepMeasure` (a μL-conditional pure preparation
+   is μL-null hence uninhabitable under the continuous bridge).
+3. **`ofKählerPreparation` from a concrete Kähler `SectorData` — DONE.**
+   `LF4/SingletKahler.lean:290`, with the capstone
+   `ofKählerPreparation_singlet_frequency_convergence`.
+
+**Residue (genuinely open):** only the **mixed-state / multi-particle** preparation classes,
+which are tracked under §8 (additional preparation classes), not as a missing piece of the
+pure-state correspondence. Note for §13: this entry being done does **not** unblock §13 —
+§2 is the *static* preparation→Born-weight correspondence; §13 needs *dynamical*
+inner-product preservation (the rigidity lemma + the D1 flow), which is the real blocker.
+
+---
+
+### Original 2026-05-18 record (superseded by the status update above)
 
 **Status:** Substantial structural progress. Pre-LF4 work landed:
 
