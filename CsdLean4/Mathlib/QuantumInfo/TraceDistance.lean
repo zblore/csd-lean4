@@ -37,11 +37,11 @@ This is the K3 metric-core tranche (K3 of `specs/qi-qec-roadmap.md`). It deliver
 The `posPart`/`negPart`/`posProj` Jordan primitives and the `IsHermitian.cfc` algebra layer
 are exposed as named `QuantumInfo` declarations: they recur in the next K3 tranche.
 
-**Honest scope — deferred to a later K3 tranche.** The **CPTP data-processing inequality**
-`traceDist (Φρ) (Φσ) ≤ traceDist ρ σ` (channels cannot increase distinguishability) is *not*
-here — it needs the variational characterisation `D = max₀≤P≤I Re Tr(P(ρ−σ))`. The
-`tr_psd_mul_nonneg` + `posProj` machinery here supplies its load-bearing half (the bound
-`Re Tr((ρ−σ)·P) ≤ Re Tr((ρ−σ)₊)`, achieved at `P = posProj (ρ−σ)`).
+The **CPTP data-processing inequality** `traceDist (Φρ) (Φσ) ≤ traceDist ρ σ` (channels cannot
+increase distinguishability) builds on this file's `posPart`/`posProj` machinery and the key
+bound `re_trace_mul_le_re_trace_posPart` (the variational half `Re Tr((ρ−σ)·P) ≤ Re Tr((ρ−σ)₊)`,
+achieved at `P = posProj (ρ−σ)`); it is proved in `DataProcessing.lean` (`channel_traceDist_le`,
+done 2026-06-09) via the channel adjoint. So K3 (metric + data-processing) is complete.
 -/
 
 open Matrix

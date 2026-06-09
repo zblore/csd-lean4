@@ -7,6 +7,7 @@ import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.Mathlib.QuantumInfo.Stinespring
 import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
+import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
@@ -516,6 +517,22 @@ arithmetic. -/
 /-- info: 'QuantumInfo.traceDist_triangle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceDist_triangle
+
+-- CPTP data-processing inequality traceDist (Φρ) (Φσ) ≤ traceDist ρ σ (K3; channels cannot
+-- increase distinguishability). Channel adjoint Φ†(P) = ∑ Kᵢᴴ P Kᵢ (unital + positive ⟹
+-- 0 ≤ Φ†P ≤ I), variational form D = Re Tr(D₊) for traceless Hermitian D, and the L6 key bound.
+-- Foundational triple, Gleason-free.
+/-- info: 'QuantumInfo.Channel.adjoint_unital' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.adjoint_unital
+
+/-- info: 'QuantumInfo.Channel.adjoint_trace_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.adjoint_trace_mul
+
+/-- info: 'QuantumInfo.channel_traceDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.channel_traceDist_le
 
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation

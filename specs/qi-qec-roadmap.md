@@ -66,11 +66,16 @@ discontinuous, it was proved via the Jordan decomposition built from `Matrix.IsH
 `tr_psd_mul_nonneg` (`0 ≤ Re Tr(S·P)` for PSD `S,P`, via `√S = cfc √ S`), and the operator
 bound `Re Tr(A·P) ≤ Re Tr(A₊)` for `0 ≤ P ≤ I`. Foundational-triple-only, AxiomAudit-pinned
 (incl. the linchpin), Tier-A adversarially audited SOUND.
-**Honest residue (deferred):** the **CPTP data-processing inequality** `D(Φρ,Φσ) ≤ D(ρ,σ)`
-(needs the variational characterisation `D = max₀≤P≤I Re Tr(P(ρ−σ))`). The `posProj` +
-`tr_psd_mul_nonneg` machinery already supplies its load-bearing half (the bound
-`Re Tr((ρ−σ)·P) ≤ Re Tr((ρ−σ)₊)`, achieved at `P = posProj (ρ−σ)`); the remaining work is the
-variational identity + the channel-monotonicity step (using `QuantumInfo/Channel` positivity).
+**K3 data-processing DONE 2026-06-09** (`DataProcessing.lean`, `channel_traceDist_le`):
+`traceDist (Φρ) (Φσ) ≤ traceDist ρ σ` for a Kraus channel Φ and Hermitian equal-trace ρ,σ —
+channels cannot increase distinguishability. Built via the **channel adjoint** `Φ.adjoint P =
+∑ᵢ Kᵢᴴ P Kᵢ` (`Channel.adjoint`, with `adjoint_unital`/`adjoint_posSemidef`/`adjoint_le_one` ⟹
+`0≤Φ†P≤I`, and the duality `adjoint_trace_mul : Tr(P·Φρ) = Tr(Φ†P·ρ)`) + the variational
+identity `traceDist = Re Tr(posPart)` for traceless difference (no `sSup`: the max is realised
+at `P = posProj(Φρ−Φσ)`, pushed through the adjoint to `Q = Φ†P` with `0≤Q≤I`, then the key
+bound). Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND (strict-decrease
+witness: a collapse channel sends `traceDist 1 ↦ 0`). **So K3 is COMPLETE** (metric +
+data-processing). Gleason-free, Hilbert/operator side — does not touch D1/A5.
 
 ### K4 — measurement update / "LF5" (Lüders rule `ρ ↦ ΠρΠ / Tr`)
 Unblocks: BB84 / B92 disturbance security, teleportation *collapse* (today

@@ -86,6 +86,71 @@ lemma apply_isHermitian (Φ : Channel n m ι) {ρ : Matrix n n ℂ} (hρ : ρ.Is
   rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
     hρ.eq, Matrix.mul_assoc]
 
+/-- The channel action is **subtractive** (linearity in the input). -/
+lemma apply_sub (Φ : Channel n m ι) (ρ σ : Matrix n n ℂ) :
+    Φ.apply (ρ - σ) = Φ.apply ρ - Φ.apply σ := by
+  simp only [apply, Matrix.mul_sub, Matrix.sub_mul, Finset.sum_sub_distrib]
+
+/-! ## The channel adjoint (Heisenberg dual)
+
+For `Φ(ρ) = ∑ᵢ Kᵢ ρ Kᵢᴴ` the **adjoint** (dual / Heisenberg) map is `Φ†(P) = ∑ᵢ Kᵢᴴ P Kᵢ`,
+characterised by the trace duality `Tr(P · Φ ρ) = Tr(Φ† P · ρ)`. The TP constraint
+`∑ᵢ Kᵢᴴ Kᵢ = 1` makes `Φ†` **unital** (`Φ† 1 = 1`); together with positivity this gives
+`0 ≤ Φ† P ≤ I` whenever `0 ≤ P ≤ I`, the load-bearing fact for data processing. -/
+
+/-- The **adjoint** (Heisenberg dual) of a channel: `Φ†(P) = ∑ᵢ Kᵢᴴ P Kᵢ`. -/
+noncomputable def adjoint (Φ : Channel n m ι) (P : Matrix m m ℂ) : Matrix n n ℂ :=
+  ∑ i : ι, (Φ.kraus i)ᴴ * P * (Φ.kraus i)
+
+@[simp] lemma adjoint_def (Φ : Channel n m ι) (P : Matrix m m ℂ) :
+    Φ.adjoint P = ∑ i : ι, (Φ.kraus i)ᴴ * P * (Φ.kraus i) := rfl
+
+/-- **The adjoint is unital:** `Φ† 1 = 1`, directly from the TP constraint `∑ᵢ Kᵢᴴ Kᵢ = 1`. -/
+lemma adjoint_unital [DecidableEq m] (Φ : Channel n m ι) : Φ.adjoint 1 = 1 := by
+  rw [adjoint]
+  simp only [Matrix.mul_one]
+  exact Φ.tp
+
+/-- **The adjoint preserves positive-semidefiniteness:** each `Kᵢᴴ P Kᵢ` is PSD and PSD is
+closed under finite sums. -/
+lemma adjoint_posSemidef (Φ : Channel n m ι) {P : Matrix m m ℂ} (hP : P.PosSemidef) :
+    (Φ.adjoint P).PosSemidef := by
+  rw [adjoint]
+  refine Finset.sum_induction _ Matrix.PosSemidef (fun _ _ => Matrix.PosSemidef.add)
+    Matrix.PosSemidef.zero (fun i _ => ?_)
+  exact hP.conjTranspose_mul_mul_same (Φ.kraus i)
+
+/-- The adjoint is **subtractive** (linearity in `P`). -/
+lemma adjoint_sub (Φ : Channel n m ι) (P Q : Matrix m m ℂ) :
+    Φ.adjoint (P - Q) = Φ.adjoint P - Φ.adjoint Q := by
+  simp only [adjoint, Matrix.mul_sub, Matrix.sub_mul, Finset.sum_sub_distrib]
+
+/-- The adjoint is **additive** (linearity in `P`). -/
+lemma adjoint_add (Φ : Channel n m ι) (P Q : Matrix m m ℂ) :
+    Φ.adjoint (P + Q) = Φ.adjoint P + Φ.adjoint Q := by
+  simp only [adjoint, Matrix.mul_add, Matrix.add_mul, Finset.sum_add_distrib]
+
+/-- **`0 ≤ P ≤ I ⟹ 0 ≤ Φ† P ≤ I`** (the half consumed by data processing): unitality +
+subtractivity give `1 − Φ† P = Φ† (1 − P)`, PSD by `adjoint_posSemidef`. -/
+lemma adjoint_le_one [DecidableEq m] (Φ : Channel n m ι) {P : Matrix m m ℂ}
+    (_hP : P.PosSemidef) (hP' : ((1 : Matrix m m ℂ) - P).PosSemidef) :
+    ((1 : Matrix n n ℂ) - Φ.adjoint P).PosSemidef := by
+  rw [← Φ.adjoint_unital, ← Φ.adjoint_sub]
+  exact Φ.adjoint_posSemidef hP'
+
+/-- **Adjoint (trace) duality:** `Tr(P · Φ ρ) = Tr(Φ† P · ρ)`. The defining property of the
+adjoint, via trace cyclicity rotating `Kᵢᴴ` to the front of each summand. -/
+lemma adjoint_trace_mul (Φ : Channel n m ι) (P : Matrix m m ℂ) (ρ : Matrix n n ℂ) :
+    (P * Φ.apply ρ).trace = (Φ.adjoint P * ρ).trace := by
+  rw [apply, Finset.mul_sum, Matrix.trace_sum, adjoint, Finset.sum_mul, Matrix.trace_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  -- Tr(P · (Kᵢ ρ) · Kᵢᴴ) = Tr(Kᵢᴴ · P · (Kᵢ ρ)): rotate Kᵢᴴ to the front (cyclicity).
+  rw [show P * (Φ.kraus i * ρ * (Φ.kraus i)ᴴ) = P * (Φ.kraus i * ρ) * (Φ.kraus i)ᴴ by
+        rw [Matrix.mul_assoc, Matrix.mul_assoc, Matrix.mul_assoc],
+    Matrix.trace_mul_cycle P (Φ.kraus i * ρ) (Φ.kraus i)ᴴ,
+    show (Φ.kraus i)ᴴ * P * (Φ.kraus i) * ρ
+        = (Φ.kraus i)ᴴ * P * (Φ.kraus i * ρ) by rw [Matrix.mul_assoc]]
+
 /-- The **identity channel** (a single Kraus operator `1`). -/
 def id (n : Type*) [Fintype n] [DecidableEq n] : Channel n n PUnit where
   kraus _ := 1
