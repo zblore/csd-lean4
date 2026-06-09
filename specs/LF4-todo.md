@@ -500,7 +500,26 @@ The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use 
 
 ## 13. Ontic-isometry ↔ Hilbert-isometry bridge for unitaries (added 2026-05-21, generalised 2026-05-21)
 
-**Status:** load-bearing, externally supplied, undischarged.
+**Status:** load-bearing, externally supplied, undischarged. The discharge route (the Wigner /
+Fubini–Study rigidity converse) is **substantially built but PAUSED 2026-06-09 at the genuine
+crux** — see the "real blocker" bullet under Discharge prerequisites below.
+
+> ⏸ **WIGNER PROGRAMME — PAUSED 2026-06-09 at the (2c-iii) phase-cocycle crux.**
+> Built and verified (foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND) in
+> `Mathlib/LinearAlgebra/Projectivization/{TransitionProbability,WignerRigidity}.lean`:
+> the `transProb` API + forward direction; `TransProbPreserving` + injectivity + orthogonality/
+> frame preservation (step 1); `imageOrthonormalBasis` + `candidateUnitary` agreeing on the
+> basis (steps 2a/2b); `projMap`/`transProb_projMap` + `reducedMap` fixing every basis ray
+> (frame reduction, 2c-i/ii on-ramp). **Remaining = ONE research-grade lemma:** a
+> `TransProbPreserving` map fixing every basis ray is induced by a *diagonal* unitary
+> (reconstruct the relative phases from the superposition rays `mk(bᵢ+bⱼ)`, show the cocycle is
+> a coboundary, prove agreement on all rays) — then antiunitary exclusion (2d) via the Kähler
+> structure. **Decision deferred** (recorded, not yet taken): complete the multi-session
+> phase-cocycle proof (preserves the one-axiom posture), or import `wigner_fs_rigidity` as a
+> busch-style library-debt axiom (closes §13 now, second axiom). **Resumption on-ramp:** the
+> next bounded sub-step is (2c-ii) relative-phase extraction from `f(mk(bᵢ+bⱼ))`. **Audit
+> watch:** the cocycle proof must DERIVE ℂ-linearity, not assume it. Paused in favour of the
+> K3 data-processing inequality (a clean bounded win); see `qi-qec-roadmap.md`.
 
 Originally framed for cloning (§13.1 below); generalised to arbitrary
 N-qubit unitaries when the Tranche 1 Tier A gate work introduced
