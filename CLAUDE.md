@@ -13,6 +13,16 @@ Naimark dilation, Gleason-free). The **single open frontier is now D1**
 dynamics on `Σ`; `Φ = id` everywhere today). Axiom posture and the two-strata (operational
 Gleason vs ontic volume) reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
+**Doc-currency discipline (mandatory).** When a tranche lands, updating the docs is part of
+"done", not a later chore. In the *same commit* as the Lean work, update: the
+[`specs/INDEX.md`](specs/INDEX.md) status row, the relevant plan-file header
+(`planned/not started` → `DONE <date>`), the matching `LF4-todo.md` §-entry, and any
+README / EMPIRICAL.md / AXIOMS.md table the result touches — plus the AxiomAudit pins for
+new headlines. Convert relative dates to absolute. The 2026-06-08 currency sweep found the
+entire algorithm branch, the one-axiom posture, the Shor status, and §2 all stale because
+prior closures were logged only to session memory; this rule exists to prevent recurrence.
+Do not let "planned / not started" rows survive a completed tranche.
+
 ## Build Commands
 
 ```bash
