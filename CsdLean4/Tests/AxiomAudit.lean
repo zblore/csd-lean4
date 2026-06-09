@@ -534,6 +534,14 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.channel_traceDist_le
 
+/-- info: 'QuantumInfo.traceDist_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceDist_le_one
+
+/-- info: 'QuantumInfo.traceDist_conj_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceDist_conj_unitary
+
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation
 -- of a unit state (sum_prob_eq_one), basis state measured with certainty (prob_basisState).

@@ -108,6 +108,12 @@ lemma re_trace_cfc {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
 lemma traceNorm_congr {A B : Matrix n n ℂ} (hA : A.IsHermitian) (hB : B.IsHermitian)
     (hAB : A = B) : traceNorm hA = traceNorm hB := by subst hAB; rfl
 
+/-- Helper: `traceDist` depends only on the underlying difference matrix (transport along the
+equality `ρ − σ = ρ' − σ'`). -/
+lemma traceDist_congr {ρ σ ρ' σ' : Matrix n n ℂ} (h : (ρ - σ).IsHermitian)
+    (h' : (ρ' - σ').IsHermitian) (heq : ρ - σ = ρ' - σ') : traceDist h = traceDist h' := by
+  rw [traceDist, traceDist, traceNorm_congr h h' heq]
+
 /-- **The trace norm is invariant under negation:** `traceNorm (−A) = traceNorm A`. Via the
 functional-calculus bridge and `cfc_comp_neg` (`|−x| = |x|`). -/
 lemma traceNorm_neg {A : Matrix n n ℂ} (hA : A.IsHermitian) :

@@ -1,4 +1,5 @@
 import CsdLean4.Mathlib.QuantumInfo.Channel
+import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 
 /-!
@@ -101,5 +102,92 @@ theorem channel_traceDist_le {m ι : Type*} [Fintype m] [Fintype ι] [DecidableE
     exact re_trace_mul_le_re_trace_posPart h hQpsd hQle
   rw [step1, step2]
   exact step3
+
+/-- **The trace distance of two states is at most one** (boundedness of the metric on the
+density-operator set). For PSD unit-trace `ρ, σ`, `traceDist ρ σ ≤ 1`. Via the variational
+form `traceDist D = Re Tr(D₊) = Re Tr((ρ−σ)·P₊)`, dropping the `σ` term (`Tr(σ·P₊) ≥ 0`) and
+bounding `Re Tr(ρ·P₊) ≤ Re Tr ρ = 1` (from `Tr(ρ·(1−P₊)) ≥ 0`), both by `tr_psd_mul_nonneg`. -/
+lemma traceDist_le_one {ρ σ : Matrix n n ℂ} (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef)
+    (htrρ : ρ.trace = 1) (htrσ : σ.trace = 1) :
+    traceDist (hρ.1.sub hσ.1) ≤ 1 := by
+  set h : (ρ - σ).IsHermitian := hρ.1.sub hσ.1 with hh
+  -- The difference is traceless.
+  have htrD : (ρ - σ).trace = 0 := by rw [Matrix.trace_sub, htrρ, htrσ, sub_self]
+  -- Variational form: traceDist = Re Tr((ρ−σ)·P₊).
+  set Pp : Matrix n n ℂ := posProj h with hPp
+  rw [traceDist_eq_re_trace_posPart h htrD]
+  have step1 : RCLike.re (posPart h).trace = RCLike.re ((ρ - σ) * Pp).trace := by
+    rw [← mul_posProj_eq_posPart h, ← hPp]
+  rw [step1, Matrix.sub_mul, Matrix.trace_sub, map_sub]
+  -- Drop the σ-term: 0 ≤ Re Tr(σ·P₊).
+  have hσP : 0 ≤ RCLike.re (σ * Pp).trace :=
+    tr_psd_mul_nonneg hσ (posProj_posSemidef h)
+  -- Bound Re Tr(ρ·P₊) ≤ Re Tr ρ = 1, since 0 ≤ Re Tr(ρ·(1−P₊)) = Re Tr ρ − Re Tr(ρ·P₊).
+  have hρsplit : RCLike.re (ρ * Pp).trace ≤ RCLike.re ρ.trace := by
+    have hnn : 0 ≤ RCLike.re (ρ * ((1 : Matrix n n ℂ) - Pp)).trace :=
+      tr_psd_mul_nonneg hρ (one_sub_posProj_posSemidef h)
+    rw [Matrix.mul_sub, Matrix.mul_one, Matrix.trace_sub, map_sub] at hnn
+    linarith
+  have htrρ_re : RCLike.re ρ.trace = 1 := by rw [htrρ]; simp
+  -- Chain: Re Tr(ρ·P₊) − Re Tr(σ·P₊) ≤ Re Tr(ρ·P₊) ≤ Re Tr ρ = 1.
+  rw [htrρ_re] at hρsplit
+  linarith
+
+/-- **Unitary invariance of the trace distance** (the equality case of data processing): for a
+unitary `U` (`Uᴴ U = 1`) and Hermitian, equal-trace `ρ, σ`,
+`traceDist (UρUᴴ − UσUᴴ) = traceDist (ρ − σ)`. Proved via `channel_traceDist_le` applied to
+the `unitaryChannel` in **both directions** (the reverse using the channel of `Uᴴ`, which is
+unitary since `U Uᴴ = 1` by `Matrix.mul_eq_one_comm`), then `le_antisymm` after collapsing
+`Uᴴ(UρUᴴ)U = ρ`. -/
+lemma traceDist_conj_unitary {U : Matrix n n ℂ} (hU : Uᴴ * U = 1)
+    {ρ σ : Matrix n n ℂ} (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) (htr : ρ.trace = σ.trace)
+    (hUconj : (U * ρ * Uᴴ - U * σ * Uᴴ).IsHermitian) :
+    traceDist hUconj = traceDist (hρ.sub hσ) := by
+  -- The reverse-direction unitary: Uᴴ, with (Uᴴ)ᴴ Uᴴ = U Uᴴ = 1 (mul_eq_one_comm).
+  have hUUstar : U * Uᴴ = 1 := mul_eq_one_comm.mp hU
+  have hUstar : (Uᴴ)ᴴ * Uᴴ = 1 := by rw [Matrix.conjTranspose_conjTranspose]; exact hUUstar
+  -- Name the two channels with the universe of the Kraus index pinned to `PUnit.{1}`.
+  set ΦU : Channel n n PUnit.{1} := Channel.unitaryChannel U hU with hΦU
+  set ΦUs : Channel n n PUnit.{1} := Channel.unitaryChannel Uᴴ hUstar with hΦUs
+  -- The unitaryChannel actions.
+  have hapU : ∀ τ : Matrix n n ℂ, ΦU.apply τ = U * τ * Uᴴ :=
+    fun τ => Channel.unitaryChannel_apply U hU τ
+  have hapUs : ∀ τ : Matrix n n ℂ, ΦUs.apply τ = Uᴴ * τ * U := by
+    intro τ; rw [hΦUs, Channel.unitaryChannel_apply Uᴴ hUstar τ, Matrix.conjTranspose_conjTranspose]
+  -- Trace of the conjugated states: Tr(UτUᴴ) = Tr τ (cyclicity + Uᴴ U = 1).
+  have htrconj : ∀ τ : Matrix n n ℂ, (U * τ * Uᴴ).trace = τ.trace := by
+    intro τ; rw [Matrix.trace_mul_comm (U * τ) Uᴴ, ← Matrix.mul_assoc, hU, Matrix.one_mul]
+  have htr' : (U * ρ * Uᴴ).trace = (U * σ * Uᴴ).trace := by rw [htrconj ρ, htrconj σ, htr]
+  -- Hermiticity of the conjugated states.
+  have hUrhoUs_herm : (U * ρ * Uᴴ).IsHermitian := by
+    have := ΦU.apply_isHermitian hρ; rwa [hapU ρ] at this
+  have hUsigUs_herm : (U * σ * Uᴴ).IsHermitian := by
+    have := ΦU.apply_isHermitian hσ; rwa [hapU σ] at this
+  -- Forward DP: traceDist (UρUᴴ − UσUᴴ) ≤ traceDist (ρ − σ).
+  have hfwd := channel_traceDist_le ΦU hρ hσ htr
+  -- Reverse DP applied to the conjugated states with the channel of Uᴴ.
+  have hrev := channel_traceDist_le ΦUs hUrhoUs_herm hUsigUs_herm htr'
+  -- The collapse Uᴴ(UτUᴴ)U = τ.
+  have hcollapse : ∀ τ : Matrix n n ℂ, Uᴴ * (U * τ * Uᴴ) * U = τ := by
+    intro τ
+    rw [show Uᴴ * (U * τ * Uᴴ) * U = (Uᴴ * U) * τ * (Uᴴ * U) by
+          simp only [Matrix.mul_assoc],
+      hU, Matrix.one_mul, Matrix.mul_one]
+  -- Restate hfwd in terms of hUconj (the LHS difference matrices agree).
+  have hfwd' : traceDist hUconj ≤ traceDist (hρ.sub hσ) := by
+    rw [traceDist_congr hUconj
+      ((ΦU.apply_isHermitian hρ).sub (ΦU.apply_isHermitian hσ))
+      (by rw [hapU ρ, hapU σ])]
+    exact hfwd
+  -- Restate hrev: its LHS difference is ρ − σ (after collapse), its RHS is traceDist hUconj.
+  have hrev' : traceDist (hρ.sub hσ) ≤ traceDist hUconj := by
+    rw [traceDist_congr (hρ.sub hσ)
+      ((ΦUs.apply_isHermitian hUrhoUs_herm).sub (ΦUs.apply_isHermitian hUsigUs_herm))
+      (by rw [hapUs (U * ρ * Uᴴ), hapUs (U * σ * Uᴴ), hcollapse ρ, hcollapse σ])]
+    -- hrev's RHS is traceDist (UρUᴴ − UσUᴴ); rewrite it to traceDist hUconj.
+    rw [show traceDist (hUrhoUs_herm.sub hUsigUs_herm) = traceDist hUconj from
+      traceDist_congr (hUrhoUs_herm.sub hUsigUs_herm) hUconj rfl] at hrev
+    exact hrev
+  exact le_antisymm hfwd' hrev'
 
 end QuantumInfo

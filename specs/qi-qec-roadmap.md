@@ -76,6 +76,11 @@ at `P = posProj(Φρ−Φσ)`, pushed through the adjoint to `Q = Φ†P` with `
 bound). Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND (strict-decrease
 witness: a collapse channel sends `traceDist 1 ↦ 0`). **So K3 is COMPLETE** (metric +
 data-processing). Gleason-free, Hilbert/operator side — does not touch D1/A5.
+**K3 closers DONE 2026-06-09** (`DataProcessing.lean`): `traceDist_le_one` (states ⟹
+`D ≤ 1`, tight at 1 for orthogonal pure states — the bounded `[0,1]` distinguishability range)
+and `traceDist_conj_unitary` (`D(UρU†,UσU†) = D(ρ,σ)`, the equality case of data-processing,
+via the unitary channel both ways). Both Tier-A audited SOUND. The K3 metric-properties set is
+now closed; remaining QI keystones: K1 entropy, K4/LF5.
 
 ### K4 — measurement update / "LF5" (Lüders rule `ρ ↦ ΠρΠ / Tr`)
 Unblocks: BB84 / B92 disturbance security, teleportation *collapse* (today
