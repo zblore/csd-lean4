@@ -49,7 +49,13 @@ POVM volume/frequency theorems apply to the projective POVM `Eᵢ = |eᵢ⟩⟨e
 
 ## 2. Decomposition (tranches, new-vs-reuse, risk)
 
-### LF5-A — the von Neumann measurement unitary  [NEW; bounded]
+### LF5-A — the von Neumann measurement unitary  [NEW; bounded] — **DONE 2026-06-09** (`CsdLean4/LF5/VonNeumannUnitary.lean`)
+`vnPerm` (adder bijection), `vnUnitary := permMatrix (vnPerm N).symm`, `vnUnitary_unitary`,
+`vnUnitary_mem_unitaryGroup`, `vnUnitary_mulVec_ground : vnUnitary N *ᵥ e_{(j,0)} = e_{(j,j)}`
+(the copy `eⱼ⊗a₀ ↦ eⱼ⊗aⱼ`). Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND
+(coupling verified correct at N=3 with a negative control). Detail of the original spec below.
+
+
 `vnUnitary {N} : Matrix (Fin N × Fin N) (Fin N × Fin N) ℂ` — the **permutation matrix** of the
 "adder" bijection `σ (j,k) = (j, j+k)` on `Fin N × Fin N` (apparatus = `Fin N`, ground `a₀ = 0`).
 Then `σ (j,0) = (j,j)`: the generalized-CNOT copy `eⱼ⊗a₀ ↦ eⱼ⊗aⱼ`. Being a permutation matrix

@@ -60,6 +60,7 @@ import CsdLean4.LF2.EffectAux
 import CsdLean4.LF4.POVMDilation
 import CsdLean4.LF4.POVMVolume
 import CsdLean4.LF4.POVMNaimark
+import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2299,5 +2300,17 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.canonicalNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.canonicalNaimark
+
+-- LF5-A (von Neumann measurement coupling unitary): the adder permutation
+-- σ(j,k) = (j, j+k) on Fin N × Fin N (system × apparatus), its manifestly-unitary
+-- permutation matrix, and the ground-apparatus copy σ(j,0) = (j,j). First file of
+-- the LF5 measurement-dynamics layer (the D1 frontier). Foundational triple.
+/-- info: 'CSD.LF5.vnUnitary_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnUnitary_unitary
+
+/-- info: 'CSD.LF5.vnPerm_ground' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnPerm_ground
 
 end CSD.Tests.AxiomAudit
