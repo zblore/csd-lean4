@@ -402,3 +402,7 @@ reproduces the Born weight, with the apparatus context entering as the sector ma
 contextual outcome-map slot already exists structurally in `LF3/ContextMap.lean`
 (`MeasurementContext`, context-indexed outcome maps, definitional separation, no Fine
 axiom); the LF5 step is to realise it dynamically rather than definitionally.
+
+**Staged LF5 plan: see [`lf5-plan.md`](lf5-plan.md)** (drafted 2026-06-09). Single-system
+projective tier, decomposed LF5-A..E, heavily reusing the POVM Naimark tranche (the static
+dilation isometry becomes the von Neumann de-isolation flow `Φ_vN ≠ id`).
