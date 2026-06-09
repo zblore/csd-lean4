@@ -1687,6 +1687,18 @@ as an axiom nor a sorry. -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.TransProbPreserving.orthogonal
 
+-- Wigner converse step (2a): the image ONB vector's ray is the image ray
+-- (`mk (imageOrthonormalBasis i) = f (mk (b i))`).
+/-- info: 'Projectivization.mk_imageOrthonormalBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mk_imageOrthonormalBasis
+
+-- Wigner converse step (2b) headline: the candidate unitary agrees with `f` on
+-- the source basis points (`mk (candidateUnitary (b i)) = f (mk (b i))`).
+/-- info: 'Projectivization.candidateUnitary_agrees_on_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.candidateUnitary_agrees_on_basis
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.

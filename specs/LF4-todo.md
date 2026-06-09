@@ -578,12 +578,25 @@ single-system lifts.
       orthonormal-frame preservation (`.pairwise_orthogonal`,
       `orthonormalBasis_pairwise_orthogonal`). Foundational-triple-only, AxiomAudit-pinned,
       Tier-A audited SOUND (predicate satisfiable AND restrictive).
-    - **(2) OPEN — the crux.** Extract a semilinear map agreeing with `f` by phase-tracking
-      via superposition states (the coherence/cocycle step). Sub-decomposition: (2a) image of
-      an ONB is an ONB frame (pairwise-orthogonal + full cardinality ⟹ basis) — bounded,
-      next deliverable; (2b) candidate map on basis elements; (2c) phase-coordinate datum
-      from `f(mk(bᵢ+bⱼ))` as an explicit inspectable object — the genuine research-grade
-      crux; (2d) agreement + semilinearity.
+    - **(2) PARTIAL.** Extract a (semi)linear map agreeing with `f`. Sub-decomposition:
+      - **(2a) DONE 2026-06-09** (`WignerRigidity.lean`): the image of an ONB is an ONB frame —
+        `imageVec` (unit-normalised image-ray reps), `imageVec_orthonormal` (orthonormality
+        routed through `hf.inner_rep_eq_zero_iff`, so `hf` is load-bearing), `imageOrthonormalBasis`
+        (via `OrthonormalBasis.mk` + span-from-cardinality), `mk_imageOrthonormalBasis` (its
+        i-th ray = the image ray `f (mk (b i))`).
+      - **(2b) DONE 2026-06-09** (`WignerRigidity.lean`): the candidate UNITARY — `candidateUnitary
+        hf b := b.equiv (imageOrthonormalBasis hf b) (Equiv.refl _) : E ≃ₗᵢ[ℂ] E`, with headline
+        `candidateUnitary_agrees_on_basis : mk (candidateUnitary (b i)) = f (mk (b i))`. Tier-A
+        audited SOUND: agreement is PER-BASIS-POINT only (not full agreement — the central
+        no-over-claim check), `candidateUnitary` is a genuine isometry equiv. Both pinned.
+      - **(2c) OPEN — the genuine research-grade crux.** Extend agreement off the basis via
+        phase-coherence on the superposition states `f(mk(bᵢ+bⱼ))` (the cocycle datum). The
+        clean on-ramp: prove `candidateUnitary` is `TransProbPreserving` as a projective map
+        (needs a `LinearIsometryEquiv ↔ Matrix.unitaryGroup` bridge on `EuclideanSpace ℂ (Fin N)`,
+        itself a worthwhile Cat-1 helper), then `g := candidateUnitary⁻¹ ∘ f` is transition-
+        preserving and fixes every basis ray, reducing (2c) to the Wigner normal-form step "a
+        transition-preserving map fixing an orthonormal frame ray-wise acts as a diagonal phase".
+      - **(2d) OPEN.** Agreement + semilinearity assembly.
     - **(3) OPEN.** Rule out the antiunitary branch via the Kähler complex structure.
     **Audit watch (per the foundation + step-1 audits):** step (3) must DERIVE ℂ-linearity,
     not assume it as a hypothesis (smuggled linearity would beg the question — attempt to
