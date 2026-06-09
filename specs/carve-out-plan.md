@@ -354,3 +354,51 @@ Tranche B's independent basin-volume theorem. Absent that, Tranche A plus
 surfacing the Born-weight import as an explicit hypothesis (B-honesty form) is
 the maximum we can claim without overstating. The carving is not a bug to hide;
 it is the Lean shadow of debt G3b, and resolving it *is* doing the open physics.
+
+## 6. D1 collapse semantics: the de-isolation reading (decided 2026-06-09)
+
+The measurement-event half of D1 (the collapse / measurement-update, the LF5 target)
+is given the following ontology. It is reading (c) of the three candidates (deterministic
+dynamical collapse / measure conditioning / apparatus-context selection), refined by the
+"isolated regions" picture.
+
+**Decision.** Measurement in CSD is not a stochastic dynamical event but the de-isolation
+of a region of `Σ` by an apparatus context. The global ontic state of `Σ` is fully
+determined; the only dynamical freedom is carried by regions that are presently isolated,
+that is, decoupled from the system and from the observer. An apparatus realises a
+measurement context: it couples to the system and de-isolates one such region, and the
+deterministic measure-preserving flow `Φ` (here `Φ ≠ id`, the interaction flow) drives the
+joint microstate. The outcome is the sector in which the de-isolated microstate comes to
+lie; it is fixed by that microstate, so a Laplacian observer with access to the isolated
+region's value would predict the outcome with certainty. The observer lacks that access.
+Relative to the typicality measure over the isolated degrees of freedom (the A5 sector
+measure, equal on the concrete Kähler instances to the Fubini-Study volume), the outcome
+sector is distributed by its typicality volume, which is the Born weight `‖⟨eᵢ, ψ⟩‖²`. The
+apparent randomness of measurement is therefore epistemic: it is typicality over the
+isolated region the observer does not resolve, the same ignorance-of-microstate that
+already carries LF1 frequencies to ontic volume. The outcome value is not a pre-existing,
+context-independent property of the system; it is selected by the apparatus context, namely
+which region de-isolates and how its `Σ`-volumes map to outcomes. This context-dependence is
+what reconciles the deterministic substrate with Kochen-Specker and Bell: there is no global
+non-contextual value assignment to be obstructed, because the de-isolation map is part of
+the measured configuration rather than a readout of one.
+
+**Why it is not a new postulate.** The picture unifies the machinery already in place.
+`ObservableFlow` supplies a `Φ ≠ id` flow of the kind de-isolation requires; the moment-map
+and Duistermaat-Heckman cluster supplies Born as the Fubini-Study typicality volume of the
+outcome sector; LF1 supplies the typicality-to-frequency law. The randomness-from-ignorance
+reading sits in the Dürr-Goldstein-Zanghì typicality line the corpus genealogy already
+cites; the "isolated-region value" is the hidden datum, the FS typicality measure the
+probability law over it.
+
+**Honest costs (two).** For entangled measurements the de-isolation map must be non-local,
+as Bell requires of any deterministic completion reproducing the corpus's CHSH `= 2√2`. And
+the isolated-region typicality measure is posited (A5) to be the Fubini-Study volume rather
+than derived; A5 in turn reduces to the dynamical origin of the sector, still open.
+
+**LF5 Lean target.** Make de-isolation concrete: a joint system-and-isolated-region `Σ`
+carrying a measure-preserving coupling flow `Φ ≠ id` whose outcome-sector selection
+reproduces the Born weight, with the apparatus context entering as the sector map. The
+contextual outcome-map slot already exists structurally in `LF3/ContextMap.lean`
+(`MeasurementContext`, context-indexed outcome maps, definitional separation, no Fine
+axiom); the LF5 step is to realise it dynamically rather than definitionally.
