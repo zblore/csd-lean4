@@ -42,6 +42,25 @@ delivers:
   `candidateUnitary_agrees_on_basis` is the agreement on the basis points:
   `mk (candidateUnitary hf b (b i)) = f (mk (b i))` for every `i`.
 
+## Step (2c) frame reduction (proved here): the reduced map fixes the basis
+
+* **The projective image of an isometry equiv.** `projMap e` is the
+  `Projectivization.map` of a linear isometry equivalence `e`'s underlying
+  injective linear map. It preserves the transition probability
+  (`transProb_projMap`, via the vector-level `transProbVec_linearIsometryEquiv`
+  from `e.inner_map_map` and `e.norm_map`), hence is `TransProbPreserving`
+  (`projMap_transProbPreserving`). `TransProbPreserving.comp` gives closure of
+  the predicate under composition. (All general in `E`.)
+* **The frame-reduced map.** `reducedMap hf b := projMap (candidateUnitary hf b).symm ∘ f`
+  is `TransProbPreserving` (`reducedMap_transProbPreserving`) and **fixes every
+  source basis ray** (`reducedMap_fixes_basis`):
+  `reducedMap hf b (mk (b i)) = mk (b i)` for every `i`. The proof rewrites
+  `f (mk (b i))` backward via `candidateUnitary_agrees_on_basis`, pushes the
+  inverse candidate unitary's projective map through `projMap_mk`, and applies
+  `LinearIsometryEquiv.symm_apply_apply`.
+
+This reduces the open converse to a **single Wigner normal-form lemma** (below).
+
 ## Open target (not proved here): the Wigner converse, steps (2c)/(2d)
 
 The converse of the realisability inclusion `transProbPreserving_unitary` is the
@@ -52,27 +71,34 @@ The converse of the realisability inclusion `transProbPreserving_unitary` is the
 
 equivalently, the isometry group of `ℂℙⁿ` with the Fubini–Study metric is the
 projective unitary group `PU(n+1)`. It is **not** stated here as an axiom or a
-`sorry`. With (2a)/(2b) in hand (a candidate unitary agreeing with `f` on a
-fixed orthonormal frame), the two **remaining steps** are:
+`sorry`. With (2a)/(2b) in hand (a candidate unitary agreeing with `f` on a fixed
+orthonormal frame) and the frame reduction above, the **remaining steps** are:
 
-* **(2c) Extending agreement off the basis.** The candidate unitary agrees with
-  `f` on the basis rays; extending the agreement to *all* of `ℂℙ^{N-1}` requires
-  fixing the relative phases of `f` on superposition states `f (mk (b i + b j))`
-  and checking consistency of these phases across overlapping superpositions
-  (the coherence/cocycle crux). Over ℂ this pins `f` to a map that is either
-  ℂ-linear or conjugate-ℂ-linear, agreeing with `candidateUnitary` (resp. its
-  conjugate) everywhere.
+* **(2c) The Wigner normal-form lemma.** With `reducedMap hf b` now known to be
+  `TransProbPreserving` and to fix every basis ray, the residual content is:
+
+  > a `TransProbPreserving` map fixing every basis ray acts as a diagonal phase;
+  > and the phase cocycle, fixed by the superposition rays `mk (b i + b j)`, is
+  > trivial, hence the map is the identity on rays.
+
+  Concretely, fixing `mk (b i)` for all `i` leaves the phases of `f` on the
+  superposition states `f (mk (b i + b j))` free; consistency of these phases
+  across overlapping superpositions (the coherence/cocycle crux) is what pins
+  them. **Critical honesty note (load-bearing).** `reducedMap_fixes_basis` does
+  **not** make `reducedMap` the identity. The diagonal-phase freedom is genuine
+  and is *exactly* what (2c) must pin down. Do **not** read the frame-reduction
+  result as `reducedMap = id`, nor as `f = projMap (candidateUnitary hf b)`. The
+  candidate unitary is built from a *chosen* frame; fixing that frame's rays is
+  one constraint, not the full rigidity.
 * **(2d) Ruling out the antiunitary branch.** Transition-probability preservation
-  alone admits both the unitary and antiunitary classes. The
-  holomorphic / Kähler complex structure on `ℂℙⁿ` selects the unitary
-  (ℂ-linear) branch. **Critical honesty note:** steps (2c)/(2d) must *derive*
-  ℂ-linearity from the overlap data plus the Kähler structure, **not** assume it
-  as a hypothesis. A smuggled linearity hypothesis would beg the question — the
-  whole content of the converse is that the metric/transition data, plus the
-  complex structure, *force* unitarity rather than merely permitting it. In
-  particular `candidateUnitary` is built from a *chosen* frame, and (2c) is what
-  certifies it is `f` itself (up to the antiunitary alternative) rather than one
-  of many unitaries matching `f` on that one frame.
+  alone admits both the unitary and antiunitary classes. The holomorphic / Kähler
+  complex structure on `ℂℙⁿ` selects the unitary (ℂ-linear) branch.
+  **Critical honesty note:** steps (2c)/(2d) must *derive* ℂ-linearity from the
+  overlap data plus the Kähler structure, **not** assume it as a hypothesis. A
+  smuggled linearity hypothesis would beg the question — the whole content of the
+  converse is that the metric/transition data, plus the complex structure, *force*
+  unitarity rather than merely permitting it. ℂ-linearity must be derived, not
+  assumed.
 
 ## Provenance
 
@@ -394,5 +420,127 @@ theorem candidateUnitary_agrees_on_basis
   -- the nonzero-proof argument.
   congr 1
   · exact candidateUnitary_apply_basis hf b i
+
+/-! ## Step (2c) frame reduction: projective image of an isometry equiv
+
+The projective map `projMap e` of a linear isometry equivalence `e` preserves
+`transProb` (`transProb_projMap`), so it is `TransProbPreserving`
+(`projMap_transProbPreserving`). Composing `f` with the projective map of the
+*inverse* candidate unitary yields `reducedMap`, which is `TransProbPreserving`
+and **fixes every basis ray** (`reducedMap_fixes_basis`). This reduces the open
+converse step (2c) to the single Wigner normal-form lemma stated in the module
+header. These declarations are general in `E` wherever they do not consume the
+`EuclideanSpace`-specific `candidateUnitary`. -/
+
+section ProjMap
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
+
+/-- The projective self-map induced by a linear isometry equivalence `e`: the
+`Projectivization.map` of `e`'s underlying (injective) linear map. -/
+noncomputable def projMap (e : E ≃ₗᵢ[ℂ] E) : ℙ ℂ E → ℙ ℂ E :=
+  Projectivization.map e.toLinearEquiv.toLinearMap e.injective
+
+/-- `projMap e` sends `mk v` to `mk (e v)`. The nonzero side is `e v ≠ 0` from
+`e.injective` (an injective linear map is zero-preserving), packaged through
+`Projectivization.map_mk`. -/
+lemma projMap_mk (e : E ≃ₗᵢ[ℂ] E) (v : E) (hv : v ≠ 0) :
+    projMap e (Projectivization.mk ℂ v hv)
+      = Projectivization.mk ℂ (e v) (e.toLinearEquiv.map_ne_zero_iff.mpr hv) := by
+  unfold projMap
+  rw [Projectivization.map_mk]
+  rfl
+
+/-- **Transition probability is invariant under a linear isometry equivalence
+(vector level).** `transProbVec (e u) (e v) = transProbVec u v`: the numerator
+is fixed by `e.inner_map_map`, the denominator by `e.norm_map`. -/
+lemma transProbVec_linearIsometryEquiv (e : E ≃ₗᵢ[ℂ] E) (u v : E) :
+    transProbVec (e u) (e v) = transProbVec u v := by
+  unfold transProbVec
+  rw [e.inner_map_map u v, e.norm_map u, e.norm_map v]
+
+/-- **`projMap e` preserves `transProb` (projective level).** Reduce both points
+to `mk` of their canonical reps, push `projMap` through `projMap_mk`, collapse to
+`transProbVec` via `transProb_mk`, then apply
+`transProbVec_linearIsometryEquiv`. -/
+lemma transProb_projMap (e : E ≃ₗᵢ[ℂ] E) (p q : ℙ ℂ E) :
+    transProb (projMap e p) (projMap e q) = transProb p q := by
+  conv_lhs => rw [← p.mk_rep, ← q.mk_rep]
+  rw [projMap_mk e p.rep p.rep_nonzero, projMap_mk e q.rep q.rep_nonzero,
+      transProb_mk]
+  conv_rhs => rw [← p.mk_rep, ← q.mk_rep, transProb_mk p.rep_nonzero q.rep_nonzero]
+  exact transProbVec_linearIsometryEquiv e p.rep q.rep
+
+/-- **`projMap e` is `TransProbPreserving`.** Immediate from `transProb_projMap`.
+General in `E`. -/
+theorem projMap_transProbPreserving (e : E ≃ₗᵢ[ℂ] E) :
+    TransProbPreserving (projMap e) :=
+  fun p q => transProb_projMap e p q
+
+/-- **Composition of `TransProbPreserving` maps.** `g ∘ f` preserves `transProb`
+when both `g` and `f` do. General in `E`. -/
+theorem TransProbPreserving.comp {g f : ℙ ℂ E → ℙ ℂ E}
+    (hg : TransProbPreserving g) (hf : TransProbPreserving f) :
+    TransProbPreserving (fun p => g (f p)) :=
+  fun p q => by rw [hg (f p) (f q), hf p q]
+
+end ProjMap
+
+/-! ## Step (2c) frame reduction: the reduced map fixes every basis ray
+
+`reducedMap hf b := projMap (candidateUnitary hf b).symm ∘ f`. It is
+`TransProbPreserving` and fixes every source basis ray, since on `srcPoint b i`
+the candidate unitary's projective map reproduces `f`'s value (by
+`candidateUnitary_agrees_on_basis`) and its inverse returns to the basis ray. -/
+
+variable {f : ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N))}
+
+/-- The **frame-reduced map**: post-compose `f` with the projective map of the
+*inverse* candidate unitary. Designed so that the basis rays become fixed
+points. -/
+noncomputable def reducedMap
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) :
+    ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N)) :=
+  fun p => projMap (candidateUnitary hf b).symm (f p)
+
+/-- **`reducedMap` is `TransProbPreserving`.** It is the composition
+`projMap (candidateUnitary hf b).symm ∘ f`; compose `hf` with
+`projMap_transProbPreserving`. -/
+theorem reducedMap_transProbPreserving
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) :
+    TransProbPreserving (reducedMap hf b) :=
+  (projMap_transProbPreserving (candidateUnitary hf b).symm).comp hf
+
+/-- **HEADLINE (frame reduction).** The frame-reduced map fixes every source
+basis ray: `reducedMap hf b (mk (b i)) = mk (b i)`.
+
+Proof chain. Write `U := candidateUnitary hf b`. By definition
+`reducedMap hf b (srcPoint b i) = projMap U.symm (f (srcPoint b i))`. Rewrite
+`f (srcPoint b i)` backward via `candidateUnitary_agrees_on_basis` to
+`mk (U (b i))`; push `projMap U.symm` through `projMap_mk` to
+`mk (U.symm (U (b i)))`; and `U.symm (U (b i)) = b i` by
+`LinearIsometryEquiv.symm_apply_apply`. `mk` is proof-irrelevant in its nonzero
+hypothesis, so the dependent nonzero proofs are immaterial.
+
+**Critical honesty note.** Fixing the basis rays does *not* make `reducedMap`
+the identity: the diagonal-phase freedom is genuine and is exactly what the
+remaining normal-form lemma (step (2c)) must pin down. Do not read this as
+`reducedMap = id` or `f = projMap (candidateUnitary hf b)`. -/
+theorem reducedMap_fixes_basis
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i : Fin N) :
+    reducedMap hf b (Projectivization.mk ℂ (b i) (b.orthonormal.ne_zero i))
+      = Projectivization.mk ℂ (b i) (b.orthonormal.ne_zero i) := by
+  set U := candidateUnitary hf b with hU
+  show projMap U.symm (f (Projectivization.mk ℂ (b i) (b.orthonormal.ne_zero i)))
+      = Projectivization.mk ℂ (b i) (b.orthonormal.ne_zero i)
+  rw [← candidateUnitary_agrees_on_basis hf b i, ← hU,
+      projMap_mk U.symm (U (b i))
+        ((candidateUnitary hf b).toLinearEquiv.map_ne_zero_iff.mpr (b.orthonormal.ne_zero i))]
+  -- `U.symm (U (b i)) = b i`; `mk` is irrelevant to the nonzero-proof argument.
+  congr 1
+  exact U.symm_apply_apply (b i)
 
 end Projectivization

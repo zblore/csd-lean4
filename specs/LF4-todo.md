@@ -589,14 +589,24 @@ single-system lifts.
         `candidateUnitary_agrees_on_basis : mk (candidateUnitary (b i)) = f (mk (b i))`. Tier-A
         audited SOUND: agreement is PER-BASIS-POINT only (not full agreement — the central
         no-over-claim check), `candidateUnitary` is a genuine isometry equiv. Both pinned.
-      - **(2c) OPEN — the genuine research-grade crux.** Extend agreement off the basis via
-        phase-coherence on the superposition states `f(mk(bᵢ+bⱼ))` (the cocycle datum). The
-        clean on-ramp: prove `candidateUnitary` is `TransProbPreserving` as a projective map
-        (needs a `LinearIsometryEquiv ↔ Matrix.unitaryGroup` bridge on `EuclideanSpace ℂ (Fin N)`,
-        itself a worthwhile Cat-1 helper), then `g := candidateUnitary⁻¹ ∘ f` is transition-
-        preserving and fixes every basis ray, reducing (2c) to the Wigner normal-form step "a
-        transition-preserving map fixing an orthonormal frame ray-wise acts as a diagonal phase".
-      - **(2d) OPEN.** Agreement + semilinearity assembly.
+      - **(2c) frame reduction DONE 2026-06-09** (`WignerRigidity.lean`); the residual
+        normal-form lemma is the OPEN crux. Landed via the direct isometry route (no
+        `≃ₗᵢ ↔ Matrix.unitaryGroup` bridge needed): `projMap (e : E ≃ₗᵢ[ℂ] E)` (projective map
+        of an isometry equiv) + `transProb_projMap` (isometry preserves `transProb`, subsuming
+        the matrix-unitary case) + `projMap_transProbPreserving` + `TransProbPreserving.comp`,
+        giving `reducedMap hf b := projMap (candidateUnitary hf b).symm ∘ f` with
+        `reducedMap_transProbPreserving` and `reducedMap_fixes_basis`
+        (`reducedMap hf b (mk (b i)) = mk (b i)`). Tier-A audited SOUND, **no over-claim**:
+        fixing the basis rays does NOT make `reducedMap` the identity — the diagonal-phase
+        freedom is genuine. So the whole converse now reduces to ONE residual lemma:
+        **a `TransProbPreserving` map fixing every basis ray is the identity on rays**, proved
+        by extracting the phase cocycle from the superposition rays `mk(bᵢ+bⱼ)` and showing it
+        trivial. This is the genuine research-grade crux.
+      - **(2d) OPEN.** Semilinearity / agreement assembly downstream of the normal-form lemma.
+      - **Audit watch (highest-value, per the step-2c audit):** the residual normal-form proof
+        must DERIVE its conclusion from the overlap/cocycle data + the Kähler complex structure;
+        it must NOT take ℂ-linearity (or `f` = a fixed unitary) as a hypothesis — a smuggled
+        linearity input is the one way this converse could become circular.
     - **(3) OPEN.** Rule out the antiunitary branch via the Kähler complex structure.
     **Audit watch (per the foundation + step-1 audits):** step (3) must DERIVE ℂ-linearity,
     not assume it as a hypothesis (smuggled linearity would beg the question — attempt to

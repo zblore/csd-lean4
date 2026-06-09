@@ -1699,6 +1699,19 @@ as an axiom nor a sorry. -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.candidateUnitary_agrees_on_basis
 
+-- Wigner converse step (2c) frame reduction: the frame-reduced map
+-- `projMap (candidateUnitary hf b).symm ∘ f` is `TransProbPreserving` ...
+/-- info: 'Projectivization.reducedMap_transProbPreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.reducedMap_transProbPreserving
+
+-- ... and fixes every source basis ray (`reducedMap hf b (mk (b i)) = mk (b i)`),
+-- reducing the open converse to the single Wigner normal-form lemma. Fixing the
+-- basis rays does NOT make the map the identity (diagonal-phase freedom is genuine).
+/-- info: 'Projectivization.reducedMap_fixes_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.reducedMap_fixes_basis
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.
