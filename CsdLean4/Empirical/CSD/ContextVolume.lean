@@ -219,9 +219,12 @@ omit [Fintype ι] in
 derived sum of Kähler volumes.** For i.i.d. trials drawing microstates from the
 Fubini–Study typicality measure on the ontic `Σ = ℂℙ^M`, the empirical frequency of
 the degenerate outcome `a` — the finite **sum** of the per-ray empirical frequencies
-over the block `{i : blk i = a}`, equal to the frequency of the union of the disjoint
-barycentric per-ray regions — converges, on a single almost-sure event, to the block
+over the block `{i : blk i = a}` — converges, on a single almost-sure event, to the block
 Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖² = ⟨ψ, Pₐ ψ⟩` (see `block_born_eq_blockSum`).
+(This sum-of-per-ray-frequencies equals the frequency of the *union* of the block's
+barycentric per-ray regions exactly when those regions are pairwise disjoint — true of the
+barycentric subdivision, but the `bornRegion` disjointness is not yet formalised, so the
+union-region restatement is owed; the sum form proved here needs only additivity of limits.)
 
 Carving-free, Gleason-free, unconditional modulo the genericity hypothesis `hpos`.
 Proof: take the single a.s. event from `context_born_frequency_volume` (which gives
@@ -263,6 +266,74 @@ theorem block_born_frequency_volume
   have h := context_born_frequency_volume p₀ B ψ hψ hpos X hX hlaw hindep
   filter_upwards [h] with ω hω
   exact tendsto_finset_sum _ (fun i _ => hω i)
+
+/-! ### Concrete degenerate (rank-2) witness: the two-qubit parity `Z⊗Z` -/
+
+/-- **Concrete degenerate (rank-2) witness: the two-qubit parity observable `Z⊗Z`.**
+The parity / `Z⊗Z` outcome Born weight realised as a block sum of Fubini–Study
+typicality volumes — the Mermin–Peres rank-2 observable case made explicit.
+
+`Z⊗Z` on `EuclideanSpace ℂ (Fin 4)` has eigenvalues `±1`, each eigenspace of
+rank 2; its eigenbasis **is** the computational basis (no rotation needed), so we
+take `B := EuclideanSpace.basisFun (Fin 4) ℂ` (whose `i`-th vector is
+`EuclideanSpace.single i 1`, `EuclideanSpace.basisFun_apply`). The block labelling
+`blk = ![0,1,1,0] : Fin 4 → Fin 2` is the parity grouping of the two-qubit strings:
+indices `{0,3}` (`|00⟩, |11⟩`, even parity, eigenvalue `+1`) ↦ outcome `0`; indices
+`{1,2}` (`|01⟩, |10⟩`, odd parity, eigenvalue `−1`) ↦ outcome `1`.
+
+Instantiating `block_born_frequency_volume` at `B`, `blk`, `a = 0` and collapsing the
+even-parity block `{0,3}` (`Finset.sum_pair`, `decide` on the filter), the empirical
+frequency of the even-parity (`Z⊗Z = +1`) outcome converges almost surely to the
+`Z⊗Z = +1` Born weight `‖⟨e₀, ψ⟩‖² + ‖⟨e₃, ψ⟩‖² = ⟨ψ, P₊ ψ⟩`, a block sum of two
+FS typicality volumes on the fixed ontic `Σ = ℂℙ³`. Carving-free, Gleason-free,
+foundational-triple-only.
+
+Honest scope unchanged from the generic degenerate case (`block_born_frequency_volume`):
+this is a faithful **realisation** of the rank-2 outcome weight as a sum of ontic
+volumes, not a derivation (`Φ = id`, FS regions carved in the computational frame);
+the Mermin–Peres / Kochen–Specker no-go itself stays at the QM-validity layer
+(`Empirical/QM/`). The genericity hypothesis `hpos` (all four computational Born
+weights strictly positive) places `ψ`'s coordinate vector at an interior simplex
+point. -/
+theorem zz_parity_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ i, 0 < ‖inner ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ) i) ψ‖ ^ 2)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+              (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (3 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ hpos
+    (![0, 1, 1, 0] : Fin 4 → Fin 2) 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0),
+          ‖inner ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ) i) ψ‖ ^ 2)
+        = ‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (3 : Fin 4) (1 : ℂ)) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0))
+          = {0, 3} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 3),
+      EuclideanSpace.basisFun_apply, EuclideanSpace.basisFun_apply]
+  rw [← hsum]
+  exact h
 
 end ContextVolume
 end CSDBridge

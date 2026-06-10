@@ -62,10 +62,15 @@ projective measurement context** generally (`ContextVolume.lean`, done 2026-06-1
 `context_born_frequency_volume` (rank-1 Kochen-Specker grounding) AND
 `block_born_frequency_volume` (degenerate rank-≥1 outcomes as block sums of FS
 volumes — covers Mermin-Peres rank-2 eigenspaces; `⟨ψ,Pₐψ⟩ = ∑_{i∈block} ‖⟨Bᵢ,ψ⟩‖²`).
-Remaining (optional): the concrete instantiations — extract a Cabello-18 basis /
-the Mermin-Peres observable eigenbases as `OrthonormalBasis` and instantiate, for
-named KS / MP volume witnesses; and the union-region form (needs per-ray
-`bornRegion` disjointness, currently asserted-but-unused).
+Concrete witness DONE 2026-06-10: `zz_parity_born_frequency_volume` — the two-qubit
+`Z⊗Z` parity (rank-2 degenerate) measurement, `+1` outcome Born weight
+`‖⟨e₀,ψ⟩‖²+‖⟨e₃,ψ⟩‖²` as a block sum of FS volumes (the Mermin-Peres-type rank-2 case
+made explicit, computational eigenbasis). Remaining (optional): a full Cabello-18 / MP
+magic-square instantiation; and the **union-region form** `block_born_frequency_volume_union`
+— OWED on **`bornRegion` pairwise disjointness**, which is not formalised anywhere (it is a
+genuine simplex-subdivision fact, argmax cell-membership characterisation; the sum-of-per-ray
+form proved needs only additivity of limits, so this is a narrative/strengthening gap, not a
+soundness one).
 
 **Why the QM-validity layer is still load-bearing pre-LF4.**
 

@@ -1293,6 +1293,16 @@ info: 'CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume
 
+-- Concrete degenerate (rank-2) witness: the two-qubit parity Z⊗Z. The +1 parity
+-- outcome Born weight realised as a block sum of two FS typicality volumes
+-- (computational eigenbasis, blk = ![0,1,1,0]). The Mermin–Peres rank-2 observable
+-- case made explicit. Carving-free, Gleason-free, foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume
+
 -- Trine POVM: the first non-projective (POVM) entry in the volume-frequency series.
 -- A concrete qubit trine POVM (completeness ∑ Eₖ = I), its canonical Naimark
 -- dilation, and the frequency-volume capstone — POVM outcome frequencies on the
