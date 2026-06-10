@@ -61,6 +61,7 @@ import CsdLean4.LF4.POVMDilation
 import CsdLean4.LF4.POVMVolume
 import CsdLean4.LF4.POVMNaimark
 import CsdLean4.LF5.VonNeumannUnitary
+import CsdLean4.LF5.MeasurementFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2350,5 +2351,22 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF5.vnPerm_ground' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.vnPerm_ground
+
+-- LF5-B (measurement flow): the reindexed vN coupling unitary acting on the
+-- dilated projective ontic space ℙ ℂ (EuclideanSpace ℂ (Fin m)) (canonically
+-- ℂℙ^{N·N−1} at e = finProdFinEquiv). FS-invariance (the Liouville / hΦ_pres
+-- content), Φ_vN ≠ id (genuine measurement dynamics, the D1 increment), and the
+-- basis-ray adder action (the LF5-C input). Foundational triple.
+/-- info: 'CSD.LF5.measurementFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurementFlow_measurePreserving
+
+/-- info: 'CSD.LF5.measurementFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurementFlow_ne_id
+
+/-- info: 'CSD.LF5.measurementFlow_mk_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurementFlow_mk_single
 
 end CSD.Tests.AxiomAudit

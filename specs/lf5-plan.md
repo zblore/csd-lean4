@@ -65,7 +65,19 @@ extend-a-partial-isometry problem. Deliver `vnUnitary`, `vnUnitary_unitary`, and
 *Risk:* low — permutation-matrix unitarity + the `Equiv` arithmetic on `Fin N × Fin N`
 (`ZMod`/`Fin` add). Reuse `Equiv.Perm` → `Matrix.PEquiv`/permutation-matrix API.
 
-### LF5-B — the measurement flow  [REUSE; bounded]
+### LF5-B — the measurement flow  [REUSE; bounded] — **DONE 2026-06-10** (`CsdLean4/LF5/MeasurementFlow.lean`)
+Delivered: `vnUnitaryReindexed N (e : Fin N × Fin N ≃ Fin m) : Matrix.unitaryGroup (Fin m) ℂ`
+(transport of `vnUnitary` along an **arbitrary** reindex equiv, matching the LF4 POVM engine's
+`e : Fin N × ι ≃ Fin (M+1)` signature so LF5-C/D share one equiv; helper
+`reindex_mem_unitaryGroup`, Mathlib upstream candidate), `measurementFlow := (vnUnitaryReindexed N e • ·)`
+on `ℙ ℂ (EuclideanSpace ℂ (Fin m))`, **`measurementFlow_measurePreserving`** (FS-invariance via
+`fubiniStudyMeasure_smul_invariant` — the smul-action route, not `projMap`; agreement with the
+projMap framing documented, not formalised), **`measurementFlow_ne_id`** (`1 < N`; the basis ray
+at `e (1,0)` moves to `e (1,1)`), and `measurementFlow_mk_single` (the flow permutes basis rays by
+the adder; at ground apparatus the projective copy `[eⱼ⊗a₀] ↦ [eⱼ⊗aⱼ]`, the LF5-C input).
+Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND (witness verified to move;
+direction convention killed with a positive/negative entry pair at N=3). Original spec below.
+
 `measurementFlow := projMap (vnUnitary)` on `ℂℙ^{N·N−1}` (reuse `projMap` from
 `WignerRigidity.lean` / the U(N)-action). Deliver `measurementFlow_measurePreserving`
 (FS-invariance, reuse `fubiniStudyMeasure_smul_invariant` / `transProb_smul_unitary`) and
