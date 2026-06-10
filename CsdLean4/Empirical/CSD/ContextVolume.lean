@@ -46,14 +46,39 @@ ontology, the dependence of the carved volume regions on the measurement frame.
 
 ## Honest scope
 
-Rank-1 (non-degenerate) projective contexts only. Degenerate-eigenspace
-measurements (e.g. the two-qubit Mermin–Peres observables, whose eigenprojectors
-have rank > 1) are **not** covered by this lemma: `born_frequency_convergence_N`
-is stated for the `N`-element computational outcome partition, one ray per
-outcome. The genericity hypothesis `hpos` (every context Born weight strictly
-positive) makes the rotated state an interior simplex point; boundary contexts
-need a separate carve-out, exactly as for the per-state files. The LHV / KS / MP
+The genericity hypothesis `hpos` (every context Born weight strictly positive)
+makes the rotated state an interior simplex point; boundary contexts need a
+separate carve-out, exactly as for the per-state files. The LHV / KS / MP
 impossibility itself lives in `Empirical/QM/` (`KochenSpecker`, `MerminPeres`).
+
+## Degenerate-eigenspace extension (rank-1 scope note closed)
+
+A **degenerate** projective measurement has outcome projectors `Pₐ` of rank ≥ 1.
+Picking an orthonormal eigenbasis `B` adapted to the spectral decomposition and a
+block labelling `blk : Fin (M+1) → ι` (the `ι`-many outcome labels), the outcome-`a`
+projector is `Pₐ = ∑_{blk i = a} |B i⟩⟨B i|`, so the outcome Born weight is the
+**block sum** of per-ray Born weights:
+
+```
+⟨ψ, Pₐ ψ⟩ = ∑_{blk i = a} ‖⟨B i, ψ⟩‖²        (block_born_eq_blockSum)
+```
+
+a finite **sum of Fubini–Study typicality volumes** on the same ontic `Σ = ℂℙ^M`.
+The block (degenerate-outcome) empirical frequency is the finite sum of the per-ray
+frequencies (the per-ray barycentric regions are disjoint, so summing the
+frequencies is the frequency of their union, the block outcome region), and it
+converges to the block Born weight: `block_born_frequency_volume`. This closes the
+rank-1 scope note above: degenerate contexts — including the two-qubit Mermin–Peres
+rank-2 eigenspace observables and any other rank ≥ 1 projective context — are now
+grounded as block sums of FS volumes. `block_born_eq_blockSum` writes the block
+Born weight via the explicit rank-1-sum projector image `Pₐ ψ = ∑_{blk i = a}
+⟨B i, ψ⟩ • B i`; the equivalent reading is `∑_{blk i = a} ‖⟨B i, ψ⟩‖² =
+‖orthogonalProjection (span {B i : blk i = a}) ψ‖²` (Parseval over the orthonormal
+sub-family), which is the standard "projection onto the eigenspace" statement.
+
+Honest scope unchanged from the rank-1 case: this is a faithful **realisation**,
+not a derivation (`Φ = id`, the FS regions carved in the rotated frame); the
+contextuality / KS / MP no-go stays at the QM-validity layer (`Empirical/QM/`).
 -/
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
@@ -155,6 +180,89 @@ theorem context_born_frequency_volume
   filter_upwards [key] with ω hω i
   rw [context_born_eq_rotated B ψ i]
   exact hω i
+
+/-! ### Degenerate-eigenspace blocks (step 1: the block Born weight) -/
+
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+
+omit [Fintype ι] in
+/-- **Degenerate-outcome Born weight = block sum of per-ray Born weights.** For an
+orthonormal eigenbasis `B` adapted to a block labelling `blk`, the rank-≥1
+eigenspace projector for outcome `a` is `Pₐ = ∑_{blk i = a} |B i⟩⟨B i|`, so
+`Pₐ ψ = ∑_{blk i = a} ⟨B i, ψ⟩ • B i`. Sandwiching against `ψ` (real part) gives the
+block sum of per-ray Born weights `∑_{blk i = a} ‖⟨B i, ψ⟩‖²`, the outcome-`a` Born
+weight `⟨ψ, Pₐ ψ⟩`.
+
+Delivered in the **block-sum-direct** form (the projector applied to `ψ` written as
+its explicit rank-1 sum), not the `orthogonalProjection`-over-subfamily-span form:
+the latter requires constructing an orthonormal basis of the span submodule from the
+sub-family of `B`, which is span-of-subfamily friction in Mathlib with no payoff here.
+The equivalent projector reading is
+`∑_{blk i = a} ‖⟨B i, ψ⟩‖² = ‖orthogonalProjection (span ℂ {B i : blk i = a}) ψ‖²`
+(Parseval over the orthonormal sub-family). Proof: `inner_sum` + `inner_smul_right` +
+`inner_conj_symm` + `RCLike.mul_conj`, termwise. -/
+lemma block_born_eq_blockSum
+    (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (blk : Fin (M + 1) → ι) (a : ι) :
+    RCLike.re (inner ℂ ψ
+        (∑ i ∈ Finset.univ.filter (fun i => blk i = a), (inner ℂ (B i) ψ) • B i))
+      = ∑ i ∈ Finset.univ.filter (fun i => blk i = a), ‖inner ℂ (B i) ψ‖ ^ 2 := by
+  rw [inner_sum, map_sum]
+  refine Finset.sum_congr rfl (fun i _ => ?_)
+  rw [inner_smul_right, ← inner_conj_symm ψ (B i), RCLike.mul_conj, ← RCLike.ofReal_pow]
+  exact RCLike.ofReal_re _
+
+/-! ### The degenerate-context block volume-frequency capstone (step 2) -/
+
+omit [Fintype ι] in
+/-- **Degenerate projective measurement context's block (eigenspace) Born weight as a
+derived sum of Kähler volumes.** For i.i.d. trials drawing microstates from the
+Fubini–Study typicality measure on the ontic `Σ = ℂℙ^M`, the empirical frequency of
+the degenerate outcome `a` — the finite **sum** of the per-ray empirical frequencies
+over the block `{i : blk i = a}`, equal to the frequency of the union of the disjoint
+barycentric per-ray regions — converges, on a single almost-sure event, to the block
+Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖² = ⟨ψ, Pₐ ψ⟩` (see `block_born_eq_blockSum`).
+
+Carving-free, Gleason-free, unconditional modulo the genericity hypothesis `hpos`.
+Proof: take the single a.s. event from `context_born_frequency_volume` (which gives
+**every** ray `i`'s convergence simultaneously) and sum the block's per-ray
+convergences via `tendsto_finset_sum`. The per-ray frequency summand is verbatim the
+conclusion of `context_born_frequency_volume`, so the per-ray limits feed in directly.
+
+This closes the rank-1 scope note of `context_born_frequency_volume`: degenerate-
+eigenspace contexts (the two-qubit Mermin–Peres rank-2 observables and any rank ≥ 1
+projective context) are grounded as block sums of FS typicality volumes on the fixed
+ontic `Σ`. Honest scope unchanged: realisation not derivation (`Φ = id`, FS regions
+carved in the rotated frame); the KS / MP no-go stays at the QM-validity layer. -/
+theorem block_born_frequency_volume
+    (p₀ : CPN (M + 1))
+    (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ i, 0 < ‖inner ℂ (B i) ψ‖ ^ 2)
+    (blk : Fin (M + 1) → ι) (a : ι)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+          ‖inner ℂ (B i) ψ‖ ^ 2)) := by
+  have h := context_born_frequency_volume p₀ B ψ hψ hpos X hX hlaw hindep
+  filter_upwards [h] with ω hω
+  exact tendsto_finset_sum _ (fun i _ => hω i)
 
 end ContextVolume
 end CSDBridge

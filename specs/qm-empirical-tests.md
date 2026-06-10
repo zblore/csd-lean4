@@ -58,11 +58,14 @@ Everything else in this document — NoCloning B2, Mach-Zehnder, Mermin,
 algorithms — is QM-validity layer only at any "actionable now" status. The
 grounding pattern (instantiate `born_frequency_convergence_N` at the prediction's
 measurement basis) now also covers **GHZ** (`GHZVolume.lean`, done) and **any
-projective measurement context** generally (`ContextVolume.lean`,
-`context_born_frequency_volume`, done 2026-06-10 — the rank-1 Kochen-Specker
-grounding). Remaining: degenerate-eigenspace contexts (Mermin-Peres rank-2
-observables) need the block-sum extension (`povm_born_eq_block_sum` pattern for
-projective rank-`r` outcomes).
+projective measurement context** generally (`ContextVolume.lean`, done 2026-06-10):
+`context_born_frequency_volume` (rank-1 Kochen-Specker grounding) AND
+`block_born_frequency_volume` (degenerate rank-≥1 outcomes as block sums of FS
+volumes — covers Mermin-Peres rank-2 eigenspaces; `⟨ψ,Pₐψ⟩ = ∑_{i∈block} ‖⟨Bᵢ,ψ⟩‖²`).
+Remaining (optional): the concrete instantiations — extract a Cabello-18 basis /
+the Mermin-Peres observable eigenbases as `OrthonormalBasis` and instantiate, for
+named KS / MP volume witnesses; and the union-region form (needs per-ray
+`bornRegion` disjointness, currently asserted-but-unused).
 
 **Why the QM-validity layer is still load-bearing pre-LF4.**
 

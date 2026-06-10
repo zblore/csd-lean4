@@ -1275,6 +1275,24 @@ info: 'CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume' depe
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume
 
+-- Degenerate-eigenspace context: the outcome-a Born weight as the block sum of
+-- per-ray Born weights (rank-1-sum projector ⟨ψ, Pₐ ψ⟩). Closes the rank-1 scope
+-- note. Foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.ContextVolume.block_born_eq_blockSum' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.block_born_eq_blockSum
+
+-- Degenerate-eigenspace context block frequency → block Born weight (sum of FS
+-- typicality volumes). Covers Mermin–Peres rank-2 eigenspaces and any degenerate
+-- projective context. Carving-free, Gleason-free, foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume
+
 -- Trine POVM: the first non-projective (POVM) entry in the volume-frequency series.
 -- A concrete qubit trine POVM (completeness ∑ Eₖ = I), its canonical Naimark
 -- dilation, and the frequency-volume capstone — POVM outcome frequencies on the
