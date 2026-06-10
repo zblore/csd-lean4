@@ -100,6 +100,7 @@ import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
+import CsdLean4.Empirical.CSD.ContextVolume
 import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
@@ -1264,6 +1265,15 @@ info: 'CSD.Empirical.CSDBridge.HardyVolume.hardy_max_volume_probability' depends
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.HardyVolume.hardy_max_volume_probability
+
+-- Arbitrary rank-1 projective measurement context: outcome Born weights as
+-- Fubini–Study typicality volumes. Carving-free, Gleason-free, the reusable
+-- contextuality grounding. Foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume
 
 -- Trine POVM: the first non-projective (POVM) entry in the volume-frequency series.
 -- A concrete qubit trine POVM (completeness ∑ Eₖ = I), its canonical Naimark

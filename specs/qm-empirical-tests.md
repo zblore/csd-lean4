@@ -54,10 +54,15 @@ Gleason-free, and *unconditional* — not riding on the undischarged
   via `LF4.born_frequency_convergence_N`, with `bell_singlet_volume_correlation`
   recovering `⟨σ_a σ_b⟩ = −cos θ`. No Busch, no carving, no bundle.
 
-Everything else in this document — NoCloning B2, Mach-Zehnder, GHZ, Hardy,
-Mermin, KS, algorithms — is QM-validity layer only at any "actionable now"
-status. The grounding pattern (instantiate `born_frequency_convergence_N` at the
-prediction's measurement basis) extends to GHZ/KS next.
+Everything else in this document — NoCloning B2, Mach-Zehnder, Mermin,
+algorithms — is QM-validity layer only at any "actionable now" status. The
+grounding pattern (instantiate `born_frequency_convergence_N` at the prediction's
+measurement basis) now also covers **GHZ** (`GHZVolume.lean`, done) and **any
+projective measurement context** generally (`ContextVolume.lean`,
+`context_born_frequency_volume`, done 2026-06-10 — the rank-1 Kochen-Specker
+grounding). Remaining: degenerate-eigenspace contexts (Mermin-Peres rank-2
+observables) need the block-sum extension (`povm_born_eq_block_sum` pattern for
+projective rank-`r` outcomes).
 
 **Why the QM-validity layer is still load-bearing pre-LF4.**
 
