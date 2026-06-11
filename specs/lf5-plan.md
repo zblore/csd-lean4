@@ -122,7 +122,37 @@ dilation now *dynamically realised* by `Φ_vN`. *Risk:* medium — the `Vᴴ Π�
 bookkeeping and the tensor-index `Fin N × Fin N` ↔ `EuclideanSpace` plumbing; mirrors
 `naimarkV_pullback` (reuse its proof shape).
 
-### LF5-D — Born = volume + frequency, on the flow  [REUSE]
+### LF5-D — Born = volume + frequency, on the flow  [REUSE + engine upgrade] — **DONE 2026-06-11** (`CsdLean4/LF4/BornRegionUncond.lean` + `CsdLean4/LF5/FlowBornFrequency.lean`)
+Resolved the LF5-C obstruction by **route (b): the unconditional engine** (decided 2026-06-11;
+route (a), the system-side reduction, was assessed and rejected — it needs new face-restriction
+geometry for the moment subdivision at a boundary Born vector, keeps `hpos` on `ψ`, and lands
+the weaker system-factor-typicality statement). Two parts:
+
+**Part 1 — the `hpos`-free engine** (`LF4/BornRegionUncond.lean`, additive — the audited
+originals in `MomentBornN` / `BornFrequencyN` / `POVMVolume` are untouched): the bornRegion
+volume/frequency theorems for **every unit `ψ`, vanishing amplitudes included**, via the
+per-cell dichotomy — positive cells by the closed-simplex subset lemmas (interiority of the
+Born vector is not needed: only `0 ≤ b`, `∑b ≤ 1`, per-cell `0 < bᵢ`), zero cells by the
+det-0 null image (`det(replaceMap b i) = bᵢ = 0` ⟹ Lebesgue-null image, σ-compact hence
+measurable) + the joint Dirichlet law with no subset hypothesis (`fs_volume_eq_dirichlet_inter`)
+forcing FS-measure 0 = the Born weight. Delivered: `fs_born_volume_ratio_N_uncond` + `_apex_uncond`,
+`bornRegion_measurable_uncond` (also drops `hψ`), `bornRegion_fs_measure_uncond`,
+`born_frequency_convergence_N_uncond`, `povm_born_eq_dilated_volume_uncond`,
+`povm_born_frequency_volume_uncond`. **This retires the genericity caveat of the general-`N`
+headline and the POVM tranche** (additively; corpus-wide call-site migration deferred).
+
+**Part 2 — the instantiation** (`LF5/FlowBornFrequency.lean`): at `P = basisPOVM N`,
+`D = vnNaimark N`, `ψ' = piLpCongrLeft e (Vψ)` (unit, derived; genuinely non-generic):
+`vnDilation_pointer_volume` — pointer-`i` committed FS volume (block sum over `{(n,i)}`) =
+`‖⟨eᵢ,ψ⟩‖²` for **every** unit `ψ`; `vnDilation_pointer_frequency` (the LF5-D capstone) —
+i.i.d. FS trials on the dilated `ℂℙ^{N·N−1}` ⟹ a.s. pointer-block frequencies → the Born
+weights. Foundational-triple-only, 8 AxiomAudit pins, Tier-A audited SOUND (carving tripwire
+explicitly probed: `bornRegion` is the unchanged audited definition, the zero branch *derives*
+measure 0 from `det = 0` geometry — executed probe confirmed the off-diagonal cell of `Vψ` gets
+FS-measure 0 from the amplitude formula, not by assertion; statement identity with the audited
+originals kernel-checked by `rfl` proof-term probes; capstone hypotheses inhabited by an
+executed `Measure.infinitePi` i.i.d. construction at N=2). Original spec below.
+
 Instantiate `povm_born_eq_dilated_volume` and `povm_born_frequency_volume` at `P_proj` + the
 LF5-C dilation ⟹ pointer-`i` FS-volume = `⟨ψ,Eᵢψ⟩ = ‖⟨eᵢ,ψ⟩‖²`, and i.i.d. FS trials ⟹
 pointer-`i` frequency → `‖⟨eᵢ,ψ⟩‖²`. *Risk:* low — direct instantiation, once LF5-C builds the

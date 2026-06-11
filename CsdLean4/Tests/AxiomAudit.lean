@@ -60,9 +60,11 @@ import CsdLean4.LF2.EffectAux
 import CsdLean4.LF4.POVMDilation
 import CsdLean4.LF4.POVMVolume
 import CsdLean4.LF4.POVMNaimark
+import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.LF5.MeasurementFlow
 import CsdLean4.LF5.DilationFromFlow
+import CsdLean4.LF5.FlowBornFrequency
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2403,5 +2405,51 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF5.basisPOVM_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.basisPOVM_weight
+
+-- LF5-D part 1 (the unconditional Born-region engine): the general-N Born =
+-- FS-volume results and the POVM tranche wrappers with the hpos genericity
+-- hypothesis retired — valid for every unit ψ, vanishing amplitudes included.
+-- Per-cell dichotomy: positive cells by the closed-simplex subset argument,
+-- zero cells by the det-0 null image + the joint Dirichlet law (the cells
+-- genuinely collapse to FS-null sets; no carving). Additive over the audited
+-- originals in MomentBornN / BornFrequencyN / POVMVolume. Carving-free,
+-- Gleason-free; foundational triple only.
+/-- info: 'CSD.LF4.fs_born_volume_ratio_N_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_born_volume_ratio_N_uncond
+
+/-- info: 'CSD.LF4.fs_born_volume_ratio_N_apex_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fs_born_volume_ratio_N_apex_uncond
+
+/-- info: 'CSD.LF4.bornRegion_fs_measure_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.bornRegion_fs_measure_uncond
+
+/-- info: 'CSD.LF4.born_frequency_convergence_N_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.born_frequency_convergence_N_uncond
+
+/-- info: 'CSD.LF4.povm_born_eq_dilated_volume_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_eq_dilated_volume_uncond
+
+/-- info: 'CSD.LF4.povm_born_frequency_volume_uncond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_frequency_volume_uncond
+
+-- LF5-D part 2 (pointer frequencies of the de-isolation flow → Born): the
+-- unconditional engine instantiated at the dynamically-realised dilation
+-- vnNaimark, at the non-generic post-flow state Vψ (off-diagonal cells FS-null).
+-- Pointer-i committed FS volume = Born weight ‖⟨eᵢ,ψ⟩‖² for every unit ψ, and
+-- the empirical capstone: i.i.d. FS trials on the dilated ℂℙ^{N²−1} have
+-- pointer-block frequencies → Born a.s. Foundational triple.
+/-- info: 'CSD.LF5.vnDilation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilation_pointer_volume
+
+/-- info: 'CSD.LF5.vnDilation_pointer_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilation_pointer_frequency
 
 end CSD.Tests.AxiomAudit

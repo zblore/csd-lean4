@@ -557,10 +557,13 @@ is the residual primitive, instantiated-but-not-discharged in LF4; **A5 reduces 
 (the sector from deterministic dynamics, `Φ = id` today, the deepest open debt). So the
 honest payoff is "Born is a theorem of the sector symmetry," with the cost named
 (primitive moves from operational effect-additivity to the geometric sector posit). The
-general-`N` Born-region forms assume a fully-generic `ψ` (no vanishing amplitude);
-**general POVMs are not yet covered geometrically** (the Naimark-dilation +
-partial-trace route via `Mathlib/LinearAlgebra/Matrix/PartialTrace.lean` is open LF4
-work). `busch_effect_gleason` still lives in the corpus as the *operational-stratum*
+general-`N` Born-region forms originally assumed a fully-generic `ψ` (no vanishing
+amplitude); that genericity is **retired** by the unconditional engine
+(`LF4/BornRegionUncond.lean`, 2026-06-11 — `*_uncond` variants valid for every unit
+`ψ`, zero-weight cells handled by the det-0 null-image branch; additive, audited
+originals untouched). General POVMs **are** covered geometrically since the POVM
+tranche (2026-06-03, `canonicalNaimark`; see the POVM note above).
+`busch_effect_gleason` still lives in the corpus as the *operational-stratum*
 closure (the LF3 chain capstones and the LF2 general-effect representation use it); this
 cluster is the *ontic-stratum, Gleason-free route*, not a removal of Busch. The full
 plan and per-result honesty ledger live in `specs/general-n-dh-plan.md` (general `N`)
