@@ -165,6 +165,7 @@ Born = Kähler-volume machinery they instantiate lives in `CsdLean4/LF4/POVM*.le
 - [`specs/qm-empirical-tests.md`](specs/qm-empirical-tests.md) — the roadmap, per-item
   status tags, and the planned-but-not-yet-done items (BB84/B92, weak-measurement
   paradoxes, algorithms).
-- [`AXIOMS.md`](AXIOMS.md) — the two standing axioms and the operational/ontic two-strata
+- [`AXIOMS.md`](AXIOMS.md) — the one standing axiom (`busch_effect_gleason`;
+  `invariant_measure_uniqueness` removed 2026-06-04) and the operational/ontic two-strata
   reading.
 - [`CLAUDE.md`](CLAUDE.md) — architecture and module-chain guide.

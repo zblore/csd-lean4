@@ -201,7 +201,7 @@ under our context. The PSD inner-product route above bypasses the issue.
 - `busch_effect_gleason` — effect-algebra infrastructure (not currently in Mathlib), plus Busch 2003's proof. Larger task; full effect-algebra / POVM machinery is an open Mathlib gap. No concrete-realisation thread yet (cf. the projectivization thread for the other axiom; the analogous target here is a finite-dimensional Gleason/Busch formalisation).
 
 **Pickup:**
-- `invariant_measure_uniqueness`: the math core is done. The count drop (two axioms → one) happens at §8 instantiation — set `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := U(N)`, `μFS := fubiniStudyMeasure p₀`, and add a concrete `measure_bridge` citing `invariant_measure_uniqueness_cpn` rather than the axiom. Signatures are already shape-compatible.
+- `invariant_measure_uniqueness`: **the count drop happened 2026-06-04, by removal rather than §8 routing** — the abstract `measure_bridge` statement that carried the axiom was unused (the concrete instances build the bridge axiom-free via `cp_measure_bridge` / `k_measure_bridge`), so the axiom, the abstract `measure_bridge` lemma, and `MeasureBridgeData.ofSectorData` were deleted. The concrete `ℂℙ^{N-1}` content survives as the proved theorem `invariant_measure_uniqueness_cpn`. One standing axiom remains (`busch_effect_gleason`).
 - `busch_effect_gleason`: remains an axiom until Mathlib integration. When it lands, swap `axiom` for `theorem`-via-import in LF2.
 
 ---

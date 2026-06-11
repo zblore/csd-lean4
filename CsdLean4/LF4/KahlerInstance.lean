@@ -33,6 +33,20 @@ no measure-isomorphism machinery.
 **Bridge is axiom-free for this instance.** `π∗μL = μFS` is the product
 marginal (`Measure.fst_prod`, `c = 1`), citing only the foundational triple —
 `invariant_measure_uniqueness` is **not** needed here (cf. `LF4/Instance.lean`).
+
+**Formalisation boundary (honest scope).** "Compact Kähler" above is the
+*mathematical reading* of these objects, not a formalised structure: in Lean,
+`KSigma` is a product **type** and `kMuL` a product **measure**. No manifold
+structure, symplectic form, or Kähler metric is constructed, and `kMuL` is not
+*derived* from a volume form — Mathlib has no Kähler API, and the corpus does
+not build one. What **is** machine-verified is the measure-theoretic content:
+`fubiniStudyMeasure` (the Haar-on-`U(N)` pushforward, which mathematically *is*
+the FS Kähler volume), its `U(N)`-invariance and uniqueness, the product
+marginal bridge, and everything downstream. The identification of these
+measures with Kähler/Liouville volume forms is interpretive prose backed by
+standard differential geometry, not by Lean. Cf. `AXIOMS.md §3.1`
+(preparation-measure origin) for the same boundary stated at the
+`OnticSetup.μL` level.
 -/
 
 open MeasureTheory Matrix Matrix.UnitaryGroup

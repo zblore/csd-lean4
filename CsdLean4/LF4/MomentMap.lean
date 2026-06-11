@@ -20,22 +20,34 @@ preparation `ψ`,
 Φ([ψ])ᵢ = |ψᵢ|² = ‖⟨eᵢ, ψ⟩‖²    (eᵢ = EuclideanSpace.single i 1).
 ```
 
-This is a theorem of symplectic geometry, **forced** by the Fubini–Study Kähler
-structure together with the torus action — not an arc carved to a target value
+Mathematically this is a theorem of symplectic geometry — the coordinate
+formula is **forced** by the Fubini–Study Kähler structure together with the
+torus action — not an arc carved to a target value
 (`SingletKahler.kMuPsi_kRegion`) and not an operational-consistency postulate
 (`busch_effect_gleason`). It exhibits the Born weight vector as a canonical
 invariant of the very structure the programme takes as primitive (the compact
 Kähler `Σ`). See `specs/carve-out-plan.md` (Tranche 1).
 
-**Scope of this slice.** This module delivers the moment map, the simplex
-constraints (`momentMap_nonneg`, `momentMap_sum_eq_one`), and the headline
-Born-weight identity (`momentMap_mk_eq_inner_sq`). It does **not** yet prove the
-Duistermaat–Heckman pushforward (`Φ∗μ_FS = uniform on Δ`) nor the full
-`U(N)`-equivariance — those are the next slices and need symplectic-volume
-machinery Mathlib lacks. The honest limit recorded in the plan stands: this
-gives the Born weight as a moment *coordinate* of the preparation point, not as a
-ψ-independent volume ratio; the ψ-dependence still enters through the preparation
-measure `μψ`, whose principled construction is the open `G3b` content.
+**Formalisation boundary (honest scope).** In Lean, `momentMap` is *defined*
+directly by the coordinate formula `‖p.rep i‖²/‖p.rep‖²`; the statement that
+this function satisfies the Hamiltonian moment-map equation `ι_{X_i} ω = dΦᵢ`
+for the FS symplectic form is the (standard, unformalised) symplectic fact
+motivating the name — Mathlib has no symplectic-form API and no Kähler API, so
+the "forced by the Kähler structure" claim is mathematical narrative, not a
+Lean theorem. What **is** machine-verified: well-definedness on rays
+(`momentMap_mk`), the simplex constraints (`momentMap_nonneg`,
+`momentMap_sum_eq_one`), the Born-weight identity
+(`momentMap_mk_eq_inner_sq`), and — by the measure-theoretic Gaussian route,
+not symplectic machinery — the Duistermaat–Heckman pushforward law
+(`fs_moment_pushforward_uniform`, qubit, proved 2026-05-31;
+`fs_moment_joint_dirichlet_N`, the joint Dirichlet law for general `N`,
+proved 2026-06-02). An earlier revision of this docstring listed the DH
+pushforward as not yet proved; that scope note is superseded.
+
+**Scope of this slice (historical).** This module delivers the moment map, the
+simplex constraints, and the headline Born-weight identity. The ψ-dependence
+of preparations still enters through the preparation measure `μψ`, whose
+principled construction is the open `G3b` content.
 
 **Category:** conceptually 1-Mathlib (CSD-free projective/Kähler geometry); kept
 here in `CSD.LF4` for now as it drives the carve-out programme. Extraction

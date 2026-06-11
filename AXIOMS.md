@@ -22,7 +22,7 @@ Every Mathlib-dependent Lean development uses these three axioms. They are inspe
 | `Classical.choice` | The (non-constructive) axiom of choice. |
 | `Quot.sound` | Soundness of quotient-type formation. |
 
-LF1 theorems cite only these three. LF3's strong-readout and finite-leakage main theorems (`LF3_main_theorem`, `LF3_finite_leakage_theorem`) cite only these three. **The three LF3 chain capstones** (`LF3_singlet_frequency_convergence`, `_born`, `_born_inner`, plus their joint-partition variants from Phase 8) cite the foundational triple **plus** `busch_effect_gleason` — see §2.2 below and the option (B) chain rewrite in §3.6 for the rationale (the chain now routes via OP.p Born identity, which extensionally invokes the Busch axiom through `pure_state_born_weights_of_certainty`).
+LF1 theorems cite only these three. LF3's strong-readout and finite-leakage main theorems (`LF3_main_theorem`, `LF3_finite_leakage_theorem`) cite only these three. **The LF3 chain capstones** (`LF3_singlet_frequency_convergence`, `_born`, `_born_inner`, plus their joint-partition variants from Phase 8) **also cite only these three** since the 2026-06-02 re-route: the chain bridge now goes through the Busch-free ontic volume step (`OP_p_at_jointEig_eq_P_st_direct` via `born_rank_one_direct`), not through `pure_state_born_weights_of_certainty`. (Pre-2026-06-02 revisions of this file recorded the capstones as Busch-carrying; that was true of the option (B) chain as first landed and is no longer the case — see §2.2 and the per-theorem table in §5.)
 
 ## 2. Imported mathematical results (formalisation debt, not theory commitments)
 
@@ -193,7 +193,7 @@ For each headline exported theorem, the legible axiom citation:
 | `LF1_main_theorem_ae` | `propext, Classical.choice, Quot.sound` |
 | `LF1_main_theorem_projective` | `propext, Classical.choice, Quot.sound` |
 | `lf1_weight_eq_projective_weight` | `propext, Classical.choice, Quot.sound` |
-| `measure_bridge` | `propext, Classical.choice, Quot.sound, invariant_measure_uniqueness` |
+| `measure_bridge` | *(removed 2026-06-04 together with `invariant_measure_uniqueness` — the abstract statement was unused; the concrete instances carry `cp_measure_bridge` / `k_measure_bridge`, foundational-triple-only)* |
 | `born_quadratic` | `propext, Classical.choice, Quot.sound` |
 | `pure_state_born_weights` | `propext, Classical.choice, Quot.sound` |
 | `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |

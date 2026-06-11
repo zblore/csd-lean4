@@ -8,11 +8,16 @@ name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4"
 rev = "0e301e814c705e296fbd6b76905fa8a9defd58cf"
 
-# Library target: LF1 + LF2 + LF3 + Empirical + Mathlib upstream-tracking.
+# Library target: LF1–LF5 + Empirical + Mathlib upstream-tracking.
 # Consumers `import CsdLean4` or `import CsdLean4.Basic` get the full
-# development. The Tests/ subtree is excluded from this target.
+# development. `CsdLean4.Basic` is listed as an explicit root because it is
+# not imported by the root module (it imports the root, not vice versa) —
+# without this it would sit outside the build graph and CI would never
+# check it (which is how its import list silently rotted pre-2026-06-11).
+# The Tests/ subtree is excluded from this target.
 [[lean_lib]]
 name = "CsdLean4"
+roots = ["CsdLean4", "CsdLean4.Basic"]
 
 # Test target: AxiomAudit regression suite (`#guard_msgs` pins on
 # `#print axioms` for every headline theorem) and Examples worked

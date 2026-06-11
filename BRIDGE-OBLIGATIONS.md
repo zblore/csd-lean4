@@ -68,11 +68,13 @@ Used by `Empirical/CSD/Framework.lean`'s `Context` bundle.
 
 | Bundle | Field | What it asserts | LF4-todo |
 |---|---|---|---|
-| `Empirical.CSDBridge.Context` | `bridge : LF2.MeasureBridgeData D μFS` | `π_*μL = c • μFS` + G-invariance, derived via `LF2.MeasureBridgeData.ofSectorData` citing `invariant_measure_uniqueness` | §8 (LF4 Kähler instantiation gives the concrete `SectorData`) |
+| `Empirical.CSDBridge.Context` | `bridge : LF2.MeasureBridgeData D μFS` | `π_*μL = c • μFS` + G-invariance, supplied as passive data | §8 (LF4 Kähler instantiation gives the concrete `SectorData`) |
 
-Note: `invariant_measure_uniqueness` is an LF2 axiom, not a bundle
-field — its provenance is in `AXIOMS.md §2.1`. The `bridge` field
-above is the *consumer* side of that axiom in the CSD framework.
+Note (updated 2026-06-11): the former constructor
+`LF2.MeasureBridgeData.ofSectorData` and the `invariant_measure_uniqueness`
+axiom it cited were **removed 2026-06-04** (see `AXIOMS.md §2.1`). The
+`bridge` field is now plain supplied data; the concrete LF4 instances
+inhabit it **axiom-free** (`cp_measure_bridge` / `k_measure_bridge`).
 
 ### 2.3 CSD cloning bundle (added 2026-05-21)
 

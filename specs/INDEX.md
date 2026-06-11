@@ -43,7 +43,7 @@ LIVE doc for the tranche you are on.
 | [`../README.md`](../README.md) | Authoritative status overview (layers, theorem tables, axiom posture). |
 | [`../EMPIRICAL.md`](../EMPIRICAL.md) | Per-test index of the empirical suite (both branches: file, headline theorem, claim, source). |
 | [`../CLAUDE.md`](../CLAUDE.md) | Working-with-the-code guide (architecture, conventions, module chains). |
-| [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: the two standing axioms (§2.1–§2.2), discharged ones (§2.3–§2.4), structural assumptions (§3, incl. A5/D1/V≈1−I), per-theorem audit (§5). |
+| [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: the one standing axiom (`busch_effect_gleason`, §2.2; `invariant_measure_uniqueness` removed 2026-06-04, §2.1), discharged ones (§2.3–§2.4), structural assumptions (§3, incl. A5/D1/V≈1−I), per-theorem audit (§5). |
 | [`../CONVENTIONS.md`](../CONVENTIONS.md) | Three-category (Cat-1/2/3) discipline, naming, namespace rules. |
 | [`../BRIDGE-OBLIGATIONS.md`](../BRIDGE-OBLIGATIONS.md) | Ledger of load-bearing Empirical/CSD bridge fields with LF4-todo cross-refs. |
 | [`../PLACEHOLDERS.md`](../PLACEHOLDERS.md) | Placeholder / stub tracking. |
