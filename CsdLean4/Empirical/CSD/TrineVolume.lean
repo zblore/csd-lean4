@@ -1,5 +1,5 @@
 import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF2.EffectAux
 
 /-!
@@ -21,10 +21,11 @@ This file:
   and `trine_born_frequency_volume` lands the trine outcome frequencies as
   **Fubini–Study volumes** on the dilated `Σ' = ℂℙ⁵` — carving-free, Gleason-free.
 
-The trine has no structural zeros (for generic `ψ` all three weights are nonzero),
-so the volume reading is a clean interior point — unlike GHZ/Hardy at their
-boundary values. The genericity hypothesis `hpos` (the dilated state has no
-vanishing amplitude) is carried as in the general capstone.
+The trine has no structural zeros (for generic `ψ` all three weights are nonzero).
+The capstone is unconditional: it routes through the hpos-free engine
+(`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no
+genericity hypothesis on the dilated state is carried (2026-06-11 migration);
+vanishing dilated amplitudes give FS-null cells.
 -/
 
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
@@ -122,20 +123,20 @@ theorem trine_weight_eq (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) (
 noncomputable def trineNaimark : NaimarkDilation trinePOVM := canonicalNaimark trinePOVM
 
 /-- **The trine POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume` at the trine: i.i.d. Fubini–Study trials on the dilated
-ontic `Σ' = ℂℙ⁵` have the `k`-th trine outcome's empirical frequency converge, on a
-single almost-sure event, to the trine Born weight `pₖ(ψ) = ⟨ψ, Eₖ ψ⟩` (the symmetric
-120°-measurement outcome probability `(2/3)‖⟨ψₖ,ψ⟩‖²`) — realised as a sum of
+`povm_born_frequency_volume_uncond` at the trine: i.i.d. Fubini–Study trials on the
+dilated ontic `Σ' = ℂℙ⁵` have the `k`-th trine outcome's empirical frequency converge,
+on a single almost-sure event, to the trine Born weight `pₖ(ψ) = ⟨ψ, Eₖ ψ⟩` (the
+symmetric 120°-measurement outcome probability `(2/3)‖⟨ψₖ,ψ⟩‖²`) — realised as a sum of
 Fubini–Study volumes of the dilated barycentric cells. The **first
-non-projective (POVM) entry in the volume-frequency series**; carving-free, Gleason-free.
-The genericity `hpos` (dilated state interior) is carried as in the general capstone. -/
+non-projective (POVM) entry in the volume-frequency series**; carving-free,
+Gleason-free, and (since the 2026-06-11 hpos migration) with no genericity
+hypothesis on the dilated state. -/
 theorem trine_born_frequency_volume
     (ψ : EuclideanSpace ℂ (Fin 2)) (e : (Fin 2 × Fin 3) ≃ Fin 6)
     (ψ' : EuclideanSpace ℂ (Fin 6))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin trineNaimark.V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (hpos : ∀ j : Fin 6, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
     (p₀ : CPN 6) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 6) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -151,7 +152,7 @@ theorem trine_born_frequency_volume
               / (m : ℝ))
         atTop
         (nhds (trinePOVM.weight ψ k)) :=
-  povm_born_frequency_volume trinePOVM trineNaimark ψ e ψ' hψ'eq hψ'0 hnorm hpos
+  povm_born_frequency_volume_uncond trinePOVM trineNaimark ψ e ψ' hψ'eq hψ'0 hnorm
     p₀ X hX hlaw hindep
 
 end TrineVolume

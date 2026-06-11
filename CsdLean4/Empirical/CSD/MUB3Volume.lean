@@ -1,5 +1,5 @@
 import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF2.EffectAux
 
 /-!
@@ -25,8 +25,11 @@ This file:
   `mub3_born_frequency_volume` lands the twelve outcome frequencies as **Fubini–Study
   volumes** on the dilated ontic `Σ' = ℂℙ³⁵` — carving-free, Gleason-free.
 
-The dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ³⁵` (`N = 3`, `|ι| = 12`). The genericity `hpos`
-is carried as in the general capstone.
+The dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ³⁵` (`N = 3`, `|ι| = 12`). The capstone routes
+through the hpos-free engine (`povm_born_frequency_volume_uncond`,
+`LF4/BornRegionUncond.lean`), so no genericity hypothesis on the dilated state is
+carried (2026-06-11 migration) — notably, MUB vectors themselves (which zero the other
+two outcomes of their own basis) are covered.
 
 ## Source
 
@@ -196,19 +199,19 @@ theorem mub3_weight_eq (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1) (i
 noncomputable def mub3Naimark : NaimarkDilation mub3POVM := canonicalNaimark mub3POVM
 
 /-- **The d=3 MUB POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume` at the complete-MUB measurement: i.i.d. Fubini–Study trials
-on the dilated ontic `Σ' = ℂℙ³⁵` have each of the twelve outcome frequencies converge, on
-a single almost-sure event, to the Born weight `p_{b,j}(ψ) = (1/4)‖⟨v_{b,j},ψ⟩‖²` —
-realised as a sum of Fubini–Study volumes of the dilated barycentric cells. A second
-non-qubit symmetric entry; carving-free, Gleason-free. The genericity `hpos` is carried as
-in the general capstone. -/
+`povm_born_frequency_volume_uncond` at the complete-MUB measurement: i.i.d. Fubini–Study
+trials on the dilated ontic `Σ' = ℂℙ³⁵` have each of the twelve outcome frequencies
+converge, on a single almost-sure event, to the Born weight
+`p_{b,j}(ψ) = (1/4)‖⟨v_{b,j},ψ⟩‖²` — realised as a sum of Fubini–Study volumes of the
+dilated barycentric cells. A second non-qubit symmetric entry; carving-free,
+Gleason-free, and (since the 2026-06-11 hpos migration) with no genericity hypothesis
+on the dilated state. -/
 theorem mub3_born_frequency_volume
     (ψ : EuclideanSpace ℂ (Fin 3)) (e : (Fin 3 × (Fin 4 × Fin 3)) ≃ Fin 36)
     (ψ' : EuclideanSpace ℂ (Fin 36))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin mub3Naimark.V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (hpos : ∀ j : Fin 36, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
     (p₀ : CPN 36) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 36) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -224,7 +227,7 @@ theorem mub3_born_frequency_volume
               / (m : ℝ))
         atTop
         (nhds (mub3POVM.weight ψ i)) :=
-  povm_born_frequency_volume mub3POVM mub3Naimark ψ e ψ' hψ'eq hψ'0 hnorm hpos
+  povm_born_frequency_volume_uncond mub3POVM mub3Naimark ψ e ψ' hψ'eq hψ'0 hnorm
     p₀ X hX hlaw hindep
 
 end MUB3Volume

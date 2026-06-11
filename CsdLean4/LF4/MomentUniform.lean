@@ -28,6 +28,13 @@ Chain:
 This retires `CSD.LF4.fs_moment_pushforward_uniform` from the axiom list (it becomes
 a theorem); the unconditional qubit Born results become foundational-triple-only.
 See `specs/plan-b-detail.md` Part 2, Slice 4.
+
+**Terminology note (two `_uncond` senses).** The `_uncond` suffix in this file
+(`fs_born_volume_ratio_qubit_uncond`, `qubit_born_frequency_convergence_uncond`)
+means "the `h_uniform` DH hypothesis is discharged". It is distinct from the
+`_uncond` of `LF4/BornRegionUncond.lean`, which means "the genericity hypothesis
+`hpos` is removed". The qubit moment-sublevel route here never carried an
+hpos-style hypothesis (only `ψ ≠ 0` and `‖ψ‖ = 1`), so no hpos migration applies.
 -/
 
 open MeasureTheory ProbabilityTheory Module Real Set Matrix.UnitaryGroup

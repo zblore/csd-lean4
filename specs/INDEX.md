@@ -66,7 +66,9 @@ The **LF5 measurement-dynamics layer is complete** (2026-06-11, single-system pr
 tier): the layer headline `measurement_flow_born_frequency` chains the de-isolation flow
 `Φ_vN ≠ id` (FS measure-preserving) through the dynamically-realised Naimark dilation to
 pointer-block volumes = Born and a.s. frequencies → Born, for every unit preparation (the
-engine's `hpos` genericity retired by `LF4/BornRegionUncond.lean`). The **open frontier is
+engine's `hpos` genericity retired by `LF4/BornRegionUncond.lean`; the corpus-wide
+call-site migration onto the `_uncond` forms executed 2026-06-11 — the Empirical/CSD
+volume capstones are now genericity-free, boundary preparations included). The **open frontier is
 D1's deeper strata** (entangled/non-local de-isolation; the per-microstate outcome map,
 gated on `bornRegion` pairwise disjointness; the A5 sector origin; the concrete `SectorData`
 instances still carry `Φ = id` — see `carve-out-plan.md` §6). Axiom posture is

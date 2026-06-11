@@ -1,4 +1,4 @@
-import CsdLean4.LF4.BornFrequencyN
+import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # Empirical/CSD: Bell singlet joint probabilities as derived Kähler-volume frequencies
@@ -8,7 +8,8 @@ transport tag, and **not** conditional on the undischarged
 `PureSingletPreparation` bundle).
 
 The two-qubit (N = 4) surfacing of the general-`N` Born-from-Kähler-volume
-capstone `LF4.born_frequency_convergence_N` for the **Bell singlet**. Where
+capstone `LF4.born_frequency_convergence_N_uncond` (the hpos-free form, since the
+2026-06-11 migration) for the **Bell singlet**. Where
 `Empirical/CSD/Bell.lean`'s `bell_singlet_frequency_convergence*` are conditional
 on the undischarged `PureSingletPreparation` bundle (LF4-todo §2/§3/§7) and where
 `LF4/SingletObservables.lean` works with sector regions **carved** to volume
@@ -42,9 +43,13 @@ and `∑ st·P_st = −cos θ` recovers the singlet correlation `⟨σ_a σ_b⟩
 
 **Derived (Lean-checked, carving-free, Gleason-free, unconditional).** The four
 Born weights are the genuine Fubini–Study volumes of the barycentric moment
-regions on `ℂℙ³` (`born_frequency_convergence_N` via `fs_born_volume_ratio_N`),
-and i.i.d. Fubini–Study trials have outcome frequencies converging a.s. to them.
-No `busch_effect_gleason`, no carving, no `PureSingletPreparation` bundle.
+regions on `ℂℙ³` (`born_frequency_convergence_N_uncond` via
+`fs_born_volume_ratio_N_uncond`), and i.i.d. Fubini–Study trials have outcome
+frequencies converging a.s. to them — at **every** relative angle `θ`, the
+aligned / anti-aligned boundary values `θ = 0, π` included (hpos-free since the
+2026-06-11 migration onto `LF4/BornRegionUncond.lean`; the vanishing-amplitude
+outcomes' cells are FS-null). No `busch_effect_gleason`, no carving, no
+`PureSingletPreparation` bundle.
 
 **Not claimed.** (i) The closed-form amplitudes above are the physics input (the
 known singlet inner products, defined directly — cf. LF3's `cAmp`); identifying
@@ -179,7 +184,9 @@ lemma bellSingletVec_ne_zero (θ : ℝ) : bellSingletVec θ ≠ 0 := by
   exact one_ne_zero hz
 
 /-- Genericity: for `θ ∈ (0, π)` all four Born weights are strictly positive
-(`sin(θ/2), cos(θ/2) > 0`), so `born_frequency_convergence_N` applies. -/
+(`sin(θ/2), cos(θ/2) > 0`), so the conditional `born_frequency_convergence_N`
+applies. No longer consumed by the capstone (it routes through the hpos-free
+`born_frequency_convergence_N_uncond`); retained as the interior-point fact. -/
 lemma bellSingletVec_hpos (θ : ℝ) (hθ : 0 < θ ∧ θ < Real.pi) :
     ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) (bellSingletVec θ)‖ ^ 2 := by
   have hs : 0 < Real.sin (θ / 2) :=
@@ -202,19 +209,22 @@ lemma bellSingletVec_hpos (θ : ℝ) (hθ : 0 < θ ∧ θ < Real.pi) :
 /-! ### The Bell singlet volume-frequency capstone -/
 
 /-- **CSD Bell singlet joint frequencies as derived Kähler-volume convergence.**
-For detectors at relative angle `θ ∈ (0, π)` and i.i.d. trials drawing microstates
+For detectors at **any** relative angle `θ` and i.i.d. trials drawing microstates
 from the Fubini–Study typicality measure on the ontic `Σ = ℂℙ³`, the empirical
 frequencies of the four barycentric Born outcome regions converge, on a single
 almost-sure event, to the singlet joint Born weights `‖⟨eᵢ, bellSingletVec θ⟩‖²`
 (equal to `(1 ∓ cos θ)/4`, see `born_value_pst_minus/plus`).
 
 Carving-free, Gleason-free, **unconditional** — no `busch_effect_gleason`, no
-carved sector regions, and no `PureSingletPreparation` bundle. The genuine
+carved sector regions, no `PureSingletPreparation` bundle, and (since the
+2026-06-11 hpos migration) **no angle restriction**: the aligned / anti-aligned
+boundary values `θ = 0, π`, where two of the four amplitudes vanish, are covered
+— their cells are FS-null and their frequencies converge to `0`. The genuine
 upgrade over `Empirical/CSD/Bell.lean`'s bundle-conditional capstones and over
 `LF4/SingletObservables.lean`'s carved sector identities. The amplitude values
 are the physics input; the `volume = Born number` step is derived. -/
 theorem bell_singlet_born_frequency_volume
-    (θ : ℝ) (hθ : 0 < θ ∧ θ < Real.pi) (p₀ : CPN 4)
+    (θ : ℝ) (p₀ : CPN 4)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -233,8 +243,8 @@ theorem bell_singlet_born_frequency_volume
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) (bellSingletVec θ)‖ ^ 2)) :=
-  born_frequency_convergence_N (M := 3) p₀ (bellSingletVec θ) (bellSingletVec_ne_zero θ)
-    (bellSingletVec_norm θ) (bellSingletVec_hpos θ hθ) X hX hlaw hindep
+  born_frequency_convergence_N_uncond (M := 3) p₀ (bellSingletVec θ)
+    (bellSingletVec_ne_zero θ) (bellSingletVec_norm θ) X hX hlaw hindep
 
 /-- **Recovered singlet correlation.** The signed sum of the four volume-derived
 Born weights is `−cos θ = −a·b`, the singlet two-point correlation

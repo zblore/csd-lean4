@@ -1,5 +1,5 @@
 import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF2.EffectAux
 import CsdLean4.Empirical.QM.USD
 
@@ -25,8 +25,9 @@ This file:
   **Fubini–Study volumes** on the dilated ontic `Σ' = ℂℙ⁵` — carving-free, Gleason-free.
 
 Like the trine, the volume reading is the general POVM capstone instantiated at a
-concrete non-projective measurement; the genericity hypothesis `hpos` (the dilated
-state has no vanishing amplitude) is carried as in `povm_born_frequency_volume`.
+concrete non-projective measurement; it routes through the hpos-free engine
+(`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no genericity
+hypothesis on the dilated state is carried (2026-06-11 migration).
 -/
 
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
@@ -66,21 +67,21 @@ noncomputable def usdNaimark (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
     NaimarkDilation (usdPOVM s hs0 hs1) := canonicalNaimark (usdPOVM s hs0 hs1)
 
 /-- **The USD POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume` at the unambiguous-discrimination POVM: i.i.d.
+`povm_born_frequency_volume_uncond` at the unambiguous-discrimination POVM: i.i.d.
 Fubini–Study trials on the dilated ontic `Σ' = ℂℙ⁵` have the `k`-th USD outcome's
 empirical frequency converge, on a single almost-sure event, to the USD Born weight
 `pₖ(ψ) = ⟨ψ, Eₖ ψ⟩` (the two conclusive weights `a‖⟨ψₖ^⊥, ψ⟩‖²` and the inconclusive
 weight) — realised as a sum of Fubini–Study volumes of the dilated barycentric cells.
 The **second non-projective (POVM) entry in the volume-frequency series**, after the
-trine; carving-free, Gleason-free. The genericity `hpos` (dilated state interior) is
-carried as in the general capstone. -/
+trine; carving-free, Gleason-free, and (since the 2026-06-11 hpos migration) with no
+genericity hypothesis on the dilated state — notably, `ψ = ψ₁` or `ψ₂` (a conclusive
+weight exactly zero, the unambiguity case itself) is covered. -/
 theorem usd_born_frequency_volume (hs0 : 0 ≤ s) (hs1 : s ≤ 1)
     (ψ : EuclideanSpace ℂ (Fin 2)) (e : (Fin 2 × Fin 3) ≃ Fin 6)
     (ψ' : EuclideanSpace ℂ (Fin 6))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (usdNaimark s hs0 hs1).V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (hpos : ∀ j : Fin 6, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
     (p₀ : CPN 6) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 6) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -96,8 +97,8 @@ theorem usd_born_frequency_volume (hs0 : 0 ≤ s) (hs1 : s ≤ 1)
               / (m : ℝ))
         atTop
         (nhds ((usdPOVM s hs0 hs1).weight ψ k)) :=
-  povm_born_frequency_volume (usdPOVM s hs0 hs1) (usdNaimark s hs0 hs1) ψ e ψ' hψ'eq hψ'0 hnorm hpos
-    p₀ X hX hlaw hindep
+  povm_born_frequency_volume_uncond (usdPOVM s hs0 hs1) (usdNaimark s hs0 hs1) ψ e ψ'
+    hψ'eq hψ'0 hnorm p₀ X hX hlaw hindep
 
 end USDVolume
 end CSDBridge

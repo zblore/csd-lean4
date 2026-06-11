@@ -91,7 +91,8 @@ noncomputable def bornRegion (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ 
       ⁻¹' (replaceMap (ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) k
           '' openSimplexFree))
 
-/-- Each Born region is measurable (an open image pulled back through a measurable map). -/
+/-- Each Born region is measurable (an open image pulled back through a measurable map).
+An hpos-free form is available: `bornRegion_measurable_uncond` (`BornRegionUncond.lean`). -/
 theorem bornRegion_measurable (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0)
     (hψ : ‖ψ‖ = 1) (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) :
     ∀ i, MeasurableSet (bornRegion ψ hψ0 i) := by
@@ -109,7 +110,8 @@ theorem bornRegion_measurable (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ
 
 /-- The Fubini–Study measure of the `i`-th Born region is the Born weight
 `‖⟨eᵢ, ψ⟩‖²` (real form). The "Born = ontic volume" content, supplied by the
-volume route — `fs_born_volume_ratio_N` / `_apex`, no Busch. -/
+volume route — `fs_born_volume_ratio_N` / `_apex`, no Busch.
+An hpos-free form is available: `bornRegion_fs_measure_uncond` (`BornRegionUncond.lean`). -/
 theorem bornRegion_fs_measure (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) :
@@ -127,7 +129,9 @@ drawn from the Fubini–Study measure on `ℂℙ^M`, the empirical frequencies o
 barycentric Born regions converge, on a single almost-sure event, to the Born weights
 `‖⟨eᵢ, ψ⟩‖²` of a fully-generic preparation `ψ`. Foundational-triple-only; **no**
 `busch_effect_gleason`. The CSD thesis realised end-to-end for general `N`:
-deterministic typicality + Born = Kähler volume ⟹ frequencies → Born. -/
+deterministic typicality + Born = Kähler volume ⟹ frequencies → Born.
+An hpos-free form is available: `born_frequency_convergence_N_uncond`
+(`BornRegionUncond.lean`). -/
 theorem born_frequency_convergence_N (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)

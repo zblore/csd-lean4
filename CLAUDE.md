@@ -486,7 +486,9 @@ BornRegionUncond.lean  — the UNCONDITIONAL bornRegion engine (2026-06-11): the
                          wrappers with the hpos genericity hypothesis retired (*_uncond
                          forms, every unit ψ, vanishing amplitudes included; per-cell
                          dichotomy — closed-simplex subset lemmas + det-0 null images).
-                         Additive: the audited hpos originals above are untouched
+                         Additive: the audited hpos originals above are untouched.
+                         Call-site migration executed 2026-06-11: the Empirical/CSD
+                         volume capstones consume the *_uncond forms (genericity-free)
 ```
 
 **POVM tranche is closed (P.1–P.5, 2026-06-03).** The ontic Born = Kähler-volume

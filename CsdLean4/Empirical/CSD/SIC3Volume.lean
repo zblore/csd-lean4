@@ -1,5 +1,5 @@
 import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF2.EffectAux
 
 /-!
@@ -32,7 +32,9 @@ This file:
   volumes** on the dilated ontic `Σ' = ℂℙ²⁶` — carving-free, Gleason-free.
 
 The first *symmetric* qutrit entry; the dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ²⁶`
-(`N = 3`, `|ι| = 9`). The genericity `hpos` is carried as in the general capstone.
+(`N = 3`, `|ι| = 9`). The capstone routes through the hpos-free engine
+(`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no genericity
+hypothesis on the dilated state is carried (2026-06-11 migration).
 
 ## Source
 
@@ -199,19 +201,19 @@ theorem sic3_weight_eq (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1) (i
 noncomputable def sic3Naimark : NaimarkDilation sic3POVM := canonicalNaimark sic3POVM
 
 /-- **The d=3 SIC-POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume` at the Hesse SIC: i.i.d. Fubini–Study trials on the dilated
-ontic `Σ' = ℂℙ²⁶` have each SIC outcome's empirical frequency converge, on a single
+`povm_born_frequency_volume_uncond` at the Hesse SIC: i.i.d. Fubini–Study trials on the
+dilated ontic `Σ' = ℂℙ²⁶` have each SIC outcome's empirical frequency converge, on a single
 almost-sure event, to the SIC Born weight `p_{a,b}(ψ) = ⟨ψ, E_{a,b} ψ⟩ = (1/3)‖⟨ψ_{a,b},ψ⟩‖²`
 — realised as a sum of Fubini–Study volumes of the dilated barycentric cells. The first
-*symmetric* non-qubit entry in the volume-frequency series; carving-free, Gleason-free.
-The genericity `hpos` is carried as in the general capstone. -/
+*symmetric* non-qubit entry in the volume-frequency series; carving-free, Gleason-free,
+and (since the 2026-06-11 hpos migration) with no genericity hypothesis on the dilated
+state — notably, `ψ ⊥ ψ_{a,b}` (a SIC outcome weight exactly zero) is covered. -/
 theorem sic3_born_frequency_volume
     (ψ : EuclideanSpace ℂ (Fin 3)) (e : (Fin 3 × (Fin 3 × Fin 3)) ≃ Fin 27)
     (ψ' : EuclideanSpace ℂ (Fin 27))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin sic3Naimark.V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (hpos : ∀ j : Fin 27, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
     (p₀ : CPN 27) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 27) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -227,7 +229,7 @@ theorem sic3_born_frequency_volume
               / (m : ℝ))
         atTop
         (nhds (sic3POVM.weight ψ i)) :=
-  povm_born_frequency_volume sic3POVM sic3Naimark ψ e ψ' hψ'eq hψ'0 hnorm hpos
+  povm_born_frequency_volume_uncond sic3POVM sic3Naimark ψ e ψ' hψ'eq hψ'0 hnorm
     p₀ X hX hlaw hindep
 
 end SIC3Volume

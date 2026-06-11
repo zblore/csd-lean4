@@ -1,4 +1,4 @@
-import CsdLean4.LF4.BornFrequencyN
+import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # Empirical/CSD: GHZ three-qubit joint probabilities as derived Kähler-volume frequencies
@@ -6,19 +6,25 @@ import CsdLean4.LF4.BornFrequencyN
 **Category:** 3-Local (CSD-ontic layer; genuine volume derivation, not a
 transport tag, and **not** conditional on any preparation bundle).
 
-The three-qubit (N = 8) surfacing of `LF4.born_frequency_convergence_N` for the
-**GHZ state** `(|000⟩ + |111⟩)/√2`, in the spirit of `Empirical/CSD/BellVolume.lean`.
+The three-qubit (N = 8) surfacing of `LF4.born_frequency_convergence_N_uncond`
+(the hpos-free form, since the 2026-06-11 migration) for the **GHZ state**
+`(|000⟩ + |111⟩)/√2`, in the spirit of `Empirical/CSD/BellVolume.lean`.
 
-## The genericity obstruction (honest, load-bearing)
+## The genericity obstruction (resolved 2026-06-11)
 
 The GHZ state is a **stabiliser state**: in every Pauli basis it is *sparse* (the
 iconic all-`X` Mermin measurement gives four zero amplitudes). It is therefore a
 **boundary point** of the probability simplex in those bases, and violates the
-genericity hypothesis `hpos` (`∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²`) of
-`born_frequency_convergence_N`, which needs an interior point.
+genericity hypothesis `hpos` (`∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²`) of the conditional engine
+`born_frequency_convergence_N`, which needs an interior point. That obstruction
+was the historical reason this file's capstone carried `Φ ∈ (0, π)`; it is
+**resolved** by the hpos-free engine (`LF4/BornRegionUncond.lean`,
+`born_frequency_convergence_N_uncond`): zero-amplitude outcomes have FS-null
+cells and frequencies converging to `0`, so the capstone now covers **every**
+angle-sum `Φ`, the Mermin boundary values `Φ = 0, π` included.
 
-The groundable version measures GHZ in a **generic xy-plane product basis** at
-angle-sum `Φ = φ₁+φ₂+φ₃`. There the eight joint amplitudes are
+The measured family is the **xy-plane product basis** at angle-sum
+`Φ = φ₁+φ₂+φ₃`. There the eight joint amplitudes are
 `(1/4)(1 + s₁s₂s₃ e^{-iΦ})` (up to a global phase, taken real here:
 `cos(Φ/2)/2` on the four even-parity outcomes, `i·sin(Φ/2)/2` on the four odd),
 with squared moduli
@@ -27,28 +33,27 @@ with squared moduli
 P_even = cos²(Φ/2)/4 = (1 + cos Φ)/8     P_odd = sin²(Φ/2)/4 = (1 − cos Φ)/8,
 ```
 
-all strictly positive **iff `cos Φ ≠ ±1`, i.e. `Φ ∈ (0, π)`**. The three-point
-correlation is `∑ s₁s₂s₃ · P_s = cos Φ` (`ghz_volume_correlation`).
+strictly positive iff `Φ ∈ (0, π)` (`ghzVec_hpos`, retained as the
+interior-point fact). The three-point correlation is
+`∑ s₁s₂s₃ · P_s = cos Φ` (`ghz_volume_correlation`).
 
-The iconic Mermin values are the **excluded boundary limits**: `Φ = 0` gives
-`⟨XXX⟩ = +1`, `Φ = π` gives `⟨XYY⟩ = ⟨YXY⟩ = ⟨YYX⟩ = −1` (the GHZ
-all-or-nothing contradiction). These are exactly the sparse `cos Φ = ±1` points
-where genericity fails, so the grounded capstone covers `Φ ∈ (0,π)` and the
-paradox values sit on its closure. This is a genuine feature of the geometry, not
-a gap in the proof: the GHZ paradox lives on the simplex boundary that the
-interior-point Duistermaat–Heckman volume route does not reach.
+The iconic Mermin values are the boundary points: `Φ = 0` gives `⟨XXX⟩ = +1`,
+`Φ = π` gives `⟨XYY⟩ = ⟨YXY⟩ = ⟨YYX⟩ = −1` (the GHZ all-or-nothing
+contradiction). At these sparse `cos Φ = ±1` points four of the eight cells are
+FS-null; the capstone reaches them with the four surviving weights `1/4` and the
+four null weights `0`.
 
 ## What is and is not claimed
 
-**Derived (carving-free, Gleason-free, unconditional).** For `Φ ∈ (0,π)`, the
+**Derived (carving-free, Gleason-free, unconditional).** For **every** `Φ`, the
 eight Born weights are the genuine Fubini–Study volumes of the barycentric moment
 regions on `ℂℙ⁷`, and i.i.d. FS trials have frequencies converging a.s. to them.
-No `busch_effect_gleason`, no carving, no preparation bundle.
+No `busch_effect_gleason`, no carving, no preparation bundle, no genericity.
 
 **Not claimed.** (i) The closed-form amplitudes are the physics input (cf. LF3
 `cAmp`); identifying `ghzVec Φ` with the abstract GHZ state in the `Φ`-basis is
 the amplitude identity, supplied by construction. (ii) Region → physical-outcome
-labelling is LF4-todo §14. (iii) The Mermin boundary values are not reached.
+labelling is LF4-todo §14.
 
 ## Experimental verification
 
@@ -183,7 +188,9 @@ lemma ghzVec_ne_zero (Φ : ℝ) : ghzVec Φ ≠ 0 := by
   exact one_ne_zero hz
 
 /-- Genericity: for `Φ ∈ (0, π)` all eight Born weights are strictly positive
-(`sin(Φ/2), cos(Φ/2) > 0`), so `born_frequency_convergence_N` applies. -/
+(`sin(Φ/2), cos(Φ/2) > 0`), so the conditional `born_frequency_convergence_N`
+applies. No longer consumed by the capstone (it routes through the hpos-free
+`born_frequency_convergence_N_uncond`); retained as the interior-point fact. -/
 lemma ghzVec_hpos (Φ : ℝ) (hΦ : 0 < Φ ∧ Φ < Real.pi) :
     ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) (ghzVec Φ)‖ ^ 2 := by
   have hs : 0 < Real.sin (Φ / 2) :=
@@ -214,17 +221,19 @@ lemma ghzVec_hpos (Φ : ℝ) (hΦ : 0 < Φ ∧ Φ < Real.pi) :
 /-! ### The GHZ volume-frequency capstone -/
 
 /-- **CSD GHZ joint frequencies as derived Kähler-volume convergence.** For
-angle-sum `Φ ∈ (0, π)` and i.i.d. trials drawing microstates from the Fubini–Study
+**every** angle-sum `Φ` and i.i.d. trials drawing microstates from the Fubini–Study
 typicality measure on the ontic `Σ = ℂℙ⁷`, the empirical frequencies of the eight
 barycentric Born outcome regions converge, on a single almost-sure event, to the
 GHZ joint Born weights `‖⟨eᵢ, ghzVec Φ⟩‖²`.
 
 Carving-free, Gleason-free, unconditional — no `busch_effect_gleason`, no carved
-regions, no preparation bundle. The amplitude values are the physics input; the
-`volume = Born number` step is derived. The iconic Mermin values lie on the
-excluded `Φ = 0, π` boundary (see module docstring). -/
+regions, no preparation bundle, and (since the 2026-06-11 hpos migration) **no
+angle restriction**: the iconic Mermin values `Φ = 0, π` are covered — their four
+sparse outcomes' cells are FS-null with frequencies converging to `0` (see module
+docstring). The amplitude values are the physics input; the
+`volume = Born number` step is derived. -/
 theorem ghz_born_frequency_volume
-    (Φ : ℝ) (hΦ : 0 < Φ ∧ Φ < Real.pi) (p₀ : CPN 8)
+    (Φ : ℝ) (p₀ : CPN 8)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 8) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -243,8 +252,8 @@ theorem ghz_born_frequency_volume
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) (ghzVec Φ)‖ ^ 2)) :=
-  born_frequency_convergence_N (M := 7) p₀ (ghzVec Φ) (ghzVec_ne_zero Φ)
-    (ghzVec_norm Φ) (ghzVec_hpos Φ hΦ) X hX hlaw hindep
+  born_frequency_convergence_N_uncond (M := 7) p₀ (ghzVec Φ) (ghzVec_ne_zero Φ)
+    (ghzVec_norm Φ) X hX hlaw hindep
 
 /-- **Recovered GHZ three-point correlation.** The parity-signed sum of the eight
 volume-derived Born weights is `cos Φ`, the GHZ correlation

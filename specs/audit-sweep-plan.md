@@ -81,11 +81,18 @@ commit; verification details in the session record):
    *Classification: stale at review time* — the reviewed tree predates commits
    `ea66a09`/`e5e45ce` (2026-06-11): `LF4/BornRegionUncond.lean` is tracked,
    imported by the root, AxiomAudit-pinned (8 pins), and Tier-A audited SOUND.
-   *Residual accepted:* the original `hpos` forms remain primary at their call
-   sites; the call-site migration is the queued hpos tranche (executing next).
+   *Residual DONE 2026-06-11:* the hpos call-site migration is executed — all
+   downstream consumers (`Empirical/CSD/ContextVolume`, `BellVolume`,
+   `GHZVolume`, and the six POVM witnesses Trine/USD/SIC/SIC3/MUB3/QutritPOVM)
+   now route through the `_uncond` engine with the engine-inherited genericity
+   hypotheses (`hpos`, and the Bell/GHZ angle carve-outs `hθ`/`hΦ`) dropped
+   from their statements; HardyVolume left as-is (hpos discharged internally,
+   no statement cost). The original `hpos` forms remain in the LF4 engine with
+   docstring cross-references to the `_uncond` forms.
    A terminology note: the corpus uses "unconditional"/"`_uncond`" in two
    senses (h_uniform-discharged, 2026-05-31; hpos-free, 2026-06-11) — keep the
-   distinction explicit when writing docs.
+   distinction explicit when writing docs (now recorded in
+   `LF4/MomentUniform.lean`'s module docstring).
 4. **`CsdLean4.Basic` API invariant broken (Medium).** *Classification: agreed,
    genuine defect.* Fixed: `Basic.lean` now imports the root module `CsdLean4`
    (verified acyclic — nothing imports `Basic`), so the documented

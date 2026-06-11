@@ -1,4 +1,4 @@
-import CsdLean4.LF4.BornFrequencyN
+import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # Empirical/CSD: arbitrary projective measurement contexts as derived Kähler volumes
@@ -6,11 +6,13 @@ import CsdLean4.LF4.BornFrequencyN
 **Category:** 3-Local (CSD-ontic layer; genuine volume derivation, not a
 transport tag, and **not** conditional on any preparation bundle).
 
-The context-generic surfacing of `LF4.born_frequency_convergence_N`: measuring a
-pure state `ψ` on `ℂℙ^M` in **any** orthonormal-basis (rank-1 projective)
-context `B`, the outcome Born weights `‖⟨B i, ψ⟩‖²` are genuine Fubini–Study
-typicality volumes on the ontic `Σ = ℂℙ^M`. Carving-free, Gleason-free,
-unconditional modulo the genericity hypothesis `hpos`. In the spirit of
+The context-generic surfacing of `LF4.born_frequency_convergence_N_uncond`:
+measuring a pure state `ψ` on `ℂℙ^M` in **any** orthonormal-basis (rank-1
+projective) context `B`, the outcome Born weights `‖⟨B i, ψ⟩‖²` are genuine
+Fubini–Study typicality volumes on the ontic `Σ = ℂℙ^M`. Carving-free,
+Gleason-free, unconditional — **every** unit preparation, eigenstates of the
+context included (no genericity hypothesis; hpos-free since the 2026-06-11
+call-site migration onto `LF4/BornRegionUncond.lean`). In the spirit of
 `Empirical/CSD/BellVolume.lean`, `Empirical/CSD/GHZVolume.lean`, and
 `Empirical/CSD/HardyVolume.lean`, but parameterised over the *context* rather
 than a fixed state.
@@ -26,11 +28,12 @@ measuring the rotated coordinate vector `B.repr ψ` in the computational basis:
 ```
 
 so `‖⟨B i, ψ⟩‖² = ‖⟨eᵢ, B.repr ψ⟩‖²`. Since `B.repr` is a `LinearIsometryEquiv`,
-`‖B.repr ψ‖ = ‖ψ‖`, so the rotated state inherits norm-one and (under `hpos`)
-the same interior-point genericity. Instantiating `born_frequency_convergence_N`
-at `B.repr ψ` therefore lands exactly on the context Born weights `‖⟨B i, ψ⟩‖²`,
-with the Born = ontic-volume content (`fs_born_volume_ratio_N` / `_apex`)
-already discharged for the rotated state. No Busch, no carving.
+`‖B.repr ψ‖ = ‖ψ‖`, so the rotated state inherits norm-one. Instantiating
+`born_frequency_convergence_N_uncond` at `B.repr ψ` therefore lands exactly on
+the context Born weights `‖⟨B i, ψ⟩‖²`, with the Born = ontic-volume content
+(`fs_born_volume_ratio_N_uncond` / `_apex_uncond`) already discharged for the
+rotated state — vanishing rotated amplitudes give FS-null cells, which **is**
+the Born weight `0`. No Busch, no carving.
 
 ## Why this is the grounding for contextuality
 
@@ -46,9 +49,12 @@ ontology, the dependence of the carved volume regions on the measurement frame.
 
 ## Honest scope
 
-The genericity hypothesis `hpos` (every context Born weight strictly positive)
-makes the rotated state an interior simplex point; boundary contexts need a
-separate carve-out, exactly as for the per-state files. The LHV / KS / MP
+No genericity hypothesis: the capstones cover **every** unit preparation `ψ`,
+including eigenstates of the context (`ψ = B i`, the Kochen–Specker-interesting
+boundary preparations) — resolving the earlier limitation, recorded at the
+a9c3a50 landing, that `ψ = B 0` failed the engine-inherited `hpos`. Zero-weight
+outcome cells genuinely collapse to FS-null sets (BornRegionUncond per-cell
+dichotomy); they are not redefined to hit Born values. The LHV / KS / MP
 impossibility itself lives in `Empirical/QM/` (`KochenSpecker`, `MerminPeres`).
 
 ## Degenerate-eigenspace extension (rank-1 scope note closed)
@@ -121,7 +127,10 @@ lemma repr_ne_zero (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (
   exact one_ne_zero this
 
 /-- Genericity transports along the rotation: if every context Born weight is
-strictly positive, so is every computational Born weight of `B.repr ψ`. -/
+strictly positive, so is every computational Born weight of `B.repr ψ`.
+No longer consumed by the capstones below (they route through the hpos-free
+`born_frequency_convergence_N_uncond`); retained for callers of the conditional
+engine `born_frequency_convergence_N`. -/
 lemma repr_hpos (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
     (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hpos : ∀ i, 0 < ‖inner ℂ (B i) ψ‖ ^ 2) :
@@ -141,22 +150,23 @@ converge, on a single almost-sure event, to the context Born weights
 context `B`.
 
 Carving-free, Gleason-free, unconditional — no `busch_effect_gleason`, no carved
-regions, no preparation bundle. The proof is the rotation reduction: instantiate
-`born_frequency_convergence_N` at `B.repr ψ` (norm one and generic by
-`repr_norm` / `repr_hpos`), then rewrite the computational Born weights back to
-the context weights via `context_born_eq_rotated`.
+regions, no preparation bundle, **no genericity hypothesis**. The proof is the
+rotation reduction: instantiate `born_frequency_convergence_N_uncond` at
+`B.repr ψ` (norm one by `repr_norm`), then rewrite the computational Born
+weights back to the context weights via `context_born_eq_rotated`.
 
-This grounds **every** rank-1 projective measurement context — the reusable
+This grounds **every** rank-1 projective measurement context at **every** unit
+preparation — eigenstates of the context included (`ψ = B i`: the other rays'
+cells are FS-null and their frequencies converge to `0`) — the reusable
 contextuality primitive (Kochen–Specker, the rank-1 Mermin–Peres parts): each
 context-dependent outcome weight that a non-contextual hidden-variable assignment
 cannot jointly reproduce is here a genuine Fubini–Study typicality volume on the
 fixed ontic `Σ`. Honest scope: rank-1 (non-degenerate) contexts; degenerate
-eigenspaces are out (see the module docstring). -/
+eigenspaces via `block_born_frequency_volume` (see the module docstring). -/
 theorem context_born_frequency_volume
     (p₀ : CPN (M + 1))
     (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ i, 0 < ‖inner ℂ (B i) ψ‖ ^ 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -175,8 +185,8 @@ theorem context_born_frequency_volume
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (B i) ψ‖ ^ 2)) := by
-  have key := born_frequency_convergence_N (M := M) p₀ (B.repr ψ)
-    (repr_ne_zero B ψ hψ) (repr_norm B ψ hψ) (repr_hpos B ψ hpos) X hX hlaw hindep
+  have key := born_frequency_convergence_N_uncond (M := M) p₀ (B.repr ψ)
+    (repr_ne_zero B ψ hψ) (repr_norm B ψ hψ) X hX hlaw hindep
   filter_upwards [key] with ω hω i
   rw [context_born_eq_rotated B ψ i]
   exact hω i
@@ -226,7 +236,8 @@ barycentric per-ray regions exactly when those regions are pairwise disjoint —
 barycentric subdivision, but the `bornRegion` disjointness is not yet formalised, so the
 union-region restatement is owed; the sum form proved here needs only additivity of limits.)
 
-Carving-free, Gleason-free, unconditional modulo the genericity hypothesis `hpos`.
+Carving-free, Gleason-free, unconditional — no genericity hypothesis (every unit
+preparation, eigenvectors of any block included).
 Proof: take the single a.s. event from `context_born_frequency_volume` (which gives
 **every** ray `i`'s convergence simultaneously) and sum the block's per-ray
 convergences via `tendsto_finset_sum`. The per-ray frequency summand is verbatim the
@@ -241,7 +252,6 @@ theorem block_born_frequency_volume
     (p₀ : CPN (M + 1))
     (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ i, 0 < ‖inner ℂ (B i) ψ‖ ^ 2)
     (blk : Fin (M + 1) → ι) (a : ι)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
@@ -263,7 +273,7 @@ theorem block_born_frequency_volume
         atTop
         (nhds (∑ i ∈ Finset.univ.filter (fun i => blk i = a),
           ‖inner ℂ (B i) ψ‖ ^ 2)) := by
-  have h := context_born_frequency_volume p₀ B ψ hψ hpos X hX hlaw hindep
+  have h := context_born_frequency_volume p₀ B ψ hψ X hX hlaw hindep
   filter_upwards [h] with ω hω
   exact tendsto_finset_sum _ (fun i _ => hω i)
 
@@ -292,13 +302,12 @@ Honest scope unchanged from the generic degenerate case (`block_born_frequency_v
 this is a faithful **realisation** of the rank-2 outcome weight as a sum of ontic
 volumes, not a derivation (`Φ = id`, FS regions carved in the computational frame);
 the Mermin–Peres / Kochen–Specker no-go itself stays at the QM-validity layer
-(`Empirical/QM/`). The genericity hypothesis `hpos` (all four computational Born
-weights strictly positive) places `ψ`'s coordinate vector at an interior simplex
-point. -/
+(`Empirical/QM/`). No genericity hypothesis: every unit two-qubit preparation is
+covered, the computational eigenstates `|00⟩, |01⟩, |10⟩, |11⟩` (and the Bell
+states with vanishing components) included. -/
 theorem zz_parity_born_frequency_volume
     (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ i, 0 < ‖inner ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ) i) ψ‖ ^ 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -321,7 +330,7 @@ theorem zz_parity_born_frequency_volume
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (3 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ hpos
+  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
     (![0, 1, 1, 0] : Fin 4 → Fin 2) 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0),

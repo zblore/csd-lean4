@@ -38,18 +38,24 @@ comes from the existing FS-volume = Born engine; this module supplies the
 typicality law on the dilated sector (**A5**) is still posited, not derived.
 Entangled / non-local de-isolation is deferred (`specs/lf5-plan.md` §0).
 
-## LF5-D obstruction (recorded at planning, load-bearing)
+## LF5-D obstruction (recorded at planning; RESOLVED)
 
 The post-flow state `Vψ` has **zero amplitude on every off-diagonal cell**
 `(j, k)` with `k ≠ j` (`vnDilationV_mulVec`). Hence the genericity hypothesis
 `hpos` of `povm_born_eq_dilated_volume` / `povm_born_frequency_volume` (all
 `N·N` dilated amplitudes nonzero) is **not satisfiable** at
 `ψ' = piLpCongrLeft e (Vψ)` for `N ≥ 2` (at `N = 1` there is no off-diagonal
-cell). LF5-D therefore cannot be a blind instantiation of
-the P.3b/P.4 theorems: it needs either a zero-amplitude-tolerant volume reading
+cell). LF5-D therefore could not be a blind instantiation of
+the P.3b/P.4 theorems: it needed either a zero-amplitude-tolerant volume reading
 on the dilated space or a system-side reduction. `vnDilation_block_weight`
 (block-`i` weight of the post-flow state = the Born weight `‖⟨eᵢ, ψ⟩‖²`) is the
 Gleason-free analytic content already available on this side of that gap.
+
+**Resolution (historical record kept above):** the FS-volume engine was upgraded
+hpos-free (`LF4/BornRegionUncond.lean`, `povm_born_eq_dilated_volume_uncond` /
+`povm_born_frequency_volume_uncond`, per-cell dichotomy); LF5-D
+(`FlowBornFrequency.lean`) consumes the unconditional forms, and the corpus-wide
+call-site migration onto them landed 2026-06-11.
 
 Reference: `specs/lf5-plan.md` (LF5-C).
 -/

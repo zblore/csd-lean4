@@ -146,7 +146,9 @@ forcing FS-measure 0 = the Born weight. Delivered: `fs_born_volume_ratio_N_uncon
 `bornRegion_measurable_uncond` (also drops `hψ`), `bornRegion_fs_measure_uncond`,
 `born_frequency_convergence_N_uncond`, `povm_born_eq_dilated_volume_uncond`,
 `povm_born_frequency_volume_uncond`. **This retires the genericity caveat of the general-`N`
-headline and the POVM tranche** (additively; corpus-wide call-site migration deferred).
+headline and the POVM tranche** (additively at landing; the corpus-wide call-site migration
+executed 2026-06-11 — ContextVolume, BellVolume, GHZVolume, and the six POVM witnesses now
+consume the `_uncond` forms with their engine-inherited genericity hypotheses dropped).
 
 **Part 2 — the instantiation** (`LF5/FlowBornFrequency.lean`): at `P = basisPOVM N`,
 `D = vnNaimark N`, `ψ' = piLpCongrLeft e (Vψ)` (unit, derived; genuinely non-generic):

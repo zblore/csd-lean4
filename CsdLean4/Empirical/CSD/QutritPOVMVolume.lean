@@ -1,5 +1,5 @@
 import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF2.EffectAux
 
 /-!
@@ -28,9 +28,10 @@ This file:
   volumes** on the dilated ontic `Σ' = ℂℙ⁸` — carving-free, Gleason-free.
 
 This is the first entry exercising the general-`N` Naimark→volume machinery past the
-qubit: the dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ⁸` for `N = 3`, `|ι| = 3`. The genericity
-hypothesis `hpos` (the dilated state has no vanishing amplitude) is carried as in the
-general capstone.
+qubit: the dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ⁸` for `N = 3`, `|ι| = 3`. The capstone
+routes through the hpos-free engine (`povm_born_frequency_volume_uncond`,
+`LF4/BornRegionUncond.lean`), so no genericity hypothesis on the dilated state is
+carried (2026-06-11 migration).
 
 ## Source
 
@@ -141,21 +142,20 @@ noncomputable def noisyNaimark (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1) :
     NaimarkDilation (noisyPOVM ε hε0 hε1) := canonicalNaimark (noisyPOVM ε hε0 hε1)
 
 /-- **The unsharp qutrit POVM Born weights as Kähler volumes (the capstone).**
-Instantiating `povm_born_frequency_volume` at the unsharp qutrit measurement: i.i.d.
-Fubini–Study trials on the dilated ontic `Σ' = ℂℙ⁸` have the `k`-th outcome's empirical
-frequency converge, on a single almost-sure event, to the Born weight
-`pₖ(ψ) = ⟨ψ, Eₖ ψ⟩ = (1 − ε)‖⟨k,ψ⟩‖² + ε/3` — realised as a sum of Fubini–Study volumes of
-the dilated barycentric cells. The **first non-qubit (`N = 3`) entry in the
+Instantiating `povm_born_frequency_volume_uncond` at the unsharp qutrit measurement:
+i.i.d. Fubini–Study trials on the dilated ontic `Σ' = ℂℙ⁸` have the `k`-th outcome's
+empirical frequency converge, on a single almost-sure event, to the Born weight
+`pₖ(ψ) = ⟨ψ, Eₖ ψ⟩ = (1 − ε)‖⟨k,ψ⟩‖² + ε/3` — realised as a sum of Fubini–Study volumes
+of the dilated barycentric cells. The **first non-qubit (`N = 3`) entry in the
 volume-frequency series**, and the first non-projective qutrit POVM; carving-free,
-Gleason-free. The genericity `hpos` (dilated state interior) is carried as in the general
-capstone. -/
+Gleason-free, and (since the 2026-06-11 hpos migration) with no genericity hypothesis
+on the dilated state — the sharp limit `ε = 0` at a basis state is covered. -/
 theorem noisy_born_frequency_volume (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1)
     (ψ : EuclideanSpace ℂ (Fin 3)) (e : (Fin 3 × Fin 3) ≃ Fin 9)
     (ψ' : EuclideanSpace ℂ (Fin 9))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (noisyNaimark ε hε0 hε1).V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (hpos : ∀ j : Fin 9, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
     (p₀ : CPN 9) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 9) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
@@ -171,8 +171,8 @@ theorem noisy_born_frequency_volume (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 
               / (m : ℝ))
         atTop
         (nhds ((noisyPOVM ε hε0 hε1).weight ψ k)) :=
-  povm_born_frequency_volume (noisyPOVM ε hε0 hε1) (noisyNaimark ε hε0 hε1) ψ e ψ' hψ'eq
-    hψ'0 hnorm hpos p₀ X hX hlaw hindep
+  povm_born_frequency_volume_uncond (noisyPOVM ε hε0 hε1) (noisyNaimark ε hε0 hε1) ψ e ψ'
+    hψ'eq hψ'0 hnorm p₀ X hX hlaw hindep
 
 end QutritPOVMVolume
 end CSDBridge

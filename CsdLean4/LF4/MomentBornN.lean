@@ -139,7 +139,8 @@ For a fully-generic unit preparation `ψ` (no vanishing amplitude), the Fubini�
 measure of the `i`-th barycentric region of the moment simplex (pulled back through
 the moment map) equals the Born weight `‖⟨e_{castSucc i}, ψ⟩‖²`. Unconditional — the
 qubit `h_uniform` hypothesis is now the proved headline `fs_moment_joint_dirichlet_N`.
-No carving, no `busch_effect_gleason`. -/
+No carving, no `busch_effect_gleason`.
+An hpos-free form is available: `fs_born_volume_ratio_N_uncond` (`BornRegionUncond.lean`). -/
 theorem fs_born_volume_ratio_N (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) (i : Fin M) :
@@ -242,7 +243,9 @@ theorem apexMap_image_subset (b : Fin M → ℝ) (hb : b ∈ openSimplexFree) :
 /-- **Apex coordinate of E4c.** For the last coordinate (the dropped vertex, index `M`),
 the Fubini–Study measure of the apex barycentric region equals the Born weight
 `‖⟨e_{last M}, ψ⟩‖²`. Together with `fs_born_volume_ratio_N` this covers **all `N`
-coordinates** of a fully-generic preparation. Unconditional; no `busch_effect_gleason`. -/
+coordinates** of a fully-generic preparation. Unconditional; no `busch_effect_gleason`.
+An hpos-free form is available: `fs_born_volume_ratio_N_apex_uncond`
+(`BornRegionUncond.lean`). -/
 theorem fs_born_volume_ratio_N_apex (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) :

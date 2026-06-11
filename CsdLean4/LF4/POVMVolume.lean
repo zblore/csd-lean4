@@ -102,7 +102,9 @@ carving-free and **Gleason-free** — it composes the Naimark Born transfer with
 achieved general-`N` Born = FS-volume result (`bornRegion_fs_measure`), no
 `busch_effect_gleason`. Honest scope: the dilation `V` is supplied (P.2), so this
 relocates POVM Born onto a larger posited configuration space (system + ancilla);
-genericity (`hpos`) excludes dilated states with a vanishing amplitude. -/
+genericity (`hpos`) excludes dilated states with a vanishing amplitude.
+An hpos-free form is available: `povm_born_eq_dilated_volume_uncond`
+(`BornRegionUncond.lean`). -/
 theorem povm_born_eq_dilated_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilation P)
     (ψ : EuclideanSpace ℂ (Fin N)) (i : ι)
     (e : (Fin N × ι) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
@@ -146,7 +148,9 @@ the limit on `pᵢ(ψ)` via the P.3a block decomposition. Carving-free, Gleason-
 the empirical → Born chain for a general (non-projective) POVM runs entirely on the
 ontic FS-volume derivation, no `busch_effect_gleason`. Honest scope: dilation
 supplied; the block frequency is the sum of the cells' frequencies (the cells are
-the rank-1 dilated outcomes), and genericity (`hpos`) is assumed. -/
+the rank-1 dilated outcomes), and genericity (`hpos`) is assumed.
+An hpos-free form is available: `povm_born_frequency_volume_uncond`
+(`BornRegionUncond.lean`). -/
 theorem povm_born_frequency_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilation P)
     (ψ : EuclideanSpace ℂ (Fin N)) (e : (Fin N × ι) ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
