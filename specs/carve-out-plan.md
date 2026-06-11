@@ -406,3 +406,14 @@ axiom); the LF5 step is to realise it dynamically rather than definitionally.
 **Staged LF5 plan: see [`lf5-plan.md`](lf5-plan.md)** (drafted 2026-06-09). Single-system
 projective tier, decomposed LF5-A..E, heavily reusing the POVM Naimark tranche (the static
 dilation isometry becomes the von Neumann de-isolation flow `Φ_vN ≠ id`).
+
+**LF5 COMPLETE 2026-06-11.** The single-system projective tier landed end to end: layer
+headline `measurement_flow_born_frequency` (`CsdLean4/LF5/Capstone.lean`) — the de-isolation
+flow `Φ_vN ≠ id` is FS measure-preserving, realises the Naimark dilation for every
+preparation, and its context-fixed pointer-block volumes / a.s. empirical frequencies are the
+Born weights, for every unit `ψ` (the engine's `hpos` genericity was retired by
+`LF4/BornRegionUncond.lean`). The contextual outcome-map slot is realised dynamically as
+outcome *statistics*; the per-microstate outcome *function* is owed on `bornRegion` pairwise
+disjointness. The honest costs above stand: entangled/non-local de-isolation and the A5
+typicality posit remain the open D1 strata, plus threading the flow through the concrete
+`SectorData` instances (still `Φ = id`).

@@ -100,6 +100,7 @@ import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.LF5.MeasurementFlow
 import CsdLean4.LF5.DilationFromFlow
 import CsdLean4.LF5.FlowBornFrequency
+import CsdLean4.LF5.Capstone
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting

@@ -1,8 +1,15 @@
 # LF5 — measurement dynamics on Σ (the D1 frontier), staged plan
 
+**STATUS: COMPLETE 2026-06-11.** LF5-A..E all DONE (A 2026-06-09, B 2026-06-10, C/D/E
+2026-06-11); layer headline `measurement_flow_born_frequency` (`CsdLean4/LF5/Capstone.lean`).
+The single-system projective tier of D1 is closed. Remaining D1 strata (not this plan):
+entangled / non-local de-isolation, the per-microstate outcome map (gated on `bornRegion`
+pairwise disjointness), the A5 sector origin, and threading the flow through the concrete
+`SectorData` instances (still `Φ = id`).
+
 Drafted 2026-06-09. **The deepest open debt (D1): `Φ = id` in every concrete sector
-instance, so no measurement *dynamics* is yet exercised.** This plan attacks the
-single-system, projective tier under the de-isolation reading fixed in
+instance, so no measurement *dynamics* is yet exercised** (status at drafting). This plan
+attacks the single-system, projective tier under the de-isolation reading fixed in
 [`carve-out-plan.md`](carve-out-plan.md) §6.
 
 ## 0. Goal and honest scope
@@ -158,7 +165,24 @@ LF5-C dilation ⟹ pointer-`i` FS-volume = `⟨ψ,Eᵢψ⟩ = ‖⟨eᵢ,ψ⟩�
 pointer-`i` frequency → `‖⟨eᵢ,ψ⟩‖²`. *Risk:* low — direct instantiation, once LF5-C builds the
 `NaimarkDilation` witness.
 
-### LF5-E — capstone + honest documentation  [NEW; wiring]
+### LF5-E — capstone + honest documentation  [NEW; wiring] — **DONE 2026-06-11** (`CsdLean4/LF5/Capstone.lean`)
+Delivered: the layer headline **`measurement_flow_born_frequency`** — a five-conjunct pure
+assembly of the audited LF5-B/C/D results: (1) `Φ_vN ≠ id`; (2) FS measure-preserving, at the
+same `p₀` the trials are drawn from; (3) the flow realises the dilation for **every**
+preparation `φ` (the context-fixedness conjunct, ∀-quantified); (4) pointer-`i` committed FS
+volume block sum = `‖⟨eᵢ,ψ⟩‖²`; (5) a.s. pointer-block frequencies → Born. Docstring records
+the de-isolation reading, the context-fixedness distinction (flow + block partition
+ψ-independent; the volume-realising `bornRegion ψ'` cells preparation-dependent with measures
+forced by the unconditional engine, not cut to fit), the ContextMap connection (the LF3
+contextual outcome-map slot realised dynamically as outcome *statistics*; a per-microstate
+outcome *function* is owed on `bornRegion` pairwise disjointness, open since `aeece86`), and
+the named non-goals (Born reused not re-derived; A5 posited; entanglement deferred).
+Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND (tripwire clean: the pointer
+index enters only through the fixed block `{(n,i)}` via `e (n,i)`; all five conjuncts
+verbatim-match their sources; hypotheses inhabited at a concrete N=2 i.i.d. witness with
+state-sensitive conclusion — block volumes 1 vs 0 at `ψ = e₀`). **The LF5 plan is complete:
+the single-system projective tier of D1 is closed.** Original spec below.
+
 Named headline `measurement_flow_born_frequency`: for the von Neumann measurement flow `Φ_vN`
 and the context-fixed pointer regions `blockProj i`, repeated trials (FS-typical over the joint
 fibre, the isolated-region typicality) ⟹ pointer-`i` empirical frequency → `‖⟨eᵢ,ψ⟩‖²`, with

@@ -65,6 +65,7 @@ import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.LF5.MeasurementFlow
 import CsdLean4.LF5.DilationFromFlow
 import CsdLean4.LF5.FlowBornFrequency
+import CsdLean4.LF5.Capstone
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2451,5 +2452,17 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF5.vnDilation_pointer_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.vnDilation_pointer_frequency
+
+-- LF5-E (capstone): the LF5 layer headline measurement_flow_born_frequency —
+-- the single named chain theorem: Φ_vN ≠ id (genuine measurement dynamics),
+-- FS measure-preserving (Liouville admissibility), context-fixed (the same
+-- flow realises the dilation for every preparation), pointer-i committed FS
+-- volume = Born weight, and a.s. pointer-block frequencies → Born, for every
+-- unit ψ. Pure assembly of the LF5-B/C/D theorems (no new mathematical
+-- content); closes the single-system projective tier of D1. Foundational
+-- triple.
+/-- info: 'CSD.LF5.measurement_flow_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurement_flow_born_frequency
 
 end CSD.Tests.AxiomAudit

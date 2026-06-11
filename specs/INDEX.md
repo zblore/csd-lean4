@@ -8,8 +8,8 @@ LIVE doc for the tranche you are on.
 
 | Doc | What it is | Status |
 |---|---|---|
-| [`carve-out-plan.md`](carve-out-plan.md) → **D1** | **The open frontier.** Exercise real measurement *dynamics* on `Σ`; the deepest structural debt, beneath A5. | **OPEN.** `Φ≠id` (non-collapse) done 2026-06-05 (`LF4/ObservableFlow.lean`). **Collapse semantics DECIDED 2026-06-09** (carve-out-plan §6: the de-isolation reading — apparatus de-isolates a region, outcome fixed by its microstate, epistemic-random via typicality, contextuality reconciles KS/Bell). Measurement-event half = LF5 → see [`lf5-plan.md`](lf5-plan.md). |
-| [`lf5-plan.md`](lf5-plan.md) | Staged plan for **LF5 (measurement dynamics, the D1 frontier)**: realise a projective measurement as a measure-preserving von Neumann de-isolation flow `Φ_vN ≠ id` on the joint `ℂℙ^{N·N−1}`, pointer regions = `blockProj` (apparatus basis, context-fixed), committed volume = Born, chained to frequencies. **Heavily reuses the POVM Naimark tranche** (block-Born = FS-volume already proved); the genuine new content is realising the static dilation isometry as a dynamical flow. | **IN PROGRESS.** LF5-A (vN unitary) DONE 2026-06-09; LF5-B (measurement flow `Φ_vN ≠ id`) DONE 2026-06-10; LF5-C (de-isolation realises the dilation: `vnNaimark`, `V = U_vN ∘ (·⊗a₀)`, flow carries `[ψ⊗a₀] ↦ [Vψ]`) DONE 2026-06-11 (`LF5/DilationFromFlow.lean`); **LF5-D (Born = volume + frequency on the flow) DONE 2026-06-11** — the LF5-C `hpos` obstruction resolved by the **unconditional engine** (`LF4/BornRegionUncond.lean`: the bornRegion volume/frequency theorems for every unit `ψ`, vanishing amplitudes included, per-cell dichotomy; retires the genericity caveat of the general-`N` + POVM engines, additively) + the instantiation (`LF5/FlowBornFrequency.lean`: `vnDilation_pointer_volume`, `vnDilation_pointer_frequency` — pointer-block FS volumes = Born weights and a.s. frequencies → Born, every unit `ψ`). Next: **LF5-E (capstone + wiring)**. Single-system projective tier; entanglement/non-locality + A5 deferred. |
+| [`carve-out-plan.md`](carve-out-plan.md) → **D1** | **The open frontier.** Exercise real measurement *dynamics* on `Σ`; the deepest structural debt, beneath A5. | **OPEN at the deeper strata.** `Φ≠id` (non-collapse) done 2026-06-05 (`LF4/ObservableFlow.lean`); collapse semantics DECIDED 2026-06-09 (§6: the de-isolation reading); **the measurement-event half is now exercised at the single-system projective tier — LF5 COMPLETE 2026-06-11** (`measurement_flow_born_frequency`). Remaining: entangled/non-local de-isolation, the per-microstate outcome map (gated on `bornRegion` pairwise disjointness), A5 sector origin, `SectorData` instances still `Φ = id`. |
+| [`lf5-plan.md`](lf5-plan.md) | Staged plan for **LF5 (measurement dynamics, the D1 frontier)**: realise a projective measurement as a measure-preserving von Neumann de-isolation flow `Φ_vN ≠ id` on the joint `ℂℙ^{N·N−1}`, pointer regions = `blockProj` (apparatus basis, context-fixed), committed volume = Born, chained to frequencies. **Heavily reuses the POVM Naimark tranche** (block-Born = FS-volume already proved); the genuine new content is realising the static dilation isometry as a dynamical flow. | **COMPLETE 2026-06-11.** LF5-A (vN unitary, 06-09); LF5-B (measurement flow `Φ_vN ≠ id`, FS-preserving, 06-10); LF5-C (de-isolation realises the dilation: `vnNaimark`, flow carries `[ψ⊗a₀] ↦ [Vψ]`, 06-11); LF5-D (the **unconditional engine** `LF4/BornRegionUncond.lean` — retires the `hpos` genericity of the general-`N` + POVM engines, additively — + `vnDilation_pointer_volume` / `vnDilation_pointer_frequency`, 06-11); LF5-E (capstone, 06-11): **layer headline `measurement_flow_born_frequency`** (`LF5/Capstone.lean`) — `Φ_vN ≠ id` + FS-preserving + dilation realised ∀ preparations + pointer-block volume = Born + a.s. frequencies → Born, every unit `ψ`. All foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND. Remaining D1 strata: entangled/non-local tier, per-microstate outcome map (`bornRegion` disjointness), A5. |
 | [`povm-plan.md`](povm-plan.md) | **POVM tranche** (DONE 2026-06-03): the ontic Born derivation extended to general (non-projective) POVMs via Naimark dilation. | **CLOSED** — P.1–P.5 done (type, dilation + Born transfer, volume reading, frequency capstone, canonical-dilation existence); all foundational-triple-only, Gleason-free. P.6 docs done. |
 | [`LF4-todo.md`](LF4-todo.md) | Ledger of items deferred from LF2/LF3 to LF4, numbered §1–§14, with bridge-discipline rules. | LIVE ledger. §14.2 done; general-N DH + LF3 re-route done; §2 done for pure states. ⏸ **§13 Wigner-rigidity programme PAUSED 2026-06-09 at the (2c-iii) phase-cocycle crux** — `transProb` API + `TransProbPreserving` + injectivity + frame reduction (`reducedMap` fixes basis rays) all built/audited SOUND in `Mathlib/.../Projectivization/{TransitionProbability,WignerRigidity}.lean`; residual = one Wigner normal-form lemma; decision deferred (full proof vs `wigner_fs_rigidity` axiom). See §13 banner. Other items still open. |
 | [`qm-empirical-tests.md`](qm-empirical-tests.md) | QM-validity regression-suite roadmap (Bell, no-cloning, teleportation, GHZ, Hardy, gates, crypto…). | LIVE. Many items done; E7/E91/BB84 + full no-broadcasting deferred (need fidelity/CPTP/LF5). |
@@ -50,7 +50,7 @@ LIVE doc for the tranche you are on.
 
 ## Current state of the programme (one paragraph)
 
-LF1–LF4 + Empirical merged and machine-verified. Born is **derived as the Fubini–Study
+LF1–LF5 + Empirical merged and machine-verified. Born is **derived as the Fubini–Study
 typicality volume** on the ontic `Σ = ℂℙ^{N-1}` for general `N`, Gleason-free, and the
 LF3 empirical chain runs on that derivation. The **POVM tranche is closed** (2026-06-03):
 the ontic Born derivation now covers general (non-projective) measurements via the
@@ -62,8 +62,14 @@ uniqueness is a proved theorem). `busch_effect_gleason` is confined to the **ope
 stratum** — it is no longer in the ontic Born path for *either* projective or POVM
 measurements. The **quantum-algorithm branch** (Deutsch–Jozsa, QFT, Grover, full Shor) is
 **complete 2026-06-08** — coverage breadth, foundational-triple-only, Tier-A-audited SOUND.
-With POVMs and the algorithm branch closed, the **single open frontier is D1** (exercising
-real measurement dynamics on `Σ`; `Φ = id` in every concrete sector instance today — see
-`carve-out-plan.md`). Axiom posture is regression-protected by
+The **LF5 measurement-dynamics layer is complete** (2026-06-11, single-system projective
+tier): the layer headline `measurement_flow_born_frequency` chains the de-isolation flow
+`Φ_vN ≠ id` (FS measure-preserving) through the dynamically-realised Naimark dilation to
+pointer-block volumes = Born and a.s. frequencies → Born, for every unit preparation (the
+engine's `hpos` genericity retired by `LF4/BornRegionUncond.lean`). The **open frontier is
+D1's deeper strata** (entangled/non-local de-isolation; the per-microstate outcome map,
+gated on `bornRegion` pairwise disjointness; the A5 sector origin; the concrete `SectorData`
+instances still carry `Φ = id` — see `carve-out-plan.md` §6). Axiom posture is
+regression-protected by
 `CsdLean4/Tests/AxiomAudit.lean` (`#guard_msgs` against `#print axioms`); build with
 `lake build` + `lake build CsdLeanTests`.

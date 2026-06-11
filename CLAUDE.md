@@ -8,10 +8,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 reference doc, with one-line status on each. Read it first when picking up work. The
 **POVM tranche is closed** ([`specs/povm-plan.md`](specs/povm-plan.md), DONE 2026-06-03 —
 the ontic Born derivation now covers general non-projective measurements via the canonical
-Naimark dilation, Gleason-free). The **single open frontier is now D1**
-([`specs/carve-out-plan.md`](specs/carve-out-plan.md) — exercising real measurement
-dynamics on `Σ`; `Φ = id` everywhere today). Axiom posture and the two-strata (operational
-Gleason vs ontic volume) reading live in [`AXIOMS.md`](AXIOMS.md) §2.
+Naimark dilation, Gleason-free). The **LF5 single-system projective measurement-dynamics
+tier is closed** ([`specs/lf5-plan.md`](specs/lf5-plan.md), LF5-A..E DONE 2026-06-09..11;
+layer headline `measurement_flow_born_frequency`): a deterministic, FS-measure-preserving
+von Neumann de-isolation flow `Φ_vN ≠ id` realises the Naimark dilation dynamically and
+its pointer-block volumes / a.s. frequencies are the Born weights, for every unit
+preparation (the `hpos` genericity was retired by the unconditional engine,
+`LF4/BornRegionUncond.lean`). **The open frontier remains D1's deeper strata**
+([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6): the entangled / non-local
+de-isolation tier, the per-microstate outcome map (gated on `bornRegion` pairwise
+disjointness), the A5 sector origin, and threading the flow through the concrete
+`SectorData` instances (which still carry `Φ = id`). Axiom posture and the two-strata
+(operational Gleason vs ontic volume) reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
 **Doc-currency discipline (mandatory).** When a tranche lands, updating the docs is part of
 "done", not a later chore. In the *same commit* as the Lean work, update: the
@@ -473,6 +481,12 @@ POVMNaimark.lean       — canonicalNaimark: the Naimark dilation from CFC squar
                          √Eᵢ = cfc Real.sqrt Eᵢ; naimarkV_isom (Vᴴ V = ∑Eᵢ = I),
                          naimarkV_pullback (Vᴴ Πᵢ V = Eᵢ); makes the POVM Born =
                          Kähler-volume results unconditional (P.5)
+BornRegionUncond.lean  — the UNCONDITIONAL bornRegion engine (2026-06-11): the
+                         general-N Born = FS-volume / frequency theorems and the POVM
+                         wrappers with the hpos genericity hypothesis retired (*_uncond
+                         forms, every unit ψ, vanishing amplitudes included; per-cell
+                         dichotomy — closed-simplex subset lemmas + det-0 null images).
+                         Additive: the audited hpos originals above are untouched
 ```
 
 **POVM tranche is closed (P.1–P.5, 2026-06-03).** The ontic Born = Kähler-volume
@@ -568,6 +582,52 @@ closure (the LF3 chain capstones and the LF2 general-effect representation use i
 cluster is the *ontic-stratum, Gleason-free route*, not a removal of Busch. The full
 plan and per-result honesty ledger live in `specs/general-n-dh-plan.md` (general `N`)
 and `specs/carve-out-plan.md` (qubit / diagnosis).
+
+### LF5: measurement dynamics (the D1 frontier; single-system projective tier COMPLETE 2026-06-11)
+
+LF5 is the layer where measurement *dynamics* is exercised: a deterministic,
+FS-measure-preserving von Neumann **de-isolation flow `Φ_vN ≠ id`** on the dilated
+projective ontic space realises the Naimark dilation dynamically, and its
+context-fixed pointer-block volumes / a.s. empirical frequencies are the Born
+weights — for every unit preparation. Built under the de-isolation reading of
+`specs/carve-out-plan.md` §6; plan and per-stage honesty ledger in
+`specs/lf5-plan.md` (LF5-A..E all DONE).
+
+LF5 module chain (under `CsdLean4/LF5/`, namespace `CSD.LF5`):
+
+```
+VonNeumannUnitary.lean — vnPerm (adder bijection σ(j,k) = (j, j+k)), vnUnitary
+                         (its permutation matrix, manifestly unitary), the ground
+                         copy vnUnitary *ᵥ e_{(j,0)} = e_{(j,j)} (LF5-A)
+MeasurementFlow.lean   — vnUnitaryReindexed (transport along e : Fin N × Fin N ≃ Fin m),
+                         measurementFlow := (vnUnitaryReindexed N e • ·) on
+                         ℙ ℂ (EuclideanSpace ℂ (Fin m)); FS-invariance
+                         (measurementFlow_measurePreserving — the hΦ_pres content),
+                         measurementFlow_ne_id (1 < N) (LF5-B)
+DilationFromFlow.lean  — basisPOVM (rank-1 computational-basis projective POVM),
+                         embedGround (ψ ↦ ψ⊗a₀), vnDilationV := vnUnitary * embedGround,
+                         vnDilationV_isom + vnDilationV_pullback (Vᴴ Πᵢ V = |eᵢ⟩⟨eᵢ|)
+                         ⟹ vnNaimark : NaimarkDilation (basisPOVM N);
+                         measurementFlow_realises_dilation (Φ_vN [ψ⊗a₀] = [Vψ]) (LF5-C)
+FlowBornFrequency.lean — vnDilation_pointer_volume (pointer-i block FS volume =
+                         ‖⟨eᵢ,ψ⟩‖², every unit ψ) + vnDilation_pointer_frequency
+                         (a.s. pointer-block frequencies → Born), on the
+                         unconditional engine LF4/BornRegionUncond.lean (LF5-D)
+Capstone.lean          — measurement_flow_born_frequency: the layer headline,
+                         five conjuncts (Φ_vN ≠ id ∧ FS-preserving ∧ dilation
+                         realised ∀ preparations ∧ pointer volume = Born ∧
+                         a.s. frequencies → Born) (LF5-E)
+```
+
+**LF5 honest scope.** Single-system projective tier only. The Born *number* is
+reused from the FS-volume engine (not re-derived); A5 (FS typicality on the
+dilated sector) is posited; the contextual outcome-map slot of
+`LF3/ContextMap.lean` is realised dynamically as outcome *statistics* — a
+per-microstate outcome *function* is owed on `bornRegion` pairwise disjointness.
+Remaining D1 strata: entangled / non-local de-isolation (Bell forces
+non-locality), the A5 sector origin, and the concrete `SectorData` instances
+(which still carry `Φ = id`). All LF5 results are foundational-triple-only and
+AxiomAudit-pinned.
 
 ### Empirical: QM-validity regression suite
 
