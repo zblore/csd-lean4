@@ -61,11 +61,13 @@ import CsdLean4.LF4.POVMDilation
 import CsdLean4.LF4.POVMVolume
 import CsdLean4.LF4.POVMNaimark
 import CsdLean4.LF4.BornRegionUncond
+import CsdLean4.LF4.TrialWitness
 import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.LF5.MeasurementFlow
 import CsdLean4.LF5.DilationFromFlow
 import CsdLean4.LF5.FlowBornFrequency
 import CsdLean4.LF5.Capstone
+import CsdLean4.LF5.CapstoneCanonical
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2464,5 +2466,53 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF5.measurement_flow_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.measurement_flow_born_frequency
+
+-- Trial-witness tranche (2026-06-11): the canonical i.i.d. FS trial process.
+-- Until this tranche every volume-frequency capstone quantified over an
+-- abstract trial bundle (Ω, Pr, X, hX, hlaw, hindep) that no corpus theorem
+-- constructed. The canonical coordinate process (Ω = ℕ → ℂℙ^{N−1},
+-- Pr = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀), X n = (· n))
+-- inhabits the bundle: marginal law via Measure.infinitePi_map_eval, joint
+-- independence via iIndepFun_infinitePi, indicator pairwise independence via
+-- IndepFun.comp (the Cat-1 glue iIndepFun.pairwise_indepFun_indicator_preimage).
+-- The _canonical capstones are the originals with the trial bundle discharged,
+-- conclusions verbatim. Measure-theoretic existence of the sampling law only:
+-- the physical i.i.d.-preparation reading remains the LF1 typicality posit
+-- (A5). Foundational triple throughout; Gleason-free.
+/-- info: 'Set.indicator_const_preimage_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Set.indicator_const_preimage_comp
+
+/--
+info: 'ProbabilityTheory.iIndepFun.pairwise_indepFun_indicator_preimage' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.iIndepFun.pairwise_indepFun_indicator_preimage
+
+/-- info: 'ProbabilityTheory.iIndepFun_eval_infinitePi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.iIndepFun_eval_infinitePi
+
+/-- info: 'CSD.LF4.fsTrial_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fsTrial_law
+
+/-- info: 'CSD.LF4.fsTrial_pairwise_indepFun_indicator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fsTrial_pairwise_indepFun_indicator
+
+/-- info: 'CSD.LF4.born_frequency_convergence_N_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.born_frequency_convergence_N_canonical
+
+/--
+info: 'CSD.LF5.measurement_flow_born_frequency_canonical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurement_flow_born_frequency_canonical
 
 end CSD.Tests.AxiomAudit

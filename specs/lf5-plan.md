@@ -183,7 +183,11 @@ Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND (tripwire clea
 index enters only through the fixed block `{(n,i)}` via `e (n,i)`; all five conjuncts
 verbatim-match their sources; hypotheses inhabited at a concrete N=2 i.i.d. witness with
 state-sensitive conclusion — block volumes 1 vs 0 at `ψ = e₀`). **The LF5 plan is complete:
-the single-system projective tier of D1 is closed.** Original spec below.
+the single-system projective tier of D1 is closed.** *Addendum 2026-06-11:* the audit-probe
+i.i.d. witness is now an in-tree theorem — `measurement_flow_born_frequency_canonical`
+(`CsdLean4/LF5/CapstoneCanonical.lean`) discharges the whole trial bundle with the canonical
+coordinate process `fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`
+(`CsdLean4/LF4/TrialWitness.lean`), conclusion verbatim, all `N`. Original spec below.
 
 Named headline `measurement_flow_born_frequency`: for the von Neumann measurement flow `Φ_vN`
 and the context-fixed pointer regions `blockProj i`, repeated trials (FS-typical over the joint

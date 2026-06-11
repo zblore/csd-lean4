@@ -93,6 +93,15 @@ commit; verification details in the session record):
    senses (h_uniform-discharged, 2026-05-31; hpos-free, 2026-06-11) — keep the
    distinction explicit when writing docs (now recorded in
    `LF4/MomentUniform.lean`'s module docstring).
+   *Follow-up DONE 2026-06-11 (auditor recommendation of the same day):* the
+   formal i.i.d. trial witness landed — the canonical coordinate process
+   (`Measure.infinitePi` of `fubiniStudyMeasure p₀`; `LF4/TrialWitness.lean` +
+   Cat-1 `Mathlib/Probability/IIDCoordinateProcess.lean`) inhabits the trial
+   bundle `(Ω, Pr, X, hX, hlaw, hindep)` corpus-wide;
+   `born_frequency_convergence_N_canonical` and
+   `measurement_flow_born_frequency_canonical` (`LF5/CapstoneCanonical.lean`)
+   state the volume-frequency capstones with the bundle discharged,
+   conclusions verbatim. AxiomAudit-pinned, foundational-triple-only.
 4. **`CsdLean4.Basic` API invariant broken (Medium).** *Classification: agreed,
    genuine defect.* Fixed: `Basic.lean` now imports the root module `CsdLean4`
    (verified acyclic — nothing imports `Basic`), so the documented
