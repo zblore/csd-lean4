@@ -83,7 +83,35 @@ direction convention killed with a positive/negative entry pair at N=3). Origina
 (FS-invariance, reuse `fubiniStudyMeasure_smul_invariant` / `transProb_smul_unitary`) and
 `measurementFlow_ne_id` (Φ≠id: it correlates — exhibit a point it moves). *Risk:* low.
 
-### LF5-C — de-isolation realises the dilation  [NEW; the crux assembly]
+### LF5-C — de-isolation realises the dilation  [NEW; the crux assembly] — **DONE 2026-06-11** (`CsdLean4/LF5/DilationFromFlow.lean`)
+Delivered: `basisPOVM N : POVM N (Fin N)` (the rank-1 computational-basis projective POVM,
+`Eᵢ = rankOneEffect eᵢ`, with `basisPOVM_weight : weight ψ i = ‖⟨eᵢ,ψ⟩‖²`); `embedGround N`
+(the matrix of `ψ ↦ ψ ⊗ a₀`, isometry); `vnDilationV N := vnUnitary N * embedGround N` — the
+**dynamically-realised dilation**, with columns `vnUnitary *ᵥ e_{(m,0)} = e_{(m,m)}` (LF5-A's
+ground copy), post-flow coordinates `vnDilationV_mulVec : (Vψ)(j,k) = δ_{kj}·ψⱼ` (i.e.
+`U_vN(ψ⊗a₀) = ∑ⱼ ψⱼ·eⱼ⊗aⱼ`), `vnDilationV_isom`, and the **pullback**
+`vnDilationV_pullback : Vᴴ (blockProj N i) V = |eᵢ⟩⟨eᵢ|`, assembled into
+**`vnNaimark N : NaimarkDilation (basisPOVM N)`**. Block-`i` weight via `born_transfer`:
+`vnDilation_block_weight = ‖⟨eᵢ,ψ⟩‖²`. Projective-level tie to the LF5-B flow:
+**`measurementFlow_realises_dilation`** — `Φ_vN [piLpCongrLeft e (ψ⊗a₀)] = [piLpCongrLeft e (Vψ)]`
+for every `ψ ≠ 0` (in the exact `piLpCongrLeft` spelling LF5-D's volume engine consumes).
+Foundational-triple-only, AxiomAudit-pinned (7 pins), Tier-A audited SOUND (copy convention
+verified from raw `permMatrix` definitions at N=2 with negative controls killing the
+transposed and no-op conventions; non-basis state gives the genuinely-correlated diagonal
+output). Original spec below.
+
+**LF5-D obstruction (recorded; load-bearing).** The post-flow state `Vψ` has zero amplitude
+on every off-diagonal cell `(j,k), k ≠ j`, so the genericity hypothesis `hpos` of
+`povm_born_eq_dilated_volume` / `povm_born_frequency_volume` is **unsatisfiable** at
+`ψ' = piLpCongrLeft e (Vψ)` for `N ≥ 2` (auditor-confirmed by a `False`-derivation at N=2).
+LF5-D therefore cannot be a blind P.3b/P.4 instantiation. Candidate routes: (a) a
+zero-amplitude-tolerant volume reading restricted to the support cells (the diagonal block,
+where `vnDilationV_mulVec` gives the exact amplitudes; the diagonal embeds as a coordinate
+`ℂℙ^{N−1}` copy via `vnDilationV_column`); (b) weaken `bornRegion_fs_measure`'s `hpos` to the
+single cell being read (feasibility scan of `MomentBornN.lean` first). Audit tripwire for
+LF5-D: the danger mode is a "tolerant reading" that quietly re-carves the diagonal cells to
+Born values instead of deriving the block volume from the FS law on the support subspace.
+
 `embedGround : EuclideanSpace ℂ (Fin N) → EuclideanSpace ℂ (Fin N × Fin N)`, `ψ ↦ ψ ⊗ a₀`.
 `V := (vnUnitary as linear map) ∘ embedGround`. Prove `V` is an isometry and the **pullback
 identity** `Vᴴ (blockProj N i) V = |eᵢ⟩⟨eᵢ|` (= the projective POVM effect `Eᵢ`). Compute the

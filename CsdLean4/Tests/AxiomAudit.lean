@@ -62,6 +62,7 @@ import CsdLean4.LF4.POVMVolume
 import CsdLean4.LF4.POVMNaimark
 import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.LF5.MeasurementFlow
+import CsdLean4.LF5.DilationFromFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2368,5 +2369,39 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF5.measurementFlow_mk_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.measurementFlow_mk_single
+
+-- LF5-C (de-isolation realises the dilation): the dynamically-realised Naimark
+-- dilation isometry V = U_vN ∘ (· ⊗ a₀) of the computational-basis projective
+-- POVM — isometry, pointer-block pullback Vᴴ Πᵢ V = |eᵢ⟩⟨eᵢ|, the NaimarkDilation
+-- inhabitant, the post-flow coordinates U_vN(ψ⊗a₀) = ∑ⱼ ψⱼ·(eⱼ⊗aⱼ), the block-i
+-- Born weight ‖⟨eᵢ,ψ⟩‖², and the projective-level realisation theorem tying the
+-- LF5-B flow Φ_vN to the dilation. Foundational triple.
+/-- info: 'CSD.LF5.vnNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnNaimark
+
+/-- info: 'CSD.LF5.vnDilationV_pullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilationV_pullback
+
+/-- info: 'CSD.LF5.vnDilationV_isom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilationV_isom
+
+/-- info: 'CSD.LF5.vnDilation_block_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilation_block_weight
+
+/-- info: 'CSD.LF5.measurementFlow_realises_dilation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurementFlow_realises_dilation
+
+/-- info: 'CSD.LF5.vnDilationV_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilationV_mulVec
+
+/-- info: 'CSD.LF5.basisPOVM_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.basisPOVM_weight
 
 end CSD.Tests.AxiomAudit
