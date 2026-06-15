@@ -113,10 +113,14 @@ by the paper sequence before Lean can formalise a correction.
 
 Algorithms, stabilisation (`qi-qec-roadmap.md §3`), and the departures here converge on the
 **same two missing structures**: the **dynamics layer** (`Φ ≠ id`; D1 + the LF5
-measurement-update sub-layer) and the **finite-N / finite-sample correction tower** (this
-file). The corpus is a complete, verified account of the *leading-order static* theory. The
-next era is (i) turning on dynamics, and (ii) the first correction beyond leading order —
-the only place CSD becomes *falsifiable against* QM rather than *equivalent to* it.
+measurement sub-layer) and the **finite-N / finite-sample correction tower** (this file).
+LF5 has turned on `Φ_vN ≠ id` at the single-system projective tier (including the
+per-microstate outcome function, LF5-F), but the concrete `SectorData` instances still carry
+`Φ = id`, and outcome-*conditioned* update + the entangled tier remain. The corpus is
+otherwise a complete, verified account of the *leading-order static* theory. The next era is
+(i) finishing the dynamics layer (instance-level `Φ ≠ id`, entanglement), and (ii) the first
+correction beyond leading order — the only place CSD becomes *falsifiable against* QM rather
+than *equivalent to* it.
 
 Priority verdict: the falsification programme (§1, §3) is the most foundationally valuable
 work, but it is **theory-gated** — it needs the papers to pin a correction first. The

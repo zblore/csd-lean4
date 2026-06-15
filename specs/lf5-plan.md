@@ -6,10 +6,10 @@
 the per-microstate outcome map `vnPointerOutcome` → the single-union-event outcome-frequency
 capstone `measurement_flow_outcome_frequency` (`CsdLean4/LF4/BornRegionDisjoint.lean` +
 `CsdLean4/LF5/PointerOutcome.lean`); closes the owed-since-`aeece86` outcome-function caveat.
-The single-system projective tier of D1 is closed. Remaining D1 strata (not this plan):
-entangled / non-local de-isolation, the per-microstate outcome map (gated on `bornRegion`
-pairwise disjointness), the A5 sector origin, and threading the flow through the concrete
-`SectorData` instances (still `Φ = id`).
+The single-system projective tier of D1 is closed (incl. the per-microstate outcome
+function, LF5-F). Remaining D1 strata (not this plan): entangled / non-local de-isolation,
+outcome-*conditioned* update (Lüders / sequential), the A5 sector origin, and threading the
+flow through the concrete `SectorData` instances (still `Φ = id`).
 
 Drafted 2026-06-09. **The deepest open debt (D1): `Φ = id` in every concrete sector
 instance, so no measurement *dynamics* is yet exercised** (status at drafting). This plan

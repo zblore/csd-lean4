@@ -273,8 +273,10 @@ Two files were carrying docstring text that claimed work was **deferred**
 when the work had actually been completed in the same commit that
 introduced the docstring. These are not placeholders — they are
 misleading docstrings in the *opposite* direction (under-claiming
-rather than over-claiming). Fixed in the same commit as this §6 was
-added.
+rather than over-claiming). Fixed in the same commit as this §11 was
+added. (Section numbering skips §6 — a pre-existing cosmetic gap; the
+later sections keep their numbers because docstrings cross-reference
+"PLACEHOLDERS.md §7"/§8 etc. by number.)
 
 | File | Stale claim | Reality |
 |---|---|---|

@@ -412,8 +412,9 @@ headline `measurement_flow_born_frequency` (`CsdLean4/LF5/Capstone.lean`) — th
 flow `Φ_vN ≠ id` is FS measure-preserving, realises the Naimark dilation for every
 preparation, and its context-fixed pointer-block volumes / a.s. empirical frequencies are the
 Born weights, for every unit `ψ` (the engine's `hpos` genericity was retired by
-`LF4/BornRegionUncond.lean`). The contextual outcome-map slot is realised dynamically as
-outcome *statistics*; the per-microstate outcome *function* is owed on `bornRegion` pairwise
-disjointness. The honest costs above stand: entangled/non-local de-isolation and the A5
+`LF4/BornRegionUncond.lean`). The contextual outcome-map slot is realised dynamically — and,
+since **LF5-F (2026-06-15)**, as a per-microstate outcome *function* (`bornRegion` pairwise
+disjointness → `vnPointerOutcome` → `measurement_flow_outcome_frequency`), not just outcome
+statistics. The honest costs above stand: entangled/non-local de-isolation and the A5
 typicality posit remain the open D1 strata, plus threading the flow through the concrete
 `SectorData` instances (still `Φ = id`).

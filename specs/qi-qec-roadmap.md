@@ -20,8 +20,9 @@ What is essentially absent is the part of QI that needs machinery the corpus nev
 plus the CSD-internal **measurement-update** step.
 
 **Load-bearing observation.** The QI program and the deepest CSD frontier (**D1**, real
-measurement dynamics on `Σ`; `Φ = id` everywhere today, see `carve-out-plan.md`) converge
-at channels and measurement update. More no-go / POVM examples are cheap and never touch
+measurement dynamics on `Σ`; `Φ = id` in every concrete `SectorData` instance, though LF5
+now exercises `Φ_vN ≠ id` on the dilated `Σ'` at the single-system projective tier, see
+`carve-out-plan.md`) converge at channels and measurement update. More no-go / POVM examples are cheap and never touch
 D1. Fidelity, CPTP, and the post-measurement state are exactly where ontic dynamics on `Σ`
 would have to earn its keep. After the static layer, "do QI properly" and "attack D1" stop
 being separate problems.
@@ -80,9 +81,12 @@ data-processing). Gleason-free, Hilbert/operator side — does not touch D1/A5.
 `D ≤ 1`, tight at 1 for orthogonal pure states — the bounded `[0,1]` distinguishability range)
 and `traceDist_conj_unitary` (`D(UρU†,UσU†) = D(ρ,σ)`, the equality case of data-processing,
 via the unitary channel both ways). Both Tier-A audited SOUND. The K3 metric-properties set is
-now closed; remaining QI keystones: K1 entropy, K4/LF5.
+now closed; remaining QI keystones: K1 entropy, and K4 (the Lüders / outcome-conditioned
+update specifically — note the LF5 *layer* itself is built: LF5-A..F landed 2026-06-09..15,
+single-system projective measurement dynamics complete; what K4 still needs is the
+outcome-*conditioned* update rule below).
 
-### K4 — measurement update / "LF5" (Lüders rule `ρ ↦ ΠρΠ / Tr`)
+### K4 — measurement update / Lüders rule `ρ ↦ ΠρΠ / Tr` (the one LF5 sub-piece still open)
 Unblocks: BB84 / B92 disturbance security, teleportation *collapse* (today
 branch-conditional only via `teleportation_branch_recovers_input`), and the entire
 weak / sequential-measurement paradox family (Zeno, quantum eraser, three-box,
@@ -170,7 +174,8 @@ Recommended order (breadth at low risk, high foundational signal):
 **Do not** keep adding static no-go / POVM examples. Qubit and qutrit, projective and POVM,
 symmetric and not, are all done; marginal foundational signal there is ~zero. The next real
 information comes from the four keystones, three of which (K2, K1, K4) are exactly where the
-dormant `hΦ_pres` / `Φ = id` debt finally has to be paid.
+instance-level `Φ = id` debt finally has to be paid (LF5 has begun this: `Φ_vN ≠ id` is
+exercised on the dilated `Σ'`, but the concrete `SectorData` instances still carry `Φ = id`).
 
 ## 5. Project-structure decision
 

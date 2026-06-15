@@ -3,8 +3,10 @@
 Status: **CLOSED 2026-06-03.** P.1–P.5 done (POVM type, Naimark dilation + Born transfer,
 volume reading, frequency capstone, canonical-dilation existence), P.6 (docs) done — all
 foundational-triple-only, Gleason-free. The ontic Born = Kähler-volume derivation now
-covers general (non-projective) measurements. See the Progress section below. The single
-open frontier is now **D1** (`specs/carve-out-plan.md`).
+covers general (non-projective) measurements. See the Progress section below. The open
+frontier is now **D1's deeper strata** (`specs/carve-out-plan.md`): the single-system
+projective tier was exercised by LF5 (`Φ_vN ≠ id`, complete 2026-06-15), but the concrete
+`SectorData` instances still carry `Φ = id`, and entanglement / the A5 sector origin remain.
 
 ## Goal and why it matters
 

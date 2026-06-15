@@ -182,7 +182,7 @@ Nine concrete items are tracked in [`specs/LF4-todo.md`](specs/LF4-todo.md). The
 **Group C: housekeeping**
 - §9 Unify `MeasurablePartition` with LF1's intersect-full-measure sketch (discharges the partition-type gap noted in the LF1 `Outcomes.lean` docstring).
 
-LF5 (measurement dynamics) is now a concrete layer: the single-system projective tier is **complete 2026-06-11** (`specs/lf5-plan.md`, layer headline `measurement_flow_born_frequency` — foundational-triple-only, no new axioms, no new structural posits beyond the A5 datum on the dilated sector already recorded in §3.3). Outcome-conditioned update (the per-microstate outcome map, gated on `bornRegion` pairwise disjointness), sequential circuits, and the entangled/non-local de-isolation tier remain open LF5+ territory.
+LF5 (measurement dynamics) is now a concrete layer: the single-system projective tier is **complete 2026-06-11..15** (`specs/lf5-plan.md`, layer headline `measurement_flow_born_frequency` — foundational-triple-only, no new axioms, no new structural posits beyond the A5 datum on the dilated sector already recorded in §3.3). **LF5-F (2026-06-15) discharged the per-microstate outcome *function*** (`bornRegion` pairwise disjointness → `vnPointerOutcome` → `measurement_flow_outcome_frequency`). Outcome-*conditioned* update (Lüders / sequential circuits) and the entangled / non-local de-isolation tier remain open LF5+ territory.
 
 ## 5. What `#print axioms` reports
 

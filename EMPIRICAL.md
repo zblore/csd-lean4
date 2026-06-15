@@ -27,10 +27,12 @@ status). For the axiom posture and the two-strata (operational vs ontic) reading
     the structural slot for the ontic interpretation.
   - **Volume-frequency series**: the Born number is *derived*, not transported, as a
     Fubini-Study typicality volume on the ontic `Σ`. These are carving-free and
-    Gleason-free (no appeal to `busch_effect_gleason`). Honest residue: in every concrete
-    instance the flow is currently the identity, so no measurement dynamics is yet
-    exercised; the Born value is derived from the posited sector geometry on `Σ`, which is
-    the standing assumption these results rest on (see `README.md` headline and `AXIOMS.md`).
+    Gleason-free (no appeal to `busch_effect_gleason`). Honest residue: the concrete
+    `SectorData` instances behind these entries still carry `Φ = id` (LF5 exercises a genuine
+    `Φ_vN ≠ id` only on the dilated `Σ'`, not in these instances), so these volume readings
+    remain *realisation* not *derivation*; the Born value is derived from the posited sector
+    geometry on `Σ`, the standing assumption these results rest on (see `README.md` headline
+    and `AXIOMS.md`).
 
 ---
 

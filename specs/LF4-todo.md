@@ -25,10 +25,12 @@ Recent closures, so this ledger is read in context:
   ontic path entirely (operational-stratum only).
 - **§2 preparation-to-Hilbert correspondence — DONE for pure-state classes** (see §2 below,
   2026-06-08 audit); mixed/multi-particle residue tracked under §8.
-- **Open frontier: D1** ([`carve-out-plan.md`](carve-out-plan.md)) — exercising real
-  measurement dynamics on `Σ` (`Φ = id` in every concrete sector instance today). §13
-  (ontic→Hilbert isometry lift) is coupled to it (needs the Wigner / FS-rigidity lemma + the
-  D1 flow), not to §2.
+- **Open frontier: D1's deeper strata** ([`carve-out-plan.md`](carve-out-plan.md)) — LF5
+  (complete 2026-06-15) exercises `Φ_vN ≠ id` at the single-system projective tier, but the
+  concrete `SectorData` instances still carry `Φ = id` and no capstone consumes the
+  preservation content of `hΦ_pres`; entanglement / non-local de-isolation and the A5 sector
+  origin remain. §13 (ontic→Hilbert isometry lift) is coupled to it (needs the Wigner /
+  FS-rigidity lemma + the D1 flow), not to §2.
 
 The numbered items below (§1–§14) remain as the standing ledger.
 
@@ -190,9 +192,9 @@ under our context. The PSD inner-product route above bypasses the issue.
 
 ---
 
-## 5. Prove the two spec-mandated axioms (long-term)
+## 5. Prove the spec-mandated axiom (long-term)
 
-**Status:** `invariant_measure_uniqueness` and `busch_effect_gleason` remain axioms. Spec §7.4 accepts this.
+**Status:** `busch_effect_gleason` remains an axiom (`invariant_measure_uniqueness` was **removed 2026-06-04** — see the Pickup note below). Spec §7.4 accepts the Busch import.
 
 **Why deferred:** Each is a Mathlib-scale contribution.
 
@@ -239,7 +241,8 @@ All three exports are foundational-axiom-only; `#guard_msgs` regressions in Axio
 `G = U(N)`, `π = id`, `μL = fubiniStudyMeasure`), proving LF2's abstract
 framework is **inhabited** (it never had been). `cp_measure_bridge` holds
 **axiom-free** for the instance (foundational triple only; the abstract
-`measure_bridge` carries `invariant_measure_uniqueness`). Both AxiomAudit-pinned.
+`measure_bridge` lemma and the `invariant_measure_uniqueness` axiom it carried were
+**removed 2026-06-04**). Both AxiomAudit-pinned.
 
 **Honest scope of the base case.** `π = id` ⇒ trivial (point) fibres, bridge
 constant `c = 1`. It does *not* reproduce any Born prediction.

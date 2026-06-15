@@ -29,8 +29,8 @@ Maps spec section numbers (Paper A / B / D) to the Lean theorem or definition th
 | §5.4 pure-state weights | `pure_state_born_weights`, `pure_state_born_weights_of_certainty` | `CsdLean4/LF2/BornWrapper.lean` |
 | §6 (LF1 ↔ LF2 identity) | `lf1_weight_eq_projective_weight` | `CsdLean4/LF2/Interface.lean` |
 | §6 (combined headline) | `LF1_main_theorem_projective` | `CsdLean4/LF2/Interface.lean` |
-| §7.4 (invariant-measure uniqueness) | `invariant_measure_uniqueness` (axiom, with transitivity) | `CsdLean4/LF2/MeasureBridge.lean` |
-| §7.4 (rank-1 density uniqueness) | `rankOneDensity_unique_of_certainty` (axiom; LF4-todo §4) | `CsdLean4/LF2/BornWrapper.lean` |
+| §7.4 (invariant-measure uniqueness) | ~~`invariant_measure_uniqueness`~~ REMOVED 2026-06-04; concrete content is the proved theorem `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` | `CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean` |
+| §7.4 (rank-1 density uniqueness) | `rankOneDensity_unique_of_certainty` (theorem; discharged 2026-05-18) | `CsdLean4/LF2/BornWrapper.lean` |
 
 ## Paper D — LF3 (singlet kernel + LF1↔LF2↔LF3 empirical chain)
 
