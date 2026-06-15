@@ -946,11 +946,31 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip' depends on axio
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.syndrome_X3
 
+-- Identifiability (the load-bearing QEC ingredient, now inside the bit-flip capstone): the
+-- four error syndromes {I,X₁,X₂,X₃} → {(+,+),(−,+),(−,−),(+,−)} are pairwise distinct, so
+-- measuring (Z₁Z₂, Z₂Z₃) pins down the error. Injectivity of errorSyndrome.
+/-- info: 'CSD.Empirical.QM.QEC.three_qubit_syndromes_distinct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.three_qubit_syndromes_distinct
+
+/-- info: 'CSD.Empirical.QM.QEC.three_qubit_syndrome_eigenstates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.three_qubit_syndrome_eigenstates
+
 /--
 info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on axioms: [propext, Classical.choice, Quot.sound]
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip
+
+-- Phase-flip identifiability (Hadamard dual; now inside the phase-flip capstone).
+/-- info: 'CSD.Empirical.QM.QEC.three_qubit_phaseflip_syndromes_distinct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.three_qubit_phaseflip_syndromes_distinct
+
+/-- info: 'CSD.Empirical.QM.QEC.three_qubit_phaseflip_syndrome_eigenstates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.three_qubit_phaseflip_syndrome_eigenstates
 
 -- The bit-flip error channel (channels phase C4): the single-qubit error as a CPTP
 -- mixedUnitaryChannel {I, X}, Φ(ρ) = (1-p)ρ + p XρX — the honest "error = decoherence"
@@ -1532,6 +1552,16 @@ The unitarity proofs cite only the foundational triple; the
 /-- info: 'CSD.Empirical.QM.Gates.qmCZ_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmCZ_mul_self
 
+-- Two-qubit gate UNITARITY (Gᴴ * G = 1) via Hermiticity (Gᴴ = G) + involutivity.
+/-- info: 'CSD.Empirical.QM.Gates.qmCNOT_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmCNOT_unitary
+
+/-- info: 'CSD.Empirical.QM.Gates.qmSWAP_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmSWAP_unitary
+
+/-- info: 'CSD.Empirical.QM.Gates.qmCZ_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmCZ_unitary
+
 /-- info: 'CSD.Empirical.QM.Gates.qmBellPrep_factorisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmBellPrep_factorisation
 
@@ -1543,6 +1573,13 @@ The unitarity proofs cite only the foundational triple; the
 
 /-- info: 'CSD.Empirical.QM.Gates.qmFredkin_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmFredkin_mul_self
+
+-- Multi-qubit gate UNITARITY (Gᴴ * G = 1) via Hermiticity + involutivity.
+/-- info: 'CSD.Empirical.QM.Gates.qmToffoli_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmToffoli_unitary
+
+/-- info: 'CSD.Empirical.QM.Gates.qmFredkin_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.Gates.qmFredkin_unitary
 
 /-! ### Mathlib upstream candidates (Projectivization, §12)
 
@@ -1857,6 +1894,14 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.momentMap_obsFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_obsFlow
+
+-- The observable flow is genuinely non-trivial (Φ ≠ id), witnessed on a SUPERPOSITION ray
+-- (every computational-basis ray is a diagonal-phase eigenvector and is FIXED): the |0⟩+|1⟩
+-- ray is moved because its two coordinates pick up the distinct phases 1 and -1. Mirrors
+-- kFlow_ne_id as the named non-triviality witness.
+/-- info: 'CSD.LF4.obsFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.obsFlow_ne_id
 
 -- Tranche M slice 3: the Born weight as a barycentric volume ratio. The i-th
 -- subdivision region of the moment polytope at Φ([ψ]) has Lebesgue-volume

@@ -160,18 +160,65 @@ lemma phaseflip_recovers (a b : ℂ) :
   · rw [← tel_mul, Z2_mul_Z2, tel_one]
   · rw [← tel_mul, Z3_mul_Z3, tel_one]
 
+/-! ### Identifiability: the four phase-error syndromes are pairwise distinct -/
+
+/-- The **phase-error syndrome**, as the eigenvalue sign-pair `(s₁, s₂) ∈ {±1}²` of the
+stabilisers `(X₁X₂, X₂X₃)` on the errored codeword. Indexed by `Fin 4` for the error set
+`{I, Z₁, Z₂, Z₃}`: `I → (+,+)`, `Z₁ → (−,+)`, `Z₂ → (−,−)`, `Z₃ → (+,−)` (read off
+`stab_*_fixes_logicalPF` / `syndromePF_*`). Hadamard dual of `errorSyndrome`. -/
+def errorSyndromePF : Fin 4 → ℂ × ℂ
+  | 0 => (1, 1)     -- I
+  | 1 => (-1, 1)    -- Z₁
+  | 2 => (-1, -1)   -- Z₂
+  | 3 => (1, -1)    -- Z₃
+
+/-- **Identifiability (the load-bearing QEC ingredient): the four phase-error syndromes are
+pairwise distinct.** `errorSyndromePF` is injective, so measuring `(X₁X₂, X₂X₃)` pins down
+which of `{I, Z₁, Z₂, Z₃}` occurred. Hadamard dual of `three_qubit_syndromes_distinct`. -/
+theorem three_qubit_phaseflip_syndromes_distinct : Function.Injective errorSyndromePF := by
+  intro i j hij
+  fin_cases i <;> fin_cases j <;>
+    first
+      | rfl
+      | (exfalso; simp only [errorSyndromePF, Prod.mk.injEq] at hij; norm_num at hij)
+
+/-- **The four errored codewords are simultaneous stabiliser eigenstates carrying their
+phase-error syndrome**, in eigen-equation form. Repackages `stab_*_fixes_logicalPF` and
+`syndromePF_*` against `errorSyndromePF`. -/
+theorem three_qubit_phaseflip_syndrome_eigenstates (a b : ℂ) :
+    (Matrix.toEuclideanLin X1X2 (logicalPF a b) = (errorSyndromePF 0).1 • logicalPF a b
+      ∧ Matrix.toEuclideanLin X2X3 (logicalPF a b) = (errorSyndromePF 0).2 • logicalPF a b)
+    ∧ (Matrix.toEuclideanLin X1X2 (Matrix.toEuclideanLin Z1 (logicalPF a b))
+        = (errorSyndromePF 1).1 • Matrix.toEuclideanLin Z1 (logicalPF a b)
+      ∧ Matrix.toEuclideanLin X2X3 (Matrix.toEuclideanLin Z1 (logicalPF a b))
+        = (errorSyndromePF 1).2 • Matrix.toEuclideanLin Z1 (logicalPF a b))
+    ∧ (Matrix.toEuclideanLin X1X2 (Matrix.toEuclideanLin Z2 (logicalPF a b))
+        = (errorSyndromePF 2).1 • Matrix.toEuclideanLin Z2 (logicalPF a b)
+      ∧ Matrix.toEuclideanLin X2X3 (Matrix.toEuclideanLin Z2 (logicalPF a b))
+        = (errorSyndromePF 2).2 • Matrix.toEuclideanLin Z2 (logicalPF a b))
+    ∧ (Matrix.toEuclideanLin X1X2 (Matrix.toEuclideanLin Z3 (logicalPF a b))
+        = (errorSyndromePF 3).1 • Matrix.toEuclideanLin Z3 (logicalPF a b)
+      ∧ Matrix.toEuclideanLin X2X3 (Matrix.toEuclideanLin Z3 (logicalPF a b))
+        = (errorSyndromePF 3).2 • Matrix.toEuclideanLin Z3 (logicalPF a b)) := by
+  simp only [errorSyndromePF, one_smul, neg_one_smul]
+  exact ⟨⟨stab_X1X2_fixes_logicalPF a b, stab_X2X3_fixes_logicalPF a b⟩,
+    syndromePF_Z1 a b, syndromePF_Z2 a b, syndromePF_Z3 a b⟩
+
 /-- **The three-qubit phase-flip code corrects any single phase flip.** Hadamard dual of
-`three_qubit_corrects_single_bitflip`. **This capstone bundles** the stabiliser-fixing and
-the self-inverse-recovery ingredients; the **identifiability** ingredient (the four errors
-give distinct syndromes) is the separate `syndromePF_*` lemmas above, not part of this
-theorem's conjunction — read them together for the full correction claim. -/
+`three_qubit_corrects_single_bitflip`. **This capstone now bundles all three ingredients:**
+stabiliser-fixing; **identifiability** — the four errors `{I, Z₁, Z₂, Z₃}` give the distinct
+syndromes `(+,+), (−,+), (−,−), (+,−)` (`three_qubit_phaseflip_syndromes_distinct`; the
+eigen-equation form is `three_qubit_phaseflip_syndrome_eigenstates`); and self-inverse
+recovery. -/
 theorem three_qubit_corrects_single_phaseflip (a b : ℂ) :
     (Matrix.toEuclideanLin X1X2 (logicalPF a b) = logicalPF a b
       ∧ Matrix.toEuclideanLin X2X3 (logicalPF a b) = logicalPF a b)
+    ∧ Function.Injective errorSyndromePF
     ∧ (Matrix.toEuclideanLin Z1 (Matrix.toEuclideanLin Z1 (logicalPF a b)) = logicalPF a b
       ∧ Matrix.toEuclideanLin Z2 (Matrix.toEuclideanLin Z2 (logicalPF a b)) = logicalPF a b
       ∧ Matrix.toEuclideanLin Z3 (Matrix.toEuclideanLin Z3 (logicalPF a b)) = logicalPF a b) :=
-  ⟨⟨stab_X1X2_fixes_logicalPF a b, stab_X2X3_fixes_logicalPF a b⟩, phaseflip_recovers a b⟩
+  ⟨⟨stab_X1X2_fixes_logicalPF a b, stab_X2X3_fixes_logicalPF a b⟩,
+    three_qubit_phaseflip_syndromes_distinct, phaseflip_recovers a b⟩
 
 end QEC
 end QM

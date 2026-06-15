@@ -217,21 +217,82 @@ lemma bitflip_recovers (a b : ℂ) :
   · rw [← tel_mul, X2_mul_X2, tel_one]
   · rw [← tel_mul, X3_mul_X3, tel_one]
 
+/-! ### Identifiability: the four syndromes are pairwise distinct -/
+
+/-- The **syndrome** of an error, as the eigenvalue sign-pair `(s₁, s₂) ∈ {±1}²` of the
+stabilisers `(Z₁Z₂, Z₂Z₃)` on the errored codeword. Indexed by `Fin 4` for the error set
+`{I, X₁, X₂, X₃}`. The values `I → (+,+)`, `X₁ → (−,+)`, `X₂ → (−,−)`, `X₃ → (+,−)` are read
+off `stab_*_fixes_logical` / `syndrome_X*` (the eigenvalues live in `ℂ`, the scalar field of
+the code space). -/
+def errorSyndrome : Fin 4 → ℂ × ℂ
+  | 0 => (1, 1)     -- I
+  | 1 => (-1, 1)    -- X₁
+  | 2 => (-1, -1)   -- X₂
+  | 3 => (1, -1)    -- X₃
+
+/-- **Identifiability (the load-bearing QEC ingredient): the four error syndromes are
+pairwise distinct.** Equivalently `errorSyndrome` is injective on `{I, X₁, X₂, X₃}`. Since the
+four `{±1}²` sign-pairs are literally distinct, measuring `(Z₁Z₂, Z₂Z₃)` pins down which of
+the four errors occurred. This is the content that makes the stabiliser eigenvalues a usable
+*syndrome* rather than merely an eigen-equation. -/
+theorem three_qubit_syndromes_distinct : Function.Injective errorSyndrome := by
+  intro i j hij
+  fin_cases i <;> fin_cases j <;>
+    first
+      | rfl
+      | (exfalso; simp only [errorSyndrome, Prod.mk.injEq] at hij; norm_num at hij)
+
+/-- **The four errored codewords are simultaneous stabiliser eigenstates carrying their
+syndrome**, in eigen-equation form: `I` is fixed (`(+,+)`); `X₁, X₂, X₃` carry the eigenvalue
+pairs `(−,+), (−,−), (+,−)`. This is the eigenstate content underlying `errorSyndrome`; it
+repackages `stab_*_fixes_logical` and `syndrome_X*` so that `three_qubit_syndromes_distinct`
+(distinctness of the `±1` pairs) is the identifiability statement. -/
+theorem three_qubit_syndrome_eigenstates (a b : ℂ) :
+    -- I : syndrome (+,+)
+    (Matrix.toEuclideanLin Z1Z2 (logical a b) = (errorSyndrome 0).1 • logical a b
+      ∧ Matrix.toEuclideanLin Z2Z3 (logical a b) = (errorSyndrome 0).2 • logical a b)
+    -- X₁ : syndrome (−,+)
+    ∧ (Matrix.toEuclideanLin Z1Z2 (Matrix.toEuclideanLin X1 (logical a b))
+        = (errorSyndrome 1).1 • Matrix.toEuclideanLin X1 (logical a b)
+      ∧ Matrix.toEuclideanLin Z2Z3 (Matrix.toEuclideanLin X1 (logical a b))
+        = (errorSyndrome 1).2 • Matrix.toEuclideanLin X1 (logical a b))
+    -- X₂ : syndrome (−,−)
+    ∧ (Matrix.toEuclideanLin Z1Z2 (Matrix.toEuclideanLin X2 (logical a b))
+        = (errorSyndrome 2).1 • Matrix.toEuclideanLin X2 (logical a b)
+      ∧ Matrix.toEuclideanLin Z2Z3 (Matrix.toEuclideanLin X2 (logical a b))
+        = (errorSyndrome 2).2 • Matrix.toEuclideanLin X2 (logical a b))
+    -- X₃ : syndrome (+,−)
+    ∧ (Matrix.toEuclideanLin Z1Z2 (Matrix.toEuclideanLin X3 (logical a b))
+        = (errorSyndrome 3).1 • Matrix.toEuclideanLin X3 (logical a b)
+      ∧ Matrix.toEuclideanLin Z2Z3 (Matrix.toEuclideanLin X3 (logical a b))
+        = (errorSyndrome 3).2 • Matrix.toEuclideanLin X3 (logical a b)) := by
+  simp only [errorSyndrome, one_smul, neg_one_smul]
+  exact ⟨⟨stab_Z1Z2_fixes_logical a b, stab_Z2Z3_fixes_logical a b⟩,
+    syndrome_X1 a b, syndrome_X2 a b, syndrome_X3 a b⟩
+
+/-- The eigenvalue sign-pair carried by `three_qubit_syndrome_eigenstates` for error index
+`k` agrees with `errorSyndrome k` (the `±1` entries are the stabiliser eigenvalues). -/
+theorem errorSyndrome_eq :
+    errorSyndrome 0 = (1, 1) ∧ errorSyndrome 1 = (-1, 1)
+      ∧ errorSyndrome 2 = (-1, -1) ∧ errorSyndrome 3 = (1, -1) :=
+  ⟨rfl, rfl, rfl, rfl⟩
+
 /-- **The three-qubit bit-flip code corrects any single bit-flip.** For the encoded state
-`ψ_L = a|000⟩ + b|111⟩`. **This capstone bundles two of the three ingredients:** (i) the
-stabilisers `Z₁Z₂, Z₂Z₃` fix the codespace, and (iii) each error `Xⱼ` is self-inverse, so
-re-applying the identified error restores `ψ_L`. The load-bearing **identifiability**
-ingredient (ii) — that the four errors `{I, X₁, X₂, X₃}` give the **distinct syndromes**
-`(+,+), (−,+), (−,−), (+,−)`, so measurement pins down which error occurred — is the
-separate `syndrome_X1` / `syndrome_X2` / `syndrome_X3` lemmas above (not part of this
-theorem's conjunction). Read the three together for the full correction claim. -/
+`ψ_L = a|000⟩ + b|111⟩`. **This capstone now bundles all three ingredients:** (i) the
+stabilisers `Z₁Z₂, Z₂Z₃` fix the codespace; (ii) **identifiability** — the four errors
+`{I, X₁, X₂, X₃}` give the **distinct syndromes** `(+,+), (−,+), (−,−), (+,−)`
+(`three_qubit_syndromes_distinct`), so measuring `(Z₁Z₂, Z₂Z₃)` pins down which error
+occurred (the eigen-equation form is `three_qubit_syndrome_eigenstates`); and (iii) each
+error `Xⱼ` is self-inverse, so re-applying the identified error restores `ψ_L`. -/
 theorem three_qubit_corrects_single_bitflip (a b : ℂ) :
     (Matrix.toEuclideanLin Z1Z2 (logical a b) = logical a b
       ∧ Matrix.toEuclideanLin Z2Z3 (logical a b) = logical a b)
+    ∧ Function.Injective errorSyndrome
     ∧ (Matrix.toEuclideanLin X1 (Matrix.toEuclideanLin X1 (logical a b)) = logical a b
       ∧ Matrix.toEuclideanLin X2 (Matrix.toEuclideanLin X2 (logical a b)) = logical a b
       ∧ Matrix.toEuclideanLin X3 (Matrix.toEuclideanLin X3 (logical a b)) = logical a b) :=
-  ⟨⟨stab_Z1Z2_fixes_logical a b, stab_Z2Z3_fixes_logical a b⟩, bitflip_recovers a b⟩
+  ⟨⟨stab_Z1Z2_fixes_logical a b, stab_Z2Z3_fixes_logical a b⟩,
+    three_qubit_syndromes_distinct, bitflip_recovers a b⟩
 
 end QEC
 end QM

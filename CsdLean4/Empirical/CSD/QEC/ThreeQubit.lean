@@ -97,6 +97,7 @@ theorem csd_three_qubit_corrects_single_bitflip
         = CSD.Empirical.QM.QEC.logical a b
       ∧ Matrix.toEuclideanLin CSD.Empirical.QM.QEC.Z2Z3 (CSD.Empirical.QM.QEC.logical a b)
         = CSD.Empirical.QM.QEC.logical a b)
+    ∧ Function.Injective CSD.Empirical.QM.QEC.errorSyndrome
     ∧ (Matrix.toEuclideanLin CSD.Empirical.QM.QEC.X1
           (Matrix.toEuclideanLin CSD.Empirical.QM.QEC.X1 (CSD.Empirical.QM.QEC.logical a b))
         = CSD.Empirical.QM.QEC.logical a b

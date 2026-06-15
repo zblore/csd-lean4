@@ -128,14 +128,32 @@ genuine SLLN.
   separate `syndrome_*` lemmas (read together for the full claim).
 - `LF1/Indicators.lean` forward-reference to `T.trialMeasure` (defined downstream) clarified.
 
-**Deferred to follow-up content tranches (the auditors offered "strengthen the theorem"
-alternatives; logged, not done — these add Lean content, out of a doc-currency sweep's
-scope):** add `obsFlow_ne_id` (witness the `Φ ≠ id` claim, mirroring `kFlow_ne_id`); bundle
-the `syndrome_*` distinctness into the QEC capstones (or formally designate the syndrome
-lemmas the load-bearing export); add `Gᴴ * G = 1` unitarity lemmas for the gates. Plus the
-sweep-1+2 upstream-prep hygiene list above (deprecated API, blanket linter disables, `@[simp]`
-unfolders, naming `PsiN`/`Tpi`, `ObservableFlow.lean:78` deprecated `toEuclideanLin_apply`).
-None affect soundness.
+**Follow-up content tranches — DONE 2026-06-15.** The three "strengthen the witness"
+items the auditors offered are now proved theorems (and the corresponding sweep docstring
+caveats reverted in the same change):
+
+1. `obsFlow_ne_id` (`LF4/ObservableFlow.lean`): the `Φ ≠ id` claim is now separately
+   witnessed, mirroring `kFlow_ne_id`. Because `obsFlow` is a *diagonal phase* flow every
+   computational-basis ray is a fixed eigenvector, so the witness is the **superposition**
+   `|0⟩+|1⟩` ray (`obsWitnessVec`), moved by the distinct phases `1`, `-1` at
+   `obsLamWitness`/`obsTWitness` (`= π`). Foundational-triple-only, AxiomAudit-pinned.
+2. QEC identifiability: `errorSyndrome`/`errorSyndromePF : Fin 4 → ℂ × ℂ` +
+   `three_qubit_syndromes_distinct` / `three_qubit_phaseflip_syndromes_distinct`
+   (`Function.Injective`, the four `{±1}²` pairs distinct) + eigen-equation bundles
+   (`three_qubit_syndrome_eigenstates`, `..._phaseflip_...`). The identifiability conjunct
+   `Function.Injective errorSyndrome[PF]` is now **inside** both `three_qubit_corrects_*`
+   capstones (and the CSD bridge `csd_three_qubit_corrects_single_bitflip`). Capstone names
+   preserved; pins still fire.
+3. Gate unitarity: `qm{CNOT,SWAP,CZ}_unitary` (TwoQubit) and `qm{Toffoli,Fredkin}_unitary`
+   (MultiQubit), each `Gᴴ * G = 1` via a proved Hermiticity lemma `qmG_hermitian` (`Gᴴ = G`,
+   genuine — CZ has a real `-1` diagonal entry) composed with the existing involutivity.
+   AxiomAudit-pinned.
+
+Both build targets green; all new theorems foundational-triple-only.
+
+**Remaining sweep-1+2 upstream-prep hygiene (not done; out of scope):** deprecated API,
+blanket linter disables, `@[simp]` unfolders, naming `PsiN`/`Tpi`,
+`ObservableFlow.lean` deprecated `toEuclideanLin_apply`. None affect soundness.
 
 ## External review intake: codex, 2026-06-11 (triaged same day)
 
