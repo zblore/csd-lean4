@@ -631,6 +631,19 @@ PointerOutcome.lean    — the per-microstate outcome map (LF5-F): vnPointerOutc
                          measurement_flow_outcome_frequency (conjunct-(5) upgrade:
                          a single union event per pointer, not a sum of cell
                          frequencies) + _canonical
+SyndromeFlow.lean      — LF5-G (2026-06-15): the 3-qubit bit-flip code's SYNDROME
+                         readout as a coarse-grained de-isolation flow. Stabilisers
+                         Z₁Z₂,Z₂Z₃ are computational-basis-diagonal ⟹ syndrome =
+                         fixed synClass : Fin 8 → Fin 4, so Φ_syn = measurementFlow 8
+                         coarse-grained (8 pointer blocks → 4 syndrome blocks, no new
+                         dilation). syndromeRegion (ψ-independent block partition),
+                         syndromeRegion_fs_volume (block FS volume = syndromeWeight =
+                         block sum of FS volumes via vnDilation_pointer_volume),
+                         syndromeWeight_Xⱼ_logical (deterministic syndrome on block j),
+                         syndrome_recovery (transport of bitflip_recovers); headline
+                         syndrome_flow_born_volume. Projective/coherent-error tier:
+                         Born numbers reused, A5 posited, decoherence/partial-trace
+                         (system→env volume loss) gated on the entangled tier
 ```
 
 The engine half of LF5-F lives in `LF4/BornRegionDisjoint.lean`:
@@ -649,8 +662,15 @@ LF5-F (2026-06-14) discharges the per-microstate outcome *function*
 on `bornRegion` pairwise disjointness, upgrading the capstone's conjunct (5) from
 outcome *statistics* (a sum of cell frequencies) to a single union event per
 pointer; the cell *shapes* remain ψ'-dependent (engine realisation, measures
-forced by Kähler geometry). Remaining D1 strata: entangled / non-local
-de-isolation (Bell forces non-locality), the A5 sector origin, and the concrete
+forced by Kähler geometry). **LF5-G (2026-06-15, `SyndromeFlow.lean`)** is the first
+*structured-measurement* application: the 3-qubit bit-flip code's syndrome readout as a
+coarse-grained de-isolation flow (the stabilisers are computational-basis-diagonal, so the
+syndrome is a fixed `synClass : Fin 8 → Fin 4` and `Φ_syn` is `measurementFlow 8`
+coarse-grained), syndrome-block FS volume = syndrome Born weight, with the deterministic
+codeword syndrome + recovery. Still the projective / coherent-error tier: the decoherence
+(system→environment volume-loss / partial-trace) origin of QEC stays gated on the entangled
+tier. Remaining D1 strata: entangled / non-local de-isolation (Bell forces non-locality),
+the decoherence/partial-trace error model, the A5 sector origin, and the concrete
 `SectorData` instances (which still carry `Φ = id`). All LF5 results are
 foundational-triple-only and AxiomAudit-pinned.
 

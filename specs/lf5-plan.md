@@ -1,6 +1,7 @@
 # LF5 — measurement dynamics on Σ (the D1 frontier), staged plan
 
-**STATUS: COMPLETE 2026-06-11; LF5-F post-plan extension DONE 2026-06-14.** LF5-A..E all DONE
+**STATUS: COMPLETE 2026-06-11; LF5-F post-plan extension DONE 2026-06-14; LF5-G (QEC syndrome
+flow) DONE 2026-06-15.** LF5-A..E all DONE
 (A 2026-06-09, B 2026-06-10, C/D/E 2026-06-11); layer headline `measurement_flow_born_frequency`
 (`CsdLean4/LF5/Capstone.lean`). **LF5-F (2026-06-14)**: bornRegion pairwise disjointness →
 the per-microstate outcome map `vnPointerOutcome` → the single-union-event outcome-frequency
@@ -241,6 +242,45 @@ in the static `SectorData` instances (the LF5 flow `Φ_vN ≠ id` is on `Σ'`); 
 Foundational-triple-only, 7 new AxiomAudit pins (`bornRegion_pairwiseDisjoint`,
 `bornOutcome_preimage_some`, `bornOutcome_ae_isSome`, `vnPointerOutcome_preimage_some`,
 `measurement_flow_outcome_frequency`, `_canonical`, `block_born_frequency_volume_event`).
+
+### LF5-G — QEC syndrome readout as a coarse-grained de-isolation flow  [post-plan extension; pure reuse] — **DONE 2026-06-15** (`CsdLean4/LF5/SyndromeFlow.lean`)
+The first *structured-measurement* application of the LF5 engine: the three-qubit bit-flip
+code's syndrome measurement, realised dynamically. **Key reuse insight:** the stabilisers
+`Z₁Z₂, Z₂Z₃` are diagonal in the computational basis, so the syndrome is a fixed function
+`synClass : Fin 8 → Fin 4` of the Z-bitstring — the syndrome measurement is a *coarse-graining*
+of the LF5 `N = 8` computational-basis de-isolation flow, the 8 pointer blocks merged into 4
+syndrome blocks. No new dilation. Delivered:
+
+- **Stratum 1 (syndrome statistics as Kähler volumes):** `synClass`/`synClass3` (parity
+  classifier matched to `errorSyndrome`), `synClass_fiber_card = 2` (genuine 4-partition of the
+  8 outcomes); `syndromeWeight ψ s = ∑_{x∈class s} ‖ψ_x‖²` (`syndromeWeight_eq_pointer_sum`);
+  `synCellIndex`/`syndromeRegion` (the **ψ-independent** syndrome-block = union of pointer-`i`
+  blocks over `i ∈ class s` — pre-registered tripwire, audited clean); `syndromeRegion_fs_volume`
+  (FS volume of the syndrome block = `syndromeWeight ψ s`, via `measure_biUnion_finset` over the
+  disjoint `bornRegion` cells + `vnDilation_pointer_volume`) and `syndromeWeight_eq_fs_volume_sum`
+  (= block sum of computational-basis FS volumes). The flow `Φ_syn := measurementFlow 8 e` is
+  `Φ ≠ id` and FS-measure-preserving, inherited directly.
+- **Stratum 2 (codeword + recovery):** `syndromeWeight_X1/X2/X3_logical` — deterministic syndrome
+  (the error `Xⱼ` on `logical a b` concentrates the weight on block `j`, live `‖a‖²+‖b‖²`, from the
+  flipped supports `{100,011}`/`{010,101}`/`{001,110}`); `syndrome_recovery` (matrix transport of
+  `bitflip_recovers`).
+- **headline** `syndrome_flow_born_volume`: `Φ_syn ≠ id` ∧ FS-preserving ∧ (∀ unit ψ, ∀ s,
+  syndrome-block FS volume = `syndromeWeight` = block sum of FS volumes) ∧ (codeword: deterministic
+  `X₁` syndrome weight + recovery). Foundational-triple-only, 5 new AxiomAudit pins. Audited SOUND
+  (tripwire clean, non-vacuous); one Minor (codeword *volume* reading not bundled into the headline,
+  only the weight statistic + matrix recovery — derivable by instantiating `syndromeRegion_fs_volume`
+  at the unit errored codeword) fixed in the docstrings in-commit.
+
+**Honest scope (explicit).** This is the **projective / coherent-error** half of the CSD ontic
+reading of QEC: the syndrome READOUT is realised as a deterministic measure-preserving flow whose
+block volumes are the syndrome Born weights. The Born *numbers* are reused from the FS-volume
+engine (not re-derived); the recovery-correctness is a transport of the matrix fact; A5 (FS
+typicality on the dilated sector) is posited. **NOT here, gated on the entangled tier:** the
+genuinely-physical error is decoherence (system→environment entanglement), whose "volume loss" is
+the partial-trace step — that needs `Σ_env`, the joint Liouville flow, and partial trace (the K2
+channel infrastructure now exists; partial trace on `Σ` + the non-local de-isolation map do not).
+The `Empirical/CSD/QEC/ThreeQubit.lean` docstring was updated in the same commit to reflect this
+(the stale "CPTP channels not yet built" claim corrected; channels = K2 done).
 
 ## 3. What this closes, honestly
 

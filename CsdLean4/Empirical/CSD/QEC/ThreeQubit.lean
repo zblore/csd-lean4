@@ -33,12 +33,22 @@ it right is what makes QEC the corpus's sharpest pointer at the dynamics layer.
   Born-from-volume result at `N = 8`): "syndrome statistics as Kähler volumes."
 
 So the honest ontic statement of QEC needs the environment `Σ_env`, the joint Liouville
-flow, and partial trace — i.e. **CPTP channels** (the QI-infrastructure keystone, not yet
-built). The error model *is* a channel and the "volume loss" *is* the partial-trace step.
-The theorem below is therefore a **transport** of the discretised correctness statement; the
+flow, and partial trace. The **CPTP-channel** half of that infrastructure now exists
+(`Mathlib/QuantumInfo/{Channel, Stinespring, CanonicalChannels, DataProcessing}.lean` +
+`QM/QEC/BitFlipChannel.lean`; the K2 keystone); the error model *is* one of these channels.
+What remains specifically missing is **partial trace on `Σ`** (the origin of the "volume
+loss", system→environment) and the **entangled joint flow on `Σ_sys × Σ_env`** — i.e. the
+non-local de-isolation tier of the dynamical-origin (`Φ ≠ id`) layer, still open (D1). The
+theorem below is therefore a **transport** of the discretised correctness statement; the
 genuinely-ontic content (decoherence as system→environment volume flow, syndrome as the
-recovery of that volume) is the load-bearing realisability obligation, gated on channels +
-the dynamical-origin (`Φ ≠ id`) layer, and not proved here.
+recovery of that volume) is the load-bearing realisability obligation, gated on the
+partial-trace + entangled-flow residue, and not proved here.
+
+The *projective* half of the ontic reading is, by contrast, reachable now: the syndrome
+measurement is a projection onto orthogonal stabiliser-eigenvalue sectors, so its weights
+are block sums of Fubini–Study volumes (the `N = 8` Born-from-volume engine) and it admits
+an LF5-style de-isolation flow `Φ_syn ≠ id`. That coherent-error realisation is the
+`LF5/SyndromeFlow.lean` tranche; only the decoherence/partial-trace origin above stays gated.
 
 ## Source
 
@@ -67,11 +77,15 @@ flow, Liouville-conserved on the joint `Σ_sys × Σ_env`), the syndrome measure
 the environment's record and re-concentrates the system, and recovery is the unitary return
 to the codespace.
 
-**Status: load-bearing, externally supplied, undischarged.** The ontic realisation needs
-`Σ_env`, the joint Liouville flow, and partial trace — i.e. CPTP channels — plus the
-dynamical-origin (`Φ ≠ id`) layer that is `id` in every concrete instance today. The error
-model *is* a channel and the "volume loss" *is* the partial-trace step. See the module
-docstring, `BRIDGE-OBLIGATIONS.md`, and `PLACEHOLDERS.md §7`. -/
+**Status: load-bearing, externally supplied, undischarged.** The full ontic realisation
+needs `Σ_env`, the joint Liouville flow on `Σ_sys × Σ_env`, and partial trace. The
+CPTP-channel infrastructure now exists (K2: `Mathlib/QuantumInfo/Channel.lean` et al.); the
+error model *is* a channel and the "volume loss" *is* the partial-trace step. What stays
+gated is partial trace on `Σ` and the entangled joint flow (the non-local de-isolation tier
+of the `Φ ≠ id` layer, `id` in every concrete instance today). The *projective* syndrome
+half (orthogonal sectors, block-FS-volume weights, an LF5 flow `Φ_syn ≠ id`) is reachable
+now and built in `LF5/SyndromeFlow.lean`. See the module docstring, `BRIDGE-OBLIGATIONS.md`,
+and `PLACEHOLDERS.md §7`. -/
 structure CSDThreeQubitBundle (D : CSD.LF2.SectorData SigmaSpace P G)
   extends CSD.Empirical.CSDBridge.Context D
 

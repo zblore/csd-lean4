@@ -69,6 +69,7 @@ import CsdLean4.LF5.FlowBornFrequency
 import CsdLean4.LF5.Capstone
 import CsdLean4.LF5.CapstoneCanonical
 import CsdLean4.LF5.PointerOutcome
+import CsdLean4.LF5.SyndromeFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2608,6 +2609,36 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.measurement_flow_outcome_frequency_canonical
+
+-- LF5 QEC tranche (SyndromeFlow): the three-qubit bit-flip code's syndrome
+-- measurement as a coarse-grained de-isolation flow. The stabilisers Z₁Z₂, Z₂Z₃
+-- are diagonal in the computational basis, so the syndrome is a coarse-graining
+-- (synClass) of the LF5 N=8 Z-basis measurement flow; the syndrome-block FS
+-- volume equals the block sum of computational-basis Born weights = a sum of
+-- Fubini–Study volumes (vnDilation_pointer_volume at N=8 + finite additivity);
+-- the codeword corollary gives the deterministic syndrome + matrix-transport
+-- recovery. Projective / coherent-error tier only; Born numbers reused from the
+-- FS-volume engine; A5 posited; decoherence/partial-trace NOT here (gated
+-- entangled tier). Foundational triple only.
+/-- info: 'CSD.LF5.synClass_fiber_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.synClass_fiber_card
+
+/-- info: 'CSD.LF5.syndromeRegion_fs_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndromeRegion_fs_volume
+
+/-- info: 'CSD.LF5.syndromeWeight_eq_fs_volume_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndromeWeight_eq_fs_volume_sum
+
+/-- info: 'CSD.LF5.syndromeWeight_X1_logical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndromeWeight_X1_logical
+
+/-- info: 'CSD.LF5.syndrome_flow_born_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndrome_flow_born_volume
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,
