@@ -115,5 +115,41 @@ theorem born_frequency_convergence_N_canonical (p₀ : CPN (M + 1))
     (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ hψ0)
       (bornRegion_measurable_uncond ψ hψ0))
 
+open CSD.LF2 in
+/-- **POVM Born-frequency convergence on the canonical i.i.d. FS process (P.4).**
+`povm_born_frequency_volume` with the trial bundle discharged by the canonical
+witness on the dilated sector `Σ' = ℂℙ^{N·|ι|−1}`: the statement quantifies only
+over `(P, D, ψ, e, ψ', hψ'eq, hψ'0, hnorm, hpos, p₀)`. The conclusion is verbatim
+the original's with `Pr := fsTrialMeasure p₀`, `X := fsTrial (M + 1)`. The region
+family is the dilated-state `bornRegion ψ' hψ'0` (measurability via
+`bornRegion_measurable_uncond`). Foundational-triple-only, Gleason-free.
+
+(This canonical form lives here, not in `POVMVolume.lean`, because the
+import chain runs `POVMVolume → BornRegionUncond → TrialWitness`; placing it
+upstream would create a cycle.) -/
+theorem povm_born_frequency_volume_canonical
+    {ι : Type*} [Fintype ι] [DecidableEq ι] {M : ℕ}
+    (P : POVM N ι) (D : NaimarkDilation P)
+    (ψ : EuclideanSpace ℂ (Fin N)) (e : (Fin N × ι) ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
+    (hpos : ∀ j : Fin (M + 1), 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ'‖ ^ 2)
+    (p₀ : CPN (M + 1)) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : ι,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ n : Fin N,
+            (∑ k ∈ Finset.range m,
+                Set.indicator ((fsTrial (M + 1) k) ⁻¹' bornRegion ψ' hψ'0 (e (n, i)))
+                  (fun _ => (1 : ℝ)) ω)
+              / (m : ℝ))
+        atTop
+        (nhds (P.weight ψ i)) :=
+  povm_born_frequency_volume P D ψ e ψ' hψ'eq hψ'0 hnorm hpos p₀
+    (fsTrial (M + 1)) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
+      (bornRegion_measurable_uncond ψ' hψ'0))
+
 end LF4
 end CSD

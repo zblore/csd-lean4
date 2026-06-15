@@ -115,6 +115,7 @@ import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.SIC3Volume
 import CsdLean4.Empirical.CSD.MUB3Volume
+import CsdLean4.Empirical.CSD.VolumeCanonical
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
@@ -2562,5 +2563,84 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.measurement_flow_outcome_frequency_canonical
+
+-- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
+-- previously wired into only three headlines (born_frequency_convergence_N,
+-- measurement_flow_born_frequency, measurement_flow_outcome_frequency), is now
+-- applied to EVERY remaining volume-frequency headline. Each _canonical form is
+-- a bare term-mode application of its parent with the abstract trial bundle
+-- discharged at the in-tree FS coordinate process (fsTrialMeasure / fsTrial):
+-- conclusions verbatim, hypothesis sets now Lean-inhabited rather than merely
+-- classically satisfiable. The LF4 POVM headline lives in TrialWitness.lean
+-- (import-direction constraint POVMVolume → BornRegionUncond → TrialWitness);
+-- the Empirical/CSD headlines are centralised in
+-- Empirical/CSD/VolumeCanonical.lean. Coverage/completeness, not new
+-- mathematics: measure-theoretic existence of the i.i.d. sampling law only; the
+-- physical FS-typical preparation reading remains the LF1 typicality / A5 posit.
+-- Foundational triple throughout; Gleason-free.
+
+/-- info: 'CSD.LF4.povm_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.BellVolume.bell_singlet_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.BellVolume.bell_singlet_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.GHZVolume.ghz_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.GHZVolume.ghz_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.HardyVolume.hardy_max_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.HardyVolume.hardy_max_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.MalusVolume.csd_malus_law_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MalusVolume.csd_malus_law_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_certain_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_certain_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_half_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlachVolume.csd_sg_volume_half_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.TrineVolume.trine_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.TrineVolume.trine_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.USDVolume.usd_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.USDVolume.usd_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.MUB3Volume.mub3_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MUB3Volume.mub3_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QutritPOVMVolume.noisy_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume_event_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume_event_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical
 
 end CSD.Tests.AxiomAudit

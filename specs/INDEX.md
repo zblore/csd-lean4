@@ -72,7 +72,12 @@ volume capstones are now genericity-free, boundary preparations included). **LF5
 adds the per-microstate outcome map** — `bornRegion_pairwiseDisjoint` (the moment-subdivision is a
 genuine partition) → `vnPointerOutcome` (deterministic, total off an FS-null set, measurable
 fibres) → `measurement_flow_outcome_frequency` (the conjunct-(5) upgrade to a single union event
-per pointer); the outcome-function caveat owed since `aeece86` is discharged. The **open frontier is
+per pointer); the outcome-function caveat owed since `aeece86` is discharged. The **canonical i.i.d.
+trial witness** (`LF4/TrialWitness.lean`, 2026-06-11) inhabits the abstract trial bundle
+`(Ω, Pr, X, hX, hlaw, hindep)` at the in-tree FS coordinate process; as of **2026-06-15** every
+volume-frequency headline (the LF4 POVM engine plus all fifteen Empirical/CSD headlines, centralised
+in `Empirical/CSD/VolumeCanonical.lean`) has a `_canonical` corollary discharging that bundle,
+conclusions verbatim — so none is left merely classically-satisfiable. The **open frontier is
 D1's deeper strata** (entangled/non-local de-isolation; the A5 sector origin; the concrete
 `SectorData` instances still carry `Φ = id` — see `carve-out-plan.md` §6). Axiom posture is
 regression-protected by

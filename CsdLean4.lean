@@ -152,6 +152,7 @@ import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.SIC3Volume
 import CsdLean4.Empirical.CSD.MUB3Volume
+import CsdLean4.Empirical.CSD.VolumeCanonical
 import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
 import CsdLean4.Empirical.CSD.Resources.Teleportation
 import CsdLean4.Empirical.CSD.Crypto.QuantumMoney

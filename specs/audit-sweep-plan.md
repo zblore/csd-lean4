@@ -102,6 +102,22 @@ commit; verification details in the session record):
    `measurement_flow_born_frequency_canonical` (`LF5/CapstoneCanonical.lean`)
    state the volume-frequency capstones with the bundle discharged,
    conclusions verbatim. AxiomAudit-pinned, foundational-triple-only.
+   *Canonical coverage completed 2026-06-15:* the witness is now wired into
+   **every** remaining volume-frequency headline, not just the three above.
+   `povm_born_frequency_volume_canonical` (in `LF4/TrialWitness.lean`, kept there
+   to respect the `POVMVolume → BornRegionUncond → TrialWitness` import
+   direction) plus the fifteen Empirical/CSD headlines (Bell, GHZ, Hardy, Malus,
+   the two Stern-Gerlach, Trine, USD, SIC, SIC3, MUB3, QutritPOVM, and the three
+   Context forms) centralised in `Empirical/CSD/VolumeCanonical.lean`. Each is a
+   bare term-mode application of its parent with the bundle discharged at
+   `fsTrialMeasure`/`fsTrial`; conclusions verbatim, AxiomAudit-pinned,
+   foundational-triple-only. The qubit moment-sublevel parents (Malus, SG) take
+   their region family via a `Unit`-indexed family with measurability
+   `(momentMap_measurable 0) measurableSet_Iic`; all others use
+   `bornRegion_measurable_uncond`. No volume-frequency headline is left merely
+   classically-satisfiable. (The `block_born_frequency_volume` sum form is
+   superseded by `block_born_frequency_volume_event_canonical` for the canonical
+   purpose; its own `_canonical` is intentionally omitted.)
 4. **`CsdLean4.Basic` API invariant broken (Medium).** *Classification: agreed,
    genuine defect.* Fixed: `Basic.lean` now imports the root module `CsdLean4`
    (verified acyclic — nothing imports `Basic`), so the documented

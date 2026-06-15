@@ -142,6 +142,19 @@ amplitudes — eigenstates of the measured context, the Mermin GHZ points `Φ = 
 aligned Bell analysers `θ = 0, π` — are covered (their cells are FS-null with
 frequencies converging to `0`).
 
+Since 2026-06-15, **every** volume-frequency headline in this table has a
+`_canonical` corollary (`Empirical/CSD/VolumeCanonical.lean`, plus
+`povm_born_frequency_volume_canonical` in `LF4/TrialWitness.lean` for the POVM
+engine) that discharges the abstract i.i.d. trial bundle
+`(Ω, Pr, X, hX, hlaw, hindep)` at the in-tree Fubini-Study coordinate process
+(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`,
+`fsTrial N n = (· n)`). The hypothesis sets are therefore **Lean-inhabited**, not
+merely classically satisfiable; each `_canonical` conclusion is its parent's
+verbatim under `Pr := fsTrialMeasure p₀`, `X := fsTrial _`. This is
+coverage/completeness (the witness already existed): measure-theoretic existence
+of the sampling law only; the physical FS-typical repeated-preparation reading
+remains the LF1 typicality / A5 posit.
+
 | Test | File | Headline theorem(s) | Derived value |
 |---|---|---|---|
 | Stern-Gerlach | `SternGerlachVolume.lean` | `csd_sg_volume_certain`, `csd_sg_volume_half` | `P(↑\|ẑ)→1`, `P(↑\|x̂)→1/2` |
