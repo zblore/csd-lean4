@@ -51,7 +51,7 @@ lemma pX_mul_pZ : pX * pZ = - (pZ * pX) := by rw [pZ_mul_pX]; exact (neg_neg _).
   rw [Z1, kron3_mul, pZ_mul_pZ]; simp only [mul_one, kron3, Matrix.one_kronecker_one]
 
 @[simp] lemma Z2_mul_Z2 : Z2 * Z2 = 1 := by
-  rw [Z2, kron3_mul, pZ_mul_pZ]; simp only [mul_one, one_mul, kron3, Matrix.one_kronecker_one]
+  rw [Z2, kron3_mul, pZ_mul_pZ]; simp only [mul_one, kron3, Matrix.one_kronecker_one]
 
 @[simp] lemma Z3_mul_Z3 : Z3 * Z3 = 1 := by
   rw [Z3, kron3_mul, pZ_mul_pZ]; simp only [one_mul, kron3, Matrix.one_kronecker_one]
@@ -99,11 +99,11 @@ set_option maxHeartbeats 2000000 in
 lemma stab_X1X2_fixes_logicalPF (a b : ℂ) :
     Matrix.toEuclideanLin X1X2 (logicalPF a b) = logicalPF a b := by
   ext i
-  simp only [Matrix.toEuclideanLin_apply, logicalPF, lplus, lminus, paritySign, X1X2, kron3, pX,
+  simp only [Matrix.toLpLin_apply, logicalPF, lplus, lminus, paritySign, X1X2, kron3, pX,
     map_add, map_smul]
   fin_cases i <;>
     simp [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
-      EuclideanSpace.single, Matrix.kroneckerMap_apply, Matrix.one_apply, Fin.prod_univ_two,
+      EuclideanSpace.single, Matrix.kroneckerMap_apply, Matrix.one_apply,
       Prod.ext_iff] <;> ring
 
 set_option maxHeartbeats 2000000 in
@@ -111,11 +111,11 @@ set_option maxHeartbeats 2000000 in
 lemma stab_X2X3_fixes_logicalPF (a b : ℂ) :
     Matrix.toEuclideanLin X2X3 (logicalPF a b) = logicalPF a b := by
   ext i
-  simp only [Matrix.toEuclideanLin_apply, logicalPF, lplus, lminus, paritySign, X2X3, kron3, pX,
+  simp only [Matrix.toLpLin_apply, logicalPF, lplus, lminus, paritySign, X2X3, kron3, pX,
     map_add, map_smul]
   fin_cases i <;>
     simp [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
-      EuclideanSpace.single, Matrix.kroneckerMap_apply, Matrix.one_apply, Fin.prod_univ_two,
+      EuclideanSpace.single, Matrix.kroneckerMap_apply, Matrix.one_apply,
       Prod.ext_iff] <;> ring
 
 /-! ### Syndromes, recovery, and the correction theorem -/

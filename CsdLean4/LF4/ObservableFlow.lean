@@ -83,7 +83,7 @@ noncomputable def obsUnitary (lam : Fin N → ℝ) (t : ℝ) :
 lemma obsUnitary_toEuclideanLin_apply (lam : Fin N → ℝ) (t : ℝ)
     (v : EuclideanSpace ℂ (Fin N)) (i : Fin N) :
     (Matrix.toEuclideanLin (obsUnitary lam t).val v) i = obsPhase lam t i * v i := by
-  rw [obsUnitary_val, Matrix.toEuclideanLin_apply]
+  rw [obsUnitary_val, Matrix.toLpLin_apply]
   simp [Matrix.mulVec_diagonal]
 
 /-- The observable's flow is **norm-preserving** on the Hilbert space (it is unitary),
@@ -142,7 +142,7 @@ noncomputable def obsTWitness : ℝ := Real.pi
   have hl : obsLamWitness hN (obsIdx1 hN) = 1 := if_pos rfl
   simp only [obsPhase, obsTWitness, hl, mul_one]
   rw [show (Complex.I * ((Real.pi : ℝ) : ℂ)) = (Real.pi : ℂ) * Complex.I by
-        push_cast; ring,
+        ring,
     Complex.exp_pi_mul_I]
 
 /-- The `|0⟩ + |1⟩` superposition vector — a non-eigenvector of every diagonal phase
@@ -151,12 +151,12 @@ noncomputable def obsWitnessVec (hN : 1 < N) : EuclideanSpace ℂ (Fin N) :=
   EuclideanSpace.single (obsIdx0 hN) (1 : ℂ) + EuclideanSpace.single (obsIdx1 hN) (1 : ℂ)
 
 lemma obsWitnessVec_apply_zero (hN : 1 < N) : (obsWitnessVec hN) (obsIdx0 hN) = 1 := by
-  simp only [obsWitnessVec, PiLp.add_apply, EuclideanSpace.single_apply,
+  simp only [obsWitnessVec, PiLp.add_apply, PiLp.single_apply,
     if_neg (obsIdx0_ne_obsIdx1 hN), add_zero, if_true]
 
 lemma obsWitnessVec_apply_one (hN : 1 < N) :
     (obsWitnessVec hN) (obsIdx1 hN) = 1 := by
-  simp only [obsWitnessVec, PiLp.add_apply, EuclideanSpace.single_apply,
+  simp only [obsWitnessVec, PiLp.add_apply, PiLp.single_apply,
     if_neg (obsIdx0_ne_obsIdx1 hN).symm, zero_add, if_true]
 
 lemma obsWitnessVec_ne_zero (hN : 1 < N) : obsWitnessVec hN ≠ 0 := fun h => by

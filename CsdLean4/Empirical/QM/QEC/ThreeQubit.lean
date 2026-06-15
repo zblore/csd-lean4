@@ -53,10 +53,10 @@ def pX : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1; 1, 0]
 def pZ : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
 
 @[simp] lemma pX_mul_pX : pX * pX = 1 := by
-  simp [pX, Matrix.mul_fin_two]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply]
+  simp [pX]; ext i j; fin_cases i <;> fin_cases j <;> simp
 
 @[simp] lemma pZ_mul_pZ : pZ * pZ = 1 := by
-  simp [pZ, Matrix.mul_fin_two]; ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.one_apply]
+  simp [pZ]; ext i j; fin_cases i <;> fin_cases j <;> simp
 
 /-- The single-qubit anticommutation `ZX = −XZ` — the engine of every syndrome sign. -/
 lemma pZ_mul_pX : pZ * pX = - (pX * pZ) := by
@@ -92,7 +92,7 @@ lemma kron3_mul (M N P M' N' P' : Matrix (Fin 2) (Fin 2) ℂ) :
   rw [X1, kron3_mul, pX_mul_pX]; simp only [mul_one, kron3, Matrix.one_kronecker_one]
 
 @[simp] lemma X2_mul_X2 : X2 * X2 = 1 := by
-  rw [X2, kron3_mul, pX_mul_pX]; simp only [mul_one, one_mul, kron3, Matrix.one_kronecker_one]
+  rw [X2, kron3_mul, pX_mul_pX]; simp only [mul_one, kron3, Matrix.one_kronecker_one]
 
 @[simp] lemma X3_mul_X3 : X3 * X3 = 1 := by
   rw [X3, kron3_mul, pX_mul_pX]; simp only [one_mul, kron3, Matrix.one_kronecker_one]
@@ -146,31 +146,31 @@ noncomputable def logical (a b : ℂ) : H3 :=
 lemma stab_Z1Z2_fixes_logical (a b : ℂ) :
     Matrix.toEuclideanLin Z1Z2 (logical a b) = logical a b := by
   ext i
-  simp only [Matrix.toEuclideanLin_apply, logical, Z1Z2, kron3, pZ]
+  simp only [Matrix.toLpLin_apply, logical, Z1Z2, kron3, pZ]
   fin_cases i <;>
     simp [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
       EuclideanSpace.single, Matrix.kroneckerMap_apply, Matrix.one_apply,
-      Fin.prod_univ_two, Prod.ext_iff]
+      Prod.ext_iff]
 
 /-- `Z₂Z₃` fixes the codespace: `Z₂Z₃ · ψ_L = ψ_L`. -/
 lemma stab_Z2Z3_fixes_logical (a b : ℂ) :
     Matrix.toEuclideanLin Z2Z3 (logical a b) = logical a b := by
   ext i
-  simp only [Matrix.toEuclideanLin_apply, logical, Z2Z3, kron3, pZ]
+  simp only [Matrix.toLpLin_apply, logical, Z2Z3, kron3, pZ]
   fin_cases i <;>
     simp [Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
       EuclideanSpace.single, Matrix.kroneckerMap_apply, Matrix.one_apply,
-      Fin.prod_univ_two, Prod.ext_iff]
+      Prod.ext_iff]
 
 /-! ### Syndromes, recovery, and the correction theorem -/
 
 lemma tel_mul (M N : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ) (v : H3) :
     Matrix.toEuclideanLin (M * N) v
       = Matrix.toEuclideanLin M (Matrix.toEuclideanLin N v) := by
-  simp only [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp, Matrix.mulVec_mulVec]
+  simp only [Matrix.toLpLin_apply, Matrix.mulVec_mulVec]
 
 lemma tel_one (v : H3) : Matrix.toEuclideanLin 1 v = v := by
-  simp [Matrix.toEuclideanLin_apply]
+  simp
 
 lemma tel_neg (M : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ) (v : H3) :
     Matrix.toEuclideanLin (-M) v = - Matrix.toEuclideanLin M v := by

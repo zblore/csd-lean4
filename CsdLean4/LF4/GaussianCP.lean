@@ -57,7 +57,7 @@ noncomputable def coords :
       Matrix.cons_val_zero, Matrix.cons_val_one, ← Complex.normSq_eq_norm_sq, Complex.normSq_apply,
       Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im, Complex.I_re, Complex.I_im,
       Complex.ofReal_re, Complex.ofReal_im, Real.norm_eq_abs, sq_abs]
-    ring
+    ring_nf
 
 /-- **C2.** The standard Gaussian transported to `ℂ²` via the coordinate
 isometry. A probability measure on `ℂ²` (kept off the diamond-prone direct

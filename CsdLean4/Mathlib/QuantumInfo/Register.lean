@@ -36,7 +36,7 @@ noncomputable def basisState (x : Fin n → Fin 2) : QReg n := EuclideanSpace.si
 
 @[simp] lemma basisState_apply (x y : Fin n → Fin 2) :
     basisState x y = if y = x then 1 else 0 := by
-  rw [basisState, EuclideanSpace.single_apply]
+  rw [basisState, PiLp.single_apply]
 
 /-- The **Born probability** of measuring computational-basis outcome `z` in state `ψ`:
 `‖ψ z‖² = ‖⟨z|ψ⟩‖²`. -/
@@ -61,7 +61,7 @@ lemma sum_prob_eq_one {ψ : QReg n} (hψ : ‖ψ‖ = 1) : ∑ z, prob ψ z = 1 
   rw [← normSq_eq_sum_prob, hψ, one_pow]
 
 @[simp] lemma basisState_norm (x : Fin n → Fin 2) : ‖basisState x‖ = 1 := by
-  rw [basisState, EuclideanSpace.norm_single, norm_one]
+  rw [basisState, PiLp.norm_single, norm_one]
 
 /-- **A computational basis state is measured with certainty:** `prob |x⟩ z = [z = x]`. -/
 @[simp] lemma prob_basisState (x z : Fin n → Fin 2) :
