@@ -70,13 +70,13 @@ variable {N : ℕ}
     hypothesis tying their inner product with `ψ` to the singlet kernel
     `P_st`.
 
-    The Born identity `‖⟨ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t` is the
-    LF4-todo §2 (preparation ↔ Hilbert correspondence) + §7 (projective-
-    first outcomes) discharge target: at LF4 instantiation time, the
-    eigenstates are constructed from the spectral decomposition of the
-    joint spin projector `jointSpinProj`, and the Born identity falls
-    out of the rank-1 projector identity `jointSpinProj = |eig⟩⟨eig|`.
-    Pre-LF4 carries this as a structural hypothesis. -/
+    The Born identity `‖⟨ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t` is **proved
+    in-corpus for the singlet** as `Singlet.JointEig.singletJointEig_born`
+    (`‖⟨singlet, singletJointEig s t⟩‖² = P_st`, foundational-triple-only, via
+    the genuine spin computation `singlet_jointSpinProj_expectation`). The
+    bundle carries it as a hypothesis only because instantiation still needs
+    the mechanical `Fin 2 × 2 → Fin N` re-index wiring (an isometry transport;
+    LF4-todo §2/§7) — the physics is not owed, only the plumbing. -/
 structure MeasurementJointEig
     (ctx : MeasurementContext) (ψ : EuclideanSpace ℂ (Fin N)) where
   /-- The joint spin eigenstate at sector `(s, t)`. -/
@@ -88,9 +88,10 @@ structure MeasurementJointEig
       outcome regions. -/
   eig_distinct : ∀ s t s' t', (s, t) ≠ (s', t') → eig s t ≠ eig s' t'
   /-- **Born identity.** The squared inner product of `ψ` with the
-      `(s, t)` joint eigenstate equals the singlet kernel value. This is
-      the LF4-todo §2 + §7 discharge target carried as a hypothesis
-      pre-LF4. -/
+      `(s, t)` joint eigenstate equals the singlet kernel value. Proved
+      in-corpus for the singlet (`Singlet.JointEig.singletJointEig_born`);
+      carried here as a hypothesis pending only the `Fin 2 × 2 → Fin N`
+      re-index wiring at LF4 instantiation (LF4-todo §2 + §7). -/
   born_eq_P_st : ∀ s t, ‖inner ℂ ψ (eig s t)‖ ^ 2 = P_st ctx.a ctx.b s t
 
 namespace MeasurementJointEig

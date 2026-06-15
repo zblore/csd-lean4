@@ -263,9 +263,11 @@ finite family of (possibly rectangular) Kraus operators `K : ι → Matrix p m` 
 
 `traceLeft (∑ᵢ (K i ⊗ I) · M · (K i ⊗ I)ᴴ) = traceLeft M`.
 
-This is the **no-communication / no-signalling content for an arbitrary local CPTP map**:
-applying *any* channel (not just a unitary) on Alice's subsystem leaves Bob's reduced state
-`Tr_A` invariant. The Alice factors recombine through `∑ᵢ (K i)ᴴ (K i) = 1`; the two
+This is the **no-communication / no-signalling content for an arbitrary trace-preserving
+Kraus family** (a Kraus-sum object is automatically CP, so this covers any local channel):
+applying it on Alice's subsystem leaves Bob's reduced state `Tr_A` invariant. The
+load-bearing hypothesis is trace-preservation alone (`∑ᵢ (K i)ᴴ (K i) = 1`, used to
+recombine the Alice factors); complete positivity is not needed for the proof. The two
 Kronecker `I` factors pin the Bob indices. -/
 theorem traceLeft_sum_conjTranspose_kronecker_one
     {p ι : Type*} [Fintype p] [Fintype ι] {K : ι → Matrix p m R}

@@ -503,8 +503,8 @@ arithmetic. -/
 
 -- Trace distance foundation (Cat-1 staging; K3 of specs/qi-qec-roadmap.md). Trace norm
 -- = ∑|λᵢ| and trace distance ½‖ρ-σ‖₁; the distinguishability headline traceDist = 0 ↔ ρ=σ,
--- and traceNorm of a PSD operator = its trace. Foundational triple. (Data-processing deferred —
--- needs the variational characterisation absent from Mathlib.)
+-- and traceNorm of a PSD operator = its trace. Foundational triple. (K3 metric set + the
+-- data-processing inequality are both closed — see channel_traceDist_le pinned below.)
 /-- info: 'QuantumInfo.traceDist_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceDist_eq_zero_iff

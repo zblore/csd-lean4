@@ -45,11 +45,46 @@ skip rationale recorded here. This file carries the running ledger:
 
 | Sweep | Modules | Status |
 |---|---|---|
-| 1. Mathlib staging | `CsdLean4/Mathlib/**` | not started |
-| 2. LF2/LF3 support | `LF2/**`, `LF3/**` | not started |
+| 1. Mathlib staging | `CsdLean4/Mathlib/**` | **DONE 2026-06-15 — SOUND** (3 sub-sweeps: Projectivization, QuantumInfo, matrix/measure/prob) |
+| 2. LF2/LF3 support | `LF2/**`, `LF3/**` | **DONE 2026-06-15 — SOUND** (2 sub-sweeps) |
 | 3. LF4 non-headline | `LF4/**` (non-capstone) | not started |
 | 4. Empirical support + bridges | `Empirical/**` | not started |
 | 5. LF1 | `LF1/**` | not started |
+
+### Sweep 1+2 findings (2026-06-15) — all MINOR/NIT, zero BLOCKER/MAJOR
+
+Every audited module is mathematically SOUND: all headlines foundational-triple-only,
+`busch_effect_gleason` confined to the LF2 operational stratum (LF3 capstones independently
+verified Busch-free), the load-bearing `IIDCoordinateProcess` confirmed to genuinely inhabit
+the trial bundle (joint independence, degenerate-`μ` rejected, exact `hindep` shape), every
+LF2/LF3 structure non-vacuously inhabited and meaning its name. Findings were all
+docstring-honesty drift or upstream-bar hygiene.
+
+**Fixed this pass (docstring/comment honesty):**
+- Stale "realises the LF2 `invariant_measure_uniqueness` axiom" framing (removed 2026-06-04):
+  `Mathlib/.../Projectivization/Unitary.lean`, `FubiniStudyUnique.lean`.
+- Stale Busch-mediated chain description (capstones are Busch-free via `_direct` since
+  2026-06-02): `LF3/Interface.lean` (architecture block + chain diagram).
+- `born_eq_P_st` over-described as undischarged — it is **proved in-corpus** for the singlet
+  (`Singlet.JointEig.singletJointEig_born`); only the `Fin 2×2 → Fin N` re-index is deferred:
+  `LF3/SingletProjective.lean`, `BRIDGE-OBLIGATIONS.md §2.1`.
+- `Channel.lean` CP claim softened (CP justified-but-not-formalised; no consumer needs it).
+- `PartialTrace.lean` "arbitrary local CPTP map" → "trace-preserving Kraus family" (TP is the
+  load-bearing hypothesis; CP unused in the proof).
+- `LF2/MeasureBridge.lean` docstring named removed `epAction`/`onticAction` maps → `(g • ·)`.
+- `Tests/AxiomAudit.lean` stale "(Data-processing deferred)" comment → DP closed (pinned below).
+
+**Deferred to upstream-prep (Cat-1 staging hygiene; not fixed — logged for the eventual
+Mathlib PR, no soundness impact):** `Register.lean` two deprecated-API uses
+(`EuclideanSpace.single_apply`/`norm_single` → `PiLp.*`); `WignerRigidity.lean` dead `hf`
+on the `imageVec` family (2 linter warnings; file is the §13-paused crux, left untouched);
+blanket `set_option linter.unusedSectionVars false` in `Stinespring`/`CanonicalChannels`/
+`PartialTrace` (prefer `omit … in`); `@[simp]` on a few `_def`/projection unfolders
+(`Channel.apply_def`/`adjoint_def`, `PartialTrace.traceRight/Left_apply`,
+`EffectAux.scaledRankOneEffect_M`); `Lp/Matrix.lean` `ofLp_toEuclideanLin` unpinned. A
+recurring auditor recommendation (multiple sub-sweeps) is to verify the LF4 carving-honesty
+(`bornRegion` carved-vs-derived, `cp_measure_bridge`/`k_measure_bridge`,
+`ofKählerPreparation`'s `bridge_op_p` discharge) — that is exactly sweep 3's remit.
 
 ## External review intake: codex, 2026-06-11 (triaged same day)
 

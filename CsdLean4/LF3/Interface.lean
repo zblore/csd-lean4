@@ -65,8 +65,11 @@ theorem** separation:
     `LF1_main_theorem_ae`, whose `μL`-conditional `prepMeasure` cannot
     model a fibre-concentrated pure preparation under the measure
     bridge);
-  + `LF3.OP_p_at_jointEig_eq_P_st` — Busch-mediated rank-1 step
-    (cites `busch_effect_gleason`);
+  + `LF3.OP_p_at_jointEig_eq_P_st_direct` — the rank-1 step the capstones
+    actually take (ontic-stratum, **Busch-free**, via
+    `LF2.PurePreparation.born_rank_one_direct`); the Busch-mediated twin
+    `OP_p_at_jointEig_eq_P_st` is retained as the operational-stratum
+    statement but is **not** on the capstone path (AXIOMS.md §2.4);
   + `LF3.Singlet.Kernel.cst_squared_eq` — algebraic
     `P_st = ‖cAmp‖²` (axiom-free).
   The two further conceptual pieces named below
@@ -198,7 +201,7 @@ The full empirical interpretation chain, under the option (B) design
 
 ```
 LF3 pointer-sector weight P_st(a, b)
-  = (via born_rank_one + jed.born_eq_P_st = OP_p_at_jointEig_eq_P_st)
+  = (via born_rank_one_direct + jed.born_eq_P_st = OP_p_at_jointEig_eq_P_st_direct)
   OP.p (rankOneEffect (jed.eig s t))
   = (via prep.bridge_op_p, the LF4 discharge target)
   μψ((prep.O_region s t).preEvent)
@@ -211,8 +214,13 @@ under the **posited fibre law** `μψ` as
 `ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))`, where the OP is
 built from `μFS + bridge + μψ + PP.rep` via
 `LF2.OperationalPackage.fromPreparation`. The `OP.p ↔ P_st` identity is
-discharged by `LF3.OP_p_at_jointEig_eq_P_st` (cites `busch_effect_gleason`
-via `LF2.pure_state_born_weights_of_certainty`). The frequency limit is
+discharged (on the capstone path) by `LF3.OP_p_at_jointEig_eq_P_st_direct`,
+the **Busch-free** ontic-stratum step via
+`LF2.PurePreparation.born_rank_one_direct`; this is why every chain capstone
+is foundational-triple-only. The Busch-mediated twin
+`OP_p_at_jointEig_eq_P_st` (via `LF2.pure_state_born_weights_of_certainty`)
+is retained as the operational-stratum statement but is not on the capstone
+path (the 2026-06-02 re-route, AXIOMS.md §2.4). The frequency limit is
 `LF1.freq_tendsto_of_iid` applied to i.i.d. trials `X : ℕ → Ω → Σ` with
 common law `μψ` — **not** `LF1_main_theorem_ae`, whose `μL`-conditional
 `prepMeasure` is incompatible with a fibre-concentrated pure preparation

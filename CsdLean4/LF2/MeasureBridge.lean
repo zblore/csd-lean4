@@ -14,7 +14,8 @@ Three pieces (spec §3.3, Lemma 1, Lemma 2):
 1. `pushforward_apply` — thin wrapper over `Measure.map_apply` specialised to a
    `SectorData`'s projection.
 2. `preimage_action_eq` — the preimage/action identity
-   `π⁻¹(epAction g '' A) = onticAction g '' (π⁻¹(A))`.
+   `π⁻¹((g • ·) '' A) = (g • ·) '' (π⁻¹(A))` (the `MulAction` form; the earlier
+   `epAction`/`onticAction` named maps were removed in the `MulAction` migration).
 3. `pushforward_epAction_invariant` — the pushforward `π*μL` is invariant under
    the induced `G`-action on `P`.
 

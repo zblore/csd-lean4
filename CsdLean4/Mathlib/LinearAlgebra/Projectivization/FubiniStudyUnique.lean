@@ -256,19 +256,20 @@ theorem fubiniStudyMeasure_unique
 `fubiniStudyMeasure_unique` pins every *probability* measure invariant under
 the unitary action to `fubiniStudyMeasure p₀`. The two corollaries below
 extend that to arbitrary **finite** invariant measures (normalising by the
-total mass) and re-express the result in the `∃ c, μ = c • μFS` shape carried
-by the LF2 spec axiom `CSD.LF2.invariant_measure_uniqueness`.
+total mass) and re-express the result in the `∃ c, μ = c • μFS` shape that the
+LF4 concrete measure bridges consume.
 
-This is the **concrete realisation** of that axiom's content for the
-`ℂℙ^{N-1}` / `U(N)` instantiation. The abstract axiom (stated over an
-arbitrary pretransitive `(P, G)` with no topology, hence deliberately
-stronger than any provable theorem) is *not* discharged by these lemmas;
-rather, when LF4 instantiates `SectorData` with
+This is the invariant-measure-uniqueness fact for the `ℂℙ^{N-1}` / `U(N)`
+instantiation: when LF4 instantiates `SectorData` with
 `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ`,
-and `μFS := fubiniStudyMeasure p₀`, the concrete `measure_bridge` can route
-through `invariant_measure_uniqueness_cpn` and cite no axiom. The
-mathematical core is proved here; the count drop is the mechanical wiring at
-the LF4 instantiation site. -/
+and `μFS := fubiniStudyMeasure p₀`, the concrete bridges
+(`cp_measure_bridge` / `k_measure_bridge`) route through
+`invariant_measure_uniqueness_cpn` and cite no axiom. (Historically this was
+the concrete realisation of an abstract `CSD.LF2.invariant_measure_uniqueness`
+axiom — stated over an arbitrary pretransitive `(P, G)` with no topology; that
+axiom and the abstract `measure_bridge` lemma it served were **removed
+2026-06-04**, since nothing downstream used the abstract statement. The
+concrete fact proved here is all that was ever load-bearing.) -/
 
 /-- **Phase G5.** Any finite measure on `ℂℙ^{N-1}` invariant under the unitary
 action is a scalar multiple of the Fubini–Study measure at any reference

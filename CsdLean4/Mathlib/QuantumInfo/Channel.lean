@@ -17,10 +17,12 @@ of Kraus operators `Kᵢ : Matrix m n ℂ` with the **trace-preserving** constra
 This file (phase C1 of `specs/channels-plan.md`) establishes the type and the core
 properties: the action is linear, **trace-preserving** (`apply_trace`), **positive**
 (`apply_posSemidef`), and **Hermiticity-preserving** (`apply_isHermitian`) — so a channel
-maps density operators to density operators. Complete positivity is automatic from the
-Kraus form (each `Kᵢ ρ Kᵢᴴ` is positive); the Stinespring dilation (the
-"unitary-on-system⊗environment then trace the environment" form) and the canonical channels
-are later phases.
+maps density operators to density operators. (Complete positivity — positivity of `Φ ⊗ id`
+— is *justified* by the Kraus form but is **not formalised here**: the file proves plain
+positivity `apply_posSemidef`, not the tensored statement, and no consumer in the corpus
+currently requires CP. Adding `Channel.tensorRight` PSD-preservation as the formal CP witness
+is open upstream-prep work.) The Stinespring dilation (the "unitary-on-system⊗environment
+then trace the environment" form) and the canonical channels are later phases.
 
 The Kraus index `ι` is an arbitrary `Fintype` (matching `CSD.LF2.POVM`'s convention).
 -/
