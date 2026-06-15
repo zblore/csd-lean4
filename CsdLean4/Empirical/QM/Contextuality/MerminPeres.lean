@@ -65,9 +65,11 @@ multi-qubit setting.
 - Peres 1990: *Phys. Lett. A* **151**, 107.
 - Cabello 2008: extension to a state-independent proof.
 
-## QM-side operator identities (proof obligations for follow-up)
+## QM-side operator identities (all proved below)
 
-The six identities driving the constraints, all 4×4 matrix equalities:
+The six identities driving the constraints, all 4×4 matrix equalities, are
+proved as `mermin_peres_R0` .. `mermin_peres_C2` further down in this file (an
+earlier "deferred to a follow-up tranche" note is superseded):
 
 ```
 R0: (σ_x ⊗ I)(I ⊗ σ_x)(σ_x ⊗ σ_x) = +I        -- from σ_x² = I
@@ -81,10 +83,9 @@ C2: (σ_x ⊗ σ_x)(σ_y ⊗ σ_y)(σ_z ⊗ σ_z) = -I    -- (σ_x σ_y σ_z)² 
 
 Each follows from `Matrix.mul_kronecker_mul`,
 `Matrix.UnitaryGroup.pauliDot_sq` (where applicable), and the standard
-Pauli relations σ_x σ_y = iσ_z, σ_y σ_x = -iσ_z, σ_z² = I. The Lean
-proofs would mirror the GHZ Mermin-expectation proofs
-(`ghz_expectation_xxx`/`_xyy` etc.) in style but at the operator level
-rather than the state-projected level. Deferred to a follow-up tranche.
+Pauli relations σ_x σ_y = iσ_z, σ_y σ_x = -iσ_z, σ_z² = I — proved at the
+operator level (mirroring the GHZ Mermin-expectation proofs in style) as the
+`mermin_peres_R0` .. `_C2` theorems below.
 
 ## What this file proves
 

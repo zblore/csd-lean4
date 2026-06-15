@@ -9,15 +9,16 @@ Toward discharging `fs_moment_pushforward_uniform` via the Gaussian route
 that L3 (Gaussian unitary-invariance) needs: a unitary matrix's `toEuclideanLin`
 action preserves the Euclidean norm.
 
-**Blocker note (next step).** Building the `U(2)` action as a `≃ₗᵢ[ℝ]` for
-`stdGaussian_map` (L3) via `(unitaryIsomC U).restrictScalars ℝ` requires
-`LinearMap.CompatibleSMul … ℝ ℂ` / `IsScalarTower ℝ ℂ (EuclideanSpace ℂ (Fin 2))`
-and `FiniteDimensional ℝ (EuclideanSpace ℂ (Fin 2))`. These resolve in a minimal
-import context but **fail to synthesize inside the full LF4 import chain** (an
-instance-resolution ambiguity from the large environment). Resolution options:
-supply the real-scalar instances explicitly, or take the `ℝ⁴`-isometry route
-(plan §Part 1 option (a)) which works in a genuine real space and sidesteps the
-ℝ-over-ℂ instances. Deferred to the next focused step.
+**Blocker note (RESOLVED).** Building the `U(2)` action as a `≃ₗᵢ[ℝ]` for
+`stdGaussian_map` via `(unitaryIsomC U).restrictScalars ℝ` hit an
+instance-resolution ambiguity (`LinearMap.CompatibleSMul … ℝ ℂ` /
+`IsScalarTower ℝ ℂ …` failing inside the full LF4 import chain). This was
+resolved by taking the `ℝ`-isometry route (plan §Part 1 option (a)): `conjRN` /
+`coordsN` in `GaussianCPN.lean` realise the real-scalar route in a genuine real
+space, sidestepping the ℝ-over-ℂ instances, and the Gaussian → Fubini–Study
+identification `gaussianCPN_eq_fubiniStudy` is proved there. The qubit DH fact
+`fs_moment_pushforward_uniform` is consequently a theorem (`MomentUniform.lean`),
+not an axiom.
 -/
 
 open MeasureTheory ProbabilityTheory Matrix Matrix.UnitaryGroup

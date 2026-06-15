@@ -41,10 +41,10 @@ which are about the fixed singlet and specific Pauli settings): it holds for an
 
 This is the **amplitude / marginal** form, needing only the Kronecker
 mixed-product identity `(A ⊗ B)(C ⊗ D) = (AC) ⊗ (BD)`. The **reduced-density**
-form (E3b) — "Alice's local CPTP map leaves `Tr_A(ρ)` invariant" — requires a
-partial-trace construction not yet in Mathlib, and is deferred to a shared
-partial-trace infrastructure tranche (jointly with E2 no-broadcasting). See
-`specs/qm-empirical-tests.md` §3bis.1.
+form (E3b) — "Alice's local CPTP map leaves `Tr_A(ρ)` invariant" — is now also
+proved here (`no_communication_reduced`, `channel_no_communication`), on the
+`Mathlib/LinearAlgebra/Matrix/PartialTrace.lean` infrastructure that landed with
+the K2 channel tranche; the earlier "deferred" note is superseded.
 
 ## Source
 

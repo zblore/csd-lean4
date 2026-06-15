@@ -1,49 +1,32 @@
 import CsdLean4.LF4.QubitBornFrequency
 
 /-!
-# LF4: the Duistermaat–Heckman pushforward axiom (qubit instance)
+# LF4: the Duistermaat–Heckman pushforward (qubit instance) — TOMBSTONE
 
-This file names, as a documented Mathlib-external **axiom**, the classical
-geometric fact that discharges the `h_uniform` hypothesis of
-`fs_born_volume_ratio_qubit` and `qubit_born_frequency_convergence`, making the
-qubit Born-from-Kähler-volume results **unconditional**.
-
-## The axiom
-
-`fs_moment_pushforward_uniform`: the moment-map coordinate pushes the genuine
-Fubini–Study measure on `ℂℙ¹` to the uniform measure on the polytope `[0,1]`:
+**This file is a tombstone. It introduces NO axiom.** It formerly named, as a
+Mathlib-external `axiom fs_moment_pushforward_uniform`, the qubit
+Duistermaat–Heckman / Archimedes hat-box fact
 
 ```
-(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = volume.restrict [0,1].
+(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = volume.restrict [0,1]
 ```
 
-This is the `N = 2` instance of **Duistermaat–Heckman** (the moment map of a
-toric Kähler manifold pushes the Liouville measure to Lebesgue on the moment
-polytope); equivalently, by `momentMap_pushforward_eq_haar_marginal`, it is
-"`|U₀₀|²` is `Uniform[0,1]` for Haar `U(2)`" — **Archimedes' hat-box theorem** on
-the Bloch sphere. It is classically true and elementary; the only reason it is an
-axiom here is that the supporting measure theory (sphere/Dirichlet pushforwards)
-is **not yet in Mathlib**.
+(the `N = 2` instance: the moment map pushes the Fubini–Study measure on `ℂℙ¹`
+to Lebesgue on the polytope `[0,1]`; equivalently `|U₀₀|² ~ Uniform[0,1]` for
+Haar `U(2)`). That axiom was **discharged 2026-05-31** — it is now a *theorem*
+of the same name, proved in `CsdLean4/LF4/MomentUniform.lean` via the Gaussian
+route (Gaussian-induced `μ_FS` + moment-marginal change of variables), alongside
+the foundational-triple-only `fs_born_volume_ratio_qubit_uncond` and
+`qubit_born_frequency_convergence_uncond`. The general-`N` extension
+(`fs_moment_joint_dirichlet_N`, `MomentDirichletN.lean`) is likewise a theorem.
 
-## Why this is an honest boundary, not a Born import
-
-Unlike `busch_effect_gleason` — which encodes the Born/trace-form rule itself —
-this axiom is a **pure geometry statement about `μ_FS` and the moment map**; the
-Born rule `‖⟨e₀, ψ⟩‖²` does not appear in it. The qubit results derive Born from
-`{` Fubini–Study Kähler volume `+` this Duistermaat–Heckman geometry `+` the
-*proved* moment-map identity `momentMap_mk_eq_inner_sq` `}`. So Born is genuinely
-derived from the Kähler structure, with the geometric input named — paralleling
-how `invariant_measure_uniqueness` is a named Mathlib-external boundary.
-
-Everything is finite-dimensional (`ℂℙ¹`, `U(2)`); this does not touch CSD's
-finiteness.
-
-## Discharge path (plan B)
-
-`momentMap_pushforward_eq_haar_marginal` (`MomentMarginal.lean`) already reduces
-this axiom, in Lean, to the Haar marginal `|U₀₀|² ~ Uniform[0,1]`. Discharging it
-is the scheduled Mathlib-infrastructure build (sphere/Gaussian/`Beta(1,1)`); see
-`specs/carve-out-plan.md` Tranche M, plan B.
+The content moved downstream to break an import cycle (the discharge needs
+`GaussianCP` / `MomentRatioUniform`, which would cycle if proved here). The
+honest-boundary framing it once carried — that this is a pure geometry statement
+about `μ_FS` and the moment map, in which the Born rule does not appear, so the
+qubit Born value is genuinely derived from the Kähler structure — now holds
+*unconditionally*, since the geometric input is proved rather than posited. See
+the dated note below and `specs/carve-out-plan.md` Tranche M (plan B, CLOSED).
 -/
 
 open MeasureTheory ProbabilityTheory Matrix Matrix.UnitaryGroup

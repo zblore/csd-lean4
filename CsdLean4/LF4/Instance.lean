@@ -8,10 +8,14 @@ This file discharges the *structural* part of LF4 §8 (`specs/LF4-todo.md`):
 it exhibits a concrete `CSD.LF2.SectorData`, proving that LF2's abstract
 framework is **inhabited** (it had never been instantiated), and that the
 sector-conditional measure bridge holds **axiom-free** for the instance.
-For this base case (`π = id`) the bridge is the trivial `c = 1` identity;
-the non-trivial-fibre Phase 2 (`ℂℙ^{N-1} × ℂℙ^{N-1}`, `π = pr₁`) is where
-`invariant_measure_uniqueness_cpn` is actually exercised to discharge the
-LF2 spec axiom `invariant_measure_uniqueness` on the instance.
+For this base case (`π = id`) the bridge is the trivial `c = 1` identity. The
+non-trivial-fibre instance `KahlerInstance.lean` (`Σ = ℂℙ^{M-1} × T²`,
+`π = pr₁`) likewise builds its bridge **axiom-free**, via the product marginal
+(`Measure.fst_prod`), not via any uniqueness axiom. (`invariant_measure_uniqueness_cpn`
+is the proved `ℂℙ^{N-1}` invariant-measure-uniqueness fact available for bridges
+that need it; the abstract `CSD.LF2.invariant_measure_uniqueness` axiom it once
+realised, and the abstract `measure_bridge` lemma it served, were **removed
+2026-06-04** as unused.)
 
 ## The instance
 

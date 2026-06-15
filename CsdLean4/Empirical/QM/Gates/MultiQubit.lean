@@ -7,8 +7,9 @@ import Mathlib.Data.Complex.Basic
 **Category:** 3-Local (promotion-ready to 2-Framework on demand).
 
 Universal classical reversible logic via Toffoli (CCNOT) and Fredkin
-(CSWAP) gates on three qubits. Both are 8×8 unitaries; both are
-involutive.
+(CSWAP) gates on three qubits. Both are 8×8 real permutation matrices —
+Hermitian and involutive, hence unitary; what is *proved* here is the
+**involutivity** `G * G = 1` (the `Gᴴ * G = 1` form is not separately stated).
 
 ## Contents
 

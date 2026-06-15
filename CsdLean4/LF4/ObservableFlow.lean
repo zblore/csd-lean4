@@ -24,12 +24,17 @@ whose **conserved quantities are exactly the Born weights**:
   constrains the volumes in `Σ`."
 
 **Honest scope.** The proof of conservation is light (the phases have modulus one). The
-content is the *identification*: this is the first `Φ ≠ id` with measurement meaning, and it
-ties the observable's dynamics to the Born volumes. What is *not* here is the measurement
-**event** — the flow conserves the populations (a non-disturbing / compatible measurement at
-the ontic level), it does not yet carry microstates into pointer regions and collapse. That
-is the LF5 / measurement-update frontier (D1's remaining half). `kFlow` (the other `Φ ≠ id`)
-is an inert torus translation; this flow is the load-bearing one.
+content is the *identification*: a measure-preserving `Φ ≠ id` whose conserved quantities are
+the Born volumes (`momentMap_obsFlow`), tying the observable's dynamics to those volumes.
+Caveat (honest): the `Φ ≠ id` claim is true for `obsFlow` but is **not separately witnessed
+here** — unlike `kFlow`, which carries an explicit `kFlow_ne_id`; an analogous
+`obsFlow_ne_id` would close the gap and is cheap follow-up. What is *not* here is the
+measurement **event** — the flow conserves the populations (a non-disturbing / compatible
+measurement at the ontic level), it does not carry microstates into pointer regions and
+commit an outcome. That measurement-dynamics content is now built in the **LF5 layer**
+(`CsdLean4/LF5/`, single-system projective tier complete: `measurementFlow ≠ id`,
+`measurement_flow_born_frequency`, the per-microstate outcome function `vnPointerOutcome`);
+the deeper D1 strata (entangled de-isolation, instance-level dynamics) remain open.
 -/
 
 open scoped LinearAlgebra.Projectivization

@@ -2,11 +2,18 @@ import CsdLean4.Empirical.QM.Bell
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!
-# Empirical: E91 device-independent security — the local-hidden-variable CHSH bound
+# Empirical: E91 device-independent certification — the local-hidden-variable CHSH bound
 
 **Category:** 3-Local. The LHV CHSH `≤ 2` bound is QM-generic (a theorem about a
 hidden-variable probability space, no CSD ontology) and promotion-ready to
 2-Framework; the QM tie-in re-uses `Bell.lean`'s Tsirelson saturation.
+
+**Scope (honest).** What is proved is the **correlation-level certification**: the
+singlet attains `2√2` while every LHV model is `≤ 2`, so no local-realistic
+description reproduces the quantum correlations (the basis of E91's
+eavesdropper-detection). This is *not* a full cryptographic security proof — there
+is no key-rate, finite-key, or general-adversary analysis here. "Device-independent"
+refers to the certification being LHV-model-agnostic, not to a security theorem.
 
 ## What this closes
 

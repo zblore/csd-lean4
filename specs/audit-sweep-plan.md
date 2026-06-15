@@ -47,9 +47,18 @@ skip rationale recorded here. This file carries the running ledger:
 |---|---|---|
 | 1. Mathlib staging | `CsdLean4/Mathlib/**` | **DONE 2026-06-15 — SOUND** (3 sub-sweeps: Projectivization, QuantumInfo, matrix/measure/prob) |
 | 2. LF2/LF3 support | `LF2/**`, `LF3/**` | **DONE 2026-06-15 — SOUND** (2 sub-sweeps) |
-| 3. LF4 non-headline | `LF4/**` (non-capstone) | not started |
-| 4. Empirical support + bridges | `Empirical/**` | not started |
-| 5. LF1 | `LF1/**` | not started |
+| 3. LF4 non-headline | `LF4/**` (non-capstone) | **DONE 2026-06-15 — SOUND** (3 sub-sweeps: moment/Born-volume, spectral/observables, instances/POVM/singlet) |
+| 4. Empirical support + bridges | `Empirical/**` | **DONE 2026-06-15 — SOUND** (2 sub-sweeps: QM 30 files, CSD 35 files) |
+| 5. LF1 | `LF1/**` | **DONE 2026-06-15 — SOUND** |
+
+**SWEEP COMPLETE 2026-06-15. The entire corpus below the Tier-A headlines (167
+files, 12 sub-sweeps) is adversarially audited SOUND — zero BLOCKER, zero MAJOR.**
+Every layer's non-vacuity load-bearers were independently probed (Shor ≥½, Grover,
+GHZ/KS no-go non-vacuity; the moment-map/DH volume chain genuinely *derived* not
+carved; the POVM Naimark dilation; the i.i.d. trial witness; LF1's SLLN and the
+`hΦ_pres`-only-measurability disclosure). The carving-honesty line (Tier-2: realise
+vs derive) is disclosed correctly throughout; no carved region is sold as a
+derivation; every Empirical/CSD transport bundle is labelled and ledgered.
 
 ### Sweep 1+2 findings (2026-06-15) — all MINOR/NIT, zero BLOCKER/MAJOR
 
@@ -81,10 +90,52 @@ on the `imageVec` family (2 linter warnings; file is the §13-paused crux, left 
 blanket `set_option linter.unusedSectionVars false` in `Stinespring`/`CanonicalChannels`/
 `PartialTrace` (prefer `omit … in`); `@[simp]` on a few `_def`/projection unfolders
 (`Channel.apply_def`/`adjoint_def`, `PartialTrace.traceRight/Left_apply`,
-`EffectAux.scaledRankOneEffect_M`); `Lp/Matrix.lean` `ofLp_toEuclideanLin` unpinned. A
-recurring auditor recommendation (multiple sub-sweeps) is to verify the LF4 carving-honesty
-(`bornRegion` carved-vs-derived, `cp_measure_bridge`/`k_measure_bridge`,
-`ofKählerPreparation`'s `bridge_op_p` discharge) — that is exactly sweep 3's remit.
+`EffectAux.scaledRankOneEffect_M`); `Lp/Matrix.lean` `ofLp_toEuclideanLin` unpinned.
+
+### Sweep 3+4+5 findings (2026-06-15) — all MINOR/NIT, zero BLOCKER/MAJOR
+
+LF4 (3 sub-sweeps), Empirical QM+CSD (2), LF1 (1): all SOUND. Sweep 3a confirmed the
+carving-honesty line is correct — the general-N Born = FS-volume chain is a genuine
+*derivation* (cells are `replaceMap`/`apexLin` geometric images; FS measure computed through
+the proved DH law `fs_moment_joint_dirichlet_N`, not asserted; the `_uncond` zero-branch
+genuinely *derives* FS-measure-0). Sweep 3c confirmed the bridges (`cp/k_measure_bridge`)
+non-degenerate (`c=1` between probability measures) and `ofKählerPreparation`'s `bridge_op_p`
+an honest *carved realisation* with a non-circular RHS. Sweep 4a/4b confirmed Shor/Grover/GHZ
+non-vacuity, the volume series lands the right Born values, and every CSD transport bundle is
+labelled + ledgered. Sweep 5 confirmed LF1's `hΦ_pres`-only-measurability disclosure and the
+genuine SLLN.
+
+**Fixed this pass (docstring/comment honesty):**
+- `DuistermaatHeckman.lean` header rewritten as a tombstone (present-tense "axiom" prose →
+  past-tense; the DH fact was discharged to a theorem 2026-05-31).
+- `GaussianFS.lean` stale "Blocker note (next step)" → RESOLVED (the ℝ-isometry route landed
+  in `GaussianCPN.lean`).
+- `Instance.lean` reference to the removed `invariant_measure_uniqueness` axiom → corrected
+  (the non-trivial-fibre instance builds its bridge axiom-free via the product marginal).
+- `SingletKahler.lean` stale "cites busch_effect_gleason via the LF3 chain" (×2: module +
+  `ofKählerPreparation_singlet_frequency_convergence`) → Busch-free via the `_direct` re-route.
+- `ObservableFlow.lean` over-claim softened: the `Φ ≠ id` claim is true but not separately
+  witnessed (unlike `kFlow`'s `kFlow_ne_id`); the "LF5 frontier remaining" framing updated
+  (LF5 single-system projective tier is now built).
+- `NoCommunication.lean` stale "E3b deferred" → reduced-density form now proved.
+- `MerminPeres.lean` stale "deferred to a follow-up tranche" → the R0..C2 identities are proved.
+- `E91.lean` "device-independent security" → "certification (correlation level)" + honest-scope
+  note (no key-rate / finite-key analysis).
+- `Gates/{TwoQubit,MultiQubit}.lean` "unitarity" → "involutivity" (only `G*G=1` proved; `Gᴴ*G=1`
+  holds by Hermiticity but is not separately stated).
+- `QEC/{ThreeQubit,PhaseFlip}.lean` capstone docstrings clarified: the capstone bundles
+  stabiliser-fixing + self-inverse recovery; the distinct-syndrome *identifiability* is the
+  separate `syndrome_*` lemmas (read together for the full claim).
+- `LF1/Indicators.lean` forward-reference to `T.trialMeasure` (defined downstream) clarified.
+
+**Deferred to follow-up content tranches (the auditors offered "strengthen the theorem"
+alternatives; logged, not done — these add Lean content, out of a doc-currency sweep's
+scope):** add `obsFlow_ne_id` (witness the `Φ ≠ id` claim, mirroring `kFlow_ne_id`); bundle
+the `syndrome_*` distinctness into the QEC capstones (or formally designate the syndrome
+lemmas the load-bearing export); add `Gᴴ * G = 1` unitarity lemmas for the gates. Plus the
+sweep-1+2 upstream-prep hygiene list above (deprecated API, blanket linter disables, `@[simp]`
+unfolders, naming `PsiN`/`Tpi`, `ObservableFlow.lean:78` deprecated `toEuclideanLin_apply`).
+None affect soundness.
 
 ## External review intake: codex, 2026-06-11 (triaged same day)
 

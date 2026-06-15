@@ -97,7 +97,9 @@ noncomputable def empiricalFreq (O : S.OutcomeRegion) (N : ℕ) : Ω → ℝ :=
 The indicator random variable is integrable with respect to the trial measure.
 
 This follows from boundedness: `‖indicatorRV O n ω‖ ≤ 1` and the fact that
-`T.trialMeasure` is a finite (probability) measure.
+the trial measure `((T.P : ProbabilityMeasure Ω) : Measure Ω)` is a finite
+(probability) measure. (The `T.trialMeasure` abbreviation for this coercion is
+introduced downstream in `Expectation.lean`.)
 -/
 lemma indicatorRV_integrable (O : S.OutcomeRegion) (n : ℕ) :
     Integrable (T.indicatorRV (S := S) O n) ((T.P : ProbabilityMeasure Ω) : Measure Ω) :=

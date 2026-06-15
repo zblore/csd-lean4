@@ -218,10 +218,13 @@ lemma bitflip_recovers (a b : ℂ) :
   · rw [← tel_mul, X3_mul_X3, tel_one]
 
 /-- **The three-qubit bit-flip code corrects any single bit-flip.** For the encoded state
-`ψ_L = a|000⟩ + b|111⟩`: (i) the stabilisers `Z₁Z₂, Z₂Z₃` fix the codespace; (ii) each of
-the four errors `{I, X₁, X₂, X₃}` puts the codeword in a stabiliser eigenstate with a
-**distinct syndrome** `(+,+), (−,+), (−,−), (+,−)`, so measurement identifies the error;
-and (iii) re-applying the identified (self-inverse) `Xⱼ` restores `ψ_L`. -/
+`ψ_L = a|000⟩ + b|111⟩`. **This capstone bundles two of the three ingredients:** (i) the
+stabilisers `Z₁Z₂, Z₂Z₃` fix the codespace, and (iii) each error `Xⱼ` is self-inverse, so
+re-applying the identified error restores `ψ_L`. The load-bearing **identifiability**
+ingredient (ii) — that the four errors `{I, X₁, X₂, X₃}` give the **distinct syndromes**
+`(+,+), (−,+), (−,−), (+,−)`, so measurement pins down which error occurred — is the
+separate `syndrome_X1` / `syndrome_X2` / `syndrome_X3` lemmas above (not part of this
+theorem's conjunction). Read the three together for the full correction claim. -/
 theorem three_qubit_corrects_single_bitflip (a b : ℂ) :
     (Matrix.toEuclideanLin Z1Z2 (logical a b) = logical a b
       ∧ Matrix.toEuclideanLin Z2Z3 (logical a b) = logical a b)

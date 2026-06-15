@@ -34,8 +34,10 @@ are excluded as they carry no Born-content.
 
 **Axiom posture.** `ofKählerPreparation` is foundational-triple only (the
 constant `rep` + the `_direct` Born theorem keep Busch out of the construction).
-The concrete capstone `LF3_singlet_frequency_convergence_concrete` cites
-Busch through the LF3 chain's `weight_eq_P_st`.
+The concrete frequency capstone is **also foundational-triple-only / Gleason-free**:
+the LF3 chain's `weight_eq_P_st` routes through the Busch-free
+`OP_p_at_jointEig_eq_P_st_direct` (the 2026-06-02 re-route; AXIOMS.md §2.4), not
+through the Busch-mediated twin.
 
 **Honesty note (Tier-2 framing).** `bridge_op_p` holds because the outcome
 regions are *carved* to fibre-volume `P_st`. This realises eq-12 (the
@@ -321,7 +323,9 @@ almost surely to `P_st`. This is the witness that the LF3 chain capstones are
 open Filter Topology in
 /-- **The chain is non-vacuous on this instance.** For i.i.d. trials with the
 posited fibre law, the per-sector empirical frequencies converge a.s. to
-`P_st ctx.a ctx.b s t`. Cites `busch_effect_gleason` via the LF3 chain. -/
+`P_st ctx.a ctx.b s t`. Foundational-triple-only / Gleason-free (the LF3 chain
+routes through the Busch-free `weight_eq_P_st` / `OP_p_at_jointEig_eq_P_st_direct`,
+2026-06-02 re-route). -/
 theorem ofKählerPreparation_singlet_frequency_convergence
     (p₀ : CPN 4) (hgen : ∀ s t : Sign, 0 < P_st ctx.a ctx.b s t)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]

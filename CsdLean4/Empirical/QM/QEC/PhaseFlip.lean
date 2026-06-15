@@ -161,8 +161,10 @@ lemma phaseflip_recovers (a b : ℂ) :
   · rw [← tel_mul, Z3_mul_Z3, tel_one]
 
 /-- **The three-qubit phase-flip code corrects any single phase flip.** Hadamard dual of
-`three_qubit_corrects_single_bitflip`: stabilisers fix the codespace, the four errors give
-distinct syndromes, and each `Z` is self-inverse (recovery). -/
+`three_qubit_corrects_single_bitflip`. **This capstone bundles** the stabiliser-fixing and
+the self-inverse-recovery ingredients; the **identifiability** ingredient (the four errors
+give distinct syndromes) is the separate `syndromePF_*` lemmas above, not part of this
+theorem's conjunction — read them together for the full correction claim. -/
 theorem three_qubit_corrects_single_phaseflip (a b : ℂ) :
     (Matrix.toEuclideanLin X1X2 (logicalPF a b) = logicalPF a b
       ∧ Matrix.toEuclideanLin X2X3 (logicalPF a b) = logicalPF a b)

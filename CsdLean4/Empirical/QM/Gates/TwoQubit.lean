@@ -6,9 +6,12 @@ import Mathlib.Data.Complex.Basic
 
 **Category:** 3-Local (promotion-ready to 2-Framework on demand).
 
-Pure linear-algebra definitions + unitarity properties for the
-canonical two-qubit gates on `Matrix (Fin 4) (Fin 4) ℂ`. No CSD
-ontology; the CSD-side reading lives in the companion
+Pure linear-algebra definitions for the canonical two-qubit gates on
+`Matrix (Fin 4) (Fin 4) ℂ`, with their **involutivity** properties
+(`G * G = 1`). These gates are real Hermitian permutation/diagonal matrices, so
+involutivity coincides with unitarity (`Gᴴ * G = 1`); only the involutive form
+`G * G = 1` is proved here (the `Gᴴ * G = 1` statement is not separately stated).
+No CSD ontology; the CSD-side reading lives in the companion
 `Empirical/CSD/Gates/TwoQubit.lean`.
 
 ## Contents
