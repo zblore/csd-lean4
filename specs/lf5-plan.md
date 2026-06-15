@@ -1,7 +1,11 @@
 # LF5 — measurement dynamics on Σ (the D1 frontier), staged plan
 
-**STATUS: COMPLETE 2026-06-11.** LF5-A..E all DONE (A 2026-06-09, B 2026-06-10, C/D/E
-2026-06-11); layer headline `measurement_flow_born_frequency` (`CsdLean4/LF5/Capstone.lean`).
+**STATUS: COMPLETE 2026-06-11; LF5-F post-plan extension DONE 2026-06-14.** LF5-A..E all DONE
+(A 2026-06-09, B 2026-06-10, C/D/E 2026-06-11); layer headline `measurement_flow_born_frequency`
+(`CsdLean4/LF5/Capstone.lean`). **LF5-F (2026-06-14)**: bornRegion pairwise disjointness →
+the per-microstate outcome map `vnPointerOutcome` → the single-union-event outcome-frequency
+capstone `measurement_flow_outcome_frequency` (`CsdLean4/LF4/BornRegionDisjoint.lean` +
+`CsdLean4/LF5/PointerOutcome.lean`); closes the owed-since-`aeece86` outcome-function caveat.
 The single-system projective tier of D1 is closed. Remaining D1 strata (not this plan):
 entangled / non-local de-isolation, the per-microstate outcome map (gated on `bornRegion`
 pairwise disjointness), the A5 sector origin, and threading the flow through the concrete
@@ -197,6 +201,46 @@ fixed (vN permutation coupling); pointer region context-fixed (apparatus basis),
 Born from the reused FS-volume engine, now dynamical; entanglement/non-locality + A5 deferred.
 Connect to `LF3/ContextMap.lean` (`MeasurementContext`): LF5 realises that context slot
 *dynamically* rather than definitionally.
+
+### LF5-F — bornRegion disjointness + the per-microstate outcome map  [post-plan extension] — **DONE 2026-06-14** (`CsdLean4/LF4/BornRegionDisjoint.lean` + `CsdLean4/LF5/PointerOutcome.lean`)
+Closes the owed-since-`aeece86` caveat of LF5-E (outcome *statistics*, not an outcome
+*function*). Delivered:
+
+- **engine half** (`LF4/BornRegionDisjoint.lean`): image-level pairwise disjointness of the
+  moment-subdivision cells, **unconditional** for any `b` in the closed free simplex —
+  `replaceMap_image_disjoint_replaceMap` (free/free) and `replaceMap_image_disjoint_apexMap`
+  (free/apex), division-free coordinate arguments (`x_j b_i − x_i b_j = t_j b_i ≥ 0` both ways
+  ⟹ `b_i = b_j = 0` ⟹ contradiction); `bornRegion_pairwiseDisjoint` (preimages of disjoint
+  sets, every `ψ ≠ 0`, no norm — the Born vector is in the closed free simplex by
+  `ratioN_momentMap_nonneg` / `_sum_le_one`); a.e. coverage `bornRegion_ae_cover`
+  (`measure_iUnion` over the disjoint measurable family sums to `∑‖⟨eᵢ,ψ⟩‖² = ‖ψ‖² = 1`); the
+  per-microstate outcome map `bornOutcome : CPN (M+1) → Option (Fin (M+1))`
+  (`bornOutcome_eq_some_iff`, `bornOutcome_preimage_some`, `bornOutcome_measurable` — `⊤`
+  σ-algebra on the finite `Option (Fin ·)`, `bornOutcome_ae_isSome` total off an FS-null set);
+  the indicator-of-disjoint-union bridge `indicator_iUnion_disjoint`
+  (`Finset.indicator_biUnion_apply`).
+- **LF5 half** (`LF5/PointerOutcome.lean`): `vnPointerOutcome = bornOutcome` post-composed with
+  the **ψ-independent, context-fixed** block assignment `c ↦ (e.symm c).2` (the audited
+  tripwire); `vnPointerOutcome_preimage_some` (the `some i` fibre = the pointer-`i` block union
+  `⋃ n, bornRegion ψ' (e (n,i))`); `measurement_flow_outcome_frequency` — the conjunct-(5)
+  **upgrade**: the frequency of trials whose microstate's *outcome* is pointer `i` (a **single**
+  union event per pointer, not a sum of cell frequencies) → `‖⟨eᵢ,ψ⟩‖²`, same hypotheses as the
+  capstone (conjuncts 1–4 referenced, not duplicated); `measurement_flow_outcome_frequency_canonical`
+  on the canonical i.i.d. FS process.
+- **debt closure** (`Empirical/CSD/ContextVolume.lean`): `block_born_frequency_volume_event` —
+  the degenerate-block frequency as the frequency of a single union event (the `aeece86`-owed
+  restatement), now that the per-ray cells are pairwise disjoint; the sum form untouched.
+
+The ContextMap slot (`LF3/ContextMap.lean`) is now realised **both dynamically and
+definitionally** for the single-system measurement: per-context state space = dilated `Σ'`,
+outcome map = `vnPointerOutcome` (deterministic, total off an FS-null set, measurable fibres),
+context enters through the fixed coupling + the ψ-independent block assignment. Honest residue
+unchanged from LF5-D/E: cell *shapes* (`bornRegion ψ'`) remain ψ'-dependent (engine realisation,
+measures forced by Kähler geometry not carved); Born number from the engine; A5 posited; `Φ = id`
+in the static `SectorData` instances (the LF5 flow `Φ_vN ≠ id` is on `Σ'`); entanglement deferred.
+Foundational-triple-only, 7 new AxiomAudit pins (`bornRegion_pairwiseDisjoint`,
+`bornOutcome_preimage_some`, `bornOutcome_ae_isSome`, `vnPointerOutcome_preimage_some`,
+`measurement_flow_outcome_frequency`, `_canonical`, `block_born_frequency_volume_event`).
 
 ## 3. What this closes, honestly
 

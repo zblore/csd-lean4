@@ -1,4 +1,5 @@
 import CsdLean4.LF4.BornRegionUncond
+import CsdLean4.LF4.BornRegionDisjoint
 
 /-!
 # Empirical/CSD: arbitrary projective measurement contexts as derived Kähler volumes
@@ -232,9 +233,11 @@ the degenerate outcome `a` — the finite **sum** of the per-ray empirical frequ
 over the block `{i : blk i = a}` — converges, on a single almost-sure event, to the block
 Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖² = ⟨ψ, Pₐ ψ⟩` (see `block_born_eq_blockSum`).
 (This sum-of-per-ray-frequencies equals the frequency of the *union* of the block's
-barycentric per-ray regions exactly when those regions are pairwise disjoint — true of the
-barycentric subdivision, but the `bornRegion` disjointness is not yet formalised, so the
-union-region restatement is owed; the sum form proved here needs only additivity of limits.)
+barycentric per-ray regions, because those regions are pairwise disjoint — the
+barycentric subdivision is a genuine partition, now formalised as
+`CSD.LF4.bornRegion_pairwiseDisjoint` (LF5-F engine half). The union-event
+restatement is `block_born_frequency_volume_event` below; the sum form proved here
+needs only additivity of limits.)
 
 Carving-free, Gleason-free, unconditional — no genericity hypothesis (every unit
 preparation, eigenvectors of any block included).
@@ -276,6 +279,77 @@ theorem block_born_frequency_volume
   have h := context_born_frequency_volume p₀ B ψ hψ X hX hlaw hindep
   filter_upwards [h] with ω hω
   exact tendsto_finset_sum _ (fun i _ => hω i)
+
+/-! ### The union-event restatement (the owed `aeece86` form) -/
+
+omit [Fintype ι] in
+/-- **Degenerate-outcome block frequency, as the frequency of a single union
+event.** The `aeece86`-owed restatement of `block_born_frequency_volume`: the
+empirical frequency of the degenerate outcome `a` stated as the frequency of the
+**single** union event `⋃_{blk i = a} bornRegion …` (the eigenspace outcome
+region), converging to the block Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖²`. The
+union form is now available because the per-ray barycentric cells are pairwise
+disjoint (`CSD.LF4.bornRegion_pairwiseDisjoint`, LF5-F engine half), so the
+indicator of the union equals the sum of the per-ray indicators
+(`CSD.LF4.indicator_iUnion_disjoint`). The sum form (`block_born_frequency_volume`)
+is untouched. -/
+theorem block_born_frequency_volume_event
+    (p₀ : CPN (M + 1))
+    (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    (blk : Fin (M + 1) → ι) (a : ι)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          (∑ k ∈ Finset.range m,
+              Set.indicator
+                ((X k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
+                    bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i))
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+          ‖inner ℂ (B i) ψ‖ ^ 2)) := by
+  have hbase := block_born_frequency_volume p₀ B ψ hψ blk a X hX hlaw hindep
+  filter_upwards [hbase] with ω hω
+  -- the union-event indicator equals the block sum of per-ray indicators
+  have hdisj : ∀ k,
+      ((Finset.univ.filter (fun i => blk i = a)) : Set (Fin (M + 1))).PairwiseDisjoint
+        (fun i => (X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i) := by
+    intro k i _ j _ hij
+    exact (bornRegion_pairwiseDisjoint (B.repr ψ) (repr_ne_zero B ψ hψ) hij).preimage _
+  have hind : ∀ k ω0,
+      Set.indicator ((X k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
+          bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)) (fun _ => (1 : ℝ)) ω0
+      = ∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+          Set.indicator ((X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+            (fun _ => (1 : ℝ)) ω0 := by
+    intro k ω0
+    rw [Set.preimage_iUnion₂]
+    exact CSD.LF4.indicator_iUnion_disjoint _ _ (hdisj k) _ ω0
+  have hfreq_eq : ∀ m : ℕ,
+      (∑ k ∈ Finset.range m,
+          Set.indicator ((X k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
+              bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)) (fun _ => (1 : ℝ)) ω) / (m : ℝ)
+      = ∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+          (∑ k ∈ Finset.range m,
+              Set.indicator ((X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ) := by
+    intro m
+    rw [← Finset.sum_div]
+    congr 1
+    rw [Finset.sum_comm]
+    exact Finset.sum_congr rfl (fun k _ => hind k ω)
+  simp_rw [hfreq_eq]
+  exact hω
 
 /-! ### Concrete degenerate (rank-2) witness: the two-qubit parity `Z⊗Z` -/
 

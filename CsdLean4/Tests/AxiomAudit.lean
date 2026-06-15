@@ -68,6 +68,7 @@ import CsdLean4.LF5.DilationFromFlow
 import CsdLean4.LF5.FlowBornFrequency
 import CsdLean4.LF5.Capstone
 import CsdLean4.LF5.CapstoneCanonical
+import CsdLean4.LF5.PointerOutcome
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -1300,6 +1301,16 @@ info: 'CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume
 
+-- Degenerate-eigenspace block frequency as the frequency of a SINGLE union event
+-- (⋃_{blk i = a} bornRegion). The aeece86-owed union restatement, available now
+-- that the per-ray cells are pairwise disjoint (CSD.LF4.bornRegion_pairwiseDisjoint,
+-- LF5-F). Sum form untouched. Foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume_event' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume_event
+
 -- Concrete degenerate (rank-2) witness: the two-qubit parity Z⊗Z. The +1 parity
 -- outcome Born weight realised as a block sum of two FS typicality volumes
 -- (computational eigenbasis, blk = ![0,1,1,0]). The Mermin–Peres rank-2 observable
@@ -2514,5 +2525,42 @@ info: 'CSD.LF5.measurement_flow_born_frequency_canonical' depends on axioms: [pr
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.measurement_flow_born_frequency_canonical
+
+-- LF5-F: bornRegion pairwise disjointness, the per-microstate outcome map, and
+-- the outcome-frequency capstone (single union event per pointer, not a sum of
+-- cell frequencies). Closes the owed-since-aeece86 outcome function. The cells
+-- are the same ψ-indexed moment-subdivision cells (no carving); Φ = id (D1).
+-- Foundational triple throughout; Gleason-free.
+/-- info: 'CSD.LF4.bornRegion_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.bornRegion_pairwiseDisjoint
+
+/-- info: 'CSD.LF4.bornOutcome_preimage_some' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.bornOutcome_preimage_some
+
+/-- info: 'CSD.LF4.bornOutcome_ae_isSome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.bornOutcome_ae_isSome
+
+/-- info: 'CSD.LF5.vnPointerOutcome_preimage_some' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnPointerOutcome_preimage_some
+
+/--
+info: 'CSD.LF5.measurement_flow_outcome_frequency' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurement_flow_outcome_frequency
+
+/--
+info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.measurement_flow_outcome_frequency_canonical
 
 end CSD.Tests.AxiomAudit

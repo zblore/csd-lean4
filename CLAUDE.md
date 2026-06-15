@@ -14,10 +14,12 @@ layer headline `measurement_flow_born_frequency`): a deterministic, FS-measure-p
 von Neumann de-isolation flow `Φ_vN ≠ id` realises the Naimark dilation dynamically and
 its pointer-block volumes / a.s. frequencies are the Born weights, for every unit
 preparation (the `hpos` genericity was retired by the unconditional engine,
-`LF4/BornRegionUncond.lean`). **The open frontier remains D1's deeper strata**
+`LF4/BornRegionUncond.lean`). LF5-F (2026-06-14) adds the per-microstate outcome
+map: `bornRegion_pairwiseDisjoint` → `vnPointerOutcome` → `measurement_flow_outcome_frequency`
+(`LF4/BornRegionDisjoint.lean` + `LF5/PointerOutcome.lean`), discharging the
+outcome-function caveat owed since `aeece86`. **The open frontier remains D1's deeper strata**
 ([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6): the entangled / non-local
-de-isolation tier, the per-microstate outcome map (gated on `bornRegion` pairwise
-disjointness), the A5 sector origin, and threading the flow through the concrete
+de-isolation tier, the A5 sector origin, and threading the flow through the concrete
 `SectorData` instances (which still carry `Φ = id`). Axiom posture and the two-strata
 (operational Gleason vs ontic volume) reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
@@ -619,17 +621,38 @@ Capstone.lean          — measurement_flow_born_frequency: the layer headline,
                          five conjuncts (Φ_vN ≠ id ∧ FS-preserving ∧ dilation
                          realised ∀ preparations ∧ pointer volume = Born ∧
                          a.s. frequencies → Born) (LF5-E)
+CapstoneCanonical.lean — measurement_flow_born_frequency_canonical: the five
+                         conjuncts on the canonical i.i.d. FS trial witness
+                         (fsTrialMeasure / fsTrial), trial bundle discharged
+PointerOutcome.lean    — the per-microstate outcome map (LF5-F): vnPointerOutcome
+                         (= bornOutcome post-composed with the ψ-independent block
+                         assignment c ↦ (e.symm c).2), vnPointerOutcome_preimage_some
+                         (some-i fibre = pointer-i block union),
+                         measurement_flow_outcome_frequency (conjunct-(5) upgrade:
+                         a single union event per pointer, not a sum of cell
+                         frequencies) + _canonical
 ```
+
+The engine half of LF5-F lives in `LF4/BornRegionDisjoint.lean`:
+`bornRegion_pairwiseDisjoint` (the moment-subdivision is a genuine partition,
+every ψ ≠ 0), the per-microstate `bornOutcome : CPN (M+1) → Option (Fin (M+1))`
+(+ `bornOutcome_preimage_some` / `_measurable` / `_ae_isSome`), a.e. coverage
+`bornRegion_ae_cover`, and the indicator-of-disjoint-union bridge
+`indicator_iUnion_disjoint`.
 
 **LF5 honest scope.** Single-system projective tier only. The Born *number* is
 reused from the FS-volume engine (not re-derived); A5 (FS typicality on the
 dilated sector) is posited; the contextual outcome-map slot of
-`LF3/ContextMap.lean` is realised dynamically as outcome *statistics* — a
-per-microstate outcome *function* is owed on `bornRegion` pairwise disjointness.
-Remaining D1 strata: entangled / non-local de-isolation (Bell forces
-non-locality), the A5 sector origin, and the concrete `SectorData` instances
-(which still carry `Φ = id`). All LF5 results are foundational-triple-only and
-AxiomAudit-pinned.
+`LF3/ContextMap.lean` is now realised **both dynamically and definitionally** —
+LF5-F (2026-06-14) discharges the per-microstate outcome *function*
+(`vnPointerOutcome`, deterministic, total off an FS-null set, measurable fibres)
+on `bornRegion` pairwise disjointness, upgrading the capstone's conjunct (5) from
+outcome *statistics* (a sum of cell frequencies) to a single union event per
+pointer; the cell *shapes* remain ψ'-dependent (engine realisation, measures
+forced by Kähler geometry). Remaining D1 strata: entangled / non-local
+de-isolation (Bell forces non-locality), the A5 sector origin, and the concrete
+`SectorData` instances (which still carry `Φ = id`). All LF5 results are
+foundational-triple-only and AxiomAudit-pinned.
 
 ### Empirical: QM-validity regression suite
 

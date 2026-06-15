@@ -57,11 +57,16 @@ wings). LF5 realises the single-system analogue of that context slot
 *dynamically* rather than definitionally: the context is the fixed vN coupling
 plus the apparatus block structure; the per-context state space is the dilated
 ontic `Σ' = ℂℙ^{N·N−1}`; the outcome statistics are the pointer-block
-frequencies. Honestly: a *definitional per-microstate outcome map*
-(microstate ↦ pointer value) is **not** constructed here — it awaits the
-`bornRegion` pairwise-disjointness fact (noted owed in the corpus since the
-Z⊗Z degenerate-witness commit `aeece86`); the capstone delivers outcome
-statistics, not an outcome function.
+frequencies. The *definitional per-microstate outcome map*
+(microstate ↦ pointer value) is now **discharged** in `LF5/PointerOutcome.lean`
+(LF5-F): the `bornRegion` pairwise-disjointness fact (owed since the Z⊗Z
+degenerate-witness commit `aeece86`) is `CSD.LF4.bornRegion_pairwiseDisjoint`,
+the outcome function is `vnPointerOutcome` (deterministic, total off an FS-null
+set, measurable fibres), and `measurement_flow_outcome_frequency` upgrades this
+capstone's conjunct (5) from outcome statistics (a sum of cell frequencies) to a
+single union event per pointer. The five-conjunct text here is kept as the
+statistics-form headline; the outcome-function upgrade is the standalone
+conjunct-(5) theorem in `PointerOutcome.lean`.
 
 ## Honest non-goals (per `specs/lf5-plan.md` §0)
 
