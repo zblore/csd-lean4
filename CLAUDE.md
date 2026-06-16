@@ -643,7 +643,17 @@ SyndromeFlow.lean      — LF5-G (2026-06-15): the 3-qubit bit-flip code's SYNDR
                          syndrome_recovery (transport of bitflip_recovers); headline
                          syndrome_flow_born_volume. Projective/coherent-error tier:
                          Born numbers reused, A5 posited, decoherence/partial-trace
-                         (system→env volume loss) gated on the entangled tier
+                         (system→env volume loss) gated on the entangled tier.
+                         errorSyndrome_synClass3 (machine-checked anchor: synClass3
+                         IS the errorSyndrome index)
+SyndromeOutcome.lean   — LF5-G.2 (2026-06-16): syndrome-granularity coarse-graining
+                         of LF5-D/F, completing the QEC readout to match the rest of
+                         LF5. syndrome_flow_born_frequency (a.s. syndrome-class freq →
+                         syndromeWeight, coarse-grains vnDilation_pointer_frequency);
+                         synOutcome = vnPointerOutcome.map synClass (per-microstate
+                         syndrome outcome map), synOutcome_preimage_some;
+                         syndrome_flow_outcome_frequency (single-event syndrome freq →
+                         syndromeWeight) + _canonical forms. Mechanical, no new physics
 ```
 
 The engine half of LF5-F lives in `LF4/BornRegionDisjoint.lean`:

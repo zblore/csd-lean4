@@ -70,6 +70,7 @@ import CsdLean4.LF5.Capstone
 import CsdLean4.LF5.CapstoneCanonical
 import CsdLean4.LF5.PointerOutcome
 import CsdLean4.LF5.SyndromeFlow
+import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -2624,6 +2625,10 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.synClass_fiber_card
 
+/-- info: 'CSD.LF5.errorSyndrome_synClass3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.errorSyndrome_synClass3
+
 /-- info: 'CSD.LF5.syndromeRegion_fs_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.syndromeRegion_fs_volume
@@ -2639,6 +2644,37 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF5.syndrome_flow_born_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.syndrome_flow_born_volume
+
+-- LF5 QEC syndrome tranche (SyndromeOutcome): the mechanical syndrome-granularity
+-- coarse-graining (synClass) of the pointer-level LF5-D frequency
+-- (vnDilation_pointer_frequency) and LF5-F outcome map (vnPointerOutcome). At N=8:
+-- the syndrome-class block frequencies converge a.s. to syndromeWeight (a finite
+-- class sum of pointer-block limits, tendsto_finset_sum); synOutcome is the
+-- per-microstate syndrome outcome function (vnPointerOutcome.map synClass) whose
+-- some-s fibre is the class-block union; the syndrome outcome event frequency
+-- (a single event per syndrome) converges a.s. to syndromeWeight (union-indicator
+-- split over the genuinely disjoint class cells via bornRegion_pairwiseDisjoint +
+-- e injectivity). Projective / coherent-error tier; Born numbers reused; A5 posited;
+-- decoherence NOT here. Foundational triple only.
+/-- info: 'CSD.LF5.syndrome_flow_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndrome_flow_born_frequency
+
+/-- info: 'CSD.LF5.syndrome_flow_born_frequency_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndrome_flow_born_frequency_canonical
+
+/-- info: 'CSD.LF5.synOutcome_preimage_some' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.synOutcome_preimage_some
+
+/-- info: 'CSD.LF5.syndrome_flow_outcome_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndrome_flow_outcome_frequency
+
+/-- info: 'CSD.LF5.syndrome_flow_outcome_frequency_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.syndrome_flow_outcome_frequency_canonical
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,

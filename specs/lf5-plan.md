@@ -1,7 +1,7 @@
 # LF5 — measurement dynamics on Σ (the D1 frontier), staged plan
 
 **STATUS: COMPLETE 2026-06-11; LF5-F post-plan extension DONE 2026-06-14; LF5-G (QEC syndrome
-flow) DONE 2026-06-15.** LF5-A..E all DONE
+flow) DONE 2026-06-15, LF5-G.2 (syndrome frequency + outcome map) DONE 2026-06-16.** LF5-A..E all DONE
 (A 2026-06-09, B 2026-06-10, C/D/E 2026-06-11); layer headline `measurement_flow_born_frequency`
 (`CsdLean4/LF5/Capstone.lean`). **LF5-F (2026-06-14)**: bornRegion pairwise disjointness →
 the per-microstate outcome map `vnPointerOutcome` → the single-union-event outcome-frequency
@@ -271,16 +271,33 @@ syndrome blocks. No new dilation. Delivered:
   only the weight statistic + matrix recovery — derivable by instantiating `syndromeRegion_fs_volume`
   at the unit errored codeword) fixed in the docstrings in-commit.
 
+**LF5-G.2 — syndrome frequency + per-microstate outcome map  [post-plan; mechanical] — DONE
+2026-06-16** (`CsdLean4/LF5/SyndromeOutcome.lean`): the syndrome-granularity coarse-graining of
+the LF5-D/F pointer-level results, completing the QEC syndrome readout to MATCH the rest of LF5.
+`syndrome_flow_born_frequency` (+`_canonical`): a.s. syndrome-class block frequencies →
+`syndromeWeight ψ s` (coarse-grains `vnDilation_pointer_frequency` over the 2-element class via
+`tendsto_finset_sum`; bridge `syndromeWeight_eq_inner_sum`). `synOutcome := vnPointerOutcome.map
+synClass` (per-microstate *syndrome* outcome `CPN → Option (Fin 4)`, ψ-independent block
+assignment), `synOutcome_preimage_some` (some-`s` fibre = `⋃_{i∈class s} ⋃_n bornRegion ψ' (e
+(n,i))`); `syndrome_flow_outcome_frequency` (+`_canonical`): the SINGLE-event syndrome frequency
+→ `syndromeWeight` (mirrors `measurement_flow_outcome_frequency`: union → disjoint-indicator sum
+over the 16-cell product index via `bornRegion_pairwiseDisjoint` + `e.injective`). Pure
+mechanical assembly, no new physics; foundational-triple-only, AxiomAudit-pinned; audited SOUND
+(tripwire PASS, zero Blocker/Major/Minor). Same commit added the machine-checked QEC anchor
+`errorSyndrome_synClass3` (closing the auditor NIT: `synClass3 x` IS the `errorSyndrome` index,
+`fin_cases <;> rfl`, was docstring-asserted) — upgrading "matched to errorSyndrome" to a theorem.
+
 **Honest scope (explicit).** This is the **projective / coherent-error** half of the CSD ontic
 reading of QEC: the syndrome READOUT is realised as a deterministic measure-preserving flow whose
-block volumes are the syndrome Born weights. The Born *numbers* are reused from the FS-volume
-engine (not re-derived); the recovery-correctness is a transport of the matrix fact; A5 (FS
-typicality on the dilated sector) is posited. **NOT here, gated on the entangled tier:** the
-genuinely-physical error is decoherence (system→environment entanglement), whose "volume loss" is
-the partial-trace step — that needs `Σ_env`, the joint Liouville flow, and partial trace (the K2
-channel infrastructure now exists; partial trace on `Σ` + the non-local de-isolation map do not).
-The `Empirical/CSD/QEC/ThreeQubit.lean` docstring was updated in the same commit to reflect this
-(the stale "CPTP channels not yet built" claim corrected; channels = K2 done).
+block volumes/frequencies are the syndrome Born weights and whose per-microstate outcome is a
+deterministic syndrome function. The Born *numbers* are reused from the FS-volume engine (not
+re-derived); the recovery-correctness is a transport of the matrix fact; A5 (FS typicality on the
+dilated sector) is posited. **NOT here, gated on the entangled tier:** the genuinely-physical
+error is decoherence (system→environment entanglement), whose "volume loss" is the partial-trace
+step — that needs `Σ_env`, the joint Liouville flow, and partial trace (the K2 channel
+infrastructure now exists; partial trace on `Σ` + the non-local de-isolation map do not). The
+`Empirical/CSD/QEC/ThreeQubit.lean` docstring was updated to reflect this (the stale "CPTP
+channels not yet built" claim corrected; channels = K2 done).
 
 ## 3. What this closes, honestly
 

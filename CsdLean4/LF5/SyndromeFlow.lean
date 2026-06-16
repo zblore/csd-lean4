@@ -108,9 +108,9 @@ def q3 : Fin 2 × Fin 2 × Fin 2 ≃ Fin 8 :=
 
 /-- **The syndrome classifier on the triple index.** Maps the computational
 bitstring `(x₁, x₂, x₃)` to its syndrome class in `Fin 4`, matched to
-`CSD.Empirical.QM.QEC.errorSyndrome`: the eigenvalue pair
-`((-1)^{x₁⊕x₂}, (-1)^{x₂⊕x₃})` reads `(+,+) → 0`, `(−,+) → 1`, `(−,−) → 2`,
-`(+,−) → 3`. -/
+`CSD.Empirical.QM.QEC.errorSyndrome` (machine-checked: `errorSyndrome_synClass3`):
+the eigenvalue pair `((-1)^{x₁⊕x₂}, (-1)^{x₂⊕x₃})` reads `(+,+) → 0`, `(−,+) → 1`,
+`(−,−) → 2`, `(+,−) → 3`. -/
 def synClass3 : Fin 2 × Fin 2 × Fin 2 → Fin 4 := fun x =>
   match (x.1 + x.2.1, x.2.1 + x.2.2) with
   | (0, 0) => 0
@@ -129,6 +129,20 @@ class 1 `{100, 011}`, class 2 `{010, 101}`, class 3 `{001, 110}`. -/
 lemma synClass3_eq (x : Fin 2 × Fin 2 × Fin 2) :
     synClass3 x = if x.1 + x.2.1 = 0 then (if x.2.1 + x.2.2 = 0 then 0 else 3)
       else (if x.2.1 + x.2.2 = 0 then 1 else 2) := by
+  fin_cases x <;> rfl
+
+/-- **The classifier IS the `errorSyndrome` index (machine-checked anchor).**
+`synClass3 x` is exactly the `Fin 4` index whose `CSD.Empirical.QM.QEC.errorSyndrome`
+sign-pair equals the stabiliser eigenvalue pair `((-1)^{x₁⊕x₂}, (-1)^{x₂⊕x₃})` of
+the computational basis state `x`. This upgrades the "matched to `errorSyndrome`"
+docstring claim of `synClass3` into a theorem: the labels `0,1,2,3` are not an
+arbitrary convention but the genuine `errorSyndrome` indices. (The complementary
+load-bearing fact — the support of `Xⱼ·logical` lands in class `j` — is
+`syndromeWeight_Xⱼ_logical` below.) -/
+theorem errorSyndrome_synClass3 (x : Fin 2 × Fin 2 × Fin 2) :
+    errorSyndrome (synClass3 x)
+      = ((if x.1 + x.2.1 = 0 then (1 : ℂ) else -1),
+         (if x.2.1 + x.2.2 = 0 then (1 : ℂ) else -1)) := by
   fin_cases x <;> rfl
 
 /-! ## Each syndrome class has exactly two basis states (genuine partition) -/
