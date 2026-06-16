@@ -1,7 +1,8 @@
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
 **STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity);
-K1-B IN PROGRESS (B.1 partial trace); K1-C/D planned.** The QI/QEC-roadmap keystone K1
+K1-B.1 partial trace DONE 2026-06-16; K1-B.2 (Klein → subadditivity) IN PROGRESS;
+K1-C/D planned.** The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
 Holevo / Schumacher / entanglement entropy / quantum thermodynamics.
@@ -84,12 +85,23 @@ overlap matrix `Dᵢⱼ = |⟨aᵢ|bⱼ⟩|²` between the two eigenbases (a Jen
 averaging) — **NOT** the operator convexity (Lieb) that SSA (K1-C) needs. So K1-B is genuinely the
 moderate middle, reachable now. Decomposed:
 
-- **K1-B.1 — partial trace** [NEW infrastructure; low–moderate risk]. Define `partialTraceRight`
+- **K1-B.1 — partial trace** [NEW infrastructure; low–moderate risk] — **DONE 2026-06-16**
+  (`Mathlib/QuantumInfo/PartialTrace.lean`, namespace `QuantumInfo`, Cat-1). `partialTraceRight`
   (`Matrix (n×m) (n×m) ℂ → Matrix n n ℂ`, `(Tr_B M) i j = ∑ₖ M (i,k) (j,k)`) and `partialTraceLeft`;
-  prove linearity, `trace (Tr_B M) = trace M`, `Tr_B (ρ ⊗ₖ σ) = (trace σ) • ρ`, IsHermitian / PSD
-  preservation, and density ↦ density. **Dual-purpose: this is the shared prerequisite with the
-  gated decoherence / entangled D1 tier and the Landauer / ontic-entropy touchpoint** — the only
-  CSD-load-bearing slice of K1. No convexity needed; cleanest piece, do first.
+  delivered: linearity (`_add`/`_smul` + bundled `partialTraceRightₗ`/`partialTraceLeftₗ` LinearMaps),
+  trace preservation `trace (Tr_B M) = trace M` (`partialTraceRight_trace`, via `Fintype.sum_prod_type`),
+  tensor reduction `Tr_B (ρ ⊗ₖ σ) = (trace σ) • ρ` / `Tr_A (ρ ⊗ₖ σ) = (trace ρ) • σ`
+  (`partialTrace{Right,Left}_kronecker`; trace of the **traced-out** factor multiplies the surviving one —
+  2×2⊗2×2 sanity-probed) + the `trace = 1` reductions (`partialTraceRight_kronecker_trace_one` ⟹
+  `Tr_B (ρ_A ⊗ ρ_B) = ρ_A` when `Tr ρ_B = 1`, the K1-B.2 consumer), IsHermitian preservation,
+  PSD preservation (`partialTrace{Right,Left}_posSemidef`, via the `v ⊗ eₖ` witness vectors
+  `wₖ p = if p.2 = k then v p.1 else 0` and `star v ⬝ᵥ (Tr_B M) *ᵥ v = ∑ₖ star wₖ ⬝ᵥ M *ᵥ wₖ ≥ 0`),
+  and density ↦ density (`partialTrace{Right,Left}_density`). Foundational-triple-only, AxiomAudit-pinned
+  (trace/kronecker/posSemidef + density). **Dual-purpose: shared prerequisite with the gated
+  decoherence / entangled D1 tier and the Landauer / ontic-entropy touchpoint** — the only
+  CSD-load-bearing slice of K1. No convexity needed. Honesty: the PSD proof closed cleanly via the
+  `v ⊗ eₖ` witness route (no alternative argument needed). Cleanly Mathlib-upstreamable (no Mathlib
+  matrix partial trace exists).
 - **K1-B.2 — Klein inequality → subadditivity + Araki–Lieb** [the convexity-dependent core;
   moderate–hard]. Klein `S(ρ‖σ) = Tr(ρ log ρ − ρ log σ) ≥ 0` via `convexOn_mul_log` + the
   doubly-stochastic Jensen bookkeeping in the joint eigenbasis; then `S(ρ_AB) ≤ S(ρ_A)+S(ρ_B)`

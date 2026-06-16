@@ -9,6 +9,7 @@ import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 import CsdLean4.Mathlib.QuantumInfo.Entropy
+import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
@@ -610,6 +611,41 @@ arithmetic. -/
 /-- info: 'QuantumInfo.vonNeumannEntropy_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.vonNeumannEntropy_kronecker
+
+-- K1-B.1 (specs/k1-plan.md): matrix partial trace (Mathlib has none). Load-bearing results:
+-- trace preservation (partialTraceRight_trace), tensor reduction with the trace of the
+-- TRACED-OUT factor multiplying the surviving one (partialTraceRight_kronecker), PSD
+-- preservation via the v⊗eₖ witness vectors (partialTraceRight_posSemidef /
+-- partialTraceLeft_posSemidef), and the reduced-state-of-a-density-is-a-density corollaries
+-- (partialTraceRight_density / partialTraceLeft_density). Foundational triple. Shared
+-- prerequisite with the gated decoherence / entangled D1 tier and the Landauer touchpoint.
+/-- info: 'QuantumInfo.partialTraceRight_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceRight_trace
+
+/-- info: 'QuantumInfo.partialTraceRight_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceRight_kronecker
+
+/-- info: 'QuantumInfo.partialTraceLeft_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceLeft_kronecker
+
+/-- info: 'QuantumInfo.partialTraceRight_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceRight_posSemidef
+
+/-- info: 'QuantumInfo.partialTraceLeft_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceLeft_posSemidef
+
+/-- info: 'QuantumInfo.partialTraceRight_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceRight_density
+
+/-- info: 'QuantumInfo.partialTraceLeft_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceLeft_density
 
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation
