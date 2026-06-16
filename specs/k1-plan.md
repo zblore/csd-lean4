@@ -1,7 +1,7 @@
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
-**STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity 2026-06-16);
-K1-B/C/D planned.** The QI/QEC-roadmap keystone K1
+**STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity);
+K1-B IN PROGRESS (B.1 partial trace); K1-C/D planned.** The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
 Holevo / Schumacher / entanglement entropy / quantum thermodynamics.
@@ -71,12 +71,32 @@ foundational-triple-only, AxiomAudit-pinned:
   IS one** (spectral-sum form). Foundational-triple-only, AxiomAudit-pinned. The conditional
   `vonNeumannEntropy_kronecker_of_eigenvalues` is retained for callers holding a sorted
   eigenvalue-product witness.
-- *Deferred:* `S ≤ log d` (concavity of `negMulLog` / Jensen — needs convexity infrastructure;
-  not blocking K1-A).
+- *Deferred (now UNBLOCKED, see K1-B note):* `S ≤ log d` — Mathlib HAS `convexOn_mul_log` /
+  `strictConvexOn_mul_log` (`Analysis/SpecialFunctions/Log/NegMulLog.lean`), so this is a quick
+  scalar-Jensen item; fold into K1-B or do standalone.
 
-### K1-B — subadditivity + Araki–Lieb  [partial trace + Klein; moderate]
-`S(ρ_AB) ≤ S(ρ_A) + S(ρ_B)`, `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)`. Needs **partial trace** (built here;
-shared prerequisite with the decoherence/entangled D1 tier) + the Klein / Gibbs inequality.
+### K1-B — subadditivity + Araki–Lieb  [partial trace + Klein; moderate] — IN PROGRESS
+`S(ρ_AB) ≤ S(ρ_A) + S(ρ_B)`, `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)`. **Convexity recon (2026-06-16):**
+Mathlib HAS the *scalar* convexity `convexOn_mul_log` / `strictConvexOn_mul_log`; it does NOT have
+matrix partial trace (the only `partialTrace` hits are category theory / probability kernels). Klein
+/ subadditivity needs only the SCALAR convexity of `x log x` applied to the doubly-stochastic
+overlap matrix `Dᵢⱼ = |⟨aᵢ|bⱼ⟩|²` between the two eigenbases (a Jensen / doubly-stochastic
+averaging) — **NOT** the operator convexity (Lieb) that SSA (K1-C) needs. So K1-B is genuinely the
+moderate middle, reachable now. Decomposed:
+
+- **K1-B.1 — partial trace** [NEW infrastructure; low–moderate risk]. Define `partialTraceRight`
+  (`Matrix (n×m) (n×m) ℂ → Matrix n n ℂ`, `(Tr_B M) i j = ∑ₖ M (i,k) (j,k)`) and `partialTraceLeft`;
+  prove linearity, `trace (Tr_B M) = trace M`, `Tr_B (ρ ⊗ₖ σ) = (trace σ) • ρ`, IsHermitian / PSD
+  preservation, and density ↦ density. **Dual-purpose: this is the shared prerequisite with the
+  gated decoherence / entangled D1 tier and the Landauer / ontic-entropy touchpoint** — the only
+  CSD-load-bearing slice of K1. No convexity needed; cleanest piece, do first.
+- **K1-B.2 — Klein inequality → subadditivity + Araki–Lieb** [the convexity-dependent core;
+  moderate–hard]. Klein `S(ρ‖σ) = Tr(ρ log ρ − ρ log σ) ≥ 0` via `convexOn_mul_log` + the
+  doubly-stochastic Jensen bookkeeping in the joint eigenbasis; then `S(ρ_AB) ≤ S(ρ_A)+S(ρ_B)`
+  (= `D(ρ_AB ‖ ρ_A ⊗ ρ_B) ≥ 0`) and Araki–Lieb. The doubly-stochastic two-eigenbasis argument is
+  the real work and the place to audit hardest; ATTEMPT and report honestly if a Jensen /
+  doubly-stochastic sub-development turns out multi-stage (it is NOT the SSA wall, but it is more
+  than K1-A).
 
 ### K1-C — strong subadditivity (Lieb–Ruskai)  [HARD; the genuine new-math core]
 `S(ρ_ABC) + S(ρ_B) ≤ S(ρ_AB) + S(ρ_BC)`. Rests on Lieb's concavity / operator convexity of
