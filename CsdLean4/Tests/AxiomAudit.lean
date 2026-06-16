@@ -681,6 +681,22 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.trace_mul_kronecker_one_right
 
+-- K1-B.2 wall closure: the Kronecker-log operator split (cfc_log_kronecker, via the
+-- decomposition-independent cfc_eq_conj_diagonal / Lagrange-interpolation route) and the
+-- von Neumann subadditivity headline S(ρ_AB) ≤ S(ρ_A) + S(ρ_B) (marginals positive-definite,
+-- ρ_AB only PSD -- pure entangled states covered). Foundational triple, Gleason-free.
+/-- info: 'QuantumInfo.cfc_eq_conj_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.cfc_eq_conj_diagonal
+
+/-- info: 'QuantumInfo.cfc_log_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.cfc_log_kronecker
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_subadditive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.vonNeumannEntropy_subadditive
+
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation
 -- of a unit state (sum_prob_eq_one), basis state measured with certainty (prob_basisState).
