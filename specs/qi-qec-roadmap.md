@@ -29,13 +29,17 @@ being separate problems.
 
 ## 1. The four keystone gaps (ranked by downstream reach)
 
-### K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`
+### K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`  [K1-A DONE 2026-06-16]
 Unblocks: Holevo bound, Schumacher compression, accessible information, entanglement
 entropy, subadditivity / strong subadditivity, data-processing inequality, quantum
-thermodynamics. *Mathlib:* matrix `log` via CFC exists; spectral entropy `∑ −λᵢ log λᵢ` is
-assemblable; **concavity / Klein's inequality is not in Mathlib** and is the hard lemma.
-Multi-week, Cat-1 (CSD-free, upstreamable). *CSD angle:* `S(ρ)` is the entropy of the
-volume distribution the state induces on `Σ`.
+thermodynamics. **K1-A (spectral `vonNeumannEntropy` + elementary properties) DONE**
+(`Mathlib/QuantumInfo/Entropy.lean`): operator-form `−Tr(ρ log ρ)`, `S ≥ 0`, pure-state
+`S = 0`, unitary invariance; tensor additivity under an explicit eigenvalue-product hypothesis
+(no Kronecker spectral theorem in Mathlib → K1-A.2). Foundational-triple-only, AxiomAudit-pinned.
+*Mathlib:* matrix `log` via CFC exists; spectral entropy `∑ −λᵢ log λᵢ` assembled from
+`TraceDistance.lean`'s `IsHermitian.cfc`/`re_trace_cfc`; **concavity / Klein's inequality is not
+in Mathlib** and is the hard lemma (K1-C, multi-week). Cat-1 (CSD-free, upstreamable).
+*CSD angle:* `S(ρ)` is the entropy of the volume distribution the state induces on `Σ`.
 
 ### K2 — CPTP channels (Kraus / Choi / Stinespring)
 Unblocks: general no-communication (CPTP form; today only unitary), channel capacities,

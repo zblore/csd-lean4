@@ -1,6 +1,6 @@
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
-**STATUS: PLANNED 2026-06-16; K1-A in progress.** The QI/QEC-roadmap keystone K1
+**STATUS: K1-A DONE 2026-06-16; K1-B/C/D planned.** The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
 Holevo / Schumacher / entanglement entropy / quantum thermodynamics.
@@ -42,18 +42,29 @@ reduce to `negMulLog` facts + eigenvalue facts (PSD ⟹ `λᵢ ≥ 0`; `trace ρ
 
 ## 2. Decomposition (stages, new-vs-reuse, risk)
 
-### K1-A — spectral von Neumann entropy + elementary properties  [REUSE; low risk] — IN PROGRESS
+### K1-A — spectral von Neumann entropy + elementary properties  [REUSE; low risk] — DONE 2026-06-16
 File `CsdLean4/Mathlib/QuantumInfo/Entropy.lean`, namespace `QuantumInfo`, hypothesis style
-(`IsHermitian`/`PosSemidef`/`trace = 1`, matching `TraceDistance.lean`). Deliver:
+(`IsHermitian`/`PosSemidef`/`trace = 1`, matching `TraceDistance.lean`). Delivered,
+foundational-triple-only, AxiomAudit-pinned:
 - `vonNeumannEntropy hρ := ∑ i, Real.negMulLog (hρ.eigenvalues i)`;
-- operator-form identity `S(ρ) = RCLike.re (− trace (ρ * IsHermitian.cfc Real.log))`
-  (the `−Tr ρ log ρ` headline) via `re_trace_cfc`;
-- `S ≥ 0` (eigenvalues in `[0,1]` ⟹ `negMulLog ≥ 0`);
-- `S = 0` for a pure state (rank-1 `ρ = |ψ⟩⟨ψ|`, spectrum `{1,0,…}`);
-- unitary invariance `S(U ρ Uᴴ) = S(ρ)` (eigenvalue invariance);
-- additivity `S(ρ ⊗ σ) = S(ρ) + S(σ)` (Kronecker eigenvalue products).
-- *Stretch / may defer to K1-A.2:* `S ≤ log d` (concavity of `negMulLog` / Jensen — the first
-  spot needing a convexity lemma; defer if it pulls in nontrivial infrastructure).
+- operator-form identities `vonNeumannEntropy_eq_re_trace_cfc`
+  (`S(ρ) = Re Tr(cfc negMulLog ρ)`) and `vonNeumannEntropy_eq_neg_re_trace_mul_log`
+  (`S(ρ) = − Re Tr(cfc (x↦x log x) ρ)` = `−Tr(ρ log ρ)`, with `cfc_id_mul_log` confirming the
+  cfc is genuinely `ρ log ρ`) via `re_trace_cfc`;
+- `vonNeumannEntropy_nonneg`: `S ≥ 0` for a density operator (eigenvalues in `[0,1]` via
+  `eigenvalues_mem_Icc_of_density` ⟹ `Real.negMulLog_nonneg`);
+- `vonNeumannEntropy_eq_zero_of_projection` (`ρ·ρ = ρ` ⟹ spectrum `⊆ {0,1}` ⟹ `S = 0`, via the
+  new `cfc_eq_iff_on_eigenvalues` spectral-injectivity helper) and the named pure-state corollary
+  `vonNeumannEntropy_eq_zero_of_pure` (+ unit trace; non-vacuity noted in docstring);
+- `vonNeumannEntropy_conj_unitary`: `S(U ρ Uᴴ) = S(ρ)` via `charpoly_conj_unitary`
+  (two `charpoly_mul_comm`) + `IsHermitian.eigenvalues_eq_eigenvalues_iff`.
+- **Additivity `vonNeumannEntropy_kronecker_of_eigenvalues`: stated under an EXPLICIT
+  eigenvalue-product hypothesis** (`heig : λ(ρ⊗σ) = λρ·λσ` along a reindexing `e`). Mathlib has
+  **no Kronecker spectral theorem**, so the eigenvalue-product fact is hypothesised (it holds for
+  the genuine spectrum; `negMulLog_mul` + the `∑λ = ∑μ = 1` collapse are proved). Discharging the
+  hypothesis = **K1-A.2** (own clean upstream contribution).
+- *Deferred to K1-A.2:* `S ≤ log d` (concavity of `negMulLog` / Jensen — needs convexity
+  infrastructure; not blocking K1-A).
 
 ### K1-B — subadditivity + Araki–Lieb  [partial trace + Klein; moderate]
 `S(ρ_AB) ≤ S(ρ_A) + S(ρ_B)`, `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)`. Needs **partial trace** (built here;
