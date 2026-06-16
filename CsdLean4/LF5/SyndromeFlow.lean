@@ -71,10 +71,15 @@ recovery restores the logical coordinates).
 
 ## Honest scope
 
-Projective / **coherent-error tier only**. The Born **numbers** are reused from
-the FS-volume = Born engine (`bornRegion_fs_measure_uncond` via
-`vnDilation_pointer_volume`), not re-derived. The FS typicality law on the dilated
-sector (**A5**) is posited. The syndrome partition into blocks is `synClass`, a
+Projective / **coherent-error tier only**. The Born = FS-volume identity is
+**derived** one layer down (the moment-map / Duistermaat–Heckman cluster,
+`fs_born_volume_ratio_N` / `born_frequency_convergence_N`: the FS volume of a
+pure-geometry region equals `‖⟨eᵢ,ψ⟩‖²`, Gleason-free, no Born put in) and
+**imported** here via `vnDilation_pointer_volume` / `bornRegion_fs_measure_uncond`;
+this module re-proves nothing about the number and takes Born as no primitive. Its
+increment is the syndrome-readout **dynamics**. What **is** posited is not Born but
+**A5** — that the sector's typicality law is the Fubini–Study measure; Born = volume
+is a theorem, FS-as-typicality is the sector posit (reducing to D1). The syndrome partition into blocks is `synClass`, a
 fixed `ψ`-independent function; only the underlying cell *shapes*
 (`bornRegion ψ'`) are `ψ'`-dependent (engine realisation mechanism, measures
 forced by Kähler geometry). The **decoherence / partial-trace** origin (the
@@ -481,7 +486,8 @@ preparation `ψ` on the 3-qubit register:
    `syndromeRegion_fs_volume` at the unit-normalised errored codeword.
 
 Pure assembly of the Stratum-1 / Stratum-2 results; the honest-scope ledger
-(coherent-error tier; Born numbers reused; A5 posited; decoherence/partial-trace
+(coherent-error tier; Born = volume derived one layer down and imported, not
+re-proved nor postulated; the posited primitive is A5/FS-typicality; decoherence/partial-trace
 NOT here) is the module docstring. -/
 theorem syndrome_flow_born_volume
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

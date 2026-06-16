@@ -32,10 +32,13 @@ basis, not carved to Born), and the headline `vnNaimark` inhabits
 ## Honest scope
 
 Single-system projective tier (`basisPOVM`, the rank-1 computational-basis
-measurement). The Born **number** is not re-derived here: downstream (LF5-D) it
-comes from the existing FS-volume = Born engine; this module supplies the
-*dynamical origin* of the dilation isometry that engine consumes. The FS
-typicality law on the dilated sector (**A5**) is still posited, not derived.
+measurement). The Born = FS-volume identity is **derived** one layer down (the
+moment-map / Duistermaat–Heckman cluster, `fs_born_volume_ratio_N`, Gleason-free)
+and downstream (LF5-D) **imported**, not re-proved and not postulated; this module
+supplies the *dynamical origin* of the dilation isometry that engine consumes. What
+**is** posited is not Born but **A5** — the Fubini–Study measure as the dilated
+sector's typicality law (a theorem that Born = volume; a posit that FS is the
+typicality measure, reducing to D1).
 Entangled / non-local de-isolation is deferred (`specs/lf5-plan.md` §0).
 
 ## LF5-D obstruction (recorded at planning; RESOLVED)

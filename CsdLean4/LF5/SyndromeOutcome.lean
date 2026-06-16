@@ -41,10 +41,14 @@ dilation, no new flow, no new physics. The module only imports and assembles.
 ## Honest scope
 
 Unchanged from `SyndromeFlow.lean`. Projective / **coherent-error tier only**.
-The Born **numbers** are reused from the FS-volume = Born engine
-(`vnDilation_pointer_volume` / `vnDilation_pointer_frequency`), not re-derived;
-this module just coarse-grains the pointer index by the fixed `synClass`. The FS
-typicality law on the dilated sector (**A5**) is posited. The syndrome partition
+The Born = FS-volume identity is **derived** one layer down (the moment-map /
+Duistermaat–Heckman cluster, `fs_born_volume_ratio_N` /
+`born_frequency_convergence_N`, Gleason-free, no Born put in) and **imported** here
+via `vnDilation_pointer_volume` / `vnDilation_pointer_frequency`; this module
+re-proves nothing about the number — it just coarse-grains the pointer index by the
+fixed `synClass`. Born is taken as no primitive. What **is** posited is **A5**: that
+the sector's typicality law is the Fubini–Study measure (Born = volume is a theorem;
+FS-as-typicality is the sector posit, reducing to D1). The syndrome partition
 into blocks is `synClass`, a fixed **ψ-independent** function (the pre-registered
 tripwire: `ψ`/`ψ'` enter only the cell *shapes* `bornRegion ψ'`, never the index
 sets). The **decoherence / partial-trace** origin of incoherent errors is **NOT**

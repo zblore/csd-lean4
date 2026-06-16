@@ -70,12 +70,17 @@ conjunct-(5) theorem in `PointerOutcome.lean`.
 
 ## Honest non-goals (per `specs/lf5-plan.md` §0)
 
-- The Born **number** is reused from the FS-volume = Born engine
-  (`bornRegion_fs_measure_uncond` via `povm_born_eq_dilated_volume_uncond`),
-  not re-derived here.
-- The FS typicality law on the dilated sector is the **A5** posit (i.i.d.
-  trials with law `fubiniStudyMeasure`, the sector enlarged by the apparatus),
-  posited, not derived from the flow.
+- The Born = FS-volume identity is **derived** one layer down (the moment-map /
+  Duistermaat–Heckman cluster, `fs_born_volume_ratio_N` /
+  `born_frequency_convergence_N`: the FS volume of a pure-geometry region equals
+  `‖⟨eᵢ,ψ⟩‖²`, Gleason-free, no Born put in) and **imported** here (via
+  `povm_born_eq_dilated_volume_uncond` / `bornRegion_fs_measure_uncond`). This
+  module re-proves nothing about the number and takes Born as no primitive; its
+  increment is the measurement **dynamics** (`Φ_vN ≠ id`).
+- What **is** posited is not Born but **A5**: that the (apparatus-enlarged)
+  sector's typicality law is the Fubini–Study measure (i.i.d. trials with law
+  `fubiniStudyMeasure`). Born = volume is a theorem; FS-as-the-typicality-measure
+  is the sector posit, not derived from the flow (it reduces to D1).
 - Entangled / non-local de-isolation is deferred: Bell forces a non-local
   de-isolation map, given the corpus CHSH `= 2√2`. Single-system projective
   tier only.

@@ -642,8 +642,10 @@ SyndromeFlow.lean      — LF5-G (2026-06-15): the 3-qubit bit-flip code's SYNDR
                          syndromeWeight_Xⱼ_logical (deterministic syndrome on block j),
                          syndrome_recovery (transport of bitflip_recovers); headline
                          syndrome_flow_born_volume. Projective/coherent-error tier:
-                         Born numbers reused, A5 posited, decoherence/partial-trace
-                         (system→env volume loss) gated on the entangled tier.
+                         Born = volume derived one layer down (DH cluster) and
+                         imported (not postulated); A5/FS-typicality posited;
+                         decoherence/partial-trace (system→env volume loss) gated
+                         on the entangled tier.
                          errorSyndrome_synClass3 (machine-checked anchor: synClass3
                          IS the errorSyndrome index)
 SyndromeOutcome.lean   — LF5-G.2 (2026-06-16): syndrome-granularity coarse-graining
@@ -663,9 +665,13 @@ every ψ ≠ 0), the per-microstate `bornOutcome : CPN (M+1) → Option (Fin (M+
 `bornRegion_ae_cover`, and the indicator-of-disjoint-union bridge
 `indicator_iUnion_disjoint`.
 
-**LF5 honest scope.** Single-system projective tier only. The Born *number* is
-reused from the FS-volume engine (not re-derived); A5 (FS typicality on the
-dilated sector) is posited; the contextual outcome-map slot of
+**LF5 honest scope.** Single-system projective tier only. The Born = FS-volume
+identity is *derived* one layer down (the moment-map / Duistermaat–Heckman cluster,
+`fs_born_volume_ratio_N` / `born_frequency_convergence_N`, Gleason-free, no Born put
+in) and *imported* by LF5, not re-proved and not postulated; LF5's increment is the
+measurement *dynamics* (`Φ_vN ≠ id`). What *is* posited is not Born but A5 (the
+Fubini–Study measure as the dilated sector's typicality law); A5 reduces to D1. The
+contextual outcome-map slot of
 `LF3/ContextMap.lean` is now realised **both dynamically and definitionally** —
 LF5-F (2026-06-14) discharges the per-microstate outcome *function*
 (`vnPointerOutcome`, deterministic, total off an FS-null set, measurable fibres)

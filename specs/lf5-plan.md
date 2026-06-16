@@ -183,7 +183,8 @@ the de-isolation reading, the context-fixedness distinction (flow + block partit
 forced by the unconditional engine, not cut to fit), the ContextMap connection (the LF3
 contextual outcome-map slot realised dynamically as outcome *statistics*; a per-microstate
 outcome *function* is owed on `bornRegion` pairwise disjointness, open since `aeece86`), and
-the named non-goals (Born reused not re-derived; A5 posited; entanglement deferred).
+the named non-goals (Born = volume derived one layer down and imported here, not re-proved nor
+postulated; the posited primitive is A5/FS-typicality, not Born; entanglement deferred).
 Foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND (tripwire clean: the pointer
 index enters only through the fixed block `{(n,i)}` via `e (n,i)`; all five conjuncts
 verbatim-match their sources; hypotheses inhabited at a concrete N=2 i.i.d. witness with
@@ -199,7 +200,8 @@ and the context-fixed pointer regions `blockProj i`, repeated trials (FS-typical
 fibre, the isolated-region typicality) ⟹ pointer-`i` empirical frequency → `‖⟨eᵢ,ψ⟩‖²`, with
 `Φ_vN ≠ id` the fixed de-isolation dynamics. Docstring records: single-system projective; flow
 fixed (vN permutation coupling); pointer region context-fixed (apparatus basis), not carved;
-Born from the reused FS-volume engine, now dynamical; entanglement/non-locality + A5 deferred.
+Born = volume derived one layer down (DH cluster) and imported, now exercised dynamically (not
+postulated); the posited primitive is A5/FS-typicality; entanglement/non-locality + A5 deferred.
 Connect to `LF3/ContextMap.lean` (`MeasurementContext`): LF5 realises that context slot
 *dynamically* rather than definitionally.
 
@@ -290,9 +292,12 @@ mechanical assembly, no new physics; foundational-triple-only, AxiomAudit-pinned
 **Honest scope (explicit).** This is the **projective / coherent-error** half of the CSD ontic
 reading of QEC: the syndrome READOUT is realised as a deterministic measure-preserving flow whose
 block volumes/frequencies are the syndrome Born weights and whose per-microstate outcome is a
-deterministic syndrome function. The Born *numbers* are reused from the FS-volume engine (not
-re-derived); the recovery-correctness is a transport of the matrix fact; A5 (FS typicality on the
-dilated sector) is posited. **NOT here, gated on the entangled tier:** the genuinely-physical
+deterministic syndrome function. The Born = FS-volume identity is *derived* one layer down (the
+moment-map / Duistermaat–Heckman cluster, `fs_born_volume_ratio_N` / `born_frequency_convergence_N`,
+Gleason-free, no Born put in) and *imported* here, not re-proved and not postulated; the
+recovery-correctness is a transport of the matrix fact. What *is* posited is not Born but **A5** —
+the Fubini–Study measure as the (dilated) sector's typicality law (Born = volume is a theorem;
+FS-as-typicality is the sector posit, reducing to D1). **NOT here, gated on the entangled tier:** the genuinely-physical
 error is decoherence (system→environment entanglement), whose "volume loss" is the partial-trace
 step — that needs `Σ_env`, the joint Liouville flow, and partial trace (the K2 channel
 infrastructure now exists; partial trace on `Σ` + the non-local de-isolation map do not). The

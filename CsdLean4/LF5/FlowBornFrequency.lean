@@ -34,12 +34,18 @@ genuinely collapse to FS-null sets contributing `0` to each pointer block.
 
 ## Honest scope
 
-The Born **number** is reused from the FS-volume = Born engine
-(`bornRegion_fs_measure_uncond`), not re-derived here; this module's content is
-the wiring of the *dynamically realised* dilation (`vnNaimark`, LF5-C) into
-that engine without genericity. The FS typicality law on the dilated sector is
-the **A5** posit (i.i.d. trials with law `fubiniStudyMeasure`), still posited,
-not derived from the flow. LF5-E wires the context-fixed pointer reading +
+The Born = FS-volume identity is **derived** one layer down — the moment-map /
+Duistermaat–Heckman cluster (`fs_born_volume_ratio_N`,
+`born_frequency_convergence_N`) computes the FS volume of a pure-geometry region
+and out comes `‖⟨eᵢ,ψ⟩‖²`, with no Born put in, Gleason-free. This module
+**imports** that identity (via `bornRegion_fs_measure_uncond`); it does not
+re-prove it, and it does not take Born as a primitive. The increment here is the
+*dynamically realised* dilation (`vnNaimark`, LF5-C) wired into that engine
+without genericity — the measurement **dynamics** (`Φ ≠ id`), not the number.
+What **is** posited is not Born but **A5**: that the sector's typicality law is
+the Fubini–Study measure (i.i.d. trials with law `fubiniStudyMeasure`). Born =
+volume is a theorem; FS-as-the-typicality-measure is the sector posit, still
+undischarged (it reduces to D1, the dynamical sector origin). LF5-E wires the context-fixed pointer reading +
 capstone; entangled / non-local de-isolation is deferred
 (`specs/lf5-plan.md` §0).
 
