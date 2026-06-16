@@ -10,6 +10,7 @@ import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 import CsdLean4.Mathlib.QuantumInfo.Entropy
 import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
@@ -646,6 +647,39 @@ arithmetic. -/
 /-- info: 'QuantumInfo.partialTraceLeft_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.partialTraceLeft_density
+
+-- K1-B.2 (specs/k1-plan.md): quantum relative entropy + Klein's inequality. relEntropy_nonneg /
+-- klein_inequality are Klein's inequality D(ρ‖σ) ≥ 0 for σ POSITIVE-DEFINITE (load-bearing: the
+-- junk-log finite expression can be negative when supp ρ ⊄ supp σ). The technical core is the
+-- DOUBLY-STOCHASTIC overlap matrix Dᵢⱼ = ‖Vᵢⱼ‖² (overlapV_row_sum / overlapV_col_sum) and the
+-- cross-term spectral expansion Tr(ρ · cfc g σ) = ∑ᵢⱼ pᵢ g(qⱼ) ‖Vᵢⱼ‖² (trace_mul_cfc_eq), which
+-- expresses a trace of a product of two operators in DIFFERENT eigenbases. The reduced-trace
+-- identities (trace_mul_kronecker_one_right / _left, Tr(M(X⊗I)) = Tr(Tr_B M · X)) are the
+-- subadditivity prerequisites. Foundational triple. The Kronecker-log split and the resulting
+-- subadditivity headline are the remaining K1-B.2 wall (see specs/k1-plan.md).
+/-- info: 'QuantumInfo.relEntropy_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.relEntropy_nonneg
+
+/-- info: 'QuantumInfo.klein_inequality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.klein_inequality
+
+/-- info: 'QuantumInfo.trace_mul_cfc_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.trace_mul_cfc_eq
+
+/-- info: 'QuantumInfo.overlapV_row_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.overlapV_row_sum
+
+/-- info: 'QuantumInfo.overlapV_col_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.overlapV_col_sum
+
+/-- info: 'QuantumInfo.trace_mul_kronecker_one_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.trace_mul_kronecker_one_right
 
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation

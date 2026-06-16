@@ -1,8 +1,10 @@
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
 **STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity);
-K1-B.1 partial trace DONE 2026-06-16; K1-B.2 (Klein → subadditivity) IN PROGRESS;
-K1-C/D planned.** The QI/QEC-roadmap keystone K1
+K1-B.1 partial trace DONE 2026-06-16; K1-B.2 PARTIAL 2026-06-16 — Klein's inequality
+(PD σ) + relative entropy + doubly-stochastic cross-term machinery + reduced-trace
+identities LANDED; subadditivity headline + Araki–Lieb WALLED on the Kronecker-log
+operator split (see K1-B.2 entry); K1-C/D planned.** The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
 Holevo / Schumacher / entanglement entropy / quantum thermodynamics.
@@ -102,13 +104,52 @@ moderate middle, reachable now. Decomposed:
   CSD-load-bearing slice of K1. No convexity needed. Honesty: the PSD proof closed cleanly via the
   `v ⊗ eₖ` witness route (no alternative argument needed). Cleanly Mathlib-upstreamable (no Mathlib
   matrix partial trace exists).
-- **K1-B.2 — Klein inequality → subadditivity + Araki–Lieb** [the convexity-dependent core;
-  moderate–hard]. Klein `S(ρ‖σ) = Tr(ρ log ρ − ρ log σ) ≥ 0` via `convexOn_mul_log` + the
-  doubly-stochastic Jensen bookkeeping in the joint eigenbasis; then `S(ρ_AB) ≤ S(ρ_A)+S(ρ_B)`
-  (= `D(ρ_AB ‖ ρ_A ⊗ ρ_B) ≥ 0`) and Araki–Lieb. The doubly-stochastic two-eigenbasis argument is
-  the real work and the place to audit hardest; ATTEMPT and report honestly if a Jensen /
-  doubly-stochastic sub-development turns out multi-stage (it is NOT the SSA wall, but it is more
-  than K1-A).
+- **K1-B.2 — Klein inequality → subadditivity + Araki–Lieb** [PARTIAL 2026-06-16,
+  `Mathlib/QuantumInfo/Subadditivity.lean`].
+
+  **LANDED (sorry-free, foundational-triple-only, AxiomAudit-pinned):**
+  - `overlapV` (`V = U_ρᴴ U_σ`) + double stochasticity `overlapV_row_sum` / `overlapV_col_sum`
+    (`∑ⱼ ‖Vᵢⱼ‖² = ∑ᵢ ‖Vᵢⱼ‖² = 1` from `Vᴴ V = V Vᴴ = 1`).
+  - the **cross-term spectral expansion** `trace_mul_cfc_eq`:
+    `Tr(ρ · cfc g σ) = ∑ᵢⱼ pᵢ · g(qⱼ) · ‖Vᵢⱼ‖²` (the trace of a product of two operators in
+    DIFFERENT eigenbases; cyclic reduction `trace_mul_cfc_cyclic` + diagonal expansion
+    `trace_diag_overlap_expand`, plus `re_trace_mul_cfc_eq`).
+  - `relEntropy ρ σ := Re Tr(ρ log ρ) − Re Tr(ρ log σ)` + `re_trace_self_log`
+    (`Re Tr(ρ log ρ) = ∑ pᵢ log pᵢ`).
+  - **Klein's inequality** `relEntropy_nonneg` / `klein_inequality`: `D(ρ‖σ) ≥ 0` for `ρ` a
+    density and **`σ` POSITIVE-DEFINITE**. Route: `D = ∑ᵢⱼ ‖Vᵢⱼ‖² pᵢ (log pᵢ − log qⱼ) ≥
+    ∑ᵢⱼ ‖Vᵢⱼ‖² (pᵢ − qⱼ) = 1 − 1 = 0` via the **scalar** `Real.log_le_sub_one_of_pos`
+    (`log(qⱼ/pᵢ) ≤ qⱼ/pᵢ − 1`) + BOTH row and column stochasticity. **No concave-Jensen step**
+    (deliberate: Jensen `∑ w log x ≤ log(∑ w x)` over `Ici 0` is FALSE at the Mathlib junk
+    `log 0 = 0`; the scalar route is robust at zero weights and `pᵢ = 0`).
+  - reduced-trace identities `trace_mul_kronecker_one_right` / `trace_mul_one_kronecker_left`:
+    `Tr(M · (X ⊗ I)) = Tr(Tr_B(M) · X)` (basis-free; the subadditivity bridge).
+
+  **THE WALL (subadditivity headline + Araki–Lieb, NOT landed):** two genuine obstructions.
+  1. **PD-`σ` is load-bearing, not cosmetic.** With Mathlib's junk `Real.log 0 = 0`, the
+     *finite* expression `Tr(ρ log ρ) − Tr(ρ log σ)` can be NEGATIVE when `supp ρ ⊄ supp σ`
+     (the true `D(ρ‖σ) = +∞` case); Klein's `≥ 0` is false without a support hypothesis.
+     `σ` PD is the standard clean sufficient condition. Subadditivity via Klein at `σ = ρ_A⊗ρ_B`
+     therefore needs either `ρ_A, ρ_B` PD or the support-projection argument
+     (`supp ρ_AB ⊆ supp(ρ_A⊗ρ_B)` always, but proving it in Lean is itself a sub-development).
+  2. **The Kronecker-log operator split** `cfc log (ρ_A ⊗ ρ_B) = log ρ_A ⊗ I + I ⊗ log ρ_B`
+     (item (e) of the route) is the predicted hard sub-problem and is NOT closed. Mathlib has
+     no commuting-CFC-log-additivity and no direct cfc-conjugation-covariance lemma. The viable
+     Lean route is `StarAlgHomClass.map_cfc` applied to the conjugation `*`-automorphism
+     `Unitary.conjStarAlgAut` (covariance `cfc f (U A Uᴴ) = U (cfc f A) Uᴴ`), which drags three
+     real obligations — continuity of the conjugation linear map
+     (`LinearMap.continuous_of_finiteDimensional`, NOT `fun_prop`-provable as-is),
+     `ContinuousOn Real.log (spectrum)` (needs PD), and `IsSelfAdjoint` predicate preservation —
+     PLUS the W-basis diagonal identity `log(λ_a μ_b) = log λ_a + log μ_b` over `W = U_A ⊗ U_B`
+     (the sorted-eigenvalue-vs-W-basis mismatch is the same subtlety `spectral_sum_kronecker`
+     sidesteps for SUMS, but here the OPERATOR is needed). This is a multi-lemma development,
+     correctly flagged in the route as item (e). Once (e) lands, subadditivity follows from
+     Klein + `re_trace_self_log` + the reduced-trace identities (all already in the file).
+     Araki–Lieb then follows from subadditivity on a purification.
+
+  The doubly-stochastic two-eigenbasis cross-term — predicted as the place to audit hardest —
+  is **closed** (`trace_mul_cfc_eq`); the actual residual wall is the operator-level
+  Kronecker-log split, not the doubly-stochastic step.
 
 ### K1-C — strong subadditivity (Lieb–Ruskai)  [HARD; the genuine new-math core]
 `S(ρ_ABC) + S(ρ_B) ≤ S(ρ_AB) + S(ρ_BC)`. Rests on Lieb's concavity / operator convexity of
