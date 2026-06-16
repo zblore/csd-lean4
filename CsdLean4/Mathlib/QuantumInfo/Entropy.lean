@@ -2,6 +2,7 @@ import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.Kronecker
+import Mathlib.Analysis.Matrix.Spectrum
 
 /-!
 # Spectral von Neumann entropy (K1-A)
@@ -31,22 +32,33 @@ Delivered:
   vanishes there;
 * **unitary invariance** `S(U ρ Uᴴ) = S(ρ)` (`vonNeumannEntropy_conj_unitary`), via charpoly
   conjugation-invariance + `eigenvalues_eq_eigenvalues_iff`;
-* **additivity on tensor products** `S(ρ ⊗ σ) = S(ρ) + S(σ)` under an explicit
-  eigenvalue-product hypothesis (`vonNeumannEntropy_kronecker_of_eigenvalues`); see the
-  honesty note below.
+* **unconditional additivity on tensor products** `S(ρ ⊗ σ) = S(ρ) + S(σ)` for density
+  operators (PSD, unit trace) (`vonNeumannEntropy_kronecker`), via the **Kronecker spectrum**
+  `spectral_sum_kronecker` (the eigenvalues of `ρ ⊗ₖ σ` are the products `λᵢ μⱼ`, in
+  permutation-invariant spectral-sum form); the explicit-hypothesis form
+  `vonNeumannEntropy_kronecker_of_eigenvalues` is retained for callers holding a sorted
+  eigenvalue-product witness. See the note below.
 
-## Honesty note on additivity
+## Note on the Kronecker spectrum (K1-A.2, done)
 
 Mathlib has **no** lemma identifying the eigenvalues of a Kronecker product `ρ ⊗ₖ σ` with the
-products `λᵢ μⱼ` of the factor eigenvalues (no Kronecker spectral theorem). Deriving it from
-scratch is a multi-hour development (it is its own clean upstream contribution). So additivity is
-stated under the explicit hypothesis that the `ρ ⊗ₖ σ` eigenvalues are reindexed products; the
-`negMulLog`-product algebra and the `∑ λ = ∑ μ = 1` collapse are then proved. The hypothesis is
-non-vacuous — it holds for the genuine Kronecker spectrum — and discharging it is the deferred
-K1-A.2 item. See `specs/k1-plan.md`.
+products `λᵢ μⱼ` of the factor eigenvalues (no Kronecker spectral theorem). We supply it here, in
+the spectral-sum form that additivity needs (`spectral_sum_kronecker`):
+
+  `∑_c g(λ(ρ⊗σ)_c) = ∑_{i,j} g(λρ(i)·λσ(j))`  for every `g : ℝ → ℝ`.
+
+The route is **charpoly-based and permutation-invariant**, so it sidesteps the subtlety that
+Mathlib's `eigenvalues` is the *sorted* spectrum (matching it pointwise to the products along an
+ad-hoc reindexing is the easy-to-get-wrong step; the spectral *sum* avoids it). Concretely:
+`ρ⊗σ = (U_ρ⊗U_σ) · diagonal(λρ·λσ) · (U_ρ⊗U_σ)ᴴ` (`kronecker_eq_conj_diagonal_eigenvalues`,
+from the two spectral theorems + `mul_kronecker_mul` + `diagonal_kronecker_diagonal`), so its
+charpoly is `∏_p (X − ↑(λρ(p.1)·λσ(p.2)))` (`charpoly_conj_unitary` + `charpoly_diagonal`); the
+spectral sum is then read off the charpoly root multiset by `spectral_sum_eq_of_charpoly_prod`.
+No external axiom is incurred (foundational triple only). This discharges the former K1-A.2 item;
+the conditional `vonNeumannEntropy_kronecker_of_eigenvalues` is kept as a convenience.
 -/
 
-open Matrix
+open Matrix Polynomial
 open scoped ComplexOrder Kronecker
 
 namespace QuantumInfo
@@ -229,10 +241,11 @@ theorem negMulLog_mul {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) :
 that the eigenvalues of `ρ ⊗ₖ σ` are the products `λ(e c).1 · μ(e c).2` of factor eigenvalues
 along a reindexing `e : (n × m) ≃ k` of the Kronecker index.
 
-This is the **honest weakened form of (6)**: Mathlib has no Kronecker spectral theorem, so the
-eigenvalue-product fact is taken as a hypothesis (it holds for the genuine Kronecker spectrum;
-discharging it is the deferred K1-A.2 item — see the module docstring and `specs/k1-plan.md`).
-The `negMulLog`-product algebra and the `∑ λ = ∑ μ = 1` collapse are proved here.
+This is the **conditional form**: it takes the eigenvalue-product fact as a hypothesis. The
+unconditional headline `vonNeumannEntropy_kronecker` discharges it via the Kronecker spectrum
+`spectral_sum_kronecker` (K1-A.2, done); this form is retained for callers that already hold a
+sorted eigenvalue-product witness along a specific reindexing `e`. The `negMulLog`-product
+algebra and the `∑ λ = ∑ μ = 1` collapse are proved here.
 
 `hsumρ`/`hsumσ` are the unit-trace conditions `∑ λᵢ = ∑ μⱼ = 1`; `hnnρ`/`hnnσ` the
 PSD non-negativity of the factor eigenvalues. -/
@@ -269,6 +282,146 @@ theorem vonNeumannEntropy_kronecker_of_eigenvalues
     rw [show (∑ x : n, ∑ y : m, hρ.eigenvalues x * Real.negMulLog (hσ.eigenvalues y))
         = ∑ x : n, hρ.eigenvalues x * ∑ y : m, Real.negMulLog (hσ.eigenvalues y) from
           Finset.sum_congr rfl fun x _ => by rw [← Finset.mul_sum]]
+    rw [← Finset.sum_mul, hsumρ, one_mul]
+
+/-! ## The Kronecker spectrum (discharging the K1-A.2 hypothesis) -/
+
+/-- **Spectral-sum diagonalization invariance (charpoly form).** If a Hermitian `A` has
+characteristic polynomial `∏ c, (X − ↑(d c))` for a real `d : k → ℝ` (i.e. its spectrum, with
+multiplicity, is the multiset `{d c}`), then for every `g : ℝ → ℝ` the spectral sum
+`∑ c, g(λᵢ(A))` equals `∑ c, g(d c)`.
+
+The eigenvalue function `hA.eigenvalues` is Mathlib's *sorted* spectrum, so it is **not** equal to
+`d` pointwise; only the *multiset* `{λᵢ}` equals `{d c}` (both are the charpoly root multiset, via
+`roots_charpoly_eq_eigenvalues` and `roots_prod`). The spectral *sum* is permutation-invariant,
+which is what lets us pass from the multiset equality to the sum equality (mapping by `g ∘ re` and
+summing). This is the tool that sidesteps the eigenvalue-sorting subtlety. -/
+theorem spectral_sum_eq_of_charpoly_prod
+    {k : Type*} [Fintype k] [DecidableEq k] {A : Matrix k k ℂ} (hA : A.IsHermitian)
+    (d : k → ℝ) (g : ℝ → ℝ)
+    (h : A.charpoly = ∏ c, (X - C ((RCLike.ofReal (d c)) : ℂ))) :
+    ∑ c, g (hA.eigenvalues c) = ∑ c, g (d c) := by
+  have hroots1 : A.charpoly.roots
+      = Multiset.map (RCLike.ofReal ∘ hA.eigenvalues) Finset.univ.val :=
+    hA.roots_charpoly_eq_eigenvalues
+  have hroots2 : A.charpoly.roots
+      = Multiset.map (fun c => (RCLike.ofReal (d c) : ℂ)) Finset.univ.val := by
+    rw [h, Polynomial.roots_prod _ _ (by
+      simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero])]
+    simp
+  have hmap : Multiset.map (RCLike.ofReal ∘ hA.eigenvalues) Finset.univ.val
+      = Multiset.map (fun c => (RCLike.ofReal (d c) : ℂ)) Finset.univ.val := by
+    rw [← hroots1, hroots2]
+  have hcongr := congrArg (fun s => (Multiset.map (fun z : ℂ => g (RCLike.re z)) s).sum) hmap
+  simp only [Multiset.map_map, Function.comp_apply, RCLike.ofReal_re] at hcongr
+  rw [Finset.sum, Finset.sum]
+  exact hcongr
+
+/-- **The Kronecker product is unitarily similar to the diagonal of eigenvalue products.**
+With `W := U_ρ ⊗ U_σ` (the Kronecker of the eigenvector unitaries),
+`ρ ⊗ₖ σ = W · diagonal(λρ(p.1)·λσ(p.2)) · Wᴴ`. From the two spectral theorems
+`ρ = U_ρ diag(λρ) U_ρᴴ`, `σ = U_σ diag(λσ) U_σᴴ`, `mul_kronecker_mul` (×2), and
+`diagonal_kronecker_diagonal`. -/
+theorem kronecker_eq_conj_diagonal_eigenvalues {m : Type*} [Fintype m] [DecidableEq m]
+    {ρ : Matrix n n ℂ} {σ : Matrix m m ℂ} (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
+    (ρ ⊗ₖ σ)
+      = ((hρ.eigenvectorUnitary : Matrix n n ℂ) ⊗ₖ (hσ.eigenvectorUnitary : Matrix m m ℂ))
+        * diagonal (fun p : n × m =>
+            (RCLike.ofReal (hρ.eigenvalues p.1) : ℂ) * RCLike.ofReal (hσ.eigenvalues p.2))
+        * star ((hρ.eigenvectorUnitary : Matrix n n ℂ)
+            ⊗ₖ (hσ.eigenvectorUnitary : Matrix m m ℂ)) := by
+  conv_lhs => rw [hρ.spectral_theorem, hσ.spectral_theorem,
+    Unitary.conjStarAlgAut_apply, Unitary.conjStarAlgAut_apply]
+  simp only [Matrix.star_eq_conjTranspose, conjTranspose_kronecker]
+  rw [← diagonal_kronecker_diagonal (fun i => (RCLike.ofReal (hρ.eigenvalues i) : ℂ))
+        (fun j => (RCLike.ofReal (hσ.eigenvalues j) : ℂ)),
+    mul_kronecker_mul, mul_kronecker_mul]
+  rfl
+
+/-- **The Kronecker eigenvector-unitary is unitary:** `(U_ρ ⊗ U_σ)ᴴ · (U_ρ ⊗ U_σ) = 1`. From
+`conjTranspose_kronecker`, `mul_kronecker_mul`, `one_kronecker_one`. -/
+theorem star_kronecker_eigenvectorUnitary_mul_self {m : Type*} [Fintype m] [DecidableEq m]
+    {ρ : Matrix n n ℂ} {σ : Matrix m m ℂ} (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
+    star ((hρ.eigenvectorUnitary : Matrix n n ℂ) ⊗ₖ (hσ.eigenvectorUnitary : Matrix m m ℂ))
+      * ((hρ.eigenvectorUnitary : Matrix n n ℂ) ⊗ₖ (hσ.eigenvectorUnitary : Matrix m m ℂ))
+      = 1 := by
+  rw [Matrix.star_eq_conjTranspose, conjTranspose_kronecker, ← Matrix.star_eq_conjTranspose,
+    ← Matrix.star_eq_conjTranspose, ← mul_kronecker_mul,
+    Unitary.coe_star_mul_self, Unitary.coe_star_mul_self, one_kronecker_one]
+
+/-- **The Kronecker spectrum (eigenvalue-product fact).** The spectral sum of any `g : ℝ → ℝ`
+over the eigenvalues of `ρ ⊗ₖ σ` equals the double sum over the products `λρ(i)·λσ(j)`:
+
+  `∑_c g(λ(ρ⊗σ)_c) = ∑_{i,j} g(λρ(i)·λσ(j))`.
+
+This is the load-bearing fact that discharges the `heig` hypothesis of
+`vonNeumannEntropy_kronecker_of_eigenvalues`. Proof route: `ρ⊗σ` is unitarily similar to
+`diagonal(λρ·λσ)` (`kronecker_eq_conj_diagonal_eigenvalues`), so its charpoly is
+`∏ p, (X − ↑(λρ(p.1)·λσ(p.2)))` (`charpoly_conj_unitary` + `charpoly_diagonal`); the spectral sum
+is then read off the charpoly root multiset by `spectral_sum_eq_of_charpoly_prod`, which is
+permutation-invariant and so avoids matching Mathlib's *sorted* `eigenvalues` to the products
+pointwise. No Kronecker spectral theorem is assumed; this **is** one (in spectral-sum form). -/
+theorem spectral_sum_kronecker {m : Type*} [Fintype m] [DecidableEq m]
+    {ρ : Matrix n n ℂ} {σ : Matrix m m ℂ} (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian)
+    (g : ℝ → ℝ) :
+    ∑ c, g ((isHermitian_kronecker hρ hσ).eigenvalues c)
+      = ∑ i, ∑ j, g (hρ.eigenvalues i * hσ.eigenvalues j) := by
+  -- the charpoly of ρ⊗σ is the product of real linear factors X − ↑(λρ·λσ).
+  have hchar : (ρ ⊗ₖ σ).charpoly
+      = ∏ p : n × m, (X - C ((RCLike.ofReal (hρ.eigenvalues p.1 * hσ.eigenvalues p.2)) : ℂ)) := by
+    rw [kronecker_eq_conj_diagonal_eigenvalues hρ hσ,
+      charpoly_conj_unitary (star_kronecker_eigenvectorUnitary_mul_self hρ hσ),
+      charpoly_diagonal]
+    exact Finset.prod_congr rfl fun p _ => by rw [RCLike.ofReal_mul]
+  -- read the spectral sum off the root multiset, then re-index the product over n × m.
+  rw [spectral_sum_eq_of_charpoly_prod (isHermitian_kronecker hρ hσ)
+    (fun p => hρ.eigenvalues p.1 * hσ.eigenvalues p.2) g hchar,
+    ← Finset.univ_product_univ, Finset.sum_product]
+
+/-- **Unconditional additivity of the von Neumann entropy on tensor products:**
+`S(ρ ⊗ σ) = S(ρ) + S(σ)` for two density operators `ρ, σ` (PSD, unit trace). The
+eigenvalue-product hypothesis of `vonNeumannEntropy_kronecker_of_eigenvalues` is discharged here
+via the Kronecker spectrum `spectral_sum_kronecker`; the `negMulLog`-product algebra
+(`negMulLog_mul`) and the `∑λ = ∑μ = 1` collapse close the argument.
+
+This is **K1-A.2** of `specs/k1-plan.md`, now done: additivity holds with no spectral hypothesis,
+only the density conditions. (The conditional form
+`vonNeumannEntropy_kronecker_of_eigenvalues` is retained for callers that already hold a sorted
+eigenvalue-product witness.) -/
+theorem vonNeumannEntropy_kronecker {m : Type*} [Fintype m] [DecidableEq m]
+    {ρ : Matrix n n ℂ} {σ : Matrix m m ℂ}
+    (hpsdρ : ρ.PosSemidef) (hpsdσ : σ.PosSemidef)
+    (htrρ : ρ.trace = 1) (htrσ : σ.trace = 1) :
+    vonNeumannEntropy (isHermitian_kronecker hpsdρ.1 hpsdσ.1)
+      = vonNeumannEntropy hpsdρ.1 + vonNeumannEntropy hpsdσ.1 := by
+  -- unit-trace ⟹ eigenvalue sums are 1.
+  have hsumρ : ∑ i, hpsdρ.1.eigenvalues i = 1 := by
+    have h := hpsdρ.1.trace_eq_sum_eigenvalues
+    rw [htrρ] at h
+    have hre := congrArg Complex.re h
+    rw [Complex.one_re, Complex.re_sum] at hre
+    simpa using hre.symm
+  have hsumσ : ∑ j, hpsdσ.1.eigenvalues j = 1 := by
+    have h := hpsdσ.1.trace_eq_sum_eigenvalues
+    rw [htrσ] at h
+    have hre := congrArg Complex.re h
+    rw [Complex.one_re, Complex.re_sum] at hre
+    simpa using hre.symm
+  -- expand all three entropies; the τ-sum is the Kronecker spectral sum.
+  rw [vonNeumannEntropy, vonNeumannEntropy, vonNeumannEntropy,
+    spectral_sum_kronecker hpsdρ.1 hpsdσ.1 Real.negMulLog]
+  -- split negMulLog of each product, then collapse via ∑λ = ∑μ = 1.
+  rw [Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ =>
+    negMulLog_mul (hpsdρ.eigenvalues_nonneg i) (hpsdσ.eigenvalues_nonneg j)))]
+  simp_rw [Finset.sum_add_distrib]
+  congr 1
+  · rw [show (∑ i : n, ∑ j : m, hpsdσ.1.eigenvalues j * Real.negMulLog (hpsdρ.1.eigenvalues i))
+        = ∑ i : n, (∑ j : m, hpsdσ.1.eigenvalues j) * Real.negMulLog (hpsdρ.1.eigenvalues i) from
+          Finset.sum_congr rfl fun i _ => by rw [← Finset.sum_mul]]
+    simp_rw [hsumσ, one_mul]
+  · rw [show (∑ i : n, ∑ j : m, hpsdρ.1.eigenvalues i * Real.negMulLog (hpsdσ.1.eigenvalues j))
+        = ∑ i : n, hpsdρ.1.eigenvalues i * ∑ j : m, Real.negMulLog (hpsdσ.1.eigenvalues j) from
+          Finset.sum_congr rfl fun i _ => by rw [← Finset.mul_sum]]
     rw [← Finset.sum_mul, hsumρ, one_mul]
 
 end QuantumInfo

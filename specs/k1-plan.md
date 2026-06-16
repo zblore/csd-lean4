@@ -1,6 +1,7 @@
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
-**STATUS: K1-A DONE 2026-06-16; K1-B/C/D planned.** The QI/QEC-roadmap keystone K1
+**STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity 2026-06-16);
+K1-B/C/D planned.** The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
 Holevo / Schumacher / entanglement entropy / quantum thermodynamics.
@@ -58,13 +59,20 @@ foundational-triple-only, AxiomAudit-pinned:
   `vonNeumannEntropy_eq_zero_of_pure` (+ unit trace; non-vacuity noted in docstring);
 - `vonNeumannEntropy_conj_unitary`: `S(U ρ Uᴴ) = S(ρ)` via `charpoly_conj_unitary`
   (two `charpoly_mul_comm`) + `IsHermitian.eigenvalues_eq_eigenvalues_iff`.
-- **Additivity `vonNeumannEntropy_kronecker_of_eigenvalues`: stated under an EXPLICIT
-  eigenvalue-product hypothesis** (`heig : λ(ρ⊗σ) = λρ·λσ` along a reindexing `e`). Mathlib has
-  **no Kronecker spectral theorem**, so the eigenvalue-product fact is hypothesised (it holds for
-  the genuine spectrum; `negMulLog_mul` + the `∑λ = ∑μ = 1` collapse are proved). Discharging the
-  hypothesis = **K1-A.2** (own clean upstream contribution).
-- *Deferred to K1-A.2:* `S ≤ log d` (concavity of `negMulLog` / Jensen — needs convexity
-  infrastructure; not blocking K1-A).
+- **Additivity — UNCONDITIONAL (K1-A.2 DONE 2026-06-16).** `vonNeumannEntropy_kronecker`:
+  `S(ρ⊗σ) = S(ρ)+S(σ)` for density operators (PSD + unit trace), **no spectral hypothesis**.
+  The load-bearing new lemma is the **Kronecker spectrum** `spectral_sum_kronecker`:
+  `∑_c g(λ(ρ⊗σ)_c) = ∑_{i,j} g(λρ(i)·λσ(j))` for every `g`. Route A (charpoly,
+  permutation-invariant — sidesteps the eigenvalue-*sorting* trap): `ρ⊗σ` is unitarily similar to
+  `diagonal(λρ·λσ)` (`kronecker_eq_conj_diagonal_eigenvalues`, via the two spectral theorems +
+  `mul_kronecker_mul` + `diagonal_kronecker_diagonal`), so its charpoly is `∏_p (X−↑(λρ·λσ))`
+  (`charpoly_conj_unitary` + `charpoly_diagonal`); the spectral sum is read off the charpoly root
+  multiset by `spectral_sum_eq_of_charpoly_prod`. **No Kronecker spectral theorem assumed — this
+  IS one** (spectral-sum form). Foundational-triple-only, AxiomAudit-pinned. The conditional
+  `vonNeumannEntropy_kronecker_of_eigenvalues` is retained for callers holding a sorted
+  eigenvalue-product witness.
+- *Deferred:* `S ≤ log d` (concavity of `negMulLog` / Jensen — needs convexity infrastructure;
+  not blocking K1-A).
 
 ### K1-B — subadditivity + Araki–Lieb  [partial trace + Klein; moderate]
 `S(ρ_AB) ≤ S(ρ_A) + S(ρ_B)`, `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)`. Needs **partial trace** (built here;

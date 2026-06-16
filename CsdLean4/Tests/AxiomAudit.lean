@@ -598,6 +598,19 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.vonNeumannEntropy_kronecker_of_eigenvalues
 
+-- K1-A.2 (specs/k1-plan.md): the Kronecker spectrum discharges the eigenvalue-product
+-- hypothesis, making tensor additivity UNCONDITIONAL. spectral_sum_kronecker is the
+-- load-bearing fact (eigenvalues of ρ⊗σ are the products λρ·λσ, in permutation-invariant
+-- spectral-sum form); vonNeumannEntropy_kronecker is the headline S(ρ⊗σ) = S(ρ)+S(σ) for
+-- density operators (PSD + unit trace), no spectral hypothesis. Foundational triple.
+/-- info: 'QuantumInfo.spectral_sum_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.spectral_sum_kronecker
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.vonNeumannEntropy_kronecker
+
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation
 -- of a unit state (sum_prob_eq_one), basis state measured with certainty (prob_basisState).
