@@ -1,5 +1,6 @@
 import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF1.GeneralFrequency
+import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
@@ -2936,5 +2937,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical
+
+/-! ### Operator-convexity ladder (Cat-1; L.0 predicate + L.1 inverse operator convexity) -/
+
+/-- info: 'Matrix.fromBlocks_inv_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.fromBlocks_inv_posSemidef
+
+/-- info: 'Matrix.operatorConvexOn_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.operatorConvexOn_inv
+
+/-- info: 'Matrix.inv_loewner_convex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.inv_loewner_convex
+
+/-- info: 'Matrix.cfc_inv_posDef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.cfc_inv_posDef
 
 end CSD.Tests.AxiomAudit

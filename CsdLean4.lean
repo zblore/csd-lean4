@@ -1,4 +1,5 @@
 import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
+import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
