@@ -1,8 +1,10 @@
 # Operator-convexity ladder → data-processing inequality (`hDPI`) for SSA
 
 **Status:** L.0 (scout + predicate) **DONE 2026-06-17**; L.1 (operator convexity of
-`x ↦ x⁻¹`) **DONE 2026-06-17**; L.2 (operator concavity of `log`) **WALLED** (precise
-gap below); L.3–L.5 **not started**.
+`x ↦ x⁻¹`) **DONE 2026-06-17**; L.2-resolvent rungs (shifted-resolvent operator concavity
+`x ↦ -(x+s)⁻¹` + affine-output-transform helper) **DONE 2026-06-17**; L.2 (operator concavity
+of `log`) **WALLED** at a sharper boundary than first diagnosed (the `CStarAlgebra (Matrix n n ℂ)`
+instance gap — see updated L.2 section); L.3–L.5 **not started**.
 
 **Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvex.lean` (Cat-1, CSD-free,
 natural Mathlib namespace `Matrix`).
@@ -149,35 +151,97 @@ combination-of-inverses` (operator CONVEX, correct).
 
 ---
 
-## L.2 — Operator concavity of `log` (ATTEMPTED, WALLED — precise gap)
+## L.2-resolvent rungs — shifted-resolvent operator concavity (LANDED 2026-06-17)
+
+The per-shift building blocks of *both* L.2 routes, proved directly in the matrix / Löwner / CFC
+setting (one step from L.1), foundational-triple-only, AxiomAudit-pinned:
+
+```lean
+theorem Matrix.add_smul_one_posDef (hA : A.PosDef) (hs : 0 < s) : (A + s • 1).PosDef
+theorem Matrix.cfc_add_inv_posDef (hA : A.PosDef) (hs : 0 < s) :
+    cfc (fun x => (x + s)⁻¹) A = (A + s • 1)⁻¹          -- shifted CFC↔inverse bridge
+theorem Matrix.inv_shift_loewner_convex (hA hB : PosDef) (ht0 ht1) (hs : 0 < s) :
+    (t•A + (1-t)•B + s•1)⁻¹ ≤ t•(A+s•1)⁻¹ + (1-t)•(B+s•1)⁻¹  -- resolvent operator convex
+theorem Matrix.cfc_neg_add_inv_posDef (hA : A.PosDef) (hs : 0 < s) :
+    cfc (fun x => -(x + s)⁻¹) A = -(A + s • 1)⁻¹
+theorem Matrix.operatorConcaveOn_neg_add_inv (hs : 0 < s) :
+    OperatorConcaveOn (Set.Ioi 0) (fun x => -(x + s)⁻¹)   -- THE per-shift concave rung
+theorem Matrix.cfc_affine_output (hA : A.IsHermitian) (hf : ContinuousOn f (spectrum ℝ A)) :
+    cfc (fun x => c * f x + d) A = c • cfc f A + d • 1
+theorem Matrix.OperatorConcaveOn.affine_output (hf : OperatorConcaveOn s f) (hc : 0 ≤ c) (hcont) :
+    OperatorConcaveOn s (fun x => c * f x + d)            -- increasing-affine output transform
+```
+
+`operatorConcaveOn_neg_add_inv` is the negation of `inv_shift_loewner_convex` (the resolvent is
+operator convex; `-(x+s)⁻¹` is operator concave, correct Löwner direction, verified on the
+predicate's all-`n` form). `affine_output` is the Step-C algebra: with `c = p⁻¹ ≥ 0`, `d = -p⁻¹`
+it lifts `x^p` operator concave to `p⁻¹(x^p−1)` operator concave. These are genuine rungs, not
+the summit; they make the integral route's integrand operator-concave per shift.
+
+**Integral-preserves-operator-concavity lemma: NOT built.** Assessment: my `OperatorConcaveOn`
+predicate is matrix-CFC-specific; the matrix-valued Bochner integral that would assemble
+`∫ -(A+s•1)⁻¹ s^{p-1} ds = c·A^p` (or `= log`) requires the matrix-side integral *representation*
+of `log`/`rpow`, which exists in Mathlib only on the C⋆-generic `cfcₙ` carrier, NOT on plain
+`Matrix n n ℂ` (the CStarAlgebra-instance wall below). The generic
+`integral_convexOn_of_integrand_ae` (Bochner) is available and order-correct, but bridging it to
+my `OperatorConcaveOn` predicate needs the reframing `OperatorConcaveOn s f ↔ ordinary-ConcaveOn
+of A ↦ cfc f A on PD matrices` plus the matrix log integral rep — both unbuilt. So the
+single-shift concave rung is landed; the integral assembly remains the wall.
+
+## L.2 — Operator concavity of `log` (WALLED — sharper boundary identified)
 
 **Target:** `Matrix.operatorConcaveOn (Set.Ioi 0) Real.log`.
 
-**Two standard routes, both walled at this pin:**
+**The sharp wall (new finding 2026-06-17): `Matrix n n ℂ` is NOT a `CStarAlgebra` at the default
+instance.** `example : CStarAlgebra (Matrix n n ℂ) := by infer_instance` FAILS (synthInstance).
+Consequently the entire C⋆-generic route-2 scaffold is inaccessible on the predicate's carrier:
+`CFC.log`, `CFC.tendsto_cfc_rpow_sub_one_log`, `CFC.monotone_rpow`, `CFC.monotone_nnrpow`, and the
+`Rpow/IntegralRepresentation` machinery (which DOES now exist at this pin, contradicting the prior
+scout note — `exists_measure_nnrpow_eq_integral_cfcₙ_rpowIntegrand₀₁`, the engine of
+`monotone_nnrpow`) are all stated for `[CStarAlgebra A]` and do not fire on `Matrix n n ℂ`.
+Mathlib provides the C⋆-matrix structure only through the **type synonym** `CStarMatrix m n A :=
+Matrix m n A` (`CStarMatrix.instCStarAlgebra`), whose norm/topology instances differ from the
+default `Matrix` ones. So both routes now share a *prerequisite bridge*:
 
-1. **Integral representation** (the prompt's route):
-   `log x = ∫₀^∞ (1/(1+s) − 1/(x+s)) ds`; each `x ↦ −(x+s)⁻¹` is operator concave (shift +
-   negate of L.1's `inv_loewner_convex`), and the integral preserves operator concavity.
-   **Wall:** Mathlib has (a) NO log integral representation (the
-   `Analysis/Matrix/Rpow/IntegralRepresentation.lean` cited by the expert note does not exist
-   at this pin), and (b) NO "integral of a pointwise-operator-concave family is operator
-   concave" lemma. Both are multi-day sub-builds: (b) requires Bochner-integral monotonicity
-   of the PSD cone (`∫ (RHS − LHS) ds` PSD from pointwise PSD integrand), and (a) requires
-   formalising the resolvent integral with its convergence. The single-shift rung
-   `x ↦ −(x+s)⁻¹` operator concave IS one step from L.1 (negate + translate), but the
-   integral-assembly is the wall.
+**Missing bridge lemma (route-enabling, ~1–2 days, Cat-1):** transport CFC + Löwner order across
+the `CStarMatrix ≃ Matrix` equivalence — show `cfc f (e A) = e (cfc f A)` and `e A ≤ e B ↔ A ≤ B`
+(the orders are defeq on the synonym; the CFC `IsSelfAdjoint`-instances should transfer, but this
+must be proved, not assumed). Once built, `CFC.log`/`monotone_rpow`/`tendsto_cfc_rpow_sub_one_log`
+fire on `CStarMatrix`, and the route-2 chain (L.3 `x^p` concave + closedness + the rpow→log limit)
+runs C⋆-generically and pulls back to `Matrix`.
+
+**Two standard routes, both still walled at this pin (gated on the bridge above):**
+
+1. **Integral representation** (the prompt's route): `log x = ∫₀^∞ (1/(1+s) − 1/(x+s)) ds`; each
+   `x ↦ −(x+s)⁻¹` is operator concave (**LANDED** as `operatorConcaveOn_neg_add_inv`, see the
+   resolvent-rungs section above), and the integral preserves operator concavity. **Remaining
+   wall:** (a) NO **matrix-side** log integral representation — `Rpow/IntegralRepresentation.lean`
+   now EXISTS at this pin (prior scout note corrected) but is `cfcₙ`-generic over C⋆-algebras and
+   needs the `CStarMatrix` bridge to reach `Matrix n n ℂ`; and (b) NO "integral of a
+   pointwise-operator-concave family is operator concave" lemma in *the predicate's* form. For (b)
+   Mathlib DOES have the order-correct generic `integral_convexOn_of_integrand_ae` /
+   `integral_antitoneOn_of_integrand_ae` (Bochner, any ordered Banach `E`), so the genuine missing
+   step is the reframing `OperatorConcaveOn s f ↔ ordinary-ConcaveOn ℝ of (A ↦ cfc f A)` on the
+   PD-matrix convex set, after which the generic lemma applies to the matrix-valued resolvent
+   family. The single-shift concave rung is done; the integral *assembly* (reframing + matrix log
+   integral rep with convergence) is the wall, ~1 week.
 
 2. **`p⁻¹(x^p−1) → log` limit** (the route Mathlib's own `CFC.log_monotoneOn` uses):
    `CFC.tendsto_cfc_rpow_sub_one_log` gives `cfc (p⁻¹(x^p−1)) a → CFC.log a` uniformly on the
-   spectrum as `p → 0⁺`. Operator concavity of `x ↦ p⁻¹(x^p−1)` for `p∈[0,1]` reduces to
-   operator concavity of `x^p` (= **L.3**, itself unbuilt), and the operator-concave set must
-   be shown closed under this limit (an `isClosed_operatorConcaveOn`-style lemma, analogue of
-   `isClosed_monotoneOn`, which does NOT yet exist for the convexity predicate).
-   **Wall:** depends on L.3 (`x^p` operator concave, `p∈[0,1]`) AND a closedness lemma for the
-   new `OperatorConcaveOn` predicate. This route does NOT use L.1's inverse.
+   spectrum as `p → 0⁺`. Operator concavity of `x ↦ p⁻¹(x^p−1)` for `p∈[0,1]` reduces (via the
+   **LANDED** `OperatorConcaveOn.affine_output`, `c = p⁻¹ ≥ 0`, `d = −p⁻¹`) to operator concavity
+   of `x^p` (= **L.3**, unbuilt), and the operator-concave set must be shown closed under this
+   limit (an `isClosed_operatorConcaveOn`-style lemma). **Wall:** (i) the `CStarAlgebra (Matrix)`
+   instance gap blocks `tendsto_cfc_rpow_sub_one_log` and `CFC.log` from firing on the predicate's
+   carrier — the bridge lemma above is a hard prerequisite for THIS route; (ii) L.3 (`x^p` operator
+   concave) is unbuilt; (iii) the closedness lemma for `OperatorConcaveOn` is unbuilt. The affine
+   algebra (Step C) and the per-shift concavity are the only pieces now in hand.
 
-**Honest verdict:** L.2 is not a one-or-two-lemma extension of L.1 at this Mathlib pin. It is a
-genuine sub-build (estimate below). Not faked; the `_log` operator-concavity TODO is open
+**Honest verdict:** L.2 is not a one-or-two-lemma extension of L.1 at this Mathlib pin. The
+per-shift concave rung and the affine-output algebra ARE landed (this tranche); the summit needs,
+on EITHER route, the `CStarMatrix ↔ Matrix` CFC/order bridge, plus (route 1) the matrix log
+integral rep + predicate-reframing of the Bochner integral-convexity lemma, OR (route 2) L.3 +
+the `OperatorConcaveOn` closedness lemma. Not faked; the `_log` operator-concavity TODO is open
 upstream too (`ExpLog/Order.lean ## TODO`).
 
 ---

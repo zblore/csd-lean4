@@ -30,6 +30,12 @@ scoped `MatrixOrder`: `A ≤ B := (B - A).PosSemidef`) and the continuous functi
   bridge).
 * `Matrix.operatorConvexOn_inv` : `x ↦ x⁻¹` is operator convex on `(0, ∞)` (the predicate form,
   the foundational rung L.1 of the ladder).
+* `Matrix.inv_shift_loewner_convex` / `Matrix.operatorConcaveOn_neg_add_inv` : the shifted
+  resolvent `x ↦ (x + s)⁻¹` is operator convex, equivalently `x ↦ -(x + s)⁻¹` is operator concave,
+  for each `s > 0` (the L.2 per-shift building block; the negation of L.1 translated by `s`).
+* `Matrix.OperatorConcaveOn.affine_output` : the increasing-affine output transform
+  `f ↦ (fun x => c * f x + d)` with `c ≥ 0` preserves operator concavity (the Step-C algebra in
+  the `log` route, `c = p⁻¹`, `d = -p⁻¹`, lifting `x^p` concavity to `p⁻¹(x^p − 1)` concavity).
 
 ## Implementation notes
 
@@ -203,3 +209,163 @@ theorem operatorConvexOn_inv : OperatorConvexOn (Set.Ioi 0) (fun x : ℝ => x⁻
   -- rewrite the CFC of `·⁻¹` to the matrix inverse on each PD argument
   rw [cfc_inv_posDef hCpd, cfc_inv_posDef hApd, cfc_inv_posDef hBpd]
   exact inv_loewner_convex hApd hBpd ht0 ht1
+
+/-! ### Shifted-inverse rungs (the resolvent family `x ↦ (x + s)⁻¹`)
+
+These are the building blocks of the integral-representation route to operator concavity of
+`log` and `x ↦ x^p`: each resolvent `x ↦ -(x + s)⁻¹` is operator concave (a translate + negate
+of L.1's `inv_loewner_convex`), and the target functions are positive integral mixtures of these.
+They are proved here directly in the matrix / Löwner / CFC setting, with no new axiom. -/
+
+omit [Fintype n] in
+/-- For positive-definite `A` and `s > 0`, the shifted matrix `A + s • 1` is positive definite. -/
+theorem add_smul_one_posDef {A : Matrix n n ℂ} (hA : A.PosDef) {s : ℝ} (hs : 0 < s) :
+    (A + (s : ℂ) • (1 : Matrix n n ℂ)).PosDef := by
+  have hsc : (0 : ℂ) < (s : ℂ) := by exact_mod_cast hs
+  have hdiag : (s : ℂ) • (1 : Matrix n n ℂ) = diagonal (fun _ : n => (s : ℂ)) := by
+    rw [Matrix.smul_one_eq_diagonal]
+  have h1 : ((s : ℂ) • (1 : Matrix n n ℂ)).PosDef := by
+    rw [hdiag, Matrix.posDef_diagonal_iff]
+    intro i; exact hsc
+  simpa [add_comm] using h1.add_posSemidef hA.posSemidef
+
+/-- The real spectrum of a positive-definite matrix shifted by `s ≥ 0` is bounded below by `s`,
+hence `x + s ≠ 0` whenever `x` is in the spectrum and `s > 0` (or `x > 0`). -/
+theorem posDef_add_pos {A : Matrix n n ℂ} (hA : A.PosDef) {s : ℝ} (hs : 0 ≤ s) :
+    ∀ x ∈ spectrum ℝ A, 0 < x + s :=
+  fun x hx => by have := posDef_spectrum_pos hA x hx; linarith
+
+/-- **CFC ↔ shifted matrix inverse bridge.** For positive-definite `A` and `s > 0`, the continuous
+functional calculus of `x ↦ (x + s)⁻¹` agrees with the matrix inverse of the shift:
+`cfc (fun x => (x + s)⁻¹) A = (A + s • 1)⁻¹`. -/
+theorem cfc_add_inv_posDef {A : Matrix n n ℂ} (hA : A.PosDef) {s : ℝ} (hs : 0 < s) :
+    cfc (fun x : ℝ => (x + s)⁻¹) A = (A + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹ := by
+  have hsa : IsSelfAdjoint A := hA.1
+  have hshift : (A + (s : ℂ) • (1 : Matrix n n ℂ)).PosDef := add_smul_one_posDef hA hs
+  have hspec := posDef_add_pos hA hs.le
+  -- `cfc (·+s) A = A + s • 1`
+  have hcfc_shift : cfc (fun x : ℝ => x + s) A = A + (s : ℂ) • (1 : Matrix n n ℂ) := by
+    rw [cfc_add (a := A) (fun x : ℝ => x) (fun _ : ℝ => s) (by fun_prop) (by fun_prop),
+      cfc_id' ℝ A, cfc_const s A, Algebra.algebraMap_eq_smul_one]
+    congr 1
+  -- continuity of the resolvent on the spectrum
+  have hres_cont : ContinuousOn (fun x : ℝ => (x + s)⁻¹) (spectrum ℝ A) :=
+    ContinuousOn.inv₀ (by fun_prop) (fun x hx => (hspec x hx).ne')
+  -- the product of the two CFCs is the identity, so the first is the inverse of the second
+  have hli : cfc (fun x : ℝ => (x + s)⁻¹) A * (A + (s : ℂ) • (1 : Matrix n n ℂ)) = 1 := by
+    rw [← hcfc_shift,
+      ← cfc_mul _ _ A (hf := hres_cont) (hg := by fun_prop), ← cfc_one (R := ℝ) A]
+    apply cfc_congr
+    intro x hx
+    exact inv_mul_cancel₀ (hspec x hx).ne'
+  exact (inv_eq_left_inv hli).symm
+
+/-- **Operator convexity of the resolvent `x ↦ (x + s)⁻¹` (Löwner form).** For positive-definite
+`A, B`, `t ∈ [0,1]` and `s > 0`,
+`(t • A + (1 - t) • B + s • 1)⁻¹ ≤ t • (A + s • 1)⁻¹ + (1 - t) • (B + s • 1)⁻¹`.
+This is `inv_loewner_convex` applied to the PD shifts `A + s • 1`, `B + s • 1`, using that the
+convex combination of the shifts is the shift of the convex combination (since `t + (1-t) = 1`). -/
+theorem inv_shift_loewner_convex {A B : Matrix n n ℂ} (hA : A.PosDef) (hB : B.PosDef)
+    {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) {s : ℝ} (hs : 0 < s) :
+    ((t : ℂ) • A + ((1 : ℂ) - t) • B + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹
+      ≤ (t : ℂ) • (A + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹
+        + ((1 : ℂ) - t) • (B + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹ := by
+  have hAs := add_smul_one_posDef hA hs
+  have hBs := add_smul_one_posDef hB hs
+  have key := inv_loewner_convex hAs hBs ht0 ht1
+  -- the convex combination of the shifts is the shift of the convex combination
+  have hcomb : (t : ℂ) • (A + (s : ℂ) • (1 : Matrix n n ℂ))
+        + ((1 : ℂ) - t) • (B + (s : ℂ) • (1 : Matrix n n ℂ))
+      = (t : ℂ) • A + ((1 : ℂ) - t) • B + (s : ℂ) • (1 : Matrix n n ℂ) := by
+    module
+  rwa [hcomb] at key
+
+/-! ### Predicate-form resolvent concavity -/
+
+/-- The CFC of the negated resolvent `x ↦ -(x + s)⁻¹` on a positive-definite matrix is
+`-(A + s • 1)⁻¹`. -/
+theorem cfc_neg_add_inv_posDef {A : Matrix n n ℂ} (hA : A.PosDef) {s : ℝ} (hs : 0 < s) :
+    cfc (fun x : ℝ => -(x + s)⁻¹) A = -(A + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹ := by
+  have hres_cont : ContinuousOn (fun x : ℝ => (x + s)⁻¹) (spectrum ℝ A) :=
+    ContinuousOn.inv₀ (by fun_prop) (fun x hx => (posDef_add_pos hA hs.le x hx).ne')
+  rw [show (fun x : ℝ => -(x + s)⁻¹) = (fun x : ℝ => -(x + s)⁻¹) from rfl,
+    cfc_neg (fun x : ℝ => (x + s)⁻¹) A, cfc_add_inv_posDef hA hs]
+
+/-- **Operator concavity of the negated resolvent.** For each `s > 0`, the function
+`x ↦ -(x + s)⁻¹` is operator concave on `(0, ∞)`. This is the per-shift building block of the
+integral-representation route to operator concavity of `log` and `x ↦ x^p`: each negated
+resolvent is operator concave, and those target functions are positive integral mixtures of
+these resolvents. Proof: the negation of `inv_shift_loewner_convex`. -/
+theorem operatorConcaveOn_neg_add_inv {s : ℝ} (hs : 0 < s) :
+    OperatorConcaveOn (Set.Ioi 0) (fun x : ℝ => -(x + s)⁻¹) := by
+  intro n _ _ A B hA hB hAspec hBspec t ht0 ht1 hCspec
+  have hApd : A.PosDef := posDef_of_spectrum_pos hA (fun x hx => hAspec hx)
+  have hBpd : B.PosDef := posDef_of_spectrum_pos hB (fun x hx => hBspec hx)
+  have hCpd : ((t : ℂ) • A + ((1 : ℂ) - t) • B).PosDef := convexComb_posDef hApd hBpd ht0 ht1
+  rw [cfc_neg_add_inv_posDef hApd hs, cfc_neg_add_inv_posDef hBpd hs,
+    cfc_neg_add_inv_posDef hCpd hs]
+  -- goal: t • (-(A+s)⁻¹) + (1-t) • (-(B+s)⁻¹) ≤ -((tA+(1-t)B)+s)⁻¹
+  have key := inv_shift_loewner_convex hApd hBpd ht0 ht1 hs
+  -- rearrange to the negated form via the Löwner order's `neg_le_neg`
+  rw [smul_neg, smul_neg, ← neg_add]
+  rw [show -((t : ℂ) • A + ((1 : ℂ) - t) • B + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹
+        = -(((t : ℂ) • A + ((1 : ℂ) - t) • B) + (s : ℂ) • (1 : Matrix n n ℂ))⁻¹ from rfl]
+  exact neg_le_neg key
+
+/-! ### Affine output transform preserves operator concavity
+
+The map `f ↦ (fun x => c * f x + d)` with `c ≥ 0` is the increasing-affine transform of the
+*output*; it preserves operator concavity. This is the algebraic step needed to pass from
+`x ↦ x ^ p` operator concave to `x ↦ p⁻¹ (x ^ p − 1)` operator concave (Step C of the log route:
+`c = p⁻¹ > 0`, `d = -p⁻¹`). -/
+
+/-- CFC of an increasing-affine output transform: for Hermitian `A` and `f` continuous on the
+spectrum, `cfc (fun x => c * f x + d) A = c • cfc f A + d • 1`. -/
+theorem cfc_affine_output {A : Matrix n n ℂ} (hA : A.IsHermitian) {c d : ℝ} {f : ℝ → ℝ}
+    (hf : ContinuousOn f (spectrum ℝ A)) :
+    cfc (fun x : ℝ => c * f x + d) A = (c : ℂ) • cfc f A + (d : ℂ) • (1 : Matrix n n ℂ) := by
+  have hsa : IsSelfAdjoint A := hA
+  rw [cfc_add (a := A) (fun x : ℝ => c * f x) (fun _ : ℝ => d) (by fun_prop) (by fun_prop),
+    cfc_const d A, cfc_const_mul (a := A) c f hf, Algebra.algebraMap_eq_smul_one,
+    Complex.coe_smul]
+  congr 1
+
+/-- **Affine output transform preserves operator concavity.** If `f` is operator concave on `s`
+and `c ≥ 0`, then `x ↦ c * f x + d` is operator concave on `s`, *provided* `f` is continuous on
+each relevant spectrum (`hcont`), which is needed for the CFC of the transform to split. This is
+the algebraic step in the `log` route: with `c = p⁻¹ ≥ 0`, `d = -p⁻¹`, it lifts operator concavity
+of `x ↦ x^p` to operator concavity of `x ↦ p⁻¹ (x^p − 1)`. -/
+theorem OperatorConcaveOn.affine_output {s : Set ℝ} {f : ℝ → ℝ} (hf : OperatorConcaveOn s f)
+    {c d : ℝ} (hc : 0 ≤ c)
+    (hcont : ∀ {m : Type} [Fintype m] [DecidableEq m] {M : Matrix m m ℂ},
+      M.IsHermitian → ContinuousOn f (spectrum ℝ M)) :
+    OperatorConcaveOn s (fun x : ℝ => c * f x + d) := by
+  intro n _ _ A B hA hB hAspec hBspec t ht0 ht1 hCspec
+  have hsaT : IsSelfAdjoint (t : ℂ) := by
+    rw [IsSelfAdjoint, Complex.star_def, Complex.conj_ofReal]
+  have hsa1T : IsSelfAdjoint ((1 : ℂ) - t) :=
+    IsSelfAdjoint.sub (IsSelfAdjoint.one (R := ℂ)) hsaT
+  have hcombHerm : ((t : ℂ) • A + ((1 : ℂ) - t) • B).IsHermitian :=
+    (hA.smul hsaT).add (hB.smul hsa1T)
+  -- split the CFC of the transform on all three arguments
+  have hcA := cfc_affine_output (A := A) hA (c := c) (d := d) (hcont hA)
+  have hcB := cfc_affine_output (A := B) hB (c := c) (d := d) (hcont hB)
+  have hcC := cfc_affine_output (A := (t : ℂ) • A + ((1 : ℂ) - t) • B) hcombHerm
+    (c := c) (d := d) (hcont hcombHerm)
+  rw [hcA, hcB, hcC]
+  -- the underlying concavity inequality
+  have key := hf hA hB hAspec hBspec ht0 ht1 hCspec
+  have hcc : (0 : ℂ) ≤ (c : ℂ) := by exact_mod_cast hc
+  -- LHS: t • (c • cfc f A + d • 1) + (1-t) • (c • cfc f B + d • 1)
+  --    = c • (t • cfc f A + (1-t) • cfc f B) + d • 1
+  -- RHS: c • cfc f (comb) + d • 1
+  have hsmul : (c : ℂ) • ((t : ℂ) • cfc f A + ((1 : ℂ) - t) • cfc f B)
+      ≤ (c : ℂ) • cfc f ((t : ℂ) • A + ((1 : ℂ) - t) • B) :=
+    smul_le_smul_of_nonneg_left key hcc
+  calc (t : ℂ) • ((c : ℂ) • cfc f A + (d : ℂ) • (1 : Matrix n n ℂ))
+        + ((1 : ℂ) - t) • ((c : ℂ) • cfc f B + (d : ℂ) • (1 : Matrix n n ℂ))
+      = (c : ℂ) • ((t : ℂ) • cfc f A + ((1 : ℂ) - t) • cfc f B)
+        + (d : ℂ) • (1 : Matrix n n ℂ) := by module
+    _ ≤ (c : ℂ) • cfc f ((t : ℂ) • A + ((1 : ℂ) - t) • B) + (d : ℂ) • (1 : Matrix n n ℂ) := by
+        gcongr
+
