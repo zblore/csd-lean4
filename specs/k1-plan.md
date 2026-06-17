@@ -1,12 +1,14 @@
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
 **STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity);
-K1-B.1 partial trace DONE 2026-06-16; K1-B.2 DONE 2026-06-16 (subadditivity landed, Araki–Lieb
-deferred) — Klein's inequality
+K1-B.1 partial trace DONE 2026-06-16; K1-B.2 DONE 2026-06-16 (subadditivity) + Araki–Lieb DONE
+2026-06-17 (PD ρ_AB) — Klein's inequality
 (PD σ) + relative entropy + doubly-stochastic cross-term machinery + reduced-trace identities +
 the Kronecker-log operator split (`cfc_log_kronecker`, via the decomposition-independent
 `cfc_eq_conj_diagonal` / Lagrange route) + the subadditivity headline `S(ρ_AB) ≤ S(ρ_A)+S(ρ_B)`
-(marginals PD, ρ_AB only PSD) all LANDED; Araki–Lieb deferred (purification); K1-C/D planned.**
+(marginals PD, ρ_AB only PSD) all LANDED; **`S ≤ log d` + Araki–Lieb `|S_A−S_B|≤S_AB` (ρ_AB PD)
+DONE 2026-06-17** via the purification + Schmidt-symmetry route, so **K1-A and K1-B are COMPLETE**
+(only the singular-marginal Araki–Lieb generalisation deferred); K1-C/D planned.**
 The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
@@ -77,11 +79,12 @@ foundational-triple-only, AxiomAudit-pinned:
   IS one** (spectral-sum form). Foundational-triple-only, AxiomAudit-pinned. The conditional
   `vonNeumannEntropy_kronecker_of_eigenvalues` is retained for callers holding a sorted
   eigenvalue-product witness.
-- *Deferred (now UNBLOCKED, see K1-B note):* `S ≤ log d` — Mathlib HAS `convexOn_mul_log` /
-  `strictConvexOn_mul_log` (`Analysis/SpecialFunctions/Log/NegMulLog.lean`), so this is a quick
-  scalar-Jensen item; fold into K1-B or do standalone.
+- **`S ≤ log d` DONE 2026-06-17** (`vonNeumannEntropy_le_log_card`, `Entropy.lean`): the
+  maximum-entropy bound `S(ρ) ≤ Real.log (Fintype.card n)` via concave Jensen on `negMulLog`
+  (uniform weights `1/d`, `∑λ = 1`); tight at the maximally mixed state (`S(I/d) = log d`).
+  Foundational-triple-only, AxiomAudit-pinned.
 
-### K1-B — subadditivity + Araki–Lieb  [partial trace + Klein; moderate] — SUBADDITIVITY DONE 2026-06-16 (Araki–Lieb deferred)
+### K1-B — subadditivity + Araki–Lieb  [partial trace + Klein; moderate] — DONE 2026-06-16/17 (subadditivity + Araki–Lieb for PD ρ_AB; singular-marginal A–L deferred)
 `S(ρ_AB) ≤ S(ρ_A) + S(ρ_B)`, `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)`. **Convexity recon (2026-06-16):**
 Mathlib HAS the *scalar* convexity `convexOn_mul_log` / `strictConvexOn_mul_log`; it does NOT have
 matrix partial trace (the only `partialTrace` hits are category theory / probability kernels). Klein
@@ -107,8 +110,8 @@ moderate middle, reachable now. Decomposed:
   CSD-load-bearing slice of K1. No convexity needed. Honesty: the PSD proof closed cleanly via the
   `v ⊗ eₖ` witness route (no alternative argument needed). Cleanly Mathlib-upstreamable (no Mathlib
   matrix partial trace exists).
-- **K1-B.2 — Klein inequality → subadditivity** [**DONE 2026-06-16** (subadditivity landed);
-  Araki–Lieb deferred. `Mathlib/QuantumInfo/Subadditivity.lean`].
+- **K1-B.2 — Klein inequality → subadditivity + Araki–Lieb** [**DONE 2026-06-16/17** (subadditivity
+  + Araki–Lieb for PD ρ_AB; singular-marginal A–L deferred). `Mathlib/QuantumInfo/Subadditivity.lean`].
 
   **LANDED (sorry-free, foundational-triple-only, AxiomAudit-pinned):**
   - `overlapV` (`V = U_ρᴴ U_σ`) + double stochasticity `overlapV_row_sum` / `overlapV_col_sum`
@@ -151,10 +154,20 @@ moderate middle, reachable now. Decomposed:
 
   The doubly-stochastic two-eigenbasis cross-term — predicted as the place to audit hardest —
   closed first (`trace_mul_cfc_eq`); the operator-level Kronecker-log split (the *actual* residual
-  wall) then closed via the Lagrange-interpolation route above. **Deferred: Araki–Lieb**
-  `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)` (needs a purification construction) and the singular-marginal
-  generalisation. Foundational-triple-only, AxiomAudit-pinned (`cfc_eq_conj_diagonal`,
-  `cfc_log_kronecker`, `vonNeumannEntropy_subadditive`). **Provenance note:** the split + headline
+  wall) then closed via the Lagrange-interpolation route above. **Araki–Lieb DONE 2026-06-17**
+  (`vonNeumannEntropy_araki_lieb`, `araki_lieb_one_side`): `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)` for
+  **`ρ_AB` positive-definite** (full-rank global state; the pure-entangled saturating case
+  `S_AB = 0` is excluded, by design — honestly documented). Built via the genuine **purification
+  route**: `exists_purification` (unit Ψ on (AB)⊗R, R≅AB, with `Tr_R |Ψ⟩⟨Ψ| = ρ_AB`) +
+  **`pure_marginal_entropy_eq`** (Schmidt symmetry: pure-state marginals have equal entropy, via
+  `MMᴴ`/`MᴴM` cospectrum on nonzero eigenvalues, `negMulLog 0 = 0`) + `reshapeABR` (the A|BR vs
+  AB|R reassociation) + subadditivity; the other side via a `Equiv.prodComm` swap-reindex
+  (`posDef_of_charpoly_eq` on the reindexed state). Audited SOUND (Bell + asymmetric 2×3 + a
+  correlated full-rank ρ_AB with `S_A ≠ S_B` probes; PD-scope honesty confirmed). Deferred only:
+  the singular-marginal Araki–Lieb generalisation. Foundational-triple-only, AxiomAudit-pinned
+  (`cfc_eq_conj_diagonal`, `cfc_log_kronecker`, `vonNeumannEntropy_subadditive`,
+  `vonNeumannEntropy_le_log_card`, `pure_marginal_entropy_eq`, `exists_purification`,
+  `araki_lieb_one_side`, `vonNeumannEntropy_araki_lieb`). **Provenance note:** the split + headline
   were written in a remote-control session and left UNCOMMITTED with a build-breaking typo
   (`_root_.PosDef.kronecker` → `Matrix.PosDef.kronecker` + missing `import
   Mathlib.Analysis.Matrix.Order`); recovered, fixed, independently audited SOUND, then committed.

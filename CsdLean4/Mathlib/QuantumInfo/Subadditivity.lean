@@ -3,6 +3,7 @@ import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.Matrix.PosDef
 
 /-!
 # Relative entropy, Klein's inequality, subadditivity (K1-B.2)
@@ -651,5 +652,496 @@ theorem vonNeumannEntropy_subadditive
   linarith [hklein, hsplit]
 
 end Kronecker
+
+/-! ## Schmidt symmetry: equal marginal entropies of a pure bipartite state (Araki–Lieb 2a)
+
+The two reduced density operators of a pure bipartite state have **equal** von Neumann entropy.
+The algebraic core is the **cospectrum** of `M Mᴴ` and `Mᴴ M`: they share the same nonzero
+eigenvalues with multiplicity, so any spectral sum `∑ g(λ)` with `g 0 = 0` agrees across the two.
+This is the entropy-side input to Araki–Lieb. -/
+
+section Cospectrum
+
+open Polynomial
+
+variable {m : Type*} [Fintype m] [DecidableEq m]
+
+/-- **Cospectral spectral sums of `M Mᴴ` and `Mᴴ M`.** For any rectangular `M : Matrix n m ℂ` and
+any `g : ℝ → ℝ` with `g 0 = 0`, the spectral sums of `g` over the eigenvalues of `M Mᴴ` (size `n`)
+and `Mᴴ M` (size `m`) coincide:
+
+  `∑ᵢ g(λ(M Mᴴ)ᵢ) = ∑ⱼ g(λ(Mᴴ M)ⱼ)`.
+
+Route (charpoly, multiset-of-roots, permutation-invariant): the rectangular charpoly identity
+`charpoly_mul_comm'` gives `X^|m| · (M Mᴴ).charpoly = X^|n| · (Mᴴ M).charpoly` in `ℂ[X]`. Taking
+`roots` of both (products of nonzero polynomials, `roots_mul`, `roots_pow`, `roots_X`) yields the
+multiset identity `replicate |m| 0 + roots((M Mᴴ).charpoly) = replicate |n| 0 + roots((Mᴴ M).charpoly)`.
+Each `roots(charpoly) = map (↑ ∘ eigenvalues) univ` (`roots_charpoly_eq_eigenvalues`), so mapping by
+`g ∘ re` and summing, the `replicate _ 0` parts contribute `g 0 = 0` and the eigenvalue sums equate.
+Avoids matching Mathlib's *sorted* `eigenvalues` pointwise. -/
+theorem spectral_sum_mul_conjTranspose_comm (M : Matrix n m ℂ) {g : ℝ → ℝ} (hg0 : g 0 = 0) :
+    ∑ i, g ((Matrix.isHermitian_mul_conjTranspose_self M).eigenvalues i)
+      = ∑ j, g ((Matrix.isHermitian_conjTranspose_mul_self M).eigenvalues j) := by
+  set A := M * Mᴴ with hA
+  set B := Mᴴ * M with hB
+  have hAh : A.IsHermitian := Matrix.isHermitian_mul_conjTranspose_self M
+  have hBh : B.IsHermitian := Matrix.isHermitian_conjTranspose_mul_self M
+  -- rectangular charpoly commutation: X^|m| · A.charpoly = X^|n| · B.charpoly.
+  have hcomm : X ^ Fintype.card m * A.charpoly = X ^ Fintype.card n * B.charpoly :=
+    Matrix.charpoly_mul_comm' M Mᴴ
+  -- both charpolys are monic, hence nonzero.
+  have hAne : A.charpoly ≠ 0 := (Matrix.charpoly_monic A).ne_zero
+  have hBne : B.charpoly ≠ 0 := (Matrix.charpoly_monic B).ne_zero
+  have hXn : (X : ℂ[X]) ^ Fintype.card n ≠ 0 := pow_ne_zero _ Polynomial.X_ne_zero
+  have hXm : (X : ℂ[X]) ^ Fintype.card m ≠ 0 := pow_ne_zero _ Polynomial.X_ne_zero
+  -- take roots of both sides.
+  have hrootsX : ∀ k : ℕ, ((X : ℂ[X]) ^ k).roots = Multiset.replicate k 0 := by
+    intro k
+    rw [Polynomial.roots_pow, Polynomial.roots_X, Multiset.nsmul_singleton]
+  have hroots : Multiset.replicate (Fintype.card m) (0 : ℂ) + A.charpoly.roots
+      = Multiset.replicate (Fintype.card n) (0 : ℂ) + B.charpoly.roots := by
+    have h := congrArg Polynomial.roots hcomm
+    rw [Polynomial.roots_mul (by simp [hXm, hAne]),
+      Polynomial.roots_mul (by simp [hXn, hBne]), hrootsX, hrootsX] at h
+    exact h
+  -- map by g ∘ re and sum; the replicate-0 parts vanish since g 0 = 0.
+  have hsum := congrArg (fun s => (Multiset.map (fun z : ℂ => g (Complex.re z)) s).sum) hroots
+  simp only [Multiset.map_add, Multiset.sum_add, Multiset.map_replicate,
+    Complex.zero_re, hg0, Multiset.sum_replicate, smul_zero, zero_add] at hsum
+  -- rewrite each eigenvalue sum via roots_charpoly_eq_eigenvalues.
+  rw [hAh.roots_charpoly_eq_eigenvalues, hBh.roots_charpoly_eq_eigenvalues,
+    Multiset.map_map, Multiset.map_map] at hsum
+  simp only [Function.comp_apply] at hsum
+  rw [Finset.sum, Finset.sum]
+  -- A.eigenvalues / B.eigenvalues vs hAh / hBh eigenvalues are the same (definitional A = M*Mᴴ).
+  exact hsum
+
+/-- **Equal charpoly ⟹ equal spectral sums.** Two Hermitian matrices (of possibly different index
+types) with the *same* characteristic polynomial have equal spectral sums `∑ g(λ)`. Via the root
+multisets (`roots_charpoly_eq_eigenvalues`): equal charpoly ⟹ equal root multiset ⟹ equal mapped
+sum. Used to transfer entropy across the transpose `(Mᴴ M)ᵀ` (`charpoly_transpose`). -/
+theorem spectral_sum_eq_of_charpoly_eq {k : Type*} [Fintype k] [DecidableEq k]
+    {X : Matrix n n ℂ} {Y : Matrix k k ℂ} (hX : X.IsHermitian) (hY : Y.IsHermitian)
+    (hcp : X.charpoly = Y.charpoly) (g : ℝ → ℝ) :
+    ∑ i, g (hX.eigenvalues i) = ∑ j, g (hY.eigenvalues j) := by
+  have hroots : X.charpoly.roots = Y.charpoly.roots := by rw [hcp]
+  rw [hX.roots_charpoly_eq_eigenvalues, hY.roots_charpoly_eq_eigenvalues] at hroots
+  have hsum := congrArg (fun s => (Multiset.map (fun z : ℂ => g (Complex.re z)) s).sum) hroots
+  simp only [Multiset.map_map, Function.comp_apply] at hsum
+  rw [Finset.sum, Finset.sum]
+  exact hsum
+
+/-- **PosDef transfers across equal charpoly.** Two Hermitian matrices with the same charpoly: if
+one is positive-definite (all eigenvalues `> 0`) so is the other. The eigenvalue *multisets* agree
+(`roots_charpoly_eq_eigenvalues`); positivity of every element is a multiset property, so it
+transfers. Used to derive `ρ_R` positive-definite from `ρ_AB` positive-definite (cospectral). -/
+theorem posDef_of_charpoly_eq {k : Type*} [Fintype k] [DecidableEq k]
+    {X : Matrix n n ℂ} {Y : Matrix k k ℂ} (hX : X.IsHermitian) (hY : Y.IsHermitian)
+    (hcp : X.charpoly = Y.charpoly) (hXpd : X.PosDef) : Y.PosDef := by
+  rw [hY.posDef_iff_eigenvalues_pos]
+  intro j
+  -- (↑(eigY j) : ℂ) is a root of Y.charpoly = X.charpoly, hence = (↑(eigX i)) for some i.
+  have hmem : ((hY.eigenvalues j : ℝ) : ℂ) ∈ Y.charpoly.roots := by
+    rw [hY.roots_charpoly_eq_eigenvalues]
+    exact Multiset.mem_map.mpr ⟨j, Finset.mem_univ_val j, rfl⟩
+  rw [← hcp, hX.roots_charpoly_eq_eigenvalues] at hmem
+  obtain ⟨i, _, hi⟩ := Multiset.mem_map.mp hmem
+  simp only [Function.comp_apply] at hi
+  have : hY.eigenvalues j = hX.eigenvalues i := (Complex.ofReal_injective hi).symm
+  rw [this]
+  exact (hX.posDef_iff_eigenvalues_pos.mp hXpd) i
+
+/-- **Entropy is independent of the Hermitian witness.** Two `IsHermitian` proofs of the *same*
+matrix give the same entropy (the eigenvalue *values* are matrix-determined; equal charpoly with
+`rfl`). -/
+theorem vonNeumannEntropy_congr {ρ : Matrix n n ℂ} (h1 h2 : ρ.IsHermitian) :
+    vonNeumannEntropy h1 = vonNeumannEntropy h2 :=
+  spectral_sum_eq_of_charpoly_eq h1 h2 rfl _
+
+/-- **Entropy is invariant under reindexing.** `S(reindex e e ρ) = S(ρ)` for any `e : n ≃ k`:
+reindexing is a permutation similarity, so `charpoly_reindex` + `spectral_sum_eq_of_charpoly_eq`.
+The reassociation hinge for the Araki–Lieb tripartite cuts. -/
+theorem vonNeumannEntropy_reindex {k : Type*} [Fintype k] [DecidableEq k]
+    {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) (e : n ≃ k) :
+    vonNeumannEntropy (hρ.reindex e) = vonNeumannEntropy hρ := by
+  rw [vonNeumannEntropy, vonNeumannEntropy]
+  exact spectral_sum_eq_of_charpoly_eq (hρ.reindex e) hρ (Matrix.charpoly_reindex e ρ) _
+
+end Cospectrum
+
+/-! ## Schmidt symmetry of pure-state marginal entropies (Araki–Lieb 2a) -/
+
+section Schmidt
+
+variable {m : Type*} [Fintype m] [DecidableEq m]
+
+/-- The pure bipartite density `ρψ = |ψ⟩⟨ψ|` of `ψ : (n × m) → ℂ`, as a matrix:
+`ρψ p q = ψ p * conj (ψ q)`. -/
+noncomputable def pureDensity (ψ : (n × m) → ℂ) : Matrix (n × m) (n × m) ℂ :=
+  vecMulVec ψ (star ψ)
+
+/-- The reshape of `ψ : (n × m) → ℂ` as a rectangular matrix `M : Matrix n m ℂ`, `M a b = ψ (a,b)`.
+-/
+def pureMatrix (ψ : (n × m) → ℂ) : Matrix n m ℂ := Matrix.of fun a b => ψ (a, b)
+
+omit [Fintype n] [DecidableEq n] [DecidableEq m] in
+/-- **Right marginal of a pure state is `M Mᴴ`:** `Tr_B |ψ⟩⟨ψ| = M Mᴴ` with `M = pureMatrix ψ`.
+`(Tr_B ρψ) i j = ∑ₖ ψ(i,k) conj(ψ(j,k)) = ∑ₖ M i k · conj(M j k) = (M Mᴴ) i j`. -/
+theorem partialTraceRight_pureDensity (ψ : (n × m) → ℂ) :
+    partialTraceRight (pureDensity ψ) = pureMatrix ψ * (pureMatrix ψ)ᴴ := by
+  ext i j
+  simp only [partialTraceRight_apply, pureDensity, vecMulVec_apply, Pi.star_apply,
+    Matrix.mul_apply, Matrix.conjTranspose_apply, pureMatrix, Matrix.of_apply, Complex.star_def]
+
+omit [DecidableEq n] [Fintype m] [DecidableEq m] in
+/-- **Left marginal of a pure state is `(Mᴴ M)ᵀ`:** `Tr_A |ψ⟩⟨ψ| = (Mᴴ M)ᵀ` with `M = pureMatrix ψ`.
+`(Tr_A ρψ) k l = ∑ᵢ ψ(i,k) conj(ψ(i,l)) = ∑ᵢ M i k conj(M i l) = (Mᴴ M) l k = ((Mᴴ M)ᵀ) k l`. -/
+theorem partialTraceLeft_pureDensity (ψ : (n × m) → ℂ) :
+    partialTraceLeft (pureDensity ψ) = ((pureMatrix ψ)ᴴ * pureMatrix ψ)ᵀ := by
+  ext k l
+  simp only [partialTraceLeft_apply, pureDensity, vecMulVec_apply, Pi.star_apply,
+    Matrix.transpose_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, pureMatrix,
+    Matrix.of_apply, Complex.star_def]
+  exact Finset.sum_congr rfl fun i _ => by rw [mul_comm]
+
+omit [DecidableEq n] [DecidableEq m] in
+/-- `trace |ψ⟩⟨ψ| = ∑ ‖ψ p‖²` (the squared norm of `ψ`). -/
+theorem pureDensity_trace (ψ : (n × m) → ℂ) :
+    (pureDensity ψ).trace = ((∑ p, ‖ψ p‖ ^ 2 : ℝ) : ℂ) := by
+  rw [Matrix.trace]
+  simp only [Matrix.diag_apply, pureDensity, vecMulVec_apply, Pi.star_apply, Complex.star_def]
+  rw [Complex.ofReal_sum]
+  refine Finset.sum_congr rfl fun p _ => ?_
+  rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, Complex.ofReal_pow]
+
+omit [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m] in
+/-- The pure density `|ψ⟩⟨ψ|` is Hermitian. -/
+theorem pureDensity_isHermitian (ψ : (n × m) → ℂ) : (pureDensity ψ).IsHermitian := by
+  ext p q
+  simp only [pureDensity, Matrix.conjTranspose_apply, vecMulVec_apply, Pi.star_apply,
+    Complex.star_def, map_mul, Complex.conj_conj, mul_comm]
+
+/-- **Schmidt symmetry (Araki–Lieb 2a):** the two reduced density operators of a pure bipartite
+state `|ψ⟩⟨ψ|` have **equal** von Neumann entropy:
+
+  `S(Tr_B |ψ⟩⟨ψ|) = S(Tr_A |ψ⟩⟨ψ|)`.
+
+Stated on the canonical Hermitian witnesses `partialTrace{Right,Left}_isHermitian` of the
+Hermitian pure density (`pureDensity_isHermitian`). Genuine content: the right marginal is `M Mᴴ`,
+the left marginal is `(Mᴴ M)ᵀ` (`partialTraceRight_pureDensity` / `partialTraceLeft_pureDensity`);
+`M Mᴴ` and `Mᴴ M` are **cospectral** on their nonzero eigenvalues
+(`spectral_sum_mul_conjTranspose_comm`, with `negMulLog 0 = 0`), and transpose preserves the
+spectrum (`charpoly_transpose` via `spectral_sum_eq_of_charpoly_eq`). No unit-norm hypothesis is
+needed for the entropy equality (it holds for every `ψ`); the unit condition only makes the
+marginals genuine densities. -/
+theorem pure_marginal_entropy_eq (ψ : (n × m) → ℂ) :
+    vonNeumannEntropy (partialTraceRight_isHermitian (pureDensity_isHermitian ψ))
+      = vonNeumannEntropy (partialTraceLeft_isHermitian (pureDensity_isHermitian ψ)) := by
+  set M := pureMatrix ψ with hM
+  -- Hermitian witnesses for the two marginals in their M Mᴴ / (Mᴴ M)ᵀ forms.
+  have hR : (partialTraceRight (pureDensity ψ)).IsHermitian :=
+    partialTraceRight_isHermitian (pureDensity_isHermitian ψ)
+  have hL : (partialTraceLeft (pureDensity ψ)).IsHermitian :=
+    partialTraceLeft_isHermitian (pureDensity_isHermitian ψ)
+  -- the marginal-form Hermitian matrices.
+  have hMMh : (M * Mᴴ).IsHermitian := Matrix.isHermitian_mul_conjTranspose_self M
+  have hMhM : (Mᴴ * M).IsHermitian := Matrix.isHermitian_conjTranspose_mul_self M
+  have hMhMt : ((Mᴴ * M)ᵀ).IsHermitian := hMhM.transpose
+  -- S(Tr_B) = ∑ negMulLog (eig (M Mᴴ)).
+  have hSR : vonNeumannEntropy hR = ∑ i, Real.negMulLog (hMMh.eigenvalues i) := by
+    rw [vonNeumannEntropy]
+    apply spectral_sum_eq_of_charpoly_eq hR hMMh
+    rw [partialTraceRight_pureDensity ψ, hM]
+  -- S(Tr_A) = ∑ negMulLog (eig ((Mᴴ M)ᵀ)).
+  have hSL : vonNeumannEntropy hL = ∑ i, Real.negMulLog (hMhMt.eigenvalues i) := by
+    rw [vonNeumannEntropy]
+    apply spectral_sum_eq_of_charpoly_eq hL hMhMt
+    rw [partialTraceLeft_pureDensity ψ, hM]
+  rw [hSR, hSL]
+  -- ∑ negMulLog (eig ((Mᴴ M)ᵀ)) = ∑ negMulLog (eig (Mᴴ M)) (transpose preserves charpoly).
+  have htrans : ∑ i, Real.negMulLog (hMhMt.eigenvalues i)
+      = ∑ j, Real.negMulLog (hMhM.eigenvalues j) :=
+    spectral_sum_eq_of_charpoly_eq hMhMt hMhM (Matrix.charpoly_transpose _) Real.negMulLog
+  rw [htrans]
+  -- cospectrum of M Mᴴ and Mᴴ M (negMulLog 0 = 0).
+  exact spectral_sum_mul_conjTranspose_comm M Real.negMulLog_zero
+
+end Schmidt
+
+/-! ## Purification of a density operator (Araki–Lieb 2b) -/
+
+section Purification
+
+variable {m : Type*} [Fintype m]
+
+/-- The **Hermitian square root** `√ρ := cfc Real.sqrt ρ` of a Hermitian matrix. For PSD `ρ`
+(eigenvalues `≥ 0`) it satisfies `√ρ · √ρ = ρ` (`sqrtMat_mul_self`) and is itself Hermitian. -/
+noncomputable def sqrtMat {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) : Matrix n n ℂ :=
+  hρ.cfc Real.sqrt
+
+/-- `√ρ` is Hermitian (the cfc of a real function is Hermitian). -/
+theorem sqrtMat_isHermitian {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) :
+    (sqrtMat hρ).IsHermitian :=
+  cfc_isHermitian hρ Real.sqrt
+
+/-- `√ρ · √ρ = ρ` for PSD `ρ`: `√λ · √λ = λ` on the (nonneg) spectrum, via `cfc_mul` + `cfc_id`. -/
+theorem sqrtMat_mul_self {ρ : Matrix n n ℂ} (hpsd : ρ.PosSemidef) :
+    sqrtMat hpsd.1 * sqrtMat hpsd.1 = ρ := by
+  rw [sqrtMat, cfc_mul hpsd.1 Real.sqrt Real.sqrt]
+  rw [cfc_eq_of_eq_on_eigenvalues hpsd.1
+    (f := fun x => Real.sqrt x * Real.sqrt x) (g := id)
+    (fun i => Real.mul_self_sqrt (hpsd.eigenvalues_nonneg i))]
+  exact cfc_id hpsd.1
+
+/-- **Purification (Araki–Lieb 2b).** Every density operator `ρ : Matrix (n×m) (n×m) ℂ` is the right
+marginal of a pure state on `(n×m) ⊗ (n×m)` (a copy of the system as ancilla): there is a unit
+`ψ : ((n×m) × (n×m)) → ℂ` with `partialTraceRight (pureDensity ψ) = ρ`. The purifying vector is
+`ψ = vec(√ρ)` (`pureMatrix ψ = √ρ`); then `partialTraceRight (pureDensity ψ) = √ρ · (√ρ)ᴴ =
+√ρ · √ρ = ρ`, and `∑‖ψ‖² = Tr((√ρ)ᴴ √ρ) = Tr ρ = 1`. -/
+theorem exists_purification {ρ : Matrix (n × m) (n × m) ℂ}
+    [DecidableEq m] (hpsd : ρ.PosSemidef) (htr : ρ.trace = 1) :
+    ∃ ψ : ((n × m) × (n × m)) → ℂ,
+      (∑ p, ‖ψ p‖ ^ 2 = 1) ∧ partialTraceRight (pureDensity ψ) = ρ := by
+  classical
+  set S := sqrtMat hpsd.1 with hS
+  have hSh : S.IsHermitian := sqrtMat_isHermitian hpsd.1
+  -- the purifying vector ψ (a,b) = S a b.
+  refine ⟨fun p => S p.1 p.2, ?_, ?_⟩
+  · -- ∑ ‖S a b‖² = Tr(S S) = Tr ρ = 1.
+    have hSS : S * S = ρ := sqrtMat_mul_self hpsd
+    have hkey : (∑ p : (n × m) × (n × m), ‖S p.1 p.2‖ ^ 2 : ℝ) = ((S * S).trace).re := by
+      rw [Matrix.trace, Complex.re_sum, Fintype.sum_prod_type]
+      refine Finset.sum_congr rfl fun a _ => ?_
+      simp only [Matrix.diag_apply, Matrix.mul_apply, Complex.re_sum]
+      refine Finset.sum_congr rfl fun b _ => ?_
+      -- (S S) a a summand at b: S a b * S b a; with S Hermitian, S b a = conj (S a b).
+      have hherm : S b a = starRingEnd ℂ (S a b) := by
+        have h := congrFun (congrFun hSh.eq a) b
+        simp only [Matrix.conjTranspose_apply, Complex.star_def] at h
+        have := congrArg (starRingEnd ℂ) h
+        rwa [Complex.conj_conj] at this
+      rw [hherm, Complex.mul_conj, Complex.normSq_eq_norm_sq, Complex.ofReal_re]
+    simp only []
+    rw [hkey, hSS, htr, Complex.one_re]
+  · -- partialTraceRight (pureDensity ψ) = pureMatrix ψ * (pureMatrix ψ)ᴴ = S Sᴴ = S S = ρ.
+    rw [partialTraceRight_pureDensity]
+    have hpm : pureMatrix (fun p : (n × m) × (n × m) => S p.1 p.2) = S := by
+      ext a b; rfl
+    rw [hpm, hSh.eq, sqrtMat_mul_self hpsd]
+
+end Purification
+
+/-! ## Araki–Lieb triangle inequality (2c)
+
+`|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)`. Route: purify `ρ_AB` to a pure `Ψ` on `(AB) ⊗ R` with `R ≅ AB`
+(`exists_purification`); for the pure global state the `A | (BR)` cut gives `S(ρ_A) = S(ρ_BR)`
+(Schmidt symmetry on the reshaped `Ψ' : n × (m × R)`); subadditivity on `ρ_BR` (split `B | R`)
+gives `S(ρ_BR) ≤ S(ρ_B) + S(ρ_R)`, and the `AB | R` cut gives `S(ρ_R) = S(ρ_AB)`; hence
+`S(ρ_A) ≤ S(ρ_B) + S(ρ_AB)`. The symmetric `A ↔ B` swap closes the absolute value.
+
+The reshape marginal identities are direct index computations (no abstract reassociation of the
+partial trace). The subadditivity step requires the `B`- and `R`-marginals **positive-definite**;
+`ρ_R` is cospectral with `ρ_AB`, so this routes through `ρ_AB.PosDef`. -/
+
+section ArakiLieb
+
+variable {m : Type*} [Fintype m] [DecidableEq m]
+
+/-- The `A | (BR)` reshape of a global pure-state vector on `(A B) × R = (n × m) × (n × m)`:
+`Ψ' a (b, r) = Ψ ((a, b), r)`, regrouping as `A × (B × R)`. -/
+def reshapeABR (Ψ : ((n × m) × (n × m)) → ℂ) : (n × (m × (n × m))) → ℂ :=
+  fun p => Ψ ((p.1, p.2.1), p.2.2)
+
+omit [DecidableEq n] [DecidableEq m] in
+/-- **A-marginal via the `A | BR` reshape = double right partial trace.**
+`Tr_{BR} |Ψ'⟩⟨Ψ'| = Tr_B (Tr_R |Ψ⟩⟨Ψ|) = ρ_A`. Direct index computation:
+both equal `(a, a') ↦ ∑_{b,r} Ψ((a,b),r) conj Ψ((a',b),r)`. -/
+theorem partialTraceRight_reshapeABR (Ψ : ((n × m) × (n × m)) → ℂ) :
+    partialTraceRight (pureDensity (reshapeABR Ψ))
+      = partialTraceRight (partialTraceRight (pureDensity Ψ)) := by
+  ext a a'
+  simp only [partialTraceRight_apply, pureDensity, vecMulVec_apply, Pi.star_apply,
+    reshapeABR, Complex.star_def, Fintype.sum_prod_type]
+
+omit [Fintype m] [DecidableEq n] [DecidableEq m] in
+/-- **BR-marginal via the `A | BR` reshape = `ρ_BR`.** `Tr_A |Ψ'⟩⟨Ψ'| = ρ_BR`, the matrix
+`((b,r),(b',r')) ↦ ∑_a Ψ((a,b),r) conj Ψ((a,b'),r')`. -/
+theorem partialTraceLeft_reshapeABR (Ψ : ((n × m) × (n × m)) → ℂ) :
+    partialTraceLeft (pureDensity (reshapeABR Ψ))
+      = Matrix.of fun br br' : m × (n × m) =>
+          ∑ a : n, Ψ ((a, br.1), br.2) * starRingEnd ℂ (Ψ ((a, br'.1), br'.2)) := by
+  ext br br'
+  simp only [partialTraceLeft_apply, pureDensity, vecMulVec_apply, Pi.star_apply,
+    reshapeABR, Complex.star_def, Matrix.of_apply]
+
+omit [DecidableEq n] [DecidableEq m] in
+/-- **B-marginal of `ρ_BR` (trace out R) = `ρ_B = Tr_A (Tr_R |Ψ⟩⟨Ψ|)`.** Direct index computation. -/
+theorem partialTraceRight_partialTraceLeft_reshapeABR (Ψ : ((n × m) × (n × m)) → ℂ) :
+    partialTraceRight (partialTraceLeft (pureDensity (reshapeABR Ψ)))
+      = partialTraceLeft (partialTraceRight (pureDensity Ψ)) := by
+  ext b b'
+  simp only [partialTraceRight_apply, partialTraceLeft_apply, pureDensity, vecMulVec_apply,
+    Pi.star_apply, reshapeABR, Complex.star_def]
+  rw [Finset.sum_comm]
+
+omit [DecidableEq n] [DecidableEq m] in
+/-- **R-marginal of `ρ_BR` (trace out B) = `ρ_R = Tr_A (Tr_B |Ψ⟩⟨Ψ|)` reassociated.** Here
+`ρ_R = Tr_{AB} |Ψ⟩⟨Ψ|` is `partialTraceLeft (pureDensity Ψ)` (trace out the whole `AB` first
+factor). Direct index computation: both equal `(r, r') ↦ ∑_{a,b} Ψ((a,b),r) conj Ψ((a,b),r')`. -/
+theorem partialTraceLeft_partialTraceLeft_reshapeABR (Ψ : ((n × m) × (n × m)) → ℂ) :
+    partialTraceLeft (partialTraceLeft (pureDensity (reshapeABR Ψ)))
+      = partialTraceLeft (pureDensity Ψ) := by
+  ext r r'
+  simp only [partialTraceLeft_apply, pureDensity, vecMulVec_apply, Pi.star_apply, reshapeABR,
+    Complex.star_def, Fintype.sum_prod_type]
+  rw [Finset.sum_comm]
+
+omit [DecidableEq n] [DecidableEq m] in
+/-- The pure density `|ψ⟩⟨ψ|` is positive-semidefinite. -/
+theorem pureDensity_posSemidef (ψ : (n × m) → ℂ) : (pureDensity ψ).PosSemidef :=
+  Matrix.posSemidef_vecMulVec_self_star ψ
+
+/-- **Cospectrum of the two pure marginals (charpoly form).** For a pure state on `(n×m) ⊗ (n×m)`
+(both factors equal-dimensional), the right and left marginals have **equal characteristic
+polynomial**: `partialTraceRight = M Mᴴ`, `partialTraceLeft = (Mᴴ M)ᵀ`, and for **square** `M`,
+`(M Mᴴ).charpoly = (Mᴴ M).charpoly` (`charpoly_mul_comm`), with `charpoly_transpose`. The
+equal-dimension square case is the one purification produces (`R ≅ AB`). -/
+theorem charpoly_partialTrace_pure_eq (Ψ : ((n × m) × (n × m)) → ℂ) :
+    (partialTraceRight (pureDensity Ψ)).charpoly
+      = (partialTraceLeft (pureDensity Ψ)).charpoly := by
+  rw [partialTraceRight_pureDensity, partialTraceLeft_pureDensity, Matrix.charpoly_transpose,
+    Matrix.charpoly_mul_comm]
+
+/-- **Araki–Lieb, one side:** `S(ρ_A) ≤ S(ρ_B) + S(ρ_AB)` for `ρ_AB` positive-definite with the
+`B`-marginal positive-definite. Purify, use Schmidt symmetry on the `A | BR` cut
+(`S(ρ_A) = S(ρ_BR)`), subadditivity on `ρ_BR` (`S(ρ_BR) ≤ S(ρ_B) + S(ρ_R)`, needs `ρ_B`, `ρ_R`
+PD), and `S(ρ_R) = S(ρ_AB)` (the `AB | R` cut). `ρ_R` PD is derived from `ρ_AB` PD by cospectrum
+(`posDef_of_charpoly_eq`). -/
+theorem araki_lieb_one_side
+    {ρAB : Matrix (n × m) (n × m) ℂ} (hpd : ρAB.PosDef) (htr : ρAB.trace = 1)
+    (hpdB : (partialTraceLeft ρAB).PosDef) :
+    vonNeumannEntropy (partialTraceRight_isHermitian hpd.1)
+      ≤ vonNeumannEntropy (partialTraceLeft_isHermitian hpd.1)
+        + vonNeumannEntropy hpd.1 := by
+  classical
+  -- purify ρAB to a pure Ψ on (AB) ⊗ R, R ≅ AB.
+  obtain ⟨Ψ, _hΨnorm, hΨ⟩ := exists_purification hpd.posSemidef htr
+  set ρBR := partialTraceLeft (pureDensity (reshapeABR Ψ)) with hρBR
+  have hρBR_psd : ρBR.PosSemidef :=
+    partialTraceLeft_posSemidef (pureDensity_posSemidef (reshapeABR Ψ))
+  -- (1) S(ρ_A) = S(ρ_BR), Schmidt symmetry on the A|BR reshape.
+  have hStep1 : vonNeumannEntropy (partialTraceRight_isHermitian hpd.1)
+      = vonNeumannEntropy hρBR_psd.1 := by
+    have hsym := pure_marginal_entropy_eq (n := n) (m := m × (n × m)) (reshapeABR Ψ)
+    rw [show vonNeumannEntropy hρBR_psd.1
+        = vonNeumannEntropy (partialTraceLeft_isHermitian (pureDensity_isHermitian (reshapeABR Ψ)))
+        from rfl, ← hsym]
+    exact spectral_sum_eq_of_charpoly_eq _ _
+      (by rw [partialTraceRight_reshapeABR, hΨ]) _
+  -- B- and R-marginals of ρ_BR.
+  have hB_eq : partialTraceRight ρBR = partialTraceLeft ρAB := by
+    rw [hρBR, partialTraceRight_partialTraceLeft_reshapeABR, hΨ]
+  have hR_eq : partialTraceLeft ρBR = partialTraceLeft (pureDensity Ψ) := by
+    rw [hρBR, partialTraceLeft_partialTraceLeft_reshapeABR]
+  have hpdB' : (partialTraceRight ρBR).PosDef := by rw [hB_eq]; exact hpdB
+  have hpdR' : (partialTraceLeft ρBR).PosDef := by
+    rw [hR_eq]
+    refine posDef_of_charpoly_eq hpd.1
+      (partialTraceLeft_isHermitian (pureDensity_isHermitian Ψ)) ?_ hpd
+    rw [← hΨ]; exact charpoly_partialTrace_pure_eq Ψ
+  -- ρ_BR trace = 1: trace (pureDensity (reshapeABR Ψ)) = trace (pureDensity Ψ) = trace ρAB ... = 1.
+  have htrBR : ρBR.trace = 1 := by
+    rw [hρBR, partialTraceLeft_trace]
+    -- trace |Ψ'⟩⟨Ψ'| = ∑ ‖Ψ' p‖² = ∑ ‖Ψ q‖² (reindex) = trace |Ψ⟩⟨Ψ| = trace ρAB = 1.
+    have hreshape_norm : (∑ p, ‖reshapeABR Ψ p‖ ^ 2) = ∑ q, ‖Ψ q‖ ^ 2 := by
+      refine Fintype.sum_bijective
+        (fun p : n × (m × (n × m)) => ((p.1, p.2.1), p.2.2)) ?_ _ _ (fun p => rfl)
+      exact ⟨fun a b h => by
+        obtain ⟨a1, a2, a3⟩ := a; obtain ⟨b1, b2, b3⟩ := b
+        simp only [Prod.mk.injEq] at h ⊢; tauto,
+        fun q => ⟨(q.1.1, q.1.2, q.2), rfl⟩⟩
+    have htrΨ : (pureDensity Ψ).trace = 1 := by
+      rw [← hΨ] at htr; rw [partialTraceRight_trace] at htr; exact htr
+    rw [pureDensity_trace, hreshape_norm, ← pureDensity_trace, htrΨ]
+  -- subadditivity on ρ_BR: S(ρ_BR) ≤ S(ρ_B) + S(ρ_R).
+  have hsub := vonNeumannEntropy_subadditive hρBR_psd htrBR hpdB' hpdR'
+  -- S(ρ_R) = S(ρ_AB) via the AB|R cut: S(Tr_B' ρBR) = S(Tr_A Ψ) = S(Tr_R Ψ) = S(ρ_AB).
+  have hStep2 : vonNeumannEntropy hpdR'.1 = vonNeumannEntropy hpd.1 := by
+    have hsym := pure_marginal_entropy_eq (n := n × m) (m := n × m) Ψ
+    calc vonNeumannEntropy hpdR'.1
+        = vonNeumannEntropy (partialTraceLeft_isHermitian (pureDensity_isHermitian Ψ)) :=
+          spectral_sum_eq_of_charpoly_eq _ _ (by rw [hR_eq]) _
+      _ = vonNeumannEntropy (partialTraceRight_isHermitian (pureDensity_isHermitian Ψ)) := hsym.symm
+      _ = vonNeumannEntropy hpd.1 := spectral_sum_eq_of_charpoly_eq _ _ (by rw [hΨ]) _
+  -- S(ρ_B) = S(partialTraceLeft ρAB).
+  have hStepB : vonNeumannEntropy hpdB'.1
+      = vonNeumannEntropy (partialTraceLeft_isHermitian hpd.1) :=
+    spectral_sum_eq_of_charpoly_eq _ _ (by rw [hB_eq]) _
+  rw [hStep1]
+  rw [hStep2, hStepB] at hsub
+  exact hsub
+
+/-- **Araki–Lieb triangle inequality** `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)` for a **positive-definite**
+bipartite density `ρ_AB` with both marginals `ρ_A = Tr_B ρ_AB`, `ρ_B = Tr_A ρ_AB`
+**positive-definite**. Genuine, non-vacuous content for **correlated** full-rank `ρ_AB` (equality
+only at product states; `S(ρ_A) − S(ρ_B)` is generically nonzero). Two applications of
+`araki_lieb_one_side` (the second to the index-swapped state `ρ_BA`, whose marginals are `ρ_B`,
+`ρ_A` and whose entropy equals `S(ρ_AB)` by reindexing).
+
+**Honest scope.** The `ρ_AB` positive-definite hypothesis is load-bearing: the purification route
+runs subadditivity on the `B | R` bipartition, which (via `vonNeumannEntropy_subadditive`) needs
+the ancilla marginal `ρ_R` positive-definite, and `ρ_R` is cospectral with `ρ_AB`. The
+**pure-entangled** case (`S(ρ_AB) = 0`, marginals full-rank) is therefore **not** covered by this
+form (it is the boundary `S(ρ_A) = S(ρ_B)` there); extending to singular `ρ_AB` needs a
+limiting / support-restriction argument. The bound is nonetheless a true inequality on correlated
+full-rank states, not a product-state identity. -/
+theorem vonNeumannEntropy_araki_lieb
+    {ρAB : Matrix (n × m) (n × m) ℂ} (hpd : ρAB.PosDef) (htr : ρAB.trace = 1)
+    (hpdA : (partialTraceRight ρAB).PosDef) (hpdB : (partialTraceLeft ρAB).PosDef) :
+    |vonNeumannEntropy hpdA.1 - vonNeumannEntropy hpdB.1| ≤ vonNeumannEntropy hpd.1 := by
+  classical
+  -- forward direction: S(ρ_A) ≤ S(ρ_B) + S(ρ_AB).
+  have hAB : vonNeumannEntropy hpdA.1 ≤ vonNeumannEntropy hpdB.1 + vonNeumannEntropy hpd.1 := by
+    have h := araki_lieb_one_side hpd htr hpdB
+    rwa [vonNeumannEntropy_congr (partialTraceRight_isHermitian hpd.1) hpdA.1,
+      vonNeumannEntropy_congr (partialTraceLeft_isHermitian hpd.1) hpdB.1] at h
+  -- backward direction via the swapped state ρ_BA = ρ_AB reindexed along Prod.swap.
+  set e : (n × m) ≃ (m × n) := Equiv.prodComm n m with he
+  set ρBA : Matrix (m × n) (m × n) ℂ := ρAB.reindex e e with hρBA
+  have hBAh : ρBA.IsHermitian := by rw [hρBA]; exact hpd.1.reindex e
+  -- charpoly of ρBA equals that of ρAB.
+  have hcpBA : ρBA.charpoly = ρAB.charpoly := by rw [hρBA]; exact Matrix.charpoly_reindex e ρAB
+  have hpdBA : ρBA.PosDef := posDef_of_charpoly_eq hpd.1 hBAh hcpBA.symm hpd
+  have htrBA : ρBA.trace = 1 := by
+    have hsubtr : (ρAB.submatrix e.symm e.symm).trace = ρAB.trace := by
+      simp only [Matrix.trace, Matrix.diag_apply, Matrix.submatrix_apply]
+      exact Equiv.sum_comp e.symm (fun i => ρAB i i)
+    rw [hρBA, Matrix.reindex_apply, hsubtr, htr]
+  -- marginals of ρBA: Tr_B' ρBA = ρ_B, Tr_A' ρBA = ρ_A (the A,B roles swap).
+  have hBA_right : partialTraceRight ρBA = partialTraceLeft ρAB := by
+    ext i j
+    simp only [partialTraceRight_apply, partialTraceLeft_apply, hρBA, Matrix.reindex_apply,
+      Matrix.submatrix_apply, he, Equiv.prodComm_symm, Equiv.prodComm_apply, Prod.swap_prod_mk]
+  have hBA_left : partialTraceLeft ρBA = partialTraceRight ρAB := by
+    ext i j
+    simp only [partialTraceLeft_apply, partialTraceRight_apply, hρBA, Matrix.reindex_apply,
+      Matrix.submatrix_apply, he, Equiv.prodComm_symm, Equiv.prodComm_apply, Prod.swap_prod_mk]
+  have hpdB_BA : (partialTraceLeft ρBA).PosDef := by rw [hBA_left]; exact hpdA
+  -- S(ρ_B) ≤ S(ρ_A) + S(ρ_BA), and S(ρ_BA) = S(ρ_AB).
+  have hBA : vonNeumannEntropy hpdB.1 ≤ vonNeumannEntropy hpdA.1 + vonNeumannEntropy hpd.1 := by
+    have h := araki_lieb_one_side hpdBA htrBA hpdB_BA
+    rw [show vonNeumannEntropy (partialTraceRight_isHermitian hpdBA.1)
+          = vonNeumannEntropy hpdB.1 from
+        spectral_sum_eq_of_charpoly_eq _ _ (by rw [hBA_right]) _,
+      show vonNeumannEntropy (partialTraceLeft_isHermitian hpdBA.1)
+          = vonNeumannEntropy hpdA.1 from
+        spectral_sum_eq_of_charpoly_eq _ _ (by rw [hBA_left]) _,
+      show vonNeumannEntropy hpdBA.1 = vonNeumannEntropy hpd.1 from
+        spectral_sum_eq_of_charpoly_eq _ _ hcpBA _] at h
+    exact h
+  rw [abs_le]
+  constructor <;> linarith
+
+end ArakiLieb
 
 end QuantumInfo

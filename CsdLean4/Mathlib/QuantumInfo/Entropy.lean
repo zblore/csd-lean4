@@ -3,6 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Analysis.Convex.Jensen
 
 /-!
 # Spectral von Neumann entropy (K1-A)
@@ -122,6 +123,67 @@ theorem vonNeumannEntropy_nonneg {ρ : Matrix n n ℂ} (hpsd : ρ.PosSemidef) (h
   refine Finset.sum_nonneg fun i _ => ?_
   obtain ⟨h0, h1⟩ := eigenvalues_mem_Icc_of_density hpsd htr i
   exact Real.negMulLog_nonneg h0 h1
+
+/-! ## Maximum-entropy bound `S ≤ log d` -/
+
+/-- **Maximum-entropy bound** `S(ρ) ≤ log d` for a density operator (PSD, unit trace) on a space
+of dimension `d = Fintype.card n ≥ 1`. The maximally mixed state `ρ = I/d` saturates it.
+Route: `negMulLog` is **concave** on `Ici 0` (`Real.concaveOn_negMulLog`); Finset Jensen
+(`ConcaveOn.le_map_sum`) with uniform weights `wᵢ = 1/d` and `pᵢ = λᵢ ∈ [0,1] ⊂ Ici 0` gives
+`∑ᵢ (1/d)·negMulLog(λᵢ) ≤ negMulLog(∑ᵢ (1/d)·λᵢ) = negMulLog(1/d)` (using `∑λᵢ = trace = 1`),
+and `negMulLog(1/d) = (1/d)·log d`. Multiply through by `d`. -/
+theorem vonNeumannEntropy_le_log_card {ρ : Matrix n n ℂ} (hpsd : ρ.PosSemidef)
+    (htr : ρ.trace = 1) :
+    vonNeumannEntropy hpsd.1 ≤ Real.log (Fintype.card n) := by
+  set d : ℝ := (Fintype.card n : ℝ) with hd
+  -- the index type is nonempty (its trace is 1 ≠ 0), so d ≥ 1 > 0.
+  have hne : Nonempty n := by
+    by_contra h
+    rw [not_nonempty_iff] at h
+    rw [Matrix.trace] at htr
+    simp only [Finset.univ_eq_empty, Finset.sum_empty] at htr
+    exact zero_ne_one htr
+  have hcard : 0 < Fintype.card n := Fintype.card_pos
+  have hdpos : 0 < d := by rw [hd]; exact_mod_cast hcard
+  -- eigenvalue sum is 1.
+  have hsum : ∑ i, hpsd.1.eigenvalues i = 1 := by
+    have h := hpsd.1.trace_eq_sum_eigenvalues
+    rw [htr] at h
+    have hre := congrArg Complex.re h
+    rw [Complex.one_re, Complex.re_sum] at hre
+    simpa using hre.symm
+  -- eigenvalues lie in Ici 0 (the concavity domain).
+  have hmem : ∀ i ∈ Finset.univ, hpsd.1.eigenvalues i ∈ Set.Ici (0 : ℝ) :=
+    fun i _ => (eigenvalues_mem_Icc_of_density hpsd htr i).1
+  -- Jensen for the concave negMulLog with uniform weights 1/d.
+  have hjensen := Real.concaveOn_negMulLog.le_map_sum
+    (t := Finset.univ) (w := fun _ : n => 1 / d) (p := hpsd.1.eigenvalues)
+    (fun i _ => by positivity)
+    (by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← hd]; field_simp)
+    hmem
+  -- ∑ (1/d) • λᵢ = (1/d) · ∑ λᵢ = 1/d.
+  have hbary : ∑ i, (1 / d) • hpsd.1.eigenvalues i = 1 / d := by
+    simp only [smul_eq_mul]
+    rw [← Finset.mul_sum, hsum, mul_one]
+  rw [hbary] at hjensen
+  -- LHS of Jensen is (1/d) · S(ρ).
+  have hLHS : ∑ i, (1 / d) • Real.negMulLog (hpsd.1.eigenvalues i)
+      = (1 / d) * vonNeumannEntropy hpsd.1 := by
+    rw [vonNeumannEntropy]
+    simp only [smul_eq_mul]
+    rw [Finset.mul_sum]
+  rw [hLHS] at hjensen
+  -- negMulLog(1/d) = (1/d) log d.
+  have hval : Real.negMulLog (1 / d) = (1 / d) * Real.log d := by
+    rw [Real.negMulLog, Real.log_div one_ne_zero (ne_of_gt hdpos), Real.log_one]
+    ring
+  rw [hval] at hjensen
+  -- multiply both sides by d > 0.
+  have := mul_le_mul_of_nonneg_left hjensen hdpos.le
+  rw [show d * ((1 / d) * vonNeumannEntropy hpsd.1) = vonNeumannEntropy hpsd.1 by
+        field_simp,
+      show d * ((1 / d) * Real.log d) = Real.log d by field_simp] at this
+  exact this
 
 /-! ## cfc injectivity on the spectrum -/
 
