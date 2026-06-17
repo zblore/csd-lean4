@@ -15,6 +15,7 @@ import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 import CsdLean4.Mathlib.QuantumInfo.Entropy
 import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier

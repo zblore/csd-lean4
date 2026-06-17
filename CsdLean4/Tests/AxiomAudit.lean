@@ -11,6 +11,7 @@ import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 import CsdLean4.Mathlib.QuantumInfo.Entropy
 import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
@@ -721,6 +722,20 @@ arithmetic. -/
 /-- info: 'QuantumInfo.vonNeumannEntropy_araki_lieb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.vonNeumannEntropy_araki_lieb
+
+-- K1-C strong subadditivity (specs/k1-plan.md §K1-C): the mutual-information identity
+-- D(ρ ‖ ρ_X⊗ρ_Y) = S(ρ_X)+S(ρ_Y)−S(ρ) (relEntropy_kronecker_eq_entropy_sub, unconditional)
+-- and the CONDITIONAL reduction strong_subadditivity_of_relEntropy_monotone: SSA derived from
+-- the data-processing inequality (DPI) carried as an EXPLICIT hypothesis hDPI. The deep
+-- operator-convexity input (Lieb concavity / joint convexity of relative entropy / DPI) is NOT
+-- in Mathlib and is isolated as hDPI; no axiom is introduced. Foundational triple on what lands.
+/-- info: 'QuantumInfo.relEntropy_kronecker_eq_entropy_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.relEntropy_kronecker_eq_entropy_sub
+
+/-- info: 'QuantumInfo.strong_subadditivity_of_relEntropy_monotone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.strong_subadditivity_of_relEntropy_monotone
 
 -- n-qubit register (R1 of specs/nqubit-register-plan.md): QReg n = EuclideanSpace ℂ
 -- (Fin n → Fin 2); Born prob as a squared inner product (prob_eq_inner_sq), normalisation

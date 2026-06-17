@@ -37,8 +37,15 @@ thermodynamics. **K1-A (spectral `vonNeumannEntropy` + elementary properties) DO
 `S = 0`, unitary invariance; tensor additivity under an explicit eigenvalue-product hypothesis
 (no Kronecker spectral theorem in Mathlib → K1-A.2). Foundational-triple-only, AxiomAudit-pinned.
 *Mathlib:* matrix `log` via CFC exists; spectral entropy `∑ −λᵢ log λᵢ` assembled from
-`TraceDistance.lean`'s `IsHermitian.cfc`/`re_trace_cfc`; **concavity / Klein's inequality is not
-in Mathlib** and is the hard lemma (K1-C, multi-week). Cat-1 (CSD-free, upstreamable).
+`TraceDistance.lean`'s `IsHermitian.cfc`/`re_trace_cfc`. **K1-B (Klein / subadditivity /
+Araki–Lieb) COMPLETE** (`Subadditivity.lean`). **K1-C strong subadditivity: SCAFFOLD +
+CONDITIONAL REDUCTION LANDED 2026-06-17** (`StrongSubadditivity.lean`): SSA from the
+data-processing inequality (DPI) carried as an explicit hypothesis `hDPI`, plus the unconditional
+mutual-information identity `D(ρ‖ρ_X⊗ρ_Y) = S_X+S_Y−S`. Scout CONFIRMED **operator convexity /
+Lieb concavity / joint convexity of relative entropy / DPI absent from Mathlib HEAD** (operator
+*monotonicity* IS present: `CFC.log_monotoneOn`, `monotone_rpow`); the deep input is isolated as
+`hDPI` and the build-vs-axiom fork is open (operator-convexity stratum = multi-week). No axiom, no
+sorry, foundational-triple-only. Cat-1 (CSD-free, upstreamable).
 *CSD angle:* `S(ρ)` is the entropy of the volume distribution the state induces on `Σ`.
 
 ### K2 — CPTP channels (Kraus / Choi / Stinespring)

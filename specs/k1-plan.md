@@ -8,7 +8,13 @@ the Kronecker-log operator split (`cfc_log_kronecker`, via the decomposition-ind
 `cfc_eq_conj_diagonal` / Lagrange route) + the subadditivity headline `S(ρ_AB) ≤ S(ρ_A)+S(ρ_B)`
 (marginals PD, ρ_AB only PSD) all LANDED; **`S ≤ log d` + Araki–Lieb `|S_A−S_B|≤S_AB` (ρ_AB PD)
 DONE 2026-06-17** via the purification + Schmidt-symmetry route, so **K1-A and K1-B are COMPLETE**
-(only the singular-marginal Araki–Lieb generalisation deferred); K1-C/D planned.**
+(only the singular-marginal Araki–Lieb generalisation deferred). **K1-C SCAFFOLD + CONDITIONAL
+REDUCTION LANDED 2026-06-17**: tripartite marginals + the mutual-information identity
+`relEntropy_kronecker_eq_entropy_sub` (unconditional) + the conditional reduction
+`strong_subadditivity_of_relEntropy_monotone` (SSA from DPI carried as explicit hypothesis `hDPI`),
+`StrongSubadditivity.lean`, no axiom / no sorry, foundational-triple-only, AxiomAudit-pinned. The
+deep operator-convexity input (Lieb / joint convexity / DPI) is ISOLATED as `hDPI` and confirmed
+absent from Mathlib; FORK (build Lieb vs axiom-state DPI) open. K1-D planned.**
 The QI/QEC-roadmap keystone K1
 (`specs/qi-qec-roadmap.md` §1). Builds the entropy / information-measure stratum:
 von Neumann entropy, subadditivity, strong subadditivity, data-processing, then downstream
@@ -172,12 +178,59 @@ moderate middle, reachable now. Decomposed:
   (`_root_.PosDef.kronecker` → `Matrix.PosDef.kronecker` + missing `import
   Mathlib.Analysis.Matrix.Order`); recovered, fixed, independently audited SOUND, then committed.
 
-### K1-C — strong subadditivity (Lieb–Ruskai)  [HARD; the genuine new-math core]
-`S(ρ_ABC) + S(ρ_B) ≤ S(ρ_AB) + S(ρ_BC)`. Rests on Lieb's concavity / operator convexity of
-`(A,B) ↦ Tr exp(log A + log B)`, **not believed to be in Mathlib**. **OPEN FORK (decision owed):**
-(a) build the operator-convexity infrastructure (Lieb's concavity — multi-week, genuinely new,
-upstreamable), or (b) state SSA as an honest hypothesis/`axiom` and proceed to K1-D. This choice
-sets whether K1 is a ~2-stage or a much longer build. Flagged, not yet decided.
+### K1-C — strong subadditivity (Lieb–Ruskai)  [SCAFFOLD + CONDITIONAL REDUCTION LANDED 2026-06-17; deep input ISOLATED, FORK OPEN]
+`S(ρ_ABC) + S(ρ_B) ≤ S(ρ_AB) + S(ρ_BC)`. Module `CsdLean4/Mathlib/QuantumInfo/StrongSubadditivity.lean`
+(namespace `QuantumInfo`, Cat-1). **No `axiom`, no `sorry`; foundational-triple-only on everything
+that landed; AxiomAudit-pinned.**
+
+**WHAT LANDED (the LF3-bundle pattern: everything proved except one named deep hypothesis).**
+
+- **Tripartite marginals** on `Matrix (a × b × c) (a × b × c) ℂ` (Lean's `a × b × c = a × (b × c)`):
+  `rhoBC := partialTraceLeft ρ` (trace `A`), `rhoAB := partialTraceRight (reassocABC ρ)` (regroup to
+  `(a×b)×c`, trace `C`), `rhoA := partialTraceRight ρ`, `rhoB := partialTraceLeft (rhoAB ρ)`. The
+  reassociation `assocE : (a×b×c) ≃ ((a×b)×c)` is `(Equiv.prodAssoc).symm`; trace/PSD transfer
+  (`reassocABC_trace`, `reassocABC_posSemidef`). The reindexing identities the auditor probes are
+  proved by direct index computation: `rhoAB_apply`, `rhoBC_apply`, `rhoA_apply`, `rhoB_consistency`
+  (`rhoB = Tr_C ρ_BC`), `rhoA_eq_traceB_AB` (`Tr_BC ρ = Tr_B ρ_AB`), `rhoB_eq_traceC_BC`.
+- **The mutual-information identity (the genuine unconditional algebraic content)**
+  `relEntropy_kronecker_eq_entropy_sub`: for a bipartite density `ρ` on `x × y` with both marginals
+  PD, `D(ρ ‖ ρ_X ⊗ ρ_Y) = S(ρ_X) + S(ρ_Y) − S(ρ)`. This is `cfc_log_kronecker` (the Kronecker-log
+  split, already in `Subadditivity.lean`) + the reduced-trace identities
+  `trace_mul_kronecker_one_right`/`_left`, extracted as a reusable *identity* (not the subadditivity
+  *inequality*). **No deep input.**
+- **The CONDITIONAL reduction (the real deliverable)** `strong_subadditivity_of_relEntropy_monotone`:
+  SSA derived from the **data-processing inequality carried as an explicit hypothesis** `hDPI`:
+  `D(ρ_AB ‖ ρ_A⊗ρ_B) ≤ D(ρ_ABC ‖ ρ_A⊗ρ_BC)` (relative entropy non-increasing under `Tr_C`, which
+  sends `ρ_ABC ↦ ρ_AB` and `ρ_A⊗ρ_BC ↦ ρ_A⊗ρ_B`). The reduction is genuine: both relative entropies
+  are rewritten by the MI identity into `I(A:BC) = S_A+S_BC−S_ABC` and `I(A:B) = S_A+S_B−S_AB`; the
+  common `S_A` cancels and `hDPI` becomes `S_B−S_AB ≤ S_BC−S_ABC`, i.e. SSA. Correct direction
+  (`I(A:BC) ≥ I(A:B)`, mutual information monotone under discarding `C`); non-vacuous on correlated
+  `ρ_ABC` (equality iff a quantum Markov chain `A−B−C`). Global `ρ_ABC` only `PosSemidef`; the three
+  sub-marginals PD is the standard Klein-style support condition (`relEntropy_nonneg` needs PD `σ`).
+
+**THE PRECISE WALL (the deep input NOT discharged).** `hDPI` is the standard deep input —
+data-processing inequality for quantum relative entropy = joint convexity of `(ρ,σ) ↦ D(ρ‖σ)` =
+Lieb's concavity of `(A,B) ↦ Tr exp(log A + log B)`. **Scout of Mathlib HEAD (2026-06-17):**
+
+- Operator MONOTONICITY (single-variable Löwner order) IS present: `CFC.log_monotoneOn` /
+  `CFC.log_le_log` (log operator monotone), `CFC.monotone_rpow` / `monotone_nnrpow` /
+  `sqrt_le_sqrt` (`x^p` operator monotone, `p∈[0,1]`), and the integral-representation scaffold
+  `…/ContinuousFunctionalCalculus/Rpow/IntegralRepresentation.lean`.
+- Operator CONVEXITY / CONCAVITY is **NOT** present. `…/ExpLog/Order.lean` carries explicit TODOs:
+  "Show that the log is operator concave" and "Show that `x ↦ x log x` is operator convex". There is
+  **no** `OperatorConvex`/`OperatorMonotone` predicate, **no** Lieb/Ando/Epstein/Wigner–Yanase,
+  **no** joint convexity of any trace functional, **no** DPI / relative-entropy monotonicity.
+
+So the minimal missing Mathlib lemma is **joint convexity of `D(·‖·)`** (or its DPI / Lieb form). A
+realistic build is the operator-convexity stratum: an `OperatorConvexOn` predicate on the Löwner
+order, the Löwner-matrix / integral route to operator convexity of `−log` and `x↦x log x`, the
+perspective-function joint-convexity lift, and the partial-trace DPI corollary — a genuine
+**multi-week** infrastructure build (the in-Mathlib `Rpow/IntegralRepresentation` scaffold is the
+template but only covers `p∈(0,1)` *monotonicity*, not convexity and not the two-variable
+perspective). **FORK (user's decision, owed):** (a) build the operator-convexity / Lieb infrastructure
+(multi-week, upstreamable), or (b) discharge `hDPI` by stating DPI / joint convexity as a named
+`axiom`. The axiom-vs-build choice is deliberately left open; this stage isolates the wall as `hDPI`
+and does not paper it.
 
 ### K1-D — data-processing / monotonicity  [composes K1-C + K2 channels]
 `S(Φρ) ≥ S(ρ)` under CPTP, composing K1-C with the K2 `Channel.lean` already built; downstream
@@ -200,4 +253,5 @@ can be deferred until K1-B lands.
 - Not a CSD result except the Landauer / ontic-entropy touchpoint (K1 is sibling infrastructure).
 - No infinite-dimensional / continuous-variable entropy (finite-dim matrices only, per the corpus
   finite-EFT posture).
-- SSA (K1-C) may be axiom-stated rather than derived, pending the §2 fork decision.
+- SSA (K1-C): the conditional reduction (SSA from DPI) is LANDED unconditionally; the deep input
+  `hDPI` (DPI / joint convexity / Lieb) may be axiom-stated rather than built, pending the fork.
