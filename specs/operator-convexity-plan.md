@@ -6,8 +6,12 @@
 **`CStarMatrix ↔ Matrix` transport bridge DONE 2026-06-18** (B.1 cfc transport +
 B.2 order transport + B.3 `log` operator-monotonicity transported onto `Matrix`;
 `Mathlib/Analysis/Matrix/OperatorConvexBridge.lean`; rpow transport WALLED, see B.3 note);
-L.2 (operator concavity of `log`) still **WALLED** but the prerequisite carrier bridge that
-gated both routes is now landed; L.3–L.5 **not started**.
+**REFRAMING LEMMA DONE 2026-06-18** (operator concavity ↔ ordinary `ConcaveOn` of `A ↦ cfc f A`
+on the Löwner-ordered codomain; `convex_spectralSet_Ioi`; bridge-independent, on the `Matrix`
+carrier — the high-leverage unlock that makes Mathlib's `ConcaveOn` API apply to operator
+concavity); **L.3a (`x^p` operator concave, `p∈[0,1]`) PARTIAL** (endpoints `p∈{0,1}` landed via
+the reframing; interior `p∈(0,1)` WALLED on the matrix-carrier integral assembly, see L.3a note);
+L.2 (operator concavity of `log`) still **WALLED**; L.4–L.5 **not started**.
 
 **Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvex.lean` (Cat-1, CSD-free,
 natural Mathlib namespace `Matrix`).
@@ -251,9 +255,91 @@ instance with a discrimination key that resolves; (ii) restate the rpow facts in
 `cfc (· ^ p)` directly (avoiding `CFC.rpow`/`^`), reproving `rpow_le_rpow`'s content on the bare
 `cfc`; (iii) use `CFC.nnrpow` only where the `ℝ≥0`-CFC fires. None attempted in this tranche.
 
-**L.3 (`x^p` operator concave) status:** NOT attempted. Blocked on the rpow-notation wall above
-for the `CStarMatrix`-transport route; the Schur/`fromBlocks` route (independent of the bridge,
-mirroring L.1) remains the cleaner unblocked path and is the recommended next rung.
+**L.3 (`x^p` operator concave) status:** see the REFRAMING + L.3a section below (2026-06-18).
+
+## REFRAMING LEMMA — operator concavity ↔ ordinary `ConcaveOn` (LANDED 2026-06-18)
+
+The high-leverage unlock. Bridge-INDEPENDENT, entirely on the `Matrix n n ℂ` carrier with the
+Löwner order; foundational-triple-only, AxiomAudit-pinned. In
+`Mathlib/Analysis/Matrix/OperatorConvex.lean`.
+
+```lean
+def Matrix.spectralSet (s : Set ℝ) (n : Type*) [Fintype n] [DecidableEq n] : Set (Matrix n n ℂ) :=
+  {A | A.IsHermitian ∧ spectrum ℝ A ⊆ s}
+
+theorem Matrix.convex_spectralSet_Ioi : Convex ℝ (spectralSet (Set.Ioi 0) n)
+theorem Matrix.operatorConcaveOn_of_concaveOn {s f}                       -- BACKWARD (the L.3a unlock)
+    (h : ∀ m [Fintype m] [DecidableEq m], ConcaveOn ℝ (spectralSet s m) (fun A => cfc f A)) :
+    OperatorConcaveOn s f
+theorem Matrix.concaveOn_of_operatorConcaveOn {s f n} (hf : OperatorConcaveOn s f)  -- FORWARD
+    (hconv : Convex ℝ (spectralSet s n)) : ConcaveOn ℝ (spectralSet s n) (fun A => cfc f A)
+theorem Matrix.operatorConcaveOn_iff_concaveOn {s f}                       -- FULL IFF
+    (hconv : ∀ m [Fintype m] [DecidableEq m], Convex ℝ (spectralSet s m)) :
+    OperatorConcaveOn s f ↔ ∀ m [Fintype m] [DecidableEq m], ConcaveOn ℝ (spectralSet s m) (cfc f ·)
+```
+
+**Why faithful (auditor-checked).** The codomain `Matrix n n ℂ` carries the genuine Löwner PSD-cone
+order (`Matrix.instPartialOrder`), and the `ConcaveOn` inequality `a • cfc f A + b • cfc f B ≤
+cfc f (a • A + b • B)` with `a + b = 1`, `a, b ≥ 0` is *literally* the operator-concavity inequality
+(`t = a`, `1 - t = b`), the convex combination matching via `Complex.coe_smul : (t:ℂ)•A = (t:ℝ)•A`.
+It is NOT a trace/scalar surrogate and NOT a single-`n` weakening (the iff quantifies over all `n`).
+The `Convex ℝ (spectralSet s n)` side condition is genuinely a fact about `s` (first conjunct of
+`ConcaveOn`), supplied for `s = (0,∞)` by `convex_spectralSet_Ioi` via `convexComb_posDef` (a convex
+combination of PD matrices is PD). The backward direction needs NO such hypothesis (it is bundled
+inside each `ConcaveOn`), which is exactly the direction the ladder consumes.
+
+**Payoff.** Mathlib's whole `ConcaveOn`/`ConvexOn` API — `ConcaveOn.add`, `ConcaveOn.smul`,
+`ConcaveOn.add_const`, Jensen — now applies to operator concavity for free (the affine-output rung
+`OperatorConcaveOn.affine_output` is a special case of `ConcaveOn.smul` + `.add_const` through it).
+What it does NOT provide: an "integral of a parameter-family of concave functions is concave" lemma
+(Mathlib has only finite-sum closure `ConcaveOn.add` and Jensen `ConcaveOn.map_integral_le`, the
+latter is the *wrong* integral — integration over the matrix argument, not over the resolvent
+parameter `s`). So the reframing alone does not close L.3a; the matrix-carrier integral identity is
+still the gating step (next).
+
+## L.3a — `x^p` operator concave on `(0,∞)`, `p∈[0,1]` (PARTIAL: endpoints LANDED, interior WALLED)
+
+**Landed (2026-06-18), foundational-triple-only, AxiomAudit-pinned:** the two *endpoints* on the
+genuine `Real.rpow`,
+```lean
+theorem Matrix.operatorConcaveOn_rpow_zero : OperatorConcaveOn (Set.Ioi 0) (fun x => x ^ (0:ℝ))
+theorem Matrix.operatorConcaveOn_rpow_one  : OperatorConcaveOn (Set.Ioi 0) (fun x => x ^ (1:ℝ))
+```
+(`x^0 = 1` constant, `x^1 = x` identity-affine; both via `cfc_const_one` / `cfc_id'` on the PD
+arguments). These are trivial but exercise the predicate on `Real.rpow`.
+
+**Interior `p∈(0,1)` — WALLED. Precise gap:** the integral route
+`x^p = c_p ∫₀^∞ x/(x+t) · t^{p-1} dt` is the standard path; the scalar rep EXISTS in Mathlib
+(`Real.rpow_eq_const_mul_integral`, `Real.integral_rpowIntegrand₀₁_eq_rpow_mul_const` in
+`Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/IntegralRepresentation.lean`), and each
+integrand `x ↦ x/(x+t)` is operator concave (`OperatorConcaveOn.affine_output` of
+`operatorConcaveOn_neg_add_inv`, both LANDED). The OPERATOR integral identity also exists —
+`CFC.exists_measure_nnrpow_eq_integral_cfcₙ_rpowIntegrand₀₁` giving `a^p = ∫ cfcₙ (integrand t) a ∂μ`
+— but its "cfc commutes with the set integral" engine `cfcₙ_setIntegral` requires
+**`[NonUnitalCStarAlgebra A] [CompleteSpace A]`**, and `example : NonUnitalCStarAlgebra (Matrix n n ℂ)
+:= by infer_instance` **FAILS** at the default `Matrix` instances (verified). So `cfc (· ^ p) A =
+∫ cfc (integrand t) A ∂μ` is NOT available on the `Matrix` carrier. Two repair routes, both walled at
+this pin:
+- (i) **Transport via `CStarMatrix`** — blocked by the *same* `NonnegSpectrumClass`/`Pow`
+  discrimination-key instance-resolution wall documented for rpow in `OperatorConvexBridge.lean` B.3
+  (the `Fintype ?m` side-condition on `CStarMatrix n n ℂ` cannot be synthesised). The `log` route
+  escaped this because `CFC.log` needs only `[CStarAlgebra A]`; rpow needs `Pow`/`NonnegSpectrumClass`.
+- (ii) **From-scratch matrix Bochner-integral-cfc lemma** — reprove `cfcₙ_setIntegral`'s content
+  directly for `cfc` on `Matrix n n ℂ` (a matrix-valued dominated-convergence + cfc-continuity build).
+  Estimated multi-day analytic sub-build; not attempted.
+
+**Schur/`fromBlocks` route for `p = 1/2` (the alternative) — also WALLED.** Operator concavity of
+`sqrt` via the geometric mean `A # B` and its block positivity `[[A, A#B],[A#B, B]] ≥ 0` is the
+standard 2×2 argument, but Mathlib has **no operator geometric mean** and **no `sqrt` operator
+concavity** (grep-confirmed; only `CFC.sqrt_le_sqrt` monotonicity). Building `A # B =
+A^{1/2}(A^{-1/2} B A^{-1/2})^{1/2} A^{1/2}` leans on rpow on the `Matrix` carrier, hitting the same
+instance wall. So the Schur route does not generalise any `p` past the trivial endpoints here.
+
+**Honest verdict.** The reframing (the high-value unlock) + the L.3a endpoints are landed,
+bridge-independent and Gleason-free. The L.3a interior is one precise, named wall away: the
+matrix-carrier "cfc commutes with the integral" identity, which is either the `CStarMatrix` rpow
+instance-resolution repair (i) or the from-scratch Bochner-cfc build (ii). No `x^p`/`log` operator
+concavity is *claimed* for the interior; the corpus does not assert it.
 
 ## L.2 — Operator concavity of `log` (WALLED — sharper boundary identified)
 

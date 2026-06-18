@@ -2,6 +2,8 @@ import Mathlib.Analysis.Matrix.Order
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Data.Matrix.Block
+import Mathlib.Analysis.Convex.Function
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-!
 # Operator convexity / concavity for matrix functions (foundational rungs)
@@ -36,6 +38,22 @@ scoped `MatrixOrder`: `A ≤ B := (B - A).PosSemidef`) and the continuous functi
 * `Matrix.OperatorConcaveOn.affine_output` : the increasing-affine output transform
   `f ↦ (fun x => c * f x + d)` with `c ≥ 0` preserves operator concavity (the Step-C algebra in
   the `log` route, `c = p⁻¹`, `d = -p⁻¹`, lifting `x^p` concavity to `p⁻¹(x^p − 1)` concavity).
+* `Matrix.operatorConcaveOn_iff_concaveOn` (and the two one-directional lemmas
+  `operatorConcaveOn_of_concaveOn`, `concaveOn_of_operatorConcaveOn`) : the **reframing lemma** —
+  `OperatorConcaveOn s f` is equivalent to ordinary `ConcaveOn ℝ (spectralSet s n)
+  (fun A => cfc f A)` for every dimension `n`, where `spectralSet s n` is the set of Hermitian
+  matrices with spectrum `⊆ s` and the codomain carries the Löwner order. This makes Mathlib's
+  whole `ConcaveOn` API (`ConcaveOn.add`, `.smul`, `.add_const`, Jensen, …) applicable to operator
+  concavity. The reframing is *faithful*: the `ConcaveOn` inequality `a • cfc f A + b • cfc f B ≤
+  cfc f (a • A + b • B)` (`a + b = 1`, `a, b ≥ 0`, Löwner `≤`) is *exactly* the operator-concavity
+  inequality, not a scalar/trace weakening.
+* `Matrix.convex_spectralSet_Ioi` : `spectralSet (Set.Ioi 0) n` is `Convex ℝ` (a convex
+  combination of positive-definite Hermitian matrices is positive definite), the domain-convexity
+  side condition of the `(0, ∞)` reframing.
+* `Matrix.operatorConcaveOn_rpow_zero` / `operatorConcaveOn_rpow_one` : `x ↦ x ^ (0 : ℝ)` and
+  `x ↦ x ^ (1 : ℝ)` (`Real.rpow`) are operator concave on `(0, ∞)` — the trivial *endpoints* of
+  the L.3a target. The interior `p ∈ (0, 1)` is **not** proved here (see the implementation note
+  and `specs/operator-convexity-plan.md` for the precise integral-assembly wall).
 
 ## Implementation notes
 
@@ -368,4 +386,134 @@ theorem OperatorConcaveOn.affine_output {s : Set ℝ} {f : ℝ → ℝ} (hf : Op
         + (d : ℂ) • (1 : Matrix n n ℂ) := by module
     _ ≤ (c : ℂ) • cfc f ((t : ℂ) • A + ((1 : ℂ) - t) • B) + (d : ℂ) • (1 : Matrix n n ℂ) := by
         gcongr
+
+/-! ### The reframing lemma : operator concavity ↔ ordinary `ConcaveOn` of `A ↦ cfc f A`
+
+This is the high-leverage unlock of the ladder. `OperatorConcaveOn s f` (the all-dimensions Löwner
+predicate) is *equivalent* to ordinary `ConcaveOn ℝ (spectralSet s n) (fun A => cfc f A)` for every
+finite dimension `n`, where the codomain `Matrix n n ℂ` carries the Löwner order
+(`Matrix.instPartialOrder`). The reframing is **faithful**, not a weakening: the `ConcaveOn`
+inequality `a • cfc f A + b • cfc f B ≤ cfc f (a • A + b • B)` (with `a + b = 1`, `a, b ≥ 0` and `≤`
+the Löwner/PSD-cone order) is *literally* the operator-concavity inequality with `a = t`, `b = 1 - t`
+(the convex combination matches via `Complex.coe_smul : (t : ℂ) • A = (t : ℝ) • A`). Through it,
+Mathlib's whole `ConcaveOn` API — `ConcaveOn.add`, `ConcaveOn.smul`, `ConcaveOn.add_const`, the
+Jensen inequalities — applies to operator concavity for free. -/
+
+/-- The convex domain set of the reframing: the Hermitian matrices of dimension `n` whose spectrum
+lies in `s ⊆ ℝ`. For convex `s` this set is `Convex ℝ` (the domain-convexity side condition of
+`ConcaveOn`); see `convex_spectralSet_Ioi` for the `(0, ∞)` instance used by the ladder. -/
+def spectralSet (s : Set ℝ) (n : Type*) [Fintype n] [DecidableEq n] : Set (Matrix n n ℂ) :=
+  {A : Matrix n n ℂ | A.IsHermitian ∧ spectrum ℝ A ⊆ s}
+
+@[simp] theorem mem_spectralSet {s : Set ℝ} {A : Matrix n n ℂ} :
+    A ∈ spectralSet s n ↔ A.IsHermitian ∧ spectrum ℝ A ⊆ s := Iff.rfl
+
+/-- `spectralSet (Set.Ioi 0) n` is `Convex ℝ`: a convex combination of positive-definite Hermitian
+matrices is positive definite (`convexComb_posDef`), and positive definiteness is exactly
+`spectrum ℝ ⊆ (0, ∞)` for Hermitian matrices. This is the domain-convexity side condition of the
+`(0, ∞)` reframing, hence of the whole `x^p` / `log` operator-concavity programme. -/
+theorem convex_spectralSet_Ioi : Convex ℝ (spectralSet (Set.Ioi 0) n) := by
+  rw [convex_iff_add_mem]
+  rintro A ⟨hAherm, hAspec⟩ B ⟨hBherm, hBspec⟩ a b ha hb hab
+  have hApd : A.PosDef := posDef_of_spectrum_pos hAherm (fun x hx => hAspec hx)
+  have hBpd : B.PosDef := posDef_of_spectrum_pos hBherm (fun x hx => hBspec hx)
+  have key : ((a : ℂ) • A + ((1 : ℂ) - a) • B).PosDef :=
+    convexComb_posDef hApd hBpd ha (by linarith)
+  rw [Complex.coe_smul,
+    show ((1 : ℂ) - a) = ((b : ℝ) : ℂ) by rw [show b = 1 - a by linarith]; push_cast; ring,
+    Complex.coe_smul] at key
+  exact ⟨key.1, fun x hx => posDef_spectrum_pos key x hx⟩
+
+/-- **Reframing, backward direction (the L.3a unlock).** If, for *every* dimension `m`, the map
+`A ↦ cfc f A` is ordinary-`ConcaveOn ℝ (spectralSet s m)` (Löwner codomain), then `f` is
+`OperatorConcaveOn s`. This is the direction that lets the operator-concavity programme *consume*
+Mathlib's `ConcaveOn` API: prove `ConcaveOn ℝ (spectralSet s m) (cfc f ·)` by whatever convex-analysis
+route, and conclude operator concavity. No domain-convexity hypothesis is needed (it is bundled
+inside each `ConcaveOn`). -/
+theorem operatorConcaveOn_of_concaveOn {s : Set ℝ} {f : ℝ → ℝ}
+    (h : ∀ (m : Type) [Fintype m] [DecidableEq m],
+      ConcaveOn ℝ (spectralSet s m) (fun A : Matrix m m ℂ => cfc f A)) :
+    OperatorConcaveOn s f := by
+  intro n _ _ A B hA hB hAspec hBspec t ht0 ht1 _
+  have hc := (h n).2 (show A ∈ spectralSet s n from ⟨hA, hAspec⟩)
+    (show B ∈ spectralSet s n from ⟨hB, hBspec⟩) ht0 (by linarith : (0 : ℝ) ≤ 1 - t) (by ring)
+  simp only [] at hc
+  rw [Complex.coe_smul t A, show ((1 : ℂ) - t) = ((1 - t : ℝ) : ℂ) by push_cast; ring,
+    Complex.coe_smul (1 - t) B] at *
+  rw [Complex.coe_smul t (cfc f A), Complex.coe_smul (1 - t) (cfc f B)]
+  exact hc
+
+/-- **Reframing, forward direction.** If `f` is `OperatorConcaveOn s` and the domain `spectralSet s n`
+is `Convex ℝ` (e.g. `convex_spectralSet_Ioi` for `s = (0, ∞)`), then `A ↦ cfc f A` is
+ordinary-`ConcaveOn ℝ (spectralSet s n)` in the Löwner-ordered codomain. The `Convex` hypothesis is
+genuinely required (it is the first conjunct of `ConcaveOn` and is a fact about `s`, not derivable
+from operator concavity). -/
+theorem concaveOn_of_operatorConcaveOn {s : Set ℝ} {f : ℝ → ℝ}
+    {n : Type} [Fintype n] [DecidableEq n]
+    (hf : OperatorConcaveOn s f) (hconv : Convex ℝ (spectralSet s n)) :
+    ConcaveOn ℝ (spectralSet s n) (fun A : Matrix n n ℂ => cfc f A) := by
+  refine ⟨hconv, ?_⟩
+  rintro A ⟨hA, hAspec⟩ B ⟨hB, hBspec⟩ a b ha hb hab
+  have hmem : (a • A + b • B) ∈ spectralSet s n :=
+    hconv ⟨hA, hAspec⟩ ⟨hB, hBspec⟩ ha hb hab
+  have hcab : ((1 : ℂ) - (a : ℂ)) = ((b : ℝ) : ℂ) := by
+    rw [show b = 1 - a by linarith]; push_cast; ring
+  have hCspec : spectrum ℝ ((a : ℂ) • A + ((1 : ℂ) - (a : ℂ)) • B) ⊆ s := by
+    rw [Complex.coe_smul a A, hcab, Complex.coe_smul b B]; exact hmem.2
+  have key := hf hA hB hAspec hBspec ha (by linarith : a ≤ 1) hCspec
+  simp only [Complex.coe_smul a, hcab, Complex.coe_smul b] at key
+  exact key
+
+/-- **The reframing lemma (full equivalence).** Given that `spectralSet s m` is `Convex ℝ` in every
+dimension `m` (the domain-convexity side condition; supplied by `convex_spectralSet_Ioi` for
+`s = (0, ∞)`), operator concavity of `f` on `s` is *equivalent* to ordinary concavity of
+`A ↦ cfc f A` on `spectralSet s m` for every `m`, in the Löwner-ordered matrix codomain. -/
+theorem operatorConcaveOn_iff_concaveOn {s : Set ℝ} {f : ℝ → ℝ}
+    (hconv : ∀ (m : Type) [Fintype m] [DecidableEq m], Convex ℝ (spectralSet s m)) :
+    OperatorConcaveOn s f ↔
+      ∀ (m : Type) [Fintype m] [DecidableEq m],
+        ConcaveOn ℝ (spectralSet s m) (fun A : Matrix m m ℂ => cfc f A) :=
+  ⟨fun hf m _ _ => concaveOn_of_operatorConcaveOn hf (hconv m),
+   operatorConcaveOn_of_concaveOn⟩
+
+/-! ### L.3a endpoints : `x ↦ x ^ p` operator concave on `(0, ∞)` at `p ∈ {0, 1}`
+
+The *interior* `p ∈ (0, 1)` of the L.3a target (`x ↦ x ^ p` operator concave, `Real.rpow`) is **not
+proved here**: it requires the operator integral representation `cfc (· ^ p) A = ∫ cfc (integrand t) A
+∂μ` (each integrand `x ↦ x / (x + t)` is operator concave via `operatorConcaveOn_neg_add_inv` +
+`OperatorConcaveOn.affine_output`), and the "`cfc` commutes with the integral" engine
+(`cfcₙ_setIntegral`) fires only for `[NonUnitalCStarAlgebra A]`, which `Matrix n n ℂ` is **not** at
+the default instances (the C⋆-matrix structure lives on the `CStarMatrix` type synonym, and the rpow
+transport across it is blocked by the `NonnegSpectrumClass`/`Pow` instance-resolution wall recorded
+in `OperatorConvexBridge.lean`). See `specs/operator-convexity-plan.md`, L.3a, for the precise gap.
+The two endpoints below are immediate (constant `1` and the identity) and exercise the reframing
+machinery on the genuine `Real.rpow`. -/
+
+/-- **L.3a endpoint `p = 0`.** `x ↦ x ^ (0 : ℝ)` (`Real.rpow`) is operator concave on `(0, ∞)`: on a
+positive-definite argument `cfc (· ^ (0:ℝ)) A = cfc (fun _ => 1) A = 1`, so both sides of the
+concavity inequality collapse to `1` (and `1 ≤ 1` in the Löwner order). -/
+theorem operatorConcaveOn_rpow_zero :
+    OperatorConcaveOn (Set.Ioi 0) (fun x : ℝ => x ^ (0 : ℝ)) := by
+  intro n _ _ A B hA hB hAspec hBspec t ht0 ht1 hCspec
+  have hApd : A.PosDef := posDef_of_spectrum_pos hA (fun x hx => hAspec hx)
+  have hBpd : B.PosDef := posDef_of_spectrum_pos hB (fun x hx => hBspec hx)
+  have hCpd : ((t : ℂ) • A + ((1 : ℂ) - t) • B).PosDef := convexComb_posDef hApd hBpd ht0 ht1
+  have hrw : (fun x : ℝ => x ^ (0 : ℝ)) = (fun _ : ℝ => (1 : ℝ)) := by ext x; rw [Real.rpow_zero]
+  rw [hrw, cfc_const_one ℝ A, cfc_const_one ℝ B, cfc_const_one ℝ _]
+  -- goal: t • 1 + (1 - t) • 1 ≤ 1, and the LHS is 1
+  rw [show (t : ℂ) • (1 : Matrix n n ℂ) + ((1 : ℂ) - t) • (1 : Matrix n n ℂ) = 1 by module]
+
+/-- **L.3a endpoint `p = 1`.** `x ↦ x ^ (1 : ℝ)` (`Real.rpow`) is operator concave on `(0, ∞)`: it is
+the identity (`cfc (· ^ (1:ℝ)) A = cfc id A = A`), and the identity is operator *affine*, so the
+concavity inequality holds with equality (`a • A + b • B = a • A + b • B`). -/
+theorem operatorConcaveOn_rpow_one :
+    OperatorConcaveOn (Set.Ioi 0) (fun x : ℝ => x ^ (1 : ℝ)) := by
+  intro n _ _ A B hA hB hAspec hBspec t ht0 ht1 hCspec
+  have hsaT : IsSelfAdjoint (t : ℂ) := by rw [IsSelfAdjoint, Complex.star_def, Complex.conj_ofReal]
+  have hsa1T : IsSelfAdjoint ((1 : ℂ) - t) :=
+    IsSelfAdjoint.sub (IsSelfAdjoint.one (R := ℂ)) hsaT
+  have hcombHerm : ((t : ℂ) • A + ((1 : ℂ) - t) • B).IsHermitian :=
+    (hA.smul hsaT).add (hB.smul hsa1T)
+  have hrw : (fun x : ℝ => x ^ (1 : ℝ)) = (fun x : ℝ => x) := by ext x; rw [Real.rpow_one]
+  rw [hrw, cfc_id' ℝ A, cfc_id' ℝ B, cfc_id' ℝ ((t : ℂ) • A + ((1 : ℂ) - t) • B)]
 
