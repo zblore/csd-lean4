@@ -1,9 +1,16 @@
 import Mathlib.Analysis.Matrix.Order
+import Mathlib.Analysis.Matrix.Normed
+import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 import Mathlib.Data.Matrix.Block
 import Mathlib.Analysis.Convex.Function
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation
+import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 /-!
 # Operator convexity / concavity for matrix functions (foundational rungs)
@@ -516,4 +523,194 @@ theorem operatorConcaveOn_rpow_one :
     (hA.smul hsaT).add (hB.smul hsa1T)
   have hrw : (fun x : ℝ => x ^ (1 : ℝ)) = (fun x : ℝ => x) := by ext x; rw [Real.rpow_one]
   rw [hrw, cfc_id' ℝ A, cfc_id' ℝ B, cfc_id' ℝ ((t : ℂ) • A + ((1 : ℂ) - t) • B)]
+
+/-! ### A1 : the cfc-integral commutation lemma, and the Löwner-order topology instances
+
+To assemble the interior `p ∈ (0,1)` of L.3a we must integrate matrix-valued functions over the
+resolvent parameter. The Bochner integral over `Matrix n n ℂ` requires a norm; we activate the
+**Frobenius** norm (`open scoped Matrix.Norms.Frobenius`), which is `PiLp 2`, hence finite
+dimensional and complete. The Frobenius topology is the standard product topology, so it is
+compatible with the Löwner order; in particular the PSD cone is closed (`isClosed_posSemidef`),
+giving the `ClosedIciTopology` / `OrderClosedTopology` / `IsOrderedModule` instances that the
+generic Bochner monotonicity / integral-of-concave lemmas
+(`MeasureTheory.integral_concaveOn_of_integrand_ae`) consume.
+
+The Frobenius instances are *scoped*: they do not leak to importers of this module. -/
+
+section Integral
+
+open scoped Matrix.Norms.Frobenius
+open MeasureTheory
+
+variable {n : Type} [Fintype n] [DecidableEq n]
+
+/-- `Matrix n n ℂ` is finite dimensional over `ℝ` (via `FiniteDimensional ℂ` → `ℝ`); needed for the
+completeness of the Frobenius-normed matrix space, which the Bochner integral requires. -/
+instance : FiniteDimensional ℝ (Matrix n n ℂ) := by
+  have : FiniteDimensional ℂ (Matrix n n ℂ) := inferInstanceAs (FiniteDimensional ℂ (Matrix n n ℂ))
+  exact FiniteDimensional.trans ℝ ℂ (Matrix n n ℂ)
+
+/-- **Entrywise integral commutation.** The Bochner integral of a matrix-valued integrable family is
+computed entrywise. Proof: each entry projection `entryLinearMap ℝ ℂ i j` is a (finite-dimensional,
+hence continuous) ℝ-linear map; `ContinuousLinearMap.integral_comp_comm` pulls it through. -/
+theorem matrix_integral_apply {μ : Measure ℝ} {F : ℝ → Matrix n n ℂ}
+    (hF : Integrable F μ) (i j : n) :
+    (∫ s, F s ∂μ) i j = ∫ s, F s i j ∂μ := by
+  have h := (LinearMap.toContinuousLinearMap (entryLinearMap ℝ ℂ i j)).integral_comp_comm hF
+  simpa [entryLinearMap] using h.symm
+
+/-- **Matrix integrability from entrywise integrability.** If every entry `s ↦ F s i j` is integrable
+then so is the matrix family `F`, via the finite basis decomposition `F s = ∑ i j, F s i j •
+single i j 1`. -/
+theorem matrix_integrable_of_entry {μ : Measure ℝ} {F : ℝ → Matrix n n ℂ}
+    (hent : ∀ i j, Integrable (fun s => F s i j) μ) :
+    Integrable F μ := by
+  have hsum : F = fun s => ∑ i, ∑ j, (F s i j) • Matrix.single i j (1 : ℂ) := by
+    ext s a b
+    simp only [Matrix.sum_apply, Matrix.smul_apply, Matrix.single, Matrix.of_apply,
+      smul_eq_mul, mul_ite, mul_one, mul_zero]
+    rw [Finset.sum_eq_single a, Finset.sum_eq_single b]
+    · simp
+    · intro j _ hj; simp [hj]
+    · intro h; exact absurd (Finset.mem_univ b) h
+    · intro i _ hi; rw [Finset.sum_eq_zero]; intro j _; simp [hi]
+    · intro h; exact absurd (Finset.mem_univ a) h
+  rw [hsum]
+  refine integrable_finset_sum _ (fun i _ => integrable_finset_sum _ (fun j _ => ?_))
+  exact (hent i j).smul_const _
+
+/-- The spectral (conjugation) form of the Hermitian CFC as a bare matrix product:
+`cfc f A = U · diagonal (ofReal ∘ f ∘ λ) · Uᴴ`, where `U = hA.eigenvectorUnitary`,
+`λ = hA.eigenvalues`. This is `Matrix.IsHermitian.cfc_eq` unfolded through
+`Unitary.conjStarAlgAut_apply`. -/
+theorem cfc_eq_eigenvectorUnitary_mul {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ → ℝ) :
+    cfc f A = (hA.eigenvectorUnitary : Matrix n n ℂ)
+      * diagonal (fun k => Complex.ofReal (f (hA.eigenvalues k)))
+      * star (hA.eigenvectorUnitary : Matrix n n ℂ) := by
+  rw [hA.cfc_eq f, Matrix.IsHermitian.cfc, Unitary.conjStarAlgAut_apply]
+  congr 1
+
+/-- Entry of the spectral conjugation `(U · diagonal v · star U) i j = ∑ k, U i k · v k · (star U) k j`. -/
+theorem conj_diagonal_apply (U : Matrix n n ℂ) (v : n → ℂ) (i j : n) :
+    (U * diagonal v * star U) i j = ∑ k, U i k * v k * (star U) k j := by
+  rw [Matrix.mul_assoc, Matrix.mul_apply]
+  refine Finset.sum_congr rfl (fun k _ => ?_)
+  rw [Matrix.diagonal_mul]; ring
+
+/-- **A1 — the cfc-integral commutation lemma.** For a Hermitian `A`, a parameter family
+`g : ℝ → ℝ → ℝ`, a measure `μ`, with
+* `hg`  : each spectral-evaluation `s ↦ g s (λ k)` integrable, `k` over the eigenvalues, and
+* `hcfc`: the matrix family `s ↦ cfc (g s) A` Bochner-integrable,
+
+integration commutes with the continuous functional calculus:
+`∫ s, cfc (g s) A ∂μ = cfc (fun x => ∫ s, g s x ∂μ) A`.
+
+Route (spectral, entrywise): both sides equal `U · diagonal (·) · Uᴴ`; the eigenvector unitary `U`
+and `Uᴴ` are constant, so the equality reduces to the *finite* family of scalar identities
+`∫ s, g s (λ k) ∂μ = (∫ s, g s · ∂μ)(λ k)`, pulled through the integral by linearity of the entry
+projection and `integral_ofReal`. No C⋆-Bochner machinery is needed — this is the matrix-carrier
+unlock that the `CStarMatrix` route could not reach (`NonUnitalCStarAlgebra (Matrix n n ℂ)` fails). -/
+theorem cfc_integral_commute {μ : Measure ℝ} {A : Matrix n n ℂ} (hA : A.IsHermitian)
+    {g : ℝ → ℝ → ℝ}
+    (hg : ∀ k, Integrable (fun s => g s (hA.eigenvalues k)) μ)
+    (hcfc : Integrable (fun s => cfc (g s) A) μ) :
+    ∫ s, cfc (g s) A ∂μ = cfc (fun x => ∫ s, g s x ∂μ) A := by
+  set U : Matrix n n ℂ := (hA.eigenvectorUnitary : Matrix n n ℂ) with hU
+  set lam := hA.eigenvalues with hlam
+  ext i j
+  rw [matrix_integral_apply hcfc i j]
+  have lhs_int : ∫ s, (cfc (g s) A) i j ∂μ
+      = ∫ s, (∑ k, U i k * (Complex.ofReal (g s (lam k))) * (star U) k j) ∂μ := by
+    apply integral_congr_ae
+    filter_upwards with s
+    rw [cfc_eq_eigenvectorUnitary_mul hA (g s), conj_diagonal_apply]
+  rw [lhs_int,
+    integral_finset_sum (G := ℂ) Finset.univ
+      (f := fun k s => U i k * (Complex.ofReal (g s (lam k))) * (star U) k j)
+      (fun k _ => (((hg k).ofReal).const_mul (U i k)).mul_const ((star U) k j))]
+  have summand : ∀ k, (∫ s, U i k * (Complex.ofReal (g s (lam k))) * (star U) k j ∂μ)
+      = U i k * (Complex.ofReal (∫ s, g s (lam k) ∂μ)) * (star U) k j := by
+    intro k
+    calc ∫ s, U i k * (Complex.ofReal (g s (lam k))) * (star U) k j ∂μ
+        = (∫ s, U i k * (Complex.ofReal (g s (lam k))) ∂μ) * (star U) k j :=
+          integral_mul_const (μ := μ) ((star U) k j)
+            (fun s => U i k * Complex.ofReal (g s (lam k)))
+      _ = (U i k * ∫ s, (Complex.ofReal (g s (lam k))) ∂μ) * (star U) k j := by
+          congr 1
+          exact integral_const_mul (μ := μ) (U i k) (fun s => Complex.ofReal (g s (lam k)))
+      _ = U i k * (Complex.ofReal (∫ s, g s (lam k) ∂μ)) * (star U) k j := by
+          congr 2; exact integral_ofReal
+  simp_rw [summand]
+  rw [cfc_eq_eigenvectorUnitary_mul hA (fun x => ∫ s, g s x ∂μ), conj_diagonal_apply]
+
+/-! #### Löwner-order topology instances on the Frobenius-normed matrix space -/
+
+/-- **The PSD cone is closed** in the Frobenius topology. It is the intersection of the closed
+Hermitian subspace `{M | Mᴴ = M}` with the closed half-spaces `{M | 0 ≤ star x ⬝ᵥ (M *ᵥ x)}`
+(`x` ranging over `n → ℂ`), each closed since `M ↦ star x ⬝ᵥ (M *ᵥ x)` is continuous and
+`{z : ℂ | 0 ≤ z}` is closed. -/
+theorem isClosed_posSemidef : IsClosed {M : Matrix n n ℂ | M.PosSemidef} := by
+  have heq : {M : Matrix n n ℂ | M.PosSemidef}
+      = {M | M.IsHermitian} ∩ ⋂ x : n → ℂ, {M | 0 ≤ star x ⬝ᵥ (M *ᵥ x)} := by
+    ext M
+    simp only [Set.mem_setOf_eq, Set.mem_inter_iff, Set.mem_iInter,
+      Matrix.posSemidef_iff_dotProduct_mulVec]
+  rw [heq]
+  refine IsClosed.inter ?_ (isClosed_iInter (fun x => ?_))
+  · have hpre : {M : Matrix n n ℂ | M.IsHermitian} = (fun M => Mᴴ - M) ⁻¹' {0} := by
+      ext M; simp [Matrix.IsHermitian, sub_eq_zero, eq_comm]
+    rw [hpre]
+    exact isClosed_singleton.preimage (by fun_prop)
+  · have hpre : {M : Matrix n n ℂ | 0 ≤ star x ⬝ᵥ (M *ᵥ x)}
+        = (fun M => star x ⬝ᵥ (M *ᵥ x)) ⁻¹' {z : ℂ | (0 : ℂ) ≤ z} := rfl
+    rw [hpre]
+    exact (isClosed_Ici).preimage (by fun_prop)
+
+/-- The Löwner `[a, +∞)` is closed: `Ici a = (· - a) ⁻¹' (PSD cone)`. -/
+instance : ClosedIciTopology (Matrix n n ℂ) := by
+  constructor
+  intro a
+  have hpre : Set.Ici a = (fun M => M - a) ⁻¹' {M : Matrix n n ℂ | M.PosSemidef} := by
+    ext M; simp only [Set.mem_Ici, Set.mem_preimage, Set.mem_setOf_eq, Matrix.le_iff]
+  rw [hpre]
+  exact isClosed_posSemidef.preimage (by fun_prop)
+
+/-- The Löwner order relation is closed: `{(x,y) | x ≤ y} = (fun p => p.2 - p.1) ⁻¹' (PSD cone)`. -/
+instance : OrderClosedTopology (Matrix n n ℂ) := by
+  constructor
+  have hpre : {p : Matrix n n ℂ × Matrix n n ℂ | p.1 ≤ p.2}
+      = (fun p => p.2 - p.1) ⁻¹' {M : Matrix n n ℂ | M.PosSemidef} := by
+    ext p; simp only [Set.mem_setOf_eq, Set.mem_preimage, Matrix.le_iff]
+  rw [hpre]
+  exact isClosed_posSemidef.preimage (by fun_prop)
+
+/-- Nonnegative real scaling is Löwner-monotone (`0 ≤ c`, `A ≤ B ⟹ c • A ≤ c • B`). The real
+scalar action coincides entrywise with the complex one (`c • M = (c : ℂ) • M`); the complex-scalar
+`Matrix.PosSemidef.smul` then applies. -/
+instance : PosSMulMono ℝ (Matrix n n ℂ) := by
+  constructor
+  intro c hc A B hAB
+  rw [Matrix.le_iff] at hAB ⊢
+  have hsub : c • B - c • A = (c : ℂ) • (B - A) := by
+    ext i j; simp [Matrix.sub_apply, Matrix.smul_apply, mul_sub]
+  rw [hsub]
+  exact hAB.smul (by exact_mod_cast hc : (0 : ℂ) ≤ (c : ℂ))
+
+/-- Scaling a PSD matrix by a larger real is Löwner-larger (`0 ≤ A`, `c ≤ d ⟹ c • A ≤ d • A`). -/
+instance : SMulPosMono ℝ (Matrix n n ℂ) := by
+  constructor
+  intro A hA c d hcd
+  rw [Matrix.nonneg_iff_posSemidef] at hA
+  rw [Matrix.le_iff]
+  have hsub : d • A - c • A = ((d - c : ℝ) : ℂ) • A := by
+    ext i j; simp [Matrix.sub_apply, Matrix.smul_apply, sub_mul]
+  rw [hsub]
+  exact hA.smul (by
+    have : (0 : ℝ) ≤ d - c := by linarith
+    exact_mod_cast this : (0 : ℂ) ≤ ((d - c : ℝ) : ℂ))
+
+/-- `Matrix n n ℂ` with the Löwner order and Frobenius norm is an ordered ℝ-module. -/
+instance : IsOrderedModule ℝ (Matrix n n ℂ) := ⟨⟩
+
+end Integral
 

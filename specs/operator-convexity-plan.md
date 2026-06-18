@@ -10,7 +10,16 @@ B.2 order transport + B.3 `log` operator-monotonicity transported onto `Matrix`;
 on the Löwner-ordered codomain; `convex_spectralSet_Ioi`; bridge-independent, on the `Matrix`
 carrier — the high-leverage unlock that makes Mathlib's `ConcaveOn` API apply to operator
 concavity); **L.3a (`x^p` operator concave, `p∈[0,1]`) PARTIAL** (endpoints `p∈{0,1}` landed via
-the reframing; interior `p∈(0,1)` WALLED on the matrix-carrier integral assembly, see L.3a note);
+the reframing; interior `p∈(0,1)` assembly still open, but its two named prerequisites are now
+LANDED — see next line); **A1 cfc-integral commutation + Löwner-order topology instances DONE
+2026-06-18** (`cfc_integral_commute`: `∫ cfc (g s) A ∂μ = cfc (∫ g s · ∂μ) A` on the bare `Matrix`
+carrier via the spectral/entrywise route — the matrix-carrier unlock the `CStarMatrix` route could
+not reach, since `NonUnitalCStarAlgebra (Matrix n n ℂ)` fails; plus `isClosed_posSemidef`,
+`ClosedIciTopology`, `OrderClosedTopology`, `PosSMulMono`, `SMulPosMono`, `IsOrderedModule` on the
+Frobenius-normed matrix space — the order-topology instances `integral_concaveOn_of_integrand_ae`
+consumes; `Integral` section, all instances scoped, no leak to importers). This breaches both halves
+of the L.3a-interior route-ii wall; the remaining step is the final `x^p` interior assembly
+(integral representation + `integral_concaveOn_of_integrand_ae` over the resolvent family);
 L.2 (operator concavity of `log`) still **WALLED**; L.4–L.5 **not started**.
 
 **Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvex.lean` (Cat-1, CSD-free,
@@ -325,8 +334,15 @@ this pin:
   (the `Fintype ?m` side-condition on `CStarMatrix n n ℂ` cannot be synthesised). The `log` route
   escaped this because `CFC.log` needs only `[CStarAlgebra A]`; rpow needs `Pow`/`NonnegSpectrumClass`.
 - (ii) **From-scratch matrix Bochner-integral-cfc lemma** — reprove `cfcₙ_setIntegral`'s content
-  directly for `cfc` on `Matrix n n ℂ` (a matrix-valued dominated-convergence + cfc-continuity build).
-  Estimated multi-day analytic sub-build; not attempted.
+  directly for `cfc` on `Matrix n n ℂ`. **DONE 2026-06-18** as `cfc_integral_commute` (Integral
+  section), NOT via dominated-convergence but via the spectral/entrywise route: both sides equal
+  `U · diagonal(·) · Uᴴ` with `U` constant, so it reduces to the finite family of scalar identities
+  `∫ g s (λ k) ∂μ = (∫ g s · ∂μ)(λ k)` pulled through by entry-projection linearity + `integral_ofReal`.
+  Plus the Löwner-order topology instances (`isClosed_posSemidef`, `ClosedIciTopology`,
+  `OrderClosedTopology`, `PosSMulMono`, `SMulPosMono`, `IsOrderedModule`) that
+  `integral_concaveOn_of_integrand_ae` consumes. Both wall-halves of route (ii) are now built; the
+  remaining step is the final assembly (apply the integral representation + the generic
+  integral-of-concave lemma to the resolvent family, then the reframing to `OperatorConcaveOn`).
 
 **Schur/`fromBlocks` route for `p = 1/2` (the alternative) — also WALLED.** Operator concavity of
 `sqrt` via the geometric mean `A # B` and its block positivity `[[A, A#B],[A#B, B]] ≥ 0` is the
