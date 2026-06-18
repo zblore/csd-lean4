@@ -1,6 +1,7 @@
 import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
+import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
@@ -2984,5 +2985,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Matrix.OperatorConcaveOn.affine_output' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.OperatorConcaveOn.affine_output
+
+/-! ### `CStarMatrix ↔ Matrix` transport bridge (OperatorConvexBridge.lean) -/
+
+/-- info: 'Matrix.cstar_cfc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.cstar_cfc
+
+/-- info: 'Matrix.cstar_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.cstar_le_iff
+
+/-- info: 'Matrix.cstar_isStrictlyPositive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.cstar_isStrictlyPositive
+
+/-- info: 'Matrix.matrix_log_le_log' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.matrix_log_le_log
 
 end CSD.Tests.AxiomAudit

@@ -2,9 +2,12 @@
 
 **Status:** L.0 (scout + predicate) **DONE 2026-06-17**; L.1 (operator convexity of
 `x ↦ x⁻¹`) **DONE 2026-06-17**; L.2-resolvent rungs (shifted-resolvent operator concavity
-`x ↦ -(x+s)⁻¹` + affine-output-transform helper) **DONE 2026-06-17**; L.2 (operator concavity
-of `log`) **WALLED** at a sharper boundary than first diagnosed (the `CStarAlgebra (Matrix n n ℂ)`
-instance gap — see updated L.2 section); L.3–L.5 **not started**.
+`x ↦ -(x+s)⁻¹` + affine-output-transform helper) **DONE 2026-06-17**;
+**`CStarMatrix ↔ Matrix` transport bridge DONE 2026-06-18** (B.1 cfc transport +
+B.2 order transport + B.3 `log` operator-monotonicity transported onto `Matrix`;
+`Mathlib/Analysis/Matrix/OperatorConvexBridge.lean`; rpow transport WALLED, see B.3 note);
+L.2 (operator concavity of `log`) still **WALLED** but the prerequisite carrier bridge that
+gated both routes is now landed; L.3–L.5 **not started**.
 
 **Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvex.lean` (Cat-1, CSD-free,
 natural Mathlib namespace `Matrix`).
@@ -187,6 +190,70 @@ of `log`/`rpow`, which exists in Mathlib only on the C⋆-generic `cfcₙ` carri
 my `OperatorConcaveOn` predicate needs the reframing `OperatorConcaveOn s f ↔ ordinary-ConcaveOn
 of A ↦ cfc f A on PD matrices` plus the matrix log integral rep — both unbuilt. So the
 single-shift concave rung is landed; the integral assembly remains the wall.
+
+## Bridge — `CStarMatrix ↔ Matrix` CFC/order transport (LANDED 2026-06-18)
+
+**Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvexBridge.lean` (Cat-1, `Matrix`
+namespace). The single prerequisite that gated *both* L.2 routes. Foundational-triple-only,
+AxiomAudit-pinned (`cstar_cfc`, `cstar_le_iff`, `cstar_isStrictlyPositive`, `matrix_log_le_log`).
+
+**Scout (the two carriers).**
+- Synonym + equiv: `CStarMatrix m n A := Matrix m n A`; `CStarMatrix.ofMatrix : Matrix ≃ CStarMatrix`
+  is literally `Equiv.refl`. The bundled `CStarMatrix.ofMatrixStarAlgEquiv : Matrix n n ℂ ≃⋆ₐ[ℂ]
+  CStarMatrix n n ℂ` (continuous, `= ofMatrixL` on carriers) is the transport map `e`.
+- C⋆ instances: `CStarMatrix.instCStarAlgebra` (unital), `instPartialOrder :=
+  CStarAlgebra.spectralOrder` (selfadjoint + nonneg spectrum), `instStarOrderedRing`.
+- **Two different cfc instances.** `Matrix n n ℂ` carries its OWN `ContinuousFunctionalCalculus ℝ
+  … IsSelfAdjoint` (the spectral/Hermitian one, `Matrix.IsHermitian.instContinuousFunctionalCalculus`).
+  `CStarMatrix n n ℂ` gets cfc from the C⋆-algebra route (`IsSelfAdjoint.instContinuousFunctionalCalculus`
+  over the `ℂ`-CFC `IsStarNormal`). They are NOT the same instance; `StarAlgHomClass.map_cfc`
+  packages the uniqueness internally (via `ContinuousMap.UniqueHom`), so no hand-rolled uniqueness
+  argument is needed.
+- **Instance-resolution wrinkle.** The generic `ℝ`-CFC instance does NOT fire on `CStarMatrix n n ℂ`
+  through the discrimination tree; a local shim `instCStarMatrixRealCFC :=
+  IsSelfAdjoint.instContinuousFunctionalCalculus` is registered to make the goal even statable.
+
+**B.1 (the crux) — `Matrix.cstar_cfc`:** `e (cfc f A) = cfc f (e A)` for Hermitian `A`,
+`f` continuous on `spectrum ℝ A`. Route: `StarAlgHomClass.map_cfc` applied to `e` (continuity
+discharged via `ofMatrixL.continuous_toFun`; `IsSelfAdjoint` side-conditions via `hA` and
+`IsSelfAdjoint.map`). No cfc-uniqueness sub-build needed — `map_cfc` IS the uniqueness, packaged.
+
+**B.2 — `Matrix.cstar_le_iff`:** `e A ≤ e B ↔ A ≤ B`. Route: `map_le_map_iff` from
+`StarRingEquivClass.instOrderIsoClass` (a star-ring equivalence is an `OrderIso` between
+`StarOrderedRing`s, since it preserves the `StarOrderedRing.le_iff` closure of `star s * s`). The
+Löwner PSD order (`Matrix`) and the spectral order (`CStarMatrix`) thus agree across `e` without
+touching the spectral-order definition directly. Short, as predicted.
+
+**B.3 — `Matrix.matrix_log_le_log` (log transported):** `A ≤ B → cfc Real.log A ≤ cfc Real.log B`
+for PD `A, B`, in the `Matrix` Löwner order. Route: `cstar_isStrictlyPositive` (PD ↦
+`IsStrictlyPositive (e A)`, via B.2 + `map_zero` + ring-equiv unit preservation) feeds
+`CFC.log_le_log` on `CStarMatrix`; B.1 with `f = Real.log` gives `e (cfc Real.log A) =
+CFC.log (e A)` (`CFC.log := cfc Real.log` definitionally); B.2 pulls the inequality back. Stated
+with `cfc Real.log` (not `CFC.log`) on the `Matrix` side because `CFC.log` itself needs
+`NormedRing (Matrix n n ℂ)`, which the default `Matrix` instances lack — exactly the carrier
+mismatch the bridge resolves.
+
+**B.3 rpow — WALLED (precise gap).** The analogous `x ↦ x^p` operator-monotonicity transport is
+NOT landed. `CFC.rpow_le_rpow` is stated with the `Pow A ℝ` notation (`CFC.instPowReal`), whose
+instance needs `[NonnegSpectrumClass ℝ A]` AND the `ℝ`-CFC. On `CStarMatrix n n ℂ`:
+`NonnegSpectrumClass ℝ (CStarMatrix n n ℂ)` is provable as a *term*
+(`CStarAlgebra.instNonnegSpectrumClass`, with the `ℝ`-CFC shim in scope) but is NOT *found* by
+instance synthesis when nested inside the `Pow`/`CFC.rpow` resolution — the repeated-index
+`CStarMatrix n n ℂ` discrimination key blocks the `Fintype n`/`DecidableEq n` side-conditions of
+the instance (synthesis emits a fresh metavar `?m` for the matrix index and cannot resolve
+`Fintype ?m`). `haveI`/`letI`/high-priority `attribute` shims and explicit `Pow` instances do not
+break the impasse. The `log` route is unaffected because `CFC.log` / `CFC.log_le_log` need only
+`[CStarAlgebra A]` (via `IsStrictlyPositive`), never `NonnegSpectrumClass` or `Pow`. So L.3's
+`x^p` operator concavity, even once proved on `CStarMatrix`, currently cannot be *stated* with the
+`^` notation on `CStarMatrix n n ℂ` without first repairing this `NonnegSpectrumClass`/`Pow`
+resolution. Repair options (deferred): (i) upstream a `NonnegSpectrumClass`/`Pow`-on-`CStarMatrix`
+instance with a discrimination key that resolves; (ii) restate the rpow facts in terms of
+`cfc (· ^ p)` directly (avoiding `CFC.rpow`/`^`), reproving `rpow_le_rpow`'s content on the bare
+`cfc`; (iii) use `CFC.nnrpow` only where the `ℝ≥0`-CFC fires. None attempted in this tranche.
+
+**L.3 (`x^p` operator concave) status:** NOT attempted. Blocked on the rpow-notation wall above
+for the `CStarMatrix`-transport route; the Schur/`fromBlocks` route (independent of the bridge,
+mirroring L.1) remains the cleaner unblocked path and is the recommended next rung.
 
 ## L.2 — Operator concavity of `log` (WALLED — sharper boundary identified)
 
