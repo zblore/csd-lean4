@@ -17,6 +17,8 @@ import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 import CsdLean4.Mathlib.QuantumInfo.Register
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
+import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
+import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3012,6 +3014,16 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.operatorConcaveOn_rpow_one
 
+/-! ### A1 cfc-integral commutation + Löwner-order topology (OperatorConvex.lean `Integral`) -/
+
+/-- info: 'Matrix.cfc_integral_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.cfc_integral_commute
+
+/-- info: 'Matrix.isClosed_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.isClosed_posSemidef
+
 /-! ### `CStarMatrix ↔ Matrix` transport bridge (OperatorConvexBridge.lean) -/
 
 /-- info: 'Matrix.cstar_cfc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3029,5 +3041,27 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Matrix.matrix_log_le_log' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.matrix_log_le_log
+
+/-! ### ECDLP reversible-circuit substrate (Reversible/{Circuit,Cost}.lean) -/
+
+/-- info: 'Reversible.denoteGate_involutive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.denoteGate_involutive
+
+/-- info: 'Reversible.reversible_inverse_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.reversible_inverse_correct
+
+/-- info: 'Reversible.denote_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.denote_bijective
+
+/-- info: 'Reversible.cost_comp_toffoli_count' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cost_comp_toffoli_count
+
+/-- info: 'Reversible.cost_comp_toffoli_depth_le' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cost_comp_toffoli_depth_le
 
 end CSD.Tests.AxiomAudit

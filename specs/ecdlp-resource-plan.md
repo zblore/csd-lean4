@@ -1,7 +1,8 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 1a DONE 2026-06-19 (`Circuit.lean` GREEN + committed); Tranche 1b (`Cost.lean`)
-NEXT.** The build blocker is resolved (see below).
+**STATUS: Tranche 1 DONE 2026-06-19 (`Circuit.lean` + `Cost.lean` GREEN, wired into the import
+graph + AxiomAudit-pinned); Tranche 2 (`ModAdd.lean`) NEXT.** The build blocker is resolved (see
+below).
 
 ---
 
@@ -65,7 +66,7 @@ were rejected — they make "verified resource accounting" hollow.)
 
 ```
 CsdLean4/Mathlib/QuantumInfo/Reversible/Circuit.lean   -- Tranche 1a: gate DSL + denote + inverse  [DONE 2026-06-19, GREEN]
-CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean      -- Tranche 1b: Cost record + circuitCost + comp lemmas  [TODO]
+CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean      -- Tranche 1b: Cost record + circuitCost + comp lemmas  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 (target: Shor mulOracle)
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4 (reuse ZMod.inv)
@@ -96,21 +97,28 @@ choice only. New `Tests/ECDLPAudit.lean` must be added to `lakefile.toml`'s `Csd
   `inverse (g :: c) = inverse c ++ [g]`; (4) CCX involution used `cases s t` after `subst hk` had
   eliminated `t` in favour of `k` — `cases s k`. Two redundant `if_pos`/`if_neg` simp args trimmed.
 
-**1b — `Cost.lean` (TODO):** `structure Cost` (qubits, ancilla, toffoli, toffoliDepth, cnot,
-tCount, meas, all ℕ); `gateCost : Gate n → Cost` (X→0; CX→cnot 1; CCX→toffoli 1, toffoliDepth 1;
-swap→cnot 3); `circuitCost c` field-wise via `(c.map (fun g => (gateCost g).field)).sum` (avoids
-needing an `AddMonoid Cost` instance), with `qubits := n`, `ancilla := 0`. Comp lemmas:
-`cost_comp_toffoli_count` (`= +`, via `List.map_append`+`List.sum_append`),
-`cost_comp_toffoli_depth_le` (`≤ +`, holds with equality), `cost_comp_qubits_le`
-(`≤ max`, = `n ≤ max n n`, trivial — width/ancilla accounting is a later refinement, documented).
+**1b — `Cost.lean` (DONE 2026-06-19, GREEN, 0 sorry, 0 warnings):** `structure Cost` (qubits,
+ancilla, toffoli, toffoliDepth, cnot, tCount, meas, all ℕ; `deriving DecidableEq, Repr`);
+`gateCost : Gate n → Cost` (X→0; CX→cnot 1; CCX→toffoli 1, toffoliDepth 1; swap→cnot 3);
+`circuitCost c` field-wise via `(c.map (fun g => (gateCost g).field)).sum` (avoids needing an
+`AddMonoid Cost` instance — correct, since `qubits`/`ancilla` are NOT additive), with `qubits := n`,
+`ancilla := 0`; `circuitCost_nil`/`_qubits`/`_ancilla` simp lemmas. Comp lemmas, all proved:
+`cost_comp_toffoli_count` + `cost_comp_cnot_count` (`= +`, via `List.map_append`+`List.sum_append`),
+`cost_comp_toffoli_depth_le` (`≤ +`, holds with equality — `≤` is the downstream-relevant bound),
+`cost_comp_qubits_le` (`≤ max`, = `n ≤ max n n` at the Pass-1 model; width/ancilla accounting is a
+Pass-2 refinement, documented), plus `cost_inverse_{toffoli,cnot}` (cost invariant under
+`inverse = List.reverse`, via `List.map_reverse`+`List.sum_reverse`). Both modules wired into
+`CsdLean4.lean` and AxiomAudit-pinned (`denoteGate_involutive`, `reversible_inverse_correct`,
+`denote_bijective`, `cost_comp_toffoli_count`, `cost_comp_toffoli_depth_le`; + the tranche-1
+A1 `cfc_integral_commute`/`isClosed_posSemidef`), foundational-triple-only.
 
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
 1. ~~Build `Circuit.lean`; fix the involution proofs~~ **DONE 2026-06-19 (4 fixes, green, committed).**
-2. Write + build `Cost.lean`. **← NEXT**
-3. Add both modules to `CsdLean4.lean`; add AxiomAudit pins (or `Tests/ECDLPAudit.lean` + lakefile root).
-   (Note: `Circuit.lean` is NOT yet in the import graph — it builds standalone but is not reached by
-   `lake build`; wire it in with `Cost.lean` in step 3 so CI covers it.)
+2. ~~Write + build `Cost.lean`~~ **DONE 2026-06-19 (green, first build).**
+3. ~~Add both modules to `CsdLean4.lean`; add AxiomAudit pins~~ **DONE 2026-06-19** (both in
+   `CsdLean4.lean`; 5 Reversible pins + 2 A1 pins in `Tests/AxiomAudit.lean`; no separate
+   `ECDLPAudit.lean` needed).
 4. Audit (csd-lean-auditor): involutions genuine, `reversible_inverse_correct` real, costs derived
-   not annotated, no sorry/axiom.
-5. Commit Tranche 1; update this file + `specs/INDEX.md`. Then Tranche 2 (ModAdd).
+   not annotated, no sorry/axiom. **← recommended before/with Tranche 2.**
+5. ~~Commit Tranche 1; update this file + `specs/INDEX.md`~~ **DONE 2026-06-19.** Then Tranche 2 (ModAdd). **← NEXT**
