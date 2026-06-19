@@ -1,6 +1,7 @@
 import Mathlib.Logic.Equiv.Basic
 import Mathlib.Logic.Function.Basic
 import Mathlib.Data.List.Basic
+import Mathlib.Data.Finset.Basic
 
 /-!
 # Reversible classical circuits — the gate-list DSL  (ECDLP Tranche 1)
@@ -130,5 +131,52 @@ theorem reversible_inverse_correct' (c : Circuit n) (s : State n) :
 theorem denote_bijective (c : Circuit n) : Function.Bijective (denote c) :=
   ⟨Function.LeftInverse.injective (g := denote (inverse c)) (reversible_inverse_correct c),
    Function.RightInverse.surjective (g := denote (inverse c)) (reversible_inverse_correct' c)⟩
+
+/-! ### Wire support and the frame (locality) lemma
+
+A gate only touches the wires in `gateWires`; every other wire is preserved. Lifted to circuits,
+this is the frame lemma `denote_apply_of_forall_not_mem` — the reusable primitive for transporting a
+gadget's correctness from a concrete wire layout to arbitrary `Fin n` wires (consumed by the
+ModAdd / ModMul arithmetic proofs). -/
+
+/-- The set of wires a gate acts on. A wire outside this set is preserved by `denoteGate`
+(`denoteGate_apply_of_not_mem`). -/
+def gateWires : Gate n → Finset (Fin n)
+  | .X i => {i}
+  | .CX c t => {c, t}
+  | .CCX c₁ c₂ t => {c₁, c₂, t}
+  | .swap i j => {i, j}
+
+/-- **Frame lemma (single gate).** A wire outside `gateWires g` is left unchanged by `denoteGate g`. -/
+theorem denoteGate_apply_of_not_mem {g : Gate n} {s : State n} {i : Fin n}
+    (hi : i ∉ gateWires g) : denoteGate g s i = s i := by
+  cases g with
+  | X j =>
+    simp only [gateWires, Finset.mem_singleton] at hi
+    simp [denoteGate, Function.update_of_ne hi]
+  | CX c t =>
+    simp only [gateWires, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
+    by_cases h : c = t
+    · simp [denoteGate, if_pos h]
+    · simp [denoteGate, if_neg h, Function.update_of_ne hi.2]
+  | CCX c₁ c₂ t =>
+    simp only [gateWires, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
+    by_cases h : t = c₁ ∨ t = c₂
+    · simp [denoteGate, if_pos h]
+    · simp [denoteGate, if_neg h, Function.update_of_ne hi.2.2]
+  | swap a b =>
+    simp only [gateWires, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
+    simp only [denoteGate, Function.comp_apply, Equiv.swap_apply_of_ne_of_ne hi.1 hi.2]
+
+/-- **Frame lemma (circuit).** A wire untouched by every gate of `c` is unchanged by `denote c`.
+Stated with the per-gate membership hypothesis (the form the gadget proofs consume). -/
+theorem denote_apply_of_forall_not_mem {i : Fin n} :
+    ∀ (c : Circuit n), (∀ g ∈ c, i ∉ gateWires g) → ∀ s : State n, denote c s i = s i
+  | [], _, _ => rfl
+  | g :: rest, hi, s => by
+    rw [denote_cons,
+      denote_apply_of_forall_not_mem rest (fun g' hg' => hi g' (List.mem_cons_of_mem g hg'))
+        (denoteGate g s)]
+    exact denoteGate_apply_of_not_mem (hi g (by simp))
 
 end Reversible

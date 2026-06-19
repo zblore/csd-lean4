@@ -1,9 +1,9 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 1 + Tranche 2-Pass-1 DONE 2026-06-19 (`Circuit.lean`, `Cost.lean`, `ModAdd.lean`
-GREEN, wired into the import graph + AxiomAudit-pinned, both tranches auditor-reviewed SOUND);
-Tranche 2-Pass-2 (ripple carry-chain correctness over `regVal`) OR Tranche 3 (`ModMul.lean`) NEXT.**
-The build blocker is resolved (see below).
+**STATUS: Tranche 1 + Tranche 2 Pass 1 + Pass 2 Stage A DONE 2026-06-19 (`Circuit.lean`, `Cost.lean`,
+`ModAdd.lean` GREEN, wired + AxiomAudit-pinned, all auditor-reviewed SOUND). NEXT: Pass 2 Stage B —
+the ripple carry-chain arithmetic identity `regVal_B(out) = (regVal_A + regVal_B) mod 2^n`.** The build
+blocker is resolved (see below).
 
 ---
 
@@ -138,11 +138,23 @@ csd-lean-expert, verified, wired, pinned.
   `rippleAdder_toffoli`, `rippleAdder_cnot`); foundational-triple-only (cost lemmas `[propext]` /
   `[propext, Quot.sound]`).
 
-**Pass 2 target (NOT claimed):** general-`n` in-place carry-chain *correctness* over `regVal` —
-`regVal (denote (rippleAdder layout) s) = (regVal_a + regVal_b) mod 2^n`. Needs a concrete carry/sum
-wire layout + a `denote`-localisation lemma (`fullAdder` touches only its 4 wires) lifting
-`fullAdder_correct` off `State 4` to arbitrary `Fin n`, then induction on slices. That localisation
-primitive is worth building first (reused by ModMul).
+**Pass 2 Stage A DONE 2026-06-19, GREEN, auditor-SOUND** (the localisation primitive + general adder):
+- `Circuit.lean`: `gateWires` (wires a gate touches) + `denoteGate_apply_of_not_mem` (untouched wire
+  preserved, single gate) + `denote_apply_of_forall_not_mem` (circuit frame lemma, per-gate form).
+- `ModAdd.lean`: `fullAdder_apply_of_ne` (gadget touches only `{a,b,cin,cout}`) + `fullAdder_correct_general`
+  — the full-adder correctness over ARBITRARY distinct `Fin n` wires (sum = `a⊕b⊕cin` to `b`, carry =
+  `majority` to `cout`, `a`/`cin` preserved), lifting the concrete `State 4` `fullAdder_correct`. Proved
+  by `simp_all [denoteGate]` + `cases`/`decide` on the bits; auditor confirmed genuinely general (n=6
+  non-canonical-wire probe), `hc0 : s cout = false` load-bearing, not vacuous. AxiomAudit-pinned,
+  foundational-triple-only. (Same commit: fixed pre-existing axiom-pin drift on `cost_comp_toffoli_depth_le`,
+  now `[propext]`; the `Finset` import added to `Circuit.lean` dropped its `Quot.sound` dependency.)
+
+**Pass 2 Stage B target (NEXT, NOT yet claimed):** the carry-chain *arithmetic* identity
+`regVal_B (denote (rippleAdder layout) s) = (regVal_A s + regVal_B s) mod 2^n`. Plan: a CONSTRUCTED
+wire layout (registers A `0..n-1`, B `n..2n-1`, carry chain C `2n..3n`, slice `i` = `(i, n+i, 2n+i, 2n+i+1)`),
+a carry invariant, induction on slices lifting `fullAdder_correct_general` via `fullAdder_apply_of_ne`,
+inhabited at a concrete small `n`. (Auditor's flagged risk: layout must be a constructed function, not a
+smuggled per-slice hypothesis.)
 
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**

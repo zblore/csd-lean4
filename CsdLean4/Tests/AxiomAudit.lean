@@ -3065,9 +3065,17 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.cost_comp_toffoli_count
 
-/-- info: 'Reversible.cost_comp_toffoli_depth_le' depends on axioms: [propext, Quot.sound] -/
+/-- info: 'Reversible.cost_comp_toffoli_depth_le' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.cost_comp_toffoli_depth_le
+
+/-- info: 'Reversible.denoteGate_apply_of_not_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.denoteGate_apply_of_not_mem
+
+/-- info: 'Reversible.denote_apply_of_forall_not_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.denote_apply_of_forall_not_mem
 
 /-! ### ECDLP reversible modular addition (Reversible/ModAdd.lean, Tranche 2) -/
 
@@ -3094,5 +3102,13 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.rippleAdder_cnot' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.rippleAdder_cnot
+
+/-- info: 'Reversible.fullAdder_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.fullAdder_apply_of_ne
+
+/-- info: 'Reversible.fullAdder_correct_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.fullAdder_correct_general
 
 end CSD.Tests.AxiomAudit

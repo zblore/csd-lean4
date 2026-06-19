@@ -120,6 +120,40 @@ theorem fullAdder_correct :
         ∧ (denote (fullAdder 0 1 2 3) s 2 = s 2) := by
   decide
 
+/-- **Frame lemma for the gadget.** A wire distinct from all four of `a, b, cin, cout` is untouched
+by `fullAdder` (every gate's wires lie in `{a, b, cin, cout}`). The payoff of the Circuit-level
+`denote_apply_of_forall_not_mem`; lets the carry-chain (Pass 2) lift this slice over a register. -/
+theorem fullAdder_apply_of_ne {a b cin cout w : Fin n}
+    (ha : w ≠ a) (hb : w ≠ b) (hcin : w ≠ cin) (hcout : w ≠ cout) (s : State n) :
+    denote (fullAdder a b cin cout) s w = s w := by
+  apply denote_apply_of_forall_not_mem
+  intro g hg
+  simp only [fullAdder, List.mem_cons, List.not_mem_nil, or_false] at hg
+  rcases hg with rfl | rfl | rfl | rfl <;>
+    simp_all [gateWires]
+
+/-- **Full-adder correctness, general `Fin n` wires.** For pairwise-distinct wires `a, b, cin, cout`
+with `cout` initialised `false`, the gadget writes the sum bit to `b`, the carry-out to `cout`, and
+preserves `a` and `cin` — over arbitrary `Fin n` (not just the concrete `State 4` of
+`fullAdder_correct`). This is the slice the ripple carry-chain (Pass 2) iterates. -/
+theorem fullAdder_correct_general {a b cin cout : Fin n}
+    (hba : b ≠ a) (hbcin : b ≠ cin) (hcouta : cout ≠ a) (hcoutb : cout ≠ b)
+    (hcoutcin : cout ≠ cin) (hacin : a ≠ cin) {s : State n} (hc0 : s cout = false) :
+    denote (fullAdder a b cin cout) s b = (s a ^^ s b ^^ s cin)
+      ∧ denote (fullAdder a b cin cout) s cout = majority (s a) (s b) (s cin)
+      ∧ denote (fullAdder a b cin cout) s a = s a
+      ∧ denote (fullAdder a b cin cout) s cin = s cin := by
+  have hab : a ≠ b := hba.symm
+  have hcinb : cin ≠ b := hbcin.symm
+  have haco : a ≠ cout := hcouta.symm
+  have hbco : b ≠ cout := hcoutb.symm
+  have hcinco : cin ≠ cout := hcoutcin.symm
+  have hcina : cin ≠ a := hacin.symm
+  refine ⟨?_, ?_, ?_, ?_⟩ <;>
+    simp only [fullAdder, denote_cons, denote_nil] <;>
+    simp_all [denoteGate] <;>
+    cases s a <;> cases s b <;> cases s cin <;> decide
+
 /-! ### Derived cost of the gadget -/
 
 /-- **Derived cost of the full adder** (from the gate list, via `circuitCost`): two Toffolis, two
