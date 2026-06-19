@@ -1,8 +1,9 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 1 DONE 2026-06-19 (`Circuit.lean` + `Cost.lean` GREEN, wired into the import
-graph + AxiomAudit-pinned); Tranche 2 (`ModAdd.lean`) NEXT.** The build blocker is resolved (see
-below).
+**STATUS: Tranche 1 + Tranche 2-Pass-1 DONE 2026-06-19 (`Circuit.lean`, `Cost.lean`, `ModAdd.lean`
+GREEN, wired into the import graph + AxiomAudit-pinned, both tranches auditor-reviewed SOUND);
+Tranche 2-Pass-2 (ripple carry-chain correctness over `regVal`) OR Tranche 3 (`ModMul.lean`) NEXT.**
+The build blocker is resolved (see below).
 
 ---
 
@@ -67,7 +68,7 @@ were rejected — they make "verified resource accounting" hollow.)
 ```
 CsdLean4/Mathlib/QuantumInfo/Reversible/Circuit.lean   -- Tranche 1a: gate DSL + denote + inverse  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean      -- Tranche 1b: Cost record + circuitCost + comp lemmas  [DONE 2026-06-19, GREEN]
-CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2 Pass 1: regVal + verified fullAdder + ripple cost  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 (target: Shor mulOracle)
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4 (reuse ZMod.inv)
 CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5 (wrap Mathlib WeierstrassCurve)
@@ -112,13 +113,45 @@ Pass-2 refinement, documented), plus `cost_inverse_{toffoli,cnot}` (cost invaria
 `denote_bijective`, `cost_comp_toffoli_count`, `cost_comp_toffoli_depth_le`; + the tranche-1
 A1 `cfc_integral_commute`/`isClosed_posSemidef`), foundational-triple-only.
 
+**Tranche 1 auditor pass (csd-lean-auditor, 2026-06-19): SOUND.** No Blocker/Major/Minor logical
+defects; involutions genuine on the non-degenerate Bool-xor branches (probed), cost genuinely
+derived (varies with the gate list, not constant), all axiom footprints match the pins. Two NITs,
+both addressed: (A) degenerate gate is `denote`-identity but still billed `gateCost` — documented in
+`gateCost`'s docstring as the conservative (upper-bound, syntactic) convention; (B) added a pin for
+`reversible_inverse_correct'` (the surjectivity input to `denote_bijective`) for drift insurance.
+
+## Tranche 2 status — `ModAdd.lean` (Pass 1)
+
+**Pass 1 DONE 2026-06-19, GREEN, 0 sorry, 0 warnings; auditor-reviewed SOUND.** Built by
+csd-lean-expert, verified, wired, pinned.
+- **Register encoding:** `regVal : State n → ℕ` little-endian (`∑ i, if s i then 2^i else 0`);
+  `regVal_lt_two_pow` (real induction, top-wire split); `regVal_update_eq` (the `Function.update`
+  round-trip helper for ModMul/ScalarMul, ℕ-truncated-subtraction-correct).
+- **Verified full adder:** `fullAdder a b cin cout := [CCX a b cout, CX a b, CCX cin b cout, CX cin b]`
+  with `fullAdder_correct` — **genuine all-inputs coverage** (`decide` over `Fintype (Fin 4 → Bool)`,
+  16 inputs, `cout` init `false`): `b ← a⊕b⊕cin`, `cout ← majority(a,b,cin)`, `a`/`cin` preserved.
+  `majority` is the real 2-of-3. Derived cost `fullAdder_cost` (toffoli 2, toffoliDepth 2, cnot 2).
+- **Ripple cost (general n):** `rippleAdder` (slice-list `flatMap` of `fullAdder`); `rippleAdder_toffoli`
+  / `_cnot` = `2 * slices.length`, by induction composing Tranche-1's `cost_comp_{toffoli,cnot}_count`
+  + `fullAdder_{toffoli,cnot}` — derived, not annotated.
+- AxiomAudit-pinned (`regVal_lt_two_pow`, `regVal_update_eq`, `fullAdder_correct`, `fullAdder_cost`,
+  `rippleAdder_toffoli`, `rippleAdder_cnot`); foundational-triple-only (cost lemmas `[propext]` /
+  `[propext, Quot.sound]`).
+
+**Pass 2 target (NOT claimed):** general-`n` in-place carry-chain *correctness* over `regVal` —
+`regVal (denote (rippleAdder layout) s) = (regVal_a + regVal_b) mod 2^n`. Needs a concrete carry/sum
+wire layout + a `denote`-localisation lemma (`fullAdder` touches only its 4 wires) lifting
+`fullAdder_correct` off `State 4` to arbitrary `Fin n`, then induction on slices. That localisation
+primitive is worth building first (reused by ModMul).
+
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
 1. ~~Build `Circuit.lean`; fix the involution proofs~~ **DONE 2026-06-19 (4 fixes, green, committed).**
 2. ~~Write + build `Cost.lean`~~ **DONE 2026-06-19 (green, first build).**
-3. ~~Add both modules to `CsdLean4.lean`; add AxiomAudit pins~~ **DONE 2026-06-19** (both in
-   `CsdLean4.lean`; 5 Reversible pins + 2 A1 pins in `Tests/AxiomAudit.lean`; no separate
-   `ECDLPAudit.lean` needed).
-4. Audit (csd-lean-auditor): involutions genuine, `reversible_inverse_correct` real, costs derived
-   not annotated, no sorry/axiom. **← recommended before/with Tranche 2.**
-5. ~~Commit Tranche 1; update this file + `specs/INDEX.md`~~ **DONE 2026-06-19.** Then Tranche 2 (ModAdd). **← NEXT**
+3. ~~Add modules to `CsdLean4.lean`; add AxiomAudit pins~~ **DONE 2026-06-19** (Circuit/Cost/ModAdd
+   all in `CsdLean4.lean`; Reversible + A1 + ModAdd pins in `Tests/AxiomAudit.lean`).
+4. ~~Audit (csd-lean-auditor)~~ **DONE 2026-06-19 — Tranche 1 + Tranche 2 both SOUND** (auditor pass
+   is now standard per tranche).
+5. ~~Commit Tranche 1; Tranche 2 Pass 1; update docs~~ **DONE 2026-06-19.**
+6. **NEXT:** either Tranche 2 Pass 2 (carry-chain correctness, via the `denote`-localisation lemma)
+   or Tranche 3 (`ModMul.lean`, consuming `regVal`/`regVal_update_eq`, Shor `mulOracle` target).

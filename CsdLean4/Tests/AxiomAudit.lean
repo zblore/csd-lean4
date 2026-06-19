@@ -19,6 +19,7 @@ import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3052,6 +3053,10 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.reversible_inverse_correct
 
+/-- info: 'Reversible.reversible_inverse_correct'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.reversible_inverse_correct'
+
 /-- info: 'Reversible.denote_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.denote_bijective
@@ -3063,5 +3068,31 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.cost_comp_toffoli_depth_le' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.cost_comp_toffoli_depth_le
+
+/-! ### ECDLP reversible modular addition (Reversible/ModAdd.lean, Tranche 2) -/
+
+/-- info: 'Reversible.regVal_lt_two_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.regVal_lt_two_pow
+
+/-- info: 'Reversible.regVal_update_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.regVal_update_eq
+
+/-- info: 'Reversible.fullAdder_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.fullAdder_correct
+
+/-- info: 'Reversible.fullAdder_cost' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.fullAdder_cost
+
+/-- info: 'Reversible.rippleAdder_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleAdder_toffoli
+
+/-- info: 'Reversible.rippleAdder_cnot' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleAdder_cnot
 
 end CSD.Tests.AxiomAudit

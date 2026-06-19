@@ -50,7 +50,14 @@ structure Cost where
 /-- Per-gate resource cost. `X` is free (a classical bit flip, no T/Toffoli); `CX` is one CNOT;
 `CCX` is one Toffoli at depth one; `swap` is three CNOTs (the standard CNOT decomposition). The
 width fields (`qubits`/`ancilla`) are `0` here — they are supplied at the circuit level by
-`circuitCost`, since a single gate does not determine the register width. -/
+`circuitCost`, since a single gate does not determine the register width.
+
+Cost is **syntactic**: it is a function of the gate, not of the permutation it realises. A
+degenerate gate (control = target, e.g. `CCX i j i`) acts as the identity under `denoteGate` yet is
+still billed its full cost. This is the conservative (upper-bound) convention for resource
+accounting — `circuitCost c` bounds the true cost of any realisation of `c` — so do NOT assume
+`denoteGate g = id ⇒ gateCost g = 0`. A degenerate-gate–stripping `simplify` pass before costing is
+a possible Pass-2 refinement. -/
 def gateCost : Gate n → Cost
   | .X _ => { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 0, tCount := 0, meas := 0 }
   | .CX _ _ => { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 1, tCount := 0, meas := 0 }
