@@ -1,9 +1,9 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 1 + Tranche 2 Pass 1 + Pass 2 Stage A DONE 2026-06-19 (`Circuit.lean`, `Cost.lean`,
-`ModAdd.lean` GREEN, wired + AxiomAudit-pinned, all auditor-reviewed SOUND). NEXT: Pass 2 Stage B —
-the ripple carry-chain arithmetic identity `regVal_B(out) = (regVal_A + regVal_B) mod 2^n`.** The build
-blocker is resolved (see below).
+**STATUS: Tranche 2 COMPLETE 2026-06-20 (Pass 1 + Pass 2 Stage A + Stage B all DONE, GREEN, wired +
+AxiomAudit-pinned, all auditor-reviewed SOUND). `rippleCirc_correct` proves the ripple adder computes
+`regValRange_B(out) = (regValRange_A + regValRange_B) mod 2^n` — genuine modular-addition correctness,
+not just cost. NEXT: Tranche 3 (`ModMul.lean`).** The build blocker is resolved (see below).
 
 ---
 
@@ -149,12 +149,24 @@ csd-lean-expert, verified, wired, pinned.
   foundational-triple-only. (Same commit: fixed pre-existing axiom-pin drift on `cost_comp_toffoli_depth_le`,
   now `[propext]`; the `Finset` import added to `Circuit.lean` dropped its `Quot.sound` dependency.)
 
-**Pass 2 Stage B target (NEXT, NOT yet claimed):** the carry-chain *arithmetic* identity
-`regVal_B (denote (rippleAdder layout) s) = (regVal_A s + regVal_B s) mod 2^n`. Plan: a CONSTRUCTED
-wire layout (registers A `0..n-1`, B `n..2n-1`, carry chain C `2n..3n`, slice `i` = `(i, n+i, 2n+i, 2n+i+1)`),
-a carry invariant, induction on slices lifting `fullAdder_correct_general` via `fullAdder_apply_of_ne`,
-inhabited at a concrete small `n`. (Auditor's flagged risk: layout must be a constructed function, not a
-smuggled per-slice hypothesis.)
+**Pass 2 Stage B DONE 2026-06-20, GREEN, auditor-SOUND** (the carry-chain arithmetic correctness):
+- `regValRange f s k` (ℕ-indexed low-`k` register readout) + `regValRange_succ` + `regValRange_lt` (`< 2^k`).
+- `fulladder_nat` (per-slice ℕ identity: `sum + 2*carry = a+b+c`, axiom-free).
+- `structure RippleLayout m n` — wire families `A B C : ℕ → Fin m` with pairwise-disjointness + bounded
+  injectivity (hypotheses are pure `Fin m` WIRE geometry; the auditor confirmed no smuggled computation).
+- `rippleSlice`/`ripplePrefix`/`rippleCirc` + `denote_ripplePrefix_succ`.
+- `rippleCirc_invariant` — the 4-clause carry invariant (P1 carry arithmetic, P2 A untouched, P4 high-B
+  preserved, P5 high-C preserved), induction on slices, lifting `fullAdder_correct_general` through
+  `fullAdder_apply_of_ne` (the frame lemma).
+- **`rippleCirc_correct`** (HEADLINE): `regValRange L.B (denote (rippleCirc L) s) n = (regValRange L.A s n
+  + regValRange L.B s n) % 2^n`, derived from the exhibited circuit. Foundational-triple-only, AxiomAudit-pinned.
+- `rippleLayout2` (concrete 2-bit layout on `Fin 7`) + `example` — non-vacuity witness. Auditor ran
+  end-to-end probes: A=2,B=1→3; A=3,B=3→2 (carry-out wire genuinely set, `mod 2^n` truncation real).
+
+**Tranche 3 next (`ModMul.lean`):** the Shor `mulOracle` target, consuming `rippleCirc_correct` +
+`regVal`/`regValRange`. Auditor flagged the load-bearing risk one layer up: a shifted/reused-register
+adder layout must keep `RippleLayout`'s injectivity bounds (`hCinj` on `< n+1` especially)
+dischargeable — that is where vacuity could silently re-enter.
 
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
@@ -165,5 +177,8 @@ smuggled per-slice hypothesis.)
 4. ~~Audit (csd-lean-auditor)~~ **DONE 2026-06-19 — Tranche 1 + Tranche 2 both SOUND** (auditor pass
    is now standard per tranche).
 5. ~~Commit Tranche 1; Tranche 2 Pass 1; update docs~~ **DONE 2026-06-19.**
-6. **NEXT:** either Tranche 2 Pass 2 (carry-chain correctness, via the `denote`-localisation lemma)
-   or Tranche 3 (`ModMul.lean`, consuming `regVal`/`regVal_update_eq`, Shor `mulOracle` target).
+6. ~~Tranche 2 Pass 2 Stage A (localisation lemma + general adder)~~ **DONE 2026-06-19, auditor-SOUND, committed `2ba2a2f`.**
+7. ~~Tranche 2 Pass 2 Stage B (carry-chain `(A+B) mod 2^n` correctness)~~ **DONE 2026-06-20, auditor-SOUND.**
+   Tranche 2 is now COMPLETE (cost + full computational correctness).
+8. **NEXT:** Tranche 3 (`ModMul.lean`) — the Shor `mulOracle` target, consuming `rippleCirc_correct`.
+   Watch the shifted-register injectivity bound (auditor's flagged vacuity risk one layer up).
