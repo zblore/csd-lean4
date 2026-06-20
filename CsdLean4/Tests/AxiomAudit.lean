@@ -20,6 +20,7 @@ import CsdLean4.Mathlib.QuantumInfo.Fourier
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3124,5 +3125,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.rippleCirc_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.rippleCirc_correct
+
+/-! ### ECDLP reversible modular multiplication (ModMul.lean, Tranche 3 Stage A) -/
+
+/-- info: 'Reversible.mulConst_bijective' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulConst_bijective
+
+/-- info: 'Reversible.multiplier_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.multiplier_toffoli
+
+/-- info: 'Reversible.rippleCirc_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleCirc_toffoli
+
+/-- info: 'Reversible.multiplier_ripple_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.multiplier_ripple_toffoli
 
 end CSD.Tests.AxiomAudit

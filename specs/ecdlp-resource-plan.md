@@ -1,9 +1,11 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 2 COMPLETE 2026-06-20 (Pass 1 + Pass 2 Stage A + Stage B all DONE, GREEN, wired +
-AxiomAudit-pinned, all auditor-reviewed SOUND). `rippleCirc_correct` proves the ripple adder computes
-`regValRange_B(out) = (regValRange_A + regValRange_B) mod 2^n` — genuine modular-addition correctness,
-not just cost. NEXT: Tranche 3 (`ModMul.lean`).** The build blocker is resolved (see below).
+**STATUS: Tranche 2 COMPLETE + Tranche 3 Stage A DONE 2026-06-20 (all GREEN, wired + AxiomAudit-pinned,
+auditor-reviewed SOUND). Tranche 2: `rippleCirc_correct` (modular addition correctness). Tranche 3
+Stage A (`ModMul.lean`): the `ZMod N` semantic target `mulConst` (Shor mulOracle action) + `mulConst_bijective`
+(unit ⇒ reversible) + the shift-and-add `multiplier` with DERIVED cost (`multiplier_toffoli/_cnot`,
+`rippleCirc_toffoli`, `multiplier_ripple_toffoli` = `2·n·m'`). NEXT: Tranche 3 Stage B — the end-to-end
+`Acc = (a·Y) mod 2^W` accumulation correctness.** The build blocker is resolved (see below).
 
 ---
 
@@ -69,7 +71,7 @@ were rejected — they make "verified resource accounting" hollow.)
 CsdLean4/Mathlib/QuantumInfo/Reversible/Circuit.lean   -- Tranche 1a: gate DSL + denote + inverse  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean      -- Tranche 1b: Cost record + circuitCost + comp lemmas  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2 Pass 1: regVal + verified fullAdder + ripple cost  [DONE 2026-06-19, GREEN]
-CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 (target: Shor mulOracle)
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 Stage A: ZMod mulConst spec + shift-and-add multiplier cost  [DONE 2026-06-20, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4 (reuse ZMod.inv)
 CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5 (wrap Mathlib WeierstrassCurve)
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6 (double-and-add over Mathlib group)
@@ -168,6 +170,28 @@ csd-lean-expert, verified, wired, pinned.
 adder layout must keep `RippleLayout`'s injectivity bounds (`hCinj` on `< n+1` especially)
 dischargeable — that is where vacuity could silently re-enter.
 
+## Tranche 3 status — `ModMul.lean` (modular multiplication)
+
+**Stage A DONE 2026-06-20, GREEN, auditor-SOUND** (semantic target + derived multiplier cost):
+- `mulConst N a : ZMod N → ZMod N := (a * ·)` — the Shor `mulOracle` action; `mulConst_bijective`
+  (`IsUnit a` ⇒ permutation, the reversibility that admits a circuit; auditor confirmed the unit
+  hypothesis load-bearing — `mulConst 4 2` is not injective).
+- `multiplier (adders : List (Circuit m)) := adders.flatMap id` — shift-and-add multiplier as the
+  concatenation of partial-product adder blocks; `multiplier_toffoli`/`_cnot` = list-sum of block
+  counts (DERIVED via `cost_comp_*`, not annotated).
+- `ripplePrefix_toffoli`/`rippleCirc_toffoli` (a block = `2·n` Toffolis) + `multiplier_ripple_toffoli`
+  (`m'` width-`n` blocks = `2·n·m'`). Honest: cost is layout-independent (syntactic) — a cost
+  statement, not correctness. AxiomAudit-pinned (`[propext, Quot.sound]`).
+- Per-step correctness is `ModAdd.rippleCirc_correct` (one shifted add); building block in hand.
+
+**Stage B target (NEXT, NOT claimed):** the end-to-end `Acc = (a·Y) mod 2^W` accumulation correctness —
+induction over partial products, each a widened ripple add (carry propagating through the full upper
+accumulator), reusing `rippleCirc_correct` + the multiplicand-preservation invariant. Then the mod-`N`
+reduction (vs mod-`2^W`) is a further stage. **Auditor's flagged Stage-B risks:** (i) the multi-register
+layout (multiplicand preserved across all adds; accumulator/carry disjoint) must be inhabited by a
+concrete witness (a `multiplier` analogue of `rippleLayout2`); (ii) the mod-`2^W` → mod-`N` step must not
+silently assume `N = 2^W`.
+
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
 1. ~~Build `Circuit.lean`; fix the involution proofs~~ **DONE 2026-06-19 (4 fixes, green, committed).**
@@ -180,5 +204,7 @@ dischargeable — that is where vacuity could silently re-enter.
 6. ~~Tranche 2 Pass 2 Stage A (localisation lemma + general adder)~~ **DONE 2026-06-19, auditor-SOUND, committed `2ba2a2f`.**
 7. ~~Tranche 2 Pass 2 Stage B (carry-chain `(A+B) mod 2^n` correctness)~~ **DONE 2026-06-20, auditor-SOUND.**
    Tranche 2 is now COMPLETE (cost + full computational correctness).
-8. **NEXT:** Tranche 3 (`ModMul.lean`) — the Shor `mulOracle` target, consuming `rippleCirc_correct`.
-   Watch the shifted-register injectivity bound (auditor's flagged vacuity risk one layer up).
+8. ~~Tranche 3 Stage A (`ModMul.lean`: `mulConst` spec + multiplier cost)~~ **DONE 2026-06-20, auditor-SOUND.**
+9. **NEXT:** Tranche 3 Stage B — the `Acc = (a·Y) mod 2^W` accumulation correctness (then mod-`N`
+   reduction). Build the multi-register layout as a constructed, concretely-inhabited function; watch
+   the mod-`2^W`→mod-`N` step (auditor's flagged risks).
