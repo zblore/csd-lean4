@@ -1,11 +1,12 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 2 COMPLETE + Tranche 3 Stage A + Stage B.1 DONE 2026-06-20 (all GREEN, wired +
-AxiomAudit-pinned, auditor-reviewed SOUND). Tranche 3 Stage A (`ModMul.lean`): semantic target `mulConst`
-(Shor mulOracle) + `mulConst_bijective` + shift-and-add `multiplier` DERIVED cost. Stage B.1: the per-step
-accumulation correctness — `accStep` (one shifted add does `accVal += 2^i·Y`, carry-propagating, no-overflow)
-+ `regValRange_split` + `rippleCirc_preserves_external`. NEXT: Tranche 3 Stage B.2 — the fold to
-`Acc = a·Y` (dependent-width) + concrete `MulLayout` witness, then mod-`N`.** The build blocker is resolved.
+**STATUS: Tranche 2 COMPLETE + Tranche 3 Stage A + B.1 + B.2 DONE 2026-06-21 (all GREEN, wired +
+AxiomAudit-pinned, auditor-reviewed SOUND). Tranche 3 (`ModMul.lean`) modular-multiplication CORRECTNESS
+is COMPLETE (mod-2^W): `mulCircuit_correct` proves the shift-and-add multiplier leaves the accumulator
+holding `Acc + (∑ 2^sh)·Y` (= `a·Y` with Acc=0, ∑ 2^sh = a), via the `accStep` fold over shifts,
+threading Y-preservation + carry-freshness; concrete `mulLayout1` witness (non-vacuity; auditor also ran
+multiply-by-3 → 3). NEXT: Tranche 3 mod-`N` reduction (Stage B.3) OR Tranche 4 (`ModInv`).** The build
+blocker is resolved.
 
 ---
 
@@ -196,15 +197,29 @@ dischargeable — that is where vacuity could silently re-enter.
   eval, both = 5 on a concrete `Fin 8` instance), `hno` load-bearing, hypotheses jointly satisfiable.
   AxiomAudit-pinned, foundational-triple-only.
 
-**Stage B.2 target (NEXT, NOT claimed):** the end-to-end `Acc = (a·Y)` identity — the fold of `accStep`
-over the set bits of `a`. Complication: each step has a different width `W - i`, so it is a
-**dependent-width fold**, plus a concrete inhabited `MulLayout` witness; then the mod-`N` reduction.
-**Auditor's flagged Stage-B.2 risks:** (i) the fold must genuinely PROVE multiplicand-preservation
-between steps (`accStep` alone says nothing about preserving `Yv`'s wires for the next step — use
-`rippleCirc_preserves_external` with `Y` external); (ii) `accStep` leaves the carry chain DIRTY, so the
-fold must re-allocate fresh carries per step (cross-step-disjoint) and re-establish `hcarry`; (iii) the
-mod-`2^W` → mod-`N` step must not silently assume `N = 2^W`; (iv) inhabit `MulLayout` with a concrete
-witness (a `multiplier` analogue of `rippleLayout2`).
+**Stage B.2 DONE 2026-06-21, GREEN, auditor-SOUND** (the fold to `Acc = a·Y`):
+- `structure MulLayout M n W` — accumulator `Acc`, multiplicand `Y` (W-wire register, high bits held
+  zero, so no separate addend-pad wires), per-shift carry chain `Carry`. **BOUNDED injectivity/cross
+  fields** (`hCarryInj` index `≤ W`, `hCarryCross` `sh,sh' ≤ W`) — an earlier UNBOUNDED version was
+  UNINHABITABLE (injective ℕ→Fin M impossible), which would have made the theorem vacuous; bounding
+  fixed it.
+- `stepLayout` (per-shift `RippleLayout`, A = Y, B = `Acc(sh+·)`, C = `Carry sh`) + `mulCircuit`
+  (concatenation of per-shift ripple adds). Each step at its own width `W - sh`, applied individually
+  (the circuits are all `Circuit M`), so NO dependent-width fold needed.
+- `stepLayout_preserves_Y` (multiplicand preserved: in-window A read-only via `rippleCirc_invariant`
+  P2, out-of-window via the frame lemma) + `stepLayout_preserves_carry` (other shifts' carries
+  preserved, via `hCarryCross`) — the two preservation properties the fold threads.
+- **`mulCircuit_correct`** (HEADLINE): `regValRange Acc (denote (mulCircuit L shifts) s) W =
+  regValRange Acc s W + (∑ 2^sh)·Yv`, induction over shifts folding `accStep`, re-establishing
+  carries-fresh + Y-preserved + bound per recursive step. Foundational-triple-only.
+- `mulLayout1 : MulLayout 6 1 1` + `example` — non-vacuity witness (`Carry sh k = 2+2·min sh 1+min k 1`,
+  all 7 fields by `omega`/`decide`). Auditor independently built a 2-shift witness and ran multiply-by-3
+  → 3, multiply-by-1 → 1, multiply-by-0 → 0; confirmed `hno` load-bearing.
+
+**Mod-`N` reduction (Stage B.3, NEXT):** the exact (mod-`2^W`) multiply above → `a·Y mod N`. Auditor's
+flagged risk: the load-bearing no-overflow `hno` becomes a liability once a true `mod N` is asserted —
+the mod-N theorem must HANDLE truncation, not hypothesise it away (probe a witness with
+`Acc + (∑2^sh)·Yv ≥ 2^W`).
 
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
@@ -220,6 +235,7 @@ witness (a `multiplier` analogue of `rippleLayout2`).
    Tranche 2 is now COMPLETE (cost + full computational correctness).
 8. ~~Tranche 3 Stage A (`ModMul.lean`: `mulConst` spec + multiplier cost)~~ **DONE 2026-06-20, auditor-SOUND.**
 9. ~~Tranche 3 Stage B.1 (per-step `accStep` accumulation correctness)~~ **DONE 2026-06-20, auditor-SOUND.**
-10. **NEXT:** Tranche 3 Stage B.2 — fold `accStep` over the set bits of `a` ⇒ `Acc = a·Y` (dependent-width
-    fold) + concrete `MulLayout` witness, then mod-`N`. Watch the 4 auditor-flagged risks (multiplicand
-    preservation, fresh carries per step, mod-`2^W`→mod-`N`, inhabited layout).
+10. ~~Tranche 3 Stage B.2 (fold to `Acc = a·Y` + `MulLayout` witness)~~ **DONE 2026-06-21, auditor-SOUND.**
+    Tranche 3 multiplication correctness COMPLETE (mod-2^W). All 4 flagged B.2 risks handled.
+11. **NEXT:** Tranche 3 mod-`N` reduction (Stage B.3) — `a·Y mod 2^W` → `a·Y mod N` — OR move to Tranche 4
+    (`ModInv.lean`, reuse `ZMod.inv`). Mod-N must handle truncation, not hypothesise it away.

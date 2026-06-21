@@ -3158,4 +3158,14 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.accStep
 
+/-! #### Stage B.2: the fold to `Acc = a · Y` -/
+
+/-- info: 'Reversible.mulCircuit_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulCircuit_correct
+
+/-- info: 'Reversible.mulLayout1' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulLayout1
+
 end CSD.Tests.AxiomAudit

@@ -36,13 +36,19 @@ content. This tranche builds the missing reversible circuit + *derived* cost.
   `Yv`) into the accumulator window `Acc[i, W)` increases the full accumulator value by exactly
   `2^i · Yv` (carry propagating through the whole upper accumulator; low `i` bits preserved; no overflow).
 
-## Stage B.2 target (NOT claimed yet)
+## Stage B.2 — the fold to `Acc = a · Y` (landed below)
 
-The end-to-end `Acc = (a · Y)` identity — the fold of `accStep` over all set bits of `a` (a multi-step
-induction threading `Y`-preservation and carry-freshness through the composition; each step has a
-different width `W - i`, hence a dependent-width fold) — plus a concrete inhabited `MulLayout` witness,
-and then the mod-`N` reduction. Stage B.1 proves the single shifted-add accumulation; nothing below
-claims the full `a · Y` identity yet.
+* `MulLayout` — the multi-register wire geometry (accumulator, multiplicand with high bits held zero,
+  per-shift carry chains; bounded injectivity/disjointness, so it is inhabitable — see `mulLayout1`).
+* `mulCircuit` — the shift-and-add multiplier: one partial-product ripple add per shift in `shifts`.
+* `mulCircuit_correct` — **THE headline**: the multiplier leaves the accumulator holding
+  `Acc + (∑ sh ∈ shifts, 2^sh) · Y`, by folding `accStep` over the shifts (an induction threading
+  `Y`-preservation via `stepLayout_preserves_Y` and carry-freshness via `stepLayout_preserves_carry`;
+  each step at its own width `W - sh`, applied individually so there is no dependent-width fold). With
+  `Acc` initialised `0` and `∑ 2^sh = a` (the set bits of the classical constant), this is `Acc = a · Y`.
+* `mulLayout1` + the closing `example` — a concrete `Fin 6` witness, so the headline is non-vacuous.
+
+The mod-`N` reduction (vs the exact / mod-`2^W` multiply here) is a further stage.
 -/
 
 namespace Reversible
@@ -200,5 +206,191 @@ theorem accStep {w : ℕ} (L : RippleLayout m w) (Acc : ℕ → Fin m) (s : Stat
   rw [regValRange_split Acc (denote (rippleCirc L) s) i W hiW,
       regValRange_split Acc s i W hiW, hlow, hWi, hcorr]
   ring
+
+/-! ### Stage B.2: the fold to `Acc = a · Y`
+
+A `MulLayout` lays out, on `Fin M`, the accumulator `Acc` (W wires), the multiplicand `Y` (a W-wire
+register whose high bits `[n, W)` are held zero, so no separate addend-pad wires are needed), and a
+per-shift carry chain `Carry sh`. The multiplier is the concatenation, over a list of shifts (the set
+bits of the classical constant `a`), of one full-window ripple add of `Y` into `Acc[sh, W)` per shift.
+Folding `accStep` over the shifts gives `Acc ← Acc + (∑ 2^sh) · Y`. Each step has its own width
+`W - sh`, but the steps are applied individually (the circuits are all `Circuit M`), so there is no
+dependent-width fold. -/
+
+/-- A multiplier layout on `Fin M`: accumulator `Acc`, multiplicand `Y` (high bits held zero), and a
+per-shift carry chain `Carry`. The fields are pure wire geometry (disjointness + injectivity). -/
+structure MulLayout (M n W : ℕ) where
+  /-- Accumulator wires (indices `[0, W)`). -/
+  Acc : ℕ → Fin M
+  /-- Multiplicand wires (a `W`-wire register; values live in `[0, n)`, high bits held zero). -/
+  Y : ℕ → Fin M
+  /-- Carry chain for the partial-product add at shift `sh`. -/
+  Carry : ℕ → ℕ → Fin M
+  hYAcc : ∀ i j, Y i ≠ Acc j
+  hYCarry : ∀ i sh j, Y i ≠ Carry sh j
+  hAccCarry : ∀ i sh j, Acc i ≠ Carry sh j
+  hCarryCross : ∀ sh sh' i j, sh ≤ W → sh' ≤ W → sh ≠ sh' → Carry sh i ≠ Carry sh' j
+  hAccInj : ∀ i j, i < W → j < W → Acc i = Acc j → i = j
+  hYInj : ∀ i j, i < W → j < W → Y i = Y j → i = j
+  hCarryInj : ∀ sh i j, i ≤ W → j ≤ W → Carry sh i = Carry sh j → i = j
+
+variable {n W : ℕ}
+
+/-- The ripple-adder layout for the partial product at shift `sh`: add the multiplicand `Y` (the low
+window) into the accumulator window `Acc[sh, W)` (width `W - sh`), with carry chain `Carry sh`. -/
+def stepLayout (L : MulLayout m n W) (sh : ℕ) : RippleLayout m (W - sh) where
+  A := L.Y
+  B := fun k => L.Acc (sh + k)
+  C := L.Carry sh
+  hAB i j := L.hYAcc i (sh + j)
+  hAC i j := L.hYCarry i sh j
+  hBC i j := L.hAccCarry (sh + i) sh j
+  hAinj i j hi hj h := L.hYInj i j (by omega) (by omega) h
+  hBinj i j hi hj h := by have := L.hAccInj (sh + i) (sh + j) (by omega) (by omega) h; omega
+  hCinj i j hi hj h := L.hCarryInj sh i j (by omega) (by omega) h
+
+/-- The shift-and-add multiplier circuit: one partial-product ripple add per shift in `shifts`. -/
+def mulCircuit (L : MulLayout m n W) (shifts : List ℕ) : Circuit m :=
+  multiplier (shifts.map (fun sh => rippleCirc (stepLayout L sh)))
+
+/-- A register readout over `[0, k)` equals its readout over `[0, n)` when bits `[n, k)` are zero. -/
+theorem regValRange_eq_of_high_zero {m : ℕ} (f : ℕ → Fin m) (s : State m) (n k : ℕ) (hnk : n ≤ k)
+    (hz : ∀ j, n ≤ j → j < k → s (f j) = false) :
+    regValRange f s k = regValRange f s n := by
+  rw [regValRange_split f s n k hnk]
+  have : regValRange (fun j => f (n + j)) s (k - n) = 0 := by
+    simp only [regValRange]
+    apply Finset.sum_eq_zero
+    intro j hj
+    rw [Finset.mem_range] at hj
+    rw [hz (n + j) (by omega) (by omega)]
+    simp
+  rw [this, mul_zero, add_zero]
+
+/-- A partial-product step preserves the multiplicand `Y` (the addend wires are read-only; the wires
+beyond the window are external). -/
+theorem stepLayout_preserves_Y (L : MulLayout m n W) (sh : ℕ) (s : State m)
+    (hcarry : ∀ k, s (L.Carry sh k) = false) (j : ℕ) (hj : j < W) :
+    denote (rippleCirc (stepLayout L sh)) s (L.Y j) = s (L.Y j) := by
+  by_cases hjw : j < W - sh
+  · exact (rippleCirc_invariant (stepLayout L sh) s hcarry (W - sh) (le_refl _)).2.1 j hjw
+  · apply rippleCirc_preserves_external
+    · exact fun k _ => fun h => absurd (L.hYInj j k hj (by omega) h) (by omega)
+    · exact fun k _ => L.hYAcc j (sh + k)
+    · exact fun k _ => L.hYCarry j sh k
+
+/-- A partial-product step at shift `sh` preserves the carry chain of any other shift `sh' ≠ sh`. -/
+theorem stepLayout_preserves_carry (L : MulLayout m n W) (sh sh' : ℕ)
+    (hshW : sh ≤ W) (hsh'W : sh' ≤ W) (hne : sh' ≠ sh) (s : State m) (k : ℕ) :
+    denote (rippleCirc (stepLayout L sh)) s (L.Carry sh' k) = s (L.Carry sh' k) := by
+  apply rippleCirc_preserves_external
+  · exact fun p _ => (L.hYCarry p sh' k).symm
+  · exact fun p _ => (L.hAccCarry (sh + p) sh' k).symm
+  · exact fun p _ => L.hCarryCross sh' sh k p hsh'W hshW hne
+
+/-- **Multiplier correctness (Stage B.2 headline).** The shift-and-add multiplier over `shifts` (the
+set bits of the classical constant `a`) leaves the accumulator holding `Acc + (∑ 2^sh) · Y`, provided
+the carries start `false`, `Y`'s high bits are zero, and the result does not overflow `2^W`. With
+`Acc` initialised to `0` and `∑ 2^sh = a`, this is `Acc = a · Y`. -/
+theorem mulCircuit_correct (L : MulLayout m n W) :
+    ∀ (shifts : List ℕ), shifts.Nodup → (∀ sh ∈ shifts, sh + n ≤ W) →
+    ∀ (s : State m) (Yv : ℕ),
+      (∀ sh ∈ shifts, ∀ k, s (L.Carry sh k) = false) →
+      (∀ j, n ≤ j → j < W → s (L.Y j) = false) →
+      regValRange L.Y s n = Yv →
+      regValRange L.Acc s W + (shifts.map (2 ^ ·)).sum * Yv < 2 ^ W →
+      regValRange L.Acc (denote (mulCircuit L shifts) s) W
+        = regValRange L.Acc s W + (shifts.map (2 ^ ·)).sum * Yv := by
+  intro shifts
+  induction shifts with
+  | nil => intro _ _ s Yv _ _ _ _; simp [mulCircuit, multiplier]
+  | cons sh rest ih =>
+    intro hnd hsh s Yv hcarry hYhigh hYv hbound
+    have hshmem : sh ∈ sh :: rest := List.mem_cons_self
+    have hshW : sh ≤ W := by have := hsh sh hshmem; omega
+    have hnsh : n ≤ W - sh := by have := hsh sh hshmem; omega
+    -- circuit splits as the step then the rest
+    have hcirc : mulCircuit L (sh :: rest) = rippleCirc (stepLayout L sh) ++ mulCircuit L rest := by
+      simp [mulCircuit, multiplier, List.map_cons, List.flatMap_cons]
+    set s1 := denote (rippleCirc (stepLayout L sh)) s with hs1
+    -- the addend value (Y over the window) is Yv
+    have hYvw : regValRange (stepLayout L sh).A s (W - sh) = Yv := by
+      show regValRange L.Y s (W - sh) = Yv
+      rw [regValRange_eq_of_high_zero L.Y s n (W - sh) hnsh (fun j hj hj2 => hYhigh j hj (by omega)),
+        hYv]
+    -- no overflow on the window
+    have hsplit := regValRange_split L.Acc s sh W hshW
+    have hno : Yv + regValRange (fun k => L.Acc (sh + k)) s (W - sh) < 2 ^ (W - sh) := by
+      have hbexp : regValRange L.Acc s W + ((2 ^ sh) * Yv + (rest.map (2 ^ ·)).sum * Yv) < 2 ^ W := by
+        have := hbound; simp only [List.map_cons, List.sum_cons, Nat.add_mul] at this; exact this
+      have e : 2 ^ sh * regValRange (fun k => L.Acc (sh + k)) s (W - sh)
+          = regValRange L.Acc s W - regValRange L.Acc s sh := by omega
+      have key : 2 ^ sh * (Yv + regValRange (fun k => L.Acc (sh + k)) s (W - sh)) < 2 ^ W := by
+        rw [Nat.mul_add, e]; omega
+      have hpow : (2 : ℕ) ^ W = 2 ^ sh * 2 ^ (W - sh) := by rw [← pow_add]; congr 1; omega
+      rw [hpow] at key
+      exact Nat.lt_of_mul_lt_mul_left key
+    -- the step accumulates 2^sh * Yv
+    have hstep : regValRange L.Acc s1 W = regValRange L.Acc s W + 2 ^ sh * Yv :=
+      accStep (stepLayout L sh) L.Acc s sh W rfl hshW (fun _ => rfl) L.hAccInj
+        (fun j _ k => (L.hYAcc k j).symm) (fun j _ k => L.hAccCarry j sh k)
+        (hcarry sh hshmem) Yv hYvw hno
+    -- Y preserved ⇒ its readout and high-zero carry to s1
+    have hYpres : ∀ j, j < W → s1 (L.Y j) = s (L.Y j) := fun j hj =>
+      stepLayout_preserves_Y L sh s (hcarry sh hshmem) j hj
+    have hYv1 : regValRange L.Y s1 n = Yv := by
+      rw [← hYv]; apply Finset.sum_congr rfl
+      intro j hj; rw [Finset.mem_range] at hj; rw [hYpres j (by omega)]
+    have hYhigh1 : ∀ j, n ≤ j → j < W → s1 (L.Y j) = false := fun j hj hj2 => by
+      rw [hYpres j hj2]; exact hYhigh j hj hj2
+    -- other carries stay false at s1
+    have hcarry1 : ∀ sh' ∈ rest, ∀ k, s1 (L.Carry sh' k) = false := by
+      intro sh' hsh' k
+      have hne : sh' ≠ sh := fun h => (List.nodup_cons.mp hnd).1 (h ▸ hsh')
+      have hsh'W : sh' ≤ W := by have := hsh sh' (List.mem_cons_of_mem _ hsh'); omega
+      rw [hs1, stepLayout_preserves_carry L sh sh' hshW hsh'W hne s k]
+      exact hcarry sh' (List.mem_cons_of_mem _ hsh') k
+    -- bound carries to the rest
+    have hbound1 : regValRange L.Acc s1 W + (rest.map (2 ^ ·)).sum * Yv < 2 ^ W := by
+      rw [hstep]
+      have := hbound; simp only [List.map_cons, List.sum_cons, Nat.add_mul] at this; omega
+    -- assemble
+    rw [hcirc, denote_append, ← hs1,
+      ih (List.nodup_cons.mp hnd).2 (fun sh' h => hsh sh' (List.mem_cons_of_mem _ h)) s1 Yv
+        hcarry1 hYhigh1 hYv1 hbound1, hstep]
+    simp only [List.map_cons, List.sum_cons, Nat.add_mul]
+    ring
+
+/-! ### Non-vacuity witness
+
+A concrete `MulLayout` showing the structure is inhabited (the bounded injectivity/disjointness fields
+are jointly satisfiable in finitely many wires) and `mulCircuit_correct` applies. Accumulator on wire
+`0`, multiplicand on wire `1`, and two disjoint carry banks (`{2,3}` for shift `0`, `{4,5}` for shift
+`1`) so the cross-shift disjointness `hCarryCross` is non-vacuous. -/
+
+/-- A concrete 1-bit multiplier layout on `Fin 6` (`n = W = 1`): accumulator wire `0`, multiplicand
+wire `1`, carry banks `{2,3}` (shift `0`) and `{4,5}` (shift `1`), via the arithmetic encoding
+`Carry sh k = 2 + 2·min sh 1 + min k 1` (no case split — every field proof is `omega`). -/
+def mulLayout1 : MulLayout 6 1 1 where
+  Acc _ := 0
+  Y _ := 1
+  Carry sh k := ⟨2 + 2 * min sh 1 + min k 1, by omega⟩
+  hYAcc _ _ := by decide
+  hYCarry i sh j := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
+  hAccCarry i sh j := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
+  hCarryCross sh sh' i j hsh hsh' hne := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
+  hAccInj i j _ _ _ := by omega
+  hYInj i j _ _ _ := by omega
+  hCarryInj sh i j hi hj h := by rw [Fin.ext_iff] at h; dsimp only at h; omega
+
+/-- The Pass-2 headline is non-vacuous: it applies to `mulLayout1`. For the 1-bit multiply by `a = 1`
+(`shifts = [0]`), with accumulator initialised `0`, it yields `Acc = 1 · Y = Y`. -/
+example (s : State 6) (hcarry : ∀ sh ∈ [0], ∀ k, s (mulLayout1.Carry sh k) = false)
+    (hacc0 : regValRange mulLayout1.Acc s 1 = 0) (Yv : ℕ) (hYv : regValRange mulLayout1.Y s 1 = Yv)
+    (hbnd : regValRange mulLayout1.Acc s 1 + ([0].map (2 ^ ·)).sum * Yv < 2 ^ 1) :
+    regValRange mulLayout1.Acc (denote (mulCircuit mulLayout1 [0]) s) 1 = Yv := by
+  rw [mulCircuit_correct mulLayout1 [0] (by decide) (by decide) s Yv hcarry
+    (by intro j hj hj2; omega) hYv hbnd, hacc0]
+  simp
 
 end Reversible
