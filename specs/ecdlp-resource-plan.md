@@ -1,12 +1,13 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: TRANCHE 3 COMPLETE 2026-06-21 (Stage A + B.1 + B.2 + B.3 all GREEN, wired + AxiomAudit-pinned,
-auditor-reviewed SOUND). `ModMul.lean` delivers: the semantic target `mulConst` (Shor mulOracle) + the
-shift-and-add `multiplier` with DERIVED cost (A); the multiplication CORRECTNESS `mulCircuit_correct`
-(`Acc = a·Y`, B.1 `accStep` + B.2 fold); and the MODULAR capstone `mulCircuit_correct_zmod` (B.3) — the
-output register read in `ZMod N` IS `mulConst N a Y` (Shor's `y ↦ a·y mod N`), the `ZMod N` cast doing the
-reduction (N free, no `N=2^W` assumption, no-overflow keeps the register exact; auditor verified at N=3,
-N=0). NEXT: Tranche 4 (`ModInv.lean`, reuse Mathlib `ZMod.inv`).** The build blocker is resolved.
+**STATUS: TRANCHE 3 + TRANCHE 4 COMPLETE 2026-06-21 (all GREEN, wired + AxiomAudit-pinned, auditor-SOUND).
+Tranche 3 (`ModMul.lean`): mulConst semantic target + derived multiplier cost + `mulCircuit_correct`
+(`Acc = a·Y`) + `mulCircuit_correct_zmod` (modular oracle action `y↦a·y mod N`). Tranche 4 (`ModInv.lean`,
+REUSE layer): `modInv N a = a⁻¹` oracle + algebra (`mul_modInv_of_unit`, `modInv_modInv` involution,
+`modInv_isUnit_iff_coprime`) + the reversibility link `mulConst_modInv_{left,right}Inverse` /
+`mulConst_modInv_bijective` (mulConst a undone by mulConst a⁻¹). NO inversion CIRCUIT (extended-Euclid
+huge; ECDLP avoids per-op inversion via projective coords) — honest residue named. NEXT: Tranche 5
+(`ECDLP/EllipticCurve.lean`, wrap Mathlib `WeierstrassCurve.Affine.Point`).** The build blocker is resolved.
 
 ---
 
@@ -73,7 +74,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/Circuit.lean   -- Tranche 1a: gate DSL +
 CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean      -- Tranche 1b: Cost record + circuitCost + comp lemmas  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2 Pass 1: regVal + verified fullAdder + ripple cost  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 Stage A: ZMod mulConst spec + shift-and-add multiplier cost  [DONE 2026-06-20, GREEN]
-CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4 (reuse ZMod.inv)
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4: modInv oracle + algebra + reversibility link  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5 (wrap Mathlib WeierstrassCurve)
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6 (double-and-add over Mathlib group)
 CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7
@@ -245,6 +246,13 @@ dischargeable — that is where vacuity could silently re-enter.
 10. ~~Tranche 3 Stage B.2 (fold to `Acc = a·Y` + `MulLayout` witness)~~ **DONE 2026-06-21, auditor-SOUND.**
 11. ~~Tranche 3 Stage B.3 (modular `ZMod N` capstone `mulCircuit_correct_zmod`)~~ **DONE 2026-06-21,
     auditor-SOUND. TRANCHE 3 COMPLETE** (cost + correctness + modular oracle-action connection).
-12. **NEXT:** Tranche 4 (`ModInv.lean`) — modular inverse, semantic layer reuses Mathlib `ZMod.inv` /
-    `unitOfCoprime`. (Optional Stage C: the in-place conditional-subtract register reduction, a qubit
-    optimisation — only if a space-optimal mulOracle register is wanted.)
+12. ~~Tranche 4 (`ModInv.lean`) — modular-inverse semantic layer~~ **DONE 2026-06-21, auditor-SOUND.**
+    `modInv` oracle + algebra (involution, coprime bridge) + reversibility link to Tranche 3
+    (`mulConst a` undone by `mulConst a⁻¹`). REUSE-only; no inversion circuit (ECDLP avoids via
+    projective coords) — honest residue named.
+13. **NEXT:** Tranche 5 (`ECDLP/EllipticCurve.lean`) — wrap Mathlib `WeierstrassCurve.Affine.Point` +
+    its `AddCommGroup` instance (do NOT reprove the group law). Auditor's flagged check: when the EC
+    group law lands, verify the point-addition formula uses only the `mulConst`/inverse oracles and
+    defers inversion (projective coords) — back the "dominant cost = multiplications" accounting with
+    the actual denotation, not prose. (Optional ModMul Stage C: in-place conditional-subtract register
+    reduction — a qubit optimisation, only if a space-optimal mulOracle register is wanted.)
