@@ -1,13 +1,15 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: TRANCHE 3 + TRANCHE 4 COMPLETE 2026-06-21 (all GREEN, wired + AxiomAudit-pinned, auditor-SOUND).
-Tranche 3 (`ModMul.lean`): mulConst semantic target + derived multiplier cost + `mulCircuit_correct`
-(`Acc = a·Y`) + `mulCircuit_correct_zmod` (modular oracle action `y↦a·y mod N`). Tranche 4 (`ModInv.lean`,
-REUSE layer): `modInv N a = a⁻¹` oracle + algebra (`mul_modInv_of_unit`, `modInv_modInv` involution,
-`modInv_isUnit_iff_coprime`) + the reversibility link `mulConst_modInv_{left,right}Inverse` /
-`mulConst_modInv_bijective` (mulConst a undone by mulConst a⁻¹). NO inversion CIRCUIT (extended-Euclid
-huge; ECDLP avoids per-op inversion via projective coords) — honest residue named. NEXT: Tranche 5
-(`ECDLP/EllipticCurve.lean`, wrap Mathlib `WeierstrassCurve.Affine.Point`).** The build blocker is resolved.
+**STATUS: TRANCHES 3, 4, 5 COMPLETE 2026-06-21 (all GREEN, wired + AxiomAudit-pinned, auditor-SOUND).
+T3 (`ModMul.lean`): mulConst + derived multiplier cost + `mulCircuit_correct` (`Acc = a·Y`) +
+`mulCircuit_correct_zmod` (modular oracle `y↦a·y mod N`). T4 (`ModInv.lean`, REUSE): `modInv = a⁻¹` oracle
++ algebra + the reversibility link `mulConst_modInv_bijective` (mulConst a undone by mulConst a⁻¹); no
+inversion circuit (ECDLP avoids via projective coords). T5 (`ECDLP/EllipticCurve.lean`, WRAP Mathlib
+`WeierstrassCurve.Affine.Point`, group law NOT reproved): `scalarMul P k = k•P` (the `[k]P` discrete-log
+map) + structural algebra (`scalarMul_add` homomorphism `[j+k]P=[j]P+[k]P`, `scalarMul_addOrderOf` period)
++ the ECDLP statement `IsDLog`/`Solvable` + `isDLog_add_addOrderOf` (solution shifts by the order — the
+period Shor finds). NEXT: Tranche 6 (`ECDLP/ScalarMul.lean`, double-and-add over the Mathlib group).**
+The build blocker is resolved.
 
 ---
 
@@ -75,7 +77,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean      -- Tranche 1b: Cost recor
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2 Pass 1: regVal + verified fullAdder + ripple cost  [DONE 2026-06-19, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 Stage A: ZMod mulConst spec + shift-and-add multiplier cost  [DONE 2026-06-20, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4: modInv oracle + algebra + reversibility link  [DONE 2026-06-21, GREEN]
-CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5 (wrap Mathlib WeierstrassCurve)
+CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5: scalarMul [k]P + ECDLP statement (wrap WeierstrassCurve)  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6 (double-and-add over Mathlib group)
 CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- abstract (Pass 1) -> exact (Pass 2)
@@ -250,9 +252,13 @@ dischargeable — that is where vacuity could silently re-enter.
     `modInv` oracle + algebra (involution, coprime bridge) + reversibility link to Tranche 3
     (`mulConst a` undone by `mulConst a⁻¹`). REUSE-only; no inversion circuit (ECDLP avoids via
     projective coords) — honest residue named.
-13. **NEXT:** Tranche 5 (`ECDLP/EllipticCurve.lean`) — wrap Mathlib `WeierstrassCurve.Affine.Point` +
-    its `AddCommGroup` instance (do NOT reprove the group law). Auditor's flagged check: when the EC
-    group law lands, verify the point-addition formula uses only the `mulConst`/inverse oracles and
-    defers inversion (projective coords) — back the "dominant cost = multiplications" accounting with
-    the actual denotation, not prose. (Optional ModMul Stage C: in-place conditional-subtract register
-    reduction — a qubit optimisation, only if a space-optimal mulOracle register is wanted.)
+13. ~~Tranche 5 (`ECDLP/EllipticCurve.lean`) — wrap Mathlib `WeierstrassCurve.Affine.Point`~~ **DONE
+    2026-06-21, auditor-SOUND.** `scalarMul [k]P` + structural algebra + ECDLP statement; group law
+    reused (not reproved). Note: needs `[DecidableEq F]` (Mathlib's `AddCommGroup W.Point` instance).
+14. **NEXT:** Tranche 6 (`ECDLP/ScalarMul.lean`) — double-and-add for `[k]P` over the Mathlib group,
+    its correctness landing on `ECDLP.scalarMul P k` (auditor's flagged check: the double-and-add output
+    spec must reduce to `scalarMul P k`, closing the loop to this math layer), and the cost as a function
+    of the bit length of `k` (× the per-point-add cost, ultimately the Tranche-3 multiplier). Then
+    Tranche 7 (Secp256k1 + ResourceBounds) — use a SINGLE `Field`/`CommRing` instance path for the base
+    field (auditor's `CommRing`-diamond note). (Optional ModMul Stage C: in-place conditional-subtract
+    register reduction — a qubit optimisation.)

@@ -22,6 +22,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3194,5 +3195,19 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.mulConst_modInv_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.mulConst_modInv_bijective
+
+/-! ### ECDLP elliptic-curve layer (ECDLP/EllipticCurve.lean, Tranche 5) -/
+
+/-- info: 'ECDLP.scalarMul_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.scalarMul_add
+
+/-- info: 'ECDLP.scalarMul_addOrderOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.scalarMul_addOrderOf
+
+/-- info: 'ECDLP.isDLog_add_addOrderOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.isDLog_add_addOrderOf
 
 end CSD.Tests.AxiomAudit
