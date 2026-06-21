@@ -1,15 +1,15 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: TRANCHES 3, 4, 5 COMPLETE 2026-06-21 (all GREEN, wired + AxiomAudit-pinned, auditor-SOUND).
+**STATUS: TRANCHES 3, 4, 5, 6 COMPLETE 2026-06-21 (all GREEN, wired + AxiomAudit-pinned, auditor-SOUND).
 T3 (`ModMul.lean`): mulConst + derived multiplier cost + `mulCircuit_correct` (`Acc = a·Y`) +
-`mulCircuit_correct_zmod` (modular oracle `y↦a·y mod N`). T4 (`ModInv.lean`, REUSE): `modInv = a⁻¹` oracle
-+ algebra + the reversibility link `mulConst_modInv_bijective` (mulConst a undone by mulConst a⁻¹); no
-inversion circuit (ECDLP avoids via projective coords). T5 (`ECDLP/EllipticCurve.lean`, WRAP Mathlib
-`WeierstrassCurve.Affine.Point`, group law NOT reproved): `scalarMul P k = k•P` (the `[k]P` discrete-log
-map) + structural algebra (`scalarMul_add` homomorphism `[j+k]P=[j]P+[k]P`, `scalarMul_addOrderOf` period)
-+ the ECDLP statement `IsDLog`/`Solvable` + `isDLog_add_addOrderOf` (solution shifts by the order — the
-period Shor finds). NEXT: Tranche 6 (`ECDLP/ScalarMul.lean`, double-and-add over the Mathlib group).**
-The build blocker is resolved.
+`mulCircuit_correct_zmod` (modular oracle `y↦a·y mod N`). T4 (`ModInv.lean`, REUSE): `modInv = a⁻¹` +
+reversibility link `mulConst_modInv_bijective`; no inversion circuit (ECDLP avoids via projective coords).
+T5 (`ECDLP/EllipticCurve.lean`, WRAP `WeierstrassCurve.Affine.Point`): `scalarMul P k = k•P` + ECDLP
+statement (`IsDLog`/`Solvable`/period). T6 (`ECDLP/ScalarMul.lean`): the binary `doubleAndAdd` algorithm
+for `[k]P` + correctness `doubleAndAdd_eq_nsmul`/`_eq_scalarMul` (computes the Tranche-5 map — auditor
+verified it COMPUTES `k•P` at concrete values) + the DERIVED logarithmic cost `doubleAndAddCost_le`
+(`≤ 2·Nat.size k` = O(log k), the first resource factor). NEXT: Tranche 7 (`ECDLP/Secp256k1.lean` +
+`ResourceBounds.lean`).** The build blocker is resolved.
 
 ---
 
@@ -78,7 +78,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModAdd.lean    -- Tranche 2 Pass 1: regV
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 Stage A: ZMod mulConst spec + shift-and-add multiplier cost  [DONE 2026-06-20, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4: modInv oracle + algebra + reversibility link  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5: scalarMul [k]P + ECDLP statement (wrap WeierstrassCurve)  [DONE 2026-06-21, GREEN]
-CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6 (double-and-add over Mathlib group)
+CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6: doubleAndAdd [k]P + correctness + O(log k) cost  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- abstract (Pass 1) -> exact (Pass 2)
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
@@ -255,10 +255,15 @@ dischargeable — that is where vacuity could silently re-enter.
 13. ~~Tranche 5 (`ECDLP/EllipticCurve.lean`) — wrap Mathlib `WeierstrassCurve.Affine.Point`~~ **DONE
     2026-06-21, auditor-SOUND.** `scalarMul [k]P` + structural algebra + ECDLP statement; group law
     reused (not reproved). Note: needs `[DecidableEq F]` (Mathlib's `AddCommGroup W.Point` instance).
-14. **NEXT:** Tranche 6 (`ECDLP/ScalarMul.lean`) — double-and-add for `[k]P` over the Mathlib group,
-    its correctness landing on `ECDLP.scalarMul P k` (auditor's flagged check: the double-and-add output
-    spec must reduce to `scalarMul P k`, closing the loop to this math layer), and the cost as a function
-    of the bit length of `k` (× the per-point-add cost, ultimately the Tranche-3 multiplier). Then
-    Tranche 7 (Secp256k1 + ResourceBounds) — use a SINGLE `Field`/`CommRing` instance path for the base
-    field (auditor's `CommRing`-diamond note). (Optional ModMul Stage C: in-place conditional-subtract
-    register reduction — a qubit optimisation.)
+14. ~~Tranche 6 (`ECDLP/ScalarMul.lean`) — double-and-add for `[k]P`~~ **DONE 2026-06-21, auditor-SOUND.**
+    `doubleAndAdd` (binary recursion) + correctness `doubleAndAdd_eq_nsmul`/`_eq_scalarMul` (closes the
+    loop to Tranche-5 `scalarMul`; auditor verified it COMPUTES `k•P` at concrete values, non-circular)
+    + DERIVED logarithmic cost `doubleAndAddCost_le ≤ 2·Nat.size k` (exact `= size + popcount`; O(log k),
+    the first resource factor). General `AddMonoid M` (applies to `W.Point`).
+15. **NEXT:** Tranche 7 (`ECDLP/Secp256k1.lean` + `ECDLP/ResourceBounds.lean`) — instantiate the
+    secp256k1 curve over a concrete base field `Fp` (use a SINGLE `Field`/`CommRing` instance path —
+    auditor's `CommRing`-diamond note; a concrete `Nonsingular` point witness lets `doubleAndAdd` run on a
+    real EC point), and assemble the end-to-end resource estimate: `[k]P` = O(log k) point-ops (T6) ×
+    point-add in modular mults × the Tranche-3 multiplier's derived Toffolis. Add `Tests/ECDLPAudit.lean`
+    (or keep pins in AxiomAudit). (Optional ModMul Stage C: in-place conditional-subtract register
+    reduction — a qubit optimisation.)

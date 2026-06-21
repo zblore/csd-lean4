@@ -23,6 +23,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3209,5 +3210,19 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'ECDLP.isDLog_add_addOrderOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.isDLog_add_addOrderOf
+
+/-! ### ECDLP double-and-add scalar multiplication (ECDLP/ScalarMul.lean, Tranche 6) -/
+
+/-- info: 'ECDLP.doubleAndAdd_eq_nsmul' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doubleAndAdd_eq_nsmul
+
+/-- info: 'ECDLP.doubleAndAdd_eq_scalarMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doubleAndAdd_eq_scalarMul
+
+/-- info: 'ECDLP.doubleAndAddCost_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doubleAndAddCost_le
 
 end CSD.Tests.AxiomAudit
