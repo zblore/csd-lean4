@@ -1,12 +1,12 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 2 COMPLETE + Tranche 3 Stage A + B.1 + B.2 DONE 2026-06-21 (all GREEN, wired +
-AxiomAudit-pinned, auditor-reviewed SOUND). Tranche 3 (`ModMul.lean`) modular-multiplication CORRECTNESS
-is COMPLETE (mod-2^W): `mulCircuit_correct` proves the shift-and-add multiplier leaves the accumulator
-holding `Acc + (∑ 2^sh)·Y` (= `a·Y` with Acc=0, ∑ 2^sh = a), via the `accStep` fold over shifts,
-threading Y-preservation + carry-freshness; concrete `mulLayout1` witness (non-vacuity; auditor also ran
-multiply-by-3 → 3). NEXT: Tranche 3 mod-`N` reduction (Stage B.3) OR Tranche 4 (`ModInv`).** The build
-blocker is resolved.
+**STATUS: TRANCHE 3 COMPLETE 2026-06-21 (Stage A + B.1 + B.2 + B.3 all GREEN, wired + AxiomAudit-pinned,
+auditor-reviewed SOUND). `ModMul.lean` delivers: the semantic target `mulConst` (Shor mulOracle) + the
+shift-and-add `multiplier` with DERIVED cost (A); the multiplication CORRECTNESS `mulCircuit_correct`
+(`Acc = a·Y`, B.1 `accStep` + B.2 fold); and the MODULAR capstone `mulCircuit_correct_zmod` (B.3) — the
+output register read in `ZMod N` IS `mulConst N a Y` (Shor's `y ↦ a·y mod N`), the `ZMod N` cast doing the
+reduction (N free, no `N=2^W` assumption, no-overflow keeps the register exact; auditor verified at N=3,
+N=0). NEXT: Tranche 4 (`ModInv.lean`, reuse Mathlib `ZMod.inv`).** The build blocker is resolved.
 
 ---
 
@@ -216,10 +216,17 @@ dischargeable — that is where vacuity could silently re-enter.
   all 7 fields by `omega`/`decide`). Auditor independently built a 2-shift witness and ran multiply-by-3
   → 3, multiply-by-1 → 1, multiply-by-0 → 0; confirmed `hno` load-bearing.
 
-**Mod-`N` reduction (Stage B.3, NEXT):** the exact (mod-`2^W`) multiply above → `a·Y mod N`. Auditor's
-flagged risk: the load-bearing no-overflow `hno` becomes a liability once a true `mod N` is asserted —
-the mod-N theorem must HANDLE truncation, not hypothesise it away (probe a witness with
-`Acc + (∑2^sh)·Yv ≥ 2^W`).
+**Stage B.3 DONE 2026-06-21, GREEN, auditor-SOUND** (the modular `ZMod N` capstone):
+- `mulCircuit_correct_zmod` — the output register, cast to `ZMod N`, equals `mulConst N (∑2^sh) Y` =
+  Shor's `mulOracle` action `y ↦ a·y mod N`. The `ZMod N` cast performs the reduction; the no-overflow
+  hypothesis keeps the register holding the EXACT integer `a·Y` (so the cast reduces it honestly). N is
+  a free `ℕ` — NO `N = 2^W` assumption (auditor instantiated at N=3, N=0; confirmed `↑3 = 1` in ZMod 2,
+  the cast genuinely reduces). Foundational-triple, AxiomAudit-pinned. + a concrete `ZMod` example.
+- **Honest residue (NOT built, named):** the register physically holds the exact integer `a·Y` (W bits,
+  `W ≥ 2·bitlen N`); reducing it in place to a `bitlen N`-bit representative of `a·y mod N` is a
+  reversible conditional-subtract modular-reduction circuit (qubit-count optimisation). That is the
+  natural Stage C / next-tranche content if a space-optimal mulOracle register is wanted; the modular
+  *oracle action* is already realised by B.3.
 
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
@@ -236,6 +243,8 @@ the mod-N theorem must HANDLE truncation, not hypothesise it away (probe a witne
 8. ~~Tranche 3 Stage A (`ModMul.lean`: `mulConst` spec + multiplier cost)~~ **DONE 2026-06-20, auditor-SOUND.**
 9. ~~Tranche 3 Stage B.1 (per-step `accStep` accumulation correctness)~~ **DONE 2026-06-20, auditor-SOUND.**
 10. ~~Tranche 3 Stage B.2 (fold to `Acc = a·Y` + `MulLayout` witness)~~ **DONE 2026-06-21, auditor-SOUND.**
-    Tranche 3 multiplication correctness COMPLETE (mod-2^W). All 4 flagged B.2 risks handled.
-11. **NEXT:** Tranche 3 mod-`N` reduction (Stage B.3) — `a·Y mod 2^W` → `a·Y mod N` — OR move to Tranche 4
-    (`ModInv.lean`, reuse `ZMod.inv`). Mod-N must handle truncation, not hypothesise it away.
+11. ~~Tranche 3 Stage B.3 (modular `ZMod N` capstone `mulCircuit_correct_zmod`)~~ **DONE 2026-06-21,
+    auditor-SOUND. TRANCHE 3 COMPLETE** (cost + correctness + modular oracle-action connection).
+12. **NEXT:** Tranche 4 (`ModInv.lean`) — modular inverse, semantic layer reuses Mathlib `ZMod.inv` /
+    `unitOfCoprime`. (Optional Stage C: the in-place conditional-subtract register reduction, a qubit
+    optimisation — only if a space-optimal mulOracle register is wanted.)

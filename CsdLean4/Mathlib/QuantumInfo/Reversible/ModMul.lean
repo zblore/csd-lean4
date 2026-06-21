@@ -48,7 +48,14 @@ content. This tranche builds the missing reversible circuit + *derived* cost.
   `Acc` initialised `0` and `∑ 2^sh = a` (the set bits of the classical constant), this is `Acc = a · Y`.
 * `mulLayout1` + the closing `example` — a concrete `Fin 6` witness, so the headline is non-vacuous.
 
-The mod-`N` reduction (vs the exact / mod-`2^W` multiply here) is a further stage.
+## Stage B.3 — the modular (`ZMod N`) capstone (landed below)
+
+* `mulCircuit_correct_zmod` — connects the exact integer product to the semantic target: the output
+  register, read in `ZMod N`, is `mulConst N (∑ 2^sh) Y` (Shor's `mulOracle` action `y ↦ a·y mod N`).
+  The `ZMod N` cast performs the reduction (no `N = 2^W` assumption); the no-overflow hypothesis keeps
+  the register exact. Honest residue: the register holds the exact integer `a·Y` — reducing it in place
+  to a `bitlen N`-bit representative is a reversible conditional-subtract circuit (qubit optimisation),
+  not built here.
 -/
 
 namespace Reversible
@@ -392,5 +399,47 @@ example (s : State 6) (hcarry : ∀ sh ∈ [0], ∀ k, s (mulLayout1.Carry sh k)
   rw [mulCircuit_correct mulLayout1 [0] (by decide) (by decide) s Yv hcarry
     (by intro j hj hj2; omega) hYv hbnd, hacc0]
   simp
+
+/-! ### Stage B.3: the modular (`ZMod N`) connection — the multiplier realises `mulConst`
+
+`mulCircuit_correct` gives the *exact* integer product `a · Y` in the `W`-bit accumulator (no
+overflow). The Shor `mulOracle` action is `y ↦ a · y` on `ZMod N` (`mulConst`), and that is precisely
+the accumulator's value cast into `ZMod N` — the cast performs the `mod N` reduction, with no
+`N = 2^W` assumption and no truncation hypothesised away (the no-overflow hypothesis guarantees the
+register holds the exact integer; the `ZMod N` cast then reduces it honestly).
+
+Honest scope: the accumulator physically holds the exact integer `a · Y` (`W` bits, `W` chosen large
+enough — for Shor `W ≥ 2·bitlen N`, since `a, y < N ⇒ a·y < N²`); its `ZMod N` interpretation is the
+oracle action. Reducing the register in place to a `bitlen N`-bit representative of `a·y mod N` is a
+reversible modular-reduction circuit (conditional-subtract), a qubit-count optimisation not built here. -/
+
+/-- **Modular-multiplication correctness (Tranche 3 capstone).** With the accumulator initialised `0`
+and no overflow, the shift-and-add multiplier's output register, read in `ZMod N`, is the `mulConst`
+(modular-multiplication) action `(∑ 2^sh) · Y`. For `∑ 2^sh = a` this is Shor's `mulOracle` action
+`y ↦ a · y mod N`. -/
+theorem mulCircuit_correct_zmod (N : ℕ) (L : MulLayout m n W) (shifts : List ℕ) (s : State m)
+    (Yv : ℕ) (hnd : shifts.Nodup) (hsh : ∀ sh ∈ shifts, sh + n ≤ W)
+    (hcarry : ∀ sh ∈ shifts, ∀ k, s (L.Carry sh k) = false)
+    (hYhigh : ∀ j, n ≤ j → j < W → s (L.Y j) = false)
+    (hYv : regValRange L.Y s n = Yv)
+    (hAcc0 : regValRange L.Acc s W = 0)
+    (hbound : (shifts.map (2 ^ ·)).sum * Yv < 2 ^ W) :
+    ((regValRange L.Acc (denote (mulCircuit L shifts) s) W : ℕ) : ZMod N)
+      = mulConst N (((shifts.map (2 ^ ·)).sum : ℕ) : ZMod N) ((Yv : ℕ) : ZMod N) := by
+  have hb : regValRange L.Acc s W + (shifts.map (2 ^ ·)).sum * Yv < 2 ^ W := by
+    rw [hAcc0, zero_add]; exact hbound
+  rw [mulCircuit_correct L shifts hnd hsh s Yv hcarry hYhigh hYv hb, hAcc0, zero_add, mulConst,
+    Nat.cast_mul]
+
+/-- Non-vacuity of the modular capstone: applied to `mulLayout1` it computes `mulConst N 1 Y` in
+`ZMod N` (multiply by `a = 1`). -/
+example (N : ℕ) (s : State 6) (hcarry : ∀ sh ∈ [0], ∀ k, s (mulLayout1.Carry sh k) = false)
+    (hacc0 : regValRange mulLayout1.Acc s 1 = 0) (Yv : ℕ) (hYv : regValRange mulLayout1.Y s 1 = Yv)
+    (hbnd : ([0].map (2 ^ ·)).sum * Yv < 2 ^ 1) :
+    ((regValRange mulLayout1.Acc (denote (mulCircuit mulLayout1 [0]) s) 1 : ℕ) : ZMod N)
+      = mulConst N (1 : ZMod N) ((Yv : ℕ) : ZMod N) := by
+  rw [mulCircuit_correct_zmod N mulLayout1 [0] s Yv (by decide) (by decide) hcarry
+    (by intro j hj hj2; omega) hYv hacc0 hbnd]
+  norm_num [mulConst]
 
 end Reversible
