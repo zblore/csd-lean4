@@ -1,11 +1,11 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: Tranche 2 COMPLETE + Tranche 3 Stage A DONE 2026-06-20 (all GREEN, wired + AxiomAudit-pinned,
-auditor-reviewed SOUND). Tranche 2: `rippleCirc_correct` (modular addition correctness). Tranche 3
-Stage A (`ModMul.lean`): the `ZMod N` semantic target `mulConst` (Shor mulOracle action) + `mulConst_bijective`
-(unit ⇒ reversible) + the shift-and-add `multiplier` with DERIVED cost (`multiplier_toffoli/_cnot`,
-`rippleCirc_toffoli`, `multiplier_ripple_toffoli` = `2·n·m'`). NEXT: Tranche 3 Stage B — the end-to-end
-`Acc = (a·Y) mod 2^W` accumulation correctness.** The build blocker is resolved (see below).
+**STATUS: Tranche 2 COMPLETE + Tranche 3 Stage A + Stage B.1 DONE 2026-06-20 (all GREEN, wired +
+AxiomAudit-pinned, auditor-reviewed SOUND). Tranche 3 Stage A (`ModMul.lean`): semantic target `mulConst`
+(Shor mulOracle) + `mulConst_bijective` + shift-and-add `multiplier` DERIVED cost. Stage B.1: the per-step
+accumulation correctness — `accStep` (one shifted add does `accVal += 2^i·Y`, carry-propagating, no-overflow)
++ `regValRange_split` + `rippleCirc_preserves_external`. NEXT: Tranche 3 Stage B.2 — the fold to
+`Acc = a·Y` (dependent-width) + concrete `MulLayout` witness, then mod-`N`.** The build blocker is resolved.
 
 ---
 
@@ -184,13 +184,27 @@ dischargeable — that is where vacuity could silently re-enter.
   statement, not correctness. AxiomAudit-pinned (`[propext, Quot.sound]`).
 - Per-step correctness is `ModAdd.rippleCirc_correct` (one shifted add); building block in hand.
 
-**Stage B target (NEXT, NOT claimed):** the end-to-end `Acc = (a·Y) mod 2^W` accumulation correctness —
-induction over partial products, each a widened ripple add (carry propagating through the full upper
-accumulator), reusing `rippleCirc_correct` + the multiplicand-preservation invariant. Then the mod-`N`
-reduction (vs mod-`2^W`) is a further stage. **Auditor's flagged Stage-B risks:** (i) the multi-register
-layout (multiplicand preserved across all adds; accumulator/carry disjoint) must be inhabited by a
-concrete witness (a `multiplier` analogue of `rippleLayout2`); (ii) the mod-`2^W` → mod-`N` step must not
-silently assume `N = 2^W`.
+**Stage B.1 DONE 2026-06-20, GREEN, auditor-SOUND** (the per-step accumulation correctness — the heart):
+- `regValRange_split` — split a register readout at offset `i` (`low + 2^i · window`); the tool relating
+  a windowed add to the full accumulator value (no division).
+- `rippleCirc_preserves_external` — a ripple circuit preserves any wire disjoint from its layout (the
+  frame lemma at circuit granularity; bounds `k<w` / `k<w+1` on the used wire range).
+- `accStep` — **THE per-step heart**: one full-remaining-width ripple add of the multiplicand (value
+  `Yv`) into the accumulator window `Acc[i, W)` increases the FULL accumulator value by exactly `2^i · Yv`
+  (carry propagates through the whole upper accumulator; low `i` bits preserved; `hno` no-overflow drops
+  the `rippleCirc_correct` mod). Auditor cross-checked the arithmetic two ways (lemma vs kernel circuit
+  eval, both = 5 on a concrete `Fin 8` instance), `hno` load-bearing, hypotheses jointly satisfiable.
+  AxiomAudit-pinned, foundational-triple-only.
+
+**Stage B.2 target (NEXT, NOT claimed):** the end-to-end `Acc = (a·Y)` identity — the fold of `accStep`
+over the set bits of `a`. Complication: each step has a different width `W - i`, so it is a
+**dependent-width fold**, plus a concrete inhabited `MulLayout` witness; then the mod-`N` reduction.
+**Auditor's flagged Stage-B.2 risks:** (i) the fold must genuinely PROVE multiplicand-preservation
+between steps (`accStep` alone says nothing about preserving `Yv`'s wires for the next step — use
+`rippleCirc_preserves_external` with `Y` external); (ii) `accStep` leaves the carry chain DIRTY, so the
+fold must re-allocate fresh carries per step (cross-step-disjoint) and re-establish `hcarry`; (iii) the
+mod-`2^W` → mod-`N` step must not silently assume `N = 2^W`; (iv) inhabit `MulLayout` with a concrete
+witness (a `multiplier` analogue of `rippleLayout2`).
 
 ## Resume checklist
 0. ~~Clear the `lake.exe` Application Control block~~ **DONE (SAC off).**
@@ -205,6 +219,7 @@ silently assume `N = 2^W`.
 7. ~~Tranche 2 Pass 2 Stage B (carry-chain `(A+B) mod 2^n` correctness)~~ **DONE 2026-06-20, auditor-SOUND.**
    Tranche 2 is now COMPLETE (cost + full computational correctness).
 8. ~~Tranche 3 Stage A (`ModMul.lean`: `mulConst` spec + multiplier cost)~~ **DONE 2026-06-20, auditor-SOUND.**
-9. **NEXT:** Tranche 3 Stage B — the `Acc = (a·Y) mod 2^W` accumulation correctness (then mod-`N`
-   reduction). Build the multi-register layout as a constructed, concretely-inhabited function; watch
-   the mod-`2^W`→mod-`N` step (auditor's flagged risks).
+9. ~~Tranche 3 Stage B.1 (per-step `accStep` accumulation correctness)~~ **DONE 2026-06-20, auditor-SOUND.**
+10. **NEXT:** Tranche 3 Stage B.2 — fold `accStep` over the set bits of `a` ⇒ `Acc = a·Y` (dependent-width
+    fold) + concrete `MulLayout` witness, then mod-`N`. Watch the 4 auditor-flagged risks (multiplicand
+    preservation, fresh carries per step, mod-`2^W`→mod-`N`, inhabited layout).

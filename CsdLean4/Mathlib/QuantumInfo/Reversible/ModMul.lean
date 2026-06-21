@@ -1,5 +1,7 @@
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import Mathlib.Data.ZMod.Basic
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.BigOperators.Intervals
 
 /-!
 # Reversible modular multiplication — semantic target + shift-and-add multiplier cost  (ECDLP Tranche 3, Stage A)
@@ -24,14 +26,23 @@ content. This tranche builds the missing reversible circuit + *derived* cost.
 * The per-partial-product correctness is `ModAdd.rippleCirc_correct` (one shifted add); the building
   block is in hand.
 
-## Stage B target (NOT claimed here)
+## Stage B.1 — the per-step accumulation correctness (landed below)
 
-The end-to-end accumulation correctness — that the exhibited shift-and-add multiplier leaves the
-accumulator holding `(a · Y) mod 2 ^ W` — is **Stage B**: an induction over partial products, each step
-a widened ripple add (carry propagating through the full upper accumulator), reusing `rippleCirc_correct`
-and `rippleCirc_invariant`'s preservation of the multiplicand. The mod-`N` reduction (vs mod-`2^W`) is a
-further stage. Stage A exhibits the circuit and proves its cost + the per-step correctness; nothing below
-claims the full `a · Y` identity.
+* `regValRange_split` — split a register readout at an offset (`low + 2^i · window`), the tool relating
+  a windowed add to the full accumulator value with no division.
+* `rippleCirc_preserves_external` — a ripple circuit preserves any wire disjoint from its layout (the
+  frame lemma at circuit granularity).
+* `accStep` — **THE per-step heart**: one full-remaining-width ripple add of the multiplicand (value
+  `Yv`) into the accumulator window `Acc[i, W)` increases the full accumulator value by exactly
+  `2^i · Yv` (carry propagating through the whole upper accumulator; low `i` bits preserved; no overflow).
+
+## Stage B.2 target (NOT claimed yet)
+
+The end-to-end `Acc = (a · Y)` identity — the fold of `accStep` over all set bits of `a` (a multi-step
+induction threading `Y`-preservation and carry-freshness through the composition; each step has a
+different width `W - i`, hence a dependent-width fold) — plus a concrete inhabited `MulLayout` witness,
+and then the mod-`N` reduction. Stage B.1 proves the single shifted-add accumulation; nothing below
+claims the full `a · Y` identity yet.
 -/
 
 namespace Reversible
@@ -123,5 +134,71 @@ theorem multiplier_ripple_toffoli {n : ℕ} (Ls : List (RippleLayout m n)) :
     apply List.map_congr_left
     intro L _; simp [Function.comp, rippleCirc_toffoli]
   rw [hconst, List.map_const', List.sum_replicate, smul_eq_mul, Nat.mul_comm]
+
+/-! ### Stage B: multiplication correctness — arithmetic tools -/
+
+/-- **Split a register readout at an offset.** The low-`i` value plus `2^i` times the value of the
+window starting at `i`. The key tool relating a windowed add to the full accumulator value (no
+division). -/
+theorem regValRange_split {m : ℕ} (f : ℕ → Fin m) (s : State m) (i k : ℕ) (h : i ≤ k) :
+    regValRange f s k
+      = regValRange f s i + 2 ^ i * regValRange (fun j => f (i + j)) s (k - i) := by
+  simp only [regValRange]
+  rw [← Finset.sum_range_add_sum_Ico (fun j => (s (f j)).toNat * 2 ^ j) h]
+  congr 1
+  rw [Finset.sum_Ico_eq_sum_range, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro l _
+  rw [pow_add]
+  exact mul_left_comm _ _ _
+
+/-- **A ripple circuit preserves any wire external to its layout** (disjoint from all of `A`, `B`, `C`).
+The frame lemma at circuit granularity, lifting `denote_apply_of_forall_not_mem`: every gate of
+`rippleCirc L` has wires among `L.A`, `L.B`, `L.C`, so a wire avoiding all three is untouched. -/
+theorem rippleCirc_preserves_external {w : ℕ} (L : RippleLayout m w) (s : State m) (x : Fin m)
+    (hA : ∀ k, k < w → x ≠ L.A k) (hB : ∀ k, k < w → x ≠ L.B k)
+    (hC : ∀ k, k < w + 1 → x ≠ L.C k) :
+    denote (rippleCirc L) s x = s x := by
+  apply denote_apply_of_forall_not_mem
+  intro g hg
+  rw [rippleCirc, ripplePrefix, List.mem_flatMap] at hg
+  obtain ⟨k, hk, hgk⟩ := hg
+  rw [List.mem_range] at hk
+  simp only [rippleSlice, fullAdder, List.mem_cons, List.not_mem_nil, or_false] at hgk
+  rcases hgk with rfl | rfl | rfl | rfl <;>
+    simp [gateWires, hA k hk, hB k hk, hC k (by omega), hC (k + 1) (by omega)]
+
+/-- **Single accumulation step.** One full-remaining-width ripple add of the multiplicand (value `Yv`,
+read by `L.A`) into the accumulator window `Acc[i, W)` increases the full accumulator value by
+`2^i · Yv` — provided the add does not overflow the window. The carry propagates through the whole
+upper accumulator (width `w = W - i`), so nothing is dropped; the low `i` bits are preserved. -/
+theorem accStep {w : ℕ} (L : RippleLayout m w) (Acc : ℕ → Fin m) (s : State m)
+    (i W : ℕ) (hw : w = W - i) (hiW : i ≤ W)
+    (hB : ∀ k, L.B k = Acc (i + k))
+    (hAccinj : ∀ j k, j < W → k < W → Acc j = Acc k → j = k)
+    (hAccA : ∀ j, j < i → ∀ k, Acc j ≠ L.A k)
+    (hAccC : ∀ j, j < i → ∀ k, Acc j ≠ L.C k)
+    (hcarry : ∀ j, s (L.C j) = false)
+    (Yv : ℕ) (hYv : regValRange L.A s w = Yv)
+    (hno : Yv + regValRange (fun k => Acc (i + k)) s w < 2 ^ w) :
+    regValRange Acc (denote (rippleCirc L) s) W
+      = regValRange Acc s W + 2 ^ i * Yv := by
+  have hWi : W - i = w := hw.symm
+  have hcorr := rippleCirc_correct L s hcarry
+  have hBwin : L.B = fun k => Acc (i + k) := funext hB
+  rw [hBwin, hYv, Nat.mod_eq_of_lt hno] at hcorr
+  have hlow : regValRange Acc (denote (rippleCirc L) s) i = regValRange Acc s i := by
+    simp only [regValRange]
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [Finset.mem_range] at hj
+    rw [rippleCirc_preserves_external L s (Acc j) (fun k _ => hAccA j hj k) ?_
+        (fun k _ => hAccC j hj k)]
+    intro k hk
+    rw [hB]
+    exact fun h => absurd (hAccinj j (i + k) (by omega) (by omega) h) (by omega)
+  rw [regValRange_split Acc (denote (rippleCirc L) s) i W hiW,
+      regValRange_split Acc s i W hiW, hlow, hWi, hcorr]
+  ring
 
 end Reversible
