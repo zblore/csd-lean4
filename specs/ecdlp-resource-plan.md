@@ -1,15 +1,17 @@
 # ECDLP / reversible-arithmetic resource-accounting programme — plan + live status
 
-**STATUS: TRANCHES 3, 4, 5, 6 COMPLETE 2026-06-21 (all GREEN, wired + AxiomAudit-pinned, auditor-SOUND).
-T3 (`ModMul.lean`): mulConst + derived multiplier cost + `mulCircuit_correct` (`Acc = a·Y`) +
-`mulCircuit_correct_zmod` (modular oracle `y↦a·y mod N`). T4 (`ModInv.lean`, REUSE): `modInv = a⁻¹` +
-reversibility link `mulConst_modInv_bijective`; no inversion circuit (ECDLP avoids via projective coords).
-T5 (`ECDLP/EllipticCurve.lean`, WRAP `WeierstrassCurve.Affine.Point`): `scalarMul P k = k•P` + ECDLP
-statement (`IsDLog`/`Solvable`/period). T6 (`ECDLP/ScalarMul.lean`): the binary `doubleAndAdd` algorithm
-for `[k]P` + correctness `doubleAndAdd_eq_nsmul`/`_eq_scalarMul` (computes the Tranche-5 map — auditor
-verified it COMPUTES `k•P` at concrete values) + the DERIVED logarithmic cost `doubleAndAddCost_le`
-(`≤ 2·Nat.size k` = O(log k), the first resource factor). NEXT: Tranche 7 (`ECDLP/Secp256k1.lean` +
-`ResourceBounds.lean`).** The build blocker is resolved.
+**STATUS: PROGRAMME COMPLETE 2026-06-21 — ALL 7 TRANCHES DONE, GREEN, wired + AxiomAudit-pinned, each
+auditor-reviewed SOUND.** T1 Circuit/Cost (reversible-gate DSL + derived cost model). T2 ModAdd (cost +
+full `(A+B) mod 2^n` correctness). T3 ModMul (mulConst + multiplier cost + `mulCircuit_correct` `Acc=a·Y`
++ modular oracle `mulCircuit_correct_zmod`). T4 ModInv (inverse oracle + algebra + reversibility link;
+no inversion circuit). T5 EllipticCurve (`scalarMul [k]P` + ECDLP statement, wraps WeierstrassCurve). T6
+ScalarMul (`doubleAndAdd` + correctness + O(log k) cost). **T7 CAPSTONE** (`Secp256k1.lean` +
+`ResourceBounds.lean`): the secp256k1 curve `y²=x³+7` over `𝔽_p` (`p=2^256−2^32−977`) + the end-to-end
+estimate `secp256k1_scalarMul_toffoli_bound` (`[k]P ≤ 2·256·(M·(2·256·256)) = O(256³)·M` Toffolis),
+composing T6's O(log k) op count and T3's `2n²` multiplier — auditor SOUND, non-vacuous (numeric bound
+`≤ 2^26` at M=1). **Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
+(O(n³) structure), NOT a verified attack — the concrete reversible EC-addition circuit (fixing `M`),
+`p`-primality, and a concrete on-curve point are named residue.** The build blocker is resolved.
 
 ---
 
@@ -79,8 +81,8 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModMul.lean    -- Tranche 3 Stage A: ZMo
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModInv.lean    -- Tranche 4: modInv oracle + algebra + reversibility link  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5: scalarMul [k]P + ECDLP statement (wrap WeierstrassCurve)  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6: doubleAndAdd [k]P + correctness + O(log k) cost  [DONE 2026-06-21, GREEN]
-CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7
-CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- abstract (Pass 1) -> exact (Pass 2)
+CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7: secp256k1 curve params  [DONE 2026-06-21, GREEN]
+CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- Tranche 7 capstone: end-to-end Toffoli estimate  [DONE 2026-06-21, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -260,10 +262,20 @@ dischargeable — that is where vacuity could silently re-enter.
     loop to Tranche-5 `scalarMul`; auditor verified it COMPUTES `k•P` at concrete values, non-circular)
     + DERIVED logarithmic cost `doubleAndAddCost_le ≤ 2·Nat.size k` (exact `= size + popcount`; O(log k),
     the first resource factor). General `AddMonoid M` (applies to `W.Point`).
-15. **NEXT:** Tranche 7 (`ECDLP/Secp256k1.lean` + `ECDLP/ResourceBounds.lean`) — instantiate the
-    secp256k1 curve over a concrete base field `Fp` (use a SINGLE `Field`/`CommRing` instance path —
-    auditor's `CommRing`-diamond note; a concrete `Nonsingular` point witness lets `doubleAndAdd` run on a
-    real EC point), and assemble the end-to-end resource estimate: `[k]P` = O(log k) point-ops (T6) ×
-    point-add in modular mults × the Tranche-3 multiplier's derived Toffolis. Add `Tests/ECDLPAudit.lean`
-    (or keep pins in AxiomAudit). (Optional ModMul Stage C: in-place conditional-subtract register
-    reduction — a qubit optimisation.)
+15. ~~Tranche 7 (`ECDLP/Secp256k1.lean` + `ECDLP/ResourceBounds.lean`) — capstone~~ **DONE 2026-06-21,
+    auditor-SOUND. PROGRAMME COMPLETE (7/7).** secp256k1 curve params + the end-to-end
+    `secp256k1_scalarMul_toffoli_bound` (`O(256³)·M` Toffolis), composing T6's O(log k) op count + T3's
+    `2n²` multiplier. Honest scaffold (O(n³) structure), not a verified attack.
+
+## Residue / possible follow-ups (named, NOT built — beyond the Pass-1 scaffold)
+
+- **The concrete reversible EC point-addition circuit** — composing the Tranche-3/4 modular-arithmetic
+  oracles into the secant–tangent addition formula (projective/Jacobian coords to avoid per-op inversion).
+  This is what would turn the parameter `M` (field-mults per point op) into a DERIVED Toffoli count, and
+  is the natural next tranche if the scaffold is to become an absolute cost. Auditor's caveat: it must
+  also cost the quantum×quantum products in the formula (the scaffold assumes quantum×classical).
+- `p`-primality of secp256k1's `p` (citable fact; infeasible in Lean without an ECPP/Pratt certificate).
+- A concrete on-curve `Nonsingular` point witness (lets `doubleAndAdd` run on a real EC point; needs the
+  field structure, gated on `Fact p.Prime`).
+- Optional ModMul Stage C: the in-place conditional-subtract register reduction (a qubit optimisation —
+  a space-optimal mulOracle register vs the current exact-integer one).
