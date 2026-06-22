@@ -3227,6 +3227,10 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.doubleAndAddCost_le
 
+/-- info: 'ECDLP.doubleAndAddWeightedCost_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doubleAndAddWeightedCost_le
+
 /-! ### ECDLP secp256k1 capstone (Secp256k1.lean + ResourceBounds.lean, Tranche 7) -/
 
 /-- info: 'ECDLP.Secp256k1.p_lt_two_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3248,5 +3252,13 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_concrete' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_concrete
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliRefined_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliRefined_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_refined' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_refined
 
 end CSD.Tests.AxiomAudit

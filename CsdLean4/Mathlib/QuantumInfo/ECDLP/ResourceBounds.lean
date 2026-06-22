@@ -110,4 +110,67 @@ theorem secp256k1_scalarMul_toffoli_concrete {m : ℕ} (k : ℕ) (hk : Nat.size 
       ≤ secp256k1ToffoliBound :=
   secp256k1_scalarMul_toffoli_bound pointOpMults k hk Ls hLs
 
+/-! ### Refined figure: per-operation-type field-multiplication counts
+
+The figure above applies a single conservative `pointOpMults = 16` to a worst-case `2·size(k)` operation
+count, which over-counts (it bills every operation as an addition, and double-counts the bit loop). The
+refinement here weights **doublings** and **additions** separately with their documented field-mult
+counts, via `doubleAndAddWeightedCost`. This removes the conservative inflation (≈ 1.8×) and is the
+honest tightening; the residual gap to the most-optimised literature is the *documented* optimisations
+listed in the scope note below, which are not formalised here. -/
+
+/-- Field multiplications per elliptic-curve **doubling**, `a = 0` projective/Jacobian coordinates:
+`2M + 5S` (EFD `dbl-2009-l`), counted as `7` (squarings as multiplications). -/
+def fieldMultsPerDoubling : ℕ := 7
+
+/-- Field multiplications per **mixed** (Jacobian + affine) **addition**, `a = 0`: `7M + 4S` (EFD
+`madd-2007-bl`), counted as `11`. The base point `2ⁱ·P` is classical, so mixed addition applies. -/
+def fieldMultsPerAddition : ℕ := 11
+
+/-- Total field multiplications to compute `[k]P` by double-and-add, doublings and additions weighted
+separately (the honest count, vs the uniform `pointOpMults` bound). -/
+def scalarMulFieldMults (k : ℕ) : ℕ :=
+  doubleAndAddWeightedCost fieldMultsPerDoubling fieldMultsPerAddition k
+
+theorem scalarMulFieldMults_le (k : ℕ) : scalarMulFieldMults k ≤ Nat.size k * 18 := by
+  have h := doubleAndAddWeightedCost_le fieldMultsPerDoubling fieldMultsPerAddition k
+  simpa [scalarMulFieldMults, fieldMultsPerDoubling, fieldMultsPerAddition] using h
+
+/-- The refined secp256k1 figure: `256 · 18 · (2·256²)`. -/
+def secp256k1ToffoliRefined : ℕ :=
+  Secp256k1.bits * 18 * (2 * Secp256k1.bits * Secp256k1.bits)
+
+/-- The refined figure evaluates to `603 979 776 ≈ 6.0 × 10⁸` Toffolis (`= 9·2²⁶`): `256` doublings at
+`7` field mults plus `≤ 256` additions at `11`, each multiplication the `256`-bit schoolbook multiplier
+at `2·256² = 131 072` Toffolis. About `1.8×` below the uniform-`M` figure. -/
+theorem secp256k1ToffoliRefined_eq : secp256k1ToffoliRefined = 603979776 := by
+  simp only [secp256k1ToffoliRefined, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the refined Toffoli figure.** Computing `[k]P` for a 256-bit scalar, with
+doublings and additions costed separately (`7` and `11` field mults, EFD `a=0`) and each field
+multiplication the Tranche-3 256-bit schoolbook multiplier, costs at most `secp256k1ToffoliRefined =
+603 979 776 ≈ 6.0×10⁸` Toffolis.
+
+**Scope (what this figure counts, exactly), so it is not misread:** the field **multiplications** of one
+scalar multiplication, via standard ripple-carry adders (`2` Toffoli/bit, the Cuccaro/Takahashi class)
+and schoolbook `O(n²)` multiplication. **It OMITS**, as named residue: the modular **reduction** after
+each multiply (ModMul Stage C; ≈ doubles the per-mult cost), modular **inversion** / the projective
+coordinate-recovery multiplications beyond the `7`/`11` counts, the **second** scalar multiplication of
+the discrete-log instance, the **QFT / phase-estimation** wrapper, and ancilla **uncomputation**. **The
+gap to the most-optimised published estimates is the documented optimisations not formalised here:**
+**windowing** of the scalar (precomputed `2ⁱ·P` tables, fewer additions), **Montgomery / Karatsuba**
+multiplication (sub-`2n²`), and **measurement-based** adders (Gidney, ≈ `1` Toffoli/bit). This is a
+**verified upper bound for the stated unoptimised circuit**, correct on its own terms; it should be
+positioned against a published figure of the *same scope*, not cited as the cost of breaking secp256k1. -/
+theorem secp256k1_scalarMul_toffoli_refined {m : ℕ} (k : ℕ) (hk : Nat.size k ≤ Secp256k1.bits)
+    (Ls : List (RippleLayout m Secp256k1.bits)) (hLs : Ls.length = Secp256k1.bits) :
+    scalarMulFieldMults k * (circuitCost (multiplier (Ls.map rippleCirc))).toffoli
+      ≤ secp256k1ToffoliRefined := by
+  rw [multiplier_ripple_toffoli, hLs]
+  calc scalarMulFieldMults k * (2 * Secp256k1.bits * Secp256k1.bits)
+      ≤ Nat.size k * 18 * (2 * Secp256k1.bits * Secp256k1.bits) := by
+        gcongr; exact scalarMulFieldMults_le k
+    _ ≤ Secp256k1.bits * 18 * (2 * Secp256k1.bits * Secp256k1.bits) := by gcongr
+    _ = secp256k1ToffoliRefined := rfl
+
 end ECDLP.ResourceBounds

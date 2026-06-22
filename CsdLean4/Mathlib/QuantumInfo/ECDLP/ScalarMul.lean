@@ -73,6 +73,40 @@ theorem doubleAndAddCost_le (k : ℕ) : doubleAndAddCost k ≤ 2 * Nat.size k :=
       have hbit : (if k % 2 = 1 then 1 else 0) ≤ 1 := by split <;> omega
       omega
 
+/-! ### Per-operation-type weighted cost (doublings vs additions cost differently)
+
+Double-and-add does one **doubling** per bit and one **addition** per set bit, and on an elliptic curve
+these cost different numbers of field multiplications (a doubling is cheaper than a mixed addition). The
+uniform `pointOpCost` bound over-counts; `doubleAndAddWeightedCost wDbl wAdd k` weights the two
+separately, giving a tighter, more accurate field-multiplication count for the resource estimate. -/
+
+/-- Per-operation-type cost of double-and-add: `wDbl` per doubling (one per bit) and `wAdd` per addition
+(one per set bit). -/
+def doubleAndAddWeightedCost (wDbl wAdd : ℕ) (k : ℕ) : ℕ :=
+  if k = 0 then 0
+  else (wDbl + (if k % 2 = 1 then wAdd else 0)) + doubleAndAddWeightedCost wDbl wAdd (k / 2)
+termination_by k
+decreasing_by exact Nat.div_lt_self (Nat.pos_of_ne_zero ‹k ≠ 0›) one_lt_two
+
+/-- **Weighted logarithmic cost**: at most `Nat.size k · (wDbl + wAdd)` — one doubling and at most one
+addition per bit of `k`. Tighter than the uniform bound (`size k · (wDbl+wAdd)` vs `2·size k · max`). -/
+theorem doubleAndAddWeightedCost_le (wDbl wAdd k : ℕ) :
+    doubleAndAddWeightedCost wDbl wAdd k ≤ Nat.size k * (wDbl + wAdd) := by
+  induction k using Nat.strong_induction_on with
+  | _ k ih =>
+    rw [doubleAndAddWeightedCost]
+    split
+    · rename_i hk; subst hk; simp
+    · rename_i hk
+      have hpos : 0 < k := Nat.pos_of_ne_zero hk
+      have hsize : Nat.size k = Nat.size (k / 2) + 1 := by
+        have hbne : Nat.bit (Nat.bodd k) (Nat.div2 k) ≠ 0 := by rw [Nat.bit_bodd_div2]; exact hk
+        rw [← Nat.div2_val, ← Nat.succ_eq_add_one, ← Nat.size_bit hbne, Nat.bit_bodd_div2]
+      have hrec := ih (k / 2) (Nat.div_lt_self hpos one_lt_two)
+      have hbit : (if k % 2 = 1 then wAdd else 0) ≤ wAdd := by split <;> omega
+      rw [hsize, Nat.succ_mul]
+      omega
+
 /-! ### Loop closure to the Tranche-5 elliptic-curve scalar-multiplication map -/
 
 open WeierstrassCurve

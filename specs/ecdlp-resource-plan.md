@@ -13,7 +13,13 @@ composing T6's O(log k) op count and T3's `2n²` multiplier — auditor SOUND, n
 per projective `a=0` point op) collapses the estimate to the concrete figure `secp256k1ToffoliBound =
 2^30 = 1 073 741 824` Toffolis (`secp256k1_scalarMul_toffoli_concrete`) — an UPPER-BOUND figure (omits
 mod-`N` reduction; assumes the standard formulae whose circuit correctness is Pass-2 residue), NOT an
-attack cost. **Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
+attack cost. **Refined 2026-06-22:** per-op-type weighting (`doubleAndAddWeightedCost`; doubling 7 field
+mults / mixed addition 11, EFD `a=0`) tightens this to `secp256k1ToffoliRefined = 603 979 776 ≈ 6.0×10^8`
+(`secp256k1_scalarMul_toffoli_refined`), ~1.8× below uniform-`M`. The ripple adder is already
+Cuccaro/Takahashi-class (2 Toffoli/bit; not halvable without measurement-based uncomputation, absent from
+the DSL); the residual gap to the most-optimised literature is the DOCUMENTED un-formalised optimisations
+(windowing, Montgomery/Karatsuba, measurement adders), with precise counted/omitted scope in the
+`secp256k1_scalarMul_toffoli_refined` docstring. **Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
 (O(n³) structure), NOT a verified attack — the concrete reversible EC-addition circuit (fixing `M`),
 `p`-primality, and a concrete on-curve point are named residue.** The build blocker is resolved.
 
