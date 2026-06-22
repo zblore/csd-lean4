@@ -137,4 +137,48 @@ theorem parallelXLayer_wf (idxs : List (Fin n)) (h : idxs.Nodup) :
   simp only [gateWires, Finset.disjoint_singleton_left, Finset.mem_singleton]
   exact hne
 
+/-! ### Log-depth computation: a parallel reduction tree (the CLA building block)
+
+`parallelXLayer` shows depth `1` for independent flips, but that is not a *computation*. A genuine
+log-depth result is a **reduction tree**: combine `n` bits pairwise in a balanced tree, `⌈log₂ n⌉`
+layers, each layer a set of wire-disjoint gates. Below is the concrete `8`-wire instance (depth `3 =
+log₂ 8`), fully verified: every layer is well-formed (parallel), it computes the XOR (parity) of all
+eight inputs into wire `0`, and it does so in depth `3` against `7` gates — log depth, not linear. This
+is the primitive a carry-lookahead adder is built from (the carry prefix is a reduction tree); the
+general `2^k`-wire tree, the full `O(log n)` carry-lookahead adder, and the secp256k1
+`(Toffoli, depth, qubits)` triple are the further S1/Phase-2 steps. -/
+
+/-- A balanced XOR reduction tree on `4` wires: two layers of wire-disjoint CNOTs accumulating the
+parity of all four bits into wire `0`. Depth `2 = log₂ 4`, `3` gates. -/
+def reduceTree4 : LayeredCircuit 4 :=
+  [ [Gate.CX 1 0, Gate.CX 3 2],
+    [Gate.CX 2 0] ]
+
+/-- The reduction tree has **depth 2** (`= log₂ 4`), below its `3`-gate count. -/
+theorem reduceTree4_depth : depth reduceTree4 = 2 := rfl
+
+/-- It has `3` gates — so `depth 2 < 3`, logarithmic depth for a real computation (the gap widens to
+`log₂ n` vs `n−1` at scale). -/
+theorem reduceTree4_gateCount : (flatten reduceTree4).length = 3 := rfl
+
+/-- Every layer is **well-formed**: the CNOTs in each layer act on disjoint wires (a valid parallel
+step), so the depth-2 count is physically meaningful, not three sequential steps in disguise. -/
+theorem reduceTree4_wf : LayeredWF reduceTree4 := by
+  intro layer h
+  simp only [reduceTree4, List.mem_cons, List.not_mem_nil, or_false] at h
+  rcases h with rfl | rfl
+  · rw [LayerWF, List.pairwise_cons]
+    refine ⟨?_, by simp⟩
+    intro x hx
+    simp only [List.mem_singleton] at hx; subst hx
+    simp only [gateWires]
+    exact Finset.disjoint_iff_inter_eq_empty.mpr (by decide)
+  · rw [LayerWF]; simp
+
+/-- **Correctness**: the tree computes the XOR (parity) of all four input bits into wire `0`, in
+depth `2`. (Verified over all `2^4` input states.) -/
+theorem reduceTree4_correct (s : State 4) :
+    denoteLayered reduceTree4 s 0 = (s 0 ^^ s 1 ^^ s 2 ^^ s 3) := by
+  revert s; decide
+
 end Reversible

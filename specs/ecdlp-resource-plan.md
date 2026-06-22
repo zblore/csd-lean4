@@ -318,11 +318,18 @@ or component → complete) and is its own auditor-checked tranche. Effort/value 
 (verified gate counts carry over); `LayerWF` (wire-disjoint layer = genuinely parallel; disjointness
 load-bearing); `sequential` (gate-per-layer) + `rippleCirc_sequential_depth = 4n` (the ripple adder's
 `O(n)` sequential depth — honestly the upper bound, carry chain inherently sequential) +
-`parallelXLayer_depth = 1` (depth ≪ gate count captured for a WF parallel layer). **Remaining in S1:**
-the carry-lookahead / parallel-prefix adder at `O(log n)` depth (the comparison the framework enables) +
-the secp256k1 `(Toffoli, depth, qubits)` triple via composing point-op depths + tight qubit-width
-accounting. Auditor's flagged trap for the continuation: any `O(log n)` layering must PROVE `LayerWF` per
-layer (wire-disjoint), else the depth count is fiction.
+`parallelXLayer_depth = 1` (depth ≪ gate count captured for a WF parallel layer). **S1 continuation —
+log-depth primitive DONE 2026-06-22** (`reduceTree4`): a balanced XOR reduction tree on 4 wires, the
+building block of a carry-lookahead adder. `reduceTree4_depth = 2 = log₂ 4` (< 3 gates),
+`reduceTree4_wf` (every layer wire-disjoint = genuinely parallel — LayerWF proven, not asserted), and
+`reduceTree4_correct` (computes the parity of all 4 bits into wire 0, in depth 2, verified over all 2^4
+states). The framework now genuinely captures `O(log n)` COMPUTATION, not just the trivial
+`parallelXLayer`. **Remaining in S1:** the full `O(log n)` carry-lookahead adder (the reduction tree IS
+its carry-prefix core; general `2^k`), and the secp256k1 `(Toffoli, depth, qubits)` triple via composing
+point-op depths + tight qubit-width accounting. Note: all three metrics computed from the current
+UNoptimised circuits are honestly-high baselines (Toffoli `6×10^8`, depth `O(n³)` sequential, qubits
+`O(n²)` fresh-ancilla), reducible by the documented optimisations (CLA/parallel-prefix for depth,
+ancilla reuse for qubits).
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
