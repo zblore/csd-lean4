@@ -173,4 +173,63 @@ theorem secp256k1_scalarMul_toffoli_refined {m : ℕ} (k : ℕ) (hk : Nat.size k
     _ ≤ Secp256k1.bits * 18 * (2 * Secp256k1.bits * Secp256k1.bits) := by gcongr
     _ = secp256k1ToffoliRefined := rfl
 
+/-! ### Tiered cost model: reconciling the verified figure with the optimised literature
+
+The figures above are **verified upper bounds** tied to the exhibited circuits (the schoolbook multiplier
+of Tranche 3 and the verified `doubleAndAddWeightedCost`). The standard literature applies three further
+optimisations to reach `~10⁸` Toffolis for 256-bit ECDLP; each is a *documented, standard* technique, but
+of differing verification status in this development:
+
+* **windowing** of the scalar (precomputed `2ⁱ·P` tables): cuts additions from `~n` to `~n/w`.
+  Verifiable in this DSL (a windowed `doubleAndAdd` variant), but only its op-count is modelled here.
+* **squaring at ~half a multiply** (`n²` vs `2n²`, diagonal symmetry): documented count; a verified
+  squaring *circuit* is not exhibited (the general multiplier is, at `2n²`).
+* **measurement-based adders** (Gidney, `~1` Toffoli/bit vs the `2`/bit Cuccaro/Takahashi class):
+  **not expressible** in this measurement-free gate DSL; documented only.
+
+The definitions below compose the **derived** per-multiply cost with these **documented** counts to give a
+transparent reconciliation. They are a *cost model*, not verified bounds: the multiplier `2n²` is derived
+(Tranche 3), but `sqrToffoli`, the EFD per-operation profile, windowing, and the measurement-adder halving
+are documented constants. The point is the **factor-by-factor account** from the verified `6.0×10⁸` down to
+the literature `~10⁸`, with each step's status explicit — not a single number to cite as "the cost". -/
+
+/-- Toffoli cost of one `n`-bit modular multiplication, schoolbook, standard (`2`/bit) adders: `2n²`
+(derived, Tranche 3 `multiplier_ripple_toffoli`). With measurement-based adders this halves to `n²`. -/
+def multToffoli (n : ℕ) : ℕ := 2 * n * n
+
+/-- Toffoli cost of one `n`-bit modular **squaring**: `~n²` (≈ half a multiply, diagonal symmetry;
+documented count, no verified squaring circuit exhibited). -/
+def sqrToffoli (n : ℕ) : ℕ := n * n
+
+/-- One `a=0` elliptic-curve **doubling** = `2M + 5S` field ops (EFD `dbl-2009-l`). -/
+def doublingToffoli (n : ℕ) : ℕ := 2 * multToffoli n + 5 * sqrToffoli n
+
+/-- One `a=0` mixed (Jacobian+affine) **addition** = `7M + 4S` (EFD `madd-2007-bl`). -/
+def additionToffoli (n : ℕ) : ℕ := 7 * multToffoli n + 4 * sqrToffoli n
+
+/-- Windowed scalar multiplication `[k]P` over `n` bits, window `w`: `n` doublings and `n/w` additions
+(the precomputed `2ⁱ·P` table is classical). -/
+def windowedScalarMulToffoli (n w : ℕ) : ℕ :=
+  n * doublingToffoli n + (n / w) * additionToffoli n
+
+/-- **Tier 2 (windowing + squaring-aware, standard `2`/bit adders).** secp256k1, `w = 4`:
+`226 492 416 ≈ 2.3×10⁸` Toffolis — squaring-aware costing and windowing applied to the *verified*
+schoolbook multiplier; ~2.7× below the verified `6.0×10⁸`. -/
+def secp256k1ToffoliWindowed : ℕ := windowedScalarMulToffoli 256 4
+
+theorem secp256k1ToffoliWindowed_eq : secp256k1ToffoliWindowed = 226492416 := by
+  simp only [secp256k1ToffoliWindowed, windowedScalarMulToffoli, doublingToffoli, additionToffoli,
+    multToffoli, sqrToffoli]
+
+/-- **Tier 3 (all standard optimisations, incl. measurement-based `1`/bit adders).** Same model with the
+multiply/square costs halved (Gidney adders): secp256k1, `w = 4`: `113 246 208 ≈ 1.1×10⁸` Toffolis —
+**consistent with the optimised literature (`~10⁸`)**. The measurement-adder halving is documented only
+(not formalisable in this measurement-free DSL); this figure reconciles the verified scaffold with the
+published optimised estimates, factor by factor. -/
+def secp256k1ToffoliOptimized : ℕ :=
+  256 * (2 * (256 * 256) + 5 * (256 * 256 / 2)) + (256 / 4) * (7 * (256 * 256) + 4 * (256 * 256 / 2))
+
+theorem secp256k1ToffoliOptimized_eq : secp256k1ToffoliOptimized = 113246208 := by
+  simp only [secp256k1ToffoliOptimized]
+
 end ECDLP.ResourceBounds

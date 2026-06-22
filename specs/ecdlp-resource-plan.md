@@ -19,7 +19,16 @@ mults / mixed addition 11, EFD `a=0`) tightens this to `secp256k1ToffoliRefined 
 Cuccaro/Takahashi-class (2 Toffoli/bit; not halvable without measurement-based uncomputation, absent from
 the DSL); the residual gap to the most-optimised literature is the DOCUMENTED un-formalised optimisations
 (windowing, Montgomery/Karatsuba, measurement adders), with precise counted/omitted scope in the
-`secp256k1_scalarMul_toffoli_refined` docstring. **Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
+`secp256k1_scalarMul_toffoli_refined` docstring. **Tiered reconciliation to the literature (2026-06-22):**
+a documented cost model (verified multiplier `2n²` composed with documented EFD per-op profile, squaring
+`n²`, windowing, measurement-adder halving) gives three figures — verified-unoptimised `6.0×10^8`
+(`secp256k1ToffoliRefined`) → windowing+squaring `2.3×10^8` (`secp256k1ToffoliWindowed`) → all standard
+optimisations incl. Gidney measurement adders `1.1×10^8` (`secp256k1ToffoliOptimized`), the last
+**consistent with the optimised literature ~10^8**. Verification status is explicit per tier: the
+multiplier and plain double-and-add bound are VERIFIED; squaring-`n²`, windowing, and the measurement-adder
+halving are DOCUMENTED (the last not formalisable in the measurement-free DSL). The honest defensible
+verified number is `6.0×10^8`; the `1.1×10^8` is the cost-model reconciliation, factor-by-factor cited.
+**Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
 (O(n³) structure), NOT a verified attack — the concrete reversible EC-addition circuit (fixing `M`),
 `p`-primality, and a concrete on-curve point are named residue.** The build blocker is resolved.
 
