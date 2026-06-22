@@ -3230,6 +3230,16 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.parallelXLayer_wf
 
+/-! ### ECDLP modular reduction (Reversible/ModReduce.lean, Phase 2 S4) -/
+
+/-- info: 'Reversible.rippleCirc_carryout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleCirc_carryout
+
+/-- info: 'Reversible.rippleCirc_modReduce_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleCirc_modReduce_ge
+
 /-! ### ECDLP elliptic-curve layer (ECDLP/EllipticCurve.lean, Tranche 5) -/
 
 /-- info: 'ECDLP.scalarMul_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3311,5 +3321,13 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'ECDLP.ResourceBounds.secp256k1QubitsBaseline_eq' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1QubitsBaseline_eq
+
+/-- info: 'ECDLP.ResourceBounds.modMultToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.modMultToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliWithReduction_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliWithReduction_eq
 
 end CSD.Tests.AxiomAudit

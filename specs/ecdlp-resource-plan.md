@@ -341,17 +341,40 @@ explicit (same verified-anchor / documented-composition discipline as the Toffol
 | depth | `secp256k1DepthSequential ≈ 6.0×10⁸` (= gate count; principle `sequential_depth` verified for the ripple adder, applied as a documented estimate to the un-assembled scalar-mult circuit) | `secp256k1DepthOptimized = 589 824 ≈ 5.9×10⁵` (CLA `O(log n)` + parallel partial products; documented; log-depth principle demonstrated by `reduceTree4`) |
 | qubits | `secp256k1QubitsBaseline = 65 536` (`O(n²)`, fresh carry chain per multiply step — structural to the exhibited circuit) | `secp256k1QubitsOptimized = 2330` (`O(n)`, ancilla reuse; documented, not modelled in the allocate-only DSL) |
 
-Verified triple: `(6.0×10⁸, ≈gate-count depth, O(n²) qubits)` — correct for the exhibited unoptimised
-circuits. Optimised triple `(1.1×10⁸, ~6×10⁵, ~2330)` — documented reconciliation with the literature.
-3 new AxiomAudit pins (`secp256k1DepthSequential_eq`, `secp256k1DepthOptimized_eq`,
-`secp256k1QubitsBaseline_eq`). **Auditor SOUND** after one Major fix: the depth-baseline prose
+**S4 DONE 2026-06-22 — modular-reduction completeness** (`Reversible/ModReduce.lean` + `ResourceBounds.lean`).
+The prior figures costed multiply-and-accumulate but OMITTED the mod-`N` reduction (a real completeness
+gap: `mulCircuit_correct_zmod` reduces only *semantically*, via the `ZMod N` cast, exhibiting no reduction
+circuit). S4 closes it as far as a control-light, measurement-free DSL honestly allows. Modular reduction
+= compare-and-conditional-subtract; the key reuse is that **the comparison flag IS the ripple adder's
+carry-out**:
+- `rippleCirc_carryout` (VERIFIED): the output carry wire `C n = decide (2ⁿ ≤ A + B)` — the overflow /
+  comparison flag, read off `rippleCirc_invariant`, no new circuit. Preset `A := 2ⁿ − N` ⇒ flag `= decide (N ≤ x)`.
+- `rippleCirc_modReduce_ge` (VERIFIED): for `N ≤ x < 2N` with `A` preset to `2ⁿ − N`, the ripple adder
+  leaves register `B` holding `x mod N` — a verified single-step modular reduction (the `x ≥ N` branch),
+  a corollary of `rippleCirc_correct`. Auditor refuted vacuity with concrete witnesses (B=3,N=3→0; B=5,N=3→2).
+- DOCUMENTED residue: making the subtract flag-CONTROLLED in one pass needs a controlled adder (heavier
+  than this DSL exhibits), and the `x < N` branch is identity. The reduction COST is documented:
+  `modReduceToffoli n = 4n` (≈ 2 adders), `modMultToffoli n = 2n² + n·4n = 6n²` (≈ 3× the un-reduced
+  multiply), `secp256k1ToffoliWithReduction = 3·6.0×10⁸ = 1.81×10⁹` — the honest reduction-complete
+  baseline (the published `~10⁸` fold reduction into the per-multiply figure, so a like-for-like
+  comparison uses THIS, not the un-reduced `6.0×10⁸`; stated as a modelling assumption, not a fact).
+  Comparison VERIFIED, reduce-value VERIFIED for `x ≥ N`, conditional-control wrapper + cost DOCUMENTED.
+4 new AxiomAudit pins. Auditor SOUND, no Blocker/Major (one Minor — softened the "published figures
+include reduction" prose to an attributed modelling assumption).
+
+**S1 (Toffoli, depth, qubits) triple.** Verified triple: `(6.0×10⁸, ≈gate-count depth, O(n²) qubits)` —
+correct for the exhibited unoptimised circuits. Optimised triple `(1.1×10⁸, ~6×10⁵, ~2330)` — documented
+reconciliation with the literature. 3 AxiomAudit pins (`secp256k1DepthSequential_eq`,
+`secp256k1DepthOptimized_eq`, `secp256k1QubitsBaseline_eq`). **Auditor SOUND** after one Major fix: the depth-baseline prose
 originally called `sequential_depth` a "verified link" for the secp256k1 constant when no Lean term
 realises that link — demoted to "documented estimate applying the verified *principle*", `_eq` value-pin
 added. The honest reading: the *verified* increment of S1 is the depth FRAMEWORK + `reduceTree4`
 log-depth witness; the 256-bit depth/qubit numbers are documented cost-model figures, like the optimised
-Toffoli tiers. **Remaining (Phase 2, beyond S1):** the full general `O(log n)` carry-lookahead adder
-(verified, large — parallel-prefix carry correctness over arbitrary `n`); S2 verified squaring; S4
-mod-`N` reduction; S5 measurement-aware DSL + Gidney adder; S6 concrete EC-add circuit.
+Toffoli tiers. **Remaining (Phase 2):** **S2 next** — verified squaring (upgrade the documented
+`sqrToffoli = n²` to an exhibited squaring circuit); S3 verified windowing; S5 measurement-aware DSL +
+Gidney adder; S6 concrete EC-add circuit; plus the full general `O(log n)` carry-lookahead adder
+(verified, large — parallel-prefix carry correctness over arbitrary `n`). (S1 triple + S4 mod-`N`
+reduction DONE 2026-06-22.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that

@@ -1,5 +1,6 @@
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 
 /-!
@@ -231,6 +232,50 @@ def secp256k1ToffoliOptimized : ℕ :=
 
 theorem secp256k1ToffoliOptimized_eq : secp256k1ToffoliOptimized = 113246208 := by
   simp only [secp256k1ToffoliOptimized]
+
+/-! ### Modular-reduction completeness (S4)
+
+The figures above cost *multiply-and-accumulate* but **omit the modular reduction** that keeps the
+accumulator bounded after each step — a real completeness gap (`mulCircuit_correct_zmod` reduces only
+*semantically*, by reading the register in `ZMod N`; no reduction circuit is costed). Each accumulate
+step needs one reduction = **compare-and-conditional-subtract**:
+
+* the **comparison** is the ripple adder's carry-out, **verified** by
+  `Reversible.rippleCirc_carryout` (preset register `A := 2ⁿ − N`; carry-out `= decide (N ≤ x)`), and
+  the reduce *value* for the `x ≥ N` branch is **verified** by `Reversible.rippleCirc_modReduce_ge`;
+* the **conditional subtract** (flag-controlled adder, so the `x < N` branch is untouched) is
+  **documented** — a controlled adder is control-heavier than the measurement-free DSL exhibits.
+
+A reduction therefore costs ≈ one comparison adder + one (controlled) subtract adder ≈ `2` adders ≈
+`4n` Toffoli; the schoolbook multiply does `n` accumulate steps, so reduction adds `n · 4n = 4n²`,
+taking the modular multiply from `2n²` to `6n²` (≈ 3×, consistent with the standard
+multiply-vs-modular-multiply ratio). Standard optimised modular-arithmetic costings (Roetteler et al.;
+Häner et al.) fold the reduction into their per-multiply figure, so a like-for-like comparison with the
+published `~10⁸` should use the reduction-inclusive baseline below rather than the un-reduced `6.0×10⁸`
+(this is a modelling assumption about what the external figures count, not a verified fact). The
+reduction-inclusive *baseline* below restores that apples-to-apples comparison. -/
+
+/-- Toffoli cost of one `n`-bit modular **reduction** (compare-and-conditional-subtract): ≈ 2 adders =
+`4n`. The comparison adder is verified (`Reversible.rippleCirc_carryout`); the conditional-subtract
+adder is documented (flag-controlled, not exhibited in the control-light DSL). -/
+def modReduceToffoli (n : ℕ) : ℕ := 4 * n
+
+/-- Toffoli cost of one `n`-bit **modular multiply, reduction included**: schoolbook `2n²` (verified,
+Tranche 3) plus `n` reductions at `4n` each = `2n² + 4n² = 6n²` (≈ 3× the un-reduced multiply). -/
+def modMultToffoli (n : ℕ) : ℕ := multToffoli n + n * modReduceToffoli n
+
+theorem modMultToffoli_eq (n : ℕ) : modMultToffoli n = 6 * n * n := by
+  simp only [modMultToffoli, multToffoli, modReduceToffoli]; ring
+
+/-- **Reduction-inclusive verified-class baseline.** The refined figure `6.0×10⁸` re-costed with the
+modular multiply `6n²` (reduction included) in place of the un-reduced `2n²`, i.e. `3×`:
+`secp256k1ToffoliRefined · 3 = 1 811 939 328 ≈ 1.8×10⁹`. This is the honest reduction-complete baseline
+for the exhibited circuits + the documented reduction; the published optimised `~10⁸` reaches its figure
+from *here* (not from `6.0×10⁸`) via windowing + sub-quadratic multiply + measurement adders. -/
+def secp256k1ToffoliWithReduction : ℕ := 3 * secp256k1ToffoliRefined
+
+theorem secp256k1ToffoliWithReduction_eq : secp256k1ToffoliWithReduction = 1811939328 := by
+  simp only [secp256k1ToffoliWithReduction, secp256k1ToffoliRefined, Secp256k1.bits]
 
 /-! ### The `(Toffoli, depth, qubits)` triple — the multi-metric resource profile (S1 close)
 
