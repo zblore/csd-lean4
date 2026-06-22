@@ -9,7 +9,11 @@ ScalarMul (`doubleAndAdd` + correctness + O(log k) cost). **T7 CAPSTONE** (`Secp
 `ResourceBounds.lean`): the secp256k1 curve `y²=x³+7` over `𝔽_p` (`p=2^256−2^32−977`) + the end-to-end
 estimate `secp256k1_scalarMul_toffoli_bound` (`[k]P ≤ 2·256·(M·(2·256·256)) = O(256³)·M` Toffolis),
 composing T6's O(log k) op count and T3's `2n²` multiplier — auditor SOUND, non-vacuous (numeric bound
-`≤ 2^26` at M=1). **Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
+`≤ 2^26` at M=1). **`M` fixed (Pass-1, 2026-06-22):** `pointOpMults = 16` (documented EFD field-mult count
+per projective `a=0` point op) collapses the estimate to the concrete figure `secp256k1ToffoliBound =
+2^30 = 1 073 741 824` Toffolis (`secp256k1_scalarMul_toffoli_concrete`) — an UPPER-BOUND figure (omits
+mod-`N` reduction; assumes the standard formulae whose circuit correctness is Pass-2 residue), NOT an
+attack cost. **Honest claim: a sorry-free semantic + resource scaffold for ECDLP over secp256k1**
 (O(n³) structure), NOT a verified attack — the concrete reversible EC-addition circuit (fixing `M`),
 `p`-primality, and a concrete on-curve point are named residue.** The build blocker is resolved.
 

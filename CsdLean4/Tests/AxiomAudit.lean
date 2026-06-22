@@ -3241,4 +3241,12 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_bound
 
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliBound_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliBound_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_concrete' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_concrete
+
 end CSD.Tests.AxiomAudit
