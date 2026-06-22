@@ -370,11 +370,31 @@ originally called `sequential_depth` a "verified link" for the secp256k1 constan
 realises that link — demoted to "documented estimate applying the verified *principle*", `_eq` value-pin
 added. The honest reading: the *verified* increment of S1 is the depth FRAMEWORK + `reduceTree4`
 log-depth witness; the 256-bit depth/qubit numbers are documented cost-model figures, like the optimised
-Toffoli tiers. **Remaining (Phase 2):** **S2 next** — verified squaring (upgrade the documented
-`sqrToffoli = n²` to an exhibited squaring circuit); S3 verified windowing; S5 measurement-aware DSL +
-Gidney adder; S6 concrete EC-add circuit; plus the full general `O(log n)` carry-lookahead adder
-(verified, large — parallel-prefix carry correctness over arbitrary `n`). (S1 triple + S4 mod-`N`
-reduction DONE 2026-06-22.)
+Toffoli tiers.
+
+**S2 keystone DONE 2026-06-22 — the controlled (quantum×quantum) adder** (`Reversible/CtrlAdd.lean`).
+S2 (verified squaring) was found BLOCKED by a missing primitive: squaring is `Y²` (quantum×quantum,
+both factors registers), but the Tranche-3 multiplier is quantum×classical (`a·Y`, `a` a classical
+constant via fixed shifts). Squaring needs a CONTROLLED adder (bit `i` of one factor controls adding the
+other, shifted) — which needs 3-control gates, while the DSL tops out at `CCX`. Built via the standard
+clean-ancilla `CCCX = CCX;CCX;CCX` decomposition (one shared ancilla, restored per slice):
+- `cfullAdder` (8 `CCX`) + `cfullAdder_correct` (decide, both control branches + ancilla restore) +
+  `cfullAdder_correct_general` (general `Fin n`) + `cfullAdder_apply_of_ne` (frame) +
+  `cfullAdder_cost = 8` Toffoli / `cfullAdder_cnot = 0` (the two `CX`s promoted, CNOTs absorbed).
+- `CRippleLayout` (RippleLayout + control + shared ancilla) + the 7-clause `cRippleCirc_invariant`
+  (unified P1 with `if ctrl`, + P0 ctrl-preserved, P7 carry-false-when-ctrl-clear — the clause that
+  closes the ctrl-clear case) + **`cRippleCirc_correct`** (the headline: `B ← (A+B) mod 2ⁿ` when `ctrl`
+  set, `B` unchanged when clear) + `cRippleCirc_toffoli = 8n` (cost-only, `[propext, Quot.sound]`) +
+  `cRippleLayout2` non-vacuity (Fin 9). Auditor SOUND, no Blocker/Major (concrete witnesses both
+  branches `1+2→3` / unchanged; clean-ancilla hypothesis PROVED load-bearing; one Minor docstring fix
+  on the CNOT-absorption applied). 4 AxiomAudit pins.
+
+**Remaining (Phase 2):** **S2.3 next** — the quantum×quantum squaring/multiply itself (fold
+`cRippleCirc` controlled on each multiplier-register bit; the controlled adder is now in hand); S3
+verified windowing; S5 measurement-aware DSL + Gidney adder; S6 concrete EC-add circuit (its field
+mults are quantum×quantum, the controlled adder is the enabling primitive); plus the full general
+`O(log n)` carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2 controlled
+adder DONE 2026-06-22.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that

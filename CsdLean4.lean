@@ -27,6 +27,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
+import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul

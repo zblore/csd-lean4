@@ -22,6 +22,8 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
+import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
@@ -3239,6 +3241,24 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.rippleCirc_modReduce_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.rippleCirc_modReduce_ge
+
+/-! ### ECDLP controlled addition (Reversible/CtrlAdd.lean, Phase 2 S2) -/
+
+/-- info: 'Reversible.cfullAdder_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cfullAdder_correct
+
+/-- info: 'Reversible.cfullAdder_correct_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cfullAdder_correct_general
+
+/-- info: 'Reversible.cRippleCirc_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cRippleCirc_correct
+
+/-- info: 'Reversible.cRippleCirc_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cRippleCirc_toffoli
 
 /-! ### ECDLP elliptic-curve layer (ECDLP/EllipticCurve.lean, Tranche 5) -/
 
