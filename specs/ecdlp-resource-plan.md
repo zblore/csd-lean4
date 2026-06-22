@@ -298,3 +298,69 @@ dischargeable — that is where vacuity could silently re-enter.
   field structure, gated on `Fact p.Prime`).
 - Optional ModMul Stage C: the in-place conditional-subtract register reduction (a qubit optimisation —
   a space-optimal mulOracle register vs the current exact-integer one).
+
+---
+
+# PHASE 2 — hardening the resource estimate (plan, 2026-06-22)
+
+**Status: PLANNED.** Phase 1 (the 7-tranche programme) is COMPLETE: a sorry-free scaffold with the
+secp256k1 tiered figures (`6.0×10^8` verified → `1.1×10^8` all-optimised, matching the literature). Phase 2
+moves the estimate from "verified component + documented optimisations" toward a **verified, complete,
+multi-metric** resource estimate. Each stage states its verification-status delta (documented → verified,
+or component → complete) and is its own auditor-checked tranche. Effort/value below; recommended order S1
+→ S4 → S2/S3 → S5 → S6.
+
+## S1 — Depth + space (qubit) accounting [HIGHEST VALUE, novel; recommended first]
+The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
+estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
+matters). Deliverables:
+- A **layered circuit model** (a `Circuit` as a `List` of layers, each layer a set of pairwise-wire-disjoint
+  gates), `denoteLayered`, `depth := layers.length`; relate to the flat model. Parallel composition gives
+  `depth = max`, the thing the flat list cannot express.
+- Bound the **ripple-adder depth** `O(n)`; optionally a carry-lookahead adder at `O(log n)` depth and more
+  gates — the canonical depth/gate tradeoff, and the first thing the model can then *compare*.
+- **Qubit width**: track the wire count (registers + ancilla banks — already named in `RippleLayout`/
+  `MulLayout`) as a function of the circuit; bound the adder/multiplier width; re-derive the secp256k1
+  qubit figure (literature ~2330).
+- Headline: secp256k1 as a verified `(Toffoli, depth, qubits)` triple.
+- Status delta: gate-count-only → multi-metric. **Verified.** Effort: LARGE (the layered model is new;
+  a verified depth/parallelism model for reversible circuits is itself a contribution).
+
+## S2 — Verified squaring circuit [moderate]
+Exhibit a squaring circuit (`~n²/2` partial products, diagonal symmetry), derive cost `= n²`. Replaces the
+documented `sqrToffoli` in the tiered figures. Status delta: `sqrToffoli` documented → verified. Effort:
+MODERATE (parallels the multiplier).
+
+## S3 — Verified windowed scalar multiplication [moderate]
+Define `windowedDoubleAndAdd`, prove `= k • P` (correctness) and derive its op count (`n` doublings +
+`⌈n/w⌉` additions, classical precomputed table). Status delta: windowing documented → verified. Effort:
+MODERATE (Tranche-6-style).
+
+## S4 — Modular reduction, ModMul Stage C [biggest COMPLETENESS gap]
+The current multiplier computes the exact integer `a·Y`; the mod-`N` reduction (omitted, ~2× per multiply)
+is the largest completeness gap. Build the conditional-subtract reduction: a **subtractor** (adder with
+inverted carry) + **comparison** (subtract `N`, test the borrow) + conditional add-back, proving the output
+`regValRange ∈ [0, N)` and `≡ input (mod N)`. Turns the multiplier into a genuine *modular* multiplier and
+the register into the space-optimal `⌈log₂ N⌉`-bit form. Status delta: component (mod `2^W`) → complete (mod
+`N`). **Verified.** Effort: MODERATE-LARGE (needs subtraction + comparison circuits, both adder-class).
+
+## S5 — Measurement-aware DSL + Gidney adder [hard, conceptually fraught]
+Extend the gate DSL with a measurement gate and honest semantics (the hard part: measurement is
+non-deterministic; the standard route is measure-and-classically-control the uncomputation). Define the
+Gidney measurement-based adder; verify cost `= n` Toffoli (1/bit). Moves the measurement-adder 2× factor
+documented → verified, making the `1.1×10^8` optimised figure a verified bound rather than a cost model.
+Status delta: the optimised tier documented → verified. Effort: LARGE + conceptually fraught (measurement
+semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
+separate measurement layer, not by polluting `denoteGate`).
+
+## S6 — Concrete EC point-addition circuit [largest; derives M]
+Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
+they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
+verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
+quantum×classical `mulConst`) and the full formula correctness. Status delta: `M` documented → derived; the
+EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche).
+
+## Recommended start
+**S1 (depth + space).** Highest value (multi-metric, comparison-enabling, matches how the literature
+reports), conceptually novel (layered model), and self-contained (no dependency on S4–S6). First concrete
+step: define the layered circuit + `depth`, and prove the ripple adder's `O(n)` depth bound.
