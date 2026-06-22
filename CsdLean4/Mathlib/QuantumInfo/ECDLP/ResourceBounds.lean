@@ -232,4 +232,65 @@ def secp256k1ToffoliOptimized : ℕ :=
 theorem secp256k1ToffoliOptimized_eq : secp256k1ToffoliOptimized = 113246208 := by
   simp only [secp256k1ToffoliOptimized]
 
+/-! ### The `(Toffoli, depth, qubits)` triple — the multi-metric resource profile (S1 close)
+
+A resource estimate is a *triple*, not a single Toffoli count: gate count, **depth** (parallel time),
+and **qubit width** (space). The Toffoli axis is tiered above (`6.0×10⁸` verified → `1.1×10⁸`
+optimised). This section completes the triple for the two remaining axes, with each value's status
+explicit — the same verified-anchor / documented-composition discipline.
+
+**Depth.** The verified *principle* is `Reversible.sequential_depth : depth (sequential c) = c.length`
+(a fully-sequentialised circuit has depth equal to its gate count), realised concretely for the ripple
+adder by `rippleCirc_sequential_depth` (`depth = 4n`). The scalar-multiplication circuit is **not
+assembled as a `Circuit` at this scale**, so we *apply that principle as a documented estimate*: its
+sequential depth is of the same order as its gate count (the Toffoli figure `6.0×10⁸`, plus CNOTs), with
+no parallelism — the honest baseline. The **optimised depth** exploits parallelism the framework
+*demonstrates* at small scale (`reduceTree4`: a `LayerWF`-proven log-depth reduction tree): carry-lookahead
+adders at `O(log n)` depth (the reduction tree is their carry-prefix core) and partial products summed in
+a tree. The composition factors below (CLA-add depth `≈ 2·log₂n`, `log₂n` tree levels, the EFD field-mult
+profile as the per-point-op sequential bound) are **documented**, not verified circuits; the figure is a
+cost-model estimate placing the optimised depth at `~10⁵–10⁶ layers`, consistent with the published
+256-bit ECC depth range.
+
+**Qubits.** The exhibited circuits allocate a *fresh* carry chain per multiply step (no reuse), giving
+`O(n²)` width — `~n² = 65 536` for `n=256` (the carry banks dominate). The **space-optimal** width
+uncomputes/reuses ancilla, giving `O(n)` — the published figure is `~2330` logical qubits. The baseline
+is structural to the exhibited circuit; the optimised value is documented (ancilla reuse is not modelled
+in the allocate-only DSL).
+
+The honest reading: the *verified* triple is `(6.0×10⁸ Toffoli, =gate-count depth, O(n²) qubits)` — a
+correct profile for the exhibited unoptimised circuits. The *optimised* triple
+`(1.1×10⁸, ~6×10⁵, ~2330)` is the documented reconciliation with the literature, factor by factor. -/
+
+/-- **Sequential depth ≈ gate count** (documented estimate applying the verified *principle*
+`Reversible.sequential_depth`, which is realised concretely only for the ripple adder,
+`rippleCirc_sequential_depth`). With no parallelism, depth equals gate count; the secp256k1 scalar
+multiply is not assembled as a `Circuit` at this scale, so we take its sequential depth as of the same
+order as the Toffoli figure `6.0×10⁸` (plus CNOTs). The honest worst-case-time baseline. -/
+def secp256k1DepthSequential : ℕ := secp256k1ToffoliRefined
+
+theorem secp256k1DepthSequential_eq : secp256k1DepthSequential = 603979776 := by
+  simp only [secp256k1DepthSequential, secp256k1ToffoliRefined, Secp256k1.bits]
+
+/-- **Optimised depth** (documented cost model): `256` point-ops, each `≤18` sequential field-ops (EFD
+profile), each a parallel multiply of depth `≈ log₂256` tree levels × `≈ 2·log₂256` carry-lookahead-add
+depth = `8·16`. `256·18·8·16 = 589 824 ≈ 5.9×10⁵ layers` — in the published 256-bit ECC depth range.
+The CLA/parallel circuits are documented, not exhibited; the log-depth *principle* is demonstrated at
+4 wires by `reduceTree4` (this 256-bit figure does not consume it). -/
+def secp256k1DepthOptimized : ℕ := 256 * 18 * 8 * 16
+
+theorem secp256k1DepthOptimized_eq : secp256k1DepthOptimized = 589824 := by
+  simp only [secp256k1DepthOptimized]
+
+/-- **Baseline qubit width** (structural to the exhibited circuit): a fresh carry chain per multiply
+step (no reuse) ⇒ `O(n²)`; the carry banks alone are `~n² = 65 536` for `n=256`. -/
+def secp256k1QubitsBaseline : ℕ := 256 * 256
+
+theorem secp256k1QubitsBaseline_eq : secp256k1QubitsBaseline = 65536 := by
+  simp only [secp256k1QubitsBaseline]
+
+/-- **Space-optimal qubit width** (documented, ancilla reuse not modelled in the allocate-only DSL):
+`O(n)` ⇒ the published `~2330` logical qubits for 256-bit ECDLP. -/
+def secp256k1QubitsOptimized : ℕ := 2330
+
 end ECDLP.ResourceBounds

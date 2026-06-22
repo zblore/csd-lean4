@@ -141,9 +141,9 @@ theorem parallelXLayer_wf (idxs : List (Fin n)) (h : idxs.Nodup) :
 
 `parallelXLayer` shows depth `1` for independent flips, but that is not a *computation*. A genuine
 log-depth result is a **reduction tree**: combine `n` bits pairwise in a balanced tree, `⌈log₂ n⌉`
-layers, each layer a set of wire-disjoint gates. Below is the concrete `8`-wire instance (depth `3 =
-log₂ 8`), fully verified: every layer is well-formed (parallel), it computes the XOR (parity) of all
-eight inputs into wire `0`, and it does so in depth `3` against `7` gates — log depth, not linear. This
+layers, each layer a set of wire-disjoint gates. Below is the concrete `4`-wire instance (depth `2 =
+log₂ 4`), fully verified: every layer is well-formed (parallel), it computes the XOR (parity) of all
+four inputs into wire `0`, and it does so in depth `2` against `3` gates — log depth, not linear. This
 is the primitive a carry-lookahead adder is built from (the carry prefix is a reduction tree); the
 general `2^k`-wire tree, the full `O(log n)` carry-lookahead adder, and the secp256k1
 `(Toffoli, depth, qubits)` triple are the further S1/Phase-2 steps. -/

@@ -331,6 +331,28 @@ UNoptimised circuits are honestly-high baselines (Toffoli `6×10^8`, depth `O(n�
 `O(n²)` fresh-ancilla), reducible by the documented optimisations (CLA/parallel-prefix for depth,
 ancilla reuse for qubits).
 
+**S1 CLOSED 2026-06-22 — the `(Toffoli, depth, qubits)` triple** (`ResourceBounds.lean`, the multi-metric
+profile). The resource estimate is now a *triple*, two tiers each, every value's verification status
+explicit (same verified-anchor / documented-composition discipline as the Toffoli tiers):
+
+| metric | verified baseline | documented optimised |
+|---|---|---|
+| Toffoli | `6.0×10⁸` (verified bound) | `1.1×10⁸` (`secp256k1ToffoliOptimized`) |
+| depth | `secp256k1DepthSequential ≈ 6.0×10⁸` (= gate count; principle `sequential_depth` verified for the ripple adder, applied as a documented estimate to the un-assembled scalar-mult circuit) | `secp256k1DepthOptimized = 589 824 ≈ 5.9×10⁵` (CLA `O(log n)` + parallel partial products; documented; log-depth principle demonstrated by `reduceTree4`) |
+| qubits | `secp256k1QubitsBaseline = 65 536` (`O(n²)`, fresh carry chain per multiply step — structural to the exhibited circuit) | `secp256k1QubitsOptimized = 2330` (`O(n)`, ancilla reuse; documented, not modelled in the allocate-only DSL) |
+
+Verified triple: `(6.0×10⁸, ≈gate-count depth, O(n²) qubits)` — correct for the exhibited unoptimised
+circuits. Optimised triple `(1.1×10⁸, ~6×10⁵, ~2330)` — documented reconciliation with the literature.
+3 new AxiomAudit pins (`secp256k1DepthSequential_eq`, `secp256k1DepthOptimized_eq`,
+`secp256k1QubitsBaseline_eq`). **Auditor SOUND** after one Major fix: the depth-baseline prose
+originally called `sequential_depth` a "verified link" for the secp256k1 constant when no Lean term
+realises that link — demoted to "documented estimate applying the verified *principle*", `_eq` value-pin
+added. The honest reading: the *verified* increment of S1 is the depth FRAMEWORK + `reduceTree4`
+log-depth witness; the 256-bit depth/qubit numbers are documented cost-model figures, like the optimised
+Toffoli tiers. **Remaining (Phase 2, beyond S1):** the full general `O(log n)` carry-lookahead adder
+(verified, large — parallel-prefix carry correctness over arbitrary `n`); S2 verified squaring; S4
+mod-`N` reduction; S5 measurement-aware DSL + Gidney adder; S6 concrete EC-add circuit.
+
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
 matters). Deliverables:
