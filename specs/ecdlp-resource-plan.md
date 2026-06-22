@@ -311,6 +311,19 @@ or component → complete) and is its own auditor-checked tranche. Effort/value 
 → S4 → S2/S3 → S5 → S6.
 
 ## S1 — Depth + space (qubit) accounting [HIGHEST VALUE, novel; recommended first]
+
+**S1 framework DONE 2026-06-22, GREEN, auditor-SOUND** (`Depth.lean`): the layered-circuit depth model.
+`LayeredCircuit`/`denoteLayered`/`flatten`/`depth`; the two bridges `denoteLayered_eq_denote_flatten`
+(correctness inherited from the flat model — auditor confirmed non-circular) and `layeredToffoli_eq`
+(verified gate counts carry over); `LayerWF` (wire-disjoint layer = genuinely parallel; disjointness
+load-bearing); `sequential` (gate-per-layer) + `rippleCirc_sequential_depth = 4n` (the ripple adder's
+`O(n)` sequential depth — honestly the upper bound, carry chain inherently sequential) +
+`parallelXLayer_depth = 1` (depth ≪ gate count captured for a WF parallel layer). **Remaining in S1:**
+the carry-lookahead / parallel-prefix adder at `O(log n)` depth (the comparison the framework enables) +
+the secp256k1 `(Toffoli, depth, qubits)` triple via composing point-op depths + tight qubit-width
+accounting. Auditor's flagged trap for the continuation: any `O(log n)` layering must PROVE `LayerWF` per
+layer (wire-disjoint), else the depth count is fiction.
+
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
 matters). Deliverables:
