@@ -389,12 +389,34 @@ clean-ancilla `CCCX = CCX;CCX;CCX` decomposition (one shared ancilla, restored p
   branches `1+2→3` / unchanged; clean-ancilla hypothesis PROVED load-bearing; one Minor docstring fix
   on the CNOT-absorption applied). 4 AxiomAudit pins.
 
-**Remaining (Phase 2):** **S2.3 next** — the quantum×quantum squaring/multiply itself (fold
-`cRippleCirc` controlled on each multiplier-register bit; the controlled adder is now in hand); S3
-verified windowing; S5 measurement-aware DSL + Gidney adder; S6 concrete EC-add circuit (its field
-mults are quantum×quantum, the controlled adder is the enabling primitive); plus the full general
-`O(log n)` carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2 controlled
-adder DONE 2026-06-22.)
+**S2.3 DONE 2026-06-23 — the quantum×quantum multiplier** (`Reversible/CtrlMul.lean`). Folds the
+controlled ripple adder (`cRippleCirc_correct`) over the bits of the first factor register `X`, with each
+partial-product control bound to `X_i` and the shared ancilla re-cleaned between steps:
+- `cAccStep` — the controlled accumulation step (controlled analogue of `ModMul.accStep`, routed through
+  `cRippleCirc_correct` so the `ctrl`-clear case adds nothing): one controlled full-window ripple add of
+  the multiplicand into `Acc[i, W)` increases the accumulator by `if ctrl then 2^i·Yv else 0`.
+- `CMulLayout` (BOUNDED-injectivity wire geometry: accumulator, control register `X`, multiplicand `Y`,
+  per-shift carry banks, shared ancilla) + `cStepLayout` + `cMulCircuit` + the X/Y/carry-preservation
+  frame lemmas (`cStepLayout_preserves_Y` / `_carry` / `_X`) + **`cMulCircuit_correct`** (the headline
+  carry induction: `Acc ← Acc + (∑ sh, [X_sh]·2^sh)·Y`) + `ctrlSum_eq` (collapses the per-bit controlled
+  sum to `regValRange X · Yv`) + **`cMulCircuit_eq_mul`** (`Acc ← Acc + X·Y`, both factors quantum;
+  `X:=Y` gives squaring) + `cMulLayout1` non-vacuity (Fin 8). The overflow bound `hbound` is
+  worst-case-over-`X` (control-independent, no `if`) — a sound circuit must not overflow on any
+  superposition branch.
+- Three enabling hygiene/frame lemmas added to `CtrlAdd.lean`: `cRippleCirc_anc_restored`,
+  `cRippleCirc_ctrl_preserved`, `cRippleCirc_preserves_external`. 8 AxiomAudit pins
+  (foundational-triple-only). Auditor SOUND — no Blocker/Major/Minor; kernel-checked that the control bit
+  genuinely gates (`1·1=1` vs `0·1=0`, accumulator wire flips only when ctrl set). This closes the deeper
+  honesty point of the S2 commit: the Tranche-3 multiplier was quantum×CLASSICAL; real EC field mults
+  multiply two quantum coordinates, which `cMulCircuit_eq_mul` now does. (Auditor follow-up suggested: a
+  line-by-line re-audit of `cRippleCirc_invariant` clause P7 / the ctrl-clear branch, taken as trusted
+  input here.)
+
+**Remaining (Phase 2):** S3 verified windowing; S5 measurement-aware DSL + Gidney adder; **S6 concrete
+EC-add circuit** (its field mults are quantum×quantum, the controlled adder + `cMulCircuit_eq_mul` are now
+the enabling primitives — S6 would DERIVE the free parameter `M`); plus the full general `O(log n)`
+carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE
+2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that

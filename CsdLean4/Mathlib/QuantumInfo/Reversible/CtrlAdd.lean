@@ -323,6 +323,40 @@ theorem cRippleCirc_toffoli (L : CRippleLayout m n) :
     rw [hsplit, cost_comp_toffoli_count, ih, cRippleSlice, cfullAdder_cost]
     omega
 
+/-- **The shared ancilla is returned clean.** After the whole controlled ripple adder the ancilla is
+`false` again (it is borrowed and restored within each slice). The hygiene fact a multi-step consumer
+needs to reuse the ancilla between successive controlled adds. -/
+theorem cRippleCirc_anc_restored (L : CRippleLayout m n) (s : State m)
+    (hC0 : ∀ j, s (L.C j) = false) (hanc0 : s L.anc = false) :
+    denote (cRippleCirc L) s L.anc = false := by
+  obtain ⟨-, -, -, -, h, -, -⟩ := cRippleCirc_invariant L s hC0 hanc0 n (Nat.le_refl n)
+  rw [cRippleCirc]; exact h
+
+/-- **The control wire is preserved** by the controlled ripple adder (it is read, never written). The
+consumer needs this to keep each partial-product's control bit equal to the original register bit across
+the accumulation loop. -/
+theorem cRippleCirc_ctrl_preserved (L : CRippleLayout m n) (s : State m)
+    (hC0 : ∀ j, s (L.C j) = false) (hanc0 : s L.anc = false) :
+    denote (cRippleCirc L) s L.ctrl = s L.ctrl := by
+  obtain ⟨-, -, -, -, -, h, -⟩ := cRippleCirc_invariant L s hC0 hanc0 n (Nat.le_refl n)
+  rw [cRippleCirc]; exact h
+
+/-- **The controlled ripple adder preserves any external wire** (distinct from `ctrl`, `anc`, and every
+register/carry wire `A k`, `B k`, `C k`). The frame lemma at circuit granularity: every gate of
+`cRippleCirc L` has wires among `{ctrl, anc} ∪ {A k, B k, C k}`. -/
+theorem cRippleCirc_preserves_external (L : CRippleLayout m n) (s : State m) (x : Fin m)
+    (hctrl : x ≠ L.ctrl) (hanc : x ≠ L.anc) (hA : ∀ k, k < n → x ≠ L.A k)
+    (hB : ∀ k, k < n → x ≠ L.B k) (hC : ∀ k, k < n + 1 → x ≠ L.C k) :
+    denote (cRippleCirc L) s x = s x := by
+  apply denote_apply_of_forall_not_mem
+  intro g hg
+  rw [cRippleCirc, cRipplePrefix, List.mem_flatMap] at hg
+  obtain ⟨k, hk, hgk⟩ := hg
+  rw [List.mem_range] at hk
+  simp only [cRippleSlice, cfullAdder, List.mem_cons, List.not_mem_nil, or_false] at hgk
+  rcases hgk with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
+    simp [gateWires, hctrl, hanc, hA k hk, hB k hk, hC k (by omega), hC (k + 1) (by omega)]
+
 /-! ### Non-vacuity witness
 
 A concrete 2-bit controlled ripple layout on `Fin 9` (registers `A → {0,1}`, `B → {2,3}`, carry chain
