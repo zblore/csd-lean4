@@ -30,6 +30,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3380,5 +3381,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliWithReduction_eq' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1ToffoliWithReduction_eq
+
+/-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
+
+/-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doublingProgram_correct
+
+/-- info: 'ECDLP.M_dbl_eq' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.M_dbl_eq
+
+/-- info: 'ECDLP.doubling_toffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doubling_toffoli_eq
+
+/-- info: 'ECDLP.doubling_toffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.doubling_toffoli_secp256k1
 
 end CSD.Tests.AxiomAudit

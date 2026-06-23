@@ -102,6 +102,7 @@ CsdLean4/Mathlib/QuantumInfo/ECDLP/EllipticCurve.lean  -- Tranche 5: scalarMul [
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6: doubleAndAdd [k]P + correctness + O(log k) cost  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7: secp256k1 curve params  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- Tranche 7 capstone: end-to-end Toffoli estimate  [DONE 2026-06-21, GREEN]
+CsdLean4/Mathlib/QuantumInfo/ECDLP/PointDouble.lean    -- S6.1: derived-cost SLP + a=0 doubling program, M_dbl=8 derived  [DONE 2026-06-23, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -412,11 +413,34 @@ partial-product control bound to `X_i` and the shared ancilla re-cleaned between
   line-by-line re-audit of `cRippleCirc_invariant` clause P7 / the ctrl-clear branch, taken as trusted
   input here.)
 
-**Remaining (Phase 2):** S3 verified windowing; S5 measurement-aware DSL + Gidney adder; **S6 concrete
-EC-add circuit** (its field mults are quantum×quantum, the controlled adder + `cMulCircuit_eq_mul` are now
-the enabling primitives — S6 would DERIVE the free parameter `M`); plus the full general `O(log n)`
-carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE
-2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23.)
+**S6.1 DONE 2026-06-23 — derived field-mult count for `a=0` doubling** (`ECDLP/PointDouble.lean`,
+auditor-SOUND). S6 "derives the free parameter `M`". S6.1 delivers a derived-cost straight-line
+field-arithmetic program model (`Instr`/`Program`/`evalProgram`/`mulCount`, mirroring T1's derived
+gate-list discipline — `mulCount` counts only register×register `mul`/`sq` opcodes; small-integer
+coefficients enter via free `nsmul`/`neg`, the EFD convention) + the explicit secp256k1 (`a₁=a₂=a₃=a₄=0`)
+Jacobian **doubling** program, with:
+- `doublingProgram_correct` (HEADLINE): the program's three output registers equal Mathlib's `dblX`/
+  `dblY`/`dblZ` under `a=0` — a `ring` identity over a `CommRing`. **Formula↔group-law correctness is
+  REUSED from Mathlib** (`Jacobian/Point.lean`), NOT reproved; only program-evaluates-to-the-polynomial
+  is proved here. Auditor verified non-vacuous (concrete `ZMod 17` eval matches hand-computed
+  `(9X⁴−8XY², dblY, 2YZ)`; `a=0` hyps satisfiable at secp256k1).
+- **`M_dbl = 8`** (`M_dbl_eq`, `decide`, no axioms) — the DERIVED count. Honest vs literature: one above
+  the most aggressive EFD `2M+5S=7`; the gap is un-shared squarings (`XX²`,`YY²` recomputed, not folded
+  via the `(X+YY)²` Karatsuba trick). Reported, not fudged to hit 7.
+- Resource bridge (bound-level): `doublingToffoli w = M_dbl·8w² = 64w²`, `doublingToffoli 256 = 4 194 304`,
+  composing the derived `M_dbl` with the verified per-controlled-add cost `cRippleCirc_toffoli = 8·width`.
+  Honest residue: the full assembled doubling circuit (register routing + ancilla scheduling + in-place
+  mod reduction between multiplies) is **NOT built** — named S6.3.
+4 AxiomAudit pins (`doublingProgram_correct` foundational-triple; `M_dbl_eq` axiom-free; `doubling_toffoli_eq`/
+`_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
+fixed in the same commit).
+
+**Remaining (Phase 2):** **S6.2** mixed-addition program (derive `M_add`, replace documented `11`,
+reuse the S6.1 program model); **S6.3** the assembled reversible doubling/addition circuit (converts the
+`doublingToffoli` bridge from bound-level to an exhibited-circuit derived count); S3 verified windowing;
+S5 measurement-aware DSL + Gidney adder; plus the full general `O(log n)` carry-lookahead adder (verified,
+large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE 2026-06-22; S2.3 quantum×quantum
+multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -460,12 +484,20 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1 DONE 2026-06-23)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
 quantum×classical `mulConst`) and the full formula correctness. Status delta: `M` documented → derived; the
-EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche).
+EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged depth-first:**
+- **S6.1 DONE 2026-06-23** — derived-cost SLP model + `a=0` doubling program, `doublingProgram_correct`
+  (= Mathlib `dblX/dblY/dblZ`), **`M_dbl = 8` derived**, resource bridge (`64w²` bound). Correctness REUSED
+  from Mathlib; count DERIVED; assembled circuit = residue. See the S2.3-status note above for detail.
+- **S6.2** — the mixed-addition program (`addXYZ`), derive `M_add` to replace the documented `11`, reusing
+  the S6.1 program model. The more error-prone schedule (more shared intermediates).
+- **S6.3** — the assembled reversible doubling/addition circuit (register routing, ancilla scheduling,
+  in-place mod reduction between multiplies); converts the `doublingToffoli`/`additionToffoli` bridges from
+  bound-level to an exhibited-circuit derived count.
 
 ## Recommended start
 **S1 (depth + space).** Highest value (multi-metric, comparison-enabling, matches how the literature
