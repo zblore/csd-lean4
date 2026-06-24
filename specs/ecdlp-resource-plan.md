@@ -104,6 +104,7 @@ CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7: secp256k1 c
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- Tranche 7 capstone: end-to-end Toffoli estimate  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/PointDouble.lean    -- S6.1: derived-cost SLP + a=0 doubling program, M_dbl=8 derived  [DONE 2026-06-23, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/PointAdd.lean       -- S6.2: a=0 mixed-addition program, M_add=17 derived (on-curve)  [DONE 2026-06-24, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModReduceCtrl.lean -- S6.3a: complete single-step modular reduction (both branches verified)  [DONE 2026-06-24, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -354,13 +355,16 @@ carry-out**:
 - `rippleCirc_modReduce_ge` (VERIFIED): for `N ≤ x < 2N` with `A` preset to `2ⁿ − N`, the ripple adder
   leaves register `B` holding `x mod N` — a verified single-step modular reduction (the `x ≥ N` branch),
   a corollary of `rippleCirc_correct`. Auditor refuted vacuity with concrete witnesses (B=3,N=3→0; B=5,N=3→2).
-- DOCUMENTED residue: making the subtract flag-CONTROLLED in one pass needs a controlled adder (heavier
-  than this DSL exhibits), and the `x < N` branch is identity. The reduction COST is documented:
+- ~~DOCUMENTED residue: the subtract flag-CONTROLLED in one pass~~ **NOW CLOSED by S6.3a**
+  (`ModReduceCtrl.lean`, 2026-06-24): the flag-controlled add-back IS built + verified (both branches,
+  `modReduce_correct`). The reduction COST is documented:
   `modReduceToffoli n = 4n` (≈ 2 adders), `modMultToffoli n = 2n² + n·4n = 6n²` (≈ 3× the un-reduced
   multiply), `secp256k1ToffoliWithReduction = 3·6.0×10⁸ = 1.81×10⁹` — the honest reduction-complete
   baseline (the published `~10⁸` fold reduction into the per-multiply figure, so a like-for-like
-  comparison uses THIS, not the un-reduced `6.0×10⁸`; stated as a modelling assumption, not a fact).
-  Comparison VERIFIED, reduce-value VERIFIED for `x ≥ N`, conditional-control wrapper + cost DOCUMENTED.
+  comparison uses THIS, not the un-reduced `6.0×10⁸`; stated as a modelling assumption, not a fact). The
+  S6.3a exhibited circuit's derived cost is `modReduceCtrl_toffoli = 10n` (heavier than the `4n` estimate;
+  the controlled add-back is `8n`). Comparison VERIFIED, single-step reduce-value VERIFIED for BOTH
+  branches (S6.3a).
 4 new AxiomAudit pins. Auditor SOUND, no Blocker/Major (one Minor — softened the "published figures
 include reduction" prose to an attributed modelling assumption).
 
@@ -436,12 +440,12 @@ Jacobian **doubling** program, with:
 `_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
 fixed in the same commit).
 
-**Remaining (Phase 2):** **S6.3** the assembled reversible doubling/addition circuit (converts the
-`doublingToffoli`/`additionToffoli` bridges from bound-level to an exhibited-circuit derived count, with
-register routing + ancilla scheduling + in-place mod reduction between multiplies); S3 verified windowing;
-S5 measurement-aware DSL + Gidney adder; plus the full general `O(log n)` carry-lookahead adder (verified,
-large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE 2026-06-22; S2.3 quantum×quantum
-multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23; S6.2 addition M-count DONE 2026-06-24.)
+**Remaining (Phase 2):** **S6.3b** (uncompute pass + verified single modular field-multiply over `𝔽_p`),
+**S6.3c** (full doubling/addition assembly: bound-level → exhibited-circuit derived count); S3 verified
+windowing; S5 measurement-aware DSL + Gidney adder; plus the full general `O(log n)` carry-lookahead adder
+(verified, large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE 2026-06-22; S2.3
+quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23; S6.2 addition M-count
+DONE 2026-06-24; S6.3a complete single-step modular reduction DONE 2026-06-24.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -485,7 +489,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2 DONE; S6.3 next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a DONE; S6.3b next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -509,9 +513,22 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
   bound-level (assembled circuit = S6.3). On-curve `ZMod 17` witness (points (2,7,1),(1,5,1) on `y²=x³+7`,
   output `(1,5,16)`). 5 AxiomAudit pins (correctness + vector foundational-triple; `M_add_eq` axiom-free;
   toffoli `[propext]`).
-- **S6.3** — the assembled reversible doubling/addition circuit (register routing, ancilla scheduling,
-  in-place mod reduction between multiplies); converts the `doublingToffoli`/`additionToffoli` bridges from
-  bound-level to an exhibited-circuit derived count.
+- **S6.3 — exhibited verified circuit (Option 1, depth-faithful route).** Discharges the `⟦c⟧ = op`
+  denotation obligation that the cost-only reading skips (the programme's founding anti-hollow-cost
+  decision). Staged:
+  - **S6.3a DONE 2026-06-24** — the complete single-step modular-reduction circuit (`ModReduceCtrl.lean`,
+    auditor-SOUND). Closes S4's documented residue: `modReduce = rippleCirc(+2ⁿ−N) ++ X(flag) ++
+    cRippleCirc(+N)` with `modReduce_correct` verifying BOTH branches (`regValRange B = x mod N` for
+    `x<2N`), `modReduce_in_range` (output `< N`), derived cost `modReduceCtrl_toffoli = 10n` (vs S4's
+    documented `4n` — the controlled add-back is `8n`). Composes only verified primitives
+    (`rippleCirc_correct`, `rippleCirc_carryout`, `cRippleCirc_correct`). Residue: the comparison flag /
+    step-1 carries are left set (in-place reuse needs uncompute = S6.3b); full `2w`-bit product reduction
+    iterates this single-step primitive. 3 AxiomAudit pins.
+  - **S6.3b** — the uncompute pass (recompute + reverse the flag/step-1 carries so `B` ends clean for
+    in-place reuse) then the verified single modular field-multiply over `𝔽_p` (cMulCircuit + interleaved
+    modReduce). The verified-arithmetic atom of an exhibited point-op.
+  - **S6.3c** — the full doubling/addition assembly (compose 8/17 verified field-multiplies + adders),
+    converting `doublingToffoli`/`additionToffoli` from bound-level to an exhibited-circuit derived count.
 
 ## Recommended start
 **S1 (depth + space).** Highest value (multi-metric, comparison-enabling, matches how the literature

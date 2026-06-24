@@ -30,14 +30,18 @@ Modular reduction of `x` (with `x < 2N`) is **compare-and-conditional-subtract**
   computes `x mod N` into register `B`. A verified single-step modular reduction (the `x ≥ N` branch).
 * `mod_eq_sub_of_le_of_lt_two_mul` — the ℕ spec the circuit realises: `N ≤ x < 2N ⇒ x mod N = x − N`.
 
-## Documented residue (named, not built)
+## Residue — now CLOSED by S6.3a (`ModReduceCtrl.lean`)
 
-Making the subtract **conditional on the flag** in one reversible pass needs a flag-*controlled* adder
-(every `CX`→`CCX`, every `CCX`→ a 3-control gate), which inflates gate count and is control-heavier than
-this DSL is meant to carry; and the `x < N` branch is the identity (no subtract). The *cost* of the
-conditional subtract is therefore documented in `ResourceBounds.lean` (`modReduceToffoli`/`modMultToffoli`),
-composed over this verified comparison core, not exhibited as a circuit. So: comparison VERIFIED, reduce
-value VERIFIED for `x ≥ N`, the conditional-control wrapper DOCUMENTED.
+The flag-*controlled* conditional subtract (so the `x < N` branch is left untouched) was originally left
+as documented cost here, because it needs a controlled adder (`CX`→`CCX`, `CCX`→ 3-control). That wrapper
+is now **built and verified** in `Reversible/ModReduceCtrl.lean` (Stage S6.3a): `modReduce` composes this
+comparison core with S2's `cRippleCirc` (controlled add-back of `N` gated on the flipped flag), and
+`modReduce_correct` verifies the complete single-step reduction for **both** branches
+(`regValRange B = x mod N` for `x < 2N`), at a derived `10n` Toffolis (vs the `4n` documented estimate
+below). So `rippleCirc_modReduce_ge` here remains the `x ≥ N` corollary; the both-branch reducer is S6.3a.
+The original documented-cost note (kept for the historical estimate): the conditional-subtract cost lives
+in `ResourceBounds.lean` (`modReduceToffoli`/`modMultToffoli`), composed over this verified comparison
+core; that estimate is now superseded by the exhibited-circuit cost `modReduceCtrl_toffoli = 10n`.
 -/
 
 namespace Reversible
@@ -75,8 +79,8 @@ complement constant `2ⁿ − N` and register `B` holding `x` with `N ≤ x < 2N
 `B` holding `x mod N`. Proof: `rippleCirc_correct` gives `B ← (2ⁿ − N + x) mod 2ⁿ`; since `N ≤ x < 2ⁿ`
 the sum is `2ⁿ + (x − N)` with `x − N < 2ⁿ`, so the mod yields `x − N`, which equals `x mod N` by
 `Nat.mod_eq_sub_of_le_of_lt_two_mul`. The reduction *value* is therefore verified for the case that
-actually needs reducing; the flag-controlled wrapper (so the `x < N` case is left untouched) is the
-documented residue (`ResourceBounds.modReduceToffoli`). -/
+actually needs reducing; the flag-controlled wrapper (so the `x < N` case is left untouched) is now
+**built and verified** in `ModReduceCtrl.lean` (`modReduce_correct`, both branches) — S6.3a. -/
 theorem rippleCirc_modReduce_ge (L : RippleLayout m n) (s : State m) (hC0 : ∀ j, s (L.C j) = false)
     {N : ℕ} (hN : N ≤ 2 ^ n) (hA : regValRange L.A s n = 2 ^ n - N)
     (hge : N ≤ regValRange L.B s n) (hx2N : regValRange L.B s n < 2 * N) :
