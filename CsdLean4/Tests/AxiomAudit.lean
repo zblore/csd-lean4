@@ -31,6 +31,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -3399,5 +3400,27 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'ECDLP.doubling_toffoli_secp256k1' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.doubling_toffoli_secp256k1
+
+/-! ### ECDLP S6.2 concrete EC mixed addition: derived field-mult count (PointAdd.lean) -/
+
+/-- info: 'ECDLP.additionProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.additionProgram_correct
+
+/-- info: 'ECDLP.additionProgram_correct_vector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.additionProgram_correct_vector
+
+/-- info: 'ECDLP.M_add_eq' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.M_add_eq
+
+/-- info: 'ECDLP.addition_toffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.addition_toffoli_eq
+
+/-- info: 'ECDLP.addition_toffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.addition_toffoli_secp256k1
 
 end CSD.Tests.AxiomAudit

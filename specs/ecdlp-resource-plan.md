@@ -103,6 +103,7 @@ CsdLean4/Mathlib/QuantumInfo/ECDLP/ScalarMul.lean      -- Tranche 6: doubleAndAd
 CsdLean4/Mathlib/QuantumInfo/ECDLP/Secp256k1.lean      -- Tranche 7: secp256k1 curve params  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- Tranche 7 capstone: end-to-end Toffoli estimate  [DONE 2026-06-21, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/PointDouble.lean    -- S6.1: derived-cost SLP + a=0 doubling program, M_dbl=8 derived  [DONE 2026-06-23, GREEN]
+CsdLean4/Mathlib/QuantumInfo/ECDLP/PointAdd.lean       -- S6.2: a=0 mixed-addition program, M_add=17 derived (on-curve)  [DONE 2026-06-24, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -435,12 +436,12 @@ Jacobian **doubling** program, with:
 `_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
 fixed in the same commit).
 
-**Remaining (Phase 2):** **S6.2** mixed-addition program (derive `M_add`, replace documented `11`,
-reuse the S6.1 program model); **S6.3** the assembled reversible doubling/addition circuit (converts the
-`doublingToffoli` bridge from bound-level to an exhibited-circuit derived count); S3 verified windowing;
+**Remaining (Phase 2):** **S6.3** the assembled reversible doubling/addition circuit (converts the
+`doublingToffoli`/`additionToffoli` bridges from bound-level to an exhibited-circuit derived count, with
+register routing + ancilla scheduling + in-place mod reduction between multiplies); S3 verified windowing;
 S5 measurement-aware DSL + Gidney adder; plus the full general `O(log n)` carry-lookahead adder (verified,
 large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE 2026-06-22; S2.3 quantum×quantum
-multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23.)
+multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23; S6.2 addition M-count DONE 2026-06-24.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -484,7 +485,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1 DONE 2026-06-23)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2 DONE; S6.3 next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -493,8 +494,21 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
 - **S6.1 DONE 2026-06-23** — derived-cost SLP model + `a=0` doubling program, `doublingProgram_correct`
   (= Mathlib `dblX/dblY/dblZ`), **`M_dbl = 8` derived**, resource bridge (`64w²` bound). Correctness REUSED
   from Mathlib; count DERIVED; assembled circuit = residue. See the S2.3-status note above for detail.
-- **S6.2** — the mixed-addition program (`addXYZ`), derive `M_add` to replace the documented `11`, reusing
-  the S6.1 program model. The more error-prone schedule (more shared intermediates).
+- **S6.2 DONE 2026-06-24** — the mixed-addition program (`PointAdd.lean`, auditor-SOUND). Reuses the
+  S6.1 program model verbatim; adds the secp256k1 (`a=0`) Jacobian addition schedule.
+  `additionProgram_correct` (+ `_vector`): the three outputs equal `addX·(Pz·Qz)²`, `negAddY·(Pz·Qz)³`,
+  `−(Pz·Qz)·addZ`, i.e. `![…] = (−(Pz·Qz)) • addXYZ P Q`, a unit multiple of Mathlib's group-law
+  representative of `P+Q`. **Addition subtlety (not present in doubling):** Mathlib's RAW `addX` retains a
+  `2·a₆·Pz⁴·Qz⁴` term (secp256k1 `a₆=7≠0`), so the formula is NOT clean at `a=0` — the `Equation P`/
+  `Equation Q` hypotheses are LOAD-BEARING for the X/Y components (they eliminate that term via Mathlib's
+  `addX_eq'`), while `out_Z` is hypothesis-free. Auditor verified the asymmetry by probe (out_X fails to
+  close without `hP`; off-curve `out_X=5` vs raw `addX·(Pz·Qz)²=3`; on-curve they agree) — the a₆
+  subtlety is a real fact, not narrative. **`M_add = 17` DERIVED** (decide; 13 mul + 4 sq), honest vs the
+  EFD `add-2007-bl` 11M+5S=16 — one above, gap = un-shared products + the unfolded Z-update; reported,
+  not fudged. Resource bridge: `additionToffoli w = M_add·8w² = 136w²`, `additionToffoli 256 = 8 912 896`,
+  bound-level (assembled circuit = S6.3). On-curve `ZMod 17` witness (points (2,7,1),(1,5,1) on `y²=x³+7`,
+  output `(1,5,16)`). 5 AxiomAudit pins (correctness + vector foundational-triple; `M_add_eq` axiom-free;
+  toffoli `[propext]`).
 - **S6.3** — the assembled reversible doubling/addition circuit (register routing, ancilla scheduling,
   in-place mod reduction between multiplies); converts the `doublingToffoli`/`additionToffoli` bridges from
   bound-level to an exhibited-circuit derived count.
