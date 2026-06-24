@@ -105,6 +105,7 @@ CsdLean4/Mathlib/QuantumInfo/ECDLP/ResourceBounds.lean -- Tranche 7 capstone: en
 CsdLean4/Mathlib/QuantumInfo/ECDLP/PointDouble.lean    -- S6.1: derived-cost SLP + a=0 doubling program, M_dbl=8 derived  [DONE 2026-06-23, GREEN]
 CsdLean4/Mathlib/QuantumInfo/ECDLP/PointAdd.lean       -- S6.2: a=0 mixed-addition program, M_add=17 derived (on-curve)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModReduceCtrl.lean -- S6.3a: complete single-step modular reduction (both branches verified)  [DONE 2026-06-24, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAdd.lean   -- S6.3b: verified modular adder (a+b) mod N (add ++ modReduce)  [DONE 2026-06-24, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -440,12 +441,13 @@ Jacobian **doubling** program, with:
 `_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
 fixed in the same commit).
 
-**Remaining (Phase 2):** **S6.3b** (uncompute pass + verified single modular field-multiply over `𝔽_p`),
-**S6.3c** (full doubling/addition assembly: bound-level → exhibited-circuit derived count); S3 verified
-windowing; S5 measurement-aware DSL + Gidney adder; plus the full general `O(log n)` carry-lookahead adder
-(verified, large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE 2026-06-22; S2.3
-quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23; S6.2 addition M-count
-DONE 2026-06-24; S6.3a complete single-step modular reduction DONE 2026-06-24.)
+**Remaining (Phase 2):** **S6.3c** (controlled modular adder + interleaved modular field-multiply over
+`𝔽_p`; orthogonal: carry-clean adder), **S6.3d** (full doubling/addition assembly: bound-level →
+exhibited-circuit derived count); S3 verified windowing; S5 measurement-aware DSL + Gidney adder; plus the
+full general `O(log n)` carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2
+controlled adder DONE 2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling M-count
+DONE 2026-06-23; S6.2 addition M-count + S6.3a single-step modular reduction + S6.3b modular adder DONE
+2026-06-24.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -489,7 +491,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a DONE; S6.3b next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a+S6.3b DONE; S6.3c next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -522,12 +524,23 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
     `x<2N`), `modReduce_in_range` (output `< N`), derived cost `modReduceCtrl_toffoli = 10n` (vs S4's
     documented `4n` — the controlled add-back is `8n`). Composes only verified primitives
     (`rippleCirc_correct`, `rippleCirc_carryout`, `cRippleCirc_correct`). Residue: the comparison flag /
-    step-1 carries are left set (in-place reuse needs uncompute = S6.3b); full `2w`-bit product reduction
-    iterates this single-step primitive. 3 AxiomAudit pins.
-  - **S6.3b** — the uncompute pass (recompute + reverse the flag/step-1 carries so `B` ends clean for
-    in-place reuse) then the verified single modular field-multiply over `𝔽_p` (cMulCircuit + interleaved
-    modReduce). The verified-arithmetic atom of an exhibited point-op.
-  - **S6.3c** — the full doubling/addition assembly (compose 8/17 verified field-multiplies + adders),
+    step-1 carries are left set (clean reuse needs the carry-clean adders the corpus lacks); full `2w`-bit
+    product reduction iterates this single-step primitive. 3 AxiomAudit pins.
+  - **S6.3b DONE 2026-06-24** — the verified modular ADDER `(a,b) ↦ (a, (a+b) mod N)` (`ModularAdd.lean`,
+    auditor-SOUND). `modAdd = rippleCirc(addStep) ++ modReduce(reduceStep)`: chains the verified register
+    add (gives `B = a+b` exactly, no wrap, since `a+b < 2N ≤ 2ⁿ`) with S6.3a's verified `modReduce` (the
+    `a+b < 2N` bound is exactly what makes the single-step reduce apply). `modAdd_correct`
+    (`regValRange B = (a+b) mod N`), `modAdd_preserves_operand` (`Aop = a` intact), `modAdd_in_range`
+    (output `< N`), derived cost `modularAdd_toffoli = 12n` (add `2n` + reduce `10n`). Witness
+    `modAddLayout2 : ModAddLayout 25 3` (`n=3` is a genuine boundary: `2N ≤ 2ⁿ` so the add cannot wrap;
+    auditor verified the wrap counterexample at `n=2`). 4 AxiomAudit pins. **Honest scope:** the
+    value-correct modular-addition atom in the FRESH-ANCILLA model (carries `Cadd/C1/C2` + flag left dirty;
+    fresh wires per use ⟹ value-correct, but in-place reuse needs carry-clean adders); UNCONTROLLED.
+  - **S6.3c** — the controlled modular adder (`cModAdd = cRippleCirc(cAddStep) ++ modReduce`, the reduce
+    unconditional since `x < 2N` in both control branches) + the interleaved MSB-first double-and-reduce
+    modular MULTIPLY over `𝔽_p` (the verified field-mult atom). Orthogonal residue: the carry-clean /
+    ancilla-restoring adder (Cuccaro-style) the corpus lacks, needed for in-place reuse (qubit efficiency).
+  - **S6.3d** — the full doubling/addition assembly (compose 8/17 verified field-multiplies + adders),
     converting `doublingToffoli`/`additionToffoli` from bound-level to an exhibited-circuit derived count.
 
 ## Recommended start

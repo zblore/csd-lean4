@@ -26,6 +26,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
@@ -3259,6 +3260,24 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.modReduceCtrl_toffoli' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.modReduceCtrl_toffoli
+
+/-! ### ECDLP S6.3b modular adder (Reversible/ModularAdd.lean) -/
+
+/-- info: 'Reversible.modAdd_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modAdd_correct
+
+/-- info: 'Reversible.modAdd_preserves_operand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modAdd_preserves_operand
+
+/-- info: 'Reversible.modAdd_in_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modAdd_in_range
+
+/-- info: 'Reversible.modularAdd_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modularAdd_toffoli
 
 /-! ### ECDLP controlled addition (Reversible/CtrlAdd.lean, Phase 2 S2) -/
 
