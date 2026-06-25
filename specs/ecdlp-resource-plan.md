@@ -106,6 +106,7 @@ CsdLean4/Mathlib/QuantumInfo/ECDLP/PointDouble.lean    -- S6.1: derived-cost SLP
 CsdLean4/Mathlib/QuantumInfo/ECDLP/PointAdd.lean       -- S6.2: a=0 mixed-addition program, M_add=17 derived (on-curve)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModReduceCtrl.lean -- S6.3a: complete single-step modular reduction (both branches verified)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAdd.lean   -- S6.3b: verified modular adder (a+b) mod N (add ++ modReduce)  [DONE 2026-06-24, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAddCtrl.lean -- S6.3c: controlled modular adder if ctrl then (a+b) mod N else b  [DONE 2026-06-24, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -441,13 +442,13 @@ Jacobian **doubling** program, with:
 `_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
 fixed in the same commit).
 
-**Remaining (Phase 2):** **S6.3c** (controlled modular adder + interleaved modular field-multiply over
-`𝔽_p`; orthogonal: carry-clean adder), **S6.3d** (full doubling/addition assembly: bound-level →
-exhibited-circuit derived count); S3 verified windowing; S5 measurement-aware DSL + Gidney adder; plus the
-full general `O(log n)` carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2
-controlled adder DONE 2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling M-count
-DONE 2026-06-23; S6.2 addition M-count + S6.3a single-step modular reduction + S6.3b modular adder DONE
-2026-06-24.)
+**Remaining (Phase 2):** **S6.3d** (interleaved modular field-multiply over `𝔽_p`: Horner loop of `cModAdd`
++ modular doubling gadget), **S6.3e** (full doubling/addition assembly: bound-level → exhibited-circuit
+derived count); orthogonal: the carry-clean adder; S3 verified windowing; S5 measurement-aware DSL + Gidney
+adder; plus the full general `O(log n)` carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N`
+reduction + S2 controlled adder DONE 2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23; S6.1
+doubling M-count DONE 2026-06-23; S6.2 addition M-count DONE 2026-06-24; S6.3a single-step modular reduction
++ S6.3b modular adder + S6.3c controlled modular adder DONE 2026-06-24.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -491,7 +492,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a+S6.3b DONE; S6.3c next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a/b/c DONE; S6.3d next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -536,12 +537,25 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
     auditor verified the wrap counterexample at `n=2`). 4 AxiomAudit pins. **Honest scope:** the
     value-correct modular-addition atom in the FRESH-ANCILLA model (carries `Cadd/C1/C2` + flag left dirty;
     fresh wires per use ⟹ value-correct, but in-place reuse needs carry-clean adders); UNCONTROLLED.
-  - **S6.3c** — the controlled modular adder (`cModAdd = cRippleCirc(cAddStep) ++ modReduce`, the reduce
-    unconditional since `x < 2N` in both control branches) + the interleaved MSB-first double-and-reduce
-    modular MULTIPLY over `𝔽_p` (the verified field-mult atom). Orthogonal residue: the carry-clean /
-    ancilla-restoring adder (Cuccaro-style) the corpus lacks, needed for in-place reuse (qubit efficiency).
-  - **S6.3d** — the full doubling/addition assembly (compose 8/17 verified field-multiplies + adders),
+  - **S6.3c DONE 2026-06-24** — the controlled modular adder (`ModularAddCtrl.lean`, auditor-SOUND).
+    `cModAdd = cRippleCirc(cAddStep) ++ modReduce(reduceStep)`: controlled add (S2 `cRippleCirc`) chained
+    with the UNCONDITIONAL S6.3a reduce. `cModAdd_correct`: `regValRange B = if ctrl then (a+b) mod N else b`
+    — the reduce always runs but is the identity on the ¬ctrl branch because `b < N` is already a valid
+    residue (`Nat.mod_eq_of_lt`). + `cModAdd_preserves_operand` (`Aop=a`), `cModAdd_preserves_ctrl` (the
+    control bit read-only — the multiply loop needs this), `cModAdd_in_range` (`<N`), derived cost
+    `cModularAdd_toffoli = 18n` (controlled add `8n` + reduce `10n`). Witness `CModAddLayout 27 3`, both
+    branches (ctrl=true `2+2 mod 3 = 1`; ctrl=false `B` stays `2`). 5 AxiomAudit pins. The inner-loop
+    primitive of the modular multiply. (Auditor note: the `Fin 27` circuit `#eval` times out
+    [`Function.update`-fold pathology], so witness values are confirmed via the theorem, not independently —
+    an infra item to resolve before S6.3d's larger witnesses [Array/Vector-backed `State` or `@[reducible]`].)
+  - **S6.3d** — the interleaved MSB-first double-and-reduce modular MULTIPLY over `𝔽_p` (the verified
+    field-mult atom): Horner loop of `cModAdd` (controlled modular add of `Y` on each bit `X_i`) + a modular
+    DOUBLING gadget (`2·acc mod N`; the register-to-itself add needs distinct copy wires) + the loop
+    invariant `acc < N`.
+  - **S6.3e** — the full doubling/addition assembly (compose 8/17 verified field-multiplies + adders),
     converting `doublingToffoli`/`additionToffoli` from bound-level to an exhibited-circuit derived count.
+  - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
+    lacks, needed for in-place reuse (qubit efficiency); value-correctness works with fresh ancilla per step.
 
 ## Recommended start
 **S1 (depth + space).** Highest value (multi-metric, comparison-enabling, matches how the literature
