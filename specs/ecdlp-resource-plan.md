@@ -109,6 +109,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAdd.lean   -- S6.3b: verified mod
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAddCtrl.lean -- S6.3c: controlled modular adder if ctrl then (a+b) mod N else b  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/Eval.lean        -- fast Array evaluator runArr + proven bridge to denote (#eval cross-check harness)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularDouble.lean -- S6.3d-1: modular doubling 2a mod N (copyReg ++ modAdd)  [DONE 2026-06-24, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean  -- S6.3d-2a: Horner step (loop body) + proven n=2 modular multiply  [DONE 2026-06-24, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -444,14 +445,14 @@ Jacobian **doubling** program, with:
 `_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
 fixed in the same commit).
 
-**Remaining (Phase 2):** **S6.3d-2** (interleaved modular field-multiply over `𝔽_p`: Horner loop of
-`modDouble` + `cModAdd` + `acc<N` invariant), **S6.3e** (full doubling/addition assembly: bound-level →
-exhibited-circuit derived count); orthogonal: the carry-clean adder; S3 verified windowing; S5
-measurement-aware DSL + Gidney adder; plus the full general `O(log n)` carry-lookahead adder (verified,
-large). (S1 triple + S4 mod-`N` reduction + S2 controlled adder DONE 2026-06-22; S2.3 quantum×quantum
-multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23; S6.2 addition M-count DONE 2026-06-24;
-S6.3a single-step modular reduction + S6.3b modular adder + S6.3c controlled modular adder + S6.3d-1 modular
-doubling DONE 2026-06-24; Eval harness DONE 2026-06-24.)
+**Remaining (Phase 2):** **S6.3d-2b** (general-`n` Horner loop induction → verified modular field-multiply
+over `𝔽_p`), **S6.3e** (full doubling/addition assembly: bound-level → exhibited-circuit derived count);
+orthogonal: the carry-clean adder; S3 verified windowing; S5 measurement-aware DSL + Gidney adder; plus the
+full general `O(log n)` carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2
+controlled adder DONE 2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling M-count
+DONE 2026-06-23; S6.2 addition M-count DONE 2026-06-24; S6.3a single-step modular reduction + S6.3b modular
+adder + S6.3c controlled modular adder + S6.3d-1 modular doubling + S6.3d-2a Horner step/n=2 multiply +
+Eval harness DONE 2026-06-24.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -495,7 +496,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a/b/c/d-1 DONE; S6.3d-2 next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a/b/c/d-1/d-2a DONE; S6.3d-2b next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -562,10 +563,22 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
     degenerate-CNOT probe), derived cost `modDouble_toffoli = 12n` (copy `0` Toffoli + add `12n`; `n` CNOTs).
     Witness `#eval`-cross-checked via the Eval harness across 5 `a`-values incl. both wrap branches
     (`a=2→1`, `a=1→2`, `a=0→0`). 6 AxiomAudit pins. Residue: `Aop` left `=a` + carries dirty (fresh-ancilla).
-  - **S6.3d-2** — the interleaved MSB-first modular MULTIPLY over `𝔽_p` (the verified field-mult atom):
-    Horner loop composing `modDouble` (d-1) with `cModAdd` (controlled modular add of `Y` on each bit `X_i`,
-    S6.3c) + the running `acc < N` loop invariant. This is where the dirty-residue first bites (the loop
-    iterates the doubler/adder), forcing fresh per-iteration wires (O(n²) qubits) or the carry-clean adder.
+  - **S6.3d-2a DONE 2026-06-24** — the verified Horner STEP (the loop body) + a proven n=2 modular multiply
+    (`ModularMul.lean`, auditor-SOUND). `hornerStep = modDouble ++ cModAdd` (sharing accumulator `B`;
+    `cModAdd.Aop = Y`, `ctrl = X_i`): `hornerStep_correct` =
+    `regValRange B = (2*c + (if ctrl then Yval else 0)) mod N` (the loop body `acc ← (2·acc + [X_i]·Y) mod N`,
+    via mod-absorption of modDouble's inner reduce). + `hornerStep_in_range` (`<N`), `hornerStep_preserves_Y`
+    (multiplicand survives — load-bearing for the loop), derived cost `hornerStep_toffoli = 30n` (12n+18n).
+    **`mulStep2_correct`**: chaining two fresh-bank steps proves `acc = ((2*X₁ + X₀)·Yval) mod N` — a PROVEN
+    2-bit modular multiply, with a concrete `Fin 92` instance harness-cross-checked (X=3,2,1 → 0,1,2 at Y=2,
+    N=3). New composable frame lemmas (`modDouble`/`cModAdd`/`hornerStep`_preserves_external) carry the
+    general loop. 8 AxiomAudit pins. Residue: fresh per-iteration wires (Θ(n²) qubits); the general loop is d-2b.
+  - **S6.3d-2b** — the general-`n` Horner loop: fold `hornerStep` over all bits (induction with the invariant
+    `acc_k = (X / 2^{n-k} · Y) mod N`), the inductive step = `mulStep2_correct`'s chaining generalised, the
+    `hp_*` preservation discharged uniformly from `hornerStep_preserves_external` + an n-bank disjointness
+    schema. (Audit risk, per the d-2a referee: keep that schema inhabitable for growing `n` — bounded
+    injectivity, no unbounded `ℕ→Fin m` vacuity trap.) Closes the verified modular field-multiply at Θ(n²)
+    ancilla; the orthogonal carry-clean Θ(n) adder remains.
   - **S6.3e** — the full doubling/addition assembly (compose 8/17 verified field-multiplies + adders),
     converting `doublingToffoli`/`additionToffoli` from bound-level to an exhibited-circuit derived count.
   - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
