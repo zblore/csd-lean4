@@ -107,6 +107,7 @@ CsdLean4/Mathlib/QuantumInfo/ECDLP/PointAdd.lean       -- S6.2: a=0 mixed-additi
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModReduceCtrl.lean -- S6.3a: complete single-step modular reduction (both branches verified)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAdd.lean   -- S6.3b: verified modular adder (a+b) mod N (add ++ modReduce)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularAddCtrl.lean -- S6.3c: controlled modular adder if ctrl then (a+b) mod N else b  [DONE 2026-06-24, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/Eval.lean        -- fast Array evaluator runArr + proven bridge to denote (#eval cross-check harness)  [DONE 2026-06-24, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -545,9 +546,11 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
     control bit read-only — the multiply loop needs this), `cModAdd_in_range` (`<N`), derived cost
     `cModularAdd_toffoli = 18n` (controlled add `8n` + reduce `10n`). Witness `CModAddLayout 27 3`, both
     branches (ctrl=true `2+2 mod 3 = 1`; ctrl=false `B` stays `2`). 5 AxiomAudit pins. The inner-loop
-    primitive of the modular multiply. (Auditor note: the `Fin 27` circuit `#eval` times out
-    [`Function.update`-fold pathology], so witness values are confirmed via the theorem, not independently —
-    an infra item to resolve before S6.3d's larger witnesses [Array/Vector-backed `State` or `@[reducible]`].)
+    primitive of the modular multiply. (Eval-infra caveat RESOLVED — `Reversible/Eval.lean` (2026-06-24):
+    a strict `Array Bool` evaluator `runArr` with the proven bridge `runArr_apply`/`regValRangeArr_eq`
+    makes circuit outputs `#eval`-able instantly; the `Fin 27` `cModAdd` witness now cross-checks
+    theorem-independently — ctrl=true `(2+2) mod 3 = 1`, ctrl=false `B=2`, `Aop=2` — certified equal to the
+    `regValRange (denote …)` the theorems use.)
   - **S6.3d** — the interleaved MSB-first double-and-reduce modular MULTIPLY over `𝔽_p` (the verified
     field-mult atom): Horner loop of `cModAdd` (controlled modular add of `Y` on each bit `X_i`) + a modular
     DOUBLING gadget (`2·acc mod N`; the register-to-itself add needs distinct copy wires) + the loop

@@ -28,6 +28,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
+import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
@@ -3301,6 +3302,20 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.cModularAdd_toffoli' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.cModularAdd_toffoli
+
+/-! ### ECDLP fast Array-based circuit evaluator + bridge (Reversible/Eval.lean) -/
+
+/-- info: 'Reversible.applyGate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.applyGate_apply
+
+/-- info: 'Reversible.runArr_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.runArr_apply
+
+/-- info: 'Reversible.regValRangeArr_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.regValRangeArr_eq
 
 /-! ### ECDLP controlled addition (Reversible/CtrlAdd.lean, Phase 2 S2) -/
 
