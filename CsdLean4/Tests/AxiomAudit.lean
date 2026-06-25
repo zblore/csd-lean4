@@ -31,6 +31,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
@@ -3391,6 +3392,36 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.mulLoopUpto_preserves' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.mulLoopUpto_preserves
+
+/-! ### ECDLP S6.3e-1 modular subtraction a-b mod N (Reversible/ModularSub.lean) -/
+
+/-- info: 'Reversible.modSub_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modSub_correct
+
+/-- info: 'Reversible.modSub_preserves_subtrahend' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modSub_preserves_subtrahend
+
+/-- info: 'Reversible.modSub_in_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modSub_in_range
+
+/-- info: 'Reversible.modSub_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modSub_toffoli
+
+/-- info: 'Reversible.rippleSub_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleSub_correct
+
+/-- info: 'Reversible.rippleSub_borrowout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.rippleSub_borrowout
+
+/-- info: 'Reversible.fullSub_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.fullSub_correct
 
 /-! ### ECDLP fast Array-based circuit evaluator + bridge (Reversible/Eval.lean) -/
 
