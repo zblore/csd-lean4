@@ -28,6 +28,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
@@ -3302,6 +3303,32 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.cModularAdd_toffoli' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.cModularAdd_toffoli
+
+/-! ### ECDLP S6.3d-1 modular doubling (Reversible/ModularDouble.lean) -/
+
+/-- info: 'Reversible.modDouble_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modDouble_correct
+
+/-- info: 'Reversible.modDouble_in_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modDouble_in_range
+
+/-- info: 'Reversible.copyReg_correct_operand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.copyReg_correct_operand
+
+/-- info: 'Reversible.copyReg_correct_B' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.copyReg_correct_B
+
+/-- info: 'Reversible.modDouble_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modDouble_toffoli
+
+/-- info: 'Reversible.copyReg_cnot' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.copyReg_cnot
 
 /-! ### ECDLP fast Array-based circuit evaluator + bridge (Reversible/Eval.lean) -/
 
