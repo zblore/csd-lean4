@@ -406,6 +406,32 @@ theorem cuccaroAdd_ancilla_clean (L : CuccaroLayout m n) (s : State m) (hZ : s L
       (fun i _ => by simpa using (L.hBZ i).symm)
   rw [cuccaroAdd, hP3, hZ]
 
+/-- **The carry-in wire is restored unconditionally.** The ancilla `Z` is returned to *its input
+value* for **every** input state (not only `false`): clause P3 of `cuccaroRec_correct` carries no
+hypothesis on `s Z`. This is the lemma the clean subtractor (`cuccaroSub`) needs to pin the ancilla of
+an `inverse`-image state. `cuccaroAdd_ancilla_clean` is the `s Z = false` specialisation. -/
+theorem cuccaroAdd_preserves_Z (L : CuccaroLayout m n) (s : State m) :
+    denote (cuccaroAdd L) s L.Z = s L.Z := by
+  obtain ⟨-, -, hP3, -⟩ :=
+    cuccaroRec_correct L n 0 L.Z s (by omega)
+      (fun i _ => by simpa using (L.hAZ i).symm)
+      (fun i _ => by simpa using (L.hBZ i).symm)
+  rw [cuccaroAdd]; exact hP3
+
+/-- **External wires are preserved unconditionally.** A wire distinct from the ancilla `Z` and from
+every used wire of registers `A`, `B` (indices `< n`) is left unchanged, for **every** input state
+(clause P4 of `cuccaroRec_correct` carries no `s Z` hypothesis). The frame lemma that lets a clean
+modular adder thread several Cuccaro passes past its constant / work / flag registers. -/
+theorem cuccaroAdd_preserves_external (L : CuccaroLayout m n) (s : State m) (w : Fin m)
+    (hwZ : w ≠ L.Z) (hwA : ∀ i, i < n → w ≠ L.A i) (hwB : ∀ i, i < n → w ≠ L.B i) :
+    denote (cuccaroAdd L) s w = s w := by
+  obtain ⟨-, -, -, hP4⟩ :=
+    cuccaroRec_correct L n 0 L.Z s (by omega)
+      (fun i _ => by simpa using (L.hAZ i).symm)
+      (fun i _ => by simpa using (L.hBZ i).symm)
+  rw [cuccaroAdd]
+  exact hP4 w hwZ (fun i hi => by simpa using hwA i hi) (fun i hi => by simpa using hwB i hi)
+
 /-! ### Derived cost: 2n Toffolis -/
 
 theorem cuccaroRec_toffoli (L : CuccaroLayout m n) (carry : Fin m) (start len : ℕ) :

@@ -118,6 +118,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouterDoubling.lean -- S6.3e-2b S
 CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssembly.lean -- S6.3e-2b STEP 3: mulLoop_preserves_X (missing multiplier-preservation lemma) + mul/nsmul single-step folds through compile_correct (bit circuit COMPUTES field op mod p) + M_dbl=8 over the verified gadget. SCOPED: representative one-step programs, NOT full doubling (8-mulLoop/17-step + sq-copy gap = thousands of lines)  [PARTIAL DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssemblyOps.lean -- S6.3e-2b STEP 4: sq/add/sub single-step folds through compile_correct (sq copy-wrapper for disjoint X/Y; add/sub via addWrap/subWrap) + modAdd/modSub_preserves_block + all_six_opcodes_through_fold (6-conjunct). CLOSES per-opcode field-correctness infra  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean -- carry-clean adder STAGE 1: in-place ancilla-restoring Cuccaro adder A<-(A+B) mod 2^n (maj/uma + cuccaroRec); cuccaroAdd_correct/_preserves_B/_ancilla_clean/_toffoli=2n, general n  [DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean -- carry-clean adder STAGE 2: modular adder (a+b) mod N, FULL clean (flag/carry-out/Mask/Z restored); cuccaroModAdd_correct/_clean/_preserves_operand/_toffoli=12n+10 + cuccaroSub; general n. Win=Theta(n) qubits (Toffoli still 12n)  [DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -711,12 +712,25 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
     (one ancilla, no Θ(n) dirty carry chain). Witness `cuccaroLayout3` (`5+6 mod 8 = 3`, B intact, Z clean)
     `#eval`-cross-checked. 4 pins. **Honest scope: `mod 2ⁿ` only** (no `mod N` reduction — Stage 2). This is
     Stage 1 of collapsing the verified-arith secp256k1 figure (`secp256k1ToffoliVerifiedArith`'s ~15× tax).
-    - **STAGE 2 (next)** — the carry-clean MODULAR adder/multiply: wrap `cuccaroAdd` with a conditional
-      subtract-`N` (reuse the high carry / borrow-gated add-back), giving `~2n` per modular add and `~2n²`
-      per modular multiply with Θ(n) qubits (vs the current 12n / 30n² / Θ(n²)). Call-site contract: each
-      reuse must re-establish `s Z = false` (thread `cuccaroAdd_ancilla_clean`).
-    - **STAGE 3** — re-derive `secp256k1ToffoliVerifiedArith` with the `~2n²` per-multiply, collapsing the
-      ~15× factor toward the literature `~10⁸`.
+    - **STAGE 2 DONE 2026-06-26** (`Reversible/CuccaroModAdd.lean`, auditor-SOUND, general `n`): the carry-clean
+      MODULAR adder `B/Acc ← (a+b) mod N`. Beauregard flag-uncompute (recompare result vs preserved `b`) +
+      a **masked-constant trick** (`Mask ^= flag·N` then a plain clean add, avoiding a C³X for the conditional
+      add-back). `cuccaroModAdd_correct` (`(a+b) % N`, both branches), **`cuccaroModAdd_clean`** (ALL scratch
+      restored: flag, carry-out `Acc[n]`, every `Mask[j]`, ancilla `Z` — full clean-ness, the Θ(n)-qubit-reuse
+      enabler), `cuccaroModAdd_preserves_operand` (incl. the top padding wires `B[n]`/`Nreg[n]`, F1-extended for
+      the loop), `cuccaroModAdd_toffoli = 12n+10`. Supporting: `cuccaroSub = inverse cuccaroAdd`, `maskCopy`,
+      `regValRange_top_bit`; + `cuccaroAdd_preserves_Z`/`_external`. Both branches `#eval`-cross-checked, all
+      flags clean. 4 pins. **HONEST PAYOFF CORRECTION:** the clean modular add is still `12n` Toffoli (same as
+      the dirty `modAdd` — modular reduction is irreducibly ~5 adder-passes in a measurement-free DSL). The
+      carry-clean prize is the **Θ(n) reusable qubit count** (vs Θ(n²) fresh-ancilla), NOT a big Toffoli drop;
+      the per-multiply Toffoli collapse is only `30n² → ~12n²` (~2.5×), landing the figure ~5×10⁹ not ~10⁸ (the
+      gap to ~10⁸ needs Gidney measurement adders, inexpressible in this DSL).
+    - **STAGE 2b (next)** — the carry-clean MODULAR multiply `cuccaroModMul`: fold `cuccaroModAdd` over the
+      multiplicand bits with ONE reused `{Mask,flag,Z}` scratch bank + `Acc`/`Nreg`/operand (Θ(n) total).
+      Needs a `flag`-gated whole-add (again via masked-operand copy, no controlled adder). Each iteration
+      re-establishes `hBtop`/`hNtop`/`hMask0`/`hflag`/`hZ`/`hAccTop` via the Stage-2 clean lemmas.
+    - **STAGE 3** — re-derive `secp256k1ToffoliVerifiedArith` with the `~12n²` clean per-multiply (~5×10⁹) and
+      the **Θ(n) verified qubit count**; document the honest ~2.5× Toffoli / big-qubit split.
   - Older framing: value-correctness already works with fresh ancilla per step; Stage 1 removes the qubit-
     efficiency residue at the adder level (modular wrapping + figure re-cost are Stages 2-3).
 
