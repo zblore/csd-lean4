@@ -116,6 +116,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean -- S6.3e-2a: modular c
 CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouter.lean -- S6.3e-2b STEP 1: SLP->circuit router infra (RegBlockLayout + ZMod p bridge + compile_correct fold + modNeg worked instance)  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouterDoubling.lean -- S6.3e-2b STEP 2: compileInstr dispatcher + frame lemmas + copyReg-wrapped adders + M_dbl=8 EXHIBITED count (full assembly walled, see STEP 3)  [PARTIAL DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssembly.lean -- S6.3e-2b STEP 3: mulLoop_preserves_X (missing multiplier-preservation lemma) + mul/nsmul single-step folds through compile_correct (bit circuit COMPUTES field op mod p) + M_dbl=8 over the verified gadget. SCOPED: representative one-step programs, NOT full doubling (8-mulLoop/17-step + sq-copy gap = thousands of lines)  [PARTIAL DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssemblyOps.lean -- S6.3e-2b STEP 4: sq/add/sub single-step folds through compile_correct (sq copy-wrapper for disjoint X/Y; add/sub via addWrap/subWrap) + modAdd/modSub_preserves_block + all_six_opcodes_through_fold (6-conjunct). CLOSES per-opcode field-correctness infra  [DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -509,7 +510,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1 + STEP 2 + STEP 3 PARTIAL DONE — gadget set CLOSED + router infra + dispatcher + M_dbl=8 EXHIBITED + mul/nsmul PROVEN field-correct through compile_correct at literal n (mulLoop_preserves_X); full doubling assembly remaining = 8-mulLoop/17-step + sq-copy-wrapper + 2^256-preset helper)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (PER-OPCODE INFRA CLOSED: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1–4 DONE — gadget set + router + dispatcher + M_dbl=8 EXHIBITED + ALL SIX opcodes PROVEN field-correct through compile_correct [neg/mul/nsmul/sq/add/sub, `all_six_opcodes_through_fold`]. Residue: full multi-step doublingProgram layout assembly [~1200 wires, mechanical] + secp256k1 width [2^256 digit-extraction helper] + carry-clean adder [orthogonal qubit residue])
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -682,9 +683,24 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       reads block `i` twice, so a faithful `sq` needs a `copyReg` of block `i` into a fresh multiplier block
       first (the 4 `sq` opcodes of `doublingProgram` each hit this); (c) the `2^n` presets at `n = 256` (STEP 2
       wall, unchanged).
-    - **S6.3e-2b STEP 3 (remaining)** — the full `doublingProgram` assembly: the 8-`mulLoop`/17-step `hstep`
-      discharge + the `sq`-copy-wrapper in `compileInstr` + the `regValRange`-of-binary-digits preset helper
-      (for `n = 256`). Mechanical at literal `n`, ~thousands of lines.
+    - **S6.3e-2b STEP 4 DONE 2026-06-26** (`Reversible/DoublingAssemblyOps.lean`, auditor-SOUND): the
+      per-opcode fold CLOSURE. `sq`/`add`/`sub` one-step programs proven field-correct through the REAL
+      `compile_correct` fold (`sq_step_assembly_correct` = `(a·a)%p` via a faithful `sqStep = copyReg ++
+      mulLoop` copy-wrapper placing X/Y on DISJOINT wires; `add_step_assembly_correct` = `(a+b)%p` via
+      `addWrap_correct`+`add_bridge`; `sub_step_assembly_correct` = `(a−b)` in `ZMod p` via `subWrap_correct`+
+      `sub_bridge`, exercising the `a<b` wraparound `(1−2 : ZMod 3).val = 2`) + the new register-block frame
+      lemmas `modAdd_preserves_block`/`modSub_preserves_block` + `all_six_opcodes_through_fold` (a 6-conjunct
+      bundling neg/mul/nsmul/sq/add/sub — name and type agree, all six witnessed). `#eval`-cross-checked
+      (sq→1, add→1, sub→2). 9 pins. **This CLOSES the per-opcode field-correctness infrastructure of the
+      router:** every `Instr` kind is now a verified bit-circuit computing its `ZMod p` field op through the
+      fold. The `sq` copy-wrapper lives at the assembly layer (`compileInstr` unmodified, STEP 2 count
+      lemmas untouched). Honest residue: the one-step programs leave the fold's heterogeneous multi-step
+      `hpre_frame` induction unexercised — that lives only in the full assembly.
+    - **S6.3e-2b STEP 5 (residue, OPTIONAL — declared low-payoff plumbing)** — the full multi-step
+      `doublingProgram` assembly: the 8-`mulLoop`/17-step `hstep` discharge in one ambient `Fin m` (~1200
+      wires, ~45 `omega` fields/bank, thousands of lines), mechanical at literal `n`. Its only product is
+      "exhibited at scale"; the conceptual content (every op a verified circuit, `M_dbl=8`) is already done.
+      Plus the `regValRange`-of-binary-digits preset helper for the secp256k1 `n=256` width.
     - **S6.3e-3** — the addition formula assembly + the full point-op resource triple.
   - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
     lacks, needed for in-place reuse (qubit efficiency); value-correctness works with fresh ancilla per step.

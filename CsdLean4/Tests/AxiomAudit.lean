@@ -3569,6 +3569,44 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.doubling_field_mul_count_eq_8_verified
 
+/-! ### ECDLP per-opcode fold closure STEP 4 (Reversible/DoublingAssemblyOps.lean) -/
+
+/-- info: 'Reversible.modAdd_preserves_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modAdd_preserves_block
+
+/-- info: 'Reversible.modSub_preserves_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modSub_preserves_block
+
+/-- info: 'Reversible.sq_step_assembly_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.sq_step_assembly_correct
+
+/-- info: 'Reversible.sq_step_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.sq_step_value
+
+/-- info: 'Reversible.add_step_assembly_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.add_step_assembly_correct
+
+/-- info: 'Reversible.add_step_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.add_step_value
+
+/-- info: 'Reversible.sub_step_assembly_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.sub_step_assembly_correct
+
+/-- info: 'Reversible.sub_step_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.sub_step_value
+
+/-- info: 'Reversible.all_six_opcodes_through_fold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.all_six_opcodes_through_fold
+
 /-! ### ECDLP fast Array-based circuit evaluator + bridge (Reversible/Eval.lean) -/
 
 /-- info: 'Reversible.applyGate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
