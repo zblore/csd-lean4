@@ -117,6 +117,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouter.lean -- S6.3e-2b STEP 1: S
 CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouterDoubling.lean -- S6.3e-2b STEP 2: compileInstr dispatcher + frame lemmas + copyReg-wrapped adders + M_dbl=8 EXHIBITED count (full assembly walled, see STEP 3)  [PARTIAL DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssembly.lean -- S6.3e-2b STEP 3: mulLoop_preserves_X (missing multiplier-preservation lemma) + mul/nsmul single-step folds through compile_correct (bit circuit COMPUTES field op mod p) + M_dbl=8 over the verified gadget. SCOPED: representative one-step programs, NOT full doubling (8-mulLoop/17-step + sq-copy gap = thousands of lines)  [PARTIAL DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssemblyOps.lean -- S6.3e-2b STEP 4: sq/add/sub single-step folds through compile_correct (sq copy-wrapper for disjoint X/Y; add/sub via addWrap/subWrap) + modAdd/modSub_preserves_block + all_six_opcodes_through_fold (6-conjunct). CLOSES per-opcode field-correctness infra  [DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean -- carry-clean adder STAGE 1: in-place ancilla-restoring Cuccaro adder A<-(A+B) mod 2^n (maj/uma + cuccaroRec); cuccaroAdd_correct/_preserves_B/_ancilla_clean/_toffoli=2n, general n  [DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -702,8 +703,22 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       "exhibited at scale"; the conceptual content (every op a verified circuit, `M_dbl=8`) is already done.
       Plus the `regValRange`-of-binary-digits preset helper for the secp256k1 `n=256` width.
     - **S6.3e-3** — the addition formula assembly + the full point-op resource triple.
-  - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
-    lacks, needed for in-place reuse (qubit efficiency); value-correctness works with fresh ancilla per step.
+  - **Carry-clean adder STAGE 1 DONE 2026-06-26** (`Reversible/CuccaroAdd.lean`, auditor-SOUND, general `n`):
+    the in-place ancilla-restoring Cuccaro adder the corpus lacked. `maj`/`uma` 3-gate blocks (kernel-`decide`
+    correct) → recursive `cuccaroAdd` (MAJ-forward/UMA-backward via `cuccaroRec`). `cuccaroAdd_correct`
+    (`A ← (A+B) mod 2ⁿ` in place), `cuccaroAdd_preserves_B`, **`cuccaroAdd_ancilla_clean`** (the carry wire `Z`
+    restored to `false` — THE reuse-enabling property, verified at heavy carry), `cuccaroAdd_toffoli = 2n`
+    (one ancilla, no Θ(n) dirty carry chain). Witness `cuccaroLayout3` (`5+6 mod 8 = 3`, B intact, Z clean)
+    `#eval`-cross-checked. 4 pins. **Honest scope: `mod 2ⁿ` only** (no `mod N` reduction — Stage 2). This is
+    Stage 1 of collapsing the verified-arith secp256k1 figure (`secp256k1ToffoliVerifiedArith`'s ~15× tax).
+    - **STAGE 2 (next)** — the carry-clean MODULAR adder/multiply: wrap `cuccaroAdd` with a conditional
+      subtract-`N` (reuse the high carry / borrow-gated add-back), giving `~2n` per modular add and `~2n²`
+      per modular multiply with Θ(n) qubits (vs the current 12n / 30n² / Θ(n²)). Call-site contract: each
+      reuse must re-establish `s Z = false` (thread `cuccaroAdd_ancilla_clean`).
+    - **STAGE 3** — re-derive `secp256k1ToffoliVerifiedArith` with the `~2n²` per-multiply, collapsing the
+      ~15× factor toward the literature `~10⁸`.
+  - Older framing: value-correctness already works with fresh ancilla per step; Stage 1 removes the qubit-
+    efficiency residue at the adder level (modular wrapping + figure re-cost are Stages 2-3).
 
 ## Recommended start
 **S1 (depth + space).** Highest value (multi-metric, comparison-enabling, matches how the literature
