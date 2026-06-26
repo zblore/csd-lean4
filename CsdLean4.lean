@@ -164,6 +164,7 @@ import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.QM.Algorithms.Simon
+import CsdLean4.Empirical.QM.Algorithms.BernsteinVazirani
 import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
 import CsdLean4.Empirical.QM.Algorithms.ShorRecovery

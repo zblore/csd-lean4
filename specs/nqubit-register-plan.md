@@ -1,8 +1,8 @@
 # n-qubit register + quantum-algorithm branch — plan
 
-The enabling infrastructure for the QM-validity algorithm tier (Deutsch–Jozsa, Simon, QFT, Grover,
-Shor). Drafted 2026-06-05. Status: **COMPLETE 2026-06-08.** R1–R5 + Grover done 2026-06-06;
-(Simon added 2026-06-26 — single-register Hadamard, reuses the R4 infra.)
+The enabling infrastructure for the QM-validity algorithm tier (Deutsch–Jozsa, Simon, Bernstein–Vazirani,
+QFT, Grover, Shor). Drafted 2026-06-05. Status: **COMPLETE 2026-06-08.** R1–R5 + Grover done 2026-06-06;
+(Simon + Bernstein–Vazirani added 2026-06-26 — single-register Hadamard, reuse the R4 infra.)
 the full **Shor's algorithm** (quantum core M1/M1.5/S4 + classical recovery S5 + factoring
 S6 + random-`a` success S7/S7-gen + factoring capstone) done 2026-06-07/08. See
 [`shor-plan.md`](shor-plan.md). This is deliberate coverage breadth (validity suite),

@@ -124,6 +124,7 @@ import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.QM.Algorithms.Simon
+import CsdLean4.Empirical.QM.Algorithms.BernsteinVazirani
 import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
 import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
@@ -844,6 +845,27 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.Simon.cosetState_normalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Simon.cosetState_normalized
+
+-- Bernstein-Vazirani: the FULL phase-oracle circuit H^⊗n ∘ U_f ∘ H^⊗n on |0ⁿ⟩ for the hidden
+-- linear function f_a(x) = ⟨a,x⟩. The 𝔽₂ character sum ∑ₓ (-1)^⟨z,x⟩ = 2ⁿ·[z=0]
+-- (bitInner_char_sum) collapses the output amplitude to the Kronecker delta δ_{y,a}
+-- (bv_amplitude), so the hidden a is measured with certainty (bv_certain) and every other
+-- outcome has probability 0 (bv_zero). One query. Foundational triple.
+/-- info: 'CSD.Empirical.QM.BernsteinVazirani.bitInner_char_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BernsteinVazirani.bitInner_char_sum
+
+/-- info: 'CSD.Empirical.QM.BernsteinVazirani.bv_amplitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BernsteinVazirani.bv_amplitude
+
+/-- info: 'CSD.Empirical.QM.BernsteinVazirani.bv_certain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BernsteinVazirani.bv_certain
+
+/-- info: 'CSD.Empirical.QM.BernsteinVazirani.bv_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BernsteinVazirani.bv_zero
 
 -- Grover (R5+): amplitude amplification of a marked item w. The genuine reflection operators
 -- oracle = I - 2|w⟩⟨w| and diffusion = 2|s⟩⟨s| - I keep the evolution in the 2D (|w⟩, rest)
