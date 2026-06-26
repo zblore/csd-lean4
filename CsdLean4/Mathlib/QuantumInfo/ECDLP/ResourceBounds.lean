@@ -2,6 +2,8 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 
 /-!
 # ECDLP / secp256k1 resource estimate — the capstone  (ECDLP Tranche 7)
@@ -337,5 +339,112 @@ theorem secp256k1QubitsBaseline_eq : secp256k1QubitsBaseline = 65536 := by
 /-- **Space-optimal qubit width** (documented, ancilla reuse not modelled in the allocate-only DSL):
 `O(n)` ⇒ the published `~2330` logical qubits for 256-bit ECDLP. -/
 def secp256k1QubitsOptimized : ℕ := 2330
+
+/-! ### H1 — secp256k1 figure from the verified modular arithmetic
+
+The figures above (`secp256k1ToffoliRefined`, `…WithReduction`, the tiered cost model) cost every field
+multiplication with the **Tranche-3 schoolbook multiplier** `multToffoli n = 2n²` — a *quantum × classical*,
+**reduction-free** count — and fix the per-point-op field-mult counts to the *documented* EFD `7`/`11`.
+The S6.3 programme has since produced something stronger and value-correct: a **verified** modular field
+multiply `X·Y mod N` (`Reversible.mulLoop_correct`) whose Toffoli cost is *derived*
+(`Reversible.mulLoop_toffoli : (circuitCost (mulLoop L)).toffoli = 30·n²`), **reduction INCLUDED**
+(Horner double-and-reduce: each of the `n` steps is `modDouble` `12n` + `cModAdd` `18n`), *quantum × quantum*;
+and the per-point-op field-mult counts `M_dbl = 8` (`ECDLP.M_dbl_eq`, one `a=0` doubling) and `M_add = 17`
+(`ECDLP.M_add_eq`, one mixed addition) are now *derived* off the verified SLP programs, not read from the EFD.
+
+This section closes hole **H1** by rebuilding the secp256k1 figure from the corpus's OWN verified gadget
+cost (`30n²`, reduction-included, q×q) and the DERIVED `M_dbl`/`M_add` (`8`/`17`), in place of the
+schoolbook `2n²` and the documented `7`/`11`. The result (~`1.3×10¹⁰`) is ~21× the schoolbook
+`secp256k1ToffoliRefined` (`6.0×10⁸`); the gap is named honestly in `secp256k1ToffoliVerifiedArith`'s
+docstring. **Neither number is "the cost to break secp256k1":** the verified-arith figure is an honest
+upper bound on the *exhibited unoptimised verified circuit*; the schoolbook figure is a thinner, more
+optimistic accounting. -/
+
+/-- **Per-field-multiply Toffoli cost, verified.** `30·n²` — the derived cost of the value-correct
+general-`n` modular field multiply `X·Y mod N` (`Reversible.mulLoop_toffoli`), **reduction INCLUDED** (the
+Horner double-and-reduce: each of the `n` steps is `modDouble` `12n` + `cModAdd` `18n`), *quantum × quantum*.
+This replaces the schoolbook `multToffoli n = 2n²` (quantum × classical, reduction-free) used in the
+figures above. The link to the verified circuit is the theorem `verifiedModMulToffoli_eq_mulLoop`. -/
+def verifiedModMulToffoli (n : ℕ) : ℕ := 30 * n ^ 2
+
+/-- **The verified-arithmetic link.** `verifiedModMulToffoli n` is exactly the derived Toffoli cost of the
+value-correct modular field multiply, for any concrete `n`-bit multiply-loop layout
+(`Reversible.mulLoop_toffoli`). This makes the citation in `verifiedModMulToffoli`'s docstring a theorem,
+not a comment. -/
+theorem verifiedModMulToffoli_eq_mulLoop {m n : ℕ} (L : MulLoopLayout m n) :
+    verifiedModMulToffoli n = (circuitCost (mulLoop L)).toffoli :=
+  (mulLoop_toffoli L).symm
+
+theorem verifiedModMulToffoli_secp256k1 : verifiedModMulToffoli Secp256k1.bits = 1966080 := by
+  norm_num [verifiedModMulToffoli, Secp256k1.bits]
+
+/-- Verified-arithmetic cost of one `a=0` elliptic-curve **doubling**: `M_dbl` derived field multiplies
+(`= 8`), each the verified `verifiedModMulToffoli` (`30w²`). Closed form `240·w²`. -/
+def verifiedDoublingToffoli (w : ℕ) : ℕ := M_dbl * verifiedModMulToffoli w
+
+theorem verifiedDoublingToffoli_eq (w : ℕ) : verifiedDoublingToffoli w = 240 * w ^ 2 := by
+  simp only [verifiedDoublingToffoli, M_dbl_eq, verifiedModMulToffoli]; ring
+
+theorem verifiedDoublingToffoli_secp256k1 : verifiedDoublingToffoli Secp256k1.bits = 15728640 := by
+  rw [verifiedDoublingToffoli_eq]; norm_num [Secp256k1.bits]
+
+/-- Verified-arithmetic cost of one **mixed** elliptic-curve **addition**: `M_add` derived field
+multiplies (`= 17`), each the verified `verifiedModMulToffoli` (`30w²`). Closed form `510·w²`. -/
+def verifiedAdditionToffoli (w : ℕ) : ℕ := M_add * verifiedModMulToffoli w
+
+theorem verifiedAdditionToffoli_eq (w : ℕ) : verifiedAdditionToffoli w = 510 * w ^ 2 := by
+  simp only [verifiedAdditionToffoli, M_add_eq, verifiedModMulToffoli]; ring
+
+theorem verifiedAdditionToffoli_secp256k1 : verifiedAdditionToffoli Secp256k1.bits = 33423360 := by
+  rw [verifiedAdditionToffoli_eq]; norm_num [Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the verified-arithmetic Toffoli figure (H1).** The worst-case double-and-add
+operation count `≤ Secp256k1.bits · (M_dbl + M_add)` (one doubling and at most one addition per bit, the
+derived counts `8`/`17`) times the verified per-field-multiply cost `verifiedModMulToffoli Secp256k1.bits`
+(`30·256²`, reduction-included, q×q). The analogue of `secp256k1ToffoliRefined` with the corpus's OWN
+verified gadget in place of the schoolbook `2n²` and the derived `M_dbl`/`M_add` in place of the EFD
+`7`/`11`.
+
+**Honest positioning vs `secp256k1ToffoliRefined` (`6.0×10⁸`).** This figure is `12 582 912 000 ≈
+1.3×10¹⁰`, about **21× higher**, decomposing as `≈15× (per-multiply) × ≈1.4× (M-count)`:
+**(a) per-multiply, ×15** — the schoolbook figure costs each multiply at `2n²` *quantum × classical* and
+**reduction-free**, whereas `verifiedModMulToffoli` is `30n²` *quantum × quantum* with the **modular
+reduction included** (the verified Horner double-and-reduce: `30/2 = 15`); the *cause* of the `30`-vs-`2`
+constant is the absent **carry-clean adder** — the corpus's verified gadgets allocate fresh ancilla per
+step (`Θ(n²)` qubits, the orthogonal `Θ(n²)→Θ(n)` residue), where an in-place Cuccaro/Takahashi-class
+adder would bring the per-multiply count back toward the standard `2n²`. **(b) M-count, ×1.4** — the
+derived per-op field-multiply counts rose to `M_dbl + M_add = 25` (8 + 17) from the EFD `7 + 11 = 18`
+(`25/18 ≈ 1.39`). So this is an honest **upper bound on the exhibited unoptimised verified circuit**,
+reduction-complete and value-correct; `secp256k1ToffoliRefined` is a thinner, more optimistic accounting.
+Neither is "the cost to break secp256k1".
+
+**Honesty on the width.** The per-multiply cost formula `mulLoop_toffoli = 30n²` is unconditional in `n`,
+but the value-correctness witness (`mulLoop_correct` with its full hypothesis bundle jointly discharged)
+is exhibited concretely only at `n = 3` (`wMulLoop`); the `n = 256` figure is the proven cost-formula
+**extrapolation** of that verified gadget family, not a separately-exhibited 256-bit value-correct
+circuit. (The `n`-general layout inhabitability is asserted in `ModularMulLoop.lean`, not formally
+exhibited at 256.) -/
+def secp256k1ToffoliVerifiedArith : ℕ :=
+  Secp256k1.bits * (M_dbl + M_add) * verifiedModMulToffoli Secp256k1.bits
+
+/-- The verified-arithmetic figure evaluates to `12 582 912 000 ≈ 1.3×10¹⁰` Toffolis: `256` bits ×
+`(8 + 17) = 25` field mults/bit × `30·256² = 1 966 080` Toffolis per reduction-included field multiply. -/
+theorem secp256k1ToffoliVerifiedArith_eq : secp256k1ToffoliVerifiedArith = 12582912000 := by
+  norm_num [secp256k1ToffoliVerifiedArith, M_dbl_eq, M_add_eq, verifiedModMulToffoli, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the verified-arithmetic scalar-multiplication bound (H1).** For a scalar `k`
+with `Nat.size k ≤ Secp256k1.bits`, the double-and-add field-multiply count weighted by the DERIVED
+per-op counts `M_dbl`/`M_add`, times the verified per-field-multiply cost
+`verifiedModMulToffoli Secp256k1.bits`, is at most `secp256k1ToffoliVerifiedArith`. Mirrors
+`secp256k1_scalarMul_toffoli_refined` with the verified `30n²` gadget and the derived `8`/`17` in place of
+the schoolbook `2n²` and the EFD `7`/`11`. -/
+theorem secp256k1_scalarMul_toffoli_verified_arith (k : ℕ) (hk : Nat.size k ≤ Secp256k1.bits) :
+    doubleAndAddWeightedCost M_dbl M_add k * verifiedModMulToffoli Secp256k1.bits
+      ≤ secp256k1ToffoliVerifiedArith := by
+  calc doubleAndAddWeightedCost M_dbl M_add k * verifiedModMulToffoli Secp256k1.bits
+      ≤ Nat.size k * (M_dbl + M_add) * verifiedModMulToffoli Secp256k1.bits := by
+        gcongr; exact doubleAndAddWeightedCost_le M_dbl M_add k
+    _ ≤ Secp256k1.bits * (M_dbl + M_add) * verifiedModMulToffoli Secp256k1.bits := by gcongr
+    _ = secp256k1ToffoliVerifiedArith := rfl
 
 end ECDLP.ResourceBounds

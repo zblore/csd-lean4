@@ -3759,6 +3759,40 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1ToffoliWithReduction_eq
 
+/-! ### ECDLP H1 secp256k1 figure from the verified modular arithmetic (ResourceBounds.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.verifiedModMulToffoli_eq_mulLoop' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedModMulToffoli_eq_mulLoop
+
+/-- info: 'ECDLP.ResourceBounds.verifiedModMulToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedModMulToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.verifiedDoublingToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedDoublingToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.verifiedDoublingToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedDoublingToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.verifiedAdditionToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedAdditionToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.verifiedAdditionToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedAdditionToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliVerifiedArith_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliVerifiedArith_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_verified_arith' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_verified_arith
+
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
 /-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
