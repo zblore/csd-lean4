@@ -123,6 +123,7 @@ import CsdLean4.Empirical.QM.Hardy
 import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
+import CsdLean4.Empirical.QM.Algorithms.Simon
 import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
 import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
@@ -817,6 +818,32 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_balanced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.DeutschJozsa.deutsch_jozsa_balanced
+
+-- Simon's algorithm (single-register reduced analysis): H^⊗n on the coset state
+-- (1/√2)(|x₀⟩+|x₀⊕s⟩). The general Hadamard entry collects per-qubit signs into one parity
+-- sign (Hn_apply_inner), giving amplitude (1/√2)^{n+1}·(-1)^⟨x₀,y⟩·(1+(-1)^⟨s,y⟩)
+-- (simon_amplitude). Hence prob = 0 when ⟨s,y⟩ odd (simon_orthogonal, the Simon promise:
+-- every outcome ⊥ s) and prob = 2/2ⁿ when ⟨s,y⟩ even (simon_uniform, uniform on s^⊥); the
+-- coset state is normalised for s ≠ 0 (cosetState_normalized). Foundational triple.
+/-- info: 'CSD.Empirical.QM.Simon.Hn_apply_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Simon.Hn_apply_inner
+
+/-- info: 'CSD.Empirical.QM.Simon.simon_amplitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Simon.simon_amplitude
+
+/-- info: 'CSD.Empirical.QM.Simon.simon_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Simon.simon_orthogonal
+
+/-- info: 'CSD.Empirical.QM.Simon.simon_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Simon.simon_uniform
+
+/-- info: 'CSD.Empirical.QM.Simon.cosetState_normalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Simon.cosetState_normalized
 
 -- Grover (R5+): amplitude amplification of a marked item w. The genuine reflection operators
 -- oracle = I - 2|w⟩⟨w| and diffusion = 2|s⟩⟨s| - I keep the evolution in the 2D (|w⟩, rest)
