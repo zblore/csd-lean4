@@ -34,6 +34,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouter
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
@@ -3452,6 +3453,52 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.modNeg_toffoli' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.modNeg_toffoli
+
+/-! ### ECDLP SLP → circuit router STEP 1 (Reversible/ProgramRouter.lean) -/
+
+/-- info: 'Reversible.contigBlock_injOn' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.contigBlock_injOn
+
+/-- info: 'Reversible.add_bridge' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.add_bridge
+
+/-- info: 'Reversible.mul_bridge' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mul_bridge
+
+/-- info: 'Reversible.nsmul_bridge' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.nsmul_bridge
+
+/-- info: 'Reversible.neg_bridge' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.neg_bridge
+
+/-- info: 'Reversible.sub_bridge' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.sub_bridge
+
+/-- info: 'Reversible.modSub_preserves_external' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modSub_preserves_external
+
+/-- info: 'Reversible.router_holds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.router_holds
+
+/-- info: 'Reversible.compile_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.compile_correct
+
+/-- info: 'Reversible.worked_compile_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.worked_compile_correct
+
+/-- info: 'Reversible.worked_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.worked_value
 
 /-! ### ECDLP fast Array-based circuit evaluator + bridge (Reversible/Eval.lean) -/
 

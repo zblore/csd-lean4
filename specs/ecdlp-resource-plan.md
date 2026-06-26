@@ -113,6 +113,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean  -- S6.3d-2a: Horner ste
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean -- S6.3d-2b: VERIFIED general-n modular field-multiply X·Y mod N (mulLoop_correct)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean  -- S6.3e-1: modular subtraction a-b mod N (fullSub ripple + borrow-gated add-back)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean -- S6.3e-2a: modular const-multiply c*a mod N (repeated modAdd) + negation -b mod N (modSub @ 0)  [DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouter.lean -- S6.3e-2b STEP 1: SLP->circuit router infra (RegBlockLayout + ZMod p bridge + compile_correct fold + modNeg worked instance)  [DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -457,7 +458,9 @@ DONE 2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling
 S6.2 addition M-count DONE 2026-06-24; S6.3a single-step modular reduction + S6.3b modular adder + S6.3c
 controlled modular adder + S6.3d-1 modular doubling + S6.3d-2a Horner step/n=2 multiply + S6.3d-2b verified
 modular field-multiply `X·Y mod N` + **S6.3e-1 modular subtraction** + Eval harness DONE 2026-06-24;
-**S6.3e-2a modular const-multiply `c·a mod N` + negation `−b mod N` DONE 2026-06-26** — gadget set complete.)
+**S6.3e-2a modular const-multiply `c·a mod N` + negation `−b mod N` DONE 2026-06-26** — gadget set complete;
+**S6.3e-2b STEP 1 SLP→circuit router infrastructure DONE 2026-06-26** — `ProgramRouter.lean`, the
+`RegBlockLayout` schema + `ZMod p` opcode bridge + `compile_correct` SSA fold + worked instance.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -501,7 +504,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a DONE — modular field-op gadget set CLOSED; S6.3e-2b SLP assembly next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1 DONE — gadget set CLOSED + router infra built; S6.3e-2b STEP 2 = doubling assembly next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -618,6 +621,20 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       the `a=0` doubling formula (S6.1's `doublingProgram`), proving the assembled circuit computes
       `dblX/dblY/dblZ mod p` over `ZMod p` (consuming `mulLoop_correct` etc.), with register routing +
       fresh per-op ancilla. This is where `M = 8` becomes an EXHIBITED-circuit Toffoli count.
+      - **STEP 1 DONE 2026-06-26** (`Reversible/ProgramRouter.lean`, auditor-SOUND): the router
+        INFRASTRUCTURE. `RegBlockLayout` scalable register-block schema (`contigBlock_injOn`: contiguous
+        stride `k·n+i` injective for EVERY `numRegs` with `numRegs·n ≤ m` — the audit-flagged scaling
+        axis, proven) + the six-opcode `ℕ-%p ↔ ZMod p .val` bridge (`add/mul/nsmul/neg/sub_bridge`; the
+        genuinely-new one is `sub_bridge`, truncation-safe `(x.val+p−y.val)%p` handling wraparound unlike
+        Mathlib's `ZMod.val_sub`; the rest are thin Mathlib restatements incl. `neg_bridge = ZMod.neg_val'`)
+        + the abstract SSA fold `router_holds`/`compile_correct` (final block holds
+        `(evalProgram inputs prog out).val`, a genuine induction threading the register-file invariant +
+        precondition transport, NOT a hypothesis-shuffling tautology — auditor's highest-risk item, cleared)
+        + a 2-gadget `modNeg` worked instance (`neg(neg 3)=3`, harness-`#eval`-cross-checked via `runArr`).
+        New frame lemma `modSub_preserves_external`. 11 pins, foundational-triple-only. **STEP 2 (next):**
+        the per-opcode `compileInstr` dispatcher (incl. `copyReg`-wrapping the in-place `add`/`sub` so SSA
+        output is a fresh block) + the full `doublingProgram` run through `compile_correct` to exhibit
+        `M_dbl = 8` as a router-level count; route the concrete layout through `contigBlock` (audit Finding 6).
     - **S6.3e-3** — the addition formula assembly + the full point-op resource triple.
   - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
     lacks, needed for in-place reuse (qubit efficiency); value-correctness works with fresh ancilla per step.
