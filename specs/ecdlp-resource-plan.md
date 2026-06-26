@@ -119,6 +119,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssembly.lean -- S6.3e-2b STEP 3
 CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssemblyOps.lean -- S6.3e-2b STEP 4: sq/add/sub single-step folds through compile_correct (sq copy-wrapper for disjoint X/Y; add/sub via addWrap/subWrap) + modAdd/modSub_preserves_block + all_six_opcodes_through_fold (6-conjunct). CLOSES per-opcode field-correctness infra  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean -- carry-clean adder STAGE 1: in-place ancilla-restoring Cuccaro adder A<-(A+B) mod 2^n (maj/uma + cuccaroRec); cuccaroAdd_correct/_preserves_B/_ancilla_clean/_toffoli=2n, general n  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean -- carry-clean adder STAGE 2: modular adder (a+b) mod N, FULL clean (flag/carry-out/Mask/Z restored); cuccaroModAdd_correct/_clean/_preserves_operand/_toffoli=12n+10 + cuccaroSub; general n. Win=Theta(n) qubits (Toffoli still 12n)  [DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean -- carry-clean adder STAGE 2b: modular MULTIPLY (X*Y) mod N via Horner, ONE reused scratch bank (Theta(n) qubits); cuccaroModDouble(6n+4, rotChain+parity, N odd)/cuccaroCModAdd(14n+10)/cuccaroModMul_correct/_clean/_preserves_XY/_toffoli=20n^2+14n; general n  [DONE 2026-06-27, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -725,12 +726,23 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       carry-clean prize is the **Θ(n) reusable qubit count** (vs Θ(n²) fresh-ancilla), NOT a big Toffoli drop;
       the per-multiply Toffoli collapse is only `30n² → ~12n²` (~2.5×), landing the figure ~5×10⁹ not ~10⁸ (the
       gap to ~10⁸ needs Gidney measurement adders, inexpressible in this DSL).
-    - **STAGE 2b (next)** — the carry-clean MODULAR multiply `cuccaroModMul`: fold `cuccaroModAdd` over the
-      multiplicand bits with ONE reused `{Mask,flag,Z}` scratch bank + `Acc`/`Nreg`/operand (Θ(n) total).
-      Needs a `flag`-gated whole-add (again via masked-operand copy, no controlled adder). Each iteration
-      re-establishes `hBtop`/`hNtop`/`hMask0`/`hflag`/`hZ`/`hAccTop` via the Stage-2 clean lemmas.
-    - **STAGE 3** — re-derive `secp256k1ToffoliVerifiedArith` with the `~12n²` clean per-multiply (~5×10⁹) and
-      the **Θ(n) verified qubit count**; document the honest ~2.5× Toffoli / big-qubit split.
+    - **STAGE 2b DONE 2026-06-27** (`Reversible/CuccaroModMul.lean`, auditor-SOUND, general `n`): the carry-clean
+      MODULAR multiply `Acc ← (X·Y) mod N` via MSB-first Horner, ONE reused scratch bank (Θ(n) total, NOT n banks).
+      Two clean sub-gadgets: `cuccaroModDouble` (`2a mod N` via an in-place wire shift `rotChain` + reduce, cost
+      `6n+4`) and `cuccaroCModAdd` (bit-gated `Acc += if ctrl then Y else 0 mod N` via masked-operand copy, cost
+      `14n+10`). `cuccaroModMul_correct` (`(X·Y)%N`, induction mirroring `mulLoop_invariant`), **`cuccaroModMul_clean`**
+      (the shared bank — `Acc[n]`/`flag`/all `Mask`/all `Mask2`/`Z` — restored ∀ step, the Θ(n)-reuse soundness),
+      `cuccaroModMul_preserves_XY`, `cuccaroModMul_toffoli = 20n²+14n`. **Load-bearing hyp `hNodd : N % 2 = 1`**
+      (the doubler's flag uncomputes by parity `[2a<N] = ¬((2a mod N) mod 2)`, sound ONLY for odd `N`; holds for the
+      ECDLP prime field, surfaced honestly — fails for even `N`). My suggested copy-add-uncopy doubler was found to
+      NOT clean (the copy register holds `a`, not 0, after the add); the rotChain+parity route is the genuine clean
+      doubler. 10 pins. **Honest cost: `20n²+14n` per multiply, ~1.5× better than the dirty `30n²`** (NOT the ~12n²
+      I earlier estimated; modular reduction per step stays irreducible). The prize remains the **Θ(n) qubit count**.
+    - **STAGE 3 (next)** — re-derive `secp256k1ToffoliVerifiedArith` with the clean `20n²+14n` per-multiply
+      (`cuccaroModMul_toffoli`): figure ≈ `256·25·(20·256²+14·256) ≈ 8.4×10⁹` (vs the `30n²`-based `1.26×10¹⁰`,
+      ~1.5×) PLUS the **Θ(n) verified qubit count** (the real win, one shared scratch bank). Document the honest
+      ~1.5× Toffoli / Θ(n²)→Θ(n) qubit split; the ~10⁸ literature Toffoli remains out of reach (needs Gidney
+      measurement adders, inexpressible in this DSL).
   - Older framing: value-correctness already works with fresh ancilla per step; Stage 1 removes the qubit-
     efficiency residue at the adder level (modular wrapping + figure re-cost are Stages 2-3).
 
