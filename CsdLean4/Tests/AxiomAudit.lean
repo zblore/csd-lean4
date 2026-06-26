@@ -3535,6 +3535,40 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.worked_value
 
+/-! ### ECDLP SLP → circuit STEP 3: PROVEN gadget assembly (Reversible/DoublingAssembly.lean) -/
+
+/-- info: 'Reversible.hornerStep_preserves_ctrl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.hornerStep_preserves_ctrl
+
+/-- info: 'Reversible.mulLoop_preserves_X' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulLoop_preserves_X
+
+/-- info: 'Reversible.mulLoop_preserves_ctrl_wire' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulLoop_preserves_ctrl_wire
+
+/-- info: 'Reversible.nsmul_step_assembly_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.nsmul_step_assembly_correct
+
+/-- info: 'Reversible.nsmul_step_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.nsmul_step_value
+
+/-- info: 'Reversible.mul_step_assembly_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mul_step_assembly_correct
+
+/-- info: 'Reversible.mul_step_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mul_step_value
+
+/-- info: 'Reversible.doubling_field_mul_count_eq_8_verified' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.doubling_field_mul_count_eq_8_verified
+
 /-! ### ECDLP fast Array-based circuit evaluator + bridge (Reversible/Eval.lean) -/
 
 /-- info: 'Reversible.applyGate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/

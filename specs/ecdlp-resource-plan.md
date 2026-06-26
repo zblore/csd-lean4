@@ -115,6 +115,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean  -- S6.3e-1: modular sub
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean -- S6.3e-2a: modular const-multiply c*a mod N (repeated modAdd) + negation -b mod N (modSub @ 0)  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouter.lean -- S6.3e-2b STEP 1: SLP->circuit router infra (RegBlockLayout + ZMod p bridge + compile_correct fold + modNeg worked instance)  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouterDoubling.lean -- S6.3e-2b STEP 2: compileInstr dispatcher + frame lemmas + copyReg-wrapped adders + M_dbl=8 EXHIBITED count (full assembly walled, see STEP 3)  [PARTIAL DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/DoublingAssembly.lean -- S6.3e-2b STEP 3: mulLoop_preserves_X (missing multiplier-preservation lemma) + mul/nsmul single-step folds through compile_correct (bit circuit COMPUTES field op mod p) + M_dbl=8 over the verified gadget. SCOPED: representative one-step programs, NOT full doubling (8-mulLoop/17-step + sq-copy gap = thousands of lines)  [PARTIAL DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -508,7 +509,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1 + STEP 2 DONE — gadget set CLOSED + router infra + dispatcher + M_dbl=8 EXHIBITED; full assembly walled at symbolic n / 2^256 presets → STEP 3 = small-fixed-n full doubling assembly)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1 + STEP 2 + STEP 3 PARTIAL DONE — gadget set CLOSED + router infra + dispatcher + M_dbl=8 EXHIBITED + mul/nsmul PROVEN field-correct through compile_correct at literal n (mulLoop_preserves_X); full doubling assembly remaining = 8-mulLoop/17-step + sq-copy-wrapper + 2^256-preset helper)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -658,9 +659,32 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
         the wall (`contigBlock_injOn` settles it). Realistic full assembly = small-fixed-`n` doubling
         (eight literal-`n` `mulLoop`s + const/sub layouts + 17-step heterogeneous `hstep`) → **S6.3e-2b
         STEP 3**.
-    - **S6.3e-2b STEP 3 (next)** — the small-fixed-`n` full `doublingProgram` assembly through
-      `compile_correct` (the 17-step heterogeneous `hstep` discharge; ~thousands of lines, mechanical not
-      walled at fixed literal `n`).
+    - **S6.3e-2b STEP 3 PARTIAL DONE 2026-06-26** (`Reversible/DoublingAssembly.lean`, GREEN, 8 pins
+      foundational-triple-only): the `⟦c⟧ = op` payoff at literal `n` for the genuine field/const multiply.
+      (1) **`mulLoop_preserves_X`** (+ `hornerStep_preserves_ctrl`, `mulLoop_preserves_ctrl_wire`) — the
+      MISSING multiplier-register preservation lemma STEP 1/STEP 2 lacked (only `B`/`Y` were tracked); the
+      multiplier is an INPUT block, required preserved by `compile_correct`'s frame; proved via
+      `cModAdd_preserves_ctrl` + `hCtrlTouch`. (2) **`mul_step_assembly_correct`** — `[.mul 1 0]` over
+      `ZMod 3` on `wMulLoop`/`wState`: the bit circuit COMPUTES the field multiply, output block =
+      `(evalProgram [2,2] [.mul 1 0] 2).val = (reg1·reg0).val`, via the verified SSA fold (`mul`-step value
+      `= 1`). (3) **`nsmul_step_assembly_correct`** — `[.nsmul 3 0]` over `ZMod 5` on
+      `constMulLayout2`/`constMulState`: output block = `(evalProgram [4] [.nsmul 3 0] 1).val = 2`. (4)
+      **`doubling_field_mul_count_eq_8_verified`** — `M_dbl = 8` (`doubling_mulLoop_emissions_eq_8`) over the
+      `mulLoop` gadget kind STEP 3 now proves field-correct. `mul`/`nsmul` `#eval`-cross-checked (`= 1`, `= 2`),
+      certified `= denote` by `regValRangeArr_eq`.
+      **SCOPED (loudly): the full `doublingProgram` (dblX/dblY/dblZ over `ZMod p`) is NOT assembled.** Per the
+      sanctioned staging, STEP 3 scopes the PROGRAM (representative one-step `mul`/`nsmul`), not the claim
+      (each headline lands on full `evalProgram`-`.val` strength). Three walls block the full doubling, two
+      NEWLY surfaced: (a) eight literal-`n` `mulLoop`s + const/sub banks in one `Fin m` (~1200+ wires) with a
+      17-step `hstep` framing against ~20 blocks + every ancilla bank ≈ thousands of layout-boilerplate lines;
+      (b) **NEW: `sq` needs a copy-wrapper the dispatcher lacks** — `compileInstr (.sq i) = mulLoop`, but the
+      `mulLoop` multiplier `X` and multiplicand `Y` must be on DISJOINT wires (`hCtrlTouch`), while `sq i`
+      reads block `i` twice, so a faithful `sq` needs a `copyReg` of block `i` into a fresh multiplier block
+      first (the 4 `sq` opcodes of `doublingProgram` each hit this); (c) the `2^n` presets at `n = 256` (STEP 2
+      wall, unchanged).
+    - **S6.3e-2b STEP 3 (remaining)** — the full `doublingProgram` assembly: the 8-`mulLoop`/17-step `hstep`
+      discharge + the `sq`-copy-wrapper in `compileInstr` + the `regValRange`-of-binary-digits preset helper
+      (for `n = 256`). Mechanical at literal `n`, ~thousands of lines.
     - **S6.3e-3** — the addition formula assembly + the full point-op resource triple.
   - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
     lacks, needed for in-place reuse (qubit efficiency); value-correctness works with fresh ancilla per step.
