@@ -114,6 +114,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean -- S6.3d-2b: VERIFIE
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean  -- S6.3e-1: modular subtraction a-b mod N (fullSub ripple + borrow-gated add-back)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean -- S6.3e-2a: modular const-multiply c*a mod N (repeated modAdd) + negation -b mod N (modSub @ 0)  [DONE 2026-06-26, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouter.lean -- S6.3e-2b STEP 1: SLP->circuit router infra (RegBlockLayout + ZMod p bridge + compile_correct fold + modNeg worked instance)  [DONE 2026-06-26, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ProgramRouterDoubling.lean -- S6.3e-2b STEP 2: compileInstr dispatcher + frame lemmas + copyReg-wrapped adders + M_dbl=8 EXHIBITED count (full assembly walled, see STEP 3)  [PARTIAL DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -460,7 +461,10 @@ controlled modular adder + S6.3d-1 modular doubling + S6.3d-2a Horner step/n=2 m
 modular field-multiply `X·Y mod N` + **S6.3e-1 modular subtraction** + Eval harness DONE 2026-06-24;
 **S6.3e-2a modular const-multiply `c·a mod N` + negation `−b mod N` DONE 2026-06-26** — gadget set complete;
 **S6.3e-2b STEP 1 SLP→circuit router infrastructure DONE 2026-06-26** — `ProgramRouter.lean`, the
-`RegBlockLayout` schema + `ZMod p` opcode bridge + `compile_correct` SSA fold + worked instance.)
+`RegBlockLayout` schema + `ZMod p` opcode bridge + `compile_correct` SSA fold + worked instance;
+**S6.3e-2b STEP 2 dispatcher + M_dbl=8 exhibited DONE 2026-06-26** — `ProgramRouterDoubling.lean`,
+`compileInstr` + frame/copyReg-wrapper lemmas + opcode-count `M_dbl=8` (full proven assembly = STEP 3,
+walled by nonlinear-stride `omega` + `2^256` preset decidability at symbolic/secp256k1 width).)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -504,7 +508,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1 DONE — gadget set CLOSED + router infra built; S6.3e-2b STEP 2 = doubling assembly next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a + e-2b STEP 1 + STEP 2 DONE — gadget set CLOSED + router infra + dispatcher + M_dbl=8 EXHIBITED; full assembly walled at symbolic n / 2^256 presets → STEP 3 = small-fixed-n full doubling assembly)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -631,10 +635,32 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
         `(evalProgram inputs prog out).val`, a genuine induction threading the register-file invariant +
         precondition transport, NOT a hypothesis-shuffling tautology — auditor's highest-risk item, cleared)
         + a 2-gadget `modNeg` worked instance (`neg(neg 3)=3`, harness-`#eval`-cross-checked via `runArr`).
-        New frame lemma `modSub_preserves_external`. 11 pins, foundational-triple-only. **STEP 2 (next):**
-        the per-opcode `compileInstr` dispatcher (incl. `copyReg`-wrapping the in-place `add`/`sub` so SSA
-        output is a fresh block) + the full `doublingProgram` run through `compile_correct` to exhibit
-        `M_dbl = 8` as a router-level count; route the concrete layout through `contigBlock` (audit Finding 6).
+        New frame lemma `modSub_preserves_external`. 11 pins, foundational-triple-only.
+      - **STEP 2 PARTIAL DONE 2026-06-26** (`Reversible/ProgramRouterDoubling.lean`, GREEN, 8 pins
+        foundational-triple-only): the per-opcode `compileInstr` dispatcher (`StepGadgets m n → Instr →
+        Circuit m`, six `rfl` dispatch equations `compileInstr_{mul,sq,add,sub,nsmul,neg}`) + the two
+        missing per-gadget external frame lemmas `mulLoop_preserves_external` /
+        `modConstMul_preserves_external` (+ `*_preserves_block` register forms) + the `copyReg`-wrapped
+        SSA-fresh adders `addWrap_correct` (`(a+b)%N`) / `subWrap_correct` (`(a+N−b)%N`) + the **`M_dbl=8`
+        EXHIBITED count**: `doubling_mulLoop_emissions : (doublingProgram.filter emitsFieldMul).length =
+        M_dbl` and `…_eq_8` (via `mulLoopEmissions_eq_mulCount` + `compileInstr_emits_mulLoop`: each
+        `mul`/`sq` emits exactly one `mulLoop` gadget), so `M=8` is now a property of the dispatched
+        circuit's gadget list, not a free parameter. `mul`+`nsmul` dispatch paths `#eval`-cross-checked on
+        the verified `wMulLoop` / `constMulLayout2` witnesses (`X·Y mod 3 = 2`; `3·2 mod 5 = 1`).
+        **GENUINE WALL (not weakened to compile, reported):** the full `doublingProgram` run through
+        `compile_correct` (assembled bit-circuit = secp256k1 doubling over `ZMod p`) is BLOCKED by two
+        infra walls — (1) a parametric general-`n` `mulLoop` layout is impossible by `omega` because the
+        inter-bank offset is `perBankStride(n)·j` (product of two variables, nonlinear) for symbolic `n`;
+        the corpus only inhabits `mulLoop` at literal `n=3` (`wMulLoop`, stride 42), so a full assembly
+        needs eight literal-`n` `mulLoop`s at distinct bases in one ambient `Fin m`; (2) at secp256k1
+        width `n=256` the presets `A1=2ⁿ−N`, `A2=N` cannot be discharged by `decide` on a concrete state
+        (no `regValRange`-of-binary-digits extraction lemma in corpus). The schema's INHABITABILITY is NOT
+        the wall (`contigBlock_injOn` settles it). Realistic full assembly = small-fixed-`n` doubling
+        (eight literal-`n` `mulLoop`s + const/sub layouts + 17-step heterogeneous `hstep`) → **S6.3e-2b
+        STEP 3**.
+    - **S6.3e-2b STEP 3 (next)** — the small-fixed-`n` full `doublingProgram` assembly through
+      `compile_correct` (the 17-step heterogeneous `hstep` discharge; ~thousands of lines, mechanical not
+      walled at fixed literal `n`).
     - **S6.3e-3** — the addition formula assembly + the full point-op resource triple.
   - Orthogonal residue across S6.3d/e: the carry-clean / ancilla-restoring (Cuccaro-style) adder the corpus
     lacks, needed for in-place reuse (qubit efficiency); value-correctness works with fresh ancilla per step.

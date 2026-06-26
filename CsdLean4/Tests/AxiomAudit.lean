@@ -35,6 +35,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouter
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouterDoubling
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
@@ -3495,6 +3496,40 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.worked_compile_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.worked_compile_correct
+
+/-! ### ECDLP SLP → circuit dispatcher STEP 2 (Reversible/ProgramRouterDoubling.lean) -/
+
+/-- info: 'Reversible.mulLoop_preserves_external' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulLoop_preserves_external
+
+/-- info: 'Reversible.modConstMul_preserves_external' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.modConstMul_preserves_external
+
+/-- info: 'Reversible.addWrap_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.addWrap_correct
+
+/-- info: 'Reversible.subWrap_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.subWrap_correct
+
+/-- info: 'Reversible.compileInstr_emits_mulLoop' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.compileInstr_emits_mulLoop
+
+/-- info: 'Reversible.mulLoopEmissions_eq_mulCount' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.mulLoopEmissions_eq_mulCount
+
+/-- info: 'Reversible.doubling_mulLoop_emissions' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.doubling_mulLoop_emissions
+
+/-- info: 'Reversible.doubling_mulLoop_emissions_eq_8' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.doubling_mulLoop_emissions_eq_8
 
 /-- info: 'Reversible.worked_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
