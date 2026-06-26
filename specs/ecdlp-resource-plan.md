@@ -112,6 +112,7 @@ CsdLean4/Mathlib/QuantumInfo/Reversible/ModularDouble.lean -- S6.3d-1: modular d
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean  -- S6.3d-2a: Horner step (loop body) + proven n=2 modular multiply  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean -- S6.3d-2b: VERIFIED general-n modular field-multiply X·Y mod N (mulLoop_correct)  [DONE 2026-06-24, GREEN]
 CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean  -- S6.3e-1: modular subtraction a-b mod N (fullSub ripple + borrow-gated add-back)  [DONE 2026-06-24, GREEN]
+CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean -- S6.3e-2a: modular const-multiply c*a mod N (repeated modAdd) + negation -b mod N (modSub @ 0)  [DONE 2026-06-26, GREEN]
 CsdLean4/Tests/ECDLPAudit.lean                         -- pins; ADD root to lakefile.toml CsdLeanTests
 specs/ecdlp-resource-plan.md                           -- this file
 ```
@@ -447,7 +448,7 @@ Jacobian **doubling** program, with:
 `_secp256k1` `[propext]`). Auditor SOUND, no Blocker/Major logical defect (one Major was the missing pins,
 fixed in the same commit).
 
-**Remaining (Phase 2):** **S6.3e-2** (SLP→circuit router: assemble the verified field gadgets into the `a=0`
+**Remaining (Phase 2):** **S6.3e-2b** (SLP→circuit router: assemble the verified field gadgets into the `a=0`
 doubling over `ZMod p`, making `M=8` an exhibited-circuit count), **S6.3e-3** (addition assembly + point-op
 resource triple); orthogonal: the carry-clean adder (collapses the Θ(n²)-qubit fresh-ancilla model to Θ(n));
 S3 verified windowing; S5 measurement-aware DSL + Gidney adder; plus the full general `O(log n)`
@@ -455,7 +456,8 @@ carry-lookahead adder (verified, large). (S1 triple + S4 mod-`N` reduction + S2 
 DONE 2026-06-22; S2.3 quantum×quantum multiplier DONE 2026-06-23; S6.1 doubling M-count DONE 2026-06-23;
 S6.2 addition M-count DONE 2026-06-24; S6.3a single-step modular reduction + S6.3b modular adder + S6.3c
 controlled modular adder + S6.3d-1 modular doubling + S6.3d-2a Horner step/n=2 multiply + S6.3d-2b verified
-modular field-multiply `X·Y mod N` + **S6.3e-1 modular subtraction** + Eval harness DONE 2026-06-24.)
+modular field-multiply `X·Y mod N` + **S6.3e-1 modular subtraction** + Eval harness DONE 2026-06-24;
+**S6.3e-2a modular const-multiply `c·a mod N` + negation `−b mod N` DONE 2026-06-26** — gadget set complete.)
 
 The `Cost` struct already carries `toffoliDepth`/`qubits`/`ancilla`, but only `toffoli` is bounded; the
 estimate is gate-count-only and cannot compare alternatives that trade depth/space (the regime that
@@ -499,7 +501,7 @@ Status delta: the optimised tier documented → verified. Effort: LARGE + concep
 semantics in a so-far-deterministic framework; risk to DSL integrity if done carelessly — do it as a
 separate measurement layer, not by polluting `denoteGate`).
 
-## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 DONE — modular field arithmetic CLOSED; S6.3e-2 SLP assembly next)
+## S6 — Concrete EC point-addition circuit [largest; derives M]  (IN PROGRESS: S6.1+S6.2+S6.3a..d-2b + e-1 + e-2a DONE — modular field-op gadget set CLOSED; S6.3e-2b SLP assembly next)
 Compose the Tranche-3/4 modular oracles into the projective/Jacobian addition + doubling formulas; prove
 they compute the Mathlib group law (`+` on `W.Point`); derive `M` (the `7`/`11` field-mult counts, now
 verified). Needs **quantum × quantum** modular multiplication (squaring + general products, NOT the
@@ -603,7 +605,16 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       SLP-reuse), `modSub_in_range` (`<N`), cost `modSub_toffoli = 10n` (sub `2n` + fix `8n`). Witness
       harness-cross-checked both branches incl. the `a<b` wrap (`a=1,b=3,N=5 → 3`; `a=0,b=4 → 1`). 7 pins.
       `modNeg`(`N−b mod N`)/`nsmul`(const-mult) compose from `{modSub, modAdd, modDouble}`.
-    - **S6.3e-2** — the SLP→circuit router: sequence `{modAdd, modSub, modDouble, mulLoop, const-mult}` for
+    - **S6.3e-2a DONE 2026-06-26** — the last two field-op gadgets (`ModularConst.lean`, auditor-SOUND),
+      completing the set `{modAdd, modSub, modDouble, mulLoop}`. `modConstMul` = repeated `modAdd` from a
+      zero accumulator (`c·a mod N` for CLASSICAL `c`; `modConstMul_correct` via `constMul_invariant`
+      induction over the `List.range c` flatMap of fresh banks, + `_preserves_operand`/`_in_range`, cost
+      `c·12n`; worked instances `cMulLayout0/1/2/8` + an independent layout harness-`#eval`-cross-checked).
+      `modNeg` = `modSub` with a zero minuend register (`(N−b) mod N` = `(−b) mod N`; `modNeg_correct` via
+      `modSub_correct` at `a:=0`, `_in_range`, cost `10n`). Honest: `modConstMul` is `O(c)` repeated add — the
+      `O(log c)` double-and-add speedup is deferred and NOT needed (the EC `nsmul` coefficients are constants
+      `≤ 8`, off the free parameter `M`). Same fresh-ancilla dirty-residue model. 7 pins.
+    - **S6.3e-2b** — the SLP→circuit router: sequence `{modAdd, modSub, modDouble, mulLoop, const-mult}` for
       the `a=0` doubling formula (S6.1's `doublingProgram`), proving the assembled circuit computes
       `dblX/dblY/dblZ mod p` over `ZMod p` (consuming `mulLoop_correct` etc.), with register routing +
       fresh per-op ancilla. This is where `M = 8` becomes an EXHIBITED-circuit Toffoli count.

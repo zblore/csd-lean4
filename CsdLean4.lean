@@ -34,6 +34,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul

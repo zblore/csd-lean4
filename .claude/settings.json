@@ -29,7 +29,15 @@
       "Bash(git switch *)",
       "Bash(kill *)",
       "Bash(taskkill *)",
-      "PowerShell(gh *)"
+      "PowerShell(gh *)",
+      "PowerShell(git status*)",
+      "PowerShell(git log*)",
+      "PowerShell(git diff*)",
+      "PowerShell(git show*)",
+      "PowerShell(git add *)",
+      "PowerShell(git commit *)",
+      "PowerShell(git push *)",
+      "PowerShell(lake build)"
     ]
   }
 }
