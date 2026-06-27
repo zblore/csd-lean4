@@ -152,6 +152,7 @@ import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
 import CsdLean4.Empirical.CSD.ContextVolume
+import CsdLean4.Empirical.CSD.UncertaintyVolume
 import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
@@ -1668,6 +1669,26 @@ info: 'CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume' de
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume
 
+-- Qubit observable variance as a product of two Fubini–Study typicality volumes
+-- (the CSD volume-ratio twin of robertson_uncertainty). Var = 4·vol₊·vol₋, the ±
+-- Born weights derived as FS volumes via context_born_frequency_volume (M=1).
+-- Carving-free, Gleason-free, foundational triple only. The Robertson INEQUALITY
+-- itself stays at the QM-validity layer (Empirical/QM/Uncertainty.lean).
+/--
+info: 'CSD.Empirical.CSDBridge.UncertaintyVolume.born_variance_eq_vol_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.UncertaintyVolume.born_variance_eq_vol_product
+
+-- The variance-as-volume-product frequency capstone: 4·freq₊(m)·freq₋(m) → the
+-- volume-product variance, grounding observable spread in ontic typicality
+-- volumes on Σ = ℂℙ¹. Foundational triple only.
+/--
+info: 'CSD.Empirical.CSDBridge.UncertaintyVolume.uncertainty_volume_frequency' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.UncertaintyVolume.uncertainty_volume_frequency
+
 -- Trine POVM: the first non-projective (POVM) entry in the volume-frequency series.
 -- A concrete qubit trine POVM (completeness ∑ Eₖ = I), its canonical Naimark
 -- dilation, and the frequency-volume capstone — POVM outcome frequencies on the
@@ -3078,6 +3099,10 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.UncertaintyVolume.uncertainty_volume_frequency_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.UncertaintyVolume.uncertainty_volume_frequency_canonical
 
 -- Kochen-Specker (Cabello-18) contextual Born weights as Kähler volumes: the representative
 -- context (basis 0) built as a genuine OrthonormalBasis from the complexified/normalised

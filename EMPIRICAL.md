@@ -165,6 +165,7 @@ remains the LF1 typicality / A5 posit.
 |---|---|---|---|
 | Stern-Gerlach | `SternGerlachVolume.lean` | `csd_sg_volume_certain`, `csd_sg_volume_half` | `P(↑\|ẑ)→1`, `P(↑\|x̂)→1/2` |
 | Malus's law | `MalusVolume.lean` | `csd_malus_law` | `P(↑\|θ)→cos²(θ/2)` |
+| Uncertainty (variance as volume) | `UncertaintyVolume.lean` | `variance_eq_four_vol_product`, `born_variance_eq_vol_product`, `uncertainty_volume_frequency` | A `±1` qubit observable's variance is a **product of two FS typicality volumes** `Var = 4·vol₊·vol₋` on `Σ = ℂℙ¹` (composes `context_born_frequency_volume` at M=1 with the `4p(1−p)` algebra). The Robertson *inequality* stays at the QM layer (`robertson_uncertainty`, it is Cauchy-Schwarz not a volume identity); this grounds the variances entering it |
 | Bell singlet (joint) | `BellVolume.lean` | `bell_singlet_born_frequency_volume`, `bell_singlet_volume_correlation` | joint weights `(1∓cos θ)/4` on `ℂℙ³` at **every** relative angle `θ` (aligned/anti-aligned `θ = 0, π` included since 2026-06-11); `⟨σ_a σ_b⟩=−cos θ` |
 | GHZ | `GHZVolume.lean` | `ghz_born_frequency_volume`, `ghz_volume_correlation` | GHZ stabiliser Born weights and correlations, at **every** angle-sum `Φ` (the Mermin all-or-nothing points `Φ = 0, π` included since 2026-06-11) |
 | Hardy | `HardyVolume.lean` | `hardy_max_born_frequency_volume`, `hardy_max_volume_probability` | the optimal Hardy probability `(5√5−11)/2` |
