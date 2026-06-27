@@ -775,4 +775,115 @@ theorem secp256k1ToffoliCleanArithWithInversion_eq :
   rw [secp256k1ToffoliCleanArithWithInversion, secp256k1ToffoliCleanArith_eq,
     fermatInvToffoli_secp256k1]
 
+/-! ### The full ECDLP quantum core — second scalar multiplication + QFT wrapper
+
+Every figure above costs **one** scalar multiplication `[k]P`. The ECDLP-via-Shor attack is
+2-dimensional discrete-log period-finding: it finds the period of the group-operation oracle
+`f(a, b) = [a]P + [b]Q` on a superposed `(a, b)` register. ONE oracle evaluation computes **two**
+scalar multiplications (`[a]P` and `[b]Q`), so the quantum core is `≈ 2×` a single `[k]P`. Phase
+estimation then applies a quantum Fourier transform to the `2n`-bit `(a, b)` phase register; that is
+`O((2n)²)` gates, negligible against the `O(n³)` arithmetic.
+
+This section closes the "one scalar multiplication only" omission carried by every prior figure: it
+assembles the FULL quantum core = `2 ·` (carry-clean scalar mult WITH the final inversion) `+` the QFT.
+
+**Honest status of the two new pieces.**
+* The `2×` factor and the inversion-inclusive per-scalar-mult cost are *derived* — they reuse
+  `secp256k1ToffoliCleanArithWithInversion`, itself built from the verified carry-clean multiply.
+* The QFT count is a **DOCUMENTED count**, not a DSL-costed circuit: `Fourier.qft_unitary` is a verified
+  finite *unitary* (its unitarity is proved), but it is not assembled as a gate-list `Circuit` and so is
+  not Toffoli-costed in this DSL. We take the textbook `(2n)²` upper bound on the gate count of the QFT on
+  the `2n`-bit register (the `2n(2n+1)/2 ≈ 2n²` controlled-phase rotations plus `2n` Hadamards, rounded up
+  to `(2n)²`). It is `O(n²)`, negligible vs the `O(n³)` arithmetic, so its documented status does not move
+  the figure.
+
+**Still omitted** (named residue): ancilla **uncomputation** of the oracle, the single final
+point-**addition** combining `[a]P` and `[b]Q` in `f(a,b) = [a]P + [b]Q` (one point op, `~1/512` of a
+scalar multiplication, well inside the `O(n³)` term), and the windowing / measurement-based-adder
+optimisations. This is the first figure that accounts for the **full quantum core** (both scalar
+multiplications + the QFT), not just one scalar multiplication; it is still NOT "the cost to break
+secp256k1" (uncomputation and the documented optimisations remain). -/
+
+/-- **QFT gate count on the `2n`-bit phase register: `(2n)²` (documented).** The textbook quantum Fourier
+transform on `m = 2n` qubits uses `m(m+1)/2 ≈ m²/2` controlled-phase rotations plus `m` Hadamards; we take
+the conservative `(2n)²` upper bound. This is a DOCUMENTED count, not a DSL-costed circuit: `Fourier`'s
+`qft_unitary` is a verified finite *unitary* (unitarity proved), not a gate-list `Circuit` Toffoli-costed
+here. At `O(n²)` it is negligible vs the `O(n³)` field arithmetic. -/
+def secp256k1EcdlpQftToffoli (n : ℕ) : ℕ := (2 * n) * (2 * n)
+
+/-- The QFT on the `2·256 = 512`-bit ECDLP phase register: `512² = 262 144` gates (documented count). -/
+theorem secp256k1EcdlpQftToffoli_secp256k1 :
+    secp256k1EcdlpQftToffoli Secp256k1.bits = 262144 := by
+  norm_num [secp256k1EcdlpQftToffoli, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the FULL quantum-core Toffoli figure.** The group-operation oracle
+`f(a, b) = [a]P + [b]Q` evaluates TWO scalar multiplications per call, so the quantum core is
+`2 · secp256k1ToffoliCleanArithWithInversion` (each carry-clean scalar mult with its final
+projective→affine inversion), plus the QFT on the `2n`-bit phase register (`secp256k1EcdlpQftToffoli`).
+This is the first figure accounting for the full quantum core, not one scalar multiplication.
+
+**Derivation, not a bare constant:** the `2×` arithmetic term reuses
+`secp256k1ToffoliCleanArithWithInversion` (built from the verified carry-clean multiply
+`cleanModMulToffoli` + the Fermat inversion `fermatInvToffoli`); only the additive QFT term is a
+documented count (negligible, `O(n²)`). **Still omitted:** oracle ancilla uncomputation and the
+windowing / measurement-based-adder optimisations. Not "the cost to break secp256k1". -/
+def secp256k1EcdlpToffoli : ℕ :=
+  2 * secp256k1ToffoliCleanArithWithInversion + secp256k1EcdlpQftToffoli Secp256k1.bits
+
+/-- The full ECDLP quantum-core figure evaluates to `18 169 200 640 ≈ 1.8×10¹⁰` Toffolis:
+`2 · 9 084 469 248` (two inversion-inclusive carry-clean scalar mults) `+ 262 144` (the QFT). -/
+theorem secp256k1EcdlpToffoli_eq : secp256k1EcdlpToffoli = 18169200640 := by
+  rw [secp256k1EcdlpToffoli, secp256k1ToffoliCleanArithWithInversion_eq,
+    secp256k1EcdlpQftToffoli_secp256k1]
+
+/-! ### The affine-coordinate variant — one inversion PER point op (why projective is standard)
+
+Every projective figure above pays exactly **one** modular inversion (the final `(X:Y:Z) ↦ (X/Z, Y/Z)`
+coordinate recovery). The **affine** alternative pays one inversion **per point operation** — the slope
+`λ = Δy/Δx` of the secant/tangent line is a field division, hence an inversion, in *every* doubling and
+addition. With the conservative Fermat inversion at `O(n³)` and `~2n` point ops over the scalar multiply,
+affine `[k]P` is `O(n⁴)` — dramatically worse than the projective `O(n³)`. This is precisely why
+projective/Jacobian coordinates are the standard choice, and why the main figures use them.
+
+This section costs the affine variant, to exhibit the `O(n⁴)` blow-up. It is a representative cost model
+(the per-op field-multiply count `3` is documented, EFD-ish), not a verified affine circuit. -/
+
+/-- **A representative affine point-op Toffoli cost: `3 · cleanModMulToffoli n + fermatInvToffoli n`.**
+An affine doubling/addition computes the slope `λ = Δy/Δx` (one inversion, dominating) plus a few field
+multiplications to form the result coordinates; the `3` field mults is a documented EFD-ish count (the
+inversion is the cost driver). The multiply and inversion are the corpus's verified carry-clean
+`cleanModMulToffoli` / Fermat `fermatInvToffoli`; the `3` op-count is documented, not a verified affine
+circuit. The inversion makes one affine point op `O(n³)`, against the projective per-op `O(n²)`. -/
+def affinePointOpToffoli (n : ℕ) : ℕ := 3 * cleanModMulToffoli n + fermatInvToffoli n
+
+/-- One representative secp256k1 affine point op costs `676 866 560 ≈ 6.8×10⁸` Toffolis:
+`3 · cleanModMulToffoli 256 = 3 · 1 314 304 = 3 942 912` plus the Fermat inversion
+`fermatInvToffoli 256 = 672 923 648` (the inversion dominates, `~170×` the three multiplies). -/
+theorem affinePointOpToffoli_secp256k1 :
+    affinePointOpToffoli Secp256k1.bits = 676866560 := by
+  norm_num [affinePointOpToffoli, cleanModMulToffoli, fermatInvToffoli, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the affine-coordinate scalar-mult figure (`O(n⁴)`).** The worst-case
+double-and-add op count `~2n` (one doubling + at most one addition per bit) times the per-op affine cost
+WITH its inversion (`affinePointOpToffoli`). Because affine pays one inversion *per* point op (the slope),
+this is `O(n⁴)`.
+
+**Confirms why projective is standard.** This figure is `346 555 678 720 ≈ 3.5×10¹¹`, about `38×` the
+projective inversion-inclusive figure `secp256k1ToffoliCleanArithWithInversion` (`9.08×10⁹`) — the
+projective route pays one inversion total, the affine route `~2n = 512`. The `O(n⁴)` affine cost is
+exactly why projective/Jacobian coordinates (one final inversion) are the standard choice and why the
+main figures use them. A representative cost model (the `3` field-mults/op is a documented EFD-ish count),
+not a verified affine circuit. -/
+def secp256k1ToffoliAffineWithInversion : ℕ :=
+  (2 * Secp256k1.bits) * affinePointOpToffoli Secp256k1.bits
+
+/-- The affine figure evaluates to `346 555 678 720 ≈ 3.5×10¹¹` Toffolis: `2·256 = 512` point ops, each
+`affinePointOpToffoli 256 = 676 866 560` (one Fermat inversion per op). This `O(n⁴)` figure dwarfs the
+projective `secp256k1ToffoliCleanArithWithInversion = 9 084 469 248` by `~38×` — the quantitative reason
+projective coordinates are standard. -/
+theorem secp256k1ToffoliAffineWithInversion_eq :
+    secp256k1ToffoliAffineWithInversion = 346555678720 := by
+  rw [secp256k1ToffoliAffineWithInversion, affinePointOpToffoli_secp256k1]
+  norm_num [Secp256k1.bits]
+
 end ECDLP.ResourceBounds

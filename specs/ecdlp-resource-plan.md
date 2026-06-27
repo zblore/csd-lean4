@@ -762,10 +762,18 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
     optimal Euclid/Kaliski inversion is `O(n²)` but needs a separate verified circuit (named, not built); projective
     `[k]P` legitimately avoids PER-OP inversion, affine variant (`~2n` inversions) is the heavier alternative. Still
     omitted in every figure: the **2nd scalar multiplication** of the DLP instance + the **QFT/phase-estimation
-    wrapper** + ancilla uncomputation. 6 pins. AxiomAudit import wired (the CI-fix lesson applied). **NEXT (Shor
-    improvement arc):** the 2nd-scalar-mult + QFT-wrapper accounting (next-largest omission), then the bigger prize —
-    the ECDLP quantum core (2-D phase estimation) + the oracle bridge wiring the verified arithmetic into it, which
-    turns "verified arithmetic scaffold + cost model" into "verified end-to-end ECDLP attack (modulo named residue)".
+    wrapper** + ancilla uncomputation. 6 pins. AxiomAudit import wired (the CI-fix lesson applied).
+  - **FULL QUANTUM-CORE + AFFINE figures DONE 2026-06-27** (`ResourceBounds.lean`, auditor-SOUND, DOCUMENTED-COUNT
+    cost models not verified circuits): closes the 2nd-scalar-mult + QFT omission. `secp256k1EcdlpToffoli =
+    18,169,200,640` (the FULL ECDLP quantum core: 2 scalar mults with inversion for the `[a]P+[b]Q` period-finding
+    oracle `= 2·9,084,469,248`, + the QFT `secp256k1EcdlpQftToffoli = (2n)² = 262,144`, `O(n²)` negligible; the QFT
+    is `qft_unitary`, a verified finite UNITARY not a DSL gate-list circuit, so its count is documented). Affine
+    variant: `affinePointOpToffoli = 676,866,560` (3 field-mults + 1 Fermat inversion) → `secp256k1ToffoliAffine
+    WithInversion = 346,555,678,720` (`O(n⁴)`, ~38× the projective figure — affine needs one inversion PER op,
+    the quantitative reason projective coords are standard). 4 pins `[propext]`. Still omitted: oracle uncomputation,
+    the final `[a]P+[b]Q` combining add (~1/512 scalar mult), windowing / measurement-based adders. **NEXT:** the
+    bigger prize — the ECDLP quantum core as a verified 2-D phase estimation + the oracle bridge wiring the verified
+    arithmetic into it, turning "scaffold + cost model" into "verified end-to-end attack (modulo named residue)".
   - Older framing: value-correctness already works with fresh ancilla per step; Stage 1 removes the qubit-
     efficiency residue at the adder level (modular wrapping + figure re-cost are Stages 2-3).
 

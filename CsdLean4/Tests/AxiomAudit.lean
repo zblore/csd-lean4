@@ -4097,6 +4097,24 @@ operand). All foundational-triple-only. -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1ToffoliCleanArithWithInversion_eq
 
+/-! ### ECDLP full quantum core (2nd scalar mult + QFT) + affine variant (ResourceBounds.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1EcdlpQftToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1EcdlpQftToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1EcdlpToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1EcdlpToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.affinePointOpToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.affinePointOpToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliAffineWithInversion_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliAffineWithInversion_eq
+
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
 /-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
