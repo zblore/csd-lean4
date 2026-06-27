@@ -161,6 +161,7 @@ import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
+import CsdLean4.Empirical.CSD.Contextuality.MerminPeresVolume
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
@@ -3031,6 +3032,33 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.Empirical.CSDBridge.KochenSpecker.ks18_context_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.KochenSpecker.ks18_context_born_frequency_volume_canonical
+
+-- Mermin–Peres rank-2 observable (X⊗X) ±1-outcome Born weights as Kähler volumes: the
+-- non-diagonal grid observable's eigenbasis (H⊗H) built as a genuine OrthonormalBasis from
+-- the explicit (±1/2)-component vectors (orthonormality a clean norm_num computation), then
+-- instantiating the degenerate-eigenspace engine block_born_frequency_volume at the
+-- sign-parity block. Carving-free, Gleason-free, foundational triple only.
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXXVec_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXXVec_orthonormal
+
+-- Eigenbasis-identity faithfulness lemmas: mpXXBasis really is the σx⊗σx eigenbasis,
+-- machine-checked against the genuine Pauli observable sigmaX ⊗ₖ sigmaX (not a literal).
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXXVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXXVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXXBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXXBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume_canonical
 
 /-! ### Operator-convexity ladder (Cat-1; L.0 predicate + L.1 inverse operator convexity
 + L.2 shifted-resolvent concavity rungs) -/
