@@ -275,10 +275,11 @@ the Hadamard test at `ι := κ × κ`, `U := swapMap` (the `(i,j) ↦ (j,i)` lin
 (`Fin 2 × κ × κ = Fin 2 × (κ × κ)`), and at the amplitude level the controlled-`U`
 collapses to the controlled-swap (`hadTest_swap_apply`), so the two ancilla-`0`
 probabilities are literally equal (`swap_test_via_hadamard`). Its closed form is the
-overlap `(1 + ‖⟨ψ,φ⟩‖²)/2` (`hadamard_test_swap_closed`), routed here through the existing
-`SwapTest.swap_test_prob`; the native `hadamard_test_prob` route would instead read it off
-the inner identity `Re⟨ψ⊗φ, swap(ψ⊗φ)⟩ = Re(⟨ψ,φ⟩·⟨φ,ψ⟩) = ‖⟨ψ,φ⟩‖²` together with the
-tensor unit norms `‖ψ⊗φ‖ = ‖swap(ψ⊗φ)‖ = 1`. -/
+overlap `(1 + ‖⟨ψ,φ⟩‖²)/2` (`hadamard_test_swap_closed`), derived **natively** through
+`hadamard_test_prob`: the inner identity `Re⟨ψ⊗φ, swap(ψ⊗φ)⟩ = Re(⟨ψ,φ⟩·⟨φ,ψ⟩) =
+‖⟨ψ,φ⟩‖²` (`re_inner_tensorEuc_swap`) together with the tensor unit norms
+`‖ψ⊗φ‖ = ‖swap(ψ⊗φ)‖ = 1` (`tensorEuc_norm_one`, `swapMap_tensorEuc_norm_one`). No
+dependence on `SwapTest.swap_test_prob`. -/
 
 section SwapUnification
 
@@ -321,13 +322,64 @@ theorem swap_test_via_hadamard (ψ φ : EuclideanSpace ℂ κ) :
   exact Finset.sum_congr rfl (fun i _ =>
     Finset.sum_congr rfl (fun j _ => by rw [hadTest_swap_apply]))
 
-/-- **The Hadamard test at `U = SWAP` computes the overlap.** Composing the unification with
-`SwapTest.swap_test_prob`, the Hadamard-test ancilla-`0` probability on `ψ⊗φ` is
-`(1 + ‖⟨ψ,φ⟩‖²)/2` — the squared overlap / fidelity. -/
+/-- **Tensor inner product factorisation:** `⟨ψ⊗φ, ψ'⊗φ'⟩ = ⟨ψ,ψ'⟩·⟨φ,φ'⟩` (Fubini split of
+the `κ × κ` coordinate sum into a product of two `κ`-sums). -/
+lemma inner_tensorEuc (ψ φ ψ' φ' : EuclideanSpace ℂ κ) :
+    inner ℂ (tensorEuc ψ φ) (tensorEuc ψ' φ') = inner ℂ ψ ψ' * inner ℂ φ φ' := by
+  simp only [inner_eq_sum]
+  rw [Fintype.sum_prod_type, Finset.sum_mul_sum]
+  refine Finset.sum_congr rfl (fun i _ => Finset.sum_congr rfl (fun j _ => ?_))
+  simp only [tensorEuc_apply, map_mul]
+  ring
+
+/-- `swap(ψ⊗φ) = φ⊗ψ` (the swap reindexing exchanges the two factors). -/
+lemma swapMap_tensorEuc (ψ φ : EuclideanSpace ℂ κ) :
+    swapMap (tensorEuc ψ φ) = tensorEuc φ ψ := by
+  ext p
+  obtain ⟨i, j⟩ := p
+  rw [swapMap_apply, tensorEuc_apply, tensorEuc_apply, mul_comm]
+
+/-- **Tensor unit norm:** `‖ψ⊗φ‖ = 1` for unit `ψ, φ` (via `‖ψ⊗φ‖² = ‖ψ‖²·‖φ‖²`). -/
+lemma tensorEuc_norm_one (ψ φ : EuclideanSpace ℂ κ) (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
+    ‖tensorEuc ψ φ‖ = 1 := by
+  have hpp : inner ℂ ψ ψ = (1 : ℂ) := by rw [inner_self_eq_norm_sq_to_K, hψ]; norm_num
+  have hqq : inner ℂ φ φ = (1 : ℂ) := by rw [inner_self_eq_norm_sq_to_K, hφ]; norm_num
+  have hself : inner ℂ (tensorEuc ψ φ) (tensorEuc ψ φ) = (1 : ℂ) := by
+    rw [inner_tensorEuc, hpp, hqq, mul_one]
+  have hsq : ‖tensorEuc ψ φ‖ ^ 2 = 1 := by
+    have h := inner_self_eq_norm_sq (𝕜 := ℂ) (tensorEuc ψ φ)
+    rw [hself, RCLike.one_re] at h
+    exact h.symm
+  calc ‖tensorEuc ψ φ‖ = Real.sqrt (‖tensorEuc ψ φ‖ ^ 2) :=
+        (Real.sqrt_sq (norm_nonneg _)).symm
+    _ = Real.sqrt 1 := by rw [hsq]
+    _ = 1 := Real.sqrt_one
+
+/-- **Swapped tensor unit norm:** `‖swap(ψ⊗φ)‖ = 1` (= `‖φ⊗ψ‖`); discharges the `‖Uψ‖ = 1`
+hypothesis of `hadamard_test_prob` at `U = swapMap`. -/
+lemma swapMap_tensorEuc_norm_one (ψ φ : EuclideanSpace ℂ κ) (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
+    ‖swapMap (tensorEuc ψ φ)‖ = 1 := by
+  rw [swapMap_tensorEuc]; exact tensorEuc_norm_one φ ψ hφ hψ
+
+/-- **The key inner identity:** `Re⟨ψ⊗φ, swap(ψ⊗φ)⟩ = ‖⟨ψ,φ⟩‖²`. Since
+`⟨ψ⊗φ, φ⊗ψ⟩ = ⟨ψ,φ⟩·⟨φ,ψ⟩ = ⟨ψ,φ⟩·conj⟨ψ,φ⟩ = ‖⟨ψ,φ⟩‖²` is already real, `Re` is the
+identity. -/
+lemma re_inner_tensorEuc_swap (ψ φ : EuclideanSpace ℂ κ) :
+    (inner ℂ (tensorEuc ψ φ) (swapMap (tensorEuc ψ φ))).re = ‖inner ℂ ψ φ‖ ^ 2 := by
+  rw [swapMap_tensorEuc, inner_tensorEuc,
+      show inner ℂ φ ψ = conj (inner ℂ ψ φ) from (inner_conj_symm φ ψ).symm,
+      mul_conj_eq, Complex.ofReal_re]
+
+/-- **The Hadamard test at `U = SWAP` computes the overlap.** Derived **natively** through
+`hadamard_test_prob` (no `SwapTest.swap_test_prob`): the ancilla-`0` probability on `ψ⊗φ`
+is `(1 + ‖⟨ψ,φ⟩‖²)/2` — the squared overlap / fidelity — via the inner identity
+`re_inner_tensorEuc_swap` and the tensor unit norms. -/
 theorem hadamard_test_swap_closed (ψ φ : EuclideanSpace ℂ κ)
     (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
-    hadTestProb0 swapMap (tensorEuc ψ φ) = (1 + ‖inner ℂ ψ φ‖ ^ 2) / 2 :=
-  (swap_test_via_hadamard ψ φ).symm.trans (SwapTest.swap_test_prob ψ φ hψ hφ)
+    hadTestProb0 swapMap (tensorEuc ψ φ) = (1 + ‖inner ℂ ψ φ‖ ^ 2) / 2 := by
+  rw [hadamard_test_prob swapMap (tensorEuc ψ φ)
+        (tensorEuc_norm_one ψ φ hψ hφ) (swapMap_tensorEuc_norm_one ψ φ hψ hφ),
+      re_inner_tensorEuc_swap]
 
 end SwapUnification
 

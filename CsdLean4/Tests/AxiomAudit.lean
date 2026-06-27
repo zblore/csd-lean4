@@ -876,7 +876,9 @@ arithmetic. -/
 -- (hadamard_test_prob1), so P(0) - P(1) = Re⟨ψ,Uψ⟩ (hadamard_test_prob_diff); P(0) = 1 at
 -- Uψ = ψ (hadamard_test_eq_one). The swap test is this at U = swapMap on the doubled
 -- register: swapTestProb0 = hadTestProb0 swapMap (ψ⊗φ) (swap_test_via_hadamard), value
--- (1 + ‖⟨ψ,φ⟩‖²)/2 (hadamard_test_swap_closed). Foundational triple.
+-- (1 + ‖⟨ψ,φ⟩‖²)/2 (hadamard_test_swap_closed) — derived NATIVELY through hadamard_test_prob
+-- via the inner identity Re⟨ψ⊗φ,swap(ψ⊗φ)⟩ = ‖⟨ψ,φ⟩‖² (re_inner_tensorEuc_swap) and the
+-- tensor unit norms, NOT through SwapTest.swap_test_prob. Foundational triple.
 /-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.HadamardTest.hadamard_test_prob
@@ -896,6 +898,10 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.HadamardTest.swap_test_via_hadamard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.HadamardTest.swap_test_via_hadamard
+
+/-- info: 'CSD.Empirical.QM.HadamardTest.re_inner_tensorEuc_swap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.re_inner_tensorEuc_swap
 
 /-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_swap_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
