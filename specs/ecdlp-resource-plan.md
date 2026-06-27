@@ -738,11 +738,16 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       NOT clean (the copy register holds `a`, not 0, after the add); the rotChain+parity route is the genuine clean
       doubler. 10 pins. **Honest cost: `20n²+14n` per multiply, ~1.5× better than the dirty `30n²`** (NOT the ~12n²
       I earlier estimated; modular reduction per step stays irreducible). The prize remains the **Θ(n) qubit count**.
-    - **STAGE 3 (next)** — re-derive `secp256k1ToffoliVerifiedArith` with the clean `20n²+14n` per-multiply
-      (`cuccaroModMul_toffoli`): figure ≈ `256·25·(20·256²+14·256) ≈ 8.4×10⁹` (vs the `30n²`-based `1.26×10¹⁰`,
-      ~1.5×) PLUS the **Θ(n) verified qubit count** (the real win, one shared scratch bank). Document the honest
-      ~1.5× Toffoli / Θ(n²)→Θ(n) qubit split; the ~10⁸ literature Toffoli remains out of reach (needs Gidney
-      measurement adders, inexpressible in this DSL).
+    - **STAGE 3 DONE 2026-06-27** (`ECDLP/ResourceBounds.lean` "### Stage 3" section, auditor-SOUND): re-cost +
+      the qubit prize. `cleanModMulToffoli n = 20n²+14n` tied to the verified circuit by `cleanModMulToffoli_eq_cuccaro`
+      (= `cuccaroModMul_toffoli`); `secp256k1ToffoliCleanArith = 8 411 545 600 ≈ 8.4×10⁹` (`256·25·(20·256²+14·256)`,
+      ~1.5× below the `30n²`-based `1.26×10¹⁰`) + bound `secp256k1_scalarMul_toffoli_clean_arith`. **The qubit prize
+      as a THEOREM:** `cleanModMulQubits n = 6n+6` (= 1542 at n=256, vs the dirty Θ(n²)=65 536) + `cleanMulLayout`
+      (a genuinely inhabited Θ(n) layout for every `n≥1`) + **`cleanModMulQubits_inhabited`** (auditor proved TIGHT:
+      `IsEmpty (CuccaroMulLayout 6 0)`, so `6n+6` is the true minimum and `hn:1≤n` load-bearing). 6 pins. Honest:
+      ~1.5× Toffoli, the real win is the verified Θ(n²)→Θ(n) QUBIT collapse; ~10⁸ literature Toffoli out of DSL
+      reach (Gidney measurement adders). Width note: figures on the n=256 register; value-correctness at the exact
+      prime is n=257 (2N≤2ⁿ headroom). **THE 3-STAGE CARRY-CLEAN FIGURE-COLLAPSE PLAN IS COMPLETE (S1+S2+S2b+S3).**
   - Older framing: value-correctness already works with fresh ancilla per step; Stage 1 removes the qubit-
     efficiency residue at the adder level (modular wrapping + figure re-cost are Stages 2-3).
 

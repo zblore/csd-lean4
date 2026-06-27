@@ -3925,6 +3925,32 @@ operand). All foundational-triple-only. -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_verified_arith
 
+/-! ### ECDLP Stage 3 secp256k1 figure from the carry-clean modular arithmetic (ResourceBounds.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.cleanModMulToffoli_eq_cuccaro' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.cleanModMulToffoli_eq_cuccaro
+
+/-- info: 'ECDLP.ResourceBounds.cleanModMulToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.cleanModMulToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliCleanArith_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliCleanArith_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_clean_arith' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1_scalarMul_toffoli_clean_arith
+
+/-- info: 'ECDLP.ResourceBounds.cleanModMulQubits_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.cleanModMulQubits_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.cleanModMulQubits_inhabited' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.cleanModMulQubits_inhabited
+
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
 /-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/

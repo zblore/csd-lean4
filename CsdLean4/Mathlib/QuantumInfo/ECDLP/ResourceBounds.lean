@@ -4,6 +4,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 
 /-!
 # ECDLP / secp256k1 resource estimate — the capstone  (ECDLP Tranche 7)
@@ -446,5 +447,242 @@ theorem secp256k1_scalarMul_toffoli_verified_arith (k : ℕ) (hk : Nat.size k �
         gcongr; exact doubleAndAddWeightedCost_le M_dbl M_add k
     _ ≤ Secp256k1.bits * (M_dbl + M_add) * verifiedModMulToffoli Secp256k1.bits := by gcongr
     _ = secp256k1ToffoliVerifiedArith := rfl
+
+/-! ### Stage 3 — secp256k1 figure from the carry-clean modular arithmetic
+
+The H1 section above costs each field multiply with the **dirty** verified gadget
+`verifiedModMulToffoli n = 30·n²` (`Reversible.mulLoop`), whose Horner double-and-reduce allocates a
+**fresh ancilla bank per step** — `Θ(n²)` qubits. Stage 2b (`Reversible.cuccaroModMul`) produced a
+**carry-clean** modular field multiply `X·Y mod N` that reuses **one shared scratch bank** across all
+`n` Horner steps, restoring every scratch wire (`cuccaroModMul_clean`); its derived Toffoli cost is
+`Reversible.cuccaroModMul_toffoli : (circuitCost (cuccaroModMul L)).toffoli = (20·n + 14)·n =
+20·n² + 14·n`, **reduction included**, *quantum × quantum*.
+
+This section rebuilds the secp256k1 figure from the carry-clean gadget. It captures **two** gains:
+
+* **(modest) Toffoli improvement** — `20n² + 14n` vs the dirty `30n²` (≈ `1.5×` at `n = 256`); the
+  modular reduction per step is irreducible in this measurement-free `CCX`-only DSL, so the constant
+  cannot drop to the non-modular `~2n²`.
+* **(real) qubit collapse Θ(n²) → Θ(n)** — the headline `cleanModMulQubits n = 6n + 6` (a single shared
+  bank: `Acc, B/Mask2, Nreg, Mask` each `n+1` wires, `flag`, `Z`, plus the read-only `Y`, `X` registers
+  each `n` wires), inhabited for every `n ≥ 1` by `cleanModMulQubits_inhabited`. The dirty `mulLoop`
+  allocates `n` fresh banks, i.e. `Θ(n²)` wires (`secp256k1QubitsBaseline = n² = 65 536`); the clean
+  route needs `6·256 + 6 = 1 542`.
+
+## Three secp256k1 Toffoli figures, positioned honestly
+
+| figure | per-multiply | reduction | width | value |
+| --- | --- | --- | --- | --- |
+| `secp256k1ToffoliRefined` | `2n²` schoolbook, q × classical | **omitted** | `Θ(n²)` | `6.0×10⁸` (optimistic) |
+| `secp256k1ToffoliVerifiedArith` (H1) | `30n²` verified dirty | included | `Θ(n²)` | `1.26×10¹⁰` |
+| `secp256k1ToffoliCleanArith` (here) | `20n² + 14n` verified clean | included | **`Θ(n)`** | `8.41×10⁹` |
+
+The clean route's **Toffoli** gain over H1 is only ≈ `1.5×` (the reduction is irreducible in this DSL);
+its genuine win is the **qubit** axis, `Θ(n²) → Θ(n)`. The literature `~10⁸` Toffoli for 256-bit ECDLP
+remains out of reach: it needs Gidney measurement-based adders (`~1` Toffoli/bit), which this
+measurement-free DSL cannot express. **None of these is "the cost to break secp256k1"**: each is a
+verified upper bound on an exhibited unoptimised circuit (and `secp256k1ToffoliRefined` omits reduction
+entirely), all costing one scalar multiplication only (no second scalar mult, no QFT/phase-estimation
+wrapper, no uncomputation accounting). -/
+
+/-- **Per-field-multiply Toffoli cost, carry-clean.** `20·n² + 14·n` — the derived cost of the
+value-correct carry-clean modular field multiply `X·Y mod N` (`Reversible.cuccaroModMul_toffoli`),
+**reduction INCLUDED** (the Horner double-and-reduce: each of the `n` steps is `cuccaroModDouble`
+`6n + 4` + `cuccaroCModAdd` `14n + 10` = `20n + 14`), *quantum × quantum*, and running on **one shared
+scratch bank** (`Θ(n)` qubits). This replaces both the schoolbook `multToffoli n = 2n²` and the dirty
+verified `verifiedModMulToffoli n = 30n²`. The link to the verified circuit is the theorem
+`cleanModMulToffoli_eq_cuccaro`. -/
+def cleanModMulToffoli (n : ℕ) : ℕ := 20 * n ^ 2 + 14 * n
+
+/-- **The carry-clean-arithmetic link.** `cleanModMulToffoli n` is exactly the derived Toffoli cost of
+the value-correct carry-clean modular field multiply, for any concrete `n`-bit layout
+(`Reversible.cuccaroModMul_toffoli`, which gives the factored `(20n + 14)·n`). This makes the citation
+in `cleanModMulToffoli`'s docstring a theorem, not a comment. -/
+theorem cleanModMulToffoli_eq_cuccaro {m n : ℕ} (L : CuccaroMulLayout m n) :
+    cleanModMulToffoli n = (circuitCost (cuccaroModMul L)).toffoli := by
+  rw [cleanModMulToffoli, cuccaroModMul_toffoli]; ring
+
+theorem cleanModMulToffoli_secp256k1 : cleanModMulToffoli Secp256k1.bits = 1314304 := by
+  norm_num [cleanModMulToffoli, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the carry-clean-arithmetic Toffoli figure (Stage 3).** The worst-case
+double-and-add operation count `≤ Secp256k1.bits · (M_dbl + M_add)` (the derived counts `8`/`17`) times
+the carry-clean per-field-multiply cost `cleanModMulToffoli Secp256k1.bits` (`20·256² + 14·256`,
+reduction-included, q × q, one shared bank). The analogue of `secp256k1ToffoliVerifiedArith` with the
+carry-clean gadget in place of the dirty `30n²`.
+
+**Honest positioning.** This figure is `8 411 545 600 ≈ 8.4×10⁹`, about `1.5×` below the dirty-arith
+H1 figure `secp256k1ToffoliVerifiedArith` (`1.26×10¹⁰`) — the per-multiply ratio `(20n+14)/(30n) → 2/3`
+as `n → ∞`. The reduction is included in both (the modular reduce per Horner step is irreducible in this
+measurement-free `CCX`-only DSL), so the constant cannot fall to the reduction-free schoolbook `2n²` of
+`secp256k1ToffoliRefined` (`6.0×10⁸`). The genuine win of the carry-clean route is **not** this `1.5×`
+Toffoli factor but the **qubit collapse** `Θ(n²) → Θ(n)` (`cleanModMulQubits = 6n + 6 = 1 542` vs the
+dirty `secp256k1QubitsBaseline = n² = 65 536`), a genuinely inhabited layout for every `n ≥ 1`
+(`cleanModMulQubits_inhabited`). **Width convention (honest boundary):** these figures use the
+programme-wide `Secp256k1.bits = 256` register width; `cuccaroModMul`'s value-correctness needs
+`2N ≤ 2ⁿ`, so value-correctness *at the exact prime* `p ≈ 2²⁵⁶` is at `n = 257` (the standard +1-bit
+modular-arithmetic headroom), marginally shifting `6n+6` / `20n²+14n`. The figures are arithmetic
+identities on the `n = 256` register; they do not assert value-correctness at `p` with `n = 256`.
+Neither figure is "the cost to break secp256k1". -/
+def secp256k1ToffoliCleanArith : ℕ :=
+  Secp256k1.bits * (M_dbl + M_add) * cleanModMulToffoli Secp256k1.bits
+
+/-- The carry-clean-arithmetic figure evaluates to `8 411 545 600 ≈ 8.4×10⁹` Toffolis: `256` bits ×
+`(8 + 17) = 25` field mults/bit × `20·256² + 14·256 = 1 314 304` Toffolis per reduction-included
+carry-clean field multiply. -/
+theorem secp256k1ToffoliCleanArith_eq : secp256k1ToffoliCleanArith = 8411545600 := by
+  norm_num [secp256k1ToffoliCleanArith, M_dbl_eq, M_add_eq, cleanModMulToffoli, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the carry-clean-arithmetic scalar-multiplication bound (Stage 3).** For a
+scalar `k` with `Nat.size k ≤ Secp256k1.bits`, the double-and-add field-multiply count weighted by the
+DERIVED per-op counts `M_dbl`/`M_add`, times the carry-clean per-field-multiply cost
+`cleanModMulToffoli Secp256k1.bits`, is at most `secp256k1ToffoliCleanArith`. Mirrors
+`secp256k1_scalarMul_toffoli_verified_arith` with the carry-clean `20n² + 14n` gadget. -/
+theorem secp256k1_scalarMul_toffoli_clean_arith (k : ℕ) (hk : Nat.size k ≤ Secp256k1.bits) :
+    doubleAndAddWeightedCost M_dbl M_add k * cleanModMulToffoli Secp256k1.bits
+      ≤ secp256k1ToffoliCleanArith := by
+  calc doubleAndAddWeightedCost M_dbl M_add k * cleanModMulToffoli Secp256k1.bits
+      ≤ Nat.size k * (M_dbl + M_add) * cleanModMulToffoli Secp256k1.bits := by
+        gcongr; exact doubleAndAddWeightedCost_le M_dbl M_add k
+    _ ≤ Secp256k1.bits * (M_dbl + M_add) * cleanModMulToffoli Secp256k1.bits := by gcongr
+    _ = secp256k1ToffoliCleanArith := rfl
+
+/-! #### The qubit collapse — a verified `Θ(n)` per-field-multiply qubit count
+
+The dirty `Reversible.mulLoop` allocates a *fresh* ancilla bank per Horner step, so its qubit width is
+`Θ(n²)` (`secp256k1QubitsBaseline = n² = 65 536`). The carry-clean `Reversible.cuccaroModMul` runs on a
+single shared bank reused across all `n` steps; its qubit width is the wire count of a
+`Reversible.CuccaroMulLayout m n`, which is **linear** in `n`. Counting the wire families of the layout
+(`CuccaroModLayout`'s `Acc`, `B = Mask2`, `Nreg`, `Mask` at `n+1` wires each, the singletons `flag`,
+`Z`, and `CuccaroMulLayout`'s read-only `Y`, `X` at `n` wires each):
+
+`4·(n+1) + 2 + 2·n = 6n + 6`.
+
+This is the genuine structural payoff of the whole carry-clean tranche: `Θ(n²) → Θ(n)` qubits. -/
+
+/-- **Per-field-multiply qubit count, carry-clean: `6n + 6` (`Θ(n)`).** The wire count of a
+`Reversible.CuccaroMulLayout m n` — one shared scratch bank `Acc, B(=Mask2), Nreg, Mask` (`n+1` wires
+each), the flag and Cuccaro ancilla `flag, Z` (`1` each), and the read-only operand registers `Y, X`
+(`n` each): `4·(n+1) + 2 + 2·n = 6n + 6`. Contrast the dirty `Reversible.mulLoop`, which allocates `n`
+fresh banks, i.e. `Θ(n²)` qubits (`secp256k1QubitsBaseline = n² = 65 536`). This is the headline
+structural result of the carry-clean route: the qubit axis collapses from quadratic to linear. -/
+def cleanModMulQubits (n : ℕ) : ℕ := 6 * n + 6
+
+theorem cleanModMulQubits_secp256k1 : cleanModMulQubits Secp256k1.bits = 1542 := by
+  norm_num [cleanModMulQubits, Secp256k1.bits]
+
+/-- The shared carry-clean modular-adder bank on exactly `6n + 6` wires (`Acc → [0,n]`,
+`B → [n+1, 2n+1]`, `Nreg → [2n+2, 3n+2]`, `Mask → [3n+3, 4n+3]`, `flag = 4n+4`, `Z = 4n+5`). The four
+banks are placed in disjoint width-`(n+1)` blocks, indexed `i ↦ i % (n+1)` inside each block (injective
+on `[0, n]`). -/
+def cleanMulModLayout (n : ℕ) : CuccaroModLayout (6 * n + 6) n where
+  Acc i := ⟨i % (n + 1), by have := Nat.mod_lt i (show 0 < n + 1 by omega); omega⟩
+  B i := ⟨(n + 1) + i % (n + 1), by have := Nat.mod_lt i (show 0 < n + 1 by omega); omega⟩
+  Nreg i := ⟨2 * (n + 1) + i % (n + 1), by have := Nat.mod_lt i (show 0 < n + 1 by omega); omega⟩
+  Mask i := ⟨3 * (n + 1) + i % (n + 1), by have := Nat.mod_lt i (show 0 < n + 1 by omega); omega⟩
+  flag := ⟨4 * (n + 1), by omega⟩
+  Z := ⟨4 * (n + 1) + 1, by omega⟩
+  hAccB i j := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [ne_eq, Fin.mk.injEq]; omega
+  hAccN i j := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [ne_eq, Fin.mk.injEq]; omega
+  hAccM i j := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [ne_eq, Fin.mk.injEq]; omega
+  hBN i j := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [ne_eq, Fin.mk.injEq]; omega
+  hBM i j := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [ne_eq, Fin.mk.injEq]; omega
+  hNM i j := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [ne_eq, Fin.mk.injEq]; omega
+  hAccflag i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hBflag i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hNflag i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hMflag i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hAccZ i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hBZ i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hNZ i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hMZ i := by
+    have h1 := Nat.mod_lt i (show 0 < n + 1 by omega); simp only [ne_eq, Fin.mk.injEq]; omega
+  hflagZ := by simp only [ne_eq, Fin.mk.injEq]; omega
+  hAccinj i j hi hj h := by
+    have hv : i % (n + 1) = j % (n + 1) := congrArg Fin.val h
+    rwa [Nat.mod_eq_of_lt hi, Nat.mod_eq_of_lt hj] at hv
+  hBinj i j hi hj h := by
+    have hv : (n + 1) + i % (n + 1) = (n + 1) + j % (n + 1) := congrArg Fin.val h
+    rw [Nat.mod_eq_of_lt hi, Nat.mod_eq_of_lt hj] at hv; omega
+  hNinj i j hi hj h := by
+    have hv : 2 * (n + 1) + i % (n + 1) = 2 * (n + 1) + j % (n + 1) := congrArg Fin.val h
+    rw [Nat.mod_eq_of_lt hi, Nat.mod_eq_of_lt hj] at hv; omega
+  hMinj i j hi hj h := by
+    have hv : 3 * (n + 1) + i % (n + 1) = 3 * (n + 1) + j % (n + 1) := congrArg Fin.val h
+    rw [Nat.mod_eq_of_lt hi, Nat.mod_eq_of_lt hj] at hv; omega
+
+/-- The full carry-clean modular-multiply layout on exactly `6n + 6` wires (`n ≥ 1`): the shared bank
+`cleanMulModLayout` plus the read-only operand registers `Y → [4n+6, 5n+5]` and `X → [5n+6, 6n+5]`,
+each a disjoint width-`n` block (`i ↦ offset + i % n`). Witnesses that a `CuccaroMulLayout` exists on a
+`Θ(n)` register, so the carry-clean modular multiply genuinely runs in `6n + 6` qubits. -/
+def cleanMulLayout (n : ℕ) (hn : 1 ≤ n) : CuccaroMulLayout (6 * n + 6) n where
+  mod := cleanMulModLayout n
+  Y i := ⟨4 * (n + 1) + 2 + i % n, by have := Nat.mod_lt i (show 0 < n by omega); omega⟩
+  X i := ⟨4 * (n + 1) + 2 + n + i % n, by have := Nat.mod_lt i (show 0 < n by omega); omega⟩
+  hYAcc i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hYB i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hYN i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hYM i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hYflag i := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hYZ i := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hXAcc i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hXB i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hXN i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hXM i j := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega); have h2 := Nat.mod_lt j (show 0 < n + 1 by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hXflag i := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+  hXZ i := by
+    have h1 := Nat.mod_lt i (show 0 < n by omega)
+    simp only [cleanMulModLayout, ne_eq, Fin.mk.injEq]; omega
+
+/-- **The qubit collapse, verified (Stage 3 headline).** For every `n ≥ 1` there is a
+`Reversible.CuccaroMulLayout` — the layout the carry-clean modular multiply `cuccaroModMul` runs on —
+on exactly `cleanModMulQubits n = 6n + 6` wires. So the verified carry-clean modular field multiply
+`X·Y mod N` uses `Θ(n)` qubits, against the dirty `mulLoop`'s `Θ(n²)` (fresh bank per step). This is the
+genuine structural payoff of the carry-clean tranche; the Toffoli gain over the dirty figure is only
+≈ `1.5×`, but the qubit axis collapses from quadratic to linear. -/
+theorem cleanModMulQubits_inhabited (n : ℕ) (hn : 1 ≤ n) :
+    Nonempty (CuccaroMulLayout (cleanModMulQubits n) n) :=
+  ⟨cleanMulLayout n hn⟩
 
 end ECDLP.ResourceBounds
