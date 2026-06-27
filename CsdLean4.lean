@@ -200,6 +200,7 @@ import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 import CsdLean4.Empirical.CSD.Crypto.E91
 import CsdLean4.Empirical.CSD.QEC.ThreeQubit
 import CsdLean4.Empirical.CSD.Contextuality.KS18
+import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Multipartite.GHZ

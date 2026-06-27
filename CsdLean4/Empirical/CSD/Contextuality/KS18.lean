@@ -7,6 +7,11 @@ import CsdLean4.Empirical.QM.Contextuality.KS18
 **Category:** 3-Local (CSD-side companion to
 `Empirical/QM/Contextuality/KS18.lean`).
 
+This file is the **impossibility** reading (no non-contextual value-assignment
+bundle). Its **volume companion** is `Empirical/CSD/Contextuality/KS18Volume.lean`
+(`ks18_context_born_frequency_volume`), which grounds each Cabello context's Born
+weights as Fubini–Study typicality volumes on the fixed `Σ = ℂℙ³`.
+
 Pairs with `Empirical/QM/Contextuality/KS18.lean`
 (Cabello-Estebaranz-García-Alcaine 1996 18-vector configuration). The
 QM file establishes two theorems:

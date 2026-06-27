@@ -160,6 +160,7 @@ import CsdLean4.Empirical.CSD.QEC.ThreeQubit
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 import CsdLean4.Empirical.CSD.Hardy
 import CsdLean4.Empirical.CSD.Contextuality.KS18
+import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
@@ -3013,6 +3014,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ContextVolume.zz_parity_born_frequency_volume_canonical
+
+-- Kochen-Specker (Cabello-18) contextual Born weights as Kähler volumes: the representative
+-- context (basis 0) built as a genuine OrthonormalBasis from the complexified/normalised
+-- Cabello rays (orthonormality reusing cabello_pairwise_orthogonal_in_basis via the
+-- complexification transport), then instantiating the context engine. Carving-free,
+-- Gleason-free, foundational triple only.
+/-- info: 'CSD.Empirical.CSDBridge.KochenSpecker.ksCtxVec_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.KochenSpecker.ksCtxVec_orthonormal
+
+/-- info: 'CSD.Empirical.CSDBridge.KochenSpecker.ks18_context_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.KochenSpecker.ks18_context_born_frequency_volume
+
+/-- info: 'CSD.Empirical.CSDBridge.KochenSpecker.ks18_context_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.KochenSpecker.ks18_context_born_frequency_volume_canonical
 
 /-! ### Operator-convexity ladder (Cat-1; L.0 predicate + L.1 inverse operator convexity
 + L.2 shifted-resolvent concavity rungs) -/
