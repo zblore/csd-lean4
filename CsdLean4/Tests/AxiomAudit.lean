@@ -3052,6 +3052,17 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXXBlk_eq_zero_iff_eigval_one
 
+-- Z⊗Z (diagonal) eigenbasis-identity lemmas: earn the σz⊗σz label for the engine-file
+-- zz_parity_born_frequency_volume by composition (computational basis = σz⊗σz eigenbasis,
+-- machine-checked against the genuine sigmaZ ⊗ₖ sigmaZ).
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpZZVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpZZVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpZZBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpZZBlk_eq_zero_iff_eigval_one
+
 /-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume

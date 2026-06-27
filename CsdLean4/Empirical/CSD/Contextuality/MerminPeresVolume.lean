@@ -212,6 +212,59 @@ theorem mpXXBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     mpXXBlk i = 0 ↔ mpXXEigval i = 1 := by
   fin_cases i <;> simp [mpXXBlk, mpXXEigval] <;> norm_num
 
+/-! ### Earning the `Z ⊗ Z` label for the engine-file `zz_parity_born_frequency_volume`
+
+`ContextVolume.zz_parity_born_frequency_volume` (in the engine file, which intentionally
+imports no QM observables) realises the `Z ⊗ Z` parity outcome weight as a block sum of FS
+volumes using `B = EuclideanSpace.basisFun (Fin 4) ℂ` (the computational basis) and block
+`![0, 1, 1, 0]`, but never proves that computational basis is the `σz ⊗ σz` eigenbasis —
+the same asserted-not-proved gap closed above for `X ⊗ X`. These lemmas close it here (the
+only file in scope that imports the real `sigmaZ`), so the `Z ⊗ Z` label is earned by
+composition: the engine's `B` is the `σz ⊗ σz` eigenbasis, and its block `{0, 3}` is the
+`+1` eigenspace, both machine-checked against the genuine Pauli observable. -/
+
+/-- The eigenvalues of the computational basis under `σz ⊗ σz`, with the `(i, j) ↦ 2i + j`
+flattening: `|00⟩ ↦ +1`, `|01⟩ ↦ −1`, `|10⟩ ↦ −1`, `|11⟩ ↦ +1`. -/
+def mpZZEigval : Fin 4 → ℂ := ![1, -1, -1, 1]
+
+/-- **The real `σz ⊗ σz`, reindexed under `finProdFinEquiv`, is the diagonal.** Machine-checked
+against the genuine `sigmaZ ⊗ₖ sigmaZ` (from `Empirical/QM/Contextuality/MerminPeres.lean`),
+not a fresh literal. -/
+lemma reindex_sigmaZZ :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaZ ⊗ₖ sigmaZ)
+      = !![1, 0, 0, 0; 0, -1, 0, 0; 0, 0, -1, 0; (0 : ℂ), 0, 0, 1] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaZ, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **The computational basis vector `eᵢ` is a genuine eigenvector of the real `σz ⊗ σz`.**
+The eigen-equation `(σz ⊗ σz) · eᵢ = mpZZEigval i • eᵢ` against the actual Pauli observable
+`sigmaZ ⊗ₖ sigmaZ` (reindexed onto `Fin 4`, where via `reindex_sigmaZZ` it is the diagonal).
+`EuclideanSpace.single i 1 = (EuclideanSpace.basisFun (Fin 4) ℂ) i` is exactly the frame `B`
+used by `zz_parity_born_frequency_volume`, so this certifies that `B` is the `σz ⊗ σz`
+eigenbasis. -/
+theorem mpZZVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaZ ⊗ₖ sigmaZ)) *ᵥ
+        (EuclideanSpace.single i (1 : ℂ)).ofLp
+      = mpZZEigval i • (EuclideanSpace.single i (1 : ℂ)).ofLp := by
+  rw [reindex_sigmaZZ]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, mpZZEigval, EuclideanSpace.single,
+      Pi.smul_apply, smul_eq_mul]
+
+/-- **The `+1` block of the `Z ⊗ Z` parity grouping is exactly the `+1` eigenspace.** The
+block `![0, 1, 1, 0] i = 0` (the outcome-`0` block collapsed in
+`zz_parity_born_frequency_volume`) holds iff the `i`-th `σz ⊗ σz` eigenvalue is `+1`.
+(`mpZZEigval i = 1` is over `ℂ`, hence not `Decidable`; closed by `simp`/`norm_num`.) -/
+theorem mpZZBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0 ↔ mpZZEigval i = 1 := by
+  fin_cases i <;> simp [mpZZEigval] <;> norm_num
+
 /-! ### The headline: the `X ⊗ X = +1` Born weight as a block sum of FS volumes -/
 
 /-- **A Mermin–Peres rank-2 observable's outcome Born weight as a derived sum of Kähler
