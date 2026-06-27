@@ -36,7 +36,11 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouter
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouterDoubling
+import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssembly
+import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssemblyOps
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
