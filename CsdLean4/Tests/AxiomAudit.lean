@@ -126,6 +126,7 @@ import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.QM.Algorithms.Simon
 import CsdLean4.Empirical.QM.Algorithms.SwapTest
+import CsdLean4.Empirical.QM.Algorithms.HadamardTest
 import CsdLean4.Empirical.QM.Algorithms.BernsteinVazirani
 import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
@@ -867,6 +868,38 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.SwapTest.swap_test_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.SwapTest.swap_test_orthogonal
+
+-- Hadamard test (parent of the swap test; expectation-value estimator): the circuit
+-- H_anc ∘ cU ∘ H_anc on |0⟩⊗ψ collapses (two-Hadamard ancilla orthogonality) to the
+-- ancilla-0 amplitude (1/2)(ψ i + (Uψ) i) (hadTest_apply); the ancilla-0 marginal is
+-- P(0) = (1 + Re⟨ψ,Uψ⟩)/2 (hadamard_test_prob), ancilla-1 P(1) = (1 - Re⟨ψ,Uψ⟩)/2
+-- (hadamard_test_prob1), so P(0) - P(1) = Re⟨ψ,Uψ⟩ (hadamard_test_prob_diff); P(0) = 1 at
+-- Uψ = ψ (hadamard_test_eq_one). The swap test is this at U = swapMap on the doubled
+-- register: swapTestProb0 = hadTestProb0 swapMap (ψ⊗φ) (swap_test_via_hadamard), value
+-- (1 + ‖⟨ψ,φ⟩‖²)/2 (hadamard_test_swap_closed). Foundational triple.
+/-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.hadamard_test_prob
+
+/-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_prob1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.hadamard_test_prob1
+
+/-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_prob_diff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.hadamard_test_prob_diff
+
+/-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.hadamard_test_eq_one
+
+/-- info: 'CSD.Empirical.QM.HadamardTest.swap_test_via_hadamard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.swap_test_via_hadamard
+
+/-- info: 'CSD.Empirical.QM.HadamardTest.hadamard_test_swap_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.HadamardTest.hadamard_test_swap_closed
 
 -- Bernstein-Vazirani: the FULL phase-oracle circuit H^⊗n ∘ U_f ∘ H^⊗n on |0ⁿ⟩ for the hidden
 -- linear function f_a(x) = ⟨a,x⟩. The 𝔽₂ character sum ∑ₓ (-1)^⟨z,x⟩ = 2ⁿ·[z=0]
