@@ -180,9 +180,23 @@ theorem secp256k1_scalarMul_toffoli_refined {m : ℕ} (k : ℕ) (hk : Nat.size k
 /-! ### Tiered cost model: reconciling the verified figure with the optimised literature
 
 The figures above are **verified upper bounds** tied to the exhibited circuits (the schoolbook multiplier
-of Tranche 3 and the verified `doubleAndAddWeightedCost`). The standard literature applies three further
-optimisations to reach `~10⁸` Toffolis for 256-bit ECDLP; each is a *documented, standard* technique, but
-of differing verification status in this development:
+of Tranche 3 and the verified `doubleAndAddWeightedCost`).
+
+**Literature context (256-bit ECDLP, published Toffoli counts span ~3 orders).** The
+Roetteler–Naehrig–Svore–Lauter 2017 baseline (eprint 2017/598) is `≈ 1.26×10¹¹` Toffolis at `2330`
+logical qubits (general formula `448 n³ log₂ n + 4090 n³`); Häner et al. tighten the qubit count (to
+`~1333`); and the most aggressively optimised estimate, Gidney 2023 ("50 million Toffoli", arXiv
+2306.08585), reaches `≈ 5×10⁷` Toffolis via windowed arithmetic + measurement-based uncomputation. So the
+"optimised literature" is a *range* `~5×10⁷ … ~1.3×10¹¹`, not a single number, and the corpus's `Optimized`
+tier below sits at the aggressively-optimised end. **Honest caveat on the verified figures:** the verified
+`secp256k1ToffoliRefined` / `…VerifiedArith` / `…CleanArith` (`6.0×10⁸ … 1.26×10¹⁰`) sit *below*
+Roetteler's `~10¹¹` baseline because they **omit** the modular **inversion** and the full
+projective-coordinate overhead that the published circuits cost in full — i.e. they are *optimistic* on
+the point-op side (the `M = 7/11` field-mult counts, no inversion), which is the named Pass-2 residue, not
+a tighter circuit.
+
+The standard literature applies three further optimisations to the per-multiply / op-count; each is a
+*documented, standard* technique, but of differing verification status in this development:
 
 * **windowing** of the scalar (precomputed `2ⁱ·P` tables): cuts additions from `~n` to `~n/w`.
   Verifiable in this DSL (a windowed `doubleAndAdd` variant), but only its op-count is modelled here.
@@ -227,9 +241,11 @@ theorem secp256k1ToffoliWindowed_eq : secp256k1ToffoliWindowed = 226492416 := by
 
 /-- **Tier 3 (all standard optimisations, incl. measurement-based `1`/bit adders).** Same model with the
 multiply/square costs halved (Gidney adders): secp256k1, `w = 4`: `113 246 208 ≈ 1.1×10⁸` Toffolis —
-**consistent with the optimised literature (`~10⁸`)**. The measurement-adder halving is documented only
-(not formalisable in this measurement-free DSL); this figure reconciles the verified scaffold with the
-published optimised estimates, factor by factor. -/
+the **aggressively-optimised end** of the literature range, the same order as Gidney 2023's `≈ 5×10⁷`
+("50 million Toffoli", arXiv 2306.08585), and `~3` orders below the Roetteler 2017 baseline `≈ 1.26×10¹¹`.
+The measurement-adder halving is documented only (not formalisable in this measurement-free DSL); this
+figure reconciles the verified scaffold with the *optimised* published estimates, factor by factor — it
+is NOT the conservative baseline (which the verified figures already undercut by omitting inversion). -/
 def secp256k1ToffoliOptimized : ℕ :=
   256 * (2 * (256 * 256) + 5 * (256 * 256 / 2)) + (256 / 4) * (7 * (256 * 256) + 4 * (256 * 256 / 2))
 
