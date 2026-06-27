@@ -153,8 +153,10 @@ import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Resources.Teleportation
 import CsdLean4.Empirical.QM.NoCommunication
 import CsdLean4.Empirical.QM.NoBroadcasting
+import CsdLean4.Empirical.QM.Protocols.Basic
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
+import CsdLean4.Empirical.QM.Crypto.E91KeyRate
 import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.QEC.ThreeQubit
 import CsdLean4.Empirical.QM.QEC.PhaseFlip

@@ -115,8 +115,10 @@ import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 import CsdLean4.Empirical.QM.Resources.Teleportation
 import CsdLean4.Empirical.QM.NoCommunication
 import CsdLean4.Empirical.QM.NoBroadcasting
+import CsdLean4.Empirical.QM.Protocols.Basic
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
+import CsdLean4.Empirical.QM.Crypto.E91KeyRate
 import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.QEC.ThreeQubit
 import CsdLean4.Empirical.QM.QEC.PhaseFlip
@@ -1229,6 +1231,44 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.E91.e91_no_lhv_reproduces_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.E91.e91_no_lhv_reproduces_singlet
+
+-- E91 device-independent asymptotic secret-key rate (Crypto/E91KeyRate.lean):
+-- a certified CHSH violation 2 < S ≤ 2√2 (above the LHV ceiling) gives a positive
+-- DI secret-key rate (e91_key_rate_pos_of_chsh, UNCONDITIONAL), with boundary
+-- values r(2) = 0 and r(2√2) = 1, instantiating the minimal reusable Protocols
+-- interface (SecurityBound / RealProtocol.secure / IdealQKD via secure_emulates).
+-- Reuses Real.binEntropy and lhvCHSH_abs_le_two. Foundational triple only.
+/-- info: 'CSD.Empirical.QM.E91.e91_key_rate_pos_of_chsh' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_key_rate_pos_of_chsh
+
+/-- info: 'CSD.Empirical.QM.E91.e91_key_rate_zero_at_classical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_key_rate_zero_at_classical
+
+/-- info: 'CSD.Empirical.QM.E91.e91_key_rate_one_at_tsirelson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_key_rate_one_at_tsirelson
+
+/-- info: 'CSD.Empirical.QM.E91.e91_eavesdropper_chsh_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_eavesdropper_chsh_le_two
+
+/-- info: 'CSD.Empirical.QM.E91.e91_eavesdropper_advantage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_eavesdropper_advantage
+
+/-- info: 'CSD.Empirical.QM.E91.e91_protocol_secure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_protocol_secure
+
+/-- info: 'CSD.Empirical.QM.E91.e91_chsh_certifies_secure_key' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_chsh_certifies_secure_key
+
+/-- info: 'CSD.Empirical.Protocols.secure_emulates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Protocols.secure_emulates
 
 -- USD (unambiguous state discrimination), the POVM-essential QM-validity result:
 -- the unambiguity zeros ⟨ψ₂,E₁ψ₂⟩ = ⟨ψ₁,E₂ψ₁⟩ = 0 (zero-error discrimination,
