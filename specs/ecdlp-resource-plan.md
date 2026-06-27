@@ -748,6 +748,24 @@ EC layer scaffold → real circuit. Effort: VERY LARGE (multi-tranche). **Staged
       ~1.5× Toffoli, the real win is the verified Θ(n²)→Θ(n) QUBIT collapse; ~10⁸ literature Toffoli out of DSL
       reach (Gidney measurement adders). Width note: figures on the n=256 register; value-correctness at the exact
       prime is n=257 (2N≤2ⁿ headroom). **THE 3-STAGE CARRY-CLEAN FIGURE-COLLAPSE PLAN IS COMPLETE (S1+S2+S2b+S3).**
+  - **FERMAT MODULAR INVERSION cost DONE 2026-06-27** (`ECDLP/Inversion.lean` + `ResourceBounds.lean` "### Fermat
+    modular inversion", auditor-SOUND): closes the **inversion-omission gap** — prior figures undercounted by
+    omitting inversion entirely (which is why the verified `~10¹⁰` sat *below* Roetteler's `~10¹¹` baseline). Part A
+    algebra: `fermatInv p a := a^(p-2)`, **`fermatInv_eq_inv [Fact p.Prime] (ha : a≠0) : fermatInv p a = a⁻¹`** (real
+    Fermat via `ZMod.pow_card_sub_one_eq_one`; the ⟦c⟧=op link; `[Fact p.Prime]` = the named secp256k1 primality
+    residue; `fermatInv_eq_modInv` ties to `Reversible.modInv`) + the derived square-and-multiply op count
+    `modExpFieldMults_le ≤ 2·Nat.size e` (mirrors `doubleAndAddCost_le`). Part B figure: `fermatInvToffoli n =
+    2n·cleanModMulToffoli n` (conservative `O(n³)`, `672 923 648 ≈ 6.7×10⁸` at n=256, tied to the verified multiply)
+    → **`secp256k1ToffoliCleanArithWithInversion = 9 084 469 248 ≈ 9.1×10⁹`** (clean figure + ONE final
+    coordinate-recovery inversion). Honest split: inversion VALUE-correctness is proven; inversion COUNT is a derived
+    op-count MODEL (no separate verified exponentiation circuit, same status as `doubleAndAddCost`). Conservative:
+    optimal Euclid/Kaliski inversion is `O(n²)` but needs a separate verified circuit (named, not built); projective
+    `[k]P` legitimately avoids PER-OP inversion, affine variant (`~2n` inversions) is the heavier alternative. Still
+    omitted in every figure: the **2nd scalar multiplication** of the DLP instance + the **QFT/phase-estimation
+    wrapper** + ancilla uncomputation. 6 pins. AxiomAudit import wired (the CI-fix lesson applied). **NEXT (Shor
+    improvement arc):** the 2nd-scalar-mult + QFT-wrapper accounting (next-largest omission), then the bigger prize —
+    the ECDLP quantum core (2-D phase estimation) + the oracle bridge wiring the verified arithmetic into it, which
+    turns "verified arithmetic scaffold + cost model" into "verified end-to-end ECDLP attack (modulo named residue)".
   - Older framing: value-correctness already works with fresh ancilla per step; Stage 1 removes the qubit-
     efficiency residue at the adder level (modular wrapping + figure re-cost are Stages 2-3).
 

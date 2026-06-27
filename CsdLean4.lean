@@ -50,6 +50,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy

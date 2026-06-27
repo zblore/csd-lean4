@@ -5,6 +5,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
 
 /-!
 # ECDLP / secp256k1 resource estimate — the capstone  (ECDLP Tranche 7)
@@ -700,5 +701,78 @@ genuine structural payoff of the carry-clean tranche; the Toffoli gain over the 
 theorem cleanModMulQubits_inhabited (n : ℕ) (hn : 1 ≤ n) :
     Nonempty (CuccaroMulLayout (cleanModMulQubits n) n) :=
   ⟨cleanMulLayout n hn⟩
+
+/-! ### Fermat modular inversion — closing the inversion-omission gap
+
+Every figure above (`secp256k1ToffoliRefined`, `…VerifiedArith`, `…CleanArith`) costs modular
+**multiplication** in full but **omits modular inversion entirely**, so each undercounts. Projective /
+Jacobian elliptic-curve coordinates legitimately avoid a *per-operation* inversion — that is exactly what
+projective coordinates buy — but the scalar multiplication `[k]P` still needs **one** final inversion to
+recover the affine result from projective `(X : Y : Z)` (the `Z⁻¹` of the coordinate normalisation). This
+section costs that one inversion, conservatively, from the corpus's OWN verified gadget — **no new
+circuit**.
+
+The route is **Fermat** (`ECDLP.Inversion`): over the prime field `ZMod p`, `a⁻¹ = a^{p-2}`
+(`fermatInv_eq_inv`, carrying `[Fact p.Prime]` — the named secp256k1 primality residue), a modular
+exponentiation. Square-and-multiply costs `≤ 2·Nat.size (p-2) ≤ 2n` modular multiplies
+(`fermatInvFieldMults_le`), each the verified carry-clean `cleanModMulToffoli n = 20n²+14n`. So one
+inversion is `2n·(20n²+14n) = O(n³)` Toffoli — derived from the existing multiply, not annotated.
+
+**Conservative, by design.** The optimal extended-Euclid / Kaliski inversion is `O(n²)`, cheaper, but
+needs a separate verified inversion circuit (named residue). Fermat is what can be costed from what the
+corpus already has. The heavier **affine** alternative — a per-operation inversion, `~2·Nat.size k`
+inversions over the whole scalar multiply rather than one — is stated here for context but **not built**;
+projective coordinates are precisely the standard way to avoid it. -/
+
+/-- **Per-inversion Toffoli cost, Fermat route.** `(2n)·cleanModMulToffoli n = 2n·(20n²+14n)` — the
+square-and-multiply op count `≤ 2n` (`ECDLP.fermatInvFieldMults_le`, `n = Nat.size (p-2)` width) times the
+verified carry-clean modular multiply (`cleanModMulToffoli`, reduction-included, q × q). The conservative
+`O(n³)` cost of one modular inversion `a⁻¹ = a^{p-2}`, built from the EXISTING verified multiply (no new
+circuit). The optimal Euclid/Kaliski inversion is `O(n²)` but needs a separate verified circuit.
+
+**Two levels of guarantee (honest line).** The inversion *value*-correctness is a PROVED theorem
+(`ECDLP.fermatInv_eq_inv : a^{p-2} = a⁻¹` for prime `p`, via Fermat). The inversion *count* `2n` is a
+derived op-count MODEL (`modExpFieldMults`, square-and-multiply, same status as `doubleAndAddCost`): there
+is no separately-exhibited `a^{p-2}` exponentiation *circuit* whose denotation is `a⁻¹` and whose gate
+tally is this product — only the per-multiply `cleanModMulToffoli` is a verified circuit cost. So "derived"
+here means "op-count model × verified-per-multiply", not "verified exponentiation circuit". -/
+def fermatInvToffoli (n : ℕ) : ℕ := (2 * n) * cleanModMulToffoli n
+
+/-- **Op-count honesty.** The leading `2n` factor of `fermatInvToffoli` is the proved square-and-multiply
+bound on the Fermat exponentiation's field multiplies (`ECDLP.fermatInvFieldMults_le`, valid at any
+register width `n ≥ Nat.size (p-2)`): `fermatInvFieldMults p ≤ 2 · Nat.size (p-2) ≤ 2n`. So the inversion
+cost is the *derived* op count times the verified per-multiply Toffoli. -/
+theorem fermatInvToffoli_field_mult_bound (p n : ℕ) (hn : Nat.size (p - 2) ≤ n) :
+    fermatInvFieldMults p ≤ 2 * n :=
+  le_trans (fermatInvFieldMults_le p) (by gcongr)
+
+/-- One secp256k1 modular inversion via Fermat costs `672 923 648 ≈ 6.7×10⁸` Toffolis:
+`2·256 = 512` verified carry-clean multiplies, each `cleanModMulToffoli 256 = 1 314 304`. -/
+theorem fermatInvToffoli_secp256k1 : fermatInvToffoli Secp256k1.bits = 672923648 := by
+  norm_num [fermatInvToffoli, cleanModMulToffoli, Secp256k1.bits]
+
+/-- **ECDLP / secp256k1 — the carry-clean figure WITH the final coordinate-recovery inversion.** The
+carry-clean scalar-multiplication figure `secp256k1ToffoliCleanArith` (`8.41×10⁹`, which omits inversion)
+plus the ONE final projective→affine inversion costed via Fermat (`fermatInvToffoli Secp256k1.bits`,
+`6.7×10⁸`). This closes the "omits inversion" gap of the prior figures, conservatively.
+
+**What this counts, exactly.** Projective `[k]P` does NOT pay a per-operation inversion (that is the point
+of projective coordinates); it pays exactly one inversion at the end to normalise `(X:Y:Z) ↦ (X/Z, Y/Z)`.
+That one inversion is costed here via Fermat (`a^{p-2}`, `≤ 2n` verified carry-clean multiplies, `O(n³)`).
+The optimal extended-Euclid/Kaliski inversion is `O(n²)`, cheaper, but is a separate verified-circuit
+residue. The heavier **affine** variant (a per-op inversion, `~2·Nat.size k` inversions) is not built —
+projective coordinates avoid it. `p`-primality is the named residue carried by `fermatInv_eq_inv`'s
+`[Fact p.Prime]`. Still one scalar multiplication only: no second scalar mult, no QFT/phase-estimation
+wrapper, no uncomputation accounting. -/
+def secp256k1ToffoliCleanArithWithInversion : ℕ :=
+  secp256k1ToffoliCleanArith + fermatInvToffoli Secp256k1.bits
+
+/-- The inversion-inclusive carry-clean figure evaluates to `9 084 469 248 ≈ 9.1×10⁹` Toffolis:
+`secp256k1ToffoliCleanArith = 8 411 545 600` plus the one Fermat inversion `fermatInvToffoli 256 =
+672 923 648`. -/
+theorem secp256k1ToffoliCleanArithWithInversion_eq :
+    secp256k1ToffoliCleanArithWithInversion = 9084469248 := by
+  rw [secp256k1ToffoliCleanArithWithInversion, secp256k1ToffoliCleanArith_eq,
+    fermatInvToffoli_secp256k1]
 
 end ECDLP.ResourceBounds

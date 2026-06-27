@@ -45,6 +45,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.LF2.Interface
@@ -4069,6 +4070,32 @@ operand). All foundational-triple-only. -/
 /-- info: 'ECDLP.ResourceBounds.cleanModMulQubits_inhabited' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.cleanModMulQubits_inhabited
+
+/-! ### ECDLP Fermat modular inversion: algebra + cost fold-in (Inversion.lean + ResourceBounds.lean) -/
+
+/-- info: 'ECDLP.fermatInv_eq_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.fermatInv_eq_inv
+
+/-- info: 'ECDLP.fermatInv_eq_modInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.fermatInv_eq_modInv
+
+/-- info: 'ECDLP.modExpFieldMults_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.modExpFieldMults_le
+
+/-- info: 'ECDLP.fermatInvFieldMults_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.fermatInvFieldMults_le
+
+/-- info: 'ECDLP.ResourceBounds.fermatInvToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.fermatInvToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliCleanArithWithInversion_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1ToffoliCleanArithWithInversion_eq
 
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
