@@ -125,6 +125,7 @@ import CsdLean4.Empirical.QM.SternGerlach
 import CsdLean4.Empirical.QM.Malus
 import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
 import CsdLean4.Empirical.QM.Algorithms.Simon
+import CsdLean4.Empirical.QM.Algorithms.SwapTest
 import CsdLean4.Empirical.QM.Algorithms.BernsteinVazirani
 import CsdLean4.Empirical.QM.Algorithms.Grover
 import CsdLean4.Empirical.QM.Algorithms.ShorCore
@@ -848,6 +849,24 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.Simon.cosetState_normalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Simon.cosetState_normalized
+
+-- Swap test (ancilla-interferometry overlap/fidelity estimator): the circuit
+-- H_anc ∘ cSWAP ∘ H_anc on |0⟩⊗ψ⊗φ collapses (two-Hadamard ancilla orthogonality) to the
+-- ancilla-0 amplitude (1/2)(ψ i φ j + φ i ψ j) (swapTest_apply); the ancilla-0 marginal is
+-- P(0) = (1 + |⟨ψ,φ⟩|²)/2 (swap_test_prob) via the tensor identity ⟨ψ⊗φ,φ⊗ψ⟩ = |⟨ψ,φ⟩|².
+-- Hence P(0) = 1 for equal states (swap_test_equal) and 1/2 for orthogonal (swap_test_orthogonal).
+-- Foundational triple.
+/-- info: 'CSD.Empirical.QM.SwapTest.swap_test_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.SwapTest.swap_test_prob
+
+/-- info: 'CSD.Empirical.QM.SwapTest.swap_test_equal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.SwapTest.swap_test_equal
+
+/-- info: 'CSD.Empirical.QM.SwapTest.swap_test_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.SwapTest.swap_test_orthogonal
 
 -- Bernstein-Vazirani: the FULL phase-oracle circuit H^⊗n ∘ U_f ∘ H^⊗n on |0ⁿ⟩ for the hidden
 -- linear function f_a(x) = ⟨a,x⟩. The 𝔽₂ character sum ∑ₓ (-1)^⟨z,x⟩ = 2ⁿ·[z=0]
