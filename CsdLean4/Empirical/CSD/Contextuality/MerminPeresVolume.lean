@@ -353,6 +353,859 @@ theorem mp_xx_born_frequency_volume_canonical
       (bornRegion (mpXXBasis.repr ψ) (repr_ne_zero mpXXBasis ψ hψ))
       (bornRegion_measurable_uncond (mpXXBasis.repr ψ) (repr_ne_zero mpXXBasis ψ hψ)))
 
+/-! ## The remaining seven square observables
+
+The two reference cells above (`X ⊗ X`, `Z ⊗ Z`) are now extended to the **full**
+nine-observable Mermin–Peres square, each with a machine-checked eigenbasis tie to the
+genuine Pauli observable (the faithfulness standard set by `mpXXVec_eigenvector`).
+
+```
+            col 0        col 1        col 2
+row 0     X ⊗ I        I ⊗ X        X ⊗ X      (X ⊗ X done above)
+row 1     I ⊗ Z        Z ⊗ I        Z ⊗ Z      (Z ⊗ Z in ContextVolume)
+row 2     X ⊗ Z        Z ⊗ X        Y ⊗ Y
+```
+
+The eigenbasis of `σ_a ⊗ σ_b` is `(U_a ⊗ U_b)` on the computational basis, `U_a`
+diagonalising `σ_a` (`U_Z = I`, `U_X = H`, `U_Y` the `(1, ±i)/√2` frame). Two cells
+sharing a single-qubit diagonalising frame on each factor share an eigenbasis, so the
+nine observables need only **four** orthonormal frames:
+
+- the **computational** frame `EuclideanSpace.basisFun` (both factors diagonal):
+  `Z ⊗ I`, `I ⊗ Z` (and `Z ⊗ Z`);
+- the **`H ⊗ I` frame** `mpHIBasis` (`|±⟩ ⊗ eⱼ`, Hadamard on the first factor, the
+  second diagonal): `X ⊗ I`, `X ⊗ Z`;
+- the **`I ⊗ H` frame** `mpIHBasis` (`eᵢ ⊗ |±⟩`): `I ⊗ X`, `Z ⊗ X`;
+- the **`H ⊗ H` frame** `mpXXBasis` (`|±⟩ ⊗ |±⟩`): `X ⊗ X`;
+- the **`U_Y ⊗ U_Y` frame** `mpYYBasis` (`|y±⟩ ⊗ |y±⟩`, the complex frame): `Y ⊗ Y`.
+
+Each cell carries: the eigenvalue vector, the `reindex_sigma_ab` matrix identity against
+the real `sigma_a ⊗ₖ sigma_b` (the four `finProdFinEquiv.symm` resolutions by `decide`),
+the eigenvector lemma `mp_<ab>Vec_eigenvector` (the load-bearing faithfulness fact:
+`(σ_a ⊗ σ_b) · vᵢ = eigval i • vᵢ` against the genuine Pauli observable), the
+`_blk_eq_zero_iff_eigval_one` block/`+1`-eigenspace certificate, and the volume headline
+`mp_<ab>_born_frequency_volume` instantiating `block_born_frequency_volume` on the `+1`
+block. Honest scope is unchanged from `mp_xx_born_frequency_volume`: realisation not
+derivation (`Φ = id`, FS regions carved in the rotated frame), Gleason-free,
+foundational-triple-only; the Mermin–Peres no-go stays at the QM layer. -/
+
+/-- `1/√2` (as `Real.sqrt 2 / 2`), the single-Hadamard component magnitude. -/
+noncomputable def invSqrt2 : ℝ := Real.sqrt 2 / 2
+
+/-- `(1/√2)² = 1/2`. -/
+lemma invSqrt2_sq : invSqrt2 * invSqrt2 = 1 / 2 := by
+  unfold invSqrt2
+  rw [div_mul_div_comm, Real.mul_self_sqrt (by norm_num : (0:ℝ) ≤ 2)]
+  norm_num
+
+/-! ### The `H ⊗ I` frame `|±⟩ ⊗ eⱼ` (shared by `X ⊗ I` and `X ⊗ Z`) -/
+
+/-- Real `(0, ±1/√2)`-component pattern of the `H ⊗ I` eigenvectors `|±⟩ ⊗ eⱼ`:
+`v0 = |+⟩⊗e₀`, `v1 = |+⟩⊗e₁`, `v2 = |−⟩⊗e₀`, `v3 = |−⟩⊗e₁` (flatten `(i,j) ↦ 2i+j`). -/
+noncomputable def mpHIReal : Fin 4 → Fin 4 → ℝ :=
+  ![![invSqrt2, 0, invSqrt2, 0],
+    ![0, invSqrt2, 0, invSqrt2],
+    ![invSqrt2, 0, -invSqrt2, 0],
+    ![0, invSqrt2, 0, -invSqrt2]]
+
+/-- The `H ⊗ I` eigenvectors as complex coordinate vectors. -/
+noncomputable def mpHIVec (i : Fin 4) : EuclideanSpace ℂ (Fin 4) :=
+  WithLp.toLp 2 (fun k => ((mpHIReal i k : ℝ) : ℂ))
+
+/-- **The `H ⊗ I` family is orthonormal.** Each squared norm is `2·(1/√2)² = 1`
+(`invSqrt2_sq`); off-diagonal products cancel. -/
+lemma mpHIVec_orthonormal : Orthonormal ℂ mpHIVec := by
+  rw [orthonormal_iff_ite]
+  intro a b
+  rw [PiLp.inner_apply, Fin.sum_univ_four]
+  simp only [mpHIVec, WithLp.ofLp_toLp, mp_scalar_inner]
+  fin_cases a <;> fin_cases b <;>
+    norm_num [mpHIReal, invSqrt2_sq, mul_neg, neg_mul,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
+      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.tail_cons]
+
+/-- The `H ⊗ I` eigenbasis as a Mathlib `OrthonormalBasis`. -/
+noncomputable def mpHIBasis :
+    OrthonormalBasis (Fin 4) ℂ (EuclideanSpace ℂ (Fin 4)) := by
+  refine OrthonormalBasis.mk mpHIVec_orthonormal ?_
+  have hcard : Fintype.card (Fin 4) = Module.finrank ℂ (EuclideanSpace ℂ (Fin 4)) := by
+    rw [Fintype.card_fin, finrank_euclideanSpace_fin]
+  rw [mpHIVec_orthonormal.linearIndependent.span_eq_top_of_card_eq_finrank hcard]
+
+lemma mpHIBasis_apply (i : Fin 4) : mpHIBasis i = mpHIVec i := by
+  unfold mpHIBasis; rw [OrthonormalBasis.coe_mk]
+
+/-! ### The `I ⊗ H` frame `eᵢ ⊗ |±⟩` (shared by `I ⊗ X` and `Z ⊗ X`) -/
+
+/-- Real `(0, ±1/√2)`-component pattern of the `I ⊗ H` eigenvectors `eᵢ ⊗ |±⟩`:
+`v0 = e₀⊗|+⟩`, `v1 = e₀⊗|−⟩`, `v2 = e₁⊗|+⟩`, `v3 = e₁⊗|−⟩`. -/
+noncomputable def mpIHReal : Fin 4 → Fin 4 → ℝ :=
+  ![![invSqrt2, invSqrt2, 0, 0],
+    ![invSqrt2, -invSqrt2, 0, 0],
+    ![0, 0, invSqrt2, invSqrt2],
+    ![0, 0, invSqrt2, -invSqrt2]]
+
+/-- The `I ⊗ H` eigenvectors as complex coordinate vectors. -/
+noncomputable def mpIHVec (i : Fin 4) : EuclideanSpace ℂ (Fin 4) :=
+  WithLp.toLp 2 (fun k => ((mpIHReal i k : ℝ) : ℂ))
+
+/-- **The `I ⊗ H` family is orthonormal.** -/
+lemma mpIHVec_orthonormal : Orthonormal ℂ mpIHVec := by
+  rw [orthonormal_iff_ite]
+  intro a b
+  rw [PiLp.inner_apply, Fin.sum_univ_four]
+  simp only [mpIHVec, WithLp.ofLp_toLp, mp_scalar_inner]
+  fin_cases a <;> fin_cases b <;>
+    norm_num [mpIHReal, invSqrt2_sq, mul_neg, neg_mul,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
+      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.tail_cons]
+
+/-- The `I ⊗ H` eigenbasis as a Mathlib `OrthonormalBasis`. -/
+noncomputable def mpIHBasis :
+    OrthonormalBasis (Fin 4) ℂ (EuclideanSpace ℂ (Fin 4)) := by
+  refine OrthonormalBasis.mk mpIHVec_orthonormal ?_
+  have hcard : Fintype.card (Fin 4) = Module.finrank ℂ (EuclideanSpace ℂ (Fin 4)) := by
+    rw [Fintype.card_fin, finrank_euclideanSpace_fin]
+  rw [mpIHVec_orthonormal.linearIndependent.span_eq_top_of_card_eq_finrank hcard]
+
+lemma mpIHBasis_apply (i : Fin 4) : mpIHBasis i = mpIHVec i := by
+  unfold mpIHBasis; rw [OrthonormalBasis.coe_mk]
+
+/-! ### `X ⊗ I` (`H ⊗ I` frame, eigenvalues `+1,+1,−1,−1`) -/
+
+/-- Eigenvalues of `mpHIVec` under `σx ⊗ I` (`+1` on the `|+⟩` block). -/
+def mpXIEigval : Fin 4 → ℂ := ![1, 1, -1, -1]
+
+/-- Sign block of `X ⊗ I`: `+1` eigenspace `{0,1}` ↦ `0`, `−1` `{2,3}` ↦ `1`. -/
+def mpXIBlk : Fin 4 → Fin 2 := ![0, 0, 1, 1]
+
+/-- **`σx ⊗ I` reindexed under `finProdFinEquiv`**, against the genuine `sigmaX`. -/
+lemma reindex_sigmaXI :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaX ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))
+      = !![0, 0, 1, 0; 0, 0, 0, 1; 1, 0, 0, 0; (0 : ℂ), 1, 0, 0] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaX, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **`mpHIVec i` is a genuine eigenvector of the real `σx ⊗ I`.** -/
+theorem mpXIVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaX ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)))
+        *ᵥ (mpHIVec i).ofLp
+      = mpXIEigval i • (mpHIVec i).ofLp := by
+  rw [reindex_sigmaXI]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, mpHIVec, mpXIEigval, mpHIReal,
+      WithLp.ofLp_toLp, Pi.smul_apply, smul_eq_mul]
+
+/-- The `+1` block of `mpXIBlk` is exactly the `+1` eigenspace. -/
+theorem mpXIBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    mpXIBlk i = 0 ↔ mpXIEigval i = 1 := by
+  fin_cases i <;> simp [mpXIBlk, mpXIEigval] <;> norm_num
+
+/-- **`X ⊗ I = +1` Born weight as a block sum of FS volumes.** Instantiation of
+`block_born_frequency_volume` at `mpHIBasis`, `mpXIBlk`, `a = 0`; the `+1` block `{0,1}`
+is collapsed via `Finset.sum_pair`. Eigenbasis faithfulness is `mpXIVec_eigenvector`. -/
+theorem mp_xi_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpXIBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
+                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 1) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ mpHIBasis ψ hψ mpXIBlk 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => mpXIBlk i = 0),
+          ‖inner ℂ (mpHIBasis i) ψ‖ ^ 2)
+        = ‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 1) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => mpXIBlk i = 0)) = {0, 1} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 1),
+      mpHIBasis_apply, mpHIBasis_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_xi_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_xi_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpXIBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
+                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 1) ψ‖ ^ 2)) :=
+  mp_xi_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ))
+      (bornRegion_measurable_uncond (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ)))
+
+/-! ### `X ⊗ Z` (`H ⊗ I` frame, eigenvalues `+1,−1,−1,+1`) -/
+
+/-- Eigenvalues of `mpHIVec` under `σx ⊗ σz`. -/
+def mpXZEigval : Fin 4 → ℂ := ![1, -1, -1, 1]
+
+/-- Sign-parity block of `X ⊗ Z`: `+1` eigenspace `{0,3}` ↦ `0`. -/
+def mpXZBlk : Fin 4 → Fin 2 := ![0, 1, 1, 0]
+
+/-- **`σx ⊗ σz` reindexed under `finProdFinEquiv`**, against the genuine Pauli factors. -/
+lemma reindex_sigmaXZ :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaX ⊗ₖ sigmaZ)
+      = !![0, 0, 1, 0; 0, 0, 0, -1; 1, 0, 0, 0; (0 : ℂ), -1, 0, 0] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaZ, sigmaX, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **`mpHIVec i` is a genuine eigenvector of the real `σx ⊗ σz`.** -/
+theorem mpXZVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaX ⊗ₖ sigmaZ)) *ᵥ (mpHIVec i).ofLp
+      = mpXZEigval i • (mpHIVec i).ofLp := by
+  rw [reindex_sigmaXZ]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, mpHIVec, mpXZEigval, mpHIReal,
+      WithLp.ofLp_toLp, Pi.smul_apply, smul_eq_mul]
+
+/-- The `+1` block of `mpXZBlk` is exactly the `+1` eigenspace. -/
+theorem mpXZBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    mpXZBlk i = 0 ↔ mpXZEigval i = 1 := by
+  fin_cases i <;> simp [mpXZBlk, mpXZEigval] <;> norm_num
+
+/-- **`X ⊗ Z = +1` Born weight as a block sum of FS volumes.** Same `H ⊗ I` frame as
+`X ⊗ I`, different observable (eigenvalues `+1,−1,−1,+1`); `+1` block `{0,3}`. -/
+theorem mp_xz_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpXZBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
+                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 3) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ mpHIBasis ψ hψ mpXZBlk 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => mpXZBlk i = 0),
+          ‖inner ℂ (mpHIBasis i) ψ‖ ^ 2)
+        = ‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 3) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => mpXZBlk i = 0)) = {0, 3} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 3),
+      mpHIBasis_apply, mpHIBasis_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_xz_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_xz_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpXZBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
+                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 3) ψ‖ ^ 2)) :=
+  mp_xz_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ))
+      (bornRegion_measurable_uncond (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ)))
+
+/-! ### `I ⊗ X` (`I ⊗ H` frame, eigenvalues `+1,−1,+1,−1`) -/
+
+/-- Eigenvalues of `mpIHVec` under `I ⊗ σx`. -/
+def mpIXEigval : Fin 4 → ℂ := ![1, -1, 1, -1]
+
+/-- Sign block of `I ⊗ X`: `+1` eigenspace `{0,2}` ↦ `0`. -/
+def mpIXBlk : Fin 4 → Fin 2 := ![0, 1, 0, 1]
+
+/-- **`I ⊗ σx` reindexed under `finProdFinEquiv`**, against the genuine `sigmaX`. -/
+lemma reindex_sigmaIX :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaX)
+      = !![0, 1, 0, 0; 1, 0, 0, 0; 0, 0, 0, 1; (0 : ℂ), 0, 1, 0] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaX, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **`mpIHVec i` is a genuine eigenvector of the real `I ⊗ σx`.** -/
+theorem mpIXVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaX))
+        *ᵥ (mpIHVec i).ofLp
+      = mpIXEigval i • (mpIHVec i).ofLp := by
+  rw [reindex_sigmaIX]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, mpIHVec, mpIXEigval, mpIHReal,
+      WithLp.ofLp_toLp, Pi.smul_apply, smul_eq_mul]
+
+/-- The `+1` block of `mpIXBlk` is exactly the `+1` eigenspace. -/
+theorem mpIXBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    mpIXBlk i = 0 ↔ mpIXEigval i = 1 := by
+  fin_cases i <;> simp [mpIXBlk, mpIXEigval] <;> norm_num
+
+/-- **`I ⊗ X = +1` Born weight as a block sum of FS volumes.** -/
+theorem mp_ix_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpIXBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
+                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 2) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ mpIHBasis ψ hψ mpIXBlk 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => mpIXBlk i = 0),
+          ‖inner ℂ (mpIHBasis i) ψ‖ ^ 2)
+        = ‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 2) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => mpIXBlk i = 0)) = {0, 2} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 2),
+      mpIHBasis_apply, mpIHBasis_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_ix_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_ix_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpIXBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
+                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 2) ψ‖ ^ 2)) :=
+  mp_ix_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ))
+      (bornRegion_measurable_uncond (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ)))
+
+/-! ### `Z ⊗ X` (`I ⊗ H` frame, eigenvalues `+1,−1,−1,+1`) -/
+
+/-- Eigenvalues of `mpIHVec` under `σz ⊗ σx`. -/
+def mpZXEigval : Fin 4 → ℂ := ![1, -1, -1, 1]
+
+/-- Sign-parity block of `Z ⊗ X`: `+1` eigenspace `{0,3}` ↦ `0`. -/
+def mpZXBlk : Fin 4 → Fin 2 := ![0, 1, 1, 0]
+
+/-- **`σz ⊗ σx` reindexed under `finProdFinEquiv`**, against the genuine Pauli factors. -/
+lemma reindex_sigmaZX :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaZ ⊗ₖ sigmaX)
+      = !![0, 1, 0, 0; 1, 0, 0, 0; 0, 0, 0, -1; (0 : ℂ), 0, -1, 0] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaZ, sigmaX, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **`mpIHVec i` is a genuine eigenvector of the real `σz ⊗ σx`.** -/
+theorem mpZXVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaZ ⊗ₖ sigmaX)) *ᵥ (mpIHVec i).ofLp
+      = mpZXEigval i • (mpIHVec i).ofLp := by
+  rw [reindex_sigmaZX]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, mpIHVec, mpZXEigval, mpIHReal,
+      WithLp.ofLp_toLp, Pi.smul_apply, smul_eq_mul]
+
+/-- The `+1` block of `mpZXBlk` is exactly the `+1` eigenspace. -/
+theorem mpZXBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    mpZXBlk i = 0 ↔ mpZXEigval i = 1 := by
+  fin_cases i <;> simp [mpZXBlk, mpZXEigval] <;> norm_num
+
+/-- **`Z ⊗ X = +1` Born weight as a block sum of FS volumes.** -/
+theorem mp_zx_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpZXBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
+                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 3) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ mpIHBasis ψ hψ mpZXBlk 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => mpZXBlk i = 0),
+          ‖inner ℂ (mpIHBasis i) ψ‖ ^ 2)
+        = ‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 3) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => mpZXBlk i = 0)) = {0, 3} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 3),
+      mpIHBasis_apply, mpIHBasis_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_zx_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_zx_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpZXBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
+                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 3) ψ‖ ^ 2)) :=
+  mp_zx_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ))
+      (bornRegion_measurable_uncond (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ)))
+
+/-! ### `Z ⊗ I` and `I ⊗ Z` (computational frame `EuclideanSpace.basisFun`)
+
+Both are diagonal in the computational basis, so the engine frame is
+`EuclideanSpace.basisFun (Fin 4) ℂ` (no rotation), exactly as for `Z ⊗ Z`. The
+eigenvector lemmas certify the computational basis vectors `EuclideanSpace.single i 1`
+are genuine `σz ⊗ I` / `I ⊗ σz` eigenvectors against the real `sigmaZ`. -/
+
+/-- Eigenvalues of the computational basis under `σz ⊗ I`. -/
+def mpZIEigval : Fin 4 → ℂ := ![1, 1, -1, -1]
+
+/-- **`σz ⊗ I` reindexed under `finProdFinEquiv` is `diag(1,1,−1,−1)`.** -/
+lemma reindex_sigmaZI :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaZ ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))
+      = !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, -1, 0; (0 : ℂ), 0, 0, -1] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaZ, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **The computational basis vector `eᵢ` is a genuine eigenvector of the real `σz ⊗ I`.** -/
+theorem mpZIVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaZ ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)))
+        *ᵥ (EuclideanSpace.single i (1 : ℂ)).ofLp
+      = mpZIEigval i • (EuclideanSpace.single i (1 : ℂ)).ofLp := by
+  rw [reindex_sigmaZI]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, mpZIEigval, EuclideanSpace.single,
+      Pi.smul_apply, smul_eq_mul]
+
+/-- The `+1` block of the `Z ⊗ I` grouping `![0,0,1,1]` is exactly the `+1` eigenspace. -/
+theorem mpZIBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0 ↔ mpZIEigval i = 1 := by
+  fin_cases i <;> simp [mpZIEigval] <;> norm_num
+
+/-- **`Z ⊗ I = +1` Born weight as a block sum of FS volumes** (computational frame). -/
+theorem mp_zi_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+              (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (1 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
+    (![0, 0, 1, 1] : Fin 4 → Fin 2) 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0),
+          ‖inner ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ) i) ψ‖ ^ 2)
+        = ‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (1 : Fin 4) (1 : ℂ)) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0))
+          = {0, 1} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 1),
+      EuclideanSpace.basisFun_apply, EuclideanSpace.basisFun_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_zi_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_zi_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (1 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) :=
+  mp_zi_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))
+      (bornRegion_measurable_uncond ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
+
+/-- Eigenvalues of the computational basis under `I ⊗ σz`. -/
+def mpIZEigval : Fin 4 → ℂ := ![1, -1, 1, -1]
+
+/-- **`I ⊗ σz` reindexed under `finProdFinEquiv` is `diag(1,−1,1,−1)`.** -/
+lemma reindex_sigmaIZ :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaZ)
+      = !![1, 0, 0, 0; 0, -1, 0, 0; 0, 0, 1, 0; (0 : ℂ), 0, 0, -1] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaZ, show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **The computational basis vector `eᵢ` is a genuine eigenvector of the real `I ⊗ σz`.** -/
+theorem mpIZVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ sigmaZ))
+        *ᵥ (EuclideanSpace.single i (1 : ℂ)).ofLp
+      = mpIZEigval i • (EuclideanSpace.single i (1 : ℂ)).ofLp := by
+  rw [reindex_sigmaIZ]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, mpIZEigval, EuclideanSpace.single,
+      Pi.smul_apply, smul_eq_mul]
+
+/-- The `+1` block of the `I ⊗ Z` grouping `![0,1,0,1]` is exactly the `+1` eigenspace. -/
+theorem mpIZBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0 ↔ mpIZEigval i = 1 := by
+  fin_cases i <;> simp [mpIZEigval] <;> norm_num
+
+/-- **`I ⊗ Z = +1` Born weight as a block sum of FS volumes** (computational frame). -/
+theorem mp_iz_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+              (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (2 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
+    (![0, 1, 0, 1] : Fin 4 → Fin 2) 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0),
+          ‖inner ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ) i) ψ‖ ^ 2)
+        = ‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (2 : Fin 4) (1 : ℂ)) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0))
+          = {0, 2} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 2),
+      EuclideanSpace.basisFun_apply, EuclideanSpace.basisFun_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_iz_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_iz_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
+          + ‖inner ℂ (EuclideanSpace.single (2 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) :=
+  mp_iz_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))
+      (bornRegion_measurable_uncond ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
+
+/-! ### `Y ⊗ Y` (the complex `U_Y ⊗ U_Y` frame `|y±⟩ ⊗ |y±⟩`)
+
+The remaining cell. `U_Y` diagonalises `σy` with columns `|y±⟩ = (1, ±i)/√2`; the
+product eigenbasis `|y±⟩ ⊗ |y±⟩` has **complex** `(±1/2, ±i/2)` components, so the
+orthonormality and eigenvector proofs run over `ℂ` directly (not the real-coercion
+`mp_scalar_inner` route). This closes the `Y ⊗ Y` cell — and the full square. -/
+
+/-- The four `Y ⊗ Y` eigenvectors `|y±⟩ ⊗ |y±⟩` with explicit complex `(±1/2, ±i/2)`
+components: `v0 = |y+⟩⊗|y+⟩`, `v1 = |y+⟩⊗|y−⟩`, `v2 = |y−⟩⊗|y+⟩`, `v3 = |y−⟩⊗|y−⟩`. -/
+noncomputable def mpYYVec : Fin 4 → EuclideanSpace ℂ (Fin 4) :=
+  ![WithLp.toLp 2 ![1/2, Complex.I/2, Complex.I/2, -1/2],
+    WithLp.toLp 2 ![1/2, -Complex.I/2, Complex.I/2, 1/2],
+    WithLp.toLp 2 ![1/2, Complex.I/2, -Complex.I/2, 1/2],
+    WithLp.toLp 2 ![1/2, -Complex.I/2, -Complex.I/2, -1/2]]
+
+/-- **The `U_Y ⊗ U_Y` family is orthonormal.** Direct complex computation: each squared
+norm is `4·(1/2)² = 1`; off-diagonal inner products cancel (`Complex.conj_I`). -/
+lemma mpYYVec_orthonormal : Orthonormal ℂ mpYYVec := by
+  rw [orthonormal_iff_ite]
+  intro a b
+  rw [PiLp.inner_apply, Fin.sum_univ_four]
+  fin_cases a <;> fin_cases b <;>
+    simp only [mpYYVec, RCLike.inner_apply] <;>
+    rw [Complex.ext_iff] <;>
+    constructor <;>
+    simp [Complex.div_re, Complex.div_im, Complex.mul_re, Complex.mul_im,
+      Complex.I_re, Complex.I_im, Complex.normSq] <;> norm_num
+
+/-- The `Y ⊗ Y` eigenbasis as a Mathlib `OrthonormalBasis`. -/
+noncomputable def mpYYBasis :
+    OrthonormalBasis (Fin 4) ℂ (EuclideanSpace ℂ (Fin 4)) := by
+  refine OrthonormalBasis.mk mpYYVec_orthonormal ?_
+  have hcard : Fintype.card (Fin 4) = Module.finrank ℂ (EuclideanSpace ℂ (Fin 4)) := by
+    rw [Fintype.card_fin, finrank_euclideanSpace_fin]
+  rw [mpYYVec_orthonormal.linearIndependent.span_eq_top_of_card_eq_finrank hcard]
+
+lemma mpYYBasis_apply (i : Fin 4) : mpYYBasis i = mpYYVec i := by
+  unfold mpYYBasis; rw [OrthonormalBasis.coe_mk]
+
+/-- Eigenvalues of `mpYYVec` under `σy ⊗ σy` (`+1` on the `|y+y+⟩,|y−y−⟩` block). -/
+def mpYYEigval : Fin 4 → ℂ := ![1, -1, -1, 1]
+
+/-- Sign-parity block of `Y ⊗ Y`: `+1` eigenspace `{0,3}` ↦ `0`. -/
+def mpYYBlk : Fin 4 → Fin 2 := ![0, 1, 1, 0]
+
+/-- **`σy ⊗ σy` reindexed under `finProdFinEquiv`**, against the genuine `sigmaY`. -/
+lemma reindex_sigmaYY :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaY ⊗ₖ sigmaY)
+      = !![0, 0, 0, -1; 0, 0, 1, 0; 0, 1, 0, 0; (-1 : ℂ), 0, 0, 0] := by
+  ext k j
+  fin_cases k <;> fin_cases j <;>
+    simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.kroneckerMap_apply,
+      sigmaY, Complex.I_mul_I,
+      show (@finProdFinEquiv 2 2).symm (0 : Fin 4) = (0, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (1 : Fin 4) = (0, 1) from by decide,
+      show (@finProdFinEquiv 2 2).symm (2 : Fin 4) = (1, 0) from by decide,
+      show (@finProdFinEquiv 2 2).symm (3 : Fin 4) = (1, 1) from by decide]
+
+/-- **`mpYYVec i` is a genuine eigenvector of the real `σy ⊗ σy`.** The load-bearing
+faithfulness lemma for the hard (complex) cell, against the actual Pauli observable
+`sigmaY ⊗ₖ sigmaY` reindexed onto `Fin 4`. -/
+theorem mpYYVec_eigenvector (i : Fin 4) :
+    (Matrix.reindex finProdFinEquiv finProdFinEquiv (sigmaY ⊗ₖ sigmaY)) *ᵥ (mpYYVec i).ofLp
+      = mpYYEigval i • (mpYYVec i).ofLp := by
+  rw [reindex_sigmaYY]
+  funext k
+  fin_cases i <;> fin_cases k <;>
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_four, mpYYVec, mpYYEigval,
+      WithLp.ofLp_toLp, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
+      Matrix.cons_val_two, Matrix.cons_val_three, Matrix.tail_cons,
+      Pi.smul_apply, smul_eq_mul] <;> ring_nf
+
+/-- The `+1` block of `mpYYBlk` is exactly the `+1` eigenspace. -/
+theorem mpYYBlk_eq_zero_iff_eigval_one (i : Fin 4) :
+    mpYYBlk i = 0 ↔ mpYYEigval i = 1 := by
+  fin_cases i <;> simp [mpYYBlk, mpYYEigval] <;> norm_num
+
+/-- **`Y ⊗ Y = +1` Born weight as a block sum of FS volumes.** The complex-frame cell,
+completing the square. Instantiation of `block_born_frequency_volume` at `mpYYBasis`,
+`mpYYBlk`, `a = 0`; the `+1` block `{0,3}`. Eigenbasis faithfulness is
+`mpYYVec_eigenvector` against the genuine `σy ⊗ σy`. -/
+theorem mp_yy_born_frequency_volume
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hindep : ∀ i : Fin 4,
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' bornRegion (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpYYBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' bornRegion (mpYYBasis.repr ψ)
+                    (repr_ne_zero mpYYBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpYYVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpYYVec 3) ψ‖ ^ 2)) := by
+  have h := block_born_frequency_volume p₀ mpYYBasis ψ hψ mpYYBlk 0 X hX hlaw hindep
+  have hsum :
+      (∑ i ∈ Finset.univ.filter (fun i => mpYYBlk i = 0),
+          ‖inner ℂ (mpYYBasis i) ψ‖ ^ 2)
+        = ‖inner ℂ (mpYYVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpYYVec 3) ψ‖ ^ 2 := by
+    rw [show (Finset.univ.filter (fun i => mpYYBlk i = 0)) = {0, 3} from by decide,
+      Finset.sum_pair (by decide : (0 : Fin 4) ≠ 3),
+      mpYYBasis_apply, mpYYBasis_apply]
+  rw [← hsum]
+  exact h
+
+/-- `mp_yy_born_frequency_volume` on the canonical FS trial witness. -/
+theorem mp_yy_born_frequency_volume_canonical
+    (p₀ : CPN 4)
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => mpYYBlk i = 0),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((fsTrial 4 k) ⁻¹' bornRegion (mpYYBasis.repr ψ)
+                    (repr_ne_zero mpYYBasis ψ hψ) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (mpYYVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpYYVec 3) ψ‖ ^ 2)) :=
+  mp_yy_born_frequency_volume p₀ ψ hψ
+    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (bornRegion (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ))
+      (bornRegion_measurable_uncond (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ)))
+
+/-! ## Closure: the full nine-observable Mermin–Peres square is grounded
+
+All nine grid observables now carry a machine-checked CSD volume reading whose eigenbasis
+label is **earned**, not asserted — each via a `mp_<ab>Vec_eigenvector` lemma certifying
+`(σ_a ⊗ σ_b) · vᵢ = eigval i • vᵢ` against the genuine Pauli observable
+`sigma_a ⊗ₖ sigma_b` of `Empirical/QM/Contextuality/MerminPeres.lean`:
+
+| cell    | frame                    | eigenvector lemma     | volume headline               |
+|---------|--------------------------|-----------------------|-------------------------------|
+| `X ⊗ I` | `mpHIBasis` (`H ⊗ I`)    | `mpXIVec_eigenvector` | `mp_xi_born_frequency_volume` |
+| `I ⊗ X` | `mpIHBasis` (`I ⊗ H`)    | `mpIXVec_eigenvector` | `mp_ix_born_frequency_volume` |
+| `X ⊗ X` | `mpXXBasis` (`H ⊗ H`)    | `mpXXVec_eigenvector` | `mp_xx_born_frequency_volume` |
+| `I ⊗ Z` | computational           | `mpIZVec_eigenvector` | `mp_iz_born_frequency_volume` |
+| `Z ⊗ I` | computational           | `mpZIVec_eigenvector` | `mp_zi_born_frequency_volume` |
+| `Z ⊗ Z` | computational           | `mpZZVec_eigenvector` | `zz_parity_born_frequency_volume` |
+| `X ⊗ Z` | `mpHIBasis` (`H ⊗ I`)    | `mpXZVec_eigenvector` | `mp_xz_born_frequency_volume` |
+| `Z ⊗ X` | `mpIHBasis` (`I ⊗ H`)    | `mpZXVec_eigenvector` | `mp_zx_born_frequency_volume` |
+| `Y ⊗ Y` | `mpYYBasis` (`U_Y ⊗ U_Y`)| `mpYYVec_eigenvector` | `mp_yy_born_frequency_volume` |
+
+Each headline lands on the `σ_a ⊗ σ_b = +1` outcome Born weight as a block sum of two
+Fubini–Study typicality volumes on the fixed ontic `Σ = ℂℙ³`, every unit two-qubit
+preparation covered (no genericity hypothesis), carving-free and Gleason-free
+(foundational-triple-only). The `−1` outcome of each cell is the identical instantiation
+at `a = 1`.
+
+The combinatorial no-go itself — that no single non-contextual `±1` assignment is jointly
+consistent across the square's six row/column product constraints — stays at the
+QM-validity layer (`no_lhv_mermin_peres`, `no_csd_mermin_peres_assignment`). The CSD
+reading: each cell is a rank-2 carving of the *one* ontic `Σ`, its outcome weights are
+typicality volumes recomputed per measurement frame, and the context-dependence the
+theorem exploits is the dependence of the carved-volume regions on the frame — not a
+hidden variable. Honest scope is unchanged: realisation, not derivation (`Φ = id`). -/
+
 end MerminPeres
 end CSDBridge
 end Empirical

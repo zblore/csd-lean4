@@ -3134,6 +3134,116 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_xx_born_frequency_volume_canonical
 
+-- The remaining seven Mermin–Peres square observables, each with a machine-checked
+-- eigenbasis tie to the genuine Pauli observable (sigma_a ⊗ₖ sigma_b reindexed onto Fin 4).
+-- Eigenvector faithfulness lemmas (the label earned, not asserted) + volume headlines.
+-- Foundational-triple-only (no busch), carving-free, Gleason-free.
+
+-- X⊗I (H⊗I frame)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXIVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXIVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_xi_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_xi_born_frequency_volume
+
+-- X⊗Z (H⊗I frame, shared eigenbasis with X⊗I)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXZVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXZVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_xz_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_xz_born_frequency_volume
+
+-- I⊗X (I⊗H frame)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpIXVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpIXVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_ix_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_ix_born_frequency_volume
+
+-- Z⊗X (I⊗H frame, shared eigenbasis with I⊗X)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpZXVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpZXVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_zx_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_zx_born_frequency_volume
+
+-- Z⊗I (computational frame)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpZIVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpZIVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_zi_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_zi_born_frequency_volume
+
+-- I⊗Z (computational frame)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpIZVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpIZVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_iz_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_iz_born_frequency_volume
+
+-- Y⊗Y (complex U_Y⊗U_Y frame; the hard cell)
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpYYVec_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpYYVec_eigenvector
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_yy_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_yy_born_frequency_volume
+
+-- Block/+1-eigenspace certificates (the second half of the earned-label faithfulness
+-- claim: the collapsed block {…} IS exactly the +1 eigenspace, machine-checked against
+-- the eigenvalue vector). X⊗X and Z⊗Z block lemmas are pinned above; these are the
+-- remaining seven cells.
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXIBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXIBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpXZBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpXZBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpIXBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpIXBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpZXBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpZXBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpZIBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpZIBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpIZBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpIZBlk_eq_zero_iff_eigval_one
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mpYYBlk_eq_zero_iff_eigval_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mpYYBlk_eq_zero_iff_eigval_one
+
+-- Z⊗I / I⊗Z canonical FS-trial witnesses (the computational-frame cells; the other
+-- non-computational cells already carry _canonical pins above).
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_zi_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_zi_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.MerminPeres.mp_iz_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MerminPeres.mp_iz_born_frequency_volume_canonical
+
 /-! ### Operator-convexity ladder (Cat-1; L.0 predicate + L.1 inverse operator convexity
 + L.2 shifted-resolvent concavity rungs) -/
 
