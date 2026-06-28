@@ -119,6 +119,7 @@ import CsdLean4.Empirical.QM.Protocols.Basic
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.Crypto.E91KeyRate
+import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
 import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.QEC.ThreeQubit
 import CsdLean4.Empirical.QM.QEC.PhaseFlip
@@ -1215,6 +1216,24 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QuantumMoney.quantum_money_unforgeable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumMoney.quantum_money_unforgeable
+
+-- Wiesner single-slot mint/verify protocol on top of quantum_money_unforgeable:
+-- honest money verifies with certainty (completeness), no isometry forges both
+-- non-orthogonal notes (no perfect forgery, instantiating quantum_money_unforgeable),
+-- and the per-slot acceptance advantage is bounded by the shared Protocols
+-- SecurityBound (ε = 1, the trivial probability bound; quantitative cloning ε out
+-- of scope). Foundational triple only.
+/-- info: 'CSD.Empirical.QM.Wiesner.wiesner_verify_honest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Wiesner.wiesner_verify_honest
+
+/-- info: 'CSD.Empirical.QM.Wiesner.wiesner_forge_impossible' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Wiesner.wiesner_forge_impossible
+
+/-- info: 'CSD.Empirical.QM.Wiesner.wiesner_forge_advantage_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Wiesner.wiesner_forge_advantage_le
 
 -- E91 device-independent security: the local-hidden-variable CHSH bound |S| ≤ 2
 -- (Bell 1964 / CHSH 1969, the previously un-formalised premise behind
