@@ -31,7 +31,23 @@ fringe `∝ cos²(φ/2)`.
 - **Validates:** CSD handles dynamic time-dependent phase tracking as cleanly as static
   entanglement. Low-risk foundational sensing protocol.
 
-### A2 — Quantum Fisher Information = Fubini-Study metric
+### A2 — Quantum Fisher Information = Fubini-Study metric (pure-state pullback form DONE 2026-06-28)
+**`Empirical/Metrology/QuantumFisher.lean`.** General pure-state defs `fsMetric ψ dψ =
+‖dψ‖² − ‖⟪ψ,dψ⟫‖²`, `qfi = 4·fsMetric`, `classicalFisher P P' = (P')²/(P(1−P))` (any `d`,
+on a state + its derivative vector — the honest trajectory pullback, NOT the intrinsic
+ℂℙⁿ metric tensor). For the A1 Ramsey family: `ramseyVec_hasDerivAt` (the GENUINE
+derivative `ramseyDeriv φ`, proved componentwise via `HasDerivAt.cexp` + an ℝ-linear
+`singleRL` CLM that dodges the ℝ-ℂ-EuclideanSpace `restrictScalars` diamond, not
+asserted); `ramsey_fs_metric = 1/4` (`‖dψ‖²=1/2`, `⟪ψ,dψ⟫=i/2`); `ramsey_qfi = 1` (the
+SQL per-shot QFI, constant); `ramsey_classical_fisher = 1` for `sin φ ≠ 0` (the |0⟩
+readout, `P(1−P)=(1/4)sin²φ`); `ramsey_qcrb_saturation` (`F_C = F_Q = 1`, the
+computational-basis measurement is Fisher-optimal / saturates the QCRB at every working
+point). 5 pins, foundational triple only (NO busch). Honest: single-qubit; reuses A1
+`ramseyVec`/`ramseyFringe`/`ramsey_fringe_hasDerivAt`. NOT covered: the intrinsic FS
+Riemannian/Kähler `(0,2)`-tensor on `ℂℙ^{N-1}` (curve-independent), the heavier A2/A3
+infrastructure, deferred.
+
+(original scope:)
 Formalize `F_Q(θ) = g_θθ` (the FS metric tensor along the trajectory `γ(θ)`), turning the
 Quantum Cramér-Rao bound `Var(θ̂) ≥ 1/F_Q` into a statement about the differential geometry
 of `Σ = ℂℙ^{N-1}`.

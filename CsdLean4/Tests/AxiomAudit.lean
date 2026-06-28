@@ -154,6 +154,7 @@ import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.Metrology.Ramsey
+import CsdLean4.Empirical.Metrology.QuantumFisher
 import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
@@ -1699,6 +1700,43 @@ info: 'CSD.Empirical.Metrology.ramseyVec_eq_circuit' depends on axioms: [propext
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.Metrology.ramseyVec_eq_circuit
+
+-- Metrology A2: Quantum Fisher Information = Fubini-Study metric. The genuine
+-- derivative of the Ramsey state (ramseyVec_hasDerivAt, proved via HasDerivAt, not
+-- asserted), the FS line element g = 1/4 (ramsey_fs_metric), the QFI F_Q = 1
+-- (ramsey_qfi), the classical Fisher info of the |0⟩ readout F_C = 1
+-- (ramsey_classical_fisher, sin φ ≠ 0), and the QCRB saturation F_C = F_Q
+-- (ramsey_qcrb_saturation): the computational-basis Ramsey measurement is
+-- Fisher-optimal. Foundational triple only; NO busch_effect_gleason.
+/--
+info: 'CSD.Empirical.Metrology.ramseyVec_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramseyVec_hasDerivAt
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_fs_metric' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_fs_metric
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_qfi' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_qfi
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_classical_fisher' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_classical_fisher
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_qcrb_saturation' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_qcrb_saturation
 
 -- Bell singlet joint frequencies as DERIVED Kähler-volume convergence (N=4
 -- surfacing of born_frequency_convergence_N): carving-free, Gleason-free, and
