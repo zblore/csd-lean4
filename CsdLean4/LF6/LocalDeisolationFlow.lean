@@ -160,7 +160,17 @@ Kronecker products into one (`← mul_kronecker_mul` twice) to expose
 `(V_wᴴ Π^w V_w) ⊗ (V_wᴴ Π^w V_w)`, discharge each factor by
 `wingDeisolation_pullback` (`= |e_i⟩⟨e_i|`), and recombine the matrix-unit
 Kronecker `|e_i⟩⟨e_i| ⊗ |e_j⟩⟨e_j| = |e_{(i,j)}⟩⟨e_{(i,j)}|`
-(`single_kronecker_single`). -/
+(`single_kronecker_single`).
+
+**Reading the projector (do not mistake the computational for the physical).** The
+proved RHS `|e_{(i,j)}⟩⟨e_{(i,j)}|` is the *computational-basis* rank-1 projector.
+It is the physical product-eigenbasis projector `|a_i ⊗ b_j⟩⟨a_i ⊗ b_j|` (wing-`A`
+detector outcome `a_i`, wing-`B` outcome `b_j`) **read in the nudged axis basis**:
+the axis context `(a, b)` is carried by the `nudgedSinglet a b` rotation applied to
+the preparation (the prepared state in `localDeisolation_pointer_volume` is
+`nudgedSinglet a b`, not the bare singlet), so the computational projectors here are
+the physical eigenprojectors expressed in the rotated frame, not a different
+observable. -/
 theorem localDeisolation_pullback (i j : Fin 2) :
     (wingDeisolationV ⊗ₖ wingDeisolationV)ᴴ * (blockProj 2 i ⊗ₖ blockProj 2 j)
         * (wingDeisolationV ⊗ₖ wingDeisolationV)
@@ -396,7 +406,154 @@ theorem localDeisolationFlow_ne_id : localDeisolationFlow ≠ id := by
   rw [hid, id_eq] at hmove
   exact mk_single_ne hne hmove
 
-/-! ### Deliverable 6: the capstone -/
+/-! ### Deliverable 6 (the flow ↔ dilation tie): the local flow realises the dilation
+
+This section closes the auditor Minor on LF6-A.3: the capstone previously bundled
+the local flow `Φ_loc` (`localDeisolationFlow`) and the local Naimark dilation
+`V_loc` (`localDeisolationV`) without a theorem tying them. Here we prove the LF5
+`measurementFlow_realises_dilation` analogue: at the projective level, the LOCAL
+product flow carries the embedded ray `[ψ ⊗ (a₀ ⊗ a₀)]` exactly to the dilated ray
+`[V_loc ψ]`. The tie is genuine and routine: `V_loc = U_loc ∘ (· ⊗ ground)` because
+each wing is `vnDilationV 2 = vnUnitary 2 * embedGround 2`, so the product dilation
+factors through the product flow `U_loc = U_A ⊗ U_B`. -/
+
+/-- **The local product ground-state embedding** `ψ ↦ ψ ⊗ (a₀ ⊗ a₀)`, reindexed
+onto the dilated space `Fin 4 × Fin 4 ← Fin 4` exactly as `localDeisolationV`. It
+is the Kronecker product of the two identical wing ground embeddings
+`embedGround 2`, so `localDeisolationV = U_loc ∘ embed` (`localDeisolationV_eq`). -/
+noncomputable def localEmbedGround : Matrix (Fin 4 × Fin 4) (Fin 4) ℂ :=
+  Matrix.reindex jointDilEquiv jointSysEquiv (embedGround 2 ⊗ₖ embedGround 2)
+
+/-- **The ground embedding is an isometry** `embedᴴ embed = 1`: the Kronecker of
+two `embedGround 2` isometries (`embedGround_isom` per wing + `one_kronecker_one`),
+transported through the reindex. Mirrors `localDeisolation_isom`. -/
+theorem localEmbedGround_isom : localEmbedGroundᴴ * localEmbedGround = 1 := by
+  have hVt : (embedGround 2 ⊗ₖ embedGround 2)ᴴ * (embedGround 2 ⊗ₖ embedGround 2) = 1 := by
+    rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul,
+      show (embedGround 2)ᴴ * embedGround 2 = 1 from embedGround_isom,
+      Matrix.one_kronecker_one]
+  unfold localEmbedGround
+  simp only [Matrix.reindex_apply, Matrix.conjTranspose_submatrix]
+  rw [Matrix.submatrix_mul_equiv, hVt, Matrix.submatrix_one_equiv]
+
+/-- **The local product flow unitary as a matrix on `Fin 4 × Fin 4`** (the dilated
+space before the final `finProdFinEquiv` reindex onto `Fin 16`). It is the
+Kronecker `U_A ⊗ U_B` reindexed by `jointDilEquiv`; `reindex finProdFinEquiv ·`
+recovers `localFlowUnitary.val` (`localFlowReindexed_reindex`). -/
+noncomputable def localFlowReindexed : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ :=
+  Matrix.reindex jointDilEquiv jointDilEquiv (vnUnitary 2 ⊗ₖ vnUnitary 2)
+
+/-- **The dilation factors through the flow (matrix level):**
+`V_loc = U_loc ∘ embed`. Genuine content: each wing `vnDilationV 2` *is*
+`vnUnitary 2 * embedGround 2`, so the Kronecker `V_A ⊗ V_B` splits as
+`(U_A ⊗ U_B) * (embed_A ⊗ embed_B)` (`mul_kronecker_mul`); the shared dilated
+middle index is folded by `submatrix_mul_equiv`. -/
+theorem localDeisolationV_eq :
+    localDeisolationV = localFlowReindexed * localEmbedGround := by
+  have hker : wingDeisolationV ⊗ₖ wingDeisolationV
+      = (vnUnitary 2 ⊗ₖ vnUnitary 2) * (embedGround 2 ⊗ₖ embedGround 2) := by
+    rw [show wingDeisolationV = vnUnitary 2 * embedGround 2 from rfl, Matrix.mul_kronecker_mul]
+  unfold localDeisolationV localFlowReindexed localEmbedGround
+  rw [Matrix.reindex_apply, Matrix.reindex_apply, Matrix.reindex_apply,
+      Matrix.submatrix_mul_equiv, hker]
+
+/-- **The flow-matrix reindex coherence:** pushing `localFlowReindexed` along the
+final `finProdFinEquiv` recovers the flow unitary `localFlowUnitary.val`. Both are
+`(vnUnitary 2 ⊗ₖ vnUnitary 2)` submatrixed; the index functions agree because
+`jointFlowEquiv = jointDilEquiv.trans finProdFinEquiv`. -/
+theorem localFlowReindexed_reindex :
+    Matrix.reindex finProdFinEquiv finProdFinEquiv localFlowReindexed = localFlowUnitary.val := by
+  unfold localFlowReindexed
+  rw [show localFlowUnitary.val
+        = Matrix.reindex jointFlowEquiv jointFlowEquiv (vnUnitary 2 ⊗ₖ vnUnitary 2) from rfl]
+  simp only [Matrix.reindex_apply, Matrix.submatrix_submatrix]
+  rfl
+
+/-- The embedded vector of a nonzero preparation is nonzero (`embed` is isometric). -/
+theorem toEuclideanLin_localEmbedGround_ne_zero (ψ : EuclideanSpace ℂ (Fin 4))
+    (hψ : ψ ≠ 0) : Matrix.toEuclideanLin localEmbedGround ψ ≠ 0 := by
+  intro h
+  apply hψ
+  have hn := toEuclideanLin_norm_map_of_isom localEmbedGround_isom ψ
+  rw [h, norm_zero] at hn
+  exact norm_eq_zero.mp hn.symm
+
+/-- The post-flow vector of a nonzero preparation is nonzero (`V_loc` is isometric). -/
+theorem toEuclideanLin_localDeisolationV_ne_zero (ψ : EuclideanSpace ℂ (Fin 4))
+    (hψ : ψ ≠ 0) : Matrix.toEuclideanLin localDeisolationV ψ ≠ 0 := by
+  intro h
+  apply hψ
+  have hn := toEuclideanLin_norm_map_of_isom localDeisolation_isom ψ
+  rw [h, norm_zero] at hn
+  exact norm_eq_zero.mp hn.symm
+
+/-- The reindexed embedded ray representative is nonzero (`piLpCongrLeft` isometry). -/
+theorem localEmbed_ne_zero (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ψ ≠ 0) :
+    (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+        (Matrix.toEuclideanLin localEmbedGround ψ) ≠ 0 := by
+  intro h
+  apply toEuclideanLin_localEmbedGround_ne_zero ψ hψ
+  have hn := (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv).norm_map
+    (Matrix.toEuclideanLin localEmbedGround ψ)
+  rw [h, norm_zero] at hn
+  exact norm_eq_zero.mp hn.symm
+
+/-- The reindexed post-flow ray representative is nonzero. -/
+theorem localDil_ne_zero (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ψ ≠ 0) :
+    (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+        (Matrix.toEuclideanLin localDeisolationV ψ) ≠ 0 := by
+  intro h
+  apply toEuclideanLin_localDeisolationV_ne_zero ψ hψ
+  have hn := (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv).norm_map
+    (Matrix.toEuclideanLin localDeisolationV ψ)
+  rw [h, norm_zero] at hn
+  exact norm_eq_zero.mp hn.symm
+
+/-- **The flow ↔ dilation operator identity:** `V_loc ψ` (reindexed onto `Fin 16`)
+equals the flow unitary `U_loc` applied to the embedded vector `ψ ⊗ (a₀ ⊗ a₀)`
+(reindexed). Composes the matrix factorisation `localDeisolationV_eq`
+(`V_loc = U_loc ∘ embed`), the `toEuclideanLin`-of-product split, the reindex
+naturality `toEuclideanLin_reindex_piLpCongrLeft`, and the flow-reindex coherence
+`localFlowReindexed_reindex`. -/
+theorem localDeisolationFlow_realises_operator (ψ : EuclideanSpace ℂ (Fin 4)) :
+    (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+        (Matrix.toEuclideanLin localDeisolationV ψ)
+      = Matrix.toEuclideanLin localFlowUnitary.val
+          ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+            (Matrix.toEuclideanLin localEmbedGround ψ)) := by
+  have hsplit : Matrix.toEuclideanLin (localFlowReindexed * localEmbedGround) ψ
+      = Matrix.toEuclideanLin localFlowReindexed (Matrix.toEuclideanLin localEmbedGround ψ) := by
+    simp only [Matrix.toLpLin_mul_same, LinearMap.comp_apply]
+  rw [localDeisolationV_eq, hsplit,
+    ← toEuclideanLin_reindex_piLpCongrLeft finProdFinEquiv localFlowReindexed
+        (Matrix.toEuclideanLin localEmbedGround ψ),
+    localFlowReindexed_reindex]
+
+/-- **The LOCAL flow realises the local Naimark dilation (the A.3 flow ↔ dilation
+tie).** At the projective level, the local product de-isolation flow `Φ_loc`
+carries the embedded ray `[ψ ⊗ (a₀ ⊗ a₀)]` exactly to the dilated ray `[V_loc ψ]`,
+for every nonzero preparation `ψ : EuclideanSpace ℂ (Fin 4)`. So the local Naimark
+dilation `localNaimark` consumed by the volume engine is *dynamically realised* by
+the manifestly local flow — a theorem of the dynamics, matching LF5's
+`measurementFlow_realises_dilation`. Proof: `smul_mk_eq_mk` + `mk_eq_mk_iff'`
+discharged by the operator identity `localDeisolationFlow_realises_operator`. -/
+theorem localDeisolationFlow_realises_localNaimark
+    (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ψ ≠ 0) :
+    localDeisolationFlow
+        (Projectivization.mk ℂ
+          ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+            (Matrix.toEuclideanLin localEmbedGround ψ))
+          (localEmbed_ne_zero ψ hψ))
+      = Projectivization.mk ℂ
+          ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+            (Matrix.toEuclideanLin localDeisolationV ψ))
+          (localDil_ne_zero ψ hψ) := by
+  haveI : NeZero (4 * 4) := ⟨by norm_num⟩
+  refine (smul_mk_eq_mk localFlowUnitary _ (localEmbed_ne_zero ψ hψ)).trans ?_
+  exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (localDil_ne_zero ψ hψ)).mpr
+    ⟨1, by rw [one_smul]; exact localDeisolationFlow_realises_operator ψ⟩
+
+/-! ### Deliverable 7: the capstone -/
 
 /-- **The LF6-A.3 capstone: a manifestly LOCAL product de-isolation realises the
 singlet.** Conjuncts:
@@ -410,7 +567,12 @@ singlet.** Conjuncts:
    `= P_st` every sector (`localDeisolation_pointer_volume`);
 4. the projectivised product flow is FS-measure-preserving
    (`localDeisolationFlow_measurePreserving`);
-5. and genuinely `≠ id` (`localDeisolationFlow_ne_id`).
+5. and genuinely `≠ id` (`localDeisolationFlow_ne_id`);
+6. the LOCAL flow realises the local Naimark dilation: `Φ_loc [ψ ⊗ (a₀ ⊗ a₀)] =
+   [V_loc ψ]` for every nonzero preparation
+   (`localDeisolationFlow_realises_localNaimark`) — the flow ↔ dilation tie, so the
+   dilation whose carve gives `P_st` (conjunct 3) is *dynamically realised* by the
+   manifestly local flow, matching LF5's `measurement_flow_realises_dilation`.
 
 So the de-isolation needs NO non-local interaction; the non-locality is entirely
 in the contextual carve (LF6-A.2) and the entangled preparation (A5). The
@@ -441,12 +603,24 @@ theorem localDeisolation_capstone {M : ℕ}
     -- (4) the projectivised product flow is FS measure-preserving
     ∧ MeasurePreserving localDeisolationFlow (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀)
     -- (5) the flow is genuinely not the identity
-    ∧ localDeisolationFlow ≠ id :=
+    ∧ localDeisolationFlow ≠ id
+    -- (6) the LOCAL flow realises the local Naimark dilation: Φ_loc [ψ⊗ground] = [V_loc ψ]
+    ∧ (∀ (φ : EuclideanSpace ℂ (Fin 4)) (hφ : φ ≠ 0),
+        localDeisolationFlow
+            (Projectivization.mk ℂ
+              ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+                (Matrix.toEuclideanLin localEmbedGround φ))
+              (localEmbed_ne_zero φ hφ))
+          = Projectivization.mk ℂ
+              ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
+                (Matrix.toEuclideanLin localDeisolationV φ))
+              (localDil_ne_zero φ hφ)) :=
   ⟨localDeisolation_factorises,
    fun i j => localDeisolation_pullback i j,
    fun s t => localDeisolation_pointer_volume a b hgen e p₀ ψ' hψ'eq hψ'0 s t,
    localDeisolationFlow_measurePreserving q₀,
-   localDeisolationFlow_ne_id⟩
+   localDeisolationFlow_ne_id,
+   fun φ hφ => localDeisolationFlow_realises_localNaimark φ hφ⟩
 
 end LF6
 end CSD

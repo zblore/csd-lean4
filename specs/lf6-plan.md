@@ -126,12 +126,14 @@ preparation (A5).
 HONEST framing honored: A.3 does NOT claim the A.2 `ℤ/4`-adder flow factors (it does not — `ℤ/4 ≠
 ℤ/2×ℤ/2`); it builds a SEPARATE manifestly-local product flow. Born = FS volume imported (LF5/DH/
 POVM-Naimark), not re-derived.
-**Auditor Minor (completeness, not soundness; follow-up):** the capstone bundles the local flow
-`Φ_loc` (≠id, measure-preserving) and the local dilation `V_loc` (the volumes), but has NO lemma tying
-them (`Φ_loc[ψ⊗a₀] = [V_loc ψ]`), unlike LF5's `measurement_flow_realises_dilation` conjunct. The link
-is true and routine (`vnDilationV = vnUnitary ∘ embedGround`); add `localDeisolationFlow_realises_localNaimark`
-as a 6th conjunct (lift LF5 `measurement_flow_realises_dilation` through `kronecker` + `jointFlowEquiv`)
-to make "the LOCAL flow realises the singlet" fully a theorem.
+**Flow ↔ dilation tie CLOSED 2026-06-28** (auditor Minor resolved): `localDeisolationFlow_realises_localNaimark`
+— `Φ_loc ⟦ψ ⊗ (a₀⊗a₀)⟧ = ⟦V_loc ψ⟧` for every `ψ ≠ 0` — folded into the capstone as a 6th conjunct, so
+"the LOCAL flow realises the singlet measurement" is now fully a theorem. Proved from the file's own
+kronecker/reindex scaffolding (`localDeisolationV_eq : V_loc = localFlowReindexed * localEmbedGround` via
+`mul_kronecker_mul` + the `vnDilationV = vnUnitary * embedGround` defeq) + the projective `mk` step
+mirroring LF5; the `ψ ≠ 0` side conditions are load-bearing (isometry/norm). Honest: it does NOT lift
+LF5's `measurementFlow_realises_dilation` at N=4 (that `ℤ/4` object does not factor); it uses the genuine
+product `U_A ⊗ U_B`. Auditor-SOUND. 5 AxiomAudit pins (capstone now 6-conjunct + the new lemma).
 
 ### LF6-B and beyond (not started)
 General-N entangled tier; the decoherence / partial-trace (open-system) stratum (D1b, system→environment

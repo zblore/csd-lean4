@@ -3316,6 +3316,14 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolation_capstone
 
+-- LF6-A.3 flow ↔ dilation tie (2026-06-28): the LOCAL flow realises the local Naimark
+-- dilation, Φ_loc [ψ ⊗ (a₀⊗a₀)] = [V_loc ψ] for every nonzero ψ (matches LF5's
+-- measurementFlow_realises_dilation). Closes the auditor Minor: the capstone now ties
+-- the bundled flow and dilation. Foundational triple only, no busch.
+/-- info: 'CSD.LF6.localDeisolationFlow_realises_localNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolationFlow_realises_localNaimark
+
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,
 -- measurement_flow_born_frequency, measurement_flow_outcome_frequency), is now
