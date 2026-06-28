@@ -59,7 +59,26 @@ of `Σ = ℂℙ^{N-1}`.
 - **Validates:** QFI as a literal property of the ontic manifold's geometry, not an
   operational bound on measurement operators.
 
-### A3 — Heisenberg limit (1/N scaling) via dilated manifolds
+### A3 — Heisenberg limit (1/N scaling) via the entangled GHZ probe (DONE 2026-06-28)
+**`Empirical/Metrology/Heisenberg.lean`.** The Heisenberg-limit comparison on the genuine
+`N`-qubit carrier `EuclideanSpace ℂ (Fin (2^N))`: the phase-accumulated GHZ state
+`ghzPhaseVec N φ = (1/√2)(|0…0⟩ + e^{iNφ}|1…1⟩)` (indices `0` and `2^N−1`), proved
+normalized `ghzPhaseVec_norm` (`N ≥ 1`, load-bearing for the A2 metric) with a GENUINE
+derivative `ghzPhaseVec_hasDerivAt` (via `HasDerivAt.cexp` on `φ ↦ exp((N·φ:ℂ)·I)`
+assembled through the ℝ-linear CLM `ghzSingleRL` — A2's `singleRL` idiom reused verbatim,
+proved not asserted). Then `‖dψ‖²=N²/2`, `⟪ψ,dψ⟫=iN/2`, `‖⟪ψ,dψ⟫‖²=N²/4`, so
+`ghz_qfi : qfi … = N²` (the Heisenberg quadratic enhancement; the `N²` comes from the
+phase being `Nφ`). SQL side: `sqlQFI N = N` (`N` independent probes, each A2-`ramsey_qfi=1`,
+Fisher info additive — additivity stated as the standard fact, value recorded not
+re-derived). `heisenberg_advantage : qfi … = N · sqlQFI N` (`N² = N·N`, the `N`-fold
+enhancement) and `ghz_qfi_div_sql = N`. 5 pins (`ghzPhaseVec_norm`,
+`ghzPhaseVec_hasDerivAt`, `ghz_qfi`, `heisenberg_advantage`, `ghz_qfi_div_sql`),
+foundational triple only (NO busch). Honest: reuses A2's `fsMetric`/`qfi`; the geometric
+QFI of the state family — NOT the `N`-body GHZ-preparation dynamics or the physical
+phase-imprinting Hamiltonian (as A2, single parameter `φ`). QCRB reading
+`Var(φ̂) ≥ 1/(n·F_Q)`: precision `1/N²` (Heisenberg, σ `1/N`) vs `1/N` (SQL, σ `1/√N`).
+
+(original scope:)
 Prove that `N`-particle correlation makes the trajectory on the dilated manifold
 `Σ' = ℂℙ^{2^N−1}` hyper-sensitive to `θ`: the carved-region boundaries shift so an
 infinitesimal `dθ` produces a macroscopic FS-volume-ratio change, giving `1/N` scaling

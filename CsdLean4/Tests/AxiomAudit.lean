@@ -155,6 +155,7 @@ import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.Metrology.Ramsey
 import CsdLean4.Empirical.Metrology.QuantumFisher
+import CsdLean4.Empirical.Metrology.Heisenberg
 import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
@@ -1737,6 +1738,44 @@ info: 'CSD.Empirical.Metrology.ramsey_qcrb_saturation' depends on axioms: [prope
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.Metrology.ramsey_qcrb_saturation
+
+-- Metrology A3: the Heisenberg limit (1/N scaling) via the entangled GHZ probe.
+-- The phase-accumulated GHZ state on the genuine N-qubit carrier Fin (2^N) is
+-- normalized (ghzPhaseVec_norm) with a GENUINE derivative (ghzPhaseVec_hasDerivAt,
+-- proved via HasDerivAt, not asserted), giving F_Q^GHZ = N² (ghz_qfi) — the
+-- Heisenberg quadratic enhancement — versus F_Q^SQL = N for N separable probes, so
+-- the entangled probe carries N× the information (heisenberg_advantage: N² = N·N).
+-- Reuses A2's fsMetric/qfi/singleRL idiom; foundational triple only (no busch).
+
+/--
+info: 'CSD.Empirical.Metrology.ghzPhaseVec_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ghzPhaseVec_norm
+
+/--
+info: 'CSD.Empirical.Metrology.ghzPhaseVec_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ghzPhaseVec_hasDerivAt
+
+/--
+info: 'CSD.Empirical.Metrology.ghz_qfi' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ghz_qfi
+
+/--
+info: 'CSD.Empirical.Metrology.heisenberg_advantage' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.heisenberg_advantage
+
+/--
+info: 'CSD.Empirical.Metrology.ghz_qfi_div_sql' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ghz_qfi_div_sql
 
 -- Bell singlet joint frequencies as DERIVED Kähler-volume convergence (N=4
 -- surfacing of born_frequency_convergence_N): carving-free, Gleason-free, and
