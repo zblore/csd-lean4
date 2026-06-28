@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 DONE 2026-06-28; A.2 DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (the entangled-tier A-stage is complete).** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -102,6 +102,36 @@ to LF6-A.3. Original framing retained below.
   region depends on the far setting while its volume does not), NOT a product partition. Build that
   contextuality witness before/with the pointer-volume composition, so A.2 cannot silently assume the
   forbidden factorisation. This is the genuinely new physics content of A.2.
+
+### LF6-A.3 — the local product de-isolation flow (DONE 2026-06-28)
+`CsdLean4/LF6/LocalDeisolationFlow.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple-only,
+4 AxiomAudit pins. Exhibits a genuinely LOCAL product de-isolation `V_loc = V_A ⊗ V_B` (each wing an
+N=2 LF5 `vnDilationV`) realising the SAME joint singlet measurement, so the de-isolation needs NO
+non-local interaction; the non-locality is entirely in the contextual carve (A.2) and the entangled
+preparation (A5).
+- `localDeisolation_factorises` — `V_loc` is a genuine Kronecker product of the two wing de-isolations
+  (verified `rfl`; the reindex equivs are genuine bijections).
+- `localDeisolation_pullback` — `(V_loc)ᴴ Π_{(i,j)} V_loc = |e_{(i,j)}⟩⟨e_{(i,j)}|`, GENUINELY composing
+  the two per-wing LF5 `vnDilationV_pullback` via `conjTranspose_kronecker`/`mul_kronecker_mul`/
+  `single_kronecker_single` (no `decide`/brute-force).
+- `localNaimark : NaimarkDilation (basisPOVM 4)` (+ `localDeisolation_isom`) — the product dilation is a
+  valid Naimark dilation, so the LF4 POVM-volume engine applies.
+- `localDeisolation_pointer_volume` — the local product flow's pointer-block `(i,j)` FS volume `= P_st`,
+  routing `povm_born_eq_dilated_volume_uncond` + `nudgedSinglet_born` (LF3). Same `hgen` (generic Bell
+  setting) as A.2.
+- `localDeisolationFlow_measurePreserving` / `_ne_id` — the projectivized product flow `U_A⊗U_B` is
+  FS-measure-preserving and `≠ id`.
+- `localDeisolation_capstone` — 5-conjunct (factorises ∧ ≠ id ∧ measure-preserving ∧ pointer volume =
+  P_st ∧ valid Naimark).
+HONEST framing honored: A.3 does NOT claim the A.2 `ℤ/4`-adder flow factors (it does not — `ℤ/4 ≠
+ℤ/2×ℤ/2`); it builds a SEPARATE manifestly-local product flow. Born = FS volume imported (LF5/DH/
+POVM-Naimark), not re-derived.
+**Auditor Minor (completeness, not soundness; follow-up):** the capstone bundles the local flow
+`Φ_loc` (≠id, measure-preserving) and the local dilation `V_loc` (the volumes), but has NO lemma tying
+them (`Φ_loc[ψ⊗a₀] = [V_loc ψ]`), unlike LF5's `measurement_flow_realises_dilation` conjunct. The link
+is true and routine (`vnDilationV = vnUnitary ∘ embedGround`); add `localDeisolationFlow_realises_localNaimark`
+as a 6th conjunct (lift LF5 `measurement_flow_realises_dilation` through `kronecker` + `jointFlowEquiv`)
+to make "the LOCAL flow realises the singlet" fully a theorem.
 
 ### LF6-B and beyond (not started)
 General-N entangled tier; the decoherence / partial-trace (open-system) stratum (D1b, system→environment

@@ -111,6 +111,7 @@ import CsdLean4.LF5.SyndromeFlow
 import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.LF6.ForcedContextuality
 import CsdLean4.LF6.SingletDeisolationFlow
+import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -3295,6 +3296,25 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.singletDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.singletDeisolation_flow_capstone
+
+-- LF6-A.3 (2026-06-28): the LOCAL product de-isolation flow V_A ⊗ V_B realising the singlet.
+-- The de-isolation can be local (factorises); the non-locality is entirely in the contextual
+-- carve (A.2) and the entangled preparation (A5). Foundational triple only, no busch.
+/-- info: 'CSD.LF6.localDeisolation_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_factorises
+
+/-- info: 'CSD.LF6.localDeisolation_pullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_pullback
+
+/-- info: 'CSD.LF6.localDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_pointer_volume
+
+/-- info: 'CSD.LF6.localDeisolation_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_capstone
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,
