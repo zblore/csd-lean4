@@ -220,6 +220,7 @@ import CsdLean4.Empirical.CSD.Gates.SingleQubit
 import CsdLean4.Empirical.CSD.Gates.TwoQubit
 import CsdLean4.Empirical.CSD.Gates.BellPrep
 import CsdLean4.Empirical.CSD.Gates.MultiQubit
+import CsdLean4.Empirical.Metrology.Ramsey
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

@@ -7,7 +7,18 @@ resulting carving volume ratios. Four areas, ordered by infrastructure readiness
 
 ## The four areas
 
-### A1 — Ramsey interferometry as a parameter-driven volume-preserving flow (START HERE)
+### A1 — Ramsey interferometry as a parameter-driven volume-preserving flow (DONE 2026-06-28)
+**`Empirical/Metrology/Ramsey.lean`, auditor-SOUND.** `ramseyPhaseFlow` (the `diag(1,e^{iφ})`
+free-precession flow on `Σ = ℂℙ¹`, reusing `LF4.obsFlow`) with `ramseyPhaseFlow_measurePreserving`
+(the first parameter-driven FS-measure-preserving metrology flow) and `ramseyPhaseFlow_ne_id`
+(`Φ ≠ id` at `φ = π`); `ramseyVec` proved equal to the genuine circuit `qmH · diag(1,e^{iφ}) · qmH · |0⟩`
+(`ramseyVec_eq_circuit`, machine-checked, not asserted); `ramsey_fringe_volume` lands the `|0⟩`-outcome
+FS volume on the fringe `cos²(φ/2)` via `qubit_born_frequency_convergence_uncond` (Gleason-free), with
+extremes `r(0)=1`, `r(π)=0` and the sensitivity `dP/dφ = −sin(φ)/2` (`ramsey_fringe_hasDerivAt`, the QFI
+precursor, maximal at quadrature `φ=π/2`). 7 pins. Honest: single-qubit; Born = FS volume imported; the
+flow runs on the projective probe, concrete `SectorData` still `Φ = id`.
+
+(original scope:)
 Mechanise the Ramsey sequence: `[π/2] → [phase φ(θ)] → [π/2] → carve`, with the phase
 accumulation a deterministic measure-preserving flow on `Σ` driven by `θ`, and prove the
 end-of-sequence multi-region carving yields the FS volume ratio reproducing the standard

@@ -150,6 +150,7 @@ import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
+import CsdLean4.Empirical.Metrology.Ramsey
 import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
 import CsdLean4.Empirical.CSD.HardyVolume
@@ -1613,6 +1614,55 @@ info: 'CSD.Empirical.CSDBridge.MalusVolume.csd_malus_law' depends on axioms: [pr
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.MalusVolume.csd_malus_law
+
+-- Metrology A1: Ramsey interferometry. The fringe cos²(φ/2) as a DERIVED
+-- Kähler-volume frequency (the Malus reading with θ = φ the accumulated phase),
+-- plus the first parameter-driven metrology flow Φ_φ = diag(1,e^{iφ}) on Σ = ℂℙ¹
+-- (FS-measure-preserving, genuinely ≠ id, via the audited LF4.obsFlow).
+-- Foundational triple only; NO busch_effect_gleason.
+/--
+info: 'CSD.Empirical.Metrology.ramsey_fringe_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_fringe_volume
+
+/--
+info: 'CSD.Empirical.Metrology.ramseyPhaseFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramseyPhaseFlow_measurePreserving
+
+/--
+info: 'CSD.Empirical.Metrology.ramseyPhaseFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramseyPhaseFlow_ne_id
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_fringe_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_fringe_max
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_fringe_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_fringe_min
+
+/--
+info: 'CSD.Empirical.Metrology.ramsey_fringe_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramsey_fringe_hasDerivAt
+
+-- The Ramsey output state IS the genuine interferometer circuit H·diag(1,e^{iφ})·H·|0⟩
+-- (corpus Hadamard QM.Gates.qmH), machine-checked (not a hand-check).
+/--
+info: 'CSD.Empirical.Metrology.ramseyVec_eq_circuit' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Metrology.ramseyVec_eq_circuit
 
 -- Bell singlet joint frequencies as DERIVED Kähler-volume convergence (N=4
 -- surfacing of born_frequency_convergence_N): carving-free, Gleason-free, and
