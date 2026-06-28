@@ -73,8 +73,23 @@ of their repo) or requires cloning their repo alongside. Reproduce the **public 
 benchmark warns memory/source may come from different agents; verify by rerunning), NOT the live
 leaderboard best unless its source is available.
 
-**Step 3 — build the comparable Lean artefact: a point-addition cost theorem.** New file
-`ECDLP/PointAddBenchmark.lean`, target shape `onePointAddCost ≤ B` (NOT `scalarMulCost ≤ B`), with:
+**Step 3 — build the comparable Lean artefact: a point-addition cost theorem. DONE 2026-06-28**
+(`ECDLP/PointAddBenchmark.lean`, auditor-SOUND). The three comparable numbers for one affine
+point addition with a classical offset at `n = 256`:
+- `onePointAddToffoli = 676,880,936` (= `affinePointOpToffoli 256` `676,866,560` [3 carry-clean field
+  multiplies + one Fermat inversion, the inversion is `99.4%`] + `classicalOffsetCoordToffoli 256`
+  `14,376` [the four constant/register coordinate subtractions]),
+- `onePointAddPeakQubits = 2,822` (= `2n` target `+ 3n` working coords `+ cleanModMulQubits n` `1542`
+  multiply scratch, `≈ 11n`; a documented layout tally),
+- `onePointAddScore = 1,910,158,001,392` (Toffoli × peak-qubits, the ECDSA.fail-convention score).
+Anchored by `onePointAdd_toffoli_le : onePointAddToffoli ≤ 4·cleanModMulToffoli 256 + fermatInvToffoli 256`
+(`678,180,864`) and the classical-offset saving `classicalOffset_coord_lt_one_qq_mult`
+(the whole offset pass `14,376` < one q×q multiply `1,314,304`). Tiers: VERIFIED gadget costs
+(`cleanModMulToffoli`/`cuccaroModMul`, `fermatInvToffoli`, `cleanModMulQubits`), DOCUMENTED assembly
+(3-mult / 4-subtraction op counts, peak-qubit layout), CONJECTURAL/EXTERNAL map to the executed-average
+harness score. This is the repo's comparable-OBJECT figure; it is **not** a validated ECDSA.fail score
+until step 2 runs their harness. (Original requirements:)
+New file `ECDLP/PointAddBenchmark.lean`, target shape `onePointAddCost ≤ B` (NOT `scalarMulCost ≤ B`), with:
 - affine input/output convention,
 - **classical** offset point (exploit it — q×classical, do not cost it as generic q×q),
 - reversible cleanup (ancilla-clean, reusing the Cuccaro `_clean` lemmas),
@@ -90,7 +105,11 @@ ECDSA.fail point addition, with Toffoli, qubits, and score" — until then we ca
 enhancement actually matters.
 
 ## Honest status line
-Until Step 3 produces a single-point-addition `Toffoli × peak-qubits` figure in the repo's
-verified/documented tiers, the repo's secp256k1 numbers (`secp256k1ToffoliCleanArith`, etc.) are
-**not** comparable to an ECDSA.fail score — they count a different object (scalar mult, generic q×q).
-The correlation above is the guard against citing them as if they were.
+Step 3 is DONE: the repo now has a single-point-addition `Toffoli × peak-qubits` figure
+(`onePointAddScore = 1,910,158,001,392`, from `onePointAddToffoli = 676,880,936` and
+`onePointAddPeakQubits = 2,822`) in the verified/documented tiers. This is the comparable-OBJECT
+figure (one affine point addition, classical offset). It is **not yet** a validated comparison to an
+ECDSA.fail score: that needs step 2 (running their harness on the identical operation), which is
+BLOCKED on the ECDSA.fail Rust source not being in this tree. The repo's *scalar-mult* numbers
+(`secp256k1ToffoliCleanArith`, etc.) remain **not** comparable to an ECDSA.fail point-addition score —
+they count a different object. Cite `onePointAddScore`, not the scalar-mult figures, for the benchmark.

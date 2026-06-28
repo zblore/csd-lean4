@@ -48,6 +48,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -4374,6 +4375,32 @@ operand). All foundational-triple-only. -/
 /-- info: 'ECDLP.ResourceBounds.secp256k1ToffoliAffineWithInversion_eq' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.secp256k1ToffoliAffineWithInversion_eq
+
+/-! ### ECDSA.fail benchmark: one affine point addition (PointAddBenchmark.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.classicalOffsetCoordToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.classicalOffsetCoordToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.classicalOffset_coord_lt_one_qq_mult' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.classicalOffset_coord_lt_one_qq_mult
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.onePointAdd_toffoli_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAdd_toffoli_le
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddPeakQubits_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddPeakQubits_eq
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddScore_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddScore_eq
 
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
