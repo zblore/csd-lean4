@@ -157,6 +157,7 @@ import CsdLean4.Empirical.QM.Protocols.Basic
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.Crypto.E91KeyRate
+import CsdLean4.Empirical.QM.Crypto.E91FiniteKey
 import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
 import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.QEC.ThreeQubit

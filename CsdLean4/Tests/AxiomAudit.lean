@@ -119,6 +119,7 @@ import CsdLean4.Empirical.QM.Protocols.Basic
 import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 import CsdLean4.Empirical.QM.Crypto.E91
 import CsdLean4.Empirical.QM.Crypto.E91KeyRate
+import CsdLean4.Empirical.QM.Crypto.E91FiniteKey
 import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
 import CsdLean4.Empirical.QM.USD
 import CsdLean4.Empirical.QM.QEC.ThreeQubit
@@ -1285,6 +1286,21 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QM.E91.e91_chsh_certifies_secure_key' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.E91.e91_chsh_certifies_secure_key
+
+-- E91 finite-sample / finite-key concentration (Crypto/E91FiniteKey.lean):
+-- the empirical CHSH estimator Sn = (sum of n bounded, unbiased, independent
+-- per-round CHSH statistics)/n concentrates around the true S via Mathlib's
+-- sub-Gaussian Hoeffding pipeline (hasSubgaussianMGF_of_mem_Icc_of_integral_eq_zero
+-- per round + measure_sum_range_ge_le_of_iIndepFun Chernoff tail), giving the
+-- finite-round confidence bridge to e91_key_rate_pos_of_chsh. Finite-SAMPLE
+-- confidence, NOT composable finite-key security. Foundational triple only.
+/-- info: 'CSD.Empirical.QM.E91.e91_chsh_concentration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_chsh_concentration
+
+/-- info: 'CSD.Empirical.QM.E91.e91_finite_key_confidence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.E91.e91_finite_key_confidence
 
 /-- info: 'CSD.Empirical.Protocols.secure_emulates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
