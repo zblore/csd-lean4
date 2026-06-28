@@ -110,6 +110,7 @@ import CsdLean4.LF5.PointerOutcome
 import CsdLean4.LF5.SyndromeFlow
 import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.LF6.ForcedContextuality
+import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -3255,6 +3256,45 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.engine_marginal_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.engine_marginal_factorises
+
+-- LF6-A.2 (SingletDeisolationFlow): the DYNAMICAL realisation of the entangled
+-- de-isolation tier. A genuine deterministic FS-measure-preserving de-isolation
+-- flow Φ ≠ id (LF5 measurementFlow @ N=4 on the dilated Σ' = ℂℙ¹⁵ = ℙ(ℂ²⊗ℂ²⊗ℂ²⊗ℂ²))
+-- whose CONTEXTUAL joint-BornRegion carve reproduces the LF3 singlet kernel P_st.
+-- singletDeisolation_pointer_volume (the headline) COMPOSES LF5 vnDilation_pointer_volume
+-- @ N=4 (pointer-block FS volume = ‖⟨e_i, φ⟩‖², Gleason-free, Born=volume IMPORTED from
+-- the DH/FS-volume engine) with the nudge coordinate-Born identity nudgedSinglet_born
+-- (unitary-invariance step + LF3 singletJointEig_born), at the prepared state
+-- φ = (U_A^x⊗U_B^y)† ψ⁻ (singlet in the rotated axis-context basis). The carve is the
+-- joint moment subdivision, NEVER a setting-local {ptr_A=i}∩{ptr_B=j} product region.
+-- singletDeisolation_blockVolume_correlation: the carve's block-volume correlation is
+-- the singlet's −a·b (block volume = P_st + LF3 correlation_eq_neg_dot).
+-- singletDeisolation_carve_contextual: ROUTES THROUGH A.1 no_product_partition_realises_singlet
+-- — no setting-local ±1 product partition reproduces the carve's −a·b correlation, so the
+-- carve is contextual (the safety anchor; does NOT assume the forbidden product structure).
+-- singletDeisolation_frequency: a.s. block frequencies → P_st (LF5 vnDilation_pointer_frequency
+-- @ N=4 + nudgedSinglet_born). Flow LOCAL (LF5 @ N=4); carve CONTEXTUAL (A.1). Flow
+-- factorisation Φ = Φ_A ⊗ Φ_B deferred to LF6-A.3. Residue A5 (entangled sector posited);
+-- generic context (P_st > 0, every Bell setting). Foundational triple only, no busch.
+/-- info: 'CSD.LF6.singletDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletDeisolation_pointer_volume
+
+/-- info: 'CSD.LF6.singletDeisolation_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletDeisolation_frequency
+
+/-- info: 'CSD.LF6.singletDeisolation_blockVolume_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletDeisolation_blockVolume_correlation
+
+/-- info: 'CSD.LF6.singletDeisolation_carve_contextual' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletDeisolation_carve_contextual
+
+/-- info: 'CSD.LF6.singletDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletDeisolation_flow_capstone
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,

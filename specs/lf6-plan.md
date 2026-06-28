@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 DONE 2026-06-28; A.2 DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -44,16 +44,50 @@ non-locality located honestly and no-signalling proven.
 Reuses `E91.lhvCHSH_abs_le_two`, `Bell.chsh_singlet_at_optimal_angles`, `LF3.P_st`/marginals; no Bell
 re-proof, no kernel reinvention. 4 AxiomAudit pins.
 
-### LF6-A.2 — the full singlet de-isolation flow (NEXT, planned)
-The dynamical realisation on `Σ' = ℂℙ¹⁵ = ℙ(ℂ²⊗ℂ²⊗ℂ²⊗ℂ²)` (two qubits + two pointer ancillae):
-1. Define the joint von Neumann de-isolation unitary (a `vnUnitary`-style adder on the 16-dim register)
-   and lift `LF5.measurementFlow` to it; FS-measure-preserving, `≠ id`.
-2. Pointer-block FS volume `= P_st`, by composing `LF5.vnDilation_pointer_volume` with
-   `LF3.MeasurementJointEig.born_eq_P_st`.
-3. a.s. pointer-block frequency convergence to `P_st` via `BornRegionUncond`.
+### LF6-A.2 — the full singlet de-isolation flow (DONE 2026-06-28)
+`CsdLean4/LF6/SingletDeisolationFlow.lean` (namespace `CSD.LF6`), foundational-triple-only, 5
+AxiomAudit pins. The dynamical realisation on `Σ' = ℂℙ¹⁵ = ℙ(EuclideanSpace ℂ (Fin 16))`
+(`16 = 4·4`), built on the clean construction path (LF5 @ N=4 + LF3 + A.1), NOT a from-scratch
+ℂℙ¹⁵ build:
+- `singletDeisolationFlow := measurementFlow 4 finProdFinEquiv` with `singletDeisolation_measurePreserving`
+  / `singletDeisolation_ne_id` (inherited from LF5-B); the flow is LOCAL (the LF5 de-isolation at N=4).
+- `nudgedSinglet a b` — the prepared state `φ = (U_A^x⊗U_B^y)† ψ⁻`, the singlet in the rotated
+  axis-context basis, in coordinates `φ_{stIdx(s,t)} = ⟨ψ⁻, singletJointEig s t a b⟩`; `nudgedSinglet_norm`
+  (unit, `∑ P_st = 1`), `nudgedSinglet_born` (`‖⟨e_{stIdx(s,t)}, φ⟩‖² = P_st`, the unitary-invariance +
+  LF3 `singletJointEig_born` step).
+- `singletDeisolation_pointer_volume` (the headline) — joint `BornRegion` pointer-block `(s,t)` FS
+  volume `= P_st a b s t`, COMPOSING `LF5.vnDilation_pointer_volume` @ N=4 with `nudgedSinglet_born`
+  (which behind `singletJointEig_born` is `MeasurementJointEig.born_eq_P_st`). Born = volume IMPORTED
+  from the DH/FS-volume engine, not re-derived.
+- `singletDeisolation_frequency` — a.s. pointer-block frequency → `P_st` (`LF5.vnDilation_pointer_frequency`
+  @ N=4 on `BornRegionUncond`).
+- `singletDeisolation_blockVolume_correlation` — the carve's block-volume correlation is the singlet's
+  `−a·b`; `singletDeisolation_carve_contextual` — ROUTES THROUGH A.1 `no_product_partition_realises_singlet`:
+  no setting-local ±1 product partition reproduces it, so the carve is contextual (safety anchor).
+- `singletDeisolation_flow_capstone` — 6-conjunct (≠ id ∧ FS-preserving ∧ pointer volume = P_st ∧
+  block correlation = −a·b ∧ a.s. freq → P_st ∧ carve contextual via A.1).
+The carve is the joint moment subdivision, never a setting-local `{ptr_A=i}∩{ptr_B=j}` product region.
+Generic context (`hgen : P_st > 0`, every Bell setting). Flow factorisation `Φ = Φ_A ⊗ Φ_B` DEFERRED to
+LF6-A.3 (the heavy tensor reindex; A.1 already shows local-flow ⊕ contextual-carve is consistent, so
+A.2 is not blocked on it). Residue A5 (entangled sector posited).
 
-**OPEN DESIGN QUESTION for A.2 (flagged by the A.1 expert + auditor, must resolve before building).**
-Does the de-isolation flow factor as `Φ = Φ_A ⊗ Φ_B`?
+**Auditor faithfulness note (A.2, recorded 2026-06-28, honest not a defect).** The capstone's
+contextuality conjunct (`singletDeisolation_carve_contextual`) carries A.1's content (no setting-local
+±1 product partition achieves the `−a·b` correlation); the A.2-specific increment is the separate
+conjunct that the exhibited carve *achieves* `−a·b` (`singletDeisolation_blockVolume_correlation`). The
+bridge "the exhibited carve is therefore not a product partition" is a juxtaposition of the two
+conjuncts, not one composed theorem — because the carve (a `BornRegion` subdivision of `ℂℙ¹⁵` under FS
+measure) and product partitions (LHV models on an abstract `Λ`) live in genuinely disjoint types. That
+disjointness IS the contextuality (a contextual carve cannot be written as `IsProductPartition RA RB`),
+so the informality is the honest content, not a gap. Optional future strengthening: a corollary feeding
+the carve's correlation into A.1 under a formal `Λ`-realisation, if/when the carve is realised as a
+`Λ`-measure.
+
+**OPEN DESIGN QUESTION for A.2 — RESOLVED 2026-06-28 (user: "measurement is contextual, continue").**
+Does the de-isolation flow factor as `Φ = Φ_A ⊗ Φ_B`? Resolution: the FLOW is local (LF5 de-isolation
+at N=4); the CARVE (joint `BornRegion` moment-subdivision) is contextual. A.2 built the local flow +
+contextual carve; the explicit flow-factorisation `Φ = Φ_A ⊗ Φ_B` (the tensor reindexing) is DEFERRED
+to LF6-A.3. Original framing retained below.
 - Design position (carve-out reading): the FLOW can be local (`Φ_A ⊗ Φ_B`, each wing's de-isolation a
   local process), with ALL the non-locality in the jointly-contextual outcome PARTITION (the carve),
   per A.1. No non-local interaction is needed; the correlations come from the engine reading the

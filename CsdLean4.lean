@@ -148,6 +148,7 @@ import CsdLean4.LF5.PointerOutcome
 import CsdLean4.LF5.SyndromeFlow
 import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.LF6.ForcedContextuality
+import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
