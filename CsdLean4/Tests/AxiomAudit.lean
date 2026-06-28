@@ -109,6 +109,7 @@ import CsdLean4.LF5.CapstoneCanonical
 import CsdLean4.LF5.PointerOutcome
 import CsdLean4.LF5.SyndromeFlow
 import CsdLean4.LF5.SyndromeOutcome
+import CsdLean4.LF6.ForcedContextuality
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -3223,6 +3224,37 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF5.syndrome_flow_outcome_frequency_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.syndrome_flow_outcome_frequency_canonical
+
+-- LF6-A.1 (ForcedContextuality): the conceptual crux of the entangled-singlet
+-- de-isolation tier (first concrete attack on D1's entangled frontier). A product
+-- (setting-local, non-contextual) outcome-partition of Σ on a shared (Λ,μ) IS a
+-- deterministic LHV model; by Bell/CHSH no such partition reproduces the singlet,
+-- so any de-isolation carve realising the singlet is jointly contextual (FORCED,
+-- not posited). no_product_partition_realises_singlet routes through E91
+-- lhvCHSH_abs_le_two (the LHV |S|≤2 cap) + Bell.chsh_singlet_at_optimal_angles
+-- (the singlet 2√2); it REUSES the corpus Bell machinery, no Bell re-proof.
+-- engine_joint_nonfactorises (P_st(s,t) ≠ P_A·P_B = 1/4 at aligned axes) and
+-- engine_marginal_factorises (each marginal = 1/2, no-signalling, reusing LF3
+-- marginal_*/no_signalling_*) are the Σ-volume engine's non-factorising-joint /
+-- factorising-marginal pair. productPartition_nonvacuous: product partitions exist
+-- and reproduce SOME (non-singlet) correlation, so the no-go is non-vacuous.
+-- Residue A5 (entangled sector posited); LF6-A.2 (full ℂℙ¹⁵ de-isolation flow)
+-- deferred. Foundational triple only.
+/-- info: 'CSD.LF6.no_product_partition_realises_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_product_partition_realises_singlet
+
+/-- info: 'CSD.LF6.productPartition_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.productPartition_nonvacuous
+
+/-- info: 'CSD.LF6.engine_joint_nonfactorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.engine_joint_nonfactorises
+
+/-- info: 'CSD.LF6.engine_marginal_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.engine_marginal_factorises
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,
