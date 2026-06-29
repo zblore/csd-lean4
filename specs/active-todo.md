@@ -158,6 +158,24 @@ Candidate first tranches, by tractability:
 Recommended order: 1 (einselection, cheapest + most foundational) → 2 (QEC-as-decoherence) →
 3/4 (weak/Zeno) → 5 (capacities).
 
+## FRAMING CORRECTION (2026-06-29, per user / papers A & B): typicality is forced by the LLN, NOT ergodicity
+
+CSD forces **typicality** (frequencies → ontic volume weights) by the **law of large numbers** (LF1,
+`LF1_main_theorem_ae` / `freq_tendsto_of_iid`, over repeated i.i.d. preparations) — papers A & B. There is
+NO time-average / Birkhoff / single-flow-ergodicity hypothesis in the forcing. Earlier A5-onramp docs
+(below, #29/#32/#33) used an ergodicity framing imported from stat mech; that is the WRONG mechanism.
+Re-classification of the onramp results (the theorems are correct; only the framing was off):
+- **#29 `fubiniStudy_forced_by_symmetry` is a MEASURE-CHARACTERISATION, not a forcing.** FS is the unique
+  U(N)-invariant measure → it is the symmetry-CANONICAL measure to sample from on the sector. It bears on
+  the measure CHOICE; the LLN then forces frequencies to its volume ratios. NOT "typicality forced by
+  symmetry."
+- **#32/#33 are honest NEGATIVES about the single-flow Birkhoff (time-average) route — which CSD does NOT
+  use.** They show you cannot shortcut typicality via one flow's ergodicity (conserved Born coordinates
+  block it), which REINFORCES that the LLN/i.i.d. route is the right one. They are not an obstruction to
+  CSD's typicality (there is none — the LLN does the forcing).
+Net: typicality-forcing is SETTLED (LLN, A&B). Measure-choice is symmetry-canonical (#29). The A5 residue
+is just the SECTOR/SYMMETRY origin = G-from-D1; typicality-forcing is NOT part of the residue.
+
 ## L5-c scoping probe verdict (2026-06-29) — WALL
 
 The measurement-based AND-uncompute (L5-a/b, verified as an amplitude gadget, `measureUncompute_cost`:
