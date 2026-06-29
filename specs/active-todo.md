@@ -23,8 +23,10 @@ research-frontier / infrastructure gap.
 | 2 | ECDSA L1–L6 (umbrella) | ECDSA | — | open | #14 |
 | 18 | L5-a measure-and-correct primitive (amplitude model) — GREEN LIGHT: measurement-based uncompute IS verifiable in Lean | ECDSA | M | DONE | |
 | 19 | L5-b ~2× cost accounting + operator↔list link | ECDSA | S–M | DONE | |
-| 20 | L5-c Boolean↔amplitude bridge (THE wall) | ECDSA | L–XL | open | #18 |
-| 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) | ECDSA | M | open | #19,#20,#7 |
+| 20 | L5-c Boolean↔amplitude bridge — SCOPING DONE, verdict WALL (see below) | ECDSA | L–XL | scoped (wall) | |
+| 30 | AND-based adder primitive (Boolean DSL; fresh per-carry AND temporary) — prereq for measurement re-cost | ECDSA | L | open | |
+| 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) | ECDSA | L–XL | open | #30 |
+| 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) — DEFERRED pending #30+#31 | ECDSA | M | open | #30,#31,#7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
@@ -136,3 +138,31 @@ Candidate first tranches, by tractability:
 
 Recommended order: 1 (einselection, cheapest + most foundational) → 2 (QEC-as-decoherence) →
 3/4 (weak/Zeno) → 5 (capacities).
+
+## L5-c scoping probe verdict (2026-06-29) — WALL
+
+The measurement-based AND-uncompute (L5-a/b, verified as an amplitude gadget, `measureUncompute_cost`:
+0 vs 1 Toffoli per AND) is currently STRANDED in the amplitude model with no attachment point to corpus
+arithmetic. Two obstructions:
+1. **No gate-lift.** `denote : (Fin n → Bool) → (Fin n → Bool)` (Boolean permutation) and the amplitude
+   unitaries (`qmToffoli : Matrix (Fin 8)`) are ill-typed against each other: bridging needs a `Bool≃Fin 2`
+   recast, per-gate `Equiv.Perm (Fin n → Fin 2)` packaging, and a general amplitude-lift `denote c ↔
+   toEuclideanLin (∏ permMatrix)` (a real 2ⁿ-dim isometry, foundational but a nontrivial induction over
+   the gate list). The clean `Equiv.Perm.permMatrix` pattern exists (LF5 `vnUnitary_mulVec_single`) but is
+   generic — it touches neither `qmToffoli` nor `denoteGate`.
+2. **Decisive: no AND-ancilla to discharge.** The corpus Cuccaro adder is IN-PLACE carry-restoring (`uma`
+   uncomputes the carry UNITARILY); there is no fresh `|0⟩`-initialised AND temporary. Gidney's gadget
+   needs an AND-based adder (one fresh AND ancilla per carry, later measured away). So even with a perfect
+   gate-lift, `measureUncompute` has nothing to attach to.
+
+**Consequence: L5-d is NOT a re-cost.** The Tier-X parity path requires NEW INFRASTRUCTURE:
+- **#30** an AND-based adder primitive in the reversible DSL (a Boolean task, no amplitude bridge: allocate
+  + compute + later uncompute a per-carry AND temporary, so an `andInput`-shaped state appears at an
+  uncompute point);
+- **#31** a LOCALIZED amplitude lift of just that AND-uncompute block (not a full general-circuit `denote`
+  lift), bridging the single block via the `permMatrix` pattern;
+- then **#21 (L5-d)** re-costs the AND-based adder with `measureUncompute` replacing the AND-uncompute Toffoli.
+
+Honest L5 status: measurement-based uncompute is VERIFIED as an amplitude gadget (L5-a/b done) with a real
+per-gadget Toffoli saving; APPLYING it to corpus arithmetic for a score is gated on #30 + #31 — genuine new
+construction (the trusted base grows), NOT a wrapper. This is the user-gated fork's true cost, now known.

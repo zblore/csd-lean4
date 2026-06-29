@@ -124,6 +124,17 @@ safegcd, CCX-only gets *most* of the way to parity. Only the last ~2× (below) n
 
 ### Tier X — verifiable, but needs amplitude-level measurement semantics (the only true extension)
 
+**STATUS 2026-06-29: L5-a/b DONE (the gadget is verified), L5-c probe VERDICT = WALL.** The
+measure-and-correct gadget is proved (`Empirical/QM/MeasurementUncompute.lean`,
+`measureUncompute_uncomputes` + `measureUncompute_cost`: 0 vs 1 Toffoli per AND-uncompute,
+foundational-triple). But the L5-c scoping probe found applying it to corpus arithmetic is a WALL, for
+TWO reasons: (1) no `denote`↔`toEuclideanLin` gate-lift exists (needs a `Bool≃Fin 2` recast + per-gate
+`Equiv.Perm` + a general 2ⁿ-dim amplitude lift); (2) DECISIVE — the corpus Cuccaro adder is in-place
+carry-restoring with NO fresh AND temporary, so Gidney's gadget has nothing to discharge (it needs an
+*AND-based* adder). So **L5-d is NOT a re-cost**; parity needs new infrastructure: an AND-based adder
+primitive (Boolean DSL) + a localized amplitude lift of the AND-uncompute block. The per-gadget saving
+is real and verified; its application is gated on that new construction. Details in `active-todo.md`.
+
 - **L5. Measurement-based (Gidney) adders — the last ~2×.** The leaderboard (and
   Litinski/Babbush/Schrottenloher) use measurement-based uncomputation: ~**1 Toffoli/bit** vs our 2, a
   flat ~2× on every adder. Gidney's trick measures an ancilla in the **X-basis** and applies a **CZ**
