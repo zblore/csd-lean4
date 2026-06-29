@@ -176,6 +176,25 @@ Re-classification of the onramp results (the theorems are correct; only the fram
 Net: typicality-forcing is SETTLED (LLN, A&B). Measure-choice is symmetry-canonical (#29). The A5 residue
 is just the SECTOR/SYMMETRY origin = G-from-D1; typicality-forcing is NOT part of the residue.
 
+### Byproducts of the (mis-framed) ergodicity exploration — KEEP (they were net-positive)
+
+The ergodicity framing was wrong, but the WORK yielded three durable things:
+1. **The negative results JUSTIFY the LLN route (not just decline ergodicity).** #32/#33 prove a single
+   one-parameter unitary flow CANNOT be μFS-ergodic (the Born coordinates are constants of motion; orbit
+   closures are tori, real-dim ≤ N−1 inside the 2(N−1)-dim sector). So CSD's LLN/ensemble route is FORCED,
+   not a stylistic choice.
+2. **Individual-vs-ensemble typicality — a genuine D1 constraint.** The LLN gives ENSEMBLE typicality
+   (many fresh preparations). An ergodic flow would give the stronger SINGLE-TRAJECTORY / individual-system
+   account (one system's time-average self-averages to Born, Boltzmann's actual ergodic hypothesis). #33
+   shows the single-trajectory account is BLOCKED under unitary dynamics. CONSTRAINT FOR D1: any
+   individual-system Born account must come from genuinely mixing — i.e. NON-UNITARY / open-system or
+   entangled de-isolation — dynamics, never unitary time-evolution. (Paper-worthy: A/B/D — flag for the
+   user; do not touch preprints.)
+3. **Reusable framing-independent lemmas** (in `LF4/TypicalityForcing.lean`): `map_withDensity_of_conserved`
+   (reweighting an invariant measure by a conserved quantity preserves invariance — general Mathlib-grade)
+   and `fubiniStudyMeasure_pos_of_isOpen` (FS has FULL SUPPORT: every nonempty open set has positive
+   measure — directly useful for any "generic ψ" / open-dense genericity argument across the corpus).
+
 ## L5-c scoping probe verdict (2026-06-29) — WALL
 
 The measurement-based AND-uncompute (L5-a/b, verified as an amplitude gadget, `measureUncompute_cost`:
