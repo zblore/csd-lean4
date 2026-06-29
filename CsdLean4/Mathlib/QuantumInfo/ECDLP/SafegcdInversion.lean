@@ -306,4 +306,79 @@ theorem safegcd_score_gap_vs_leaderboard_upper :
     onePointAddScore_safegcd < ecdsaFailLeaderboardBest * 15 := by
   rw [onePointAddScore_safegcd_eq]; norm_num [ecdsaFailLeaderboardBest]
 
+/-! ### Windowed Fermat inversion — a DOCUMENTED COMPARISON, off the critical path (L2)
+
+**This block is a standalone cost-model comparison closing L2; it is NOT on the critical path.**
+The point addition now inverts via **safegcd** (the L6 `safegcdInvToffoli` above), NOT via Fermat, so
+nothing here feeds `onePointAddScore_safegcd` / `onePointAddToffoli_safegcd`: `windowedFermatInvToffoli`
+is referenced by no point-op definition. It exists only to answer "does the standard *windowed*
+(`2^k`-ary) refinement of Fermat exponentiation close the gap to safegcd?" — and the answer is no.
+
+**The model.** Windowed (`2^k`-ary) modular exponentiation of `a^{p-2}` over an `~n`-bit exponent does
+`~n` squarings, `~n/k` window-multiplies, and `~2^k` precomputed-power multiplies, each one a verified
+carry-clean modular multiply `cleanModMulToffoli n`. So the multiply count is `n + n/k + 2^k` and
+`windowedFermatInvToffoli n k = (n + n/k + 2^k)·cleanModMulToffoli n`. This is the `2^k`-ary refinement
+of `fermatInvToffoli n = 2n·cleanModMulToffoli n` (`Inversion.modExpFieldMults`'s `≤ 2n`): at small
+optimal `k` the multiply count is `~n·(1 + 1/k)` (vs naive `2n`), a constant `~1.4–1.7×` saving — but
+STILL `O(n)` modular multiplies, i.e. `O(n³)` Toffoli.
+
+**Tiers (honest, cost-model only — NO value-correctness claim beyond what already exists).**
+* **DOCUMENTED**: the windowed op-count `n + n/k + 2^k` and the window parameter `k` (same status as
+  `fermatInvToffoli`'s `2n` op-count model; an analogue of `modExpFieldMults`, no windowed-exponentiation
+  *circuit* is exhibited).
+* **VERIFIED**: the per-multiply base `cleanModMulToffoli` (the carry-clean modular multiply Toffoli cost,
+  tied to `Reversible.cuccaroModMul_toffoli` by `cleanModMulToffoli_eq_cuccaro`).
+* **CONJECTURAL / EXTERNAL**: n/a here — the inverse VALUE is unchanged (still `a⁻¹ = a^{p-2}`, the proved
+  `ECDLP.fermatInv_eq_inv`); this block makes no new value claim, it only re-costs the same exponentiation.
+
+The headline `safegcd_beats_windowed_fermat` confirms safegcd (`O(n²)`) wins by `~120×` even against
+windowed Fermat: windowing buys a constant factor over naive Fermat but cannot overcome the structural
+`O(n³)`-vs-`O(n²)` gap. -/
+
+/-- **Windowed (`2^k`-ary) Fermat inversion Toffoli cost (DOCUMENTED op-count model).**
+`(n + n/k + 2^k)·cleanModMulToffoli n` — `~n` squarings + `~n/k` window-multiplies + `~2^k`
+precomputed-power multiplies, each the verified carry-clean modular multiply `cleanModMulToffoli n`. The
+`2^k`-ary refinement of `fermatInvToffoli n = 2n·cleanModMulToffoli n`. Same honesty status as
+`fermatInvToffoli`: a documented op-count model (analogue of `Inversion.modExpFieldMults`) times the
+verified per-multiply cost; no separately-exhibited windowed-exponentiation circuit. **Off the critical
+path:** no point-op definition references it (the point addition inverts via `safegcdInvToffoli`); this
+is the standalone L2 comparison only. -/
+def windowedFermatInvToffoli (n k : ℕ) : ℕ := (n + n / k + 2 ^ k) * cleanModMulToffoli n
+
+/-- One secp256k1 windowed-Fermat inversion at window `k = 6` costs `475 778 048 ≈ 4.8×10⁸` Toffolis:
+`256 + 256/6 + 2^6 = 256 + 42 + 64 = 362` verified carry-clean multiplies (note `256/6 = 42` in `ℕ`,
+not the round-up `43`), each `cleanModMulToffoli 256 = 1 314 304`. Contrast naive Fermat
+`fermatInvToffoli 256 = 672 923 648` — windowing saves the constant factor `~1.41×`
+(`windowedFermatInvToffoli_lt_fermat_secp256k1`). -/
+theorem windowedFermatInvToffoli_secp256k1 :
+    windowedFermatInvToffoli Secp256k1.bits 6 = 475778048 := by
+  norm_num [windowedFermatInvToffoli, cleanModMulToffoli, Secp256k1.bits]
+
+/-- **Windowing beats naive Fermat by a constant factor.** At `n = 256`, `k = 6`:
+`windowedFermatInvToffoli 256 6 = 475 778 048 < 672 923 648 = fermatInvToffoli 256` — the `~1.41×`
+windowing saving (`362` window-multiplies vs the naive `512`). Still `O(n³)`. -/
+theorem windowedFermatInvToffoli_lt_fermat_secp256k1 :
+    windowedFermatInvToffoli Secp256k1.bits 6 < fermatInvToffoli Secp256k1.bits := by
+  rw [windowedFermatInvToffoli_secp256k1, fermatInvToffoli_secp256k1]; norm_num
+
+/-- **THE HEADLINE COMPARISON: safegcd wins even against windowed Fermat (`~120×`).**
+`safegcdInvToffoli 256 = 3 939 328 < 475 778 048 = windowedFermatInvToffoli 256 6` — the `O(n²)`
+binary-GCD inversion is `~120×` cheaper than the `2^6`-ary windowed Fermat exponentiation. Windowing
+saves a constant `~1.4×` over naive Fermat but cannot overcome the structural `O(n³)`-vs-`O(n²)` gap.
+This closes L2 as a documented comparison. -/
+theorem safegcd_beats_windowed_fermat :
+    safegcdInvToffoli Secp256k1.bits < windowedFermatInvToffoli Secp256k1.bits 6 := by
+  rw [safegcdInvToffoli_secp256k1, windowedFermatInvToffoli_secp256k1]; norm_num
+
+/-- **Windowed Fermat stays `O(n³)` for any fixed window `k`.** For every register width `n` and window
+`k`, `windowedFermatInvToffoli n k ≥ n·cleanModMulToffoli n = 20n³ + 14n²` — the multiply count
+`n + n/k + 2^k ≥ n` is `Ω(n)`, so windowing cannot drop the inversion below the cubic Toffoli class,
+whatever `k`. Contrast safegcd's `O(n²)` (`safegcdInvToffoli_eq : 60n² + 28n`). The structural reason
+the `~120×` gap at `n = 256` only widens with `n`. -/
+theorem windowedFermatInvToffoli_ge_cubic (n k : ℕ) :
+    n * cleanModMulToffoli n ≤ windowedFermatInvToffoli n k := by
+  unfold windowedFermatInvToffoli
+  gcongr
+  exact le_trans (Nat.le_add_right n (n / k)) (Nat.le_add_right _ (2 ^ k))
+
 end ECDLP.ResourceBounds

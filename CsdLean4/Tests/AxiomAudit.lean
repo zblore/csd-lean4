@@ -4723,6 +4723,25 @@ operand). All foundational-triple-only. -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_upper
 
+/-! ### ECDLP L2 windowed Fermat inversion — DOCUMENTED COMPARISON, off the critical path
+(SafegcdInversion.lean). Cost-model only; safegcd wins even against windowed Fermat. -/
+
+/-- info: 'ECDLP.ResourceBounds.windowedFermatInvToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.windowedFermatInvToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.windowedFermatInvToffoli_lt_fermat_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.windowedFermatInvToffoli_lt_fermat_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.safegcd_beats_windowed_fermat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcd_beats_windowed_fermat
+
+/-- info: 'ECDLP.ResourceBounds.windowedFermatInvToffoli_ge_cubic' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.windowedFermatInvToffoli_ge_cubic
+
 /-! ### ECDLP L7 Karatsuba sub-quadratic modular multiply cost model (KaratsubaMul.lean) -/
 
 /-- info: 'ECDLP.ResourceBounds.karatsuba_identity' depends on axioms: [propext, Quot.sound] -/

@@ -51,6 +51,15 @@ product by uniqueness) with the algebraic `karatsuba_identity` (`ring`, flagged 
 full verified Karatsuba CIRCUIT and the structural `≤ C·n^1.585` bound are deferred. After L1 the gap is
 inversion-dominated again; further verified-CCX gains are limited, parity needs the Tier-X L5 fork.
 
+**L2 CLOSED as a documented comparison 2026-06-28 (`SafegcdInversion.lean`, off critical path).** Per the
+user's choice, L2 (windowed Fermat) was built only as a comparison, since L6 (safegcd) replaced Fermat
+entirely. `windowedFermatInvToffoli n k = (n + n/k + 2^k)·cleanModMulToffoli n`; at n=256, k=6 it is
+`475,778,048` (a ~1.41× constant saving over naive Fermat `672,923,648`), but `safegcd_beats_windowed_fermat`:
+`safegcdInvToffoli 256 (3,939,328) < windowedFermatInvToffoli 256 6` — safegcd wins **~120×** even against
+windowed Fermat, and `windowedFermatInvToffoli_ge_cubic` gives the structural `O(n³)` floor (`≥ n·cleanModMul`)
+for any fixed window k vs safegcd's O(n²). Confirms L6 was the right inversion. Does NOT feed `onePointAddScore`
+(off critical path); cost-model only, no value claim.
+
 So the gap decomposes as:
 
 ```
