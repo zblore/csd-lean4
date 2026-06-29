@@ -54,6 +54,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique

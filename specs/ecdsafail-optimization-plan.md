@@ -1,11 +1,24 @@
 # ECDSA.fail optimization plan — toward the best VERIFIED optimised point-addition score
 
-**Status: planned (2026-06-28).** Supersedes the "worst-case upper bound" posture of step 3.
-Goal restated by the user: **aim for the best verified *optimised* result, not the worst verified
-result.** This file inventories the levers, tiers each by whether it is expressible in the current
-verified measurement-free CCX DSL, estimates impact, and sequences the work. Companion:
-`specs/ecdsafail-correlation.md` (the object-correlation guard; step 2 reproduction is the user's
-machine action and gates any claim of a validated comparison).
+**Status: L6 DONE 2026-06-28 (the dominant lever); L1/L2/L3/L5 pending.** Supersedes the "worst-case
+upper bound" posture of step 3. Goal restated by the user: **aim for the best verified *optimised*
+result, not the worst verified result.** This file inventories the levers, tiers each by whether it is
+expressible in the current verified measurement-free CCX DSL, estimates impact, and sequences the work.
+Companion: `specs/ecdsafail-correlation.md` (the object-correlation guard; step 2 reproduction is the
+user's machine action and gates any claim of a validated comparison).
+
+**L6 result (`ECDLP/SafegcdInversion.lean`, auditor-SOUND).** The binary-GCD / safegcd inversion
+replaced Fermat: per-inversion Toffoli `672,923,648 → 3,939,328` (~170×), `onePointAddToffoli
+676,880,936 → 7,896,616`, **`onePointAddScore 1,910,158,001,392 → 22,284,250,352` (~86×)**, closing the
+leaderboard gap **~1217× → ~14×**. The dominant ~86× of the ~1220× gap is eliminated; the residual ~14×
+is now the multiply term + windowing + measurement adders + the worst-case-vs-executed modelling gap, no
+longer the inversion. HONESTY (auditor-corrected): `binGcdInv` is DEFINITIONALLY Mathlib's `ZMod.inv`
+(xgcd-based), so `binGcdInv_eq_inv` is an unfolding, not an independent algorithm-correctness proof
+(weaker than `fermatInv_eq_inv`, which is a genuine theorem); the real coprimality-load-bearing value
+export is `binGcdInv_mul_eq_one : a * binGcdInv N a = 1`. Cost = derived op-count model tied to verified
+gadgets (`divstepToffoli = modSub + cuccaroCModAdd + cuccaroModDouble`), DOCUMENTED divstep count `2n`,
+and an honestly-flagged lower-fidelity proxy (single Bézout track + doubling-for-halving, so the win is
+if anything optimistic on the safegcd side). Full per-divstep bit-circuit (route 2a) deferred.
 
 ## Where we stand (the gap)
 

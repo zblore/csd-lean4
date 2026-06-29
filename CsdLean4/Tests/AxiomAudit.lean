@@ -49,6 +49,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -4654,6 +4655,72 @@ operand). All foundational-triple-only. -/
 /-- info: 'ECDLP.ResourceBounds.onePointAddScore_eq' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.onePointAddScore_eq
+
+/-! ### ECDLP L6 binary-GCD / Kaliski modular inversion (SafegcdInversion.lean) -/
+
+/-- info: 'ECDLP.binGcdInv_mul_eq_one' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.binGcdInv_mul_eq_one
+
+/-- info: 'ECDLP.binGcdInv_eq_inv' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.binGcdInv_eq_inv
+
+/-- info: 'ECDLP.binGcdInv_eq_modInv' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.binGcdInv_eq_modInv
+
+/-- info: 'ECDLP.ResourceBounds.divstepToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.divstepToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.divstepToffoli_eq_gadgets' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.divstepToffoli_eq_gadgets
+
+/-- info: 'ECDLP.ResourceBounds.safegcdInvToffoli_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcdInvToffoli_eq
+
+/-- info: 'ECDLP.ResourceBounds.safegcdInvToffoli_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcdInvToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.affinePointOpToffoli_safegcd_secp256k1' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.affinePointOpToffoli_safegcd_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.safegcdInvToffoli_lt_fermat_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcdInvToffoli_lt_fermat_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.safegcdInvToffoli_le_fermat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcdInvToffoli_le_fermat
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddToffoli_safegcd_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddToffoli_safegcd_eq
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddScore_safegcd_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddScore_safegcd_eq
+
+/-- info: 'ECDLP.ResourceBounds.safegcd_score_improvement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcd_score_improvement
+
+/-- info: 'ECDLP.ResourceBounds.fermat_score_gap_vs_leaderboard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.fermat_score_gap_vs_leaderboard
+
+/-- info: 'ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_lower
+
+/-- info: 'ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_upper
 
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
