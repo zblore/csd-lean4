@@ -32,7 +32,8 @@ research-frontier / infrastructure gap.
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
 | 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
 | 28 | D1c-2: physically-meaningful Φ (obsFlow Hamiltonian) into cpSectorData | Foundations-debt | S | DONE | |
-| 29 | D1c-3 / A5-onramp: ergodic/mixing Φ whose unique invariant measure is μFS | Foundations-debt | L–XL | open | |
+| 29 | A5 onramp: typicality forced by symmetry + single-flow obstruction (DONE) | Foundations-debt | L | DONE | |
+| 32 | A5 onramp follow-up: strengthen (B) to the conserved-quantity (moment-fibre) continuum of invariant measures | Foundations-debt | M | open | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
 | 15 | Open-system / decoherence empirical targets | Empirical | L | open | |
@@ -98,11 +99,22 @@ ray-fixing fibre translation), `hΦ_pres := obsFlow_measurePreserving`; `cpSecto
 `_phi_measurePreserving`, `cpSectorDataFlow_frequency_convergence` (LF1 via `freq_tendsto_of_iid`). 3 pins.
 Honest: a single observable's PERIODIC phase flow — NOT ergodic/mixing, so A5 still untouched.
 
-**D1c-3 / A5 onramp (#29).** The A5 gap is precisely that `obsFlow`/`kFlow` are periodic/non-mixing, so they
-do not FORCE `μFS`. The onramp: an ERGODIC / MIXING `Φ` on ℂℙ^{N-1} (e.g. an irrational-rotation phase flow)
-whose UNIQUE invariant measure is `μFS` — that is what makes typicality *derived* (the quantum
-Liouville/equal-a-priori justification) rather than posited, and is where A5 (#17) actually starts. Also
-proper D1c-3: `obsFlow` on the non-trivial-fibre `kSectorData` base (moves `π`).
+**A5 onramp (#29) DONE 2026-06-29** (`LF4/TypicalityForcing.lean`, auditor-SOUND, foundational-triple).
+The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one-parameter unitary flow on
+ℂℙ^{N-1} has torus orbit-closures + fixed basis rays). The honest content instead:
+- (A) `fubiniStudy_forced_by_symmetry`: any U(N)-invariant probability (typicality) law on the sector IS
+  μFS (one-line reuse of the axiom-free `invariant_measure_uniqueness_cpn`). So Born = FS-volume is DERIVED
+  from the sector symmetry G, CONDITIONAL on positing G-invariance of the typicality law.
+- (B) `obsFlow_not_uniquely_ergodic` (the honest negative, genuine new content): `obsFlow` fixes the
+  eigenstate rays, so `δ_{[e₀]}` is invariant and ≠ μFS (distinctness via a swap-unitary + FS's
+  U(N)-invariance) — TWO distinct invariant probability measures, so a single ontic flow does NOT force
+  μFS. This is WHY D1c-1/2's single-flow instances do not discharge A5.
+- `a5_onramp` capstone conjoins (A)+(B). HONEST: A5 is NOT closed; typicality is forced by the SYMMETRY
+  (not a flow); the residual A5 primitive is G=U(N) ITSELF, reducing to D1 (deriving the U(N)-symmetry of
+  the ontic dynamics from the substrate — the deepest open content). Nothing claimed about deriving G.
+Follow-up #32: strengthen (B) to a continuum of invariant measures via the moment-fibre conserved
+quantities (`momentMap ∘ obsFlow = momentMap`). The genuine A5/D1 frontier beyond: the entangled
+de-isolation tier (Bell-forced non-locality), where G could begin to be derived rather than posited.
 
 (superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
 (needs the SectorData on the dilated space).

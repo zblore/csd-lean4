@@ -104,6 +104,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
+import CsdLean4.LF4.TypicalityForcing
 import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.BornFS

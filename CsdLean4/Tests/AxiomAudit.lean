@@ -65,6 +65,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
+import CsdLean4.LF4.TypicalityForcing
 import CsdLean4.LF4.BornVolume
 import CsdLean4.LF4.MomentPushforward
 import CsdLean4.LF4.BornFS
@@ -2474,6 +2475,27 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.obsFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.obsFlow_ne_id
+
+-- A5 onramp (TypicalityForcing.lean): WHERE the Fubini–Study typicality measure comes from.
+-- (A) fubiniStudy_forced_by_symmetry — any U(N)-invariant probability measure on the sector
+-- ℂℙ^{N-1} IS the Fubini–Study measure (restates the axiom-free fubiniStudyMeasure_unique as
+-- the typicality-derivation: Born = FS-volume is DERIVED from the sector symmetry G = U(N),
+-- not posited). (B) obsFlow_not_uniquely_ergodic — a single ontic flow does NOT force FS: it
+-- has ≥2 distinct invariant probability measures (μFS and δ_{[e₀]} at a fixed basis ray).
+-- a5_onramp conjoins them. HONEST: typicality is forced by the SYMMETRY, not any flow; residual
+-- A5 primitive = G = U(N) itself, which reduces to D1 (G-from-dynamics, NOT done). A5 not closed.
+-- Foundational-triple-only (no busch).
+/-- info: 'CSD.LF4.fubiniStudy_forced_by_symmetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fubiniStudy_forced_by_symmetry
+
+/-- info: 'CSD.LF4.obsFlow_not_uniquely_ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.obsFlow_not_uniquely_ergodic
+
+/-- info: 'CSD.LF4.a5_onramp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.a5_onramp
 
 -- D1c-2: the concrete BASE SectorData carrying a PHYSICALLY-MEANINGFUL Φ = obsFlow ≠ id
 -- (the observable's Hamiltonian flow exp(i t Â) on the Fubini–Study Kähler base ℂℙ^{N-1}).
