@@ -224,6 +224,7 @@ import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
 import CsdLean4.Empirical.QM.Gates.BellPrep
 import CsdLean4.Empirical.QM.Gates.MultiQubit
+import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.CSD.Gates.Framework
 import CsdLean4.Empirical.CSD.Gates.SingleQubit
 import CsdLean4.Empirical.CSD.Gates.TwoQubit

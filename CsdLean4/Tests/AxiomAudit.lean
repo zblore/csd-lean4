@@ -51,6 +51,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
+import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -4902,5 +4903,23 @@ operand). All foundational-triple-only. -/
 /-- info: 'ECDLP.addition_toffoli_secp256k1' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.addition_toffoli_secp256k1
+
+/-! ### L5-a measurement-based AND-uncomputation (Gidney measure-and-correct gadget) -/
+
+/-- info: 'CSD.Empirical.QM.measureUncompute_uncomputes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.measureUncompute_uncomputes
+
+/-- info: 'CSD.Empirical.QM.measureUncompute_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.measureUncompute_basisState
+
+/-- info: 'CSD.Empirical.QM.andInput_nontrivial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andInput_nontrivial
+
+/-- info: 'CSD.Empirical.QM.gadgetGateList_zero_toffoli' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gadgetGateList_zero_toffoli
 
 end CSD.Tests.AxiomAudit
