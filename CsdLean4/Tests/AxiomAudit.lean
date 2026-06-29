@@ -2428,6 +2428,21 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.kFlow_frequency_convergence
 
+-- D1c-1: the concrete compact-Kähler SectorData that carries the genuine
+-- measure-preserving Φ = kFlow ≠ id (structural discharge of the "Φ = id in the
+-- concrete Kähler instance" debt; cpSectorData still carries Φ = id).
+/-- info: 'CSD.LF4.kSectorDataFlow_phi_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorDataFlow_phi_ne_id
+
+/-- info: 'CSD.LF4.kSectorDataFlow_phi_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorDataFlow_phi_measurePreserving
+
+/-- info: 'CSD.LF4.kSectorDataFlow_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorDataFlow_frequency_convergence
+
 -- Tranche 1: the Born weights as the torus moment map on ℂℙ^{N-1} (a forced
 -- symplectic invariant of the Kähler structure, not a carving). Headline:
 -- momentMap_mk_eq_inner_sq — Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖² at a unit preparation.

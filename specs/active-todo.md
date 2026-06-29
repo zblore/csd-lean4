@@ -28,7 +28,7 @@ research-frontier / infrastructure gap.
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
-| 16 | Debt D1c: thread genuine Φ through concrete SectorData | Foundations-debt | M–L | open | |
+| 16 | Debt D1c: thread genuine Φ through concrete SectorData | Foundations-debt | M–L | D1c-1 DONE (D1c-2 open) | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #16 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
 | 15 | Open-system / decoherence empirical targets | Empirical | L | open | |
@@ -80,10 +80,19 @@ headline "every concrete instance has Φ=id" caveat for the Kähler instance.
 flow derived from the Kähler form. So D1c-1 discharges the STRUCTURAL debt (the instance carries
 non-trivial dynamics), not the physical content.
 
-**D1c-2 (deeper, L).** Thread a physically-meaningful flow as `Φ`: either the LF5/LF6
-de-isolation/measurement flow (connecting measurement dynamics to the SectorData layer — needs
-the SectorData on the dilated space) or a Hamiltonian/symplectic flow from the Kähler form. This
-is the genuine "dynamics in the instance."
+**D1c-1 DONE 2026-06-29** (`LF4/KahlerFlow.lean`, self-verified, foundational-triple): `kOnticSetupFlow`
+(= `kOnticSetup` with `Φ := kFlow sh`, `hΦ_pres := kFlow_measurePreserving`) + `kSectorDataFlow` (G-action
+fields reused verbatim — none touch `Φ`) + `kSectorDataFlow_phi_ne_id` (instance's `Φ ≠ id`),
+`_phi_measurePreserving`, `kSectorDataFlow_frequency_convergence` (LF1 typicality through the instance's
+own `Φ ∘ sample` → `kMuL` volume, non-vacuous). Structural `Φ=id` debt discharged for the Kähler instance.
+3 AxiomAudit pins. `cpSectorData` still `Φ=id`.
+
+**D1c-2 (deeper, L — next).** Thread a physically-meaningful flow as `Φ`. STRONG LEAD: `obsFlow`
+(`LF4/ObservableFlow.lean`) already exists with `obsFlow_ne_id` + `obsFlow_measurePreserving` — a
+Hamiltonian/observable flow on the BASE `ℂℙ^{N-1}` (not the trivial T²-fibre translation), so swapping
+`Φ := obsFlow` into `kSectorDataFlow` gives a strictly stronger, physically-meaningful instance with
+near-zero new proof cost. The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
+(needs the SectorData on the dilated space).
 
 **Relation to A5 (#17).** D1c (Φ≠id) is necessary-but-not-sufficient for A5 (deriving (π,G) +
 FS typicality from the dynamics). A5 additionally needs the flow to be ergodic/mixing so the FS
