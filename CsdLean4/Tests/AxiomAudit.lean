@@ -187,6 +187,7 @@ import CsdLean4.Empirical.CSD.Contextuality.KS18
 import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeresVolume
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
+import CsdLean4.Empirical.CSD.Einselection
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
 import CsdLean4.Empirical.QM.Gates.BellPrep
@@ -3478,6 +3479,37 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.decoherence_irreversibility_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decoherence_irreversibility_capstone
+
+-- Build 15a (Einselection, 2026-06-29): the first einselection / pointer-basis-selection
+-- result on the LF6-B decoherence machinery. decohereReduced ψ (LF6-B) is diagonal in the
+-- measurement (pointer) basis {eⱼ} (decohere_diagonal_in_pointer_basis), but conjugating by
+-- the Hadamard qmH rotates it into a basis where the (0,1) coherence = (p₀−p₁)/2 PERSISTS
+-- (decohere_hadamard_offDiag), nonzero for any qubit with distinct Born weights p₀≠p₁
+-- (decohere_not_diagonal_in_rotated_basis). einselection bundles diagonal-in-pointer + nonzero
+-- in the Hadamard rotation for the concrete witness (2,1) (p₀=4≠1=p₂, off-diag 3/2). The
+-- preferred basis comes from the de-isolation/partial-trace CONTEXT, contrasting #29's
+-- basis-covariant FS typicality (fubiniStudy_forced_by_symmetry, unique U(N)-invariant, picks
+-- no basis). QM-validity/open-system layer; basis-SELECTIVITY of decoherence (not derived from
+-- an environment Hamiltonian). Foundational triple only (off busch).
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_hadamard_offDiag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_hadamard_offDiag
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_diagonal_in_pointer_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_diagonal_in_pointer_basis
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_not_diagonal_in_rotated_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_not_diagonal_in_rotated_basis
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.einselectionWitness_offDiag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.einselectionWitness_offDiag
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.einselection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.einselection
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,

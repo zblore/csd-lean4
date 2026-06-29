@@ -37,7 +37,8 @@ research-frontier / infrastructure gap.
 | 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | open | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
-| 15 | Open-system / decoherence empirical targets | Empirical | L | open | |
+| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a DONE; 15b–e open | |
+| 34 | 15a follow-up: degeneracy boundary (p₀=p₁ ⇒ scalar·I) + general-N einselection | Empirical | M | open | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
 
 Per-area plans: [`lf6-plan.md`](lf6-plan.md), [`ecdsafail-optimization-plan.md`](ecdsafail-optimization-plan.md),
@@ -131,7 +132,12 @@ LF6-B gives `decohereReduced` (the dephasing channel), `Channel`, `PartialTrace`
 `decoherence_dephases` (→ Born diagonal mixture), `_offdiagonal_vanish`, the purity drop (B.2).
 Candidate first tranches, by tractability:
 
-1. **Einselection / pointer-basis (M, RECOMMENDED first).** `decohereReduced` already yields the
+1. **Einselection / pointer-basis (M, DONE 2026-06-29 — `Empirical/CSD/Einselection.lean`).** Witness:
+   `(qmH · decohereReduced ψ · qmH) 0 1 = (p₀−p₁)/2` (computed); `decohere_not_diagonal_in_rotated_basis`
+   (off-diag ≠ 0 for `p₀≠p₁`); `einselection` capstone (diagonal in `{e_j}`, off-diag `3/2` in the
+   Hadamard rotation). Decoherence is basis-SELECTIVE; the pointer basis is the de-isolation's context
+   basis, contrasted honestly with #29's basis-covariant FS typicality. Follow-up #34: degeneracy boundary
+   (`p₀=p₁ ⇒ scalar·I`, every basis diagonal) + general-N. (original scoping:) `decohereReduced` already yields the
    diagonal Born mixture IN THE MEASUREMENT BASIS — the pointer basis IS the einselected basis.
    Tranche: prove decoherence selects that basis as the preferred one — coherences vanish in the
    `e_j` basis (have B.1) but PERSIST in a generic rotated basis (the new content: the reduced
