@@ -112,6 +112,7 @@ import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.LF6.ForcedContextuality
 import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.LF6.LocalDeisolationFlow
+import CsdLean4.LF6.Decoherence
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -3323,6 +3324,41 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.localDeisolationFlow_realises_localNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolationFlow_realises_localNaimark
+
+-- LF6-B.1 (Decoherence, 2026-06-28): decoherence as coarse-graining over a CONSERVATIVE
+-- de-isolation flow — the first result on the open-system / partial-trace stratum of D1.
+-- decohereReduced ψ = partialTraceRight (V |ψ⟩⟨ψ| Vᴴ) GENUINELY COMPUTES to the
+-- Born-weighted diagonal mixture ∑ⱼ ‖⟨eⱼ,ψ⟩‖² • |eⱼ⟩⟨eⱼ| (dephases); off-diagonal
+-- coherences are explicit zeros; diagonal weights are the Born weights, TIED to the
+-- LF5/LF6 pointer-block FS typicality volumes (decoherence_diagonal_eq_pointer_volume,
+-- vnDilation_pointer_volume); the de-isolation V is an isometry (conservative on the
+-- joint, dissipative only on the marginal). Foundational triple only, no busch (the
+-- partial-trace + dilation machinery is measure-theoretic / linear-algebraic, off the
+-- ontic Born path). DEFERRED: continuous-time Lindblad / T1-T2; system-marginal
+-- FS-volume-drift geometry; purity/entropy. Residue A5 (FS-typicality posited).
+/-- info: 'CSD.LF6.decoherence_dephases' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_dephases
+
+/-- info: 'CSD.LF6.decoherence_offdiagonal_vanish' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_offdiagonal_vanish
+
+/-- info: 'CSD.LF6.decoherence_diagonal_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_diagonal_born
+
+/-- info: 'CSD.LF6.decoherence_diagonal_eq_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_diagonal_eq_pointer_volume
+
+/-- info: 'CSD.LF6.deisolation_conservative' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolation_conservative
+
+/-- info: 'CSD.LF6.decoherence_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_capstone
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,

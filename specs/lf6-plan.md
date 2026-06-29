@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (the entangled-tier A-stage is complete).** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -135,10 +135,36 @@ mirroring LF5; the `ψ ≠ 0` side conditions are load-bearing (isometry/norm). 
 LF5's `measurementFlow_realises_dilation` at N=4 (that `ℤ/4` object does not factor); it uses the genuine
 product `U_A ⊗ U_B`. Auditor-SOUND. 5 AxiomAudit pins (capstone now 6-conjunct + the new lemma).
 
-### LF6-B and beyond (not started)
-General-N entangled tier; the decoherence / partial-trace (open-system) stratum (D1b, system→environment
-volume loss); threading `Φ` through the concrete entangled `SectorData` (D1c). A5 emergence (deriving the
-entangled sector from the dynamics) is the downstream target that would retire the residue.
+### LF6-B.1 — decoherence as coarse-graining over a conservative flow (DONE 2026-06-28)
+`CsdLean4/LF6/Decoherence.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple-only, 6 pins.
+The first open-system / partial-trace (D1b) result: the genuinely new physics beyond the global-beable
+account. `vnDilationV` is the Stinespring isometry `V|ψ⟩ = ∑_j ψ_j |j⟩_S ⊗ |j⟩_ptr`; tracing the
+unmonitored pointer decoheres the system to the Born mixture.
+- `decohereReduced ψ := partialTraceRight (V · |ψ⟩⟨ψ| · Vᴴ)` (the system reduced state after de-isolation
+  + pointer trace) — genuinely the partial trace, NOT defined diagonal.
+- `decoherence_dephases` — `decohereReduced ψ = ∑_j ‖⟨e_j,ψ⟩‖² • |e_j⟩⟨e_j|`, the Born diagonal mixture.
+  Genuinely computes the partial trace (`vnDilationV_conj_outerProduct` via `mul_vecMulVec`/`vecMulVec_mul`
+  + `decohereReduced_apply` killing off-diagonal on the pointer δ). Auditor non-vacuity probe: a real
+  superposition `(|0⟩+|1⟩)` has input coherence `1 ≠ 0`, output coherence `0` — decoherence happened.
+- `decoherence_offdiagonal_vanish` (coherences provably zero), `decoherence_diagonal_born` (diagonal =
+  Born weight), `decoherence_diagonal_eq_pointer_volume` (the decohered weights ARE the LF6/LF5 FS
+  typicality volumes, via `vnDilation_pointer_volume` — imported, Gleason-free, not re-derived).
+- `deisolation_conservative := vnDilationV_isom` (`VᴴV = 1`): conservative on the joint, dissipative
+  only on the marginal — irreversibility is coarse-graining over a conservative isometric flow, NO
+  fundamental stochasticity.
+- `decoherence_capstone` (4-conjunct).
+HONEST scope: reduced-density-operator decoherence (standard QM-validity object); the CSD increment is
+the conservative-flow-coarse-graining reading. DEFERRED: the quantitative purity drop `Tr(ρ_red²) =
+∑‖ψ_j‖⁴ < 1` (the genuine irreversibility witness — auditor Nit: the "irreversibility emergent" narrative
+leans on this until it lands); continuous-time Lindblad / T1-T2 semigroup; the system-marginal
+FS-volume-DRIFT geometry (the "open symplectic drift" as a measure statement on Σ). Residue A5.
+Subsumes metrology A4 (same open-system machinery).
+
+### LF6 remaining (not started)
+The purity-drop / entropy-increase witness (closes the irreversibility narrative); continuous-time
+Lindblad; the marginal volume-drift geometry; general-N entangled tier; threading `Φ` through the
+concrete entangled `SectorData` (D1c). A5 emergence (deriving the entangled sector from the dynamics) is
+the downstream target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the
