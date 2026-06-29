@@ -29,8 +29,9 @@ research-frontier / infrastructure gap.
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
 | 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
-| 28 | D1c-2: physically-meaningful Φ (obsFlow / Φ_vN) into a concrete SectorData | Foundations-debt | S–L | open | |
-| 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #28 |
+| 28 | D1c-2: physically-meaningful Φ (obsFlow Hamiltonian) into cpSectorData | Foundations-debt | S | DONE | |
+| 29 | D1c-3 / A5-onramp: ergodic/mixing Φ whose unique invariant measure is μFS | Foundations-debt | L–XL | open | |
+| 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
 | 15 | Open-system / decoherence empirical targets | Empirical | L | open | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
@@ -88,11 +89,20 @@ fields reused verbatim — none touch `Φ`) + `kSectorDataFlow_phi_ne_id` (insta
 own `Φ ∘ sample` → `kMuL` volume, non-vacuous). Structural `Φ=id` debt discharged for the Kähler instance.
 3 AxiomAudit pins. `cpSectorData` still `Φ=id`.
 
-**D1c-2 (deeper, L — next).** Thread a physically-meaningful flow as `Φ`. STRONG LEAD: `obsFlow`
-(`LF4/ObservableFlow.lean`) already exists with `obsFlow_ne_id` + `obsFlow_measurePreserving` — a
-Hamiltonian/observable flow on the BASE `ℂℙ^{N-1}` (not the trivial T²-fibre translation), so swapping
-`Φ := obsFlow` into `kSectorDataFlow` gives a strictly stronger, physically-meaningful instance with
-near-zero new proof cost. The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
+**D1c-2 DONE 2026-06-29** (`LF4/ObservableFlow.lean`, self-verified, foundational-triple): `cpSectorDataFlow`
+= `cpSectorData` with `Φ := obsFlow lam t` (a diagonal-phase `e^{itÂ}` observable/Hamiltonian flow on the
+actual Fubini–Study Kähler base ℂℙ^{N-1}, MOVING superposition rays — strictly stronger than D1c-1's
+ray-fixing fibre translation), `hΦ_pres := obsFlow_measurePreserving`; `cpSectorDataFlow_phi_ne_id`,
+`_phi_measurePreserving`, `cpSectorDataFlow_frequency_convergence` (LF1 via `freq_tendsto_of_iid`). 3 pins.
+Honest: a single observable's PERIODIC phase flow — NOT ergodic/mixing, so A5 still untouched.
+
+**D1c-3 / A5 onramp (#29).** The A5 gap is precisely that `obsFlow`/`kFlow` are periodic/non-mixing, so they
+do not FORCE `μFS`. The onramp: an ERGODIC / MIXING `Φ` on ℂℙ^{N-1} (e.g. an irrational-rotation phase flow)
+whose UNIQUE invariant measure is `μFS` — that is what makes typicality *derived* (the quantum
+Liouville/equal-a-priori justification) rather than posited, and is where A5 (#17) actually starts. Also
+proper D1c-3: `obsFlow` on the non-trivial-fibre `kSectorData` base (moves `π`).
+
+(superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
 (needs the SectorData on the dilated space).
 
 **Relation to A5 (#17).** D1c (Φ≠id) is necessary-but-not-sufficient for A5 (deriving (π,G) +

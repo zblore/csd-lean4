@@ -2474,6 +2474,24 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.obsFlow_ne_id
 
+-- D1c-2: the concrete BASE SectorData carrying a PHYSICALLY-MEANINGFUL Φ = obsFlow ≠ id
+-- (the observable's Hamiltonian flow exp(i t Â) on the Fubini–Study Kähler base ℂℙ^{N-1}).
+-- Strictly stronger than D1c-1's free T²-fibre translation (kSectorDataFlow): dynamics on
+-- the actual projective state space, not a trivial fibre shift. obsFlow is a single
+-- observable's periodic phase flow (not de-isolation Φ_vN, not ergodic); A5 ergodicity gap
+-- remains.
+/-- info: 'CSD.LF4.cpSectorDataFlow_phi_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cpSectorDataFlow_phi_ne_id
+
+/-- info: 'CSD.LF4.cpSectorDataFlow_phi_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cpSectorDataFlow_phi_measurePreserving
+
+/-- info: 'CSD.LF4.cpSectorDataFlow_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cpSectorDataFlow_frequency_convergence
+
 -- Tranche M slice 3: the Born weight as a barycentric volume ratio. The i-th
 -- subdivision region of the moment polytope at Φ([ψ]) has Lebesgue-volume
 -- fraction ‖⟨eᵢ,ψ⟩‖² (vertex-replacement map det = barycentric coord, via Cramer

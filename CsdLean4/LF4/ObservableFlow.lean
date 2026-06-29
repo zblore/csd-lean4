@@ -1,4 +1,5 @@
 import CsdLean4.LF4.MomentMap
+import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 
 /-!
@@ -41,7 +42,7 @@ the deeper D1 strata (entangled de-isolation, instance-level dynamics) remain op
 -/
 
 open scoped LinearAlgebra.Projectivization
-open Matrix MeasureTheory Matrix.UnitaryGroup
+open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
 
 namespace CSD
 namespace LF4
@@ -224,6 +225,134 @@ theorem momentMap_obsFlow [NeZero N] (lam : Fin N → ℝ) (t : ℝ) (p : CPN N)
   · rw [euclidean_norm_sq_eq_sum, euclidean_norm_sq_eq_sum]
     exact Finset.sum_congr rfl fun j _ => by
       rw [obsUnitary_toEuclideanLin_apply, norm_mul, obsPhase_norm, one_mul]
+
+/-! ## D1c-2: the concrete base `SectorData` with a physically-meaningful `Φ = obsFlow ≠ id`
+
+D1c-1 (`LF4/KahlerFlow.lean`, `kSectorDataFlow`) discharged the "`Φ = id` in the
+concrete Kähler instance" debt with a *free* `T²`-fibre translation `kFlow`: a
+genuine measure-preserving `Φ ≠ id`, but dynamically trivial — a fibre shift that
+acts as the identity on the actual projective state space. This block is the
+**physically-meaningful** strengthening: it rebuilds the base instance
+`cpSectorData` (`Σ = P = ℂℙ^{N-1}`, `μL = fubiniStudyMeasure`, `π = id`) with
+`Φ := obsFlow lam t`, the **Hamiltonian flow `t ↦ exp(i t Â)` of a diagonal
+observable `Â = diag(λ)` acting on the Fubini–Study Kähler base** by
+`obsFlow lam t [ψ] = [exp(i t Â) ψ]`. This is dynamics on the real projective
+state space, not a trivial fibre shift.
+
+Only the three flow-related `OnticSetup` fields change (`Φ`, `hΦ_pres`, and the
+derived `measurable_Φ`); `μL`, `Ω0`, and their hypotheses are reused verbatim from
+`cpOnticSetup`. The `SectorData` `G = U(N)`-action fields (`measurable_smul_σ`,
+`measurable_smul_P`, `hμL_inv`, `hπ_equiv`) are about the `U(N)`-action and
+`π = id`, never about `Φ`, so they are reused verbatim from `cpSectorData`
+(`hμL_inv` reads `toOntic.μL`, which is unchanged `= fubiniStudyMeasure p₀`).
+
+**Strictly stronger than D1c-1.** `kFlow` is a free `T²`-fibre translation
+(`kFlow_preserves_rays`: it fixes every projective ray `[ψ]`); `obsFlow` is a
+Hamiltonian flow *on* the projective base, moving superposition rays
+(`obsFlow_ne_id`: the `|0⟩+|1⟩` ray acquires distinct coordinate phases `1`, `-1`).
+So D1c-2 gives the concrete base instance genuine physical dynamics on the actual
+Kähler state space.
+
+**Honest scope.** `obsFlow` is a *single observable's* periodic phase flow. It is
+**not** the de-isolation / measurement flow `Φ_vN` (the dilated-space dynamics of
+LF5, the fuller deferred D1c content), and it is **not** ergodic / mixing (a
+periodic phase flow cannot be). **A5 is untouched** — D1c is
+necessary-but-not-sufficient for deriving the sector + Fubini–Study typicality from
+the dynamics: A5 additionally needs the flow ergodic / mixing to *force* `μFS`,
+which `obsFlow` is not. So D1c-2 supplies the concrete base instance with genuine
+physical dynamics; the A5 ergodicity content remains the open gap. -/
+
+variable [NeZero N]
+
+/-- The base `OnticSetup` with the **physically-meaningful** flow `Φ := obsFlow lam t`.
+Identical to `cpOnticSetup p₀` except for the three flow fields: `Φ` is the
+observable's Hamiltonian flow on `ℂℙ^{N-1}`, `hΦ_pres` is
+`obsFlow_measurePreserving` (FS-invariance, genuine Liouville content, not
+`MeasurePreserving.id`). `μL`, `Ω0`, and their hypotheses are reused. -/
+noncomputable def cpOnticSetupFlow (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
+    CSD.LF1.OnticSetup (CPN N) where
+  μL := ⟨fubiniStudyMeasure p₀, inferInstance⟩
+  Φ := obsFlow lam t
+  hΦ_pres := obsFlow_measurePreserving lam t p₀
+  Ω0 := Set.univ
+  hΩ0_meas := MeasurableSet.univ
+  hΩ0_nonzero := by
+    show (fubiniStudyMeasure p₀) Set.univ ≠ 0
+    rw [measure_univ]; exact one_ne_zero
+
+/-- **The concrete base `SectorData` carrying a physically-meaningful
+measure-preserving `Φ ≠ id`.** Identical to `cpSectorData p₀` except its
+underlying ontic data is `cpOnticSetupFlow p₀ lam t` (so `Φ = obsFlow lam t`, the
+observable's Hamiltonian flow on the Fubini–Study base). The `G = U(N)` action
+fields are reused verbatim from `cpSectorData`; none of them mention `Φ`. -/
+noncomputable def cpSectorDataFlow (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
+    CSD.LF2.SectorData (CPN N) (CPN N) (Matrix.unitaryGroup (Fin N) ℂ) where
+  toOntic := cpOnticSetupFlow p₀ lam t
+  π := id
+  measurable_π := measurable_id
+  measurable_smul_σ := (cpSectorData p₀).measurable_smul_σ
+  measurable_smul_P := (cpSectorData p₀).measurable_smul_P
+  hμL_inv := (cpSectorData p₀).hμL_inv
+  hπ_equiv := (cpSectorData p₀).hπ_equiv
+
+/-- The instance's flow is exactly `obsFlow lam t` (definitional). -/
+@[simp] lemma cpSectorDataFlow_phi (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
+    (cpSectorDataFlow p₀ lam t).toOntic.Φ = obsFlow lam t := rfl
+
+/-- **D1c-2 headline.** The concrete base `SectorData` genuinely carries a
+*physically-meaningful* `Φ ≠ id`: the observable's Hamiltonian flow `exp(i t Â)`
+on the Fubini–Study Kähler base `ℂℙ^{N-1}`. Strictly stronger than D1c-1's free
+`T²`-fibre translation (`kSectorDataFlow_phi_ne_id`), which fixes every projective
+ray. Reuses `obsFlow_ne_id` (witnesses `obsLamWitness hN`, `obsTWitness`). -/
+theorem cpSectorDataFlow_phi_ne_id (p₀ : CPN N) (hN : 1 < N) :
+    (cpSectorDataFlow p₀ (obsLamWitness hN) obsTWitness).toOntic.Φ ≠ id :=
+  obsFlow_ne_id hN
+
+/-- The instance's flow is measure-preserving for the Fubini–Study / Liouville
+volume `fubiniStudyMeasure p₀` (the genuine `hΦ_pres` content surfaced on the
+`SectorData`). -/
+theorem cpSectorDataFlow_phi_measurePreserving (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
+    MeasureTheory.MeasurePreserving (cpSectorDataFlow p₀ lam t).toOntic.Φ
+      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+  obsFlow_measurePreserving lam t p₀
+
+/-- **Non-vacuity link to LF1.** The LF1 deterministic-typicality theorem is
+non-vacuous on `cpSectorDataFlow`: for i.i.d. preparation draws, the empirical
+frequency of a measurable outcome region `O` evaluated on the states evolved by
+the **instance's own flow** `(cpSectorDataFlow p₀ lam t).toOntic.Φ` converges
+almost surely to the ontic volume ratio `(fubiniStudyMeasure p₀ O).toReal`. The
+moving flow that pins the limit is the `SectorData`'s own physically-meaningful
+`Φ = obsFlow lam t ≠ id`, and `obsFlow_measurePreserving` is what makes
+`law(obsFlow ∘ sampleₙ) = fubiniStudyMeasure p₀`. LF1's `freq_tendsto_of_iid`
+is cited, not re-proved (the same route as `kSectorDataFlow_frequency_convergence`). -/
+theorem cpSectorDataFlow_frequency_convergence
+    (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (sample : ℕ → Ω → CPN N) (hsample : ∀ n, Measurable (sample n))
+    (hlaw : ∀ n, Measure.map (sample n) Pr = fubiniStudyMeasure p₀)
+    {O : Set (CPN N)} (hO : MeasurableSet O)
+    (hindep :
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            (((cpSectorDataFlow p₀ lam t).toOntic.Φ ∘ sample n) ⁻¹' O)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun M : ℕ =>
+          (∑ i ∈ Finset.range M,
+              Set.indicator
+                (((cpSectorDataFlow p₀ lam t).toOntic.Φ ∘ sample i) ⁻¹' O)
+                (fun _ => (1 : ℝ)) ω) / (M : ℝ))
+        atTop
+        (nhds (fubiniStudyMeasure p₀ O).toReal) := by
+  have hmp := cpSectorDataFlow_phi_measurePreserving p₀ lam t
+  -- Measure preservation is load-bearing: it pins the law of the evolved trials.
+  have hlaw' : ∀ n,
+      Measure.map ((cpSectorDataFlow p₀ lam t).toOntic.Φ ∘ sample n) Pr
+        = fubiniStudyMeasure p₀ := fun n => by
+    rw [← Measure.map_map hmp.measurable (hsample n), hlaw n, hmp.map_eq]
+  exact LF1.freq_tendsto_of_iid (fun n => hmp.measurable.comp (hsample n)) hlaw' hO hindep
 
 end LF4
 end CSD
