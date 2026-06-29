@@ -1,6 +1,6 @@
 # ECDSA.fail optimization plan — toward the best VERIFIED optimised point-addition score
 
-**Status: L6 DONE 2026-06-28 (the dominant lever); L1/L2/L3/L5 pending.** Supersedes the "worst-case
+**Status: L6 + L1 DONE 2026-06-28; L3 pending, L2 superseded (comparison only), L5 = Tier-X fork.** Supersedes the "worst-case
 upper bound" posture of step 3. Goal restated by the user: **aim for the best verified *optimised*
 result, not the worst verified result.** This file inventories the levers, tiers each by whether it is
 expressible in the current verified measurement-free CCX DSL, estimates impact, and sequences the work.
@@ -40,7 +40,18 @@ choice: we cost the field inversion by **Fermat's little theorem** (`a^(p−2)` 
 multiplies → `fermatInvToffoli 256 = 672,923,648`, **99.4%** of our total), and each of our modular
 multiplies is the **schoolbook carry-clean `cleanModMulToffoli 256 ≈ 1.31 million`**. The leaderboard
 performs an entire point addition — inversion included — in ~1.36M Toffolis, i.e. about **one** of our
-modular multiplies. So the gap decomposes as:
+modular **L1 result (`ECDLP/KaratsubaMul.lean`, auditor-SOUND, no overclaim).** Karatsuba cost recurrence
+`karatsubaToffoli n = 3·T(⌈n/2⌉) + 6·cuccaroModAdd` (base `cleanModMulToffoli` at `n≤32`), tied to the
+verified adders; `karatsubaToffoli 256 = 653,388` vs schoolbook `1,314,304` (~2.0× per multiply). Re-cost:
+`onePointAddToffoli 7,896,616 → 5,913,868`, **`onePointAddScore 22,284,250,352 → 16,688,935,496` (~1.33×)**,
+leaderboard gap **~14× → ~10.6×**. Only ~1.33× because the multiply was ~50% of the post-L6 total; the
+**safegcd inversion now co-dominates (~67%)**. Honest (mirrors L6 post-repair): cost = derived recurrence
+tied to verified adders + verified base multiply; value rides on `cuccaroModMul_correct` (route 3b, same
+product by uniqueness) with the algebraic `karatsuba_identity` (`ring`, flagged algebra-not-circuit); the
+full verified Karatsuba CIRCUIT and the structural `≤ C·n^1.585` bound are deferred. After L1 the gap is
+inversion-dominated again; further verified-CCX gains are limited, parity needs the Tier-X L5 fork.
+
+So the gap decomposes as:
 
 ```
 our 677M  =  ~515 modmul-equivalents  (3 mults + 512 for Fermat inversion)

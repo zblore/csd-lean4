@@ -50,6 +50,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -4721,6 +4722,52 @@ operand). All foundational-triple-only. -/
 /-- info: 'ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.safegcd_score_gap_vs_leaderboard_upper
+
+/-! ### ECDLP L7 Karatsuba sub-quadratic modular multiply cost model (KaratsubaMul.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.karatsuba_identity' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsuba_identity
+
+/-- info: 'ECDLP.ResourceBounds.kCombineToffoli_eq_adders' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.kCombineToffoli_eq_adders
+
+/-- info: 'ECDLP.ResourceBounds.karatsubaToffoli_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsubaToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.karatsubaToffoli_lt_schoolbook_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsubaToffoli_lt_schoolbook_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddToffoli_karatsuba_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddToffoli_karatsuba_eq
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddScore_karatsuba_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddScore_karatsuba_eq
+
+/-- info: 'ECDLP.ResourceBounds.karatsuba_score_improvement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsuba_score_improvement
+
+/-- info: 'ECDLP.ResourceBounds.karatsuba_score_gap_vs_leaderboard_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsuba_score_gap_vs_leaderboard_lower
+
+/-- info: 'ECDLP.ResourceBounds.karatsuba_score_gap_vs_leaderboard_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsuba_score_gap_vs_leaderboard_upper
+
+/-- info: 'ECDLP.ResourceBounds.affinePointOpToffoli_karatsuba_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.affinePointOpToffoli_karatsuba_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.karatsuba_score_improvement_quant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsuba_score_improvement_quant
 
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
