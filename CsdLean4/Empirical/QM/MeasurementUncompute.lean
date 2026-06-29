@@ -1,6 +1,7 @@
 import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
+import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 
 /-!
 # Measurement-based AND-uncomputation (Gidney's measure-and-correct gadget)
@@ -32,6 +33,18 @@ That is the ~2× saving versus the unitary AND-uncompute, which costs one Toffol
   (non-vacuity: the uncompute is real work, not a trivial product).
 - `gadgetGateList_zero_toffoli`: the gadget's gate list contains no Toffoli, whereas the
   unitary AND-uncompute contains one.
+- `gadgetGateList_denotes_measureUncompute` (**L5-b, the operator↔list link**): folding the
+  interpretation `GadgetGate.denote` of `gadgetGateList` (`hGate ↦ hadA`, `measGate ↦ projA m`,
+  `czGate ↦ correctionMat m`) reproduces the `measureUncompute m` operator **exactly**. The
+  equality is **definitional** (`rfl`): `measureUncompute m` is by definition the composition
+  `correctionMat m ∘ projA m ∘ hadA`, so the cost-bearing gate list is a genuine decomposition
+  of the operator, not a free-standing list.
+- `measureUncompute_cost` (**L5-b, the 0-vs-1 Toffoli saving as an operator property**): the
+  decomposition `gadgetGateList` of the `measureUncompute` operator has Toffoli count `0` (plus
+  `1` measurement and `1` CNOT-equivalent for the conditional CZ, all single-qubit Cliffords
+  free), whereas the unitary AND-uncompute's decomposition has Toffoli count `1`. The
+  Toffoli-free property is now a property of the **operator** (via the link), not of a
+  hand-written list.
 
 ## Representation choice
 
@@ -45,11 +58,15 @@ this lives in the amplitude model and NOT the Boolean reversible DSL.
 
 ## Scope (honest)
 
-This is the **primitive only** (L5-a): it settles that measurement-based uncomputation is
-*verifiable in Lean* in the amplitude model. **Deferred:** L5-b (the ~2× cost accounting in
-the `Cost` model), L5-c (the Boolean-arithmetic ↔ amplitude bridge — applying this to actual
-adders, the trusted-base increase), L5-d (the measurement-based adder + re-cost). No ECDSA
-resource claim is made here.
+**L5-a** settled that measurement-based uncomputation is *verifiable in Lean* in the amplitude
+model. **L5-b** (this file) closes the operator↔list gap: `gadgetGateList` is now **proven**
+(definitionally) to be the decomposition of `measureUncompute`, so the 0-Toffoli cost is a
+property of the *operator*, not a hand-written list, and the ~2× saving is stated in the corpus
+`Reversible.Cost` model (0 Toffoli + 1 measurement + Cliffords, vs 1 Toffoli for the unitary
+uncompute). This is a **per-AND-uncompute gate-cost** statement only. **Deferred:** L5-c (the
+Boolean-arithmetic ↔ amplitude bridge — applying this to actual adders, the trusted-base
+increase, the wall), L5-d (the measurement-based adder + circuit re-cost). No ECDSA resource
+claim is made here.
 -/
 
 open scoped Matrix
@@ -282,15 +299,89 @@ def gadgetGateList : List GadgetGate := [.hGate, .measGate, .czGate]
 /-- The unitary AND-uncompute's gate list: one Toffoli. -/
 def unitaryUncomputeGateList : List GadgetGate := [.toffoli]
 
-/-- **The cost point.** The measure-and-correct gadget's gate LIST (`[H, Meas, CZ]`) contains
-**no Toffoli**, whereas the unitary AND-uncompute's list contains exactly one — the ~2×
-(one-Toffoli) saving. Honest scope: this is a count over the hand-written gate lists; it is NOT
-yet linked to the `measureUncompute` OPERATOR (proving `gadgetGateList` is a genuine decomposition
-of `measureUncompute`, and the `Cost`-model accounting of the measurement + classical-controlled CZ
-as real resources, is L5-b). The name reflects the list, not the operator. -/
+/-- **The cost point (list form).** The measure-and-correct gadget's gate LIST (`[H, Meas, CZ]`)
+contains **no Toffoli**, whereas the unitary AND-uncompute's list contains exactly one — the ~2×
+(one-Toffoli) saving. This is a count over the gate lists; L5-b (`measureUncompute_cost` below)
+upgrades it to a property of the `measureUncompute` OPERATOR via the link
+`gadgetGateList_denotes_measureUncompute`. -/
 theorem gadgetGateList_zero_toffoli :
     gadgetGateList.countP GadgetGate.isToffoli = 0 ∧
     unitaryUncomputeGateList.countP GadgetGate.isToffoli = 1 := by
   decide
+
+/-! ## L5-b: the operator↔list link and the cost as an operator property -/
+
+/-- **Interpretation of a gadget gate** as a register operator on `QReg 3`, parameterised by the
+measurement outcome `m`: `hGate ↦ hadA`, `measGate ↦ projA m`, `czGate ↦ correctionMat m` (the
+three `Matrix.toEuclideanLin` blocks that *define* `measureUncompute`). The `toffoli` label maps
+to `id` — it is not part of *this* gadget's decomposition (it is the unitary route's gate), so it
+plays no role in `gadgetGateList`; it is given a denotation only for totality. -/
+noncomputable def GadgetGate.denote (g : GadgetGate) (m : Fin 2) : QReg 3 → QReg 3 :=
+  match g with
+  | .hGate => fun ψ => Matrix.toEuclideanLin hadA ψ
+  | .measGate => fun ψ => Matrix.toEuclideanLin (projA m) ψ
+  | .czGate => fun ψ => Matrix.toEuclideanLin (correctionMat m) ψ
+  | .toffoli => id
+
+/-- **Fold a gadget gate list into an operator**, applying gates left-to-right (head first). -/
+noncomputable def denoteGadgetList (m : Fin 2) : List GadgetGate → QReg 3 → QReg 3
+  | [], ψ => ψ
+  | g :: gs, ψ => denoteGadgetList m gs (g.denote m ψ)
+
+/-- **The operator↔list link (L5-b, the honesty fix).** Folding the interpretation of the
+cost-bearing gate list `gadgetGateList = [hGate, measGate, czGate]` reproduces the
+`measureUncompute m` operator **exactly**, for every input `ψ`.
+
+This equality is **definitional** (`rfl`): `measureUncompute m ψ` is by definition the
+composition `correctionMat m ∘ projA m ∘ hadA` applied to `ψ`, and `denoteGadgetList m
+gadgetGateList ψ` unfolds to that same composition. The point is not a deep proof but to **tie**
+the Toffoli-count statement (`gadgetGateList_zero_toffoli`) to the operator: `gadgetGateList` is a
+genuine decomposition of `measureUncompute`, not a free-standing list. -/
+theorem gadgetGateList_denotes_measureUncompute (m : Fin 2) (ψ : QReg 3) :
+    denoteGadgetList m gadgetGateList ψ = measureUncompute m ψ := rfl
+
+/-- **Per-gate fault-tolerant cost** in the corpus `Reversible.Cost` model. Following the corpus
+convention (`Reversible.gateCost`: single-qubit Clifford `X` is *free*, two-qubit Clifford `CX`
+costs one CNOT, `CCX` costs one Toffoli — the FT-expensive resource), the amplitude gadget gates
+are billed: `hGate` (single-qubit Clifford) free; `czGate` (two-qubit Clifford CZ ≃ CNOT up to
+single-qubit Cliffords) one CNOT; `measGate` one measurement; `toffoli` one Toffoli. No gate here
+incurs a `T`-count beyond the Toffoli's own (kept in the `toffoli` field, Pass-1 model). -/
+def gadgetGateCost : GadgetGate → Reversible.Cost
+  | .hGate => { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 0, tCount := 0, meas := 0 }
+  | .czGate => { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 1, tCount := 0, meas := 0 }
+  | .measGate => { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 0, tCount := 0, meas := 1 }
+  | .toffoli => { qubits := 0, ancilla := 0, toffoli := 1, toffoliDepth := 1, cnot := 0, tCount := 0, meas := 0 }
+
+/-- **The cost as an operator property (L5-b, the ~2× saving).** Via the link
+`gadgetGateList_denotes_measureUncompute`, the decomposition `gadgetGateList` of the
+`measureUncompute` operator costs, in the corpus `Reversible.Cost` model:
+
+- **Toffoli `0`** (the FT-expensive resource) — `gadgetGateList` is Toffoli-free as an operator;
+- **measurement `1`** — the single X-basis ancilla measurement;
+- **CNOT `1`** — the conditional CZ correction (a two-qubit Clifford, counted but cheap);
+
+whereas the unitary AND-uncompute's decomposition `unitaryUncomputeGateList` costs **Toffoli `1`**.
+So the measurement-based route **saves the Toffoli** (0 vs 1) at the cost of one measurement plus
+Cliffords — the ~2× per-AND-uncompute saving, with the measurement and Cliffords accounted as real
+but cheap resources and the Toffoli as the FT-expensive one.
+
+**Honest scope:** this is a **per-AND-uncompute gate-cost** statement. It is *not* an adder- or
+circuit-level re-cost (that is L5-d), and it does not yet apply the gadget to Boolean arithmetic
+(that is L5-c, the amplitude↔Boolean bridge wall). -/
+theorem measureUncompute_cost :
+    (gadgetGateList.map (fun g => (gadgetGateCost g).toffoli)).sum = 0 ∧
+    (gadgetGateList.map (fun g => (gadgetGateCost g).meas)).sum = 1 ∧
+    (gadgetGateList.map (fun g => (gadgetGateCost g).cnot)).sum = 1 ∧
+    (unitaryUncomputeGateList.map (fun g => (gadgetGateCost g).toffoli)).sum = 1 := by
+  decide
+
+/-- **The Toffoli-free property of the operator (L5-b headline).** There is a decomposition of the
+`measureUncompute m` operator (namely `gadgetGateList`, by `gadgetGateList_denotes_measureUncompute`)
+whose `Reversible.Cost` Toffoli count is `0`. The 0-Toffoli is thus a property of the **operator**,
+not of a free-standing gate list. -/
+theorem measureUncompute_toffoli_eq_zero (m : Fin 2) :
+    (∀ ψ : QReg 3, denoteGadgetList m gadgetGateList ψ = measureUncompute m ψ) ∧
+      (gadgetGateList.map (fun g => (gadgetGateCost g).toffoli)).sum = 0 :=
+  ⟨gadgetGateList_denotes_measureUncompute m, by decide⟩
 
 end CSD.Empirical.QM

@@ -22,7 +22,7 @@ research-frontier / infrastructure gap.
 | 10 | ECDSA L3 shared-partial-product squaring | ECDSA | M | DONE | |
 | 2 | ECDSA L1–L6 (umbrella) | ECDSA | — | open | #14 |
 | 18 | L5-a measure-and-correct primitive (amplitude model) — GREEN LIGHT: measurement-based uncompute IS verifiable in Lean | ECDSA | M | DONE | |
-| 19 | L5-b ~2× cost accounting (Cost.meas) | ECDSA | S–M | open | #18 |
+| 19 | L5-b ~2× cost accounting + operator↔list link | ECDSA | S–M | DONE | |
 | 20 | L5-c Boolean↔amplitude bridge (THE wall) | ECDSA | L–XL | open | #18 |
 | 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) | ECDSA | M | open | #19,#20,#7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |

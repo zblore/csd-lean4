@@ -4922,4 +4922,18 @@ operand). All foundational-triple-only. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.gadgetGateList_zero_toffoli
 
+/-! ### L5-b operator↔list link and cost as an operator property -/
+
+/-- info: 'CSD.Empirical.QM.gadgetGateList_denotes_measureUncompute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gadgetGateList_denotes_measureUncompute
+
+/-- info: 'CSD.Empirical.QM.measureUncompute_cost' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.measureUncompute_cost
+
+/-- info: 'CSD.Empirical.QM.measureUncompute_toffoli_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.measureUncompute_toffoli_eq_zero
+
 end CSD.Tests.AxiomAudit
