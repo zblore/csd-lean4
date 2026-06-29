@@ -305,6 +305,58 @@ theorem singletDeisolation_carve_contextual {Λ : Type*} [MeasurableSpace Λ]
   intro a b
   rw [hcarve a b, singletCorrelation_eq_neg_dot]
 
+/-- **The exhibited carve's block-volume correlation function** at settings
+`(a, b)`: the `s·t`-weighted sum of the singlet de-isolation carve's pointer-block
+Fubini–Study volumes. This is the *achieved* value of the EXHIBITED carve (a sum
+of `bornRegion` FS volumes on `Σ' = ℂℙ¹⁵`, not a free real); by
+`singletDeisolation_blockVolume_correlation` it equals the singlet's `−a·b`. -/
+noncomputable def carveBlockCorrelation {M : ℕ} (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0) : ℝ :=
+  ∑ st : Sign × Sign, st.1.val * st.2.val *
+    (∑ n : Fin 4,
+      (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (st.1, st.2))))).toReal)
+
+/-- **The exhibited carve is not a product partition (LF6-A.2, the composed
+contextuality corollary).** No setting-local ±1 product partition of any shared
+probability space `(Λ, μ)` reproduces the EXHIBITED singlet de-isolation carve's
+block-volume correlation function.
+
+This closes the A.2 contextuality juxtaposition into a single theorem: the
+hypothesis `hmatch` feeds the carve's OWN achieved value
+(`carveBlockCorrelation`, a `s·t`-weighted sum of the carve's `bornRegion`
+Fubini–Study volumes — not a free `−a·b`) at every setting pair, and the
+conclusion routes through A.1 `no_product_partition_realises_singlet`. The proof
+discharges each carve correlation to the singlet's `−a·b` via
+`singletDeisolation_blockVolume_correlation` (which is exactly
+`block volume = P_st` composed with `correlation_eq_neg_dot`), then applies
+`singletDeisolation_carve_contextual`. So the statement is about the dynamical
+carve exhibited above, not about an externally supplied `−a·b`.
+
+The carve data is a family indexed by the setting pair (`ψ' a b` is the prepared
+nudged singlet `(U_A^x ⊗ U_B^y)† ψ⁻` for that context); the CHSH no-go consumes
+all four setting pairs, so the family is essential — no single product partition
+can match the contextual carve across the canonical Bell settings. Generic
+context (`hgen`) at every setting. -/
+theorem singletDeisolation_carve_not_product {M : ℕ}
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (ψ' : DetectorSetting → DetectorSetting → EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'0 : ∀ a b, ψ' a b ≠ 0)
+    (hgen : ∀ a b, ∀ s t, 0 < P_st a b s t)
+    (hψ'eq : ∀ a b, ψ' a b = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin (vnDilationV 4) (nudgedSinglet a b)))
+    {Λ : Type*} [MeasurableSpace Λ]
+    (μ : Measure Λ) [IsProbabilityMeasure μ] (RA RB : DetectorSetting → Λ → ℝ)
+    (hPP : IsProductPartition RA RB)
+    (hmatch : ∀ a b : DetectorSetting,
+      lhvCorrelation μ RA RB a b = carveBlockCorrelation p₀ e (ψ' a b) (hψ'0 a b)) :
+    False := by
+  refine singletDeisolation_carve_contextual μ RA RB hPP ?_
+  intro a b
+  rw [hmatch a b]
+  exact singletDeisolation_blockVolume_correlation a b (hgen a b) e p₀ (ψ' a b)
+    (hψ'eq a b) (hψ'0 a b)
+
 /-! ### Deliverable 6: the capstone -/
 
 /-- **The LF6-A.2 capstone: the singlet de-isolation flow.** A deterministic,
@@ -323,6 +375,12 @@ routed through A.1. Conjuncts:
 6. the carve is contextual: no setting-local ±1 product partition reproduces the
    `−a·b` correlation of the carve (`singletDeisolation_carve_contextual`, routed
    through A.1 `no_product_partition_realises_singlet`).
+
+The contextuality conjunct (6) is no longer a juxtaposition of two separate
+facts: `singletDeisolation_carve_not_product` composes the EXHIBITED carve's
+achieved block-volume correlation (`carveBlockCorrelation`, the `s·t`-weighted sum
+of the carve's `bornRegion` FS volumes) with A.1 in one theorem — feeding the
+carve's own value, not a free `−a·b`, into `no_product_partition_realises_singlet`.
 
 The flow is local (LF5 @ N=4); the carve is contextual (the joint moment
 subdivision, A.1). Born = FS-volume is imported from the DH/FS-volume engine, not

@@ -79,9 +79,14 @@ bridge "the exhibited carve is therefore not a product partition" is a juxtaposi
 conjuncts, not one composed theorem — because the carve (a `BornRegion` subdivision of `ℂℙ¹⁵` under FS
 measure) and product partitions (LHV models on an abstract `Λ`) live in genuinely disjoint types. That
 disjointness IS the contextuality (a contextual carve cannot be written as `IsProductPartition RA RB`),
-so the informality is the honest content, not a gap. Optional future strengthening: a corollary feeding
-the carve's correlation into A.1 under a formal `Λ`-realisation, if/when the carve is realised as a
-`Λ`-measure.
+so the informality is the honest content, not a gap. **CLOSED 2026-06-28** by
+`singletDeisolation_carve_not_product` (correlation-match variant, auditor-SOUND): the corollary feeds the
+carve's OWN achieved block-volume correlation (`carveBlockCorrelation`, the `s·t`-weighted sum of the
+carve's `bornRegion` FS volumes — forced to `−dotR` via `singletDeisolation_blockVolume_correlation`) into
+A.1's `no_product_partition_realises_singlet`, so "no product partition matches the exhibited carve" is now
+one theorem, not a juxtaposition. Auditor: genuine (not A.1 restated), non-vacuous (refuted by CHSH across
+the four settings, not by a contradictory `hmatch`). Recommended further strengthening (deferred): the
+distribution-match form (`μ{RA=s ∧ RB=t} = P_st`) via a ±1-integral-to-cell-sum bridge lemma.
 
 **OPEN DESIGN QUESTION for A.2 — RESOLVED 2026-06-28 (user: "measurement is contextual, continue").**
 Does the de-isolation flow factor as `Φ = Φ_A ⊗ Φ_B`? Resolution: the FLOW is local (LF5 de-isolation

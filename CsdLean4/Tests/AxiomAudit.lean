@@ -3298,6 +3298,15 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.singletDeisolation_flow_capstone
 
+-- LF6-A.2 contextuality juxtaposition CLOSED: singletDeisolation_carve_not_product composes
+-- the EXHIBITED carve's achieved block-volume correlation (carveBlockCorrelation, the s·t-weighted
+-- sum of bornRegion FS volumes, discharged to −a·b via singletDeisolation_blockVolume_correlation)
+-- with A.1 no_product_partition_realises_singlet in ONE theorem (no free −a·b; the carve's own
+-- value is fed in). Foundational-triple-only.
+/-- info: 'CSD.LF6.singletDeisolation_carve_not_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletDeisolation_carve_not_product
+
 -- LF6-A.3 (2026-06-28): the LOCAL product de-isolation flow V_A ⊗ V_B realising the singlet.
 -- The de-isolation can be local (factorises); the non-locality is entirely in the contextual
 -- carve (A.2) and the entangled preparation (A5). Foundational triple only, no busch.
