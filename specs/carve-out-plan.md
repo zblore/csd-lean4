@@ -396,6 +396,22 @@ as Bell requires of any deterministic completion reproducing the corpus's CHSH `
 the isolated-region typicality measure is posited (A5) to be the Fubini-Study volume rather
 than derived; A5 in turn reduces to the dynamical origin of the sector, still open.
 
+**A5 single-flow obstruction story closed (`LF4/TypicalityForcing.lean`).** The "why no
+single flow forces FS" thread now has three machine-checked strata, all foundational-triple:
+(B) `obsFlow_not_uniquely_ergodic` — `obsFlow` has ≥ 2 invariant probability measures
+(`μFS`, `δ_{[e₀]}`); (B′) `obsFlow_continuum_invariant` — a continuum of them, structurally
+because the Born coordinate `momentMap · i` is conserved; (B′′, 2026-06-29) the sharper,
+`μFS`-specific statement `obsFlow_not_ergodic` — `obsFlow` is not even *`μFS`-ergodic*
+(distinct from not-uniquely-ergodic, which does not imply it): the **non-constant conserved
+observable** `momentMap_obsFlow_nonconstant_conserved` (the Born coordinate, conserved +
+measurable + values `1` at `[e₀]` vs `0` at `[e₁]`) yields a non-trivial `μFS`-invariant set
+`{m₀ ≥ m₁}` of measure `∈ (0,1)` (bounded away from `0`/`1` by FS full support, itself the
+Haar pushforward `fubiniStudyMeasure_pos_of_isOpen`), contradicting the zero-one law.
+`a5_obstruction_capstone` packages "single flow ⇒ non-constant constant of motion ⇒ not
+`μFS`-ergodic ⇒ cannot force `μFS`". This **isolates exactly the property D1 must supply** —
+an *ergodic* ontic flow, one whose only conserved observables are a.e. constants — and proves
+`obsFlow` is provably not it. It does **not** close A5: residue = `G`-from-`D1`.
+
 **LF5 Lean target.** Make de-isolation concrete: a joint system-and-isolated-region `Σ`
 carrying a measure-preserving coupling flow `Φ ≠ id` whose outcome-sector selection
 reproduces the Born weight, with the apparatus context entering as the sector map. The

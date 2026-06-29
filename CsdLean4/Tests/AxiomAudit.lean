@@ -2519,6 +2519,29 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.obsFlow_continuum_invariant
 
+-- (B′′) SHARPER, μFS-SPECIFIC obstruction (TypicalityForcing.lean): obsFlow is not even
+-- μFS-ERGODIC (distinct from not-uniquely-ergodic, which does NOT imply not-μFS-ergodic).
+-- momentMap_obsFlow_nonconstant_conserved — the Born coordinate momentMap·0 is a NON-CONSTANT
+-- CONSTANT OF MOTION (conserved via momentMap_obsFlow, measurable, values 1 at [e₀] vs 0 at
+-- [e₁]). obsFlow_not_ergodic — therefore ¬ Ergodic obsFlow μFS: the conserved coordinate gives
+-- a non-trivial μFS-invariant set {m₀ ≥ m₁} of measure ∈ (0,1) (full support of μFS via the
+-- Haar pushforward bounds it away from 0 and 1), contradicting the zero-one law.
+-- a5_obstruction_capstone — packages (1)⇒(2): single flow ⇒ non-constant conserved observable
+-- ⇒ not μFS-ergodic ⇒ cannot force μFS. HONEST: CLOSES the single-flow obstruction story; an
+-- ergodic flow (only-constant conserved observables) is what D1 must supply; residue = G-from-D1.
+-- A5 NOT closed. Foundational-triple-only (no busch).
+/-- info: 'CSD.LF4.momentMap_obsFlow_nonconstant_conserved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.momentMap_obsFlow_nonconstant_conserved
+
+/-- info: 'CSD.LF4.obsFlow_not_ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.obsFlow_not_ergodic
+
+/-- info: 'CSD.LF4.a5_obstruction_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.a5_obstruction_capstone
+
 -- D1c-2: the concrete BASE SectorData carrying a PHYSICALLY-MEANINGFUL Φ = obsFlow ≠ id
 -- (the observable's Hamiltonian flow exp(i t Â) on the Fubini–Study Kähler base ℂℙ^{N-1}).
 -- Strictly stronger than D1c-1's free T²-fibre translation (kSectorDataFlow): dynamics on
