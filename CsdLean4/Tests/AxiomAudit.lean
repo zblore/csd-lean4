@@ -2497,6 +2497,27 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.a5_onramp
 
+-- (B′) STRENGTHENING (TypicalityForcing.lean): the obstruction to unique ergodicity is GENERIC,
+-- via a CONSERVED QUANTITY. map_withDensity_of_conserved — reweighting an invariant measure by a
+-- conserved density (d ∘ T = d) keeps it invariant (the genuine conserved-quantity mechanism).
+-- withDensity_momentMap_obsFlow_invariant — instantiated at the conserved Born coordinate
+-- momentMap·i (momentMap_obsFlow): μFS.withDensity (g ∘ momentMap·i) is obsFlow-invariant.
+-- obsFlow_continuum_invariant — a CONTINUUM (Set.InjOn on [0,1]) of pairwise-distinct
+-- obsFlow-invariant PROBABILITY measures (convex-combo witness s·μFS+(1-s)·δ_{[e₀]}; the
+-- conserved Born coordinates are the structural WHY). HONEST: strengthens the obstruction;
+-- still does NOT force FS / NOT close A5. Foundational-triple-only (no busch).
+/-- info: 'CSD.LF4.map_withDensity_of_conserved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.map_withDensity_of_conserved
+
+/-- info: 'CSD.LF4.withDensity_momentMap_obsFlow_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.withDensity_momentMap_obsFlow_invariant
+
+/-- info: 'CSD.LF4.obsFlow_continuum_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.obsFlow_continuum_invariant
+
 -- D1c-2: the concrete BASE SectorData carrying a PHYSICALLY-MEANINGFUL Φ = obsFlow ≠ id
 -- (the observable's Hamiltonian flow exp(i t Â) on the Fubini–Study Kähler base ℂℙ^{N-1}).
 -- Strictly stronger than D1c-1's free T²-fibre translation (kSectorDataFlow): dynamics on

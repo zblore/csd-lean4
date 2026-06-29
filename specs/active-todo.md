@@ -33,7 +33,8 @@ research-frontier / infrastructure gap.
 | 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
 | 28 | D1c-2: physically-meaningful Φ (obsFlow Hamiltonian) into cpSectorData | Foundations-debt | S | DONE | |
 | 29 | A5 onramp: typicality forced by symmetry + single-flow obstruction (DONE) | Foundations-debt | L | DONE | |
-| 32 | A5 onramp follow-up: strengthen (B) to the conserved-quantity (moment-fibre) continuum of invariant measures | Foundations-debt | M | open | |
+| 32 | A5 onramp follow-up: conserved-quantity CONTINUUM of invariant measures (DONE) | Foundations-debt | M | DONE | |
+| 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | open | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
 | 15 | Open-system / decoherence empirical targets | Empirical | L | open | |
