@@ -28,8 +28,9 @@ research-frontier / infrastructure gap.
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
-| 16 | Debt D1c: thread genuine Φ through concrete SectorData | Foundations-debt | M–L | D1c-1 DONE (D1c-2 open) | |
-| 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #16 |
+| 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
+| 28 | D1c-2: physically-meaningful Φ (obsFlow / Φ_vN) into a concrete SectorData | Foundations-debt | S–L | open | |
+| 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #28 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
 | 15 | Open-system / decoherence empirical targets | Empirical | L | open | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
