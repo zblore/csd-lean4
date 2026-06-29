@@ -4788,6 +4788,48 @@ operand). All foundational-triple-only. -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.karatsuba_score_improvement_quant
 
+/-! ### ECDLP L3 dedicated modular squaring cost model + re-cost (KaratsubaMul.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.karatsubaSquare_identity' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsubaSquare_identity
+
+/-- info: 'ECDLP.ResourceBounds.schoolbookSquareToffoli_two_mul' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.schoolbookSquareToffoli_two_mul
+
+/-- info: 'ECDLP.ResourceBounds.squareToffoli_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.squareToffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.squareToffoli_lt_multiply_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.squareToffoli_lt_multiply_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.affinePointOpToffoli_squaring_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.affinePointOpToffoli_squaring_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddToffoli_squaring_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddToffoli_squaring_eq
+
+/-- info: 'ECDLP.ResourceBounds.onePointAddScore_squaring_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.onePointAddScore_squaring_eq
+
+/-- info: 'ECDLP.ResourceBounds.squaring_score_improvement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.squaring_score_improvement
+
+/-- info: 'ECDLP.ResourceBounds.squaring_score_gap_vs_leaderboard_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.squaring_score_gap_vs_leaderboard_lower
+
+/-- info: 'ECDLP.ResourceBounds.squaring_score_gap_vs_leaderboard_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.squaring_score_gap_vs_leaderboard_upper
+
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
 /-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/

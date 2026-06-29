@@ -1,6 +1,6 @@
 # ECDSA.fail optimization plan — toward the best VERIFIED optimised point-addition score
 
-**Status: L6 + L1 DONE 2026-06-28; L3 pending, L2 superseded (comparison only), L5 = Tier-X fork.** Supersedes the "worst-case
+**Status: L6 + L1 + L3 DONE 2026-06-28; L2 closed as comparison; L5 = Tier-X fork (broken into L5-a..e).** Supersedes the "worst-case
 upper bound" posture of step 3. Goal restated by the user: **aim for the best verified *optimised*
 result, not the worst verified result.** This file inventories the levers, tiers each by whether it is
 expressible in the current verified measurement-free CCX DSL, estimates impact, and sequences the work.
@@ -50,6 +50,18 @@ tied to verified adders + verified base multiply; value rides on `cuccaroModMul_
 product by uniqueness) with the algebraic `karatsuba_identity` (`ring`, flagged algebra-not-circuit); the
 full verified Karatsuba CIRCUIT and the structural `≤ C·n^1.585` bound are deferred. After L1 the gap is
 inversion-dominated again; further verified-CCX gains are limited, parity needs the Tier-X L5 fork.
+
+**L3 result (`ECDLP/KaratsubaMul.lean`, self-verified).** Dedicated modular SQUARING via a Karatsuba-square
+recurrence `S(n) = 2·S(⌈n/2⌉) + 1·mult(⌈n/2⌉) + combine` (one fewer recursive multiply than the general
+3-mult Karatsuba). `squareToffoli 256 = 571,468` vs `karatsubaToffoli 256 = 653,388` (~1.14× per-squaring).
+HONESTY POINT: the pure-schoolbook square `658,944` is ABOVE the Karatsuba multiply, so the per-squaring win
+needs the Karatsuba-square recurrence (stated). The affine op has one squaring (λ²) of its three field ops,
+so re-cost `2·mult + 1·sq + inv`: `onePointAddToffoli 5,913,868 → 5,831,948`, `onePointAddScore 16,688,935,496
+→ 16,457,757,256` (~1.014×), leaderboard gap band UNCHANGED ~10.5× — small, because squarings are a minority
+and the inversion still ~67%-dominates. Same honest framing (route 3b: value rides on the verified multiply,
+`karatsubaSquare_identity` is `ring` algebra, full squaring circuit deferred). **This exhausts the
+per-field-op constant-factor levers (L6 inversion, L1 multiply, L3 squaring).** The next bigger lever is the
+carry-clean adder (the `30n²→~2n²` dirty-carry gap) or the Tier-X L5 measurement-adder fork.
 
 **L2 CLOSED as a documented comparison 2026-06-28 (`SafegcdInversion.lean`, off critical path).** Per the
 user's choice, L2 (windowed Fermat) was built only as a comparison, since L6 (safegcd) replaced Fermat

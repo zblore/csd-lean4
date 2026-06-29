@@ -269,4 +269,247 @@ theorem karatsuba_score_gap_vs_leaderboard_upper :
     onePointAddScore_karatsuba < ecdsaFailLeaderboardBest * 11 := by
   rw [onePointAddScore_karatsuba_eq]; norm_num [ecdsaFailLeaderboardBest]
 
+/-! ### Dedicated modular SQUARING cost model + re-cost  (ECDLP L3)
+
+A squaring `x²` is cheaper than a general multiply `x·y`: schoolbook, the diagonal symmetry leaves only
+`n(n+1)/2 ≈ n²/2` distinct partial products (the `n` diagonal `xᵢ²` plus the `n(n−1)/2` off-diagonal
+`xᵢxⱼ`, `i < j`, each used twice via a free shift) against `n²` for a general multiply — a `~2×`
+partial-product saving. This block costs that saving (a Karatsuba-square recurrence, so it lands strictly
+below the Karatsuba *multiply* `karatsubaToffoli`) and re-costs the L6+L1 affine point op by costing its
+ONE squaring (`λ²`) with the cheaper figure instead of a full multiply.
+
+## HONEST STATUS — this is a COST MODEL, not a verified squaring circuit (mirrors L1/L6 route 3b)
+
+`x²` is `x·x`, the **same proved product**: its value rides on the corpus's verified carry-clean modular
+multiply `Reversible.cuccaroModMul_correct` (`= X·Y mod N`), with the squaring algebra trivial (`x*x`).
+We do **not** build or claim a verified squaring CIRCUIT (a reversible circuit exploiting the diagonal
+symmetry whose denotation IS `x² mod N`) — that is the **named deferred residue**. The win lives entirely
+on the cost side, every term tied to the verified gadgets `karatsubaToffoli` already uses. The genuine
+ALGEBRAIC core (the Karatsuba-square split is exact) is `karatsubaSquare_identity` (a `ring` identity),
+real content but algebra, not a circuit. This is L1's route 3b exactly.
+
+## Squaring model chosen + count of squarings costed
+
+* **Model:** the **Karatsuba-square recurrence** `S(n) = 2·S(⌈n/2⌉) + karatsubaToffoli(⌈n/2⌉) +
+  kCombineToffoli n`, base `S(n≤32) = schoolbookSquareToffoli n` — TWO half-width recursive squarings +
+  ONE half-width recursive *multiply* (the cross term `x₁x₀`), one fewer recursive multiply than the
+  general Karatsuba's three. The schoolbook *base* is the diagonal-halved `10n²+14n` (the `20n²`
+  partial-product term of the verified `cleanModMulToffoli` halved, the per-step reduction `14n` kept —
+  one reduction per Horner step regardless). The pure schoolbook square `~n²/2` (≈ half of
+  `cleanModMulToffoli`) is `658 944` at `n=256`, *above* the Karatsuba multiply `653 388`; the
+  Karatsuba-square recurrence is what brings the per-squaring figure below the Karatsuba multiply.
+* **Squarings costed:** the affine point op has three field multiplies (`λ = Δy·(1/Δx)`, `λ²`,
+  `λ·(x−x₃)`); exactly ONE — `λ²` — is a squaring, so the re-cost is `2·multiply + 1·squaring +
+  inversion`. The DERIVED per-op mul/sq splits one layer down corroborate that squarings are a minority:
+  `M_add = 17 = 13 mul + 4 sq` (`additionProgram`), `M_dbl = 8 = 4 mul + 4 sq` (`doublingProgram`).
+
+## Tier (per figure, mandatory)
+
+* **VERIFIED** — the carry-clean multiply base cost `cleanModMulToffoli` (`cleanModMulToffoli_eq_cuccaro`,
+  value `cuccaroModMul_correct`) that the squaring base halves; the combine adder cost (`kCombineToffoli`,
+  `kCombineToffoli_eq_adders`, tied to `cuccaroModAdd_toffoli = 12n+10`); the embedded recursive multiply
+  `karatsubaToffoli`; the Karatsuba-square algebraic identity `karatsubaSquare_identity`.
+* **DOCUMENTED** — the diagonal-symmetry halving of the base partial-product term
+  (`schoolbookSquareToffoli n = 10n²+14n`, tied by `schoolbookSquareToffoli_two_mul`); the
+  Karatsuba-square recurrence SHAPE (2 squares + 1 multiply); the identification of `λ²` as the one
+  affine squaring.
+* **CONJECTURAL / EXTERNAL** — the leaderboard datum `ecdsaFailLeaderboardBest` and the
+  worst-case→executed-average map (unchanged). **The win here is SMALL** (squarings are a minority of the
+  field ops and the inversion still dominates `~67%`), so the leaderboard band is unmoved (`~10.5×`).
+
+## Headline figures (at `Secp256k1.bits = 256`)
+
+* `squareToffoli_secp256k1                 : squareToffoli 256 = 571468`  (`< 653 388 =
+  karatsubaToffoli 256`, a `~1.14×` per-squaring win over the Karatsuba multiply)
+* `squareToffoli_lt_multiply_secp256k1     : squareToffoli 256 < karatsubaToffoli 256`
+* `onePointAddToffoli_squaring_eq          : onePointAddToffoli_squaring = 5831948`
+  (vs L1 `onePointAddToffoli_karatsuba = 5 913 868`, a `~81 920` Toffoli trim)
+* `onePointAddScore_squaring_eq            : onePointAddScore_squaring = 16457757256`
+  (vs L1 `onePointAddScore_karatsuba = 16 688 935 496`, a `~1.014×` score trim; small by design)
+-/
+
+/-- **The Karatsuba-square algebraic identity (genuine algebra).** In any commutative ring, splitting
+`x = x₁·B + x₀`, the square is recovered from TWO sub-squares `x₁²`, `x₀²` and ONE cross product `x₁x₀`
+(the middle term `2·x₁x₀` a free doubling/shift) — one fewer recursive multiply than the general
+Karatsuba's three: `(x₁B+x₀)² = x₁²·B² + 2·x₁x₀·B + x₀²`. The **exactness** of the Karatsuba-square split,
+proved by `ring`; the source of the `2·S + 1·M` recurrence shape. ALGEBRA, **not** a verified circuit (the
+mod-`N` value rides on `Reversible.cuccaroModMul_correct`; route 3b, see block note). -/
+theorem karatsubaSquare_identity {R : Type*} [CommRing R] (B x1 x0 : R) :
+    (x1 * B + x0) ^ 2 = x1 ^ 2 * B ^ 2 + 2 * (x1 * x0) * B + x0 ^ 2 := by
+  ring
+
+/-- **Schoolbook squaring base cost: `10n² + 14n` (DOCUMENTED diagonal-symmetry halving).** The
+carry-clean schoolbook multiply is `cleanModMulToffoli n = 20n² + 14n` (`n` Horner steps; the `20n²` the
+partial-product term, the `14n` the per-step modular reduction). A squaring computes only `n(n+1)/2`
+distinct partial products against `n²` — the diagonal symmetry HALVES the partial-product term `20n² →
+10n²`; the per-step modular reduction `14n` is NOT halved (one reduction per Horner step regardless). So
+the schoolbook squaring base is `10n² + 14n`. DOCUMENTED count, tied to the VERIFIED multiply by
+`schoolbookSquareToffoli_two_mul`; no verified squaring circuit. -/
+def schoolbookSquareToffoli (n : ℕ) : ℕ := 10 * n ^ 2 + 14 * n
+
+/-- **The verified-multiply tie for the squaring base.** `2 · schoolbookSquareToffoli n =
+cleanModMulToffoli n + 14n` — twice the squaring base equals the carry-clean multiply plus the unhalved
+per-step reduction `14n`, i.e. the partial-product term is EXACTLY halved (`10n²` vs `20n²`). Anchors the
+diagonal-symmetry halving to the verified multiply cost `cleanModMulToffoli` (itself
+`cleanModMulToffoli_eq_cuccaro`), not a free constant. -/
+theorem schoolbookSquareToffoli_two_mul (n : ℕ) :
+    2 * schoolbookSquareToffoli n = cleanModMulToffoli n + 14 * n := by
+  simp only [schoolbookSquareToffoli, cleanModMulToffoli]; ring
+
+/-- **Karatsuba modular-SQUARING Toffoli cost: `S(n) = 2·S(⌈n/2⌉) + karatsubaToffoli(⌈n/2⌉) +
+kCombineToffoli n`, base `S(n≤32) = schoolbookSquareToffoli n`.** The Karatsuba-square recurrence: TWO
+half-width recursive squarings plus ONE half-width recursive MULTIPLY (`karatsubaToffoli`, the cross term
+`x₁x₀`), one fewer recursive multiply than the general Karatsuba's three (cf. `karatsubaSquare_identity`);
+the same `O(n)` combine `kCombineToffoli`. Base is the diagonal-halved schoolbook squaring
+`schoolbookSquareToffoli` (the verified `cleanModMulToffoli` halved, `schoolbookSquareToffoli_two_mul`).
+`⌈n/2⌉ = (n+1)/2` in `ℕ`.
+
+**Status: DERIVED cost recurrence** (base + combine + embedded multiply tied to verified circuits), NOT a
+verified squaring circuit. The VALUE (`x² mod N = x·x mod N`) rides on `Reversible.cuccaroModMul_correct`
+(route 3b); the full verified squaring circuit is the deferred residue. See block note. -/
+def squareToffoli (n : ℕ) : ℕ :=
+  if h : n ≤ 32 then schoolbookSquareToffoli n
+  else 2 * squareToffoli ((n + 1) / 2) + karatsubaToffoli ((n + 1) / 2) + kCombineToffoli n
+termination_by n
+decreasing_by omega
+
+/-- **Base-case unfolding** (`n ≤ 32`): `squareToffoli n = schoolbookSquareToffoli n`. -/
+theorem squareToffoli_base {n : ℕ} (h : n ≤ 32) :
+    squareToffoli n = schoolbookSquareToffoli n := by
+  rw [squareToffoli.eq_def, dif_pos h]
+
+/-- **Recursive-step unfolding** (`32 < n`): `squareToffoli n = 2·squareToffoli ⌈n/2⌉ +
+karatsubaToffoli ⌈n/2⌉ + combine` — the `2·S + 1·M` Karatsuba-square recurrence. -/
+theorem squareToffoli_rec {n : ℕ} (h : ¬ n ≤ 32) :
+    squareToffoli n
+      = 2 * squareToffoli ((n + 1) / 2) + karatsubaToffoli ((n + 1) / 2) + kCombineToffoli n := by
+  rw [squareToffoli.eq_def, dif_neg h]
+
+/-- The Karatsuba modular-squaring cost at secp256k1 width evaluates to `571 468 ≈ 5.7×10⁵` Toffolis:
+unrolling `S(256) = 2·S(128) + karatsuba(128) + 18 492`, `S(128) = 2·S(64) + karatsuba(64) + 9 276`,
+`S(64) = 2·S(32) + karatsuba(32) + 4 668`, base `S(32) = schoolbookSquareToffoli 32 = 10 688` (since
+`32 ≤ 32`). With `karatsuba(32) = 20 928`, `karatsuba(64) = 67 452`, `karatsuba(128) = 211 632`, this
+gives `S(64) = 46 972`, `S(128) = 170 672`, `S(256) = 571 468`. The recursion bottoms out at the
+diagonal-halved schoolbook squaring, each embedded multiply the verified Karatsuba `karatsubaToffoli`,
+each combine `6·(12n+10)` verified modular adders. -/
+theorem squareToffoli_secp256k1 : squareToffoli Secp256k1.bits = 571468 := by
+  have hk32 : karatsubaToffoli 32 = 20928 := by
+    rw [karatsubaToffoli_base (by norm_num)]; norm_num [cleanModMulToffoli]
+  have hk64 : karatsubaToffoli 64 = 67452 := by
+    have hd : ((64 : ℕ) + 1) / 2 = 32 := by norm_num
+    rw [karatsubaToffoli_rec (by norm_num), hd, hk32]; norm_num [kCombineToffoli, kCombineAdders]
+  have hk128 : karatsubaToffoli 128 = 211632 := by
+    have hd : ((128 : ℕ) + 1) / 2 = 64 := by norm_num
+    rw [karatsubaToffoli_rec (by norm_num), hd, hk64]; norm_num [kCombineToffoli, kCombineAdders]
+  have hs32 : squareToffoli 32 = 10688 := by
+    rw [squareToffoli_base (by norm_num)]; norm_num [schoolbookSquareToffoli]
+  have hs64 : squareToffoli 64 = 46972 := by
+    have hd : ((64 : ℕ) + 1) / 2 = 32 := by norm_num
+    rw [squareToffoli_rec (by norm_num), hd, hs32, hk32]; norm_num [kCombineToffoli, kCombineAdders]
+  have hs128 : squareToffoli 128 = 170672 := by
+    have hd : ((128 : ℕ) + 1) / 2 = 64 := by norm_num
+    rw [squareToffoli_rec (by norm_num), hd, hs64, hk64]; norm_num [kCombineToffoli, kCombineAdders]
+  have hs256 : squareToffoli 256 = 571468 := by
+    have hd : ((256 : ℕ) + 1) / 2 = 128 := by norm_num
+    rw [squareToffoli_rec (by norm_num), hd, hs128, hk128]; norm_num [kCombineToffoli, kCombineAdders]
+  rw [show Secp256k1.bits = 256 from rfl]; exact hs256
+
+/-- **The per-squaring win, concrete.** At `n = 256` the Karatsuba modular squaring is strictly cheaper
+than the Karatsuba modular multiply: `squareToffoli 256 = 571 468 < 653 388 = karatsubaToffoli 256` (a
+`~1.14×` win — the diagonal-halved base plus one fewer recursive multiply per level). The win is modest:
+the squaring shares the same `O(n)` combine and `~32`-bit fallback band as the multiply, and replaces only
+one of the three recursive products with a recursive square. -/
+theorem squareToffoli_lt_multiply_secp256k1 :
+    squareToffoli Secp256k1.bits < karatsubaToffoli Secp256k1.bits := by
+  rw [squareToffoli_secp256k1, karatsubaToffoli_secp256k1]; norm_num
+
+/-! ### Re-costing the ECDSA.fail benchmark with squaring-aware field ops (L3) -/
+
+/-- **Affine point-op Toffoli cost, Karatsuba multiply + dedicated squaring + binary-GCD inversion.** The
+`affinePointOpToffoli_karatsuba` analogue, refining its three uniform field multiplies into TWO Karatsuba
+multiplies (`λ = Δy·(1/Δx)`, `λ·(x−x₃)`) and ONE dedicated squaring (`λ²`), keeping the L6 binary-GCD
+inversion `safegcdInvToffoli`. The squaring `λ²` is the only one of the three affine field multiplies that
+is a square; the derived one-layer-down splits corroborate squarings as a minority (`M_add = 13 mul + 4
+sq`, `M_dbl = 4 mul + 4 sq`). The inversion still dominates: `safegcdInvToffoli 256 = 3 939 328` vs the
+two multiplies + one square `2·653 388 + 571 468 = 1 878 244`. -/
+def affinePointOpToffoli_squaring (n : ℕ) : ℕ :=
+  2 * karatsubaToffoli n + squareToffoli n + safegcdInvToffoli n
+
+/-- One representative secp256k1 affine point op with two Karatsuba multiplies + one dedicated squaring +
+binary-GCD inversion costs `5 817 572 ≈ 5.8×10⁶` Toffolis: `2·karatsubaToffoli 256 = 1 306 776` plus
+`squareToffoli 256 = 571 468` plus `safegcdInvToffoli 256 = 3 939 328`. Contrast the L1
+`affinePointOpToffoli_karatsuba 256 = 5 899 492` (all three field mults full multiplies) — an `81 920`
+Toffoli trim, exactly `karatsubaToffoli 256 − squareToffoli 256`. -/
+theorem affinePointOpToffoli_squaring_secp256k1 :
+    affinePointOpToffoli_squaring Secp256k1.bits = 5817572 := by
+  rw [affinePointOpToffoli_squaring, karatsubaToffoli_secp256k1, squareToffoli_secp256k1,
+    safegcdInvToffoli_secp256k1]
+
+/-- **Toffoli count for ONE affine point addition, squaring-aware field ops, classical offset.** The
+`onePointAddToffoli_karatsuba` analogue with the squaring-aware affine point-op core
+(`affinePointOpToffoli_squaring`) plus the unchanged sub-dominant classical-offset coordinate term
+(`classicalOffsetCoordToffoli`).
+
+**Tier:** the two multiplies are the DERIVED Karatsuba recurrence `karatsubaToffoli`; the one squaring is
+the DERIVED Karatsuba-square recurrence `squareToffoli` (value rides on `cuccaroModMul_correct`, base
+halving DOCUMENTED via `schoolbookSquareToffoli_two_mul`); the inversion is the L6 op-count model
+`safegcdInvToffoli`; the `2-mul + 1-sq` assembly and the classical-offset count are DOCUMENTED. -/
+def onePointAddToffoli_squaring : ℕ :=
+  affinePointOpToffoli_squaring Secp256k1.bits + classicalOffsetCoordToffoli Secp256k1.bits
+
+/-- One affine point addition with squaring-aware field ops (classical offset) costs `5 831 948 ≈ 5.8×10⁶`
+Toffolis: the squaring-aware affine core `affinePointOpToffoli_squaring 256 = 5 817 572` plus the
+classical-offset coordinate term `classicalOffsetCoordToffoli 256 = 14 376`. Contrast the L1
+`onePointAddToffoli_karatsuba = 5 913 868` — an `81 920` Toffoli trim (`~1.014×`), small by design: the
+squaring is one of three field multiplies and the inversion still dominates. -/
+theorem onePointAddToffoli_squaring_eq : onePointAddToffoli_squaring = 5831948 := by
+  rw [onePointAddToffoli_squaring, affinePointOpToffoli_squaring_secp256k1,
+    classicalOffsetCoordToffoli_secp256k1]
+
+/-- **The ECDSA.fail-convention score for one affine point addition, squaring-aware field ops.** The
+`onePointAddScore_karatsuba` analogue, `onePointAddToffoli_squaring × onePointAddPeakQubits`. The
+peak-qubit count `onePointAddPeakQubits = 2822` is reused unchanged: the dedicated squaring runs on the
+same shared carry-clean scratch bank (`cleanModMulQubits = 6n+6`) as the multiply (`x²` is `x·x` on that
+bank), so the live width band is unaffected (the DOCUMENTED layout choice). So the score trim equals the
+Toffoli trim.
+
+**Tier:** Toffoli factor DERIVED-recurrence / op-count-model; peak qubits DOCUMENTED; the product as a
+comparison to the live ECDSA.fail score is CONJECTURAL / EXTERNAL (worst-case upper bound, not their
+executed average). -/
+def onePointAddScore_squaring : ℕ := onePointAddToffoli_squaring * onePointAddPeakQubits
+
+/-- The ECDSA.fail-convention score for one affine point addition with squaring-aware field ops is
+`16 457 757 256 ≈ 1.65×10¹⁰`: `onePointAddToffoli_squaring = 5 831 948` Toffolis times
+`onePointAddPeakQubits = 2822` peak live qubits. Contrast the L1 `onePointAddScore_karatsuba =
+16 688 935 496 ≈ 1.67×10¹⁰` — a `~1.014×` score trim. Repo comparable-OBJECT figure, NOT a validated
+ECDSA.fail harness score. -/
+theorem onePointAddScore_squaring_eq : onePointAddScore_squaring = 16457757256 := by
+  rw [onePointAddScore_squaring, onePointAddToffoli_squaring_eq, onePointAddPeakQubits_eq]
+
+/-- **The score trim over the L1 Karatsuba figure (SMALL, `~1.014×`).** `onePointAddScore_squaring <
+onePointAddScore_karatsuba` — costing `λ²` as a dedicated squaring drops the one-affine-point-addition
+score from `16 688 935 496` (L1) to `16 457 757 256`. The trim is small by design: the squaring is one of
+three affine field multiplies, and the inversion still dominates (`~67%` of the total). This is a small
+critical-path trim, not a major lever. -/
+theorem squaring_score_improvement :
+    onePointAddScore_squaring < onePointAddScore_karatsuba := by
+  rw [onePointAddScore_squaring_eq, onePointAddScore_karatsuba_eq]; norm_num
+
+/-! ### Placement against the ECDSA.fail leaderboard (CONJECTURAL / EXTERNAL) -/
+
+/-- **The leaderboard gap after L3 — lower bound.** The squaring-aware score is still `> 10×` the
+leaderboard best: `ecdsaFailLeaderboardBest · 10 < onePointAddScore_squaring` (`15 700 000 000 <
+16 457 757 256`). -/
+theorem squaring_score_gap_vs_leaderboard_lower :
+    ecdsaFailLeaderboardBest * 10 < onePointAddScore_squaring := by
+  rw [onePointAddScore_squaring_eq]; norm_num [ecdsaFailLeaderboardBest]
+
+/-- **The leaderboard gap after L3 — upper bound.** The squaring-aware score is `< 11×` the leaderboard
+best: `onePointAddScore_squaring < ecdsaFailLeaderboardBest · 11` (`16 457 757 256 < 17 270 000 000`).
+The gap stays in L1's `~10.5×` band — the squaring trim is small (a minority of the field ops, inversion
+dominant), so it does not move the leaderboard placement. -/
+theorem squaring_score_gap_vs_leaderboard_upper :
+    onePointAddScore_squaring < ecdsaFailLeaderboardBest * 11 := by
+  rw [onePointAddScore_squaring_eq]; norm_num [ecdsaFailLeaderboardBest]
+
 end ECDLP.ResourceBounds
