@@ -49,6 +49,19 @@ correlated structure `V *ᵥ ψ`.
   (`vnDilationV_isom`): conservative on the joint, dissipative only on the marginal.
 - `decoherence_capstone` — the four headline facts + conservativity.
 
+**LF6-B.2 (the quantitative irreversibility witness):**
+
+- `decohereReduced_trace` — `Tr(decohereReduced ψ) = ‖ψ‖²` (a genuine density operator,
+  trace one for unit `ψ`; via `partialTraceRight_trace` + `deisolation_conservative`).
+- `decohere_purity_eq` — `Tr((decohereReduced ψ)²) = ∑ⱼ (‖⟨eⱼ,ψ⟩‖²)²` (purity = sum of
+  squared Born weights, the reduced state being diagonal).
+- `decohere_purity_le_one` — `Tr(ρ_red²).re ≤ 1` (linear entropy `1 − Tr(ρ²) ≥ 0`).
+- `decohere_purity_lt_one_of_superposition` (THE WITNESS) — for a unit measurement-basis
+  superposition (two distinct nonzero Born weights), `Tr(ρ_red²).re < 1`: the STRICT
+  purity drop. The pure input had purity `1`; the conservative de-isolation + pointer
+  trace yields a strictly mixed state. Irreversibility quantified, not narrated.
+- `decoherence_irreversibility_capstone` — the four B.2 facts bundled.
+
 ## Honest scope
 
 This is the **reduced-density-operator** level of decoherence (a standard QM-validity
@@ -58,11 +71,15 @@ no fundamental noise. The Born weights are **imported** as FS typicality volumes
 (LF6-A / the moment-map / Duistermaat–Heckman cluster), not postulated and not
 re-derived here.
 
+The **purity-drop / linear-entropy** reading `Tr(ρ_red²) < 1` is now discharged
+(LF6-B.2, `decohere_purity_lt_one_of_superposition`): the irreversibility is
+theorem-backed, no longer only narrated.
+
 **Explicitly DEFERRED** (not in this tranche): the continuous-time Lindblad /
 T₁–T₂ semigroup; the system-marginal FS-volume-**drift** geometry (the open
-symplectic drift as a measure statement on Σ); the purity/entropy-increase reading
-(`Tr(ρ_red²) < 1`, deliverable 7). **Residue: A5** (the sector / FS-typicality law
-is posited, reducing to D1).
+symplectic drift as a measure statement on Σ); the full **von Neumann** entropy
+increase (only the linear-entropy / purity witness is given here). **Residue: A5**
+(the sector / FS-typicality law is posited, reducing to D1).
 
 All exports are foundational-triple-only (the partial-trace and dilation machinery
 are measure-theoretic / linear-algebraic, off `busch_effect_gleason`).
@@ -247,6 +264,151 @@ theorem decoherence_capstone (ψ : EuclideanSpace ℂ (Fin N)) :
    fun _ _ h => decoherence_offdiagonal_vanish ψ h,
    decoherence_diagonal_born ψ,
    deisolation_conservative⟩
+
+/-! ### LF6-B.2: the quantitative purity-drop / irreversibility witness
+
+The reduced state `decohereReduced ψ` is a genuine density operator (trace one for
+unit `ψ`) but, for a measurement-basis *superposition*, a **mixed** one: its purity
+`Tr(ρ_red²) = ∑ⱼ pⱼ²` (with `pⱼ = ‖⟨eⱼ,ψ⟩‖²` the Born/probability vector) is strictly
+below `1`. A pure input `|ψ⟩⟨ψ|` has purity `1`; the de-isolation + unmonitored-pointer
+trace drops it to `∑ pⱼ² < 1`. The lost coherence has leaked into system-pointer
+correlation that the marginal no longer sees. This is the *linear-entropy* /
+purity quantification of the irreversibility narrated in LF6-B.1: irreversibility is
+not asserted, it is the strict inequality `decohere_purity_lt_one_of_superposition`. -/
+
+/-- The reduced state is a `Matrix.diagonal`: `decohereReduced ψ = diagonal (ψ · star ψ)`.
+Repackages `decohereReduced_apply` (the dephased entrywise form) so the trace / purity
+computations collapse via `Matrix.trace_diagonal` and `Matrix.diagonal_mul_diagonal`. -/
+lemma decohereReduced_eq_diagonal (ψ : EuclideanSpace ℂ (Fin N)) :
+    decohereReduced ψ = Matrix.diagonal (fun i => ψ i * star (ψ i)) := by
+  ext i i'
+  rw [decohereReduced_apply, Matrix.diagonal_apply]
+
+omit [NeZero N] in
+/-- **Parseval for the Born weights.** `∑ⱼ ‖⟨eⱼ,ψ⟩‖² = ‖ψ‖²`: the decohered diagonal
+weights form a probability vector (sum `= 1` for unit `ψ`). -/
+private lemma born_sum_eq_norm_sq (ψ : EuclideanSpace ℂ (Fin N)) :
+    ∑ j : Fin N, ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
+  rw [euclidean_norm_sq_eq_sum]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [EuclideanSpace.inner_single_left, map_one, one_mul]
+
+/-- Abstract probability-vector fact: `∑ pᵢ² ≤ ∑ pᵢ = 1` when `0 ≤ pᵢ` (each
+`pᵢ² ≤ pᵢ` since `pᵢ ≤ 1`). -/
+private lemma sum_sq_le_one_of_sum_one {ι : Type*} [Fintype ι] (p : ι → ℝ)
+    (hnn : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1) :
+    ∑ i, p i ^ 2 ≤ 1 := by
+  have hle : ∀ i, p i ≤ 1 := fun i =>
+    (Finset.single_le_sum (fun j _ => hnn j) (Finset.mem_univ i)).trans_eq hsum
+  calc ∑ i, p i ^ 2 ≤ ∑ i, p i :=
+        Finset.sum_le_sum fun i _ => by nlinarith [hnn i, hle i]
+    _ = 1 := hsum
+
+/-- Abstract probability-vector fact (STRICT): if `≥ 2` entries are nonzero then
+`∑ pᵢ² < ∑ pᵢ = 1`. Both nonzero entries satisfy `pⱼ < 1` (the other contributes a
+positive amount to the unit sum), so `pⱼ² < pⱼ` strictly there; `Finset.sum_lt_sum`. -/
+private lemma sum_sq_lt_one_of_two_nonzero {ι : Type*} [Fintype ι] [DecidableEq ι] (p : ι → ℝ)
+    (hnn : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1)
+    {j k : ι} (hjk : j ≠ k) (hj : p j ≠ 0) (hk : p k ≠ 0) :
+    ∑ i, p i ^ 2 < 1 := by
+  have hle : ∀ i, p i ≤ 1 := fun i =>
+    (Finset.single_le_sum (fun l _ => hnn l) (Finset.mem_univ i)).trans_eq hsum
+  have hjpos : 0 < p j := lt_of_le_of_ne (hnn j) (Ne.symm hj)
+  have hkpos : 0 < p k := lt_of_le_of_ne (hnn k) (Ne.symm hk)
+  have hpair : p j + p k ≤ 1 := by
+    rw [← hsum, ← Finset.sum_pair hjk]
+    exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+      (fun i _ _ => hnn i)
+  have hjlt : p j < 1 := by linarith
+  calc ∑ i, p i ^ 2 < ∑ i, p i :=
+        Finset.sum_lt_sum (fun i _ => by nlinarith [hnn i, hle i])
+          ⟨j, Finset.mem_univ j, by nlinarith [hjpos, hjlt]⟩
+    _ = 1 := hsum
+
+/-- **The reduced state is trace-preserving (a genuine density operator).**
+`Tr(decohereReduced ψ) = ‖ψ‖²`. Via `partialTraceRight_trace` (trace-preservation of the
+partial trace) + `trace_mul_comm` to cycle `Vᴴ` to the front + `deisolation_conservative`
+(`Vᴴ V = 1`): `Tr(V|ψ⟩⟨ψ|Vᴴ) = Tr(Vᴴ V |ψ⟩⟨ψ|) = Tr(|ψ⟩⟨ψ|) = ‖ψ‖²`. For unit `ψ` this
+is `1`. -/
+theorem decohereReduced_trace (ψ : EuclideanSpace ℂ (Fin N)) :
+    (decohereReduced ψ).trace = ((‖ψ‖ ^ 2 : ℝ) : ℂ) := by
+  rw [decohereReduced, partialTraceRight_trace, Matrix.trace_mul_comm,
+    ← Matrix.mul_assoc, deisolation_conservative, Matrix.one_mul, outerProduct_trace,
+    inner_self_eq_norm_sq_to_K]
+  norm_cast
+
+/-- **The purity is the sum of squared Born weights.**
+`Tr((decohereReduced ψ)²) = ∑ⱼ (‖⟨eⱼ,ψ⟩‖²)²`. The reduced state is diagonal
+(`decohereReduced_eq_diagonal`), so `ρ²` is diagonal with entries `pⱼ²` and its trace
+collapses to `∑ⱼ pⱼ²` (`diagonal_mul_diagonal` + `trace_diagonal`). -/
+theorem decohere_purity_eq (ψ : EuclideanSpace ℂ (Fin N)) :
+    (decohereReduced ψ * decohereReduced ψ).trace
+      = ∑ j : Fin N,
+          (((‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) ^ 2 : ℝ) : ℂ) := by
+  rw [decohereReduced_eq_diagonal, Matrix.diagonal_mul_diagonal, Matrix.trace_diagonal]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [EuclideanSpace.inner_single_left, map_one, one_mul, mul_star_eq_normSq]
+  push_cast; ring
+
+/-- **The decohered purity is at most one** (unit `ψ`): `Tr(ρ_red²) ≤ 1`, i.e. the
+linear entropy `1 − Tr(ρ_red²) ≥ 0`. From `∑ pⱼ² ≤ ∑ pⱼ = 1` (probability vector). -/
+theorem decohere_purity_le_one (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1) :
+    (decohereReduced ψ * decohereReduced ψ).trace.re ≤ 1 := by
+  rw [decohere_purity_eq, ← Complex.ofReal_sum, Complex.ofReal_re]
+  exact sum_sq_le_one_of_sum_one
+    (fun i => ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)
+    (fun _ => sq_nonneg _) (by rw [born_sum_eq_norm_sq, hψ, one_pow])
+
+/-- **THE WITNESS (LF6-B.2): a measurement-basis superposition strictly loses purity.**
+If `ψ` has two distinct measurement-basis components `j ≠ k` with nonzero Born weight,
+then `Tr((decohereReduced ψ)²) < 1` for unit `ψ`. The pure input `|ψ⟩⟨ψ|` had purity `1`;
+the de-isolation (conservative isometry `V`, `deisolation_conservative`) followed by the
+unmonitored-pointer trace produces a strictly mixed state. This is the *quantitative*
+irreversibility / coherence-loss statement: the strict drop `1 → ∑ pⱼ² < 1` (the lost
+coherence has leaked into system-pointer correlation discarded by the marginal). The
+superposition hypothesis is load-bearing: at a single measurement-basis eigenstate the
+purity stays `1` (no coherence to lose). Linear-entropy witness `1 − Tr(ρ_red²) > 0`;
+the full von Neumann entropy increase and the continuous-time Lindblad / environment-growth
+account remain DEFERRED. -/
+theorem decohere_purity_lt_one_of_superposition (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    {j k : Fin N} (hjk : j ≠ k)
+    (hj : ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2 ≠ 0)
+    (hk : ‖inner ℂ (EuclideanSpace.single k (1 : ℂ)) ψ‖ ^ 2 ≠ 0) :
+    (decohereReduced ψ * decohereReduced ψ).trace.re < 1 := by
+  rw [decohere_purity_eq, ← Complex.ofReal_sum, Complex.ofReal_re]
+  exact sum_sq_lt_one_of_two_nonzero
+    (fun i => ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)
+    (fun _ => sq_nonneg _) (by rw [born_sum_eq_norm_sq, hψ, one_pow]) hjk hj hk
+
+/-- **The LF6-B.2 irreversibility capstone.** For a unit measurement-basis superposition
+(`j ≠ k`, both Born weights nonzero):
+
+1. `Tr(decohereReduced ψ) = 1` — the reduced state is a genuine density operator
+   (`decohereReduced_trace`);
+2. `Tr((decohereReduced ψ)²) = ∑ⱼ (‖⟨eⱼ,ψ⟩‖²)²` — purity = sum of squared Born weights
+   (`decohere_purity_eq`);
+3. `Tr((decohereReduced ψ)²).re ≤ 1` — purity ≤ 1 / linear entropy ≥ 0
+   (`decohere_purity_le_one`);
+4. `Tr((decohereReduced ψ)²).re < 1` — STRICT purity drop (`decohere_purity_lt_one_of_superposition`).
+
+The pure input `|ψ⟩⟨ψ|` (purity 1) decoheres to a strictly mixed state: the
+irreversibility narrated in `decoherence_capstone` is now theorem-backed (linear-entropy
+witness `1 − Tr(ρ²) > 0`). DEFERRED: von Neumann entropy increase; continuous-time
+Lindblad / environment growth. Residue A5 (FS-typicality posited). -/
+theorem decoherence_irreversibility_capstone (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    {j k : Fin N} (hjk : j ≠ k)
+    (hj : ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2 ≠ 0)
+    (hk : ‖inner ℂ (EuclideanSpace.single k (1 : ℂ)) ψ‖ ^ 2 ≠ 0) :
+    (decohereReduced ψ).trace = 1
+    ∧ (decohereReduced ψ * decohereReduced ψ).trace
+        = ∑ i : Fin N,
+            (((‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2) ^ 2 : ℝ) : ℂ)
+    ∧ (decohereReduced ψ * decohereReduced ψ).trace.re ≤ 1
+    ∧ (decohereReduced ψ * decohereReduced ψ).trace.re < 1 :=
+  ⟨by rw [decohereReduced_trace, hψ, one_pow]; norm_num,
+   decohere_purity_eq ψ,
+   decohere_purity_le_one ψ hψ,
+   decohere_purity_lt_one_of_superposition ψ hψ hjk hj hk⟩
 
 end LF6
 end CSD

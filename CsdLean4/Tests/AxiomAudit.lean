@@ -3360,6 +3360,37 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decoherence_capstone
 
+-- LF6-B.2 (Decoherence, 2026-06-29): the QUANTITATIVE purity-drop / irreversibility witness.
+-- The reduced state is a genuine density operator (decohereReduced_trace, Tr = ‖ψ‖², via
+-- partialTraceRight_trace + deisolation_conservative Vᴴ V = 1); its purity Tr(ρ_red²) =
+-- ∑ⱼ (‖⟨eⱼ,ψ⟩‖²)² (decohere_purity_eq, the reduced state being diagonal); purity ≤ 1
+-- (decohere_purity_le_one, linear entropy ≥ 0); and STRICTLY < 1 for a measurement-basis
+-- superposition with ≥2 nonzero Born weights (decohere_purity_lt_one_of_superposition) —
+-- the pure input |ψ⟩⟨ψ| (purity 1) decoheres to a strictly mixed state. The irreversibility
+-- narrated in B.1 is now theorem-backed (linear-entropy witness 1 − Tr(ρ²) > 0). The
+-- superposition hypothesis is load-bearing (single eigenstate ⟹ purity stays 1). Foundational
+-- triple only, no busch. DEFERRED: von Neumann entropy increase; continuous-time Lindblad /
+-- environment growth. Residue A5 (FS-typicality posited).
+/-- info: 'CSD.LF6.decohereReduced_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohereReduced_trace
+
+/-- info: 'CSD.LF6.decohere_purity_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohere_purity_eq
+
+/-- info: 'CSD.LF6.decohere_purity_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohere_purity_le_one
+
+/-- info: 'CSD.LF6.decohere_purity_lt_one_of_superposition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohere_purity_lt_one_of_superposition
+
+/-- info: 'CSD.LF6.decoherence_irreversibility_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_irreversibility_capstone
+
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,
 -- measurement_flow_born_frequency, measurement_flow_outcome_frequency), is now

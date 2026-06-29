@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -154,11 +154,27 @@ unmonitored pointer decoheres the system to the Born mixture.
   fundamental stochasticity.
 - `decoherence_capstone` (4-conjunct).
 HONEST scope: reduced-density-operator decoherence (standard QM-validity object); the CSD increment is
-the conservative-flow-coarse-graining reading. DEFERRED: the quantitative purity drop `Tr(ρ_red²) =
-∑‖ψ_j‖⁴ < 1` (the genuine irreversibility witness — auditor Nit: the "irreversibility emergent" narrative
-leans on this until it lands); continuous-time Lindblad / T1-T2 semigroup; the system-marginal
-FS-volume-DRIFT geometry (the "open symplectic drift" as a measure statement on Σ). Residue A5.
-Subsumes metrology A4 (same open-system machinery).
+the conservative-flow-coarse-graining reading. Subsumes metrology A4 (same open-system machinery).
+
+### LF6-B.2 — the purity-drop / irreversibility witness (DONE 2026-06-28)
+`CsdLean4/LF6/Decoherence.lean` (extended), auditor-SOUND, foundational-triple-only, 5 pins. Turns the
+B.1 "irreversibility is emergent" narrative into a theorem.
+- `decohereReduced_trace : (decohereReduced ψ).trace = ‖ψ‖²` (= 1 for unit ψ) — the reduced state is a
+  genuine density operator (via `partialTraceRight_trace` + `trace_mul_comm` + `deisolation_conservative`).
+- `decohereReduced_eq_diagonal` — the reduced state IS `diagonal (j ↦ ψ_j · star ψ_j)` (the Born weights).
+- `decohere_purity_eq : Tr((decohereReduced ψ)²) = ∑_j ‖⟨e_j,ψ⟩‖⁴` (= ∑ p_j², via `diagonal_mul_diagonal`
+  + `trace_diagonal`). Probe: equal superposition gives purity 1/2.
+- `decohere_purity_le_one` (`∑ p_j² ≤ ∑ p_j = 1`, Parseval) and **`decohere_purity_lt_one_of_superposition`**
+  (THE witness): `Tr(ρ_red²) < 1` strictly when ψ has ≥2 nonzero measurement-basis weights. The pure input
+  (purity 1) decoheres to a MIXED state. Auditor confirmed the superposition hypotheses are LOAD-BEARING:
+  at a single eigenstate purity stays exactly 1 (the witness correctly does not fire). The quantitative
+  irreversibility / coherence-loss witness, `1 − Tr(ρ_red²) > 0`.
+- `decoherence_irreversibility_capstone` (trace=1 ∧ purity=∑p_j² ∧ ≤1 ∧ <1).
+HONEST: this is the LINEAR-entropy / purity witness. STILL DEFERRED: the von Neumann entropy increase
+`S(ρ_red) = −∑ p_j log p_j > 0` (B.3, the Shannon entropy of the Born vector — diagonal eigenvalues are
+the p_j, reuse K1-A entropy machinery); the continuous-time Lindblad / T1-T2 semigroup; the environment-
+growth → PRACTICAL irreversibility (no-recoherence) account; the system-marginal FS-volume-DRIFT geometry.
+Residue A5.
 
 ### LF6 remaining (not started)
 The purity-drop / entropy-increase witness (closes the irreversibility narrative); continuous-time
