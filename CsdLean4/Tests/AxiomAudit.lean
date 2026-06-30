@@ -3538,6 +3538,58 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Einselection.einselection
 
+-- Build 15a follow-up (#34, 2026-06-30): the degeneracy boundary of einselection + general-N
+-- einselection. Qubit boundary: the rotated off-diagonal (p₀−p₁)/2 is nonzero IFF p₀ ≠ p₁
+-- (decohere_hadamard_offDiag_ne_zero_iff); at p₀ = p₁ the dephased state is the maximally mixed
+-- (1/2)·I (decohere_degenerate_half / degenerateWitness_decohere_half) which is invariant under
+-- ANY unitary conjugation (decohere_degenerate_basis_invariant), so NO basis is einselected (the
+-- einselection-FAILS side). General-N: the dephasing channel decohereReducedN kills off-diagonals
+-- and keeps the diagonal pointer populations (einselectionN), with degenerate locus = equal
+-- populations ρ i i = 1/N ⟹ (1/N)·I, basis-invariant (einselectionN_degenerate). Non-vacuity:
+-- decohereReducedN_acts_nontrivial (off-diagonal nonzero before, zero after) +
+-- decohereReducedN_maximally_mixed. The pointer basis is the COMPUTATIONAL basis by construction;
+-- the ontic einselection-from-Σ-dynamics origin is GATED to the entangled tier / D1.
+-- Foundational triple only (off busch).
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_hadamard_offDiag_ne_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_hadamard_offDiag_ne_zero_iff
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_degenerate_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_degenerate_half
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_degenerate_basis_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_degenerate_basis_invariant
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.einselection_degenerate_boundary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.einselection_degenerate_boundary
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohere_degenerate_scalar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohere_degenerate_scalar
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.einselectionN' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.einselectionN
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohereReducedN_acts_nontrivial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohereReducedN_acts_nontrivial
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohereReducedN_degenerate_scalar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohereReducedN_degenerate_scalar
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.decohereReducedN_maximally_mixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.decohereReducedN_maximally_mixed
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.einselectionN_degenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.einselectionN_degenerate
+
 -- Build 15b (QECDecoherence, 2026-06-30): the QEC-corrects-decoherence companion to 15a. A
 -- single-qubit error is the K2 bit-flip CHANNEL (CPTP, bitflip_error_cptp) whose Stinespring /
 -- partial-trace origin is bitflip_error_is_decoherence (Φ ρ = traceRight(V ρ Vᴴ), Vᴴ V = 1):

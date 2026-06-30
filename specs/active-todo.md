@@ -40,7 +40,7 @@ research-frontier / infrastructure gap.
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
 | 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b DONE; 15c–e open | |
 | 24 | 15b QEC-as-decoherence — DONE: error = K2 bit-flip CHANNEL + Stinespring origin + in-code correction (recoverⱼ∘errorⱼ=id on encoded density, one space); ontic Σ-volume origin gated to D1 (QECDecoherence.lean) | Empirical | M | DONE | |
-| 34 | 15a follow-up: degeneracy boundary (p₀=p₁ ⇒ scalar·I) + general-N einselection | Empirical | M | open | |
+| 34 | 15a follow-up — DONE: degeneracy boundary (p₀=p₁ ⇒ ½I basis-invariant, einselection FAILS; iff `decohere_hadamard_offDiag_ne_zero_iff`) + general-N einselection (`einselectionN`, `decohereReducedN_acts_nontrivial`); ontic origin D1-gated (Einselection.lean) | Empirical | M | DONE | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
 
 Per-area plans: [`lf6-plan.md`](lf6-plan.md), [`ecdsafail-optimization-plan.md`](ecdsafail-optimization-plan.md),
