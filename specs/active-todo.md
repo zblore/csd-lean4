@@ -25,8 +25,8 @@ research-frontier / infrastructure gap.
 | 19 | L5-b ~2× cost accounting + operator↔list link | ECDSA | S–M | DONE | |
 | 20 | L5-c Boolean↔amplitude bridge — SCOPING DONE, verdict WALL (see below) | ECDSA | L–XL | scoped (wall) | |
 | 30 | AND-based adder primitive (Boolean DSL; fresh per-carry AND temporary) — DONE (the L5-d attachment point) | ECDSA | L | DONE | |
-| 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) | ECDSA | L–XL | open | #30 |
-| 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) — DEFERRED pending #30+#31 | ECDSA | M | open | #30,#31,#7 |
+| 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) — DONE: L5-c wall closed at CELL granularity (MeasurementUncomputeLift.lean) | ECDSA | L–XL | DONE | #30 |
+| 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) — UNBLOCKED by #30+#31; still gated on #7 | ECDSA | M | open | #7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
@@ -195,7 +195,31 @@ The ergodicity framing was wrong, but the WORK yielded three durable things:
    and `fubiniStudyMeasure_pos_of_isOpen` (FS has FULL SUPPORT: every nonempty open set has positive
    measure — directly useful for any "generic ψ" / open-dense genericity argument across the corpus).
 
-## L5-c scoping probe verdict (2026-06-29) — WALL
+## L5-c wall CLOSED at cell granularity (2026-06-30, #31)
+
+`CsdLean4/Empirical/QM/MeasurementUncomputeLift.lean` (auditor-SOUND, foundational-triple, no busch).
+The L5-c "no gate-lift" obstruction (1, below) is closed FOR THE SINGLE AND-uncompute block by staying
+in L5-a's `B3 = Fin 3 → Fin 2` permutation-matrix representation — NO `Fin 8`/`qmToffoli` reindex (that
+ill-typing was exactly the wall). Headlines, all computed not asserted:
+- `andUncompMat_lifts_denote` — the `B3` unitary acts on basis states exactly as the Boolean Toffoli
+  `denote (andUncompute 0 1 2)` (modulo an explicit, round-tripping `Bool↔Fin 2` recast). The localized
+  gate-lift.
+- `andUncompMat_uncomputes` — the unitary deterministically uncomputes the AND on the `andInput` subspace
+  (`toEuclideanLin andUncompMat (andInput c) = uncomputedData c 0`).
+- `andUncompute_measureUncompute_agree_on_block` / `..._same_data` — the unitary block and the L5-a
+  measurement gadget land in the SAME `uncomputedData c ·` family (same data amplitudes `c`; ancilla `0`
+  deterministic vs `m` measured; the `_same_data` form clears the `(√2)⁻¹` so `c` is literal in both).
+  So `measureUncompute` is a PROVEN-equivalent replacement on this block.
+- `andUncompute_measurement_saving` — 1 vs 0 Toffoli, on the proven-equivalent block (not a count over an
+  unverified swap; the auditor confirmed this is the real saving, not 0-vs-0/miscount).
+
+Honest scope: CELL granularity. Trusted base grows by this localized lift. NO circuit-level re-cost and
+NO ECDSA score change here. DEFERRED: #21 (L5-d) threads the block-replacement through the AND-based
+adder's `n` AND-uncomputes for the circuit re-cost (gap ~10.5×→~5×); the watch-point (auditor) is whether
+the per-block "same data modulo ancilla/scalar" composes coherently across the `n`-fold tensor embedding
+(stay in the per-block `B3` factor, identity elsewhere — the analogous sidestep). Also gated on #7 (harness).
+
+## L5-c scoping probe verdict (2026-06-29) — WALL [superseded at cell granularity by #31 above]
 
 The measurement-based AND-uncompute (L5-a/b, verified as an amplitude gadget, `measureUncompute_cost`:
 0 vs 1 Toffoli per AND) is currently STRANDED in the amplitude model with no attachment point to corpus

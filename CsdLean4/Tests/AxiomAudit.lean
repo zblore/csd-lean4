@@ -53,6 +53,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Empirical.QM.MeasurementUncompute
+import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -5090,5 +5091,27 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Empirical.QM.measureUncompute_toffoli_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.measureUncompute_toffoli_eq_zero
+
+/-! ### #31 localized amplitude lift of the AND-uncompute block (L5-c bridge, cell granularity) -/
+
+/-- info: 'CSD.Empirical.QM.andUncompMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andUncompMat_lifts_denote
+
+/-- info: 'CSD.Empirical.QM.andUncompMat_uncomputes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andUncompMat_uncomputes
+
+/-- info: 'CSD.Empirical.QM.andUncompute_measureUncompute_agree_on_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andUncompute_measureUncompute_agree_on_block
+
+/-- info: 'CSD.Empirical.QM.andUncompute_measureUncompute_same_data' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andUncompute_measureUncompute_same_data
+
+/-- info: 'CSD.Empirical.QM.andUncompute_measurement_saving' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andUncompute_measurement_saving
 
 end CSD.Tests.AxiomAudit
