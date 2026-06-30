@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28.** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) DONE 2026-06-30.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -181,11 +181,37 @@ the p_j, reuse K1-A entropy machinery); the continuous-time Lindblad / T1-T2 sem
 growth → PRACTICAL irreversibility (no-recoherence) account; the system-marginal FS-volume-DRIFT geometry.
 Residue A5.
 
+### LF6-C.1 — the general-N tier: GHZ forced-contextuality crux (DONE 2026-06-30)
+`CsdLean4/LF6/GHZContextuality.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple-only, 6
+AxiomAudit pins. Opens the general-N entangled tier by extending A.1 from the 2-party singlet to the
+3-party GHZ state, with a qualitatively STRONGER forcing: DETERMINISTIC / all-or-nothing (the Mermin
+GHZ paradox, no LHV at all) vs A.1's statistical CHSH bound (`2 < 2√2`).
+- `no_product_partition_realises_ghz` (headline) — no setting-local ±1 product partition on a shared
+  `(Λ,μ)` reproducing the four GHZ perfect-correlation expectations (⟨XXX⟩=+1, ⟨XYY⟩=⟨YXY⟩=⟨YYX⟩=−1)
+  exists. ROUTES THROUGH the existing `Empirical.GHZ.no_lhv_assignment_for_ghz` (no GHZ re-proof): the
+  private `pm_ae_eq` upgrades each expectation=±1 of a two-valued RV to pointwise=±1 a.e., the four
+  full-measure sets intersect (probability measure ⟹ `NeBot (ae μ)`) to ONE microstate carrying a
+  deterministic local ±1 assignment, which the no-go forbids — `False` at a single point, no inequality.
+- Both hypotheses load-bearing (auditor probe-confirmed): **±1** via `pm_ae_eq` (a non-two-valued RV with
+  mean 1 need NOT be a.e. 1 — so the EXPECTATION formulation, not pointwise, keeps ±1 essential; the
+  pointwise form would make ±1 inert via the perfect-square argument); **locality** via
+  `ghz_each_correlation_locally_realisable` (each of the four correlations is individually realisable by
+  a local ±1 assignment — only one shared non-contextual assignment hitting all four fails).
+- `productPartition_ghz_nonvacuous` (product partitions exist), `ghz_engine_joint_nonfactorises`
+  (⟨XXX⟩=1 ≠ 0·0·0), `ghz_engine_marginal_factorises` (all six single-wing marginals = 0, no-signalling,
+  via `ghz_expectation_formula`), `ghz_forced_contextuality_capstone`.
+Honest scope: the forced-contextuality CRUX (A.1 analogue), NOT the GHZ de-isolation FLOW. **LF6-C.2
+DEFERRED** — the dynamical realisation (instantiate `LF5.measurementFlow` at `N=8` on the dilated
+three-qubit projective space, GHZ pointer-block carve, pointer-block FS volume = GHZ Born weight via
+`vnDilation_pointer_volume`, + a one-theorem contextuality juxtaposition mirroring
+`singletDeisolation_carve_contextual`). Residue A5 (GHZ sector posited). Born imported (LF4/LF5), not
+re-derived.
+
 ### LF6 remaining (not started)
-The purity-drop / entropy-increase witness (closes the irreversibility narrative); continuous-time
-Lindblad; the marginal volume-drift geometry; general-N entangled tier; threading `Φ` through the
-concrete entangled `SectorData` (D1c). A5 emergence (deriving the entangled sector from the dynamics) is
-the downstream target that would retire the residue.
+Continuous-time Lindblad; the marginal volume-drift geometry; LF6-C.2 (GHZ de-isolation flow) and the
+wider general-N entangled tier (general bipartite `d×d`; n-party GHZ_n); threading `Φ` through the
+concrete entangled `SectorData` (D1c); the von Neumann entropy-increase witness (B.3). A5 emergence
+(deriving the entangled sector from the dynamics) is the downstream target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the

@@ -121,6 +121,7 @@ import CsdLean4.LF5.PointerOutcome
 import CsdLean4.LF5.SyndromeFlow
 import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.LF6.ForcedContextuality
+import CsdLean4.LF6.GHZContextuality
 import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.Decoherence
@@ -3468,6 +3469,47 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.engine_marginal_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.engine_marginal_factorises
+
+-- LF6-C.1 (GHZContextuality): the multipartite analogue of A.1; the first
+-- general-N-tier instance of D1's entangled frontier. GHZ forces contextuality
+-- DETERMINISTICALLY (Mermin all-or-nothing: no LHV plus/minus 1 assignment at all),
+-- a qualitatively stronger forcing than the singlet's statistical CHSH bound.
+-- no_product_partition_realises_ghz: a product (setting-local, non-contextual)
+-- plus/minus 1 partition reproducing the four GHZ perfect correlations forces each
+-- product integrand pointwise-determinate a.e. (pm_ae_eq, where the plus/minus 1
+-- hypothesis is load-bearing), yielding ONE microstate with a deterministic local
+-- assignment that CSD.Empirical.GHZ.no_lhv_assignment_for_ghz forbids; it ROUTES
+-- THROUGH that no-go, no GHZ re-proof. ghz_each_correlation_locally_realisable
+-- isolates locality as the other load-bearing leg (each correlation alone is
+-- locally realisable). ghz_engine_joint_nonfactorises (<XXX>=1 != 0*0*0) and
+-- ghz_engine_marginal_factorises (each single-wing marginal = 0, no-signalling)
+-- are the Sigma-volume engine's non-factorising-joint / factorising-marginal pair.
+-- productPartition_ghz_nonvacuous: product partitions exist. Residue A5 (GHZ
+-- entangled sector posited); LF6-C.2 (full GHZ de-isolation flow) deferred.
+-- Foundational triple only.
+/-- info: 'CSD.LF6.no_product_partition_realises_ghz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_product_partition_realises_ghz
+
+/-- info: 'CSD.LF6.productPartition_ghz_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.productPartition_ghz_nonvacuous
+
+/-- info: 'CSD.LF6.ghz_engine_joint_nonfactorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghz_engine_joint_nonfactorises
+
+/-- info: 'CSD.LF6.ghz_engine_marginal_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghz_engine_marginal_factorises
+
+/-- info: 'CSD.LF6.ghz_each_correlation_locally_realisable' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghz_each_correlation_locally_realisable
+
+/-- info: 'CSD.LF6.ghz_forced_contextuality_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghz_forced_contextuality_capstone
 
 -- LF6-A.2 (SingletDeisolationFlow): the DYNAMICAL realisation of the entangled
 -- de-isolation tier. A genuine deterministic FS-measure-preserving de-isolation
