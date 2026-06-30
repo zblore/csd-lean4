@@ -235,6 +235,7 @@ import CsdLean4.Empirical.CSD.Gates.TwoQubit
 import CsdLean4.Empirical.CSD.Gates.BellPrep
 import CsdLean4.Empirical.CSD.Gates.MultiQubit
 import CsdLean4.Empirical.CSD.Einselection
+import CsdLean4.Empirical.CSD.QECDecoherence
 import CsdLean4.Empirical.Metrology.Ramsey
 import CsdLean4.Empirical.Metrology.QuantumFisher
 import CsdLean4.Empirical.Metrology.Heisenberg

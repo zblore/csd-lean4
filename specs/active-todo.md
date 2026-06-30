@@ -2,7 +2,7 @@
 
 **Purpose.** Durable copy of the session task list so it survives session loss. If the
 in-memory task list is gone, re-seed from the table below (each row → a task; keep the
-Category / Complexity / Blocked-by columns). Last updated 2026-06-29.
+Category / Complexity / Blocked-by columns). Last updated 2026-06-30.
 
 **Complexity key:** S = single step · M = one expert tranche · L = multi-tranche · XL =
 research-frontier / infrastructure gap.
@@ -34,10 +34,11 @@ research-frontier / infrastructure gap.
 | 28 | D1c-2: physically-meaningful Φ (obsFlow Hamiltonian) into cpSectorData | Foundations-debt | S | DONE | |
 | 29 | A5 onramp: typicality forced by symmetry + single-flow obstruction (DONE) | Foundations-debt | L | DONE | |
 | 32 | A5 onramp follow-up: conserved-quantity CONTINUUM of invariant measures (DONE) | Foundations-debt | M | DONE | |
-| 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | open | |
+| 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | DONE | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
-| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a DONE; 15b–e open | |
+| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a DONE; 15b in audit-repair; 15c–e open | |
+| 24 | 15b QEC-as-decoherence (error channel + Stinespring origin + code correction) | Empirical | M | in-progress (A-class repair: in-code channel-correction bridge) | |
 | 34 | 15a follow-up: degeneracy boundary (p₀=p₁ ⇒ scalar·I) + general-N einselection | Empirical | M | open | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
 
@@ -54,9 +55,21 @@ Per-area plans: [`lf6-plan.md`](lf6-plan.md), [`ecdsafail-optimization-plan.md`]
 | + L3 squaring | 5,831,948 | 16,457,757,256 | ~10.5× |
 | leaderboard best | ~1,360,000 | ~1,566,720,000 | 1× |
 
-Per-field-op constant levers (L6/L1/L3) exhausted. Remaining: carry-clean adder (the
-`30n²→~2n²` dirty-carry gap) and the Tier-X L5 measurement fork (#14, gap → ~5× but needs
-amplitude semantics). Parity gated on L5 + step #7 (user harness).
+Per-field-op constant levers (L6/L1/L3) exhausted. Current ~5.83M Toffoli/point-add is
+**inversion-dominated**: safegcd `60n²+28n` ≈ 3.94M at n=256 (~67%); mults/squarings/adds the
+rest. Standalone adders are an O(n) sliver of an O(n²) total — which is why the L5-d adder
+re-cost barely moves the score.
+
+**HONESTY CORRECTION (2026-06-30): L5-d as built is NOT a score lever.** The #30 AND-based
+adder is `6n` Toffoli (`andCarryCell` = 3 CCX/carry, fresh-ancilla majority cell), ~3× a
+Cuccaro adder (~2n ≈ 512 at n=256). After the measurement re-cost it is `3n` = 768, STILL
+larger than Cuccaro's ~2n. So swapping #30 into the point-addition RAISES the score. #30/#21
+are the measurement-path proof-of-concept (the `andInput`-shaped uncompute attachment point),
+not a competitive adder. The genuine Tier-X score lever needs (i) a MINIMAL 1-AND-per-carry
+Gidney adder (~n Toffoli, free uncompute → beats Cuccaro), then (ii) pervasive application
+inside the O(n²) multiplier/inverter (where the measurement uncompute halves the dominant
+cost). The earlier "gap → ~5×" was aspirational (assumed that minimal-adder programme), NOT
+what #30/#21 deliver. Parity still gated on that unbuilt programme + step #7 (user harness).
 
 ## #16 — D1c plan (thread genuine Φ through concrete SectorData)
 

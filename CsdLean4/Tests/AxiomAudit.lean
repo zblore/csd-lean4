@@ -191,6 +191,7 @@ import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
 import CsdLean4.Empirical.CSD.Contextuality.MerminPeresVolume
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.CSD.Einselection
+import CsdLean4.Empirical.CSD.QECDecoherence
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
 import CsdLean4.Empirical.QM.Gates.BellPrep
@@ -3536,6 +3537,62 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.Empirical.CSDBridge.Einselection.einselection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Einselection.einselection
+
+-- Build 15b (QECDecoherence, 2026-06-30): the QEC-corrects-decoherence companion to 15a. A
+-- single-qubit error is the K2 bit-flip CHANNEL (CPTP, bitflip_error_cptp) whose Stinespring /
+-- partial-trace origin is bitflip_error_is_decoherence (Φ ρ = traceRight(V ρ Vᴴ), Vᴴ V = 1):
+-- the error is environmental entanglement traced away. The three-qubit code CORRECTS it:
+-- recover ∘ error = id on a bare qubit (qubit_recover_compose_bitflip) and on the code density
+-- (three_qubit_recover_density: Xⱼ(Xⱼ ρ Xⱼᴴ)Xⱼᴴ = ρ); qec_corrects_decoherence bundles the
+-- Stinespring origin + syndrome-distinctness + exact vector recovery (bitflip_recovers).
+-- Non-vacuity: the SAME channel corrupts a bare qubit (bitFlipChannel_corrupts_bare_qubit:
+-- Φ(|0⟩⟨0|) ≠ |0⟩⟨0| for 0<p). csd_qec_decoherence_corrected transports it through a
+-- CSDThreeQubitBundle. QM-OPERATIONAL (channel + correction) discharged here; the ontic
+-- Σ-volume / partial-trace-volume-loss origin is GATED to the entangled tier (LF6 / D1).
+-- Foundational triple only (off busch).
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.bitflip_error_cptp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.bitflip_error_cptp
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.bitflip_error_is_decoherence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.bitflip_error_is_decoherence
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.qubit_recover_compose_bitflip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.qubit_recover_compose_bitflip
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.three_qubit_recover_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.three_qubit_recover_density
+
+-- The in-code channel-correction bridge (one Hilbert space): recoverⱼ ∘ errorⱼ = id on the
+-- ENCODED density encodeDensity a b, lifting the correctable X branch to qubit j as the K2
+-- unitaryChannel (the conjunct that earns qec_corrects_decoherence's name). error_moves_codeword
+-- is the non-vacuity witness (X₁ displaces |000⟩).
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.recover_channel_compose_error_on_code' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.recover_channel_compose_error_on_code
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.error_moves_codeword' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.error_moves_codeword
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.error_moves_encoded_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.error_moves_encoded_density
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.bitFlipChannel_corrupts_bare_qubit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.bitFlipChannel_corrupts_bare_qubit
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.qec_corrects_decoherence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.qec_corrects_decoherence
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.csd_qec_decoherence_corrected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.csd_qec_decoherence_corrected
 
 -- Volume-series canonical coverage (2026-06-15): the trial-witness discharge,
 -- previously wired into only three headlines (born_frequency_convergence_N,
