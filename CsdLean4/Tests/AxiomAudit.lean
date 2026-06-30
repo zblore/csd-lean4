@@ -31,6 +31,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
@@ -4429,6 +4430,28 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Reversible.mulLoopUpto_preserves' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.mulLoopUpto_preserves
+
+/-! ### ECDLP S6.3-36a adder-parametric modular multiplier (Reversible/VerifiedAdder.lean) -/
+
+/-- info: 'Reversible.genMul_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMul_correct
+
+/-- info: 'Reversible.genMul_toffoli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMul_toffoli
+
+/-- info: 'Reversible.genMul_corpusAdder_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMul_corpusAdder_correct
+
+/-- info: 'Reversible.genMul_corpusAdder_toffoli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMul_corpusAdder_toffoli
+
+/-- info: 'Reversible.genMul_corpusAdder_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMul_corpusAdder_eq
 
 /-! ### ECDLP S6.3e-1 modular subtraction a-b mod N (Reversible/ModularSub.lean) -/
 
