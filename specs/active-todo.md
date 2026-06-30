@@ -38,7 +38,8 @@ research-frontier / infrastructure gap.
 | 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | DONE | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
-| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b, 15c DONE; 15d–e open | |
+| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b, 15c, 15d DONE; 15e open | |
+| 26 | 15d quantum Zeno — DONE: derived quadratic short-time bound P(s)≥1−(ΔH)²s² + zero slope P'(0)=0 (σx/|0⟩ witness, variance (ΔH)²=1 from matrices), Bernoulli lower bound P_n≥1−(ΔH)²t²/n, freezing P_n→1 (squeeze); non-vacuity (ΔH)²>0 + full decay at π/2; exp(-isσx) closed-form asserted, rest derived; CSD re-carving reading, dynamical Σ-flow D1-gated (QuantumZeno.lean) | Empirical | M | DONE | |
 | 25 | 15c weak/unsharp measurement — DONE: unsharp POVM weakEffect±(η)=½(I±ησ), no-meas(η=0)↔projective(η=1) interpolation, partial-info witness, FULL FS-volume reading on ℂℙ³ Naimark dilation (Gleason-free uncond engine); continuous-measurement flow D1-gated (WeakMeasurement.lean) | Empirical | M | DONE | |
 | 24 | 15b QEC-as-decoherence — DONE: error = K2 bit-flip CHANNEL + Stinespring origin + in-code correction (recoverⱼ∘errorⱼ=id on encoded density, one space); ontic Σ-volume origin gated to D1 (QECDecoherence.lean) | Empirical | M | DONE | |
 | 34 | 15a follow-up — DONE: degeneracy boundary (p₀=p₁ ⇒ ½I basis-invariant, einselection FAILS; iff `decohere_hadamard_offDiag_ne_zero_iff`) + general-N einselection (`einselectionN`, `decohereReducedN_acts_nontrivial`); ontic origin D1-gated (Einselection.lean) | Empirical | M | DONE | |
@@ -165,13 +166,20 @@ Candidate first tranches, by tractability:
 3. **Weak / continuous measurement (M–L).** Partial de-isolation (a coupling-strength parameter),
    gradual decoherence interpolating identity↔full dephasing. New infra: parameterised weak
    coupling.
-4. **Quantum Zeno (M–L).** Repeated de-isolation freezing evolution — needs the weak/partial
-   coupling from (3) plus iteration.
+4. **Quantum Zeno (M, DONE 2026-06-30 — `Empirical/CSD/QuantumZeno.lean`).** Repeated projective
+   re-measurement onto `|0⟩` freezes evolution. Mechanism DERIVED on the `σx`/`|0⟩` witness:
+   variance `(ΔH)²=1` from the matrices, the quadratic short-time bound `P(s)≥1−(ΔH)²s²`
+   (`zeno_survival_quadratic`, coefficient = the computed variance) and the zero initial slope
+   `P'(0)=0` (`zeno_survival_slope_zero`). Limit: Bernoulli lower bound `P_n≥1−(ΔH)²t²/n`
+   (`zeno_survival_lower_bound`) + freezing `P_n→1` (`zeno_freezing`, full squeeze). Non-vacuity
+   `(ΔH)²>0` with full free decay at `π/2` (`zeno_nonvacuous`). The closed-form `exp(-isσx)` is the
+   asserted standard qubit rotation; all else derived. CSD re-carving reading; the dynamical
+   measurement-interspersed Σ-flow `Φ≠id` is D1-gated (LF6).
 5. **Channel capacities (L).** The de-isolation channel's classical/quantum capacity — needs the
    K1 entropy machinery + capacity definitions.
 
-Recommended order: 1 (einselection, cheapest + most foundational) → 2 (QEC-as-decoherence) →
-3/4 (weak/Zeno) → 5 (capacities).
+Recommended order: 1 (einselection) → 2 (QEC-as-decoherence) → 3/4 (weak/Zeno) → 5 (capacities).
+Status: 1, 2, 3, 4 DONE; 5 (channel capacities, 15e) is the remaining open-system empirical entry.
 
 ## FRAMING CORRECTION (2026-06-29, per user / papers A & B): typicality is forced by the LLN, NOT ergodicity
 

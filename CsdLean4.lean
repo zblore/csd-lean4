@@ -209,6 +209,7 @@ import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.WeakMeasurement
+import CsdLean4.Empirical.CSD.QuantumZeno
 import CsdLean4.Empirical.CSD.SIC3Volume
 import CsdLean4.Empirical.CSD.MUB3Volume
 import CsdLean4.Empirical.CSD.VolumeCanonical

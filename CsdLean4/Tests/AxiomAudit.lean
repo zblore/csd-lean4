@@ -176,6 +176,7 @@ import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
 import CsdLean4.Empirical.CSD.WeakMeasurement
+import CsdLean4.Empirical.CSD.QuantumZeno
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.SIC3Volume
 import CsdLean4.Empirical.CSD.MUB3Volume
@@ -2027,6 +2028,50 @@ info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume' depen
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume
+
+-- Quantum Zeno effect (Build 15d): frequent projective re-measurement freezes the state.
+-- Part A (DERIVED, concrete σx/|0⟩ witness): variance (ΔH)²=1 from the matrices (varH_eq),
+-- the quadratic short-time bound P(s) ≥ 1−(ΔH)²s² (zeno_survival_quadratic, from cos²=1−sin²
+-- ≥ 1−s²), and the zero initial slope P'(0)=0 (zeno_survival_slope_zero). Part B: the Zeno
+-- lower bound P_n ≥ 1−(ΔH)²t²/n (Bernoulli) and the freezing limit P_n → 1
+-- (zeno_freezing, squeeze). Non-vacuity: (ΔH)²>0 with full free decay at π/2. The closed-form
+-- exp(-isσx) is the standard qubit rotation (asserted closed form); everything else derived.
+-- Foundational-triple only; static/operational, the dynamical Σ-flow realisation D1-gated.
+/--
+info: 'CSD.Empirical.CSDBridge.QuantumZeno.varH_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumZeno.varH_eq
+
+/--
+info: 'CSD.Empirical.CSDBridge.QuantumZeno.zeno_survival_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumZeno.zeno_survival_quadratic
+
+/--
+info: 'CSD.Empirical.CSDBridge.QuantumZeno.zeno_survival_slope_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumZeno.zeno_survival_slope_zero
+
+/--
+info: 'CSD.Empirical.CSDBridge.QuantumZeno.zeno_survival_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumZeno.zeno_survival_lower_bound
+
+/--
+info: 'CSD.Empirical.CSDBridge.QuantumZeno.zeno_freezing' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumZeno.zeno_freezing
+
+/--
+info: 'CSD.Empirical.CSDBridge.QuantumZeno.zeno_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumZeno.zeno_nonvacuous
 
 -- Qutrit POVM volume capstone: the first non-qubit (N=3) volume-frequency entry,
 -- foundational-triple only (carving-free, Gleason-free); a genuine non-projective
