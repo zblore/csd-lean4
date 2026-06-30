@@ -24,7 +24,7 @@ research-frontier / infrastructure gap.
 | 18 | L5-a measure-and-correct primitive (amplitude model) — GREEN LIGHT: measurement-based uncompute IS verifiable in Lean | ECDSA | M | DONE | |
 | 19 | L5-b ~2× cost accounting + operator↔list link | ECDSA | S–M | DONE | |
 | 20 | L5-c Boolean↔amplitude bridge — SCOPING DONE, verdict WALL (see below) | ECDSA | L–XL | scoped (wall) | |
-| 30 | AND-based adder primitive (Boolean DSL; fresh per-carry AND temporary) — prereq for measurement re-cost | ECDSA | L | open | |
+| 30 | AND-based adder primitive (Boolean DSL; fresh per-carry AND temporary) — DONE (the L5-d attachment point) | ECDSA | L | DONE | |
 | 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) | ECDSA | L–XL | open | #30 |
 | 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) — DEFERRED pending #30+#31 | ECDSA | M | open | #30,#31,#7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
