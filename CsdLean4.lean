@@ -47,6 +47,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssemblyOps
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
 import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve

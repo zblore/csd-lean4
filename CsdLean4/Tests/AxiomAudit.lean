@@ -42,6 +42,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssemblyOps
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
 import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
@@ -4808,6 +4809,42 @@ operand). All foundational-triple-only. -/
 /-- info: 'Reversible.cuccaroModMul_toffoli' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.cuccaroModMul_toffoli
+
+/-! ### ECDLP S6.3-36b carry-clean adder-parametric modular multiplier
+(Reversible/VerifiedAdderCarryClean.lean)
+
+The carry-clean (`Θ(n)`-qubit) counterpart of the 36a keystone: a restored-clean step interface
+(`clean` precondition + restoration postcondition, single reused scratch bank), the parametric
+multiplier + cost, and the faithfulness instance recovering `cuccaroModMul`'s `(X·Y) mod N`
+correctness and `20·n²+14·n` Toffoli figure by instantiation. All foundational-triple-only. -/
+
+/-- info: 'Reversible.genMulCC_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMulCC_correct
+
+/-- info: 'Reversible.genMulCC_toffoli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMulCC_toffoli
+
+/-- info: 'Reversible.genMulCC_clean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMulCC_clean
+
+/-- info: 'Reversible.cuccaroModMulStep_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.cuccaroModMulStep_spec
+
+/-- info: 'Reversible.genMulCC_cuccaroAdder_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMulCC_cuccaroAdder_eq
+
+/-- info: 'Reversible.genMulCC_cuccaroAdder_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMulCC_cuccaroAdder_correct
+
+/-- info: 'Reversible.genMulCC_cuccaroAdder_toffoli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.genMulCC_cuccaroAdder_toffoli
 
 /-! ### AND-based reversible adder with explicit fresh per-carry AND temporaries (Reversible/AndAdd.lean,
 Tier-X / L5-c prerequisite). The fresh-AND compute / uncompute attachment point + the full AND-based
