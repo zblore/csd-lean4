@@ -37,8 +37,8 @@ research-frontier / infrastructure gap.
 | 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | DONE | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
-| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a DONE; 15b in audit-repair; 15c–e open | |
-| 24 | 15b QEC-as-decoherence (error channel + Stinespring origin + code correction) | Empirical | M | in-progress (A-class repair: in-code channel-correction bridge) | |
+| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b DONE; 15c–e open | |
+| 24 | 15b QEC-as-decoherence — DONE: error = K2 bit-flip CHANNEL + Stinespring origin + in-code correction (recoverⱼ∘errorⱼ=id on encoded density, one space); ontic Σ-volume origin gated to D1 (QECDecoherence.lean) | Empirical | M | DONE | |
 | 34 | 15a follow-up: degeneracy boundary (p₀=p₁ ⇒ scalar·I) + general-N einselection | Empirical | M | open | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
 
