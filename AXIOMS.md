@@ -182,7 +182,7 @@ Nine concrete items are tracked in [`specs/LF4-todo.md`](specs/LF4-todo.md). The
 **Group C: housekeeping**
 - §9 Unify `MeasurablePartition` with LF1's intersect-full-measure sketch (discharges the partition-type gap noted in the LF1 `Outcomes.lean` docstring).
 
-LF5 (measurement dynamics) is now a concrete layer: the single-system projective tier is **complete 2026-06-11..15** (`specs/lf5-plan.md`, layer headline `measurement_flow_born_frequency` — foundational-triple-only, no new axioms, no new structural posits beyond the A5 datum on the dilated sector already recorded in §3.3). **LF5-F (2026-06-15) discharged the per-microstate outcome *function*** (`bornRegion` pairwise disjointness → `vnPointerOutcome` → `measurement_flow_outcome_frequency`). Outcome-*conditioned* update (Lüders / sequential circuits) and the entangled / non-local de-isolation tier remain open LF5+ territory.
+LF5 (measurement dynamics) is now a concrete layer: the single-system projective tier is **complete 2026-06-11..15** (`specs/lf5-plan.md`, layer headline `measurement_flow_born_frequency` — foundational-triple-only, no new axioms, no new structural posits beyond the A5 datum on the dilated sector already recorded in §3.3). **LF5-F (2026-06-15) discharged the per-microstate outcome *function*** (`bornRegion` pairwise disjointness → `vnPointerOutcome` → `measurement_flow_outcome_frequency`). Outcome-*conditioned* update (Lüders / sequential circuits) remains open. The entangled / non-local de-isolation tier is now **first exercised at LF6-A/B** (2026-06-28, `CsdLean4/LF6/`: `no_product_partition_realises_singlet`, `singletDeisolationFlow`, the decoherence/purity-drop witness) — **introducing no new axioms** (foundational-triple-only); the general-`N` entangled tier remains open. The open-system / decoherence empirical 15-series (`Empirical/CSD/{Einselection,QECDecoherence,WeakMeasurement,QuantumZeno,ChannelCapacity}`) and the metrology branch (`Empirical/Metrology/`) likewise add no axioms.
 
 ## 5. What `#print axioms` reports
 
@@ -227,6 +227,18 @@ For each headline exported theorem, the legible axiom citation:
 | `LF4.fs_born_volume_ratio_N` (+ `_apex`) | `propext, Classical.choice, Quot.sound` |
 | `LF4.born_frequency_convergence_N` (general-`N` Busch-free) | `propext, Classical.choice, Quot.sound` |
 | `MeasureTheory.measurePreserving_piCurry` / `map_curryProd_pi` (Cat-1 staging) | `propext, Classical.choice, Quot.sound` |
+| `LF4.povm_born_frequency_volume` (POVM Born = FS volume) | `propext, Classical.choice, Quot.sound` |
+| `LF4.canonicalNaimark` / `povm_born_eq_dilated_volume` | `propext, Classical.choice, Quot.sound` |
+| `LF5.measurement_flow_born_frequency` (layer headline) | `propext, Classical.choice, Quot.sound` |
+| `LF5.measurement_flow_outcome_frequency` (LF5-F) | `propext, Classical.choice, Quot.sound` |
+| `LF6.no_product_partition_realises_singlet` (entangled tier) | `propext, Classical.choice, Quot.sound` |
+| `LF6.singletDeisolationFlow` (Φ ≠ id realises the singlet) | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.Einselection.einselection_degenerate_boundary` (15a) | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.QECDecoherence.qec_corrects_decoherence` (15b) | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume` (15c) | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.QuantumZeno.zeno_freezing` (15d) | `propext, Classical.choice, Quot.sound` |
+| `Empirical.CSDBridge.ChannelCapacity.dephasing_classical_vs_quantum` (15e) | `propext, Classical.choice, Quot.sound` |
+| `Empirical.Metrology` Ramsey / QFI / Heisenberg (A1–A3) | `propext, Classical.choice, Quot.sound` |
 
 ### Empirical-prediction headline theorems
 

@@ -17,11 +17,20 @@ preparation (the `hpos` genericity was retired by the unconditional engine,
 `LF4/BornRegionUncond.lean`). LF5-F (2026-06-14) adds the per-microstate outcome
 map: `bornRegion_pairwiseDisjoint` → `vnPointerOutcome` → `measurement_flow_outcome_frequency`
 (`LF4/BornRegionDisjoint.lean` + `LF5/PointerOutcome.lean`), discharging the
-outcome-function caveat owed since `aeece86`. **The open frontier remains D1's deeper strata**
-([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6): the entangled / non-local
-de-isolation tier, the A5 sector origin, and threading the flow through the concrete
-`SectorData` instances (which still carry `Φ = id`). Axiom posture and the two-strata
-(operational Gleason vs ontic volume) reading live in [`AXIOMS.md`](AXIOMS.md) §2.
+outcome-function caveat owed since `aeece86`. **The entangled / non-local de-isolation tier
+is now first exercised at LF6-A/B** (2026-06-28; `CsdLean4/LF6/`): the singlet's
+non-factorisation is Bell-forced in the `Σ`-engine (`no_product_partition_realises_singlet`),
+realised by a genuine `ℂℙ¹⁵` de-isolation flow `Φ ≠ id` (`singletDeisolationFlow`), with a
+decoherence / purity-drop witness (LF6-B). The **A5 sector origin has first onramp results**
+(2026-06-29, `LF4/TypicalityForcing.lean`): typicality is forced by the LLN (papers A&B),
+`μFS` is the symmetry-canonical sampling measure (`fubiniStudy_forced_by_symmetry`), and the
+single-flow ergodic route is ruled out — but the sector is not yet derived from the dynamics.
+**The open frontier remains D1's deeper strata** ([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6):
+the **general-`N`** entangled tier, the A5 sector origin (derive `(π,G)` from `Φ`), and the
+Born-from-volume `SectorData` instances, which still carry `Φ = id` (the D1c variants
+`kSectorDataFlow` / `cpSectorDataFlow` thread a genuine `Φ ≠ id` into concrete instances but do
+not yet discharge A5). Axiom posture and the two-strata (operational Gleason vs ontic volume)
+reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
 **Doc-currency discipline (mandatory).** When a tranche lands, updating the docs is part of
 "done", not a later chore. In the *same commit* as the Lean work, update: the
@@ -515,11 +524,15 @@ value: `kMuPsi_kRegion` makes `fibreArc (P_st)` have volume `P_st`;
 `diracProd_spectralRegion` are *proved* but realise the Born value rather than
 *derive* it. The genuine content is (a) the partition is genuinely disjoint, and
 (b) the ontic Lebesgue-integral route and the Hilbert Parseval route meet at the
-same number through structurally distinct machinery. **`Φ := id` in every
-concrete `SectorData`** — no dynamics is exercised (structural debt D1, wide
-open). LF4 is a faithful *realisation* on a compact-Kähler Σ, not a *derivation*
-of quantum weights from deterministic dynamics. Say which side of that line any
-new result sits on.
+same number through structurally distinct machinery. **`Φ := id` in the
+Born-from-volume `SectorData` instances** — these LF4 results exercise no dynamics
+(structural debt D1, wide open). (D1c-1/-2, 2026-06-29, added flow-carrying
+*variants* `kSectorDataFlow` / `cpSectorDataFlow` with a genuine `Φ ≠ id`
+(`kFlow` / `obsFlow`), and LF5/LF6 exercise `Φ_vN ≠ id` / `singletDeisolationFlow`
+on the *dilated* `Σ'`; but the instances behind the Born-from-volume theorems still
+carry `Φ = id`, and none of these discharge A5.) LF4 is a faithful *realisation* on
+a compact-Kähler Σ, not a *derivation* of quantum weights from deterministic
+dynamics. Say which side of that line any new result sits on.
 
 **Carve-out / Born-from-Kähler-volume programme (the moment-map cluster).** The
 modules `KahlerFlow`, `MomentMap`, `BornVolume`, `MomentPushforward`, `BornFS`,
@@ -690,6 +703,33 @@ the decoherence/partial-trace error model, the A5 sector origin, and the concret
 `SectorData` instances (which still carry `Φ = id`). All LF5 results are
 foundational-triple-only and AxiomAudit-pinned.
 
+### LF6: the entangled de-isolation tier (D1 frontier; first results 2026-06-28)
+
+LF6 carries measurement dynamics into the **entangled / non-local** stratum of D1.
+Module chain (under `CsdLean4/LF6/`, namespace `CSD.LF6`):
+
+```
+ForcedContextuality.lean   — no_product_partition_realises_singlet (no setting-local
+                             ±1 PRODUCT partition of the Σ-engine reproduces the singlet,
+                             via lhvCHSH_abs_le_two + the singlet 2√2; non-factorisation
+                             is Bell-FORCED, derived not posited), the contextuality
+                             corollary, engine_joint_nonfactorises (P_st ≠ 1/4 aligned),
+                             engine_marginal_factorises (no-signalling, LF3 reuse)
+SingletDeisolationFlow.lean— singletDeisolationFlow: a genuine Φ ≠ id de-isolation flow
+                             on the dilated ℂℙ¹⁵ realising the singlet dilation
+                             (flow-realises-dilation lemma)
+LocalDeisolationFlow.lean  — the local product de-isolation flow (LF6-A.3)
+Decoherence.lean           — LF6-B (D1b): the decoherence / partial-trace tier;
+                             purity-drop / irreversibility witness on the reduced state
+```
+
+**LF6 honest scope.** Single-instance (the singlet) entangled landings: the
+non-factorisation is *derived* from the engine structure (factorisation would itself
+be a measurement; nudge ≠ carve), and a real `Φ ≠ id` flow realises (not carves) the
+dilation. The **general-`N` entangled tier remains open** (active-todo #5). The Born
+number is still imported from the FS-volume engine, not re-derived; the A5 sector origin
+is the residue. All LF6 results are foundational-triple-only and AxiomAudit-pinned.
+
 ### Empirical: QM-validity regression suite
 
 Under `CsdLean4/Empirical/`, namespace `Empirical`. Two branches:
@@ -716,7 +756,19 @@ Under `CsdLean4/Empirical/`, namespace `Empirical`. Two branches:
   + measure-bridge data, providing the structural slot for the CSD-ontic
   interpretation. Several bundles carry load-bearing undischarged realisability
   fields (`bridge_isometry`, observable-correspondence; LF4-todo §13/§14) marked
-  with `Status: load-bearing, externally supplied, undischarged`.
+  with `Status: load-bearing, externally supplied, undischarged`. Also the
+  **open-system / decoherence 15-series** (2026-06-30): `Einselection.lean`
+  (pointer-basis selection + degeneracy boundary), `QECDecoherence.lean`
+  (QEC-as-decoherence: error = bit-flip channel + Stinespring origin + in-code
+  correction), `WeakMeasurement.lean` (unsharp POVM, partial volume nudge),
+  `QuantumZeno.lean` (freezing via repeated re-carving), `ChannelCapacity.lean`
+  (dephasing classical-yes/quantum-no). Each discharges the QM-operational content;
+  the ontic Σ-volume / partial-trace-loss origin is uniformly D1-gated (`Φ = id`).
+- `Empirical/Metrology/` — quantum sensing (A1–A3): `Ramsey.lean`,
+  `QuantumFisher.lean` (QFI = Fubini-Study metric), `Heisenberg.lean` (the `1/N`
+  Heisenberg scaling via the GHZ probe). QM-validity / estimator geometry;
+  foundational-triple-only, AxiomAudit-pinned. A4 (decoherence as open symplectic
+  drift) is D1-gated.
 
 ### `Mathlib/` staging tree
 
@@ -725,8 +777,14 @@ candidates — `Projectivization` topology/measure/lift API and the
 `UnitaryGroup` / Fubini-Study uniqueness chain (which gives the axiom-free
 concrete realisation `invariant_measure_uniqueness_cpn`); the `QuantumInfo/`
 subtree (the n-qubit `Register`/`prob` Born, `Hadamard`, `Fourier`/QFT
-unitarity, CPTP `Channel`s, `TraceDistance`, `QEC/` codes) consumed by the
-algorithm tier; and `MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
+unitarity, CPTP `Channel`s, `TraceDistance`, von Neumann `Entropy`, `QEC/` codes)
+consumed by the algorithm and decoherence tiers; the **`QuantumInfo/Reversible/`**
+reversible-circuit DSL + derived cost model (gate-list `Circuit`, `Cost`, the
+ModAdd/ModMul/ModInv + modular field-arithmetic + Cuccaro carry-clean stack) and
+**`QuantumInfo/ECDLP/`** (EllipticCurve / ScalarMul / Secp256k1 / ResourceBounds /
+point-double + point-add SLP programs / PointAddBenchmark) — the Shor/ECDLP
+resource-accounting tree (see `specs/ecdlp-resource-plan.md`); and
+`MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
 These files keep the **natural Mathlib namespace** (`namespace Projectivization`,
 `namespace Matrix`, `namespace QuantumInfo`), not a CSD wrapper; the
 `CsdLean4/Mathlib/<path>/` location is the only staging signal (CONVENTIONS.md §1
