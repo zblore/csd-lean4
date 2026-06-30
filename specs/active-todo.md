@@ -28,7 +28,8 @@ research-frontier / infrastructure gap.
 | 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) — DONE: L5-c wall closed at CELL granularity (MeasurementUncomputeLift.lean) | ECDSA | L–XL | DONE | #30 |
 | 21 | L5-d measurement-based adder re-cost — DONE: adder Toffolis 6n→3n (n=256: 1536→768), aggregated from 3n #31-proven-equivalent blocks (MeasurementAdder.lean); n-fold amplitude correctness WALLED (gadget non-permutation; QReg 3⊗QReg(m−3) tensor factor); SCORE still gated on adder-swap-through-point-addition + #7 | ECDSA | M | DONE | #7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
-| 35 | Minimal 1-AND-per-carry Gidney adder (~n Toffoli, free measurement uncompute) — the REAL Tier-X score-lever prerequisite; #30/#21 are a proof-of-concept attachment point, not competitive (6n→3n > 2n Cuccaro) | ECDSA | L | open | |
+| 35 | Minimal 1-Toffoli-per-carry Gidney adder — DONE: `gidneyAdd_correct = (a+b) mod 2ⁿ` (FULL general-n Boolean correctness, anti-hollow), 1-Toffoli `majCell`, unitary `2n` (ties Cuccaro), measurement re-cost `n` (`gidney_beats_cuccaro` vs proven corpus Cuccaro `2n` + #30 `6n`; n=256: 256/512/1536); space tradeoff O(n) disclosed; GidneyAdder.lean + MeasurementGidneyAdder.lean | ECDSA | L | DONE | |
+| 36 | Thread Gidney/carry-clean adder through the O(n²) multiplier/inverter (`ModularMulLoop`/`SafegcdInversion`) + re-cost vs ResourceBounds — the REAL score lever (a single adder swap barely moves the inversion-dominated 5.83M) | ECDSA | L | open | #35 |
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) — score lever ONLY after #35 + pervasive O(n²) mult/inverter application | ECDSA | XL | open | #35,#7,#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
 | 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
@@ -69,11 +70,16 @@ adder is `6n` Toffoli (`andCarryCell` = 3 CCX/carry, fresh-ancilla majority cell
 Cuccaro adder (~2n ≈ 512 at n=256). After the measurement re-cost it is `3n` = 768, STILL
 larger than Cuccaro's ~2n. So swapping #30 into the point-addition RAISES the score. #30/#21
 are the measurement-path proof-of-concept (the `andInput`-shaped uncompute attachment point),
-not a competitive adder. The genuine Tier-X score lever needs (i) a MINIMAL 1-AND-per-carry
-Gidney adder (~n Toffoli, free uncompute → beats Cuccaro), then (ii) pervasive application
-inside the O(n²) multiplier/inverter (where the measurement uncompute halves the dominant
-cost). The earlier "gap → ~5×" was aspirational (assumed that minimal-adder programme), NOT
-what #30/#21 deliver. Parity still gated on that unbuilt programme + step #7 (user harness).
+not a competitive adder.
+
+**UPDATE 2026-06-30: the minimal adder is now BUILT (#35, GidneyAdder.lean).** `gidneyAdd` is
+value-correct general-n (`gidneyAdd_correct`), `2n` Toffoli unitary (ties Cuccaro), `n` via the
+measurement re-cost (`gidney_beats_cuccaro`: n < Cuccaro 2n < #30 6n; n=256: 256/512/1536),
+foundational-triple, auditor-SOUND. So Tier-X step (i) is done. The score lever now reduces to
+step (ii) — **#36: thread the Gidney/carry-clean adder pervasively through the O(n²)
+multiplier/inverter** (`ModularMulLoop`/`SafegcdInversion`), where the inversion-dominated 5.83M
+lives (a single adder swap barely moves it) — plus step #7 (user harness). The "gap → ~5×" target
+is now gated on #36, not on an unbuilt adder.
 
 ## #16 — D1c plan (thread genuine Φ through concrete SectorData)
 

@@ -47,6 +47,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
@@ -231,6 +232,7 @@ import CsdLean4.Empirical.QM.Gates.MultiQubit
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
+import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.Empirical.CSD.Gates.Framework
 import CsdLean4.Empirical.CSD.Gates.SingleQubit
 import CsdLean4.Empirical.CSD.Gates.TwoQubit

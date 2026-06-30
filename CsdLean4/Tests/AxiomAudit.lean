@@ -42,6 +42,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
@@ -55,6 +56,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
+import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -4840,6 +4842,28 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.denote_agree_on
 
+/-! ### Gidney 1-Toffoli-per-carry adder (Reversible/GidneyAdder.lean, Build #35) -/
+
+/-- info: 'Reversible.majCell_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.majCell_correct
+
+/-- info: 'Reversible.majCell_toffoli' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.majCell_toffoli
+
+/-- info: 'Reversible.gidneyAdd_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.gidneyAdd_correct
+
+/-- info: 'Reversible.gidneyAdd_ancilla_clean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.gidneyAdd_ancilla_clean
+
+/-- info: 'Reversible.gidneyAdd_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.gidneyAdd_toffoli
+
 /-! ### ECDLP elliptic-curve layer (ECDLP/EllipticCurve.lean, Tranche 5) -/
 
 /-- info: 'ECDLP.scalarMul_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -5368,6 +5392,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Empirical.QM.measAdd_saving_aggregates' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.measAdd_saving_aggregates
+
+/-! ### Gidney adder measurement re-cost (Empirical/QM/MeasurementGidneyAdder.lean, Build #35) -/
+
+/-- info: 'CSD.Empirical.QM.gidneyMeasAddToffoli_eq' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyMeasAddToffoli_eq
+
+/-- info: 'CSD.Empirical.QM.gidneyMeasAdd_saving_aggregates' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyMeasAdd_saving_aggregates
+
+/-- info: 'CSD.Empirical.QM.gidney_beats_cuccaro' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidney_beats_cuccaro
+
+/-- info: 'CSD.Empirical.QM.gidney_toffoli_256' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidney_toffoli_256
 
 /-- info: 'CSD.Empirical.QM.ccxAtMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
