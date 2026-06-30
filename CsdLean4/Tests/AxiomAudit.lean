@@ -194,6 +194,7 @@ import CsdLean4.Empirical.CSD.Contextuality.MerminPeresVolume
 import CsdLean4.Empirical.CSD.Multipartite.GHZ
 import CsdLean4.Empirical.CSD.Einselection
 import CsdLean4.Empirical.CSD.QECDecoherence
+import CsdLean4.Empirical.CSD.ChannelCapacity
 import CsdLean4.Empirical.QM.Gates.SingleQubit
 import CsdLean4.Empirical.QM.Gates.TwoQubit
 import CsdLean4.Empirical.QM.Gates.BellPrep
@@ -5371,5 +5372,43 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Empirical.QM.ccxAtMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.ccxAtMat_lifts_denote
+
+-- Build 15e (ChannelCapacity, 2026-06-30): channel capacities of the de-isolation /
+-- dephasing channel Φ_deph = decohereReducedN (15a), on the K1-A von Neumann entropy.
+-- CLASSICAL info survives: computational-basis states are FIXED POINTS
+-- (dephasing_fixes_basis_state), single-letter Holevo χ of the basis ensemble = log 2
+-- (holevo_classical_eq_log_two, S(½I)−½·0−½·0). QUANTUM coherence destroyed: |+⟩⟨+| ↦ ½I
+-- (dephasing_plus_eq_half_one), entropy jump 0 → log 2 (dephasing_destroys_coherence).
+-- S(½I)=log 2 via the maximally-mixed value vonNeumannEntropy_const_smul_one (charpoly route).
+-- Single-shot Holevo / coherent-information, NOT the regularized capacity; entropy concavity
+-- (the general χ≥0 bound) gated on the open SSA fork. Ontic Σ-volume capacity D1-gated (LF6).
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_const_smul_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.vonNeumannEntropy_const_smul_one
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_maximally_mixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.vonNeumannEntropy_maximally_mixed
+
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_fixes_basis_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_fixes_basis_state
+
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.holevo_classical_eq_log_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.holevo_classical_eq_log_two
+
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_plus_eq_half_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_plus_eq_half_one
+
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_destroys_coherence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_destroys_coherence
+
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_classical_vs_quantum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_classical_vs_quantum
 
 end CSD.Tests.AxiomAudit

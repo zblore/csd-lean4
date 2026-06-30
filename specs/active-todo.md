@@ -38,7 +38,8 @@ research-frontier / infrastructure gap.
 | 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | DONE | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
-| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b, 15c, 15d DONE; 15e open | |
+| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a–e ALL DONE (series closed) | |
+| 27 | 15e channel capacities — DONE: dephasing classical-yes/quantum-no contrast (fixes |i⟩⟨i|, Holevo χ=log 2; |+⟩→½I entropy jump 0→log 2); single-letter Holevo (regularized capacity NOT claimed, concavity gated); 2 new Cat-1 entropy lemmas S(c·I)/S(½I)=log 2 relocated to QuantumInfo/Entropy.lean; ontic capacity D1-gated (ChannelCapacity.lean) | Empirical | M | DONE | |
 | 26 | 15d quantum Zeno — DONE: derived quadratic short-time bound P(s)≥1−(ΔH)²s² + zero slope P'(0)=0 (σx/|0⟩ witness, variance (ΔH)²=1 from matrices), Bernoulli lower bound P_n≥1−(ΔH)²t²/n, freezing P_n→1 (squeeze); non-vacuity (ΔH)²>0 + full decay at π/2; exp(-isσx) closed-form asserted, rest derived; CSD re-carving reading, dynamical Σ-flow D1-gated (QuantumZeno.lean) | Empirical | M | DONE | |
 | 25 | 15c weak/unsharp measurement — DONE: unsharp POVM weakEffect±(η)=½(I±ησ), no-meas(η=0)↔projective(η=1) interpolation, partial-info witness, FULL FS-volume reading on ℂℙ³ Naimark dilation (Gleason-free uncond engine); continuous-measurement flow D1-gated (WeakMeasurement.lean) | Empirical | M | DONE | |
 | 24 | 15b QEC-as-decoherence — DONE: error = K2 bit-flip CHANNEL + Stinespring origin + in-code correction (recoverⱼ∘errorⱼ=id on encoded density, one space); ontic Σ-volume origin gated to D1 (QECDecoherence.lean) | Empirical | M | DONE | |

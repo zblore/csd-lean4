@@ -486,4 +486,51 @@ theorem vonNeumannEntropy_kronecker {m : Type*} [Fintype m] [DecidableEq m]
           Finset.sum_congr rfl fun i _ => by rw [← Finset.mul_sum]]
     rw [← Finset.sum_mul, hsumρ, one_mul]
 
+/-! ### Entropy of a real-scalar (maximally-mixed) state -/
+
+/-- A real-scalar multiple of the identity is Hermitian: `(↑c)·I` for `c : ℝ`. Via
+`diagonal_conjTranspose` and `star (↑c) = ↑c`. -/
+lemma const_smul_one_isHermitian {N : ℕ} (c : ℝ) :
+    ((↑c : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)).IsHermitian := by
+  have hdiag : ((↑c : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ))
+      = Matrix.diagonal (fun _ : Fin N => (↑c : ℂ)) := by
+    ext i j
+    rw [Matrix.smul_apply, Matrix.one_apply, Matrix.diagonal_apply, smul_eq_mul]
+    by_cases hij : i = j <;> simp [hij]
+  rw [hdiag]
+  unfold Matrix.IsHermitian
+  rw [Matrix.diagonal_conjTranspose]
+  congr 1
+  funext i
+  rw [Pi.star_apply, ← starRingEnd_apply, Complex.conj_ofReal]
+
+/-- **Entropy of a real-scalar identity.** `S((↑c)·I_N) = N · negMulLog c` for `c : ℝ`.
+Route: `(↑c)·I = diagonal (fun _ => ↑c)` has charpoly `∏ (X − ↑c)`, so its spectral
+sum collapses by `spectral_sum_eq_of_charpoly_prod` (permutation-invariant, avoiding
+the sorted-eigenvalue subtlety); the constant sum gives `N · negMulLog c`. -/
+theorem vonNeumannEntropy_const_smul_one {N : ℕ} (c : ℝ)
+    (h : ((↑c : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)).IsHermitian) :
+    vonNeumannEntropy h = (N : ℝ) * Real.negMulLog c := by
+  have hdiag : ((↑c : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ))
+      = Matrix.diagonal (fun _ : Fin N => (↑c : ℂ)) := by
+    ext i j
+    rw [Matrix.smul_apply, Matrix.one_apply, Matrix.diagonal_apply, smul_eq_mul]
+    by_cases hij : i = j <;> simp [hij]
+  have hchar : ((↑c : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)).charpoly
+      = ∏ _i : Fin N, (X - C (↑c : ℂ)) := by
+    rw [hdiag, charpoly_diagonal]
+  unfold vonNeumannEntropy
+  rw [spectral_sum_eq_of_charpoly_prod h (fun _ => c) Real.negMulLog hchar,
+    Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+
+/-- **Maximally-mixed entropy saturates the max-entropy bound:** `S((1/N)·I) = log N`
+for `N ≥ 1`. Companion to `vonNeumannEntropy_le_log_card` (the `≤ log d` bound); the
+uniform state is the saturating case. -/
+theorem vonNeumannEntropy_maximally_mixed {N : ℕ} (hN : 0 < N)
+    (h : ((↑((1 : ℝ) / N) : ℂ) • (1 : Matrix (Fin N) (Fin N) ℂ)).IsHermitian) :
+    vonNeumannEntropy h = Real.log N := by
+  have hNz : (N : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hN.ne'
+  rw [vonNeumannEntropy_const_smul_one, Real.negMulLog, one_div, Real.log_inv]
+  field_simp
+
 end QuantumInfo
