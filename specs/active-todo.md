@@ -26,7 +26,7 @@ research-frontier / infrastructure gap.
 | 20 | L5-c Boolean↔amplitude bridge — SCOPING DONE, verdict WALL (see below) | ECDSA | L–XL | scoped (wall) | |
 | 30 | AND-based adder primitive (Boolean DSL; fresh per-carry AND temporary) — DONE (the L5-d attachment point) | ECDSA | L | DONE | |
 | 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) — DONE: L5-c wall closed at CELL granularity (MeasurementUncomputeLift.lean) | ECDSA | L–XL | DONE | #30 |
-| 21 | L5-d measurement-based adder + re-cost (gap ~10.5×→~5×) — UNBLOCKED by #30+#31; still gated on #7 | ECDSA | M | open | #7 |
+| 21 | L5-d measurement-based adder re-cost — DONE: adder Toffolis 6n→3n (n=256: 1536→768), aggregated from 3n #31-proven-equivalent blocks (MeasurementAdder.lean); n-fold amplitude correctness WALLED (gadget non-permutation; QReg 3⊗QReg(m−3) tensor factor); SCORE still gated on adder-swap-through-point-addition + #7 | ECDSA | M | DONE | #7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
 | 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
