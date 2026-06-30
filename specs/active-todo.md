@@ -28,7 +28,8 @@ research-frontier / infrastructure gap.
 | 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) — DONE: L5-c wall closed at CELL granularity (MeasurementUncomputeLift.lean) | ECDSA | L–XL | DONE | #30 |
 | 21 | L5-d measurement-based adder re-cost — DONE: adder Toffolis 6n→3n (n=256: 1536→768), aggregated from 3n #31-proven-equivalent blocks (MeasurementAdder.lean); n-fold amplitude correctness WALLED (gadget non-permutation; QReg 3⊗QReg(m−3) tensor factor); SCORE still gated on adder-swap-through-point-addition + #7 | ECDSA | M | DONE | #7 |
 | 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
-| 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) | ECDSA | XL | open | #7,#18–#22 |
+| 35 | Minimal 1-AND-per-carry Gidney adder (~n Toffoli, free measurement uncompute) — the REAL Tier-X score-lever prerequisite; #30/#21 are a proof-of-concept attachment point, not competitive (6n→3n > 2n Cuccaro) | ECDSA | L | open | |
+| 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) — score lever ONLY after #35 + pervasive O(n²) mult/inverter application | ECDSA | XL | open | #35,#7,#22 |
 | 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
 | 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
 | 28 | D1c-2: physically-meaningful Φ (obsFlow Hamiltonian) into cpSectorData | Foundations-debt | S | DONE | |
