@@ -38,7 +38,8 @@ research-frontier / infrastructure gap.
 | 33 | A5: obsFlow_not_ergodic — momentMap·i is a non-constant conserved observable (closes the obstruction story) | Foundations-debt | S–M | DONE | |
 | 17 | A5: derive sector (π,G) + FS typicality from dynamics | Foundations-debt | XL | open | #29 |
 | 5 | LF6 general-N entangled tier | LF6 | L | open | |
-| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b DONE; 15c–e open | |
+| 15 | Open-system / decoherence empirical (umbrella; 15a einselection DONE) | Empirical | L | 15a, 15b, 15c DONE; 15d–e open | |
+| 25 | 15c weak/unsharp measurement — DONE: unsharp POVM weakEffect±(η)=½(I±ησ), no-meas(η=0)↔projective(η=1) interpolation, partial-info witness, FULL FS-volume reading on ℂℙ³ Naimark dilation (Gleason-free uncond engine); continuous-measurement flow D1-gated (WeakMeasurement.lean) | Empirical | M | DONE | |
 | 24 | 15b QEC-as-decoherence — DONE: error = K2 bit-flip CHANNEL + Stinespring origin + in-code correction (recoverⱼ∘errorⱼ=id on encoded density, one space); ontic Σ-volume origin gated to D1 (QECDecoherence.lean) | Empirical | M | DONE | |
 | 34 | 15a follow-up — DONE: degeneracy boundary (p₀=p₁ ⇒ ½I basis-invariant, einselection FAILS; iff `decohere_hadamard_offDiag_ne_zero_iff`) + general-N einselection (`einselectionN`, `decohereReducedN_acts_nontrivial`); ontic origin D1-gated (Einselection.lean) | Empirical | M | DONE | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |

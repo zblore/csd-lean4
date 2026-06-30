@@ -175,6 +175,7 @@ import CsdLean4.Empirical.CSD.UncertaintyVolume
 import CsdLean4.Empirical.CSD.TrineVolume
 import CsdLean4.Empirical.CSD.USDVolume
 import CsdLean4.Empirical.CSD.SICVolume
+import CsdLean4.Empirical.CSD.WeakMeasurement
 import CsdLean4.Empirical.CSD.QutritPOVMVolume
 import CsdLean4.Empirical.CSD.SIC3Volume
 import CsdLean4.Empirical.CSD.MUB3Volume
@@ -1975,6 +1976,58 @@ info: 'CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume' depends on a
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume
 
+-- Weak / unsharp measurement (Build 15c): the one-parameter unsharp POVM
+-- interpolating no-measurement (η=0) and the sharp σ_z carve (η=1), its Born weights,
+-- and the partial-volume-nudge reading on the dilated Σ' = ℂℙ³. Foundational-triple
+-- only (carving-free, Gleason-free), static / operational (continuous dynamics D1-gated).
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_effects_sum_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_effects_sum_one
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_effect_psd' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_effect_psd
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_weight_plus' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_weight_plus
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_weight_plus_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_weight_plus_unit
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_weight_minus' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_weight_minus
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_unsharp_interpolation' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_unsharp_interpolation
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_partial_information_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_partial_information_witness
+
+/--
+info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound]
+-/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume
+
 -- Qutrit POVM volume capstone: the first non-qubit (N=3) volume-frequency entry,
 -- foundational-triple only (carving-free, Gleason-free); a genuine non-projective
 -- qutrit POVM (the unsharp / white-noise measurement) via Naimark dilation to ℂℙ⁸.
@@ -3700,6 +3753,10 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SICVolume.sic_born_frequency_volume_canonical
+
+/-- info: 'CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WeakMeasurement.weak_born_frequency_volume_canonical
 
 /-- info: 'CSD.Empirical.CSDBridge.SIC3Volume.sic3_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
