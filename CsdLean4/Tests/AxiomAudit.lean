@@ -5588,6 +5588,32 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.score_trustedEstimate_vs_rounded_leaderboard
 
+/-! ### ECDLP Stage-2 aggressive qubit layout: cited 4.5n = 1152, recomposed score, ~1.07x rank (TrustedEstimate.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Qubits_trustedEstimate_aggressive_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Qubits_trustedEstimate_aggressive_eq
+
+/-- info: 'ECDLP.ResourceBounds.qubits_aggressive_matches_leaderboard_benchmark' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.qubits_aggressive_matches_leaderboard_benchmark
+
+/-- info: 'ECDLP.ResourceBounds.qubits_aggressive_half_trustedEstimate' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.qubits_aggressive_half_trustedEstimate
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Score_trustedEstimate_aggressive_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Score_trustedEstimate_aggressive_eq
+
+/-- info: 'ECDLP.ResourceBounds.score_aggressive_within_leaderboard_benchmark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.score_aggressive_within_leaderboard_benchmark
+
+/-- info: 'ECDLP.ResourceBounds.trustedEstimate_aggressive_uses_trusted' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.trustedEstimate_aggressive_uses_trusted
+
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
 /-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/

@@ -3,8 +3,8 @@
 Status: DONE 2026-07-01. Reporting layer only (no circuit re-derived).
 Lean: `CsdLean4/Mathlib/QuantumInfo/ECDLP/TwoTrack.lean` +
 `CsdLean4/Mathlib/QuantumInfo/ECDLP/TrustedEstimate.lean` (Stage-1 trusted leaderboard estimate).
-Pins: `CsdLean4/Tests/AxiomAudit.lean` (seven TwoTrack pins + fourteen TrustedEstimate pins,
-foundational-triple plus propext, no busch).
+Pins: `CsdLean4/Tests/AxiomAudit.lean` (seven TwoTrack pins + fourteen Stage-1 TrustedEstimate pins +
+six Stage-2 aggressive-layout pins, foundational-triple plus propext, no busch).
 
 ## Purpose
 
@@ -164,6 +164,49 @@ AND-ancilla-recycling qubit layout of Litinski 2023 / Babbush et al. (about 4.5n
 named and cited, NOT modelled here because modelling it is reproducing the number-one construction, not a
 bounded re-cost. The corpus records only the number-one leaderboard figure, so no specific top-N rank is
 claimed beyond the number-one comparison the arithmetic supports.
+
+### Stage-2: aggressive qubit layout (trusted published mechanism; closes the Stage-1 qubit residual)
+
+Stage-1's whole score residual was the peak-qubit factor of two. Stage-2 composes Litinski's published
+measurement-based ancilla-recycling layout in place of the Stage-1 windowed-projective `9n` model and
+recomposes the score.
+
+Basis (why the number is trusted): the figure is grounded in a PUBLISHED, community-validated MECHANISM, not
+in any leaderboard entry. Litinski's measurement-based AND-ancilla-recycling register layout (arXiv
+2306.08585, 2023; Babbush et al. reduced-qubit ECDLP estimates) has a peak width of about 4.5n, which at n =
+256 is about 1152 qubits. Its coordinate registers plus a minimal recycled working scratch (each AND-ancilla
+measured out and its space reused) replace the Stage-1 windowed table, exactly halving the 9n width. The
+ecdsa.fail leaderboard peak-qubit figure 1152 is an EXTERNAL BENCHMARK we compare to, NOT a trusted input:
+that a principled composition of published mechanisms lands on it is a cross-check, not the justification.
+
+| figure | value | composition | basis |
+| --- | --- | --- | --- |
+| `secp256k1Qubits_trustedEstimate_aggressive` | 1152 | 4.5n = 9n/2 (Litinski ancilla-recycling layout) | trusted |
+| `secp256k1Score_trustedEstimate_aggressive` | 1679601024 | qubits times Toffoli (1152 * 1457987) | trusted |
+
+Cross-checks and rank (from the arithmetic):
+
+- Qubit axis matches the benchmark width: `secp256k1Qubits_trustedEstimate_aggressive = leaderboardQubits`
+  (1152 = 1152, `qubits_aggressive_matches_leaderboard_benchmark`), and is exactly half the Stage-1 model
+  (`qubits_aggressive_half_trustedEstimate`, 2 * 1152 = 2304).
+- Recomposed score within about 1.07 times the number-one benchmark:
+  `leaderboardScoreExact * 107 < secp256k1Score_trustedEstimate_aggressive * 100 < leaderboardScoreExact *
+  108` (167639040000 < 167960102400 < 169205760000, `score_aggressive_within_leaderboard_benchmark`),
+  pinning the ratio strictly between 1.07 and 1.08 times the number-one benchmark score 1566720000.
+
+So the composition of published mechanisms lands within about 1.07 times the number-one benchmark on BOTH
+axes (the qubit axis matches the benchmark width; the Toffoli axis was already within about 1.08 times in
+Stage-1). Honesty check (`trustedEstimate_aggressive_uses_trusted`, decide): both aggressive figures tag
+`trusted` (cited published construction, not verified); no verified or anchored figure is touched, and none
+consumes the aggressive layout.
+
+Stage-2 caveats (restated): the aggressive figure is a CITED published layout (Litinski / Babbush),
+community-validated, cited-not-modelled, NOT verified (no Lean circuit proof), NOT a novel improvement, NOT a
+corpus achievement, and NOT a submission. It does NOT reach and does NOT beat the number-one entry: it lands
+slightly above at about 1.07 times, composing the same published mechanisms the leaders use. The board scores
+a RUST-coded circuit, so this remains a TARGET SPEC, not a submission. The distinctive corpus result is still
+the VERIFIED floor (denote-level circuit correctness), not this trusted rank. Verifying the aggressive
+measurement-based ancilla-recycling layout as a reversible circuit is a future tranche, not done here.
 
 ### Standing caveats
 

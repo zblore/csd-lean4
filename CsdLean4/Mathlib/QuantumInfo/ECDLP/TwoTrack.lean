@@ -44,6 +44,14 @@ not yet verified. The frontier is the roadmap, not a deficiency.
   the named residue, 36c Case-C), and Karatsuba's recursion split is a `ring`-identity not a circuit
   fold. The proven-bound-vs-documented-count line is the distinction from `anchored`.
 
+  **What `trusted` means (and does not).** `trusted` = trust in the PUBLISHED, community-validated
+  MECHANISM (the construction is established and relied on across the peer-reviewed literature), NOT
+  trust in any competition / leaderboard entry. The trusted estimate is a principled COMPOSITION of such
+  published mechanisms (Cuccaro, Kaliski / Bernstein-Yang GCD-inverse, Gidney, Karatsuba, windowing,
+  Litinski's ancilla-recycling layout). The ecdsa.fail leaderboard is an EXTERNAL BENCHMARK the estimate
+  is COMPARED to, never a trusted input; that the composition lands near the leaderboard is a cross-check,
+  not the justification.
+
 ## The two headline figures (at `Secp256k1.bits = 256`, one affine point addition, classical offset)
 
 * `secp256k1Toffoli_verifiedFloor    = 676880936`  (Fermat inversion, verified/anchored only)
