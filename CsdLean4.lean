@@ -158,6 +158,7 @@ import CsdLean4.LF6.ForcedContextuality
 import CsdLean4.LF6.GHZContextuality
 import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.LF6.GHZDeisolationFlow
+import CsdLean4.LF6.GHZMerminCarve
 import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.Empirical.QM.Bell

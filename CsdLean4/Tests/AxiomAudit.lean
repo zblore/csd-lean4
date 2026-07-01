@@ -124,6 +124,7 @@ import CsdLean4.LF6.ForcedContextuality
 import CsdLean4.LF6.GHZContextuality
 import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.LF6.GHZDeisolationFlow
+import CsdLean4.LF6.GHZMerminCarve
 import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.Empirical.QM.Bell
@@ -3552,6 +3553,63 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.ghzDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.ghzDeisolation_flow_capstone
+
+-- LF6-C.3 (GHZMerminCarve, 2026-07-01): the GHZ Mermin-context carve — the GENUINE
+-- contextual increment C.2 deferred. NEW infrastructure: the GHZ Pauli-context joint
+-- eigenstructure (ghzMerminEig, the tensor of the genuine single-qubit sigma_x/sigma_y
+-- eigenstates; localEig_eigenvector proves each local factor is a real Pauli eigenvector
+-- with eigenvalue signC o = ±1 — the three-party analogue of LF3 singletJointEig), plus
+-- the Born identity ghzMerminEig_born (‖⟨ghz, ghzMerminEig ctx o⟩‖² = (1/16)(1+signProd o·pv)²,
+-- genuinely computed from the 8 GHZ basis evaluations + the local amplitudes).
+-- ghzDeisolation_blockVolume_correlation (THE headline): for every Mermin context with real
+-- phase product pv, the carve's sign-product-weighted pointer-block FS-volume sum = pv = the
+-- Mermin expectation (⟨XXX⟩=+1, ⟨XYY⟩=⟨YXY⟩=⟨YYX⟩=−1). GENUINELY COMPUTED (LF5
+-- vnDilation_pointer_volume @ N=8 block volumes composed with the Mermin Born identity), NOT
+-- asserted — this is what C.2's diagonal re-export lacked. carveBlockCorrelation_eq_xxx ties the
+-- carve's ⟨XXX⟩ to the QM Hilbert Mermin expectation (via ghz_expectation_xxx) through distinct
+-- machinery meeting at +1. ghzDeisolation_carve_not_product (the dynamical carve-tie, FOUR-CONTEXT
+-- tie CLOSED): feeds the carve's OWN four achieved Mermin correlations into C.1
+-- no_product_partition_realises_ghz — no setting-local ±1 product partition reproduces them,
+-- triggering Mermin's +1=−1 all-or-nothing contradiction; upgrades C.2's bare re-export
+-- ghzDeisolation_contextuality_anchor to a genuine carve-tied theorem. Born = FS-volume IMPORTED
+-- from the DH/moment-map engine, not re-derived; flow realises not derives; only the local
+-- single-qubit eigen-equation proved (tripartite eigen-eq is the tensor, definitional). Residue A5
+-- (GHZ entangled sector posited). Foundational triple only, no busch, no native_decide.
+/-- info: 'CSD.LF6.localEig_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localEig_eigenvector
+
+/-- info: 'CSD.LF6.ghzMerminEig_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzMerminEig_born
+
+/-- info: 'CSD.LF6.ghzDeisolation_blockVolume_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_blockVolume_correlation
+
+/-- info: 'CSD.LF6.merminCarveCorrelation_eq_xxx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.merminCarveCorrelation_eq_xxx
+
+/-- info: 'CSD.LF6.merminCarveCorrelation_eq_xyy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.merminCarveCorrelation_eq_xyy
+
+/-- info: 'CSD.LF6.merminCarveCorrelation_eq_yxy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.merminCarveCorrelation_eq_yxy
+
+/-- info: 'CSD.LF6.merminCarveCorrelation_eq_yyx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.merminCarveCorrelation_eq_yyx
+
+/-- info: 'CSD.LF6.ghzDeisolation_carve_not_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_carve_not_product
+
+/-- info: 'CSD.LF6.ghzMermin_carve_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzMermin_carve_capstone
 
 -- LF6-A.2 (SingletDeisolationFlow): the DYNAMICAL realisation of the entangled
 -- de-isolation tier. A genuine deterministic FS-measure-preserving de-isolation
