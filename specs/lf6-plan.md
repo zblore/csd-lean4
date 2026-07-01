@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) DONE 2026-06-30.** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) + C.2 (GHZ de-isolation flow, minimal computational-basis carve) DONE 2026-06-30.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -200,18 +200,38 @@ GHZ paradox, no LHV at all) vs A.1's statistical CHSH bound (`2 < 2√2`).
 - `productPartition_ghz_nonvacuous` (product partitions exist), `ghz_engine_joint_nonfactorises`
   (⟨XXX⟩=1 ≠ 0·0·0), `ghz_engine_marginal_factorises` (all six single-wing marginals = 0, no-signalling,
   via `ghz_expectation_formula`), `ghz_forced_contextuality_capstone`.
-Honest scope: the forced-contextuality CRUX (A.1 analogue), NOT the GHZ de-isolation FLOW. **LF6-C.2
-DEFERRED** — the dynamical realisation (instantiate `LF5.measurementFlow` at `N=8` on the dilated
-three-qubit projective space, GHZ pointer-block carve, pointer-block FS volume = GHZ Born weight via
-`vnDilation_pointer_volume`, + a one-theorem contextuality juxtaposition mirroring
-`singletDeisolation_carve_contextual`). Residue A5 (GHZ sector posited). Born imported (LF4/LF5), not
-re-derived.
+Honest scope: the forced-contextuality CRUX (A.1 analogue), NOT the GHZ de-isolation FLOW (that is
+C.2 below). Residue A5 (GHZ sector posited). Born imported (LF4/LF5), not re-derived.
+
+### LF6-C.2 — the GHZ de-isolation flow, minimal computational-basis carve (DONE 2026-06-30)
+`CsdLean4/LF6/GHZDeisolationFlow.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple-only, 6
+AxiomAudit pins. The dynamical realisation (`Φ ≠ id`) of the GHZ measurement at `N=8`, mirroring A.2:
+- `ghzDeisolationFlow := measurementFlow 8 finProdFinEquiv` on `ℙ ℂ (EuclideanSpace ℂ (Fin 64))`
+  (`64 = 8·8`); `ghzDeisolation_ne_id` (`1<8`), `ghzDeisolation_measurePreserving` (inherited LF5-B).
+- `ghzWeight` + `ghz_normSq_eq_weight` (`‖ghzState w‖² = ghzWeight w`, computed from the 8 basis evals:
+  `1/2` on `(0,0,0)/(1,1,1)`, `0` else); `nudgedGHZ`, `nudgedGHZ_born`.
+- `ghzDeisolation_pointer_volume` (headline) — pointer-block FS volume `= ghzWeight w`, genuinely
+  COMPOSED `vnDilation_pointer_volume @ N=8 ∘ nudgedGHZ_born` (Born = volume imported, not re-derived).
+- `ghzDeisolation_frequency` (a.s. block freq → GHZ Born); `ghzDeisolation_contextuality_anchor`
+  (the C.1 no-go re-exported); `ghzDeisolation_flow_capstone` (5-conjunct).
+**HONEST scope (auditor-verified): the MINIMAL computational-basis carve.** The diagonal block weights
+`(1/2,0,…,0,1/2)` do NOT reproduce the Mermin X/Y correlations, so the carve is NOT itself contextual;
+`ghzDeisolation_contextuality_anchor` (renamed from `_carve_contextual` per audit, to stop the name
+implying a contextuality property of a carve it never touches) is a bare RE-EXPORT of C.1's no-go — the
+anchor for the DEFERRED Mermin carve, not a claim about the diagonal carve. C.2 correctly OMITS any
+`blockVolume_correlation` analogue (unlike A.2, which has a genuine `−a·b` block correlation for the
+singlet). Tier-2: the flow REALISES (does not derive) the GHZ measurement; A5 residue.
 
 ### LF6 remaining (not started)
-Continuous-time Lindblad; the marginal volume-drift geometry; LF6-C.2 (GHZ de-isolation flow) and the
-wider general-N entangled tier (general bipartite `d×d`; n-party GHZ_n); threading `Φ` through the
-concrete entangled `SectorData` (D1c); the von Neumann entropy-increase witness (B.3). A5 emergence
-(deriving the entangled sector from the dynamics) is the downstream target that would retire the residue.
+**LF6-C.3** — the GHZ **Mermin-context** carve: build the three-party joint X/Y eigenstructure (the GHZ
+analogue of `LF3/Singlet/*` joint-eig), express `nudgedGHZ` in that context basis, and prove
+`ghzDeisolation_blockVolume_correlation` reproducing the four perfect correlations, so the carve ties
+*dynamically* (not just by re-export) to `no_product_partition_realises_ghz` — the genuine contextual
+increment C.2's minimal diagonal carve defers. Then: the three-party local product flow `V₀⊗V₁⊗V₂`
+(A.3 analogue); continuous-time Lindblad; the marginal volume-drift geometry; the wider general-N tier
+(general bipartite `d×d`; n-party GHZ_n); threading `Φ` through the concrete entangled `SectorData`
+(D1c); the von Neumann entropy-increase witness (B.3). A5 emergence (deriving the entangled sector from
+the dynamics) is the downstream target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the

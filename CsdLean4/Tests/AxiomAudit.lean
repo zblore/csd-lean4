@@ -123,6 +123,7 @@ import CsdLean4.LF5.SyndromeOutcome
 import CsdLean4.LF6.ForcedContextuality
 import CsdLean4.LF6.GHZContextuality
 import CsdLean4.LF6.SingletDeisolationFlow
+import CsdLean4.LF6.GHZDeisolationFlow
 import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.Empirical.QM.Bell
@@ -3485,7 +3486,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- ghz_engine_marginal_factorises (each single-wing marginal = 0, no-signalling)
 -- are the Sigma-volume engine's non-factorising-joint / factorising-marginal pair.
 -- productPartition_ghz_nonvacuous: product partitions exist. Residue A5 (GHZ
--- entangled sector posited); LF6-C.2 (full GHZ de-isolation flow) deferred.
+-- entangled sector posited); LF6-C.2 (full GHZ de-isolation flow) built below.
 -- Foundational triple only.
 /-- info: 'CSD.LF6.no_product_partition_realises_ghz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3510,6 +3511,47 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.ghz_forced_contextuality_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.ghz_forced_contextuality_capstone
+
+-- LF6-C.2 (GHZDeisolationFlow): the DYNAMICAL realisation of the multipartite GHZ
+-- de-isolation tier, mirroring A.2 at three parties. A genuine deterministic
+-- FS-measure-preserving de-isolation flow Φ ≠ id (LF5 measurementFlow @ N=8 on the
+-- dilated Σ' = ℂℙ^{63} = ℙ(ℂ⁸⊗ℂ⁸)) whose context-fixed BornRegion pointer-block volumes
+-- are the GHZ Born weights. ghzDeisolation_pointer_volume (the headline) COMPOSES LF5
+-- vnDilation_pointer_volume @ N=8 (pointer-block FS volume = ‖⟨e_i, φ⟩‖², Gleason-free,
+-- Born = volume IMPORTED from the DH/FS-volume engine, not re-derived) with the reindex
+-- coordinate-Born identity nudgedGHZ_born (nudgedGHZ = ghzState in the Fin 8 computational
+-- basis; ghz_normSq_eq_weight GENUINELY COMPUTES the diagonal weights 1/2 on (0,0,0)/(1,1,1),
+-- 0 elsewhere). ghzDeisolation_frequency: a.s. block frequencies → the GHZ Born weight (LF5
+-- vnDilation_pointer_frequency @ N=8 + nudgedGHZ_born). This is the MINIMAL computational-basis
+-- carve (diagonal weights); ghzDeisolation_contextuality_anchor RE-EXPORTS C.1
+-- no_product_partition_realises_ghz as the contextuality anchor of the DEFERRED Mermin-context
+-- carve (the diagonal carve is NOT itself contextual; the Mermin X/Y carve tying block
+-- correlations to C.1, three-party analogue of A.2's blockVolume_correlation, is the deferred
+-- increment, as is the local product flow V_0⊗V_1⊗V_2). Flow REALISES (not derives) the GHZ
+-- measurement. Residue A5 (GHZ entangled sector posited). Foundational triple only, no busch.
+/-- info: 'CSD.LF6.ghzDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_pointer_volume
+
+/-- info: 'CSD.LF6.ghzDeisolation_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_frequency
+
+/-- info: 'CSD.LF6.ghzDeisolation_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_ne_id
+
+/-- info: 'CSD.LF6.ghzDeisolation_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_measurePreserving
+
+/-- info: 'CSD.LF6.ghzDeisolation_contextuality_anchor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_contextuality_anchor
+
+/-- info: 'CSD.LF6.ghzDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzDeisolation_flow_capstone
 
 -- LF6-A.2 (SingletDeisolationFlow): the DYNAMICAL realisation of the entangled
 -- de-isolation tier. A genuine deterministic FS-measure-preserving de-isolation
