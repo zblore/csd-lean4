@@ -60,7 +60,7 @@ as reversible circuits would buy.
 
 The public ECDLP resource leaderboards are resource ESTIMATORS: they compose trusted textbook primitives
 (Roetteler-Naehrig-Svore-Lauter 2017, eprint 2017/598; Haener-Jaques-Naehrig-Roetteler-Soeken 2020,
-eprint 2020/077; Gidney 2023, arXiv 2306.08585), validated by small-instance simulation and peer review,
+eprint 2020/077; Litinski 2023, arXiv 2306.08585), validated by small-instance simulation and peer review,
 not by machine proof. This corpus VERIFIES the arithmetic at denote level, a different and harder
 standard. The verified floor is the number this corpus can stand behind on that harder standard; the
 trusted estimate is the number the estimator posture would report; the frontier is the named gap between

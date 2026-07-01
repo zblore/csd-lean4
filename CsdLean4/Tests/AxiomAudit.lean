@@ -56,6 +56,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
@@ -5528,6 +5529,64 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.ResourceBounds.trustedEstimate_lt_verifiedFloor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.trustedEstimate_lt_verifiedFloor
+
+/-! ### ECDLP Stage-1 trusted leaderboard estimate: measurement + windowing + qubit model + score (TrustedEstimate.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Toffoli_measGidney_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Toffoli_measGidney_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Toffoli_trustedEstimate_v2_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Toffoli_trustedEstimate_v2_eq
+
+/-- info: 'ECDLP.ResourceBounds.trustedEstimate_v2_lt_trustedEstimate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.trustedEstimate_v2_lt_trustedEstimate
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Qubits_trustedEstimate_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Qubits_trustedEstimate_eq
+
+/-- info: 'ECDLP.ResourceBounds.qubits_trustedEstimate_lt_anchor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.qubits_trustedEstimate_lt_anchor
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Score_trustedEstimate_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Score_trustedEstimate_eq
+
+/-- info: 'ECDLP.ResourceBounds.score_trustedEstimate_lt_squaring_score' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.score_trustedEstimate_lt_squaring_score
+
+/-- info: 'ECDLP.ResourceBounds.trustedEstimate_v2_uses_trusted' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.trustedEstimate_v2_uses_trusted
+
+/-- info: 'ECDLP.ResourceBounds.leaderboardScoreExact_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.leaderboardScoreExact_eq
+
+/-- info: 'ECDLP.ResourceBounds.toffoli_v2_reproduces_leaderboard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.toffoli_v2_reproduces_leaderboard
+
+/-- info: 'ECDLP.ResourceBounds.qubits_trustedEstimate_two_leaderboard' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.qubits_trustedEstimate_two_leaderboard
+
+/-- info: 'ECDLP.ResourceBounds.score_trustedEstimate_vs_leaderboard_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.score_trustedEstimate_vs_leaderboard_lower
+
+/-- info: 'ECDLP.ResourceBounds.score_trustedEstimate_vs_leaderboard_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.score_trustedEstimate_vs_leaderboard_upper
+
+/-- info: 'ECDLP.ResourceBounds.score_trustedEstimate_vs_rounded_leaderboard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.score_trustedEstimate_vs_rounded_leaderboard
 
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
