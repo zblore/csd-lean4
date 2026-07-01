@@ -62,6 +62,16 @@ the conditional `vonNeumannEntropy_kronecker_of_eigenvalues` is kept as a conven
 open Matrix Polynomial
 open scoped ComplexOrder Kronecker
 
+/-- `negMulLog` is strictly positive on the open interval `(0,1)`: `0 < x < 1 ⟹ 0 < negMulLog x`.
+Companion to `Real.negMulLog_nonneg` (the closed-interval `≥ 0`). The strict interior positivity
+is what the entropy-increase witness needs: a genuine superposition Born weight `p ∈ (0,1)`
+contributes strictly positive Shannon entropy. Since `log x < 0` for `0 < x < 1` and `x > 0`,
+`negMulLog x = -(x log x) > 0`. -/
+theorem Real.negMulLog_pos {x : ℝ} (h0 : 0 < x) (h1 : x < 1) : 0 < Real.negMulLog x := by
+  have hlog : Real.log x < 0 := Real.log_neg h0 h1
+  have hxlog : x * Real.log x < 0 := mul_neg_of_pos_of_neg h0 hlog
+  simpa only [Real.negMulLog_eq_neg, neg_pos] using hxlog
+
 namespace QuantumInfo
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
@@ -532,5 +542,20 @@ theorem vonNeumannEntropy_maximally_mixed {N : ℕ} (hN : 0 < N)
   have hNz : (N : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hN.ne'
   rw [vonNeumannEntropy_const_smul_one, Real.negMulLog, one_div, Real.log_inv]
   field_simp
+
+/-! ### Entropy of a general diagonal state -/
+
+/-- **Entropy of a diagonal density.** `S(diagonal (fun i => ↑(d i))) = ∑ i, negMulLog (d i)` for a
+real diagonal `d : n → ℝ` (Hermitian witness supplied). The charpoly of `diagonal (↑ ∘ d)` is
+`∏ i, (X − ↑(d i))` (`charpoly_diagonal`), so the spectral sum collapses to `∑ i, negMulLog (d i)`
+by `spectral_sum_eq_of_charpoly_prod` (permutation-invariant, avoiding the sorted-eigenvalue
+subtlety). Generalises `vonNeumannEntropy_const_smul_one` (the constant case `d ≡ c`). -/
+theorem vonNeumannEntropy_diagonal {d : n → ℝ}
+    (h : (Matrix.diagonal (fun i => (RCLike.ofReal (d i) : ℂ))).IsHermitian) :
+    vonNeumannEntropy h = ∑ i, Real.negMulLog (d i) := by
+  have hchar : (Matrix.diagonal (fun i => (RCLike.ofReal (d i) : ℂ))).charpoly
+      = ∏ i, (X - C ((RCLike.ofReal (d i)) : ℂ)) := charpoly_diagonal _
+  unfold vonNeumannEntropy
+  exact spectral_sum_eq_of_charpoly_prod h d Real.negMulLog hchar
 
 end QuantumInfo

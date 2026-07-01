@@ -686,6 +686,13 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.vonNeumannEntropy_kronecker
 
+-- General diagonal entropy (Cat-1, LF6-B.3 prerequisite): S(diagonal ↑d) = ∑ negMulLog(dᵢ),
+-- via charpoly_diagonal + spectral_sum_eq_of_charpoly_prod (the const-smul-one route generalised).
+-- Consumed by the LF6-B.3 Born-vector entropy witness (the decohered reduced state is diagonal).
+/-- info: 'QuantumInfo.vonNeumannEntropy_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.vonNeumannEntropy_diagonal
+
 -- K1-B.1 (specs/k1-plan.md): matrix partial trace (Mathlib has none). Load-bearing results:
 -- trace preservation (partialTraceRight_trace), tensor reduction with the trace of the
 -- TRACED-OUT factor multiplying the surviving one (partialTraceRight_kronecker), PSD
@@ -3752,6 +3759,34 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.decoherence_irreversibility_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decoherence_irreversibility_capstone
+
+-- LF6-B.3 (Decoherence, 2026-07-01): the von Neumann (Shannon-of-the-Born-vector) entropy-increase
+-- witness. The decohered reduced state is diagonal with the Born vector pⱼ = ‖⟨eⱼ,ψ⟩‖² on the
+-- diagonal, so its von Neumann entropy is GENUINELY DERIVED (decohereReduced_eq_diagonal ∘
+-- QuantumInfo.vonNeumannEntropy_diagonal) to be the Shannon entropy ∑ⱼ negMulLog(pⱼ) = −∑ pⱼ log pⱼ
+-- (decohere_vonNeumann_entropy_eq); non-negative (decohere_vonNeumann_entropy_nonneg); and STRICTLY
+-- positive for a measurement-basis superposition with ≥2 nonzero Born weights
+-- (decohere_vonNeumann_entropy_pos_of_superposition). The pure input |ψ⟩⟨ψ| has S = 0
+-- (vonNeumannEntropy_eq_zero_of_pure); the conservative de-isolation + pointer trace jumps it to
+-- S > 0 — the entropy-increase irreversibility witness (0 → S > 0), completing B.1/B.2's
+-- linear-entropy / purity account. The superposition hypothesis is load-bearing (single eigenstate
+-- ⟹ S = 0, one pⱼ = 1 rest 0, negMulLog(1) = negMulLog(0) = 0). Foundational triple only, no busch.
+-- DEFERRED: continuous-time Lindblad / environment growth. Residue A5 (FS-typicality posited).
+/-- info: 'CSD.LF6.decohere_vonNeumann_entropy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohere_vonNeumann_entropy_eq
+
+/-- info: 'CSD.LF6.decohere_vonNeumann_entropy_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohere_vonNeumann_entropy_nonneg
+
+/-- info: 'CSD.LF6.decohere_vonNeumann_entropy_pos_of_superposition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decohere_vonNeumann_entropy_pos_of_superposition
+
+/-- info: 'CSD.LF6.decoherence_vonNeumann_irreversibility_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.decoherence_vonNeumann_irreversibility_capstone
 
 -- Build 15a (Einselection, 2026-06-29): the first einselection / pointer-basis-selection
 -- result on the LF6-B decoherence machinery. decohereReduced ψ (LF6-B) is diagonal in the

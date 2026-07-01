@@ -175,11 +175,29 @@ B.1 "irreversibility is emergent" narrative into a theorem.
   at a single eigenstate purity stays exactly 1 (the witness correctly does not fire). The quantitative
   irreversibility / coherence-loss witness, `1 − Tr(ρ_red²) > 0`.
 - `decoherence_irreversibility_capstone` (trace=1 ∧ purity=∑p_j² ∧ ≤1 ∧ <1).
-HONEST: this is the LINEAR-entropy / purity witness. STILL DEFERRED: the von Neumann entropy increase
-`S(ρ_red) = −∑ p_j log p_j > 0` (B.3, the Shannon entropy of the Born vector — diagonal eigenvalues are
-the p_j, reuse K1-A entropy machinery); the continuous-time Lindblad / T1-T2 semigroup; the environment-
-growth → PRACTICAL irreversibility (no-recoherence) account; the system-marginal FS-volume-DRIFT geometry.
-Residue A5.
+HONEST: this is the LINEAR-entropy / purity witness; the von Neumann entropy increase is B.3 below.
+
+### LF6-B.3 — the von Neumann entropy-increase witness (DONE 2026-07-01)
+`CsdLean4/LF6/Decoherence.lean` (extended) + `Mathlib/QuantumInfo/Entropy.lean` (Cat-1), auditor-SOUND,
+foundational-triple-only. Closes B.1/B.2's deferred B.3: the genuine von Neumann (Shannon-of-the-Born-vector)
+entropy jump `0 → S > 0` under decoherence, past the linear-entropy/purity witness.
+- Cat-1 (Entropy.lean, `namespace QuantumInfo` / top-level `Real`): `Real.negMulLog_pos` (`0<x<1 ⇒
+  negMulLog x > 0`, the strict-interior companion to `negMulLog_nonneg`); `vonNeumannEntropy_diagonal`
+  (`S(diagonal (fun i => (d i : ℂ))) = ∑ i, negMulLog (d i)`, the charpoly-of-diagonal route
+  `charpoly_diagonal` + `spectral_sum_eq_of_charpoly_prod`, generalising `vonNeumannEntropy_const_smul_one`).
+- `decohere_vonNeumann_entropy_eq : S(decohereReduced ψ) = ∑_j negMulLog(‖⟨e_j,ψ⟩‖²)` — the Shannon
+  entropy of the Born vector, GENUINELY DERIVED (transport `decohereReduced_eq_diagonal` (B.2) into
+  `vonNeumannEntropy_diagonal`), not asserted.
+- `decohere_vonNeumann_entropy_nonneg`; **`decohere_vonNeumann_entropy_pos_of_superposition`** (THE
+  witness): `0 < S` when ψ has ≥2 nonzero Born weights, via `negMulLog_pos` on a `p_j ∈ (0,1)`.
+  Superposition hyp LOAD-BEARING (auditor: single eigenstate ⇒ S = negMulLog(1)+∑negMulLog(0) = 0, does
+  not fire — mirrors B.2).
+- `decoherence_vonNeumann_irreversibility_capstone` (S(pure)=0 ∧ S=∑negMulLog(p_j) ∧ ≥0 ∧ >0).
+HONEST: the vN-entropy irreversibility witness (the pure→mixed entropy jump). Tier-2 unchanged
+(reduced-density-operator decoherence; the CSD increment is the conservative-flow coarse-graining
+`deisolation_conservative`, VᴴV=1; Born imported). STILL DEFERRED: the continuous-time Lindblad / T1-T2
+semigroup; the environment-growth → PRACTICAL irreversibility (no-recoherence) account; the
+system-marginal FS-volume-DRIFT geometry. Residue A5.
 
 ### LF6-C.1 — the general-N tier: GHZ forced-contextuality crux (DONE 2026-06-30)
 `CsdLean4/LF6/GHZContextuality.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple-only, 6
