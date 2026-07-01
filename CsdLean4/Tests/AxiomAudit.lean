@@ -55,6 +55,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
@@ -5458,6 +5459,40 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.ResourceBounds.squaring_score_gap_vs_leaderboard_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.squaring_score_gap_vs_leaderboard_upper
+
+/-! ### ECDLP two-track resource accounting: verified floor / trusted estimate / frontier (TwoTrack.lean) -/
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Toffoli_verifiedFloor_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Toffoli_verifiedFloor_eq
+
+/-- info: 'ECDLP.ResourceBounds.secp256k1Toffoli_trustedEstimate_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Toffoli_trustedEstimate_eq
+
+/-- info: 'ECDLP.ResourceBounds.verifiedFloor_no_trusted_leak' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verifiedFloor_no_trusted_leak
+
+/-- info: 'ECDLP.ResourceBounds.trustedEstimate_uses_trusted' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.trustedEstimate_uses_trusted
+
+/-- info: 'ECDLP.ResourceBounds.verificationFrontier_length' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.verificationFrontier_length
+
+/-- info: 'ECDLP.ResourceBounds.two_track_gap_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.two_track_gap_lower
+
+/-- info: 'ECDLP.ResourceBounds.two_track_gap_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.two_track_gap_upper
+
+/-- info: 'ECDLP.ResourceBounds.trustedEstimate_lt_verifiedFloor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.trustedEstimate_lt_verifiedFloor
 
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 

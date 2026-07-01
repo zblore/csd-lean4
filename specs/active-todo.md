@@ -55,13 +55,23 @@ Per-area plans: [`lf6-plan.md`](lf6-plan.md), [`ecdsafail-optimization-plan.md`]
 
 ## ECDSA.fail score ledger (point addition, qubit×Toffoli, lower wins)
 
-| stage | Toffoli | score | leaderboard gap |
+**TWO-TRACK REFRAME 2026-07-01 (TwoTrack.lean, specs/ecdsafail-two-track.md, auditor-SOUND):** the
+figures below split by TRUST BASIS. The honest **VERIFIED FLOOR** is `secp256k1Toffoli_verifiedFloor =
+676,880,936` (Fermat inversion — the ONLY inverter the corpus can machine-anchor, verified multiply +
+anchored O(n³) Fermat with the PROVEN op-count `fermatInvFieldMults_le`). The `5,831,948` "best" is the
+**TRUSTED ESTIMATE** (`secp256k1Toffoli_trustedEstimate`, safegcd + Karatsuba + squaring — cited to
+Bernstein-Yang/RNSL/Karatsuba-Ofman, NOT Lean-verified, NOT a corpus achievement). Gap ~116× = the
+VERIFICATION FRONTIER (verifying those primitives, esp. the safegcd divstep circuit, collapses it). So
+the "~10.5× off leaderboard" line below judged a VERIFIER on the ESTIMATORS' axis; the honest posture is
+verified-floor + cited trusted-estimate + the named frontier between them.
+
+| stage (trust basis) | Toffoli | score | leaderboard gap |
 |---|---|---|---|
-| step 3 (Fermat) | 676,880,936 | 1,910,158,001,392 | ~1217× |
-| + L6 safegcd | 7,896,616 | 22,284,250,352 | ~14× |
-| + L1 Karatsuba | 5,913,868 | 16,688,935,496 | ~10.6× |
-| + L3 squaring | 5,831,948 | 16,457,757,256 | ~10.5× |
-| leaderboard best | ~1,360,000 | ~1,566,720,000 | 1× |
+| **VERIFIED FLOOR** (Fermat, verified+anchored) | 676,880,936 | 1,910,158,001,392 | ~1217× |
+| + L6 safegcd (→ trusted) | 7,896,616 | 22,284,250,352 | ~14× |
+| + L1 Karatsuba (trusted) | 5,913,868 | 16,688,935,496 | ~10.6× |
+| **TRUSTED ESTIMATE** (+ L3 squaring) | 5,831,948 | 16,457,757,256 | ~10.5× |
+| leaderboard best (trusted, external) | ~1,360,000 | ~1,566,720,000 | 1× |
 
 Per-field-op constant levers (L6/L1/L3) exhausted. Current ~5.83M Toffoli/point-add is
 **inversion-dominated**: safegcd `60n²+28n` ≈ 3.94M at n=256 (~67%); mults/squarings/adds the
