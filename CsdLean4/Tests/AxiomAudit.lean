@@ -2451,8 +2451,8 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 
 The transition-probability API plus the forward (realisability) direction
 `U(N) ⊆ transition-preservers`, and the coincidence / orthogonality
-characterisations. All foundational-triple-only. The Wigner / FS converse
-is the documented open target (not stated as an axiom or sorry). -/
+characterisations. All foundational-triple-only. The Wigner / FS converse is
+now PROVED (`wigner_rigidity`, W6), pinned below. -/
 
 /-- info: 'Projectivization.transProb_smul_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -2470,9 +2470,9 @@ is the documented open target (not stated as an axiom or sorry). -/
 
 The `TransProbPreserving` predicate (injectivity + orthogonality preservation)
 and the `U(N) → TransProbPreserving` realisability inclusion. All
-foundational-triple-only. The Wigner converse itself remains the documented open
-target (semilinear extraction + antiunitary-branch elimination), stated neither
-as an axiom nor a sorry. -/
+foundational-triple-only. The Wigner converse itself is now PROVED
+(`wigner_rigidity`, W6, pinned below); ℂ-linearity is DERIVED (not assumed) and
+the antiunitary branch is genuinely present, so no branch elimination is needed. -/
 
 /-- info: 'Projectivization.TransProbPreserving.injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -2671,6 +2671,33 @@ as an axiom nor a sorry. -/
 /-- info: 'Projectivization.diagReducedMap_dichotomy_of_complexSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.diagReducedMap_dichotomy_of_complexSign
+
+-- Wigner W6 HEADLINE (global-sign closure): the per-pair `± I` complex-probe datum
+-- is globally consistent (all complex two-level rays fixed, or all flipped),
+-- discharged from transition-probability preservation alone via the master witness
+-- `masterVec` and the abstract Gram-triple core `sign_link_core`. No `Complex.arg`
+-- choice, no linearity; both branches stay alive. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_complexSign_closure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_complexSign_closure
+
+-- Wigner W6 HEADLINE (unconditional reduced-map dichotomy): the diagonally reduced
+-- map is GLOBALLY the identity on rays, or GLOBALLY coordinatewise conjugation in `b`
+-- (the global-sign residual discharged). Both branches genuine; ℂ-linearity an
+-- OUTPUT. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_dichotomy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_dichotomy
+
+-- Wigner W6 HEADLINE (the converse): every `TransProbPreserving` self-map of
+-- `ℂℙ^{N-1}` is `projMap e` for a `≃ₗᵢ[ℂ]` `e` (UNITARY) or `projMap e ∘ conjProj`
+-- (ANTIUNITARY). The honest Wigner disjunction. ℂ-linearity of `e` is an OUTPUT of
+-- the dichotomy landing on the identity, never assumed; the antiunitary branch is
+-- genuinely present; the global sign is forced from transProb preservation alone.
+-- No `busch`, no `sorry`, no `native_decide`. Foundational-triple only.
+/-- info: 'Projectivization.wigner_rigidity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wigner_rigidity
 
 /-! ### LF4 §8 ontic-shell instantiation
 

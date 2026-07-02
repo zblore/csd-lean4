@@ -153,16 +153,15 @@ projective **semi**-unitary group. It is **not** stated here as an axiom or a
   reduced map is globally the identity, or globally `bConjVec` conjugation. Both
   branches genuine; the antiunitary branch is not dropped.
 
-**Residual (the single remaining step, STAGED).** The unconditional
-`wigner_rigidity` is not stated as a theorem here: what remains is discharging the
-global-sign closure — the per-pair `± I` datum is consistent across all pairs
-(fixes-all ∨ flips-all) — via the three-index consistency / non-anchored
-probe-linking. Note the per-pair datum itself is proved only for ANCHORED pairs
-(`diagReducedMap_complex_probe`, `w = b i₀ + I • b i`); the non-anchored per-pair
-`± I` dichotomy is derivable by the same machinery (`diagReducedMap_fixes_two_level_general`
-+ `unit_re_zero_eq_I_or_negI`) but is not yet stated as a standalone lemma. The
-precise residual is documented in the `Stage 3 (residual)` section at the end of
-this file. **Scope of "piece 2
+**W6 (DONE).** The unconditional `wigner_rigidity` **is** stated and proved here.
+The global-sign closure — the per-pair `± I` datum is consistent across all pairs
+(fixes-all ∨ flips-all) — is discharged in `diagReducedMap_complexSign_closure`
+via the non-anchored per-pair dichotomy (`diagReducedMap_complex_probe_general`),
+the master witness `masterVec`, the abstract Gram-triple core `sign_link_core`,
+order swap by injectivity, and index linking; the unconditional
+`diagReducedMap_dichotomy` and the headline `wigner_rigidity` (unitary ∨
+antiunitary, ℂ-linearity an output) follow, foundational-triple only. See the
+`Stage 3 complete (W6)` section at the end of this file. **Scope of "piece 2
 CLOSED" (load-bearing):** piece 2 delivers the
 *sign-free real-part relations* — the full pairwise data `Re(conj dᵢ·dⱼ)/‖φ‖² =
 Re(conj cᵢ·cⱼ)/‖ψ‖²` (equivalently the pairwise cosines `cos(βⱼ−βᵢ)=cos(αⱼ−αᵢ)`)
@@ -2425,121 +2424,631 @@ theorem diagReducedMap_dichotomy_of_complexSign
   · exact Or.inl (fun ψ hψ => eq_id_of_fixes_all_two_level hg b hfixb hR hfix hψ)
   · exact Or.inr (fun ψ hψ => eq_bconj_of_flips_complex hg b hfixb hR hflip hψ)
 
-/-! ## Stage 3 (residual): the phase cocycle and the unitary/antiunitary dichotomy
+theorem diagReducedMap_relphase_all
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j)
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    ((starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep j).re
+        / ‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr ψ i) * b.repr ψ j).re / ‖ψ‖ ^ 2 :=
+  two_level_relphase_of_fixes (diagReducedMap_transProbPreserving hf b i₀) b
+    (fun k => by rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k)
+    hij (diagReducedMap_fixes_real_all hf b i₀ i j hij) hψ
 
-Stages 1–2 are proved above with **no linearity assumed** on `f`: only
-`TransProbPreserving`. **Stage 3 piece 1 (the diagonal-phase reduction) is
-proved** (`diagReducedMap` + `diagReducedMap_fixes_two_level`), and **Stage 3
-piece 2 is now CLOSED**: the moduli (`diagReducedMap_coord_modulus`), the
-two-level relative-phase constraint (`diagReducedMap_two_level_relphase`, the
-heart of piece 2), the **triple-support fixing**
-(`diagReducedMap_fixes_three_level`), the **non-anchored two-level fixing**
-(`diagReducedMap_fixes_two_level_general`, W4), and the resulting
-**unconditional pairwise relative phase** (`diagReducedMap_pairwise_relphase`).
-**Stage 3 piece 3 (W5) is now proved** except for one clearly-scoped step: the
-imaginary relative phase (`two_level_imrelphase_of_fixes` / `_flips`), both
-**reconstruction** directions (`eq_id_of_fixes_all_two_level` /
-`eq_bconj_of_flips_complex`), the branch-distinguishing **complex probe**
-(`diagReducedMap_complex_probe`), and the **assembly**
-(`diagReducedMap_dichotomy_of_complexSign`, conditional on the global-sign
-closure). What remains to make the Wigner / Fubini–Study converse *unconditional*
-is discharging that global-sign closure (item 3′ below); it is **not** an axiom
-and **not** a `sorry`.
+theorem diagReducedMap_complex_probe_general
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j) :
+    diagReducedMap hf b i₀
+        (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij)
+    ∨ diagReducedMap hf b i₀
+        (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij) := by
+  have hg : TransProbPreserving (diagReducedMap hf b i₀) :=
+    diagReducedMap_transProbPreserving hf b i₀
+  set w : EuclideanSpace ℂ (Fin N) := b i + Complex.I • b j with hw
+  have hwne : w ≠ 0 := Iadd_basis_ne_zero b hij
+  have hwnorm : ‖w‖ ^ 2 = 2 := Iadd_basis_norm_sq b hij
+  have hw_i : b.repr w i = 1 := by
+    rw [hw, b.repr_apply_apply, inner_add_right, inner_smul_right,
+        orthonormal_iff_ite.mp b.orthonormal i i, if_pos rfl,
+        orthonormal_iff_ite.mp b.orthonormal i j, if_neg hij, mul_zero, add_zero]
+  have hw_j : b.repr w j = Complex.I := by
+    rw [hw, b.repr_apply_apply, inner_add_right, inner_smul_right,
+        orthonormal_iff_ite.mp b.orthonormal j i, if_neg (Ne.symm hij),
+        orthonormal_iff_ite.mp b.orthonormal j j, if_pos rfl, mul_one, zero_add]
+  have hw_zero : ∀ k, k ≠ i → k ≠ j → b.repr w k = 0 := by
+    intro k hki hkj
+    rw [hw, b.repr_apply_apply, inner_add_right, inner_smul_right,
+        orthonormal_iff_ite.mp b.orthonormal k i, if_neg hki,
+        orthonormal_iff_ite.mp b.orthonormal k j, if_neg hkj, mul_zero, add_zero]
+  set φ := (diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne)).rep with hφ
+  have hφne : φ ≠ 0 := Projectivization.rep_nonzero _
+  have hφpos : (0 : ℝ) < ‖φ‖ ^ 2 := pow_pos (norm_pos_iff.mpr hφne) 2
+  have hden : ‖φ‖ ^ 2 ≠ 0 := ne_of_gt hφpos
+  have hcm : ∀ k, ‖b.repr φ k‖ ^ 2 / ‖φ‖ ^ 2 = ‖b.repr w k‖ ^ 2 / ‖w‖ ^ 2 := by
+    intro k
+    have h := coord_modulus_of_fixes_basis hg b
+      (fun m => by rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ m) hwne k
+    rwa [← hφ] at h
+  have hsupp : ∀ k, k ≠ i → k ≠ j → b.repr φ k = 0 := by
+    intro k hki hkj
+    have hm := hcm k
+    rw [hw_zero k hki hkj, norm_zero, zero_pow (by norm_num), zero_div] at hm
+    have hz : ‖b.repr φ k‖ ^ 2 = 0 := by
+      rcases div_eq_zero_iff.mp hm with h | h
+      · exact h
+      · exact absurd h hden
+    rwa [pow_eq_zero_iff (by norm_num), norm_eq_zero] at hz
+  have ha : b.repr φ i ≠ 0 := by
+    intro h0
+    have hm := hcm i
+    rw [h0, norm_zero, zero_pow (by norm_num), zero_div, hw_i, norm_one, one_pow, hwnorm] at hm
+    norm_num at hm
+  have hmod : ‖b.repr φ j‖ = ‖b.repr φ i‖ := by
+    have hi := hcm j
+    have hi0 := hcm i
+    rw [hw_j, Complex.norm_I, one_pow, hwnorm] at hi
+    rw [hw_i, norm_one, one_pow, hwnorm] at hi0
+    have hd := hi.trans hi0.symm
+    rw [div_eq_div_iff hden hden] at hd
+    have heq2 : ‖b.repr φ j‖ ^ 2 = ‖b.repr φ i‖ ^ 2 := mul_right_cancel₀ hden hd
+    rw [← Real.sqrt_sq (norm_nonneg (b.repr φ j)),
+        ← Real.sqrt_sq (norm_nonneg (b.repr φ i)), heq2]
+  set ε : ℂ := b.repr φ j / b.repr φ i with hε
+  have hεnorm : ‖ε‖ = 1 := by rw [hε, norm_div, hmod, div_self (norm_ne_zero_iff.mpr ha)]
+  have hdj : b.repr φ j = ε * b.repr φ i := by rw [hε, div_mul_cancel₀ _ ha]
+  have hrel := diagReducedMap_relphase_all hf b i₀ hij hwne
+  rw [← hφ, hw_i, hw_j, map_one, one_mul, Complex.I_re, zero_div] at hrel
+  have hRe : ((starRingEnd ℂ) (b.repr φ i) * b.repr φ j).re = 0 := by
+    rcases div_eq_zero_iff.mp hrel with h | h
+    · exact h
+    · exact absurd h hden
+  have hεre : ε.re = 0 := by
+    rw [hdj] at hRe
+    have hr : (starRingEnd ℂ) (b.repr φ i) * (ε * b.repr φ i)
+        = ε * ((‖b.repr φ i‖ ^ 2 : ℝ) : ℂ) := by
+      rw [show (starRingEnd ℂ) (b.repr φ i) * (ε * b.repr φ i)
+            = ε * ((starRingEnd ℂ) (b.repr φ i) * b.repr φ i) from by ring, RCLike.conj_mul]
+      norm_cast
+    rw [hr, mul_ofReal_re] at hRe
+    have hpos : (0 : ℝ) < ‖b.repr φ i‖ ^ 2 := pow_pos (norm_pos_iff.mpr ha) 2
+    exact (mul_eq_zero.mp hRe).resolve_right (ne_of_gt hpos)
+  have hgw : diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne)
+      = Projectivization.mk ℂ φ hφne := (Projectivization.mk_rep _).symm
+  have hpair : φ = b.repr φ i • b i + b.repr φ j • b j :=
+    repr_eq_pair_of_support b φ hij hsupp
+  rcases unit_re_zero_eq_I_or_negI hεnorm hεre with hI | hnI
+  · left
+    have hval : b.repr φ i • w = φ := by
+      conv_rhs => rw [hpair, hdj, hI]
+      rw [hw]; module
+    rw [hgw]
+    exact (Projectivization.mk_eq_mk_iff' ℂ φ w hφne hwne).mpr ⟨b.repr φ i, hval⟩
+  · right
+    have hval : b.repr φ i • (b i - Complex.I • b j) = φ := by
+      conv_rhs => rw [hpair, hdj, hnI]
+      module
+    rw [hgw]
+    exact (Projectivization.mk_eq_mk_iff' ℂ φ (b i - Complex.I • b j) hφne
+      (subI_basis_ne_zero b hij)).mpr ⟨b.repr φ i, hval⟩
 
-**Audit note (W4, load-bearing).** Every probe used to establish the fixings —
-the triple `mk (b i₀ + b i + b j)` and the pair `mk (b i + b j)` — is a
-**real-coordinate** superposition; its ray is fixed by the identity and by
-coordinatewise conjugation alike, so each fixing is consistent with **both** the
-unitary (`d = c`) and antiunitary (`d = conj c`) branches. Piece 2 establishes
-the **cocycle coboundary structure** (the pairwise real-part relations); it does
-**not** collapse the global unitary/antiunitary sign, which is precisely piece 3.
-`diagReducedMap` is **not** concluded to be the identity.
+/-- Gram datum for a fixed complex ray. -/
+theorem diagReducedMap_gram_of_fixed
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j)
+    (hfixI : diagReducedMap hf b i₀
+        (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    (starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep j
+          * ((‖ψ‖ ^ 2 : ℝ) : ℂ)
+      = (starRingEnd ℂ) (b.repr ψ i) * b.repr ψ j
+          * ((‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2 : ℝ) : ℂ) := by
+  have hg : TransProbPreserving (diagReducedMap hf b i₀) :=
+    diagReducedMap_transProbPreserving hf b i₀
+  have hfixb : ∀ k, diagReducedMap hf b i₀ (srcPoint b k) = srcPoint b k := fun k => by
+    rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k
+  have hre := diagReducedMap_relphase_all hf b i₀ hij hψ
+  have him := two_level_imrelphase_of_fixes hg b hfixb hij hfixI hψ
+  set φ := (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep with hφ
+  have hDφ : ‖φ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr (Projectivization.rep_nonzero _))
+  have hDψ : ‖ψ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hψ)
+  have hrec := (div_eq_div_iff hDφ hDψ).mp hre
+  have himc := (div_eq_div_iff hDφ hDψ).mp him
+  apply Complex.ext
+  · rw [mul_ofReal_re, mul_ofReal_re]; exact hrec
+  · rw [mul_ofReal_im, mul_ofReal_im]; exact himc
 
-**State reached.** Write `g := reducedMap hf b` (`TransProbPreserving`, fixes
-every basis ray). Stage 1 (`reducedMap_coord_modulus`) gives, for every
-`p = mk ψ` with image rep `φ`, the modulus profile
-`‖b.repr φ j‖² / ‖φ‖² = ‖b.repr ψ j‖² / ‖ψ‖²` for all `j`. Stage 2
-(`reducedMap_two_level_normal_form`) gives, for each `i ≠ i₀`, a unit phase
-`εᵢ` with `g (mk (b i₀ + b i)) = mk (b i₀ + εᵢ • b i)`. Stage 3 piece 1
-(`diagReducedMap_fixes_two_level`) then removes these phases: the diagonally
-reduced map `g' := diagReducedMap hf b i₀` is `TransProbPreserving`, fixes every
-basis ray **and** every two-level ray `mk (b i₀ + b i)`.
+/-- Gram datum for a flipped complex ray. -/
+theorem diagReducedMap_gram_of_flips
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j)
+    (hflipI : diagReducedMap hf b i₀
+        (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    (starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep j
+          * ((‖ψ‖ ^ 2 : ℝ) : ℂ)
+      = (starRingEnd ℂ) ((starRingEnd ℂ) (b.repr ψ i) * b.repr ψ j)
+          * ((‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2 : ℝ) : ℂ) := by
+  have hg : TransProbPreserving (diagReducedMap hf b i₀) :=
+    diagReducedMap_transProbPreserving hf b i₀
+  have hfixb : ∀ k, diagReducedMap hf b i₀ (srcPoint b k) = srcPoint b k := fun k => by
+    rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k
+  have hre := diagReducedMap_relphase_all hf b i₀ hij hψ
+  have him := two_level_imrelphase_of_flips hg b hfixb hij hflipI hψ
+  set φ := (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep with hφ
+  have hDφ : ‖φ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr (Projectivization.rep_nonzero _))
+  have hDψ : ‖ψ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hψ)
+  have hrec := (div_eq_div_iff hDφ hDψ).mp hre
+  have himc := (div_eq_div_iff hDφ hDψ).mp him
+  apply Complex.ext
+  · rw [mul_ofReal_re, mul_ofReal_re, Complex.conj_re]; exact hrec
+  · rw [mul_ofReal_im, mul_ofReal_im, Complex.conj_im]; exact himc
 
-**Residual crux.** The content is the coherence of the phases across overlapping
-superpositions, in three linked pieces (pieces 1–2 discharged; piece 3 open),
-none of which may assume ℂ-linearity:
+/-- Gram datum on the diagonal (moduli). -/
+theorem diagReducedMap_gram_diag
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N) (i : Fin N)
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    (starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i
+          * ((‖ψ‖ ^ 2 : ℝ) : ℂ)
+      = (starRingEnd ℂ) (b.repr ψ i) * b.repr ψ i
+          * ((‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2 : ℝ) : ℂ) := by
+  have hg : TransProbPreserving (diagReducedMap hf b i₀) :=
+    diagReducedMap_transProbPreserving hf b i₀
+  have hfixb : ∀ k, diagReducedMap hf b i₀ (srcPoint b k) = srcPoint b k := fun k => by
+    rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k
+  have hm := coord_modulus_of_fixes_basis hg b hfixb hψ i
+  set φ := (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep with hφ
+  have hDφ : ‖φ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr (Projectivization.rep_nonzero _))
+  have hDψ : ‖ψ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hψ)
+  have hmc := (div_eq_div_iff hDφ hDψ).mp hm
+  have e1 : (starRingEnd ℂ) (b.repr φ i) * b.repr φ i = ((‖b.repr φ i‖ ^ 2 : ℝ) : ℂ) := by
+    rw [RCLike.conj_mul]; norm_cast
+  have e2 : (starRingEnd ℂ) (b.repr ψ i) * b.repr ψ i = ((‖b.repr ψ i‖ ^ 2 : ℝ) : ℂ) := by
+    rw [RCLike.conj_mul]; norm_cast
+  rw [e1, e2, ← Complex.ofReal_mul, ← Complex.ofReal_mul, Complex.ofReal_inj]
+  exact hmc
 
-1. **Diagonal-phase reduction (DONE).** Post-compose `g` with `projMap D⁻¹` for
-   the diagonal isometry `D` (in the basis `b`) with `D (b i₀) = b i₀`,
-   `D (b i) = εᵢ • b i` (so `D⁻¹` fixes every basis ray, preserving the frame
-   reduction). After this, the reduced map fixes `mk (b i₀ + b i)` for **every**
-   `i`. Realised here as `diagUnitary` / `diagReducedMap` /
-   `diagReducedMap_fixes_two_level`.
+/-! ## Master witness and the global-sign closure -/
 
-2. **General coordinate phase (piece 2, CLOSED via W4).**
-   For a general `ψ = ∑ cⱼ bⱼ` the two-level overlap
-   `transProb (g (mk ψ)) (mk (b i₀ + b i))` together with the Stage-1 moduli pins
-   the *real part* of each anchored relative phase, `Re(d̄_{i₀} d_i)/‖φ‖² =
-   Re(c̄_{i₀} c_i)/‖ψ‖²` (`diagReducedMap_two_level_relphase`), leaving the sign of
-   the imaginary part free — the cocycle's ℤ/2 datum.
+/-- Master witness vector: `∑ a, (1 + I·a) • b a`. All coordinates nonzero and
+all pairwise imaginary relative phases nonzero. -/
+noncomputable def masterVec
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) :
+    EuclideanSpace ℂ (Fin N) :=
+  ∑ a : Fin N, (1 + Complex.I * ((a : ℕ) : ℂ)) • b a
 
-   The **non-anchored fixing** `g (mk (b i + b j)) = mk (b i + b j)` for
-   `i, j ≠ i₀` — the input that upgrades the pairwise leg to an unconditional
-   relation — is now derived (**W4**). The anchored two-level probes
-   `{mk (b i₀ + b k)}` each see only one of `i`, `j`, so a probe carrying *both*
-   coordinates is needed: the equal three-level ray `mk (b i₀ + b i + b j)`. It is
-   fixed by a relative-phase *saturation* argument (moduli equality forces
-   `Re = |·|`, hence phase alignment: `norm_eq_re_imp_eq` / `eq_of_re_conj_mul_eq`)
-   on triple-support states plus the triple-support reconstruction
-   (`repr_eq_triple_of_support`), giving `diagReducedMap_fixes_three_level`. Using
-   that fixed triple as a probe (through `transProb_of_fixed`) fixes the
-   non-anchored pair (`diagReducedMap_fixes_two_level_general`), whence the
-   unconditional pairwise real-part relation `Re(d̄_i d_j)/‖φ‖² =
-   Re(c̄_i c_j)/‖ψ‖²` for all `i, j ≠ i₀` (`diagReducedMap_pairwise_relphase`).
-   Together with the anchored legs these are the full **coboundary structure** of
-   the phase 2-cocycle. The saturation probes are real-coordinate and keep both
-   ± branches alive: piece 2 does **not** fix the global sign.
+lemma masterVec_repr
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (k : Fin N) :
+    b.repr (masterVec b) k = 1 + Complex.I * ((k : ℕ) : ℂ) := by
+  rw [b.repr_apply_apply]
+  unfold masterVec
+  rw [inner_sum, Finset.sum_eq_single k]
+  · rw [inner_smul_right, orthonormal_iff_ite.mp b.orthonormal k k, if_pos rfl, mul_one]
+  · intro j _ hjk
+    rw [inner_smul_right, orthonormal_iff_ite.mp b.orthonormal k j, if_neg (Ne.symm hjk),
+        mul_zero]
+  · intro h; exact absurd (Finset.mem_univ k) h
 
-3. **Complex probe + reconstruction (piece 3, PROVED via W5).** The real probes of
-   pieces 1–2 are conjugation-invariant, so they cannot fix the global sign. The
-   **complex probe** `mk (b i₀ + I • b i)` is not: `conjVec (b i₀ + I • b i) =
-   b i₀ − I • b i`, so its image under `diagReducedMap` is *either*
-   `mk (b i₀ + I • b i)` (`+`) *or* `mk (b i₀ − I • b i)` (`−`)
-   (`diagReducedMap_complex_probe`). The `I`-probe overlap pins the *imaginary*
-   relative phase (`two_level_imrelphase_of_fixes` / `_flips`), so a map fixing all
-   basis + real + complex two-level rays reconstructs to `φ = λ • ψ` — the
-   **identity** on rays (`eq_id_of_fixes_all_two_level`) — while one that flips the
-   complex rays reconstructs to `φ = μ • bConjVec b ψ` — coordinatewise
-   **conjugation** (`eq_bconj_of_flips_complex`). Assembled in
-   `diagReducedMap_dichotomy_of_complexSign`. **ℂ-linearity is an output of this
-   step, never an input; the antiunitary branch is genuinely present.**
+lemma masterVec_coord_ne_zero
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (k : Fin N) :
+    b.repr (masterVec b) k ≠ 0 := by
+  rw [masterVec_repr]
+  have hre : (1 + Complex.I * ((k : ℕ) : ℂ)).re = 1 := by
+    simp [Complex.add_re, Complex.mul_re, Complex.I_re, Complex.I_im]
+  intro h
+  rw [h] at hre
+  simp at hre
 
-3′. **Global-sign closure (the STAGED residual).** The complex probe gives, per
-    pair, a `± I` datum; making `diagReducedMap_dichotomy_of_complexSign`
-    unconditional requires that this datum is *globally consistent*: either every
-    complex two-level ray `mk (b i + I • b j)` is fixed, or every one is flipped.
-    The mathematics is the three-index consistency together with a probe-linking
-    argument (a complex triple probe `mk (b i₀ + I • b i + I • b j)` forces the
-    two anchored signs to agree via a saturated pairwise relation, and a
-    symmetry-breaking probe `mk (b i₀ + I • b i − b j)` links the non-anchored
-    pairs), each preserved `transProb` between two probe states pinning the
-    relative sign. This is not yet assembled in Lean; it is the single residual to
-    an unconditional Wigner converse. No linearity is used or needed.
+lemma masterVec_ne_zero
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (k : Fin N) :
+    masterVec b ≠ 0 := by
+  intro h
+  exact masterVec_coord_ne_zero b k (by rw [h]; simp)
 
-**Assembly (once 3′ is closed).** Inverting the frame reduction,
-`f = projMap (candidateUnitary hf b) ∘ g` with `g` the reduced map, and
-`reducedMap = projMap D ∘ diagReducedMap`; with the dichotomy
-`diagReducedMap_dichotomy_of_complexSign` this yields either
-`∃ e : E ≃ₗᵢ[ℂ] E, ∀ p, f p = projMap e p` (unitary branch, then bridge to
-`Matrix.unitaryGroup` via the isometry's matrix) or the antiunitary analogue
-`f = projMap e ∘ (b-conjugation)` (`conjProj` for the standard basis). The final
-headline
+lemma masterVec_im_ne
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) {a c : Fin N} (hac : a ≠ c) :
+    ((starRingEnd ℂ) (b.repr (masterVec b) a) * b.repr (masterVec b) c).im ≠ 0 := by
+  rw [masterVec_repr, masterVec_repr]
+  have him : ((starRingEnd ℂ) (1 + Complex.I * ((a : ℕ) : ℂ)) * (1 + Complex.I * ((c : ℕ) : ℂ))).im
+      = ((c : ℕ) : ℝ) - ((a : ℕ) : ℝ) := by
+    simp only [map_add, map_one, map_mul, Complex.conj_I, Complex.conj_natCast]
+    simp only [Complex.mul_im, Complex.mul_re, Complex.add_re, Complex.add_im, Complex.one_re,
+      Complex.one_im, Complex.I_re, Complex.I_im, Complex.neg_re, Complex.neg_im,
+      Complex.natCast_re, Complex.natCast_im]
+    ring
+  rw [him, sub_ne_zero]
+  intro h
+  exact hac (Fin.val_injective (Nat.cast_injective h)).symm
 
-> `TransProbPreserving f → (∃ U : Matrix.unitaryGroup (Fin N) ℂ, ∀ p, f p = U • p)`
-> `  ∨ (∃ antiunitary A, ∀ p, f p = A-ray-action p)`
+/-- The complex probe `mk (b i + I • b j)` and its conjugate `mk (b i - I • b j)`
+are distinct projective points (their reps are orthogonal). -/
+lemma Iprobe_ne_negIprobe
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) {i j : Fin N} (hij : i ≠ j) :
+    Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij)
+      ≠ Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij) := by
+  intro h
+  have h0 : transProb (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+      (Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij)) = 0 := by
+    rw [transProb_mk_eq_zero_iff]
+    have e1 : (inner ℂ (b i) (b i) : ℂ) = 1 := by
+      rw [orthonormal_iff_ite.mp b.orthonormal i i, if_pos rfl]
+    have e2 : (inner ℂ (b i) (b j) : ℂ) = 0 := by
+      rw [orthonormal_iff_ite.mp b.orthonormal i j, if_neg hij]
+    have e3 : (inner ℂ (b j) (b i) : ℂ) = 0 := by
+      rw [orthonormal_iff_ite.mp b.orthonormal j i, if_neg (Ne.symm hij)]
+    have e4 : (inner ℂ (b j) (b j) : ℂ) = 1 := by
+      rw [orthonormal_iff_ite.mp b.orthonormal j j, if_pos rfl]
+    rw [inner_add_left, inner_sub_right, inner_sub_right, inner_smul_left, inner_smul_right,
+        inner_smul_left, inner_smul_right, e1, e2, e3, e4]
+    simp [Complex.conj_I]
+  rw [h, transProb_self] at h0
+  exact one_ne_zero h0
 
-is deliberately **not** stated as a bare theorem here, because the global-sign
-closure (item 3′) is not yet discharged; `diagReducedMap_dichotomy_of_complexSign`
-is the honest reduced-map form of it, conditional on exactly that closure. -/
+/-- Abstract algebraic core of the global-sign linking: given the Gram equations
+for three coordinates and the master genericity (imaginary relative phases
+nonzero), the fixed/flipped sign of the pair `(a,b)` matches that of `(b,c)`. -/
+lemma sign_link_core {cA cB cC dA dB dC : ℂ} {S F : ℝ}
+    (hFpos : (0 : ℝ) < F)
+    (hcA : cA ≠ 0) (hcB : cB ≠ 0) (hcC : cC ≠ 0)
+    (hImAB : ((starRingEnd ℂ) cA * cB).im ≠ 0)
+    (hImBC : ((starRingEnd ℂ) cB * cC).im ≠ 0)
+    {Γab Γbc Γac : ℂ}
+    (Eab : (starRingEnd ℂ) dA * dB * (S : ℂ) = Γab * (F : ℂ))
+    (Ebc : (starRingEnd ℂ) dB * dC * (S : ℂ) = Γbc * (F : ℂ))
+    (Eac : (starRingEnd ℂ) dA * dC * (S : ℂ) = Γac * (F : ℂ))
+    (Ebb : (starRingEnd ℂ) dB * dB * (S : ℂ) = (starRingEnd ℂ) cB * cB * (F : ℂ))
+    (hAB : Γab = (starRingEnd ℂ) cA * cB ∨ Γab = (starRingEnd ℂ) ((starRingEnd ℂ) cA * cB))
+    (hBC : Γbc = (starRingEnd ℂ) cB * cC ∨ Γbc = (starRingEnd ℂ) ((starRingEnd ℂ) cB * cC))
+    (hAC : Γac = (starRingEnd ℂ) cA * cC ∨ Γac = (starRingEnd ℂ) ((starRingEnd ℂ) cA * cC)) :
+    (Γab = (starRingEnd ℂ) cA * cB ↔ Γbc = (starRingEnd ℂ) cB * cC) := by
+  have hFc : (F : ℂ) ≠ 0 := by exact_mod_cast (ne_of_gt hFpos)
+  have hdia : Γab * Γbc = Γac * ((starRingEnd ℂ) cB * cB) := by
+    have hbase : ((starRingEnd ℂ) dA * dB * (S : ℂ)) * ((starRingEnd ℂ) dB * dC * (S : ℂ))
+        = ((starRingEnd ℂ) dA * dC * (S : ℂ)) * ((starRingEnd ℂ) dB * dB * (S : ℂ)) := by ring
+    rw [Eab, Ebc, Eac, Ebb] at hbase
+    have h2 : Γab * Γbc * ((F : ℂ) * (F : ℂ))
+        = Γac * ((starRingEnd ℂ) cB * cB) * ((F : ℂ) * (F : ℂ)) := by linear_combination hbase
+    exact mul_right_cancel₀ (mul_ne_zero hFc hFc) h2
+  have hsrc : ((starRingEnd ℂ) cA * cB) * ((starRingEnd ℂ) cB * cC)
+      = ((starRingEnd ℂ) cA * cC) * ((starRingEnd ℂ) cB * cB) := by ring
+  have hγab : (starRingEnd ℂ) cA * cB ≠ 0 := mul_ne_zero (by simpa using hcA) hcB
+  have hγbc : (starRingEnd ℂ) cB * cC ≠ 0 := mul_ne_zero (by simpa using hcB) hcC
+  have hγbb_real : (starRingEnd ℂ) ((starRingEnd ℂ) cB * cB) = (starRingEnd ℂ) cB * cB := by
+    rw [map_mul, Complex.conj_conj, mul_comm]
+  have hsrcC : (starRingEnd ℂ) ((starRingEnd ℂ) cA * cB) * (starRingEnd ℂ) ((starRingEnd ℂ) cB * cC)
+      = (starRingEnd ℂ) ((starRingEnd ℂ) cA * cC) * ((starRingEnd ℂ) cB * cB) := by
+    rw [← map_mul, hsrc, map_mul, hγbb_real]
+  constructor
+  · intro hABf
+    by_contra hBCn
+    have hBCflip : Γbc = (starRingEnd ℂ) ((starRingEnd ℂ) cB * cC) := hBC.resolve_left hBCn
+    rcases hAC with hACf | hACflip
+    · rw [hABf, hBCflip, hACf] at hdia
+      have hz : (starRingEnd ℂ) cA * cB
+          * ((starRingEnd ℂ) ((starRingEnd ℂ) cB * cC) - (starRingEnd ℂ) cB * cC) = 0 := by
+        linear_combination hdia - hsrc
+      rcases mul_eq_zero.mp hz with h | h
+      · exact hγab h
+      · exact hImBC (Complex.conj_eq_iff_im.mp (sub_eq_zero.mp h))
+    · rw [hABf, hBCflip, hACflip] at hdia
+      have hz : ((starRingEnd ℂ) cA * cB - (starRingEnd ℂ) ((starRingEnd ℂ) cA * cB))
+          * (starRingEnd ℂ) ((starRingEnd ℂ) cB * cC) = 0 := by
+        linear_combination hdia - hsrcC
+      rcases mul_eq_zero.mp hz with h | h
+      · exact hImAB (Complex.conj_eq_iff_im.mp (sub_eq_zero.mp h).symm)
+      · exact hγbc (by simpa only [starRingEnd_apply, star_eq_zero] using h)
+  · intro hBCf
+    by_contra hABn
+    have hABflip : Γab = (starRingEnd ℂ) ((starRingEnd ℂ) cA * cB) := hAB.resolve_left hABn
+    rcases hAC with hACf | hACflip
+    · rw [hABflip, hBCf, hACf] at hdia
+      have hz : ((starRingEnd ℂ) ((starRingEnd ℂ) cA * cB) - (starRingEnd ℂ) cA * cB)
+          * ((starRingEnd ℂ) cB * cC) = 0 := by
+        linear_combination hdia - hsrc
+      rcases mul_eq_zero.mp hz with h | h
+      · exact hImAB (Complex.conj_eq_iff_im.mp (sub_eq_zero.mp h))
+      · exact hγbc h
+    · rw [hABflip, hBCf, hACflip] at hdia
+      have hz : (starRingEnd ℂ) ((starRingEnd ℂ) cA * cB)
+          * ((starRingEnd ℂ) cB * cC - (starRingEnd ℂ) ((starRingEnd ℂ) cB * cC)) = 0 := by
+        linear_combination hdia - hsrcC
+      rcases mul_eq_zero.mp hz with h | h
+      · exact hγab (by simpa only [starRingEnd_apply, star_eq_zero] using h)
+      · exact hImBC (Complex.conj_eq_iff_im.mp (sub_eq_zero.mp h).symm)
+
+/-- Abbreviation: the diagonally reduced map fixes the complex two-level ray `(i,j)`. -/
+def CFixed (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j) : Prop :=
+  diagReducedMap hf b i₀ (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+    = Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij)
+
+/-- Middle-index linking: the complex sign of `(a,bx)` matches that of `(bx,c)`. -/
+theorem diagReducedMap_complexSign_link
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {a bx c : Fin N} (hab : a ≠ bx) (hbc : bx ≠ c) (hac : a ≠ c) :
+    CFixed hf b i₀ hab ↔ CFixed hf b i₀ hbc := by
+  have hψne : masterVec b ≠ 0 := masterVec_ne_zero b a
+  have hφne : (diagReducedMap hf b i₀ (Projectivization.mk ℂ (masterVec b) hψne)).rep ≠ 0 :=
+    Projectivization.rep_nonzero _
+  have hFpos : (0 : ℝ)
+      < ‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ (masterVec b) hψne)).rep‖ ^ 2 :=
+    pow_pos (norm_pos_iff.mpr hφne) 2
+  have Ebb := diagReducedMap_gram_diag hf b i₀ bx (ψ := masterVec b) hψne
+  have hcA := masterVec_coord_ne_zero b a
+  have hcB := masterVec_coord_ne_zero b bx
+  have hcC := masterVec_coord_ne_zero b c
+  have hImAB := masterVec_im_ne b hab
+  have hImBC := masterVec_im_ne b hbc
+  constructor
+  · intro hAB
+    rcases diagReducedMap_complex_probe_general hf b i₀ hbc with hBC | hBC
+    · exact hBC
+    · exfalso
+      have Eab := diagReducedMap_gram_of_fixed hf b i₀ hab hAB (ψ := masterVec b) hψne
+      have Ebc := diagReducedMap_gram_of_flips hf b i₀ hbc hBC (ψ := masterVec b) hψne
+      rcases diagReducedMap_complex_probe_general hf b i₀ hac with hAC | hAC
+      · have Eac := diagReducedMap_gram_of_fixed hf b i₀ hac hAC (ψ := masterVec b) hψne
+        have hcore := sign_link_core hFpos hcA hcB hcC hImAB hImBC Eab Ebc Eac Ebb
+          (Or.inl rfl) (Or.inr rfl) (Or.inl rfl)
+        exact hImBC (Complex.conj_eq_iff_im.mp (hcore.mp rfl))
+      · have Eac := diagReducedMap_gram_of_flips hf b i₀ hac hAC (ψ := masterVec b) hψne
+        have hcore := sign_link_core hFpos hcA hcB hcC hImAB hImBC Eab Ebc Eac Ebb
+          (Or.inl rfl) (Or.inr rfl) (Or.inr rfl)
+        exact hImBC (Complex.conj_eq_iff_im.mp (hcore.mp rfl))
+  · intro hBC
+    rcases diagReducedMap_complex_probe_general hf b i₀ hab with hAB | hAB
+    · exact hAB
+    · exfalso
+      have Eab := diagReducedMap_gram_of_flips hf b i₀ hab hAB (ψ := masterVec b) hψne
+      have Ebc := diagReducedMap_gram_of_fixed hf b i₀ hbc hBC (ψ := masterVec b) hψne
+      rcases diagReducedMap_complex_probe_general hf b i₀ hac with hAC | hAC
+      · have Eac := diagReducedMap_gram_of_fixed hf b i₀ hac hAC (ψ := masterVec b) hψne
+        have hcore := sign_link_core hFpos hcA hcB hcC hImAB hImBC Eab Ebc Eac Ebb
+          (Or.inr rfl) (Or.inl rfl) (Or.inl rfl)
+        exact hImAB (Complex.conj_eq_iff_im.mp (hcore.mpr rfl))
+      · have Eac := diagReducedMap_gram_of_flips hf b i₀ hac hAC (ψ := masterVec b) hψne
+        have hcore := sign_link_core hFpos hcA hcB hcC hImAB hImBC Eab Ebc Eac Ebb
+          (Or.inr rfl) (Or.inl rfl) (Or.inr rfl)
+        exact hImAB (Complex.conj_eq_iff_im.mp (hcore.mpr rfl))
+
+/-- Order swap: the complex sign of `(i,j)` matches that of `(j,i)` (by injectivity). -/
+theorem diagReducedMap_complexSign_swap
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j) :
+    CFixed hf b i₀ hij → CFixed hf b i₀ (Ne.symm hij) := by
+  intro hfix
+  rcases diagReducedMap_complex_probe_general hf b i₀ (Ne.symm hij) with hji | hji
+  · exact hji
+  · exfalso
+    have hLvec : Complex.I • (b i - Complex.I • b j) = b j + Complex.I • b i := by
+      rw [smul_sub, smul_smul, Complex.I_mul_I, neg_one_smul, sub_neg_eq_add, add_comm]
+    have hRvec : (-Complex.I) • (b i + Complex.I • b j) = b j - Complex.I • b i := by
+      rw [smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul, add_comm,
+          ← sub_eq_add_neg]
+    have hL : Projectivization.mk ℂ (b j + Complex.I • b i) (Iadd_basis_ne_zero b (Ne.symm hij))
+        = Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij) :=
+      (Projectivization.mk_eq_mk_iff' ℂ (b j + Complex.I • b i) (b i - Complex.I • b j)
+        (Iadd_basis_ne_zero b (Ne.symm hij)) (subI_basis_ne_zero b hij)).mpr ⟨Complex.I, hLvec⟩
+    have hR : Projectivization.mk ℂ (b j - Complex.I • b i) (subI_basis_ne_zero b (Ne.symm hij))
+        = Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij) :=
+      (Projectivization.mk_eq_mk_iff' ℂ (b j - Complex.I • b i) (b i + Complex.I • b j)
+        (subI_basis_ne_zero b (Ne.symm hij)) (Iadd_basis_ne_zero b hij)).mpr ⟨-Complex.I, hRvec⟩
+    rw [hL, hR] at hji
+    have hginj := (diagReducedMap_transProbPreserving hf b i₀).injective
+    have hReq := hginj (hji.trans hfix.symm)
+    exact Iprobe_ne_negIprobe b hij hReq.symm
+
+/-- Order swap as an iff. -/
+theorem diagReducedMap_complexSign_swapIff
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j) :
+    CFixed hf b i₀ hij ↔ CFixed hf b i₀ (Ne.symm hij) :=
+  ⟨diagReducedMap_complexSign_swap hf b i₀ hij,
+   diagReducedMap_complexSign_swap hf b i₀ (Ne.symm hij)⟩
+
+/-- Shared-first-index linking: the complex sign of `(a,bx)` matches that of `(a,c)`. -/
+theorem diagReducedMap_complexSign_link'
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {a bx c : Fin N} (hab : a ≠ bx) (hac : a ≠ c) (hbc : bx ≠ c) :
+    CFixed hf b i₀ hab ↔ CFixed hf b i₀ hac :=
+  (diagReducedMap_complexSign_swapIff hf b i₀ hab).trans
+    (diagReducedMap_complexSign_link hf b i₀ (Ne.symm hab) hac hbc)
+
+/-- Global constancy: the complex sign is the same for every pair. -/
+theorem diagReducedMap_complexSign_all
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j) {k l : Fin N} (hkl : k ≠ l) :
+    CFixed hf b i₀ hij ↔ CFixed hf b i₀ hkl := by
+  by_cases h1 : i = k
+  · subst h1
+    by_cases h2 : j = l
+    · subst h2; exact Iff.rfl
+    · exact diagReducedMap_complexSign_link' hf b i₀ hij hkl h2
+  · by_cases h2 : i = l
+    · subst h2
+      by_cases h3 : j = k
+      · subst h3; exact diagReducedMap_complexSign_swapIff hf b i₀ hij
+      · exact (diagReducedMap_complexSign_link' hf b i₀ hij h1 h3).trans
+          (diagReducedMap_complexSign_swapIff hf b i₀ h1)
+    · by_cases h3 : j = k
+      · subst h3
+        exact (diagReducedMap_complexSign_swapIff hf b i₀ hij).trans
+          (diagReducedMap_complexSign_link' hf b i₀ (Ne.symm hij) hkl h2)
+      · by_cases h4 : j = l
+        · subst h4
+          exact (diagReducedMap_complexSign_swapIff hf b i₀ hij).trans
+            ((diagReducedMap_complexSign_link' hf b i₀ (Ne.symm hij) (Ne.symm hkl) h1).trans
+             (diagReducedMap_complexSign_swapIff hf b i₀ (Ne.symm hkl)))
+        · exact (diagReducedMap_complexSign_link' hf b i₀ hij h1 h3).trans
+            ((diagReducedMap_complexSign_swapIff hf b i₀ h1).trans
+             (diagReducedMap_complexSign_link' hf b i₀ (Ne.symm h1) hkl h2))
+
+/-- **HEADLINE (global-sign closure).** The per-pair `± I` complex-probe datum is
+globally consistent: either every complex two-level ray is fixed, or every one is
+flipped. Discharges the `hsign` hypothesis of
+`diagReducedMap_dichotomy_of_complexSign` from transition-probability preservation
+alone. -/
+theorem diagReducedMap_complexSign_closure
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N) :
+    (∀ i j (hij : i ≠ j),
+        diagReducedMap hf b i₀
+            (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+          = Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+    ∨ (∀ i j (hij : i ≠ j),
+        diagReducedMap hf b i₀
+            (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
+          = Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij)) := by
+  rcases lt_or_ge N 2 with hN | hN
+  · haveI : Subsingleton (Fin N) := Fin.subsingleton_iff_le_one.mpr (by omega)
+    exact Or.inl (fun i j hij => absurd (Subsingleton.elim i j) hij)
+  · have h01 : (⟨0, by omega⟩ : Fin N) ≠ ⟨1, by omega⟩ := Fin.ne_of_val_ne (by norm_num)
+    rcases diagReducedMap_complex_probe_general hf b i₀ h01 with hfix | hflip
+    · exact Or.inl (fun i j hij => (diagReducedMap_complexSign_all hf b i₀ h01 hij).mp hfix)
+    · refine Or.inr (fun i j hij => ?_)
+      rcases diagReducedMap_complex_probe_general hf b i₀ hij with hf2 | hf2
+      · exact absurd ((diagReducedMap_complexSign_all hf b i₀ hij h01).mp hf2)
+          (fun hcfix => Iprobe_ne_negIprobe b h01 (hcfix.symm.trans hflip))
+      · exact hf2
+
+/-- **HEADLINE (unconditional reduced-map dichotomy).** The diagonally reduced map
+is globally the identity on rays, or globally coordinatewise conjugation in `b`.
+The global-sign residual is discharged (`diagReducedMap_complexSign_closure`);
+both branches are genuine and no ℂ-linearity is assumed. -/
+theorem diagReducedMap_dichotomy
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N) :
+    (∀ (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ψ ≠ 0),
+        diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ) = Projectivization.mk ℂ ψ hψ)
+    ∨ (∀ (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ψ ≠ 0),
+        diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)
+          = Projectivization.mk ℂ (bConjVec b ψ) (bConjVec_ne_zero b hψ)) :=
+  diagReducedMap_dichotomy_of_complexSign hf b i₀ (diagReducedMap_complexSign_closure hf b i₀)
+
+/-! ## STEP 2: assembly of the Wigner rigidity theorem -/
+
+section Assembly
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
+
+/-- `projMap` functoriality: composition of projective isometry maps. -/
+lemma projMap_comp (e₁ e₂ : E ≃ₗᵢ[ℂ] E) (p : ℙ ℂ E) :
+    projMap e₁ (projMap e₂ p) = projMap (e₂.trans e₁) p := by
+  conv_lhs => rw [← p.mk_rep]
+  conv_rhs => rw [← p.mk_rep]
+  rw [projMap_mk e₂ p.rep p.rep_nonzero,
+      projMap_mk e₁ (e₂ p.rep) (e₂.toLinearEquiv.map_ne_zero_iff.mpr p.rep_nonzero),
+      projMap_mk (e₂.trans e₁) p.rep p.rep_nonzero]
+  simp only [LinearIsometryEquiv.trans_apply]
+
+/-- `projMap e` and `projMap e.symm` are inverse. -/
+lemma projMap_symm_projMap (e : E ≃ₗᵢ[ℂ] E) (p : ℙ ℂ E) :
+    projMap e (projMap e.symm p) = p := by
+  conv_lhs => rw [← p.mk_rep]
+  rw [projMap_mk e.symm p.rep p.rep_nonzero,
+      projMap_mk e (e.symm p.rep) (e.symm.toLinearEquiv.map_ne_zero_iff.mpr p.rep_nonzero)]
+  conv_rhs => rw [← p.mk_rep]
+  congr 1
+  exact e.apply_symm_apply p.rep
+
+end Assembly
+
+/-- Coordinatewise conjugation in the standard basis is `conjVec`. -/
+lemma bConjVec_basisFun (ψ : EuclideanSpace ℂ (Fin N)) :
+    bConjVec (EuclideanSpace.basisFun (Fin N) ℂ) ψ = conjVec ψ := by
+  apply (EuclideanSpace.basisFun (Fin N) ℂ).repr.injective
+  ext k
+  rw [repr_bConjVec, EuclideanSpace.basisFun_repr, EuclideanSpace.basisFun_repr]
+  exact (conjVec_ofLp ψ k).symm
+
+/-- **HEADLINE (Wigner / Fubini-Study rigidity converse).** Every
+transition-probability-preserving self-map of `ℂℙ^{N-1}` is induced by a unitary
+(`projMap e` for a `≃ₗᵢ[ℂ]` `e`) or by an antiunitary (`projMap e ∘ conjProj`).
+ℂ-linearity of `e` is an OUTPUT of the construction (the reduced map lands on the
+identity), never assumed; the antiunitary branch is genuinely present
+(`conjProj`); the global unitary/antiunitary sign is forced from
+transition-probability preservation alone. Foundational-triple only. -/
+theorem wigner_rigidity
+    (hf : TransProbPreserving f) :
+    (∃ e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N), ∀ p, f p = projMap e p)
+    ∨ (∃ e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N),
+        ∀ p, f p = projMap e (conjProj p)) := by
+  rcases Nat.eq_zero_or_pos N with hN | hN
+  · subst hN
+    exact Or.inl ⟨LinearIsometryEquiv.refl ℂ _,
+      fun p => absurd (Subsingleton.elim p.rep 0) p.rep_nonzero⟩
+  · set b := EuclideanSpace.basisFun (Fin N) ℂ with hb
+    set i₀ : Fin N := ⟨0, hN⟩ with hi0
+    set U := candidateUnitary hf b with hU
+    set D := diagUnitary b (twoLevelPhase hf b i₀) (twoLevelPhase_norm hf b i₀) with hD
+    have hfe : ∀ p, f p = projMap U (projMap D (diagReducedMap hf b i₀ p)) := by
+      intro p
+      have h1 : reducedMap hf b p = projMap D (diagReducedMap hf b i₀ p) :=
+        (projMap_symm_projMap D (reducedMap hf b p)).symm
+      have h2 : f p = projMap U (reducedMap hf b p) :=
+        (projMap_symm_projMap U (f p)).symm
+      rw [h2, h1]
+    rcases diagReducedMap_dichotomy hf b i₀ with hid | hconj
+    · refine Or.inl ⟨D.trans U, fun p => ?_⟩
+      have hthis : diagReducedMap hf b i₀ p = p := by
+        have hp := hid p.rep p.rep_nonzero; rwa [p.mk_rep] at hp
+      rw [hfe p, hthis, projMap_comp]
+    · refine Or.inr ⟨D.trans U, fun p => ?_⟩
+      have hthis : diagReducedMap hf b i₀ p = conjProj p := by
+        have hp := hconj p.rep p.rep_nonzero
+        rw [p.mk_rep] at hp
+        rw [hp]
+        refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨1, ?_⟩
+        rw [one_smul, bConjVec_basisFun]
+      rw [hfe p, hthis, projMap_comp]
+
+
+/-! ## Stage 3 complete (W6): the Wigner / Fubini-Study rigidity converse
+
+Stages 1-3 are proved with **no linearity assumed** on `f`, only
+`TransProbPreserving`. Stage 3 piece 3 (W5) delivered the complex probe, both
+reconstruction directions, and the reduced-map dichotomy conditional on the
+global complex-sign closure. **W6 discharges that closure**
+(`diagReducedMap_complexSign_closure`) from transition-probability preservation
+alone: the per-pair `± I` datum is globally consistent (all complex two-level
+rays fixed, or all flipped). The route is (a) the non-anchored per-pair `± I`
+dichotomy (`diagReducedMap_complex_probe_general`); (b) the master witness
+`masterVec` with every pairwise imaginary relative phase nonzero
+(`masterVec_im_ne`); (c) the abstract Gram-triple core `sign_link_core`, ruling
+out mixed signs via the rank-1 identity `g_ab g_bc = g_ac ‖d_b‖²` and the
+imaginary relative phases; (d) order swap by injectivity
+(`diagReducedMap_complexSign_swap`, distinct rays `mk (b i + I b j)` and
+`mk (b i - I b j)`) plus index linking (`..._link` / `..._link'` / `..._all`).
+Neither `Complex.arg` nor any linearity is used; both `±` branches stay alive
+until the probes resolve them.
+
+The unconditional `diagReducedMap_dichotomy` follows, and the headline
+`wigner_rigidity` inverts the frame reductions
+(`f = projMap (candidateUnitary hf b) ∘ projMap D ∘ diagReducedMap`, with
+`b` the standard basis so `bConjVec b = conjVec`) to conclude that every
+`TransProbPreserving` self-map of `ℂℙ^{N-1}` is `projMap e` for a `≃ₗᵢ[ℂ]` `e`
+(**unitary**) or `projMap e ∘ conjProj` (**antiunitary**). The antiunitary
+branch is genuinely present (`conjProj`); ℂ-linearity of `e` is an OUTPUT of the
+dichotomy landing on the identity, never assumed; the global sign is forced, not
+posited. Foundational triple only (`propext, Classical.choice, Quot.sound`); no
+`busch`, no `sorry`, no `native_decide`.
+-/
 
 end Projectivization

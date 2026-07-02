@@ -503,11 +503,29 @@ The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use 
 
 ## 13. Ontic-isometry ↔ Hilbert-isometry bridge for unitaries (added 2026-05-21, generalised 2026-05-21)
 
-**Status:** load-bearing, externally supplied, undischarged. The discharge route (the Wigner /
-Fubini–Study rigidity converse) is **substantially built but PAUSED 2026-06-09 at the genuine
-crux** — see the "real blocker" bullet under Discharge prerequisites below.
+**Status:** the discharge route (the Wigner / Fubini–Study rigidity converse) is **DONE 2026-07-02,
+axiom-free** — `Projectivization.wigner_rigidity` is proved (auditor-SOUND, foundational-triple, no
+`wigner_fs_rigidity` axiom). The §13 realisability obligations (`bridge_isometry` etc.) can now be
+discharged by citing it; that call-site wiring is the remaining §13 bookkeeping, but the hard
+mathematical blocker is closed.
 
-> ▶ **WIGNER PROGRAMME — RESUMED 2026-07-02 (W1), progressing incrementally (no axiom).**
+> ✅ **WIGNER PROGRAMME — DONE 2026-07-02 (W1-W6), axiom-free.** `Projectivization.wigner_rigidity`
+> (`Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean`, auditor-SOUND, foundational-triple,
+> no busch/sorry/axiom in the full 3055-line chain):
+> `TransProbPreserving f → (∃ e : ≃ₗᵢ[ℂ], ∀ p, f p = projMap e p) ∨ (∃ e, ∀ p, f p = projMap e (conjProj p))`
+> — the honest Wigner disjunction (unitary ∨ antiunitary), hypothesis MINIMAL (`TransProbPreserving`
+> only, surjectivity not assumed = the STRONG form), ℂ-linearity an OUTPUT (never assumed), antiunitary
+> branch genuinely present (`conjProj` conjugate-linear). Together with `transProbPreserving_unitary`
+> (the U(N)→ inclusion) this brackets the isometry group of ℂℙ^{N-1} as the projective semi-unitary
+> group, entirely on the foundational triple. W6 (2026-07-02) discharged the last residual `hsign`
+> (global-sign closure) via `masterVec` (a witness with all pairwise imaginary phases nonzero) +
+> `sign_link_core` (a rank-1 Gram identity `Γab·Γbc=Γac·‖d_b‖²` ruling out mixed signs from `transProb`
+> data alone, no `arg`/linearity), making `diagReducedMap_dichotomy` UNCONDITIONAL, then frame-inverted
+> `f = projMap(candidateUnitary ∘ D) ∘ (id ∨ conjProj)` to state the theorem. Follow-on (optional, not
+> blocking): the `Matrix.unitaryGroup` reformulation `∃ U, f p = U • p` via a `≃ₗᵢ[ℂ] → unitaryGroup`
+> bridge (the classic statement verbatim). The build history:
+
+> ▶ **W1-W5 (the incremental build, 2026-07-02, no axiom).**
 > Built and verified (foundational-triple-only, AxiomAudit-pinned, auditor-SOUND) in
 > `Mathlib/LinearAlgebra/Projectivization/{TransitionProbability,WignerRigidity}.lean`:
 > the `transProb` API + forward direction; `TransProbPreserving` + injectivity + orthogonality/
