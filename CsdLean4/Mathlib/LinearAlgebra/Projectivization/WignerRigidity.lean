@@ -282,6 +282,21 @@ theorem conjProj_transProbPreserving :
       conjVec_transProbVec]
   rfl
 
+/-- **Ray-map identity for `conjProj` on arbitrary representatives.**
+`conjProj (mk v hv) = mk (conjVec v)`. The canonical representative of `mk v hv`
+is `a • v` for some nonzero `a`; `conjVec (a • v) = conj a • conjVec v`
+(`conjVec_smul`), a nonzero rescaling, so both sides span the same ray. This is
+the representative-independent form of `conjProj`, needed for the eventual
+antiunitary assembly (Stage 3). -/
+lemma conjProj_mk {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
+    conjProj (Projectivization.mk ℂ v hv)
+      = Projectivization.mk ℂ (conjVec v) (conjVec_ne_zero hv) := by
+  unfold conjProj
+  obtain ⟨a, ha⟩ := (Projectivization.mk_eq_mk_iff' ℂ (Projectivization.mk ℂ v hv).rep v
+    (Projectivization.rep_nonzero _) hv).mp (Projectivization.mk_rep _)
+  refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨(starRingEnd ℂ) a, ?_⟩
+  rw [← ha, conjVec_smul]
+
 /-! ## Orthogonality preservation -/
 
 /-- `mk`-level orthogonality rewriter: for nonzero representatives `v, w`, the
@@ -1086,15 +1101,232 @@ theorem diagReducedMap_fixes_two_level
   refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨1, ?_⟩
   rw [one_smul, hcomp]
 
+/-! ## Stage 3 piece 2: coordinate moduli, the two-level relative phase, cocycle datum
+
+Piece 2 of the Stage-3 residual, the derivation-heavy core, built on the diagonally
+reduced map `h := diagReducedMap hf b i₀` (`TransProbPreserving`, fixing every basis
+ray and every anchored two-level ray `mk (b i₀ + b i)`). Writing `h (mk ψ) = mk φ`,
+`cⱼ := b.repr ψ j`, `dⱼ := b.repr φ j`:
+
+* **Moduli** (`coord_modulus_of_fixes_basis`, `diagReducedMap_coord_modulus`):
+  `‖dⱼ‖² / ‖φ‖² = ‖cⱼ‖² / ‖ψ‖²`, for any `TransProbPreserving` map fixing the basis
+  rays.
+* **Two-level relative phase** (`two_level_relphase_of_fixes`,
+  `diagReducedMap_two_level_relphase`) — the heart of piece 2:
+  `Re(d̄_{i₀} d_i) / ‖φ‖² = Re(c̄_{i₀} c_i) / ‖ψ‖²`, i.e.
+  `arg(d_i / d_{i₀}) = ± arg(c_i / c_{i₀})`. The overlap fixes only the real part;
+  the sign of the imaginary part — the cocycle's ℤ/2 datum — stays free.
+* **Conditional pairwise relation** (`diagReducedMap_pairwise_relphase_of_fixed`):
+  for any pair `(i, j)` whose two-level ray is fixed by `h`, the analogous relation
+  `Re(d̄_i d_j) / ‖φ‖² = Re(c̄_i c_j) / ‖ψ‖²` holds.
+
+**No ℂ-linearity of `f`/`h` is used anywhere below**: every relation comes from the
+`transProb`/`transProbVec` overlap algebra, the fixed-point content of
+`diagReducedMap`, and the moduli. The precise residual is documented after the
+lemmas and in the `Stage 3 (residual)` section. -/
+
+/-- **Complex parallelogram expansion.** For `A B : ℂ`,
+`‖A + B‖² = ‖A‖² + ‖B‖² + 2·Re(conj A · B)`. Via `Complex.normSq_add` and
+`Complex.normSq_eq_norm_sq`; `(A · conj B).re = (conj A · B).re` since `re` is
+conjugation-invariant. -/
+lemma cnorm_add_sq (A B : ℂ) :
+    ‖A + B‖ ^ 2 = ‖A‖ ^ 2 + ‖B‖ ^ 2 + 2 * ((starRingEnd ℂ) A * B).re := by
+  rw [← Complex.normSq_eq_norm_sq, ← Complex.normSq_eq_norm_sq, ← Complex.normSq_eq_norm_sq,
+      Complex.normSq_add]
+  have hre : (A * (starRingEnd ℂ) B).re = ((starRingEnd ℂ) A * B).re := by
+    simp only [Complex.mul_re, Complex.conj_re, Complex.conj_im]; ring
+  rw [hre]
+
+/-- The inner product of `ψ` with a basis vector is the conjugate of the
+corresponding coordinate: `⟪ψ, b j⟫ = conj (b.repr ψ j)`. From
+`OrthonormalBasis.repr_apply_apply` (`b.repr ψ j = ⟪b j, ψ⟫`) and
+`inner_conj_symm`. -/
+lemma inner_eq_conj_repr
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ψ : EuclideanSpace ℂ (Fin N)) (j : Fin N) :
+    (inner ℂ ψ (b j) : ℂ) = (starRingEnd ℂ) (b.repr ψ j) := by
+  rw [b.repr_apply_apply]
+  exact (inner_conj_symm ψ (b j)).symm
+
+/-- The inner product of `ψ` with a two-level basis sum unfolds to the conjugate
+of the coordinate sum: `⟪ψ, b i₀ + b i⟫ = conj (b.repr ψ i₀ + b.repr ψ i)`. -/
+lemma inner_add_basis
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ψ : EuclideanSpace ℂ (Fin N)) (i₀ i : Fin N) :
+    (inner ℂ ψ (b i₀ + b i) : ℂ)
+      = (starRingEnd ℂ) (b.repr ψ i₀ + b.repr ψ i) := by
+  rw [inner_add_right, inner_eq_conj_repr b ψ i₀, inner_eq_conj_repr b ψ i, map_add]
+
+/-- The squared norm of a two-level basis sum is `2` (Pythagoras via
+`norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero` and the unit norms). -/
+lemma add_basis_norm_sq
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {i₀ i : Fin N} (hij : i₀ ≠ i) :
+    ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖ ^ 2 = 2 := by
+  rw [sq, norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero (b i₀) (b i)
+        (b.orthonormal.2 hij), b.orthonormal.norm_eq_one i₀, b.orthonormal.norm_eq_one i]
+  norm_num
+
+/-- **Two-level overlap in coordinates.** The transition probability from `mk ψ`
+to the two-level ray `mk (b i₀ + b i)` is
+`‖b.repr ψ i₀ + b.repr ψ i‖² / (‖ψ‖² · 2)`. Combines `transProb_mk`,
+`inner_add_basis` (the numerator), `RCLike.norm_conj`, and `add_basis_norm_sq`
+(the denominator's `‖b i₀ + b i‖² = 2`). -/
+lemma transProb_two_level
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) {i₀ i : Fin N} (hij : i₀ ≠ i) :
+    transProb (Projectivization.mk ℂ ψ hψ)
+        (Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))
+      = ‖b.repr ψ i₀ + b.repr ψ i‖ ^ 2 / (‖ψ‖ ^ 2 * 2) := by
+  rw [transProb_mk hψ (add_basis_ne_zero b hij)]
+  unfold transProbVec
+  rw [inner_add_basis, RCLike.norm_conj, add_basis_norm_sq b hij]
+
+/-- **Moduli preservation for a basis-fixing preserver.** Any
+`TransProbPreserving` map `g` that fixes every source basis ray preserves the
+normalised squared modulus of every coordinate:
+`‖b.repr (g (mk ψ)).rep i‖² / ‖(g (mk ψ)).rep‖² = ‖b.repr ψ i‖² / ‖ψ‖²`.
+Generalises `reducedMap_coord_modulus` off `reducedMap` to an abstract `g`; the
+proof is the same `transProb_of_fixed` + `transProb_srcPoint` composition. -/
+theorem coord_modulus_of_fixes_basis
+    {g : ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N))}
+    (hg : TransProbPreserving g)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (hfixb : ∀ j, g (srcPoint b j) = srcPoint b j)
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) (i : Fin N) :
+    ‖b.repr (g (Projectivization.mk ℂ ψ hψ)).rep i‖ ^ 2
+        / ‖(g (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ‖b.repr ψ i‖ ^ 2 / ‖ψ‖ ^ 2 := by
+  have key := hg.transProb_of_fixed (hfixb i) (Projectivization.mk ℂ ψ hψ)
+  rw [transProb_srcPoint b hψ i] at key
+  set gp := g (Projectivization.mk ℂ ψ hψ) with hgp
+  have hgp_coord : transProb gp (srcPoint b i)
+      = ‖b.repr gp.rep i‖ ^ 2 / ‖gp.rep‖ ^ 2 := by
+    conv_lhs => rw [← Projectivization.mk_rep gp]
+    exact transProb_srcPoint b gp.rep_nonzero i
+  rw [← hgp_coord, key]
+
+/-- **Two-level relative-phase constraint (general).** Let `g` be
+`TransProbPreserving`, fixing every basis ray and the two-level ray
+`mk (b i₀ + b i)`. Writing `g (mk ψ) = mk φ`, the *real part* of the relative
+phase between the `i₀`- and `i`-coordinates is preserved:
+`Re(conj d_{i₀} · d_i) / ‖φ‖² = Re(conj c_{i₀} · c_i) / ‖ψ‖²`, with
+`cⱼ = b.repr ψ j`, `dⱼ = b.repr φ j`.
+
+Proof. The two-level overlap `transProb (g (mk ψ)) (mk (b i₀ + b i))` equals
+`transProb (mk ψ) (mk (b i₀ + b i))` because `g` fixes the two-level ray
+(`transProb_of_fixed`); `transProb_two_level` reads both as
+`‖·₀ + ·ᵢ‖² / (‖·‖² · 2)`. Cross-multiplying and expanding the numerators with
+`cnorm_add_sq` leaves, after cancelling the modulus terms via
+`coord_modulus_of_fixes_basis`, exactly the real-part relation.
+
+**No linearity is used**: this is pure overlap algebra. The imaginary part of
+`conj d_{i₀} · d_i` — the sign of the relative phase, the cocycle's ℤ/2 datum —
+is *not* pinned, and the result holds for both the unitary (`d = c`) and
+antiunitary (`d = conj c`) branches. -/
+theorem two_level_relphase_of_fixes
+    {g : ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N))}
+    (hg : TransProbPreserving g)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (hfixb : ∀ j, g (srcPoint b j) = srcPoint b j)
+    {i₀ i : Fin N} (hij : i₀ ≠ i)
+    (hfix2 : g (Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    ((starRingEnd ℂ) (b.repr (g (Projectivization.mk ℂ ψ hψ)).rep i₀)
+          * b.repr (g (Projectivization.mk ℂ ψ hψ)).rep i).re
+        / ‖(g (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr ψ i₀) * b.repr ψ i).re / ‖ψ‖ ^ 2 := by
+  have hA := hg.transProb_of_fixed hfix2 (Projectivization.mk ℂ ψ hψ)
+  rw [transProb_two_level b hψ hij] at hA
+  have md0 := coord_modulus_of_fixes_basis hg b hfixb hψ i₀
+  have mdi := coord_modulus_of_fixes_basis hg b hfixb hψ i
+  set q := g (Projectivization.mk ℂ ψ hψ) with hq
+  have hLHS : transProb q (Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))
+      = ‖b.repr q.rep i₀ + b.repr q.rep i‖ ^ 2 / (‖q.rep‖ ^ 2 * 2) := by
+    conv_lhs => rw [← q.mk_rep]
+    exact transProb_two_level b q.rep_nonzero hij
+  rw [hLHS] at hA
+  have hDφ : ‖q.rep‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr q.rep_nonzero)
+  have hDψ : ‖ψ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hψ)
+  have hcross := (div_eq_div_iff (mul_ne_zero hDφ (by norm_num : (2 : ℝ) ≠ 0))
+    (mul_ne_zero hDψ (by norm_num : (2 : ℝ) ≠ 0))).mp hA
+  rw [cnorm_add_sq, cnorm_add_sq] at hcross
+  have hm0 := (div_eq_div_iff hDφ hDψ).mp md0
+  have hmi := (div_eq_div_iff hDφ hDψ).mp mdi
+  rw [div_eq_div_iff hDφ hDψ]
+  linear_combination (1 / 4 : ℝ) * hcross - (1 / 2 : ℝ) * hm0 - (1 / 2 : ℝ) * hmi
+
+/-- **Moduli preservation for the diagonally reduced map.** Instance of
+`coord_modulus_of_fixes_basis` for `diagReducedMap hf b i₀`. -/
+theorem diagReducedMap_coord_modulus
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) (i : Fin N) :
+    ‖b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i‖ ^ 2
+        / ‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ‖b.repr ψ i‖ ^ 2 / ‖ψ‖ ^ 2 :=
+  coord_modulus_of_fixes_basis (diagReducedMap_transProbPreserving hf b i₀) b
+    (fun j => by rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ j) hψ i
+
+/-- **HEADLINE (two-level relative phase, the heart of piece 2).** The diagonally
+reduced map `diagReducedMap hf b i₀` preserves the real part of the relative phase
+between the anchor coordinate `i₀` and any coordinate `i ≠ i₀`:
+`Re(conj d_{i₀} · d_i) / ‖φ‖² = Re(conj c_{i₀} · c_i) / ‖ψ‖²`, i.e.
+`arg(d_i / d_{i₀}) = ± arg(c_i / c_{i₀})`. Instance of `two_level_relphase_of_fixes`
+with the basis fixing (`diagReducedMap_fixes_basis`) and the anchored two-level
+fixing (`diagReducedMap_fixes_two_level`). The `±` sign is genuinely free (only the
+real part is pinned) and no ℂ-linearity is assumed. -/
+theorem diagReducedMap_two_level_relphase
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i : Fin N} (hij : i₀ ≠ i)
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    ((starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i₀)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i).re
+        / ‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr ψ i₀) * b.repr ψ i).re / ‖ψ‖ ^ 2 :=
+  two_level_relphase_of_fixes (diagReducedMap_transProbPreserving hf b i₀) b
+    (fun j => by rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ j)
+    hij (diagReducedMap_fixes_two_level hf b hij) hψ
+
+/-- **Conditional pairwise relative phase (the (i, j) leg of the 2-cocycle).**
+For a pair `(i, j)` whose two-level ray `mk (b i + b j)` is fixed by
+`diagReducedMap hf b i₀`, the relative-phase relation
+`Re(conj d_i · d_j) / ‖φ‖² = Re(conj c_i · c_j) / ‖ψ‖²` holds. Immediate instance
+of `two_level_relphase_of_fixes` for the pair `(i, j)`. The fixing hypothesis
+`hfix` is the *only* residual input: the anchored diagonal reduction supplies it
+for `i = i₀` (`diagReducedMap_fixes_two_level`) but not for general non-anchored
+pairs (see the residual note). -/
+theorem diagReducedMap_pairwise_relphase_of_fixed
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (hij : i ≠ j)
+    (hfix : diagReducedMap hf b i₀
+        (Projectivization.mk ℂ (b i + b j) (add_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i + b j) (add_basis_ne_zero b hij))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    ((starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep j).re
+        / ‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr ψ i) * b.repr ψ j).re / ‖ψ‖ ^ 2 :=
+  two_level_relphase_of_fixes (diagReducedMap_transProbPreserving hf b i₀) b
+    (fun k => by rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k)
+    hij hfix hψ
+
 /-! ## Stage 3 (residual): the phase cocycle and the unitary/antiunitary dichotomy
 
 Stages 1–2 are proved above with **no linearity assumed** on `f`: only
-`TransProbPreserving`. **Stage 3 piece 1 (the diagonal-phase reduction) is now
-also proved** (`diagReducedMap` + `diagReducedMap_fixes_two_level`). What remains
-to close the Wigner / Fubini–Study converse is the **phase cocycle** step
-(pieces 2–3) and the resulting dichotomy, plus the Kähler selection. This is
-stated here precisely as the open target; it is **not** an axiom and **not** a
-`sorry`.
+`TransProbPreserving`. **Stage 3 piece 1 (the diagonal-phase reduction) is
+proved** (`diagReducedMap` + `diagReducedMap_fixes_two_level`), and **Stage 3
+piece 2 is now proved up to the non-anchored two-level fixing**: the moduli
+(`diagReducedMap_coord_modulus`), the two-level relative-phase constraint
+(`diagReducedMap_two_level_relphase`, the heart of piece 2), and the conditional
+pairwise leg (`diagReducedMap_pairwise_relphase_of_fixed`). What remains to close
+the Wigner / Fubini–Study converse is the **non-anchored two-level fixing** (the
+last missing input of piece 2), the resulting **dichotomy** (piece 3), plus the
+Kähler selection. This is stated here precisely as the open target; it is **not**
+an axiom and **not** a `sorry`.
 
 **State reached.** Write `g := reducedMap hf b` (`TransProbPreserving`, fixes
 every basis ray). Stage 1 (`reducedMap_coord_modulus`) gives, for every
@@ -1117,11 +1349,27 @@ none of which may assume ℂ-linearity:
    `i`. Realised here as `diagUnitary` / `diagReducedMap` /
    `diagReducedMap_fixes_two_level`.
 
-2. **General coordinate phase.** For a general `ψ = ∑ cⱼ bⱼ`, the transition
-   probabilities `transProb (g (mk ψ)) (mk (b i₀ + b i))` together with the
-   Stage-1 moduli pin each image coordinate `dⱼ` to `cⱼ` up to a *single* phase
-   per index, and the further overlaps with `mk (b i + b j)` force those phases
-   to satisfy a 2-cocycle relation `θ(i,j) = θ(i₀,j) − θ(i₀,i)`.
+2. **General coordinate phase (piece 2, proved up to the non-anchored fixing).**
+   For a general `ψ = ∑ cⱼ bⱼ` the two-level overlap
+   `transProb (g (mk ψ)) (mk (b i₀ + b i))` together with the Stage-1 moduli pins
+   the *real part* of each relative phase, `Re(d̄_{i₀} d_i)/‖φ‖² =
+   Re(c̄_{i₀} c_i)/‖ψ‖²` (`diagReducedMap_two_level_relphase`), leaving the sign of
+   the imaginary part free — the cocycle's ℤ/2 datum. The `(i, j)` leg follows
+   *whenever* `mk (b i + b j)` is fixed (`diagReducedMap_pairwise_relphase_of_fixed`).
+
+   **Precise residual.** The anchored diagonal reduction fixes only the two-level
+   rays `mk (b i₀ + b i)`. Deriving the *non-anchored* fixing
+   `g (mk (b i + b j)) = mk (b i + b j)` for `i, j ≠ i₀` — the single missing input
+   that upgrades the pairwise leg to an unconditional relation and assembles the
+   coboundary `θ(i, j) = θ(i₀, j) − θ(i₀, i)` — is not available from the anchored
+   fixing alone: the anchored two-level probes `{mk (b i₀ + b k)}` each see only
+   one of the coordinates `i`, `j` (the cross overlaps vanish), so they cannot pin
+   the residual phase `η` in `g (mk (b i + b j)) = mk (b i + η • b j)`. Pinning it
+   needs a fixed probe carrying *both* coordinates, i.e. a fixed three-level ray
+   `mk (b i₀ + b i + b j)`; establishing that fixing needs a relative-phase
+   *saturation* argument (moduli equality forces `Re = |·|`, hence phase alignment)
+   on triple-support states plus a triple-support reconstruction lemma. That is the
+   concrete next tranche.
 
 3. **Trivial-cocycle dichotomy.** The cocycle is a coboundary in exactly two
    ways over `ℂ`: either `dⱼ = cⱼ` for all `j` (⇒ `g = id` on rays, the

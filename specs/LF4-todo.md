@@ -521,14 +521,21 @@ crux** — see the "real blocker" bullet under Discharge prerequisites below.
 > conjugate-linear via `conjVec_smul`, so the dichotomy is non-vacuous on the antiunitary side) and
 > `diagReducedMap` + `diagReducedMap_fixes_two_level` (the diagonal-phase reduction: `projMap D⁻¹ ∘ g`
 > with `D = diagUnitary` built from the extracted `twoLevelPhase`, fixing every basis ray AND every
-> two-level ray `mk(bᵢ₀+bᵢ)`). **Remaining = Stage 3 pieces 2-3 (the research-grade crux):** (b) the
-> general-`N` 2-cocycle `θ(i,j)=θ(i₀,j)−θ(i₀,i)` (from a general `ψ=∑cⱼbⱼ`, pin the image coords to
-> `cⱼ` up to a per-index phase via Stage-1 moduli + overlaps with `mk(bᵢ₀+bᵢ)`; the pairwise overlaps
-> `mk(bᵢ+bⱼ)` force the cocycle relation), (c) the trivial-cocycle dichotomy → identity (unitary) or
-> `conjProj` (antiunitary), + the Kähler selection of the unitary branch. **Decision TAKEN (user,
-> 2026-07-02): complete the multi-session phase-cocycle proof incrementally — NO `wigner_fs_rigidity`
-> axiom** (preserve the one-axiom posture). **Next bounded increment:** piece 2 (the 2-cocycle). Also
-> owed for the eventual antiunitary assembly: the ray-map identity `conjProj (mk v) = mk (conjVec v)`.
+> two-level ray `mk(bᵢ₀+bᵢ)`). **W3 (2026-07-02) added Stage 3 piece 2 (partial):** the general moduli
+> (`coord_modulus_of_fixes_basis`), the KEY relative-phase lemma `two_level_relphase_of_fixes` /
+> `diagReducedMap_two_level_relphase` (`Re(conj d_{i₀}·d_i)/‖φ‖² = Re(conj c_{i₀}·c_i)/‖ψ‖²` — the
+> two-level overlap pins ONLY the real part, so the ± cocycle sign is GENUINELY FREE; both `d=c`
+> (unitary) and `d=conj c` (antiunitary) satisfy it; auditor probe-confirmed, seam clean = NO smuggled
+> linearity), the conditional pairwise leg `diagReducedMap_pairwise_relphase_of_fixed`, and the owed
+> `conjProj_mk`. **Remaining:** (b-residual) the NON-ANCHORED two-level fixing `h(mk(bᵢ+bⱼ))=mk(bᵢ+bⱼ)`
+> for `i,j≠i₀` — needs a triple-support probe `mk(bᵢ₀+bᵢ+bⱼ)` fixed via a relative-phase SATURATION
+> argument (`|z|=z.re ⟹ z=z.re`) + a triple-support reconstruction lemma; that upgrades the conditional
+> cocycle to the unconditional `θ(i,j)=θ(i₀,j)−θ(i₀,i)`. (c) the trivial-cocycle dichotomy → identity
+> (unitary) or `conjProj` (antiunitary), + the Kähler selection of the unitary branch. **Decision TAKEN
+> (user, 2026-07-02): complete the phase-cocycle proof incrementally — NO `wigner_fs_rigidity` axiom.**
+> **Next bounded increment:** the triple-support fixing (closes piece 2), then piece 3 (dichotomy).
+> **Audit watch (piece 3, load-bearing):** the saturation step must keep BOTH ± signs alive until the
+> Kähler selection; and the dichotomy must DERIVE ℂ-linearity as an OUTPUT, never assume it.
 > **Audit watch (load-bearing):** the dichotomy must DERIVE ℂ-linearity as an OUTPUT, never assume it,
 > and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
 

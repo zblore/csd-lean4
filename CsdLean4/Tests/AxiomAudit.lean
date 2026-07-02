@@ -2570,6 +2570,37 @@ as an axiom nor a sorry. -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.diagReducedMap_fixes_two_level
 
+-- Wigner W3 HEADLINE (heart of piece 2): the two-level relative-phase constraint.
+-- `diagReducedMap` preserves `Re(conj d_{i₀} · d_i)/‖φ‖²` (the real part of the
+-- relative phase between the anchor coordinate and any other), so
+-- `arg(d_i/d_{i₀}) = ± arg(c_i/c_{i₀})` with the ± sign (the cocycle's ℤ/2 datum)
+-- genuinely FREE. Derived from the transProb overlap algebra; NO ℂ-linearity of
+-- `f`/`h` is assumed. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_two_level_relphase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_two_level_relphase
+
+-- Wigner W3 (general form + moduli + conditional pairwise leg).
+/-- info: 'Projectivization.two_level_relphase_of_fixes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.two_level_relphase_of_fixes
+
+/-- info: 'Projectivization.diagReducedMap_coord_modulus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_coord_modulus
+
+-- Conditional (i, j) leg of the 2-cocycle: holds whenever `mk (b i + b j)` is
+-- fixed. The non-anchored fixing is the documented residual of piece 2.
+/-- info: 'Projectivization.diagReducedMap_pairwise_relphase_of_fixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_pairwise_relphase_of_fixed
+
+-- Wigner W3 owed helper: the representative-independent ray-map identity for the
+-- antiunitary witness `conjProj`, needed for the eventual antiunitary assembly.
+/-- info: 'Projectivization.conjProj_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.conjProj_mk
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.
