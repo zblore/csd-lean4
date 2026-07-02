@@ -106,6 +106,26 @@ rays `mk (b i₀ + b i)` for every `i ≠ i₀` (`diagReducedMap_fixes_two_level
 This is the setup the cocycle step (pieces 2–3) consumes. `D` is constructed
 *from* the extracted phases, not posited of `f`: **no ℂ-linearity is assumed.**
 
+## Stage 3 piece 2 (proved here): the cocycle coboundary structure
+
+On the diagonally reduced map `g := diagReducedMap hf b i₀` the coordinate
+overlap algebra pins the pairwise relative phases up to sign:
+
+* `diagReducedMap_coord_modulus` — Stage-1 moduli transported to `g`.
+* `diagReducedMap_two_level_relphase` — the anchored real-part relation
+  `Re(d̄_{i₀} d_i)/‖φ‖² = Re(c̄_{i₀} c_i)/‖ψ‖²`.
+* `diagReducedMap_fixes_three_level` (**W4**) — the equal triple ray
+  `mk (b i₀ + b i + b j)` is fixed, via moduli + saturation
+  (`norm_eq_re_imp_eq`, `eq_of_re_conj_mul_eq`) + `repr_eq_triple_of_support`.
+* `diagReducedMap_fixes_two_level_general` (**W4**) — the non-anchored ray
+  `mk (b i + b j)` (`i, j ≠ i₀`) is fixed, using the triple as a probe.
+* `diagReducedMap_pairwise_relphase` (**W4**) — the unconditional pairwise
+  real-part relation for all `i, j ≠ i₀`, the full **coboundary structure**.
+
+Every probe is real-coordinate, so the fixings are consistent with **both** the
+unitary and antiunitary branches: piece 2 establishes the coboundary structure,
+**not** the global sign (that is piece 3). **No ℂ-linearity is assumed.**
+
 ## Stage 3 (open target, not proved): the phase cocycle and the dichotomy
 
 The converse of the realisability inclusion `transProbPreserving_unitary` is the
@@ -116,11 +136,21 @@ The converse of the realisability inclusion `transProbPreserving_unitary` is the
 
 equivalently, the isometry group of `ℂℙⁿ` with the Fubini–Study metric is the
 projective **semi**-unitary group. It is **not** stated here as an axiom or a
-`sorry`. With Stages 1–2 and Stage 3 piece 1 in hand, the residual is pieces 2–3:
-the phase-cocycle coherence of the (now diagonally reduced) phases and the
-resulting unitary/antiunitary dichotomy, plus the Kähler selection; the precise
+`sorry`. With Stages 1–2 and Stage 3 pieces 1–2 in hand (piece 2 CLOSED via the
+W4 triple-support probe: `diagReducedMap_fixes_three_level`,
+`diagReducedMap_fixes_two_level_general`, `diagReducedMap_pairwise_relphase`), the
+residual is piece 3: the unitary/antiunitary dichotomy from the now-established
+phase-cocycle coboundary structure, plus the Kähler selection; the precise
 residual is documented in the `Stage 3 (residual)` section at the end of this
-file. **Critical honesty notes (load-bearing).**
+file. **Scope of "piece 2 CLOSED" (load-bearing):** piece 2 delivers the
+*sign-free real-part relations* — the full pairwise data `Re(conj dᵢ·dⱼ)/‖φ‖² =
+Re(conj cᵢ·cⱼ)/‖ψ‖²` (equivalently the pairwise cosines `cos(βⱼ−βᵢ)=cos(αⱼ−αᵢ)`)
+for every pair, which pin the phase configuration up to global rotation AND a
+single global reflection. The phrases "2-cocycle"/"coboundary structure" are
+narrative labels: no formal `Complex.arg`-based additive identity
+`θ(i,j)=θ(i₀,j)−θ(i₀,i)` or `H²` object is constructed, because extracting one
+presupposes choosing an `arg` branch — i.e. resolving the ± reflection — which is
+precisely piece 3. **Critical honesty notes (load-bearing).**
 
 * `reducedMap_fixes_basis` does **not** make `reducedMap` the identity: the
   diagonal-phase freedom is genuine and is exactly the Stage-2 phase `ε`, pinned
@@ -1314,19 +1344,420 @@ theorem diagReducedMap_pairwise_relphase_of_fixed
     (fun k => by rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k)
     hij hfix hψ
 
+/-! ## Stage 3 piece 2 (W4): triple-support probe and the non-anchored two-level fixing
+
+The non-anchored two-level fixing `g (mk (b i + b j)) = mk (b i + b j)` for
+`i, j ≠ i₀` — the missing input that upgrades the pairwise relative-phase relation
+to unconditional — is derived here through a **triple-support probe**. The equal
+triple ray `mk (b i₀ + b i + b j)` is first shown fixed
+(`diagReducedMap_fixes_three_level`), then used as a probe carrying both `i` and
+`j` to fix the non-anchored two-level ray
+(`diagReducedMap_fixes_two_level_general`), whence the conditional pairwise leg
+becomes unconditional (`diagReducedMap_pairwise_relphase`).
+
+**Critical honesty (audit).** Every probe here is a **real-coordinate**
+superposition (all surviving source coordinates `= 1`), so its ray is fixed by
+the identity and by coordinatewise conjugation **alike**: fixing it is consistent
+with **both** the unitary (`d = c`) and antiunitary (`d = conj c`) branches, and
+does **not** collapse the global unitary/antiunitary choice. What is established
+is the **coboundary structure** of the phase cocycle (the pairwise real-part
+relations), not the global sign (piece 3). No ℂ-linearity is assumed: every
+alignment comes from moduli preservation, a single fixed-probe overlap, and the
+saturation lemma. -/
+
+/-- **Saturation.** A complex number whose real part equals its modulus is that
+real part: `‖z‖ = z.re → z = z.re`. Squaring, `z.re² = ‖z‖² = z.re² + z.im²`
+forces `z.im = 0`. -/
+lemma norm_eq_re_imp_eq {z : ℂ} (h : ‖z‖ = z.re) : z = (z.re : ℂ) := by
+  have him : z.im = 0 := by
+    have h1 : z.re * z.re + z.im * z.im = ‖z‖ ^ 2 := by
+      rw [← Complex.normSq_apply]; exact Complex.normSq_eq_norm_sq z
+    have hsq : ‖z‖ ^ 2 = z.re * z.re := by rw [h]; ring
+    rw [hsq] at h1
+    have : z.im * z.im = 0 := by linarith
+    exact mul_self_eq_zero.mp this
+  rw [Complex.ext_iff]
+  exact ⟨by simp, by rw [him]; simp⟩
+
+/-- **Phase alignment from a saturated overlap.** If two complex numbers have
+equal modulus `‖c‖ = ‖a‖`, with `a ≠ 0`, and the real part of `conj a · c`
+saturates the modulus product `Re(conj a · c) = ‖a‖²`, then `c = a`. Route:
+`‖conj a · c‖ = ‖a‖‖c‖ = ‖a‖²`, so `Re = ‖·‖`; `norm_eq_re_imp_eq` makes
+`conj a · c` real and equal to `‖a‖² = conj a · a`; cancel `conj a ≠ 0`. This is
+the neutral alignment step; applied to a real-coordinate probe it aligns `d = a`
+on **both** the unitary and antiunitary branches, so it does not collapse the
+sign. -/
+lemma eq_of_re_conj_mul_eq {a c : ℂ} (ha : a ≠ 0) (hmod : ‖c‖ = ‖a‖)
+    (hre : ((starRingEnd ℂ) a * c).re = ‖a‖ ^ 2) : c = a := by
+  have hnorm : ‖(starRingEnd ℂ) a * c‖ = ((starRingEnd ℂ) a * c).re := by
+    rw [norm_mul, RCLike.norm_conj, hmod, hre]; ring
+  have hsat : (starRingEnd ℂ) a * c = (((starRingEnd ℂ) a * c).re : ℂ) :=
+    norm_eq_re_imp_eq hnorm
+  rw [hre] at hsat
+  have haa : (starRingEnd ℂ) a * a = ((‖a‖ ^ 2 : ℝ) : ℂ) := by
+    rw [RCLike.conj_mul]; norm_cast
+  have hca : (starRingEnd ℂ) a * c = (starRingEnd ℂ) a * a := by rw [hsat, haa]
+  have hconj_ne : (starRingEnd ℂ) a ≠ 0 := star_ne_zero.mpr ha
+  exact mul_left_cancel₀ hconj_ne hca
+
+/-- **Triple-support reconstruction.** A vector whose coordinates in the basis
+`b` vanish outside `{i₀, i, j}` (distinct) is the triple sum of its three
+surviving coordinates. `OrthonormalBasis.sum_repr` expands `φ`,
+`Finset.sum_subset` drops the null coordinates, and the three-element
+`Finset.sum` collapses. The 3-support analogue of `repr_eq_pair_of_support`. -/
+lemma repr_eq_triple_of_support
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (φ : EuclideanSpace ℂ (Fin N)) {i₀ i j : Fin N}
+    (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j)
+    (hsupp : ∀ k, k ≠ i₀ → k ≠ i → k ≠ j → b.repr φ k = 0) :
+    φ = b.repr φ i₀ • b i₀ + b.repr φ i • b i + b.repr φ j • b j := by
+  have hvanish : ∀ k ∈ (Finset.univ : Finset (Fin N)),
+      k ∉ ({i₀, i, j} : Finset (Fin N)) → b.repr φ k • b k = 0 := by
+    intro k _ hk
+    simp only [Finset.mem_insert, Finset.mem_singleton, not_or] at hk
+    rw [hsupp k hk.1 hk.2.1 hk.2.2, zero_smul]
+  calc φ = ∑ k, b.repr φ k • b k := (b.sum_repr φ).symm
+    _ = ∑ k ∈ ({i₀, i, j} : Finset (Fin N)), b.repr φ k • b k :=
+          (Finset.sum_subset (Finset.subset_univ _) hvanish).symm
+    _ = b.repr φ i₀ • b i₀ + b.repr φ i • b i + b.repr φ j • b j := by
+          rw [Finset.sum_insert (by simp [h0i, h0j]),
+              Finset.sum_insert (by simp [hij]), Finset.sum_singleton, add_assoc]
+
+/-- The squared norm of a triple basis sum is `3` (Pythagoras: `b i₀ + b i ⟂ b j`
+and `‖b i₀ + b i‖² = 2`, `‖b j‖² = 1`). -/
+lemma add3_basis_norm_sq
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {i₀ i j : Fin N} (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j) :
+    ‖(b i₀ + b i + b j : EuclideanSpace ℂ (Fin N))‖ ^ 2 = 3 := by
+  have hperp : (inner ℂ (b i₀ + b i : EuclideanSpace ℂ (Fin N)) (b j) : ℂ) = 0 := by
+    rw [inner_add_left, orthonormal_iff_ite.mp b.orthonormal i₀ j,
+        orthonormal_iff_ite.mp b.orthonormal i j, if_neg h0j, if_neg hij, add_zero]
+  have h3 := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero (b i₀ + b i) (b j) hperp
+  rw [pow_two, h3]
+  have e1 : ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖
+      * ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖ = 2 := by
+    rw [← pow_two]; exact add_basis_norm_sq b h0i
+  rw [e1, b.orthonormal.norm_eq_one j]; norm_num
+
+/-- A triple of distinct basis vectors sums to a nonzero vector (norm² = `3`). -/
+lemma add3_basis_ne_zero
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {i₀ i j : Fin N} (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j) :
+    (b i₀ + b i + b j : EuclideanSpace ℂ (Fin N)) ≠ 0 := by
+  intro h
+  have hn := add3_basis_norm_sq b h0i h0j hij
+  rw [h, norm_zero, zero_pow (by norm_num)] at hn
+  norm_num at hn
+
+/-- The inner product of `ψ` with a triple basis sum unfolds to the conjugate of
+the coordinate sum: `⟪ψ, b i₀ + b i + b j⟫ = conj (c_{i₀} + c_i + c_j)`. -/
+lemma inner_add3_basis
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ψ : EuclideanSpace ℂ (Fin N)) (i₀ i j : Fin N) :
+    (inner ℂ ψ (b i₀ + b i + b j) : ℂ)
+      = (starRingEnd ℂ) (b.repr ψ i₀ + b.repr ψ i + b.repr ψ j) := by
+  rw [inner_add_right, inner_add_basis, inner_eq_conj_repr, ← map_add]
+
+/-- **Triple parallelogram expansion.** `‖A + B + C‖² = ‖A‖² + ‖B‖² + ‖C‖²
++ 2·Re(conj A · B) + 2·Re(conj A · C) + 2·Re(conj B · C)`. Two applications of
+`cnorm_add_sq` plus `Re(conj (A+B) · C) = Re(conj A · C) + Re(conj B · C)`. -/
+lemma cnorm_add3_sq (A B C : ℂ) :
+    ‖A + B + C‖ ^ 2 = ‖A‖ ^ 2 + ‖B‖ ^ 2 + ‖C‖ ^ 2
+      + 2 * ((starRingEnd ℂ) A * B).re + 2 * ((starRingEnd ℂ) A * C).re
+      + 2 * ((starRingEnd ℂ) B * C).re := by
+  rw [cnorm_add_sq (A + B) C, cnorm_add_sq A B]
+  have hsplit : ((starRingEnd ℂ) (A + B) * C).re
+      = ((starRingEnd ℂ) A * C).re + ((starRingEnd ℂ) B * C).re := by
+    rw [map_add, add_mul, Complex.add_re]
+  rw [hsplit]; ring
+
+/-- **Triple-level overlap in coordinates.** The transition probability from
+`mk ψ` to the equal triple ray `mk (b i₀ + b i + b j)` is
+`‖c_{i₀} + c_i + c_j‖² / (‖ψ‖² · 3)`. Combines `transProb_mk`, `inner_add3_basis`
+(numerator), `RCLike.norm_conj`, and `add3_basis_norm_sq` (denominator). -/
+lemma transProb_three_level
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0)
+    {i₀ i j : Fin N} (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j) :
+    transProb (Projectivization.mk ℂ ψ hψ)
+        (Projectivization.mk ℂ (b i₀ + b i + b j) (add3_basis_ne_zero b h0i h0j hij))
+      = ‖b.repr ψ i₀ + b.repr ψ i + b.repr ψ j‖ ^ 2 / (‖ψ‖ ^ 2 * 3) := by
+  rw [transProb_mk hψ (add3_basis_ne_zero b h0i h0j hij)]
+  unfold transProbVec
+  rw [inner_add3_basis, RCLike.norm_conj, add3_basis_norm_sq b h0i h0j hij]
+
+/-! ## Stage 3 piece 2 (W4): the triple and non-anchored two-level fixings -/
+
+/-- **HEADLINE (triple-support fixing).** The diagonally reduced map fixes the
+equal triple superposition ray `mk (b i₀ + b i + b j)` for distinct `i₀, i, j`.
+
+Proof. Write `g := diagReducedMap hf b i₀`, `φ := (g (mk w)).rep` with
+`w := b i₀ + b i + b j`. Stage-1 moduli (`coord_modulus_of_fixes_basis`) restrict
+`φ` to support `{i₀, i, j}` with equal coordinate moduli `‖d_k‖² = ‖φ‖²/3`. The
+two anchored two-level fixings (`diagReducedMap_two_level_relphase` at the probe
+`w`) pin `Re(conj d_{i₀} · d_i) = ‖φ‖²/3 = ‖d_{i₀}‖²` and likewise for `j`, which
+saturates the modulus product; `eq_of_re_conj_mul_eq` forces `d_i = d_{i₀}` and
+`d_j = d_{i₀}`, so `φ = d_{i₀} · w` and `mk φ = mk w`.
+
+**Audit note.** The source coordinates `c_{i₀} = c_i = c_j = 1` are real, so this
+fixing is consistent with both `d = c` (unitary) and `d = conj c` (antiunitary):
+it establishes cocycle coboundary structure, **not** the global sign. No
+ℂ-linearity is assumed. -/
+theorem diagReducedMap_fixes_three_level
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) {i₀ i j : Fin N}
+    (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j) :
+    diagReducedMap hf b i₀
+        (Projectivization.mk ℂ (b i₀ + b i + b j) (add3_basis_ne_zero b h0i h0j hij))
+      = Projectivization.mk ℂ (b i₀ + b i + b j) (add3_basis_ne_zero b h0i h0j hij) := by
+  have hg : TransProbPreserving (diagReducedMap hf b i₀) :=
+    diagReducedMap_transProbPreserving hf b i₀
+  have hfixb : ∀ k, diagReducedMap hf b i₀ (srcPoint b k) = srcPoint b k := fun k => by
+    rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k
+  set w : EuclideanSpace ℂ (Fin N) := b i₀ + b i + b j with hw_def
+  have hwne : w ≠ 0 := add3_basis_ne_zero b h0i h0j hij
+  have hwnorm : ‖w‖ ^ 2 = 3 := add3_basis_norm_sq b h0i h0j hij
+  have hwk : ∀ k, b.repr w k
+      = (if k = i₀ then (1 : ℂ) else 0) + (if k = i then 1 else 0)
+        + (if k = j then 1 else 0) := by
+    intro k
+    rw [hw_def, b.repr_apply_apply, inner_add_right, inner_add_right,
+        orthonormal_iff_ite.mp b.orthonormal k i₀,
+        orthonormal_iff_ite.mp b.orthonormal k i,
+        orthonormal_iff_ite.mp b.orthonormal k j]
+  have hwi0 : b.repr w i₀ = 1 := by rw [hwk i₀, if_pos rfl, if_neg h0i, if_neg h0j]; ring
+  have hwi : b.repr w i = 1 := by rw [hwk i, if_neg (Ne.symm h0i), if_pos rfl, if_neg hij]; ring
+  have hwj : b.repr w j = 1 := by
+    rw [hwk j, if_neg (Ne.symm h0j), if_neg (Ne.symm hij), if_pos rfl]; ring
+  have hwzero : ∀ k, k ≠ i₀ → k ≠ i → k ≠ j → b.repr w k = 0 := by
+    intro k hk0 hki hkj; rw [hwk k, if_neg hk0, if_neg hki, if_neg hkj]; ring
+  set φ := (diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne)).rep with hφ_def
+  have hφne : φ ≠ 0 := Projectivization.rep_nonzero _
+  have hφpos : (0 : ℝ) < ‖φ‖ ^ 2 := pow_pos (norm_pos_iff.mpr hφne) 2
+  have hden : ‖φ‖ ^ 2 ≠ 0 := ne_of_gt hφpos
+  have hcm : ∀ k, ‖b.repr φ k‖ ^ 2 / ‖φ‖ ^ 2 = ‖b.repr w k‖ ^ 2 / ‖w‖ ^ 2 := by
+    intro k
+    have h := coord_modulus_of_fixes_basis hg b hfixb hwne k
+    rwa [← hφ_def] at h
+  have hsupp : ∀ k, k ≠ i₀ → k ≠ i → k ≠ j → b.repr φ k = 0 := by
+    intro k hk0 hki hkj
+    have hm := hcm k
+    rw [hwzero k hk0 hki hkj, norm_zero, zero_pow (by norm_num), zero_div] at hm
+    have hz : ‖b.repr φ k‖ ^ 2 = 0 := by
+      rcases div_eq_zero_iff.mp hm with h | h
+      · exact h
+      · exact absurd h hden
+    rwa [pow_eq_zero_iff (by norm_num), norm_eq_zero] at hz
+  have md : ∀ k, k = i₀ ∨ k = i ∨ k = j → ‖b.repr φ k‖ ^ 2 = ‖φ‖ ^ 2 / 3 := by
+    intro k hk
+    have hm := hcm k
+    have hck : ‖b.repr w k‖ ^ 2 = 1 := by
+      rcases hk with h | h | h
+      · rw [h, hwi0, norm_one, one_pow]
+      · rw [h, hwi, norm_one, one_pow]
+      · rw [h, hwj, norm_one, one_pow]
+    rw [hck, hwnorm] at hm
+    rw [div_eq_div_iff hden (by norm_num : (3 : ℝ) ≠ 0)] at hm
+    rw [eq_div_iff (by norm_num : (3 : ℝ) ≠ 0)]; linarith [hm]
+  have md_i0 := md i₀ (Or.inl rfl)
+  have md_i := md i (Or.inr (Or.inl rfl))
+  have md_j := md j (Or.inr (Or.inr rfl))
+  have ha0 : b.repr φ i₀ ≠ 0 := by
+    intro h
+    rw [h, norm_zero, zero_pow (by norm_num)] at md_i0
+    exact absurd md_i0.symm (div_pos hφpos (by norm_num)).ne'
+  have hrel_i : ((starRingEnd ℂ) (b.repr φ i₀) * b.repr φ i).re / ‖φ‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr w i₀) * b.repr w i).re / ‖w‖ ^ 2 := by
+    have h := diagReducedMap_two_level_relphase hf b i₀ h0i hwne
+    rwa [← hφ_def] at h
+  rw [hwi0, hwi, hwnorm] at hrel_i
+  simp only [map_one, mul_one, Complex.one_re] at hrel_i
+  have hrel_j : ((starRingEnd ℂ) (b.repr φ i₀) * b.repr φ j).re / ‖φ‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr w i₀) * b.repr w j).re / ‖w‖ ^ 2 := by
+    have h := diagReducedMap_two_level_relphase hf b i₀ h0j hwne
+    rwa [← hφ_def] at h
+  rw [hwi0, hwj, hwnorm] at hrel_j
+  simp only [map_one, mul_one, Complex.one_re] at hrel_j
+  have hre_i : ((starRingEnd ℂ) (b.repr φ i₀) * b.repr φ i).re = ‖b.repr φ i₀‖ ^ 2 := by
+    rw [div_eq_div_iff hden (by norm_num : (3 : ℝ) ≠ 0)] at hrel_i
+    rw [md_i0, eq_div_iff (by norm_num : (3 : ℝ) ≠ 0)]; linarith [hrel_i]
+  have hre_j : ((starRingEnd ℂ) (b.repr φ i₀) * b.repr φ j).re = ‖b.repr φ i₀‖ ^ 2 := by
+    rw [div_eq_div_iff hden (by norm_num : (3 : ℝ) ≠ 0)] at hrel_j
+    rw [md_i0, eq_div_iff (by norm_num : (3 : ℝ) ≠ 0)]; linarith [hrel_j]
+  have hmod_i : ‖b.repr φ i‖ = ‖b.repr φ i₀‖ := by
+    rw [← Real.sqrt_sq (norm_nonneg (b.repr φ i)),
+        ← Real.sqrt_sq (norm_nonneg (b.repr φ i₀)), md_i, md_i0]
+  have hmod_j : ‖b.repr φ j‖ = ‖b.repr φ i₀‖ := by
+    rw [← Real.sqrt_sq (norm_nonneg (b.repr φ j)),
+        ← Real.sqrt_sq (norm_nonneg (b.repr φ i₀)), md_j, md_i0]
+  have hdi : b.repr φ i = b.repr φ i₀ := eq_of_re_conj_mul_eq ha0 hmod_i hre_i
+  have hdj : b.repr φ j = b.repr φ i₀ := eq_of_re_conj_mul_eq ha0 hmod_j hre_j
+  have hrec : φ = b.repr φ i₀ • w := by
+    have h1 := repr_eq_triple_of_support b φ h0i h0j hij hsupp
+    rw [hdi, hdj] at h1
+    rw [hw_def, smul_add, smul_add]; exact h1
+  have hmkeq : Projectivization.mk ℂ φ hφne = Projectivization.mk ℂ w hwne :=
+    (Projectivization.mk_eq_mk_iff' ℂ φ w hφne hwne).mpr ⟨b.repr φ i₀, hrec.symm⟩
+  calc diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne)
+      = Projectivization.mk ℂ φ hφne :=
+        (Projectivization.mk_rep (diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne))).symm
+    _ = Projectivization.mk ℂ w hwne := hmkeq
+
+/-- **HEADLINE (non-anchored two-level fixing).** The diagonally reduced map fixes
+**every** two-level superposition ray `mk (b i + b j)` with `i, j ≠ i₀`,
+`i ≠ j` — not only the anchored ones. This upgrades the pairwise relative-phase
+leg to unconditional.
+
+Proof. Write `g := diagReducedMap hf b i₀`, `φ := (g (mk w')).rep`,
+`w' := b i + b j`. Stage-1 moduli restrict `φ` to support `{i, j}`
+(`d_{i₀} = 0`) with `‖d_i‖² = ‖d_j‖² = ‖φ‖²/2`. The **fixed triple ray**
+`mk (b i₀ + b i + b j)` (`diagReducedMap_fixes_three_level`) — a probe carrying
+both `i` and `j` — used through `transProb_of_fixed` gives the overlap identity
+`‖d_i + d_j‖² / (‖φ‖²·3) = ‖1 + 1‖² / (2·3)`, whence
+`Re(conj d_i · d_j) = ‖φ‖²/2 = ‖d_i‖²`, saturating the modulus product;
+`eq_of_re_conj_mul_eq` forces `d_j = d_i`, so `φ = d_i · w'` and `mk φ = mk w'`.
+
+**Audit note.** The probe `b i₀ + b i + b j` and the source `b i + b j` are
+real-coordinate: consistent with both branches. Coboundary structure, not global
+sign. No ℂ-linearity assumed. -/
+theorem diagReducedMap_fixes_two_level_general
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) {i₀ i j : Fin N}
+    (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j) :
+    diagReducedMap hf b i₀ (Projectivization.mk ℂ (b i + b j) (add_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i + b j) (add_basis_ne_zero b hij) := by
+  have hg : TransProbPreserving (diagReducedMap hf b i₀) :=
+    diagReducedMap_transProbPreserving hf b i₀
+  have hfixb : ∀ k, diagReducedMap hf b i₀ (srcPoint b k) = srcPoint b k := fun k => by
+    rw [srcPoint_eq]; exact diagReducedMap_fixes_basis hf b i₀ k
+  set w : EuclideanSpace ℂ (Fin N) := b i + b j with hw_def
+  have hwne : w ≠ 0 := add_basis_ne_zero b hij
+  have hwnorm : ‖w‖ ^ 2 = 2 := add_basis_norm_sq b hij
+  have hwk : ∀ k, b.repr w k = (if k = i then (1 : ℂ) else 0) + (if k = j then 1 else 0) := by
+    intro k
+    rw [hw_def, b.repr_apply_apply, inner_add_right,
+        orthonormal_iff_ite.mp b.orthonormal k i, orthonormal_iff_ite.mp b.orthonormal k j]
+  have hwi : b.repr w i = 1 := by rw [hwk i, if_pos rfl, if_neg hij]; ring
+  have hwj : b.repr w j = 1 := by rw [hwk j, if_neg (Ne.symm hij), if_pos rfl]; ring
+  have hwi0 : b.repr w i₀ = 0 := by rw [hwk i₀, if_neg h0i, if_neg h0j]; ring
+  have hwzero : ∀ k, k ≠ i → k ≠ j → b.repr w k = 0 := by
+    intro k hki hkj; rw [hwk k, if_neg hki, if_neg hkj]; ring
+  set φ := (diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne)).rep with hφ_def
+  have hφne : φ ≠ 0 := Projectivization.rep_nonzero _
+  have hφpos : (0 : ℝ) < ‖φ‖ ^ 2 := pow_pos (norm_pos_iff.mpr hφne) 2
+  have hden : ‖φ‖ ^ 2 ≠ 0 := ne_of_gt hφpos
+  have hcm : ∀ k, ‖b.repr φ k‖ ^ 2 / ‖φ‖ ^ 2 = ‖b.repr w k‖ ^ 2 / ‖w‖ ^ 2 := by
+    intro k
+    have h := coord_modulus_of_fixes_basis hg b hfixb hwne k
+    rwa [← hφ_def] at h
+  have hsupp : ∀ k, k ≠ i → k ≠ j → b.repr φ k = 0 := by
+    intro k hki hkj
+    have hm := hcm k
+    rw [hwzero k hki hkj, norm_zero, zero_pow (by norm_num), zero_div] at hm
+    have hz : ‖b.repr φ k‖ ^ 2 = 0 := by
+      rcases div_eq_zero_iff.mp hm with h | h
+      · exact h
+      · exact absurd h hden
+    rwa [pow_eq_zero_iff (by norm_num), norm_eq_zero] at hz
+  have hd0 : b.repr φ i₀ = 0 := hsupp i₀ h0i h0j
+  have md : ∀ k, k = i ∨ k = j → ‖b.repr φ k‖ ^ 2 = ‖φ‖ ^ 2 / 2 := by
+    intro k hk
+    have hm := hcm k
+    have hck : ‖b.repr w k‖ ^ 2 = 1 := by
+      rcases hk with h | h
+      · rw [h, hwi, norm_one, one_pow]
+      · rw [h, hwj, norm_one, one_pow]
+    rw [hck, hwnorm] at hm
+    rw [div_eq_div_iff hden (by norm_num : (2 : ℝ) ≠ 0)] at hm
+    rw [eq_div_iff (by norm_num : (2 : ℝ) ≠ 0)]; linarith [hm]
+  have md_i := md i (Or.inl rfl)
+  have md_j := md j (Or.inr rfl)
+  have ha_i : b.repr φ i ≠ 0 := by
+    intro h
+    rw [h, norm_zero, zero_pow (by norm_num)] at md_i
+    exact absurd md_i.symm (div_pos hφpos (by norm_num)).ne'
+  -- triple-support probe overlap
+  have hfix3 := diagReducedMap_fixes_three_level hf b h0i h0j hij
+  have hoverlap := hg.transProb_of_fixed hfix3 (Projectivization.mk ℂ w hwne)
+  rw [show diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne) = Projectivization.mk ℂ φ hφne
+        from (Projectivization.mk_rep
+          (diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne))).symm,
+      transProb_three_level b hφne h0i h0j hij,
+      transProb_three_level b hwne h0i h0j hij,
+      hd0, hwi0, hwi, hwj, hwnorm, zero_add, zero_add] at hoverlap
+  have h11 : ‖(1 : ℂ) + 1‖ ^ 2 = 4 := by
+    rw [cnorm_add_sq]
+    simp only [norm_one, one_pow, map_one, mul_one, Complex.one_re]; norm_num
+  rw [h11] at hoverlap
+  have hDφ : ‖φ‖ ^ 2 * 3 ≠ 0 := mul_ne_zero hden (by norm_num)
+  have hcross := (div_eq_div_iff hDφ (by norm_num : (2 : ℝ) * 3 ≠ 0)).mp hoverlap
+  rw [cnorm_add_sq, md_i, md_j] at hcross
+  have hRe : ((starRingEnd ℂ) (b.repr φ i) * b.repr φ j).re = ‖b.repr φ i‖ ^ 2 := by
+    rw [md_i, eq_div_iff (by norm_num : (2 : ℝ) ≠ 0)]; nlinarith [hcross]
+  have hmod_ij : ‖b.repr φ j‖ = ‖b.repr φ i‖ := by
+    rw [← Real.sqrt_sq (norm_nonneg (b.repr φ j)),
+        ← Real.sqrt_sq (norm_nonneg (b.repr φ i)), md_j, md_i]
+  have hdj : b.repr φ j = b.repr φ i := eq_of_re_conj_mul_eq ha_i hmod_ij hRe
+  have hrec : φ = b.repr φ i • w := by
+    have h1 := repr_eq_pair_of_support b φ hij hsupp
+    rw [hdj] at h1
+    rw [hw_def, smul_add]; exact h1
+  have hmkeq : Projectivization.mk ℂ φ hφne = Projectivization.mk ℂ w hwne :=
+    (Projectivization.mk_eq_mk_iff' ℂ φ w hφne hwne).mpr ⟨b.repr φ i, hrec.symm⟩
+  calc diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne)
+      = Projectivization.mk ℂ φ hφne :=
+        (Projectivization.mk_rep (diagReducedMap hf b i₀ (Projectivization.mk ℂ w hwne))).symm
+    _ = Projectivization.mk ℂ w hwne := hmkeq
+
+/-- **HEADLINE (unconditional pairwise relative phase, the 2-cocycle coboundary).**
+For **any** distinct `i, j ≠ i₀`, the diagonally reduced map preserves the real
+part of the relative phase between coordinates `i` and `j`:
+`Re(conj d_i · d_j) / ‖φ‖² = Re(conj c_i · c_j) / ‖ψ‖²`, for every source ray
+`mk ψ`. Discharges the `hfix` hypothesis of
+`diagReducedMap_pairwise_relphase_of_fixed` via the non-anchored two-level fixing
+`diagReducedMap_fixes_two_level_general`.
+
+Together with `diagReducedMap_two_level_relphase` (the anchored legs
+`(i₀, k)`), the pairwise legs `(i, j)` here give the full **coboundary
+structure** of the phase 2-cocycle — the real-part relations
+`Re(c̄_i d_j) = Re(c̄_i c_j)·‖φ‖²/‖ψ‖²` for all pairs — with the ± sign of the
+imaginary parts still free (the ℤ/2 datum resolved only by piece 3). No
+ℂ-linearity is assumed. -/
+theorem diagReducedMap_pairwise_relphase
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N)
+    {i j : Fin N} (h0i : i₀ ≠ i) (h0j : i₀ ≠ j) (hij : i ≠ j)
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) :
+    ((starRingEnd ℂ) (b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep i)
+          * b.repr (diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep j).re
+        / ‖(diagReducedMap hf b i₀ (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ((starRingEnd ℂ) (b.repr ψ i) * b.repr ψ j).re / ‖ψ‖ ^ 2 :=
+  diagReducedMap_pairwise_relphase_of_fixed hf b i₀ hij
+    (diagReducedMap_fixes_two_level_general hf b h0i h0j hij) hψ
+
 /-! ## Stage 3 (residual): the phase cocycle and the unitary/antiunitary dichotomy
 
 Stages 1–2 are proved above with **no linearity assumed** on `f`: only
 `TransProbPreserving`. **Stage 3 piece 1 (the diagonal-phase reduction) is
 proved** (`diagReducedMap` + `diagReducedMap_fixes_two_level`), and **Stage 3
-piece 2 is now proved up to the non-anchored two-level fixing**: the moduli
-(`diagReducedMap_coord_modulus`), the two-level relative-phase constraint
-(`diagReducedMap_two_level_relphase`, the heart of piece 2), and the conditional
-pairwise leg (`diagReducedMap_pairwise_relphase_of_fixed`). What remains to close
-the Wigner / Fubini–Study converse is the **non-anchored two-level fixing** (the
-last missing input of piece 2), the resulting **dichotomy** (piece 3), plus the
-Kähler selection. This is stated here precisely as the open target; it is **not**
-an axiom and **not** a `sorry`.
+piece 2 is now CLOSED**: the moduli (`diagReducedMap_coord_modulus`), the
+two-level relative-phase constraint (`diagReducedMap_two_level_relphase`, the
+heart of piece 2), the **triple-support fixing**
+(`diagReducedMap_fixes_three_level`), the **non-anchored two-level fixing**
+(`diagReducedMap_fixes_two_level_general`, W4), and the resulting
+**unconditional pairwise relative phase** (`diagReducedMap_pairwise_relphase`).
+What remains to close the Wigner / Fubini–Study converse is the **dichotomy**
+(piece 3) plus the Kähler selection. This is stated here precisely as the open
+target; it is **not** an axiom and **not** a `sorry`.
+
+**Audit note (W4, load-bearing).** Every probe used to establish the fixings —
+the triple `mk (b i₀ + b i + b j)` and the pair `mk (b i + b j)` — is a
+**real-coordinate** superposition; its ray is fixed by the identity and by
+coordinatewise conjugation alike, so each fixing is consistent with **both** the
+unitary (`d = c`) and antiunitary (`d = conj c`) branches. Piece 2 establishes
+the **cocycle coboundary structure** (the pairwise real-part relations); it does
+**not** collapse the global unitary/antiunitary sign, which is precisely piece 3.
+`diagReducedMap` is **not** concluded to be the identity.
 
 **State reached.** Write `g := reducedMap hf b` (`TransProbPreserving`, fixes
 every basis ray). Stage 1 (`reducedMap_coord_modulus`) gives, for every
@@ -1339,7 +1770,7 @@ reduced map `g' := diagReducedMap hf b i₀` is `TransProbPreserving`, fixes eve
 basis ray **and** every two-level ray `mk (b i₀ + b i)`.
 
 **Residual crux.** The content is the coherence of the phases across overlapping
-superpositions, in three linked pieces (piece 1 discharged; pieces 2–3 open),
+superpositions, in three linked pieces (pieces 1–2 discharged; piece 3 open),
 none of which may assume ℂ-linearity:
 
 1. **Diagonal-phase reduction (DONE).** Post-compose `g` with `projMap D⁻¹` for
@@ -1349,27 +1780,29 @@ none of which may assume ℂ-linearity:
    `i`. Realised here as `diagUnitary` / `diagReducedMap` /
    `diagReducedMap_fixes_two_level`.
 
-2. **General coordinate phase (piece 2, proved up to the non-anchored fixing).**
+2. **General coordinate phase (piece 2, CLOSED via W4).**
    For a general `ψ = ∑ cⱼ bⱼ` the two-level overlap
    `transProb (g (mk ψ)) (mk (b i₀ + b i))` together with the Stage-1 moduli pins
-   the *real part* of each relative phase, `Re(d̄_{i₀} d_i)/‖φ‖² =
+   the *real part* of each anchored relative phase, `Re(d̄_{i₀} d_i)/‖φ‖² =
    Re(c̄_{i₀} c_i)/‖ψ‖²` (`diagReducedMap_two_level_relphase`), leaving the sign of
-   the imaginary part free — the cocycle's ℤ/2 datum. The `(i, j)` leg follows
-   *whenever* `mk (b i + b j)` is fixed (`diagReducedMap_pairwise_relphase_of_fixed`).
+   the imaginary part free — the cocycle's ℤ/2 datum.
 
-   **Precise residual.** The anchored diagonal reduction fixes only the two-level
-   rays `mk (b i₀ + b i)`. Deriving the *non-anchored* fixing
-   `g (mk (b i + b j)) = mk (b i + b j)` for `i, j ≠ i₀` — the single missing input
-   that upgrades the pairwise leg to an unconditional relation and assembles the
-   coboundary `θ(i, j) = θ(i₀, j) − θ(i₀, i)` — is not available from the anchored
-   fixing alone: the anchored two-level probes `{mk (b i₀ + b k)}` each see only
-   one of the coordinates `i`, `j` (the cross overlaps vanish), so they cannot pin
-   the residual phase `η` in `g (mk (b i + b j)) = mk (b i + η • b j)`. Pinning it
-   needs a fixed probe carrying *both* coordinates, i.e. a fixed three-level ray
-   `mk (b i₀ + b i + b j)`; establishing that fixing needs a relative-phase
-   *saturation* argument (moduli equality forces `Re = |·|`, hence phase alignment)
-   on triple-support states plus a triple-support reconstruction lemma. That is the
-   concrete next tranche.
+   The **non-anchored fixing** `g (mk (b i + b j)) = mk (b i + b j)` for
+   `i, j ≠ i₀` — the input that upgrades the pairwise leg to an unconditional
+   relation — is now derived (**W4**). The anchored two-level probes
+   `{mk (b i₀ + b k)}` each see only one of `i`, `j`, so a probe carrying *both*
+   coordinates is needed: the equal three-level ray `mk (b i₀ + b i + b j)`. It is
+   fixed by a relative-phase *saturation* argument (moduli equality forces
+   `Re = |·|`, hence phase alignment: `norm_eq_re_imp_eq` / `eq_of_re_conj_mul_eq`)
+   on triple-support states plus the triple-support reconstruction
+   (`repr_eq_triple_of_support`), giving `diagReducedMap_fixes_three_level`. Using
+   that fixed triple as a probe (through `transProb_of_fixed`) fixes the
+   non-anchored pair (`diagReducedMap_fixes_two_level_general`), whence the
+   unconditional pairwise real-part relation `Re(d̄_i d_j)/‖φ‖² =
+   Re(c̄_i c_j)/‖ψ‖²` for all `i, j ≠ i₀` (`diagReducedMap_pairwise_relphase`).
+   Together with the anchored legs these are the full **coboundary structure** of
+   the phase 2-cocycle. The saturation probes are real-coordinate and keep both
+   ± branches alive: piece 2 does **not** fix the global sign.
 
 3. **Trivial-cocycle dichotomy.** The cocycle is a coboundary in exactly two
    ways over `ℂ`: either `dⱼ = cⱼ` for all `j` (⇒ `g = id` on rays, the

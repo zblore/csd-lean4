@@ -527,17 +527,25 @@ crux** — see the "real blocker" bullet under Discharge prerequisites below.
 > two-level overlap pins ONLY the real part, so the ± cocycle sign is GENUINELY FREE; both `d=c`
 > (unitary) and `d=conj c` (antiunitary) satisfy it; auditor probe-confirmed, seam clean = NO smuggled
 > linearity), the conditional pairwise leg `diagReducedMap_pairwise_relphase_of_fixed`, and the owed
-> `conjProj_mk`. **Remaining:** (b-residual) the NON-ANCHORED two-level fixing `h(mk(bᵢ+bⱼ))=mk(bᵢ+bⱼ)`
-> for `i,j≠i₀` — needs a triple-support probe `mk(bᵢ₀+bᵢ+bⱼ)` fixed via a relative-phase SATURATION
-> argument (`|z|=z.re ⟹ z=z.re`) + a triple-support reconstruction lemma; that upgrades the conditional
-> cocycle to the unconditional `θ(i,j)=θ(i₀,j)−θ(i₀,i)`. (c) the trivial-cocycle dichotomy → identity
-> (unitary) or `conjProj` (antiunitary), + the Kähler selection of the unitary branch. **Decision TAKEN
-> (user, 2026-07-02): complete the phase-cocycle proof incrementally — NO `wigner_fs_rigidity` axiom.**
-> **Next bounded increment:** the triple-support fixing (closes piece 2), then piece 3 (dichotomy).
-> **Audit watch (piece 3, load-bearing):** the saturation step must keep BOTH ± signs alive until the
-> Kähler selection; and the dichotomy must DERIVE ℂ-linearity as an OUTPUT, never assume it.
-> **Audit watch (load-bearing):** the dichotomy must DERIVE ℂ-linearity as an OUTPUT, never assume it,
-> and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
+> `conjProj_mk`. **W4 (2026-07-02) CLOSED piece 2:** `norm_eq_re_imp_eq` (saturation `‖z‖=z.re⟹z=z.re`)
+> + `eq_of_re_conj_mul_eq` (neutral phase alignment) + `repr_eq_triple_of_support` +
+> `diagReducedMap_fixes_three_level` (the equal REAL triple ray `mk(bᵢ₀+bᵢ+bⱼ)` is fixed, ± free —
+> the saturation aligns the IMAGE coords to each other, not source→image, so no collapse to id) +
+> `diagReducedMap_fixes_two_level_general` (the non-anchored `mk(bᵢ+bⱼ)` fixing, from the fixed triple
+> as a both-coordinate probe) + `diagReducedMap_pairwise_relphase` (the UNCONDITIONAL pairwise real-part
+> relation). Auditor-SOUND. **Scope note (auditor):** "piece 2 closed" = the SIGN-FREE real-part
+> relations (pairwise cosines `cos(βⱼ−βᵢ)=cos(αⱼ−αᵢ)` for all pairs); no explicit `Complex.arg` additive
+> `θ(i,j)=θ(i₀,j)−θ(i₀,i)` / `H²` object is built, because that presupposes resolving the ± reflection =
+> piece 3. **Remaining = piece 3 (the finish):** (c) the trivial-cocycle dichotomy `dⱼ=cⱼ ∀j` (unitary)
+> vs `dⱼ=conj cⱼ ∀j` (antiunitary), separated by a COMPLEX probe `mk(bᵢ₀+ζ•bᵢ)` (non-real `ζ`, no longer
+> conjugation-invariant), + the Kähler/holomorphic selection of the unitary branch, + the final
+> `TransProbPreserving f → unitary ∨ antiunitary` assembly by inverting the frame reduction. **Decision
+> TAKEN (user, 2026-07-02): complete the phase-cocycle proof incrementally — NO `wigner_fs_rigidity` axiom.**
+> **Next bounded increment (W5, the finish):** piece 3 — the complex-probe branch separation + the
+> Kähler selection + the final assembly. **Audit watch (piece 3, load-bearing):** the branch separation
+> must keep BOTH ± signs alive until the complex probe / Kähler selection resolves them (guard against a
+> proof that silently assumes `d_{i₀}` real or picks a branch); the dichotomy must DERIVE ℂ-linearity as
+> an OUTPUT, never assume it, and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
 
 Originally framed for cloning (§13.1 below); generalised to arbitrary
 N-qubit unitaries when the Tranche 1 Tier A gate work introduced

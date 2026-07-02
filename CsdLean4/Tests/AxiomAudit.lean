@@ -2590,10 +2590,36 @@ as an axiom nor a sorry. -/
 #print axioms Projectivization.diagReducedMap_coord_modulus
 
 -- Conditional (i, j) leg of the 2-cocycle: holds whenever `mk (b i + b j)` is
--- fixed. The non-anchored fixing is the documented residual of piece 2.
+-- fixed. The non-anchored fixing is discharged by W4 below.
 /-- info: 'Projectivization.diagReducedMap_pairwise_relphase_of_fixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.diagReducedMap_pairwise_relphase_of_fixed
+
+-- Wigner W4 HEADLINE (piece 2 closure, triple-support fixing): the equal triple
+-- ray `mk (b i₀ + b i + b j)` is fixed by `diagReducedMap`. Route: Stage-1 moduli
+-- (support {i₀,i,j}, equal moduli) + the two anchored two-level relphase relations
+-- + saturation (`norm_eq_re_imp_eq`) forcing phase alignment + triple-support
+-- reconstruction. The probe is REAL-coordinate, so the fixing is consistent with
+-- BOTH the unitary and antiunitary branches: it establishes cocycle coboundary
+-- structure, NOT the global sign. NO ℂ-linearity assumed. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_fixes_three_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_fixes_three_level
+
+-- Wigner W4 HEADLINE (non-anchored two-level fixing): `mk (b i + b j)` fixed for
+-- every `i, j ≠ i₀`, using the fixed triple as a both-coordinate probe through
+-- `transProb_of_fixed`. Discharges the residual input of piece 2. Foundational-triple.
+/-- info: 'Projectivization.diagReducedMap_fixes_two_level_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_fixes_two_level_general
+
+-- Wigner W4 HEADLINE (unconditional pairwise relative phase, the 2-cocycle
+-- coboundary): `Re(conj d_i d_j)/‖φ‖² = Re(conj c_i c_j)/‖ψ‖²` for ALL `i,j ≠ i₀`,
+-- unconditionally. The ± sign of the imaginary parts stays free (resolved only by
+-- piece 3). NO ℂ-linearity assumed. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_pairwise_relphase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_pairwise_relphase
 
 -- Wigner W3 owed helper: the representative-independent ray-map identity for the
 -- antiunitary witness `conjProj`, needed for the eventual antiunitary assembly.
