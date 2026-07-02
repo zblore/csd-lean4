@@ -2627,6 +2627,51 @@ as an axiom nor a sorry. -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.conjProj_mk
 
+-- Wigner W5 (piece 3): the complex probe pins the IMAGINARY part of the relative
+-- phase (the datum invisible to the real probes of pieces 1-2). Fixed complex ray
+-- ⟹ Im preserved; flipped complex ray ⟹ Im negated (the antiunitary reading).
+-- Pure overlap algebra; NO ℂ-linearity. Foundational-triple only.
+/-- info: 'Projectivization.two_level_imrelphase_of_fixes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.two_level_imrelphase_of_fixes
+
+/-- info: 'Projectivization.two_level_imrelphase_of_flips' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.two_level_imrelphase_of_flips
+
+-- Wigner W5 HEADLINE (reconstruction, unitary branch): a preserving map fixing all
+-- basis, real two-level AND complex two-level rays is the IDENTITY on rays. The full
+-- Gram datum `conj dᵢ dⱼ ‖ψ‖² = conj cᵢ cⱼ ‖φ‖²` forces `φ = λ • ψ`. ℂ-linearity is
+-- an OUTPUT, never an input. Foundational-triple only.
+/-- info: 'Projectivization.eq_id_of_fixes_all_two_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_id_of_fixes_all_two_level
+
+-- Wigner W5 HEADLINE (reconstruction, antiunitary branch): fixing the real rays but
+-- FLIPPING the complex rays gives coordinatewise conjugation in the basis `b`. The
+-- genuine antiunitary branch; ℂ-linearity is an OUTPUT. Foundational-triple only.
+/-- info: 'Projectivization.eq_bconj_of_flips_complex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_bconj_of_flips_complex
+
+-- Wigner W5 HEADLINE (the branch-distinguishing complex probe): the diagonally
+-- reduced map sends `mk (b i₀ + I • b i)` to itself (+ branch) OR to
+-- `mk (b i₀ - I • b i)` (− branch). Unlike the real probes, this ray is NOT
+-- conjugation-invariant, so it distinguishes the unitary from the antiunitary
+-- branch. The ± is forced by `Re ε = 0`, `‖ε‖ = 1`. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_complex_probe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_complex_probe
+
+-- Wigner W5 HEADLINE (the reduced-map dichotomy): given the GLOBAL complex-sign
+-- closure (all complex two-level rays fixed, or all flipped), the diagonally reduced
+-- map is GLOBALLY the identity on rays, or GLOBALLY coordinatewise conjugation. Both
+-- branches genuine; ℂ-linearity an OUTPUT. The residual to an unconditional Wigner
+-- converse is exactly the global-sign closure. Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_dichotomy_of_complexSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_dichotomy_of_complexSign
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.

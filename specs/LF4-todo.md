@@ -541,11 +541,27 @@ crux** — see the "real blocker" bullet under Discharge prerequisites below.
 > conjugation-invariant), + the Kähler/holomorphic selection of the unitary branch, + the final
 > `TransProbPreserving f → unitary ∨ antiunitary` assembly by inverting the frame reduction. **Decision
 > TAKEN (user, 2026-07-02): complete the phase-cocycle proof incrementally — NO `wigner_fs_rigidity` axiom.**
-> **Next bounded increment (W5, the finish):** piece 3 — the complex-probe branch separation + the
-> Kähler selection + the final assembly. **Audit watch (piece 3, load-bearing):** the branch separation
-> must keep BOTH ± signs alive until the complex probe / Kähler selection resolves them (guard against a
-> proof that silently assumes `d_{i₀}` real or picks a branch); the dichotomy must DERIVE ℂ-linearity as
-> an OUTPUT, never assume it, and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
+> **W5 (2026-07-02) proved piece 3 CONDITIONALLY (the reconstruction + the conditional dichotomy):**
+> `diagReducedMap_complex_probe` (the complex ray `mk(bᵢ₀+I•bᵢ)` is fixed or flipped to `mk(bᵢ₀−I•bᵢ)`,
+> the per-pair ±I datum FORCED by `unit_re_zero_eq_I_or_negI` from `Re ε=0,‖ε‖=1`, not assumed — the
+> branch-distinguishing tool the real probes could not supply), `two_level_imrelphase_of_fixes`/`_of_flips`
+> (the imaginary relative-phase datum, ± reading), `eq_id_of_fixes_all_two_level` (a map fixing all
+> basis+real+complex two-level rays is the IDENTITY on rays, `φ=λ•ψ` from the full Gram datum, ℂ-linearity
+> an OUTPUT, no genericity) + `eq_bconj_of_flips_complex` (flipping the complex rays gives coordinatewise
+> conjugation `bConjVec` = the genuine antiunitary branch), and `diagReducedMap_dichotomy_of_complexSign`
+> (CONDITIONAL on the global-sign closure `hsign`, the reduced map is globally id or globally conjugation).
+> Auditor-SOUND: `hsign` is an HONEST residual (strictly weaker than the conclusion — the conclusion
+> implies `hsign`; the per-pair ± is forced unconditionally, `hsign` adds only global coherence), both
+> branches genuinely present, ℂ-linearity nowhere assumed. **Remaining = the SINGLE residual `hsign`
+> (W6, the finish):** discharge the global-sign closure (per-pair ±I signs cohere: fixes-all ∨ flips-all)
+> via a complex triple probe `mk(bᵢ₀+I•bᵢ+I•bⱼ)` (three-index consistency of anchored signs) + a
+> symmetry-breaking probe `mk(bᵢ₀+I•bᵢ−bⱼ)` (non-anchored linking) — each a `transProb`-between-probe
+> linking lemma, no linearity — plus the non-anchored per-pair probe `diagReducedMap_complex_probe_general`;
+> then frame-invert `f = projMap(candidateUnitary) ∘ projMap D ∘ diagReducedMap` to STATE the final
+> `wigner_rigidity : TransProbPreserving f → unitary ∨ antiunitary`. **Decision TAKEN (user, 2026-07-02):
+> incremental, NO `wigner_fs_rigidity` axiom.** **Audit watch (W6, load-bearing):** the global closure must
+> be derived from `transProb` preservation alone — no `arg`-branch choice or linearity at the linking step,
+> both ± alive until the probes resolve them; ℂ-linearity stays an OUTPUT.
 
 Originally framed for cloning (§13.1 below); generalised to arbitrary
 N-qubit unitaries when the Tranche 1 Tier A gate work introduced
