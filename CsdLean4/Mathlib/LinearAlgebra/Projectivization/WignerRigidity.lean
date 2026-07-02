@@ -59,46 +59,53 @@ delivers:
   inverse candidate unitary's projective map through `projMap_mk`, and applies
   `LinearIsometryEquiv.symm_apply_apply`.
 
-This reduces the open converse to a **single Wigner normal-form lemma** (below).
+This reduces the open converse to the **Wigner normal-form problem** for the
+reduced map, addressed in Stages 1–3 below.
 
-## Open target (not proved here): the Wigner converse, steps (2c)/(2d)
+## Stage 1 (proved here): moduli preservation
+
+* `TransProbPreserving.transProb_of_fixed` — a preserving map fixing a point `q`
+  preserves the transition probability from every point to `q`.
+* `transProb_srcPoint` — the transition probability to the `i`-th basis ray is the
+  normalised squared modulus of the `i`-th coordinate `b.repr ψ i`.
+* `reducedMap_coord_modulus` — **Stage 1 headline**: writing
+  `reducedMap hf b (mk ψ) = mk φ`, the modulus profile
+  `‖b.repr φ i‖² / ‖φ‖² = ‖b.repr ψ i‖² / ‖ψ‖²` is preserved coordinate-by-coordinate.
+
+## Stage 2 (proved here): the two-level phase normal form
+
+* `add_basis_ne_zero`, `repr_eq_pair_of_support`, `mk_eq_two_level_of_profile` —
+  support and reconstruction infrastructure.
+* `reducedMap_two_level_normal_form` — **Stage 2 headline**: for distinct
+  `i₀ ≠ i`, `reducedMap hf b (mk (b i₀ + b i)) = mk (b i₀ + ε • b i)` for a
+  unimodular `ε`. The image ray is pinned up to the single phase `ε`.
+
+Both stages are derived from `TransProbPreserving` alone; **no ℂ-linearity is
+assumed** anywhere.
+
+## Stage 3 (open target, not proved): the phase cocycle and the dichotomy
 
 The converse of the realisability inclusion `transProbPreserving_unitary` is the
 **Wigner / Fubini–Study rigidity theorem**:
 
-> `theorem (informal): TransProbPreserving f → ∃ U : Matrix.unitaryGroup (Fin N) ℂ,
->   f = fun p => U • p`
+> `theorem (informal): TransProbPreserving f → (∃ U : Matrix.unitaryGroup (Fin N) ℂ,`
+> `  f = fun p => U • p) ∨ (∃ antiunitary A, f = A-ray-action)`
 
 equivalently, the isometry group of `ℂℙⁿ` with the Fubini–Study metric is the
-projective unitary group `PU(n+1)`. It is **not** stated here as an axiom or a
-`sorry`. With (2a)/(2b) in hand (a candidate unitary agreeing with `f` on a fixed
-orthonormal frame) and the frame reduction above, the **remaining steps** are:
+projective **semi**-unitary group. It is **not** stated here as an axiom or a
+`sorry`. With Stages 1–2 in hand, the residual is the phase-cocycle coherence of
+the Stage-2 phases `εᵢ` and the resulting unitary/antiunitary dichotomy; the
+precise three-piece residual is documented in the `Stage 3 (residual)` section at
+the end of this file. **Critical honesty notes (load-bearing).**
 
-* **(2c) The Wigner normal-form lemma.** With `reducedMap hf b` now known to be
-  `TransProbPreserving` and to fix every basis ray, the residual content is:
-
-  > a `TransProbPreserving` map fixing every basis ray acts as a diagonal phase;
-  > and the phase cocycle, fixed by the superposition rays `mk (b i + b j)`, is
-  > trivial, hence the map is the identity on rays.
-
-  Concretely, fixing `mk (b i)` for all `i` leaves the phases of `f` on the
-  superposition states `f (mk (b i + b j))` free; consistency of these phases
-  across overlapping superpositions (the coherence/cocycle crux) is what pins
-  them. **Critical honesty note (load-bearing).** `reducedMap_fixes_basis` does
-  **not** make `reducedMap` the identity. The diagonal-phase freedom is genuine
-  and is *exactly* what (2c) must pin down. Do **not** read the frame-reduction
-  result as `reducedMap = id`, nor as `f = projMap (candidateUnitary hf b)`. The
-  candidate unitary is built from a *chosen* frame; fixing that frame's rays is
-  one constraint, not the full rigidity.
-* **(2d) Ruling out the antiunitary branch.** Transition-probability preservation
-  alone admits both the unitary and antiunitary classes. The holomorphic / Kähler
-  complex structure on `ℂℙⁿ` selects the unitary (ℂ-linear) branch.
-  **Critical honesty note:** steps (2c)/(2d) must *derive* ℂ-linearity from the
-  overlap data plus the Kähler structure, **not** assume it as a hypothesis. A
-  smuggled linearity hypothesis would beg the question — the whole content of the
-  converse is that the metric/transition data, plus the complex structure, *force*
-  unitarity rather than merely permitting it. ℂ-linearity must be derived, not
-  assumed.
+* `reducedMap_fixes_basis` does **not** make `reducedMap` the identity: the
+  diagonal-phase freedom is genuine and is exactly the Stage-2 phase `ε`, pinned
+  only by the Stage-3 cocycle. Do not read frame reduction as `reducedMap = id`
+  nor as `f = projMap (candidateUnitary hf b)`.
+* Transition-probability preservation over `ℂ` admits both the unitary and the
+  antiunitary classes; the holomorphic / Kähler complex structure selects the
+  unitary one. Stage 3 must *derive* ℂ-linearity from the overlap data, **not**
+  assume it: a smuggled linearity hypothesis would beg the question.
 
 ## Provenance
 
@@ -542,5 +549,273 @@ theorem reducedMap_fixes_basis
   -- `U.symm (U (b i)) = b i`; `mk` is irrelevant to the nonzero-proof argument.
   congr 1
   exact U.symm_apply_apply (b i)
+
+/-! ## Stage 1: moduli preservation
+
+A `TransProbPreserving` map fixing a projective point `q` preserves the
+transition probability from every point to `q` (`TransProbPreserving.transProb_of_fixed`).
+Applied to `reducedMap hf b`, which fixes every source basis ray, this shows the
+**modulus profile** of the coordinates in the basis `b` is preserved: writing
+`reducedMap hf b (mk ψ) = mk φ`, the normalised squared modulus
+`‖b.repr ψ i‖² / ‖ψ‖²` of each coordinate is preserved
+(`reducedMap_coord_modulus`). This is the coordinate-free heart of the Wigner
+normal-form argument; it does not yet pin phases. -/
+
+/-- **Moduli-preservation kernel.** A transition-probability-preserving map
+fixing a projective point `q` preserves the transition probability from every
+point to `q`. General in `E`. -/
+theorem TransProbPreserving.transProb_of_fixed
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
+    {g : ℙ ℂ E → ℙ ℂ E} (hg : TransProbPreserving g)
+    {q : ℙ ℂ E} (hq : g q = q) (p : ℙ ℂ E) :
+    transProb (g p) q = transProb p q := by
+  conv_lhs => rw [← hq]
+  exact hg p q
+
+/-- The transition probability from `mk ψ` to the `i`-th source basis ray
+`srcPoint b i` is the normalised squared modulus of the `i`-th coordinate
+`b.repr ψ i`. Uses `norm_inner_symm` and `OrthonormalBasis.repr_apply_apply` to
+identify `‖⟪ψ, b i⟫‖ = ‖b.repr ψ i‖`, and `Orthonormal.norm_eq_one` to drop the
+unit basis norm from the denominator. -/
+lemma transProb_srcPoint
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) (i : Fin N) :
+    transProb (Projectivization.mk ℂ ψ hψ) (srcPoint b i)
+      = ‖b.repr ψ i‖ ^ 2 / ‖ψ‖ ^ 2 := by
+  rw [srcPoint_eq, transProb_mk hψ (b.orthonormal.ne_zero i)]
+  unfold transProbVec
+  rw [b.orthonormal.norm_eq_one i, one_pow, mul_one, norm_inner_symm,
+      ← b.repr_apply_apply]
+
+/-- **Stage 1 (moduli preservation).** Writing `reducedMap hf b (mk ψ) = mk φ`,
+the normalised squared modulus of every coordinate in the basis `b` is preserved:
+`‖b.repr φ i‖² / ‖φ‖² = ‖b.repr ψ i‖² / ‖ψ‖²`, where `φ` is the canonical
+representative of the image ray. Combines the moduli-preservation kernel
+`TransProbPreserving.transProb_of_fixed` (with `q = srcPoint b i`, fixed by
+`reducedMap_fixes_basis`) and the coordinate reading `transProb_srcPoint`. -/
+theorem reducedMap_coord_modulus
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) (i : Fin N) :
+    ‖b.repr (reducedMap hf b (Projectivization.mk ℂ ψ hψ)).rep i‖ ^ 2
+        / ‖(reducedMap hf b (Projectivization.mk ℂ ψ hψ)).rep‖ ^ 2
+      = ‖b.repr ψ i‖ ^ 2 / ‖ψ‖ ^ 2 := by
+  have hfix : reducedMap hf b (srcPoint b i) = srcPoint b i := by
+    rw [srcPoint_eq]; exact reducedMap_fixes_basis hf b i
+  have key := (reducedMap_transProbPreserving hf b).transProb_of_fixed hfix
+    (Projectivization.mk ℂ ψ hψ)
+  rw [transProb_srcPoint b hψ i] at key
+  set gp := reducedMap hf b (Projectivization.mk ℂ ψ hψ) with hgp
+  have hgp_coord : transProb gp (srcPoint b i)
+      = ‖b.repr gp.rep i‖ ^ 2 / ‖gp.rep‖ ^ 2 := by
+    conv_lhs => rw [← Projectivization.mk_rep gp]
+    exact transProb_srcPoint b gp.rep_nonzero i
+  rw [← hgp_coord, key]
+
+/-! ## Stage 2: the two-level phase normal form
+
+For distinct indices `i₀ ≠ i`, the frame-reduced map sends the superposition ray
+`mk (b i₀ + b i)` to a ray `mk (b i₀ + ε • b i)` with `ε` unimodular
+(`reducedMap_two_level_normal_form`). Stage 1 forces the image rep to be
+supported on `{i₀, i}` with equal coordinate moduli there; normalising the ray so
+that the `i₀`-coordinate is `1` leaves a single unit phase `ε := d_i / d_{i₀}`.
+The genuine content is the support restriction plus the modulus equality; the
+phase `ε` is *not* yet pinned to `1` (that is Stage 3, the cocycle). -/
+
+/-- The sum of two distinct basis vectors is nonzero: its squared norm is `2`
+(Pythagoras via `norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero`, using the
+orthogonality `b.orthonormal.2 hij` and the unit norms). -/
+lemma add_basis_ne_zero
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {i₀ i : Fin N} (hij : i₀ ≠ i) :
+    (b i₀ + b i : EuclideanSpace ℂ (Fin N)) ≠ 0 := by
+  intro h
+  have h2 : ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖
+      * ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖ = 2 := by
+    rw [norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero (b i₀) (b i)
+          (b.orthonormal.2 hij), b.orthonormal.norm_eq_one i₀,
+        b.orthonormal.norm_eq_one i]
+    norm_num
+  rw [h, norm_zero, mul_zero] at h2
+  norm_num at h2
+
+/-- **Support reconstruction.** A vector whose coordinates in the basis `b`
+vanish outside `{i₀, i}` is the pair sum of its two surviving coordinates.
+`OrthonormalBasis.sum_repr` expands `φ`, `Finset.sum_subset` drops the null
+coordinates, and `Finset.sum_pair` collapses the two-element sum. -/
+lemma repr_eq_pair_of_support
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (φ : EuclideanSpace ℂ (Fin N)) {i₀ i : Fin N} (hij : i₀ ≠ i)
+    (hsupp : ∀ j, j ≠ i₀ → j ≠ i → b.repr φ j = 0) :
+    φ = b.repr φ i₀ • b i₀ + b.repr φ i • b i := by
+  have hvanish : ∀ j ∈ (Finset.univ : Finset (Fin N)),
+      j ∉ ({i₀, i} : Finset (Fin N)) → b.repr φ j • b j = 0 := by
+    intro j _ hj
+    rw [Finset.mem_insert, Finset.mem_singleton] at hj
+    push_neg at hj
+    rw [hsupp j hj.1 hj.2, zero_smul]
+  calc φ = ∑ j, b.repr φ j • b j := (b.sum_repr φ).symm
+    _ = ∑ j ∈ ({i₀, i} : Finset (Fin N)), b.repr φ j • b j :=
+          (Finset.sum_subset (Finset.subset_univ _) hvanish).symm
+    _ = b.repr φ i₀ • b i₀ + b.repr φ i • b i := Finset.sum_pair hij
+
+/-- **Profile ⇒ two-level normal form.** A nonzero vector supported on `{i₀, i}`
+with equal coordinate moduli there (and nonzero `i₀`-coordinate) spans the ray
+`mk (b i₀ + ε • b i)` for the unit phase `ε := (b.repr φ i) / (b.repr φ i₀)`.
+Factoring `b.repr φ i₀` out of the pair reconstruction rescales the ray; the
+modulus equality gives `‖ε‖ = 1`. -/
+lemma mk_eq_two_level_of_profile
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {φ : EuclideanSpace ℂ (Fin N)} (hφ : φ ≠ 0) {i₀ i : Fin N} (hij : i₀ ≠ i)
+    (hsupp : ∀ j, j ≠ i₀ → j ≠ i → b.repr φ j = 0)
+    (ha : b.repr φ i₀ ≠ 0)
+    (hmod : ‖b.repr φ i‖ = ‖b.repr φ i₀‖) :
+    ∃ (ε : ℂ) (hne : (b i₀ + ε • b i : EuclideanSpace ℂ (Fin N)) ≠ 0),
+      ‖ε‖ = 1 ∧
+      Projectivization.mk ℂ φ hφ = Projectivization.mk ℂ (b i₀ + ε • b i) hne := by
+  have hrec : φ = b.repr φ i₀ • b i₀ + b.repr φ i • b i :=
+    repr_eq_pair_of_support b φ hij hsupp
+  set a := b.repr φ i₀ with ha_def
+  set c := b.repr φ i with hc_def
+  have hfactor : a • (b i₀ + (c / a) • b i) = φ := by
+    have hac : a * (c / a) = c := by field_simp
+    rw [smul_add, smul_smul, hac, ← hrec]
+  have hne : (b i₀ + (c / a) • b i : EuclideanSpace ℂ (Fin N)) ≠ 0 := by
+    intro h0
+    rw [h0, smul_zero] at hfactor
+    exact hφ hfactor.symm
+  refine ⟨c / a, hne, ?_, ?_⟩
+  · rw [norm_div, hmod, div_self (norm_ne_zero_iff.mpr ha)]
+  · exact (Projectivization.mk_eq_mk_iff' ℂ φ (b i₀ + (c / a) • b i) hφ hne).mpr
+      ⟨a, hfactor⟩
+
+/-- **Stage 2 (two-level phase normal form).** For distinct `i₀ ≠ i`, the
+frame-reduced map sends the superposition ray `mk (b i₀ + b i)` to
+`mk (b i₀ + ε • b i)` for a unimodular `ε`. Stage 1 (`reducedMap_coord_modulus`)
+forces the image rep to be supported on `{i₀, i}` with equal moduli there;
+`mk_eq_two_level_of_profile` packages the ray normal form. This pins the image
+ray up to the single phase `ε`; pinning `ε = 1` (globally coherently) is the
+Stage 3 cocycle, not proved here. -/
+theorem reducedMap_two_level_normal_form
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    {i₀ i : Fin N} (hij : i₀ ≠ i) :
+    ∃ (ε : ℂ) (hne : (b i₀ + ε • b i : EuclideanSpace ℂ (Fin N)) ≠ 0),
+      ‖ε‖ = 1 ∧
+      reducedMap hf b
+          (Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))
+        = Projectivization.mk ℂ (b i₀ + ε • b i) hne := by
+  -- Coordinates of the source superposition `w = b i₀ + b i`.
+  have hwj : ∀ j, b.repr (b i₀ + b i) j
+      = (if j = i₀ then (1 : ℂ) else 0) + (if j = i then 1 else 0) := by
+    intro j
+    rw [b.repr_apply_apply, inner_add_right,
+        orthonormal_iff_ite.mp b.orthonormal j i₀,
+        orthonormal_iff_ite.mp b.orthonormal j i]
+  have hwi0 : b.repr (b i₀ + b i) i₀ = 1 := by
+    rw [hwj i₀, if_pos rfl, if_neg hij, add_zero]
+  have hwi : b.repr (b i₀ + b i) i = 1 := by
+    rw [hwj i, if_neg (Ne.symm hij), if_pos rfl, zero_add]
+  have hwnorm : ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖ ^ 2 = 2 := by
+    rw [sq, norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero (b i₀) (b i)
+          (b.orthonormal.2 hij), b.orthonormal.norm_eq_one i₀,
+        b.orthonormal.norm_eq_one i]
+    norm_num
+  -- The image rep `φ` and the transported moduli (Stage 1).
+  set φ := (reducedMap hf b
+      (Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))).rep
+    with hφ_def
+  have hφne : φ ≠ 0 := Projectivization.rep_nonzero _
+  have hφpos : (0 : ℝ) < ‖φ‖ ^ 2 := pow_pos (norm_pos_iff.mpr hφne) 2
+  have hmodj : ∀ j, ‖b.repr φ j‖ ^ 2 / ‖φ‖ ^ 2
+      = ‖b.repr (b i₀ + b i) j‖ ^ 2
+          / ‖(b i₀ + b i : EuclideanSpace ℂ (Fin N))‖ ^ 2 := by
+    intro j
+    rw [hφ_def]
+    exact reducedMap_coord_modulus hf b (add_basis_ne_zero b hij) j
+  -- Support of `φ` is `{i₀, i}`.
+  have hsupp : ∀ j, j ≠ i₀ → j ≠ i → b.repr φ j = 0 := by
+    intro j hj0 hji
+    have hz : ‖b.repr φ j‖ ^ 2 / ‖φ‖ ^ 2 = 0 := by
+      rw [hmodj j, hwj j, if_neg hj0, if_neg hji, add_zero, norm_zero]
+      norm_num
+    have hsq : ‖b.repr φ j‖ ^ 2 = 0 := by
+      rcases div_eq_zero_iff.mp hz with h | h
+      · exact h
+      · exact absurd h (ne_of_gt hφpos)
+    rwa [pow_eq_zero_iff (by norm_num), norm_eq_zero] at hsq
+  -- The `i₀`-coordinate of `φ` is nonzero (its modulus² is `‖φ‖²/2`).
+  have ha : b.repr φ i₀ ≠ 0 := by
+    intro h
+    have hmj := hmodj i₀
+    rw [hwi0, h, norm_zero, hwnorm, norm_one] at hmj
+    norm_num at hmj
+  -- The `i` and `i₀` coordinate moduli agree.
+  have hmod : ‖b.repr φ i‖ = ‖b.repr φ i₀‖ := by
+    have hi := hmodj i
+    have hi0 := hmodj i₀
+    rw [hwi, norm_one, hwnorm] at hi
+    rw [hwi0, norm_one, hwnorm] at hi0
+    have hd := hi.trans hi0.symm
+    rw [div_eq_div_iff (ne_of_gt hφpos) (ne_of_gt hφpos)] at hd
+    have heq2 : ‖b.repr φ i‖ ^ 2 = ‖b.repr φ i₀‖ ^ 2 :=
+      mul_right_cancel₀ (ne_of_gt hφpos) hd
+    rw [← Real.sqrt_sq (norm_nonneg (b.repr φ i)),
+        ← Real.sqrt_sq (norm_nonneg (b.repr φ i₀)), heq2]
+  -- Assemble via the profile normal form.
+  obtain ⟨ε, hne, hεnorm, hmkeq⟩ :=
+    mk_eq_two_level_of_profile b hφne hij hsupp ha hmod
+  refine ⟨ε, hne, hεnorm, ?_⟩
+  rw [← hmkeq]
+  exact (Projectivization.mk_rep _).symm
+
+/-! ## Stage 3 (residual): the phase cocycle and the unitary/antiunitary dichotomy
+
+Stages 1–2 are proved above with **no linearity assumed** on `f`: only
+`TransProbPreserving`. What remains to close the Wigner / Fubini–Study converse is
+the **phase cocycle** step and the resulting dichotomy. This is stated here
+precisely as the open target; it is **not** an axiom and **not** a `sorry`.
+
+**State reached.** Write `g := reducedMap hf b` (`TransProbPreserving`, fixes
+every basis ray). Stage 1 (`reducedMap_coord_modulus`) gives, for every
+`p = mk ψ` with image rep `φ`, the modulus profile
+`‖b.repr φ j‖² / ‖φ‖² = ‖b.repr ψ j‖² / ‖ψ‖²` for all `j`. Stage 2
+(`reducedMap_two_level_normal_form`) gives, for each `i ≠ i₀`, a unit phase
+`εᵢ` with `g (mk (b i₀ + b i)) = mk (b i₀ + εᵢ • b i)`.
+
+**Residual crux (open).** The remaining content is the coherence of the `εᵢ`
+across overlapping superpositions, in three linked pieces, none of which may
+assume ℂ-linearity:
+
+1. **Diagonal-phase reduction.** Post-compose `g` with `projMap D⁻¹` for the
+   diagonal unitary `D` with `D (b i₀) = b i₀`, `D (b i) = εᵢ⁻¹ • b i` (which
+   fixes every basis ray, so the frame reduction is preserved). After this, the
+   reduced map fixes `mk (b i₀ + b i)` for **every** `i`.
+
+2. **General coordinate phase.** For a general `ψ = ∑ cⱼ bⱼ`, the transition
+   probabilities `transProb (g (mk ψ)) (mk (b i₀ + b i))` together with the
+   Stage-1 moduli pin each image coordinate `dⱼ` to `cⱼ` up to a *single* phase
+   per index, and the further overlaps with `mk (b i + b j)` force those phases
+   to satisfy a 2-cocycle relation `θ(i,j) = θ(i₀,j) − θ(i₀,i)`.
+
+3. **Trivial-cocycle dichotomy.** The cocycle is a coboundary in exactly two
+   ways over `ℂ`: either `dⱼ = cⱼ` for all `j` (⇒ `g = id` on rays, the
+   ℂ-linear / unitary branch) or `dⱼ = conj cⱼ` for all `j` (⇒ `g = conj` on
+   rays, the antiunitary branch). Over `ℂ`, transition-probability preservation
+   alone admits both; the holomorphic / Kähler complex structure selects the
+   first. **ℂ-linearity is an output of this step, never an input.**
+
+**Assembly (once the residual is closed).** Inverting the frame reduction,
+`f = projMap (candidateUnitary hf b) ∘ g`; with the dichotomy this yields either
+`∃ e : E ≃ₗᵢ[ℂ] E, ∀ p, f p = projMap e p` (unitary branch, then bridge to
+`Matrix.unitaryGroup` via the isometry's matrix) or the antiunitary analogue
+`f = projMap (candidateUnitary hf b) ∘ conjProj` for the ray-map `conjProj` of
+complex conjugation in the basis `b`. The final headline
+
+> `TransProbPreserving f → (∃ U : Matrix.unitaryGroup (Fin N) ℂ, ∀ p, f p = U • p)`
+> `  ∨ (∃ antiunitary A, ∀ p, f p = A-ray-action p)`
+
+is deliberately **not** stated as a theorem here, because the dichotomy (item 3)
+is not yet discharged. -/
 
 end Projectivization

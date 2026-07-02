@@ -507,22 +507,25 @@ The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use 
 Fubini–Study rigidity converse) is **substantially built but PAUSED 2026-06-09 at the genuine
 crux** — see the "real blocker" bullet under Discharge prerequisites below.
 
-> ⏸ **WIGNER PROGRAMME — PAUSED 2026-06-09 at the (2c-iii) phase-cocycle crux.**
-> Built and verified (foundational-triple-only, AxiomAudit-pinned, Tier-A audited SOUND) in
+> ▶ **WIGNER PROGRAMME — RESUMED 2026-07-02 (W1), progressing incrementally (no axiom).**
+> Built and verified (foundational-triple-only, AxiomAudit-pinned, auditor-SOUND) in
 > `Mathlib/LinearAlgebra/Projectivization/{TransitionProbability,WignerRigidity}.lean`:
 > the `transProb` API + forward direction; `TransProbPreserving` + injectivity + orthogonality/
 > frame preservation (step 1); `imageOrthonormalBasis` + `candidateUnitary` agreeing on the
 > basis (steps 2a/2b); `projMap`/`transProb_projMap` + `reducedMap` fixing every basis ray
-> (frame reduction, 2c-i/ii on-ramp). **Remaining = ONE research-grade lemma:** a
-> `TransProbPreserving` map fixing every basis ray is induced by a *diagonal* unitary
-> (reconstruct the relative phases from the superposition rays `mk(bᵢ+bⱼ)`, show the cocycle is
-> a coboundary, prove agreement on all rays) — then antiunitary exclusion (2d) via the Kähler
-> structure. **Decision deferred** (recorded, not yet taken): complete the multi-session
-> phase-cocycle proof (preserves the one-axiom posture), or import `wigner_fs_rigidity` as a
-> busch-style library-debt axiom (closes §13 now, second axiom). **Resumption on-ramp:** the
-> next bounded sub-step is (2c-ii) relative-phase extraction from `f(mk(bᵢ+bⱼ))`. **Audit
-> watch:** the cocycle proof must DERIVE ℂ-linearity, not assume it. Paused in favour of the
-> K3 data-processing inequality (a clean bounded win); see `qi-qec-roadmap.md`.
+> (frame reduction, 2c-i). **W1 (2026-07-02) added Bargmann Stages 1-2:** `reducedMap_coord_modulus`
+> (moduli preservation: the reduced map preserves the coordinate-modulus profile
+> `‖repr φ i‖²/‖φ‖²`) and `reducedMap_two_level_normal_form` (`reducedMap (mk (bᵢ₀+bᵢ)) = mk (bᵢ₀ + ε•bᵢ)`,
+> `‖ε‖=1`, ε genuinely FREE) — the (2c-ii) relative-phase extraction, DONE. **Remaining = Stage 3
+> (the research-grade crux):** (a) diagonal-phase reduction (`projMap D⁻¹ ∘ g` fixing every
+> `mk(bᵢ₀+bᵢ)`, achievable ≃ₗᵢ plumbing), (b) the general-`N` 2-cocycle
+> `θ(i,j)=θ(i₀,j)−θ(i₀,i)`, (c) the trivial-cocycle dichotomy → unitary/antiunitary branch, + the
+> Kähler selection of the unitary branch. **Decision TAKEN (user, 2026-07-02): complete the
+> multi-session phase-cocycle proof incrementally — NO `wigner_fs_rigidity` axiom** (preserve the
+> one-axiom posture). **Next bounded increments:** the concrete antiunitary witness `conjProj`
+> (upgrade "branch present" from structural to a machine-checked inhabitant), then (a) the diagonal
+> reduction. **Audit watch (load-bearing):** the dichotomy must DERIVE ℂ-linearity as an OUTPUT,
+> never assume it, and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
 
 Originally framed for cloning (§13.1 below); generalised to arbitrary
 N-qubit unitaries when the Tranche 1 Tier A gate work introduced

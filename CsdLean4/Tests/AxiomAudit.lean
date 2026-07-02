@@ -2511,6 +2511,46 @@ as an axiom nor a sorry. -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.reducedMap_fixes_basis
 
+-- Wigner converse Stage 1 (moduli-preservation kernel): a preserving map fixing
+-- a point `q` preserves the transition probability from every point to `q`.
+/-- info: 'Projectivization.TransProbPreserving.transProb_of_fixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.TransProbPreserving.transProb_of_fixed
+
+-- Wigner converse Stage 1: transition probability to the `i`-th basis ray is the
+-- normalised squared modulus of the `i`-th coordinate `b.repr ψ i`.
+/-- info: 'Projectivization.transProb_srcPoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProb_srcPoint
+
+-- Wigner converse Stage 1 HEADLINE: the frame-reduced map preserves the modulus
+-- profile of the coordinates, `‖b.repr φ i‖²/‖φ‖² = ‖b.repr ψ i‖²/‖ψ‖²`. No
+-- ℂ-linearity assumed.
+/-- info: 'Projectivization.reducedMap_coord_modulus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.reducedMap_coord_modulus
+
+-- Wigner converse Stage 2 support infrastructure.
+/-- info: 'Projectivization.add_basis_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.add_basis_ne_zero
+
+/-- info: 'Projectivization.repr_eq_pair_of_support' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.repr_eq_pair_of_support
+
+/-- info: 'Projectivization.mk_eq_two_level_of_profile' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mk_eq_two_level_of_profile
+
+-- Wigner converse Stage 2 HEADLINE: `reducedMap hf b (mk (b i₀ + b i)) =
+-- mk (b i₀ + ε • b i)` for a unimodular `ε`. The image ray is pinned up to the
+-- single phase `ε`; the phase cocycle (Stage 3) remains the documented open target
+-- (stated neither as an axiom nor a sorry). No ℂ-linearity assumed.
+/-- info: 'Projectivization.reducedMap_two_level_normal_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.reducedMap_two_level_normal_form
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.
