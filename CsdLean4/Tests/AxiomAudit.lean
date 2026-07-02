@@ -220,6 +220,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+import CsdLean4.Empirical.CSD.Gates.WignerDischarge
 
 /-!
 # Axiom regression suite
@@ -2707,6 +2708,43 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 /-- info: 'Projectivization.wigner_rigidity_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.wigner_rigidity_unitaryGroup
+
+-- LF4-todo §13.2 discharge via Wigner (2026-07-02). The `CSDUnitaryBundle.U_isometry`
+-- obligation is derived (not posited) from the intrinsic transition-probability
+-- condition. `conjProj_ne_projMap`: coordinatewise conjugation is not a unitary
+-- projective map (N ≥ 2). `transProbPreserving_isometry_dichotomy`: the honest
+-- Hilbert-level dichotomy (unitary isometry ∨ antiunitary anti-isometry; the
+-- antiunitary branch is exposed, not dropped). `smul_action_not_antiunitary`: the
+-- sector action `g • ·` is not time-reversal (the no-time-reversal selection holds).
+-- `u_isometry_of_transProbPreserving` / `ofTransProbPreserving`: Wigner OUTPUTS the
+-- isometry `U`, discharging `U_isometry`. `cpSectorActionBundle`: non-vacuous
+-- instantiation on the concrete Kähler instance via the sector action. All
+-- foundational-triple only; no `busch`, no `sorry`, no `native_decide`. §13.2
+-- discharges modulo the sector symmetry (A5); the measure-⟹-metric route is false
+-- and not used.
+/-- info: 'Projectivization.conjProj_ne_projMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.conjProj_ne_projMap
+
+/-- info: 'Projectivization.transProbPreserving_isometry_dichotomy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProbPreserving_isometry_dichotomy
+
+/-- info: 'Projectivization.smul_action_not_antiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.smul_action_not_antiunitary
+
+/-- info: 'CSD.Empirical.CSDBridge.Gates.u_isometry_of_transProbPreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Gates.u_isometry_of_transProbPreserving
+
+/-- info: 'CSD.Empirical.CSDBridge.Gates.CSDUnitaryBundle.ofTransProbPreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Gates.CSDUnitaryBundle.ofTransProbPreserving
+
+/-- info: 'CSD.LF4.cpSectorActionBundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cpSectorActionBundle
 
 /-! ### LF4 §8 ontic-shell instantiation
 

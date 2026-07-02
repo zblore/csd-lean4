@@ -511,27 +511,33 @@ foundational-triple, no `wigner_fs_rigidity` axiom), with the classic `unitaryGr
 used by `transProbPreserving_unitary`, via the isometry→matrix bridge `unitaryOfIsometry` /
 `projMap_eq_smul_unitary`).
 
-**§13.2 call-site wiring: SCOPED 2026-07-02 — NOT a clean citation-discharge (STAGED).** The
-realisability field is `CSDUnitaryBundle.U_isometry : ∀ x y, ⟪U x, U y⟫ = ⟪x, y⟫` on a *posited*
-Hilbert function `U`. Wigner cannot discharge it as-is:
-  1. **Direction/stratum.** Wigner runs *projective symmetry ⟹ unitary*; §13.2 needs *ontic ⟹
-     isometry* — `U_isometry` should FOLLOW from a measure-preserving, `π`-equivariant `Σ`-flow `Φ`
-     whose projective pushforward realises `U`. Wigner supplies no `Σ`-flow, no `π`-equivariance, no
-     `μL`-preservation (the D1 ontic stratum), so it does not reach the load-bearing content.
-  2. **No map to feed Wigner (schema-mismatch, PLACEHOLDERS.md §7).** `CSDUnitaryBundle` exposes only
-     `U` + `U_isometry`; it carries no `TransProbPreserving` projective map and no `Σ`-flow. Routing
-     through Wigner requires first re-architecting the bundle to carry `Φ` and its projective
-     pushforward `f_Φ`, then **proving `TransProbPreserving f_Φ` from measure-preservation +
-     `π`-equivariance on a concrete Kähler `SectorData` (§8)** — that step IS the ontic-to-Hilbert
-     lift `U_isometry` abbreviates. Wigner presupposes it; only *after* it does
-     `wigner_rigidity_unitaryGroup` yield the unitary whose isometry is `U_isometry`.
+**§13.2: DISCHARGED via Wigner modulo the sector symmetry (A5), 2026-07-02.**
+`CsdLean4/Empirical/CSD/Gates/WignerDischarge.lean` (foundational-triple, AxiomAudit-pinned):
+`CSDUnitaryBundle.ofTransProbPreserving` builds a bundle whose `U` is the Wigner OUTPUT and whose
+`U_isometry : ∀ x y, ⟪U x, U y⟫ = ⟪x, y⟫` is a **theorem** (`e.inner_map_map`), derived from:
+  - `hf : Projectivization.TransProbPreserving f` — the intrinsic transition-probability condition on
+    the projective dynamics (a weaker, coordinate-free, physical primitive);
+  - `hsel` — a no-time-reversal selection (`f` is not the antiunitary branch), a discrete `ℤ/2`
+    orientation datum, **not** the isometry data.
 
-Precise residual for §13.2: (a) a `SectorData`/bundle field carrying `Φ : Σ^N → Σ^N` (measure-
-preserving, `π`-equivariant) and its projective pushforward `f_Φ`; (b) the theorem
-`TransProbPreserving f_Φ` on a concrete Kähler Σ (§8). With (a)+(b), `U_isometry` is a one-line
-citation of `wigner_rigidity_unitaryGroup` + `e.inner_map_map`. Wigner closes the hard *math*
-blocker on the projective side and is the correct final step; the remaining gap is ontic (D1),
-untouched by it. See the "Wigner availability" note in
+`u_isometry_of_transProbPreserving` is the headline: `wigner_rigidity` *produces* the `≃ₗᵢ[ℂ]` `e`
+with `⟪e x, e y⟫ = ⟪x, y⟫`; unitarity (hence `U_isometry`) is the OUTPUT, never assumed. The
+antiunitary branch is exposed honestly (`transProbPreserving_isometry_dichotomy`: unitary isometry ∨
+antiunitary anti-isometry `⟪e (conjVec x), e (conjVec y)⟫ = conj ⟪x, y⟫`), not dropped. Non-vacuity:
+`smul_action_not_antiunitary` (from `conjProj_ne_projMap`, `N ≥ 2`) shows the sector action `g • ·`
+(a `Matrix.unitaryGroup` element = the A5 datum) is not time-reversal, so `cpSectorActionBundle`
+instantiates a concrete `CSDUnitaryBundle` on `cpSectorData p₀` with `U_isometry` DERIVED.
+
+**Primitive moved, not eliminated (honest):** from "posit the Hilbert isometry `U`" to "posit the
+projective dynamics preserves transition probabilities and is not time-reversal". The
+transition-probability preservation is FORCED by the **sector symmetry** (G acting by FS isometries =
+A5), **not** by `μL`-measure-preservation. The earlier reading — `U_isometry` follows from a
+measure-preserving π-equivariant Σ-flow — is **FALSE and corrected**: measure-preservation is
+strictly weaker than metric preservation (a `μFS`-measure-preserving self-map of `ℂℙ^{N-1}` need not
+preserve the FS metric / transition probability), so no "measure-preserving `f_Φ` ⟹
+`TransProbPreserving f_Φ`" lemma exists or is proved. Deriving `TransProbPreserving f_Φ` from a
+*general* `μL`-flow for a non-symmetry flow is the open **D1** gap. §13.2 discharges exactly modulo
+A5, which is CSD's posited structure. See the "LF4 obligation" note in
 `CsdLean4/Empirical/CSD/Gates/Framework.lean`.
 
 > ✅ **WIGNER PROGRAMME — DONE 2026-07-02 (W1-W6), axiom-free.** `Projectivization.wigner_rigidity`
