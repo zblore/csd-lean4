@@ -503,11 +503,36 @@ The §12 API is now feature-complete for LF4 consumption. LF4 §3 + §8 can use 
 
 ## 13. Ontic-isometry ↔ Hilbert-isometry bridge for unitaries (added 2026-05-21, generalised 2026-05-21)
 
-**Status:** the discharge route (the Wigner / Fubini–Study rigidity converse) is **DONE 2026-07-02,
-axiom-free** — `Projectivization.wigner_rigidity` is proved (auditor-SOUND, foundational-triple, no
-`wigner_fs_rigidity` axiom). The §13 realisability obligations (`bridge_isometry` etc.) can now be
-discharged by citing it; that call-site wiring is the remaining §13 bookkeeping, but the hard
-mathematical blocker is closed.
+**Status:** the *projective↔unitary* half (the Wigner / Fubini–Study rigidity converse) is
+**DONE 2026-07-02, axiom-free** — `Projectivization.wigner_rigidity` is proved (auditor-SOUND,
+foundational-triple, no `wigner_fs_rigidity` axiom), with the classic `unitaryGroup` reformulation
+`Projectivization.wigner_rigidity_unitaryGroup` added 2026-07-02
+(`∃ U : Matrix.unitaryGroup (Fin N) ℂ, ∀ p, f p = U • p` ∨ antiunitary; the `U • ·` action is the one
+used by `transProbPreserving_unitary`, via the isometry→matrix bridge `unitaryOfIsometry` /
+`projMap_eq_smul_unitary`).
+
+**§13.2 call-site wiring: SCOPED 2026-07-02 — NOT a clean citation-discharge (STAGED).** The
+realisability field is `CSDUnitaryBundle.U_isometry : ∀ x y, ⟪U x, U y⟫ = ⟪x, y⟫` on a *posited*
+Hilbert function `U`. Wigner cannot discharge it as-is:
+  1. **Direction/stratum.** Wigner runs *projective symmetry ⟹ unitary*; §13.2 needs *ontic ⟹
+     isometry* — `U_isometry` should FOLLOW from a measure-preserving, `π`-equivariant `Σ`-flow `Φ`
+     whose projective pushforward realises `U`. Wigner supplies no `Σ`-flow, no `π`-equivariance, no
+     `μL`-preservation (the D1 ontic stratum), so it does not reach the load-bearing content.
+  2. **No map to feed Wigner (schema-mismatch, PLACEHOLDERS.md §7).** `CSDUnitaryBundle` exposes only
+     `U` + `U_isometry`; it carries no `TransProbPreserving` projective map and no `Σ`-flow. Routing
+     through Wigner requires first re-architecting the bundle to carry `Φ` and its projective
+     pushforward `f_Φ`, then **proving `TransProbPreserving f_Φ` from measure-preservation +
+     `π`-equivariance on a concrete Kähler `SectorData` (§8)** — that step IS the ontic-to-Hilbert
+     lift `U_isometry` abbreviates. Wigner presupposes it; only *after* it does
+     `wigner_rigidity_unitaryGroup` yield the unitary whose isometry is `U_isometry`.
+
+Precise residual for §13.2: (a) a `SectorData`/bundle field carrying `Φ : Σ^N → Σ^N` (measure-
+preserving, `π`-equivariant) and its projective pushforward `f_Φ`; (b) the theorem
+`TransProbPreserving f_Φ` on a concrete Kähler Σ (§8). With (a)+(b), `U_isometry` is a one-line
+citation of `wigner_rigidity_unitaryGroup` + `e.inner_map_map`. Wigner closes the hard *math*
+blocker on the projective side and is the correct final step; the remaining gap is ontic (D1),
+untouched by it. See the "Wigner availability" note in
+`CsdLean4/Empirical/CSD/Gates/Framework.lean`.
 
 > ✅ **WIGNER PROGRAMME — DONE 2026-07-02 (W1-W6), axiom-free.** `Projectivization.wigner_rigidity`
 > (`Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean`, auditor-SOUND, foundational-triple,

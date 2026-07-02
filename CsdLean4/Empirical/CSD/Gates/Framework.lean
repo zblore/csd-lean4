@@ -40,6 +40,38 @@ Per the bridge-discipline rules at the top of `specs/LF4-todo.md`,
 §13.2 was added in the same change-set as this file's first use
 (the Tranche 1 Tier A gate work).
 
+### Wigner availability (2026-07-02) — NOT a clean discharge of this field
+
+`Projectivization.wigner_rigidity` / `wigner_rigidity_unitaryGroup`
+(`Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean`, axiom-free)
+now close the *operational/projective* correspondence: a
+`TransProbPreserving` self-map of `ℂℙ^{N-1}` is `U • ·` for a
+`Matrix.unitaryGroup` element (or `U • conjProj ·`). That is the converse of
+the realisability inclusion `transProbPreserving_unitary`, on the same stratum
+as `U_isometry` here. It does **not** discharge this field, for two precise
+reasons:
+
+1. **Wrong side / wrong direction.** Wigner runs *projective symmetry ⟹
+   unitary*. The §13.2 obligation is *ontic ⟹ isometry*: `U_isometry` should
+   FOLLOW from a measure-preserving, `π`-equivariant flow `Φ : Σ^N → Σ^N` whose
+   projective pushforward realises `U`. Wigner supplies no `Σ`-flow, no
+   `π`-equivariance, and no `μL`-preservation — that content (the D1 ontic
+   stratum) is exactly what remains open.
+2. **No map to feed Wigner (schema-mismatch, PLACEHOLDERS.md §7).** This
+   structure carries only `U : H_n → H_n` and `U_isometry`; it exposes no
+   `TransProbPreserving` projective map and no `Σ`-flow. To route through
+   Wigner one must first (a) re-architect the bundle to carry `Φ` and its
+   projective pushforward `f_Φ`, then (b) PROVE `TransProbPreserving f_Φ` from
+   measure-preservation + `π`-equivariance on a concrete Kähler `SectorData`
+   (§8). Step (b) is the load-bearing lift `U_isometry` abbreviates; Wigner
+   presupposes it, so it cannot supply it. Only *after* (b) does
+   `wigner_rigidity_unitaryGroup` yield the unitary whose isometry is
+   `U_isometry`.
+
+Net: Wigner closes the projective↔unitary half and is the correct final step of
+the §13.2 chain, but the remaining gap (`Σ`-flow ⟹ `TransProbPreserving`
+pushforward on a Kähler Σ) is untouched by it. STAGED, not discharged.
+
 ## Composition
 
 `CSDUnitaryBundle.comp` composes two bundles on the same context +

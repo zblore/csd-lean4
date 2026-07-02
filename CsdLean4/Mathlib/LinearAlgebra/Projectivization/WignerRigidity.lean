@@ -446,7 +446,7 @@ lemma srcPoint_eq
 real reciprocal of its norm (cast to `ℂ`) gives a unit vector spanning the same
 ray. -/
 noncomputable def imageVec
-    (hf : TransProbPreserving f)
+    (_hf : TransProbPreserving f)
     (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i : Fin N) :
     EuclideanSpace ℂ (Fin N) :=
   ((‖(f (srcPoint b i)).rep‖⁻¹ : ℝ) : ℂ) • (f (srcPoint b i)).rep
@@ -454,7 +454,7 @@ noncomputable def imageVec
 /-- The reciprocal-norm scalar in `imageVec` is nonzero (the rep is nonzero, so
 its norm is positive). -/
 private lemma imageVec_scalar_ne_zero
-    (hf : TransProbPreserving f)
+    (_hf : TransProbPreserving f)
     (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i : Fin N) :
     ((‖(f (srcPoint b i)).rep‖⁻¹ : ℝ) : ℂ) ≠ 0 := by
   have hne : (f (srcPoint b i)).rep ≠ 0 := (f (srcPoint b i)).rep_nonzero
@@ -3050,5 +3050,122 @@ dichotomy landing on the identity, never assumed; the global sign is forced, not
 posited. Foundational triple only (`propext, Classical.choice, Quot.sound`); no
 `busch`, no `sorry`, no `native_decide`.
 -/
+
+/-! ## The `Matrix.unitaryGroup` reformulation
+
+`wigner_rigidity` produces a `≃ₗᵢ[ℂ]` witness `e` and states `f = projMap e`
+(or `= projMap e ∘ conjProj`). This section restates the theorem in the classic
+`∃ U : Matrix.unitaryGroup (Fin N) ℂ, f = U • ·` form, where `U • ·` is the exact
+projective action used by `transProbPreserving_unitary` /
+`transProb_smul_unitary` (the `MulAction.compHom` of
+`Matrix.UnitaryGroup.toEuclideanLinearEquivHom`). The bridge is the matrix of the
+isometry in the standard basis: `unitaryOfIsometry e := toEuclideanLin.symm e`,
+whose columns are `e (basisFun j)`, hence `star M * M = 1` by the isometry
+property `e.inner_map_map` and orthonormality of `basisFun`. The antiunitary
+branch is kept genuinely present as `U • conjProj p`. -/
+
+/-- The matrix of a linear isometry equivalence in the standard basis of
+`EuclideanSpace ℂ (Fin N)`, i.e. the inverse image under the linear equivalence
+`Matrix.toEuclideanLin`. Its `toEuclideanLin` is `e` by construction
+(`unitaryOfIsometry_toEuclideanLin`); it lies in `unitaryGroup`
+(`unitaryOfIsometry_mem`). -/
+noncomputable def unitaryOfIsometry
+    (e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N)) :
+    Matrix (Fin N) (Fin N) ℂ :=
+  Matrix.toEuclideanLin.symm (e : EuclideanSpace ℂ (Fin N) →ₗ[ℂ] EuclideanSpace ℂ (Fin N))
+
+/-- `toEuclideanLin (unitaryOfIsometry e) = e`: the matrix realises the isometry's
+linear map. Immediate from `LinearEquiv.apply_symm_apply`. -/
+lemma unitaryOfIsometry_toEuclideanLin
+    (e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N)) :
+    Matrix.toEuclideanLin (unitaryOfIsometry e)
+      = (e : EuclideanSpace ℂ (Fin N) →ₗ[ℂ] EuclideanSpace ℂ (Fin N)) :=
+  LinearEquiv.apply_symm_apply _ _
+
+/-- Column formula: the `(i, j)` entry of `unitaryOfIsometry e` is the `i`-th
+coordinate of `e (basisFun j)`. Evaluate `toEuclideanLin (unitaryOfIsometry e)`
+at the standard basis vector `basisFun j` (= `Pi.single j 1` after `ofLp`) and use
+`unitaryOfIsometry_toEuclideanLin`. -/
+lemma unitaryOfIsometry_apply
+    (e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N)) (i j : Fin N) :
+    unitaryOfIsometry e i j = e (EuclideanSpace.basisFun (Fin N) ℂ j) i := by
+  have h : Matrix.toEuclideanLin (unitaryOfIsometry e) (EuclideanSpace.basisFun (Fin N) ℂ j)
+      = e (EuclideanSpace.basisFun (Fin N) ℂ j) := by
+    rw [unitaryOfIsometry_toEuclideanLin]; rfl
+  calc unitaryOfIsometry e i j
+      = (unitaryOfIsometry e *ᵥ Pi.single j (1 : ℂ)) i := by
+          rw [Matrix.mulVec_single_one, Matrix.col_apply]
+    _ = (Matrix.toEuclideanLin (unitaryOfIsometry e)
+          (EuclideanSpace.basisFun (Fin N) ℂ j)).ofLp i := by
+          rw [EuclideanSpace.basisFun_apply, Matrix.ofLp_toLpLin, Matrix.toLin'_apply,
+            PiLp.ofLp_single]
+    _ = e (EuclideanSpace.basisFun (Fin N) ℂ j) i := by rw [h]
+
+/-- `unitaryOfIsometry e` is a unitary matrix: `star M * M = 1`, because the
+`(j, k)` entry of `star M * M` is `⟪e (basisFun j), e (basisFun k)⟫ =
+⟪basisFun j, basisFun k⟫ = δ_{jk}` via `e.inner_map_map` and orthonormality of
+`basisFun`. -/
+lemma unitaryOfIsometry_mem
+    (e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N)) :
+    unitaryOfIsometry e ∈ Matrix.unitaryGroup (Fin N) ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff']
+  ext j k
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  calc ∑ i, (star (unitaryOfIsometry e)) j i * unitaryOfIsometry e i k
+      = ∑ i, (starRingEnd ℂ) (e (EuclideanSpace.basisFun (Fin N) ℂ j) i)
+          * e (EuclideanSpace.basisFun (Fin N) ℂ k) i := by
+        refine Finset.sum_congr rfl (fun i _ => ?_)
+        rw [Matrix.star_apply, unitaryOfIsometry_apply, unitaryOfIsometry_apply]
+        rfl
+    _ = (inner ℂ (e (EuclideanSpace.basisFun (Fin N) ℂ j))
+          (e (EuclideanSpace.basisFun (Fin N) ℂ k)) : ℂ) := by
+        rw [PiLp.inner_apply]
+        refine Finset.sum_congr rfl (fun i _ => ?_)
+        rw [RCLike.inner_apply']
+    _ = (inner ℂ (EuclideanSpace.basisFun (Fin N) ℂ j)
+          (EuclideanSpace.basisFun (Fin N) ℂ k) : ℂ) := e.inner_map_map _ _
+    _ = if j = k then 1 else 0 :=
+        orthonormal_iff_ite.mp (EuclideanSpace.basisFun (Fin N) ℂ).orthonormal j k
+
+/-- The `unitaryGroup` element attached to a linear isometry equivalence. -/
+noncomputable def unitaryGroupOfIsometry
+    (e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N)) :
+    Matrix.unitaryGroup (Fin N) ℂ :=
+  ⟨unitaryOfIsometry e, unitaryOfIsometry_mem e⟩
+
+/-- **The action bridge.** `projMap e` agrees with the `unitaryGroup` ray action
+`unitaryGroupOfIsometry e • ·` used by `transProbPreserving_unitary`. Reduce `p`
+to `mk p.rep`, push both sides through `projMap_mk` /
+`smul_mk_eq_mk_toEuclideanLin`, and note the underlying vectors agree since
+`toEuclideanLin (unitaryOfIsometry e) = e`. -/
+theorem projMap_eq_smul_unitary
+    (e : EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N))
+    (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    projMap e p = unitaryGroupOfIsometry e • p := by
+  conv_lhs => rw [← p.mk_rep]
+  conv_rhs => rw [← p.mk_rep]
+  rw [projMap_mk e p.rep p.rep_nonzero,
+      smul_mk_eq_mk_toEuclideanLin (unitaryGroupOfIsometry e) p.rep_nonzero]
+  have hvec : Matrix.toEuclideanLin ((unitaryGroupOfIsometry e).val) p.rep = e p.rep := by
+    show Matrix.toEuclideanLin (unitaryOfIsometry e) p.rep = e p.rep
+    rw [unitaryOfIsometry_toEuclideanLin]; rfl
+  exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨1, by rw [one_smul, hvec]⟩
+
+/-- **HEADLINE (Wigner rigidity, `unitaryGroup` form).** The classic statement:
+every transition-probability-preserving self-map of `ℂℙ^{N-1}` is `U • ·` for a
+`U : Matrix.unitaryGroup (Fin N) ℂ` (the **unitary** branch) or `U • conjProj ·`
+(the **antiunitary** branch), with `U • ·` the same `MulAction` used by
+`transProbPreserving_unitary`. Reformulation of `wigner_rigidity` through the
+isometry-to-matrix bridge `projMap_eq_smul_unitary`; no ℂ-linearity is assumed on
+`f`, the antiunitary branch is genuinely present, foundational-triple only. -/
+theorem wigner_rigidity_unitaryGroup
+    (hf : TransProbPreserving f) :
+    (∃ U : Matrix.unitaryGroup (Fin N) ℂ, ∀ p, f p = U • p)
+    ∨ (∃ U : Matrix.unitaryGroup (Fin N) ℂ, ∀ p, f p = U • conjProj p) := by
+  rcases wigner_rigidity hf with ⟨e, he⟩ | ⟨e, he⟩
+  · exact Or.inl ⟨unitaryGroupOfIsometry e,
+      fun p => by rw [he p, projMap_eq_smul_unitary e p]⟩
+  · exact Or.inr ⟨unitaryGroupOfIsometry e,
+      fun p => by rw [he p, projMap_eq_smul_unitary e (conjProj p)]⟩
 
 end Projectivization

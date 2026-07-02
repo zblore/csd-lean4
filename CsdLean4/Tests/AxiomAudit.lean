@@ -2699,6 +2699,15 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.wigner_rigidity
 
+-- Wigner rigidity, `Matrix.unitaryGroup` reformulation (2026-07-02): the classic
+-- `∃ U : unitaryGroup (Fin N) ℂ, ∀ p, f p = U • p` (UNITARY) ∨ `f p = U • conjProj p`
+-- (ANTIUNITARY) form, via the isometry→matrix bridge `unitaryOfIsometry` /
+-- `projMap_eq_smul_unitary`; the `U • ·` action is the one used by
+-- `transProbPreserving_unitary`. Foundational-triple only.
+/-- info: 'Projectivization.wigner_rigidity_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wigner_rigidity_unitaryGroup
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.
