@@ -128,6 +128,7 @@ import CsdLean4.LF6.SingletDeisolationFlow
 import CsdLean4.LF6.GHZDeisolationFlow
 import CsdLean4.LF6.GHZMerminCarve
 import CsdLean4.LF6.LocalDeisolationFlow
+import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -3694,6 +3695,44 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.localDeisolationFlow_realises_localNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolationFlow_realises_localNaimark
+
+-- LF6-C.4 (GHZLocalFlow, 2026-07-02): the manifestly LOCAL product de-isolation flow
+-- V_loc = V_0 ⊗ V_1 ⊗ V_2 (three genuine N=2 wings) realising the three-qubit GHZ
+-- measurement, the three-party analogue of A.3. ghzLocal_pullback GENUINELY composes the
+-- three wing LF5 vnDilationV_pullback (via conjTranspose/mul_kronecker_mul + A.3's 2-wing
+-- localDeisolation_pullback for the inner factor); the pointer-block FS volume = ghzWeight
+-- (povm_born_eq_dilated_volume_uncond ∘ nudgedGHZ_born); the projectivised product flow
+-- U_0 ⊗ U_1 ⊗ U_2 is FS-measure-preserving and ≠ id; the flow realises the local dilation.
+-- The de-isolation CAN be local (three-party product, no non-local interaction); the GHZ
+-- non-locality lives in the contextual carve (C.1/C.3) and the entangled preparation (A5).
+-- Born = FS-volume imported, not re-derived. Foundational triple only, no busch.
+/-- info: 'CSD.LF6.ghzLocal_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocal_factorises
+
+/-- info: 'CSD.LF6.ghzLocal_pullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocal_pullback
+
+/-- info: 'CSD.LF6.ghzLocal_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocal_pointer_volume
+
+/-- info: 'CSD.LF6.ghzLocalFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocalFlow_measurePreserving
+
+/-- info: 'CSD.LF6.ghzLocalFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocalFlow_ne_id
+
+/-- info: 'CSD.LF6.ghzLocalFlow_realises_localNaimark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocalFlow_realises_localNaimark
+
+/-- info: 'CSD.LF6.ghzLocal_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzLocal_capstone
 
 -- LF6-B.1 (Decoherence, 2026-06-28): decoherence as coarse-graining over a CONSERVATIVE
 -- de-isolation flow — the first result on the open-system / partial-trace stratum of D1.

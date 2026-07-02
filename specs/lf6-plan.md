@@ -1,6 +1,6 @@
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
-**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) + C.2 (GHZ de-isolation flow, minimal computational-basis carve) + C.3 (GHZ Mermin-context carve: genuine dynamical contextuality) DONE 2026-06-30.** LF6 is the first concrete attack on the entangled / non-local
+**Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) + C.2 (GHZ de-isolation flow, minimal computational-basis carve) + C.3 (GHZ Mermin-context carve: genuine dynamical contextuality) DONE 2026-06-30; C.4 (3-party GHZ local product flow) DONE 2026-07-02.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
@@ -265,12 +265,28 @@ eigen-eqs) is auditor-verified NOT load-bearing (the Born identity routes throug
 `localEig_eigenvector`) — honest deferral, not a hidden gap. Tier-2: Born = FS volume imported (LF5/DH),
 flow REALISES not derives; A5 residue. Reuses the Empirical GHZ Mermin structure + C.1/C.2; no GHZ re-proof.
 
+### LF6-C.4 — the 3-party GHZ local product flow (DONE 2026-07-02)
+`CsdLean4/LF6/GHZLocalFlow.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple-only, 7
+AxiomAudit pins. The 3-party analogue of A.3: a manifestly-LOCAL product de-isolation
+`V_loc = V₀ ⊗ V₁ ⊗ V₂` (three N=2 wings) realising the SAME GHZ measurement, so the de-isolation needs
+NO non-local interaction; the GHZ non-locality lives entirely in the contextual carve (C.1/C.3) + the
+entangled preparation (A5).
+- `ghzLocalV` + `ghzLocal_factorises` (genuine triple Kronecker `V₀ ⊗ₖ (V₁ ⊗ₖ V₂)`, manifest locality).
+- `ghzLocal_pullback` — `(V_loc)ᴴ Π_{(i,j,k)} V_loc = |e_{(i,j,k)}⟩⟨e_{(i,j,k)}|`, GENUINELY composing the
+  three per-wing pullbacks: `conjTranspose_kronecker` + `mul_kronecker_mul` split off the outer wing
+  (`wingDeisolation_pullback`) and REUSE A.3's proven 2-wing `localDeisolation_pullback` for wings 1,2,
+  recombined by `single_kronecker_single` (no `decide`). The genuine increment = one more Kronecker layer.
+- `ghzLocalNaimark : NaimarkDilation (basisPOVM 8)` (via `blockProj_ghzReindex`); `ghzLocal_pointer_volume`
+  (pointer-block FS volume = `ghzWeight`, via `povm_born_eq_dilated_volume_uncond ∘ nudgedGHZ_born`);
+  `ghzLocalFlow_measurePreserving` / `_ne_id`; `ghzLocalFlow_realises_localNaimark`
+  (`Φ_loc [ψ ⊗ (a₀⊗a₀⊗a₀)] = [V_loc ψ]`, ψ≠0); `ghzLocal_capstone` (6-conjunct).
+Honest (mirrors A.3): a SEPARATE manifestly-local product flow, NOT a claim that C.2's ℤ/8 `measurementFlow`
+factors (ℤ/8 ≠ ℤ/2×ℤ/2×ℤ/2). Born imported (LF5/DH/POVM-Naimark), flow realises not derives; residue A5.
+
 ### LF6 remaining (not started)
-The three-party local product flow `V₀⊗V₁⊗V₂` (A.3 analogue, on the Mermin carve); continuous-time
-Lindblad; the marginal volume-drift geometry; the wider general-N tier (general bipartite `d×d`; n-party
-GHZ_n); threading `Φ` through the concrete entangled `SectorData` (D1c); the von Neumann entropy-increase
-witness (B.3). A5 emergence (deriving the entangled sector from the dynamics) is the downstream target
-that would retire the residue.
+Continuous-time Lindblad; the marginal volume-drift geometry; the wider general-N tier (general bipartite
+`d×d`; n-party GHZ_n); threading `Φ` through the concrete entangled `SectorData` (D1c). A5 emergence
+(deriving the entangled sector from the dynamics) is the downstream target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the
