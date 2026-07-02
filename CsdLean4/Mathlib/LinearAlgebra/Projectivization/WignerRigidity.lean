@@ -83,6 +83,29 @@ reduced map, addressed in Stages 1–3 below.
 Both stages are derived from `TransProbPreserving` alone; **no ℂ-linearity is
 assumed** anywhere.
 
+## The antiunitary witness (proved here): `conjProj`
+
+`conjProj` is coordinatewise complex conjugation as a ray map
+(`conjVec` on representatives), a **concrete** `TransProbPreserving` inhabitant
+(`conjProj_transProbPreserving`) of the **antiunitary** class: `conjVec` is
+conjugate-linear (`conjVec_smul : conjVec (c • ψ) = conj c • conjVec ψ`), not the
+underlying map of any `≃ₗᵢ[ℂ]`. This makes the eventual dichotomy non-vacuous on
+the antiunitary side. Built on the conjugation inner/norm identities
+`conjVec_inner : ⟪conjVec u, conjVec v⟫ = conj ⟪u, v⟫` and
+`conjVec_norm : ‖conjVec ψ‖ = ‖ψ‖`.
+
+## Stage 3 piece 1 (proved here): the diagonal-phase reduction
+
+`diagUnitary b ε hε` is the diagonal-in-`b` isometry with unit-modulus phases
+`ε` (via the `ε`-scaled orthonormal basis, `scaledBasis`); `twoLevelPhase`
+extracts the Stage-2 phases anchored at `ε i₀ := 1`; and
+`diagReducedMap hf b i₀ := projMap D⁻¹ ∘ reducedMap hf b` (with `D` built from
+those phases) is `TransProbPreserving` (`diagReducedMap_transProbPreserving`),
+fixes every basis ray (`diagReducedMap_fixes_basis`), **and** fixes the two-level
+rays `mk (b i₀ + b i)` for every `i ≠ i₀` (`diagReducedMap_fixes_two_level`).
+This is the setup the cocycle step (pieces 2–3) consumes. `D` is constructed
+*from* the extracted phases, not posited of `f`: **no ℂ-linearity is assumed.**
+
 ## Stage 3 (open target, not proved): the phase cocycle and the dichotomy
 
 The converse of the realisability inclusion `transProbPreserving_unitary` is the
@@ -93,10 +116,11 @@ The converse of the realisability inclusion `transProbPreserving_unitary` is the
 
 equivalently, the isometry group of `ℂℙⁿ` with the Fubini–Study metric is the
 projective **semi**-unitary group. It is **not** stated here as an axiom or a
-`sorry`. With Stages 1–2 in hand, the residual is the phase-cocycle coherence of
-the Stage-2 phases `εᵢ` and the resulting unitary/antiunitary dichotomy; the
-precise three-piece residual is documented in the `Stage 3 (residual)` section at
-the end of this file. **Critical honesty notes (load-bearing).**
+`sorry`. With Stages 1–2 and Stage 3 piece 1 in hand, the residual is pieces 2–3:
+the phase-cocycle coherence of the (now diagonally reduced) phases and the
+resulting unitary/antiunitary dichotomy, plus the Kähler selection; the precise
+residual is documented in the `Stage 3 (residual)` section at the end of this
+file. **Critical honesty notes (load-bearing).**
 
 * `reducedMap_fixes_basis` does **not** make `reducedMap` the identity: the
   diagonal-phase freedom is genuine and is exactly the Stage-2 phase `ε`, pinned
@@ -169,6 +193,94 @@ theorem transProbPreserving_unitary
     (U : Matrix.unitaryGroup (Fin N) ℂ) :
     TransProbPreserving (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) :=
   fun p q => transProb_smul_unitary U p q
+
+/-! ## The antiunitary witness `conjProj`
+
+Over `ℂ`, transition-probability preservation admits a second class beyond the
+unitary one: the **antiunitary** class, realised by complex conjugation. This
+subsection builds it concretely. `conjVec` is coordinatewise complex conjugation
+on `EuclideanSpace ℂ (Fin N)`, a **conjugate-linear** isometry
+(`conjVec_smul` shows the semilinear scaling law `conjVec (c • ψ) = conj c • conjVec ψ`,
+which is *not* the linear law of any `≃ₗᵢ[ℂ]`). Its ray map `conjProj` is
+`TransProbPreserving` (`conjProj_transProbPreserving`), so the eventual
+Wigner dichotomy is not vacuous on the antiunitary side. -/
+
+/-- Coordinatewise complex conjugation on `EuclideanSpace ℂ (Fin N)`: the
+conjugate-linear isometry `ψ ↦ (fun i => conj (ψ i))`. -/
+noncomputable def conjVec (ψ : EuclideanSpace ℂ (Fin N)) : EuclideanSpace ℂ (Fin N) :=
+  WithLp.toLp 2 (fun i => (starRingEnd ℂ) (ψ.ofLp i))
+
+/-- `conjVec` acts coordinatewise: `(conjVec ψ) i = conj (ψ i)` (definitional). -/
+lemma conjVec_ofLp (ψ : EuclideanSpace ℂ (Fin N)) (i : Fin N) :
+    (conjVec ψ).ofLp i = (starRingEnd ℂ) (ψ.ofLp i) := rfl
+
+/-- **Conjugation inner identity.** `⟪conjVec u, conjVec v⟫ = conj ⟪u, v⟫`.
+Reduces via `PiLp.inner_apply` to the coordinatewise identity
+`conj(conj (u i)) * conj (v i) = conj (conj (u i) * v i)` (`RCLike.inner_apply'`,
+`map_mul`, `Complex.conj_conj`). -/
+lemma conjVec_inner (u v : EuclideanSpace ℂ (Fin N)) :
+    (inner ℂ (conjVec u) (conjVec v) : ℂ) = (starRingEnd ℂ) (inner ℂ u v) := by
+  rw [PiLp.inner_apply, PiLp.inner_apply, map_sum]
+  refine Finset.sum_congr rfl (fun i _ => ?_)
+  rw [RCLike.inner_apply', RCLike.inner_apply', map_mul, conjVec_ofLp, conjVec_ofLp,
+      Complex.conj_conj]
+
+/-- **Conjugation norm identity.** `‖conjVec ψ‖ = ‖ψ‖`. Both squared norms are
+the real part of the (conjugation-swapped) self inner product `conjVec_inner`;
+`RCLike.conj_re` drops the conjugation on the real part. -/
+lemma conjVec_norm (ψ : EuclideanSpace ℂ (Fin N)) : ‖conjVec ψ‖ = ‖ψ‖ := by
+  rw [← Real.sqrt_sq (norm_nonneg (conjVec ψ)), ← Real.sqrt_sq (norm_nonneg ψ)]
+  congr 1
+  rw [← @inner_self_eq_norm_sq ℂ, ← @inner_self_eq_norm_sq ℂ]
+  have h2 : RCLike.re (inner ℂ (conjVec ψ) (conjVec ψ) : ℂ)
+      = RCLike.re ((starRingEnd ℂ) (inner ℂ ψ ψ)) := by rw [conjVec_inner]
+  rwa [RCLike.conj_re] at h2
+
+/-- **Semilinearity of `conjVec`.** `conjVec (c • ψ) = conj c • conjVec ψ`. This
+conjugate-linear scaling law witnesses that `conjVec` is genuinely antiunitary:
+it is not the linear scaling law satisfied by any `≃ₗᵢ[ℂ]`, so `conjProj` is not
+`projMap` of a complex-linear isometry equivalence. -/
+lemma conjVec_smul (c : ℂ) (ψ : EuclideanSpace ℂ (Fin N)) :
+    conjVec (c • ψ) = (starRingEnd ℂ) c • conjVec ψ := by
+  ext i
+  show (starRingEnd ℂ) ((c • ψ).ofLp i) = ((starRingEnd ℂ) c • conjVec ψ).ofLp i
+  simp [conjVec_ofLp, map_mul]
+
+/-- `conjVec` preserves nonvanishing: `‖conjVec ψ‖ = ‖ψ‖ ≠ 0`. -/
+lemma conjVec_ne_zero {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) : conjVec ψ ≠ 0 := by
+  rw [← norm_ne_zero_iff, conjVec_norm]; exact norm_ne_zero_iff.mpr hψ
+
+/-- **Conjugation preserves the vector transition probability.**
+`transProbVec (conjVec u) (conjVec v) = transProbVec u v`: the numerator is
+fixed since `‖conj ⟪u,v⟫‖ = ‖⟪u,v⟫‖` (`conjVec_inner` + `RCLike.norm_conj`), the
+denominator by `conjVec_norm`. -/
+lemma conjVec_transProbVec (u v : EuclideanSpace ℂ (Fin N)) :
+    transProbVec (conjVec u) (conjVec v) = transProbVec u v := by
+  unfold transProbVec
+  rw [conjVec_inner, RCLike.norm_conj, conjVec_norm, conjVec_norm]
+
+/-- The **antiunitary ray map**: complex conjugation of the canonical
+representative. Total and well-defined (conjugation is norm-preserving and
+injective, so the image ray does not depend on representative choice up to the
+scaling `conjVec_smul` absorbs). -/
+noncomputable def conjProj (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    ℙ ℂ (EuclideanSpace ℂ (Fin N)) :=
+  Projectivization.mk ℂ (conjVec p.rep) (conjVec_ne_zero p.rep_nonzero)
+
+/-- **HEADLINE (antiunitary witness).** `conjProj` is `TransProbPreserving`.
+Reduce both image rays to `mk (conjVec ·.rep)` via `transProb_mk`, then apply
+`conjVec_transProbVec`. This exhibits a concrete `TransProbPreserving` inhabitant
+of the **antiunitary** class: `conjVec` is conjugate-linear (`conjVec_smul`), not
+the underlying map of any `≃ₗᵢ[ℂ]`, so `conjProj` is not `projMap` of a unitary.
+The eventual Wigner dichotomy is thus non-vacuous on the antiunitary side. -/
+theorem conjProj_transProbPreserving :
+    TransProbPreserving (conjProj (N := N)) := by
+  intro p q
+  show transProb (Projectivization.mk ℂ (conjVec p.rep) _)
+      (Projectivization.mk ℂ (conjVec q.rep) _) = transProb p q
+  rw [transProb_mk (conjVec_ne_zero p.rep_nonzero) (conjVec_ne_zero q.rep_nonzero),
+      conjVec_transProbVec]
+  rfl
 
 /-! ## Orthogonality preservation -/
 
@@ -769,28 +881,241 @@ theorem reducedMap_two_level_normal_form
   rw [← hmkeq]
   exact (Projectivization.mk_rep _).symm
 
+/-! ## Stage 3 piece 1: the diagonal-phase reduction
+
+The first piece of the Stage 3 residual, on the critical path to the dichotomy.
+It removes the Stage-2 two-level phases by post-composing the frame-reduced map
+`g = reducedMap hf b` with a diagonal isometry `D⁻¹` in the basis `b`.
+
+* **The diagonal isometry.** For a unit-modulus phase family `ε : Fin N → ℂ`
+  (`∀ i, ‖ε i‖ = 1`), the scaled family `fun i => ε i • b i` is again an
+  orthonormal basis (`scaledBasis`); `diagUnitary b ε hε` is the `≃ₗᵢ[ℂ]`
+  carrying `b` to it, so `diagUnitary (b i) = ε i • b i`
+  (`diagUnitary_apply_basis`) and `(diagUnitary).symm (b i) = (ε i)⁻¹ • b i`
+  (`diagUnitary_symm_apply_basis`). This is diagonal *in the basis `b`*, not in
+  the standard basis, so it is built as an `OrthonormalBasis.equiv`, not a
+  `Matrix.diagonal`.
+* **The extracted phases.** `twoLevelPhase hf b i₀` reads off, per index, the
+  Stage-2 phase `εᵢ` from `reducedMap_two_level_normal_form` (anchored at
+  `ε i₀ := 1`), with `‖twoLevelPhase hf b i₀ j‖ = 1` for every `j`
+  (`twoLevelPhase_norm`).
+* **The diagonally-reduced map.** `diagReducedMap hf b i₀ := projMap (D).symm ∘
+  reducedMap hf b` with `D := diagUnitary b (twoLevelPhase hf b i₀) …`. It is
+  `TransProbPreserving` (`diagReducedMap_transProbPreserving`), still fixes every
+  basis ray (`diagReducedMap_fixes_basis`), and additionally **fixes the
+  two-level rays** `mk (b i₀ + b i)` for every `i ≠ i₀`
+  (`diagReducedMap_fixes_two_level`) — the setup the cocycle step (pieces 2–3)
+  consumes. **No ℂ-linearity is assumed:** `D` is constructed *from* the
+  extracted phases, not posited of `f`. -/
+
+/-- The scaled family `fun i => ε i • b i` is orthonormal when every phase is
+unit modulus (`‖ε i‖ = 1`): the off-diagonals inherit `b`'s orthogonality, and
+the diagonal is `conj (ε i) * ε i = ‖ε i‖² = 1` (`RCLike.conj_mul`). -/
+lemma scaled_orthonormal
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) :
+    Orthonormal ℂ (fun i => ε i • b i) := by
+  rw [orthonormal_iff_ite]
+  intro i j
+  rw [inner_smul_left, inner_smul_right, orthonormal_iff_ite.mp b.orthonormal i j]
+  rcases eq_or_ne i j with h | h
+  · subst h
+    simp only [if_true, mul_one]
+    rw [RCLike.conj_mul, hε i]; norm_num
+  · simp [h]
+
+/-- The `ε`-scaled family spans: cardinality `N` linearly independent vectors in
+`finrank = N`. Kept a separate `Prop` lemma so `scaledBasis` is a term-mode `def`
+(a tactic-mode data `def` would over-include ambient section variables). -/
+lemma scaled_span
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) :
+    ⊤ ≤ Submodule.span ℂ (Set.range (fun i => ε i • b i)) := by
+  rcases Nat.eq_zero_or_pos N with hN | hN
+  · subst hN
+    intro x _
+    exact (Subsingleton.elim x 0) ▸ Submodule.zero_mem _
+  · have : Nonempty (Fin N) := ⟨⟨0, hN⟩⟩
+    have hcard : Fintype.card (Fin N) = Module.finrank ℂ (EuclideanSpace ℂ (Fin N)) := by
+      rw [Fintype.card_fin, finrank_euclideanSpace_fin]
+    rw [(scaled_orthonormal b ε hε).linearIndependent.span_eq_top_of_card_eq_finrank hcard]
+
+/-- The `ε`-scaled orthonormal basis (an orthonormal family of cardinality `N`
+in `finrank = N`, so `OrthonormalBasis.mk` applies). -/
+noncomputable def scaledBasis
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) :
+    OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)) :=
+  OrthonormalBasis.mk (scaled_orthonormal b ε hε) (scaled_span b ε hε)
+
+/-- `scaledBasis` evaluates to the scaled basis vector (`OrthonormalBasis.mk`
+apply). -/
+lemma scaledBasis_apply
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) (i : Fin N) :
+    scaledBasis b ε hε i = ε i • b i := by
+  unfold scaledBasis; rw [OrthonormalBasis.coe_mk]
+
+/-- The **diagonal isometry in the basis `b`**: the `≃ₗᵢ[ℂ]` carrying `b` to the
+`ε`-scaled basis along the identity reindexing. Diagonal in `b`
+(`diagUnitary (b i) = ε i • b i`), unit modulus per coordinate. -/
+noncomputable def diagUnitary
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) :
+    EuclideanSpace ℂ (Fin N) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin N) :=
+  b.equiv (scaledBasis b ε hε) (Equiv.refl (Fin N))
+
+/-- `diagUnitary` scales the `i`-th basis vector by `ε i`. -/
+lemma diagUnitary_apply_basis
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) (i : Fin N) :
+    diagUnitary b ε hε (b i) = ε i • b i := by
+  unfold diagUnitary
+  rw [OrthonormalBasis.equiv_apply_basis, Equiv.refl_apply, scaledBasis_apply]
+
+/-- The inverse `diagUnitary` scales the `i`-th basis vector by `(ε i)⁻¹`.
+`diagUnitary ((ε i)⁻¹ • b i) = b i` (since `ε i ≠ 0`), then
+`symm_apply_apply`. -/
+lemma diagUnitary_symm_apply_basis
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ε : Fin N → ℂ) (hε : ∀ i, ‖ε i‖ = 1) (i : Fin N) :
+    (diagUnitary b ε hε).symm (b i) = (ε i)⁻¹ • b i := by
+  have hεne : ε i ≠ 0 := by rw [← norm_ne_zero_iff, hε i]; norm_num
+  have h : diagUnitary b ε hε ((ε i)⁻¹ • b i) = b i := by
+    rw [map_smul, diagUnitary_apply_basis, smul_smul, inv_mul_cancel₀ hεne, one_smul]
+  conv_lhs => rw [← h]
+  rw [LinearIsometryEquiv.symm_apply_apply]
+
+/-- The Stage-2 phase, extracted per index and anchored at `ε i₀ := 1`.
+For `j ≠ i₀`, `twoLevelPhase hf b i₀ j` is the unit phase `εⱼ` supplied by
+`reducedMap_two_level_normal_form` for the pair `(i₀, j)`. -/
+noncomputable def twoLevelPhase
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ j : Fin N) : ℂ :=
+  if h : j = i₀ then 1
+  else Classical.choose (reducedMap_two_level_normal_form hf b (i₀ := i₀) (i := j) (Ne.symm h))
+
+/-- The anchor phase is `1`: `twoLevelPhase hf b i₀ i₀ = 1`. -/
+lemma twoLevelPhase_self
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N) :
+    twoLevelPhase hf b i₀ i₀ = 1 := by
+  unfold twoLevelPhase; rw [dif_pos rfl]
+
+/-- Every extracted phase is unit modulus: `‖twoLevelPhase hf b i₀ j‖ = 1`
+(anchor `‖1‖ = 1`; off-anchor from the Stage-2 `choose_spec`). -/
+lemma twoLevelPhase_norm
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ j : Fin N) :
+    ‖twoLevelPhase hf b i₀ j‖ = 1 := by
+  unfold twoLevelPhase
+  rcases eq_or_ne j i₀ with h | h
+  · rw [dif_pos h, norm_one]
+  · rw [dif_neg h]
+    obtain ⟨_, hnorm, _⟩ :=
+      Classical.choose_spec (reducedMap_two_level_normal_form hf b (i₀ := i₀) (i := j) (Ne.symm h))
+    exact hnorm
+
+/-- The **diagonally-reduced map**: `projMap D⁻¹ ∘ reducedMap hf b`, where
+`D := diagUnitary b (twoLevelPhase hf b i₀) …` is the diagonal isometry built
+from the extracted phases. -/
+noncomputable def diagReducedMap
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N) :
+    ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N)) :=
+  fun p => projMap (diagUnitary b (twoLevelPhase hf b i₀) (twoLevelPhase_norm hf b i₀)).symm
+    (reducedMap hf b p)
+
+/-- **`diagReducedMap` is `TransProbPreserving`.** Composition of the
+preserving `projMap D⁻¹` and the preserving `reducedMap hf b`. -/
+lemma diagReducedMap_transProbPreserving
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ : Fin N) :
+    TransProbPreserving (diagReducedMap hf b i₀) :=
+  (projMap_transProbPreserving
+    (diagUnitary b (twoLevelPhase hf b i₀) (twoLevelPhase_norm hf b i₀)).symm).comp
+    (reducedMap_transProbPreserving hf b)
+
+/-- **`diagReducedMap` still fixes every basis ray.** `reducedMap` fixes
+`mk (b i)`, then `projMap D⁻¹` sends it to `mk ((ε i)⁻¹ • b i) = mk (b i)`
+(scaling invariance). -/
+lemma diagReducedMap_fixes_basis
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i₀ i : Fin N) :
+    diagReducedMap hf b i₀ (Projectivization.mk ℂ (b i) (b.orthonormal.ne_zero i))
+      = Projectivization.mk ℂ (b i) (b.orthonormal.ne_zero i) := by
+  show projMap (diagUnitary b (twoLevelPhase hf b i₀) (twoLevelPhase_norm hf b i₀)).symm
+      (reducedMap hf b _) = _
+  rw [reducedMap_fixes_basis hf b i, projMap_mk]
+  refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨(twoLevelPhase hf b i₀ i)⁻¹, ?_⟩
+  rw [diagUnitary_symm_apply_basis]
+
+/-- **HEADLINE (diagonal-phase reduction).** The diagonally-reduced map fixes
+the two-level superposition ray `mk (b i₀ + b i)` for every `i ≠ i₀`.
+
+Proof. Stage 2 (`reducedMap_two_level_normal_form`, extracted through
+`twoLevelPhase`) gives `reducedMap hf b (mk (b i₀ + b i)) = mk (b i₀ + c • b i)`
+with `c := twoLevelPhase hf b i₀ i` unit modulus. Applying `D⁻¹`:
+`D⁻¹ (b i₀) = (ε i₀)⁻¹ • b i₀ = b i₀` (anchor `ε i₀ = 1`) and
+`D⁻¹ (b i) = c⁻¹ • b i`, so `D⁻¹ (b i₀ + c • b i) = b i₀ + (c c⁻¹) • b i =
+b i₀ + b i`. Hence the ray is fixed. This is the setup consumed by the cocycle
+step (pieces 2–3): a `TransProbPreserving` map fixing every basis ray and every
+two-level ray `mk (b i₀ + b i)`. **No ℂ-linearity assumed.** -/
+theorem diagReducedMap_fixes_two_level
+    (hf : TransProbPreserving f)
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) {i₀ i : Fin N} (hij : i₀ ≠ i) :
+    diagReducedMap hf b i₀ (Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij))
+      = Projectivization.mk ℂ (b i₀ + b i) (add_basis_ne_zero b hij) := by
+  obtain ⟨_, hnorm, heq⟩ :=
+    Classical.choose_spec (reducedMap_two_level_normal_form hf b (i₀ := i₀) (i := i) hij)
+  have hci : twoLevelPhase hf b i₀ i
+      = Classical.choose (reducedMap_two_level_normal_form hf b (i₀ := i₀) (i := i) hij) := by
+    rw [twoLevelPhase, dif_neg (Ne.symm hij)]
+  set c := Classical.choose (reducedMap_two_level_normal_form hf b (i₀ := i₀) (i := i) hij) with hc
+  have hcne : c ≠ 0 := by rw [← norm_ne_zero_iff, hnorm]; norm_num
+  show projMap (diagUnitary b (twoLevelPhase hf b i₀) (twoLevelPhase_norm hf b i₀)).symm
+      (reducedMap hf b _) = _
+  rw [heq, projMap_mk]
+  have hcomp :
+      (diagUnitary b (twoLevelPhase hf b i₀) (twoLevelPhase_norm hf b i₀)).symm
+        (b i₀ + c • b i) = b i₀ + b i := by
+    rw [map_add, map_smul, diagUnitary_symm_apply_basis, diagUnitary_symm_apply_basis,
+        twoLevelPhase_self hf b i₀, hci]
+    simp only [inv_one, one_smul, smul_smul]
+    rw [mul_inv_cancel₀ hcne, one_smul]
+  refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨1, ?_⟩
+  rw [one_smul, hcomp]
+
 /-! ## Stage 3 (residual): the phase cocycle and the unitary/antiunitary dichotomy
 
 Stages 1–2 are proved above with **no linearity assumed** on `f`: only
-`TransProbPreserving`. What remains to close the Wigner / Fubini–Study converse is
-the **phase cocycle** step and the resulting dichotomy. This is stated here
-precisely as the open target; it is **not** an axiom and **not** a `sorry`.
+`TransProbPreserving`. **Stage 3 piece 1 (the diagonal-phase reduction) is now
+also proved** (`diagReducedMap` + `diagReducedMap_fixes_two_level`). What remains
+to close the Wigner / Fubini–Study converse is the **phase cocycle** step
+(pieces 2–3) and the resulting dichotomy, plus the Kähler selection. This is
+stated here precisely as the open target; it is **not** an axiom and **not** a
+`sorry`.
 
 **State reached.** Write `g := reducedMap hf b` (`TransProbPreserving`, fixes
 every basis ray). Stage 1 (`reducedMap_coord_modulus`) gives, for every
 `p = mk ψ` with image rep `φ`, the modulus profile
 `‖b.repr φ j‖² / ‖φ‖² = ‖b.repr ψ j‖² / ‖ψ‖²` for all `j`. Stage 2
 (`reducedMap_two_level_normal_form`) gives, for each `i ≠ i₀`, a unit phase
-`εᵢ` with `g (mk (b i₀ + b i)) = mk (b i₀ + εᵢ • b i)`.
+`εᵢ` with `g (mk (b i₀ + b i)) = mk (b i₀ + εᵢ • b i)`. Stage 3 piece 1
+(`diagReducedMap_fixes_two_level`) then removes these phases: the diagonally
+reduced map `g' := diagReducedMap hf b i₀` is `TransProbPreserving`, fixes every
+basis ray **and** every two-level ray `mk (b i₀ + b i)`.
 
-**Residual crux (open).** The remaining content is the coherence of the `εᵢ`
-across overlapping superpositions, in three linked pieces, none of which may
-assume ℂ-linearity:
+**Residual crux.** The content is the coherence of the phases across overlapping
+superpositions, in three linked pieces (piece 1 discharged; pieces 2–3 open),
+none of which may assume ℂ-linearity:
 
-1. **Diagonal-phase reduction.** Post-compose `g` with `projMap D⁻¹` for the
-   diagonal unitary `D` with `D (b i₀) = b i₀`, `D (b i) = εᵢ⁻¹ • b i` (which
-   fixes every basis ray, so the frame reduction is preserved). After this, the
-   reduced map fixes `mk (b i₀ + b i)` for **every** `i`.
+1. **Diagonal-phase reduction (DONE).** Post-compose `g` with `projMap D⁻¹` for
+   the diagonal isometry `D` (in the basis `b`) with `D (b i₀) = b i₀`,
+   `D (b i) = εᵢ • b i` (so `D⁻¹` fixes every basis ray, preserving the frame
+   reduction). After this, the reduced map fixes `mk (b i₀ + b i)` for **every**
+   `i`. Realised here as `diagUnitary` / `diagReducedMap` /
+   `diagReducedMap_fixes_two_level`.
 
 2. **General coordinate phase.** For a general `ψ = ∑ cⱼ bⱼ`, the transition
    probabilities `transProb (g (mk ψ)) (mk (b i₀ + b i))` together with the

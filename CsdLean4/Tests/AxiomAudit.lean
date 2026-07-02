@@ -2551,6 +2551,25 @@ as an axiom nor a sorry. -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.reducedMap_two_level_normal_form
 
+-- Wigner W2 (A) HEADLINE: the concrete antiunitary witness. `conjProj`
+-- (coordinatewise complex conjugation as a ray map) is `TransProbPreserving`,
+-- an inhabitant of the ANTIUNITARY class (`conjVec` is conjugate-linear, not the
+-- underlying map of any `≃ₗᵢ[ℂ]`), so the eventual Wigner dichotomy is non-vacuous
+-- on the antiunitary side. Foundational-triple only.
+/-- info: 'Projectivization.conjProj_transProbPreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.conjProj_transProbPreserving
+
+-- Wigner W2 (B) HEADLINE: Stage 3 piece 1 (the diagonal-phase reduction). The
+-- diagonally-reduced map (frame reduction post-composed with the inverse diagonal
+-- isometry built FROM the extracted Stage-2 phases) fixes the two-level rays
+-- `mk (b i₀ + b i)`. ℂ-linearity is DERIVED not assumed (`D` is constructed from
+-- the phases, not posited of `f`). The residual is pieces 2-3 (the 2-cocycle +
+-- the unitary/antiunitary dichotomy). Foundational-triple only.
+/-- info: 'Projectivization.diagReducedMap_fixes_two_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.diagReducedMap_fixes_two_level
+
 /-! ### LF4 §8 ontic-shell instantiation
 
 The first concrete `SectorData` instance and its axiom-free measure bridge.

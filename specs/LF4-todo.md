@@ -516,16 +516,21 @@ crux** — see the "real blocker" bullet under Discharge prerequisites below.
 > (frame reduction, 2c-i). **W1 (2026-07-02) added Bargmann Stages 1-2:** `reducedMap_coord_modulus`
 > (moduli preservation: the reduced map preserves the coordinate-modulus profile
 > `‖repr φ i‖²/‖φ‖²`) and `reducedMap_two_level_normal_form` (`reducedMap (mk (bᵢ₀+bᵢ)) = mk (bᵢ₀ + ε•bᵢ)`,
-> `‖ε‖=1`, ε genuinely FREE) — the (2c-ii) relative-phase extraction, DONE. **Remaining = Stage 3
-> (the research-grade crux):** (a) diagonal-phase reduction (`projMap D⁻¹ ∘ g` fixing every
-> `mk(bᵢ₀+bᵢ)`, achievable ≃ₗᵢ plumbing), (b) the general-`N` 2-cocycle
-> `θ(i,j)=θ(i₀,j)−θ(i₀,i)`, (c) the trivial-cocycle dichotomy → unitary/antiunitary branch, + the
-> Kähler selection of the unitary branch. **Decision TAKEN (user, 2026-07-02): complete the
-> multi-session phase-cocycle proof incrementally — NO `wigner_fs_rigidity` axiom** (preserve the
-> one-axiom posture). **Next bounded increments:** the concrete antiunitary witness `conjProj`
-> (upgrade "branch present" from structural to a machine-checked inhabitant), then (a) the diagonal
-> reduction. **Audit watch (load-bearing):** the dichotomy must DERIVE ℂ-linearity as an OUTPUT,
-> never assume it, and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
+> `‖ε‖=1`, ε genuinely FREE) — the (2c-ii) relative-phase extraction, DONE. **W2 (2026-07-02) added Stage 3 piece 1 + the antiunitary witness:** `conjProj` +
+> `conjProj_transProbPreserving` (the CONCRETE antiunitary `TransProbPreserving` inhabitant, genuinely
+> conjugate-linear via `conjVec_smul`, so the dichotomy is non-vacuous on the antiunitary side) and
+> `diagReducedMap` + `diagReducedMap_fixes_two_level` (the diagonal-phase reduction: `projMap D⁻¹ ∘ g`
+> with `D = diagUnitary` built from the extracted `twoLevelPhase`, fixing every basis ray AND every
+> two-level ray `mk(bᵢ₀+bᵢ)`). **Remaining = Stage 3 pieces 2-3 (the research-grade crux):** (b) the
+> general-`N` 2-cocycle `θ(i,j)=θ(i₀,j)−θ(i₀,i)` (from a general `ψ=∑cⱼbⱼ`, pin the image coords to
+> `cⱼ` up to a per-index phase via Stage-1 moduli + overlaps with `mk(bᵢ₀+bᵢ)`; the pairwise overlaps
+> `mk(bᵢ+bⱼ)` force the cocycle relation), (c) the trivial-cocycle dichotomy → identity (unitary) or
+> `conjProj` (antiunitary), + the Kähler selection of the unitary branch. **Decision TAKEN (user,
+> 2026-07-02): complete the multi-session phase-cocycle proof incrementally — NO `wigner_fs_rigidity`
+> axiom** (preserve the one-axiom posture). **Next bounded increment:** piece 2 (the 2-cocycle). Also
+> owed for the eventual antiunitary assembly: the ray-map identity `conjProj (mk v) = mk (conjVec v)`.
+> **Audit watch (load-bearing):** the dichotomy must DERIVE ℂ-linearity as an OUTPUT, never assume it,
+> and eliminate the antiunitary branch by a Kähler datum, not by dropping it.
 
 Originally framed for cloning (§13.1 below); generalised to arbitrary
 N-qubit unitaries when the Tranche 1 Tier A gate work introduced
