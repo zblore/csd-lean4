@@ -4130,6 +4130,72 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.maxEntangledDeisolation_flow_capstone
 
+-- GHZ_n tranche (GHZnDeisolationFlow, 2026-07-03): the DETERMINISTIC (Mermin) all-or-nothing forcing
+-- axis at general PARTY number n, complementing the statistical (CGLMP) axis at general dimension d
+-- (MaxEntangledDeisolationFlow + Mathlib/Probability/CGLMP). ghzN n = (|0..0⟩+|1..1⟩)/√2 on Fin (2^n)
+-- (support 0 / topIdx n = 2^n−1); ghzNWeight (Born = 1/2 on the two all-equal outcomes, 0 else),
+-- ghzN_normSq_eq_weight / sum_ghzNWeight (unit-norm, n≥1) / ghzN_born. The de-isolation flow +
+-- Born-from-volume at N = 2^n (the clean general-PARTY core) REUSES the LF5 general-N engine:
+-- ghzNDeisolation_pointer_volume COMPOSES LF5 vnDilation_pointer_volume @ N=2^n (pointer-block FS
+-- volume = ‖⟨eᵢ,φ⟩‖², Gleason-free, Born=volume IMPORTED from the DH/FS-volume engine) with ghzN_born;
+-- ghzNDeisolation_frequency (a.s. block freq → GHZ_n Born); ne_id (Φ≠id, 1<2^n) + measurePreserving.
+-- The n-party DETERMINISTIC (Mermin) forcing (the load-bearing thesis part): no_lhvN_assignment_for_ghzN
+-- (general n, combinatorial) + no_product_partition_realises_ghzN (general n, measure-theoretic —
+-- generalises C.1's no_product_partition_realises_ghz via pm_ae_eq → l₀ → no_lhvN). Mechanism: the
+-- three-party Mermin dance on parties {0,1,2}, spectators ≥3 measure X; the full-n product PARITY
+-- contradiction (each party's ±1 appears squared → 4 correlations multiply to +1 while product of QM
+-- values is −1) is a GENUINE n-party statement (product over Fin n, n-party contexts), NOT a hollow
+-- re-export. no_lhv_assignment_for_ghz4 is the essentially-FOUR-party witness (all parties participate,
+-- no spectator; via decide-free parity). Honest caveat: general-n forcing routes the contradiction
+-- through the 3-party paradox embedded via X-spectators (does not exhibit essential n-party
+-- entanglement beyond 3); physical regime n≥3 (targets = GHZ_n's Mermin correlations). Residual: the
+-- uniform essentially-all-n-parties construction (n mod 4) + general-n GHZ_n QM tensor-Pauli
+-- confirmation. Born IMPORTED not derived (DH engine); flow realises not derives. Residue A5.
+-- Foundational triple only, no busch, no native_decide (decide not used on headlines; ghz4 via ring/norm_num).
+/-- info: 'CSD.LF6.ghzN_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzN_norm
+
+/-- info: 'CSD.LF6.sum_ghzNWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.sum_ghzNWeight
+
+/-- info: 'CSD.LF6.ghzN_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzN_born
+
+/-- info: 'CSD.LF6.ghzNDeisolation_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzNDeisolation_ne_id
+
+/-- info: 'CSD.LF6.ghzNDeisolation_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzNDeisolation_measurePreserving
+
+/-- info: 'CSD.LF6.ghzNDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzNDeisolation_pointer_volume
+
+/-- info: 'CSD.LF6.ghzNDeisolation_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzNDeisolation_frequency
+
+/-- info: 'CSD.LF6.no_lhvN_assignment_for_ghzN' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_lhvN_assignment_for_ghzN
+
+/-- info: 'CSD.LF6.no_product_partition_realises_ghzN' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_product_partition_realises_ghzN
+
+/-- info: 'CSD.LF6.no_lhv_assignment_for_ghz4' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_lhv_assignment_for_ghz4
+
+/-- info: 'CSD.LF6.ghzNDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzNDeisolation_flow_capstone
+
 -- Build 15a (Einselection, 2026-06-29): the first einselection / pointer-basis-selection
 -- result on the LF6-B decoherence machinery. decohereReduced ψ (LF6-B) is diagonal in the
 -- measurement (pointer) basis {eⱼ} (decohere_diagonal_in_pointer_basis), but conjugating by

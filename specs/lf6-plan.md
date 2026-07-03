@@ -326,11 +326,33 @@ the QM-side violation `I_3 > 2` on the maximally-entangled qutrit `Ψ_3` (≈ 2.
 `cglmp_lhv_bound_three`, upgrading `no_product_partition_realises_maxEntangled` from the 2×2-sector
 routing to genuinely `d=3`-intrinsic forcing.**
 
+### LF6-E — the n-party GHZ_n deterministic (Mermin) tier (DONE 2026-07-03)
+`CsdLean4/LF6/GHZnDeisolationFlow.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple. The
+deterministic all-or-nothing (Mermin) forcing axis at general PARTY-number, complementing the CGLMP
+statistical axis (general `d`). Together: forced non-locality reproduced in both the statistical (CGLMP,
+general `d`) and deterministic (Mermin, general `n`) forms.
+- `ghzN n` = `(|0..0>+|1..1>)/√2` on `EuclideanSpace ℂ (Fin (2^n))`; `ghzNWeight` (Born `1/2` on all-0 /
+  all-1 = `topIdx n`); `ghzN_norm`, `ghzN_born`. Cleaner than C.2 (state lives directly on `Fin (2^n)`).
+- The general-party de-isolation flow + Born-from-volume (reuses the LF5 engine at `N = 2^n`):
+  `ghzNDeisolationFlow n = measurementFlow (2^n) finProdFinEquiv`; `_ne_id` (`1 < 2^n`), `_measurePreserving`,
+  `ghzNDeisolation_pointer_volume` (pointer-block FS volume = `ghzNWeight` via `vnDilation_pointer_volume @
+  N=2^n` ∘ `ghzN_born`), `_frequency`. Genuinely general `n`, non-vacuous.
+- The n-party deterministic forcing: `no_lhvN_assignment_for_ghzN (n)` (no n-party ±1 LHV assignment
+  satisfies the four full-`n` context products; genuine `Fin n` parity, distinct type from the 3-party
+  no-go, NOT a hollow re-export) + `no_product_partition_realises_ghzN` (measure-theoretic, via `pm_ae_eq`)
+  + `no_lhv_assignment_for_ghz4` (the essentially-4-party witness YYYY/YXXY/XYXY/XXYY, every party Y≥twice,
+  no spectator — genuine beyond-n=3). `ghzNDeisolation_flow_capstone (n) (hn : 3 ≤ n)` (5-conjunct).
+- HONEST scope (auditor-checked, no overclaim): the general-`n` FORCING (the ±1 no-go) is formalised for
+  all `n`, but its mechanism embeds the 3-party Mermin via `n−3` X-spectators; the QM link (that the ±1
+  targets are GHZ_n's own tensor-Pauli Mermin correlations) is formalised only at `n=3` (via `Empirical.GHZ`)
+  + the `n=4` essentially-4-party witness. Named residual: the general-`n` QM confirmation
+  `⟨GHZ_n|⊗σ_{a_i}|GHZ_n⟩ = (−1)^{#Y/2}`. Born imported (FS-volume), flow realises not derives, residue A5.
+
 ### LF6 remaining (not started)
-Continuous-time Lindblad; the marginal volume-drift geometry; the rest of the general-N tier (n-party
-GHZ_n [queued next]; the CGLMP d-intrinsic step 2 above); threading `Φ` through the concrete entangled
-`SectorData` (D1c). A5 emergence (deriving the entangled sector from the dynamics) is the downstream
-target that would retire the residue.
+Continuous-time Lindblad; the marginal volume-drift geometry; the CGLMP d-intrinsic step 2 (the QM-side
+`Ψ_3` violation `I_3 > 2`); the GHZ_n general-`n` QM link (LF6-E residue above); threading `Φ` through the
+concrete entangled `SectorData` (D1c). A5 emergence (deriving the entangled sector from the dynamics) is
+the downstream target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the
