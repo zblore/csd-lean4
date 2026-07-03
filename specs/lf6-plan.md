@@ -313,7 +313,7 @@ the 2×2 singlet A-tier and the 3-qubit GHZ C-tier). The bipartite maximally-ent
 - `maxEntangledDeisolation_flow_capstone` (7-conjunct, adds sector = `Φ⁺` and the `Φ⁺` no-go). Residue
   A5 (entangled sector posited).
 
-### CGLMP infrastructure (d-intrinsic route, step 1 DONE 2026-07-03)
+### CGLMP infrastructure (d-intrinsic route, step 1 + step 2 DONE 2026-07-03)
 `CsdLean4/Mathlib/Probability/CGLMP.lean` (Cat-1, `ProbabilityTheory.CGLMP`, CSD-free), auditor-SOUND,
 foundational-triple. The qudit Bell infrastructure toward making LF6-D's non-factorisation genuinely
 `d`-intrinsic (rather than routed through the 2×2 `Φ⁺` sector): the genuine standard CGLMP functional
@@ -321,10 +321,21 @@ foundational-triple. The qudit Bell infrastructure toward making LF6-D's non-fac
 the classical bound is exactly 2), the general-`d` deterministic reduction (`cglmpLHV_eq_integral` +
 `cglmpLHV_le_of_det_le`, the LHV → finite-optimisation convexity bridge), and the LHV bound `I_d ≤ 2`
 proved for `d = 2, 3, 4` via kernel `decide` on the division-cleared integer functional `scaledDetZ ≤
-2(d−1)`. Named residual: the general-`d` numeric bound (the CGLMP counting argument). **Step 2 (pending):
-the QM-side violation `I_3 > 2` on the maximally-entangled qutrit `Ψ_3` (≈ 2.873), contradicting
-`cglmp_lhv_bound_three`, upgrading `no_product_partition_realises_maxEntangled` from the 2×2-sector
-routing to genuinely `d=3`-intrinsic forcing.**
+2(d−1)`. Named residual: the general-`d` numeric bound (the CGLMP counting argument). **Step 2 DONE
+2026-07-03** (`CsdLean4/LF6/CGLMPQutrit.lean`, namespace `CSD.LF6.CGLMPQutrit`, foundational-triple): the
+QM-side violation `I_3 > 2` on the maximally-entangled qutrit `Ψ_3`. `pQM x y c = P(A_x−B_y=c)` is the
+GENUINE outcome-difference Born table (`bornPair x y k l = ‖⟨outcome_{k,l}, maxEntangled 3⟩‖²`, a squared
+inner product with `Ψ_3`; the outcome vectors are the CGLMP phase-basis measurement vectors, `aVec_unit`/
+`bVec_unit` unit; `pQM` the `k−l` marginal, `bornPair_periodic`). `bornPair_value` computes it via the
+roots-of-unity geometric sum `‖1+w+w²‖²=3+4cosφ+2cos2φ` (`normSq_geom`) + the diagonal `Ψ_3` contraction
+(`inner_outcome_collapse`). Under offsets `α₁=0,α₂=1/2,β₁=−1/4,β₂=1/4` the four CGLMP-positive entries are
+`(4+2√3)/9`, the four negative `1/9`, giving the EXACT `cglmp_maxEntangled_qutrit_eq: cglmp 3 pQM =
+(12+8√3)/9 ≈ 2.8729`, hence `cglmp_maxEntangled_qutrit_gt_two: > 2` (the `√3` is irrational — no rational /
+half-integer setting violates, those give exactly 2). The `d`-intrinsic no-go
+`no_lhv_realises_maxEntangled_cglmp`: any LHV reproducing `pQM` gives `cglmpLHV = cglmp 3 pQM > 2`,
+contradicting `cglmp_lhv_bound_three`. Supersedes the 2×2 `Φ⁺` CHSH routing of
+`no_product_partition_realises_maxEntangled` for `d=3` (that theorem untouched; additive). Residual: the
+general-`d` (`d ≥ 4`) CGLMP violation for `Ψ_d`.
 
 ### LF6-E — the n-party GHZ_n deterministic (Mermin) tier (DONE 2026-07-03)
 `CsdLean4/LF6/GHZnDeisolationFlow.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple. The
@@ -353,9 +364,10 @@ general `d`) and deterministic (Mermin, general `n`) forms.
   the X/Y Mermin family the forcing consumes. Born imported (FS-volume), flow realises not derives, residue A5.
 
 ### LF6 remaining (not started)
-Continuous-time Lindblad; the marginal volume-drift geometry; the CGLMP d-intrinsic step 2 (the QM-side
-`Ψ_3` violation `I_3 > 2`); the fully-general arbitrary-Pauli-tensor GHZ_n reducer (the X/Y Mermin family
-QM link is CLOSED, deliverable 5 above); threading `Φ` through the concrete entangled `SectorData` (D1c).
+Continuous-time Lindblad; the marginal volume-drift geometry; the general-`d` (`d ≥ 4`) CGLMP violation
+for `Ψ_d` (the `d=3` qutrit case is CLOSED, step 2 above); the fully-general arbitrary-Pauli-tensor GHZ_n
+reducer (the X/Y Mermin family QM link is CLOSED, deliverable 5 above); threading `Φ` through the concrete
+entangled `SectorData` (D1c).
 A5 emergence (deriving the entangled sector from the dynamics) is the downstream target that would retire
 the residue.
 

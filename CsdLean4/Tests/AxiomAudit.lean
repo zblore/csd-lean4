@@ -131,6 +131,7 @@ import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
+import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.GHZnDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -4130,6 +4131,33 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.maxEntangledDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.maxEntangledDeisolation_flow_capstone
+
+-- LF6-D QM side (CGLMPQutrit, 2026-07-03): the genuinely d=3-INTRINSIC CGLMP violation for the
+-- maximally-entangled qutrit Ψ_3, the QM payoff of the CGLMP infrastructure. pQM x y c = P(A_x−B_y=c)
+-- is the GENUINE outcome-difference Born table: bornPair x y k l = ‖⟨outcome_{k,l}, maxEntangled 3⟩‖²
+-- (squared inner product with Ψ_3), the outcome vectors the CGLMP phase-basis measurement vectors
+-- (aVec_unit/bVec_unit unit vectors), pQM the k−l marginal (bornPair_periodic: Born depends only on
+-- k−l). bornPair_value computes it via the roots-of-unity geometric sum ‖1+w+w²‖²=3+4cosφ+2cos2φ
+-- (normSq_geom) + the diagonal Ψ_3 contraction (inner_outcome_collapse). Under offsets α₁=0,α₂=1/2,
+-- β₁=−1/4,β₂=1/4 the four CGLMP-positive entries are (4+2√3)/9, the four negative 1/9, giving the
+-- EXACT value cglmp_maxEntangled_qutrit_eq: cglmp 3 pQM = (12+8√3)/9 ≈ 2.8729. cglmp_maxEntangled_qutrit_gt_two:
+-- > 2 (the √3 irrational; no rational/half-integer setting violates — those give exactly 2). The
+-- d-intrinsic no-go no_lhv_realises_maxEntangled_cglmp: any LHV reproducing pQM would give
+-- cglmpLHV = cglmp 3 pQM > 2, contradicting cglmp_lhv_bound_three (I_3 ≤ 2). SUPERSEDES the 2×2 Φ⁺
+-- CHSH sector routing of no_product_partition_realises_maxEntangled for d=3 (that theorem is untouched;
+-- this is additive). Scope: d=3 only; general-d (d≥4) CGLMP is the residual. Foundational triple only,
+-- no busch, no native_decide (decide for finite ZMod facts only).
+/-- info: 'CSD.LF6.CGLMPQutrit.cglmp_maxEntangled_qutrit_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQutrit.cglmp_maxEntangled_qutrit_eq
+
+/-- info: 'CSD.LF6.CGLMPQutrit.cglmp_maxEntangled_qutrit_gt_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQutrit.cglmp_maxEntangled_qutrit_gt_two
+
+/-- info: 'CSD.LF6.CGLMPQutrit.no_lhv_realises_maxEntangled_cglmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQutrit.no_lhv_realises_maxEntangled_cglmp
 
 -- GHZ_n tranche (GHZnDeisolationFlow, 2026-07-03): the DETERMINISTIC (Mermin) all-or-nothing forcing
 -- axis at general PARTY number n, complementing the statistical (CGLMP) axis at general dimension d
