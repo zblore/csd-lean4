@@ -16,11 +16,13 @@ de-isolation account reproduces forced non-locality in both the statistical
 (CGLMP, general `d`) and deterministic (Mermin/GHZ, general `n`) forms at
 arbitrary size. Read this framing against the honest-scope ledger below: the
 general-`n` deterministic FORCING (the ±1 combinatorial no-go) is formalised for
-all `n`, but the QM link (that the four ±1 context targets are GHZ_n's own
-tensor-Pauli Mermin correlations) is formalised only at `n = 3`, with the
-essentially-4-party case witnessed at `n = 4`; the general-`n` QM link is a named
-residual. So "forced non-locality at arbitrary size" is fully load-bearing at
-`n = 3`/`n = 4` and combinatorial-only (QM link deferred) for general `n`.
+all `n`, and (2026-07-03, deliverable 5) the QM link is now ALSO general-`n`: the
+four ±1 context targets are DERIVED to be GHZ_n's own tensor-Pauli Mermin
+correlations `⟨GHZ_n | σ_{a_1} ⊗ … ⊗ σ_{a_n} | GHZ_n⟩` for every `n ≥ 3`
+(`ghzN_mermin_correlations`), through a genuine two-corner Hilbert reducer
+(`ghzN_expectation_corner`), not `n = 3`-anchored. So "forced non-locality at
+arbitrary size" is now fully load-bearing (dynamics + forcing + QM link) for
+general `n ≥ 3`; the essentially-4-party case is additionally witnessed at `n = 4`.
 
 ## What lands
 
@@ -57,6 +59,16 @@ residual. So "forced non-locality at arbitrary size" is fully load-bearing at
    `Φ ≠ id`, FS-measure-preserving, pointer volume = Born, a.s. freq → Born,
    n-party deterministic no-LHV forcing.
 
+5. **The general-`n` GHZ_n QM tensor-Pauli link (deliverable 5, residual closure).**
+   `ghzN_expectation_corner` (the two-corner Hilbert reducer on `Fin (2^n)`),
+   `tensorPauliFin` (the `n`-fold tensor Pauli via the product-of-factor-entries
+   Kronecker formula on the bit-decomposition basis `finFunctionFinEquiv`),
+   `ghzN_mermin_correlation` / `ghzN_mermin_correlations` (the four GHZ_n Mermin
+   correlations `+1, −1, −1, −1` DERIVED for every `n ≥ 3`, the spectator `X`-factors
+   contributing `+1` via `prod_ghzNCtx`), and `no_product_partition_realises_ghzN_qm`
+   (the forcing routed through GHZ_n's ACTUAL QM correlations via
+   `reproducesGHZN_QM_iff`). This closes the general-`n` QM-link residual.
+
 ## Honest scope (the GHZ_n ledger)
 
 - **Born imported, not derived.** Born = FS-volume is the DH/moment-map cluster's
@@ -75,8 +87,9 @@ residual. So "forced non-locality at arbitrary size" is fully load-bearing at
   essentially-`n`-party entanglement beyond three. `no_lhv_assignment_for_ghz4`
   is the essentially-four-party witness (all parties participate) demonstrating
   genuine beyond-`n=3` content. The physical regime is `n ≥ 3` (the targets
-  `⟨XXX…⟩ = +1`, `⟨XYY…⟩ = −1`, … are GHZ_n's actual Mermin correlations only for
-  `n ≥ 3`; for `n = 3` the tie is `Empirical.GHZ.ghz_expectation_*`).
+  `⟨XXX…⟩ = +1`, `⟨XYY…⟩ = −1`, … are GHZ_n's actual Mermin correlations for every
+  `n ≥ 3`, DERIVED here as `ghzN_mermin_correlations` — deliverable 5, general `n`;
+  at `n = 3` this agrees with `Empirical.GHZ.ghz_expectation_*`).
 - **Residue: A5.** The GHZ_n entangled sector / preparation region is posited, not
   derived (A5 reduces to D1); the typicality law on `Σ'` is the Fubini-Study
   measure (A5).
@@ -87,14 +100,19 @@ residual. So "forced non-locality at arbitrary size" is fully load-bearing at
   all-or-nothing (which uses every party non-trivially; the construction depends on
   `n mod 4` and is not delivered uniformly here — only the spectator-embedding
   general-`n` and the essentially-four-party `n = 4` witness are).
-- The **general-`n` GHZ_n QM confirmation** that the `±1` targets are the actual
-  `⟨σ_{a_1} ⊗ … ⊗ σ_{a_n}⟩` Mermin correlations (the general tensor-Pauli
-  expectation; proved for `n = 3` in `Empirical.GHZ`, named residual for general
-  `n`).
+- **CLOSED (2026-07-03, deliverable 5): the general-`n` GHZ_n QM confirmation.** The
+  four `±1` targets are DERIVED to be the actual `⟨σ_{a_1} ⊗ … ⊗ σ_{a_n}⟩` Mermin
+  correlations for every `n ≥ 3` (`ghzN_mermin_correlations`, via the two-corner
+  reducer `ghzN_expectation_corner` and the product-of-factor-entries tensor Pauli
+  `tensorPauliFin`), no longer `n = 3`-anchored to `Empirical.GHZ`. The one residual
+  sub-point: the fully-general arbitrary-Pauli-tensor reducer (any `Z` factors, any
+  axis pattern) is not delivered; only the `X`/`Y` Mermin family relevant to the four
+  `ghzNCtx` contexts is (which is exactly what the forcing consumes).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine is
-off Busch, the forcing is measure-theoretic Mermin content, `decide` only on the
-finite `n = 4` witness, no `native_decide`).
+off Busch, the forcing is measure-theoretic Mermin content; `decide` is used only
+on the two-element `PauliAxis` inequality `x ≠ y` (and the `n = 4` witness closes
+by `norm_num`/`ring`), no `native_decide`).
 
 Reference: `specs/lf6-plan.md` (GHZ_n tranche).
 -/
@@ -406,12 +424,14 @@ def IsProductPartitionGHZN {Λ : Type*} [MeasurableSpace Λ] (n : ℕ)
 
 /-- A product partition **reproduces the GHZ_n Mermin correlations** if its four
 factorisable full-`n` context-product expectations match the GHZ_n perfect
-correlations `+1` (all-`X`), `−1`, `−1`, `−1` (the twisted contexts). These are
-known to be GHZ_n's actual QM Mermin correlations for every `n ≥ 3` (X⊗ⁿ is a
-+1 stabiliser; a two-`Y`-rest-`X` operator has eigenvalue `−1` independent of the
-spectator count), but this QM link is FORMALISED only at `n = 3` (via
-`Empirical.GHZ`) and witnessed essentially-4-party at `n = 4`; the general-`n`
-QM confirmation is a named residual (see the module ledger). -/
+correlations `+1` (all-`X`), `−1`, `−1`, `−1` (the twisted contexts). These
+`±1` targets ARE GHZ_n's actual QM tensor-Pauli Mermin correlations for every
+`n ≥ 3` — DERIVED as `ghzN_mermin_correlations` (deliverable 5, general `n`;
+`X⊗ⁿ` is a `+1` stabiliser, a two-`Y`-rest-`X` operator has eigenvalue `−1`
+independent of the spectator count). The forcing is routed through those actual QM
+correlations by `no_product_partition_realises_ghzN_qm` (via `reproducesGHZN_QM_iff`
+and `ReproducesGHZN_QM`); the general-`n` QM link is CLOSED (previously formalised
+only at `n = 3` via `Empirical.GHZ`). -/
 def ReproducesGHZN {Λ : Type*} [MeasurableSpace Λ] (n : ℕ) (μ : Measure Λ)
     (R : Fin n → PauliAxis → Λ → ℝ) : Prop :=
   (∫ l, ∏ i, R i (ghzNCtx PauliAxis.x PauliAxis.x PauliAxis.x n i) l ∂μ = 1) ∧
@@ -579,6 +599,350 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
    fun i => ghzNDeisolation_pointer_volume n (by omega) e p₀ ψ' hψ'eq hψ'0 i,
    ghzNDeisolation_frequency n (by omega) e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep,
    fun Λ _ μ _ R hPP hRep => no_product_partition_realises_ghzN μ n R hPP hRep⟩
+
+/-! ### Deliverable 5 (residual closure): the general-`n` GHZ_n QM tensor-Pauli link
+
+Closes the LF6-E named residual "the general-`n` GHZ_n QM confirmation that the ±1
+targets are the actual `⟨σ_{a_1} ⊗ … ⊗ σ_{a_n}⟩` Mermin correlations". The four ±1
+targets of `ReproducesGHZN` / `no_lhvN_assignment_for_ghzN` (`+1` all-`X`, `−1` for
+each twisted 2-`Y` context) are here DERIVED to be GHZ_n's own tensor-Pauli Mermin
+correlations `⟨GHZ_n | σ_{a_1} ⊗ … ⊗ σ_{a_n} | GHZ_n⟩`, for every `n ≥ 3`, as a
+genuine Hilbert computation (the two-corner reducer + the product-of-factor-entries
+tensor Pauli on the bit-decomposition basis), not asserted and not `n = 3`-anchored.
+
+The tensor-Pauli operator is `tensorPauliFin n f`, whose `(r, c)` entry is the
+standard product-of-factor-entries formula `∏ i, (σ·f i)_{r_i, c_i}` under the bit
+decomposition `Fin (2^n) ≃ (Fin n → Fin 2)` (`finFunctionFinEquiv`). This IS the
+`n`-fold Kronecker product `σ·f₁ ⊗ … ⊗ σ·f_n` (the definition of the Kronecker
+product on the tensor-basis indices); at `n = 3` it agrees, up to the
+`Fin 8 ≃ Fin 2 × Fin 2 × Fin 2` reindexing, with `Empirical.GHZ.sigmaDotTriple`. -/
+
+section QMLink
+
+open CSD.LF3 CSD.Empirical.Bell
+
+/-! #### The two-corner reducer for GHZ_n on `Fin (2^n)` -/
+
+/-- `∑ i : Fin n, 2^i = 2^n − 1` (the all-ones binary expansion). -/
+lemma sum_two_pow_fin (n : ℕ) : ∑ i : Fin n, (2 : ℕ) ^ (i : ℕ) = 2 ^ n - 1 := by
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    rw [Fin.sum_univ_castSucc]
+    simp only [Fin.val_castSucc, Fin.val_last, ih]
+    have h1 : 1 ≤ (2 : ℕ) ^ k := Nat.one_le_two_pow
+    have h2 : (2 : ℕ) ^ (k + 1) = 2 ^ k + 2 ^ k := by rw [pow_succ]; ring
+    omega
+
+/-- GHZ_n written as `(√2)⁻¹ • (|0…0⟩ + |1…1⟩)` in the two-support single-vector
+form the corner reducer consumes. -/
+lemma ghzN_eq_smul (n : ℕ) (hn : 0 < n) :
+    ghzN n = ((Real.sqrt 2 : ℂ)⁻¹) •
+      (EuclideanSpace.single (0 : Fin (2 ^ n)) (1 : ℂ)
+        + EuclideanSpace.single (topIdx n) (1 : ℂ)) := by
+  have hne : topIdx n ≠ (0 : Fin (2 ^ n)) := topIdx_ne_zero n hn.ne'
+  ext i
+  rw [ghzN_apply]
+  simp only [PiLp.smul_apply, PiLp.add_apply, EuclideanSpace.single_apply, smul_eq_mul]
+  by_cases h0 : i = 0
+  · subst h0
+    rw [if_pos (Or.inl rfl), if_pos rfl, if_neg (Ne.symm hne)]
+    ring
+  · by_cases ht : i = topIdx n
+    · subst ht
+      rw [if_pos (Or.inr rfl), if_neg h0, if_pos rfl]
+      ring
+    · rw [if_neg (not_or.mpr ⟨h0, ht⟩), if_neg h0, if_neg ht]
+      ring
+
+/-- Coordinate readout of `toEuclideanLin`: `⟨e_i, (toEuclideanLin M) e_j⟩ = M i j`. -/
+lemma toELin_single_coord {N : ℕ} (M : Matrix (Fin N) (Fin N) ℂ) (i j : Fin N) :
+    inner ℂ (EuclideanSpace.single i (1 : ℂ))
+        (Matrix.toEuclideanLin M (EuclideanSpace.single j (1 : ℂ))) = M i j := by
+  rw [EuclideanSpace.inner_single_left, map_one, one_mul, Matrix.ofLp_toEuclideanLin]
+  simp only [Matrix.mulVec, dotProduct, EuclideanSpace.single_apply, mul_ite, mul_one, mul_zero]
+  rw [Finset.sum_ite_eq' Finset.univ j (fun k => M i k)]
+  simp
+
+/-- **The two-corner reducer for GHZ_n.** For any `Fin (2^n)`-indexed matrix `M`,
+`⟨GHZ_n | M | GHZ_n⟩` reduces to a half-sum over the four corner entries at the two
+all-equal indices `0` (all zeros) and `topIdx n` (all ones). A genuine Hilbert
+computation: GHZ_n is supported on exactly `{0, topIdx n}`, each with amplitude
+`(√2)⁻¹`, so the double sum collapses to the four corner terms, each carrying
+`((√2)⁻¹)² = 1/2`. The `Fin (2^n)` analogue of `Empirical.GHZ.ghz_expectation_formula`
+and `phiPlus_expectation_formula`. -/
+theorem ghzN_expectation_corner (n : ℕ) (hn : 0 < n)
+    (M : Matrix (Fin (2 ^ n)) (Fin (2 ^ n)) ℂ) :
+    inner ℂ (ghzN n) (Matrix.toEuclideanLin M (ghzN n))
+      = (1 / 2 : ℂ) *
+          (M 0 0 + M 0 (topIdx n) + M (topIdx n) 0 + M (topIdx n) (topIdx n)) := by
+  rw [ghzN_eq_smul n hn, map_smul, inner_smul_left, inner_smul_right]
+  simp only [map_add, inner_add_left, inner_add_right, toELin_single_coord]
+  rw [show (starRingEnd ℂ) ((Real.sqrt 2 : ℂ)⁻¹) = ((Real.sqrt 2 : ℂ)⁻¹) from by
+        rw [starRingEnd_apply, star_inv₀, Complex.star_def, Complex.conj_ofReal],
+      ← mul_assoc, inv_sqrt_two_sq]
+  ring
+
+/-! #### The tensor-Pauli operator on the bit-decomposition basis -/
+
+/-- The bit decomposition `Fin (2^n) → (Fin n → Fin 2)` (`finFunctionFinEquiv.symm`);
+`bitDecomp n k i` is the `i`-th qubit value of the computational index `k`. -/
+def bitDecomp (n : ℕ) (k : Fin (2 ^ n)) : Fin n → Fin 2 := finFunctionFinEquiv.symm k
+
+lemma finFunctionFinEquiv_allZero (n : ℕ) :
+    finFunctionFinEquiv (fun _ : Fin n => (0 : Fin 2)) = 0 := by
+  apply Fin.ext
+  rw [finFunctionFinEquiv_apply]
+  simp
+
+lemma finFunctionFinEquiv_allOne (n : ℕ) :
+    finFunctionFinEquiv (fun _ : Fin n => (1 : Fin 2)) = topIdx n := by
+  apply Fin.ext
+  rw [finFunctionFinEquiv_apply]
+  simp only [Fin.val_one, one_mul]
+  rw [sum_two_pow_fin]
+  rfl
+
+/-- The all-zeros index bit-decomposes to the all-zeros qubit string. -/
+lemma bitDecomp_zero_apply (n : ℕ) (i : Fin n) : bitDecomp n 0 i = 0 := by
+  rw [bitDecomp, ← finFunctionFinEquiv_allZero n, Equiv.symm_apply_apply]
+
+/-- The all-ones index `topIdx n` bit-decomposes to the all-ones qubit string. -/
+lemma bitDecomp_top_apply (n : ℕ) (i : Fin n) : bitDecomp n (topIdx n) i = 1 := by
+  rw [bitDecomp, ← finFunctionFinEquiv_allOne n, Equiv.symm_apply_apply]
+
+/-- **The `n`-fold tensor-Pauli operator** `σ·f₁ ⊗ … ⊗ σ·f_n` on `Fin (2^n)`, via the
+standard product-of-factor-entries Kronecker formula on the bit-decomposition basis:
+its `(r, c)` entry is `∏ i, (σ·f i)_{bit r i, bit c i}`. -/
+noncomputable def tensorPauliFin (n : ℕ) (f : Fin n → DetectorSetting) :
+    Matrix (Fin (2 ^ n)) (Fin (2 ^ n)) ℂ :=
+  Matrix.of fun r c => ∏ i : Fin n, (pauliDot (f i)) (bitDecomp n r i) (bitDecomp n c i)
+
+lemma tensorPauliFin_apply (n : ℕ) (f : Fin n → DetectorSetting) (r c : Fin (2 ^ n)) :
+    tensorPauliFin n f r c
+      = ∏ i : Fin n, (pauliDot (f i)) (bitDecomp n r i) (bitDecomp n c i) := rfl
+
+/-! #### The single-qubit axis assignment and its Pauli entries -/
+
+/-- The measurement axis as a `DetectorSetting`: `x ↦ chshA = (1,0,0)` (`σ_x`),
+`y ↦ chshA' = (0,1,0)` (`σ_y`). -/
+noncomputable def axisVec : PauliAxis → DetectorSetting
+  | PauliAxis.x => chshA
+  | PauliAxis.y => chshA'
+
+/-- `(σ·axisVec ax)_{0,0} = a_z = 0` (both `σ_x`, `σ_y` are traceless, `z`-free). -/
+lemma pauliDot_axisVec_00 (ax : PauliAxis) : pauliDot (axisVec ax) 0 0 = 0 := by
+  cases ax <;>
+    simp only [axisVec, pauliDot_apply_00, chshA_vec_ofLp_2, chshA'_vec_ofLp_2,
+      Complex.ofReal_zero]
+
+/-- `(σ·axisVec ax)_{1,1} = −a_z = 0`. -/
+lemma pauliDot_axisVec_11 (ax : PauliAxis) : pauliDot (axisVec ax) 1 1 = 0 := by
+  cases ax <;>
+    simp only [axisVec, pauliDot_apply_11, chshA_vec_ofLp_2, chshA'_vec_ofLp_2,
+      Complex.ofReal_zero, neg_zero]
+
+/-- The `(0,1)` corner entry: `1` for `X`, `−i` for `Y` (`a_x − i a_y`). -/
+lemma pauliDot_axisVec_01 (ax : PauliAxis) :
+    pauliDot (axisVec ax) 0 1 = if ax = PauliAxis.y then -Complex.I else 1 := by
+  cases ax
+  · rw [if_neg (by decide)]
+    show pauliDot chshA 0 1 = 1
+    rw [pauliDot_apply_01]
+    simp only [chshA_vec_ofLp_0, chshA_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
+      mul_zero, sub_zero]
+  · rw [if_pos rfl]
+    show pauliDot chshA' 0 1 = -Complex.I
+    rw [pauliDot_apply_01]
+    simp only [chshA'_vec_ofLp_0, chshA'_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
+      mul_one, zero_sub]
+
+/-- The `(1,0)` corner entry: `1` for `X`, `i` for `Y` (`a_x + i a_y`). -/
+lemma pauliDot_axisVec_10 (ax : PauliAxis) :
+    pauliDot (axisVec ax) 1 0 = if ax = PauliAxis.y then Complex.I else 1 := by
+  cases ax
+  · rw [if_neg (by decide)]
+    show pauliDot chshA 1 0 = 1
+    rw [pauliDot_apply_10]
+    simp only [chshA_vec_ofLp_0, chshA_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
+      mul_zero, add_zero]
+  · rw [if_pos rfl]
+    show pauliDot chshA' 1 0 = Complex.I
+    rw [pauliDot_apply_10]
+    simp only [chshA'_vec_ofLp_0, chshA'_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
+      mul_one, zero_add]
+
+/-! #### The GHZ_n tensor-Pauli expectation and the four Mermin correlations -/
+
+/-- **The GHZ_n tensor-Pauli expectation** for a context `c : Fin n → PauliAxis`:
+`⟨GHZ_n | σ·(axisVec (c 0)) ⊗ … ⊗ σ·(axisVec (c (n−1))) | GHZ_n⟩`. -/
+noncomputable def ghzNPauliExpectation (n : ℕ) (c : Fin n → PauliAxis) : ℂ :=
+  inner ℂ (ghzN n)
+    (Matrix.toEuclideanLin (tensorPauliFin n (fun i => axisVec (c i))) (ghzN n))
+
+/-- **The GHZ_n expectation reduces to the two off-diagonal corner products.** For
+every context of `X`/`Y` axes and every `n ≥ 1`,
+`⟨GHZ_n | ⊗σ | GHZ_n⟩ = (1/2)(∏_i (σ·axisVec (c i))_{0,1} + ∏_i (σ·axisVec (c i))_{1,0})`.
+The `(0,0)` and `(1,1)` corner products vanish (each factor `= a_z = 0`); the
+surviving two are the `(0,1)`/`(1,0)` products. Genuine Hilbert computation via
+`ghzN_expectation_corner`. -/
+theorem ghzNPauliExpectation_eq (n : ℕ) (hn : 0 < n) (c : Fin n → PauliAxis) :
+    ghzNPauliExpectation n c
+      = (1 / 2 : ℂ) *
+          ((∏ i, pauliDot (axisVec (c i)) 0 1) + (∏ i, pauliDot (axisVec (c i)) 1 0)) := by
+  unfold ghzNPauliExpectation
+  rw [ghzN_expectation_corner n hn, tensorPauliFin_apply, tensorPauliFin_apply,
+      tensorPauliFin_apply, tensorPauliFin_apply]
+  simp only [bitDecomp_zero_apply, bitDecomp_top_apply]
+  rw [show (∏ i, pauliDot (axisVec (c i)) 0 0) = 0 from
+        Finset.prod_eq_zero (Finset.mem_univ (⟨0, hn⟩ : Fin n)) (pauliDot_axisVec_00 _),
+      show (∏ i, pauliDot (axisVec (c i)) 1 1) = 0 from
+        Finset.prod_eq_zero (Finset.mem_univ (⟨0, hn⟩ : Fin n)) (pauliDot_axisVec_11 _)]
+  ring
+
+/-- **Spectator collapse.** For a context `(a on party 0, b on party 1, c on party 2,
+X on every spectator party ≥ 3)` and any factor function `F` with `F x = 1`, the
+full-`n` product collapses to the three essential parties: `∏_i F(ghzNCtx a b c n i)
+= F a · F b · F c`, for every `n ≥ 3`. This is what makes the `n − 3` `X`-spectators
+contribute `+1` and the general-`n` correlation match the three-party Mermin value. -/
+lemma prod_ghzNCtx {F : PauliAxis → ℂ} (hF : F PauliAxis.x = 1)
+    (a b c : PauliAxis) (n : ℕ) (hn : 3 ≤ n) :
+    ∏ i : Fin n, F (ghzNCtx a b c n i) = F a * F b * F c := by
+  have hsub : ({⟨0, by omega⟩, ⟨1, by omega⟩, ⟨2, by omega⟩} : Finset (Fin n)) ⊆
+      Finset.univ := Finset.subset_univ _
+  have hrest : ∀ x ∈ (Finset.univ : Finset (Fin n)),
+      x ∉ ({⟨0, by omega⟩, ⟨1, by omega⟩, ⟨2, by omega⟩} : Finset (Fin n)) →
+      F (ghzNCtx a b c n x) = 1 := by
+    intro x _ hx
+    simp only [Finset.mem_insert, Finset.mem_singleton, not_or] at hx
+    obtain ⟨hx0, hx1, hx2⟩ := hx
+    have hv0 : x.val ≠ 0 := fun h => hx0 (Fin.ext (by simpa using h))
+    have hv1 : x.val ≠ 1 := fun h => hx1 (Fin.ext (by simpa using h))
+    have hv2 : x.val ≠ 2 := fun h => hx2 (Fin.ext (by simpa using h))
+    unfold ghzNCtx
+    rw [if_neg hv0, if_neg hv1, if_neg hv2]
+    exact hF
+  rw [← Finset.prod_subset hsub hrest]
+  rw [Finset.prod_insert (by simp [Fin.ext_iff]), Finset.prod_insert (by simp [Fin.ext_iff]),
+    Finset.prod_singleton]
+  have e0 : ghzNCtx a b c n ⟨0, by omega⟩ = a := by simp [ghzNCtx]
+  have e1 : ghzNCtx a b c n ⟨1, by omega⟩ = b := by simp [ghzNCtx]
+  have e2 : ghzNCtx a b c n ⟨2, by omega⟩ = c := by simp [ghzNCtx]
+  rw [e0, e1, e2]; ring
+
+/-- **The GHZ_n Mermin correlation (general `n`).** For a Mermin context `(a, b, c)`
+with `X`-spectators, `⟨GHZ_n | ⊗σ | GHZ_n⟩ = (1/2)(g₀₁ a · g₀₁ b · g₀₁ c
++ g₁₀ a · g₁₀ b · g₁₀ c)`, where `g₀₁ = (1, −i)` on `(X, Y)` and `g₁₀ = (1, i)`.
+Derived from `ghzNPauliExpectation_eq` + `prod_ghzNCtx`, every `n ≥ 3`. -/
+theorem ghzN_mermin_correlation (n : ℕ) (hn : 3 ≤ n) (a b c : PauliAxis) :
+    ghzNPauliExpectation n (ghzNCtx a b c n)
+      = (1 / 2 : ℂ) *
+          ((if a = PauliAxis.y then -Complex.I else 1) *
+             (if b = PauliAxis.y then -Complex.I else 1) *
+             (if c = PauliAxis.y then -Complex.I else 1)
+           + (if a = PauliAxis.y then Complex.I else 1) *
+             (if b = PauliAxis.y then Complex.I else 1) *
+             (if c = PauliAxis.y then Complex.I else 1)) := by
+  rw [ghzNPauliExpectation_eq n (by omega) (ghzNCtx a b c n)]
+  congr 1
+  congr 1
+  · rw [Finset.prod_congr rfl (fun i _ => pauliDot_axisVec_01 (ghzNCtx a b c n i))]
+    exact prod_ghzNCtx (F := fun ax => if ax = PauliAxis.y then -Complex.I else 1)
+      (by simp) a b c n hn
+  · rw [Finset.prod_congr rfl (fun i _ => pauliDot_axisVec_10 (ghzNCtx a b c n i))]
+    exact prod_ghzNCtx (F := fun ax => if ax = PauliAxis.y then Complex.I else 1)
+      (by simp) a b c n hn
+
+/-- **GHZ_n `⟨XXX…X⟩ = +1`** (all-`X` context, general `n ≥ 3`). Mermin identity #1,
+GHZ_n's own tensor-Pauli correlation. -/
+theorem ghzN_correlation_allX (n : ℕ) (hn : 3 ≤ n) :
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.x PauliAxis.x n) = 1 := by
+  rw [ghzN_mermin_correlation n hn]
+  simp only [if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  norm_num
+
+/-- **GHZ_n `⟨XYY…⟩ = −1`** (twisted `X,Y,Y` context, `X`-spectators, general `n ≥ 3`).
+Mermin identity #2; `n_y = 2`, `cos(π) = −1`. -/
+theorem ghzN_correlation_xyy (n : ℕ) (hn : 3 ≤ n) :
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.y PauliAxis.y n) = -1 := by
+  rw [ghzN_mermin_correlation n hn]
+  simp only [reduceIte, if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  linear_combination Complex.I_mul_I
+
+/-- **GHZ_n `⟨YXY…⟩ = −1`** (twisted `Y,X,Y` context, general `n ≥ 3`). Mermin
+identity #3. -/
+theorem ghzN_correlation_yxy (n : ℕ) (hn : 3 ≤ n) :
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.x PauliAxis.y n) = -1 := by
+  rw [ghzN_mermin_correlation n hn]
+  simp only [reduceIte, if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  linear_combination Complex.I_mul_I
+
+/-- **GHZ_n `⟨YYX…⟩ = −1`** (twisted `Y,Y,X` context, general `n ≥ 3`). Mermin
+identity #4. -/
+theorem ghzN_correlation_yyx (n : ℕ) (hn : 3 ≤ n) :
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.y PauliAxis.x n) = -1 := by
+  rw [ghzN_mermin_correlation n hn]
+  simp only [reduceIte, if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  linear_combination Complex.I_mul_I
+
+/-- **The four GHZ_n Mermin correlations, general `n ≥ 3` (the residual-closing bundle).**
+`⟨XXX…⟩ = +1`, `⟨XYY…⟩ = −1`, `⟨YXY…⟩ = −1`, `⟨YYX…⟩ = −1` are GHZ_n's OWN
+tensor-Pauli correlations, for every `n ≥ 3` — the four ±1 targets of
+`ReproducesGHZN` / `no_lhvN_assignment_for_ghzN`. Genuine derived Hilbert
+computations, not `n = 3`-anchored. -/
+theorem ghzN_mermin_correlations (n : ℕ) (hn : 3 ≤ n) :
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.x PauliAxis.x n) = 1 ∧
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.y PauliAxis.y n) = -1 ∧
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.x PauliAxis.y n) = -1 ∧
+    ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.y PauliAxis.x n) = -1 :=
+  ⟨ghzN_correlation_allX n hn, ghzN_correlation_xyy n hn,
+   ghzN_correlation_yxy n hn, ghzN_correlation_yyx n hn⟩
+
+/-! #### Routing the forcing through GHZ_n's actual QM correlations -/
+
+/-- A product partition **reproduces GHZ_n's ACTUAL QM tensor-Pauli Mermin
+correlations**: its four factorisable full-`n` context-product expectations match
+`(ghzNPauliExpectation n …).re`, i.e. the genuine `⟨GHZ_n | ⊗σ | GHZ_n⟩`. Unlike
+`ReproducesGHZN` (bare ±1 numerals), the targets here are GHZ_n's own derived Hilbert
+correlations. -/
+def ReproducesGHZN_QM {Λ : Type*} [MeasurableSpace Λ] (n : ℕ) (μ : Measure Λ)
+    (R : Fin n → PauliAxis → Λ → ℝ) : Prop :=
+  (∫ l, ∏ i, R i (ghzNCtx PauliAxis.x PauliAxis.x PauliAxis.x n i) l ∂μ
+      = (ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.x PauliAxis.x n)).re) ∧
+  (∫ l, ∏ i, R i (ghzNCtx PauliAxis.x PauliAxis.y PauliAxis.y n i) l ∂μ
+      = (ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.y PauliAxis.y n)).re) ∧
+  (∫ l, ∏ i, R i (ghzNCtx PauliAxis.y PauliAxis.x PauliAxis.y n i) l ∂μ
+      = (ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.x PauliAxis.y n)).re) ∧
+  (∫ l, ∏ i, R i (ghzNCtx PauliAxis.y PauliAxis.y PauliAxis.x n i) l ∂μ
+      = (ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.y PauliAxis.x n)).re)
+
+/-- **The QM link (general `n ≥ 3`): the ±1 targets ARE GHZ_n's QM correlations.**
+`ReproducesGHZN_QM n μ R ↔ ReproducesGHZN n μ R`, because GHZ_n's four tensor-Pauli
+Mermin correlations are exactly `+1, −1, −1, −1` (`ghzN_mermin_correlations`). This is
+the residual closure: the abstract ±1 targets of the forcing are GHZ_n's OWN QM
+correlations, for every `n ≥ 3`, not just `n = 3`. -/
+theorem reproducesGHZN_QM_iff {Λ : Type*} [MeasurableSpace Λ] (n : ℕ) (hn : 3 ≤ n)
+    (μ : Measure Λ) (R : Fin n → PauliAxis → Λ → ℝ) :
+    ReproducesGHZN_QM n μ R ↔ ReproducesGHZN n μ R := by
+  unfold ReproducesGHZN_QM ReproducesGHZN
+  rw [ghzN_correlation_allX n hn, ghzN_correlation_xyy n hn, ghzN_correlation_yxy n hn,
+      ghzN_correlation_yyx n hn]
+  norm_num
+
+/-- **`no_product_partition_realises_ghzN_qm` (the residual-closed forcing, general
+`n ≥ 3`).** No product (setting-local, non-contextual) partition of any shared
+probability space reproduces GHZ_n's ACTUAL QM tensor-Pauli Mermin correlations
+`⟨GHZ_n | ⊗σ | GHZ_n⟩` (the `.re` values `+1, −1, −1, −1`). Routes the LF6-E forcing
+`no_product_partition_realises_ghzN` through GHZ_n's own derived QM correlations
+(`reproducesGHZN_QM_iff`), so the general-`n` GHZ_n non-locality is genuinely
+GHZ_n-specific and not `n = 3`-anchored. -/
+theorem no_product_partition_realises_ghzN_qm {Λ : Type*} [MeasurableSpace Λ]
+    (μ : Measure Λ) [IsProbabilityMeasure μ] (n : ℕ) (hn : 3 ≤ n)
+    (R : Fin n → PauliAxis → Λ → ℝ)
+    (hPP : IsProductPartitionGHZN n R) (hRep : ReproducesGHZN_QM n μ R) : False :=
+  no_product_partition_realises_ghzN μ n R hPP ((reproducesGHZN_QM_iff n hn μ R).mp hRep)
+
+end QMLink
 
 end LF6
 end CSD

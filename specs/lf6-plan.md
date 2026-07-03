@@ -343,16 +343,21 @@ general `d`) and deterministic (Mermin, general `n`) forms.
   + `no_lhv_assignment_for_ghz4` (the essentially-4-party witness YYYY/YXXY/XYXY/XXYY, every party Y≥twice,
   no spectator — genuine beyond-n=3). `ghzNDeisolation_flow_capstone (n) (hn : 3 ≤ n)` (5-conjunct).
 - HONEST scope (auditor-checked, no overclaim): the general-`n` FORCING (the ±1 no-go) is formalised for
-  all `n`, but its mechanism embeds the 3-party Mermin via `n−3` X-spectators; the QM link (that the ±1
-  targets are GHZ_n's own tensor-Pauli Mermin correlations) is formalised only at `n=3` (via `Empirical.GHZ`)
-  + the `n=4` essentially-4-party witness. Named residual: the general-`n` QM confirmation
-  `⟨GHZ_n|⊗σ_{a_i}|GHZ_n⟩ = (−1)^{#Y/2}`. Born imported (FS-volume), flow realises not derives, residue A5.
+  all `n`, its mechanism embeds the 3-party Mermin via `n−3` X-spectators. QM link CLOSED (deliverable 5,
+  2026-07-03): the ±1 targets are DERIVED to be GHZ_n's own tensor-Pauli Mermin correlations
+  `⟨GHZ_n|⊗σ_{a_i}|GHZ_n⟩` for every `n≥3` (`ghzN_mermin_correlations`, via the two-corner Hilbert reducer
+  `ghzN_expectation_corner` + the product-of-factor-entries tensor Pauli `tensorPauliFin` on the
+  bit-decomposition basis), and the forcing is routed through them (`no_product_partition_realises_ghzN_qm`
+  via `reproducesGHZN_QM_iff`), NO LONGER `n=3`-anchored to `Empirical.GHZ`. Residual sub-point: the
+  fully-general arbitrary-Pauli-tensor reducer (Z factors / arbitrary axis patterns) is not delivered, only
+  the X/Y Mermin family the forcing consumes. Born imported (FS-volume), flow realises not derives, residue A5.
 
 ### LF6 remaining (not started)
 Continuous-time Lindblad; the marginal volume-drift geometry; the CGLMP d-intrinsic step 2 (the QM-side
-`Ψ_3` violation `I_3 > 2`); the GHZ_n general-`n` QM link (LF6-E residue above); threading `Φ` through the
-concrete entangled `SectorData` (D1c). A5 emergence (deriving the entangled sector from the dynamics) is
-the downstream target that would retire the residue.
+`Ψ_3` violation `I_3 > 2`); the fully-general arbitrary-Pauli-tensor GHZ_n reducer (the X/Y Mermin family
+QM link is CLOSED, deliverable 5 above); threading `Φ` through the concrete entangled `SectorData` (D1c).
+A5 emergence (deriving the entangled sector from the dynamics) is the downstream target that would retire
+the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the

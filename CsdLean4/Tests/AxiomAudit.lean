@@ -4149,9 +4149,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- no spectator; via decide-free parity). Honest caveat: general-n forcing routes the contradiction
 -- through the 3-party paradox embedded via X-spectators (does not exhibit essential n-party
 -- entanglement beyond 3); physical regime n≥3 (targets = GHZ_n's Mermin correlations). Residual: the
--- uniform essentially-all-n-parties construction (n mod 4) + general-n GHZ_n QM tensor-Pauli
--- confirmation. Born IMPORTED not derived (DH engine); flow realises not derives. Residue A5.
+-- uniform essentially-all-n-parties construction (n mod 4). Born IMPORTED not derived (DH engine);
+-- flow realises not derives. Residue A5.
 -- Foundational triple only, no busch, no native_decide (decide not used on headlines; ghz4 via ring/norm_num).
+-- GHZ_n QM-link (deliverable 5, 2026-07-03): CLOSES the general-n QM-confirmation residual. The four ±1
+-- targets of ReproducesGHZN / no_lhvN_assignment_for_ghzN are DERIVED to be GHZ_n's OWN tensor-Pauli
+-- Mermin correlations ⟨GHZ_n|σ_{a_1}⊗…⊗σ_{a_n}|GHZ_n⟩ for every n≥3, NO LONGER n=3-anchored to
+-- Empirical.GHZ. ghzN_expectation_corner: the genuine two-corner Hilbert reducer on Fin (2^n) (GHZ_n
+-- supported on {0, topIdx n}, half-sum of four corner entries, ((√2)⁻¹)²=1/2 via the smul/single
+-- expansion + toELin_single_coord). tensorPauliFin: the n-fold tensor Pauli via the product-of-factor-
+-- entries Kronecker formula on the bit-decomposition basis (finFunctionFinEquiv). ghzN_mermin_correlations:
+-- ⟨XXX…⟩=+1, ⟨XYY…⟩=⟨YXY…⟩=⟨YYX…⟩=−1 (spectator X-factors → +1 via prod_ghzNCtx; twisted 2-Y → cos π=−1
+-- via Complex.I_mul_I). reproducesGHZN_QM_iff: ReproducesGHZN_QM ↔ ReproducesGHZN (the ±1 targets ARE the
+-- .re QM correlations). no_product_partition_realises_ghzN_qm: the LF6-E forcing ROUTED through GHZ_n's
+-- actual QM correlations, so general-n non-locality is genuinely GHZ_n-specific. Genuine derived Hilbert
+-- computation, not asserted; foundational triple only, no busch, no native_decide (decide only on the finite
+-- PauliAxis inequality PauliAxis.x ≠ PauliAxis.y). Residual sub-point: fully-general arbitrary-Pauli-tensor
+-- reducer (Z factors, arbitrary axis patterns) not delivered; only the X/Y Mermin family the forcing needs.
 /-- info: 'CSD.LF6.ghzN_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.ghzN_norm
@@ -4195,6 +4209,22 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.ghzNDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.ghzNDeisolation_flow_capstone
+
+/-- info: 'CSD.LF6.ghzN_expectation_corner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzN_expectation_corner
+
+/-- info: 'CSD.LF6.ghzN_mermin_correlations' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.ghzN_mermin_correlations
+
+/-- info: 'CSD.LF6.reproducesGHZN_QM_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.reproducesGHZN_QM_iff
+
+/-- info: 'CSD.LF6.no_product_partition_realises_ghzN_qm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_product_partition_realises_ghzN_qm
 
 -- Build 15a (Einselection, 2026-06-29): the first einselection / pointer-basis-selection
 -- result on the LF6-B decoherence machinery. decohereReduced ψ (LF6-B) is diagonal in the
