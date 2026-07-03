@@ -164,6 +164,7 @@ import CsdLean4.LF6.GHZMerminCarve
 import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
+import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting

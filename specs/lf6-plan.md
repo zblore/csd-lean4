@@ -283,10 +283,41 @@ entangled preparation (A5).
 Honest (mirrors A.3): a SEPARATE manifestly-local product flow, NOT a claim that C.2's ℤ/8 `measurementFlow`
 factors (ℤ/8 ≠ ℤ/2×ℤ/2×ℤ/2). Born imported (LF5/DH/POVM-Naimark), flow realises not derives; residue A5.
 
+### LF6-D — the general d×d maximally-entangled de-isolation flow (DONE 2026-07-03)
+`CsdLean4/LF6/MaxEntangledDeisolationFlow.lean` (namespace `CSD.LF6`), foundational-triple-only, 7
+AxiomAudit pins. The first genuinely DIMENSION-GENERAL entangled instance (the tier previously had only
+the 2×2 singlet A-tier and the 3-qubit GHZ C-tier). The bipartite maximally-entangled state
+`Ψ_d = (1/√d) ∑ᵢ |i⟩|i⟩` on `EuclideanSpace ℂ (Fin d × Fin d)`, every `d ≥ 2`.
+- `maxEntangled d` + `medWeight` (Born = `1/d` on the diagonal, `0` off); `maxEntangled_normSq_eq_weight`,
+  `sum_medWeight` (unit-norm), `maxEntangled_marginal_uniform` (reduced state `= I/d`, maximal mixedness).
+- **De-isolation flow + Born-from-volume (the LOAD-BEARING content — general-N is now genuinely general).**
+  REUSES the LF5 general-N engine at `N = d·d`: `maxEntangledDeisolation_pointer_volume` (pointer-block FS
+  volume = `medWeight`, composing LF5 `vnDilation_pointer_volume` @ N=d·d with the reindex Born identity
+  `nudgedMaxEntangled_born`), `maxEntangledDeisolation_frequency` (a.s. block freq → `medWeight`),
+  `_ne_id` (Φ≠id, `1<d·d`), `_measurePreserving`. Born = FS-volume IMPORTED from the DH engine, not
+  re-derived; the flow realises the measurement, does not derive the weights.
+- **Forced non-factorisation** (`no_product_partition_realises_maxEntangled`, all `d ≥ 2`;
+  2026-07-03 rewrite — DERIVED, maxEntangled-specific, no longer a verbatim singlet re-export): (a) the
+  sector's diagonal Born-weight marginal is uniform `1/d` (`maxEntangled_sector_marginal_uniform`); (b)
+  the `{0,1}²` Schmidt sector IS the Bell `Φ⁺` state up to `√2/√d`, coherences included
+  (`maxEntangledSector_eq_phiPlus`, full state, `d`-dependent); (c) no product partition reproduces the
+  sector's OWN `Φ⁺` correlation (`no_product_partition_realises_phiPlus`). `Φ⁺`'s two-qubit Pauli
+  correlation `⟨Φ⁺|σ·a⊗σ·b|Φ⁺⟩ = a_x b_x − a_y b_y + a_z b_z` is COMPUTED from the Hilbert space
+  (`phiPlus_pauli_correlation`, mirrors `LF3.expectation_formula`); the orthogonal `xz`-reflection
+  `reflectXZ` of Bob's axis carries `E_{Φ⁺}` to the singlet's `−a·b` (`phiPlusCorrelation_reflectXZ`), so
+  `Φ⁺` reaches the same `2√2 > 2` (LHV cap `|S| ≤ 2`, `lhvCHSH_abs_le_two`), reducing to
+  `no_product_partition_realises_singlet` on the relabeled partition. So the CHSH violation is DERIVED for
+  `Φ⁺` (not the singlet's imported by prose). Scope: forced by the CHSH-violating 2×2 `Φ⁺` sector; a full
+  general-`d` CGLMP result is NOT claimed.
+- `maxEntangledDeisolation_flow_capstone` (7-conjunct, adds sector = `Φ⁺` and the `Φ⁺` no-go). Residue
+  A5 (entangled sector posited).
+
 ### LF6 remaining (not started)
-Continuous-time Lindblad; the marginal volume-drift geometry; the wider general-N tier (general bipartite
-`d×d`; n-party GHZ_n); threading `Φ` through the concrete entangled `SectorData` (D1c). A5 emergence
-(deriving the entangled sector from the dynamics) is the downstream target that would retire the residue.
+Continuous-time Lindblad; the marginal volume-drift geometry; the rest of the general-N tier (n-party
+GHZ_n; the general-`d` CGLMP result deferred by LF6-D — the `Φ⁺↔ψ⁻` correlation-level transport is now
+done via `reflectXZ`/`phiPlus_pauli_correlation`);
+threading `Φ` through the concrete entangled `SectorData` (D1c). A5 emergence (deriving the entangled
+sector from the dynamics) is the downstream target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the

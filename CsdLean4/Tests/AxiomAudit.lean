@@ -130,6 +130,7 @@ import CsdLean4.LF6.GHZMerminCarve
 import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
+import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
 import CsdLean4.Empirical.QM.NoDeleting
@@ -4062,6 +4063,71 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.decoherence_vonNeumann_irreversibility_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decoherence_vonNeumann_irreversibility_capstone
+
+-- LF6-D (MaxEntangledDeisolationFlow, 2026-07-03): the first genuinely DIMENSION-GENERAL entangled
+-- de-isolation instance. Before this the tier had only two hand-built instances (2x2 singlet A-tier,
+-- 3-qubit GHZ C-tier); this makes "general-N" actually general — the d x d maximally-entangled state
+-- Ψ_d = (1/√d)∑ᵢ|i⟩|i⟩, every d ≥ 2. maxEntangled d + medWeight (Born = 1/d on the diagonal, 0 off);
+-- maxEntangled_normSq_eq_weight / sum_medWeight (unit-norm) / maxEntangled_marginal_uniform (the DIAGONAL
+-- Born-weight marginal is uniform 1/d — not the full ρ_A = I/d). The de-isolation flow + Born-from-volume
+-- REUSES the LF5 general-N engine at N = d·d: maxEntangledDeisolation_pointer_volume (the headline)
+-- COMPOSES LF5 vnDilation_pointer_volume @ N=d·d (pointer-block FS volume = ‖⟨eᵢ,φ⟩‖², Gleason-free,
+-- Born=volume IMPORTED from the DH/FS-volume engine) with the reindex coordinate-Born identity
+-- nudgedMaxEntangled_born; maxEntangledDeisolation_frequency (a.s. block frequencies → medWeight);
+-- ne_id (Φ≠id, 1<d·d) + measurePreserving. This is the LOAD-BEARING content: the LF6 de-isolation
+-- dynamics + Born-from-volume is now genuinely DIMENSION-GENERAL, not tied to 2x2/GHZ. Forced
+-- non-factorisation (no_product_partition_realises_maxEntangled, 2026-07-03 rewrite): DERIVED and
+-- maxEntangled-specific, no longer a verbatim singlet re-export. (b) maxEntangledSector_eq_phiPlus:
+-- Ψ_d's {0,1}² Schmidt sector IS the Bell Φ⁺ state up to √2/√d (FULL state, coherences included,
+-- d-dependent). phiPlus_pauli_correlation: ⟨Φ⁺|σ·a⊗σ·b|Φ⁺⟩ = a_x b_x − a_y b_y + a_z b_z, COMPUTED
+-- from the Hilbert space (mirrors LF3.expectation_formula on Φ⁺'s (0,0)/(1,1) support). (c)
+-- no_product_partition_realises_phiPlus: no product partition reproduces Φ⁺'s OWN correlation — the
+-- orthogonal xz-reflection reflectXZ of Bob's axis carries E_{Φ⁺} to the singlet's −a·b
+-- (phiPlusCorrelation_reflectXZ), so Φ⁺ reaches the same 2√2 > 2 (LHV cap |S|≤2, lhvCHSH_abs_le_two),
+-- reducing to no_product_partition_realises_singlet on the relabeled partition. So the CHSH violation is
+-- DERIVED for Φ⁺ (not the singlet's imported by prose). Scope: forced by the CHSH-violating 2x2 Φ⁺
+-- sector; a full general-d CGLMP result is NOT claimed. Born IMPORTED not derived (DH engine); flow
+-- realises not derives. Residue A5 (entangled sector posited). Foundational triple only, no busch, no
+-- native_decide.
+/-- info: 'CSD.LF6.maxEntangledDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledDeisolation_pointer_volume
+
+/-- info: 'CSD.LF6.maxEntangledDeisolation_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledDeisolation_frequency
+
+/-- info: 'CSD.LF6.maxEntangledDeisolation_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledDeisolation_ne_id
+
+/-- info: 'CSD.LF6.maxEntangledDeisolation_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledDeisolation_measurePreserving
+
+/-- info: 'CSD.LF6.maxEntangled_sector_marginal_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangled_sector_marginal_uniform
+
+/-- info: 'CSD.LF6.maxEntangledSector_eq_phiPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledSector_eq_phiPlus
+
+/-- info: 'CSD.LF6.phiPlus_pauli_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.phiPlus_pauli_correlation
+
+/-- info: 'CSD.LF6.no_product_partition_realises_phiPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_product_partition_realises_phiPlus
+
+/-- info: 'CSD.LF6.no_product_partition_realises_maxEntangled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_product_partition_realises_maxEntangled
+
+/-- info: 'CSD.LF6.maxEntangledDeisolation_flow_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledDeisolation_flow_capstone
 
 -- Build 15a (Einselection, 2026-06-29): the first einselection / pointer-basis-selection
 -- result on the LF6-B decoherence machinery. decohereReduced ψ (LF6-B) is diagonal in the

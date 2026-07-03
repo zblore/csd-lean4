@@ -721,6 +721,21 @@ SingletDeisolationFlow.lean— singletDeisolationFlow: a genuine Φ ≠ id de-is
 LocalDeisolationFlow.lean  — the local product de-isolation flow (LF6-A.3)
 Decoherence.lean           — LF6-B (D1b): the decoherence / partial-trace tier;
                              purity-drop / irreversibility witness on the reduced state
+MaxEntangledDeisolationFlow.lean — LF6-D (2026-07-03): the first genuinely
+                             DIMENSION-GENERAL entangled instance. The d×d
+                             maximally-entangled state Ψ_d = (1/√d)∑ᵢ|i⟩|i⟩ (all
+                             d ≥ 2): maxEntangled/medWeight/marginal I/d; the
+                             de-isolation flow + Born-from-volume REUSES the LF5
+                             general-N engine at N=d·d (maxEntangledDeisolation_
+                             pointer_volume / _frequency / _ne_id / _measure-
+                             Preserving) — the load-bearing "general-N is now
+                             general" content; forced non-factorisation
+                             (no_product_partition_realises_maxEntangled) via the
+                             CHSH-violating 2×2 maximally-entangled Schmidt sector
+                             (maxEntangled_sector_marginal_uniform), routed
+                             through A.1 verbatim (Bell-forced). Honest residual:
+                             the symmetric-sector Φ⁺↔ψ⁻ transport not recomputed;
+                             CGLMP not claimed. Born imported; residue A5
 ```
 
 **LF6 honest scope.** Single-instance (the singlet) entangled landings: the
