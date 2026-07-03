@@ -9,6 +9,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
+import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.Mathlib.QuantumInfo.Stinespring
 import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels

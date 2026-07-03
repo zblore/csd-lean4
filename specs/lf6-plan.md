@@ -289,7 +289,8 @@ AxiomAudit pins. The first genuinely DIMENSION-GENERAL entangled instance (the t
 the 2×2 singlet A-tier and the 3-qubit GHZ C-tier). The bipartite maximally-entangled state
 `Ψ_d = (1/√d) ∑ᵢ |i⟩|i⟩` on `EuclideanSpace ℂ (Fin d × Fin d)`, every `d ≥ 2`.
 - `maxEntangled d` + `medWeight` (Born = `1/d` on the diagonal, `0` off); `maxEntangled_normSq_eq_weight`,
-  `sum_medWeight` (unit-norm), `maxEntangled_marginal_uniform` (reduced state `= I/d`, maximal mixedness).
+  `sum_medWeight` (unit-norm), `maxEntangled_marginal_uniform` (the diagonal Born-weight marginal is
+  uniform `1/d`; this does not by itself establish `ρ_A = I/d`, which needs off-diagonal vanishing).
 - **De-isolation flow + Born-from-volume (the LOAD-BEARING content — general-N is now genuinely general).**
   REUSES the LF5 general-N engine at `N = d·d`: `maxEntangledDeisolation_pointer_volume` (pointer-block FS
   volume = `medWeight`, composing LF5 `vnDilation_pointer_volume` @ N=d·d with the reindex Born identity
@@ -312,12 +313,24 @@ the 2×2 singlet A-tier and the 3-qubit GHZ C-tier). The bipartite maximally-ent
 - `maxEntangledDeisolation_flow_capstone` (7-conjunct, adds sector = `Φ⁺` and the `Φ⁺` no-go). Residue
   A5 (entangled sector posited).
 
+### CGLMP infrastructure (d-intrinsic route, step 1 DONE 2026-07-03)
+`CsdLean4/Mathlib/Probability/CGLMP.lean` (Cat-1, `ProbabilityTheory.CGLMP`, CSD-free), auditor-SOUND,
+foundational-triple. The qudit Bell infrastructure toward making LF6-D's non-factorisation genuinely
+`d`-intrinsic (rather than routed through the 2×2 `Φ⁺` sector): the genuine standard CGLMP functional
+`I_d` (8-term grouping, coefficients `1 − 2k/(d−1)`, mod-`d` outcome relations; tightness-certified so
+the classical bound is exactly 2), the general-`d` deterministic reduction (`cglmpLHV_eq_integral` +
+`cglmpLHV_le_of_det_le`, the LHV → finite-optimisation convexity bridge), and the LHV bound `I_d ≤ 2`
+proved for `d = 2, 3, 4` via kernel `decide` on the division-cleared integer functional `scaledDetZ ≤
+2(d−1)`. Named residual: the general-`d` numeric bound (the CGLMP counting argument). **Step 2 (pending):
+the QM-side violation `I_3 > 2` on the maximally-entangled qutrit `Ψ_3` (≈ 2.873), contradicting
+`cglmp_lhv_bound_three`, upgrading `no_product_partition_realises_maxEntangled` from the 2×2-sector
+routing to genuinely `d=3`-intrinsic forcing.**
+
 ### LF6 remaining (not started)
 Continuous-time Lindblad; the marginal volume-drift geometry; the rest of the general-N tier (n-party
-GHZ_n; the general-`d` CGLMP result deferred by LF6-D — the `Φ⁺↔ψ⁻` correlation-level transport is now
-done via `reflectXZ`/`phiPlus_pauli_correlation`);
-threading `Φ` through the concrete entangled `SectorData` (D1c). A5 emergence (deriving the entangled
-sector from the dynamics) is the downstream target that would retire the residue.
+GHZ_n [queued next]; the CGLMP d-intrinsic step 2 above); threading `Φ` through the concrete entangled
+`SectorData` (D1c). A5 emergence (deriving the entangled sector from the dynamics) is the downstream
+target that would retire the residue.
 
 ## Honest posture (carried into each file)
 LF6 realises the singlet on a deterministic substrate and locates the non-locality precisely (in the

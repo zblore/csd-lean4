@@ -222,6 +222,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+import CsdLean4.Mathlib.Probability.CGLMP
 
 /-!
 # Axiom regression suite
@@ -6149,5 +6150,37 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_classical_vs_quantum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_classical_vs_quantum
+
+-- CGLMP qudit Bell inequality (Cat-1, Mathlib/Probability/CGLMP.lean): the
+-- general-d deterministic reduction (LHV = mixture of product strategies) + the
+-- LHV-to-finite-optimisation bound, and the numeric CGLMP LHV bound I_d <= 2 for
+-- d = 2, 3, 4 (finite check via decide on the division-cleared integer functional).
+-- All foundational-triple-only. The general-d numeric bound is the named residual.
+
+/-- info: 'ProbabilityTheory.CGLMP.cglmpLHV_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.cglmpLHV_eq_integral
+
+/-- info: 'ProbabilityTheory.CGLMP.cglmpLHV_le_of_det_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.cglmpLHV_le_of_det_le
+
+/-- info: 'ProbabilityTheory.CGLMP.cglmp_lhv_bound_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.cglmp_lhv_bound_three
+
+/-- info: 'ProbabilityTheory.CGLMP.cglmp_lhv_bound_four' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.cglmp_lhv_bound_four
+
+-- Tightness: the LHV bound is EXACTLY 2 (achieved), not loose -- guards the
+-- bound-is-tight claim against future decide / ZMod churn.
+/-- info: 'ProbabilityTheory.CGLMP.scaledDetZ_three_tight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.scaledDetZ_three_tight
+
+/-- info: 'ProbabilityTheory.CGLMP.scaledDetZ_four_tight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.scaledDetZ_four_tight
 
 end CSD.Tests.AxiomAudit
