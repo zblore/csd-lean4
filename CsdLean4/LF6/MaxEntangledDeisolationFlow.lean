@@ -65,11 +65,13 @@ computed maximally-entangled Born weights `medWeight`.
   (`lhvCHSH_abs_le_two`). So `no_product_partition_realises_maxEntangled` is
   Bell-forced *and* maxEntangled-specific (the `Φ⁺` correlation is derived and
   identified with the sector, not the singlet's `−a·b` imported by prose). Scope:
-  non-factorisation forced by the CHSH-violating 2x2 `Φ⁺` sector. For `d = 3` this
-  is now superseded by the genuinely `d`-intrinsic CGLMP violation of `Ψ_3`
-  (`CGLMPQutrit.no_lhv_realises_maxEntangled_cglmp`, `cglmp 3 pQM = (12+8√3)/9 > 2`,
-  computed from `Ψ_3`'s actual Born probabilities); the general-`d` (`d ≥ 4`) CGLMP
-  result remains the residual.
+  non-factorisation forced by the CHSH-violating 2x2 `Φ⁺` sector. This is now
+  superseded for **every** `d ≥ 2` by the genuinely `d`-intrinsic CGLMP violation of
+  `Ψ_d` (`CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d`,
+  `CGLMPQudit.cglmp_maxEntangled_qudit_gt_two`: `cglmp d pQM > 2` for all `d ≥ 2`,
+  computed from `Ψ_d`'s actual Born probabilities via the Dirichlet-kernel closed
+  form), with `d = 3` (`cglmp 3 pQM = (12+8√3)/9`) the concrete qutrit anchor. The
+  general-`d` CGLMP result is now closed.
 - **Residue: A5.** The entangled sector / preparation region is posited, not
   derived (A5 reduces to D1); the typicality law on `Σ'` is the Fubini-Study
   measure (A5).
@@ -588,10 +590,12 @@ and (ii) *identified* with `Ψ_d`'s sector by (b). The CHSH violation is genuine
 the singlet's `−a·b` (`phiPlusCorrelation_reflectXZ`), so `Φ⁺` violates CHSH at the
 same `2√2 > 2`. The non-factorisation is thus Bell-forced *and* maxEntangled-specific.
 
-Scope: non-factorisation forced by the CHSH-violating 2x2 `Φ⁺` sector. For `d = 3`
-this is superseded by the genuinely `d`-intrinsic qutrit CGLMP violation
-(`CGLMPQutrit.no_lhv_realises_maxEntangled_cglmp`); the general-`d` (`d ≥ 4`) CGLMP
-result remains the residual. Residue: A5 (the entangled sector posited). -/
+Scope: non-factorisation forced by the CHSH-violating 2x2 `Φ⁺` sector. This is
+superseded for **every** `d ≥ 2` by the genuinely `d`-intrinsic CGLMP violation
+(`CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d`,
+`CGLMPQudit.cglmp_maxEntangled_qudit_gt_two`), with `d = 3`
+(`CGLMPQutrit.cglmp_maxEntangled_qutrit_gt_two`) the concrete qutrit anchor; the
+general-`d` CGLMP result is now closed. Residue: A5 (the entangled sector posited). -/
 theorem no_product_partition_realises_maxEntangled (d : ℕ) (hd : 2 ≤ d) :
     -- (a) the sector diagonal Born-weight marginal is uniform (derived, general d)
     (∀ i : Fin 2, ∑ j : Fin 2,

@@ -334,8 +334,24 @@ roots-of-unity geometric sum `‖1+w+w²‖²=3+4cosφ+2cos2φ` (`normSq_geom`) 
 half-integer setting violates, those give exactly 2). The `d`-intrinsic no-go
 `no_lhv_realises_maxEntangled_cglmp`: any LHV reproducing `pQM` gives `cglmpLHV = cglmp 3 pQM > 2`,
 contradicting `cglmp_lhv_bound_three`. Supersedes the 2×2 `Φ⁺` CHSH routing of
-`no_product_partition_realises_maxEntangled` for `d=3` (that theorem untouched; additive). Residual: the
-general-`d` (`d ≥ 4`) CGLMP violation for `Ψ_d`.
+`no_product_partition_realises_maxEntangled` for `d=3` (that theorem untouched; additive).
+
+**Step 3 (general `d`) DONE 2026-07-04** (`CsdLean4/LF6/CGLMPQudit.lean`, namespace `CSD.LF6.CGLMPQudit`,
+foundational-triple, auditor pending): the qutrit violation extended to `Ψ_d = maxEntangled d` for
+EVERY `d ≥ 2`, closing the statistical non-locality axis at FULL dimensional generality. The Born table
+is genuine (`bornPair x y k l = ‖⟨outcome_{k,l}, maxEntangled d⟩‖²`); `pQM_closed` DERIVES the standard
+maximally-entangled closed form `pQM x y c = 1/(2 d² sin²(π(c.val+δ)/d))` via the `d`-th-roots-of-unity
+Dirichlet / Fejér kernel `dirichlet_kernel` (`‖∑_{j<d} e^{ijφ}‖² = sin²(dφ/2)/sin²(φ/2)`, the general-`d`
+analogue of the qutrit `normSq_geom`), the quarter-integer numerator `sin²(π(m+δ))=1/2`, and the diagonal
+`Ψ_d` contraction. `cglmp_maxEntangled_qudit_closed`: the full CGLMP value as
+`∑_{k<⌊d/2⌋}(1−2k/(d−1))·(2/d²)(csc²(π(k+1/4)/d)−csc²(π(k+3/4)/d))`. `cglmp_maxEntangled_qudit_gt_two
+(hd:2≤d): cglmp d pQM > 2` is a REAL analytic inequality for ALL `d ≥ 2` (NOT `decide` over finite `d`,
+NOT axiomatised): every bracket term nonneg (sin-monotonicity) + every coefficient nonneg ⟹ the sum
+dominates its `k=0` term, and that term alone is `≥ 32/π²−8/9 > 2` uniformly in `d` (`sin x ≤ x` on the
+`π/(4d)` arm; Jordan `sin x ≥ 2x/π` from `strictConcaveOn_sin_Icc` on the `3π/(4d)` arm; `π < 3.15`). The
+general-`d` Bell force `no_lhv_realises_maxEntangled_cglmp_d`: any LHV reproducing `pQM` gives
+`cglmpLHV = cglmp d pQM > 2`, contradicting `cglmp_lhv_bound` (`I_d ≤ 2`, all `d`). The `d=3` qutrit and
+the CGLMP infra headlines are untouched (additive). **The general-`d` CGLMP violation is now CLOSED.**
 
 ### LF6-E — the n-party GHZ_n deterministic (Mermin) tier (DONE 2026-07-03)
 `CsdLean4/LF6/GHZnDeisolationFlow.lean` (namespace `CSD.LF6`), auditor-SOUND, foundational-triple. The
@@ -364,10 +380,10 @@ general `d`) and deterministic (Mermin, general `n`) forms.
   the X/Y Mermin family the forcing consumes. Born imported (FS-volume), flow realises not derives, residue A5.
 
 ### LF6 remaining (not started)
-Continuous-time Lindblad; the marginal volume-drift geometry; the general-`d` (`d ≥ 4`) CGLMP violation
-for `Ψ_d` (the `d=3` qutrit case is CLOSED, step 2 above); the fully-general arbitrary-Pauli-tensor GHZ_n
-reducer (the X/Y Mermin family QM link is CLOSED, deliverable 5 above); threading `Φ` through the concrete
-entangled `SectorData` (D1c).
+Continuous-time Lindblad; the marginal volume-drift geometry; the fully-general arbitrary-Pauli-tensor
+GHZ_n reducer (the X/Y Mermin family QM link is CLOSED, deliverable 5 above); threading `Φ` through the
+concrete entangled `SectorData` (D1c). (The general-`d` CGLMP violation for `Ψ_d` is now CLOSED — step 3
+above; the statistical non-locality axis is closed at full dimensional generality.)
 A5 emergence (deriving the entangled sector from the dynamics) is the downstream target that would retire
 the residue.
 

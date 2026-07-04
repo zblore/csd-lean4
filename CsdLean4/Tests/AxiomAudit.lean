@@ -133,6 +133,7 @@ import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.LF6.CGLMPQutrit
+import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.GHZnDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -4159,6 +4160,42 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.CGLMPQutrit.no_lhv_realises_maxEntangled_cglmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.CGLMPQutrit.no_lhv_realises_maxEntangled_cglmp
+
+-- LF6-D QM side GENERAL-d (CGLMPQudit, 2026-07-04): the CGLMP violation for the maximally-entangled
+-- qudit Ψ_d = maxEntangled d extended to EVERY d ≥ 2, closing the statistical non-locality axis at
+-- full dimensional generality (the d=3 qutrit result above is untouched; this is additive). The Born
+-- table is GENUINE: bornPair x y k l = ‖⟨outcome_{k,l}, maxEntangled d⟩‖² (squared inner product with
+-- Ψ_d), and pQM_closed derives the standard maximally-entangled closed form
+-- pQM x y c = 1/(2 d² sin²(π(c.val+δ)/d)) via the d-th-roots-of-unity Dirichlet/Fejér kernel
+-- (dirichlet_kernel: ‖∑_{j<d} e^{ijφ}‖² = sin²(dφ/2)/sin²(φ/2), the general-d analogue of the qutrit
+-- normSq_geom), the quarter-integer numerator sin²(π(m+δ))=1/2, and the diagonal Ψ_d contraction. The
+-- cglmp value is the closed-form sum cglmp_maxEntangled_qudit_closed = ∑_{k<⌊d/2⌋}(1−2k/(d−1))·
+-- (2/d²)(csc²(π(k+1/4)/d)−csc²(π(k+3/4)/d)). cglmp_maxEntangled_qudit_gt_two (hd:2≤d): cglmp d pQM > 2
+-- is a REAL analytic inequality for ALL d ≥ 2 (NOT decide over finite d, NOT axiomatised): every
+-- bracket term is nonneg (sin-monotonicity) and every coefficient nonneg, so the sum dominates its k=0
+-- term, and that term alone is ≥ 32/π²−8/9 > 2 uniformly in d (sin x ≤ x on the π/(4d) arm, Jordan's
+-- sin x ≥ 2x/π on the 3π/(4d) arm, π < 3.15). The general-d Bell force
+-- no_lhv_realises_maxEntangled_cglmp_d: any LHV reproducing pQM gives cglmpLHV = cglmp d pQM > 2,
+-- contradicting cglmp_lhv_bound (I_d ≤ 2, all d). Foundational triple only, no busch, no native_decide.
+/-- info: 'CSD.LF6.CGLMPQudit.pQM_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQudit.pQM_closed
+
+/-- info: 'CSD.LF6.CGLMPQudit.cglmpBracket_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQudit.cglmpBracket_closed
+
+/-- info: 'CSD.LF6.CGLMPQudit.cglmp_maxEntangled_qudit_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQudit.cglmp_maxEntangled_qudit_closed
+
+/-- info: 'CSD.LF6.CGLMPQudit.cglmp_maxEntangled_qudit_gt_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQudit.cglmp_maxEntangled_qudit_gt_two
+
+/-- info: 'CSD.LF6.CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d
 
 -- GHZ_n tranche (GHZnDeisolationFlow, 2026-07-03): the DETERMINISTIC (Mermin) all-or-nothing forcing
 -- axis at general PARTY number n, complementing the statistical (CGLMP) axis at general dimension d
