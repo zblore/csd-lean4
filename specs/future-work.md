@@ -44,13 +44,23 @@ hard, **XL** = research-grade / multi-session. **★** = actually reduces the de
 | **CV-3** | Approximate CCR: `‖[Q_N,P_N]−iℏ·1‖ ≤ ε` on a low-energy sector | CV-1, CV-2 | **M/L** | The quantitative finite-sector-recovers-continuum claim; highest-value CV item. |
 | **CV-4** | Oscillator truncation recovers finite-energy predictions | CV-1..3 | **M** | |
 
-## W-series (CSD dynamics spine — needs specs)
+## W-series (CSD dynamics spine — the prize: finite-dim Schrödinger dynamics as projected CSD flow)
+
+**Spec received 2026-07-04.** The chain being built: `Σ-flow → projected ℂℙ^{N-1} flow → FS-isometry /
+transition-probability-preserving flow → unitary Schrödinger dynamics`. W1 (Wigner) + W4 (CCR obstruction)
+are done; the W-series assembles the bridge. **Order: W4-pins (done) → W-2 → W-3 → W-5.** Leave the P3
+tensor derivation alone until there is a paper proof.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
-| **W-2** | KählerOnticSetup (user #1 priority) | spec needed | **L** | Needs the spec (as given for W4). |
-| **W-3** | UnitarySelection | spec needed, Wigner | **M/L** | |
-| **W-5** | ProjectedDynamics | spec needed | **L** | |
+| **W-2** | `LF4/KahlerOnticSetup.lean`: a `structure KahlerOnticSetup N` interface (Σ + measurable/topological, Kähler/Liouville volume, π to `ℂℙ^{N-1}`, volume-preserving `flow`, `projectedFlow` + `projectable`). Sector-level HYPOTHESES as fields, NO global axioms. Not a proof of Σ / A5 / the ontology; the interface the Σ-flow → Schrödinger chain needs. | none (interface) | **M** | **NEXT SERIOUS TARGET.** Structure + fields; DoD: file + structure + π + flow/projectability + volume-preservation, imported, pins if any theorem-level decls. |
+| **W-3** | `LF4/UnitarySelection.lean`: FS-isometry / transProb-preservation ⇒ unitary ∨ antiunitary (consumes W1 `wigner_rigidity`); + the physical refinement (continuous one-parameter flow from id ⇒ unitary branch). | W-2, Wigner (done) | **M/L** | Where W1 gets consumed. |
+| **W-5** | `LF4/ProjectedDynamics.lean`: projected CSD dynamics recovers finite-dim Schrödinger. Lean-first: projected flow = projective action of a one-parameter unitary family; then `U_t = exp(-itH)` / the vector-level Schrödinger equation. | W-2, W-3 | **L** | The major milestone / the prize. |
+
+**Honest posture of the W-series (load-bearing):** this is the FORWARD direction -- GIVEN the Kähler sector
+(as hypotheses/fields), it derives the unitary Schrödinger dynamics (via Wigner). It CONSUMES the sector
+(A5-level structure); it does NOT derive the sector from the dynamics (that reverse is D1/FND-1, untouched).
+So the W-series completes "QM dynamics from the posited sector", not the deep residue. Not ★.
 
 ## ecdsa.fail / ECDLP
 
