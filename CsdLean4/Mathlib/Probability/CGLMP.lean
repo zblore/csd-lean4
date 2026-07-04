@@ -61,16 +61,23 @@ on the LHV table. The classical (CGLMP) bound is `I_d ≤ 2`, and it is tight
 * `cglmpDet_le_two`, `cglmp_lhv_bound_two` / `_three` / `_four`: the LHV bound
   `I_d ≤ 2` for `d = 2, 3, 4`. The finite optimisation is discharged by `decide`
   on the division-cleared integer functional `scaledDetZ` over `(ZMod d)^4`.
+* `scaledDetZ_le_general`, `cglmp_lhv_bound` (general `d`): the numeric bound
+  `scaledDetZ ≤ 2*(d-1)` and hence `I_d ≤ 2` for **every** `d ≥ 2`, proved by the
+  CGLMP counting argument (the sawtooth reduction + the cyclic constraint), not by
+  `decide`. This closes the numeric bound at full dimensional generality.
 
 ## Honest scope
 
 * The reduction (`cglmpLHV_eq_integral`, `cglmpLHV_le_of_det_le`) is **general
   `d`**: the LHV-to-finite-optimisation bridge holds for every `d ≥ 2`.
 * The numeric bound `I_d ≤ 2` is proved for **`d = 2, 3, 4`** by `decide` on the
-  81 (`d = 3`) / 256 (`d = 4`) deterministic strategies. `d = 3` is the genuine
-  first qudit Bell inequality beyond CHSH. The **general-`d`** numeric bound
-  `∀ a1 a2 b1 b2 : ZMod d, scaledDetZ a1 a2 b1 b2 ≤ 2*(d-1)` (the CGLMP counting
-  argument) is the named residual; it is not axiomatised or `sorry`-ed here.
+  81 (`d = 3`) / 256 (`d = 4`) deterministic strategies (concrete anchors) AND for
+  **every** `d ≥ 2` by the CGLMP counting argument (`scaledDetZ_le_general`,
+  `cglmp_lhv_bound`). The general-`d` bound is the sawtooth reduction
+  `scaledDetZ = -2 - 2·d·t` (`t ≥ -1` integer) forced by the cyclic constraint on
+  the four outcome differences; it is a genuine proof, not `decide` (which only
+  reduces at fixed `d`) and not axiomatised. `d = 3` is the genuine first qudit
+  Bell inequality beyond CHSH.
 * `d = 2` reduces to the CHSH bound: `⌊2/2⌋ = 1`, coefficient `1`, and the
   eight terms are the CHSH probabilities. This is a sanity anchor, not the
   deliverable; the two-outcome CHSH `|S| ≤ 2` already lives elsewhere.
@@ -360,6 +367,170 @@ lemma scaledDetZ_three_tight :
 /-- **The `d = 4` bound is tight.** -/
 lemma scaledDetZ_four_tight :
     ∃ a1 a2 b1 b2 : ZMod 4, scaledDetZ a1 a2 b1 b2 = 2 * ((4 : ℤ) - 1) := by decide
+
+/-! ### The general-`d` LHV bound (the CGLMP counting argument)
+
+The numeric optimisation `scaledDetZ ≤ 2*(d-1)` is discharged for **all** `d`
+(not merely `d = 2, 3, 4` via `decide`) by the CGLMP counting argument. The core
+is the **sawtooth reduction**: the division-cleared functional collapses to four
+values of the single linear-on-representatives sawtooth `S(r) = d - 1 - 2·val(r)`,
+evaluated at the four outcome differences `a₁−b₁, a₂−b₁, a₂−b₂, (a₁−b₂)−1`. The
+cyclic constraint `(a₁−b₁) − (a₂−b₁) + (a₂−b₂) − ((a₁−b₂)−1) = 1` (mod `d`) then
+forces `scaledDetZ = -2 - 2·d·t` with `t ≥ -1` (integer), whence
+`scaledDetZ ≤ 2(d-1)`, tight at `t = -1`. No `decide`, no dimension restriction. -/
+
+/-- The CGLMP sawtooth `S(r) = d - 1 - 2·val(r)`: the single coefficient function
+to which the division-cleared functional collapses. Linear in the standard
+representative `val r`; its antisymmetric arm structure (the low arm `k` and the
+high arm `d-1-k`) is exactly the CGLMP weight pattern `d - 1 - 2k`. -/
+def sawtooth (d : ℕ) (r : ZMod d) : ℤ := (d : ℤ) - 1 - 2 * (r.val : ℤ)
+
+/-- `val (-r - 1) = d - 1 - val r`: the reflection carrying the low arm to the
+high arm. -/
+lemma val_neg_sub_one [NeZero d] (r : ZMod d) :
+    (-r - 1 : ZMod d).val = d - 1 - r.val := by
+  have hd1 : 1 ≤ d := Nat.one_le_iff_ne_zero.mpr (NeZero.ne d)
+  have hlt : r.val < d := ZMod.val_lt r
+  have hle : r.val ≤ d - 1 := by omega
+  have hlt2 : d - 1 - r.val < d := by omega
+  have hcast : (-r - 1 : ZMod d) = ((d - 1 - r.val : ℕ) : ZMod d) := by
+    rw [Nat.cast_sub hle, Nat.cast_sub hd1, ZMod.natCast_self, Nat.cast_one,
+      ZMod.natCast_zmod_val]
+    ring
+  rw [hcast, ZMod.val_natCast, Nat.mod_eq_of_lt hlt2]
+
+/-- The positive-arm collector: `∑_k (d-1-2k)·⟦r = k⟧` picks out the single term
+`k = val r` when `val r < ⌊d/2⌋`. -/
+lemma sawtooth_sum_pos [NeZero d] (r : ZMod d) :
+    ∑ k ∈ Finset.range (d/2), ((d:ℤ)-1-2*(k:ℤ)) * (if r = (k:ZMod d) then (1:ℤ) else 0)
+      = if r.val < d/2 then ((d:ℤ)-1-2*(r.val:ℤ)) else 0 := by
+  rw [Finset.sum_congr rfl (fun k hk => ?_)]
+  · rw [Finset.sum_ite_eq' (Finset.range (d/2)) r.val (fun k => ((d:ℤ)-1-2*(k:ℤ)))]
+    simp only [Finset.mem_range]
+  · have hk' : k < d := by simp only [Finset.mem_range] at hk; omega
+    have hiff : (r = (k:ZMod d)) ↔ (k = r.val) := by
+      constructor
+      · intro h; rw [h, ZMod.val_natCast, Nat.mod_eq_of_lt hk']
+      · intro h; rw [h, ZMod.natCast_zmod_val]
+    rw [if_congr hiff rfl rfl, mul_ite, mul_one, mul_zero]
+
+/-- The negative-arm collector: `∑_k (d-1-2k)·⟦r = -k-1⟧` picks out the reflected
+term `k = d-1-val r`. -/
+lemma sawtooth_sum_neg [NeZero d] (r : ZMod d) :
+    ∑ k ∈ Finset.range (d/2), ((d:ℤ)-1-2*(k:ℤ)) * (if r = -(k:ZMod d)-1 then (1:ℤ) else 0)
+      = if (d-1-r.val) < d/2 then ((d:ℤ)-1-2*((d-1-r.val : ℕ):ℤ)) else 0 := by
+  have hd1 : 1 ≤ d := Nat.one_le_iff_ne_zero.mpr (NeZero.ne d)
+  rw [Finset.sum_congr rfl (fun k hk => ?_)]
+  · rw [Finset.sum_ite_eq' (Finset.range (d/2)) (d-1-r.val) (fun k => ((d:ℤ)-1-2*(k:ℤ)))]
+    simp only [Finset.mem_range]
+  · have hk' : k < d := by simp only [Finset.mem_range] at hk; omega
+    have hiff : (r = -(k:ZMod d)-1) ↔ (k = d-1-r.val) := by
+      have hkc : ((k:ZMod d) = -r-1) ↔ (k = d-1-r.val) := by
+        constructor
+        · intro h
+          have hv : (k:ZMod d).val = (-r-1 : ZMod d).val := by rw [h]
+          rw [ZMod.val_natCast, Nat.mod_eq_of_lt hk', val_neg_sub_one] at hv
+          exact hv
+        · intro h; rw [h]
+          have hc : ((d - 1 - r.val : ℕ) : ZMod d) = (-r - 1 : ZMod d) := by
+            have hle : r.val ≤ d - 1 := by have := ZMod.val_lt r; omega
+            rw [Nat.cast_sub hle, Nat.cast_sub hd1, ZMod.natCast_self, Nat.cast_one,
+              ZMod.natCast_zmod_val]; ring
+          rw [hc]
+      rw [← hkc]; constructor <;> intro h <;> (rw [h]; ring)
+    rw [if_congr hiff rfl rfl, mul_ite, mul_one, mul_zero]
+
+/-- **The sawtooth collapse.** The weighted difference of the two arm collectors
+equals the sawtooth `S(r)` for every `r` (both arms and the middle fixed point
+covered by the same linear formula `d - 1 - 2·val r`). -/
+lemma sawtooth_weighted_sum [NeZero d] (r : ZMod d) :
+    ∑ k ∈ Finset.range (d/2), ((d:ℤ)-1-2*(k:ℤ)) *
+        ((if r = (k:ZMod d) then (1:ℤ) else 0) - (if r = -(k:ZMod d)-1 then (1:ℤ) else 0))
+      = sawtooth d r := by
+  have hlt : r.val < d := ZMod.val_lt r
+  simp only [mul_sub, Finset.sum_sub_distrib, sawtooth_sum_pos, sawtooth_sum_neg]
+  unfold sawtooth
+  split_ifs <;> omega
+
+/-- **The per-index bracket identity.** The integer CGLMP bracket at index `k`
+equals the signed combination of the four differences' arm summands. This is the
+purely combinatorial rewrite of `bracketZ` into the sawtooth arms; the `a₁−b₂`
+difference carries the `-1` shift (via `(a₁−b₂)−1`). -/
+lemma bracketZ_eq_sawtooth_summand (a1 a2 b1 b2 : ZMod d) (k : ℕ) :
+    bracketZ a1 a2 b1 b2 k
+      = ((if a1-b1 = (k:ZMod d) then (1:ℤ) else 0) - (if a1-b1 = -(k:ZMod d)-1 then (1:ℤ) else 0))
+      - ((if a2-b1 = (k:ZMod d) then (1:ℤ) else 0) - (if a2-b1 = -(k:ZMod d)-1 then (1:ℤ) else 0))
+      + ((if a2-b2 = (k:ZMod d) then (1:ℤ) else 0) - (if a2-b2 = -(k:ZMod d)-1 then (1:ℤ) else 0))
+      - ((if (a1-b2)-1 = (k:ZMod d) then (1:ℤ) else 0) - (if (a1-b2)-1 = -(k:ZMod d)-1 then (1:ℤ) else 0)) := by
+  simp only [bracketZ, detIndZ]
+  rw [show (-((k:ZMod d)+1) : ZMod d) = -(k:ZMod d)-1 from by ring]
+  have eB : ((a1-b2)-1 = -(k:ZMod d)-1) = (a1-b2 = -(k:ZMod d)) := by
+    apply propext; constructor <;> intro h <;> linear_combination h
+  have eC : ((a1-b2)-1 = (k:ZMod d)) = (a1-b2 = (k:ZMod d)+1) := by
+    apply propext; constructor <;> intro h <;> linear_combination h
+  simp only [eB, eC]
+  ring
+
+/-- **The sawtooth reduction (general `d`).** The division-cleared functional
+equals the signed sum of the four sawtooth values at the outcome differences. This
+is the structural half of the counting argument: `scaledDetZ` is fully determined
+by the four differences and the single sawtooth `S`. -/
+lemma scaledDetZ_eq_sawtooth [NeZero d] (a1 a2 b1 b2 : ZMod d) :
+    scaledDetZ a1 a2 b1 b2
+      = sawtooth d (a1-b1) - sawtooth d (a2-b1) + sawtooth d (a2-b2) - sawtooth d ((a1-b2)-1) := by
+  rw [scaledDetZ, ← sawtooth_weighted_sum (a1-b1), ← sawtooth_weighted_sum (a2-b1),
+      ← sawtooth_weighted_sum (a2-b2), ← sawtooth_weighted_sum ((a1-b2)-1)]
+  rw [← Finset.sum_sub_distrib, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
+  refine Finset.sum_congr rfl (fun k _ => ?_)
+  rw [bracketZ_eq_sawtooth_summand]; ring
+
+/-- **The general-`d` CGLMP numeric bound (the counting argument).** For every
+deterministic strategy `(a₁, a₂, b₁, b₂) ∈ (ZMod d)^4` and every `d ≥ 2`,
+`scaledDetZ ≤ 2*(d-1)`. This discharges the named residual `cglmpDet_le_two`'s
+hypothesis for all `d`: the sawtooth reduction gives
+`scaledDetZ = -2 - 2·d·t` where `t` is the integer witnessing the cyclic
+constraint `∑(differences) ≡ 1 (mod d)`, and the outcome-difference bounds
+`0 ≤ val < d` force `t ≥ -1`, hence `scaledDetZ ≤ 2(d-1)` (tight at `t = -1`;
+cf. `scaledDetZ_three_tight`, `scaledDetZ_four_tight`). -/
+theorem scaledDetZ_le_general [NeZero d] (hd : 2 ≤ d) (a1 a2 b1 b2 : ZMod d) :
+    scaledDetZ a1 a2 b1 b2 ≤ 2 * ((d:ℤ) - 1) := by
+  rw [scaledDetZ_eq_sawtooth]
+  unfold sawtooth
+  have hconstr : (a1-b1) - (a2-b1) + (a2-b2) - ((a1-b2)-1) = (1 : ZMod d) := by ring
+  have hqZ : ((a2-b1).val:ℤ) < d := by exact_mod_cast ZMod.val_lt (a2-b1)
+  have hsZ : (((a1-b2)-1).val:ℤ) < d := by exact_mod_cast ZMod.val_lt ((a1-b2)-1)
+  have hp0 : (0:ℤ) ≤ ((a1-b1).val:ℤ) := Int.natCast_nonneg _
+  have hr0 : (0:ℤ) ≤ ((a2-b2).val:ℤ) := Int.natCast_nonneg _
+  have hdpos : (0:ℤ) < d := by exact_mod_cast (by omega : 0 < d)
+  have hdvd : (d:ℤ) ∣ (((a1-b1).val : ℤ) - (a2-b1).val + (a2-b2).val - ((a1-b2)-1).val - 1) := by
+    rw [← ZMod.intCast_zmod_eq_zero_iff_dvd]
+    push_cast [ZMod.natCast_zmod_val]
+    rw [sub_eq_zero]
+    linear_combination hconstr
+  obtain ⟨t, ht⟩ := hdvd
+  have htge : -1 ≤ t := by
+    by_contra hcon
+    push_neg at hcon
+    have ht2 : t ≤ -2 := by omega
+    have hmul : (d:ℤ) * t ≤ (d:ℤ) * (-2) := mul_le_mul_of_nonneg_left ht2 (le_of_lt hdpos)
+    nlinarith [ht, hqZ, hsZ, hp0, hr0]
+  have hdt : (d:ℤ) * (-1) ≤ (d:ℤ) * t := mul_le_mul_of_nonneg_left htge (le_of_lt hdpos)
+  linarith [ht, hdt]
+
+/-- **The CGLMP LHV bound, general `d`.** For every `d ≥ 2` and every deterministic
+local-hidden-variable model of two `d`-outcome parties, the CGLMP functional obeys
+`I_d ≤ 2`. Composes the LHV-to-finite-optimisation reduction
+(`cglmpLHV_le_of_det_le`) with the general-`d` counting argument
+(`scaledDetZ_le_general`) through the integer-to-real bridge (`cglmpDet_le_two`).
+This closes the numeric bound at full dimensional generality; the `d = 2, 3, 4`
+`decide` variants (`cglmp_lhv_bound_two/_three/_four`) are the concrete anchors. -/
+theorem cglmp_lhv_bound (μ : Measure Λ) [IsProbabilityMeasure μ] (hd : 2 ≤ d)
+    (A B : Bool → Λ → ZMod d) (hA : ∀ x, Measurable (A x)) (hB : ∀ y, Measurable (B y)) :
+    cglmpLHV μ A B ≤ 2 := by
+  haveI : NeZero d := ⟨by omega⟩
+  exact cglmpLHV_le_of_det_le μ A B hA hB 2
+    (fun a1 a2 b1 b2 =>
+      cglmpDet_le_two hd (fun a1 a2 b1 b2 => scaledDetZ_le_general hd a1 a2 b1 b2) a1 a2 b1 b2)
 
 end CGLMP
 end ProbabilityTheory

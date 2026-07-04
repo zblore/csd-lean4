@@ -6308,4 +6308,21 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ProbabilityTheory.CGLMP.scaledDetZ_four_tight
 
+-- The GENERAL-d CGLMP classical bound (the sawtooth counting argument, all d >= 2,
+-- no decide) -- closes the general-d LHV-bound residual. scaledDetZ_eq_sawtooth is
+-- the genuine equality reduction; scaledDetZ_le_general the general-d numeric bound
+-- (val-wraparound handled via mod-d divisibility, auditor-verified tight + matching
+-- the d=2,3,4 decide anchors); cglmp_lhv_bound the general-d LHV bound.
+/-- info: 'ProbabilityTheory.CGLMP.scaledDetZ_eq_sawtooth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.scaledDetZ_eq_sawtooth
+
+/-- info: 'ProbabilityTheory.CGLMP.scaledDetZ_le_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.scaledDetZ_le_general
+
+/-- info: 'ProbabilityTheory.CGLMP.cglmp_lhv_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.cglmp_lhv_bound
+
 end CSD.Tests.AxiomAudit
