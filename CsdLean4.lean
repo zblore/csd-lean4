@@ -260,6 +260,7 @@ import CsdLean4.Empirical.Metrology.Ramsey
 import CsdLean4.Empirical.Metrology.QuantumFisher
 import CsdLean4.Empirical.Metrology.Heisenberg
 import CsdLean4.CV.ApproxCCR
+import CsdLean4.Thermo.CanonicalTypicality
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

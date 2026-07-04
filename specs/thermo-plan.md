@@ -1,6 +1,7 @@
 # Thermodynamics track — plan
 
-**Status: PLANNED 2026-07-04.** Not started. The thermodynamics track formalises the
+**Status: TH1 DONE 2026-07-05 (EXPECTATION core; concentration/Levy staged as the named
+residual); TH2-TH5 planned.** The thermodynamics track formalises the
 statistical-mechanical content that CSD's foundations already imply: Born weights are equilibrium
 volume fractions, typicality is forced by the law of large numbers, and the de-isolation flow is
 measure-preserving (Liouville). Thermodynamics is the native language of that structure, not a
@@ -43,6 +44,24 @@ Start with the equal-energy case (microcanonical → maximally mixed), generalis
 (concentration of the reduced state near `I/d_S`). This is the natural CSD-thermodynamics bridge:
 "thermal equilibrium from volume," directly on the machinery the corpus already has. HONEST scope: a
 concentration/typicality result, not a dynamical thermalisation theorem.
+
+**DONE 2026-07-05 (EXPECTATION core), `CsdLean4/Thermo/CanonicalTypicality.lean`.** Landed:
+- `fs_first_moment`: `E_{μ_FS}[ |ψ><ψ| ] = (1/N) I` on `ℂℙ^{N-1}` — the FS first moment is maximally
+  mixed. A genuine twirl/Schur integral (NOT asserted): entrywise via FS `U(N)`-invariance. Off-diagonal
+  entries vanish by a sign-flip diagonal unitary (`signFlip`, `fsFirstMoment_offdiag`: change of
+  variables ⟹ `M = -M`); diagonal entries are `1/N` by permutation unitaries + `momentMap_sum_eq_one`
+  + `probReal_univ` (`fsFirstMoment_diag`). The diagonal density entry IS `momentMap` (`rayDensity_diag`).
+- `canonical_typicality_expectation`: for `H = H_S ⊗ H_E` with `N = d_S·d_E` (reindex equiv `e`),
+  `E_{μ_FS}[ Tr_E |ψ><ψ| ] = (1/d_S) I_S`. Partial-traces the FS first moment through the genuine corpus
+  `Matrix.traceRight`. The FS-average ANALOGUE of `LF6.maxEntangled_marginal_uniform` (the specific
+  maximally-entangled state's marginal) -- an analogy, not a formal Lean dependency (does not cite it).
+- HONEST SCOPE: EXPECTATION (average) only. The TYPICAL-state (concentration/Levy) upgrade is the NAMED
+  residual (module docstring `Concentration residual`): it needs Levy's lemma / spherical isoperimetry,
+  not in Mathlib. No `sorry`/axiom stands in. `fs_first_moment` is exactly the mean Levy would
+  concentrate around; only the deviation bound is missing. NOT dynamical thermalisation (needs mixing/ETH).
+  CSD-microdynamics reading rests on the shared A5/D1 residue (μ_FS posited as sampling law).
+  Foundational-triple; Gleason-free. AxiomAudit-pinned (`fs_first_moment`,
+  `canonical_typicality_expectation`).
 
 ### TH2 — the second law as coarse-grained entropy monotonicity
 Build on LF6-B.3: the fine-grained de-isolation flow is measure-preserving (entropy-conserving), and

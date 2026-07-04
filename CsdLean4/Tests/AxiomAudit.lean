@@ -63,6 +63,7 @@ import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.CV.ApproxCCR
+import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -6406,5 +6407,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'ECDLP.Safegcd.divstepIter_bezout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_bezout
+
+-- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
+-- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
+-- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation
+-- unitaries), and the average reduced state E[Tr_E |psi><psi|] = (1/d_S) I_S
+-- (canonical typicality IN EXPECTATION, generalising maxEntangled_marginal_uniform).
+-- Concentration/Levy (the typical-state upgrade) is the NAMED residual, not
+-- proved. Foundational-triple; Gleason-free.
+/-- info: 'CSD.Thermo.fs_first_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_first_moment
+
+/-- info: 'CSD.Thermo.canonical_typicality_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.canonical_typicality_expectation
 
 end CSD.Tests.AxiomAudit
