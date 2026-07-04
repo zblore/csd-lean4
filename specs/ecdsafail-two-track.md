@@ -68,8 +68,17 @@ roadmap, not a deficiency of the verified floor.
 
 1. safegcd divstep circuit: a reversible Bernstein-Yang / Roetteler-Naehrig-Svore-Lauter divstep
    recurrence whose denotation is the modular inverse, with a proved GCD/Bezout invariant and
-   termination. Currently the corpus value is a definitional unfolding of `ZMod.inv`
-   (`binGcdInv_eq_inv`) and the 2n divstep count is a documented op-count model.
+   termination. PARTIALLY CLOSED 2026-07-04 (`SafegcdDivstep.lean`, foundational-triple, AxiomAudit
+   pins): the divstep transition is now EXHIBITED as a concrete function `ECDLP.Safegcd.divstep :
+   ℤ³ → ℤ³` and the GCD INVARIANT `divstep_gcd : Int.gcd f' g' = Int.gcd f g` is a GENUINE THEOREM
+   (parity + coprimality-with-2, not a `ZMod.inv`/`Nat.gcd` unfolding); `divstepIter_gcd` iterates it,
+   `divstepIter_natAbs_of_g_zero` gives correctness modulo termination (running `g = 0` implies running
+   `|f| = gcd(f₀,g₀)`), and `divstepIter_bezout` tracks the cofactor up to the `2^k` scale. So the
+   divstep recurrence genuinely computes the gcd; the value is no longer a definitional unfolding of
+   `ZMod.inv`. STILL RESIDUAL (keeps the full inversion trusted-not-verified): TERMINATION (the `g → 0`
+   within `2·bits` bound, the potential-function / transition-matrix argument) and the reversible
+   BIT-CIRCUIT whose denotation equals `divstep` (the `2n` divstep count and `divstepToffoli` remain a
+   documented op-count model over the not-yet-exhibited circuit).
 2. measurement-based adder and multiply: Gidney measurement uncomputation at one Toffoli per bit. Not
    expressible in the measurement-free CCX DSL; the `gidneyMeasAddToffoli` handle costs only the
    measurement half (equals n).

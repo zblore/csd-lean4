@@ -57,6 +57,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
@@ -6379,5 +6380,31 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.CV.no_exact_finite_ccr_ihbar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.CV.no_exact_finite_ccr_ihbar
+
+-- Safegcd (Bernstein-Yang) divstep: the GCD invariant as a GENUINE theorem
+-- (divstep_gcd, not a ZMod.inv unfolding; Odd f load-bearing), the divstep
+-- function, correctness-modulo-termination, and Bezout-up-to-2^k. Termination +
+-- the reversible circuit + the 2^{-k} correction are named residuals (still
+-- trusted). All foundational-triple.
+/-- info: 'ECDLP.Safegcd.divstep_fst_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstep_fst_odd
+
+/-- info: 'ECDLP.Safegcd.gcd_two_mul_right_of_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.gcd_two_mul_right_of_odd
+
+/-- info: 'ECDLP.Safegcd.divstep_gcd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstep_gcd
+
+/-- info: 'ECDLP.Safegcd.divstepIter_gcd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_gcd
+
+/-- info: 'ECDLP.Safegcd.divstepIter_natAbs_of_g_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_natAbs_of_g_zero
+
+/-- info: 'ECDLP.Safegcd.divstepIter_natAbs_one_of_coprime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_natAbs_one_of_coprime
+
+/-- info: 'ECDLP.Safegcd.divstepIter_bezout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_bezout
 
 end CSD.Tests.AxiomAudit

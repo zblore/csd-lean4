@@ -32,6 +32,17 @@ Fermat. The two sides have DIFFERENT honesty status, stated plainly:
   (`divstepToffoli_eq_gadgets`: one `modSub` + one `cuccaroCModAdd` + one `cuccaroModDouble`), not an
   asserted constant. Same status as `fermatInvToffoli`'s op-count model (`modExpFieldMults`).
 
+**Value-side promotion (2026-07-04, `SafegcdDivstep.lean`).** The divstep transition is no longer
+only a `ZMod.inv` unfolding: `ECDLP.Safegcd.divstep` exhibits the Bernstein-Yang divstep as a concrete
+`ℤ³ → ℤ³` function, and `ECDLP.Safegcd.divstep_gcd` proves the GCD INVARIANT `Int.gcd f' g' =
+Int.gcd f g` as a genuine theorem (parity + coprimality-with-2, not a `Nat.gcd`/`ZMod.inv` unfolding).
+`divstepIter_gcd` iterates it; `divstepIter_natAbs_of_g_zero` gives correctness modulo termination
+(when the running `g` hits `0`, the running `|f|` equals `gcd(f₀,g₀)`); `divstepIter_bezout` tracks the
+cofactor up to the `2^k` scale. So the divstep recurrence now GENUINELY computes the gcd. The two
+NAMED RESIDUALS that keep the full inversion trusted-not-verified: (i) TERMINATION (the `g → 0` within
+`2·bits` bound, the potential-function argument), and (ii) the reversible BIT-CIRCUIT whose denotation
+equals `divstep` (the `divstepToffoli` op-count model below is over this not-yet-exhibited circuit).
+
 ## Route taken for value-correctness (stated honestly)
 
 **Route 2b** of the plan: the value-bearing algorithm is Mathlib's verified **xgcd** (`Nat.gcdA`,

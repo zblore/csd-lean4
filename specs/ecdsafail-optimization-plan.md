@@ -20,6 +20,20 @@ gadgets (`divstepToffoli = modSub + cuccaroCModAdd + cuccaroModDouble`), DOCUMEN
 and an honestly-flagged lower-fidelity proxy (single Bézout track + doubling-for-halving, so the win is
 if anything optimistic on the safegcd side). Full per-divstep bit-circuit (route 2a) deferred.
 
+**L6 value-side promotion (`ECDLP/SafegcdDivstep.lean`, 2026-07-04, foundational-triple, AxiomAudit
+pins).** The divstep is no longer only a `ZMod.inv` unfolding. `ECDLP.Safegcd.divstep : ℤ³ → ℤ³`
+EXHIBITS the Bernstein-Yang transition and `divstep_gcd` proves the GCD INVARIANT
+`Int.gcd f' g' = Int.gcd f g` as a GENUINE theorem (parity + coprimality-with-2, not a `Nat.gcd` /
+`ZMod.inv` unfolding). `divstepIter_gcd` iterates it; `divstepIter_natAbs_of_g_zero` gives correctness
+modulo termination (running `g = 0 ⟹` running `|f| = gcd(f₀,g₀)`); `divstepIter_bezout` tracks the
+cofactor up to the `2^k` scale; `divstep_fst_odd` proves the odd-`f` invariant. So the divstep recurrence
+GENUINELY computes the gcd (value upgraded from "definitionally `ZMod.inv`" to "the recurrence proved to
+preserve the gcd"). RESIDUAL, still trusted/documented: (i) TERMINATION (the `g → 0` within `2·bits`
+Bernstein-Yang bound, the potential-function argument), and (ii) the reversible BIT-CIRCUIT whose
+denotation equals `divstep` (the `2n` divstep count / `divstepToffoli` op-count model is over this
+not-yet-exhibited circuit). This closes the "no exhibited divstep + no proved invariant" half of
+verification-frontier item 1; termination + the circuit are the remaining half.
+
 ## Where we stand (the gap)
 
 The benchmark scores ONE secp256k1 point addition on the **qubit × Toffoli product, lower wins**.
