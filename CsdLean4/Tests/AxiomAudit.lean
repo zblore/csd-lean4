@@ -61,6 +61,7 @@ import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
+import CsdLean4.CV.ApproxCCR
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -6324,5 +6325,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ProbabilityTheory.CGLMP.cglmp_lhv_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ProbabilityTheory.CGLMP.cglmp_lhv_bound
+
+-- W4 (CV/ApproxCCR): the finite-dimensional obstruction to exact canonical
+-- commutation. trace(QP - PQ) = 0 but trace(c•1) = c*card, so no finite matrices
+-- satisfy [Q,P] = c•1 when c*card ≠ 0. The physics corollary is c = iℏ.
+-- Foundational triple; CSD-free general matrix facts (the CSD reading is docstring
+-- only). Motivates the finite-sector reading of position/momentum; does NOT derive CV-QM.
+/-- info: 'CSD.CV.trace_commutator_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.trace_commutator_eq_zero
+
+/-- info: 'CSD.CV.trace_scalar_identity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.trace_scalar_identity
+
+/-- info: 'CSD.CV.no_exact_finite_ccr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.no_exact_finite_ccr
+
+/-- info: 'CSD.CV.no_exact_finite_ccr_ihbar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.no_exact_finite_ccr_ihbar
 
 end CSD.Tests.AxiomAudit
