@@ -738,12 +738,23 @@ MaxEntangledDeisolationFlow.lean — LF6-D (2026-07-03): the first genuinely
                              CGLMP not claimed. Born imported; residue A5
 ```
 
-**LF6 honest scope.** Single-instance (the singlet) entangled landings: the
-non-factorisation is *derived* from the engine structure (factorisation would itself
-be a measurement; nudge ≠ carve), and a real `Φ ≠ id` flow realises (not carves) the
-dilation. The **general-`N` entangled tier remains open** (active-todo #5). The Born
-number is still imported from the FS-volume engine, not re-derived; the A5 sector origin
-is the residue. All LF6 results are foundational-triple-only and AxiomAudit-pinned.
+**LF6 honest scope.** The non-factorisation is *derived* from the engine structure
+(factorisation would itself be a measurement; nudge ≠ carve), and a real `Φ ≠ id` flow
+realises (not carves) the dilation. The **general-`N` entangled tier's core is now DONE**
+(LF6-D, 2026-07-03, `MaxEntangledDeisolationFlow.lean`): the general `d×d`
+maximally-entangled state `Ψ_d = (1/√d)∑ᵢ|i⟩|i⟩` for every `d ≥ 2` — a de-isolation flow
+`Φ ≠ id` + Born-from-volume that reuses the LF5 general-`N` engine at `N = d·d`
+(`maxEntangledDeisolation_pointer_volume`/`_frequency`/`_ne_id`/`_measurePreserving`) and
+forced non-factorisation (`no_product_partition_realises_maxEntangled`, derived,
+maxEntangled-specific). Both non-locality axes are at generality: CGLMP general-`d`
+statistical violation (`cglmp_maxEntangled_qudit_gt_two`) and GHZ_n general-`n`
+deterministic Mermin (`no_lhvN_assignment_for_ghzN`). Named residuals (see
+`specs/future-work.md` LF6-5/6/7): the general-`d` non-factorisation is routed through
+the 2×2 `Φ⁺` CHSH sector (d-intrinsic CGLMP LHV bound only `decide`-proved for `d ≤ 4`);
+only the maximally-entangled family (arbitrary partial-Schmidt states not covered); the
+continuous-time Lindblad entangled tier (LF6-2). The Born number is still imported from
+the FS-volume engine, not re-derived; the A5 sector origin is the residue. All LF6 results
+are foundational-triple-only and AxiomAudit-pinned.
 
 ### Empirical: QM-validity regression suite
 

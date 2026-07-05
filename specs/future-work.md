@@ -23,6 +23,13 @@ hard, **XL** = research-grade / multi-session. **★** = actually reduces the de
 | **LF6-2** | Lindblad / continuous-time open-system de-isolation (T1/T2 semigroup) | LF6-B | **L** | Subsumes Metrology A4; the dynamics half of decoherence. |
 | **LF6-3** | Marginal volume-drift geometry (symplectic drift of the reduced state) | LF6-B, LF5 | **M** | |
 | **LF6-4** | Metrology A4: decoherence as open symplectic drift | LF6-2 (Lindblad) | **M** | D1-gated. |
+| **LF6-5** | General-`d` CGLMP LHV bound `I_d ≤ 2` for all `d` (the counting argument) -- currently `decide`-proved only for `d ≤ 4`; would make LF6-D's non-factorisation d-INTRINSIC (not routed through the 2×2 `Φ⁺` CHSH sector) | CGLMP infra (done) | **M/L** | The general-N entangled tier's non-factorisation refinement. |
+| **LF6-6** | Arbitrary (partial-Schmidt) entangled states general-`d` -- LF6-D covers only the maximally-entangled family | LF6-D | **M/L** | Extends the tier beyond maximal entanglement. |
+| **LF6-7** | Symmetric-sector `Φ⁺↔ψ⁻` transport recompute (not yet done in LF6-D) | LF6-D | **S/M** | Small consolidation. |
+
+**LF6 general-N entangled tier status:** the CORE is DONE (LF6-D: general `d×d` maximally-entangled
+de-isolation + Born-from-volume + forced non-factorisation; CGLMP general-`d` violation; GHZ_n general-`n`
+Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 
 ## Thermodynamics track (`thermo-plan.md`)
 
