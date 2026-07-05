@@ -77,6 +77,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.UnitarySelection
+import CsdLean4.LF4.ProjectedDynamics
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing
@@ -2825,6 +2826,49 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup_unitary_of_clopen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup_unitary_of_clopen
+
+-- W5: projected CSD dynamics = projective action of a one-parameter unitary
+-- family. projectedFlow_eq_unitary_family is the MILESTONE (given the W3
+-- selection hU: ∀t, ProjUnitary d t, the projected flow is the projective action
+-- of a single one-parameter family {U_t}; choice over the per-t existentials,
+-- NOT from Liouville-preservation, measure ≠ metric). The ray-level one-parameter
+-- projective representation (U(s+t)•p = (U s * U t)•p, U 0•p = p) is proved under
+-- EXPLICIT one-parameter-group hypotheses on projectedFlow. exp(-itH) is STAGED:
+-- the CONVERSE realizability witness (expNegITH_unitary_group: t ↦ exp(-itH) is a
+-- genuine vector-level one-parameter unitary group for Hermitian H) is proved,
+-- while the Stone direction (recover H from an abstract projected flow) is the
+-- named residual (phase lift S1 + finite-dim Stone S2, absent from Mathlib).
+/-- info: 'CSD.LF4.projectedFlow_eq_unitary_family' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_eq_unitary_family
+
+/-- info: 'CSD.LF4.unitaryFamily_projective_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFamily_projective_representation
+
+/-- info: 'CSD.LF4.projectedFlow_projective_one_parameter_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_projective_one_parameter_representation
+
+/-- info: 'CSD.LF4.schrodingerGen_exp_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerGen_exp_mem_unitaryGroup
+
+/-- info: 'CSD.LF4.expNegITH_unitary_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.expNegITH_unitary_group
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_eq_unitary_family' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_eq_unitary_family
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_projective_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_projective_representation
+
+/-- info: 'CSD.LF4.expNegITH_unitary_group_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.expNegITH_unitary_group_zero
 
 -- D1c-1: the concrete compact-Kähler SectorData that carries the genuine
 -- measure-preserving Φ = kFlow ≠ id (structural discharge of the "Φ = id in the
