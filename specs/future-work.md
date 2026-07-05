@@ -85,7 +85,7 @@ So the W-series completes "QM dynamics from the posited sector", not the deep re
 | **EC-3** | Gidney measurement adder as a verified circuit (task #36) | measurement-discipline DSL ext (EC-6) | **M/L** | The other score lever. |
 | **EC-4** | Run their Rust harness for a leaderboard entry (task #7) | competitive Rust circuit | **—** | User machine action; out of Lean scope. |
 | **EC-5** | Full doubling layout assembly (~1200 wires) | router (done) | **M** | Declared low-payoff mechanical residue. |
-| **EC-6** | Measurement-discipline DSL extension decision (task #22) | — | **M** | Gates EC-3; a posture/architecture decision. |
+| **EC-6** | Measurement-discipline DSL extension for Gidney (task #22) | W-residues first | **L** (multi-tranche) | **DECIDED 2026-07-05: opted IN, sequenced after the W-residues.** Gates EC-3. First tranche = an AND-based adder (the Cuccaro adder is carry-restoring, no AND to uncompute); then the Boolean→amplitude bridge (`denote↔toEuclideanLin`); then the net-channel theorem (measure+correct = identity-on-data ⊗ ancilla-reset) via the QuantumInfo CPTP/measurement machinery. Genuine verified theorem; larger trusted base. L5-a..d proved the amplitude MODEL of the primitive already. |
 
 ## Hygiene / audits
 
