@@ -53,16 +53,23 @@ Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 
 ## W-series (CSD dynamics spine — the prize: finite-dim Schrödinger dynamics as projected CSD flow)
 
-**Spec received 2026-07-04.** The chain being built: `Σ-flow → projected ℂℙ^{N-1} flow → FS-isometry /
-transition-probability-preserving flow → unitary Schrödinger dynamics`. W1 (Wigner) + W4 (CCR obstruction)
-are done; the W-series assembles the bridge. **Order: W4-pins (done) → W-2 → W-3 → W-5.** Leave the P3
-tensor derivation alone until there is a paper proof.
+**Spec received 2026-07-04. SPINE COMPLETE 2026-07-05 (W-2/W-3/W-5 all DONE).** The chain built:
+`Σ-flow → projected ℂℙ^{N-1} flow → FS-isometry / transition-probability-preserving flow → unitary
+dynamics`. W1 (Wigner) + W4 (CCR obstruction) done; W-2/W-3/W-5 assemble the bridge, all auditor-SOUND,
+foundational-triple, no global axioms. **Two named residues remain** (not defects, honestly staged):
+the W-3 clopen datum (continuity of `t↦projectedFlow t` + PU(N) disconnected in the FS-isometry group)
+and the W-5 vector-level phase-lift (S1, kill the U(1) cocycle) + finite-dim Stone (S2, absent from
+Mathlib). Leave the P3 tensor derivation alone until there is a paper proof.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
-| **W-2** | `LF4/KahlerOnticSetup.lean`: a `structure KahlerOnticSetup N` interface (Σ + measurable/topological, Kähler/Liouville volume, π to `ℂℙ^{N-1}`, volume-preserving `flow`, `projectedFlow` + `projectable`). Sector-level HYPOTHESES as fields, NO global axioms. Not a proof of Σ / A5 / the ontology; the interface the Σ-flow → Schrödinger chain needs. | none (interface) | **M** | **NEXT SERIOUS TARGET.** Structure + fields; DoD: file + structure + π + flow/projectability + volume-preservation, imported, pins if any theorem-level decls. |
-| **W-3** | `LF4/UnitarySelection.lean`: FS-isometry / transProb-preservation ⇒ unitary ∨ antiunitary (consumes W1 `wigner_rigidity`); + the physical refinement (continuous one-parameter flow from id ⇒ unitary branch). | W-2, Wigner (done) | **M/L** | Where W1 gets consumed. |
-| **W-5** | `LF4/ProjectedDynamics.lean`: projected CSD dynamics recovers finite-dim Schrödinger. Lean-first: projected flow = projective action of a one-parameter unitary family; then `U_t = exp(-itH)` / the vector-level Schrödinger equation. | W-2, W-3 | **L** | The major milestone / the prize. |
+| **W-2** | `LF4/KahlerOnticSetup.lean`: the `structure KahlerOnticSetup N` interface (8 genuine fields + 2 honest Kähler-geometry placeholders, NO global axioms; `trivialKahlerOnticSetup` witness; projective target = Wigner's). | none (interface) | **M** | **DONE 2026-07-05** (`53ad012`). |
+| **W-3** | `LF4/UnitarySelection.lean`: transProb-preservation (a HYPOTHESIS, not derived from Liouville) ⇒ unitary ∨ antiunitary via `wigner_rigidity_unitaryGroup`; continuous-from-id ⇒ unitary branch, STAGED on the clopen datum (connectedness on `PreconnectedSpace ℝ` proved). | W-2, Wigner | **M/L** | **DONE 2026-07-05** (`c119ffc`). Residue: the clopen datum. |
+| **W-5** | `LF4/ProjectedDynamics.lean`: `projectedFlow_eq_unitary_family` (projected flow = projective action of a one-parameter unitary family) + ray-level group law under explicit hypotheses + `expNegITH_unitary_group` (converse: `exp(-itH)` a genuine unitary group from Hermitian H). `U_t=exp(-itH)`-for-the-flow STAGED. | W-2, W-3 | **L** | **DONE 2026-07-05** (`ff97830`). Residues S1 (phase lift) + S2 (finite-dim Stone). |
+
+**Follow-on (auditor-recommended, S):** inhabit the W-3 clopen datum on a non-trivial (`Φ≠id`, e.g.
+`kFlow`) `KahlerOnticSetup`, not only the identity witness, so the unitary-branch selection is non-vacuous
+beyond the base case. The one place a real topological posit is compressed into a single `Prop`.
 
 **Honest posture of the W-series (load-bearing):** this is the FORWARD direction -- GIVEN the Kähler sector
 (as hypotheses/fields), it derives the unitary Schrödinger dynamics (via Wigner). It CONSUMES the sector
