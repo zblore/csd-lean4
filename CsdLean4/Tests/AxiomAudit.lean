@@ -75,6 +75,7 @@ import CsdLean4.LF3.Projectors.TensorModel
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
+import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing
@@ -2793,6 +2794,13 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.kFlow_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.kFlow_frequency_convergence
+
+-- W2: the Kähler ontic-sector INTERFACE (sector hypotheses as structure fields,
+-- no global axioms) + its inhabitation witness (non-vacuity). The projective
+-- target matches Wigner's ℙ ℂ (EuclideanSpace ℂ (Fin N)).
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup
 
 -- D1c-1: the concrete compact-Kähler SectorData that carries the genuine
 -- measure-preserving Φ = kFlow ≠ id (structural discharge of the "Φ = id in the

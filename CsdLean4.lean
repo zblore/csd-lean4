@@ -110,6 +110,7 @@ import CsdLean4.LF3.Interface
 import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
+import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing
