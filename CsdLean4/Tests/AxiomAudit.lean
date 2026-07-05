@@ -2,6 +2,7 @@ import CsdLean4.LF1.MainTheorem
 import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
+import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
@@ -4862,6 +4863,28 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'Matrix.matrix_log_le_log' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.matrix_log_le_log
+
+/-! ### C^1 finite-dimensional Stone theorem (StoneC1.lean, W5-S2 under smoothness) -/
+
+/-- info: 'CSD.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.StoneC1.eq_exp_of_hasDeriv
+
+/-- info: 'CSD.StoneC1.exp_smul_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.StoneC1.exp_smul_unitary
+
+/-- info: 'CSD.StoneC1.stone_c1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.StoneC1.stone_c1
+
+/-- info: 'CSD.StoneC1.trivial_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.StoneC1.trivial_group
+
+/-- info: 'CSD.StoneC1.skew_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.StoneC1.skew_witness
 
 /-! ### ECDLP reversible-circuit substrate (Reversible/{Circuit,Cost}.lean) -/
 
