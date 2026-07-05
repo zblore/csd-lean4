@@ -76,6 +76,7 @@ import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
+import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing
@@ -2801,6 +2802,29 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup
+
+-- W3: the Wigner selection on the Kähler ontic setup. The per-t disjunction
+-- (unitary ∨ antiunitary) consumes W1 wigner_rigidity_unitaryGroup through the W2
+-- interface; hTPP (transition-probability preservation) is a HYPOTHESIS, NOT
+-- derived from Liouville-preservation (measure ≠ metric). The continuous-from-
+-- identity refinement selects the unitary branch, STAGED on the clopen datum
+-- (named topological residual: continuity of t ↦ flow + disconnectedness of the
+-- antiunitary component), discharged via connectedness of ℝ.
+/-- info: 'CSD.LF4.projectedFlow_unitary_or_antiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_unitary_or_antiunitary
+
+/-- info: 'CSD.LF4.projectedFlow_unitary_of_clopen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_unitary_of_clopen
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_unitary_or_antiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_unitary_or_antiunitary
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_unitary_of_clopen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_unitary_of_clopen
 
 -- D1c-1: the concrete compact-Kähler SectorData that carries the genuine
 -- measure-preserving Φ = kFlow ≠ id (structural discharge of the "Φ = id in the
