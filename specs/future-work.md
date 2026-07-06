@@ -56,10 +56,12 @@ Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 **Spec received 2026-07-04. SPINE COMPLETE 2026-07-05 (W-2/W-3/W-5 all DONE).** The chain built:
 `Σ-flow → projected ℂℙ^{N-1} flow → FS-isometry / transition-probability-preserving flow → unitary
 dynamics`. W1 (Wigner) + W4 (CCR obstruction) done; W-2/W-3/W-5 assemble the bridge, all auditor-SOUND,
-foundational-triple, no global axioms. **Two named residues remain** (not defects, honestly staged):
-the W-3 clopen datum (continuity of `t↦projectedFlow t` + PU(N) disconnected in the FS-isometry group)
-and the W-5 vector-level phase-lift (S1, kill the U(1) cocycle) + finite-dim Stone (S2, absent from
-Mathlib). Leave the P3 tensor derivation alone until there is a paper proof.
+foundational-triple, no global axioms. **W-5-S2 finite-dim Stone: DONE** (C^1 form,
+`Mathlib/Analysis/Matrix/StoneC1.lean`, commit 23b2a36 -- differentiable one-parameter unitary group =
+`exp(t.A)`, generator recovered; the CompleteSpace instance-diamond blocker resolved via the C^*-algebra
+norm; full-continuity Stone is the named sub-residual). **Remaining residues:** W-5-S1 (vector-level
+phase-lift, kill the U(1) cocycle) and the W-3 clopen datum (continuity of `t↦projectedFlow t` + PU(N)
+disconnected in the FS-isometry group). Leave the P3 tensor derivation alone until there is a paper proof.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
