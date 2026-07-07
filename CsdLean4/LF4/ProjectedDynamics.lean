@@ -35,7 +35,12 @@ one-parameter unitary family `{U_t}`. This is the honest Lean-first reading of
 ## What is STAGED (the deeper residual, precisely named)
 
 The vector-level `U_t = exp(-i t H)` for a Hermitian generator `H` (the
-Schrödinger form) is NOT claimed here. Two ingredients are missing and named:
+Schrödinger form) is NOT claimed here. Two ingredients are missing and named
+(BOTH SINCE DISCHARGED downstream: S2 by `Mathlib/Analysis/Matrix/StoneC1.lean`
+(2026-07-05, C^1 form) and S1 by `LF4/PhaseLift.lean` (2026-07-07, on the
+coboundary datum), whose `projectedFlow_schrodinger_form` is the assembled
+capstone; this module's staging remarks describe the honest scope of THIS
+file):
 
   (S1) **The projective-to-vector phase lift.** The ray-level representation
        `U (s+t) • p = (U s * U t) • p` only forces `U (s+t)` and `U s * U t`

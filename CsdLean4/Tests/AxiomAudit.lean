@@ -79,6 +79,8 @@ import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.ProjectedDynamics
+import CsdLean4.LF4.PhaseLift
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing
@@ -2870,6 +2872,54 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.expNegITH_unitary_group_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.expNegITH_unitary_group_zero
+
+-- W5-S1: the projective-to-vector phase lift. Phase rigidity (the kernel of
+-- U(N) → PU(N) is the circle: unitaries acting identically on every ray differ
+-- by a unit phase) extracts the U(1) cocycle of the projected-flow family
+-- (projectedFlow_phase_cocycle, the named obstruction), which obeys the
+-- 2-cocycle law (phase_cocycle_identity). The coboundary datum b (the honest
+-- S1 residual input: H²(ℝ,U(1)) ≠ 0 algebraically, so some input is genuinely
+-- required) upgrades the family to a GENUINE vector-level one-parameter
+-- unitary group realising the same flow (projectedFlow_phase_lift). Wired to
+-- the S2 C^1 Stone theorem this gives the W5 capstone: the projected flow is
+-- exp(-itH)-conjugation on rays for a Hermitian H
+-- (projectedFlow_schrodinger_form). Non-vacuity: the whole chain fires
+-- end-to-end on trivialKahlerOnticSetup with U = 1, c = 1, b = 1, H = 0.
+/-- info: 'Projectivization.exists_unit_smul_of_smul_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_unit_smul_of_smul_eq_smul
+
+/-- info: 'Projectivization.smul_eq_smul_of_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.smul_eq_smul_of_eq_smul
+
+/-- info: 'Matrix.UnitaryGroup.unit_smul_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.UnitaryGroup.unit_smul_mem
+
+/-- info: 'CSD.LF4.projectedFlow_phase_cocycle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_phase_cocycle
+
+/-- info: 'CSD.LF4.phase_cocycle_identity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.phase_cocycle_identity
+
+/-- info: 'CSD.LF4.projectedFlow_phase_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_phase_lift
+
+/-- info: 'CSD.LF4.projectedFlow_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_schrodinger_form
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_phase_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_phase_lift
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_schrodinger_form
 
 -- D1c-1: the concrete compact-Kähler SectorData that carries the genuine
 -- measure-preserving Φ = kFlow ≠ id (structural discharge of the "Φ = id in the

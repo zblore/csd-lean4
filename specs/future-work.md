@@ -59,15 +59,25 @@ dynamics`. W1 (Wigner) + W4 (CCR obstruction) done; W-2/W-3/W-5 assemble the bri
 foundational-triple, no global axioms. **W-5-S2 finite-dim Stone: DONE** (C^1 form,
 `Mathlib/Analysis/Matrix/StoneC1.lean`, commit 23b2a36 -- differentiable one-parameter unitary group =
 `exp(t.A)`, generator recovered; the CompleteSpace instance-diamond blocker resolved via the C^*-algebra
-norm; full-continuity Stone is the named sub-residual). **Remaining residues:** W-5-S1 (vector-level
-phase-lift, kill the U(1) cocycle) and the W-3 clopen datum (continuity of `t↦projectedFlow t` + PU(N)
+norm; full-continuity Stone is the named sub-residual). **W-5-S1 phase lift: DONE 2026-07-07**
+(`LF4/PhaseLift.lean` + `Mathlib/LinearAlgebra/Projectivization/PhaseRigidity.lean`): phase rigidity
+(ker `U(N)→PU(N)` = the circle, via `LinearMap.exists_eq_smul_id_of_forall_notLinearIndependent`)
+extracts the `U(1)` cocycle of the projected-flow family (`projectedFlow_phase_cocycle`, the named
+obstruction), the 2-cocycle law is proved (`phase_cocycle_identity`), and the coboundary datum `b`
+(the honest cohomological input -- `H²(ℝ,U(1)) ≠ 0` algebraically, so some input is genuinely required)
+yields the GENUINE vector-level one-parameter unitary group realising the same flow
+(`projectedFlow_phase_lift`). Wired to S2 this closes the **W5 capstone**
+`projectedFlow_schrodinger_form`: projected CSD flow = `exp(-itH)`-conjugation on rays, `H` Hermitian
+recovered. Non-vacuity end-to-end on the trivial witness. Named follow-ons: Bargmann (continuity ⇒
+coboundary datum, kills S1's input for continuous flows) and full-continuity Stone (S2's input).
+**Remaining residue:** the W-3 clopen datum (continuity of `t↦projectedFlow t` + PU(N)
 disconnected in the FS-isometry group). Leave the P3 tensor derivation alone until there is a paper proof.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
 | **W-2** | `LF4/KahlerOnticSetup.lean`: the `structure KahlerOnticSetup N` interface (8 genuine fields + 2 honest Kähler-geometry placeholders, NO global axioms; `trivialKahlerOnticSetup` witness; projective target = Wigner's). | none (interface) | **M** | **DONE 2026-07-05** (`53ad012`). |
 | **W-3** | `LF4/UnitarySelection.lean`: transProb-preservation (a HYPOTHESIS, not derived from Liouville) ⇒ unitary ∨ antiunitary via `wigner_rigidity_unitaryGroup`; continuous-from-id ⇒ unitary branch, STAGED on the clopen datum (connectedness on `PreconnectedSpace ℝ` proved). | W-2, Wigner | **M/L** | **DONE 2026-07-05** (`c119ffc`). Residue: the clopen datum. |
-| **W-5** | `LF4/ProjectedDynamics.lean`: `projectedFlow_eq_unitary_family` (projected flow = projective action of a one-parameter unitary family) + ray-level group law under explicit hypotheses + `expNegITH_unitary_group` (converse: `exp(-itH)` a genuine unitary group from Hermitian H). `U_t=exp(-itH)`-for-the-flow STAGED. | W-2, W-3 | **L** | **DONE 2026-07-05** (`ff97830`). Residues S1 (phase lift) + S2 (finite-dim Stone). |
+| **W-5** | `LF4/ProjectedDynamics.lean`: `projectedFlow_eq_unitary_family` (projected flow = projective action of a one-parameter unitary family) + ray-level group law under explicit hypotheses + `expNegITH_unitary_group` (converse: `exp(-itH)` a genuine unitary group from Hermitian H). `U_t=exp(-itH)`-for-the-flow STAGED. | W-2, W-3 | **L** | **DONE 2026-07-05** (`ff97830`). Residues S2 (finite-dim Stone) DONE 2026-07-05 + S1 (phase lift) DONE 2026-07-07 (`LF4/PhaseLift.lean`, capstone `projectedFlow_schrodinger_form`). |
 
 **Follow-on (auditor-recommended, S):** inhabit the W-3 clopen datum on a non-trivial (`Φ≠id`, e.g.
 `kFlow`) `KahlerOnticSetup`, not only the identity witness, so the unitary-branch selection is non-vacuous
