@@ -82,6 +82,14 @@ DERIVED (`projUnitary_isClopen_of_bargmann_continuous`) and the selection fires
 continuity of the Bargmann function on `ℙ³` (local sections of `mk`; would derive the scalar datum
 from raw flow continuity) and inhabiting the continuity datum on a non-trivial (`Φ≠id`)
 `KahlerOnticSetup`. **ALL THREE W-RESIDUES ARE NOW CLOSED** (S1, S2, W-3 clopen); EC-6 unblocks.
+**Substrate-linkage fix (2026-07-07):** a provenance audit found the W-series theorems consumed only
+`d.projectedFlow` — the `KahlerOnticSetup` substrate fields (`flow`, `pi`, the descent equation
+`projectable`) were inert, so the "Schrödinger from the ontic sector" reading was carried-but-unused
+scaffolding. Fixed by `sigmaFlow_schrodinger_form` (`LF4/PhaseLift.lean`), which consumes
+`d.projectable`/`d.flow`/`d.pi` to land `d.pi (d.flow t x) = exp(-itH) • d.pi x` — the deterministic
+Σ-flow, projected, IS Schrödinger evolution. Enforced by `scripts/check-sector-linkage.sh`. (The Born
+pillar has the analogous gap — its general-`N` frequency capstones run on abstract `CPN` + `μ_FS`, not
+an `OnticSetup` with a deterministic Σ-flow; wiring that through is the D1/FND-1 frontier, HY-5 below.)
 Leave the P3 tensor derivation alone until there is a paper proof.
 
 | Ref | Item | Depends on | Cx | Notes |
@@ -118,6 +126,7 @@ So the W-series completes "QM dynamics from the posited sector", not the deep re
 | **HY-2** | Vacuity re-audit of the earliest Empirical files | — | **M** | Completes the older-code health pass. |
 | **HY-3** | Doc-currency sweep: CLAUDE.md `SectorData` field drift (MulAction migration) + stale plan rows | — | **S** | Audit-flagged. |
 | **HY-4** | Deprecation sweep (`EuclideanSpace.single_apply → PiLp.single_apply` etc.) | — | **S** | Keeps the build warning-clean. |
+| **HY-5** ★ | Born-pillar Σ-linkage: route the general-`N` Born-frequency capstones (`born_frequency_convergence_N`, `povm_born_frequency_volume`) through an `OnticSetup` built from a Σ with a DETERMINISTIC flow, not the abstract i.i.d. SLLN engine on bare `CPN`+`μ_FS`. The provenance-audit analogue of the W-series `sigmaFlow` fix, on the Born side. | LF1 `OnticSetup`, D1c `SectorData` flows | **L** | Flagged 2026-07-07. Overlaps FND-1/D1 (concrete `SectorData` still carry `Φ=id`); partly consolidation, partly the deep frontier. Guardable by extending `check-sector-linkage.sh`. |
 
 ## Pillar completeness (named deferrals)
 

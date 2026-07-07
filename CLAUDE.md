@@ -64,10 +64,27 @@ lake env lean CsdLean4/LF1/MainTheorem.lean
 
 # Update dependencies (after editing lakefile.toml)
 lake update
+
+# Static pre-commit guards (grep-only, seconds; not a substitute for the build):
+bash scripts/check-axiom-imports.sh    # every AxiomAudit pin is import-reachable
+bash scripts/check-sector-linkage.sh   # the KahlerOnticSetup substrate is not carried-but-unused
 ```
 
 The build configuration lives in `lakefile.toml` (not `lakefile.lean`); Mathlib
 is pinned by `rev` there, bumped in lockstep with `lean-toolchain`.
+
+**Sector-linkage guard (`scripts/check-sector-linkage.sh`).** A 2026-07-07 audit
+found that the W-series "Schrödinger from the ontic sector" theorems threaded a
+`KahlerOnticSetup` argument through their signatures but consumed only
+`.projectedFlow` — the substrate fields (`flow`, `pi`, and the descent equation
+`projectable`) were inert, so the theorems were really statements about an
+arbitrary ray-space self-map and the "dynamics from Σ" reading was unearned. The
+fix is `CSD.LF4.sigmaFlow_schrodinger_form` (`LF4/PhaseLift.lean`), which consumes
+`d.projectable`/`d.flow`/`d.pi` to land `d.pi (d.flow t x) = exp(-itH) • d.pi x`.
+The guard enforces that this linkage stays: it fails if `.projectable` (the
+descent equation) is consumed by no declaration outside its def+witness file. Run
+it whenever touching the W-series or the sector interface. A `lake build` cannot
+see this vacuity; the guard exists precisely for that blind spot.
 
 The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` plus a clean `lake build CsdLeanTests` with no errors and no `sorry`s constitutes a verified proof plus a green regression suite.
 

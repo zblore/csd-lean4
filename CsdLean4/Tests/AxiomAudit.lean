@@ -2924,6 +2924,21 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup_schrodinger_form
 
+-- The Σ-level capstone: the SUBSTRATE-CONSUMING form. Unlike the ray-level
+-- schrodinger_form (which touches only d.projectedFlow), sigmaFlow_schrodinger_form
+-- consumes d.projectable + d.flow + d.pi to conclude the deterministic ontic
+-- Σ-flow, projected through π, IS exp(-itH)-conjugation: d.pi (d.flow t x) =
+-- exp(-itH) • d.pi x. This is the theorem that makes the KahlerOnticSetup
+-- substrate load-bearing (guarded by scripts/check-sector-linkage.sh); without
+-- it the sector object is carried-but-unused scaffolding.
+/-- info: 'CSD.LF4.sigmaFlow_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.sigmaFlow_schrodinger_form
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_sigmaFlow_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_sigmaFlow_schrodinger_form
+
 -- W3 clopen-datum closure: the Bargmann discriminator. The Bargmann invariant
 -- (normalised triple product on ℙ³) is preserved by unitaries and CONJUGATED
 -- by the antiunitary conjProj; on a probe triple with Im Δ ≠ 0 (exists for

@@ -285,6 +285,51 @@ theorem projectedFlow_schrodinger_form
   rw [hgen]
   exact hexp t
 
+/-! ## The Σ-level capstone: the ontic flow projects to Schrödinger evolution
+
+The ray-level `projectedFlow_schrodinger_form` above is a statement about
+`d.projectedFlow` alone. This next theorem is the one that makes the sector
+substrate LOAD-BEARING: it consumes `d.projectable` (the descent equation
+`pi (flow t x) = projectedFlow t (pi x)`) together with the ontic flow
+`d.flow` and the projection `d.pi` to conclude that the DETERMINISTIC Σ-flow,
+pushed to ray space through `π`, is `exp(-itH)`-conjugation. This is the honest
+"Schrödinger dynamics from the posited ontic sector" statement — the whole
+point of packaging the dynamics as a `KahlerOnticSetup`. -/
+
+/-- **The Σ-level Schrödinger capstone (PROVED; the substrate-consuming form).**
+Under the same S1 (coboundary) + S2 (C¹) data as `projectedFlow_schrodinger_form`,
+the projection of the deterministic ontic flow is a one-parameter unitary
+(Schrödinger) evolution on rays:
+
+    `∀ t x, d.pi (d.flow t x) = exp(-i t H) • d.pi x`,
+
+for a Hermitian generator `H`. Unlike the ray-level form, this GENUINELY
+consumes the sector fields `d.projectable`, `d.flow`, `d.pi`: it is the
+statement that the CSD ontic dynamics on `Σ`, viewed through the operational
+projection `π`, IS finite-dimensional Schrödinger evolution. It is the forward
+direction of the dynamics spine landed on the substrate, not merely on the
+already-projected map. -/
+theorem sigmaFlow_schrodinger_form
+    (d : KahlerOnticSetup N)
+    (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
+    (hfam : ∀ t p, d.projectedFlow t p = U t • p)
+    (c : ℝ → ℝ → ℂ)
+    (hc : ∀ s t, (U (s + t) : Matrix (Fin N) (Fin N) ℂ)
+        = c s t • ((U s : Matrix (Fin N) (Fin N) ℂ)
+            * (U t : Matrix (Fin N) (Fin N) ℂ)))
+    (b : ℝ → ℂ) (hb : ∀ t, ‖b t‖ = 1)
+    (hcob : ∀ s t, c s t * b (s + t) = b s * b t)
+    (A : Matrix (Fin N) (Fin N) ℂ) (hA : star A = -A)
+    (hderiv : ∀ t, HasDerivAt
+        (fun τ : ℝ => (phaseLiftFamily U b hb τ : Matrix (Fin N) (Fin N) ℂ))
+        ((phaseLiftFamily U b hb t : Matrix (Fin N) (Fin N) ℂ) * A) t) :
+    ∃ H : Matrix (Fin N) (Fin N) ℂ, ∃ hH : H.IsHermitian,
+      ∀ t x, d.pi (d.flow t x) = schrodingerUnitary hH t • d.pi x := by
+  obtain ⟨H, hH, hray⟩ :=
+    projectedFlow_schrodinger_form d U hfam c hc b hb hcob A hA hderiv
+  refine ⟨H, hH, fun t x => ?_⟩
+  rw [d.projectable t x, hray t (d.pi x)]
+
 /-! ## Non-vacuity on the `trivialKahlerOnticSetup` witness -/
 
 /-- The phase lift FIRES on the inhabitation witness: the constant family
@@ -315,6 +360,32 @@ theorem trivialKahlerOnticSetup_schrodinger_form
       ∀ t p, (trivialKahlerOnticSetup N p₀).projectedFlow t p
         = schrodingerUnitary hH t • p := by
   apply projectedFlow_schrodinger_form (trivialKahlerOnticSetup N p₀)
+    (fun _ => 1) (fun _ p => (one_smul _ p).symm)
+    (fun _ _ => 1) (fun _ _ => by simp)
+    (fun _ => 1) (fun _ => norm_one) (fun _ _ => rfl)
+    (0 : Matrix (Fin N) (Fin N) ℂ) (by simp)
+  intro t
+  have h1 : (fun τ : ℝ =>
+      (phaseLiftFamily (N := N) (fun _ => 1) (fun _ => 1) (fun _ => norm_one) τ
+        : Matrix (Fin N) (Fin N) ℂ)) = fun _ => 1 := by
+    funext τ
+    rw [phaseLiftFamily_val, one_smul]
+    rfl
+  rw [h1, mul_zero]
+  exact hasDerivAt_const t 1
+
+/-- The Σ-level capstone FIRES on the inhabitation witness: the identity ontic
+flow (`flow t = id`, `pi = id`, `projectable` by `rfl`) projects to the
+identity `exp(-it·0) = 1` on rays. Confirms the substrate-consuming form's
+hypotheses are jointly dischargeable and the descent equation genuinely closes
+the loop (`d.pi (d.flow t x) = x = 1 • x`). -/
+theorem trivialKahlerOnticSetup_sigmaFlow_schrodinger_form
+    (N : ℕ) (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    ∃ H : Matrix (Fin N) (Fin N) ℂ, ∃ hH : H.IsHermitian,
+      ∀ t x, (trivialKahlerOnticSetup N p₀).pi
+          ((trivialKahlerOnticSetup N p₀).flow t x)
+        = schrodingerUnitary hH t • (trivialKahlerOnticSetup N p₀).pi x := by
+  apply sigmaFlow_schrodinger_form (trivialKahlerOnticSetup N p₀)
     (fun _ => 1) (fun _ p => (one_smul _ p).symm)
     (fun _ _ => 1) (fun _ _ => by simp)
     (fun _ => 1) (fun _ => norm_one) (fun _ _ => rfl)
