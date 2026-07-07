@@ -25,8 +25,16 @@ decoherence / purity-drop witness (LF6-B). The **A5 sector origin has first onra
 (2026-06-29, `LF4/TypicalityForcing.lean`): typicality is forced by the LLN (papers A&B),
 `μFS` is the symmetry-canonical sampling measure (`fubiniStudy_forced_by_symmetry`), and the
 single-flow ergodic route is ruled out — but the sector is not yet derived from the dynamics.
+**The W-series dynamics spine is COMPLETE with all residues closed (2026-07-07):** the projected
+sector flow is `exp(-itH)`-conjugation on rays (`projectedFlow_schrodinger_form`,
+`LF4/PhaseLift.lean`) via Wigner selection + the Bargmann branch discriminator
+(`LF4/BargmannSelection.lean`) + the U(1) phase lift + C¹ Stone (`StoneC1.lean`) — the Schrödinger
+pillar stands beside the Born pillar on the same sector interface (see the README pillar ledger).
+The general-`N` entangled tier core is likewise CLOSED (2026-07-04, LF6-C/D/E: CGLMP ∀`d`, GHZ ∀`n`).
+**Work programme order (user-set 2026-07-07): the TH track (TH-2→TH-4 + TH-1 concentration
+residual) → the CV track (CV-1 onwards) → EC (deprioritised).**
 **The open frontier remains D1's deeper strata** ([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6):
-the **general-`N`** entangled tier, the A5 sector origin (derive `(π,G)` from `Φ`), and the
+the A5 sector origin (derive `(π,G)` from `Φ`), and the
 Born-from-volume `SectorData` instances, which still carry `Φ = id` (the D1c variants
 `kSectorDataFlow` / `cpSectorDataFlow` thread a genuine `Φ ≠ id` into concrete instances but do
 not yet discharge A5). Axiom posture and the two-strata (operational Gleason vs ontic volume)

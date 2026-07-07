@@ -108,7 +108,7 @@ So the W-series completes "QM dynamics from the posited sector", not the deep re
 | **EC-3** | Gidney measurement adder as a verified circuit (task #36) | measurement-discipline DSL ext (EC-6) | **M/L** | The other score lever. |
 | **EC-4** | Run their Rust harness for a leaderboard entry (task #7) | competitive Rust circuit | **—** | User machine action; out of Lean scope. |
 | **EC-5** | Full doubling layout assembly (~1200 wires) | router (done) | **M** | Declared low-payoff mechanical residue. |
-| **EC-6** | Measurement-discipline DSL extension for Gidney (task #22) | W-residues first | **L** (multi-tranche) | **DECIDED 2026-07-05: opted IN, sequenced after the W-residues.** Gates EC-3. First tranche = an AND-based adder (the Cuccaro adder is carry-restoring, no AND to uncompute); then the Boolean→amplitude bridge (`denote↔toEuclideanLin`); then the net-channel theorem (measure+correct = identity-on-data ⊗ ancilla-reset) via the QuantumInfo CPTP/measurement machinery. Genuine verified theorem; larger trusted base. L5-a..d proved the amplitude MODEL of the primitive already. |
+| **EC-6** | Measurement-discipline DSL extension for Gidney (task #22) | TH + CV tracks first | **L** (multi-tranche) | **DECIDED 2026-07-05: opted IN.** **RE-SEQUENCED 2026-07-07: behind the TH and CV tracks** (was: after the W-residues, which are now all closed). Gates EC-3. First tranche = an AND-based adder (the Cuccaro adder is carry-restoring, no AND to uncompute); then the Boolean→amplitude bridge (`denote↔toEuclideanLin`); then the net-channel theorem (measure+correct = identity-on-data ⊗ ancilla-reset) via the QuantumInfo CPTP/measurement machinery. Genuine verified theorem; larger trusted base. L5-a..d proved the amplitude MODEL of the primitive already. |
 
 ## Hygiene / audits
 
@@ -119,13 +119,28 @@ So the W-series completes "QM dynamics from the posited sector", not the deep re
 | **HY-3** | Doc-currency sweep: CLAUDE.md `SectorData` field drift (MulAction migration) + stale plan rows | — | **S** | Audit-flagged. |
 | **HY-4** | Deprecation sweep (`EuclideanSpace.single_apply → PiLp.single_apply` etc.) | — | **S** | Keeps the build warning-clean. |
 
-## Priority read (recommendation, 2026-07-04)
+## Pillar completeness (named deferrals)
 
-- **Thesis goal:** only the ★ rows move it. **FND-2** (D1c-entangled, M) is the most tractable genuine A5
-  attack; **FND-1** (A5→D1, XL) is the prize but has no clean on-ramp. Everything else is breadth or
-  consolidation, however valuable.
-- **Manuscript breadth:** finish the thermodynamics track (**TH-1→TH-4**) and the CV track
-  (**CV-1→CV-3**) — strong, well-supported, land clean "CSD covers ordinary QM / stat-mech / CV" claims.
-- **ecdsa.fail artifact:** **EC-1** (safegcd termination, L) is the one piece that would make the inversion
-  genuinely VERIFIED end-to-end.
+The pillar map of ordinary QM, for manuscript honesty (see the README pillar ledger). Two textbook
+pillars are deliberately NOT in the work programme; they are recorded here so their absence is a
+decision, not an oversight.
+
+| Ref | Item | Depends on | Cx | Notes |
+|---|---|---|---|---|
+| **P3** | Tensor-product / composite-system derivation (why `⊗`) | a paper proof first | **XL** | PARKED by standing instruction; composite structure is currently POSITED per instance (the LF6 entangled setups are built by hand at fixed `N`). |
+| **IP-1** | Identical particles / spin-statistics (symmetrisation postulate, boson/fermion sectors) | P3 | **XL** | NOT in the corpus or plans (recorded 2026-07-07 for pillar-map completeness). Out of current scope; any "CSD covers ordinary QM" claim should name this deferral. |
+
+## Priority read (user-set sequencing, 2026-07-07; supersedes the 2026-07-04 recommendation)
+
+- **NOW — finish the thermodynamics track.** TH-1's core is DONE (expectation form); next are the
+  **TH-1 Levy-concentration residual** (if tractable in Mathlib) and **TH-2 (second law) → TH-3
+  (temperature / free energy) → TH-4 (Landauer)**.
+- **THEN — the CV track, CV-1 onwards:** finite position observable → finite momentum (finite
+  Fourier) → approximate CCR `‖[Q_N,P_N]−iℏ·1‖ ≤ ε` → oscillator truncation. The
+  continuous-variables pillar.
+- **DEPRIORITISED — EC-6 / the ecdsa.fail Tier-X fork:** still opted in, but sequenced BEHIND the TH
+  and CV tracks (previously "after the W-residues"; the W-residues are now all closed, 2026-07-07).
+  Same for the other EC rows.
+- **Thesis goal (unchanged):** only the ★ rows move it. **FND-2** (D1c-entangled, M) is the most
+  tractable genuine A5 attack; **FND-1** (A5→D1, XL) is the prize but has no clean on-ramp.
 - **Cheap wins, clear anytime:** **LF6-1** (S), **HY-3** + **HY-4** (S).
