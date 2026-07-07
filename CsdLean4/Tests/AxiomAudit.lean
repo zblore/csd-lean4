@@ -66,6 +66,7 @@ import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.CV.ApproxCCR
 import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
+import CsdLean4.Thermo.FreeEnergy
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -6653,5 +6654,27 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.Thermo.entropy_production_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.entropy_production_nonneg
+
+-- TH3: temperature, free energy, and the Gibbs variational principle. The Gibbs
+-- state ρ_β = exp(-βH)/Z (built via the Hermitian functional calculus) minimises
+-- the free energy F(ρ) = Re Tr(ρH) - T·S(ρ) among all density operators, with
+-- minimum F(ρ_β) = -T log Z. Proof: β(F(ρ) - F(ρ_β)) = D(ρ ‖ ρ_β) ≥ 0 by Klein,
+-- using the crux log(ρ_β) = -βH - (log Z)·1 (cfc_eq_conj_diagonal on the
+-- H-eigenbasis). Foundational-triple; the variational characterisation of
+-- thermal equilibrium. Requires [Nonempty n].
+/-- info: 'CSD.Thermo.cfc_log_gibbsState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.cfc_log_gibbsState
+
+/-- info: 'CSD.Thermo.gibbsState_posDef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.gibbsState_posDef
+
+/-- info: 'CSD.Thermo.gibbsState_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.gibbsState_trace
+
+/-- info: 'CSD.Thermo.gibbs_free_energy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.gibbs_free_energy_eq
+
+/-- info: 'CSD.Thermo.gibbs_free_energy_min' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.gibbs_free_energy_min
 
 end CSD.Tests.AxiomAudit

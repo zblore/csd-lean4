@@ -2,7 +2,7 @@
 
 **Status: TH1 DONE 2026-07-05 (EXPECTATION core; concentration/Levy staged as the named
 residual); TH2 DONE 2026-07-07 (the H-theorem / second law as pinching entropy monotonicity);
-TH3-TH5 planned.** The thermodynamics track formalises the
+TH3 DONE 2026-07-07 (temperature / free energy / Gibbs variational principle); TH4-TH5 planned.** The thermodynamics track formalises the
 statistical-mechanical content that CSD's foundations already imply: Born weights are equilibrium
 volume fractions, typicality is forced by the law of large numbers, and the de-isolation flow is
 measure-preserving (Liouville). Thermodynamics is the native language of that structure, not a
@@ -96,6 +96,23 @@ Define the Gibbs state as the max-entropy state at fixed mean energy; temperatur
 multiplier / `∂S/∂E`; free energy `F = E − TS`. Prove the Gibbs variational principle (Gibbs state
 minimises free energy) on finite-dim density operators. Cat-1-adjacent (general QM statistical
 mechanics with a CSD-reading docstring).
+
+**DONE 2026-07-07, `CsdLean4/Thermo/FreeEnergy.lean`.** Landed:
+- `gibbsState H hH β = exp(-βH)/Z`, built through the Hermitian functional calculus
+  `hH.cfc (x ↦ exp(-βx)/Z)`, `Z = partitionFn = ∑ exp(-βλᵢ)`; `gibbsState_posDef` (unitary conjugate
+  of the positive diagonal, via `mul_mul_conjTranspose_same`) and `gibbsState_trace = 1` — a genuine
+  density.
+- `cfc_log_gibbsState` (the crux): `log(ρ_β) = −β·H − (log Z)·1`, both sides `U · diag · Uᴴ` on
+  `H`'s eigenbasis (`cfc_eq_conj_diagonal` at the H-diagonalisation), diagonals matched by
+  `log(exp(-βλ)/Z) = −βλ − log Z`.
+- `freeEnergy H T ρ = Re Tr(ρH) − T·S(ρ)`; `gibbs_free_energy_eq`: `F(ρ_β) = −T log Z`.
+- `gibbs_free_energy_min` (**the variational principle**): `F(ρ_β) ≤ F(ρ)` for every density `ρ` at
+  `β > 0`. Proof: `β(F(ρ) − F(ρ_β)) = D(ρ ‖ ρ_β) ≥ 0` by Klein's inequality (`relEntropy_nonneg`),
+  using the log-linear form of `log ρ_β`.
+- HONEST SCOPE: the inequality (not the equality-iff-Gibbs strict case); `[Nonempty n]` (a Gibbs
+  state needs ≥1 level); a QM-stat-mech theorem with a CSD reading. Foundational-triple; Gleason-free.
+  AxiomAudit-pinned (`gibbs_free_energy_min`, `gibbs_free_energy_eq`, `cfc_log_gibbsState`,
+  `gibbsState_posDef`, `gibbsState_trace`).
 
 ### TH4 — Landauer's bound (information thermodynamics)
 The thermodynamic cost of erasure / measurement: erasing one bit dissipates `≥ kT ln 2`. Connects the
