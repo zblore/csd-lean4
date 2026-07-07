@@ -36,7 +36,7 @@ Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
 | **TH-1** | Canonical typicality: `E_{μFS}[ρ_S] = I/d_S` (avg) + Levy stretch | μ_FS + partial trace | **M** | Flagship; IN PROGRESS 2026-07-04. |
-| **TH-2** | Second law: coarse-grained vN entropy monotone under the de-isolation flow | TH-1 / LF6-B.3 | **M** | Generalises the single-step entropy witness. |
+| ~~TH-2~~ | Second law: coarse-grained vN entropy monotone under the de-isolation flow | TH-1 / LF6-B.3 | **M** | **DONE 2026-07-07** (`Thermo/SecondLaw.lean`): the H-theorem `vonNeumannEntropy_le_pinching` (`S(ρ) ≤ S(pinch ρ)`) + `entropy_reversible_then_coarsegrain` + `entropy_production_nonneg`, via Klein. |
 | **TH-3** | Temperature / free energy: Gibbs max-entropy state, `T=∂S/∂E`, `F=E−TS`, variational principle | vN entropy (K1) | **M** | |
 | **TH-4** | Landauer erasure bound `≥ kT ln2` | TH-3, QEC tier | **M** | Info-thermodynamics. |
 | **TH-5** | ETH / fluctuation theorem (Jarzynski/Crooks) | TH-1..3 | **L** | Stretch. |
@@ -132,9 +132,9 @@ decision, not an oversight.
 
 ## Priority read (user-set sequencing, 2026-07-07; supersedes the 2026-07-04 recommendation)
 
-- **NOW — finish the thermodynamics track.** TH-1's core is DONE (expectation form); next are the
-  **TH-1 Levy-concentration residual** (if tractable in Mathlib) and **TH-2 (second law) → TH-3
-  (temperature / free energy) → TH-4 (Landauer)**.
+- **NOW — finish the thermodynamics track.** TH-1's core is DONE (expectation form) and **TH-2 (the
+  second law / H-theorem) is DONE 2026-07-07**; next are **TH-3 (temperature / free energy) → TH-4
+  (Landauer)**, plus the **TH-1 Levy-concentration residual** (if tractable in Mathlib).
 - **THEN — the CV track, CV-1 onwards:** finite position observable → finite momentum (finite
   Fourier) → approximate CCR `‖[Q_N,P_N]−iℏ·1‖ ≤ ε` → oscillator truncation. The
   continuous-variables pillar.

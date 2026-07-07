@@ -65,6 +65,7 @@ import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.CV.ApproxCCR
 import CsdLean4.Thermo.CanonicalTypicality
+import CsdLean4.Thermo.SecondLaw
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -6619,5 +6620,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.Thermo.canonical_typicality_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.canonical_typicality_expectation
+
+-- TH2: the second law as coarse-grained entropy monotonicity. Pinching
+-- (dephasing to the pointer-basis diagonal) never decreases the von Neumann
+-- entropy -- S(rho) <= S(pinch rho) -- via Klein's inequality against the
+-- diagonal and the cross-term identity Tr(rho log(pinch rho)) = -S(pinch rho).
+-- The fine-grained unitary step conserves entropy (vonNeumannEntropy_conj_unitary);
+-- the coarse-graining step produces it: the H-theorem form of the second law.
+-- Honest scope: strict-positivity (Klein support) hypothesis; a specific
+-- coarse-graining, not a universal second law; the pure-state instance is
+-- LF6-B.3. Foundational-triple.
+/-- info: 'CSD.Thermo.vonNeumannEntropy_le_pinching' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.vonNeumannEntropy_le_pinching
+
+/-- info: 'CSD.Thermo.entropy_reversible_then_coarsegrain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.entropy_reversible_then_coarsegrain
+
+/-- info: 'CSD.Thermo.entropy_production_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.entropy_production_nonneg
 
 end CSD.Tests.AxiomAudit
