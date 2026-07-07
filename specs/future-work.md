@@ -70,18 +70,29 @@ yields the GENUINE vector-level one-parameter unitary group realising the same f
 `projectedFlow_schrodinger_form`: projected CSD flow = `exp(-itH)`-conjugation on rays, `H` Hermitian
 recovered. Non-vacuity end-to-end on the trivial witness. Named follow-ons: Bargmann (continuity ⇒
 coboundary datum, kills S1's input for continuous flows) and full-continuity Stone (S2's input).
-**Remaining residue:** the W-3 clopen datum (continuity of `t↦projectedFlow t` + PU(N)
-disconnected in the FS-isometry group). Leave the P3 tensor derivation alone until there is a paper proof.
+**W-3 clopen datum: CLOSED 2026-07-07** (`LF4/BargmannSelection.lean` +
+`Mathlib/LinearAlgebra/Projectivization/Bargmann.lean`): the Bargmann invariant (normalised triple
+product on `ℙ³`, preserved by unitaries, CONJUGATED by `conjProj`) separates the Wigner branches at
+the distinct values `Δ` vs `conj Δ` on a probe triple with `Im Δ = 1/4 ≠ 0` (exists ∀ `N ≥ 2`) --
+(ii) (PU(N) disconnected in the FS-isometry group) is thereby PROVED (incl. exclusivity of the
+Wigner disjunction, `not_projUnitary_and_projAntiunitary`), and (i) is REDUCED to the scalar datum
+"the Bargmann observable `t ↦ Δ(Φ_t p,Φ_t q,Φ_t r)` is continuous", from which the clopen set is
+DERIVED (`projUnitary_isClopen_of_bargmann_continuous`) and the selection fires
+(`projectedFlow_unitary_of_bargmann_continuous`); `N ≤ 1` needs no datum. Named follow-ons:
+continuity of the Bargmann function on `ℙ³` (local sections of `mk`; would derive the scalar datum
+from raw flow continuity) and inhabiting the continuity datum on a non-trivial (`Φ≠id`)
+`KahlerOnticSetup`. **ALL THREE W-RESIDUES ARE NOW CLOSED** (S1, S2, W-3 clopen); EC-6 unblocks.
+Leave the P3 tensor derivation alone until there is a paper proof.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
 | **W-2** | `LF4/KahlerOnticSetup.lean`: the `structure KahlerOnticSetup N` interface (8 genuine fields + 2 honest Kähler-geometry placeholders, NO global axioms; `trivialKahlerOnticSetup` witness; projective target = Wigner's). | none (interface) | **M** | **DONE 2026-07-05** (`53ad012`). |
-| **W-3** | `LF4/UnitarySelection.lean`: transProb-preservation (a HYPOTHESIS, not derived from Liouville) ⇒ unitary ∨ antiunitary via `wigner_rigidity_unitaryGroup`; continuous-from-id ⇒ unitary branch, STAGED on the clopen datum (connectedness on `PreconnectedSpace ℝ` proved). | W-2, Wigner | **M/L** | **DONE 2026-07-05** (`c119ffc`). Residue: the clopen datum. |
+| **W-3** | `LF4/UnitarySelection.lean`: transProb-preservation (a HYPOTHESIS, not derived from Liouville) ⇒ unitary ∨ antiunitary via `wigner_rigidity_unitaryGroup`; continuous-from-id ⇒ unitary branch, STAGED on the clopen datum (connectedness on `PreconnectedSpace ℝ` proved). | W-2, Wigner | **M/L** | **DONE 2026-07-05** (`c119ffc`). Residue (clopen datum) CLOSED 2026-07-07 via the Bargmann discriminator (`LF4/BargmannSelection.lean`). |
 | **W-5** | `LF4/ProjectedDynamics.lean`: `projectedFlow_eq_unitary_family` (projected flow = projective action of a one-parameter unitary family) + ray-level group law under explicit hypotheses + `expNegITH_unitary_group` (converse: `exp(-itH)` a genuine unitary group from Hermitian H). `U_t=exp(-itH)`-for-the-flow STAGED. | W-2, W-3 | **L** | **DONE 2026-07-05** (`ff97830`). Residues S2 (finite-dim Stone) DONE 2026-07-05 + S1 (phase lift) DONE 2026-07-07 (`LF4/PhaseLift.lean`, capstone `projectedFlow_schrodinger_form`). |
 
-**Follow-on (auditor-recommended, S):** inhabit the W-3 clopen datum on a non-trivial (`Φ≠id`, e.g.
-`kFlow`) `KahlerOnticSetup`, not only the identity witness, so the unitary-branch selection is non-vacuous
-beyond the base case. The one place a real topological posit is compressed into a single `Prop`.
+**Follow-on (auditor-recommended, S):** inhabit the W-3 continuity datum (now the Bargmann-observable
+continuity, after the 2026-07-07 closure) on a non-trivial (`Φ≠id`, e.g. `kFlow`) `KahlerOnticSetup`,
+not only the identity witness, so the unitary-branch selection is non-vacuous beyond the base case.
 
 **Honest posture of the W-series (load-bearing):** this is the FORWARD direction -- GIVEN the Kähler sector
 (as hypotheses/fields), it derives the unitary Schrödinger dynamics (via Wigner). It CONSUMES the sector

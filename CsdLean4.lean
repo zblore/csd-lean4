@@ -71,6 +71,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
 import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
 import CsdLean4.LF1.Setup
 import CsdLean4.LF1.Preparation
@@ -114,6 +115,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.UnitarySelection
+import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
 import CsdLean4.LF4.PhaseLift
 import CsdLean4.LF4.MomentMap

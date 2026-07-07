@@ -55,6 +55,16 @@ family and the disconnectedness of the antiunitary component. There is no `sorry
 and no axiom; the unitary-branch SELECTION is STAGED on the clopen datum, not
 claimed unconditionally.
 
+**Datum closure (2026-07-07, `LF4/BargmannSelection.lean`):** (ii) is now
+PROVED — the Bargmann invariant separates the branches (`Δ` vs `conj Δ` on a
+probe triple with `Im Δ ≠ 0`, which exists for `N ≥ 2`) — and (i) is REDUCED
+to the scalar datum "the Bargmann observable `t ↦ Δ(Φ_t p, Φ_t q, Φ_t r)` is
+continuous": `projUnitary_isClopen_of_bargmann_continuous` DERIVES the clopen
+hypothesis, and `projectedFlow_unitary_of_bargmann_continuous` runs the
+selection on it. For `N ≤ 1` no datum is needed
+(`projUnitary_of_dim_le_one`). This module's clopen-hypothesis form remains
+the general interface the closure feeds.
+
 ## Non-vacuity
 
 `trivialKahlerOnticSetup` (identity flow) satisfies `hTPP` (the identity is

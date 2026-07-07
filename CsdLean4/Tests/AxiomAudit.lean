@@ -78,9 +78,11 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.UnitarySelection
+import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
 import CsdLean4.LF4.PhaseLift
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
+import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing
@@ -2920,6 +2922,54 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup_schrodinger_form
+
+-- W3 clopen-datum closure: the Bargmann discriminator. The Bargmann invariant
+-- (normalised triple product on ℙ³) is preserved by unitaries and CONJUGATED
+-- by the antiunitary conjProj; on a probe triple with Im Δ ≠ 0 (exists for
+-- N ≥ 2) the two Wigner branches sit at the distinct values Δ vs conj Δ of one
+-- scalar observable of the flow. This PROVES the branch separation ((ii) of
+-- the W3 staged residual, incl. exclusivity of the Wigner disjunction) and
+-- DERIVES the clopen datum from a scalar continuity hypothesis ((i) reduced:
+-- continuity of t ↦ Δ(Φ_t p, Φ_t q, Φ_t r), the named remaining physical
+-- input; deriving IT from flow continuity needs continuity of Δ on ℙ³ = local
+-- sections of mk, the named follow-on). N ≤ 1 needs no datum
+-- (projUnitary_of_dim_le_one). Non-vacuity: the constant observable of the
+-- trivial witness fires the full selection.
+/-- info: 'Projectivization.bargmann_smul_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.bargmann_smul_unitary
+
+/-- info: 'Projectivization.bargmann_conjProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.bargmann_conjProj
+
+/-- info: 'Projectivization.bargmann_probe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.bargmann_probe
+
+/-- info: 'Projectivization.exists_bargmann_im_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_bargmann_im_ne_zero
+
+/-- info: 'CSD.LF4.not_projUnitary_and_projAntiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.not_projUnitary_and_projAntiunitary
+
+/-- info: 'CSD.LF4.projUnitary_isClopen_of_bargmann_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projUnitary_isClopen_of_bargmann_continuous
+
+/-- info: 'CSD.LF4.projectedFlow_unitary_of_bargmann_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_unitary_of_bargmann_continuous
+
+/-- info: 'CSD.LF4.projUnitary_of_dim_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projUnitary_of_dim_le_one
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_bargmann_selection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_bargmann_selection
 
 -- D1c-1: the concrete compact-Kähler SectorData that carries the genuine
 -- measure-preserving Φ = kFlow ≠ id (structural discharge of the "Φ = id in the
