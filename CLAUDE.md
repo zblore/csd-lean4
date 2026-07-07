@@ -68,6 +68,7 @@ lake update
 # Static pre-commit guards (grep-only, seconds; not a substitute for the build):
 bash scripts/check-axiom-imports.sh    # every AxiomAudit pin is import-reachable
 bash scripts/check-sector-linkage.sh   # the KahlerOnticSetup substrate is not carried-but-unused
+bash scripts/check-connectivity.sh     # docs don't overclaim end-to-end Kähler→Born/Schrödinger connectivity
 ```
 
 The build configuration lives in `lakefile.toml` (not `lakefile.lean`); Mathlib
@@ -85,6 +86,22 @@ The guard enforces that this linkage stays: it fails if `.projectable` (the
 descent equation) is consumed by no declaration outside its def+witness file. Run
 it whenever touching the W-series or the sector interface. A `lake build` cannot
 see this vacuity; the guard exists precisely for that blind spot.
+
+**Connectivity honesty (`scripts/check-connectivity.sh` + [`specs/connectivity-manifest.md`](specs/connectivity-manifest.md)) — READ BEFORE MAKING ANY "PILLAR" CLAIM.**
+A 2026-07-07 end-to-end audit found the top-level README claim ("one posited
+Kähler object yields both the Born rule and Schrödinger dynamics") was **false**:
+the Kähler fields are unconsumed placeholders, the Schrödinger chain is
+instantiated only on the trivial `Φ = id, H = 0` witness, and the Born chain runs
+on a separate abstract `CPN + μ_FS` engine with no sector object. The individual
+theorems are all real; the *connective claim* was not. The connectivity manifest
+is the single source of truth for what connects — no doc may assert a stronger
+end-to-end connection than a **CONNECTED** row there, each backed by a named
+`sorry`-free theorem. The guard forbids the retracted overclaim phrases in
+README/INDEX, requires the honesty banner, and reports whether a non-trivial
+`KahlerOnticSetup` inhabitant exists yet (currently none). **Do not reintroduce
+"single posited object / both pillars on one interface / end-to-end" framing
+until the manifest's L4∧L5∧L6 flip to CONNECTED.** The fix course is C1–C6 in the
+manifest; C1 (a genuine `Φ ≠ id` inhabitant) is the current priority.
 
 The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` plus a clean `lake build CsdLeanTests` with no errors and no `sorry`s constitutes a verified proof plus a green regression suite.
 
