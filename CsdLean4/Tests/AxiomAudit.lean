@@ -67,6 +67,7 @@ import CsdLean4.CV.ApproxCCR
 import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
 import CsdLean4.Thermo.FreeEnergy
+import CsdLean4.Thermo.Landauer
 import CsdLean4.LF2.Interface
 import CsdLean4.LF2.Preparation
 import CsdLean4.LF3.Interface
@@ -6676,5 +6677,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.Thermo.gibbs_free_energy_min' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.gibbs_free_energy_min
+
+-- TH4: Landauer's principle (Reeb-Wolf bound). A system coupled by a global
+-- unitary to a bath in the Gibbs state obeys β·ΔQ ≥ S(ρ_S) − S(ρ_S') -- the
+-- entropy removed from the system is at most β times the heat dumped into the
+-- bath. Chain: entropy conservation (conj_unitary + kronecker) + subadditivity
+-- ⇒ S(ρ_S)−S(ρ_S') ≤ S(ρ_B')−S(τ_B); the bath Clausius inequality
+-- (relEntropy_nonneg + the TH3 Gibbs log identity) bounds that by β·ΔQ. One-bit
+-- corollary: erasing a maximally-mixed bit to a definite state costs
+-- ΔQ ≥ T log 2 = kT ln 2. Foundational-triple.
+/-- info: 'CSD.Thermo.bath_clausius' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.bath_clausius
+
+/-- info: 'CSD.Thermo.landauer_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.landauer_bound
+
+/-- info: 'CSD.Thermo.landauer_one_bit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.landauer_one_bit
 
 end CSD.Tests.AxiomAudit

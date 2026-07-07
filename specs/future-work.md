@@ -38,7 +38,7 @@ Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 | **TH-1** | Canonical typicality: `E_{μFS}[ρ_S] = I/d_S` (avg) + Levy stretch | μ_FS + partial trace | **M** | Flagship; IN PROGRESS 2026-07-04. |
 | ~~TH-2~~ | Second law: coarse-grained vN entropy monotone under the de-isolation flow | TH-1 / LF6-B.3 | **M** | **DONE 2026-07-07** (`Thermo/SecondLaw.lean`): the H-theorem `vonNeumannEntropy_le_pinching` (`S(ρ) ≤ S(pinch ρ)`) + `entropy_reversible_then_coarsegrain` + `entropy_production_nonneg`, via Klein. |
 | ~~TH-3~~ | Temperature / free energy: Gibbs max-entropy state, `T=∂S/∂E`, `F=E−TS`, variational principle | vN entropy (K1) | **M** | **DONE 2026-07-07** (`Thermo/FreeEnergy.lean`): `gibbs_free_energy_min` (`F(ρ_β) ≤ F(ρ)`) + `gibbs_free_energy_eq` (`F(ρ_β) = −T log Z`) + the Gibbs state (`gibbsState`, `cfc_log_gibbsState`), via Klein. |
-| **TH-4** | Landauer erasure bound `≥ kT ln2` | TH-3, QEC tier | **M** | Info-thermodynamics. |
+| ~~TH-4~~ | Landauer erasure bound `≥ kT ln2` | TH-3, QEC tier | **M** | **DONE 2026-07-07** (`Thermo/Landauer.lean`): the Reeb–Wolf bound `landauer_bound` (`S(ρ_S)−S(ρ_S') ≤ β·ΔQ`) via entropy conservation + subadditivity + `bath_clausius`; one-bit corollary `landauer_one_bit` (`ΔQ ≥ T log 2`). |
 | **TH-5** | ETH / fluctuation theorem (Jarzynski/Crooks) | TH-1..3 | **L** | Stretch. |
 
 ## CV / continuous-variable track
@@ -141,10 +141,12 @@ decision, not an oversight.
 
 ## Priority read (user-set sequencing, 2026-07-07; supersedes the 2026-07-04 recommendation)
 
-- **NOW — finish the thermodynamics track.** TH-1's core (expectation), **TH-2 (second law /
-  H-theorem)**, and **TH-3 (temperature / free energy / Gibbs variational principle) are all DONE
-  2026-07-07**; next is **TH-4 (Landauer's bound `≥ kT ln 2`)**, plus the **TH-1 Levy-concentration
-  residual** (if tractable in Mathlib) and the optional **TH-5 stretch** (ETH / fluctuation theorem).
+- **THERMO TRACK COMPLETE (TH-1..TH-4, all DONE 2026-07-07):** canonical typicality (expectation),
+  the second law / H-theorem, the Gibbs free-energy variational principle, and Landauer's `kT ln 2`
+  bound. Remaining thermo residues are optional: the **TH-1 Levy-concentration** upgrade (needs
+  spherical isoperimetry, not in Mathlib) and the **TH-5 stretch** (ETH / Jarzynski–Crooks
+  fluctuation theorem). **NEXT PER SEQUENCING: the CV track (CV-1 onwards)** — the continuous-variables
+  pillar.
 - **THEN — the CV track, CV-1 onwards:** finite position observable → finite momentum (finite
   Fourier) → approximate CCR `‖[Q_N,P_N]−iℏ·1‖ ≤ ε` → oscillator truncation. The
   continuous-variables pillar.

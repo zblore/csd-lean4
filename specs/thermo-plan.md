@@ -2,7 +2,8 @@
 
 **Status: TH1 DONE 2026-07-05 (EXPECTATION core; concentration/Levy staged as the named
 residual); TH2 DONE 2026-07-07 (the H-theorem / second law as pinching entropy monotonicity);
-TH3 DONE 2026-07-07 (temperature / free energy / Gibbs variational principle); TH4-TH5 planned.** The thermodynamics track formalises the
+TH3 DONE 2026-07-07 (temperature / free energy / Gibbs variational principle); TH4 DONE 2026-07-07
+(Landauer's principle, the Reeb–Wolf bound); TH5 stretch planned.** The thermodynamics track formalises the
 statistical-mechanical content that CSD's foundations already imply: Born weights are equilibrium
 volume fractions, typicality is forced by the law of large numbers, and the de-isolation flow is
 measure-preserving (Liouville). Thermodynamics is the native language of that structure, not a
@@ -118,6 +119,24 @@ mechanics with a CSD-reading docstring).
 The thermodynamic cost of erasure / measurement: erasing one bit dissipates `≥ kT ln 2`. Connects the
 QEC/decoherence tier (measurement = de-isolation = information gain at a thermodynamic cost) to the
 second law. Touchpoint already noted in K1.
+
+**DONE 2026-07-07, `CsdLean4/Thermo/Landauer.lean`.** The information-theoretic (Reeb–Wolf) form,
+grounded in TH3. Landed:
+- `bath_clausius` (the engine): for any bath density `ρ_B'` and the Gibbs state `τ_B`,
+  `S(ρ_B') − S(τ_B) ≤ β·(⟨H_B⟩_{ρ_B'} − ⟨H_B⟩_{τ_B})` — the thermodynamic face of
+  `D(ρ_B' ‖ τ_B) ≥ 0` (`relEntropy_nonneg`), read through the TH3 Gibbs log identity
+  `re_trace_mul_log_gibbs`.
+- `landauer_bound` (**the headline**): a system `S` coupled by a global unitary `U` to a bath in the
+  Gibbs state obeys `S(ρ_S) − S(ρ_S') ≤ β·ΔQ` (`ΔQ` = heat into the bath). Chain: entropy
+  conservation `S(ρ_SB') = S(ρ_S) + S(τ_B)` (`vonNeumannEntropy_conj_unitary` +
+  `vonNeumannEntropy_kronecker`) + subadditivity (`vonNeumannEntropy_subadditive`) give
+  `S(ρ_S) − S(ρ_S') ≤ S(ρ_B') − S(τ_B)`; `bath_clausius` bounds that by `β·ΔQ`.
+- `landauer_one_bit` (**the `kT ln 2`**): erasing a maximally-mixed bit (`S = log 2`) to a definite
+  state (`S = 0`) forces `log 2 ≤ β·ΔQ`, i.e. `ΔQ ≥ T log 2 = kT ln 2`.
+- HONEST SCOPE: full-rank final marginals + full-rank initial system state (Klein/subadditivity
+  support hypotheses; a maximally-mixed bit qualifies); the standard finite-dim Reeb–Wolf setting, a
+  genuine bound (not the reversible idealisation). Foundational-triple; Gleason-free. AxiomAudit-pinned
+  (`bath_clausius`, `landauer_bound`, `landauer_one_bit`).
 
 ### TH5 (stretch) — ETH or a fluctuation theorem
 Eigenstate thermalisation (a single energy eigenstate looks thermal on small subsystems) or a
