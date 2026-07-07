@@ -104,12 +104,12 @@ inhabitants="$(for f in $(grep -rlE "KahlerOnticSetup" --include='*.lean' CsdLea
     }
   ' "$f"
 done || true)"
-nontrivial="$(printf '%s' "$inhabitants" | grep -viE "trivial" | grep -c . || true)"
+nontrivial="$(printf '%s' "$inhabitants" | grep -viE ": *trivial" | grep -c . || true)"
 if [ "$nontrivial" -gt 0 ]; then
   echo "  INFO  $nontrivial non-trivial KahlerOnticSetup inhabitant(s) found —"
   echo "        the Schrödinger chain may now be instantiated off the trivial"
   echo "        witness. Update $MANIFEST (link L4) and the README claim to match:"
-  printf '%s\n' "$inhabitants" | grep -viE "trivial" | sed 's/^/          /'
+  printf '%s\n' "$inhabitants" | grep -viE ": *trivial" | sed 's/^/          /'
 else
   echo "  INFO  0 non-trivial KahlerOnticSetup inhabitants (only the trivial"
   echo "        witness Φ=id). Manifest L4 = BROKEN; the overclaim guard (2)+(3)"

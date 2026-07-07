@@ -80,6 +80,7 @@ import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
+import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
@@ -2811,6 +2812,21 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup
+
+-- Connectivity fix C1 (manifest link L4): a GENUINE Φ≠id KahlerOnticSetup
+-- inhabitant. unitaryFlowSetup builds one from any unitary family
+-- (measure-preserving via fubiniStudyMeasure_smul_invariant); the concrete
+-- rotationSetup at N=2 (the ℂℙ¹ rotation flow) has projectedFlow ≠ id
+-- (rotationSetup_projectedFlow_ne_id, [e₀]↦[e₁] at t=π/2). This flips the
+-- Schrödinger pillar off the trivial Φ=id, H=0 witness. See
+-- specs/connectivity-manifest.md.
+/-- info: 'CSD.LF4.rotationSetup_projectedFlow_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.rotationSetup_projectedFlow_ne_id
+
+/-- info: 'CSD.LF4.unitaryFlowSetup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup
 
 -- W3: the Wigner selection on the Kähler ontic setup. The per-t disjunction
 -- (unitary ∨ antiunitary) consumes W1 wigner_rigidity_unitaryGroup through the W2

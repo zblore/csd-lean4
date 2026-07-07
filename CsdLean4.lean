@@ -114,6 +114,7 @@ import CsdLean4.LF4.Instance
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
+import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics

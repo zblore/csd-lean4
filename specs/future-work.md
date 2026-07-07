@@ -99,8 +99,12 @@ Leave the P3 tensor derivation alone until there is a paper proof.
 | **W-5** | `LF4/ProjectedDynamics.lean`: `projectedFlow_eq_unitary_family` (projected flow = projective action of a one-parameter unitary family) + ray-level group law under explicit hypotheses + `expNegITH_unitary_group` (converse: `exp(-itH)` a genuine unitary group from Hermitian H). `U_t=exp(-itH)`-for-the-flow STAGED. | W-2, W-3 | **L** | **DONE 2026-07-05** (`ff97830`). Residues S2 (finite-dim Stone) DONE 2026-07-05 + S1 (phase lift) DONE 2026-07-07 (`LF4/PhaseLift.lean`, capstone `projectedFlow_schrodinger_form`). |
 
 **Follow-on (auditor-recommended, S):** inhabit the W-3 continuity datum (now the Bargmann-observable
-continuity, after the 2026-07-07 closure) on a non-trivial (`Φ≠id`, e.g. `kFlow`) `KahlerOnticSetup`,
-not only the identity witness, so the unitary-branch selection is non-vacuous beyond the base case.
+continuity, after the 2026-07-07 closure) on a non-trivial (`Φ≠id`) `KahlerOnticSetup`, not only the
+identity witness, so the unitary-branch selection is non-vacuous beyond the base case. **A genuine
+`Φ≠id` inhabitant now EXISTS** (`rotationSetup`, `LF4/NonTrivialSetup.lean`, connectivity fix C1
+2026-07-07); firing the W3/W5/S1/S2 chain on it is fix **C2** (the next connectivity step). NB: `kFlow`
+is NOT usable here — it acts trivially on rays (`projectedFlow=id`); the C1 witness uses a projective
+unitary flow. See [`specs/connectivity-manifest.md`](connectivity-manifest.md).
 
 **Honest posture of the W-series (load-bearing):** this is the FORWARD direction -- GIVEN the Kähler sector
 (as hypotheses/fields), it derives the unitary Schrödinger dynamics (via Wigner). It CONSUMES the sector
