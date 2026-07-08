@@ -14,6 +14,22 @@ hard, **XL** = research-grade / multi-session. **★** = actually reduces the de
 | **FND-1** ★ | A5 → D1: derive the sector `(π,G)` + FS typicality from the deterministic dynamics | none (hard) | **XL** | The deepest residue under all of LF6/Wigner/thermo. The only work that closes the thesis gap. No clean on-ramp yet (onramps: `TypicalityForcing`, D1c). |
 | **FND-2** ★ | D1c-entangled: thread a genuine `Φ≠id` through a concrete *entangled* SectorData | LF6 tier | **M** | Most tractable genuine A5 attack; mirrors D1c-1/-2. |
 | **FND-3** ★ | §13.2 ontic lift: thread `Φ` + prove `TransProbPreserving f_Φ` on `kSectorData` | Wigner (done) | **M** | Makes the A5→Wigner→U_isometry chain explicit on the non-trivial-fibre instance. Caveat C-1: sector-action-carries-isometry, so partly consolidation. |
+| **C7** ★ (Paper-C A3) | **Genuine many-to-one `π` both-pillars object.** Build a `KahlerOnticSetup` with `Σ` strictly LARGER than ray space (e.g. `ℂℙ^{N-1} × T²`, `π = Prod.fst`, fibres `= T²`) AND a flow whose projected action is a NON-trivial ray rotation, then fire BOTH `rotationSetup_both_pillars`-style pillars on it. | C1–C5, `KSigma`/`KahlerFlow` (has the many-to-one `π` but trivial ray flow) | **M** | Flagged 2026-07-08 (Paper C cross-check). The C4 both-pillars object `rotationSetup` uses `π = id` (degenerate); Paper C's A3 requires a smooth many-to-one projection with non-trivial fibres. No single object yet has both a many-to-one `π` AND a non-trivial projected flow — this builds it. Reduces the "Σ = ray space" degeneracy, though NOT the deep A5 origin (that stays FND-1). |
+
+## Kähler / symplectic differential geometry (blocked on Mathlib API)
+
+These formalize Paper C's geometric substrate — currently carried as honest
+interpretive prose (connectivity-manifest link L1) because Mathlib has no
+Kähler / symplectic-form API on projective space. Each is unblocked only when
+that API lands; the objects we use are already the correct ones (μ_FS is *the*
+unique invariant measure, `fubiniStudyMeasure_unique`), so this is
+formalization-DEPTH, not a correctness gap.
+
+| Ref | Item | Depends on | Cx | Notes |
+|---|---|---|---|---|
+| **KG-1** | Construct the Fubini–Study Kähler 2-form `ω` on `ℂℙ^{N-1}`, prove it closed and compatible with the complex structure `J`; identify `μ_FS = ω^{∧(N-1)}/(N-1)!`. Discharges the `IsKahlerSector` / full `IsLiouvilleKahlerVolume` posits (L1). | **Mathlib Kähler-form API (does not exist)** | **XL / blocked** | Flagged 2026-07-08. The interpretive core of "Σ is a Kähler manifold with Kähler volume μ_FS." Today only the *normalized-volume* core is formalized (C5). |
+| **KG-2** | Derive the Σ-flow from an explicit Hamiltonian vector field `X_H` (symplectic gradient of `H` w.r.t. `ω`), matching Paper C's A2, rather than positing a unitary/rotation flow. | KG-1, symplectic-gradient API | **L / blocked** | The flows we use are measure-preserving but not presented as `X_H = ω^{-1}dH`. |
+| **KG-3** | Ashtekar–Schilling route to Schrödinger: projected quantum-effective Hamiltonian ⇒ holomorphic vector field on `ℂℙ^{N-1}` ⇒ `iψ̇ = Ĥψ`, matching Paper C §3.4 (we currently reach the same endpoint via Wigner-rigidity + phase-lift + Stone). | KG-1 | **L / blocked** | Alternative/complementary derivation; not required (endpoint already proved). |
 
 ## LF6 entangled tier (remaining)
 

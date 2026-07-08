@@ -61,6 +61,26 @@ both the Born rule and Schrödinger dynamics"** is CONNECTED (structurally); the
 remaining frontier is deriving that sector — and the Born trials — from the
 deterministic flow itself.
 
+**Paper-C cross-check caveat (2026-07-08).** Paper C's architecture (Axiom A3)
+requires the projection `π : Σ → ℂℙ^{N-1}` to be **smooth many-to-one** — `Σ` is
+strictly LARGER than ray space, and each epistemic ray `[ψ]` is the image of a
+whole fibre `π⁻¹([ψ])` of ontic microstates (the fibre coordinates carry the
+Liouville / absolute-continuity structure). The both-pillars object
+`rotationSetup` uses **`π = id`** — the DEGENERATE one-to-one case, `Σ = ` ray
+space, fibres = points. So the C1/C2/C4 theorems, while valid, do NOT exercise
+Paper C's genuine many-to-one ontic projection; they run on `Σ = ℂℙ^{N-1}`
+directly. A genuine many-to-one `π` DOES exist in the corpus
+(`KSigma = ℂℙ^{N-1} × T²`, `π = Prod.fst`, fibres `= T²`, pushforward bridge
+`Prod.fst_* kMuL = μ_FS` — `KahlerFlow.lean`), but (i) it is on the older
+`SectorData` track, not `KahlerOnticSetup`, and (ii) its flow `kFlow` acts
+trivially on rays (`projectedFlow = id`), so Schrödinger on it is trivial. **No
+single object yet has BOTH a many-to-one `π` AND a non-trivial projected flow** —
+that is the fix **C7** (below), the honest next step to match Paper C's A3. Also
+note: our Schrödinger route is Wigner-rigidity + phase-lift + Stone, NOT Paper
+C's Ashtekar–Schilling (holomorphic-vector-field) derivation — same endpoint,
+different path. Paper C itself (§1.4) states `Σ`, `π`, and the A5 sector are
+**assumed, not derived** — so our posited-sector scope matches Paper C's own.
+
 ## What may be claimed (until a link flips to CONNECTED)
 
 - ✅ "CSD machine-verifies the Born rule as an FS-typicality volume (on `ℂℙ^{N-1}`
