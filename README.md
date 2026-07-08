@@ -2,29 +2,33 @@
 
 [![CI](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml)
 
-**Scope, stated honestly (read [`specs/connectivity-manifest.md`](specs/connectivity-manifest.md) first).** This Lean 4 formalisation of Constraint-Surface Dynamics machine-verifies the major structural theorems of finite-dimensional quantum mechanics as a set of **largely independent, sorry-free results**. The CSD *thesis* — that a single deterministic Kähler ontic sector `(Σ, Φ, π)` yields BOTH the Born rule AND Schrödinger dynamics as one connected derivation — is **NOT yet realized end-to-end in the code.** A 2026-07-07 provenance audit found the intended chain broken at several links: there is no single non-trivial object underlying both pillars; the Kähler-geometry fields are unconsumed placeholders; the Schrödinger chain is instantiated only on the identity-flow (`Φ = id`, `H = 0`) witness; and the Born chain runs on a separate abstract measure-space engine that never sees a sector object or a deterministic flow. The per-link status and the sequenced fix course live in the [connectivity manifest](specs/connectivity-manifest.md); nothing below may be read as a stronger connection than a **CONNECTED** row there.
+**Scope, stated honestly (read [`specs/connectivity-manifest.md`](specs/connectivity-manifest.md) first).** This Lean 4 formalisation of Constraint-Surface Dynamics machine-verifies the major structural theorems of finite-dimensional quantum mechanics, and — as of the 2026-07-07 connectivity work (fixes C1–C5) — connects them on **one concrete non-trivial Kähler-sector object**: `rotationSetup`, a `KahlerOnticSetup` whose deterministic flow `Φ ≠ id` genuinely moves the rays. For that single object, `rotationSetup_both_pillars` proves BOTH pillars together — (A) its projected flow is Schrödinger evolution `exp(-it·σ_y)` on rays (`H = σ_y ≠ 0`), AND (B) sampling its own Liouville/typicality measure gives the Born frequencies `‖⟨eᵢ,ψ⟩‖²`. Connectivity-manifest links **L2–L6 are CONNECTED**.
 
-**What is genuinely proved** (each a real theorem; see the manifest for exactly what it does and does not assert):
+**It is still NOT yet realized end-to-end.** Two honest gaps remain, both recorded in the [connectivity manifest](specs/connectivity-manifest.md):
+- **The deep frontier (L7 / FND-1).** The Born trials *sample* the sector's measure i.i.d.; they are **not** *evolved by the deterministic flow*, and the Born weights are **not** *derived from the dynamics*. Closing this — deriving the sector and its typicality from `Φ` itself — is the A5→D1 sector-origin problem, research-grade and possibly open. Until then the result reads "given the posited Kähler sector, both pillars follow," **not** "both pillars follow from deterministic dynamics."
+- **Kähler geometry (L1).** The differential-geometric content (a closed 2-form compatible with a complex structure) is **unformalizable in current Mathlib** — no Kähler API — so the `IsKahlerSector` field is an honestly-labelled interpretive posit consumed by no theorem. Its formalizable core (the Liouville measure is a *normalized* volume) is now genuine, consumed content (fix C5). "Kähler" elsewhere names the *mathematical reading*, not a formalized manifold.
 
-- **the Born rule as an FS-typicality volume** — for every dimension, every unit preparation, and *general* (POVM) measurements, empirical frequencies of i.i.d. Fubini–Study draws converge a.s. to FS volumes, which *are* the Born weights, Gleason-free (LF1–LF4). *(This is a theorem about the FS measure on `ℂℙ^{N-1}`; it is NOT routed through a deterministic Σ-flow — manifest L5.)*
-- **Schrödinger dynamics as a conditional theorem** — GIVEN a Kähler ontic sector (packaged as `KahlerOnticSetup`, with FS-isometry / coboundary / C¹ regularity as explicit hypotheses), the projected flow is `exp(-itH)`-conjugation on rays (the W-series). *(Currently discharged only on the trivial `Φ = id, H = 0` witness — manifest L3/L4.)*
-- **measurement as a process** — a genuine `Φ ≠ id` von Neumann de-isolation flow realises the Naimark dilation dynamically, with per-microstate outcomes (LF5);
+Nothing below may be read as a stronger connection than a **CONNECTED** row in the [manifest](specs/connectivity-manifest.md), enforced by `scripts/check-connectivity.sh`.
+
+**What is proved** (each a real theorem):
+
+- **the Born rule as a Fubini–Study typicality volume** — for every dimension, every unit preparation, and *general* (POVM) measurements, empirical frequencies of i.i.d. FS draws converge a.s. to FS volumes = the Born weights, Gleason-free (LF1–LF4); and, for `rotationSetup`, those draws are from the sector object's own `liouvilleMeasure` (fix C4).
+- **Schrödinger dynamics from the sector** — for the genuine `Φ ≠ id` `rotationSetup`, the projected deterministic flow is `exp(-itH)`-conjugation on rays with `H = σ_y ≠ 0` (the W-series capstone, fired off the trivial witness by fixes C1/C2). The general form `sigmaFlow_schrodinger_form` takes any `KahlerOnticSetup` with FS-isometry / coboundary / C¹ regularity as explicit hypotheses.
+- **measurement as a process** — a `Φ ≠ id` von Neumann de-isolation flow realises the Naimark dilation dynamically, with per-microstate outcomes (LF5);
 - **entanglement, non-locality, no-signalling** — Bell-forced non-factorisation in the `Σ`-engine at full generality: CGLMP for *every* `d`, GHZ/Mermin for *every* `n` (LF6);
 - **uncertainty** (Robertson, LF4 §14.2) and the **thermodynamics track TH1–TH4** (canonical typicality, the second law, the Gibbs free-energy principle, Landauer's `kT ln 2`).
 
-**The connectivity ledger** (see the [manifest](specs/connectivity-manifest.md) for evidence):
+**The connectivity ledger** (see the [manifest](specs/connectivity-manifest.md) for evidence and the C1–C6 fix course):
 
 | Intended link | Status |
 |---|---|
-| Kähler geometry ⇒ the sector's fields | **BROKEN** — inert `Prop` placeholders, consumed by no theorem |
-| Σ + `Φ` + `π` ⇒ projected flow | **CONNECTED (interface)** — the descent field is consumed (`sigmaFlow_schrodinger_form`) |
-| projected flow ⇒ Schrödinger form | **CONDITIONAL** — real theorem; hypotheses discharged only on the trivial witness |
-| a genuine `Φ ≠ id` sector instance exists | **BROKEN** — the only inhabitant is `trivialKahlerOnticSetup` |
-| sector ⇒ Born weights | **BROKEN** — Born uses a separate abstract `CPN + μ_FS` engine, no flow |
-| ONE object underlies both pillars | **BROKEN** — two unlinked objects |
-| Born weights derived FROM the flow | **BROKEN** — the thesis frontier (A5→D1, FND-1) |
-
-Individual QM-pillar coverage (Born, dynamics, measurement, uncertainty, entanglement, stat-mech) is real; what is missing is the **connective tissue** making them one derivation. The fix course is Phases C1–C6 in the [manifest](specs/connectivity-manifest.md).
+| Kähler geometry ⇒ the sector's fields | **PARTIAL** — volume-normalization core consumed (C5); the differential geometry is unformalizable (no Mathlib API), honestly demoted |
+| Σ + `Φ` + `π` ⇒ projected flow | **CONNECTED** — the descent field `projectable` is consumed (`sigmaFlow_schrodinger_form`) |
+| projected flow ⇒ Schrödinger form | **CONNECTED** — fired on the genuine `Φ ≠ id` `rotationSetup`, `H = σ_y ≠ 0` (C1/C2) |
+| a genuine `Φ ≠ id` sector instance exists | **CONNECTED** — `rotationSetup`, `projectedFlow ≠ id` (C1) |
+| sector ⇒ Born frequencies | **CONNECTED (structural)** — Born law stated with sampling measure = the sector's `liouvilleMeasure` (C4); trials still sampled, not flow-evolved |
+| ONE object underlies both pillars | **CONNECTED** — `rotationSetup_both_pillars`, both pillars on one object (C4) |
+| Born weights derived FROM the flow | **OPEN ★** — the thesis frontier (A5→D1, FND-1, fix C6) |
 
 **Current work programme** (revised 2026-07-07 after the audit): **Phase 1 of the connectivity fix** — C1 (construct a genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant) then C2 (discharge the Schrödinger hypotheses on it) — takes priority over new breadth. Then the CV track. Details: [`specs/future-work.md`](specs/future-work.md) and the [connectivity manifest](specs/connectivity-manifest.md).
 

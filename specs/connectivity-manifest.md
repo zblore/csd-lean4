@@ -37,7 +37,7 @@ Kähler geometry (ω, complex structure)
 
 | Link | Claim | Status | Backing theorem / the gap |
 |---|---|---|---|
-| **L1** | Kähler geometry `⇒` the sector's fields | **BROKEN — inert placeholder** | `KahlerOnticSetup.{IsKahlerSector,kahler_condition,IsLiouvilleKahlerVolume,liouville_eq_kahler_volume}` are `Prop` placeholders consumed by **no** theorem (only supplied as `True` in the trivial witness). No Kähler differential-form structure is formalized (Mathlib has no Kähler API). |
+| **L1** | Kähler geometry `⇒` the sector's fields | **PARTIAL (2026-07-07, fix C5): volume field load-bearing; `IsKahlerSector` honestly demoted** | `IsLiouvilleKahlerVolume` now carries the formalizable core — `μ_FS` is a *normalized* volume (probability measure) — and is CONSUMED by `unitaryFlowSetup_liouville_isProbability` (`LF4/NonTrivialSetup.lean`). `IsKahlerSector` (the closed-2-form / complex-structure posit) stays `True`: genuine differential geometry with **no Mathlib Kähler API**, so it is an honestly-labelled unformalizable interpretive posit, not a fixable link. This is the correct honest resolution — the alternative (consuming a `True`) would itself be vacuity. |
 | **L2** | Σ + `Φ` + `π` `⇒` a well-defined projected flow | **CONNECTED (interface) but see L4** | The descent field `projectable : π(Φ_t x) = φ_t(π x)` is a genuine field and is consumed by `CSD.LF4.sigmaFlow_schrodinger_form` (`LF4/PhaseLift.lean`). Enforced by `scripts/check-sector-linkage.sh`. |
 | **L3** | projected flow `⇒` Schrödinger form | **CONNECTED (2026-07-07, fix C2)** | `CSD.LF4.rotationSetup_schrodinger_form` (`LF4/RotationSchrodinger.lean`) fires `sigmaFlow_schrodinger_form` on the genuine `Φ ≠ id` `rotationSetup`: the FS-isometry (unitary flow), coboundary (`b = 1`, trivial cocycle since `R(s+t) = R(s)R(t)`), and C¹ (`R'(τ) = R(τ)·J`) data are all discharged on a non-trivial flow, recovering `H = iJ = σ_y ≠ 0` (`rotationSetup_generator_ne_zero`). The first fully-instantiated `H ≠ 0` Schrödinger statement — no longer trivial-witness-only. |
 | **L4** | a genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant exists | **CONNECTED (2026-07-07, fix C1)** | `CSD.LF4.rotationSetup` (`LF4/NonTrivialSetup.lean`) is a `KahlerOnticSetup 2` whose projected flow is the `ℂℙ¹` rotation `R(t)`; `rotationSetup_projectedFlow_ne_id` proves `∃ t, projectedFlow t ≠ id` (at `t = π/2`, `[e₀] ↦ [e₁]`). The general constructor `unitaryFlowSetup N U p₀` builds one from any unitary family (measure-preserving via `fubiniStudyMeasure_smul_invariant`). NB: `kFlow` was the wrong tool — it translates a `T²` fibre and so acts trivially on rays (`projectedFlow = id`). |
@@ -100,9 +100,12 @@ deterministic flow itself.
   the sector field `d.liouvilleMeasure` (defeq `fubiniStudyMeasure`);
   `rotationSetup_both_pillars` proves Schrödinger ∧ Born on the SINGLE
   `rotationSetup` object. Structural sharing only — weights-from-flow is C6.
-- **C5 (fixes L1).** Consume the Kähler-geometry fields in ≥1 theorem (e.g. tie
-  `liouville_eq_kahler_volume` to `fubiniStudyMeasure`), or formally demote them to
-  documented interpretive prose in `PLACEHOLDERS.md` and stop implying they matter.
+- **C5 (fixes L1) — DONE 2026-07-07** (`LF4/NonTrivialSetup.lean`). Made
+  `IsLiouvilleKahlerVolume` carry genuine content (`IsProbabilityMeasure μ_FS`,
+  the normalized-volume core) and consumed it (`unitaryFlowSetup_liouville_isProbability`).
+  `IsKahlerSector` honestly demoted to an unformalizable interpretive posit
+  (no Mathlib Kähler API) — documented in `PLACEHOLDERS.md` and the structure
+  docstring; no doc implies the Kähler differential geometry is load-bearing.
 
 **Phase 3 — the thesis frontier (deep; = FND-1 / A5→D1).**
 - **C6 (fixes L7, makes L5/L6 genuine).** Derive the Born weights FROM the

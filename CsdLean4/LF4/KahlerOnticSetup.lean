@@ -49,15 +49,23 @@ carry the geometric posit honestly, as a `Prop` the instance must supply, and
 are NOT dressed as proved conditions):
 - `IsKahlerSector : Prop` + `kahler_condition : IsKahlerSector` : stands for
   "`Σ` carries a closed 2-form `ω` compatible with a complex structure" (the
-  Kähler condition). An inhabitant chooses the proposition and supplies its
-  proof; the degenerate base case supplies `True`.
+  Kähler condition). **Genuinely unformalizable — Mathlib has no Kähler API — so
+  it is an honestly-labelled interpretive posit that NO theorem consumes** (fix
+  C5 / connectivity link L1). An inhabitant supplies `True`; do not read
+  "Kähler" here as a formalized differential-geometric condition.
 - `IsLiouvilleKahlerVolume : Prop` + `liouville_eq_kahler_volume :
   IsLiouvilleKahlerVolume` : stands for "`liouvilleMeasure` is the top-power
-  Kähler volume `ω^{∧ n} / n!`". Same honest-placeholder status.
+  Kähler volume `ω^{∧ n} / n!`". Its **formalizable core** — that the volume is
+  *normalized* (a probability measure) — is now a genuine, consumed condition on
+  the concrete instances (`unitaryFlowSetup` supplies
+  `IsProbabilityMeasure μ_FS`, consumed by
+  `unitaryFlowSetup_liouville_isProbability`, fix C5). The trivial witness still
+  supplies `True`.
 
-When Mathlib grows the symplectic/Kähler-form API on the relevant `Σ`, these two
-placeholder pairs are the exact slots to replace with genuine conditions on an
-`omega` field; the dynamical fields are unaffected.
+When Mathlib grows the symplectic/Kähler-form API on the relevant `Σ`, the
+`IsKahlerSector` pair is the exact slot to replace with a genuine `omega`-field
+condition; the dynamical fields are unaffected. See
+`specs/connectivity-manifest.md` (link L1) and `PLACEHOLDERS.md`.
 -/
 
 open MeasureTheory

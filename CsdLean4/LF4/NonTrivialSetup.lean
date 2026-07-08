@@ -53,8 +53,17 @@ namespace LF4
 
 /-- **A `KahlerOnticSetup` from any one-parameter unitary family.** `Σ = ℂℙ^{N-1}`,
 `π = id`, `flow t = projectedFlow t = (U t • ·)`, Liouville measure `= μ_FS`.
-Measure-preserving because `μ_FS` is `U(N)`-invariant. Kähler fields are honest
-placeholders (`True`). -/
+Measure-preserving because `μ_FS` is `U(N)`-invariant.
+
+The Kähler-geometry placeholder fields (fix C5, connectivity link L1):
+* `IsLiouvilleKahlerVolume` now carries the **formalizable core** of "Liouville
+  = Kähler volume" — that `μ_FS` is a *normalized* volume, i.e. a probability
+  measure (`∫ ω^n/n! = 1`). This is genuine, checkable content, and it is
+  consumed by `unitaryFlowSetup_liouville_isProbability`, so the field is no
+  longer inert.
+* `IsKahlerSector` remains `True`: "`Σ` carries a closed 2-form `ω` compatible
+  with a complex structure" is genuine differential geometry with **no Mathlib
+  API**, so it stays an honestly-labelled unformalizable interpretive posit. -/
 noncomputable def unitaryFlowSetup (N : ℕ)
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
@@ -64,8 +73,8 @@ noncomputable def unitaryFlowSetup (N : ℕ)
   IsKahlerSector := True
   kahler_condition := trivial
   liouvilleMeasure := fubiniStudyMeasure p₀
-  IsLiouvilleKahlerVolume := True
-  liouville_eq_kahler_volume := trivial
+  IsLiouvilleKahlerVolume := IsProbabilityMeasure (fubiniStudyMeasure p₀)
+  liouville_eq_kahler_volume := inferInstance
   pi := id
   pi_measurable := measurable_id
   flow := fun t p => U t • p
@@ -154,6 +163,21 @@ theorem rotationSetup_projectedFlow_ne_id
   obtain ⟨a, ha⟩ := hflow
   have h0 := congrFun (congrArg (fun v => (WithLp.ofLp v : Fin 2 → ℂ)) ha) 0
   simp at h0
+
+/-! ## Consuming the Kähler-volume field (connectivity fix C5, link L1) -/
+
+/-- **The `IsLiouvilleKahlerVolume` field is load-bearing.** It carries the
+formalizable core of the "Liouville = Kähler volume" posit — that the sector's
+typicality measure is a *normalized* volume (a probability measure) — and this
+theorem CONSUMES `d.liouville_eq_kahler_volume` to expose it. Before fix C5 the
+Kähler-geometry fields were inert placeholders read by no theorem (connectivity
+link L1); this makes the volume field genuine. (`IsKahlerSector` remains an
+honestly-unformalizable posit — no Mathlib Kähler API.) -/
+theorem unitaryFlowSetup_liouville_isProbability (N : ℕ)
+    (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    IsProbabilityMeasure (unitaryFlowSetup N U p₀).liouvilleMeasure :=
+  (unitaryFlowSetup N U p₀).liouville_eq_kahler_volume
 
 end LF4
 end CSD

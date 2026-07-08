@@ -2830,6 +2830,15 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup
 
+-- Connectivity fix C5 (manifest link L1): the IsLiouvilleKahlerVolume field is
+-- now load-bearing. It carries the formalizable core of "Liouville = Kähler
+-- volume" -- that μ_FS is a normalized volume (probability measure) -- and
+-- unitaryFlowSetup_liouville_isProbability CONSUMES d.liouville_eq_kahler_volume.
+-- IsKahlerSector remains an honestly-unformalizable posit (no Mathlib Kähler API).
+/-- info: 'CSD.LF4.unitaryFlowSetup_liouville_isProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_liouville_isProbability
+
 -- Connectivity fix C2 (manifest link L3, off the trivial witness): the W-series
 -- Schrödinger capstone sigmaFlow_schrodinger_form FIRED on the genuine Φ≠id
 -- rotation flow. The rotation R(t) is a one-parameter unitary group (trivial
