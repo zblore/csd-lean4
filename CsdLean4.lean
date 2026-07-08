@@ -121,6 +121,7 @@ import CsdLean4.LF4.ProjectedDynamics
 import CsdLean4.LF4.PhaseLift
 import CsdLean4.LF4.RotationSchrodinger
 import CsdLean4.LF4.BothPillars
+import CsdLean4.LF4.ManyToOnePillars
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.TypicalityForcing

@@ -83,6 +83,7 @@ import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.RotationSchrodinger
 import CsdLean4.LF4.BothPillars
+import CsdLean4.LF4.ManyToOnePillars
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
@@ -2867,6 +2868,25 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.rotationSetup_both_pillars' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.rotationSetup_both_pillars
+
+-- Connectivity fix C7 (Paper-C A3 caveat): BOTH pillars on ONE object with a
+-- GENUINE many-to-one π. rotationSetup uses π = id (degenerate); manyToOneSetup
+-- has Σ = ℂℙ^{N-1} × T², π = Prod.fst (fibres = T², not points —
+-- manyToOneSetup_pi_not_injective) AND a non-trivial projected ray flow. The
+-- Born pillar scores the FIBRED region π⁻¹'(bornRegion), whose kMuL-volume = the
+-- base Born weight because the fibre volume is normalized (Prod.fst_* kMuL = μFS).
+-- Same honest gap as C4: trials sample kMuL, not evolved by the flow (L7/FND-1).
+/-- info: 'CSD.LF4.manyToOneSetup_pi_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_pi_not_injective
+
+/-- info: 'CSD.LF4.manyToOneSetup_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_born_frequency
+
+/-- info: 'CSD.LF4.manyToOneRotationSetup_both_pillars' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneRotationSetup_both_pillars
 
 -- W3: the Wigner selection on the Kähler ontic setup. The per-t disjunction
 -- (unitary ∨ antiunitary) consumes W1 wigner_rigidity_unitaryGroup through the W2

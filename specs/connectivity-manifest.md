@@ -44,11 +44,16 @@ Kähler geometry (ω, complex structure)
 | **L5** | sector `⇒` Born frequencies (structural) | **CONNECTED (structural, 2026-07-07, fix C4)** | `unitaryFlowSetup_born_frequency` (`LF4/BothPillars.lean`) states `born_frequency_convergence_N` with the sampling law = the SECTOR FIELD `d.liouvilleMeasure` (definitionally `fubiniStudyMeasure p₀`), so the Born theorem now references the same object the Schrödinger chain consumes. CAVEAT: structural sharing only — the trials `X` still SAMPLE the measure i.i.d.; they are not evolved by `d.flow`, and the weights are not derived from the dynamics (that is L7 = C6). |
 | **L6** | ONE object underlies both pillars | **CONNECTED (2026-07-07, fix C4)** | `rotationSetup_both_pillars` (`LF4/BothPillars.lean`) proves, for the SINGLE `rotationSetup p₀`, BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`) AND (B) Born (frequencies from sampling `(rotationSetup p₀).liouvilleMeasure` → `‖⟨eᵢ,ψ⟩‖²`). One `KahlerOnticSetup` instance, both pillars. |
 | **L7** | Born weights derived FROM the deterministic flow | **BROKEN — the thesis frontier (A5/D1, FND-1)** | The one genuine `Φ ≠ id` flow (`kFlow` on `KSigma`) yields a **generic volume-ratio** typicality law (`kFlow_frequency_convergence`), explicitly NOT a Born weight (its docstring disclaims deriving the outcome region / Born weight — "Tranche B, not this module"). |
+| **L8** | ONE object with a GENUINE many-to-one `π` (Paper C A3) underlies both pillars | **CONNECTED (2026-07-08, fix C7)** | `manyToOneRotationSetup_both_pillars` (`LF4/ManyToOnePillars.lean`) proves, for the SINGLE `manyToOneRotationSetup p₀` — whose `Σ = ℂℙ¹ × T²`, `π = Prod.fst` is genuinely many-to-one (fibres `= T²`, `manyToOneSetup_pi_not_injective`) AND whose projected flow is a non-trivial ray rotation (`manyToOneRotationSetup_projectedFlow_ne_id`) — BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`, inherited from `rotationSetup_schrodinger_form`) AND (B) Born (frequencies from sampling `kMuL p₀` and scoring the FIBRED region `π⁻¹'(bornRegion ψ i)` → `‖⟨eᵢ,ψ⟩‖²`, via `manyToOneSetup_born_frequency`). Removes the `π = id` degeneracy of L6/`rotationSetup_both_pillars` — the Paper-C A3 caveat below. AxiomAudit-pinned (foundational triple, Gleason-free). SAME standing gap as L5/L7: the Born trials still SAMPLE `kMuL` i.i.d. rather than being evolved by `d.flow`, and the fibre flow is trivial (the flow moves only the base ray). |
 
-**Net (updated 2026-07-07 after C1+C2+C4):** **L2–L6 CONNECTED.** A single genuine
-`Φ ≠ id` object (`rotationSetup`) supports BOTH pillars: the Schrödinger form
-(`H = σ_y ≠ 0`) AND the Born frequencies (sampling its own `liouvilleMeasure`),
-proved together in `rotationSetup_both_pillars`. Remaining:
+**Net (updated 2026-07-08 after C1+C2+C4+C7):** **L2–L6 + L8 CONNECTED.** A single
+genuine `Φ ≠ id` object (`rotationSetup`) supports BOTH pillars: the Schrödinger
+form (`H = σ_y ≠ 0`) AND the Born frequencies (sampling its own `liouvilleMeasure`),
+proved together in `rotationSetup_both_pillars`. And (C7, L8) a single object with
+a GENUINE many-to-one `π` (`Σ = ℂℙ¹ × T²`, `π = Prod.fst`, fibres `= T²`) with a
+non-trivial projected ray flow supports both pillars too
+(`manyToOneRotationSetup_both_pillars`), removing the `π = id` degeneracy and
+matching Paper C's A3 fibred-projection shape. Remaining:
 - **L1** — the Kähler-geometry fields are still inert `Prop` placeholders (fix C5,
   small).
 - **L7** ★ — the DEEP gap: the Born trials sample the sector's measure i.i.d.;
@@ -80,6 +85,26 @@ note: our Schrödinger route is Wigner-rigidity + phase-lift + Stone, NOT Paper
 C's Ashtekar–Schilling (holomorphic-vector-field) derivation — same endpoint,
 different path. Paper C itself (§1.4) states `Σ`, `π`, and the A5 sector are
 **assumed, not derived** — so our posited-sector scope matches Paper C's own.
+
+**Update (2026-07-08, fix C7 — A3 caveat RESOLVED, link L8).** The
+"no single object has BOTH a many-to-one `π` AND a non-trivial projected flow"
+gap is now closed. `LF4/ManyToOnePillars.lean` builds `manyToOneSetup U p₀`:
+a `KahlerOnticSetup` on the fibred `Σ = ℂℙ^{N-1} × T²` with `π = Prod.fst`
+(genuinely many-to-one — `manyToOneSetup_pi_not_injective`, fibres `= T²`) and a
+flow `Φ_t (p, θ) = (U t • p, θ)` that ROTATES THE BASE RAY (so `projectedFlow` is
+the genuine ray action, non-trivial for the rotation, unlike `kFlow`). Both
+pillars fire on the concrete `N = 2` witness (`manyToOneRotationSetup_both_pillars`,
+link L8): Schrödinger inherited verbatim from `rotationSetup_schrodinger_form`
+(identical base ray action), Born via `manyToOneSetup_born_frequency` scoring the
+FIBRED region `π⁻¹'(bornRegion ψ i)` — whose `kMuL`-volume equals the base Born
+weight because the fibre volume is normalized (`Prod.fst_* kMuL = μ_FS`,
+`Measure.fst_prod` / `k_measure_bridge`), reducing to `born_frequency_convergence_N`
+on the projected trials. This is now on the `KahlerOnticSetup` track (not the
+older `SectorData` track), so it composes with the Schrödinger chain.
+**Still NOT closed by C7:** the A5 sector-origin / weights-from-flow gap (L7 /
+FND-1) — the Born trials still SAMPLE `kMuL`, and the fibre flow is trivial
+(dynamics move only the base ray, not the fibre). C7 fixes the *projection shape*,
+not the *dynamical origin*. Our route is still Wigner, not Ashtekar–Schilling.
 
 ## What may be claimed (until a link flips to CONNECTED)
 
@@ -126,6 +151,17 @@ different path. Paper C itself (§1.4) states `Σ`, `π`, and the A5 sector are
   `IsKahlerSector` honestly demoted to an unformalizable interpretive posit
   (no Mathlib Kähler API) — documented in `PLACEHOLDERS.md` and the structure
   docstring; no doc implies the Kähler differential geometry is load-bearing.
+
+**Phase 2b — genuine many-to-one projection (Paper C A3; medium).**
+- **C7 (fixes the A3 caveat, link L8) — DONE 2026-07-08** (`LF4/ManyToOnePillars.lean`).
+  `manyToOneSetup U p₀` is a `KahlerOnticSetup` on `Σ = ℂℙ^{N-1} × T²` with the
+  genuine many-to-one `π = Prod.fst` (`manyToOneSetup_pi_not_injective`) AND a
+  non-trivial projected ray flow (`Φ_t` rotates the base by `U t`); both pillars
+  fire on the `N = 2` rotation witness (`manyToOneRotationSetup_both_pillars`) —
+  Schrödinger inherited from `rotationSetup_schrodinger_form`, Born via
+  `manyToOneSetup_born_frequency` scoring the fibred region `π⁻¹'(bornRegion)`.
+  AxiomAudit-pinned (foundational triple). Removes the `π = id` degeneracy; does
+  NOT touch L7 (Born still samples `kMuL`; fibre flow trivial).
 
 **Phase 3 — the thesis frontier (deep; = FND-1 / A5→D1).**
 - **C6 (fixes L7, makes L5/L6 genuine).** Derive the Born weights FROM the

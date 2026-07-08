@@ -4,6 +4,22 @@ Single-page state so the next session can resume without re-deriving. The
 authoritative per-link ledger is [`connectivity-manifest.md`](connectivity-manifest.md);
 the todo backlog is [`future-work.md`](future-work.md). This file is the narrative.
 
+> **Addendum (2026-07-08, later): C7 DONE — the A3 caveat is resolved.**
+> The "do C7 next?" question below was answered YES. `LF4/ManyToOnePillars.lean`
+> builds `manyToOneSetup U p₀`, a `KahlerOnticSetup` on `Σ = ℂℙ^{N-1} × T²` with a
+> GENUINE many-to-one `π = Prod.fst` (fibres `= T²`, `manyToOneSetup_pi_not_injective`)
+> AND a non-trivial projected ray flow (`Φ_t` rotates the base by `U t`). Both
+> pillars fire on the `N = 2` witness (`manyToOneRotationSetup_both_pillars`,
+> connectivity link **L8 CONNECTED**): Schrödinger inherited from
+> `rotationSetup_schrodinger_form`, Born via `manyToOneSetup_born_frequency`
+> scoring the fibred region `π⁻¹'(bornRegion)` (volume = base Born weight because
+> the fibre volume is normalized, `Measure.fst_prod`). AxiomAudit-pinned
+> (foundational triple, Gleason-free); full build + tests + all three guards green.
+> **Standing gaps unchanged:** L1 (Kähler geometry), L7/FND-1 (Born-from-flow) —
+> C7 fixed the projection *shape*, not the dynamical *origin* (the fibre flow is
+> trivial). Recommended next is unchanged: **FND-1** (the deep frontier) or **KG**
+> (blocked on Mathlib).
+
 ## What was done this session (all committed + pushed to `origin/main`)
 
 The 2026-07-07 provenance audit found the "one Kähler object → both pillars"
