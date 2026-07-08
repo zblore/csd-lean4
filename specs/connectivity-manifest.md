@@ -39,18 +39,21 @@ Kähler geometry (ω, complex structure)
 |---|---|---|---|
 | **L1** | Kähler geometry `⇒` the sector's fields | **BROKEN — inert placeholder** | `KahlerOnticSetup.{IsKahlerSector,kahler_condition,IsLiouvilleKahlerVolume,liouville_eq_kahler_volume}` are `Prop` placeholders consumed by **no** theorem (only supplied as `True` in the trivial witness). No Kähler differential-form structure is formalized (Mathlib has no Kähler API). |
 | **L2** | Σ + `Φ` + `π` `⇒` a well-defined projected flow | **CONNECTED (interface) but see L4** | The descent field `projectable : π(Φ_t x) = φ_t(π x)` is a genuine field and is consumed by `CSD.LF4.sigmaFlow_schrodinger_form` (`LF4/PhaseLift.lean`). Enforced by `scripts/check-sector-linkage.sh`. |
-| **L3** | projected flow `⇒` Schrödinger form | **CONDITIONAL (theorem real; hypotheses undischarged off trivial)** | `CSD.LF4.sigmaFlow_schrodinger_form` proves `π(Φ_t x) = exp(-itH)·π(x)` GIVEN the FS-isometry family, the coboundary datum, and the C¹ datum. Those hypotheses are discharged only for `U=1, b=1, A=0, H=0` on `trivialKahlerOnticSetup`. |
+| **L3** | projected flow `⇒` Schrödinger form | **CONNECTED (2026-07-07, fix C2)** | `CSD.LF4.rotationSetup_schrodinger_form` (`LF4/RotationSchrodinger.lean`) fires `sigmaFlow_schrodinger_form` on the genuine `Φ ≠ id` `rotationSetup`: the FS-isometry (unitary flow), coboundary (`b = 1`, trivial cocycle since `R(s+t) = R(s)R(t)`), and C¹ (`R'(τ) = R(τ)·J`) data are all discharged on a non-trivial flow, recovering `H = iJ = σ_y ≠ 0` (`rotationSetup_generator_ne_zero`). The first fully-instantiated `H ≠ 0` Schrödinger statement — no longer trivial-witness-only. |
 | **L4** | a genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant exists | **CONNECTED (2026-07-07, fix C1)** | `CSD.LF4.rotationSetup` (`LF4/NonTrivialSetup.lean`) is a `KahlerOnticSetup 2` whose projected flow is the `ℂℙ¹` rotation `R(t)`; `rotationSetup_projectedFlow_ne_id` proves `∃ t, projectedFlow t ≠ id` (at `t = π/2`, `[e₀] ↦ [e₁]`). The general constructor `unitaryFlowSetup N U p₀` builds one from any unitary family (measure-preserving via `fubiniStudyMeasure_smul_invariant`). NB: `kFlow` was the wrong tool — it translates a `T²` fibre and so acts trivially on rays (`projectedFlow = id`). |
 | **L5** | sector / projected flow `⇒` Born weights | **BROKEN — separate object** | The Born capstones (`born_frequency_convergence_N`, `povm_born_frequency_volume`) consume abstract i.i.d. variables on `CPN` with law `fubiniStudyMeasure`, via the generic SLLN engine. No `KahlerOnticSetup`, no `OnticSetup`, no deterministic flow appears. |
 | **L6** | ONE object underlies both pillars | **BROKEN — two unlinked objects** | Schrödinger consumes `KahlerOnticSetup`; Born consumes bare `CPN + fubiniStudyMeasure`. No file shares both; no instance is fed to both. |
 | **L7** | Born weights derived FROM the deterministic flow | **BROKEN — the thesis frontier (A5/D1, FND-1)** | The one genuine `Φ ≠ id` flow (`kFlow` on `KSigma`) yields a **generic volume-ratio** typicality law (`kFlow_frequency_convergence`), explicitly NOT a Born weight (its docstring disclaims deriving the outcome region / Born weight — "Tranche B, not this module"). |
 
-**Net (updated 2026-07-07 after C1):** L4 is now CONNECTED — a genuine
-`Φ ≠ id` `KahlerOnticSetup` inhabitant exists (`rotationSetup`) with
-`projectedFlow ≠ id`. The remaining break on the Schrödinger side is L3-off-trivial
-(discharging the FS-isometry / coboundary / C¹ hypotheses on this instance =
-fix C2). The Born side (L5/L6/L7) is untouched. So the Schrödinger chain now has
-a non-trivial *object*; wiring the derivation's hypotheses onto it is next.
+**Net (updated 2026-07-07 after C1+C2):** the **Schrödinger side is now fully
+connected on a non-trivial flow** — L2/L3/L4 CONNECTED: a genuine `Φ ≠ id`
+`KahlerOnticSetup` (`rotationSetup`) exists, and the W-series capstone fires on
+it, recovering `H = σ_y ≠ 0` (`rotationSetup_schrodinger_form`). Remaining
+breaks: **L1** (Kähler-geometry fields still inert placeholders → fix C5) and the
+whole **Born side L5/L6/L7** (Born uses a separate abstract `CPN + μ_FS` engine;
+sharing the object = C4, deriving Born weights from the flow = C6/FND-1, the
+thesis frontier). So: Schrödinger-from-a-genuine-flow is done; one-object-for-both
+and Born-from-flow are the open work.
 
 ## What may be claimed (until a link flips to CONNECTED)
 
@@ -77,9 +80,11 @@ a non-trivial *object*; wiring the derivation's hypotheses onto it is next.
   `rotationSetup_projectedFlow_ne_id : ∃ t, projectedFlow t ≠ id`. NB: `kFlow`
   was NOT reusable — it acts trivially on rays (`projectedFlow = id`); the fix
   uses a projective *unitary* flow instead.
-- **C2 (fixes L3 off-trivial).** On the C1 instance, either discharge the FS-isometry
-  / coboundary / C¹ hypotheses, or expose exactly which remain posited — so the
-  Schrödinger form fires on a real flow, not `H = 0`.
+- **C2 (fixes L3 off-trivial) — DONE 2026-07-07** (`LF4/RotationSchrodinger.lean`).
+  `rotationSetup_schrodinger_form` fires `sigmaFlow_schrodinger_form` on
+  `rotationSetup`: FS-isometry (unitary flow), coboundary (`b=1`, trivial cocycle
+  via `R(s+t)=R(s)R(t)`), C¹ (`R'=R·J`) all discharged; recovers `H = iJ = σ_y ≠ 0`.
+  The Schrödinger form now holds on a genuine `Φ≠id` flow with `H≠0`.
 - **C3 (done 2026-07-07).** Retract the overclaiming docs; add
   `scripts/check-connectivity.sh` enforcing non-trivial-instance + no-overclaim.
 

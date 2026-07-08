@@ -81,6 +81,7 @@ import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.NonTrivialSetup
+import CsdLean4.LF4.RotationSchrodinger
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
@@ -2827,6 +2828,20 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.unitaryFlowSetup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup
+
+-- Connectivity fix C2 (manifest link L3, off the trivial witness): the W-series
+-- Schrödinger capstone sigmaFlow_schrodinger_form FIRED on the genuine Φ≠id
+-- rotation flow. The rotation R(t) is a one-parameter unitary group (trivial
+-- cocycle) with generator J=[[0,-1],[1,0]]; the capstone recovers H=iJ=σ_y
+-- (Pauli-Y, Hermitian, ≠0), landing rotationSetup.pi(flow t x) = exp(-it σ_y) •
+-- pi x. First fully-instantiated H≠0 Schrödinger statement of the corpus.
+/-- info: 'CSD.LF4.rotationSetup_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.rotationSetup_schrodinger_form
+
+/-- info: 'CSD.LF4.rotationSetup_generator_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.rotationSetup_generator_ne_zero
 
 -- W3: the Wigner selection on the Kähler ontic setup. The per-t disjunction
 -- (unitary ∨ antiunitary) consumes W1 wigner_rigidity_unitaryGroup through the W2
