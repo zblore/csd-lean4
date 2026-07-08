@@ -41,19 +41,25 @@ Kähler geometry (ω, complex structure)
 | **L2** | Σ + `Φ` + `π` `⇒` a well-defined projected flow | **CONNECTED (interface) but see L4** | The descent field `projectable : π(Φ_t x) = φ_t(π x)` is a genuine field and is consumed by `CSD.LF4.sigmaFlow_schrodinger_form` (`LF4/PhaseLift.lean`). Enforced by `scripts/check-sector-linkage.sh`. |
 | **L3** | projected flow `⇒` Schrödinger form | **CONNECTED (2026-07-07, fix C2)** | `CSD.LF4.rotationSetup_schrodinger_form` (`LF4/RotationSchrodinger.lean`) fires `sigmaFlow_schrodinger_form` on the genuine `Φ ≠ id` `rotationSetup`: the FS-isometry (unitary flow), coboundary (`b = 1`, trivial cocycle since `R(s+t) = R(s)R(t)`), and C¹ (`R'(τ) = R(τ)·J`) data are all discharged on a non-trivial flow, recovering `H = iJ = σ_y ≠ 0` (`rotationSetup_generator_ne_zero`). The first fully-instantiated `H ≠ 0` Schrödinger statement — no longer trivial-witness-only. |
 | **L4** | a genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant exists | **CONNECTED (2026-07-07, fix C1)** | `CSD.LF4.rotationSetup` (`LF4/NonTrivialSetup.lean`) is a `KahlerOnticSetup 2` whose projected flow is the `ℂℙ¹` rotation `R(t)`; `rotationSetup_projectedFlow_ne_id` proves `∃ t, projectedFlow t ≠ id` (at `t = π/2`, `[e₀] ↦ [e₁]`). The general constructor `unitaryFlowSetup N U p₀` builds one from any unitary family (measure-preserving via `fubiniStudyMeasure_smul_invariant`). NB: `kFlow` was the wrong tool — it translates a `T²` fibre and so acts trivially on rays (`projectedFlow = id`). |
-| **L5** | sector / projected flow `⇒` Born weights | **BROKEN — separate object** | The Born capstones (`born_frequency_convergence_N`, `povm_born_frequency_volume`) consume abstract i.i.d. variables on `CPN` with law `fubiniStudyMeasure`, via the generic SLLN engine. No `KahlerOnticSetup`, no `OnticSetup`, no deterministic flow appears. |
-| **L6** | ONE object underlies both pillars | **BROKEN — two unlinked objects** | Schrödinger consumes `KahlerOnticSetup`; Born consumes bare `CPN + fubiniStudyMeasure`. No file shares both; no instance is fed to both. |
+| **L5** | sector `⇒` Born frequencies (structural) | **CONNECTED (structural, 2026-07-07, fix C4)** | `unitaryFlowSetup_born_frequency` (`LF4/BothPillars.lean`) states `born_frequency_convergence_N` with the sampling law = the SECTOR FIELD `d.liouvilleMeasure` (definitionally `fubiniStudyMeasure p₀`), so the Born theorem now references the same object the Schrödinger chain consumes. CAVEAT: structural sharing only — the trials `X` still SAMPLE the measure i.i.d.; they are not evolved by `d.flow`, and the weights are not derived from the dynamics (that is L7 = C6). |
+| **L6** | ONE object underlies both pillars | **CONNECTED (2026-07-07, fix C4)** | `rotationSetup_both_pillars` (`LF4/BothPillars.lean`) proves, for the SINGLE `rotationSetup p₀`, BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`) AND (B) Born (frequencies from sampling `(rotationSetup p₀).liouvilleMeasure` → `‖⟨eᵢ,ψ⟩‖²`). One `KahlerOnticSetup` instance, both pillars. |
 | **L7** | Born weights derived FROM the deterministic flow | **BROKEN — the thesis frontier (A5/D1, FND-1)** | The one genuine `Φ ≠ id` flow (`kFlow` on `KSigma`) yields a **generic volume-ratio** typicality law (`kFlow_frequency_convergence`), explicitly NOT a Born weight (its docstring disclaims deriving the outcome region / Born weight — "Tranche B, not this module"). |
 
-**Net (updated 2026-07-07 after C1+C2):** the **Schrödinger side is now fully
-connected on a non-trivial flow** — L2/L3/L4 CONNECTED: a genuine `Φ ≠ id`
-`KahlerOnticSetup` (`rotationSetup`) exists, and the W-series capstone fires on
-it, recovering `H = σ_y ≠ 0` (`rotationSetup_schrodinger_form`). Remaining
-breaks: **L1** (Kähler-geometry fields still inert placeholders → fix C5) and the
-whole **Born side L5/L6/L7** (Born uses a separate abstract `CPN + μ_FS` engine;
-sharing the object = C4, deriving Born weights from the flow = C6/FND-1, the
-thesis frontier). So: Schrödinger-from-a-genuine-flow is done; one-object-for-both
-and Born-from-flow are the open work.
+**Net (updated 2026-07-07 after C1+C2+C4):** **L2–L6 CONNECTED.** A single genuine
+`Φ ≠ id` object (`rotationSetup`) supports BOTH pillars: the Schrödinger form
+(`H = σ_y ≠ 0`) AND the Born frequencies (sampling its own `liouvilleMeasure`),
+proved together in `rotationSetup_both_pillars`. Remaining:
+- **L1** — the Kähler-geometry fields are still inert `Prop` placeholders (fix C5,
+  small).
+- **L7** ★ — the DEEP gap: the Born trials sample the sector's measure i.i.d.;
+  they are not *evolved by the deterministic flow*, and the Born weights are not
+  *derived from the dynamics*. This is the sector-origin problem (A5→D1, FND-1),
+  fix C6, research-grade. It is the one link that, if closed, would make "QM from
+  deterministic dynamics" unconditional rather than "QM from the posited sector".
+So the honest headline is now: **"a single posited Kähler sector object yields
+both the Born rule and Schrödinger dynamics"** is CONNECTED (structurally); the
+remaining frontier is deriving that sector — and the Born trials — from the
+deterministic flow itself.
 
 ## What may be claimed (until a link flips to CONNECTED)
 
@@ -89,9 +95,11 @@ and Born-from-flow are the open work.
   `scripts/check-connectivity.sh` enforcing non-trivial-instance + no-overclaim.
 
 **Phase 2 — one object, and Kähler content (medium).**
-- **C4 (fixes L5/L6 structurally).** Route the Born capstone through the SAME
-  `KahlerOnticSetup`/`OnticSetup` Σ that the Schrödinger side uses — a single
-  instance feeding both. (Weights-from-flow is C6; this is the structural sharing.)
+- **C4 (fixes L5/L6 structurally) — DONE 2026-07-07** (`LF4/BothPillars.lean`).
+  `unitaryFlowSetup_born_frequency` states the Born law with sampling measure =
+  the sector field `d.liouvilleMeasure` (defeq `fubiniStudyMeasure`);
+  `rotationSetup_both_pillars` proves Schrödinger ∧ Born on the SINGLE
+  `rotationSetup` object. Structural sharing only — weights-from-flow is C6.
 - **C5 (fixes L1).** Consume the Kähler-geometry fields in ≥1 theorem (e.g. tie
   `liouville_eq_kahler_volume` to `fubiniStudyMeasure`), or formally demote them to
   documented interpretive prose in `PLACEHOLDERS.md` and stop implying they matter.

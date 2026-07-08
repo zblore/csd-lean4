@@ -82,6 +82,7 @@ import CsdLean4.LF4.KahlerFlow
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.RotationSchrodinger
+import CsdLean4.LF4.BothPillars
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
@@ -2842,6 +2843,21 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.rotationSetup_generator_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.rotationSetup_generator_ne_zero
+
+-- Connectivity fix C4 (manifest links L5/L6): BOTH pillars on ONE object. The
+-- Born capstone now references the SECTOR'S OWN liouvilleMeasure (defeq
+-- fubiniStudyMeasure), so a single rotationSetup instance supports both
+-- Schrödinger dynamics (A) and Born frequencies (B).
+-- rotationSetup_both_pillars is the structural "one posited object underlies
+-- both pillars" theorem. Honest gap: the Born trials still SAMPLE the measure
+-- rather than being evolved by the flow (= C6/L7, the A5/D1 frontier).
+/-- info: 'CSD.LF4.unitaryFlowSetup_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_born_frequency
+
+/-- info: 'CSD.LF4.rotationSetup_both_pillars' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.rotationSetup_both_pillars
 
 -- W3: the Wigner selection on the Kähler ontic setup. The per-t disjunction
 -- (unitary ∨ antiunitary) consumes W1 wigner_rigidity_unitaryGroup through the W2
