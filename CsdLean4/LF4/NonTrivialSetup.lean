@@ -123,7 +123,7 @@ second `e₁`. -/
 lemma rotMat_pi_div_two_mulVec_e0 :
     (rotMat (Real.pi / 2)).toEuclideanLin (EuclideanSpace.single 0 (1 : ℂ))
       = EuclideanSpace.single 1 (1 : ℂ) := by
-  rw [Matrix.toEuclideanLin_apply]
+  rw [Matrix.toLpLin_apply]
   congr 1
   rw [PiLp.ofLp_single]
   ext i

@@ -272,11 +272,16 @@ not a narrative corollary.
   target `P` is **not** specialised to Mathlib's `Projectivization`; no
   Fubini–Study measure is constructed. Concrete instantiation is deferred to
   LF4+.
-- `SectorData` carries **group-action coherence fields**
-  (`onticAction_one`, `onticAction_mul`, `epAction_one`, `epAction_mul`)
-  expressing the left-action laws for `onticAction` and `epAction`. LF2's
-  own theorems don't consume them, but LF4 will when it uses
-  transitivity / orbits / Haar measure.
+- `SectorData` encodes the `G`-action via **Mathlib `MulAction` typeclasses**
+  (`[MulAction G SigmaSpace]`, `[MulAction G P]`, `[MulAction.IsPretransitive G P]`),
+  the idiomatic replacement for the earlier `onticAction`/`epAction` map fields,
+  their `_one`/`_mul` coherence fields, and the `epAction_transitive` field
+  (all removed in the MulAction migration — the action laws now follow from the
+  typeclass). The remaining action-related structure fields are just
+  `measurable_smul_σ` / `measurable_smul_P` (measurability of the two actions),
+  `hμL_inv` (`μL`-invariance), and `hπ_equiv` (π-equivariance `π (g • x) = g • π x`).
+  LF2's own theorems consume `hμL_inv` / `hπ_equiv`; LF4 uses transitivity /
+  orbits / Haar measure on the concrete instances.
 - The reference measure `μFS` is **not** a field of `SectorData`; it enters
   `measure_bridge` as an explicit argument, keeping `SectorData`
   `μFS`-agnostic.

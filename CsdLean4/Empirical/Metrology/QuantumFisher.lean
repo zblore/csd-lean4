@@ -112,9 +112,9 @@ noncomputable def singleRL (i : Fin 2) : ℂ →L[ℝ] EuclideanSpace ℂ (Fin 2
   LinearMap.toContinuousLinearMap
     { toFun := EuclideanSpace.single i
       map_add' := fun x y => by
-        ext j; simp only [EuclideanSpace.single_apply, PiLp.add_apply]; split_ifs <;> simp
+        ext j; simp only [PiLp.single_apply, PiLp.add_apply]; split_ifs <;> simp
       map_smul' := fun (r : ℝ) x => by
-        ext j; simp only [EuclideanSpace.single_apply, PiLp.smul_apply, RingHom.id_apply]
+        ext j; simp only [PiLp.single_apply, PiLp.smul_apply, RingHom.id_apply]
         split_ifs <;> simp }
 
 /-- Componentwise lift: a scalar `HasDerivAt a a' φ` lifts to a vector

@@ -35,7 +35,7 @@ formalization-DEPTH, not a correctness gap.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
-| **LF6-1** | Flow-capstone d-intrinsic reroute: route `maxEntangledDeisolation_flow_capstone` conjunct-7 through the general-d CGLMP force (not the Φ⁺ sector) | CGLMP general-d (done) | **S** | Cheap cleanup; the CGLMP expert's named follow-on. |
+| ~~LF6-1~~ | Flow-capstone d-intrinsic reroute: route `maxEntangledDeisolation_flow_capstone` conjunct-7 through the general-d CGLMP force (not the Φ⁺ sector) | CGLMP general-d (done) | **S** | **DONE 2026-07-09** (`LF6/MaxEntangledCGLMPCapstone.lean`): `maxEntangledDeisolation_flow_capstone_cglmp` inherits conjuncts 1–6 and reroutes conjunct 7 to `no_lhv_realises_maxEntangled_cglmp_d` (no LHV table reproduces `pQM d`, since `cglmp d pQM > 2` in dimension `d`) — no 2×2 `Φ⁺`/CHSH reduction. New downstream file (CGLMPQudit imports the capstone, so an in-place edit would cycle). AxiomAudit-pinned. |
 | **LF6-2** | Lindblad / continuous-time open-system de-isolation (T1/T2 semigroup) | LF6-B | **L** | Subsumes Metrology A4; the dynamics half of decoherence. |
 | **LF6-3** | Marginal volume-drift geometry (symplectic drift of the reduced state) | LF6-B, LF5 | **M** | |
 | **LF6-4** | Metrology A4: decoherence as open symplectic drift | LF6-2 (Lindblad) | **M** | D1-gated. |
@@ -51,7 +51,7 @@ Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
-| **TH-1** | Canonical typicality: `E_{μFS}[ρ_S] = I/d_S` (avg) + Levy stretch | μ_FS + partial trace | **M** | Flagship; IN PROGRESS 2026-07-04. |
+| ~~TH-1~~ | Canonical typicality: `E_{μFS}[ρ_S] = I/d_S` (avg) + Levy stretch | μ_FS + partial trace | **M** | **DONE (expectation core) 2026-07-07** (`Thermo/CanonicalTypicality.lean`): `E_{μFS}[ρ_S] = I/d_S`, thermal equilibrium from FS volume. Optional residue: the **Levy-concentration** stretch (needs spherical isoperimetry, not in Mathlib). |
 | ~~TH-2~~ | Second law: coarse-grained vN entropy monotone under the de-isolation flow | TH-1 / LF6-B.3 | **M** | **DONE 2026-07-07** (`Thermo/SecondLaw.lean`): the H-theorem `vonNeumannEntropy_le_pinching` (`S(ρ) ≤ S(pinch ρ)`) + `entropy_reversible_then_coarsegrain` + `entropy_production_nonneg`, via Klein. |
 | ~~TH-3~~ | Temperature / free energy: Gibbs max-entropy state, `T=∂S/∂E`, `F=E−TS`, variational principle | vN entropy (K1) | **M** | **DONE 2026-07-07** (`Thermo/FreeEnergy.lean`): `gibbs_free_energy_min` (`F(ρ_β) ≤ F(ρ)`) + `gibbs_free_energy_eq` (`F(ρ_β) = −T log Z`) + the Gibbs state (`gibbsState`, `cfc_log_gibbsState`), via Klein. |
 | ~~TH-4~~ | Landauer erasure bound `≥ kT ln2` | TH-3, QEC tier | **M** | **DONE 2026-07-07** (`Thermo/Landauer.lean`): the Reeb–Wolf bound `landauer_bound` (`S(ρ_S)−S(ρ_S') ≤ β·ΔQ`) via entropy conservation + subadditivity + `bath_clausius`; one-bit corollary `landauer_one_bit` (`ΔQ ≥ T log 2`). |

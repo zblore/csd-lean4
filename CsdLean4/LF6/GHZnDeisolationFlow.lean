@@ -643,7 +643,7 @@ lemma ghzN_eq_smul (n : ℕ) (hn : 0 < n) :
   have hne : topIdx n ≠ (0 : Fin (2 ^ n)) := topIdx_ne_zero n hn.ne'
   ext i
   rw [ghzN_apply]
-  simp only [PiLp.smul_apply, PiLp.add_apply, EuclideanSpace.single_apply, smul_eq_mul]
+  simp only [PiLp.smul_apply, PiLp.add_apply, PiLp.single_apply, smul_eq_mul]
   by_cases h0 : i = 0
   · subst h0
     rw [if_pos (Or.inl rfl), if_pos rfl, if_neg (Ne.symm hne)]
@@ -660,7 +660,7 @@ lemma toELin_single_coord {N : ℕ} (M : Matrix (Fin N) (Fin N) ℂ) (i j : Fin 
     inner ℂ (EuclideanSpace.single i (1 : ℂ))
         (Matrix.toEuclideanLin M (EuclideanSpace.single j (1 : ℂ))) = M i j := by
   rw [EuclideanSpace.inner_single_left, map_one, one_mul, Matrix.ofLp_toEuclideanLin]
-  simp only [Matrix.mulVec, dotProduct, EuclideanSpace.single_apply, mul_ite, mul_one, mul_zero]
+  simp only [Matrix.mulVec, dotProduct, PiLp.single_apply, mul_ite, mul_one, mul_zero]
   rw [Finset.sum_ite_eq' Finset.univ j (fun k => M i k)]
   simp
 

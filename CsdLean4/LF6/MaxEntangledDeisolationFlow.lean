@@ -633,6 +633,12 @@ non-factorisation. Conjuncts:
    setting-local ±1 product partition reproduces the sector's own derived `Φ⁺`
    correlation `a_x b_x − a_y b_y + a_z b_z` (`no_product_partition_realises_phiPlus`).
 
+For the strictly stronger, **`d`-intrinsic** form of conjunct 7 — non-factorisation
+forced directly in dimension `d` by the CGLMP violation `cglmp d (pQM d) > 2`, with
+no 2×2 `Φ⁺` sector reduction — see `maxEntangledDeisolation_flow_capstone_cglmp`
+(`LF6/MaxEntangledCGLMPCapstone.lean`, fix LF6-1), which inherits conjuncts 1–6
+here and swaps only conjunct 7.
+
 Dimension-general (all `d ≥ 2`): the load-bearing "general-N is now general"
 content is the de-isolation dynamics + Born-from-volume (conjuncts 1-4). Born =
 FS-volume is imported from the DH/FS-volume engine, not re-derived; the flow

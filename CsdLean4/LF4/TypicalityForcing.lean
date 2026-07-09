@@ -104,7 +104,7 @@ lemma cpBasisVec_ne_zero (j : Fin N) : (EuclideanSpace.single j (1 : ℂ)) ≠ 0
   intro h
   have h2 : (EuclideanSpace.single j (1 : ℂ)) j = (0 : EuclideanSpace ℂ (Fin N)) j := by
     rw [h]
-  rw [EuclideanSpace.single_apply] at h2
+  rw [PiLp.single_apply] at h2
   simp at h2
 
 /-- The computational-basis eigenstate **ray** `[eⱼ] ∈ ℂℙ^{N-1}`. -/
@@ -122,8 +122,8 @@ lemma cpBasisRay_ne (j k : Fin N) (hjk : j ≠ k) : cpBasisRay j ≠ cpBasisRay 
     (Projectivization.mk_eq_mk_iff' ℂ _ _ (cpBasisVec_ne_zero j) (cpBasisVec_ne_zero k)).mp he
   -- `a • eₖ` vanishes at coordinate `j` (since `j ≠ k`); but `ha` makes it `eⱼ`, value `1` there.
   have hj : (a • EuclideanSpace.single k (1 : ℂ)) j = 0 := by
-    simp only [PiLp.smul_apply, EuclideanSpace.single_apply, if_neg hjk, smul_zero]
-  rw [ha, EuclideanSpace.single_apply, if_pos rfl] at hj
+    simp only [PiLp.smul_apply, PiLp.single_apply, if_neg hjk, smul_zero]
+  rw [ha, PiLp.single_apply, if_pos rfl] at hj
   exact one_ne_zero hj
 
 /-! ## (B) — the eigenstate ray is a fixed point of `obsFlow` -/
@@ -140,7 +140,7 @@ theorem obsFlow_fixes_eigenstate (lam : Fin N → ℝ) (t : ℝ) (j : Fin N) :
   refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨obsPhase lam t j, ?_⟩
   ext i
   rw [obsUnitary_toEuclideanLin_apply]
-  simp only [PiLp.smul_apply, EuclideanSpace.single_apply, smul_eq_mul]
+  simp only [PiLp.smul_apply, PiLp.single_apply, smul_eq_mul]
   split_ifs with h
   · rw [h]
   · ring
@@ -455,8 +455,8 @@ omit [NeZero N] in
 The non-constancy witness for the conserved Born coordinate. -/
 lemma momentMap_cpBasisRay (q r : Fin N) :
     momentMap (cpBasisRay r) q = if q = r then 1 else 0 := by
-  rw [cpBasisRay, momentMap_mk, EuclideanSpace.norm_single, norm_one, one_pow, div_one,
-    EuclideanSpace.single_apply]
+  rw [cpBasisRay, momentMap_mk, PiLp.norm_single, norm_one, one_pow, div_one,
+    PiLp.single_apply]
   split_ifs with h
   · rw [norm_one, one_pow]
   · rw [norm_zero]; norm_num

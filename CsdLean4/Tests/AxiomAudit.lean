@@ -151,6 +151,7 @@ import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
+import CsdLean4.LF6.MaxEntangledCGLMPCapstone
 import CsdLean4.LF6.GHZnDeisolationFlow
 import CsdLean4.Empirical.QM.Bell
 import CsdLean4.Empirical.QM.NoCloning
@@ -4469,6 +4470,13 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d
+
+-- LF6-1 (2026-07-09): the flow capstone with conjunct 7 REROUTED through the d-intrinsic CGLMP force
+-- (no LHV table reproduces pQM d, since cglmp d pQM > 2 in dimension d) instead of the 2×2 Φ⁺/CHSH
+-- sector. Conjuncts 1–6 inherited from maxEntangledDeisolation_flow_capstone; still foundational-triple.
+/-- info: 'CSD.LF6.maxEntangledDeisolation_flow_capstone_cglmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.maxEntangledDeisolation_flow_capstone_cglmp
 
 -- GHZ_n tranche (GHZnDeisolationFlow, 2026-07-03): the DETERMINISTIC (Mermin) all-or-nothing forcing
 -- axis at general PARTY number n, complementing the statistical (CGLMP) axis at general dimension d
