@@ -233,6 +233,59 @@ theorem divstepIter_natAbs_one_of_coprime {s : ℤ × ℤ × ℤ} (hf : Odd s.2.
     (divstepIter n s).2.1.natAbs = 1 := by
   rw [divstepIter_natAbs_of_g_zero hf hg, hcop]
 
+/-! ### Layer 3a′: `g = 0` is absorbing — the fixed-count loop reads a stable answer
+
+A constant-time safegcd circuit runs a FIXED number of divsteps (the worst-case
+iteration bound); on an input that reaches `g = 0` earlier, the extra steps must
+not corrupt the surviving `f`-register. The lemmas here prove exactly that: `g = 0`
+is a fixed point (`divstep_snd_snd_zero`), it persists and freezes `f`
+(`divstepIter_zero_stable`), so the gcd read-off is stable for EVERY step count at
+or beyond termination (`divstepIter_natAbs_of_g_zero_stable`). This is the
+"fixed-count-does-not-corrupt" half of the loop's correctness; the complementary
+half — that `g` DOES reach `0` within the Bernstein–Yang worst-case bound — remains
+the external / documented residual (their transition-matrix / potential argument,
+which is itself computer-assisted; see `SafegcdInversion.lean`). -/
+
+/-- **`g = 0` is absorbing.** `divstep d f 0 = (1 + d, f, 0)` (the `g`-even branch,
+`0 / 2 = 0`): once the running `g` reaches `0`, the divstep leaves `f` untouched
+and keeps `g` at `0` (only `δ` drifts). -/
+theorem divstep_snd_snd_zero (d f : ℤ) : divstep d f 0 = (1 + d, f, 0) := by
+  have h0 : ¬ Odd (0 : ℤ) := Int.not_odd_iff_even.mpr ⟨0, by ring⟩
+  unfold divstep
+  rw [if_neg (fun h => h0 h.2), if_neg h0]
+  norm_num
+
+/-- **Once `g` hits `0`, the loop is halted stably.** If `g` is `0` after `k`
+divsteps, then after any further `m` steps `g` is still `0` and the `f`-register is
+unchanged. So the surviving `f` is frozen at termination — extra iterations of a
+fixed-count loop cannot corrupt it. -/
+theorem divstepIter_zero_stable {s : ℤ × ℤ × ℤ} {k : ℕ}
+    (hg : (divstepIter k s).2.2 = 0) (m : ℕ) :
+    (divstepIter (k + m) s).2.2 = 0 ∧ (divstepIter (k + m) s).2.1 = (divstepIter k s).2.1 := by
+  induction m with
+  | zero => exact ⟨hg, rfl⟩
+  | succ j ih =>
+    obtain ⟨ihg, ihf⟩ := ih
+    rw [show k + (j + 1) = (k + j) + 1 from by ring, divstepIter_succ]
+    set t := divstepIter (k + j) s
+    show (divstep t.1 t.2.1 t.2.2).2.2 = 0 ∧ (divstep t.1 t.2.1 t.2.2).2.1 = (divstepIter k s).2.1
+    have ht : divstep t.1 t.2.1 t.2.2 = (1 + t.1, t.2.1, 0) := by
+      rw [show t.2.2 = 0 from ihg]; exact divstep_snd_snd_zero t.1 t.2.1
+    rw [ht]
+    exact ⟨rfl, ihf⟩
+
+/-- **The gcd read-off is stable for every step count at or beyond termination.**
+If `g` reaches `0` after `k` divsteps, then for ANY further `m` the surviving
+`|f|` still equals `Int.gcd f₀ g₀`. This is the "fixed-count loop reads the right
+answer" guarantee: a circuit running a fixed `k + m ≥` (termination step) count
+computes `gcd(f₀, g₀)` in `|f|`, the extra steps notwithstanding. Combines
+`divstepIter_zero_stable` (f is frozen) with `divstepIter_natAbs_of_g_zero`. -/
+theorem divstepIter_natAbs_of_g_zero_stable {s : ℤ × ℤ × ℤ} (hf : Odd s.2.1) {k : ℕ}
+    (hg : (divstepIter k s).2.2 = 0) (m : ℕ) :
+    (divstepIter (k + m) s).2.1.natAbs = Int.gcd s.2.1 s.2.2 := by
+  rw [(divstepIter_zero_stable hg m).2]
+  exact divstepIter_natAbs_of_g_zero hf hg
+
 /-! ### Layer 3b: Bezout cofactor tracking (up to the `2^k` scale) -/
 
 /-- `x` is an integer linear combination of `f₀` and `g₀`. -/

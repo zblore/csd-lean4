@@ -6795,6 +6795,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.divstepIter_natAbs_one_of_coprime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_natAbs_one_of_coprime
 
+-- EC-1 (2026-07-09): termination STABILITY (the fixed-count-loop half). g=0 is absorbing
+-- (divstep_snd_snd_zero); once g hits 0 the surviving |f| = gcd(f₀,g₀) and STAYS so for every further
+-- step (divstepIter_natAbs_of_g_zero_stable) — so a fixed 3n-step loop reads the right answer on any
+-- input that terminates within it. The termination-COUNT bound itself (g reaches 0 within ~2.88·bits,
+-- Bernstein-Yang's computer-assisted argument) stays the external residual.
+/-- info: 'ECDLP.Safegcd.divstep_snd_snd_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstep_snd_snd_zero
+
+/-- info: 'ECDLP.Safegcd.divstepIter_zero_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_zero_stable
+
+/-- info: 'ECDLP.Safegcd.divstepIter_natAbs_of_g_zero_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_natAbs_of_g_zero_stable
+
 /-- info: 'ECDLP.Safegcd.divstepIter_bezout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_bezout
 

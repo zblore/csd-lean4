@@ -55,7 +55,7 @@ not yet verified. The frontier is the roadmap, not a deficiency.
 ## The two headline figures (at `Secp256k1.bits = 256`, one affine point addition, classical offset)
 
 * `secp256k1Toffoli_verifiedFloor    = 676880936`  (Fermat inversion, verified/anchored only)
-* `secp256k1Toffoli_trustedEstimate  = 5831948`    (safegcd + Karatsuba + squaring, trusted primitives)
+* `secp256k1Toffoli_trustedEstimate  = 7801612`    (safegcd + Karatsuba + squaring, trusted primitives)
 
 The verified floor is LARGER than the trusted estimate: the only inversion the corpus can machine-anchor
 is Fermat, whose `O(n^3)` exponentiation dominates the point addition. The trusted estimate replaces it
@@ -119,7 +119,7 @@ inductive EcdsaFigure
   | classicalOffset
   /-- The verified-floor point addition `onePointAddToffoli` (Fermat; verified + anchored only). -/
   | verifiedFloor
-  /-- safegcd / Bernstein-Yang binary-GCD modular inversion `safegcdInvToffoli n = 60*n^2 + 28*n` (trusted). -/
+  /-- safegcd / Bernstein-Yang binary-GCD modular inversion `safegcdInvToffoli n = 90*n^2 + 42*n` (trusted). -/
   | safegcdInversion
   /-- Karatsuba sub-quadratic modular multiply recurrence `karatsubaToffoli` (trusted). -/
   | karatsubaMultiply
@@ -211,11 +211,12 @@ divstep circuit, the Karatsuba circuit, or the dedicated squaring circuit as rev
 presented to match the estimator posture, and every trusted input is cited above. It is NOT verified. -/
 def secp256k1Toffoli_trustedEstimate : ℕ := onePointAddToffoli_squaring
 
-/-- The trusted estimate evaluates to `5831948` Toffolis: the squaring-aware affine core
-`affinePointOpToffoli_squaring 256 = 5817572` (two Karatsuba multiplies `2 * 653388 = 1306776`, one
-dedicated squaring `571468`, one safegcd inversion `3939328`) plus the classical-offset coordinate term
-`14376`. A literature-cited reference estimate, NOT a verified corpus figure. -/
-theorem secp256k1Toffoli_trustedEstimate_eq : secp256k1Toffoli_trustedEstimate = 5831948 := by
+/-- The trusted estimate evaluates to `7801612` Toffolis: the squaring-aware affine core
+`affinePointOpToffoli_squaring 256 = 7787236` (two Karatsuba multiplies `2 * 653388 = 1306776`, one
+dedicated squaring `571468`, one safegcd inversion `5908992` — the honest Bernstein–Yang `3n` divstep
+count) plus the classical-offset coordinate term `14376`. A literature-cited reference estimate, NOT a
+verified corpus figure. -/
+theorem secp256k1Toffoli_trustedEstimate_eq : secp256k1Toffoli_trustedEstimate = 7801612 := by
   rw [secp256k1Toffoli_trustedEstimate, onePointAddToffoli_squaring_eq]
 
 /-- **The trusted estimate tags as `trusted`, and its distinguishing inputs are trusted.** The safegcd
@@ -257,22 +258,23 @@ theorem verificationFrontier_length : verificationFrontier.length = 4 := rfl
 /-! ### The gap (the frontier as a factor, not a deficiency) -/
 
 /-- **The two-track gap, lower bracket.** The verified floor exceeds the trusted estimate by more than a
-factor of 116: `secp256k1Toffoli_trustedEstimate * 116 < secp256k1Toffoli_verifiedFloor`
-(`5831948 * 116 = 676505968 < 676880936`). The verified floor is the LARGER number because the only
+factor of 86: `secp256k1Toffoli_trustedEstimate * 86 < secp256k1Toffoli_verifiedFloor`
+(`7801612 * 86 = 670938632 < 676880936`). The verified floor is the LARGER number because the only
 inversion the corpus can machine-anchor is the `O(n^3)` Fermat exponentiation; the trusted estimate
-replaces it with the `O(n^2)` safegcd inversion and the sub-quadratic Karatsuba multiply. -/
+replaces it with the `O(n^2)` safegcd inversion and the sub-quadratic Karatsuba multiply. (Gap was
+`~116×` under the prior optimistic `2n` divstep count; `~87×` under the honest Bernstein–Yang `3n`.) -/
 theorem two_track_gap_lower :
-    secp256k1Toffoli_trustedEstimate * 116 < secp256k1Toffoli_verifiedFloor := by
+    secp256k1Toffoli_trustedEstimate * 86 < secp256k1Toffoli_verifiedFloor := by
   rw [secp256k1Toffoli_trustedEstimate_eq, secp256k1Toffoli_verifiedFloor_eq]; norm_num
 
-/-- **The two-track gap, upper bracket.** The factor is below 117:
-`secp256k1Toffoli_verifiedFloor < secp256k1Toffoli_trustedEstimate * 117`
-(`676880936 < 5831948 * 117 = 682337916`). Together with `two_track_gap_lower` this pins the gap at about
-116-fold. That factor of about 116 IS the verification frontier: it is exactly what verifying safegcd,
+/-- **The two-track gap, upper bracket.** The factor is below 87:
+`secp256k1Toffoli_verifiedFloor < secp256k1Toffoli_trustedEstimate * 87`
+(`676880936 < 7801612 * 87 = 678740244`). Together with `two_track_gap_lower` this pins the gap at about
+87-fold. That factor of about 87 IS the verification frontier: it is exactly what verifying safegcd,
 Karatsuba, and measurement-based arithmetic as reversible circuits would buy. The gap is the roadmap, not
 a deficiency of the verified floor. -/
 theorem two_track_gap_upper :
-    secp256k1Toffoli_verifiedFloor < secp256k1Toffoli_trustedEstimate * 117 := by
+    secp256k1Toffoli_verifiedFloor < secp256k1Toffoli_trustedEstimate * 87 := by
   rw [secp256k1Toffoli_trustedEstimate_eq, secp256k1Toffoli_verifiedFloor_eq]; norm_num
 
 /-- **The gap is strict.** The trusted estimate is strictly below the verified floor

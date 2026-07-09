@@ -38,9 +38,13 @@ only a `ZMod.inv` unfolding: `ECDLP.Safegcd.divstep` exhibits the Bernstein-Yang
 Int.gcd f g` as a genuine theorem (parity + coprimality-with-2, not a `Nat.gcd`/`ZMod.inv` unfolding).
 `divstepIter_gcd` iterates it; `divstepIter_natAbs_of_g_zero` gives correctness modulo termination
 (when the running `g` hits `0`, the running `|f|` equals `gcd(f₀,g₀)`); `divstepIter_bezout` tracks the
-cofactor up to the `2^k` scale. So the divstep recurrence now GENUINELY computes the gcd. The two
-NAMED RESIDUALS that keep the full inversion trusted-not-verified: (i) TERMINATION (the `g → 0` within
-`2·bits` bound, the potential-function argument), and (ii) the reversible BIT-CIRCUIT whose denotation
+cofactor up to the `2^k` scale. So the divstep recurrence now GENUINELY computes the gcd.
+**Termination stability is now proved too** (`divstepIter_natAbs_of_g_zero_stable`): once `g` hits `0`
+the surviving `|f|` equals `gcd(f₀,g₀)` and STAYS so for every further step, so a fixed `3n`-step loop
+reads the right answer on any input that terminates within it. The NAMED RESIDUALS that keep the full
+inversion trusted-not-verified: (i) the TERMINATION-COUNT bound (that `g` DOES reach `0` within the
+Bernstein–Yang worst case `⌊(49·bits+80)/17⌋ ≈ 2.882·bits ≤ 3·bits` — their computer-assisted
+transition-matrix argument, not formalised), and (ii) the reversible BIT-CIRCUIT whose denotation
 equals `divstep` (the `divstepToffoli` op-count model below is over this not-yet-exhibited circuit).
 
 ## Route taken for value-correctness (stated honestly)
@@ -68,14 +72,20 @@ residue** that would make the value genuinely circuit-backed; it is NOT built he
 * **CONJECTURAL / EXTERNAL**: the leaderboard reference `ecdsaFailLeaderboardBest` and the mapping of
   our worst-case UPPER-bound Toffoli count to the executed-average harness.
 
-## Headline figures (at `Secp256k1.bits = 256`)
+## Headline figures (at `Secp256k1.bits = 256`, honest Bernstein–Yang `3n` divstep count)
 
-* `safegcdInvToffoli_secp256k1            : safegcdInvToffoli 256 = 3939328`  (`≈ 3.9×10⁶`, vs Fermat
-  `fermatInvToffoli 256 = 672923648 ≈ 6.7×10⁸`, a `~170×` per-inversion win)
-* `onePointAddToffoli_safegcd_eq          : onePointAddToffoli_safegcd = 7896616`
-* `onePointAddScore_safegcd_eq            : onePointAddScore_safegcd = 22284250352`
-* `safegcd_score_improvement              : onePointAddScore_safegcd · 85 < onePointAddScore`
-  (the `~86×` score win over the Fermat benchmark `onePointAddScore = 1910158001392`)
+* `safegcdInvToffoli_secp256k1            : safegcdInvToffoli 256 = 5908992`  (`≈ 5.9×10⁶`, vs Fermat
+  `fermatInvToffoli 256 = 672923648 ≈ 6.7×10⁸`, a `~114×` per-inversion win)
+* `onePointAddToffoli_safegcd_eq          : onePointAddToffoli_safegcd = 9866280`
+* `onePointAddScore_safegcd_eq            : onePointAddScore_safegcd = 27842642160`
+* `safegcd_score_improvement              : onePointAddScore_safegcd · 68 < onePointAddScore`
+  (the `~69×` score win over the Fermat benchmark `onePointAddScore = 1910158001392`)
+
+**Numbers revised 2026-07-09 (EC-1):** the divstep count was corrected from the optimistic `2n` to the
+honest Bernstein–Yang worst-case upper bound `3n` (`⌊(49n+80)/17⌋ ≈ 2.882n ≤ 3n`). The per-inversion
+win drops `~170× → ~114×` and the point-add score win `~86× → ~69×` — still an order-of-magnitude+
+improvement. Termination stability (fixed-count loop reads the right answer) is now proved
+(`SafegcdDivstep.lean`); the termination-count bound itself stays the external residual.
 -/
 
 namespace ECDLP
@@ -180,46 +190,53 @@ theorem divstepToffoli_eq_gadgets {m n : ℕ} (Ls : ModSubLayout m n)
 
 /-! ### The divstep count and the `O(n²)` inversion cost -/
 
-/-- **Divstep count, `2n` (DOCUMENTED model).** The binary-GCD / Kaliski almost-inverse / Bernstein–Yang
-safegcd loop runs at most `~2n` divsteps for `n`-bit inputs (each divstep removes at least one bit from
-the combined `(f, g)` length, total `2n`). This is the op-count model — the analogue of `fermatInv`'s
-`modExpFieldMults_le ≤ 2·Nat.size e`; a *proved* `2n` bound would need the divstep recurrence + its
-termination (route 2a, the named residue). -/
-def safegcdDivsteps (n : ℕ) : ℕ := 2 * n
+/-- **Divstep count, `3n` (DOCUMENTED model — the honest Bernstein–Yang worst case).** The
+Bernstein–Yang safegcd loop's *proven* worst-case divstep count for `n`-bit inputs is
+`⌊(49n + 80)/17⌋ ≈ 2.882·n` (Bernstein–Yang, TCHES 2019, established via their transition-matrix /
+potential analysis — itself computer-assisted). We use the clean upper bound `3n ≥ 2.882n` for the
+op-count model. **This corrects a prior optimistic `2n`** (which is BELOW the actual worst case, so
+not a valid upper bound). Same status tier as `fermatInv`'s `modExpFieldMults_le ≤ 2·Nat.size e`; the
+divstep-count bound stays DOCUMENTED/EXTERNAL — proving it in Lean would mean formalising
+Bernstein–Yang's computer-assisted argument (the named residue). What IS proved (`SafegcdDivstep.lean`)
+is the complementary half: once `g` reaches `0`, the surviving `|f|` is `gcd(f₀,g₀)` and stays so for
+every further step (`divstepIter_natAbs_of_g_zero_stable`), so running a FIXED `3n`-step loop reads the
+right answer on any input that terminates within it. -/
+def safegcdDivsteps (n : ℕ) : ℕ := 3 * n
 
-/-- **Binary-GCD inversion Toffoli cost: `(2n)·(30n+14) = 60n² + 28n` (`O(n²)`).** The DOCUMENTED
-divstep count (`safegcdDivsteps = 2n`) times the verified-gadget-anchored per-divstep cost
-(`divstepToffoli = 30n+14`). This is the `~n`-fold structural win over the `O(n³)` Fermat
-`fermatInvToffoli n = 2n·cleanModMulToffoli n`. Same honesty status as `fermatInvToffoli`: a derived
-op-count model (`divstep count × verified-per-divstep`), not a separately-exhibited inversion circuit;
-the VALUE is the proved `binGcdInv_eq_inv`. -/
+/-- **Binary-GCD inversion Toffoli cost: `(3n)·(30n+14) = 90n² + 42n` (`O(n²)`).** The DOCUMENTED
+divstep count (`safegcdDivsteps = 3n`, the honest Bernstein–Yang worst-case upper bound) times the
+verified-gadget-anchored per-divstep cost (`divstepToffoli = 30n+14`). This is the `~n`-fold structural
+win over the `O(n³)` Fermat `fermatInvToffoli n = 2n·cleanModMulToffoli n`. Same honesty status as
+`fermatInvToffoli`: a derived op-count model (`divstep count × verified-per-divstep`), not a
+separately-exhibited inversion circuit; the VALUE is the proved `binGcdInv_eq_inv`. -/
 def safegcdInvToffoli (n : ℕ) : ℕ := safegcdDivsteps n * divstepToffoli n
 
-theorem safegcdInvToffoli_eq (n : ℕ) : safegcdInvToffoli n = 60 * n ^ 2 + 28 * n := by
+theorem safegcdInvToffoli_eq (n : ℕ) : safegcdInvToffoli n = 90 * n ^ 2 + 42 * n := by
   simp only [safegcdInvToffoli, safegcdDivsteps, divstepToffoli]; ring
 
-/-- One secp256k1 binary-GCD inversion costs `3 939 328 ≈ 3.9×10⁶` Toffolis: `2·256 = 512` divsteps,
-each `30·256 + 14 = 7694` Toffolis (`= 60·256² + 28·256`). Contrast the Fermat
-`fermatInvToffoli 256 = 672 923 648 ≈ 6.7×10⁸` — a `~170×` per-inversion win (`O(n²)` vs `O(n³)`). -/
-theorem safegcdInvToffoli_secp256k1 : safegcdInvToffoli Secp256k1.bits = 3939328 := by
+/-- One secp256k1 binary-GCD inversion costs `5 908 992 ≈ 5.9×10⁶` Toffolis: `3·256 = 768` divsteps
+(the Bernstein–Yang worst-case upper bound), each `30·256 + 14 = 7694` Toffolis (`= 90·256² + 42·256`).
+Contrast the Fermat `fermatInvToffoli 256 = 672 923 648 ≈ 6.7×10⁸` — a `~114×` per-inversion win
+(`O(n²)` vs `O(n³)`). -/
+theorem safegcdInvToffoli_secp256k1 : safegcdInvToffoli Secp256k1.bits = 5908992 := by
   rw [safegcdInvToffoli_eq]; norm_num [Secp256k1.bits]
 
 /-- **The per-inversion win, concrete.** At `n = 256`, the binary-GCD inversion is strictly cheaper
-than Fermat: `safegcdInvToffoli 256 = 3 939 328 < 672 923 648 = fermatInvToffoli 256` (a `~170×`
+than Fermat: `safegcdInvToffoli 256 = 5 908 992 < 672 923 648 = fermatInvToffoli 256` (a `~114×`
 factor — the `O(n²)`-vs-`O(n³)` structural improvement). -/
 theorem safegcdInvToffoli_lt_fermat_secp256k1 :
     safegcdInvToffoli Secp256k1.bits < fermatInvToffoli Secp256k1.bits := by
   rw [safegcdInvToffoli_secp256k1, fermatInvToffoli_secp256k1]; norm_num
 
-/-- **The per-inversion win, structural (`O(n²) ≤ O(n³)`).** For every register width `n ≥ 2`, the
-binary-GCD inversion cost `60n² + 28n` is at most the Fermat cost `40n³ + 28n²`. This is the
+/-- **The per-inversion win, structural (`O(n²) ≤ O(n³)`).** For every register width `n ≥ 3`, the
+binary-GCD inversion cost `90n² + 42n` is at most the Fermat cost `40n³ + 28n²`. This is the
 `O(n²)`-vs-`O(n³)` separation as a theorem, not just at `n = 256`. -/
-theorem safegcdInvToffoli_le_fermat (n : ℕ) (hn : 2 ≤ n) :
+theorem safegcdInvToffoli_le_fermat (n : ℕ) (hn : 3 ≤ n) :
     safegcdInvToffoli n ≤ fermatInvToffoli n := by
   have hf : fermatInvToffoli n = 40 * n ^ 3 + 28 * n ^ 2 := by
     simp only [fermatInvToffoli, cleanModMulToffoli]; ring
   rw [safegcdInvToffoli_eq, hf]
-  have key : 2 * n ^ 2 ≤ n * n ^ 2 := by gcongr
+  have key : 2 * n ^ 2 ≤ n * n ^ 2 := by gcongr <;> omega
   nlinarith [key, hn]
 
 /-! ### Re-costing the ECDSA.fail benchmark with the binary-GCD inversion (L6) -/
@@ -227,15 +244,15 @@ theorem safegcdInvToffoli_le_fermat (n : ℕ) (hn : 2 ≤ n) :
 /-- **Affine point-op Toffoli cost, binary-GCD inversion.** The `affinePointOpToffoli` analogue with
 `safegcdInvToffoli` in place of the Fermat `fermatInvToffoli`: three carry-clean field multiplies
 (`λ = Δy·(1/Δx)`, `λ²`, `λ·(x−x₃)`) plus the now-`O(n²)` slope inversion. The inversion no longer
-dominates: `safegcdInvToffoli 256 = 3 939 328` vs the three multiplies `3·1 314 304 = 3 942 912`
-(roughly equal), against Fermat's `~170×` domination. -/
+dominates: `safegcdInvToffoli 256 = 5 908 992` vs the three multiplies `3·1 314 304 = 3 942 912`
+(now ~1.5× the multiplies, not `~170×`), against Fermat's `~170×` domination. -/
 def affinePointOpToffoli_safegcd (n : ℕ) : ℕ := 3 * cleanModMulToffoli n + safegcdInvToffoli n
 
-/-- One representative secp256k1 affine point op with binary-GCD inversion costs `7 882 240 ≈ 7.9×10⁶`
-Toffolis: `3·cleanModMulToffoli 256 = 3 942 912` plus `safegcdInvToffoli 256 = 3 939 328`. Contrast
+/-- One representative secp256k1 affine point op with binary-GCD inversion costs `9 851 904 ≈ 9.9×10⁶`
+Toffolis: `3·cleanModMulToffoli 256 = 3 942 912` plus `safegcdInvToffoli 256 = 5 908 992`. Contrast
 the Fermat `affinePointOpToffoli 256 = 676 866 560` (the inversion `~170×` the three multiplies). -/
 theorem affinePointOpToffoli_safegcd_secp256k1 :
-    affinePointOpToffoli_safegcd Secp256k1.bits = 7882240 := by
+    affinePointOpToffoli_safegcd Secp256k1.bits = 9851904 := by
   rw [affinePointOpToffoli_safegcd, safegcdInvToffoli_secp256k1, cleanModMulToffoli_secp256k1]
 
 /-- **Toffoli count for ONE affine point addition, binary-GCD inversion, classical offset.** The
@@ -250,11 +267,11 @@ verified-gadget-anchored op-count model `safegcdInvToffoli` (value `binGcdInv_eq
 def onePointAddToffoli_safegcd : ℕ :=
   affinePointOpToffoli_safegcd Secp256k1.bits + classicalOffsetCoordToffoli Secp256k1.bits
 
-/-- One affine point addition with binary-GCD inversion (classical offset) costs `7 896 616 ≈ 7.9×10⁶`
-Toffolis: the binary-GCD affine core `affinePointOpToffoli_safegcd 256 = 7 882 240` plus the
+/-- One affine point addition with binary-GCD inversion (classical offset) costs `9 866 280 ≈ 9.9×10⁶`
+Toffolis: the binary-GCD affine core `affinePointOpToffoli_safegcd 256 = 9 851 904` plus the
 classical-offset coordinate term `classicalOffsetCoordToffoli 256 = 14 376`. Contrast the Fermat
-`onePointAddToffoli = 676 880 936` — an `~86×` per-addition Toffoli win. -/
-theorem onePointAddToffoli_safegcd_eq : onePointAddToffoli_safegcd = 7896616 := by
+`onePointAddToffoli = 676 880 936` — an `~69×` per-addition Toffoli win. -/
+theorem onePointAddToffoli_safegcd_eq : onePointAddToffoli_safegcd = 9866280 := by
   rw [onePointAddToffoli_safegcd, affinePointOpToffoli_safegcd_secp256k1,
     classicalOffsetCoordToffoli_secp256k1]
 
@@ -264,7 +281,7 @@ theorem onePointAddToffoli_safegcd_eq : onePointAddToffoli_safegcd = 7896616 := 
 `n`-bit working registers vs Fermat's `Δx, Δy, accumulator` three) and runs on the same shared
 carry-clean scratch bank `cleanModMulQubits = 6n+6` that dominates the tally, so the width stays in the
 same `~11n` band; reusing `onePointAddPeakQubits` is the DOCUMENTED layout choice (the inversion is no
-longer the qubit driver either). So the score win equals the Toffoli win (`~86×`).
+longer the qubit driver either). So the score win equals the Toffoli win (`~69×`).
 
 **Tier:** Toffoli factor VERIFIED-gadget-anchored / op-count-model; peak qubits DOCUMENTED; the product
 as a comparison to the live ECDSA.fail score is CONJECTURAL / EXTERNAL (worst-case upper bound, not
@@ -272,19 +289,20 @@ their executed average). -/
 def onePointAddScore_safegcd : ℕ := onePointAddToffoli_safegcd * onePointAddPeakQubits
 
 /-- The ECDSA.fail-convention score for one affine point addition with binary-GCD inversion is
-`22 284 250 352 ≈ 2.2×10¹⁰`: `onePointAddToffoli_safegcd = 7 896 616` Toffolis times
+`27 842 642 160 ≈ 2.8×10¹⁰`: `onePointAddToffoli_safegcd = 9 866 280` Toffolis times
 `onePointAddPeakQubits = 2822` peak live qubits. Contrast the Fermat
-`onePointAddScore = 1 910 158 001 392 ≈ 1.9×10¹²` — an `~86×` score win. Repo comparable-OBJECT figure,
+`onePointAddScore = 1 910 158 001 392 ≈ 1.9×10¹²` — an `~69×` score win. Repo comparable-OBJECT figure,
 NOT a validated ECDSA.fail harness score. -/
-theorem onePointAddScore_safegcd_eq : onePointAddScore_safegcd = 22284250352 := by
+theorem onePointAddScore_safegcd_eq : onePointAddScore_safegcd = 27842642160 := by
   rw [onePointAddScore_safegcd, onePointAddToffoli_safegcd_eq, onePointAddPeakQubits_eq]
 
-/-- **The score win over the Fermat benchmark: `> 85×`.** `onePointAddScore_safegcd · 85 <
+/-- **The score win over the Fermat benchmark: `> 68×`.** `onePointAddScore_safegcd · 68 <
 onePointAddScore` — binary-GCD inversion drops the one-affine-point-addition score from
-`1 910 158 001 392` to `22 284 250 352`, an `~86×` improvement (the inversion was `~99.4%` of the cost,
-and `O(n²)` replaces `O(n³)`). -/
+`1 910 158 001 392` to `27 842 642 160`, an `~69×` improvement (the inversion was `~99.4%` of the cost,
+and `O(n²)` replaces `O(n³)`). Down from the prior `~86×` after correcting the divstep count from the
+optimistic `2n` to the honest Bernstein–Yang worst-case bound `3n` — still enormous. -/
 theorem safegcd_score_improvement :
-    onePointAddScore_safegcd * 85 < onePointAddScore := by
+    onePointAddScore_safegcd * 68 < onePointAddScore := by
   rw [onePointAddScore_safegcd_eq, onePointAddScore_eq]; norm_num
 
 /-! ### Placement against the ECDSA.fail leaderboard (CONJECTURAL / EXTERNAL) -/
@@ -302,19 +320,19 @@ theorem fermat_score_gap_vs_leaderboard :
     ecdsaFailLeaderboardBest * 1216 < onePointAddScore := by
   rw [onePointAddScore_eq]; norm_num [ecdsaFailLeaderboardBest]
 
-/-- **The gap L6 closes — after (lower bound).** The binary-GCD score is still `> 14×` the leaderboard
-best: `ecdsaFailLeaderboardBest · 14 < onePointAddScore_safegcd`. -/
+/-- **The gap L6 closes — after (lower bound).** The binary-GCD score is still `> 17×` the leaderboard
+best: `ecdsaFailLeaderboardBest · 17 < onePointAddScore_safegcd`. -/
 theorem safegcd_score_gap_vs_leaderboard_lower :
-    ecdsaFailLeaderboardBest * 14 < onePointAddScore_safegcd := by
+    ecdsaFailLeaderboardBest * 17 < onePointAddScore_safegcd := by
   rw [onePointAddScore_safegcd_eq]; norm_num [ecdsaFailLeaderboardBest]
 
-/-- **The gap L6 closes — after (upper bound).** The binary-GCD score is `< 15×` the leaderboard best:
-`onePointAddScore_safegcd < ecdsaFailLeaderboardBest · 15`. Together with the lower bound, L6 brings
-the gap from `~1217×` (Fermat) to `~14×` (binary-GCD) — closing the dominant `~86×` of the
-`~1220×` leaderboard gap; the residual `~14×` is the documented optimisations (windowing, sub-quadratic
+/-- **The gap L6 closes — after (upper bound).** The binary-GCD score is `< 18×` the leaderboard best:
+`onePointAddScore_safegcd < ecdsaFailLeaderboardBest · 18`. Together with the lower bound, L6 brings
+the gap from `~1217×` (Fermat) to `~18×` (binary-GCD) — closing the dominant `~69×` of the
+`~1220×` leaderboard gap; the residual `~18×` is the documented optimisations (windowing, sub-quadratic
 multiply, measurement-based adders) plus the worst-case-vs-executed-average modelling gap. -/
 theorem safegcd_score_gap_vs_leaderboard_upper :
-    onePointAddScore_safegcd < ecdsaFailLeaderboardBest * 15 := by
+    onePointAddScore_safegcd < ecdsaFailLeaderboardBest * 18 := by
   rw [onePointAddScore_safegcd_eq]; norm_num [ecdsaFailLeaderboardBest]
 
 /-! ### Windowed Fermat inversion — a DOCUMENTED COMPARISON, off the critical path (L2)
@@ -342,7 +360,7 @@ STILL `O(n)` modular multiplies, i.e. `O(n³)` Toffoli.
 * **CONJECTURAL / EXTERNAL**: n/a here — the inverse VALUE is unchanged (still `a⁻¹ = a^{p-2}`, the proved
   `ECDLP.fermatInv_eq_inv`); this block makes no new value claim, it only re-costs the same exponentiation.
 
-The headline `safegcd_beats_windowed_fermat` confirms safegcd (`O(n²)`) wins by `~120×` even against
+The headline `safegcd_beats_windowed_fermat` confirms safegcd (`O(n²)`) wins by `~80×` even against
 windowed Fermat: windowing buys a constant factor over naive Fermat but cannot overcome the structural
 `O(n³)`-vs-`O(n²)` gap. -/
 
@@ -372,9 +390,9 @@ theorem windowedFermatInvToffoli_lt_fermat_secp256k1 :
     windowedFermatInvToffoli Secp256k1.bits 6 < fermatInvToffoli Secp256k1.bits := by
   rw [windowedFermatInvToffoli_secp256k1, fermatInvToffoli_secp256k1]; norm_num
 
-/-- **THE HEADLINE COMPARISON: safegcd wins even against windowed Fermat (`~120×`).**
-`safegcdInvToffoli 256 = 3 939 328 < 475 778 048 = windowedFermatInvToffoli 256 6` — the `O(n²)`
-binary-GCD inversion is `~120×` cheaper than the `2^6`-ary windowed Fermat exponentiation. Windowing
+/-- **THE HEADLINE COMPARISON: safegcd wins even against windowed Fermat (`~80×`).**
+`safegcdInvToffoli 256 = 5 908 992 < 475 778 048 = windowedFermatInvToffoli 256 6` — the `O(n²)`
+binary-GCD inversion is `~80×` cheaper than the `2^6`-ary windowed Fermat exponentiation. Windowing
 saves a constant `~1.4×` over naive Fermat but cannot overcome the structural `O(n³)`-vs-`O(n²)` gap.
 This closes L2 as a documented comparison. -/
 theorem safegcd_beats_windowed_fermat :
@@ -384,8 +402,8 @@ theorem safegcd_beats_windowed_fermat :
 /-- **Windowed Fermat stays `O(n³)` for any fixed window `k`.** For every register width `n` and window
 `k`, `windowedFermatInvToffoli n k ≥ n·cleanModMulToffoli n = 20n³ + 14n²` — the multiply count
 `n + n/k + 2^k ≥ n` is `Ω(n)`, so windowing cannot drop the inversion below the cubic Toffoli class,
-whatever `k`. Contrast safegcd's `O(n²)` (`safegcdInvToffoli_eq : 60n² + 28n`). The structural reason
-the `~120×` gap at `n = 256` only widens with `n`. -/
+whatever `k`. Contrast safegcd's `O(n²)` (`safegcdInvToffoli_eq : 90n² + 42n`). The structural reason
+the `~80×` gap at `n = 256` only widens with `n`. -/
 theorem windowedFermatInvToffoli_ge_cubic (n k : ℕ) :
     n * cleanModMulToffoli n ≤ windowedFermatInvToffoli n k := by
   unfold windowedFermatInvToffoli

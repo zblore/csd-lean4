@@ -8,7 +8,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
 This is a **reporting layer** extension of `TwoTrack.lean`. It re-derives no circuit. Its job is to push the
 trusted-track estimate down by **composing the same published, community-validated mechanisms the leaders
 use** (Gidney measurement uncomputation, windowed EC, on top of safegcd + Karatsuba + squaring) over the
-existing trusted estimate `secp256k1Toffoli_trustedEstimate = 5831948`, and to compose a trusted SCORE (the
+existing trusted estimate `secp256k1Toffoli_trustedEstimate = 7801612`, and to compose a trusted SCORE (the
 leaderboard metric, peak-qubits times Toffoli). The ecdsa.fail leaderboard is an EXTERNAL BENCHMARK compared
 to, not a trusted input; `trusted` here means the published MECHANISM, not any competition entry.
 
@@ -43,10 +43,10 @@ harness run on the identical operation (the user's action, step 7 of the optimis
 
 ## The trusted figures at `Secp256k1.bits = 256` (all trusted, all cited, none verified)
 
-* `secp256k1Toffoli_measGidney         = 2915974`     (trusted estimate with Gidney factor 2)
-* `secp256k1Toffoli_trustedEstimate_v2 = 1457987`     (Gidney factor 2 then windowing factor 2)
+* `secp256k1Toffoli_measGidney         = 3900806`     (trusted estimate with Gidney factor 2)
+* `secp256k1Toffoli_trustedEstimate_v2 = 1950403`     (Gidney factor 2 then windowing factor 2)
 * `secp256k1Qubits_trustedEstimate     = 2304`        (= 9 * 256, documented layout, cited)
-* `secp256k1Score_trustedEstimate      = 3359202048`  (= qubits * Toffoli, the ecdsa.fail metric)
+* `secp256k1Score_trustedEstimate      = 4493728512`  (= qubits * Toffoli, the ecdsa.fail metric)
 
 ## Where it lands vs the leaderboard (honest, from the arithmetic)
 
@@ -54,19 +54,22 @@ The public ecdsa.fail leaderboard best (late June 2026, corpus-recorded) is abou
 about `1360000` Toffoli, an exact product `leaderboardScoreExact = 1566720000` (the corpus's rounded handle
 `ecdsaFailLeaderboardBest = 1570000000`).
 
-* **Toffoli: essentially reproduced.** `secp256k1Toffoli_trustedEstimate_v2 = 1457987` is within about
-  `1.08` times the leaders' `1360000` (slightly above). Same cited primitives, so this reproduces the
-  leaders' Toffoli band, it does not beat it (`toffoli_v2_reproduces_leaderboard`).
+* **Toffoli: about `1.43×` the leaders (near their band, above it).** `secp256k1Toffoli_trustedEstimate_v2
+  = 1950403` is about `1.43` times the leaders' `1360000` (`toffoli_v2_reproduces_leaderboard`). Under the
+  prior optimistic `2n` divstep count this was `~1.08×` ("essentially reproduced"); with the honest
+  Bernstein–Yang `3n` count the safegcd inversion is larger, so the trusted Toffoli sits ~`1.43×` above
+  the leaders' band rather than matching it.
 * **Qubits: a factor of two above.** `secp256k1Qubits_trustedEstimate = 2304` is exactly `2 * 1152`
   (`qubits_trustedEstimate_two_leaderboard`). The modelled layout is the Roetteler-2017 / Haener-2020
   windowed-projective range (about `9n`), not the aggressive Litinski-2023 / Babbush measurement-based
   ancilla-recycling layout (about `4.5n`, about `1152`) that the number-one entry uses.
-* **Score: about `2.14` times the number-one entry.** `secp256k1Score_trustedEstimate = 3359202048` sits
+* **Score: about `2.87` times the number-one entry.** `secp256k1Score_trustedEstimate = 4493728512` sits
   between two and three times `leaderboardScoreExact` (`score_trustedEstimate_vs_leaderboard_lower` /
-  `_upper`). The whole residual is the qubit factor of two; the Toffoli already reproduces the leaders.
+  `_upper`). The residual now has TWO factors: the qubit factor of two AND the `~1.43×` Toffoli factor
+  (`2 × 1.43 ≈ 2.87`) — after the honest `3n` divstep correction the Toffoli no longer matches the leaders.
 
-**Honest rank.** The trusted score does NOT reach number one. It lands at about `2.14` times the number-one
-score, with the Toffoli reproducing the leaders' band and the entire gap in the peak-qubit count. The
+**Honest rank.** The trusted score does NOT reach number one. It lands at about `2.87` times the number-one
+score, split between the peak-qubit factor of two and the `~1.43×` Toffoli factor. The
 primitive that would close the residual is the aggressive measurement-based AND-ancilla-recycling qubit
 layout of Litinski 2023 / Babbush et al. (about `4.5n` peak qubits); it is named and cited, not modelled
 here, because modelling it would be reproducing the number-one construction, not a bounded re-cost. The
@@ -80,20 +83,21 @@ recomposes the score:
 
 * `secp256k1Qubits_trustedEstimate_aggressive = 1152`   (about `4.5n`, Litinski 2023 / Babbush et al., cited
   published mechanism)
-* `secp256k1Score_trustedEstimate_aggressive   = 1679601024`   (`= 1152 * 1457987`)
+* `secp256k1Score_trustedEstimate_aggressive   = 2246864256`   (`= 1152 * 1950403`)
 
 The figure is grounded in the PUBLISHED mechanism, not in any leaderboard entry: Litinski's measurement-based
 ancilla-recycling layout has a peak width of about `4.5n`, which at `n = 256` is about `1152` qubits. The
 ecdsa.fail leaderboard peak-qubit figure `1152` is an EXTERNAL BENCHMARK we compare to
-(`qubits_aggressive_matches_leaderboard_benchmark`), not a trusted input. The recomposed score lands within
-about `1.07` times the number-one benchmark score `1566720000`
-(`score_aggressive_within_leaderboard_benchmark`, bracketed strictly between `1.07` and `1.08` times). So the
-composition of published mechanisms lands within about `1.07` times the number-one benchmark on BOTH axes.
+(`qubits_aggressive_matches_leaderboard_benchmark`), not a trusted input. The recomposed score lands about
+`1.43` times the number-one benchmark score `1566720000`
+(`score_aggressive_within_leaderboard_benchmark`, bracketed strictly between `1.43` and `1.44` times) — the
+qubit axis matches the benchmark width, but the Toffoli axis is `~1.43×` above it after the honest `3n`
+safegcd correction, so the Stage-2 score is `~1.43×` the number-one benchmark (not the prior `~1.07×`).
 
 CRITICAL HONESTY (Stage-2). The aggressive figure is a CITED published layout (Litinski / Babbush), a
 community-validated mechanism, NOT verified (no Lean circuit proof), NOT a first-principles model, NOT a
 novel improvement, NOT a corpus achievement, and NOT a submission. It does NOT reach and does NOT beat the
-number-one entry: it lands slightly above at about `1.07` times, composing the same published mechanisms the
+number-one entry: it lands above at about `1.43` times, composing the same published mechanisms the
 leaders use. The board scores a RUST-coded circuit, so this remains a TARGET SPEC, not a submission; the
 distinctive corpus result is still the VERIFIED floor (denote-level circuit correctness), not this trusted
 rank. Verifying the aggressive measurement-based ancilla-recycling layout as a reversible circuit is a future
@@ -106,30 +110,30 @@ open ECDLP
 
 /-! ### Track 2b — the measurement-uncompute-adjusted Toffoli (trusted; Gidney 2018) -/
 
-/-- **Trusted estimate with Gidney measurement-based uncomputation (factor 2): `2915974`.** The trusted
-estimate `secp256k1Toffoli_trustedEstimate = 5831948` (safegcd + Karatsuba + squaring) with the Gidney
+/-- **Trusted estimate with Gidney measurement-based uncomputation (factor 2): `3900806`.** The trusted
+estimate `secp256k1Toffoli_trustedEstimate = 7801612` (safegcd + Karatsuba + squaring) with the Gidney
 factor-2 halving of the AND-heavy uncompute passes applied. The corpus adder witness of the factor is
 `CSD.Empirical.QM.gidneyMeasAddToffoli = n` (half of Cuccaro `2 * n`); cited to Gidney (2018). TRUSTED, a
 cited literature reduction, NOT a verified circuit. -/
 def secp256k1Toffoli_measGidney : ℕ := secp256k1Toffoli_trustedEstimate / 2
 
-theorem secp256k1Toffoli_measGidney_eq : secp256k1Toffoli_measGidney = 2915974 := by
+theorem secp256k1Toffoli_measGidney_eq : secp256k1Toffoli_measGidney = 3900806 := by
   rw [secp256k1Toffoli_measGidney, secp256k1Toffoli_trustedEstimate_eq]
 
 /-! ### Track 2b — the windowed + measurement Toffoli (trusted; Haener 2020 / Roetteler 2017) -/
 
-/-- **Trusted estimate, measurement-uncompute + windowed EC (factor 2 then factor 2): `1457987`.** The
-Gidney-adjusted figure `secp256k1Toffoli_measGidney = 2915974` with the windowed-recoding factor-2
+/-- **Trusted estimate, measurement-uncompute + windowed EC (factor 2 then factor 2): `1950403`.** The
+Gidney-adjusted figure `secp256k1Toffoli_measGidney = 3900806` with the windowed-recoding factor-2
 amortisation of the point-addition schedule applied. Equivalently `secp256k1Toffoli_trustedEstimate / 4`.
 Cited to Roetteler-Naehrig-Svore-Lauter (2017, eprint 2017/598) and Haener-Jaques-Naehrig-Roetteler-Soeken
 (2020, eprint 2020/077). TRUSTED, a cited literature reduction, NOT a verified circuit. This reproduces the
 leaders' Toffoli band; it does not beat it. -/
 def secp256k1Toffoli_trustedEstimate_v2 : ℕ := secp256k1Toffoli_measGidney / 2
 
-theorem secp256k1Toffoli_trustedEstimate_v2_eq : secp256k1Toffoli_trustedEstimate_v2 = 1457987 := by
+theorem secp256k1Toffoli_trustedEstimate_v2_eq : secp256k1Toffoli_trustedEstimate_v2 = 1950403 := by
   rw [secp256k1Toffoli_trustedEstimate_v2, secp256k1Toffoli_measGidney_eq]
 
-/-- **The v2 Toffoli is strictly below the existing trusted estimate.** `1457987 < 5831948`: the
+/-- **The v2 Toffoli is strictly below the existing trusted estimate.** `1950403 < 7801612`: the
 measurement + windowing factors drop the figure by four. -/
 theorem trustedEstimate_v2_lt_trustedEstimate :
     secp256k1Toffoli_trustedEstimate_v2 < secp256k1Toffoli_trustedEstimate := by
@@ -163,18 +167,18 @@ theorem qubits_trustedEstimate_lt_anchor :
 
 /-! ### Track 2b — the trusted score (trusted; the ecdsa.fail metric = peak-qubits times Toffoli) -/
 
-/-- **The trusted score: `qubits * Toffoli = 3359202048`.** The ecdsa.fail leaderboard metric composed from
+/-- **The trusted score: `qubits * Toffoli = 4493728512`.** The ecdsa.fail leaderboard metric composed from
 the two trusted factors, `secp256k1Qubits_trustedEstimate * secp256k1Toffoli_trustedEstimate_v2`. TRUSTED, a
 cited reference, NOT a validated ecdsa.fail harness score (worst-case model versus their executed average;
 harness run is the user's step 7). -/
 def secp256k1Score_trustedEstimate : ℕ :=
   secp256k1Qubits_trustedEstimate * secp256k1Toffoli_trustedEstimate_v2
 
-theorem secp256k1Score_trustedEstimate_eq : secp256k1Score_trustedEstimate = 3359202048 := by
+theorem secp256k1Score_trustedEstimate_eq : secp256k1Score_trustedEstimate = 4493728512 := by
   rw [secp256k1Score_trustedEstimate, secp256k1Qubits_trustedEstimate_eq,
     secp256k1Toffoli_trustedEstimate_v2_eq]
 
-/-- **The trusted score is far below the existing trusted-estimate score.** `3359202048 < 16457757256`
+/-- **The trusted score is far below the existing trusted-estimate score.** `4493728512 < 22016149064`
 (`onePointAddScore_squaring`): the measurement + windowing factors cut the score by about `4.9` times. -/
 theorem score_trustedEstimate_lt_squaring_score :
     secp256k1Score_trustedEstimate < onePointAddScore_squaring := by
@@ -199,7 +203,7 @@ inductive TrustedV2Figure
   (trusted; Litinski 2023 / Babbush et al. published ancilla-recycling mechanism, about 4.5n). -/
   | aggressiveQubitLayout
   /-- Stage-2 recomposed aggressive score `secp256k1Score_trustedEstimate_aggressive`
-  (trusted; composition of published mechanisms, within about 1.07 times the number-one benchmark). -/
+  (trusted; composition of published mechanisms, at about 1.43 times the number-one benchmark). -/
   | aggressiveScore
   deriving DecidableEq, Repr
 
@@ -246,13 +250,13 @@ theorem leaderboardScoreExact_eq : leaderboardScoreExact = 1566720000 := by
   norm_num [leaderboardScoreExact, leaderboardQubits, leaderboardToffoli]
 
 /-- **Toffoli reproduces the leaderboard band (does not beat it).** The v2 Toffoli exceeds the leaders'
-figure (`1360000 < 1457987`) and is within about `1.08` times it
-(`secp256k1Toffoli_trustedEstimate_v2 * 100 < leaderboardToffoli * 108`, `145798700 < 146880000`). Same
+figure (`1360000 < 1950403`) and is at about `1.43` times it
+(`secp256k1Toffoli_trustedEstimate_v2 * 100 < leaderboardToffoli * 144`, `195040300 < 195840000`). Same
 cited primitives (safegcd + Karatsuba + Gidney measurement + windowing), so the v2 Toffoli REPRODUCES the
 leaders' Toffoli band, slightly above; it does not beat it. -/
 theorem toffoli_v2_reproduces_leaderboard :
     leaderboardToffoli < secp256k1Toffoli_trustedEstimate_v2
-    ∧ secp256k1Toffoli_trustedEstimate_v2 * 100 < leaderboardToffoli * 108 := by
+    ∧ secp256k1Toffoli_trustedEstimate_v2 * 100 < leaderboardToffoli * 144 := by
   rw [secp256k1Toffoli_trustedEstimate_v2_eq, leaderboardToffoli]
   refine ⟨by norm_num, by norm_num⟩
 
@@ -265,15 +269,15 @@ theorem qubits_trustedEstimate_two_leaderboard :
   rw [secp256k1Qubits_trustedEstimate_eq, leaderboardQubits]
 
 /-- **The trusted score lands above two times the number-one score (lower bracket).**
-`leaderboardScoreExact * 2 < secp256k1Score_trustedEstimate` (`3133440000 < 3359202048`). The trusted score
+`leaderboardScoreExact * 2 < secp256k1Score_trustedEstimate` (`3133440000 < 4493728512`). The trusted score
 does NOT reach the number-one entry. -/
 theorem score_trustedEstimate_vs_leaderboard_lower :
     leaderboardScoreExact * 2 < secp256k1Score_trustedEstimate := by
   rw [leaderboardScoreExact_eq, secp256k1Score_trustedEstimate_eq]; norm_num
 
 /-- **The trusted score lands below three times the number-one score (upper bracket).**
-`secp256k1Score_trustedEstimate < leaderboardScoreExact * 3` (`3359202048 < 4700160000`). Together with the
-lower bracket this pins the trusted score at about `2.14` times the number-one entry. The whole residual is
+`secp256k1Score_trustedEstimate < leaderboardScoreExact * 3` (`4493728512 < 4700160000`). Together with the
+lower bracket this pins the trusted score at about `2.87` times the number-one entry. The residual is the qubit factor of two AND the ~1.43x Toffoli factor, being
 the qubit factor of two (the Toffoli already reproduces the leaders); closing it needs the aggressive
 measurement-based ancilla-recycling qubit layout of Litinski 2023 / Babbush et al. (about `4.5n` peak
 qubits), which is reproducing the number-one construction, not a bounded re-cost. -/
@@ -283,7 +287,7 @@ theorem score_trustedEstimate_vs_leaderboard_upper :
 
 /-- **The trusted score also sits between two and three times the corpus rounded leaderboard handle.**
 `ecdsaFailLeaderboardBest * 2 < secp256k1Score_trustedEstimate < ecdsaFailLeaderboardBest * 3`
-(`3140000000 < 3359202048 < 4710000000`). Consistent with the exact-factor brackets above. -/
+(`3140000000 < 4493728512 < 4710000000`). Consistent with the exact-factor brackets above. -/
 theorem score_trustedEstimate_vs_rounded_leaderboard :
     ecdsaFailLeaderboardBest * 2 < secp256k1Score_trustedEstimate
     ∧ secp256k1Score_trustedEstimate < ecdsaFailLeaderboardBest * 3 := by
@@ -342,30 +346,30 @@ theorem qubits_aggressive_half_trustedEstimate :
     2 * secp256k1Qubits_trustedEstimate_aggressive = secp256k1Qubits_trustedEstimate := by
   rw [secp256k1Qubits_trustedEstimate_aggressive_eq, secp256k1Qubits_trustedEstimate_eq]
 
-/-- **The Stage-2 recomposed trusted score: `qubits * Toffoli = 1679601024`.** The ecdsa.fail metric with the
+/-- **The Stage-2 recomposed trusted score: `qubits * Toffoli = 2246864256`.** The ecdsa.fail metric with the
 published aggressive peak-qubit layout,
-`secp256k1Qubits_trustedEstimate_aggressive * secp256k1Toffoli_trustedEstimate_v2 = 1152 * 1457987`. TRUSTED,
+`secp256k1Qubits_trustedEstimate_aggressive * secp256k1Toffoli_trustedEstimate_v2 = 1152 * 1950403`. TRUSTED,
 a composition of cited published mechanisms, NOT a validated ecdsa.fail harness score. -/
 def secp256k1Score_trustedEstimate_aggressive : ℕ :=
   secp256k1Qubits_trustedEstimate_aggressive * secp256k1Toffoli_trustedEstimate_v2
 
 theorem secp256k1Score_trustedEstimate_aggressive_eq :
-    secp256k1Score_trustedEstimate_aggressive = 1679601024 := by
+    secp256k1Score_trustedEstimate_aggressive = 2246864256 := by
   rw [secp256k1Score_trustedEstimate_aggressive, secp256k1Qubits_trustedEstimate_aggressive_eq,
     secp256k1Toffoli_trustedEstimate_v2_eq]
 
-/-- **The Stage-2 score lands within about 1.07 times the number-one benchmark (both axes, does not beat).**
+/-- **The Stage-2 score lands at about 1.43 times the number-one benchmark (Toffoli axis above, does not beat).**
 `leaderboardScoreExact * 107 < secp256k1Score_trustedEstimate_aggressive * 100 < leaderboardScoreExact * 108`
-(`167639040000 < 167960102400 < 169205760000`), pinning the ratio between `1.07` and `1.08` times the
+(`224040960000 < 224686425600 < 225607680000`), pinning the ratio between `1.43` and `1.44` times the
 number-one EXTERNAL BENCHMARK score `1566720000`. The composed figure uses the published aggressive layout on
 the qubit axis (matching the benchmark width, `qubits_aggressive_matches_leaderboard_benchmark`) and the
-Stage-1 published primitives on the Toffoli axis (within about `1.08` times the benchmark,
-`toffoli_v2_reproduces_leaderboard`), so the composition of published mechanisms lands within about `1.07`
+Stage-1 published primitives on the Toffoli axis (at about `1.43` times the benchmark,
+`toffoli_v2_reproduces_leaderboard`), so the composition of published mechanisms lands at about `1.43`
 times the number-one benchmark on BOTH axes. It does NOT reach and does NOT beat the number-one entry: it is
 slightly above, using the leaders' own published mechanisms, not a novel improvement. -/
 theorem score_aggressive_within_leaderboard_benchmark :
-    leaderboardScoreExact * 107 < secp256k1Score_trustedEstimate_aggressive * 100
-    ∧ secp256k1Score_trustedEstimate_aggressive * 100 < leaderboardScoreExact * 108 := by
+    leaderboardScoreExact * 143 < secp256k1Score_trustedEstimate_aggressive * 100
+    ∧ secp256k1Score_trustedEstimate_aggressive * 100 < leaderboardScoreExact * 144 := by
   rw [secp256k1Score_trustedEstimate_aggressive_eq, leaderboardScoreExact_eq]
   refine ⟨by norm_num, by norm_num⟩
 

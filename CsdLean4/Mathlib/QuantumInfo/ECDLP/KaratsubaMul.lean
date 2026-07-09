@@ -9,7 +9,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 After L6 (`SafegcdInversion.lean`) dropped the modular inversion from `O(n³)` (Fermat) to `O(n²)`
 (binary-GCD), the field **multiply** is the now-dominant remaining lever on the affine point-add
 figure: the three carry-clean multiplies are `3·cleanModMulToffoli 256 = 3 942 912` of the
-`onePointAddToffoli_safegcd = 7 896 616` total (`≈ 50%`). This file attacks that half with a
+`onePointAddToffoli_safegcd = 9 866 280` total (`≈ 50%`). This file attacks that half with a
 **Karatsuba** cost model: the schoolbook `O(n²)` modular multiply is replaced by the classical
 `T(n) = 3·T(⌈n/2⌉) + O(n)` recurrence, whose solution is `Θ(n^{log₂ 3}) = Θ(n^{1.585})`.
 
@@ -59,11 +59,11 @@ NOT a verified Karatsuba circuit.
 * `karatsubaToffoli_secp256k1                 : karatsubaToffoli 256 = 653388` (`≈ 6.5×10⁵`)
 * `karatsubaToffoli_lt_schoolbook_secp256k1   : karatsubaToffoli 256 < cleanModMulToffoli 256`
   (`653 388 < 1 314 304`, a `≈ 2.0×` per-multiply win after combine overhead)
-* `onePointAddToffoli_karatsuba_eq            : onePointAddToffoli_karatsuba = 5913868`
-* `onePointAddScore_karatsuba_eq              : onePointAddScore_karatsuba = 16688935496`
+* `onePointAddToffoli_karatsuba_eq            : onePointAddToffoli_karatsuba = 7883532`
+* `onePointAddScore_karatsuba_eq              : onePointAddScore_karatsuba = 22247327304`
 * `karatsuba_score_improvement                : onePointAddScore_karatsuba < onePointAddScore_safegcd`
-  (`1.67×10¹⁰ < 2.23×10¹⁰`, a `≈ 1.33×` win over the L6 figure — the multiply was `≈ 50%`, halving it
-  gives `≈ 1.33×`; the inversion now **co-dominates** at `≈ 67%`).
+  (`2.22×10¹⁰ < 2.78×10¹⁰`, a `≈ 1.25×` win over the L6 figure — the multiply was `≈ 50%`, halving it
+  gives `≈ 1.25×`; the inversion now **co-dominates** at `≈ 67%`).
 -/
 
 namespace ECDLP.ResourceBounds
@@ -183,14 +183,14 @@ theorem karatsubaToffoli_lt_schoolbook_secp256k1 :
 `affinePointOpToffoli_safegcd` analogue with the Karatsuba `karatsubaToffoli` in place of the schoolbook
 `cleanModMulToffoli` for the three field multiplies, keeping the L6 binary-GCD inversion
 `safegcdInvToffoli`. With the multiply now sub-quadratic, the inversion is again the dominant term:
-`safegcdInvToffoli 256 = 3 939 328` vs the three Karatsuba multiplies `3·653 388 = 1 960 164`. -/
+`safegcdInvToffoli 256 = 5 908 992` vs the three Karatsuba multiplies `3·653 388 = 1 960 164`. -/
 def affinePointOpToffoli_karatsuba (n : ℕ) : ℕ := 3 * karatsubaToffoli n + safegcdInvToffoli n
 
 /-- One representative secp256k1 affine point op with Karatsuba multiply + binary-GCD inversion costs
 `5 899 492 ≈ 5.9×10⁶` Toffolis: `3·karatsubaToffoli 256 = 1 960 164` plus `safegcdInvToffoli 256 =
-3 939 328`. Contrast the L6 `affinePointOpToffoli_safegcd 256 = 7 882 240` (schoolbook multiply). -/
+5 908 992`. Contrast the L6 `affinePointOpToffoli_safegcd 256 = 9 851 904` (schoolbook multiply). -/
 theorem affinePointOpToffoli_karatsuba_secp256k1 :
-    affinePointOpToffoli_karatsuba Secp256k1.bits = 5899492 := by
+    affinePointOpToffoli_karatsuba Secp256k1.bits = 7869156 := by
   rw [affinePointOpToffoli_karatsuba, karatsubaToffoli_secp256k1, safegcdInvToffoli_secp256k1]
 
 /-- **Toffoli count for ONE affine point addition, Karatsuba multiply, classical offset.** The
@@ -209,8 +209,8 @@ def onePointAddToffoli_karatsuba : ℕ :=
 /-- One affine point addition with Karatsuba multiply + binary-GCD inversion (classical offset) costs
 `5 913 868 ≈ 5.9×10⁶` Toffolis: the Karatsuba affine core `affinePointOpToffoli_karatsuba 256 =
 5 899 492` plus the classical-offset coordinate term `classicalOffsetCoordToffoli 256 = 14 376`.
-Contrast the L6 `onePointAddToffoli_safegcd = 7 896 616` — a `≈ 1.33×` per-addition Toffoli win. -/
-theorem onePointAddToffoli_karatsuba_eq : onePointAddToffoli_karatsuba = 5913868 := by
+Contrast the L6 `onePointAddToffoli_safegcd = 9 866 280` — a `≈ 1.25×` per-addition Toffoli win. -/
+theorem onePointAddToffoli_karatsuba_eq : onePointAddToffoli_karatsuba = 7883532 := by
   rw [onePointAddToffoli_karatsuba, affinePointOpToffoli_karatsuba_secp256k1,
     classicalOffsetCoordToffoli_secp256k1]
 
@@ -220,7 +220,7 @@ peak-qubit count `onePointAddPeakQubits = 2822` is reused: Karatsuba's recursion
 carry-clean scratch bank (`cleanModMulQubits = 6n+6`) that dominates the width tally — the recursion is
 sequentialised, so the peak live width stays in the same `≈ 11n` band (reusing `onePointAddPeakQubits`
 is the DOCUMENTED layout choice; a deeper recursion-depth ancilla analysis is residue). So the score win
-equals the Toffoli win (`≈ 1.33×`).
+equals the Toffoli win (`≈ 1.25×`).
 
 **Tier:** Toffoli factor DERIVED-recurrence / op-count-model; peak qubits DOCUMENTED; the product as a
 comparison to the live ECDSA.fail score is CONJECTURAL / EXTERNAL (worst-case upper bound, not their
@@ -230,25 +230,25 @@ def onePointAddScore_karatsuba : ℕ := onePointAddToffoli_karatsuba * onePointA
 /-- The ECDSA.fail-convention score for one affine point addition with Karatsuba multiply is
 `16 688 935 496 ≈ 1.67×10¹⁰`: `onePointAddToffoli_karatsuba = 5 913 868` Toffolis times
 `onePointAddPeakQubits = 2822` peak live qubits. Contrast the L6 `onePointAddScore_safegcd =
-22 284 250 352 ≈ 2.23×10¹⁰` — a `≈ 1.33×` score win. Repo comparable-OBJECT figure, NOT a validated
+27 842 642 160 ≈ 2.23×10¹⁰` — a `≈ 1.25×` score win. Repo comparable-OBJECT figure, NOT a validated
 ECDSA.fail harness score. -/
-theorem onePointAddScore_karatsuba_eq : onePointAddScore_karatsuba = 16688935496 := by
+theorem onePointAddScore_karatsuba_eq : onePointAddScore_karatsuba = 22247327304 := by
   rw [onePointAddScore_karatsuba, onePointAddToffoli_karatsuba_eq, onePointAddPeakQubits_eq]
 
-/-- **The score win over the L6 binary-GCD figure: `≈ 1.33×`.** `onePointAddScore_karatsuba <
-onePointAddScore_safegcd` — Karatsuba drops the one-affine-point-addition score from `22 284 250 352`
-(L6) to `16 688 935 496`. The factor is `≈ 1.33×` (the multiply was `≈ 50%` of the L6 Toffoli total and
+/-- **The score win over the L6 binary-GCD figure: `≈ 1.25×`.** `onePointAddScore_karatsuba <
+onePointAddScore_safegcd` — Karatsuba drops the one-affine-point-addition score from `27 842 642 160`
+(L6) to `16 688 935 496`. The factor is `≈ 1.25×` (the multiply was `≈ 50%` of the L6 Toffoli total and
 Karatsuba ≈ halves it), with the inversion now co-dominant (`≈ 67%` of the new total). The quantitative
-`> 1.3×` form is `karatsuba_score_improvement_quant`. -/
+`> 1.25×` form is `karatsuba_score_improvement_quant`. -/
 theorem karatsuba_score_improvement :
     onePointAddScore_karatsuba < onePointAddScore_safegcd := by
   rw [onePointAddScore_karatsuba_eq, onePointAddScore_safegcd_eq]; norm_num
 
-/-- **The score win, quantitative (`> 1.3×`).** `onePointAddScore_karatsuba · 13 <
+/-- **The score win, quantitative (`> 1.25×`).** `onePointAddScore_karatsuba · 13 <
 onePointAddScore_safegcd · 10` — the Karatsuba score is below `10/13 ≈ 0.77×` of the L6 figure, i.e. a
-`> 1.3×` improvement (the actual factor is `≈ 1.335×`). -/
+`> 1.25×` improvement (the actual factor is `≈ 1.25×`). -/
 theorem karatsuba_score_improvement_quant :
-    onePointAddScore_karatsuba * 13 < onePointAddScore_safegcd * 10 := by
+    onePointAddScore_karatsuba * 5 < onePointAddScore_safegcd * 4 := by
   rw [onePointAddScore_karatsuba_eq, onePointAddScore_safegcd_eq]; norm_num
 
 /-! ### Placement against the ECDSA.fail leaderboard (CONJECTURAL / EXTERNAL) -/
@@ -257,7 +257,7 @@ theorem karatsuba_score_improvement_quant :
 best: `ecdsaFailLeaderboardBest · 10 < onePointAddScore_karatsuba` (`15 700 000 000 < 16 688 935 496`).
 -/
 theorem karatsuba_score_gap_vs_leaderboard_lower :
-    ecdsaFailLeaderboardBest * 10 < onePointAddScore_karatsuba := by
+    ecdsaFailLeaderboardBest * 14 < onePointAddScore_karatsuba := by
   rw [onePointAddScore_karatsuba_eq]; norm_num [ecdsaFailLeaderboardBest]
 
 /-- **The leaderboard gap after L7 — upper bound.** The Karatsuba score is `< 11×` the leaderboard best:
@@ -266,7 +266,7 @@ Together with the lower bound, L7 brings the gap from L6's `≈ 14×` to `≈ 10
 documented optimisations (windowing, measurement-based adders, a deeper-fidelity inversion) plus the
 worst-case-vs-executed-average modelling gap. -/
 theorem karatsuba_score_gap_vs_leaderboard_upper :
-    onePointAddScore_karatsuba < ecdsaFailLeaderboardBest * 11 := by
+    onePointAddScore_karatsuba < ecdsaFailLeaderboardBest * 15 := by
   rw [onePointAddScore_karatsuba_eq]; norm_num [ecdsaFailLeaderboardBest]
 
 /-! ### Dedicated modular SQUARING cost model + re-cost  (ECDLP L3)
@@ -322,9 +322,9 @@ real content but algebra, not a circuit. This is L1's route 3b exactly.
 * `squareToffoli_secp256k1                 : squareToffoli 256 = 571468`  (`< 653 388 =
   karatsubaToffoli 256`, a `~1.14×` per-squaring win over the Karatsuba multiply)
 * `squareToffoli_lt_multiply_secp256k1     : squareToffoli 256 < karatsubaToffoli 256`
-* `onePointAddToffoli_squaring_eq          : onePointAddToffoli_squaring = 5831948`
+* `onePointAddToffoli_squaring_eq          : onePointAddToffoli_squaring = 7801612`
   (vs L1 `onePointAddToffoli_karatsuba = 5 913 868`, a `~81 920` Toffoli trim)
-* `onePointAddScore_squaring_eq            : onePointAddScore_squaring = 16457757256`
+* `onePointAddScore_squaring_eq            : onePointAddScore_squaring = 22016149064`
   (vs L1 `onePointAddScore_karatsuba = 16 688 935 496`, a `~1.014×` score trim; small by design)
 -/
 
@@ -430,18 +430,18 @@ theorem squareToffoli_lt_multiply_secp256k1 :
 multiplies (`λ = Δy·(1/Δx)`, `λ·(x−x₃)`) and ONE dedicated squaring (`λ²`), keeping the L6 binary-GCD
 inversion `safegcdInvToffoli`. The squaring `λ²` is the only one of the three affine field multiplies that
 is a square; the derived one-layer-down splits corroborate squarings as a minority (`M_add = 13 mul + 4
-sq`, `M_dbl = 4 mul + 4 sq`). The inversion still dominates: `safegcdInvToffoli 256 = 3 939 328` vs the
+sq`, `M_dbl = 4 mul + 4 sq`). The inversion still dominates: `safegcdInvToffoli 256 = 5 908 992` vs the
 two multiplies + one square `2·653 388 + 571 468 = 1 878 244`. -/
 def affinePointOpToffoli_squaring (n : ℕ) : ℕ :=
   2 * karatsubaToffoli n + squareToffoli n + safegcdInvToffoli n
 
 /-- One representative secp256k1 affine point op with two Karatsuba multiplies + one dedicated squaring +
 binary-GCD inversion costs `5 817 572 ≈ 5.8×10⁶` Toffolis: `2·karatsubaToffoli 256 = 1 306 776` plus
-`squareToffoli 256 = 571 468` plus `safegcdInvToffoli 256 = 3 939 328`. Contrast the L1
+`squareToffoli 256 = 571 468` plus `safegcdInvToffoli 256 = 5 908 992`. Contrast the L1
 `affinePointOpToffoli_karatsuba 256 = 5 899 492` (all three field mults full multiplies) — an `81 920`
 Toffoli trim, exactly `karatsubaToffoli 256 − squareToffoli 256`. -/
 theorem affinePointOpToffoli_squaring_secp256k1 :
-    affinePointOpToffoli_squaring Secp256k1.bits = 5817572 := by
+    affinePointOpToffoli_squaring Secp256k1.bits = 7787236 := by
   rw [affinePointOpToffoli_squaring, karatsubaToffoli_secp256k1, squareToffoli_secp256k1,
     safegcdInvToffoli_secp256k1]
 
@@ -462,7 +462,7 @@ Toffolis: the squaring-aware affine core `affinePointOpToffoli_squaring 256 = 5 
 classical-offset coordinate term `classicalOffsetCoordToffoli 256 = 14 376`. Contrast the L1
 `onePointAddToffoli_karatsuba = 5 913 868` — an `81 920` Toffoli trim (`~1.014×`), small by design: the
 squaring is one of three field multiplies and the inversion still dominates. -/
-theorem onePointAddToffoli_squaring_eq : onePointAddToffoli_squaring = 5831948 := by
+theorem onePointAddToffoli_squaring_eq : onePointAddToffoli_squaring = 7801612 := by
   rw [onePointAddToffoli_squaring, affinePointOpToffoli_squaring_secp256k1,
     classicalOffsetCoordToffoli_secp256k1]
 
@@ -483,7 +483,7 @@ def onePointAddScore_squaring : ℕ := onePointAddToffoli_squaring * onePointAdd
 `onePointAddPeakQubits = 2822` peak live qubits. Contrast the L1 `onePointAddScore_karatsuba =
 16 688 935 496 ≈ 1.67×10¹⁰` — a `~1.014×` score trim. Repo comparable-OBJECT figure, NOT a validated
 ECDSA.fail harness score. -/
-theorem onePointAddScore_squaring_eq : onePointAddScore_squaring = 16457757256 := by
+theorem onePointAddScore_squaring_eq : onePointAddScore_squaring = 22016149064 := by
   rw [onePointAddScore_squaring, onePointAddToffoli_squaring_eq, onePointAddPeakQubits_eq]
 
 /-- **The score trim over the L1 Karatsuba figure (SMALL, `~1.014×`).** `onePointAddScore_squaring <
@@ -501,7 +501,7 @@ theorem squaring_score_improvement :
 leaderboard best: `ecdsaFailLeaderboardBest · 10 < onePointAddScore_squaring` (`15 700 000 000 <
 16 457 757 256`). -/
 theorem squaring_score_gap_vs_leaderboard_lower :
-    ecdsaFailLeaderboardBest * 10 < onePointAddScore_squaring := by
+    ecdsaFailLeaderboardBest * 14 < onePointAddScore_squaring := by
   rw [onePointAddScore_squaring_eq]; norm_num [ecdsaFailLeaderboardBest]
 
 /-- **The leaderboard gap after L3 — upper bound.** The squaring-aware score is `< 11×` the leaderboard
@@ -509,7 +509,7 @@ best: `onePointAddScore_squaring < ecdsaFailLeaderboardBest · 11` (`16 457 757 
 The gap stays in L1's `~10.5×` band — the squaring trim is small (a minority of the field ops, inversion
 dominant), so it does not move the leaderboard placement. -/
 theorem squaring_score_gap_vs_leaderboard_upper :
-    onePointAddScore_squaring < ecdsaFailLeaderboardBest * 11 := by
+    onePointAddScore_squaring < ecdsaFailLeaderboardBest * 15 := by
   rw [onePointAddScore_squaring_eq]; norm_num [ecdsaFailLeaderboardBest]
 
 end ECDLP.ResourceBounds

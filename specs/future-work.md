@@ -130,7 +130,7 @@ So the W-series completes "QM dynamics from the posited sector", not the deep re
 
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
-| **EC-1** | Safegcd termination: `g→0` within `2n` (potential-function argument) | safegcd divstep (done) | **L** | The load-bearing residual keeping inversion trusted; self-contained integer combinatorics. |
+| EC-1 — **PARTIAL 2026-07-09** | Safegcd termination: `g→0` within the Bernstein–Yang bound (potential-function argument) | safegcd divstep (done) | **L** | **Done: the termination-STABILITY half** (`SafegcdDivstep.lean`): `divstep_snd_snd_zero` (g=0 absorbing), `divstepIter_natAbs_of_g_zero_stable` (the surviving `|f|=gcd` is stable for every step count ≥ termination — so a fixed-count loop reads the right answer). **Numbers revised (EC-1)**: corrected the divstep count from the optimistic `2n` to the honest Bernstein–Yang worst-case `3n ≥ ⌊(49n+80)/17⌋≈2.88n` across `SafegcdInversion`/`KaratsubaMul`/`TwoTrack`/`TrustedEstimate` (score win ~86×→~69×; trusted estimate now ~1.43× the leaders' Toffoli band, not ~1.07×). **Residual**: the termination-COUNT bound itself (that `g` reaches 0 within the bound) — Bernstein–Yang's proof is computer-assisted (transition-matrix search), not formalised. |
 | **EC-2** | Safegcd reversible circuit: `divstepGadget` with `denote = divstep`, cost over a proven circuit | divstep + Reversible DSL | **M/L** | Promotes the cost-side from documented to circuit-backed. |
 | **EC-3** | Gidney measurement adder as a verified circuit (task #36) | measurement-discipline DSL ext (EC-6) | **M/L** | The other score lever. |
 | **EC-4** | Run their Rust harness for a leaderboard entry (task #7) | competitive Rust circuit | **—** | User machine action; out of Lean scope. |
