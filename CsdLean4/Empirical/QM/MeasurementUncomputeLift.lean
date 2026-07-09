@@ -229,4 +229,45 @@ theorem andUncompute_measurement_saving {n : ℕ} (a b g : Fin n) :
       (gadgetGateList.map (fun gg => (gadgetGateCost gg).toffoli)).sum = 0 :=
   ⟨Reversible.andCell_uncompute_toffoli a b g, by decide⟩
 
+/-! ## L5-d: the circuit-level saving, threaded through the whole AND-adder
+
+Each block's per-AND measurement replacement is proven-equivalent (same data effect,
+`andUncompute_measureUncompute_same_data`) at `0` Toffoli (`andUncompute_measurement_saving`). Summed
+over the adder's `n` carry cells this gives the circuit-level cost of the whole
+measurement-discipline AND-adder: the compute pass is unchanged, the uncompute pass costs `0`, so the
+adder halves from the unitary `6n` to `3n`. -/
+
+/-- The measurement gadget's per-block Toffoli cost is `0` (`gadgetGateList` is Toffoli-free). -/
+theorem gadget_block_toffoli_zero :
+    (gadgetGateList.map (fun gg => (gadgetGateCost gg).toffoli)).sum = 0 := by decide
+
+/-- **L5-d: the measurement-discipline AND-adder costs `3 * n` Toffoli — half the unitary `6 * n`.**
+The AND-based adder `andAdd` (`AndAdd.lean`) costs `6 * n` Toffoli (`andAdd_toffoli`): a `3 * n` compute
+pass (`andForward`) plus a `3 * n` uncompute pass (`inverse andForward`, `andAdd_uncompute_toffoli`).
+Threading the measurement discipline through the adder replaces each of the `n` fresh-AND uncomputes by
+the proven-equivalent measurement gadget — same data effect
+(`andUncompute_measureUncompute_same_data`) at `0` Toffoli (`andUncompute_measurement_saving`). Summed
+over the `n` cells the measurement uncompute costs `0`, so the measurement-discipline adder costs
+`(andForward Toffoli) + n·0 = 3 * n` — exactly the `~2×` Gidney saving, now at circuit level.
+
+**Honest scope.** This is the CIRCUIT-LEVEL COST re-cost: the compute-pass count is the verified
+`andForward` figure and the uncompute-pass count is `0` because each block's replacement is the
+proven-equivalent measurement gadget (per-block data-effect + cost, L5-a/b/c). The full CHANNEL-level
+proof that the `n` measurement gadgets composed reproduce the unitary uncompute's data effect on the
+WHOLE `m`-qubit register (the tensor composition over all cells, with the mid-circuit measurements) is
+the standing residual; here the equivalence is proved per block and the cost aggregated. -/
+theorem andAdd_measurement_toffoli {m n : ℕ} (L : Reversible.AndAddLayout m n) :
+    (Reversible.circuitCost (Reversible.andForward L)).toffoli
+      + n * (gadgetGateList.map (fun gg => (gadgetGateCost gg).toffoli)).sum = 3 * n := by
+  rw [Reversible.andForward, Reversible.andForwardPrefix_toffoli, gadget_block_toffoli_zero]
+  ring
+
+/-- **The exact `~2×` saving.** Twice the measurement-discipline adder cost equals the unitary `andAdd`
+Toffoli count (`6 * n`): the measurement discipline halves the AND-adder. -/
+theorem andAdd_measurement_halves {m n : ℕ} (L : Reversible.AndAddLayout m n) :
+    2 * ((Reversible.circuitCost (Reversible.andForward L)).toffoli
+          + n * (gadgetGateList.map (fun gg => (gadgetGateCost gg).toffoli)).sum)
+      = (Reversible.circuitCost (Reversible.andAdd L)).toffoli := by
+  rw [andAdd_measurement_toffoli, Reversible.andAdd_toffoli]; ring
+
 end CSD.Empirical.QM

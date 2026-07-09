@@ -6549,6 +6549,19 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.andUncompute_measurement_saving
 
+-- EC-6 / L5-d (2026-07-09): the circuit-level measurement-discipline saving threaded through the whole
+-- AND-adder. Each of the n fresh-AND uncomputes is replaced by the proven-equivalent measurement gadget
+-- (same data, 0 Toffoli), so the measurement-discipline AND-adder costs 3n — exactly HALF the unitary 6n
+-- (andAdd_measurement_halves). The per-cell data-effect equivalence is proved; the full channel-level
+-- composition over all cells is the standing residual.
+/-- info: 'CSD.Empirical.QM.andAdd_measurement_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andAdd_measurement_toffoli
+
+/-- info: 'CSD.Empirical.QM.andAdd_measurement_halves' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.andAdd_measurement_halves
+
 /-! ### L5-d measurement-based AND-adder re-cost (Build #21) -/
 
 /-- info: 'CSD.Empirical.QM.gadgetBlockToffoli_eq_zero' depends on axioms: [propext] -/
