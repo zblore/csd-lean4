@@ -64,6 +64,7 @@ import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.CV.ApproxCCR
+import CsdLean4.CV.Position
 import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
 import CsdLean4.Thermo.FreeEnergy
@@ -6699,6 +6700,25 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.CV.no_exact_finite_ccr_ihbar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.CV.no_exact_finite_ccr_ihbar
+
+-- CV-1 (CV/Position): the positive counterpart to W4 — a genuine finite position observable
+-- Q_N = diag(x_j) on an N-point symmetric lattice. Hermitian, eigenvalues = the lattice points
+-- (standard basis is the position eigenbasis), distinct for a≠0, bounded spectrum, centered (trace 0).
+-- Foundational triple; Cat-1 general matrix facts (CSD reading is docstring only).
+/-- info: 'CSD.CV.positionOp_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.positionOp_isHermitian
+
+/-- info: 'CSD.CV.positionOp_mulVec_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.positionOp_mulVec_single
+
+/-- info: 'CSD.CV.latticePoint_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.latticePoint_injective
+
+/-- info: 'CSD.CV.abs_latticePoint_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.abs_latticePoint_le
+
+/-- info: 'CSD.CV.positionOp_trace_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.positionOp_trace_eq_zero
 
 -- Safegcd (Bernstein-Yang) divstep: the GCD invariant as a GENUINE theorem
 -- (divstep_gcd, not a ZMod.inv unfolding; Odd f load-bearing), the divstep
