@@ -132,6 +132,7 @@ import CsdLean4.LF2.POVM
 import CsdLean4.LF2.EffectAux
 import CsdLean4.LF4.POVMDilation
 import CsdLean4.LF4.POVMVolume
+import CsdLean4.LF4.BornFlowLinkage
 import CsdLean4.LF4.POVMNaimark
 import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF4.TrialWitness
@@ -3492,6 +3493,19 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.born_frequency_convergence_N' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.born_frequency_convergence_N
+
+-- HY-5 (BornFlowLinkage): the Born-side sigmaFlow fix. The general-N Born capstone, now on trials
+-- EVOLVED by the sector's own deterministic flow Φ_t = (unitaryFlowSetup …).flow t, converging to
+-- the Born weights. The flow's Liouville-preservation (flow_preserves_volume = U(N)-invariance of
+-- μ_FS) pins the evolved law back to μ_FS — the substrate flow is now consumed on the Born side.
+-- Still foundational-triple; weights-from-flow (FND-1) untouched.
+/-- info: 'CSD.LF4.unitaryFlowSetup_born_frequency_evolved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_born_frequency_evolved
+
+/-- info: 'CSD.LF4.povm_born_frequency_volume_evolved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.povm_born_frequency_volume_evolved
 
 -- N=2 consistency cross-check: the qubit fs_moment_pushforward_uniform is kernel-derived
 -- from the general-N fs_moment_joint_dirichlet_N (M:=1). Machine-confirms the general-N

@@ -161,6 +161,7 @@ import CsdLean4.LF4.POVMVolume
 import CsdLean4.LF4.POVMNaimark
 import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF4.BornRegionDisjoint
+import CsdLean4.LF4.BornFlowLinkage
 import CsdLean4.LF4.TrialWitness
 import CsdLean4.LF5.VonNeumannUnitary
 import CsdLean4.LF5.MeasurementFlow
