@@ -263,6 +263,7 @@ import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
+import CsdLean4.Empirical.QM.MeasurementAdderHierarchy
 import CsdLean4.Empirical.CSD.Gates.Framework
 import CsdLean4.Empirical.CSD.Gates.SingleQubit
 import CsdLean4.Empirical.CSD.Gates.TwoQubit

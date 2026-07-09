@@ -64,6 +64,7 @@ import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
+import CsdLean4.Empirical.QM.MeasurementAdderHierarchy
 import CsdLean4.CV.ApproxCCR
 import CsdLean4.CV.Position
 import CsdLean4.CV.Oscillator
@@ -6634,6 +6635,19 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Empirical.QM.gidney_toffoli_256' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.gidney_toffoli_256
+
+-- EC-3 capstone (2026-07-09): the measurement-discipline ADDER HIERARCHY, unifying EC-3 (Gidney
+-- measurement adder, n) and EC-6/L5-d (AND-adder measurement, 3n). Each of the four costs is a proven
+-- circuit figure: meas-Gidney n < unitary-Gidney 2n < meas-AND 3n < unitary-AND 6n. The measurement
+-- Gidney adder is the cheapest reversible adder in the corpus (gidneyMeas_cheapest). Channel-level
+-- composition over all cells is the standing residual shared by EC-3/EC-6.
+/-- info: 'CSD.Empirical.QM.measurement_adder_hierarchy' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.measurement_adder_hierarchy
+
+/-- info: 'CSD.Empirical.QM.gidneyMeas_cheapest' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyMeas_cheapest
 
 /-- info: 'CSD.Empirical.QM.ccxAtMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
