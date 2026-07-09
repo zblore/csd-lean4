@@ -114,6 +114,7 @@ import CsdLean4.LF4.BornFrequencyN
 import CsdLean4.LF4.QubitConsistency
 import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
+import CsdLean4.LF4.SingletKahlerFlow
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler
@@ -3511,6 +3512,22 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.ofKählerPreparation_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ofKählerPreparation_singlet_frequency_convergence
+
+-- FND-2 (2026-07-09): the singlet preparation rebuilt over the Φ≠id sector kSectorDataFlow (Φ=kFlow),
+-- the ENTANGLED analogue of D1c-1. The LF1 preEvent = Φ⁻¹'Ω, so with Φ=kFlow the capstone scores the
+-- flow-EVOLVED trials (kFlow∘X)⁻¹'kRegion, and kFlow's μψ-preservation (kFlow_measurePreserving_muPsi)
+-- is load-bearing (bridge_op_p: kMuPsi (kFlow⁻¹'kRegion) = kMuPsi kRegion = P_st). Still foundational-triple.
+/-- info: 'CSD.LF4.kFlow_measurePreserving_muPsi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kFlow_measurePreserving_muPsi
+
+/-- info: 'CSD.LF4.ofKählerPreparationFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ofKählerPreparationFlow
+
+/-- info: 'CSD.LF4.ofKählerPreparationFlow_flow_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ofKählerPreparationFlow_flow_frequency_convergence
 
 -- LF4 §14 discharge (projector observables, single-qubit Stern-Gerlach):
 -- the Hilbert ↔ ontic-measure identity, foundational triple only.

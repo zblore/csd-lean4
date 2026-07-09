@@ -145,6 +145,7 @@ import CsdLean4.LF4.MomentBornN
 import CsdLean4.LF4.BornFrequencyN
 import CsdLean4.LF4.QubitConsistency
 import CsdLean4.LF4.SingletKahler
+import CsdLean4.LF4.SingletKahlerFlow
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler
