@@ -236,7 +236,7 @@ theorem safegcdInvToffoli_le_fermat (n : ℕ) (hn : 3 ≤ n) :
   have hf : fermatInvToffoli n = 40 * n ^ 3 + 28 * n ^ 2 := by
     simp only [fermatInvToffoli, cleanModMulToffoli]; ring
   rw [safegcdInvToffoli_eq, hf]
-  have key : 2 * n ^ 2 ≤ n * n ^ 2 := by gcongr <;> omega
+  have key : 2 * n ^ 2 ≤ n * n ^ 2 := by gcongr; omega
   nlinarith [key, hn]
 
 /-! ### Re-costing the ECDSA.fail benchmark with the binary-GCD inversion (L6) -/

@@ -63,6 +63,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy

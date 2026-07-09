@@ -56,6 +56,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
@@ -6244,6 +6245,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.ResourceBounds.safegcd_beats_windowed_fermat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.safegcd_beats_windowed_fermat
+
+-- ECDLP L8 (2026-07-09): the sub-quadratic (half-GCD) inversion lever, quantified at 256. It BEATS
+-- safegcd at 256 iff the recursion is tuned to ≤1 full Karatsuba multiply per level (k=1, ≤8 total);
+-- at k≥2 it loses. So a genuine beat CANDIDATE at the ECDLP width — on the knife-edge — the honest
+-- "can we beat, not just reproduce" answer. Documented op-count model over the verified Karatsuba mult.
+/-- info: 'ECDLP.ResourceBounds.halfGcd_aggressive_beats_safegcd_256' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.halfGcd_aggressive_beats_safegcd_256
+
+/-- info: 'ECDLP.ResourceBounds.halfGcd_beats_iff_k_one_256' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.halfGcd_beats_iff_k_one_256
 
 /-- info: 'ECDLP.ResourceBounds.windowedFermatInvToffoli_ge_cubic' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
