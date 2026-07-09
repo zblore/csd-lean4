@@ -6188,6 +6188,15 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.divstepToffoli_eq_gadgets
 
+-- EC-2 (2026-07-09, cost side): the divstep gadget EXHIBITED as one concrete Circuit
+-- (modSub ++ cuccaroCModAdd ++ cuccaroModDouble) whose Toffoli cost IS divstepToffoli n. So the cost is
+-- the cost of a real in-DSL circuit, not a count over a hypothetical one. HONEST: this is the modular
+-- PROXY circuit (denote ≠ integer divstep); the value-faithful divstepGadget (denote = divstep, with
+-- garbage bits since divstep is not injective) is the deferred residue.
+/-- info: 'ECDLP.ResourceBounds.divstepProxyGadget_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.divstepProxyGadget_toffoli
+
 /-- info: 'ECDLP.ResourceBounds.safegcdInvToffoli_eq' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.safegcdInvToffoli_eq

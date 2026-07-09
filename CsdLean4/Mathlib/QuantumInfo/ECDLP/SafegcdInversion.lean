@@ -27,10 +27,12 @@ Fermat. The two sides have DIFFERENT honesty status, stated plainly:
   mod `N`; without coprimality `a` has no inverse and the product is `gcd a.val N ≠ 1`). This is
   **weaker than `fermatInv`'s status**: `fermatInv = a^{p-2}` is a genuinely *distinct* term from
   `a⁻¹` whose equality needs load-bearing primality, whereas `binGcdInv` IS `a⁻¹` by definition.
-* **cost side (sound DERIVED op-count model)** — `safegcdInvToffoli n = (2n)·(per-divstep gadget
-  cost)`, the per-divstep cost tied to the corpus's VERIFIED `O(n)` modular gadgets
-  (`divstepToffoli_eq_gadgets`: one `modSub` + one `cuccaroCModAdd` + one `cuccaroModDouble`), not an
-  asserted constant. Same status as `fermatInvToffoli`'s op-count model (`modExpFieldMults`).
+* **cost side (sound DERIVED op-count model)** — `safegcdInvToffoli n = (3n)·(per-divstep gadget
+  cost)` (the honest Bernstein–Yang `3n` divstep count, EC-1), the per-divstep cost tied to the corpus's
+  VERIFIED `O(n)` modular gadgets (`divstepToffoli_eq_gadgets`: one `modSub` + one `cuccaroCModAdd` + one
+  `cuccaroModDouble`), not an asserted constant. Same status as `fermatInvToffoli`'s op-count model
+  (`modExpFieldMults`). EC-2: the three gadgets are now EXHIBITED as one circuit `divstepProxyGadget`
+  whose cost IS `divstepToffoli` (`divstepProxyGadget_toffoli`) — the cost side is circuit-backed.
 
 **Value-side promotion (2026-07-04, `SafegcdDivstep.lean`).** The divstep transition is no longer
 only a `ZMod.inv` unfolding: `ECDLP.Safegcd.divstep` exhibits the Bernstein-Yang divstep as a concrete
@@ -67,8 +69,8 @@ residue** that would make the value genuinely circuit-backed; it is NOT built he
   `modSub_toffoli = 10n`, `cuccaroCModAdd_toffoli = 14n+10`, `cuccaroModDouble_toffoli = 6n+4` (cited
   via `divstepToffoli_eq_gadgets`).
 * **DOCUMENTED** (op-count model, same status as `fermatInv`'s `2n`): the divstep **count**
-  `safegcdDivsteps n = 2n` (the standard binary-GCD / Kaliski / Bernstein–Yang worst-case iteration
-  bound for `n`-bit inputs), and the `divstep = modSub + cModAdd + modDouble` assembly.
+  `safegcdDivsteps n = 3n` (the honest Bernstein–Yang worst-case upper bound `⌊(49n+80)/17⌋ ≈ 2.882n ≤
+  3n`, EC-1), and the `divstep = modSub + cModAdd + modDouble` assembly.
 * **CONJECTURAL / EXTERNAL**: the leaderboard reference `ecdsaFailLeaderboardBest` and the mapping of
   our worst-case UPPER-bound Toffoli count to the executed-average harness.
 
@@ -187,6 +189,46 @@ theorem divstepToffoli_eq_gadgets {m n : ℕ} (Ls : ModSubLayout m n)
         + (circuitCost (cuccaroModDouble Ld)).toffoli := by
   unfold divstepToffoli
   rw [modSub_toffoli, cuccaroCModAdd_toffoli, cuccaroModDouble_toffoli]
+
+/-! ### EC-2: the divstep gadget EXHIBITED as one concrete reversible circuit (cost side)
+
+`divstepToffoli` was a cost model over a *hypothetical* circuit ("a not-yet-exhibited circuit"). This
+block exhibits an actual `Circuit` — the concatenation of the three verified `O(n)` modular gadgets the
+model sums — and proves its Toffoli cost IS `divstepToffoli n`. So the cost is now the cost of a
+concrete, in-DSL circuit, not a free-floating count.
+
+**HONEST SCOPE — this is the COST side only.** The exhibited `divstepProxyGadget` is the corpus's
+`modSub / cuccaroCModAdd / cuccaroModDouble` PROXY: its `denote` computes *modular* arithmetic, NOT the
+integer `ECDLP.Safegcd.divstep`. A value-faithful `divstepGadget` (`denote = divstep`) is a genuinely
+larger build — the divstep does PLAIN-integer conditional-swap / subtract / exact-halve on shrinking
+`f, g` (the modular gadgets are only same-`O(n)`-class proxies), AND `divstep` is not injective
+(`divstep 0 1 2 = divstep 0 1 1 = (1,1,1)`), so a reversible circuit for it must carry garbage/history
+bits. That full value-faithful circuit is the deferred EC-2 residue; here only the cost is
+circuit-backed. -/
+
+/-- Layout bundling the three verified sub-gadget layouts on a shared `m`-qubit register. -/
+structure DivstepProxyLayout (m n : ℕ) where
+  /-- the subtraction gadget's layout. -/
+  sub  : ModSubLayout m n
+  /-- the conditional modular-add gadget's layout (Bézout-cofactor track). -/
+  cadd : CuccaroCModLayout m n
+  /-- the halving/shift gadget's layout. -/
+  dbl  : CuccaroModLayout m n
+
+/-- **The divstep gadget, exhibited as ONE reversible circuit** (EC-2, cost side): the concrete
+concatenation `modSub ; cuccaroCModAdd ; cuccaroModDouble` of the three verified modular gadgets the
+cost model `divstepToffoli` sums. A proxy at the VALUE level (see the block note); an exhibited circuit
+at the COST level. -/
+def divstepProxyGadget {m n : ℕ} (L : DivstepProxyLayout m n) : Circuit m :=
+  modSub L.sub ++ cuccaroCModAdd L.cadd ++ cuccaroModDouble L.dbl
+
+/-- **The exhibited gadget's Toffoli cost equals the model.** `(circuitCost (divstepProxyGadget L))
+.toffoli = divstepToffoli n`, so `divstepToffoli` is now the cost of a CONCRETE in-DSL circuit, not a
+count over a hypothetical one — the cost-side promotion EC-2 targets. -/
+theorem divstepProxyGadget_toffoli {m n : ℕ} (L : DivstepProxyLayout m n) :
+    (circuitCost (divstepProxyGadget L)).toffoli = divstepToffoli n := by
+  rw [divstepProxyGadget, cost_comp_toffoli_count, cost_comp_toffoli_count,
+    divstepToffoli_eq_gadgets L.sub L.cadd L.dbl]
 
 /-! ### The divstep count and the `O(n²)` inversion cost -/
 
@@ -411,3 +453,4 @@ theorem windowedFermatInvToffoli_ge_cubic (n k : ℕ) :
   exact le_trans (Nat.le_add_right n (n / k)) (Nat.le_add_right _ (2 ^ k))
 
 end ECDLP.ResourceBounds
+
