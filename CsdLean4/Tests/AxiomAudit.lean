@@ -66,6 +66,7 @@ import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.CV.ApproxCCR
 import CsdLean4.CV.Position
 import CsdLean4.CV.Oscillator
+import CsdLean4.CV.OscillatorSpectrum
 import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
 import CsdLean4.Thermo.FreeEnergy
@@ -6740,6 +6741,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.CV.ccr_exact_on_bulk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.CV.ccr_exact_on_bulk
+
+-- CV-4 (CV/OscillatorSpectrum): the energy spectrum. H = a†a + ½ = diag(n+½), Hermitian, with the
+-- Fock states as energy eigenstates (H·eₙ = (n+½)·eₙ). The energy Eₙ = n+½ is CUTOFF-INDEPENDENT
+-- (oscEnergy has no N), so every finite-energy prediction below the ceiling — zero-point ½, uniform
+-- gap 1, each level — is recovered exactly by the truncation. Foundational triple; Cat-1.
+/-- info: 'CSD.CV.hamiltonian_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.hamiltonian_isHermitian
+
+/-- info: 'CSD.CV.hamiltonian_mulVec_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.hamiltonian_mulVec_single
+
+/-- info: 'CSD.CV.oscEnergy_gap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.oscEnergy_gap
+
+/-- info: 'CSD.CV.hamiltonian_groundEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.hamiltonian_groundEnergy
 
 -- Safegcd (Bernstein-Yang) divstep: the GCD invariant as a GENUINE theorem
 -- (divstep_gcd, not a ZMod.inv unfolding; Odd f load-bearing), the divstep

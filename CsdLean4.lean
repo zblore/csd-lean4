@@ -276,6 +276,7 @@ import CsdLean4.Empirical.Metrology.Heisenberg
 import CsdLean4.CV.ApproxCCR
 import CsdLean4.CV.Position
 import CsdLean4.CV.Oscillator
+import CsdLean4.CV.OscillatorSpectrum
 import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
 import CsdLean4.Thermo.FreeEnergy
