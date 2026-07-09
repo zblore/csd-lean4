@@ -65,6 +65,7 @@ import CsdLean4.Empirical.QM.MeasurementAdder
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.CV.ApproxCCR
 import CsdLean4.CV.Position
+import CsdLean4.CV.Oscillator
 import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
 import CsdLean4.Thermo.FreeEnergy
@@ -6719,6 +6720,26 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.CV.positionOp_trace_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.CV.positionOp_trace_eq_zero
+
+-- CV-2/CV-3 (CV/Oscillator): the conjugate (Q,P) pair and the sharp approximate CCR. The N-level
+-- truncated oscillator gives a†a = diag(n), aa† = diag(1..N-1,0), hence the truncated CCR
+-- [a,a†] = 1 - N·|N-1⟩⟨N-1| (both sides trace 0, per W4). Q=(a+a†)/√2, P=(a-a†)/(i√2) are Hermitian,
+-- [Q,P] = i·[a,a†], and [Q,P]·eₙ = i·eₙ exactly for every n ≠ N-1 (exact CCR on the low-energy
+-- sector; the W4-forced defect is confined to the top level). Foundational triple; Cat-1.
+/-- info: 'CSD.CV.truncated_ccr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.truncated_ccr
+
+/-- info: 'CSD.CV.Q_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.Q_isHermitian
+
+/-- info: 'CSD.CV.P_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.P_isHermitian
+
+/-- info: 'CSD.CV.QP_commutator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.QP_commutator
+
+/-- info: 'CSD.CV.ccr_exact_on_bulk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.CV.ccr_exact_on_bulk
 
 -- Safegcd (Bernstein-Yang) divstep: the GCD invariant as a GENUINE theorem
 -- (divstep_gcd, not a ZMod.inv unfolding; Odd f load-bearing), the divstep

@@ -62,10 +62,9 @@ Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
 | Ref | Item | Depends on | Cx | Notes |
 |---|---|---|---|---|
 | ~~W4~~ | ApproxCCR finite-dim CCR obstruction | — | — | DONE (committed). |
-| **CV-1** | Finite position observable on a lattice | W4 | **S/M** | NEXT after TH-1. |
-| **CV-2** | Finite momentum: conjugate basis via finite Fourier | CV-1 | **M** | |
-| **CV-3** | Approximate CCR: `‖[Q_N,P_N]−iℏ·1‖ ≤ ε` on a low-energy sector | CV-1, CV-2 | **M/L** | The quantitative finite-sector-recovers-continuum claim; highest-value CV item. |
-| **CV-4** | Oscillator truncation recovers finite-energy predictions | CV-1..3 | **M** | |
+| ~~CV-1~~ | Finite position observable on a lattice | W4 | **S/M** | **DONE 2026-07-09** (`CV/Position.lean`): `positionOp = diag(x_j)` on the symmetric lattice — Hermitian, eigenvalues = lattice points (`positionOp_mulVec_single`), distinct (`latticePoint_injective`), bounded, centered. AxiomAudit-pinned. |
+| ~~CV-2~~ / ~~CV-3~~ | Finite conjugate pair + approximate CCR on a low-energy sector | CV-1 / W4 | **M/L** | **DONE 2026-07-09** (`CV/Oscillator.lean`): took the truncated-oscillator route (cleaner + provable, and the sharp complement to W4) rather than lattice+DFT. `a`, `a†`, number op `a†a = diag(n)`; truncated CCR `[a,a†] = 1 − N·|N−1⟩⟨N−1|`; `Q,P` Hermitian; `[Q,P] = i·[a,a†]`; **`ccr_exact_on_bulk`**: `[Q,P]·eₙ = i·eₙ` exactly for every `n ≠ N−1` — the exact CCR on the low-energy sector, W4-forced defect confined to the top level. AxiomAudit-pinned. NB: the "‖·‖ ≤ ε" is realised as *exact on the bulk* (defect rank-one at the ceiling), stronger than a norm bound; the lattice+DFT semiclassical form is left as a harder alternative. |
+| **CV-4** | Oscillator truncation recovers finite-energy predictions | CV-1..3 | **M** | The oscillator ladder is now built (`CV/Oscillator.lean`); this would add the energy-eigenvalue / finite-spectrum recovery on top. |
 
 ## W-series (CSD dynamics spine — the prize: finite-dim Schrödinger dynamics as projected CSD flow)
 
