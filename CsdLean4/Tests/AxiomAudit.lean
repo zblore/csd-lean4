@@ -120,6 +120,7 @@ import CsdLean4.LF4.QubitConsistency
 import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingletKahlerFlow
+import CsdLean4.LF4.KahlerWignerLift
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler
@@ -2776,6 +2777,35 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 /-- info: 'CSD.LF4.cpSectorActionBundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.cpSectorActionBundle
+
+-- FND-3 (2026-07-10): the §13.2 ontic lift on the NON-TRIVIAL-FIBRE instance kSectorData
+-- (π = pr₁ many-to-one, Σ = ℂℙ^{N-1}×T²), the cpSectorActionBundle analogue on the Kähler instance.
+-- Part 1 (thread Φ): the sector flow Φ=kFlow descends along π to f_Φ=id on rays
+-- (kSectorDataFlow_projectable), which is TransProbPreserving (kProjectedFlow_transProbPreserving)
+-- and fed through Wigner realises the unitary branch (kProjectedFlow_unitary_or_antiunitary) —
+-- honest but degenerate (ray flow trivial; dynamics live in the T² fibre). Part 2 (genuine, caveat
+-- C-1): the sector U(N)-action carries the FS-isometry — kSectorActionBundle's U_isometry is a Wigner
+-- OUTPUT (kSectorActionBundle_U_isometry), not a posit. Does NOT derive TPP from measure-preservation
+-- (that is the §13.2 trap / open D1 gap); A5 untouched.
+/-- info: 'CSD.LF4.kSectorDataFlow_projectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorDataFlow_projectable
+
+/-- info: 'CSD.LF4.kProjectedFlow_transProbPreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kProjectedFlow_transProbPreserving
+
+/-- info: 'CSD.LF4.kProjectedFlow_unitary_or_antiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kProjectedFlow_unitary_or_antiunitary
+
+/-- info: 'CSD.LF4.kSectorActionBundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorActionBundle
+
+/-- info: 'CSD.LF4.kSectorActionBundle_U_isometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kSectorActionBundle_U_isometry
 
 /-! ### LF4 §8 ontic-shell instantiation
 
