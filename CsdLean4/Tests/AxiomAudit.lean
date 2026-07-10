@@ -6268,6 +6268,31 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.halfGcd_beats_iff_k_one_256
 
+-- ECDLP L8 faster-M(n) lever (2026-07-10): substitute the verified Toom-3 multiply (Θ(n^1.465)) into the
+-- half-GCD model and characterise the beat threshold in the multiply cost. Toom-3 IMPROVES the k=1 margin
+-- (12%→~24%) but does NOT flip the threshold at 256 (still beats iff k≤1); flipping to k=2 needs
+-- M(256) ≤ 369311, below both Karatsuba (653388) and Toom-3 (596490) — an FFT-class multiply. The
+-- knife-edge at the ECDLP width is structural (8 levels vs safegcd's tight ~90n²), not a Karatsuba artefact.
+/-- info: 'ECDLP.ResourceBounds.halfGcdInvToffoli_eq_with' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.halfGcdInvToffoli_eq_with
+
+/-- info: 'ECDLP.ResourceBounds.halfGcd_toom3_beats_iff_k_one_256' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.halfGcd_toom3_beats_iff_k_one_256
+
+/-- info: 'ECDLP.ResourceBounds.halfGcd_toom3_improves_margin_256' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.halfGcd_toom3_improves_margin_256
+
+/-- info: 'ECDLP.ResourceBounds.halfGcd_k2_beats_iff_mult_budget_256' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.halfGcd_k2_beats_iff_mult_budget_256
+
+/-- info: 'ECDLP.ResourceBounds.karatsuba_toom3_miss_k2_budget_256' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.karatsuba_toom3_miss_k2_budget_256
+
 /-- info: 'ECDLP.ResourceBounds.windowedFermatInvToffoli_ge_cubic' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.windowedFermatInvToffoli_ge_cubic
@@ -6289,6 +6314,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.ResourceBounds.karatsubaToffoli_lt_schoolbook_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.karatsubaToffoli_lt_schoolbook_secp256k1
+
+-- ECDLP L7-t Toom-3 modular multiply (Θ(n^{log₃5})=Θ(n^1.465)), same verified footing as Karatsuba
+-- (base = verified schoolbook, combine = verified modular adders). toom3Toffoli 256 = 596490 < 653388.
+/-- info: 'ECDLP.ResourceBounds.toom3_coeff_identity' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.toom3_coeff_identity
+
+/-- info: 'ECDLP.ResourceBounds.toom3CombineToffoli_eq_adders' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.toom3CombineToffoli_eq_adders
+
+/-- info: 'ECDLP.ResourceBounds.toom3Toffoli_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.toom3Toffoli_secp256k1
+
+/-- info: 'ECDLP.ResourceBounds.toom3Toffoli_lt_karatsuba_secp256k1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.toom3Toffoli_lt_karatsuba_secp256k1
 
 /-- info: 'ECDLP.ResourceBounds.onePointAddToffoli_karatsuba_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

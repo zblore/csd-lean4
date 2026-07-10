@@ -512,4 +512,107 @@ theorem squaring_score_gap_vs_leaderboard_upper :
     onePointAddScore_squaring < ecdsaFailLeaderboardBest * 15 := by
   rw [onePointAddScore_squaring_eq]; norm_num [ecdsaFailLeaderboardBest]
 
+/-! ### Toom-3 modular multiply cost model — the faster-`M(n)` lever  (ECDLP L7-t)
+
+Karatsuba's `Θ(n^{log₂3}) = Θ(n^{1.585})` is the `M(n)` that pins the half-GCD beat lever
+(`HalfGcdInversion.lean`) to a knife-edge at 256. The next asymptotic rung is **Toom-3**: split each
+operand into THREE parts, evaluate at 5 points, do FIVE half-third-width recursive multiplies, interpolate
+— `T(n) = 5·T(⌈n/3⌉) + O(n)`, solution `Θ(n^{log₃5}) = Θ(n^{1.465})`, strictly below Karatsuba's exponent.
+This block costs Toom-3 on the SAME verified footing as Karatsuba (base = verified schoolbook multiply,
+combine = verified modular adders) and asks the concrete question: does the faster multiply move the
+half-GCD beat threshold at 256? (Answer, quantified in `HalfGcdInversion.lean`: it improves the margin but
+does NOT flip the threshold — the crossover with Karatsuba sits near 256, so Toom-3's asymptotic edge is
+barely realised at the ECDLP width; only an FFT-class `M(n)` clears the required budget.)
+
+**Status: DERIVED cost recurrence** (base + combine tied to verified circuits), same tier as
+`karatsubaToffoli`. NOT a verified Toom-3 circuit. The value (`X·Y mod N`) is unique, so it rides on the
+verified schoolbook `Reversible.cuccaroModMul_correct` (route 3b); the 5-multiply reduction via
+evaluation–interpolation is the DOCUMENTED recurrence shape (`toom3_coeff_identity` gives the algebraic
+coefficient split; the Vandermonde interpolation that turns it into 5 multiplies is documented, not a ring
+identity). -/
+
+/-- **Toom-3 coefficient split (algebra).** For degree-2 operands `x = x₂B²+x₁B+x₀`, `y = y₂B²+y₁B+y₀`, the
+product is a degree-4 polynomial in `B` whose five coefficients are the classical convolution buckets. This
+is the exactness of the 3-way split (the polynomial `c(t)=a(t)b(t)` whose 5 coefficients Toom-3 recovers by
+evaluating at 5 points and interpolating). Proved by `ring`; it is ALGEBRA, not a circuit — the reduction
+to FIVE recursive multiplies via evaluation–interpolation is the DOCUMENTED recurrence shape (mod-`N` value
+rides on `Reversible.cuccaroModMul_correct`; route 3b). -/
+theorem toom3_coeff_identity {R : Type*} [CommRing R] (B x2 x1 x0 y2 y1 y0 : R) :
+    (x2 * B ^ 2 + x1 * B + x0) * (y2 * B ^ 2 + y1 * B + y0)
+      = x2 * y2 * B ^ 4
+        + (x2 * y1 + x1 * y2) * B ^ 3
+        + (x2 * y0 + x1 * y1 + x0 * y2) * B ^ 2
+        + (x1 * y0 + x0 * y1) * B
+        + x0 * y0 := by
+  ring
+
+/-- **Toom-3 combine-op count per level: `20` (DOCUMENTED, Bodrato-style).** One Toom-3 level performs the
+5-point evaluation of both operands (`~10` half-width add/sub) and the interpolation back to 5 coefficients
+(`~10` add/sub + small exact divisions by 2, 3, counted as `O(n)` ops) — `≈ 20` linear-time operations, the
+standard optimised (Bodrato) Toom-3 combine, materially more than Karatsuba's `6` (the price of the 5-way
+split). DOCUMENTED op-count, modelled uniformly as `20` modular adders at the node width and tied to the
+verified adder by `toom3CombineToffoli_eq_adders`. -/
+def toom3CombineAdders : ℕ := 20
+
+/-- **Per-level Toom-3 combine Toffoli cost: `20·(12n+10)`** — `toom3CombineAdders` copies of the VERIFIED
+carry-clean modular adder (`Reversible.cuccaroModAdd_toffoli = 12n+10`). Derived count of a verified gadget
+cost, tied by `toom3CombineToffoli_eq_adders`. -/
+def toom3CombineToffoli (n : ℕ) : ℕ := toom3CombineAdders * (12 * n + 10)
+
+theorem toom3CombineToffoli_eq (n : ℕ) : toom3CombineToffoli n = 240 * n + 200 := by
+  simp only [toom3CombineToffoli, toom3CombineAdders]; ring
+
+/-- The verified-gadget link for the Toom-3 combine: `toom3CombineToffoli n` is exactly
+`toom3CombineAdders` copies of the proved carry-clean modular-adder Toffoli cost. -/
+theorem toom3CombineToffoli_eq_adders {m n : ℕ} (L : CuccaroModLayout m n) :
+    toom3CombineToffoli n = toom3CombineAdders * (circuitCost (cuccaroModAdd L)).toffoli := by
+  rw [toom3CombineToffoli, cuccaroModAdd_toffoli]
+
+/-- **Toom-3 modular-multiply Toffoli cost: `T(n) = 5·T(⌈n/3⌉) + 20·(12n+10)`, base
+`T(n≤32) = cleanModMulToffoli n`.** The classical 3-way recurrence: FIVE third-width recursive multiplies
+(source of the `Θ(n^{log₃5}) = Θ(n^{1.465})` solution, since `5 < 9` schoolbook sub-products) plus the
+`O(n)` Toom-3 combine. Base is the VERIFIED carry-clean schoolbook multiply. `⌈n/3⌉ = (n+2)/3` in `ℕ`.
+
+**Status: DERIVED cost recurrence**, same tier as `karatsubaToffoli`; NOT a verified Toom-3 circuit (value
+rides on `Reversible.cuccaroModMul_correct`, route 3b). -/
+def toom3Toffoli (n : ℕ) : ℕ :=
+  if h : n ≤ 32 then cleanModMulToffoli n
+  else 5 * toom3Toffoli ((n + 2) / 3) + toom3CombineToffoli n
+termination_by n
+decreasing_by omega
+
+/-- **Base-case unfolding** (`n ≤ 32`): `toom3Toffoli n = cleanModMulToffoli n`. -/
+theorem toom3Toffoli_base {n : ℕ} (h : n ≤ 32) :
+    toom3Toffoli n = cleanModMulToffoli n := by
+  rw [toom3Toffoli.eq_def, dif_pos h]
+
+/-- **Recursive-step unfolding** (`32 < n`): `toom3Toffoli n = 5·toom3Toffoli ⌈n/3⌉ + combine`. -/
+theorem toom3Toffoli_rec {n : ℕ} (h : ¬ n ≤ 32) :
+    toom3Toffoli n = 5 * toom3Toffoli ((n + 2) / 3) + toom3CombineToffoli n := by
+  rw [toom3Toffoli.eq_def, dif_neg h]
+
+/-- The Toom-3 modular-multiply cost at secp256k1 width evaluates to `596 490 ≈ 6.0×10⁵` Toffolis:
+`T(256) = 5·T(86) + combine(256)`, `T(86) = 5·T(29) + combine(86)`, base `T(29) = cleanModMulToffoli 29 =
+17 226` (since `29 ≤ 32`, one level shy of Karatsuba's `32`-base). With `combine(86) = 20·1042 = 20 840`
+and `combine(256) = 20·3082 = 61 640`: `T(86) = 106 970`, `T(256) = 596 490`. -/
+theorem toom3Toffoli_secp256k1 : toom3Toffoli Secp256k1.bits = 596490 := by
+  have h29 : toom3Toffoli 29 = 17226 := by
+    rw [toom3Toffoli_base (by norm_num)]; norm_num [cleanModMulToffoli]
+  have h86 : toom3Toffoli 86 = 106970 := by
+    have hd : ((86 : ℕ) + 2) / 3 = 29 := by norm_num
+    rw [toom3Toffoli_rec (by norm_num), hd, h29]; norm_num [toom3CombineToffoli, toom3CombineAdders]
+  have h256 : toom3Toffoli 256 = 596490 := by
+    have hd : ((256 : ℕ) + 2) / 3 = 86 := by norm_num
+    rw [toom3Toffoli_rec (by norm_num), hd, h86]; norm_num [toom3CombineToffoli, toom3CombineAdders]
+  rw [show Secp256k1.bits = 256 from rfl]; exact h256
+
+/-- **The per-multiply win over Karatsuba, concrete.** At `n = 256` the Toom-3 modular multiply is strictly
+cheaper than the Karatsuba modular multiply: `toom3Toffoli 256 = 596 490 < 653 388 = karatsubaToffoli 256`
+(a `≈ 1.10×` win — the `Θ(n^{1.465})`-vs-`Θ(n^{1.585})` improvement). The win is SMALL because the
+Toom-3/Karatsuba crossover sits near this width: the larger 5-way combine (`20` vs `6` adders) and the
+`32`-bit schoolbook base eat most of the asymptotic edge at `256`. -/
+theorem toom3Toffoli_lt_karatsuba_secp256k1 :
+    toom3Toffoli Secp256k1.bits < karatsubaToffoli Secp256k1.bits := by
+  rw [toom3Toffoli_secp256k1, karatsubaToffoli_secp256k1]; norm_num
+
 end ECDLP.ResourceBounds

@@ -96,5 +96,71 @@ theorem halfGcd_beats_iff_k_one_256 (k : ℕ) :
   rw [halfGcdInvToffoli, log2_256, karatsubaToffoli_256, safegcdInvToffoli_256]
   omega
 
+/-! ### Moving the beat lever with a faster multiply `M(n)` — Toom-3, and the structural budget
+
+The knife-edge above (`beats iff k ≤ 1`) is driven ENTIRELY by the multiply cost
+`M(256) = karatsubaToffoli 256 = 653 388`: `halfGcdInvToffoli k 256 = 8 · k · M(256)`. Does a faster
+`M(n)` move the threshold? This block answers precisely, over a `mulCost`-parameterised half-GCD, and
+substitutes the verified Toom-3 model (`KaratsubaMul.lean`, `toom3Toffoli`). The finding is honest and
+quantitative: Toom-3 IMPROVES the `k = 1` margin but does NOT flip the threshold at 256 — clearing `k = 2`
+needs `M(256) ≤ 369 311`, below BOTH Karatsuba (`653 388`) and Toom-3 (`596 490`), i.e. an FFT-class
+multiply whose Karatsuba crossover sits far above 256. The beat lever's knife-edge at the ECDLP width is
+STRUCTURAL (the `log₂ 256 = 8` levels against safegcd's tight `≈ 90n²` constant), not an artefact of the
+Karatsuba constant. -/
+
+/-- **Multiply-parameterised half-GCD inversion cost.** `halfGcdInvToffoliWith mulCost k n =
+(log₂ n) · k · mulCost` — the half-GCD op-count model with the per-level multiply cost `mulCost` supplied
+explicitly, so a faster `M(n)` (Toom-3, FFT) can be substituted for Karatsuba. Recovers `halfGcdInvToffoli`
+at `mulCost = karatsubaToffoli n` (`halfGcdInvToffoli_eq_with`). -/
+def halfGcdInvToffoliWith (mulCost k n : ℕ) : ℕ := Nat.log2 n * k * mulCost
+
+/-- `halfGcdInvToffoli` is the parameterised model at the Karatsuba multiply cost. -/
+theorem halfGcdInvToffoli_eq_with (k n : ℕ) :
+    halfGcdInvToffoli k n = halfGcdInvToffoliWith (karatsubaToffoli n) k n := rfl
+
+/-- `toom3Toffoli 256 = 596 490` (the verified Toom-3 multiply at the ECDLP width). -/
+private theorem toom3Toffoli_256 : toom3Toffoli 256 = 596490 :=
+  toom3Toffoli_secp256k1
+
+/-- **With the Toom-3 multiply, half-GCD still beats safegcd at 256 iff `k ≤ 1`.** Substituting the faster
+`toom3Toffoli 256 = 596 490` for Karatsuba's `653 388` does NOT move the beat threshold: `8 · k · 596 490 <
+5 908 992 ↔ k ≤ 1`. The faster multiply is not enough to make a standard (`k ≥ 2`) recursion win at 256 —
+the knife-edge is structural at this width. -/
+theorem halfGcd_toom3_beats_iff_k_one_256 (k : ℕ) :
+    halfGcdInvToffoliWith (toom3Toffoli 256) k 256 < safegcdInvToffoli 256 ↔ k ≤ 1 := by
+  rw [halfGcdInvToffoliWith, log2_256, toom3Toffoli_256, safegcdInvToffoli_256]
+  omega
+
+/-- **Toom-3 tightens the aggressive (`k = 1`) beat margin.** The `k = 1` half-GCD figure with the Toom-3
+multiply is strictly below the same figure with Karatsuba: `8 · 596 490 = 4 771 920 < 5 227 104 =
+8 · 653 388`. Against `safegcdInvToffoli 256 = 5 908 992` this widens the beat from Karatsuba's `≈ 1.13×`
+to `≈ 1.24×` — a real improvement in the margin, even though the threshold `k ≤ 1` is unchanged. -/
+theorem halfGcd_toom3_improves_margin_256 :
+    halfGcdInvToffoliWith (toom3Toffoli 256) 1 256 < halfGcdInvToffoli 1 256 := by
+  rw [halfGcdInvToffoli_eq_with, halfGcdInvToffoliWith, halfGcdInvToffoliWith,
+    log2_256, toom3Toffoli_256, karatsubaToffoli_256]
+  norm_num
+
+/-- **The exact multiply budget to flip the threshold to `k = 2` at 256.** A standard (`k = 2`) half-GCD
+recursion beats safegcd at 256 IFF the per-level multiply costs at most `369 311` Toffoli:
+`halfGcdInvToffoliWith m 2 256 < safegcdInvToffoli 256 ↔ m ≤ 369 311` (i.e. `16·m < 5 908 992`). This is
+the structural target a faster `M(256)` must hit to move the beat lever off the knife-edge. -/
+theorem halfGcd_k2_beats_iff_mult_budget_256 (m : ℕ) :
+    halfGcdInvToffoliWith m 2 256 < safegcdInvToffoli 256 ↔ m ≤ 369311 := by
+  rw [halfGcdInvToffoliWith, log2_256, safegcdInvToffoli_256]
+  omega
+
+/-- **Neither Karatsuba nor Toom-3 clears the `k = 2` budget at 256.** Both multiply costs exceed the
+`369 311` Toffoli budget of `halfGcd_k2_beats_iff_mult_budget_256`: `369 311 < 596 490 = toom3Toffoli 256 <
+653 388 = karatsubaToffoli 256`. So no multiply in the corpus flips the threshold at 256 — a `k = 2` beat
+needs an FFT-class `M(256) ≤ 369 311`, whose sub-Toom-3 crossover lies well above the ECDLP width. This
+pins the honest conclusion: the half-GCD beat at 256 is contingent on tuning the recursion to `k ≤ 1`, not
+on a faster multiply. -/
+theorem karatsuba_toom3_miss_k2_budget_256 :
+    369311 < toom3Toffoli 256 ∧ toom3Toffoli 256 < karatsubaToffoli 256 := by
+  rw [toom3Toffoli_256, karatsubaToffoli_256]
+  exact ⟨by norm_num, by norm_num⟩
+
 end ECDLP.ResourceBounds
+
 
