@@ -2926,6 +2926,23 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneRotationSetup_both_pillars
 
+-- General-N unified capstone (2026-07-10): both pillars from the Kähler space Σ = ℂℙ^{N-1}×T² mapped
+-- by π = pr₁ onto the ray space, at general N with ARBITRARY Hermitian H. manyToOneSetup driven by
+-- U t = exp(-itH) (schrodingerUnitary): (A) Schrödinger π(Φ_t x)=exp(-itH)•π x holds by rfl at general N
+-- (no N=2 σ_y, no Wigner selection — the flow is unitary by construction), (B) Born via the already
+-- general-N manyToOneSetup_born_frequency. FORWARD delivery (consumes the sector); FND-1 untouched.
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_schrodinger_form
+
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_both_pillars' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_both_pillars
+
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_pi_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_pi_not_injective
+
 -- W3: the Wigner selection on the Kähler ontic setup. The per-t disjunction
 -- (unitary ∨ antiunitary) consumes W1 wigner_rigidity_unitaryGroup through the W2
 -- interface; hTPP (transition-probability preservation) is a HYPOTHESIS, NOT

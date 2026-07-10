@@ -254,5 +254,90 @@ theorem manyToOneRotationSetup_both_pillars (p₀ : CPN 2)
   obtain ⟨H, hH, hSchro⟩ := rotationSetup_schrodinger_form p₀
   exact ⟨H, hH, fun t x => hSchro t x.1⟩
 
+/-! ## The general-`N` unified capstone: both pillars from the Kähler space, any Hermitian `H`
+
+The `N = 2` witness above inherits its Schrödinger conjunct from the concrete `σ_y` rotation
+`rotationSetup_schrodinger_form`. But `manyToOneSetup`'s projected flow is `U t • ·` BY CONSTRUCTION
+(`projectable := rfl`), so driving it with the genuine one-parameter unitary group
+`U t = exp(-itH) = schrodingerUnitary hH t` for an ARBITRARY Hermitian `H` gives the Schrödinger form
+`π (Φ_t x) = exp(-itH) • π x` by `rfl` at general `N` — and the Born pillar
+(`manyToOneSetup_born_frequency`) is already general-`N`. So both pillars are delivered, at general
+`N`, from ONE Kähler ontic space `Σ = ℂℙ^{N-1} × T²` mapped by `π = pr₁` onto the ray space
+`ℂℙ^{N-1}`, with genuine unitary dynamics. -/
+
+/-- **The general-`N` Kähler many-to-one Schrödinger instance.** `manyToOneSetup` driven by the
+genuine one-parameter unitary group `U t = exp(-itH)` (`schrodingerUnitary hH`, `expNegITH_unitary_group`)
+for an ARBITRARY Hermitian `H` — not just the `N = 2` `σ_y` rotation. `Σ = ℂℙ^{N-1} × T²` is the Kähler
+ontic space (Liouville measure `kMuL = μ_FS ⊗ vol_{T²}`), `π = Prod.fst` is the genuine many-to-one
+projection onto the ray space `ℂℙ^{N-1}` (fibres `= T²`), and the projected flow is the genuine ray
+evolution `exp(-itH) • ·`. -/
+noncomputable def manyToOneSchrodingerSetup {M : ℕ}
+    (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1)) :
+    KahlerOnticSetup (M + 1) :=
+  manyToOneSetup (schrodingerUnitary hH) p₀
+
+/-- The projection of the general-`N` instance is genuinely many-to-one (fibres `= T²`). -/
+theorem manyToOneSchrodingerSetup_pi_not_injective {M : ℕ}
+    (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ p : CPN (M + 1))
+    {sh : KTorus} (hsh : sh ≠ 0) :
+    ¬ Function.Injective (manyToOneSchrodingerSetup H hH p₀).pi :=
+  manyToOneSetup_pi_not_injective (schrodingerUnitary hH) p₀ p hsh
+
+/-- **Schrödinger from the Kähler flow, general `N`, arbitrary Hermitian `H`.** The projected
+deterministic flow on the ray space is exactly `exp(-itH)`-evolution:
+`π (Φ_t x) = exp(-itH) • π x` for every `t` and every ontic microstate `x` — holding by `rfl`,
+since the flow rotates the base ray by `schrodingerUnitary hH t` and `π = Prod.fst`. This is the
+Schrödinger pillar delivered from the Kähler space at general `N` (no `N = 2` restriction, no Wigner
+selection: the flow is unitary by construction, `expNegITH_unitary_group`). -/
+theorem manyToOneSchrodingerSetup_schrodinger_form {M : ℕ}
+    (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1)) :
+    ∀ t x, (manyToOneSchrodingerSetup H hH p₀).pi ((manyToOneSchrodingerSetup H hH p₀).flow t x)
+      = schrodingerUnitary hH t • (manyToOneSchrodingerSetup H hH p₀).pi x :=
+  fun _ _ => rfl
+
+/-- **General-`N` capstone: BOTH pillars from the Kähler space `Σ → π → ℂℙ^{N-1}`, any Hermitian `H`.**
+For the single general-`N` Kähler ontic instance `manyToOneSchrodingerSetup H hH p₀`
+(`Σ = ℂℙ^{N-1} × T²`, `π = Prod.fst` genuinely many-to-one, projected flow `= exp(-itH) • ·`):
+
+* **(A) Schrödinger** — the projected deterministic Kähler flow IS `exp(-itH)`-evolution on rays,
+  `π (Φ_t x) = exp(-itH) • π x`, for the given Hermitian `H` at general `N`
+  (`manyToOneSchrodingerSetup_schrodinger_form`, by construction);
+* **(B) Born** — sampling the Kähler Liouville measure `kMuL = μ_FS ⊗ vol_{T²}` i.i.d. and scoring the
+  fibred Born region `π⁻¹'(bornRegion ψ i)` gives empirical frequencies converging a.s. to the Born
+  weights `‖⟨eᵢ, ψ⟩‖²` (`manyToOneSetup_born_frequency`, general `N`).
+
+Both about the SAME Kähler ontic object, mapped by the genuine many-to-one `π` onto the ray space —
+the full forward delivery of ordinary QM's two pillars from the Kähler sector, at general `N` with
+arbitrary unitary dynamics. This is the FORWARD direction (it CONSUMES the posited sector `(π, G, μ_FS)`);
+it does not derive the sector from the dynamics (L7 / FND-1, untouched — the Born trials sample `kMuL`
+rather than being evolved by the flow). -/
+theorem manyToOneSchrodingerSetup_both_pillars {M : ℕ}
+    (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = (manyToOneSchrodingerSetup H hH p₀).liouvilleMeasure)
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' ((manyToOneSchrodingerSetup H hH p₀).pi ⁻¹' bornRegion ψ hψ0 i))
+            (fun _ => (1 : ℝ))))) :
+    (∀ t x, (manyToOneSchrodingerSetup H hH p₀).pi ((manyToOneSchrodingerSetup H hH p₀).flow t x)
+        = schrodingerUnitary hH t • (manyToOneSchrodingerSetup H hH p₀).pi x)
+      ∧ (∀ᵐ ω ∂ Pr, ∀ i : Fin (M + 1),
+          Tendsto
+            (fun m : ℕ =>
+              (∑ k ∈ Finset.range m,
+                  Set.indicator
+                    ((X k) ⁻¹' ((manyToOneSchrodingerSetup H hH p₀).pi ⁻¹' bornRegion ψ hψ0 i))
+                    (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+            atTop
+            (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2))) :=
+  ⟨manyToOneSchrodingerSetup_schrodinger_form H hH p₀,
+    manyToOneSetup_born_frequency (schrodingerUnitary hH) p₀ ψ hψ0 hψ hpos X hX hlaw hindep⟩
+
 end LF4
 end CSD
+
