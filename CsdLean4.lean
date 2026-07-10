@@ -148,6 +148,7 @@ import CsdLean4.LF4.QubitConsistency
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingletKahlerFlow
 import CsdLean4.LF4.KahlerWignerLift
+import CsdLean4.LF4.KahlerVolumeForced
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler

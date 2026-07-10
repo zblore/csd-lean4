@@ -121,6 +121,7 @@ import CsdLean4.Mathlib.MeasureTheory.PiCurry
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingletKahlerFlow
 import CsdLean4.LF4.KahlerWignerLift
+import CsdLean4.LF4.KahlerVolumeForced
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler
@@ -2877,6 +2878,29 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.unitaryFlowSetup_liouville_isProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup_liouville_isProbability
+
+-- Move up the chain (2026-07-10): UPGRADE the IsLiouvilleKahlerVolume content from "μ is a
+-- probability measure" (C5 core) to "μ is THE volume forced by the space + U(N)-symmetry"
+-- (IsForcedKahlerVolume: prob + invariant + UNIQUE, via fubiniStudyMeasure_unique). So the Kähler
+-- volume is an OUTCOME of Σ = ℂℙ^{N-1} and its symmetry, not posited: fubiniStudyMeasure IS the forced
+-- volume, the unitaryFlowSetup sector volume IS it, and the many-to-one instance's ray-space volume
+-- π_*(kMuL) IS it (kMuL = forced-FS ⊗ Haar). IsKahlerSector (the 2-form) stays Mathlib-blocked (KG-1);
+-- FORWARD (takes G=U(N) as given, does not derive it — FND-1 untouched).
+/-- info: 'CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume
+
+/-- info: 'CSD.LF4.unitaryFlowSetup_liouville_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_liouville_isForcedKahlerVolume
+
+/-- info: 'CSD.LF4.manyToOneSetup_baseVolume_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_baseVolume_isForcedKahlerVolume
+
+/-- info: 'CSD.LF4.manyToOneSetup_liouville_eq_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_liouville_eq_product
 
 -- Connectivity fix C2 (manifest link L3, off the trivial witness): the W-series
 -- Schrödinger capstone sigmaFlow_schrodinger_form FIRED on the genuine Φ≠id
