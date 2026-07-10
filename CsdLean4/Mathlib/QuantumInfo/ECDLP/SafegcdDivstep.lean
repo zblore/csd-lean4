@@ -286,6 +286,84 @@ theorem divstepIter_natAbs_of_g_zero_stable {s : ℤ × ℤ × ℤ} (hf : Odd s.
   rw [(divstepIter_zero_stable hg m).2]
   exact divstepIter_natAbs_of_g_zero hf hg
 
+/-! ### Layer 3a″: the divstep is REVERSIBLE on the odd-`f` domain (EC-2 value side)
+
+A reversible/quantum circuit realising the divstep needs the transition to be injective. It is NOT,
+raw: `divstep 0 1 2 = divstep 0 1 1 = (1, 1, 0)` (the branch is ambiguous from the output alone). The
+minimal garbage that restores injectivity is the **2-bit branch selector** — the input's sign of `δ`
+and parity of `g`, which is exactly what a divstep circuit would keep as history. `divstepRev` carries
+it, and `divstepRev_injective` proves the extended transition is injective on the invariant domain
+`f` odd (where every halving `(g±f)/2`, `g/2` is exact). This is the mathematical content underlying
+"the divstep can be a value-faithful reversible circuit (2 garbage bits per step)"; the bit-level circuit
+whose denotation IS `divstepRev` is the deferred EC-2 build. -/
+
+/-- **Raw `divstep` is NOT injective** — so the garbage below is genuinely necessary, not gratuitous:
+`divstep 0 1 2 = (1, 1, 0) = divstep 0 1 1` (branch C vs branch B collide) while `(0,1,2) ≠ (0,1,1)`. -/
+theorem divstep_not_injective :
+    ¬ Function.Injective (fun p : ℤ × ℤ × ℤ => divstep p.1 p.2.1 p.2.2) := by
+  intro hinj
+  have h : ((0 : ℤ), (1 : ℤ), (2 : ℤ)) = ((0 : ℤ), (1 : ℤ), (1 : ℤ)) := hinj (by decide)
+  exact absurd h (by decide)
+
+/-- The **reversibilised divstep**: the divstep triple plus its 2-bit branch selector (input `0 < δ`
+and `Odd g`). The garbage is minimal — exactly what disambiguates the three branches at the output. -/
+def divstepRev (d f g : ℤ) : (ℤ × ℤ × ℤ) × (Bool × Bool) :=
+  (divstep d f g, (decide (0 < d), decide (Odd g)))
+
+/-- The data projection of `divstepRev` is the divstep. -/
+@[simp] theorem divstepRev_data (d f g : ℤ) : (divstepRev d f g).1 = divstep d f g := rfl
+
+/-- **The divstep is REVERSIBLE on the odd-`f` domain.** With the 2-bit branch selector kept
+(`divstepRev`), the transition is injective for `f` odd: equal outputs force equal inputs. So a
+constant-time divstep circuit that maintains `f` odd (the invariant) and keeps the 2 history bits is a
+genuine reversible transformation — the prerequisite for a `denote = divstep` circuit. -/
+theorem divstepRev_injective {d₁ f₁ g₁ d₂ f₂ g₂ : ℤ} (hf₁ : Odd f₁) (hf₂ : Odd f₂)
+    (h : divstepRev d₁ f₁ g₁ = divstepRev d₂ f₂ g₂) :
+    d₁ = d₂ ∧ f₁ = f₂ ∧ g₁ = g₂ := by
+  simp only [divstepRev, Prod.mk.injEq] at h
+  obtain ⟨hstep, hsd, hodd⟩ := h
+  have hoiff : Odd g₁ ↔ Odd g₂ := decide_eq_decide.mp hodd
+  have hdiff : (0 < d₁) ↔ (0 < d₂) := decide_eq_decide.mp hsd
+  by_cases hg₁ : Odd g₁
+  · have hg₂ : Odd g₂ := hoiff.mp hg₁
+    by_cases hd₁ : 0 < d₁
+    · -- both branch A: (1-δ, g, (g-f)/2)
+      have hd₂ : 0 < d₂ := hdiff.mp hd₁
+      unfold divstep at hstep
+      rw [if_pos ⟨hd₁, hg₁⟩, if_pos ⟨hd₂, hg₂⟩] at hstep
+      simp only [Prod.mk.injEq] at hstep
+      obtain ⟨hd, hg, hh⟩ := hstep
+      have e₁ : 2 * ((g₁ - f₁) / 2) = g₁ - f₁ :=
+        Int.mul_ediv_cancel' (even_iff_two_dvd.mp (Odd.sub_odd hg₁ hf₁))
+      have e₂ : 2 * ((g₂ - f₂) / 2) = g₂ - f₂ :=
+        Int.mul_ediv_cancel' (even_iff_two_dvd.mp (Odd.sub_odd hg₂ hf₂))
+      have hsub : g₁ - f₁ = g₂ - f₂ := by rw [← e₁, ← e₂, hh]
+      exact ⟨by linarith, by linarith, hg⟩
+    · -- both branch B: (1+δ, f, (g+f)/2)
+      have hd₂ : ¬ 0 < d₂ := fun p => hd₁ (hdiff.mpr p)
+      unfold divstep at hstep
+      rw [if_neg (fun p => hd₁ p.1), if_pos hg₁, if_neg (fun p => hd₂ p.1), if_pos hg₂] at hstep
+      simp only [Prod.mk.injEq] at hstep
+      obtain ⟨hd, hf, hh⟩ := hstep
+      have e₁ : 2 * ((g₁ + f₁) / 2) = g₁ + f₁ :=
+        Int.mul_ediv_cancel' (even_iff_two_dvd.mp (Odd.add_odd hg₁ hf₁))
+      have e₂ : 2 * ((g₂ + f₂) / 2) = g₂ + f₂ :=
+        Int.mul_ediv_cancel' (even_iff_two_dvd.mp (Odd.add_odd hg₂ hf₂))
+      have hadd : g₁ + f₁ = g₂ + f₂ := by rw [← e₁, ← e₂, hh]
+      exact ⟨by linarith, hf, by linarith⟩
+  · -- both branch C: (1+δ, f, g/2), g even
+    have hg₂ : ¬ Odd g₂ := fun p => hg₁ (hoiff.mpr p)
+    have he₁ : Even g₁ := Int.not_odd_iff_even.mp hg₁
+    have he₂ : Even g₂ := Int.not_odd_iff_even.mp hg₂
+    unfold divstep at hstep
+    rw [if_neg (fun p => hg₁ p.2), if_neg hg₁, if_neg (fun p => hg₂ p.2), if_neg hg₂] at hstep
+    simp only [Prod.mk.injEq] at hstep
+    obtain ⟨hd, hf, hh⟩ := hstep
+    have e₁ : 2 * (g₁ / 2) = g₁ := Int.mul_ediv_cancel' (even_iff_two_dvd.mp he₁)
+    have e₂ : 2 * (g₂ / 2) = g₂ := Int.mul_ediv_cancel' (even_iff_two_dvd.mp he₂)
+    have hgg : g₁ = g₂ := by rw [← e₁, ← e₂, hh]
+    exact ⟨by linarith, hf, hgg⟩
+
 /-! ### Layer 3b: Bezout cofactor tracking (up to the `2^k` scale) -/
 
 /-- `x` is an integer linear combination of `f₀` and `g₀`. -/
@@ -390,3 +468,5 @@ example : Int.gcd (divstep 1 5 3).2.1 (divstep 1 5 3).2.2 = Int.gcd 5 3 := by de
 example : divstep (-1) 5 4 = (0, 5, 2) := by decide
 
 end ECDLP.Safegcd
+
+

@@ -6858,6 +6858,17 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.divstepIter_natAbs_of_g_zero_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_natAbs_of_g_zero_stable
 
+-- EC-2 value side (2026-07-09): the divstep is REVERSIBLE on the odd-f domain. Raw divstep is NOT
+-- injective (divstep_not_injective: divstep 0 1 2 = divstep 0 1 1), so garbage is genuinely needed;
+-- divstepRev keeps the minimal 2-bit branch selector (input sign-δ, parity-g), and divstepRev_injective
+-- proves the extended transition injective for f odd — the mathematical basis for a denote=divstep
+-- reversible circuit (2 garbage bits/step). The bit-level circuit itself is the deferred build.
+/-- info: 'ECDLP.Safegcd.divstep_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstep_not_injective
+
+/-- info: 'ECDLP.Safegcd.divstepRev_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.divstepRev_injective
+
 /-- info: 'ECDLP.Safegcd.divstepIter_bezout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_bezout
 
