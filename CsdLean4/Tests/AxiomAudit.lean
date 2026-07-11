@@ -2492,6 +2492,12 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Kahler.fundamentalForm_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_antisymm
 
+-- Tangent-space tie (2026-07-11): the projective tangent model ψ^⊥ = (span ℂ {ψ})ᗮ is J-invariant, so
+-- it is a complex subspace on which the pointwise Kähler triple restricts — the flat form INDUCES the
+-- Fubini–Study structure on each tangent space of ℂℙ^{N-1} (still pointwise; no manifold needed).
+/-- info: 'Kahler.tangent_complexStructure_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.tangent_complexStructure_invariant
+
 -- `whitespace := lax` because the long theorem names push the axiom list
 -- past the pretty-printer width, wrapping it across lines; lax collapses
 -- the wrap so a single-line docstring matches.

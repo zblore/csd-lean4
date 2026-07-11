@@ -1,4 +1,5 @@
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.Orthogonal
 import Mathlib.Analysis.Complex.Basic
 
 /-!
@@ -182,5 +183,31 @@ theorem fubiniStudy_pointwise_kahler_compatibility (u v : E) :
     metric_eq_fundamentalForm_complexStructure u v,
     fundamentalForm_complexStructure u v, fundamentalForm_complexStructure_self u⟩
 
+/-! ### The projective tangent space `ψ^⊥` is `J`-invariant
+
+At a ray `[ψ] ∈ ℂℙ^{N-1}` the (holomorphic) tangent space is modelled by the orthogonal complement
+`(span ℂ {ψ})ᗮ = ψ^⊥`. The complex structure `J = i • ·` preserves it, so `ψ^⊥` is a complex
+(`J`-invariant) subspace — and since the Kähler-triple identities above hold on all of `E`, they
+restrict to `ψ^⊥`: the flat Hermitian structure on `E` **induces** the Fubini–Study Kähler structure on
+each tangent space. This ties the ambient pointwise form to the actual tangent model of `ℂℙ^{N-1}`
+(still pointwise — no manifold structure needed). -/
+
+/-- **`J` preserves the tangent space `ψ^⊥`.** If `v ⊥ ψ` then `J v = i • v ⊥ ψ` (since
+`⟪ψ, i • v⟫ = i · ⟪ψ, v⟫ = 0`). -/
+theorem complexStructure_mem_orthogonal {ψ v : E}
+    (hv : v ∈ (Submodule.span ℂ {ψ})ᗮ) :
+    complexStructure v ∈ (Submodule.span ℂ {ψ})ᗮ := by
+  rw [Submodule.mem_orthogonal] at hv ⊢
+  intro u hu
+  simp only [complexStructure, inner_smul_right, hv u hu, mul_zero]
+
+/-- **The tangent space at a ray is a complex (`J`-invariant) subspace.** `J` maps `ψ^⊥` into itself,
+so the pointwise Kähler triple (`fubiniStudy_pointwise_kahler_compatibility`) restricts to the tangent
+space of `ℂℙ^{N-1}` at `[ψ]` — the induced Fubini–Study Kähler structure on the tangent. -/
+theorem tangent_complexStructure_invariant (ψ : E) :
+    ∀ v ∈ (Submodule.span ℂ {ψ})ᗮ, complexStructure v ∈ (Submodule.span ℂ {ψ})ᗮ :=
+  fun _ hv => complexStructure_mem_orthogonal hv
+
 end Kahler
+
 
