@@ -122,6 +122,7 @@ import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.SingletKahlerFlow
 import CsdLean4.LF4.KahlerWignerLift
 import CsdLean4.LF4.KahlerVolumeForced
+import CsdLean4.LF4.SchrodingerKahlerInvariance
 import CsdLean4.LF4.SingleQubitKahler
 import CsdLean4.LF4.SingletObservables
 import CsdLean4.LF4.HardyKahler
@@ -2497,6 +2498,18 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 -- Fubini–Study structure on each tangent space of ℂℙ^{N-1} (still pointwise; no manifold needed).
 /-- info: 'Kahler.tangent_complexStructure_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Kahler.tangent_complexStructure_invariant
+
+-- Schrödinger flow = Kähler symplectomorphism (2026-07-11): ties the pointwise Kähler form to the
+-- Schrödinger pillar. Any ℂ-linear isometry preserves g = re⟪·,·⟫ and ω = im⟪·,·⟫
+-- (kahler_structure_isometry_invariant), so exp(-itH) (schrodingerUnitary, unitary) preserves the FS
+-- metric AND symplectic form — QM evolution is a symplectic isometry of the CP^{N-1} Kähler geometry
+-- (Kibble/Ashtekar–Schilling picture, pointwise/linear level). The converse X_H = ω⁻¹dH (KG-2) stays
+-- Mathlib-blocked (manifold symplectic-gradient API).
+/-- info: 'Kahler.kahler_structure_isometry_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.kahler_structure_isometry_invariant
+
+/-- info: 'CSD.LF4.schrodinger_flow_kahler_symplectomorphism' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.schrodinger_flow_kahler_symplectomorphism
 
 -- `whitespace := lax` because the long theorem names push the axiom list
 -- past the pretty-printer width, wrapping it across lines; lax collapses

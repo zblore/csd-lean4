@@ -208,6 +208,33 @@ theorem tangent_complexStructure_invariant (ψ : E) :
     ∀ v ∈ (Submodule.span ℂ {ψ})ᗮ, complexStructure v ∈ (Submodule.span ℂ {ψ})ᗮ :=
   fun _ hv => complexStructure_mem_orthogonal hv
 
+/-! ### The Kähler structure is preserved by unitary symmetries
+
+Any `ℂ`-linear isometry preserves the Hermitian inner product, hence both the metric `g` and the
+fundamental form `ω`. So it is a **symplectic isometry** — a "Kähler transformation" of the structure.
+In particular the Schrödinger flow `exp(-itH)` (a one-parameter group of unitaries) preserves `g` and
+`ω`: QM evolution is a symplectomorphism of the Fubini–Study Kähler geometry (the Kibble /
+Ashtekar–Schilling picture, at the pointwise/linear level). See `LF4/SchrodingerKahlerInvariance.lean`
+for the flow corollary. -/
+
+/-- A `ℂ`-linear isometry preserves the metric `g`. -/
+theorem metric_linearIsometryEquiv (f : E ≃ₗᵢ[ℂ] E) (u v : E) :
+    metric (f u) (f v) = metric u v := by
+  simp only [metric, f.inner_map_map]
+
+/-- A `ℂ`-linear isometry preserves the fundamental form `ω`. -/
+theorem fundamentalForm_linearIsometryEquiv (f : E ≃ₗᵢ[ℂ] E) (u v : E) :
+    fundamentalForm (f u) (f v) = fundamentalForm u v := by
+  simp only [fundamentalForm, f.inner_map_map]
+
+/-- **The Kähler structure is preserved by any unitary symmetry.** A `ℂ`-linear isometry preserves
+both the metric `g` and the fundamental form `ω`, so it is a symplectic isometry (a Kähler
+transformation) of the Hermitian structure. This is the invariance that makes the Schrödinger flow a
+symplectomorphism of the Fubini–Study geometry. -/
+theorem kahler_structure_isometry_invariant (f : E ≃ₗᵢ[ℂ] E) (u v : E) :
+    metric (f u) (f v) = metric u v ∧ fundamentalForm (f u) (f v) = fundamentalForm u v :=
+  ⟨metric_linearIsometryEquiv f u v, fundamentalForm_linearIsometryEquiv f u v⟩
+
 end Kahler
 
 
