@@ -247,6 +247,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
+import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
@@ -2469,6 +2470,27 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 
 /-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_unique
+
+-- Pointwise Kähler fundamental form (2026-07-10): the form-level analogue of fubiniStudyMeasure. On a
+-- complex inner-product space (the tangent model ψ^⊥ of ℂℙ^{N-1}) the flat Hermitian structure gives the
+-- Kähler triple g = re⟪·,·⟫, ω = im⟪·,·⟫, J = i•·. Proved pointwise & axiom-free: J²=-1, ω alternating
+-- ℝ-bilinear, J-compatibility ω u v = g(Ju) v, dual g u v = ω u (Jv), ω J-invariant (a (1,1)-form),
+-- positivity ω u (Ju) = ‖u‖². This is the "compatible with J + positive" half of Kähler. Closedness dω=0
+-- and the global ω^∧n/n! = μ_FS need manifold exterior calculus (absent from Mathlib) and stay blocked.
+/-- info: 'Kahler.fubiniStudy_pointwise_kahler_compatibility' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.fubiniStudy_pointwise_kahler_compatibility
+
+/-- info: 'Kahler.fundamentalForm_eq_metric_complexStructure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_eq_metric_complexStructure
+
+/-- info: 'Kahler.fundamentalForm_complexStructure_self_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_complexStructure_self_pos
+
+/-- info: 'Kahler.inner_complexStructure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.inner_complexStructure
+
+/-- info: 'Kahler.fundamentalForm_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_antisymm
 
 -- `whitespace := lax` because the long theorem names push the axiom list
 -- past the pretty-printer width, wrapping it across lines; lax collapses
