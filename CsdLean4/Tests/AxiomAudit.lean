@@ -159,6 +159,7 @@ import CsdLean4.LF6.LocalDeisolationFlow
 import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
+import CsdLean4.LF6.PartialSchmidtCorrelation
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.MaxEntangledCGLMPCapstone
@@ -4547,6 +4548,31 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.no_product_partition_realises_phiPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.no_product_partition_realises_phiPlus
+
+-- LF6-7 (2026-07-12): the Φ⁺↔ψ⁻ transport recompute. reflectXZ (Bob's xz-axis flip) lifted to the
+-- Hilbert-space level: phiPlus_pauli_correlation_reflectXZ recomputes the singlet's −a·b from Φ⁺'s OWN
+-- derived expectation; phiPlus_transport_eq_singlet_expectation proves this equals LF3's independently
+-- derived ⟨ψ⁻|σ·a⊗σ·b|ψ⁻⟩ — the two independent Bell derivations are one under reflectXZ (consolidation).
+/-- info: 'CSD.LF6.phiPlus_pauli_correlation_reflectXZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.phiPlus_pauli_correlation_reflectXZ
+
+/-- info: 'CSD.LF6.phiPlus_transport_eq_singlet_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.phiPlus_transport_eq_singlet_expectation
+
+-- LF6-6 partial (2026-07-12): the partial-Schmidt (non-maximally-entangled) two-qubit correlation,
+-- extending the LF6 correlation beyond equal Schmidt coefficients. Ψ(c,s)=c|00⟩+s|11⟩ gives
+-- ⟨σ·a⊗σ·b⟩ = a_z b_z + 2cs(a_x b_x − a_y b_y) (psQubit_pauli_correlation), 2cs = concurrence; at
+-- c=s=1/√2 it collapses to Φ⁺ (psQubit_pauli_correlation_maximal). Residual (needs Gisin, not in corpus):
+-- the non-factorisation witness for unequal c≠s.
+/-- info: 'CSD.LF6.psQubit_pauli_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.psQubit_pauli_correlation
+
+/-- info: 'CSD.LF6.psQubit_pauli_correlation_maximal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.psQubit_pauli_correlation_maximal
 
 /-- info: 'CSD.LF6.no_product_partition_realises_maxEntangled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

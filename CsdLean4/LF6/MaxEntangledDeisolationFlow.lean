@@ -532,6 +532,44 @@ lemma phiPlusCorrelation_reflectXZ (a b : DetectorSetting) :
   simp only [reflectXZ_vec_0, reflectXZ_vec_1, reflectXZ_vec_2]
   ring
 
+/-! ### LF6-7: the symmetric-sector `Φ⁺ ↔ ψ⁻` transport recompute
+
+The two Bell correlations were derived by two *independent* Hilbert-space
+computations — `Φ⁺`'s here in LF6-D (`phiPlus_pauli_correlation`) and `ψ⁻`'s
+separately in LF3 (`LF3.singlet_pauli_correlation`). Here the `xz`-reflection
+transport (`phiPlusCorrelation_reflectXZ`, so far only at the correlation-function
+level) is lifted to the HILBERT-SPACE expectation level: the singlet's `−a·b` is
+recomputed directly from `Φ⁺`'s own expectation, and the two independent
+derivations are proved to agree. This consolidates the antisymmetric (`ψ⁻`) sector
+as the `reflectXZ`-image of the symmetric (`Φ⁺`) sector — the `Φ⁺ ↔ ψ⁻` transport
+recompute that was not yet done in LF6-D. -/
+
+/-- **Transport recompute (Hilbert-space level).** Feeding Bob's `xz`-reflected
+setting into `Φ⁺`'s *derived* Pauli expectation recomputes the singlet
+correlation: `⟨Φ⁺ | σ·a ⊗ σ·(reflectXZ b) | Φ⁺⟩ = singletCorrelation a b = −a·b`.
+The `ψ⁻` value is obtained as a corollary of the `Φ⁺` computation via the
+local-unitary (`xz`-reflection) transport, not as a separate derivation. -/
+theorem phiPlus_pauli_correlation_reflectXZ (a b : DetectorSetting) :
+    phiPlusExpectation (sigmaDotJoint a (reflectXZ b)) = (singletCorrelation a b : ℂ) := by
+  rw [phiPlus_pauli_correlation, phiPlusCorrelation_reflectXZ]
+
+/-- **The two independent Bell derivations agree (the LF6-7 consolidation).** The
+singlet correlation recomputed from `Φ⁺` via the `xz`-reflection transport equals
+the singlet's own Hilbert-space expectation derived separately in LF3
+(`LF3.singlet_pauli_correlation`):
+`⟨Φ⁺ | σ·a ⊗ σ·(reflectXZ b) | Φ⁺⟩ = ⟨ψ⁻ | σ·a ⊗ σ·b | ψ⁻⟩`. So the
+symmetric-sector (`Φ⁺`) computation and the antisymmetric-sector (`ψ⁻`)
+computation are the SAME result under `reflectXZ` — the two independently-derived
+correlations are one, closing the `Φ⁺ ↔ ψ⁻` sector consolidation. -/
+theorem phiPlus_transport_eq_singlet_expectation (a b : DetectorSetting) :
+    phiPlusExpectation (sigmaDotJoint a (reflectXZ b))
+      = CSD.LF3.expectation (sigmaDotJoint a b) := by
+  rw [phiPlus_pauli_correlation_reflectXZ, singletCorrelation_eq_neg_dot,
+      CSD.LF3.singlet_pauli_correlation]
+  simp only [dotR]
+  push_cast
+  ring
+
 /-- A product partition **reproduces the `Φ⁺` (sector) correlations** if its
 factorisable LHV correlation matches `Φ⁺`'s derived correlation
 `E_{Φ⁺}(a, b) = a_x b_x − a_y b_y + a_z b_z` at every pair of settings. -/
@@ -700,3 +738,4 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
 
 end LF6
 end CSD
+
