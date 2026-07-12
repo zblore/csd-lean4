@@ -160,6 +160,7 @@ import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.LF6.PartialSchmidtCorrelation
+import CsdLean4.LF6.DephasingSemigroup
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.MaxEntangledCGLMPCapstone
@@ -4573,6 +4574,19 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.psQubit_pauli_correlation_maximal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.psQubit_pauli_correlation_maximal
+
+-- LF6-2 bounded core (2026-07-12): the qubit T2 dephasing quantum dynamical semigroup — the
+-- continuous-time open-system de-isolation frontier. Φ_t(ρ) damps coherences by e^{-γt}, preserves
+-- populations; dephasingChannel_semigroup (Φ_s∘Φ_t = Φ_{s+t}, the Markovian composition law) and
+-- dephasingChannel_coherence_tendsto_zero (coherence → 0 as t→∞, γ>0: continuous-time einselection to
+-- the pointer basis). Residual: the general Lindblad generator + complete positivity + T1 damping.
+/-- info: 'CSD.LF6.dephasingChannel_semigroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dephasingChannel_semigroup
+
+/-- info: 'CSD.LF6.dephasingChannel_coherence_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dephasingChannel_coherence_tendsto_zero
 
 /-- info: 'CSD.LF6.no_product_partition_realises_maxEntangled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
