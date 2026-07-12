@@ -795,11 +795,14 @@ maximally-entangled state `Ψ_d = (1/√d)∑ᵢ|i⟩|i⟩` for every `d ≥ 2` 
 forced non-factorisation (`no_product_partition_realises_maxEntangled`, derived,
 maxEntangled-specific). Both non-locality axes are at generality: CGLMP general-`d`
 statistical violation (`cglmp_maxEntangled_qudit_gt_two`) and GHZ_n general-`n`
-deterministic Mermin (`no_lhvN_assignment_for_ghzN`). Named residuals (see
-`specs/future-work.md` LF6-5/6/7): the general-`d` non-factorisation is routed through
-the 2×2 `Φ⁺` CHSH sector (d-intrinsic CGLMP LHV bound only `decide`-proved for `d ≤ 4`);
-only the maximally-entangled family (arbitrary partial-Schmidt states not covered); the
-continuous-time Lindblad entangled tier (LF6-2). The Born number is still imported from
+deterministic Mermin (`no_lhvN_assignment_for_ghzN`). **LF6-5 DONE:** the CGLMP LHV bound
+`I_d ≤ 2` is proved for ALL `d` by the sawtooth counting argument (`cglmp_lhv_bound`, not
+`decide`) and is tight (`cglmp_detTable_tight_general`), so the `d`-intrinsic
+non-factorisation `no_lhv_realises_maxEntangled_cglmp_d` + capstone
+`maxEntangledDeisolation_flow_capstone_cglmp` route OFF the 2×2 `Φ⁺` CHSH sector (the
+`decide` proofs remain only as `d=2,3,4` anchors). Named residuals (see
+`specs/future-work.md` LF6-6/7): only the maximally-entangled family (arbitrary
+partial-Schmidt states not covered); the continuous-time Lindblad entangled tier (LF6-2). The Born number is still imported from
 the FS-volume engine, not re-derived; the A5 sector origin is the residue. All LF6 results
 are foundational-triple-only and AxiomAudit-pinned.
 

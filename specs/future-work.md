@@ -39,13 +39,13 @@ formalization-DEPTH, not a correctness gap.
 | **LF6-2** | Lindblad / continuous-time open-system de-isolation (T1/T2 semigroup) | LF6-B | **L** | Subsumes Metrology A4; the dynamics half of decoherence. |
 | **LF6-3** | Marginal volume-drift geometry (symplectic drift of the reduced state) | LF6-B, LF5 | **M** | |
 | **LF6-4** | Metrology A4: decoherence as open symplectic drift | LF6-2 (Lindblad) | **M** | D1-gated. |
-| **LF6-5** | General-`d` CGLMP LHV bound `I_d ≤ 2` for all `d` (the counting argument) -- currently `decide`-proved only for `d ≤ 4`; would make LF6-D's non-factorisation d-INTRINSIC (not routed through the 2×2 `Φ⁺` CHSH sector) | CGLMP infra (done) | **M/L** | The general-N entangled tier's non-factorisation refinement. |
+| ~~LF6-5~~ — **DONE** (bound earlier; tightness 2026-07-11) | General-`d` CGLMP LHV bound `I_d ≤ 2` for all `d` (the counting argument) -- makes LF6-D's non-factorisation d-INTRINSIC (not routed through the 2×2 `Φ⁺` CHSH sector) | CGLMP infra (done) | **M/L** | **DONE** (`Mathlib/Probability/CGLMP.lean`). The general-`d` bound is the **sawtooth counting argument**, NOT `decide`: `scaledDetZ_le_general` (`scaledDetZ ≤ 2(d-1)` via `scaledDetZ = −2−2·d·t`, `t ≥ −1` from the cyclic constraint) + `cglmp_lhv_bound` (`I_d ≤ 2`, all `d`); the `decide` proofs survive only as `d=2,3,4` concrete anchors. **d-intrinsic non-factorisation** is delivered: `no_lhv_realises_maxEntangled_cglmp_d` consumes the general bound + `cglmp_maxEntangled_qudit_gt_two` (`I_d > 2` for the max-entangled qudit, all `d`), and `maxEntangledDeisolation_flow_capstone_cglmp` (LF6-1) reroutes conjunct 7 off the 2×2 Φ⁺ CHSH sector. **Tightness added 2026-07-11** (`scaledDetZ_tight_general`, `cglmp_detTable_tight_general`): the all-zero local strategy attains `I_d = 2` exactly for every `d`, so `2` is the EXACT LHV optimum in all dimensions (generalising the `decide` anchors `scaledDetZ_three_tight`/`_four_tight`). All AxiomAudit-pinned. |
 | **LF6-6** | Arbitrary (partial-Schmidt) entangled states general-`d` -- LF6-D covers only the maximally-entangled family | LF6-D | **M/L** | Extends the tier beyond maximal entanglement. |
 | **LF6-7** | Symmetric-sector `Φ⁺↔ψ⁻` transport recompute (not yet done in LF6-D) | LF6-D | **S/M** | Small consolidation. |
 
 **LF6 general-N entangled tier status:** the CORE is DONE (LF6-D: general `d×d` maximally-entangled
 de-isolation + Born-from-volume + forced non-factorisation; CGLMP general-`d` violation; GHZ_n general-`n`
-Mermin). LF6-5/6/7 + LF6-2 (Lindblad) are the named residuals.
+Mermin). LF6-5 is now DONE (general-`d` CGLMP bound + tightness, d-intrinsic non-factorisation); LF6-6/7 + LF6-2 (Lindblad) are the named residuals.
 
 ## Thermodynamics track (`thermo-plan.md`)
 

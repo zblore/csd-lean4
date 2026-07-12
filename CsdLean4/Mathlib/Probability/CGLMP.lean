@@ -65,6 +65,11 @@ on the LHV table. The classical (CGLMP) bound is `I_d ≤ 2`, and it is tight
   `scaledDetZ ≤ 2*(d-1)` and hence `I_d ≤ 2` for **every** `d ≥ 2`, proved by the
   CGLMP counting argument (the sawtooth reduction + the cyclic constraint), not by
   `decide`. This closes the numeric bound at full dimensional generality.
+* `scaledDetZ_tight_general`, `cglmp_detTable_tight_general` (general `d`): the
+  bound is **tight** — the all-zero local strategy attains `scaledDetZ = 2(d-1)`,
+  i.e. `I_d = 2`, for every `d ≥ 2`. So `2` is the EXACT local-hidden-variable
+  optimum in every dimension (generalising the `decide` anchors
+  `scaledDetZ_three_tight` / `_four_tight`).
 
 ## Honest scope
 
@@ -532,5 +537,46 @@ theorem cglmp_lhv_bound (μ : Measure Λ) [IsProbabilityMeasure μ] (hd : 2 ≤ 
     (fun a1 a2 b1 b2 =>
       cglmpDet_le_two hd (fun a1 a2 b1 b2 => scaledDetZ_le_general hd a1 a2 b1 b2) a1 a2 b1 b2)
 
+/-! ### Tightness of the general-`d` bound
+
+The general bound `cglmp_lhv_bound` (`I_d ≤ 2`) is not merely an upper estimate — it is **saturated at
+every `d`** by an explicit local strategy. The all-zero deterministic strategy `(a₁,a₂,b₁,b₂) = 0`
+achieves the maximum: three sawtooth arms sit at `S(0) = d-1` and the shifted arm at the reflected
+minimum `S(-1) = -(d-1)`, summing to `scaledDetZ = 2(d-1)`, i.e. `I_d = 2`. This generalises the
+`decide`-proved anchors `scaledDetZ_three_tight` / `scaledDetZ_four_tight` to all `d`. -/
+
+/-- **The integer functional is tight at every `d`.** The all-zero strategy gives
+`scaledDetZ 0 0 0 0 = 2(d-1)` — the maximum permitted by `scaledDetZ_le_general` (attained at `t = -1`).
+Three arms at `S(0) = d-1`, the shifted arm at `S(-1) = -(d-1)`. -/
+theorem scaledDetZ_tight_general [NeZero d] :
+    scaledDetZ (0 : ZMod d) 0 0 0 = 2 * ((d : ℤ) - 1) := by
+  have hd1 : 1 ≤ d := Nat.one_le_iff_ne_zero.mpr (NeZero.ne d)
+  have hs0 : sawtooth d ((0 : ZMod d) - 0) = (d : ℤ) - 1 := by
+    rw [show ((0 : ZMod d) - 0 : ZMod d) = 0 from by ring, sawtooth, ZMod.val_zero]; ring
+  have hsm1 : sawtooth d ((0 : ZMod d) - 0 - 1) = -((d : ℤ) - 1) := by
+    rw [show ((0 : ZMod d) - 0 - 1 : ZMod d) = -1 from by ring, sawtooth]
+    have hv : ((-1 : ZMod d)).val = d - 1 := by
+      have h := val_neg_sub_one (0 : ZMod d)
+      rw [show (-(0 : ZMod d) - 1 : ZMod d) = -1 from by ring, ZMod.val_zero, Nat.sub_zero] at h
+      exact h
+    rw [hv, Nat.cast_sub hd1, Nat.cast_one]; ring
+  rw [scaledDetZ_eq_sawtooth, hs0, hsm1]; ring
+
+/-- **The CGLMP LHV bound `I_d ≤ 2` is TIGHT at every `d`.** The local deterministic strategy
+`(0,0,0,0)` (the LHV table `detTable 0 0 0 0`) achieves `I_d = 2` exactly, for every `d ≥ 2`:
+`cglmp d (detTable 0 0 0 0) = 2`. Together with `cglmp_lhv_bound` (`I_d ≤ 2`), this shows `2` is the
+EXACT local-hidden-variable optimum in every dimension — the CGLMP bound is saturated, not merely an
+upper estimate. -/
+theorem cglmp_detTable_tight_general (hd : 2 ≤ d) :
+    cglmp d (detTable (K := ℝ) (0 : ZMod d) 0 0 0) = 2 := by
+  haveI : NeZero d := ⟨by omega⟩
+  have hne : ((d : ℝ) - 1) ≠ 0 := by
+    have : (2 : ℝ) ≤ (d : ℝ) := by exact_mod_cast hd
+    linarith
+  rw [cglmp_detTable_eq hd, scaledDetZ_tight_general]
+  push_cast
+  rw [mul_div_assoc, div_self hne, mul_one]
+
 end CGLMP
 end ProbabilityTheory
+

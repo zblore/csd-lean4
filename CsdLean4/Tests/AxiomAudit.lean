@@ -6904,6 +6904,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ProbabilityTheory.CGLMP.cglmp_lhv_bound
 
+-- LF6-5 tightness (2026-07-11): the general-d bound I_d ≤ 2 is TIGHT for all d. The all-zero local
+-- strategy attains scaledDetZ = 2(d-1) (scaledDetZ_tight_general) hence cglmp = I_d = 2
+-- (cglmp_detTable_tight_general), so 2 is the EXACT LHV optimum in every dimension (generalising the
+-- decide anchors scaledDetZ_three_tight/_four_tight). No decide; sawtooth reduction only.
+/-- info: 'ProbabilityTheory.CGLMP.scaledDetZ_tight_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.scaledDetZ_tight_general
+
+/-- info: 'ProbabilityTheory.CGLMP.cglmp_detTable_tight_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.CGLMP.cglmp_detTable_tight_general
+
 -- W4 (CV/ApproxCCR): the finite-dimensional obstruction to exact canonical
 -- commutation. trace(QP - PQ) = 0 but trace(c•1) = c*card, so no finite matrices
 -- satisfy [Q,P] = c•1 when c*card ≠ 0. The physics corollary is c = iℏ.
