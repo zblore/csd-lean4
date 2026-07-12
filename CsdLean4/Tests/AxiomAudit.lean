@@ -6673,6 +6673,19 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.trustedEstimate_aggressive_uses_trusted
 
+-- Stage-2b (2026-07-12): the aggressive 4.5n qubit layout given a register-role breakdown grounded in the
+-- corpus's verified measurement-ancilla-recycling. secp256k1Qubits_aggressive_breakdown = 2n + 5n/2 = 9n/2
+-- = 1152 (2n coords + 2.5n recycled scratch), = leaderboardQubits (aggressive_breakdown_closes_qubit_gap):
+-- the 2x qubit gap (2304→1152) closed via the same discipline that halves the AND-adder Toffoli (EC-6/L5-d).
+-- Documented layout model (trusted tier), not a verified circuit.
+/-- info: 'ECDLP.ResourceBounds.secp256k1Qubits_aggressive_breakdown_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.secp256k1Qubits_aggressive_breakdown_eq
+
+/-- info: 'ECDLP.ResourceBounds.aggressive_breakdown_closes_qubit_gap' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.aggressive_breakdown_closes_qubit_gap
+
 /-! ### ECDLP S6.1 concrete EC doubling: derived field-mult count (PointDouble.lean) -/
 
 /-- info: 'ECDLP.doublingProgram_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/

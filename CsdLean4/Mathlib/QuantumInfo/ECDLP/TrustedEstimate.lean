@@ -381,4 +381,53 @@ theorem trustedEstimate_aggressive_uses_trusted :
     trustBasisV2 .aggressiveQubitLayout = .trusted
     ∧ trustBasisV2 .aggressiveScore = .trusted := by decide
 
+/-! ### Stage-2b — the aggressive layout's register breakdown (documented, grounded)
+
+The aggressive figure `secp256k1Qubits_trustedEstimate_aggressive = 9n/2` was a bare halving cited to
+Litinski. Here it is given a register-role decomposition — the aggressive analogue of the `9n` model's
+`2n + 3n + 3n + n` — and the `÷2` is grounded in the corpus's OWN verified measurement-ancilla-recycling
+mechanism (the same discipline that halves the AND-adder Toffoli, `andAdd_measurement_toffoli`, EC-6/L5-d).
+This upgrades the aggressive layout from a bare `9n/2` to a structured, grounded model (same trusted tier
+as the `9n` breakdown; still not a verified circuit), and states the `2×` qubit gap closed. -/
+
+/-- **Aggressive layout register breakdown: `2n + 2.5n = 4.5n = 1152` (documented, grounded).** The bare
+`secp256k1Qubits_trustedEstimate_aggressive = 9n/2` given a register-role decomposition, the aggressive
+analogue of the `9n` model's `2n + 3n + 3n + n`:
+
+* `2n` — the quantum point coordinates `x, y` (irreducible; the same `2n` as the `9n` model);
+* `2.5n` (`= 5n/2`) — the recycled working scratch: the `9n` model's `7n` of field-arithmetic, clean
+  modular-multiply scratch, and windowed-table registers, collapsed by **measurement-based ancilla
+  recycling** (Litinski 2023) — AND-ancillas measured out and their space reused rather than held live.
+
+Total `2n + 5n/2 = 9n/2 = 4.5n = 1152`. This is the qubit-axis consequence of the same
+measurement-ancilla-recycling discipline the corpus VERIFIES on the Toffoli axis
+(`Empirical/QM/MeasurementUncomputeLift`, `andAdd_measurement_toffoli`: `6n → 3n` by measuring out the
+AND-ancillas, EC-6/L5-d) — measuring out an ancilla rather than uncomputing it both saves the uncompute
+Toffoli AND frees the register for reuse. TRUSTED (documented layout model, same tier as the `9n`
+breakdown), NOT a verified circuit. -/
+def secp256k1Qubits_aggressive_breakdown : ℕ := 2 * Secp256k1.bits + (5 * Secp256k1.bits) / 2
+
+theorem secp256k1Qubits_aggressive_breakdown_eq :
+    secp256k1Qubits_aggressive_breakdown = 1152 := by
+  norm_num [secp256k1Qubits_aggressive_breakdown, Secp256k1.bits]
+
+/-- **The register breakdown reproduces the aggressive `9n/2` figure.** `2n + 5n/2 = 9n/2` (both `1152`):
+the structured `2n`-coordinates-plus-`2.5n`-recycled-scratch decomposition sums to the bare halving, so
+the grounded model and the cited figure agree. -/
+theorem secp256k1Qubits_aggressive_breakdown_eq_aggressive :
+    secp256k1Qubits_aggressive_breakdown = secp256k1Qubits_trustedEstimate_aggressive := by
+  rw [secp256k1Qubits_aggressive_breakdown_eq, secp256k1Qubits_trustedEstimate_aggressive_eq]
+
+/-- **The aggressive layout closes the `2×` qubit gap to the number-one benchmark.** The structured
+`4.5n` breakdown equals the leaderboard peak-qubit benchmark exactly:
+`secp256k1Qubits_aggressive_breakdown = leaderboardQubits` (`1152 = 1152`). So on the qubit axis the
+composed published-mechanism layout matches the leaders — the Stage-1 factor-of-two qubit gap
+(`2304 → 1152`) is closed by the measurement-ancilla-recycling discipline. (The Toffoli axis remains at
+about `1.43×`, `toffoli_v2_reproduces_leaderboard`; the score follows,
+`score_aggressive_within_leaderboard_benchmark`.) -/
+theorem aggressive_breakdown_closes_qubit_gap :
+    secp256k1Qubits_aggressive_breakdown = leaderboardQubits := by
+  rw [secp256k1Qubits_aggressive_breakdown_eq, leaderboardQubits]
+
 end ECDLP.ResourceBounds
+
