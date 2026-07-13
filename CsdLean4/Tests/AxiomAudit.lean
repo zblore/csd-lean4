@@ -261,6 +261,7 @@ import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
+import CsdLean4.FND.CompositeAdapters
 
 /-!
 # Axiom regression suite
@@ -7235,5 +7236,32 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.lifted_choiceA_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.lifted_choiceA_measurement_born_capstone
+
+-- FND Tranche 3 (2026-07-13): the composition/measurement targets (ledger T9-T15) as bridge interfaces
+-- and uninhabited predicates (FND/CompositeInterface.lean), inhabited by adapters wiring the existing
+-- LF6/Empirical capstones (FND/CompositeAdapters.lean). T15 no-signalling from the singlet marginals;
+-- T14 Bell from the d-intrinsic CGLMP no-LHV force and the CHSH Tsirelson saturation; T13 contextuality
+-- from Kochen-Specker (Cabello-18), Mermin-Peres and GHZ; T10 POVM normalisation. T9 (mixed states) left
+-- out honestly: the ensemble/mixed-Born content is the reported Mathlib density-matrix gap.
+/-- info: 'CSD.FND.singlet_hasNoSignalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.singlet_hasNoSignalling
+
+/-- info: 'CSD.FND.maxEntangled_noLocalHiddenVariable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.maxEntangled_noLocalHiddenVariable
+
+/-- info: 'CSD.FND.singlet_hasTsirelsonSeparation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.singlet_hasTsirelsonSeparation
+
+/-- info: 'CSD.FND.cabello18_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.cabello18_noNonContextualValuation
+
+/-- info: 'CSD.FND.merminPeres_noNonContextualValuation' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.merminPeres_noNonContextualValuation
+
+/-- info: 'CSD.FND.ghz_noNonContextualValuation' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ghz_noNonContextualValuation
+
+/-- info: 'CSD.FND.povm_weightsProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.povm_weightsProbability
 
 end CSD.Tests.AxiomAudit
