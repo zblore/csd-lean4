@@ -290,6 +290,13 @@ import CsdLean4.Thermo.CanonicalTypicality
 import CsdLean4.Thermo.SecondLaw
 import CsdLean4.Thermo.FreeEnergy
 import CsdLean4.Thermo.Landauer
+import CsdLean4.FND.ConstraintSurface
+import CsdLean4.FND.ConstraintDynamics
+import CsdLean4.FND.RecordedFact
+import CsdLean4.FND.IsolationPreparation
+import CsdLean4.FND.ChoiceASector
+import CsdLean4.FND.TheoremTargets
+import CsdLean4.FND.Adapters
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

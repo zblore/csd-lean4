@@ -258,6 +258,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 import CsdLean4.Empirical.CSD.Gates.WignerDischarge
 import CsdLean4.Mathlib.Probability.CGLMP
+import CsdLean4.FND.Adapters
 
 /-!
 # Axiom regression suite
@@ -7161,5 +7162,32 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.Thermo.landauer_one_bit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.landauer_one_bit
+
+-- FND Tranche 1 (2026-07-12): the Choice A ontology foundation. ConstraintDynamics (deterministic
+-- measure-preserving one-parameter-group ontic flow), RecordedFact/RecordSemantics/compatibleSet
+-- (records as measurable contextual events; isolation = conditioning muL on the record history),
+-- IsolationPreparation (LF1 adapter reusing prepMeasure), ChoiceASector (measurable pi to CP^{N-1}, not
+-- injective), and the Kähler adapters. No Born/unitarity/Fubini-Study as fields; those are uninhabited
+-- theorem-target predicates (TheoremTargets). Foundational triple only.
+/-- info: 'CSD.FND.ConstraintDynamics.flow_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ConstraintDynamics.flow_bijective
+
+/-- info: 'CSD.FND.compatibleSet_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_measurable
+
+/-- info: 'CSD.FND.compatibleSet_append_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_append_singleton
+
+/-- info: 'CSD.FND.Preparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.Preparation.conditionalMeasure_apply
+
+/-- info: 'CSD.FND.HistoryPreparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.conditionalMeasure_apply
+
+/-- info: 'CSD.FND.ChoiceASector.projectiveLaw_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ChoiceASector.projectiveLaw_apply
+
+/-- info: 'CSD.FND.kahlerChoiceASector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.kahlerChoiceASector_pi
 
 end CSD.Tests.AxiomAudit
