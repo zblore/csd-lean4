@@ -7224,4 +7224,16 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.FND.lifted_choiceA_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.lifted_choiceA_measurement_capstone
 
+-- FND Tranche 2b Born statistics (2026-07-13): the concrete de-isolation model reproduces the Born
+-- FREQUENCIES, not merely a defined outcome. vnDeisolationModel_born_frequency transfers the LF5
+-- outcome-frequency capstone measurement_flow_outcome_frequency through the measure-preserving
+-- interaction (composed trial process measurementFlow ∘ fsTrial), so the pointer-i readout frequency
+-- converges a.s. to ‖⟨eᵢ,ψ⟩‖². lifted_choiceA_measurement_born_capstone bundles the full measurement:
+-- measure preservation + unique outcome a.e. + record establishment + a.e. total + Born frequencies.
+/-- info: 'CSD.FND.vnDeisolationModel_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.vnDeisolationModel_born_frequency
+
+/-- info: 'CSD.FND.lifted_choiceA_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.lifted_choiceA_measurement_born_capstone
+
 end CSD.Tests.AxiomAudit

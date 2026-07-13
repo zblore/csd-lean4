@@ -15,12 +15,20 @@ readout equals `some i` exactly on the `i`-th region. Almost-everywhere totality
 off an FS-null set, transferred through the measure-preserving interaction) is
 `vnDeisolationModel_ae_total`.
 
+Crucially, the model reproduces the Born STATISTICS, not merely a defined outcome: for the dilated
+system state `ψ'` and i.i.d. FS-typical trials, the frequency of trials whose de-isolation readout is
+pointer `i` converges almost surely to `‖⟨eᵢ, ψ⟩‖²` (`vnDeisolationModel_born_frequency`). This is the
+LF5 outcome-frequency capstone `measurement_flow_outcome_frequency` transferred through the
+measure-preserving interaction, so the frequency is about the model's OWN outcome (readout after the
+interaction), not the raw microstate. `lifted_choiceA_measurement_born_capstone` bundles the full
+measurement: measure preservation, unique outcome a.e., record establishment, and Born frequencies.
+
 This is a theorem-backed construction, not an assumed instance: every field is discharged by an LF5
 lemma. The isolated dynamics is trivial here (`trivialDynamics`); the physical content is the
 de-isolation interaction.
 -/
 
-open MeasureTheory Matrix.UnitaryGroup
+open MeasureTheory Matrix.UnitaryGroup Filter
 open scoped LinearAlgebra.Projectivization
 
 namespace CSD.FND
@@ -128,5 +136,82 @@ theorem lifted_choiceA_measurement_capstone (p₀ : CPN (M + 1))
     (vnDeisolationModel p₀ e ψ' hψ'0).pairwise_disjoint () (),
     vnDeisolationModel_records p₀ e ψ' hψ'0,
     vnDeisolationModel_ae_total p₀ e ψ' hψ'0 hψ'⟩
+
+/-- **The model reproduces the Born statistics (the measurement content).** For the dilated system state
+`ψ'` (the von Neumann dilation of a unit system state `ψ`) and i.i.d. FS-typical trials, the frequency
+of trials whose de-isolation readout is pointer `i` converges almost surely to the Born weight
+`‖⟨eᵢ, ψ⟩‖²`. The event `(interaction ∘ trial)⁻¹' (readout⁻¹' {some i})` is exactly "the model reads
+pointer `i` on this trial", the readout applied AFTER the model's interaction.
+
+This is the LF5 outcome-frequency capstone `measurement_flow_outcome_frequency` transferred through the
+measure-preserving interaction: the composed trial process `measurementFlow ∘ fsTrial` still samples the
+Fubini-Study law (measure preservation), and its per-trial indicators are still independent (a fixed
+deterministic map of independent trials), so the Born weights are unchanged. Hence the frequency is a
+genuine statistic of the model's own outcome, not of the raw microstate. -/
+theorem vnDeisolationModel_born_frequency (hN : 1 < N) (e : Fin N × Fin N ≃ Fin (M + 1))
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin (vnDilationV N) ψ))
+    (hψ'0 : ψ' ≠ 0) (p₀ : CPN (M + 1)) :
+    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin N,
+      Tendsto
+        (fun m : ℕ =>
+          (∑ k ∈ Finset.range m,
+              Set.indicator
+                ((measurementFlow N e ∘ fsTrial (M + 1) k) ⁻¹'
+                  (vnPointerOutcome ψ' hψ'0 e ⁻¹' {some i}))
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) := by
+  have hlaw : ∀ k, Measure.map (measurementFlow N e ∘ fsTrial (M + 1) k) (fsTrialMeasure p₀)
+      = fubiniStudyMeasure p₀ := fun k => by
+    rw [← Measure.map_map (measurementFlow_measurable e) (fsTrial_measurable k),
+      fsTrial_law p₀ k, (measurementFlow_measurePreserving e p₀).map_eq]
+  exact measurement_flow_outcome_frequency hN e ψ hψ ψ' hψ'eq hψ'0 p₀
+    (fun k => measurementFlow N e ∘ fsTrial (M + 1) k)
+    (fun k => (measurementFlow_measurable e).comp (fsTrial_measurable k)) hlaw
+    (fsTrial_pairwise_indepFun_indicator p₀
+      (fun j => measurementFlow N e ⁻¹' bornRegion ψ' hψ'0 j)
+      (fun j => measurementFlow_measurable e (bornRegion_measurable_uncond ψ' hψ'0 j)))
+
+/-- **The full lifted Choice A measurement capstone (with Born statistics).** For the concrete
+de-isolation model on the dilated sector, with the system state `ψ'` the von Neumann dilation of a unit
+state `ψ`, the following hold with no open hypotheses beyond the dilation data:
+
+* the interaction is measure-preserving;
+* the outcome regions (pointer fibres) are pairwise disjoint, so the recorded outcome is unique;
+* the readout records the established outcome (bridge B5);
+* the outcome is established for almost every initial ontic state (target T6);
+* the frequency of pointer-`i` readouts converges almost surely to the Born weight `‖⟨eᵢ, ψ⟩‖²`.
+
+This is the genuine measurement: a defined, unique outcome a.e. AND the Born statistics, delivered from a
+de-isolation interaction rather than an assumed instance. -/
+theorem lifted_choiceA_measurement_born_capstone (hN : 1 < N)
+    (e : Fin N × Fin N ≃ Fin (M + 1)) (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin (vnDilationV N) ψ))
+    (hψ'0 : ψ' ≠ 0) (hψ' : ‖ψ'‖ = 1) (p₀ : CPN (M + 1)) :
+    (∀ t, MeasurePreserving ((vnDeisolationModel p₀ e ψ' hψ'0).interaction t ())
+        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
+    ∧ Set.PairwiseDisjoint Set.univ ((vnDeisolationModel p₀ e ψ' hψ'0).outcomeRegion () ())
+    ∧ DeisolationModel.RecordsEstablishedOutcome (vnDeisolationModel p₀ e ψ' hψ'0)
+    ∧ (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fubiniStudyMeasure p₀)
+    ∧ (∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin N,
+        Tendsto
+          (fun m : ℕ =>
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((measurementFlow N e ∘ fsTrial (M + 1) k) ⁻¹'
+                    (vnPointerOutcome ψ' hψ'0 e ⁻¹' {some i}))
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+          atTop
+          (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2))) :=
+  ⟨(lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').1,
+    (lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').2.1,
+    (lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').2.2.1,
+    (lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').2.2.2,
+    vnDeisolationModel_born_frequency hN e ψ hψ ψ' hψ'eq hψ'0 p₀⟩
 
 end CSD.FND
