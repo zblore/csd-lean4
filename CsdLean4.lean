@@ -297,6 +297,10 @@ import CsdLean4.FND.IsolationPreparation
 import CsdLean4.FND.ChoiceASector
 import CsdLean4.FND.TheoremTargets
 import CsdLean4.FND.Adapters
+import CsdLean4.FND.MeasureBridge
+import CsdLean4.FND.DynamicsBridge
+import CsdLean4.FND.MeasurementRecord
+import CsdLean4.FND.ForwardCapstone
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

@@ -259,6 +259,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 import CsdLean4.Empirical.CSD.Gates.WignerDischarge
 import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.FND.Adapters
+import CsdLean4.FND.ForwardCapstone
 
 /-!
 # Axiom regression suite
@@ -7189,5 +7190,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.kahlerChoiceASector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.kahlerChoiceASector_pi
+
+-- FND Tranche 2 (2026-07-13): the de-isolation measurement layer + the concrete product forward
+-- capstone. productSector_hasFubiniStudyPushforward proves bridge B1 (pi_*(muFS ⊗ vol) = muFS) for the
+-- CP^{N-1}×T² product model; productProjectedFlow_hasHamiltonianRealisation inhabits target T5
+-- (exp(-itH) realisation); product_choiceA_forward_capstone bundles measure preservation + projectability
+-- + T5 + B1, no open hypotheses. DeisolationModel + establishedFact are the measurement/record interface.
+/-- info: 'CSD.FND.productSector_hasFubiniStudyPushforward' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.productSector_hasFubiniStudyPushforward
+
+/-- info: 'CSD.FND.productProjectedFlow_hasHamiltonianRealisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.productProjectedFlow_hasHamiltonianRealisation
+
+/-- info: 'CSD.FND.product_choiceA_forward_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.product_choiceA_forward_capstone
+
+/-- info: 'CSD.FND.compatibleSet_appendEstablishedFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_appendEstablishedFact
 
 end CSD.Tests.AxiomAudit
