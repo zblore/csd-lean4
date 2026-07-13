@@ -260,6 +260,7 @@ import CsdLean4.Empirical.CSD.Gates.WignerDischarge
 import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
+import CsdLean4.FND.LiftedMeasurement
 
 /-!
 # Axiom regression suite
@@ -7207,5 +7208,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.compatibleSet_appendEstablishedFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_appendEstablishedFact
+
+-- FND Tranche 2b (2026-07-13): the concrete de-isolation model from the LF5 pointer machinery.
+-- vnDeisolationModel is a fully theorem-backed DeisolationModel on CP^{M} (M+1 = N*N): interaction =
+-- measurementFlow (measure-preserving unitary), readout = vnPointerOutcome, outcome regions = pointer
+-- fibres. vnDeisolationModel_records proves the readout records the established outcome (B5);
+-- vnDeisolationModel_ae_total proves the outcome is established for a.e. initial ontic state (target T6),
+-- by transferring bornOutcome_ae_isSome through the measure-preserving interaction.
+/-- info: 'CSD.FND.vnDeisolationModel_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.vnDeisolationModel_records
+
+/-- info: 'CSD.FND.vnDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.vnDeisolationModel_ae_total
+
+/-- info: 'CSD.FND.lifted_choiceA_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.lifted_choiceA_measurement_capstone
 
 end CSD.Tests.AxiomAudit

@@ -162,6 +162,24 @@ decision, not an oversight.
 | **P3** | Tensor-product / composite-system derivation (why `⊗`) | a paper proof first | **XL** | PARKED by standing instruction; composite structure is currently POSITED per instance (the LF6 entangled setups are built by hand at fixed `N`). |
 | **IP-1** | Identical particles / spin-statistics (symmetrisation postulate, boson/fermion sectors) | P3 | **XL** | NOT in the corpus or plans (recorded 2026-07-07 for pillar-map completeness). Out of current scope; any "CSD covers ordinary QM" claim should name this deferral. |
 
+## FND Choice A ontology layer (`CsdLean4/FND/`, namespace `CSD.FND`)
+
+A dedicated ontological layer built to strict anti-circularity discipline (no Born weight, frequency
+claim, FS equality, projected unitary dynamics or Schrödinger equation is ever a structure FIELD; every
+quantum claim is a theorem target or a NAMED bridge assumption). The canonical core is
+`ConstraintDynamics` (finite Liouville measure + deterministic measure-preserving one-parameter-group
+flow) plus `ChoiceASector` (the measurable projection to `ℂℙ^{N-1}`); the four pre-existing ontic-setup
+abstractions (`LF1.OnticSetup`, `LF2.SectorData`, `LF4.KahlerOnticSetup`, `FND.ConstraintDynamics`) are
+reconciled by one-directional adapters (the Rosetta in `FND/Adapters.lean`), not a big-bang refactor, so
+the multiple-setup DRIFT is contained without disturbing the existing corpus.
+
+| Ref | Item | Depends on | Cx | Notes |
+|---|---|---|---|---|
+| ~~FND-T1~~ | Tranche 1: the ontology skeleton | none | **M** | **DONE 2026-07-13.** `ConstraintSurface`, `ConstraintDynamics` (core + `flow_bijective`/`flow_neg_*`), `RecordedFact`/`RecordSemantics`/`compatibleSet`, `IsolationPreparation` (LF1 adapter, isolation = conditioning: `conditionalMeasure_apply` = `μL(A∩Ω)/μL(Ω)`), `ChoiceASector` (+ Kähler adapter), `TheoremTargets` (uninhabited Prop predicates B/T), `Adapters` (postulate ledger P1–P9/B1–B7/T1–T15 + faithfulness lemmas). AxiomAudit-pinned. |
+| ~~FND-T2~~ | Tranche 2: the concrete product model + forward capstone | FND-T1, C7 | **M** | **DONE 2026-07-13.** `MeasureBridge` (`productDynamics H hH p₀` via the many-to-one Schrödinger sector; **bridge B1 PROVED**, `productSector_hasFubiniStudyPushforward`: `π_*(μFS⊗vol) = μFS`), `DynamicsBridge` (projectability + **target T5 inhabited**, `exp(-itH)` Hamiltonian realisation), `MeasurementRecord` (the `DeisolationModel` B4/B5 interface + `compatibleSet_appendEstablishedFact` conditioning update), `ForwardCapstone` (`product_choiceA_forward_capstone`: measure preservation + projectability + T5 + B1, no open hypotheses). Explicitly does NOT claim the contextual readout / a.e. unique outcome — that is FND-T2b. AxiomAudit-pinned. |
+| ~~FND-T2b~~ | Tranche 2b: the concrete de-isolation MEASUREMENT model | FND-T2, LF5 pointer machinery | **M** | **DONE 2026-07-13** (`FND/LiftedMeasurement.lean`): `vnDeisolationModel p₀ e ψ' hψ'0` is a fully theorem-backed `DeisolationModel` on `CP^{M}` (`M+1 = N·N`) — every field discharged by an LF5 lemma. Interaction = `measurementFlow` (a genuine measure-preserving unitary), readout = `vnPointerOutcome` (the per-microstate pointer outcome), outcome regions = the pointer fibres. **Proved:** `vnDeisolationModel_records` (the readout records the established outcome, bridge B5); `vnDeisolationModel_ae_total` (**target T6**: the outcome is established for a.e. initial ontic state, by transferring `bornOutcome_ae_isSome` through the measure-preserving interaction); `lifted_choiceA_measurement_capstone` (bundles measure-preservation + pairwise-disjoint fibres/uniqueness + B5 + T6, no open hypotheses). This delivers the measurement content the product capstone did not claim, from a genuine de-isolation interaction rather than an assumed instance. Isolated dynamics is trivial here (`trivialDynamics`); the physical content is the de-isolation. AxiomAudit-pinned. **FORWARD only** — CONSUMES the posited sector; does not touch A5 (stays **FND-1**). |
+| **FND-T3** | Tranche 3: composite / mixed-state / POVM / contextuality / Bell as bridge interfaces | FND-T2b, LF6 no-signalling/CHSH/CGLMP | **L** | OPEN. Bridge-interface structures + uninhabited predicates wiring the existing LF6 results via adapters. Blocked in part on a Mathlib density-matrix gap (report on entry). |
+
 ## Priority read (user-set sequencing, 2026-07-07; supersedes the 2026-07-04 recommendation)
 
 - **THERMO TRACK COMPLETE (TH-1..TH-4, all DONE 2026-07-07):** canonical typicality (expectation),

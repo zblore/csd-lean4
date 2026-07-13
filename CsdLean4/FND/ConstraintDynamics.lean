@@ -46,6 +46,18 @@ structure ConstraintDynamics (Sigma : Type u) [MeasurableSpace Sigma] where
   flow_preserves : ∀ t,
     MeasurePreserving (flow t) (muL : Measure Sigma) (muL : Measure Sigma)
 
+/-- **The trivial (identity-flow) dynamics** with a given finite reference measure. The isolated
+evolution is the identity; useful when the physical content of a model is a de-isolation interaction
+(`DeisolationModel`) rather than a nontrivial isolated flow. -/
+def trivialDynamics {Sigma : Type u} [MeasurableSpace Sigma] (μ : FiniteMeasure Sigma) :
+    ConstraintDynamics Sigma where
+  muL := μ
+  flow := fun _ => id
+  measurable_flow := fun _ => measurable_id
+  flow_zero := fun _ => rfl
+  flow_add := fun _ _ _ => rfl
+  flow_preserves := fun _ => MeasurePreserving.id _
+
 namespace ConstraintDynamics
 
 variable {Sigma : Type u} [MeasurableSpace Sigma] (D : ConstraintDynamics Sigma)
