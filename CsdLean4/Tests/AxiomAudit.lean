@@ -7329,4 +7329,13 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.FND.maximallyMixed_not_isPure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.maximallyMixed_not_isPure
 
+-- T9 purity converse (2026-07-14): the spectral-theorem direction, closing the residue. IsPure ρ ↔
+-- Tr(ρ²)=1 (isPure_iff_trace_sq_one); the converse isPure_of_trace_sq_one uses Matrix spectral theory
+-- (∑λᵢ = ∑λᵢ² = 1, λᵢ ≥ 0 ⇒ λᵢ ∈ {0,1} ⇒ ρ² = ρ). Foundational triple.
+/-- info: 'CSD.FND.isPure_of_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.isPure_of_trace_sq_one
+
+/-- info: 'CSD.FND.isPure_iff_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.isPure_iff_trace_sq_one
+
 end CSD.Tests.AxiomAudit

@@ -1,5 +1,6 @@
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.FND.CompositeInterface
+import Mathlib.Analysis.Matrix.Spectrum
 
 /-!
 # FND/MixedState: mixed-state representation and statistical mixtures
@@ -18,17 +19,18 @@ the affine dependence of the Born rule on the state, together with a purity pred
   probabilities, `Tr((p ρ₁ + (1-p) ρ₂) E) = p Tr(ρ₁ E) + (1-p) Tr(ρ₂ E)`. This is the defining property
   of a statistical mixture and the reason density operators, not just state vectors, are the right state
   space.
-* `IsPure` / `rankOneDensity_isPure` / `IsPure.trace_sq_one` — the purity predicate (`ρ² = ρ`), the fact
-  that rank-one densities are pure, and the purity witness `Tr(ρ²) = 1`.
+* `IsPure` / `rankOneDensity_isPure` / `isPure_iff_trace_sq_one` — the purity predicate (`ρ² = ρ`), the
+  fact that rank-one densities are pure, and the full purity characterisation `IsPure ρ ↔ Tr(ρ²) = 1`
+  (the converse `isPure_of_trace_sq_one` via the spectral theorem: `∑λᵢ = ∑λᵢ² = 1`, `λᵢ ≥ 0` forces
+  `λᵢ ∈ {0,1}`).
 * `maximallyMixed` / `maximallyMixed_not_isPure` — a genuinely mixed state: `I/N` is a density operator
   and, for `N ≥ 2`, is not pure, so the mixture structure is not vacuous.
 
 This is the mixed-state layer Mathlib does not supply (no density-matrix type upstream); it is built on
-the repository's `LF2.DensityOperator`/`Effect` and `traceForm`. Purity's converse `Tr(ρ²) = 1 → ρ² = ρ`
-needs the spectral theorem and is left as a residue.
+the repository's `LF2.DensityOperator`/`Effect` and `traceForm`.
 -/
 
-open Matrix
+open Matrix Unitary
 open scoped ComplexOrder
 
 namespace CSD.FND
@@ -86,10 +88,55 @@ theorem rankOneDensity_isPure (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ 
     IsPure (rankOneDensity ψ hψ) :=
   outerProduct_mul_self_of_unit_norm ψ hψ
 
-/-- **Purity witness.** A pure state has `Tr(ρ²) = 1`. (The converse needs the spectral theorem.) -/
+/-- **Purity witness.** A pure state has `Tr(ρ²) = 1`. -/
 theorem IsPure.trace_sq_one {ρ : DensityOperator N} (h : IsPure ρ) : (ρ.M * ρ.M).trace = 1 := by
   have h' : ρ.M * ρ.M = ρ.M := h
   rw [h']; exact ρ.trace_one
+
+/-- **Purity from the trace witness (the converse).** A density operator with `Tr(ρ²) = 1` is pure.
+Via the spectral theorem: the eigenvalues `λᵢ ≥ 0` satisfy `∑λᵢ = ∑λᵢ² = 1`, forcing each `λᵢ ∈ {0,1}`
+(so `λᵢ² = λᵢ`), whence `ρ² = ρ` by diagonalisation. -/
+theorem isPure_of_trace_sq_one {ρ : DensityOperator N} (h : (ρ.M * ρ.M).trace = 1) : IsPure ρ := by
+  classical
+  have hA := ρ.isHermitian
+  have hspec := hA.spectral_theorem
+  have hsq : ρ.M * ρ.M
+      = conjStarAlgAut ℂ _ hA.eigenvectorUnitary
+          (diagonal (RCLike.ofReal ∘ hA.eigenvalues) * diagonal (RCLike.ofReal ∘ hA.eigenvalues)) := by
+    conv_lhs => rw [hspec]
+    rw [← map_mul]
+  have htr1 : (∑ i, (hA.eigenvalues i : ℂ)) = 1 :=
+    (hA.trace_eq_sum_eigenvalues).symm.trans ρ.trace_one
+  have htr2 : (∑ i, ((hA.eigenvalues i : ℂ)) ^ 2) = 1 := by
+    rw [← h, hsq, conjStarAlgAut_apply, trace_mul_cycle, coe_star_mul_self, one_mul,
+      diagonal_mul_diagonal, trace_diagonal]
+    exact Finset.sum_congr rfl (fun i _ => by simp [Function.comp_apply, pow_two])
+  have hr1 : (∑ i, hA.eigenvalues i) = 1 := by exact_mod_cast htr1
+  have hr2 : (∑ i, (hA.eigenvalues i) ^ 2) = 1 := by exact_mod_cast htr2
+  have hnn : ∀ i, 0 ≤ hA.eigenvalues i := ρ.nonneg.eigenvalues_nonneg
+  have hle1 : ∀ i, hA.eigenvalues i ≤ 1 := fun i => by
+    rw [← hr1]; exact Finset.single_le_sum (fun j _ => hnn j) (Finset.mem_univ i)
+  have hzero : ∀ i, hA.eigenvalues i ^ 2 = hA.eigenvalues i := by
+    have hsum : (∑ i, (hA.eigenvalues i - hA.eigenvalues i ^ 2)) = 0 := by
+      rw [Finset.sum_sub_distrib, hr1, hr2]; ring
+    have hterm : ∀ i ∈ (Finset.univ : Finset (Fin N)), 0 ≤ hA.eigenvalues i - hA.eigenvalues i ^ 2 :=
+      fun i _ => by nlinarith [hnn i, hle1 i]
+    intro i
+    have := (Finset.sum_eq_zero_iff_of_nonneg hterm).mp hsum i (Finset.mem_univ i)
+    linarith
+  have hDD : diagonal (RCLike.ofReal ∘ hA.eigenvalues) * diagonal (RCLike.ofReal ∘ hA.eigenvalues)
+      = diagonal ((RCLike.ofReal : ℝ → ℂ) ∘ hA.eigenvalues) := by
+    rw [diagonal_mul_diagonal]
+    congr 1
+    funext i
+    simp only [Function.comp_apply]
+    rw [← RCLike.ofReal_mul, ← pow_two, hzero i]
+  show ρ.M * ρ.M = ρ.M
+  rw [hsq, hDD, ← hspec]
+
+/-- **Purity characterisation.** A density operator is pure iff `Tr(ρ²) = 1`. -/
+theorem isPure_iff_trace_sq_one {ρ : DensityOperator N} : IsPure ρ ↔ (ρ.M * ρ.M).trace = 1 :=
+  ⟨IsPure.trace_sq_one, isPure_of_trace_sq_one⟩
 
 /-! ### A genuinely mixed state -/
 

@@ -62,7 +62,8 @@ T8 Lüders update (`luders_capstone`: the projective post-measurement update is 
 and reproduces conditional Born probabilities, `FND/Luders.lean`; the sharp special case of T7). T9
 mixed-state representation (`FND/MixedState.lean`: `mixedState_capstone`/`traceForm_mix` -- convex
   mixtures are density operators and the Born rule is affine in the state; `rankOneDensity_isPure`,
-  `maximallyMixed_not_isPure`; purity converse `Tr(ρ²)=1 → ρ²=ρ` left as a spectral residue). T10 POVM
+  `maximallyMixed_not_isPure`; full purity characterisation `IsPure ρ ↔ Tr(ρ²)=1` via the spectral
+  theorem, `isPure_iff_trace_sq_one`). T10 POVM
   by dilation
   (`POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical`). T11 composite quantum
   probabilities. T12 entangled predictions. T13 contextuality (`NoNonContextualValuation`). T14 Bell
