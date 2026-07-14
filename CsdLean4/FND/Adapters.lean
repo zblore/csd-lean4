@@ -56,8 +56,10 @@ Theorem targets, never unconditional postulates.
   `born_frequency_convergence_N`). T3 Born from deterministic-flow frequencies (`BornFromFlow`). T4
   projected unitary dynamics (`HasUnitaryRealisation`). T5 Schrödinger evolution
   (`HasHamiltonianRealisation`). T6 unique contextual outcome a.e. (`vnDeisolationModel_ae_total`). T7
-  conditional state update. T8 Lüders update (`luders_capstone`: the projective post-measurement update is
-normalised, repeatable, and reproduces conditional Born probabilities, `FND/Luders.lean`). T9
+  conditional state update (`conditionalUpdate_capstone`: the general Kraus/effect update, normalised, Born
+weight `Re⟨x, M†M x⟩`, and the sequential/Wigner conditionalisation rule, `FND/ConditionalUpdate.lean`).
+T8 Lüders update (`luders_capstone`: the projective post-measurement update is normalised, repeatable,
+and reproduces conditional Born probabilities, `FND/Luders.lean`; the sharp special case of T7). T9
 mixed-state representation (`DensityOperatorIx.IsPure`;
   the mixed-Born/ensemble content is the reported Mathlib density-matrix gap). T10 POVM by dilation
   (`POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical`). T11 composite quantum

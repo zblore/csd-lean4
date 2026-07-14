@@ -265,6 +265,7 @@ import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
+import CsdLean4.FND.ConditionalUpdate
 
 /-!
 # Axiom regression suite
@@ -7296,5 +7297,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.projWeight_eq_re_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.projWeight_eq_re_inner
+
+-- FND T7: the general (non-projective) conditional state update (2026-07-14). conditionalUpdate_capstone
+-- bundles the general Kraus/effect update stateUpdate M x = (‖M x‖)⁻¹ • M x for a measurement operator M
+-- (effect E = M† M): normalised, outcome weight = Re⟨x, M† M x⟩ (updateWeight_eq_re_inner), and the
+-- sequential (Wigner) rule stateUpdate_sequential (updateWeight N (stateUpdate M x) = updateWeight N
+-- (M x) / updateWeight M x). Lüders (T8) is the sharp special case (stateUpdate_eq_ludersUpdate); T7
+-- needs neither self-adjointness nor idempotence.
+/-- info: 'CSD.FND.conditionalUpdate_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditionalUpdate_capstone
+
+/-- info: 'CSD.FND.stateUpdate_sequential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.stateUpdate_sequential
+
+/-- info: 'CSD.FND.stateUpdate_eq_ludersUpdate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.stateUpdate_eq_ludersUpdate
 
 end CSD.Tests.AxiomAudit
