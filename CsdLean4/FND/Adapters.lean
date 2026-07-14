@@ -55,10 +55,25 @@ Theorem targets, never unconditional postulates.
 * T1 Born from volume (`BornFromVolume`). T2 Born from independent-trial frequencies (LF4
   `born_frequency_convergence_N`). T3 Born from deterministic-flow frequencies (`BornFromFlow`). T4
   projected unitary dynamics (`HasUnitaryRealisation`). T5 Schrödinger evolution
-  (`HasHamiltonianRealisation`). T6 unique contextual outcome a.e. (later). T7 conditional state update.
-  T8 Lüders update. T9 mixed-state representation. T10 POVM by dilation. T11 composite quantum
-  probabilities. T12 entangled predictions. T13 contextuality. T14 Bell correlations. T15 operational
-  no-signalling. T6 to T15 are defined with their measurement/composition modules in later tranches.
+  (`HasHamiltonianRealisation`). T6 unique contextual outcome a.e. (`vnDeisolationModel_ae_total`). T7
+  conditional state update. T8 Lüders update. T9 mixed-state representation (`DensityOperatorIx.IsPure`;
+  the mixed-Born/ensemble content is the reported Mathlib density-matrix gap). T10 POVM by dilation
+  (`POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical`). T11 composite quantum
+  probabilities. T12 entangled predictions. T13 contextuality (`NoNonContextualValuation`). T14 Bell
+  correlations (`NoLocalHiddenVariableTable`, `HasTsirelsonSeparation`). T15 operational no-signalling
+  (`HasNoSignalling`; operator form `tensorSector_no_signalling`). T16 two-path Born interference
+  (`HasBornInterference`, from the Hadamard test). T6 to T16 are defined with their
+  measurement/composition modules (`FND/LiftedMeasurement.lean`, `FND/CompositeInterface.lean`,
+  `FND/CompositeAdapters.lean`, `FND/Interference.lean`, `FND/TensorSector.lean`).
+
+Interference and tensors, specifically. Interference (T16) is NOT a postulate: it is a consequence of
+P7 (the sector is a COMPLEX projective space) and T1/T2 (Born weights), realised as the phase-dependent
+two-path probability `(1 + Re⟨ψ,Uψ⟩)/2`. The tensor product is likewise DERIVED, not posited: the finite
+`ℂ^{NA} ⊗ ℂ^{NB} = ℂ^{NA·NB}` is the Choice A sector on the product index `Fin NA × Fin NB`
+(`FND/TensorSector.lean` `tensorIndexEquiv`), on which the local operator algebra commutes
+(`aliceOp_bobOp_commute`) and no-signalling holds (`tensorSector_no_signalling`). The ONLY tensor posit
+is bridge B6 (`CompositeSector.tensor_dimension`, `dim = NA·NB`): the "why `⊗`" reconstruction (P3) is
+parked by standing instruction, so composite structure is posited per instance.
 
 ## The ontic-setup Rosetta (resolving the drift)
 

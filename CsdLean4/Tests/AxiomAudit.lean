@@ -262,6 +262,8 @@ import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.CompositeAdapters
+import CsdLean4.FND.Interference
+import CsdLean4.FND.TensorSector
 
 /-!
 # Axiom regression suite
@@ -7263,5 +7265,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.povm_weightsProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.povm_weightsProbability
+
+-- FND interference (T16) + tensor weave (2026-07-14). hadamardTest_hasBornInterference inhabits the
+-- two-path Born-interference target from the Hadamard test ((1 + Re⟨ψ,Uψ⟩)/2); interference is a
+-- consequence of the complex sector (P7) + Born rule (T1/T2), not a postulate. The tensor weave shows
+-- the finite tensor product ℂ^{NA} ⊗ ℂ^{NB} = ℂ^{NA·NB} is DERIVED (tensorIndexEquiv on Fin NA × Fin NB,
+-- the local algebra aliceOp_bobOp_commute, operator no-signalling tensorSector_no_signalling); only the
+-- composite-is-tensor bridge (CompositeSector.tensor_dimension, B6) is posited (P3 parked).
+/-- info: 'CSD.FND.hadamardTest_hasBornInterference' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.hadamardTest_hasBornInterference
+
+/-- info: 'CSD.FND.aliceOp_bobOp_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.aliceOp_bobOp_commute
+
+/-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
 
 end CSD.Tests.AxiomAudit
