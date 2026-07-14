@@ -264,6 +264,7 @@ import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
+import CsdLean4.FND.Luders
 
 /-!
 # Axiom regression suite
@@ -7280,5 +7281,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+
+-- FND T8: the projective (Lüders) update (2026-07-14). luders_capstone bundles the three defining
+-- properties of the projective post-measurement update ludersUpdate p x = (‖p x‖)⁻¹ • p x: normalised,
+-- repeatable (p fixes it, so re-measurement is certain), and Lüders = conditional probability
+-- (ludersUpdate_conditional: the updated Born weight of a finer projection q is projWeight q x /
+-- projWeight p x). projWeight_eq_re_inner ties the weight ‖p x‖² to the effect form Re⟨x, p x⟩;
+-- isProjection_toEuclideanLin connects matrix projectors. Closes the T8 gap left by MeasurementRecord.
+/-- info: 'CSD.FND.luders_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.luders_capstone
+
+/-- info: 'CSD.FND.ludersUpdate_conditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ludersUpdate_conditional
+
+/-- info: 'CSD.FND.projWeight_eq_re_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.projWeight_eq_re_inner
 
 end CSD.Tests.AxiomAudit
