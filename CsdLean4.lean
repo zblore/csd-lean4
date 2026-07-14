@@ -188,6 +188,7 @@ import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.LF6.PartialSchmidtCorrelation
 import CsdLean4.LF6.DephasingSemigroup
+import CsdLean4.LF6.AmplitudeDamping
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.MaxEntangledCGLMPCapstone

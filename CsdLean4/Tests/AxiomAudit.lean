@@ -161,6 +161,7 @@ import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.LF6.PartialSchmidtCorrelation
 import CsdLean4.LF6.DephasingSemigroup
+import CsdLean4.LF6.AmplitudeDamping
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.MaxEntangledCGLMPCapstone
@@ -4596,6 +4597,23 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.dephasingChannel_coherence_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.dephasingChannel_coherence_tendsto_zero
+
+-- LF6-2 T1 amplitude damping (2026-07-14): the population-transferring companion of T2 dephasing.
+-- dampingChannel Φ_t(ρ) = [[ρ₀₀+(1-e)ρ₁₁, √e·ρ₀₁],[√e·ρ₁₀, e·ρ₁₁]] (e = e^{-γt}). dampingChannel_
+-- semigroup (Φ_s∘Φ_t = Φ_{s+t}), dampingChannel_trace (channel), dampingChannel_ground_population (the
+-- T1 signature: population flows 1→0), dampingChannel_excited_tendsto_zero + _coherence_tendsto_zero
+-- (relaxation to the ground state as t→∞, γ>0). Foundational triple.
+/-- info: 'CSD.LF6.dampingChannel_semigroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dampingChannel_semigroup
+
+/-- info: 'CSD.LF6.dampingChannel_ground_population' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dampingChannel_ground_population
+
+/-- info: 'CSD.LF6.dampingChannel_excited_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dampingChannel_excited_tendsto_zero
 
 /-- info: 'CSD.LF6.no_product_partition_realises_maxEntangled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
