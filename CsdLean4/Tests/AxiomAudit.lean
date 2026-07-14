@@ -263,6 +263,7 @@ import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.CompositeAdapters
+import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
@@ -7301,6 +7302,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+
+-- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
+-- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),
+-- cglmp_lhv_le_two (every LHV table, every d: cglmp ≤ 2), bell_general_separation (2 < 2√2, gap attained
+-- by the singlet), general_ks_noNonContextualValuation (any parity-(18,9) config, not just Cabello-18).
+/-- info: 'CSD.FND.lhv_chsh_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.lhv_chsh_le_two
+
+/-- info: 'CSD.FND.qm_chsh_le_tsirelson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.qm_chsh_le_tsirelson
+
+/-- info: 'CSD.FND.bell_general_separation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.bell_general_separation
+
+/-- info: 'CSD.FND.general_ks_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.general_ks_noNonContextualValuation
 
 -- FND T8: the projective (Lüders) update (2026-07-14). luders_capstone bundles the three defining
 -- properties of the projective post-measurement update ludersUpdate p x = (‖p x‖)⁻¹ • p x: normalised,

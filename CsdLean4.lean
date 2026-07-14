@@ -305,6 +305,7 @@ import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.CompositeInterface
 import CsdLean4.FND.CompositeAdapters
+import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
