@@ -266,6 +266,7 @@ import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
 import CsdLean4.FND.ConditionalUpdate
+import CsdLean4.FND.MixedState
 
 /-!
 # Axiom regression suite
@@ -7312,5 +7313,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.stateUpdate_eq_ludersUpdate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.stateUpdate_eq_ludersUpdate
+
+-- FND T9: the mixed-state representation (2026-07-14). Closes the density-matrix gap on the statistical
+-- side. mixedState_capstone / traceForm_mix: the convex mixture mix p ρ₁ ρ₂ is a density operator and
+-- the Born rule traceForm is affine in the state (Tr((p ρ₁ + (1-p) ρ₂) E) = p Tr(ρ₁ E) + (1-p) Tr(ρ₂ E)).
+-- rankOneDensity_isPure: pure states are the rank-one projectors; maximallyMixed_not_isPure: I/N is a
+-- genuinely mixed state for N ≥ 2 (non-vacuity). Built on LF2.DensityOperator/Effect/traceForm; the
+-- purity converse Tr(ρ²)=1 → ρ²=ρ (spectral theorem) is left as a residue.
+/-- info: 'CSD.FND.mixedState_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixedState_capstone
+
+/-- info: 'CSD.FND.traceForm_mix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.traceForm_mix
+
+/-- info: 'CSD.FND.maximallyMixed_not_isPure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.maximallyMixed_not_isPure
 
 end CSD.Tests.AxiomAudit

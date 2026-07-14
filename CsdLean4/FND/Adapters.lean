@@ -60,8 +60,10 @@ Theorem targets, never unconditional postulates.
 weight `Re⟨x, M†M x⟩`, and the sequential/Wigner conditionalisation rule, `FND/ConditionalUpdate.lean`).
 T8 Lüders update (`luders_capstone`: the projective post-measurement update is normalised, repeatable,
 and reproduces conditional Born probabilities, `FND/Luders.lean`; the sharp special case of T7). T9
-mixed-state representation (`DensityOperatorIx.IsPure`;
-  the mixed-Born/ensemble content is the reported Mathlib density-matrix gap). T10 POVM by dilation
+mixed-state representation (`FND/MixedState.lean`: `mixedState_capstone`/`traceForm_mix` -- convex
+  mixtures are density operators and the Born rule is affine in the state; `rankOneDensity_isPure`,
+  `maximallyMixed_not_isPure`; purity converse `Tr(ρ²)=1 → ρ²=ρ` left as a spectral residue). T10 POVM
+  by dilation
   (`POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical`). T11 composite quantum
   probabilities. T12 entangled predictions. T13 contextuality (`NoNonContextualValuation`). T14 Bell
   correlations (`NoLocalHiddenVariableTable`, `HasTsirelsonSeparation`). T15 operational no-signalling
