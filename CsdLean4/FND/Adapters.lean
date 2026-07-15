@@ -25,6 +25,9 @@ Core ontic postulates.
   (`RecordSemantics`).
 * P6. Isolation introduces no new physical record; its probability law is conditional uncertainty over
   `Sigma` given the existing record history (`HistoryPreparation`, `HistoryPreparation.conditionalMeasure_apply`).
+  A de-isolating measurement extends the history with the established record, yielding the post-outcome
+  preparation (`FND/PostMeasurement.lean` `HistoryPreparation.appendFact` / `appendFactOfPos`, with proven
+  nonzero compatible measure when the outcome is possible).
 
 Choice A sector postulates.
 

@@ -264,6 +264,7 @@ import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.ConditioningLink
+import CsdLean4.FND.PostMeasurement
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.Interference
@@ -7304,6 +7305,21 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+
+-- FND post-outcome preparation (2026-07-15, FND-T5 follow-on): closes the measurement/record loop.
+-- HistoryPreparation.appendFact constructs the post-measurement preparation on the extended history
+-- (history ++ [r]); its compatible region compatibleSet ∩ event r has PROVEN nonzero measure when the
+-- outcome is possible. appendFactOfPos builds it from positive conditional probability
+-- (conditionalMeasure(event r) ≠ 0). appendFact_conditionalMeasure_apply: the post-measurement law is
+-- the Bayesian update μL(A ∩ (compatible ∩ event))/μL(compatible ∩ event).
+/-- info: 'CSD.FND.HistoryPreparation.appendFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.appendFact
+
+/-- info: 'CSD.FND.HistoryPreparation.appendFact_conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.appendFact_conditionalMeasure_apply
+
+/-- info: 'CSD.FND.HistoryPreparation.appendFactOfPos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.appendFactOfPos
 
 -- FND conditional->Luders correspondence (2026-07-15, FND-T5 follow-on): connects the two conditioning
 -- rules the review flagged as unlinked. bayesianConditional w = w(fine)/w(coarse); BOTH the projective
