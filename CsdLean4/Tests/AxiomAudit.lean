@@ -263,6 +263,7 @@ import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
+import CsdLean4.FND.ConditioningLink
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.Interference
@@ -7303,6 +7304,21 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+
+-- FND conditional->Luders correspondence (2026-07-15, FND-T5 follow-on): connects the two conditioning
+-- rules the review flagged as unlinked. bayesianConditional w = w(fine)/w(coarse); BOTH the projective
+-- Luders update (ludersUpdate_isBayesianConditional, over the Born weight) and the ontic record-history
+-- conditioning (historyConditioning_isBayesianConditional, over the Liouville measure) are instances.
+-- luders_record_conditioning_correspondence bundles both -- one conditioning rule, two weights that
+-- agree on the sector via Born-from-volume (π_*μL = μFS, B1).
+/-- info: 'CSD.FND.luders_record_conditioning_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.luders_record_conditioning_correspondence
+
+/-- info: 'CSD.FND.ludersUpdate_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ludersUpdate_isBayesianConditional
+
+/-- info: 'CSD.FND.historyConditioning_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.historyConditioning_isBayesianConditional
 
 -- FND-T5 unified many-to-one measurement capstone (2026-07-15): dynamics + measurement on ONE ontic
 -- model. unified_choiceA_capstone puts BOTH the isolated Hamiltonian flow (productDynamics, exp(-itH)•)

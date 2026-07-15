@@ -59,7 +59,10 @@ Theorem targets, never unconditional postulates.
   conditional state update (`conditionalUpdate_capstone`: the general Kraus/effect update, normalised, Born
 weight `Re⟨x, M†M x⟩`, and the sequential/Wigner conditionalisation rule, `FND/ConditionalUpdate.lean`).
 T8 Lüders update (`luders_capstone`: the projective post-measurement update is normalised, repeatable,
-and reproduces conditional Born probabilities, `FND/Luders.lean`; the sharp special case of T7). T9
+and reproduces conditional Born probabilities, `FND/Luders.lean`; the sharp special case of T7; linked to
+the ontic record conditioning via `FND/ConditioningLink.lean`
+`luders_record_conditioning_correspondence` -- both are the same `bayesianConditional w(fine)/w(coarse)`
+rule, over the Born weight and `μL` respectively). T9
 mixed-state representation (`FND/MixedState.lean`: `mixedState_capstone`/`traceForm_mix` -- convex
   mixtures are density operators and the Born rule is affine in the state; `rankOneDensity_isPure`,
   `maximallyMixed_not_isPure`; full purity characterisation `IsPure ρ ↔ Tr(ρ²)=1` via the spectral
