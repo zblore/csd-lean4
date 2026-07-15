@@ -268,6 +268,8 @@ import CsdLean4.FND.PostMeasurement
 import CsdLean4.FND.TimeIndexedRecord
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
+import CsdLean4.FND.TensorGeneration
+import CsdLean4.FND.LocalisedTypicality
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
@@ -7362,6 +7364,27 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total
+
+-- FND P3 resolution + localized A5 (2026-07-15): reducing the two deep posits.
+-- P3 (why tensor): single_prod (the joint basis matrix = product of local ones) + joint_mem_span_local
+-- (the commuting local subalgebras GENERATE the whole joint algebra) -- the tensor product carries no
+-- observables beyond local ones and their products, so B6 reduces from "posit ⊗" to "posit two full
+-- local algebras that act and commute". A5 (sector origin) LOCALIZED: forcedVolume_unique /
+-- region_measure_symmetry_forced (any two U(N)-invariant measures give the same region weights, so the
+-- Born weights are symmetry-forced, not measure-chosen); localised_A5_capstone (the concrete sector's
+-- typicality is forced by the U(N) symmetry the flow is part of -- "A5 in the appropriate places").
+-- Neither closes the universal posit (P3 "why ⊗" / A5 sector-from-bare-flow); both reduce where it bites.
+/-- info: 'CSD.FND.single_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.single_prod
+
+/-- info: 'CSD.FND.joint_mem_span_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.joint_mem_span_local
+
+/-- info: 'CSD.FND.region_measure_symmetry_forced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.region_measure_symmetry_forced
+
+/-- info: 'CSD.FND.localised_A5_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.localised_A5_capstone
 
 -- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
 -- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),

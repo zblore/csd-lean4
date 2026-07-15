@@ -118,9 +118,16 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 ## 7. The honest frontier — what is NOT claimed
 
 * **A5 / FND-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
-  sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade.
+  sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade. **Localized
+  partial** (`FND/LocalisedTypicality.lean`): A5 is discharged AT sectors carrying the full `U(N)`
+  symmetry — the typicality measure and Born weights are symmetry-forced there (`localised_A5_capstone`,
+  `region_measure_symmetry_forced`) — so A5 need only hold "in the appropriate places". Residual: the
+  bare flow is one one-parameter subgroup, not all of `U(N)`; the symmetry is still construction data.
 * **P3 "why ⊗"** — composition is posited (`CompositeSector.tensor_dimension`), parked by standing
-  instruction; the finite tensor algebra and no-signalling consequences ARE derived (`FND/TensorSector.lean`).
+  instruction. **Reduced** (`FND/TensorGeneration.lean`): the commuting local subalgebras GENERATE the
+  whole joint algebra (`joint_mem_span_local`), so `⊗` carries no observables beyond local ones and their
+  products — B6 reduces to "two full local algebras that act and commute". Residual: WHY composition must
+  be `⊗` from first principles.
 * **KG-1** — the Kähler closed 2-form `dω = 0` and the global volume identity, blocked on missing Mathlib
   manifold exterior calculus (the volume is forced; the pointwise form is proved).
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
