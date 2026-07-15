@@ -1,37 +1,39 @@
 #!/usr/bin/env bash
 # check-connectivity.sh
 #
-# Guard against END-TO-END CONNECTIVITY OVERCLAIM: the failure where the docs
-# assert that "one posited Kähler ontic sector yields both the Born rule and
-# Schrödinger dynamics" while the code proves no such connected chain. A
-# 2026-07-07 provenance audit found exactly this: the Kähler fields are
-# unconsumed placeholders, the Schrödinger chain is instantiated only on the
-# identity-flow (Φ = id, H = 0) witness, and the Born chain runs on a separate
-# abstract measure-space engine with no sector object. The single source of
-# truth for what actually connects is `specs/connectivity-manifest.md`; this
-# script enforces the statically-checkable parts of that discipline.
+# Guard against SECTOR-ORIGIN (A5) OVERCLAIM.
 #
-# It checks four things:
+# History: written 2026-07-07 when the connectivity chain was BROKEN (Kähler
+# fields unconsumed, Schrödinger instantiated only on the Φ=id witness, Born on a
+# separate engine). It then enforced a "NOT yet realized end-to-end" banner. That
+# era is over. As of fixes C1–C7 and the FND "Choice A" layer (2026-07), the
+# FORWARD chain is CONNECTED on genuine objects: a single posited Kähler sector
+# yields BOTH pillars at general N (`manyToOneSchrodingerSetup_both_pillars`), and
+# ONE ontic model `(Σ, μL, Φ, π)` carries isolated dynamics + de-isolating
+# measurement + time-indexed records + Born + the conditional/Lüders state update
+# (`unified_choiceA_capstone`, manifest link L9). The guard is therefore repurposed
+# to the CURRENT frontier: the ONE remaining deep gap is A5 / FND-1 — the sector
+# and its Born weights are POSITED (the trials SAMPLE μL i.i.d.), NOT derived from
+# the deterministic flow. `specs/connectivity-manifest.md` is the single source of
+# truth; this script enforces the statically-checkable honesty at that frontier.
+#
+# It checks:
 #   (1) the connectivity manifest exists;
-#   (2) README carries the honesty banner (a pointer to the manifest + the
-#       "NOT yet realized end-to-end" statement) — you cannot silently delete
-#       the caveat;
-#   (3) README / specs/INDEX.md contain NONE of the retracted overclaim phrases
-#       — you cannot re-assert the connected chain in prose;
-#   (4) the non-trivial-inhabitant reality check: it counts genuine
-#       `KahlerOnticSetup` inhabitants other than the trivial witness. If there
-#       are NONE (the current honest state), the overclaim phrases in (3) MUST
-#       stay forbidden and the banner in (2) MUST stay — which (2)+(3) already
-#       enforce. If a non-trivial inhabitant IS added later, this reports it so
-#       the manifest/README can be upgraded deliberately.
+#   (2) README carries the A5 honesty banner (a pointer to the manifest AND the
+#       caveat that the sector itself is posited) — the deep caveat may not be
+#       silently deleted while A5 is open;
+#   (3) README / specs/INDEX.md assert NONE of the A5 overclaims (that the sector
+#       or the Born weights are DERIVED from the flow, or that A5 is closed);
+#   (4) reports the genuine non-trivial `KahlerOnticSetup` inhabitants — now the
+#       healthy, expected state (the Schrödinger chain runs off the trivial witness).
 #
-# This does NOT prove connectivity (only the manifest's CONNECTED rows, each
-# backed by a named theorem, do that). It prevents the prose from claiming more
-# than the code delivers — the exact hole that produced the overclaim.
+# This does NOT prove connectivity (only the manifest's CONNECTED rows, each backed
+# by a named theorem, do that). It prevents the prose from claiming the DEEP
+# reverse — that the sector is derived from the dynamics — which is still open.
 #
 # Usage:  bash scripts/check-connectivity.sh
-# Exit 0 = docs are consistent with the (broken) connectivity reality.
-# Exit 1 = an overclaim was reintroduced, or the honesty banner/manifest is gone.
+# Exit 0 = docs honest at the current (A5) frontier.
+# Exit 1 = an A5 overclaim was introduced, or the honesty banner/manifest is gone.
 
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
@@ -49,49 +51,46 @@ else
   fail=1
 fi
 
-# --- (2) README honesty banner ----------------------------------------------
+# --- (2) README A5 honesty banner --------------------------------------------
 banner_ok=1
 grep -Fq "connectivity-manifest.md" README.md || banner_ok=0
-grep -Fq "NOT yet realized end-to-end" README.md || banner_ok=0
+grep -Fq "the sector itself is posited" README.md || banner_ok=0
 if [ "$banner_ok" -eq 1 ]; then
-  echo "  OK    README carries the connectivity honesty banner."
+  echo "  OK    README carries the A5 honesty banner (manifest link + sector-posited caveat)."
 else
-  echo "  FAIL  README is missing the honesty banner (a link to $MANIFEST AND"
-  echo "        the phrase \"NOT yet realized end-to-end\"). The connectivity"
-  echo "        caveat may not be silently removed while the chain is broken."
+  echo "  FAIL  README is missing the honesty banner (a link to $MANIFEST AND the phrase"
+  echo "        \"the sector itself is posited\"). The A5 / FND-1 caveat may not be removed"
+  echo "        while the sector is posited (the trials sample muL; the sector is not derived)."
   fail=1
 fi
 
-# --- (3) forbidden overclaim phrases (README + INDEX; NOT the manifest) ------
-# Exact strings that only a genuine end-to-end connection would justify. The
-# manifest is excluded because it quotes these in order to forbid them.
+# --- (3) forbidden A5 overclaim phrases (README + INDEX; NOT the manifest) ----
+# Exact strings that only a genuine sector-origin derivation (A5 closed) would
+# justify. The manifest is excluded because it quotes these in order to forbid them.
 FORBIDDEN=(
-  "theorems of a single posited object"
-  "single posited object"
-  "on the same sector interface"
-  "Both load-bearing pillars of quantum mechanics"
-  "put the Born rule and the Schrödinger equation on the same"
+  "A5 is closed"
+  "the sector is no longer posited"
+  "derives the sector from the deterministic flow"
 )
 scan_files=(README.md specs/INDEX.md)
 overclaim=0
 for phrase in "${FORBIDDEN[@]}"; do
   hits="$(grep -Fn "$phrase" "${scan_files[@]}" 2>/dev/null || true)"
   if [ -n "$hits" ]; then
-    echo "  FAIL  retracted overclaim phrase reintroduced: \"$phrase\""
+    echo "  FAIL  A5 overclaim phrase present: \"$phrase\""
     printf '%s\n' "$hits" | sed 's/^/          /'
     overclaim=1
     fail=1
   fi
 done
-[ "$overclaim" -eq 0 ] && echo "  OK    no retracted overclaim phrases in README / INDEX."
+[ "$overclaim" -eq 0 ] && echo "  OK    no A5 overclaim phrases in README / INDEX."
 
-# --- (4) non-trivial KahlerOnticSetup inhabitant reality check ---------------
+# --- (4) non-trivial KahlerOnticSetup inhabitant report ----------------------
 # Genuine inhabitants: a `def` whose RETURN type is `KahlerOnticSetup N` — i.e.
-# `: KahlerOnticSetup N where` or `: KahlerOnticSetup N :=`. This is distinct
-# from a CONSUMER `def foo (d : KahlerOnticSetup N) … : <other>`, whose
-# `KahlerOnticSetup` sits in a `(…)` binder (followed by `)`), never by
-# `where`/`:=`. An awk pass associates each such return type with its `def`
-# name (the signature may span lines) and lists the non-trivial ones.
+# `: KahlerOnticSetup N where` or `: KahlerOnticSetup N :=`. This is distinct from a
+# CONSUMER `def foo (d : KahlerOnticSetup N) … : <other>`. An awk pass associates
+# each such return type with its `def` name and lists the non-trivial ones. Since
+# C1/C7, several genuine Φ≠id inhabitants exist — the healthy, expected state.
 inhabitants="$(for f in $(grep -rlE "KahlerOnticSetup" --include='*.lean' CsdLean4 2>/dev/null); do
   awk -v F="$f" '
     /^(noncomputable )?def [A-Za-z0-9_]+/ {
@@ -106,19 +105,17 @@ inhabitants="$(for f in $(grep -rlE "KahlerOnticSetup" --include='*.lean' CsdLea
 done || true)"
 nontrivial="$(printf '%s' "$inhabitants" | grep -viE ": *trivial" | grep -c . || true)"
 if [ "$nontrivial" -gt 0 ]; then
-  echo "  INFO  $nontrivial non-trivial KahlerOnticSetup inhabitant(s) found —"
-  echo "        the Schrödinger chain may now be instantiated off the trivial"
-  echo "        witness. Update $MANIFEST (link L4) and the README claim to match:"
+  echo "  INFO  $nontrivial non-trivial KahlerOnticSetup inhabitant(s) — the healthy state:"
+  echo "        the Schrödinger chain is instantiated off the trivial witness (C1/C7)."
   printf '%s\n' "$inhabitants" | grep -viE ": *trivial" | sed 's/^/          /'
 else
-  echo "  INFO  0 non-trivial KahlerOnticSetup inhabitants (only the trivial"
-  echo "        witness Φ=id). Manifest L4 = BROKEN; the overclaim guard (2)+(3)"
-  echo "        keeps the docs honest. Fix C1 (build a Φ≠id instance) flips this."
+  echo "  WARN  0 non-trivial KahlerOnticSetup inhabitants found — a REGRESSION from the"
+  echo "        C1/C7 state (rotationSetup / manyToOneSetup). Check the awk scan / the code."
 fi
 
 if [ "$fail" -ne 0 ]; then
   echo "== connectivity guard: FAIL =="
-  echo "   See $MANIFEST for the per-link status and the fix course."
+  echo "   See $MANIFEST for the per-link status (L1–L9) and the A5 frontier."
   exit 1
 fi
 echo "== connectivity guard: OK =="

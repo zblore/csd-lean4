@@ -1,5 +1,7 @@
 # Future work — priorities, dependencies, complexity
 
+**For a current review of what is machine-verified, see [`reconstruction-status.md`](reconstruction-status.md).**
+
 **Living planning doc (created 2026-07-04).** Every open work item with a stable reference number,
 dependencies, and complexity, so priorities can be evaluated and items cited by id ("do EC-1").
 

@@ -10,17 +10,25 @@ the code.
 
 ## The honest one-paragraph status
 
-The corpus machine-verifies the major structural theorems of finite-dimensional
-QM as a set of **largely independent** results. The CSD *thesis* — that a single
-deterministic Kähler ontic sector `(Σ, Φ, π)` yields BOTH the Born rule AND
-Schrödinger dynamics as a connected derivation — is **NOT** formally realized
-end-to-end. There is no single non-trivial object from which both pillars are
-derived; the Kähler-geometry content is an unconsumed placeholder; the Schrödinger
-chain is instantiated only on the identity-flow (`Φ = id`, `H = 0`) witness; and
-the Born chain runs on a separate abstract measure-space engine that never sees a
-sector object or a deterministic flow. What is genuinely proved is a collection of
-**sound conditional theorems** plus the trivial base case; the connective tissue
-is the open work below.
+**(Updated 2026-07-15 — supersedes the 2026-07-07 "not realized" wording, which
+predated fixes C1–C7 and the FND layer and contradicted the CONNECTED rows below.)**
+The FORWARD chain is now realized end-to-end on genuine objects. A single genuine
+`Φ ≠ id` Kähler sector supports BOTH pillars together — the Schrödinger form
+(`H ≠ 0`) AND the Born frequencies from sampling its own Liouville measure — first
+on `rotationSetup` (C4, L6) and, at GENERAL `N` with a genuine many-to-one
+`π = Prod.fst` (`Σ = ℂℙ^{N-1} × T²`, fibres `= T²`), on `manyToOneSchrodingerSetup`
+with arbitrary Hermitian `H` (C7, L8). The FND "Choice A" ontology layer (2026-07)
+then puts isolated Hamiltonian dynamics AND de-isolating measurement AND
+time-indexed records AND the Born content AND the conditional state update on ONE
+ontic model `(Σ, μL, Φ, π)` — the unified capstone `unified_choiceA_capstone`
+(L9). So "a single posited Kähler sector yields both pillars, and one ontic model
+carries dynamics + measurement + records + Born + update" is CONNECTED. What
+remains OPEN is the ONE deep link **L7 / A5 / FND-1**: the sector and its Born
+weights are POSITED — the trials SAMPLE `μL` i.i.d. — they are NOT *derived from*
+the deterministic flow. Everything CONNECTED is FORWARD (it consumes the posited
+sector); closing A5 (deriving the sector from `Φ`) is the research-grade frontier
+and is NOT claimed. The Kähler differential-geometry fields (L1) remain honestly
+demoted interpretive posits (no Mathlib Kähler API).
 
 ## The intended chain and per-link status
 
@@ -44,7 +52,8 @@ Kähler geometry (ω, complex structure)
 | **L5** | sector `⇒` Born frequencies (structural) | **CONNECTED (structural, 2026-07-07, fix C4)** | `unitaryFlowSetup_born_frequency` (`LF4/BothPillars.lean`) states `born_frequency_convergence_N` with the sampling law = the SECTOR FIELD `d.liouvilleMeasure` (definitionally `fubiniStudyMeasure p₀`), so the Born theorem now references the same object the Schrödinger chain consumes. CAVEAT: structural sharing only — the trials `X` still SAMPLE the measure i.i.d.; they are not evolved by `d.flow`, and the weights are not derived from the dynamics (that is L7 = C6). |
 | **L6** | ONE object underlies both pillars | **CONNECTED (2026-07-07, fix C4)** | `rotationSetup_both_pillars` (`LF4/BothPillars.lean`) proves, for the SINGLE `rotationSetup p₀`, BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`) AND (B) Born (frequencies from sampling `(rotationSetup p₀).liouvilleMeasure` → `‖⟨eᵢ,ψ⟩‖²`). One `KahlerOnticSetup` instance, both pillars. |
 | **L7** | Born weights derived FROM the deterministic flow | **BROKEN — the thesis frontier (A5/D1, FND-1)** | The one genuine `Φ ≠ id` flow (`kFlow` on `KSigma`) yields a **generic volume-ratio** typicality law (`kFlow_frequency_convergence`), explicitly NOT a Born weight (its docstring disclaims deriving the outcome region / Born weight — "Tranche B, not this module"). |
-| **L8** | ONE object with a GENUINE many-to-one `π` (Paper C A3) underlies both pillars | **CONNECTED (2026-07-08, fix C7)** | `manyToOneRotationSetup_both_pillars` (`LF4/ManyToOnePillars.lean`) proves, for the SINGLE `manyToOneRotationSetup p₀` — whose `Σ = ℂℙ¹ × T²`, `π = Prod.fst` is genuinely many-to-one (fibres `= T²`, `manyToOneSetup_pi_not_injective`) AND whose projected flow is a non-trivial ray rotation (`manyToOneRotationSetup_projectedFlow_ne_id`) — BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`, inherited from `rotationSetup_schrodinger_form`) AND (B) Born (frequencies from sampling `kMuL p₀` and scoring the FIBRED region `π⁻¹'(bornRegion ψ i)` → `‖⟨eᵢ,ψ⟩‖²`, via `manyToOneSetup_born_frequency`). Removes the `π = id` degeneracy of L6/`rotationSetup_both_pillars` — the Paper-C A3 caveat below. AxiomAudit-pinned (foundational triple, Gleason-free). SAME standing gap as L5/L7: the Born trials still SAMPLE `kMuL` i.i.d. rather than being evolved by `d.flow`, and the fibre flow is trivial (the flow moves only the base ray). |
+| **L8** | ONE object with a GENUINE many-to-one `π` (Paper C A3) underlies both pillars | **CONNECTED (2026-07-08, fix C7)** | `manyToOneRotationSetup_both_pillars` (`LF4/ManyToOnePillars.lean`) proves, for the SINGLE `manyToOneRotationSetup p₀` — whose `Σ = ℂℙ¹ × T²`, `π = Prod.fst` is genuinely many-to-one (fibres `= T²`, `manyToOneSetup_pi_not_injective`) AND whose projected flow is a non-trivial ray rotation (`manyToOneRotationSetup_projectedFlow_ne_id`) — BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`, inherited from `rotationSetup_schrodinger_form`) AND (B) Born (frequencies from sampling `kMuL p₀` and scoring the FIBRED region `π⁻¹'(bornRegion ψ i)` → `‖⟨eᵢ,ψ⟩‖²`, via `manyToOneSetup_born_frequency`). At GENERAL `N` with ARBITRARY Hermitian `H`: `manyToOneSchrodingerSetup_both_pillars` (`U t = exp(-itH)`). Removes the `π = id` degeneracy of L6/`rotationSetup_both_pillars` — the Paper-C A3 caveat below. AxiomAudit-pinned (foundational triple, Gleason-free). SAME standing gap as L5/L7: the Born trials still SAMPLE `kMuL` i.i.d. rather than being evolved by `d.flow`, and the fibre flow is trivial (the flow moves only the base ray). |
+| **L9** | ONE ontic model carries isolated dynamics AND de-isolating measurement AND records AND Born AND state update | **CONNECTED (2026-07-15, FND-T5)** | `unified_choiceA_capstone` (`FND/UnifiedMeasurement.lean`): on the SAME `(Σ = ℂℙ^{M}×T², μL = μFS ⊗ vol, π = Prod.fst)`, the ISOLATED dynamics is the genuine `exp(-itH)` Hamiltonian flow (`productDynamics`, measure-preserving + Schrödinger-projectable + `π_*μL = μFS`) AND a `DeisolationModel` over that same dynamics realises the de-isolation MEASUREMENT (`(measurementFlow p, θ)`, measure-preserving, a.e.-defined pointer readout `vnDeisolationModel_ae_total`, record establishment). Records are time-physical (`flowedSemantics`, `event ⟨c,i,t⟩ = Φ_t⁻¹'(region)`, probability conserved + flow-covariant); the post-outcome preparation has proven nonzero measure (`PostMeasurement.appendFact`); the state update = the record conditioning = the Lüders update (`ConditioningLink.luders_record_conditioning_correspondence`). Removes the earlier forward-vs-measurement model split (forward on `ℂℙ^{N-1}×T²` + Hamiltonian flow, measurement on dilated `ℂℙ^{M}` + `trivialDynamics`). AxiomAudit-pinned (foundational triple). SAME standing gap as L7: FORWARD only — consumes the posited sector; does NOT derive it (A5/FND-1). |
 
 **Net (updated 2026-07-08 after C1+C2+C4+C7):** **L2–L6 + L8 CONNECTED.** A single
 genuine `Φ ≠ id` object (`rotationSetup`) supports BOTH pillars: the Schrödinger
@@ -108,18 +117,33 @@ not the *dynamical origin*. Our route is still Wigner, not Ashtekar–Schilling.
 
 ## What may be claimed (until a link flips to CONNECTED)
 
+**(Updated 2026-07-15: the "both pillars on one posited sector" claims are now
+CONNECTED forward results, so they are permitted; the forbidden line has moved to
+the A5 frontier.)**
+
 - ✅ "CSD machine-verifies the Born rule as an FS-typicality volume (on `ℂℙ^{N-1}`
   with `μ_FS`), Gleason-free, general `N`, incl. POVMs." — a real theorem about
-  the FS measure; does NOT assert a deterministic-flow origin.
-- ✅ "GIVEN a Kähler ontic sector (as hypotheses), CSD derives finite-dim
-  Schrödinger dynamics via Wigner." — a real conditional theorem
-  (`sigmaFlow_schrodinger_form`), currently instantiated only trivially.
+  the FS measure.
+- ✅ "GIVEN a posited Kähler ontic sector, CSD derives finite-dim Schrödinger
+  dynamics via Wigner, at general `N` with arbitrary Hermitian `H`." — a real
+  conditional theorem (`sigmaFlow_schrodinger_form`), now instantiated
+  non-trivially (`manyToOneSchrodingerSetup`, `H` arbitrary).
+- ✅ "A single posited Kähler sector object yields BOTH the Born rule AND
+  Schrödinger dynamics" — CONNECTED (L6/L8), FORWARD, at general `N`
+  (`manyToOneSchrodingerSetup_both_pillars`). Must carry the posited-sector /
+  A5-open caveat.
+- ✅ "One ontic model `(Σ, μL, Φ, π)` carries isolated dynamics, de-isolating
+  measurement, time-indexed records, Born frequencies and the conditional/Lüders
+  state update" — CONNECTED (L9, `unified_choiceA_capstone`), FORWARD.
 - ✅ "The thermodynamics track (TH1–TH4) is proved." — real, independent.
-- ❌ "A single posited object yields both the Born rule and Schrödinger dynamics
-  end-to-end." — **FORBIDDEN** until L4 ∧ L5 ∧ L6 are CONNECTED.
-- ❌ "The pillars stand on the same sector interface." — **FORBIDDEN** until L6.
-- ❌ Any phrasing implying the Kähler geometry is load-bearing — **FORBIDDEN**
-  until L1.
+- ❌ "CSD DERIVES the sector `(π, G)` / the Born weights FROM the deterministic
+  flow" / "A5 is closed" / "the sector is no longer posited" — **FORBIDDEN** (L7 /
+  A5 / FND-1 is OPEN; the trials SAMPLE `μL` i.i.d., the sector is posited). Every
+  CONNECTED claim above is FORWARD (consumes the posited sector).
+- ❌ Any phrasing implying the Kähler differential geometry (closed 2-form,
+  complex structure) is constructed / load-bearing — **FORBIDDEN** (L1: no Mathlib
+  Kähler API; the VOLUME is forced, the differential-geometric fields are demoted
+  interpretive posits).
 
 ## The fix course (sequenced)
 

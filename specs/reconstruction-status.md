@@ -1,0 +1,137 @@
+# Reconstruction status — a thorough review of what is machine-verified (2026-07-15)
+
+**Purpose.** A single honest review of what the `csd-lean4` corpus actually proves, at commit `HEAD`
+(after the FND "Choice A" layer and FND-T5). It supersedes scattered claims; where it and an older
+document disagree, this file and [`connectivity-manifest.md`](connectivity-manifest.md) win. Everything
+below is `sorry`-free, `lake build CsdLeanTests` green, and AxiomAudit-pinned to the foundational triple
+(`propext`, `Classical.choice`, `Quot.sound`) unless explicitly noted otherwise.
+
+## 1. One-paragraph verdict
+
+The corpus is a **rigorous, forward finite-dimensional QM reconstruction from one posited Choice A ontic
+model.** A single genuine `Φ ≠ id` Kähler sector yields BOTH pillars (Born + Schrödinger) at general `N`
+with arbitrary Hermitian `H` (`manyToOneSchrodingerSetup_both_pillars`), and ONE ontic model
+`(Σ = ℂℙ^{M}×T², μL = μFS⊗vol, Φ, π = Prod.fst)` carries isolated Hamiltonian dynamics, de-isolating
+measurement, time-indexed records, Born frequencies, and the conditional/Lüders state update
+(`unified_choiceA_capstone`). The measurement/record loop closes (post-outcome preparation with proven
+nonzero measure; the record conditioning = the Lüders update). The **one deep gap** is A5 / FND-1: the
+sector itself is **posited**, not derived from the deterministic flow (the Born trials SAMPLE `μL`
+i.i.d.). This is FORWARD throughout — it does not derive the sector — and that scope matches Paper C's
+own (§1.4 assumes `Σ`, `π`, the A5 sector).
+
+## 2. The FND Choice A postulate ledger (P1–P9 / B1–B7 / T1–T16)
+
+The anti-circularity ontology layer (`CsdLean4/FND/`, namespace `CSD.FND`). Full ledger in
+[`../CsdLean4/FND/Adapters.lean`](../CsdLean4/FND/Adapters.lean) and [`../AXIOMS.md`](../AXIOMS.md) §3.7.
+NONE of these is an `axiom`: postulates are structure fields, bridges are named assumptions discharged
+per model, targets are `Prop` predicates inhabited by proved theorems.
+
+**Core postulates (fields).** P1 `ConstraintSurface`; P2 `ConstraintDynamics.muL`; P3 `flow`/`flow_zero`/
+`flow_add`; P4 `flow_preserves`; P5 `RecordSemantics` (time-indexed via `flowedSemantics`); P6
+`HistoryPreparation` (isolation = conditioning); P7 `ProjectiveState = CP^{N-1}`; P8 `ChoiceASector.pi`;
+P9 many-to-one `π`.
+
+**Bridges (discharged for the product model).** B1 `π_*μL = μFS` (`productSector_hasFubiniStudyPushforward`);
+B2 `ProjectiveDynamicsBridge.projectable`; B3 `HasUnitaryRealisation`/`HasHamiltonianRealisation`; B4/B5
+`DeisolationModel` + `vnDeisolationModel_records`; B6 `CompositeSector.tensor_dimension` (P3 "why ⊗"
+parked); B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
+
+**Theorem targets (each inhabited).**
+
+| # | Target | Key theorem | Status |
+|---|---|---|---|
+| T1 | Born from volume | `BornFromVolume`, LF4 `fs_born_volume_ratio_N` | proved |
+| T2 | Born from i.i.d. frequencies | `born_frequency_convergence_N` | proved |
+| T3 | Born from deterministic-flow frequencies | `BornFromFlow` predicate | OPEN (= A5 face) |
+| T4 | Unitary projected dynamics | `HasUnitaryRealisation` | proved (product model) |
+| T5 | Schrödinger evolution | `HasHamiltonianRealisation`, `productProjectedFlow_hasHamiltonianRealisation` | proved (product model) |
+| T6 | Unique contextual outcome a.e. | `vnDeisolationModel_ae_total` | proved |
+| T7 | General conditional update | `conditionalUpdate_capstone` | proved |
+| T8 | Lüders update | `luders_capstone` (sharp special case of T7) | proved |
+| T9 | Mixed states | `mixedState_capstone`, `isPure_iff_trace_sq_one` | proved |
+| T10 | POVM by dilation | `POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical` | proved |
+| T11 | Composite probabilities | joint Born-frequency capstones | per-instance (P3-gated for sector-intrinsic) |
+| T12 | Entangled predictions | = T14 | per-instance |
+| T13 | Contextuality | `NoNonContextualValuation`: Cabello-18 / Mermin-Peres / GHZ; `general_ks_noNonContextualValuation` | proved (+ general KS) |
+| T14 | Bell correlations | `NoLocalHiddenVariableTable` (CGLMP), `HasTsirelsonSeparation`, `bell_general_separation`, `lhv_chsh_le_two`, `qm_chsh_le_tsirelson` | proved (+ universal bounds) |
+| T15 | No-signalling | `HasNoSignalling` (singlet), `tensorSector_no_signalling` (operator) | proved |
+| T16 | Two-path interference | `HasBornInterference` (Hadamard test) | proved (derived, not postulated) |
+
+## 3. The connectivity chain (L1–L9)
+
+See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
+
+| Link | Claim | Status |
+|---|---|---|
+| L1 | Kähler geometry ⇒ sector fields | PARTIAL — volume forced; 2-form unformalizable (no Mathlib API) |
+| L2 | Σ+Φ+π ⇒ projected flow | CONNECTED |
+| L3 | projected flow ⇒ Schrödinger | CONNECTED — general `N`, arbitrary `H` |
+| L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |
+| L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
+| L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
+| **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — `unified_choiceA_capstone` (FND-T5) |
+| **L7** ★ | Born weights derived FROM the flow | **OPEN** — the sector is posited (A5/FND-1) |
+
+## 4. The forward reconstruction — what each pillar delivers
+
+* **Born rule** (LF1–LF4): the Born weight `‖⟨eᵢ,ψ⟩‖²` is a Fubini–Study typicality volume; i.i.d.
+  FS-typical trial frequencies converge a.s. to it, Gleason-free, general `N`, including **general POVMs**
+  (`povm_born_frequency_volume`, canonical Naimark dilation from CFC `√Eᵢ`).
+* **Schrödinger dynamics** (the W-series, LF4): given the Kähler sector interface, Wigner rigidity +
+  Bargmann branch selection + phase lift + a C¹ finite-dim Stone theorem force the projected flow to be
+  `exp(-itH)` on rays. Instantiated non-trivially at general `N` (`manyToOneSchrodingerSetup`).
+* **Measurement** (LF5 + FND): a measure-preserving von Neumann de-isolation flow realises the Naimark
+  dilation; the per-microstate pointer outcome is defined a.e.; frequencies are Born. In FND this is a
+  `DeisolationModel` over the *nontrivial* isolated dynamics (`unifiedDeisolationModel`).
+* **Records / state update** (FND): records are time-indexed measurable events (`flowedSemantics`), with
+  probability conserved and flow-covariant under isolation; the post-outcome preparation has proven
+  nonzero measure (`PostMeasurement.appendFact`); the record conditioning equals the Lüders update
+  (`luders_record_conditioning_correspondence`).
+* **Entanglement / non-locality** (LF6): Bell-forced non-factorisation in the Σ-engine at full
+  generality — CGLMP for every `d`, GHZ/Mermin for every party count `n`, no-signalling; the universal
+  bounds (`lhv_chsh_le_two`, `qm_chsh_le_tsirelson`, `cglmp_lhv_le_two`, `bell_general_separation`).
+* **Open-system dynamics** (LF6-2): the two canonical qubit dissipators as continuous quantum dynamical
+  semigroups — T2 dephasing (`dephasingChannel`) and T1 amplitude damping (`dampingChannel`), each with
+  the semigroup law, trace preservation and relaxation limits.
+
+## 5. Adjacent arms (honest scope)
+
+* **Empirical / CSD arm** — thermodynamics (TH1–TH4), CV track (finite position/momentum, approximate
+  CCR, oscillator spectrum), algorithms (Deutsch–Jozsa, Simon, BV, Grover, QFT, full Shor), metrology
+  (Ramsey, Heisenberg, quantum Fisher), QEC, contextuality, channels/decoherence. These share the same
+  complex-sector + Born + unitary primitives but are independent theorems consuming them, not a formal
+  cascade from the FND ledger.
+* **ecdsa.fail / ECDLP arm** — quantum resource estimation for Shor-on-ECDLP (elliptic-curve arithmetic,
+  Karatsuba/Toom-3, safegcd/half-GCD inversion, Toffoli/qubit counting, a verified-floor / trusted-estimate
+  two-track). It presupposes the unitary-evolution pillar but its theorems are number theory + circuit
+  costs, NOT a QM reconstruction. See [`ecdsafail-two-track.md`](ecdsafail-two-track.md).
+
+## 6. Axiom hygiene
+
+* Foundational triple only on every FND/LF headline pin.
+* One imported mathematical result remains: `busch_effect_gleason` — library debt confined to the
+  operational stratum, **not** in the ontic Born derivation (which is Gleason-free). See
+  [`../AXIOMS.md`](../AXIOMS.md) §2.2.
+* No global `axiom` declarations in the FND layer; no `sorry`/`admit`.
+* Three static guards (connectivity, sector-linkage, axiom-imports) pass and are run in CI.
+
+## 7. The honest frontier — what is NOT claimed
+
+* **A5 / FND-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
+  sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade.
+* **P3 "why ⊗"** — composition is posited (`CompositeSector.tensor_dimension`), parked by standing
+  instruction; the finite tensor algebra and no-signalling consequences ARE derived (`FND/TensorSector.lean`).
+* **KG-1** — the Kähler closed 2-form `dω = 0` and the global volume identity, blocked on missing Mathlib
+  manifold exterior calculus (the volume is forced; the pointwise form is proved).
+* **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
+* **IP-1** — identical particles / spin-statistics, not in the corpus.
+
+## 8. Bottom line
+
+Under Choice A, the finite-dimensional QM reconstruction is **structurally closed forward**: one posited
+ontic model, one measurement/record/update loop, the full T1–T16 target ledger inhabited, axiom-clean.
+The remaining depth is the *origin* of the posited sector (A5) and the *derivation* of composition (P3) —
+genuine open problems, honestly flagged, not papered over.
+
+References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
+[`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/FND/Adapters.lean`](../CsdLean4/FND/Adapters.lean).
