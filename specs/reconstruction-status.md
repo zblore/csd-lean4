@@ -123,11 +123,13 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
   symmetry — the typicality measure and Born weights are symmetry-forced there (`localised_A5_capstone`,
   `region_measure_symmetry_forced`) — so A5 need only hold "in the appropriate places". Residual: the
   bare flow is one one-parameter subgroup, not all of `U(N)`; the symmetry is still construction data.
-* **P3 "why ⊗"** — composition is posited (`CompositeSector.tensor_dimension`), parked by standing
-  instruction. **Reduced** (`FND/TensorGeneration.lean`): the commuting local subalgebras GENERATE the
-  whole joint algebra (`joint_mem_span_local`), so `⊗` carries no observables beyond local ones and their
-  products — B6 reduces to "two full local algebras that act and commute". Residual: WHY composition must
-  be `⊗` from first principles.
+* **P3 "why ⊗" — SOLVED via local tomography** (`FND/TensorSolved.lean` `composite_is_tensor_product`):
+  the composite observable algebra IS the tensor product of the local ones — `compositeTensorEquiv` is a
+  bijective linear iso `M_{NA} ⊗ M_{NB} ≃ M_{NA·NB}`, `U ⊗ₜ Q ↦ aliceOp U · bobOp Q`. Locality
+  (`aliceOp_bobOp_commute`) + local tomography (`joint_mem_span_local`, proved for the quantum case)
+  force composition to be `⊗` with dim `NA·NB` — the operational GPT-reconstruction answer. Residual:
+  local tomography is not (and cannot be) derived from nothing — it is the one operational axiom that
+  singles out quantum `⊗`; the "posit `⊗` per instance" is discharged.
 * **KG-1** — the Kähler closed 2-form `dω = 0` and the global volume identity, blocked on missing Mathlib
   manifold exterior calculus (the volume is forced; the pointwise form is proved).
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).

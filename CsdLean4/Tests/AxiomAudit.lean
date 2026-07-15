@@ -269,6 +269,7 @@ import CsdLean4.FND.TimeIndexedRecord
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.TensorGeneration
+import CsdLean4.FND.TensorSolved
 import CsdLean4.FND.LocalisedTypicality
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
@@ -7364,6 +7365,17 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total
+
+-- FND P3 SOLVED via local tomography (2026-07-15): composite_is_tensor_product. The composite observable
+-- algebra IS the tensor product of the local ones -- compositeTensorEquiv (= kroneckerLinearEquiv) is a
+-- BIJECTIVE linear iso M_{NA} ⊗ M_{NB} ≃ M_{NA·NB} sending U ⊗ₜ Q ↦ aliceOp U · bobOp Q. So locality
+-- (commuting) + local tomography (joint_mem_span_local) FORCE composition = ⊗ (dim NA·NB), the operational
+-- answer to "why ⊗". Reduced to the single axiom of local tomography (itself proved for the quantum case).
+/-- info: 'CSD.FND.composite_is_tensor_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.composite_is_tensor_product
+
+/-- info: 'CSD.FND.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeTensorEquiv_apply
 
 -- FND P3 resolution + localized A5 (2026-07-15): reducing the two deep posits.
 -- P3 (why tensor): single_prod (the joint basis matrix = product of local ones) + joint_mem_span_local

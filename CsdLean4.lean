@@ -311,6 +311,7 @@ import CsdLean4.FND.CompositeInterface
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.TensorGeneration
+import CsdLean4.FND.TensorSolved
 import CsdLean4.FND.LocalisedTypicality
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
