@@ -265,6 +265,7 @@ import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.ConditioningLink
 import CsdLean4.FND.PostMeasurement
+import CsdLean4.FND.TimeIndexedRecord
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.Interference
@@ -7305,6 +7306,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+
+-- FND time-indexed records + persistence (2026-07-15, FND-T5 final follow-on): makes records physical.
+-- flowedSemantics event ⟨c,i,t⟩ = Φ_t⁻¹'(region c i) genuinely uses the recorded time (the pointer
+-- semantics ignored it). flowedSemantics_event_measure: μL(event ⟨c,i,t⟩) = μL(region c i) -- record
+-- probability conserved under isolated evolution. flowedSemantics_event_flow: event ⟨c,i,t+s⟩ =
+-- Φ_s⁻¹'(event ⟨c,i,t⟩) -- record covariant with the flow. flowedSemantics_persistence bundles both.
+/-- info: 'CSD.FND.flowedSemantics_event_measure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flowedSemantics_event_measure
+
+/-- info: 'CSD.FND.flowedSemantics_event_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flowedSemantics_event_flow
+
+/-- info: 'CSD.FND.flowedSemantics_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flowedSemantics_persistence
 
 -- FND post-outcome preparation (2026-07-15, FND-T5 follow-on): closes the measurement/record loop.
 -- HistoryPreparation.appendFact constructs the post-measurement preparation on the extended history

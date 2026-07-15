@@ -305,6 +305,7 @@ import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.ConditioningLink
 import CsdLean4.FND.PostMeasurement
+import CsdLean4.FND.TimeIndexedRecord
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.CompositeInterface
 import CsdLean4.FND.CompositeAdapters

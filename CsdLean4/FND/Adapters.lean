@@ -22,7 +22,8 @@ Core ontic postulates.
   `flow_zero`, `flow_add`).
 * P4. Ontic evolution preserves `muL` (`ConstraintDynamics.flow_preserves`).
 * P5. Physical records correspond to measurable, contextual, time-indexed regions of `Sigma`
-  (`RecordSemantics`).
+  (`RecordSemantics`; the genuinely time-indexed instance `FND/TimeIndexedRecord.lean` `flowedSemantics`,
+  `event ⟨c,i,t⟩ = Φ_t⁻¹'(region)`, with record-probability persistence and flow-covariance).
 * P6. Isolation introduces no new physical record; its probability law is conditional uncertainty over
   `Sigma` given the existing record history (`HistoryPreparation`, `HistoryPreparation.conditionalMeasure_apply`).
   A de-isolating measurement extends the history with the established record, yielding the post-outcome
