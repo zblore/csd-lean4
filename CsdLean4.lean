@@ -302,6 +302,7 @@ import CsdLean4.FND.MeasureBridge
 import CsdLean4.FND.DynamicsBridge
 import CsdLean4.FND.MeasurementRecord
 import CsdLean4.FND.LiftedMeasurement
+import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.CompositeInterface
 import CsdLean4.FND.CompositeAdapters

@@ -262,6 +262,7 @@ import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
+import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.Interference
@@ -7302,6 +7303,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+
+-- FND-T5 unified many-to-one measurement capstone (2026-07-15): dynamics + measurement on ONE ontic
+-- model. unified_choiceA_capstone puts BOTH the isolated Hamiltonian flow (productDynamics, exp(-itH)•)
+-- AND the de-isolation measurement (measurementFlow on the base fibre) on the SAME (Σ=ℂℙ^{M}×T², μL=μFS⊗
+-- vol, π=Prod.fst): flow measure-preserving + Schrödinger-projectable + FS pushforward + interaction
+-- measure-preserving + a.e. readout (T6, lifted through π) + record establishment (B5). Removes the
+-- forward-vs-measurement model split. unifiedDeisolationModel_ae_total lifts the base a.e. via Prod.fst.
+/-- info: 'CSD.FND.unified_choiceA_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_choiceA_capstone
+
+/-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total
 
 -- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
 -- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),
