@@ -7209,6 +7209,29 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.Circuit.gUpdateAdd_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.gUpdateAdd_correct
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4c (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the `0 < δ` control read (the branch discriminant). regValZ_nonneg_iff: 0 ≤ δ iff the sign bit (wire n)
+-- is clear; regValZ_pos_iff: 0 < δ iff sign bit clear AND low bits nonzero -- the divstep branch-A test
+-- `0<δ` as a bit read, via regValZ_signBit. (The `Odd g` half is regValZ_odd_iff, T3.) Remaining: the
+-- δ-counter arithmetic δ ↦ 1±δ, branch-bit synthesis + conditional selection, then denote = divstepRev.
+/-- info: 'ECDLP.Safegcd.Circuit.regValZ_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.regValZ_pos_iff
+
+/-- info: 'ECDLP.Safegcd.Circuit.regValZ_nonneg_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.regValZ_nonneg_iff
+
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4d (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the δ-counter update δ ↦ 1±δ, a tranche-2 corollary (signed ± against constant 1, no new circuit).
+-- deltaInc_correct: cuccaroAdd gives δ↦1+δ (branches B,C); deltaDec_correct: rippleSub gives δ↦1-δ
+-- (branch A), each with a register holding the value 1. So every divstep sub-operation (swap, signed ±,
+-- signed halve, g-update, δ-update, the 0<δ / Odd g reads) is now circuit-backed. Remaining: branch-bit
+-- synthesis (needs a reversible nonzero/OR gadget) + conditional selection, then denote = divstepRev.
+/-- info: 'ECDLP.Safegcd.Circuit.deltaInc_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.deltaInc_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.deltaDec_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.deltaDec_correct
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

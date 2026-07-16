@@ -64,7 +64,11 @@ halves SIGNED numerators `(g±f)/2` (`g,f` go negative) — so `signedHalve` (a 
 two's-complement support. Tranche 4b (g-update): `gUpdateSub_correct` / `gUpdateAdd_correct` compose T2
 (signed `±`) with T4a (signed halve) into ONE circuit computing the divstep numerators `g ↦ (g∓f)/2` at
 the signed `regValZ` level (`f,g` odd ⇒ numerator even discharges the halving's bottom-bit hypothesis).
-Remaining: the `δ`-counter arithmetic layer + `0<δ` read + branch-bit synthesis + assembly `= divstepRev`.
+Tranche 4c (the `0<δ` read): `regValZ_pos_iff` / `regValZ_nonneg_iff` characterise the divstep branch
+discriminant `0 < δ` as a bit read (sign bit clear + low bits nonzero). Tranche 4d (the `δ` update):
+`deltaInc_correct` / `deltaDec_correct` give `δ ↦ 1±δ` as a T2 corollary (signed `±` against constant `1`).
+So every divstep sub-operation is circuit-backed; remaining: branch-bit synthesis (a reversible nonzero/OR
+gadget) + conditional selection, then the in-place assembly `= divstepRev`.
 
 ## Route taken for value-correctness (stated honestly)
 

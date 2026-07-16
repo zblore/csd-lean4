@@ -14,8 +14,11 @@ the integer divstep — so `divstepToffoli` is cost-backed but the value is not 
 the value-faithful circuit is a multi-tranche task (there was no signed-integer register layer). Tranches
 so far: **1** exact (unsigned) halving; **2** signed integer `±` (the `g ∓ f` numerators); **3** the
 branch-conditional register swap `f ↔ g` + the `Odd g` test; **4a** the SIGNED (sign-extending) halving;
-**4b** the g-register update `g ↦ (g ∓ f)/2` composing T2 + T4a. Remaining: the `δ`-counter arithmetic
-(`δ ↦ 1 ± δ`, the `0 < δ` read), branch-bit synthesis + conditional selection, then `denote = divstepRev`.
+**4b** the g-register update `g ↦ (g ∓ f)/2` composing T2 + T4a; **4c** the `0 < δ` control read (the
+branch discriminant, `regValZ_pos_iff`/`regValZ_nonneg_iff`); **4d** the `δ`-counter update `δ ↦ 1 ± δ`
+(a T2 corollary — signed `±` against the constant `1`). So every divstep sub-operation is circuit-backed.
+Remaining: branch-bit synthesis (a reversible nonzero/OR gadget) + conditional selection, then the
+in-place assembly `denote = divstepRev`.
 
 ## The divstep's three register updates, and which one this tranche builds
 
@@ -629,5 +632,69 @@ theorem gUpdateAdd_correct {n : ℕ} (L : CuccaroLayout m (n + 1)) (s : State m)
       exact absurd (hadd ▸ (regValZ_odd_iff L.A s' (by omega)).mpr hb)
         (Int.not_odd_iff_even.mpr (hgodd.add_odd hfodd))
   rw [signedHalve_correct L.A hAinj s' hn heven, hadd]
+
+/-! ## Tranche 4c: the `0 < δ` control read — the branch discriminant
+
+The divstep's branch A is taken when `0 < δ ∧ Odd g`. The `Odd g` half is a wire-0 read
+(`regValZ_odd_iff`, T3); this section supplies the other half, the SIGN read `0 < δ` (and `0 ≤ δ`),
+characterised in bits via the two's-complement decomposition `regValZ_signBit`. These are the value
+primitives a branch-bit synthesis circuit computes into its control ancilla. The `δ`-counter *arithmetic*
+`δ ↦ 1 ± δ` (updating `δ` across the step) remains — it needs a small signed constant-add/negate layer. -/
+
+/-- **The sign read `0 ≤ δ`.** A signed register is non-negative iff its sign bit (wire `n`) is clear.
+Immediate from `regValZ_signBit`. -/
+theorem regValZ_nonneg_iff (f : ℕ → Fin m) (s : State m) (n : ℕ) :
+    0 ≤ regValZ f s (n + 1) ↔ s (f n) = false := by
+  have hLlt : (regValRange f s n : ℤ) < 2 ^ n := by exact_mod_cast regValRange_lt f s n
+  have hL0 : 0 ≤ (regValRange f s n : ℤ) := by positivity
+  rw [regValZ_signBit]
+  cases hb : s (f n) with
+  | false =>
+    simp only [Bool.toNat_false, Nat.cast_zero, zero_mul, sub_zero]
+    exact iff_of_true hL0 trivial
+  | true =>
+    simp only [Bool.toNat_true, Nat.cast_one, one_mul]
+    exact iff_of_false (by linarith) (by decide)
+
+/-- **The `0 < δ` branch read.** A signed register is strictly positive iff its sign bit (wire `n`) is
+clear AND its low `n` bits are not all zero: `0 < regValZ f s (n+1) ↔ s (f n) = false ∧ regValRange f s n
+≠ 0`. This is the divstep's `0 < δ` discriminant as a bit read (a sign test plus a nonzero test). -/
+theorem regValZ_pos_iff (f : ℕ → Fin m) (s : State m) (n : ℕ) :
+    0 < regValZ f s (n + 1) ↔ s (f n) = false ∧ regValRange f s n ≠ 0 := by
+  have hLlt : (regValRange f s n : ℤ) < 2 ^ n := by exact_mod_cast regValRange_lt f s n
+  rw [regValZ_signBit]
+  cases hb : s (f n) with
+  | false =>
+    simp only [Bool.toNat_false, Nat.cast_zero, zero_mul, sub_zero]
+    rw [Int.natCast_pos, Nat.pos_iff_ne_zero]
+    simp
+  | true =>
+    simp only [Bool.toNat_true, Nat.cast_one, one_mul]
+    exact iff_of_false (by linarith) (by rintro ⟨h, _⟩; exact absurd h (by decide))
+
+/-! ## Tranche 4d: the δ-counter update `δ ↦ 1 ± δ` — a tranche-2 corollary
+
+The divstep's `δ` update is `δ ↦ 1 - δ` (branch A) or `δ ↦ 1 + δ` (branches B, C). Each is signed
+arithmetic against the constant `1`, so it needs NO new circuit: with a register initialised to the
+value `1`, `cuccaroAdd` gives `1 + δ` and `rippleSub` gives `1 - δ` at the signed level. These are
+immediate instances of tranche 2, recorded here to close the δ-arithmetic item. -/
+
+/-- **δ ↦ 1 + δ** (branches B, C). If register `B` holds the constant `1`, `cuccaroAdd` leaves the
+`A`-register holding `regValZ A + 1` — the divstep's `δ` increment. Instance of `signedAdd_correct`. -/
+theorem deltaInc_correct {n : ℕ} (L : CuccaroLayout m (n + 1)) (s : State m) (hZ : s L.Z = false)
+    (hone : regValZ L.B s (n + 1) = 1)
+    (hlo : -2 ^ n ≤ regValZ L.A s (n + 1) + 1) (hhi : regValZ L.A s (n + 1) + 1 < 2 ^ n) :
+    regValZ L.A (denote (cuccaroAdd L) s) (n + 1) = regValZ L.A s (n + 1) + 1 := by
+  rw [signedAdd_correct L s (by omega) hZ (by rw [hone]; simpa using hlo)
+    (by rw [hone]; simpa using hhi), hone]
+
+/-- **δ ↦ 1 - δ** (branch A). If register `B` (the minuend) holds the constant `1`, `rippleSub` leaves
+`B` holding `1 - regValZ Sub` — the divstep's `δ ↦ 1 - δ`. Instance of `signedSub_correct`. -/
+theorem deltaDec_correct {n : ℕ} (L : SubLayout m (n + 1)) (s : State m)
+    (hBor0 : ∀ j, s (L.Bor j) = false) (hone : regValZ L.B s (n + 1) = 1)
+    (hlo : -2 ^ n ≤ 1 - regValZ L.Sub s (n + 1)) (hhi : 1 - regValZ L.Sub s (n + 1) < 2 ^ n) :
+    regValZ L.B (denote (rippleSub L) s) (n + 1) = 1 - regValZ L.Sub s (n + 1) := by
+  rw [signedSub_correct L s (by omega) hBor0 (by rw [hone]; simpa using hlo)
+    (by rw [hone]; simpa using hhi), hone]
 
 end ECDLP.Safegcd.Circuit
