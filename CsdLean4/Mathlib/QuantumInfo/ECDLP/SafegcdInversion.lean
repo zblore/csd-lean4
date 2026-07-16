@@ -61,8 +61,10 @@ branch test as a wire-0 read (`regValRange_odd_iff` / `regValZ_odd_iff`). Tranch
 building the assembly exposed that tranche 1's `shiftDown` halves the UNSIGNED magnitude, but the divstep
 halves SIGNED numerators `(g±f)/2` (`g,f` go negative) — so `signedHalve` (a sign-extending shift) +
 `signedHalve_correct` (`regValZ ÷2` for an even register), with `signedRep_high` / `regValZ_signBit` the
-two's-complement support. Remaining: the g-update composition + the `δ`-counter arithmetic layer + `0<δ`
-read + branch-bit synthesis + assembly `= divstepRev`.
+two's-complement support. Tranche 4b (g-update): `gUpdateSub_correct` / `gUpdateAdd_correct` compose T2
+(signed `±`) with T4a (signed halve) into ONE circuit computing the divstep numerators `g ↦ (g∓f)/2` at
+the signed `regValZ` level (`f,g` odd ⇒ numerator even discharges the halving's bottom-bit hypothesis).
+Remaining: the `δ`-counter arithmetic layer + `0<δ` read + branch-bit synthesis + assembly `= divstepRev`.
 
 ## Route taken for value-correctness (stated honestly)
 

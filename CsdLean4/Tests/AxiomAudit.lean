@@ -7196,6 +7196,19 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.Circuit.signedRep_high' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedRep_high
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4b (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the g-register update, COMPOSING the tranches. gUpdateSub_correct: the composite rippleSub;signedHalve
+-- computes g ↦ (g-f)/2 (branch-A numerator) at the signed regValZ level; gUpdateAdd_correct: cuccaroAdd;
+-- signedHalve computes g ↦ (g+f)/2 (branch-B). Composes T2 (signed ±) with T4a (signed halve); f,g odd
+-- makes the numerator even (Odd.sub_odd/add_odd), discharging the halving's bottom-bit hypothesis. So the
+-- divstep g-update is now a single value-faithful circuit. Remaining: δ-counter arithmetic + branch
+-- synthesis + conditional selection, then denote = divstepRev.
+/-- info: 'ECDLP.Safegcd.Circuit.gUpdateSub_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.gUpdateSub_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.gUpdateAdd_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.gUpdateAdd_correct
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

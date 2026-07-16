@@ -3,7 +3,7 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
 
 /-!
-# The value-faithful safegcd divstep circuit — TRANCHES 1–2  (ECDLP L6, #36c-2)
+# The value-faithful safegcd divstep circuit — TRANCHES 1–4b  (ECDLP L6, #36c-2)
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
@@ -11,8 +11,11 @@ This module opens the deferred residue named in `SafegcdInversion.lean` and `Saf
 the **reversible BIT-CIRCUIT whose denotation equals `ECDLP.Safegcd.divstep`**. The existing
 `ResourceBounds.divstepProxyGadget` is a COST proxy — its `denote` computes *modular* arithmetic, not
 the integer divstep — so `divstepToffoli` is cost-backed but the value is not circuit-backed. Building
-the value-faithful circuit is a multi-tranche task (there is no signed-integer register layer yet); this
-module is **tranche 1**.
+the value-faithful circuit is a multi-tranche task (there was no signed-integer register layer). Tranches
+so far: **1** exact (unsigned) halving; **2** signed integer `±` (the `g ∓ f` numerators); **3** the
+branch-conditional register swap `f ↔ g` + the `Odd g` test; **4a** the SIGNED (sign-extending) halving;
+**4b** the g-register update `g ↦ (g ∓ f)/2` composing T2 + T4a. Remaining: the `δ`-counter arithmetic
+(`δ ↦ 1 ± δ`, the `0 < δ` read), branch-bit synthesis + conditional selection, then `denote = divstepRev`.
 
 ## The divstep's three register updates, and which one this tranche builds
 
@@ -564,5 +567,67 @@ sign-extending shift on the register holding `-6` decodes to `-3`. Machine-check
 example :
     regValZ F4 (denote (signedHalve F4 3)
       (fun w => [false, true, false, true].getD w.val false)) 4 = -3 := by decide
+
+/-! ## Tranche 4b: the g-register update — composing signed `±` (T2) with signed halve (T4a)
+
+The divstep's `g`-register update is `g ↦ (g - f)/2` (branch A) or `g ↦ (g + f)/2` (branch B). Each is
+the composition of a signed integer combination (tranche 2) and a signed halving (tranche 4a). This
+section assembles the two verified stages into one circuit whose `denote` computes the divstep numerator
+directly at the signed-ℤ (`regValZ`) level — no new infrastructure, just composition.
+
+The load-bearing observation: since `f` is kept ODD throughout the divstep and `g` is odd in these
+branches, the numerator `g ∓ f` is EVEN — so the intermediate register has bottom bit `false`, exactly
+the hypothesis `signedHalve_correct` consumes. -/
+
+/-- **The g-update, subtract branch (branch A numerator): `g ↦ (g - f)/2`.** The composite circuit
+`rippleSub ; signedHalve` on the minuend register `B` computes `(regValZ B - regValZ Sub)/2` at the
+signed level. `B = g`, `Sub = f`. Requires `g, f` odd (so `g - f` is even and the halving is exact) and
+the signed difference in range. Composes `signedSub_correct` (T2) with `signedHalve_correct` (T4a); the
+evenness of `g - f` (`Odd.sub_odd`) discharges the halving's bottom-bit hypothesis. -/
+theorem gUpdateSub_correct {n : ℕ} (L : SubLayout m (n + 1)) (s : State m) (hn : 1 ≤ n)
+    (hBinj : Function.Injective L.B) (hBor0 : ∀ j, s (L.Bor j) = false)
+    (hgodd : Odd (regValZ L.B s (n + 1))) (hfodd : Odd (regValZ L.Sub s (n + 1)))
+    (hlo : -2 ^ n ≤ regValZ L.B s (n + 1) - regValZ L.Sub s (n + 1))
+    (hhi : regValZ L.B s (n + 1) - regValZ L.Sub s (n + 1) < 2 ^ n) :
+    regValZ L.B (denote (rippleSub L ++ signedHalve L.B n) s) (n + 1)
+      = (regValZ L.B s (n + 1) - regValZ L.Sub s (n + 1)) / 2 := by
+  rw [denote_append]
+  set s' := denote (rippleSub L) s with hs'
+  -- the subtraction stage: B holds g - f
+  have hsub : regValZ L.B s' (n + 1) = regValZ L.B s (n + 1) - regValZ L.Sub s (n + 1) :=
+    signedSub_correct L s (by omega) hBor0 (by simpa using hlo) (by simpa using hhi)
+  -- g - f is even, so the intermediate bottom bit is false
+  have heven : s' (L.B 0) = false := by
+    cases hb : s' (L.B 0) with
+    | false => rfl
+    | true =>
+      exact absurd (hsub ▸ (regValZ_odd_iff L.B s' (by omega)).mpr hb)
+        (Int.not_odd_iff_even.mpr (hgodd.sub_odd hfodd))
+  -- the halving stage
+  rw [signedHalve_correct L.B hBinj s' hn heven, hsub]
+
+/-- **The g-update, add branch (branch B numerator): `g ↦ (g + f)/2`.** The composite circuit
+`cuccaroAdd ; signedHalve` on the sum register `A` computes `(regValZ A + regValZ B)/2` at the signed
+level. `A = g`, `B = f`. Requires `g, f` odd (so `g + f` is even) and the signed sum in range. Composes
+`signedAdd_correct` (T2) with `signedHalve_correct` (T4a); evenness of `g + f` (`Odd.add_odd`) discharges
+the halving's bottom-bit hypothesis. -/
+theorem gUpdateAdd_correct {n : ℕ} (L : CuccaroLayout m (n + 1)) (s : State m) (hn : 1 ≤ n)
+    (hAinj : Function.Injective L.A) (hZ : s L.Z = false)
+    (hgodd : Odd (regValZ L.A s (n + 1))) (hfodd : Odd (regValZ L.B s (n + 1)))
+    (hlo : -2 ^ n ≤ regValZ L.A s (n + 1) + regValZ L.B s (n + 1))
+    (hhi : regValZ L.A s (n + 1) + regValZ L.B s (n + 1) < 2 ^ n) :
+    regValZ L.A (denote (cuccaroAdd L ++ signedHalve L.A n) s) (n + 1)
+      = (regValZ L.A s (n + 1) + regValZ L.B s (n + 1)) / 2 := by
+  rw [denote_append]
+  set s' := denote (cuccaroAdd L) s with hs'
+  have hadd : regValZ L.A s' (n + 1) = regValZ L.A s (n + 1) + regValZ L.B s (n + 1) :=
+    signedAdd_correct L s (by omega) hZ (by simpa using hlo) (by simpa using hhi)
+  have heven : s' (L.A 0) = false := by
+    cases hb : s' (L.A 0) with
+    | false => rfl
+    | true =>
+      exact absurd (hadd ▸ (regValZ_odd_iff L.A s' (by omega)).mpr hb)
+        (Int.not_odd_iff_even.mpr (hgodd.add_odd hfodd))
+  rw [signedHalve_correct L.A hAinj s' hn heven, hadd]
 
 end ECDLP.Safegcd.Circuit
