@@ -48,11 +48,14 @@ inversion trusted-not-verified: (i) the TERMINATION-COUNT bound (that `g` DOES r
 Bernstein–Yang worst case `⌊(49·bits+80)/17⌋ ≈ 2.882·bits ≤ 3·bits` — their computer-assisted
 transition-matrix argument, not formalised), and (ii) the reversible BIT-CIRCUIT whose denotation
 equals `divstep` (the `divstepToffoli` op-count model below is over this not-yet-exhibited circuit).
-**Residue (ii) is now OPENED, tranche 1** (`SafegcdDivstepCircuit.lean`, 2026-07-16): the divstep's
-exact-halving primitive is exhibited as a concrete `n`-swap `Circuit` with `denote`-level correctness
-`ECDLP.Safegcd.Circuit.halve_correct` (an even register decodes to `regValRange … / 2`), and it is
-Toffoli-FREE (`shiftDown_toffoli`), refining the `cuccaroModDouble` `6n+4` halving overcount below to
-`0`. Remaining: signed subtraction (2), conditional swap + branch routing (3), assembly `= divstepRev` (4).
+**Residue (ii) is now OPENED, tranches 1–2** (`SafegcdDivstepCircuit.lean`, 2026-07-16). Tranche 1
+(halving): the divstep's exact-halving primitive is a concrete `n`-swap `Circuit` with `denote`-level
+correctness `ECDLP.Safegcd.Circuit.halve_correct` (an even register decodes to `regValRange … / 2`),
+Toffoli-FREE (`shiftDown_toffoli`, refining the `cuccaroModDouble` `6n+4` halving overcount below to
+`0`). Tranche 2 (signed arithmetic): `signedRep`/`regValZ` (two's-complement decoder) +
+`signedAdd_correct` / `signedSub_correct` — under a no-overflow bound the VERIFIED mod-`2^n` gadgets
+(`cuccaroAdd`, `rippleSub`) realise the divstep numerators `g+f` / `g-f` at the signed-ℤ level.
+Remaining: conditional swap + branch routing (3), assembly `= divstepRev` (4).
 
 ## Route taken for value-correctness (stated honestly)
 

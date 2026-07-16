@@ -7144,6 +7144,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.Circuit.shiftDown_toffoli' depends on axioms: [propext] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.shiftDown_toffoli
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 2 (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the signed integer arithmetic for the divstep numerators g+f / g-f. signedRep is the two's-complement
+-- balanced representative (signedRep_of_mem: fixes in-range values); regValZ the signed register value.
+-- signedAdd_correct / signedSub_correct: under a no-overflow bound, the VERIFIED mod-2^n gadgets
+-- (cuccaroAdd / rippleSub) realise signed ℤ addition / subtraction at the regValZ level -- the branch-B
+-- `g+f` and branch-A `g-f` numerators on a value-faithful circuit (two's-complement +/- IS mod-2^n
+-- arithmetic, exact whenever the true result fits the signed range).
+/-- info: 'ECDLP.Safegcd.Circuit.signedAdd_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedAdd_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.signedSub_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedSub_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.signedRep_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedRep_of_mem
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

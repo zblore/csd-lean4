@@ -1,8 +1,9 @@
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
 
 /-!
-# The value-faithful safegcd divstep circuit — TRANCHE 1: the exact-halving gadget  (ECDLP L6, #36c-2)
+# The value-faithful safegcd divstep circuit — TRANCHES 1–2  (ECDLP L6, #36c-2)
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
@@ -21,12 +22,20 @@ One `divstep (δ,f,g) ↦ (δ',f',g')` (with `f` kept ODD) does, on the `(f,g)` 
 * an **integer combination** `g ± f` (forming the even numerator `g-f` or `g+f`);
 * an **exact halving** `↦ /2` of that even numerator (or of `g` itself when `g` is even).
 
-**This tranche builds the exact halving** — the divstep-specific primitive, and the one provable on the
-EXISTING natural-number register decoder (`Reversible.regValRange`): every divstep halving is of an
-*even* register (the numerator is even in each branch, `divstep_gcd`'s per-branch `Odd.sub_odd` /
-`Odd.add_odd` / `Even`), so its magnitude alone determines the result and no signed decoding is needed
-here. Signed subtraction (tranche 2) and conditional swap + branch routing (tranche 3), then the
-assembly `denote = divstepRev` (tranche 4), are the remaining tranches.
+**Tranche 1 builds the exact halving** — the divstep-specific primitive, provable on the EXISTING
+natural-number register decoder (`Reversible.regValRange`): every divstep halving is of an *even*
+register (the numerator is even in each branch, `divstep_gcd`'s per-branch `Odd.sub_odd` / `Odd.add_odd`
+/ `Even`), so its magnitude alone determines the result and no signed decoding is needed there.
+
+**Tranche 2 builds the signed integer arithmetic** — the `g + f` and `g - f` numerator computations.
+`f`, `g` range over ℤ (they go negative), so this needs a SIGNED register decoder. The clean device is
+`signedRep` — the **balanced two's-complement representative**, depending only on the unsigned readout
+(no bit indexing): `signedRep n u = u` for `u < 2^{n-1}` and `u - 2^n` otherwise. Then `regValZ` is the
+signed value of a register, and the verified mod-`2^n` gadgets (`cuccaroAdd`, `rippleSub`) realise signed
+ℤ addition / subtraction under a NO-OVERFLOW bound (`signedAdd_correct`, `signedSub_correct`) — because
+two's-complement `+`/`−` IS mod-`2^n` arithmetic reinterpreted, exact whenever the true result fits the
+signed range. Conditional swap + branch routing (tranche 3), then the assembly `denote = divstepRev`
+(tranche 4), remain.
 
 ## What tranche 1 proves (genuine, `denote`-level, general `n`)
 
@@ -172,5 +181,128 @@ theorem F4_injOn : Function.Injective (fun i : Fin 4 => F4 i) := by decide
 example :
     regValRange F4 (denote (shiftDown F4 3)
       (fun w => [false, true, false, true].getD w.val false)) 4 = 5 := by decide
+
+/-! ## Tranche 2: the signed integer arithmetic (`g ± f`)
+
+The divstep numerators `g - f` (branch A) and `g + f` (branch B) are ℤ operations (`f, g` go negative).
+`signedRep` is the two's-complement **balanced representative** of an `n`-bit unsigned readout, and
+`regValZ` the signed value of a register. The verified mod-`2^n` gadgets then realise signed ℤ
+arithmetic under a no-overflow hypothesis. -/
+
+/-- **The two's-complement (balanced) signed value** of an `n`-bit readout `z`. `signedRep n u = u` for
+`u` in the low half `[0, 2^{n-1})` and `u - 2^n` in the high half `[2^{n-1}, 2^n)` — the faithful
+`n`-bit two's-complement decoding, written uniformly as `(z + 2^{n-1}) mod 2^n - 2^{n-1}` so it depends
+only on `z mod 2^n` (`signedRep_congr`) and needs no bit indexing. -/
+def signedRep (n : ℕ) (z : ℤ) : ℤ := (z + 2 ^ (n - 1)) % 2 ^ n - 2 ^ (n - 1)
+
+/-- `signedRep n z ≡ z [ZMOD 2^n]`: the signed value is congruent to the raw readout mod `2^n`. -/
+theorem signedRep_modEq (n : ℕ) (z : ℤ) : signedRep n z ≡ z [ZMOD 2 ^ n] := by
+  unfold signedRep
+  calc (z + 2 ^ (n - 1)) % 2 ^ n - 2 ^ (n - 1)
+      ≡ (z + 2 ^ (n - 1)) - 2 ^ (n - 1) [ZMOD 2 ^ n] := (Int.mod_modEq _ _).sub_right _
+    _ = z := by ring
+
+/-- **`signedRep` depends only on the value mod `2^n`.** Congruent readouts have the same signed value —
+the reason mod-`2^n` register arithmetic is faithful to two's complement. -/
+theorem signedRep_congr (n : ℕ) {z w : ℤ} (h : z ≡ w [ZMOD 2 ^ n]) :
+    signedRep n z = signedRep n w := by
+  unfold signedRep
+  have hshift : (z + 2 ^ (n - 1)) % 2 ^ n = (w + 2 ^ (n - 1)) % 2 ^ n := h.add_right _
+  rw [hshift]
+
+/-- **`signedRep` fixes in-range values.** If `z` already lies in the signed range `[-2^{n-1}, 2^{n-1})`,
+it is its own two's-complement representative. This is the no-overflow fixpoint the arithmetic theorems
+land on. -/
+theorem signedRep_of_mem (n : ℕ) (hn : 1 ≤ n) {z : ℤ}
+    (hlo : -2 ^ (n - 1) ≤ z) (hhi : z < 2 ^ (n - 1)) : signedRep n z = z := by
+  unfold signedRep
+  have hpow : (2 : ℤ) ^ n = 2 ^ (n - 1) * 2 := by
+    rw [← pow_succ]; congr 1; omega
+  have h0 : 0 ≤ z + 2 ^ (n - 1) := by linarith
+  have h1 : z + 2 ^ (n - 1) < 2 ^ n := by rw [hpow]; linarith
+  rw [Int.emod_eq_of_lt h0 h1]; ring
+
+/-- **The signed (two's-complement) value of a register**: the balanced representative of its unsigned
+`n`-bit readout. `regValZ` is to signed arithmetic what `regValRange` is to unsigned. -/
+def regValZ (f : ℕ → Fin m) (s : State m) (n : ℕ) : ℤ := signedRep n (regValRange f s n : ℤ)
+
+/-- Casting a natural readout mod `2^n` into ℤ is congruent to the raw ℤ value mod `2^n`. The bridge
+that lets `signedRep_congr` consume the `% 2^n` in the verified gadget correctness statements. -/
+theorem natCast_mod_modEq (a : ℕ) (n : ℕ) : (((a % 2 ^ n : ℕ) : ℤ)) ≡ (a : ℤ) [ZMOD 2 ^ n] := by
+  refine Int.modEq_iff_dvd.mpr ⟨(a / 2 ^ n : ℕ), ?_⟩
+  have h : 2 ^ n * (a / 2 ^ n) + a % 2 ^ n = a := Nat.div_add_mod a (2 ^ n)
+  push_cast at h ⊢
+  linarith [h]
+
+/-- **Value-faithful signed ADDITION (the `g + f` numerator).** Under a no-overflow bound on the signed
+sum, the verified carry-clean adder `cuccaroAdd` computes `regValZ` addition: register `A` ends holding
+`regValZ A + regValZ B` at the SIGNED (two's-complement) level, not merely mod `2^n`. This is the
+divstep branch-B numerator `g + f` on a value-faithful circuit. Proof: `cuccaroAdd_correct` gives the
+unsigned `(uA+uB) mod 2^n`; `signedRep` collapses the mod (it depends only on the value mod `2^n`,
+`signedRep_congr` + `signedRep_modEq`), and the range hypothesis pins the result via `signedRep_of_mem`. -/
+theorem signedAdd_correct {n : ℕ} (L : CuccaroLayout m n) (s : State m) (hn : 1 ≤ n)
+    (hZ : s L.Z = false)
+    (hlo : -2 ^ (n - 1) ≤ regValZ L.A s n + regValZ L.B s n)
+    (hhi : regValZ L.A s n + regValZ L.B s n < 2 ^ (n - 1)) :
+    regValZ L.A (denote (cuccaroAdd L) s) n = regValZ L.A s n + regValZ L.B s n := by
+  set uA := regValRange L.A s n with huA
+  set uB := regValRange L.B s n with huB
+  have hres : regValRange L.A (denote (cuccaroAdd L) s) n = (uA + uB) % 2 ^ n :=
+    cuccaroAdd_correct L s hZ
+  -- congruences: the mod-2^n readout is congruent to the signed sum a + b
+  have hcong : (((uA + uB) % 2 ^ n : ℕ) : ℤ)
+      ≡ regValZ L.A s n + regValZ L.B s n [ZMOD 2 ^ n] := by
+    refine (natCast_mod_modEq (uA + uB) n).trans ?_
+    push_cast
+    exact ((signedRep_modEq n (uA : ℤ)).add (signedRep_modEq n (uB : ℤ))).symm
+  calc regValZ L.A (denote (cuccaroAdd L) s) n
+      = signedRep n (((uA + uB) % 2 ^ n : ℕ) : ℤ) := by unfold regValZ; rw [hres]
+    _ = signedRep n (regValZ L.A s n + regValZ L.B s n) := signedRep_congr n hcong
+    _ = regValZ L.A s n + regValZ L.B s n := signedRep_of_mem n hn hlo hhi
+
+/-- **Value-faithful signed SUBTRACTION (the `g - f` numerator).** Under a no-overflow bound on the
+signed difference, the verified borrow-chain subtractor `rippleSub` computes `regValZ` subtraction:
+the minuend register `B` ends holding `regValZ B - regValZ Sub` at the SIGNED level. This is the divstep
+branch-A numerator `g - f` on a value-faithful circuit. Proof mirrors `signedAdd_correct`, absorbing the
+`+ 2^n` guard of `rippleSub_correct` into the mod-`2^n` congruence. -/
+theorem signedSub_correct {n : ℕ} (L : SubLayout m n) (s : State m) (hn : 1 ≤ n)
+    (hBor0 : ∀ j, s (L.Bor j) = false)
+    (hlo : -2 ^ (n - 1) ≤ regValZ L.B s n - regValZ L.Sub s n)
+    (hhi : regValZ L.B s n - regValZ L.Sub s n < 2 ^ (n - 1)) :
+    regValZ L.B (denote (rippleSub L) s) n = regValZ L.B s n - regValZ L.Sub s n := by
+  set uB := regValRange L.B s n with huB
+  set uS := regValRange L.Sub s n with huS
+  have hres : regValRange L.B (denote (rippleSub L) s) n = (uB + 2 ^ n - uS) % 2 ^ n :=
+    rippleSub_correct L s hBor0
+  have hSlt : uS < 2 ^ n := huS ▸ regValRange_lt _ _ _
+  -- the modded nat readout, cast to ℤ, is congruent to the signed difference b - c
+  have hcong : (((uB + 2 ^ n - uS) % 2 ^ n : ℕ) : ℤ)
+      ≡ regValZ L.B s n - regValZ L.Sub s n [ZMOD 2 ^ n] := by
+    refine (natCast_mod_modEq (uB + 2 ^ n - uS) n).trans ?_
+    have hcast : ((uB + 2 ^ n - uS : ℕ) : ℤ) = (uB : ℤ) + 2 ^ n - uS := by
+      have hle : uS ≤ uB + 2 ^ n := by omega
+      push_cast [Nat.cast_sub hle]
+      ring
+    rw [hcast]
+    -- (uB + 2^n - uS) ≡ (uB - uS) ≡ (a - b) [ZMOD 2^n]
+    have h1 : (uB : ℤ) + 2 ^ n - uS ≡ (uB : ℤ) - uS [ZMOD 2 ^ n] :=
+      Int.modEq_iff_dvd.mpr ⟨-1, by ring⟩
+    refine h1.trans ?_
+    exact ((signedRep_modEq n (uB : ℤ)).sub (signedRep_modEq n (uS : ℤ))).symm
+  calc regValZ L.B (denote (rippleSub L) s) n
+      = signedRep n (((uB + 2 ^ n - uS) % 2 ^ n : ℕ) : ℤ) := by unfold regValZ; rw [hres]
+    _ = signedRep n (regValZ L.B s n - regValZ L.Sub s n) := signedRep_congr n hcong
+    _ = regValZ L.B s n - regValZ L.Sub s n := signedRep_of_mem n hn hlo hhi
+
+/-! ### Signed-decoder `decide` witnesses (anti-hollow) -/
+
+/-- `0b1110 = 14` as a 4-bit two's-complement number is `-2`. -/
+example : signedRep 4 14 = -2 := by decide
+
+/-- `0b0011 = 3` (low half) decodes to `+3`. -/
+example : signedRep 4 3 = 3 := by decide
+
+/-- `0b1000 = 8` is the most-negative 4-bit value `-8`. -/
+example : signedRep 4 8 = -8 := by decide
 
 end ECDLP.Safegcd.Circuit
