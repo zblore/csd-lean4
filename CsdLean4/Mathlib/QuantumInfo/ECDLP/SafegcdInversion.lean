@@ -55,7 +55,10 @@ Toffoli-FREE (`shiftDown_toffoli`, refining the `cuccaroModDouble` `6n+4` halvin
 `0`). Tranche 2 (signed arithmetic): `signedRep`/`regValZ` (two's-complement decoder) +
 `signedAdd_correct` / `signedSub_correct` — under a no-overflow bound the VERIFIED mod-`2^n` gadgets
 (`cuccaroAdd`, `rippleSub`) realise the divstep numerators `g+f` / `g-f` at the signed-ℤ level.
-Remaining: conditional swap + branch routing (3), assembly `= divstepRev` (4).
+Tranche 3 (branch control): `cswap` (Fredkin) + `condSwapReg` — the value-faithful controlled register
+swap (`condSwapReg_swaps`: `F,G` exchange iff the control is set, the branch-A `f ↔ g`), plus the `Odd g`
+branch test as a wire-0 read (`regValRange_odd_iff` / `regValZ_odd_iff`). Remaining: the `0 < δ` sign read
++ branch-bit ancilla synthesis + assembly `= divstepRev` (4).
 
 ## Route taken for value-correctness (stated honestly)
 

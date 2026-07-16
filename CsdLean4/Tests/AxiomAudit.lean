@@ -7160,6 +7160,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.Circuit.signedRep_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedRep_of_mem
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 3 (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the branch control. cswap (Fredkin) + condSwapReg: the value-faithful controlled register swap --
+-- condSwapReg_swaps proves F,G exchange bitwise exactly when the control is set (divstep branch-A
+-- `f ↔ g`), one Toffoli/bit (condSwapReg_toffoli). regValRange_odd_iff / regValZ_odd_iff: the `Odd g`
+-- branch test IS a read of wire 0 (parity = low bit, interpretation-independent). Remaining: the `0<δ`
+-- sign read + branch-bit ancilla synthesis + assembly = divstepRev (tranche 4).
+/-- info: 'ECDLP.Safegcd.Circuit.cswap_correct_general' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.cswap_correct_general
+
+/-- info: 'ECDLP.Safegcd.Circuit.condSwapReg_swaps' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.condSwapReg_swaps
+
+/-- info: 'ECDLP.Safegcd.Circuit.regValZ_odd_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.regValZ_odd_iff
+
+/-- info: 'ECDLP.Safegcd.Circuit.condSwapReg_toffoli' depends on axioms: [propext] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.condSwapReg_toffoli
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

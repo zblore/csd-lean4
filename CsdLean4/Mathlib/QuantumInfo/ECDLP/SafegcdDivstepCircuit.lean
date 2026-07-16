@@ -305,4 +305,156 @@ example : signedRep 4 3 = 3 := by decide
 /-- `0b1000 = 8` is the most-negative 4-bit value `-8`. -/
 example : signedRep 4 8 = -8 := by decide
 
+/-! ## Tranche 3: the branch control — conditional swap `f ↔ g` and the parity test
+
+The divstep's branch A (`0 < δ ∧ Odd g`) sets `f' = g` — a conditional swap of the `f` and `g`
+registers, controlled by a branch bit. This tranche builds that controlled swap value-faithfully, plus
+the `Odd g` branch test as a bit read (`regValRange_odd_iff` / `regValZ_odd_iff`). The remaining control
+input `0 < δ` is a sign read on the `δ` register; combined with `Odd g` it forms the branch-A control
+bit, whose ancilla synthesis + the full conditional assembly is tranche 4. -/
+
+/-- **The Fredkin (controlled-swap) gate** on target wires `x, y` with control `c`:
+`[CX x y, CCX c y x, CX x y]`. When `c` is set it exchanges `x` and `y`; when clear it is the identity
+(`cswap_correct_general`). One Toffoli. -/
+def cswap (c x y : Fin m) : Circuit m := [.CX x y, .CCX c y x, .CX x y]
+
+/-- **`cswap` correctness (general `Fin m`).** For pairwise-distinct `c, x, y`: the targets `x, y` are
+exchanged exactly when the control `c` is set, and `c` itself is preserved. -/
+theorem cswap_correct_general {c x y : Fin m} (hcx : c ≠ x) (hcy : c ≠ y) (hxy : x ≠ y)
+    (s : State m) :
+    denote (cswap c x y) s x = (if s c then s y else s x)
+      ∧ denote (cswap c x y) s y = (if s c then s x else s y)
+      ∧ denote (cswap c x y) s c = s c := by
+  have hxc := hcx.symm; have hyc := hcy.symm; have hyx := hxy.symm
+  refine ⟨?_, ?_, ?_⟩ <;>
+    simp only [cswap, denote_cons, denote_nil, denoteGate] <;>
+    simp_all <;>
+    cases s c <;> cases s x <;> cases s y <;> simp_all
+
+/-- **Frame lemma for `cswap`.** A wire distinct from `c, x, y` is untouched. -/
+theorem cswap_apply_of_ne {c x y w : Fin m} (hc : w ≠ c) (hx : w ≠ x) (hy : w ≠ y) (s : State m) :
+    denote (cswap c x y) s w = s w := by
+  apply denote_apply_of_forall_not_mem
+  intro g hg
+  simp only [cswap, List.mem_cons, List.not_mem_nil, or_false] at hg
+  rcases hg with rfl | rfl | rfl <;> simp_all [gateWires]
+
+/-- **The controlled register swap** of the `n`-bit registers `F` and `G`, controlled by wire `c`: one
+Fredkin gate per bit. When `c` is set it exchanges the two registers; when clear it is the identity
+(`condSwapReg_swaps`). This is the divstep branch-A move `f ↔ g`. -/
+def condSwapReg (c : Fin m) (F G : ℕ → Fin m) : ℕ → Circuit m
+  | 0 => []
+  | k + 1 => condSwapReg c F G k ++ cswap c (F k) (G k)
+
+/-- The controlled register swap costs `n` Toffolis (one CCX per bit). -/
+theorem condSwapReg_toffoli (c : Fin m) (F G : ℕ → Fin m) (n : ℕ) :
+    (circuitCost (condSwapReg c F G n)).toffoli = n := by
+  induction n with
+  | zero => rfl
+  | succ k ih =>
+    rw [condSwapReg, cost_comp_toffoli_count, ih]
+    rfl
+
+/-- **Wire action of the controlled register swap (induction core).** For a disjoint, injective layout,
+after the `k`-bit controlled swap: positions `i < k` of `F` and `G` are exchanged iff the control `c` is
+set (and unchanged otherwise), the control `c` is preserved, and positions `i ≥ k` are untouched. -/
+theorem condSwapReg_wire {c : Fin m} {F G : ℕ → Fin m}
+    (hcF : ∀ i, c ≠ F i) (hcG : ∀ i, c ≠ G i) (hFG : ∀ i j, F i ≠ G j)
+    (hF : Function.Injective F) (hG : Function.Injective G) (s : State m) (k : ℕ) :
+    (∀ i, i < k → denote (condSwapReg c F G k) s (F i) = if s c then s (G i) else s (F i))
+      ∧ (∀ i, i < k → denote (condSwapReg c F G k) s (G i) = if s c then s (F i) else s (G i))
+      ∧ denote (condSwapReg c F G k) s c = s c
+      ∧ (∀ i, k ≤ i → denote (condSwapReg c F G k) s (F i) = s (F i)
+          ∧ denote (condSwapReg c F G k) s (G i) = s (G i)) := by
+  induction k with
+  | zero =>
+    refine ⟨by omega, by omega, rfl, ?_⟩
+    intro i _; exact ⟨rfl, rfl⟩
+  | succ k ih =>
+    obtain ⟨ihA, ihB, ihC, ihD⟩ := ih
+    have hstep : ∀ w, denote (condSwapReg c F G (k + 1)) s w
+        = denote (cswap c (F k) (G k)) (denote (condSwapReg c F G k) s) w := by
+      intro w; rw [condSwapReg, denote_append]
+    set t := denote (condSwapReg c F G k) s with ht
+    obtain ⟨htFk, htGk⟩ := ihD k (le_refl k)
+    -- cswap on the top bit, over the k-chain result t
+    have hsw := cswap_correct_general (hcF k) (hcG k) (hFG k k) t
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · -- F positions i < k+1
+      intro i hi
+      rw [hstep]
+      rcases Nat.lt_succ_iff_lt_or_eq.mp hi with hlt | rfl
+      · rw [cswap_apply_of_ne (hcF i).symm (fun h => by exact absurd (hF h) (by omega))
+          (fun h => hFG i k h)]
+        exact ihA i hlt
+      · rw [hsw.1, ihC, htFk, htGk]
+    · -- G positions i < k+1
+      intro i hi
+      rw [hstep]
+      rcases Nat.lt_succ_iff_lt_or_eq.mp hi with hlt | rfl
+      · rw [cswap_apply_of_ne (hcG i).symm (fun h => (hFG k i) h.symm)
+          (fun h => by exact absurd (hG h) (by omega))]
+        exact ihB i hlt
+      · rw [hsw.2.1, ihC, htFk, htGk]
+    · -- control preserved
+      rw [hstep, hsw.2.2]; exact ihC
+    · -- untouched high positions i ≥ k+1
+      intro i hi
+      constructor
+      · rw [hstep, cswap_apply_of_ne (hcF i).symm (fun h => by exact absurd (hF h) (by omega))
+          (fun h => hFG i k h)]
+        exact (ihD i (by omega)).1
+      · rw [hstep, cswap_apply_of_ne (hcG i).symm (fun h => (hFG k i) h.symm)
+          (fun h => by exact absurd (hG h) (by omega))]
+        exact (ihD i (by omega)).2
+
+/-- **The controlled register swap exchanges the registers when the control is set.** For a set control
+`c`, `F` and `G` swap bitwise, hence their `regValRange` (and `regValZ`) readouts swap. This is the
+divstep branch-A `f ↔ g` on a value-faithful circuit. -/
+theorem condSwapReg_swaps {c : Fin m} {F G : ℕ → Fin m}
+    (hcF : ∀ i, c ≠ F i) (hcG : ∀ i, c ≠ G i) (hFG : ∀ i j, F i ≠ G j)
+    (hF : Function.Injective F) (hG : Function.Injective G) (s : State m) (hc : s c = true)
+    (n : ℕ) :
+    (∀ i, i < n → denote (condSwapReg c F G n) s (F i) = s (G i))
+      ∧ (∀ i, i < n → denote (condSwapReg c F G n) s (G i) = s (F i)) := by
+  obtain ⟨hA, hB, _, _⟩ := condSwapReg_wire hcF hcG hFG hF hG s n
+  refine ⟨fun i hi => ?_, fun i hi => ?_⟩
+  · rw [hA i hi, if_pos hc]
+  · rw [hB i hi, if_pos hc]
+
+/-! ### The `Odd g` branch test as a bit read -/
+
+/-- **Parity is the bottom bit.** For a nonempty register, `regValRange` is odd iff wire `0` is set —
+the divstep's `Odd g` branch test is exactly a read of the register's low bit. Parity is
+interpretation-independent, so this holds for the signed value too (`regValZ_odd_iff`). -/
+theorem regValRange_odd_iff (f : ℕ → Fin m) (s : State m) {n : ℕ} (hn : 1 ≤ n) :
+    Odd (regValRange f s n) ↔ s (f 0) = true := by
+  obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+  rw [regValRange_succ' f s k, Nat.odd_add]
+  have heven : Even (2 * regValRange (fun i => f (i + 1)) s k) := ⟨_, two_mul _⟩
+  simp only [heven, iff_true]
+  cases s (f 0) <;> simp
+
+/-- **The signed `Odd g` test.** The signed register value `regValZ` is odd iff wire `0` is set — the
+divstep condition `Odd g` (on the signed `g`) is the same low-bit read, since `regValZ ≡ regValRange`
+mod `2^n` and `2 ∣ 2^n` for `n ≥ 1`. -/
+theorem regValZ_odd_iff (f : ℕ → Fin m) (s : State m) {n : ℕ} (hn : 1 ≤ n) :
+    Odd (regValZ f s n) ↔ s (f 0) = true := by
+  have hmod := signedRep_modEq n (regValRange f s n : ℤ)
+  have hdvd2 : (2 : ℤ) ∣ ((regValRange f s n : ℤ) - signedRep n (regValRange f s n)) :=
+    dvd_trans (dvd_pow_self 2 (by omega : n ≠ 0)) (Int.modEq_iff_dvd.mp hmod)
+  have h2' : signedRep n (regValRange f s n) % 2 = (regValRange f s n : ℤ) % 2 :=
+    Int.modEq_iff_dvd.mpr hdvd2
+  rw [regValZ, Int.odd_iff, h2', ← Int.odd_iff, Int.odd_coe_nat]
+  exact regValRange_odd_iff f s hn
+
+/-- Controlled swap of `F i = 2i`, `G i = 2i+1` on control wire `6`, `n = 3` bits, control SET: the two
+`3`-bit registers holding `5` and `2` are exchanged (readouts swap). Machine-checked through `denote`. -/
+example :
+    let s : State 7 := fun w => [true, false, false, true, false, true, true].getD w.val false
+    let F : ℕ → Fin 7 := fun i => ⟨(2 * i) % 7, Nat.mod_lt _ (by norm_num)⟩
+    let G : ℕ → Fin 7 := fun i => ⟨(2 * i + 1) % 7, Nat.mod_lt _ (by norm_num)⟩
+    regValRange F (denote (condSwapReg 6 F G 3) s) 3 = regValRange G s 3
+      ∧ regValRange G (denote (condSwapReg 6 F G 3) s) 3 = regValRange F s 3 := by decide
+
 end ECDLP.Safegcd.Circuit
