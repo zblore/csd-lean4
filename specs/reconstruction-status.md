@@ -70,7 +70,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
 | **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — `unified_choiceA_capstone` (FND-T5) |
-| **L7** ★ | Born weights derived FROM the flow | **OPEN** — the sector is posited (A5/FND-1) |
+| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`) |
 
 ## 4. The forward reconstruction — what each pillar delivers
 
@@ -118,11 +118,20 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 ## 7. The honest frontier — what is NOT claimed
 
 * **A5 / FND-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
-  sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade. **Localized
-  partial** (`FND/LocalisedTypicality.lean`): A5 is discharged AT sectors carrying the full `U(N)`
-  symmetry — the typicality measure and Born weights are symmetry-forced there (`localised_A5_capstone`,
-  `region_measure_symmetry_forced`) — so A5 need only hold "in the appropriate places". Residual: the
-  bare flow is one one-parameter subgroup, not all of `U(N)`; the symmetry is still construction data.
+  sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade. It now has
+  **both a proved boundary and a localized partial**:
+  * **No-go (why the gap is real, not a formalisation debt)** (`FND/A5NoGo.lean`): a single projective
+    unitary flow does NOT uniquely determine an invariant measure — a flow with two distinct fixed rays
+    admits (at least) two distinct invariant probability measures, so at least one is not `μ_FS`
+    (`flow_admits_invariant_ne_fubiniStudy`), exhibited on the concrete nontrivial phase-flip
+    `diag(1,-1)` on `ℂℙ¹` (`phaseFlip_admits_invariant_ne_fubiniStudy`). So "A5 is posited" is a proved
+    statement about the limit: the deterministic flow underdetermines the sector's typicality measure.
+  * **Localized partial (what DOES pin it)** (`FND/LocalisedTypicality.lean`): A5 is discharged AT sectors
+    carrying the full `U(N)` symmetry — the typicality measure and Born weights are symmetry-forced there
+    (`localised_A5_capstone`, `region_measure_symmetry_forced`) — so A5 need only hold "in the appropriate
+    places". Residual: the bare flow is one one-parameter subgroup, not all of `U(N)`; the symmetry is
+    still construction data. Together: a single flow is provably insufficient; the full symmetry is
+    provably sufficient — the frontier is exactly the gap between them.
 * **P3 "why ⊗" — SOLVED via local tomography** (`FND/TensorSolved.lean` `composite_is_tensor_product`):
   the composite observable algebra IS the tensor product of the local ones — `compositeTensorEquiv` is a
   bijective linear iso `M_{NA} ⊗ M_{NB} ≃ M_{NA·NB}`, `U ⊗ₜ Q ↦ aliceOp U · bobOp Q`. Locality

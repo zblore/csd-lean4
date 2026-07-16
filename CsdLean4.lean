@@ -313,6 +313,7 @@ import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.TensorGeneration
 import CsdLean4.FND.TensorSolved
 import CsdLean4.FND.LocalisedTypicality
+import CsdLean4.FND.A5NoGo
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders

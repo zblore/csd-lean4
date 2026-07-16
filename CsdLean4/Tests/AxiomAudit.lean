@@ -271,6 +271,7 @@ import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.TensorGeneration
 import CsdLean4.FND.TensorSolved
 import CsdLean4.FND.LocalisedTypicality
+import CsdLean4.FND.A5NoGo
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
@@ -7397,6 +7398,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.FND.localised_A5_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.localised_A5_capstone
+
+-- FND A5 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
+-- two distinct fixed rays admits an invariant probability measure /= mu_FS (the two fixed-ray Diracs), so a
+-- single deterministic flow does NOT pin the sector's typicality measure -- "A5 is posited" is a theorem
+-- about the limit, not a formalisation gap. phaseFlip_admits_invariant_ne_fubiniStudy exhibits it on the
+-- concrete nontrivial flow diag(1,-1) on CP^1. Positive companion: region_measure_symmetry_forced (full U(N)
+-- symmetry DOES pin mu_FS). Matches Paper C (S1.4): Sigma, pi, the A5 sector are assumed, not derived.
+/-- info: 'CSD.FND.flow_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flow_admits_invariant_ne_fubiniStudy
+
+/-- info: 'CSD.FND.phaseFlip_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.phaseFlip_admits_invariant_ne_fubiniStudy
 
 -- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
 -- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),
