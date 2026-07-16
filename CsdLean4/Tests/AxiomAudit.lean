@@ -7178,6 +7178,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.Circuit.condSwapReg_toffoli' depends on axioms: [propext] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.condSwapReg_toffoli
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4a (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the SIGNED halving. Building the assembly exposed that tranche 1's shiftDown halves the UNSIGNED
+-- magnitude (fills the vacated top with 0), but the divstep halves SIGNED numerators (g±f)/2 (g,f go
+-- negative) -> needs a sign-EXTENDING right shift. signedHalve = shiftDown + one sign-copy CNOT;
+-- signedHalve_correct: regValZ ÷2 for an even register (still Toffoli-free). Supporting two's-complement
+-- lemmas: signedRep_high (high-half value = v - 2^W), regValZ_signBit (signed = lowbits - sign·2^n).
+-- Remaining tranche-4 residual: g-update composition (signedSub;signedHalve), the δ-counter arithmetic
+-- layer + `0<δ` read, branch-bit synthesis + conditional selection, then denote = divstepRev.
+/-- info: 'ECDLP.Safegcd.Circuit.signedHalve_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedHalve_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.regValZ_signBit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.regValZ_signBit
+
+/-- info: 'ECDLP.Safegcd.Circuit.signedRep_high' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedRep_high
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

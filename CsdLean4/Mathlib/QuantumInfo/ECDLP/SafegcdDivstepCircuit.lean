@@ -457,4 +457,112 @@ example :
     regValRange F (denote (condSwapReg 6 F G 3) s) 3 = regValRange G s 3
       ∧ regValRange G (denote (condSwapReg 6 F G 3) s) 3 = regValRange F s 3 := by decide
 
+/-! ## Tranche 4a: the SIGNED halving (sign-extending shift)
+
+Tranche 1's `shiftDown` halves the UNSIGNED magnitude (it fills the vacated top bit with `0`). The
+divstep halves SIGNED numerators `(g ± f)/2` where `g, f` go negative, so it needs an ARITHMETIC
+(sign-extending) right shift — one that keeps the sign bit. This section builds it.
+
+First, two two's-complement facts: `signedRep_high` evaluates `signedRep` on the high half, and
+`regValZ_signBit` decomposes the signed value as `low bits − sign·2^n` — the workhorse for reasoning
+about signs (and the eventual `0 < δ` read). -/
+
+/-- **`signedRep` on the high half.** For `v ∈ [2^{W-1}, 2^W)` (top bit set), the two's-complement value
+is `v - 2^W` (negative). Complements `signedRep_of_mem` (the low half, where it is `v`). -/
+theorem signedRep_high (W : ℕ) (hW : 1 ≤ W) {v : ℤ} (hlo : 2 ^ (W - 1) ≤ v) (hhi : v < 2 ^ W) :
+    signedRep W v = v - 2 ^ W := by
+  have hpow : (2 : ℤ) ^ W = 2 ^ (W - 1) * 2 := by rw [← pow_succ]; congr 1; omega
+  have hcong : v ≡ v - 2 ^ W [ZMOD 2 ^ W] := Int.modEq_iff_dvd.mpr ⟨-1, by ring⟩
+  rw [signedRep_congr W hcong]
+  apply signedRep_of_mem W hW <;> rw [hpow] <;> linarith
+
+/-- **The two's-complement sign decomposition.** The signed register value is its low `n` bits minus
+its sign bit weighted `2^n`: `regValZ f s (n+1) = regValRange f s n - (bit n)·2^n`. Proof: split the top
+bit; the low half (`bit n = 0`) uses `signedRep_of_mem`, the high half (`bit n = 1`) uses
+`signedRep_high`. -/
+theorem regValZ_signBit (f : ℕ → Fin m) (s : State m) (n : ℕ) :
+    regValZ f s (n + 1) = (regValRange f s n : ℤ) - (s (f n)).toNat * 2 ^ n := by
+  have hLlt : regValRange f s n < 2 ^ n := regValRange_lt _ _ _
+  rw [regValZ, regValRange_succ]
+  push_cast
+  set L : ℤ := (regValRange f s n : ℤ) with hL
+  have hLlt' : L < 2 ^ n := by rw [hL]; exact_mod_cast hLlt
+  have hL0 : 0 ≤ L := by rw [hL]; positivity
+  cases s (f n) with
+  | false =>
+    simp only [Bool.toNat_false, Nat.cast_zero, zero_mul, add_zero, sub_zero]
+    exact signedRep_of_mem (n + 1) (by omega) (by simp only [Nat.add_sub_cancel]; linarith)
+      (by simpa using hLlt')
+  | true =>
+    simp only [Bool.toNat_true, Nat.cast_one, one_mul]
+    rw [signedRep_high (n + 1) (by omega) (by simpa using (by linarith : (2:ℤ)^n ≤ L + 2 ^ n))
+      (by rw [pow_succ]; linarith)]
+    ring
+
+/-- **The signed (sign-extending) halving gadget** on an `(n+1)`-bit register: the tranche-1 shift
+`shiftDown` followed by one CNOT copying the sign bit up (`CX (F (n-1)) (F n)`). Where `shiftDown` alone
+fills the vacated top with `0` (unsigned `÷2`), this restores the sign, giving a two's-complement
+arithmetic right shift. One extra CNOT, still Toffoli-free. -/
+def signedHalve (F : ℕ → Fin m) (n : ℕ) : Circuit m := shiftDown F n ++ [.CX (F (n - 1)) (F n)]
+
+/-- The signed halving is Toffoli-free (`shiftDown` is, and a CNOT adds none). -/
+theorem signedHalve_toffoli (F : ℕ → Fin m) (n : ℕ) :
+    (circuitCost (signedHalve F n)).toffoli = 0 := by
+  rw [signedHalve, cost_comp_toffoli_count, shiftDown_toffoli]; rfl
+
+/-- **Exact signed halving of an EVEN register.** For an even register (bottom bit `false`), the
+sign-extending shift computes signed `÷2` at the two's-complement level: `regValZ` is halved. This is
+the divstep's halving on the SIGNED numerators `(g ± f)/2` (which go negative) — the piece tranche 1's
+unsigned `halve_correct` did not cover. Proof: the shift moves bits `1..n` down and the CNOT restores
+the sign bit (the vacated bit is `0`, even); `regValZ_signBit` then reduces both sides to the sign
+decomposition, and `regValRange_succ'/_succ` give `regValZ s = 2 · regValZ s'`. -/
+theorem signedHalve_correct (F : ℕ → Fin m) (hF : Function.Injective F) (s : State m) {n : ℕ}
+    (hn : 1 ≤ n) (hbot : s (F 0) = false) :
+    regValZ F (denote (signedHalve F n) s) (n + 1) = regValZ F s (n + 1) / 2 := by
+  -- sign bit is restored: s' (F n) = s (F n)
+  have hsFn : denote (signedHalve F n) s (F n) = s (F n) := by
+    rw [signedHalve, denote_append]
+    have hne : F (n - 1) ≠ F n := fun h => by have := hF h; omega
+    simp only [denote_cons, denote_nil, denoteGate, if_neg hne, Function.update_self]
+    have h1 : denote (shiftDown F n) s (F (n - 1)) = s (F n) := by
+      have := shiftDown_apply_lt F hF s (i := n - 1) (by omega : n - 1 < n)
+      rwa [Nat.sub_add_cancel hn] at this
+    rw [h1, shiftDown_apply_top F hF s n, hbot]
+    simp
+  -- low n bits: shifted down, so they equal the shifted register
+  have hR' : regValRange F (denote (signedHalve F n) s) n = regValRange (fun i => F (i + 1)) s n := by
+    unfold regValRange
+    apply Finset.sum_congr rfl
+    intro i hi
+    rw [Finset.mem_range] at hi
+    have hsi : denote (signedHalve F n) s (F i) = s (F (i + 1)) := by
+      rw [signedHalve, denote_append]
+      have hne : F i ≠ F n := fun h => by have := hF h; omega
+      have hne2 : F (n - 1) ≠ F n := fun h => by have := hF h; omega
+      simp only [denote_cons, denote_nil, denoteGate, if_neg hne2, Function.update_of_ne hne]
+      exact shiftDown_apply_lt F hF s hi
+    rw [hsi]
+  -- the arithmetic key: regValRange F s n + sign·2^n = 2 · (low shifted register)
+  have e2 : regValRange F s (n + 1) = 2 * regValRange (fun i => F (i + 1)) s n := by
+    rw [regValRange_succ' F s n, hbot]; simp
+  have hkey : (regValRange F s n : ℤ) + (s (F n)).toNat * 2 ^ n
+      = 2 * (regValRange (fun i => F (i + 1)) s n : ℤ) := by
+    have := (regValRange_succ F s n).symm.trans e2
+    exact_mod_cast this
+  -- assemble via the sign decomposition of both states
+  have hlhs : regValZ F (denote (signedHalve F n) s) (n + 1)
+      = (regValRange (fun i => F (i + 1)) s n : ℤ) - (s (F n)).toNat * 2 ^ n := by
+    rw [regValZ_signBit F (denote (signedHalve F n) s) n, hR', hsFn]
+  rw [hlhs, regValZ_signBit F s n]
+  have hstep : (regValRange F s n : ℤ) - (s (F n)).toNat * 2 ^ n
+      = 2 * ((regValRange (fun i => F (i + 1)) s n : ℤ) - (s (F n)).toNat * 2 ^ n) := by
+    linarith [hkey]
+  rw [hstep, Int.mul_ediv_cancel_left _ (by norm_num : (2 : ℤ) ≠ 0)]
+
+/-- `-6 = 0b1010` as a 4-bit two's-complement value halves (signed) to `-3 = 0b1101`: the
+sign-extending shift on the register holding `-6` decodes to `-3`. Machine-checked through `denote`. -/
+example :
+    regValZ F4 (denote (signedHalve F4 3)
+      (fun w => [false, true, false, true].getD w.val false)) 4 = -3 := by decide
+
 end ECDLP.Safegcd.Circuit

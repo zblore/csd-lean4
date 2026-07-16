@@ -57,8 +57,12 @@ Toffoli-FREE (`shiftDown_toffoli`, refining the `cuccaroModDouble` `6n+4` halvin
 (`cuccaroAdd`, `rippleSub`) realise the divstep numerators `g+f` / `g-f` at the signed-ℤ level.
 Tranche 3 (branch control): `cswap` (Fredkin) + `condSwapReg` — the value-faithful controlled register
 swap (`condSwapReg_swaps`: `F,G` exchange iff the control is set, the branch-A `f ↔ g`), plus the `Odd g`
-branch test as a wire-0 read (`regValRange_odd_iff` / `regValZ_odd_iff`). Remaining: the `0 < δ` sign read
-+ branch-bit ancilla synthesis + assembly `= divstepRev` (4).
+branch test as a wire-0 read (`regValRange_odd_iff` / `regValZ_odd_iff`). Tranche 4a (signed halving):
+building the assembly exposed that tranche 1's `shiftDown` halves the UNSIGNED magnitude, but the divstep
+halves SIGNED numerators `(g±f)/2` (`g,f` go negative) — so `signedHalve` (a sign-extending shift) +
+`signedHalve_correct` (`regValZ ÷2` for an even register), with `signedRep_high` / `regValZ_signBit` the
+two's-complement support. Remaining: the g-update composition + the `δ`-counter arithmetic layer + `0<δ`
+read + branch-bit synthesis + assembly `= divstepRev`.
 
 ## Route taken for value-correctness (stated honestly)
 
