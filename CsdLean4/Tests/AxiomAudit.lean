@@ -60,6 +60,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
