@@ -62,6 +62,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack

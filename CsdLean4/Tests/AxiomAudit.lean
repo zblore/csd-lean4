@@ -7128,6 +7128,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.divstepIter_bezout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.divstepIter_bezout
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 1 (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the value-faithful divstep bit-circuit (denote = divstep) opened at its exact-halving primitive.
+-- shiftDown is a concrete `n`-swap Circuit; halve_correct proves it computes `÷2` on an EVEN register
+-- at the `denote`/regValRange level (general n) -- the divstep's third register update, value-faithful
+-- (the divstepProxyGadget above is only a modular COST proxy). shiftDown_toffoli: the halving is
+-- Toffoli-FREE (pure wire permutation), refining divstepToffoli's `cuccaroModDouble` 6n+4 overcount.
+-- Remaining tranches: signed subtraction (2), conditional swap + branch routing (3), assembly = divstepRev (4).
+/-- info: 'ECDLP.Safegcd.Circuit.halve_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.halve_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.shiftDown_apply_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.shiftDown_apply_lt
+
+/-- info: 'ECDLP.Safegcd.Circuit.shiftDown_toffoli' depends on axioms: [propext] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.shiftDown_toffoli
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

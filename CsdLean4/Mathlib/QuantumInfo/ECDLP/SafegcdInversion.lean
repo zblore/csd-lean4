@@ -48,6 +48,11 @@ inversion trusted-not-verified: (i) the TERMINATION-COUNT bound (that `g` DOES r
 Bernstein–Yang worst case `⌊(49·bits+80)/17⌋ ≈ 2.882·bits ≤ 3·bits` — their computer-assisted
 transition-matrix argument, not formalised), and (ii) the reversible BIT-CIRCUIT whose denotation
 equals `divstep` (the `divstepToffoli` op-count model below is over this not-yet-exhibited circuit).
+**Residue (ii) is now OPENED, tranche 1** (`SafegcdDivstepCircuit.lean`, 2026-07-16): the divstep's
+exact-halving primitive is exhibited as a concrete `n`-swap `Circuit` with `denote`-level correctness
+`ECDLP.Safegcd.Circuit.halve_correct` (an even register decodes to `regValRange … / 2`), and it is
+Toffoli-FREE (`shiftDown_toffoli`), refining the `cuccaroModDouble` `6n+4` halving overcount below to
+`0`. Remaining: signed subtraction (2), conditional swap + branch routing (3), assembly `= divstepRev` (4).
 
 ## Route taken for value-correctness (stated honestly)
 
