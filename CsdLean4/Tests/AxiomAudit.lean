@@ -284,6 +284,7 @@ import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
 import CsdLean4.FND.ConditionalUpdate
 import CsdLean4.FND.MixedState
+import CsdLean4.FND.MixedEnsemble
 
 /-!
 # Axiom regression suite
@@ -7756,5 +7757,28 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 /-- info: 'CSD.FND.isPure_iff_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.isPure_iff_trace_sq_one
+
+-- MixedEnsemble (#8 A+B, 2026-07-17): the mixed-state / ensemble representation. A -- finite ensembles:
+-- ensemble w ρ = ∑ᵢ wᵢρᵢ (∑wᵢ=1, wᵢ≥0) is a density operator via posSemidef_sum; traceForm_ensemble is
+-- the affine Born rule over the whole ensemble, Tr((∑wᵢρᵢ)E) = ∑wᵢTr(ρᵢE) (the many-component
+-- traceForm_mix). B -- spectral ensemble decomposition: density_eq_eigen_ensemble (ρ = ∑λᵢ|eᵢ⟩⟨eᵢ| via
+-- the Hermitian spectral theorem), eigenvalues_isProbability (λ a probability distribution),
+-- density_isPureEnsemble (every density operator IS a convex ensemble of pure states), and
+-- traceForm_eq_pureEnsemble / mixedEnsemble_capstone (the Born rule of a mixed state is the
+-- eigenvalue-weighted average of the pure Born rules).
+/-- info: 'CSD.FND.ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ensemble
+
+/-- info: 'CSD.FND.traceForm_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.traceForm_ensemble
+
+/-- info: 'CSD.FND.density_eq_eigen_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.density_eq_eigen_ensemble
+
+/-- info: 'CSD.FND.density_isPureEnsemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.density_isPureEnsemble
+
+/-- info: 'CSD.FND.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixedEnsemble_capstone
 
 end CSD.Tests.AxiomAudit

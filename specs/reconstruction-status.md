@@ -58,7 +58,7 @@ B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
 | T6 | Unique contextual outcome a.e. | `vnDeisolationModel_ae_total` | proved |
 | T7 | General conditional update | `conditionalUpdate_capstone` | proved |
 | T8 | Lüders update | `luders_capstone` (sharp special case of T7) | proved |
-| T9 | Mixed states | `mixedState_capstone`, `isPure_iff_trace_sq_one` | proved |
+| T9 | Mixed states | `mixedState_capstone`, `isPure_iff_trace_sq_one`; ensemble #8 A+B: `traceForm_ensemble`, `density_isPureEnsemble`, `mixedEnsemble_capstone` | proved (ontic-side #8 C open) |
 | T10 | POVM by dilation | `POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical` | proved |
 | T11 | Composite probabilities | joint Born-frequency capstones | per-instance (P3-gated for sector-intrinsic) |
 | T12 | Entangled predictions | = T14 | per-instance |

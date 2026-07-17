@@ -56,7 +56,11 @@ reconstruction content.
 
 ## Tier 4 — OPEN
 
-* full mixed-state / ensemble representation (#8) — only pure-state Born content is closed here;
+* mixed-state / ensemble representation (#8): the statistical side is now closed — finite ensembles and
+  the spectral decomposition (`FND/MixedEnsemble.lean`: every density operator is a convex ensemble of
+  pure states, Born rule = eigenvalue-weighted average of pure Born rules), #8 A+B. What remains open is
+  #8 C — the ONTIC-side mixed representation on this unified model (a classical mixture over ontic
+  preparations reproducing `Tr(ρ E)`), which would add a `mixed_born_frequency` field here;
 * the ECDLP circuit track's capstone `denote = divstepRev` + termination (`ECDLP/SafegcdDivstepCircuit.lean`)
   — independent of this QM closure, tracked separately.
 
