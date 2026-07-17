@@ -7590,6 +7590,14 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'CSD.FND.unifiedFlowedSemantics_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedFlowedSemantics_zero
 
+-- FND #2 BORN-FREQUENCY ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's #2.
+-- unified_born_frequency: for i.i.d. trials with the unified model's OWN law (productDynamics.muL), the
+-- frequency of trials in π⁻¹(bornRegion i) converges a.s. to ‖⟨eᵢ,ψ⟩‖² -- a direct transfer of
+-- manyToOneSetup_born_frequency through productDynamics.muL = liouvilleMeasure (rfl). Born frequencies now
+-- stated ON the unified model itself, alongside dynamics/measurement/records/conditioning=Lüders.
+/-- info: 'CSD.FND.unified_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_born_frequency
+
 /-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total
 

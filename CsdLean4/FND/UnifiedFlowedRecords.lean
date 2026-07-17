@@ -1,5 +1,6 @@
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.TimeIndexedRecord
+import CsdLean4.LF4.ManyToOnePillars
 
 /-!
 # FND/UnifiedFlowedRecords: time-indexed records ON the unified model (#5)
@@ -34,7 +35,7 @@ References: `FND/UnifiedMeasurement.lean` (`vnRecordSemanticsProd`, `unifiedDeis
 `FND/TimeIndexedRecord.lean` (`flowedSemantics`, `flowedSemantics_persistence`).
 -/
 
-open MeasureTheory
+open MeasureTheory Filter Topology ProbabilityTheory
 
 namespace CSD.FND
 
@@ -79,5 +80,37 @@ theorem unifiedFlowedSemantics_zero (c : (vnRecordSignature N).Context)
   ext x
   simp only [unifiedFlowedSemantics, flowedSemantics_event, vnRecordSemanticsProd,
     Set.mem_preimage, (productDynamics H hH p₀).flow_zero]
+
+/-! ### #2: Born-frequency ON the unified model
+
+`manyToOneSetup_born_frequency` (the independent-trial LLN Born frequency) transfers directly to the
+unified model, because `(productDynamics H hH p₀).muL = (manyToOneSetup (schrodingerUnitary hH) p₀)
+.liouvilleMeasure` (by `productDynamics_muL_eq`, itself `rfl`) and `(productSector H hH p₀).pi` is that
+setup's `π`. So the Born frequencies are stated on the SAME model that carries the dynamics, measurement,
+and records — no separate base object. -/
+
+/-- **Born frequency on the unified model.** For i.i.d. trials `X` whose law is the unified model's own
+Liouville measure `(productDynamics H hH p₀).muL`, the frequency of trials landing in the `i`-th outcome
+region `π⁻¹(bornRegion i)` converges a.s. to the Born weight `‖⟨eᵢ,ψ⟩‖²`. A direct transfer of
+`manyToOneSetup_born_frequency` through the definitional identity `productDynamics.muL = liouvilleMeasure`
+— so Born frequencies are now stated on the unified model itself. -/
+theorem unified_born_frequency {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω}
+    [IsProbabilityMeasure Pr] (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
+    (X : ℕ → Ω → KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr
+      = ((productDynamics H hH p₀).muL : Measure (KSigma (M + 1))))
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+        (fun n => Set.indicator
+          ((X n) ⁻¹' ((productSector H hH p₀).pi ⁻¹' bornRegion ψ hψ0 i)) (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr, ∀ i : Fin (M + 1),
+      Tendsto
+        (fun m : ℕ =>
+          (∑ k ∈ Finset.range m,
+              Set.indicator ((X k) ⁻¹' ((productSector H hH p₀).pi ⁻¹' bornRegion ψ hψ0 i))
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) :=
+  manyToOneSetup_born_frequency (schrodingerUnitary hH) p₀ ψ hψ0 hψ hpos X hX hlaw hindep
 
 end CSD.FND
