@@ -267,6 +267,7 @@ import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.UnifiedFlowedRecords
+import CsdLean4.FND.FiniteQMClosure
 import CsdLean4.FND.ConditioningLink
 import CsdLean4.FND.ConditioningLuders
 import CsdLean4.FND.PostMeasurement
@@ -7597,6 +7598,15 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 -- stated ON the unified model itself, alongside dynamics/measurement/records/conditioning=Lüders.
 /-- info: 'CSD.FND.unified_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_born_frequency
+
+-- FiniteQMClosure (#6, 2026-07-17): the tiered capstone. unifiedFiniteQMClosure bundles the nine
+-- GENUINELY-PROVED-on-the-unified-model facts (isolated flow measure-preserving, Schrödinger projection,
+-- Fubini-Study bridge/B1, measurement preserving, readout a.e. total/T6, records established/B5, records
+-- time-physical/#5, Born frequency/#2, conditioning=Lüders/#3#4) into one record, each field discharged by
+-- its source lemma. The Choice-A posit, QM adapters, and open residue are documented in the module header,
+-- not encoded as fields -- so no field is sorry and the tiers are honest.
+/-- info: 'CSD.FND.unifiedFiniteQMClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedFiniteQMClosure
 
 /-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total
