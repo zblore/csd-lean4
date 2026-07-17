@@ -266,6 +266,7 @@ import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
+import CsdLean4.FND.UnifiedFlowedRecords
 import CsdLean4.FND.ConditioningLink
 import CsdLean4.FND.ConditioningLuders
 import CsdLean4.FND.PostMeasurement
@@ -7576,6 +7577,18 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 -- forward-vs-measurement model split. unifiedDeisolationModel_ae_total lifts the base a.e. via Prod.fst.
 /-- info: 'CSD.FND.unified_choiceA_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_choiceA_capstone
+
+-- FND #5 TIME-INDEXED RECORDS ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's
+-- #5. unifiedFlowedSemantics = flowedSemantics over the isolated flow productDynamics with the pointer-fibre
+-- region; unified_records_persistence instantiates flowedSemantics_persistence ON the unified model (Born
+-- weight conserved + flow-covariant under the exp(-itH) evolution); unifiedFlowedSemantics_zero: the static
+-- vnRecordSemanticsProd is the t=0 slice (so the capstone is undisturbed). Records are now genuinely
+-- time-physical ON the model -- the piece L9 needs to list records in "proved on the unified model".
+/-- info: 'CSD.FND.unified_records_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_records_persistence
+
+/-- info: 'CSD.FND.unifiedFlowedSemantics_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedFlowedSemantics_zero
 
 /-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total

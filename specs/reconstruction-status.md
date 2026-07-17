@@ -14,7 +14,8 @@ with arbitrary Hermitian `H` (`manyToOneSchrodingerSetup_both_pillars`), and ONE
 `(Σ = ℂℙ^{M}×T², μL = μFS⊗vol, Φ, π = Prod.fst)` carries isolated Hamiltonian dynamics and de-isolating
 measurement together. `unified_choiceA_capstone` BUNDLES the dynamics + measurement core (six proved
 properties: isolated measure-preservation, projectability, FS pushforward, measurement-interaction
-preservation, a.e. pointer readout, record establishment). Time-indexed record semantics (`flowedSemantics`),
+preservation, a.e. pointer readout, record establishment). Time-indexed record semantics (now INSTANTIATED on the model:
+`unifiedFlowedSemantics` / `unified_records_persistence`, records time-physical under the isolated flow),
 Born-frequency convergence, and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
 `conditioning_luders_effect_equivalence` — now genuinely proved: the ontic record-conditioning and the
 Lüders update give the same conditional prediction for every pointer-basis effect) are SEPARATE proved
