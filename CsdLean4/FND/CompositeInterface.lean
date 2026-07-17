@@ -45,10 +45,13 @@ universe u
 
 /-! ### B6: the composite sector bridge interface -/
 
-/-- **The composite Choice A sector (bridge assumption B6).** A joint projective sector for a composite
-system, together with the tensor-dimension relation `NA * NB = Njoint` as a NAMED postulate field. The
-P3 tensor-product derivation is parked by standing instruction, so this dimension relation is posited,
-not proved: `CompositeSector` is a bridge interface, not a construction of `⊗`. -/
+/-- **The composite Choice A sector (bridge B6).** A joint projective sector for a composite system,
+together with the tensor-dimension relation `NA * NB = Njoint` as a `tensor_dimension` field. The field
+can be filled by ASSUMPTION (a bare bridge instance) OR DERIVED: `CSD.FND.CompositeSector.ofReconstruction`
+(`FND/TensorReconstruction.lean`) constructs a `CompositeSector` in which `tensor_dimension` is PROVED by
+`composite_dim_eq` from commuting, generating local observable embeddings — so B6 is no longer necessarily
+a posit. The by-hand entangled tier still supplies the field directly per instance; the reconstruction
+route is available whenever the local-algebra data is on hand. -/
 structure CompositeSector (NA NB Njoint : ℕ) {Sigma : Type u} [MeasurableSpace Sigma]
     (D : ConstraintDynamics Sigma) where
   /-- The joint projective sector on the composite dilation. -/

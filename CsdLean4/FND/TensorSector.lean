@@ -21,13 +21,15 @@ How the composite/tensor structure sits in the base. The honest split is:
   abstract theorem `CSD.FND.compositeAlgReconstruction` (`FND/TensorReconstruction.lean`) PROVES that
   commuting local algebras `M_m, M_n` that GENERATE a composite `𝒜` force `𝒜 ≃ₐ M_m ⊗ M_n`, and
   `CSD.FND.composite_dim_eq` derives `k = m·n` for `𝒜 = M_k` — i.e. B6's dimension relation is a THEOREM
-  under locality + generation. It remains a `CompositeSector` FIELD only because the sector interface has
-  not yet been refactored to CONSTRUCT instances via the reconstruction (the residual bridge step); the
-  by-hand entangled tier (singlet, GHZ, CGLMP on `Fin 2 × Fin 2`) still supplies the field per instance.
+  under locality + generation, and the interface now HAS the constructor:
+  `CSD.FND.CompositeSector.ofReconstruction` builds a `CompositeSector` whose `tensor_dimension` field is
+  FILLED by `composite_dim_eq` (derived from commuting, generating local embeddings). So B6 is
+  dischargeable — the by-hand entangled tier (singlet, GHZ, CGLMP on `Fin 2 × Fin 2`) still supplies the
+  field directly per instance, but no longer must.
 
-So tensors ARE woven in: the tensor product, its no-signalling algebra, AND now the composite-is-tensor
-reconstruction are theorems; the only residue is threading `composite_dim_eq` into `CompositeSector`'s
-constructor.
+So tensors ARE woven in: the tensor product, its no-signalling algebra, the composite-is-tensor
+reconstruction (`compositeAlgReconstruction`), AND the B6-discharging constructor
+(`CompositeSector.ofReconstruction`) are all theorems/tools.
 -/
 
 open CSD.Empirical.QM

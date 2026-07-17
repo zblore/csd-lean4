@@ -20,6 +20,7 @@ import CsdLean4.Mathlib.QuantumInfo.Hadamard
 import CsdLean4.Mathlib.QuantumInfo.Fourier
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+import CsdLean4.Mathlib.QuantumInfo.Reversible.ConstProp
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
@@ -7557,6 +7558,26 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 /-- info: 'CSD.FND.composite_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.composite_dim_eq
+
+-- FND P3 BRIDGE B6 DISCHARGED (2026-07-17): CompositeSector.ofReconstruction builds a CompositeSector
+-- whose tensor_dimension (NA*NB=Njoint) FIELD is filled by composite_dim_eq -- derived from commuting,
+-- generating local embeddings, not posited. So B6 is no longer a bare assumption.
+/-- info: 'CSD.FND.CompositeSector.ofReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.CompositeSector.ofReconstruction
+
+-- ECDLP value-exact CONSTPROP pass (2026-07-17, Reversible/ConstProp.lean, the frontier's Toffoli lever):
+-- cprop folds provably-determined CCX (known-0 control -> drop; known-1 -> CX). cprop_denote MACHINE-CHECKS
+-- value-exactness (denote (cprop α c) s = denote c s for s the seed α describes), via foldGate_denote
+-- (per-gate fold is value-exact) + stepAbs_agree (the forward abstract state stays sound). The informal
+-- frontier lever, here a proved circuit-to-circuit transform.
+/-- info: 'Reversible.cprop_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.cprop_denote
+
+/-- info: 'Reversible.foldGate_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.foldGate_denote
+
+/-- info: 'Reversible.stepAbs_agree' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.stepAbs_agree
 
 /-- info: 'CSD.FND.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeTensorEquiv_apply

@@ -1,4 +1,5 @@
 import CsdLean4.FND.TensorSolved
+import CsdLean4.FND.CompositeInterface
 import Mathlib.RingTheory.SimpleRing.Matrix
 import Mathlib.RingTheory.SimpleRing.Congr
 import Mathlib.LinearAlgebra.Dimension.Constructions
@@ -123,5 +124,28 @@ theorem composite_dim_eq {m n k : ℕ} [NeZero m] [NeZero n] [NeZero k]
   -- hfin : (m * m) * (n * n) = k * k
   have hsq : k * k = (m * n) * (m * n) := by rw [← hfin]; ring
   exact Nat.mul_self_inj.mp hsq
+
+/-! ### Discharging bridge B6 in the sector interface
+
+`CompositeSector.tensor_dimension` (`FND/CompositeInterface.lean`) is the `NA · NB = Njoint` FIELD that
+posited B6. The smart constructor below builds a `CompositeSector` in which that field is DERIVED from the
+reconstruction — the caller supplies the joint sector plus commuting, generating local observable
+embeddings, and `composite_dim_eq` PROVES the dimension. So B6 need no longer be assumed: any composite
+whose local algebras are commuting and generating gets its tensor dimension for free. -/
+
+/-- **A composite sector with the tensor dimension DERIVED, not posited (B6 discharged).** Given the joint
+`ChoiceASector` on `M_k` and commuting, generating local observable embeddings `M_NA, M_NB ↪ M_k`, this
+constructs the `CompositeSector` whose `tensor_dimension : NA * NB = k` field is filled by
+`composite_dim_eq` rather than taken on faith. -/
+noncomputable def CompositeSector.ofReconstruction {NA NB k : ℕ} [NeZero NA] [NeZero NB] [NeZero k]
+    {Sigma : Type*} [MeasurableSpace Sigma] {D : ConstraintDynamics Sigma}
+    (jointSector : ChoiceASector k D)
+    (ιA : Matrix (Fin NA) (Fin NA) ℂ →ₐ[ℂ] Matrix (Fin k) (Fin k) ℂ)
+    (ιB : Matrix (Fin NB) (Fin NB) ℂ →ₐ[ℂ] Matrix (Fin k) (Fin k) ℂ)
+    (hc : ∀ A B, Commute (ιA A) (ιB B))
+    (hgen : Algebra.adjoin ℂ (Set.range ιA ∪ Set.range ιB) = ⊤) :
+    CompositeSector NA NB k D where
+  jointSector := jointSector
+  tensor_dimension := (composite_dim_eq ιA ιB hc hgen).symm
 
 end CSD.FND
