@@ -66,6 +66,8 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.ThreeTrackScore
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdExecCost
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy

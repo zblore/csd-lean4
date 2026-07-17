@@ -58,6 +58,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.ThreeTrackScore
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
@@ -6626,6 +6627,31 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ECDLP.ResourceBounds.trustedEstimate_lt_verifiedFloor
 
+/-! ### ECDLP THREE-TRACK score ledger: Verified / Trusted / Leaderboard (ThreeTrackScore.lean, 2026-07-17)
+The ecdsa.fail SCORE (peak × Toffoli) split three ways. Verified score = verifiedFloor × peak 2822 =
+1.91e12; Trusted score = trustedEstimate × peak 2822 = 2.2e10; Leaderboard (competition convention) =
+optimised peak 1156 × CALCULATED avg-executed 1,950,403 = 2,254,665,868 ≈ 2.25e9 -- ~1.44× the live best
+(leaderboard_calculated_gap: ratio in (1.4,1.5); leaderboard_not_below_best: ABOVE it, NOT a win). The
+avg-executed is COMPUTED (SafegcdExecCost.lean: competition's executed-Toffoli rule MEASURED on the
+verified n=3 adder = 25% executed/emitted, × emitted worst-case 7,801,612), a grounded MODEL — not the
+frontier's number. The exact figure needs the assembled op-stream + eval_circuit (#7). -/
+
+/-- info: 'ECDLP.ResourceBounds.leaderboardConventionScore_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.leaderboardConventionScore_eq
+
+/-- info: 'ECDLP.ResourceBounds.leaderboard_calculated_gap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.leaderboard_calculated_gap
+
+/-- info: 'ECDLP.ResourceBounds.leaderboard_not_below_best' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.leaderboard_not_below_best
+
+/-- info: 'ECDLP.ResourceBounds.three_tracks_ordered' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ECDLP.ResourceBounds.three_tracks_ordered
+
 /-! ### ECDLP Stage-1 trusted leaderboard estimate: measurement + windowing + qubit model + score (TrustedEstimate.lean) -/
 
 /-- info: 'ECDLP.ResourceBounds.secp256k1Toffoli_measGidney_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -7253,6 +7279,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'ECDLP.Safegcd.Circuit.branchA_recovers' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.branchA_recovers
+
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4g (2026-07-17, SafegcdDivstepCircuit.lean, #36c-2/#3):
+-- lane-0 cswap elision (a real frontier Toffoli lever). cswap_noop_of_eq: a controlled swap of two wires
+-- holding EQUAL values is the identity. cswap_lane0_noop: when the branch-A f↔g swap fires, f,g are both
+-- odd so wire 0 is true for both -- the lane-0 swap is a no-op, eliminable (the field's `divstep 0..n →
+-- 1..n`), here a proved value-exact identity.
+/-- info: 'ECDLP.Safegcd.Circuit.cswap_noop_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.cswap_noop_of_eq
+
+/-- info: 'ECDLP.Safegcd.Circuit.cswap_lane0_noop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.cswap_lane0_noop
+
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4h (2026-07-17, SafegcdDivstepCircuit.lean, #36c-2/#1):
+-- the branch-control-bit synthesis. and3_correct: [CCX a b u, CCX u c t, CCX a b u] sets t = a∧b∧c and
+-- restores scratch u (compute-copy-uncompute, 2 Toffoli) -- synthesises the branch-A control
+-- bA = sign_clear ∧ nonzero_δ ∧ odd_g into a clean ancilla, the input the conditional gadgets consume.
+/-- info: 'ECDLP.Safegcd.Circuit.and3_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.and3_correct
 
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine

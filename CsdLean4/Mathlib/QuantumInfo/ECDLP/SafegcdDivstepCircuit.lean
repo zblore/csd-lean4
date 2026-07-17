@@ -19,9 +19,12 @@ branch discriminant, `regValZ_pos_iff`/`regValZ_nonneg_iff`); **4d** the `δ`-co
 (a T2 corollary — signed `±` against the constant `1`); **4e** the reversible nonzero/OR gadget
 (`orAccum` — the "low bits ≠ 0" half of the `0<δ` read); **4f** the branch-A f-recovery `f ← f + 2·g`
 (`addTwice`, resolving the in-place `f' = g` without a swap) + the composition identity `branchA_recovers`.
-So every divstep sub-operation AND branch A's in-place `(f,g)` transformation are circuit-backed. Remaining:
-the full conditional selection wiring (controlled gadgets), the `δ`-sign+nonzero control synthesis, and the
-end-to-end `denote = divstepRev`.
+**4g** the lane-0 cswap elision (`cswap_lane0_noop` — the frontier's `divstep 0..n → 1..n` Toffoli lever,
+here a proved value-exact identity: when the swap fires, `f, g` are both odd so wire-0 swap is a no-op).
+So every divstep sub-operation AND branch A's in-place `(f,g)` transformation are circuit-backed; **4h** the
+branch-control-bit synthesis (`and3_correct`: `bA = sign_clear ∧ nonzero_δ ∧ odd_g` into a clean ancilla).
+Remaining: the controlled (branch-gated) gadget variants + wiring the control bits, then the end-to-end
+`denote = divstepRev`.
 
 ## The divstep's three register updates, and which one this tranche builds
 
@@ -431,6 +434,29 @@ theorem condSwapReg_swaps {c : Fin m} {F G : ℕ → Fin m}
   · rw [hA i hi, if_pos hc]
   · rw [hB i hi, if_pos hc]
 
+/-- **Lane-0 cswap elision (a real frontier Toffoli lever).** A controlled swap of two wires holding
+EQUAL values is the identity — swapping equal bits does nothing, whatever the control. -/
+theorem cswap_noop_of_eq {c x y : Fin m} (hxy : x ≠ y) (hcx : c ≠ x) (hcy : c ≠ y) (s : State m)
+    (heq : s x = s y) : denote (cswap c x y) s = s := by
+  obtain ⟨hx, hy, hc⟩ := cswap_correct_general hcx hcy hxy s
+  funext w
+  by_cases hwx : w = x
+  · subst hwx; rw [hx, ← heq]; split <;> rfl
+  by_cases hwy : w = y
+  · subst hwy; rw [hy, heq]; split <;> rfl
+  by_cases hwc : w = c
+  · subst hwc; exact hc
+  · exact cswap_apply_of_ne hwc hwx hwy s
+
+/-- **The divstep lane-0 cswap is a no-op** (the frontier's `divstep 0..n → 1..n` elision). When the
+branch-A `f ↔ g` swap fires, `f` and `g` are BOTH odd, so wire `0` is `true` for both; swapping equal
+bits does nothing. So the lane-0 controlled swap is eliminable — a per-divstep Toffoli saving the field
+ships (`ecdsafail-toffoli-reduction`), here a proved value-exact identity. -/
+theorem cswap_lane0_noop {c : Fin m} {F G : ℕ → Fin m} (hcF : c ≠ F 0) (hcG : c ≠ G 0)
+    (hFG : F 0 ≠ G 0) (s : State m) (hf : s (F 0) = true) (hg : s (G 0) = true) :
+    denote (cswap c (F 0) (G 0)) s = s :=
+  cswap_noop_of_eq hFG hcF hcG s (hf.trans hg.symm)
+
 /-! ### The `Odd g` branch test as a bit read -/
 
 /-- **Parity is the bottom bit.** For a nonempty register, `regValRange` is odd iff wire `0` is set —
@@ -801,6 +827,31 @@ theorem orAccum_correct {A W : ℕ → Fin m} (hAinj : Function.Injective A)
         rw [hblk.2.2, ihW]
       · rw [orBlock_apply_of_ne (fun h => (hAW k j h.symm))
           (fun h => hjk (hWinj h)) (fun h => (hAW (k + 1) j h.symm)), ihW]
+
+/-! ### The branch-control-bit synthesis (`bA = (0<δ) ∧ Odd g`)
+
+Once the three control bits are on wires — `sign_clear` (`¬` δ's sign bit), `nonzero_δ` (`orAccum`'s
+output), `odd_g` (`g`'s wire 0) — the branch-A control `bA = sign_clear ∧ nonzero_δ ∧ odd_g` is one clean
+3-way AND into a fresh ancilla, with a scratch ancilla uncomputed. -/
+
+/-- **3-way AND into a fresh ancilla.** `[CCX a b u, CCX u c t, CCX a b u]`: with scratch `u` and target
+`t` both `false`, sets `t = a ∧ b ∧ c` and restores `u` to `false` (compute–copy–uncompute). Two
+Toffolis (the third restores the scratch). -/
+def and3 (a b c u t : Fin m) : Circuit m := [.CCX a b u, .CCX u c t, .CCX a b u]
+
+/-- **`and3` correctness.** For pairwise-distinct wires with scratch `u` and target `t` init `false`,
+`t` ends `s a && s b && s c` and `u` is restored to `false`. This synthesises the branch-A control bit
+`(0<δ) ∧ Odd g` (its three inputs being `sign_clear`, `nonzero_δ`, `odd_g`). -/
+theorem and3_correct {a b c u t : Fin m}
+    (hau : a ≠ u) (hbu : b ≠ u) (hcu : c ≠ u) (hat : a ≠ t) (hbt : b ≠ t) (hct : c ≠ t)
+    (hut : u ≠ t) (s : State m) (hu : s u = false) (ht : s t = false) :
+    denote (and3 a b c u t) s t = (s a && s b && s c)
+      ∧ denote (and3 a b c u t) s u = false := by
+  have hua := hau.symm; have hub := hbu.symm; have huc := hcu.symm
+  have hta := hat.symm; have htb := hbt.symm; have htc := hct.symm; have htu := hut.symm
+  refine ⟨?_, ?_⟩ <;>
+    simp only [and3, denote_cons, denote_nil, denoteGate] <;>
+    simp_all
 
 /-! ## Tranche 4f: the f-recovery `f ← f + 2·g` and the branch-A transformation
 
