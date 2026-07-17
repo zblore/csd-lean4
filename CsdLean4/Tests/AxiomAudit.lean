@@ -7232,6 +7232,28 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ECDLP.Safegcd.Circuit.deltaDec_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.deltaDec_correct
 
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4e (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the reversible nonzero/OR gadget (branch-synthesis prerequisite). orBlock: De Morgan `a ← c ∨ w` into
+-- a fresh ancilla (1 Toffoli), c/w restored; orAccum: the ancilla-ladder fold, orAccum_correct proves the
+-- top ancilla is `true` iff some low input wire is set -- a reversible nonzero test (the "low bits ≠ 0"
+-- half of the 0<δ read, T4c). Preserves the input wires.
+/-- info: 'ECDLP.Safegcd.Circuit.orBlock_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.orBlock_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.orAccum_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.orAccum_correct
+
+-- ECDLP L6 safegcd divstep CIRCUIT, TRANCHE 4f (2026-07-16, SafegcdDivstepCircuit.lean, #36c-2):
+-- the branch-A f-recovery. addTwice_correct: two cuccaroAdds give f ← f + 2·g at the signed regValZ level
+-- (the in-place resolution of f'=g: run the g-update first, then f_old + 2·(g-f)/2 = g_old recovers f'=g
+-- with no swap, no value destroyed). branchA_recovers: the ℤ identity f + 2·((g-f)/2) = g (f,g odd)
+-- confirming gUpdateSub (g-update, T4b) + addTwice compose to divstep branch A (f,g) ↦ (g,(g-f)/2).
+/-- info: 'ECDLP.Safegcd.Circuit.addTwice_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.addTwice_correct
+
+/-- info: 'ECDLP.Safegcd.Circuit.branchA_recovers' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.branchA_recovers
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

@@ -67,8 +67,12 @@ the signed `regValZ` level (`f,g` odd ⇒ numerator even discharges the halving'
 Tranche 4c (the `0<δ` read): `regValZ_pos_iff` / `regValZ_nonneg_iff` characterise the divstep branch
 discriminant `0 < δ` as a bit read (sign bit clear + low bits nonzero). Tranche 4d (the `δ` update):
 `deltaInc_correct` / `deltaDec_correct` give `δ ↦ 1±δ` as a T2 corollary (signed `±` against constant `1`).
-So every divstep sub-operation is circuit-backed; remaining: branch-bit synthesis (a reversible nonzero/OR
-gadget) + conditional selection, then the in-place assembly `= divstepRev`.
+Tranche 4e: the reversible nonzero/OR gadget (`orAccum_correct` — the "low bits ≠ 0" half of the `0<δ`
+read). Tranche 4f: the branch-A f-recovery `f ← f + 2·g` (`addTwice_correct`) + the identity
+`branchA_recovers` (`f + 2·((g-f)/2) = g`), which resolves the in-place `f' = g` (run the g-update first,
+then recover `f' = g_old` — no swap, no value destroyed) so `gUpdateSub` + `addTwice` compose to branch A.
+So every divstep sub-operation and branch A's in-place `(f,g)` transformation are circuit-backed; remaining:
+the conditional-selection wiring + `δ`-control synthesis + the end-to-end `denote = divstepRev`.
 
 ## Route taken for value-correctness (stated honestly)
 

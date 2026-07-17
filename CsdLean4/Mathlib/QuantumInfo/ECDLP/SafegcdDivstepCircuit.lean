@@ -16,9 +16,12 @@ so far: **1** exact (unsigned) halving; **2** signed integer `±` (the `g ∓ f`
 branch-conditional register swap `f ↔ g` + the `Odd g` test; **4a** the SIGNED (sign-extending) halving;
 **4b** the g-register update `g ↦ (g ∓ f)/2` composing T2 + T4a; **4c** the `0 < δ` control read (the
 branch discriminant, `regValZ_pos_iff`/`regValZ_nonneg_iff`); **4d** the `δ`-counter update `δ ↦ 1 ± δ`
-(a T2 corollary — signed `±` against the constant `1`). So every divstep sub-operation is circuit-backed.
-Remaining: branch-bit synthesis (a reversible nonzero/OR gadget) + conditional selection, then the
-in-place assembly `denote = divstepRev`.
+(a T2 corollary — signed `±` against the constant `1`); **4e** the reversible nonzero/OR gadget
+(`orAccum` — the "low bits ≠ 0" half of the `0<δ` read); **4f** the branch-A f-recovery `f ← f + 2·g`
+(`addTwice`, resolving the in-place `f' = g` without a swap) + the composition identity `branchA_recovers`.
+So every divstep sub-operation AND branch A's in-place `(f,g)` transformation are circuit-backed. Remaining:
+the full conditional selection wiring (controlled gadgets), the `δ`-sign+nonzero control synthesis, and the
+end-to-end `denote = divstepRev`.
 
 ## The divstep's three register updates, and which one this tranche builds
 
@@ -696,5 +699,160 @@ theorem deltaDec_correct {n : ℕ} (L : SubLayout m (n + 1)) (s : State m)
     regValZ L.B (denote (rippleSub L) s) (n + 1) = 1 - regValZ L.Sub s (n + 1) := by
   rw [signedSub_correct L s (by omega) hBor0 (by rw [hone]; simpa using hlo)
     (by rw [hone]; simpa using hhi), hone]
+
+/-! ## Tranche 4e: the reversible nonzero / OR gadget (branch-synthesis prerequisite)
+
+The `0 < δ` control read (`regValZ_pos_iff`, T4c) is `sign bit clear ∧ low bits NOT all zero`. A branch
+circuit must turn the "low bits not all zero" half into a single control bit — a reversible OR of the
+low wires into a fresh ancilla. This section builds it.
+
+The primitive is a De Morgan OR block `a ← a ∨ (c ∨ w)`... concretely, for a fresh `a` (init `false`),
+`orBlock c w a` sets `a = c ∨ w` while restoring `c, w`, via `¬(¬c ∧ ¬w)` (X's + one Toffoli). Chaining
+it along an ancilla ladder (`orAccum`) ORs a whole register: `A k` ends `true` iff some low wire is set. -/
+
+/-- **The De Morgan OR block.** With target `a` init `false`, sets `a = s c ∨ s w` and restores `c, w`:
+`[X c, X w, CCX c w a, X a, X c, X w]` computes `a ← ¬(¬c ∧ ¬w) = c ∨ w`. One Toffoli. -/
+def orBlock (c w a : Fin m) : Circuit m := [.X c, .X w, .CCX c w a, .X a, .X c, .X w]
+
+/-- **`orBlock` correctness.** For distinct wires and `a` init `false`: `a` ends `s c || s w`, and `c, w`
+are restored. -/
+theorem orBlock_correct {c w a : Fin m} (hca : c ≠ a) (hwa : w ≠ a) (hcw : c ≠ w) (s : State m)
+    (ha : s a = false) :
+    denote (orBlock c w a) s a = (s c || s w)
+      ∧ denote (orBlock c w a) s c = s c ∧ denote (orBlock c w a) s w = s w := by
+  have hac := hca.symm; have haw := hwa.symm; have hwc := hcw.symm
+  refine ⟨?_, ?_, ?_⟩ <;>
+    simp only [orBlock, denote_cons, denote_nil, denoteGate] <;>
+    simp_all
+
+/-- **Frame lemma for `orBlock`.** A wire distinct from `c, w, a` is untouched. -/
+theorem orBlock_apply_of_ne {c w a x : Fin m} (hc : x ≠ c) (hw : x ≠ w) (haa : x ≠ a) (s : State m) :
+    denote (orBlock c w a) s x = s x := by
+  apply denote_apply_of_forall_not_mem
+  intro g hg
+  simp only [orBlock, List.mem_cons, List.not_mem_nil, or_false] at hg
+  rcases hg with rfl | rfl | rfl | rfl | rfl | rfl <;> simp_all [gateWires]
+
+/-- **The OR accumulator.** An ancilla ladder `A 0, …, A k` (all init `false`) ORs the low wires
+`W 0, …, W (k-1)`: `A (i+1) ← A i ∨ W i`. After `k` blocks, `A k` holds the OR of `W 0 … W (k-1)`. -/
+def orAccum (A W : ℕ → Fin m) : ℕ → Circuit m
+  | 0 => []
+  | k + 1 => orAccum A W k ++ orBlock (A k) (W k) (A (k + 1))
+
+/-- **Frame lemma for `orAccum`.** A wire distinct from every ladder ancilla `A 0..A k` and every input
+`W 0..W (k-1)` the `k`-block accumulator touches is left unchanged. -/
+theorem orAccum_apply_of_ne {A W : ℕ → Fin m} (x : Fin m) (s : State m) (k : ℕ)
+    (hxA : ∀ i, i ≤ k → x ≠ A i) (hxW : ∀ i, i < k → x ≠ W i) :
+    denote (orAccum A W k) s x = s x := by
+  induction k with
+  | zero => rfl
+  | succ j ihj =>
+    rw [orAccum, denote_append,
+      orBlock_apply_of_ne (hxA j (by omega)) (hxW j (by omega)) (hxA (j + 1) (by omega))]
+    exact ihj (fun i hi => hxA i (by omega)) (fun i hi => hxW i (by omega))
+
+/-- **The nonzero test (`orAccum` correctness).** For a disjoint, injective ancilla ladder `A` and input
+family `W` (ancillas all init `false`), the top ancilla `A k` ends `true` iff SOME input wire `W i`
+(`i < k`) is set — a reversible nonzero test — and every input wire is preserved. Proved by induction:
+each block ORs the running accumulator with the next wire (`orBlock_correct`), the frame lemma isolating
+the untouched wires. -/
+theorem orAccum_correct {A W : ℕ → Fin m} (hAinj : Function.Injective A)
+    (hWinj : Function.Injective W) (hAW : ∀ i j, A i ≠ W j)
+    (s : State m) (hA0 : ∀ i, s (A i) = false) (k : ℕ) :
+    (denote (orAccum A W k) s (A k) = true ↔ ∃ i, i < k ∧ s (W i) = true)
+      ∧ (∀ j, denote (orAccum A W k) s (W j) = s (W j)) := by
+  induction k with
+  | zero =>
+    refine ⟨?_, fun j => rfl⟩
+    rw [orAccum, denote_nil, hA0 0]
+    simp
+  | succ k ih =>
+    obtain ⟨ihOr, ihW⟩ := ih
+    have hstep : ∀ w, denote (orAccum A W (k + 1)) s w
+        = denote (orBlock (A k) (W k) (A (k + 1))) (denote (orAccum A W k) s) w := by
+      intro w; rw [orAccum, denote_append]
+    set t := denote (orAccum A W k) s with ht
+    -- A (k+1) was untouched by the first k blocks, so still false
+    have htA1 : t (A (k + 1)) = false := by
+      rw [ht, orAccum_apply_of_ne (A (k + 1)) s k
+        (fun i hi h => by have := hAinj h; omega) (fun i _ => hAW (k + 1) i), hA0]
+    have hne_cw : A k ≠ W k := hAW k k
+    have hne_ca : A k ≠ A (k + 1) := fun h => by have := hAinj h; omega
+    have hne_wa : W k ≠ A (k + 1) := fun h => (hAW (k + 1) k h.symm)
+    have hblk := orBlock_correct hne_ca hne_wa hne_cw t htA1
+    refine ⟨?_, ?_⟩
+    · rw [hstep, hblk.1]
+      -- t (A k) = OR over i<k ; t (W k) = s (W k)
+      rw [ihW k]
+      constructor
+      · intro h
+        rcases Bool.or_eq_true_iff.mp h with hAk | hWk
+        · obtain ⟨i, hi, hwi⟩ := ihOr.mp hAk
+          exact ⟨i, by omega, hwi⟩
+        · exact ⟨k, by omega, hWk⟩
+      · rintro ⟨i, hi, hwi⟩
+        rcases Nat.lt_succ_iff_lt_or_eq.mp hi with hlt | rfl
+        · exact Bool.or_eq_true_iff.mpr (Or.inl (ihOr.mpr ⟨i, hlt, hwi⟩))
+        · exact Bool.or_eq_true_iff.mpr (Or.inr hwi)
+    · intro j
+      rw [hstep]
+      by_cases hjk : j = k
+      · subst hjk
+        rw [hblk.2.2, ihW]
+      · rw [orBlock_apply_of_ne (fun h => (hAW k j h.symm))
+          (fun h => hjk (hWinj h)) (fun h => (hAW (k + 1) j h.symm)), ihW]
+
+/-! ## Tranche 4f: the f-recovery `f ← f + 2·g` and the branch-A transformation
+
+The divstep branch A is `(f, g) ↦ (g, (g - f)/2)`. Its `g`-update `g ↦ (g - f)/2` is `gUpdateSub_correct`
+(T4b). The `f`-update `f ↦ g` (the old `g`) is the subtle in-place step — naively swapping would destroy
+the `g` the g-update needs. The resolution: run the g-update FIRST (so `g` now holds `(g_old - f_old)/2`),
+then recover `f' = g_old` by `f ← f + 2·g`, since `f_old + 2·(g_old - f_old)/2 = g_old`. The `+2·g` is
+two `cuccaroAdd`s of `g` into `f` (`addTwice_correct`). So branch A = `gUpdateSub ; addTwice` — both
+verified stages; no swap, no lost value. -/
+
+/-- **`f ← f + 2·g` via two adders.** Two `cuccaroAdd`s of register `B` into register `A` add `2·B` at
+the signed level (the second add reuses the carry-clean ancilla and the preserved `B`). Under a
+no-overflow bound on the true `regValZ A + 2·regValZ B`, `A` ends holding exactly that. This is the
+divstep branch-A `f`-recovery: with `B = g = (g_old - f_old)/2`, it drives `f` from `f_old` to `g_old`. -/
+theorem addTwice_correct {n : ℕ} (L : CuccaroLayout m (n + 1)) (s : State m) (hZ : s L.Z = false)
+    (hlo : -2 ^ n ≤ regValZ L.A s (n + 1) + 2 * regValZ L.B s (n + 1))
+    (hhi : regValZ L.A s (n + 1) + 2 * regValZ L.B s (n + 1) < 2 ^ n) :
+    regValZ L.A (denote (cuccaroAdd L ++ cuccaroAdd L) s) (n + 1)
+      = regValZ L.A s (n + 1) + 2 * regValZ L.B s (n + 1) := by
+  rw [denote_append]
+  set s3 := denote (cuccaroAdd L) s with hs3
+  set uA := regValRange L.A s (n + 1) with huA
+  set uB := regValRange L.B s (n + 1) with huB
+  have h3A : regValRange L.A s3 (n + 1) = (uA + uB) % 2 ^ (n + 1) := cuccaroAdd_correct L s hZ
+  have h3B : regValRange L.B s3 (n + 1) = uB := by
+    rw [huB]; unfold regValRange; apply Finset.sum_congr rfl
+    intro k hk; rw [Finset.mem_range] at hk
+    rw [hs3, cuccaroAdd_preserves_B L s hZ k hk]
+  have h3Z : s3 L.Z = false := by rw [hs3]; exact cuccaroAdd_ancilla_clean L s hZ
+  have h4A : regValRange L.A (denote (cuccaroAdd L) s3) (n + 1) = (uA + 2 * uB) % 2 ^ (n + 1) := by
+    rw [cuccaroAdd_correct L s3 h3Z, h3A, h3B, Nat.mod_add_mod]
+    congr 1; ring
+  calc regValZ L.A (denote (cuccaroAdd L) s3) (n + 1)
+      = signedRep (n + 1) (((uA + 2 * uB) % 2 ^ (n + 1) : ℕ) : ℤ) := by
+        unfold regValZ; rw [h4A]
+    _ = signedRep (n + 1) (regValZ L.A s (n + 1) + 2 * regValZ L.B s (n + 1)) := by
+        apply signedRep_congr
+        refine (natCast_mod_modEq (uA + 2 * uB) (n + 1)).trans ?_
+        push_cast
+        have hA := (signedRep_modEq (n + 1) (uA : ℤ)).symm
+        have hB := (signedRep_modEq (n + 1) (uB : ℤ)).symm
+        exact hA.add ((hB.mul_left 2))
+    _ = regValZ L.A s (n + 1) + 2 * regValZ L.B s (n + 1) :=
+        signedRep_of_mem (n + 1) (by omega) hlo hhi
+
+/-- **Branch-A recovery identity.** For `f, g` odd, the `sub ; halve ; add-2g` sequence yields the
+divstep branch-A pair `(g, (g-f)/2)`: after the g-update the g-register holds `(g-f)/2`, and
+`f + 2·((g-f)/2) = g` recovers `f' = g`. This is the arithmetic that makes `gUpdateSub` (the g-update)
+and `addTwice` (the f-recovery, with `B = g` now holding `(g-f)/2`) compose to `divstep`'s branch A
+`(f, g) ↦ (g, (g-f)/2)` — in place, with no swap and no value destroyed. -/
+theorem branchA_recovers {f g : ℤ} (hf : Odd f) (hg : Odd g) :
+    f + 2 * ((g - f) / 2) = g := by
+  rw [Int.mul_ediv_cancel' (even_iff_two_dvd.mp (hg.sub_odd hf))]; ring
 
 end ECDLP.Safegcd.Circuit
