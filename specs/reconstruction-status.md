@@ -58,7 +58,7 @@ B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
 | T6 | Unique contextual outcome a.e. | `vnDeisolationModel_ae_total` | proved |
 | T7 | General conditional update | `conditionalUpdate_capstone` | proved |
 | T8 | Lüders update | `luders_capstone` (sharp special case of T7) | proved |
-| T9 | Mixed states | `mixedState_capstone`, `isPure_iff_trace_sq_one`; ensemble #8 A+B: `traceForm_ensemble`, `density_isPureEnsemble`, `mixedEnsemble_capstone` | proved (ontic-side #8 C open) |
+| T9 | Mixed states | `mixedState_capstone`, `isPure_iff_trace_sq_one`; ensemble #8 A+B: `traceForm_ensemble`, `density_isPureEnsemble`, `mixedEnsemble_capstone`; ontic-side #8 C: `mixed_ontic_born_weight` (= `FiniteQMClosure.mixed_born`) | proved (mixed-freq LLN open) |
 | T10 | POVM by dilation | `POVMWeightsProbability`, `LF4.povm_born_frequency_volume_canonical` | proved |
 | T11 | Composite probabilities | joint Born-frequency capstones | per-instance (P3-gated for sector-intrinsic) |
 | T12 | Entangled predictions | = T14 | per-instance |
@@ -79,7 +79,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 | L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
-| **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`FND/FiniteQMClosure.lean`) assembles all 9 proved-on-model facts (the 6 core `unified_choiceA_capstone` properties + records-time-physical #5 + Born-frequency #2 + conditioning=Lüders #3/#4) into ONE tiered record, each field discharged by its source lemma; Choice-A posit / QM adapters / open residue documented, not encoded as fields |
+| **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`FND/FiniteQMClosure.lean`) assembles all 10 proved-on-model facts (the 6 core `unified_choiceA_capstone` properties + records-time-physical #5 + Born-frequency #2 + conditioning=Lüders #3/#4 + mixed-state Born #8 C `mixed_born`) into ONE tiered record, each field discharged by its source lemma; Choice-A posit / QM adapters / open residue documented, not encoded as fields |
 | **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`) |
 
 ## 4. The forward reconstruction — what each pillar delivers

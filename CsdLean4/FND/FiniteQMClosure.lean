@@ -1,6 +1,7 @@
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.UnifiedFlowedRecords
 import CsdLean4.FND.ConditioningLuders
+import CsdLean4.FND.MixedOntic
 
 /-!
 # FND/FiniteQMClosure: the tiered finite-dimensional QM closure (#6)
@@ -31,7 +32,10 @@ All nine on the ONE model `productDynamics H hH p₀`:
 * `born_frequency` — i.i.d. trials of `μL` have outcome-region frequency → `‖⟨eᵢ,ψ⟩‖²`, #2
   (`unified_born_frequency`);
 * `conditioning_is_luders` — record conditioning = Lüders update as predictions, #3/#4
-  (`conditioning_luders_effect_equivalence`).
+  (`conditioning_luders_effect_equivalence`);
+* `mixed_born` — mixed states on the model (#8 C, weight level): for every density operator `ρ`, the
+  classical mixture over `ρ`'s spectral ensemble of ontic Born-region measures reproduces `Tr(ρ Eᵢ)`
+  (`mixed_ontic_born_weight`) — so the model carries mixed-state Born content, not only the pure `ψ`.
 
 ## Tier 2 — ASSUMED under Choice A
 
@@ -56,11 +60,11 @@ reconstruction content.
 
 ## Tier 4 — OPEN
 
-* mixed-state / ensemble representation (#8): the statistical side is now closed — finite ensembles and
-  the spectral decomposition (`FND/MixedEnsemble.lean`: every density operator is a convex ensemble of
-  pure states, Born rule = eigenvalue-weighted average of pure Born rules), #8 A+B. What remains open is
-  #8 C — the ONTIC-side mixed representation on this unified model (a classical mixture over ontic
-  preparations reproducing `Tr(ρ E)`), which would add a `mixed_born_frequency` field here;
+* mixed-state / ensemble representation (#8): the statistical side (#8 A+B, `FND/MixedEnsemble.lean`) and
+  the ontic-side WEIGHT-level representation (#8 C, the `mixed_born` field / `mixed_ontic_born_weight`) are
+  now closed. What remains is the mixed-state FREQUENCY LLN — a genuine two-stage mixture process
+  redrawing the spectral component each shot, strengthening `mixed_born` from a weight identity to an
+  a.s. limit (the mixed analogue of `born_frequency`);
 * the ECDLP circuit track's capstone `denote = divstepRev` + termination (`ECDLP/SafegcdDivstepCircuit.lean`)
   — independent of this QM closure, tracked separately.
 
@@ -77,7 +81,7 @@ open MeasureTheory
 
 namespace CSD.FND
 
-open CSD.LF4 CSD.LF5
+open CSD.LF4 CSD.LF5 CSD.LF2
 
 variable {N M : ℕ} [NeZero N] (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian)
   (p₀ : CPN (M + 1)) (e : Fin N × Fin N ≃ Fin (M + 1))
@@ -141,6 +145,15 @@ structure FiniteQMClosure : Prop where
       = bayesianConditional
           (fun U : Finset (Fin (M + 1)) => ∑ k ∈ U, ‖inner ℂ (EuclideanSpace.single k (1 : ℂ)) ψ‖ ^ 2)
           T S
+  /-- Mixed states on the model (#8 C, weight level): for every density operator `ρ` and pointer outcome
+  `i`, the classical mixture — over `ρ`'s spectral ensemble — of ontic Born-region measures reproduces the
+  density-operator Born rule `Tr(ρ Eᵢ)`. The model represents mixed states, not only the pure `ψ`. -/
+  mixed_born : ∀ (ρ : DensityOperator (M + 1)) (i : Fin (M + 1)),
+    ∑ j, ρ.isHermitian.eigenvalues j
+        * (((productDynamics H hH p₀).muL : Measure (KSigma (M + 1)))
+            ((productSector H hH p₀).pi ⁻¹'
+              bornRegion (ρ.isHermitian.eigenvectorBasis j) (eigenvectorBasis_ne_zero ρ j) i)).toReal
+      = traceForm ρ (rankOneEffect (EuclideanSpace.single i (1 : ℂ)) (single_norm_one i))
 
 /-- **The finite-dimensional QM closure holds on the unified model.** Every tier-1 field is discharged by
 its source lemma on the single ontic model `productDynamics H hH p₀`. Requires only the normalisations of
@@ -161,6 +174,7 @@ theorem unifiedFiniteQMClosure (hψ' : ‖ψ'‖ = 1) (hψ : ‖ψ‖ = 1) :
       born_frequency := fun hpos X hX hlaw hindep =>
         unified_born_frequency H hH p₀ ψ hψ0 hψ hpos X hX hlaw hindep
       conditioning_is_luders := fun S T hψn =>
-        conditioning_luders_effect_equivalence H hH p₀ ψ hψ0 hψn S T }
+        conditioning_luders_effect_equivalence H hH p₀ ψ hψ0 hψn S T
+      mixed_born := fun ρ i => mixed_ontic_born_weight H hH p₀ ρ i }
 
 end CSD.FND

@@ -285,6 +285,7 @@ import CsdLean4.FND.Luders
 import CsdLean4.FND.ConditionalUpdate
 import CsdLean4.FND.MixedState
 import CsdLean4.FND.MixedEnsemble
+import CsdLean4.FND.MixedOntic
 
 /-!
 # Axiom regression suite
@@ -7780,5 +7781,14 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 /-- info: 'CSD.FND.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixedEnsemble_capstone
+
+-- MixedOntic (#8 C, 2026-07-17): the ontic-side mixed-state representation on the unified model.
+-- mixed_ontic_born_weight: for any density operator ρ and pointer outcome i, the classical mixture over
+-- ρ's spectral ensemble (λⱼ,eⱼ) of the ontic Born-region measures ∑ⱼ λⱼ·μL(π⁻¹ bornRegion(eⱼ) i) equals
+-- Tr(ρ Eᵢ) = traceForm ρ (rankOneEffect eᵢ) -- composing onticRegion_measure_eq_born with
+-- traceForm_eq_pureEnsemble + born_quadratic. So productDynamics represents mixed states, not only pure ψ;
+-- wired as the FiniteQMClosure.mixed_born field. Weight-level (the mixed frequency LLN is the refinement).
+/-- info: 'CSD.FND.mixed_ontic_born_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixed_ontic_born_weight
 
 end CSD.Tests.AxiomAudit
