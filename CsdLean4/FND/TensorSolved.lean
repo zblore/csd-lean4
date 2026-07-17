@@ -7,34 +7,36 @@ import Mathlib.RingTheory.MatrixAlgebra
 **Category:** 7-FND (the Choice A ontology layer).
 
 `FND/TensorGeneration.lean` reduced B6 by showing the commuting local subalgebras GENERATE the joint
-observable algebra. This module completes the derivation: **the composite observable algebra IS the
-tensor product of the local ones**, a canonical linear (indeed algebra) equivalence
+observable algebra. This module proves that the **standard tensor (Kronecker) model REALIZES the
+composition principles**: it is a canonical linear (and — see `TensorReconstruction.lean` — algebra)
+equivalence
 
   `M_{NA} ⊗[ℂ] M_{NB}  ≃  M_{NA·NB}`,   `U ⊗ₜ Q  ↦  aliceOp U · bobOp Q  =  U ⊗ₖ Q`
 
-(`compositeTensorEquiv`, wiring `kroneckerLinearEquiv`). So the two operational facts
+(`compositeTensorEquiv`, wiring `kroneckerLinearEquiv`), in which the two operational facts
 
 * **locality** — the local algebras commute (`aliceOp_bobOp_commute`);
 * **local tomography** — every joint observable is a combination of local products
   (`joint_mem_span_local`);
 
-FORCE the composite state space to be `ℂ^{NA} ⊗ ℂ^{NB}` (dimension `NA · NB`): the map from
-(local Alice observable) ⊗ (local Bob observable) to (their joint product) is a BIJECTION
-(`composite_is_tensor_product`). There is no composite carrying these local observables, commuting and
-locally tomographic, other than the tensor product.
+both hold. So the tensor product is a MODEL satisfying locality + local tomography with dimension
+`NA · NB` (`composite_is_tensor_product`).
 
-## Honest scope — what "solving P3" means
+## Honest scope — SUFFICIENCY here, UNIQUENESS in `TensorReconstruction.lean`
 
-This is the operational derivation of the tensor product, exactly as in the generalised-probabilistic-
-theory reconstructions (Hardy; Chiribella–D'Ariano–Perinotti): "why `⊗`" is answered by **local
-tomography** — that the joint state/observables are determined by, and spanned by, local ones. Local
-tomography is the axiom that singles out the quantum tensor product among general composites (real-QM and
-other GPTs are NOT locally tomographic and do NOT get `⊗`); it is here a PROVED property of the quantum
-local-algebra structure (`joint_mem_span_local`), so the implication "local subsystems + locality + local
-tomography ⟹ `⊗`" is a theorem, not a posit. What is NOT derived (and cannot be, on pain of falsehood
-for non-tomographic GPTs) is that the world must be locally tomographic; P3 is thereby reduced to that one
-clean operational axiom and the implication proved. This closes the "why `⊗`" question for quantum
-composites; B6's dimension `NA · NB` is forced, not chosen.
+This module proves SUFFICIENCY: the Kronecker composite satisfies the composition principles. It does NOT
+by itself prove NECESSITY — that an ARBITRARY composite carrying commuting, generating local algebras must
+BE the tensor product. That converse (the actual reconstruction, `local matrix algebras + locality +
+generation ⟹ ⊗`, with the dimension corollary `dim = NA · NB` discharging B6) is the abstract theorem
+`compositeAlgReconstruction` / `composite_dim_eq` in `FND/TensorReconstruction.lean`. Read together they
+give the full statement; this file alone is the sufficiency half.
+
+The operational content is the standard GPT reconstruction (Hardy; Chiribella–D'Ariano–Perinotti): "why
+`⊗`" is answered by **local tomography** — the joint observables are spanned by local products. Local
+tomography singles out the quantum tensor product among general composites (real-QM and other GPTs are NOT
+locally tomographic and do NOT get `⊗`); it is here a PROVED property of the quantum local-algebra
+structure (`joint_mem_span_local`). What is NOT derived (and cannot be, on pain of falsehood for
+non-tomographic GPTs) is that the world must be locally tomographic.
 
 References: `specs/future-work.md` (P3 / FND-P3r); `FND/TensorGeneration.lean` (`joint_mem_span_local`,
 `single_prod`), `FND/TensorSector.lean` (`aliceOp`, `bobOp`, `aliceOp_bobOp_commute`).
@@ -70,17 +72,19 @@ theorem compositeTensorEquiv_apply (U : Matrix (Fin m) (Fin m) ℂ) (Q : Matrix 
       = NoCommunication.aliceOp U * NoCommunication.bobOp Q := by
   rw [compositeTensorEquiv, kroneckerLinearEquiv_tmul, aliceOp_mul_bobOp_eq_kronecker]
 
-/-- **P3 solved (via local tomography): the composite observable algebra IS the tensor product of the
-local ones.** Bundles:
+/-- **The standard tensor model realizes the composition principles (P3 sufficiency).** Bundles, for the
+Kronecker composite:
 
 1. the map `M_{NA} ⊗ M_{NB} → M_{NA·NB}`, `U ⊗ₜ Q ↦ aliceOp U · bobOp Q`, is a BIJECTION (a linear
-   isomorphism) — the composite carries no more and no less than the tensor product;
+   isomorphism) — the tensor model carries exactly the local products, no more and no less;
 2. its action is exactly the joint local product;
 3. locality: the local algebras commute.
 
-Together with local tomography (`joint_mem_span_local`), this forces composition to be `⊗` with
-dimension `NA · NB`: given quantum local subsystems that are local and locally tomographic, the composite
-IS the tensor product. This is the operational answer to "why `⊗`". -/
+Together with local tomography (`joint_mem_span_local`) this shows the tensor product is a MODEL of
+locality + generation with dimension `NA · NB`. It is the SUFFICIENCY half of "why `⊗`". The NECESSITY /
+uniqueness half — that any composite with commuting, generating local algebras must BE this tensor product
+— is `CSD.FND.compositeAlgReconstruction` in `FND/TensorReconstruction.lean`; only the two together force
+composition to be `⊗`. -/
 theorem composite_is_tensor_product :
     Function.Bijective (compositeTensorEquiv m n)
     ∧ (∀ (U : Matrix (Fin m) (Fin m) ℂ) (Q : Matrix (Fin n) (Fin n) ℂ),

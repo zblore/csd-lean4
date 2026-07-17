@@ -15,15 +15,19 @@ How the composite/tensor structure sits in the base. The honest split is:
   (the operator-level no-signalling `CSD.Empirical.QM.NoCommunication.no_communication`). None of this is
   assumed; it follows from the Kronecker algebra.
 
-* **Posited (bridge B6, parked P3).** The one thing NOT derived is the reconstruction claim that a
-  composite physical system's Choice A sector IS this tensor sector, i.e. that composition is `⊗` with
-  `dim = NA · NB`. That is `CompositeSector.tensor_dimension`, a named field: the "why `⊗`" derivation
-  (P3) is parked by standing instruction, so composite structure is posited per instance. The whole
-  entangled tier (singlet, GHZ, CGLMP) is built by hand on `Fin 2 × Fin 2` etc.; each such instance is a
-  concrete inhabitant of this tensor sector.
+* **Bridge B6 (dim `= NA·NB`) — now DERIVABLE, still a structure field here.** The reconstruction claim
+  that a composite's Choice A sector IS this tensor sector with `dim = NA · NB` is
+  `CompositeSector.tensor_dimension`, a named field. As of 2026-07-17 it is no longer *parked*: the
+  abstract theorem `CSD.FND.compositeAlgReconstruction` (`FND/TensorReconstruction.lean`) PROVES that
+  commuting local algebras `M_m, M_n` that GENERATE a composite `𝒜` force `𝒜 ≃ₐ M_m ⊗ M_n`, and
+  `CSD.FND.composite_dim_eq` derives `k = m·n` for `𝒜 = M_k` — i.e. B6's dimension relation is a THEOREM
+  under locality + generation. It remains a `CompositeSector` FIELD only because the sector interface has
+  not yet been refactored to CONSTRUCT instances via the reconstruction (the residual bridge step); the
+  by-hand entangled tier (singlet, GHZ, CGLMP on `Fin 2 × Fin 2`) still supplies the field per instance.
 
-So tensors ARE woven in: the tensor product itself and its no-signalling algebra are theorems here, and
-only the composite-is-tensor bridge is the posit, isolated in `CompositeSector`.
+So tensors ARE woven in: the tensor product, its no-signalling algebra, AND now the composite-is-tensor
+reconstruction are theorems; the only residue is threading `composite_dim_eq` into `CompositeSector`'s
+constructor.
 -/
 
 open CSD.Empirical.QM

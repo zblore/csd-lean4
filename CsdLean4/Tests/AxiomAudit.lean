@@ -272,6 +272,7 @@ import CsdLean4.FND.CompositeAdapters
 import CsdLean4.FND.BellGenerality
 import CsdLean4.FND.TensorGeneration
 import CsdLean4.FND.TensorSolved
+import CsdLean4.FND.TensorReconstruction
 import CsdLean4.FND.LocalisedTypicality
 import CsdLean4.FND.A5NoGo
 import CsdLean4.FND.Interference
@@ -7539,11 +7540,23 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 -- FND P3 SOLVED via local tomography (2026-07-15): composite_is_tensor_product. The composite observable
 -- algebra IS the tensor product of the local ones -- compositeTensorEquiv (= kroneckerLinearEquiv) is a
--- BIJECTIVE linear iso M_{NA} ⊗ M_{NB} ≃ M_{NA·NB} sending U ⊗ₜ Q ↦ aliceOp U · bobOp Q. So locality
--- (commuting) + local tomography (joint_mem_span_local) FORCE composition = ⊗ (dim NA·NB), the operational
--- answer to "why ⊗". Reduced to the single axiom of local tomography (itself proved for the quantum case).
+-- SUFFICIENCY (2026-07-17 downgrade): BIJECTIVE linear iso M_{NA} ⊗ M_{NB} ≃ M_{NA·NB} sending
+-- U ⊗ₜ Q ↦ aliceOp U · bobOp Q -- the standard tensor model REALIZES locality (commuting) + local tomography
+-- (joint_mem_span_local). This is SUFFICIENCY, not uniqueness; the NECESSITY half (any composite with
+-- commuting, generating local algebras IS the tensor product) is TensorReconstruction.lean below.
 /-- info: 'CSD.FND.composite_is_tensor_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.composite_is_tensor_product
+
+-- FND P3 RECONSTRUCTION (2026-07-17, TensorReconstruction.lean): the NECESSITY/uniqueness half.
+-- compositeAlgReconstruction: commuting local embeddings M_m, M_n whose images GENERATE 𝒜 give an ALGEBRA
+-- EQUIVALENCE M_m ⊗ M_n ≃ₐ 𝒜 (injective since M_m⊗M_n is SIMPLE -- matrixTensor_isSimpleRing; surjective
+-- from generation). composite_dim_eq: for 𝒜 = M_k, forces k = m·n -- discharging bridge B6
+-- (CompositeSector.tensor_dimension) as a THEOREM. So locality + generation FORCE ⊗, not just admit it.
+/-- info: 'CSD.FND.compositeAlgReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeAlgReconstruction
+
+/-- info: 'CSD.FND.composite_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.composite_dim_eq
 
 /-- info: 'CSD.FND.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeTensorEquiv_apply
