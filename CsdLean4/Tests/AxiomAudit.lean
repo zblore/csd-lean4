@@ -267,6 +267,7 @@ import CsdLean4.FND.ForwardCapstone
 import CsdLean4.FND.LiftedMeasurement
 import CsdLean4.FND.UnifiedMeasurement
 import CsdLean4.FND.ConditioningLink
+import CsdLean4.FND.ConditioningLuders
 import CsdLean4.FND.PostMeasurement
 import CsdLean4.FND.TimeIndexedRecord
 import CsdLean4.FND.CompositeAdapters
@@ -7516,10 +7517,50 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 -- rules the review flagged as unlinked. bayesianConditional w = w(fine)/w(coarse); BOTH the projective
 -- Luders update (ludersUpdate_isBayesianConditional, over the Born weight) and the ontic record-history
 -- conditioning (historyConditioning_isBayesianConditional, over the Liouville measure) are instances.
--- luders_record_conditioning_correspondence bundles both -- one conditioning rule, two weights that
--- agree on the sector via Born-from-volume (π_*μL = μFS, B1).
+-- luders_record_conditioning_correspondence bundles both -- one conditioning rule, two weights. That the
+-- two weights AGREE (asserted there, not proved) is now a THEOREM: ConditioningLuders.lean.
 /-- info: 'CSD.FND.luders_record_conditioning_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.luders_record_conditioning_correspondence
+
+-- FND conditioning->Luders WEIGHT AGREEMENT (2026-07-17, ConditioningLuders.lean): the missing link the
+-- review flagged. onticRegion_measure_eq_born: μL(π⁻¹ bornRegion i) = ‖⟨eᵢ,ψ⟩‖² -- the ontic measure of the
+-- i-th OUTCOME REGION equals the Born weight, via B1 (π_*μL=μFS) + Born-from-volume. So the ontic and Born
+-- conditioning weights are the SAME number (previously only asserted). conditioning_born_ratio_correspondence:
+-- the ontic Bayesian conditional of the outcome regions = the ratio of Born weights (probability-level
+-- correspondence). Residual: all-effects operational STATE equivalence via projWeight.
+/-- info: 'CSD.FND.onticRegion_measure_eq_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.onticRegion_measure_eq_born
+
+/-- info: 'CSD.FND.conditioning_born_ratio_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditioning_born_ratio_correspondence
+
+-- FND #4 OPERATIONAL EQUIVALENCE (2026-07-17, ConditioningLuders.lean): the review's #4 for pointer-basis
+-- effects. projWeight_rankOne: projWeight(rank-1 proj eₖ)ψ = ‖⟨eₖ,ψ⟩‖² -- the formalism bridge between the
+-- projWeight (E→ₗE) weight and the Born/region weight. onticWeight_eq_ludersWeight: μL(π⁻¹ bornRegion i) =
+-- projWeight(rankOneProj i)ψ -- the ontic and Lüders conditioning weights are LITERALLY equal per outcome.
+-- conditioning_luders_operational_equivalence: the two conditionings give the SAME conditional probability,
+-- each in its native weight -- operational equivalence as PREDICTIONS, not measure=vector. Residual:
+-- non-pointer-basis / general-projector effects (sums over ranges).
+/-- info: 'CSD.FND.projWeight_rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.projWeight_rankOne
+
+/-- info: 'CSD.FND.onticWeight_eq_ludersWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.onticWeight_eq_ludersWeight
+
+/-- info: 'CSD.FND.conditioning_luders_operational_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditioning_luders_operational_equivalence
+
+-- FND #4 GENERAL-EFFECT extension (2026-07-17, ConditioningLuders.lean): #4 completed for ALL pointer-basis
+-- effects. onticRegion_biUnion_measure_eq_born_sum: μL(π⁻¹ ⋃_{k∈S} bornRegion k) = ∑_{k∈S} ‖⟨eₖ,ψ⟩‖² --
+-- the weight agreement for an effect S (union of regions = sum of Born weights), via additivity over the
+-- pairwise-disjoint Born regions. conditioning_luders_effect_equivalence: the ontic and Lüders conditionings
+-- give the SAME conditional probability for every pointer-basis effect. So #4 (operational equivalence) is
+-- proved for all diagonal effects on the product model.
+/-- info: 'CSD.FND.onticRegion_biUnion_measure_eq_born_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.onticRegion_biUnion_measure_eq_born_sum
+
+/-- info: 'CSD.FND.conditioning_luders_effect_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditioning_luders_effect_equivalence
 
 /-- info: 'CSD.FND.ludersUpdate_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.ludersUpdate_isBayesianConditional

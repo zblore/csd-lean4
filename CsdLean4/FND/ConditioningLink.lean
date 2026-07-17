@@ -17,12 +17,16 @@ FND-T5 follow-on. The corpus proves TWO conditioning rules that were not yet con
 * the **projective Lüders state update** (`Luders.ludersUpdate_conditional`): the post-measurement Born
   weight of a finer projection is `projWeight q (ludersUpdate p x) = projWeight q x / projWeight p x`.
 
-This module makes their identity explicit: BOTH are the single Bayesian conditioning rule
-`bayesianConditional w = w(fine) / w(coarse)`, differing only in the WEIGHT — the Liouville measure `μL`
-for the ontic record update, the Born weight `projWeight · x` for the projective state update. On the
-Choice A sector these two weights AGREE (Born from volume, `π_* μL = μFS`, bridge B1
-`productSector_hasFubiniStudyPushforward`), so the ontic record conditioning and the projective Lüders
-update are one and the same conditioning, seen through `π`.
+This module makes their identity explicit at the RULE level: BOTH are the single Bayesian conditioning
+rule `bayesianConditional w = w(fine) / w(coarse)`, differing only in the WEIGHT — the Liouville measure
+`μL` for the ontic record update, the Born weight for the projective state update.
+
+**That the two weights AGREE is proved separately in `FND/ConditioningLuders.lean`**
+(`onticRegion_measure_eq_born` : `μL(π⁻¹ bornRegion i) = ‖⟨eᵢ,ψ⟩‖²`, via `π_* μL = μFS` (B1) +
+Born-from-volume), so the ontic record conditioning and the projective Lüders update give the SAME
+conditional probability, seen through `π`. The `..._correspondence` bundle below states only the two
+Bayesian-rule halves; the weight agreement — and hence the genuine coincidence — lives in that companion
+file.
 
 References: `specs/future-work.md` (FND-T5 follow-on); `FND/Luders.lean` (`ludersUpdate_conditional`),
 `FND/IsolationPreparation.lean` (`conditionalMeasure_apply`), `FND/MeasurementRecord.lean`

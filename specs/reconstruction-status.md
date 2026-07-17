@@ -11,10 +11,15 @@ below is `sorry`-free, `lake build CsdLeanTests` green, and AxiomAudit-pinned to
 The corpus is a **rigorous, forward finite-dimensional QM reconstruction from one posited Choice A ontic
 model.** A single genuine `Φ ≠ id` Kähler sector yields BOTH pillars (Born + Schrödinger) at general `N`
 with arbitrary Hermitian `H` (`manyToOneSchrodingerSetup_both_pillars`), and ONE ontic model
-`(Σ = ℂℙ^{M}×T², μL = μFS⊗vol, Φ, π = Prod.fst)` carries isolated Hamiltonian dynamics, de-isolating
-measurement, time-indexed records, Born frequencies, and the conditional/Lüders state update
-(`unified_choiceA_capstone`). The measurement/record loop closes (post-outcome preparation with proven
-nonzero measure; the record conditioning = the Lüders update). The **one deep gap** is A5 / FND-1: the
+`(Σ = ℂℙ^{M}×T², μL = μFS⊗vol, Φ, π = Prod.fst)` carries isolated Hamiltonian dynamics and de-isolating
+measurement together. `unified_choiceA_capstone` BUNDLES the dynamics + measurement core (six proved
+properties: isolated measure-preservation, projectability, FS pushforward, measurement-interaction
+preservation, a.e. pointer readout, record establishment). Time-indexed record semantics (`flowedSemantics`),
+Born-frequency convergence, and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
+`conditioning_luders_effect_equivalence` — now genuinely proved: the ontic record-conditioning and the
+Lüders update give the same conditional prediction for every pointer-basis effect) are SEPARATE proved
+theorems ON this model, not yet assembled INTO the one capstone — so L9 is a multi-theorem PARTIAL, not a
+single unified closure. The **one deep gap** is A5 / FND-1: the
 sector itself is **posited**, not derived from the deterministic flow (the Born trials SAMPLE `μL`
 i.i.d.). This is FORWARD throughout — it does not derive the sector — and that scope matches Paper C's
 own (§1.4 assumes `Σ`, `π`, the A5 sector).
@@ -33,8 +38,9 @@ P9 many-to-one `π`.
 
 **Bridges (discharged for the product model).** B1 `π_*μL = μFS` (`productSector_hasFubiniStudyPushforward`);
 B2 `ProjectiveDynamicsBridge.projectable`; B3 `HasUnitaryRealisation`/`HasHamiltonianRealisation`; B4/B5
-`DeisolationModel` + `vnDeisolationModel_records`; B6 `CompositeSector.tensor_dimension` (P3 "why ⊗"
-parked); B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
+`DeisolationModel` + `vnDeisolationModel_records`; B6 `CompositeSector.tensor_dimension` (P3 "why ⊗" — now
+DISCHARGEABLE via `CompositeSector.ofReconstruction` / `composite_dim_eq`, no longer necessarily posited);
+B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
 
 **Theorem targets (each inhabited).**
 
@@ -69,7 +75,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 | L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
-| **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — `unified_choiceA_capstone` (FND-T5) |
+| **L9** | ONE model: dynamics + measurement + records + Born + update | PARTIAL — `unified_choiceA_capstone` bundles the dynamics+measurement CORE (6 properties); records/Born-freq/conditioning=Lüders are separate proved theorems on the same model, not yet assembled into it |
 | **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`) |
 
 ## 4. The forward reconstruction — what each pillar delivers
@@ -85,8 +91,13 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
   `DeisolationModel` over the *nontrivial* isolated dynamics (`unifiedDeisolationModel`).
 * **Records / state update** (FND): records are time-indexed measurable events (`flowedSemantics`), with
   probability conserved and flow-covariant under isolation; the post-outcome preparation has proven
-  nonzero measure (`PostMeasurement.appendFact`); the record conditioning equals the Lüders update
-  (`luders_record_conditioning_correspondence`).
+  nonzero measure (`PostMeasurement.appendFact`); the record conditioning equals the Lüders update as an
+  OPERATIONAL EQUIVALENCE — `ConditioningLuders.conditioning_luders_effect_equivalence`: on the product
+  model the ontic record-conditioning and the Lüders update give the same conditional prediction for every
+  pointer-basis effect, resting on the proved weight agreement `onticRegion_measure_eq_born`
+  (`μL(π⁻¹ bornRegion i) = ‖⟨eᵢ,ψ⟩‖²`, via B1 + Born-from-volume). (The earlier
+  `luders_record_conditioning_correspondence` only conjoined the two Bayesian halves; it did not prove the
+  weights agree.)
 * **Entanglement / non-locality** (LF6): Bell-forced non-factorisation in the Σ-engine at full
   generality — CGLMP for every `d`, GHZ/Mermin for every party count `n`, no-signalling; the universal
   bounds (`lhv_chsh_le_two`, `qm_chsh_le_tsirelson`, `cglmp_lhv_le_two`, `bell_general_separation`).
@@ -132,13 +143,18 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
     places". Residual: the bare flow is one one-parameter subgroup, not all of `U(N)`; the symmetry is
     still construction data. Together: a single flow is provably insufficient; the full symmetry is
     provably sufficient — the frontier is exactly the gap between them.
-* **P3 "why ⊗" — SOLVED via local tomography** (`FND/TensorSolved.lean` `composite_is_tensor_product`):
-  the composite observable algebra IS the tensor product of the local ones — `compositeTensorEquiv` is a
-  bijective linear iso `M_{NA} ⊗ M_{NB} ≃ M_{NA·NB}`, `U ⊗ₜ Q ↦ aliceOp U · bobOp Q`. Locality
-  (`aliceOp_bobOp_commute`) + local tomography (`joint_mem_span_local`, proved for the quantum case)
-  force composition to be `⊗` with dim `NA·NB` — the operational GPT-reconstruction answer. Residual:
-  local tomography is not (and cannot be) derived from nothing — it is the one operational axiom that
-  singles out quantum `⊗`; the "posit `⊗` per instance" is discharged.
+* **P3 "why ⊗" — SUFFICIENCY + NECESSITY both proved** (2 files): SUFFICIENCY
+  (`FND/TensorSolved.lean` `composite_is_tensor_product`) — the standard Kronecker model REALIZES the
+  composition principles: `compositeTensorEquiv` is a bijective linear iso `M_{NA} ⊗ M_{NB} ≃ M_{NA·NB}`
+  in which locality (`aliceOp_bobOp_commute`) and local tomography (`joint_mem_span_local`, proved for the
+  quantum case) both hold. NECESSITY / uniqueness (`FND/TensorReconstruction.lean`
+  `compositeAlgReconstruction`) — an ARBITRARY composite `𝒜` with commuting, generating local embeddings
+  is FORCED to be the tensor product (`𝒜 ≃ₐ M_NA ⊗ M_NB`: injective because `M_NA ⊗ M_NB` is simple,
+  surjective from generation), and `composite_dim_eq` derives `dim = NA·NB`, DISCHARGING bridge B6
+  (`CompositeSector.ofReconstruction` fills the `tensor_dimension` field from the reconstruction). So both
+  halves are now theorems. Residual: local tomography itself is the one operational axiom that cannot be
+  derived from nothing (it singles out quantum `⊗`); and the sector interface uses the discharge
+  constructor only where the local-algebra data is on hand.
 * **KG-1** — the Kähler closed 2-form `dω = 0` and the global volume identity, blocked on missing Mathlib
   manifold exterior calculus (the volume is forced; the pointwise form is proved).
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
