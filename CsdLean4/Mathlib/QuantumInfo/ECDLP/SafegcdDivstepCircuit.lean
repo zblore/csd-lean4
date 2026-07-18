@@ -600,6 +600,26 @@ example :
     regValZ F4 (denote (signedHalve F4 3)
       (fun w => [false, true, false, true].getD w.val false)) 4 = -3 := by decide
 
+/-- **Frame lemma for `shiftDown`.** A wire distinct from every shifted register wire `F 0 … F n` is left
+untouched by the `n`-swap shift chain. -/
+theorem shiftDown_apply_of_ne (F : ℕ → Fin m) (s : State m) (n : ℕ) (w : Fin m)
+    (hw : ∀ i, i ≤ n → w ≠ F i) : denote (shiftDown F n) s w = s w := by
+  induction n with
+  | zero => rfl
+  | succ k ih =>
+    rw [shiftDown, denote_append, denote_cons, denote_nil, denoteGate, Function.comp_apply,
+      Equiv.swap_apply_of_ne_of_ne (hw k (by omega)) (hw (k + 1) (le_refl _))]
+    exact ih (fun i hi => hw i (by omega))
+
+/-- **Frame lemma for `signedHalve`.** A wire distinct from every register wire `F 0 … F n` is left
+untouched: the signed halving `shiftDown ; CX (F (n-1)) (F n)` acts only on the register `F`. -/
+theorem signedHalve_apply_of_ne (F : ℕ → Fin m) (s : State m) (n : ℕ) (w : Fin m)
+    (hw : ∀ i, i ≤ n → w ≠ F i) : denote (signedHalve F n) s w = s w := by
+  rw [signedHalve, denote_append, denote_cons, denote_nil, denoteGate]
+  split
+  · exact shiftDown_apply_of_ne F s n w hw
+  · rw [Function.update_of_ne (hw n (le_refl _)), shiftDown_apply_of_ne F s n w hw]
+
 /-! ## Tranche 4b: the g-register update — composing signed `±` (T2) with signed halve (T4a)
 
 The divstep's `g`-register update is `g ↦ (g - f)/2` (branch A) or `g ↦ (g + f)/2` (branch B). Each is
@@ -637,6 +657,26 @@ theorem gUpdateSub_correct {n : ℕ} (L : SubLayout m (n + 1)) (s : State m) (hn
         (Int.not_odd_iff_even.mpr (hgodd.sub_odd hfodd))
   -- the halving stage
   rw [signedHalve_correct L.B hBinj s' hn heven, hsub]
+
+/-- **The g-update preserves the `f` register.** Branch A recovers `f' = g` by adding `2·g` back into the
+`f` register AFTER the g-update, which only works if the g-update left `f` (`= L.Sub`) intact. It does:
+`rippleSub` keeps the subtrahend read-only (`rippleSub_invariant` P2) and `signedHalve L.B` touches only the
+`L.B` (= g) register (disjoint from `L.Sub`, `signedHalve_apply_of_ne`). So `regValZ L.Sub` is unchanged. -/
+theorem gUpdateSub_preserves_Sub {n : ℕ} (L : SubLayout m (n + 1)) (s : State m)
+    (hBor0 : ∀ j, s (L.Bor j) = false) :
+    regValZ L.Sub (denote (rippleSub L ++ signedHalve L.B n) s) (n + 1)
+      = regValZ L.Sub s (n + 1) := by
+  have hwire : ∀ j, j < n + 1 →
+      denote (rippleSub L ++ signedHalve L.B n) s (L.Sub j) = s (L.Sub j) := by
+    intro j hj
+    rw [denote_append,
+      signedHalve_apply_of_ne L.B (denote (rippleSub L) s) n (L.Sub j) (fun i _ => (L.hBSub i j).symm)]
+    exact (rippleSub_invariant L s hBor0 (n + 1) (le_refl _)).2.1 j hj
+  have hrange : regValRange L.Sub (denote (rippleSub L ++ signedHalve L.B n) s) (n + 1)
+      = regValRange L.Sub s (n + 1) := by
+    simp only [regValRange]
+    exact Finset.sum_congr rfl fun k hk => by rw [hwire k (Finset.mem_range.mp hk)]
+  rw [regValZ, regValZ, hrange]
 
 /-- **The g-update, add branch (branch B numerator): `g ↦ (g + f)/2`.** The composite circuit
 `cuccaroAdd ; signedHalve` on the sum register `A` computes `(regValZ A + regValZ B)/2` at the signed

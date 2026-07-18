@@ -7330,6 +7330,21 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'ECDLP.Safegcd.Circuit.and3_correct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.and3_correct
 
+-- ECDLP TRANCHE 5 prerequisites (2026-07-18): frame/preservation lemmas for the branch-A end-to-end
+-- assembly. shiftDown_apply_of_ne / signedHalve_apply_of_ne: a wire disjoint from the register family is
+-- untouched by the shift / signed-halve (needed to show the g-update does not disturb the f register).
+-- gUpdateSub_preserves_Sub: the g-update `rippleSub ; signedHalve` leaves regValZ of the f (Sub) register
+-- unchanged (rippleSub keeps Sub read-only via rippleSub_invariant P2; signedHalve acts only on B=g) --
+-- the glue that lets branch A recover f' = g by adding 2·g back into an intact f register afterwards.
+/-- info: 'ECDLP.Safegcd.Circuit.shiftDown_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.shiftDown_apply_of_ne
+
+/-- info: 'ECDLP.Safegcd.Circuit.signedHalve_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedHalve_apply_of_ne
+
+/-- info: 'ECDLP.Safegcd.Circuit.gUpdateSub_preserves_Sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.gUpdateSub_preserves_Sub
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation
