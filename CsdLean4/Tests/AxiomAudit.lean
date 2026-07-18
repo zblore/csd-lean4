@@ -7393,6 +7393,21 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'ECDLP.Safegcd.Circuit.branchA_executed_decomp' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.branchA_executed_decomp
 
+-- ECDLP PER-BRANCH INERTNESS (2026-07-18): the certified per-branch executed-count mechanism.
+-- executedToffoli_cons: executed(g::gs) a = gateFires g a + executed gs (applyGate g a) (head peel).
+-- applyGate_getElem!_of_not_writesTo: a gate not writing w preserves w's value (Array frame).
+-- executedToffoli_ctrl_clear: a block where every CCX has control w, w never written and clear on input,
+-- executes 0 Toffolis -- so a non-taken divstep branch (its select wire clear) costs nothing. With
+-- executedToffoli_append this yields executed(divstep|branch X) = executed(unconditional)+executed(gadget X).
+/-- info: 'ECDLP.Safegcd.Circuit.executedToffoli_cons' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.executedToffoli_cons
+
+/-- info: 'ECDLP.Safegcd.Circuit.applyGate_getElem!_of_not_writesTo' depends on axioms: [propext] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.applyGate_getElem!_of_not_writesTo
+
+/-- info: 'ECDLP.Safegcd.Circuit.executedToffoli_ctrl_clear' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.executedToffoli_ctrl_clear
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

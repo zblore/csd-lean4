@@ -198,4 +198,82 @@ theorem inertToffoli_executed_zero {m : ℕ} (c₁ c₂ t : Fin m) (a : Array Bo
   refine ⟨?_, by simp [circuitCost, gateCost]⟩
   simp [executedToffoli, h]
 
+/-! ### The per-branch mechanism: a controlled block with a clear select wire executes zero
+
+The divstep is reversible: all three branches' gadgets run, each controlled by a branch-select wire. When a
+branch is not taken, its select wire is clear, so EVERY Toffoli in its gadget is inert — the whole gadget
+executes `0`. `executedToffoli_ctrl_clear` proves exactly this: a block all of whose `CCX`s have a control
+`w`, with `w` never written and clear on input, executes `0` Toffolis. Combined with `executedToffoli_append`
+this gives `executed(divstep on a branch-`X` input) = executed(unconditional) + executed(gadget `X`)`, the
+other gadgets contributing nothing — the certified per-branch executed count. -/
+
+/-- Reading a different index after an in-bounds `set!` returns the old value. -/
+private theorem getElem!_set!_ne {a : Array Bool} {i j : ℕ} {v : Bool} (h : i ≠ j) :
+    (a.set! i v)[j]! = a[j]! := by
+  rw [Array.getElem!_eq_getD, Array.getElem!_eq_getD, Array.set!_eq_setIfInBounds,
+    Array.getD_eq_getD_getElem?, Array.getD_eq_getD_getElem?, Array.getElem?_setIfInBounds_ne h]
+
+/-- `w` is (over)written by gate `g` (its target, or either swapped wire). -/
+def writesTo {m : ℕ} (g : Gate m) (w : Fin m) : Prop :=
+  match g with
+  | .X i => w = i
+  | .CX _ t => w = t
+  | .CCX _ _ t => w = t
+  | .swap i j => w = i ∨ w = j
+
+/-- **A gate that does not write `w` preserves `w`'s value** (Array frame for `applyGate`). -/
+theorem applyGate_getElem!_of_not_writesTo {m : ℕ} (g : Gate m) (w : Fin m) (arr : Array Bool)
+    (h : ¬ writesTo g w) : (applyGate g arr)[w.val]! = arr[w.val]! := by
+  cases g with
+  | X i => exact getElem!_set!_ne (fun he => h (Fin.ext he.symm))
+  | CX c t =>
+    simp only [applyGate]; split
+    · rfl
+    · exact getElem!_set!_ne (fun he => h (Fin.ext he.symm))
+  | CCX c₁ c₂ t =>
+    simp only [applyGate]; split
+    · rfl
+    · exact getElem!_set!_ne (fun he => h (Fin.ext he.symm))
+  | swap i j =>
+    simp only [writesTo, not_or] at h
+    simp only [applyGate]
+    rw [getElem!_set!_ne (fun he => h.2 (Fin.ext he.symm)),
+      getElem!_set!_ne (fun he => h.1 (Fin.ext he.symm))]
+
+/-- **The executed count peels the head gate.** `executed(g :: gs) a = gateFires g a +
+executed gs (applyGate g a)`. -/
+theorem executedToffoli_cons {m : ℕ} (g : Gate m) (gs : Circuit m) (arr : Array Bool) :
+    executedToffoli (g :: gs) arr = gateFires g arr + executedToffoli gs (applyGate g arr) := by
+  rw [show g :: gs = [g] ++ gs from rfl, executedToffoli_append,
+    show runArr [g] arr = applyGate g arr from rfl]
+  congr 1
+  cases g <;> simp [executedToffoli, gateFires]
+
+/-- **Per-branch inertness, certified.** For a circuit `c` in which every `CCX` has `w` as one of its two
+controls, and `w` is never written (`¬ writesTo g w` for every gate), an input with `w` clear runs `c` with
+`0` executed Toffolis. This is why a non-taken divstep branch (its select wire `w` clear) costs nothing —
+the mechanism behind the certified per-branch average-executed count. -/
+theorem executedToffoli_ctrl_clear {m : ℕ} (c : Circuit m) (w : Fin m)
+    (hctrl : ∀ c₁ c₂ t, Gate.CCX c₁ c₂ t ∈ c → w = c₁ ∨ w = c₂)
+    (hnowrite : ∀ g ∈ c, ¬ writesTo g w) :
+    ∀ (arr : Array Bool), arr[w.val]! = false → executedToffoli c arr = 0 := by
+  induction c with
+  | nil => intro arr _; rfl
+  | cons g gs ih =>
+    intro arr hw
+    rw [executedToffoli_cons]
+    have hg0 : gateFires g arr = 0 := by
+      cases g with
+      | CCX c₁ c₂ t =>
+        rcases hctrl c₁ c₂ t (List.mem_cons_self ..) with h | h
+        · simp [gateFires, show arr[c₁.val]! = false from by rw [← h]; exact hw]
+        · simp [gateFires, show arr[c₂.val]! = false from by rw [← h]; exact hw]
+      | X i => simp [gateFires]
+      | CX c t => simp [gateFires]
+      | swap i j => simp [gateFires]
+    rw [hg0, Nat.zero_add]
+    refine ih (fun c₁ c₂ t hm => hctrl c₁ c₂ t (List.mem_cons_of_mem _ hm))
+      (fun g' hm => hnowrite g' (List.mem_cons_of_mem _ hm)) (applyGate g arr) ?_
+    rw [applyGate_getElem!_of_not_writesTo g w arr (hnowrite g (List.mem_cons_self ..))]; exact hw
+
 end ECDLP.Safegcd.Circuit
