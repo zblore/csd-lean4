@@ -286,6 +286,7 @@ import CsdLean4.FND.ConditionalUpdate
 import CsdLean4.FND.MixedState
 import CsdLean4.FND.MixedEnsemble
 import CsdLean4.FND.MixedOntic
+import CsdLean4.FND.Symmetrization
 
 /-!
 # Axiom regression suite
@@ -7790,5 +7791,26 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 -- wired as the FiniteQMClosure.mixed_born field. Weight-level (the mixed frequency LLN is the refinement).
 /-- info: 'CSD.FND.mixed_ontic_born_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixed_ontic_born_weight
+
+-- Symmetrization (identical particles / exchange statistics, n=2, 2026-07-18): the swap operator on
+-- H⊗H = EuclideanSpace ℂ (Fin N × Fin N) is a self-adjoint involution (swap_isSymmetric); symProj/
+-- antisymProj = ½(1±swap) are complementary orthogonal projections (symProj_idem, symProj_antisymProj,
+-- symProj_add_antisymProj); the exchange dichotomy Sym=(+1)/Anti=(-1) eigenspaces (swap_eq_self_iff,
+-- swap_eq_neg_iff, eq_zero_of_swap_self_and_neg → H⊗H = Sym⊕Anti); and Pauli exclusion
+-- antisymProj_tprod_self (antisymProj (v⊗v) = 0: no two fermions in the same state).
+/-- info: 'CSD.FND.swap_isSymmetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.swap_isSymmetric
+
+/-- info: 'CSD.FND.symProj_add_antisymProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.symProj_add_antisymProj
+
+/-- info: 'CSD.FND.swap_eq_self_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.swap_eq_self_iff
+
+/-- info: 'CSD.FND.swap_eq_neg_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.swap_eq_neg_iff
+
+/-- info: 'CSD.FND.antisymProj_tprod_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.antisymProj_tprod_self
 
 end CSD.Tests.AxiomAudit
