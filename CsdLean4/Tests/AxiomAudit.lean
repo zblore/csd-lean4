@@ -5,6 +5,7 @@ import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
 import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
+import CsdLean4.LF2.QuantumChannel
 import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 import CsdLean4.Mathlib.QuantumInfo.Channel
 import CsdLean4.Mathlib.QuantumInfo.Stinespring
@@ -351,6 +352,29 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 -- remains as an imported axiom.)
 /-- info: 'CSD.LF2.born_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms born_quadratic
+
+-- QuantumChannel (general CPTP maps, 2026-07-18): channels in Kraus form (∑ₖ Kₖ†Kₖ=1). T1 CPTP-forward:
+-- channelApply sends density operators to density operators (apply_posSemidef via mul_mul_conjTranspose_same
+-- + posSemidef_sum; apply_trace via trace cyclicity + the constraint), unitaryChannel, comp (channels
+-- compose). T2 Stinespring: dilation_isometry (V†V=1) + stinespring (Φ(ρ) = Tr_E(VρV†) via partialTraceRight).
+-- T3 Choi: choiMatrix_posSemidef (the Choi-Jamiolkowski completely-positive witness, ∑ₖ vec(Kₖ)vec(Kₖ)† PSD).
+/-- info: 'CSD.LF2.QuantumChannel.channelApply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.channelApply
+
+/-- info: 'CSD.LF2.QuantumChannel.apply_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.apply_trace
+
+/-- info: 'CSD.LF2.QuantumChannel.comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.comp
+
+/-- info: 'CSD.LF2.QuantumChannel.dilation_isometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.dilation_isometry
+
+/-- info: 'CSD.LF2.QuantumChannel.stinespring' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.stinespring
+
+/-- info: 'CSD.LF2.QuantumChannel.choiMatrix_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.choiMatrix_posSemidef
 
 -- Partial trace (Cat-1 Mathlib staging) + the reduced density operator (LF2).
 -- traceRight/traceLeft trace out a tensor factor; the API (kronecker defining
