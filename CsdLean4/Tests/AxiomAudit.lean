@@ -64,6 +64,7 @@ import CsdLean4.Mathlib.QuantumInfo.ECDLP.ThreeTrackScore
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
 import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
+import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdExecCost
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
@@ -7360,6 +7361,22 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 /-- info: 'ECDLP.Safegcd.Circuit.branchA_transformation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.branchA_transformation
+
+-- ECDLP EXECUTED-COST CERTIFICATION (2026-07-18, SafegcdExecCost.lean): the measured executed/emitted
+-- ratio, now PROVED. executedToffoli_le_toffoli: on every input, Toffolis that FIRE ≤ Toffolis EMITTED --
+-- so the competition's scored avg-executed quantity is a certified LOWER bound on the verified emitted
+-- floor (the three-track direction, a theorem not a #eval). totalExecuted_le: total (hence average)
+-- executed ≤ emitted × #inputs. inertToffoli_executed_zero: a CCX with a control clear contributes 0
+-- executed but 1 emitted -- the certified data-dependence mechanism that puts average-executed below
+-- worst-case. Axiom set [propext, Quot.sound] (constructive, no Classical.choice).
+/-- info: 'ECDLP.Safegcd.Circuit.executedToffoli_le_toffoli' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.executedToffoli_le_toffoli
+
+/-- info: 'ECDLP.Safegcd.Circuit.totalExecuted_le' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.totalExecuted_le
+
+/-- info: 'ECDLP.Safegcd.Circuit.inertToffoli_executed_zero' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.inertToffoli_executed_zero
 
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
