@@ -16,11 +16,11 @@ measurement together. `unified_choiceA_capstone` BUNDLES the dynamics + measurem
 properties: isolated measure-preservation, projectability, FS pushforward, measurement-interaction
 preservation, a.e. pointer readout, record establishment). Time-indexed record semantics (now INSTANTIATED on the model:
 `unifiedFlowedSemantics` / `unified_records_persistence`, records time-physical under the isolated flow),
-Born-frequency convergence (now stated on the model: `unified_born_frequency`), and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
+Born-frequency convergence (now stated on the model: `unified_born_frequency`, given full pointer-basis support of `ψ` — the genericity hypothesis `hpos : ∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²`), and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
 `conditioning_luders_effect_equivalence` — now genuinely proved: the ontic record-conditioning and the
 Lüders update give the same conditional prediction for every pointer-basis effect) are now ASSEMBLED into
 one tiered record: **`FiniteQMClosure`** / `unifiedFiniteQMClosure` (`FND/FiniteQMClosure.lean`) collects all
-nine proved-on-the-model facts as fields, each discharged by its source lemma, and states honestly in the
+ten proved-on-the-model facts as fields (the sixth-through-tenth: records #5, Born-frequency #2, conditioning=Lüders #3/#4, mixed-state Born #8 C), each discharged by its source lemma, and states honestly in the
 module header what is a theorem here vs. a Choice-A posit vs. a QM adapter vs. still open (no field is
 `sorry`). So L9 is now a single unified closure (Tier 1), not a scattered multi-theorem partial. The **one
 deep gap** — outside the closure's Tier 1 — is A5 / FND-1: the

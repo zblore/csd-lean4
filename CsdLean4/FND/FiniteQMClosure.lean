@@ -18,7 +18,7 @@ and the non-theorem tiers live in this docstring, not in fabricated fields.
 
 ## Tier 1 — PROVED on the unified model (the fields of `FiniteQMClosure`)
 
-All nine on the ONE model `productDynamics H hH p₀`:
+All ten on the ONE model `productDynamics H hH p₀`:
 
 * `isolated_flow_measure_preserving` — the isolated flow preserves `μL` (`ConstraintDynamics.flow_preserves`);
 * `schrodinger_projection` — `π ∘ Φ_t = exp(-itH) • ·` (`productDynamicsBridge.projectable`);
@@ -30,7 +30,7 @@ All nine on the ONE model `productDynamics H hH p₀`:
 * `records_time_physical` — the time-indexed record probability is conserved and flow-covariant, #5
   (`unified_records_persistence`);
 * `born_frequency` — i.i.d. trials of `μL` have outcome-region frequency → `‖⟨eᵢ,ψ⟩‖²`, #2
-  (`unified_born_frequency`);
+  (`unified_born_frequency`; requires full pointer-basis support of `ψ`, `hpos : ∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²`);
 * `conditioning_is_luders` — record conditioning = Lüders update as predictions, #3/#4
   (`conditioning_luders_effect_equivalence`);
 * `mixed_born` — mixed states on the model (#8 C, weight level): for every density operator `ρ`, the
