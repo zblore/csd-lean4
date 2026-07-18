@@ -213,6 +213,12 @@ private theorem getElem!_set!_ne {a : Array Bool} {i j : ℕ} {v : Bool} (h : i 
   rw [Array.getElem!_eq_getD, Array.getElem!_eq_getD, Array.set!_eq_setIfInBounds,
     Array.getD_eq_getD_getElem?, Array.getD_eq_getD_getElem?, Array.getElem?_setIfInBounds_ne h]
 
+/-- Reading the just-updated index after an in-bounds `set!` returns the new value. -/
+private theorem getElem!_set!_self {a : Array Bool} {i : ℕ} {v : Bool} (h : i < a.size) :
+    (a.set! i v)[i]! = v := by
+  rw [Array.getElem!_eq_getD, Array.set!_eq_setIfInBounds, Array.getD_eq_getD_getElem?,
+    Array.getElem?_setIfInBounds_self_of_lt h, Option.getD_some]
+
 /-- `w` is (over)written by gate `g` (its target, or either swapped wire). -/
 def writesTo {m : ℕ} (g : Gate m) (w : Fin m) : Prop :=
   match g with
@@ -275,5 +281,59 @@ theorem executedToffoli_ctrl_clear {m : ℕ} (c : Circuit m) (w : Fin m)
     refine ih (fun c₁ c₂ t hm => hctrl c₁ c₂ t (List.mem_cons_of_mem _ hm))
       (fun g' hm => hnowrite g' (List.mem_cons_of_mem _ hm)) (applyGate g arr) ?_
     rw [applyGate_getElem!_of_not_writesTo g w arr (hnowrite g (List.mem_cons_self ..))]; exact hw
+
+/-! ### The taken gadget's executed count, as a boolean function of the data (step 5)
+
+The Cuccaro adder's Toffolis live in its `maj` (majority) and `uma` (un-majority-add) cells, one each per
+bit. Each cell's executed Toffoli is an EXPLICIT boolean function of the wire values at the cell's input —
+the atomic per-branch executed count. The adder's total executed count is the sum of these over its cells
+(`executedToffoli_append`); composing them into an operand-level closed form (tracking the carry chain) is
+the remaining analytical step. -/
+
+open Reversible in
+/-- **`uma` cell executed count.** The un-majority-and-add cell `[CCX c b a, CX a c, CX c b]` executes its
+one Toffoli iff both controls `c, b` are set on input: `executed(uma c b a) arr = ⟦arr c ∧ arr b⟧`. -/
+theorem uma_executed {m : ℕ} (c b a : Fin m) (arr : Array Bool) :
+    executedToffoli (uma c b a) arr = if arr[c.val]! && arr[b.val]! then 1 else 0 := by
+  rw [uma, show [Gate.CCX c b a, Gate.CX a c, Gate.CX c b]
+      = [Gate.CCX c b a] ++ [Gate.CX a c, Gate.CX c b] from rfl, executedToffoli_append,
+    executedToffoli_eq_zero_of_toffoli_zero [Gate.CX a c, Gate.CX c b] _
+      (by simp [circuitCost, gateCost]), Nat.add_zero]
+  simp [executedToffoli]
+
+open Reversible in
+/-- **`maj` cell executed count.** The majority cell `[CX a b, CX a c, CCX c b a]` executes its one Toffoli
+iff the two CX-updated controls `c ⊕ a` and `b ⊕ a` are both set — the majority predicate on `(a,b,c)`:
+`executed(maj c b a) arr = ⟦(arr a ⊕ arr c) ∧ (arr a ⊕ arr b)⟧` (for distinct wires). -/
+theorem maj_executed {m : ℕ} (c b a : Fin m) (arr : Array Bool) (hsz : arr.size = m)
+    (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
+    executedToffoli (maj c b a) arr
+      = if (arr[a.val]! ^^ arr[c.val]!) && (arr[a.val]! ^^ arr[b.val]!) then 1 else 0 := by
+  have hbv : b.val < arr.size := hsz ▸ b.isLt
+  have hcv : c.val < arr.size := hsz ▸ c.isLt
+  have hrunb : (runArr [Gate.CX a b, Gate.CX a c] arr)[b.val]! = (arr[a.val]! ^^ arr[b.val]!) := by
+    show (applyGate (Gate.CX a c) (applyGate (Gate.CX a b) arr))[b.val]! = _
+    rw [applyGate_getElem!_of_not_writesTo (Gate.CX a c) b (applyGate (Gate.CX a b) arr) hbc,
+      show applyGate (Gate.CX a b) arr = arr.set! b.val (arr[a.val]! ^^ arr[b.val]!)
+        from by simp only [applyGate, if_neg hab]]
+    exact getElem!_set!_self hbv
+  have hrunc : (runArr [Gate.CX a b, Gate.CX a c] arr)[c.val]! = (arr[a.val]! ^^ arr[c.val]!) := by
+    show (applyGate (Gate.CX a c) (applyGate (Gate.CX a b) arr))[c.val]! = _
+    have hXa : (applyGate (Gate.CX a b) arr)[a.val]! = arr[a.val]! :=
+      applyGate_getElem!_of_not_writesTo (Gate.CX a b) a arr hab
+    have hXc : (applyGate (Gate.CX a b) arr)[c.val]! = arr[c.val]! :=
+      applyGate_getElem!_of_not_writesTo (Gate.CX a b) c arr (Ne.symm hbc)
+    have hXsz : c.val < (applyGate (Gate.CX a b) arr).size := by rw [applyGate_size]; exact hcv
+    generalize applyGate (Gate.CX a b) arr = X at hXa hXc hXsz ⊢
+    rw [show applyGate (Gate.CX a c) X = X.set! c.val (X[a.val]! ^^ X[c.val]!)
+        from by simp only [applyGate, if_neg hac], getElem!_set!_self hXsz, hXa, hXc]
+  rw [maj, show [Gate.CX a b, Gate.CX a c, Gate.CCX c b a]
+      = [Gate.CX a b, Gate.CX a c] ++ [Gate.CCX c b a] from rfl, executedToffoli_append,
+    executedToffoli_eq_zero_of_toffoli_zero [Gate.CX a b, Gate.CX a c] arr
+      (by simp [circuitCost, gateCost]), Nat.zero_add,
+    show executedToffoli [Gate.CCX c b a] (runArr [Gate.CX a b, Gate.CX a c] arr)
+      = (if (runArr [Gate.CX a b, Gate.CX a c] arr)[c.val]!
+          && (runArr [Gate.CX a b, Gate.CX a c] arr)[b.val]! then 1 else 0)
+      from by simp [executedToffoli], hrunc, hrunb]
 
 end ECDLP.Safegcd.Circuit

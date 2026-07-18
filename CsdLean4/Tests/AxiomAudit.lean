@@ -7408,6 +7408,17 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'ECDLP.Safegcd.Circuit.executedToffoli_ctrl_clear' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.executedToffoli_ctrl_clear
 
+-- ECDLP TAKEN-GADGET EXECUTED COUNT (2026-07-18, step 5): the adder's Toffoli cells' executed count as an
+-- explicit boolean function of the data. uma_executed: the un-majority-add cell executes its Toffoli iff
+-- both controls c,b are set (⟦arr c ∧ arr b⟧). maj_executed: the majority cell executes iff the two
+-- CX-updated controls c⊕a, b⊕a are both set (⟦(arr a ⊕ arr c) ∧ (arr a ⊕ arr b)⟧, distinct wires) -- the
+-- majority predicate. The adder's total executed count is the sum of these over its cells (via _append).
+/-- info: 'ECDLP.Safegcd.Circuit.uma_executed' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.uma_executed
+
+/-- info: 'ECDLP.Safegcd.Circuit.maj_executed' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.maj_executed
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation
