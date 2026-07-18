@@ -122,6 +122,71 @@ theorem totalExecuted_le {m : ℕ} (c : Circuit m) (wires : ℕ) :
       exact (ih _).trans (by have := executedToffoli_le_toffoli c (arrOfNat m i); omega)
   simpa [totalExecuted, List.length_range] using key (List.range (2 ^ wires)) 0
 
+/-! ### Compositionality — the executed count decomposes over circuit concatenation
+
+The step toward a per-branch executed count: `executedToffoli` is additive over `++`, so the executed
+Toffoli of an assembled circuit is the sum of its stages' executed Toffolis (each on the array the previous
+stages produced). Toffoli-free stages (the sign-extending halving) drop out entirely. -/
+
+/-- The executed-count increment of one gate on an array: `1` iff it is a live `CCX`, else `0`. -/
+def gateFires {m : ℕ} (g : Gate m) (arr : Array Bool) : ℕ :=
+  match g with
+  | .CCX c₁ c₂ _ => if arr[c₁.val]! && arr[c₂.val]! then 1 else 0
+  | _ => 0
+
+/-- **Accumulator additivity of the executed fold.** Running the executed-count fold from a starting count
+`k` just adds `k` to the count it would produce from `0`, and threads the array identically to `runArr`. -/
+private theorem execFold {m : ℕ} (c : Circuit m) : ∀ (k : ℕ) (arr : Array Bool),
+    (c.foldl (fun (p : ℕ × Array Bool) g =>
+      match g with
+      | .CCX c₁ c₂ _ => (p.1 + (if p.2[c₁.val]! && p.2[c₂.val]! then 1 else 0), applyGate g p.2)
+      | _ => (p.1, applyGate g p.2)) (k, arr))
+      = (k + executedToffoli c arr, runArr c arr) := by
+  induction c with
+  | nil => intro k arr; simp [executedToffoli, runArr]
+  | cons g gs ih =>
+    intro k arr
+    have hstep : ∀ j : ℕ, (match g with
+        | .CCX c₁ c₂ _ => (j + (if arr[c₁.val]! && arr[c₂.val]! then 1 else 0), applyGate g arr)
+        | _ => ((j : ℕ), applyGate g arr)) = (j + gateFires g arr, applyGate g arr) := by
+      intro j; cases g <;> simp [gateFires]
+    have hexec : executedToffoli (g :: gs) arr = gateFires g arr + executedToffoli gs (applyGate g arr) := by
+      rw [executedToffoli, List.foldl_cons, hstep 0, ih]; simp [executedToffoli]
+    have harr : runArr (g :: gs) arr = runArr gs (applyGate g arr) := by
+      rw [runArr, List.foldl_cons, ← runArr]
+    rw [List.foldl_cons, hstep k, ih, hexec, harr, Nat.add_assoc]
+
+/-- **The executed count is additive over concatenation.** `executedToffoli (c₁ ++ c₂) a =
+executedToffoli c₁ a + executedToffoli c₂ (runArr c₁ a)` — the compositional backbone for a per-branch
+executed count. -/
+theorem executedToffoli_append {m : ℕ} (c₁ c₂ : Circuit m) (a : Array Bool) :
+    executedToffoli (c₁ ++ c₂) a = executedToffoli c₁ a + executedToffoli c₂ (runArr c₁ a) := by
+  rw [executedToffoli, List.foldl_append, execFold c₁ 0 a, execFold c₂ (0 + executedToffoli c₁ a)]
+  simp [executedToffoli]
+
+/-- **A Toffoli-free circuit executes zero Toffolis.** Immediate from `executedToffoli ≤ emitted = 0`. -/
+theorem executedToffoli_eq_zero_of_toffoli_zero {m : ℕ} (c : Circuit m) (a : Array Bool)
+    (h : (circuitCost c).toffoli = 0) : executedToffoli c a = 0 :=
+  Nat.le_zero.mp (h ▸ executedToffoli_le_toffoli c a)
+
+/-- **The signed halving executes zero Toffolis** (it is a pure wire permutation). -/
+theorem signedHalve_executed_zero {m : ℕ} (F : ℕ → Fin m) (n : ℕ) (a : Array Bool) :
+    executedToffoli (signedHalve F n) a = 0 :=
+  executedToffoli_eq_zero_of_toffoli_zero _ a (signedHalve_toffoli F n)
+
+/-- **Per-branch decomposition: where branch A's Toffolis fire.** The executed Toffoli of the branch-A
+circuit is exactly the subtractor's plus the two adders' — the sign-extending halving (`signedHalve`) is
+Toffoli-free and contributes nothing. So `executed(branch A) = executed(rippleSub) + executed(2 adders)`,
+each on the running array. This isolates the divstep branch's executed cost into its Toffoli-bearing
+stages — the shape needed to bound the average-executed count per branch. -/
+theorem branchA_executed_decomp {m n : ℕ} (L : BranchALayout m n) (a : Array Bool) :
+    executedToffoli (branchACircuit L) a
+      = executedToffoli (rippleSub L.subL) a
+        + executedToffoli (cuccaroAdd L.cucL ++ cuccaroAdd L.cucL)
+            (runArr (rippleSub L.subL ++ signedHalve L.G n) a) := by
+  rw [branchACircuit, executedToffoli_append, executedToffoli_append, signedHalve_executed_zero,
+    Nat.add_zero]
+
 /-- **The inert-Toffoli mechanism, certified.** A single `CCX` with a control clear at run time contributes
 `0` to the EXECUTED count while contributing `1` to the EMITTED count. This is the exact data-dependence
 that pushes average-executed strictly below worst-case: the executed metric sees an inert Toffoli as

@@ -7378,6 +7378,21 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'ECDLP.Safegcd.Circuit.inertToffoli_executed_zero' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.inertToffoli_executed_zero
 
+-- ECDLP EXECUTED-COST COMPOSITIONALITY (2026-07-18): toward a per-branch executed count.
+-- executedToffoli_append: the executed count is additive over ++ (executed(c₁++c₂) a = executed c₁ a +
+-- executed c₂ (runArr c₁ a)) -- the compositional backbone. signedHalve_executed_zero /
+-- executedToffoli_eq_zero_of_toffoli_zero: Toffoli-free stages (the sign-extending halving) execute 0.
+-- branchA_executed_decomp: executed(branchACircuit) = executed(rippleSub) + executed(2 adders) -- the
+-- branch-A executed cost lives entirely in the subtractor + two adders; the halving contributes nothing.
+/-- info: 'ECDLP.Safegcd.Circuit.executedToffoli_append' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.executedToffoli_append
+
+/-- info: 'ECDLP.Safegcd.Circuit.signedHalve_executed_zero' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.signedHalve_executed_zero
+
+/-- info: 'ECDLP.Safegcd.Circuit.branchA_executed_decomp' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.branchA_executed_decomp
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation
