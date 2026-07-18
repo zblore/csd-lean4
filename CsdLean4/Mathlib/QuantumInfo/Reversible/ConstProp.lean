@@ -184,4 +184,52 @@ example : (circuitCost (cprop demoAbs [Gate.CCX 0 1 2])).toffoli = 0 := by decid
 /-- ...and the original had one Toffoli — so the fold is a real `−1`. -/
 example : (circuitCost [Gate.CCX (0 : Fin 3) 1 2]).toffoli = 1 := by decide
 
+/-! ### `cprop` is a sound REDUCING optimization (cost side)
+
+`cprop_denote` shows the pass preserves the computed VALUE. These show it never increases — and, on a
+known-constant control, strictly decreases — the emitted Toffoli count. Together: `cprop` is a certified
+value-exact Toffoli-reducing pass, exactly the frontier's key lever, proved both correct and beneficial. -/
+
+/-- **Folding never increases a gate's Toffoli count.** A `CCX` folds to `[]`, `[CX]`, or `[CCX]` — Toffoli
+count `0`, `0`, or `1`, all `≤ 1`; every other gate is unchanged. -/
+theorem foldGate_toffoli_le (α : Abs m) (g : Gate m) :
+    (circuitCost (foldGate α g)).toffoli ≤ (gateCost g).toffoli := by
+  cases g with
+  | X i => simp [foldGate, circuitCost, gateCost]
+  | CX c t => simp [foldGate, circuitCost, gateCost]
+  | swap i j => simp [foldGate, circuitCost, gateCost]
+  | CCX c₁ c₂ t => simp only [foldGate]; split_ifs <;> simp [circuitCost, gateCost]
+
+/-- **`cprop` never increases the Toffoli count.** So constant-propagation is a valid optimization: it
+computes the same value (`cprop_denote`) with no more Toffolis. -/
+theorem cprop_toffoli_le (α : Abs m) (c : Circuit m) :
+    (circuitCost (cprop α c)).toffoli ≤ (circuitCost c).toffoli := by
+  induction c generalizing α with
+  | nil => simp [cprop]
+  | cons g gs ih =>
+    rw [cprop, cost_comp_toffoli_count]
+    have hcons : (circuitCost (g :: gs)).toffoli
+        = (gateCost g).toffoli + (circuitCost gs).toffoli := by simp [circuitCost]
+    rw [hcons]
+    have h1 := foldGate_toffoli_le α g
+    have h2 := ih (stepAbs α g)
+    omega
+
+/-- **The reduction mechanism.** A non-degenerate `CCX` with a control known to be `false` folds AWAY (to
+`[]`): its Toffoli is dropped entirely. This is where constant propagation buys Toffolis. -/
+theorem foldGate_ccx_known_false (α : Abs m) (c₁ c₂ t : Fin m)
+    (hdeg : ¬ (t = c₁ ∨ t = c₂)) (h0 : α c₁ = some false ∨ α c₂ = some false) :
+    foldGate α (Gate.CCX c₁ c₂ t) = [] := by
+  simp only [foldGate, if_neg hdeg, if_pos h0]
+
+/-- **A real multi-Toffoli win on the AND-adder's carry cell.** The three-`CCX` carry cell
+`[CCX a b g, CCX a c g, CCX b c g]` with the carry-in `c` a known-`0` ancilla constant-propagates to a
+SINGLE Toffoli — a value-exact `3 → 1` (67%) Toffoli reduction, exactly the structure constant folding
+exploits in a ripple/AND adder whose low carry-in is `|0⟩`. -/
+theorem andCell_constprop_reduces :
+    (circuitCost (cprop (fun i : Fin 4 => if i = 2 then some false else none)
+        [Gate.CCX 0 1 3, Gate.CCX 0 2 3, Gate.CCX 1 2 3])).toffoli = 1
+      ∧ (circuitCost [Gate.CCX (0 : Fin 4) 1 3, Gate.CCX 0 2 3, Gate.CCX 1 2 3]).toffoli = 3 := by
+  decide
+
 end Reversible

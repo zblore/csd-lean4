@@ -7780,6 +7780,21 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'Reversible.stepAbs_agree' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Reversible.stepAbs_agree
 
+-- CONSTPROP is a sound REDUCING optimization (cost side, 2026-07-18): the value-exact lever, now proved
+-- BENEFICIAL. cprop_toffoli_le: the pass never increases the emitted Toffoli count ((circuitCost (cprop α c))
+-- .toffoli ≤ (circuitCost c).toffoli) -- so with cprop_denote it is a valid Toffoli-reducing optimization.
+-- foldGate_ccx_known_false: a non-degenerate CCX with a control known false folds AWAY (to []) -- where the
+-- reduction is bought. andCell_constprop_reduces: the AND-adder carry cell [CCX a b g, CCX a c g, CCX b c g]
+-- with carry-in known 0 constant-propagates 3 Toffoli -> 1, a value-exact 67% reduction on a real gadget.
+/-- info: 'Reversible.cprop_toffoli_le' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.cprop_toffoli_le
+
+/-- info: 'Reversible.foldGate_ccx_known_false' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.foldGate_ccx_known_false
+
+/-- info: 'Reversible.andCell_constprop_reduces' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.andCell_constprop_reduces
+
 /-- info: 'CSD.FND.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeTensorEquiv_apply
 
