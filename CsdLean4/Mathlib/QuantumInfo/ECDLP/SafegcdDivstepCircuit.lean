@@ -946,4 +946,151 @@ theorem branchA_recovers {f g : ℤ} (hf : Odd f) (hg : Odd g) :
     f + 2 * ((g - f) / 2) = g := by
   rw [Int.mul_ediv_cancel' (even_iff_two_dvd.mp (hg.sub_odd hf))]; ring
 
+/-! ## Tranche 5: the branch-A transformation assembled end-to-end
+
+The divstep branch A is `(f, g) ↦ (g, (g - f)/2)`. This section wires the two verified stages —
+the `g`-update `rippleSub ; signedHalve` (T4b) and the `f`-recovery `cuccaroAdd ; cuccaroAdd` (T4f) — into
+ONE circuit `branchACircuit` on a SINGLE shared register layout, and proves its `denote` realises the
+branch-A pair at the signed-ℤ level: the `f` register ends holding the old `g`, the `g` register the new
+`(g - f)/2`. This is the first COMPLETE divstep branch verified at the circuit level. -/
+
+/-- **Frame lemma for `subPrefix`.** A wire disjoint from the minuend `B`, subtrahend `Sub` and borrow
+`Bor` families is untouched by the borrow-chain prefix (each slice is a `fullSub` on those wires). -/
+theorem subPrefix_apply_of_ne {n : ℕ} (L : SubLayout m n) (s : State m) (w : Fin m) (k : ℕ)
+    (hB : ∀ i, w ≠ L.B i) (hSub : ∀ i, w ≠ L.Sub i) (hBor : ∀ i, w ≠ L.Bor i) :
+    denote (subPrefix L k) s w = s w := by
+  induction k with
+  | zero => rfl
+  | succ j ih =>
+    rw [denote_subPrefix_succ]
+    simp only [subSlice]
+    rw [fullSub_apply_of_ne (hB j) (hSub j) (hBor j) (hBor (j + 1))]
+    exact ih
+
+/-- **Frame lemma for `rippleSub`.** A wire disjoint from `B, Sub, Bor` is untouched by the full
+subtractor — in particular a fresh carry ancilla survives the g-update stage. -/
+theorem rippleSub_apply_of_ne {n : ℕ} (L : SubLayout m n) (s : State m) (w : Fin m)
+    (hB : ∀ i, w ≠ L.B i) (hSub : ∀ i, w ≠ L.Sub i) (hBor : ∀ i, w ≠ L.Bor i) :
+    denote (rippleSub L) s w = s w :=
+  subPrefix_apply_of_ne L s w n hB hSub hBor
+
+/-- **The f-recovery preserves the g register.** Two `cuccaroAdd`s each return the addend `B` untouched
+(`cuccaroAdd_preserves_B`, the ancilla re-cleaned by `cuccaroAdd_ancilla_clean`), so `regValZ B` — the
+`(g - f)/2` the g-update deposited — is unchanged by the f-recovery. -/
+theorem addTwice_preserves_B {n : ℕ} (L : CuccaroLayout m (n + 1)) (s : State m) (hZ : s L.Z = false) :
+    regValZ L.B (denote (cuccaroAdd L ++ cuccaroAdd L) s) (n + 1) = regValZ L.B s (n + 1) := by
+  rw [denote_append]
+  have hZ' : (denote (cuccaroAdd L) s) L.Z = false := cuccaroAdd_ancilla_clean L s hZ
+  have hwire : ∀ k, k < n + 1 →
+      denote (cuccaroAdd L) (denote (cuccaroAdd L) s) (L.B k) = s (L.B k) := fun k hk => by
+    rw [cuccaroAdd_preserves_B L (denote (cuccaroAdd L) s) hZ' k hk, cuccaroAdd_preserves_B L s hZ k hk]
+  have hrange : regValRange L.B (denote (cuccaroAdd L) (denote (cuccaroAdd L) s)) (n + 1)
+      = regValRange L.B s (n + 1) := by
+    simp only [regValRange]
+    exact Finset.sum_congr rfl fun k hk => by rw [hwire k (Finset.mem_range.mp hk)]
+  rw [regValZ, regValZ, hrange]
+
+/-- **A shared two-register layout for a divstep branch.** The `f` register `F`, the `g` register `G`, the
+borrow ancillas `Bor` (for the subtractor) and the carry ancilla `Z` (for the adder), all mutually
+disjoint and each family injective. It presents both a `SubLayout` view (minuend `G`, subtrahend `F`) and
+a `CuccaroLayout` view (sum `F`, addend `G`) over the SAME `f, g` wires. -/
+structure BranchALayout (m n : ℕ) where
+  /-- The `f` register. -/
+  F : ℕ → Fin m
+  /-- The `g` register. -/
+  G : ℕ → Fin m
+  /-- Borrow ancillas (subtractor). -/
+  Bor : ℕ → Fin m
+  /-- Carry ancilla (adder). -/
+  Z : Fin m
+  hFG : ∀ i j, F i ≠ G j
+  hFBor : ∀ i j, F i ≠ Bor j
+  hGBor : ∀ i j, G i ≠ Bor j
+  hFZ : ∀ i, F i ≠ Z
+  hGZ : ∀ i, G i ≠ Z
+  hBorZ : ∀ j, Bor j ≠ Z
+  hFinj : Function.Injective F
+  hGinj : Function.Injective G
+  hBorinj : Function.Injective Bor
+
+namespace BranchALayout
+
+/-- The subtractor view: minuend `B = G`, subtrahend `Sub = F`, borrows `Bor`. -/
+def subL (L : BranchALayout m n) : SubLayout m (n + 1) where
+  B := L.G
+  Sub := L.F
+  Bor := L.Bor
+  hBSub := fun i j => (L.hFG j i).symm
+  hBBor := L.hGBor
+  hSubBor := L.hFBor
+  hBinj := fun _ _ _ _ h => L.hGinj h
+  hSubinj := fun _ _ _ _ h => L.hFinj h
+  hBorinj := fun _ _ _ _ h => L.hBorinj h
+
+/-- The adder view: sum `A = F`, addend `B = G`, carry `Z`. -/
+def cucL (L : BranchALayout m n) : CuccaroLayout m (n + 1) where
+  A := L.F
+  B := L.G
+  Z := L.Z
+  hAB := L.hFG
+  hAZ := L.hFZ
+  hBZ := L.hGZ
+  hAinj := fun _ _ _ _ h => L.hFinj h
+  hBinj := fun _ _ _ _ h => L.hGinj h
+
+end BranchALayout
+
+/-- **The branch-A circuit:** the g-update `rippleSub ; signedHalve` on the `g` register, then the
+f-recovery `cuccaroAdd ; cuccaroAdd` (adding `2·g` back into `f`). -/
+def branchACircuit (L : BranchALayout m n) : Circuit m :=
+  (rippleSub L.subL ++ signedHalve L.G n) ++ (cuccaroAdd L.cucL ++ cuccaroAdd L.cucL)
+
+/-- **Branch-A verified end-to-end.** For `f, g` odd and in signed range, `branchACircuit` realises the
+divstep branch-A transformation `(f, g) ↦ (g, (g - f)/2)` at the signed-ℤ level: the `f` register ends
+holding the old `g`, and the `g` register the new `(g - f)/2`. Composes the g-update (`gUpdateSub_correct`),
+its f-preservation (`gUpdateSub_preserves_Sub`), the f-recovery (`addTwice_correct` + `branchA_recovers`),
+and the f-recovery's g-preservation (`addTwice_preserves_B`), with the carry ancilla surviving the g-update
+(`rippleSub_apply_of_ne`, `signedHalve_apply_of_ne`). -/
+theorem branchA_transformation {n : ℕ} (L : BranchALayout m n) (s : State m) (hn : 1 ≤ n)
+    (hBor0 : ∀ j, s (L.Bor j) = false) (hZ : s L.Z = false)
+    (hgodd : Odd (regValZ L.G s (n + 1))) (hfodd : Odd (regValZ L.F s (n + 1)))
+    (hdlo : -2 ^ n ≤ regValZ L.G s (n + 1) - regValZ L.F s (n + 1))
+    (hdhi : regValZ L.G s (n + 1) - regValZ L.F s (n + 1) < 2 ^ n)
+    (hglo : -2 ^ n ≤ regValZ L.G s (n + 1)) (hghi : regValZ L.G s (n + 1) < 2 ^ n) :
+    regValZ L.F (denote (branchACircuit L) s) (n + 1) = regValZ L.G s (n + 1)
+      ∧ regValZ L.G (denote (branchACircuit L) s) (n + 1)
+        = (regValZ L.G s (n + 1) - regValZ L.F s (n + 1)) / 2 := by
+  set f := regValZ L.F s (n + 1) with hf
+  set g := regValZ L.G s (n + 1) with hg
+  set sGU := denote (rippleSub L.subL ++ signedHalve L.G n) s with hsGU
+  -- g-update results (on the SubLayout view: B = G, Sub = F)
+  have hGsGU : regValZ L.G sGU (n + 1) = (g - f) / 2 :=
+    gUpdateSub_correct L.subL s hn L.hGinj hBor0 hgodd hfodd hdlo hdhi
+  have hFsGU : regValZ L.F sGU (n + 1) = f := gUpdateSub_preserves_Sub L.subL s hBor0
+  -- cucL-projected forms (cucL.A = F, cucL.B = G definitionally)
+  have hAsGU : regValZ L.cucL.A sGU (n + 1) = f := hFsGU
+  have hBsGU : regValZ L.cucL.B sGU (n + 1) = (g - f) / 2 := hGsGU
+  -- the carry ancilla survives the g-update
+  have hZsGU : sGU L.Z = false := by
+    rw [hsGU, denote_append,
+      signedHalve_apply_of_ne L.G (denote (rippleSub L.subL) s) n L.Z (fun i _ => (L.hGZ i).symm),
+      rippleSub_apply_of_ne L.subL s L.Z (fun i => (L.hGZ i).symm) (fun i => (L.hFZ i).symm)
+        (fun i => (L.hBorZ i).symm)]
+    exact hZ
+  -- the f-recovery sum equals g
+  have hsum : regValZ L.cucL.A sGU (n + 1) + 2 * regValZ L.cucL.B sGU (n + 1) = g := by
+    rw [hAsGU, hBsGU]; exact branchA_recovers hfodd hgodd
+  have hfactor : denote (branchACircuit L) s
+      = denote (cuccaroAdd L.cucL ++ cuccaroAdd L.cucL) sGU := by
+    rw [branchACircuit, denote_append, ← hsGU]
+  refine ⟨?_, ?_⟩
+  · -- f register: ends holding old g
+    rw [hfactor]
+    show regValZ L.cucL.A (denote (cuccaroAdd L.cucL ++ cuccaroAdd L.cucL) sGU) (n + 1) = g
+    rw [addTwice_correct L.cucL sGU hZsGU (by rw [hsum]; exact hglo) (by rw [hsum]; exact hghi), hsum]
+  · -- g register: ends holding (g - f)/2, preserved through the f-recovery
+    rw [hfactor]
+    show regValZ L.cucL.B (denote (cuccaroAdd L.cucL ++ cuccaroAdd L.cucL) sGU) (n + 1) = (g - f) / 2
+    rw [addTwice_preserves_B L.cucL sGU hZsGU]; exact hBsGU
+
 end ECDLP.Safegcd.Circuit

@@ -7345,6 +7345,22 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'ECDLP.Safegcd.Circuit.gUpdateSub_preserves_Sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.gUpdateSub_preserves_Sub
 
+-- ECDLP TRANCHE 5 (2026-07-18): the branch-A transformation assembled END-TO-END -- the first COMPLETE
+-- divstep branch verified at the circuit level. rippleSub_apply_of_ne / addTwice_preserves_B: the extra
+-- frames (borrow-chain leaves a disjoint carry ancilla alone; the f-recovery's two adders leave g intact).
+-- branchA_transformation: on the shared BranchALayout (SubLayout view B=g,Sub=f + CuccaroLayout view
+-- A=f,B=g), branchACircuit = (rippleSub;signedHalve);(cuccaroAdd;cuccaroAdd) realises divstep branch A
+-- (f,g) ↦ (g,(g-f)/2) at the signed-ℤ level: f-reg ends = old g, g-reg ends = (g-f)/2. Composes
+-- gUpdateSub_correct + gUpdateSub_preserves_Sub + addTwice_correct + branchA_recovers + addTwice_preserves_B.
+/-- info: 'ECDLP.Safegcd.Circuit.rippleSub_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.rippleSub_apply_of_ne
+
+/-- info: 'ECDLP.Safegcd.Circuit.addTwice_preserves_B' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.addTwice_preserves_B
+
+/-- info: 'ECDLP.Safegcd.Circuit.branchA_transformation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.branchA_transformation
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation
