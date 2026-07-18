@@ -7419,6 +7419,19 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'ECDLP.Safegcd.Circuit.maj_executed' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs in #print axioms ECDLP.Safegcd.Circuit.maj_executed
 
+-- ECDLP CELL COMPOSITION THROUGH THE CARRY RECURSION (2026-07-18, step 6). cuccaroRec_executed_succ: the
+-- executed count peels one Cuccaro bit -- executed(len+1-bit adder) = maj's + (len-bit remainder)'s +
+-- uma's, each on the running array (composition through the recursion, via executedToffoli_append twice +
+-- runArr_append). cuccaroAdd_one_executed: the base case as a CLOSED FORM -- the 1-bit adder executes 2
+-- Toffolis iff the carry-generate predicate (B₀⊕Z)∧(A₀⊕B₀) holds, else 0 (maj and uma fire together). Over
+-- uniform inputs the predicate is true 1/4 the time: avg-executed = 2·¼ = ½ of 2 emitted = the 25% ratio,
+-- now certified from the closed form rather than #eval-measured.
+/-- info: 'ECDLP.Safegcd.Circuit.cuccaroRec_executed_succ' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.cuccaroRec_executed_succ
+
+/-- info: 'ECDLP.Safegcd.Circuit.cuccaroAdd_one_executed' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs in #print axioms ECDLP.Safegcd.Circuit.cuccaroAdd_one_executed
+
 -- TH1 (thermodynamics track): canonical typicality -- thermal equilibrium from
 -- Fubini-Study volume. The FS first moment E[|psi><psi|] = (1/N) I (a genuine
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation

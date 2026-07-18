@@ -336,4 +336,78 @@ theorem maj_executed {m : ℕ} (c b a : Fin m) (arr : Array Bool) (hsz : arr.siz
           && (runArr [Gate.CX a b, Gate.CX a c] arr)[b.val]! then 1 else 0)
       from by simp [executedToffoli], hrunc, hrunb]
 
+/-! ### Composing cells through the carry recursion (step 6)
+
+The Cuccaro adder is `maj ; recurse ; uma` per bit. `cuccaroRec_executed_succ` peels one bit: the executed
+count of the `(len+1)`-bit adder is the current `maj`'s + the `len`-bit sub-adder's + the current `uma`'s,
+each on the running array — the executed cost composed through the carry recursion. `cuccaroAdd_one_executed`
+is the base case resolved to a closed form: the 1-bit adder executes `2` Toffolis iff the carry-generate
+predicate `(B ⊕ Z) ∧ (A ⊕ B)` holds, else `0`. (Over uniform inputs that predicate is true `1/4` of the
+time — so avg-executed `= 2·¼ = ½` per `2` emitted = the `25%` ratio, now certified from the closed form.) -/
+
+/-- `runArr` threads through concatenation. -/
+theorem runArr_append {m : ℕ} (c₁ c₂ : Circuit m) (a : Array Bool) :
+    runArr (c₁ ++ c₂) a = runArr c₂ (runArr c₁ a) := by
+  rw [runArr, runArr, runArr, List.foldl_append]
+
+open Reversible in
+/-- **The executed count peels one Cuccaro bit.** For the `(len+1)`-bit sub-adder, the executed Toffoli is
+the current `maj`'s + the `len`-bit remainder's + the current `uma`'s, each on the running array — the
+executed cost composed through the carry recursion. -/
+theorem cuccaroRec_executed_succ {m n : ℕ} (L : CuccaroLayout m n) (carry : Fin m) (start len : ℕ)
+    (arr : Array Bool) :
+    executedToffoli (cuccaroRec L carry start (len + 1)) arr
+      = executedToffoli (maj carry (L.A start) (L.B start)) arr
+        + executedToffoli (cuccaroRec L (L.B start) (start + 1) len)
+            (runArr (maj carry (L.A start) (L.B start)) arr)
+        + executedToffoli (uma carry (L.A start) (L.B start))
+            (runArr (cuccaroRec L (L.B start) (start + 1) len)
+              (runArr (maj carry (L.A start) (L.B start)) arr)) := by
+  rw [show cuccaroRec L carry start (len + 1)
+      = maj carry (L.A start) (L.B start) ++ cuccaroRec L (L.B start) (start + 1) len
+        ++ uma carry (L.A start) (L.B start) from rfl,
+    executedToffoli_append, executedToffoli_append, runArr_append]
+
+open Reversible in
+/-- **The 1-bit Cuccaro adder's executed count, closed form.** It executes `2` Toffolis (its `maj` and its
+`uma`) iff the carry-generate predicate `(B₀ ⊕ Z) ∧ (A₀ ⊕ B₀)` holds on input, else `0`. The `maj` and
+`uma` fire together (the same predicate, by `xor` symmetry). Over uniform inputs this is true `¼` of the
+time, giving avg-executed `½` of `2` emitted — the certified `25%` ratio. -/
+theorem cuccaroAdd_one_executed {m : ℕ} (L : CuccaroLayout m 1) (arr : Array Bool) (hsz : arr.size = m) :
+    executedToffoli (cuccaroAdd L) arr
+      = if (arr[(L.B 0).val]! ^^ arr[L.Z.val]!) && (arr[(L.B 0).val]! ^^ arr[(L.A 0).val]!) then 2 else 0 := by
+  have hA0v : (L.A 0).val < arr.size := hsz ▸ (L.A 0).isLt
+  have hZv : L.Z.val < arr.size := hsz ▸ L.Z.isLt
+  have hcirc : cuccaroAdd L = maj L.Z (L.A 0) (L.B 0) ++ uma L.Z (L.A 0) (L.B 0) := by
+    rw [cuccaroAdd]; rfl
+  -- the two uma controls after the maj cell
+  have harr'Z : (runArr (maj L.Z (L.A 0) (L.B 0)) arr)[L.Z.val]!
+      = (arr[(L.B 0).val]! ^^ arr[L.Z.val]!) := by
+    show (applyGate (Gate.CCX L.Z (L.A 0) (L.B 0)) (applyGate (Gate.CX (L.B 0) L.Z)
+        (applyGate (Gate.CX (L.B 0) (L.A 0)) arr)))[L.Z.val]! = _
+    rw [applyGate_getElem!_of_not_writesTo (Gate.CCX L.Z (L.A 0) (L.B 0)) L.Z _ (L.hBZ 0).symm]
+    have hYB : (applyGate (Gate.CX (L.B 0) (L.A 0)) arr)[(L.B 0).val]! = arr[(L.B 0).val]! :=
+      applyGate_getElem!_of_not_writesTo (Gate.CX (L.B 0) (L.A 0)) (L.B 0) arr (L.hAB 0 0).symm
+    have hYZ : (applyGate (Gate.CX (L.B 0) (L.A 0)) arr)[L.Z.val]! = arr[L.Z.val]! :=
+      applyGate_getElem!_of_not_writesTo (Gate.CX (L.B 0) (L.A 0)) L.Z arr (L.hAZ 0).symm
+    have hYsz : L.Z.val < (applyGate (Gate.CX (L.B 0) (L.A 0)) arr).size := by
+      rw [applyGate_size]; exact hZv
+    generalize applyGate (Gate.CX (L.B 0) (L.A 0)) arr = Y at hYB hYZ hYsz ⊢
+    rw [show applyGate (Gate.CX (L.B 0) L.Z) Y = Y.set! L.Z.val (Y[(L.B 0).val]! ^^ Y[L.Z.val]!)
+        from by simp only [applyGate, if_neg (L.hBZ 0)], getElem!_set!_self hYsz, hYB, hYZ]
+  have harr'A0 : (runArr (maj L.Z (L.A 0) (L.B 0)) arr)[(L.A 0).val]!
+      = (arr[(L.B 0).val]! ^^ arr[(L.A 0).val]!) := by
+    show (applyGate (Gate.CCX L.Z (L.A 0) (L.B 0)) (applyGate (Gate.CX (L.B 0) L.Z)
+        (applyGate (Gate.CX (L.B 0) (L.A 0)) arr)))[(L.A 0).val]! = _
+    rw [applyGate_getElem!_of_not_writesTo (Gate.CCX L.Z (L.A 0) (L.B 0)) (L.A 0) _ (L.hAB 0 0),
+      applyGate_getElem!_of_not_writesTo (Gate.CX (L.B 0) L.Z) (L.A 0) _ (L.hAZ 0),
+      show applyGate (Gate.CX (L.B 0) (L.A 0)) arr
+          = arr.set! (L.A 0).val (arr[(L.B 0).val]! ^^ arr[(L.A 0).val]!)
+        from by simp only [applyGate, if_neg (L.hAB 0 0).symm]]
+    exact getElem!_set!_self hA0v
+  rw [hcirc, executedToffoli_append,
+    maj_executed L.Z (L.A 0) (L.B 0) arr hsz (L.hAB 0 0).symm (L.hBZ 0) (L.hAZ 0),
+    uma_executed L.Z (L.A 0) (L.B 0) (runArr (maj L.Z (L.A 0) (L.B 0)) arr), harr'Z, harr'A0]
+  split <;> simp
+
 end ECDLP.Safegcd.Circuit
