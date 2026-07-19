@@ -52,7 +52,7 @@ B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
 |---|---|---|---|
 | T1 | Born from volume | `BornFromVolume`, LF4 `fs_born_volume_ratio_N` | proved |
 | T2 | Born from i.i.d. frequencies | `born_frequency_convergence_N` | proved |
-| T3 | Born from deterministic-flow frequencies | `BornFromFlow` predicate | OPEN (= A5 face) |
+| T3 | Born from deterministic-flow frequencies | `BornFromFlow` predicate | OPEN (= A5 face) — ergodic side sharpened: `UniquelyErgodic` defined + `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`FND/UniqueErgodicity.lean`); residual gap is the Mathlib-absent pointwise Birkhoff theorem, and the unitary no-gos exclude the hypothesis (candidate flow must be non-unitary) |
 | T4 | Unitary projected dynamics | `HasUnitaryRealisation` | proved (product model) |
 | T5 | Schrödinger evolution | `HasHamiltonianRealisation`, `productProjectedFlow_hasHamiltonianRealisation` | proved (product model) |
 | T6 | Unique contextual outcome a.e. | `vnDeisolationModel_ae_total` | proved |
@@ -80,7 +80,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
 | **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`FND/FiniteQMClosure.lean`) assembles all 11 proved-on-model facts (the 6 core `unified_choiceA_capstone` properties + records-time-physical #5 + Born-frequency #2 + conditioning=Lüders #3/#4 + mixed-state Born weight #8 C `mixed_born` + mixed-state Born FREQUENCY #8 C `mixed_born_frequency`) into ONE tiered record, each field discharged by its source lemma; Choice-A posit / QM adapters / open residue documented, not encoded as fields |
-| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`) |
+| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved; ergodic face sharpened)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`, `obsFlow_not_uniquely_ergodic`). `UniquelyErgodic` now defined with `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`FND/UniqueErgodicity.lean`); the gap to `BornFromFlow` is exactly the Mathlib-absent pointwise Birkhoff theorem, and the current unitary flows provably fail the hypothesis. Typicality itself is forced by the LLN, not this route (Papers A/B) |
 
 ## 4. The forward reconstruction — what each pillar delivers
 

@@ -282,6 +282,7 @@ import CsdLean4.FND.TensorSolved
 import CsdLean4.FND.TensorReconstruction
 import CsdLean4.FND.LocalisedTypicality
 import CsdLean4.FND.A5NoGo
+import CsdLean4.FND.UniqueErgodicity
 import CsdLean4.FND.Interference
 import CsdLean4.FND.TensorSector
 import CsdLean4.FND.Luders
@@ -7853,6 +7854,17 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 /-- info: 'CSD.FND.phaseFlip_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.phaseFlip_admits_invariant_ne_fubiniStudy
+
+-- UniqueErgodicity (2026-07-19, A5/L7 ergodic face sharpened): UniquelyErgodic defined (absent from
+-- Mathlib) + UniquelyErgodic ⇒ Ergodic (via Ergodic.of_mem_extremePoints: singleton invariant-measure
+-- set) + the scaffold link Ergodic(Φ_1) ⇒ IsErgodicForOutcomeRegions. Does NOT prove BornFromFlow
+-- (needs the Mathlib-absent pointwise Birkhoff theorem); the unitary no-gos above provably exclude the
+-- hypothesis for the current flows (candidate must be non-unitary). Boundary-marking, not A5 closure.
+/-- info: 'CSD.FND.UniquelyErgodic.ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.UniquelyErgodic.ergodic
+
+/-- info: 'CSD.FND.isErgodicForOutcomeRegions_of_uniquelyErgodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.isErgodicForOutcomeRegions_of_uniquelyErgodic
 
 -- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
 -- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),
