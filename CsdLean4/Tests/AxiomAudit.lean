@@ -7729,7 +7729,7 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 /-- info: 'CSD.FND.unified_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_born_frequency
 
--- FiniteQMClosure (#6, 2026-07-17): the tiered capstone. unifiedFiniteQMClosure bundles the nine
+-- FiniteQMClosure (#6, 2026-07-17): the tiered capstone. unifiedFiniteQMClosure bundles the eleven
 -- GENUINELY-PROVED-on-the-unified-model facts (isolated flow measure-preserving, Schrödinger projection,
 -- Fubini-Study bridge/B1, measurement preserving, readout a.e. total/T6, records established/B5, records
 -- time-physical/#5, Born frequency/#2, conditioning=Lüders/#3#4) into one record, each field discharged by
