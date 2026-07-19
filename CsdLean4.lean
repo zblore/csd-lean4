@@ -73,6 +73,7 @@ import CsdLean4.LF2.Weights
 import CsdLean4.LF2.BornWrapper
 import CsdLean4.LF2.ReducedDensity
 import CsdLean4.LF2.MixedEnsembleIx
+import CsdLean4.LF2.ChoiConverse
 import CsdLean4.LF2.PhaseInvariance
 import CsdLean4.LF2.EffectFn
 import CsdLean4.LF2.Preparation

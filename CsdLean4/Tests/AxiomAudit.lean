@@ -276,6 +276,7 @@ import CsdLean4.FND.ConditionalUpdate
 import CsdLean4.FND.MixedState
 import CsdLean4.FND.MixedEnsemble
 import CsdLean4.LF2.MixedEnsembleIx
+import CsdLean4.LF2.ChoiConverse
 import CsdLean4.FND.MixedOntic
 import CsdLean4.FND.MixedFrequency
 import CsdLean4.FND.Symmetrization
@@ -349,6 +350,9 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 -- + posSemidef_sum; apply_trace via trace cyclicity + the constraint), unitaryChannel, comp (channels
 -- compose). T2 Stinespring: dilation_isometry (V†V=1) + stinespring (Φ(ρ) = Tr_E(VρV†) via partialTraceRight).
 -- T3 Choi: choiMatrix_posSemidef (the Choi-Jamiolkowski completely-positive witness, ∑ₖ vec(Kₖ)vec(Kₖ)† PSD).
+-- T4 Choi converse (ChoiConverse.lean, 2026-07-19): choi_iff_posSemidef — a matrix on Fin M × Fin N is the
+-- Choi matrix of some Kraus family iff it is PSD; choiOfKraus_krausOfChoi reconstructs the family Kᵢ=√λᵢ·unvec(eᵢ)
+-- from the spectral decomposition (IsHermitian.eq_eigen_outer). Closes Choi's theorem (CP ⟺ PSD Choi).
 /-- info: 'CSD.LF2.QuantumChannel.channelApply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.channelApply
 
@@ -366,6 +370,15 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 /-- info: 'CSD.LF2.QuantumChannel.choiMatrix_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.choiMatrix_posSemidef
+
+/-- info: 'CSD.LF2.IsHermitian.eq_eigen_outer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.IsHermitian.eq_eigen_outer
+
+/-- info: 'CSD.LF2.choiOfKraus_krausOfChoi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.choiOfKraus_krausOfChoi
+
+/-- info: 'CSD.LF2.choi_iff_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.choi_iff_posSemidef
 
 -- Partial trace (Cat-1 Mathlib staging) + the reduced density operator (LF2).
 -- traceRight/traceLeft trace out a tensor factor; the API (kronecker defining
