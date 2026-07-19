@@ -295,6 +295,7 @@ import CsdLean4.FND.Luders
 import CsdLean4.FND.ConditionalUpdate
 import CsdLean4.FND.MixedState
 import CsdLean4.FND.MixedEnsemble
+import CsdLean4.LF2.MixedEnsembleIx
 import CsdLean4.FND.MixedOntic
 import CsdLean4.FND.MixedFrequency
 import CsdLean4.FND.Symmetrization
@@ -8032,6 +8033,17 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 
 /-- info: 'CSD.FND.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixedEnsemble_capstone
+
+-- Mixed-Born on the COMPOSITE INDEXED density type (2026-07-19, FND-T3 T9 residual closed): the
+-- MixedEnsemble content (affine Born + spectral ensemble) ported from DensityOperator (Fin N) to
+-- DensityOperatorIx ι (arbitrary Fintype index — the type the bipartite/composite interface uses via
+-- reduced/reducedLeft). traceForm_ensemble = affine; mixedEnsemble_capstone = Born is the
+-- eigenvalue-weighted avg of pure Born rules, on the indexed type. Closes the reported density-matrix gap.
+/-- info: 'CSD.LF2.DensityOperatorIx.traceForm_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.traceForm_ensemble
+
+/-- info: 'CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone
 
 -- MixedOntic (#8 C, 2026-07-17): the ontic-side mixed-state representation on the unified model.
 -- mixed_ontic_born_weight: for any density operator ρ and pointer outcome i, the classical mixture over
