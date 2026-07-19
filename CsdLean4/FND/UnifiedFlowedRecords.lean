@@ -96,7 +96,6 @@ region `π⁻¹(bornRegion i)` converges a.s. to the Born weight `‖⟨eᵢ,ψ�
 — so Born frequencies are now stated on the unified model itself. -/
 theorem unified_born_frequency {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω}
     [IsProbabilityMeasure Pr] (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     (X : ℕ → Ω → KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr
       = ((productDynamics H hH p₀).muL : Measure (KSigma (M + 1))))
@@ -111,6 +110,6 @@ theorem unified_born_frequency {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure �
               Set.indicator ((X k) ⁻¹' ((productSector H hH p₀).pi ⁻¹' bornRegion ψ hψ0 i))
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) :=
-  manyToOneSetup_born_frequency (schrodingerUnitary hH) p₀ ψ hψ0 hψ hpos X hX hlaw hindep
+  manyToOneSetup_born_frequency (schrodingerUnitary hH) p₀ ψ hψ0 hψ X hX hlaw hindep
 
 end CSD.FND

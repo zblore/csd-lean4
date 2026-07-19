@@ -1,5 +1,6 @@
 import CsdLean4.LF4.BothPillars
 import CsdLean4.LF4.KahlerInstance
+import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # C7: both pillars on a genuine many-to-one-`π` object
@@ -168,7 +169,6 @@ so the statement reduces to `born_frequency_convergence_N` on the projected tria
 theorem manyToOneSetup_born_frequency {M : ℕ}
     (U : ℝ → Matrix.unitaryGroup (Fin (M + 1)) ℂ) (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = (manyToOneSetup U p₀).liouvilleMeasure)
@@ -193,7 +193,7 @@ theorem manyToOneSetup_born_frequency {M : ℕ}
         = ((manyToOneSetup U p₀).pi ∘ X n) ⁻¹' bornRegion ψ hψ0 i := fun n i => rfl
   simp only [hpre] at hindep ⊢
   -- Apply the general-N Born capstone to the projected trials `π ∘ X`.
-  refine born_frequency_convergence_N p₀ ψ hψ0 hψ hpos
+  refine born_frequency_convergence_N_uncond p₀ ψ hψ0 hψ
     (fun n => (manyToOneSetup U p₀).pi ∘ X n)
     (fun n => (manyToOneSetup U p₀).pi_measurable.comp (hX n)) ?_ hindep
   -- The projected trials sample `μ_FS` (the marginal of the fibred `kMuL`).
@@ -228,7 +228,6 @@ caveat). Standing gap unchanged: the Born trials still sample `kMuL` rather than
 being evolved by the flow (L7 / FND-1). -/
 theorem manyToOneRotationSetup_both_pillars (p₀ : CPN 2)
     (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → KSigma 2) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = (manyToOneRotationSetup p₀).liouvilleMeasure)
@@ -250,7 +249,7 @@ theorem manyToOneRotationSetup_both_pillars (p₀ : CPN 2)
                     (fun _ => (1 : ℝ)) ω) / (m : ℝ))
             atTop
             (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2))) := by
-  refine ⟨?_, manyToOneSetup_born_frequency rotU p₀ ψ hψ0 hψ hpos X hX hlaw hindep⟩
+  refine ⟨?_, manyToOneSetup_born_frequency rotU p₀ ψ hψ0 hψ X hX hlaw hindep⟩
   obtain ⟨H, hH, hSchro⟩ := rotationSetup_schrodinger_form p₀
   exact ⟨H, hH, fun t x => hSchro t x.1⟩
 
@@ -314,7 +313,6 @@ rather than being evolved by the flow). -/
 theorem manyToOneSchrodingerSetup_both_pillars {M : ℕ}
     (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
     (hlaw : ∀ n, Measure.map (X n) Pr = (manyToOneSchrodingerSetup H hH p₀).liouvilleMeasure)
@@ -336,7 +334,7 @@ theorem manyToOneSchrodingerSetup_both_pillars {M : ℕ}
             atTop
             (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2))) :=
   ⟨manyToOneSchrodingerSetup_schrodinger_form H hH p₀,
-    manyToOneSetup_born_frequency (schrodingerUnitary hH) p₀ ψ hψ0 hψ hpos X hX hlaw hindep⟩
+    manyToOneSetup_born_frequency (schrodingerUnitary hH) p₀ ψ hψ0 hψ X hX hlaw hindep⟩
 
 end LF4
 end CSD

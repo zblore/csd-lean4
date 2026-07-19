@@ -29,8 +29,10 @@ All ten on the ONE model `productDynamics H hH p₀`:
 * `records_established` — the readout records the established outcome, B5 (`unifiedDeisolationModel_records`);
 * `records_time_physical` — the time-indexed record probability is conserved and flow-covariant, #5
   (`unified_records_persistence`);
-* `born_frequency` — i.i.d. trials of `μL` have outcome-region frequency → `‖⟨eᵢ,ψ⟩‖²`, #2
-  (`unified_born_frequency`; requires full pointer-basis support of `ψ`, `hpos : ∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²`);
+* `born_frequency` — i.i.d. trials of `μL` have outcome-region frequency → `‖⟨eᵢ,ψ⟩‖²`, #2, for EVERY
+  unit `ψ` (no genericity hypothesis — the `hpos` full-support requirement is retired via the `_uncond`
+  engine, `unified_born_frequency` / `born_frequency_convergence_N_uncond`; vanishing amplitudes give
+  FS-null regions whose frequencies converge to `0` = their Born weight);
 * `conditioning_is_luders` — record conditioning = Lüders update as predictions, #3/#4
   (`conditioning_luders_effect_equivalence`);
 * `mixed_born` — mixed states on the model (#8 C, weight level): for every density operator `ρ`, the
@@ -122,7 +124,6 @@ structure FiniteQMClosure : Prop where
   /-- Born frequency on the model: i.i.d. trials of `μL` land in `π⁻¹(bornRegion i)` with frequency →
   `‖⟨eᵢ,ψ⟩‖²` (#2). -/
   born_frequency : ∀ {Ω : Type} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (_ : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     (X : ℕ → Ω → KSigma (M + 1)) (_ : ∀ n, Measurable (X n))
     (_ : ∀ n, Measure.map (X n) Pr = ((productDynamics H hH p₀).muL : Measure (KSigma (M + 1))))
     (_ : ∀ i : Fin (M + 1),
@@ -171,8 +172,8 @@ theorem unifiedFiniteQMClosure (hψ' : ‖ψ'‖ = 1) (hψ : ‖ψ‖ = 1) :
       readout_ae_total := h5
       records_established := h6
       records_time_physical := fun c i => unified_records_persistence H hH p₀ e ψ' hψ'0 c i
-      born_frequency := fun hpos X hX hlaw hindep =>
-        unified_born_frequency H hH p₀ ψ hψ0 hψ hpos X hX hlaw hindep
+      born_frequency := fun X hX hlaw hindep =>
+        unified_born_frequency H hH p₀ ψ hψ0 hψ X hX hlaw hindep
       conditioning_is_luders := fun S T hψn =>
         conditioning_luders_effect_equivalence H hH p₀ ψ hψ0 hψn S T
       mixed_born := fun ρ i => mixed_ontic_born_weight H hH p₀ ρ i }

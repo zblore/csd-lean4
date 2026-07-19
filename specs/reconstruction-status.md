@@ -16,7 +16,7 @@ measurement together. `unified_choiceA_capstone` BUNDLES the dynamics + measurem
 properties: isolated measure-preservation, projectability, FS pushforward, measurement-interaction
 preservation, a.e. pointer readout, record establishment). Time-indexed record semantics (now INSTANTIATED on the model:
 `unifiedFlowedSemantics` / `unified_records_persistence`, records time-physical under the isolated flow),
-Born-frequency convergence (now stated on the model: `unified_born_frequency`, given full pointer-basis support of `ψ` — the genericity hypothesis `hpos : ∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²`), and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
+Born-frequency convergence (now stated on the model: `unified_born_frequency`, for EVERY unit `ψ` — the `hpos` full-support genericity hypothesis was retired via the `_uncond` engine, so vanishing amplitudes are covered too), and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
 `conditioning_luders_effect_equivalence` — now genuinely proved: the ontic record-conditioning and the
 Lüders update give the same conditional prediction for every pointer-basis effect) are now ASSEMBLED into
 one tiered record: **`FiniteQMClosure`** / `unifiedFiniteQMClosure` (`FND/FiniteQMClosure.lean`) collects all
