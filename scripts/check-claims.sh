@@ -18,7 +18,7 @@
 #       — catches a rename/deletion silently orphaning a CONNECTED claim.
 #   (5) the forbidden A5-overclaim phrases are absent from the forward-claim docs.
 #
-# Scope: the core QM library only; `Mathlib/QuantumInfo/ECDLP` (ecdsa.fail) is
+# Scope: the core QM library only; `CsdLean4/Ecdsafail` (the ecdsa.fail track) is
 # excluded — it is a separate project with no honesty ledger here.
 #
 # Usage:  bash scripts/check-claims.sh   (grep/awk only, no Lean build; seconds)
@@ -27,7 +27,7 @@ set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 SRC="CsdLean4"
-EXCLUDE_DIR="CsdLean4/Mathlib/QuantumInfo/ECDLP"
+EXCLUDE_DIR="CsdLean4/Ecdsafail"
 
 # ------------------------------------------------------------------ CLAIMS ----
 # THE canonical source of truth. Update HERE when the code legitimately changes;

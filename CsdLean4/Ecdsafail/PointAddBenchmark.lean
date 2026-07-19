@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
+import CsdLean4.Ecdsafail.ResourceBounds
 
 /-!
 # ECDSA.fail benchmark-comparable artefact — one affine point addition

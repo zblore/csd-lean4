@@ -48,18 +48,23 @@
 
 ---
 
-## ecdsa.fail separation — what is required
+## ecdsa.fail separation
 
-Not zero-coupling. The carve needs:
+**Folder move DONE 2026-07-19.** The non-QM-core code now lives in one folder,
+`CsdLean4/Ecdsafail/` (21 files): the ECDLP tree (17 — elliptic curves, secp256k1,
+point add/double, scalar mul, safegcd) plus the 4 ecdsa-specific circuit-assembly files
+(`ProgramRouter`, `ProgramRouterDoubling`, `DoublingAssembly`, `DoublingAssemblyOps`).
+The generic reversible-arithmetic DSL (`CuccaroAdd`, `ModMul`, `ModInv`, …) stayed in
+`Reversible/` — it is shared with core-QM (Shor + `MeasurementGidneyAdder`/`Uncompute*`).
+The core aggregator `CsdLean4.lean` has **zero** ecdsa references; `check-claims`'s
+exclude path updated to `CsdLean4/Ecdsafail`.
 
-1. **Decide `Reversible/`'s home.** The reversible-circuit DSL (`CuccaroAdd`, `ModMul`, `ModInv`, …) is **shared**: the ECDLP tree depends on it, *and* three core-QM empirical modules do (`Empirical/QM/MeasurementGidneyAdder`, `MeasurementUncompute`, `MeasurementUncomputeLift`). Either (a) `Reversible/` becomes a shared base library both sides import, or (b) it moves with ecdsa and those three empirical modules move too (they are ecdsa-adjacent).
-2. **Move `Reversible/ProgramRouter.lean`** to the ECDLP side — it is ECDLP-Phase-2-specific yet currently sits in `Reversible/` and imports `ECDLP.PointDouble` (the one genuine inbound edge).
-3. **Cut the aggregator.** Remove the 17 ECDLP imports from `CsdLean4.lean` (core should not build ecdsa).
-4. **Split the axiom audit.** Move the 17 ECDLP `#print axioms` pins out of `Tests/AxiomAudit.lean` into a separate `ECDLP/AxiomAudit.lean`.
-5. **Relocate the specs.** The 6 `specs/ecd*` / `specs/ecdsafail-*` files → an `ecdsa/` subtree or separate repo.
-6. **Lake structure.** Two `lean_lib` targets (`CsdLean4` core-QM + `Ecdsafail`) in the lakefile, or two repos sharing the `Reversible/` base.
-
-Effort: **M**. The only genuine tangles are (1) the shared `Reversible/` DSL and (2) `ProgramRouter`.
+**Remaining for a full project split (M):**
+1. **Lake structure** — give `Ecdsafail` its own `lean_lib` target so `lake build CsdLean4`
+   (core) does not build ecdsa; or split to a second repo sharing `Reversible/` as a base.
+2. **Split the axiom audit** — move the ecdsa `#print axioms` pins out of `Tests/AxiomAudit.lean`
+   into `Ecdsafail/AxiomAudit.lean` (the last inbound edge from a core file).
+3. **Relocate the specs** — the 6 `specs/ecd*` / `specs/ecdsafail-*` files → an `ecdsa/` subtree.
 
 ---
 

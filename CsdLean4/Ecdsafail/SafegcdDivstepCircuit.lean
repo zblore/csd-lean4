@@ -1,6 +1,6 @@
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
+import CsdLean4.Ecdsafail.SafegcdDivstep
 
 /-!
 # The value-faithful safegcd divstep circuit — TRANCHES 1–4b  (ECDLP L6, #36c-2)

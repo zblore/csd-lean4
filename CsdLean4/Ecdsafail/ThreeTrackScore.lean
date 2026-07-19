@@ -1,5 +1,5 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
+import CsdLean4.Ecdsafail.SafegcdInversion
+import CsdLean4.Ecdsafail.TwoTrack
 
 /-!
 # Three-track secp256k1 point-addition SCORE ledger — Verified / Trusted / Leaderboard  (ECDLP)

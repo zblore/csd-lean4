@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
+import CsdLean4.Ecdsafail.PointAddBenchmark
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import Mathlib.Data.Int.GCD
 

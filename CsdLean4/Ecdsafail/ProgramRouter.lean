@@ -1,5 +1,5 @@
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
+import CsdLean4.Ecdsafail.PointDouble
 import Mathlib.Data.ZMod.Basic
 
 /-!

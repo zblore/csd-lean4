@@ -1,11 +1,11 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
+import CsdLean4.Ecdsafail.ScalarMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
+import CsdLean4.Ecdsafail.Secp256k1
+import CsdLean4.Ecdsafail.PointAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
+import CsdLean4.Ecdsafail.Inversion
 
 /-!
 # ECDLP / secp256k1 resource estimate — the capstone  (ECDLP Tranche 7)

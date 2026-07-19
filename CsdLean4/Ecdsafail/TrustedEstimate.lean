@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
+import CsdLean4.Ecdsafail.TwoTrack
 
 /-!
 # Stage-1 trusted leaderboard estimate: measurement-uncompute + windowed EC, qubit model, score

@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
+import CsdLean4.Ecdsafail.PointDouble
 
 /-!
 # Derived field-multiplication count for `a = 0` Jacobian mixed addition  (ECDLP Phase 2, Stage S6.2)

@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
+import CsdLean4.Ecdsafail.KaratsubaMul
 
 /-!
 # Two-track ECDSA resource accounting: verified floor, trusted estimate, and the frontier

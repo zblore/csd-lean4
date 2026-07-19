@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
+import CsdLean4.Ecdsafail.SafegcdDivstepCircuit
 
 /-!
 # Average-EXECUTED Toffoli — the competition's scored quantity, computed (not assumed)  (ECDLP, #36c-2)

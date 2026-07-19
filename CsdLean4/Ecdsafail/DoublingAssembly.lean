@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouterDoubling
+import CsdLean4.Ecdsafail.ProgramRouterDoubling
 
 /-!
 # Small-fixed-`n` PROVEN gadget assembly through `compile_correct` (STEP 3)  (ECDLP Phase 2, S6.3e-2b)

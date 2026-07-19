@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
+import CsdLean4.Ecdsafail.SafegcdInversion
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 
 /-!

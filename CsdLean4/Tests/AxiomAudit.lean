@@ -38,33 +38,33 @@ import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
 import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouter
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ProgramRouterDoubling
-import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssembly
-import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssemblyOps
+import CsdLean4.Ecdsafail.ProgramRouter
+import CsdLean4.Ecdsafail.ProgramRouterDoubling
+import CsdLean4.Ecdsafail.DoublingAssembly
+import CsdLean4.Ecdsafail.DoublingAssemblyOps
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
 import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
 import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.ScalarMul
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.Secp256k1
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.ResourceBounds
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.Inversion
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointDouble
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAdd
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.PointAddBenchmark
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdInversion
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.HalfGcdInversion
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.TwoTrack
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.ThreeTrackScore
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.TrustedEstimate
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstep
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdDivstepCircuit
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.SafegcdExecCost
+import CsdLean4.Ecdsafail.EllipticCurve
+import CsdLean4.Ecdsafail.ScalarMul
+import CsdLean4.Ecdsafail.Secp256k1
+import CsdLean4.Ecdsafail.ResourceBounds
+import CsdLean4.Ecdsafail.Inversion
+import CsdLean4.Ecdsafail.PointDouble
+import CsdLean4.Ecdsafail.PointAdd
+import CsdLean4.Ecdsafail.PointAddBenchmark
+import CsdLean4.Ecdsafail.SafegcdInversion
+import CsdLean4.Ecdsafail.KaratsubaMul
+import CsdLean4.Ecdsafail.HalfGcdInversion
+import CsdLean4.Ecdsafail.TwoTrack
+import CsdLean4.Ecdsafail.ThreeTrackScore
+import CsdLean4.Ecdsafail.TrustedEstimate
+import CsdLean4.Ecdsafail.SafegcdDivstep
+import CsdLean4.Ecdsafail.SafegcdDivstepCircuit
+import CsdLean4.Ecdsafail.SafegcdExecCost
 import CsdLean4.Empirical.QM.MeasurementUncompute
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 import CsdLean4.Empirical.QM.MeasurementAdder
@@ -5858,7 +5858,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.modNeg_toffoli
 
-/-! ### ECDLP SLP → circuit router STEP 1 (Reversible/ProgramRouter.lean) -/
+/-! ### ECDLP SLP → circuit router STEP 1 (Ecdsafail/ProgramRouter.lean) -/
 
 /-- info: 'Reversible.contigBlock_injOn' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5900,7 +5900,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.worked_compile_correct
 
-/-! ### ECDLP SLP → circuit dispatcher STEP 2 (Reversible/ProgramRouterDoubling.lean) -/
+/-! ### ECDLP SLP → circuit dispatcher STEP 2 (Ecdsafail/ProgramRouterDoubling.lean) -/
 
 /-- info: 'Reversible.mulLoop_preserves_external' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5938,7 +5938,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.worked_value
 
-/-! ### ECDLP SLP → circuit STEP 3: PROVEN gadget assembly (Reversible/DoublingAssembly.lean) -/
+/-! ### ECDLP SLP → circuit STEP 3: PROVEN gadget assembly (Ecdsafail/DoublingAssembly.lean) -/
 
 /-- info: 'Reversible.hornerStep_preserves_ctrl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5972,7 +5972,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.doubling_field_mul_count_eq_8_verified
 
-/-! ### ECDLP per-opcode fold closure STEP 4 (Reversible/DoublingAssemblyOps.lean) -/
+/-! ### ECDLP per-opcode fold closure STEP 4 (Ecdsafail/DoublingAssemblyOps.lean) -/
 
 /-- info: 'Reversible.modAdd_preserves_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

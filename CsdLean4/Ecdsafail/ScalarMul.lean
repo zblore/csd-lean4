@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.EllipticCurve
+import CsdLean4.Ecdsafail.EllipticCurve
 import Mathlib.Data.Nat.Size
 
 /-!

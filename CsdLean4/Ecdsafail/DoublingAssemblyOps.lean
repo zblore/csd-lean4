@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.Reversible.DoublingAssembly
+import CsdLean4.Ecdsafail.DoublingAssembly
 
 /-!
 # Per-opcode closure of the SLP → circuit fold: `sq` / `add` / `sub` (STEP 4)  (ECDLP Phase 2, S6.3e-2b)

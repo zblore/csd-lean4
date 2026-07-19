@@ -1,4 +1,4 @@
-import CsdLean4.Mathlib.QuantumInfo.ECDLP.KaratsubaMul
+import CsdLean4.Ecdsafail.KaratsubaMul
 
 /-!
 # Half-GCD (recursive) modular inversion — the sub-quadratic lever, quantified  (ECDLP L8)
