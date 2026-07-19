@@ -168,6 +168,31 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
 * **IP-1** — identical particles / spin-statistics, not in the corpus.
 
+### 7a. Settled non-goals — do NOT re-litigate these
+
+Two positions are **decided** and recorded here so they are not re-argued. Both are backed by
+machine-checked facts in the corpus.
+
+* **NG1 — "derive Born from a single deterministic flow" (the Birkhoff / single-trajectory ergodic
+  route) is a PROVED DEAD-END that CSD deliberately does not take.** CSD forces typicality by the **law
+  of large numbers over fresh i.i.d. preparations**, NOT by time-averaging one trajectory
+  (`specs/active-todo.md`, framing correction 2026-06-29, Papers A & B). The single-flow route is
+  provably impossible: `flow_admits_invariant_ne_fubiniStudy` (`FND/A5NoGo.lean`),
+  `obsFlow_not_ergodic` / `obsFlow_not_uniquely_ergodic` (`LF4/TypicalityForcing.lean`) — a unitary flow
+  is not even ergodic w.r.t. `μ_FS`. The ergodic scaffolding (`FND/UniqueErgodicity.lean`,
+  `IsErgodicForOutcomeRegions`, `BornFromFlow`) is **boundary-marking only** — it precisely locates why
+  the route fails; it is NOT the reconstruction path and building it out further is not progress on the
+  reconstruction. The genuine open ★ residue is narrower: the sector/symmetry ORIGIN (NG-adjacent, see
+  A5 above), not "Born from flow".
+* **NG2 — the Busch effect-Gleason axiom is NOT needed for CSD's core claim; discharging it is
+  cosmetic.** CSD's ontic Born rule is **Gleason-free**: it is a Fubini–Study / Duistermaat–Heckman
+  *volume* (`bornRegion_fs_measure`, `born_frequency_convergence_N`), with no Gleason or Busch input.
+  The single imported axiom `busch_effect_gleason` (`LF2/BornWrapper.lean`) enters only the
+  **operational effect/POVM stratum**, off the reconstruction path (`AXIOMS.md` §2.2). Proving it in-repo
+  would take the imported-axiom count to zero — an **audit-posture** improvement (the "three axioms, zero
+  imported" headline), NOT a strengthening of the CSD reconstruction. Do not describe it as required for
+  the result.
+
 ## 8. Bottom line
 
 Under Choice A, the finite-dimensional QM reconstruction is **structurally closed forward**: one posited

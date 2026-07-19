@@ -85,16 +85,22 @@ the same LF4-todo §13.2 discharge route. Each Prop asserts:
 "there exists a `CSDUnitaryBundle D N H_n` whose carried unitary `U`
 equals the QM-side gate matrix's action."
 
-Pre-LF4, no concrete `D` is constructed for which any of these holds.
-The Props are **claim-shaped** placeholders for the LF4-§13.2
-obligation.
+**Partially discharged 2026-07-19:** the three single-qubit gate Props
+(`hadamard_/phaseS_/phaseT_realisable_for`) are now PROVED on the concrete
+`cpSectorData` (`Gates/SingleQubitDischarge.lean`) — each gate's action is a genuine
+`CSDUnitaryBundle` whose `U_isometry` is *derived* from the gate lying in `U(2)`
+(the sector-symmetry membership), modulo A5. Honest scope (`§7` below): the bundle
+type carries `U` + `U_isometry` + a `Context`, not a Σ-flow, so this discharges the
+Prop *as typed*, not the stronger Σ-flow-lift prose (the open D1 gap). The remaining
+five (2-qubit CNOT/SWAP/CZ, multi-qubit Toffoli/Fredkin) and Bell-prep follow the same
+pattern — each gate matrix is unitary — and are the mechanical continuation.
 
 | File | Prop | LF4-todo | Status |
 |---|---|---|---|
-| `Empirical/CSD/Gates/SingleQubit.lean` | `hadamard_realisable_for` | §13.2 | unproved |
-| `Empirical/CSD/Gates/SingleQubit.lean` | `phaseS_realisable_for` | §13.2 | unproved |
-| `Empirical/CSD/Gates/SingleQubit.lean` | `phaseT_realisable_for` | §13.2 | unproved |
-| `Empirical/CSD/Gates/TwoQubit.lean` | `cnot_realisable_for` | §13.2 | unproved |
+| `Empirical/CSD/Gates/SingleQubit.lean` | `hadamard_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** on `cpSectorData` (`hadamard_realisable_cpSector`, `Gates/SingleQubitDischarge.lean`); modulo A5 |
+| `Empirical/CSD/Gates/SingleQubit.lean` | `phaseS_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`phaseS_realisable_cpSector`); modulo A5 |
+| `Empirical/CSD/Gates/SingleQubit.lean` | `phaseT_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`phaseT_realisable_cpSector`); modulo A5 |
+| `Empirical/CSD/Gates/TwoQubit.lean` | `cnot_realisable_for` | §13.2 | unproved (same pattern as single-qubit; mechanical continuation) |
 | `Empirical/CSD/Gates/TwoQubit.lean` | `swap_realisable_for` | §13.2 | unproved |
 | `Empirical/CSD/Gates/TwoQubit.lean` | `cz_realisable_for` | §13.2 | unproved |
 | `Empirical/CSD/Gates/MultiQubit.lean` | `toffoli_realisable_for` | §13.2 | unproved |

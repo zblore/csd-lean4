@@ -264,6 +264,7 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+import CsdLean4.Empirical.CSD.Gates.SingleQubitDischarge
 import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
@@ -2878,6 +2879,23 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 /-- info: 'CSD.LF4.cpSectorActionBundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.cpSectorActionBundle
+
+-- §13.2 CONCRETE gate discharge (2026-07-19): the three single-qubit gate realisability Props
+-- (hadamard/phaseS/phaseT_realisable_for) DISCHARGED on cpSectorData. Each gate's action is a genuine
+-- CSDUnitaryBundle whose U_isometry is derived from the gate ∈ U(2) (inner_toEuclideanLin_unitary),
+-- modulo A5. Type carries U + U_isometry + Context, not a Σ-flow (PLACEHOLDERS §7), so the Σ-flow-lift
+-- reading is the open D1 gap. Converts 3 of the 9 claim-shaped gate placeholders (PLACEHOLDERS §1) to proved.
+/-- info: 'CSD.LF4.hadamard_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hadamard_realisable_cpSector
+
+/-- info: 'CSD.LF4.phaseS_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.phaseS_realisable_cpSector
+
+/-- info: 'CSD.LF4.phaseT_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.phaseT_realisable_cpSector
 
 -- FND-3 (2026-07-10): the §13.2 ontic lift on the NON-TRIVIAL-FIBRE instance kSectorData
 -- (π = pr₁ many-to-one, Σ = ℂℙ^{N-1}×T²), the cpSectorActionBundle analogue on the Kähler instance.

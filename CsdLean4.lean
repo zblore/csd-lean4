@@ -282,6 +282,7 @@ import CsdLean4.Empirical.CSD.Gates.TwoQubit
 import CsdLean4.Empirical.CSD.Gates.BellPrep
 import CsdLean4.Empirical.CSD.Gates.MultiQubit
 import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+import CsdLean4.Empirical.CSD.Gates.SingleQubitDischarge
 import CsdLean4.Empirical.CSD.Einselection
 import CsdLean4.Empirical.CSD.QECDecoherence
 import CsdLean4.Empirical.CSD.ChannelCapacity
