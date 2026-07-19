@@ -17,7 +17,7 @@
 | Item | Status / what's needed | Former source |
 |---|---|---|
 | ~~**Choi converse** (PSD Choi ⇒ Kraus)~~ | **DONE 2026-07-19** (`LF2/ChoiConverse.lean`). `choi_iff_posSemidef`: a matrix on `Fin M × Fin N` is a Kraus family's Choi matrix **iff** PSD. The feared "vectorization iso" was definitional (the Choi index *is* a product), so the content was the spectral `Kᵢ=√λᵢ·unvec(eᵢ)` reconstruction (`choiOfKraus_krausOfChoi` + `IsHermitian.eq_eigen_outer`). Foundational triple. | `qi-qec-roadmap.md` |
-| **Gisin's theorem** (pure entangled ⇒ CHSH violation) | **Sketched, not started.** Needs the missing piece: a Schmidt decomposition of a general pure bipartite state (not in repo). Have: CHSH / Tsirelson machinery for the singlet. Unblocks LF6-6. | `lf6-plan.md` (LF6-8) |
+| ~~**Gisin's theorem** (pure entangled ⇒ CHSH violation)~~ | **DONE 2026-07-19** (`LF6/GisinTheorem.lean`). `gisin_chsh_violation`: every entangled `Ψ(c,s)=c\|00⟩+s\|11⟩` (`0<c,0<s`) violates CHSH — the physical `⟨Ψ\|σ·a⊗σ·b\|Ψ⟩` combination `> 2`. Built directly on the existing `psQubit_pauli_correlation`; the feared "general Schmidt decomposition" wasn't needed (the real-Schmidt two-qubit state + its correlation were already in `PartialSchmidtCorrelation.lean`). Trig-free `c,s`-dependent witness giving `2√(1+(2cs)²)`. Closes LF6-6. Foundational triple. | `lf6-plan.md` (LF6-8) |
 | **Busch–Gleason** (effect-Gleason, finite-dim) | Deletes the one imported axiom `busch_effect_gleason` → "three axioms, zero imported". **Cosmetic** (NG2): not needed for CSD — ontic Born is Gleason-free. Do only for audit-posture. | `AXIOMS.md §2.2` |
 | **Separate the ecdsa.fail track** | Real carve, not zero-coupling (see the dedicated section below). | `ecdsafail-two-track.md` |
 
@@ -80,7 +80,7 @@ code (`CsdLean4/Ecdsafail/`), build (`Ecdsafail` lean_lib), audit
 
 ## Done this session (2026-07-19)
 
-Honesty guard (`check-claims.sh`) · Track A#1 Schrödinger derivation · Track A#2 Kähler de-vacuum · A5/L7 ergodic bracket · §13.2 all 9 gates · §14 measurement connections (SG/Uncertainty/Hardy) · Mach–Zehnder · Double-slit + complementarity · **composite mixed-Born on `DensityOperatorIx`** (FND-T3 T9) · **Choi converse — Choi's theorem CP⟺PSD** (`LF2/ChoiConverse.lean`).
+Honesty guard (`check-claims.sh`) · Track A#1 Schrödinger derivation · Track A#2 Kähler de-vacuum · A5/L7 ergodic bracket · §13.2 all 9 gates · §14 measurement connections (SG/Uncertainty/Hardy) · Mach–Zehnder · Double-slit + complementarity · **composite mixed-Born on `DensityOperatorIx`** (FND-T3 T9) · **Choi converse — Choi's theorem CP⟺PSD** (`LF2/ChoiConverse.lean`) · **Gisin's theorem — every entangled pure two-qubit state violates CHSH** (`LF6/GisinTheorem.lean`, closes LF6-6).
 
 ## Settled non-goals — do not re-litigate (see `reconstruction-status.md §7a`)
 

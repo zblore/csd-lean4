@@ -146,6 +146,7 @@ import CsdLean4.LF6.GHZLocalFlow
 import CsdLean4.LF6.Decoherence
 import CsdLean4.LF6.MaxEntangledDeisolationFlow
 import CsdLean4.LF6.PartialSchmidtCorrelation
+import CsdLean4.LF6.GisinTheorem
 import CsdLean4.LF6.DephasingSemigroup
 import CsdLean4.LF6.AmplitudeDamping
 import CsdLean4.LF6.CGLMPQutrit
@@ -4711,8 +4712,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- LF6-6 partial (2026-07-12): the partial-Schmidt (non-maximally-entangled) two-qubit correlation,
 -- extending the LF6 correlation beyond equal Schmidt coefficients. Ψ(c,s)=c|00⟩+s|11⟩ gives
 -- ⟨σ·a⊗σ·b⟩ = a_z b_z + 2cs(a_x b_x − a_y b_y) (psQubit_pauli_correlation), 2cs = concurrence; at
--- c=s=1/√2 it collapses to Φ⁺ (psQubit_pauli_correlation_maximal). Residual (needs Gisin, not in corpus):
--- the non-factorisation witness for unequal c≠s.
+-- c=s=1/√2 it collapses to Φ⁺ (psQubit_pauli_correlation_maximal).
 /-- info: 'CSD.LF6.psQubit_pauli_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.psQubit_pauli_correlation
@@ -4720,6 +4720,19 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.psQubit_pauli_correlation_maximal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.psQubit_pauli_correlation_maximal
+
+-- LF6-6 residual DISCHARGED — Gisin's theorem (GisinTheorem.lean, 2026-07-19): the non-factorisation
+-- witness for unequal Schmidt coefficients. Every pure entangled two-qubit state Ψ(c,s) (0<c,0<s,
+-- c²+s²=1) violates CHSH: gisin_chsh_violation gives settings whose CHSH combination of the genuine
+-- Hilbert-space expectations ⟨Ψ(c,s)|σ·a⊗σ·b|Ψ(c,s)⟩ exceeds 2. gisin_chsh_value: the closed form is
+-- 2√(1+(2cs)²) (Horodecki optimum for T=diag(2cs,−2cs,1)); >2 since concurrence 2cs>0; =2√2 at c=s=1/√2.
+/-- info: 'CSD.LF6.gisin_chsh_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.gisin_chsh_value
+
+/-- info: 'CSD.LF6.gisin_chsh_violation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.gisin_chsh_violation
 
 -- LF6-2 bounded core (2026-07-12): the qubit T2 dephasing quantum dynamical semigroup — the
 -- continuous-time open-system de-isolation frontier. Φ_t(ρ) damps coherences by e^{-γt}, preserves

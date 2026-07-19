@@ -24,15 +24,15 @@ maximally-entangled point `c = s = 1/√2`, where the correlation collapses to `
   (`psExpectation_formula` + the `pauliDot` entries), with the maximal-entanglement reduction to `Φ⁺`
   (`psQubit_pauli_correlation_maximal`). This extends the LF6 correlation content past equal Schmidt
   coefficients.
-* **Named residual (the non-factorisation witness):** forcing non-factorisation for **unequal** Schmidt
-  coefficients (`c ≠ s`) needs a Bell violation for a non-maximally-entangled state. The LF6-D
-  `reflectXZ → singlet` CHSH reduction is specific to `Φ⁺` (equal weights), and the CGLMP
-  Dirichlet-kernel closed form is specific to the equal diagonal amplitudes `(√d)⁻¹`; neither ports. The
-  general witness is **Gisin's theorem** (every entangled pure two-qubit state violates CHSH), which is
-  not in the corpus — the genuine remaining cost of LF6-6. What IS shown here is the state-dependence of
-  the correlation, from which the concurrence `2cs > 0` (entanglement) is manifest.
+* **The non-factorisation witness (now discharged in `LF6/GisinTheorem.lean`):** forcing
+  non-factorisation for **unequal** Schmidt coefficients (`c ≠ s`) needs a Bell violation for a
+  non-maximally-entangled state. The LF6-D `reflectXZ → singlet` CHSH reduction is specific to `Φ⁺`
+  (equal weights) and the CGLMP Dirichlet-kernel closed form to the equal diagonal amplitudes `(√d)⁻¹`;
+  neither ports. The general witness is **Gisin's theorem** — `GisinTheorem.gisin_chsh_violation` builds
+  it directly on the `psQubit_pauli_correlation` computed here: from the state-dependence, the concurrence
+  `2cs > 0` yields explicit detector settings with CHSH value `2√(1+(2cs)²) > 2`.
 
-Reference: `specs/future-work.md` (LF6-6).
+Reference: `specs/future-work.md` (LF6-6); `LF6/GisinTheorem.lean` (`gisin_chsh_violation`, the witness).
 -/
 
 open scoped BigOperators ComplexConjugate
