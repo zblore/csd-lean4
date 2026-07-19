@@ -218,6 +218,7 @@ import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.Metrology.Ramsey
 import CsdLean4.Empirical.CSD.MachZehnderVolume
+import CsdLean4.Empirical.CSD.DoubleSlitVolume
 import CsdLean4.Empirical.Metrology.QuantumFisher
 import CsdLean4.Empirical.Metrology.Heisenberg
 import CsdLean4.Empirical.CSD.BellVolume
@@ -1816,6 +1817,15 @@ info: 'CSD.Empirical.Metrology.ramseyPhaseFlow_ne_id' depends on axioms: [propex
 /-- info: 'CSD.Empirical.CSDBridge.MachZehnder.mz_visibility_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.MachZehnder.mz_visibility_one
+
+-- Double-slit interference + Bohr complementarity (2026-07-19): coherent fringe reuses MZ (visibility 1),
+-- NEW content = which-path complementarity — measuring the slit makes the interference coherence
+-- (off-diagonal of the decohered reduced state) VANISH (decoherence_offdiagonal_vanish), collapsing the
+-- fringe to the flat classical mixture (visibility 0). The physical heart of the double slit; the part MZ
+-- does not carry. Built on the LF6-B decoherence stratum. Foundational triple.
+/-- info: 'CSD.Empirical.CSDBridge.DoubleSlit.doubleslit_complementarity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.DoubleSlit.doubleslit_complementarity
 
 -- §14 CONNECTED (2026-07-19): the transport-only SternGerlach module now re-exports the genuine ontic
 -- derivation (sg_frequency_convergence) so its CSD reading cites the ontic substrate, not only QM transport.

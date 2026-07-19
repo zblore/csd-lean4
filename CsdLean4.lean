@@ -242,6 +242,7 @@ import CsdLean4.Empirical.CSD.Uncertainty
 import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MachZehnderVolume
+import CsdLean4.Empirical.CSD.DoubleSlitVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.CSD.BellVolume
 import CsdLean4.Empirical.CSD.GHZVolume
