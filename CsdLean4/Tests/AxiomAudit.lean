@@ -217,6 +217,7 @@ import CsdLean4.Empirical.CSD.SternGerlach
 import CsdLean4.Empirical.CSD.SternGerlachVolume
 import CsdLean4.Empirical.CSD.MalusVolume
 import CsdLean4.Empirical.Metrology.Ramsey
+import CsdLean4.Empirical.CSD.MachZehnderVolume
 import CsdLean4.Empirical.Metrology.QuantumFisher
 import CsdLean4.Empirical.Metrology.Heisenberg
 import CsdLean4.Empirical.CSD.BellVolume
@@ -1807,6 +1808,20 @@ info: 'CSD.Empirical.Metrology.ramseyPhaseFlow_ne_id' depends on axioms: [propex
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.Metrology.ramseyPhaseFlow_ne_id
+
+-- Mach-Zehnder interference (2026-07-19, roadmap B4, the last iconic missing phenomenon): single-photon
+-- two-mode interferometer = qubit phase circuit H·D(φ)·H·|0⟩ (= ramseyVec, machine-checked
+-- ramseyVec_eq_circuit). Fringe cos²(φ/2) reuses ramsey_fringe_volume (Born-as-volume). NEW content:
+-- interferometric visibility = 1 for a pure single photon (bright P(0)=1, dark P(π)=0). Foundational triple.
+/-- info: 'CSD.Empirical.CSDBridge.MachZehnder.mz_visibility_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.MachZehnder.mz_visibility_one
+
+-- §14 CONNECTED (2026-07-19): the transport-only SternGerlach module now re-exports the genuine ontic
+-- derivation (sg_frequency_convergence) so its CSD reading cites the ontic substrate, not only QM transport.
+/-- info: 'CSD.Empirical.CSDBridge.SternGerlach.csd_sg_ontic_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SternGerlach.csd_sg_ontic_frequency_convergence
 
 /--
 info: 'CSD.Empirical.Metrology.ramsey_fringe_max' depends on axioms: [propext, Classical.choice, Quot.sound]

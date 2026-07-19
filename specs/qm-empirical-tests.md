@@ -204,7 +204,7 @@ content is sealed behind the LF4 discharge.
 
 | # | Prediction | LF4 prerequisite |
 |---|---|---|
-| B4 | Mach-Zehnder visibility = 1 for pure single-photon | N=2 `SectorData` instantiated as two-mode bosonic, beam-splitter unitary |
+| B4 | Mach-Zehnder visibility = 1 for pure single-photon — **DONE 2026-07-19** (`Empirical/CSD/MachZehnderVolume.lean`): the two-mode single photon is a qubit, MZ circuit `H·D(φ)·H·|0⟩` = `ramseyVec φ` (machine-checked `ramseyVec_eq_circuit`); fringe `cos²(φ/2)` as an FS volume (`mz_fringe_volume` = `ramsey_fringe_volume`), bright `P(0)=1`/dark `P(π)=0`, and the new `mz_visibility_one : V = 1`. Foundational triple. | N=2 `SectorData` instantiated as two-mode bosonic, beam-splitter unitary |
 
 ### 2.3 `NoCloning.lean` — general QM theorem
 

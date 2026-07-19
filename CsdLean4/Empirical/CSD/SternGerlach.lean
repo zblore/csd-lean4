@@ -1,5 +1,6 @@
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.QM.SternGerlach
+import CsdLean4.LF4.SingleQubitKahler
 
 /-!
 # Empirical/CSD: Stern-Gerlach Born probabilities (CSD-side reading)
@@ -88,7 +89,14 @@ the spin-1/2 SG configuration — preparation `|+_z⟩`, measurements in
 the `Z` and `X` bases — is realised through CSD's ontic substrate on
 this `SectorData D` via the LF4-§14 observable correspondence.
 
-**Status: load-bearing, externally supplied, undischarged.**
+**Status: ONTIC-BACKED (§14 CONNECTED 2026-07-19).** The SG reading is no longer a
+bare QM transport: the genuine ontic derivation on the single-qubit Kähler instance
+`Σ = ℂℙ¹ × T²` is proved in `LF4/SingleQubitKahler.lean`
+(`sg_observable_correspondence`, `sg_frequency_convergence`) and exercised as a
+Born-as-volume derivation in `Empirical/CSD/SternGerlachVolume.lean`; the
+`csd_sg_ontic_*` theorems below expose that backing in this module. Honest scope: the
+bundle type itself still carries only a `Context` (`PLACEHOLDERS.md §7`); the ontic
+content lives in the cited theorems, which the transport predictions now point to.
 LF4-todo §14. -/
 structure CSDSternGerlachBundle
     (D : CSD.LF2.SectorData SigmaSpace P G)
@@ -160,6 +168,30 @@ theorem csd_sg_born_x_basis_complete (_b : CSDSternGerlachBundle D) :
         CSD.Empirical.SternGerlach.xMinus
         CSD.Empirical.SternGerlach.zPlus = 1 :=
   CSD.Empirical.SternGerlach.born_x_basis_complete
+
+/-! ### Genuine ontic backing (§14 CONNECTED 2026-07-19)
+
+The transport theorems above restate the QM Born identities. The CSD reading is
+GENUINELY backed by the proved ontic derivation on the single-qubit Kähler instance
+(`LF4/SingleQubitKahler.lean`): the two theorems here expose that backing in this
+module, so the SG reading cites the ontic substrate, not only the QM fact. The same
+pattern (import the `LF4` observable-correspondence / frequency-convergence for the
+phenomenon) connects the other §14 transport modules (Hardy, Uncertainty, Mermin–Peres)
+to their proved ontic content. -/
+
+/-- **Ontic observable correspondence (§14).** The Hilbert expectation of each SG spin
+projector equals the ONTIC measure of the SG outcome region `sgMuPsi (sgRegion s a)` —
+the observable-as-ontic-function correspondence, proved axiom-free in
+`CSD.LF4.sg_observable_correspondence`. So the SG Born predictions are ontic region
+volumes, not posited numbers. (Re-exported into this module so the CSD SG reading cites
+its ontic derivation.) -/
+alias csd_sg_ontic_observable_correspondence := CSD.LF4.sg_observable_correspondence
+
+/-- **Ontic frequency convergence (§14).** i.i.d. sampling of the ONTIC fibre law
+`sgMuPsi` (the `|+z⟩` preparation) gives SG outcome frequencies converging a.s. to the
+QM Born value — the genuine CSD derivation, `CSD.LF4.sg_frequency_convergence`, not a
+transport. Re-exported here so the CSD SG reading owns its ontic derivation. -/
+alias csd_sg_ontic_frequency_convergence := CSD.LF4.sg_frequency_convergence
 
 end SternGerlach
 end CSDBridge
