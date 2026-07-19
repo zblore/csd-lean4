@@ -288,6 +288,7 @@ import CsdLean4.FND.ConditionalUpdate
 import CsdLean4.FND.MixedState
 import CsdLean4.FND.MixedEnsemble
 import CsdLean4.FND.MixedOntic
+import CsdLean4.FND.MixedFrequency
 import CsdLean4.FND.Symmetrization
 
 /-!
@@ -7932,6 +7933,19 @@ frontier's number. The exact figure needs the assembled op-stream + eval_circuit
 -- wired as the FiniteQMClosure.mixed_born field. Weight-level (the mixed frequency LLN is the refinement).
 /-- info: 'CSD.FND.mixed_ontic_born_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixed_ontic_born_weight
+
+-- MixedFrequency (#8 C, a.s. limit, 2026-07-19, roadmap A1): the mixed Born WEIGHT upgraded to a
+-- FREQUENCY LLN. unified_mixed_born_frequency: for i.i.d. two-stage trials Y whose law is mixtureMeasure
+-- (eigenvalue distribution ⊗ μL), the frequency in mixtureRegion i (component j's eigenvector lands in the
+-- i-th ontic Born region) converges a.s. to Tr(ρ Eᵢ). Proof: mixtureMeasure_region_toReal shows the
+-- two-stage region measure = Tr(ρ Eᵢ) (via Measure.prod_prod + eigenvalueMeasure_singleton +
+-- mixed_ontic_born_weight), then born_frequency_convergence_partition. Wired as FiniteQMClosure's 11th
+-- field mixed_born_frequency, closing the closure's last open QM item (Tier-4 mixed frequency LLN).
+/-- info: 'CSD.FND.unified_mixed_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_mixed_born_frequency
+
+/-- info: 'CSD.FND.mixtureMeasure_region_toReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixtureMeasure_region_toReal
 
 -- Symmetrization (identical particles / exchange statistics, n=2, 2026-07-18): the swap operator on
 -- H⊗H = EuclideanSpace ℂ (Fin N × Fin N) is a self-adjoint involution (swap_isSymmetric); symProj/
