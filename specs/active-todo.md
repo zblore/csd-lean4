@@ -1,5 +1,10 @@
 # Active TODO — CSD session work queue (persistent)
 
+> **⚠️ Open items now live in [`BACKLOG.md`](BACKLOG.md).** This is a historical
+> session-queue record (mostly-DONE core rows + the #16/#15/framing notes). The ecdsa.fail
+> task rows and score ledger were moved to the separated track: [`ecdsa/todo.md`](ecdsa/todo.md),
+> [`ecdsa/score-ledger.md`](ecdsa/score-ledger.md).
+
 **Purpose.** Durable copy of the session task list so it survives session loss. If the
 in-memory task list is gone, re-seed from the table below (each row → a task; keep the
 Category / Complexity / Blocked-by columns). Last updated 2026-07-16.
@@ -16,25 +21,6 @@ research-frontier / infrastructure gap.
 | 6 | LF6-A.2 contextuality corollary | LF6 | S | DONE | |
 | 8 | LF6-A.3 flow-realises-dilation lemma | LF6 | S | DONE | |
 | 9 | LF6-B.2 purity-drop witness | LF6 | M | DONE | |
-| 11 | ECDSA L6 safegcd inversion (dominant) | ECDSA | L | DONE | |
-| 12 | ECDSA L1 Karatsuba multiply | ECDSA | M | DONE | |
-| 13 | ECDSA L2 windowed Fermat (comparison) | ECDSA | S | DONE | |
-| 10 | ECDSA L3 shared-partial-product squaring | ECDSA | M | DONE | |
-| 2 | ECDSA L1–L6 (umbrella) | ECDSA | — | open | #14 |
-| 18 | L5-a measure-and-correct primitive (amplitude model) — GREEN LIGHT: measurement-based uncompute IS verifiable in Lean | ECDSA | M | DONE | |
-| 19 | L5-b ~2× cost accounting + operator↔list link | ECDSA | S–M | DONE | |
-| 20 | L5-c Boolean↔amplitude bridge — SCOPING DONE, verdict WALL (see below) | ECDSA | L–XL | scoped (wall) | |
-| 30 | AND-based adder primitive (Boolean DSL; fresh per-carry AND temporary) — DONE (the L5-d attachment point) | ECDSA | L | DONE | |
-| 31 | Localized amplitude lift of the AND-uncompute block (denote↔toEuclideanLin, restricted) — DONE: L5-c wall closed at CELL granularity (MeasurementUncomputeLift.lean) | ECDSA | L–XL | DONE | #30 |
-| 21 | L5-d measurement-based adder re-cost — DONE: adder Toffolis 6n→3n (n=256: 1536→768), aggregated from 3n #31-proven-equivalent blocks (MeasurementAdder.lean); n-fold amplitude correctness WALLED (gadget non-permutation; QReg 3⊗QReg(m−3) tensor factor); SCORE still gated on adder-swap-through-point-addition + #7 | ECDSA | M | DONE | #7 |
-| 22 | L5-e DSL-extension posture decision | ECDSA | M | open | #18 |
-| 35 | Minimal 1-Toffoli-per-carry Gidney adder — DONE: `gidneyAdd_correct = (a+b) mod 2ⁿ` (FULL general-n Boolean correctness, anti-hollow), 1-Toffoli `majCell`, unitary `2n` (ties Cuccaro), measurement re-cost `n` (`gidney_beats_cuccaro` vs proven corpus Cuccaro `2n` + #30 `6n`; n=256: 256/512/1536); space tradeoff O(n) disclosed; GidneyAdder.lean + MeasurementGidneyAdder.lean | ECDSA | L | DONE | |
-| 36a | VerifiedAdder interface + adder-parametric generic multiplier — DONE: `genMul_correct` (parametric fold induction), `genMul_toffoli = n·A.toffoli`; faithfulness `genMul corpusAdder = mulLoop` (rfl) recovering `30n²` exactly (non-lossy). Interface at the Horner-STEP level (VerifiedAdder.lean). HONEST LIMIT (scout): abstracts the FOLD only — a cheaper BASE adder does NOT propagate by instantiation (modAdd/cModAdd/modDouble sit between; 36b must re-derive the step), and the carry-clean memory model needs a VARIANT interface | ECDSA | M | DONE | #35 |
-| 36b | Carry-clean VerifiedAdder variant — DONE: `VerifiedAdderCarryClean` (global restored-clean invariant: clean precondition + `cleanRestored` postcondition threaded; NOT 36a's fresh-ancilla `cleanStable`), `genMulCC_correct` parametric, faithfulness `genMulCC cuccaroAdder = cuccaroModMul` (rfl) recovering `20n²+14n` exactly. Fully Boolean-verified, no amplitude wall. Θ(n)-qubit win genuine (VerifiedAdderCarryClean.lean). Keystone proven to generalise across memory models | ECDSA | M | DONE | #36a |
-| 36c | Generic inverter — SCOUTED (Case C): NEITHER inverter is a verified gate-level CIRCUIT. Fermat (`Inversion.lean`) = ZMod value-correct (`fermatInv_eq_inv`) + op-count cost-figure (`2n·perMultiply`), NO square-and-multiply circuit. Safegcd (`SafegcdInversion.lean`) = value-correct-by-unfolding + verified-gadget-anchored per-divstep × DOCUMENTED count, NO divstep circuit folded (module defers it). So 36c cannot be a 36a-style abstraction (no concrete inverter-circuit to recover); a cost-only parametric inverter fails ⟦c⟧=op (NOT built). OPTIONS: (1) build the Fermat square-and-multiply CIRCUIT over genMul/genMulCC — anti-hollow, FIRST verified inverter circuit, but O(n³) and NOT the score's term (staged 36c-1 squaring / 36c-2 exponent fold / 36c-3 faithfulness; the in-place B←B² clean-uncompute is the genuine new hard part); (2) build the safegcd divstep CIRCUIT — the score's actual O(n²) term, gold-standard but heaviest (Bernstein-Yang divstep invariant + termination); (3) cost-recurrence-only — REJECTED (hollow). HONEST TENSION: the cheap inverter the score uses (safegcd) has no circuit; the one buildable from the parametric multiply (Fermat) is O(n³) and not the score's term. None moves the benchmark NUMBER without harness #7. **DECISION 2026-07-16: option (2) chosen — build the safegcd divstep CIRCUIT (`denote = divstep`). TRANCHES 1–3 DONE** (`SafegcdDivstepCircuit.lean`): (1) exact-halving primitive as a concrete `n`-swap `Circuit`, `denote`-correct (`halve_correct`: even register → `regValRange/2`, general n) and Toffoli-FREE (`shiftDown_toffoli`, refines the `cuccaroModDouble` 6n+4 halving overcount to 0); (2) signed integer arithmetic — `signedRep`/`regValZ` two's-complement decoder + `signedAdd_correct`/`signedSub_correct` (under no-overflow, verified mod-2^n `cuccaroAdd`/`rippleSub` realise the `g+f`/`g-f` numerators at the signed-ℤ level); (3) branch control — `cswap`(Fredkin)/`condSwapReg` controlled register swap (`condSwapReg_swaps`: `f↔g` iff control set, 1 Toffoli/bit) + `Odd g` test as a wire-0 read (`regValRange_odd_iff`/`regValZ_odd_iff`); (4a) SIGNED halving — building the assembly exposed that T1's `shiftDown` is UNSIGNED (fills top with 0) but the divstep halves SIGNED `(g±f)/2` (g,f negative), so `signedHalve` (sign-extending shift) + `signedHalve_correct` (`regValZ ÷2`, even reg), with `signedRep_high`/`regValZ_signBit` two's-complement support; (4b) g-update composition — `gUpdateSub_correct`/`gUpdateAdd_correct` compose T2+T4a into ONE circuit computing `g ↦ (g∓f)/2` at the signed `regValZ` level (f,g odd ⇒ even numerator discharges the halve's bottom-bit hyp); (4c) the `0<δ` control read — `regValZ_pos_iff`/`regValZ_nonneg_iff` characterise the branch discriminant `0<δ` as a bit read (sign clear + low bits nonzero), via `regValZ_signBit`; (4d) δ-counter update `δ↦1±δ` — `deltaInc_correct`/`deltaDec_correct`, a T2 corollary (signed ± vs constant 1). So EVERY divstep sub-operation is circuit-backed (swap, signed ±, signed halve, g-update, δ-update, 0<δ / Odd g reads); (4e) reversible nonzero/OR gadget `orAccum_correct` (the "low bits≠0" half of 0<δ); (4f) branch-A f-recovery `addTwice_correct` (f←f+2g) + `branchA_recovers` (f+2·((g-f)/2)=g) — resolves the in-place f'=g (g-update first, then recover, no swap), so gUpdateSub+addTwice compose to branch A. Branch A's in-place (f,g) transform is now circuit-backed. (4g) lane-0 cswap elision `cswap_lane0_noop` (frontier's `divstep 0..n→1..n` Toffoli lever, proved value-exact); (4h) branch-control-bit synthesis `and3_correct` (bA = sign_clear ∧ nonzero_δ ∧ odd_g into a clean ancilla). Remaining T4 residual: controlled (branch-gated) gadget variants + wiring, then end-to-end denote = `divstepRev`. Three-track SCORE ledger added (ThreeTrackScore.lean): Leaderboard-convention = 1.58e9 PARITY (competition metric; TRUSTED PROJECTION — avg-executed ADOPTED from the frontier's own measured value, NOT computed here; a real figure needs #7). | ECDSA | XL | in progress (T1–T4h done; full assembly remains) | #36a,#36b |
-| 36d | Instantiate the Gidney measurement adder (amplitude-gated per #21/#31) for the further drop; re-cost vs ResourceBounds | ECDSA | M | open | #36b |
-| 14 | ECDSA L5 Gidney measurement adders (Tier-X umbrella) — score lever ONLY after #35 + pervasive O(n²) mult/inverter application | ECDSA | XL | open | #35,#7,#22 |
-| 7 | ECDSA step 2: run their Rust harness (USER action) | ECDSA (user) | S | open | |
 | 16 | Debt D1c-1: structural Φ≠id into kSectorData (kFlow) | Foundations-debt | M | DONE | |
 | 28 | D1c-2: physically-meaningful Φ (obsFlow Hamiltonian) into cpSectorData | Foundations-debt | S | DONE | |
 | 29 | A5 onramp: typicality forced by symmetry + single-flow obstruction (DONE) | Foundations-debt | L | DONE | |
@@ -50,82 +36,8 @@ research-frontier / infrastructure gap.
 | 34 | 15a follow-up — DONE: degeneracy boundary (p₀=p₁ ⇒ ½I basis-invariant, einselection FAILS; iff `decohere_hadamard_offDiag_ne_zero_iff`) + general-N einselection (`einselectionN`, `decohereReducedN_acts_nontrivial`); ontic origin D1-gated (Einselection.lean) | Empirical | M | DONE | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
 
-Per-area plans: [`lf6-plan.md`](lf6-plan.md), [`ecdsafail-optimization-plan.md`](ecdsafail-optimization-plan.md),
+Per-area plans: [`lf6-plan.md`](lf6-plan.md), [the ecdsa.fail track](ecdsa/INDEX.md),
 [`metrology-plan.md`](metrology-plan.md), [`INDEX.md`](INDEX.md).
-
-## ECDSA.fail score ledger (point addition, qubit×Toffoli, lower wins)
-
-**HARNESS FINDINGS 2026-07-16 (from github.com/jieyilong/ecdsafail-autoresearch-harness, benhuang2025 —
-a real leaderboard participant's tooling; see [[reference_ecdsafail_harness]]).** Material for the honesty
-framing of this ledger:
-- **The scored metric is `score = peak_qubits × AVERAGE EXECUTED Toffoli`** (NOT worst-case emitted).
-  Frontier: peak = 1156 qubits, avgT ≈ 1,365,020 → score ≈ 1.577×10⁹ (matches our `ecdsaFailLeaderboardBest
-  = 1.57×10⁹`). Our corpus counts WORST-CASE UPPER-BOUND EMITTED Toffoli on a FULL-WIDTH VALUE-EXACT
-  circuit; the leaderboard scores AVERAGE-EXECUTED Toffoli on a TRUNCATED circuit (correct on most inputs,
-  hard inputs dodged by nonce-hunting). These are DIFFERENT QUANTITIES — our figures are honestly higher by
-  construction, and the "~Nx off leaderboard" lines below conflate the two axes. Keep the two-track posture.
-- **Their central rule: "certify value-exactness STATICALLY, never by sampling"** (a control firing 1/1e6
-  passes 1e6 shots yet breaks the circuit). Our Lean proofs ARE the machine-checked gold-standard form of
-  exactly that methodology — the #36c divstep verification is the rigorous version of what they do with
-  def-use liveness / algebraic identity / constprop. Strong validation of the formal-verification approach.
-- **Generalizable negatives (save effort):** (i) `jump=4` (wider-jump GCD rewrite) is REFUTED — structurally
-  +32–67% MORE Toffoli, cost inherent (controlled-shift cswaps); our safegcd `jump=2`-equiv is right, don't
-  pursue wider jumps. (ii) A CCX folds cheaper ONLY when inputs are affine-related (equal / complementary /
-  constant) — no sound fourth relation. (iii) **GCD lane-0 cswap elision** (`divstep 0..n → 1..n`): the
-  bit-0 conditional swap is a no-op — a real frontier Toffoli lever, potentially a verifiable lemma for
-  `condSwapReg` (start the swap ladder at index 1). (iv) Truncation trades score for hard inputs (the λ
-  cliff) — an input-dependent optimisation OUTSIDE the value-exact regime our verification certifies.
-
-**THREE-TRACK SCORE LEDGER 2026-07-17 (ThreeTrackScore.lean + SafegcdExecCost.lean).** The point-add SCORE
-(peak×Toffoli) split three ways: **Verified** = verifiedFloor 676,880,936 × peak 2822 = 1.91×10¹²;
-**Trusted** = trustedEstimate 7,801,612 × peak 2822 = 2.20×10¹⁰; **Leaderboard** (competition convention) =
-optimised peak 1156 × **CALCULATED** avg-executed 1,950,403 = **2,254,665,868 ≈ 2.25×10⁹ — ~1.44× the live
-best** (`leaderboard_calculated_gap`). The avg-executed is COMPUTED, not adopted: `SafegcdExecCost.lean`
-implements the competition's executed-Toffoli rule (`executedToffoli`: CCX counts iff both controls set)
-and MEASURES it on the verified n=3 adder over all 2^7 inputs = **25% executed/emitted** (192/(128·6));
-× emitted worst-case 7,801,612 = 1,950,403. Honest tier: a grounded MODEL (single gadget, uniform inputs,
-pre-constprop), in the frontier's ballpark (~1.37×10⁶) but NOT a win (`leaderboard_not_below_best`: above
-best; residual = constprop + peak-reduction we have not applied). Exact figure needs the assembled op-stream
-+ eval_circuit (#7). The defensible headline remains the machine-checked value-exactness (#36c).
-
-**TWO-TRACK REFRAME 2026-07-01 (TwoTrack.lean, specs/ecdsafail-two-track.md, auditor-SOUND):** the
-figures below split by TRUST BASIS. The honest **VERIFIED FLOOR** is `secp256k1Toffoli_verifiedFloor =
-676,880,936` (Fermat inversion — the ONLY inverter the corpus can machine-anchor, verified multiply +
-anchored O(n³) Fermat with the PROVEN op-count `fermatInvFieldMults_le`). The `5,831,948` "best" is the
-**TRUSTED ESTIMATE** (`secp256k1Toffoli_trustedEstimate`, safegcd + Karatsuba + squaring — cited to
-Bernstein-Yang/RNSL/Karatsuba-Ofman, NOT Lean-verified, NOT a corpus achievement). Gap ~116× = the
-VERIFICATION FRONTIER (verifying those primitives, esp. the safegcd divstep circuit, collapses it). So
-the "~10.5× off leaderboard" line below judged a VERIFIER on the ESTIMATORS' axis; the honest posture is
-verified-floor + cited trusted-estimate + the named frontier between them.
-
-| stage (trust basis) | Toffoli | score | leaderboard gap |
-|---|---|---|---|
-| **VERIFIED FLOOR** (Fermat, verified+anchored) | 676,880,936 | 1,910,158,001,392 | ~1217× |
-| + L6 safegcd (→ trusted) | 7,896,616 | 22,284,250,352 | ~14× |
-| + L1 Karatsuba (trusted) | 5,913,868 | 16,688,935,496 | ~10.6× |
-| **TRUSTED ESTIMATE** (+ L3 squaring) | 5,831,948 | 16,457,757,256 | ~10.5× |
-| leaderboard best (trusted, external) | ~1,360,000 | ~1,566,720,000 | 1× |
-
-Per-field-op constant levers (L6/L1/L3) exhausted. Current ~5.83M Toffoli/point-add is
-**inversion-dominated**: safegcd `60n²+28n` ≈ 3.94M at n=256 (~67%); mults/squarings/adds the
-rest. Standalone adders are an O(n) sliver of an O(n²) total — which is why the L5-d adder
-re-cost barely moves the score.
-
-**HONESTY CORRECTION (2026-06-30): L5-d as built is NOT a score lever.** The #30 AND-based
-adder is `6n` Toffoli (`andCarryCell` = 3 CCX/carry, fresh-ancilla majority cell), ~3× a
-Cuccaro adder (~2n ≈ 512 at n=256). After the measurement re-cost it is `3n` = 768, STILL
-larger than Cuccaro's ~2n. So swapping #30 into the point-addition RAISES the score. #30/#21
-are the measurement-path proof-of-concept (the `andInput`-shaped uncompute attachment point),
-not a competitive adder.
-
-**UPDATE 2026-06-30: the minimal adder is now BUILT (#35, GidneyAdder.lean).** `gidneyAdd` is
-value-correct general-n (`gidneyAdd_correct`), `2n` Toffoli unitary (ties Cuccaro), `n` via the
-measurement re-cost (`gidney_beats_cuccaro`: n < Cuccaro 2n < #30 6n; n=256: 256/512/1536),
-foundational-triple, auditor-SOUND. So Tier-X step (i) is done. The score lever now reduces to
-step (ii) — **#36: thread the Gidney/carry-clean adder pervasively through the O(n²)
-multiplier/inverter** (`ModularMulLoop`/`SafegcdInversion`), where the inversion-dominated 5.83M
-lives (a single adder swap barely moves it) — plus step #7 (user harness). The "gap → ~5×" target
-is now gated on #36, not on an unbuilt adder.
 
 ## #16 — D1c plan (thread genuine Φ through concrete SectorData)
 
@@ -271,54 +183,3 @@ The ergodicity framing was wrong, but the WORK yielded three durable things:
    and `fubiniStudyMeasure_pos_of_isOpen` (FS has FULL SUPPORT: every nonempty open set has positive
    measure — directly useful for any "generic ψ" / open-dense genericity argument across the corpus).
 
-## L5-c wall CLOSED at cell granularity (2026-06-30, #31)
-
-`CsdLean4/Empirical/QM/MeasurementUncomputeLift.lean` (auditor-SOUND, foundational-triple, no busch).
-The L5-c "no gate-lift" obstruction (1, below) is closed FOR THE SINGLE AND-uncompute block by staying
-in L5-a's `B3 = Fin 3 → Fin 2` permutation-matrix representation — NO `Fin 8`/`qmToffoli` reindex (that
-ill-typing was exactly the wall). Headlines, all computed not asserted:
-- `andUncompMat_lifts_denote` — the `B3` unitary acts on basis states exactly as the Boolean Toffoli
-  `denote (andUncompute 0 1 2)` (modulo an explicit, round-tripping `Bool↔Fin 2` recast). The localized
-  gate-lift.
-- `andUncompMat_uncomputes` — the unitary deterministically uncomputes the AND on the `andInput` subspace
-  (`toEuclideanLin andUncompMat (andInput c) = uncomputedData c 0`).
-- `andUncompute_measureUncompute_agree_on_block` / `..._same_data` — the unitary block and the L5-a
-  measurement gadget land in the SAME `uncomputedData c ·` family (same data amplitudes `c`; ancilla `0`
-  deterministic vs `m` measured; the `_same_data` form clears the `(√2)⁻¹` so `c` is literal in both).
-  So `measureUncompute` is a PROVEN-equivalent replacement on this block.
-- `andUncompute_measurement_saving` — 1 vs 0 Toffoli, on the proven-equivalent block (not a count over an
-  unverified swap; the auditor confirmed this is the real saving, not 0-vs-0/miscount).
-
-Honest scope: CELL granularity. Trusted base grows by this localized lift. NO circuit-level re-cost and
-NO ECDSA score change here. DEFERRED: #21 (L5-d) threads the block-replacement through the AND-based
-adder's `n` AND-uncomputes for the circuit re-cost (gap ~10.5×→~5×); the watch-point (auditor) is whether
-the per-block "same data modulo ancilla/scalar" composes coherently across the `n`-fold tensor embedding
-(stay in the per-block `B3` factor, identity elsewhere — the analogous sidestep). Also gated on #7 (harness).
-
-## L5-c scoping probe verdict (2026-06-29) — WALL [superseded at cell granularity by #31 above]
-
-The measurement-based AND-uncompute (L5-a/b, verified as an amplitude gadget, `measureUncompute_cost`:
-0 vs 1 Toffoli per AND) is currently STRANDED in the amplitude model with no attachment point to corpus
-arithmetic. Two obstructions:
-1. **No gate-lift.** `denote : (Fin n → Bool) → (Fin n → Bool)` (Boolean permutation) and the amplitude
-   unitaries (`qmToffoli : Matrix (Fin 8)`) are ill-typed against each other: bridging needs a `Bool≃Fin 2`
-   recast, per-gate `Equiv.Perm (Fin n → Fin 2)` packaging, and a general amplitude-lift `denote c ↔
-   toEuclideanLin (∏ permMatrix)` (a real 2ⁿ-dim isometry, foundational but a nontrivial induction over
-   the gate list). The clean `Equiv.Perm.permMatrix` pattern exists (LF5 `vnUnitary_mulVec_single`) but is
-   generic — it touches neither `qmToffoli` nor `denoteGate`.
-2. **Decisive: no AND-ancilla to discharge.** The corpus Cuccaro adder is IN-PLACE carry-restoring (`uma`
-   uncomputes the carry UNITARILY); there is no fresh `|0⟩`-initialised AND temporary. Gidney's gadget
-   needs an AND-based adder (one fresh AND ancilla per carry, later measured away). So even with a perfect
-   gate-lift, `measureUncompute` has nothing to attach to.
-
-**Consequence: L5-d is NOT a re-cost.** The Tier-X parity path requires NEW INFRASTRUCTURE:
-- **#30** an AND-based adder primitive in the reversible DSL (a Boolean task, no amplitude bridge: allocate
-  + compute + later uncompute a per-carry AND temporary, so an `andInput`-shaped state appears at an
-  uncompute point);
-- **#31** a LOCALIZED amplitude lift of just that AND-uncompute block (not a full general-circuit `denote`
-  lift), bridging the single block via the `permMatrix` pattern;
-- then **#21 (L5-d)** re-costs the AND-based adder with `measureUncompute` replacing the AND-uncompute Toffoli.
-
-Honest L5 status: measurement-based uncompute is VERIFIED as an amplitude gadget (L5-a/b done) with a real
-per-gadget Toffoli saving; APPLYING it to corpus arithmetic for a score is gated on #30 + #31 — genuine new
-construction (the trusted base grows), NOT a wrapper. This is the user-gated fork's true cost, now known.

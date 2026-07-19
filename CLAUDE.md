@@ -866,7 +866,7 @@ reversible-circuit DSL + derived cost model (gate-list `Circuit`, `Cost`, the
 ModAdd/ModMul/ModInv + modular field-arithmetic + Cuccaro carry-clean stack) and
 **`QuantumInfo/ECDLP/`** (EllipticCurve / ScalarMul / Secp256k1 / ResourceBounds /
 point-double + point-add SLP programs / PointAddBenchmark) — the Shor/ECDLP
-resource-accounting tree (see `specs/ecdlp-resource-plan.md`); and
+resource-accounting tree (see `specs/ecdsa/ecdlp-resource-plan.md`); and
 `MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
 These files keep the **natural Mathlib namespace** (`namespace Projectivization`,
 `namespace Matrix`, `namespace QuantumInfo`), not a CSD wrapper; the

@@ -123,7 +123,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 * **ecdsa.fail / ECDLP arm** — quantum resource estimation for Shor-on-ECDLP (elliptic-curve arithmetic,
   Karatsuba/Toom-3, safegcd/half-GCD inversion, Toffoli/qubit counting, a verified-floor / trusted-estimate
   two-track). It presupposes the unitary-evolution pillar but its theorems are number theory + circuit
-  costs, NOT a QM reconstruction. See [`ecdsafail-two-track.md`](ecdsafail-two-track.md).
+  costs, NOT a QM reconstruction. See [`ecdsafail-two-track.md`](ecdsa/ecdsafail-two-track.md).
 
 ## 6. Axiom hygiene
 

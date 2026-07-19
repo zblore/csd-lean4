@@ -66,10 +66,15 @@ pins moved out of the core `Tests/AxiomAudit.lean` into `CsdLean4/Ecdsafail/Axio
 `ECDLP.Safegcd.*` divstep pins). `lake build CsdLean4` and `lake build CsdLeanTests` no
 longer reach ecdsa; `lake build Ecdsafail` builds + audits the track on its own.
 
-**Only genuinely-remaining split item (S, optional):** relocate the 6 `specs/ecd*` /
-`specs/ecdsafail-*` doc files into an `ecdsa/` subtree, and (if ever wanted) a fully
-separate repo sharing the `Reversible/` arithmetic DSL as a base. The code and build are
-already fully separated.
+**Spec relocation DONE 2026-07-19.** All ecdsa docs now live in `specs/ecdsa/` (the 5
+plan files + a track `INDEX.md`, `score-ledger.md`, and `todo.md` extracted from
+`active-todo.md`); the core `INDEX.md`/`active-todo.md` carry a single pointer, and every
+link was updated (broken-link sweep clean). The ecdsa track is now fully separated —
+code (`CsdLean4/Ecdsafail/`), build (`Ecdsafail` lean_lib), audit
+(`Ecdsafail/AxiomAudit.lean`), and docs (`specs/ecdsa/`).
+
+**Only genuinely-remaining item (optional):** a fully separate *repo* (sharing the
+`Reversible/` arithmetic DSL as a base). Nothing in-repo depends on it.
 
 ---
 
