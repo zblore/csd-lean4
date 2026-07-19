@@ -287,7 +287,14 @@ deterministic flow on the ray space is exactly `exp(-itH)`-evolution:
 `π (Φ_t x) = exp(-itH) • π x` for every `t` and every ontic microstate `x` — holding by `rfl`,
 since the flow rotates the base ray by `schrodingerUnitary hH t` and `π = Prod.fst`. This is the
 Schrödinger pillar delivered from the Kähler space at general `N` (no `N = 2` restriction, no Wigner
-selection: the flow is unitary by construction, `expNegITH_unitary_group`). -/
+selection: the flow is unitary by construction, `expNegITH_unitary_group`).
+
+This `rfl`-form is BACKED by an exercised derivation, not standing alone:
+`manyToOneSchrodingerSetup_schrodinger_derived` (in `ManyToOneSchrodingerDerived`)
+exhibits the genuine skew-Hermitian generator `A = -iH`, DISCHARGES the C¹ smoothness
+datum `U' t = U t * A` for the real family, and runs the finite-dimensional Stone
+theorem (`CSD.StoneC1.eq_exp_of_hasDeriv`) to recover `U t = exp(t • A)` — at general
+`N` with arbitrary Hermitian `H`, no longer only the `A = 0` witness. -/
 theorem manyToOneSchrodingerSetup_schrodinger_form {M : ℕ}
     (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1)) :
     ∀ t x, (manyToOneSchrodingerSetup H hH p₀).pi ((manyToOneSchrodingerSetup H hH p₀).flow t x)

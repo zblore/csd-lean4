@@ -44,6 +44,7 @@ FINITEQMCLOSURE_FIELDS=11
 DECLARED_BACKING_THEOREMS="unifiedFiniteQMClosure
 unified_choiceA_capstone
 manyToOneSchrodingerSetup_both_pillars
+manyToOneSchrodingerSetup_schrodinger_derived
 bornRegion_fs_measure
 born_frequency_convergence_N
 conditioning_luders_effect_equivalence
@@ -122,7 +123,7 @@ fi
 # (4) backing theorems exist
 while read -r thm; do
   [ -z "$thm" ] && continue
-  if srcfiles | xargs grep -lE "^(theorem|lemma|def|noncomputable def)[[:space:]]+$thm([[:space:](:{]|\$)" >/dev/null 2>&1; then
+  if srcfiles | xargs grep -lE "^(theorem|lemma|def|noncomputable def)[[:space:]]+([A-Za-z0-9_'.]+\.)?$thm([[:space:](:{]|\$)" >/dev/null 2>&1; then
     :
   else
     say_fail "backing theorem '$thm' not found as a declaration (CONNECTED claim orphaned?)"

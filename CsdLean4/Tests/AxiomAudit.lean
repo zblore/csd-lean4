@@ -94,6 +94,7 @@ import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.RotationSchrodinger
 import CsdLean4.LF4.BothPillars
 import CsdLean4.LF4.ManyToOnePillars
+import CsdLean4.LF4.ManyToOneSchrodingerDerived
 import CsdLean4.LF4.UnitarySelection
 import CsdLean4.LF4.BargmannSelection
 import CsdLean4.LF4.ProjectedDynamics
@@ -3060,6 +3061,19 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.manyToOneSchrodingerSetup_both_pillars' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSchrodingerSetup_both_pillars
+
+-- Schrödinger pillar DERIVED (2026-07-19): the (A)-by-rfl form above is now backed by an exercised
+-- C¹-Stone derivation on the REAL nonzero generator at general N. schrodingerUnitary_hasDerivAt
+-- DISCHARGES the smoothness datum U' t = U t·(-iH); manyToOneSchrodingerSetup_schrodinger_derived
+-- exhibits the skew generator A = -iH, that discharged datum, the Stone conclusion U t = exp(t•A)
+-- (CSD.StoneC1.eq_exp_of_hasDeriv), and the pillar — no longer only the A = 0 witness.
+/-- info: 'CSD.LF4.schrodingerUnitary_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerUnitary_hasDerivAt
+
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_schrodinger_derived' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_schrodinger_derived
 
 /-- info: 'CSD.LF4.manyToOneSchrodingerSetup_pi_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

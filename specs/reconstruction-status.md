@@ -75,7 +75,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 |---|---|---|
 | L1 | Kähler geometry ⇒ sector fields | PARTIAL — volume forced; 2-form unformalizable (no Mathlib API) |
 | L2 | Σ+Φ+π ⇒ projected flow | CONNECTED |
-| L3 | projected flow ⇒ Schrödinger | CONNECTED — general `N`, arbitrary `H` |
+| L3 | projected flow ⇒ Schrödinger | CONNECTED — general `N`, arbitrary `H`; C¹-Stone derivation EXERCISED on the real nonzero generator (`manyToOneSchrodingerSetup_schrodinger_derived`), not only the `A = 0` witness |
 | L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
@@ -89,7 +89,11 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
   (`povm_born_frequency_volume`, canonical Naimark dilation from CFC `√Eᵢ`).
 * **Schrödinger dynamics** (the W-series, LF4): given the Kähler sector interface, Wigner rigidity +
   Bargmann branch selection + phase lift + a C¹ finite-dim Stone theorem force the projected flow to be
-  `exp(-itH)` on rays. Instantiated non-trivially at general `N` (`manyToOneSchrodingerSetup`).
+  `exp(-itH)` on rays. Instantiated non-trivially at general `N` (`manyToOneSchrodingerSetup`); the
+  C¹-Stone derivation is now EXERCISED on the real object at general `N` with arbitrary Hermitian `H` —
+  `manyToOneSchrodingerSetup_schrodinger_derived` exhibits the skew generator `A = -iH`, DISCHARGES the
+  smoothness datum `U' t = U t·A`, and runs `CSD.StoneC1.eq_exp_of_hasDeriv` — so the ray-level `rfl`
+  form is backed by an actual derivation, not standing alone.
 * **Measurement** (LF5 + FND): a measure-preserving von Neumann de-isolation flow realises the Naimark
   dilation; the per-microstate pointer outcome is defined a.e.; frequencies are Born. In FND this is a
   `DeisolationModel` over the *nontrivial* isolated dynamics (`unifiedDeisolationModel`).
