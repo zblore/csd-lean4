@@ -59,12 +59,17 @@ The generic reversible-arithmetic DSL (`CuccaroAdd`, `ModMul`, `ModInv`, …) st
 The core aggregator `CsdLean4.lean` has **zero** ecdsa references; `check-claims`'s
 exclude path updated to `CsdLean4/Ecdsafail`.
 
-**Remaining for a full project split (M):**
-1. **Lake structure** — give `Ecdsafail` its own `lean_lib` target so `lake build CsdLean4`
-   (core) does not build ecdsa; or split to a second repo sharing `Reversible/` as a base.
-2. **Split the axiom audit** — move the ecdsa `#print axioms` pins out of `Tests/AxiomAudit.lean`
-   into `Ecdsafail/AxiomAudit.lean` (the last inbound edge from a core file).
-3. **Relocate the specs** — the 6 `specs/ecd*` / `specs/ecdsafail-*` files → an `ecdsa/` subtree.
+**Lake-lib split + audit split DONE 2026-07-19.** `Ecdsafail` is now its own `lean_lib`
+target (`lakefile.toml`, root `CsdLean4.Ecdsafail.AxiomAudit`); the ecdsa `#print axioms`
+pins moved out of the core `Tests/AxiomAudit.lean` into `CsdLean4/Ecdsafail/AxiomAudit.lean`
+(3 blocks: the 4 assembly `Reversible.*` pins, the ECDLP-proper `ECDLP.*` pins, and the
+`ECDLP.Safegcd.*` divstep pins). `lake build CsdLean4` and `lake build CsdLeanTests` no
+longer reach ecdsa; `lake build Ecdsafail` builds + audits the track on its own.
+
+**Only genuinely-remaining split item (S, optional):** relocate the 6 `specs/ecd*` /
+`specs/ecdsafail-*` doc files into an `ecdsa/` subtree, and (if ever wanted) a fully
+separate repo sharing the `Reversible/` arithmetic DSL as a base. The code and build are
+already fully separated.
 
 ---
 
