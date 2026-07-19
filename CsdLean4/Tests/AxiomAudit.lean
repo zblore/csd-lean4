@@ -265,6 +265,9 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 import CsdLean4.Empirical.CSD.Gates.WignerDischarge
 import CsdLean4.Empirical.CSD.Gates.SingleQubitDischarge
+import CsdLean4.Empirical.CSD.Gates.TwoQubitDischarge
+import CsdLean4.Empirical.CSD.Gates.MultiQubitDischarge
+import CsdLean4.Empirical.CSD.Gates.BellPrepDischarge
 import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.FND.Adapters
 import CsdLean4.FND.ForwardCapstone
@@ -2896,6 +2899,34 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 /-- info: 'CSD.LF4.phaseT_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.phaseT_realisable_cpSector
+
+-- §13.2 gate discharge COMPLETE (2026-07-19): the remaining six gate realisability Props discharged on
+-- cpSectorData (2-qubit CNOT/SWAP/CZ, multi-qubit Toffoli/Fredkin, composite Bell-prep). All nine gate
+-- placeholders (PLACEHOLDERS §1) now proved; same honest scope (modulo A5; type carries U + U_isometry +
+-- Context, not a Σ-flow — D1 gap). U_isometry derived from the gate ∈ U(N) (inner_toEuclideanLin_unitary).
+/-- info: 'CSD.LF4.cnot_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cnot_realisable_cpSector
+
+/-- info: 'CSD.LF4.swap_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.swap_realisable_cpSector
+
+/-- info: 'CSD.LF4.cz_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cz_realisable_cpSector
+
+/-- info: 'CSD.LF4.toffoli_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.toffoli_realisable_cpSector
+
+/-- info: 'CSD.LF4.fredkin_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fredkin_realisable_cpSector
+
+/-- info: 'CSD.LF4.bell_prep_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.bell_prep_realisable_cpSector
 
 -- FND-3 (2026-07-10): the §13.2 ontic lift on the NON-TRIVIAL-FIBRE instance kSectorData
 -- (π = pr₁ many-to-one, Σ = ℂℙ^{N-1}×T²), the cpSectorActionBundle analogue on the Kähler instance.

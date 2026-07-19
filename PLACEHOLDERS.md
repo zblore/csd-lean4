@@ -100,17 +100,17 @@ pattern — each gate matrix is unitary — and are the mechanical continuation.
 | `Empirical/CSD/Gates/SingleQubit.lean` | `hadamard_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** on `cpSectorData` (`hadamard_realisable_cpSector`, `Gates/SingleQubitDischarge.lean`); modulo A5 |
 | `Empirical/CSD/Gates/SingleQubit.lean` | `phaseS_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`phaseS_realisable_cpSector`); modulo A5 |
 | `Empirical/CSD/Gates/SingleQubit.lean` | `phaseT_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`phaseT_realisable_cpSector`); modulo A5 |
-| `Empirical/CSD/Gates/TwoQubit.lean` | `cnot_realisable_for` | §13.2 | unproved (same pattern as single-qubit; mechanical continuation) |
-| `Empirical/CSD/Gates/TwoQubit.lean` | `swap_realisable_for` | §13.2 | unproved |
-| `Empirical/CSD/Gates/TwoQubit.lean` | `cz_realisable_for` | §13.2 | unproved |
-| `Empirical/CSD/Gates/MultiQubit.lean` | `toffoli_realisable_for` | §13.2 | unproved |
-| `Empirical/CSD/Gates/MultiQubit.lean` | `fredkin_realisable_for` | §13.2 | unproved |
+| `Empirical/CSD/Gates/TwoQubit.lean` | `cnot_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`cnot_realisable_cpSector`, `Gates/TwoQubitDischarge.lean`); modulo A5 |
+| `Empirical/CSD/Gates/TwoQubit.lean` | `swap_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`swap_realisable_cpSector`); modulo A5 |
+| `Empirical/CSD/Gates/TwoQubit.lean` | `cz_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`cz_realisable_cpSector`); modulo A5 |
+| `Empirical/CSD/Gates/MultiQubit.lean` | `toffoli_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`toffoli_realisable_cpSector`, `Gates/MultiQubitDischarge.lean`); modulo A5 |
+| `Empirical/CSD/Gates/MultiQubit.lean` | `fredkin_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`fredkin_realisable_cpSector`); modulo A5 |
 
 Plus the composite **Bell-prep realisability**:
 
 | File | Prop | LF4-todo | Status |
 |---|---|---|---|
-| `Empirical/CSD/Gates/BellPrep.lean` | `bell_prep_realisable_for` | §13.2 | unproved (rewritten 2026-05-22 from the previous vacuous form `∃ b_HI b_CNOT, True` to a non-vacuous existential constraining both bundles' `U` to the QM-side matrices) |
+| `Empirical/CSD/Gates/BellPrep.lean` | `bell_prep_realisable_for` | §13.2 | **DISCHARGED 2026-07-19** (`bell_prep_realisable_cpSector`, `Gates/BellPrepDischarge.lean`) — the ninth and last gate Prop; modulo A5 |
 
 **Each Prop carries:**
 

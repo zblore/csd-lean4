@@ -59,12 +59,14 @@ for `CNOT`, whose `U` fields agree with the QM-side gate matrices.
 The bundle composition `b_CNOT.comp b_HI` then realises the
 Bell-state preparation circuit.
 
-**Status: claim-shaped, undischarged.** This is a `Prop` definition,
-not a theorem. Pre-LF4 there is no proof that `bell_prep_realisable_for D`
-holds for any concrete `D`; the claim is recorded as an LF4-§13.2
-obligation (post-LF4, the Kähler `SectorData` would discharge both
-bundle existences). See `PLACEHOLDERS.md` for the canonical
-placeholder ledger.
+**Status: DISCHARGED 2026-07-19** on the concrete `cpSectorData`
+(`Gates/BellPrepDischarge.lean`: `bell_prep_realisable_cpSector`), modulo A5.
+Both bundle existences (`H ⊗ I` and `CNOT`) are supplied with `U` the gate action
+and `U_isometry` derived from `U(4)` membership. This is the ninth and last of the
+gate realisability Props to be discharged. Honest scope (`PLACEHOLDERS.md §7`): the
+bundle type carries `U` + `U_isometry` + a `Context`, not a Σ-flow, so this
+discharges the Prop *as typed*, not the Σ-flow-lift prose (the open D1 gap). See
+`PLACEHOLDERS.md §1` for the canonical ledger.
 
 The earlier formulation `∃ b_HI b_CNOT, True` was a vacuous Prop
 (satisfied by any two bundles); rewritten 2026-05-22 to constrain

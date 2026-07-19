@@ -15,7 +15,11 @@ specialised to `N = 2` (Hilbert space `EuclideanSpace ℂ (Fin 4)`).
 ## LF4 obligations
 
 LF4-todo §13.2 (per gate; same as single-qubit gates, instantiated
-at `N = 2`). See `BRIDGE-OBLIGATIONS.md` §2.6.
+at `N = 2`). **DISCHARGED 2026-07-19** on `cpSectorData`
+(`Gates/TwoQubitDischarge.lean`: `cnot_/swap_/cz_realisable_cpSector`), modulo A5;
+`U_isometry` derived from the gate ∈ `U(4)`. Honest scope (`PLACEHOLDERS.md §7`): the
+bundle type carries no Σ-flow, so this discharges the Prop as-typed, not the
+Σ-flow-lift prose (open D1 gap). See `BRIDGE-OBLIGATIONS.md` §2.6, `PLACEHOLDERS.md §1`.
 -/
 
 namespace CSD
