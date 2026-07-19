@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Quantum sensing / metrology in CSD — program plan
 
 **Status: planned (2026-06-27).** Validation target: shift from static-state validation

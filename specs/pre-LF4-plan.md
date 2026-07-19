@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Pre-LF4 execution plan
 
 Active execution plan for the work that lands between v0.3.4-lf3 and the start

@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Empirical/CSD/ bridge architecture plan
 
 Plan landed 2026-05-21. Architectural commitment for the dual-perspective

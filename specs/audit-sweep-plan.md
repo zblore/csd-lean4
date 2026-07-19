@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Audit sweep — extend the adversarial audit below the Tier-A headlines
 
 Added 2026-06-10. **Status: planned, not started.**

@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # LF4 TODO: items deferred from LF2
 
 Items LF2 deliberately left for LF4, with rationale and concrete pickup notes.

@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # K1 — density-operator entropy `S(ρ) = −Tr ρ log ρ`, staged plan
 
 **STATUS: K1-A DONE 2026-06-16 (incl. K1-A.2 unconditional tensor additivity);

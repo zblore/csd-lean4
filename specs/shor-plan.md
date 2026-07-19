@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Shor's algorithm — plan
 
 The final item of the quantum-algorithm branch (`specs/nqubit-register-plan.md` R5+). Drafted

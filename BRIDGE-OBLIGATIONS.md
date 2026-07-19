@@ -1,5 +1,8 @@
 # BRIDGE-OBLIGATIONS.md
 
+> Status/claims ledger — for *open* items (e.g. the §14 states obligation) see the canonical
+> [`specs/BACKLOG.md`](specs/BACKLOG.md), not this file.
+
 Ledger of every load-bearing structural field across all
 `CsdLean4/Empirical/CSD/` bridge files, with its `specs/LF4-todo.md`
 cross-reference. Parallel to [`AXIOMS.md`](AXIOMS.md) (per-theorem

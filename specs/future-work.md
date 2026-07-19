@@ -1,5 +1,9 @@
 # Future work — priorities, dependencies, complexity
 
+> **⚠️ HISTORICAL LEDGER — not the open-items list.** Open work now lives in ONE place:
+> [`BACKLOG.md`](BACKLOG.md). This file is the completed-work record (mostly DONE rows);
+> do not add new open items here. Add / close work in `BACKLOG.md`.
+
 **For a current review of what is machine-verified, see [`reconstruction-status.md`](reconstruction-status.md).**
 
 **Living planning doc (created 2026-07-04).** Every open work item with a stable reference number,

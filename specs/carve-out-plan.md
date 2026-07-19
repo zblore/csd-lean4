@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Resolving the carve-out issue: a layered plan
 
 Status: planning doc, 2026-05-29. Scope: what it would take, at the Lean

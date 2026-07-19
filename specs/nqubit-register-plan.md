@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # n-qubit register + quantum-algorithm branch — plan
 
 The enabling infrastructure for the QM-validity algorithm tier (Deutsch–Jozsa, Simon, Bernstein–Vazirani,

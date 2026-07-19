@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # LF2 implementation plan
 
 Companion to `specs/LF2-v1.00.pdf` (extracted text: `specs/LF2-v1.00.txt`).

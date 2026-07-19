@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # TN4 — the measurement-theory architecture
 
 **Orientation map for the measurement stack.** This document is the single

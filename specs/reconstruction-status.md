@@ -136,6 +136,9 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 
 ## 7. The honest frontier — what is NOT claimed
 
+*(Actionable open items — including the research-tier ones below — are tracked in the
+canonical [`BACKLOG.md`](BACKLOG.md).)*
+
 * **A5 / FND-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
   sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade. It now has
   **both a proved boundary and a localized partial**:

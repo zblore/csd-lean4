@@ -1,5 +1,9 @@
 # specs/ index — orientation map for plans, todos, and references
 
+> **⚠️ [`BACKLOG.md`](BACKLOG.md) is the single canonical open-items list.** Everything
+> below it is either the historical execution record (the per-phase `*-plan` files) or the
+> status/claims layer. For "what is next", read `BACKLOG.md` — nothing else.
+
 **Start here.** This indexes every planning / todo / reference doc in the corpus, with
 one-line status. Updated 2026-06-30. When starting a session, read this first, then the
 LIVE doc for the tranche you are on.

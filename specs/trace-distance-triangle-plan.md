@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Trace-distance triangle inequality — plan
 
 Completes the K3 metric core (`CsdLean4/Mathlib/QuantumInfo/TraceDistance.lean`). Drafted

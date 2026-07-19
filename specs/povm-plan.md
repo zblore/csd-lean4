@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # POVM tranche plan — extend the ontic Born derivation to general POVMs
 
 Status: **CLOSED 2026-06-03.** P.1–P.5 done (POVM type, Naimark dilation + Born transfer,

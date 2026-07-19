@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # LF3 implementation plan
 
 Companion to `specs/LF3-v1.00.pdf` (extracted text: `specs/LF3-v1.00.txt`).

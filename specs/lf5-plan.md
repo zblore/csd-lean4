@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # LF5 — measurement dynamics on Σ (the D1 frontier), staged plan
 
 **STATUS: COMPLETE 2026-06-11; LF5-F post-plan extension DONE 2026-06-14; LF5-G (QEC syndrome

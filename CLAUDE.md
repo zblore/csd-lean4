@@ -4,6 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Where to start (plans & todos)
 
+> **⚠️ Open work lives in ONE place: [`specs/BACKLOG.md`](specs/BACKLOG.md).** That is the
+> single canonical list of what is next. **Do not add TODO / future-work / open items to any
+> other `.md`** — the per-phase plans are frozen historical logs, and the status docs
+> (`reconstruction-status`, `PLACEHOLDERS`, `AXIOMS`, `BRIDGE-OBLIGATIONS`) describe what is
+> *proved* and point to `BACKLOG.md` for what is *open*. When you close or add work, edit
+> `BACKLOG.md`.
+
 **[`specs/INDEX.md`](specs/INDEX.md) is the orientation map** for every plan / todo /
 reference doc, with one-line status on each. Read it first when picking up work. The
 **POVM tranche is closed** ([`specs/povm-plan.md`](specs/povm-plan.md), DONE 2026-06-03 —

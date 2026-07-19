@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # General-N Duistermaat–Heckman — plan + honest difficulty grading
 
 Status: planning doc, 2026-06-01. Scope: extend the discharged qubit DH fact

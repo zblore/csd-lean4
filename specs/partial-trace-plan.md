@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Partial-trace infrastructure tranche (unblocks E2 + E3b)
 
 Status: planning doc, 2026-06-01. Goal: add a partial-trace construction to the

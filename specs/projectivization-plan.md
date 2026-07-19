@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Projectivization topology / measure / lift plan
 
 Plan for the `CsdLean4/Mathlib/LinearAlgebra/Projectivization/{Topology,MeasureSpace}.lean`

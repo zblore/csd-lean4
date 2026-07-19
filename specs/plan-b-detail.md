@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # Plan B — detailed implementation spec
 
 **Goal.** Discharge the axiom `CSD.LF4.fs_moment_pushforward_uniform`:

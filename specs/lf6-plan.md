@@ -1,3 +1,4 @@
+> ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
 **Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) + C.2 (GHZ de-isolation flow, minimal computational-basis carve) + C.3 (GHZ Mermin-context carve: genuine dynamical contextuality) DONE 2026-06-30; C.4 (3-party GHZ local product flow) DONE 2026-07-02.** LF6 is the first concrete attack on the entangled / non-local
