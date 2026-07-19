@@ -27,8 +27,10 @@ remains OPEN is the ONE deep link **L7 / A5 / FND-1**: the sector and its Born
 weights are POSITED — the trials SAMPLE `μL` i.i.d. — they are NOT *derived from*
 the deterministic flow. Everything CONNECTED is FORWARD (it consumes the posited
 sector); closing A5 (deriving the sector from `Φ`) is the research-grade frontier
-and is NOT claimed. The Kähler differential-geometry fields (L1) remain honestly
-demoted interpretive posits (no Mathlib Kähler API).
+and is NOT claimed. The Kähler-geometry fields (L1) now carry their genuine
+pointwise/linear core (`IsKahlerSector := IsFubiniStudyKahler`, proved); only the
+manifold residual (`dω = 0`, top-power volume identity) stays an interpretive posit
+(no Mathlib exterior-calculus API).
 
 ## The intended chain and per-link status
 
@@ -45,7 +47,7 @@ Kähler geometry (ω, complex structure)
 
 | Link | Claim | Status | Backing theorem / the gap |
 |---|---|---|---|
-| **L1** | Kähler geometry `⇒` the sector's fields | **PARTIAL (2026-07-07, fix C5): volume field load-bearing; `IsKahlerSector` honestly demoted** | `IsLiouvilleKahlerVolume` now carries the formalizable core — `μ_FS` is a *normalized* volume (probability measure) — and is CONSUMED by `unitaryFlowSetup_liouville_isProbability` (`LF4/NonTrivialSetup.lean`). `IsKahlerSector` (the closed-2-form / complex-structure posit) stays `True`: genuine differential geometry with **no Mathlib Kähler API**, so it is an honestly-labelled unformalizable interpretive posit, not a fixable link. This is the correct honest resolution — the alternative (consuming a `True`) would itself be vacuity. |
+| **L1** | Kähler geometry `⇒` the sector's fields | **PARTIAL (2026-07-07 fix C5; pointwise Kähler core DISCHARGED 2026-07-19): both geometry fields now carry genuine formalizable content; only the manifold residual remains** | `IsLiouvilleKahlerVolume` carries the formalizable core — `μ_FS` is a *normalized* volume (probability measure) — CONSUMED by `unitaryFlowSetup_liouville_isProbability` (`LF4/NonTrivialSetup.lean`). `IsKahlerSector` is **no longer `True`**: every `ℂℙ`-based instance now supplies `IsKahlerSector := IsFubiniStudyKahler N` — the pointwise Fubini–Study Kähler-compatibility triple (`g = re⟪·,·⟫`, `ω = im⟪·,·⟫`, `J = i•·`, with `J² = -1`, `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form, `ω u (Ju) = ‖u‖²`), PROVED axiom-free (`CSD.LF4.isFubiniStudyKahler` / `Kahler.fubiniStudy_pointwise_kahler_compatibility`, `Mathlib/Analysis/InnerProductSpace/KahlerForm.lean`). What stays unformalizable is only the **manifold** residual: closedness `dω = 0` and the top-power identity `ω^{∧(N-1)}/(N-1)! = μ_FS` need exterior calculus absent from Mathlib. |
 | **L2** | Σ + `Φ` + `π` `⇒` a well-defined projected flow | **CONNECTED (interface) but see L4** | The descent field `projectable : π(Φ_t x) = φ_t(π x)` is a genuine field and is consumed by `CSD.LF4.sigmaFlow_schrodinger_form` (`LF4/PhaseLift.lean`). Enforced by `scripts/check-sector-linkage.sh`. |
 | **L3** | projected flow `⇒` Schrödinger form | **CONNECTED (2026-07-07, fix C2)** | `CSD.LF4.rotationSetup_schrodinger_form` (`LF4/RotationSchrodinger.lean`) fires `sigmaFlow_schrodinger_form` on the genuine `Φ ≠ id` `rotationSetup`: the FS-isometry (unitary flow), coboundary (`b = 1`, trivial cocycle since `R(s+t) = R(s)R(t)`), and C¹ (`R'(τ) = R(τ)·J`) data are all discharged on a non-trivial flow, recovering `H = iJ = σ_y ≠ 0` (`rotationSetup_generator_ne_zero`). The first fully-instantiated `H ≠ 0` Schrödinger statement — no longer trivial-witness-only. **General-`N` (2026-07-19):** `CSD.LF4.manyToOneSchrodingerSetup_schrodinger_derived` (`LF4/ManyToOneSchrodingerDerived.lean`) exercises the same C¹-Stone derivation on the REAL family at general `N` with ARBITRARY Hermitian `H`: `schrodingerUnitary_hasDerivAt` discharges the smoothness datum `U' t = U t·(-iH)` (via `hasDerivAt_exp_smul_const` under the `C^*` L2-operator norm), and `CSD.StoneC1.eq_exp_of_hasDeriv` recovers `U t = exp(t•A)`, `A = -iH` — so the general-`N` `manyToOneSchrodingerSetup_schrodinger_form` (`rfl`) is backed by an actual derivation, not only the `N=2 σ_y` or `A=0` witnesses. AxiomAudit-pinned. |
 | **L4** | a genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant exists | **CONNECTED (2026-07-07, fix C1)** | `CSD.LF4.rotationSetup` (`LF4/NonTrivialSetup.lean`) is a `KahlerOnticSetup 2` whose projected flow is the `ℂℙ¹` rotation `R(t)`; `rotationSetup_projectedFlow_ne_id` proves `∃ t, projectedFlow t ≠ id` (at `t = π/2`, `[e₀] ↦ [e₁]`). The general constructor `unitaryFlowSetup N U p₀` builds one from any unitary family (measure-preserving via `fubiniStudyMeasure_smul_invariant`). NB: `kFlow` was the wrong tool — it translates a `T²` fibre and so acts trivially on rays (`projectedFlow = id`). |
@@ -63,8 +65,11 @@ a GENUINE many-to-one `π` (`Σ = ℂℙ¹ × T²`, `π = Prod.fst`, fibres `= T
 non-trivial projected ray flow supports both pillars too
 (`manyToOneRotationSetup_both_pillars`), removing the `π = id` degeneracy and
 matching Paper C's A3 fibred-projection shape. Remaining:
-- **L1** — the Kähler-geometry fields are still inert `Prop` placeholders (fix C5,
-  small).
+- **L1** — the Kähler-geometry fields now carry genuine formalizable content
+  (`IsKahlerSector := IsFubiniStudyKahler`, the proved pointwise FS Kähler
+  compatibility; `IsLiouvilleKahlerVolume` = normalized volume). Only the
+  **manifold** residual (closedness `dω=0`, top-power volume identity) stays
+  unformalizable — no Mathlib exterior-calculus API.
 - **L7** ★ — the DEEP gap: the Born trials sample the sector's measure i.i.d.;
   they are not *evolved by the deterministic flow*, and the Born weights are not
   *derived from the dynamics*. This is the sector-origin problem (A5→D1, FND-1),

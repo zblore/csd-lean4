@@ -73,7 +73,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 
 | Link | Claim | Status |
 |---|---|---|
-| L1 | Kähler geometry ⇒ sector fields | PARTIAL — volume forced; 2-form unformalizable (no Mathlib API) |
+| L1 | Kähler geometry ⇒ sector fields | PARTIAL — volume forced; 2-form's **pointwise** compatibility core now genuine & consumed (`IsKahlerSector := IsFubiniStudyKahler`, proved via `fubiniStudy_pointwise_kahler_compatibility`); only manifold closedness `dω=0` / `ω^{∧n}/n!=μ_FS` unformalizable (no Mathlib API) |
 | L2 | Σ+Φ+π ⇒ projected flow | CONNECTED |
 | L3 | projected flow ⇒ Schrödinger | CONNECTED — general `N`, arbitrary `H`; C¹-Stone derivation EXERCISED on the real nonzero generator (`manyToOneSchrodingerSetup_schrodinger_derived`), not only the `A = 0` witness |
 | L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |

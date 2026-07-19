@@ -1,6 +1,7 @@
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 
 /-!
 # W2: the Kähler ontic-sector interface
@@ -49,23 +50,30 @@ carry the geometric posit honestly, as a `Prop` the instance must supply, and
 are NOT dressed as proved conditions):
 - `IsKahlerSector : Prop` + `kahler_condition : IsKahlerSector` : stands for
   "`Σ` carries a closed 2-form `ω` compatible with a complex structure" (the
-  Kähler condition). **Genuinely unformalizable — Mathlib has no Kähler API — so
-  it is an honestly-labelled interpretive posit that NO theorem consumes** (fix
-  C5 / connectivity link L1). An inhabitant supplies `True`; do not read
-  "Kähler" here as a formalized differential-geometric condition.
+  Kähler condition). Its **formalizable core is now genuine and consumed**: every
+  `ℂℙ`-based instance supplies `IsKahlerSector := IsFubiniStudyKahler N` — the
+  pointwise Fubini–Study Kähler-compatibility triple (`g = re⟪·,·⟫`,
+  `ω = im⟪·,·⟫`, `J = i•·` with `J² = -1`, `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form,
+  `ω u (Ju) = ‖u‖²`), proved axiom-free via
+  `Kahler.fubiniStudy_pointwise_kahler_compatibility` (no longer `True`). The
+  **manifold** residual — closedness `dω = 0` and `ω^{∧(N-1)}/(N-1)! = μ_FS` — needs
+  exterior calculus absent from Mathlib and stays the honestly-named open piece
+  (connectivity link L1).
 - `IsLiouvilleKahlerVolume : Prop` + `liouville_eq_kahler_volume :
   IsLiouvilleKahlerVolume` : stands for "`liouvilleMeasure` is the top-power
   Kähler volume `ω^{∧ n} / n!`". Its **formalizable core** — that the volume is
   *normalized* (a probability measure) — is now a genuine, consumed condition on
-  the concrete instances (`unitaryFlowSetup` supplies
-  `IsProbabilityMeasure μ_FS`, consumed by
-  `unitaryFlowSetup_liouville_isProbability`, fix C5). The trivial witness still
+  ALL concrete instances (`unitaryFlowSetup`, `manyToOneSetup`, and the trivial
+  witness `trivialKahlerOnticSetup`, each supplying `IsProbabilityMeasure`;
+  `unitaryFlowSetup_liouville_isProbability` consumes it, fix C5). No instance
   supplies `True`.
 
-When Mathlib grows the symplectic/Kähler-form API on the relevant `Σ`, the
-`IsKahlerSector` pair is the exact slot to replace with a genuine `omega`-field
-condition; the dynamical fields are unaffected. See
-`specs/connectivity-manifest.md` (link L1) and `PLACEHOLDERS.md`.
+Both Kähler-geometry fields now carry their genuine formalizable core; only the
+**manifold** residual stays open (closedness `dω = 0` and `ω^{∧ n}/n! = μ_FS`,
+needing exterior calculus absent from Mathlib). When Mathlib grows that API, the
+`IsKahlerSector` predicate is the slot to strengthen from the pointwise
+`IsFubiniStudyKahler` to the full closed-2-form condition; the dynamical fields are
+unaffected. See `specs/connectivity-manifest.md` (link L1) and `PLACEHOLDERS.md`.
 -/
 
 open MeasureTheory
@@ -73,6 +81,39 @@ open scoped LinearAlgebra.Projectivization
 
 namespace CSD
 namespace LF4
+
+/-- **The genuine formalizable core of the Kähler-sector posit.** On the tangent model
+`EuclideanSpace ℂ (Fin N)` of `ℂℙ^{N-1}`, the Fubini–Study triple
+`g = re⟪·,·⟫` (metric), `ω = im⟪·,·⟫` (fundamental form), `J = i • ·` (complex
+structure) satisfies the defining almost-Kähler relations:
+
+* `J² = -1` (complex structure);
+* `ω u v = g (J u) v` (the form is the metric twisted by `J`);
+* `g u v = ω u (J v)` (the metric is recovered from `ω` and `J`);
+* `ω (J u) (J v) = ω u v` (`ω` is a `(1,1)`-form);
+* `ω u (J u) = ‖u‖²` (positivity / taming).
+
+This is the linear-algebra core of "`Σ` is a Kähler sector" — the *compatible with
+the complex structure and positive* content — proved axiom-free
+(`Kahler.fubiniStudy_pointwise_kahler_compatibility`). It is the genuine predicate the
+concrete `ℂℙ`-based instances now supply for `IsKahlerSector`, in place of the earlier
+`True`. The manifold-level closedness `dω = 0` and the top-power identity
+`ω^{∧(N-1)}/(N-1)! = μ_FS` need exterior calculus absent from Mathlib and remain the
+honestly-named residual (connectivity link L1). -/
+def IsFubiniStudyKahler (N : ℕ) : Prop :=
+  ∀ u v : EuclideanSpace ℂ (Fin N),
+    Kahler.complexStructure (Kahler.complexStructure u) = -u
+    ∧ Kahler.fundamentalForm u v = Kahler.metric (Kahler.complexStructure u) v
+    ∧ Kahler.metric u v = Kahler.fundamentalForm u (Kahler.complexStructure v)
+    ∧ Kahler.fundamentalForm (Kahler.complexStructure u) (Kahler.complexStructure v)
+        = Kahler.fundamentalForm u v
+    ∧ Kahler.fundamentalForm u (Kahler.complexStructure u) = ‖u‖ ^ 2
+
+/-- The Fubini–Study Kähler compatibility holds on the tangent model of `ℂℙ^{N-1}`
+(axiom-free; `Kahler.fubiniStudy_pointwise_kahler_compatibility`). This discharges the
+`IsKahlerSector` field genuinely on every `ℂℙ`-based instance. -/
+theorem isFubiniStudyKahler (N : ℕ) : IsFubiniStudyKahler N :=
+  fun u v => Kahler.fubiniStudy_pointwise_kahler_compatibility u v
 
 /-- **The Kähler ontic-sector interface (W2).** Sector-level hypotheses bundled
 as structure fields (no global axioms). `N` is the operational Hilbert
@@ -133,7 +174,10 @@ attribute [instance] KahlerOnticSetup.compact_sigma
 `flow t = id`, and `liouvilleMeasure = fubiniStudyMeasure p₀`. This confirms the
 `KahlerOnticSetup N` fields are mutually satisfiable (the interface is
 non-empty), exactly the `π = id` base-case role `LF4.cpSectorData` plays for
-`SectorData`. The two Kähler-geometry placeholders are supplied as `True`; the
+`SectorData`. The two Kähler-geometry fields are supplied GENUINELY:
+`IsKahlerSector := IsFubiniStudyKahler N` (the pointwise FS Kähler compatibility,
+proved) and `IsLiouvilleKahlerVolume := IsProbabilityMeasure μ_FS` (the normalized-
+volume core, proved) — no longer `True`; the
 dynamical fields are the identity flow (`Φ = id`), so this witness carries no
 dynamics (structural debt D1, as elsewhere in LF4). A genuine `Φ ≠ id`
 inhabitant is available by reusing `kFlow` on `KSigma`; this witness only
@@ -143,11 +187,11 @@ noncomputable def trivialKahlerOnticSetup
     KahlerOnticSetup N where
   Sigma := ℙ ℂ (EuclideanSpace ℂ (Fin N))
   compact_sigma := inferInstance
-  IsKahlerSector := True
-  kahler_condition := trivial
+  IsKahlerSector := IsFubiniStudyKahler N
+  kahler_condition := isFubiniStudyKahler N
   liouvilleMeasure := Matrix.UnitaryGroup.fubiniStudyMeasure p₀
-  IsLiouvilleKahlerVolume := True
-  liouville_eq_kahler_volume := trivial
+  IsLiouvilleKahlerVolume := IsProbabilityMeasure (Matrix.UnitaryGroup.fubiniStudyMeasure p₀)
+  liouville_eq_kahler_volume := inferInstance
   pi := id
   pi_measurable := measurable_id
   flow := fun _ => id

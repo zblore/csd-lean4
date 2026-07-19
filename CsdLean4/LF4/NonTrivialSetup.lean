@@ -61,17 +61,18 @@ The Kähler-geometry placeholder fields (fix C5, connectivity link L1):
   measure (`∫ ω^n/n! = 1`). This is genuine, checkable content, and it is
   consumed by `unitaryFlowSetup_liouville_isProbability`, so the field is no
   longer inert.
-* `IsKahlerSector` remains `True`: "`Σ` carries a closed 2-form `ω` compatible
-  with a complex structure" is genuine differential geometry with **no Mathlib
-  API**, so it stays an honestly-labelled unformalizable interpretive posit. -/
+* `IsKahlerSector := IsFubiniStudyKahler N` now carries the **genuine formalizable
+  core**: the pointwise Fubini–Study Kähler compatibility on the tangent model
+  (proved, `isFubiniStudyKahler`), no longer `True`. Only the manifold closedness
+  `dω = 0` (no Mathlib API) stays the honestly-named residual. -/
 noncomputable def unitaryFlowSetup (N : ℕ)
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
     KahlerOnticSetup N where
   Sigma := ℙ ℂ (EuclideanSpace ℂ (Fin N))
   compact_sigma := inferInstance
-  IsKahlerSector := True
-  kahler_condition := trivial
+  IsKahlerSector := IsFubiniStudyKahler N
+  kahler_condition := isFubiniStudyKahler N
   liouvilleMeasure := fubiniStudyMeasure p₀
   IsLiouvilleKahlerVolume := IsProbabilityMeasure (fubiniStudyMeasure p₀)
   liouville_eq_kahler_volume := inferInstance

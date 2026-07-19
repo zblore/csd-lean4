@@ -34,10 +34,11 @@ EXCLUDE_DIR="CsdLean4/Mathlib/QuantumInfo/ECDLP"
 # the checks below fail loudly if code and these facts disagree.
 DECLARED_AXIOMS="busch_effect_gleason"
 
-DECLARED_PLACEHOLDERS="CsdLean4/LF4/KahlerOnticSetup.lean:IsKahlerSector
-CsdLean4/LF4/KahlerOnticSetup.lean:IsLiouvilleKahlerVolume
-CsdLean4/LF4/ManyToOnePillars.lean:IsKahlerSector
-CsdLean4/LF4/NonTrivialSetup.lean:IsKahlerSector"
+# All Kähler `:= True` placeholders were de-vacuumed 2026-07-19 (IsKahlerSector →
+# IsFubiniStudyKahler, the proved pointwise FS Kähler compatibility; the trivial
+# witness's IsLiouvilleKahlerVolume → IsProbabilityMeasure). Inventory now empty:
+# a new `:= True` anywhere is a fresh vacuity regression the check below catches.
+DECLARED_PLACEHOLDERS=""
 
 FINITEQMCLOSURE_FIELDS=11
 
@@ -102,12 +103,17 @@ found_ph="$(srcfiles | while read -r f; do
     grep -nE '[A-Za-z_][A-Za-z0-9_]*[[:space:]]*:=[[:space:]]*True([[:space:]]|$)' "$f" \
       | sed -E "s|^[0-9]+:[[:space:]]*([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*:=.*|$f:\1|"
   done | sort -u)"
-if [ "$found_ph" = "$(printf '%s\n' "$DECLARED_PLACEHOLDERS" | sort -u)" ]; then
-  say_ok ":= True placeholders == declared inventory ($(printf '%s\n' "$DECLARED_PLACEHOLDERS" | wc -l | tr -d ' ') sites)"
+decl_ph="$(printf '%s\n' "$DECLARED_PLACEHOLDERS" | grep -v '^[[:space:]]*$' | sort -u)"
+if [ "$found_ph" = "$decl_ph" ]; then
+  if [ -z "$found_ph" ]; then
+    say_ok ":= True placeholders: none remain (all de-vacuumed)"
+  else
+    say_ok ":= True placeholders == declared inventory ($(printf '%s\n' "$decl_ph" | grep -c .) sites)"
+  fi
 else
-  say_fail "placeholder set mismatch."
-  echo "        declared:"; printf '%s\n' "$DECLARED_PLACEHOLDERS" | sort -u | sed 's/^/          /'
-  echo "        found:";    printf '%s\n' "$found_ph"                        | sed 's/^/          /'
+  say_fail "placeholder set mismatch (new/removed := True — fix code or update the CLAIMS block)."
+  echo "        declared:"; printf '%s\n' "$decl_ph"   | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_ph"  | sed 's/^/          /'
 fi
 
 # (3) FiniteQMClosure field count

@@ -2973,10 +2973,18 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- now load-bearing. It carries the formalizable core of "Liouville = Kähler
 -- volume" -- that μ_FS is a normalized volume (probability measure) -- and
 -- unitaryFlowSetup_liouville_isProbability CONSUMES d.liouville_eq_kahler_volume.
--- IsKahlerSector remains an honestly-unformalizable posit (no Mathlib Kähler API).
 /-- info: 'CSD.LF4.unitaryFlowSetup_liouville_isProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup_liouville_isProbability
+
+-- IsKahlerSector DE-VACUUMED (2026-07-19, manifest link L1): no longer `True`. Every ℂℙ-based instance
+-- supplies IsKahlerSector := IsFubiniStudyKahler N -- the pointwise Fubini-Study Kähler-compatibility
+-- triple (J²=-1, ω=g∘J, g=ω∘J, ω a (1,1)-form, ω u (Ju)=‖u‖²), PROVED axiom-free
+-- (fubiniStudy_pointwise_kahler_compatibility). Only the manifold residual (dω=0, top-power volume
+-- identity) stays unformalizable. isFubiniStudyKahler is the discharge.
+/-- info: 'CSD.LF4.isFubiniStudyKahler' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isFubiniStudyKahler
 
 -- Move up the chain (2026-07-10): UPGRADE the IsLiouvilleKahlerVolume content from "μ is a
 -- probability measure" (C5 core) to "μ is THE volume forced by the space + U(N)-symmetry"
