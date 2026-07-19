@@ -93,7 +93,13 @@ nine two-qubit Pauli observables through the LF4-todo §14 observable
 correspondence. Pre-LF4 this is structural; post-LF4 it becomes
 provable from the concrete `SectorData` instantiation.
 
-**Status: load-bearing, externally supplied, undischarged.**
+**Status: genuine content in `MerminPeresVolume.lean` (§14, 2026-07-19).** Unlike
+Hardy/SG/Uncertainty there is no single `*_observable_correspondence` theorem to
+re-export; the genuine CSD Born-as-volume derivation of the Mermin–Peres contextuality
+witness lives in `Empirical/CSD/Contextuality/MerminPeresVolume.lean`, which this
+transport module's reading points to. The bundle here carries only a `Context`
+(`PLACEHOLDERS.md §7`); the §14 moment-region↔detector labelling is the interpretive
+boundary.
 LF4-todo §14. -/
 structure CSDMerminPeresBundle
     (D : CSD.LF2.SectorData SigmaSpace P G)

@@ -156,6 +156,19 @@ CSD-side re-exports are part of the formal interface to the LF1↔LF2↔LF3
 chain capstones (Bell) or the negative-existential / partition content
 (NoCloning, KS18, GHZ).
 
+**§14 ontic-backing re-exports (2026-07-19) — an honesty UPGRADE, not scaffolding.**
+Distinct from the QM-identity re-exports above: the transport-only §14 measurement
+modules now re-export the *genuine proved ontic derivation* (not the QM fact) so their
+CSD reading cites the ontic substrate. These re-export LF4 content that is real
+observable-correspondence / frequency-convergence, discharging the "transport-only"
+criticism:
+`SternGerlach.csd_sg_ontic_{observable_correspondence, frequency_convergence}`
+(← `LF4.sg_*`), `Uncertainty.csd_uncertainty_ontic_observable_correspondence`
+(← `LF4.pauliDot_observable_correspondence`), and
+`Hardy.csd_hardy_ontic_correspondence_{AB, AB'minus, A'minus_B, A'_B'}`
+(← `LF4.hardy_observable_correspondence_*`). Mermin–Peres has no single correspondence
+theorem; its genuine content is the volume derivation `MerminPeresVolume.lean`.
+
 ## 4. What this file does *not* catalogue
 
 - **`:= rfl` definitional-unfold lemmas where the LHS is a derived

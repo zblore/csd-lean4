@@ -1,5 +1,6 @@
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.QM.Hardy
+import CsdLean4.LF4.HardyKahler
 
 /-!
 # Empirical/CSD: Hardy's 9% paradox (CSD-side reading)
@@ -93,7 +94,13 @@ the carried `p` represents the joint `μψ`-measure of outcome
 quadruples for Alice's `A`, `A'` and Bob's `B`, `B'` Pauli observables
 through the LF4-todo §14 observable correspondence.
 
-**Status: load-bearing, externally supplied, undischarged.**
+**Status: ONTIC-BACKED (§14 CONNECTED 2026-07-19).** The four Alice/Bob joint
+observable correspondences are proved in `LF4/HardyKahler.lean`
+(`hardy_observable_correspondence_{AB, AB'minus, A'minus_B, A'_B'}`: each Hilbert
+joint expectation equals its ontic-measure value), re-exported below; the genuine
+volume derivation is in `HardyVolume.lean`. Honest scope: the bundle type still
+carries only a `Context` (`PLACEHOLDERS.md §7`); the ontic content lives in the cited
+theorems.
 LF4-todo §14. -/
 structure CSDHardyBundle
     (D : CSD.LF2.SectorData SigmaSpace P G)
@@ -148,6 +155,24 @@ theorem no_csd_hardy_assignment
   exact CSD.Empirical.Hardy.no_lhv_hardy
     ⟨b.p, b.p_nonneg, b.hardy_AB_pos, b.hardy_AB'_zero,
      b.hardy_A'B_zero, b.hardy_A'B'_zero⟩
+
+/-! ### Genuine ontic backing (§14 CONNECTED 2026-07-19)
+
+The four Alice/Bob joint observable correspondences for the Hardy configuration are
+proved axiom-free in `LF4/HardyKahler.lean`; re-exported here so the CSD Hardy reading
+cites its ontic derivation. Each states the Hilbert joint expectation equals the
+corresponding ontic-measure value. -/
+
+/-- Ontic correspondence for the `A·B` observable (§14). -/
+alias csd_hardy_ontic_correspondence_AB := CSD.LF4.hardy_observable_correspondence_AB
+/-- Ontic correspondence for the `A·B'` observable (§14). -/
+alias csd_hardy_ontic_correspondence_AB'minus :=
+  CSD.LF4.hardy_observable_correspondence_AB'minus
+/-- Ontic correspondence for the `A'·B` observable (§14). -/
+alias csd_hardy_ontic_correspondence_A'minus_B :=
+  CSD.LF4.hardy_observable_correspondence_A'minus_B
+/-- Ontic correspondence for the `A'·B'` observable (§14). -/
+alias csd_hardy_ontic_correspondence_A'_B' := CSD.LF4.hardy_observable_correspondence_A'_B'
 
 end Hardy
 end CSDBridge

@@ -1,5 +1,6 @@
 import CsdLean4.Empirical.CSD.Framework
 import CsdLean4.Empirical.QM.Uncertainty
+import CsdLean4.LF4.SingleQubitKahler
 
 /-!
 # Empirical/CSD: Robertson uncertainty relation (CSD-side reading)
@@ -100,7 +101,13 @@ assert:
 
 Together these realise the QM-side Robertson bound at the ontic level.
 
-**Status: load-bearing, externally supplied, undischarged.**
+**Status: ONTIC-BACKED (§14 CONNECTED 2026-07-19).** The observable correspondence
+is proved in `LF4/SingleQubitKahler.lean` (`pauliDot_observable_correspondence`:
+the Hilbert expectation `⟨ψ, (n·σ) ψ⟩` equals the `sgMuPsi`-integral of the ontic
+observable function `pauliDotOntic`), re-exported below as
+`csd_uncertainty_ontic_observable_correspondence`; the genuine volume derivation is
+in `UncertaintyVolume.lean`. Honest scope: the bundle type still carries only a
+`Context` (`PLACEHOLDERS.md §7`); the ontic content lives in the cited theorem.
 LF4-todo §14. -/
 structure CSDUncertaintyBundle
     (D : CSD.LF2.SectorData SigmaSpace P G)
@@ -144,6 +151,14 @@ theorem csd_robertson_uncertainty
       ≥ (1 / 4) * ‖inner ℂ b.ψ ((b.A * b.B - b.B * b.A) b.ψ)‖ ^ 2 :=
   CSD.Empirical.Uncertainty.robertson_uncertainty
     b.A b.B b.hA_sym b.hB_sym b.ψ
+
+/-- **Ontic observable correspondence (§14).** The Hilbert expectation of a spin
+observable `n·σ` on `|+z⟩` equals the `sgMuPsi`-integral of its ontic observable
+function `pauliDotOntic` — the observable-as-ontic-function correspondence, proved
+axiom-free in `CSD.LF4.pauliDot_observable_correspondence`. Re-exported so the CSD
+uncertainty reading cites its ontic derivation, not only the QM identity. -/
+alias csd_uncertainty_ontic_observable_correspondence :=
+  CSD.LF4.pauliDot_observable_correspondence
 
 end Uncertainty
 end CSDBridge
