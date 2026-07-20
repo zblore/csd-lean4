@@ -198,9 +198,9 @@ Standard file opening (adapted to this project — copyright and authors are our
 
 ```lean
 /-
-Copyright (c) 2026 zblore. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: zblore
+Authors: Zayn Blore
 -/
 module
 public import CsdLean4.LF2.BornWrapper
@@ -211,7 +211,7 @@ public import CsdLean4.LF2.BornWrapper
 @[expose] public section
 ```
 
-- **Copyright / licence / authors block** — *policy.* Mathlib-style. Existing files carry `Copyright (c) 2026 CSD contributors`; that is grandfathered (not worth a mass rewrite). New files use the block above with `Authors: zblore`; an explicit `Authors:` line is the new requirement.
+- **Copyright / licence / authors block** — *policy.* Mathlib-style. Existing files carry `Copyright (c) 2026 CSD contributors`; that is grandfathered (not worth a mass rewrite). New files use the block above with `Authors: Zayn Blore`; an explicit `Authors:` line is the new requirement.
 - **Lean 4 module system** (`module` / `public import` / `@[expose] public section`) — *to-implement (migration).* All current files use legacy `import`. Mathlib (v4.33) is on the module system, so the migration is now possible; it is a large, mechanical, separate pass tracked in `BACKLOG.md`, not a per-file requirement yet.
 - **`open scoped …`, `namespace`, `universe`, `noncomputable section`** in that order — *policy* (already the de-facto ordering; make it explicit).
 - **`autoImplicit=false`** — *to-implement.* Add `moreLeanArgs = ["-DautoImplicit=false"]` (or `leanOptions`) to `lakefile.toml` to kill accidental implicit binders. Must be landed with a full green build (it can surface latent implicit-binder reliance), so it is a dedicated commit, not a silent flip.
