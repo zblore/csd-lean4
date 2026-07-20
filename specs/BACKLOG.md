@@ -46,6 +46,16 @@
 | **Track B — quantum relaxation** (Valentini H-theorem) | The only route to *new predictions* past the "empirically identical" ceiling. | `project` note |
 | **CV chain** — continuous spectra | Extend Born-as-volume past finite `ℂℙⁿ`. Foundations begun (`CsdLean4/CV/`). | `project` note |
 
+## Hardening / conventions (from the 2026-07-20 Lean-QIT / Physlib comparison — `CONVENTIONS.md §8`)
+
+| Item | What / why | Size |
+|---|---|---|
+| **Zero-`axiom` CI gate** | Add a `check-claims.sh` rule failing on any `^axiom ` under `CsdLean4/` except the one whitelisted `busch_effect_gleason`. Gates the Physlib route. (`CONVENTIONS.md §8.1`) | **S** |
+| **Discharge `busch_effect_gleason`** | Finite-dim effect-Gleason → "three axioms, zero imported". Cosmetic (NG2) but clears the last `axiom`. (Also the M-tier Busch–Gleason row above.) | **M** |
+| **`REFERENCES.json` + line-precise citations** | Machine-readable provenance; docstrings cite `[Key, file:Lstart-Lend]` incl. exact CSD-preprint lines. Biggest auditability win. (`§8.2`) | **M** |
+| **`_statement`/`_of_`/final-theorem pattern** | Turn `BRIDGE-OBLIGATIONS.md` prose into explicit `_of_` hypotheses; discharging an obligation = removing a hypothesis. (`§8.3`) | **M** (incremental) |
+| **`autoImplicit=false` + module-system migration + tagged Mathlib pin** | Mechanical hardening; fold into the next toolchain/module-system pass (needs a full green build each). (`§8.4`) | **S**/**L** |
+
 ---
 
 ## ecdsa.fail separation

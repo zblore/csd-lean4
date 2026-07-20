@@ -148,3 +148,86 @@ Cat-1 modules are eligible to be opened as Mathlib PRs once their content is sta
 Timelines vary by item. Small lemmas can land in days to weeks with engagement from a Mathlib reviewer. Substantive framework (effect algebras, operator exponentials on finite-dim Hilbert, Haar on compact homogeneous spaces) is months to years.
 
 The corpus does not prioritise upstreaming over programme progress. The conventions exist to keep the option open, not to commit to it.
+
+## 8. Conventions adopted from the Lean-QIT / Physlib comparison (2026-07-20)
+
+Drawn from an inspection of the QuAIR/Lean-QIT source and Physlib's contribution rules. Most of these also move the corpus toward Physlib's requirements, so adopting them serves both hardening and the upstreaming route. Each item below is marked with its **status**: *already-satisfied* (we do this or better), *policy* (adopted as a rule for new work), or *to-implement* (a concrete follow-up task, tracked in [`specs/BACKLOG.md`](specs/BACKLOG.md)).
+
+### 8.1 Zero-axiom discipline — *policy + to-implement*
+
+No `axiom` declarations anywhere in the corpus. This is Physlib's hard rule ("never use the `axiom` declaration") and the single change that both hardens the corpus and unblocks the canonical upstreaming route.
+
+- **Current state.** Exactly **one** `axiom` declaration exists: `busch_effect_gleason` (`LF2/BornWrapper.lean`; the imported effect-Gleason step, [`AXIOMS.md §2.2`](AXIOMS.md)). Per settled non-goal **NG2** ([`reconstruction-status.md §7a`](specs/reconstruction-status.md)) the ontic Born rule is Gleason-free and this axiom is *cosmetic* — most exports are already `busch_effect_gleason`-free (foundational-triple only).
+- **Target.** Discharge or delete `busch_effect_gleason` (finite-dim effect-Gleason, tracked M-tier in `BACKLOG.md`), reaching "three axioms, zero imported" (`propext`, `Classical.choice`, `Quot.sound` only).
+- **Enforcement.** Add a **CI zero-user-axiom gate** to `scripts/check-claims.sh`: fail on any `^axiom ` declaration under `CsdLean4/` outside the one whitelisted site (and empty the whitelist once `busch_effect_gleason` is gone). This complements — does not replace — the `#print axioms` pins.
+
+### 8.2 Machine-readable provenance — *policy + to-implement*  (biggest structural win)
+
+A structured `REFERENCES.json` at repo root, and line-precise citations from module docstrings.
+
+- **`REFERENCES.json`** — one entry per source, e.g.
+  ```json
+  { "key": "Busch2003", "title": "Quantum States and Generalized Observables: A Simple Proof of Gleason's Theorem",
+    "authors": ["Paul Busch"], "year": 2003, "kind": "article",
+    "arxiv_id": "quant-ph/9909073", "doi": "10.1103/PhysRevLett.91.120403", "url": null }
+  ```
+  Keys are stable citation handles (`Busch2003`, `Wilde2011Qst`, and the CSD preprint itself).
+- **Line-precise citations** in docstrings: `[Busch2003, §3]` for external sources and — the foundations-project advantage — `[CSDPreprint, §14.2:L120-134]` pointing at the exact line range of the CSD manuscript each theorem formalises. This makes claims *auditable rather than assertable*, which is exactly what a referee wants.
+- **Relation to existing practice.** This is the machine-readable upgrade of the current "always cite `specs/future-work.md` + cross-link theorem names" habit. The `References:` line every module already carries becomes a set of `REFERENCES.json` keys plus line ranges.
+
+### 8.3 The `_statement` / `_of_` / final-theorem pattern — *policy*  (formalises the bridge-obligations ledger)
+
+Three layers per major result:
+
+```lean
+-- 1. What the source CLAIMS, as a Prop, decoupled from any proof.
+def bornFromVolume_statement (S : SectorData) : Prop := …
+
+-- 2. Conditional theorems taking each ingredient as an explicit hypothesis (…_of_…).
+theorem bornFromVolume_of_typicality (S : SectorData) (hTyp : …) : bornFromVolume_statement S := …
+
+-- 3. The payoff: a final theorem with NO side hypotheses.
+theorem bornFromVolume (S : SectorData) : bornFromVolume_statement S := …
+```
+
+This is a direct upgrade for [`specs/BRIDGE-OBLIGATIONS.md`](specs/BRIDGE-OBLIGATIONS.md): obligations stop being prose in markdown and become **explicit `_of_` hypotheses in code**. Discharging an obligation becomes the visible act of *removing a hypothesis from the final theorem* — machine-checked, and unconditionality is legible at a glance. New bridge results should be shaped this way; the existing prose ledger is migrated opportunistically (not a mass refactor of tagged, axiom-audited layers).
+
+### 8.4 File header and build hygiene — *mixed*
+
+Standard file opening (adapted to this project — copyright and authors are ours, not QuAIR's):
+
+```lean
+/-
+Copyright (c) 2026 zblore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: zblore
+-/
+module
+public import CsdLean4.LF2.BornWrapper
+
+/-! # <Module name>
+… prose, with **Category:** line (§2) and `[Key, file:Lstart-Lend]` citations (§8.2) …
+-/
+@[expose] public section
+```
+
+- **Copyright / licence / authors block** — *policy.* Mathlib-style. Existing files carry `Copyright (c) 2026 CSD contributors`; that is grandfathered (not worth a mass rewrite). New files use the block above with `Authors: zblore`; an explicit `Authors:` line is the new requirement.
+- **Lean 4 module system** (`module` / `public import` / `@[expose] public section`) — *to-implement (migration).* All current files use legacy `import`. Mathlib (v4.33) is on the module system, so the migration is now possible; it is a large, mechanical, separate pass tracked in `BACKLOG.md`, not a per-file requirement yet.
+- **`open scoped …`, `namespace`, `universe`, `noncomputable section`** in that order — *policy* (already the de-facto ordering; make it explicit).
+- **`autoImplicit=false`** — *to-implement.* Add `moreLeanArgs = ["-DautoImplicit=false"]` (or `leanOptions`) to `lakefile.toml` to kill accidental implicit binders. Must be landed with a full green build (it can surface latent implicit-binder reliance), so it is a dedicated commit, not a silent flip.
+- **Mathlib pin** — *policy, with a caveat.* Prefer a **tagged** Mathlib release matching the pinned toolchain over a bare commit SHA (a tag is more legible). **Caveat / current state:** the repo intentionally tracks **Mathlib master HEAD** (commit `c732b96d`, Lean `v4.33.0-rc1`) to stay on the newest APIs; a pinned SHA is still fully reproducible, just less legible than a tag. Revisit and switch to a tag when a tagged release catches up to the toolchain we need.
+- **Docstring on every declaration** — *near-satisfied → policy.* The corpus is already close (~1 docstring per 12 lines); make "every `def`/`theorem`/`instance` carries a docstring" an enforced rule for new modules.
+
+### 8.5 What NOT to adopt
+
+- **Their monolithic 200–250 KB files.** Our one-result-per-file discipline (§1, ~291 lines/file) is better and matches how the material is reviewed. Keep it.
+- **Their CI's lack of an explicit `sorry`/`axiom` gate.** Our axiom-audit harness (`Tests/AxiomAudit.lean`, the `#print axioms` pins) plus `check-claims.sh` is *superior*. Keep it; §8.1 only adds a zero-`axiom`-declaration gate on top.
+
+### 8.6 Suggested adoption order
+
+1. **Zero-axiom** (§8.1) — gates the Physlib route; add the CI gate now, discharge `busch_effect_gleason` when the effect-Gleason M-item lands.
+2. **`REFERENCES.json` + line-precise citations** (§8.2) — the biggest auditability win.
+3. **`_statement` / `_of_` pattern** (§8.3) — formalises the bridge-obligations ledger.
+4. **`autoImplicit=false`, module system, tagged pin, per-declaration docstrings** (§8.4) — fold the mechanical items into the next toolchain/module-system pass.
+
+Provenance: the 2026-07-20 Lean-QIT / Physlib overlap analysis.
