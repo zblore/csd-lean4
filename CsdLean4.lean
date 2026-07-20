@@ -176,6 +176,7 @@ import CsdLean4.LF6.PartialSchmidtCorrelation
 import CsdLean4.LF6.GisinTheorem
 import CsdLean4.LF6.DephasingSemigroup
 import CsdLean4.LF6.AmplitudeDamping
+import CsdLean4.LF6.LindbladGenerator
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.MaxEntangledCGLMPCapstone

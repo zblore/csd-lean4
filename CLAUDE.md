@@ -57,6 +57,25 @@ entire algorithm branch, the one-axiom posture, the Shor status, and §2 all sta
 prior closures were logged only to session memory; this rule exists to prevent recurrence.
 Do not let "planned / not started" rows survive a completed tranche.
 
+**No placeholder scaffolding (mandatory).** Every definition and theorem that lands must carry
+genuine content. Specifically **never** commit:
+
+- `sorry` / `admit` / `stop`, or any axiom-backed stub standing in for a real proof;
+- `:= True` (or other vacuous bodies like `0 = 0`, a trivially-inhabited `∃`) as a definition —
+  `check-claims.sh` fails on any fresh `:= True`, and the same principle covers all vacuous stand-ins;
+- a **weakened or renamed** statement discharged by `trivial`/`tauto`/`rfl` that only *looks* like the
+  intended claim (e.g. proving `P → True`, or a hypothesis-gutted variant, then citing it as "P is proved");
+- broken / half-finished scratch, even behind a guard or `noncomputable` — if it doesn't build clean it
+  doesn't get committed.
+
+When a route walls or a primitive is genuinely missing, **stop and report it honestly** — write the
+honest-scope note in the module docstring and a `BACKLOG.md` row describing exactly what remains — rather
+than landing a stub that ticks the box. Partial-but-real is fine and encouraged (a proved *tier* of a
+larger item, clearly scoped as such); vacuous-but-complete-looking is not. A theorem's name and docstring
+must state what is *actually* proved, no stronger. This is the same honesty posture the `check-claims`,
+axiom-audit, and doc-currency rules enforce; it applies to all new work, not only the `:= True` case the
+script can mechanically catch.
+
 ## Build Commands
 
 ```bash

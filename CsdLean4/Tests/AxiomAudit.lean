@@ -149,6 +149,7 @@ import CsdLean4.LF6.PartialSchmidtCorrelation
 import CsdLean4.LF6.GisinTheorem
 import CsdLean4.LF6.DephasingSemigroup
 import CsdLean4.LF6.AmplitudeDamping
+import CsdLean4.LF6.LindbladGenerator
 import CsdLean4.LF6.CGLMPQutrit
 import CsdLean4.LF6.CGLMPQudit
 import CsdLean4.LF6.MaxEntangledCGLMPCapstone
@@ -4763,6 +4764,33 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.dampingChannel_excited_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.dampingChannel_excited_tendsto_zero
+
+-- LF6-9 generator tier (LindbladGenerator.lean, 2026-07-20): the general Lindblad/GKSL generator
+-- ℒ(ρ)=−i[H,ρ]+Σₖ(LₖρLₖ†−½{Lₖ†Lₖ,ρ}), previously undefined. lindbladGenerator_trace (trace annihilation
+-- tr ℒ=0 ⟹ trace-preserving), lindbladGenerator_isHermitian (Hermiticity preservation), and
+-- lindblad_dissipation_posSemidef (the jump part ΣₖLₖρLₖ† preserves PSD — the Choi/Kraus CP witness). The
+-- dephasing instance: dephasingGenerator_eq_lindblad ((γ/2)(σzρσz−ρ) is GKSL with H=0, L=√(γ/2)σz) and
+-- dephasingChannel_master_equation (the exhibited T2 channel solves d/dt Φ = ℒ_deph(Φ) — the Φ_t=e^{tℒ}
+-- content). Foundational triple. Deferred: CP of e^{tℒ} for arbitrary generators (matrix-exp positivity).
+/-- info: 'CSD.LF6.lindbladGenerator_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladGenerator_trace
+
+/-- info: 'CSD.LF6.lindbladGenerator_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladGenerator_isHermitian
+
+/-- info: 'CSD.LF6.lindblad_dissipation_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindblad_dissipation_posSemidef
+
+/-- info: 'CSD.LF6.dephasingGenerator_eq_lindblad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dephasingGenerator_eq_lindblad
+
+/-- info: 'CSD.LF6.dephasingChannel_master_equation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.dephasingChannel_master_equation
 
 /-- info: 'CSD.LF6.no_product_partition_realises_maxEntangled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

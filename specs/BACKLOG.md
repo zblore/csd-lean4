@@ -26,7 +26,7 @@
 | Item | Status / what's needed | Former source |
 |---|---|---|
 | **Operator convexity → unconditional SSA** | **Parked on an instance wall.** Detailed ladder (steps 0→7) in `operator-convexity-plan.md`; the immediate blocker is step 0 (ℂ-smul Löwner monotonicity + spectrum-restricted `affine_output`; the `PartialOrder ℂ` cascade). Endpoint: discharge `hDPI` in `strong_subadditivity_of_relEntropy_monotone`. | `operator-convexity-plan.md` |
-| **GKSL / Lindblad open-systems tier** (LF6-9) | General `Φ_t = e^{tℒ}` + complete positivity. Buildable in-repo on the existing Kraus/Choi/Stinespring infra. Unblocks LF6-2 full + Metrology A4. | `lf6-plan.md` |
+| **GKSL / Lindblad open-systems tier** (LF6-9) | **Generator tier DONE 2026-07-20** (`LF6/LindbladGenerator.lean`): the general GKSL generator `ℒ(ρ)=−i[H,ρ]+Σₖ(LₖρLₖ†−½{Lₖ†Lₖ,ρ})` + trace-annihilation (`lindbladGenerator_trace`), Hermiticity-preservation, CP of the jump part (`lindblad_dissipation_posSemidef`, reusing the Choi/Kraus witness); dephasing shown to **be** a GKSL instance (`dephasingGenerator_eq_lindblad`) and to **solve** its master equation (`dephasingChannel_master_equation`). **Remaining (genuinely Mathlib-scale):** CP of the *exponentiated* `e^{tℒ}` for arbitrary generators (matrix-exp positivity, L2-operator norm scope). Unblocks LF6-2 full + Metrology A4. | `lf6-plan.md` |
 | **§14 *states* obligation** | NoBroadcasting / SuperdenseCoding / Teleportation cite §14 for **state/projector** realisation (distinct from the observable-correspondence, which is now connected for SG/Uncertainty/Hardy). No LF4 content to cite → needs genuine new state-realisation content. | `BRIDGE-OBLIGATIONS.md` |
 | **Lévy / spherical isoperimetry** (TH-1) | Canonical-typicality concentration (single-state typicality). Mathlib lacks spherical isoperimetry; the mean is proved. Optional strengthening. | `thermo-plan.md` |
 | **Continuity-only Stone** | The non-C¹ Stone strengthening (drop the smoothness hypothesis). The C¹ case is done. | `future-work.md` (W5-S2) |
@@ -80,7 +80,7 @@ code (`CsdLean4/Ecdsafail/`), build (`Ecdsafail` lean_lib), audit
 
 ## Done this session (2026-07-19)
 
-Honesty guard (`check-claims.sh`) · Track A#1 Schrödinger derivation · Track A#2 Kähler de-vacuum · A5/L7 ergodic bracket · §13.2 all 9 gates · §14 measurement connections (SG/Uncertainty/Hardy) · Mach–Zehnder · Double-slit + complementarity · **composite mixed-Born on `DensityOperatorIx`** (FND-T3 T9) · **Choi converse — Choi's theorem CP⟺PSD** (`LF2/ChoiConverse.lean`) · **Gisin's theorem — every entangled pure two-qubit state violates CHSH** (`LF6/GisinTheorem.lean`, closes LF6-6).
+Honesty guard (`check-claims.sh`) · Track A#1 Schrödinger derivation · Track A#2 Kähler de-vacuum · A5/L7 ergodic bracket · §13.2 all 9 gates · §14 measurement connections (SG/Uncertainty/Hardy) · Mach–Zehnder · Double-slit + complementarity · **composite mixed-Born on `DensityOperatorIx`** (FND-T3 T9) · **Choi converse — Choi's theorem CP⟺PSD** (`LF2/ChoiConverse.lean`) · **Gisin's theorem — every entangled pure two-qubit state violates CHSH** (`LF6/GisinTheorem.lean`, closes LF6-6) · **Lindblad/GKSL generator tier** (`LF6/LindbladGenerator.lean`, LF6-9 generator level).
 
 ## Settled non-goals — do not re-litigate (see `reconstruction-status.md §7a`)
 
