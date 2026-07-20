@@ -32,27 +32,32 @@ frame-function analysis of projective Gleason.
    `smulVal_homog`): the monotone + additive (Cauchy) equation `f(a+b) = f(a)+f(b)` on `[0,1]`
    forces `f(t) = t f(1)` — via integer scaling (`smulVal_natMul`), rational homogeneity
    (`smulVal_rat`), and the density squeeze (`exists_rat_btwn` + monotonicity).
-3. **(Deferred) Reconstruction** — build `ρ` from the quadratic form `φ ↦ p(rankOneEffect φ)` by
-   polarisation; then `p E = Tr(ρ E)` for every effect `E` via the spectral decomposition of `E`
-   into rank-one projectors + homogeneity + additivity.
+3. **Reconstruction (spectral reduction delivered; polarisation deferred).** The **spectral
+   reduction** is done: `p_finsetSum` (finite additivity), `Effect.eigenvalues_le_one`
+   (effect eigenvalues `∈ [0,1]`), `Effect.sum_eigenEffect_M` (`E = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`), and
+   `p_eq_eigen_sum` (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`) reduce the whole representation problem to
+   determining `p` on rank-one projectors. **Deferred:** recovering `ρ` from the rank-one values
+   `φ ↦ p(rankOneEffect φ)` by polarisation (that the diagonal quadratic form comes from a
+   sesquilinear form ⟹ a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`).
 4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ ρ` PSD; `p I = 1 ⟹ Tr ρ = 1`;
    uniqueness from non-degeneracy of the trace pairing. This yields
    `theorem busch_effect_gleason … := …`, replacing the axiom in `BornWrapper.lean`.
 
 ## Honest scope
 
-**Delivered here:** steps 1–2 (the monotone/additive foundational layer + homogeneity
-`p(t•E) = t·p E`). **Deferred:** steps 3–4 (reconstruction, uniqueness) — tracked in
-`specs/BACKLOG.md` ("Discharge `busch_effect_gleason`"). This module builds axiom-free
-(foundational triple) and does **not** yet remove the axiom; it is a genuine partial layer of
-that discharge, not a stub.
+**Delivered here:** steps 1–2 (monotone/additive layer + homogeneity `p(t•E) = t·p E`) and the
+**spectral-reduction half of step 3** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`). **Deferred:** the
+polarisation half of step 3 (recover `ρ` from the rank-one values) and step 4
+(positivity/normalisation + uniqueness) — tracked in `specs/BACKLOG.md` ("Discharge
+`busch_effect_gleason`"). This module builds axiom-free (foundational triple) and does **not**
+yet remove the axiom; it is a genuine partial layer of that discharge, not a stub.
 
 References: `LF2/BornWrapper.lean` (`Effect`, `DensityOperator`, `OperationalPackage`,
 `traceForm`, `busch_effect_gleason`); Busch 2003 (`quant-ph/9909073`); `AXIOMS.md §2.2`;
 `CONVENTIONS.md §8.1`; `specs/BACKLOG.md`.
 -/
 
-open Matrix
+open Matrix Unitary
 open scoped ComplexOrder
 
 namespace CSD.LF2
@@ -323,6 +328,88 @@ theorem p_finsetSum {ι : Type*} [DecidableEq ι] (E : ι → Effect N) (s : Fin
           = Effect.add (E a) (Effect.finsetSum s' E h') hLe from
         Effect.ext_M (by simp only [Effect.finsetSum_M, Effect.add]; rw [hins]),
       OP.additivity, ih h', Finset.sum_insert ha]
+
+end OperationalPackage
+
+/-! ### E — spectral reduction (Route B step 3): `p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)` -/
+
+namespace Effect
+
+/-- **Effect eigenvalues are `≤ 1`.** For an effect `E` (so `1 - E.M` is PSD), each eigenvalue of
+`E.M` is `≤ 1`: on the eigenvector `eᵢ`, `⟨eᵢ, (1-E.M) eᵢ⟩ = 1 - λᵢ ≥ 0`. -/
+theorem eigenvalues_le_one (E : Effect N) (i : Fin N) :
+    E.isHermitian.eigenvalues i ≤ 1 := by
+  set x : Fin N → ℂ := ⇑(E.isHermitian.eigenvectorBasis i) with hx
+  have hnorm : ‖E.isHermitian.eigenvectorBasis i‖ = 1 :=
+    E.isHermitian.eigenvectorBasis.orthonormal.norm_eq_one i
+  have hxx : star x ⬝ᵥ x = 1 := by
+    have h1 : star x ⬝ᵥ x
+        = inner ℂ (E.isHermitian.eigenvectorBasis i) (E.isHermitian.eigenvectorBasis i) := by
+      rw [EuclideanSpace.inner_eq_star_dotProduct]; exact dotProduct_comm _ _
+    rw [h1, inner_self_eq_norm_sq_to_K, hnorm]; norm_num
+  have hmv : E.M *ᵥ x = (E.isHermitian.eigenvalues i : ℂ) • x := by
+    rw [hx]; exact E.isHermitian.mulVec_eigenvectorBasis i
+  have hnn : (0 : ℂ) ≤ star x ⬝ᵥ ((1 - E.M) *ᵥ x) := E.le_one.dotProduct_mulVec_nonneg x
+  have hval : star x ⬝ᵥ ((1 - E.M) *ᵥ x) = ((1 - E.isHermitian.eigenvalues i : ℝ) : ℂ) := by
+    rw [sub_mulVec, Matrix.one_mulVec, hmv, dotProduct_sub, dotProduct_smul, hxx, smul_eq_mul,
+      mul_one]
+    push_cast; ring
+  rw [hval] at hnn
+  have hle : (0 : ℝ) ≤ 1 - E.isHermitian.eigenvalues i := Complex.zero_le_real.mp hnn
+  linarith
+
+/-- **The eigenvalue-scaled rank-one projectors of an effect are effects.** `λᵢ • |eᵢ⟩⟨eᵢ|` with
+`λᵢ = eigenvalues i ∈ [0,1]` and `eᵢ = eigenvectorBasis i` (unit norm). -/
+noncomputable def eigenEffect (E : Effect N) (i : Fin N) : Effect N :=
+  Effect.smul (E.isHermitian.eigenvalues i) (E.nonneg.eigenvalues_nonneg i)
+    (E.eigenvalues_le_one i)
+    (rankOneEffect (E.isHermitian.eigenvectorBasis i)
+      (E.isHermitian.eigenvectorBasis.orthonormal.norm_eq_one i))
+
+@[simp] lemma eigenEffect_M (E : Effect N) (i : Fin N) :
+    (E.eigenEffect i).M
+      = (E.isHermitian.eigenvalues i : ℂ) • outerProduct (E.isHermitian.eigenvectorBasis i) := by
+  simp only [eigenEffect, Effect.smul_M, rankOneEffect]
+
+/-- **`E` is the finite sum of its eigen-effects.** `E.M = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|` (the Hermitian spectral
+theorem, same computation as `density_eq_eigen_ensemble`). -/
+theorem sum_eigenEffect_M (E : Effect N) :
+    ∑ i, (E.eigenEffect i).M = E.M := by
+  simp only [eigenEffect_M]
+  symm
+  set hA := E.isHermitian with hA_def
+  conv_lhs => rw [hA.spectral_theorem, conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
+  ext a b
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.smul_apply,
+    outerProduct, Matrix.vecMulVec_apply, smul_eq_mul, Function.comp_apply,
+    Matrix.IsHermitian.eigenvectorUnitary_apply]
+  exact Finset.sum_congr rfl fun k _ => (mul_assoc _ _ _).trans (mul_left_comm _ _ _)
+
+end Effect
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **Spectral reduction of `p` (Route B step 3).** For every effect `E`,
+`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)` — the eigenvalue-weighted sum of `p` on the rank-one projectors of
+`E`'s spectral decomposition. Reduces the entire representation problem to determining `p` on
+rank-one projectors. Combines finite additivity + homogeneity with the spectral theorem. -/
+theorem p_eq_eigen_sum (E : Effect N) :
+    OP.p E = ∑ i, E.isHermitian.eigenvalues i
+      * OP.p (rankOneEffect (E.isHermitian.eigenvectorBasis i)
+          (E.isHermitian.eigenvectorBasis.orthonormal.norm_eq_one i)) := by
+  have hLe : (1 - ∑ i, (E.eigenEffect i).M).PosSemidef := by rw [E.sum_eigenEffect_M]; exact E.le_one
+  have hEeq : Effect.finsetSum Finset.univ (E.eigenEffect) hLe = E :=
+    Effect.ext_M (by rw [Effect.finsetSum_M, E.sum_eigenEffect_M])
+  calc OP.p E = OP.p (Effect.finsetSum Finset.univ (E.eigenEffect) hLe) := by rw [hEeq]
+    _ = ∑ i, OP.p (E.eigenEffect i) := OP.p_finsetSum _ _ hLe
+    _ = ∑ i, E.isHermitian.eigenvalues i
+          * OP.p (rankOneEffect (E.isHermitian.eigenvectorBasis i)
+              (E.isHermitian.eigenvectorBasis.orthonormal.norm_eq_one i)) := by
+        refine Finset.sum_congr rfl fun i _ => ?_
+        exact OP.p_smul_homog (E.nonneg.eigenvalues_nonneg i) (E.eigenvalues_le_one i)
 
 end OperationalPackage
 
