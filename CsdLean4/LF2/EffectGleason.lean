@@ -86,6 +86,22 @@ noncomputable def smul (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (E : Effect N) 
 @[simp] lemma smul_M (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (E : Effect N) :
     (Effect.smul t ht0 ht1 E).M = (t : ℂ) • E.M := rfl
 
+/-- **A finite sum of effects whose total is `≤ I` is an effect.** Hermiticity and PSD of the
+sum are automatic; `le_one` is the hypothesis (as in `Effect.add`). -/
+noncomputable def finsetSum {ι : Type*} (s : Finset ι) (E : ι → Effect N)
+    (h : (1 - ∑ i ∈ s, (E i).M).PosSemidef) : Effect N where
+  M := ∑ i ∈ s, (E i).M
+  isHermitian := by
+    show (∑ i ∈ s, (E i).M)ᴴ = ∑ i ∈ s, (E i).M
+    rw [Matrix.conjTranspose_sum]
+    exact Finset.sum_congr rfl fun i _ => (E i).isHermitian
+  nonneg := Matrix.posSemidef_sum _ fun i _ => (E i).nonneg
+  le_one := h
+
+@[simp] lemma finsetSum_M {ι : Type*} (s : Finset ι) (E : ι → Effect N)
+    (h : (1 - ∑ i ∈ s, (E i).M).PosSemidef) :
+    (Effect.finsetSum s E h).M = ∑ i ∈ s, (E i).M := rfl
+
 end Effect
 
 namespace OperationalPackage
@@ -279,6 +295,34 @@ theorem smulVal_homog {E : Effect N} {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
 theorem p_smul_homog {E : Effect N} {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     OP.p (Effect.smul t ht0 ht1 E) = t * OP.p E := by
   rw [← OP.smulVal_of ht0 ht1, OP.smulVal_homog ht0 ht1, OP.smulVal_one]
+
+/-! ### D — finite additivity (Route B step 3, building block) -/
+
+/-- **Finite additivity.** For a family of effects whose total is `≤ I`, `p(∑ᵢ Eᵢ) = ∑ᵢ p(Eᵢ)`.
+Induction on the index set via the pairwise `additivity`; each partial sum stays `≤ I` because
+the omitted effects are PSD. The prerequisite for reducing `p` on an arbitrary effect to `p` on
+the rank-one projectors of its spectral decomposition. -/
+theorem p_finsetSum {ι : Type*} [DecidableEq ι] (E : ι → Effect N) (s : Finset ι) :
+    ∀ (h : (1 - ∑ i ∈ s, (E i).M).PosSemidef),
+      OP.p (Effect.finsetSum s E h) = ∑ i ∈ s, OP.p (E i) := by
+  induction s using Finset.induction with
+  | empty =>
+    intro h
+    rw [show Effect.finsetSum (∅ : Finset ι) E h = Effect.zero from
+      Effect.ext_M (by simp [Effect.finsetSum, Effect.zero]), OP.p_zero, Finset.sum_empty]
+  | insert a s' ha ih =>
+    intro h
+    have hins : ∑ i ∈ insert a s', (E i).M = (E a).M + ∑ i ∈ s', (E i).M := Finset.sum_insert ha
+    have h' : (1 - ∑ i ∈ s', (E i).M).PosSemidef := by
+      have hrw : (1 : Matrix (Fin N) (Fin N) ℂ) - ∑ i ∈ s', (E i).M
+          = (1 - ∑ i ∈ insert a s', (E i).M) + (E a).M := by rw [hins]; abel
+      rw [hrw]; exact h.add (E a).nonneg
+    have hLe : (1 - ((E a).M + (Effect.finsetSum s' E h').M)).PosSemidef := by
+      simp only [Effect.finsetSum_M]; rw [← hins]; exact h
+    rw [show Effect.finsetSum (insert a s') E h
+          = Effect.add (E a) (Effect.finsetSum s' E h') hLe from
+        Effect.ext_M (by simp only [Effect.finsetSum_M, Effect.add]; rw [hins]),
+      OP.additivity, ih h', Finset.sum_insert ha]
 
 end OperationalPackage
 
