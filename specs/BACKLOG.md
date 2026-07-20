@@ -51,7 +51,7 @@
 | Item | What / why | Size |
 |---|---|---|
 | **Zero-`axiom` CI gate** | Add a `check-claims.sh` rule failing on any `^axiom ` under `CsdLean4/` except the one whitelisted `busch_effect_gleason`. Gates the Physlib route. (`CONVENTIONS.md §8.1`) | **S** |
-| **Discharge `busch_effect_gleason`** | Finite-dim effect-Gleason → "three axioms, zero imported". Cosmetic (NG2) but clears the last `axiom`. (Also the M-tier Busch–Gleason row above.) | **M** |
+| **Discharge `busch_effect_gleason`** | Finite-dim effect-Gleason → "three axioms, zero imported". **Foundational layer LANDED** (`LF2/EffectGleason.lean`, 2026-07-20): `Effect.smul`, `p_zero`, `p_mono`, `p_smul_add` (the Cauchy relation `p((a+b)•E)=p(a•E)+p(b•E)`), `p_smul_mono` — all foundational-triple, no `sorry`. **Remaining:** (2) homogeneity `p(t•E)=t·p E` (monotone+additive ⟹ linear on `[0,1]`); (3) reconstruct `ρ` from the quadratic form `φ↦p(rankOneEffect φ)` by polarisation + spectral additivity; (4) positivity/normalisation + uniqueness → replace the axiom. Cosmetic for CSD (NG2) but clears the last `axiom` + gates Physlib. | **M** |
 | **`REFERENCES.json` + line-precise citations** | Machine-readable provenance; docstrings cite `[Key, file:Lstart-Lend]` incl. exact CSD-preprint lines. Biggest auditability win. (`§8.2`) | **M** |
 | **`_statement`/`_of_`/final-theorem pattern** | Turn `BRIDGE-OBLIGATIONS.md` prose into explicit `_of_` hypotheses; discharging an obligation = removing a hypothesis. (`§8.3`) | **M** (incremental) |
 | **`autoImplicit=false` + module-system migration + tagged Mathlib pin** | Mechanical hardening; fold into the next toolchain/module-system pass (needs a full green build each). (`§8.4`) | **S**/**L** |
