@@ -1,9 +1,8 @@
 # Active TODO — CSD session work queue (persistent)
 
 > **⚠️ Open items now live in [`BACKLOG.md`](BACKLOG.md).** This is a historical
-> session-queue record (mostly-DONE core rows + the #16/#15/framing notes). The ecdsa.fail
-> task rows and score ledger were moved to the separated track: [`ecdsa/todo.md`](ecdsa/todo.md),
-> [`ecdsa/score-ledger.md`](ecdsa/score-ledger.md).
+> session-queue record (mostly-DONE core rows + the #16/#15/framing notes). The ecdsa.fail /
+> ECDLP track was extracted to its own repository (2026-07-20) and is no longer tracked here.
 
 **Purpose.** Durable copy of the session task list so it survives session loss. If the
 in-memory task list is gone, re-seed from the table below (each row → a task; keep the
@@ -36,7 +35,7 @@ research-frontier / infrastructure gap.
 | 34 | 15a follow-up — DONE: degeneracy boundary (p₀=p₁ ⇒ ½I basis-invariant, einselection FAILS; iff `decohere_hadamard_offDiag_ne_zero_iff`) + general-N einselection (`einselectionN`, `decohereReducedN_acts_nontrivial`); ontic origin D1-gated (Einselection.lean) | Empirical | M | DONE | |
 | 4 | Metrology A4: decoherence (Lindblad) | Metrology | XL | open | |
 
-Per-area plans: [`lf6-plan.md`](lf6-plan.md), [the ecdsa.fail track](ecdsa/INDEX.md),
+Per-area plans: [`lf6-plan.md`](lf6-plan.md),
 [`metrology-plan.md`](metrology-plan.md), [`INDEX.md`](INDEX.md).
 
 ## #16 — D1c plan (thread genuine Φ through concrete SectorData)

@@ -27,11 +27,3 @@ roots = ["CsdLean4", "CsdLean4.Basic"]
 [[lean_lib]]
 name = "CsdLeanTests"
 roots = ["CsdLean4.Tests.AxiomAudit", "CsdLean4.Tests.Examples"]
-
-# Separate target for the ecdsa.fail / ECDLP quantum-cryptanalysis track
-# (CsdLean4/Ecdsafail/). NOT part of core QM: `lake build CsdLean4` and
-# `lake build CsdLeanTests` do not build it. Its axiom-audit pins live in
-# `CsdLean4.Ecdsafail.AxiomAudit`, which transitively imports the 21 ecdsa modules.
-[[lean_lib]]
-name = "Ecdsafail"
-roots = ["CsdLean4.Ecdsafail.AxiomAudit"]

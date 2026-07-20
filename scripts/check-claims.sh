@@ -18,8 +18,8 @@
 #       — catches a rename/deletion silently orphaning a CONNECTED claim.
 #   (5) the forbidden A5-overclaim phrases are absent from the forward-claim docs.
 #
-# Scope: the core QM library only; `CsdLean4/Ecdsafail` (the ecdsa.fail track) is
-# excluded — it is a separate project with no honesty ledger here.
+# Scope: the core QM library. (The ecdsa.fail / ECDLP track was extracted to its own
+# repository 2026-07-20 and is no longer present here.)
 #
 # Usage:  bash scripts/check-claims.sh   (grep/awk only, no Lean build; seconds)
 
@@ -27,7 +27,6 @@ set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 SRC="CsdLean4"
-EXCLUDE_DIR="CsdLean4/Ecdsafail"
 
 # ------------------------------------------------------------------ CLAIMS ----
 # THE canonical source of truth. Update HERE when the code legitimately changes;
@@ -83,7 +82,7 @@ strip_comments() {
     }' "$1"
 }
 
-srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null | grep -v "^$EXCLUDE_DIR/"; }
+srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null; }
 
 echo "check-claims: verifying code against the canonical claims block…"
 

@@ -882,11 +882,10 @@ subtree (the n-qubit `Register`/`prob` Born, `Hadamard`, `Fourier`/QFT
 unitarity, CPTP `Channel`s, `TraceDistance`, von Neumann `Entropy`, `QEC/` codes)
 consumed by the algorithm and decoherence tiers; the **`QuantumInfo/Reversible/`**
 reversible-circuit DSL + derived cost model (gate-list `Circuit`, `Cost`, the
-ModAdd/ModMul/ModInv + modular field-arithmetic + Cuccaro carry-clean stack) and
-**`QuantumInfo/ECDLP/`** (EllipticCurve / ScalarMul / Secp256k1 / ResourceBounds /
-point-double + point-add SLP programs / PointAddBenchmark) — the Shor/ECDLP
-resource-accounting tree (see `specs/ecdsa/ecdlp-resource-plan.md`); and
-`MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
+ModAdd/ModMul/ModInv + modular field-arithmetic + Cuccaro carry-clean stack) used by the
+Shor algorithm tier; and `MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
+(The ecdsa.fail / ECDLP quantum-cryptanalysis track that formerly sat on this DSL was
+extracted to its own repository 2026-07-20.)
 These files keep the **natural Mathlib namespace** (`namespace Projectivization`,
 `namespace Matrix`, `namespace QuantumInfo`), not a CSD wrapper; the
 `CsdLean4/Mathlib/<path>/` location is the only staging signal (CONVENTIONS.md §1

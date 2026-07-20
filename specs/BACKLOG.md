@@ -19,7 +19,7 @@
 | ~~**Choi converse** (PSD Choi ⇒ Kraus)~~ | **DONE 2026-07-19** (`LF2/ChoiConverse.lean`). `choi_iff_posSemidef`: a matrix on `Fin M × Fin N` is a Kraus family's Choi matrix **iff** PSD. The feared "vectorization iso" was definitional (the Choi index *is* a product), so the content was the spectral `Kᵢ=√λᵢ·unvec(eᵢ)` reconstruction (`choiOfKraus_krausOfChoi` + `IsHermitian.eq_eigen_outer`). Foundational triple. | `qi-qec-roadmap.md` |
 | ~~**Gisin's theorem** (pure entangled ⇒ CHSH violation)~~ | **DONE 2026-07-19** (`LF6/GisinTheorem.lean`). `gisin_chsh_violation`: every entangled `Ψ(c,s)=c\|00⟩+s\|11⟩` (`0<c,0<s`) violates CHSH — the physical `⟨Ψ\|σ·a⊗σ·b\|Ψ⟩` combination `> 2`. Built directly on the existing `psQubit_pauli_correlation`; the feared "general Schmidt decomposition" wasn't needed (the real-Schmidt two-qubit state + its correlation were already in `PartialSchmidtCorrelation.lean`). Trig-free `c,s`-dependent witness giving `2√(1+(2cs)²)`. Closes LF6-6. Foundational triple. | `lf6-plan.md` (LF6-8) |
 | **Busch–Gleason** (effect-Gleason, finite-dim) | Deletes the one imported axiom `busch_effect_gleason` → "three axioms, zero imported". **Cosmetic** (NG2): not needed for CSD — ontic Born is Gleason-free. Do only for audit-posture. | `AXIOMS.md §2.2` |
-| **Separate the ecdsa.fail track** | Real carve, not zero-coupling (see the dedicated section below). | `ecdsafail-two-track.md` |
+| ~~**Separate the ecdsa.fail track**~~ | **DONE 2026-07-20** — extracted to its own repository and removed from this one (see the section below). | `ecdsafail-two-track.md` |
 
 ## L — weeks
 
@@ -58,33 +58,17 @@
 
 ---
 
-## ecdsa.fail separation
+## ecdsa.fail — EXTRACTED to a separate repository (2026-07-20)
 
-**Folder move DONE 2026-07-19.** The non-QM-core code now lives in one folder,
-`CsdLean4/Ecdsafail/` (21 files): the ECDLP tree (17 — elliptic curves, secp256k1,
-point add/double, scalar mul, safegcd) plus the 4 ecdsa-specific circuit-assembly files
-(`ProgramRouter`, `ProgramRouterDoubling`, `DoublingAssembly`, `DoublingAssemblyOps`).
-The generic reversible-arithmetic DSL (`CuccaroAdd`, `ModMul`, `ModInv`, …) stayed in
-`Reversible/` — it is shared with core-QM (Shor + `MeasurementGidneyAdder`/`Uncompute*`).
-The core aggregator `CsdLean4.lean` has **zero** ecdsa references; `check-claims`'s
-exclude path updated to `CsdLean4/Ecdsafail`.
+**DONE.** The ecdsa.fail / ECDLP quantum-cryptanalysis track has been extracted to its own
+repository and removed from this one. What was removed: the code (`CsdLean4/Ecdsafail/`, 23
+files), its docs (`specs/ecdsa/`), the `Ecdsafail` `lean_lib` target (`lakefile.toml`), and
+the `check-claims` exclude path. The new repo carries a **copy** of the shared
+reversible-arithmetic DSL (`Mathlib/QuantumInfo/Reversible/`, 20 of 26 modules in Ecdsafail's
+transitive closure) pinned to the same Mathlib commit.
 
-**Lake-lib split + audit split DONE 2026-07-19.** `Ecdsafail` is now its own `lean_lib`
-target (`lakefile.toml`, root `CsdLean4.Ecdsafail.AxiomAudit`); the ecdsa `#print axioms`
-pins moved out of the core `Tests/AxiomAudit.lean` into `CsdLean4/Ecdsafail/AxiomAudit.lean`
-(3 blocks: the 4 assembly `Reversible.*` pins, the ECDLP-proper `ECDLP.*` pins, and the
-`ECDLP.Safegcd.*` divstep pins). `lake build CsdLean4` and `lake build CsdLeanTests` no
-longer reach ecdsa; `lake build Ecdsafail` builds + audits the track on its own.
-
-**Spec relocation DONE 2026-07-19.** All ecdsa docs now live in `specs/ecdsa/` (the 5
-plan files + a track `INDEX.md`, `score-ledger.md`, and `todo.md` extracted from
-`active-todo.md`); the core `INDEX.md`/`active-todo.md` carry a single pointer, and every
-link was updated (broken-link sweep clean). The ecdsa track is now fully separated —
-code (`CsdLean4/Ecdsafail/`), build (`Ecdsafail` lean_lib), audit
-(`Ecdsafail/AxiomAudit.lean`), and docs (`specs/ecdsa/`).
-
-**Only genuinely-remaining item (optional):** a fully separate *repo* (sharing the
-`Reversible/` arithmetic DSL as a base). Nothing in-repo depends on it.
+**Stays here:** the `Reversible/` DSL — it is shared with core-QM (Shor +
+`MeasurementGidneyAdder`/`Uncompute*`) and is not ecdsa-specific.
 
 ---
 
