@@ -39,6 +39,7 @@ namespace MeasureTheory
 
 variable {ι : Type*} [Fintype ι]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Tonelli for a product over `Fin n` (`lintegral`).** The lower integral of a
 product of single-coordinate functions over `Measure.pi` is the product of the
 lower integrals. Proved by induction on `n` (`measurePreserving_piFinSuccAbove`
@@ -63,7 +64,6 @@ theorem lintegral_fin_nat_prod_eq_prod {n : ℕ} {E : Fin n → Type*}
         (f := f 0) (g := fun y : (j : Fin n) → E j.succ => ∏ i, f i.succ (y i))
         (hf 0).aemeasurable
         ((Finset.measurable_prod _ (fun i _ => (hf _).comp (measurable_pi_apply i))).aemeasurable)
-      simp only at hmul
       -- `hmul : LHS = (∫⁻ f 0) * ∫⁻ ∏ f i.succ`; close by IH + `Fin.prod_univ_succ`.
       rw [n_ih (fun i => f i.succ) (fun i => hf _)] at hmul
       exact hmul

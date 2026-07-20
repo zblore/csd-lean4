@@ -386,7 +386,9 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 -- traceRight/traceLeft trace out a tensor factor; the API (kronecker defining
 -- property, trace-preservation, Hermitian/PSD preservation) sends a density
 -- operator to its reduced density operator. Foundational triple. Unblocks E3b/E2.
-/-- info: 'Matrix.traceRight_kronecker' depends on axioms: [propext, Quot.sound] -/
+-- (2026-07-20 Mathlib v4.33 upgrade: traceRight_kronecker gained Classical.choice — a
+-- transitively-used Mathlib lemma became classical upstream; still the foundational triple.)
+/-- info: 'Matrix.traceRight_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.traceRight_kronecker
 
 /-- info: 'Matrix.trace_traceRight' depends on axioms: [propext, Classical.choice, Quot.sound] -/

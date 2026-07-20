@@ -191,8 +191,8 @@ noncomputable def outerProduct (φ : EuclideanSpace ℂ (Fin N)) :
     fact `PosSemidef (vecMulVec a (star a))`. -/
 lemma outerProduct_posSemidef (φ : EuclideanSpace ℂ (Fin N)) :
     (outerProduct φ).PosSemidef := by
-  simpa [outerProduct] using
-    Matrix.posSemidef_vecMulVec_self_star (R := ℂ) (fun i => φ i)
+  unfold outerProduct
+  exact Matrix.posSemidef_vecMulVec_self_star (R := ℂ) (fun i => φ i)
 
 /-- The outer product is Hermitian (a consequence of being PSD). -/
 lemma outerProduct_isHermitian (φ : EuclideanSpace ℂ (Fin N)) :

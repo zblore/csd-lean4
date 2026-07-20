@@ -539,16 +539,55 @@ The Frobenius instances are *scoped*: they do not leak to importers of this modu
 
 section Integral
 
-open scoped Matrix.Norms.Frobenius
 open MeasureTheory
 
 variable {n : Type} [Fintype n] [DecidableEq n]
 
 /-- `Matrix n n ℂ` is finite dimensional over `ℝ` (via `FiniteDimensional ℂ` → `ℝ`); needed for the
-completeness of the Frobenius-normed matrix space, which the Bochner integral requires. -/
+continuity of the entry-projection linear maps and for the completeness of the matrix space, which
+the Bochner integral requires. -/
 instance : FiniteDimensional ℝ (Matrix n n ℂ) := by
   have : FiniteDimensional ℂ (Matrix n n ℂ) := inferInstanceAs (FiniteDimensional ℂ (Matrix n n ℂ))
   exact FiniteDimensional.trans ℝ ℂ (Matrix n n ℂ)
+
+/- ### Bochner integration of matrix-valued functions
+
+The refactored `MeasureTheory.Integrable` (Lean v4.33 Mathlib) takes `[TopologicalSpace ε]` and
+`[ContinuousENorm ε]` as *independent* instance arguments, and the Bochner integral `∫ s, F s ∂μ`
+needs `[NormedAddCommGroup] [NormedSpace ℝ] [CompleteSpace]`. `Matrix n n ℂ` always carries the
+global product topology `instTopologicalSpaceMatrix` (which the continuous functional calculus and
+the entry projections also use), but the elementwise / Frobenius matrix norms declare a
+`NormedAddCommGroup` whose topology is only *propositionally* — not reducibly — that product topology.
+That mismatch makes `ContinuousENorm (Matrix n n ℂ)` fail to synthesize, and worse, supplying a
+*separate* `ContinuousENorm` on the product topology forces Lean to reconcile two propositionally-equal
+topology instances on every `Integrable` goal, which diverges (`isDefEq`/`whnf` timeout).
+
+The robust fix is to work with a **single** `NormedAddCommGroup` whose bundled topology *is* the
+ambient product topology syntactically: we take the elementwise (entrywise-sup) norm — whose topology
+equals the product topology definitionally — and `replaceTopology` it onto the ambient instance. Then
+`Integrable`, `∫`, `cfc` and `ContinuousENorm` all resolve to one and the same topology instance (no
+reconciliation, no diamond), and `cfc` is untouched (its `ContinuousFunctionalCalculus` instance is on
+that same ambient topology). All instances are `local`/section-scoped, so nothing leaks to importers
+and the Löwner-order topology instances below keep using the bare product topology. -/
+section BochnerMatrix
+
+/-- The (entrywise-sup) `NormedAddCommGroup` on `Matrix n n ℂ`, re-topologised so its bundled
+`TopologicalSpace` is *syntactically* the ambient product topology. This is the single normed
+structure the Bochner-integral lemmas use; it gives `Integrable`/`∫`/`ContinuousENorm` a consistent
+topology without disturbing `cfc`. -/
+noncomputable local instance instNormedAddCommGroupMatrix : NormedAddCommGroup (Matrix n n ℂ) :=
+  letI base : NormedAddCommGroup (Matrix n n ℂ) := Matrix.normedAddCommGroup
+  { base with toMetricSpace := base.toMetricSpace.replaceTopology rfl }
+
+/-- `NormedSpace ℝ` for the re-topologised norm (same norm as the elementwise one, so the
+`norm_smul_le` proof carries over verbatim). -/
+noncomputable local instance instNormedSpaceRealMatrix : NormedSpace ℝ (Matrix n n ℂ) where
+  norm_smul_le := (Matrix.normedSpace (R := ℝ) (m := n) (n := n) (α := ℂ)).norm_smul_le
+
+/-- `NormedSpace ℂ` for the re-topologised norm; needed to rebuild a matrix from its entries
+(`Integrable.smul_const`) in `matrix_integrable_of_entry`. -/
+noncomputable local instance instNormedSpaceComplexMatrix : NormedSpace ℂ (Matrix n n ℂ) where
+  norm_smul_le := (Matrix.normedSpace (R := ℂ) (m := n) (n := n) (α := ℂ)).norm_smul_le
 
 /-- **Entrywise integral commutation.** The Bochner integral of a matrix-valued integrable family is
 computed entrywise. Proof: each entry projection `entryLinearMap ℝ ℂ i j` is a (finite-dimensional,
@@ -557,7 +596,7 @@ theorem matrix_integral_apply {μ : Measure ℝ} {F : ℝ → Matrix n n ℂ}
     (hF : Integrable F μ) (i j : n) :
     (∫ s, F s ∂μ) i j = ∫ s, F s i j ∂μ := by
   have h := (LinearMap.toContinuousLinearMap (entryLinearMap ℝ ℂ i j)).integral_comp_comm hF
-  simpa [entryLinearMap] using h.symm
+  exact h.symm
 
 /-- **Matrix integrability from entrywise integrability.** If every entry `s ↦ F s i j` is integrable
 then so is the matrix family `F`, via the finite basis decomposition `F s = ∑ i j, F s i j •
@@ -643,7 +682,9 @@ theorem cfc_integral_commute {μ : Measure ℝ} {A : Matrix n n ℂ} (hA : A.IsH
   simp_rw [summand]
   rw [cfc_eq_eigenvectorUnitary_mul hA (fun x => ∫ s, g s x ∂μ), conj_diagonal_apply]
 
-/-! #### Löwner-order topology instances on the Frobenius-normed matrix space -/
+end BochnerMatrix
+
+/-! #### Löwner-order topology instances on the ambient (product) matrix topology -/
 
 /-- **The PSD cone is closed** in the Frobenius topology. It is the intersection of the closed
 Hermitian subspace `{M | Mᴴ = M}` with the closed half-spaces `{M | 0 ≤ star x ⬝ᵥ (M *ᵥ x)}`

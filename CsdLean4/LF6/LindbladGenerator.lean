@@ -221,15 +221,19 @@ theorem dephasingGenerator_eq_lindblad {γ : ℝ} (hγ : 0 ≤ γ) (ρ : Matrix 
 private theorem hasDerivAt_expDecay (γ t : ℝ) (c : ℂ) :
     HasDerivAt (fun τ : ℝ => (Real.exp (-(γ * τ)) : ℂ) * c)
       (-(γ : ℂ) * (Real.exp (-(γ * t)) : ℂ) * c) t := by
-  have hlin : HasDerivAt (fun τ : ℝ => -(γ * τ)) (-γ) t := by
-    simpa using ((hasDerivAt_id t).const_mul γ).neg
-  have hexp : HasDerivAt (fun τ : ℝ => Real.exp (-(γ * τ))) (Real.exp (-(γ * t)) * -γ) t :=
-    (Real.hasDerivAt_exp _).comp t hlin
-  have hC : HasDerivAt (fun τ : ℝ => (Real.exp (-(γ * τ)) : ℂ))
-      ((Real.exp (-(γ * t)) * -γ : ℝ) : ℂ) t := hexp.ofReal_comp
+  -- Build the ℝ→ℝ intermediate steps WITHOUT type annotations: annotating forces a `Module ℝ ℝ`
+  -- instance (`Semiring.toModule`) that no longer matches the one `const_mul`/`neg` produce
+  -- (`RCLike.toInnerProductSpaceReal.toModule`) under Lean v4.33 — a diamond. Keeping them un-annotated
+  -- threads one consistent instance through to the ℂ-valued conclusion.
+  have hlin := ((hasDerivAt_id t).const_mul γ).neg
+  simp only [id_eq, mul_one] at hlin
+  have hexp := (Real.hasDerivAt_exp (x := -(γ * t))).comp t hlin
+  have hC := hexp.ofReal_comp
   have hmul := hC.mul_const c
-  convert hmul using 1
-  push_cast; ring
+  have heq : (-(γ : ℂ) * (Real.exp (-(γ * t)) : ℂ) * c)
+      = ((Real.exp (-(γ * t)) * -γ : ℝ) : ℂ) * c := by push_cast; ring
+  rw [heq]
+  exact hmul
 
 /-- **The dephasing master equation.** The exhibited T2 semigroup `dephasingChannel` **solves** its
 Lindblad master equation entrywise: `d/dt Φ_t(ρ) = ℒ_deph(Φ_t(ρ))`. The populations are stationary

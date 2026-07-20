@@ -77,10 +77,10 @@ noncomputable def gaussianProj (p₀ : CPN 2) (v : EuclideanSpace ℂ (Fin 2)) :
 lemma measurable_gaussianProj (p₀ : CPN 2) : Measurable (gaussianProj p₀) := by
   refine measurable_of_measurable_on_compl_singleton 0 ?_
   -- On `{v | v ≠ 0}`, `gaussianProj p₀` agrees with `mk' ℂ` (no junk).
-  have hrestr : {v : EuclideanSpace ℂ (Fin 2) | v ≠ 0}.restrict (gaussianProj p₀)
+  have hrestr : {v : EuclideanSpace ℂ (Fin 2) | v ≠ 0}.domRestrict (gaussianProj p₀)
       = fun v => Projectivization.mk' ℂ ⟨v.1, v.2⟩ := by
     funext v
-    simp only [Set.restrict_apply, gaussianProj, dif_neg v.2,
+    simp only [Set.domRestrict_apply, gaussianProj, dif_neg v.2,
       Projectivization.mk'_eq_mk]
   rw [hrestr]
   exact Projectivization.measurable_mk'.comp
@@ -204,8 +204,8 @@ lemma stdGaussian_ne_dirac (x : EuclideanSpace ℝ (Fin 4)) :
   rw [hx, ProbabilityTheory.variance_dirac] at hvar
   exact zero_ne_one hvar
 
-instance instNoAtomsStdGaussian4 : NoAtoms (stdGaussian (EuclideanSpace ℝ (Fin 4))) :=
-  ProbabilityTheory.IsGaussian.noAtoms stdGaussian_ne_dirac
+instance instNoAtomsStdGaussian4 : NullSingletonClass (stdGaussian (EuclideanSpace ℝ (Fin 4))) :=
+  ProbabilityTheory.IsGaussian.nullSingletonClass stdGaussian_ne_dirac
 
 /-- The origin is `gaussianH`-null (the junk value of `gaussianProj` at `0` is
 therefore irrelevant a.e.). -/

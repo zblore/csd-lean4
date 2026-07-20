@@ -157,7 +157,7 @@ lemma hasDerivAt_ghzSingle {N : ℕ} (i : Fin (2 ^ N)) {a : ℝ → ℂ} {a' : �
     (h : HasDerivAt a a' φ) :
     HasDerivAt (fun φ => EuclideanSpace.single i (a φ)) (EuclideanSpace.single i a') φ := by
   have := ((ghzSingleRL i).hasFDerivAt (x := a φ)).comp_hasDerivAt φ h
-  simpa [ghzSingleRL] using this
+  exact this
 
 /-- **`ghzDeriv` is the genuine derivative of `ghzPhaseVec`.** The all-zeros component is
 constant; the all-ones component `φ ↦ e^{iNφ}/√2` has derivative `i·N·e^{iNφ}/√2`, proved
@@ -166,8 +166,8 @@ via the chain rule `HasDerivAt.cexp` on `φ ↦ exp((N·φ:ℂ)·I)` and assembl
 `ramseyVec_hasDerivAt`. -/
 theorem ghzPhaseVec_hasDerivAt (N : ℕ) (φ : ℝ) :
     HasDerivAt (ghzPhaseVec N) (ghzDeriv N φ) φ := by
-  have h0 : HasDerivAt (fun φ : ℝ => ((φ : ℂ))) 1 φ := by
-    simpa [Complex.ofRealCLM_apply] using Complex.ofRealCLM.hasDerivAt (x := φ)
+  have h0 : HasDerivAt (fun φ : ℝ => ((φ : ℂ))) 1 φ :=
+    Complex.ofRealCLM.hasDerivAt (x := φ)
   have h1 : HasDerivAt (fun φ : ℝ => (N : ℂ) * (φ : ℂ)) (N : ℂ) φ := by
     simpa using h0.const_mul (N : ℂ)
   have hlin : HasDerivAt (fun φ : ℝ => (N : ℂ) * (φ : ℂ) * Complex.I) ((N : ℂ) * Complex.I) φ := by

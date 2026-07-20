@@ -135,7 +135,10 @@ theorem psiMat_det (S : ℝ) (t : Fin M → ℝ) : (psiMat S t).det = S ^ M := b
   -- Last row of B is the indicator `[j = last]`.
   have hBlast : ∀ j, B (Fin.last M) j = if j = Fin.last M then (1 : ℝ) else 0 := by
     intro j
-    rw [hB, Matrix.updateRow_self, Finset.sum_apply, psiMat_col_sum]
+    have hBj : B (Fin.last M) j = ∑ k, A k j := by
+      rw [hB, Matrix.updateRow_self]
+      exact Finset.sum_apply j Finset.univ (fun k => A k)
+    rw [hBj, hA, psiMat_col_sum]
   -- Off the last row, B agrees with A (= psiMat).
   have hBoff : ∀ i, i ≠ Fin.last M → ∀ j, B i j = A i j := by
     intro i hi j; rw [hB, Matrix.updateRow_ne hi]

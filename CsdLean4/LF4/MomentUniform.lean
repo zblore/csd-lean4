@@ -137,7 +137,7 @@ theorem pi_gaussianReal_singleton_zero :
   rw [show ({(0 : Fin 4 → ℝ)} : Set (Fin 4 → ℝ)) = Set.univ.pi (fun _ => {(0 : ℝ)}) by
       ext f; simp only [Set.mem_singleton_iff, Set.mem_univ_pi, funext_iff]; rfl,
     Measure.pi_pi]
-  haveI : NoAtoms (gaussianReal 0 1) := noAtoms_gaussianReal one_ne_zero
+  haveI : NullSingletonClass (gaussianReal 0 1) := nullSingletonClass_gaussianReal one_ne_zero
   exact Finset.prod_eq_zero (Finset.mem_univ 0) (measure_singleton 0)
 
 set_option maxHeartbeats 1000000 in

@@ -306,8 +306,8 @@ lemma syndromeWeight_eq_triple_sum (v : H3) (s : Fin 4) :
   unfold syndromeWeight
   refine Finset.sum_equiv q3.symm (fun i => ?_) (fun i _ => ?_)
   · -- membership: synClass i = s ↔ synClass3 (q3.symm i) = s
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, synClass,
-      Function.comp_apply]
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    simp only [synClass, Function.comp_apply]
   · -- summand transport: ‖(regOfH3 v).ofLp i‖² = ‖v.ofLp (q3.symm i)‖²
     rw [show i = q3 (q3.symm i) from (q3.apply_symm_apply i).symm, regOfH3_apply,
       Equiv.symm_apply_apply]

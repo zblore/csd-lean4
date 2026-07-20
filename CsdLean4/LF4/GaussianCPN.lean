@@ -95,10 +95,10 @@ noncomputable def gaussianProjN (p₀ : CPN N) (v : EuclideanSpace ℂ (Fin N)) 
 
 lemma measurable_gaussianProjN (p₀ : CPN N) : Measurable (gaussianProjN p₀) := by
   refine measurable_of_measurable_on_compl_singleton 0 ?_
-  have hrestr : {v : EuclideanSpace ℂ (Fin N) | v ≠ 0}.restrict (gaussianProjN p₀)
+  have hrestr : {v : EuclideanSpace ℂ (Fin N) | v ≠ 0}.domRestrict (gaussianProjN p₀)
       = fun v => Projectivization.mk' ℂ ⟨v.1, v.2⟩ := by
     funext v
-    simp only [Set.restrict_apply, gaussianProjN, dif_neg v.2, Projectivization.mk'_eq_mk]
+    simp only [Set.domRestrict_apply, gaussianProjN, dif_neg v.2, Projectivization.mk'_eq_mk]
   rw [hrestr]
   exact Projectivization.measurable_mk'.comp (measurable_subtype_coe.subtype_mk)
 
@@ -218,8 +218,8 @@ lemma stdGaussianN_ne_dirac [NeZero N] (x : EuclideanSpace ℝ (Fin N × Fin 2))
   exact zero_ne_one hvar
 
 instance instNoAtomsStdGaussianN [NeZero N] :
-    NoAtoms (stdGaussian (EuclideanSpace ℝ (Fin N × Fin 2))) :=
-  ProbabilityTheory.IsGaussian.noAtoms stdGaussianN_ne_dirac
+    NullSingletonClass (stdGaussian (EuclideanSpace ℝ (Fin N × Fin 2))) :=
+  ProbabilityTheory.IsGaussian.nullSingletonClass stdGaussianN_ne_dirac
 
 /-- The origin is `gaussianHN`-null. -/
 lemma gaussianHN_singleton_zero [NeZero N] :

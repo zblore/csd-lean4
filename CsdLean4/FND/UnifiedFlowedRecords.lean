@@ -78,7 +78,7 @@ theorem unifiedFlowedSemantics_zero (c : (vnRecordSignature N).Context)
     (unifiedFlowedSemantics H hH p₀ e ψ' hψ'0).event ⟨c, i, 0⟩
       = (vnRecordSemanticsProd e ψ' hψ'0).event ⟨c, i, 0⟩ := by
   ext x
-  simp only [unifiedFlowedSemantics, flowedSemantics_event, vnRecordSemanticsProd,
+  simp only [unifiedFlowedSemantics, flowedSemantics, vnRecordSemanticsProd,
     Set.mem_preimage, (productDynamics H hH p₀).flow_zero]
 
 /-! ### #2: Born-frequency ON the unified model

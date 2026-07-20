@@ -123,7 +123,7 @@ lemma hasDerivAt_single (i : Fin 2) {a : ℝ → ℂ} {a' : ℂ} {φ : ℝ}
     (h : HasDerivAt a a' φ) :
     HasDerivAt (fun φ => EuclideanSpace.single i (a φ)) (EuclideanSpace.single i a') φ := by
   have := ((singleRL i).hasFDerivAt (x := a φ)).comp_hasDerivAt φ h
-  simpa [singleRL] using this
+  exact this
 
 /-- **`ramseyDeriv` is the genuine derivative of `ramseyVec`.** Proved componentwise:
 each component `φ ↦ (1 ± e^{iφ})/2` has derivative `±i·e^{iφ}/2`, via the chain rule

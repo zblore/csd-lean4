@@ -6,6 +6,7 @@ import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Analysis.ODE.Gronwall
+import Mathlib.Analysis.ODE.ExistUnique
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
 import Mathlib.Tactic.Module

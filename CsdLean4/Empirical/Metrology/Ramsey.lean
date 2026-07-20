@@ -286,6 +286,7 @@ theorem ramsey_fringe_volume
 
 /-! ### Fringe sensitivity (the QFI precursor) -/
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Fringe sensitivity** `dP/dφ = -(sin φ)/2` (the slope of `cos²(φ/2)`). The
 maximal-sensitivity operating point is `φ = π/2`, where `|dP/dφ| = 1/2`
 (`ramsey_sensitivity_at_quadrature`). This is the precursor to the Quantum Fisher
@@ -295,14 +296,14 @@ theorem ramsey_fringe_hasDerivAt (φ : ℝ) :
     HasDerivAt ramseyFringe (-(Real.sin φ) / 2) φ := by
   have h1 : HasDerivAt (fun x : ℝ => x / 2) (1 / 2 : ℝ) φ := by
     simpa using (hasDerivAt_id φ).div_const 2
-  have h2 : HasDerivAt (fun x : ℝ => Real.cos (x / 2)) (-Real.sin (φ / 2) * (1 / 2)) φ := by
-    simpa using (Real.hasDerivAt_cos (φ / 2)).comp φ h1
-  have h3 : HasDerivAt ramseyFringe ((2 : ℕ) * Real.cos (φ / 2) ^ (2 - 1) * (-Real.sin (φ / 2) * (1 / 2))) φ := by
-    simpa [ramseyFringe] using h2.pow 2
-  convert h3 using 1
+  have h2 := (Real.hasDerivAt_cos (φ / 2)).comp φ h1
+  have h3 := h2.pow 2
   have hs : Real.sin φ = 2 * Real.sin (φ / 2) * Real.cos (φ / 2) := by
     rw [← Real.sin_two_mul]; congr 1; ring
-  rw [hs]; push_cast; ring
+  convert h3 using 1 <;>
+    first
+      | rfl
+      | (simp only [Function.comp_apply]; rw [hs]; push_cast; ring)
 
 /-- The fringe slope is maximal in magnitude at quadrature `φ = π/2`: `dP/dφ = -1/2`. -/
 theorem ramsey_sensitivity_at_quadrature :

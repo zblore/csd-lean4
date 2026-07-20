@@ -95,11 +95,11 @@ lemma exists_unitary_e_zero_eq [NeZero N]
   -- Build a single-element "orthonormal subset" {v} indexed via s = {0} ⊂ Fin N.
   let s : Set (Fin N) := {0}
   let f : Fin N → EuclideanSpace ℂ (Fin N) := fun i => if i = 0 then v else 0
-  have hf_orth : Orthonormal ℂ (s.restrict f) := by
+  have hf_orth : Orthonormal ℂ (s.domRestrict f) := by
     rw [orthonormal_iff_ite]
     rintro ⟨i, (hi : i = 0)⟩ ⟨j, (hj : j = 0)⟩
     subst hi; subst hj
-    simp only [Set.restrict_apply, if_true, f]
+    simp only [Set.domRestrict_apply, if_true, f]
     rw [inner_self_eq_norm_sq_to_K, hv]
     simp
   have card_eq : Module.finrank ℂ (EuclideanSpace ℂ (Fin N))

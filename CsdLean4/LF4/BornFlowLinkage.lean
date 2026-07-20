@@ -79,12 +79,9 @@ theorem unitaryFlowSetup_born_frequency_evolved {M : ℕ}
   have hmp := (unitaryFlowSetup (M + 1) U p₀).flow_preserves_volume t
   have hlaw' : ∀ n, Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n) Pr
       = fubiniStudyMeasure p₀ := fun n =>
-    calc Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n) Pr
-        = Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t) (Measure.map (X n) Pr) :=
-          (Measure.map_map hmp.measurable (hX n)).symm
-      _ = Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t)
-            ((unitaryFlowSetup (M + 1) U p₀).liouvilleMeasure) := congrArg _ (hlaw n)
-      _ = fubiniStudyMeasure p₀ := hmp.map_eq
+    (((Measure.map_map hmp.measurable (hX n)).symm.trans
+        (congrArg (Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t)) (hlaw n))).trans
+      hmp.map_eq)
   exact born_frequency_convergence_N p₀ ψ hψ0 hψ hpos
     (fun n => (unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n)
     (fun n => hmp.measurable.comp (hX n)) hlaw' hindep

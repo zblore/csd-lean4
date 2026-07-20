@@ -151,10 +151,7 @@ lemma mk'_preimage_mk'_image (U : Set { v : V // v ≠ 0 }) :
     simp only [scaleNonzero_coe, Units.val_inv_eq_inv_val]
     -- Goal: ((a : Kˣ) : K)⁻¹ • (v : V) = (w : V)
     have hsmul : ((a : Kˣ) : K) • (w : V) = (v : V) := ha
-    have := congrArg (((a : Kˣ) : K)⁻¹ • ·) hsmul
-    simp only at this
-    rw [← mul_smul, inv_mul_cancel₀ a.ne_zero, one_smul] at this
-    exact this.symm
+    rw [← hsmul, ← mul_smul, inv_mul_cancel₀ a.ne_zero, one_smul]
   · intro hw
     rw [mem_iUnion] at hw
     obtain ⟨a, v, hv, hvw⟩ := hw

@@ -54,11 +54,12 @@ noncomputable def productDynamics : ConstraintDynamics (CSD.LF4.KSigma (M + 1)) 
     inferInstanceAs (IsFiniteMeasure (CSD.LF4.kMuL p₀))
   kahlerConstraintDynamics (CSD.LF4.manyToOneSchrodingerSetup H hH p₀)
     (fun x => by
-      simp only [CSD.LF4.manyToOneSchrodingerSetup, CSD.LF4.manyToOneSetup_flow,
-        (CSD.LF4.expNegITH_unitary_group hH).2, one_smul, Prod.mk.eta])
+      show (CSD.LF4.schrodingerUnitary hH 0 • x.1, x.2) = (x.1, x.2)
+      rw [(CSD.LF4.expNegITH_unitary_group hH).2, one_smul])
     (fun s t x => by
-      simp only [CSD.LF4.manyToOneSchrodingerSetup, CSD.LF4.manyToOneSetup_flow,
-        (CSD.LF4.expNegITH_unitary_group hH).1, mul_smul])
+      show (CSD.LF4.schrodingerUnitary hH (s + t) • x.1, x.2)
+          = (CSD.LF4.schrodingerUnitary hH s • CSD.LF4.schrodingerUnitary hH t • x.1, x.2)
+      rw [(CSD.LF4.expNegITH_unitary_group hH).1, mul_smul])
 
 /-- The many-to-one product Choice A sector: `pi = Prod.fst` onto the ray space. -/
 noncomputable def productSector : ChoiceASector (M + 1) (productDynamics H hH p₀) :=

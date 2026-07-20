@@ -29,7 +29,14 @@ namespace LF3
 
 /-- Two-element sign type for outcome labels (paper §9.4). -/
 inductive Sign | plus | minus
-  deriving DecidableEq, Fintype, Repr
+  deriving DecidableEq, Repr
+
+/-- `Sign` is a finite type with elements `{plus, minus}`. (Manual instance: the
+`deriving Fintype` handler regressed on a `List.Nodup`/`Multiset.Nodup` coercion under the
+Lean v4.33 toolchain; the explicit instance is equivalent and stable.) -/
+instance : Fintype Sign where
+  elems := {Sign.plus, Sign.minus}
+  complete := fun s => by cases s <;> decide
 
 namespace Sign
 

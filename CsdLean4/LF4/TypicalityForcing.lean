@@ -522,7 +522,7 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
   have hSne : fubiniStudyMeasure p₀ S ≠ 0 := by
     intro h0
     exact (fubiniStudyMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt j i) hgtne)
-      (le_antisymm (h0 ▸ measure_mono hsub) (zero_le _))
+      (le_antisymm (h0 ▸ measure_mono hsub) zero_le')
   -- μFS S ≠ 1: Sᶜ = {m_i < m_j} is open nonempty, hence positive.
   have hScompl : Sᶜ = {p : CPN N | momentMap p i < momentMap p j} := by
     rw [hS]; ext p; simp only [Set.mem_compl_iff, Set.mem_setOf_eq, not_le]

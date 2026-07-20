@@ -229,9 +229,8 @@ lemma measureUncompute_basisState (m x y : Fin 2) :
   by_cases h0 : z 0 = x
   · by_cases h1 : z 1 = y
     · by_cases h2 : z 2 = m
-      · rw [if_pos h2, if_pos (show z 0 = x ∧ z 1 = y from ⟨h0, h1⟩),
-          if_pos (show z 0 = x ∧ z 1 = y ∧ z 2 = m from ⟨h0, h1, h2⟩),
-          one_mul, mul_one, h0, h1, h2]
+      · rw [h0, h1, h2]
+        simp only [and_self, if_true, one_mul, mul_one]
         exact corr_had_eq m x y
       · simp [h2]
     · simp [h1]

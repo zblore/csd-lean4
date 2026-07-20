@@ -219,7 +219,6 @@ theorem cfc_eq_iff_on_eigenvalues {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) {
       = diagonal (RCLike.ofReal ∘ g ∘ hρ.eigenvalues) := by
     have h2 := congrArg (fun M => star (hρ.eigenvectorUnitary : Matrix n n ℂ) * M
       * (hρ.eigenvectorUnitary : Matrix n n ℂ)) h
-    simp only at h2
     rw [collapse, collapse] at h2
     exact h2
   have hd := congrFun (congrFun key i) i

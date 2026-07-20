@@ -393,7 +393,7 @@ theorem cuccaroAdd_preserves_B (L : CuccaroLayout m n) (s : State m) (hZ : s L.Z
       (fun i _ => by simpa using (L.hBZ i).symm)
   intro k hk
   have := hP2 k hk
-  simpa using this
+  rw [cuccaroAdd]; simpa using this
 
 /-- **The carry-clean property.** The ancilla `Z` returns to `false`: the Cuccaro adder borrows the
 low-carry wire clean and returns it clean, so it is reusable in place with no fresh ancilla. This is

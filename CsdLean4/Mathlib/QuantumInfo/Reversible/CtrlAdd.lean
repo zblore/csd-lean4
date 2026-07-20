@@ -88,6 +88,16 @@ theorem cfullAdder_apply_of_ne {ctrl a b cin cout anc w : Fin n}
   rcases hg with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     simp_all [gateWires]
 
+-- Budget note: under the Lean v4.33 toolchain the pre-upgrade proof (one `simp only` chain building
+-- the full `Function.update` gate-read term, then a 4-wire `cases` generalising over that large term)
+-- hit a `(deterministic) timeout at isDefEq` even at 2000000 heartbeats — 4.33's `isDefEq`/`simp` is
+-- far slower for this shape. Restructured: the four Boolean wire values are cased FIRST (recording
+-- `s ctrl = …` etc.), so each of the 16 branches unfolds `denote` on concrete Booleans and the
+-- intermediate term never grows; the read-out `Function.update` chain then resolves per-branch via
+-- `update_apply` + the distinctness hyps, and each leaf closes by Boolean computation. The proof now
+-- fits within the *default* 200000 heartbeats; the modest explicit budget below is kept only as
+-- CI-machine-variance headroom.
+set_option maxHeartbeats 400000 in
 set_option linter.unusedSimpArgs false in
 set_option linter.unusedVariables false in
 /-- **Controlled-full-adder correctness, general `Fin n` wires.** For pairwise-distinct wires
@@ -109,15 +119,17 @@ theorem cfullAdder_correct_general {ctrl a b cin cout anc : Fin n}
       ∧ (denote (cfullAdder ctrl a b cin cout anc) s a = s a)
       ∧ (denote (cfullAdder ctrl a b cin cout anc) s cin = s cin)
       ∧ (denote (cfullAdder ctrl a b cin cout anc) s ctrl = s ctrl) := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
-    simp only [cfullAdder, denote_cons, denote_nil, denoteGate] <;>
-    simp_all [Function.update_apply, hctrla, hctrlb, hctrlcin, hctrlcout, hctrlanc, hab, hacin,
-      hacout, haanc, hbcin, hbcout, hbanc, hcincout, hcinanc, hcoutanc,
-      hctrla.symm, hctrlb.symm, hctrlcin.symm, hctrlcout.symm, hctrlanc.symm, hab.symm, hacin.symm,
-      hacout.symm, haanc.symm, hbcin.symm, hbcout.symm, hbanc.symm, hcincout.symm, hcinanc.symm,
-      hcoutanc.symm] <;>
-    cases s ctrl <;> cases s a <;> cases s b <;> cases s cin <;>
-    simp_all [majority]
+  cases hsctrl : s ctrl <;> cases hsa : s a <;> cases hsb : s b <;> cases hscin : s cin <;>
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
+    simp only [cfullAdder, denote_cons, denote_nil, denoteGate,
+      Function.update_apply, hcout, hanc, hsctrl, hsa, hsb, hscin,
+      hctrla, hctrlb, hctrlcin, hctrlcout, hctrlanc, hab, hacin, hacout, haanc, hbcin, hbcout,
+      hbanc, hcincout, hcinanc, hcoutanc, hctrla.symm, hctrlb.symm, hctrlcin.symm, hctrlcout.symm,
+      hctrlanc.symm, hab.symm, hacin.symm, hacout.symm, haanc.symm, hbcin.symm, hbcout.symm,
+      hbanc.symm, hcincout.symm, hcinanc.symm, hcoutanc.symm, majority,
+      eq_self_iff_true, or_self, or_false, false_or, if_true, if_false,
+      Bool.xor_false, Bool.xor_true, Bool.and_false, Bool.and_true, Bool.or_false, Bool.or_true,
+      Bool.not_true, Bool.not_false, Bool.false_eq_true]
 
 /-! ### The controlled ripple adder (general `n`): correctness
 

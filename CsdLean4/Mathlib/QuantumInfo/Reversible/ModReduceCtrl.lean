@@ -264,6 +264,7 @@ theorem modReduce_correct (L : ModReduceLayout m n) (s : State m)
   -- STEP 1 value of B (= step-one register B = L.B)
   have hB1 : regValRange L.B s1 n = (regValRange L.A1 s n + x) % 2 ^ n := by
     have := rippleCirc_correct L.stepOne s (by intro j; exact hC1 j)
+    rw [← hs1def] at this
     simpa [ModReduceLayout.stepOne, hx] using this
   rw [hA1] at hB1
   -- STEP 1 flag (= carry-out C1 n) = decide (N ≤ x)
