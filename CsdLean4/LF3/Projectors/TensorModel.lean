@@ -138,7 +138,7 @@ lemma TensorEmbedding.liftA_liftB_commute_apply
   -- Apply at y; both sides unfold via composition.
   have hPoint := DFunLike.congr_fun h y
   -- hPoint : (T.liftA f ∘L T.liftB g) y = (T.liftB g ∘L T.liftA f) y
-  simp only [ContinuousLinearMap.coe_comp', Function.comp_apply] at hPoint
+  simp only [ContinuousLinearMap.coe_comp, Function.comp_apply] at hPoint
   exact hPoint.symm
 
 /-! ### ProjectorAlgebra constructor -/

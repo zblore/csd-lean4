@@ -143,7 +143,7 @@ block, of the dilated barycentric-cell frequencies — converges, on a single
 almost-sure event, to the POVM Born weight `pᵢ(ψ)`.
 
 Composes the general-`N` per-cell convergence `born_frequency_convergence_N` (joint
-a.s. over all `M+1` cells) with the finite block sum (`tendsto_finset_sum`), landing
+a.s. over all `M+1` cells) with the finite block sum (`tendsto_finsetSum`), landing
 the limit on `pᵢ(ψ)` via the P.3a block decomposition. Carving-free, Gleason-free —
 the empirical → Born chain for a general (non-projective) POVM runs entirely on the
 ontic FS-volume derivation, no `busch_effect_gleason`. Honest scope: dilation
@@ -176,7 +176,7 @@ theorem povm_born_frequency_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilatio
   filter_upwards [born_frequency_convergence_N p₀ ψ' hψ'0 hnorm hpos X hX hlaw hindep]
     with ω hω
   intro i
-  have hlim := tendsto_finset_sum (Finset.univ : Finset (Fin N))
+  have hlim := tendsto_finsetSum (Finset.univ : Finset (Fin N))
     (fun n (_ : n ∈ Finset.univ) => hω (e (n, i)))
   rwa [show (∑ n : Fin N, ‖inner ℂ (EuclideanSpace.single (e (n, i)) (1 : ℂ)) ψ'‖ ^ 2)
         = P.weight ψ i from by

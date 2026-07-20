@@ -263,7 +263,7 @@ theorem cglmpLHV_eq_integral [NeZero d] (μ : Measure Λ) [IsProbabilityMeasure 
   rw [cglmpLHV, cglmp, show (fun l => cglmp d (F l))
       = (fun l => ∑ k ∈ Finset.range (d / 2),
           (1 - 2 * (k : ℝ) / ((d : ℝ) - 1)) * cglmpBracket d (F l) k) from rfl,
-    integral_finset_sum _ (fun k _ => (hbint k).const_mul _)]
+    integral_finsetSum _ (fun k _ => (hbint k).const_mul _)]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [integral_const_mul, hbracket k]
 
@@ -286,7 +286,7 @@ lemma cglmpDet_integrable [NeZero d] (μ : Measure Λ) [IsProbabilityMeasure μ]
       (detTable_integrable μ A B hA hB true true _)).add
       (detTable_integrable μ A B hA hB false true _))
   simp only [cglmp]
-  exact integrable_finset_sum _ (fun k _ => (hbint k).const_mul _)
+  exact integrable_finsetSum _ (fun k _ => (hbint k).const_mul _)
 
 /-- **The LHV-to-finite-optimisation bound (general `d`, load-bearing).** If every
 deterministic strategy `(a1, a2, b1, b2) ∈ (ZMod d)^4` has CGLMP value `≤ C`, then
@@ -515,7 +515,7 @@ theorem scaledDetZ_le_general [NeZero d] (hd : 2 ≤ d) (a1 a2 b1 b2 : ZMod d) :
   obtain ⟨t, ht⟩ := hdvd
   have htge : -1 ≤ t := by
     by_contra hcon
-    push_neg at hcon
+    push Not at hcon
     have ht2 : t ≤ -2 := by omega
     have hmul : (d:ℤ) * t ≤ (d:ℤ) * (-2) := mul_le_mul_of_nonneg_left ht2 (le_of_lt hdpos)
     nlinarith [ht, hqZ, hsZ, hp0, hr0]

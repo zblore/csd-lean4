@@ -106,7 +106,7 @@ theorem projWeight_rankOne (k : Fin (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 
     projWeight (rankOneProj k) ψ = ‖inner ℂ (EuclideanSpace.single k (1 : ℂ)) ψ‖ ^ 2 := by
   simp only [projWeight, rankOneProj, ContinuousLinearMap.coe_coe,
     ContinuousLinearMap.smulRight_apply, innerSL_apply_apply, norm_smul,
-    EuclideanSpace.norm_single, norm_one, mul_one]
+    PiLp.norm_single, norm_one, mul_one]
 
 /-- **The ontic and Lüders conditioning weights coincide (operational equivalence, per outcome).** For
 each pointer outcome `i`, `μL(π⁻¹ bornRegion i) = projWeight (rankOneProj i) ψ`: the ontic Liouville

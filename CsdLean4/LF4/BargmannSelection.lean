@@ -129,7 +129,7 @@ theorem projUnitary_isClopen_of_bargmann_continuous
   have hset : {t : ℝ | ProjUnitary d t}
       = bargmannObservable d p q r ⁻¹' {bargmann p q r} := by
     ext t
-    simp only [Set.mem_setOf_eq, Set.mem_preimage, Set.mem_singleton_iff]
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_singleton_iff]
     constructor
     · intro h
       exact bargmannObservable_of_projUnitary h p q r
@@ -146,7 +146,7 @@ theorem projUnitary_isClopen_of_bargmann_continuous
   have hsetc : {t : ℝ | ProjUnitary d t}ᶜ
       = bargmannObservable d p q r ⁻¹' {(starRingEnd ℂ) (bargmann p q r)} := by
     ext t
-    simp only [Set.mem_compl_iff, Set.mem_setOf_eq, Set.mem_preimage,
+    simp only [Set.mem_compl_iff, Set.mem_ofPred_eq, Set.mem_preimage,
       Set.mem_singleton_iff]
     constructor
     · intro h

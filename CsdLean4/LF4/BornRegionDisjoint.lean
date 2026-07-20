@@ -327,8 +327,8 @@ theorem bornOutcome_ae_isSome (p₀ : CPN (M + 1))
   refine measure_mono_null (t := (⋃ i, bornRegion ψ hψ0 i)ᶜ) ?_
     (bornRegion_ae_cover p₀ ψ hψ0 hψ)
   intro p hp
-  simp only [Set.mem_compl_iff, Set.mem_setOf_eq, Set.mem_iUnion] at hp ⊢
-  push_neg
+  simp only [Set.mem_compl_iff, Set.mem_ofPred_eq, Set.mem_iUnion] at hp ⊢
+  push Not
   -- if `p ∈ cell i` then `bornOutcome = some i` is `isSome`, contradiction
   intro i hpi
   apply hp

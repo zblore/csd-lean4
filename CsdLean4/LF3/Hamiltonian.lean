@@ -119,7 +119,7 @@ theorem hTotal_isSelfAdjoint {S : SystemApparatusSetup K_A K_B H_SA}
     ∀ x y, inner ℂ (hTotal R x) y = inner ℂ x (hTotal R y) := by
   intro x y
   unfold hTotal
-  simp only [ContinuousLinearMap.add_apply, inner_add_left, inner_add_right]
+  simp only [add_apply, inner_add_left, inner_add_right]
   rw [R.hA_selfAdjoint, R.hB_selfAdjoint]
 
 /-- Factorisation of the measurement unitary (paper §3.6). Field re-export

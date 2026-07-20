@@ -38,7 +38,7 @@ spectral identity. The headline result here is `hermitian_inner_spectral_expansi
 ## Proof route
 
 Uses Mathlib's `Matrix.IsHermitian.mulVec_eigenvectorBasis` (eigenvalue
-equation `A uᵢ = λᵢ • uᵢ`), `Matrix.isHermitian_iff_isSymmetric`
+equation `A uᵢ = λᵢ • uᵢ`), `Matrix.isSymmetric_toEuclideanLin_iff.symm`
 (self-adjointness of the linear-map action), and
 `OrthonormalBasis.sum_inner_mul_inner` (Parseval). The chain:
 
@@ -82,7 +82,7 @@ theorem hermitian_inner_spectral_expansion
   intro i _
   -- Step 2: use self-adjointness + eigenvalue equation to rewrite ⟨uᵢ, A ψ⟩.
   have hSym : A.toEuclideanLin.IsSymmetric :=
-    (Matrix.isHermitian_iff_isSymmetric).mp hA
+    (Matrix.isSymmetric_toEuclideanLin_iff.symm).mp hA
   have hEigAct : A.toEuclideanLin (hA.eigenvectorBasis i)
       = (hA.eigenvalues i : ℂ) • hA.eigenvectorBasis i := by
     -- `simp` discharges the eigenvalue equation `A uᵢ = λᵢ • uᵢ` directly via the

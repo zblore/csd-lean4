@@ -274,7 +274,7 @@ lemma spectralOntic_integrable {N M : ℕ} {A : Matrix (Fin N) (Fin N) ℂ}
   -- The Dirac-product measure is a probability measure (Dirac and Haar T² both are).
   haveI : IsProbabilityMeasure ((Measure.dirac p₀).prod (volume : Measure KTorus)) :=
     inferInstance
-  apply integrable_finset_sum
+  apply integrable_finsetSum
   intros i _
   refine Integrable.const_mul ?_ _
   exact MeasureTheory.Integrable.indicator (integrable_const (1 : ℝ))
@@ -295,7 +295,7 @@ theorem integral_spectralOntic_eq_inner_re {N M : ℕ}
   unfold spectralOntic
   haveI : IsProbabilityMeasure ((Measure.dirac p₀).prod (volume : Measure KTorus)) :=
     inferInstance
-  rw [MeasureTheory.integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · -- Step 1: per-term integral = λᵢ * (μ(R_i)).toReal = λᵢ * bornWeights i.
     have h_each : ∀ i : Fin N,
         ∫ σ, hA.eigenvalues i *

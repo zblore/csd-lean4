@@ -128,7 +128,7 @@ theorem e91_chsh_concentration [IsProbabilityMeasure μ]
   have hset : {ω | empiricalCHSH Y n ω ≤ S - ε}
       = {ω | (n : ℝ) * ε ≤ ∑ i ∈ Finset.range n, X i ω} := by
     ext ω
-    simp only [Set.mem_setOf_eq, empiricalCHSH, hXapp]
+    simp only [Set.mem_ofPred_eq, empiricalCHSH, hXapp]
     rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul,
       div_le_iff₀ hnpos]
     constructor <;> intro h <;> nlinarith [h]

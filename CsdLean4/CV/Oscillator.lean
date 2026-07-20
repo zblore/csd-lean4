@@ -3,7 +3,7 @@ Copyright (c) 2026 CSD contributors. All rights reserved.
 -/
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Data.Complex.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic.NoncommRing
 
 /-!

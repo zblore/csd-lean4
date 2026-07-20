@@ -615,7 +615,7 @@ theorem matrix_integrable_of_entry {μ : Measure ℝ} {F : ℝ → Matrix n n �
     · intro i _ hi; rw [Finset.sum_eq_zero]; intro j _; simp [hi]
     · intro h; exact absurd (Finset.mem_univ a) h
   rw [hsum]
-  refine integrable_finset_sum _ (fun i _ => integrable_finset_sum _ (fun j _ => ?_))
+  refine integrable_finsetSum _ (fun i _ => integrable_finsetSum _ (fun j _ => ?_))
   exact (hent i j).smul_const _
 
 /-- The spectral (conjugation) form of the Hermitian CFC as a bare matrix product:
@@ -664,7 +664,7 @@ theorem cfc_integral_commute {μ : Measure ℝ} {A : Matrix n n ℂ} (hA : A.IsH
     filter_upwards with s
     rw [cfc_eq_eigenvectorUnitary_mul hA (g s), conj_diagonal_apply]
   rw [lhs_int,
-    integral_finset_sum (G := ℂ) Finset.univ
+    integral_finsetSum (G := ℂ) Finset.univ
       (f := fun k s => U i k * (Complex.ofReal (g s (lam k))) * (star U) k j)
       (fun k _ => (((hg k).ofReal).const_mul (U i k)).mul_const ((star U) k j))]
   have summand : ∀ k, (∫ s, U i k * (Complex.ofReal (g s (lam k))) * (star U) k j ∂μ)
@@ -694,7 +694,7 @@ theorem isClosed_posSemidef : IsClosed {M : Matrix n n ℂ | M.PosSemidef} := by
   have heq : {M : Matrix n n ℂ | M.PosSemidef}
       = {M | M.IsHermitian} ∩ ⋂ x : n → ℂ, {M | 0 ≤ star x ⬝ᵥ (M *ᵥ x)} := by
     ext M
-    simp only [Set.mem_setOf_eq, Set.mem_inter_iff, Set.mem_iInter,
+    simp only [Set.mem_ofPred_eq, Set.mem_inter_iff, Set.mem_iInter,
       Matrix.posSemidef_iff_dotProduct_mulVec]
   rw [heq]
   refine IsClosed.inter ?_ (isClosed_iInter (fun x => ?_))
@@ -712,7 +712,7 @@ instance : ClosedIciTopology (Matrix n n ℂ) := by
   constructor
   intro a
   have hpre : Set.Ici a = (fun M => M - a) ⁻¹' {M : Matrix n n ℂ | M.PosSemidef} := by
-    ext M; simp only [Set.mem_Ici, Set.mem_preimage, Set.mem_setOf_eq, Matrix.le_iff]
+    ext M; simp only [Set.mem_Ici, Set.mem_preimage, Set.mem_ofPred_eq, Matrix.le_iff]
   rw [hpre]
   exact isClosed_posSemidef.preimage (by fun_prop)
 
@@ -721,7 +721,7 @@ instance : OrderClosedTopology (Matrix n n ℂ) := by
   constructor
   have hpre : {p : Matrix n n ℂ × Matrix n n ℂ | p.1 ≤ p.2}
       = (fun p => p.2 - p.1) ⁻¹' {M : Matrix n n ℂ | M.PosSemidef} := by
-    ext p; simp only [Set.mem_setOf_eq, Set.mem_preimage, Matrix.le_iff]
+    ext p; simp only [Set.mem_ofPred_eq, Set.mem_preimage, Matrix.le_iff]
   rw [hpre]
   exact isClosed_posSemidef.preimage (by fun_prop)
 

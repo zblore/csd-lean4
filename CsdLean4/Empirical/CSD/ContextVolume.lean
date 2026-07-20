@@ -243,7 +243,7 @@ Carving-free, Gleason-free, unconditional — no genericity hypothesis (every un
 preparation, eigenvectors of any block included).
 Proof: take the single a.s. event from `context_born_frequency_volume` (which gives
 **every** ray `i`'s convergence simultaneously) and sum the block's per-ray
-convergences via `tendsto_finset_sum`. The per-ray frequency summand is verbatim the
+convergences via `tendsto_finsetSum`. The per-ray frequency summand is verbatim the
 conclusion of `context_born_frequency_volume`, so the per-ray limits feed in directly.
 
 This closes the rank-1 scope note of `context_born_frequency_volume`: degenerate-
@@ -278,7 +278,7 @@ theorem block_born_frequency_volume
           ‖inner ℂ (B i) ψ‖ ^ 2)) := by
   have h := context_born_frequency_volume p₀ B ψ hψ X hX hlaw hindep
   filter_upwards [h] with ω hω
-  exact tendsto_finset_sum _ (fun i _ => hω i)
+  exact tendsto_finsetSum _ (fun i _ => hω i)
 
 /-! ### The union-event restatement (the owed `aeece86` form) -/
 

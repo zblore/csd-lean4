@@ -46,7 +46,7 @@ theorem fs_moment_pushforward_uniform_of_joint_dirichlet (p₀ : CPN 2) :
   -- `openSimplexFree` on `Fin 1 → ℝ` is the `e`-preimage of `Ioo 0 1`.
   have hpre : (openSimplexFree (M := 1)) = e ⁻¹' (Set.Ioo (0 : ℝ) 1) := by
     ext t
-    simp only [openSimplexFree, Set.mem_setOf_eq, Set.mem_preimage, he,
+    simp only [openSimplexFree, Set.mem_ofPred_eq, Set.mem_preimage, he,
       MeasurableEquiv.funUnique_apply, Set.mem_Ioo, Fin.sum_univ_one, Fin.forall_fin_one,
       Fin.default_eq_zero]
   rw [hfun, ← Measure.map_map e.measurable (measurable_ratio_momentMap (M := 1)),

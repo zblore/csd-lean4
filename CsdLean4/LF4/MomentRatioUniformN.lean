@@ -244,9 +244,9 @@ theorem hasFDerivAt_PsiN (y : Fin (M + 1) → ℝ) : HasFDerivAt PsiN (psiFDeriv
     show _ = ∑ j, psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k)) (Fin.last M) j * v j
     rw [Fin.sum_univ_castSucc]
     simp only [psiMat, Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last,
-      ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
-      ContinuousLinearMap.sub_apply, ContinuousLinearMap.zero_apply,
-      ContinuousLinearMap.coe_sum', Finset.sum_apply, ContinuousLinearMap.proj_apply,
+      add_apply, FunLike.coe_smul, Pi.smul_apply,
+      sub_apply, zero_apply,
+      FunLike.coe_sum, Finset.sum_apply, ContinuousLinearMap.proj_apply,
       smul_eq_mul]
     simp only [zero_sub, Finset.mul_sum, mul_neg, neg_mul, Finset.sum_neg_distrib]
     ring
@@ -271,7 +271,7 @@ theorem hasFDerivAt_PsiN (y : Fin (M + 1) → ℝ) : HasFDerivAt PsiN (psiFDeriv
     show _ = ∑ j, psiMat (y (Fin.last M)) (fun k => y (Fin.castSucc k)) (Fin.castSucc k) j * v j
     rw [Fin.sum_univ_castSucc]
     simp only [psiMat, Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last,
-      ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
+      add_apply, FunLike.coe_smul, Pi.smul_apply,
       ContinuousLinearMap.proj_apply, smul_eq_mul]
     rw [Finset.sum_eq_single k]
     · simp; ring
@@ -294,7 +294,7 @@ def posQuadrant : Set (Fin (M + 1) → ℝ) := {s | ∀ i, 0 < s i}
 
 theorem measurableSet_domainN : MeasurableSet (domainN (M := M)) := by
   have h1 : MeasurableSet {y : Fin (M + 1) → ℝ | ∀ k, 0 < y (Fin.castSucc k)} := by
-    rw [Set.setOf_forall]
+    rw [Set.ofPred_forall]
     exact MeasurableSet.iInter fun k => measurableSet_lt measurable_const (measurable_pi_apply _)
   have hsum : Measurable (fun y : Fin (M + 1) → ℝ => ∑ k, y (Fin.castSucc k)) :=
     Finset.measurable_sum Finset.univ fun k _ => measurable_pi_apply _
@@ -302,7 +302,7 @@ theorem measurableSet_domainN : MeasurableSet (domainN (M := M)) := by
     (measurableSet_lt measurable_const (measurable_pi_apply _)))
 
 theorem measurableSet_posQuadrant : MeasurableSet (posQuadrant (M := M)) := by
-  rw [posQuadrant, Set.setOf_forall]
+  rw [posQuadrant, Set.ofPred_forall]
   exact MeasurableSet.iInter fun i => measurableSet_lt measurable_const (measurable_pi_apply i)
 
 /-- **Total-sum recovery.** `∑ i, Ψ_N(y) i = y last = S`. The inverse-map crux:
@@ -335,7 +335,7 @@ theorem injOn_PsiN : InjOn (PsiN (M := M)) domainN := by
 /-- **D.4b: the image of `Ψ_N` over the domain is the positive quadrant.** -/
 theorem image_PsiN : PsiN '' (domainN : Set (Fin (M + 1) → ℝ)) = posQuadrant := by
   ext s
-  simp only [mem_image, domainN, posQuadrant, Set.mem_setOf_eq]
+  simp only [mem_image, domainN, posQuadrant, Set.mem_ofPred_eq]
   constructor
   · -- (⊆) every coordinate of Ψ_N y is positive on the domain.
     rintro ⟨y, ⟨ht, hsum, hS⟩, rfl⟩ i
@@ -386,7 +386,7 @@ def openSimplexFree : Set (Fin M → ℝ) := {t | (∀ k, 0 < t k) ∧ ∑ k, t 
 
 theorem measurableSet_openSimplexFree : MeasurableSet (openSimplexFree (M := M)) := by
   have h1 : MeasurableSet {t : Fin M → ℝ | ∀ k, 0 < t k} := by
-    rw [Set.setOf_forall]
+    rw [Set.ofPred_forall]
     exact MeasurableSet.iInter fun k => measurableSet_lt measurable_const (measurable_pi_apply k)
   have h2 : Measurable (fun t : Fin M → ℝ => ∑ k, t k) :=
     Finset.measurable_sum Finset.univ fun k _ => measurable_pi_apply _
@@ -440,7 +440,7 @@ theorem ratioSqNorm_map_expHalf_pi :
     by_cases hs : s ∈ posQuadrant
     · rw [if_pos hs]
     · rw [if_neg hs, hF]
-      simp only [posQuadrant, Set.mem_setOf_eq, not_forall, not_lt] at hs
+      simp only [posQuadrant, Set.mem_ofPred_eq, not_forall, not_lt] at hs
       obtain ⟨i, hi⟩ := hs
       refine mul_eq_zero.mpr (Or.inl ?_)
       refine Finset.prod_eq_zero (Finset.mem_univ i) ?_
@@ -495,7 +495,7 @@ theorem ratioSqNorm_map_expHalf_pi :
   have hdom : domainN (M := M) = e ⁻¹' (Set.Ioi 0 ×ˢ openSimplexFree) := by
     ext y
     simp only [domainN, openSimplexFree, Set.mem_preimage, he, Set.mem_prod, Set.mem_Ioi,
-      Set.mem_setOf_eq]
+      Set.mem_ofPred_eq]
     exact ⟨fun ⟨h1, h2, h3⟩ => ⟨h3, h1, h2⟩, fun ⟨h3, h1, h2⟩ => ⟨h1, h2, h3⟩⟩
   -- Volume MP for `e`.
   have hmp : MeasurePreserving e (volume : Measure (Fin (M + 1) → ℝ))

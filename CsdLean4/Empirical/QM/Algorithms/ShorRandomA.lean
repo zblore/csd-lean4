@@ -163,7 +163,7 @@ theorem card_v2_orderOf_le {G : Type*} [Group G] [Fintype G] [IsCyclic G]
   have hn0 : n ≠ 0 := Fintype.card_ne_zero
   have hcpos : 1 ≤ c := by
     rw [hc, Nat.one_le_iff_ne_zero, Ne, Nat.factorization_eq_zero_iff]
-    push_neg
+    push Not
     exact ⟨Nat.prime_two, even_iff_two_dvd.mp hev, hn0⟩
   -- It suffices to show the class injects into a parity class of `Fin n` (card `n/2`).
   -- Case split on `k = c`.
@@ -1289,7 +1289,7 @@ Instantiating the `m`-fold coprime transport `shor_random_a_success_pi` (gen-D) 
 factorisation of an arbitrary odd composite `N` closes the Shor random-`a` success bound for any
 odd `N` with at least two distinct prime factors. The indexing family is `↥N.primeFactors` (the
 Finset-as-subtype), with `N' p = p ^ (N.factorization p)`. The two product facts are ready-made in
-Mathlib (`Nat.prod_pow_primeFactors_factorization`, `Nat.pairwise_coprime_pow_primeFactors_factorization`);
+Mathlib (`Nat.prod_primeFactors_coe_pow_factorization`, `Nat.pairwise_coprime_pow_primeFactors_factorization`);
 the gen-D side-conditions are discharged from primality exactly as in the two-prime-power headline
 `shor_random_a_success` (each `p ∈ N.primeFactors` is an odd prime since `p ∣ N` and `N` is odd, so
 its prime-power factor is cyclic with `orderOf (-1) = 2`). The free-index pair `i₁ ≠ i₀` comes from
@@ -1306,7 +1306,7 @@ with at least two distinct prime factors, the Shor "GOOD" event covers at least 
 A uniformly random unit `a` mod `N` has even multiplicative order and `a^(r/2) ≢ -1` (so the
 order-finding step yields a non-trivial factor of `N`) with probability `≥ 1/2`. Proof: instantiate
 `shor_random_a_success_pi` (gen-D) at `ι := ↥N.primeFactors`, `N' p := p ^ (N.factorization p)`.
-The product `∏ N' = N` is `Nat.prod_pow_primeFactors_factorization`; the pairwise coprimality is
+The product `∏ N' = N` is `Nat.prod_primeFactors_coe_pow_factorization`; the pairwise coprimality is
 `Nat.pairwise_coprime_pow_primeFactors_factorization`. Per-factor: each `p ∈ N.primeFactors` is an
 odd prime (`p ∣ N`, `N` odd), so `ZMod (p^α)`ˣ is cyclic (`ZMod.isCyclic_units_of_prime_pow`) and
 `orderOf (-1) = 2` (`orderOf_neg_one`, `ringChar = p^α ≠ 2`). The free index pair `i₁ ≠ i₀` comes
@@ -1325,7 +1325,7 @@ theorem shor_random_a_success_general (N : ℕ) [NeZero N] (hodd : Odd N)
   -- the prime-power factorisation as an indexed family over `↥N.primeFactors`
   set N' : N.primeFactors → ℕ := fun p => (p : ℕ) ^ N.factorization p with hN'def
   -- ∏ N' = N
-  have hprod : N = ∏ p, N' p := Nat.prod_pow_primeFactors_factorization hN0
+  have hprod : N = ∏ p, N' p := Nat.prod_primeFactors_coe_pow_factorization hN0
   -- pairwise coprimality
   have hcop : Pairwise (Function.onFun Nat.Coprime N') :=
     Nat.pairwise_coprime_pow_primeFactors_factorization

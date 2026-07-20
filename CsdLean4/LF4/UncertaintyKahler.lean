@@ -103,7 +103,7 @@ theorem QM_variance_eq_spectralVariance {N : ℕ}
     CSD.Empirical.Uncertainty.variance A.toEuclideanLin ψ
       = spectralVariance hA ψ := by
   rw [variance_eq_norm_sq_sub_expectation_sq
-        (Matrix.isHermitian_iff_isSymmetric.mp hA) hψ,
+        (Matrix.isSymmetric_toEuclideanLin_iff.symm.mp hA) hψ,
       spectralVariance_eq_hilbert_norm_sq_diff hA hψ]
 
 /-- **QM variance ↔ ontic-side integrated variance**: composition of the
@@ -147,8 +147,8 @@ theorem kahler_robertson_ontic_variance {N M : ℕ}
       ← QM_variance_eq_integral_spectralOnticCentered hB hψ p₀]
   exact CSD.Empirical.Uncertainty.robertson_uncertainty
     A.toEuclideanLin B.toEuclideanLin
-    (Matrix.isHermitian_iff_isSymmetric.mp hA)
-    (Matrix.isHermitian_iff_isSymmetric.mp hB) ψ
+    (Matrix.isSymmetric_toEuclideanLin_iff.symm.mp hA)
+    (Matrix.isSymmetric_toEuclideanLin_iff.symm.mp hB) ψ
 
 end LF4
 end CSD

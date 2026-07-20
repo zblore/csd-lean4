@@ -120,7 +120,7 @@ theorem povm_born_frequency_volume_evolved {M : ℕ} {N : ℕ} {ι : Type*} [Fin
   filter_upwards [unitaryFlowSetup_born_frequency_evolved U p₀ t ψ' hψ'0 hnorm hpos X hX hlaw hindep]
     with ω hω
   intro i
-  have hlim := tendsto_finset_sum (Finset.univ : Finset (Fin N))
+  have hlim := tendsto_finsetSum (Finset.univ : Finset (Fin N))
     (fun n (_ : n ∈ Finset.univ) => hω (e (n, i)))
   rwa [show (∑ n : Fin N, ‖inner ℂ (EuclideanSpace.single (e (n, i)) (1 : ℂ)) ψ'‖ ^ 2)
         = P.weight ψ i from by

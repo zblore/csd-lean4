@@ -101,7 +101,7 @@ theorem unifiedDeisolationModel_ae_total (hψ' : ‖ψ'‖ = 1) :
     have hset : {p : CPN (M + 1) | (vnPointerOutcome ψ' hψ'0 e (measurementFlow N e p)).isSome}
         = ⋃ i : Fin N, (fun p => vnPointerOutcome ψ' hψ'0 e (measurementFlow N e p)) ⁻¹' {some i} := by
       ext p
-      simp only [Set.mem_setOf_eq, Option.isSome_iff_exists, Set.mem_iUnion, Set.mem_preimage,
+      simp only [Set.mem_ofPred_eq, Option.isSome_iff_exists, Set.mem_iUnion, Set.mem_preimage,
         Set.mem_singleton_iff]
     rw [hset]
     refine MeasurableSet.iUnion (fun i => ?_)

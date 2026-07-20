@@ -1,6 +1,6 @@
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Real.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Data.Complex.Basic
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.Fintype.Prod
@@ -144,7 +144,7 @@ theorem no_lhv_hardy :
   have h_exists_pos : ∃ x ∈ univ.filter
       (fun x : Outcome => x.1 = 1 ∧ x.2.2.1 = 1), 0 < p x := by
     by_contra h_none
-    push_neg at h_none
+    push Not at h_none
     have h_all_zero : ∀ x ∈ univ.filter
         (fun x : Outcome => x.1 = 1 ∧ x.2.2.1 = 1), p x = 0 := by
       intro x hx

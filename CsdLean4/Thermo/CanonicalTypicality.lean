@@ -345,7 +345,7 @@ theorem fsFirstMoment_diag [NeZero N] (p₀ : CPN N) (i : Fin N) :
   have hall : ∀ k : Fin N, ∫ p, momentMap p k ∂μ = ∫ p, momentMap p i ∂μ :=
     fun k => (fsFirstMoment_diag_swap p₀ i k).symm
   have hsum : ∑ k : Fin N, ∫ p, momentMap p k ∂μ = 1 := by
-    rw [← integral_finset_sum Finset.univ (fun k _ => momentMap_integrable p₀ k)]
+    rw [← integral_finsetSum Finset.univ (fun k _ => momentMap_integrable p₀ k)]
     have hone : (fun p => ∑ k : Fin N, momentMap p k) = fun _ => (1 : ℝ) := by
       funext p; exact momentMap_sum_eq_one p
     rw [hone, integral_const, probReal_univ, one_smul]
@@ -440,7 +440,7 @@ theorem canonical_typicality_expectation [NeZero N] [NeZero dS] [NeZero dE]
   have hfun : (fun p => reducedRayDensity e p i i')
       = fun p => ∑ k : Fin dE, rayDensity p (e (i, k)) (e (i', k)) := by
     funext p; exact reducedRayDensity_apply e p i i'
-  rw [hfun, integral_finset_sum Finset.univ
+  rw [hfun, integral_finsetSum Finset.univ
         (fun k _ => rayDensity_integrable p₀ (e (i, k)) (e (i', k)))]
   -- each summand is the first-moment entry = (N)⁻¹ * delta_{i i'}
   have hentry : ∀ k : Fin dE, ∫ p, rayDensity p (e (i, k)) (e (i', k)) ∂(fubiniStudyMeasure p₀)

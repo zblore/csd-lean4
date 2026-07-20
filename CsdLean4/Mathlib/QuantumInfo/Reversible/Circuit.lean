@@ -69,7 +69,7 @@ theorem denoteGate_involutive (g : Gate n) : Function.Involutive (denoteGate g) 
   | CCX c₁ c₂ t =>
     by_cases h : t = c₁ ∨ t = c₂
     · simp [denoteGate, h]
-    · push_neg at h
+    · push Not at h
       obtain ⟨h1, h2⟩ := h
       funext k
       simp only [denoteGate, if_neg (not_or.mpr ⟨h1, h2⟩), Function.update_apply]

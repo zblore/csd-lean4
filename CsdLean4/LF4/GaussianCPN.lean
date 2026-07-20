@@ -244,7 +244,7 @@ lemma gaussianCPN_smul_invariant [NeZero N] (p₀ : CPN N) (U : Matrix.unitaryGr
     refine ae_iff.mpr ?_
     refine measure_mono_null ?_ gaussianHN_singleton_zero
     intro v hv
-    simp only [Set.mem_setOf_eq, Function.comp_apply] at hv
+    simp only [Set.mem_ofPred_eq, Function.comp_apply] at hv
     by_contra hv0
     simp only [Set.mem_singleton_iff] at hv0
     apply hv

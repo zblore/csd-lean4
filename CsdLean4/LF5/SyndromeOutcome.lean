@@ -23,7 +23,7 @@ dilation, no new flow, no new physics. The module only imports and assembles.
   pointers `i ∈ class s` and the apparatus index `n : Fin 8` of the per-cell
   empirical frequencies — converges to `syndromeWeight ψ s` (the block sum of
   the computational-basis Born weights, `SyndromeFlow.lean`). Proof: a finite
-  class sum (`tendsto_finset_sum`) of the per-pointer
+  class sum (`tendsto_finsetSum`) of the per-pointer
   `vnDilation_pointer_frequency` limits, landing on `syndromeWeight` via
   `syndromeWeight_eq_pointer_sum`.
 * `synOutcome` + `synOutcome_preimage_some`: the per-microstate **syndrome**
@@ -94,11 +94,11 @@ and the apparatus index `n : Fin 8`, of the per-cell empirical frequencies
 
 Proof: `filter_upwards` on `vnDilation_pointer_frequency`; the a.s. ω gives, for
 each pointer `i`, convergence of the pointer-`i` block frequency to `‖⟨eᵢ,ψ⟩‖²`.
-Sum over the class `Finset.univ.filter (synClass · = s)` by `tendsto_finset_sum`
+Sum over the class `Finset.univ.filter (synClass · = s)` by `tendsto_finsetSum`
 (continuity of finite addition); the limit `∑_{i ∈ class s} ‖⟨eᵢ,ψ⟩‖²` is
 `syndromeWeight ψ s` (`syndromeWeight_eq_inner_sum`). The syndrome-block
 frequency function is presented as a finite class sum of the per-pointer block
-frequency functions, so `tendsto_finset_sum` applies termwise. -/
+frequency functions, so `tendsto_finsetSum` applies termwise. -/
 theorem syndrome_flow_born_frequency
     (ψ : EuclideanSpace ℂ (Fin 8)) (hψ : ‖ψ‖ = 1)
     (e : (Fin 8 × Fin 8) ≃ Fin (M + 1))
@@ -126,7 +126,7 @@ theorem syndrome_flow_born_frequency
   filter_upwards [vnDilation_pointer_frequency (N := 8) ψ hψ e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep]
     with ω hω s
   rw [syndromeWeight_eq_inner_sum]
-  exact tendsto_finset_sum _ (fun i _ => hω i)
+  exact tendsto_finsetSum _ (fun i _ => hω i)
 
 /-- **Syndrome-class block frequencies → syndrome weight, on the canonical i.i.d.
 FS trial process.** `syndrome_flow_born_frequency` with the trial bundle

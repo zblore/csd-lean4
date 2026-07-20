@@ -96,7 +96,7 @@ theorem overlapV_star_mul_self {ρ σ : Matrix n n ℂ} (hρ : ρ.IsHermitian) (
   unfold overlapV
   have hρρ : (hρ.eigenvectorUnitary : Matrix n n ℂ) * star (hρ.eigenvectorUnitary : Matrix n n ℂ)
       = 1 := Unitary.coe_mul_star_self hρ.eigenvectorUnitary
-  rw [Matrix.star_mul, star_star]
+  rw [StarMul.star_mul, star_star]
   rw [show star (hσ.eigenvectorUnitary : Matrix n n ℂ) * (hρ.eigenvectorUnitary : Matrix n n ℂ)
       * (star (hρ.eigenvectorUnitary : Matrix n n ℂ) * (hσ.eigenvectorUnitary : Matrix n n ℂ))
       = star (hσ.eigenvectorUnitary : Matrix n n ℂ)
@@ -111,7 +111,7 @@ theorem overlapV_mul_star_self {ρ σ : Matrix n n ℂ} (hρ : ρ.IsHermitian) (
   unfold overlapV
   have hσσ : (hσ.eigenvectorUnitary : Matrix n n ℂ) * star (hσ.eigenvectorUnitary : Matrix n n ℂ)
       = 1 := Unitary.coe_mul_star_self hσ.eigenvectorUnitary
-  rw [Matrix.star_mul, star_star]
+  rw [StarMul.star_mul, star_star]
   rw [show star (hρ.eigenvectorUnitary : Matrix n n ℂ) * (hσ.eigenvectorUnitary : Matrix n n ℂ)
       * (star (hσ.eigenvectorUnitary : Matrix n n ℂ) * (hρ.eigenvectorUnitary : Matrix n n ℂ))
       = star (hρ.eigenvectorUnitary : Matrix n n ℂ)
@@ -168,7 +168,7 @@ theorem trace_mul_cfc_cyclic {ρ σ : Matrix n n ℂ} (hρ : ρ.IsHermitian) (h�
     rfl
   show (ρ * hσ.cfc g).trace
       = (Dp * (star Up * Uσ) * Dg * star (star Up * Uσ)).trace
-  rw [Matrix.star_mul, star_star]
+  rw [StarMul.star_mul, star_star]
   conv_lhs => rw [hρ_eq, hcfc_eq]
   rw [show Up * Dp * star Up * (Uσ * Dg * star Uσ)
       = Up * (Dp * (star Up * Uσ) * Dg * star Uσ) by

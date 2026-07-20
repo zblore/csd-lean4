@@ -4239,7 +4239,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- coarse-graining (synClass) of the pointer-level LF5-D frequency
 -- (vnDilation_pointer_frequency) and LF5-F outcome map (vnPointerOutcome). At N=8:
 -- the syndrome-class block frequencies converge a.s. to syndromeWeight (a finite
--- class sum of pointer-block limits, tendsto_finset_sum); synOutcome is the
+-- class sum of pointer-block limits, tendsto_finsetSum); synOutcome is the
 -- per-microstate syndrome outcome function (vnPointerOutcome.map synClass) whose
 -- some-s fibre is the class-block union; the syndrome outcome event frequency
 -- (a single event per syndrome) converges a.s. to syndromeWeight (union-indicator

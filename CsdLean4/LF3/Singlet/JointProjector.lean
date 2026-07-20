@@ -90,7 +90,7 @@ theorem jointSpinProj_mul_orthogonal {s t s' t' : Sign} (a b : DetectorSetting)
       ← Matrix.mul_kronecker_mul]
   have hor : s ≠ s' ∨ t ≠ t' := by
     by_contra hc
-    push_neg at hc
+    push Not at hc
     exact h (Prod.ext hc.1 hc.2)
   rcases hor with hs | ht
   · rw [spinProj_mul_orthogonal a hs, Matrix.zero_kronecker]

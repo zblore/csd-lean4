@@ -61,7 +61,7 @@ lemma toEuclideanLin_jointSpinProj_idem
 /-- `T_P` is symmetric (self-adjoint), from `jointSpinProj` Hermitian. -/
 lemma toEuclideanLin_jointSpinProj_isSymmetric :
     (Matrix.toEuclideanLin (jointSpinProj s t a b)).IsSymmetric :=
-  Matrix.isHermitian_iff_isSymmetric.mp (jointSpinProj_isHermitian s t a b)
+  Matrix.isSymmetric_toEuclideanLin_iff.symm.mp (jointSpinProj_isHermitian s t a b)
 
 /-- The squared norm of the singlet's projection onto the sector is `P_st`. -/
 lemma norm_sq_jointSpinProj_singlet :

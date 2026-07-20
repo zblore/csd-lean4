@@ -147,7 +147,7 @@ lemma haar_orbit_indicator_eq
       {U : Matrix.unitaryGroup (Fin N) ℂ | U • p ∈ B}
         = (· * V_p) ⁻¹' {U | U • p₀ ∈ B} := by
     ext U
-    simp only [Set.mem_setOf_eq, Set.mem_preimage]
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage]
     rw [← hV_p, smul_smul]
   -- Measurability of the inner set (orbit map preimage of Borel).
   have h_S_meas :

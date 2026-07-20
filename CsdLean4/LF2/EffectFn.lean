@@ -186,10 +186,10 @@ lemma effectProjFn_measurable
       have h_mulVec : Continuous (fun u : Fin N → ℂ => E.M *ᵥ u) :=
         continuous_pi (fun i => by
           show Continuous (fun u : Fin N → ℂ => E.M i ⬝ᵥ u)
-          exact continuous_finset_sum _ (fun j _ => continuous_const.mul (continuous_apply j)))
+          exact continuous_finsetSum _ (fun j _ => continuous_const.mul (continuous_apply j)))
       -- dotProduct (a b : Fin N → ℂ) = Σ_i a i * b i: continuous in (a, b).
       have : Continuous (fun u : Fin N → ℂ => ∑ i, (star u) i * (E.M *ᵥ u) i) :=
-        continuous_finset_sum _ (fun i _ =>
+        continuous_finsetSum _ (fun i _ =>
           ((continuous_apply i).comp h_star).mul ((continuous_apply i).comp h_mulVec))
       exact this
     exact h_F_cont.measurable

@@ -133,7 +133,7 @@ private lemma weighted_indicator_sum_integral (w : Sign × Sign → ℝ) :
             w st * Set.indicator (kRegion ctx st.1 st.2)
               (fun _ => (1 : ℝ)) σ) ∂kMuPsi
       = ∑ st : Sign × Sign, w st * P_st ctx.a ctx.b st.1 st.2 := by
-  rw [integral_finset_sum _
+  rw [integral_finsetSum _
         (fun st _ => (indicator_kRegion_integrable ctx st.1 st.2).const_mul (w st))]
   congr 1
   ext st

@@ -829,7 +829,7 @@ lemma repr_eq_pair_of_support
       j ∉ ({i₀, i} : Finset (Fin N)) → b.repr φ j • b j = 0 := by
     intro j _ hj
     rw [Finset.mem_insert, Finset.mem_singleton] at hj
-    push_neg at hj
+    push Not at hj
     rw [hsupp j hj.1 hj.2, zero_smul]
   calc φ = ∑ j, b.repr φ j • b j := (b.sum_repr φ).symm
     _ = ∑ j ∈ ({i₀, i} : Finset (Fin N)), b.repr φ j • b j :=
@@ -2032,7 +2032,7 @@ theorem eq_id_of_fixes_all_two_level
   have hDψ : ‖ψ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hψ)
   -- reference index with nonzero source coordinate
   obtain ⟨i₁, hi₁⟩ : ∃ i₁, b.repr ψ i₁ ≠ 0 := by
-    by_contra h; push_neg at h
+    by_contra h; push Not at h
     apply hψ
     have hsum := b.sum_repr ψ
     rw [← hsum]; exact Finset.sum_eq_zero (fun j _ => by rw [h j, zero_smul])
@@ -2117,7 +2117,7 @@ lemma bConjVec_ne_zero
     (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
     {ψ : EuclideanSpace ℂ (Fin N)} (hψ : ψ ≠ 0) : bConjVec b ψ ≠ 0 := by
   obtain ⟨k, hk⟩ : ∃ k, b.repr ψ k ≠ 0 := by
-    by_contra h; push_neg at h; apply hψ
+    by_contra h; push Not at h; apply hψ
     rw [← b.sum_repr ψ]; exact Finset.sum_eq_zero (fun j _ => by rw [h j, zero_smul])
   intro h0
   have hk0 : (starRingEnd ℂ) (b.repr ψ k) = 0 := by
@@ -2172,7 +2172,7 @@ theorem eq_bconj_of_flips_complex
   have hDφ : ‖φ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hφne)
   have hDψ : ‖ψ‖ ^ 2 ≠ 0 := pow_ne_zero 2 (norm_ne_zero_iff.mpr hψ)
   obtain ⟨i₁, hi₁⟩ : ∃ i₁, b.repr ψ i₁ ≠ 0 := by
-    by_contra h; push_neg at h
+    by_contra h; push Not at h
     apply hψ
     rw [← b.sum_repr ψ]; exact Finset.sum_eq_zero (fun j _ => by rw [h j, zero_smul])
   have key : ∀ j, (starRingEnd ℂ) (b.repr φ i₁) * b.repr φ j * ((‖ψ‖ ^ 2 : ℝ) : ℂ)

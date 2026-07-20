@@ -32,7 +32,7 @@ For `[RCLike K]` and finite-dimensional normed `V`:
 - `Projectivization.instT2Space`: Hausdorffness, via the open-quotient-map
   criterion `t2Space_iff_of_isOpenQuotientMap` reduced to closedness of
   the K-collinearity relation, which in turn follows from
-  `isOpen_setOf_linearIndependent` and `LinearIndependent.pair_iff'`.
+  `isOpen_setOfPred_linearIndependent` and `LinearIndependent.pair_iff'`.
 - `Projectivization.instCompactSpace`: compactness, via continuous
   surjection from `Metric.sphere (0 : V) 1` (compact by Heine-Borel in
   finite-dim normed).
@@ -340,13 +340,13 @@ omit [FiniteDimensional K V] in
 Two nonzero vectors `v, w` represent the same projective point iff their
 pair is linearly dependent (`mk_eq_mk_iff'` + `LinearIndependent.pair_iff'`),
 and the set of linearly dependent pairs is the complement of an open set
-via `isOpen_setOf_linearIndependent`. -/
+via `isOpen_setOfPred_linearIndependent`. -/
 lemma isClosed_collinearity_relation :
     IsClosed { p : { v : V // v ≠ 0 } × { v : V // v ≠ 0 } |
                 mk' K p.1 = mk' K p.2 } := by
   -- Map `(v_sub, w_sub) ↦ ![w, v] : Fin 2 → V`. The collinearity set is
   -- the preimage of `¬ LinearIndependent K`-pairs, which is the
-  -- complement of `isOpen_setOf_linearIndependent`.
+  -- complement of `isOpen_setOfPred_linearIndependent`.
   let f : { v : V // v ≠ 0 } × { v : V // v ≠ 0 } → (Fin 2 → V) :=
     fun p => ![(p.2 : V), (p.1 : V)]
   have hf : Continuous f := by
@@ -358,13 +358,13 @@ lemma isClosed_collinearity_relation :
                   mk' K p.1 = mk' K p.2 }
             = f ⁻¹' { g : Fin 2 → V | LinearIndependent K g }ᶜ := by
     ext ⟨⟨v, hv⟩, ⟨w, hw⟩⟩
-    simp only [Set.mem_setOf_eq, Set.mem_preimage, Set.mem_compl_iff, f]
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, Set.mem_compl_iff, f]
     rw [mk'_eq_mk, mk'_eq_mk, mk_eq_mk_iff' K v w hv hw,
         LinearIndependent.pair_iff' hw]
-    push_neg
+    push Not
     rfl
   rw [h_eq]
-  exact isOpen_setOf_linearIndependent.isClosed_compl.preimage hf
+  exact isOpen_setOfPred_linearIndependent.isClosed_compl.preimage hf
 
 /-- `ℙ K V` is Hausdorff under finite-dimensional normed hypotheses on
 `V`. Routes through the open-quotient-map criterion

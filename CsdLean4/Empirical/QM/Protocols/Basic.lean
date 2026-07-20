@@ -1,4 +1,4 @@
-import Mathlib.Data.Real.Archimedean
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 /-!
 # Empirical/QM: minimal reusable security-protocol interface

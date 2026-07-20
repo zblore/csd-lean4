@@ -446,7 +446,7 @@ theorem isOpen_momentMap_lt (i j : Fin N) :
           ‖(v : EuclideanSpace ℂ (Fin N)) i‖ ^ 2 / ‖(v : EuclideanSpace ℂ (Fin N))‖ ^ 2 <
           ‖(v : EuclideanSpace ℂ (Fin N)) j‖ ^ 2 / ‖(v : EuclideanSpace ℂ (Fin N))‖ ^ 2} := by
     ext v
-    simp only [Set.mem_preimage, Set.mem_setOf_eq, Projectivization.mk'_eq_mk, momentMap_mk]
+    simp only [Set.mem_preimage, Set.mem_ofPred_eq, Projectivization.mk'_eq_mk, momentMap_mk]
   rw [hpre]
   exact isOpen_lt (hcont i) (hcont j)
 
@@ -510,25 +510,25 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
   -- S is obsFlow-invariant (both coordinates conserved).
   have hSinv : obsFlow lam t ⁻¹' S = S := by
     ext p
-    simp only [Set.mem_preimage, hS, Set.mem_setOf_eq, momentMap_obsFlow]
+    simp only [Set.mem_preimage, hS, Set.mem_ofPred_eq, momentMap_obsFlow]
   -- The zero-one law: μFS S ∈ {0, 1}.
   have h01 := herg.toPreErgodic.prob_eq_zero_or_one hSmeas hSinv
   -- μFS S ≠ 0: S contains the open nonempty set {m_j < m_i}.
   have hsub : {p : CPN N | momentMap p j < momentMap p i} ⊆ S := by
-    rw [hS]; exact Set.setOf_subset_setOf.2 (fun p => le_of_lt)
+    rw [hS]; exact Set.ofPred_subset_ofPred.2 (fun p => le_of_lt)
   have hgtne : {p : CPN N | momentMap p j < momentMap p i}.Nonempty :=
     ⟨cpBasisRay i, by
-      simp only [Set.mem_setOf_eq, momentMap_cpBasisRay, if_neg hji]; norm_num⟩
+      simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, if_neg hji]; norm_num⟩
   have hSne : fubiniStudyMeasure p₀ S ≠ 0 := by
     intro h0
     exact (fubiniStudyMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt j i) hgtne)
-      (le_antisymm (h0 ▸ measure_mono hsub) zero_le')
+      (le_antisymm (h0 ▸ measure_mono hsub) zero_le)
   -- μFS S ≠ 1: Sᶜ = {m_i < m_j} is open nonempty, hence positive.
   have hScompl : Sᶜ = {p : CPN N | momentMap p i < momentMap p j} := by
-    rw [hS]; ext p; simp only [Set.mem_compl_iff, Set.mem_setOf_eq, not_le]
+    rw [hS]; ext p; simp only [Set.mem_compl_iff, Set.mem_ofPred_eq, not_le]
   have hltne : {p : CPN N | momentMap p i < momentMap p j}.Nonempty :=
     ⟨cpBasisRay j, by
-      simp only [Set.mem_setOf_eq, momentMap_cpBasisRay, if_neg hji.symm]; norm_num⟩
+      simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, if_neg hji.symm]; norm_num⟩
   have hScpos : fubiniStudyMeasure p₀ Sᶜ ≠ 0 := by
     rw [hScompl]; exact fubiniStudyMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt i j) hltne
   -- Combine: neither 0 nor 1 is possible.

@@ -95,7 +95,7 @@ theorem vnDeisolationModel_ae_total (p₀ : CPN (M + 1)) (e : Fin N × Fin N ≃
     have : {p : CPN (M + 1) | (bornOutcome ψ' hψ'0 p).isSome}
         = ⋃ i, bornRegion ψ' hψ'0 i := by
       ext p
-      simp only [Set.mem_setOf_eq, Option.isSome_iff_exists, Set.mem_iUnion]
+      simp only [Set.mem_ofPred_eq, Option.isSome_iff_exists, Set.mem_iUnion]
       constructor
       · rintro ⟨i, hi⟩; exact ⟨i, (bornOutcome_eq_some_iff ψ' hψ'0 p i).mp hi⟩
       · rintro ⟨i, hi⟩; exact ⟨i, (bornOutcome_eq_some_iff ψ' hψ'0 p i).mpr hi⟩

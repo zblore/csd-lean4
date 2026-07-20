@@ -177,7 +177,7 @@ theorem trivialKahlerOnticSetup_unitary_of_clopen
     (trivialKahlerOnticSetup_projUnitary N p₀ 0) ?_
   have huniv : {t : ℝ | ProjUnitary (trivialKahlerOnticSetup N p₀) t} = Set.univ := by
     ext t
-    simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+    simp only [Set.mem_ofPred_eq, Set.mem_univ, iff_true]
     exact trivialKahlerOnticSetup_projUnitary N p₀ t
   rw [huniv]
   exact isClopen_univ

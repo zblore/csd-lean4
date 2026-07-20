@@ -103,11 +103,11 @@ theorem replaceMap_apply {N : ℕ} (b : Fin N → ℝ) (i : Fin N) (t : Fin N �
 
 /-- The open free simplex is an open set. -/
 theorem isOpen_openSimplexFree {M : ℕ} : IsOpen (openSimplexFree (M := M)) := by
-  rw [openSimplexFree, Set.setOf_and]
+  rw [openSimplexFree, Set.ofPred_and]
   refine IsOpen.inter ?_ ?_
-  · rw [Set.setOf_forall]
+  · rw [Set.ofPred_forall]
     exact isOpen_iInter_of_finite fun k => isOpen_lt continuous_const (continuous_apply k)
-  · exact isOpen_lt (continuous_finset_sum _ fun k _ => continuous_apply k) continuous_const
+  · exact isOpen_lt (continuous_finsetSum _ fun k _ => continuous_apply k) continuous_const
 
 /-- The `i`-th barycentric region stays inside the simplex when `b` is an interior
 point (`b ∈ openSimplexFree`): the subdivision of the simplex at an interior point. -/

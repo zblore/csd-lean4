@@ -54,7 +54,7 @@ theorem eigenvectorBasis_ne_zero (ρ : DensityOperator (M + 1)) (j : Fin (M + 1)
 
 /-- The standard basis vector `eᵢ` has unit norm. -/
 theorem single_norm_one (i : Fin (M + 1)) : ‖EuclideanSpace.single i (1 : ℂ)‖ = 1 := by
-  rw [EuclideanSpace.norm_single, norm_one]
+  rw [PiLp.norm_single, norm_one]
 
 /-- **The ontic mixed-state Born weight (#8 C).** For any density operator `ρ` and pointer outcome `i`,
 the classical mixture — over `ρ`'s spectral ensemble `(λⱼ, eⱼ)` — of the ontic Born-region measures equals

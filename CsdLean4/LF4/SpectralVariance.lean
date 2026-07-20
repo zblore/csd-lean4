@@ -36,7 +36,7 @@ orthonormal eigenbasis (`Matrix.IsHermitian.eigenvectorBasis`), and
   `integral_spectralOnticCentered_eq_variance :
     ∫ spectralOnticCentered dμψ = spectralVariance hA ψ`,
   the ontic ↔ Hilbert-spectral variance correspondence at the integration
-  level. Composes the Phase D template (`integral_finset_sum +
+  level. Composes the Phase D template (`integral_finsetSum +
   diracProd_spectralRegion`) with `bornWeights_sum_eq_one`.
 
 ## Tier-2 posture (unchanged)
@@ -71,7 +71,7 @@ lemma inner_eigenvector_image {N : ℕ} {A : Matrix (Fin N) (Fin N) ℂ}
     inner ℂ (hA.eigenvectorBasis i) (A.toEuclideanLin ψ)
       = (hA.eigenvalues i : ℂ) * inner ℂ (hA.eigenvectorBasis i) ψ := by
   have hSym : A.toEuclideanLin.IsSymmetric :=
-    (Matrix.isHermitian_iff_isSymmetric).mp hA
+    (Matrix.isSymmetric_toEuclideanLin_iff.symm).mp hA
   have hEigAct : A.toEuclideanLin (hA.eigenvectorBasis i)
       = (hA.eigenvalues i : ℂ) • hA.eigenvectorBasis i := by
     simp [Matrix.IsHermitian.eigenvectorBasis, Matrix.IsHermitian.eigenvalues,
@@ -195,7 +195,7 @@ theorem integral_spectralOnticCentered_eq_variance {N M : ℕ}
   unfold spectralOnticCentered spectralVariance
   haveI : IsProbabilityMeasure ((Measure.dirac p₀).prod (volume : Measure KTorus)) :=
     inferInstance
-  rw [MeasureTheory.integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · apply Finset.sum_congr rfl
     intros i _
     rw [integral_const_mul]

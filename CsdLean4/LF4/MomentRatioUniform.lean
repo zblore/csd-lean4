@@ -109,10 +109,10 @@ theorem psiFDeriv_det (p : ℝ × ℝ) : (psiFDeriv p).det = p.2 := by
     Matrix.det_fin_two]
   simp only [LinearMap.toMatrix_apply, ContinuousLinearMap.coe_coe, psiFDeriv,
     Basis.finTwoProd_zero, Basis.finTwoProd_one, Basis.coe_finTwoProd_repr,
-    ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul',
+    add_apply, FunLike.coe_smul,
     ContinuousLinearMap.coe_fst', ContinuousLinearMap.coe_snd', Pi.smul_apply,
-    ContinuousLinearMap.prod_apply, ContinuousLinearMap.sub_apply,
-    ContinuousLinearMap.zero_apply, smul_eq_mul, Matrix.cons_val_zero, Matrix.cons_val_one]
+    ContinuousLinearMap.prod_apply, sub_apply,
+    zero_apply, smul_eq_mul, Matrix.cons_val_zero, Matrix.cons_val_one]
   ring
 
 /-- `Ψ` is injective on `Ioo 0 1 ×ˢ Ioi 0`: from `Ψ(T,S) = (TS,(1−T)S)`, the sum

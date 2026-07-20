@@ -232,7 +232,7 @@ lemma gaussianCP_smul_invariant (p₀ : CPN 2) (U : Matrix.unitaryGroup (Fin 2) 
     refine ae_iff.mpr ?_
     refine measure_mono_null ?_ gaussianH_singleton_zero
     intro v hv
-    simp only [Set.mem_setOf_eq, Function.comp_apply] at hv
+    simp only [Set.mem_ofPred_eq, Function.comp_apply] at hv
     by_contra hv0
     simp only [Set.mem_singleton_iff] at hv0
     apply hv
