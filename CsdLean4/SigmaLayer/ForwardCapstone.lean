@@ -2,11 +2,11 @@ import CsdLean4.SigmaLayer.DynamicsBridge
 import CsdLean4.SigmaLayer.MeasurementRecord
 
 /-!
-# FND/ForwardCapstone: the product-model forward capstone
+# SigmaLayer/ForwardCapstone: the product-model forward capstone
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-The first achievable FND capstone, combining only currently proved components on the concrete
+The first achievable SigmaLayer capstone, combining only currently proved components on the concrete
 many-to-one product sector `Sigma = CP^{N-1} x T^2`, `pi = Prod.fst`, `muL = muFS ⊗ vol`, with the
 `exp(-itH)` unitary flow on the base ray:
 
@@ -39,9 +39,9 @@ namespace CSD.SigmaLayer
 variable {M : ℕ} (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian)
   (p₀ : CSD.LF4.CPN (M + 1))
 
-/-- The FND product Liouville measure is the LF4 product measure `muFS ⊗ vol`, so the existing
+/-- The SigmaLayer product Liouville measure is the LF4 product measure `muFS ⊗ vol`, so the existing
 independent-trial Born-frequency theorem `LF4.manyToOneSetup_born_frequency` (stated for
-`liouvilleMeasure`) applies directly to sampling the FND `productDynamics.muL`. -/
+`liouvilleMeasure`) applies directly to sampling the SigmaLayer `productDynamics.muL`. -/
 theorem productDynamics_muL_eq :
     ((productDynamics H hH p₀).muL : Measure (CSD.LF4.KSigma (M + 1)))
       = (CSD.LF4.manyToOneSchrodingerSetup H hH p₀).liouvilleMeasure := rfl

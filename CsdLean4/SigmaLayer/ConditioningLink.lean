@@ -3,11 +3,11 @@ import CsdLean4.SigmaLayer.IsolationPreparation
 import CsdLean4.SigmaLayer.MeasurementRecord
 
 /-!
-# FND/ConditioningLink: the conditional→Lüders correspondence
+# SigmaLayer/ConditioningLink: the conditional→Lüders correspondence
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-FND-T5 follow-on. The corpus proves TWO conditioning rules that were not yet connected (external review
+SL-T5 follow-on. The corpus proves TWO conditioning rules that were not yet connected (external review
 2026-07-14):
 
 * the **ontic record-history conditioning** (`IsolationPreparation.HistoryPreparation.conditionalMeasure_apply`):
@@ -21,16 +21,16 @@ This module makes their identity explicit at the RULE level: BOTH are the single
 rule `bayesianConditional w = w(fine) / w(coarse)`, differing only in the WEIGHT — the Liouville measure
 `μL` for the ontic record update, the Born weight for the projective state update.
 
-**That the two weights AGREE is proved separately in `FND/ConditioningLuders.lean`**
+**That the two weights AGREE is proved separately in `SigmaLayer/ConditioningLuders.lean`**
 (`onticRegion_measure_eq_born` : `μL(π⁻¹ bornRegion i) = ‖⟨eᵢ,ψ⟩‖²`, via `π_* μL = μFS` (B1) +
 Born-from-volume), so the ontic record conditioning and the projective Lüders update give the SAME
 conditional probability, seen through `π`. The `..._correspondence` bundle below states only the two
 Bayesian-rule halves; the weight agreement — and hence the genuine coincidence — lives in that companion
 file.
 
-References: `specs/future-work.md` (FND-T5 follow-on); `FND/Luders.lean` (`ludersUpdate_conditional`),
-`FND/IsolationPreparation.lean` (`conditionalMeasure_apply`), `FND/MeasurementRecord.lean`
-(`compatibleSet_appendEstablishedFact`), `FND/MeasureBridge.lean` (B1).
+References: `specs/future-work.md` (SL-T5 follow-on); `SigmaLayer/Luders.lean` (`ludersUpdate_conditional`),
+`SigmaLayer/IsolationPreparation.lean` (`conditionalMeasure_apply`), `SigmaLayer/MeasurementRecord.lean`
+(`compatibleSet_appendEstablishedFact`), `SigmaLayer/MeasureBridge.lean` (B1).
 -/
 
 open MeasureTheory

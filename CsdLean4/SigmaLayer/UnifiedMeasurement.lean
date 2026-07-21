@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.DynamicsBridge
 import CsdLean4.SigmaLayer.LiftedMeasurement
 
 /-!
-# FND/UnifiedMeasurement: dynamics and measurement on ONE many-to-one ontic model (FND-T5)
+# SigmaLayer/UnifiedMeasurement: dynamics and measurement on ONE many-to-one ontic model (SL-T5)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -32,7 +32,7 @@ So one `(Σ, μL, Φ, π)` carries isolated Hamiltonian evolution AND de-isolati
 AND the Fubini-Study/Born content — removing the forward-vs-measurement model split. The Born outcome
 FREQUENCIES are the base-space statement `vnDeisolationModel_born_frequency` (the readout factors through
 `π`, so its i.i.d. law lives on the base `ℂℙ^{M}`). Follow-on residue (see `specs/future-work.md`
-FND-T5): physical record persistence, nonzero post-outcome preparation, the conditional→Lüders link.
+SL-T5): physical record persistence, nonzero post-outcome preparation, the conditional→Lüders link.
 -/
 
 open MeasureTheory Matrix.UnitaryGroup
@@ -115,7 +115,7 @@ theorem unifiedDeisolationModel_ae_total (hψ' : ‖ψ'‖ = 1) :
   rw [← hmap] at hbase
   exact (ae_map_iff measurable_fst.aemeasurable hQ).mp hbase
 
-/-- **FND-T5: dynamics and measurement on one many-to-one ontic model.** For `Σ = ℂℙ^{M} × T²`, the
+/-- **SL-T5: dynamics and measurement on one many-to-one ontic model.** For `Σ = ℂℙ^{M} × T²`, the
 Liouville measure `μFS ⊗ vol` and `π = Prod.fst`, the SAME `productDynamics H hH p₀` carries:
 
 1. a measure-preserving isolated Hamiltonian flow;

@@ -33,7 +33,7 @@ consumed by the Born capstone, not just the abstract measure.
 This routes the Born capstone through the sector's deterministic flow, making
 `flow_preserves_volume` load-bearing (the Born-side sigmaFlow fix). It does NOT
 derive the Born weights from the flow, and the trials are still an i.i.d. sampling
-posit before evolution — the weights-from-dynamics problem (A5→D1, FND-1) is
+posit before evolution — the weights-from-dynamics problem (A5→D1, SL-1) is
 untouched. Foundational-triple-only / Gleason-free (reuses
 `born_frequency_convergence_N`; nothing re-proved).
 -/

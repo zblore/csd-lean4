@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.TimeIndexedRecord
 import CsdLean4.LF4.ManyToOnePillars
 
 /-!
-# FND/UnifiedFlowedRecords: time-indexed records ON the unified model (#5)
+# SigmaLayer/UnifiedFlowedRecords: time-indexed records ON the unified model (#5)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -31,8 +31,8 @@ So the "records are time-physical on the unified model" claim, previously suppor
 `flowedSemantics`, is now instantiated on the actual model — the piece L9 needs to list records in the
 "proved on the unified model" tier.
 
-References: `FND/UnifiedMeasurement.lean` (`vnRecordSemanticsProd`, `unifiedDeisolationModel`),
-`FND/TimeIndexedRecord.lean` (`flowedSemantics`, `flowedSemantics_persistence`).
+References: `SigmaLayer/UnifiedMeasurement.lean` (`vnRecordSemanticsProd`, `unifiedDeisolationModel`),
+`SigmaLayer/TimeIndexedRecord.lean` (`flowedSemantics`, `flowedSemantics_persistence`).
 -/
 
 open MeasureTheory Filter Topology ProbabilityTheory

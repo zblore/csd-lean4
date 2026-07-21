@@ -4,15 +4,15 @@ import Mathlib.MeasureTheory.Measure.MeasureSpace
 import CsdLean4.SigmaLayer.ConstraintSurface
 
 /-!
-# FND/ConstraintDynamics: deterministic, measure-preserving ontic dynamics
+# SigmaLayer/ConstraintDynamics: deterministic, measure-preserving ontic dynamics
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-`ConstraintDynamics Sigma` is the canonical FND core (postulates P2, P3, P4): a finite Liouville
+`ConstraintDynamics Sigma` is the canonical SigmaLayer core (postulates P2, P3, P4): a finite Liouville
 reference measure `muL` on the ontic state space, together with a deterministic real-parameter flow
 that forms a one-parameter group and preserves `muL`. This is the group-law refinement of the existing
 `LF1.OnticSetup` (single map, no group law) and `LF4.KahlerOnticSetup` (time flow, no group law); the
-adapters into those live in `FND/IsolationPreparation.lean` and `FND/ProjectiveSector.lean`.
+adapters into those live in `SigmaLayer/IsolationPreparation.lean` and `SigmaLayer/ProjectiveSector.lean`.
 
 ## Anti-circularity
 

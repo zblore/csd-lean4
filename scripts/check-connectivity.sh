@@ -6,13 +6,13 @@
 # History: written 2026-07-07 when the connectivity chain was BROKEN (Kähler
 # fields unconsumed, Schrödinger instantiated only on the Φ=id witness, Born on a
 # separate engine). It then enforced a "NOT yet realized end-to-end" banner. That
-# era is over. As of fixes C1–C7 and the FND "Choice A" layer (2026-07), the
+# era is over. As of fixes C1–C7 and the SigmaLayer "Choice A" layer (2026-07), the
 # FORWARD chain is CONNECTED on genuine objects: a single posited Kähler sector
 # yields BOTH pillars at general N (`manyToOneSchrodingerSetup_both_pillars`), and
 # ONE ontic model `(Σ, μL, Φ, π)` carries isolated dynamics + de-isolating
 # measurement + time-indexed records + Born + the conditional/Lüders state update
 # (`unified_choiceA_capstone`, manifest link L9). The guard is therefore repurposed
-# to the CURRENT frontier: the ONE remaining deep gap is A5 / FND-1 — the sector
+# to the CURRENT frontier: the ONE remaining deep gap is A5 / SL-1 — the sector
 # and its Born weights are POSITED (the trials SAMPLE μL i.i.d.), NOT derived from
 # the deterministic flow. `specs/connectivity-manifest.md` is the single source of
 # truth; this script enforces the statically-checkable honesty at that frontier.
@@ -59,7 +59,7 @@ if [ "$banner_ok" -eq 1 ]; then
   echo "  OK    README carries the A5 honesty banner (manifest link + sector-posited caveat)."
 else
   echo "  FAIL  README is missing the honesty banner (a link to $MANIFEST AND the phrase"
-  echo "        \"the sector itself is posited\"). The A5 / FND-1 caveat may not be removed"
+  echo "        \"the sector itself is posited\"). The A5 / SL-1 caveat may not be removed"
   echo "        while the sector is posited (the trials sample muL; the sector is not derived)."
   fail=1
 fi

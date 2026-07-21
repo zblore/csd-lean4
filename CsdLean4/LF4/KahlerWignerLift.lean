@@ -2,7 +2,7 @@ import CsdLean4.Empirical.CSD.Gates.WignerDischarge
 import CsdLean4.LF4.KahlerFlow
 
 /-!
-# FND-3: the §13.2 ontic lift on the non-trivial-fibre Kähler instance
+# SL-3: the §13.2 ontic lift on the non-trivial-fibre Kähler instance
 
 **Category:** 4-Foundations (the A5→Wigner→U_isometry chain, made explicit on `kSectorData`).
 
@@ -10,7 +10,7 @@ The §13.2 ontic lift asks: on a concrete Kähler `SectorData`, thread the deter
 down to a projective ray map `f_Φ`, prove `f_Φ` is transition-probability preserving, and feed
 that into Wigner rigidity to recover the Hilbert-space unitary (`U_isometry`) — the forward
 `A5 → Wigner → U_isometry` chain. This has been done for `cpSectorData` (`π = id`,
-`cpSectorActionBundle`, `WignerDischarge.lean`); **FND-3 does it on the NON-TRIVIAL-FIBRE
+`cpSectorActionBundle`, `WignerDischarge.lean`); **SL-3 does it on the NON-TRIVIAL-FIBRE
 instance `kSectorData`** (`Σ = ℂℙ^{N-1} × T²`, `π = pr₁` genuinely many-to-one, fibres `= T²`),
 where the descent of `Φ` along a many-to-one `π` is a real quotient step, not identity-on-`Σ`.
 
@@ -35,13 +35,13 @@ where the descent of `Φ` along a many-to-one `π` is a real quotient step, not 
   OUTPUT of Wigner, not a posit. This is the `A5 → Wigner → U_isometry` chain on the
   non-trivial-fibre Kähler `SectorData`.
 
-## Honesty flag (what FND-3 does NOT do)
+## Honesty flag (what SL-3 does NOT do)
 
 The `TransProbPreserving f_Φ` of Part 1 holds because `f_Φ = id`, NOT because `Φ` is
 measure-preserving: there is deliberately **no** `measure-preserving Φ ⟹ TransProbPreserving f_Φ`
 step, since measure-preservation is strictly weaker than metric (transition-probability)
-preservation — that false implication is the §13.2 trap and the open **D1/FND-1** gap
-(`specs/LF4-todo.md`). FND-3 makes the chain explicit on this instance without touching A5:
+preservation — that false implication is the §13.2 trap and the open **D1/SL-1** gap
+(`specs/LF4-todo.md`). SL-3 makes the chain explicit on this instance without touching A5:
 the ray flow is trivial here, and the genuine isometry content (Part 2) rides on the posited
 `U(N)` sector action, not on the flow.
 -/
@@ -70,7 +70,7 @@ theorem kSectorDataFlow_projectable (p₀ : CPN N) (sh : KTorus) (x : KSigma N) 
       = kProjectedFlow sh ((kSectorDataFlow p₀ sh).π x) := rfl
 
 omit [NeZero N] in
-/-- **FND-3 Part 1 headline (thread `Φ`): the projected flow `f_Φ` is transition-probability
+/-- **SL-3 Part 1 headline (thread `Φ`): the projected flow `f_Φ` is transition-probability
 preserving.** Since `f_Φ = kProjectedFlow sh = id` (the flow is fibre-trivial on rays), this is
 honest but degenerate — the exact pattern of `trivialKahlerOnticSetup_transProbPreserving`. It is
 NOT derived from measure-preservation of `Φ` (the §13.2 trap / open D1 gap); it holds because the
@@ -124,7 +124,7 @@ noncomputable def kContext (p₀ : CPN N) :
   hμFS_prob := inferInstance
   bridge := kBridgeData p₀
 
-/-- **FND-3 Part 2 headline (the genuine content, caveat C-1): the sector `U(N)`-action on the
+/-- **SL-3 Part 2 headline (the genuine content, caveat C-1): the sector `U(N)`-action on the
 non-trivial-fibre instance carries the Fubini–Study isometry.** The `cpSectorActionBundle`
 analogue on `kSectorData` (`π = pr₁` many-to-one, not `π = id`): a `CSDUnitaryBundle` on the
 Kähler instance whose `U_isometry` is DERIVED via Wigner

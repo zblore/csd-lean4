@@ -6,11 +6,11 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 
 /-!
-# FND/TensorReconstruction: locality + generation FORCE the tensor product (P3, the uniqueness half)
+# SigmaLayer/TensorReconstruction: locality + generation FORCE the tensor product (P3, the uniqueness half)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-`FND/TensorSolved.lean` proves SUFFICIENCY — the standard Kronecker composite satisfies locality and
+`SigmaLayer/TensorSolved.lean` proves SUFFICIENCY — the standard Kronecker composite satisfies locality and
 local tomography. This module proves the converse, NECESSITY / uniqueness: **any composite algebra `𝒜`
 carrying commuting local matrix algebras that GENERATE it must BE the tensor product** — there is no other
 composite. That is the real "why `⊗`" reconstruction, and its dimension corollary discharges bridge B6
@@ -34,10 +34,10 @@ For a composite represented by `M_k(ℂ)`, `finrank` across the equivalence forc
 consequence of locality + generation — the reconstruction the sector interface (`CompositeInterface`,
 `TensorSector`) previously took as the bridge-B6 field.
 
-References: `specs/future-work.md` (P3 / FND-P3r, bridge B6); `FND/TensorSolved.lean`
+References: `specs/future-work.md` (P3 / SL-P3r, bridge B6); `SigmaLayer/TensorSolved.lean`
 (`composite_is_tensor_product`, the sufficiency half — the tensor model realizes the principles);
-`FND/TensorGeneration.lean` (`joint_mem_span_local`, the quantum generation fact);
-`FND/CompositeInterface.lean` (`CompositeSector.tensor_dimension`, the field this discharges).
+`SigmaLayer/TensorGeneration.lean` (`joint_mem_span_local`, the quantum generation fact);
+`SigmaLayer/CompositeInterface.lean` (`CompositeSector.tensor_dimension`, the field this discharges).
 -/
 
 open scoped TensorProduct
@@ -127,7 +127,7 @@ theorem composite_dim_eq {m n k : ℕ} [NeZero m] [NeZero n] [NeZero k]
 
 /-! ### Discharging bridge B6 in the sector interface
 
-`CompositeSector.tensor_dimension` (`FND/CompositeInterface.lean`) is the `NA · NB = Njoint` FIELD that
+`CompositeSector.tensor_dimension` (`SigmaLayer/CompositeInterface.lean`) is the `NA · NB = Njoint` FIELD that
 posited B6. The smart constructor below builds a `CompositeSector` in which that field is DERIVED from the
 reconstruction — the caller supplies the joint sector plus commuting, generating local observable
 embeddings, and `composite_dim_eq` PROVES the dimension. So B6 need no longer be assumed: any composite

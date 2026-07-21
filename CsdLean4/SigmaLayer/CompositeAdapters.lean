@@ -6,13 +6,13 @@ import CsdLean4.Empirical.QM.Contextuality.MerminPeres
 import CsdLean4.LF6.CGLMPQudit
 
 /-!
-# FND/CompositeAdapters: inhabiting the composition targets from the existing capstones
+# SigmaLayer/CompositeAdapters: inhabiting the composition targets from the existing capstones
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-Tranche 3 adapters. Each theorem here inhabits one of the `FND/CompositeInterface.lean` target predicates
+Tranche 3 adapters. Each theorem here inhabits one of the `SigmaLayer/CompositeInterface.lean` target predicates
 by wiring an existing LF6/Empirical capstone through the interface. No new mathematics is proved: the
-content is the demonstration that the FND-layer targets are exactly the reconstruction results already in
+content is the demonstration that the SigmaLayer targets are exactly the reconstruction results already in
 the corpus.
 
 * **T15 no-signalling:** `singlet_hasNoSignalling` (from `Bell.no_signalling_alice/bob`).
@@ -28,7 +28,7 @@ the corpus.
 ## T9 (mixed states): no inhabitant, by the reported gap
 
 We give NO inhabitant of a mixed-state Born or ensemble target. The `DensityOperatorIx.IsPure` purity
-predicate is defined (`FND/CompositeInterface.lean`), but the convex-ensemble representation and the Born
+predicate is defined (`SigmaLayer/CompositeInterface.lean`), but the convex-ensemble representation and the Born
 rule on mixtures are the reported Mathlib density-matrix gap: Mathlib has no mixed-state type, and the
 repository's `CSD.LF2.DensityOperatorIx` carries no purity/ensemble/Born API. This is left out honestly
 rather than stated vacuously.

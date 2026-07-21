@@ -4,7 +4,7 @@ import CsdLean4.LF4.ManyToOnePillars
 import CsdLean4.LF4.KahlerVolumeForced
 
 /-!
-# FND/MeasureBridge: the projective measure bridge and its concrete product proof
+# SigmaLayer/MeasureBridge: the projective measure bridge and its concrete product proof
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -12,7 +12,7 @@ Bridge assumption B1: the ontic measure pushes forward under `pi` to the require
 This is an explicit assumption interface in the abstract theory (`ProjectiveMeasureBridge`,
 `HasFubiniStudyPushforward`), and a THEOREM for concrete models. Here the concrete model is the
 many-to-one product sector `Sigma = CP^{N-1} x T^2`, `pi = Prod.fst`, `muL = muFS ⊗ vol`, adapted to the
-FND core from `manyToOneSchrodingerSetup`; the pushforward `pi_* muL = muFS` is discharged by the
+SigmaLayer core from `manyToOneSchrodingerSetup`; the pushforward `pi_* muL = muFS` is discharged by the
 existing `manyToOneSetup_baseVolume_eq_fubiniStudy` (which reuses `Measure.fst_prod`).
 
 We do NOT install the Fubini-Study equality as a typeclass instance for every projective sector; it is a
@@ -46,7 +46,7 @@ def HasFubiniStudyPushforward {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma]
 variable {M : ℕ} (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian)
   (p₀ : CSD.LF4.CPN (M + 1))
 
-/-- The many-to-one product sector as an FND `ConstraintDynamics`, adapted from
+/-- The many-to-one product sector as an SigmaLayer `ConstraintDynamics`, adapted from
 `manyToOneSchrodingerSetup` (unitary flow `exp(-itH)` on the base ray, fibre fixed). The one-parameter
 group laws come from `expNegITH_unitary_group`. -/
 noncomputable def productDynamics : ConstraintDynamics (CSD.LF4.KSigma (M + 1)) :=

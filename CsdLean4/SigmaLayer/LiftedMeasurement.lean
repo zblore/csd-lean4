@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.MeasurementRecord
 import CsdLean4.LF5.PointerOutcome
 
 /-!
-# FND/LiftedMeasurement: the concrete de-isolation model from the LF5 pointer machinery
+# SigmaLayer/LiftedMeasurement: the concrete de-isolation model from the LF5 pointer machinery
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 

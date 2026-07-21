@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.CompositeInterface
 import CsdLean4.Empirical.QM.NoCommunication
 
 /-!
-# FND/TensorSector: weaving the tensor product into the ledger
+# SigmaLayer/TensorSector: weaving the tensor product into the ledger
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -18,7 +18,7 @@ How the composite/tensor structure sits in the base. The honest split is:
 * **Bridge B6 (dim `= NA·NB`) — now DERIVABLE, still a structure field here.** The reconstruction claim
   that a composite's projective sector IS this tensor sector with `dim = NA · NB` is
   `CompositeSector.tensor_dimension`, a named field. As of 2026-07-17 it is no longer *parked*: the
-  abstract theorem `CSD.SigmaLayer.compositeAlgReconstruction` (`FND/TensorReconstruction.lean`) PROVES that
+  abstract theorem `CSD.SigmaLayer.compositeAlgReconstruction` (`SigmaLayer/TensorReconstruction.lean`) PROVES that
   commuting local algebras `M_m, M_n` that GENERATE a composite `𝒜` force `𝒜 ≃ₐ M_m ⊗ M_n`, and
   `CSD.SigmaLayer.composite_dim_eq` derives `k = m·n` for `𝒜 = M_k` — i.e. B6's dimension relation is a THEOREM
   under locality + generation, and the interface now HAS the constructor:

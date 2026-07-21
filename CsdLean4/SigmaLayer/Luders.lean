@@ -3,12 +3,12 @@ import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
-# FND/Luders: the projective (Lüders) state update
+# SigmaLayer/Luders: the projective (Lüders) state update
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Ledger target **T8**, the projective post-measurement (Lüders) update, closing the gap left by
-`FND/MeasurementRecord.lean` (which supplies only the epistemic-support conditioning
+`SigmaLayer/MeasurementRecord.lean` (which supplies only the epistemic-support conditioning
 `compatibleSet_appendEstablishedFact` and explicitly declines to call it a Lüders update until an
 equality with the Lüders rule is proved).
 

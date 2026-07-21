@@ -10,11 +10,11 @@ import CsdLean4.SigmaLayer.MixedEnsemble
 
 **Category:** 2-Local (the operational density-operator layer).
 
-The mixed-state ensemble content (`FND/MixedEnsemble.lean`) was proved for
+The mixed-state ensemble content (`SigmaLayer/MixedEnsemble.lean`) was proved for
 `DensityOperator N` (indexed by `Fin N`). This module ports it to the **composite
 index-parametric** density type `DensityOperatorIx ι` (`LF2/ReducedDensity.lean`,
 indexed by an arbitrary `[Fintype ι] [DecidableEq ι]`) — the type the bipartite /
-composite interface (`FND/CompositeInterface.lean`, target T9) uses via `reduced` /
+composite interface (`SigmaLayer/CompositeInterface.lean`, target T9) uses via `reduced` /
 `reducedLeft` partial traces. This closes the reported density-matrix gap: mixed-state
 Born on the composite indexed type, not only on `Fin N`.
 

@@ -2,14 +2,14 @@ import Mathlib.MeasureTheory.MeasurableSpace.Basic
 import CsdLean4.SigmaLayer.ConstraintSurface
 
 /-!
-# FND/RecordedFact: physical records as measurable contextual ontic events
+# SigmaLayer/RecordedFact: physical records as measurable contextual ontic events
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-This is the genuinely new FND content: physical records represented as measurable, contextual,
+This is the genuinely new SigmaLayer content: physical records represented as measurable, contextual,
 time-indexed ontic events (postulate P5), and a finite record history whose compatible region is the
 intersection of the corresponding events. Isolation (postulate P6) is then conditioning `muL` on this
-compatible region; see `FND/IsolationPreparation.lean`.
+compatible region; see `SigmaLayer/IsolationPreparation.lean`.
 
 ## Scientific reading
 

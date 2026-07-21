@@ -4,11 +4,11 @@ import CsdLean4.LF4.BornRegionUncond
 import CsdLean4.LF4.BornRegionDisjoint
 
 /-!
-# FND/ConditioningLuders: the ontic-record conditioning EQUALS the Lüders update, through `π`
+# SigmaLayer/ConditioningLuders: the ontic-record conditioning EQUALS the Lüders update, through `π`
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-`FND/ConditioningLink.lean` proved that the ontic record-history conditioning and the projective Lüders
+`SigmaLayer/ConditioningLink.lean` proved that the ontic record-history conditioning and the projective Lüders
 update are BOTH the single Bayesian rule `w(fine)/w(coarse)` — but for DIFFERENT weights (`μL` vs the Born
 weight), and it never proved the two weights AGREE. This module supplies exactly that missing link, on the
 concrete many-to-one product sector: the ontic measure of a measurement OUTCOME REGION (the `π`-preimage
@@ -41,7 +41,7 @@ the weight agreement over the pairwise-disjoint Born regions). So #4 is complete
 outcome regions are the pointer Born regions, can represent. (A truly non-diagonal effect has no
 pointer-basis outcome region here, so it is outside what this ontic model predicts at all.)
 
-References: `FND/ConditioningLink.lean` (the two Bayesian halves), `FND/MeasureBridge.lean` (B1,
+References: `SigmaLayer/ConditioningLink.lean` (the two Bayesian halves), `SigmaLayer/MeasureBridge.lean` (B1,
 `productSector_hasFubiniStudyPushforward`), `LF4/BornRegionUncond.lean` (`bornRegion_fs_measure_uncond`).
 -/
 

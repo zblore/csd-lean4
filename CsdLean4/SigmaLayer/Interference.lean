@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.CompositeInterface
 import CsdLean4.Empirical.QM.Algorithms.HadamardTest
 
 /-!
-# FND/Interference: quantum interference as a first-class target
+# SigmaLayer/Interference: quantum interference as a first-class target
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 

@@ -2,11 +2,11 @@ import CsdLean4.SigmaLayer.RecordedFact
 import CsdLean4.SigmaLayer.ConstraintDynamics
 
 /-!
-# FND/TimeIndexedRecord: time-indexed records and their persistence under isolated evolution
+# SigmaLayer/TimeIndexedRecord: time-indexed records and their persistence under isolated evolution
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-FND-T5 final follow-on. `RecordSemantics.event` already takes a full `RecordedFact` (context, outcome AND
+SL-T5 final follow-on. `RecordSemantics.event` already takes a full `RecordedFact` (context, outcome AND
 time), but the concrete pointer semantics (`vnRecordSemantics`) ignored the recorded time — the event was
 the same pointer fibre for every `t` (external review 2026-07-14: "ignores the recorded time"). This
 module builds a genuinely TIME-INDEXED record semantics from the isolated dynamics, and proves the two
@@ -28,12 +28,12 @@ physical persistence facts.
 
 This makes records genuinely time-physical: the event uses the recorded time, the record probability is
 conserved, and the evidence is flow-covariant. This is NOT a model of persistent apparatus MEMORY (a
-pointer physically latching to its value and remaining there); consistent with `FND/RecordedFact.lean`, a
+pointer physically latching to its value and remaining there); consistent with `SigmaLayer/RecordedFact.lean`, a
 value recorded at time `t` is time-indexed evidence, not required to persist as a later value. A
 latching-memory model would be a separate record-stability postulate.
 
-References: `specs/future-work.md` (FND-T5 follow-on); `FND/RecordedFact.lean` (`RecordSemantics`, P5),
-`FND/ConstraintDynamics.lean` (`flow_preserves`, `flow_add`), `FND/UnifiedMeasurement.lean` (the concrete
+References: `specs/future-work.md` (SL-T5 follow-on); `SigmaLayer/RecordedFact.lean` (`RecordSemantics`, P5),
+`SigmaLayer/ConstraintDynamics.lean` (`flow_preserves`, `flow_add`), `SigmaLayer/UnifiedMeasurement.lean` (the concrete
 pointer regions that instantiate `region`).
 -/
 

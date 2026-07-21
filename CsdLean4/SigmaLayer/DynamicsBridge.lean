@@ -1,7 +1,7 @@
 import CsdLean4.SigmaLayer.MeasureBridge
 
 /-!
-# FND/DynamicsBridge: projectable dynamics and its Hamiltonian realisation
+# SigmaLayer/DynamicsBridge: projectable dynamics and its Hamiltonian realisation
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 

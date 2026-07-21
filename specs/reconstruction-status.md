@@ -1,7 +1,7 @@
 # Reconstruction status — a thorough review of what is machine-verified (2026-07-15)
 
 **Purpose.** A single honest review of what the `csd-lean4` corpus actually proves, at commit `HEAD`
-(after the Σ-layer (projective-sector, Paper C) and FND-T5). It supersedes scattered claims; where it and an older
+(after the Σ-layer (projective-sector, Paper C) and SL-T5). It supersedes scattered claims; where it and an older
 document disagree, this file and [`connectivity-manifest.md`](connectivity-manifest.md) win. Everything
 below is `sorry`-free, `lake build CsdLeanTests` green, and AxiomAudit-pinned to the foundational triple
 (`propext`, `Classical.choice`, `Quot.sound`) unless explicitly noted otherwise.
@@ -23,7 +23,7 @@ one tiered record: **`FiniteQMClosure`** / `unifiedFiniteQMClosure` (`SigmaLayer
 eleven proved-on-the-model facts as fields (the sixth-through-eleventh: records #5, Born-frequency #2, conditioning=Lüders #3/#4, mixed-state Born weight #8 C, mixed-state Born FREQUENCY #8 C), each discharged by its source lemma, and states honestly in the
 module header what is a theorem here vs. a Choice-A posit vs. a QM adapter vs. still open (no field is
 `sorry`). So L9 is now a single unified closure (Tier 1), not a scattered multi-theorem partial. The **one
-deep gap** — outside the closure's Tier 1 — is A5 / FND-1: the
+deep gap** — outside the closure's Tier 1 — is A5 / SL-1: the
 sector itself is **posited**, not derived from the deterministic flow (the Born trials SAMPLE `μL`
 i.i.d.). This is FORWARD throughout — it does not derive the sector — and that scope matches Paper C's
 own (§1.4 assumes `Σ`, `π`, the A5 sector).
@@ -80,7 +80,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
 | **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`SigmaLayer/FiniteQMClosure.lean`) assembles all 11 proved-on-model facts (the 6 core `unified_projectiveSector_capstone` properties + records-time-physical #5 + Born-frequency #2 + conditioning=Lüders #3/#4 + mixed-state Born weight #8 C `mixed_born` + mixed-state Born FREQUENCY #8 C `mixed_born_frequency`) into ONE tiered record, each field discharged by its source lemma; Choice-A posit / QM adapters / open residue documented, not encoded as fields |
-| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved; ergodic face sharpened)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`, `obsFlow_not_uniquely_ergodic`). `UniquelyErgodic` now defined with `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`SigmaLayer/UniqueErgodicity.lean`); the gap to `BornFromFlow` is exactly the Mathlib-absent pointwise Birkhoff theorem, and the current unitary flows provably fail the hypothesis. Typicality itself is forced by the LLN, not this route (Papers A/B) |
+| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved; ergodic face sharpened)** — the sector is posited (A5/SL-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`, `obsFlow_not_uniquely_ergodic`). `UniquelyErgodic` now defined with `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`SigmaLayer/UniqueErgodicity.lean`); the gap to `BornFromFlow` is exactly the Mathlib-absent pointwise Birkhoff theorem, and the current unitary flows provably fail the hypothesis. Typicality itself is forced by the LLN, not this route (Papers A/B) |
 
 ## 4. The forward reconstruction — what each pillar delivers
 
@@ -139,7 +139,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 *(Actionable open items — including the research-tier ones below — are tracked in the
 canonical [`BACKLOG.md`](BACKLOG.md).)*
 
-* **A5 / FND-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
+* **A5 / SL-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
   sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade. It now has
   **both a proved boundary and a localized partial**:
   * **No-go (why the gap is real, not a formalisation debt)** (`SigmaLayer/SectorPostulateNoGo.lean`): a single projective

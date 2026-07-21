@@ -4,14 +4,14 @@ import CsdLean4.LF2.POVM
 import CsdLean4.LF2.ReducedDensity
 
 /-!
-# FND/CompositeInterface: composite, mixed-state, POVM, contextuality and Bell targets
+# SigmaLayer/CompositeInterface: composite, mixed-state, POVM, contextuality and Bell targets
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Tranche 3. The composition- and measurement-dependent reconstruction targets (ledger T9-T15 of
-`FND/Adapters.lean`) as bridge interfaces and uninhabited `Prop` predicates. As with
-`FND/TheoremTargets.lean`, a target predicate is NOT a postulate: it is a statement whose inhabitants
-are theorems, proved for concrete models in `FND/CompositeAdapters.lean` by wiring the existing
+`SigmaLayer/Adapters.lean`) as bridge interfaces and uninhabited `Prop` predicates. As with
+`SigmaLayer/TheoremTargets.lean`, a target predicate is NOT a postulate: it is a statement whose inhabitants
+are theorems, proved for concrete models in `SigmaLayer/CompositeAdapters.lean` by wiring the existing
 LF6/Empirical CGLMP, CHSH, GHZ, Kochen-Specker and no-signalling capstones through these interfaces.
 
 Every predicate here is stated GENERICALLY (over the table, valuation, POVM or density operator), so this
@@ -48,7 +48,7 @@ universe u
 /-- **The composite projective sector (bridge B6).** A joint projective sector for a composite system,
 together with the tensor-dimension relation `NA * NB = Njoint` as a `tensor_dimension` field. The field
 can be filled by ASSUMPTION (a bare bridge instance) OR DERIVED: `CSD.SigmaLayer.CompositeSector.ofReconstruction`
-(`FND/TensorReconstruction.lean`) constructs a `CompositeSector` in which `tensor_dimension` is PROVED by
+(`SigmaLayer/TensorReconstruction.lean`) constructs a `CompositeSector` in which `tensor_dimension` is PROVED by
 `composite_dim_eq` from commuting, generating local observable embeddings — so B6 is no longer necessarily
 a posit. The by-hand entangled tier still supplies the field directly per instance; the reconstruction
 route is available whenever the local-algebra data is on hand. -/

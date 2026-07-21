@@ -15,9 +15,9 @@ the todo backlog is [`future-work.md`](future-work.md). This file is the narrati
 > scoring the fibred region `π⁻¹'(bornRegion)` (volume = base Born weight because
 > the fibre volume is normalized, `Measure.fst_prod`). AxiomAudit-pinned
 > (foundational triple, Gleason-free); full build + tests + all three guards green.
-> **Standing gaps unchanged:** L1 (Kähler geometry), L7/FND-1 (Born-from-flow) —
+> **Standing gaps unchanged:** L1 (Kähler geometry), L7/SL-1 (Born-from-flow) —
 > C7 fixed the projection *shape*, not the dynamical *origin* (the fibre flow is
-> trivial). Recommended next is unchanged: **FND-1** (the deep frontier) or **KG**
+> trivial). Recommended next is unchanged: **SL-1** (the deep frontier) or **KG**
 > (blocked on Mathlib).
 
 ## What was done this session (all committed + pushed to `origin/main`)
@@ -50,7 +50,7 @@ A single genuine `Φ ≠ id` object (`rotationSetup`) supports both pillars.
   normalized-volume core is formalized. *Formalization-depth, not correctness*:
   μ_FS is provably the unique invariant measure (`fubiniStudyMeasure_unique`),
   so the object is already the right one.
-- **L7 / FND-1 (Born from the flow)** ★ — the deep frontier. Born trials still
+- **L7 / SL-1 (Born from the flow)** ★ — the deep frontier. Born trials still
   *sample* μ_FS i.i.d.; they are not *evolved by* the deterministic flow, and
   the weights are not *derived from* the dynamics. The A5→D1 sector-origin
   problem. Research-grade; may not close. Paper C itself defers this.
@@ -91,7 +91,7 @@ Formalizing KG-1 (ω, `μ_FS = ω^n/n!`) → KG-2 (Hamiltonian vector field) →
 with the Wigner one; (3) provide one geometric language for π/μ/flow/dynamics,
 knitting the Born and Schrödinger tracks onto one Σ. **But**: XL and *blocked* on
 Mathlib's missing Kähler API (greenfield, plausibly larger than all work so far);
-does NOT close FND-1 (sector origin stays open — Paper C posits it too).
+does NOT close SL-1 (sector origin stays open — Paper C posits it too).
 
 ## Recommended next step
 
@@ -103,7 +103,7 @@ Two open, non-overlapping directions:
   no answer given before session close.**
 - **KG-1/2/3** (`future-work.md`, blocked) — the deep geometric reunification with
   Paper C. Large; gated on Mathlib.
-- **FND-1** ★ — the actual thesis gap (Born from the flow). Unchanged.
+- **SL-1** ★ — the actual thesis gap (Born from the flow). Unchanged.
 
 Everything is honest and guarded: `check-connectivity.sh` fails the build if the
 retracted overclaim phrases reappear, and the manifest is the single source of

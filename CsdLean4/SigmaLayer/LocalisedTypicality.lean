@@ -2,11 +2,11 @@ import CsdLean4.LF4.KahlerVolumeForced
 import CsdLean4.LF4.ManyToOnePillars
 
 /-!
-# FND/LocalisedTypicality: A5 in the right appropriate places
+# SigmaLayer/LocalisedTypicality: A5 in the right appropriate places
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-The deep open link A5 / FND-1 (connectivity-manifest L7) asks to DERIVE the sector's typicality measure —
+The deep open link A5 / SL-1 (connectivity-manifest L7) asks to DERIVE the sector's typicality measure —
 and hence the Born weights — from the deterministic flow. A5 does NOT need to hold universally, for every
 possible measure or state; it only needs to hold where it matters: **the measure only needs to be pinned
 where the dynamical symmetry acts.** This module makes that precise.
@@ -26,14 +26,14 @@ UNIQUE `U(N)`-invariant probability measure on `ℂℙ^{N-1}`. So:
 
 ## Honest scope
 
-This is NOT the universal A5. The residual (FND-1) is that the FLOW alone is a single one-parameter
+This is NOT the universal A5. The residual (SL-1) is that the FLOW alone is a single one-parameter
 subgroup, which does not by itself GENERATE the full `U(N)` — so "invariant under the flow" is weaker
 than "invariant under `U(N)`", and forcing needs the ambient symmetry the sector CONSTRUCTION carries,
 not the bare flow. What is shown here: given that symmetry (which the concrete sectors have), the
 typicality measure and the Born weights are forced, not independently posited. The sector itself is still
-posited (A5/FND-1); this localises where the forcing bites.
+posited (A5/SL-1); this localises where the forcing bites.
 
-References: `specs/connectivity-manifest.md` (L7 / A5), `specs/future-work.md` (FND-1);
+References: `specs/connectivity-manifest.md` (L7 / A5), `specs/future-work.md` (SL-1);
 `LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`, `fubiniStudyMeasure_unique`),
 `LF4/ManyToOnePillars.lean` (`manyToOneSetup`).
 -/
@@ -70,7 +70,7 @@ unitary-flow sector on `Σ = ℂℙ^{N-1} × T²`, the ray-space typicality meas
 3. gives the SAME measure to every region as any other measure carrying the symmetry.
 
 So A5 holds AT the sectors carrying the full `U(N)` symmetry — the right appropriate places — without a
-universal derivation of the sector from the bare flow (that residual is FND-1). -/
+universal derivation of the sector from the bare flow (that residual is SL-1). -/
 theorem localised_sectorPostulate_capstone [NeZero N] (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     IsForcedKahlerVolume
         (Measure.map (manyToOneSetup U p₀).pi (manyToOneSetup U p₀).liouvilleMeasure)

@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.ProjectiveSector
 import CsdLean4.LF4.ProjectedDynamics
 
 /-!
-# FND/TheoremTargets: the quantum reconstruction targets as uninhabited predicates
+# SigmaLayer/TheoremTargets: the quantum reconstruction targets as uninhabited predicates
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -10,12 +10,12 @@ The quantum content of the reconstruction (Born rule, unitary and Schrödinger d
 frequency convergence, Lüders update, no-signalling, Bell) is represented as well-typed `Prop`
 predicates, NOT as axioms and NOT as structure fields. A target predicate is not a postulate: it is a
 statement whose inhabitants are theorems to be proved for concrete models. This module defines the
-targets whose types are supported by the current FND core; the measurement- and composition-dependent
+targets whose types are supported by the current SigmaLayer core; the measurement- and composition-dependent
 targets (Lüders update, no-signalling, contextuality, Bell) are defined in their own modules once the
 `DeisolationModel` and `CompositeSector` types exist.
 
 **We deliberately provide no inhabitants of these predicates here.** Concrete proofs live with the
-concrete models (see `FND/LiftedMeasurement.lean` and `FND/ForwardCapstone.lean`, and the existing
+concrete models (see `SigmaLayer/LiftedMeasurement.lean` and `SigmaLayer/ForwardCapstone.lean`, and the existing
 LF4/LF5/LF6 theorems they connect to).
 -/
 
@@ -66,7 +66,7 @@ def HasHamiltonianRealisation
     ∀ t p, projectedFlow t p = CSD.LF4.schrodingerUnitary hH t • p
 
 /-- **B1: the ontic measure pushes forward to a target projective measure.** Named bridge assumption:
-`pi_* muL = targetMeasure`. Proved for concrete product models (see `FND/MeasureBridge.lean`). -/
+`pi_* muL = targetMeasure`. Proved for concrete product models (see `SigmaLayer/MeasureBridge.lean`). -/
 def HasProjectivePushforward {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D)
     (targetMeasure : Measure (ProjectiveState N)) : Prop :=
   Measure.map Q.pi (D.muL : Measure Sigma) = targetMeasure

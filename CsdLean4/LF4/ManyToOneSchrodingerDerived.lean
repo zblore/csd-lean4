@@ -110,7 +110,7 @@ a genuine skew-Hermitian generator `A = -iH` such that:
 This EXERCISES the Wigner/Stone derivation on the real nonzero-generator object at
 general `N`, so `manyToOneSchrodingerSetup_schrodinger_form` (the `rfl`-form) is
 backed by an actual derivation. It is the FORWARD direction (consumes the posited
-sector); it does not derive the sector from the dynamics (L7/FND-1, untouched). -/
+sector); it does not derive the sector from the dynamics (L7/SL-1, untouched). -/
 theorem CSD.LF4.manyToOneSchrodingerSetup_schrodinger_derived {M : ℕ}
     (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1)) :
     ∃ A : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ,

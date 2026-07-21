@@ -5,11 +5,11 @@ import CsdLean4.Empirical.QM.Contextuality.KS18
 import CsdLean4.Mathlib.Probability.CGLMP
 
 /-!
-# FND/BellGenerality: the universal Bell/contextuality bounds
+# SigmaLayer/BellGenerality: the universal Bell/contextuality bounds
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-Where `FND/CompositeAdapters.lean` inhabits the T13/T14 predicates with SPECIFIC violation witnesses
+Where `SigmaLayer/CompositeAdapters.lean` inhabits the T13/T14 predicates with SPECIFIC violation witnesses
 (the singlet, the maximally-entangled qudit, Cabello-18, Mermin-Peres, GHZ), this module exposes the
 UNIVERSAL bounds behind them — the general form of Bell's theorem and Kochen-Specker, quantified over ALL
 local-hidden-variable models, ALL quantum states, and ALL parity-`(18,9)` configurations:
@@ -29,7 +29,7 @@ local-hidden-variable models, ALL quantum states, and ALL parity-`(18,9)` config
 
 These are the general theorems the corpus already proves (`E91.lhvCHSH_abs_le_two`,
 `Bell.chsh_qm_tsirelson_bound`, `CGLMP.cglmp_lhv_bound`, `KochenSpecker.no_value_assignment_18_9`), lifted
-into the FND ledger as universal statements rather than per-instance witnesses.
+into the SigmaLayer ledger as universal statements rather than per-instance witnesses.
 -/
 
 open Matrix

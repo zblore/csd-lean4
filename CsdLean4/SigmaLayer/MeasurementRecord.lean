@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.ConstraintDynamics
 import CsdLean4.SigmaLayer.RecordedFact
 
 /-!
-# FND/MeasurementRecord: de-isolating measurement and record establishment
+# SigmaLayer/MeasurementRecord: de-isolating measurement and record establishment
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 

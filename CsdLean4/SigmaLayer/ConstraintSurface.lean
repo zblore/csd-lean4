@@ -1,7 +1,7 @@
 import Mathlib.Data.Real.Basic
 
 /-!
-# FND/ConstraintSurface: ontic time and the concrete constrained state space
+# SigmaLayer/ConstraintSurface: ontic time and the concrete constrained state space
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -10,8 +10,8 @@ constrained ontic state space. The generic foundations stay polymorphic over an 
 `ConstraintSurface` construction here is for concrete models only. We do not claim that every abstract
 `Sigma` has been derived from explicit constraints.
 
-See `FND/Adapters.lean` for the postulate ledger (P1 to P9, B1 to B7, T1 to T15) governing the whole
-FND layer, and `FND/ConstraintDynamics.lean` for the deterministic dynamics.
+See `SigmaLayer/Adapters.lean` for the postulate ledger (P1 to P9, B1 to B7, T1 to T15) governing the whole
+SigmaLayer layer, and `SigmaLayer/ConstraintDynamics.lean` for the deterministic dynamics.
 -/
 
 namespace CSD.SigmaLayer

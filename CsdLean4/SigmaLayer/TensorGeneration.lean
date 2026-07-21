@@ -1,7 +1,7 @@
 import CsdLean4.SigmaLayer.TensorSector
 
 /-!
-# FND/TensorGeneration: the tensor product resolved into the local observable algebras
+# SigmaLayer/TensorGeneration: the tensor product resolved into the local observable algebras
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -14,16 +14,16 @@ and their products**. Concretely, the joint standard basis matrix is a product o
 
 so the two commuting local subalgebras (`aliceOp` = `M_{NA} ⊗ I`, `bobOp` = `I ⊗ M_{NB}`) GENERATE the
 entire joint observable algebra `M_{NA·NB}` (`joint_mem_span_local`). Combined with locality
-(`aliceOp_bobOp_commute`, `FND/TensorSector.lean`), this is the operational content of the tensor product:
+(`aliceOp_bobOp_commute`, `SigmaLayer/TensorSector.lean`), this is the operational content of the tensor product:
 the composite's observables are exactly the local observables and their products — nothing more. So B6
 reduces from "posit `⊗`" to the weaker "posit that both subsystems carry full matrix observable algebras
 that act and commute", from which the tensor structure (and the dimension `NA · NB`) is forced.
 
 This does NOT derive WHY composition should be `⊗` from first principles (that would need a locality/
-completeness reconstruction of the composite ontic space — the residual P3 / FND-1 direction); it shows
+completeness reconstruction of the composite ontic space — the residual P3 / SL-1 direction); it shows
 the `⊗` is not free structure OVER the local algebras.
 
-References: `specs/future-work.md` (P3 / FND-T3); `FND/TensorSector.lean` (`aliceOp`, `bobOp`,
+References: `specs/future-work.md` (P3 / SL-T3); `SigmaLayer/TensorSector.lean` (`aliceOp`, `bobOp`,
 `aliceOp_bobOp_commute`, `tensorIndexEquiv`).
 -/
 

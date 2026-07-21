@@ -2,11 +2,11 @@ import CsdLean4.SigmaLayer.IsolationPreparation
 import CsdLean4.SigmaLayer.MeasurementRecord
 
 /-!
-# FND/PostMeasurement: the post-outcome isolation preparation
+# SigmaLayer/PostMeasurement: the post-outcome isolation preparation
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-FND-T5 follow-on. A de-isolating measurement establishes a `RecordedFact` and appends it to the record
+SL-T5 follow-on. A de-isolating measurement establishes a `RecordedFact` and appends it to the record
 history (`appendEstablishedFact`, `compatibleSet_appendEstablishedFact`:
 `compatibleSet (history ++ [r]) = compatibleSet history ∩ event r`). The external review (2026-07-14)
 flagged that the corpus did not yet PROVE the extended history has nonzero compatible measure, nor
@@ -25,12 +25,12 @@ construct the resulting post-measurement `HistoryPreparation`. This module does 
 This closes the measurement/record loop on the unified model: measure, establish a record, and the state
 updates to a genuine (nonzero-measure) post-outcome preparation whose conditional law is the Bayesian
 update. Its `bayesianConditional` form is the ontic half of the conditional→Lüders correspondence
-(`FND/ConditioningLink.lean`).
+(`SigmaLayer/ConditioningLink.lean`).
 
-References: `specs/future-work.md` (FND-T5 follow-on); `FND/IsolationPreparation.lean`
-(`HistoryPreparation`, `conditionalMeasure_apply`), `FND/MeasurementRecord.lean`
+References: `specs/future-work.md` (SL-T5 follow-on); `SigmaLayer/IsolationPreparation.lean`
+(`HistoryPreparation`, `conditionalMeasure_apply`), `SigmaLayer/MeasurementRecord.lean`
 (`appendEstablishedFact`, `compatibleSet_appendEstablishedFact`, `DeisolationModel.establishedFact`),
-`FND/ConditioningLink.lean` (`bayesianConditional`).
+`SigmaLayer/ConditioningLink.lean` (`bayesianConditional`).
 -/
 
 open MeasureTheory

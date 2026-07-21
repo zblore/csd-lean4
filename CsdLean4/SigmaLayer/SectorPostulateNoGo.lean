@@ -4,11 +4,11 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
-# FND/SectorPostulateNoGo: the single-flow limit — a deterministic flow does not pin the sector
+# SigmaLayer/SectorPostulateNoGo: the single-flow limit — a deterministic flow does not pin the sector
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-The localized A5 result (`FND/LocalisedTypicality.lean`) shows the typicality measure is forced by the
+The localized A5 result (`SigmaLayer/LocalisedTypicality.lean`) shows the typicality measure is forced by the
 `U(N)` SYMMETRY. This module makes precise WHY the *universal* A5 — deriving the Born measure `μ_FS` from
 a single deterministic flow — is not reachable: **a single projective flow does not uniquely determine an
 invariant measure**, so it cannot single out `μ_FS`.
@@ -31,7 +31,7 @@ uniqueness), which a single one-parameter flow does not carry. This matches Pape
 A5 sector are assumed, not derived.
 
 References: `specs/connectivity-manifest.md` (L7 / A5), `specs/reconstruction-status.md` (frontier),
-`FND/LocalisedTypicality.lean` (`region_measure_symmetry_forced`, the positive companion),
+`SigmaLayer/LocalisedTypicality.lean` (`region_measure_symmetry_forced`, the positive companion),
 `LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`).
 -/
 

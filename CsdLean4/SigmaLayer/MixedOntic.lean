@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.ConditioningLuders
 import CsdLean4.SigmaLayer.MixedEnsemble
 
 /-!
-# FND/MixedOntic: the ontic-side mixed-state representation on the unified model (#8 C)
+# SigmaLayer/MixedOntic: the ontic-side mixed-state representation on the unified model (#8 C)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -13,7 +13,7 @@ over ontic pure-preparations, and proves that the mixture reproduces the density
 The state enters the ontic model only through the pointer/outcome structure (the `ψ`-dependent Born
 region), not through the Liouville law `μL` (which is fixed). So a mixed state `ρ` is represented by
 classical randomness over WHICH pure component `ψⱼ = eⱼ` (eigenvector) is in effect, weighted by the
-eigenvalues `λⱼ` — the spectral ensemble of `FND/MixedEnsemble.lean` (`density_isPureEnsemble`). The
+eigenvalues `λⱼ` — the spectral ensemble of `SigmaLayer/MixedEnsemble.lean` (`density_isPureEnsemble`). The
 resulting mixed Born WEIGHT for pointer outcome `i` is
 
   `∑ⱼ λⱼ · μL(π⁻¹ bornRegion(eⱼ) i)`   (classical mixture of ontic Born-region measures)
@@ -28,14 +28,14 @@ correspondence (`conditioning_luders_effect_equivalence`), which is also a weigh
 than an LLN. A genuine mixed-state frequency LLN (redrawing the component each shot on a two-stage
 mixture space) is the remaining refinement of #8 C.
 
-Proof = the ontic weight agreement `onticRegion_measure_eq_born` (`FND/ConditioningLuders.lean`,
+Proof = the ontic weight agreement `onticRegion_measure_eq_born` (`SigmaLayer/ConditioningLuders.lean`,
 `μL(π⁻¹ bornRegion ψ i) = ‖⟨eᵢ,ψ⟩‖²`) composed with the spectral affine Born rule
-`traceForm_eq_pureEnsemble` (`FND/MixedEnsemble.lean`) and the pure Born quadratic form `born_quadratic`
+`traceForm_eq_pureEnsemble` (`SigmaLayer/MixedEnsemble.lean`) and the pure Born quadratic form `born_quadratic`
 (`LF2/BornWrapper.lean`), matched up by conjugate symmetry of the inner product.
 
-References: `FND/ConditioningLuders.lean` (`onticRegion_measure_eq_born`), `FND/MixedEnsemble.lean`
+References: `SigmaLayer/ConditioningLuders.lean` (`onticRegion_measure_eq_born`), `SigmaLayer/MixedEnsemble.lean`
 (`traceForm_eq_pureEnsemble`, `eigenvectorBasis_norm_one`, `density_isPureEnsemble`),
-`LF2/BornWrapper.lean` (`traceForm`, `rankOneEffect`, `born_quadratic`); `specs/future-work.md` FND-T9.
+`LF2/BornWrapper.lean` (`traceForm`, `rankOneEffect`, `born_quadratic`); `specs/future-work.md` SL-T9.
 -/
 
 open MeasureTheory

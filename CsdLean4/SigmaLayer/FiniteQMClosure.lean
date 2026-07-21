@@ -5,7 +5,7 @@ import CsdLean4.SigmaLayer.MixedOntic
 import CsdLean4.SigmaLayer.MixedFrequency
 
 /-!
-# FND/FiniteQMClosure: the tiered finite-dimensional QM closure (#6)
+# SigmaLayer/FiniteQMClosure: the tiered finite-dimensional QM closure (#6)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -54,33 +54,33 @@ exception recorded separately:
 
 * **B6 (composite tensor structure)** — that a joint system's algebra is `M_m ⊗ M_n`. Posited per instance
   in `CompositeSector`, OR derived: `CSD.SigmaLayer.CompositeSector.ofReconstruction`
-  (`FND/TensorReconstruction.lean`, `composite_dim_eq`) builds a `CompositeSector` whose `tensor_dimension`
+  (`SigmaLayer/TensorReconstruction.lean`, `composite_dim_eq`) builds a `CompositeSector` whose `tensor_dimension`
   is PROVED from the composite algebra being simple — so B6 is "assumed OR dischargeable", not a gap. This
   is single-system closure; B6 belongs to the composite track and is intentionally outside `FiniteQMClosure`.
 
 ## Tier 3 — QM ADAPTERS (restatements into textbook QM, elsewhere)
 
-`FND/Adapters.lean`, `FND/CompositeAdapters.lean`: the maps taking these ontic facts to their standard
+`SigmaLayer/Adapters.lean`, `SigmaLayer/CompositeAdapters.lean`: the maps taking these ontic facts to their standard
 Hilbert-space QM statements (density operators, Lüders channel, Born rule). They translate; they do not add
 reconstruction content.
 
 ## Tier 4 — OPEN
 
 * mixed-state / ensemble representation (#8): fully closed — the statistical side (#8 A+B,
-  `FND/MixedEnsemble.lean`), the ontic-side WEIGHT-level representation (`mixed_born` /
+  `SigmaLayer/MixedEnsemble.lean`), the ontic-side WEIGHT-level representation (`mixed_born` /
   `mixed_ontic_born_weight`), AND the a.s. FREQUENCY LLN (`mixed_born_frequency` /
-  `unified_mixed_born_frequency`, `FND/MixedFrequency.lean`: the two-stage mixture process redrawing the
+  `unified_mixed_born_frequency`, `SigmaLayer/MixedFrequency.lean`: the two-stage mixture process redrawing the
   spectral component each shot). Mixed-state Born now holds as both weights and certified frequencies;
 * the ECDLP circuit track's capstone `denote = divstepRev` + termination (`ECDLP/SafegcdDivstepCircuit.lean`)
   — independent of this QM closure, tracked separately.
 
 ## References
 
-`specs/future-work.md` (FND-T5, FND-T6, projective sector); `specs/reconstruction-status.md`;
+`specs/future-work.md` (SL-T5, SL-T6, projective sector); `specs/reconstruction-status.md`;
 `specs/connectivity-manifest.md` (L9). Source theorems: `unified_projectiveSector_capstone`
-(`FND/UnifiedMeasurement.lean`), `unified_records_persistence`, `unified_born_frequency`
-(`FND/UnifiedFlowedRecords.lean`), `conditioning_luders_effect_equivalence`
-(`FND/ConditioningLuders.lean`), `CompositeSector.ofReconstruction` (`FND/TensorReconstruction.lean`).
+(`SigmaLayer/UnifiedMeasurement.lean`), `unified_records_persistence`, `unified_born_frequency`
+(`SigmaLayer/UnifiedFlowedRecords.lean`), `conditioning_luders_effect_equivalence`
+(`SigmaLayer/ConditioningLuders.lean`), `CompositeSector.ofReconstruction` (`SigmaLayer/TensorReconstruction.lean`).
 -/
 
 open MeasureTheory

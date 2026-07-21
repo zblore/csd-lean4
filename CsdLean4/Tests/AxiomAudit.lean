@@ -2951,7 +2951,7 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.bell_prep_realisable_cpSector
 
--- FND-3 (2026-07-10): the §13.2 ontic lift on the NON-TRIVIAL-FIBRE instance kSectorData
+-- SL-3 (2026-07-10): the §13.2 ontic lift on the NON-TRIVIAL-FIBRE instance kSectorData
 -- (π = pr₁ many-to-one, Σ = ℂℙ^{N-1}×T²), the cpSectorActionBundle analogue on the Kähler instance.
 -- Part 1 (thread Φ): the sector flow Φ=kFlow descends along π to f_Φ=id on rays
 -- (kSectorDataFlow_projectable), which is TransProbPreserving (kProjectedFlow_transProbPreserving)
@@ -3065,7 +3065,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- volume is an OUTCOME of Σ = ℂℙ^{N-1} and its symmetry, not posited: fubiniStudyMeasure IS the forced
 -- volume, the unitaryFlowSetup sector volume IS it, and the many-to-one instance's ray-space volume
 -- π_*(kMuL) IS it (kMuL = forced-FS ⊗ Haar). IsKahlerSector (the 2-form) stays Mathlib-blocked (KG-1);
--- FORWARD (takes G=U(N) as given, does not derive it — FND-1 untouched).
+-- FORWARD (takes G=U(N) as given, does not derive it — SL-1 untouched).
 /-- info: 'CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume
@@ -3117,7 +3117,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- manyToOneSetup_pi_not_injective) AND a non-trivial projected ray flow. The
 -- Born pillar scores the FIBRED region π⁻¹'(bornRegion), whose kMuL-volume = the
 -- base Born weight because the fibre volume is normalized (Prod.fst_* kMuL = μFS).
--- Same honest gap as C4: trials sample kMuL, not evolved by the flow (L7/FND-1).
+-- Same honest gap as C4: trials sample kMuL, not evolved by the flow (L7/SL-1).
 /-- info: 'CSD.LF4.manyToOneSetup_pi_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSetup_pi_not_injective
@@ -3134,7 +3134,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- by π = pr₁ onto the ray space, at general N with ARBITRARY Hermitian H. manyToOneSetup driven by
 -- U t = exp(-itH) (schrodingerUnitary): (A) Schrödinger π(Φ_t x)=exp(-itH)•π x holds by rfl at general N
 -- (no N=2 σ_y, no Wigner selection — the flow is unitary by construction), (B) Born via the already
--- general-N manyToOneSetup_born_frequency. FORWARD delivery (consumes the sector); FND-1 untouched.
+-- general-N manyToOneSetup_born_frequency. FORWARD delivery (consumes the sector); SL-1 untouched.
 /-- info: 'CSD.LF4.manyToOneSchrodingerSetup_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSchrodingerSetup_schrodinger_form
@@ -3764,7 +3764,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- EVOLVED by the sector's own deterministic flow Φ_t = (unitaryFlowSetup …).flow t, converging to
 -- the Born weights. The flow's Liouville-preservation (flow_preserves_volume = U(N)-invariance of
 -- μ_FS) pins the evolved law back to μ_FS — the substrate flow is now consumed on the Born side.
--- Still foundational-triple; weights-from-flow (FND-1) untouched.
+-- Still foundational-triple; weights-from-flow (SL-1) untouched.
 /-- info: 'CSD.LF4.unitaryFlowSetup_born_frequency_evolved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup_born_frequency_evolved
@@ -3796,7 +3796,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ofKählerPreparation_singlet_frequency_convergence
 
--- FND-2 (2026-07-09): the singlet preparation rebuilt over the Φ≠id sector kSectorDataFlow (Φ=kFlow),
+-- SL-2 (2026-07-09): the singlet preparation rebuilt over the Φ≠id sector kSectorDataFlow (Φ=kFlow),
 -- the ENTANGLED analogue of D1c-1. The LF1 preEvent = Φ⁻¹'Ω, so with Φ=kFlow the capstone scores the
 -- flow-EVOLVED trials (kFlow∘X)⁻¹'kRegion, and kFlow's μψ-preservation (kFlow_measurePreserving_muPsi)
 -- is load-bearing (bridge_op_p: kMuPsi (kFlow⁻¹'kRegion) = kMuPsi kRegion = P_st). Still foundational-triple.
@@ -6537,7 +6537,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Thermo.landauer_one_bit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.landauer_one_bit
 
--- FND Tranche 1 (2026-07-12): the projective-sector foundation. ConstraintDynamics (deterministic
+-- SigmaLayer Tranche 1 (2026-07-12): the projective-sector foundation. ConstraintDynamics (deterministic
 -- measure-preserving one-parameter-group ontic flow), RecordedFact/RecordSemantics/compatibleSet
 -- (records as measurable contextual events; isolation = conditioning muL on the record history),
 -- IsolationPreparation (LF1 adapter reusing prepMeasure), ProjectiveSector (measurable pi to CP^{N-1}, not
@@ -6564,7 +6564,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.kahlerProjectiveSector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.kahlerProjectiveSector_pi
 
--- FND Tranche 2 (2026-07-13): the de-isolation measurement layer + the concrete product forward
+-- SigmaLayer Tranche 2 (2026-07-13): the de-isolation measurement layer + the concrete product forward
 -- capstone. productSector_hasFubiniStudyPushforward proves bridge B1 (pi_*(muFS ⊗ vol) = muFS) for the
 -- CP^{N-1}×T² product model; productProjectedFlow_hasHamiltonianRealisation inhabits target T5
 -- (exp(-itH) realisation); product_projectiveSector_forward_capstone bundles measure preservation + projectability
@@ -6581,7 +6581,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.compatibleSet_appendEstablishedFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compatibleSet_appendEstablishedFact
 
--- FND Tranche 2b (2026-07-13): the concrete de-isolation model from the LF5 pointer machinery.
+-- SigmaLayer Tranche 2b (2026-07-13): the concrete de-isolation model from the LF5 pointer machinery.
 -- vnDeisolationModel is a fully theorem-backed DeisolationModel on CP^{M} (M+1 = N*N): interaction =
 -- measurementFlow (measure-preserving unitary), readout = vnPointerOutcome, outcome regions = pointer
 -- fibres. vnDeisolationModel_records proves the readout records the established outcome (B5);
@@ -6596,7 +6596,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.lifted_projectiveSector_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_projectiveSector_measurement_capstone
 
--- FND Tranche 2b Born statistics (2026-07-13): the concrete de-isolation model reproduces the Born
+-- SigmaLayer Tranche 2b Born statistics (2026-07-13): the concrete de-isolation model reproduces the Born
 -- FREQUENCIES, not merely a defined outcome. vnDeisolationModel_born_frequency transfers the LF5
 -- outcome-frequency capstone measurement_flow_outcome_frequency through the measure-preserving
 -- interaction (composed trial process measurementFlow ∘ fsTrial), so the pointer-i readout frequency
@@ -6608,9 +6608,9 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.lifted_projectiveSector_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_projectiveSector_measurement_born_capstone
 
--- FND Tranche 3 (2026-07-13): the composition/measurement targets (ledger T9-T15) as bridge interfaces
--- and uninhabited predicates (FND/CompositeInterface.lean), inhabited by adapters wiring the existing
--- LF6/Empirical capstones (FND/CompositeAdapters.lean). T15 no-signalling from the singlet marginals;
+-- SigmaLayer Tranche 3 (2026-07-13): the composition/measurement targets (ledger T9-T15) as bridge interfaces
+-- and uninhabited predicates (SigmaLayer/CompositeInterface.lean), inhabited by adapters wiring the existing
+-- LF6/Empirical capstones (SigmaLayer/CompositeAdapters.lean). T15 no-signalling from the singlet marginals;
 -- T14 Bell from the d-intrinsic CGLMP no-LHV force and the CHSH Tsirelson saturation; T13 contextuality
 -- from Kochen-Specker (Cabello-18), Mermin-Peres and GHZ; T10 POVM normalisation. T9 (mixed states) left
 -- out honestly: the ensemble/mixed-Born content is the reported Mathlib density-matrix gap.
@@ -6635,7 +6635,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.povm_weightsProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.povm_weightsProbability
 
--- FND interference (T16) + tensor weave (2026-07-14). hadamardTest_hasBornInterference inhabits the
+-- SigmaLayer interference (T16) + tensor weave (2026-07-14). hadamardTest_hasBornInterference inhabits the
 -- two-path Born-interference target from the Hadamard test ((1 + Re⟨ψ,Uψ⟩)/2); interference is a
 -- consequence of the complex sector (P7) + Born rule (T1/T2), not a postulate. The tensor weave shows
 -- the finite tensor product ℂ^{NA} ⊗ ℂ^{NB} = ℂ^{NA·NB} is DERIVED (tensorIndexEquiv on Fin NA × Fin NB,
@@ -6650,7 +6650,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.tensorSector_no_signalling
 
--- FND time-indexed records + persistence (2026-07-15, FND-T5 final follow-on): makes records physical.
+-- SigmaLayer time-indexed records + persistence (2026-07-15, SL-T5 final follow-on): makes records physical.
 -- flowedSemantics event ⟨c,i,t⟩ = Φ_t⁻¹'(region c i) genuinely uses the recorded time (the pointer
 -- semantics ignored it). flowedSemantics_event_measure: μL(event ⟨c,i,t⟩) = μL(region c i) -- record
 -- probability conserved under isolated evolution. flowedSemantics_event_flow: event ⟨c,i,t+s⟩ =
@@ -6664,7 +6664,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.flowedSemantics_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.flowedSemantics_persistence
 
--- FND post-outcome preparation (2026-07-15, FND-T5 follow-on): closes the measurement/record loop.
+-- SigmaLayer post-outcome preparation (2026-07-15, SL-T5 follow-on): closes the measurement/record loop.
 -- HistoryPreparation.appendFact constructs the post-measurement preparation on the extended history
 -- (history ++ [r]); its compatible region compatibleSet ∩ event r has PROVEN nonzero measure when the
 -- outcome is possible. appendFactOfPos builds it from positive conditional probability
@@ -6679,7 +6679,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.HistoryPreparation.appendFactOfPos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.HistoryPreparation.appendFactOfPos
 
--- FND conditional->Luders correspondence (2026-07-15, FND-T5 follow-on): connects the two conditioning
+-- SigmaLayer conditional->Luders correspondence (2026-07-15, SL-T5 follow-on): connects the two conditioning
 -- rules the review flagged as unlinked. bayesianConditional w = w(fine)/w(coarse); BOTH the projective
 -- Luders update (ludersUpdate_isBayesianConditional, over the Born weight) and the ontic record-history
 -- conditioning (historyConditioning_isBayesianConditional, over the Liouville measure) are instances.
@@ -6688,7 +6688,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.luders_record_conditioning_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.luders_record_conditioning_correspondence
 
--- FND conditioning->Luders WEIGHT AGREEMENT (2026-07-17, ConditioningLuders.lean): the missing link the
+-- SigmaLayer conditioning->Luders WEIGHT AGREEMENT (2026-07-17, ConditioningLuders.lean): the missing link the
 -- review flagged. onticRegion_measure_eq_born: μL(π⁻¹ bornRegion i) = ‖⟨eᵢ,ψ⟩‖² -- the ontic measure of the
 -- i-th OUTCOME REGION equals the Born weight, via B1 (π_*μL=μFS) + Born-from-volume. So the ontic and Born
 -- conditioning weights are the SAME number (previously only asserted). conditioning_born_ratio_correspondence:
@@ -6700,7 +6700,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.conditioning_born_ratio_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conditioning_born_ratio_correspondence
 
--- FND #4 OPERATIONAL EQUIVALENCE (2026-07-17, ConditioningLuders.lean): the review's #4 for pointer-basis
+-- SigmaLayer #4 OPERATIONAL EQUIVALENCE (2026-07-17, ConditioningLuders.lean): the review's #4 for pointer-basis
 -- effects. projWeight_rankOne: projWeight(rank-1 proj eₖ)ψ = ‖⟨eₖ,ψ⟩‖² -- the formalism bridge between the
 -- projWeight (E→ₗE) weight and the Born/region weight. onticWeight_eq_ludersWeight: μL(π⁻¹ bornRegion i) =
 -- projWeight(rankOneProj i)ψ -- the ontic and Lüders conditioning weights are LITERALLY equal per outcome.
@@ -6716,7 +6716,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.conditioning_luders_operational_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conditioning_luders_operational_equivalence
 
--- FND #4 GENERAL-EFFECT extension (2026-07-17, ConditioningLuders.lean): #4 completed for ALL pointer-basis
+-- SigmaLayer #4 GENERAL-EFFECT extension (2026-07-17, ConditioningLuders.lean): #4 completed for ALL pointer-basis
 -- effects. onticRegion_biUnion_measure_eq_born_sum: μL(π⁻¹ ⋃_{k∈S} bornRegion k) = ∑_{k∈S} ‖⟨eₖ,ψ⟩‖² --
 -- the weight agreement for an effect S (union of regions = sum of Born weights), via additivity over the
 -- pairwise-disjoint Born regions. conditioning_luders_effect_equivalence: the ontic and Lüders conditionings
@@ -6734,7 +6734,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.historyConditioning_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.historyConditioning_isBayesianConditional
 
--- FND-T5 unified many-to-one measurement capstone (2026-07-15): dynamics + measurement on ONE ontic
+-- SL-T5 unified many-to-one measurement capstone (2026-07-15): dynamics + measurement on ONE ontic
 -- model. unified_projectiveSector_capstone puts BOTH the isolated Hamiltonian flow (productDynamics, exp(-itH)•)
 -- AND the de-isolation measurement (measurementFlow on the base fibre) on the SAME (Σ=ℂℙ^{M}×T², μL=μFS⊗
 -- vol, π=Prod.fst): flow measure-preserving + Schrödinger-projectable + FS pushforward + interaction
@@ -6743,7 +6743,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.unified_projectiveSector_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_projectiveSector_capstone
 
--- FND #5 TIME-INDEXED RECORDS ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's
+-- SigmaLayer #5 TIME-INDEXED RECORDS ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's
 -- #5. unifiedFlowedSemantics = flowedSemantics over the isolated flow productDynamics with the pointer-fibre
 -- region; unified_records_persistence instantiates flowedSemantics_persistence ON the unified model (Born
 -- weight conserved + flow-covariant under the exp(-itH) evolution); unifiedFlowedSemantics_zero: the static
@@ -6755,7 +6755,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.unifiedFlowedSemantics_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unifiedFlowedSemantics_zero
 
--- FND #2 BORN-FREQUENCY ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's #2.
+-- SigmaLayer #2 BORN-FREQUENCY ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's #2.
 -- unified_born_frequency: for i.i.d. trials with the unified model's OWN law (productDynamics.muL), the
 -- frequency of trials in π⁻¹(bornRegion i) converges a.s. to ‖⟨eᵢ,ψ⟩‖² -- a direct transfer of
 -- manyToOneSetup_born_frequency through productDynamics.muL = liouvilleMeasure (rfl). Born frequencies now
@@ -6775,7 +6775,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unifiedDeisolationModel_ae_total
 
--- FND P3 SOLVED via local tomography (2026-07-15): composite_is_tensor_product. The composite observable
+-- SigmaLayer P3 SOLVED via local tomography (2026-07-15): composite_is_tensor_product. The composite observable
 -- algebra IS the tensor product of the local ones -- compositeTensorEquiv (= kroneckerLinearEquiv) is a
 -- SUFFICIENCY (2026-07-17 downgrade): BIJECTIVE linear iso M_{NA} ⊗ M_{NB} ≃ M_{NA·NB} sending
 -- U ⊗ₜ Q ↦ aliceOp U · bobOp Q -- the standard tensor model REALIZES locality (commuting) + local tomography
@@ -6784,7 +6784,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.composite_is_tensor_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.composite_is_tensor_product
 
--- FND P3 RECONSTRUCTION (2026-07-17, TensorReconstruction.lean): the NECESSITY/uniqueness half.
+-- SigmaLayer P3 RECONSTRUCTION (2026-07-17, TensorReconstruction.lean): the NECESSITY/uniqueness half.
 -- compositeAlgReconstruction: commuting local embeddings M_m, M_n whose images GENERATE 𝒜 give an ALGEBRA
 -- EQUIVALENCE M_m ⊗ M_n ≃ₐ 𝒜 (injective since M_m⊗M_n is SIMPLE -- matrixTensor_isSimpleRing; surjective
 -- from generation). composite_dim_eq: for 𝒜 = M_k, forces k = m·n -- discharging bridge B6
@@ -6795,7 +6795,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.composite_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.composite_dim_eq
 
--- FND P3 BRIDGE B6 DISCHARGED (2026-07-17): CompositeSector.ofReconstruction builds a CompositeSector
+-- SigmaLayer P3 BRIDGE B6 DISCHARGED (2026-07-17): CompositeSector.ofReconstruction builds a CompositeSector
 -- whose tensor_dimension (NA*NB=Njoint) FIELD is filled by composite_dim_eq -- derived from commuting,
 -- generating local embeddings, not posited. So B6 is no longer a bare assumption.
 /-- info: 'CSD.SigmaLayer.CompositeSector.ofReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -6833,7 +6833,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compositeTensorEquiv_apply
 
--- FND P3 resolution + localized A5 (2026-07-15): reducing the two deep posits.
+-- SigmaLayer P3 resolution + localized A5 (2026-07-15): reducing the two deep posits.
 -- P3 (why tensor): single_prod (the joint basis matrix = product of local ones) + joint_mem_span_local
 -- (the commuting local subalgebras GENERATE the whole joint algebra) -- the tensor product carries no
 -- observables beyond local ones and their products, so B6 reduces from "posit ⊗" to "posit two full
@@ -6854,7 +6854,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.localised_sectorPostulate_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.localised_sectorPostulate_capstone
 
--- FND A5 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
+-- SigmaLayer A5 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
 -- two distinct fixed rays admits an invariant probability measure /= mu_FS (the two fixed-ray Diracs), so a
 -- single deterministic flow does NOT pin the sector's typicality measure -- "A5 is posited" is a theorem
 -- about the limit, not a formalisation gap. phaseFlip_admits_invariant_ne_fubiniStudy exhibits it on the
@@ -6877,7 +6877,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.isErgodicForOutcomeRegions_of_uniquelyErgodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.isErgodicForOutcomeRegions_of_uniquelyErgodic
 
--- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
+-- SigmaLayer Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
 -- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),
 -- cglmp_lhv_le_two (every LHV table, every d: cglmp ≤ 2), bell_general_separation (2 < 2√2, gap attained
 -- by the singlet), general_ks_noNonContextualValuation (any parity-(18,9) config, not just Cabello-18).
@@ -6893,7 +6893,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.general_ks_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.general_ks_noNonContextualValuation
 
--- FND T8: the projective (Lüders) update (2026-07-14). luders_capstone bundles the three defining
+-- SigmaLayer T8: the projective (Lüders) update (2026-07-14). luders_capstone bundles the three defining
 -- properties of the projective post-measurement update ludersUpdate p x = (‖p x‖)⁻¹ • p x: normalised,
 -- repeatable (p fixes it, so re-measurement is certain), and Lüders = conditional probability
 -- (ludersUpdate_conditional: the updated Born weight of a finer projection q is projWeight q x /
@@ -6908,7 +6908,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.projWeight_eq_re_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.projWeight_eq_re_inner
 
--- FND T7: the general (non-projective) conditional state update (2026-07-14). conditionalUpdate_capstone
+-- SigmaLayer T7: the general (non-projective) conditional state update (2026-07-14). conditionalUpdate_capstone
 -- bundles the general Kraus/effect update stateUpdate M x = (‖M x‖)⁻¹ • M x for a measurement operator M
 -- (effect E = M† M): normalised, outcome weight = Re⟨x, M† M x⟩ (updateWeight_eq_re_inner), and the
 -- sequential (Wigner) rule stateUpdate_sequential (updateWeight N (stateUpdate M x) = updateWeight N
@@ -6923,7 +6923,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.stateUpdate_eq_ludersUpdate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.stateUpdate_eq_ludersUpdate
 
--- FND T9: the mixed-state representation (2026-07-14). Closes the density-matrix gap on the statistical
+-- SigmaLayer T9: the mixed-state representation (2026-07-14). Closes the density-matrix gap on the statistical
 -- side. mixedState_capstone / traceForm_mix: the convex mixture mix p ρ₁ ρ₂ is a density operator and
 -- the Born rule traceForm is affine in the state (Tr((p ρ₁ + (1-p) ρ₂) E) = p Tr(ρ₁ E) + (1-p) Tr(ρ₂ E)).
 -- rankOneDensity_isPure: pure states are the rank-one projectors; maximallyMixed_not_isPure: I/N is a
@@ -6970,7 +6970,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.mixedEnsemble_capstone
 
--- Mixed-Born on the COMPOSITE INDEXED density type (2026-07-19, FND-T3 T9 residual closed): the
+-- Mixed-Born on the COMPOSITE INDEXED density type (2026-07-19, SL-T3 T9 residual closed): the
 -- MixedEnsemble content (affine Born + spectral ensemble) ported from DensityOperator (Fin N) to
 -- DensityOperatorIx ι (arbitrary Fintype index — the type the bipartite/composite interface uses via
 -- reduced/reducedLeft). traceForm_ensemble = affine; mixedEnsemble_capstone = Born is the

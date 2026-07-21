@@ -74,7 +74,7 @@ transitive closure) pinned to the same Mathlib commit.
 
 ## Done this session (2026-07-19)
 
-Honesty guard (`check-claims.sh`) · Track A#1 Schrödinger derivation · Track A#2 Kähler de-vacuum · A5/L7 ergodic bracket · §13.2 all 9 gates · §14 measurement connections (SG/Uncertainty/Hardy) · Mach–Zehnder · Double-slit + complementarity · **composite mixed-Born on `DensityOperatorIx`** (FND-T3 T9) · **Choi converse — Choi's theorem CP⟺PSD** (`LF2/ChoiConverse.lean`) · **Gisin's theorem — every entangled pure two-qubit state violates CHSH** (`LF6/GisinTheorem.lean`, closes LF6-6) · **Lindblad/GKSL generator tier** (`LF6/LindbladGenerator.lean`, LF6-9 generator level).
+Honesty guard (`check-claims.sh`) · Track A#1 Schrödinger derivation · Track A#2 Kähler de-vacuum · A5/L7 ergodic bracket · §13.2 all 9 gates · §14 measurement connections (SG/Uncertainty/Hardy) · Mach–Zehnder · Double-slit + complementarity · **composite mixed-Born on `DensityOperatorIx`** (SL-T3 T9) · **Choi converse — Choi's theorem CP⟺PSD** (`LF2/ChoiConverse.lean`) · **Gisin's theorem — every entangled pure two-qubit state violates CHSH** (`LF6/GisinTheorem.lean`, closes LF6-6) · **Lindblad/GKSL generator tier** (`LF6/LindbladGenerator.lean`, LF6-9 generator level).
 
 ## Settled non-goals — do not re-litigate (see `reconstruction-status.md §7a`)
 

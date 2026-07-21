@@ -40,7 +40,7 @@ the moment-region ↔ physical-detector-outcome labelling is the interpretive LF
 boundary; the number `cos²(φ/2)` and the visibility `1` are derived.
 
 References: `Empirical/Metrology/Ramsey.lean` (`ramseyVec`, `ramseyVec_eq_circuit`,
-`ramseyFringe`, `ramsey_fringe_volume`, `ramsey_fringe_max/min`), `FND/Interference.lean`
+`ramseyFringe`, `ramsey_fringe_volume`, `ramsey_fringe_max/min`), `SigmaLayer/Interference.lean`
 (`HasBornInterference`), `specs/qm-empirical-tests.md` (B4).
 -/
 

@@ -3,7 +3,7 @@ import Mathlib.Analysis.InnerProductSpace.Symmetric
 import Mathlib.Tactic.Module
 
 /-!
-# FND/Symmetrization: the two-particle symmetrization postulate (identical particles)
+# SigmaLayer/Symmetrization: the two-particle symmetrization postulate (identical particles)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)) — the identical-particle / exchange-statistics pillar.
 
@@ -26,7 +26,7 @@ For two identical particles the joint Hilbert space is `H ⊗ H`, realised concr
 This is the finite-dimensional `n = 2` core of the symmetrization postulate (the exchange-statistics
 pillar); the general-`n` symmetric group action / exterior-power Fock structure is a further extension.
 
-References: `FND/TensorReconstruction.lean` (composite two-system structure); `specs/future-work.md`
+References: `SigmaLayer/TensorReconstruction.lean` (composite two-system structure); `specs/future-work.md`
 (identical-particle statistics). Uses Mathlib `LinearIsometryEquiv.piLpCongrLeft`,
 `LinearMap.IsSymmetric`.
 -/

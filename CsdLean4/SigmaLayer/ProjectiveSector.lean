@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.IsolationPreparation
 import CsdLean4.LF4.KahlerOnticSetup
 
 /-!
-# FND/ProjectiveSector: the projective sector and its projective law
+# SigmaLayer/ProjectiveSector: the projective sector and its projective law
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -19,7 +19,7 @@ are theorem targets or named bridge assumptions elsewhere, never fields here.
 
 ## Adapters into the existing setups
 
-`kahlerConstraintDynamics` and `kahlerProjectiveSector` recover the FND structures from
+`kahlerConstraintDynamics` and `kahlerProjectiveSector` recover the SigmaLayer structures from
 `LF4.KahlerOnticSetup`. The `ConstraintDynamics` adapter is PARTIAL: `KahlerOnticSetup` does not carry
 the one-parameter-group laws (`flow_zero`, `flow_add`), so they are taken as explicit inputs, and it
 does not guarantee finiteness of `liouvilleMeasure`, so `IsFiniteMeasure` is required. `KahlerOnticSetup`'s
@@ -35,7 +35,7 @@ namespace CSD.SigmaLayer
 universe u
 
 /-- **The projective sector projective pure-state target (postulate P7):** `CP^{N-1}`. Definitionally the LF4
-`CPN N = ℙ ℂ (EuclideanSpace ℂ (Fin N))`; named here for the FND layer. -/
+`CPN N = ℙ ℂ (EuclideanSpace ℂ (Fin N))`; named here for the SigmaLayer layer. -/
 abbrev ProjectiveState (N : ℕ) := ℙ ℂ (EuclideanSpace ℂ (Fin N))
 
 /-- **The projective sector (postulates P8, P9).** A measurable projection from the ontic state space to
@@ -53,7 +53,7 @@ namespace ProjectiveSector
 variable {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma] {D : ConstraintDynamics Sigma}
 
 /-- **The projective law of an ontic measure.** The pushforward `pi_* mu` on the projective sector.
-Not identified with the Fubini-Study measure without a separate bridge (`FND/MeasureBridge.lean`). -/
+Not identified with the Fubini-Study measure without a separate bridge (`SigmaLayer/MeasureBridge.lean`). -/
 noncomputable def projectiveLaw (Q : ProjectiveSector N D) (mu : Measure Sigma) :
     Measure (ProjectiveState N) :=
   Measure.map Q.pi mu
@@ -74,7 +74,7 @@ end ProjectiveSector
 
 /-! ### Adapters from the existing `LF4.KahlerOnticSetup` -/
 
-/-- **Partial adapter `KahlerOnticSetup -> ConstraintDynamics`.** Recovers the FND canonical core from a
+/-- **Partial adapter `KahlerOnticSetup -> ConstraintDynamics`.** Recovers the SigmaLayer canonical core from a
 Kähler setup, given the one-parameter-group laws (`hzero`, `hadd`) that `KahlerOnticSetup` does not carry
 and `IsFiniteMeasure` on its `liouvilleMeasure`. Measurability of the flow is derived from
 `flow_preserves_volume`; measure preservation is inherited directly. -/

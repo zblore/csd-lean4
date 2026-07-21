@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.CompositeInterface
 import Mathlib.Analysis.Matrix.Spectrum
 
 /-!
-# FND/MixedState: mixed-state representation and statistical mixtures
+# SigmaLayer/MixedState: mixed-state representation and statistical mixtures
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 

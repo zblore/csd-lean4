@@ -1,12 +1,12 @@
 import CsdLean4.SigmaLayer.Luders
 
 /-!
-# FND/ConditionalUpdate: the general (non-projective) conditional state update
+# SigmaLayer/ConditionalUpdate: the general (non-projective) conditional state update
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Ledger target **T7**, the general conditional post-measurement state update, of which the Lüders update
-(**T8**, `FND/Luders.lean`) is the sharp-projective special case.
+(**T8**, `SigmaLayer/Luders.lean`) is the sharp-projective special case.
 
 A general measurement outcome is described by a measurement operator (Kraus operator) `M`: the effect
 measured is `E = M† M` (a positive operator `0 ≤ E ≤ I`; every effect arises as `M = √E`), the outcome

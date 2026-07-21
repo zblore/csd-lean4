@@ -1,13 +1,13 @@
 import CsdLean4.SigmaLayer.MixedState
 
 /-!
-# FND/MixedEnsemble: finite ensembles and the spectral ensemble decomposition (#8 A+B)
+# SigmaLayer/MixedEnsemble: finite ensembles and the spectral ensemble decomposition (#8 A+B)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-Extends the mixed-state layer (`FND/MixedState.lean`, ledger T9) from the binary mixture `mix` to the two
+Extends the mixed-state layer (`SigmaLayer/MixedState.lean`, ledger T9) from the binary mixture `mix` to the two
 missing pieces of the mixed-state / ensemble representation flagged as open in `specs/future-work.md`
-(FND-T9 "remaining extensions"):
+(SL-T9 "remaining extensions"):
 
 * **A — finite ensembles.** `ensemble w ρ = ∑ᵢ wᵢ ρᵢ` over a finite index type: a convex combination of
   arbitrarily many density operators is a density operator (`ensemble`), and the Born rule is affine over
@@ -24,9 +24,9 @@ Built on Mathlib's Hermitian spectral theorem (`Matrix.IsHermitian.spectral_theo
 `outerProduct` / `rankOneDensity`. This closes #8 pieces A and B (the statistical/QM-adapter side); the
 ontic-side mixed representation on the unified model (#8 C) is separate.
 
-References: `FND/MixedState.lean` (`mix`, `traceForm_mix`, `IsPure`, `maximallyMixed`),
+References: `SigmaLayer/MixedState.lean` (`mix`, `traceForm_mix`, `IsPure`, `maximallyMixed`),
 `LF2/BornWrapper.lean` (`DensityOperator`, `Effect`, `traceForm`, `outerProduct`, `rankOneDensity`,
-`born_quadratic`); `specs/future-work.md` FND-T9.
+`born_quadratic`); `specs/future-work.md` SL-T9.
 -/
 
 open Matrix Unitary

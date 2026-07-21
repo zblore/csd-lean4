@@ -2,7 +2,7 @@ import CsdLean4.SigmaLayer.MixedOntic
 import CsdLean4.LF4.BornFrequencyPartition
 
 /-!
-# FND/MixedFrequency: the mixed-state Born FREQUENCY on the unified model (#8 C, a.s. limit)
+# SigmaLayer/MixedFrequency: the mixed-state Born FREQUENCY on the unified model (#8 C, a.s. limit)
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -23,7 +23,7 @@ The frequency of outcome `i` over the trials converges a.s. to `Tr(ρ Eᵢ)`.
 So the unified model carries mixed-state Born statistics as certified FREQUENCIES, not only as weights —
 closing the last open QM item in `FiniteQMClosure` (its Tier-4 "mixed-state frequency LLN").
 
-References: `FND/MixedOntic.lean` (`mixed_ontic_born_weight`), `FND/MixedEnsemble.lean`
+References: `SigmaLayer/MixedOntic.lean` (`mixed_ontic_born_weight`), `SigmaLayer/MixedEnsemble.lean`
 (`eigenvalues_isProbability`), `LF4/BornFrequencyPartition.lean` (the general partition LLN).
 -/
 

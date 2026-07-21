@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.RecordedFact
 import CsdLean4.LF1.Preparation
 
 /-!
-# FND/IsolationPreparation: preparations and isolation as conditioning on a record history
+# SigmaLayer/IsolationPreparation: preparations and isolation as conditioning on a record history
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
@@ -78,7 +78,7 @@ namespace HistoryPreparation
 
 variable {D : ConstraintDynamics Sigma} {R : RecordSignature} {S : RecordSemantics Sigma R}
 
-/-- The isolation preparation as an FND `Preparation`, with region the compatible region of the
+/-- The isolation preparation as an SigmaLayer `Preparation`, with region the compatible region of the
 history. -/
 def toPreparation (HP : HistoryPreparation D R S) : Preparation D where
   region := compatibleSet S HP.history
