@@ -40,11 +40,13 @@ frame-function analysis of projective Gleason.
    identities** are done: `outerProduct_parallelogram` (`|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| +
    2|v⟩⟨v|`, cross terms cancel) and `outerProduct_polarization_real` — the algebraic core that
    lets `p`, being additive, inherit the parallelogram law. The **sub-unit rank-one effect**
-   `outerEffect v` (`|v⟩⟨v|` for any `‖v‖ ≤ 1`, needed for the combinations `u ± v`, `u ± iv`)
-   and the **degree-2 homogeneity** `p_outerEffect_smul` (`p(|c·v⟩⟨c·v|) = c²·p(|v⟩⟨v|)`) are
-   done. **Deferred:** the ρ-build itself — the `p`-level parallelogram (needs a sum-of-projectors
-   `≤ I` eigenvalue bound) and using it to show `φ ↦ p(|φ⟩⟨φ|)` comes from a sesquilinear form,
-   giving a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
+   `outerEffect v` (`|v⟩⟨v|` for any `‖v‖ ≤ 1`, needed for the combinations `u ± v`, `u ± iv`),
+   the **degree-2 homogeneity** `p_outerEffect_smul` (`p(|c·v⟩⟨c·v|) = c²·p(|v⟩⟨v|)`), and the
+   **Cauchy–Schwarz sum bound** `one_sub_two_outerProduct_posSemidef` (`I − |a⟩⟨a| − |b⟩⟨b|` PSD
+   for `‖a‖²+‖b‖²≤1` — the sum-of-projectors `≤ I` fact the additivity of the parallelogram
+   needs, via CS not an eigenvalue bound) are done. **Deferred:** the ρ-build itself — the
+   `p`-level parallelogram (assembled from these) and using it to show `φ ↦ p(|φ⟩⟨φ|)` comes from
+   a sesquilinear form, giving a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
 4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ ρ` PSD; `p I = 1 ⟹ Tr ρ = 1`;
    uniqueness from non-degeneracy of the trace pairing. This yields
    `theorem busch_effect_gleason … := …`, replacing the axiom in `BornWrapper.lean`.
@@ -503,6 +505,65 @@ theorem outerProduct_polarization_real (u v : EuclideanSpace ℂ (Fin N)) :
     Matrix.vecMulVec_apply, PiLp.add_apply, PiLp.sub_apply, smul_eq_mul,
     star_add, star_sub]
   ring
+
+/-! ### F1 — the Cauchy–Schwarz sum-of-projectors bound (Route B step 3b)
+
+The additivity step of the `p`-level parallelogram needs `|a⟩⟨a| + |b⟩⟨b| ≤ I` when
+`‖a‖² + ‖b‖² ≤ 1`. This is Cauchy–Schwarz, not an eigenvalue bound:
+`⟨x, (I − |a⟩⟨a| − |b⟩⟨b|) x⟩ = ‖x‖² − |⟨a,x⟩|² − |⟨b,x⟩|² ≥ ‖x‖²(1 − ‖a‖² − ‖b‖²) ≥ 0`. -/
+
+/-- The `|a⟩⟨a|` quadratic form: `⟨x, |a⟩⟨a| x⟩ = |⟨a,x⟩|²` (the squared norm of the standard
+Hermitian pairing `c := star ⇑a ⬝ᵥ x`). -/
+private lemma quad_outerProduct (a : EuclideanSpace ℂ (Fin N)) (x : Fin N → ℂ) :
+    star x ⬝ᵥ (outerProduct a *ᵥ x) = ((‖star (⇑a) ⬝ᵥ x‖ ^ 2 : ℝ) : ℂ) := by
+  set c := star (⇑a) ⬝ᵥ x with hc
+  have hrow : ∀ i, (outerProduct a *ᵥ x) i = (⇑a) i * c := by
+    intro i
+    simp only [outerProduct, Matrix.mulVec, Matrix.vecMulVec_apply, dotProduct, Pi.star_apply, hc,
+      Finset.mul_sum]
+    exact Finset.sum_congr rfl fun j _ => by ring
+  have hstar : (∑ i, star (x i) * (⇑a) i) = star c := by
+    rw [hc]; simp only [dotProduct, Pi.star_apply, star_sum]
+    exact Finset.sum_congr rfl fun i _ => by rw [star_mul', star_star]; ring
+  have hval : star x ⬝ᵥ (outerProduct a *ᵥ x) = c * star c := by
+    simp only [dotProduct, Pi.star_apply, hrow]
+    rw [← hstar, Finset.mul_sum]
+    exact Finset.sum_congr rfl fun i _ => by ring
+  rw [hval, ← starRingEnd_apply, RCLike.mul_conj]
+  norm_cast
+
+/-- **Cauchy–Schwarz sum bound.** For `‖a‖² + ‖b‖² ≤ 1`, `I − |a⟩⟨a| − |b⟩⟨b|` is PSD.
+`⟨x, (I − |a⟩⟨a| − |b⟩⟨b|) x⟩ = ‖x‖² − |⟨a,x⟩|² − |⟨b,x⟩|² ≥ ‖x‖²(1 − ‖a‖² − ‖b‖²) ≥ 0`. -/
+theorem one_sub_two_outerProduct_posSemidef {a b : EuclideanSpace ℂ (Fin N)}
+    (hab : ‖a‖ ^ 2 + ‖b‖ ^ 2 ≤ 1) :
+    (1 - outerProduct a - outerProduct b).PosSemidef := by
+  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+    (((Matrix.isHermitian_one).sub (outerProduct_isHermitian a)).sub
+      (outerProduct_isHermitian b)) fun x => ?_
+  set X : EuclideanSpace ℂ (Fin N) := WithLp.toLp 2 x with hX
+  have hxx : star x ⬝ᵥ x = ((‖X‖ : ℂ)) ^ 2 := by
+    rw [dotProduct_comm]
+    have hi : x ⬝ᵥ star x = (inner ℂ X X : ℂ) := (EuclideanSpace.inner_eq_star_dotProduct X X).symm
+    rw [hi, inner_self_eq_norm_sq_to_K]; norm_cast
+  have hCS : ∀ w : EuclideanSpace ℂ (Fin N),
+      ‖star (⇑w) ⬝ᵥ x‖ ^ 2 ≤ ‖w‖ ^ 2 * ‖X‖ ^ 2 := by
+    intro w
+    have hval : (inner ℂ X w : ℂ) = star (star (⇑w) ⬝ᵥ x) := by
+      rw [EuclideanSpace.inner_eq_star_dotProduct]
+      simp only [hX, dotProduct, Pi.star_apply, star_sum, star_mul', star_star]
+    have hnorm : ‖star (⇑w) ⬝ᵥ x‖ = ‖(inner ℂ X w : ℂ)‖ := by rw [hval, norm_star]
+    rw [hnorm]
+    calc ‖(inner ℂ X w : ℂ)‖ ^ 2 ≤ (‖X‖ * ‖w‖) ^ 2 :=
+          pow_le_pow_left₀ (norm_nonneg _) (norm_inner_le_norm X w) 2
+      _ = ‖w‖ ^ 2 * ‖X‖ ^ 2 := by ring
+  have hquad : star x ⬝ᵥ ((1 - outerProduct a - outerProduct b) *ᵥ x)
+      = (((‖X‖ ^ 2 - ‖star (⇑a) ⬝ᵥ x‖ ^ 2 - ‖star (⇑b) ⬝ᵥ x‖ ^ 2 : ℝ)) : ℂ) := by
+    simp only [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, quad_outerProduct, hxx]
+    push_cast; ring
+  rw [hquad]
+  refine Complex.zero_le_real.mpr ?_
+  nlinarith [hCS a, hCS b, sq_nonneg ‖X‖, norm_nonneg (star (⇑a) ⬝ᵥ x),
+    norm_nonneg (star (⇑b) ⬝ᵥ x)]
 
 /-! ### G — `p`-level homogeneity of the rank-one form (Route B step 3b) -/
 
