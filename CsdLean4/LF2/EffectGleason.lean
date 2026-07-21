@@ -39,9 +39,12 @@ frame-function analysis of projective Gleason.
    representation problem to determining `p` on rank-one projectors. The **polarisation
    identities** are done: `outerProduct_parallelogram` (`|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| +
    2|v⟩⟨v|`, cross terms cancel) and `outerProduct_polarization_real` — the algebraic core that
-   lets `p`, being additive, inherit the parallelogram law. **Deferred:** the ρ-build itself —
-   using these to show the diagonal form `φ ↦ p(|φ⟩⟨φ|)` comes from a sesquilinear form, giving a
-   Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
+   lets `p`, being additive, inherit the parallelogram law. The **sub-unit rank-one effect**
+   `outerEffect v` (`|v⟩⟨v|` for any `‖v‖ ≤ 1`, needed for the combinations `u ± v`, `u ± iv`)
+   and the **degree-2 homogeneity** `p_outerEffect_smul` (`p(|c·v⟩⟨c·v|) = c²·p(|v⟩⟨v|)`) are
+   done. **Deferred:** the ρ-build itself — the `p`-level parallelogram (needs a sum-of-projectors
+   `≤ I` eigenvalue bound) and using it to show `φ ↦ p(|φ⟩⟨φ|)` comes from a sesquilinear form,
+   giving a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
 4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ ρ` PSD; `p I = 1 ⟹ Tr ρ = 1`;
    uniqueness from non-degeneracy of the trace pairing. This yields
    `theorem busch_effect_gleason … := …`, replacing the axiom in `BornWrapper.lean`.
@@ -416,6 +419,60 @@ theorem p_eq_eigen_sum (E : Effect N) :
 
 end OperationalPackage
 
+/-! ### F0 — the sub-unit rank-one effect `|v⟩⟨v|` for `‖v‖ ≤ 1`
+
+`rankOneEffect` is defined only for *unit* vectors. The polarisation reconstruction needs
+`|v⟩⟨v|` as an effect for the (generally non-unit) combinations `u ± v`, `u ± iv`; this requires
+`‖v‖ ≤ 1`. -/
+
+/-- **`outerProduct` under complex scaling.** `|c•v⟩⟨c•v| = |c|² · |v⟩⟨v|`. -/
+theorem outerProduct_smul (c : ℂ) (v : EuclideanSpace ℂ (Fin N)) :
+    outerProduct (c • v) = ((c * star c) : ℂ) • outerProduct v := by
+  ext i j
+  simp only [outerProduct, Matrix.smul_apply, Matrix.vecMulVec_apply, PiLp.smul_apply,
+    smul_eq_mul, star_mul']
+  ring
+
+/-- **The sub-unit rank-one effect** `|v⟩⟨v|` for `‖v‖ ≤ 1`. PSD is automatic; `le_one` holds
+because `1 - |v⟩⟨v| = (1 - |v̂⟩⟨v̂|) + (1-‖v‖²)|v̂⟩⟨v̂|`, both PSD. -/
+noncomputable def outerEffect (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ ≤ 1) : Effect N where
+  M := outerProduct v
+  isHermitian := outerProduct_isHermitian v
+  nonneg := outerProduct_posSemidef v
+  le_one := by
+    rcases eq_or_ne v 0 with rfl | hne
+    · have h0 : outerProduct (0 : EuclideanSpace ℂ (Fin N)) = 0 := by
+        ext i j; simp [outerProduct, Matrix.vecMulVec_apply]
+      rw [h0, sub_zero]; exact Matrix.PosSemidef.one
+    · set φ : EuclideanSpace ℂ (Fin N) := (‖v‖⁻¹ : ℂ) • v with hφ
+      have hvpos : (0 : ℝ) < ‖v‖ := norm_pos_iff.mpr hne
+      have hφnorm : ‖φ‖ = 1 := by
+        rw [hφ, norm_smul, norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_norm,
+          inv_mul_cancel₀ (ne_of_gt hvpos)]
+      have hv_eq : v = (‖v‖ : ℂ) • φ := by
+        rw [hφ, smul_smul, mul_inv_cancel₀ (by exact_mod_cast ne_of_gt hvpos), one_smul]
+      have houter : outerProduct v = ((‖v‖ ^ 2 : ℝ) : ℂ) • outerProduct φ := by
+        conv_lhs => rw [hv_eq]
+        rw [outerProduct_smul]
+        congr 1
+        rw [Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul]; push_cast; ring
+      have hsplit : (1 : Matrix (Fin N) (Fin N) ℂ) - outerProduct v
+          = (1 - outerProduct φ) + ((1 - ‖v‖ ^ 2 : ℝ) : ℂ) • outerProduct φ := by
+        rw [houter]; push_cast; module
+      rw [hsplit]
+      refine (one_sub_outerProduct_posSemidef φ hφnorm).add
+        ((outerProduct_posSemidef φ).smul ?_)
+      rw [← Complex.ofReal_zero]
+      exact_mod_cast (by nlinarith [hv, hvpos, sq_nonneg (‖v‖ - 1)] : (0:ℝ) ≤ 1 - ‖v‖ ^ 2)
+
+@[simp] lemma outerEffect_M (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ ≤ 1) :
+    (outerEffect v hv).M = outerProduct v := rfl
+
+/-- On a unit vector, `outerEffect` agrees with `rankOneEffect`. -/
+lemma outerEffect_eq_rankOneEffect (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    outerEffect φ (le_of_eq hφ) = rankOneEffect φ hφ :=
+  Effect.ext_M rfl
+
 /-! ### F — the polarisation identities (Route B step 3b, building blocks)
 
 The reconstruction of `ρ` from the rank-one values `φ ↦ p(|φ⟩⟨φ|)` rests on polarisation: the
@@ -446,5 +503,33 @@ theorem outerProduct_polarization_real (u v : EuclideanSpace ℂ (Fin N)) :
     Matrix.vecMulVec_apply, PiLp.add_apply, PiLp.sub_apply, smul_eq_mul,
     star_add, star_sub]
   ring
+
+/-! ### G — `p`-level homogeneity of the rank-one form (Route B step 3b) -/
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **Homogeneity of the rank-one value.** `p(|c·v⟩⟨c·v|) = c² · p(|v⟩⟨v|)` for real `c ∈ [0,1]`
+and `‖v‖ ≤ 1`: `|c·v⟩⟨c·v| = c² • |v⟩⟨v| = Effect.smul c² |v⟩⟨v|`, then apply `p_smul_homog`.
+The degree-2 homogeneity of the quadratic form `v ↦ p(|v⟩⟨v|)`. -/
+theorem p_outerEffect_smul (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c ≤ 1)
+    (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ ≤ 1) :
+    OP.p (outerEffect ((c : ℂ) • v)
+        (by rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hc0]
+            exact le_trans (mul_le_of_le_one_left (norm_nonneg v) hc1) hv))
+      = c ^ 2 * OP.p (outerEffect v hv) := by
+  have hsq : (c ^ 2 : ℝ) ≤ 1 := by nlinarith
+  have heq : outerEffect ((c : ℂ) • v)
+      (by rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hc0]
+          exact le_trans (mul_le_of_le_one_left (norm_nonneg v) hc1) hv)
+      = Effect.smul (c ^ 2) (by positivity) hsq (outerEffect v hv) := by
+    refine Effect.ext_M ?_
+    rw [outerEffect_M, Effect.smul_M, outerEffect_M, outerProduct_smul]
+    congr 1
+    rw [Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul]; push_cast; ring
+  rw [heq, OP.p_smul_homog (by positivity) hsq]
+
+end OperationalPackage
 
 end CSD.LF2
