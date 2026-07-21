@@ -116,7 +116,7 @@ else
 fi
 
 # (3) FiniteQMClosure field count
-FQC="$SRC/FND/FiniteQMClosure.lean"
+FQC="$SRC/SigmaLayer/FiniteQMClosure.lean"
 n_fields="$(awk '/^structure FiniteQMClosure/{s=1;next} /^theorem unifiedFiniteQMClosure/{s=0} s' "$FQC" \
             | grep -cE '^  [a-z_]+ :')"
 if [ "$n_fields" = "$FINITEQMCLOSURE_FIELDS" ]; then

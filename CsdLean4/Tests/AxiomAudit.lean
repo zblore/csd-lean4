@@ -253,35 +253,35 @@ import CsdLean4.Empirical.CSD.Gates.TwoQubitDischarge
 import CsdLean4.Empirical.CSD.Gates.MultiQubitDischarge
 import CsdLean4.Empirical.CSD.Gates.BellPrepDischarge
 import CsdLean4.Mathlib.Probability.CGLMP
-import CsdLean4.FND.Adapters
-import CsdLean4.FND.ForwardCapstone
-import CsdLean4.FND.LiftedMeasurement
-import CsdLean4.FND.UnifiedMeasurement
-import CsdLean4.FND.UnifiedFlowedRecords
-import CsdLean4.FND.FiniteQMClosure
-import CsdLean4.FND.ConditioningLink
-import CsdLean4.FND.ConditioningLuders
-import CsdLean4.FND.PostMeasurement
-import CsdLean4.FND.TimeIndexedRecord
-import CsdLean4.FND.CompositeAdapters
-import CsdLean4.FND.BellGenerality
-import CsdLean4.FND.TensorGeneration
-import CsdLean4.FND.TensorSolved
-import CsdLean4.FND.TensorReconstruction
-import CsdLean4.FND.LocalisedTypicality
-import CsdLean4.FND.A5NoGo
-import CsdLean4.FND.UniqueErgodicity
-import CsdLean4.FND.Interference
-import CsdLean4.FND.TensorSector
-import CsdLean4.FND.Luders
-import CsdLean4.FND.ConditionalUpdate
-import CsdLean4.FND.MixedState
-import CsdLean4.FND.MixedEnsemble
+import CsdLean4.SigmaLayer.Adapters
+import CsdLean4.SigmaLayer.ForwardCapstone
+import CsdLean4.SigmaLayer.LiftedMeasurement
+import CsdLean4.SigmaLayer.UnifiedMeasurement
+import CsdLean4.SigmaLayer.UnifiedFlowedRecords
+import CsdLean4.SigmaLayer.FiniteQMClosure
+import CsdLean4.SigmaLayer.ConditioningLink
+import CsdLean4.SigmaLayer.ConditioningLuders
+import CsdLean4.SigmaLayer.PostMeasurement
+import CsdLean4.SigmaLayer.TimeIndexedRecord
+import CsdLean4.SigmaLayer.CompositeAdapters
+import CsdLean4.SigmaLayer.BellGenerality
+import CsdLean4.SigmaLayer.TensorGeneration
+import CsdLean4.SigmaLayer.TensorSolved
+import CsdLean4.SigmaLayer.TensorReconstruction
+import CsdLean4.SigmaLayer.LocalisedTypicality
+import CsdLean4.SigmaLayer.A5NoGo
+import CsdLean4.SigmaLayer.UniqueErgodicity
+import CsdLean4.SigmaLayer.Interference
+import CsdLean4.SigmaLayer.TensorSector
+import CsdLean4.SigmaLayer.Luders
+import CsdLean4.SigmaLayer.ConditionalUpdate
+import CsdLean4.SigmaLayer.MixedState
+import CsdLean4.SigmaLayer.MixedEnsemble
 import CsdLean4.LF2.MixedEnsembleIx
 import CsdLean4.LF2.ChoiConverse
-import CsdLean4.FND.MixedOntic
-import CsdLean4.FND.MixedFrequency
-import CsdLean4.FND.Symmetrization
+import CsdLean4.SigmaLayer.MixedOntic
+import CsdLean4.SigmaLayer.MixedFrequency
+import CsdLean4.SigmaLayer.Symmetrization
 
 /-!
 # Axiom regression suite
@@ -6543,43 +6543,43 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- IsolationPreparation (LF1 adapter reusing prepMeasure), ChoiceASector (measurable pi to CP^{N-1}, not
 -- injective), and the Kähler adapters. No Born/unitarity/Fubini-Study as fields; those are uninhabited
 -- theorem-target predicates (TheoremTargets). Foundational triple only.
-/-- info: 'CSD.FND.ConstraintDynamics.flow_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ConstraintDynamics.flow_bijective
+/-- info: 'CSD.SigmaLayer.ConstraintDynamics.flow_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ConstraintDynamics.flow_bijective
 
-/-- info: 'CSD.FND.compatibleSet_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_measurable
+/-- info: 'CSD.SigmaLayer.compatibleSet_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compatibleSet_measurable
 
-/-- info: 'CSD.FND.compatibleSet_append_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_append_singleton
+/-- info: 'CSD.SigmaLayer.compatibleSet_append_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compatibleSet_append_singleton
 
-/-- info: 'CSD.FND.Preparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.Preparation.conditionalMeasure_apply
+/-- info: 'CSD.SigmaLayer.Preparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.Preparation.conditionalMeasure_apply
 
-/-- info: 'CSD.FND.HistoryPreparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.conditionalMeasure_apply
+/-- info: 'CSD.SigmaLayer.HistoryPreparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.HistoryPreparation.conditionalMeasure_apply
 
-/-- info: 'CSD.FND.ChoiceASector.projectiveLaw_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ChoiceASector.projectiveLaw_apply
+/-- info: 'CSD.SigmaLayer.ChoiceASector.projectiveLaw_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ChoiceASector.projectiveLaw_apply
 
-/-- info: 'CSD.FND.kahlerChoiceASector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.kahlerChoiceASector_pi
+/-- info: 'CSD.SigmaLayer.kahlerChoiceASector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.kahlerChoiceASector_pi
 
 -- FND Tranche 2 (2026-07-13): the de-isolation measurement layer + the concrete product forward
 -- capstone. productSector_hasFubiniStudyPushforward proves bridge B1 (pi_*(muFS ⊗ vol) = muFS) for the
 -- CP^{N-1}×T² product model; productProjectedFlow_hasHamiltonianRealisation inhabits target T5
 -- (exp(-itH) realisation); product_choiceA_forward_capstone bundles measure preservation + projectability
 -- + T5 + B1, no open hypotheses. DeisolationModel + establishedFact are the measurement/record interface.
-/-- info: 'CSD.FND.productSector_hasFubiniStudyPushforward' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.productSector_hasFubiniStudyPushforward
+/-- info: 'CSD.SigmaLayer.productSector_hasFubiniStudyPushforward' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.productSector_hasFubiniStudyPushforward
 
-/-- info: 'CSD.FND.productProjectedFlow_hasHamiltonianRealisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.productProjectedFlow_hasHamiltonianRealisation
+/-- info: 'CSD.SigmaLayer.productProjectedFlow_hasHamiltonianRealisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.productProjectedFlow_hasHamiltonianRealisation
 
-/-- info: 'CSD.FND.product_choiceA_forward_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.product_choiceA_forward_capstone
+/-- info: 'CSD.SigmaLayer.product_choiceA_forward_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.product_choiceA_forward_capstone
 
-/-- info: 'CSD.FND.compatibleSet_appendEstablishedFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compatibleSet_appendEstablishedFact
+/-- info: 'CSD.SigmaLayer.compatibleSet_appendEstablishedFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compatibleSet_appendEstablishedFact
 
 -- FND Tranche 2b (2026-07-13): the concrete de-isolation model from the LF5 pointer machinery.
 -- vnDeisolationModel is a fully theorem-backed DeisolationModel on CP^{M} (M+1 = N*N): interaction =
@@ -6587,14 +6587,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- fibres. vnDeisolationModel_records proves the readout records the established outcome (B5);
 -- vnDeisolationModel_ae_total proves the outcome is established for a.e. initial ontic state (target T6),
 -- by transferring bornOutcome_ae_isSome through the measure-preserving interaction.
-/-- info: 'CSD.FND.vnDeisolationModel_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.vnDeisolationModel_records
+/-- info: 'CSD.SigmaLayer.vnDeisolationModel_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.vnDeisolationModel_records
 
-/-- info: 'CSD.FND.vnDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.vnDeisolationModel_ae_total
+/-- info: 'CSD.SigmaLayer.vnDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.vnDeisolationModel_ae_total
 
-/-- info: 'CSD.FND.lifted_choiceA_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.lifted_choiceA_measurement_capstone
+/-- info: 'CSD.SigmaLayer.lifted_choiceA_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_choiceA_measurement_capstone
 
 -- FND Tranche 2b Born statistics (2026-07-13): the concrete de-isolation model reproduces the Born
 -- FREQUENCIES, not merely a defined outcome. vnDeisolationModel_born_frequency transfers the LF5
@@ -6602,11 +6602,11 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- interaction (composed trial process measurementFlow ∘ fsTrial), so the pointer-i readout frequency
 -- converges a.s. to ‖⟨eᵢ,ψ⟩‖². lifted_choiceA_measurement_born_capstone bundles the full measurement:
 -- measure preservation + unique outcome a.e. + record establishment + a.e. total + Born frequencies.
-/-- info: 'CSD.FND.vnDeisolationModel_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.vnDeisolationModel_born_frequency
+/-- info: 'CSD.SigmaLayer.vnDeisolationModel_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.vnDeisolationModel_born_frequency
 
-/-- info: 'CSD.FND.lifted_choiceA_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.lifted_choiceA_measurement_born_capstone
+/-- info: 'CSD.SigmaLayer.lifted_choiceA_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_choiceA_measurement_born_capstone
 
 -- FND Tranche 3 (2026-07-13): the composition/measurement targets (ledger T9-T15) as bridge interfaces
 -- and uninhabited predicates (FND/CompositeInterface.lean), inhabited by adapters wiring the existing
@@ -6614,26 +6614,26 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- T14 Bell from the d-intrinsic CGLMP no-LHV force and the CHSH Tsirelson saturation; T13 contextuality
 -- from Kochen-Specker (Cabello-18), Mermin-Peres and GHZ; T10 POVM normalisation. T9 (mixed states) left
 -- out honestly: the ensemble/mixed-Born content is the reported Mathlib density-matrix gap.
-/-- info: 'CSD.FND.singlet_hasNoSignalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.singlet_hasNoSignalling
+/-- info: 'CSD.SigmaLayer.singlet_hasNoSignalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.singlet_hasNoSignalling
 
-/-- info: 'CSD.FND.maxEntangled_noLocalHiddenVariable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.maxEntangled_noLocalHiddenVariable
+/-- info: 'CSD.SigmaLayer.maxEntangled_noLocalHiddenVariable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.maxEntangled_noLocalHiddenVariable
 
-/-- info: 'CSD.FND.singlet_hasTsirelsonSeparation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.singlet_hasTsirelsonSeparation
+/-- info: 'CSD.SigmaLayer.singlet_hasTsirelsonSeparation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.singlet_hasTsirelsonSeparation
 
-/-- info: 'CSD.FND.cabello18_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.cabello18_noNonContextualValuation
+/-- info: 'CSD.SigmaLayer.cabello18_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.cabello18_noNonContextualValuation
 
-/-- info: 'CSD.FND.merminPeres_noNonContextualValuation' depends on axioms: [propext, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.merminPeres_noNonContextualValuation
+/-- info: 'CSD.SigmaLayer.merminPeres_noNonContextualValuation' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.merminPeres_noNonContextualValuation
 
-/-- info: 'CSD.FND.ghz_noNonContextualValuation' depends on axioms: [propext, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ghz_noNonContextualValuation
+/-- info: 'CSD.SigmaLayer.ghz_noNonContextualValuation' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ghz_noNonContextualValuation
 
-/-- info: 'CSD.FND.povm_weightsProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.povm_weightsProbability
+/-- info: 'CSD.SigmaLayer.povm_weightsProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.povm_weightsProbability
 
 -- FND interference (T16) + tensor weave (2026-07-14). hadamardTest_hasBornInterference inhabits the
 -- two-path Born-interference target from the Hadamard test ((1 + Re⟨ψ,Uψ⟩)/2); interference is a
@@ -6641,28 +6641,28 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- the finite tensor product ℂ^{NA} ⊗ ℂ^{NB} = ℂ^{NA·NB} is DERIVED (tensorIndexEquiv on Fin NA × Fin NB,
 -- the local algebra aliceOp_bobOp_commute, operator no-signalling tensorSector_no_signalling); only the
 -- composite-is-tensor bridge (CompositeSector.tensor_dimension, B6) is posited (P3 parked).
-/-- info: 'CSD.FND.hadamardTest_hasBornInterference' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.hadamardTest_hasBornInterference
+/-- info: 'CSD.SigmaLayer.hadamardTest_hasBornInterference' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.hadamardTest_hasBornInterference
 
-/-- info: 'CSD.FND.aliceOp_bobOp_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.aliceOp_bobOp_commute
+/-- info: 'CSD.SigmaLayer.aliceOp_bobOp_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.aliceOp_bobOp_commute
 
-/-- info: 'CSD.FND.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.tensorSector_no_signalling
+/-- info: 'CSD.SigmaLayer.tensorSector_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.tensorSector_no_signalling
 
 -- FND time-indexed records + persistence (2026-07-15, FND-T5 final follow-on): makes records physical.
 -- flowedSemantics event ⟨c,i,t⟩ = Φ_t⁻¹'(region c i) genuinely uses the recorded time (the pointer
 -- semantics ignored it). flowedSemantics_event_measure: μL(event ⟨c,i,t⟩) = μL(region c i) -- record
 -- probability conserved under isolated evolution. flowedSemantics_event_flow: event ⟨c,i,t+s⟩ =
 -- Φ_s⁻¹'(event ⟨c,i,t⟩) -- record covariant with the flow. flowedSemantics_persistence bundles both.
-/-- info: 'CSD.FND.flowedSemantics_event_measure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flowedSemantics_event_measure
+/-- info: 'CSD.SigmaLayer.flowedSemantics_event_measure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.flowedSemantics_event_measure
 
-/-- info: 'CSD.FND.flowedSemantics_event_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flowedSemantics_event_flow
+/-- info: 'CSD.SigmaLayer.flowedSemantics_event_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.flowedSemantics_event_flow
 
-/-- info: 'CSD.FND.flowedSemantics_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flowedSemantics_persistence
+/-- info: 'CSD.SigmaLayer.flowedSemantics_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.flowedSemantics_persistence
 
 -- FND post-outcome preparation (2026-07-15, FND-T5 follow-on): closes the measurement/record loop.
 -- HistoryPreparation.appendFact constructs the post-measurement preparation on the extended history
@@ -6670,14 +6670,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- outcome is possible. appendFactOfPos builds it from positive conditional probability
 -- (conditionalMeasure(event r) ≠ 0). appendFact_conditionalMeasure_apply: the post-measurement law is
 -- the Bayesian update μL(A ∩ (compatible ∩ event))/μL(compatible ∩ event).
-/-- info: 'CSD.FND.HistoryPreparation.appendFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.appendFact
+/-- info: 'CSD.SigmaLayer.HistoryPreparation.appendFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.HistoryPreparation.appendFact
 
-/-- info: 'CSD.FND.HistoryPreparation.appendFact_conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.appendFact_conditionalMeasure_apply
+/-- info: 'CSD.SigmaLayer.HistoryPreparation.appendFact_conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.HistoryPreparation.appendFact_conditionalMeasure_apply
 
-/-- info: 'CSD.FND.HistoryPreparation.appendFactOfPos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.HistoryPreparation.appendFactOfPos
+/-- info: 'CSD.SigmaLayer.HistoryPreparation.appendFactOfPos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.HistoryPreparation.appendFactOfPos
 
 -- FND conditional->Luders correspondence (2026-07-15, FND-T5 follow-on): connects the two conditioning
 -- rules the review flagged as unlinked. bayesianConditional w = w(fine)/w(coarse); BOTH the projective
@@ -6685,8 +6685,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- conditioning (historyConditioning_isBayesianConditional, over the Liouville measure) are instances.
 -- luders_record_conditioning_correspondence bundles both -- one conditioning rule, two weights. That the
 -- two weights AGREE (asserted there, not proved) is now a THEOREM: ConditioningLuders.lean.
-/-- info: 'CSD.FND.luders_record_conditioning_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.luders_record_conditioning_correspondence
+/-- info: 'CSD.SigmaLayer.luders_record_conditioning_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.luders_record_conditioning_correspondence
 
 -- FND conditioning->Luders WEIGHT AGREEMENT (2026-07-17, ConditioningLuders.lean): the missing link the
 -- review flagged. onticRegion_measure_eq_born: μL(π⁻¹ bornRegion i) = ‖⟨eᵢ,ψ⟩‖² -- the ontic measure of the
@@ -6694,11 +6694,11 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- conditioning weights are the SAME number (previously only asserted). conditioning_born_ratio_correspondence:
 -- the ontic Bayesian conditional of the outcome regions = the ratio of Born weights (probability-level
 -- correspondence). Residual: all-effects operational STATE equivalence via projWeight.
-/-- info: 'CSD.FND.onticRegion_measure_eq_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.onticRegion_measure_eq_born
+/-- info: 'CSD.SigmaLayer.onticRegion_measure_eq_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.onticRegion_measure_eq_born
 
-/-- info: 'CSD.FND.conditioning_born_ratio_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditioning_born_ratio_correspondence
+/-- info: 'CSD.SigmaLayer.conditioning_born_ratio_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conditioning_born_ratio_correspondence
 
 -- FND #4 OPERATIONAL EQUIVALENCE (2026-07-17, ConditioningLuders.lean): the review's #4 for pointer-basis
 -- effects. projWeight_rankOne: projWeight(rank-1 proj eₖ)ψ = ‖⟨eₖ,ψ⟩‖² -- the formalism bridge between the
@@ -6707,14 +6707,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- conditioning_luders_operational_equivalence: the two conditionings give the SAME conditional probability,
 -- each in its native weight -- operational equivalence as PREDICTIONS, not measure=vector. Residual:
 -- non-pointer-basis / general-projector effects (sums over ranges).
-/-- info: 'CSD.FND.projWeight_rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.projWeight_rankOne
+/-- info: 'CSD.SigmaLayer.projWeight_rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.projWeight_rankOne
 
-/-- info: 'CSD.FND.onticWeight_eq_ludersWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.onticWeight_eq_ludersWeight
+/-- info: 'CSD.SigmaLayer.onticWeight_eq_ludersWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.onticWeight_eq_ludersWeight
 
-/-- info: 'CSD.FND.conditioning_luders_operational_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditioning_luders_operational_equivalence
+/-- info: 'CSD.SigmaLayer.conditioning_luders_operational_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conditioning_luders_operational_equivalence
 
 -- FND #4 GENERAL-EFFECT extension (2026-07-17, ConditioningLuders.lean): #4 completed for ALL pointer-basis
 -- effects. onticRegion_biUnion_measure_eq_born_sum: μL(π⁻¹ ⋃_{k∈S} bornRegion k) = ∑_{k∈S} ‖⟨eₖ,ψ⟩‖² --
@@ -6722,17 +6722,17 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- pairwise-disjoint Born regions. conditioning_luders_effect_equivalence: the ontic and Lüders conditionings
 -- give the SAME conditional probability for every pointer-basis effect. So #4 (operational equivalence) is
 -- proved for all diagonal effects on the product model.
-/-- info: 'CSD.FND.onticRegion_biUnion_measure_eq_born_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.onticRegion_biUnion_measure_eq_born_sum
+/-- info: 'CSD.SigmaLayer.onticRegion_biUnion_measure_eq_born_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.onticRegion_biUnion_measure_eq_born_sum
 
-/-- info: 'CSD.FND.conditioning_luders_effect_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditioning_luders_effect_equivalence
+/-- info: 'CSD.SigmaLayer.conditioning_luders_effect_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conditioning_luders_effect_equivalence
 
-/-- info: 'CSD.FND.ludersUpdate_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ludersUpdate_isBayesianConditional
+/-- info: 'CSD.SigmaLayer.ludersUpdate_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ludersUpdate_isBayesianConditional
 
-/-- info: 'CSD.FND.historyConditioning_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.historyConditioning_isBayesianConditional
+/-- info: 'CSD.SigmaLayer.historyConditioning_isBayesianConditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.historyConditioning_isBayesianConditional
 
 -- FND-T5 unified many-to-one measurement capstone (2026-07-15): dynamics + measurement on ONE ontic
 -- model. unified_choiceA_capstone puts BOTH the isolated Hamiltonian flow (productDynamics, exp(-itH)•)
@@ -6740,8 +6740,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- vol, π=Prod.fst): flow measure-preserving + Schrödinger-projectable + FS pushforward + interaction
 -- measure-preserving + a.e. readout (T6, lifted through π) + record establishment (B5). Removes the
 -- forward-vs-measurement model split. unifiedDeisolationModel_ae_total lifts the base a.e. via Prod.fst.
-/-- info: 'CSD.FND.unified_choiceA_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_choiceA_capstone
+/-- info: 'CSD.SigmaLayer.unified_choiceA_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_choiceA_capstone
 
 -- FND #5 TIME-INDEXED RECORDS ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's
 -- #5. unifiedFlowedSemantics = flowedSemantics over the isolated flow productDynamics with the pointer-fibre
@@ -6749,19 +6749,19 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- weight conserved + flow-covariant under the exp(-itH) evolution); unifiedFlowedSemantics_zero: the static
 -- vnRecordSemanticsProd is the t=0 slice (so the capstone is undisturbed). Records are now genuinely
 -- time-physical ON the model -- the piece L9 needs to list records in "proved on the unified model".
-/-- info: 'CSD.FND.unified_records_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_records_persistence
+/-- info: 'CSD.SigmaLayer.unified_records_persistence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_records_persistence
 
-/-- info: 'CSD.FND.unifiedFlowedSemantics_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedFlowedSemantics_zero
+/-- info: 'CSD.SigmaLayer.unifiedFlowedSemantics_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unifiedFlowedSemantics_zero
 
 -- FND #2 BORN-FREQUENCY ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's #2.
 -- unified_born_frequency: for i.i.d. trials with the unified model's OWN law (productDynamics.muL), the
 -- frequency of trials in π⁻¹(bornRegion i) converges a.s. to ‖⟨eᵢ,ψ⟩‖² -- a direct transfer of
 -- manyToOneSetup_born_frequency through productDynamics.muL = liouvilleMeasure (rfl). Born frequencies now
 -- stated ON the unified model itself, alongside dynamics/measurement/records/conditioning=Lüders.
-/-- info: 'CSD.FND.unified_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_born_frequency
+/-- info: 'CSD.SigmaLayer.unified_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_born_frequency
 
 -- FiniteQMClosure (#6, 2026-07-17): the tiered capstone. unifiedFiniteQMClosure bundles the eleven
 -- GENUINELY-PROVED-on-the-unified-model facts (isolated flow measure-preserving, Schrödinger projection,
@@ -6769,11 +6769,11 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- time-physical/#5, Born frequency/#2, conditioning=Lüders/#3#4) into one record, each field discharged by
 -- its source lemma. The Choice-A posit, QM adapters, and open residue are documented in the module header,
 -- not encoded as fields -- so no field is sorry and the tiers are honest.
-/-- info: 'CSD.FND.unifiedFiniteQMClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedFiniteQMClosure
+/-- info: 'CSD.SigmaLayer.unifiedFiniteQMClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unifiedFiniteQMClosure
 
-/-- info: 'CSD.FND.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unifiedDeisolationModel_ae_total
+/-- info: 'CSD.SigmaLayer.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unifiedDeisolationModel_ae_total
 
 -- FND P3 SOLVED via local tomography (2026-07-15): composite_is_tensor_product. The composite observable
 -- algebra IS the tensor product of the local ones -- compositeTensorEquiv (= kroneckerLinearEquiv) is a
@@ -6781,25 +6781,25 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- U ⊗ₜ Q ↦ aliceOp U · bobOp Q -- the standard tensor model REALIZES locality (commuting) + local tomography
 -- (joint_mem_span_local). This is SUFFICIENCY, not uniqueness; the NECESSITY half (any composite with
 -- commuting, generating local algebras IS the tensor product) is TensorReconstruction.lean below.
-/-- info: 'CSD.FND.composite_is_tensor_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.composite_is_tensor_product
+/-- info: 'CSD.SigmaLayer.composite_is_tensor_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.composite_is_tensor_product
 
 -- FND P3 RECONSTRUCTION (2026-07-17, TensorReconstruction.lean): the NECESSITY/uniqueness half.
 -- compositeAlgReconstruction: commuting local embeddings M_m, M_n whose images GENERATE 𝒜 give an ALGEBRA
 -- EQUIVALENCE M_m ⊗ M_n ≃ₐ 𝒜 (injective since M_m⊗M_n is SIMPLE -- matrixTensor_isSimpleRing; surjective
 -- from generation). composite_dim_eq: for 𝒜 = M_k, forces k = m·n -- discharging bridge B6
 -- (CompositeSector.tensor_dimension) as a THEOREM. So locality + generation FORCE ⊗, not just admit it.
-/-- info: 'CSD.FND.compositeAlgReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeAlgReconstruction
+/-- info: 'CSD.SigmaLayer.compositeAlgReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compositeAlgReconstruction
 
-/-- info: 'CSD.FND.composite_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.composite_dim_eq
+/-- info: 'CSD.SigmaLayer.composite_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.composite_dim_eq
 
 -- FND P3 BRIDGE B6 DISCHARGED (2026-07-17): CompositeSector.ofReconstruction builds a CompositeSector
 -- whose tensor_dimension (NA*NB=Njoint) FIELD is filled by composite_dim_eq -- derived from commuting,
 -- generating local embeddings, not posited. So B6 is no longer a bare assumption.
-/-- info: 'CSD.FND.CompositeSector.ofReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.CompositeSector.ofReconstruction
+/-- info: 'CSD.SigmaLayer.CompositeSector.ofReconstruction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.CompositeSector.ofReconstruction
 
 -- ECDLP value-exact CONSTPROP pass (2026-07-17, Reversible/ConstProp.lean, the frontier's Toffoli lever):
 -- cprop folds provably-determined CCX (known-0 control -> drop; known-1 -> CX). cprop_denote MACHINE-CHECKS
@@ -6830,8 +6830,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Reversible.andCell_constprop_reduces' depends on axioms: [propext] -/
 #guard_msgs (whitespace := lax) in #print axioms Reversible.andCell_constprop_reduces
 
-/-- info: 'CSD.FND.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.compositeTensorEquiv_apply
+/-- info: 'CSD.SigmaLayer.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compositeTensorEquiv_apply
 
 -- FND P3 resolution + localized A5 (2026-07-15): reducing the two deep posits.
 -- P3 (why tensor): single_prod (the joint basis matrix = product of local ones) + joint_mem_span_local
@@ -6842,17 +6842,17 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- Born weights are symmetry-forced, not measure-chosen); localised_A5_capstone (the concrete sector's
 -- typicality is forced by the U(N) symmetry the flow is part of -- "A5 in the appropriate places").
 -- Neither closes the universal posit (P3 "why ⊗" / A5 sector-from-bare-flow); both reduce where it bites.
-/-- info: 'CSD.FND.single_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.single_prod
+/-- info: 'CSD.SigmaLayer.single_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.single_prod
 
-/-- info: 'CSD.FND.joint_mem_span_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.joint_mem_span_local
+/-- info: 'CSD.SigmaLayer.joint_mem_span_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.joint_mem_span_local
 
-/-- info: 'CSD.FND.region_measure_symmetry_forced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.region_measure_symmetry_forced
+/-- info: 'CSD.SigmaLayer.region_measure_symmetry_forced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.region_measure_symmetry_forced
 
-/-- info: 'CSD.FND.localised_A5_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.localised_A5_capstone
+/-- info: 'CSD.SigmaLayer.localised_A5_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.localised_A5_capstone
 
 -- FND A5 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
 -- two distinct fixed rays admits an invariant probability measure /= mu_FS (the two fixed-ray Diracs), so a
@@ -6860,38 +6860,38 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- about the limit, not a formalisation gap. phaseFlip_admits_invariant_ne_fubiniStudy exhibits it on the
 -- concrete nontrivial flow diag(1,-1) on CP^1. Positive companion: region_measure_symmetry_forced (full U(N)
 -- symmetry DOES pin mu_FS). Matches Paper C (S1.4): Sigma, pi, the A5 sector are assumed, not derived.
-/-- info: 'CSD.FND.flow_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.flow_admits_invariant_ne_fubiniStudy
+/-- info: 'CSD.SigmaLayer.flow_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.flow_admits_invariant_ne_fubiniStudy
 
-/-- info: 'CSD.FND.phaseFlip_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.phaseFlip_admits_invariant_ne_fubiniStudy
+/-- info: 'CSD.SigmaLayer.phaseFlip_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.phaseFlip_admits_invariant_ne_fubiniStudy
 
 -- UniqueErgodicity (2026-07-19, A5/L7 ergodic face sharpened): UniquelyErgodic defined (absent from
 -- Mathlib) + UniquelyErgodic ⇒ Ergodic (via Ergodic.of_mem_extremePoints: singleton invariant-measure
 -- set) + the scaffold link Ergodic(Φ_1) ⇒ IsErgodicForOutcomeRegions. Does NOT prove BornFromFlow
 -- (needs the Mathlib-absent pointwise Birkhoff theorem); the unitary no-gos above provably exclude the
 -- hypothesis for the current flows (candidate must be non-unitary). Boundary-marking, not A5 closure.
-/-- info: 'CSD.FND.UniquelyErgodic.ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.UniquelyErgodic.ergodic
+/-- info: 'CSD.SigmaLayer.UniquelyErgodic.ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.UniquelyErgodic.ergodic
 
-/-- info: 'CSD.FND.isErgodicForOutcomeRegions_of_uniquelyErgodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.isErgodicForOutcomeRegions_of_uniquelyErgodic
+/-- info: 'CSD.SigmaLayer.isErgodicForOutcomeRegions_of_uniquelyErgodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.isErgodicForOutcomeRegions_of_uniquelyErgodic
 
 -- FND Bell/contextuality generality (2026-07-14): the UNIVERSAL bounds behind the per-instance T13/T14
 -- witnesses. lhv_chsh_le_two (every LHV: |S| ≤ 2), qm_chsh_le_tsirelson (every state: |S| ≤ 2√2),
 -- cglmp_lhv_le_two (every LHV table, every d: cglmp ≤ 2), bell_general_separation (2 < 2√2, gap attained
 -- by the singlet), general_ks_noNonContextualValuation (any parity-(18,9) config, not just Cabello-18).
-/-- info: 'CSD.FND.lhv_chsh_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.lhv_chsh_le_two
+/-- info: 'CSD.SigmaLayer.lhv_chsh_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lhv_chsh_le_two
 
-/-- info: 'CSD.FND.qm_chsh_le_tsirelson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.qm_chsh_le_tsirelson
+/-- info: 'CSD.SigmaLayer.qm_chsh_le_tsirelson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.qm_chsh_le_tsirelson
 
-/-- info: 'CSD.FND.bell_general_separation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.bell_general_separation
+/-- info: 'CSD.SigmaLayer.bell_general_separation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.bell_general_separation
 
-/-- info: 'CSD.FND.general_ks_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.general_ks_noNonContextualValuation
+/-- info: 'CSD.SigmaLayer.general_ks_noNonContextualValuation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.general_ks_noNonContextualValuation
 
 -- FND T8: the projective (Lüders) update (2026-07-14). luders_capstone bundles the three defining
 -- properties of the projective post-measurement update ludersUpdate p x = (‖p x‖)⁻¹ • p x: normalised,
@@ -6899,14 +6899,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- (ludersUpdate_conditional: the updated Born weight of a finer projection q is projWeight q x /
 -- projWeight p x). projWeight_eq_re_inner ties the weight ‖p x‖² to the effect form Re⟨x, p x⟩;
 -- isProjection_toEuclideanLin connects matrix projectors. Closes the T8 gap left by MeasurementRecord.
-/-- info: 'CSD.FND.luders_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.luders_capstone
+/-- info: 'CSD.SigmaLayer.luders_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.luders_capstone
 
-/-- info: 'CSD.FND.ludersUpdate_conditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ludersUpdate_conditional
+/-- info: 'CSD.SigmaLayer.ludersUpdate_conditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ludersUpdate_conditional
 
-/-- info: 'CSD.FND.projWeight_eq_re_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.projWeight_eq_re_inner
+/-- info: 'CSD.SigmaLayer.projWeight_eq_re_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.projWeight_eq_re_inner
 
 -- FND T7: the general (non-projective) conditional state update (2026-07-14). conditionalUpdate_capstone
 -- bundles the general Kraus/effect update stateUpdate M x = (‖M x‖)⁻¹ • M x for a measurement operator M
@@ -6914,14 +6914,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- sequential (Wigner) rule stateUpdate_sequential (updateWeight N (stateUpdate M x) = updateWeight N
 -- (M x) / updateWeight M x). Lüders (T8) is the sharp special case (stateUpdate_eq_ludersUpdate); T7
 -- needs neither self-adjointness nor idempotence.
-/-- info: 'CSD.FND.conditionalUpdate_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.conditionalUpdate_capstone
+/-- info: 'CSD.SigmaLayer.conditionalUpdate_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conditionalUpdate_capstone
 
-/-- info: 'CSD.FND.stateUpdate_sequential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.stateUpdate_sequential
+/-- info: 'CSD.SigmaLayer.stateUpdate_sequential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.stateUpdate_sequential
 
-/-- info: 'CSD.FND.stateUpdate_eq_ludersUpdate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.stateUpdate_eq_ludersUpdate
+/-- info: 'CSD.SigmaLayer.stateUpdate_eq_ludersUpdate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.stateUpdate_eq_ludersUpdate
 
 -- FND T9: the mixed-state representation (2026-07-14). Closes the density-matrix gap on the statistical
 -- side. mixedState_capstone / traceForm_mix: the convex mixture mix p ρ₁ ρ₂ is a density operator and
@@ -6929,23 +6929,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- rankOneDensity_isPure: pure states are the rank-one projectors; maximallyMixed_not_isPure: I/N is a
 -- genuinely mixed state for N ≥ 2 (non-vacuity). Built on LF2.DensityOperator/Effect/traceForm; the
 -- purity converse Tr(ρ²)=1 → ρ²=ρ (spectral theorem) is left as a residue.
-/-- info: 'CSD.FND.mixedState_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixedState_capstone
+/-- info: 'CSD.SigmaLayer.mixedState_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.mixedState_capstone
 
-/-- info: 'CSD.FND.traceForm_mix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.traceForm_mix
+/-- info: 'CSD.SigmaLayer.traceForm_mix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.traceForm_mix
 
-/-- info: 'CSD.FND.maximallyMixed_not_isPure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.maximallyMixed_not_isPure
+/-- info: 'CSD.SigmaLayer.maximallyMixed_not_isPure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.maximallyMixed_not_isPure
 
 -- T9 purity converse (2026-07-14): the spectral-theorem direction, closing the residue. IsPure ρ ↔
 -- Tr(ρ²)=1 (isPure_iff_trace_sq_one); the converse isPure_of_trace_sq_one uses Matrix spectral theory
 -- (∑λᵢ = ∑λᵢ² = 1, λᵢ ≥ 0 ⇒ λᵢ ∈ {0,1} ⇒ ρ² = ρ). Foundational triple.
-/-- info: 'CSD.FND.isPure_of_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.isPure_of_trace_sq_one
+/-- info: 'CSD.SigmaLayer.isPure_of_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.isPure_of_trace_sq_one
 
-/-- info: 'CSD.FND.isPure_iff_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.isPure_iff_trace_sq_one
+/-- info: 'CSD.SigmaLayer.isPure_iff_trace_sq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.isPure_iff_trace_sq_one
 
 -- MixedEnsemble (#8 A+B, 2026-07-17): the mixed-state / ensemble representation. A -- finite ensembles:
 -- ensemble w ρ = ∑ᵢ wᵢρᵢ (∑wᵢ=1, wᵢ≥0) is a density operator via posSemidef_sum; traceForm_ensemble is
@@ -6955,20 +6955,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- density_isPureEnsemble (every density operator IS a convex ensemble of pure states), and
 -- traceForm_eq_pureEnsemble / mixedEnsemble_capstone (the Born rule of a mixed state is the
 -- eigenvalue-weighted average of the pure Born rules).
-/-- info: 'CSD.FND.ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.ensemble
+/-- info: 'CSD.SigmaLayer.ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ensemble
 
-/-- info: 'CSD.FND.traceForm_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.traceForm_ensemble
+/-- info: 'CSD.SigmaLayer.traceForm_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.traceForm_ensemble
 
-/-- info: 'CSD.FND.density_eq_eigen_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.density_eq_eigen_ensemble
+/-- info: 'CSD.SigmaLayer.density_eq_eigen_ensemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.density_eq_eigen_ensemble
 
-/-- info: 'CSD.FND.density_isPureEnsemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.density_isPureEnsemble
+/-- info: 'CSD.SigmaLayer.density_isPureEnsemble' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.density_isPureEnsemble
 
-/-- info: 'CSD.FND.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixedEnsemble_capstone
+/-- info: 'CSD.SigmaLayer.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.mixedEnsemble_capstone
 
 -- Mixed-Born on the COMPOSITE INDEXED density type (2026-07-19, FND-T3 T9 residual closed): the
 -- MixedEnsemble content (affine Born + spectral ensemble) ported from DensityOperator (Fin N) to
@@ -6987,8 +6987,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- Tr(ρ Eᵢ) = traceForm ρ (rankOneEffect eᵢ) -- composing onticRegion_measure_eq_born with
 -- traceForm_eq_pureEnsemble + born_quadratic. So productDynamics represents mixed states, not only pure ψ;
 -- wired as the FiniteQMClosure.mixed_born field. Weight-level (the mixed frequency LLN is the refinement).
-/-- info: 'CSD.FND.mixed_ontic_born_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixed_ontic_born_weight
+/-- info: 'CSD.SigmaLayer.mixed_ontic_born_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.mixed_ontic_born_weight
 
 -- MixedFrequency (#8 C, a.s. limit, 2026-07-19, roadmap A1): the mixed Born WEIGHT upgraded to a
 -- FREQUENCY LLN. unified_mixed_born_frequency: for i.i.d. two-stage trials Y whose law is mixtureMeasure
@@ -6997,11 +6997,11 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- two-stage region measure = Tr(ρ Eᵢ) (via Measure.prod_prod + eigenvalueMeasure_singleton +
 -- mixed_ontic_born_weight), then born_frequency_convergence_partition. Wired as FiniteQMClosure's 11th
 -- field mixed_born_frequency, closing the closure's last open QM item (Tier-4 mixed frequency LLN).
-/-- info: 'CSD.FND.unified_mixed_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.unified_mixed_born_frequency
+/-- info: 'CSD.SigmaLayer.unified_mixed_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_mixed_born_frequency
 
-/-- info: 'CSD.FND.mixtureMeasure_region_toReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.mixtureMeasure_region_toReal
+/-- info: 'CSD.SigmaLayer.mixtureMeasure_region_toReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.mixtureMeasure_region_toReal
 
 -- Symmetrization (identical particles / exchange statistics, n=2, 2026-07-18): the swap operator on
 -- H⊗H = EuclideanSpace ℂ (Fin N × Fin N) is a self-adjoint involution (swap_isSymmetric); symProj/
@@ -7009,19 +7009,19 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- symProj_add_antisymProj); the exchange dichotomy Sym=(+1)/Anti=(-1) eigenspaces (swap_eq_self_iff,
 -- swap_eq_neg_iff, eq_zero_of_swap_self_and_neg → H⊗H = Sym⊕Anti); and Pauli exclusion
 -- antisymProj_tprod_self (antisymProj (v⊗v) = 0: no two fermions in the same state).
-/-- info: 'CSD.FND.swap_isSymmetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.swap_isSymmetric
+/-- info: 'CSD.SigmaLayer.swap_isSymmetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.swap_isSymmetric
 
-/-- info: 'CSD.FND.symProj_add_antisymProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.symProj_add_antisymProj
+/-- info: 'CSD.SigmaLayer.symProj_add_antisymProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.symProj_add_antisymProj
 
-/-- info: 'CSD.FND.swap_eq_self_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.swap_eq_self_iff
+/-- info: 'CSD.SigmaLayer.swap_eq_self_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.swap_eq_self_iff
 
-/-- info: 'CSD.FND.swap_eq_neg_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.swap_eq_neg_iff
+/-- info: 'CSD.SigmaLayer.swap_eq_neg_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.swap_eq_neg_iff
 
-/-- info: 'CSD.FND.antisymProj_tprod_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.FND.antisymProj_tprod_self
+/-- info: 'CSD.SigmaLayer.antisymProj_tprod_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.antisymProj_tprod_self
 
 end CSD.Tests.AxiomAudit

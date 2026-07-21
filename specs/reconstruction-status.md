@@ -30,8 +30,8 @@ own (§1.4 assumes `Σ`, `π`, the A5 sector).
 
 ## 2. The FND Choice A postulate ledger (P1–P9 / B1–B7 / T1–T16)
 
-The anti-circularity ontology layer (`CsdLean4/FND/`, namespace `CSD.FND`). Full ledger in
-[`../CsdLean4/FND/Adapters.lean`](../CsdLean4/FND/Adapters.lean) and [`../AXIOMS.md`](../AXIOMS.md) §3.7.
+The anti-circularity ontology layer (`CsdLean4/SigmaLayer/`, namespace `CSD.SigmaLayer`). Full ledger in
+[`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean) and [`../AXIOMS.md`](../AXIOMS.md) §3.7.
 NONE of these is an `axiom`: postulates are structure fields, bridges are named assumptions discharged
 per model, targets are `Prop` predicates inhabited by proved theorems.
 
@@ -204,4 +204,4 @@ The remaining depth is the *origin* of the posited sector (A5) and the *derivati
 genuine open problems, honestly flagged, not papered over.
 
 References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
-[`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/FND/Adapters.lean`](../CsdLean4/FND/Adapters.lean).
+[`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean).

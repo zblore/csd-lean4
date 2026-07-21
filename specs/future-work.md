@@ -165,7 +165,7 @@ decision, not an oversight.
 | ~~**P3**~~ (solved via local tomography) | Tensor-product / composite-system derivation (why `⊗`) | local tomography axiom | **XL→done** | **SOLVED 2026-07-15** (`FND/TensorSolved.lean` `composite_is_tensor_product`): the composite observable algebra IS the tensor product of the local ones — `compositeTensorEquiv` (= Mathlib `kroneckerLinearEquiv`) is a BIJECTIVE linear iso `M_{NA} ⊗ M_{NB} ≃ M_{NA·NB}` sending `U ⊗ₜ Q ↦ aliceOp U · bobOp Q`. So **locality** (`aliceOp_bobOp_commute`) + **local tomography** (`joint_mem_span_local`, PROVED for the quantum case) FORCE composition to be `⊗` with dim `NA·NB` — the operational GPT-reconstruction answer to "why `⊗`" (Hardy; CDP). P3 is reduced to the single clean axiom of local tomography (the axiom that singles out quantum `⊗` among GPTs) and the implication proved as a theorem. Residual: local tomography itself is not derived from nothing (nor can it be — non-tomographic GPTs exist), but the standing-instruction "posit `⊗` per instance" is discharged. |
 | **IP-1** | Identical particles / spin-statistics (symmetrisation postulate, boson/fermion sectors) | P3 | **XL** | NOT in the corpus or plans (recorded 2026-07-07 for pillar-map completeness). Out of current scope; any "CSD covers ordinary QM" claim should name this deferral. |
 
-## FND Choice A ontology layer (`CsdLean4/FND/`, namespace `CSD.FND`)
+## FND Choice A ontology layer (`CsdLean4/SigmaLayer/`, namespace `CSD.SigmaLayer`)
 
 A dedicated ontological layer built to strict anti-circularity discipline (no Born weight, frequency
 claim, FS equality, projected unitary dynamics or Schrödinger equation is ever a structure FIELD; every
@@ -187,7 +187,7 @@ concrete record model ignores the recorded time in the outcome event and has no 
 nonzero-post-outcome-measure / conditional-to-Lüders link; the Bell/contextuality/no-signalling/
 interference adapters demonstrate ledger-compatibility, not derivation-from-`ChoiceASector`; docs/CI drift
 (README, connectivity manifest, `AXIOMS.md` missing the P1-P9/B1-B7 ledger, `CONVENTIONS.md` lacks a
-`7-FND` category, CI does not run the three static guards). (Review predates T7/T8/T9 — those rows in it
+`7-SigmaLayer` category, CI does not run the three static guards). (Review predates T7/T8/T9 — those rows in it
 are now closed.)
 
 | Ref | Item | Depends on | Cx | Notes |

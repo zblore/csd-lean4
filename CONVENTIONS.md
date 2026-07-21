@@ -83,8 +83,8 @@ Where `<N>-<Tag>` is one of:
 - `1-Mathlib` — Category 1, Mathlib-track infrastructure.
 - `2-Framework` — Category 2, CSD-adjacent framework.
 - `3-Local` — Category 3, programme-specific content.
-- `7-FND` — Category 3 (programme-specific), reserved for the FND "Choice A" ontology layer
-  (`CsdLean4/FND/`, namespace `CSD.FND`): the anti-circularity postulate/bridge/theorem-target layer
+- `7-SigmaLayer` — Category 3 (programme-specific), reserved for the FND "Choice A" ontology layer
+  (`CsdLean4/SigmaLayer/`, namespace `CSD.SigmaLayer`): the anti-circularity postulate/bridge/theorem-target layer
   (`ConstraintDynamics`, `ChoiceASector`, `DeisolationModel`, the P1–P9 / B1–B7 / T1–T16 ledger). It is a
   Category-3 tag with its own directory and namespace, not a fourth top-level category; the `7-` prefix
   simply names the FND stratum. Allowed imports: as Category 3, plus earlier `CsdLean4/LF<m>/` layers.

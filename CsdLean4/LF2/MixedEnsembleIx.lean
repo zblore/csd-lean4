@@ -3,7 +3,7 @@ Copyright (c) 2026 CSD contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 -/
 import CsdLean4.LF2.ReducedDensity
-import CsdLean4.FND.MixedEnsemble
+import CsdLean4.SigmaLayer.MixedEnsemble
 
 /-!
 # LF2: Mixed-state Born rule and spectral ensemble on the indexed density type
