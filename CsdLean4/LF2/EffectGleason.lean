@@ -43,10 +43,11 @@ frame-function analysis of projective Gleason.
    `outerEffect v` (`|v⟩⟨v|` for any `‖v‖ ≤ 1`, needed for the combinations `u ± v`, `u ± iv`),
    the **degree-2 homogeneity** `p_outerEffect_smul` (`p(|c·v⟩⟨c·v|) = c²·p(|v⟩⟨v|)`), and the
    **Cauchy–Schwarz sum bound** `one_sub_two_outerProduct_posSemidef` (`I − |a⟩⟨a| − |b⟩⟨b|` PSD
-   for `‖a‖²+‖b‖²≤1` — the sum-of-projectors `≤ I` fact the additivity of the parallelogram
-   needs, via CS not an eigenvalue bound) are done. **Deferred:** the ρ-build itself — the
-   `p`-level parallelogram (assembled from these) and using it to show `φ ↦ p(|φ⟩⟨φ|)` comes from
-   a sesquilinear form, giving a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
+   for `‖a‖²+‖b‖²≤1`, via CS not an eigenvalue bound), and the **`p`-level parallelogram law**
+   `p_parallelogram` (`p(|u+v⟩⟨u+v|) + p(|u−v⟩⟨u−v|) = 2p(|u⟩⟨u|) + 2p(|v⟩⟨v|)` for
+   `‖u‖²+‖v‖²≤½`, from the matrix identity + additivity + the `√2`-doubling `p_outerEffect_sqrt2`)
+   are done. **Deferred:** the ρ-build itself — using the parallelogram to show `φ ↦ p(|φ⟩⟨φ|)`
+   comes from a sesquilinear form, giving a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
 4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ ρ` PSD; `p I = 1 ⟹ Tr ρ = 1`;
    uniqueness from non-degeneracy of the trace pairing. This yields
    `theorem busch_effect_gleason … := …`, replacing the axiom in `BornWrapper.lean`.
@@ -590,6 +591,78 @@ theorem p_outerEffect_smul (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c ≤ 1)
     congr 1
     rw [Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul]; push_cast; ring
   rw [heq, OP.p_smul_homog (by positivity) hsq]
+
+/-- **`p` depends only on the vector, not the norm-bound proof.** For equal vectors, the
+`outerEffect` values (and hence their `p`) agree. -/
+theorem p_congr_outerEffect {w v : EuclideanSpace ℂ (Fin N)} (h : w = v)
+    (hw : ‖w‖ ≤ 1) (hv : ‖v‖ ≤ 1) :
+    OP.p (outerEffect w hw) = OP.p (outerEffect v hv) := by
+  subst h; rfl
+
+/-- **`√2`-doubling of the rank-one value.** `p(|√2·v⟩⟨√2·v|) = 2·p(|v⟩⟨v|)`. Inverts
+`p_outerEffect_smul` at `c = 1/√2`: `|v⟩⟨v| = ½·|√2·v⟩⟨√2·v|`. -/
+theorem p_outerEffect_sqrt2 (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ ≤ 1)
+    (hsv : ‖(Real.sqrt 2 : ℂ) • v‖ ≤ 1) :
+    OP.p (outerEffect ((Real.sqrt 2 : ℂ) • v) hsv) = 2 * OP.p (outerEffect v hv) := by
+  have hs2 : (0 : ℝ) < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have hc0 : (0 : ℝ) ≤ 1 / Real.sqrt 2 := by positivity
+  have hc1 : (1 / Real.sqrt 2 : ℝ) ≤ 1 := by
+    rw [div_le_one hs2]; nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2), Real.sqrt_nonneg 2]
+  have hinv : ((1 / Real.sqrt 2 : ℝ) : ℂ) • ((Real.sqrt 2 : ℂ) • v) = v := by
+    rw [smul_smul, ← Complex.ofReal_mul, one_div, inv_mul_cancel₀ (ne_of_gt hs2),
+      Complex.ofReal_one, one_smul]
+  have key := OP.p_outerEffect_smul (1 / Real.sqrt 2) hc0 hc1 ((Real.sqrt 2 : ℂ) • v) hsv
+  rw [OP.p_congr_outerEffect hinv _ hv] at key
+  rw [key]
+  have : (1 / Real.sqrt 2 : ℝ) ^ 2 = 1 / 2 := by
+    rw [div_pow, one_pow, Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]
+  rw [this]; ring
+
+/-- **The `p`-level parallelogram law (Route B step 3b).** For `‖u‖² + ‖v‖² ≤ ½`,
+`p(|u+v⟩⟨u+v|) + p(|u−v⟩⟨u−v|) = 2·p(|u⟩⟨u|) + 2·p(|v⟩⟨v|)`. The matrix parallelogram identity
+(`outerProduct_parallelogram`) makes the two effect-sums equal; additivity (with the CS sum
+bound as the `≤ I` hypothesis) + the `√2`-doubling homogeneity give the scalar `2`s. This is the
+property that forces the diagonal form `v ↦ p(|v⟩⟨v|)` to come from a sesquilinear form. -/
+theorem p_parallelogram {u v : EuclideanSpace ℂ (Fin N)}
+    (huv : ‖u‖ ^ 2 + ‖v‖ ^ 2 ≤ 1 / 2)
+    (hu : ‖u‖ ≤ 1) (hv : ‖v‖ ≤ 1) (hpv : ‖u + v‖ ≤ 1) (hmv : ‖u - v‖ ≤ 1) :
+    OP.p (outerEffect (u + v) hpv) + OP.p (outerEffect (u - v) hmv)
+      = 2 * OP.p (outerEffect u hu) + 2 * OP.p (outerEffect v hv) := by
+  -- the norm parallelogram: ‖u+v‖² + ‖u−v‖² = 2(‖u‖²+‖v‖²) ≤ 1
+  have hnormpar : ‖u + v‖ ^ 2 + ‖u - v‖ ^ 2 = 2 * (‖u‖ ^ 2 + ‖v‖ ^ 2) := parallelogram_law_with_norm ℝ u v
+  have hsum_le : ‖u + v‖ ^ 2 + ‖u - v‖ ^ 2 ≤ 1 := by rw [hnormpar]; linarith
+  -- √2-scaled vectors and their sub-unit bounds
+  have hsu : ‖(Real.sqrt 2 : ℂ) • u‖ ≤ 1 := by
+    rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (Real.sqrt_pos.mpr (by norm_num))]
+    nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2), norm_nonneg u, Real.sqrt_nonneg 2, huv]
+  have hsv : ‖(Real.sqrt 2 : ℂ) • v‖ ≤ 1 := by
+    rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (Real.sqrt_pos.mpr (by norm_num))]
+    nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2), norm_nonneg v, Real.sqrt_nonneg 2, huv]
+  -- the two effect-sums share a matrix (parallelogram identity), so their p agree
+  have hM : outerProduct (u + v) + outerProduct (u - v)
+      = outerProduct ((Real.sqrt 2 : ℂ) • u) + outerProduct ((Real.sqrt 2 : ℂ) • v) := by
+    rw [outerProduct_parallelogram u v, outerProduct_smul, outerProduct_smul]
+    have h2 : (Real.sqrt 2 : ℂ) * star (Real.sqrt 2 : ℂ) = (2 : ℂ) := by
+      rw [Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul,
+        Real.mul_self_sqrt (by norm_num)]; norm_num
+    rw [h2]
+  have hLe1 : (1 - ((outerEffect (u + v) hpv).M + (outerEffect (u - v) hmv).M)).PosSemidef := by
+    rw [outerEffect_M, outerEffect_M, sub_add_eq_sub_sub]
+    exact one_sub_two_outerProduct_posSemidef hsum_le
+  have hLe2 : (1 - ((outerEffect ((Real.sqrt 2 : ℂ) • u) hsu).M
+      + (outerEffect ((Real.sqrt 2 : ℂ) • v) hsv).M)).PosSemidef := by
+    rw [outerEffect_M, outerEffect_M, ← hM]; rw [outerEffect_M, outerEffect_M] at hLe1; exact hLe1
+  have hadd1 := OP.additivity (outerEffect (u + v) hpv) (outerEffect (u - v) hmv) hLe1
+  have hadd2 := OP.additivity (outerEffect ((Real.sqrt 2 : ℂ) • u) hsu)
+    (outerEffect ((Real.sqrt 2 : ℂ) • v) hsv) hLe2
+  have hsame : Effect.add (outerEffect (u + v) hpv) (outerEffect (u - v) hmv) hLe1
+      = Effect.add (outerEffect ((Real.sqrt 2 : ℂ) • u) hsu)
+          (outerEffect ((Real.sqrt 2 : ℂ) • v) hsv) hLe2 :=
+    Effect.ext_M (by simp only [Effect.add, outerEffect_M]; exact hM)
+  rw [hsame] at hadd1
+  rw [hadd1] at hadd2
+  -- hadd2 : p(oe(u+v)) + p(oe(u-v)) = p(oe(√2 u)) + p(oe(√2 v))
+  rw [hadd2, OP.p_outerEffect_sqrt2 u hu hsu, OP.p_outerEffect_sqrt2 v hv hsv]
 
 end OperationalPackage
 
