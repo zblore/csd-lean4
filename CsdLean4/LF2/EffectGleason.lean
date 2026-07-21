@@ -32,7 +32,7 @@ frame-function analysis of projective Gleason.
    `smulVal_homog`): the monotone + additive (Cauchy) equation `f(a+b) = f(a)+f(b)` on `[0,1]`
    forces `f(t) = t f(1)` — via integer scaling (`smulVal_natMul`), rational homogeneity
    (`smulVal_rat`), and the density squeeze (`exists_rat_btwn` + monotonicity).
-3. **Reconstruction (spectral reduction + polarisation identities delivered; ρ-build deferred).**
+3. **Reconstruction — spectral reduction, polarisation, and the ρ-build (delivered).**
    The **spectral reduction** is done: `p_finsetSum` (finite additivity),
    `Effect.eigenvalues_le_one` (effect eigenvalues `∈ [0,1]`), `Effect.sum_eigenEffect_M`
    (`E = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`), and `p_eq_eigen_sum` (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`) reduce the whole
@@ -46,24 +46,36 @@ frame-function analysis of projective Gleason.
    for `‖a‖²+‖b‖²≤1`, via CS not an eigenvalue bound), and the **`p`-level parallelogram law**
    `p_parallelogram` (`p(|u+v⟩⟨u+v|) + p(|u−v⟩⟨u−v|) = 2p(|u⟩⟨u|) + 2p(|v⟩⟨v|)` for
    `‖u‖²+‖v‖²≤½`, from the matrix identity + additivity + the `√2`-doubling `p_outerEffect_sqrt2`)
-   are done. **Deferred:** the ρ-build itself — using the parallelogram to show `φ ↦ p(|φ⟩⟨φ|)`
-   comes from a sesquilinear form, giving a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
-4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ ρ` PSD; `p I = 1 ⟹ Tr ρ = 1`;
-   uniqueness from non-degeneracy of the trace pairing. This yields
-   `theorem busch_effect_gleason … := …`, replacing the axiom in `BornWrapper.lean`.
+   are done. The **ρ-build** (step 3b-final) is now done as well: `qform` (the degree-2
+   homogeneous extension of `v ↦ p(|v⟩⟨v|)` off the unit ball) satisfies the *unrestricted*
+   parallelogram law (`qform_parallelogram`); the Jordan–von Neumann argument makes its
+   polarisation `qpolar` bi-additive (`qpolar_add_left`) and — via `additive_bounded_linear`,
+   which replaces the classical continuity step by the bound `0 ≤ q ≤ ‖·‖²` —
+   `ℝ`-bihomogeneous (`qpolar_smul_real`); the complex polarisation `qsesq` is then sesquilinear
+   (`qsesq_add_right`, `qsesq_smul_right`, `qsesq_conj_symm`) with `qsesq_self : S(v,v) = q v`,
+   and its matrix on the standard basis `qmatrix` is Hermitian (`qmatrix_isHermitian`) with
+   `p_outerEffect_eq_trace : p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)` and — through the spectral reduction —
+   `p_eq_trace : p E = Tr(R · E)` for **every** effect.
+4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ R` PSD; `p I = 1 ⟹ Tr R = 1`;
+   uniqueness from non-degeneracy of the trace pairing. That packages `R = qmatrix` as a
+   `DensityOperator` and yields `theorem busch_effect_gleason … := …`, replacing the axiom in
+   `BornWrapper.lean`.
 
 ## Honest scope
 
 **Delivered here:** steps 1–2 (monotone/additive layer + homogeneity `p(t•E) = t·p E`), the
-**spectral reduction** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`), and the **polarisation identities**
-(step 3b core). **Deferred:** the ρ-build (assemble `ρ` from the polarisation of the rank-one
-values) and step 4 (positivity/normalisation + uniqueness) — tracked in `specs/BACKLOG.md`
-("Discharge `busch_effect_gleason`"). This module builds axiom-free (foundational triple) and
-does **not** yet remove the axiom; it is a genuine partial layer of that discharge, not a stub.
+**spectral reduction** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`), the **polarisation identities** (step 3b
+core), and the **ρ-build** (step 3b-final): a single Hermitian matrix `R = OP.qmatrix` with
+`p E = Tr(R · E)` for every effect (`p_eq_trace`). **Deferred:** step 4 only — `R.PosSemidef`,
+`R.trace = 1`, and uniqueness, which turn `R` into a `DensityOperator` and let the axiom be
+replaced; tracked in `specs/BACKLOG.md` ("Discharge `busch_effect_gleason`") and
+`specs/future-work.md`. This module builds axiom-free (foundational triple) and does **not** yet
+remove the axiom; it is a genuine partial layer of that discharge, not a stub.
 
 References: `LF2/BornWrapper.lean` (`Effect`, `DensityOperator`, `OperationalPackage`,
-`traceForm`, `busch_effect_gleason`); Busch 2003 (`quant-ph/9909073`); `AXIOMS.md §2.2`;
-`CONVENTIONS.md §8.1`; `specs/BACKLOG.md`.
+`traceForm`, `busch_effect_gleason`); Busch 2003 (`quant-ph/9909073`); Jordan–von Neumann 1935
+(the parallelogram characterisation polarised in §J–§K); `AXIOMS.md §2.2`;
+`CONVENTIONS.md §8.1`; `specs/BACKLOG.md`; `specs/future-work.md`.
 -/
 
 open Matrix Unitary
@@ -663,6 +675,579 @@ theorem p_parallelogram {u v : EuclideanSpace ℂ (Fin N)}
   rw [hadd1] at hadd2
   -- hadd2 : p(oe(u+v)) + p(oe(u-v)) = p(oe(√2 u)) + p(oe(√2 v))
   rw [hadd2, OP.p_outerEffect_sqrt2 u hu hsu, OP.p_outerEffect_sqrt2 v hv hsv]
+
+end OperationalPackage
+
+/-! ### H — the global quadratic form `q v = ‖v‖² · p(|v̂⟩⟨v̂|)` (Route B step 3b-final)
+
+`p (outerEffect v ·)` lives only on the sub-unit ball, while the polarisation argument needs a
+quadratic form defined on all vectors (the combinations `u ± v`, `u ± i·v` leave the ball). The
+degree-2 homogeneous extension `q` supplies it: it agrees with `p ∘ outerEffect` where the
+latter is defined (`qform_eq_p`), so the sub-unit `p_parallelogram` becomes the *unrestricted*
+parallelogram law (`qform_parallelogram`). -/
+
+/-- The normalised representative `‖v‖⁻¹ • v` is sub-unit (norm `1` unless `v = 0`). -/
+theorem norm_inv_norm_smul_le_one (v : EuclideanSpace ℂ (Fin N)) :
+    ‖((‖v‖⁻¹ : ℝ) : ℂ) • v‖ ≤ 1 := by
+  rw [norm_smul, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_nonneg (by positivity : (0:ℝ) ≤ ‖v‖⁻¹)]
+  rcases eq_or_ne v 0 with rfl | hne
+  · simp
+  · rw [inv_mul_cancel₀ (norm_ne_zero_iff.mpr hne)]
+
+/-- **`|c·v⟩⟨c·v| = |v⟩⟨v|` for a phase `‖c‖ = 1`.** -/
+theorem outerProduct_smul_of_norm_one {c : ℂ} (hc : ‖c‖ = 1) (v : EuclideanSpace ℂ (Fin N)) :
+    outerProduct (c • v) = outerProduct v := by
+  rw [outerProduct_smul, ← starRingEnd_apply, RCLike.mul_conj, hc]
+  simp
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **`p` on `outerEffect` depends only on the matrix `|v⟩⟨v|`.** -/
+theorem p_outerEffect_congr_M {w v : EuclideanSpace ℂ (Fin N)}
+    (h : outerProduct w = outerProduct v) (hw : ‖w‖ ≤ 1) (hv : ‖v‖ ≤ 1) :
+    OP.p (outerEffect w hw) = OP.p (outerEffect v hv) := by
+  rw [show outerEffect w hw = outerEffect v hv from Effect.ext_M h]
+
+/-- **The global quadratic form** `q v = ‖v‖² · p(|v̂⟩⟨v̂|)`, `v̂ = ‖v‖⁻¹ • v`.
+
+`p (outerEffect v ·)` is defined only for `‖v‖ ≤ 1`; the reconstruction needs a quadratic form
+on *all* of `EuclideanSpace ℂ (Fin N)`. The formula gives `q 0 = 0` automatically (the `‖v‖²`
+factor), agrees with `p ∘ outerEffect` on the sub-unit ball (`qform_eq_p`), and is degree-2
+homogeneous under arbitrary complex scaling (`qform_smul`). -/
+noncomputable def qform (v : EuclideanSpace ℂ (Fin N)) : ℝ :=
+  ‖v‖ ^ 2 * OP.p (outerEffect (((‖v‖⁻¹ : ℝ) : ℂ) • v) (norm_inv_norm_smul_le_one v))
+
+/-- `0 ≤ q v` (from `OP.nonneg`). -/
+theorem qform_nonneg (v : EuclideanSpace ℂ (Fin N)) : 0 ≤ OP.qform v :=
+  mul_nonneg (by positivity) (OP.nonneg _)
+
+/-- `q v ≤ ‖v‖²` (from `OP.le_one`). With `qform_nonneg` this is the local bound feeding the
+Cauchy-equation argument in `qpolar_smul_real`. -/
+theorem qform_le_normSq (v : EuclideanSpace ℂ (Fin N)) : OP.qform v ≤ ‖v‖ ^ 2 := by
+  have h1 := OP.le_one (outerEffect (((‖v‖⁻¹ : ℝ) : ℂ) • v) (norm_inv_norm_smul_le_one v))
+  have h2 : (0:ℝ) ≤ ‖v‖ ^ 2 := by positivity
+  calc OP.qform v ≤ ‖v‖ ^ 2 * 1 := mul_le_mul_of_nonneg_left h1 h2
+    _ = ‖v‖ ^ 2 := mul_one _
+
+/-- `q 0 = 0`. -/
+@[simp] theorem qform_zero : OP.qform (0 : EuclideanSpace ℂ (Fin N)) = 0 := by simp [qform]
+
+/-- **Degree-2 homogeneity of `q` under complex scaling:** `q(c • v) = ‖c‖² · q v`. The modulus
+of `c` scales the `‖v‖²` prefactor; its phase is invisible to `|v⟩⟨v|`
+(`outerProduct_smul_of_norm_one`). -/
+theorem qform_smul (c : ℂ) (v : EuclideanSpace ℂ (Fin N)) :
+    OP.qform (c • v) = ‖c‖ ^ 2 * OP.qform v := by
+  rcases eq_or_ne c 0 with rfl | hc
+  · simp
+  rcases eq_or_ne v 0 with rfl | hv
+  · simp
+  have hcn : ‖c‖ ≠ 0 := norm_ne_zero_iff.mpr hc
+  have hphase : ‖((‖c‖⁻¹ : ℝ) : ℂ) * c‖ = 1 := by
+    rw [norm_mul, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (by positivity : (0:ℝ) ≤ ‖c‖⁻¹), inv_mul_cancel₀ hcn]
+  have h1 : ((‖c • v‖⁻¹ : ℝ) : ℂ) • (c • v)
+      = (((‖c‖⁻¹ : ℝ) : ℂ) * c) • (((‖v‖⁻¹ : ℝ) : ℂ) • v) := by
+    rw [smul_smul, smul_smul, norm_smul, mul_inv]
+    congr 1
+    push_cast
+    ring
+  have h2 : outerProduct (((‖c • v‖⁻¹ : ℝ) : ℂ) • (c • v))
+      = outerProduct (((‖v‖⁻¹ : ℝ) : ℂ) • v) := by
+    rw [h1, outerProduct_smul_of_norm_one hphase]
+  simp only [qform]
+  rw [OP.p_outerEffect_congr_M h2 (norm_inv_norm_smul_le_one _) (norm_inv_norm_smul_le_one v),
+    norm_smul]
+  ring
+
+/-- **`q` agrees with `p ∘ outerEffect` on the sub-unit ball:** `q v = p(|v⟩⟨v|)` for `‖v‖ ≤ 1`.
+The bridge between the global quadratic form and the operational data (`p_outerEffect_smul` at
+`c = ‖v‖`). -/
+theorem qform_eq_p {v : EuclideanSpace ℂ (Fin N)} (hv : ‖v‖ ≤ 1) :
+    OP.qform v = OP.p (outerEffect v hv) := by
+  rcases eq_or_ne v 0 with rfl | hne
+  · have h0 : outerEffect (0 : EuclideanSpace ℂ (Fin N)) hv = Effect.zero := by
+      refine Effect.ext_M ?_
+      ext i j
+      simp [outerEffect, outerProduct, Matrix.vecMulVec_apply, Effect.zero]
+    rw [h0, OP.p_zero, qform_zero]
+  · have hpos : (0:ℝ) < ‖v‖ := norm_pos_iff.mpr hne
+    have hkey := OP.p_outerEffect_smul ‖v‖ (le_of_lt hpos) hv
+      (((‖v‖⁻¹ : ℝ) : ℂ) • v) (norm_inv_norm_smul_le_one v)
+    have heq : ((‖v‖ : ℝ) : ℂ) • (((‖v‖⁻¹ : ℝ) : ℂ) • v) = v := by
+      rw [smul_smul, ← Complex.ofReal_mul, mul_inv_cancel₀ (ne_of_gt hpos),
+        Complex.ofReal_one, one_smul]
+    rw [OP.p_congr_outerEffect heq _ hv] at hkey
+    rw [qform, ← hkey]
+
+/-- **`q` is even:** `q(−v) = q v` (the unit phase `−1`). -/
+theorem qform_neg (v : EuclideanSpace ℂ (Fin N)) : OP.qform (-v) = OP.qform v := by
+  have := OP.qform_smul (-1) v
+  simpa using this
+
+/-- **The unrestricted parallelogram law for `q`.** `q(u+v) + q(u−v) = 2 q u + 2 q v` for *all*
+`u, v` — the sub-unit `p_parallelogram` transported off the ball by scaling both vectors down by
+`t = (2(1+‖u‖+‖v‖))⁻¹` and dividing out `t²` (`qform_smul`). This is the hypothesis of the
+Jordan–von Neumann argument below. -/
+theorem qform_parallelogram (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qform (u + v) + OP.qform (u - v) = 2 * OP.qform u + 2 * OP.qform v := by
+  set t : ℝ := (2 * (1 + ‖u‖ + ‖v‖))⁻¹ with ht
+  have hden : (0:ℝ) < 2 * (1 + ‖u‖ + ‖v‖) := by positivity
+  have htpos : 0 < t := inv_pos.mpr hden
+  have hnt : ‖((t : ℝ) : ℂ)‖ = t := by
+    rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos htpos]
+  have hu2 : ‖((t : ℝ) : ℂ) • u‖ ≤ 1/2 := by
+    rw [norm_smul, hnt, ht, inv_mul_eq_div, div_le_iff₀ hden]
+    nlinarith [norm_nonneg u, norm_nonneg v]
+  have hv2 : ‖((t : ℝ) : ℂ) • v‖ ≤ 1/2 := by
+    rw [norm_smul, hnt, ht, inv_mul_eq_div, div_le_iff₀ hden]
+    nlinarith [norm_nonneg u, norm_nonneg v]
+  have hsum : ‖((t : ℝ) : ℂ) • u‖ ^ 2 + ‖((t : ℝ) : ℂ) • v‖ ^ 2 ≤ 1/2 := by
+    nlinarith [norm_nonneg (((t : ℝ) : ℂ) • u), norm_nonneg (((t : ℝ) : ℂ) • v)]
+  have hu1 : ‖((t : ℝ) : ℂ) • u‖ ≤ 1 := by linarith
+  have hv1 : ‖((t : ℝ) : ℂ) • v‖ ≤ 1 := by linarith
+  have hpv : ‖((t : ℝ) : ℂ) • u + ((t : ℝ) : ℂ) • v‖ ≤ 1 :=
+    le_trans (norm_add_le _ _) (by linarith)
+  have hmv : ‖((t : ℝ) : ℂ) • u - ((t : ℝ) : ℂ) • v‖ ≤ 1 :=
+    le_trans (norm_sub_le _ _) (by linarith)
+  have key := OP.p_parallelogram hsum hu1 hv1 hpv hmv
+  rw [← OP.qform_eq_p hpv, ← OP.qform_eq_p hmv, ← OP.qform_eq_p hu1,
+    ← OP.qform_eq_p hv1] at key
+  rw [show ((t : ℝ) : ℂ) • u + ((t : ℝ) : ℂ) • v = ((t : ℝ) : ℂ) • (u + v) from
+      (smul_add _ _ _).symm,
+    show ((t : ℝ) : ℂ) • u - ((t : ℝ) : ℂ) • v = ((t : ℝ) : ℂ) • (u - v) from
+      (smul_sub _ _ _).symm,
+    OP.qform_smul, OP.qform_smul, OP.qform_smul, OP.qform_smul, hnt] at key
+  have ht2 : t ^ 2 ≠ 0 := by positivity
+  refine mul_left_cancel₀ ht2 ?_
+  linear_combination key
+
+end OperationalPackage
+
+/-! ### I — Cauchy's functional equation with a local bound (Route B step 3b-final)
+
+The Jordan–von Neumann polarisation gives additivity of `f u v = q(u+v) − q(u−v)` in each slot,
+hence `ℚ`-homogeneity. Upgrading to `ℝ`-homogeneity is where the classical proof invokes
+continuity — unavailable here, since `p` is an arbitrary probability assignment. Boundedness is
+the substitute: `0 ≤ q ≤ ‖·‖²` bounds `f` on the unit ball, and a bounded additive function on
+`ℝ` is linear. -/
+
+/-- **Cauchy's functional equation with a local bound.** An additive `g : ℝ → ℝ` that is bounded
+on `[-1,1]` is linear: `g t = t · g 1`.
+
+No continuity is assumed (and none is available: `p` is an arbitrary probability assignment).
+The proof is the classical squeeze on `h y = g y − y · g 1`: `h` is additive, kills every
+integer (`h m = m · h 1 = 0`), and is bounded on `[-1,1]`; for any `x` and any `n ≥ 1`,
+`n · h x = h (n x − ⌊n x⌋)` lands in that bounded window, so `|h x| ≤ (M + |g 1|)/n → 0`.
+
+Used by `OperationalPackage.qpolar_smul_real`, where the local bound comes from `qform_nonneg`
+and `qform_le_normSq`. -/
+theorem additive_bounded_linear (g : ℝ → ℝ) (hadd : ∀ s t : ℝ, g (s + t) = g s + g t)
+    {M : ℝ} (hM : ∀ t : ℝ, |t| ≤ 1 → |g t| ≤ M) (x : ℝ) : g x = x * g 1 := by
+  obtain ⟨h, hh⟩ : ∃ h : ℝ → ℝ, ∀ y, h y = g y - y * g 1 := ⟨_, fun _ => rfl⟩
+  have hadd' : ∀ s t : ℝ, h (s + t) = h s + h t := by
+    intro s t; rw [hh, hh, hh, hadd s t]; ring
+  have hzero : h 0 = 0 := by
+    have h0 := hadd' 0 0; rw [add_zero] at h0; linarith
+  have hone : h 1 = 0 := by rw [hh]; ring
+  have hnat : ∀ (n : ℕ) (y : ℝ), h ((n : ℝ) * y) = (n : ℝ) * h y := by
+    intro n
+    induction n with
+    | zero => intro y; simp [hzero]
+    | succ k ih =>
+      intro y
+      have hstep : ((k + 1 : ℕ) : ℝ) * y = (k : ℝ) * y + y := by push_cast; ring
+      rw [hstep, hadd', ih]; push_cast; ring
+  have hneg : ∀ y : ℝ, h (-y) = - h y := by
+    intro y
+    have hy := hadd' y (-y)
+    rw [add_neg_cancel, hzero] at hy
+    linarith
+  have hnatz : ∀ n : ℕ, h ((n : ℝ)) = 0 := by
+    intro n
+    have hn := hnat n 1
+    rw [mul_one, hone, mul_zero] at hn
+    exact hn
+  have hint : ∀ m : ℤ, h ((m : ℝ)) = 0 := by
+    intro m
+    obtain ⟨n, hn⟩ : ∃ n : ℕ, m = n ∨ m = -(n : ℤ) := ⟨m.natAbs, by omega⟩
+    rcases hn with hn | hn
+    · subst hn; exact_mod_cast hnatz n
+    · subst hn
+      have hcast : (((-(n : ℤ)) : ℤ) : ℝ) = -((n : ℕ) : ℝ) := by push_cast; ring
+      rw [hcast, hneg, hnatz n, neg_zero]
+  have hM' : ∀ y : ℝ, |y| ≤ 1 → |h y| ≤ M + |g 1| := by
+    intro y hy
+    have h1 : |h y| ≤ |g y| + |y * g 1| := by
+      rw [hh]
+      have hg1 := le_abs_self (g y)
+      have hg2 := neg_abs_le (g y)
+      have hy1 := le_abs_self (y * g 1)
+      have hy2 := neg_abs_le (y * g 1)
+      rw [abs_le]
+      constructor <;> linarith
+    have h2 : |y * g 1| ≤ |g 1| := by
+      rw [abs_mul]
+      nlinarith [abs_nonneg (g 1), abs_nonneg y]
+    linarith [hM y hy]
+  have hsq : ∀ n : ℕ, 0 < n → |h x| ≤ (M + |g 1|) / n := by
+    intro n hn
+    have hn0 : (0:ℝ) < n := by exact_mod_cast hn
+    have hr0 : 0 ≤ (n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ) := sub_nonneg.mpr (Int.floor_le _)
+    have hr1 : (n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ) < 1 := by
+      have hlt := Int.lt_floor_add_one ((n : ℝ) * x)
+      linarith
+    have hsplit : h ((n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ)) = (n : ℝ) * h x := by
+      have hs := hadd' ((n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ)) (((⌊(n : ℝ) * x⌋ : ℤ) : ℝ))
+      have heq : (n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ) + ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ)
+          = (n : ℝ) * x := by ring
+      rw [heq, hint, add_zero] at hs
+      rw [← hs, hnat n x]
+    have habs : |h ((n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ))| ≤ M + |g 1| :=
+      hM' _ (by rw [abs_of_nonneg hr0]; linarith)
+    rw [hsplit, abs_mul, abs_of_pos hn0] at habs
+    rw [le_div_iff₀ hn0]
+    linarith
+  have hMnn : (0:ℝ) ≤ M := le_trans (abs_nonneg (g 0)) (hM 0 (by norm_num))
+  have hx0 : h x = 0 := by
+    by_contra hne
+    have hpos : 0 < |h x| := abs_pos.mpr hne
+    obtain ⟨n, hn⟩ := exists_nat_gt ((M + |g 1|) / |h x|)
+    have hq : (0:ℝ) ≤ (M + |g 1|) / |h x| := by positivity
+    have hnpos : 0 < n := by
+      rcases Nat.eq_zero_or_pos n with rfl | hp
+      · exfalso; rw [Nat.cast_zero] at hn; linarith
+      · exact hp
+    have hn0 : (0:ℝ) < n := by exact_mod_cast hnpos
+    have hb := hsq n hnpos
+    rw [div_lt_iff₀ hpos] at hn
+    rw [le_div_iff₀ hn0] at hb
+    nlinarith
+  rw [hh] at hx0
+  linarith
+
+/-! ### J — the polarisation difference `f u v = q(u+v) − q(u−v)` (Route B step 3b-final) -/
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **The polarisation difference** `f u v = q(u+v) − q(u−v)` — four times the real part of the
+sesquilinear form being reconstructed. Symmetric (`qpolar_symm`), additive (`qpolar_add_left`)
+and `ℝ`-homogeneous (`qpolar_smul_real`) in each slot. -/
+noncomputable def qpolar (u v : EuclideanSpace ℂ (Fin N)) : ℝ :=
+  OP.qform (u + v) - OP.qform (u - v)
+
+/-- `f` is symmetric: `q(v−u) = q(−(u−v)) = q(u−v)`. -/
+theorem qpolar_symm (u v : EuclideanSpace ℂ (Fin N)) : OP.qpolar u v = OP.qpolar v u := by
+  have h : v - u = -(u - v) := by abel
+  rw [qpolar, qpolar, h, OP.qform_neg, add_comm]
+
+/-- `f 0 v = q v − q(−v) = 0` (evenness of `q`). -/
+theorem qpolar_zero_left (v : EuclideanSpace ℂ (Fin N)) : OP.qpolar 0 v = 0 := by
+  rw [qpolar, zero_add, zero_sub, OP.qform_neg, sub_self]
+
+/-- `f u (−v) = − f u v` (the two `q`-terms swap). -/
+theorem qpolar_neg_right (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qpolar u (-v) = - OP.qpolar u v := by
+  rw [qpolar, qpolar, ← sub_eq_add_neg, sub_neg_eq_add]; ring
+
+/-- **The halving identity (Jordan–von Neumann core).** `f u v + f w v = 2 · f ((u+w)/2) v`:
+apply the parallelogram law at `(a ± v, b)` with `a = (u+w)/2`, `b = (u−w)/2` (so `a + b = u`
+and `a − b = w`) and subtract the two instances — the `q b` terms cancel. -/
+private theorem qpolar_add_half (u w v : EuclideanSpace ℂ (Fin N)) :
+    OP.qpolar u v + OP.qpolar w v = 2 * OP.qpolar (((2:ℂ)⁻¹) • (u + w)) v := by
+  have h2 : (2:ℂ) ≠ 0 := by norm_num
+  set a : EuclideanSpace ℂ (Fin N) := ((2:ℂ)⁻¹) • (u + w) with ha
+  set b : EuclideanSpace ℂ (Fin N) := ((2:ℂ)⁻¹) • (u - w) with hb
+  have hab1 : a + b = u := by
+    rw [ha, hb, ← smul_add, show (u + w) + (u - w) = (2:ℂ) • u from by rw [two_smul]; abel,
+      smul_smul, inv_mul_cancel₀ h2, one_smul]
+  have hab2 : a - b = w := by
+    rw [ha, hb, ← smul_sub, show (u + w) - (u - w) = (2:ℂ) • w from by rw [two_smul]; abel,
+      smul_smul, inv_mul_cancel₀ h2, one_smul]
+  have par1 := OP.qform_parallelogram (a + v) b
+  have par2 := OP.qform_parallelogram (a - v) b
+  rw [show a + v + b = u + v from by rw [← hab1]; abel,
+    show a + v - b = w + v from by rw [← hab2]; abel] at par1
+  rw [show a - v + b = u - v from by rw [← hab1]; abel,
+    show a - v - b = w - v from by rw [← hab2]; abel] at par2
+  simp only [qpolar]
+  linarith
+
+/-- **Additivity of the polarisation difference in the first slot.** `f (u+w) v = f u v + f w v`:
+the halving identity at `(u, w)` and at `(u+w, 0)` (where `f 0 v = 0`) share a right-hand
+side. -/
+theorem qpolar_add_left (u w v : EuclideanSpace ℂ (Fin N)) :
+    OP.qpolar (u + w) v = OP.qpolar u v + OP.qpolar w v := by
+  have h1 := OP.qpolar_add_half u w v
+  have h2 := OP.qpolar_add_half (u + w) 0 v
+  simp only [OP.qpolar_zero_left, add_zero] at h2
+  linarith
+
+/-- **Real homogeneity of the polarisation difference in the first slot.** `f (t • u) v =
+t · f u v` for every *real* `t`. Additivity alone gives only `ℚ`-homogeneity; the upgrade to `ℝ`
+is `additive_bounded_linear`, whose local bound is `0 ≤ q ≤ ‖·‖²` (`qform_nonneg`,
+`qform_le_normSq`) — no continuity of `p` is needed or available. -/
+theorem qpolar_smul_real (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qpolar (((t : ℝ) : ℂ) • u) v = t * OP.qpolar u v := by
+  have hadd : ∀ s r : ℝ, OP.qpolar ((((s + r : ℝ)) : ℂ) • u) v
+      = OP.qpolar (((s : ℝ) : ℂ) • u) v + OP.qpolar (((r : ℝ) : ℂ) • u) v := by
+    intro s r
+    rw [show (((s + r : ℝ)) : ℂ) • u = ((s : ℝ) : ℂ) • u + ((r : ℝ) : ℂ) • u from by
+      push_cast; rw [add_smul], OP.qpolar_add_left]
+  have hbound : ∀ s : ℝ, |s| ≤ 1 → |OP.qpolar (((s : ℝ) : ℂ) • u) v| ≤ (‖u‖ + ‖v‖) ^ 2 := by
+    intro s hs
+    have hsn : ‖((s : ℝ) : ℂ) • u‖ ≤ ‖u‖ := by
+      rw [norm_smul, Complex.norm_real, Real.norm_eq_abs]
+      nlinarith [norm_nonneg u, abs_nonneg s]
+    have hp : ‖((s:ℝ):ℂ) • u + v‖ ≤ ‖u‖ + ‖v‖ := le_trans (norm_add_le _ _) (by linarith)
+    have hm : ‖((s:ℝ):ℂ) • u - v‖ ≤ ‖u‖ + ‖v‖ := le_trans (norm_sub_le _ _) (by linarith)
+    have h1 := OP.qform_nonneg (((s:ℝ):ℂ) • u + v)
+    have h2 := OP.qform_nonneg (((s:ℝ):ℂ) • u - v)
+    have h3 := OP.qform_le_normSq (((s:ℝ):ℂ) • u + v)
+    have h4 := OP.qform_le_normSq (((s:ℝ):ℂ) • u - v)
+    rw [abs_le, qpolar]
+    constructor
+    · nlinarith [norm_nonneg (((s:ℝ):ℂ) • u - v), norm_nonneg u, norm_nonneg v]
+    · nlinarith [norm_nonneg (((s:ℝ):ℂ) • u + v), norm_nonneg u, norm_nonneg v]
+  have hlin := additive_bounded_linear (fun s : ℝ => OP.qpolar (((s : ℝ) : ℂ) • u) v) hadd
+    hbound t
+  simpa using hlin
+
+end OperationalPackage
+
+/-! ### K — the polarised sesquilinear form `S` (Route B step 3b-final)
+
+With `f` bi-additive and `ℝ`-bihomogeneous, the complex polarisation
+`S(u,v) = ¼ f(u,v) − (i/4) f(u, i·v)` is sesquilinear: linear in `v` (the `i`-homogeneity
+`S(u, i·v) = i·S(u,v)` is pure algebra of the formula), conjugate-linear in `u` by conjugate
+symmetry, and `S(v,v) = q v`. -/
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **The polarised sesquilinear form.**
+`S(u,v) = ¼ f(u,v) − (i/4) f(u, i·v)`, the complex polarisation of `q`. It is additive
+(`qsesq_add_right`) and `ℂ`-homogeneous (`qsesq_smul_right`) in `v`, conjugate-symmetric
+(`qsesq_conj_symm`), and restricts to `q` on the diagonal (`qsesq_self`) — exactly the
+sesquilinear form whose matrix is the density operator Busch's theorem asserts. -/
+noncomputable def qsesq (u v : EuclideanSpace ℂ (Fin N)) : ℂ :=
+  ((OP.qpolar u v : ℝ) : ℂ) / 4 - Complex.I * ((OP.qpolar u (Complex.I • v) : ℝ) : ℂ) / 4
+
+/-- `S(u, 0) = 0`. -/
+theorem qsesq_zero_right (u : EuclideanSpace ℂ (Fin N)) : OP.qsesq u 0 = 0 := by
+  simp [qsesq, qpolar]
+
+/-- Additivity of `f` in the second slot (by symmetry from `qpolar_add_left`). -/
+theorem qpolar_add_right (u v w : EuclideanSpace ℂ (Fin N)) :
+    OP.qpolar u (v + w) = OP.qpolar u v + OP.qpolar u w := by
+  rw [OP.qpolar_symm u (v + w), OP.qpolar_add_left, OP.qpolar_symm v u, OP.qpolar_symm w u]
+
+/-- Real homogeneity of `f` in the second slot (by symmetry from `qpolar_smul_real`). -/
+theorem qpolar_smul_real_right (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qpolar u (((t : ℝ) : ℂ) • v) = t * OP.qpolar u v := by
+  rw [OP.qpolar_symm u (((t : ℝ) : ℂ) • v), OP.qpolar_smul_real, OP.qpolar_symm v u]
+
+/-- **Additivity of `S` in the second slot.** -/
+theorem qsesq_add_right (u v w : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq u (v + w) = OP.qsesq u v + OP.qsesq u w := by
+  simp only [qsesq, smul_add, OP.qpolar_add_right]
+  push_cast
+  ring
+
+/-- **Real homogeneity of `S` in the second slot.** -/
+theorem qsesq_smul_real_right (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq u (((t : ℝ) : ℂ) • v) = (t : ℂ) * OP.qsesq u v := by
+  have hcomm : Complex.I • (((t : ℝ) : ℂ) • v) = ((t : ℝ) : ℂ) • (Complex.I • v) :=
+    smul_comm _ _ _
+  simp only [qsesq, hcomm, OP.qpolar_smul_real_right]
+  push_cast
+  ring
+
+/-- **`S(u, i·v) = i · S(u,v)`** — pure algebra of the polarisation formula (`i·(i·v) = −v`),
+no additivity needed. -/
+theorem qsesq_smul_I_right (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq u (Complex.I • v) = Complex.I * OP.qsesq u v := by
+  have hII : Complex.I • (Complex.I • v) = -v := by
+    rw [smul_smul, Complex.I_mul_I, neg_smul, one_smul]
+  simp only [qsesq, hII, OP.qpolar_neg_right]
+  push_cast
+  ring_nf
+  rw [Complex.I_sq]
+  ring
+
+/-- **Complex homogeneity in the second slot:** `S(u, c•v) = c · S(u,v)`. Split
+`c = Re c + i · Im c` and combine `qsesq_smul_real_right` with `qsesq_smul_I_right`. -/
+theorem qsesq_smul_right (c : ℂ) (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq u (c • v) = c * OP.qsesq u v := by
+  have hdecomp : c • v = ((c.re : ℝ) : ℂ) • v + ((c.im : ℝ) : ℂ) • (Complex.I • v) := by
+    rw [smul_smul, ← add_smul]
+    congr 1
+    exact (Complex.re_add_im c).symm
+  rw [hdecomp, OP.qsesq_add_right, OP.qsesq_smul_real_right, OP.qsesq_smul_real_right,
+    OP.qsesq_smul_I_right]
+  have hc : ((c.re : ℝ) : ℂ) + ((c.im : ℝ) : ℂ) * Complex.I = c := Complex.re_add_im c
+  linear_combination OP.qsesq u v * hc
+
+/-- **Conjugate symmetry:** `S(v,u) = conj (S(u,v))`. The real part is symmetric
+(`qpolar_symm`); the imaginary part flips because `q(v ± i·u) = q(u ∓ i·v)` (multiply by the
+unit phase `∓i` and use `qform_smul`). With `qsesq_smul_right` this makes `S` conjugate-linear
+in its *first* slot. -/
+theorem qsesq_conj_symm (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq v u = (starRingEnd ℂ) (OP.qsesq u v) := by
+  have h1 : OP.qform (v + Complex.I • u) = OP.qform (u - Complex.I • v) := by
+    have hI : Complex.I • (u - Complex.I • v) = v + Complex.I • u := by
+      rw [smul_sub, smul_smul, Complex.I_mul_I, neg_smul, one_smul, sub_neg_eq_add, add_comm]
+    rw [← hI, OP.qform_smul]
+    simp
+  have h2 : OP.qform (v - Complex.I • u) = OP.qform (u + Complex.I • v) := by
+    have hI : (-Complex.I) • (u + Complex.I • v) = v - Complex.I • u := by
+      rw [smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul,
+        add_comm, ← sub_eq_add_neg]
+    rw [← hI, OP.qform_smul]
+    simp
+  have hpol : OP.qpolar v (Complex.I • u) = - OP.qpolar u (Complex.I • v) := by
+    simp only [qpolar, h1, h2]
+    ring
+  simp only [qsesq, OP.qpolar_symm v u, hpol]
+  simp only [map_sub, map_div₀, map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
+  push_cast
+  ring
+
+/-- **`S` restricts to `q` on the diagonal:** `S(v,v) = q v`. The diagonal value is
+`f v v = 4 q v` (degree-2 homogeneity at `2`), and the imaginary term vanishes because
+`q(v − i·v) = q(v + i·v)` (unit phase `−i`). -/
+theorem qsesq_self (v : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq v v = ((OP.qform v : ℝ) : ℂ) := by
+  have hdiag : OP.qpolar v v = 4 * OP.qform v := by
+    have h2 : v + v = ((2 : ℝ) : ℂ) • v := by push_cast; rw [two_smul]
+    have hn2 : ‖((2 : ℝ) : ℂ)‖ ^ 2 = 4 := by
+      rw [Complex.norm_real, Real.norm_eq_abs]; norm_num
+    rw [qpolar, h2, OP.qform_smul, hn2, sub_self, OP.qform_zero, sub_zero]
+  have hIv : OP.qpolar v (Complex.I • v) = 0 := by
+    have hneg : (-Complex.I) • (v + Complex.I • v) = v - Complex.I • v := by
+      rw [smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul,
+        add_comm, ← sub_eq_add_neg]
+    rw [qpolar, ← hneg, OP.qform_smul]
+    simp
+  rw [qsesq, hdiag, hIv]
+  push_cast
+  ring
+
+end OperationalPackage
+
+/-! ### L — the reconstructed matrix `R` and the representation theorem (Route B step 3b-final)
+
+`R j k := S(eⱼ, eₖ)` on the standard basis. Sesquilinearity turns the basis expansion of `v`
+into `q v = ⟨v, R v⟩ = Tr(R · |v⟩⟨v|)`, i.e. `p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)`; the spectral
+reduction lifts this to `p E = Tr(R · E)` for every effect. -/
+
+/-- **Standard-basis expansion in `EuclideanSpace`:** `v = ∑ᵢ vᵢ • eᵢ`. -/
+theorem euclidean_sum_single (v : EuclideanSpace ℂ (Fin N)) :
+    ∑ i, (v i) • (EuclideanSpace.single i (1:ℂ)) = v := by
+  ext j
+  simp
+  refine (Finset.sum_eq_single_of_mem j (Finset.mem_univ j) ?_).trans ?_
+  · intro b _ hb
+    simp [Ne.symm hb]
+  · simp
+
+/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against a rank-one projector is the
+quadratic form of `R` — the identity turning the sesquilinear reconstruction into the
+Born-style trace formula. -/
+theorem trace_mul_outerProduct (R : Matrix (Fin N) (Fin N) ℂ)
+    (v : EuclideanSpace ℂ (Fin N)) :
+    (R * outerProduct v).trace = star (⇑v) ⬝ᵥ (R *ᵥ (⇑v)) := by
+  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, outerProduct,
+    Matrix.vecMulVec_apply, dotProduct, Pi.star_apply, Matrix.mulVec, Finset.mul_sum]
+  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **`S` is linear over finite sums in the second slot.** -/
+theorem qsesq_sum_right {ι : Type*} (u : EuclideanSpace ℂ (Fin N)) (s : Finset ι) (c : ι → ℂ)
+    (e : ι → EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq u (∑ i ∈ s, c i • e i) = ∑ i ∈ s, c i * OP.qsesq u (e i) := by
+  classical
+  induction s using Finset.induction with
+  | empty => simp [OP.qsesq_zero_right]
+  | @insert i s hi ih =>
+    rw [Finset.sum_insert hi, Finset.sum_insert hi, OP.qsesq_add_right, OP.qsesq_smul_right, ih]
+
+/-- **`S` is conjugate-linear over finite sums in the first slot** (via `qsesq_conj_symm`). -/
+theorem qsesq_sum_left {ι : Type*} (s : Finset ι) (c : ι → ℂ)
+    (e : ι → EuclideanSpace ℂ (Fin N)) (w : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq (∑ i ∈ s, c i • e i) w = ∑ i ∈ s, (starRingEnd ℂ) (c i) * OP.qsesq (e i) w := by
+  rw [OP.qsesq_conj_symm w (∑ i ∈ s, c i • e i), OP.qsesq_sum_right, map_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [map_mul]
+  congr 1
+  exact (OP.qsesq_conj_symm w (e i)).symm
+
+/-- **The reconstructed matrix** `R j k = S(eⱼ, eₖ)` on the standard basis — the candidate
+density operator of Busch's theorem (its positivity and unit trace are step 4). -/
+noncomputable def qmatrix : Matrix (Fin N) (Fin N) ℂ :=
+  Matrix.of fun j k =>
+    OP.qsesq (EuclideanSpace.single j (1:ℂ)) (EuclideanSpace.single k (1:ℂ))
+
+/-- **`R` is Hermitian**, directly from `qsesq_conj_symm`. -/
+theorem qmatrix_isHermitian : OP.qmatrix.IsHermitian := by
+  ext j k
+  simp only [Matrix.conjTranspose_apply, qmatrix, Matrix.of_apply, Complex.star_def]
+  exact (OP.qsesq_conj_symm (EuclideanSpace.single k (1:ℂ))
+    (EuclideanSpace.single j (1:ℂ))).symm
+
+/-- **`S` is the sesquilinear form of `R`:** `S(u,v) = ⟨u, R v⟩`. Expand both slots in the
+standard basis (`qsesq_sum_left`, `qsesq_sum_right`). -/
+theorem qsesq_eq_dotProduct (u v : EuclideanSpace ℂ (Fin N)) :
+    OP.qsesq u v = star (⇑u) ⬝ᵥ (OP.qmatrix *ᵥ (⇑v)) := by
+  conv_lhs => rw [← euclidean_sum_single u, ← euclidean_sum_single v]
+  rw [OP.qsesq_sum_left]
+  simp only [OP.qsesq_sum_right, dotProduct, Pi.star_apply, Matrix.mulVec, qmatrix,
+    Matrix.of_apply, Finset.mul_sum, Complex.star_def]
+  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
+
+/-- **`q` is the quadratic form of `R`:** `q v = ⟨v, R v⟩`. -/
+theorem qform_eq_dotProduct (v : EuclideanSpace ℂ (Fin N)) :
+    ((OP.qform v : ℝ) : ℂ) = star (⇑v) ⬝ᵥ (OP.qmatrix *ᵥ (⇑v)) := by
+  rw [← OP.qsesq_self v, OP.qsesq_eq_dotProduct]
+
+/-- **The rank-one representation (Route B step 3b-final).** `p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)` for
+every sub-unit `v`: the operational probability of every rank-one effect is a trace against one
+fixed Hermitian matrix. This is what the polarisation programme was for. -/
+theorem p_outerEffect_eq_trace {v : EuclideanSpace ℂ (Fin N)} (hv : ‖v‖ ≤ 1) :
+    ((OP.p (outerEffect v hv) : ℝ) : ℂ) = (OP.qmatrix * outerProduct v).trace := by
+  rw [← OP.qform_eq_p hv, OP.qform_eq_dotProduct, trace_mul_outerProduct]
+
+/-- **Full representation on all effects (Route B step 3b-final, capstone).**
+`p E = Tr(R · E)` for *every* effect `E` — the rank-one representation lifted through the
+spectral reduction (`p_eq_eigen_sum`, `Effect.sum_eigenEffect_M`).
+
+This is the content of Busch's theorem except the *state* conditions on `R`. What remains
+(step 4) is `R.PosSemidef` (from `OP.nonneg`), `R.trace = 1` (from `OP.total_one`), and
+uniqueness (non-degeneracy of the trace pairing) — which together make `R` a `DensityOperator`
+and replace the `busch_effect_gleason` axiom in `LF2/BornWrapper.lean`. -/
+theorem p_eq_trace (E : Effect N) :
+    ((OP.p E : ℝ) : ℂ) = (OP.qmatrix * E.M).trace := by
+  have hE : E.M = ∑ i, (E.isHermitian.eigenvalues i : ℂ)
+      • outerProduct (E.isHermitian.eigenvectorBasis i) :=
+    (E.sum_eigenEffect_M).symm.trans (Finset.sum_congr rfl fun i _ => Effect.eigenEffect_M E i)
+  conv_rhs => rw [hE, Matrix.mul_sum, Matrix.trace_sum]
+  rw [OP.p_eq_eigen_sum E]
+  push_cast
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul]
+  congr 1
+  have hnorm : ‖E.isHermitian.eigenvectorBasis i‖ = 1 :=
+    E.isHermitian.eigenvectorBasis.orthonormal.norm_eq_one i
+  rw [← outerEffect_eq_rankOneEffect _ hnorm]
+  exact OP.p_outerEffect_eq_trace (le_of_eq hnorm)
 
 end OperationalPackage
 
