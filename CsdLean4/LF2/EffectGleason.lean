@@ -32,25 +32,28 @@ frame-function analysis of projective Gleason.
    `smulVal_homog`): the monotone + additive (Cauchy) equation `f(a+b) = f(a)+f(b)` on `[0,1]`
    forces `f(t) = t f(1)` — via integer scaling (`smulVal_natMul`), rational homogeneity
    (`smulVal_rat`), and the density squeeze (`exists_rat_btwn` + monotonicity).
-3. **Reconstruction (spectral reduction delivered; polarisation deferred).** The **spectral
-   reduction** is done: `p_finsetSum` (finite additivity), `Effect.eigenvalues_le_one`
-   (effect eigenvalues `∈ [0,1]`), `Effect.sum_eigenEffect_M` (`E = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`), and
-   `p_eq_eigen_sum` (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`) reduce the whole representation problem to
-   determining `p` on rank-one projectors. **Deferred:** recovering `ρ` from the rank-one values
-   `φ ↦ p(rankOneEffect φ)` by polarisation (that the diagonal quadratic form comes from a
-   sesquilinear form ⟹ a Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`).
+3. **Reconstruction (spectral reduction + polarisation identities delivered; ρ-build deferred).**
+   The **spectral reduction** is done: `p_finsetSum` (finite additivity),
+   `Effect.eigenvalues_le_one` (effect eigenvalues `∈ [0,1]`), `Effect.sum_eigenEffect_M`
+   (`E = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`), and `p_eq_eigen_sum` (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`) reduce the whole
+   representation problem to determining `p` on rank-one projectors. The **polarisation
+   identities** are done: `outerProduct_parallelogram` (`|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| +
+   2|v⟩⟨v|`, cross terms cancel) and `outerProduct_polarization_real` — the algebraic core that
+   lets `p`, being additive, inherit the parallelogram law. **Deferred:** the ρ-build itself —
+   using these to show the diagonal form `φ ↦ p(|φ⟩⟨φ|)` comes from a sesquilinear form, giving a
+   Hermitian `ρ` with `p(|φ⟩⟨φ|) = ⟨φ|ρ|φ⟩`.
 4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ ρ` PSD; `p I = 1 ⟹ Tr ρ = 1`;
    uniqueness from non-degeneracy of the trace pairing. This yields
    `theorem busch_effect_gleason … := …`, replacing the axiom in `BornWrapper.lean`.
 
 ## Honest scope
 
-**Delivered here:** steps 1–2 (monotone/additive layer + homogeneity `p(t•E) = t·p E`) and the
-**spectral-reduction half of step 3** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`). **Deferred:** the
-polarisation half of step 3 (recover `ρ` from the rank-one values) and step 4
-(positivity/normalisation + uniqueness) — tracked in `specs/BACKLOG.md` ("Discharge
-`busch_effect_gleason`"). This module builds axiom-free (foundational triple) and does **not**
-yet remove the axiom; it is a genuine partial layer of that discharge, not a stub.
+**Delivered here:** steps 1–2 (monotone/additive layer + homogeneity `p(t•E) = t·p E`), the
+**spectral reduction** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`), and the **polarisation identities**
+(step 3b core). **Deferred:** the ρ-build (assemble `ρ` from the polarisation of the rank-one
+values) and step 4 (positivity/normalisation + uniqueness) — tracked in `specs/BACKLOG.md`
+("Discharge `busch_effect_gleason`"). This module builds axiom-free (foundational triple) and
+does **not** yet remove the axiom; it is a genuine partial layer of that discharge, not a stub.
 
 References: `LF2/BornWrapper.lean` (`Effect`, `DensityOperator`, `OperationalPackage`,
 `traceForm`, `busch_effect_gleason`); Busch 2003 (`quant-ph/9909073`); `AXIOMS.md §2.2`;
@@ -412,5 +415,36 @@ theorem p_eq_eigen_sum (E : Effect N) :
         exact OP.p_smul_homog (E.nonneg.eigenvalues_nonneg i) (E.eigenvalues_le_one i)
 
 end OperationalPackage
+
+/-! ### F — the polarisation identities (Route B step 3b, building blocks)
+
+The reconstruction of `ρ` from the rank-one values `φ ↦ p(|φ⟩⟨φ|)` rests on polarisation: the
+diagonal quadratic form must come from a sesquilinear form. Its algebraic core is that the
+rank-one projectors satisfy the parallelogram law at the matrix level — the cross terms of
+`|u±v⟩⟨u±v|` cancel — so `p`, being additive, inherits the parallelogram law. -/
+
+/-- **Matrix parallelogram identity for rank-one projectors.**
+`|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| + 2|v⟩⟨v|`: the off-diagonal cross terms
+`|u⟩⟨v| + |v⟩⟨u|` appear with opposite signs in the two sums and cancel. Pure matrix algebra. -/
+theorem outerProduct_parallelogram (u v : EuclideanSpace ℂ (Fin N)) :
+    outerProduct (u + v) + outerProduct (u - v)
+      = (2 : ℂ) • outerProduct u + (2 : ℂ) • outerProduct v := by
+  ext i j
+  simp only [outerProduct, Matrix.add_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
+    PiLp.add_apply, PiLp.sub_apply, smul_eq_mul, star_add, star_sub]
+  ring
+
+/-- **Rank-one polarisation (real part).**
+`|u+v⟩⟨u+v| − |u−v⟩⟨u−v| = 2(|u⟩⟨v| + |v⟩⟨u|)`: the difference isolates the cross terms
+(the "real part" of the sesquilinear form the reconstruction recovers). -/
+theorem outerProduct_polarization_real (u v : EuclideanSpace ℂ (Fin N)) :
+    outerProduct (u + v) - outerProduct (u - v)
+      = (2 : ℂ) • Matrix.vecMulVec (fun i => u i) (fun i => star (v i))
+        + (2 : ℂ) • Matrix.vecMulVec (fun i => v i) (fun i => star (u i)) := by
+  ext i j
+  simp only [outerProduct, Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, PiLp.add_apply, PiLp.sub_apply, smul_eq_mul,
+    star_add, star_sub]
+  ring
 
 end CSD.LF2
