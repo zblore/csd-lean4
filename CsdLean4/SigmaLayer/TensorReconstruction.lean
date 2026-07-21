@@ -8,7 +8,7 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 /-!
 # FND/TensorReconstruction: locality + generation FORCE the tensor product (P3, the uniqueness half)
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 `FND/TensorSolved.lean` proves SUFFICIENCY — the standard Kronecker composite satisfies locality and
 local tomography. This module proves the converse, NECESSITY / uniqueness: **any composite algebra `𝒜`
@@ -134,12 +134,12 @@ embeddings, and `composite_dim_eq` PROVES the dimension. So B6 need no longer be
 whose local algebras are commuting and generating gets its tensor dimension for free. -/
 
 /-- **A composite sector with the tensor dimension DERIVED, not posited (B6 discharged).** Given the joint
-`ChoiceASector` on `M_k` and commuting, generating local observable embeddings `M_NA, M_NB ↪ M_k`, this
+`ProjectiveSector` on `M_k` and commuting, generating local observable embeddings `M_NA, M_NB ↪ M_k`, this
 constructs the `CompositeSector` whose `tensor_dimension : NA * NB = k` field is filled by
 `composite_dim_eq` rather than taken on faith. -/
 noncomputable def CompositeSector.ofReconstruction {NA NB k : ℕ} [NeZero NA] [NeZero NB] [NeZero k]
     {Sigma : Type*} [MeasurableSpace Sigma] {D : ConstraintDynamics Sigma}
-    (jointSector : ChoiceASector k D)
+    (jointSector : ProjectiveSector k D)
     (ιA : Matrix (Fin NA) (Fin NA) ℂ →ₐ[ℂ] Matrix (Fin k) (Fin k) ℂ)
     (ιB : Matrix (Fin NB) (Fin NB) ℂ →ₐ[ℂ] Matrix (Fin k) (Fin k) ℂ)
     (hc : ∀ A B, Commute (ιA A) (ιB B))

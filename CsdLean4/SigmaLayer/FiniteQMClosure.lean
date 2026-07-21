@@ -7,7 +7,7 @@ import CsdLean4.SigmaLayer.MixedFrequency
 /-!
 # FND/FiniteQMClosure: the tiered finite-dimensional QM closure (#6)
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 The capstone bundle. Every earlier module proves ONE reconstructed fact on the single many-to-one ontic
 model `productDynamics H hH p₀` (isolated Hamiltonian flow `exp(-itH)` on `Σ = ℂℙ^M × T²`, Liouville
@@ -43,10 +43,10 @@ All eleven on the ONE model `productDynamics H hH p₀`:
   (spectral component `~ λ`, then microstate `~ μL`) have outcome-`i` frequency → `Tr(ρ Eᵢ)`
   (`unified_mixed_born_frequency`) — mixed-state Born as certified frequencies, not only weights.
 
-## Tier 2 — ASSUMED under Choice A
+## Tier 2 — ASSUMED under projective sector
 
 The interpretive commitment that makes the above a reconstruction of QM rather than a study of a measure
-space: taking the Fubini-Study/Liouville measure on `ℂℙ^M × T²` to BE the ontic probability law (Choice A;
+space: taking the Fubini-Study/Liouville measure on `ℂℙ^M × T²` to BE the ontic probability law (projective sector;
 see `specs/future-work.md`). This is a stance, not a Lean proposition, and is deliberately NOT a field. The
 structural sub-posits that a bare Choice-A reconstruction would ALSO assume are, on this concrete model,
 already DISCHARGED (hence they appear as tier-1 `fubini_study_bridge` etc., not here) — with one honest
@@ -76,8 +76,8 @@ reconstruction content.
 
 ## References
 
-`specs/future-work.md` (FND-T5, FND-T6, Choice A); `specs/reconstruction-status.md`;
-`specs/connectivity-manifest.md` (L9). Source theorems: `unified_choiceA_capstone`
+`specs/future-work.md` (FND-T5, FND-T6, projective sector); `specs/reconstruction-status.md`;
+`specs/connectivity-manifest.md` (L9). Source theorems: `unified_projectiveSector_capstone`
 (`FND/UnifiedMeasurement.lean`), `unified_records_persistence`, `unified_born_frequency`
 (`FND/UnifiedFlowedRecords.lean`), `conditioning_luders_effect_equivalence`
 (`FND/ConditioningLuders.lean`), `CompositeSector.ofReconstruction` (`FND/TensorReconstruction.lean`).
@@ -185,7 +185,7 @@ measurement, records, Born frequency, conditioning=Lüders) is a theorem on one 
 posit and open residue as documented (module header), not as hidden gaps. -/
 theorem unifiedFiniteQMClosure (hψ' : ‖ψ'‖ = 1) (hψ : ‖ψ‖ = 1) :
     FiniteQMClosure H hH p₀ e ψ' hψ'0 ψ hψ0 := by
-  obtain ⟨h1, h2, h3, h4, h5, h6⟩ := unified_choiceA_capstone H hH p₀ e ψ' hψ'0 hψ'
+  obtain ⟨h1, h2, h3, h4, h5, h6⟩ := unified_projectiveSector_capstone H hH p₀ e ψ' hψ'0 hψ'
   exact
     { isolated_flow_measure_preserving := h1
       schrodinger_projection := h2

@@ -5,11 +5,11 @@ import CsdLean4.SigmaLayer.LiftedMeasurement
 /-!
 # FND/UnifiedMeasurement: dynamics and measurement on ONE many-to-one ontic model (FND-T5)
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-The primary structural closure item. The forward capstone (`product_choiceA_forward_capstone`) lives on
+The primary structural closure item. The forward capstone (`product_projectiveSector_forward_capstone`) lives on
 `Σ = ℂℙ^{M} × T²` with the `exp(-itH)` Hamiltonian flow; the measurement capstone
-(`lifted_choiceA_measurement_born_capstone`) lived on the dilated `ℂℙ^{M}` with `trivialDynamics`. They
+(`lifted_projectiveSector_measurement_born_capstone`) lived on the dilated `ℂℙ^{M}` with `trivialDynamics`. They
 used DIFFERENT ontic models. This module puts BOTH on the SAME `(Σ, μL, Φ, π)`:
 
 * `Σ = KSigma (M+1) = ℂℙ^{M} × T²`, `μL = kMuL = μFS ⊗ vol`, `π = Prod.fst` (`productSector`);
@@ -19,7 +19,7 @@ used DIFFERENT ontic models. This module puts BOTH on the SAME `(Σ, μL, Φ, π
   is the LF5 von Neumann flow lifted to the fibre, `Φ_meas(p,θ) = (measurementFlow p, θ)`, with the
   pointer readout `vnPointerOutcome ∘ π`.
 
-`unified_choiceA_capstone` then delivers, on the ONE model `productDynamics H hH p₀`:
+`unified_projectiveSector_capstone` then delivers, on the ONE model `productDynamics H hH p₀`:
 
 1. the isolated flow is measure-preserving (`flow_preserves`);
 2. it projects through `π = Prod.fst` to `exp(-itH) • ·` — the Schrödinger pillar (`productDynamicsBridge`);
@@ -126,7 +126,7 @@ Liouville measure `μFS ⊗ vol` and `π = Prod.fst`, the SAME `productDynamics 
 6. record establishment.
 
 One ontic model behind isolated evolution, measurement, records and the Born/Fubini-Study content. -/
-theorem unified_choiceA_capstone (hψ' : ‖ψ'‖ = 1) :
+theorem unified_projectiveSector_capstone (hψ' : ‖ψ'‖ = 1) :
     (∀ t, MeasurePreserving ((productDynamics H hH p₀).flow t) (kMuL p₀) (kMuL p₀))
     ∧ (∀ t x, (productSector H hH p₀).pi ((productDynamics H hH p₀).flow t x)
         = productProjectedFlow H hH t ((productSector H hH p₀).pi x))

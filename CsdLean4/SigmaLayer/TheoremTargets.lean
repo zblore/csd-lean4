@@ -1,10 +1,10 @@
-import CsdLean4.SigmaLayer.ChoiceASector
+import CsdLean4.SigmaLayer.ProjectiveSector
 import CsdLean4.LF4.ProjectedDynamics
 
 /-!
 # FND/TheoremTargets: the quantum reconstruction targets as uninhabited predicates
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 The quantum content of the reconstruction (Born rule, unitary and Schrödinger dynamics, ergodic
 frequency convergence, Lüders update, no-signalling, Bell) is represented as well-typed `Prop`
@@ -31,7 +31,7 @@ variable {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma]
 /-- **T1: Born from volume.** The projective preparation law assigns each outcome region its Born
 weight. Generic over the region/weight family; instantiated against the LF4 Born regions and weights in
 concrete models. -/
-def BornFromVolume [Nonempty Sigma] {D : ConstraintDynamics Sigma} (Q : ChoiceASector N D)
+def BornFromVolume [Nonempty Sigma] {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D)
     (P : Preparation D) {ι : Type*} (region : ι → Set (ProjectiveState N)) (weight : ι → ENNReal) :
     Prop :=
   ∀ i, Q.projectivePreparationLaw P (region i) = weight i
@@ -67,7 +67,7 @@ def HasHamiltonianRealisation
 
 /-- **B1: the ontic measure pushes forward to a target projective measure.** Named bridge assumption:
 `pi_* muL = targetMeasure`. Proved for concrete product models (see `FND/MeasureBridge.lean`). -/
-def HasProjectivePushforward {D : ConstraintDynamics Sigma} (Q : ChoiceASector N D)
+def HasProjectivePushforward {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D)
     (targetMeasure : Measure (ProjectiveState N)) : Prop :=
   Measure.map Q.pi (D.muL : Measure Sigma) = targetMeasure
 

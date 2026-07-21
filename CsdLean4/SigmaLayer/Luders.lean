@@ -5,7 +5,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
 # FND/Luders: the projective (Lüders) state update
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Ledger target **T8**, the projective post-measurement (Lüders) update, closing the gap left by
 `FND/MeasurementRecord.lean` (which supplies only the epistemic-support conditioning

@@ -1,4 +1,4 @@
-import CsdLean4.SigmaLayer.ChoiceASector
+import CsdLean4.SigmaLayer.ProjectiveSector
 import CsdLean4.SigmaLayer.TheoremTargets
 import CsdLean4.LF4.ManyToOnePillars
 import CsdLean4.LF4.KahlerVolumeForced
@@ -6,7 +6,7 @@ import CsdLean4.LF4.KahlerVolumeForced
 /-!
 # FND/MeasureBridge: the projective measure bridge and its concrete product proof
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Bridge assumption B1: the ontic measure pushes forward under `pi` to the required projective measure.
 This is an explicit assumption interface in the abstract theory (`ProjectiveMeasureBridge`,
@@ -15,7 +15,7 @@ many-to-one product sector `Sigma = CP^{N-1} x T^2`, `pi = Prod.fst`, `muL = muF
 FND core from `manyToOneSchrodingerSetup`; the pushforward `pi_* muL = muFS` is discharged by the
 existing `manyToOneSetup_baseVolume_eq_fubiniStudy` (which reuses `Measure.fst_prod`).
 
-We do NOT install the Fubini-Study equality as a typeclass instance for every Choice A sector; it is a
+We do NOT install the Fubini-Study equality as a typeclass instance for every projective sector; it is a
 named field / predicate, proved only where a concrete model supplies it.
 -/
 
@@ -28,7 +28,7 @@ universe u
 /-- **Projective measure bridge (B1 interface).** A named assumption that `pi_* muL` equals a specified
 target projective measure. Passive data, not a typeclass. -/
 structure ProjectiveMeasureBridge {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma]
-    {D : ConstraintDynamics Sigma} (Q : ChoiceASector N D) where
+    {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D) where
   /-- The target projective measure. -/
   targetMeasure : Measure (ProjectiveState N)
   /-- The pushforward of the Liouville measure under `pi` equals the target. -/
@@ -37,7 +37,7 @@ structure ProjectiveMeasureBridge {N : ℕ} {Sigma : Type u} [MeasurableSpace Si
 /-- **The Fubini-Study pushforward predicate (B1 with a fixed target).** `pi_* muL = muFS`. A theorem
 target for concrete models, not a global instance. -/
 def HasFubiniStudyPushforward {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma]
-    {D : ConstraintDynamics Sigma} (Q : ChoiceASector N D)
+    {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D)
     (p₀ : ProjectiveState N) : Prop :=
   Measure.map Q.pi (D.muL : Measure Sigma) = fubiniStudyMeasure p₀
 
@@ -61,9 +61,9 @@ noncomputable def productDynamics : ConstraintDynamics (CSD.LF4.KSigma (M + 1)) 
           = (CSD.LF4.schrodingerUnitary hH s • CSD.LF4.schrodingerUnitary hH t • x.1, x.2)
       rw [(CSD.LF4.expNegITH_unitary_group hH).1, mul_smul])
 
-/-- The many-to-one product Choice A sector: `pi = Prod.fst` onto the ray space. -/
-noncomputable def productSector : ChoiceASector (M + 1) (productDynamics H hH p₀) :=
-  kahlerChoiceASector (CSD.LF4.manyToOneSchrodingerSetup H hH p₀)
+/-- The many-to-one product projective sector: `pi = Prod.fst` onto the ray space. -/
+noncomputable def productSector : ProjectiveSector (M + 1) (productDynamics H hH p₀) :=
+  kahlerProjectiveSector (CSD.LF4.manyToOneSchrodingerSetup H hH p₀)
 
 /-- **B1 proved for the product model.** The projective law of the product Liouville measure is the
 Fubini-Study measure: `pi_* (muFS ⊗ vol) = muFS`. Discharged by

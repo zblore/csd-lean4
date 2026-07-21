@@ -5,7 +5,7 @@ import Mathlib.Tactic.Module
 /-!
 # FND/Symmetrization: the two-particle symmetrization postulate (identical particles)
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer) — the identical-particle / exchange-statistics pillar.
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)) — the identical-particle / exchange-statistics pillar.
 
 For two identical particles the joint Hilbert space is `H ⊗ H`, realised concretely as
 `EuclideanSpace ℂ (Fin N × Fin N)` (functions on ordered pairs). Particle EXCHANGE is the `swap` operator

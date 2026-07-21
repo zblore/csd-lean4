@@ -3,7 +3,7 @@ import Mathlib.Data.Real.Basic
 /-!
 # FND/ConstraintSurface: ontic time and the concrete constrained state space
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 This module fixes the ontic time parameter and offers an optional concrete representation of a
 constrained ontic state space. The generic foundations stay polymorphic over an abstract `Sigma`; the

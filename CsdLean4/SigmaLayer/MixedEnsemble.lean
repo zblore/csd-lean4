@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.MixedState
 /-!
 # FND/MixedEnsemble: finite ensembles and the spectral ensemble decomposition (#8 A+B)
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Extends the mixed-state layer (`FND/MixedState.lean`, ledger T9) from the binary mixture `mix` to the two
 missing pieces of the mixed-state / ensemble representation flagged as open in `specs/future-work.md`

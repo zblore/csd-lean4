@@ -3,9 +3,9 @@ import CsdLean4.SigmaLayer.TensorSector
 /-!
 # FND/TensorGeneration: the tensor product resolved into the local observable algebras
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-Bridge B6 posits that a composite system's Choice A sector is the tensor product with `dim = NA · NB`
+Bridge B6 posits that a composite system's projective sector is the tensor product with `dim = NA · NB`
 (the "why ⊗" derivation P3, parked by standing instruction). This module RESOLVES a substantive part of
 that posit into the underlying object: the tensor product carries **no observables beyond the local ones
 and their products**. Concretely, the joint standard basis matrix is a product of local basis matrices,

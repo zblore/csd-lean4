@@ -4,7 +4,7 @@ import CsdLean4.LF4.BornFrequencyPartition
 /-!
 # FND/MixedFrequency: the mixed-state Born FREQUENCY on the unified model (#8 C, a.s. limit)
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 `FiniteQMClosure.mixed_born` (`mixed_ontic_born_weight`) delivers the mixed Born content at the WEIGHT
 level: the spectral-ensemble mixture of ontic Born-region measures equals `Tr(ρ Eᵢ)`. This module upgrades

@@ -4,7 +4,7 @@ import CsdLean4.LF5.PointerOutcome
 /-!
 # FND/LiftedMeasurement: the concrete de-isolation model from the LF5 pointer machinery
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 The concrete `DeisolationModel` for Tranche 2b, on the dilated projective sector `CP^{M}`
 (`M + 1 = N * N`). The physical interaction is the LF5 von Neumann de-isolation flow
@@ -20,7 +20,7 @@ system state `ψ'` and i.i.d. FS-typical trials, the frequency of trials whose d
 pointer `i` converges almost surely to `‖⟨eᵢ, ψ⟩‖²` (`vnDeisolationModel_born_frequency`). This is the
 LF5 outcome-frequency capstone `measurement_flow_outcome_frequency` transferred through the
 measure-preserving interaction, so the frequency is about the model's OWN outcome (readout after the
-interaction), not the raw microstate. `lifted_choiceA_measurement_born_capstone` bundles the full
+interaction), not the raw microstate. `lifted_projectiveSector_measurement_born_capstone` bundles the full
 measurement: measure preservation, unique outcome a.e., record establishment, and Born frequencies.
 
 This is a theorem-backed construction, not an assumed instance: every field is discharged by an LF5
@@ -112,7 +112,7 @@ theorem vnDeisolationModel_ae_total (p₀ : CPN (M + 1)) (e : Fin N × Fin N ≃
   · rw [hb] at hx; simp only [Option.isSome_none, Bool.false_eq_true] at hx
   · simp only [vnPointerOutcome, hb, Option.map_some, Option.isSome_some]
 
-/-- **The lifted Choice A measurement capstone.** For the concrete de-isolation model on `CP^{M}`
+/-- **The lifted projective sector measurement capstone.** For the concrete de-isolation model on `CP^{M}`
 (`M + 1 = N * N`), with the LF5 measurement flow as the physical interaction and the LF5 pointer outcome
 as the contextual readout, the following hold with no open hypotheses beyond a unit reference state:
 
@@ -122,9 +122,9 @@ as the contextual readout, the following hold with no open hypotheses beyond a u
 * the outcome is established for almost every initial ontic state (target T6).
 
 This is the contextual pointer readout and almost-everywhere unique outcome that the product forward
-capstone `product_choiceA_forward_capstone` explicitly did not claim: the measurement content, delivered
+capstone `product_projectiveSector_forward_capstone` explicitly did not claim: the measurement content, delivered
 from a genuine de-isolation interaction rather than an assumed instance. -/
-theorem lifted_choiceA_measurement_capstone (p₀ : CPN (M + 1))
+theorem lifted_projectiveSector_measurement_capstone (p₀ : CPN (M + 1))
     (e : Fin N × Fin N ≃ Fin (M + 1)) (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'0 : ψ' ≠ 0) (hψ' : ‖ψ'‖ = 1) :
     (∀ t, MeasurePreserving ((vnDeisolationModel p₀ e ψ' hψ'0).interaction t ())
@@ -175,7 +175,7 @@ theorem vnDeisolationModel_born_frequency (hN : 1 < N) (e : Fin N × Fin N ≃ F
       (fun j => measurementFlow N e ⁻¹' bornRegion ψ' hψ'0 j)
       (fun j => measurementFlow_measurable e (bornRegion_measurable_uncond ψ' hψ'0 j)))
 
-/-- **The full lifted Choice A measurement capstone (with Born statistics).** For the concrete
+/-- **The full lifted projective sector measurement capstone (with Born statistics).** For the concrete
 de-isolation model on the dilated sector, with the system state `ψ'` the von Neumann dilation of a unit
 state `ψ`, the following hold with no open hypotheses beyond the dilation data:
 
@@ -187,7 +187,7 @@ state `ψ`, the following hold with no open hypotheses beyond the dilation data:
 
 This is the genuine measurement: a defined, unique outcome a.e. AND the Born statistics, delivered from a
 de-isolation interaction rather than an assumed instance. -/
-theorem lifted_choiceA_measurement_born_capstone (hN : 1 < N)
+theorem lifted_projectiveSector_measurement_born_capstone (hN : 1 < N)
     (e : Fin N × Fin N ≃ Fin (M + 1)) (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
@@ -208,10 +208,10 @@ theorem lifted_choiceA_measurement_born_capstone (hN : 1 < N)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
           atTop
           (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2))) :=
-  ⟨(lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').1,
-    (lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').2.1,
-    (lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').2.2.1,
-    (lifted_choiceA_measurement_capstone p₀ e ψ' hψ'0 hψ').2.2.2,
+  ⟨(lifted_projectiveSector_measurement_capstone p₀ e ψ' hψ'0 hψ').1,
+    (lifted_projectiveSector_measurement_capstone p₀ e ψ' hψ'0 hψ').2.1,
+    (lifted_projectiveSector_measurement_capstone p₀ e ψ' hψ'0 hψ').2.2.1,
+    (lifted_projectiveSector_measurement_capstone p₀ e ψ' hψ'0 hψ').2.2.2,
     vnDeisolationModel_born_frequency hN e ψ hψ ψ' hψ'eq hψ'0 p₀⟩
 
 end CSD.SigmaLayer

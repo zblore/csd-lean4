@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.MeasureBridge
 /-!
 # FND/DynamicsBridge: projectable dynamics and its Hamiltonian realisation
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Bridge assumption B2: the ontic flow is projectable through `pi` (there is an induced flow on the
 projective sector). `ProjectiveDynamicsBridge` bundles the projected flow, its one-parameter-group laws
@@ -13,7 +13,7 @@ projectable AND has a Hamiltonian realisation: theorem target T5 (`HasHamiltonia
 inhabited for this concrete model, reusing `manyToOneSchrodingerSetup_schrodinger_form` and
 `expNegITH_unitary_group`.
 
-Unitarity of the projected flow is NOT a field of `ChoiceASector`; it is the separate target
+Unitarity of the projected flow is NOT a field of `ProjectiveSector`; it is the separate target
 `HasUnitaryRealisation` / `HasHamiltonianRealisation`, proved only where a concrete model supplies it.
 -/
 
@@ -28,7 +28,7 @@ universe u
 projectability equation `pi (flow t x) = projectedFlow t (pi x)`, and the one-parameter-group laws of
 the projected flow. -/
 structure ProjectiveDynamicsBridge {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma]
-    {D : ConstraintDynamics Sigma} (Q : ChoiceASector N D) where
+    {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D) where
   /-- The induced flow on the projective sector. -/
   projectedFlow : OnticTime → ProjectiveState N → ProjectiveState N
   /-- Each projected time-`t` map is measurable. -/

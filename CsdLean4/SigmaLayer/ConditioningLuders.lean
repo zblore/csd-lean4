@@ -6,7 +6,7 @@ import CsdLean4.LF4.BornRegionDisjoint
 /-!
 # FND/ConditioningLuders: the ontic-record conditioning EQUALS the Lüders update, through `π`
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 `FND/ConditioningLink.lean` proved that the ontic record-history conditioning and the projective Lüders
 update are BOTH the single Bayesian rule `w(fine)/w(coarse)` — but for DIFFERENT weights (`μL` vs the Born

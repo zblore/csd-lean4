@@ -42,7 +42,7 @@ DECLARED_PLACEHOLDERS=""
 FINITEQMCLOSURE_FIELDS=11
 
 DECLARED_BACKING_THEOREMS="unifiedFiniteQMClosure
-unified_choiceA_capstone
+unified_projectiveSector_capstone
 manyToOneSchrodingerSetup_both_pillars
 manyToOneSchrodingerSetup_schrodinger_derived
 bornRegion_fs_measure

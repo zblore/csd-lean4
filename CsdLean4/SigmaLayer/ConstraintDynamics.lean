@@ -6,19 +6,19 @@ import CsdLean4.SigmaLayer.ConstraintSurface
 /-!
 # FND/ConstraintDynamics: deterministic, measure-preserving ontic dynamics
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 `ConstraintDynamics Sigma` is the canonical FND core (postulates P2, P3, P4): a finite Liouville
 reference measure `muL` on the ontic state space, together with a deterministic real-parameter flow
 that forms a one-parameter group and preserves `muL`. This is the group-law refinement of the existing
 `LF1.OnticSetup` (single map, no group law) and `LF4.KahlerOnticSetup` (time flow, no group law); the
-adapters into those live in `FND/IsolationPreparation.lean` and `FND/ChoiceASector.lean`.
+adapters into those live in `FND/IsolationPreparation.lean` and `FND/ProjectiveSector.lean`.
 
 ## Anti-circularity
 
 `ConstraintDynamics` carries NO Born weight, NO frequency claim, NO Fubini-Study equality, NO unitary
 projected dynamics, NO Schrödinger equation. It is deterministic dynamics and a reference measure only.
-The projective sector `pi` is a separate structure (`ChoiceASector`); all quantum content is a theorem
+The projective sector `pi` is a separate structure (`ProjectiveSector`); all quantum content is a theorem
 target or a named bridge assumption, never a field here.
 -/
 

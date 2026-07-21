@@ -4,9 +4,9 @@ import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
-# FND/A5NoGo: the single-flow limit — a deterministic flow does not pin the sector
+# FND/SectorPostulateNoGo: the single-flow limit — a deterministic flow does not pin the sector
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 The localized A5 result (`FND/LocalisedTypicality.lean`) shows the typicality measure is forced by the
 `U(N)` SYMMETRY. This module makes precise WHY the *universal* A5 — deriving the Born measure `μ_FS` from

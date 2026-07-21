@@ -1,25 +1,25 @@
 # Reconstruction status — a thorough review of what is machine-verified (2026-07-15)
 
 **Purpose.** A single honest review of what the `csd-lean4` corpus actually proves, at commit `HEAD`
-(after the FND "Choice A" layer and FND-T5). It supersedes scattered claims; where it and an older
+(after the Σ-layer (projective-sector, Paper C) and FND-T5). It supersedes scattered claims; where it and an older
 document disagree, this file and [`connectivity-manifest.md`](connectivity-manifest.md) win. Everything
 below is `sorry`-free, `lake build CsdLeanTests` green, and AxiomAudit-pinned to the foundational triple
 (`propext`, `Classical.choice`, `Quot.sound`) unless explicitly noted otherwise.
 
 ## 1. One-paragraph verdict
 
-The corpus is a **rigorous, forward finite-dimensional QM reconstruction from one posited Choice A ontic
+The corpus is a **rigorous, forward finite-dimensional QM reconstruction from one posited projective sector ontic
 model.** A single genuine `Φ ≠ id` Kähler sector yields BOTH pillars (Born + Schrödinger) at general `N`
 with arbitrary Hermitian `H` (`manyToOneSchrodingerSetup_both_pillars`), and ONE ontic model
 `(Σ = ℂℙ^{M}×T², μL = μFS⊗vol, Φ, π = Prod.fst)` carries isolated Hamiltonian dynamics and de-isolating
-measurement together. `unified_choiceA_capstone` BUNDLES the dynamics + measurement core (six proved
+measurement together. `unified_projectiveSector_capstone` BUNDLES the dynamics + measurement core (six proved
 properties: isolated measure-preservation, projectability, FS pushforward, measurement-interaction
 preservation, a.e. pointer readout, record establishment). Time-indexed record semantics (now INSTANTIATED on the model:
 `unifiedFlowedSemantics` / `unified_records_persistence`, records time-physical under the isolated flow),
 Born-frequency convergence (now stated on the model: `unified_born_frequency`, for EVERY unit `ψ` — the `hpos` full-support genericity hypothesis was retired via the `_uncond` engine, so vanishing amplitudes are covered too), and the conditioning = Lüders correspondence (`ConditioningLuders.lean`,
 `conditioning_luders_effect_equivalence` — now genuinely proved: the ontic record-conditioning and the
 Lüders update give the same conditional prediction for every pointer-basis effect) are now ASSEMBLED into
-one tiered record: **`FiniteQMClosure`** / `unifiedFiniteQMClosure` (`FND/FiniteQMClosure.lean`) collects all
+one tiered record: **`FiniteQMClosure`** / `unifiedFiniteQMClosure` (`SigmaLayer/FiniteQMClosure.lean`) collects all
 eleven proved-on-the-model facts as fields (the sixth-through-eleventh: records #5, Born-frequency #2, conditioning=Lüders #3/#4, mixed-state Born weight #8 C, mixed-state Born FREQUENCY #8 C), each discharged by its source lemma, and states honestly in the
 module header what is a theorem here vs. a Choice-A posit vs. a QM adapter vs. still open (no field is
 `sorry`). So L9 is now a single unified closure (Tier 1), not a scattered multi-theorem partial. The **one
@@ -28,7 +28,7 @@ sector itself is **posited**, not derived from the deterministic flow (the Born 
 i.i.d.). This is FORWARD throughout — it does not derive the sector — and that scope matches Paper C's
 own (§1.4 assumes `Σ`, `π`, the A5 sector).
 
-## 2. The FND Choice A postulate ledger (P1–P9 / B1–B7 / T1–T16)
+## 2. The SigmaLayer sector-postulate ledger (P1–P9 / B1–B7 / T1–T16)
 
 The anti-circularity ontology layer (`CsdLean4/SigmaLayer/`, namespace `CSD.SigmaLayer`). Full ledger in
 [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean) and [`../AXIOMS.md`](../AXIOMS.md) §3.7.
@@ -37,7 +37,7 @@ per model, targets are `Prop` predicates inhabited by proved theorems.
 
 **Core postulates (fields).** P1 `ConstraintSurface`; P2 `ConstraintDynamics.muL`; P3 `flow`/`flow_zero`/
 `flow_add`; P4 `flow_preserves`; P5 `RecordSemantics` (time-indexed via `flowedSemantics`); P6
-`HistoryPreparation` (isolation = conditioning); P7 `ProjectiveState = CP^{N-1}`; P8 `ChoiceASector.pi`;
+`HistoryPreparation` (isolation = conditioning); P7 `ProjectiveState = CP^{N-1}`; P8 `ProjectiveSector.pi`;
 P9 many-to-one `π`.
 
 **Bridges (discharged for the product model).** B1 `π_*μL = μFS` (`productSector_hasFubiniStudyPushforward`);
@@ -52,7 +52,7 @@ B7 `TrialWitness` / `IsErgodicForOutcomeRegions`.
 |---|---|---|---|
 | T1 | Born from volume | `BornFromVolume`, LF4 `fs_born_volume_ratio_N` | proved |
 | T2 | Born from i.i.d. frequencies | `born_frequency_convergence_N` | proved |
-| T3 | Born from deterministic-flow frequencies | `BornFromFlow` predicate | OPEN (= A5 face) — ergodic side sharpened: `UniquelyErgodic` defined + `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`FND/UniqueErgodicity.lean`); residual gap is the Mathlib-absent pointwise Birkhoff theorem, and the unitary no-gos exclude the hypothesis (candidate flow must be non-unitary) |
+| T3 | Born from deterministic-flow frequencies | `BornFromFlow` predicate | OPEN (= A5 face) — ergodic side sharpened: `UniquelyErgodic` defined + `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`SigmaLayer/UniqueErgodicity.lean`); residual gap is the Mathlib-absent pointwise Birkhoff theorem, and the unitary no-gos exclude the hypothesis (candidate flow must be non-unitary) |
 | T4 | Unitary projected dynamics | `HasUnitaryRealisation` | proved (product model) |
 | T5 | Schrödinger evolution | `HasHamiltonianRealisation`, `productProjectedFlow_hasHamiltonianRealisation` | proved (product model) |
 | T6 | Unique contextual outcome a.e. | `vnDeisolationModel_ae_total` | proved |
@@ -79,8 +79,8 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 | L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |
 | L5 | sector ⇒ Born frequencies | CONNECTED (structural) |
 | L6/L8 | ONE object, both pillars, many-to-one `π` | CONNECTED — `manyToOneSchrodingerSetup_both_pillars` |
-| **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`FND/FiniteQMClosure.lean`) assembles all 11 proved-on-model facts (the 6 core `unified_choiceA_capstone` properties + records-time-physical #5 + Born-frequency #2 + conditioning=Lüders #3/#4 + mixed-state Born weight #8 C `mixed_born` + mixed-state Born FREQUENCY #8 C `mixed_born_frequency`) into ONE tiered record, each field discharged by its source lemma; Choice-A posit / QM adapters / open residue documented, not encoded as fields |
-| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved; ergodic face sharpened)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`, `obsFlow_not_uniquely_ergodic`). `UniquelyErgodic` now defined with `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`FND/UniqueErgodicity.lean`); the gap to `BornFromFlow` is exactly the Mathlib-absent pointwise Birkhoff theorem, and the current unitary flows provably fail the hypothesis. Typicality itself is forced by the LLN, not this route (Papers A/B) |
+| **L9** | ONE model: dynamics + measurement + records + Born + update | CONNECTED — **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`SigmaLayer/FiniteQMClosure.lean`) assembles all 11 proved-on-model facts (the 6 core `unified_projectiveSector_capstone` properties + records-time-physical #5 + Born-frequency #2 + conditioning=Lüders #3/#4 + mixed-state Born weight #8 C `mixed_born` + mixed-state Born FREQUENCY #8 C `mixed_born_frequency`) into ONE tiered record, each field discharged by its source lemma; Choice-A posit / QM adapters / open residue documented, not encoded as fields |
+| **L7** ★ | Born weights derived FROM the flow | **OPEN (boundary proved; ergodic face sharpened)** — the sector is posited (A5/FND-1); a single flow provably cannot pin `μ_FS` (`flow_admits_invariant_ne_fubiniStudy`, `obsFlow_not_uniquely_ergodic`). `UniquelyErgodic` now defined with `⇒ Ergodic ⇒ IsErgodicForOutcomeRegions` (`SigmaLayer/UniqueErgodicity.lean`); the gap to `BornFromFlow` is exactly the Mathlib-absent pointwise Birkhoff theorem, and the current unitary flows provably fail the hypothesis. Typicality itself is forced by the LLN, not this route (Papers A/B) |
 
 ## 4. The forward reconstruction — what each pillar delivers
 
@@ -94,10 +94,10 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
   `manyToOneSchrodingerSetup_schrodinger_derived` exhibits the skew generator `A = -iH`, DISCHARGES the
   smoothness datum `U' t = U t·A`, and runs `CSD.StoneC1.eq_exp_of_hasDeriv` — so the ray-level `rfl`
   form is backed by an actual derivation, not standing alone.
-* **Measurement** (LF5 + FND): a measure-preserving von Neumann de-isolation flow realises the Naimark
-  dilation; the per-microstate pointer outcome is defined a.e.; frequencies are Born. In FND this is a
+* **Measurement** (LF5 + SigmaLayer): a measure-preserving von Neumann de-isolation flow realises the Naimark
+  dilation; the per-microstate pointer outcome is defined a.e.; frequencies are Born. In SigmaLayer this is a
   `DeisolationModel` over the *nontrivial* isolated dynamics (`unifiedDeisolationModel`).
-* **Records / state update** (FND): records are time-indexed measurable events (`flowedSemantics`), with
+* **Records / state update** (SigmaLayer): records are time-indexed measurable events (`flowedSemantics`), with
   probability conserved and flow-covariant under isolation; the post-outcome preparation has proven
   nonzero measure (`PostMeasurement.appendFact`); the record conditioning equals the Lüders update as an
   OPERATIONAL EQUIVALENCE — `ConditioningLuders.conditioning_luders_effect_equivalence`: on the product
@@ -119,7 +119,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
   CCR, oscillator spectrum), algorithms (Deutsch–Jozsa, Simon, BV, Grover, QFT, full Shor), metrology
   (Ramsey, Heisenberg, quantum Fisher), QEC, contextuality, channels/decoherence. These share the same
   complex-sector + Born + unitary primitives but are independent theorems consuming them, not a formal
-  cascade from the FND ledger.
+  cascade from the SigmaLayer ledger.
 * **ecdsa.fail / ECDLP arm** — quantum resource estimation for Shor-on-ECDLP (elliptic-curve arithmetic,
   Karatsuba/Toom-3, safegcd/half-GCD inversion, Toffoli/qubit counting, a verified-floor / trusted-estimate
   two-track). It presupposes the unitary-evolution pillar but its theorems are number theory + circuit
@@ -127,11 +127,11 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 
 ## 6. Axiom hygiene
 
-* Foundational triple only on every FND/LF headline pin.
+* Foundational triple only on every SigmaLayer/LF headline pin.
 * One imported mathematical result remains: `busch_effect_gleason` — library debt confined to the
   operational stratum, **not** in the ontic Born derivation (which is Gleason-free). See
   [`../AXIOMS.md`](../AXIOMS.md) §2.2.
-* No global `axiom` declarations in the FND layer; no `sorry`/`admit`.
+* No global `axiom` declarations in the Σ-layer; no `sorry`/`admit`.
 * Three static guards (connectivity, sector-linkage, axiom-imports) pass and are run in CI.
 
 ## 7. The honest frontier — what is NOT claimed
@@ -142,23 +142,23 @@ canonical [`BACKLOG.md`](BACKLOG.md).)*
 * **A5 / FND-1 ★** — deriving the sector `(π, G)` and its Born weights FROM the deterministic flow. The
   sector is posited; the trials sample `μL`. This is the one deep gap and is research-grade. It now has
   **both a proved boundary and a localized partial**:
-  * **No-go (why the gap is real, not a formalisation debt)** (`FND/A5NoGo.lean`): a single projective
+  * **No-go (why the gap is real, not a formalisation debt)** (`SigmaLayer/SectorPostulateNoGo.lean`): a single projective
     unitary flow does NOT uniquely determine an invariant measure — a flow with two distinct fixed rays
     admits (at least) two distinct invariant probability measures, so at least one is not `μ_FS`
     (`flow_admits_invariant_ne_fubiniStudy`), exhibited on the concrete nontrivial phase-flip
     `diag(1,-1)` on `ℂℙ¹` (`phaseFlip_admits_invariant_ne_fubiniStudy`). So "A5 is posited" is a proved
     statement about the limit: the deterministic flow underdetermines the sector's typicality measure.
-  * **Localized partial (what DOES pin it)** (`FND/LocalisedTypicality.lean`): A5 is discharged AT sectors
+  * **Localized partial (what DOES pin it)** (`SigmaLayer/LocalisedTypicality.lean`): A5 is discharged AT sectors
     carrying the full `U(N)` symmetry — the typicality measure and Born weights are symmetry-forced there
-    (`localised_A5_capstone`, `region_measure_symmetry_forced`) — so A5 need only hold "in the appropriate
+    (`localised_sectorPostulate_capstone`, `region_measure_symmetry_forced`) — so A5 need only hold "in the appropriate
     places". Residual: the bare flow is one one-parameter subgroup, not all of `U(N)`; the symmetry is
     still construction data. Together: a single flow is provably insufficient; the full symmetry is
     provably sufficient — the frontier is exactly the gap between them.
 * **P3 "why ⊗" — SUFFICIENCY + NECESSITY both proved** (2 files): SUFFICIENCY
-  (`FND/TensorSolved.lean` `composite_is_tensor_product`) — the standard Kronecker model REALIZES the
+  (`SigmaLayer/TensorSolved.lean` `composite_is_tensor_product`) — the standard Kronecker model REALIZES the
   composition principles: `compositeTensorEquiv` is a bijective linear iso `M_{NA} ⊗ M_{NB} ≃ M_{NA·NB}`
   in which locality (`aliceOp_bobOp_commute`) and local tomography (`joint_mem_span_local`, proved for the
-  quantum case) both hold. NECESSITY / uniqueness (`FND/TensorReconstruction.lean`
+  quantum case) both hold. NECESSITY / uniqueness (`SigmaLayer/TensorReconstruction.lean`
   `compositeAlgReconstruction`) — an ARBITRARY composite `𝒜` with commuting, generating local embeddings
   is FORCED to be the tensor product (`𝒜 ≃ₐ M_NA ⊗ M_NB`: injective because `M_NA ⊗ M_NB` is simple,
   surjective from generation), and `composite_dim_eq` derives `dim = NA·NB`, DISCHARGING bridge B6
@@ -180,9 +180,9 @@ machine-checked facts in the corpus.
   route) is a PROVED DEAD-END that CSD deliberately does not take.** CSD forces typicality by the **law
   of large numbers over fresh i.i.d. preparations**, NOT by time-averaging one trajectory
   (`specs/active-todo.md`, framing correction 2026-06-29, Papers A & B). The single-flow route is
-  provably impossible: `flow_admits_invariant_ne_fubiniStudy` (`FND/A5NoGo.lean`),
+  provably impossible: `flow_admits_invariant_ne_fubiniStudy` (`SigmaLayer/SectorPostulateNoGo.lean`),
   `obsFlow_not_ergodic` / `obsFlow_not_uniquely_ergodic` (`LF4/TypicalityForcing.lean`) — a unitary flow
-  is not even ergodic w.r.t. `μ_FS`. The ergodic scaffolding (`FND/UniqueErgodicity.lean`,
+  is not even ergodic w.r.t. `μ_FS`. The ergodic scaffolding (`SigmaLayer/UniqueErgodicity.lean`,
   `IsErgodicForOutcomeRegions`, `BornFromFlow`) is **boundary-marking only** — it precisely locates why
   the route fails; it is NOT the reconstruction path and building it out further is not progress on the
   reconstruction. The genuine open ★ residue is narrower: the sector/symmetry ORIGIN (NG-adjacent, see
@@ -198,7 +198,7 @@ machine-checked facts in the corpus.
 
 ## 8. Bottom line
 
-Under Choice A, the finite-dimensional QM reconstruction is **structurally closed forward**: one posited
+Under projective sector, the finite-dimensional QM reconstruction is **structurally closed forward**: one posited
 ontic model, one measurement/record/update loop, the full T1–T16 target ledger inhabited, axiom-clean.
 The remaining depth is the *origin* of the posited sector (A5) and the *derivation* of composition (P3) —
 genuine open problems, honestly flagged, not papered over.

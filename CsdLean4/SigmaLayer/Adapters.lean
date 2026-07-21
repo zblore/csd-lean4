@@ -1,10 +1,10 @@
-import CsdLean4.SigmaLayer.ChoiceASector
+import CsdLean4.SigmaLayer.ProjectiveSector
 import CsdLean4.SigmaLayer.TheoremTargets
 
 /-!
 # FND/Adapters: the postulate ledger and the ontic-setup Rosetta
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 This module documents the FND postulate ledger and records the correspondence (the "Rosetta") between
 the four ontic-setup abstractions in the corpus, together with faithfulness lemmas for the adapters. It
@@ -30,11 +30,11 @@ Core ontic postulates.
   preparation (`FND/PostMeasurement.lean` `HistoryPreparation.appendFact` / `appendFactOfPos`, with proven
   nonzero compatible measure when the outcome is possible).
 
-Choice A sector postulates.
+projective sector postulates.
 
 * P7. For each finite sector dimension `N`, the operational pure-state target is `CP^{N-1}`
   (`ProjectiveState`).
-* P8. There exists a measurable projection `pi : Sigma -> CP^{N-1}` (`ChoiceASector.pi`).
+* P8. There exists a measurable projection `pi : Sigma -> CP^{N-1}` (`ProjectiveSector.pi`).
 * P9. `pi` need not be injective (many-to-one supported; no injectivity field).
 
 Bridge assumptions, to be proved for concrete models whenever possible.
@@ -83,7 +83,7 @@ mixed-state representation (`FND/MixedState.lean`: `mixedState_capstone`/`traceF
 Interference and tensors, specifically. Interference (T16) is NOT a postulate: it is a consequence of
 P7 (the sector is a COMPLEX projective space) and T1/T2 (Born weights), realised as the phase-dependent
 two-path probability `(1 + Re⟨ψ,Uψ⟩)/2`. The tensor product is likewise DERIVED, not posited: the finite
-`ℂ^{NA} ⊗ ℂ^{NB} = ℂ^{NA·NB}` is the Choice A sector on the product index `Fin NA × Fin NB`
+`ℂ^{NA} ⊗ ℂ^{NB} = ℂ^{NA·NB}` is the projective sector on the product index `Fin NA × Fin NB`
 (`FND/TensorSector.lean` `tensorIndexEquiv`), on which the local operator algebra commutes
 (`aliceOp_bobOp_commute`) and no-signalling holds (`tensorSector_no_signalling`). The ONLY tensor posit
 is bridge B6 (`CompositeSector.tensor_dimension`, `dim = NA·NB`): the "why `⊗`" reconstruction (P3) is
@@ -91,10 +91,10 @@ parked by standing instruction, so composite structure is posited per instance.
 
 ## The ontic-setup Rosetta (resolving the drift)
 
-Four ontic-setup abstractions exist; the FND canonical core is `ConstraintDynamics + ChoiceASector`
+Four ontic-setup abstractions exist; the FND canonical core is `ConstraintDynamics + ProjectiveSector`
 (the only one carrying the one-parameter-group law and no `True` placeholders). The intended tower:
 
-    ConstraintDynamics + ChoiceASector      (FND canonical core)
+    ConstraintDynamics + ProjectiveSector      (FND canonical core)
       ── (fix time + region) ─────────────►  LF1.OnticSetup        (single-Phi typicality)
       ── (+ placeholders, + group law) ───►  LF4.KahlerOnticSetup  (W-series forward dynamics)
 
@@ -103,7 +103,7 @@ Adapters (all one-directional, no existing file altered):
 * `Preparation.toOnticSetup : Preparation D -> OnticTime -> LF1.OnticSetup Sigma` (fix time + region).
 * `kahlerConstraintDynamics : KahlerOnticSetup N -> ... -> ConstraintDynamics K.Sigma` (partial: takes
   the group laws `KahlerOnticSetup` lacks and `IsFiniteMeasure`).
-* `kahlerChoiceASector : KahlerOnticSetup N -> ChoiceASector N D` (total; `pi` is dynamics independent).
+* `kahlerProjectiveSector : KahlerOnticSetup N -> ProjectiveSector N D` (total; `pi` is dynamics independent).
 
 `LF4.KahlerOnticSetup` field status: `IsKahlerSector` / `kahler_condition` and (on the trivial witness)
 `IsLiouvilleKahlerVolume` are documented placeholders; its `flow` is time-parameterised but does NOT
@@ -135,11 +135,11 @@ theorem kahlerConstraintDynamics_flow (K : CSD.LF4.KahlerOnticSetup N)
     (hzero : ∀ x, K.flow 0 x = x) (hadd : ∀ s t x, K.flow (s + t) x = K.flow s (K.flow t x)) :
     (kahlerConstraintDynamics K hzero hadd).flow = K.flow := rfl
 
-/-- **Faithfulness of the Kähler `ChoiceASector` adapter (projection).** The adapter's `pi` is the
+/-- **Faithfulness of the Kähler `ProjectiveSector` adapter (projection).** The adapter's `pi` is the
 Kähler setup's projection. -/
-theorem kahlerChoiceASector_pi (K : CSD.LF4.KahlerOnticSetup N)
+theorem kahlerProjectiveSector_pi (K : CSD.LF4.KahlerOnticSetup N)
     {D : ConstraintDynamics K.Sigma} :
-    (kahlerChoiceASector K (D := D)).pi = K.pi := rfl
+    (kahlerProjectiveSector K (D := D)).pi = K.pi := rfl
 
 end CSD.SigmaLayer
 

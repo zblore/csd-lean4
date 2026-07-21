@@ -5,7 +5,7 @@ import Mathlib.Analysis.Matrix.Spectrum
 /-!
 # FND/MixedState: mixed-state representation and statistical mixtures
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Ledger target **T9**, the mixed-state representation. The repository already carries the Born rule on
 density operators (`LF2.BornWrapper.traceForm`, `Tr(ρ E)`), the pure-state density

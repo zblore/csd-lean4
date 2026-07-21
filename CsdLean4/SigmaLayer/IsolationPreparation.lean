@@ -5,7 +5,7 @@ import CsdLean4.LF1.Preparation
 /-!
 # FND/IsolationPreparation: preparations and isolation as conditioning on a record history
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 A `Preparation` restricts the ontic state to a measurable region of nonzero Liouville measure. The LF1
 adapter (`Preparation.toOnticSetup`) turns a preparation plus a time into an existing `LF1.OnticSetup`,

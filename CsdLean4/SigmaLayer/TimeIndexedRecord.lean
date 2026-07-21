@@ -4,7 +4,7 @@ import CsdLean4.SigmaLayer.ConstraintDynamics
 /-!
 # FND/TimeIndexedRecord: time-indexed records and their persistence under isolated evolution
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 FND-T5 final follow-on. `RecordSemantics.event` already takes a full `RecordedFact` (context, outcome AND
 time), but the concrete pointer semantics (`vnRecordSemantics`) ignored the recorded time — the event was

@@ -8,7 +8,7 @@ import CsdLean4.SigmaLayer.TheoremTargets
 /-!
 # FND/UniqueErgodicity: the ergodic face of A5/L7, sharpened
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 This module defines **unique ergodicity** (absent from Mathlib) and connects it to the
 FND target scaffold `IsErgodicForOutcomeRegions` / `BornFromFlow` (`FND/TheoremTargets.lean`),
@@ -36,7 +36,7 @@ remaining gap; it does not close `BornFromFlow`.
 CSD takes:**
 1. A single projective *unitary* flow is provably NOT ergodic, and NOT uniquely ergodic, w.r.t.
    `μ_FS`: it conserves the Born coordinates and fixes eigen-rays, giving distinct invariant
-   measures (`FND/A5NoGo.lean` `flow_admits_invariant_ne_fubiniStudy`; `LF4/TypicalityForcing.lean`
+   measures (`FND/SectorPostulateNoGo.lean` `flow_admits_invariant_ne_fubiniStudy`; `LF4/TypicalityForcing.lean`
    `obsFlow_not_ergodic`, `obsFlow_not_uniquely_ergodic`). So `UniquelyErgodic` is provably FALSE
    for the Schrödinger-type flows the sector currently carries — a candidate flow satisfying it
    must be non-unitary (de-isolation / fibre-mixing).
@@ -47,7 +47,7 @@ CSD takes:**
    close the A5 residue (which is the sector/symmetry ORIGIN, `G`-from-`D1`).
 
 References: `FND/TheoremTargets.lean` (`BornFromFlow`, `IsErgodicForOutcomeRegions`),
-`FND/A5NoGo.lean`, `LF4/TypicalityForcing.lean`, `LF4/KahlerVolumeForced.lean`
+`FND/SectorPostulateNoGo.lean`, `LF4/TypicalityForcing.lean`, `LF4/KahlerVolumeForced.lean`
 (`IsForcedKahlerVolume` — the positive companion: `μ_FS` forced by the full `U(N)` symmetry),
 `specs/connectivity-manifest.md` (L7/A5), `specs/reconstruction-status.md` (T3 frontier).
 -/

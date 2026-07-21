@@ -269,7 +269,7 @@ import CsdLean4.SigmaLayer.TensorGeneration
 import CsdLean4.SigmaLayer.TensorSolved
 import CsdLean4.SigmaLayer.TensorReconstruction
 import CsdLean4.SigmaLayer.LocalisedTypicality
-import CsdLean4.SigmaLayer.A5NoGo
+import CsdLean4.SigmaLayer.SectorPostulateNoGo
 import CsdLean4.SigmaLayer.UniqueErgodicity
 import CsdLean4.SigmaLayer.Interference
 import CsdLean4.SigmaLayer.TensorSector
@@ -6537,10 +6537,10 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.Thermo.landauer_one_bit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.landauer_one_bit
 
--- FND Tranche 1 (2026-07-12): the Choice A ontology foundation. ConstraintDynamics (deterministic
+-- FND Tranche 1 (2026-07-12): the projective-sector foundation. ConstraintDynamics (deterministic
 -- measure-preserving one-parameter-group ontic flow), RecordedFact/RecordSemantics/compatibleSet
 -- (records as measurable contextual events; isolation = conditioning muL on the record history),
--- IsolationPreparation (LF1 adapter reusing prepMeasure), ChoiceASector (measurable pi to CP^{N-1}, not
+-- IsolationPreparation (LF1 adapter reusing prepMeasure), ProjectiveSector (measurable pi to CP^{N-1}, not
 -- injective), and the Kähler adapters. No Born/unitarity/Fubini-Study as fields; those are uninhabited
 -- theorem-target predicates (TheoremTargets). Foundational triple only.
 /-- info: 'CSD.SigmaLayer.ConstraintDynamics.flow_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -6558,16 +6558,16 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.HistoryPreparation.conditionalMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.HistoryPreparation.conditionalMeasure_apply
 
-/-- info: 'CSD.SigmaLayer.ChoiceASector.projectiveLaw_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ChoiceASector.projectiveLaw_apply
+/-- info: 'CSD.SigmaLayer.ProjectiveSector.projectiveLaw_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.ProjectiveSector.projectiveLaw_apply
 
-/-- info: 'CSD.SigmaLayer.kahlerChoiceASector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.kahlerChoiceASector_pi
+/-- info: 'CSD.SigmaLayer.kahlerProjectiveSector_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.kahlerProjectiveSector_pi
 
 -- FND Tranche 2 (2026-07-13): the de-isolation measurement layer + the concrete product forward
 -- capstone. productSector_hasFubiniStudyPushforward proves bridge B1 (pi_*(muFS ⊗ vol) = muFS) for the
 -- CP^{N-1}×T² product model; productProjectedFlow_hasHamiltonianRealisation inhabits target T5
--- (exp(-itH) realisation); product_choiceA_forward_capstone bundles measure preservation + projectability
+-- (exp(-itH) realisation); product_projectiveSector_forward_capstone bundles measure preservation + projectability
 -- + T5 + B1, no open hypotheses. DeisolationModel + establishedFact are the measurement/record interface.
 /-- info: 'CSD.SigmaLayer.productSector_hasFubiniStudyPushforward' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.productSector_hasFubiniStudyPushforward
@@ -6575,8 +6575,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.productProjectedFlow_hasHamiltonianRealisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.productProjectedFlow_hasHamiltonianRealisation
 
-/-- info: 'CSD.SigmaLayer.product_choiceA_forward_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.product_choiceA_forward_capstone
+/-- info: 'CSD.SigmaLayer.product_projectiveSector_forward_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.product_projectiveSector_forward_capstone
 
 /-- info: 'CSD.SigmaLayer.compatibleSet_appendEstablishedFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compatibleSet_appendEstablishedFact
@@ -6593,20 +6593,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.vnDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.vnDeisolationModel_ae_total
 
-/-- info: 'CSD.SigmaLayer.lifted_choiceA_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_choiceA_measurement_capstone
+/-- info: 'CSD.SigmaLayer.lifted_projectiveSector_measurement_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_projectiveSector_measurement_capstone
 
 -- FND Tranche 2b Born statistics (2026-07-13): the concrete de-isolation model reproduces the Born
 -- FREQUENCIES, not merely a defined outcome. vnDeisolationModel_born_frequency transfers the LF5
 -- outcome-frequency capstone measurement_flow_outcome_frequency through the measure-preserving
 -- interaction (composed trial process measurementFlow ∘ fsTrial), so the pointer-i readout frequency
--- converges a.s. to ‖⟨eᵢ,ψ⟩‖². lifted_choiceA_measurement_born_capstone bundles the full measurement:
+-- converges a.s. to ‖⟨eᵢ,ψ⟩‖². lifted_projectiveSector_measurement_born_capstone bundles the full measurement:
 -- measure preservation + unique outcome a.e. + record establishment + a.e. total + Born frequencies.
 /-- info: 'CSD.SigmaLayer.vnDeisolationModel_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.vnDeisolationModel_born_frequency
 
-/-- info: 'CSD.SigmaLayer.lifted_choiceA_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_choiceA_measurement_born_capstone
+/-- info: 'CSD.SigmaLayer.lifted_projectiveSector_measurement_born_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.lifted_projectiveSector_measurement_born_capstone
 
 -- FND Tranche 3 (2026-07-13): the composition/measurement targets (ledger T9-T15) as bridge interfaces
 -- and uninhabited predicates (FND/CompositeInterface.lean), inhabited by adapters wiring the existing
@@ -6735,13 +6735,13 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.historyConditioning_isBayesianConditional
 
 -- FND-T5 unified many-to-one measurement capstone (2026-07-15): dynamics + measurement on ONE ontic
--- model. unified_choiceA_capstone puts BOTH the isolated Hamiltonian flow (productDynamics, exp(-itH)•)
+-- model. unified_projectiveSector_capstone puts BOTH the isolated Hamiltonian flow (productDynamics, exp(-itH)•)
 -- AND the de-isolation measurement (measurementFlow on the base fibre) on the SAME (Σ=ℂℙ^{M}×T², μL=μFS⊗
 -- vol, π=Prod.fst): flow measure-preserving + Schrödinger-projectable + FS pushforward + interaction
 -- measure-preserving + a.e. readout (T6, lifted through π) + record establishment (B5). Removes the
 -- forward-vs-measurement model split. unifiedDeisolationModel_ae_total lifts the base a.e. via Prod.fst.
-/-- info: 'CSD.SigmaLayer.unified_choiceA_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_choiceA_capstone
+/-- info: 'CSD.SigmaLayer.unified_projectiveSector_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unified_projectiveSector_capstone
 
 -- FND #5 TIME-INDEXED RECORDS ON THE UNIFIED MODEL (2026-07-17, UnifiedFlowedRecords.lean): the review's
 -- #5. unifiedFlowedSemantics = flowedSemantics over the isolated flow productDynamics with the pointer-fibre
@@ -6839,7 +6839,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- observables beyond local ones and their products, so B6 reduces from "posit ⊗" to "posit two full
 -- local algebras that act and commute". A5 (sector origin) LOCALIZED: forcedVolume_unique /
 -- region_measure_symmetry_forced (any two U(N)-invariant measures give the same region weights, so the
--- Born weights are symmetry-forced, not measure-chosen); localised_A5_capstone (the concrete sector's
+-- Born weights are symmetry-forced, not measure-chosen); localised_sectorPostulate_capstone (the concrete sector's
 -- typicality is forced by the U(N) symmetry the flow is part of -- "A5 in the appropriate places").
 -- Neither closes the universal posit (P3 "why ⊗" / A5 sector-from-bare-flow); both reduce where it bites.
 /-- info: 'CSD.SigmaLayer.single_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -6851,8 +6851,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.region_measure_symmetry_forced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.region_measure_symmetry_forced
 
-/-- info: 'CSD.SigmaLayer.localised_A5_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.localised_A5_capstone
+/-- info: 'CSD.SigmaLayer.localised_sectorPostulate_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.localised_sectorPostulate_capstone
 
 -- FND A5 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
 -- two distinct fixed rays admits an invariant probability measure /= mu_FS (the two fixed-ray Diracs), so a

@@ -4,10 +4,10 @@ import CsdLean4.Empirical.QM.Algorithms.HadamardTest
 /-!
 # FND/Interference: quantum interference as a first-class target
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Interference is NOT a postulate and NOT a structure field: it is a consequence of two facts already in the
-base, namely that the Choice A sector is a COMPLEX projective space (P7) and that outcome probabilities
+base, namely that the projective sector is a COMPLEX projective space (P7) and that outcome probabilities
 are Born weights (T1/T2). Because amplitudes live in a complex Hilbert space and probabilities are
 inner-product moduli, a two-path (superposition) outcome probability carries a phase-dependent cross
 term, so it is not the phase-independent classical average of the branch probabilities.

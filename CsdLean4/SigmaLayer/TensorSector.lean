@@ -4,19 +4,19 @@ import CsdLean4.Empirical.QM.NoCommunication
 /-!
 # FND/TensorSector: weaving the tensor product into the ledger
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 How the composite/tensor structure sits in the base. The honest split is:
 
 * **Derived (theorems, NOT posits).** The finite tensor product `ℂ^{NA} ⊗ ℂ^{NB}` is a genuine,
-  constructible object: it is the Choice A sector on the PRODUCT index `Fin NA × Fin NB`, identified with
+  constructible object: it is the projective sector on the PRODUCT index `Fin NA × Fin NB`, identified with
   `Fin (NA · NB)` by `finProdFinEquiv` (`tensorIndexEquiv`). On it the local operator algebra is real:
   Alice's `U ⊗ I` and Bob's `I ⊗ Q` commute (`aliceOp_bobOp_commute`), and Alice cannot signal to Bob
   (the operator-level no-signalling `CSD.Empirical.QM.NoCommunication.no_communication`). None of this is
   assumed; it follows from the Kronecker algebra.
 
 * **Bridge B6 (dim `= NA·NB`) — now DERIVABLE, still a structure field here.** The reconstruction claim
-  that a composite's Choice A sector IS this tensor sector with `dim = NA · NB` is
+  that a composite's projective sector IS this tensor sector with `dim = NA · NB` is
   `CompositeSector.tensor_dimension`, a named field. As of 2026-07-17 it is no longer *parked*: the
   abstract theorem `CSD.SigmaLayer.compositeAlgReconstruction` (`FND/TensorReconstruction.lean`) PROVES that
   commuting local algebras `M_m, M_n` that GENERATE a composite `𝒜` force `𝒜 ≃ₐ M_m ⊗ M_n`, and
@@ -40,7 +40,7 @@ namespace CSD.SigmaLayer
 variable {m n : ℕ}
 
 /-- **The finite tensor index equivalence.** `Fin NA × Fin NB ≃ Fin (NA · NB)` (`finProdFinEquiv`): the
-joint Choice A sector `CP^{NA·NB−1}` is genuinely the tensor product `ℂ^{NA} ⊗ ℂ^{NB}`, realised on the
+joint projective sector `CP^{NA·NB−1}` is genuinely the tensor product `ℂ^{NA} ⊗ ℂ^{NB}`, realised on the
 product index, not posited. -/
 def tensorIndexEquiv (NA NB : ℕ) : Fin NA × Fin NB ≃ Fin (NA * NB) := finProdFinEquiv
 

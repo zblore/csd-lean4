@@ -7,7 +7,7 @@ import CsdLean4.Mathlib.Probability.CGLMP
 /-!
 # FND/BellGenerality: the universal Bell/contextuality bounds
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Where `FND/CompositeAdapters.lean` inhabits the T13/T14 predicates with SPECIFIC violation witnesses
 (the singlet, the maximally-entangled qudit, Cabello-18, Mermin-Peres, GHZ), this module exposes the

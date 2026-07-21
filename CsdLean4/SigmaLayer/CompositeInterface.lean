@@ -1,4 +1,4 @@
-import CsdLean4.SigmaLayer.ChoiceASector
+import CsdLean4.SigmaLayer.ProjectiveSector
 import CsdLean4.Mathlib.Probability.CGLMP
 import CsdLean4.LF2.POVM
 import CsdLean4.LF2.ReducedDensity
@@ -6,7 +6,7 @@ import CsdLean4.LF2.ReducedDensity
 /-!
 # FND/CompositeInterface: composite, mixed-state, POVM, contextuality and Bell targets
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Tranche 3. The composition- and measurement-dependent reconstruction targets (ledger T9-T15 of
 `FND/Adapters.lean`) as bridge interfaces and uninhabited `Prop` predicates. As with
@@ -45,7 +45,7 @@ universe u
 
 /-! ### B6: the composite sector bridge interface -/
 
-/-- **The composite Choice A sector (bridge B6).** A joint projective sector for a composite system,
+/-- **The composite projective sector (bridge B6).** A joint projective sector for a composite system,
 together with the tensor-dimension relation `NA * NB = Njoint` as a `tensor_dimension` field. The field
 can be filled by ASSUMPTION (a bare bridge instance) OR DERIVED: `CSD.SigmaLayer.CompositeSector.ofReconstruction`
 (`FND/TensorReconstruction.lean`) constructs a `CompositeSector` in which `tensor_dimension` is PROVED by
@@ -55,7 +55,7 @@ route is available whenever the local-algebra data is on hand. -/
 structure CompositeSector (NA NB Njoint : ℕ) {Sigma : Type u} [MeasurableSpace Sigma]
     (D : ConstraintDynamics Sigma) where
   /-- The joint projective sector on the composite dilation. -/
-  jointSector : ChoiceASector Njoint D
+  jointSector : ProjectiveSector Njoint D
   /-- B6 (parked): the composite dimension realises the tensor product of the two parties. -/
   tensor_dimension : NA * NB = Njoint
 
@@ -107,7 +107,7 @@ def POVMWeightsProbability {N : ℕ} {ι : Type*} [Fintype ι] (P : CSD.LF2.POVM
 /-! ### T9: mixed states -/
 
 /-- **T9 (purity): a density operator is pure iff idempotent.** A trace-one positive semidefinite
-Hermitian operator represents a Choice A pure state exactly when it is a projector (`ρ² = ρ`, hence
+Hermitian operator represents a projective sector pure state exactly when it is a projector (`ρ² = ρ`, hence
 rank one given trace one); otherwise it is a genuine mixture. This is the purity primitive Mathlib
 lacks. The convex-ensemble representation and the Born rule on mixtures remain a gap (see the module
 header). -/

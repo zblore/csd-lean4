@@ -5,7 +5,7 @@ import CsdLean4.SigmaLayer.MeasurementRecord
 /-!
 # FND/ConditioningLink: the conditional→Lüders correspondence
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 FND-T5 follow-on. The corpus proves TWO conditioning rules that were not yet connected (external review
 2026-07-14):
@@ -84,7 +84,7 @@ end Record
 
 /-- **The conditional→Lüders correspondence.** The projective Lüders state update and the ontic
 record-history conditioning are the SAME Bayesian conditioning rule `w(fine)/w(coarse)`, applied to the
-Born weight and to the Liouville measure respectively. Given the Choice A Born-from-volume bridge
+Born weight and to the Liouville measure respectively. Given the projective sector Born-from-volume bridge
 (`π_* μL = μFS`, B1), the two weights agree on the sector, so the state-level Lüders update and the
 ontic-level record conditioning coincide. -/
 theorem luders_record_conditioning_correspondence {E : Type*} [NormedAddCommGroup E]

@@ -4,7 +4,7 @@ import CsdLean4.SigmaLayer.ConstraintSurface
 /-!
 # FND/RecordedFact: physical records as measurable contextual ontic events
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 This is the genuinely new FND content: physical records represented as measurable, contextual,
 time-indexed ontic events (postulate P5), and a finite record history whose compatible region is the

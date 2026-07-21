@@ -5,9 +5,9 @@ import CsdLean4.LF4.ManyToOnePillars
 /-!
 # FND/UnifiedFlowedRecords: time-indexed records ON the unified model (#5)
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-`unified_choiceA_capstone` (`UnifiedMeasurement.lean`) bundles the dynamics + measurement core of the ONE
+`unified_projectiveSector_capstone` (`UnifiedMeasurement.lean`) bundles the dynamics + measurement core of the ONE
 ontic model `productDynamics H hH p₀` on `Σ = ℂℙ^M × T²`, but its record layer `vnRecordSemanticsProd`
 uses a STATIC event (it ignores the recorded time). This module puts the GENUINELY TIME-INDEXED record
 semantics `flowedSemantics` onto that same model, with the ISOLATED Hamiltonian flow `Φ = exp(-itH)` as
@@ -72,7 +72,7 @@ theorem unified_records_persistence (c : (vnRecordSignature N).Context)
 
 /-- **Consistency: the static capstone semantics is the `t = 0` slice.** At `t = 0` the time-indexed
 record event coincides with `vnRecordSemanticsProd`'s (since `Φ₀ = id`), so adding the flowed layer does
-not disturb `unified_choiceA_capstone`. -/
+not disturb `unified_projectiveSector_capstone`. -/
 theorem unifiedFlowedSemantics_zero (c : (vnRecordSignature N).Context)
     (i : (vnRecordSignature N).Outcome c) :
     (unifiedFlowedSemantics H hH p₀ e ψ' hψ'0).event ⟨c, i, 0⟩

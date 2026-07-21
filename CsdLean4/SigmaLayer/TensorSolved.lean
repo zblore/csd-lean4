@@ -4,7 +4,7 @@ import Mathlib.RingTheory.MatrixAlgebra
 /-!
 # FND/TensorSolved: why composition is the tensor product (P3, via local tomography)
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 `FND/TensorGeneration.lean` reduced B6 by showing the commuting local subalgebras GENERATE the joint
 observable algebra. This module proves that the **standard tensor (Kronecker) model REALIZES the

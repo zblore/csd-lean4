@@ -4,7 +4,7 @@ import CsdLean4.SigmaLayer.RecordedFact
 /-!
 # FND/MeasurementRecord: de-isolating measurement and record establishment
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Bridge assumptions B4, B5. A `DeisolationModel` is a physical interaction (measure-preserving, per
 context) together with preparation-dependent outcome regions and a partial readout. De-isolation is a

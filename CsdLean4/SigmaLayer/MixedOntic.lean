@@ -4,7 +4,7 @@ import CsdLean4.SigmaLayer.MixedEnsemble
 /-!
 # FND/MixedOntic: the ontic-side mixed-state representation on the unified model (#8 C)
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 `FiniteQMClosure` carries the Born content for PURE states only (`born_frequency` for a single `ψ`). This
 module represents a MIXED state on the SAME ontic model `productDynamics H hH p₀` as a classical mixture

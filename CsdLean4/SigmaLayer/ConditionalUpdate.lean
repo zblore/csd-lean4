@@ -3,7 +3,7 @@ import CsdLean4.SigmaLayer.Luders
 /-!
 # FND/ConditionalUpdate: the general (non-projective) conditional state update
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Ledger target **T7**, the general conditional post-measurement state update, of which the Lüders update
 (**T8**, `FND/Luders.lean`) is the sharp-projective special case.

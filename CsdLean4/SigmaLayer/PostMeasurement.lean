@@ -4,7 +4,7 @@ import CsdLean4.SigmaLayer.MeasurementRecord
 /-!
 # FND/PostMeasurement: the post-outcome isolation preparation
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 FND-T5 follow-on. A de-isolating measurement establishes a `RecordedFact` and appends it to the record
 history (`appendEstablishedFact`, `compatibleSet_appendEstablishedFact`:

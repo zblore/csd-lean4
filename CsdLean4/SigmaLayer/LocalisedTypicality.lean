@@ -4,7 +4,7 @@ import CsdLean4.LF4.ManyToOnePillars
 /-!
 # FND/LocalisedTypicality: A5 in the right appropriate places
 
-**Category:** 7-SigmaLayer (the Choice A ontology layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 The deep open link A5 / FND-1 (connectivity-manifest L7) asks to DERIVE the sector's typicality measure —
 and hence the Born weights — from the deterministic flow. A5 does NOT need to hold universally, for every
@@ -18,7 +18,7 @@ UNIQUE `U(N)`-invariant probability measure on `ℂℙ^{N-1}`. So:
   `U(N)` symmetry coincide on EVERY region. The Born weights depend only on the SYMMETRY, not on which
   invariant measure: one does not need to derive THE measure from the dynamics, only to know the sector
   carries the `U(N)` symmetry.
-* `localised_A5_capstone` — for the concrete unitary-flow sector: (i) its ray-space typicality measure is
+* `localised_sectorPostulate_capstone` — for the concrete unitary-flow sector: (i) its ray-space typicality measure is
   FORCED (the unique `U(N)`-invariant probability measure), (ii) the deterministic projected flow
   `U t • ·` — a one-parameter subgroup of that symmetry — PRESERVES it, and (iii) every measure sharing
   the symmetry gives the same Born weights. So A5 is discharged AT the sectors carrying the full `U(N)`
@@ -71,7 +71,7 @@ unitary-flow sector on `Σ = ℂℙ^{N-1} × T²`, the ray-space typicality meas
 
 So A5 holds AT the sectors carrying the full `U(N)` symmetry — the right appropriate places — without a
 universal derivation of the sector from the bare flow (that residual is FND-1). -/
-theorem localised_A5_capstone [NeZero N] (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
+theorem localised_sectorPostulate_capstone [NeZero N] (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     IsForcedKahlerVolume
         (Measure.map (manyToOneSetup U p₀).pi (manyToOneSetup U p₀).liouvilleMeasure)
     ∧ (∀ t, MeasurePreserving (fun p => U t • p)

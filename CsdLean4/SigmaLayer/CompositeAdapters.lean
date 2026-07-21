@@ -8,7 +8,7 @@ import CsdLean4.LF6.CGLMPQudit
 /-!
 # FND/CompositeAdapters: inhabiting the composition targets from the existing capstones
 
-**Category:** 7-SigmaLayer (the Choice A ontological layer).
+**Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 Tranche 3 adapters. Each theorem here inhabits one of the `FND/CompositeInterface.lean` target predicates
 by wiring an existing LF6/Empirical capstone through the interface. No new mathematics is proved: the
