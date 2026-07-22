@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.SingletKahler
+module
+
+public import CsdLean4.LF4.SingletKahler
 
 /-!
 # LF4 §14: observable correspondence for single-qubit Stern-Gerlach
@@ -67,6 +69,8 @@ bridge as for `N = 4`.
 - The §14 observable correspondence framing is new with this corpus.
 -/
 
+@[expose] public section
+
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization
 open CSD.LF3
@@ -80,10 +84,10 @@ namespace LF4
 noncomputable def zPlusVec : EuclideanSpace ℂ (Fin 2) :=
   EuclideanSpace.single 0 (1 : ℂ)
 
-private lemma zPlusVec_ofLp_zero : zPlusVec.ofLp 0 = (1 : ℂ) := by
+lemma zPlusVec_ofLp_zero : zPlusVec.ofLp 0 = (1 : ℂ) := by
   simp [zPlusVec, EuclideanSpace.single]
 
-private lemma zPlusVec_ofLp_one : zPlusVec.ofLp 1 = (0 : ℂ) := by
+lemma zPlusVec_ofLp_one : zPlusVec.ofLp 1 = (0 : ℂ) := by
   simp [zPlusVec, EuclideanSpace.single]
 
 lemma zPlusVec_norm : ‖zPlusVec‖ = 1 := by

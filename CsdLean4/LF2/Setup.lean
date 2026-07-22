@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Setup
-import Mathlib.MeasureTheory.MeasurableSpace.Defs
-import Mathlib.Dynamics.Ergodic.MeasurePreserving
+module
+
+public import CsdLean4.LF1.Setup
+public import Mathlib.MeasureTheory.MeasurableSpace.Defs
+public import Mathlib.Dynamics.Ergodic.MeasurePreserving
 
 /-!
 # LF2 Setup: Sector data
@@ -25,6 +27,8 @@ measure construction. Concrete instantiation is LF4+'s job. The reference
 measure `μFS` is not a field of `SectorData`; it enters downstream theorems as
 an explicit argument, keeping `SectorData` `μFS`-agnostic.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

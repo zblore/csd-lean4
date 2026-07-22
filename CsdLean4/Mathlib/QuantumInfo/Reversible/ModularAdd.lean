@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 
 /-!
 # Reversible modular addition — the verified value primitive `(a, b) ↦ (a, (a+b) mod N)`  (ECDLP Phase 2, Stage S6.3b)
@@ -56,6 +58,8 @@ multiply and NOT a clean in-place adder.
 (`rippleCirc`, the `rippleAdder`-style ripple count) + reduce step `10n` (`modReduceCtrl_toffoli`),
 composed through `cost_comp_toffoli_count`.
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -493,7 +497,7 @@ def modAddState2 (a0 a1 a2 b0 b1 b2 : Bool) : State 25 := fun w =>
 /-- The hypotheses of `modAdd_correct` hold at `modAddState2` (carries/ancilla clear, `A1 = 5`,
 `A2 = 3`), for any data bits. The `regValRange` register-value preconditions are concrete sums,
 discharged by `decide`. -/
-private theorem modAddState2_pre (a0 a1 a2 b0 b1 b2 : Bool) :
+theorem modAddState2_pre (a0 a1 a2 b0 b1 b2 : Bool) :
     (∀ j, modAddState2 a0 a1 a2 b0 b1 b2 (modAddLayout2.Cadd j) = false)
       ∧ (∀ j, modAddState2 a0 a1 a2 b0 b1 b2 (modAddLayout2.C1 j) = false)
       ∧ (∀ j, modAddState2 a0 a1 a2 b0 b1 b2 (modAddLayout2.C2 j) = false)

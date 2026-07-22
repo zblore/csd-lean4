@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Symmetric
-import Mathlib.Tactic.Module
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Symmetric
+public import Mathlib.Tactic.Module
 
 /-!
 # SigmaLayer/Symmetrization: the two-particle symmetrization postulate (identical particles)
@@ -35,6 +37,8 @@ References: `SigmaLayer/TensorReconstruction.lean` (composite two-system structu
 (identical-particle statistics). Uses Mathlib `LinearIsometryEquiv.piLpCongrLeft`,
 `LinearMap.IsSymmetric`.
 -/
+
+@[expose] public section
 
 open scoped InnerProductSpace
 

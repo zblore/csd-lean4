@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ConstraintDynamics
-import CsdLean4.SigmaLayer.RecordedFact
+module
+
+public import CsdLean4.SigmaLayer.ConstraintDynamics
+public import CsdLean4.SigmaLayer.RecordedFact
 
 /-!
 # SigmaLayer/MeasurementRecord: de-isolating measurement and record establishment
@@ -22,6 +24,8 @@ We do NOT assume that later ontic states retain the measured value: a record sta
 its time, not for all later times. Persistent apparatus memory would be a separate record-stability
 model.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

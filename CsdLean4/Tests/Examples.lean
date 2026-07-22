@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.MainTheorem
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.LF2.Interface
-import CsdLean4.LF3.Interface
-import CsdLean4.LF3.PurePreparation
+module
+
+public import CsdLean4.LF1.MainTheorem
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.LF2.Interface
+public import CsdLean4.LF3.Interface
+public import CsdLean4.LF3.PurePreparation
 
 /-!
 # Examples and API smoke tests
@@ -46,6 +48,8 @@ Three-category posture for this module:
 - **Axiomatised at an explicit boundary.** None new. The audit lives
   in `CsdLean4/Tests/AxiomAudit.lean`.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Topology
 

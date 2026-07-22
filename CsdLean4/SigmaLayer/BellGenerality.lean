@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.CompositeInterface
-import CsdLean4.Empirical.QM.Bell
-import CsdLean4.Empirical.QM.Crypto.E91
-import CsdLean4.Empirical.QM.Contextuality.KS18
-import CsdLean4.Mathlib.Probability.CGLMP
+module
+
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import CsdLean4.Empirical.QM.Bell
+public import CsdLean4.Empirical.QM.Crypto.E91
+public import CsdLean4.Empirical.QM.Contextuality.KS18
+public import CsdLean4.Mathlib.Probability.CGLMP
 
 /-!
 # SigmaLayer/BellGenerality: the universal Bell/contextuality bounds
@@ -36,6 +38,8 @@ These are the general theorems the corpus already proves (`E91.lhvCHSH_abs_le_tw
 `Bell.chsh_qm_tsirelson_bound`, `CGLMP.cglmp_lhv_bound`, `KochenSpecker.no_value_assignment_18_9`), lifted
 into the SigmaLayer ledger as universal statements rather than per-instance witnesses.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped BigOperators

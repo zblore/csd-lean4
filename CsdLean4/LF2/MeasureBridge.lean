@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.Setup
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Measure.Map
-import Mathlib.MeasureTheory.Measure.FiniteMeasure
-import Mathlib.Data.ENNReal.Basic
+module
+
+public import CsdLean4.LF2.Setup
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Measure.Map
+public import Mathlib.MeasureTheory.Measure.FiniteMeasure
+public import Mathlib.Data.ENNReal.Basic
 
 /-!
 # LF2 Measure Bridge
@@ -34,6 +36,8 @@ the concrete `CP^{N-1}` uniqueness it would have needed is itself a proved,
 axiom-free theorem in the tree (`Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn`).
 The corpus's only remaining imported axiom is `busch_effect_gleason`.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

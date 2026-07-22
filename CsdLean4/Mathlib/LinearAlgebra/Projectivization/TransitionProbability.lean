@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 
 /-!
 # Transition probability on complex projective space
@@ -66,6 +68,8 @@ location: `Mathlib/LinearAlgebra/Projectivization/TransitionProbability.lean`.
 projectivization, transition probability, Fubini-Study, Wigner theorem,
 unitary group, complex projective space
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization ComplexOrder
 open Matrix
@@ -142,7 +146,7 @@ noncomputable def transProb (p q : ℙ ℂ E) : ℝ :=
 
 /-- A canonical representative of `mk v hv` is a nonzero scalar multiple of
 `v`. -/
-private lemma rep_mk_eq_smul {v : E} (hv : v ≠ 0) :
+lemma rep_mk_eq_smul {v : E} (hv : v ≠ 0) :
     ∃ a : ℂˣ, (Projectivization.mk ℂ v hv).rep = a • v := by
   obtain ⟨a, ha⟩ :=
     (Projectivization.mk_eq_mk_iff ℂ (Projectivization.mk ℂ v hv).rep v

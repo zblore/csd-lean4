@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Thermo.FreeEnergy
-import CsdLean4.Mathlib.QuantumInfo.Subadditivity
-import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+module
+
+public import CsdLean4.Thermo.FreeEnergy
+public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 
 /-!
 # TH4: Landauer's principle (the thermodynamic cost of erasure)
@@ -59,6 +61,8 @@ relative-entropy layer, and TH3 (`gibbsState`, `re_trace_mul_log_gibbs`);
 nothing is re-proved.
 -/
 
+@[expose] public section
+
 open scoped BigOperators ComplexOrder Kronecker
 open Matrix QuantumInfo
 
@@ -68,7 +72,7 @@ namespace Thermo
 variable {n m : Type*} [Fintype n] [DecidableEq n] [Fintype m] [DecidableEq m]
 
 /-- Re Tr(ρ · log ρ) = −S(ρ) for a density (self term of the relative entropy). -/
-private lemma re_trace_self_eq_neg_entropy {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) :
+lemma re_trace_self_eq_neg_entropy {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) :
     RCLike.re ((ρ * hρ.cfc Real.log).trace) = -vonNeumannEntropy hρ := by
   rw [re_trace_self_log hρ]
   unfold vonNeumannEntropy

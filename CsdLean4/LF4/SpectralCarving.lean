@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.SpectralExpansion
-import CsdLean4.LF4.KahlerInstance
+module
+
+public import CsdLean4.LF4.SpectralExpansion
+public import CsdLean4.LF4.KahlerInstance
 
 /-!
 # LF4 §14.2 multi-region spectral carving (N-arc partition of the fibre)
@@ -53,6 +55,8 @@ measure equals the Hilbert expectation value.
 
 Foundational triple only.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 open Matrix Finset

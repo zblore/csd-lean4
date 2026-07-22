@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentDirichletN
-import CsdLean4.LF4.BornVolume
+module
+
+public import CsdLean4.LF4.MomentDirichletN
+public import CsdLean4.LF4.BornVolume
 
 /-!
 # LF4 general-N Slice E (Born lift): Born = Fubini–Study volume ratio on Σ
@@ -36,6 +38,8 @@ hypothesis `∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²` (no vanishing amplitude) makes `fr
 interior simplex point, so each barycentric region is a homeomorphic image of the open
 simplex (hence open, measurable) and stays inside it.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

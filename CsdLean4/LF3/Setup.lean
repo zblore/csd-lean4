@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Trace
-import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # LF3 Setup: signs, detector settings, system-apparatus interfaces, two-qubit Pauli layer
@@ -24,6 +26,8 @@ identities (§2.8: `pauliDot_isHermitian`, `pauliDot_sq`, `spinProj_idem`,
 `DetectorSetting.sum_sq_components_eq_one`, `Sign.val_mul_self`, and 2×2
 matrix arithmetic.
 -/
+
+@[expose] public section
 
 open Matrix Kronecker
 

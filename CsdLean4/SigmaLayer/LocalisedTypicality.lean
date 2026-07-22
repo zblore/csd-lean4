@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.KahlerVolumeForced
-import CsdLean4.LF4.ManyToOnePillars
+module
+
+public import CsdLean4.LF4.KahlerVolumeForced
+public import CsdLean4.LF4.ManyToOnePillars
 
 /-!
 # SigmaLayer/LocalisedTypicality: A5 in the right appropriate places
@@ -42,6 +44,8 @@ References: `specs/connectivity-manifest.md` (L7 / A5), `specs/future-work.md` (
 `LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`, `fubiniStudyMeasure_unique`),
 `LF4/ManyToOnePillars.lean` (`manyToOneSetup`).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

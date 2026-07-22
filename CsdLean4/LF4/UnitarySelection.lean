@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.KahlerOnticSetup
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+module
+
+public import CsdLean4.LF4.KahlerOnticSetup
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 
 /-!
 # W3: the Wigner selection on a Kähler ontic setup
@@ -85,6 +87,8 @@ Foundational-triple only (`propext, Classical.choice, Quot.sound`); no `busch`,
 no `sorry`, no `native_decide`, no new axioms. Reuses `wigner_rigidity_unitaryGroup`,
 `conjProj`, and the W2 `KahlerOnticSetup`; Wigner is not re-proved.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped LinearAlgebra.Projectivization

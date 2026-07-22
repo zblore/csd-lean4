@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.Setup
-import CsdLean4.LF4.Instance
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
-import Mathlib.MeasureTheory.Group.AddCircle
-import Mathlib.MeasureTheory.Measure.Prod
+module
+
+public import CsdLean4.LF2.Setup
+public import CsdLean4.LF4.Instance
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import Mathlib.MeasureTheory.Group.AddCircle
+public import Mathlib.MeasureTheory.Measure.Prod
 
 /-!
 # LF4 §8: a non-trivial-fibre compact-Kähler `SectorData`
@@ -55,6 +57,8 @@ standard differential geometry, not by Lean. Cf. `AXIOMS.md §3.1`
 (preparation-measure origin) for the same boundary stated at the
 `OnticSetup.μL` level.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

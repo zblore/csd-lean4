@@ -3,290 +3,292 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.MainTheorem
-import CsdLean4.LF1.GeneralFrequency
-import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
-import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
-import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.LF2.ReducedDensity
-import CsdLean4.LF2.QuantumChannel
-import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
-import CsdLean4.Mathlib.QuantumInfo.Channel
-import CsdLean4.Mathlib.QuantumInfo.Stinespring
-import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
-import CsdLean4.Mathlib.QuantumInfo.TraceDistance
-import CsdLean4.Mathlib.QuantumInfo.DataProcessing
-import CsdLean4.Mathlib.QuantumInfo.Entropy
-import CsdLean4.Mathlib.QuantumInfo.PartialTrace
-import CsdLean4.Mathlib.QuantumInfo.Subadditivity
-import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
-import CsdLean4.Mathlib.QuantumInfo.Register
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
-import CsdLean4.Mathlib.QuantumInfo.Fourier
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ConstProp
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlMul
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
-import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
-import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
-import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
-import CsdLean4.Empirical.QM.MeasurementUncompute
-import CsdLean4.Empirical.QM.MeasurementUncomputeLift
-import CsdLean4.Empirical.QM.MeasurementAdder
-import CsdLean4.Empirical.QM.MeasurementGidneyAdder
-import CsdLean4.Empirical.QM.MeasurementAdderHierarchy
-import CsdLean4.CV.ApproxCCR
-import CsdLean4.CV.Position
-import CsdLean4.CV.Oscillator
-import CsdLean4.CV.OscillatorSpectrum
-import CsdLean4.Thermo.CanonicalTypicality
-import CsdLean4.Thermo.SecondLaw
-import CsdLean4.Thermo.FreeEnergy
-import CsdLean4.Thermo.Landauer
-import CsdLean4.LF2.Interface
-import CsdLean4.LF2.Preparation
-import CsdLean4.LF3.Interface
-import CsdLean4.LF3.PurePreparation
-import CsdLean4.LF3.SingletProjective
-import CsdLean4.LF3.Singlet.JointProjector
-import CsdLean4.LF3.Singlet.JointEig
-import CsdLean4.LF3.Projectors.TensorModel
-import CsdLean4.LF4.Instance
-import CsdLean4.LF4.KahlerInstance
-import CsdLean4.LF4.KahlerFlow
-import CsdLean4.LF4.KahlerOnticSetup
-import CsdLean4.LF4.NonTrivialSetup
-import CsdLean4.LF4.RotationSchrodinger
-import CsdLean4.LF4.BothPillars
-import CsdLean4.LF4.ManyToOnePillars
-import CsdLean4.LF4.ManyToOneSchrodingerDerived
-import CsdLean4.LF4.UnitarySelection
-import CsdLean4.LF4.BargmannSelection
-import CsdLean4.LF4.ProjectedDynamics
-import CsdLean4.LF4.PhaseLift
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
-import CsdLean4.LF4.MomentMap
-import CsdLean4.LF4.ObservableFlow
-import CsdLean4.LF4.TypicalityForcing
-import CsdLean4.LF4.BornVolume
-import CsdLean4.LF4.MomentPushforward
-import CsdLean4.LF4.BornFS
-import CsdLean4.LF4.QubitBornFrequency
-import CsdLean4.LF4.BornFrequencyPartition
-import CsdLean4.LF4.MomentMarginal
-import CsdLean4.LF4.DuistermaatHeckman
-import CsdLean4.LF4.GaussianFS
-import CsdLean4.LF4.GaussianCP
-import CsdLean4.LF4.GaussianCPN
-import CsdLean4.LF4.MomentMarginalUniform
-import CsdLean4.LF4.MomentRatioUniform
-import CsdLean4.LF4.MomentRatioUniformN
-import CsdLean4.LF4.MomentUniform
-import CsdLean4.LF4.MomentBridgeN
-import CsdLean4.LF4.MomentDirichletN
-import CsdLean4.LF4.MomentBornN
-import CsdLean4.LF4.BornFrequencyN
-import CsdLean4.LF4.QubitConsistency
-import CsdLean4.Mathlib.MeasureTheory.PiCurry
-import CsdLean4.LF4.SingletKahler
-import CsdLean4.LF4.SingletKahlerFlow
-import CsdLean4.LF4.KahlerWignerLift
-import CsdLean4.LF4.KahlerVolumeForced
-import CsdLean4.LF4.SchrodingerKahlerInvariance
-import CsdLean4.LF4.SingleQubitKahler
-import CsdLean4.LF4.SingletObservables
-import CsdLean4.LF4.HardyKahler
-import CsdLean4.LF4.SpectralExpansion
-import CsdLean4.LF4.SpectralCarving
-import CsdLean4.LF4.SpectralVariance
-import CsdLean4.LF4.UncertaintyKahler
-import CsdLean4.LF4.PauliRobertson
-import CsdLean4.LF4.PauliDotRobertson
-import CsdLean4.LF4.OnticBorn
-import CsdLean4.LF2.POVM
-import CsdLean4.LF2.EffectAux
-import CsdLean4.LF4.POVMDilation
-import CsdLean4.LF4.POVMVolume
-import CsdLean4.LF4.BornFlowLinkage
-import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF4.TrialWitness
-import CsdLean4.LF5.VonNeumannUnitary
-import CsdLean4.LF5.MeasurementFlow
-import CsdLean4.LF5.DilationFromFlow
-import CsdLean4.LF5.FlowBornFrequency
-import CsdLean4.LF5.Capstone
-import CsdLean4.LF5.CapstoneCanonical
-import CsdLean4.LF5.PointerOutcome
-import CsdLean4.LF5.SyndromeFlow
-import CsdLean4.LF5.SyndromeOutcome
-import CsdLean4.LF6.ForcedContextuality
-import CsdLean4.LF6.GHZContextuality
-import CsdLean4.LF6.SingletDeisolationFlow
-import CsdLean4.LF6.GHZDeisolationFlow
-import CsdLean4.LF6.GHZMerminCarve
-import CsdLean4.LF6.LocalDeisolationFlow
-import CsdLean4.LF6.GHZLocalFlow
-import CsdLean4.LF6.Decoherence
-import CsdLean4.LF6.MaxEntangledDeisolationFlow
-import CsdLean4.LF6.PartialSchmidtCorrelation
-import CsdLean4.LF6.GisinTheorem
-import CsdLean4.LF6.DephasingSemigroup
-import CsdLean4.LF6.AmplitudeDamping
-import CsdLean4.LF6.LindbladGenerator
-import CsdLean4.LF6.CGLMPQutrit
-import CsdLean4.LF6.CGLMPQudit
-import CsdLean4.LF6.MaxEntangledCGLMPCapstone
-import CsdLean4.LF6.GHZnDeisolationFlow
-import CsdLean4.Empirical.QM.Bell
-import CsdLean4.Empirical.QM.NoCloning
-import CsdLean4.Empirical.QM.NoDeleting
-import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
-import CsdLean4.Empirical.QM.Resources.Teleportation
-import CsdLean4.Empirical.QM.NoCommunication
-import CsdLean4.Empirical.QM.NoBroadcasting
-import CsdLean4.Empirical.QM.Protocols.Basic
-import CsdLean4.Empirical.QM.Crypto.QuantumMoney
-import CsdLean4.Empirical.QM.Crypto.E91
-import CsdLean4.Empirical.QM.Crypto.E91KeyRate
-import CsdLean4.Empirical.QM.Crypto.E91FiniteKey
-import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
-import CsdLean4.Empirical.QM.USD
-import CsdLean4.Empirical.QM.QEC.ThreeQubit
-import CsdLean4.Empirical.QM.QEC.PhaseFlip
-import CsdLean4.Empirical.QM.QEC.BitFlipChannel
-import CsdLean4.Empirical.QM.Uncertainty
-import CsdLean4.Empirical.QM.Multipartite.GHZ
-import CsdLean4.Empirical.QM.Contextuality.KS18
-import CsdLean4.Empirical.QM.Contextuality.MerminPeres
-import CsdLean4.Empirical.QM.Hardy
-import CsdLean4.Empirical.QM.SternGerlach
-import CsdLean4.Empirical.QM.Malus
-import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
-import CsdLean4.Empirical.QM.Algorithms.Simon
-import CsdLean4.Empirical.QM.Algorithms.SwapTest
-import CsdLean4.Empirical.QM.Algorithms.HadamardTest
-import CsdLean4.Empirical.QM.Algorithms.BernsteinVazirani
-import CsdLean4.Empirical.QM.Algorithms.Grover
-import CsdLean4.Empirical.QM.Algorithms.ShorCore
-import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
-import CsdLean4.Empirical.QM.Algorithms.ShorRandomA
-import CsdLean4.Empirical.QM.Algorithms.ShorCapstone
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.CSD.Bell
-import CsdLean4.Empirical.CSD.NoCloning
-import CsdLean4.Empirical.CSD.NoDeleting
-import CsdLean4.Empirical.CSD.NoBroadcasting
-import CsdLean4.Empirical.CSD.NoCommunication
-import CsdLean4.Empirical.CSD.Uncertainty
-import CsdLean4.Empirical.CSD.SternGerlach
-import CsdLean4.Empirical.CSD.SternGerlachVolume
-import CsdLean4.Empirical.CSD.MalusVolume
-import CsdLean4.Empirical.Metrology.Ramsey
-import CsdLean4.Empirical.CSD.MachZehnderVolume
-import CsdLean4.Empirical.CSD.DoubleSlitVolume
-import CsdLean4.Empirical.Metrology.QuantumFisher
-import CsdLean4.Empirical.Metrology.Heisenberg
-import CsdLean4.Empirical.CSD.BellVolume
-import CsdLean4.Empirical.CSD.GHZVolume
-import CsdLean4.Empirical.CSD.HardyVolume
-import CsdLean4.Empirical.CSD.ContextVolume
-import CsdLean4.Empirical.CSD.UncertaintyVolume
-import CsdLean4.Empirical.CSD.TrineVolume
-import CsdLean4.Empirical.CSD.USDVolume
-import CsdLean4.Empirical.CSD.SICVolume
-import CsdLean4.Empirical.CSD.WeakMeasurement
-import CsdLean4.Empirical.CSD.QuantumZeno
-import CsdLean4.Empirical.CSD.QutritPOVMVolume
-import CsdLean4.Empirical.CSD.SIC3Volume
-import CsdLean4.Empirical.CSD.MUB3Volume
-import CsdLean4.Empirical.CSD.VolumeCanonical
-import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
-import CsdLean4.Empirical.CSD.Resources.Teleportation
-import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
-import CsdLean4.Empirical.CSD.Crypto.E91
-import CsdLean4.Empirical.CSD.QEC.ThreeQubit
-import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
-import CsdLean4.Empirical.CSD.Hardy
-import CsdLean4.Empirical.CSD.Contextuality.KS18
-import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
-import CsdLean4.Empirical.CSD.Contextuality.MerminPeresVolume
-import CsdLean4.Empirical.CSD.Multipartite.GHZ
-import CsdLean4.Empirical.CSD.Einselection
-import CsdLean4.Empirical.CSD.QECDecoherence
-import CsdLean4.Empirical.CSD.ChannelCapacity
-import CsdLean4.Empirical.QM.Gates.SingleQubit
-import CsdLean4.Empirical.QM.Gates.TwoQubit
-import CsdLean4.Empirical.QM.Gates.BellPrep
-import CsdLean4.Empirical.QM.Gates.MultiQubit
-import CsdLean4.Empirical.CSD.Gates.Framework
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
-import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
-import CsdLean4.Empirical.CSD.Gates.WignerDischarge
-import CsdLean4.Empirical.CSD.Gates.SingleQubitDischarge
-import CsdLean4.Empirical.CSD.Gates.TwoQubitDischarge
-import CsdLean4.Empirical.CSD.Gates.MultiQubitDischarge
-import CsdLean4.Empirical.CSD.Gates.BellPrepDischarge
-import CsdLean4.Mathlib.Probability.CGLMP
-import CsdLean4.SigmaLayer.Adapters
-import CsdLean4.SigmaLayer.ForwardCapstone
-import CsdLean4.SigmaLayer.LiftedMeasurement
-import CsdLean4.SigmaLayer.UnifiedMeasurement
-import CsdLean4.SigmaLayer.UnifiedFlowedRecords
-import CsdLean4.SigmaLayer.FiniteQMClosure
-import CsdLean4.SigmaLayer.ConditioningLink
-import CsdLean4.SigmaLayer.ConditioningLuders
-import CsdLean4.SigmaLayer.PostMeasurement
-import CsdLean4.SigmaLayer.TimeIndexedRecord
-import CsdLean4.SigmaLayer.CompositeAdapters
-import CsdLean4.SigmaLayer.BellGenerality
-import CsdLean4.SigmaLayer.TensorGeneration
-import CsdLean4.SigmaLayer.TensorSolved
-import CsdLean4.SigmaLayer.TensorReconstruction
-import CsdLean4.SigmaLayer.LocalisedTypicality
-import CsdLean4.SigmaLayer.SectorPostulateNoGo
-import CsdLean4.SigmaLayer.UniqueErgodicity
-import CsdLean4.SigmaLayer.Interference
-import CsdLean4.SigmaLayer.TensorSector
-import CsdLean4.SigmaLayer.Luders
-import CsdLean4.SigmaLayer.ConditionalUpdate
-import CsdLean4.SigmaLayer.MixedState
-import CsdLean4.SigmaLayer.MixedEnsemble
-import CsdLean4.LF2.MixedEnsembleIx
-import CsdLean4.LF2.ChoiConverse
-import CsdLean4.SigmaLayer.MixedOntic
-import CsdLean4.SigmaLayer.MixedFrequency
-import CsdLean4.SigmaLayer.Symmetrization
+module
+
+public import CsdLean4.LF1.MainTheorem
+public import CsdLean4.LF1.GeneralFrequency
+public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
+public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
+public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.LF2.ReducedDensity
+public import CsdLean4.LF2.QuantumChannel
+public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
+public import CsdLean4.Mathlib.QuantumInfo.Channel
+public import CsdLean4.Mathlib.QuantumInfo.Stinespring
+public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
+public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
+public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
+public import CsdLean4.Mathlib.QuantumInfo.Register
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
+public import CsdLean4.Mathlib.QuantumInfo.Fourier
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ConstProp
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
+public import CsdLean4.Empirical.QM.MeasurementUncompute
+public import CsdLean4.Empirical.QM.MeasurementUncomputeLift
+public import CsdLean4.Empirical.QM.MeasurementAdder
+public import CsdLean4.Empirical.QM.MeasurementGidneyAdder
+public import CsdLean4.Empirical.QM.MeasurementAdderHierarchy
+public import CsdLean4.CV.ApproxCCR
+public import CsdLean4.CV.Position
+public import CsdLean4.CV.Oscillator
+public import CsdLean4.CV.OscillatorSpectrum
+public import CsdLean4.Thermo.CanonicalTypicality
+public import CsdLean4.Thermo.SecondLaw
+public import CsdLean4.Thermo.FreeEnergy
+public import CsdLean4.Thermo.Landauer
+public import CsdLean4.LF2.Interface
+public import CsdLean4.LF2.Preparation
+public import CsdLean4.LF3.Interface
+public import CsdLean4.LF3.PurePreparation
+public import CsdLean4.LF3.SingletProjective
+public import CsdLean4.LF3.Singlet.JointProjector
+public import CsdLean4.LF3.Singlet.JointEig
+public import CsdLean4.LF3.Projectors.TensorModel
+public import CsdLean4.LF4.Instance
+public import CsdLean4.LF4.KahlerInstance
+public import CsdLean4.LF4.KahlerFlow
+public import CsdLean4.LF4.KahlerOnticSetup
+public import CsdLean4.LF4.NonTrivialSetup
+public import CsdLean4.LF4.RotationSchrodinger
+public import CsdLean4.LF4.BothPillars
+public import CsdLean4.LF4.ManyToOnePillars
+public import CsdLean4.LF4.ManyToOneSchrodingerDerived
+public import CsdLean4.LF4.UnitarySelection
+public import CsdLean4.LF4.BargmannSelection
+public import CsdLean4.LF4.ProjectedDynamics
+public import CsdLean4.LF4.PhaseLift
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
+public import CsdLean4.LF4.MomentMap
+public import CsdLean4.LF4.ObservableFlow
+public import CsdLean4.LF4.TypicalityForcing
+public import CsdLean4.LF4.BornVolume
+public import CsdLean4.LF4.MomentPushforward
+public import CsdLean4.LF4.BornFS
+public import CsdLean4.LF4.QubitBornFrequency
+public import CsdLean4.LF4.BornFrequencyPartition
+public import CsdLean4.LF4.MomentMarginal
+public import CsdLean4.LF4.DuistermaatHeckman
+public import CsdLean4.LF4.GaussianFS
+public import CsdLean4.LF4.GaussianCP
+public import CsdLean4.LF4.GaussianCPN
+public import CsdLean4.LF4.MomentMarginalUniform
+public import CsdLean4.LF4.MomentRatioUniform
+public import CsdLean4.LF4.MomentRatioUniformN
+public import CsdLean4.LF4.MomentUniform
+public import CsdLean4.LF4.MomentBridgeN
+public import CsdLean4.LF4.MomentDirichletN
+public import CsdLean4.LF4.MomentBornN
+public import CsdLean4.LF4.BornFrequencyN
+public import CsdLean4.LF4.QubitConsistency
+public import CsdLean4.Mathlib.MeasureTheory.PiCurry
+public import CsdLean4.LF4.SingletKahler
+public import CsdLean4.LF4.SingletKahlerFlow
+public import CsdLean4.LF4.KahlerWignerLift
+public import CsdLean4.LF4.KahlerVolumeForced
+public import CsdLean4.LF4.SchrodingerKahlerInvariance
+public import CsdLean4.LF4.SingleQubitKahler
+public import CsdLean4.LF4.SingletObservables
+public import CsdLean4.LF4.HardyKahler
+public import CsdLean4.LF4.SpectralExpansion
+public import CsdLean4.LF4.SpectralCarving
+public import CsdLean4.LF4.SpectralVariance
+public import CsdLean4.LF4.UncertaintyKahler
+public import CsdLean4.LF4.PauliRobertson
+public import CsdLean4.LF4.PauliDotRobertson
+public import CsdLean4.LF4.OnticBorn
+public import CsdLean4.LF2.POVM
+public import CsdLean4.LF2.EffectAux
+public import CsdLean4.LF4.POVMDilation
+public import CsdLean4.LF4.POVMVolume
+public import CsdLean4.LF4.BornFlowLinkage
+public import CsdLean4.LF4.POVMNaimark
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF4.TrialWitness
+public import CsdLean4.LF5.VonNeumannUnitary
+public import CsdLean4.LF5.MeasurementFlow
+public import CsdLean4.LF5.DilationFromFlow
+public import CsdLean4.LF5.FlowBornFrequency
+public import CsdLean4.LF5.Capstone
+public import CsdLean4.LF5.CapstoneCanonical
+public import CsdLean4.LF5.PointerOutcome
+public import CsdLean4.LF5.SyndromeFlow
+public import CsdLean4.LF5.SyndromeOutcome
+public import CsdLean4.LF6.ForcedContextuality
+public import CsdLean4.LF6.GHZContextuality
+public import CsdLean4.LF6.SingletDeisolationFlow
+public import CsdLean4.LF6.GHZDeisolationFlow
+public import CsdLean4.LF6.GHZMerminCarve
+public import CsdLean4.LF6.LocalDeisolationFlow
+public import CsdLean4.LF6.GHZLocalFlow
+public import CsdLean4.LF6.Decoherence
+public import CsdLean4.LF6.MaxEntangledDeisolationFlow
+public import CsdLean4.LF6.PartialSchmidtCorrelation
+public import CsdLean4.LF6.GisinTheorem
+public import CsdLean4.LF6.DephasingSemigroup
+public import CsdLean4.LF6.AmplitudeDamping
+public import CsdLean4.LF6.LindbladGenerator
+public import CsdLean4.LF6.CGLMPQutrit
+public import CsdLean4.LF6.CGLMPQudit
+public import CsdLean4.LF6.MaxEntangledCGLMPCapstone
+public import CsdLean4.LF6.GHZnDeisolationFlow
+public import CsdLean4.Empirical.QM.Bell
+public import CsdLean4.Empirical.QM.NoCloning
+public import CsdLean4.Empirical.QM.NoDeleting
+public import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
+public import CsdLean4.Empirical.QM.Resources.Teleportation
+public import CsdLean4.Empirical.QM.NoCommunication
+public import CsdLean4.Empirical.QM.NoBroadcasting
+public import CsdLean4.Empirical.QM.Protocols.Basic
+public import CsdLean4.Empirical.QM.Crypto.QuantumMoney
+public import CsdLean4.Empirical.QM.Crypto.E91
+public import CsdLean4.Empirical.QM.Crypto.E91KeyRate
+public import CsdLean4.Empirical.QM.Crypto.E91FiniteKey
+public import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
+public import CsdLean4.Empirical.QM.USD
+public import CsdLean4.Empirical.QM.QEC.ThreeQubit
+public import CsdLean4.Empirical.QM.QEC.PhaseFlip
+public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
+public import CsdLean4.Empirical.QM.Uncertainty
+public import CsdLean4.Empirical.QM.Multipartite.GHZ
+public import CsdLean4.Empirical.QM.Contextuality.KS18
+public import CsdLean4.Empirical.QM.Contextuality.MerminPeres
+public import CsdLean4.Empirical.QM.Hardy
+public import CsdLean4.Empirical.QM.SternGerlach
+public import CsdLean4.Empirical.QM.Malus
+public import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
+public import CsdLean4.Empirical.QM.Algorithms.Simon
+public import CsdLean4.Empirical.QM.Algorithms.SwapTest
+public import CsdLean4.Empirical.QM.Algorithms.HadamardTest
+public import CsdLean4.Empirical.QM.Algorithms.BernsteinVazirani
+public import CsdLean4.Empirical.QM.Algorithms.Grover
+public import CsdLean4.Empirical.QM.Algorithms.ShorCore
+public import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
+public import CsdLean4.Empirical.QM.Algorithms.ShorRandomA
+public import CsdLean4.Empirical.QM.Algorithms.ShorCapstone
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.CSD.Bell
+public import CsdLean4.Empirical.CSD.NoCloning
+public import CsdLean4.Empirical.CSD.NoDeleting
+public import CsdLean4.Empirical.CSD.NoBroadcasting
+public import CsdLean4.Empirical.CSD.NoCommunication
+public import CsdLean4.Empirical.CSD.Uncertainty
+public import CsdLean4.Empirical.CSD.SternGerlach
+public import CsdLean4.Empirical.CSD.SternGerlachVolume
+public import CsdLean4.Empirical.CSD.MalusVolume
+public import CsdLean4.Empirical.Metrology.Ramsey
+public import CsdLean4.Empirical.CSD.MachZehnderVolume
+public import CsdLean4.Empirical.CSD.DoubleSlitVolume
+public import CsdLean4.Empirical.Metrology.QuantumFisher
+public import CsdLean4.Empirical.Metrology.Heisenberg
+public import CsdLean4.Empirical.CSD.BellVolume
+public import CsdLean4.Empirical.CSD.GHZVolume
+public import CsdLean4.Empirical.CSD.HardyVolume
+public import CsdLean4.Empirical.CSD.ContextVolume
+public import CsdLean4.Empirical.CSD.UncertaintyVolume
+public import CsdLean4.Empirical.CSD.TrineVolume
+public import CsdLean4.Empirical.CSD.USDVolume
+public import CsdLean4.Empirical.CSD.SICVolume
+public import CsdLean4.Empirical.CSD.WeakMeasurement
+public import CsdLean4.Empirical.CSD.QuantumZeno
+public import CsdLean4.Empirical.CSD.QutritPOVMVolume
+public import CsdLean4.Empirical.CSD.SIC3Volume
+public import CsdLean4.Empirical.CSD.MUB3Volume
+public import CsdLean4.Empirical.CSD.VolumeCanonical
+public import CsdLean4.Empirical.CSD.Resources.SuperdenseCoding
+public import CsdLean4.Empirical.CSD.Resources.Teleportation
+public import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
+public import CsdLean4.Empirical.CSD.Crypto.E91
+public import CsdLean4.Empirical.CSD.QEC.ThreeQubit
+public import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
+public import CsdLean4.Empirical.CSD.Hardy
+public import CsdLean4.Empirical.CSD.Contextuality.KS18
+public import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
+public import CsdLean4.Empirical.CSD.Contextuality.MerminPeresVolume
+public import CsdLean4.Empirical.CSD.Multipartite.GHZ
+public import CsdLean4.Empirical.CSD.Einselection
+public import CsdLean4.Empirical.CSD.QECDecoherence
+public import CsdLean4.Empirical.CSD.ChannelCapacity
+public import CsdLean4.Empirical.QM.Gates.SingleQubit
+public import CsdLean4.Empirical.QM.Gates.TwoQubit
+public import CsdLean4.Empirical.QM.Gates.BellPrep
+public import CsdLean4.Empirical.QM.Gates.MultiQubit
+public import CsdLean4.Empirical.CSD.Gates.Framework
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+public import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+public import CsdLean4.Empirical.CSD.Gates.SingleQubitDischarge
+public import CsdLean4.Empirical.CSD.Gates.TwoQubitDischarge
+public import CsdLean4.Empirical.CSD.Gates.MultiQubitDischarge
+public import CsdLean4.Empirical.CSD.Gates.BellPrepDischarge
+public import CsdLean4.Mathlib.Probability.CGLMP
+public import CsdLean4.SigmaLayer.Adapters
+public import CsdLean4.SigmaLayer.ForwardCapstone
+public import CsdLean4.SigmaLayer.LiftedMeasurement
+public import CsdLean4.SigmaLayer.UnifiedMeasurement
+public import CsdLean4.SigmaLayer.UnifiedFlowedRecords
+public import CsdLean4.SigmaLayer.FiniteQMClosure
+public import CsdLean4.SigmaLayer.ConditioningLink
+public import CsdLean4.SigmaLayer.ConditioningLuders
+public import CsdLean4.SigmaLayer.PostMeasurement
+public import CsdLean4.SigmaLayer.TimeIndexedRecord
+public import CsdLean4.SigmaLayer.CompositeAdapters
+public import CsdLean4.SigmaLayer.BellGenerality
+public import CsdLean4.SigmaLayer.TensorGeneration
+public import CsdLean4.SigmaLayer.TensorSolved
+public import CsdLean4.SigmaLayer.TensorReconstruction
+public import CsdLean4.SigmaLayer.LocalisedTypicality
+public import CsdLean4.SigmaLayer.SectorPostulateNoGo
+public import CsdLean4.SigmaLayer.UniqueErgodicity
+public import CsdLean4.SigmaLayer.Interference
+public import CsdLean4.SigmaLayer.TensorSector
+public import CsdLean4.SigmaLayer.Luders
+public import CsdLean4.SigmaLayer.ConditionalUpdate
+public import CsdLean4.SigmaLayer.MixedState
+public import CsdLean4.SigmaLayer.MixedEnsemble
+public import CsdLean4.LF2.MixedEnsembleIx
+public import CsdLean4.LF2.ChoiConverse
+public import CsdLean4.SigmaLayer.MixedOntic
+public import CsdLean4.SigmaLayer.MixedFrequency
+public import CsdLean4.SigmaLayer.Symmetrization
 
 /-!
 # Axiom regression suite
@@ -310,6 +312,8 @@ or introducing a new one, update the `/-- info: ... -/` line above the
 corresponding `#print axioms` to match the new output, in lockstep with
 the corresponding `AXIOMS.md §5` row.
 -/
+
+@[expose] public section
 
 namespace CSD.Tests.AxiomAudit
 

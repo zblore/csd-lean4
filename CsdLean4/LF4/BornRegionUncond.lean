@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornFrequencyN
-import CsdLean4.LF4.POVMVolume
+module
+
+public import CsdLean4.LF4.BornFrequencyN
+public import CsdLean4.LF4.POVMVolume
 
 /-!
 # LF4: the Born-region volume/frequency engine, unconditional (genericity retired)
@@ -48,6 +50,8 @@ audited engine; the zero-weight cells genuinely collapse to FS-null sets, they
 are not redefined to hit Born values. Gleason-free throughout (no
 `busch_effect_gleason`).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.Order.Filter.AtTopBot.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.Order.Filter.AtTopBot.Basic
 
 /-!
 # LF6-2 (T1 tier): the qubit amplitude-damping (T1 relaxation) semigroup
@@ -49,6 +51,8 @@ The semigroup is exhibited directly (not derived as `Φ_t = e^{tℒ}`). Reuses o
 Reference: `specs/future-work.md` (LF6-2).
 -/
 
+@[expose] public section
+
 open scoped BigOperators
 open Matrix
 
@@ -81,14 +85,14 @@ theorem dampingChannel_zero (γ : ℝ) (ρ : Matrix (Fin 2) (Fin 2) ℂ) :
   fin_cases i <;> fin_cases j <;> simp [dampingChannel]
 
 /-- `e^{-γs}·e^{-γt} = e^{-γ(s+t)}` (population factor). -/
-private lemma exp_mul_pop (γ s t : ℝ) (X : ℂ) :
+lemma exp_mul_pop (γ s t : ℝ) (X : ℂ) :
     (Real.exp (-(γ * s)) : ℂ) * ((Real.exp (-(γ * t)) : ℂ) * X)
       = (Real.exp (-(γ * (s + t))) : ℂ) * X := by
   rw [← mul_assoc, ← Complex.ofReal_mul, ← Real.exp_add,
     show -(γ * s) + -(γ * t) = -(γ * (s + t)) from by ring]
 
 /-- `e^{-γs/2}·e^{-γt/2} = e^{-γ(s+t)/2}` (coherence factor). -/
-private lemma exp_mul_coh (γ s t : ℝ) (X : ℂ) :
+lemma exp_mul_coh (γ s t : ℝ) (X : ℂ) :
     (Real.exp (-(γ * s) / 2) : ℂ) * ((Real.exp (-(γ * t) / 2) : ℂ) * X)
       = (Real.exp (-(γ * (s + t)) / 2) : ℂ) * X := by
   rw [← mul_assoc, ← Complex.ofReal_mul, ← Real.exp_add,
@@ -144,7 +148,7 @@ theorem dampingChannel_coherence (γ t : ℝ) (ρ : Matrix (Fin 2) (Fin 2) ℂ) 
     dampingChannel γ t ρ 0 1 = (Real.exp (-(γ * t) / 2) : ℂ) * ρ 0 1 := rfl
 
 /-- The complex decay factor `e^{-c t} → 0` as `t → ∞` (for `c > 0`). -/
-private lemma exp_decay {c : ℝ} (hc : 0 < c) :
+lemma exp_decay {c : ℝ} (hc : 0 < c) :
     Filter.Tendsto (fun t : ℝ => (Real.exp (-(c * t)) : ℂ)) Filter.atTop (nhds 0) := by
   have hlin : Filter.Tendsto (fun t : ℝ => -(c * t)) Filter.atTop Filter.atBot := by
     have h : Filter.Tendsto (fun t : ℝ => (-c) * t) Filter.atTop Filter.atBot :=

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.MeasurementUncomputeLift
+module
+
+public import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 
 /-!
 # Measurement-based AND-adder re-cost  (Build #21, L5-d)
@@ -73,6 +75,8 @@ here**. The Part-1 count is exact and the Part-2 anchor proves it aggregates `3n
 blocks (so the count is *not* hollow); the full n-fold amplitude state-equality of the hybrid adder is
 **WALLED** at the `QReg 3 ⊗ QReg (m−3)` tensor factor, as stated above and reported.
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open QuantumInfo

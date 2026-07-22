@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.MeasurementGidneyAdder
-import CsdLean4.Empirical.QM.MeasurementUncomputeLift
+module
+
+public import CsdLean4.Empirical.QM.MeasurementGidneyAdder
+public import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 
 /-!
 # EC-3 capstone: the measurement-discipline adder hierarchy
@@ -32,6 +34,8 @@ figures are cost re-costs whose per-AND-block replacement is proven-equivalent
 (the tensor composition over all cells) is the standing residual shared by EC-3 and EC-6 — proved per
 block, aggregated in cost. No amplitudes or ECDSA-score claim here; just the adder cost ordering.
 -/
+
+@[expose] public section
 
 open QuantumInfo Reversible
 

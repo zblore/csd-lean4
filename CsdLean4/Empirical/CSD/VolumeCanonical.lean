@@ -3,19 +3,21 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.TrialWitness
-import CsdLean4.Empirical.CSD.BellVolume
-import CsdLean4.Empirical.CSD.GHZVolume
-import CsdLean4.Empirical.CSD.HardyVolume
-import CsdLean4.Empirical.CSD.MalusVolume
-import CsdLean4.Empirical.CSD.SternGerlachVolume
-import CsdLean4.Empirical.CSD.TrineVolume
-import CsdLean4.Empirical.CSD.USDVolume
-import CsdLean4.Empirical.CSD.SICVolume
-import CsdLean4.Empirical.CSD.SIC3Volume
-import CsdLean4.Empirical.CSD.MUB3Volume
-import CsdLean4.Empirical.CSD.QutritPOVMVolume
-import CsdLean4.Empirical.CSD.ContextVolume
+module
+
+public import CsdLean4.LF4.TrialWitness
+public import CsdLean4.Empirical.CSD.BellVolume
+public import CsdLean4.Empirical.CSD.GHZVolume
+public import CsdLean4.Empirical.CSD.HardyVolume
+public import CsdLean4.Empirical.CSD.MalusVolume
+public import CsdLean4.Empirical.CSD.SternGerlachVolume
+public import CsdLean4.Empirical.CSD.TrineVolume
+public import CsdLean4.Empirical.CSD.USDVolume
+public import CsdLean4.Empirical.CSD.SICVolume
+public import CsdLean4.Empirical.CSD.SIC3Volume
+public import CsdLean4.Empirical.CSD.MUB3Volume
+public import CsdLean4.Empirical.CSD.QutritPOVMVolume
+public import CsdLean4.Empirical.CSD.ContextVolume
 
 /-!
 # Empirical/CSD: every volume-frequency headline on the canonical i.i.d. FS witness
@@ -59,6 +61,8 @@ of repeated preparation as FS-typical i.i.d. draws remains the LF1 typicality /
 A5 posit, not derived by constructing the process. Foundational-triple-only;
 Gleason-free (no `busch_effect_gleason`).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

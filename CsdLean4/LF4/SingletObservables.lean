@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.SingletKahler
-import CsdLean4.LF3.Singlet.Expectations
-import CsdLean4.LF3.ContextMap
+module
+
+public import CsdLean4.LF4.SingletKahler
+public import CsdLean4.LF3.Singlet.Expectations
+public import CsdLean4.LF3.ContextMap
 
 /-!
 # LF4 §14.2 at N = 4: two-qubit Pauli observables on the singlet preparation
@@ -71,6 +73,8 @@ Foundational triple only. Reuses `kRegion_measurable`, `kMuPsi_kRegion`
 from `SingletKahler.lean`; reuses the LF3 marginal/correlation algebra.
 -/
 
+@[expose] public section
+
 open MeasureTheory Matrix Finset
 open CSD.LF3
 
@@ -81,18 +85,18 @@ variable (ctx : CSD.LF3.MeasurementContext)
 
 /-! ### Algebraic helpers: sector-weighted `P_st` sums -/
 
-private lemma sum_sign_val : ∑ s : Sign, (s.val : ℝ) = 0 := by
+lemma sum_sign_val : ∑ s : Sign, (s.val : ℝ) = 0 := by
   rw [Sign.sum_univ]
   simp [Sign.val]
 
-private lemma sum_sectorLeft_PSt_eq_zero (a b : DetectorSetting) :
+lemma sum_sectorLeft_PSt_eq_zero (a b : DetectorSetting) :
     ∑ st : Sign × Sign, st.1.val * P_st a b st.1 st.2 = 0 := by
   rw [Fintype.sum_prod_type]
   -- Goal: ∑ s, ∑ t, s.val * P_st a b s t = 0
   simp_rw [← Finset.mul_sum, marginal_a_eq_half a b]
   rw [← Finset.sum_mul, sum_sign_val, zero_mul]
 
-private lemma sum_sectorRight_PSt_eq_zero (a b : DetectorSetting) :
+lemma sum_sectorRight_PSt_eq_zero (a b : DetectorSetting) :
     ∑ st : Sign × Sign, st.2.val * P_st a b st.1 st.2 = 0 := by
   rw [Fintype.sum_prod_type, Finset.sum_comm]
   -- Goal: ∑ t, ∑ s, t.val * P_st a b s t = 0
@@ -125,7 +129,7 @@ noncomputable def sigmaDotJointOntic (σ : KSigma 4) : ℝ :=
 
 /-- For each sector, the indicator of `kRegion ctx s t` is integrable
 against `kMuPsi`. -/
-private lemma indicator_kRegion_integrable (s t : Sign) :
+lemma indicator_kRegion_integrable (s t : Sign) :
     Integrable
       (Set.indicator (kRegion ctx s t) (fun _ : KSigma 4 => (1 : ℝ))) kMuPsi :=
   (integrable_const (1 : ℝ)).indicator (kRegion_measurable ctx s t)
@@ -133,7 +137,7 @@ private lemma indicator_kRegion_integrable (s t : Sign) :
 /-- The integral of a sector-weighted indicator sum is the corresponding
 `P_st`-weighted scalar sum. The shared computational step underlying
 all three §14.2 forms. -/
-private lemma weighted_indicator_sum_integral (w : Sign × Sign → ℝ) :
+lemma weighted_indicator_sum_integral (w : Sign × Sign → ℝ) :
     ∫ σ, (∑ st : Sign × Sign,
             w st * Set.indicator (kRegion ctx st.1 st.2)
               (fun _ => (1 : ℝ)) σ) ∂kMuPsi

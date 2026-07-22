@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Setup
-import CsdLean4.Empirical.QM.Bell
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.Normed.Lp.Matrix
+module
+
+public import CsdLean4.LF3.Setup
+public import CsdLean4.Empirical.QM.Bell
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # Empirical: GHZ paradox (Mermin all-or-nothing form)
@@ -68,6 +70,8 @@ specific projective ray) is the LF4 §8 obligation. Until then the
 empirical content is conditional on the CSD ontic axioms supplying the
 bridge data and the Dirac-concentration preparation.
 -/
+
+@[expose] public section
 
 open Real Matrix
 open scoped BigOperators ComplexConjugate Kronecker

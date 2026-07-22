@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Fourier
-import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Logic.Equiv.Fin.Rotate
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Analysis.Real.Pi.Bounds
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Fourier
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Logic.Equiv.Fin.Rotate
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 # Shor's algorithm — quantum core (M1 + M1.5: S1 + S2 + S3, ideal case `r ∣ T`)
@@ -71,6 +73,8 @@ continued-fraction recovery of `r` (Legendre converse, S5), and the classical re
 (nontrivial-sqrt-of-unity factor S6 + random-`a` success bound S7). All per `specs/shor-plan.md`;
 S4 is the next open quantum piece.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open scoped Matrix
@@ -191,14 +195,14 @@ lemma cycShift_val (j : Fin (ord a)) : ((cycShift a j : Fin (ord a)) : ℕ) = ((
   rw [cycShift_apply, Fin.val_add, Fin.val_one', Nat.add_mod_mod]
 
 /-- A root-of-unity reduction: with `z^r = 1`, the power `z^{s·m}` depends only on `m mod r`. -/
-private lemma pow_mul_mod_eq {z : ℂ} {r : ℕ} (hz : z ^ r = 1) (s m : ℕ) :
+lemma pow_mul_mod_eq {z : ℂ} {r : ℕ} (hz : z ^ r = 1) (s m : ℕ) :
     z ^ (s * m) = z ^ (s * (m % r)) := by
   conv_lhs => rw [show m = r * (m / r) + m % r from (Nat.div_add_mod m r).symm]
   rw [Nat.mul_add, pow_add, Nat.mul_left_comm s r (m / r), pow_mul, hz, one_pow, one_mul]
 
 omit [NeZero N] in
 /-- A unit-power reduction: with `a^r = 1` (`r = ord a`), `a^m = a^{m mod r}`. -/
-private lemma units_pow_mod (m : ℕ) : (a ^ m : (ZMod N)ˣ) = (a ^ (m % ord a) : (ZMod N)ˣ) := by
+lemma units_pow_mod (m : ℕ) : (a ^ m : (ZMod N)ˣ) = (a ^ (m % ord a) : (ZMod N)ˣ) := by
   conv_lhs => rw [show m = ord a * (m / ord a) + m % ord a from (Nat.div_add_mod m (ord a)).symm]
   rw [pow_add, pow_mul, show (a ^ ord a : (ZMod N)ˣ) = 1 from pow_orderOf_eq_one a,
     one_pow, one_mul]
@@ -265,7 +269,7 @@ theorem mulOracle_eigU (s : Fin (ord a)) :
 /-- A geometric-series collapse: for the primitive root `ω` and `j < r`,
 `∑_{s<r} conj(ω)^{s·j} = r` if `j = 0` and `0` otherwise. (Roots-of-unity orthogonality, the
 same collapse as in `Fourier.qft_unitary`.) -/
-private lemma sum_pow_orbit_phase (j : Fin (ord a)) :
+lemma sum_pow_orbit_phase (j : Fin (ord a)) :
     (∑ s : Fin (ord a), conj (omega a) ^ ((s : ℕ) * (j : ℕ)))
       = if j = ⟨0, ord_pos a⟩ then (ord a : ℂ) else 0 := by
   have hr : 0 < ord a := ord_pos a
@@ -834,7 +838,7 @@ theorem basisState_apow_eq (x : ℕ) :
 set_option linter.unusedSectionVars false in
 /-- The eigenphase counting state `(1/√T) ∑_x ω_r^{s x} |x⟩` equals the QFT column `s·(T/r)`,
 re-stated with the M1 `omega a = qftω r` notation. -/
-private lemma eigenPhase_eq_phaseColumn' {r : ℕ} (hr : 0 < r) (hT : 0 < T) (hdvd : r ∣ T)
+lemma eigenPhase_eq_phaseColumn' {r : ℕ} (hr : 0 < r) (hT : 0 < T) (hdvd : r ∣ T)
     (s : Fin r) :
     (Real.sqrt T : ℂ)⁻¹ • ∑ x : Fin T, (qftω r ^ ((x : ℕ) * (s : ℕ))) • basisState x
       = phaseColumn T ⟨(s : ℕ) * (T / r), bridgeIndex_lt hr hT hdvd s⟩ := by

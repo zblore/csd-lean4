@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.MaxEntangledDeisolationFlow
-import CsdLean4.Mathlib.Probability.CGLMP
+module
+
+public import CsdLean4.LF6.MaxEntangledDeisolationFlow
+public import CsdLean4.Mathlib.Probability.CGLMP
 
 /-!
 # LF6-D (QM side): the maximally-entangled qutrit violates the CGLMP inequality
@@ -57,6 +59,8 @@ actual CGLMP outcome-difference statistics
 Reference: Collins, Gisin, Linden, Massar, Popescu, *Phys. Rev. Lett.* **88**, 040404
 (2002). `specs/lf6-plan.md` (LF6-D).
 -/
+
+@[expose] public section
 
 open Complex MeasureTheory ProbabilityTheory ProbabilityTheory.CGLMP
 open CSD.LF6

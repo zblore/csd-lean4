@@ -3,9 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
-import Mathlib.Tactic.IntervalCases
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+public import Mathlib.Tactic.IntervalCases
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 
 /-!
 # Reversible interleaved modular multiply — the general-`n` Horner LOOP  (ECDLP Phase 2, Stage S6.3d-2b)
@@ -60,6 +66,8 @@ Option-1 route — composing the verified Horner step (S6.3d-2a) over all `n` bi
 `mulLoop_toffoli` derives `30 * n²` Toffolis: `n` Horner steps, each `30n` (`hornerStep_toffoli`),
 composed through `cost_comp_toffoli_count` over the fold (`multiplier_toffoli`).
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -204,7 +212,7 @@ theorem notTouches_preserved (L : MulLoopLayout m n) (j : ℕ) (s : State m) (w 
 /-- A clean wire of bank `k` survives bank `j`'s Horner step (`j ≠ k`, both `< n`): by `hInter` it is
 not touched, so `notTouches_preserved` applies. The 14 `Clean`-membership constructors are unfolded at
 each call site (the `mulLoop_invariant` step transports bank `k`'s preconditions through bank `j`). -/
-private theorem bank_step_preserves_clean (L : MulLoopLayout m n) (j k : ℕ) (hj : j < n) (hk : k < n)
+theorem bank_step_preserves_clean (L : MulLoopLayout m n) (j k : ℕ) (hj : j < n) (hk : k < n)
     (hjk : j ≠ k) (s : State m) (w : Fin m) (hw : Clean L.bank k w) :
     denote (hornerStep (L.bank j)) s w = s w :=
   notTouches_preserved L j s w (L.hInter j k w hj hk hjk hw)
@@ -264,12 +272,12 @@ Every clean / preset wire of bank `k` lies in `Clean L.bank k`, so (for `k ≤ n
 `≤ k`) it is untouched by every earlier bank `j < k` (`hInter`) and survives `mulLoopUpto`. The control
 bit `X (n-1-k)` survives via `hCtrlTouch`. These are the lemmas the invariant's step consumes. -/
 
-private theorem clean_pres (L : MulLoopLayout m n) {k p : ℕ} (hk : k < n) (hpk : p ≤ k) (s : State m)
+theorem clean_pres (L : MulLoopLayout m n) {k p : ℕ} (hk : k < n) (hpk : p ≤ k) (s : State m)
     (w : Fin m) (hw : Clean L.bank k w) : denote (mulLoopUpto L p) s w = s w :=
   mulLoopUpto_preserves L p s w
     (fun j hj => L.hInter j k w (by omega) hk (by omega) hw)
 
-private theorem clean_pres_reg (L : MulLoopLayout m n) {k p : ℕ} (hk : k < n) (hpk : p ≤ k)
+theorem clean_pres_reg (L : MulLoopLayout m n) {k p : ℕ} (hk : k < n) (hpk : p ≤ k)
     (s : State m) (f : ℕ → Fin m) (hf : ∀ i, Clean L.bank k (f i)) (q : ℕ) :
     regValRange f (denote (mulLoopUpto L p) s) q = regValRange f s q :=
   Finset.sum_congr rfl fun i _ => by

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.Capstone
-import CsdLean4.LF4.TrialWitness
+module
+
+public import CsdLean4.LF5.Capstone
+public import CsdLean4.LF4.TrialWitness
 
 /-!
 # LF5: the measurement-flow capstone on the canonical i.i.d. FS trial witness
@@ -31,6 +33,8 @@ as i.i.d. FS-typical draws on the dilated sector remains the LF1 typicality
 posit (A5, here on `Σ'`); the canonical process does not derive it.
 Foundational-triple-only, Gleason-free.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

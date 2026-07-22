@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.CGLMPQudit
+module
+
+public import CsdLean4.LF6.CGLMPQudit
 
 /-!
 # LF6-1: the `d`-intrinsic CGLMP capstone
@@ -37,6 +39,8 @@ strictly stronger, dimension-intrinsic statement of the same non-factorisation.
 Foundational-triple-only (Gleason-free), like both parents. Residue unchanged:
 A5 (the entangled sector is posited, not derived).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal BigOperators LinearAlgebra.Projectivization

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.Metrology.Ramsey
+module
+
+public import CsdLean4.Empirical.Metrology.Ramsey
 
 /-!
 # Empirical/CSD: Mach–Zehnder single-photon interference (CSD Born-as-volume)
@@ -44,6 +46,8 @@ References: `Empirical/Metrology/Ramsey.lean` (`ramseyVec`, `ramseyVec_eq_circui
 `ramseyFringe`, `ramsey_fringe_volume`, `ramsey_fringe_max/min`), `SigmaLayer/Interference.lean`
 (`HasBornInterference`), `specs/qm-empirical-tests.md` (B4).
 -/
+
+@[expose] public section
 
 open CSD.Empirical.Metrology
 

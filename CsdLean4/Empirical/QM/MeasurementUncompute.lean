@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
-import CsdLean4.Empirical.QM.Gates.SingleQubit
-import CsdLean4.Empirical.QM.Gates.TwoQubit
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
+public import CsdLean4.Empirical.QM.Gates.SingleQubit
+public import CsdLean4.Empirical.QM.Gates.TwoQubit
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 
 /-!
 # Measurement-based AND-uncomputation (Gidney's measure-and-correct gadget)
@@ -73,6 +75,8 @@ Boolean-arithmetic ↔ amplitude bridge — applying this to actual adders, the 
 increase, the wall), L5-d (the measurement-based adder + circuit re-cost). No ECDSA resource
 claim is made here.
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open QuantumInfo

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.MixedOntic
-import CsdLean4.LF4.BornFrequencyPartition
+module
+
+public import CsdLean4.SigmaLayer.MixedOntic
+public import CsdLean4.LF4.BornFrequencyPartition
 
 /-!
 # SigmaLayer/MixedFrequency: the mixed-state Born FREQUENCY on the unified model (#8 C, a.s. limit)
@@ -31,6 +33,8 @@ closing the last open QM item in `FiniteQMClosure` (its Tier-4 "mixed-state freq
 References: `SigmaLayer/MixedOntic.lean` (`mixed_ontic_born_weight`), `SigmaLayer/MixedEnsemble.lean`
 (`eigenvalues_isProbability`), `LF4/BornFrequencyPartition.lean` (the general partition LLN).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ComplexOrder ENNReal

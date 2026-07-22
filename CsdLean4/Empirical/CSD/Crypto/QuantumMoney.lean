@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Crypto.QuantumMoney
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 
 /-!
 # Empirical/CSD: Wiesner quantum money (CSD-side reading)
@@ -62,6 +64,8 @@ upper bound on forgery probability consistent with no-cloning).
 Wiesner 1983, *SIGACT News* **15**(1), 78. Unforgeability via
 Wootters-Zurek 1982 / Dieks 1982 no-cloning.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

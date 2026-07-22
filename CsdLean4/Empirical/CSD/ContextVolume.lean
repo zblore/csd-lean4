@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF4.BornRegionDisjoint
+module
+
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF4.BornRegionDisjoint
 
 /-!
 # Empirical/CSD: arbitrary projective measurement contexts as derived Kähler volumes
@@ -92,6 +94,8 @@ Honest scope unchanged from the rank-1 case: this is a faithful **realisation**,
 not a derivation (`Φ = id`, the FS regions carved in the rotated frame); the
 contextuality / KS / MP no-go stays at the QM-validity layer (`Empirical/QM/`).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

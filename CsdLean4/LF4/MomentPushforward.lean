@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentMap
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+module
+
+public import CsdLean4.LF4.MomentMap
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 
 /-!
 # LF4 Tranche M slice 2 (reduction): the moment map along the unitary orbit
@@ -43,6 +45,8 @@ See `specs/carve-out-plan.md` Tranche M slice 2.
 
 **Category:** 1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

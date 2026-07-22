@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.ContextMap
-import CsdLean4.LF2.Preparation
+module
+
+public import CsdLean4.LF3.ContextMap
+public import CsdLean4.LF2.Preparation
 
 /-!
 # LF3 Singlet projective outcomes
@@ -53,6 +55,8 @@ preparation's outcome regions. Until LF4 instantiates a concrete
 `SectorData` with concrete Σ, π, Φ, μprep, the bridge stays as a
 structural hypothesis on the chain capstone.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

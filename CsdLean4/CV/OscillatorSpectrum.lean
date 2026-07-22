@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.CV.Oscillator
+module
+
+public import CsdLean4.CV.Oscillator
 
 /-!
 # CV-4: the oscillator energy spectrum — finite-energy predictions recovered
@@ -51,6 +53,8 @@ docstrings only.
   `Eₙ = n + ½`, uniform spacing `1`, zero-point `½`.
 - `hamiltonian_groundEnergy` : `H·e₀ = ½·e₀` (the zero-point energy).
 -/
+
+@[expose] public section
 
 namespace CSD.CV
 

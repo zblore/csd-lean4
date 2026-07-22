@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.Notation
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Notation
 
 /-!
 # Empirical/QM: Quantum teleportation (E5)
@@ -55,6 +57,8 @@ Bennett, Brassard, Crépeau, Jozsa, Peres, Wootters 1993,
 *Phys. Rev. Lett.* **70**, 1895. Experimental: Bouwmeester et al. 1997,
 *Nature* **390**, 575.
 -/
+
+@[expose] public section
 
 open Matrix ComplexConjugate
 
@@ -159,7 +163,7 @@ theorem teleportation_bell_expansion (α β : ℂ) (a b c : Fin 2) :
 /-! ## Per-branch recovery -/
 
 /-- The matrix-vector image collapses to a `Fin 2` sum (helper for recovery). -/
-private lemma mulVec_fin2 (M : Matrix (Fin 2) (Fin 2) ℂ) (v : EuclideanSpace ℂ (Fin 2))
+lemma mulVec_fin2 (M : Matrix (Fin 2) (Fin 2) ℂ) (v : EuclideanSpace ℂ (Fin 2))
     (i : Fin 2) :
     (M *ᵥ v.ofLp) i = M i 0 * v.ofLp 0 + M i 1 * v.ofLp 1 := by
   show ∑ j, M i j * v.ofLp j = _

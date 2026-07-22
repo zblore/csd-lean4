@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Tactic.NoncommRing
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Tactic.NoncommRing
 
 /-!
 # CV-2 / CV-3: the truncated oscillator and the approximate CCR
@@ -60,6 +62,8 @@ Cat-1: `annihilation`, `creation`, `Q`, `P` and all lemmas are CSD-free general
 facts about finite complex matrices. The CSD interpretation lives only in the
 docstrings.
 -/
+
+@[expose] public section
 
 namespace CSD.CV
 
@@ -238,11 +242,11 @@ noncomputable def P : Matrix (Fin N) (Fin N) ℂ :=
 variable {N}
 
 /-- `√2·√2 = 2` in `ℂ`. -/
-private lemma sqrt2_mul_sqrt2 : ((Real.sqrt 2 : ℝ) : ℂ) * ((Real.sqrt 2 : ℝ) : ℂ) = 2 := by
+lemma sqrt2_mul_sqrt2 : ((Real.sqrt 2 : ℝ) : ℂ) * ((Real.sqrt 2 : ℝ) : ℂ) = 2 := by
   rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]; norm_num
 
 /-- `√2 ≠ 0` in `ℂ`. -/
-private lemma sqrt2_ne_zero : ((Real.sqrt 2 : ℝ) : ℂ) ≠ 0 := by
+lemma sqrt2_ne_zero : ((Real.sqrt 2 : ℝ) : ℂ) ≠ 0 := by
   rw [Ne, Complex.ofReal_eq_zero]; positivity
 
 /-- `Q` is Hermitian (a genuine self-adjoint observable). -/

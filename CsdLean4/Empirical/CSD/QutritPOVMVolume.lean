@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF2.EffectAux
+module
+
+public import CsdLean4.LF4.POVMNaimark
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/CSD: the unsharp qutrit POVM and its Born weights as Kähler volumes
@@ -43,6 +45,8 @@ carried (2026-06-11 migration).
 Unsharp / POVM measurements: Busch, Lahti, Mittelstaedt, *The Quantum Theory of
 Measurement* (1996); depolarising noise is the standard detector-noise model.
 -/
+
+@[expose] public section
 
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
 open scoped Kronecker MatrixOrder ComplexOrder LinearAlgebra.Projectivization

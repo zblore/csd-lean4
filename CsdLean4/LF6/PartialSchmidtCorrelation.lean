@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.Expectations
+module
+
+public import CsdLean4.LF3.Singlet.Expectations
 
 /-!
 # LF6-6: the partial-Schmidt (non-maximally-entangled) two-qubit correlation
@@ -39,6 +41,8 @@ maximally-entangled point `c = s = 1/√2`, where the correlation collapses to `
 
 Reference: `specs/future-work.md` (LF6-6); `LF6/GisinTheorem.lean` (`gisin_chsh_violation`, the witness).
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate
 open Matrix

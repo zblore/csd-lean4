@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF2.EffectAux
-import CsdLean4.Empirical.QM.USD
+module
+
+public import CsdLean4.LF4.POVMNaimark
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF2.EffectAux
+public import CsdLean4.Empirical.QM.USD
 
 /-!
 # Empirical/CSD: the USD (unambiguous-discrimination) POVM and its Born weights as Kähler volumes
@@ -34,6 +36,8 @@ concrete non-projective measurement; it routes through the hpos-free engine
 (`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no genericity
 hypothesis on the dilated state is carried (2026-06-11 migration).
 -/
+
+@[expose] public section
 
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
 open scoped Kronecker MatrixOrder ComplexOrder LinearAlgebra.Projectivization

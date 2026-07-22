@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.ContextVolume
-import CsdLean4.LF4.TrialWitness
+module
+
+public import CsdLean4.Empirical.CSD.ContextVolume
+public import CsdLean4.LF4.TrialWitness
 
 /-!
 # Empirical/CSD: qubit observable variance as a product of Fubini–Study volumes
@@ -70,6 +72,8 @@ Robertson 1929, *Phys. Rev.* **34**, 163 (the QM-layer inequality). The
 variance-as-volume-product reading is the CSD-ontic surfacing of the qubit
 Born-volume engine (`LF4.born_frequency_convergence_N` / the moment-map cluster).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

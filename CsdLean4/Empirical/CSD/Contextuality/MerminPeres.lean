@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Contextuality.MerminPeres
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Contextuality.MerminPeres
 
 /-!
 # Empirical/CSD: Mermin–Peres magic square (CSD-side reading)
@@ -64,6 +66,8 @@ through §14 — is prose-only. See `PLACEHOLDERS.md §7`.
 - Mermin 1990 *Phys. Rev. Lett.* **65**, 3373.
 - Peres 1990 *Phys. Lett. A* **151**, 107.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

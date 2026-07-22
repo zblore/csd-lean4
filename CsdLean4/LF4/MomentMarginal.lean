@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornFS
-import CsdLean4.LF4.MomentPushforward
+module
+
+public import CsdLean4.LF4.BornFS
+public import CsdLean4.LF4.MomentPushforward
 
 /-!
 # LF4 plan B (step 1): the moment marginal as a Haar marginal
@@ -45,6 +47,8 @@ Beta(1,1)`). Tools: `MeasureTheory.Constructions.HaarToSphere`,
 `Probability.Distributions.Beta`/`Gaussian`. This is a multi-session build; see
 `specs/carve-out-plan.md` Tranche M, plan B.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

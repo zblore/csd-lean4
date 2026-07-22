@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 
 /-!
 # Reversible modular reduction — comparison via carry-out, single-step reduce  (ECDLP Phase 2, Stage S4)
@@ -48,6 +50,8 @@ The original documented-cost note (kept for the historical estimate): the condit
 in `ResourceBounds.lean` (`modReduceToffoli`/`modMultToffoli`), composed over this verified comparison
 core; that estimate is now superseded by the exhibited-circuit cost `modReduceCtrl_toffoli = 10n`.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

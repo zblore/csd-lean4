@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.CompositeInterface
-import CsdLean4.Empirical.QM.Bell
-import CsdLean4.Empirical.QM.Multipartite.GHZ
-import CsdLean4.Empirical.QM.Contextuality.KS18
-import CsdLean4.Empirical.QM.Contextuality.MerminPeres
-import CsdLean4.LF6.CGLMPQudit
+module
+
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import CsdLean4.Empirical.QM.Bell
+public import CsdLean4.Empirical.QM.Multipartite.GHZ
+public import CsdLean4.Empirical.QM.Contextuality.KS18
+public import CsdLean4.Empirical.QM.Contextuality.MerminPeres
+public import CsdLean4.LF6.CGLMPQudit
 
 /-!
 # SigmaLayer/CompositeAdapters: inhabiting the composition targets from the existing capstones
@@ -38,6 +40,8 @@ rule on mixtures are the reported Mathlib density-matrix gap: Mathlib has no mix
 repository's `CSD.LF2.DensityOperatorIx` carries no purity/ensemble/Born API. This is left out honestly
 rather than stated vacuously.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open CSD.LF3 CSD.Empirical.Bell

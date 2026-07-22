@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
-import Mathlib.MeasureTheory.Measure.Haar.Basic
-import Mathlib.MeasureTheory.Measure.Haar.Unique
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
+public import Mathlib.MeasureTheory.Measure.Haar.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.Unique
 
 /-!
 # Haar measure on the matrix unitary group
@@ -50,6 +52,8 @@ tranche) and the Fubini-Study pushforward to `ℂℙ^{N-1}`.
 
 unitary group, Haar measure, compact group
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

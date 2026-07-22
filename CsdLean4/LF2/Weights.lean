@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.MeasureBridge
+module
+
+public import CsdLean4.LF2.MeasureBridge
 
 /-!
 # LF2 Projective Weights
@@ -23,6 +25,8 @@ The partition is stated relative to the pushforward measure `π*μprep`, not
 via the measure bridge, the two agree, but this form lets `weights_sum_eq_one`
 be proved without dragging `μFS` through.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set Function
 

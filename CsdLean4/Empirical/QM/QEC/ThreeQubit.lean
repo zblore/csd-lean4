@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Analysis.Normed.Lp.Matrix
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # Empirical/QM: the three-qubit bit-flip code (the first QEC theorem)
@@ -38,6 +40,8 @@ syndrome sign.
 Shor 1995 (the 9-qubit code, of which this is the bit-flip half); the 3-qubit repetition
 code is the standard pedagogical entry to stabiliser QEC (Nielsen-Chuang §10.1).
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped Kronecker

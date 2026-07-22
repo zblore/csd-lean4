@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF2.EffectAux
+module
+
+public import CsdLean4.LF4.POVMNaimark
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/CSD: the d=2 SIC-POVM and its Born weights as Kähler volumes
@@ -38,6 +40,8 @@ The capstone routes through the hpos-free engine (`povm_born_frequency_volume_un
 carried (2026-06-11 migration).
 -/
 
+@[expose] public section
+
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
 open scoped Kronecker MatrixOrder ComplexOrder LinearAlgebra.Projectivization
 
@@ -50,9 +54,9 @@ open CSD.LF2 CSD.LF4
 
 /-! ### Square-root facts -/
 
-private lemma r2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-private lemma r3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-private lemma r6 : Real.sqrt 6 ^ 2 = 6 := Real.sq_sqrt (by norm_num)
+lemma r2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+lemma r3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+lemma r6 : Real.sqrt 6 ^ 2 = 6 := Real.sq_sqrt (by norm_num)
 
 /-! ### The SIC fiducial states -/
 
@@ -80,7 +84,7 @@ lemma sicState_apply (k : Fin 4) (i : Fin 2) : sicState k i = sicAmp k i := by
   fin_cases i <;> simp [sicState, EuclideanSpace.single]
 
 /-- `‖z‖² = z.re·z.re + z.im·z.im`, the bridge to real coordinates. -/
-private lemma normSq_coord (z : ℂ) : ‖z‖ ^ 2 = z.re * z.re + z.im * z.im := by
+lemma normSq_coord (z : ℂ) : ‖z‖ ^ 2 = z.re * z.re + z.im * z.im := by
   rw [Complex.sq_norm, Complex.normSq_apply]
 
 lemma sicState_norm (k : Fin 4) : ‖sicState k‖ = 1 := by
@@ -139,7 +143,7 @@ noncomputable def sicPOVM : POVM 2 (Fin 4) where
 /-! ### The equiangular SIC property -/
 
 /-- `⟨x, y⟩ = star(x₀)·y₀ + star(x₁)·y₁` on `ℂ²`. -/
-private lemma inner_two (x y : EuclideanSpace ℂ (Fin 2)) :
+lemma inner_two (x y : EuclideanSpace ℂ (Fin 2)) :
     inner ℂ x y = star (x.ofLp 0) * y.ofLp 0 + star (x.ofLp 1) * y.ofLp 1 := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_two]
   simp only [Pi.star_apply]; ring

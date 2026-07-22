@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.MeasureBridge
-import CsdLean4.SigmaLayer.DynamicsBridge
-import CsdLean4.SigmaLayer.LiftedMeasurement
+module
+
+public import CsdLean4.SigmaLayer.MeasureBridge
+public import CsdLean4.SigmaLayer.DynamicsBridge
+public import CsdLean4.SigmaLayer.LiftedMeasurement
 
 /-!
 # SigmaLayer/UnifiedMeasurement: dynamics and measurement on ONE many-to-one ontic model (SL-T5)
@@ -39,6 +41,8 @@ FREQUENCIES are the base-space statement `vnDeisolationModel_born_frequency` (th
 `π`, so its i.i.d. law lives on the base `ℂℙ^{M}`). Follow-on residue (see `specs/future-work.md`
 SL-T5): physical record persistence, nonzero post-outcome preparation, the conditional→Lüders link.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.UnifiedMeasurement
-import CsdLean4.SigmaLayer.UnifiedFlowedRecords
-import CsdLean4.SigmaLayer.ConditioningLuders
-import CsdLean4.SigmaLayer.MixedOntic
-import CsdLean4.SigmaLayer.MixedFrequency
+module
+
+public import CsdLean4.SigmaLayer.UnifiedMeasurement
+public import CsdLean4.SigmaLayer.UnifiedFlowedRecords
+public import CsdLean4.SigmaLayer.ConditioningLuders
+public import CsdLean4.SigmaLayer.MixedOntic
+public import CsdLean4.SigmaLayer.MixedFrequency
 
 /-!
 # SigmaLayer/FiniteQMClosure: the tiered finite-dimensional QM closure (#6)
@@ -87,6 +89,8 @@ reconstruction content.
 (`SigmaLayer/UnifiedFlowedRecords.lean`), `conditioning_luders_effect_equivalence`
 (`SigmaLayer/ConditioningLuders.lean`), `CompositeSector.ofReconstruction` (`SigmaLayer/TensorReconstruction.lean`).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

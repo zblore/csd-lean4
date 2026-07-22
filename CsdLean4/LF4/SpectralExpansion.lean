@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.Matrix.Spectrum
+module
+
+public import Mathlib.Analysis.Matrix.Spectrum
 
 /-!
 # LF4 §14.2 general N×N spectral expansion of the Hilbert expectation
@@ -55,6 +57,8 @@ equation `A uᵢ = λᵢ • uᵢ`), `Matrix.isSymmetric_toEuclideanLin_iff.symm
 
 Foundational triple only.
 -/
+
+@[expose] public section
 
 open Matrix Finset
 

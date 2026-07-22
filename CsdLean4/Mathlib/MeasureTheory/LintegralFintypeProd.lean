@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.MeasureTheory.Constructions.Pi
+module
+
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.MeasureTheory.Constructions.Pi
 
 /-!
 # Mathlib upstream candidate: Tonelli for a product over a finite index (`lintegral`)
@@ -36,6 +38,8 @@ lower-integral Fubini fact (and the `pi`-`withDensity` bridge built on it). See
 
 lintegral, Fubini, Tonelli, product measure, pi
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ENNReal

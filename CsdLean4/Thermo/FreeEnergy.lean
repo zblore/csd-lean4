@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Subadditivity
-import CsdLean4.Mathlib.QuantumInfo.Entropy
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
 /-!
 # TH3: temperature, free energy, and the Gibbs variational principle
@@ -51,6 +53,8 @@ no new axioms. Reuses K1 (`vonNeumannEntropy`) and the Klein / relative-entropy
 layer (`relEntropy_nonneg`, `cfc_eq_conj_diagonal`, `re_trace_self_log`);
 nothing is re-proved.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexOrder
 open Matrix QuantumInfo
@@ -148,7 +152,7 @@ lemma gibbsState_trace [Nonempty n] (H : Matrix n n ℂ) (hH : H.IsHermitian) (�
 
 /-- Pulling a scalar into a unitary-conjugated diagonal:
 `a • (V · diag D · Vᴴ) = V · diag (a • D) · Vᴴ`. -/
-private lemma smul_conj (a : ℂ) (V : Matrix n n ℂ) (D : n → ℂ) :
+lemma smul_conj (a : ℂ) (V : Matrix n n ℂ) (D : n → ℂ) :
     a • (V * diagonal D * star V) = V * diagonal (a • D) * star V := by
   rw [diagonal_smul, mul_smul_comm, smul_mul_assoc]
 

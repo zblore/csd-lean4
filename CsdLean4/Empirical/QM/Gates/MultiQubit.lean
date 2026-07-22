@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Data.Complex.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Data.Complex.Basic
 
 /-!
 # Empirical/QM: Multi-qubit gates (Toffoli, Fredkin)
@@ -27,6 +29,8 @@ Basis order: `|000⟩, |001⟩, ..., |111⟩` = `Fin 8`.
 Function-based matrix definitions (the `!!` notation fails to
 propagate ℂ elaboration cleanly for 8×8 sparse permutations).
 -/
+
+@[expose] public section
 
 open Matrix
 

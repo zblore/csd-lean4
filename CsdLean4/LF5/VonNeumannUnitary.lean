@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Permutation
-import Mathlib.LinearAlgebra.UnitaryGroup
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Permutation
+public import Mathlib.LinearAlgebra.UnitaryGroup
 
 /-!
 # LF5: the von Neumann measurement coupling unitary (LF5-A)
@@ -47,6 +49,8 @@ downstream system dimension is `≥ 1`, so this costs nothing.
 
 Reference: `specs/lf5-plan.md` (LF5-A).
 -/
+
+@[expose] public section
 
 open Matrix
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 
 /-!
 # The Bargmann invariant on complex projective space
@@ -47,6 +49,8 @@ scalar continuity hypothesis.
 
 projectivization, Bargmann invariant, Wigner theorem, antiunitary, phase
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization
 
@@ -128,7 +132,7 @@ noncomputable def bargmann (p q r : ℙ ℂ E) : ℂ :=
 
 /-- A canonical representative of `mk v hv` is a nonzero scalar multiple of
 `v`. (Local copy of the `TransitionProbability` helper, which is private.) -/
-private lemma rep_mk_smul {v : E} (hv : v ≠ 0) :
+lemma rep_mk_smul {v : E} (hv : v ≠ 0) :
     ∃ a : ℂˣ, (Projectivization.mk ℂ v hv).rep = a • v := by
   obtain ⟨a, ha⟩ :=
     (Projectivization.mk_eq_mk_iff ℂ (Projectivization.mk ℂ v hv).rep v

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 
 /-!
 # Reversible quantum×quantum multiplication — controlled shift-and-add  (ECDLP Phase 2, Stage S2.3)
@@ -26,6 +28,8 @@ steps (`cRippleCirc_anc_restored`).
   routed through `cRippleCirc_correct` (so the `ctrl`-clear case adds nothing) — the heart of the
   quantum×quantum multiply.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Constructions.Pi
+module
+
+public import Mathlib.MeasureTheory.Constructions.Pi
 
 /-!
 # Mathlib upstream candidate: `Measure.pi` is preserved by currying a product index
@@ -36,6 +38,8 @@ into a product over `Fin N` of `ℝ²`-Gaussians before Slices C/D apply. See
 
 measure preserving, pi, curry, sigma, product measure
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 open scoped ENNReal

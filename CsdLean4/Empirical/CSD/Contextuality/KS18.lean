@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Contextuality.KS18
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Contextuality.KS18
 
 /-!
 # Empirical/CSD: Kochen-Specker theorem (CSD-side reading, Cabello-18)
@@ -110,6 +112,8 @@ externally supplied. The headline theorem here is then strictly
 stronger: it carries both the combinatorial impossibility content AND
 the CSD partition-discipline realisability content.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

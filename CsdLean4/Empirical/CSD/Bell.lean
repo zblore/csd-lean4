@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.LF3.Interface
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.LF3.Interface
 
 /-!
 # Empirical/CSD: Bell-family CSD-side reading
@@ -74,6 +76,8 @@ at LF4 — i.e. conditional on LF4-todo §2 + §7 being discharged. Pre-LF4,
 the chain capstones are statements parametric on the bundle; concrete
 empirical verification awaits LF4's concrete Kähler instantiation.
 -/
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Data.Fintype.BigOperators
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Data.Fintype.BigOperators
 
 /-!
 # Matrix partial trace (K1-B.1)
@@ -44,6 +46,8 @@ Delivered, foundational-triple-only and AxiomAudit-pinned:
 * **density ↦ density** (`partialTraceRight_density`, `partialTraceLeft_density`): the reduced
   state of a density operator is a density operator.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder Kronecker
@@ -196,7 +200,7 @@ theorem partialTraceLeft_isHermitian {M : Matrix (n × m) (n × m) ℂ} (hM : M.
 /-- The Hermitian quadratic form expanded as an explicit double sum:
 `star u ⬝ᵥ (M *ᵥ u) = ∑ p, ∑ q, star (u p) * M p q * u q`. A bookkeeping helper for the
 partial-trace `PosSemidef` proofs. -/
-private theorem star_dotProduct_mulVec_eq_sum {ι : Type*} [Fintype ι]
+theorem star_dotProduct_mulVec_eq_sum {ι : Type*} [Fintype ι]
     (M : Matrix ι ι ℂ) (u : ι → ℂ) :
     star u ⬝ᵥ (M *ᵥ u) = ∑ p, ∑ q, star (u p) * M p q * u q := by
   simp only [dotProduct, mulVec, Pi.star_apply, Finset.mul_sum]

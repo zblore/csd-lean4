@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.MeasureBridge
+module
+
+public import CsdLean4.SigmaLayer.MeasureBridge
 
 /-!
 # SigmaLayer/DynamicsBridge: projectable dynamics and its Hamiltonian realisation
@@ -21,6 +23,8 @@ inhabited for this concrete model, reusing `manyToOneSchrodingerSetup_schrodinge
 Unitarity of the projected flow is NOT a field of `ProjectiveSector`; it is the separate target
 `HasUnitaryRealisation` / `HasHamiltonianRealisation`, proved only where a concrete model supplies it.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped LinearAlgebra.Projectivization

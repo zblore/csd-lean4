@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.POVM
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.LinearAlgebra.Matrix.Kronecker
+module
+
+public import CsdLean4.LF2.POVM
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
 
 /-!
 # LF4: Naimark dilation of a POVM and the Born transfer
@@ -42,6 +44,8 @@ push `V` across the inner product via the matrix↔operator adjoint bridge
 (`toEuclideanLin_conjTranspose_eq_adjoint`), fold the three operator
 applications with `toLpLin_mul_same`, and collapse with the pullback identity.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped Kronecker

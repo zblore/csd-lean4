@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.MeasurableSpace.Basic
-import CsdLean4.SigmaLayer.ConstraintSurface
+module
+
+public import Mathlib.MeasureTheory.MeasurableSpace.Basic
+public import CsdLean4.SigmaLayer.ConstraintSurface
 
 /-!
 # SigmaLayer/RecordedFact: physical records as measurable contextual ontic events
@@ -23,6 +25,8 @@ property may subsequently change; the historical record is not thereby invalidat
 region records time-indexed evidence, and we do NOT require a value measured at time `t` to persist at
 later times. Exclusivity is asserted only within a single context at a single time.
 -/
+
+@[expose] public section
 
 namespace CSD.SigmaLayer
 

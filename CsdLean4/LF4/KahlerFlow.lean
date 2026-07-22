@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.KahlerInstance
-import CsdLean4.LF1.GeneralFrequency
-import Mathlib.MeasureTheory.Group.Measure
+module
+
+public import CsdLean4.LF4.KahlerInstance
+public import CsdLean4.LF1.GeneralFrequency
+public import Mathlib.MeasureTheory.Group.Measure
 
 /-!
 # LF4 Tranche A: a non-trivial measure-preserving flow on the Kähler instance
@@ -46,6 +48,8 @@ time.
   *region* (and hence its Born weight) from the dynamics is Tranche B
   (`specs/carve-out-plan.md` §4, the §9.5 / G3b target), not this module.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

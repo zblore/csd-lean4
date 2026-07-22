@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.WignerDischarge
-import CsdLean4.Empirical.CSD.Gates.TwoQubit
+module
+
+public import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+public import CsdLean4.Empirical.CSD.Gates.TwoQubit
 
 /-!
 # Empirical/CSD/Gates: §13.2 discharge for the two-qubit gates (CNOT, SWAP, CZ)
@@ -32,6 +34,8 @@ References: `Gates/SingleQubitDischarge.lean`, `Empirical/CSD/Gates/TwoQubit.lea
 `Empirical/QM/Gates/TwoQubit.lean` (`qmCNOT`, `qmSWAP`, `qmCZ`, `qmG*_unitary`),
 `specs/LF4-todo.md` §13.2, `PLACEHOLDERS.md` §1/§7.
 -/
+
+@[expose] public section
 
 open Matrix
 open CSD.Empirical.QM.Gates

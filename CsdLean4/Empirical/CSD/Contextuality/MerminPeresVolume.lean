@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.ContextVolume
-import CsdLean4.Empirical.CSD.VolumeCanonical
-import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
+module
+
+public import CsdLean4.Empirical.CSD.ContextVolume
+public import CsdLean4.Empirical.CSD.VolumeCanonical
+public import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 
 /-!
 # Empirical/CSD: a Mermin–Peres rank-2 observable's outcome Born weights as Kähler volumes
@@ -103,6 +105,8 @@ genuine per-observable volume realisation.
   included.
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open CSD.Empirical.MerminPeres
 open scoped LinearAlgebra.Projectivization Kronecker Matrix
@@ -130,7 +134,7 @@ noncomputable def mpXXVec (i : Fin 4) : EuclideanSpace ℂ (Fin 4) :=
   WithLp.toLp 2 (fun k => ((mpXXReal i k : ℝ) : ℂ))
 
 /-- Scalar complex inner product of two real coercions: `⟨↑a, ↑b⟩_ℂ = ↑(a * b)`. -/
-private lemma mp_scalar_inner (a b : ℝ) : (inner ℂ (↑a : ℂ) (↑b : ℂ) : ℂ) = ↑(a * b) := by
+lemma mp_scalar_inner (a b : ℝ) : (inner ℂ (↑a : ℂ) (↑b : ℂ) : ℂ) = ↑(a * b) := by
   rw [RCLike.inner_apply, Complex.conj_ofReal]; push_cast; ring
 
 /-- **The `H ⊗ H` family is orthonormal.** A direct `norm_num` computation on the

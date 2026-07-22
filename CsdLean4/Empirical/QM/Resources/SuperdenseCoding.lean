@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Gates.BellPrep
+module
+
+public import CsdLean4.Empirical.QM.Gates.BellPrep
 
 /-!
 # Empirical/QM: Superdense coding
@@ -41,6 +43,8 @@ The encodings act on the **first** (high-bit) qubit; `X ⊗ I`, `Z ⊗ I`,
 
 Bennett and Wiesner 1992, *Phys. Rev. Lett.* **69**, 2881.
 -/
+
+@[expose] public section
 
 open Matrix ComplexConjugate
 
@@ -99,21 +103,21 @@ noncomputable def pauliXZ_tensor_I : Matrix (Fin 4) (Fin 4) ℂ :=
 `qmKetPhiPlus.ofLp` is `(1/√2)` at indices `0, 3` and `0` elsewhere
 (re-derived locally; `BellPrep`'s versions are `private`). -/
 
-private lemma phiPlus_ofLp_zero : qmKetPhiPlus.ofLp 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
+lemma phiPlus_ofLp_zero : qmKetPhiPlus.ofLp 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
-private lemma phiPlus_ofLp_one : qmKetPhiPlus.ofLp 1 = (0 : ℂ) := by
+lemma phiPlus_ofLp_one : qmKetPhiPlus.ofLp 1 = (0 : ℂ) := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
-private lemma phiPlus_ofLp_two : qmKetPhiPlus.ofLp 2 = (0 : ℂ) := by
+lemma phiPlus_ofLp_two : qmKetPhiPlus.ofLp 2 = (0 : ℂ) := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
-private lemma phiPlus_ofLp_three : qmKetPhiPlus.ofLp 3 = (Real.sqrt 2 : ℂ)⁻¹ := by
+lemma phiPlus_ofLp_three : qmKetPhiPlus.ofLp 3 = (Real.sqrt 2 : ℂ)⁻¹ := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
 /-- For any row `k`, applying a matrix `M` to `|Φ⁺⟩` collapses to
 `(M[k,0] + M[k,3]) / √2`. -/
-private lemma mulVec_phiPlus (M : Matrix (Fin 4) (Fin 4) ℂ) (k : Fin 4) :
+lemma mulVec_phiPlus (M : Matrix (Fin 4) (Fin 4) ℂ) (k : Fin 4) :
     (M *ᵥ qmKetPhiPlus.ofLp) k
       = (Real.sqrt 2 : ℂ)⁻¹ * (M k 0 + M k 3) := by
   show ∑ j, M k j * qmKetPhiPlus.ofLp j = _

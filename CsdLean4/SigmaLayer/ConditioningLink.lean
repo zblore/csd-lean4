@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.Luders
-import CsdLean4.SigmaLayer.IsolationPreparation
-import CsdLean4.SigmaLayer.MeasurementRecord
+module
+
+public import CsdLean4.SigmaLayer.Luders
+public import CsdLean4.SigmaLayer.IsolationPreparation
+public import CsdLean4.SigmaLayer.MeasurementRecord
 
 /-!
 # SigmaLayer/ConditioningLink: the conditional→Lüders correspondence
@@ -37,6 +39,8 @@ References: `specs/future-work.md` (SL-T5 follow-on); `SigmaLayer/Luders.lean` (
 `SigmaLayer/IsolationPreparation.lean` (`conditionalMeasure_apply`), `SigmaLayer/MeasurementRecord.lean`
 (`compatibleSet_appendEstablishedFact`), `SigmaLayer/MeasureBridge.lean` (B1).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

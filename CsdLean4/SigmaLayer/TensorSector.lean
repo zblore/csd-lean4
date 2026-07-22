@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.CompositeInterface
-import CsdLean4.Empirical.QM.NoCommunication
+module
+
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import CsdLean4.Empirical.QM.NoCommunication
 
 /-!
 # SigmaLayer/TensorSector: weaving the tensor product into the ledger
@@ -36,6 +38,8 @@ So tensors ARE woven in: the tensor product, its no-signalling algebra, the comp
 reconstruction (`compositeAlgReconstruction`), AND the B6-discharging constructor
 (`CompositeSector.ofReconstruction`) are all theorems/tools.
 -/
+
+@[expose] public section
 
 open CSD.Empirical.QM
 open Matrix

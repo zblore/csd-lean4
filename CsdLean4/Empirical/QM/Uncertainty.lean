@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.Symmetric
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Symmetric
 
 /-!
 # Empirical/QM: Robertson uncertainty relation
@@ -32,6 +34,8 @@ no finite-dimensionality.
 Robertson 1929, *Phys. Rev.* **34**, 163; Schrödinger 1930 (the stronger
 form with the anticommutator term, not formalised here).
 -/
+
+@[expose] public section
 
 open ComplexConjugate
 

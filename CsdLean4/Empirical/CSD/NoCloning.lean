@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.NoCloning
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.NoCloning
 
 /-!
 # Empirical/CSD: No-cloning theorem (CSD-side reading)
@@ -93,6 +95,8 @@ than externally supplied. The headline theorem here is then strictly
 stronger than just a "transport of QM no-cloning to CSD", because it
 also carries the LF4 realisability content.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

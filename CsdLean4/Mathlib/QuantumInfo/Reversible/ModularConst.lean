@@ -3,10 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
-import Mathlib.Tactic.IntervalCases
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+public import Mathlib.Tactic.IntervalCases
 
 /-!
 # Reversible modular constant-multiply and negation — the last two field-op gadgets  (ECDLP Phase 2, Stage S6.3e-2a)
@@ -54,6 +59,8 @@ NOT claimed here. This module supplies the two missing opcode gadgets.
   (`modularAdd_toffoli`), composed through `cost_comp_toffoli_count` over the fold.
 * `modNeg_toffoli` is `10n`, inherited verbatim from `modSub_toffoli`.
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -115,7 +122,7 @@ theorem notCTouches_preserved (L : ConstMulLayout m n c) (j : ℕ) (s : State m)
 
 /-- A clean wire of bank `k` survives bank `j`'s modular add (`j ≠ k`, both `< c`): by `hInter` it is
 not touched, so `notCTouches_preserved` applies. -/
-private theorem cbank_step_preserves_clean (L : ConstMulLayout m n c) (j k : ℕ) (hj : j < c)
+theorem cbank_step_preserves_clean (L : ConstMulLayout m n c) (j k : ℕ) (hj : j < c)
     (hk : k < c) (hjk : j ≠ k) (s : State m) (w : Fin m) (hw : CClean L.bank k w) :
     denote (modAdd (L.bank j)) s w = s w :=
   notCTouches_preserved L j s w (L.hInter j k w hj hk hjk hw)
@@ -155,12 +162,12 @@ theorem constMulUpto_preserves (L : ConstMulLayout m n c) (k : ℕ) (s : State m
 
 /-- A clean / preset wire of bank `k` survives every earlier-bank prefix (`p ≤ k < c`): each lies in
 `CClean L.bank k`, so `hInter` keeps it untouched by every bank `j < p ≤ k`. -/
-private theorem cclean_pres (L : ConstMulLayout m n c) {k p : ℕ} (hk : k < c) (hpk : p ≤ k)
+theorem cclean_pres (L : ConstMulLayout m n c) {k p : ℕ} (hk : k < c) (hpk : p ≤ k)
     (s : State m) (w : Fin m) (hw : CClean L.bank k w) : denote (constMulUpto L p) s w = s w :=
   constMulUpto_preserves L p s w
     (fun j hj => L.hInter j k w (by omega) hk (by omega) hw)
 
-private theorem cclean_pres_reg (L : ConstMulLayout m n c) {k p : ℕ} (hk : k < c) (hpk : p ≤ k)
+theorem cclean_pres_reg (L : ConstMulLayout m n c) {k p : ℕ} (hk : k < c) (hpk : p ≤ k)
     (s : State m) (f : ℕ → Fin m) (hf : ∀ i, CClean L.bank k (f i)) (q : ℕ) :
     regValRange f (denote (constMulUpto L p) s) q = regValRange f s q :=
   Finset.sum_congr rfl fun i _ => by
@@ -470,7 +477,7 @@ theorem cmin4_cases (i : ℕ) : min i 4 = 0 ∨ min i 4 = 1 ∨ min i 4 = 2 ∨ 
 /-- The clean / preset preconditions of `modConstMul_correct` hold at `constMulState`, for any operand
 bits (`n = 4, N = 5`). The carry / ancilla families are `false`; the presets `A1 = 11`, `A2 = 5`.
 Discharged by `interval_cases` over the 3 banks + `cmin4_cases` over the wire index. -/
-private theorem constMulState_pre (a0 a1 a2 : Bool) :
+theorem constMulState_pre (a0 a1 a2 : Bool) :
     (∀ j i, j < 3 → constMulState a0 a1 a2 ((constMulLayout2.bank j).Cadd i) = false)
       ∧ (∀ j i, j < 3 → constMulState a0 a1 a2 ((constMulLayout2.bank j).C1 i) = false)
       ∧ (∀ j i, j < 3 → constMulState a0 a1 a2 ((constMulLayout2.bank j).C2 i) = false)
@@ -520,7 +527,7 @@ def constMulLayout1 : ConstMulLayout 200 4 1 where
     have ht := cBank_touch_range j (by omega) w htouch
     omega
 
-private theorem constMulState1_pre (a0 a1 a2 : Bool) :
+theorem constMulState1_pre (a0 a1 a2 : Bool) :
     (∀ j i, j < 1 → constMulState a0 a1 a2 ((constMulLayout1.bank j).Cadd i) = false)
       ∧ (∀ j i, j < 1 → constMulState a0 a1 a2 ((constMulLayout1.bank j).C1 i) = false)
       ∧ (∀ j i, j < 1 → constMulState a0 a1 a2 ((constMulLayout1.bank j).C2 i) = false)

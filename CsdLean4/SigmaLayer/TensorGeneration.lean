@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.TensorSector
+module
+
+public import CsdLean4.SigmaLayer.TensorSector
 
 /-!
 # SigmaLayer/TensorGeneration: the tensor product resolved into the local observable algebras
@@ -32,6 +34,8 @@ References: `specs/future-work.md` (P3 / SL-T3); `SigmaLayer/TensorSector.lean` 
 `aliceOp_bobOp_commute`, `tensorIndexEquiv`).
 -/
 
+@[expose] public section
+
 open Matrix
 open CSD.Empirical.QM
 
@@ -54,7 +58,7 @@ theorem single_prod (i j : Fin m) (k l : Fin n) :
     simp_all
 
 /-- `single p q c = c • single p q 1` (a matrix basis element is the scalar times the unit one). -/
-private theorem single_eq_smul {ι κ : Type*} [DecidableEq ι] [DecidableEq κ]
+theorem single_eq_smul {ι κ : Type*} [DecidableEq ι] [DecidableEq κ]
     (i : ι) (j : κ) (c : ℂ) : single i j c = c • single i j (1 : ℂ) := by
   ext a b; simp only [Matrix.single, Matrix.of_apply, Matrix.smul_apply, smul_eq_mul]
   split <;> simp

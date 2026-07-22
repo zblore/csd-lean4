@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Einselection
-import CsdLean4.Mathlib.QuantumInfo.Entropy
+module
+
+public import CsdLean4.Empirical.CSD.Einselection
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
 /-!
 # Empirical/CSD: channel capacities of the de-isolation / dephasing channel (Build 15e)
@@ -60,6 +62,8 @@ of `Φ ≠ id`) is D1-gated to the entangled tier (LF6); `Φ = id` in every conc
 All exports are foundational-triple-only (off `busch_effect_gleason`): concrete
 `Matrix` spectral arithmetic on the 15a dephasing channel and the K1-A entropy.
 -/
+
+@[expose] public section
 
 open Matrix Polynomial QuantumInfo
 open CSD.LF2 CSD.LF5

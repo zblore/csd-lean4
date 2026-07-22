@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.UnitarySelection
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
+module
+
+public import CsdLean4.LF4.UnitarySelection
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
 
 /-!
 # W3 clopen-datum closure: the Bargmann discriminator
@@ -64,6 +66,8 @@ Foundational-triple only (`propext, Classical.choice, Quot.sound`); no
 (`projectedFlow_unitary_or_antiunitary`, `projectedFlow_unitary_of_clopen`)
 and the Bargmann layer; Wigner is not re-proved.
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization
 open Projectivization

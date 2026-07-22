@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Outcomes
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.ProductMeasure
+module
+
+public import CsdLean4.LF1.Outcomes
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.ProductMeasure
 
 /-!
 # LF1 Trials
@@ -19,6 +21,8 @@ models repetition of preparation, not stochastic dynamics of a single trial.
 
 Single-trial evolution remains deterministic at the ontic level.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornRegionUncond
+module
+
+public import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # Empirical/CSD: GHZ three-qubit joint probabilities as derived Kähler-volume frequencies
@@ -66,6 +68,8 @@ labelling is LF4-todo §14.
   3373; Pan et al. 2000: *Nature* **403**, 515.
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization
 
@@ -77,21 +81,21 @@ namespace GHZVolume
 /-! ### Helpers -/
 
 /-- Eight-term expansion of a sum over `Fin 8` (no `Fin.sum_univ_eight` in Mathlib). -/
-private lemma sum_univ_eight {M : Type*} [AddCommMonoid M] (f : Fin 8 → M) :
+lemma sum_univ_eight {M : Type*} [AddCommMonoid M] (f : Fin 8 → M) :
     ∑ i, f i = f 0 + f 1 + f 2 + f 3 + f 4 + f 5 + f 6 + f 7 := by
   simp [Fin.sum_univ_succ, add_assoc]
 
 /-- `‖⟨eᵢ, ψ⟩‖² = ‖ψᵢ‖²` on `ℂℙ⁷`. -/
-private lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 8)) (i : Fin 8) :
+lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 8)) (i : Fin 8) :
     ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 = ‖ψ.ofLp i‖ ^ 2 := by
   rw [EuclideanSpace.inner_single_left, map_one, one_mul]
 
 /-- `‖↑r‖² = r²`. -/
-private lemma realNormSq (r : ℝ) : ‖((r : ℝ) : ℂ)‖ ^ 2 = r ^ 2 := by
+lemma realNormSq (r : ℝ) : ‖((r : ℝ) : ℂ)‖ ^ 2 = r ^ 2 := by
   rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
 
 /-- `‖↑r · i‖² = r²`. -/
-private lemma imagNormSq (r : ℝ) : ‖((r : ℝ) : ℂ) * Complex.I‖ ^ 2 = r ^ 2 := by
+lemma imagNormSq (r : ℝ) : ‖((r : ℝ) : ℂ) * Complex.I‖ ^ 2 = r ^ 2 := by
   rw [norm_mul, Complex.norm_I, mul_one, Complex.norm_real, Real.norm_eq_abs, sq_abs]
 
 /-! ### The GHZ amplitude vector on `ℂℙ⁷` (generic xy-plane basis) -/

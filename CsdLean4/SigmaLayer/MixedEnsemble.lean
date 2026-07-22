@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.MixedState
+module
+
+public import CsdLean4.SigmaLayer.MixedState
 
 /-!
 # SigmaLayer/MixedEnsemble: finite ensembles and the spectral ensemble decomposition (#8 A+B)
@@ -33,6 +35,8 @@ References: `SigmaLayer/MixedState.lean` (`mix`, `traceForm_mix`, `IsPure`, `max
 `LF2/BornWrapper.lean` (`DensityOperator`, `Effect`, `traceForm`, `outerProduct`, `rankOneDensity`,
 `born_quadratic`); `specs/future-work.md` SL-T9.
 -/
+
+@[expose] public section
 
 open Matrix Unitary
 open scoped ComplexOrder

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.Kernel
+module
+
+public import CsdLean4.LF3.Singlet.Kernel
 
 /-!
 # LF3 Singlet / Leakage: finite-leakage stability of kernel, correlation, marginals
@@ -18,6 +20,8 @@ sum over `Sign × Sign` or `Sign`, with the per-sector deviation supplied by
 `sectorVolume_finite_leakage` from `Projectors/SectorVolume.lean` with the
 `cst_squared_eq` algebraic core.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

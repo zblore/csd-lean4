@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ProjectiveSector
-import CsdLean4.SigmaLayer.TheoremTargets
-import CsdLean4.LF4.ManyToOnePillars
-import CsdLean4.LF4.KahlerVolumeForced
+module
+
+public import CsdLean4.SigmaLayer.ProjectiveSector
+public import CsdLean4.SigmaLayer.TheoremTargets
+public import CsdLean4.LF4.ManyToOnePillars
+public import CsdLean4.LF4.KahlerVolumeForced
 
 /-!
 # SigmaLayer/MeasureBridge: the projective measure bridge and its concrete product proof
@@ -23,6 +25,8 @@ existing `manyToOneSetup_baseVolume_eq_fubiniStudy` (which reuses `Measure.fst_p
 We do NOT install the Fubini-Study equality as a typeclass instance for every projective sector; it is a
 named field / predicate, proved only where a concrete model supplies it.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix.UnitaryGroup
 

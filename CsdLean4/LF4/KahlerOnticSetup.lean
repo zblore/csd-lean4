@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
-import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 
 /-!
 # W2: the Kähler ontic-sector interface
@@ -82,6 +84,8 @@ needing exterior calculus absent from Mathlib). When Mathlib grows that API, the
 `IsFubiniStudyKahler` to the full closed-2-form condition; the dynamical fields are
 unaffected. See `specs/connectivity-manifest.md` (link L1) and `PLACEHOLDERS.md`.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped LinearAlgebra.Projectivization

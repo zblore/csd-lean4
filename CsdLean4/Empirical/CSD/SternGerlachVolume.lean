@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentUniform
-import CsdLean4.LF4.SingleQubitKahler
+module
+
+public import CsdLean4.LF4.MomentUniform
+public import CsdLean4.LF4.SingleQubitKahler
 
 /-!
 # Empirical/CSD: Stern-Gerlach Born values as derived Kähler-volume frequencies
@@ -55,6 +57,8 @@ function dictionary. The carved capstone (2) carries the same boundary.
 - Stern, Gerlach 1922: *Z. Phys.* **9**, 349.
 - Phipps, Taylor 1927: *Phys. Rev.* **29**, 309.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

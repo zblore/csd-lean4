@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 
 /-!
 # Reversible modular inverse — the semantic layer  (ECDLP Tranche 4)
@@ -37,6 +39,8 @@ from the Tranche-3 multiplier). So the dominant cost is multiplications (Tranche
 counts), and the inversion-as-a-circuit is deferred to the EC layer's coordinate choice. What is
 established here is the inversion *oracle* and the reversibility algebra that the EC group law consumes.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

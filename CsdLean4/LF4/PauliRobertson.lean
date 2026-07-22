@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.UncertaintyKahler
-import CsdLean4.LF4.SingleQubitKahler
+module
+
+public import CsdLean4.LF4.UncertaintyKahler
+public import CsdLean4.LF4.SingleQubitKahler
 
 /-!
 # LF4 §14.2 Robertson saturation: Pauli σ_x, σ_y on |0⟩ (N=2)
@@ -50,6 +52,8 @@ saturation theorem `pauli_xy_robertson_saturation`.
 Foundational triple only.
 -/
 
+@[expose] public section
+
 open MeasureTheory Matrix
 
 namespace CSD
@@ -67,16 +71,16 @@ noncomputable def pauliY : Matrix (Fin 2) (Fin 2) ℂ := !![0, -Complex.I; Compl
 noncomputable def zMinusVec : EuclideanSpace ℂ (Fin 2) :=
   EuclideanSpace.single 1 (1 : ℂ)
 
-private lemma zPlusVec_entry_0 : zPlusVec.ofLp 0 = (1 : ℂ) := by
+lemma zPlusVec_entry_0 : zPlusVec.ofLp 0 = (1 : ℂ) := by
   simp [zPlusVec, EuclideanSpace.single]
 
-private lemma zPlusVec_entry_1 : zPlusVec.ofLp 1 = (0 : ℂ) := by
+lemma zPlusVec_entry_1 : zPlusVec.ofLp 1 = (0 : ℂ) := by
   simp [zPlusVec, EuclideanSpace.single]
 
-private lemma zMinusVec_entry_0 : zMinusVec.ofLp 0 = (0 : ℂ) := by
+lemma zMinusVec_entry_0 : zMinusVec.ofLp 0 = (0 : ℂ) := by
   simp [zMinusVec, EuclideanSpace.single]
 
-private lemma zMinusVec_entry_1 : zMinusVec.ofLp 1 = (1 : ℂ) := by
+lemma zMinusVec_entry_1 : zMinusVec.ofLp 1 = (1 : ℂ) := by
   simp [zMinusVec, EuclideanSpace.single]
 
 lemma zMinusVec_norm : ‖zMinusVec‖ = 1 := by

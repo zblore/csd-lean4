@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.MeasurementAdder
-import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+module
+
+public import CsdLean4.Empirical.QM.MeasurementAdder
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 
 /-!
 # Measurement-based re-cost of the Gidney adder  (Tier-X / Build #35, Part C)
@@ -56,6 +58,8 @@ The legitimacy of each per-block swap rests on `#31`'s `andInput`-shaped block e
 `n`-fold amplitude state-equality of the hybrid stays walled at the `#21` `QReg 3 ⊗ QReg (m−3)` tensor
 factor.
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open QuantumInfo

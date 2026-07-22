@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
+module
+
+public import CsdLean4.LF2.BornWrapper
 
 /-!
 # Phase invariance of rank-1 outer products and wrappers
@@ -21,6 +23,8 @@ Used downstream by the volume-ratio effect function `effectProjFn`
 (pre-LF4 plan Phase 2) to justify well-definedness under a caller-
 supplied phase-arbitrary `rep : P → EuclideanSpace ℂ (Fin N)` map.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

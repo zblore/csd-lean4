@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.QEC.ThreeQubit
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 
 /-!
 # Empirical/CSD: the three-qubit bit-flip code (CSD-side reading)
@@ -59,6 +61,8 @@ an LF5-style de-isolation flow `Φ_syn ≠ id`. That coherent-error realisation 
 
 Shor 1995, *Phys. Rev. A* **52**, R2493 (the bit-flip half of the 9-qubit code).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

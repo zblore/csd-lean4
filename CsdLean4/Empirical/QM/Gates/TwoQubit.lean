@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Data.Complex.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Data.Complex.Basic
 
 /-!
 # Empirical/QM: Two-qubit gates (CNOT, SWAP, CZ)
@@ -29,6 +31,8 @@ Basis order `|00⟩, |01⟩, |10⟩, |11⟩` (qubit-0 = high bit, qubit-1
 = low bit). Function-based matrix definitions; the `!!` notation
 fails to propagate ℂ elaboration cleanly for 4×4.
 -/
+
+@[expose] public section
 
 open Matrix
 

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentMarginalUniform
-import CsdLean4.Mathlib.MeasureTheory.PiCurry
+module
+
+public import CsdLean4.LF4.MomentMarginalUniform
+public import CsdLean4.Mathlib.MeasureTheory.PiCurry
 
 /-!
 # LF4 general-N Slice E (bridge): `ℝ^{N×2}` Gaussian → `Exp(1/2)^{⊗N}`
@@ -29,6 +31,8 @@ This **bypasses Slice C** (`blockSqNorm_map_gaussianN_pi`, which routed through
 so the single-block computation is the Fin-2 form of Slice 1, not the `gaussian2`
 explicit-density form. See `specs/general-n-dh-plan.md` Slice E.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set
 open scoped ENNReal

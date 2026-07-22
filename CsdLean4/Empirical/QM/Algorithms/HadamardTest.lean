@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
-import CsdLean4.Empirical.QM.Algorithms.SwapTest
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
+public import CsdLean4.Empirical.QM.Algorithms.SwapTest
 
 /-!
 # The Hadamard test (expectation-value estimator)
@@ -60,6 +62,8 @@ plain linear map.
 (For `ι = Empty` the unit hypotheses `‖ψ‖ = 1` are unsatisfiable, so the headlines hold
 vacuously there; non-vacuous content needs an inhabited system `ι`.)
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open QuantumInfo

@@ -3,8 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 
 /-!
 # Reversible modular subtraction — the verified value primitive `(a, b) ↦ (a − b mod N, b)`  (ECDLP Phase 2, Stage S6.3e-1)
@@ -75,6 +79,8 @@ two Toffolis per `fullSub` slice — the two `X mw` framing gates are free) + fi
 (`cRippleCirc_toffoli`, the controlled add-back), composed through `cost_comp_toffoli_count`. Same
 `10n` as the single-step `modReduce` (S6.3a): a verified compare-and-conditional-add.
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -699,7 +705,7 @@ def modSubState2 (a0 a1 a2 b0 b1 b2 : Bool) : State 25 := fun w =>
 /-- The hypotheses of `modSub_correct` hold at `modSubState2` (borrows / carries / ancilla clear,
 `Nreg = 5`), for any data bits. The `regValRange` register-value preconditions are concrete sums,
 discharged by `decide`. -/
-private theorem modSubState2_pre (a0 a1 a2 b0 b1 b2 : Bool) :
+theorem modSubState2_pre (a0 a1 a2 b0 b1 b2 : Bool) :
     (∀ j, modSubState2 a0 a1 a2 b0 b1 b2 (modSubLayout2.Bor j) = false)
       ∧ (∀ j, modSubState2 a0 a1 a2 b0 b1 b2 (modSubLayout2.C j) = false)
       ∧ modSubState2 a0 a1 a2 b0 b1 b2 modSubLayout2.anc = false

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ProjectiveSector
-import CsdLean4.Mathlib.Probability.CGLMP
-import CsdLean4.LF2.POVM
-import CsdLean4.LF2.ReducedDensity
+module
+
+public import CsdLean4.SigmaLayer.ProjectiveSector
+public import CsdLean4.Mathlib.Probability.CGLMP
+public import CsdLean4.LF2.POVM
+public import CsdLean4.LF2.ReducedDensity
 
 /-!
 # SigmaLayer/CompositeInterface: composite, mixed-state, POVM, contextuality and Bell targets
@@ -40,6 +42,8 @@ module. We deliberately provide NO inhabitants here.
   (the POVM/Born surface is on pure states). `DensityOperatorIx.IsPure` below adds the purity predicate;
   the ensemble/mixture and mixed-Born content remains a genuine gap.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped BigOperators LinearAlgebra.Projectivization

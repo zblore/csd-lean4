@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.CapstoneCanonical
-import CsdLean4.LF4.BornRegionDisjoint
-import CsdLean4.Empirical.QM.QEC.ThreeQubit
+module
+
+public import CsdLean4.LF5.CapstoneCanonical
+public import CsdLean4.LF4.BornRegionDisjoint
+public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 
 /-!
 # LF5: syndrome measurement as a coarse-grained de-isolation flow (QEC, projective tier)
@@ -98,6 +100,8 @@ Mirrors the register-Σ honesty conventions of the other LF5 module docstrings.
 
 Reference: `specs/lf5-plan.md`; `specs/carve-out-plan.md` §6.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization
@@ -217,7 +221,7 @@ noncomputable def syndromeRegion (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0
 
 /-- The cells `bornRegion ψ' (e p)` indexed by distinct `p` are disjoint
 (`bornRegion_pairwiseDisjoint` + `e` injective). -/
-private lemma bornRegion_e_pairwiseDisjoint
+lemma bornRegion_e_pairwiseDisjoint
     (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0)
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (t : Finset (Fin 8 × Fin 8)) :
     (↑t : Set (Fin 8 × Fin 8)).PairwiseDisjoint

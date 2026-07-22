@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 
 /-!
 # Simon's algorithm
@@ -45,6 +47,8 @@ the unnormalised `√2 |x₀⟩`); it is retained for the physical reading (a ge
 coset). It *is* load-bearing for `cosetState_normalized` (norm `1` requires the two basis
 states to be distinct).
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open QuantumInfo

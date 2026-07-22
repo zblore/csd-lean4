@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+public import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Matrix unitary group action on projective Euclidean space
@@ -59,6 +61,8 @@ The file is intended to land in
 
 projectivization, unitary group, MulAction, complex projective space
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped LinearAlgebra.Projectivization

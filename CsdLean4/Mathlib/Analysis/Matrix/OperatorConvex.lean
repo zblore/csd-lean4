@@ -3,19 +3,21 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-import Mathlib.Data.Matrix.Block
-import Mathlib.Analysis.Convex.Function
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation
-import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Topology.Algebra.Module.FiniteDimension
+module
+
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Matrix.Normed
+public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.SchurComplement
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+public import Mathlib.Data.Matrix.Block
+public import Mathlib.Analysis.Convex.Function
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation
+public import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
 
 /-!
 # Operator convexity / concavity for matrix functions (foundational rungs)
@@ -88,6 +90,8 @@ the data-processing inequality `hDPI` of
 
 operator convex, operator monotone, Löwner order, Schur complement, functional calculus
 -/
+
+@[expose] public section
 
 open scoped MatrixOrder ComplexOrder
 open Matrix

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Data.Complex.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Data.Complex.Basic
 
 /-!
 # W4: the finite-dimensional obstruction to exact canonical commutation
@@ -54,6 +56,8 @@ matrices. The CSD interpretation lives only in this docstring.
 `Matrix.trace_sub`, `Matrix.trace_mul_comm`, `Matrix.trace_smul`,
 `Matrix.trace_one`.
 -/
+
+@[expose] public section
 
 namespace CSD.CV
 

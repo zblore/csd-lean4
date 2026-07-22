@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.ContextVolume
-import CsdLean4.Empirical.CSD.VolumeCanonical
-import CsdLean4.Empirical.QM.Contextuality.KS18
+module
+
+public import CsdLean4.Empirical.CSD.ContextVolume
+public import CsdLean4.Empirical.CSD.VolumeCanonical
+public import CsdLean4.Empirical.QM.Contextuality.KS18
 
 /-!
 # Empirical/CSD: Kochen-Specker (Cabello-18) contextual Born weights as Kähler volumes
@@ -66,6 +68,8 @@ no-go, now sitting beside a genuine per-context volume realisation.
   instantiation inherits that.
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization
 
@@ -85,11 +89,11 @@ noncomputable def cabelloVecC (i : Fin 18) : EuclideanSpace ℂ (Fin 4) :=
 
 /-- Scalar real inner product on `ℝ` (the `RCLike.toInnerProductSpaceReal` instance produced
 by `PiLp.inner_apply` on a real `EuclideanSpace`): `⟨a, b⟩_ℝ = a * b`. -/
-private lemma real_scalar_inner (a b : ℝ) : (inner ℝ a b : ℝ) = a * b := by
+lemma real_scalar_inner (a b : ℝ) : (inner ℝ a b : ℝ) = a * b := by
   rw [real_inner_eq_re_inner ℝ]; simp [RCLike.inner_apply, mul_comm]
 
 /-- Scalar complex inner product of two real coercions: `⟨↑a, ↑b⟩_ℂ = ↑(a * b)`. -/
-private lemma cplx_scalar_inner (a b : ℝ) : (inner ℂ (↑a : ℂ) (↑b : ℂ) : ℂ) = ↑(a * b) := by
+lemma cplx_scalar_inner (a b : ℝ) : (inner ℂ (↑a : ℂ) (↑b : ℂ) : ℂ) = ↑(a * b) := by
   rw [RCLike.inner_apply, Complex.conj_ofReal]; push_cast; ring
 
 /-- **Complexification transport.** The complex inner product of two complexified Cabello rays

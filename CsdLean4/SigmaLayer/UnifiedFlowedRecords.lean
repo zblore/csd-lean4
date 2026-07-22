@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.UnifiedMeasurement
-import CsdLean4.SigmaLayer.TimeIndexedRecord
-import CsdLean4.LF4.ManyToOnePillars
+module
+
+public import CsdLean4.SigmaLayer.UnifiedMeasurement
+public import CsdLean4.SigmaLayer.TimeIndexedRecord
+public import CsdLean4.LF4.ManyToOnePillars
 
 /-!
 # SigmaLayer/UnifiedFlowedRecords: time-indexed records ON the unified model (#5)
@@ -39,6 +41,8 @@ So the "records are time-physical on the unified model" claim, previously suppor
 References: `SigmaLayer/UnifiedMeasurement.lean` (`vnRecordSemanticsProd`, `unifiedDeisolationModel`),
 `SigmaLayer/TimeIndexedRecord.lean` (`flowedSemantics`, `flowedSemantics_persistence`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Filter Topology ProbabilityTheory
 

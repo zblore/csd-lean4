@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.State
+module
+
+public import CsdLean4.LF3.Singlet.State
 
 /-!
 # LF3 Singlet / Expectations: the headline 4×4 Pauli expectation calculation
@@ -29,6 +31,8 @@ sums over `Fin 2 × Fin 2`, push `star` past pointwise application with
 terms vanish from factors of zero), and close with `ring_nf` + the
 `((√2)⁻¹)² = 1/2` helper.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate
 open Matrix

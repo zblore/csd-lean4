@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.GHZDeisolationFlow
+module
+
+public import CsdLean4.LF6.GHZDeisolationFlow
 
 /-!
 # LF6-C.3: the GHZ Mermin-context carve (the genuine contextual increment)
@@ -106,6 +108,8 @@ is off Busch, C.1 is measure-theoretic Mermin content).
 
 Reference: `specs/lf6-plan.md` (LF6-C.3).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

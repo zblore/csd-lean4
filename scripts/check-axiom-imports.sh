@@ -27,11 +27,14 @@ AA="CsdLean4/Tests/AxiomAudit.lean"
 # --- Transitive import closure of AxiomAudit, as repo-relative file paths. ---
 declare -A inclosure
 queue=()
-imp_to_file() { sed 's/^import //; s/\./\//g; s/$/.lean/'; }
+# Match legacy `import`, and the Lean 4 module-system forms `public import` / `meta import`
+# / `public meta import`, stripping the modifier prefix before turning the module path into a file.
+imp_re='^(public )?(meta )?import CsdLean4'
+imp_to_file() { sed -E 's/^(public )?(meta )?import //; s/\./\//g; s/$/.lean/'; }
 while read -r f; do
   [ -n "$f" ] || continue
   inclosure["$f"]=1; queue+=("$f")
-done < <(grep -E '^import CsdLean4' "$AA" | imp_to_file)
+done < <(grep -E "$imp_re" "$AA" | imp_to_file)
 
 i=0
 while [ "$i" -lt "${#queue[@]}" ]; do
@@ -40,7 +43,7 @@ while [ "$i" -lt "${#queue[@]}" ]; do
   while read -r g; do
     [ -n "$g" ] || continue
     if [ -z "${inclosure[$g]:-}" ]; then inclosure["$g"]=1; queue+=("$g"); fi
-  done < <(grep -E '^import CsdLean4' "$f" | imp_to_file)
+  done < <(grep -E "$imp_re" "$f" | imp_to_file)
 done
 
 # --- Check every pinned constant's defining module is in the closure. ---

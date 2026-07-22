@@ -3,15 +3,19 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Measure.FiniteMeasure
-import Mathlib.Dynamics.Ergodic.MeasurePreserving
-import Mathlib.MeasureTheory.Measure.MeasureSpace
+module
+
+public import Mathlib.MeasureTheory.Measure.FiniteMeasure
+public import Mathlib.Dynamics.Ergodic.MeasurePreserving
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
 
 /-!
 # LF1 Setup
 
 **Category:** 3-Local (LF1 ontic phase-space data: measurable space, Liouville measure, deterministic flow, preparation region).
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

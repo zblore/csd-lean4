@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fintype.Pi
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fintype.Pi
 
 /-!
 # Reversible modular addition — register encoding, verified full adder, ripple cost  (ECDLP Tranche 2, Pass 1)
@@ -46,6 +48,8 @@ carry invariant) lifting `fullAdder_correct_general` through the frame lemma and
 arithmetic `fulladder_nat`. Non-vacuity witnessed by `rippleLayout2` (a concrete 2-bit layout on
 `Fin 7`). This is the genuine *computational* correctness, not just the cost.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

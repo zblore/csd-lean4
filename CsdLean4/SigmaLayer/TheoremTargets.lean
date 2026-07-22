@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ProjectiveSector
-import CsdLean4.LF4.ProjectedDynamics
+module
+
+public import CsdLean4.SigmaLayer.ProjectiveSector
+public import CsdLean4.LF4.ProjectedDynamics
 
 /-!
 # SigmaLayer/TheoremTargets: the quantum reconstruction targets as uninhabited predicates
@@ -23,6 +25,8 @@ targets (Lüders update, no-signalling, contextuality, Bell) are defined in thei
 concrete models (see `SigmaLayer/LiftedMeasurement.lean` and `SigmaLayer/ForwardCapstone.lean`, and the existing
 LF4/LF5/LF6 theorems they connect to).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped BigOperators LinearAlgebra.Projectivization

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.Data.ZMod.Basic
 
 /-!
 # The CGLMP qudit Bell inequality and its local-hidden-variable bound
@@ -95,6 +97,8 @@ on the LHV table. The classical (CGLMP) bound is `I_d ≤ 2`, and it is tight
 Reference: Collins, Gisin, Linden, Massar, Popescu, *Phys. Rev. Lett.* **88**,
 040404 (2002).
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open MeasureTheory

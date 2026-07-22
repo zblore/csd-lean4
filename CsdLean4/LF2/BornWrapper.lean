@@ -3,16 +3,18 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.Complex.Order
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.DotProduct
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Analysis.Complex.Order
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.LinearAlgebra.Matrix.DotProduct
 
 /-!
 # LF2 Born-Weight Wrapper
@@ -30,6 +32,8 @@ needed; PSD inner-product route).
 This file is built incrementally; see the companion plan at
 `specs/LF2-plan.md` §2.4.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

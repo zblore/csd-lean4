@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF2.EffectAux
+module
+
+public import CsdLean4.LF4.POVMNaimark
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/CSD: the qubit trine POVM and its Born weights as Kähler volumes
@@ -32,6 +34,8 @@ The capstone is unconditional: it routes through the hpos-free engine
 genericity hypothesis on the dilated state is carried (2026-06-11 migration);
 vanishing dilated amplitudes give FS-null cells.
 -/
+
+@[expose] public section
 
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
 open scoped Kronecker MatrixOrder ComplexOrder LinearAlgebra.Projectivization

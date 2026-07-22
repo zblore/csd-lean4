@@ -3,7 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 
 /-!
 # The carry-clean (ancilla-restoring) MODULAR adder  (ECDLP Phase 2, Stage 2)
@@ -65,6 +70,8 @@ qubits. The carry-clean modular MULTIPLY (folding this over the multiplicand bit
 figure re-cost are Stage 2b / Stage 3, not built here.
 -/
 
+@[expose] public section
+
 namespace Reversible
 
 variable {m n : ℕ}
@@ -123,7 +130,7 @@ theorem regValRange_top_bit (f : ℕ → Fin m) (s : State m) (k : ℕ) :
     rw [eq_comm, decide_eq_true_eq]; omega
 
 /-- A `regValRange`-congruence shortcut: equal on the low `k` wires ⇒ equal readouts. -/
-private theorem rvc {f : ℕ → Fin m} {x y : State m} {k : ℕ}
+theorem rvc {f : ℕ → Fin m} {x y : State m} {k : ℕ}
     (h : ∀ j, j < k → x (f j) = y (f j)) : regValRange f x k = regValRange f y k :=
   Finset.sum_congr rfl (fun j hj => by rw [h j (Finset.mem_range.mp hj)])
 
@@ -799,7 +806,7 @@ def cuccaroModState3 (a0 a1 a2 b0 b1 b2 : Bool) : State 18 := fun w =>
 
 /-- Structural hypotheses of `cuccaroModAdd_correct` hold at `cuccaroModState3` (clean scratch,
 `Nreg = 3`), for any data bits. -/
-private theorem cuccaroModState3_pre (a0 a1 a2 b0 b1 b2 : Bool) :
+theorem cuccaroModState3_pre (a0 a1 a2 b0 b1 b2 : Bool) :
     cuccaroModState3 a0 a1 a2 b0 b1 b2 (cuccaroModLayout3.Acc 3) = false
       ∧ cuccaroModState3 a0 a1 a2 b0 b1 b2 (cuccaroModLayout3.B 3) = false
       ∧ cuccaroModState3 a0 a1 a2 b0 b1 b2 (cuccaroModLayout3.Nreg 3) = false

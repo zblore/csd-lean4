@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.LocalDeisolationFlow
-import CsdLean4.LF6.GHZDeisolationFlow
+module
+
+public import CsdLean4.LF6.LocalDeisolationFlow
+public import CsdLean4.LF6.GHZDeisolationFlow
 
 /-!
 # LF6-C.4: a manifestly LOCAL product de-isolation flow realising the GHZ measurement
@@ -94,6 +96,8 @@ volume engine is off Busch).
 Reference: `specs/lf6-plan.md` (LF6-C.4).
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal Kronecker LinearAlgebra.Projectivization
 
@@ -105,7 +109,7 @@ open CSD.LF2 CSD.LF4 CSD.LF5
 /-! ### Boolean-indicator algebra helper -/
 
 /-- Product of two `0/1` indicators is the indicator of the conjunction. -/
-private lemma ite3_mul_ite_one {P Q : Prop} [Decidable P] [Decidable Q] :
+lemma ite3_mul_ite_one {P Q : Prop} [Decidable P] [Decidable Q] :
     (if P then (1 : ℂ) else 0) * (if Q then (1 : ℂ) else 0) = if P ∧ Q then (1 : ℂ) else 0 := by
   split_ifs <;> simp_all
 
@@ -186,7 +190,7 @@ theorem ghzLocal_factorises :
 
 /-- The inner two-wing Kronecker de-isolation is an isometry (reused for the
 triple isometry). -/
-private lemma wingKron2_isom :
+lemma wingKron2_isom :
     (wingDeisolationV ⊗ₖ wingDeisolationV)ᴴ * (wingDeisolationV ⊗ₖ wingDeisolationV) = 1 := by
   rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul,
     show wingDeisolationVᴴ * wingDeisolationV = 1 from vnDilationV_isom,
@@ -437,7 +441,7 @@ noncomputable def ghzLocalEmbedGround : Matrix (Fin 8 × Fin 8) (Fin 8) ℂ :=
   Matrix.reindex ghzDilEquiv ghzIdx (embedGround 2 ⊗ₖ (embedGround 2 ⊗ₖ embedGround 2))
 
 /-- The inner two-wing ground embedding is an isometry. -/
-private lemma embedGroundKron2_isom :
+lemma embedGroundKron2_isom :
     (embedGround 2 ⊗ₖ embedGround 2)ᴴ * (embedGround 2 ⊗ₖ embedGround 2) = 1 := by
   rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul,
     show (embedGround 2)ᴴ * embedGround 2 = 1 from embedGround_isom, Matrix.one_kronecker_one]

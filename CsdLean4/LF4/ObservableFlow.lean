@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentMap
-import CsdLean4.LF1.GeneralFrequency
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+module
+
+public import CsdLean4.LF4.MomentMap
+public import CsdLean4.LF1.GeneralFrequency
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 
 /-!
 # The measured observable's Hamiltonian flow on `Σ = ℂℙ^{N-1}`
@@ -47,6 +49,8 @@ commit an outcome. That measurement-dynamics content is now built in the **LF5 l
 `measurement_flow_born_frequency`, the per-microstate outcome function `vnPointerOutcome`);
 the deeper D1 strata (entangled de-isolation, instance-level dynamics) remain open.
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter

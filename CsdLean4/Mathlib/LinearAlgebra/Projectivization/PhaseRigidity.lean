@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
-import Mathlib.LinearAlgebra.Center
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+public import Mathlib.LinearAlgebra.Center
 
 /-!
 # Phase rigidity: unitaries with the same projective action differ by a phase
@@ -46,6 +48,8 @@ first step of the projective-to-vector phase lift.
 
 projectivization, unitary group, projective representation, phase, rigidity
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization
 open Matrix

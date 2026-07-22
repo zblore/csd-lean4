@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.LinearMap
+module
+
+public import Mathlib.Analysis.InnerProductSpace.LinearMap
 
 /-!
 # Empirical: No-deleting theorem
@@ -62,6 +64,8 @@ to the no-cloning case.
 Pati and Braunstein 2000, *Nature* **404**, 164 ("Impossibility of
 deleting an unknown quantum state").
 -/
+
+@[expose] public section
 
 open ComplexConjugate
 

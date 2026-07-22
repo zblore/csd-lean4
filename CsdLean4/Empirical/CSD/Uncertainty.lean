@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Uncertainty
-import CsdLean4.LF4.SingleQubitKahler
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Uncertainty
+public import CsdLean4.LF4.SingleQubitKahler
 
 /-!
 # Empirical/CSD: Robertson uncertainty relation (CSD-side reading)
@@ -64,6 +66,8 @@ by minimum-uncertainty states (coherent states for position–momentum).
 Robertson 1929, *Phys. Rev.* **34**, 163. Schrödinger 1930 (stronger
 form with anticommutator term, not formalised here or on the QM side).
 -/
+
+@[expose] public section
 
 open MeasureTheory ComplexConjugate
 

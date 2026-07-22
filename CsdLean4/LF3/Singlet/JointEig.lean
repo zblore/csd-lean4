@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.JointProjector
-import Mathlib.Analysis.Matrix.Hermitian
+module
+
+public import CsdLean4.LF3.Singlet.JointProjector
+public import Mathlib.Analysis.Matrix.Hermitian
 
 /-!
 # LF3 Singlet / JointEig: genuine joint spin eigenstates of the singlet (LF4 §3)
@@ -32,6 +34,8 @@ All over `EuclideanSpace ℂ (Fin 2 × Fin 2)`; the LF4 bundle re-indexes to
 construction covers all four sectors. Collinear settings (`a = ±b`) have one
 vanishing sector and are excluded; they carry no Born information anyway.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate
 open Matrix

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
+module
+
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 /-!
 # Empirical/QM: minimal reusable security-protocol interface
@@ -36,6 +38,8 @@ and is the slot the quantum-money tranche will reuse as forgery probability.
 composable-secrecy tranche that will consume it; at this interface layer it is
 deliberately abstract.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

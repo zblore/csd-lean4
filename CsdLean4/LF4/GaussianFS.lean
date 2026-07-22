@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentMarginal
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
+module
+
+public import CsdLean4.LF4.MomentMarginal
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
 
 /-!
 # LF4 plan B, Part 1 (step): unitary norm-preservation on `ℂ^N`
@@ -27,6 +29,8 @@ identification `gaussianCPN_eq_fubiniStudy` is proved there. The qubit DH fact
 `fs_moment_pushforward_uniform` is consequently a theorem (`MomentUniform.lean`),
 not an axiom.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

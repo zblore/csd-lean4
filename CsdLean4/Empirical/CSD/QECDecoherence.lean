@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.QEC.BitFlipChannel
-import CsdLean4.Empirical.CSD.QEC.ThreeQubit
+module
+
+public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
+public import CsdLean4.Empirical.CSD.QEC.ThreeQubit
 
 /-!
 # Empirical/CSD: QEC corrects a decoherence error (Build 15b)
@@ -53,6 +55,8 @@ All exports are foundational-triple-only (off `busch_effect_gleason`): concrete 
 algebra over the K2 `Channel` / Stinespring machinery.
 -/
 
+@[expose] public section
+
 open Matrix QuantumInfo
 open CSD.Empirical.QM.QEC
 open scoped ComplexOrder
@@ -92,7 +96,7 @@ theorem bitflip_error_is_decoherence (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
 
 /-- Conjugation by a self-inverse matrix is undone by a second conjugation:
 `X (X ρ X) X = ρ` when `X X = 1`. The algebraic core of "re-apply the identified error". -/
-private lemma conj_self_inv {n : Type*} [Fintype n] [DecidableEq n]
+lemma conj_self_inv {n : Type*} [Fintype n] [DecidableEq n]
     {X ρ : Matrix n n ℂ} (hX : X * X = 1) :
     X * (X * ρ * X) * X = ρ := by
   have h : X * (X * ρ * X) * X = (X * X) * ρ * (X * X) := by
@@ -225,7 +229,7 @@ theorem error_moves_encoded_density :
 def qubitZero : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, 0]
 
 /-- `X |0⟩⟨0| X = |1⟩⟨1|`: the bit-flip swaps the computational populations. -/
-private lemma pX_mul_qubitZero_mul_pX : pX * qubitZero * pX = !![0, 0; 0, 1] := by
+lemma pX_mul_qubitZero_mul_pX : pX * qubitZero * pX = !![0, 0; 0, 1] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [pX, qubitZero, Matrix.mul_apply, Fin.sum_univ_two, Matrix.cons_val_zero,

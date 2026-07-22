@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.WignerDischarge
-import CsdLean4.Empirical.CSD.Gates.MultiQubit
+module
+
+public import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+public import CsdLean4.Empirical.CSD.Gates.MultiQubit
 
 /-!
 # Empirical/CSD/Gates: §13.2 discharge for the multi-qubit gates (Toffoli, Fredkin)
@@ -29,6 +31,8 @@ not the Σ-flow-lift prose (open **D1** gap). `U_isometry` is derived from
 References: `Gates/SingleQubitDischarge.lean`, `Empirical/QM/Gates/MultiQubit.lean`
 (`qmToffoli`, `qmFredkin`, `qmG_unitary`), `PLACEHOLDERS.md` §1/§7.
 -/
+
+@[expose] public section
 
 open Matrix
 open CSD.Empirical.QM.Gates

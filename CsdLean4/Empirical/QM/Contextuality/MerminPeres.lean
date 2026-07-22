@@ -3,13 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Data.Complex.Basic
+module
+
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.NormNum
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Data.Complex.Basic
 
 /-!
 # Empirical: Mermin–Peres magic square (no LHV assignment)
@@ -110,6 +112,8 @@ documented in prose but not separately proven here. A future tranche
 should add the 6 operator-identity theorems (similar in flavor to
 GHZ's four Mermin expectations) to close that loop.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

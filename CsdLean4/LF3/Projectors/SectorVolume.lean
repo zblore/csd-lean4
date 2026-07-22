@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Projectors.Core
+module
+
+public import CsdLean4.LF3.Projectors.Core
 
 /-!
 # LF3 Projectors / SectorVolume: operator-form sector volume and bounds
@@ -30,6 +32,8 @@ with a concrete tensor decomposition of `H_SA`, the compatibility data would
 be derivable from the decomposition; in v1.00 it is taken as data, mirroring
 the design pattern used for `ProjectorAlgebra` and `MeasurementUnitary`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate
 

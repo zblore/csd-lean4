@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.ForcedContextuality
-import CsdLean4.Empirical.QM.Multipartite.GHZ
-import Mathlib.MeasureTheory.Integral.IntegrableOn
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
+module
+
+public import CsdLean4.LF6.ForcedContextuality
+public import CsdLean4.Empirical.QM.Multipartite.GHZ
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!
 # LF6-C.1: Forced contextuality of the GHZ state (the multipartite tier crux)
@@ -89,6 +91,8 @@ All exports are foundational-triple-only (the machinery is measure-theoretic; no
 Busch, no decide on the headline).
 -/
 
+@[expose] public section
+
 open MeasureTheory
 open scoped BigOperators
 
@@ -100,7 +104,7 @@ open CSD.LF3 CSD.Empirical CSD.Empirical.Bell CSD.Empirical.GHZ
 /-! ### plus/minus 1 arithmetic and integrability helpers -/
 
 /-- A product of two plus/minus 1 reals is plus/minus 1. -/
-private lemma pm_mul {a b : ℝ} (ha : a = 1 ∨ a = -1) (hb : b = 1 ∨ b = -1) :
+lemma pm_mul {a b : ℝ} (ha : a = 1 ∨ a = -1) (hb : b = 1 ∨ b = -1) :
     a * b = 1 ∨ a * b = -1 := by
   rcases ha with rfl | rfl <;> rcases hb with rfl | rfl <;> norm_num
 

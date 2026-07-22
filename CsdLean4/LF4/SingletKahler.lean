@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.KahlerInstance
-import CsdLean4.LF3.PurePreparation
-import CsdLean4.LF3.Interface
-import CsdLean4.LF3.Singlet.JointEig
-import CsdLean4.LF2.Preparation
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
+module
+
+public import CsdLean4.LF4.KahlerInstance
+public import CsdLean4.LF3.PurePreparation
+public import CsdLean4.LF3.Interface
+public import CsdLean4.LF3.Singlet.JointEig
+public import CsdLean4.LF2.Preparation
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 
 /-!
 # LF4 §8: the `ofKählerPreparation` constructor for the singlet
@@ -54,6 +56,8 @@ non-vacuous; the further reduction "why do volumes select Born?" remains
 the constraint-surface-dynamics open problem (LF4-todo §8 outro).
 -/
 
+@[expose] public section
+
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization
 open CSD.LF3
@@ -70,7 +74,7 @@ noncomputable def kReindex :
   LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv
 
 /-- A handy upper bound: `P_st ≤ 1` (it is in fact `≤ 1/2`, but `≤ 1` suffices). -/
-private lemma P_st_le_one (a b : DetectorSetting) (s t : Sign) :
+lemma P_st_le_one (a b : DetectorSetting) (s t : Sign) :
     P_st a b s t ≤ 1 := by
   unfold P_st
   have h := abs_dotR_le_one a b

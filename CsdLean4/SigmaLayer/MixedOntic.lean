@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ConditioningLuders
-import CsdLean4.SigmaLayer.MixedEnsemble
+module
+
+public import CsdLean4.SigmaLayer.ConditioningLuders
+public import CsdLean4.SigmaLayer.MixedEnsemble
 
 /-!
 # SigmaLayer/MixedOntic: the ontic-side mixed-state representation on the unified model (#8 C)
@@ -42,6 +44,8 @@ References: `SigmaLayer/ConditioningLuders.lean` (`onticRegion_measure_eq_born`)
 (`traceForm_eq_pureEnsemble`, `eigenvectorBasis_norm_one`, `density_isPureEnsemble`),
 `LF2/BornWrapper.lean` (`traceForm`, `rankOneEffect`, `born_quadratic`); `specs/future-work.md` SL-T9.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ComplexOrder

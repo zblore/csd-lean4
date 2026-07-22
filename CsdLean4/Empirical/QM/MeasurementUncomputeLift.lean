@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.MeasurementUncompute
-import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+module
+
+public import CsdLean4.Empirical.QM.MeasurementUncompute
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
 
 /-!
 # Localized amplitude lift of the AND-uncompute block  (Build #31, L5-c bridge at cell granularity)
@@ -66,6 +68,8 @@ uncomputes — `andAdd`'s `inverse andForward` — to obtain the circuit-level r
 needs threading the replacement through the `n` AND-uncomputes), and **step #7** (the harness). **No
 circuit-level re-cost claim is made here, and no ECDSA resource-score change.**
 -/
+
+@[expose] public section
 
 open scoped Matrix
 open QuantumInfo

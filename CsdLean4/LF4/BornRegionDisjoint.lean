@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornRegionUncond
+module
+
+public import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # LF4: pairwise disjointness of the Born regions, the per-microstate outcome map
@@ -46,6 +48,8 @@ enter through `bornRegion_fs_measure_uncond` (the FS-volume = Born engine);
 `Φ = id` still (D1). This file makes the partition structure formal; it does not
 exercise dynamics.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

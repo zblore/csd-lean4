@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Dynamics.Ergodic.Extreme
-import CsdLean4.SigmaLayer.TheoremTargets
+module
+
+public import Mathlib.Dynamics.Ergodic.Extreme
+public import CsdLean4.SigmaLayer.TheoremTargets
 
 /-!
 # SigmaLayer/UniqueErgodicity: the ergodic face of A5/L7, sharpened
@@ -52,6 +54,8 @@ References: `SigmaLayer/TheoremTargets.lean` (`BornFromFlow`, `IsErgodicForOutco
 (`IsForcedKahlerVolume` — the positive companion: `μ_FS` forced by the full `U(N)` symmetry),
 `specs/connectivity-manifest.md` (L7/A5), `specs/reconstruction-status.md` (T3 frontier).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

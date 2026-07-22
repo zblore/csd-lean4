@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.WeakMeasurement
+module
+
+public import CsdLean4.Empirical.CSD.WeakMeasurement
 
 /-!
 # Empirical/CSD: the quantum Zeno effect (Build 15d)
@@ -79,6 +81,8 @@ algebra over `EuclideanSpace ℂ (Fin 2)`, real trigonometric inequalities, and 
 / squeeze limit.
 -/
 
+@[expose] public section
+
 open Matrix Filter
 open scoped ComplexOrder
 
@@ -119,16 +123,16 @@ lemma zenoU_closed_form (s : ℝ) :
 
 /-! ### The `⟨0, M·0⟩` sandwich on the qubit -/
 
-private lemma toEuclideanLin_ofLp (M : Matrix (Fin 2) (Fin 2) ℂ)
+lemma toEuclideanLin_ofLp (M : Matrix (Fin 2) (Fin 2) ℂ)
     (v : EuclideanSpace ℂ (Fin 2)) (i : Fin 2) :
     (Matrix.toEuclideanLin M v).ofLp i = (M *ᵥ v.ofLp) i := rfl
 
-private lemma mulVec_e0 (M : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 2) :
+lemma mulVec_e0 (M : Matrix (Fin 2) (Fin 2) ℂ) (i : Fin 2) :
     (M *ᵥ e0.ofLp) i = M i 0 := by
   simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, e0_ofLp_zero, e0_ofLp_one]
 
 /-- The diagonal sandwich `⟨0, M·0⟩ = M₀₀` on the `|0⟩` preparation. -/
-private lemma inner_e0_M (M : Matrix (Fin 2) (Fin 2) ℂ) :
+lemma inner_e0_M (M : Matrix (Fin 2) (Fin 2) ℂ) :
     inner ℂ e0 (Matrix.toEuclideanLin M e0) = M 0 0 := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_two]
   simp only [toEuclideanLin_ofLp, mulVec_e0, Pi.star_apply, e0_ofLp_zero, e0_ofLp_one,
@@ -202,7 +206,7 @@ theorem zeno_survival_slope_zero : HasDerivAt survProb 0 0 := by
 
 /-- Bernoulli + monotonicity helper: if `0 ≤ P`, `1 − u ≤ P`, `0 ≤ u`, then
 `1 − n·u ≤ P^n`. -/
-private lemma pow_lower {P u : ℝ} (n : ℕ) (hP : 0 ≤ P) (hPu : 1 - u ≤ P) (_hu : 0 ≤ u) :
+lemma pow_lower {P u : ℝ} (n : ℕ) (hP : 0 ≤ P) (hPu : 1 - u ≤ P) (_hu : 0 ≤ u) :
     1 - n * u ≤ P ^ n := by
   by_cases hu1 : u ≤ 1
   · have hb : (0 : ℝ) ≤ 1 - u := by linarith

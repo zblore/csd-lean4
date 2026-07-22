@@ -3,13 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Function.Jacobian
-import Mathlib.MeasureTheory.Integral.Gamma
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.LinearAlgebra.Matrix.Block
-import CsdLean4.LF4.MomentMarginalUniform
-import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
+module
+
+public import Mathlib.MeasureTheory.Function.Jacobian
+public import Mathlib.MeasureTheory.Integral.Gamma
+public import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import CsdLean4.LF4.MomentMarginalUniform
+public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 
 /-!
 # LF4 general-N DH, Slice D (the crux): the ratio map sends `expHalf^{⊗N}` to Dirichlet
@@ -30,6 +32,8 @@ diffeo → D.4 inj/image → D.5 assembly).
 — the `n`-th moment base (`n = N−1`) that the substituted `S`-integral collapses
 to. Generalises `lintegral_radial_const` (N=2: `n=1`, `∫ S e^{−S/2} = 4 = 2²·1!`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Real Set
 open scoped ENNReal
@@ -400,12 +404,12 @@ theorem measurableSet_openSimplexFree : MeasurableSet (openSimplexFree (M := M))
   exact h1.inter (measurableSet_lt h2 measurable_const)
 
 /-- The single-coordinate `Exp(1/2)` density. -/
-private noncomputable def dExp (s : ℝ) : ℝ≥0∞ :=
+noncomputable def dExp (s : ℝ) : ℝ≥0∞ :=
   ENNReal.ofReal (if 0 < s then (1 / 2) * Real.exp (-s / 2) else 0)
 
-private theorem measurable_dExp : Measurable dExp := measurable_expHalf_density
+theorem measurable_dExp : Measurable dExp := measurable_expHalf_density
 
-private theorem expHalf_eq_withDensity_dExp : expHalf = volume.withDensity dExp := rfl
+theorem expHalf_eq_withDensity_dExp : expHalf = volume.withDensity dExp := rfl
 
 /-- **D.5c (the general-N Dirichlet law).** The free-coordinate ratio map pushes
 the `N`-fold product `Exp(1/2)^{⊗N}` (`N = M+1`) to `M!` times the uniform measure

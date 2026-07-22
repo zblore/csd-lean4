@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.SectorSeparation
+module
+
+public import CsdLean4.LF3.SectorSeparation
 
 /-!
 # LF3 Projectors / Core: abstract pointer-sector projective algebra
@@ -22,6 +24,8 @@ Self-adjointness is stated via the inner-product equation directly (matching
 the convention in `BinaryPointerProjectors` and `TensorFactorReadoutAlgebra`,
 avoiding `Star` typeclass synthesis on `H_SA →L[ℂ] H_SA`).
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

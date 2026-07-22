@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornRegionUncond
+module
+
+public import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # Empirical/CSD: Bell singlet joint probabilities as derived Kähler-volume frequencies
@@ -70,6 +72,8 @@ labelling is LF4-todo §14. The genuine, derived content is `volume = Born numbe
   Shalm 2015.
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization
 
@@ -82,7 +86,7 @@ namespace BellVolume
 
 /-- `‖⟨eᵢ, ψ⟩‖² = ‖ψᵢ‖²` on `ℂℙ³` (the fixed-outcome Born amplitude is the `i`-th
 coordinate squared norm). -/
-private lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) :
+lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) :
     ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 = ‖ψ.ofLp i‖ ^ 2 := by
   have h : inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ = ψ.ofLp i := by
     rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_four]
@@ -90,7 +94,7 @@ private lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) 
   rw [h]
 
 /-- `‖↑(r/√2)‖² = r²/2`. -/
-private lemma normSq_ofReal_div_sqrt2 (r : ℝ) :
+lemma normSq_ofReal_div_sqrt2 (r : ℝ) :
     ‖((r / Real.sqrt 2 : ℝ) : ℂ)‖ ^ 2 = r ^ 2 / 2 := by
   rw [Complex.norm_real, Real.norm_eq_abs, sq_abs, div_pow,
       Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
@@ -150,13 +154,13 @@ lemma born_value_three (θ : ℝ) :
 
 /-! ### The `P_st = (1 ∓ cos θ)/4` closed forms (recognisable singlet kernel) -/
 
-private lemma sin_half_sq (θ : ℝ) : Real.sin (θ / 2) ^ 2 = (1 - Real.cos θ) / 2 := by
+lemma sin_half_sq (θ : ℝ) : Real.sin (θ / 2) ^ 2 = (1 - Real.cos θ) / 2 := by
   have hc : Real.cos θ = 2 * Real.cos (θ / 2) ^ 2 - 1 := by
     have h := Real.cos_two_mul (θ / 2); rwa [show 2 * (θ / 2) = θ by ring] at h
   have h2 := Real.sin_sq_add_cos_sq (θ / 2)
   linarith
 
-private lemma cos_half_sq (θ : ℝ) : Real.cos (θ / 2) ^ 2 = (1 + Real.cos θ) / 2 := by
+lemma cos_half_sq (θ : ℝ) : Real.cos (θ / 2) ^ 2 = (1 + Real.cos θ) / 2 := by
   have hc : Real.cos θ = 2 * Real.cos (θ / 2) ^ 2 - 1 := by
     have h := Real.cos_two_mul (θ / 2); rwa [show 2 * (θ / 2) = θ by ring] at h
   linarith

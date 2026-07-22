@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.NonTrivialSetup
-import CsdLean4.LF4.POVMVolume
+module
+
+public import CsdLean4.LF4.NonTrivialSetup
+public import CsdLean4.LF4.POVMVolume
 
 /-!
 # HY-5: routing the general-`N` Born frequencies through a deterministic Σ-flow
@@ -44,6 +46,8 @@ posit before evolution — the weights-from-dynamics problem (A5→D1, SL-1) is
 untouched. Foundational-triple-only / Gleason-free (reuses
 `born_frequency_convergence_N`; nothing re-proved).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization Kronecker

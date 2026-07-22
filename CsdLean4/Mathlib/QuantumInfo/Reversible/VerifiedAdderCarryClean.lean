@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 
 /-!
 # A carry-clean adder-parametric modular multiplier  (ECDLP Phase 2, Stage S6.3-36b)
@@ -63,6 +65,8 @@ parametric, the ~67%). **No ECDSA score change is claimed yet** (still needs 36c
 **Load-bearing hypothesis: `N` odd** (inherited from the doubler's parity flag-uncompute), which holds
 for the ECDLP prime field.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

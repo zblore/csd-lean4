@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Register
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.Algebra.Field.GeomSum
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Register
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.Algebra.Field.GeomSum
 
 /-!
 # Quantum Fourier transform and its unitarity (R5)
@@ -30,6 +32,8 @@ setting.
 The transform is defined on a general level count `N` (not specialised to `N = 2ⁿ`), so it is
 directly the discrete Fourier unitary; the qubit instance is the `N = 2ⁿ` case.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open scoped Matrix

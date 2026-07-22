@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.CStarAlgebra.CStarMatrix
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
-import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
+module
+
+public import Mathlib.Analysis.CStarAlgebra.CStarMatrix
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
+public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 
 /-!
 # `CStarMatrix ↔ Matrix` transport bridge for the operator-convexity ladder
@@ -64,6 +66,8 @@ not. See `specs/operator-convexity-plan.md` (L.2 / L.3 sections) for the precise
 
 **Category:** 1-Mathlib (CSD-free). Natural Mathlib namespace `Matrix`.
 -/
+
+@[expose] public section
 
 open scoped MatrixOrder ComplexOrder
 

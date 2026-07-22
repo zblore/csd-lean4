@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.Basis
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Basis
 
 /-!
 # Transitivity of the matrix unitary group action on complex projective space
@@ -49,6 +51,8 @@ Staged as upstream Mathlib material. Intended location:
 projectivization, unitary group, transitive action, orthonormal basis
 -/
 
+@[expose] public section
+
 open Matrix
 open scoped LinearAlgebra.Projectivization
 
@@ -60,14 +64,14 @@ variable {N : ℕ}
 
 /-- Build a unitary matrix from an orthonormal basis: the matrix whose
 columns are the coordinates of the basis vectors in the standard basis. -/
-private noncomputable def unitaryOfONB (b : OrthonormalBasis (Fin N) ℂ
+noncomputable def unitaryOfONB (b : OrthonormalBasis (Fin N) ℂ
       (EuclideanSpace ℂ (Fin N))) : Matrix.unitaryGroup (Fin N) ℂ :=
   ⟨(EuclideanSpace.basisFun (Fin N) ℂ).toBasis.toMatrix b.toBasis,
    (EuclideanSpace.basisFun (Fin N) ℂ).toMatrix_orthonormalBasis_mem_unitary b⟩
 
 /-- The matrix `unitaryOfONB b`, applied to the standard basis vector
 `e_j`, recovers `b j`. -/
-private lemma unitaryOfONB_apply_single (b : OrthonormalBasis (Fin N) ℂ
+lemma unitaryOfONB_apply_single (b : OrthonormalBasis (Fin N) ℂ
       (EuclideanSpace ℂ (Fin N))) (j : Fin N) :
     (Matrix.toEuclideanLin (unitaryOfONB b).val) (EuclideanSpace.single j (1 : ℂ))
       = b j := by
@@ -150,7 +154,7 @@ lemma exists_unitary_map_unit [NeZero N]
   exact hM_w
 
 /-- A unitary matrix's `toEuclideanLin` action preserves non-zero. -/
-private lemma toEuclideanLin_unitary_ne_zero
+lemma toEuclideanLin_unitary_ne_zero
     (U : Matrix.unitaryGroup (Fin N) ℂ)
     {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
     (Matrix.toEuclideanLin U.val) v ≠ 0 := by

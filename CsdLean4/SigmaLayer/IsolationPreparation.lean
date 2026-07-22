@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ConstraintDynamics
-import CsdLean4.SigmaLayer.RecordedFact
-import CsdLean4.LF1.Preparation
+module
+
+public import CsdLean4.SigmaLayer.ConstraintDynamics
+public import CsdLean4.SigmaLayer.RecordedFact
+public import CsdLean4.LF1.Preparation
 
 /-!
 # SigmaLayer/IsolationPreparation: preparations and isolation as conditioning on a record history
@@ -23,6 +25,8 @@ region is the compatible region of the history (`compatibleSet`), and its condit
 ordinary conditioning `muH(A) = muL(A ∩ compatible) / muL(compatible)`. This is the epistemic law
 conditional on the record history, not an additional ontic state.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

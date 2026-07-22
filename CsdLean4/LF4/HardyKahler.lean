@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.SingletKahler
+module
+
+public import CsdLean4.LF4.SingletKahler
 
 /-!
 # LF4 Hardy LF3-chain lift (Phase A — state and ray)
@@ -36,6 +38,8 @@ capstones.
   `kReindex` isometry from `SingletKahler.lean`) and normalises.
 -/
 
+@[expose] public section
+
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization
 
@@ -52,16 +56,16 @@ noncomputable def hardyVecE : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
     + EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ)
     + EuclideanSpace.single ((1, 1) : Fin 2 × Fin 2) (-3 : ℂ)
 
-private lemma hardyVecE_ofLp_00 : hardyVecE.ofLp ((0, 0) : Fin 2 × Fin 2) = (1 : ℂ) := by
+lemma hardyVecE_ofLp_00 : hardyVecE.ofLp ((0, 0) : Fin 2 × Fin 2) = (1 : ℂ) := by
   simp [hardyVecE, EuclideanSpace.single]
 
-private lemma hardyVecE_ofLp_01 : hardyVecE.ofLp ((0, 1) : Fin 2 × Fin 2) = (1 : ℂ) := by
+lemma hardyVecE_ofLp_01 : hardyVecE.ofLp ((0, 1) : Fin 2 × Fin 2) = (1 : ℂ) := by
   simp [hardyVecE, EuclideanSpace.single]
 
-private lemma hardyVecE_ofLp_10 : hardyVecE.ofLp ((1, 0) : Fin 2 × Fin 2) = (1 : ℂ) := by
+lemma hardyVecE_ofLp_10 : hardyVecE.ofLp ((1, 0) : Fin 2 × Fin 2) = (1 : ℂ) := by
   simp [hardyVecE, EuclideanSpace.single]
 
-private lemma hardyVecE_ofLp_11 : hardyVecE.ofLp ((1, 1) : Fin 2 × Fin 2) = (-3 : ℂ) := by
+lemma hardyVecE_ofLp_11 : hardyVecE.ofLp ((1, 1) : Fin 2 × Fin 2) = (-3 : ℂ) := by
   simp [hardyVecE, EuclideanSpace.single]
 
 /-- The Hardy state has squared norm `12 = 1² + 1² + 1² + 3²`. -/
@@ -420,29 +424,29 @@ outcome's `EuclideanSpace.single` components. -/
 
 /-- Helper: `inner ℂ hardyVecE (single i 1) = star (hardyVecE.ofLp i)`,
 giving the four explicit values via the entry lemmas. -/
-private lemma inner_hardyVecE_single_apply
+lemma inner_hardyVecE_single_apply
     (i : Fin 2 × Fin 2) :
     inner ℂ hardyVecE (EuclideanSpace.single i (1 : ℂ))
       = (starRingEnd ℂ) (hardyVecE.ofLp i) := by
   rw [← inner_conj_symm, EuclideanSpace.inner_single_left]
   simp
 
-private lemma inner_hardyVecE_single_00 :
+lemma inner_hardyVecE_single_00 :
     inner ℂ hardyVecE (EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ))
       = (1 : ℂ) := by
   rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_00]; simp
 
-private lemma inner_hardyVecE_single_01 :
+lemma inner_hardyVecE_single_01 :
     inner ℂ hardyVecE (EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ))
       = (1 : ℂ) := by
   rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_01]; simp
 
-private lemma inner_hardyVecE_single_10 :
+lemma inner_hardyVecE_single_10 :
     inner ℂ hardyVecE (EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ))
       = (1 : ℂ) := by
   rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_10]; simp
 
-private lemma inner_hardyVecE_single_11 :
+lemma inner_hardyVecE_single_11 :
     inner ℂ hardyVecE (EuclideanSpace.single ((1, 1) : Fin 2 × Fin 2) (1 : ℂ))
       = (-3 : ℂ) := by
   rw [inner_hardyVecE_single_apply, hardyVecE_ofLp_11]
@@ -452,12 +456,12 @@ private lemma inner_hardyVecE_single_11 :
       Complex.conj_ofReal]
 
 /-- Helper: `star ((√12 : ℂ)⁻¹) = (√12 : ℂ)⁻¹` (real number is self-conjugate). -/
-private lemma conj_sqrt12_inv :
+lemma conj_sqrt12_inv :
     (starRingEnd ℂ) ((Real.sqrt 12 : ℂ))⁻¹ = ((Real.sqrt 12 : ℂ))⁻¹ := by
   rw [map_inv₀, Complex.conj_ofReal]
 
 /-- `‖((√12 : ℂ))⁻¹‖² = 1/12`. -/
-private lemma sqrt12_inv_normSq :
+lemma sqrt12_inv_normSq :
     ‖((Real.sqrt 12 : ℂ))⁻¹‖ ^ 2 = 1 / 12 := by
   rw [norm_inv, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
@@ -474,7 +478,7 @@ theorem hardyBorn_AB_eq_inner_sq :
   exact sqrt12_inv_normSq
 
 /-- Helper: the (−|00⟩ + |01⟩) outcome's inner with hardyVecE vanishes. -/
-private lemma inner_hardyVecE_AB'minus_raw :
+lemma inner_hardyVecE_AB'minus_raw :
     inner ℂ hardyVecE
         (- EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
          + EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ)) = (0 : ℂ) := by
@@ -482,7 +486,7 @@ private lemma inner_hardyVecE_AB'minus_raw :
       inner_hardyVecE_single_00, inner_hardyVecE_single_01]
   ring
 
-private lemma inner_hardyVecE_A'minus_B_raw :
+lemma inner_hardyVecE_A'minus_B_raw :
     inner ℂ hardyVecE
         (- EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
          + EuclideanSpace.single ((1, 0) : Fin 2 × Fin 2) (1 : ℂ)) = (0 : ℂ) := by
@@ -490,7 +494,7 @@ private lemma inner_hardyVecE_A'minus_B_raw :
       inner_hardyVecE_single_00, inner_hardyVecE_single_10]
   ring
 
-private lemma inner_hardyVecE_A'_B'_raw :
+lemma inner_hardyVecE_A'_B'_raw :
     inner ℂ hardyVecE
         (EuclideanSpace.single ((0, 0) : Fin 2 × Fin 2) (1 : ℂ)
        + EuclideanSpace.single ((0, 1) : Fin 2 × Fin 2) (1 : ℂ)

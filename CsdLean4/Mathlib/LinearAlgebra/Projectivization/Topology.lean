@@ -3,14 +3,16 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.Topology.Algebra.ConstMulAction
-import Mathlib.Topology.Maps.OpenQuotient
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.Topology.Separation.Hausdorff
+module
+
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.Topology.Algebra.ConstMulAction
+public import Mathlib.Topology.Maps.OpenQuotient
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.Topology.Separation.Hausdorff
 
 /-!
 # Topology on projectivization
@@ -55,6 +57,8 @@ idiom.
 
 projectivization, projective space, quotient topology
 -/
+
+@[expose] public section
 
 open Set Function Topology
 open scoped LinearAlgebra.Projectivization

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Setup
+module
+
+public import CsdLean4.LF3.Setup
 
 /-!
 # LF3 Hamiltonian: tensor-factor readout algebra and measurement unitary
@@ -23,6 +25,8 @@ measurement model:
 Per spec §9.5, the operator exponential is not constructed in v1.00; the
 unitaries enter as structural data.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 

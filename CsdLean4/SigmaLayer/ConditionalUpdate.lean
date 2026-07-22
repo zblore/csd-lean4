@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.Luders
+module
+
+public import CsdLean4.SigmaLayer.Luders
 
 /-!
 # SigmaLayer/ConditionalUpdate: the general (non-projective) conditional state update
@@ -32,6 +34,8 @@ subsumes T8, and unlike T8 needs neither self-adjointness nor idempotence of the
 
 General finite-dimensional complex inner product space; no new postulate.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 

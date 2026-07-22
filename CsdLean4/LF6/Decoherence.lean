@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.FlowBornFrequency
-import CsdLean4.Mathlib.QuantumInfo.PartialTrace
-import CsdLean4.Mathlib.QuantumInfo.Entropy
+module
+
+public import CsdLean4.LF5.FlowBornFrequency
+public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
 /-!
 # LF6-B.1: decoherence as coarse-graining over a conservative de-isolation flow
@@ -101,6 +103,8 @@ All exports are foundational-triple-only (the partial-trace and dilation machine
 are measure-theoretic / linear-algebraic, off `busch_effect_gleason`).
 -/
 
+@[expose] public section
+
 open MeasureTheory Matrix Matrix.UnitaryGroup QuantumInfo
 open scoped ENNReal LinearAlgebra.Projectivization
 
@@ -115,7 +119,7 @@ variable {N : ℕ} [NeZero N]
 
 /-- `z · z̄ = (‖z‖ : ℂ)²` for a complex scalar. Bridges the diagonal density entry
 `ψⱼ · star ψⱼ` to the Born weight `‖ψⱼ‖²`. -/
-private lemma mul_star_eq_normSq (z : ℂ) : z * star z = ((‖z‖ : ℂ)) ^ 2 := by
+lemma mul_star_eq_normSq (z : ℂ) : z * star z = ((‖z‖ : ℂ)) ^ 2 := by
   rw [← starRingEnd_apply]
   exact RCLike.mul_conj z
 
@@ -303,7 +307,7 @@ lemma decohereReduced_eq_diagonal (ψ : EuclideanSpace ℂ (Fin N)) :
 omit [NeZero N] in
 /-- **Parseval for the Born weights.** `∑ⱼ ‖⟨eⱼ,ψ⟩‖² = ‖ψ‖²`: the decohered diagonal
 weights form a probability vector (sum `= 1` for unit `ψ`). -/
-private lemma born_sum_eq_norm_sq (ψ : EuclideanSpace ℂ (Fin N)) :
+lemma born_sum_eq_norm_sq (ψ : EuclideanSpace ℂ (Fin N)) :
     ∑ j : Fin N, ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
   rw [euclidean_norm_sq_eq_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -311,7 +315,7 @@ private lemma born_sum_eq_norm_sq (ψ : EuclideanSpace ℂ (Fin N)) :
 
 /-- Abstract probability-vector fact: `∑ pᵢ² ≤ ∑ pᵢ = 1` when `0 ≤ pᵢ` (each
 `pᵢ² ≤ pᵢ` since `pᵢ ≤ 1`). -/
-private lemma sum_sq_le_one_of_sum_one {ι : Type*} [Fintype ι] (p : ι → ℝ)
+lemma sum_sq_le_one_of_sum_one {ι : Type*} [Fintype ι] (p : ι → ℝ)
     (hnn : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1) :
     ∑ i, p i ^ 2 ≤ 1 := by
   have hle : ∀ i, p i ≤ 1 := fun i =>
@@ -323,7 +327,7 @@ private lemma sum_sq_le_one_of_sum_one {ι : Type*} [Fintype ι] (p : ι → ℝ
 /-- Abstract probability-vector fact (STRICT): if `≥ 2` entries are nonzero then
 `∑ pᵢ² < ∑ pᵢ = 1`. Both nonzero entries satisfy `pⱼ < 1` (the other contributes a
 positive amount to the unit sum), so `pⱼ² < pⱼ` strictly there; `Finset.sum_lt_sum`. -/
-private lemma sum_sq_lt_one_of_two_nonzero {ι : Type*} [Fintype ι] [DecidableEq ι] (p : ι → ℝ)
+lemma sum_sq_lt_one_of_two_nonzero {ι : Type*} [Fintype ι] [DecidableEq ι] (p : ι → ℝ)
     (hnn : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1)
     {j k : ι} (hjk : j ≠ k) (hj : p j ≠ 0) (hk : p k ≠ 0) :
     ∑ i, p i ^ 2 < 1 := by
@@ -470,7 +474,7 @@ lemma decohereReduced_isHermitian (ψ : EuclideanSpace ℂ (Fin N)) :
 vector summing to `1` has `≥ 2` nonzero entries then `0 < ∑ᵢ negMulLog(pᵢ)`. Each term is `≥ 0`
 (`Real.negMulLog_nonneg`, `pᵢ ∈ [0,1]`) and the `j`-th is strictly positive since `0 < pⱼ < 1`
 (the second nonzero entry `pₖ` keeps `pⱼ` off `1`), by `Real.negMulLog_pos`. -/
-private lemma sum_negMulLog_pos_of_two_nonzero {ι : Type*} [Fintype ι] [DecidableEq ι]
+lemma sum_negMulLog_pos_of_two_nonzero {ι : Type*} [Fintype ι] [DecidableEq ι]
     (p : ι → ℝ) (hnn : ∀ i, 0 ≤ p i) (hsum : ∑ i, p i = 1)
     {j k : ι} (hjk : j ≠ k) (hj : p j ≠ 0) (hk : p k ≠ 0) :
     0 < ∑ i, Real.negMulLog (p i) := by
@@ -489,7 +493,7 @@ private lemma sum_negMulLog_pos_of_two_nonzero {ι : Type*} [Fintype ι] [Decida
 equality: if `ρ = σ` then `S(ρ) = S(σ)` (the eigenvalue values are matrix-determined). The
 proof-irrelevance / matrix-equality hinge used to move the entropy computation onto the diagonal
 form. -/
-private lemma entropy_congr_of_eq {n : Type*} [Fintype n] [DecidableEq n]
+lemma entropy_congr_of_eq {n : Type*} [Fintype n] [DecidableEq n]
     {ρ σ : Matrix n n ℂ} (heq : ρ = σ) (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
     QuantumInfo.vonNeumannEntropy hρ = QuantumInfo.vonNeumannEntropy hσ := by
   subst heq

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Measure.FiniteMeasure
-import Mathlib.Dynamics.Ergodic.MeasurePreserving
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import CsdLean4.SigmaLayer.ConstraintSurface
+module
+
+public import Mathlib.MeasureTheory.Measure.FiniteMeasure
+public import Mathlib.Dynamics.Ergodic.MeasurePreserving
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import CsdLean4.SigmaLayer.ConstraintSurface
 
 /-!
 # SigmaLayer/ConstraintDynamics: deterministic, measure-preserving ontic dynamics
@@ -26,6 +28,8 @@ projected dynamics, NO Schrödinger equation. It is deterministic dynamics and a
 The projective sector `pi` is a separate structure (`ProjectiveSector`); all quantum content is a theorem
 target or a named bridge assumption, never a field here.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

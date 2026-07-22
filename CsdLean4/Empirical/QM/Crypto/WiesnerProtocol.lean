@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Crypto.QuantumMoney
-import CsdLean4.Empirical.QM.Protocols.Basic
+module
+
+public import CsdLean4.Empirical.QM.Crypto.QuantumMoney
+public import CsdLean4.Empirical.QM.Protocols.Basic
 
 /-!
 # Empirical/QM: Wiesner quantum-money minting / verification protocol
@@ -65,6 +67,8 @@ Wiesner 1983, *SIGACT News* **15**(1), 78 ("Conjugate Coding"); unforgeability v
 the no-cloning theorem (Wootters-Zurek 1982 / Dieks 1982), as packaged in
 `Crypto/QuantumMoney.quantum_money_unforgeable`.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

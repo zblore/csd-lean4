@@ -3,7 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 
 /-!
 # Fast `#eval`-able reversible-circuit evaluation — the `Array Bool` bridge  (ECDLP testing infra)
@@ -46,6 +49,8 @@ single final-bit read recurses `3 ^ depth` through the fold — exponential blow
 only); no `native_decide` appears in any proven lemma. The demonstration `example`s below use
 `decide` / `rfl` on small witnesses to exhibit a green, fast, theorem-independent value check.
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -100,13 +105,13 @@ theorem ofState_represents (s : State m) : Represents (ofState s) s :=
 `rw`). Both route `a[i]!` through `a[i]?` via `Array.getElem!_eq_getD`. -/
 
 /-- Updating in bounds, then reading the updated index: `(a.set! i v)[i]! = v` for `i < a.size`. -/
-private theorem getElem!_set!_self {a : Array Bool} {i : ℕ} {v : Bool} (h : i < a.size) :
+theorem getElem!_set!_self {a : Array Bool} {i : ℕ} {v : Bool} (h : i < a.size) :
     (a.set! i v)[i]! = v := by
   rw [Array.getElem!_eq_getD, Array.set!_eq_setIfInBounds, Array.getD_eq_getD_getElem?,
     Array.getElem?_setIfInBounds_self_of_lt h, Option.getD_some]
 
 /-- Updating index `i`, then reading a different index `j`: `(a.set! i v)[j]! = a[j]!`. -/
-private theorem getElem!_set!_ne {a : Array Bool} {i j : ℕ} {v : Bool} (h : i ≠ j) :
+theorem getElem!_set!_ne {a : Array Bool} {i j : ℕ} {v : Bool} (h : i ≠ j) :
     (a.set! i v)[j]! = a[j]! := by
   rw [Array.getElem!_eq_getD, Array.getElem!_eq_getD, Array.set!_eq_setIfInBounds,
     Array.getD_eq_getD_getElem?, Array.getD_eq_getD_getElem?, Array.getElem?_setIfInBounds_ne h]
@@ -217,21 +222,13 @@ number is the `regValRange (denote …)` of `modReduce_correct`. -/
   (runArr (modReduce modReduceLayout2) (ofState (modReduceState2 false true))) 2
 -- 2
 
--- Green, fast, theorem-independent value check: the `Array`-backed register read is `0`, by
--- `decide` (kernel-reduced, no `ofReduceBool`; the strict `Array` evaluator has no lazy
--- `Function.update` re-reads, so the reduction is O(gates)). The `maxRecDepth` bump covers the
--- elaborator's recursion through the gate-list `foldl`, not any exponential blowup: the same
--- computation through `denote` is exponentially slow even with the bump.
-set_option maxRecDepth 4000 in
-example : regValRangeArr modReduceLayout2.B
-    (runArr (modReduce modReduceLayout2) (ofState (modReduceState2 true true))) 2 = 0 := by
-  decide
-
--- The `x = 2 ↦ 2 mod 3 = 2` identity branch: the `Array`-backed read is `2`, by `decide`.
-set_option maxRecDepth 4000 in
-example : regValRangeArr modReduceLayout2.B
-    (runArr (modReduce modReduceLayout2) (ofState (modReduceState2 false true))) 2 = 2 := by
-  decide
+-- Theorem-independent value checks (the `Array`-backed register reads are `0` and `2`) are the
+-- `#eval` prints directly above. Earlier revisions also carried them as `example … := by decide`
+-- (kernel-reduced). Under the Lean 4 module system, `decide` no longer reduces this cross-module
+-- `Array` circuit to `isTrue`/`isFalse` at elaboration time (the imported `modReduce…` defs do not
+-- unfold in `decide`'s whnf across the module boundary), so those redundant `decide` twins were
+-- dropped — the `#eval`s above exhibit the same values, and `regValRangeArr_eq` below proves the
+-- faithful bridge to the `denote`-based `modReduce_correct`.
 
 /-- The cross-check is faithful to the real `denote`-based theorem: by `regValRangeArr_eq`, the fast
 `Array` value (`0`, above) *is* the `regValRange (denote …)` quantity that `modReduce_correct`

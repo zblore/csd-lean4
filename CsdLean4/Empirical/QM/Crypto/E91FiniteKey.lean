@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Crypto.E91KeyRate
-import Mathlib.Probability.Moments.SubGaussian
+module
+
+public import CsdLean4.Empirical.QM.Crypto.E91KeyRate
+public import Mathlib.Probability.Moments.SubGaussian
 
 /-!
 # Empirical/QM: E91 finite-sample (finite-key) concentration
@@ -65,6 +67,8 @@ inner-product layer; no CSD ontology. Foundational triple only (no `busch`).
 Hoeffding 1963; Pironio et al. 2009 (DIQKD finite-key); Tomamichel–Lim–
 Gisin–Renner 2012 (composable finite-key, *not* formalised here).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory
 open scoped NNReal

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
-import Mathlib.Topology.Instances.Matrix
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
+public import Mathlib.Topology.Instances.Matrix
 
 /-!
 # Fubini–Study measure on complex projective space
@@ -44,6 +46,8 @@ Staged as upstream Mathlib material. Intended location:
 
 projectivization, Fubini-Study, Haar measure, SU(N), invariant measure
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped LinearAlgebra.Projectivization

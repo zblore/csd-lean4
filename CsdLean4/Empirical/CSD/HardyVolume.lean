@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornFrequencyN
-import CsdLean4.Empirical.QM.Hardy
+module
+
+public import CsdLean4.LF4.BornFrequencyN
+public import CsdLean4.Empirical.QM.Hardy
 
 /-!
 # Empirical/CSD: Hardy's probability as a derived Kähler-volume frequency
@@ -68,6 +70,8 @@ impossibility itself lives in `QM/Hardy.lean`.
   *Phys. Rev. Lett.* **102**, 020404 (weak-measurement confirmation).
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization
 open CSD.Empirical.Hardy.HardyQMMax
@@ -80,25 +84,25 @@ namespace HardyVolume
 /-! ### Helpers (file-local, mirroring `GHZVolume.lean`) -/
 
 /-- `‖⟨eᵢ, ψ⟩‖² = ‖ψᵢ‖²` on `ℂℙ³`. -/
-private lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) :
+lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) :
     ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 = ‖ψ.ofLp i‖ ^ 2 := by
   rw [EuclideanSpace.inner_single_left, map_one, one_mul]
 
 /-- `‖↑r‖² = r²`. -/
-private lemma realNormSq (r : ℝ) : ‖((r : ℝ) : ℂ)‖ ^ 2 = r ^ 2 := by
+lemma realNormSq (r : ℝ) : ‖((r : ℝ) : ℂ)‖ ^ 2 = r ^ 2 := by
   rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
 
 /-! ### The normalising constant `nrm = √(5φ+3)` -/
 
 /-- `5φ + 3 > 0` (the squared norm of the golden-ratio Hardy state). -/
-private lemma denom_pos : (0 : ℝ) < 5 * phi + 3 := by nlinarith [phi_pos]
+lemma denom_pos : (0 : ℝ) < 5 * phi + 3 := by nlinarith [phi_pos]
 
 /-- The normalisation `nrm = √(5φ+3) = ‖ψ_max‖`. -/
 noncomputable def nrm : ℝ := Real.sqrt (5 * phi + 3)
 
-private lemma nrm_pos : 0 < nrm := Real.sqrt_pos.mpr denom_pos
+lemma nrm_pos : 0 < nrm := Real.sqrt_pos.mpr denom_pos
 
-private lemma nrm_sq : nrm ^ 2 = 5 * phi + 3 := Real.sq_sqrt denom_pos.le
+lemma nrm_sq : nrm ^ 2 = 5 * phi + 3 := Real.sq_sqrt denom_pos.le
 
 /-! ### The normalised golden-ratio Hardy state on `ℂℙ³` -/
 

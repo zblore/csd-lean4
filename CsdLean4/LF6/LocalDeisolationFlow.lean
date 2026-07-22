@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.SingletDeisolationFlow
+module
+
+public import CsdLean4.LF6.SingletDeisolationFlow
 
 /-!
 # LF6-A.3: a manifestly LOCAL product de-isolation flow realising the singlet
@@ -89,6 +91,8 @@ volume engine is off Busch).
 Reference: `specs/lf6-plan.md` (LF6-A.3).
 -/
 
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal Kronecker LinearAlgebra.Projectivization
 
@@ -100,7 +104,7 @@ open CSD.LF2 CSD.LF3 CSD.LF4 CSD.LF5
 /-! ### Boolean-indicator algebra helper -/
 
 /-- Product of two `0/1` indicators is the indicator of the conjunction. -/
-private lemma ite_mul_ite_one {P Q : Prop} [Decidable P] [Decidable Q] :
+lemma ite_mul_ite_one {P Q : Prop} [Decidable P] [Decidable Q] :
     (if P then (1 : ℂ) else 0) * (if Q then (1 : ℂ) else 0) = if P ∧ Q then (1 : ℂ) else 0 := by
   split_ifs <;> simp_all
 

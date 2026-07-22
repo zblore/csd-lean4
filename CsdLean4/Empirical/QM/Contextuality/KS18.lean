@@ -3,13 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Finset.Card
-import Mathlib.Tactic.FinCases
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Tactic.FinCases
 
 /-!
 # Empirical: Kochen-Specker theorem (Cabello 1996 18-vector configuration)
@@ -96,6 +98,8 @@ of `cabelloBasis` + `cabelloBasis_appears_twice`. The orthogonality
 verification (`cabello_pairwise_orthogonal_in_basis`) is what ties
 the abstract impossibility to genuine QM eigenvalue content.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Basic
-import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Idempotent
-import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Quotient
+module
+
+public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Basic
+public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Idempotent
+public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Quotient
 
 /-!
 # Mathlib upstream candidates: `ContinuousLinearMap` complement lemmas
@@ -34,6 +36,8 @@ future upstreaming PR can write itself.
 - `ContinuousLinearMap.complement_comp_of_idem`: symmetric companion,
   composition on the left.
 -/
+
+@[expose] public section
 
 namespace ContinuousLinearMap
 

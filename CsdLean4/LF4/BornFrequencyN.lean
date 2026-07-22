@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentBornN
-import CsdLean4.LF4.BornFrequencyPartition
+module
+
+public import CsdLean4.LF4.MomentBornN
+public import CsdLean4.LF4.BornFrequencyPartition
 
 /-!
 # LF4 general-N capstone: Busch-free frequency → Born for all N coordinates
@@ -30,6 +32,8 @@ Genericity hypothesis `∀ j, 0 < ‖⟨eⱼ, ψ⟩‖²` (no vanishing amplitud
 Born vector an interior simplex point, so every barycentric region is a homeomorphic
 image of the open simplex (open, measurable) and stays inside it.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

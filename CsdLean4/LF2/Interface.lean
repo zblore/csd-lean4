@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.Weights
-import CsdLean4.LF1.Preparation
-import CsdLean4.LF1.Outcomes
-import CsdLean4.LF1.MainTheorem
+module
+
+public import CsdLean4.LF2.Weights
+public import CsdLean4.LF1.Preparation
+public import CsdLean4.LF1.Outcomes
+public import CsdLean4.LF1.MainTheorem
 
 /-!
 # LF2 ↔ LF1 interface
@@ -22,6 +24,8 @@ point for `LF1_main_theorem_ae` to speak about projective outcome weights,
 and the hinge by which LF2's measure bridge feeds back into the LF1 frequency
 theorem.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set Filter
 

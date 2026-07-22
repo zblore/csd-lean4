@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornFS
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
-import Mathlib.LinearAlgebra.Matrix.Permutation
+module
+
+public import CsdLean4.LF4.BornFS
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+public import Mathlib.LinearAlgebra.Matrix.Permutation
 
 /-!
 # TH1: canonical typicality -- thermal equilibrium from Fubini-Study volume
@@ -67,6 +69,8 @@ All results are foundational-triple-only (no `busch_effect_gleason`, no
 
 Reference: `specs/thermo-plan.md` (TH1).
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization BigOperators ComplexConjugate

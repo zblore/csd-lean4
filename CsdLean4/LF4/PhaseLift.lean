@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.ProjectedDynamics
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
-import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+module
+
+public import CsdLean4.LF4.ProjectedDynamics
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
+public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 
 /-!
 # W5-S1: the projective-to-vector phase lift
@@ -74,6 +76,8 @@ no `sorry`, no `native_decide`, no new axioms. Reuses W5
 the W5-S2 Stone theorem (`StoneC1`); nothing is re-proved.
 -/
 
+@[expose] public section
+
 open MeasureTheory
 open scoped LinearAlgebra.Projectivization
 open scoped Matrix
@@ -122,7 +126,7 @@ theorem projectedFlow_phase_cocycle
 /-- Scalars acting on a fixed unitary are injective (`N ≠ 0`): cancel a
 common unitary factor in a scalar identity by multiplying with its star and
 evaluating a diagonal entry. -/
-private lemma smul_unitary_cancel (hN : N ≠ 0) {x y : ℂ}
+lemma smul_unitary_cancel (hN : N ≠ 0) {x y : ℂ}
     (W : Matrix.unitaryGroup (Fin N) ℂ)
     (h : x • (W : Matrix (Fin N) (Fin N) ℂ)
         = y • (W : Matrix (Fin N) (Fin N) ℂ)) :

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 
 /-!
 # A VALUE-EXACT constant-propagation pass on reversible circuits  (ECDLP, the frontier's key lever)
@@ -25,6 +27,8 @@ wire becomes `Unknown`; only `swap` moves knowledge), which is sound and already
 benefit — a fresh `|0⟩` ancilla stays known-`0` until it is written, so every Toffoli reading it as a
 control while it is still `0` is dropped.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

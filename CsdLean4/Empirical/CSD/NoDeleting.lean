@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.NoDeleting
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.NoDeleting
 
 /-!
 # Empirical/CSD: No-deleting theorem (CSD-side reading)
@@ -60,6 +62,8 @@ underwrites the information-conservation reading of quantum erasure
 experiments (e.g. Scully-Englert-Walther 1991, Kim et al. 2000): exact
 deletion of an unknown state would violate the bound.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

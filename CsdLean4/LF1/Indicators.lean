@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Trials
-import Mathlib.MeasureTheory.Integral.Bochner.Set
+module
+
+public import CsdLean4.LF1.Trials
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
 
 /-!
 # LF1 Indicators
@@ -20,6 +22,8 @@ event along the repeated-trial preparation model.
 Thus the probabilistic layer in LF1 enters only through repeated preparation
 sampling, not through stochastic ontic dynamics.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set
 

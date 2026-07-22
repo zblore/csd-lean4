@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.Normed.Lp.Matrix
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import CsdLean4.LF2.ReducedDensity
-import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.Normed.Lp.Matrix
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import CsdLean4.LF2.ReducedDensity
+public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 
 /-!
 # Empirical/QM: No-communication theorem (E3a, marginal form)
@@ -57,6 +59,8 @@ Standard; the relativistic no-signalling property of quantum mechanics
 (Ghirardi-Rimini-Weber 1980; Eberhard 1978). Cf. the PR-box / no-signalling
 literature (Popescu-Rohrlich 1994).
 -/
+
+@[expose] public section
 
 open Matrix ComplexConjugate
 open scoped Kronecker

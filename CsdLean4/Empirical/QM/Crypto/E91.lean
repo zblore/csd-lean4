@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Bell
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
+module
+
+public import CsdLean4.Empirical.QM.Bell
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!
 # Empirical: E91 device-independent certification — the local-hidden-variable CHSH bound
@@ -64,6 +66,8 @@ integral.
   2015, *Nature* **526**, 682; Giustina et al. 2015 and Shalm et al. 2015,
   *Phys. Rev. Lett.* **115**, 250401 / 250402.
 -/
+
+@[expose] public section
 
 open MeasureTheory Real
 open scoped BigOperators

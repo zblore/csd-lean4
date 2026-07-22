@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.SingletKahler
-import CsdLean4.LF4.KahlerFlow
+module
+
+public import CsdLean4.LF4.SingletKahler
+public import CsdLean4.LF4.KahlerFlow
 
 /-!
 # SL-2: a genuine `Φ ≠ id` on the concrete ENTANGLED (singlet) sector
@@ -54,6 +56,8 @@ NOT a derivation of the sector. **A5 is untouched** (the entangled sector /
 Fubini–Study typicality is still posited; that is SL-1). Foundational-triple-only
 / Gleason-free, inherited from `ofKählerPreparation` and the LF3 chain.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

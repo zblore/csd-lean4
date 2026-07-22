@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.Instance
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.LF4.Instance
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # LF4 Tranche 1: the Born weights as the torus moment map on ℂℙ^{N-1}
@@ -58,6 +60,8 @@ principled construction is the open `G3b` content.
 here in `CSD.LF4` for now as it drives the carve-out programme. Extraction
 candidate (cf. LF4-todo §10).
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization
 

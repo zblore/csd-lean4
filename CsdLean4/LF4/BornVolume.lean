@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentMap
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.LinearAlgebra.Matrix.Adjugate
+module
+
+public import CsdLean4.LF4.MomentMap
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.LinearAlgebra.Matrix.Adjugate
 
 /-!
 # LF4 Tranche M slice 3: the Born weights as barycentric volume ratios
@@ -49,6 +51,8 @@ projected volume structure."
 **Category:** conceptually 1-Mathlib (affine/measure geometry); kept in `CSD.LF4`
 as it drives the carve-out programme. Extraction candidate (LF4-todo §10).
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped LinearAlgebra.Projectivization

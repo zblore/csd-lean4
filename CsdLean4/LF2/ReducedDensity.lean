@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Analysis.Complex.Order
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Analysis.Complex.Order
 
 /-!
 # LF2: reduced density operators via partial trace
@@ -34,6 +36,8 @@ every call. `DensityOperatorIx ι` is the more natural object and avoids that
 friction (decision recorded 2026-06-01, `specs/partial-trace-plan.md`). The two
 structures agree under `finProdFinEquiv` should a bridge ever be needed.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

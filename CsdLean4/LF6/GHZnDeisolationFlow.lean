@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.FlowBornFrequency
-import CsdLean4.LF6.GHZContextuality
+module
+
+public import CsdLean4.LF5.FlowBornFrequency
+public import CsdLean4.LF6.GHZContextuality
 
 /-!
 # LF6-C (GHZ_n): the n-party GHZ de-isolation flow and the general-n Mermin forcing
@@ -121,6 +123,8 @@ by `norm_num`/`ring`), no `native_decide`).
 
 Reference: `specs/lf6-plan.md` (GHZ_n tranche).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal BigOperators LinearAlgebra.Projectivization
@@ -401,7 +405,7 @@ private lemma pm_ae_eq {Λ : Type*} [MeasurableSpace Λ] (μ : Measure Λ)
     linarith
 
 /-- The full-`n` context product of ±1-valued responses is ±1 (its square is `1`). -/
-private lemma prod_pm_real {Λ : Type*} {n : ℕ} (R : Fin n → PauliAxis → Λ → ℝ)
+lemma prod_pm_real {Λ : Type*} {n : ℕ} (R : Fin n → PauliAxis → Λ → ℝ)
     (c : Fin n → PauliAxis) (hpm : ∀ i ax l, R i ax l = 1 ∨ R i ax l = -1) (l : Λ) :
     (∏ i, R i (c i) l) = 1 ∨ (∏ i, R i (c i) l) = -1 := by
   have hsq : (∏ i, R i (c i) l) * (∏ i, R i (c i) l) = 1 := by
@@ -412,7 +416,7 @@ private lemma prod_pm_real {Λ : Type*} {n : ℕ} (R : Fin n → PauliAxis → �
 
 /-- The full-`n` context product is measurable (finite product of measurable
 responses). -/
-private lemma prod_meas {Λ : Type*} {n : ℕ} [MeasurableSpace Λ]
+lemma prod_meas {Λ : Type*} {n : ℕ} [MeasurableSpace Λ]
     (R : Fin n → PauliAxis → Λ → ℝ) (c : Fin n → PauliAxis)
     (hmeas : ∀ i ax, Measurable (R i ax)) :
     Measurable (fun l => ∏ i, R i (c i) l) :=

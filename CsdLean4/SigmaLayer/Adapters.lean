@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.ProjectiveSector
-import CsdLean4.SigmaLayer.TheoremTargets
+module
+
+public import CsdLean4.SigmaLayer.ProjectiveSector
+public import CsdLean4.SigmaLayer.TheoremTargets
 
 /-!
 # SigmaLayer/Adapters: the postulate ledger and the ontic-setup Rosetta
@@ -115,6 +117,8 @@ Adapters (all one-directional, no existing file altered):
 carry `flow_zero` / `flow_add`, which the adapter supplies explicitly. This is exactly the drift the
 canonical core removes.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

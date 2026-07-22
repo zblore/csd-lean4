@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.MeasureBridge
-import CsdLean4.LF2.EffectFn
-import CsdLean4.LF2.EffectGleason
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
+module
+
+public import CsdLean4.LF2.MeasureBridge
+public import CsdLean4.LF2.EffectFn
+public import CsdLean4.LF2.EffectGleason
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 
 /-!
 # OP-from-preparation construction (pre-LF4 Phase 3)
@@ -38,6 +40,8 @@ abstract `measure_bridge`/axiom were **removed** once it was clear nothing
 downstream used them (the concrete instances build the bridge directly and
 axiom-free), leaving `busch_effect_gleason` as the corpus's only imported axiom.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

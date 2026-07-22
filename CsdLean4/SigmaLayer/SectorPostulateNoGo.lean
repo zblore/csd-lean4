@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.NonTrivialSetup
-import CsdLean4.LF4.Instance
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+module
+
+public import CsdLean4.LF4.NonTrivialSetup
+public import CsdLean4.LF4.Instance
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
 # SigmaLayer/SectorPostulateNoGo: the single-flow limit — a deterministic flow does not pin the sector
@@ -39,6 +41,8 @@ References: `specs/connectivity-manifest.md` (L7 / A5), `specs/reconstruction-st
 `SigmaLayer/LocalisedTypicality.lean` (`region_measure_symmetry_forced`, the positive companion),
 `LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

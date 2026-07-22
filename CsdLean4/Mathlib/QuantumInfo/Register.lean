@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # n-qubit register (R1 foundation)
@@ -25,6 +27,8 @@ core API: Born as a squared inner product (`prob_eq_inner_sq`), normalisation of
 (`sum_prob_eq_one`), and that a basis state is measured with certainty (`prob_basisState`).
 Later phases add the Hadamard transform, oracles, and the algorithms.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentDirichletN
-import CsdLean4.LF4.MomentBornN
-import CsdLean4.LF4.MomentUniform
+module
+
+public import CsdLean4.LF4.MomentDirichletN
+public import CsdLean4.LF4.MomentBornN
+public import CsdLean4.LF4.MomentUniform
 
 /-!
 # LF4 verification: the general-N joint-Dirichlet law recovers the qubit at N=2
@@ -28,6 +30,8 @@ The reduction handles the two shape differences the referee flagged:
 - `openSimplexFree` on `Fin 1 → ℝ` is the `funUnique`-preimage of `Ioo 0 1`, which differs
   from the qubit's `Icc 0 1` by the volume-null endpoint set (`Ioo_ae_eq_Icc`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

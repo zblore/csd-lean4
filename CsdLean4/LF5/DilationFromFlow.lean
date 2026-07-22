@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.MeasurementFlow
-import CsdLean4.LF4.POVMDilation
+module
+
+public import CsdLean4.LF5.MeasurementFlow
+public import CsdLean4.LF4.POVMDilation
 
 /-!
 # LF5: de-isolation realises the Naimark dilation (LF5-C)
@@ -68,6 +70,8 @@ call-site migration onto them landed 2026-06-11.
 Reference: `specs/lf5-plan.md` (LF5-C).
 -/
 
+@[expose] public section
+
 open Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization
 
@@ -112,7 +116,7 @@ lemma basisPOVM_E_M (i : Fin N) :
 
 /-- Action of the matrix unit `single i i 1` on a vector:
 `(single i i 1 *ᵥ v) a = δ_{i a} · v i`. -/
-private lemma single_one_mulVec_apply (i a : Fin N) (v : Fin N → ℂ) :
+lemma single_one_mulVec_apply (i a : Fin N) (v : Fin N → ℂ) :
     (Matrix.single i i (1 : ℂ) *ᵥ v) a = if i = a then v i else 0 := by
   simp only [Matrix.mulVec, dotProduct, Matrix.single_apply]
   by_cases ha : i = a

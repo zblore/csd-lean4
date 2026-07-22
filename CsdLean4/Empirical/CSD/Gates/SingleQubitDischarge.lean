@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.WignerDischarge
-import CsdLean4.Empirical.CSD.Gates.SingleQubit
+module
+
+public import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+public import CsdLean4.Empirical.CSD.Gates.SingleQubit
 
 /-!
 # Empirical/CSD/Gates: §13.2 discharge for the single-qubit gates (H, S, T)
@@ -44,6 +46,8 @@ References: `Empirical/CSD/Gates/WignerDischarge.lean`, `Empirical/CSD/Gates/Sin
 `Empirical/QM/Gates/SingleQubit.lean` (`qmH`, `qmS`, `qmT`), `specs/LF4-todo.md` §13.2,
 `BRIDGE-OBLIGATIONS.md` §2.6, `PLACEHOLDERS.md` §1/§7.
 -/
+
+@[expose] public section
 
 open Matrix
 open CSD.Empirical.QM.Gates

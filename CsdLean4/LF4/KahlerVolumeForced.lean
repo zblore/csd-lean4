@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.ManyToOnePillars
-import CsdLean4.LF4.NonTrivialSetup
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+module
+
+public import CsdLean4.LF4.ManyToOnePillars
+public import CsdLean4.LF4.NonTrivialSetup
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
 # Moving up the chain: the Kähler-sector VOLUME is forced, not posited
@@ -58,6 +60,8 @@ it is FORWARD: it characterises the *posited* sector volume intrinsically; it do
 `U(N)`-symmetry itself from the deterministic dynamics (that reverse — deriving `G` — is SL-1,
 untouched). "The volume is forced by the symmetry" still takes the symmetry `G = U(N)` as given.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix.UnitaryGroup
 

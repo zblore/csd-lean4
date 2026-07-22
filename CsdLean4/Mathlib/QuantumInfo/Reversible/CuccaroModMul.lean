@@ -3,8 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 
 /-!
 # The carry-clean (Θ(n)-qubit) MODULAR MULTIPLY `X·Y mod N`  (ECDLP Phase 2, Stage 2b)
@@ -54,6 +60,8 @@ Toffoli is also ~`1.5×` better than the dirty `30n²`. This is the verified mod
 atom; the elliptic-curve point op is a later stage. **Load-bearing hypothesis: `N` odd** (the parity
 flag-uncompute in the doubler), which holds for the ECDLP prime field.
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -1222,7 +1230,7 @@ def cuccaroMulState3 (x0 x1 x2 : Bool) : State 24 := fun w =>
   else false
 
 /-- The structural preconditions of `cuccaroModMul_correct` hold at `cuccaroMulState3`. -/
-private theorem cuccaroMulState3_pre (x0 x1 x2 : Bool) :
+theorem cuccaroMulState3_pre (x0 x1 x2 : Bool) :
     cuccaroMulState3 x0 x1 x2 (cuccaroMulLayout3.mod.Acc 3) = false
       ∧ cuccaroMulState3 x0 x1 x2 (cuccaroMulLayout3.mod.Nreg 3) = false
       ∧ (∀ j, j < 3 + 1 → cuccaroMulState3 x0 x1 x2 (cuccaroMulLayout3.mod.Mask j) = false)

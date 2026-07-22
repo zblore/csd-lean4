@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.TraceDistance
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.Convex.Jensen
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.Convex.Jensen
 
 /-!
 # Spectral von Neumann entropy (K1-A)
@@ -63,6 +65,8 @@ spectral sum is then read off the charpoly root multiset by `spectral_sum_eq_of_
 No external axiom is incurred (foundational triple only). This discharges the former K1-A.2 item;
 the conditional `vonNeumannEntropy_kronecker_of_eigenvalues` is kept as a convenience.
 -/
+
+@[expose] public section
 
 open Matrix Polynomial
 open scoped ComplexOrder Kronecker

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.MeasureTheory.Constructions.Polish.Basic
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Constructions.Polish.Basic
 
 /-!
 # Measurable structure on projectivization
@@ -61,6 +63,8 @@ that agrees with the Mathlib-canonical `borel _` (callers typically
 projectivization, projective space, Borel measurable space,
 quotient measurable space, scale-invariant measurable function
 -/
+
+@[expose] public section
 
 open MeasureTheory Topology
 open scoped LinearAlgebra.Projectivization

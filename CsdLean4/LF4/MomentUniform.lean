@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentRatioUniform
-import CsdLean4.LF4.GaussianCP
-import CsdLean4.LF4.MomentMap
-import CsdLean4.LF4.DuistermaatHeckman
+module
+
+public import CsdLean4.LF4.MomentRatioUniform
+public import CsdLean4.LF4.GaussianCP
+public import CsdLean4.LF4.MomentMap
+public import CsdLean4.LF4.DuistermaatHeckman
 
 /-!
 # LF4 plan B, Part 2, Slice 4: assembly + discharge of `fs_moment_pushforward_uniform`
@@ -43,6 +45,8 @@ means "the `h_uniform` DH hypothesis is discharged". It is distinct from the
 `hpos` is removed". The qubit moment-sublevel route here never carried an
 hpos-style hypothesis (only `ψ ≠ 0` and `‖ψ‖ = 1`), so no hpos migration applies.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Module Real Set Matrix.UnitaryGroup
 open scoped ENNReal

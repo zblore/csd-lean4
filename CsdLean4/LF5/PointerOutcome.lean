@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.CapstoneCanonical
-import CsdLean4.LF4.BornRegionDisjoint
+module
+
+public import CsdLean4.LF5.CapstoneCanonical
+public import CsdLean4.LF4.BornRegionDisjoint
 
 /-!
 # LF5: the per-microstate pointer-outcome map and the outcome-frequency capstone
@@ -62,6 +64,8 @@ mechanism, with measures forced by the Kähler geometry, not carved; the Born
 
 Reference: `specs/lf5-plan.md` (LF5-F); the owed-since-`aeece86` outcome map.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 
 /-!
 # Reversible controlled addition — the quantum×quantum primitive  (ECDLP Phase 2, Stage S2)
@@ -33,6 +35,8 @@ restored to `false`), so one shared ancilla suffices and the controlled full add
 * `cfullAdder_cost` — derived `toffoli = 8`, everything else `0`: a controlled add is `4×` the
   uncontrolled full adder's two Toffolis, plus one ancilla. The honest quantum×quantum overhead.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

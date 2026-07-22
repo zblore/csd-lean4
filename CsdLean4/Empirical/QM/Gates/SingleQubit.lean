@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 /-!
 # Empirical/QM: Single-qubit gates (Hadamard, Phase S, Phase T)
@@ -36,6 +38,8 @@ Clifford content. The CSD-side companion uses `csd`-prefixed names.
 These are standard textbook gates; specific experimental verification
 is unit-test-level (gate fidelity measurements in any QC platform).
 No single named experiment. -/
+
+@[expose] public section
 
 open Matrix Complex
 open scoped Matrix

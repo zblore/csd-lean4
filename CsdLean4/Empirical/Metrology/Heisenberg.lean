@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.Metrology.QuantumFisher
+module
+
+public import CsdLean4.Empirical.Metrology.QuantumFisher
 
 /-!
 # Empirical/Metrology A3: the Heisenberg limit (1/N scaling) via the GHZ probe
@@ -58,6 +60,8 @@ Heisenberg limit and `F_Q^SQL = N` the standard quantum limit. This reuses A2's
 generalizes from the qubit to the `N`-qubit entangled probe. QM-validity layer; the CSD
 content is the A1/A2 metrology lineage.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 

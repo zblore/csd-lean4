@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMDilation
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+module
+
+public import CsdLean4.LF4.POVMDilation
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 
 /-!
 # LF4: the canonical Naimark dilation of a POVM exists (P.5)
@@ -42,6 +44,8 @@ the dynamics (**D1**). The dilation is still non-canonical as a *choice* (Naimar
 dilations are non-unique); `canonicalNaimark` is *one* explicit, always-available
 inhabitant, not a forced one.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped Kronecker MatrixOrder ComplexOrder

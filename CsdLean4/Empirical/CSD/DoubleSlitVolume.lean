@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.MachZehnderVolume
-import CsdLean4.LF6.Decoherence
+module
+
+public import CsdLean4.Empirical.CSD.MachZehnderVolume
+public import CsdLean4.LF6.Decoherence
 
 /-!
 # Empirical/CSD: Double-slit interference and Bohr complementarity
@@ -40,6 +42,8 @@ References: `Empirical/CSD/MachZehnderVolume.lean`, `LF6/Decoherence.lean`
 (`decohereReduced`, `decoherence_offdiagonal_vanish`, `decoherence_diagonal_born`),
 `Empirical/CSD/Einselection.lean`, `specs/qm-empirical-tests.md`.
 -/
+
+@[expose] public section
 
 open CSD.Empirical.CSDBridge
 

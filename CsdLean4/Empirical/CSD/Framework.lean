@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.Interface
-import CsdLean4.LF2.Preparation
+module
+
+public import CsdLean4.LF2.Interface
+public import CsdLean4.LF2.Preparation
 
 /-!
 # Empirical/CSD: shared framework bundle for CSD-side empirical readings
@@ -82,6 +84,8 @@ The existing `PureSingletPreparation.bridge_op_p` is the working
 example of this discipline. See `specs/empirical-csd-bridge-plan.md`
 §5 for the full rule set.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

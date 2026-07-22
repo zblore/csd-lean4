@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Projectors.Core
-import CsdLean4.LF3.Hamiltonian
-import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
+module
+
+public import CsdLean4.LF3.Projectors.Core
+public import CsdLean4.LF3.Hamiltonian
+public import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
 
 /-!
 # LF3 Projectors / TensorModel: derive ProjectorAlgebra from a tensor structure
@@ -55,6 +57,8 @@ Callers without a `TensorEmbedding` (LF3 v1.00 callers) continue to
 construct `ProjectorAlgebra` directly; this module is additive, not
 invasive.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Algebra.BigOperators.Intervals
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Algebra.BigOperators.Intervals
 
 /-!
 # Reversible modular multiplication — semantic target + shift-and-add multiplier cost  (ECDLP Tranche 3, Stage A)
@@ -62,6 +64,8 @@ content. This tranche builds the missing reversible circuit + *derived* cost.
   to a `bitlen N`-bit representative is a reversible conditional-subtract circuit (qubit optimisation),
   not built here.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

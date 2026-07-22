@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.LF2.PhaseInvariance
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
-import Mathlib.MeasureTheory.Integral.IntegrableOn
+module
+
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.LF2.PhaseInvariance
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
 
 /-!
 # Volume-ratio projective effect function
@@ -28,6 +30,8 @@ trace-form / density-operator description is a reformulation, available
 via `traceForm` + `born_quadratic`; that reformulation is downstream of
 the volume integral, not foundational.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

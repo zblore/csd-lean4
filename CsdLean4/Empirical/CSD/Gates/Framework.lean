@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import Mathlib.Analysis.InnerProductSpace.Basic
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import Mathlib.Analysis.InnerProductSpace.Basic
 
 /-!
 # Empirical/CSD: Gate framework (CSDUnitaryBundle)
@@ -98,6 +100,8 @@ that any specific unitary IS realisable through a CSD ontic flow
 the realisability and reducing gate-identity statements across the
 bridge.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

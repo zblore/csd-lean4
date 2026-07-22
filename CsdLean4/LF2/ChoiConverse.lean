@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.QuantumChannel
-import CsdLean4.LF2.MixedEnsembleIx
+module
+
+public import CsdLean4.LF2.QuantumChannel
+public import CsdLean4.LF2.MixedEnsembleIx
 
 /-!
 # LF2/ChoiConverse: Choi's theorem, the converse direction (PSD Choi ⇒ Kraus)
@@ -47,6 +49,8 @@ References: `LF2/QuantumChannel.lean` (`choiMatrix`, `choiMatrix_posSemidef`, th
 direction); `LF2/MixedEnsembleIx.lean` (`outerProduct`, `eq_eigen_ensemble` — the spectral
 idiom this reuses); `specs/BACKLOG.md` (M-tier "Choi converse"); `specs/future-work.md`.
 -/
+
+@[expose] public section
 
 open Matrix Unitary
 open scoped ComplexOrder

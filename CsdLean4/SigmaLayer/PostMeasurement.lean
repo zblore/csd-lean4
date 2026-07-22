@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.IsolationPreparation
-import CsdLean4.SigmaLayer.MeasurementRecord
+module
+
+public import CsdLean4.SigmaLayer.IsolationPreparation
+public import CsdLean4.SigmaLayer.MeasurementRecord
 
 /-!
 # SigmaLayer/PostMeasurement: the post-outcome isolation preparation
@@ -37,6 +39,8 @@ References: `specs/future-work.md` (SL-T5 follow-on); `SigmaLayer/IsolationPrepa
 (`appendEstablishedFact`, `compatibleSet_appendEstablishedFact`, `DeisolationModel.establishedFact`),
 `SigmaLayer/ConditioningLink.lean` (`bayesianConditional`).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.Metrology.Ramsey
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Analysis.Calculus.FDeriv.Linear
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+module
+
+public import CsdLean4.Empirical.Metrology.Ramsey
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.FDeriv.Linear
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 
 /-!
 # Empirical/Metrology A2: Quantum Fisher Information = Fubini-Study metric
@@ -65,6 +67,8 @@ remaining A2/A3 infrastructure, deferred. This is a single-qubit (`d = 2`) insta
 QM-validity layer: no CSD ontology is introduced beyond reuse of the A1 Ramsey
 machinery (`ramseyVec`, `ramseyFringe`, `ramsey_fringe_hasDerivAt`).
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 

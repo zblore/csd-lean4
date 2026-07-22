@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Data.Real.Basic
+module
+
+public import Mathlib.Data.Real.Basic
 
 /-!
 # SigmaLayer/ConstraintSurface: ontic time and the concrete constrained state space
@@ -18,6 +20,8 @@ constrained ontic state space. The generic foundations stay polymorphic over an 
 See `SigmaLayer/Adapters.lean` for the postulate ledger (P1 to P9, B1 to B7, T1 to T15) governing the whole
 SigmaLayer layer, and `SigmaLayer/ConstraintDynamics.lean` for the deterministic dynamics.
 -/
+
+@[expose] public section
 
 namespace CSD.SigmaLayer
 

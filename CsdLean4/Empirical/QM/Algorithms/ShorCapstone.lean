@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
-import CsdLean4.Empirical.QM.Algorithms.ShorRandomA
+module
+
+public import CsdLean4.Empirical.QM.Algorithms.ShorRecovery
+public import CsdLean4.Empirical.QM.Algorithms.ShorRandomA
 
 /-!
 # Shor's algorithm — factoring capstone (ties GOOD ⟹ nontrivial factor of `N`)
@@ -33,6 +35,8 @@ Both are foundational-triple-only (no `busch_effect_gleason`, no measure axioms)
 elementary finite number theory composed on top of the already-verified S6 reduction and the S7
 counting bound.
 -/
+
+@[expose] public section
 
 namespace CSD.Empirical.QM.Shor
 

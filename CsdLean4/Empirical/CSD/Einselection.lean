@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.Decoherence
-import CsdLean4.Empirical.QM.Gates.SingleQubit
+module
+
+public import CsdLean4.LF6.Decoherence
+public import CsdLean4.Empirical.QM.Gates.SingleQubit
 
 /-!
 # Empirical/CSD: einselection / pointer-basis selection (Build 15a)
@@ -107,6 +109,8 @@ All exports are foundational-triple-only (off `busch_effect_gleason`): the resul
 is concrete `Matrix` arithmetic on `Fin 2` over the LF6-B `decohereReduced`.
 -/
 
+@[expose] public section
+
 open Matrix
 open CSD.LF2 CSD.LF6 CSD.Empirical.QM.Gates
 
@@ -118,24 +122,24 @@ namespace Einselection
 /-! ### The rotated-basis off-diagonal (the core computation) -/
 
 /-- `((√2)⁻¹)² = 1/2`, the Hadamard normalisation squared (cf. `qmH_mul_self`). -/
-private lemma sqrt_two_inv_sq : ((Real.sqrt 2 : ℂ))⁻¹ * ((Real.sqrt 2 : ℂ))⁻¹ = (1 / 2 : ℂ) := by
+lemma sqrt_two_inv_sq : ((Real.sqrt 2 : ℂ))⁻¹ * ((Real.sqrt 2 : ℂ))⁻¹ = (1 / 2 : ℂ) := by
   rw [← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
   norm_num
 
 /-- `z · z̄ = (‖z‖ : ℂ)²` (the diagonal density entry as the Born weight). -/
-private lemma mul_star_normSq (z : ℂ) : z * star z = ((‖z‖ : ℂ)) ^ 2 := by
+lemma mul_star_normSq (z : ℂ) : z * star z = ((‖z‖ : ℂ)) ^ 2 := by
   rw [← starRingEnd_apply]
   exact RCLike.mul_conj z
 
 /-- `star (↑r) = ↑r` for a real scalar embedded in `ℂ`. -/
-private lemma star_ofReal' (r : ℝ) : star ((r : ℝ) : ℂ) = ((r : ℝ) : ℂ) := by
+lemma star_ofReal' (r : ℝ) : star ((r : ℝ) : ℂ) = ((r : ℝ) : ℂ) := by
   rw [← starRingEnd_apply]
   exact Complex.conj_ofReal r
 
 /-- A constant diagonal is a scalar multiple of the identity:
 `diagonal (fun _ => c) = c • 1`. The shape of the maximally mixed / degenerate
 reduced state. -/
-private lemma diagonal_const_eq_smul_one {N : ℕ} (c : ℂ) :
+lemma diagonal_const_eq_smul_one {N : ℕ} (c : ℂ) :
     Matrix.diagonal (fun _ : Fin N => c) = c • (1 : Matrix (Fin N) (Fin N) ℂ) := by
   ext i j
   rw [Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, Matrix.diagonal_apply]

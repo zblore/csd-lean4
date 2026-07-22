@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.KahlerOnticSetup
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+module
+
+public import CsdLean4.LF4.KahlerOnticSetup
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 
 /-!
 # A genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant (connectivity fix C1)
@@ -49,6 +51,8 @@ The Kähler-geometry fields remain honest `True` placeholders (link L1).
 Foundational-triple only. Reuses `KahlerOnticSetup`, the projectivization unitary
 action, and `fubiniStudyMeasure_smul_invariant`; nothing is re-proved.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF6.PartialSchmidtCorrelation
+module
+
+public import CsdLean4.LF6.PartialSchmidtCorrelation
 
 /-!
 # LF6-6: Gisin's theorem — every entangled pure two-qubit state violates CHSH
@@ -49,6 +51,8 @@ References: `LF6/PartialSchmidtCorrelation.lean` (`psQubit`, `psQubit_pauli_corr
 this violates); `Empirical/QM/Bell.lean` (`chshOperator`, `chsh_singlet_tsirelson_bound` — the
 maximally-entangled special case); `specs/future-work.md` (LF6-6); `specs/BACKLOG.md`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Matrix
@@ -97,12 +101,12 @@ noncomputable def gisinA : DetectorSetting := detector3 1 0 0 (by ring)
 noncomputable def gisinA' : DetectorSetting := detector3 0 0 1 (by ring)
 
 /-- `r = 1/√(1+t²)` with `t = 2cs`, squared: `r² = (1+(2cs)²)⁻¹`. -/
-private lemma gisin_r_sq (c s : ℝ) :
+lemma gisin_r_sq (c s : ℝ) :
     ((Real.sqrt (1 + (2 * c * s) ^ 2))⁻¹) ^ 2 = (1 + (2 * c * s) ^ 2)⁻¹ := by
   rw [inv_pow, Real.sq_sqrt (by positivity)]
 
 /-- The unit-norm condition for Bob's `b = (t·r, 0, r)`: `(t·r)² + 0² + r² = 1`. -/
-private lemma gisin_B_norm (c s : ℝ) :
+lemma gisin_B_norm (c s : ℝ) :
     (2 * c * s * (Real.sqrt (1 + (2 * c * s) ^ 2))⁻¹) ^ 2 + (0 : ℝ) ^ 2
       + ((Real.sqrt (1 + (2 * c * s) ^ 2))⁻¹) ^ 2 = 1 := by
   have hpos : (0 : ℝ) < 1 + (2 * c * s) ^ 2 := by positivity
@@ -111,7 +115,7 @@ private lemma gisin_B_norm (c s : ℝ) :
   ring
 
 /-- The unit-norm condition for Bob's `b' = (−t·r, 0, r)`. -/
-private lemma gisin_B'_norm (c s : ℝ) :
+lemma gisin_B'_norm (c s : ℝ) :
     (-(2 * c * s * (Real.sqrt (1 + (2 * c * s) ^ 2))⁻¹)) ^ 2 + (0 : ℝ) ^ 2
       + ((Real.sqrt (1 + (2 * c * s) ^ 2))⁻¹) ^ 2 = 1 := by
   rw [neg_pow]; simpa using gisin_B_norm c s

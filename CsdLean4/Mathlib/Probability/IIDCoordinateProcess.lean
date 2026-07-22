@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Probability.ProductMeasure
-import Mathlib.Probability.Independence.InfinitePi
+module
+
+public import Mathlib.Probability.ProductMeasure
+public import Mathlib.Probability.Independence.InfinitePi
 
 /-!
 # Mathlib upstream candidate: the canonical i.i.d. coordinate process
@@ -43,6 +45,8 @@ hypothesis sets are Lean-inhabited rather than merely classically satisfiable.
 
 independence, product measure, iid, indicator, coordinate process
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

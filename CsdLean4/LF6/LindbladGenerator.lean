@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.QuantumChannel
-import CsdLean4.LF6.DephasingSemigroup
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+module
+
+public import CsdLean4.LF2.QuantumChannel
+public import CsdLean4.LF6.DephasingSemigroup
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
 /-!
 # LF6-9: the general Lindblad (GKSL) generator and its CPTP-generating structure
@@ -56,6 +58,8 @@ References: `LF2/QuantumChannel.lean` (`apply_posSemidef`, the Kraus CP witness 
 (LF6-2, LF6-9); `specs/BACKLOG.md`.
 -/
 
+@[expose] public section
+
 open Matrix
 open scoped ComplexOrder BigOperators
 
@@ -104,7 +108,7 @@ theorem lindblad_dissipation_posSemidef (L : ι → Matrix n n ℂ) {ρ : Matrix
 /-! ### Hermiticity preservation ⟹ the flow keeps states Hermitian -/
 
 /-- `L ρ L†` is Hermitian when `ρ` is. -/
-private theorem isHermitian_mul_mul_conjTranspose {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian)
+theorem isHermitian_mul_mul_conjTranspose {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian)
     (L : Matrix n n ℂ) : (L * ρ * Lᴴ).IsHermitian := by
   show (L * ρ * Lᴴ)ᴴ = L * ρ * Lᴴ
   rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
@@ -219,7 +223,7 @@ theorem dephasingGenerator_eq_lindblad {γ : ℝ} (hγ : 0 ≤ γ) (ρ : Matrix 
 /-! ### The dephasing master equation: the exhibited semigroup is the generator's flow -/
 
 /-- The complex decay factor `e^{-γt}·c` has derivative `−γ·e^{-γt}·c` in `t`. -/
-private theorem hasDerivAt_expDecay (γ t : ℝ) (c : ℂ) :
+theorem hasDerivAt_expDecay (γ t : ℝ) (c : ℂ) :
     HasDerivAt (fun τ : ℝ => (Real.exp (-(γ * τ)) : ℂ) * c)
       (-(γ : ℂ) * (Real.exp (-(γ * t)) : ℂ) * c) t := by
   -- Build the ℝ→ℝ intermediate steps WITHOUT type annotations: annotating forces a `Module ℝ ℝ`

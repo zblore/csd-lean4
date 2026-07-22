@@ -3,19 +3,21 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.ZMod.UnitsCyclic
-import Mathlib.Algebra.Group.Units.Equiv
-import Mathlib.Algebra.Group.Prod
-import Mathlib.Algebra.Group.Pi.Units
-import Mathlib.Algebra.Ring.Equiv
-import Mathlib.Data.ZMod.QuotientRing
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.ZMod.UnitsCyclic
+public import Mathlib.Algebra.Group.Units.Equiv
+public import Mathlib.Algebra.Group.Prod
+public import Mathlib.Algebra.Group.Pi.Units
+public import Mathlib.Algebra.Ring.Equiv
+public import Mathlib.Data.ZMod.QuotientRing
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Linarith
 
 /-!
 # Shor's algorithm — random-`a` success, per-cyclic-factor v₂ distribution bound (S7b)
@@ -57,6 +59,8 @@ This avoids the divisor-reindexing of the totient route (`IsCyclic.card_orderOf_
 **Honest scope.** S7b only. The `−1`-characterisation (S7c), the two-factor CRT framing (S7a), and
 the assembly into `2·#GOOD ≥ |G|` (S7d) are separate, not in this file.
 -/
+
+@[expose] public section
 
 namespace CSD.Empirical.QM.Shor
 
@@ -239,7 +243,7 @@ per-cyclic-factor core of Shor's "`a^(r/2) = -1`" success condition (S7).
 half `R/2` iff its 2-adic valuation is *strictly* below that of `R`. The non-2 primes are
 unconstrained by halving (`m ∣ R` already bounds them); the `p = 2` slot drops by exactly one
 (`Nat.factorization_div` on the divisor `2`, `(2).factorization = single 2 1`). -/
-private theorem dvd_half_iff_v2_lt {m R : ℕ} (hm : m ≠ 0) (hR0 : R ≠ 0)
+theorem dvd_half_iff_v2_lt {m R : ℕ} (hm : m ≠ 0) (hR0 : R ≠ 0)
     (h2R : 2 ∣ R) (hmR : m ∣ R) :
     m ∣ (R / 2) ↔ m.factorization 2 < R.factorization 2 := by
   have hR2 : R / 2 ≠ 0 := by
@@ -273,7 +277,7 @@ private theorem dvd_half_iff_v2_lt {m R : ℕ} (hm : m ≠ 0) (hR0 : R ≠ 0)
 order-2 element of the cyclic group, then `w` is either `1` or `z`: the order-2 elements form a
 singleton (`IsCyclic.card_orderOf_eq_totient`, `Nat.totient 2 = 1`), so `w` of order 2 must equal
 `z`. -/
-private theorem sqrt_one_dichotomy {G : Type*} [Group G] [Fintype G] [IsCyclic G]
+theorem sqrt_one_dichotomy {G : Type*} [Group G] [Fintype G] [IsCyclic G]
     {z : G} (hz : orderOf z = 2) {w : G} (hw : w ^ 2 = 1) :
     w = 1 ∨ w = z := by
   classical
@@ -1029,7 +1033,7 @@ per-element valuations. `Finset.induction` on the binary `Nat.factorization_lcm`
 is `max` at the prime `2`, `Finsupp.sup_apply`), with `Finset.lcm_insert` / `Finset.sup_insert` and
 the `GCDMonoid.lcm = Nat.lcm` bridge `lcm_eq_nat_lcm`. The nonzero side-condition needed by
 `Nat.factorization_lcm` is `finset_lcm_ne_zero`. Mathlib has no Finset-level `factorization_lcm`. -/
-private theorem finset_lcm_ne_zero {ι : Type*} (s : Finset ι) (g : ι → ℕ)
+theorem finset_lcm_ne_zero {ι : Type*} (s : Finset ι) (g : ι → ℕ)
     (hg : ∀ i ∈ s, g i ≠ 0) : s.lcm g ≠ 0 := by
   classical
   induction s using Finset.induction with
@@ -1040,7 +1044,7 @@ private theorem finset_lcm_ne_zero {ι : Type*} (s : Finset ι) (g : ι → ℕ)
     have hsne : s.lcm g ≠ 0 := ih (fun i hi => hg i (Finset.mem_insert_of_mem hi))
     exact Nat.lcm_ne_zero hbne hsne
 
-private theorem v2_finset_lcm_eq_sup {ι : Type*} (s : Finset ι) (g : ι → ℕ)
+theorem v2_finset_lcm_eq_sup {ι : Type*} (s : Finset ι) (g : ι → ℕ)
     (hg : ∀ i ∈ s, g i ≠ 0) :
     (s.lcm g).factorization 2 = s.sup (fun i => (g i).factorization 2) := by
   classical

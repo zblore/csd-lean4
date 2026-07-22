@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.CompositeInterface
-import CsdLean4.Empirical.QM.Algorithms.HadamardTest
+module
+
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import CsdLean4.Empirical.QM.Algorithms.HadamardTest
 
 /-!
 # SigmaLayer/Interference: quantum interference as a first-class target
@@ -26,6 +28,8 @@ form is used here because it exposes the phase (the real part of the overlap) di
 
 We provide NO new mathematics: `HasBornInterference` is inhabited verbatim by `hadamard_test_prob`.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 

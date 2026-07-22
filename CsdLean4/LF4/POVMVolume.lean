@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMDilation
-import CsdLean4.LF4.BornFrequencyN
+module
+
+public import CsdLean4.LF4.POVMDilation
+public import CsdLean4.LF4.BornFrequencyN
 
 /-!
 # LF4: POVM Born weight as a dilated rank-1 block sum (P.3a)
@@ -27,6 +29,8 @@ Fubini–Study volume on `ℂℙ^{N·|ι|−1}` (the FS-volume identification, P
 on top of this via the `Fin N × ι ≃ Fin (N·|ι|)` reindex).
 -/
 
+@[expose] public section
+
 open Matrix Matrix.UnitaryGroup MeasureTheory ProbabilityTheory Filter
 open scoped Kronecker LinearAlgebra.Projectivization
 
@@ -48,7 +52,7 @@ lemma piLpCongrLeft_inner_single_sq {α κ : Type*} [Fintype α] [DecidableEq α
   rw [← EuclideanSpace.piLpCongrLeft_single e p (1 : ℂ), LinearIsometryEquiv.inner_map_map]
 
 /-- `‖⟨e_p, w⟩‖² = ‖w_p‖²` on the dilated `EuclideanSpace ℂ (Fin N × ι)`. -/
-private lemma normSq_inner_single (w : EuclideanSpace ℂ (Fin N × ι)) (p : Fin N × ι) :
+lemma normSq_inner_single (w : EuclideanSpace ℂ (Fin N × ι)) (p : Fin N × ι) :
     ‖inner ℂ (EuclideanSpace.single p (1 : ℂ)) w‖ ^ 2 = ‖w.ofLp p‖ ^ 2 := by
   rw [EuclideanSpace.inner_single_left, map_one, one_mul]
 

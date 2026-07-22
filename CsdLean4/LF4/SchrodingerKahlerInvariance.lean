@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
-import CsdLean4.LF4.ProjectedDynamics
+module
+
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+public import CsdLean4.LF4.ProjectedDynamics
 
 /-!
 # The Schrödinger flow is a Kähler symplectomorphism
@@ -38,6 +40,8 @@ blocked. This module proves the invariance (a symmetry of `ω`), not the generat
 Hilbert-vector level; the descent to the ray-level FS form rides on the tangent-space `J`-invariance
 (`Kahler.tangent_complexStructure_invariant`).
 -/
+
+@[expose] public section
 
 open Kahler MeasureTheory Projectivization
 

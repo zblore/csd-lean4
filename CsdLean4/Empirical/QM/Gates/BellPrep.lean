@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Gates.SingleQubit
-import CsdLean4.Empirical.QM.Gates.TwoQubit
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.Empirical.QM.Gates.SingleQubit
+public import CsdLean4.Empirical.QM.Gates.TwoQubit
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Empirical/QM: Bell-state preparation circuit
@@ -37,6 +39,8 @@ phase. No direct algebraic identity between this file's circuit
 output and the LF3 singlet — the circuit produces a different Bell
 state, mentioned in the docstring for context.
 -/
+
+@[expose] public section
 
 open Matrix
 
@@ -121,36 +125,36 @@ component expressions; we expose those for the headline proof.
 `qmKet00.ofLp` is `1` at index `0` and `0` elsewhere. `qmKetPhiPlus.ofLp`
 is `(1/√2)` at indices `0` and `3` and `0` elsewhere. -/
 
-private lemma qmKet00_ofLp_zero : qmKet00.ofLp 0 = (1 : ℂ) := by
+lemma qmKet00_ofLp_zero : qmKet00.ofLp 0 = (1 : ℂ) := by
   simp [qmKet00, EuclideanSpace.single]
 
-private lemma qmKet00_ofLp_one : qmKet00.ofLp 1 = (0 : ℂ) := by
+lemma qmKet00_ofLp_one : qmKet00.ofLp 1 = (0 : ℂ) := by
   simp [qmKet00, EuclideanSpace.single]
 
-private lemma qmKet00_ofLp_two : qmKet00.ofLp 2 = (0 : ℂ) := by
+lemma qmKet00_ofLp_two : qmKet00.ofLp 2 = (0 : ℂ) := by
   simp [qmKet00, EuclideanSpace.single]
 
-private lemma qmKet00_ofLp_three : qmKet00.ofLp 3 = (0 : ℂ) := by
+lemma qmKet00_ofLp_three : qmKet00.ofLp 3 = (0 : ℂ) := by
   simp [qmKet00, EuclideanSpace.single]
 
-private lemma qmKetPhiPlus_ofLp_zero :
+lemma qmKetPhiPlus_ofLp_zero :
     qmKetPhiPlus.ofLp 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
-private lemma qmKetPhiPlus_ofLp_one : qmKetPhiPlus.ofLp 1 = (0 : ℂ) := by
+lemma qmKetPhiPlus_ofLp_one : qmKetPhiPlus.ofLp 1 = (0 : ℂ) := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
-private lemma qmKetPhiPlus_ofLp_two : qmKetPhiPlus.ofLp 2 = (0 : ℂ) := by
+lemma qmKetPhiPlus_ofLp_two : qmKetPhiPlus.ofLp 2 = (0 : ℂ) := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
-private lemma qmKetPhiPlus_ofLp_three :
+lemma qmKetPhiPlus_ofLp_three :
     qmKetPhiPlus.ofLp 3 = (Real.sqrt 2 : ℂ)⁻¹ := by
   simp [qmKetPhiPlus, EuclideanSpace.single]
 
 /-- For any row index `k`, `(qmBellPrepCircuit *ᵥ qmKet00.ofLp) k`
     collapses to the column-0 entry `qmBellPrepCircuit k 0`, because
     `qmKet00.ofLp` is `1` at index `0` and `0` elsewhere. -/
-private lemma qmBellPrepCircuit_mulVec_qmKet00 (k : Fin 4) :
+lemma qmBellPrepCircuit_mulVec_qmKet00 (k : Fin 4) :
     (qmBellPrepCircuit *ᵥ qmKet00.ofLp) k = qmBellPrepCircuit k 0 := by
   show qmBellPrepCircuit k ⬝ᵥ qmKet00.ofLp = qmBellPrepCircuit k 0
   show ∑ j, qmBellPrepCircuit k j * qmKet00.ofLp j = qmBellPrepCircuit k 0

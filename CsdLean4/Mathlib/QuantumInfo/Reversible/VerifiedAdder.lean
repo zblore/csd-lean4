@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 
 /-!
 # An adder-parametric modular multiplier — the substitution keystone  (ECDLP Phase 2, Stage S6.3-36a)
@@ -70,6 +72,8 @@ Deferred and the precise propagation cost:
 (`hornerStep_toffoli`), so `genMul_corpusAdder_toffoli = 30 · n²` — equal to `mulLoop_toffoli`. This is
 the `Θ(n²)`-qubit fresh-ancilla figure inherited from the corpus step.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

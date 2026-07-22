@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.SternGerlachVolume
+module
+
+public import CsdLean4.Empirical.CSD.SternGerlachVolume
 
 /-!
 # Empirical/CSD: Malus's law (spin-1/2) as a derived Kähler-volume frequency
@@ -52,6 +54,8 @@ Kähler volume; it does not provide the operator → measurable-Σ-function dict
   canonical sequential Stern-Gerlach prediction (Stern, Gerlach 1922; standard
   QM textbooks, e.g. Sakurai 1985).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

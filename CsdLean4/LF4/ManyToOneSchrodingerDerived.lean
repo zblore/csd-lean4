@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.ManyToOnePillars
-import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+module
+
+public import CsdLean4.LF4.ManyToOnePillars
+public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 
 /-!
 # General-`N` Schrödinger pillar, DERIVED (not by `rfl`)
@@ -49,6 +51,8 @@ References: `LF4/PhaseLift.lean` (`sigmaFlow_schrodinger_form`, S1),
 `rfl`-form this backs). See `specs/future-work.md` (W5-S2) and
 `specs/reconstruction-status.md` (L3/L8, the Schrödinger pillar).
 -/
+
+@[expose] public section
 
 open scoped Matrix.Norms.L2Operator Matrix
 open NormedSpace

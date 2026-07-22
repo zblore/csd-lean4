@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Multipartite.GHZ
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Multipartite.GHZ
 
 /-!
 # Empirical/CSD: GHZ paradox (CSD-side reading, Mermin all-or-nothing)
@@ -114,6 +116,8 @@ the projective-first outcome construction. The headline theorem
 is then strictly stronger: it carries both the LHV impossibility
 AND the CSD partition-discipline realisability.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Resources.Teleportation
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Resources.Teleportation
 
 /-!
 # Empirical/CSD: Quantum teleportation (CSD-side reading)
@@ -40,6 +42,8 @@ concrete `SectorData` instantiation. See `BRIDGE-OBLIGATIONS.md` and `PLACEHOLDE
 
 Bennett, Brassard, Crépeau, Jozsa, Peres, Wootters 1993, *Phys. Rev. Lett.* **70**, 1895.
 -/
+
+@[expose] public section
 
 open Matrix
 

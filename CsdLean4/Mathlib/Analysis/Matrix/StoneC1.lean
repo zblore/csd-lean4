@@ -3,14 +3,16 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Analysis.ODE.Gronwall
-import Mathlib.Analysis.ODE.ExistUnique
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
-import Mathlib.Tactic.Module
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Analysis.ODE.Gronwall
+public import Mathlib.Analysis.ODE.ExistUnique
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.LinearAlgebra.Matrix.FiniteDimensional
+public import Mathlib.Tactic.Module
 
 /-!
 # Finite-dimensional Stone's theorem, C^1 form
@@ -66,6 +68,8 @@ matrix-norm the `SMul ℝ (Matrix ...)` instance path defeats those rewrites, wh
 Declarations use dotted `CSD.StoneC1.*` names at top level rather than a
 `namespace ... end` block (a namespace block can select a spurious `SMul` diamond).
 -/
+
+@[expose] public section
 
 open scoped Matrix.Norms.L2Operator Matrix
 

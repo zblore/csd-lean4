@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 
 /-!
 # The swap test (overlap / fidelity estimator)
@@ -45,6 +47,8 @@ formalised here. No tensor caveats beyond the explicit `Fin 2 × ι × ι` model
 (For `ι = Empty` the unit hypotheses `‖ψ‖ = 1` are unsatisfiable, so the headlines hold
 vacuously there; non-vacuous content needs an inhabited system `ι`.)
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open QuantumInfo

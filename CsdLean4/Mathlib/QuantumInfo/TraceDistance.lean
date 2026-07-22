@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
-import Mathlib.Analysis.RCLike.Basic
+module
+
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
+public import Mathlib.Analysis.RCLike.Basic
 
 /-!
 # Trace norm and trace distance (K3 foundation)
@@ -48,6 +50,8 @@ bound `re_trace_mul_le_re_trace_posPart` (the variational half `Re Tr((ρ−σ)�
 achieved at `P = posProj (ρ−σ)`); it is proved in `DataProcessing.lean` (`channel_traceDist_le`,
 done 2026-06-09) via the channel adjoint. So K3 (metric + data-processing) is complete.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

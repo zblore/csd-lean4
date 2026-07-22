@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Preparation
+module
+
+public import CsdLean4.LF1.Preparation
 
 /-!
 # LF1 Outcomes
@@ -33,6 +35,8 @@ family) would be the right object if a future layer (LF2/LF4) needs to reason ab
 partition sums such as Σ_i weight(O_i) = 1 or POVM completeness. That extension should
 be built in the layer that first requires it, not here.
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

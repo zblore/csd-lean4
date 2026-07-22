@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.DilationFromFlow
-import CsdLean4.LF4.BornRegionUncond
+module
+
+public import CsdLean4.LF5.DilationFromFlow
+public import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # LF5: pointer frequencies of the de-isolation flow → Born (LF5-D)
@@ -56,6 +58,8 @@ capstone; entangled / non-local de-isolation is deferred
 
 Reference: `specs/lf5-plan.md` (LF5-D).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

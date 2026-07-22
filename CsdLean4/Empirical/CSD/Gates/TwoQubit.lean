@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.Framework
-import CsdLean4.Empirical.QM.Gates.TwoQubit
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.Empirical.CSD.Gates.Framework
+public import CsdLean4.Empirical.QM.Gates.TwoQubit
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Empirical/CSD: Two-qubit gates (CSD-side reading)
@@ -26,6 +28,8 @@ at `N = 2`). **DISCHARGED 2026-07-19** on `cpSectorData`
 bundle type carries no Σ-flow, so this discharges the Prop as-typed, not the
 Σ-flow-lift prose (open D1 gap). See `BRIDGE-OBLIGATIONS.md` §2.6, `PLACEHOLDERS.md §1`.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

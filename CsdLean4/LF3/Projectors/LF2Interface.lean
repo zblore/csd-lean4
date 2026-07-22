@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Projectors.SectorVolume
-import CsdLean4.LF2.BornWrapper
+module
+
+public import CsdLean4.LF3.Projectors.SectorVolume
+public import CsdLean4.LF2.BornWrapper
 
 /-!
 # LF3 Projectors / LF2 interface: sector volume ↔ LF2 Born form
@@ -25,6 +27,8 @@ The trace-inner identity `Tr(|φ⟩⟨φ| · M) = ⟨φ, Mφ⟩` is the core alg
 content; it generalises LF2's `born_quadratic` to arbitrary effects via
 `Matrix.dotProduct_mulVec` and `dotProduct_comm` (paper §5.14, spec §9.7).
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate ComplexOrder
 open Matrix

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.Framework
-import CsdLean4.Empirical.CSD.Gates.SingleQubit
-import CsdLean4.Empirical.CSD.Gates.TwoQubit
-import CsdLean4.Empirical.QM.Gates.BellPrep
+module
+
+public import CsdLean4.Empirical.CSD.Gates.Framework
+public import CsdLean4.Empirical.CSD.Gates.SingleQubit
+public import CsdLean4.Empirical.CSD.Gates.TwoQubit
+public import CsdLean4.Empirical.QM.Gates.BellPrep
 
 /-!
 # Empirical/CSD: Bell-state preparation circuit (CSD-side reading)
@@ -42,6 +44,8 @@ CSD-side content is the bundle-composition structure plus the
 existence-conditional-on-LF4 commitment that the resulting bundle's
 `U` is ontic-realisable.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

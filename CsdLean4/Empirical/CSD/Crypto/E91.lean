@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Crypto.E91
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Crypto.E91
 
 /-!
 # Empirical/CSD: E91 device-independent security (CSD-side reading)
@@ -39,6 +41,8 @@ The transport is therefore a clean reduction with no externally-supplied ontic p
 
 Ekert 1991, *Phys. Rev. Lett.* **67**, 661; CHSH 1969, *Phys. Rev. Lett.* **23**, 880.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

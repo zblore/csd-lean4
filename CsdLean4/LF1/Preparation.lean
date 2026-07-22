@@ -3,15 +3,19 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Setup
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.Measure.FiniteMeasure
+module
+
+public import CsdLean4.LF1.Setup
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.FiniteMeasure
 
 /-!
 # LF1 Preparation
 
 **Category:** 3-Local (LF1 conditional preparation measure on `Ω0`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Set
 

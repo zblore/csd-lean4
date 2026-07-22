@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.Framework
-import CsdLean4.Empirical.QM.Gates.SingleQubit
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.Empirical.CSD.Gates.Framework
+public import CsdLean4.Empirical.QM.Gates.SingleQubit
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Empirical/CSD: Single-qubit gates (CSD-side reading)
@@ -69,6 +71,8 @@ as a structural commitment carried by the `CSDUnitaryBundle`
 existence claim. Post-LF4, the bundle becomes constructible from
 the concrete Kähler `SectorData` via LF4-todo §13.2's discharge.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

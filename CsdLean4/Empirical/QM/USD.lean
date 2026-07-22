@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.POVM
-import CsdLean4.LF2.EffectAux
+module
+
+public import CsdLean4.LF2.POVM
+public import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/QM: unambiguous state discrimination (the IDP POVM)
@@ -45,6 +47,8 @@ cannot have an informative outcome that gives identically zero on a non-orthogon
 state while leaving room for a second such outcome.
 -/
 
+@[expose] public section
+
 open Matrix
 open scoped ComplexOrder
 
@@ -81,21 +85,21 @@ lemma sig_sq (hs1 : s ≤ 1) (hs0 : -1 ≤ s) : sig s ^ 2 = 1 - s ^ 2 :=
 
 /-! ### Component values and inner products -/
 
-private lemma inner_two (x y : EuclideanSpace ℂ (Fin 2)) :
+lemma inner_two (x y : EuclideanSpace ℂ (Fin 2)) :
     inner ℂ x y = star (x.ofLp 0) * y.ofLp 0 + star (x.ofLp 1) * y.ofLp 1 := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_two]
   simp only [Pi.star_apply]; ring
 
-private lemma psi1_ofLp : (psi1).ofLp 0 = 1 ∧ (psi1).ofLp 1 = 0 := by
+lemma psi1_ofLp : (psi1).ofLp 0 = 1 ∧ (psi1).ofLp 1 = 0 := by
   constructor <;> simp [psi1, EuclideanSpace.single]
 
-private lemma psi1perp_ofLp : (psi1perp).ofLp 0 = 0 ∧ (psi1perp).ofLp 1 = 1 := by
+lemma psi1perp_ofLp : (psi1perp).ofLp 0 = 0 ∧ (psi1perp).ofLp 1 = 1 := by
   constructor <;> simp [psi1perp, EuclideanSpace.single]
 
-private lemma psi2_ofLp : (psi2 s).ofLp 0 = (s : ℂ) ∧ (psi2 s).ofLp 1 = ((sig s : ℝ) : ℂ) := by
+lemma psi2_ofLp : (psi2 s).ofLp 0 = (s : ℂ) ∧ (psi2 s).ofLp 1 = ((sig s : ℝ) : ℂ) := by
   constructor <;> simp [psi2, EuclideanSpace.single]
 
-private lemma psi2perp_ofLp :
+lemma psi2perp_ofLp :
     (psi2perp s).ofLp 0 = ((-sig s : ℝ) : ℂ) ∧ (psi2perp s).ofLp 1 = (s : ℂ) := by
   constructor <;> simp [psi2perp, EuclideanSpace.single]
 
@@ -189,12 +193,12 @@ noncomputable def chiInc : EuclideanSpace ℂ (Fin 2) :=
   EuclideanSpace.single 0 ((Real.sqrt s : ℝ) : ℂ)
     + EuclideanSpace.single 1 ((sig s * Real.sqrt s / (1 + s) : ℝ) : ℂ)
 
-private lemma chiInc_ofLp :
+lemma chiInc_ofLp :
     (chiInc s).ofLp 0 = ((Real.sqrt s : ℝ) : ℂ)
       ∧ (chiInc s).ofLp 1 = ((sig s * Real.sqrt s / (1 + s) : ℝ) : ℂ) := by
   constructor <;> simp [chiInc, EuclideanSpace.single]
 
-private lemma outer_apply (φ : EuclideanSpace ℂ (Fin 2)) (i j : Fin 2) :
+lemma outer_apply (φ : EuclideanSpace ℂ (Fin 2)) (i j : Fin 2) :
     outerProduct φ i j = φ.ofLp i * star (φ.ofLp j) := rfl
 
 /-- **Completeness:** `E₁ + E₂ + |χ?⟩⟨χ?| = I` at the optimal `a = 1/(1+s)`. The

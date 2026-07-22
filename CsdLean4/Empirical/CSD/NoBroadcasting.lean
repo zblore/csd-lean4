@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.NoBroadcasting
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.NoBroadcasting
 
 /-!
 # Empirical/CSD: No-broadcasting (CSD-side reading)
@@ -41,6 +43,8 @@ concrete `SectorData` instantiation. See `BRIDGE-OBLIGATIONS.md` and `PLACEHOLDE
 
 Barnum, Caves, Fuchs, Jozsa, Schumacher 1996, *Phys. Rev. Lett.* **76**, 2818.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder Kronecker

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.GeneralFrequency
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.LF2.EffectGleason
+module
+
+public import CsdLean4.LF1.GeneralFrequency
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.LF2.EffectGleason
 
 /-!
 # LF4: pure-state ontic Born rule as a frequency limit
@@ -39,6 +41,8 @@ satisfiable. This repairs the inhabitability defect of the LF3
 incompatible with the continuous measure bridge `π∗μL = c·μFS` (a single quantum
 state's fibre is `μL`-null). See `LF4-todo §8`.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter
 

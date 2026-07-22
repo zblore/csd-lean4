@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Probability.StrongLaw
-import Mathlib.Probability.IdentDistrib
-import Mathlib.MeasureTheory.Integral.Bochner.Set
+module
+
+public import Mathlib.Probability.StrongLaw
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
 
 /-!
 # LF1 General frequency theorem (law-agnostic)
@@ -28,6 +30,8 @@ downstream simply as a probability measure pushing to a Dirac on `[ψ]`.
 The proof is the same strong-law wrapper used in `Convergence.lean`, with
 `S.prepMeasure` replaced by the abstract `μp`.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter
 

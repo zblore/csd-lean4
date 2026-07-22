@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Kronecker
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Kronecker
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.Trace
 
 /-!
 # Mathlib upstream candidate: partial trace of a matrix over a tensor factor
@@ -53,6 +55,8 @@ revision (Lean 4.29.0-rc8).
 matrix, partial trace, tensor product, kronecker, density operator, positive
 semidefinite
 -/
+
+@[expose] public section
 
 open scoped Kronecker
 

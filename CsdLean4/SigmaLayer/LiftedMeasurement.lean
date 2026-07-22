@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.MeasurementRecord
-import CsdLean4.LF5.PointerOutcome
+module
+
+public import CsdLean4.SigmaLayer.MeasurementRecord
+public import CsdLean4.LF5.PointerOutcome
 
 /-!
 # SigmaLayer/LiftedMeasurement: the concrete de-isolation model from the LF5 pointer machinery
@@ -32,6 +34,8 @@ This is a theorem-backed construction, not an assumed instance: every field is d
 lemma. The isolated dynamics is trivial here (`trivialDynamics`); the physical content is the
 de-isolation interaction.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix.UnitaryGroup Filter
 open scoped LinearAlgebra.Projectivization

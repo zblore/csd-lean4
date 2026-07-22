@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.POVMNaimark
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF4.TrialWitness
-import CsdLean4.LF2.EffectAux
+module
+
+public import CsdLean4.LF4.POVMNaimark
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF4.TrialWitness
+public import CsdLean4.LF2.EffectAux
 
 /-!
 # Empirical/CSD: weak / unsharp measurement as a partial volume nudge (Build 15c)
@@ -69,6 +71,8 @@ is D1-gated. Every concrete `SectorData` still carries `Φ = id`.
 All exports are foundational-triple-only (off `busch_effect_gleason`): concrete `Matrix`
 algebra over the `Effect` / `POVM` types and the unconditional FS-volume engine.
 -/
+
+@[expose] public section
 
 open Matrix MeasureTheory Matrix.UnitaryGroup ProbabilityTheory Filter
 open scoped Kronecker MatrixOrder ComplexOrder LinearAlgebra.Projectivization
@@ -237,10 +241,10 @@ lemma weakPOVM_weight_one (η : ℝ) (h0 : 0 ≤ η) (h1 : η ≤ 1)
 
 /-! ### Born weights -/
 
-private lemma re_add (a b : ℂ) : RCLike.re (a + b) = RCLike.re a + RCLike.re b := by
+lemma re_add (a b : ℂ) : RCLike.re (a + b) = RCLike.re a + RCLike.re b := by
   simp only [← RCLike.reLm_coe, map_add]
 
-private lemma inner_two (x y : EuclideanSpace ℂ (Fin 2)) :
+lemma inner_two (x y : EuclideanSpace ℂ (Fin 2)) :
     inner ℂ x y = star (x.ofLp 0) * y.ofLp 0 + star (x.ofLp 1) * y.ofLp 1 := by
   rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_two]
   simp only [Pi.star_apply]; ring

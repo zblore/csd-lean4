@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Channel
-import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
-import CsdLean4.Mathlib.QuantumInfo.TraceDistance
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Channel
+public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 
 /-!
 # Data-processing inequality for the trace distance (K3)
@@ -43,6 +45,8 @@ projector *candidate* on the input side, and the operator bound
 `TraceDistance.lean`) closes the inequality. The whole argument consumes the channel adjoint
 (unital + positive ⟹ `0 ≤ Φ† P ≤ I`) and the `posPart`/`posProj` Jordan machinery.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

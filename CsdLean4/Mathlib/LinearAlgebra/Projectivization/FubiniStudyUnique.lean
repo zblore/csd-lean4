@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
-import Mathlib.MeasureTheory.Measure.Haar.Unique
-import Mathlib.Topology.Instances.Matrix
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import Mathlib.MeasureTheory.Measure.Haar.Unique
+public import Mathlib.Topology.Instances.Matrix
 
 /-!
 # Joint continuity of the unitary action on complex projective space (Phase G1)
@@ -51,6 +53,8 @@ Staged as upstream Mathlib material. Intended location:
 
 projectivization, continuous group action, joint continuity
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped LinearAlgebra.Projectivization

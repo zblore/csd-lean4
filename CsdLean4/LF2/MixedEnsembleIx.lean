@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.ReducedDensity
-import CsdLean4.SigmaLayer.MixedEnsemble
+module
+
+public import CsdLean4.LF2.ReducedDensity
+public import CsdLean4.SigmaLayer.MixedEnsemble
 
 /-!
 # LF2: Mixed-state Born rule and spectral ensemble on the indexed density type
@@ -33,6 +35,8 @@ The proofs are the faithful `ι`-generalisation of the `Fin N` originals; every
 underlying lemma (`Matrix.posSemidef_sum`, the Hermitian spectral theorem,
 `trace_eq_sum_eigenvalues`, `eigenvalues_nonneg`) is stated for a general Fintype index.
 -/
+
+@[expose] public section
 
 open Matrix Unitary
 open scoped ComplexOrder

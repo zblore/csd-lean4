@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.MeasureBridge
-import CsdLean4.SigmaLayer.ConditioningLink
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.LF4.BornRegionDisjoint
+module
+
+public import CsdLean4.SigmaLayer.MeasureBridge
+public import CsdLean4.SigmaLayer.ConditioningLink
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF4.BornRegionDisjoint
 
 /-!
 # SigmaLayer/ConditioningLuders: the ontic-record conditioning EQUALS the Lüders update, through `π`
@@ -49,6 +51,8 @@ pointer-basis outcome region here, so it is outside what this ontic model predic
 References: `SigmaLayer/ConditioningLink.lean` (the two Bayesian halves), `SigmaLayer/MeasureBridge.lean` (B1,
 `productSector_hasFubiniStudyPushforward`), `LF4/BornRegionUncond.lean` (`bornRegion_fs_measure_uncond`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix.UnitaryGroup
 

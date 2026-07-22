@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.NoCommunication
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.NoCommunication
 
 /-!
 # Empirical/CSD: No-communication / no-signalling (CSD-side reading)
@@ -39,6 +41,8 @@ bundle's fields are Hilbert-side; the ontic correspondence is prose-only).
 
 Ghirardi-Rimini-Weber 1980, *Lett. Nuovo Cimento* **27**, 293; Eberhard 1978.
 -/
+
+@[expose] public section
 
 open Matrix ComplexConjugate
 open scoped Kronecker

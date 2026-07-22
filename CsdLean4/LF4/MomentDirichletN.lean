@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.GaussianCPN
-import CsdLean4.LF4.MomentMap
-import CsdLean4.LF4.MomentRatioUniformN
-import CsdLean4.LF4.MomentBridgeN
+module
+
+public import CsdLean4.LF4.GaussianCPN
+public import CsdLean4.LF4.MomentMap
+public import CsdLean4.LF4.MomentRatioUniformN
+public import CsdLean4.LF4.MomentBridgeN
 
 /-!
 # LF4 general-N Slice E (headline): the joint Dirichlet moment pushforward
@@ -34,6 +36,8 @@ The proof is the general-N assembly:
 pointwise identity `ratioN (momentMap [coordsN(toLp y)]) = ratioN (blockSqNorm (curry y))`
 glues the geometric and coordinate routes.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

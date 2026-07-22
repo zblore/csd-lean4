@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
+module
+
+public import CsdLean4.LF2.BornWrapper
 
 /-!
 # LF2/EffectGleason: the Busch effect-Gleason theorem, PROVED (discharges the former axiom)
@@ -82,6 +84,8 @@ References: `LF2/BornWrapper.lean` (`Effect`, `DensityOperator`, `OperationalPac
 (the parallelogram characterisation polarised in §J–§K); `AXIOMS.md §2.2`;
 `CONVENTIONS.md §8.1`; `specs/BACKLOG.md`; `specs/future-work.md`.
 -/
+
+@[expose] public section
 
 open Matrix Unitary
 open scoped ComplexOrder
@@ -532,7 +536,7 @@ The additivity step of the `p`-level parallelogram needs `|a⟩⟨a| + |b⟩⟨b
 
 /-- The `|a⟩⟨a|` quadratic form: `⟨x, |a⟩⟨a| x⟩ = |⟨a,x⟩|²` (the squared norm of the standard
 Hermitian pairing `c := star ⇑a ⬝ᵥ x`). -/
-private lemma quad_outerProduct (a : EuclideanSpace ℂ (Fin N)) (x : Fin N → ℂ) :
+lemma quad_outerProduct (a : EuclideanSpace ℂ (Fin N)) (x : Fin N → ℂ) :
     star x ⬝ᵥ (outerProduct a *ᵥ x) = ((‖star (⇑a) ⬝ᵥ x‖ ^ 2 : ℝ) : ℂ) := by
   set c := star (⇑a) ⬝ᵥ x with hc
   have hrow : ∀ i, (outerProduct a *ᵥ x) i = (⇑a) i * c := by
@@ -962,7 +966,7 @@ theorem qpolar_neg_right (u v : EuclideanSpace ℂ (Fin N)) :
 /-- **The halving identity (Jordan–von Neumann core).** `f u v + f w v = 2 · f ((u+w)/2) v`:
 apply the parallelogram law at `(a ± v, b)` with `a = (u+w)/2`, `b = (u−w)/2` (so `a + b = u`
 and `a − b = w`) and subtract the two instances — the `q b` terms cancel. -/
-private theorem qpolar_add_half (u w v : EuclideanSpace ℂ (Fin N)) :
+theorem qpolar_add_half (u w v : EuclideanSpace ℂ (Fin N)) :
     OP.qpolar u v + OP.qpolar w v = 2 * OP.qpolar (((2:ℂ)⁻¹) • (u + w)) v := by
   have h2 : (2:ℂ) ≠ 0 := by norm_num
   set a : EuclideanSpace ℂ (Fin N) := ((2:ℂ)⁻¹) • (u + w) with ha

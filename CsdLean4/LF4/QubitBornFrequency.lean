@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornFS
-import CsdLean4.LF1.GeneralFrequency
+module
+
+public import CsdLean4.LF4.BornFS
+public import CsdLean4.LF1.GeneralFrequency
 
 /-!
 # LF4: Busch-free empirical chain for the qubit Born weight (volume route)
@@ -33,6 +35,8 @@ Born value derived from the Kähler volume, not imported via Gleason/Busch.
 plan B). The outcome region is the moment sublevel set, special to `N=2`'s
 1-dimensional polytope.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

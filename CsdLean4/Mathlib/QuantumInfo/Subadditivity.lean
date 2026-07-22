@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Entropy
-import CsdLean4.Mathlib.QuantumInfo.PartialTrace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.LinearAlgebra.Lagrange
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Matrix.PosDef
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
+public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.LinearAlgebra.Lagrange
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.Matrix.PosDef
 
 /-!
 # Relative entropy, Klein's inequality, subadditivity (K1-B.2)
@@ -78,6 +80,8 @@ product-state identity. The general singular-marginal case and **Araki–Lieb**
 `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)` (which needs a purification construction) are deferred. See
 `specs/k1-plan.md` for the ledger.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder Kronecker
@@ -462,7 +466,7 @@ theorem eigenvalue_of_conj_diagonal {M U : Matrix n n ℂ} (hM : M.IsHermitian)
 
 open Polynomial in
 /-- `aeval (↑r) q = ↑(eval r q)` for a real polynomial `q` evaluated at `(r : ℂ)`. -/
-private theorem aeval_ofReal_eq (r : ℝ) (q : ℝ[X]) :
+theorem aeval_ofReal_eq (r : ℝ) (q : ℝ[X]) :
     aeval ((r : ℝ) : ℂ) q = ((eval r q : ℝ) : ℂ) := by
   rw [show ((r:ℝ):ℂ) = algebraMap ℝ ℂ r from rfl, aeval_algebraMap_apply, aeval_def,
     Algebra.algebraMap_self, eval₂_id]

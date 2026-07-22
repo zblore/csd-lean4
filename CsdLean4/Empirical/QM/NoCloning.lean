@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.LinearMap
+module
+
+public import Mathlib.Analysis.InnerProductSpace.LinearMap
 
 /-!
 # Empirical: No-cloning theorem
@@ -62,6 +64,8 @@ immediately from the theorem below).
 Wootters and Zurek 1982, *Nature* **299**, 802; Dieks 1982,
 *Phys. Lett. A* **92**, 271 (simultaneous independent derivation).
 -/
+
+@[expose] public section
 
 open ComplexConjugate
 

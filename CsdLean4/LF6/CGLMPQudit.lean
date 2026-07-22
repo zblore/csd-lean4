@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.Probability.CGLMP
-import CsdLean4.LF6.MaxEntangledDeisolationFlow
-import Mathlib.Analysis.Real.Pi.Bounds
+module
+
+public import CsdLean4.Mathlib.Probability.CGLMP
+public import CsdLean4.LF6.MaxEntangledDeisolationFlow
+public import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 # LF6-D (QM side, general `d`): `Ψ_d` violates the CGLMP inequality for every `d ≥ 2`
@@ -63,6 +65,8 @@ arbitrary `d`:
 Reference: Collins, Gisin, Linden, Massar, Popescu, *Phys. Rev. Lett.* **88**, 040404
 (2002). `specs/lf6-plan.md` (LF6-D).
 -/
+
+@[expose] public section
 
 open Real Complex
 open CSD.LF6

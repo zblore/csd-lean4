@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 
 /-!
 # Layered circuits and depth  (ECDLP Phase 2, Stage S1)
@@ -27,6 +29,8 @@ count = 4n = O(n)` (its carry chain is inherently sequential). The payoff the fr
 parallel-prefix / carry-lookahead adder at `O(log n)` depth, to **compare** against the ripple `O(n)` —
 is the next increment (S1 continuation), not proved here.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

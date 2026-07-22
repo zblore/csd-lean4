@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.NonTrivialSetup
-import CsdLean4.LF4.PhaseLift
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+module
+
+public import CsdLean4.LF4.NonTrivialSetup
+public import CsdLean4.LF4.PhaseLift
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 
 /-!
 # C2: the Schrödinger form on the non-trivial rotation flow
@@ -42,6 +44,8 @@ sector. Born-side connectivity (manifest L5/L6/L7) is untouched.
 Foundational-triple only. Reuses `sigmaFlow_schrodinger_form` (S1×S2 capstone),
 `rotationSetup`/`rotU` (C1), and standard trig derivatives; nothing re-proved.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped Matrix Matrix.Norms.L2Operator LinearAlgebra.Projectivization

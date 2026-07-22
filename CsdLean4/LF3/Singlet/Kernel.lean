@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.Expectations
-import CsdLean4.LF3.Projectors.SectorVolume
+module
+
+public import CsdLean4.LF3.Singlet.Expectations
+public import CsdLean4.LF3.Projectors.SectorVolume
 
 /-!
 # LF3 Singlet / Kernel: pointer-sector kernel, correlation, marginals
@@ -28,6 +30,8 @@ definition for `cAmp := inner ℂ jointSpinEig singlet` once the eigenstate
 construction is added; downstream theorems consume only `‖cAmp‖²`, so the
 swap is transparent.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate
 open Matrix

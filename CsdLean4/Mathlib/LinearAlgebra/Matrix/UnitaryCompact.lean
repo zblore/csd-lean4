@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.Matrix.Normed
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Star.Unitary
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.Algebra.Star.Unitary
+module
+
+public import Mathlib.LinearAlgebra.UnitaryGroup
+public import Mathlib.Analysis.Matrix.Normed
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Topology.Algebra.Star.Unitary
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.Algebra.Star.Unitary
 
 /-!
 # Compactness and measurability of the matrix unitary group
@@ -56,6 +58,8 @@ usage stabilises.
 
 unitary group, compactness, Haar measure
 -/
+
+@[expose] public section
 
 open scoped Matrix.Norms.Elementwise
 

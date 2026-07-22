@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
+module
+
+public import CsdLean4.LF2.BornWrapper
 
 /-!
 # LF2: auxiliary effect constructions
@@ -21,6 +23,8 @@ by the Empirical POVM examples (trine, USD, …):
 - `scaledRankOne_quadratic` — `⟨ψ, (c|φ⟩⟨φ|) ψ⟩ = c‖⟨ψ,φ⟩‖²`, the quadratic form
   (the per-outcome Born weight of a scaled rank-1 effect).
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

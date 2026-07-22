@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
-import Mathlib.Algebra.BigOperators.Group.List.Basic
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
 
 /-!
 # Reversible-circuit resource cost — the derived gate-list cost model  (ECDLP Tranche 1b)
@@ -26,6 +28,8 @@ make the additive/non-additive split explicit: Toffoli/CNOT counts add exactly; 
 `≤`-subadditive (here equality, since the model is sequential); width is `≤ max` (here trivial, since
 `circuitCost` fixes `qubits := n` — genuine width/ancilla accounting is a Pass-2 refinement).
 -/
+
+@[expose] public section
 
 namespace Reversible
 

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Lp.Matrix
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # Mathlib upstream candidate: `Matrix.ofLp_toEuclideanLin`
@@ -43,6 +45,8 @@ here on 2026-05-19 to fix the namespace and stage for upstreaming.
 
 matrix, euclidean space, Lp, adapter
 -/
+
+@[expose] public section
 
 namespace Matrix
 

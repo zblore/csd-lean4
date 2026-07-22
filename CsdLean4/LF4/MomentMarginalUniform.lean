@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.SpecialFunctions.PolarCoord
-import Mathlib.MeasureTheory.Function.JacobianOneDim
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Probability.Distributions.Gaussian.Real
+module
+
+public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import Mathlib.MeasureTheory.Function.JacobianOneDim
+public import Mathlib.MeasureTheory.Measure.Prod
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Probability.Distributions.Gaussian.Real
 
 /-!
 # LF4 plan B, Part 2, Slice 1 (L5.1): the single-block squared-norm law is Exp(1/2)
@@ -32,6 +34,8 @@ substitute `s = r²` via the 1-D Jacobian change of variables
 (`lintegral_image_eq_lintegral_abs_deriv_mul`, `f r = r²`, `f' r = 2r`,
 `f '' Ioi 0 = Ioi 0`).
 -/
+
+@[expose] public section
 
 open MeasureTheory Real Set
 open scoped ENNReal

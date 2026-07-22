@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Register
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Register
 
 /-!
 # Hadamard transform on the n-qubit register (R2)
@@ -22,6 +24,8 @@ and the key fact that it sends the all-zeros state to the **uniform superpositio
 This is the first step of every Hadamard-based algorithm (Deutsch–Jozsa, Grover). It needs
 no unitarity (that is R3, via character orthogonality); only the action on `|0ⁿ⟩`.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open scoped Matrix

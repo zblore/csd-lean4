@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Hardy
-import CsdLean4.LF4.HardyKahler
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Hardy
+public import CsdLean4.LF4.HardyKahler
 
 /-!
 # Empirical/CSD: Hardy's 9% paradox (CSD-side reading)
@@ -67,6 +69,8 @@ the §14 observable correspondence — is prose-only. See
 - Hardy 1992 *Phys. Rev. Lett.* **68**, 2981.
 - Hardy 1993 *Phys. Rev. Lett.* **71**, 1665 (golden-ratio maximum).
 -/
+
+@[expose] public section
 
 open Finset
 

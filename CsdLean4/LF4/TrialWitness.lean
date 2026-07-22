@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BornRegionUncond
-import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
+module
+
+public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 
 /-!
 # LF4: the canonical i.i.d. FS trial witness
@@ -48,6 +50,8 @@ posit (the A5 sector/typicality datum); constructing the process does not
 derive that posit. Foundational-triple-only; Gleason-free (no
 `busch_effect_gleason`).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

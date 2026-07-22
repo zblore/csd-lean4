@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.Kernel
+module
+
+public import CsdLean4.LF3.Singlet.Kernel
 
 /-!
 # LF3 ContextMap: measurement contexts and the Bell-consistency boundary
@@ -18,6 +20,8 @@ the Bell-consistency content; no Fine-theorem axiom is needed. Six context
 theorems re-state `Singlet/Kernel` results in `MeasurementContext` form for
 the paper's §8.12 export list.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

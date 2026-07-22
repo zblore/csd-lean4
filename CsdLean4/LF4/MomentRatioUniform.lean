@@ -3,13 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.MeasureTheory.Function.Jacobian
-import Mathlib.MeasureTheory.Integral.Gamma
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
-import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
-import Mathlib.LinearAlgebra.Basis.Fin
-import CsdLean4.LF4.MomentMarginalUniform
+module
+
+public import Mathlib.MeasureTheory.Function.Jacobian
+public import Mathlib.MeasureTheory.Integral.Gamma
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
+public import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
+public import Mathlib.LinearAlgebra.Basis.Fin
+public import CsdLean4.LF4.MomentMarginalUniform
 
 /-!
 # LF4 plan B, Part 2, Slice 3 (L5.3): the ratio map sends `expHalf × expHalf` to uniform
@@ -32,6 +34,8 @@ and its determinant, injectivity, image) and assembles them into
 `ratioSqNorm_map_expHalf_prod`. Foundational-triple-only. See
 `specs/plan-b-detail.md` Part 2, Slice 3.
 -/
+
+@[expose] public section
 
 open MeasureTheory Real Set Module
 open scoped ENNReal

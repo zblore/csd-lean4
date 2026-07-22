@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Channel
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Channel
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 
 /-!
 # Stinespring dilation of a Kraus-form quantum channel
@@ -43,6 +45,8 @@ measure-preserving joint flow on `Σ_sys × Σ_env` and `traceRight` is the envi
 average, so a channel *is* the environment-marginal of a genuine `Φ ≠ id` flow — the
 structural on-ramp to the dynamics frontier (decoherence = environment volume flow).
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

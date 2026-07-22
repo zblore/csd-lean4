@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.MalusVolume
-import CsdLean4.LF4.ObservableFlow
-import CsdLean4.Empirical.QM.Gates.SingleQubit
+module
+
+public import CsdLean4.Empirical.CSD.MalusVolume
+public import CsdLean4.LF4.ObservableFlow
+public import CsdLean4.Empirical.QM.Gates.SingleQubit
 
 /-!
 # Empirical/Metrology: Ramsey interferometry as a parameter-driven Kähler flow
@@ -63,6 +65,8 @@ QFI precursor, with maximal slope at `φ = π/2`.
   The symmetric `cos²(φ/2)` fringe is the canonical two-pulse Ramsey signal (standard
   atomic-clock / interferometry references).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix.UnitaryGroup CSD.LF4
 open scoped LinearAlgebra.Projectivization

@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.IsolationPreparation
-import CsdLean4.LF4.KahlerOnticSetup
+module
+
+public import CsdLean4.SigmaLayer.IsolationPreparation
+public import CsdLean4.LF4.KahlerOnticSetup
 
 /-!
 # SigmaLayer/ProjectiveSector: the projective sector and its projective law
@@ -31,6 +33,8 @@ does not guarantee finiteness of `liouvilleMeasure`, so `IsFiniteMeasure` is req
 `IsKahlerSector` and `IsLiouvilleKahlerVolume` fields are documented placeholders (see
 `LF4/KahlerOnticSetup.lean`). The projection adapter is total: `pi` is dynamics independent.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped LinearAlgebra.Projectivization

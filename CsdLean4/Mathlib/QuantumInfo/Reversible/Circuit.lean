@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Logic.Equiv.Basic
-import Mathlib.Logic.Function.Basic
-import Mathlib.Data.List.Basic
-import Mathlib.Data.Finset.Basic
+module
+
+public import Mathlib.Logic.Equiv.Basic
+public import Mathlib.Logic.Function.Basic
+public import Mathlib.Data.List.Basic
+public import Mathlib.Data.Finset.Basic
 
 /-!
 # Reversible classical circuits — the gate-list DSL  (ECDLP Tranche 1)
@@ -27,6 +29,8 @@ and `denote` is a bijection. State is `Fin n → Bool`; the bridge to the quantu
 `QReg n` (basis states indexed by `Fin n → Fin 2`) is a later embedding step, kept out of this
 classical layer.
 -/
+
+@[expose] public section
 
 namespace Reversible
 

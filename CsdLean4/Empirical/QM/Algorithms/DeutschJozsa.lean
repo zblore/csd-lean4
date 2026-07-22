@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 
 /-!
 # Deutsch–Jozsa (R4)
@@ -27,6 +29,8 @@ One measurement therefore discriminates the two cases with certainty.
 is what makes the *full* output distribution a normalised probability vector; the
 `prob(0ⁿ) = 1 vs 0` discrimination here is self-contained as a squared-amplitude computation.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open QuantumInfo

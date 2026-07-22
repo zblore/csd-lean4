@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.SternGerlach
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+module
+
+public import CsdLean4.Empirical.QM.SternGerlach
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 /-!
 # Empirical: Malus's law (spin-1/2 Born probability)
@@ -42,6 +44,8 @@ double cover. It reuses the Stern-Gerlach `bornProb` (the doubly-normalised
 - The spin-1/2 `cos²(θ/2)` form: standard QM (Sakurai, *Modern QM*; the
   rotated-spin projection probability).
 -/
+
+@[expose] public section
 
 open CSD.Empirical.SternGerlach
 

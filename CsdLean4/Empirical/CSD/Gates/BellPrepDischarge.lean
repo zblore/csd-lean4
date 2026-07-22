@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.TwoQubitDischarge
-import CsdLean4.Empirical.CSD.Gates.BellPrep
+module
+
+public import CsdLean4.Empirical.CSD.Gates.TwoQubitDischarge
+public import CsdLean4.Empirical.CSD.Gates.BellPrep
 
 /-!
 # Empirical/CSD/Gates: §13.2 discharge for Bell-state preparation (H⊗I, CNOT)
@@ -28,6 +30,8 @@ are discharged** on the concrete instance.
 References: `Gates/{SingleQubit,TwoQubit,MultiQubit}Discharge.lean`,
 `Empirical/QM/Gates/BellPrep.lean` (`qmH_tensor_I`), `PLACEHOLDERS.md` §1/§7.
 -/
+
+@[expose] public section
 
 open Matrix
 open CSD.Empirical.QM.Gates

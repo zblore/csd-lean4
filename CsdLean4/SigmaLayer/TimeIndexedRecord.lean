@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.RecordedFact
-import CsdLean4.SigmaLayer.ConstraintDynamics
+module
+
+public import CsdLean4.SigmaLayer.RecordedFact
+public import CsdLean4.SigmaLayer.ConstraintDynamics
 
 /-!
 # SigmaLayer/TimeIndexedRecord: time-indexed records and their persistence under isolated evolution
@@ -41,6 +43,8 @@ References: `specs/future-work.md` (SL-T5 follow-on); `SigmaLayer/RecordedFact.l
 `SigmaLayer/ConstraintDynamics.lean` (`flow_preserves`, `flow_add`), `SigmaLayer/UnifiedMeasurement.lean` (the concrete
 pointer regions that instantiate `region`).
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

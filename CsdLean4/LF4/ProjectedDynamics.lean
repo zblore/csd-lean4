@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.UnitarySelection
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+module
+
+public import CsdLean4.LF4.UnitarySelection
+public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 /-!
 # W5: projected CSD dynamics = projective action of a one-parameter unitary family
@@ -80,6 +82,8 @@ no `sorry`, no `native_decide`, no new axioms. Reuses W2/W3 (`KahlerOnticSetup`,
 `ProjUnitary`, the `Matrix.unitaryGroup` action from `Unitary.lean`) and
 Mathlib's `Matrix.exp`; nothing is re-proved.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 open scoped LinearAlgebra.Projectivization

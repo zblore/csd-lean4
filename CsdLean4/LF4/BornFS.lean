@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.MomentMap
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+module
+
+public import CsdLean4.LF4.MomentMap
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # LF4 Tranche M slice 2 (option C): Born = Fubini–Study volume ratio on Σ (qubit)
@@ -40,6 +42,8 @@ uses the barycentric regions of `BornVolume.lean` with the full
 
 **Category:** 1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

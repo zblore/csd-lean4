@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.LF2.ReducedDensity
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.LF2.ReducedDensity
 
 /-!
 # Empirical/QM: No-broadcasting — pure-marginal confinement core (E2)
@@ -42,6 +44,8 @@ zero, which pins `ρ` to the `P`-sector.
 Barnum, Caves, Fuchs, Jozsa, Schumacher 1996, *Phys. Rev. Lett.* **76**, 2818
 (the full no-broadcasting theorem; only the pure-marginal core is formalised here).
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder Kronecker

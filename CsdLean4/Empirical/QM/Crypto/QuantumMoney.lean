@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.NoCloning
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.Empirical.QM.NoCloning
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Empirical/QM: Wiesner quantum money (unforgeability)
@@ -32,6 +34,8 @@ Wiesner 1983, *SIGACT News* **15**(1), 78 ("Conjugate Coding");
 unforgeability via Wootters-Zurek 1982 / Dieks 1982 no-cloning.
 -/
 
+@[expose] public section
+
 open ComplexConjugate
 
 namespace CSD
@@ -48,13 +52,13 @@ noncomputable def ketPlus : EuclideanSpace ℂ (Fin 2) :=
     (EuclideanSpace.single 0 (1 : ℂ) + EuclideanSpace.single 1 (1 : ℂ))
 
 /-- `(√2⁻¹)² = ½`, the only nonalgebraic fact used below. -/
-private lemma half : ((Real.sqrt 2 : ℂ)⁻¹) * ((Real.sqrt 2 : ℂ)⁻¹) = 1 / 2 := by
+lemma half : ((Real.sqrt 2 : ℂ)⁻¹) * ((Real.sqrt 2 : ℂ)⁻¹) = 1 / 2 := by
   rw [← mul_inv, ← Complex.ofReal_mul,
       Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
   norm_num
 
 /-- `⟨0|0⟩ = 1`, used to get `‖|0⟩‖ = 1`. -/
-private lemma ket0_inner_self : inner ℂ ket0 ket0 = (1 : ℂ) := by
+lemma ket0_inner_self : inner ℂ ket0 ket0 = (1 : ℂ) := by
   simp only [ket0, EuclideanSpace.inner_single_left, PiLp.single_apply, map_one]
   norm_num [Fin.ext_iff]
 
@@ -73,7 +77,7 @@ lemma wiesner_inner : inner ℂ ket0 ketPlus = (Real.sqrt 2 : ℂ)⁻¹ := by
   norm_num [Fin.ext_iff]
 
 /-- `⟨+|+⟩ = 1`, used to get `‖|+⟩‖ = 1`. -/
-private lemma ketPlus_inner_self : inner ℂ ketPlus ketPlus = (1 : ℂ) := by
+lemma ketPlus_inner_self : inner ℂ ketPlus ketPlus = (1 : ℂ) := by
   simp only [ketPlus, inner_smul_left, inner_smul_right, inner_add_left,
     inner_add_right, EuclideanSpace.inner_single_left, PiLp.single_apply,
     map_inv₀, Complex.conj_ofReal, map_one]

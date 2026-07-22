@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+module
+
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 
 /-!
 # Step (1) of the Wigner / Fubini–Study rigidity converse
@@ -198,6 +200,8 @@ Staged as upstream Mathlib material. All declarations live under
 projectivization, transition probability, Fubini-Study, Wigner theorem,
 unitary group, complex projective space, isometry, orthogonality
 -/
+
+@[expose] public section
 
 open scoped LinearAlgebra.Projectivization ComplexOrder
 open Matrix
@@ -458,7 +462,7 @@ noncomputable def imageVec
 
 /-- The reciprocal-norm scalar in `imageVec` is nonzero (the rep is nonzero, so
 its norm is positive). -/
-private lemma imageVec_scalar_ne_zero
+lemma imageVec_scalar_ne_zero
     (_hf : TransProbPreserving f)
     (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (i : Fin N) :
     ((‖(f (srcPoint b i)).rep‖⁻¹ : ℝ) : ℂ) ≠ 0 := by

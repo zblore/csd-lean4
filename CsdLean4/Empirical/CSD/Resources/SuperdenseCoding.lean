@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
 
 /-!
 # Empirical/CSD: superdense coding (CSD-side reading)
@@ -61,6 +63,8 @@ photons).
 
 Bennett and Wiesner 1992, *Phys. Rev. Lett.* **69**, 2881.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

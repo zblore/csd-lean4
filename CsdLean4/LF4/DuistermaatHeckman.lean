@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.QubitBornFrequency
+module
+
+public import CsdLean4.LF4.QubitBornFrequency
 
 /-!
 # LF4: the Duistermaat–Heckman pushforward (qubit instance) — TOMBSTONE
@@ -35,6 +37,8 @@ qubit Born value is genuinely derived from the Kähler structure — now holds
 *unconditionally*, since the geometric input is proved rather than posited. See
 the dated note below and `specs/carve-out-plan.md` Tranche M (plan B, CLOSED).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

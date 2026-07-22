@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.RotationSchrodinger
-import CsdLean4.LF4.BornFrequencyN
+module
+
+public import CsdLean4.LF4.RotationSchrodinger
+public import CsdLean4.LF4.BornFrequencyN
 
 /-!
 # C4: both pillars on ONE object
@@ -48,6 +50,8 @@ Foundational-triple only; Gleason-free (the Born side carries no
 `busch_effect_gleason`). Reuses `born_frequency_convergence_N` and
 `rotationSetup_schrodinger_form`; nothing re-proved.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

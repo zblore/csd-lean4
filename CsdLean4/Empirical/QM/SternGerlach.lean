@@ -3,15 +3,17 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.Fintype.Prod
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
 
 /-!
 # Empirical: Stern-Gerlach Born probabilities (spin-1/2)
@@ -73,6 +75,8 @@ Spin states are stored unnormalised as `Fin 2 → ℂ` (consistent with
 norm-squared product, so any consistent (un)normalisation gives the
 same Born probability.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

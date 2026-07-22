@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.DynamicsBridge
-import CsdLean4.SigmaLayer.MeasurementRecord
+module
+
+public import CsdLean4.SigmaLayer.DynamicsBridge
+public import CsdLean4.SigmaLayer.MeasurementRecord
 
 /-!
 # SigmaLayer/ForwardCapstone: the product-model forward capstone
@@ -36,6 +38,8 @@ The capstone `product_projectiveSector_forward_capstone` has NO hypotheses beyon
 generator and a basepoint). Every conjunct is discharged by a proved theorem; there are no bridge
 assumptions left open in the statement. `#print axioms` shows the foundational triple only.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix.UnitaryGroup
 

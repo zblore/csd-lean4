@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.TensorGeneration
-import Mathlib.RingTheory.MatrixAlgebra
+module
+
+public import CsdLean4.SigmaLayer.TensorGeneration
+public import Mathlib.RingTheory.MatrixAlgebra
 
 /-!
 # SigmaLayer/TensorSolved: why composition is the tensor product (P3, via local tomography)
@@ -46,6 +48,8 @@ non-tomographic GPTs) is that the world must be locally tomographic.
 References: `specs/future-work.md` (P3 / SL-P3r); `SigmaLayer/TensorGeneration.lean` (`joint_mem_span_local`,
 `single_prod`), `SigmaLayer/TensorSector.lean` (`aliceOp`, `bobOp`, `aliceOp_bobOp_commute`).
 -/
+
+@[expose] public section
 
 open Matrix TensorProduct
 open scoped Kronecker

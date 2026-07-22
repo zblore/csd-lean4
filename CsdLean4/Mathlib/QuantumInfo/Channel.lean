@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Order
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.Matrix.PosDef
+module
+
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Order
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Analysis.Matrix.PosDef
 
 /-!
 # Finite-dimensional quantum channels (Kraus form)
@@ -31,6 +33,8 @@ then trace the environment" form) and the canonical channels are later phases.
 
 The Kraus index `ι` is an arbitrary `Fintype` (matching `CSD.LF2.POVM`'s convention).
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

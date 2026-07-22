@@ -3,9 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.GaussianFS
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
+module
+
+public import CsdLean4.LF4.GaussianFS
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Mathlib.Probability.Distributions.Gaussian.Fernique
 
 /-!
 # LF4 general-N Part 1: `gaussianCPN = fubiniStudyMeasure` on `ℂℙ^{N-1}`
@@ -30,6 +33,8 @@ machinery (`coords`, `regroup4`, …) is load-bearing for the retired
 `fs_moment_pushforward_uniform` axiom, so this is a parallel general-N development
 rather than a refactor.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

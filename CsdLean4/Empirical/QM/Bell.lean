@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.Kernel
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.Normed.Lp.Matrix
+module
+
+public import CsdLean4.LF3.Singlet.Kernel
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.Normed.Lp.Matrix
 
 /-!
 # Empirical: Bell-family predictions on the bipartite singlet
@@ -69,6 +71,8 @@ content is conditional on the CSD ontic axioms supplying the bridge
 data and the Dirac-concentration preparation. See
 `[[project-structural-debts]]` and `[[project-lf4-decisions]]`.
 -/
+
+@[expose] public section
 
 open Real
 open scoped BigOperators
@@ -217,7 +221,7 @@ noncomputable def chshOperator (a a' b b' : DetectorSetting) : ℝ :=
 /-- Helper: construct a `DetectorSetting` from three real components
 `(x, y, z)` with the unit-norm side condition. Uses `WithLp.toLp 2` to
 build the underlying `EuclideanSpace ℝ (Fin 3)` value from a tuple. -/
-private noncomputable def detector3 (x y z : ℝ)
+noncomputable def detector3 (x y z : ℝ)
     (h_norm : x ^ 2 + y ^ 2 + z ^ 2 = 1) : DetectorSetting where
   vec := WithLp.toLp 2 (![x, y, z] : Fin 3 → ℝ)
   unit := by
@@ -237,7 +241,7 @@ noncomputable def chshA' : DetectorSetting :=
   detector3 0 1 0 (by ring)
 
 /-- Auxiliary: `(√2 / 2) ^ 2 = 1 / 2`. -/
-private lemma sqrt2_div_two_sq : (Real.sqrt 2 / 2) ^ 2 = 1 / 2 := by
+lemma sqrt2_div_two_sq : (Real.sqrt 2 / 2) ^ 2 = 1 / 2 := by
   rw [div_pow, Real.sq_sqrt (by norm_num : (2 : ℝ) ≥ 0)]
   norm_num
 
@@ -275,7 +279,7 @@ noncomputable def chshB' : DetectorSetting :=
 @[simp] lemma chshB'_vec_ofLp_2 : chshB'.vec.ofLp 2 = 0 := rfl
 
 /-- `√2 · √2 = 2`. -/
-private lemma sqrt2_mul_sqrt2 : Real.sqrt 2 * Real.sqrt 2 = 2 :=
+lemma sqrt2_mul_sqrt2 : Real.sqrt 2 * Real.sqrt 2 = 2 :=
   Real.mul_self_sqrt (by norm_num)
 
 /-- **A1 (named-witness form):** the CHSH operator on the singlet at
@@ -353,7 +357,7 @@ once the algebraic core is in place.
 
 /-- Auxiliary: `x + y ≤ √2 · √(x² + y²)` for any non-negative reals
 `x, y`. Cauchy-Schwarz on `ℝ²` applied to `(1, 1)` and `(x, y)`. -/
-private lemma sum_le_sqrt_two_mul_sqrt_sum_sq {x y : ℝ}
+lemma sum_le_sqrt_two_mul_sqrt_sum_sq {x y : ℝ}
     (hx : 0 ≤ x) (hy : 0 ≤ y) :
     x + y ≤ Real.sqrt 2 * Real.sqrt (x ^ 2 + y ^ 2) := by
   have h_sq : (x + y) ^ 2 ≤ 2 * (x ^ 2 + y ^ 2) := by nlinarith [sq_nonneg (x - y)]
@@ -479,33 +483,33 @@ open scoped Kronecker
 /-- `(σ·a ⊗ I)² = I` as a matrix identity. The kernel of the involution
 property that underlies norm preservation by the Tsirelson Alice-side
 operator. -/
-private lemma sigmaDotLeft_sq (a : DetectorSetting) :
+lemma sigmaDotLeft_sq (a : DetectorSetting) :
     sigmaDotLeft a * sigmaDotLeft a = 1 := by
   unfold sigmaDotLeft
   rw [← Matrix.mul_kronecker_mul, pauliDot_sq, one_mul, Matrix.one_kronecker_one]
 
 /-- `(I ⊗ σ·b)² = I`. -/
-private lemma sigmaDotRight_sq (b : DetectorSetting) :
+lemma sigmaDotRight_sq (b : DetectorSetting) :
     sigmaDotRight b * sigmaDotRight b = 1 := by
   unfold sigmaDotRight
   rw [← Matrix.mul_kronecker_mul, pauliDot_sq, one_mul, Matrix.one_kronecker_one]
 
 /-- `σ·a ⊗ I` is Hermitian. -/
-private lemma sigmaDotLeft_isHermitian (a : DetectorSetting) :
+lemma sigmaDotLeft_isHermitian (a : DetectorSetting) :
     (sigmaDotLeft a).IsHermitian := by
   unfold sigmaDotLeft Matrix.IsHermitian
   rw [Matrix.conjTranspose_kronecker, (pauliDot_isHermitian a).eq,
       Matrix.conjTranspose_one]
 
 /-- `I ⊗ σ·b` is Hermitian. -/
-private lemma sigmaDotRight_isHermitian (b : DetectorSetting) :
+lemma sigmaDotRight_isHermitian (b : DetectorSetting) :
     (sigmaDotRight b).IsHermitian := by
   unfold sigmaDotRight Matrix.IsHermitian
   rw [Matrix.conjTranspose_kronecker, (pauliDot_isHermitian b).eq,
       Matrix.conjTranspose_one]
 
 /-- Kronecker product identity: `(σ·a ⊗ I) · (I ⊗ σ·b) = σ·a ⊗ σ·b`. -/
-private lemma sigmaDotLeft_mul_sigmaDotRight (a b : DetectorSetting) :
+lemma sigmaDotLeft_mul_sigmaDotRight (a b : DetectorSetting) :
     sigmaDotLeft a * sigmaDotRight b = sigmaDotJoint a b := by
   unfold sigmaDotLeft sigmaDotRight sigmaDotJoint
   rw [← Matrix.mul_kronecker_mul, mul_one, one_mul]

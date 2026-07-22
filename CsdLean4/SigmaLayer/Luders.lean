@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.CompositeInterface
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # SigmaLayer/Luders: the projective (Lüders) state update
@@ -37,6 +39,8 @@ weights and `LF2.POVM` effects.
 
 Everything is proved for a general finite-dimensional complex inner product space; no new postulate.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate Matrix
 
@@ -77,7 +81,7 @@ theorem projWeight_eq_re_inner (p : E →ₗ[ℂ] E) (hp : IsProjection p) (x : 
   norm_cast
 
 /-- Norm of the scalar `(‖p x‖ : ℂ)⁻¹`. -/
-private theorem norm_inv_ofReal_norm (p : E →ₗ[ℂ] E) (x : E) :
+theorem norm_inv_ofReal_norm (p : E →ₗ[ℂ] E) (x : E) :
     ‖((‖p x‖ : ℂ))⁻¹‖ = (‖p x‖)⁻¹ := by
   rw [norm_inv, Complex.norm_real, norm_norm]
 

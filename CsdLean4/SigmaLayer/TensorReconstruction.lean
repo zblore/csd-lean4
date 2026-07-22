@@ -3,12 +3,14 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.SigmaLayer.TensorSolved
-import CsdLean4.SigmaLayer.CompositeInterface
-import Mathlib.RingTheory.SimpleRing.Matrix
-import Mathlib.RingTheory.SimpleRing.Congr
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+module
+
+public import CsdLean4.SigmaLayer.TensorSolved
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import Mathlib.RingTheory.SimpleRing.Matrix
+public import Mathlib.RingTheory.SimpleRing.Congr
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 
 /-!
 # SigmaLayer/TensorReconstruction: locality + generation FORCE the tensor product (P3, the uniqueness half)
@@ -44,6 +46,8 @@ References: `specs/future-work.md` (P3 / SL-P3r, bridge B6); `SigmaLayer/TensorS
 `SigmaLayer/TensorGeneration.lean` (`joint_mem_span_local`, the quantum generation fact);
 `SigmaLayer/CompositeInterface.lean` (`CompositeSector.tensor_dimension`, the field this discharges).
 -/
+
+@[expose] public section
 
 open scoped TensorProduct
 open Matrix

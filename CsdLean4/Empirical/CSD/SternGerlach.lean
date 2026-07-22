@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Framework
-import CsdLean4.Empirical.QM.SternGerlach
-import CsdLean4.LF4.SingleQubitKahler
+module
+
+public import CsdLean4.Empirical.CSD.Framework
+public import CsdLean4.Empirical.QM.SternGerlach
+public import CsdLean4.LF4.SingleQubitKahler
 
 /-!
 # Empirical/CSD: Stern-Gerlach Born probabilities (CSD-side reading)
@@ -72,6 +74,8 @@ tranche (LF4-todo §8 sub-item, currently unscheduled).
 The four Born identities + basis completeness are the foundational
 verification of QM's probabilistic structure on a single qubit.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

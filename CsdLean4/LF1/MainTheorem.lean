@@ -3,13 +3,15 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Setup
-import CsdLean4.LF1.Preparation
-import CsdLean4.LF1.Outcomes
-import CsdLean4.LF1.Trials
-import CsdLean4.LF1.Indicators
-import CsdLean4.LF1.Expectation
-import CsdLean4.LF1.Convergence
+module
+
+public import CsdLean4.LF1.Setup
+public import CsdLean4.LF1.Preparation
+public import CsdLean4.LF1.Outcomes
+public import CsdLean4.LF1.Trials
+public import CsdLean4.LF1.Indicators
+public import CsdLean4.LF1.Expectation
+public import CsdLean4.LF1.Convergence
 
 /-!
 # LF1 Main Theorem
@@ -36,6 +38,8 @@ additional structure is required at this layer.
 See `Outcomes.lean` for further discussion of when a formalised partition type would
 become necessary (LF2/LF4 and POVM completeness).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Setup
+module
+
+public import CsdLean4.LF3.Setup
 
 /-!
 # LF3 Singlet / State: Bell singlet vector and expectation functional
@@ -20,6 +22,8 @@ The joint spin eigenstate `jointSpinEig` and the singlet amplitude `cAmp` are
 deferred to `Singlet/Kernel.lean`, where `cAmp` is supplied in closed form
 sufficient for the algebraic core (paper §6.9) and the LF1↔LF2↔LF3 chain.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Matrix

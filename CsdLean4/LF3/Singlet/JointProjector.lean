@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Singlet.Kernel
+module
+
+public import CsdLean4.LF3.Singlet.Kernel
 
 /-!
 # LF3 Singlet / JointProjector: joint spin projector algebra + the Born expectation identity
@@ -31,6 +33,8 @@ expectation identity and Hermitian-idempotence it yields
 `Fin 2 × Fin 2 → Fin N` re-indexing) lives in the LF4 layer; this module is
 the context-independent physics it consumes.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexConjugate
 open Matrix Kronecker

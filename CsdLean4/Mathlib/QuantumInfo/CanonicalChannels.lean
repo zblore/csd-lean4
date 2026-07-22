@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Stinespring
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 
 /-!
 # Canonical quantum channels
@@ -28,6 +30,8 @@ inhabitants of `QuantumInfo.Channel`:
 The dephasing/depolarizing/bit-flip channels named in the plan are instances of
 `mixedUnitaryChannel`; the QEC error channel (phase C4) is the bit-flip instance.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder Kronecker
@@ -71,12 +75,12 @@ noncomputable def traceOutChannel (s env : Type*) [Fintype s] [Fintype env]
 /-! ### Mixed-unitary (random-unitary) channel -/
 
 /-- Helper: `star (√r : ℂ) = (√r : ℂ)` (the square root is real). -/
-private lemma star_ofReal_sqrt {r : ℝ} :
+lemma star_ofReal_sqrt {r : ℝ} :
     star ((Real.sqrt r : ℂ)) = (Real.sqrt r : ℂ) := by
   rw [← starRingEnd_apply, Complex.conj_ofReal]
 
 /-- Helper: for `r ≥ 0`, `star (√r : ℂ) * (√r : ℂ) = (r : ℂ)`. -/
-private lemma star_ofReal_sqrt_mul {r : ℝ} (hr : 0 ≤ r) :
+lemma star_ofReal_sqrt_mul {r : ℝ} (hr : 0 ≤ r) :
     star ((Real.sqrt r : ℂ)) * (Real.sqrt r : ℂ) = (r : ℂ) := by
   rw [star_ofReal_sqrt, ← Complex.ofReal_mul, Real.mul_self_sqrt hr]
 
@@ -112,7 +116,7 @@ noncomputable def mixedUnitaryChannel {ι : Type*} [Fintype ι] (U : ι → Matr
 /-! ### Local channel: `Φ ⊗ id` (Alice acts, Bob idle) -/
 
 /-- Kronecker-with-identity commutes with finite sums on the left factor. -/
-private lemma sum_kronecker_one {p' n' ι' : Type*} [Fintype ι'] {b' : Type*} [DecidableEq b']
+lemma sum_kronecker_one {p' n' ι' : Type*} [Fintype ι'] {b' : Type*} [DecidableEq b']
     (f : ι' → Matrix p' n' ℂ) :
     (∑ i, f i) ⊗ₖ (1 : Matrix b' b' ℂ) = ∑ i, (f i ⊗ₖ (1 : Matrix b' b' ℂ)) := by
   ext x z

@@ -3,10 +3,12 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.Complex.Basic
-import Mathlib.Data.Complex.BigOperators
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Data.Complex.BigOperators
 
 /-!
 # CV-1: a finite position observable on a lattice
@@ -63,6 +65,8 @@ finite diagonal matrix. The CSD interpretation lives only in this docstring.
 - `abs_latticePoint_le` : the spectrum is bounded, `|x_j| ≤ |a|·(N−1)/2`.
 - `positionOp_trace_eq_zero` : the mean position is `0` (the grid is centered).
 -/
+
+@[expose] public section
 
 namespace CSD.CV
 

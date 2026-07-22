@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
-import CsdLean4.Empirical.QM.QEC.ThreeQubit
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 
 /-!
 # Empirical/QM/QEC: the bit-flip error channel
@@ -27,6 +29,8 @@ dilation, `QuantumInfo.Channel.stinespringIsom`). The *correction* — syndrome 
 and recovery — is the discrete `X₁/X₂/X₃` recovery of `ThreeQubit.lean`; closing the loop
 to a measurement-conditioned update is LF5 work.
 -/
+
+@[expose] public section
 
 open Matrix QuantumInfo
 open scoped ComplexOrder

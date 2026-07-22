@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.Order.Filter.AtTopBot.Basic
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.Order.Filter.AtTopBot.Basic
 
 /-!
 # LF6-2 (bounded core): the qubit T2 dephasing quantum dynamical semigroup
@@ -46,6 +48,8 @@ Reuses only Mathlib matrix + `Real.exp` facts (CSD-free).
 
 Reference: `specs/future-work.md` (LF6-2).
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open Matrix
@@ -115,7 +119,7 @@ theorem dephasingChannel_coherence (γ t : ℝ) (ρ : Matrix (Fin 2) (Fin 2) ℂ
     dephasingChannel γ t ρ 0 1 = (Real.exp (-(γ * t)) : ℂ) * ρ 0 1 := rfl
 
 /-- The complex-valued decay factor `e^{-γt} → 0` as `t → ∞` (for `γ > 0`). -/
-private lemma dephasing_decay {γ : ℝ} (hγ : 0 < γ) :
+lemma dephasing_decay {γ : ℝ} (hγ : 0 < γ) :
     Filter.Tendsto (fun t : ℝ => (Real.exp (-(γ * t)) : ℂ)) Filter.atTop (nhds 0) := by
   have hlin : Filter.Tendsto (fun t : ℝ => -(γ * t)) Filter.atTop Filter.atBot := by
     have h : Filter.Tendsto (fun t : ℝ => (-γ) * t) Filter.atTop Filter.atBot :=

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.ContextMap
-import CsdLean4.LF3.SingletProjective
-import CsdLean4.LF2.Interface
+module
+
+public import CsdLean4.LF3.ContextMap
+public import CsdLean4.LF3.SingletProjective
+public import CsdLean4.LF2.Interface
 
 /-!
 # LF3 PureSingletPreparation: option (B) singlet OP-bridge bundle
@@ -83,6 +85,8 @@ Posited fibre law plus the auxiliary OP-construction data:
 The transitional constructor `ofHypothesis` accepts the raw field set
 for migrating existing callsites.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

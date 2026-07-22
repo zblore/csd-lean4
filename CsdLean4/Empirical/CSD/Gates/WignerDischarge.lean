@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.Framework
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
-import CsdLean4.LF4.Instance
+module
+
+public import CsdLean4.Empirical.CSD.Gates.Framework
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+public import CsdLean4.LF4.Instance
 
 /-!
 # Empirical/CSD/Gates: Wigner discharge of `CSDUnitaryBundle.U_isometry` (LF4-todo §13.2)
@@ -73,6 +75,8 @@ posited sector symmetry, correcting the earlier (false) "measure-preserving
 
 Foundational-triple only; no `busch`.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped LinearAlgebra.Projectivization ComplexOrder

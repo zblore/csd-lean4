@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.VonNeumannUnitary
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+module
+
+public import CsdLean4.LF5.VonNeumannUnitary
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 
 /-!
 # LF5: the von Neumann measurement flow (LF5-B)
@@ -74,6 +76,8 @@ tier; entangled measurements and the A5 sector posit are deferred
 
 Reference: `specs/lf5-plan.md` (LF5-B).
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

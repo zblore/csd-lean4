@@ -3,11 +3,13 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.ObservableFlow
-import CsdLean4.LF4.BornFS
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
-import Mathlib.Dynamics.Ergodic.Ergodic
+module
+
+public import CsdLean4.LF4.ObservableFlow
+public import CsdLean4.LF4.BornFS
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+public import Mathlib.Dynamics.Ergodic.Ergodic
 
 /-!
 # A5 onramp: where the Fubini–Study typicality measure comes from
@@ -94,6 +96,8 @@ beyond the LLN.
 `a5_onramp` conjoins (A) and (B). Foundational-triple-only (no `busch_effect_gleason`);
 `invariant_measure_uniqueness_cpn` / `fubiniStudyMeasure_unique` are axiom-free.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

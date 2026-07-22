@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Subadditivity
-import CsdLean4.Mathlib.QuantumInfo.Entropy
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
 /-!
 # TH2: the second law as coarse-grained entropy monotonicity
@@ -67,6 +69,8 @@ Foundational-triple only (`propext, Classical.choice, Quot.sound`); no
 Klein / relative-entropy layer (`klein_inequality`, `cfc_eq_conj_diagonal`,
 `re_trace_self_log`); nothing is re-proved.
 -/
+
+@[expose] public section
 
 open scoped BigOperators ComplexOrder
 open Matrix QuantumInfo

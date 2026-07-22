@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.QEC.ThreeQubit
+module
+
+public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 
 /-!
 # Empirical/QM: the three-qubit phase-flip code (Hadamard dual of the bit-flip code)
@@ -27,6 +29,8 @@ driven by the same single-qubit anticommutation `pX·pZ = −(pZ·pX)`.
 
 Shor 1995 (the phase-flip half of the 9-qubit code); Nielsen-Chuang §10.1.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped Kronecker

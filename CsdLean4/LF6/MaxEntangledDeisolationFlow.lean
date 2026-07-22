@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.FlowBornFrequency
-import CsdLean4.LF6.ForcedContextuality
-import CsdLean4.LF3.Singlet.Expectations
+module
+
+public import CsdLean4.LF5.FlowBornFrequency
+public import CsdLean4.LF6.ForcedContextuality
+public import CsdLean4.LF3.Singlet.Expectations
 
 /-!
 # LF6-D: the general d x d maximally-entangled de-isolation flow
@@ -86,6 +88,8 @@ off Busch, A.1 is measure-theoretic Bell content).
 
 Reference: `specs/lf6-plan.md` (LF6-D).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal BigOperators LinearAlgebra.Projectivization

@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.SigmaLayer.CompositeInterface
-import Mathlib.Analysis.Matrix.Spectrum
+module
+
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.SigmaLayer.CompositeInterface
+public import Mathlib.Analysis.Matrix.Spectrum
 
 /-!
 # SigmaLayer/MixedState: mixed-state representation and statistical mixtures
@@ -35,6 +37,8 @@ This is the mixed-state layer Mathlib does not supply (no density-matrix type up
 the repository's `LF2.DensityOperator`/`Effect` and `traceForm`.
 -/
 
+@[expose] public section
+
 open Matrix Unitary
 open scoped ComplexOrder
 
@@ -45,11 +49,11 @@ open CSD.LF2
 variable {N : ℕ}
 
 /-- `(r : ℂ)` is self-adjoint for real `r` (its conjugate is itself). -/
-private theorem isSelfAdjoint_ofReal (r : ℝ) : IsSelfAdjoint ((r : ℂ)) := by
+theorem isSelfAdjoint_ofReal (r : ℝ) : IsSelfAdjoint ((r : ℂ)) := by
   rw [isSelfAdjoint_iff]; exact Complex.conj_ofReal r
 
 /-- A nonnegative real multiple of a positive semidefinite complex matrix is positive semidefinite. -/
-private theorem posSemidef_real_smul {A : Matrix (Fin N) (Fin N) ℂ} (hA : A.PosSemidef)
+theorem posSemidef_real_smul {A : Matrix (Fin N) (Fin N) ℂ} (hA : A.PosSemidef)
     {p : ℝ} (hp : 0 ≤ p) : ((p : ℂ) • A).PosSemidef :=
   hA.smul (by exact_mod_cast hp)
 

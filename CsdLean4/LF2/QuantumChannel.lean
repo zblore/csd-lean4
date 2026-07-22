@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
-import CsdLean4.Mathlib.QuantumInfo.PartialTrace
-import Mathlib.LinearAlgebra.Matrix.PosDef
+module
+
+public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+public import Mathlib.LinearAlgebra.Matrix.PosDef
 
 /-!
 # LF2/QuantumChannel: quantum channels (CPTP maps) — Kraus form + CPTP-forward (tranche 1)
@@ -31,6 +33,8 @@ Built on `LF2.DensityOperator` and Mathlib's `Matrix.PosSemidef.mul_mul_conjTran
 References: `LF2/BornWrapper.lean` (`DensityOperator`, `traceForm`); `LF2/ReducedDensity.lean`
 (`partialTrace*`, for the forthcoming Stinespring tranche); `specs/future-work.md`.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

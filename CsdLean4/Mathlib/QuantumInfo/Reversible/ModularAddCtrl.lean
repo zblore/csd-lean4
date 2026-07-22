@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
 
 /-!
 # Reversible controlled modular addition — `(ctrl, a, b) ↦ if ctrl then (a+b) mod N else b`  (ECDLP Phase 2, Stage S6.3c)
@@ -54,6 +56,8 @@ do NOT provide. That carry-clean adder is the genuine orthogonal residue, NOT bu
 composed through `cost_comp_toffoli_count`. (Heavier than S6.3b's uncontrolled `12n` precisely by the
 `4×` quantum×quantum cost of the controlled add, `8n` vs `2n`.)
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -584,7 +588,7 @@ def cModAddState2 (a0 a1 a2 b0 b1 b2 c : Bool) : State 27 := fun w =>
 /-- The hypotheses of `cModAdd_correct` hold at `cModAddState2` (carries/ancillas clear, `A1 = 5`,
 `A2 = 3`), for any data / control bits. The `regValRange` register-value preconditions are concrete
 sums, discharged by `decide`. -/
-private theorem cModAddState2_pre (a0 a1 a2 b0 b1 b2 c : Bool) :
+theorem cModAddState2_pre (a0 a1 a2 b0 b1 b2 c : Bool) :
     (∀ j, cModAddState2 a0 a1 a2 b0 b1 b2 c (cModAddLayout2.Ccadd j) = false)
       ∧ cModAddState2 a0 a1 a2 b0 b1 b2 c cModAddLayout2.ancC = false
       ∧ (∀ j, cModAddState2 a0 a1 a2 b0 b1 b2 c (cModAddLayout2.C1 j) = false)

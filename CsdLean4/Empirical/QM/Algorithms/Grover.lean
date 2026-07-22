@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Hadamard
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 
 /-!
 # Grover's search algorithm (R5+)
@@ -36,6 +38,8 @@ carried as `ℂ`-coercions of `ℝ` so the operators stay genuinely complex / Hi
 iteration count and the success-probability bound are downstream arithmetic on this closed form;
 they are not formalised here.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open QuantumInfo

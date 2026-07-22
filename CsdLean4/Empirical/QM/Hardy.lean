@@ -3,18 +3,20 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Data.Fintype.Prod
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Polyrith
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Polyrith
 
 /-!
 # Empirical: Hardy's paradox (nonlocality without inequalities)
@@ -101,6 +103,8 @@ We index outcome quadruples by `Outcome := Fin 2 × Fin 2 × Fin 2 × Fin 2`.
 The coordinates are `(A, A', B, B')`, with `Fin 2`-value `1` meaning
 QM-outcome `+1` and `Fin 2`-value `0` meaning QM-outcome `-1`.
 -/
+
+@[expose] public section
 
 namespace CSD
 namespace Empirical

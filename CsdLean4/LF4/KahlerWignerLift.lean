@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.CSD.Gates.WignerDischarge
-import CsdLean4.LF4.KahlerFlow
+module
+
+public import CsdLean4.Empirical.CSD.Gates.WignerDischarge
+public import CsdLean4.LF4.KahlerFlow
 
 /-!
 # SL-3: the §13.2 ontic lift on the non-trivial-fibre Kähler instance
@@ -50,6 +52,8 @@ preservation — that false implication is the §13.2 trap and the open **D1/SL-
 the ray flow is trivial here, and the genuine isometry content (Part 2) rides on the posited
 `U(N)` sector action, not on the flow.
 -/
+
+@[expose] public section
 
 open Projectivization CSD.Empirical.CSDBridge Matrix.UnitaryGroup MeasureTheory
 

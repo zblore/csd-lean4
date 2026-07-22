@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
-import CsdLean4.Empirical.QM.Algorithms.Simon
+module
+
+public import CsdLean4.Empirical.QM.Algorithms.DeutschJozsa
+public import CsdLean4.Empirical.QM.Algorithms.Simon
 
 /-!
 # Bernstein–Vazirani
@@ -36,6 +38,8 @@ the per-qubit factorisation `(-1)^{∑ᵢ zᵢxᵢ} = ∏ᵢ (-1)^{zᵢxᵢ}` an
 Reuses Simon's `bitInner` / `bxor` / `Hn_apply_inner` / `neg_one_bitInner_bxor` and
 Deutsch–Jozsa's `inv_sqrt2_pow_mul`.
 -/
+
+@[expose] public section
 
 open scoped ComplexConjugate
 open QuantumInfo

@@ -3,15 +3,19 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.Expectation
-import Mathlib.Probability.StrongLaw
-import Mathlib.Probability.IdentDistrib
+module
+
+public import CsdLean4.LF1.Expectation
+public import Mathlib.Probability.StrongLaw
+public import Mathlib.Probability.IdentDistrib
 
 /-!
 # LF1 Convergence
 
 **Category:** 3-Local (LF1 strong-law application: empirical frequencies converge to ontic weights).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter
 

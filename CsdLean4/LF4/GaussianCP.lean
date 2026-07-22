@@ -3,8 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.GaussianFS
-import Mathlib.Probability.Distributions.Gaussian.Multivariate
+module
+
+public import CsdLean4.LF4.GaussianFS
+public import Mathlib.Probability.Distributions.Gaussian.Multivariate
+public import Mathlib.Probability.Distributions.Gaussian.Fernique
 
 /-!
 # LF4 plan B, Part 1 (Option 2): `gaussianCP = fubiniStudyMeasure` via `ℝ⁴`
@@ -17,6 +20,8 @@ Gaussian, working through a hand-built real coordinate isometry
 the ℝ/ℂ typeclass diamond on `EuclideanSpace ℂ (Fin 2)`). See
 `specs/plan-b-detail.md` Part 1 (Option 2).
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

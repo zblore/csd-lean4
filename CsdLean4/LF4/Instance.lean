@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.Setup
-import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+module
+
+public import CsdLean4.LF2.Setup
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
 # LF4 §8: the first concrete ontic-shell instantiation
@@ -45,6 +47,8 @@ dynamics that turn volume ratios into Born weights, are future work; this
 shell is the scaffold they attach to. It does **not** by itself reproduce
 any Born prediction.
 -/
+
+@[expose] public section
 
 open MeasureTheory Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

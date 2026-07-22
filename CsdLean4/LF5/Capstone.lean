@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF5.FlowBornFrequency
+module
+
+public import CsdLean4.LF5.FlowBornFrequency
 
 /-!
 # LF5: the measurement-flow Born-frequency capstone (LF5-E)
@@ -92,6 +94,8 @@ conjunct-(5) theorem in `PointerOutcome.lean`.
 
 Reference: `specs/lf5-plan.md` (LF5-E); `specs/carve-out-plan.md` §6.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Filter Matrix Matrix.UnitaryGroup
 open scoped ENNReal LinearAlgebra.Projectivization

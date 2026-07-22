@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF2.BornWrapper
+module
+
+public import CsdLean4.LF2.BornWrapper
 
 /-!
 # LF2: POVMs (positive operator-valued measures)
@@ -23,6 +25,8 @@ The Born weight is taken in the `EuclideanSpace`/`toEuclideanLin` form
 `fs_born_volume_ratio_N` projective-Born surface — so the dilation transfer
 (`born_transfer`) composes cleanly through the matrix↔operator adjoint bridge.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

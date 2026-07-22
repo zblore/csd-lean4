@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Crypto.E91
-import CsdLean4.Empirical.QM.Protocols.Basic
-import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
+module
+
+public import CsdLean4.Empirical.QM.Crypto.E91
+public import CsdLean4.Empirical.QM.Protocols.Basic
+public import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 
 /-!
 # Empirical/QM: E91 device-independent asymptotic secret-key rate
@@ -67,6 +69,8 @@ Acín, Brunner, Gisin, Massar, Pironio, Scarani 2007, *Phys. Rev. Lett.* **98**,
 230501; Pironio et al. 2009, *New J. Phys.* **11**, 045021; Ekert 1991,
 *Phys. Rev. Lett.* **67**, 661.
 -/
+
+@[expose] public section
 
 open MeasureTheory
 

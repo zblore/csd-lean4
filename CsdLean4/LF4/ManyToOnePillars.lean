@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF4.BothPillars
-import CsdLean4.LF4.KahlerInstance
-import CsdLean4.LF4.BornRegionUncond
+module
+
+public import CsdLean4.LF4.BothPillars
+public import CsdLean4.LF4.KahlerInstance
+public import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # C7: both pillars on a genuine many-to-one-`π` object
@@ -67,6 +69,8 @@ Foundational-triple only; Gleason-free. Reuses `rotationSetup_schrodinger_form`
 (Schrödinger), `born_frequency_convergence_N` (Born), `kMuL` / `Measure.fst_prod`
 (the marginal bridge); nothing re-proved.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter Matrix Matrix.UnitaryGroup
 open scoped LinearAlgebra.Projectivization

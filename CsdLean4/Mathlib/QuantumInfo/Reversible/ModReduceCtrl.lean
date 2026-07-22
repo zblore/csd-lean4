@@ -3,8 +3,10 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
-import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
 
 /-!
 # Reversible modular reduction — the complete single-step reduce circuit  (ECDLP Phase 2, Stage S6.3a)
@@ -72,6 +74,8 @@ estimate.
    module is the **single-step (`x < 2N`) primitive** that schedule iterates; the full modular
    multiply is S6.3b.
 -/
+
+@[expose] public section
 
 namespace Reversible
 
@@ -436,7 +440,7 @@ def modReduceState2 (b0 b1 : Bool) : State 13 := fun w =>
 /-- The hypotheses of `modReduce_correct` hold at `modReduceState2 b0 b1` (carries/ancilla clear,
 `A1 = 1`, `A2 = 3`), for any data bits. The `regValRange` register-value preconditions are concrete
 sums, discharged by `decide`. -/
-private theorem modReduceState2_pre (b0 b1 : Bool) :
+theorem modReduceState2_pre (b0 b1 : Bool) :
     (∀ j, modReduceState2 b0 b1 (modReduceLayout2.C1 j) = false)
       ∧ (∀ j, modReduceState2 b0 b1 (modReduceLayout2.C2 j) = false)
       ∧ modReduceState2 b0 b1 modReduceLayout2.anc = false

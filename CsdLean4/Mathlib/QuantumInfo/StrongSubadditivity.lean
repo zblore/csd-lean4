@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+module
+
+public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 
 /-!
 # Strong subadditivity (K1-C): the conditional reduction and the isolated wall
@@ -75,6 +77,8 @@ file isolates the wall as `hDPI` and does not paper it.
 **No `axiom`, no `sorry`. Foundational-triple-only on everything that lands.** See `specs/k1-plan.md`
 §K1-C for the ledger.
 -/
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder Kronecker

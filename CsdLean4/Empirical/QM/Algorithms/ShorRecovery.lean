@@ -3,18 +3,20 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Algebra.Order.Field.Rat
-import Mathlib.Algebra.Order.Field.Basic
-import Mathlib.Algebra.Order.Ring.Int
-import Mathlib.Data.Int.GCD
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.RingTheory.Int.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.GCongr
-import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.OrderOfElement
+module
+
+public import Mathlib.Algebra.Order.Field.Rat
+public import Mathlib.Algebra.Order.Field.Basic
+public import Mathlib.Algebra.Order.Ring.Int
+public import Mathlib.Data.Int.GCD
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.RingTheory.Int.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.GroupTheory.OrderOfElement
 
 /-!
 # Shor's algorithm — period recovery (S5, uniqueness route)
@@ -47,6 +49,8 @@ factoring": for an even order `r` of a unit `a` with `a^(r/2) ≢ ±1 (mod N)`, 
 `gcd(x-1, N)` is then a proper nontrivial divisor of `N`. This is the step that turns the
 quantum period output into an actual factor.
 -/
+
+@[expose] public section
 
 namespace CSD.Empirical.QM.Shor
 

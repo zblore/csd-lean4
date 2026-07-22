@@ -3,9 +3,11 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Orthogonal
-import Mathlib.Analysis.Complex.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Orthogonal
+public import Mathlib.Analysis.Complex.Basic
 
 /-!
 # The pointwise Fubini–Study / Kähler fundamental form (linear-algebra core)
@@ -54,6 +56,8 @@ flat Hermitian model `E`; its restriction to the tangent space `ψ^⊥` is the F
 pointwise. The physically load-bearing datum — the volume — is already forced independently
 (`KahlerVolumeForced.lean`).
 -/
+
+@[expose] public section
 
 namespace Kahler
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF1.GeneralFrequency
+module
+
+public import CsdLean4.LF1.GeneralFrequency
 
 /-!
 # LF4: general-`N` Busch-free Born frequency convergence over a partition
@@ -33,6 +35,8 @@ So the general statement is: deterministic repeated-trial typicality (LF1) +
 `BornVolume`/`BornFS`) ⟹ empirical frequencies converge jointly to the Born
 weights, with the Born values supplied by the volume route, not Gleason/Busch.
 -/
+
+@[expose] public section
 
 open MeasureTheory ProbabilityTheory Set Filter
 

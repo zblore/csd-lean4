@@ -3,23 +3,25 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.LF3.Setup
-import CsdLean4.LF3.Hamiltonian
-import CsdLean4.LF3.SectorSeparation
-import CsdLean4.LF3.Projectors.Core
-import CsdLean4.LF3.Projectors.SectorVolume
-import CsdLean4.LF3.Projectors.LF2Interface
-import CsdLean4.LF3.Singlet.State
-import CsdLean4.LF3.Singlet.Expectations
-import CsdLean4.LF3.Singlet.Kernel
-import CsdLean4.LF3.Singlet.Leakage
-import CsdLean4.LF3.ContextMap
-import CsdLean4.LF3.SingletProjective
-import CsdLean4.LF3.PurePreparation
-import CsdLean4.LF1.MainTheorem
-import CsdLean4.LF1.GeneralFrequency
-import CsdLean4.LF2.Interface
-import CsdLean4.LF2.Preparation
+module
+
+public import CsdLean4.LF3.Setup
+public import CsdLean4.LF3.Hamiltonian
+public import CsdLean4.LF3.SectorSeparation
+public import CsdLean4.LF3.Projectors.Core
+public import CsdLean4.LF3.Projectors.SectorVolume
+public import CsdLean4.LF3.Projectors.LF2Interface
+public import CsdLean4.LF3.Singlet.State
+public import CsdLean4.LF3.Singlet.Expectations
+public import CsdLean4.LF3.Singlet.Kernel
+public import CsdLean4.LF3.Singlet.Leakage
+public import CsdLean4.LF3.ContextMap
+public import CsdLean4.LF3.SingletProjective
+public import CsdLean4.LF3.PurePreparation
+public import CsdLean4.LF1.MainTheorem
+public import CsdLean4.LF1.GeneralFrequency
+public import CsdLean4.LF2.Interface
+public import CsdLean4.LF2.Preparation
 
 /-!
 # LF3 Interface: the LF1 ↔ LF2 ↔ LF3 chain closure
@@ -99,6 +101,8 @@ constructor. The reader should track:
 - *What's proven*: the theorem composition machinery, sorry-free.
 - *What's assumed*: everything packed into `prep : PureSingletPreparation`.
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 open MeasureTheory Set Filter

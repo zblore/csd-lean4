@@ -3,7 +3,9 @@ Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore
 -/
-import CsdLean4.Empirical.QM.Crypto.E91
+module
+
+public import CsdLean4.Empirical.QM.Crypto.E91
 
 /-!
 # LF6-A.1: Forced contextuality of the entangled de-isolation tier
@@ -80,6 +82,8 @@ All exports are foundational-triple-only (the machinery is measure-theoretic, no
 Busch).
 -/
 
+@[expose] public section
+
 open MeasureTheory Real
 open scoped BigOperators
 
@@ -129,7 +133,7 @@ def ReproducesSinglet {Λ : Type*} [MeasurableSpace Λ] (μ : Measure Λ)
 
 /-- A reproducing product partition's CHSH combination is *literally* the singlet
 CHSH operator: rewrite each LHV correlation by the reproduction hypothesis. -/
-private theorem lhvCHSH_eq_chshOperator {Λ : Type*} [MeasurableSpace Λ]
+theorem lhvCHSH_eq_chshOperator {Λ : Type*} [MeasurableSpace Λ]
     (μ : Measure Λ) (RA RB : DetectorSetting → Λ → ℝ)
     (hRep : ReproducesSinglet μ RA RB) (a a' b b' : DetectorSetting) :
     lhvCHSH μ RA RB a a' b b' = Empirical.Bell.chshOperator a a' b b' := by
