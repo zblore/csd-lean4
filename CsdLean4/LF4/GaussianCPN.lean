@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.GaussianFS
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 import Mathlib.Probability.Distributions.Gaussian.Multivariate
 
 /-!
 # LF4 general-N Part 1: `gaussianCPN = fubiniStudyMeasure` on `ℂℙ^{N-1}`
+
+**Category:** 3-Local (`gaussianCPN = fubiniStudyMeasure` on `ℂℙ^{N-1}`).
 
 The general-`N` analogue of `GaussianCP.lean` (which handled the qubit `N = 2`):
 the Fubini–Study measure on `ℂℙ^{N-1}` is the projectivised standard Gaussian on

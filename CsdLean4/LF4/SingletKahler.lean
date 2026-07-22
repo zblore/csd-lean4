@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF3.PurePreparation
 import CsdLean4.LF3.Interface
@@ -7,6 +12,8 @@ import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 
 /-!
 # LF4 §8: the `ofKählerPreparation` constructor for the singlet
+
+**Category:** 3-Local (the `ofKählerPreparation` constructor for the singlet).
 
 Assembles a concrete `LF3.PureSingletPreparation kSectorData ctx 4` on the
 non-trivial-fibre compact-Kähler instance `Σ = ℂℙ³ × T²` (the `N = 4` case for

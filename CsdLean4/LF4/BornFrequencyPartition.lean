@@ -1,7 +1,14 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF1.GeneralFrequency
 
 /-!
 # LF4: general-`N` Busch-free Born frequency convergence over a partition
+
+**Category:** 3-Local (general-`N` Busch-free Born frequency convergence over a partition).
 
 The qubit capstone `qubit_born_frequency_convergence` is single-outcome. This is
 its general-`N`, joint-outcome form: for a finite family of measurable outcome

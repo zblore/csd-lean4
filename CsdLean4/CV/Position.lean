@@ -1,5 +1,7 @@
 /-
-Copyright (c) 2026 CSD contributors. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
 -/
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.Trace
@@ -8,6 +10,8 @@ import Mathlib.Data.Complex.BigOperators
 
 /-!
 # CV-1: a finite position observable on a lattice
+
+**Category:** 3-Local (a finite position observable on a lattice).
 
 The first constructive step of the continuous-variable track. `W4`
 (`CV/ApproxCCR.lean`) proved the *no-go*: no pair of finite matrices satisfies

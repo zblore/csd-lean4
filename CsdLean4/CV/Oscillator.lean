@@ -1,5 +1,7 @@
 /-
-Copyright (c) 2026 CSD contributors. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
 -/
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Data.Complex.Basic
@@ -8,6 +10,8 @@ import Mathlib.Tactic.NoncommRing
 
 /-!
 # CV-2 / CV-3: the truncated oscillator and the approximate CCR
+
+**Category:** 3-Local (the truncated oscillator and the approximate CCR).
 
 W4 (`CV/ApproxCCR.lean`) proved that no finite matrices satisfy the *exact*
 canonical commutation relation `[Q, P] = iℏ·1` — the trace of a commutator is `0`,

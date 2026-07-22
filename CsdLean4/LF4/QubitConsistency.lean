@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentDirichletN
 import CsdLean4.LF4.MomentBornN
 import CsdLean4.LF4.MomentUniform
 
 /-!
 # LF4 verification: the general-N joint-Dirichlet law recovers the qubit at N=2
+
+**Category:** 3-Local (the general-N joint-Dirichlet law recovers the qubit at N=2).
 
 A machine-checked consistency cross-check. The general-N headline
 `fs_moment_joint_dirichlet_N` and the qubit `fs_moment_pushforward_uniform` were proved

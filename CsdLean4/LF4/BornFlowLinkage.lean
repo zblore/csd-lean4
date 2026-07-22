@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.POVMVolume
 
 /-!
 # HY-5: routing the general-`N` Born frequencies through a deterministic Σ-flow
+
+**Category:** 3-Local (routing the general-`N` Born frequencies through a deterministic Σ-flow).
 
 The general-`N` Born-frequency capstones (`born_frequency_convergence_N`,
 `povm_born_frequency_volume`) run the strong law over i.i.d. trials sampled from

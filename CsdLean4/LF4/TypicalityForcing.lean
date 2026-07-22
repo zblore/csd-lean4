@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.ObservableFlow
 import CsdLean4.LF4.BornFS
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
@@ -6,6 +11,8 @@ import Mathlib.Dynamics.Ergodic.Ergodic
 
 /-!
 # A5 onramp: where the Fubini–Study typicality measure comes from
+
+**Category:** 3-Local (where the Fubini–Study typicality measure comes from).
 
 This file isolates the honest content of the A5 datum (`SectorData.(π, G)`,
 `AXIOMS.md §3.3`) at the level of the **typicality measure**: which measure is the

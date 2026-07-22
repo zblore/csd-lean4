@@ -1,7 +1,14 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.QubitBornFrequency
 
 /-!
 # LF4: the Duistermaat–Heckman pushforward (qubit instance) — TOMBSTONE
+
+**Category:** 3-Local (the Duistermaat–Heckman pushforward (qubit instance) — TOMBSTONE).
 
 **This file is a tombstone. It introduces NO axiom.** It formerly named, as a
 Mathlib-external `axiom fs_moment_pushforward_uniform`, the qubit

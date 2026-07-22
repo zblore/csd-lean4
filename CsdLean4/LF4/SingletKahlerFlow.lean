@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.SingletKahler
 import CsdLean4.LF4.KahlerFlow
 
 /-!
 # SL-2: a genuine `Φ ≠ id` on the concrete ENTANGLED (singlet) sector
+
+**Category:** 3-Local (a genuine `Φ ≠ id` on the concrete ENTANGLED (singlet) sector).
 
 D1c-1 (`LF4/KahlerFlow.lean`) discharged the "`Φ = id` in the concrete Kähler
 instance" debt for the GENERIC sector: `kSectorDataFlow` carries the non-identity

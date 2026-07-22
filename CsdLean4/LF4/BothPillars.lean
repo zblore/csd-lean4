@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.RotationSchrodinger
 import CsdLean4.LF4.BornFrequencyN
 
 /-!
 # C4: both pillars on ONE object
+
+**Category:** 3-Local (both pillars on ONE object).
 
 Connectivity fix C4 (`specs/connectivity-manifest.md`, links L5/L6): the audit
 found the Born capstone and the Schrödinger capstone were proved about

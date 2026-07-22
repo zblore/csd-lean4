@@ -1,10 +1,14 @@
 /-
-Copyright (c) 2026 CSD contributors. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
 -/
 import CsdLean4.CV.Oscillator
 
 /-!
 # CV-4: the oscillator energy spectrum — finite-energy predictions recovered
+
+**Category:** 3-Local (the oscillator energy spectrum — finite-energy predictions recovered).
 
 CV-2/CV-3 (`CV/Oscillator.lean`) built the truncated-oscillator ladder operators
 `a`, `a†`. This module reads off the **energy spectrum** and shows the truncation

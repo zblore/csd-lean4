@@ -1,12 +1,15 @@
 /-
-Copyright (c) 2026 CSD contributors. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
 -/
 import CsdLean4.LF4.ManyToOnePillars
 import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 
 /-!
 # General-`N` Schrödinger pillar, DERIVED (not by `rfl`)
+
+**Category:** 3-Local (General-`N` Schrödinger pillar, DERIVED (not by `rfl`)).
 
 `manyToOneSchrodingerSetup_schrodinger_form` (in `ManyToOnePillars`) delivers the
 Schrödinger pillar `π (Φ_t x) = exp(-itH) • π x` by `rfl` — true, but only because

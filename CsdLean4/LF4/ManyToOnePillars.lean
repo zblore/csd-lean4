@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.BothPillars
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # C7: both pillars on a genuine many-to-one-`π` object
+
+**Category:** 3-Local (both pillars on a genuine many-to-one-`π` object).
 
 The C4 both-pillars object `rotationSetup` (`LF4/BothPillars.lean`) uses `π = id`
 — the DEGENERATE one-to-one case (`Σ = ` ray space, fibres = points). Paper C's

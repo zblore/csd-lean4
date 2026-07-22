@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.BornFS
 import CsdLean4.LF1.GeneralFrequency
 
 /-!
 # LF4: Busch-free empirical chain for the qubit Born weight (volume route)
+
+**Category:** 3-Local (Busch-free empirical chain for the qubit Born weight (volume route)).
 
 This integrates the moment-map / volume derivation of the Born weight into the
 LF1 empirical chain, giving a frequency-convergence capstone that routes through

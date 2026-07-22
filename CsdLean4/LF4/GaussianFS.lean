@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentMarginal
 import Mathlib.Probability.Distributions.Gaussian.Multivariate
 
 /-!
 # LF4 plan B, Part 1 (step): unitary norm-preservation on `ℂ^N`
+
+**Category:** 3-Local (unitary norm-preservation on `ℂ^N`).
 
 Toward discharging `fs_moment_pushforward_uniform` via the Gaussian route
 (`specs/plan-b-detail.md` Part 1). This file lands the matrix-analytic core

@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 
 /-!
 # A genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant (connectivity fix C1)
+
+**Category:** 3-Local (A genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant (connectivity fix C1)).
 
 `trivialKahlerOnticSetup` (`LF4/KahlerOnticSetup.lean`) is the identity-flow
 witness (`Φ = id`, `projectedFlow = id`): the whole W-series Schrödinger chain,

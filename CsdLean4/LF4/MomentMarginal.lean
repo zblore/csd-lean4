@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.BornFS
 import CsdLean4.LF4.MomentPushforward
 
 /-!
 # LF4 plan B (step 1): the moment marginal as a Haar marginal
+
+**Category:** 3-Local (the moment marginal as a Haar marginal).
 
 Plan B is to discharge the hypothesis `h_uniform` of `fs_born_volume_ratio_qubit`
 and `qubit_born_frequency_convergence`, i.e. to *prove*

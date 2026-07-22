@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
@@ -5,6 +10,8 @@ import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 
 /-!
 # W2: the Kähler ontic-sector interface
+
+**Category:** 3-Local (the Kähler ontic-sector interface).
 
 This module packages the CSD Kähler-sector assumptions as a single Lean
 structure, `KahlerOnticSetup N`, whose fields are sector-level HYPOTHESES.

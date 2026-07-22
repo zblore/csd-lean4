@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 
 /-!
 # EC-3 capstone: the measurement-discipline adder hierarchy
+
+**Category:** 3-Local (the measurement-discipline adder hierarchy).
 
 Two adder families carry the safegcd / point-op cost model, and each has a unitary and a
 measurement-discipline cost:

@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.KahlerOnticSetup
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
 
 /-!
 # W3: the Wigner selection on a Kähler ontic setup
+
+**Category:** 3-Local (the Wigner selection on a Kähler ontic setup).
 
 This module consumes W1 (the Wigner / Fubini-Study rigidity converse,
 `Projectivization.wigner_rigidity_unitaryGroup`) through the W2 sector interface

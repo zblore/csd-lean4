@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.GaussianFS
 import Mathlib.Probability.Distributions.Gaussian.Multivariate
 
 /-!
 # LF4 plan B, Part 1 (Option 2): `gaussianCP = fubiniStudyMeasure` via `ℝ⁴`
+
+**Category:** 3-Local (`gaussianCP = fubiniStudyMeasure` via `ℝ⁴`).
 
 Identifies the Fubini–Study measure on `ℂℙ¹` with the projectivized standard
 Gaussian, working through a hand-built real coordinate isometry

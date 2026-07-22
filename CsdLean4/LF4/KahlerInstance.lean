@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF2.Setup
 import CsdLean4.LF4.Instance
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
@@ -6,6 +11,8 @@ import Mathlib.MeasureTheory.Measure.Prod
 
 /-!
 # LF4 §8: a non-trivial-fibre compact-Kähler `SectorData`
+
+**Category:** 3-Local (a non-trivial-fibre compact-Kähler `SectorData`).
 
 Builds the first `SectorData` with **non-trivial fibres**, faithful to the
 Σ0 / Paper A ontology (`Σ` a finite compact symplectic Kähler space):

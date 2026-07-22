@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF3.Setup
 import CsdLean4.Empirical.QM.Bell
 import Mathlib.Analysis.InnerProductSpace.Adjoint

@@ -1,5 +1,7 @@
 /-
-Copyright (c) 2026 CSD contributors. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
 -/
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
@@ -7,6 +9,8 @@ import Mathlib.Data.Complex.Basic
 
 /-!
 # W4: the finite-dimensional obstruction to exact canonical commutation
+
+**Category:** 3-Local (the finite-dimensional obstruction to exact canonical commutation).
 
 For finite complex matrices the trace of a commutator vanishes,
 `trace (Q * P - P * Q) = 0`, because `trace (Q * P) = trace (P * Q)`. A scalar

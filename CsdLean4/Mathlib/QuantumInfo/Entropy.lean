@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic

@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.KahlerInstance
 import CsdLean4.LF1.GeneralFrequency
 import Mathlib.MeasureTheory.Group.Measure
 
 /-!
 # LF4 Tranche A: a non-trivial measure-preserving flow on the Kähler instance
+
+**Category:** 3-Local (a non-trivial measure-preserving flow on the Kähler instance).
 
 Every concrete `SectorData` built so far (`LF4/Instance.lean`,
 `LF4/KahlerInstance.lean`, `Tests/Examples.lean`) hard-codes `Φ := id`, so the

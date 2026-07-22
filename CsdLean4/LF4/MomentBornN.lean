@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentDirichletN
 import CsdLean4.LF4.BornVolume
 
 /-!
 # LF4 general-N Slice E (Born lift): Born = Fubini–Study volume ratio on Σ
+
+**Category:** 3-Local (Born = Fubini–Study volume ratio on Σ).
 
 The general-N analogue of `fs_born_volume_ratio_qubit` (qubit, `N = 2`), now
 **unconditional** — the qubit's `h_uniform` hypothesis is the Slice E headline

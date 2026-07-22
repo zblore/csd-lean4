@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.UnitarySelection
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 /-!
 # W5: projected CSD dynamics = projective action of a one-parameter unitary family
+
+**Category:** 3-Local (projected CSD dynamics = projective action of a one-parameter unitary family).
 
 This module is the milestone of the CSD dynamics spine. It shows that the
 projected ontic flow of a Kähler ontic setup, once the W3 Wigner selection has

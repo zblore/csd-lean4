@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentMarginalUniform
 import CsdLean4.Mathlib.MeasureTheory.PiCurry
 
 /-!
 # LF4 general-N Slice E (bridge): `ℝ^{N×2}` Gaussian → `Exp(1/2)^{⊗N}`
+
+**Category:** 3-Local (`ℝ^{N×2}` Gaussian → `Exp(1/2)^{⊗N}`).
 
 The bridge connecting the standard Gaussian on `ℝ^{N×2}` (indexed by the product
 `Fin N × Fin 2`, the real coordinate space behind `gaussianHN`) to the `N`-fold

@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import Mathlib.MeasureTheory.Function.Jacobian
 import Mathlib.MeasureTheory.Integral.Gamma
 import Mathlib.Analysis.SpecialFunctions.Gamma.BohrMollerup
@@ -8,6 +13,8 @@ import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 
 /-!
 # LF4 general-N DH, Slice D (the crux): the ratio map sends `expHalf^{⊗N}` to Dirichlet
+
+**Category:** 3-Local (the ratio map sends `expHalf^{⊗N}` to Dirichlet).
 
 The general-`N` analogue of `MomentRatioUniform.lean` (the qubit's
 `ratioSqNorm_map_expHalf_prod`, `Beta(1,1)=Uniform[0,1]`): the `N`-fold ratio map

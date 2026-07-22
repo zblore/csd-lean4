@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentRatioUniform
 import CsdLean4.LF4.GaussianCP
 import CsdLean4.LF4.MomentMap
@@ -5,6 +10,8 @@ import CsdLean4.LF4.DuistermaatHeckman
 
 /-!
 # LF4 plan B, Part 2, Slice 4: assembly + discharge of `fs_moment_pushforward_uniform`
+
+**Category:** 3-Local (assembly + discharge of `fs_moment_pushforward_uniform`).
 
 Composes the three closed slices into the moment-marginal headline and discharges
 the Duistermaat–Heckman axiom for the qubit:

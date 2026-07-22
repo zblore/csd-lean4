@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 import CsdLean4.LF4.ProjectedDynamics
 
 /-!
 # The Schrödinger flow is a Kähler symplectomorphism
+
+**Category:** 3-Local (The Schrödinger flow is a Kähler symplectomorphism).
 
 This ties the pointwise Kähler form (`Mathlib/Analysis/InnerProductSpace/KahlerForm.lean`) to the
 Schrödinger pillar (`schrodingerUnitary`, `LF4/ProjectedDynamics.lean`): the deterministic quantum

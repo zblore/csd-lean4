@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import Mathlib.Analysis.SpecialFunctions.PolarCoord
 import Mathlib.MeasureTheory.Function.JacobianOneDim
 import Mathlib.MeasureTheory.Measure.Prod
@@ -6,6 +11,8 @@ import Mathlib.Probability.Distributions.Gaussian.Real
 
 /-!
 # LF4 plan B, Part 2, Slice 1 (L5.1): the single-block squared-norm law is Exp(1/2)
+
+**Category:** 3-Local (the single-block squared-norm law is Exp(1/2)).
 
 `sqNorm_map_gaussian2 : Measure.map (fun p => p.1^2 + p.2^2) gaussian2 = expHalf`,
 where `gaussian2` is the 2-D standard Gaussian on `ℝ × ℝ` (explicit Lebesgue

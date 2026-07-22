@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentMap
 import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 
 /-!
 # The measured observable's Hamiltonian flow on `Σ = ℂℙ^{N-1}`
+
+**Category:** 3-Local (The measured observable's Hamiltonian flow on `Σ = ℂℙ^{N-1}`).
 
 The first physically-meaningful `Φ ≠ id` in the corpus. A measurement context is a choice of
 observable `Â` (the apparatus measures `Â`), diagonal `diag(λ)` in its eigenbasis. Its

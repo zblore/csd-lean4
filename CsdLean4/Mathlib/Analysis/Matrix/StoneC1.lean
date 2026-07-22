@@ -1,6 +1,7 @@
 /-
-Copyright (c) 2026 CSD contributors. All rights reserved.
+Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
 -/
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
@@ -13,6 +14,8 @@ import Mathlib.Tactic.Module
 
 /-!
 # Finite-dimensional Stone's theorem, C^1 form
+
+**Category:** 1-Mathlib (Finite-dimensional Stone's theorem, C^1 form).
 
 A `C^1` (differentiable) one-parameter unitary group of `N x N` complex matrices is
 `t ↦ exp (t • A)` for its skew-Hermitian generator `A`. This is the load-bearing

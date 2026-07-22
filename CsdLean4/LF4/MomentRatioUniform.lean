@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import Mathlib.MeasureTheory.Function.Jacobian
 import Mathlib.MeasureTheory.Integral.Gamma
 import Mathlib.MeasureTheory.Integral.Prod
@@ -8,6 +13,8 @@ import CsdLean4.LF4.MomentMarginalUniform
 
 /-!
 # LF4 plan B, Part 2, Slice 3 (L5.3): the ratio map sends `expHalf × expHalf` to uniform
+
+**Category:** 3-Local (the ratio map sends `expHalf × expHalf` to uniform).
 
 `ratioSqNorm_map_expHalf_prod : R∗ (expHalf.prod expHalf) = volume.restrict (Ioo 0 1)`,
 where `R q = q.1 / (q.1 + q.2)`.

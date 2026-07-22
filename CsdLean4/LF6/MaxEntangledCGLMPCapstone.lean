@@ -1,7 +1,14 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF6.CGLMPQudit
 
 /-!
 # LF6-1: the `d`-intrinsic CGLMP capstone
+
+**Category:** 6-Local (the `d`-intrinsic CGLMP capstone).
 
 The general `d × d` maximally-entangled de-isolation flow capstone
 (`maxEntangledDeisolation_flow_capstone`, `LF6/MaxEntangledDeisolationFlow.lean`)

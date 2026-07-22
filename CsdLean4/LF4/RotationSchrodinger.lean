@@ -1,9 +1,16 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.NonTrivialSetup
 import CsdLean4.LF4.PhaseLift
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 
 /-!
 # C2: the Schrödinger form on the non-trivial rotation flow
+
+**Category:** 3-Local (the Schrödinger form on the non-trivial rotation flow).
 
 Connectivity fix C2 (`specs/connectivity-manifest.md`, link L3): fire the full
 W-series Schrödinger capstone `sigmaFlow_schrodinger_form` on the genuine

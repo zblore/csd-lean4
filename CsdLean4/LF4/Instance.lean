@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF2.Setup
 import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 /-!
 # LF4 §8: the first concrete ontic-shell instantiation
+
+**Category:** 3-Local (the first concrete ontic-shell instantiation).
 
 This file discharges the *structural* part of LF4 §8 (`specs/LF4-todo.md`):
 it exhibits a concrete `CSD.LF2.SectorData`, proving that LF2's abstract

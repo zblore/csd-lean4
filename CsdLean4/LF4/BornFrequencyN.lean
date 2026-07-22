@@ -1,8 +1,15 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
 import CsdLean4.LF4.MomentBornN
 import CsdLean4.LF4.BornFrequencyPartition
 
 /-!
 # LF4 general-N capstone: Busch-free frequency → Born for all N coordinates
+
+**Category:** 3-Local (Busch-free frequency → Born for all N coordinates).
 
 The headline empirical payoff of the general-N Duistermaat–Heckman / Born-from-Kähler-
 volume programme. The qubit had `qubit_born_frequency_convergence_uncond` (single
