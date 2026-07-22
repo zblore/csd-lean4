@@ -108,6 +108,7 @@ public import CsdLean4.LF4.MomentUniform
 public import CsdLean4.LF4.MomentBridgeN
 public import CsdLean4.LF4.MomentDirichletN
 public import CsdLean4.LF4.MomentBornN
+public import CsdLean4.LF4.ObservableCorrespondenceN
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -3823,6 +3824,13 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.sg_observable_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.sg_observable_correspondence
+
+-- LF4 §14 general-N discharge for DIAGONAL observables (2026-07-22): the Hilbert expectation of
+-- diagonal(lam·) equals the eigenvalue-weighted sum of the ontic Born-region volumes, at all N and
+-- all real eigenvalues. Foundational triple only; carving-free, Gleason-free.
+/-- info: 'CSD.LF4.observable_correspondence_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.observable_correspondence_diagonal
 
 -- The non-vacuous LF3-chain Stern-Gerlach capstone (N = 2 analog of
 -- ofKählerPreparation_singlet_frequency_convergence). Foundational triple only.
