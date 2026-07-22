@@ -30,10 +30,13 @@ the Hilbert expectation. For a diagonal observable this is delivered here:
   region `bornRegionN ψ k` on `Σ` equals the Born weight `‖⟨e_k, ψ⟩‖²`, for **every** basis index
   `k : Fin N`. This unifies `fs_born_volume_ratio_N` (free coordinates) and
   `fs_born_volume_ratio_N_apex` (the apex coordinate) via `Fin.lastCases`.
-* **`observable_correspondence_diagonal`** — the correspondence:
+* **`observable_correspondence_diagonal`** — the pointwise-volume form:
   `⟨ψ, diagonal(lam·) ψ⟩ = ∑ₖ lam k · vol(bornRegionN ψ k)`, i.e. the expectation is the
-  eigenvalue-weighted sum of the ontic Born-region volumes. The associated ontic observable is the
-  simple function `A_ontic = ∑ₖ lam k · 𝟙_{Rₖ}`.
+  eigenvalue-weighted sum of the ontic Born-region volumes.
+* **`observable_correspondence_diagonal_integral`** — the canonical integral form
+  `⟨ψ, diagonal(lam·) ψ⟩ = ∫ A_ontic dμ_FS`, with `A_ontic = ∑ₖ lam k · 𝟙_{Rₖ}` (`aOntic`) an
+  explicit **measurable** `Σ`-function (`bornRegionN_measurableSet`), and the integral evaluated by
+  finite additivity over the eigenvalue-weighted region indicators.
 
 ## Scope (honest)
 
@@ -138,6 +141,98 @@ theorem observable_correspondence_diagonal (p₀ : CPN (M + 1))
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Complex.ofReal_mul, fsMeasure_bornRegionN p₀ ψ hψ0 hψ hpos k,
       ENNReal.toReal_ofReal (by positivity)]
+
+/-! ### The integral form: `A_ontic` as an explicit measurable Σ-function -/
+
+/-- The `i`-th free Born coordinate is the Born weight at `castSucc i`. -/
+theorem bornVecN_apply (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (i : Fin M) :
+    bornVecN ψ hψ0 i = ‖inner ℂ (EuclideanSpace.single (Fin.castSucc i) (1 : ℂ)) ψ‖ ^ 2 := by
+  rw [bornVecN, ratioN,
+      show (∑ j, momentMap (Projectivization.mk ℂ ψ hψ0) j) = 1 from momentMap_sum_eq_one _,
+      div_one, momentMap_mk_eq_inner_sq ψ hψ0 hψ (Fin.castSucc i)]
+
+/-- The apex Born weight: `1 − ∑ᵢ bᵢ = ‖⟨e_last, ψ⟩‖²`. -/
+theorem one_sub_sum_bornVecN (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
+    1 - ∑ i, bornVecN ψ hψ0 i
+      = ‖inner ℂ (EuclideanSpace.single (Fin.last M) (1 : ℂ)) ψ‖ ^ 2 := by
+  have hsum : ∑ i, bornVecN ψ hψ0 i
+      = ∑ i : Fin M, momentMap (Projectivization.mk ℂ ψ hψ0) (Fin.castSucc i) := by
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [bornVecN_apply ψ hψ0 hψ, momentMap_mk_eq_inner_sq ψ hψ0 hψ (Fin.castSucc i)]
+  have htot : (∑ k : Fin M, momentMap (Projectivization.mk ℂ ψ hψ0) (Fin.castSucc k))
+      + momentMap (Projectivization.mk ℂ ψ hψ0) (Fin.last M) = 1 := by
+    rw [← Fin.sum_univ_castSucc]; exact momentMap_sum_eq_one _
+  rw [hsum]
+  rw [momentMap_mk_eq_inner_sq ψ hψ0 hψ (Fin.last M)] at htot
+  linarith
+
+/-- Each ontic Born region is measurable (an open-image moment-ratio preimage; the moment map is
+measurable and each simplex Born region is an open set, being the image of the open simplex under a
+determinant-`≠ 0` affine map). -/
+theorem bornRegionN_measurableSet (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) (k : Fin (M + 1)) :
+    MeasurableSet (bornRegionN ψ hψ0 k) := by
+  have hopen : IsOpen (bornSimplexRegion (bornVecN ψ hψ0) k) := by
+    refine Fin.lastCases ?_ ?_ k
+    · rw [bornSimplexRegion, Fin.lastCases_last]
+      have hdet : LinearMap.det (apexLin (bornVecN ψ hψ0)) ≠ 0 := by
+        rw [apexLin_det, one_sub_sum_bornVecN ψ hψ0 hψ]; exact ne_of_gt (hpos _)
+      have hopenLin : IsOpen (apexLin (bornVecN ψ hψ0) '' openSimplexFree) :=
+        LinearMap.isOpenMap_of_finiteDimensional _
+          (LinearMap.equivOfDetNeZero (apexLin (bornVecN ψ hψ0)) hdet).surjective _
+          isOpen_openSimplexFree
+      have hregion : (fun x => apexLin (bornVecN ψ hψ0) x + bornVecN ψ hψ0) '' openSimplexFree
+          = (fun y => y + bornVecN ψ hψ0) '' (apexLin (bornVecN ψ hψ0) '' openSimplexFree) :=
+        (Set.image_image (fun y : Fin M → ℝ => y + bornVecN ψ hψ0) _ openSimplexFree).symm
+      rw [hregion]
+      exact (Homeomorph.addRight (bornVecN ψ hψ0)).isOpenMap _ hopenLin
+    · intro i
+      rw [bornSimplexRegion, Fin.lastCases_castSucc]
+      have hdet : LinearMap.det (replaceMap (bornVecN ψ hψ0) i) ≠ 0 := by
+        rw [replaceMap_det, bornVecN_apply ψ hψ0 hψ]; exact ne_of_gt (hpos _)
+      exact LinearMap.isOpenMap_of_finiteDimensional _
+        (LinearMap.equivOfDetNeZero (replaceMap (bornVecN ψ hψ0) i) hdet).surjective _
+        isOpen_openSimplexFree
+  exact measurable_ratio_momentMap hopen.measurableSet
+
+/-- **The ontic observable** realising a diagonal Hilbert observable: the eigenvalue-weighted sum
+of the Born-region indicators, `A_ontic = ∑ₖ lam k · 𝟙_{Rₖ}` — a measurable simple function on
+`Σ = ℂℙ^{N-1}`. -/
+noncomputable def aOntic (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0)
+    (lam : Fin (M + 1) → ℝ) : CPN (M + 1) → ℝ :=
+  fun p => ∑ k, lam k * (bornRegionN ψ hψ0 k).indicator (1 : CPN (M + 1) → ℝ) p
+
+/-- **The Σ-average of `A_ontic` is the weighted Born-volume sum** (finite additivity of the
+integral over the eigenvalue-weighted indicators, each integrable since `μ_FS` is a probability
+measure and each region is measurable). -/
+theorem integral_aOntic (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0)
+    (hψ : ‖ψ‖ = 1) (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
+    (lam : Fin (M + 1) → ℝ) :
+    ∫ p, aOntic ψ hψ0 lam p ∂(fubiniStudyMeasure p₀)
+      = ∑ k, lam k * (fubiniStudyMeasure p₀ (bornRegionN ψ hψ0 k)).toReal := by
+  unfold aOntic
+  rw [integral_finsetSum]
+  · refine Finset.sum_congr rfl fun k _ => ?_
+    rw [integral_const_mul,
+        integral_indicator_one (bornRegionN_measurableSet ψ hψ0 hψ hpos k), measureReal_def]
+  · intro k _
+    exact ((integrable_const (1 : ℝ)).indicator
+      (bornRegionN_measurableSet ψ hψ0 hψ hpos k)).const_mul (lam k)
+
+/-- **§14 observable correspondence, integral form (general N, diagonal observables).** The
+Hilbert expectation of the diagonal observable `diagonal (lam ·)` equals the Fubini–Study
+`Σ`-average of the ontic observable `A_ontic = ∑ₖ lam k · 𝟙_{Rₖ}`. This is the canonical §14
+statement — `⟨ψ, A ψ⟩ = ∫ A_ontic dμ_FS`, with `A_ontic` an explicit measurable `Σ`-function —
+of which `observable_correspondence_diagonal` is the pointwise-volume form. Foundational triple. -/
+theorem observable_correspondence_diagonal_integral (p₀ : CPN (M + 1))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
+    (lam : Fin (M + 1) → ℝ) :
+    inner ℂ ψ ((Matrix.toEuclideanLin (Matrix.diagonal (fun k => (lam k : ℂ)))) ψ)
+      = ((∫ p, aOntic ψ hψ0 lam p ∂(fubiniStudyMeasure p₀) : ℝ) : ℂ) := by
+  rw [observable_correspondence_diagonal p₀ ψ hψ0 hψ hpos lam,
+      integral_aOntic p₀ ψ hψ0 hψ hpos lam]
 
 end LF4
 end CSD

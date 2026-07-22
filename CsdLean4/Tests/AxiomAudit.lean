@@ -3832,6 +3832,12 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.observable_correspondence_diagonal
 
+-- LF4 §14 general-N diagonal observable, canonical INTEGRAL form (2026-07-22): ⟨ψ,Aψ⟩ = ∫ A_ontic dμ
+-- with A_ontic = ∑ₖ lam k · 𝟙_{Rₖ} an explicit measurable Σ-function. Foundational triple only.
+/-- info: 'CSD.LF4.observable_correspondence_diagonal_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.observable_correspondence_diagonal_integral
+
 -- The non-vacuous LF3-chain Stern-Gerlach capstone (N = 2 analog of
 -- ofKählerPreparation_singlet_frequency_convergence). Foundational triple only.
 /-- info: 'CSD.LF4.sg_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
