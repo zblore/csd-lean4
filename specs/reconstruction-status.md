@@ -128,9 +128,9 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 ## 6. Axiom hygiene
 
 * Foundational triple only on every SigmaLayer/LF headline pin.
-* One imported mathematical result remains: `busch_effect_gleason` — library debt confined to the
-  operational stratum, **not** in the ontic Born derivation (which is Gleason-free). See
-  [`../AXIOMS.md`](../AXIOMS.md) §2.2.
+* **Zero imported axioms** (since 2026-07-21). The last one, `busch_effect_gleason`, was proved —
+  now `OperationalPackage.effect_gleason_representation` (`LF2/EffectGleason.lean`), foundational
+  triple. See [`../AXIOMS.md`](../AXIOMS.md) §2.2.
 * No global `axiom` declarations in the Σ-layer; no `sorry`/`admit`.
 * Three static guards (connectivity, sector-linkage, axiom-imports) pass and are run in CI.
 
@@ -190,11 +190,11 @@ machine-checked facts in the corpus.
 * **NG2 — the Busch effect-Gleason axiom is NOT needed for CSD's core claim; discharging it is
   cosmetic.** CSD's ontic Born rule is **Gleason-free**: it is a Fubini–Study / Duistermaat–Heckman
   *volume* (`bornRegion_fs_measure`, `born_frequency_convergence_N`), with no Gleason or Busch input.
-  The single imported axiom `busch_effect_gleason` (`LF2/BornWrapper.lean`) enters only the
-  **operational effect/POVM stratum**, off the reconstruction path (`AXIOMS.md` §2.2). Proving it in-repo
-  would take the imported-axiom count to zero — an **audit-posture** improvement (the "three axioms, zero
-  imported" headline), NOT a strengthening of the CSD reconstruction. Do not describe it as required for
-  the result.
+  The former axiom `busch_effect_gleason` entered only the **operational effect/POVM stratum**, off the
+  reconstruction path (`AXIOMS.md` §2.2). It was **proved in-repo 2026-07-21**
+  (`OperationalPackage.effect_gleason_representation`), taking the imported-axiom count to zero — an
+  **audit-posture** improvement (the "three axioms, zero imported" headline now holds), NOT a
+  strengthening of the CSD reconstruction. Do not describe it as having been required for the result.
 
 ## 8. Bottom line
 

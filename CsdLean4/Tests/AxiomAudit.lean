@@ -342,8 +342,9 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 
 -- (The abstract `measure_bridge` + the `invariant_measure_uniqueness` axiom it carried
 -- were removed 2026-06-04; the bridge holds axiom-free on the concrete instances —
--- `cp_measure_bridge` / `k_measure_bridge`, pinned below. Only `busch_effect_gleason`
--- remains as an imported axiom.)
+-- `cp_measure_bridge` / `k_measure_bridge`, pinned below. `busch_effect_gleason` was the
+-- last imported axiom; it was DISCHARGED 2026-07-21 — see below — so the corpus now imports
+-- ZERO axioms beyond the foundational triple.)
 /-- info: 'CSD.LF2.born_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms born_quadratic
 
@@ -460,18 +461,14 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.pure_state_born_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms pure_state_born_weights
 
-/--
-info: 'CSD.LF2.pure_state_born_weights_of_certainty' depends on axioms: [propext,
- Classical.choice,
- Quot.sound,
- busch_effect_gleason]
--/
+-- `busch_effect_gleason` discharged 2026-07-21: this is now foundational-triple only.
+/-- info: 'CSD.LF2.pure_state_born_weights_of_certainty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms pure_state_born_weights_of_certainty
 
 /-- info: 'CSD.LF2.PurePreparation.OP_certain_at_ψ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms PurePreparation.OP_certain_at_ψ
 
-/-- info: 'CSD.LF2.PurePreparation.born_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+/-- info: 'CSD.LF2.PurePreparation.born_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms PurePreparation.born_rank_one
 
 /-- info: 'CSD.LF2.PurePreparation.born_rank_one_direct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -542,7 +539,7 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 -/
 #guard_msgs in #print axioms MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct
 
-/-- info: 'CSD.LF3.OP_p_at_jointEig_eq_P_st' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+/-- info: 'CSD.LF3.OP_p_at_jointEig_eq_P_st' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms OP_p_at_jointEig_eq_P_st
 
 /-- info: 'CSD.LF3.OP_p_at_jointEig_eq_P_st_direct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3931,9 +3928,9 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #print axioms CSD.LF4.pauliDot_robertson_zPlus
 
 -- The pure-state ontic Born capstone composes LF1 frequency convergence with the
--- LF2 operational Born derivation, so it cites the Busch axiom (and only it,
--- beyond the foundational triple).
-/-- info: 'CSD.LF4.ontic_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound, busch_effect_gleason] -/
+-- LF2 operational Born derivation. Since `busch_effect_gleason` was discharged
+-- (2026-07-21), it now stands on the foundational triple alone.
+/-- info: 'CSD.LF4.ontic_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.ontic_born_frequency
 

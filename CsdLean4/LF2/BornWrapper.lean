@@ -154,24 +154,18 @@ structure OperationalPackage (N : ℕ) where
   additivity : ∀ E F : Effect N, ∀ (hLe : (1 - (E.M + F.M)).PosSemidef),
                  p (Effect.add E F hLe) = p E + p F
 
-/-- **Imported Busch effect-Gleason theorem (spec §5.2, §7.4).** Under the
-    effect-additive operational consistency package of Definition 5.1 and
-    dimension `N ≥ 2`, there is a unique density operator `ρ` such that
-    `p(E) = Tr(ρ · E)` for every effect `E`.
+/- **Busch effect-Gleason theorem (spec §5.2, §7.4) — DISCHARGED, no longer an axiom.**
+    Under the effect-additive operational consistency package of Definition 5.1, there is a
+    unique density operator `ρ` such that `p(E) = Tr(ρ · E)` for every effect `E`.
 
-    This is the load-bearing external input of the Born-weight wrapper and is
-    not present in Mathlib. LF2 imports it axiomatically rather than
-    rederiving it, per the explicit spec directive in §7.4. -/
-axiom busch_effect_gleason
-    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N) :
-    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E
-
-/-- **Born-form assignment (spec §5.4 wrapper).** Thin wrapper exposing the
-    Busch axiom under an `LF2`-namespaced name. -/
-theorem born_form_of_package
-    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N) :
-    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
-  busch_effect_gleason hN OP
+    Earlier revisions imported this as `axiom busch_effect_gleason` (the one load-bearing
+    external input of the Born-weight wrapper, not present in Mathlib). It was **proved** on
+    2026-07-21 in `LF2/EffectGleason.lean` as `OperationalPackage.effect_gleason_representation`
+    (Busch's finite-dimensional argument: effect-additivity → homogeneity → spectral reduction →
+    the Jordan–von Neumann parallelogram/polarisation ρ-build → PSD/unit-trace/uniqueness). The
+    named wrappers `born_form_of_package` and `pure_state_born_weights_of_certainty` now live in
+    that module (they cannot sit here, since the proof imports this file). Downstream code cites
+    `pure_state_born_weights_of_certainty` unchanged. See `AXIOMS.md §2.2`. -/
 
 open scoped MatrixOrder
 
@@ -436,31 +430,11 @@ theorem rankOneDensity_unique_of_certainty
     _ = (1 : ℂ) • P := by rw [h_trace_eq_one]
     _ = P := one_smul _ _
 
-/-- **Strengthened composite endpoint.**  Given only a **purity hypothesis** —
-    that the operational package assigns probability one to the rank-1
-    effect through `ψ`, i.e. the preparation is "certain" to produce `ψ` —
-    the Born quadratic form `|⟨ψ|φ⟩|²` falls out for every rank-1 outcome.
-
-    This is the tightened version of `pure_state_born_weights` that derives
-    the `hρ`-hypothesis from the weaker `h_certain`, using
-    `busch_effect_gleason` to extract a density operator and
-    `rankOneDensity_unique_of_certainty` to identify it as `rankOneDensity ψ`.
-    The proof composes three named ingredients:
-    `busch_effect_gleason`, `rankOneDensity_unique_of_certainty`, and
-    `born_quadratic`. -/
-theorem pure_state_born_weights_of_certainty
-    {N : ℕ} (hN : 2 ≤ N) (OP : OperationalPackage N)
-    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
-    (h_certain : OP.p (rankOneEffect ψ hψ) = 1)
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
-    OP.p (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
-  obtain ⟨ρ, hρ_spec, _hρ_unique⟩ := busch_effect_gleason hN OP
-  have hρ_eq : ρ = rankOneDensity ψ hψ := by
-    refine rankOneDensity_unique_of_certainty ψ hψ ρ ?_
-    rw [← hρ_spec]
-    exact h_certain
-  rw [hρ_spec, hρ_eq]
-  exact born_quadratic ψ φ hψ hφ
+/- `pure_state_born_weights_of_certainty` was here; it now lives in `LF2/EffectGleason.lean`
+    (relocated 2026-07-21), because its proof uses the now-**proved** effect-Gleason
+    representation `effect_gleason_representation`, which imports this file. Downstream callers
+    that need it should `import CsdLean4.LF2.EffectGleason`; the name and signature are
+    unchanged. -/
 
 end LF2
 end CSD

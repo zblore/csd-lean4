@@ -1,5 +1,6 @@
 import CsdLean4.LF1.GeneralFrequency
 import CsdLean4.LF2.BornWrapper
+import CsdLean4.LF2.EffectGleason
 
 /-!
 # LF4: pure-state ontic Born rule as a frequency limit

@@ -31,7 +31,15 @@ SRC="CsdLean4"
 # ------------------------------------------------------------------ CLAIMS ----
 # THE canonical source of truth. Update HERE when the code legitimately changes;
 # the checks below fail loudly if code and these facts disagree.
-DECLARED_AXIOMS="busch_effect_gleason"
+#
+# ZERO imported axioms. `busch_effect_gleason` was the last one; it was discharged
+# 2026-07-21 (proved in LF2/EffectGleason.lean as
+# `OperationalPackage.effect_gleason_representation`). The corpus now stands on the
+# foundational triple alone (propext / Classical.choice / Quot.sound); even the
+# measure-bridge realisers `cp_measure_bridge` / `k_measure_bridge` are proved
+# theorems, not axioms (see AXIOMS.md §2). This gate now fails loudly on ANY
+# `^axiom ` declaration under CsdLean4/ — the zero-axiom posture.
+DECLARED_AXIOMS=""
 
 # All Kähler `:= True` placeholders were de-vacuumed 2026-07-19 (IsKahlerSector →
 # IsFubiniStudyKahler, the proved pointwise FS Kähler compatibility; the trivial
@@ -91,10 +99,15 @@ found_ax="$(srcfiles | while read -r f; do
     strip_comments "$f" | grep -oE '^axiom[[:space:]]+[A-Za-z_][A-Za-z0-9_'\'']*' \
       | awk '{print $2}'
   done | sort -u)"
-if [ "$found_ax" = "$(printf '%s\n' "$DECLARED_AXIOMS" | sort -u)" ]; then
-  say_ok "imported axioms == { $DECLARED_AXIOMS }"
+decl_ax="$(printf '%s\n' "$DECLARED_AXIOMS" | grep -v '^[[:space:]]*$' | sort -u)"
+if [ "$found_ax" = "$decl_ax" ]; then
+  if [ -z "$found_ax" ]; then
+    say_ok "imported axioms: none (zero-axiom posture — busch_effect_gleason discharged)"
+  else
+    say_ok "imported axioms == { $(echo "$found_ax" | tr '\n' ' ')}"
+  fi
 else
-  say_fail "axiom set mismatch. declared: [$DECLARED_AXIOMS]  found: [$(echo "$found_ax" | tr '\n' ' ')]"
+  say_fail "axiom set mismatch. declared: [$(echo "$decl_ax" | tr '\n' ' ')]  found: [$(echo "$found_ax" | tr '\n' ' ')]"
 fi
 
 # (2) := True placeholder inventory

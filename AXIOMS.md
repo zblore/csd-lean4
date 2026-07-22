@@ -7,10 +7,10 @@ Axiom audit for the `csd-lean4` formalisation. This file is the canonical record
 "Axiom" is used loosely, and three categories are easy to conflate. They are not the same kind of thing, and only one of them is a commitment of the physical theory:
 
 1. **Lean foundational axioms** (§1) — `propext`, `Classical.choice`, `Quot.sound`. Every Mathlib development carries these. Not a commitment of CSD.
-2. **Imported mathematical results** (§2) — standard theorems not yet in Mathlib, imported as `axiom`. **These are formalisation debt, not commitments of the physical theory** — each is provable in principle and eliminable as the library grows. There is now **exactly one**: the Busch effect-Gleason theorem. The second, invariant-measure uniqueness, was **removed 2026-06-04** — nothing downstream used the abstract statement that carried it, and its concrete `ℂℙ^{N-1}` content is a proved, axiom-free theorem in the tree (§2.1).
+2. **Imported mathematical results** (§2) — standard theorems not yet in Mathlib, once imported as `axiom`. **These were formalisation debt, not commitments of the physical theory** — each provable in principle and eliminable as the library grows. There are now **none**: the last, the Busch effect-Gleason theorem, was **proved and de-axiomatised 2026-07-21** (§2.2); invariant-measure uniqueness was **removed 2026-06-04** (§2.1). The corpus now imports **zero** axioms beyond the foundational triple.
 3. **CSD's physical postulates** (§3) — the ontic substrate, the deterministic measure-preserving flow, the sector posit, and the typicality reading of probability. **These are what the theory actually asks you to accept.** They are carried as *hypotheses / structure fields*, not `axiom` declarations, because CSD's claims are conditional ("given an ontic substrate with these properties, repeated-trial frequencies converge to the Born weight"). Consequently `#print axioms` never reports them — correctly, because they are antecedents, not axioms.
 
-**So `#print axioms` measures categories 1 and 2 (Lean + library), not category 3 (the physics).** The number "one imported axiom" is a statement about library completeness, *not* about what CSD commits you to. The figure that describes the theory is **category 3**: the ontic substrate + the sector posit + typicality, with the **Born rule now a theorem** of those (Gleason-free, general dimension, including general POVMs) rather than a postulate. Categories 1 and 2 are infrastructure — the triple is unavoidable, the single remaining imported result is an eliminable library gap confined to the operational stratum, and it is **not** in the ontic Born derivation.
+**So `#print axioms` measures categories 1 and 2 (Lean + library), not category 3 (the physics).** With category 2 now **empty**, `#print axioms` on every corpus theorem reports only the foundational triple — a statement about library completeness, *not* about what CSD commits you to. The figure that describes the theory is **category 3**: the ontic substrate + the sector posit + typicality, with the **Born rule now a theorem** of those (Gleason-free, general dimension, including general POVMs) rather than a postulate. Categories 1 and 2 are infrastructure — the triple is unavoidable, and there is no longer any imported library gap.
 
 ## 1. Lean foundational axioms (always present)
 
@@ -26,9 +26,9 @@ LF1 theorems cite only these three. LF3's strong-readout and finite-leakage main
 
 ## 2. Imported mathematical results (formalisation debt, not theory commitments)
 
-These are standard mathematical theorems imported as `axiom` only because they are not yet in Mathlib (see §0, category 2). They are *not* commitments of CSD: each is provable in principle, and `invariant_measure_uniqueness` (§2.1) is already eliminable, its concrete content being a proved axiom-free theorem in the tree. Neither is in the ontic Born derivation.
+These were standard mathematical theorems imported as `axiom` only because they were not yet in Mathlib (see §0, category 2). They were *not* commitments of CSD, and **this category is now empty** — both former imports have been discharged.
 
-LF2 now imports **exactly one** such result — `busch_effect_gleason` (§2.2); the invariant-measure-uniqueness import (§2.1) was **removed 2026-06-04** (see §2.1). LF4 introduces **no** axioms (the Duistermaat–Heckman pushforward formerly carried in §2.3 was discharged 2026-05-31 and is now a foundational-triple theorem). `busch_effect_gleason` is documented at its declaration site and propagates into the LF3 chain capstones only via the operational stratum: it enters extensionally through `pure_state_born_weights_of_certainty` inside the OP.p Born identity step. The ontic Born derivation (the volume-frequency route) is Gleason-free. LF3's `LF3_main_theorem` and `LF3_finite_leakage_theorem` remain axiom-clean, as do the LF3 chain capstones after the 2026-06-02 Busch re-route.
+LF2 now imports **zero** such results — `busch_effect_gleason` (§2.2) was **proved and de-axiomatised 2026-07-21**, and the invariant-measure-uniqueness import (§2.1) was **removed 2026-06-04**. LF4 introduces **no** axioms (the Duistermaat–Heckman pushforward formerly carried in §2.3 was discharged 2026-05-31). The former `busch_effect_gleason` entered the LF3 chain capstones only via the operational stratum — extensionally, through `pure_state_born_weights_of_certainty` — so those capstones, `PurePreparation.born_rank_one`, `LF3.OP_p_at_jointEig_eq_P_st` and `LF4.ontic_born_frequency` are now foundational-triple-only (AxiomAudit-pinned). The ontic Born derivation (the volume-frequency route) was always Gleason-free.
 
 A third axiom, `rankOneDensity_unique_of_certainty`, was carried in earlier
 revisions and discharged on 2026-05-18 (see commit landing the
@@ -38,7 +38,7 @@ entry has been retired.
 
 ### 2.1 `invariant_measure_uniqueness` — REMOVED 2026-06-04
 
-**Status: NO LONGER AN AXIOM.** The axiom, the abstract `measure_bridge` lemma that was its only consumer, and the convenience constructor `MeasureBridgeData.ofSectorData` were all deleted from `CsdLean4/LF2/MeasureBridge.lean` and `Preparation.lean`. Nothing downstream used the abstract statement: the concrete instances realise the measure bridge `π∗μL = c • μFS` **axiom-free** (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`, `c = 1`), and the `ℂℙ^{N-1}` uniqueness the abstract version would have needed is itself a proved, axiom-free theorem (`Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn`, §2.1 below). The corpus's only remaining imported axiom is `busch_effect_gleason`. The historical record is retained below.
+**Status: NO LONGER AN AXIOM.** The axiom, the abstract `measure_bridge` lemma that was its only consumer, and the convenience constructor `MeasureBridgeData.ofSectorData` were all deleted from `CsdLean4/LF2/MeasureBridge.lean` and `Preparation.lean`. Nothing downstream used the abstract statement: the concrete instances realise the measure bridge `π∗μL = c • μFS` **axiom-free** (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`, `c = 1`), and the `ℂℙ^{N-1}` uniqueness the abstract version would have needed is itself a proved, axiom-free theorem (`Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn`, §2.1 below). The corpus's last remaining imported axiom was `busch_effect_gleason`, itself discharged 2026-07-21 (§2.2); the corpus now imports zero axioms. The historical record is retained below.
 
 **Former statement.** For an abstract measurable space `P` with a `MulAction G P` whose action is pretransitive (`[MulAction.IsPretransitive G P]`), a `G`-invariant probability measure `μFS` on `P`, and any `G`-invariant finite measure `μ` on `P`, there exists `c : ENNReal` with `μ = c · μFS`.
 
@@ -56,19 +56,35 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 
 **Discharge target.** When LF4 instantiates `SectorData` with `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := U(N)`, `μFS := fubiniStudyMeasure p₀`, the concrete `measure_bridge` routes through `invariant_measure_uniqueness_cpn` instead of the axiom, and the LF2 axiom count drops from two to one at that instantiation site. The current abstract signature carries transitivity explicitly so the concrete instantiation supplies `epAction_transitive` from the `SU(N)`-on-`CP^{N-1}` model with matching hypotheses.
 
-### 2.2 `busch_effect_gleason`
+### 2.2 `busch_effect_gleason` — DISCHARGED 2026-07-21
 
-**Location.** `CsdLean4/LF2/BornWrapper.lean`.
+**Status: NO LONGER AN AXIOM.** Proved in `CsdLean4/LF2/EffectGleason.lean` as
+`OperationalPackage.effect_gleason_representation` (foundational triple only). The `axiom`
+declaration was deleted from `CsdLean4/LF2/BornWrapper.lean`; its two named consumers
+(`born_form_of_package`, `pure_state_born_weights_of_certainty`) were relocated to
+`EffectGleason.lean` — signatures unchanged — because they now depend on the proof, which
+imports `BornWrapper`. **The corpus now imports ZERO axioms** beyond the foundational triple.
 
-**Statement.** For `N ≥ 2` and an effect-additive operational package `OP` on `Effect N`, there is a unique density operator `ρ` such that `OP.p E = traceForm ρ E` for every effect `E`.
+**Statement (now a theorem).** For an effect-additive operational package `OP` on `Effect N`,
+there is a unique density operator `ρ` with `OP.p E = traceForm ρ E` for every effect `E`. (The
+`N ≥ 2` hypothesis of the classical statement is retained in the wrapper signatures for spec
+compatibility but is not needed — the reconstruction works for every `N`.)
 
-**Mathematical content.** The Busch effect-Gleason theorem (Busch 2003): effect-additive probability assignments on a finite-dimensional effect algebra are realised by a unique trace-form density.
+**Proof (Busch 2003, finite-dimensional).** Effect-additivity + monotonicity give homogeneity
+`p(t•E) = t·p E`; the Hermitian spectral theorem reduces `p` to its values on rank-one
+projectors (`p_eq_eigen_sum`). The quadratic form `q v = ‖v‖²·p(|v̂⟩⟨v̂|)` inherits the
+*parallelogram law* (`qform_parallelogram`, from the Cauchy–Schwarz sum bound
+`one_sub_two_outerProduct_posSemidef`), so by Jordan–von Neumann its polarisation is
+sesquilinear. The one place the classical proof uses continuity — upgrading `ℚ`- to
+`ℝ`-homogeneity — is replaced by boundedness (`additive_bounded_linear`: a bounded additive
+`ℝ → ℝ` is linear), available because `0 ≤ q ≤ ‖·‖²`. The resulting Hermitian matrix
+`R = qmatrix` gives `p E = Tr(R·E)` for every effect (`p_eq_trace`); `R` is PSD (`OP.nonneg`),
+unit-trace (`OP.total_one`), and unique because a complex matrix is determined by its quadratic
+form (`matrix_eq_zero_of_quadForm_zero`, a polarisation). All foundational-triple, no `sorry`;
+AxiomAudit-pinned.
 
-**Spec authorisation.** The spec directs LF2 to import this rather than rederive it.
-
-**Mathlib status.** Not in Mathlib. Effect-algebra / POVM machinery is an open Mathlib gap; the full proof requires Busch 2003's argument.
-
-**Discharge target.** Same as above: signature is stable; the axiom becomes a theorem when the Mathlib infrastructure is in place.
+**Mathlib status.** Effect-algebra / POVM machinery remains a Mathlib gap; this proof is
+self-contained in the CSD tree and does not need it.
 
 ### 2.3 `fs_moment_pushforward_uniform` (LF4 Duistermaat–Heckman, qubit instance) — DISCHARGED 2026-05-31
 
@@ -90,13 +106,13 @@ This does **not** discharge the abstract axiom: as stated over an arbitrary pret
 - `fs_born_volume_ratio_N` (+ `_apex`) (`MomentBornN.lean`): Born = genuine FS-volume ratio of the barycentric regions, **all `N` coordinates**, unconditional.
 - `born_frequency_convergence_N` (`BornFrequencyN.lean`): the general-`N` Busch-free empirical chain — frequencies → the full Born vector jointly a.s. **No `busch_effect_gleason`.**
 
-**Posture note.** This does **not** remove `busch_effect_gleason` (§2.2) from the corpus. It establishes a *parallel, Gleason-free* derivation of the Born weights from the symplectic geometry, at general `N`. As of 2026-06-02 the **LF3 empirical chain was re-routed onto this ontic derivation**: `PureSingletPreparation.weight_eq_P_st` now goes through the Busch-free `OP_p_at_jointEig_eq_P_st_direct`, so the six chain capstones, the LF4 `ofKählerPreparation_singlet_frequency_convergence` capstone, and the Empirical `bell_singlet_frequency_convergence` re-export are all foundational-triple-only. `busch_effect_gleason` is now cited **only by the operational-stratum statements**: `pure_state_born_weights_of_certainty`, `PurePreparation.born_rank_one`, `LF3.OP_p_at_jointEig_eq_P_st`, and `LF4.ontic_born_frequency`. Plan + per-result honesty ledger: `specs/general-n-dh-plan.md`. The only standing axioms remain the two of §2.1–§2.2; **LF4 introduces no axioms.**
+**Posture note.** This section predates the discharge of `busch_effect_gleason` (§2.2, 2026-07-21); it established a *parallel, Gleason-free* derivation of the Born weights from the symplectic geometry, at general `N`. As of 2026-06-02 the **LF3 empirical chain was re-routed onto this ontic derivation**: `PureSingletPreparation.weight_eq_P_st` now goes through the Busch-free `OP_p_at_jointEig_eq_P_st_direct`, so the six chain capstones, the LF4 `ofKählerPreparation_singlet_frequency_convergence` capstone, and the Empirical `bell_singlet_frequency_convergence` re-export are all foundational-triple-only. The operational-stratum statements that formerly cited `busch_effect_gleason` (`pure_state_born_weights_of_certainty`, `PurePreparation.born_rank_one`, `LF3.OP_p_at_jointEig_eq_P_st`, `LF4.ontic_born_frequency`) are now **also** foundational-triple-only, since the axiom became the proved `effect_gleason_representation`. Plan + per-result honesty ledger: `specs/general-n-dh-plan.md`. There are now **no** standing imported axioms; **LF4 introduces no axioms.**
 
 #### Foundational reading: two strata, and where the Born weights come from
 
 The corpus reaches the Born weights by two distinct derivations, and they belong to two distinct strata. Keeping both is deliberate.
 
-- **Operational / non-ontic stratum.** Given the Hilbert-space formalism alone, effect-additive probability is forced to the trace form. This is the Gleason-class argument, formalised as the import `busch_effect_gleason` (§2.2). It assumes no configuration space and covers arbitrary effects/POVMs. It is retained here as the operational closure of the formalism.
+- **Operational / non-ontic stratum.** Given the Hilbert-space formalism alone, effect-additive probability is forced to the trace form. This is the Gleason-class argument, now the **proved** theorem `effect_gleason_representation` (§2.2, formerly the import `busch_effect_gleason`). It assumes no configuration space and covers arbitrary effects/POVMs. It is retained here as the operational closure of the formalism.
 - **Ontic stratum.** Taking the quantum-effective sector with its symmetry as the primitive, the Born weight is the Fubini–Study volume ratio: the U(N) symmetry fixes `μ_FS` uniquely (axiom-free concretely, via the Haar / FS-uniqueness chain `invariant_measure_uniqueness_cpn`), and the moment map identifies the weight with that volume (`fs_born_volume_ratio_N`). This is the CSD-native derivation (LF2 → LF3 → LF4). It is **foundational-triple-only** and does **not** use `busch_effect_gleason`.
 
 **This is a relocation of the primitive, not its elimination.** The ontic derivation does not produce Born from nothing; it produces Born from the posited sector symmetry. That posit is the sector structural datum (§3.3): `SectorData.(π, G)`, the projection onto the quantum-effective sector and its U(N) symmetry. So the honest hierarchy is:
@@ -107,7 +123,7 @@ The corpus reaches the Born weights by two distinct derivations, and they belong
 
 The payoff is real and stateable without overclaim: in the ontic stratum the Born rule is a **theorem of the posited sector symmetry**, not an independent probability postulate. The cost is named: the primitive moves from operational effect-additivity (Gleason) to the geometric sector posit, and the question "why this sector" becomes a question about the underlying deterministic dynamics.
 
-**Scope: the POVM step is closed (2026-06-03).** The ontic derivation covers rank-1 **projective** (von Neumann) measurements **and general POVMs**. The POVM case routes through **Naimark dilation** (`LF4/POVMNaimark.lean` `canonicalNaimark`, the dilation built from the CFC square roots `√Eᵢ = cfc Real.sqrt Eᵢ`, inhabiting `NaimarkDilation P` for every POVM) onto a larger ontic configuration space `Σ' = ℂℙ^{N·|ι|−1}`, where the achieved general-`N` result reads the POVM Born weight `⟨ψ,Eᵢψ⟩` as a **sum of Fubini–Study volumes** (`povm_born_eq_dilated_volume`) and the empirical chain lands `povm_born_frequency_volume` — carving-free, Gleason-free, unconditional. So the ontic stratum now stands alone for **arbitrary** quantum measurements, and `busch_effect_gleason` is no longer on the ontic Born path for *either* projective or POVM measurements; it survives only as the operational-stratum closure (§2.2). Honest cost: the POVM derivation **enlarges the posited sector structure** by the ancilla on `Σ'` (the apparatus/environment). The genericity assumption (`hpos`, no vanishing dilated amplitude) carried by the original forms was **retired 2026-06-11** by the unconditional engine (`LF4/BornRegionUncond.lean`, `*_uncond` variants — every unit state, vanishing amplitudes included; additive, originals untouched). See `specs/povm-plan.md`.
+**Scope: the POVM step is closed (2026-06-03).** The ontic derivation covers rank-1 **projective** (von Neumann) measurements **and general POVMs**. The POVM case routes through **Naimark dilation** (`LF4/POVMNaimark.lean` `canonicalNaimark`, the dilation built from the CFC square roots `√Eᵢ = cfc Real.sqrt Eᵢ`, inhabiting `NaimarkDilation P` for every POVM) onto a larger ontic configuration space `Σ' = ℂℙ^{N·|ι|−1}`, where the achieved general-`N` result reads the POVM Born weight `⟨ψ,Eᵢψ⟩` as a **sum of Fubini–Study volumes** (`povm_born_eq_dilated_volume`) and the empirical chain lands `povm_born_frequency_volume` — carving-free, Gleason-free, unconditional. So the ontic stratum now stands alone for **arbitrary** quantum measurements, and the effect-Gleason theorem is not on the ontic Born path for *either* projective or POVM measurements; it serves only as the operational-stratum closure (§2.2, and since 2026-07-21 a proved theorem, not an axiom). Honest cost: the POVM derivation **enlarges the posited sector structure** by the ancilla on `Σ'` (the apparatus/environment). The genericity assumption (`hpos`, no vanishing dilated amplitude) carried by the original forms was **retired 2026-06-11** by the unconditional engine (`LF4/BornRegionUncond.lean`, `*_uncond` variants — every unit state, vanishing amplitudes included; additive, originals untouched). See `specs/povm-plan.md`.
 
 ## 3. CSD's physical postulates (the theory's actual commitments)
 

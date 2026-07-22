@@ -153,13 +153,12 @@ The corpus does not prioritise upstreaming over programme progress. The conventi
 
 Drawn from an inspection of the QuAIR/Lean-QIT source and Physlib's contribution rules. Most of these also move the corpus toward Physlib's requirements, so adopting them serves both hardening and the upstreaming route. Each item below is marked with its **status**: *already-satisfied* (we do this or better), *policy* (adopted as a rule for new work), or *to-implement* (a concrete follow-up task, tracked in [`specs/BACKLOG.md`](specs/BACKLOG.md)).
 
-### 8.1 Zero-axiom discipline — *policy + to-implement*
+### 8.1 Zero-axiom discipline — *ACHIEVED 2026-07-21*
 
 No `axiom` declarations anywhere in the corpus. This is Physlib's hard rule ("never use the `axiom` declaration") and the single change that both hardens the corpus and unblocks the canonical upstreaming route.
 
-- **Current state.** Exactly **one** `axiom` declaration exists: `busch_effect_gleason` (`LF2/BornWrapper.lean`; the imported effect-Gleason step, [`AXIOMS.md §2.2`](AXIOMS.md)). Per settled non-goal **NG2** ([`reconstruction-status.md §7a`](specs/reconstruction-status.md)) the ontic Born rule is Gleason-free and this axiom is *cosmetic* — most exports are already `busch_effect_gleason`-free (foundational-triple only).
-- **Target.** Discharge or delete `busch_effect_gleason` (finite-dim effect-Gleason, tracked M-tier in `BACKLOG.md`), reaching "three axioms, zero imported" (`propext`, `Classical.choice`, `Quot.sound` only).
-- **Enforcement.** Add a **CI zero-user-axiom gate** to `scripts/check-claims.sh`: fail on any `^axiom ` declaration under `CsdLean4/` outside the one whitelisted site (and empty the whitelist once `busch_effect_gleason` is gone). This complements — does not replace — the `#print axioms` pins.
+- **Current state.** **Zero** `axiom` declarations. The last one, `busch_effect_gleason`, was **proved and deleted 2026-07-21** — it is now the theorem `OperationalPackage.effect_gleason_representation` in `LF2/EffectGleason.lean` ([`AXIOMS.md §2.2`](AXIOMS.md)). Every corpus export is now foundational-triple only (`propext`, `Classical.choice`, `Quot.sound`).
+- **Enforcement (live).** `scripts/check-claims.sh` sets `DECLARED_AXIOMS=""` and **fails on any `^axiom ` declaration** under `CsdLean4/` (the whitelist is empty now that `busch_effect_gleason` is gone). This complements — does not replace — the `#print axioms` pins in `Tests/AxiomAudit.lean`.
 
 ### 8.2 Machine-readable provenance — *policy + to-implement*  (biggest structural win)
 
@@ -225,7 +224,7 @@ public import CsdLean4.LF2.BornWrapper
 
 ### 8.6 Suggested adoption order
 
-1. **Zero-axiom** (§8.1) — gates the Physlib route; add the CI gate now, discharge `busch_effect_gleason` when the effect-Gleason M-item lands.
+1. **Zero-axiom** (§8.1) — **DONE 2026-07-21**: `busch_effect_gleason` discharged, CI gate live (empty whitelist). Gates the Physlib route.
 2. **`REFERENCES.json` + line-precise citations** (§8.2) — the biggest auditability win.
 3. **`_statement` / `_of_` pattern** (§8.3) — formalises the bridge-obligations ledger.
 4. **`autoImplicit=false`, module system, tagged pin, per-declaration docstrings** (§8.4) — fold the mechanical items into the next toolchain/module-system pass.

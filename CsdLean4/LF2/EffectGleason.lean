@@ -6,18 +6,21 @@ Authors: Zayn Blore
 import CsdLean4.LF2.BornWrapper
 
 /-!
-# LF2/EffectGleason: discharging the `busch_effect_gleason` axiom (Busch effect-Gleason)
+# LF2/EffectGleason: the Busch effect-Gleason theorem, PROVED (discharges the former axiom)
 
 **Category:** 3-Local (LF2 operational stratum — the effect-Gleason representation theorem).
 
-`LF2/BornWrapper.lean` imports the Busch effect-Gleason theorem as the axiom
-`busch_effect_gleason`: for `N ≥ 2`, every effect-additive, bounded, normalised probability
-assignment `OP.p` on effects is `OP.p E = Tr(ρ E)` for a *unique* density operator `ρ`. This
-module works toward **discharging** that axiom — proving it, so the corpus reaches "three
-axioms, zero imported" (`CONVENTIONS.md §8.1`, `AXIOMS.md §2.2`, `specs/BACKLOG.md`). Busch's
-proof (Busch 2003, "A Simple Proof of Gleason's Theorem") is short in finite dimensions
-because additivity over the *effect* algebra gives linearity directly, bypassing the
-frame-function analysis of projective Gleason.
+Earlier revisions of `LF2/BornWrapper.lean` imported the Busch effect-Gleason theorem as the
+axiom `busch_effect_gleason`: every effect-additive, bounded, normalised probability assignment
+`OP.p` on effects is `OP.p E = Tr(ρ E)` for a *unique* density operator `ρ`. This module
+**discharges** that axiom — it is proved here as `OperationalPackage.effect_gleason_representation`
+(2026-07-21), so the corpus imports **zero** axioms beyond the foundational triple
+(`CONVENTIONS.md §8.1`, `AXIOMS.md §2.2`, `specs/BACKLOG.md`). The `axiom` was deleted from
+`BornWrapper.lean` and its two named consumers (`born_form_of_package`,
+`pure_state_born_weights_of_certainty`) relocated here (signatures unchanged), since they now
+depend on the proof, which imports `BornWrapper`. Busch's proof (Busch 2003, "A Simple Proof of
+Gleason's Theorem") is short in finite dimensions because additivity over the *effect* algebra
+gives linearity directly, bypassing the frame-function analysis of projective Gleason.
 
 ## Proof arc (bottom-up)
 
@@ -56,24 +59,26 @@ frame-function analysis of projective Gleason.
    and its matrix on the standard basis `qmatrix` is Hermitian (`qmatrix_isHermitian`) with
    `p_outerEffect_eq_trace : p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)` and — through the spectral reduction —
    `p_eq_trace : p E = Tr(R · E)` for **every** effect.
-4. **(Deferred) Positivity/normalisation + uniqueness** — `p ≥ 0 ⟹ R` PSD; `p I = 1 ⟹ Tr R = 1`;
-   uniqueness from non-degeneracy of the trace pairing. That packages `R = qmatrix` as a
-   `DensityOperator` and yields `theorem busch_effect_gleason … := …`, replacing the axiom in
-   `BornWrapper.lean`.
+4. **Positivity / normalisation + uniqueness (step 4 — done).** `p ≥ 0 ⟹ R` PSD
+   (`qmatrix_posSemidef`); `p I = 1 ⟹ Tr R = 1` (`qmatrix_trace_one`); uniqueness because a
+   complex matrix is determined by its quadratic form (`matrix_eq_zero_of_quadForm_zero`, a
+   polarisation) via `qdensity_unique`. This packages `R = qmatrix` as the `DensityOperator`
+   `qdensity` and yields `effect_gleason_representation` (`∃!`), the statement the axiom asserted.
 
 ## Honest scope
 
-**Delivered here:** steps 1–2 (monotone/additive layer + homogeneity `p(t•E) = t·p E`), the
-**spectral reduction** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`), the **polarisation identities** (step 3b
-core), and the **ρ-build** (step 3b-final): a single Hermitian matrix `R = OP.qmatrix` with
-`p E = Tr(R · E)` for every effect (`p_eq_trace`). **Deferred:** step 4 only — `R.PosSemidef`,
-`R.trace = 1`, and uniqueness, which turn `R` into a `DensityOperator` and let the axiom be
-replaced; tracked in `specs/BACKLOG.md` ("Discharge `busch_effect_gleason`") and
-`specs/future-work.md`. This module builds axiom-free (foundational triple) and does **not** yet
-remove the axiom; it is a genuine partial layer of that discharge, not a stub.
+**Delivered here — the complete theorem.** Steps 1–2 (monotone/additive layer + homogeneity
+`p(t•E) = t·p E`), the **spectral reduction** (`p(E) = ∑ᵢ λᵢ · p(|eᵢ⟩⟨eᵢ|)`), the **polarisation
+identities** (step 3b), the **ρ-build** (step 3b-final: `p E = Tr(R · E)`, `p_eq_trace`), and
+**step 4** (PSD / unit-trace / uniqueness), assembled into
+`OperationalPackage.effect_gleason_representation`. All foundational-triple (`propext`,
+`Classical.choice`, `Quot.sound`), no `sorry`, no placeholder — verified by AxiomAudit. The
+`busch_effect_gleason` axiom has been **removed** from `BornWrapper.lean`; this module is the
+proof.
 
 References: `LF2/BornWrapper.lean` (`Effect`, `DensityOperator`, `OperationalPackage`,
-`traceForm`, `busch_effect_gleason`); Busch 2003 (`quant-ph/9909073`); Jordan–von Neumann 1935
+`traceForm`, `rankOneDensity_unique_of_certainty`, `born_quadratic`); Busch 2003
+(`quant-ph/9909073`); Jordan–von Neumann 1935
 (the parallelogram characterisation polarised in §J–§K); `AXIOMS.md §2.2`;
 `CONVENTIONS.md §8.1`; `specs/BACKLOG.md`; `specs/future-work.md`.
 -/
@@ -1250,5 +1255,180 @@ theorem p_eq_trace (E : Effect N) :
   exact OP.p_outerEffect_eq_trace (le_of_eq hnorm)
 
 end OperationalPackage
+
+/-! ### M — step 4: positivity, normalisation, uniqueness, and the discharged theorem
+(Route B step 4, capstone)
+
+The three state conditions on the reconstructed `R = OP.qmatrix`: `R.PosSemidef` (from
+`OP.nonneg`), `R.trace = 1` (from `OP.total_one`), and — the only genuinely new argument —
+*uniqueness*, from the fact that a complex matrix is determined by its quadratic form
+(`matrix_eq_zero_of_quadForm_zero`, a polarisation). Together they package `R` as a
+`DensityOperator` and prove `effect_gleason_representation`, the statement the
+`busch_effect_gleason` axiom used to assert. -/
+
+/-- **A complex matrix is determined by its quadratic form.** If `star x ⬝ᵥ (D *ᵥ x) = 0` for
+every `x`, then `D = 0`. Over `ℂ` the diagonal of a sesquilinear form recovers the whole form by
+polarisation, so a vanishing quadratic form forces every entry to vanish. -/
+theorem matrix_eq_zero_of_quadForm_zero {D : Matrix (Fin N) (Fin N) ℂ}
+    (hQ : ∀ x : Fin N → ℂ, star x ⬝ᵥ (D *ᵥ x) = 0) : D = 0 := by
+  have hI : star (Complex.I) = -Complex.I := by rw [Complex.star_def, Complex.conj_I]
+  have hII : Complex.I * Complex.I = -1 := Complex.I_mul_I
+  have hB : ∀ u v : Fin N → ℂ, star u ⬝ᵥ (D *ᵥ v) = 0 := by
+    intro u v
+    have h1 := hQ (u + v)
+    have h2 := hQ (u - v)
+    have h3 := hQ (u + Complex.I • v)
+    have h4 := hQ (u - Complex.I • v)
+    simp only [star_add, star_sub, star_smul, hI, mulVec_add, mulVec_sub, Matrix.mulVec_smul,
+      add_dotProduct, sub_dotProduct, dotProduct_add, dotProduct_sub, smul_dotProduct,
+      dotProduct_smul, smul_eq_mul, neg_mul] at h1 h2 h3 h4
+    have key : (4 : ℂ) * (star u ⬝ᵥ (D *ᵥ v)) = 0 := by
+      linear_combination h1 - h2 - Complex.I * h3 + Complex.I * h4
+        + (2 * (star u ⬝ᵥ (D *ᵥ v)) - 2 * (star v ⬝ᵥ (D *ᵥ u))) * hII
+    have h4ne : (4 : ℂ) ≠ 0 := by norm_num
+    exact (mul_eq_zero.mp key).resolve_left h4ne
+  ext j k
+  have hjk := hB (Pi.single j 1) (Pi.single k 1)
+  rw [Matrix.mulVec_single_one] at hjk
+  simpa [dotProduct, Matrix.col_apply, Pi.single_apply, Finset.sum_ite_eq', eq_comm] using hjk
+
+/-- **The trace of a product of two Hermitian matrices is real.** `Tr(A·B)^conj = Tr(B·A) =
+Tr(A·B)`. -/
+theorem trace_mul_isHermitian_real {A B : Matrix (Fin N) (Fin N) ℂ}
+    (hA : A.IsHermitian) (hB : B.IsHermitian) :
+    (starRingEnd ℂ) ((A * B).trace) = (A * B).trace := by
+  calc (starRingEnd ℂ) ((A * B).trace)
+      = ((A * B)ᴴ).trace := by rw [starRingEnd_apply, ← Matrix.trace_conjTranspose]
+    _ = (B * A).trace := by rw [Matrix.conjTranspose_mul, hA.eq, hB.eq]
+    _ = (A * B).trace := Matrix.trace_mul_comm _ _
+
+/-- **The trace form lifts to the complex trace.** For a density operator `ρ` and effect `E`
+(both Hermitian), `Tr(ρ·E)` is real, so `↑(traceForm ρ E) = Tr(ρ.M·E.M)`. -/
+theorem traceForm_ofReal (ρ : DensityOperator N) (E : Effect N) :
+    ((traceForm ρ E : ℝ) : ℂ) = (ρ.M * E.M).trace := by
+  have him : ((ρ.M * E.M).trace).im = 0 :=
+    Complex.conj_eq_iff_im.mp (trace_mul_isHermitian_real ρ.isHermitian E.isHermitian)
+  apply Complex.ext
+  · simp [traceForm]
+  · simp [traceForm, him]
+
+namespace OperationalPackage
+
+variable (OP : OperationalPackage N)
+
+/-- **Step 4a — the reconstructed matrix is positive semidefinite.** `R.PosSemidef` from
+`qform_nonneg` and `qform_eq_dotProduct` (`⟨x, R x⟩ = q x ≥ 0`), with `R` Hermitian. -/
+theorem qmatrix_posSemidef : OP.qmatrix.PosSemidef := by
+  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg OP.qmatrix_isHermitian fun x => ?_
+  have hx := OP.qform_eq_dotProduct (WithLp.toLp 2 x)
+  have hcoe : ⇑(WithLp.toLp 2 x) = x := rfl
+  rw [hcoe] at hx
+  rw [← hx]
+  exact Complex.zero_le_real.mpr (OP.qform_nonneg _)
+
+/-- **Step 4b — the reconstructed matrix has unit trace.** `R.trace = 1` from `OP.total_one`
+(`p I = 1`) and `p_eq_trace` at `E = Effect.one` (`Tr(R · I) = Tr R`). -/
+theorem qmatrix_trace_one : OP.qmatrix.trace = 1 := by
+  have h := OP.p_eq_trace Effect.one
+  rw [OP.total_one] at h
+  simpa [Effect.one] using h.symm
+
+/-- **The reconstructed density operator** `R = OP.qmatrix`, packaged with its PSD + unit-trace
+witnesses. -/
+noncomputable def qdensity : DensityOperator N where
+  M := OP.qmatrix
+  isHermitian := OP.qmatrix_isHermitian
+  nonneg := OP.qmatrix_posSemidef
+  trace_one := OP.qmatrix_trace_one
+
+@[simp] lemma qdensity_M : OP.qdensity.M = OP.qmatrix := rfl
+
+/-- **`p` is the trace form of `qdensity`.** From `p_eq_trace` (`↑(p E) = Tr(R·E)`) and
+`traceForm_ofReal` (`↑(traceForm ρ E) = Tr(R·E)`), by injectivity of `ℝ ↪ ℂ`. -/
+theorem p_eq_traceForm_qdensity (E : Effect N) :
+    OP.p E = traceForm OP.qdensity E := by
+  have h1 := OP.p_eq_trace E
+  have h2 := traceForm_ofReal OP.qdensity E
+  rw [qdensity_M] at h2
+  exact Complex.ofReal_injective (h1.trans h2.symm)
+
+/-- **Step 4c — uniqueness.** Any density operator whose trace form reproduces `p` on every
+effect equals `qdensity`. Their difference `D` is Hermitian with `Tr(D · E) = 0` for every
+effect; taking `E = |v⟩⟨v|` (sub-unit) gives `⟨v, D v⟩ = 0` on the whole unit ball, and scaling
++ polarisation (`matrix_eq_zero_of_quadForm_zero`) forces `D = 0`. -/
+theorem qdensity_unique (ρ : DensityOperator N)
+    (hρ : ∀ E : Effect N, OP.p E = traceForm ρ E) :
+    ρ = OP.qdensity := by
+  suffices hM : ρ.M = OP.qmatrix by
+    obtain ⟨M, _, _, _⟩ := ρ; cases hM; rfl
+  set D : Matrix (Fin N) (Fin N) ℂ := ρ.M - OP.qmatrix with hD
+  -- `Tr(D · E.M) = 0` for every effect E
+  have htr : ∀ E : Effect N, (D * E.M).trace = 0 := by
+    intro E
+    have e1 : ((OP.p E : ℝ) : ℂ) = (ρ.M * E.M).trace := by
+      rw [hρ E]; exact traceForm_ofReal ρ E
+    have e2 : ((OP.p E : ℝ) : ℂ) = (OP.qmatrix * E.M).trace := OP.p_eq_trace E
+    rw [hD, Matrix.sub_mul, Matrix.trace_sub, ← e1, ← e2, sub_self]
+  -- quadratic form of D vanishes on the whole space
+  have hquad : ∀ x : Fin N → ℂ, star x ⬝ᵥ (D *ᵥ x) = 0 := by
+    intro x
+    set X : EuclideanSpace ℂ (Fin N) := WithLp.toLp 2 x with hX
+    set t : ℝ := (1 + ‖X‖)⁻¹ with ht
+    have htpos : 0 < t := by positivity
+    have hle : ‖((t : ℝ) : ℂ) • X‖ ≤ 1 := by
+      rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos htpos, ht,
+        inv_mul_eq_div, div_le_one (by positivity)]
+      linarith [norm_nonneg X]
+    have hE := htr (outerEffect (((t : ℝ) : ℂ) • X) hle)
+    rw [outerEffect_M, trace_mul_outerProduct] at hE
+    have hcoe : ⇑(((t : ℝ) : ℂ) • X) = ((t : ℝ) : ℂ) • x := rfl
+    rw [hcoe, star_smul, Matrix.mulVec_smul, dotProduct_smul, smul_dotProduct, smul_smul,
+      Complex.star_def, Complex.conj_ofReal, smul_eq_mul] at hE
+    have htne : ((t : ℝ) : ℂ) * ((t : ℝ) : ℂ) ≠ 0 := by
+      simp only [ne_eq, mul_eq_zero, Complex.ofReal_eq_zero, or_self]
+      exact ne_of_gt htpos
+    exact (mul_eq_zero.mp hE).resolve_left htne
+  have hDzero : D = 0 := matrix_eq_zero_of_quadForm_zero hquad
+  rw [hD] at hDzero
+  exact sub_eq_zero.mp hDzero
+
+/-- **Busch effect-Gleason (finite dim), proved.** For every operational package there is a
+**unique** density operator `ρ` with `p E = Tr(ρ · E)` for every effect. This discharges the
+`busch_effect_gleason` axiom: `qdensity` witnesses existence (`p_eq_traceForm_qdensity`) and
+`qdensity_unique` gives uniqueness. -/
+theorem effect_gleason_representation (OP : OperationalPackage N) :
+    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
+  ⟨OP.qdensity, OP.p_eq_traceForm_qdensity, fun ρ hρ => OP.qdensity_unique ρ hρ⟩
+
+end OperationalPackage
+
+/-- **Born-form assignment (spec §5.4 wrapper).** The unique density operator representing an
+operational package — now a **theorem** (`effect_gleason_representation`), not an axiom. The
+dimension hypothesis `hN : 2 ≤ N` is retained for signature compatibility with the spec and with
+downstream callers, though the reconstruction in fact works for every `N`. -/
+theorem born_form_of_package
+    {N : ℕ} (_hN : 2 ≤ N) (OP : OperationalPackage N) :
+    ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
+  OP.effect_gleason_representation
+
+/-- **Strengthened composite endpoint.** Given only a **purity hypothesis** — that the
+operational package assigns probability one to the rank-1 effect through `ψ`, i.e. the
+preparation is "certain" to produce `ψ` — the Born quadratic form `|⟨ψ|φ⟩|²` falls out for every
+rank-1 outcome. Relocated from `LF2/BornWrapper.lean` (2026-07-21) because it now composes the
+**proven** `effect_gleason_representation` (was `busch_effect_gleason`) with
+`rankOneDensity_unique_of_certainty` and `born_quadratic`; `hN` is retained for the spec
+signature. -/
+theorem pure_state_born_weights_of_certainty
+    {N : ℕ} (_hN : 2 ≤ N) (OP : OperationalPackage N)
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (h_certain : OP.p (rankOneEffect ψ hψ) = 1)
+    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    OP.p (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
+  obtain ⟨ρ, hρ_spec, _hρ_unique⟩ := OP.effect_gleason_representation
+  have hρ_eq : ρ = rankOneDensity ψ hψ := by
+    refine rankOneDensity_unique_of_certainty ψ hψ ρ ?_
+    rw [← hρ_spec]; exact h_certain
+  rw [hρ_spec, hρ_eq]
+  exact born_quadratic ψ φ hψ hφ
 
 end CSD.LF2
