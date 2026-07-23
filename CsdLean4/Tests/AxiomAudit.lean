@@ -5517,6 +5517,11 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.StoneC1.stone_c1
 
+-- Continuity-only Stone (2026-07-23): differentiability derived (FTC + integral averaging), not assumed.
+/-- info: 'CSD.StoneC1.stone_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.StoneC1.stone_continuous
+
 /-- info: 'CSD.StoneC1.trivial_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.StoneC1.trivial_group
