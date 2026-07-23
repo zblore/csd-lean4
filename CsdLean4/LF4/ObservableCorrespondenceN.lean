@@ -6,17 +6,20 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.MomentBornN
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 
 /-!
-# LF4 §14: observable correspondence for diagonal observables (general N)
+# LF4 §14: observable correspondence for general self-adjoint observables (general N)
 
 **Category:** 3-Local (LF4 §14 discharge — the general-N, all-eigenvalue observable correspondence
-for observables diagonal in the reference basis).
+for arbitrary self-adjoint observables).
 
-This module discharges the §14 **observable-correspondence** obligation for **diagonal**
-self-adjoint observables `A = diagonal (lam ·)` on `Σ = ℂℙ^{N-1}`, at **general N** and for
-**every real eigenvalue vector** `lam` — the general lift of `LF4/SingleQubitKahler.lean`'s
-single-qubit projector result `sg_observable_correspondence`.
+This module discharges the §14 **observable-correspondence** obligation for **every finite-dimensional
+self-adjoint observable** on `Σ = ℂℙ^{N-1}`, at **general N** and for **every real eigenvalue
+vector** — the general lift of `LF4/SingleQubitKahler.lean`'s single-qubit projector result
+`sg_observable_correspondence`. It is built in two layers: first for observables **diagonal** in the
+reference basis, then for **arbitrary** self-adjoint observables via spectral **unitary transport**
+of the state.
 
 ## What §14 means, and what is discharged here
 
@@ -37,14 +40,20 @@ the Hilbert expectation. For a diagonal observable this is delivered here:
   `⟨ψ, diagonal(lam·) ψ⟩ = ∫ A_ontic dμ_FS`, with `A_ontic = ∑ₖ lam k · 𝟙_{Rₖ}` (`aOntic`) an
   explicit **measurable** `Σ`-function (`bornRegionN_measurableSet`), and the integral evaluated by
   finite additivity over the eigenvalue-weighted region indicators.
+* **`hermitian_observable_correspondence`** / **`_integral`** — the general (non-diagonal) case:
+  for any Hermitian `A = U·diag(λ)·Uᴴ` (spectral theorem, `U = eigenvectorUnitary`),
+  `⟨ψ, A ψ⟩ = ∑ₖ λₖ · vol(bornRegionN φ k) = ∫ aOntic φ λ dμ_FS`, where `φ = Uᴴ ψ` is the state
+  **transported** by the spectral unitary. The unitary covariance is nothing more than that state
+  transport (`hermitian_expectation_transport` + the isometry `transport_norm`).
 
 ## Scope (honest)
 
-**Diagonal observables only.** The reference-basis Born regions `bornRegionN ψ k` realise the
-**standard-basis** projectors `|e_k⟩⟨e_k|`; an observable whose eigenbasis is *not* the reference
-basis is not covered here (bridging an arbitrary eigenbasis needs a §13-style unitary-covariance
-step, tracked as the residual §14 obligation). The **genericity** hypothesis `hpos`
-(`∀ j, 0 < ‖⟨e_j, ψ⟩‖²`, no vanishing amplitude) is the same one carried by `fs_born_volume_ratio_N`
+**All finite-dimensional self-adjoint observables** are now covered. For the diagonal case the ontic
+regions realise the standard-basis projectors `|e_k⟩⟨e_k|`; the general case handles an arbitrary
+eigenbasis by transporting the *state* through the spectral unitary (`φ = Uᴴ ψ`), so the same Born
+regions of `φ` do the work — no separate §13 Σ-flow machinery is needed. The **genericity**
+hypothesis `hpos` (no vanishing amplitude of the relevant state — for the general case, `ψ` has
+nonzero overlap with every eigenvector of `A`) is the same one carried by `fs_born_volume_ratio_N`
 (it makes each barycentric region a homeomorphic image of the open simplex). This module builds
 axiom-free (foundational triple), carving-free, Gleason-free.
 
@@ -56,7 +65,7 @@ References: `LF4/MomentBornN.lean` (`fs_born_volume_ratio_N`, `fs_born_volume_ra
 
 @[expose] public section
 
-open MeasureTheory ProbabilityTheory Set Matrix Matrix.UnitaryGroup
+open MeasureTheory ProbabilityTheory Set Matrix Matrix.UnitaryGroup Unitary
 open scoped ENNReal LinearAlgebra.Projectivization
 
 namespace CSD
@@ -233,6 +242,92 @@ theorem observable_correspondence_diagonal_integral (p₀ : CPN (M + 1))
       = ((∫ p, aOntic ψ hψ0 lam p ∂(fubiniStudyMeasure p₀) : ℝ) : ℂ) := by
   rw [observable_correspondence_diagonal p₀ ψ hψ0 hψ hpos lam,
       integral_aOntic p₀ ψ hψ0 hψ hpos lam]
+
+
+/-! ### Non-diagonal (general self-adjoint) observables, via spectral unitary transport -/
+
+/-- `⟨ψ, toEuclideanLin M ψ⟩` as a matrix quadratic form. -/
+theorem inner_toEuclideanLin_eq_dotProduct (Mat : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ)
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) :
+    inner ℂ ψ (Matrix.toEuclideanLin Mat ψ)
+      = (Mat *ᵥ WithLp.ofLp ψ) ⬝ᵥ star (WithLp.ofLp ψ) := rfl
+
+/-- **The unitary adjoint move.** `(U *ᵥ w) ⬝ᵥ star v = w ⬝ᵥ star (star U *ᵥ v)`. -/
+theorem mulVec_dotProduct_star_conj (U : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ)
+    (w v : Fin (M + 1) → ℂ) :
+    (U *ᵥ w) ⬝ᵥ star v = w ⬝ᵥ star (star U *ᵥ v) := by
+  rw [dotProduct_comm, dotProduct_mulVec, dotProduct_comm]
+  congr 1
+  rw [Matrix.star_mulVec, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_conjTranspose]
+
+/-- **Expectation transport under the spectral unitary.** For a Hermitian `A`, its Hilbert
+expectation in `ψ` equals the *diagonal* expectation of its eigenvalues in the transported state
+`φ = Uᴴ ψ` (`U = eigenvectorUnitary`). -/
+theorem hermitian_expectation_transport (A : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ)
+    (hA : A.IsHermitian) (ψ : EuclideanSpace ℂ (Fin (M + 1))) :
+    inner ℂ ψ (Matrix.toEuclideanLin A ψ)
+      = inner ℂ (Matrix.toEuclideanLin (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ)
+          (Matrix.toEuclideanLin (Matrix.diagonal (fun k => (hA.eigenvalues k : ℂ)))
+            (Matrix.toEuclideanLin (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ)) := by
+  set U := (Matrix.IsHermitian.eigenvectorUnitary hA).val with hU
+  set D := Matrix.diagonal (fun k => (hA.eigenvalues k : ℂ)) with hD
+  set v := WithLp.ofLp ψ with hv
+  rw [inner_toEuclideanLin_eq_dotProduct, inner_toEuclideanLin_eq_dotProduct]
+  have hspec : A = U * D * star U := by
+    have := hA.spectral_theorem
+    rw [conjStarAlgAut_apply] at this
+    exact this
+  rw [hspec]
+  have hofLp : WithLp.ofLp (Matrix.toEuclideanLin (star U) ψ) = star U *ᵥ v := rfl
+  rw [hofLp]
+  rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, mulVec_dotProduct_star_conj U]
+
+/-- The spectral-unitary transport preserves the norm: `‖Uᴴ ψ‖ = ‖ψ‖`. -/
+theorem transport_norm (A : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hA : A.IsHermitian)
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1) :
+    ‖Matrix.toEuclideanLin (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ‖ = 1 := by
+  have hkey := Projectivization.inner_toEuclideanLin_unitary
+    (star (Matrix.IsHermitian.eigenvectorUnitary hA)) ψ ψ
+  rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K, hψ] at hkey
+  have hsq : ‖Matrix.toEuclideanLin (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ‖ ^ 2
+      = (1 : ℝ) ^ 2 := by exact_mod_cast hkey
+  nlinarith [norm_nonneg (Matrix.toEuclideanLin
+    (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ)]
+
+/-- **§14 observable correspondence for a general (self-adjoint) observable, general N.** For a
+Hermitian matrix `A`, the Hilbert expectation `⟨ψ, A ψ⟩` equals the eigenvalue-weighted sum of the
+Fubini–Study volumes of the ontic Born regions of the **transported** state `φ = Uᴴ ψ`
+(`U = eigenvectorUnitary`): `⟨ψ, A ψ⟩ = ∑ₖ (eigenvalues k) · vol(bornRegionN φ k)`. The unitary
+covariance is exactly the state transport `ψ ↦ Uᴴ ψ`; the genericity `hpos` is on `φ` (i.e. `ψ`
+has nonzero overlap with every eigenvector of `A`). Foundational triple. -/
+theorem hermitian_observable_correspondence (p₀ : CPN (M + 1))
+    (A : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hA : A.IsHermitian)
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    (φ : EuclideanSpace ℂ (Fin (M + 1)))
+    (hφ : φ = Matrix.toEuclideanLin (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ)
+    (hφ0 : φ ≠ 0)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) φ‖ ^ 2) :
+    inner ℂ ψ (Matrix.toEuclideanLin A ψ)
+      = ((∑ k, hA.eigenvalues k
+          * (fubiniStudyMeasure p₀ (bornRegionN φ hφ0 k)).toReal : ℝ) : ℂ) := by
+  have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact transport_norm A hA ψ hψ
+  rw [hermitian_expectation_transport A hA ψ, ← hφ,
+      observable_correspondence_diagonal p₀ φ hφ0 hφnorm hpos hA.eigenvalues]
+
+/-- **§14, general self-adjoint observable, integral form.** `⟨ψ, A ψ⟩ = ∫ A_ontic dμ_FS`, with
+`A_ontic = aOntic φ (eigenvalues)` the ontic observable of the transported state `φ = Uᴴ ψ`. -/
+theorem hermitian_observable_correspondence_integral (p₀ : CPN (M + 1))
+    (A : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hA : A.IsHermitian)
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    (φ : EuclideanSpace ℂ (Fin (M + 1)))
+    (hφ : φ = Matrix.toEuclideanLin (star (Matrix.IsHermitian.eigenvectorUnitary hA).val) ψ)
+    (hφ0 : φ ≠ 0)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) φ‖ ^ 2) :
+    inner ℂ ψ (Matrix.toEuclideanLin A ψ)
+      = ((∫ p, aOntic φ hφ0 hA.eigenvalues p ∂(fubiniStudyMeasure p₀) : ℝ) : ℂ) := by
+  have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact transport_norm A hA ψ hψ
+  rw [hermitian_observable_correspondence p₀ A hA ψ hψ φ hφ hφ0 hpos,
+      ← integral_aOntic p₀ φ hφ0 hφnorm hpos hA.eigenvalues]
 
 end LF4
 end CSD

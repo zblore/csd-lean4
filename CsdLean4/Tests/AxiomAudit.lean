@@ -3838,6 +3838,16 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.observable_correspondence_diagonal_integral
 
+-- LF4 §14 GENERAL (non-diagonal) self-adjoint observable (2026-07-22): via spectral unitary transport
+-- of the state (φ = Uᴴψ), ⟨ψ,Aψ⟩ = ∑ₖ λₖ·vol(bornRegionN φ k) = ∫ aOntic φ λ dμ. Foundational triple.
+/-- info: 'CSD.LF4.hermitian_observable_correspondence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hermitian_observable_correspondence
+
+/-- info: 'CSD.LF4.hermitian_observable_correspondence_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hermitian_observable_correspondence_integral
+
 -- The non-vacuous LF3-chain Stern-Gerlach capstone (N = 2 analog of
 -- ofKählerPreparation_singlet_frequency_convergence). Foundational triple only.
 /-- info: 'CSD.LF4.sg_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
