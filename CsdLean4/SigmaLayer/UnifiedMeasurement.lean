@@ -40,6 +40,13 @@ AND the Fubini-Study/Born content — removing the forward-vs-measurement model 
 FREQUENCIES are the base-space statement `vnDeisolationModel_born_frequency` (the readout factors through
 `π`, so its i.i.d. law lives on the base `ℂℙ^{M}`). Follow-on residue (see `specs/future-work.md`
 SL-T5): physical record persistence, nonzero post-outcome preparation, the conditional→Lüders link.
+
+**Consistency witness, not derivation (scope discipline).** This is ONE concrete model with `μL = μFS ⊗ vol`
+and `Φ_t = (e^{-itH}·[p], θ)` built in; the capstone is a *compatibility statement about the witness*, not a
+derivation of the projective geometry / FS measure / unitary evolution from a primitive ontology. Two
+frontiers sit outside it: **SO-1** (the sector origin) and **MD-1** (the Paper C A7 mismatch — the readout
+cells `bornRegion ψ'` are preparation-indexed, not the context-fixed `Ωᵢ(M)` of A7, so `readout_ae_total`
+is a preparation-indexed operational witness). See `specs/reconstruction-status.md` §7.
 -/
 
 @[expose] public section

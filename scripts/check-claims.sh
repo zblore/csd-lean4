@@ -68,6 +68,26 @@ FORBIDDEN_PHRASES=(
 # as text. (connectivity-manifest.md legitimately QUOTES them in its ❌ list, so
 # it is deliberately NOT scanned here; check-connectivity covers README/INDEX.)
 FORWARD_DOCS=("README.md" "specs/reconstruction-status.md")
+
+# The A5-mislabel aliases. Paper C's Axiom A5 is the *quantum-effective /
+# projectability* condition on Hamiltonians (H = h∘π + δH, sup‖d(δH)|_V‖ ≤ ε), which
+# SELECTS the sector — it is NOT the sector-origin question. The sector-origin gap
+# (the origin of (Σ,π,μL)) is SO-1. These aliases wrongly attach "A5" to the origin
+# and MUST NOT reappear in the forward-claim doc surface. (SO-1 was formerly, and
+# also wrongly, tracked as "SL-1".)
+FORBIDDEN_ALIASES=(
+  "A5 / SL-1"
+  "A5/SL-1"
+  "A5 sector origin"
+  "A5→D1"
+  "A5 → D1"
+)
+# Cleaned forward-claim docs (all swept in the 2026-07-23 honest-alignment closeout).
+# Unlike FORWARD_DOCS above, these do NOT quote the old overclaims, so they can be
+# scanned for the new aliases without false positives.
+ALIAS_DOCS=("README.md" "AXIOMS.md" "CLAUDE.md" "specs/reconstruction-status.md" \
+            "specs/connectivity-manifest.md" "specs/INDEX.md" "specs/BACKLOG.md" \
+            "specs/future-work.md")
 # ------------------------------------------------------------------------------
 
 fail=0
@@ -159,6 +179,19 @@ for doc in "${FORWARD_DOCS[@]}"; do
   done
 done
 [ "$fail" -eq 0 ] && say_ok "no forbidden A5-overclaim phrases in forward-claim docs" || true
+
+# (5b) A5-mislabel aliases in the swept forward-claim docs
+alias_fail=0
+for doc in "${ALIAS_DOCS[@]}"; do
+  [ -f "$doc" ] || { say_fail "alias-scan doc missing: $doc"; alias_fail=1; continue; }
+  for alias in "${FORBIDDEN_ALIASES[@]}"; do
+    if grep -Fq "$alias" "$doc"; then
+      say_fail "A5-mislabel alias in $doc: \"$alias\" (use SO-1 for the sector-origin gap; A5 = projectability)"
+      alias_fail=1
+    fi
+  done
+done
+[ "$alias_fail" -eq 0 ] && say_ok "no A5-mislabel aliases in the swept forward-claim docs (A5≠SO-1 kept distinct)" || true
 
 echo
 if [ "$fail" -eq 0 ]; then echo "check-claims: PASS"; exit 0

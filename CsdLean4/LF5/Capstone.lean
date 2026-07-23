@@ -120,7 +120,7 @@ Neumann coupling `e` and every unit preparation `ψ` (no genericity):
    `{(n, i) : n}` of the dilated Born-region volumes at the post-flow state —
    equals the Born weight `‖⟨eᵢ, ψ⟩‖²` (`vnDilation_pointer_volume`);
 5. the empirical capstone: i.i.d. FS-typical trials on the dilated
-   `ℂℙ^{N·N−1}` (the A5 typicality posit over the isolated DOF) have, almost
+   `ℂℙ^{N·N−1}` (the sector-typicality posit (SO-1) over the isolated DOF) have, almost
    surely, every pointer-block frequency converging to the Born weight
    (`vnDilation_pointer_frequency`).
 

@@ -88,6 +88,7 @@ public import CsdLean4.LF2.Preparation
 public import CsdLean4.LF2.Interface
 public import CsdLean4.LF2.POVM
 public import CsdLean4.LF2.EffectAux
+public import CsdLean4.LF2.QuantumChannel
 public import CsdLean4.LF3.Setup
 public import CsdLean4.LF3.Hamiltonian
 public import CsdLean4.LF3.SectorSeparation
@@ -327,6 +328,11 @@ public import CsdLean4.SigmaLayer.TensorSector
 public import CsdLean4.SigmaLayer.Luders
 public import CsdLean4.SigmaLayer.ConditionalUpdate
 public import CsdLean4.SigmaLayer.MixedState
+public import CsdLean4.SigmaLayer.MixedEnsemble
+public import CsdLean4.SigmaLayer.MixedOntic
+public import CsdLean4.SigmaLayer.MixedFrequency
+public import CsdLean4.SigmaLayer.Symmetrization
+public import CsdLean4.SigmaLayer.FiniteQMClosure
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

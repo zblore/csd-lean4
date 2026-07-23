@@ -27,7 +27,7 @@ reduces from "posit `⊗`" to the weaker "posit that both subsystems carry full 
 that act and commute", from which the tensor structure (and the dimension `NA · NB`) is forced.
 
 This does NOT derive WHY composition should be `⊗` from first principles (that would need a locality/
-completeness reconstruction of the composite ontic space — the residual P3 / SL-1 direction); it shows
+completeness reconstruction of the composite ontic space — the residual P3 / SO-1 direction); it shows
 the `⊗` is not free structure OVER the local algebras.
 
 References: `specs/future-work.md` (P3 / SL-T3); `SigmaLayer/TensorSector.lean` (`aliceOp`, `bobOp`,

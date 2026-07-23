@@ -51,7 +51,7 @@ The initial system state is taken positive-definite (so `ρ_S ⊗ τ_B` is; a
 maximally-mixed bit qualifies). This is the standard finite-dimensional
 Reeb–Wolf setting: a genuine bound, not the asymptotic/reversible idealisation.
 As across the thermo track it is a QM-stat-mech theorem with a CSD reading;
-the deterministic-microdynamics interpretation rests on the shared A5/D1 residue.
+the deterministic-microdynamics interpretation rests on the shared SO-1/D1 residue.
 
 ## Provenance
 

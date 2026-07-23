@@ -24,6 +24,12 @@ existing `manyToOneSetup_baseVolume_eq_fubiniStudy` (which reuses `Measure.fst_p
 
 We do NOT install the Fubini-Study equality as a typeclass instance for every projective sector; it is a
 named field / predicate, proved only where a concrete model supplies it.
+
+**Consistency witness, not derivation.** On the concrete product model the Liouville measure is
+`muL = muFS ⊗ vol` — the Fubini-Study measure is built IN — so `pi_* muL = muFS` is a *compatibility fact
+about the witness* (`Measure.fst_prod` on a product whose first factor already IS `muFS`), NOT a derivation
+of the Fubini-Study measure from a more primitive ontology. Deriving `muFS` (and the sector) from a
+primitive dynamics is the open sector-origin problem SO-1 (`specs/reconstruction-status.md` §7).
 -/
 
 @[expose] public section

@@ -40,7 +40,7 @@ sector's own measure), not a coincidentally-equal external measure. It does NOT
 yet derive the Born trials from the deterministic flow `d.flow`, nor the Born
 weights from the dynamics — the trials `X` remain an i.i.d. sampling posit
 (`hlaw`, `hindep`). Deriving the outcome region / weights FROM the flow is fix C6
-= the A5/D1 sector-origin problem (`future-work.md` SL-1), untouched here. So:
+= the SO-1 sector-origin problem (`future-work.md` SO-1; distinct from Paper C Axiom A5), untouched here. So:
 one object underlies both pillars (L6 CONNECTED), but the Born side still samples
 the measure rather than evolving it (L7 open).
 

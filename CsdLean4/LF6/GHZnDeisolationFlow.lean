@@ -98,7 +98,7 @@ general `n ≥ 3`; the essentially-4-party case is additionally witnessed at `n 
   `n ≥ 3`, DERIVED here as `ghzN_mermin_correlations` — deliverable 5, general `n`;
   at `n = 3` this agrees with `Empirical.GHZ.ghz_expectation_*`).
 - **Residue: A5.** The GHZ_n entangled sector / preparation region is posited, not
-  derived (A5 reduces to D1); the typicality law on `Σ'` is the Fubini-Study
+  derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
   measure (A5).
 
 ## Residual (named, honestly)
@@ -275,7 +275,7 @@ theorem ghzNDeisolation_pointer_volume (n : ℕ) (hn : 0 < n) {M : ℕ}
   exact ghzN_born n i
 
 /-- **The empirical capstone.** For i.i.d. Fubini-Study-typical trials on the
-dilated `Σ' = ℂℙ^{2^n·2^n − 1}` (the A5 typicality posit on the enlarged entangled
+dilated `Σ' = ℂℙ^{2^n·2^n − 1}` (the sector-typicality posit (SO-1) on the enlarged entangled
 sector), almost surely every pointer-block `i` empirical frequency converges to the
 GHZ_n Born weight `ghzNWeight n i`. Instantiates LF5 `vnDilation_pointer_frequency`
 at `N = 2^n`, `φ = ghzN n`, landing the limit on `ghzNWeight` via `ghzN_born`. -/

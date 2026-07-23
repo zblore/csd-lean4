@@ -3073,7 +3073,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- volume is an OUTCOME of Σ = ℂℙ^{N-1} and its symmetry, not posited: fubiniStudyMeasure IS the forced
 -- volume, the unitaryFlowSetup sector volume IS it, and the many-to-one instance's ray-space volume
 -- π_*(kMuL) IS it (kMuL = forced-FS ⊗ Haar). IsKahlerSector (the 2-form) stays Mathlib-blocked (KG-1);
--- FORWARD (takes G=U(N) as given, does not derive it — SL-1 untouched).
+-- FORWARD (takes G=U(N) as given, does not derive it — SO-1 untouched).
 /-- info: 'CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume
@@ -3110,7 +3110,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- Schrödinger dynamics (A) and Born frequencies (B).
 -- rotationSetup_both_pillars is the structural "one posited object underlies
 -- both pillars" theorem. Honest gap: the Born trials still SAMPLE the measure
--- rather than being evolved by the flow (= C6/L7, the A5/D1 frontier).
+-- rather than being evolved by the flow (= C6/L7, the SO-1/D1 frontier).
 /-- info: 'CSD.LF4.unitaryFlowSetup_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup_born_frequency
@@ -3125,7 +3125,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- manyToOneSetup_pi_not_injective) AND a non-trivial projected ray flow. The
 -- Born pillar scores the FIBRED region π⁻¹'(bornRegion), whose kMuL-volume = the
 -- base Born weight because the fibre volume is normalized (Prod.fst_* kMuL = μFS).
--- Same honest gap as C4: trials sample kMuL, not evolved by the flow (L7/SL-1).
+-- Same honest gap as C4: trials sample kMuL, not evolved by the flow (L7/SO-1).
 /-- info: 'CSD.LF4.manyToOneSetup_pi_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSetup_pi_not_injective
@@ -3142,7 +3142,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- by π = pr₁ onto the ray space, at general N with ARBITRARY Hermitian H. manyToOneSetup driven by
 -- U t = exp(-itH) (schrodingerUnitary): (A) Schrödinger π(Φ_t x)=exp(-itH)•π x holds by rfl at general N
 -- (no N=2 σ_y, no Wigner selection — the flow is unitary by construction), (B) Born via the already
--- general-N manyToOneSetup_born_frequency. FORWARD delivery (consumes the sector); SL-1 untouched.
+-- general-N manyToOneSetup_born_frequency. FORWARD delivery (consumes the sector); SO-1 untouched.
 /-- info: 'CSD.LF4.manyToOneSchrodingerSetup_schrodinger_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSchrodingerSetup_schrodinger_form
@@ -3772,7 +3772,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- EVOLVED by the sector's own deterministic flow Φ_t = (unitaryFlowSetup …).flow t, converging to
 -- the Born weights. The flow's Liouville-preservation (flow_preserves_volume = U(N)-invariance of
 -- μ_FS) pins the evolved law back to μ_FS — the substrate flow is now consumed on the Born side.
--- Still foundational-triple; weights-from-flow (SL-1) untouched.
+-- Still foundational-triple; weights-from-flow (SO-1) untouched.
 /-- info: 'CSD.LF4.unitaryFlowSetup_born_frequency_evolved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup_born_frequency_evolved

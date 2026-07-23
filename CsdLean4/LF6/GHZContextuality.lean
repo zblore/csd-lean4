@@ -81,7 +81,7 @@ reached at one point, not through an inequality.
   joint `<XXX>` does not factor (`ghz_engine_joint_nonfactorises`).
 - **Residue: A5.** This realises the GHZ correlations MODULO **A5**: the GHZ
   entangled sector / preparation region is posited, not derived from deterministic
-  dynamics (A5 reduces to D1). Same posture as the singlet (A.1).
+  dynamics (SO-1: the sector origin, distinct from Paper C Axiom A5). Same posture as the singlet (A.1).
 - **Scope: C.1 only.** THIS file is the forced-contextuality crux. The full GHZ
   de-isolation FLOW on the dilated three-qubit space (a deterministic
   FS-measure-preserving `Phi != id` whose pointer-block volumes are the GHZ Born

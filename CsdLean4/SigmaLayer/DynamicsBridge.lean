@@ -22,6 +22,13 @@ inhabited for this concrete model, reusing `manyToOneSchrodingerSetup_schrodinge
 
 Unitarity of the projected flow is NOT a field of `ProjectiveSector`; it is the separate target
 `HasUnitaryRealisation` / `HasHamiltonianRealisation`, proved only where a concrete model supplies it.
+
+**Consistency witness, not derivation.** The concrete model's isolated flow is `Φ_t = (e^{-itH}·[p], θ)` —
+unitary Schrödinger evolution is built IN — so "the projected flow is `exp(-itH)`" is a *compatibility fact
+about the witness*, NOT a derivation of unitary dynamics from a fibre-primitive Hamiltonian vector field
+(Paper C A2/A5, the quantum-effective projectability). The W-series (`LF4/PhaseLift.lean`) derives the
+`exp(-itH)` form from the sector interface + regularity data as a separate, forward result; here it is
+exhibited on the witness. The sector's own origin remains SO-1 (`specs/reconstruction-status.md` §7).
 -/
 
 @[expose] public section

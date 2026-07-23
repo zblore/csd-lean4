@@ -58,7 +58,7 @@ support; the pure-state corollary is stated under it. This is the
 H-theorem for a SPECIFIC coarse-graining (the pointer-basis pinch), not a
 universal second law, and it is a statement about the coarse-graining map,
 not a proof that a given state thermalises dynamically (that needs
-mixing / ETH; the CSD-microdynamics reading rests on the shared A5/D1
+mixing / ETH; the CSD-microdynamics reading rests on the shared SO-1/D1
 residue, as across the thermo track).
 
 ## Provenance

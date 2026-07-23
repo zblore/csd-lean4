@@ -20,9 +20,22 @@ The capstone bundle. Every earlier module proves ONE reconstructed fact on the s
 model `productDynamics H hH p₀` (isolated Hamiltonian flow `exp(-itH)` on `Σ = ℂℙ^M × T²`, Liouville
 measure `μL = μFS ⊗ vol`, projection `π = Prod.fst`). This module collects the ones that are GENUINELY
 PROVED on that model into a single record `FiniteQMClosure`, discharged by `unifiedFiniteQMClosure`, and —
-crucially — states honestly, tier by tier, what is a theorem here, what is a Choice-A posit, what is a
-textbook-QM adapter, and what is still open. No field is `sorry`; the structure carries only real theorems,
-and the non-theorem tiers live in this docstring, not in fabricated fields.
+crucially — states honestly, tier by tier, what is a theorem here, what is a projective-sector posit, what
+is a textbook-QM adapter, and what is still open. No field is `sorry`; the structure carries only real
+theorems, and the non-theorem tiers live in this docstring, not in fabricated fields.
+
+**This is a concrete consistency witness, not a derivation of the Paper C architecture.** The model
+`productDynamics H hH p₀` has `μL = μFS ⊗ vol` and `Φ_t = (e^{-itH}·[p], θ)` built IN, so the
+pushforward-to-`μFS` (`fubini_study_bridge`) and the Schrödinger projection (`schrodinger_projection`) are
+*compatibility facts about the witness* — NOT derivations of projective geometry, the Fubini–Study measure,
+or unitary evolution from a more primitive ontic model. The precise claim `unifiedFiniteQMClosure` earns is:
+**operational finite-QM closure holds on a concrete projective product witness satisfying the exact
+formalised subset of the Paper C assumptions** (`specs/reconstruction-status.md` §2, the A1–A7 map). It does
+NOT claim the witness derives that architecture. The two genuinely open frontiers sit OUTSIDE this closure:
+**SO-1** (the sector-origin problem — the origin of `(Σ, π, μL)`; the trials SAMPLE `μL`) and **MD-1** (the
+Paper C A7 mismatch — the measurement cells `bornRegion ψ'` are preparation-indexed, not the context-fixed
+`Ωᵢ(M)` of A7; the readout here is an honest preparation-indexed operational witness). See
+`specs/BACKLOG.md` (SO-1, MD-1).
 
 ## Tier 1 — PROVED on the unified model (the fields of `FiniteQMClosure`)
 
@@ -71,15 +84,19 @@ exception recorded separately:
 Hilbert-space QM statements (density operators, Lüders channel, Born rule). They translate; they do not add
 reconstruction content.
 
-## Tier 4 — OPEN
+## Open residue (outside the closure)
 
-* mixed-state / ensemble representation (#8): fully closed — the statistical side (#8 A+B,
-  `SigmaLayer/MixedEnsemble.lean`), the ontic-side WEIGHT-level representation (`mixed_born` /
-  `mixed_ontic_born_weight`), AND the a.s. FREQUENCY LLN (`mixed_born_frequency` /
-  `unified_mixed_born_frequency`, `SigmaLayer/MixedFrequency.lean`: the two-stage mixture process redrawing the
-  spectral component each shot). Mixed-state Born now holds as both weights and certified frequencies;
-* the ECDLP circuit track's capstone `denote = divstepRev` + termination (`ECDLP/SafegcdDivstepCircuit.lean`)
-  — independent of this QM closure, tracked separately.
+The mixed-state / ensemble representation (#8) that was once "Tier 4 open" is now **fully closed** and lives
+in the closure as fields: the statistical side (#8 A+B, `SigmaLayer/MixedEnsemble.lean`), the ontic-side
+WEIGHT-level representation (`mixed_born` / `mixed_ontic_born_weight`), AND the a.s. FREQUENCY LLN
+(`mixed_born_frequency` / `unified_mixed_born_frequency`, `SigmaLayer/MixedFrequency.lean`). So the closure's
+QM content is complete on the witness. What remains open is NOT a QM item but the two architecture frontiers
+already named above:
+
+* **SO-1** — the sector-origin problem: derive `(Σ, π, μL)` + FS typicality from a primitive ontology
+  (`specs/BACKLOG.md`, `SigmaLayer/SectorPostulateNoGo.lean` proves the single-flow no-go);
+* **MD-1** — the Paper C A7 measurement-partition mismatch: the outcome cells `bornRegion ψ'` are
+  preparation-indexed, not the context-fixed `Ωᵢ(M)` of A7 (`specs/BACKLOG.md`).
 
 ## References
 
@@ -105,7 +122,7 @@ variable {N M : ℕ} [NeZero N] (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH
 
 /-- **The tiered finite-dimensional QM closure (Tier 1).** A record of exactly the reconstructed QM facts
 that are GENUINELY PROVED on the single ontic model `productDynamics H hH p₀` (measurement reference state
-`ψ'`, Born state `ψ`). Every field is a theorem discharged by `unifiedFiniteQMClosure`; the Choice-A posit,
+`ψ'`, Born state `ψ`). Every field is a theorem discharged by `unifiedFiniteQMClosure`; the projective-sector posit,
 QM adapters, and open residue are documented in the module header, not encoded as fields. -/
 structure FiniteQMClosure : Prop where
   /-- The isolated Hamiltonian flow preserves the Liouville measure. -/
@@ -190,8 +207,8 @@ structure FiniteQMClosure : Prop where
 /-- **The finite-dimensional QM closure holds on the unified model.** Every tier-1 field is discharged by
 its source lemma on the single ontic model `productDynamics H hH p₀`. Requires only the normalisations of
 the measurement reference state `ψ'` and the Born state `ψ` — the whole reconstruction (dynamics,
-measurement, records, Born frequency, conditioning=Lüders) is a theorem on one model, with the Choice-A
-posit and open residue as documented (module header), not as hidden gaps. -/
+measurement, records, Born frequency, conditioning=Lüders) is a theorem on one model, with the
+projective-sector posit and open residue (SO-1, MD-1) as documented (module header), not as hidden gaps. -/
 theorem unifiedFiniteQMClosure (hψ' : ‖ψ'‖ = 1) (hψ : ‖ψ‖ = 1) :
     FiniteQMClosure H hH p₀ e ψ' hψ'0 ψ hψ0 := by
   obtain ⟨h1, h2, h3, h4, h5, h6⟩ := unified_projectiveSector_capstone H hH p₀ e ψ' hψ'0 hψ'

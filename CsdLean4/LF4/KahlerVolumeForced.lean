@@ -57,8 +57,8 @@ ratio) consumes; the differential-geometric 2-form packaging is the part that st
 This discharges the **formalisable core** of `IsLiouvilleKahlerVolume` (volume forced by symmetry),
 not the full differential-geometric `IsKahlerSector` (the 2-form), which remains Mathlib-blocked. And
 it is FORWARD: it characterises the *posited* sector volume intrinsically; it does NOT derive the
-`U(N)`-symmetry itself from the deterministic dynamics (that reverse — deriving `G` — is SL-1,
-untouched). "The volume is forced by the symmetry" still takes the symmetry `G = U(N)` as given.
+`U(N)`-symmetry itself from the deterministic dynamics (that reverse — deriving `G` — is SO-1,
+the sector-origin problem, untouched). "The volume is forced by the symmetry" still takes the symmetry `G = U(N)` as given.
 -/
 
 @[expose] public section

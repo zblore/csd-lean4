@@ -57,7 +57,7 @@ on the projected trials `π ∘ X`.
 This removes the `π = id` degeneracy flagged in the Paper-C cross-check
 (`connectivity-manifest.md`, the A3 caveat): one `KahlerOnticSetup` object now
 carries BOTH a genuine many-to-one `π` AND a non-trivial projected ray flow,
-with both pillars proved on it. It does **NOT** close the deep gap (L7 / SL-1):
+with both pillars proved on it. It does **NOT** close the deep gap (L7 / SO-1):
 the Born trials still SAMPLE `kMuL` i.i.d.; they are not evolved by the flow, and
 the weights are not derived from the dynamics. The fibre flow here is trivial
 (the flow moves only the base ray), so this is not the de-isolation / Hamiltonian
@@ -237,7 +237,7 @@ whose projected flow is a non-trivial ray rotation
 Both about the *same* object, whose projection is genuinely many-to-one — the
 `π = id` degeneracy of `rotationSetup_both_pillars` removed (the Paper-C A3
 caveat). Standing gap unchanged: the Born trials still sample `kMuL` rather than
-being evolved by the flow (L7 / SL-1). -/
+being evolved by the flow (L7 / SO-1). -/
 theorem manyToOneRotationSetup_both_pillars (p₀ : CPN 2)
     (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
@@ -327,7 +327,7 @@ For the single general-`N` Kähler ontic instance `manyToOneSchrodingerSetup H h
 Both about the SAME Kähler ontic object, mapped by the genuine many-to-one `π` onto the ray space —
 the full forward delivery of ordinary QM's two pillars from the Kähler sector, at general `N` with
 arbitrary unitary dynamics. This is the FORWARD direction (it CONSUMES the posited sector `(π, G, μ_FS)`);
-it does not derive the sector from the dynamics (L7 / SL-1, untouched — the Born trials sample `kMuL`
+it does not derive the sector from the dynamics (L7 / SO-1, untouched — the Born trials sample `kMuL`
 rather than being evolved by the flow). -/
 theorem manyToOneSchrodingerSetup_both_pillars {M : ℕ}
     (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1))

@@ -47,8 +47,8 @@ where the descent of `Φ` along a many-to-one `π` is a real quotient step, not 
 The `TransProbPreserving f_Φ` of Part 1 holds because `f_Φ = id`, NOT because `Φ` is
 measure-preserving: there is deliberately **no** `measure-preserving Φ ⟹ TransProbPreserving f_Φ`
 step, since measure-preservation is strictly weaker than metric (transition-probability)
-preservation — that false implication is the §13.2 trap and the open **D1/SL-1** gap
-(`specs/LF4-todo.md`). SL-3 makes the chain explicit on this instance without touching A5:
+preservation — that false implication is the §13.2 trap and the open **D1/SO-1** gap
+(`specs/LF4-todo.md`). SL-3 makes the chain explicit on this instance without touching the sector origin (SO-1):
 the ray flow is trivial here, and the genuine isometry content (Part 2) rides on the posited
 `U(N)` sector action, not on the flow.
 -/

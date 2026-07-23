@@ -80,7 +80,7 @@ computed maximally-entangled Born weights `medWeight`.
   form), with `d = 3` (`cglmp 3 pQM = (12+8√3)/9`) the concrete qutrit anchor. The
   general-`d` CGLMP result is now closed.
 - **Residue: A5.** The entangled sector / preparation region is posited, not
-  derived (A5 reduces to D1); the typicality law on `Σ'` is the Fubini-Study
+  derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
   measure (A5).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine is
@@ -476,7 +476,7 @@ theorem maxEntangledDeisolation_pointer_volume (d : ℕ) [NeZero d] {M : ℕ}
 /-! ### Deliverable 3: a.s. pointer-block frequencies → Born weight -/
 
 /-- **The empirical capstone.** For i.i.d. Fubini-Study-typical trials on the
-dilated `Σ' = ℂℙ^{d²·d²−1}` (the A5 typicality posit on the enlarged entangled
+dilated `Σ' = ℂℙ^{d²·d²−1}` (the sector-typicality posit (SO-1) on the enlarged entangled
 sector), almost surely every pointer-block `w` empirical frequency converges to
 the Born weight `medWeight d w`. Instantiates LF5 `vnDilation_pointer_frequency` at
 `N = d*d`, `φ = nudgedMaxEntangled d`, landing the limit on `medWeight` via

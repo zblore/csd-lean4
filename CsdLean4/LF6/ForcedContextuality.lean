@@ -59,7 +59,7 @@ posited; it lives in the `Σ`-volume engine's reading of the entangled state.
   `engine_marginal_factorises`) even though the joint does not.
 - **(f) Residue: A5.** This realises the singlet correlations MODULO **A5** — the
   entangled sector / the singlet's preparation region `Ω₀` is *posited*, not
-  derived from deterministic dynamics (A5 reduces to D1). The forced-contextuality
+  derived from deterministic dynamics (SO-1: the sector origin, distinct from Paper C Axiom A5). The forced-contextuality
   no-go is unconditional Bell content; the *engine reading* of the singlet rests
   on the posited entangled sector.
 - **(g) Scope: LF6-A.1 only.** THIS file is the conceptual crux (LF6-A.1). The

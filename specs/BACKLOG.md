@@ -43,7 +43,8 @@
 
 | Item | Note | Source |
 |---|---|---|
-| **A5 sector origin** (derive `(Σ, π, G)` from primitive ontology) | The one genuine ★ open frontier. `flow_admits_invariant_ne_fubiniStudy` proves a single flow can't do it. | `reconstruction-status.md §7` |
+| **SO-1 — sector origin** (derive `(Σ, π, μL)` from primitive ontology) | The one genuine ★ open frontier. `flow_admits_invariant_ne_fubiniStudy` proves a single flow can't do it. **Distinct from Paper C Axiom A5** (the projectability / quantum-effective condition that *selects* the sector; A5 does not concern the sector's origin — Paper C §3.6 leaves that "for later work"). | `reconstruction-status.md §7` |
+| **MD-1 — measurement-partition mismatch (A7)** | Paper C A7 makes outcome regions context-fixed, `Ωᵢ = Ωᵢ(M)`, with `μ_FS`-null boundaries. The present `vnPointerOutcome` uses `bornRegion ψ'`, so cell *shapes* are preparation-indexed, not context-fixed apparatus basins. **Endpoint:** separate preparation laws from context-fixed outcome partitions, then derive the outcome probabilities by integrating the preparation law over those fixed regions. A later Paper D strengthening would additionally prove the interaction generates stable pointer basins and persistent apparatus memory. (Recorded, not redesigned — the present object is an honest preparation-indexed operational witness.) | `reconstruction-status.md §7` |
 | **Track B — quantum relaxation** (Valentini H-theorem) | The only route to *new predictions* past the "empirically identical" ceiling. | `project` note |
 | **CV chain** — continuous spectra | Extend Born-as-volume past finite `ℂℙⁿ`. Foundations begun (`CsdLean4/CV/`). | `project` note |
 

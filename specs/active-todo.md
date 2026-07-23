@@ -95,7 +95,7 @@ The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one
   (not a flow); the residual A5 primitive is G=U(N) ITSELF, reducing to D1 (deriving the U(N)-symmetry of
   the ontic dynamics from the substrate — the deepest open content). Nothing claimed about deriving G.
 Follow-up #32: strengthen (B) to a continuum of invariant measures via the moment-fibre conserved
-quantities (`momentMap ∘ obsFlow = momentMap`). The genuine A5/D1 frontier beyond: the entangled
+quantities (`momentMap ∘ obsFlow = momentMap`). The genuine SO-1/D1 frontier beyond: the entangled
 de-isolation tier (Bell-forced non-locality), where G could begin to be derived rather than posited.
 
 (superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`

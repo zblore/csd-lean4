@@ -43,7 +43,7 @@ as the parameter `T = 1/β`. Equality `F(ρ) = F(ρ_β)` iff `ρ = ρ_β` (the s
 Klein case) is not separately extracted here — only the inequality. As with the
 rest of the thermo track this is a QM-statistical-mechanics theorem with a CSD
 reading; the deterministic-microdynamics interpretation rests on the shared
-A5/D1 residue. Requires `[Nonempty n]` (a Gibbs state needs at least one level;
+SO-1/D1 residue. Requires `[Nonempty n]` (a Gibbs state needs at least one level;
 otherwise `Z = 0`).
 
 ## Provenance

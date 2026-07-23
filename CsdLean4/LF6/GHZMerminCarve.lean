@@ -100,7 +100,7 @@ theorem tying the dynamical carve to C.1, not a juxtaposition.
   eigen-equation for `sigmaDotTriple` is the tensor of the three local
   eigen-equations (definitional, not separately proved).
 - **Residue: A5.** The GHZ entangled sector / preparation region is posited, not
-  derived (A5 reduces to D1); the typicality law on `Σ'` is the Fubini-Study
+  derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
   measure (A5).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine

@@ -87,7 +87,7 @@ claim the diagonal carve is the contextual one.
   to C.1 (the three-party analogue of A.2's contextual block-correlation), and
   the local product flow `V = V_0 ⊗ V_1 ⊗ V_2` (A.3's analogue).
 - **Residue: A5.** The GHZ entangled sector / preparation region is posited, not
-  derived (A5 reduces to D1); the typicality law on `Σ'` is the Fubini-Study
+  derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
   measure (A5).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine
@@ -240,7 +240,7 @@ theorem ghzDeisolation_pointer_volume {M : ℕ}
 /-! ### Deliverable 3: a.s. pointer-block frequencies → GHZ Born weight -/
 
 /-- **The empirical capstone.** For i.i.d. Fubini-Study-typical trials on the
-dilated `Σ' = ℂℙ^{63}` (the A5 typicality posit on the enlarged entangled
+dilated `Σ' = ℂℙ^{63}` (the sector-typicality posit (SO-1) on the enlarged entangled
 sector), almost surely every pointer-block `w` empirical frequency converges to
 the GHZ Born weight `ghzWeight w`. Instantiates LF5
 `vnDilation_pointer_frequency` at `N = 8`, `φ = nudgedGHZ`, and lands the limit on

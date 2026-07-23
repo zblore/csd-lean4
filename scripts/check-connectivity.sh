@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # check-connectivity.sh
 #
-# Guard against SECTOR-ORIGIN (A5) OVERCLAIM.
+# Guard against SECTOR-ORIGIN (SO-1) OVERCLAIM.
 #
 # History: written 2026-07-07 when the connectivity chain was BROKEN (Kähler
 # fields unconsumed, Schrödinger instantiated only on the Φ=id witness, Born on a
@@ -12,18 +12,21 @@
 # ONE ontic model `(Σ, μL, Φ, π)` carries isolated dynamics + de-isolating
 # measurement + time-indexed records + Born + the conditional/Lüders state update
 # (`unified_choiceA_capstone`, manifest link L9). The guard is therefore repurposed
-# to the CURRENT frontier: the ONE remaining deep gap is A5 / SL-1 — the sector
-# and its Born weights are POSITED (the trials SAMPLE μL i.i.d.), NOT derived from
-# the deterministic flow. `specs/connectivity-manifest.md` is the single source of
+# to the CURRENT frontier: the ONE remaining deep gap is SO-1 (the sector-origin
+# problem) — the sector and its Born weights are POSITED (the trials SAMPLE μL
+# i.i.d.), NOT derived from the deterministic flow. (SO-1 is distinct from Paper C
+# Axiom A5, the projectability / quantum-effective condition that SELECTS the
+# sector.) `specs/connectivity-manifest.md` is the single source of
 # truth; this script enforces the statically-checkable honesty at that frontier.
 #
 # It checks:
 #   (1) the connectivity manifest exists;
-#   (2) README carries the A5 honesty banner (a pointer to the manifest AND the
-#       caveat that the sector itself is posited) — the deep caveat may not be
-#       silently deleted while A5 is open;
-#   (3) README / specs/INDEX.md assert NONE of the A5 overclaims (that the sector
-#       or the Born weights are DERIVED from the flow, or that A5 is closed);
+#   (2) README carries the sector-origin honesty banner (a pointer to the manifest
+#       AND the caveat that the sector itself is posited) — the deep caveat may not
+#       be silently deleted while SO-1 is open;
+#   (3) README / specs/INDEX.md assert NONE of the sector-origin overclaims (that
+#       the sector or the Born weights are DERIVED from the flow, or that the sector
+#       is no longer posited);
 #   (4) reports the genuine non-trivial `KahlerOnticSetup` inhabitants — now the
 #       healthy, expected state (the Schrödinger chain runs off the trivial witness).
 #
@@ -32,8 +35,8 @@
 # reverse — that the sector is derived from the dynamics — which is still open.
 #
 # Usage:  bash scripts/check-connectivity.sh
-# Exit 0 = docs honest at the current (A5) frontier.
-# Exit 1 = an A5 overclaim was introduced, or the honesty banner/manifest is gone.
+# Exit 0 = docs honest at the current (SO-1) frontier.
+# Exit 1 = a sector-origin overclaim was introduced, or the honesty banner/manifest is gone.
 
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
@@ -51,24 +54,28 @@ else
   fail=1
 fi
 
-# --- (2) README A5 honesty banner --------------------------------------------
+# --- (2) README sector-origin honesty banner ---------------------------------
 banner_ok=1
 grep -Fq "connectivity-manifest.md" README.md || banner_ok=0
 grep -Fq "the sector itself is posited" README.md || banner_ok=0
 if [ "$banner_ok" -eq 1 ]; then
-  echo "  OK    README carries the A5 honesty banner (manifest link + sector-posited caveat)."
+  echo "  OK    README carries the sector-origin honesty banner (manifest link + sector-posited caveat)."
 else
   echo "  FAIL  README is missing the honesty banner (a link to $MANIFEST AND the phrase"
-  echo "        \"the sector itself is posited\"). The A5 / SL-1 caveat may not be removed"
+  echo "        \"the sector itself is posited\"). The SO-1 caveat may not be removed"
   echo "        while the sector is posited (the trials sample muL; the sector is not derived)."
   fail=1
 fi
 
-# --- (3) forbidden A5 overclaim phrases (README + INDEX; NOT the manifest) ----
-# Exact strings that only a genuine sector-origin derivation (A5 closed) would
+# --- (3) forbidden sector-origin overclaim phrases (README + INDEX; NOT the manifest) ----
+# Exact strings that only a genuine sector-origin derivation (SO-1 closed) would
 # justify. The manifest is excluded because it quotes these in order to forbid them.
+# ("A5 is closed" is retained as a legacy overclaim string: historically "A5" was
+# the (mislabelled) name for the sector-origin gap; a doc asserting it is still an
+# overclaim. SO-1 is the correct current name for that gap.)
 FORBIDDEN=(
   "A5 is closed"
+  "SO-1 is closed"
   "the sector is no longer posited"
   "derives the sector from the deterministic flow"
 )
@@ -77,13 +84,13 @@ overclaim=0
 for phrase in "${FORBIDDEN[@]}"; do
   hits="$(grep -Fn "$phrase" "${scan_files[@]}" 2>/dev/null || true)"
   if [ -n "$hits" ]; then
-    echo "  FAIL  A5 overclaim phrase present: \"$phrase\""
+    echo "  FAIL  sector-origin overclaim phrase present: \"$phrase\""
     printf '%s\n' "$hits" | sed 's/^/          /'
     overclaim=1
     fail=1
   fi
 done
-[ "$overclaim" -eq 0 ] && echo "  OK    no A5 overclaim phrases in README / INDEX."
+[ "$overclaim" -eq 0 ] && echo "  OK    no sector-origin overclaim phrases in README / INDEX."
 
 # --- (4) non-trivial KahlerOnticSetup inhabitant report ----------------------
 # Genuine inhabitants: a `def` whose RETURN type is `KahlerOnticSetup N` — i.e.
@@ -115,7 +122,7 @@ fi
 
 if [ "$fail" -ne 0 ]; then
   echo "== connectivity guard: FAIL =="
-  echo "   See $MANIFEST for the per-link status (L1–L9) and the A5 frontier."
+  echo "   See $MANIFEST for the per-link status (L1–L9) and the SO-1 frontier."
   exit 1
 fi
 echo "== connectivity guard: OK =="

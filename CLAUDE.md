@@ -28,10 +28,11 @@ outcome-function caveat owed since `aeece86`. **The entangled / non-local de-iso
 is now first exercised at LF6-A/B** (2026-06-28; `CsdLean4/LF6/`): the singlet's
 non-factorisation is Bell-forced in the `Σ`-engine (`no_product_partition_realises_singlet`),
 realised by a genuine `ℂℙ¹⁵` de-isolation flow `Φ ≠ id` (`singletDeisolationFlow`), with a
-decoherence / purity-drop witness (LF6-B). The **A5 sector origin has first onramp results**
-(2026-06-29, `LF4/TypicalityForcing.lean`): typicality is forced by the LLN (papers A&B),
+decoherence / purity-drop witness (LF6-B). The **SO-1 sector-origin problem has first onramp
+results** (2026-06-29, `LF4/TypicalityForcing.lean`): typicality is forced by the LLN (papers A&B),
 `μFS` is the symmetry-canonical sampling measure (`fubiniStudy_forced_by_symmetry`), and the
-single-flow ergodic route is ruled out — but the sector is not yet derived from the dynamics.
+single-flow ergodic route is ruled out — but the sector is not yet derived from a primitive
+ontology. (SO-1 is distinct from Paper C's Axiom A5, the projectability/quantum-effective condition.)
 **The W-series dynamics spine is COMPLETE with all residues closed (2026-07-07):** the projected
 sector flow is `exp(-itH)`-conjugation on rays (`projectedFlow_schrodinger_form`,
 `LF4/PhaseLift.lean`) via Wigner selection + the Bargmann branch discriminator
@@ -41,10 +42,11 @@ The general-`N` entangled tier core is likewise CLOSED (2026-07-04, LF6-C/D/E: C
 **Work programme order (user-set 2026-07-07): the TH track (TH-2→TH-4 + TH-1 concentration
 residual) → the CV track (CV-1 onwards) → EC (deprioritised).**
 **The open frontier remains D1's deeper strata** ([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6):
-the A5 sector origin (derive `(π,G)` from `Φ`), and the
+SO-1, the sector-origin problem (derive `(Σ, π, μL)` from a primitive ontology), MD-1 (the A7
+preparation-indexed vs. context-fixed partition mismatch), and the
 Born-from-volume `SectorData` instances, which still carry `Φ = id` (the D1c variants
 `kSectorDataFlow` / `cpSectorDataFlow` thread a genuine `Φ ≠ id` into concrete instances but do
-not yet discharge A5). Axiom posture and the two-strata (operational Gleason vs ontic volume)
+not yet discharge SO-1). Axiom posture and the two-strata (operational Gleason vs ontic volume)
 reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
 **Doc-currency discipline (mandatory).** When a tranche lands, updating the docs is part of
@@ -603,7 +605,7 @@ Born-from-volume `SectorData` instances** — these LF4 results exercise no dyna
 *variants* `kSectorDataFlow` / `cpSectorDataFlow` with a genuine `Φ ≠ id`
 (`kFlow` / `obsFlow`), and LF5/LF6 exercise `Φ_vN ≠ id` / `singletDeisolationFlow`
 on the *dilated* `Σ'`; but the instances behind the Born-from-volume theorems still
-carry `Φ = id`, and none of these discharge A5.) LF4 is a faithful *realisation* on
+carry `Φ = id`, and none of these discharge SO-1.) LF4 is a faithful *realisation* on
 a compact-Kähler Σ, not a *derivation* of quantum weights from deterministic
 dynamics. Say which side of that line any new result sits on.
 
@@ -654,11 +656,12 @@ products; the CSD-bridge branch imports them via Busch/operational consistency;
 this cluster now *derives* the Born weight from the Kähler volume **for every `N`**,
 unconditionally and Gleason-free. **This is a relocation of the primitive, not its
 elimination.** The ontic derivation produces Born from the posited quantum-effective
-sector symmetry, which is the **A5** datum (`SectorData.(π, G)`, AXIOMS.md §3.3), not
+sector symmetry, which is the posited-sector datum (`SectorData.(π, G)`, AXIOMS.md §3.3), not
 from nothing. Honest hierarchy: **G3b** (Born as a volume ratio) is dischargeable now
-for rank-1 projective measurements *modulo* **A5**; **A5** (the `(π, G)` sector posited)
-is the residual primitive, instantiated-but-not-discharged in LF4; **A5 reduces to D1**
-(the sector from deterministic dynamics, `Φ = id` today, the deepest open debt). So the
+for rank-1 projective measurements *modulo* the sector posit; **the posited `(π, G)` sector**
+is the residual primitive, instantiated-but-not-discharged in LF4; **that posit is SO-1**
+(the sector-origin problem — derive `(Σ, π, μL)` from a primitive ontology, `Φ = id` today, the
+deepest open debt; distinct from Paper C Axiom A5, the projectability condition). So the
 honest payoff is "Born is a theorem of the sector symmetry," with the cost named
 (primitive moves from operational effect-additivity to the geometric sector posit). The
 general-`N` Born-region forms originally assumed a fully-generic `ψ` (no vanishing
@@ -772,7 +775,8 @@ coarse-grained), syndrome-block FS volume = syndrome Born weight, with the deter
 codeword syndrome + recovery. Still the projective / coherent-error tier: the decoherence
 (system→environment volume-loss / partial-trace) origin of QEC stays gated on the entangled
 tier. Remaining D1 strata: entangled / non-local de-isolation (Bell forces non-locality),
-the decoherence/partial-trace error model, the A5 sector origin, and the concrete
+the decoherence/partial-trace error model, SO-1 (the sector origin), MD-1 (the A7 partition
+mismatch), and the concrete
 `SectorData` instances (which still carry `Φ = id`). All LF5 results are
 foundational-triple-only and AxiomAudit-pinned.
 
@@ -829,7 +833,7 @@ non-factorisation `no_lhv_realises_maxEntangled_cglmp_d` + capstone
 `decide` proofs remain only as `d=2,3,4` anchors). Named residuals (see
 `specs/future-work.md` LF6-6/7): only the maximally-entangled family (arbitrary
 partial-Schmidt states not covered); the continuous-time Lindblad entangled tier (LF6-2). The Born number is still imported from
-the FS-volume engine, not re-derived; the A5 sector origin is the residue. All LF6 results
+the FS-volume engine, not re-derived; SO-1 (the sector origin) is the residue. All LF6 results
 are foundational-triple-only and AxiomAudit-pinned.
 
 ### Empirical: QM-validity regression suite

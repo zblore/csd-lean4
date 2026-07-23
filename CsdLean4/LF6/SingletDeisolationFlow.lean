@@ -80,7 +80,7 @@ behind `MeasurementJointEig.born_eq_P_st`.
   with the contextuality of the carve, and the safety anchor
   (`singletDeisolation_carve_contextual`) does not assume the product structure.
 - **Residue: A5.** The entangled sector / the singlet's preparation region `Ω₀`
-  is posited, not derived (A5 reduces to D1). `nudgedSinglet`'s amplitudes are the
+  is posited, not derived (SO-1: the sector origin, distinct from Paper C Axiom A5). `nudgedSinglet`'s amplitudes are the
   singlet's; the *typicality law* on `Σ'` is the Fubini–Study measure (A5).
 - **Generic context.** The four-sector construction needs `P_st a b s t > 0` for
   all `(s, t)` (`hgen`), i.e. `|a·b| < 1` — every Bell-test setting. Collinear
@@ -238,7 +238,7 @@ theorem singletDeisolation_pointer_volume {M : ℕ}
 /-! ### Deliverable 3: a.s. pointer-block frequencies → `P_st` -/
 
 /-- **The empirical capstone.** For i.i.d. Fubini–Study-typical trials on the
-dilated `Σ' = ℂℙ¹⁵` (the A5 typicality posit on the enlarged entangled sector),
+dilated `Σ' = ℂℙ¹⁵` (the sector-typicality posit (SO-1) on the enlarged entangled sector),
 almost surely every pointer-block `(s, t)` empirical frequency converges to the
 singlet kernel `P_st a b s t`. Instantiates LF5 `vnDilation_pointer_frequency` at
 `N = 4`, `φ = nudgedSinglet a b`, and lands the limit on `P_st` via

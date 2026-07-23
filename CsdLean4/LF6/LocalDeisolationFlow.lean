@@ -79,7 +79,7 @@ regrouping `((s_a,p_a),(s_b,p_b)) ↦ ((s_a,s_b),(p_a,p_b))`. The block reshuffl
   imported via `povm_born_eq_dilated_volume_uncond`; the singlet kernel `P_st`,
   its joint eigenstates, and the Born identity `singletJointEig_born` are LF3.
 - **Residue: A5.** The entangled sector / the singlet's preparation region is
-  posited, not derived (A5 reduces to D1). The non-locality lives in the
+  posited, not derived (SO-1: the sector origin, distinct from Paper C Axiom A5). The non-locality lives in the
   contextual carve (A.2) and the entangled preparation, never in the (local)
   flow.
 - **Generic context.** `hgen : ∀ s t, 0 < P_st a b s t` (`|a·b| < 1`, every

@@ -83,7 +83,17 @@ the microstate's cell: `some ((e.symm c).2)` when the microstate lands in cell
 apparatus, factor of the `Fin N × Fin N` reindex) is **ψ-independent and
 context-fixed** — it depends only on the measurement context `e`, not on the
 preparation. Deterministic and total off an FS-null set (inherited from
-`bornOutcome`). -/
+`bornOutcome`).
+
+**Honest A7 caveat (MD-1).** The *block assignment* above is context-fixed, but the
+outcome *cells themselves* are the dilated Born regions `bornRegion ψ'` — so their
+**geometry is preparation-indexed** (it depends on the prepared/dilated state `ψ'`),
+whereas Paper C's Axiom A7 asks for context-fixed outcome regions `Ωᵢ(M)` with
+`μ_FS`-null boundaries, independent of the preparation. This map is therefore an
+honest **preparation-indexed operational witness**, NOT the general Paper C A7
+mechanism. Separating the preparation law from context-fixed partitions (and deriving
+the probabilities by integrating the former over the latter) is the open item **MD-1**
+(`specs/BACKLOG.md`, `specs/reconstruction-status.md` §7). -/
 noncomputable def vnPointerOutcome
     (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0)
     (e : Fin N × Fin N ≃ Fin (M + 1)) :

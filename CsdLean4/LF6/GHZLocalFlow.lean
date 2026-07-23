@@ -87,7 +87,7 @@ factor reuse A.3's `localDeisolation_pullback` verbatim.
   GHZ's contextuality) is deferred. The contextuality is the C.1 no-go, never in
   the (local) flow.
 - **Residue: A5.** The entangled GHZ sector / preparation region is posited, not
-  derived (A5 reduces to D1). The non-locality lives in the contextual carve and
+  derived (SO-1: the sector origin, distinct from Paper C Axiom A5). The non-locality lives in the contextual carve and
   the entangled preparation, never in the (local) flow.
 
 All exports are foundational-triple-only (Gleason-free; the LF4/LF5 POVM-Naimark
