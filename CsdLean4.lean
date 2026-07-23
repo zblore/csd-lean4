@@ -139,6 +139,7 @@ public import CsdLean4.LF4.MomentBridgeN
 public import CsdLean4.LF4.MomentDirichletN
 public import CsdLean4.LF4.MomentBornN
 public import CsdLean4.LF4.ObservableCorrespondenceN
+public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.LF4.SingletKahler

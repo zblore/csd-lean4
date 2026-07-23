@@ -109,6 +109,7 @@ public import CsdLean4.LF4.MomentBridgeN
 public import CsdLean4.LF4.MomentDirichletN
 public import CsdLean4.LF4.MomentBornN
 public import CsdLean4.LF4.ObservableCorrespondenceN
+public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -3853,6 +3854,12 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.pure_state_born_prob_eq_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.pure_state_born_prob_eq_volume
+
+-- LF4 §14 STATES obligation, MIXED-STATE / density-operator case (2026-07-23): Tr(ρ·|φ⟩⟨φ|) =
+-- ρ-eigenvalue-weighted sum of ontic Fubini–Study volumes of ρ's pure eigenstates. Foundational triple.
+/-- info: 'CSD.LF4.mixed_state_born_eq_ensemble_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.mixed_state_born_eq_ensemble_volume
 
 -- The non-vacuous LF3-chain Stern-Gerlach capstone (N = 2 analog of
 -- ofKählerPreparation_singlet_frequency_convergence). Foundational triple only.
