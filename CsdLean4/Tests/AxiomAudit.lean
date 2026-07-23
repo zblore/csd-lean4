@@ -3848,6 +3848,12 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.hermitian_observable_correspondence_integral
 
+-- LF4 §14 STATES obligation (pure states / rank-one projectors, 2026-07-23): ‖⟨Φ,ψ⟩‖² = an ontic
+-- Fubini–Study volume, via a unitary sending e₀ ↦ Φ. Foundational triple only.
+/-- info: 'CSD.LF4.pure_state_born_prob_eq_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pure_state_born_prob_eq_volume
+
 -- The non-vacuous LF3-chain Stern-Gerlach capstone (N = 2 analog of
 -- ofKählerPreparation_singlet_frequency_convergence). Foundational triple only.
 /-- info: 'CSD.LF4.sg_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/

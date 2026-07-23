@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.MomentBornN
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 
 /-!
 # LF4 §14: observable correspondence for general self-adjoint observables (general N)
@@ -45,6 +46,12 @@ the Hilbert expectation. For a diagonal observable this is delivered here:
   `⟨ψ, A ψ⟩ = ∑ₖ λₖ · vol(bornRegionN φ k) = ∫ aOntic φ λ dμ_FS`, where `φ = Uᴴ ψ` is the state
   **transported** by the spectral unitary. The unitary covariance is nothing more than that state
   transport (`hermitian_expectation_transport` + the isometry `transport_norm`).
+* **`pure_state_born_prob_eq_volume`** — the §14 *states* obligation for **pure states / rank-one
+  projectors**: `‖⟨Φ, ψ⟩‖² = vol(bornRegionN (Wᴴ ψ) 0)`, the Born probability of the pure outcome
+  `|Φ⟩` (= expectation of the projector `|Φ⟩⟨Φ|`) as a single ontic Fubini–Study volume, using a
+  unitary `W` with `W e₀ = Φ` (`exists_unitary_e_zero_eq`). This realises pure states / rank-one
+  projectors as ontic objects — the state-side content underlying the resource bundles
+  (Bell-state projectors, teleportation input state).
 
 ## Scope (honest)
 
@@ -328,6 +335,48 @@ theorem hermitian_observable_correspondence_integral (p₀ : CPN (M + 1))
   have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact transport_norm A hA ψ hψ
   rw [hermitian_observable_correspondence p₀ A hA ψ hψ φ hφ hφ0 hpos,
       ← integral_aOntic p₀ φ hφ0 hφnorm hpos hA.eigenvalues]
+
+
+/-! ### §14 states obligation: pure states / rank-one projectors as ontic volumes -/
+
+/-- **Unitary inner-adjoint.** `⟨W x, y⟩ = ⟨x, Wᴴ y⟩` for a unitary `W` (matrix action). -/
+theorem inner_toEuclideanLin_adjoint (W : Matrix.unitaryGroup (Fin (M + 1)) ℂ)
+    (x y : EuclideanSpace ℂ (Fin (M + 1))) :
+    inner ℂ (Matrix.toEuclideanLin W.val x) y
+      = inner ℂ x (Matrix.toEuclideanLin (star W.val) y) := by
+  show WithLp.ofLp y ⬝ᵥ star (W.val *ᵥ WithLp.ofLp x)
+      = (star W.val *ᵥ WithLp.ofLp y) ⬝ᵥ star (WithLp.ofLp x)
+  rw [Matrix.star_mulVec, ← Matrix.star_eq_conjTranspose, dotProduct_comm (WithLp.ofLp y),
+      ← dotProduct_mulVec, dotProduct_comm]
+
+/-- The transport `Wᴴ ψ` preserves the norm: `‖Wᴴ ψ‖ = ‖ψ‖`. -/
+theorem unitary_transport_norm (W : Matrix.unitaryGroup (Fin (M + 1)) ℂ)
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1) :
+    ‖Matrix.toEuclideanLin (star W.val) ψ‖ = 1 := by
+  have hkey := Projectivization.inner_toEuclideanLin_unitary (star W) ψ ψ
+  rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K, hψ] at hkey
+  have hsq : ‖Matrix.toEuclideanLin (star W.val) ψ‖ ^ 2 = (1 : ℝ) ^ 2 := by exact_mod_cast hkey
+  nlinarith [norm_nonneg (Matrix.toEuclideanLin (star W.val) ψ)]
+
+/-- **§14 states obligation — the pure-state / rank-one-projector case.** The Born probability
+`‖⟨Φ, ψ⟩‖²` of the pure outcome `|Φ⟩` (equivalently the expectation of the rank-one projector
+`|Φ⟩⟨Φ|` in `ψ`) is realised as a single **ontic Fubini–Study volume**: the volume of the Born
+region (index `0`) of the state `φ = Wᴴ ψ` transported by any unitary `W` sending `e₀ ↦ Φ`.
+Genericity `hpos` is on `φ`. This realises pure states / rank-one projectors as ontic objects —
+the §14 *states* content underlying the resource bundles (Bell-state projectors, teleportation
+input state). Foundational triple. -/
+theorem pure_state_born_prob_eq_volume (p₀ : CPN (M + 1))
+    (Φ ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    (W : Matrix.unitaryGroup (Fin (M + 1)) ℂ)
+    (hW : Matrix.toEuclideanLin W.val (EuclideanSpace.single 0 (1 : ℂ)) = Φ)
+    (φ : EuclideanSpace ℂ (Fin (M + 1)))
+    (hφ : φ = Matrix.toEuclideanLin (star W.val) ψ) (hφ0 : φ ≠ 0)
+    (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) φ‖ ^ 2) :
+    ‖inner ℂ Φ ψ‖ ^ 2 = (fubiniStudyMeasure p₀ (bornRegionN φ hφ0 0)).toReal := by
+  have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact unitary_transport_norm W ψ hψ
+  rw [fsMeasure_bornRegionN p₀ φ hφ0 hφnorm hpos 0, ENNReal.toReal_ofReal (by positivity)]
+  congr 1
+  rw [← hW, inner_toEuclideanLin_adjoint W (EuclideanSpace.single 0 (1 : ℂ)) ψ, ← hφ]
 
 end LF4
 end CSD
