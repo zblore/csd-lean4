@@ -11,9 +11,10 @@ claims; where it and an older document disagree, this file and
 > 1. **The QM calculation engine, on a concrete projective witness** — Ω-region volume ratios → Born, the
 >    T1–T16 inventory inhabited. This is what the Lean proofs deliver, and it is essentially complete. It is
 >    the **consistency floor**, not the thesis. (Reproducing QM ≠ the achievement.)
-> 2. **The thesis** — measurement as **record selection** via Ω-basins on the local floor Σ, those records
->    **projecting to make spacetime**, and the **Σ-local / spacetime-non-local resolution of entanglement**.
->    This is *not* scaffolded in Lean, and is where the work is.
+> 2. **Completing the reconstruction** — making QM genuinely *arise from* Σ and Ω-regions on the ontic
+>    surface, not accumulating more QM on the epistemic side. The near frontier is measurement as **record
+>    selection** via context-fixed Ω-basins on Σ (the corpus currently does it epistemically on ℂℙ). This is
+>    where the work is.
 >
 > The precise, defensible claim about the Lean today is:
 >
@@ -41,11 +42,11 @@ in, so the pushforward-to-`μFS` and the Schrödinger pillar are *compatibility 
 derivations of `μFS` or of unitary evolution from a fibre-primitive ontology. **This closure is the QM
 *calculation engine* demonstrated — the consistency floor, not the thesis** (see [`CSD-CHARTER.md`](CSD-CHARTER.md)).
 **Σ is the floor and is everything; deriving it is a non-question** (Paper C is explicitly "a reconstruction,
-not a derivation"). The thesis — *not yet scaffolded in Lean* — is the **record layer** (measurement =
-de-isolation = record *selection* via context-fixed Ω-basins on Σ; **MD-1**, of which the present
-preparation-indexed `bornRegion ψ'` on `ℂℙ` is only a witness) and the **projection layer** (records → project
-to make spacetime; Σ *local*, the projection *non-local*, dissolving entanglement-at-a-distance). The earlier
-"SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
+not a derivation"). The goal is to **complete the reconstruction of QM from Σ and Ω-regions**; the near
+frontier — *not yet genuine in Lean* — is the **record layer**: measurement = de-isolation = record
+*selection* via context-fixed Ω-basins on Σ (**MD-1**; the present preparation-indexed `bornRegion ψ'` on
+`ℂℙ` is only an epistemic witness). The earlier "SO-1 = derive the sector" framing that appeared here is a
+**retired error** (§7).
 
 ## 2. The Paper C axiom map (A1–A7) — canonical formalisation status
 
@@ -155,23 +156,18 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 
 **Framing (read first).** **Σ is the floor and is everything** — deriving it is a *non-question*, not an open
 problem. QM (the T1–T16 inventory in §2a) is the **calculation engine** the Ω-region/volume-ratio structure
-computes; reproducing it — even fully, on the witness — is the **consistency floor**, not the thesis. The
-thesis lives in two layers that are **not yet scaffolded in Lean**:
+computes. The goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — QM genuinely
+*arising from* the ontic surface, not accumulated on the epistemic side. The near frontier — **not yet
+genuine in Lean**:
 
 * **The record layer (MD-1) — the near frontier.** Measurement = de-isolation = **record selection via
   context-fixed Ω-basins on Σ**: a partition of the prepared region `Ω₀` determined by the apparatus, the
   preparation entering only through `Ω₀`, the record being *which basin the single trajectory occupies* — a
   **selection of structure already in Σ** (Σ does not grow). The corpus's measurement is on the wrong side:
   `vnPointerOutcome` uses `bornRegion ψ'` — preparation-indexed cells on `ℂℙⁿ⁻¹` (epistemic), not
-  context-fixed basins on Σ producing records. Endpoint:
+  context-fixed basins on Σ. Completing the reconstruction moves measurement onto Σ. Endpoint:
   > **MD-1.** Separate preparation laws from context-fixed outcome partitions, then derive the outcome
   > probabilities by integrating the preparation law over those fixed regions.
-  These records are the raw material for the projection layer.
-
-* **The projection layer — the thesis.** The selected records in Σ **project to make spacetime** (emergent,
-  non-fundamental). Because **Σ is local** and the record→spacetime projection is **non-local**,
-  entanglement-at-a-distance is locality in Σ seen through a non-local projection — no fundamental action at a
-  distance. This is the deliverable the whole programme is for, and it is **entirely unbuilt in Lean**.
 
 **The measure layer is settled — not a frontier.** μ_FS is the unique SU(n)-compatible measure (Paper B),
 realized in Lean by `fubiniStudy_forced_by_symmetry` / `LocalisedTypicality.lean`
@@ -226,12 +222,12 @@ machine-checked facts in the corpus.
 
 The corpus proves the **QM calculation engine on a concrete projective witness** — the *consistency floor*:
 the full T1–T16 target inventory inhabited, axiom-clean, Born = Ω-region volume ratio, on one witness model
-with μ_FS and `exp(-itH)` built in. This is **layer 2 (the engine), demonstrated — not the thesis**. **Σ is
-the floor and is everything; deriving it is a non-question.** The thesis is the two layers **not yet
-scaffolded in Lean**: the **record layer** (measurement = de-isolation = record *selection* via Ω-basins on
-Σ; MD-1) and the **projection layer** (those records project to make spacetime; Σ *local* while the
-record→spacetime projection is *non-local*, dissolving entanglement-at-a-distance). That is where the work
-is. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired error — see §7.)
+with μ_FS and `exp(-itH)` built in. **Σ is the floor and is everything; deriving it is a non-question.** The
+goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — making QM genuinely *arise from*
+the ontic surface. The near frontier, **not yet genuine in Lean**, is the **record layer**: measurement =
+de-isolation = record *selection* via context-fixed Ω-basins on Σ (MD-1), where the corpus currently uses the
+epistemic, preparation-indexed `bornRegion ψ'` on `ℂℙ`. That is where the work is. (The earlier "SO-1 =
+derive the sector, the central frontier" framing is a retired error — see §7.)
 
 References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
 [`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean).

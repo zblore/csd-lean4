@@ -90,13 +90,16 @@ The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one
 - (B) `obsFlow_not_uniquely_ergodic` (the honest negative, genuine new content): `obsFlow` fixes the
   eigenstate rays, so `δ_{[e₀]}` is invariant and ≠ μFS (distinctness via a swap-unitary + FS's
   U(N)-invariance) — TWO distinct invariant probability measures, so a single ontic flow does NOT force
-  μFS. This is WHY D1c-1/2's single-flow instances do not discharge SO-1.
-- `so1_onramp` capstone conjoins (A)+(B). HONEST: SO-1 is NOT closed; typicality is forced by the SYMMETRY
-  (not a flow); the residual SO-1 primitive is G=U(N) ITSELF, reducing to D1 (deriving the U(N)-symmetry of
-  the ontic dynamics from CSD's substrate — the deepest open CSD content). Nothing claimed about deriving G.
-Follow-up #32: strengthen (B) to a continuum of invariant measures via the moment-fibre conserved
-quantities (`momentMap ∘ obsFlow = momentMap`). The genuine SO-1/D1 frontier beyond: the entangled
-de-isolation tier (Bell-forced non-locality), where G could begin to be derived rather than posited.
+  μFS. (This is a *measure-layer* fact — a single epistemic flow is not ergodic; CSD's typicality is
+  repeated-preparation ignorance over Ω₀, not epistemic time-averaging.)
+- `so1_onramp` capstone conjoins (A)+(B): typicality's *measure* is forced by the SYMMETRY (Paper B), and a
+  single flow does not force it. **NOTE (2026-07-24):** the old framing of these as "the SO-1 frontier /
+  deriving G" is **retired** — Σ (and its symmetry) is the **floor**, posited; deriving it is a non-question.
+  These are settled measure-layer theorems, not an open frontier. (Theorem names `so1_onramp` /
+  `so1_obstruction_capstone` are legacy labels; do not read them as an open goal.)
+Follow-up #32 (moment-fibre conserved quantities `momentMap ∘ obsFlow = momentMap`) is likewise measure-layer,
+not a frontier. The genuine near frontier is the **record layer** — measurement as record selection via
+Ω-basins on Σ (`specs/CSD-CHARTER.md`), which is how QM's measurement account becomes genuinely ontic.
 
 (superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
 (needs the SectorData on the dilated space).

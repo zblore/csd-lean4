@@ -2,27 +2,28 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## ★ North star — the CSD ontology, NOT "just reproducing QM"
+## ★ North star — complete the reconstruction of QM from Σ + Ω, NOT "just reproducing QM"
 
-> **Read [`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) first.** The stack: **(1) Σ is the floor
-> and is everything** — the total, fixed, *local* ontic space; deriving Σ is a **non-question**.
-> **(2) Ω-regions → QM as a calculation *engine*** (volume ratios μ(Ωᵢ)/μ(Ω₀) → Born, via
-> typicality over Ω₀ + the SU(n)-fixed μFS) — QM is instrumental, **not** the goal; reproducing it
-> is the consistency floor. **(3) Measurement = de-isolation = record *selection*** — it picks out
-> which basin the single trajectory occupies, a selection of structure *already in Σ* (Σ does not
-> grow). **(4) Records → project → spacetime** (emergent, non-fundamental). **(5) Payoff:** Σ is
-> **local**, the record→spacetime projection is **non-local**, so entanglement-at-a-distance is
-> locality in Σ through a non-local projection — no fundamental action at a distance. **The thesis
-> is layers 3→5; QM (layer 2) is the engine floor beneath it.**
+> **Read [`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) first.** **Σ is the floor and is everything**
+> — the total, fixed, *local* ontic space; deriving Σ is a **non-question**. **QM arises from
+> Ω-regions on Σ**: volume ratios μ(Ωᵢ)/μ(Ω₀), via typicality over the prepared region Ω₀ + the
+> SU(n)-fixed μ_FS, give the Born weights; dynamics + measurement follow on the same ontic footing.
+> **The goal now is to *complete that reconstruction* — QM genuinely arising from Σ and Ω-regions**,
+> not to accumulate more QM results on the epistemic side.
+>
+> **The near frontier is the record layer:** measurement = de-isolation = **record *selection* via
+> context-fixed Ω-basins on Σ** (a partition of Ω₀ by the apparatus; the record = which basin the
+> single trajectory occupies, a selection of structure *already in Σ* — Σ does not grow). The corpus
+> currently does measurement on the *epistemic* ℂℙ side (`vnPointerOutcome` via `bornRegion ψ'`,
+> preparation-indexed) — the wrong side; completing the reconstruction moves it onto Σ.
 >
 > **Before landing any framing/prose/claim, or scoping new work, run the `csd-foundations` agent**
-> (`.claude/agents/csd-foundations.md`) — the anti-drift check. Never sell reproducing QM as the
-> achievement; never try to "derive Σ"; keep measurement as **record selection via Ω-basins on Σ**
-> (not epistemic `bornRegion ψ'`); never drop the **records→spacetime + Σ-local/spacetime-non-local**
-> endpoint. The finite-QM closure is the *engine on a witness*, not "QM derived from CSD". A5 =
-> projectability (never "origin of Σ"); `scripts/check-claims.sh` guards the retired mislabels.
-> **Note:** the older "SO-1 / derive the sector" framing in some status docs is a *retired error* —
-> Σ is the floor; the frontier is the record layer (MD-1) → the spacetime/locality layer.
+> (`.claude/agents/csd-foundations.md`) — the anti-drift check. Never sell reproducing QM on the
+> epistemic side as completing the reconstruction; never try to "derive Σ". The finite-QM closure is
+> the *engine on a witness*, not "QM derived from CSD". A5 = projectability (never "origin of Σ");
+> `scripts/check-claims.sh` guards the retired mislabels. **Note:** the older "SO-1 / derive the
+> sector" framing in some status docs is a *retired error* — Σ is the floor; the frontier is the
+> record layer.
 
 ## Where to start (plans & todos)
 
@@ -50,11 +51,11 @@ outcome-function caveat owed since `aeece86`. **The entangled / non-local de-iso
 is now first exercised at LF6-A/B** (2026-06-28; `CsdLean4/LF6/`): the singlet's
 non-factorisation is Bell-forced in the `Σ`-engine (`no_product_partition_realises_singlet`),
 realised by a genuine `ℂℙ¹⁵` de-isolation flow `Φ ≠ id` (`singletDeisolationFlow`), with a
-decoherence / purity-drop witness (LF6-B). The **SO-1 sector-origin problem has first onramp
-results** (2026-06-29, `LF4/TypicalityForcing.lean`): typicality is forced by the LLN (papers A&B),
-`μFS` is the symmetry-canonical sampling measure (`fubiniStudy_forced_by_symmetry`), and the
-single-flow ergodic route is ruled out — but the sector is not yet derived from a primitive
-ontology. (SO-1 is distinct from Paper C's Axiom A5, the projectability/quantum-effective condition.)
+decoherence / purity-drop witness (LF6-B). The **measure layer is settled** (2026-06-29,
+`LF4/TypicalityForcing.lean`): typicality's *measure* is `μFS`, the symmetry-canonical one
+(`fubiniStudy_forced_by_symmetry`, Paper B), and a single *epistemic* flow is not ergodic — a
+measure-layer fact, not a gap. **The sector is posited — Σ is the floor; deriving it is a
+non-question** (Paper C Axiom A5 = projectability, never "the origin of Σ").
 **The W-series dynamics spine is COMPLETE with all residues closed (2026-07-07):** the projected
 sector flow is `exp(-itH)`-conjugation on rays (`projectedFlow_schrodinger_form`,
 `LF4/PhaseLift.lean`) via Wigner selection + the Bargmann branch discriminator
@@ -63,12 +64,12 @@ pillar stands beside the Born pillar on the same sector interface (see the READM
 The general-`N` entangled tier core is likewise CLOSED (2026-07-04, LF6-C/D/E: CGLMP ∀`d`, GHZ ∀`n`).
 **Work programme order (user-set 2026-07-07): the TH track (TH-2→TH-4 + TH-1 concentration
 residual) → the CV track (CV-1 onwards) → EC (deprioritised).**
-**The open frontier remains D1's deeper strata** ([`specs/carve-out-plan.md`](specs/carve-out-plan.md) §6):
-SO-1, the sector-origin problem (derive `(Σ, π, μL)` from a primitive ontology), MD-1 (the A7
-preparation-indexed vs. context-fixed partition mismatch), and the
+**The goal now is to complete the reconstruction of QM from Σ + Ω** ([`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md)):
+the near frontier is the **record layer (MD-1)** — measurement = de-isolation = record selection via
+context-fixed Ω-basins on Σ, replacing the epistemic, preparation-indexed `bornRegion ψ'` on `ℂℙ`; plus the
 Born-from-volume `SectorData` instances, which still carry `Φ = id` (the D1c variants
-`kSectorDataFlow` / `cpSectorDataFlow` thread a genuine `Φ ≠ id` into concrete instances but do
-not yet discharge SO-1). Axiom posture and the two-strata (operational Gleason vs ontic volume)
+`kSectorDataFlow` / `cpSectorDataFlow` thread a genuine `Φ ≠ id`). (Σ is the floor — "derive the sector" is a
+non-question.) Axiom posture and the two-strata (operational Gleason vs ontic volume)
 reading live in [`AXIOMS.md`](AXIOMS.md) §2.
 
 **Doc-currency discipline (mandatory).** When a tranche lands, updating the docs is part of
@@ -627,7 +628,7 @@ Born-from-volume `SectorData` instances** — these LF4 results exercise no dyna
 *variants* `kSectorDataFlow` / `cpSectorDataFlow` with a genuine `Φ ≠ id`
 (`kFlow` / `obsFlow`), and LF5/LF6 exercise `Φ_vN ≠ id` / `singletDeisolationFlow`
 on the *dilated* `Σ'`; but the instances behind the Born-from-volume theorems still
-carry `Φ = id`, and none of these discharge SO-1.) LF4 is a faithful *realisation* on
+carry `Φ = id`, and none of these derive the sector — which is posited, the CSD floor.) LF4 is a faithful *realisation* on
 a compact-Kähler Σ, not a *derivation* of quantum weights from deterministic
 dynamics. Say which side of that line any new result sits on.
 
@@ -681,9 +682,9 @@ elimination.** The ontic derivation produces Born from the posited quantum-effec
 sector symmetry, which is the posited-sector datum (`SectorData.(π, G)`, AXIOMS.md §3.3), not
 from nothing. Honest hierarchy: **G3b** (Born as a volume ratio) is dischargeable now
 for rank-1 projective measurements *modulo* the sector posit; **the posited `(π, G)` sector**
-is the residual primitive, instantiated-but-not-discharged in LF4; **that posit is SO-1**
-(the sector-origin problem — derive `(Σ, π, μL)` from a primitive ontology, `Φ = id` today, the
-deepest open debt; distinct from Paper C Axiom A5, the projectability condition). So the
+is the residual primitive, instantiated-but-not-discharged in LF4; **that posit is the CSD floor** — Σ is everything, and deriving it is a non-question (`Φ = id` in the
+Born instances today is a formalization state, not a debt against Σ; Paper C Axiom A5 = projectability,
+not the origin of Σ). So the
 honest payoff is "Born is a theorem of the sector symmetry," with the cost named
 (primitive moves from operational effect-additivity to the geometric sector posit). The
 general-`N` Born-region forms originally assumed a fully-generic `ψ` (no vanishing
@@ -797,8 +798,7 @@ coarse-grained), syndrome-block FS volume = syndrome Born weight, with the deter
 codeword syndrome + recovery. Still the projective / coherent-error tier: the decoherence
 (system→environment volume-loss / partial-trace) origin of QEC stays gated on the entangled
 tier. Remaining D1 strata: entangled / non-local de-isolation (Bell forces non-locality),
-the decoherence/partial-trace error model, SO-1 (the sector origin), MD-1 (the A7 partition
-mismatch), and the concrete
+the decoherence/partial-trace error model; MD-1 (the record layer — measurement on Σ); and the concrete
 `SectorData` instances (which still carry `Φ = id`). All LF5 results are
 foundational-triple-only and AxiomAudit-pinned.
 
@@ -855,7 +855,7 @@ non-factorisation `no_lhv_realises_maxEntangled_cglmp_d` + capstone
 `decide` proofs remain only as `d=2,3,4` anchors). Named residuals (see
 `specs/future-work.md` LF6-6/7): only the maximally-entangled family (arbitrary
 partial-Schmidt states not covered); the continuous-time Lindblad entangled tier (LF6-2). The Born number is still imported from
-the FS-volume engine, not re-derived; SO-1 (the sector origin) is the residue. All LF6 results
+the FS-volume engine, not re-derived; the sector is posited (Σ is the floor). All LF6 results
 are foundational-triple-only and AxiomAudit-pinned.
 
 ### Empirical: QM-validity regression suite

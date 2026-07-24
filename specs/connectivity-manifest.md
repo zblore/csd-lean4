@@ -23,12 +23,12 @@ time-indexed records AND the Born content AND the conditional state update on ON
 ontic model `(Σ, μL, Φ, π)` — the unified capstone `unified_projectiveSector_capstone`
 (L9). So "a single posited Kähler sector yields both pillars, and one ontic model
 carries dynamics + measurement + records + Born + update" is CONNECTED. What
-remains OPEN is the ONE deep link **L7 / SO-1** (the sector-origin problem): the
-sector and its Born weights are POSITED — the trials SAMPLE `μL` i.i.d. — they are
-NOT *derived from* a primitive ontology / deterministic flow. Everything CONNECTED is
-FORWARD (it consumes the posited sector); closing SO-1 (deriving the sector from `Φ`)
-is the research-grade frontier and is NOT claimed. (SO-1 is distinct from Paper C's
-Axiom A5, the projectability / quantum-effective condition that *selects* the sector.) The Kähler-geometry fields (L1) now carry their genuine
+the sector is **POSITED** — Σ is the floor, and **deriving it is a non-question** (the
+retired "SO-1 / L7 Born-from-flow" gap). Born *arises from* the Ω-region volume ratios +
+typicality; that IS the reconstruction, not a "derive the sector" debt. The goal now is to
+**complete the reconstruction of QM from Σ and Ω-regions**; the near frontier is the record
+layer (measurement as record selection via Ω-basins on Σ). (Paper C **Axiom A5** =
+projectability, never "the origin of Σ".) The Kähler-geometry fields (L1) now carry their genuine
 pointwise/linear core (`IsKahlerSector := IsFubiniStudyKahler`, proved); only the
 manifold residual (`dω = 0`, top-power volume identity) stays an interpretive posit
 (no Mathlib exterior-calculus API).
@@ -54,9 +54,9 @@ Kähler geometry (ω, complex structure)
 | **L4** | a genuine `Φ ≠ id` `KahlerOnticSetup` inhabitant exists | **CONNECTED (2026-07-07, fix C1)** | `CSD.LF4.rotationSetup` (`LF4/NonTrivialSetup.lean`) is a `KahlerOnticSetup 2` whose projected flow is the `ℂℙ¹` rotation `R(t)`; `rotationSetup_projectedFlow_ne_id` proves `∃ t, projectedFlow t ≠ id` (at `t = π/2`, `[e₀] ↦ [e₁]`). The general constructor `unitaryFlowSetup N U p₀` builds one from any unitary family (measure-preserving via `fubiniStudyMeasure_smul_invariant`). NB: `kFlow` was the wrong tool — it translates a `T²` fibre and so acts trivially on rays (`projectedFlow = id`). |
 | **L5** | sector `⇒` Born frequencies (structural) | **CONNECTED (structural, 2026-07-07, fix C4)** | `unitaryFlowSetup_born_frequency` (`LF4/BothPillars.lean`) states `born_frequency_convergence_N` with the sampling law = the SECTOR FIELD `d.liouvilleMeasure` (definitionally `fubiniStudyMeasure p₀`), so the Born theorem now references the same object the Schrödinger chain consumes. CAVEAT: structural sharing only — the trials `X` still SAMPLE the measure i.i.d.; they are not evolved by `d.flow`, and the weights are not derived from the dynamics (that is L7 = C6). |
 | **L6** | ONE object underlies both pillars | **CONNECTED (2026-07-07, fix C4)** | `rotationSetup_both_pillars` (`LF4/BothPillars.lean`) proves, for the SINGLE `rotationSetup p₀`, BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`) AND (B) Born (frequencies from sampling `(rotationSetup p₀).liouvilleMeasure` → `‖⟨eᵢ,ψ⟩‖²`). One `KahlerOnticSetup` instance, both pillars. |
-| **L7** | Born weights derived FROM the deterministic flow | **BROKEN — the thesis frontier (SO-1, the sector-origin problem); boundary now PROVED** | The one genuine `Φ ≠ id` flow (`kFlow` on `KSigma`) yields a **generic volume-ratio** typicality law (`kFlow_frequency_convergence`), explicitly NOT a Born weight (its docstring disclaims deriving the outcome region / Born weight — "Tranche B, not this module"). The obstruction is now machine-checked: a single projective flow does not uniquely determine an invariant measure — `SigmaLayer/SectorPostulateNoGo.lean` `flow_admits_invariant_ne_fubiniStudy` / `phaseFlip_admits_invariant_ne_fubiniStudy` exhibit an invariant probability measure `≠ μ_FS` for a flow with two fixed rays (concretely `diag(1,-1)` on `ℂℙ¹`). So L7 being broken is a proved fact about the single-flow limit, not a formalisation debt. The positive companion `SigmaLayer/LocalisedTypicality.lean` shows the full `U(N)` symmetry DOES pin `μ_FS` — the frontier is exactly that gap. |
+| **L7** | Born weights derived FROM the deterministic flow | **N/A — a non-question (Σ is the floor)** | "Derive the sector/Born from the flow" is retired: **Σ is the floor and is everything; deriving it is a non-question.** Born *arises from* the Ω-region volume ratios + typicality — that IS the reconstruction. The theorems once filed here are the **measure layer**, and are settled: `SigmaLayer/LocalisedTypicality.lean` shows the full `U(N)` symmetry pins `μ_FS` (Paper B's uniqueness, in Lean); `SigmaLayer/SectorPostulateNoGo.lean` (`flow_admits_invariant_ne_fubiniStudy`) records only that a single *epistemic* flow does not time-average to `μ_FS` — expected, and irrelevant (CSD's typicality is repeated-preparation ignorance over `Ω₀`, not epistemic time-averaging). The real frontier is the record layer, not this. |
 | **L8** | ONE object with a GENUINE many-to-one `π` (Paper C A3) underlies both pillars | **CONNECTED (2026-07-08, fix C7)** | `manyToOneRotationSetup_both_pillars` (`LF4/ManyToOnePillars.lean`) proves, for the SINGLE `manyToOneRotationSetup p₀` — whose `Σ = ℂℙ¹ × T²`, `π = Prod.fst` is genuinely many-to-one (fibres `= T²`, `manyToOneSetup_pi_not_injective`) AND whose projected flow is a non-trivial ray rotation (`manyToOneRotationSetup_projectedFlow_ne_id`) — BOTH (A) Schrödinger (`π(Φ_t x) = exp(-itH)·π(x)`, `H=σ_y`, inherited from `rotationSetup_schrodinger_form`) AND (B) Born (frequencies from sampling `kMuL p₀` and scoring the FIBRED region `π⁻¹'(bornRegion ψ i)` → `‖⟨eᵢ,ψ⟩‖²`, via `manyToOneSetup_born_frequency`). At GENERAL `N` with ARBITRARY Hermitian `H`: `manyToOneSchrodingerSetup_both_pillars` (`U t = exp(-itH)`). Removes the `π = id` degeneracy of L6/`rotationSetup_both_pillars` — the Paper-C A3 caveat below. AxiomAudit-pinned (foundational triple, Gleason-free). SAME standing gap as L5/L7: the Born trials still SAMPLE `kMuL` i.i.d. rather than being evolved by `d.flow`, and the fibre flow is trivial (the flow moves only the base ray). |
-| **L9** | ONE ontic model carries isolated dynamics AND de-isolating measurement AND records AND Born AND state update | **CONNECTED (2026-07-17: assembled into one tiered closure `FiniteQMClosure`)** | `unified_projectiveSector_capstone` (`SigmaLayer/UnifiedMeasurement.lean`) BUNDLES the dynamics + measurement CORE on the SAME `(Σ = ℂℙ^{M}×T², μL = μFS ⊗ vol, π = Prod.fst)`: the ISOLATED dynamics is the genuine `exp(-itH)` Hamiltonian flow (`productDynamics`, measure-preserving + Schrödinger-projectable + `π_*μL = μFS`) AND a `DeisolationModel` over that same dynamics realises the de-isolation MEASUREMENT (`(measurementFlow p, θ)`, measure-preserving, a.e.-defined pointer readout `vnDeisolationModel_ae_total`, record establishment). All the remaining pieces are now ASSEMBLED with it INTO one tiered record **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`SigmaLayer/FiniteQMClosure.lean`): time-physical records — INSTANTIATED on the unified model (`unifiedFlowedSemantics` = `flowedSemantics` over the isolated `productDynamics` flow; `unified_records_persistence`: Born weight conserved + flow-covariant; `unifiedFlowedSemantics_zero`: the static `vnRecordSemanticsProd` is the `t=0` slice), #5; post-outcome preparation with proven nonzero measure (`PostMeasurement.appendFact`); Born-frequency convergence — stated ON the model (`unified_born_frequency`: i.i.d. trials of `productDynamics.muL`, frequency in `π⁻¹(bornRegion i)` → `‖⟨eᵢ,ψ⟩‖²`, for EVERY unit `ψ` — `hpos` retired via the `_uncond` engine), #2; and the state update = record conditioning = Lüders update — GENUINELY proved (`ConditioningLuders.conditioning_luders_effect_equivalence`: the ontic record-conditioning and the Lüders update give the same conditional prediction for every pointer-basis effect, via the proved weight agreement `onticRegion_measure_eq_born`; the earlier `ConditioningLink.luders_record_conditioning_correspondence` only conjoined the two Bayesian halves and ASSERTED their agreement); and mixed-state Born (`MixedOntic.mixed_ontic_born_weight` = the `mixed_born` field, #8 C: the classical mixture over `ρ`'s spectral ensemble of ontic Born-region measures reproduces `Tr(ρ Eᵢ)`, so the model carries mixed-state Born content, not only the pure `ψ`). `FiniteQMClosure` carries these eleven as fields (the tenth/eleventh being mixed-state Born as a weight `mixed_born` and as an a.s. frequency `mixed_born_frequency` / `unified_mixed_born_frequency`, `SigmaLayer/MixedFrequency.lean`: a two-stage mixture LLN converging to `Tr(ρ Eᵢ)`), each discharged by its source lemma; the Choice-A posit, QM adapters, and open residue are documented in the module header (no field is `sorry`) — so the tiers stay honest. AxiomAudit-pinned. SAME standing gap as L7: FORWARD only — consumes the posited sector; does NOT derive it (SO-1). |
+| **L9** | ONE ontic model carries isolated dynamics AND de-isolating measurement AND records AND Born AND state update | **CONNECTED (2026-07-17: assembled into one tiered closure `FiniteQMClosure`)** | `unified_projectiveSector_capstone` (`SigmaLayer/UnifiedMeasurement.lean`) BUNDLES the dynamics + measurement CORE on the SAME `(Σ = ℂℙ^{M}×T², μL = μFS ⊗ vol, π = Prod.fst)`: the ISOLATED dynamics is the genuine `exp(-itH)` Hamiltonian flow (`productDynamics`, measure-preserving + Schrödinger-projectable + `π_*μL = μFS`) AND a `DeisolationModel` over that same dynamics realises the de-isolation MEASUREMENT (`(measurementFlow p, θ)`, measure-preserving, a.e.-defined pointer readout `vnDeisolationModel_ae_total`, record establishment). All the remaining pieces are now ASSEMBLED with it INTO one tiered record **`FiniteQMClosure` / `unifiedFiniteQMClosure`** (`SigmaLayer/FiniteQMClosure.lean`): time-physical records — INSTANTIATED on the unified model (`unifiedFlowedSemantics` = `flowedSemantics` over the isolated `productDynamics` flow; `unified_records_persistence`: Born weight conserved + flow-covariant; `unifiedFlowedSemantics_zero`: the static `vnRecordSemanticsProd` is the `t=0` slice), #5; post-outcome preparation with proven nonzero measure (`PostMeasurement.appendFact`); Born-frequency convergence — stated ON the model (`unified_born_frequency`: i.i.d. trials of `productDynamics.muL`, frequency in `π⁻¹(bornRegion i)` → `‖⟨eᵢ,ψ⟩‖²`, for EVERY unit `ψ` — `hpos` retired via the `_uncond` engine), #2; and the state update = record conditioning = Lüders update — GENUINELY proved (`ConditioningLuders.conditioning_luders_effect_equivalence`: the ontic record-conditioning and the Lüders update give the same conditional prediction for every pointer-basis effect, via the proved weight agreement `onticRegion_measure_eq_born`; the earlier `ConditioningLink.luders_record_conditioning_correspondence` only conjoined the two Bayesian halves and ASSERTED their agreement); and mixed-state Born (`MixedOntic.mixed_ontic_born_weight` = the `mixed_born` field, #8 C: the classical mixture over `ρ`'s spectral ensemble of ontic Born-region measures reproduces `Tr(ρ Eᵢ)`, so the model carries mixed-state Born content, not only the pure `ψ`). `FiniteQMClosure` carries these eleven as fields (the tenth/eleventh being mixed-state Born as a weight `mixed_born` and as an a.s. frequency `mixed_born_frequency` / `unified_mixed_born_frequency`, `SigmaLayer/MixedFrequency.lean`: a two-stage mixture LLN converging to `Tr(ρ Eᵢ)`), each discharged by its source lemma; the Choice-A posit, QM adapters, and open residue are documented in the module header (no field is `sorry`) — so the tiers stay honest. AxiomAudit-pinned. Consumes the posited sector — Σ is the floor (deriving it is a non-question); the frontier is the record layer, not this. |
 
 **Net (updated 2026-07-08 after C1+C2+C4+C7):** **L2–L6 + L8 CONNECTED.** A single
 genuine `Φ ≠ id` object (`rotationSetup`) supports BOTH pillars: the Schrödinger
@@ -71,11 +71,10 @@ matching Paper C's A3 fibred-projection shape. Remaining:
   compatibility; `IsLiouvilleKahlerVolume` = normalized volume). Only the
   **manifold** residual (closedness `dω=0`, top-power volume identity) stays
   unformalizable — no Mathlib exterior-calculus API.
-- **L7** ★ — the DEEP gap: the Born trials sample the sector's measure i.i.d.;
-  they are not *evolved by the deterministic flow*, and the Born weights are not
-  *derived from the dynamics*. This is the sector-origin problem (SO-1; distinct from
-  Paper C Axiom A5, the projectability condition), fix C6, research-grade. It is the one link that, if closed, would make "QM from
-  deterministic dynamics" unconditional rather than "QM from the posited sector".
+- **L7 — N/A (a non-question).** "Born weights derived FROM the flow" is retired: Σ is
+  the floor, and the Born trials sampling the sector's measure is not a gap — Born *arises
+  from* the Ω-region volume ratios + typicality, which IS the reconstruction. (Paper C Axiom
+  A5 = projectability, not "the origin of Σ".) The frontier is the record layer, not this.
 So the honest headline is now: **"a single posited Kähler sector object yields
 both the Born rule and Schrödinger dynamics"** is CONNECTED (structurally); the
 remaining frontier is deriving that sector — and the Born trials — from the
@@ -99,8 +98,8 @@ that is the fix **C7** (below), the honest next step to match Paper C's A3. Also
 note: our Schrödinger route is Wigner-rigidity + phase-lift + Stone, NOT Paper
 C's Ashtekar–Schilling (holomorphic-vector-field) derivation — same endpoint,
 different path. Paper C itself (§A/§3.6) states `Σ`, `π`, and the quantum-effective
-sector (selected by A5) are **assumed, not derived**, leaving the sector's deeper
-origin (SO-1) for later work — so our posited-sector scope matches Paper C's own.
+sector (selected by A5) are **assumed, not derived** — **Σ is the floor** (deriving it
+is a non-question). So our posited-sector scope matches Paper C's own.
 
 **Update (2026-07-08, fix C7 — A3 caveat RESOLVED, link L8).** The
 "no single object has BOTH a many-to-one `π` AND a non-trivial projected flow"
@@ -117,16 +116,16 @@ weight because the fibre volume is normalized (`Prod.fst_* kMuL = μ_FS`,
 `Measure.fst_prod` / `k_measure_bridge`), reducing to `born_frequency_convergence_N`
 on the projected trials. This is now on the `KahlerOnticSetup` track (not the
 older `SectorData` track), so it composes with the Schrödinger chain.
-**Still NOT closed by C7:** the sector-origin / weights-from-flow gap (L7 /
-SO-1) — the Born trials still SAMPLE `kMuL`, and the fibre flow is trivial
-(dynamics move only the base ray, not the fibre). C7 fixes the *projection shape*,
-not the *dynamical origin*. Our route is still Wigner, not Ashtekar–Schilling.
+**Not addressed by C7 (nor a gap):** "weights-from-flow" (L7) is a non-question — Σ is
+the floor; the Born trials sampling `kMuL` is not a debt (Born arises from the Ω-region
+volume ratios). C7 fixes the *projection shape*; the frontier is the record layer. Our
+route is still Wigner, not Ashtekar–Schilling.
 
 ## What may be claimed (until a link flips to CONNECTED)
 
-**(Updated 2026-07-15: the "both pillars on one posited sector" claims are now
-CONNECTED forward results, so they are permitted; the forbidden line has moved to
-the SO-1 frontier.)**
+**(The "both pillars on one posited sector" claims are CONNECTED forward results, so
+they are permitted; the forbidden line is: do not claim the sector/Σ is *derived*, and
+do not sell the epistemic witness as completing the reconstruction. Σ is the floor.)**
 
 - ✅ "CSD machine-verifies the Born rule as an FS-typicality volume (on `ℂℙ^{N-1}`
   with `μ_FS`), Gleason-free, general `N`, incl. POVMs." — a real theorem about
@@ -137,16 +136,16 @@ the SO-1 frontier.)**
   non-trivially (`manyToOneSchrodingerSetup`, `H` arbitrary).
 - ✅ "A single posited Kähler sector object yields BOTH the Born rule AND
   Schrödinger dynamics" — CONNECTED (L6/L8), FORWARD, at general `N`
-  (`manyToOneSchrodingerSetup_both_pillars`). Must carry the posited-sector /
-  SO-1-open caveat.
+  (`manyToOneSchrodingerSetup_both_pillars`). Must carry the posited-sector caveat
+  (Σ is the floor; the sector is posited, not derived).
 - ✅ "One ontic model `(Σ, μL, Φ, π)` carries isolated dynamics, de-isolating
   measurement, time-indexed records, Born frequencies and the conditional/Lüders
   state update" — CONNECTED (L9: `FiniteQMClosure` / `unifiedFiniteQMClosure` assembles the dynamics +
   measurement core, records #5, Born-freq #2 and conditioning=Lüders #3/#4 into one tiered closure), FORWARD.
 - ✅ "The thermodynamics track (TH1–TH4) is proved." — real, independent.
 - ❌ "CSD DERIVES the sector `(π, G)` / the Born weights FROM the deterministic
-  flow" / "the sector is no longer posited" — **FORBIDDEN** (L7 / SO-1 is OPEN; the
-  trials SAMPLE `μL` i.i.d., the sector is posited). Every CONNECTED claim above is
+  flow" / "the sector is no longer posited" — **FORBIDDEN**. Σ is the floor; the sector
+  is posited, not derived (deriving it is a non-question). Every CONNECTED claim above is
   FORWARD (consumes the posited sector).
 - ❌ Any phrasing implying the Kähler differential geometry (closed 2-form,
   complex structure) is constructed / load-bearing — **FORBIDDEN** (L1: no Mathlib
@@ -195,11 +194,13 @@ the SO-1 frontier.)**
   AxiomAudit-pinned (foundational triple). Removes the `π = id` degeneracy; does
   NOT touch L7 (Born still samples `kMuL`; fibre flow trivial).
 
-**Phase 3 — the thesis frontier (deep; = SO-1, the sector-origin problem).**
-- **C6 (fixes L7, makes L5/L6 genuine).** Derive the Born weights FROM the
-  deterministic flow — the outcome-region / pointer content that `kFlow` currently
-  disclaims. This is the open sector-origin problem SO-1 (`specs/carve-out-plan.md` §6,
-  `future-work.md` SO-1; distinct from Paper C Axiom A5). It is the real prize and is research-grade.
+**Phase 3 — the near frontier: complete the reconstruction of QM from Σ + Ω (the record layer).**
+- **C6 (retired as stated).** "Derive the Born weights FROM the deterministic flow" is a
+  **non-question** — Σ is the floor; Born *arises from* the Ω-region volume ratios +
+  typicality (that is the reconstruction). The genuine near frontier is the **record layer**:
+  make measurement a record *selection* via context-fixed Ω-basins on Σ (replacing the
+  epistemic, preparation-indexed `bornRegion ψ'` on `ℂℙ`) — `specs/CSD-CHARTER.md`,
+  `future-work.md` (record layer / MD-1). Paper C Axiom A5 = projectability, not "the origin of Σ".
 
 **Gate:** a link's row flips to CONNECTED only when a named `sorry`-free,
 AxiomAudit-pinned theorem backs it. The README claim upgrades only then.
