@@ -7,19 +7,22 @@ claims; where it and an older document disagree, this file and
 `lake build CsdLeanTests` green, and AxiomAudit-pinned to the foundational triple (`propext`,
 `Classical.choice`, `Quot.sound`) unless explicitly noted otherwise.
 
-> **Two endpoints — do not conflate them.**
-> 1. **Operational finite-QM closure** on a concrete projective product witness — this is what the Lean
->    proofs deliver, and it is essentially complete.
-> 2. **A faithful derivation of the Paper C/D architecture** from a primitive ontology — this is *not*
->    complete, and the corpus does not claim it.
+> **The engine vs. the thesis — do not conflate them** (frame: [`CSD-CHARTER.md`](CSD-CHARTER.md)).
+> 1. **The QM calculation engine, on a concrete projective witness** — Ω-region volume ratios → Born, the
+>    T1–T16 inventory inhabited. This is what the Lean proofs deliver, and it is essentially complete. It is
+>    the **consistency floor**, not the thesis. (Reproducing QM ≠ the achievement.)
+> 2. **The thesis** — measurement as **record selection** via Ω-basins on the local floor Σ, those records
+>    **projecting to make spacetime**, and the **Σ-local / spacetime-non-local resolution of entanglement**.
+>    This is *not* scaffolded in Lean, and is where the work is.
 >
-> The precise, defensible claim is:
+> The precise, defensible claim about the Lean today is:
 >
-> > The repository proves operational finite-QM closure on a concrete projective product witness satisfying
+> > The repository proves the finite-QM calculation engine on a concrete projective product witness satisfying
 > > the exact formalised subset of the Paper C assumptions.
 >
-> It does **not** claim that this witness *derives* projective geometry, the Fubini–Study measure, or
-> Schrödinger evolution from a more primitive ontic model — those ingredients are **built into** the witness.
+> It does **not** claim to *derive* projective geometry, μ_FS, or Schrödinger evolution from a more primitive
+> model — those are **built into** the witness. And **Σ is the floor and is everything; deriving Σ is a
+> non-question**, not an open goal.
 
 ## 1. One-paragraph verdict
 
@@ -35,11 +38,14 @@ fields, each discharged by its source lemma, and states honestly what is a theor
 posit vs. a QM adapter vs. still open (no field is `sorry`). **This is a concrete consistency witness, not a
 derivation of the Paper C architecture:** the witness has `μL = μFS ⊗ vol` and `Φ_t = (e^{-itH}·[p], θ)` built
 in, so the pushforward-to-`μFS` and the Schrödinger pillar are *compatibility facts about the witness*, not
-derivations of `μFS` or of unitary evolution from a fibre-primitive ontology. Two genuinely open questions sit
-outside the closure: **SO-1** (the sector-origin problem — the origin of `(Σ, π, μL)`; the trials SAMPLE `μL`
-i.i.d.) and the **A7 measurement-partition mismatch** (the present outcome cells are preparation-indexed, not
-context-fixed apparatus basins — tracked as **MD-1**). This scope matches Paper C's own (§A, and §3.6 "the
-deeper physical origin of the quantum-effective sector selected by A5 is left for later work").
+derivations of `μFS` or of unitary evolution from a fibre-primitive ontology. **This closure is the QM
+*calculation engine* demonstrated — the consistency floor, not the thesis** (see [`CSD-CHARTER.md`](CSD-CHARTER.md)).
+**Σ is the floor and is everything; deriving it is a non-question** (Paper C is explicitly "a reconstruction,
+not a derivation"). The thesis — *not yet scaffolded in Lean* — is the **record layer** (measurement =
+de-isolation = record *selection* via context-fixed Ω-basins on Σ; **MD-1**, of which the present
+preparation-indexed `bornRegion ψ'` on `ℂℙ` is only a witness) and the **projection layer** (records → project
+to make spacetime; Σ *local*, the projection *non-local*, dissolving entanglement-at-a-distance). The earlier
+"SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
 
 ## 2. The Paper C axiom map (A1–A7) — canonical formalisation status
 
@@ -145,31 +151,39 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 
 ## 7. The honest frontier — what is NOT claimed
 
-*(Actionable open items are tracked in the canonical [`BACKLOG.md`](BACKLOG.md).)*
+*(Actionable open items in [`BACKLOG.md`](BACKLOG.md); the mission frame in [`CSD-CHARTER.md`](CSD-CHARTER.md).)*
 
-* **SO-1 ★ — the sector-origin problem.** Deriving the sector `(Σ, π, μL)` and its Born weights FROM a
-  primitive ontology / deterministic flow. The sector is posited; the trials sample `μL`. This is the one
-  deep gap, research-grade, and it is **distinct from Paper C A5** (A5 is the projectability condition that
-  *selects* the quantum-effective sector; SO-1 is the deeper origin of the sector, which Paper C §3.6 itself
-  leaves "for later work"). SO-1 now has **both a proved boundary and a localized partial**:
-  * **No-go (why the gap is real, not a formalisation debt)** (`SigmaLayer/SectorPostulateNoGo.lean`): a single
-    projective unitary flow does NOT uniquely determine an invariant measure — a flow with two distinct fixed
-    rays admits (at least) two distinct invariant probability measures, so at least one is not `μ_FS`
-    (`flow_admits_invariant_ne_fubiniStudy`), exhibited on the concrete nontrivial phase-flip `diag(1,-1)` on
-    `ℂℙ¹` (`phaseFlip_admits_invariant_ne_fubiniStudy`).
-  * **Localized partial (what DOES pin it)** (`SigmaLayer/LocalisedTypicality.lean`): the sector posit is
-    discharged AT sectors carrying the full `U(N)` symmetry — the typicality measure and Born weights are
-    symmetry-forced there (`localised_sectorPostulate_capstone`, `region_measure_symmetry_forced`). Residual:
-    the bare flow is one one-parameter subgroup, not all of `U(N)`. Together: a single flow is provably
-    insufficient; the full symmetry is provably sufficient — the frontier is exactly the gap between them.
-* **MD-1 — the A7 measurement-partition mismatch.** Paper C A7 makes outcome regions depend on the
-  measurement context, `Ωᵢ = Ωᵢ(M)`, as context-fixed measurable partitions with `μ_FS`-null boundaries. The
-  present `vnPointerOutcome` uses `bornRegion ψ'`, so the cell *shapes* depend on the prepared/dilated state.
-  This is a genuine architecture gap, recorded — not redesigned — as the next scientific tranche:
+**Framing (read first).** **Σ is the floor and is everything** — deriving it is a *non-question*, not an open
+problem. QM (the T1–T16 inventory in §2a) is the **calculation engine** the Ω-region/volume-ratio structure
+computes; reproducing it — even fully, on the witness — is the **consistency floor**, not the thesis. The
+thesis lives in two layers that are **not yet scaffolded in Lean**:
+
+* **The record layer (MD-1) — the near frontier.** Measurement = de-isolation = **record selection via
+  context-fixed Ω-basins on Σ**: a partition of the prepared region `Ω₀` determined by the apparatus, the
+  preparation entering only through `Ω₀`, the record being *which basin the single trajectory occupies* — a
+  **selection of structure already in Σ** (Σ does not grow). The corpus's measurement is on the wrong side:
+  `vnPointerOutcome` uses `bornRegion ψ'` — preparation-indexed cells on `ℂℙⁿ⁻¹` (epistemic), not
+  context-fixed basins on Σ producing records. Endpoint:
   > **MD-1.** Separate preparation laws from context-fixed outcome partitions, then derive the outcome
   > probabilities by integrating the preparation law over those fixed regions.
-  A later Paper D strengthening would additionally prove that the interaction generates stable pointer basins
-  and persistent apparatus memory.
+  These records are the raw material for the projection layer.
+
+* **The projection layer — the thesis.** The selected records in Σ **project to make spacetime** (emergent,
+  non-fundamental). Because **Σ is local** and the record→spacetime projection is **non-local**,
+  entanglement-at-a-distance is locality in Σ seen through a non-local projection — no fundamental action at a
+  distance. This is the deliverable the whole programme is for, and it is **entirely unbuilt in Lean**.
+
+**The measure layer is settled — not a frontier.** μ_FS is the unique SU(n)-compatible measure (Paper B),
+realized in Lean by `fubiniStudy_forced_by_symmetry` / `LocalisedTypicality.lean`
+(`region_measure_symmetry_forced`). The companion no-go (`SectorPostulateNoGo.lean`,
+`flow_admits_invariant_ne_fubiniStudy`) records only that a single *epistemic unitary* flow does not
+time-average to μ_FS — expected, and irrelevant to CSD's mechanism (typicality is repeated-preparation
+ignorance over `Ω₀` on Σ, not epistemic time-averaging). These are true theorems about the measure/symmetry
+layer; they are **not** progress toward "deriving Σ" (a non-question). The earlier "SO-1 / L7 Born-from-flow"
+framing that presented them as *the* frontier is a **retired error**.
+
+**Remaining formalization gaps (engine-level, not the thesis):**
+
 * **A6 "why ⊗"** — SUFFICIENCY + NECESSITY both proved (`SigmaLayer/TensorSolved.lean`
   `composite_is_tensor_product`; `SigmaLayer/TensorReconstruction.lean` `compositeAlgReconstruction`,
   `composite_dim_eq`). Residual: local tomography itself is the one operational axiom that cannot be derived
@@ -187,14 +201,19 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 Two positions are **decided** and recorded here so they are not re-argued. Both are backed by
 machine-checked facts in the corpus.
 
-* **NG1 — "derive Born from a single deterministic flow" (the Birkhoff / single-trajectory ergodic
-  route) is a PROVED DEAD-END that CSD deliberately does not take.** CSD forces typicality by the **law
-  of large numbers over fresh i.i.d. preparations**, NOT by time-averaging one trajectory
-  (`specs/active-todo.md`, framing correction 2026-06-29, Papers A & B). The single-flow route is
-  provably impossible: `flow_admits_invariant_ne_fubiniStudy` (`SigmaLayer/SectorPostulateNoGo.lean`),
-  `obsFlow_not_ergodic` / `obsFlow_not_uniquely_ergodic` (`LF4/TypicalityForcing.lean`). The ergodic
-  scaffolding is **boundary-marking only**. The genuine open ★ residue is narrower: the sector/symmetry
-  ORIGIN (SO-1 above), not "Born from flow".
+* **NG1 — CORRECTED 2026-07-24 (the earlier wording was wrong and misleading).** Do **not** call the
+  single-trajectory / deterministic-flow account a route "CSD rejects" — **CSD *is* a single-trajectory
+  theory** (Paper D §4.2: physical reality is one trajectory `ω(t)` on Σ). What *is* a proved dead-end is
+  time-averaging one infinite *epistemic unitary* trajectory on `ℂℙⁿ⁻¹` (`obsFlow_not_ergodic` /
+  `obsFlow_not_uniquely_ergodic`, `LF4/TypicalityForcing.lean`; `flow_admits_invariant_ne_fubiniStudy`,
+  `SigmaLayer/SectorPostulateNoGo.lean`), so building out the epistemic ergodic scaffolding
+  (`SigmaLayer/UniqueErgodicity.lean`, `BornFromFlow`, `IsErgodicForOutcomeRegions`) is **not progress**.
+  CSD's typicality is **repeated-preparation ignorance over the prepared region `Ω₀` on Σ** (Paper D, "Note on
+  repeated preparations"; classical-statistical-mechanics style) — each experiment is one trajectory;
+  statistics come from not knowing the exact microstate in `Ω₀`. That is neither time-averaging one epistemic
+  trajectory nor "fresh i.i.d. preparations *instead of* single-trajectory." Do not round the narrow
+  epistemic-`ℂℙ` no-go up to a rejection of the ontology, and do not treat "deriving Σ" as the residue
+  (Σ is the floor — a non-question).
 * **NG2 — the Busch effect-Gleason axiom is NOT needed for CSD's core claim; discharging it is
   cosmetic.** CSD's ontic Born rule is **Gleason-free**: it is a Fubini–Study / Duistermaat–Heckman
   *volume* (`bornRegion_fs_measure`, `born_frequency_convergence_N`). The former axiom
@@ -205,13 +224,14 @@ machine-checked facts in the corpus.
 
 ## 8. Bottom line
 
-The corpus proves **operational finite-QM closure on a concrete projective product witness** satisfying the
-exact formalised subset of the Paper C assumptions: one witness model, one measurement/record/update loop, the
-full T1–T16 target inventory inhabited, axiom-clean. It does **not** derive the Paper C architecture from a
-primitive ontology — the projective geometry, Fubini–Study measure and unitary evolution are built into the
-witness. The two genuine open frontiers are **SO-1** (the *origin* of the posited sector) and **MD-1** (the
-A7 preparation-indexed vs. context-fixed measurement-partition mismatch) — genuine open problems, honestly
-flagged, not papered over. This is exactly Paper C's own scope.
+The corpus proves the **QM calculation engine on a concrete projective witness** — the *consistency floor*:
+the full T1–T16 target inventory inhabited, axiom-clean, Born = Ω-region volume ratio, on one witness model
+with μ_FS and `exp(-itH)` built in. This is **layer 2 (the engine), demonstrated — not the thesis**. **Σ is
+the floor and is everything; deriving it is a non-question.** The thesis is the two layers **not yet
+scaffolded in Lean**: the **record layer** (measurement = de-isolation = record *selection* via Ω-basins on
+Σ; MD-1) and the **projection layer** (those records project to make spacetime; Σ *local* while the
+record→spacetime projection is *non-local*, dissolving entanglement-at-a-distance). That is where the work
+is. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired error — see §7.)
 
 References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
 [`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean).
