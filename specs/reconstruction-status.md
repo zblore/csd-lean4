@@ -12,9 +12,9 @@ claims; where it and an older document disagree, this file and
 >    T1–T16 inventory inhabited. This is what the Lean proofs deliver, and it is essentially complete. It is
 >    the **consistency floor**, not the thesis. (Reproducing QM ≠ the achievement.)
 > 2. **Completing the reconstruction** — making QM genuinely *arise from* Σ and Ω-regions on the ontic
->    surface, not accumulating more QM on the epistemic side. The near frontier is measurement as **record
->    selection** via context-fixed Ω-basins on Σ (the corpus currently does it epistemically on ℂℙ). This is
->    where the work is.
+>    surface, not accumulating more QM on the epistemic side. The near frontier is the record layer:
+>    **context-fixed *epistemic* outcome regions {Ωᵢ(M)} on ℂℙⁿ⁻¹** (Paper C A7; the corpus's `bornRegion ψ'`
+>    is preparation-indexed), with **the record the ontic selection in Σ**. This is where the work is.
 >
 > The precise, defensible claim about the Lean today is:
 >
@@ -43,10 +43,10 @@ derivations of `μFS` or of unitary evolution from a fibre-primitive ontology. *
 *calculation engine* demonstrated — the consistency floor, not the thesis** (see [`CSD-CHARTER.md`](CSD-CHARTER.md)).
 **Σ is the floor and is everything; deriving it is a non-question** (Paper C is explicitly "a reconstruction,
 not a derivation"). The goal is to **complete the reconstruction of QM from Σ and Ω-regions**; the near
-frontier — *not yet genuine in Lean* — is the **record layer**: measurement = de-isolation = record
-*selection* via context-fixed Ω-basins on Σ (**MD-1**; the present preparation-indexed `bornRegion ψ'` on
-`ℂℙ` is only an epistemic witness). The earlier "SO-1 = derive the sector" framing that appeared here is a
-**retired error** (§7).
+frontier — *not yet genuine in Lean* — is the **record layer** (**MD-1**): the **epistemic** outcome regions
+{Ωᵢ(M)} on `ℂℙⁿ⁻¹` must be **context-fixed** (Paper C A7), not the present preparation-indexed `bornRegion ψ'`,
+and **the record** must be realized as the ontic selection in Σ. (The Ω-regions are epistemic, not ontic.)
+The earlier "SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
 
 ## 2. The Paper C axiom map (A1–A7) — canonical formalisation status
 
@@ -160,12 +160,15 @@ computes. The goal now is to **complete the reconstruction of QM from Σ and Ω-
 *arising from* the ontic surface, not accumulated on the epistemic side. The near frontier — **not yet
 genuine in Lean**:
 
-* **The record layer (MD-1) — the near frontier.** Measurement = de-isolation = **record selection via
-  context-fixed Ω-basins on Σ**: a partition of the prepared region `Ω₀` determined by the apparatus, the
-  preparation entering only through `Ω₀`, the record being *which basin the single trajectory occupies* — a
-  **selection of structure already in Σ** (Σ does not grow). The corpus's measurement is on the wrong side:
-  `vnPointerOutcome` uses `bornRegion ψ'` — preparation-indexed cells on `ℂℙⁿ⁻¹` (epistemic), not
-  context-fixed basins on Σ. Completing the reconstruction moves measurement onto Σ. Endpoint:
+* **The record layer (MD-1) — the near frontier.** Measurement = de-isolation. Two levels, kept distinct
+  (Paper C A7): the apparatus context M fixes an **epistemic** outcome partition **{Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹**
+  (context-defined, μ_FS-null boundaries — **the Ω-regions are epistemic, NOT ontic**); and **the record is
+  the ontic selection in Σ** of which region the single trajectory realizes (equivalently which
+  `π⁻¹(Ωᵢ(M))` basin `ω(t)` occupies — structure already in Σ; Σ does not grow). Born = the prepared density
+  integrated over the fixed epistemic regions. **The corpus's gap is two things, neither "move regions onto
+  Σ":** (1) `vnPointerOutcome` uses `bornRegion ψ'` — **preparation-indexed** (defined from the state ψ') on
+  `ℂℙⁿ⁻¹`, not **context-fixed** {Ωᵢ(M)} (defined from the apparatus M) — *both epistemic*; and (2) the record
+  is not yet realized as the ontic selection in Σ. Endpoint:
   > **MD-1.** Separate preparation laws from context-fixed outcome partitions, then derive the outcome
   > probabilities by integrating the preparation law over those fixed regions.
 
@@ -227,10 +230,10 @@ The corpus proves the **QM calculation engine on a concrete projective witness**
 the full T1–T16 target inventory inhabited, axiom-clean, Born = Ω-region volume ratio, on one witness model
 with μ_FS and `exp(-itH)` built in. **Σ is the floor and is everything; deriving it is a non-question.** The
 goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — making QM genuinely *arise from*
-the ontic surface. The near frontier, **not yet genuine in Lean**, is the **record layer**: measurement =
-de-isolation = record *selection* via context-fixed Ω-basins on Σ (MD-1), where the corpus currently uses the
-epistemic, preparation-indexed `bornRegion ψ'` on `ℂℙ`. That is where the work is. (The earlier "SO-1 =
-derive the sector, the central frontier" framing is a retired error — see §7.)
+the ontic surface. The near frontier, **not yet genuine in Lean**, is the **record layer** (MD-1): the
+**epistemic** outcome regions {Ωᵢ(M)} on `ℂℙⁿ⁻¹` must be **context-fixed** (Paper C A7) — the corpus uses the
+preparation-indexed `bornRegion ψ'` — and **the record** realized as the ontic selection in Σ. That is where
+the work is. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired error — §7.)
 
 References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
 [`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean).

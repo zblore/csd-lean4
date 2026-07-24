@@ -26,14 +26,15 @@ the stronger the theory. Deriving Σ (from beneath) is the non-question; *constr
 SU(n)-compatible measure, the U(N) symmetry, the Kähler structure, minimality — are exactly
 this constraint work (not a frontier *like the record layer*, but not to be dismissed).
 
-**QM arises from Ω-regions on Σ.** A measurement context partitions the prepared region
-into outcome basins {Ωᵢ}; the invariant volume ratios μ(Ωᵢ)/μ(Ω₀) are the outcome
-weights, and — via typicality over repeated preparations (classical-statistical-mechanics
-ignorance of the microstate in Ω₀; Paper A) together with the SU(n)-fixed measure μ_FS
-(Paper B) — they are the Born weights |⟨i|ψ⟩|². The rest of QM (Schrödinger dynamics,
-composite structure, contextuality) follows on the same footing. **QM is the calculation
-engine born from the Ω-region structure — reproducing it is the point, but only when it
-genuinely arises from Σ and Ω.**
+**QM arises from the (epistemic) Ω-region partition + the ontic typicality volume — two
+levels, kept distinct.** A measurement context M fixes an **epistemic** outcome partition
+**{Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹** — context-defined, μ_FS-null boundaries (Paper C A7). **The Ω-regions
+are EPISTEMIC, not ontic.** The outcome weight is the **ontic typicality volume ratio**
+`μL(π⁻¹Ωᵢ(M) ∩ Ω₀) / μL(Ω₀)` on Σ (equivalently `∫_{Ωᵢ(M)} ρ_ep dμ_FS`), which — via
+typicality over repeated preparations (ignorance of the microstate in Ω₀; Paper A) + the
+SU(n)-fixed μ_FS (Paper B) — is the Born weight |⟨i|ψ⟩|². So: **the regions are epistemic (on
+ℂℙ); the measure/typicality that weights them is ontic (μL over Ω₀ ⊂ Σ).** QM is the
+calculation engine born from this structure.
 
 ## The goal now — complete the Σ+Ω reconstruction of QM
 
@@ -41,13 +42,15 @@ The immediate deliverable is to make **the whole of finite-dimensional QM arise 
 Ω-regions**, on the ontic surface, with no epistemic shortcuts. The corpus has the
 calculation engine running on a projective *witness*, but two things are not yet genuine:
 
-- **Measurement must be a record on Σ — the near frontier.** Measurement = de-isolation =
-  **record selection via context-fixed Ω-basins on Σ**: a partition of Ω₀ determined by
-  the apparatus (not the preparation), the record being *which basin the single trajectory
-  occupies* — a **selection of structure already in Σ** (Σ does not grow). The corpus
-  currently does measurement on the *epistemic* side — `vnPointerOutcome` via
-  `bornRegion ψ'` on ℂℙⁿ⁻¹, preparation-indexed — which is the wrong side. Completing the
-  reconstruction means moving measurement onto Σ as genuine Ω-basins + records.
+- **The record — the near frontier.** Measurement = de-isolation. The apparatus context M
+  fixes the **epistemic** partition {Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹; the single trajectory's projection lands
+  in one region, and **the record is the ontic selection in Σ** of which one — equivalently
+  which `π⁻¹(Ωᵢ(M))` basin ω(t) occupies (a **selection of structure already in Σ**; Σ does
+  not grow). Born = the prepared density integrated over the fixed epistemic regions. **The
+  corpus's gap is two things, neither of them "move the regions onto Σ":** (1) `bornRegion ψ'`
+  is **preparation-indexed** (defined from the state ψ'), not **context-fixed** {Ωᵢ(M)}
+  (defined from the apparatus M) — *both are epistemic*; and (2) the record is not yet realized
+  as the ontic selection in Σ. **The Ω-regions stay epistemic (on ℂℙ) — do NOT relocate them to Σ.**
   > Separate preparation laws from context-fixed outcome partitions, then derive the
   > outcome probabilities by integrating the preparation law over those fixed regions.
 - **The engine currently runs on a witness with μ_FS and `exp(-itH)` built in.** That
@@ -87,14 +90,16 @@ calculation engine running on a projective *witness*, but two things are not yet
 - Reproducing QM on the *epistemic* side (more results, gates, algorithms) presented as
   completing the reconstruction.
 - Any attempt to "derive Σ" / explain Σ's origin — a non-question.
-- Measurement left on the epistemic ℂℙ side (preparation-indexed `bornRegion ψ'`) instead
-  of record selection via Ω-basins on Σ — the near frontier.
+- Measurement outcome regions **preparation-indexed** (`bornRegion ψ'`) instead of
+  **context-fixed** {Ωᵢ(M)} — both epistemic; and the record not realized as the ontic
+  selection in Σ. (The Ω-regions are epistemic; do not "relocate them to Σ".)
 - The witness closure called "QM derived from CSD."
 
 ## How to use this
 
 Before landing framing/prose/claims, or scoping new work, run the **`csd-foundations`**
 agent (`.claude/agents/csd-foundations.md`) against the change or plan, or check it
-against this charter yourself. The immediate frontier is **the record layer** — measurement
-as record selection via Ω-basins on Σ — as the step that makes QM genuinely arise from Σ
-and Ω.
+against this charter yourself. The immediate frontier is **the record layer** — context-fixed
+**epistemic** outcome regions {Ωᵢ(M)} on ℂℙ, with the **record the ontic selection in Σ** of
+which region the trajectory realizes — the step that makes QM's measurement genuinely arise
+from Σ + Ω.

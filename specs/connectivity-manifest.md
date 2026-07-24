@@ -27,7 +27,8 @@ the sector is **POSITED** — Σ is the floor, and **deriving it is a non-questi
 retired "SO-1 / L7 Born-from-flow" gap). Born *arises from* the Ω-region volume ratios +
 typicality; that IS the reconstruction, not a "derive the sector" debt. The goal now is to
 **complete the reconstruction of QM from Σ and Ω-regions**; the near frontier is the record
-layer (measurement as record selection via Ω-basins on Σ). (Paper C **Axiom A5** =
+layer (context-fixed **epistemic** outcome regions {Ωᵢ(M)} on `ℂℙⁿ⁻¹`, not the prep-indexed
+`bornRegion ψ'`, with **the record the ontic selection in Σ**). (Paper C **Axiom A5** =
 projectability, never "the origin of Σ".) The Kähler-geometry fields (L1) now carry their genuine
 pointwise/linear core (`IsKahlerSector := IsFubiniStudyKahler`, proved); only the
 manifold residual (`dω = 0`, top-power volume identity) stays an interpretive posit
@@ -198,8 +199,9 @@ do not sell the epistemic witness as completing the reconstruction. Σ is the fl
 - **C6 (retired as stated).** "Derive the Born weights FROM the deterministic flow" is a
   **non-question** — Σ is the floor; Born *arises from* the Ω-region volume ratios +
   typicality (that is the reconstruction). The genuine near frontier is the **record layer**:
-  make measurement a record *selection* via context-fixed Ω-basins on Σ (replacing the
-  epistemic, preparation-indexed `bornRegion ψ'` on `ℂℙ`) — `specs/CSD-CHARTER.md`,
+  make the **epistemic** outcome regions {Ωᵢ(M)} on `ℂℙⁿ⁻¹` **context-fixed** (Paper C A7), not the
+  preparation-indexed `bornRegion ψ'`, and realize **the record** as the ontic selection in Σ (which
+  region the trajectory realizes) — the Ω-regions stay epistemic — `specs/CSD-CHARTER.md`,
   `future-work.md` (record layer / MD-1). Paper C Axiom A5 = projectability, not "the origin of Σ".
 
 **Gate:** a link's row flips to CONNECTED only when a named `sorry`-free,

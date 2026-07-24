@@ -5,17 +5,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## ★ North star — complete the reconstruction of QM from Σ + Ω, NOT "just reproducing QM"
 
 > **Read [`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) first.** **Σ is the floor and is everything**
-> — the total, fixed, *local* ontic space; deriving Σ is a **non-question**. **QM arises from
-> Ω-regions on Σ**: volume ratios μ(Ωᵢ)/μ(Ω₀), via typicality over the prepared region Ω₀ + the
-> SU(n)-fixed μ_FS, give the Born weights; dynamics + measurement follow on the same ontic footing.
-> **The goal now is to *complete that reconstruction* — QM genuinely arising from Σ and Ω-regions**,
-> not to accumulate more QM results on the epistemic side.
+> — the total, fixed, *local* ontic space; deriving Σ is a **non-question** (but *constraining* Σ
+> from above — forcing its structure/measure, e.g. μ_FS unique by SU(n) — is legitimate). **QM arises
+> from the (epistemic) Ω-region partition + the ontic typicality volume — TWO LEVELS, kept distinct:**
+> the outcome regions **{Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹ are EPISTEMIC** (context-defined, Paper C A7); the *measure*
+> that weights them (`μL(π⁻¹Ωᵢ ∩ Ω₀)/μL(Ω₀)`, via typicality + SU(n)-fixed μ_FS) is **ontic on Σ** →
+> the Born weight. **The goal now is to complete that reconstruction**, not accumulate more epistemic QM.
 >
-> **The near frontier is the record layer:** measurement = de-isolation = **record *selection* via
-> context-fixed Ω-basins on Σ** (a partition of Ω₀ by the apparatus; the record = which basin the
-> single trajectory occupies, a selection of structure *already in Σ* — Σ does not grow). The corpus
-> currently does measurement on the *epistemic* ℂℙ side (`vnPointerOutcome` via `bornRegion ψ'`,
-> preparation-indexed) — the wrong side; completing the reconstruction moves it onto Σ.
+> **The near frontier is the record layer (MD-1):** the **epistemic** outcome regions {Ωᵢ(M)} on ℂℙ must
+> be **context-fixed** (apparatus M), NOT the corpus's preparation-indexed `bornRegion ψ'` (from the
+> state) — *both epistemic*; and **the record** must be realized as the **ontic selection in Σ** of which
+> region the single trajectory realizes (a selection of structure *already in Σ* — Σ does not grow).
+> **The Ω-regions are epistemic — do NOT "move them onto Σ".** The fix is context-fixed-vs-prep-indexed
+> + the ontic record.
 >
 > **Before landing any framing/prose/claim, or scoping new work, run the `csd-foundations` agent**
 > (`.claude/agents/csd-foundations.md`) — the anti-drift check. Never sell reproducing QM on the
@@ -65,8 +67,8 @@ The general-`N` entangled tier core is likewise CLOSED (2026-07-04, LF6-C/D/E: C
 **Work programme order (user-set 2026-07-07): the TH track (TH-2→TH-4 + TH-1 concentration
 residual) → the CV track (CV-1 onwards) → EC (deprioritised).**
 **The goal now is to complete the reconstruction of QM from Σ + Ω** ([`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md)):
-the near frontier is the **record layer (MD-1)** — measurement = de-isolation = record selection via
-context-fixed Ω-basins on Σ, replacing the epistemic, preparation-indexed `bornRegion ψ'` on `ℂℙ`; plus the
+the near frontier is the **record layer (MD-1)** — context-fixed **epistemic** outcome regions {Ωᵢ(M)} on
+`ℂℙ` (replacing the preparation-indexed `bornRegion ψ'`), with **the record the ontic selection in Σ**; plus the
 Born-from-volume `SectorData` instances, which still carry `Φ = id` (the D1c variants
 `kSectorDataFlow` / `cpSectorDataFlow` thread a genuine `Φ ≠ id`). (Σ is the floor — "derive the sector" is a
 non-question.) Axiom posture and the two-strata (operational Gleason vs ontic volume)
