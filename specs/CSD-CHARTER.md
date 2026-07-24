@@ -17,6 +17,15 @@ a Liouville-preserving flow. All indeterminacy is epistemic — ignorance of exa
 *where* in a prepared region Ω₀ ⊂ Σ the microstate is. **Deriving Σ is a non-question**
 (the retired "SO-1 / derive the sector" framing); Σ is posited as complete local reality.
 
+**But constrain Σ ≠ derive Σ.** Σ is not directly seen (we observe only the epistemic
+projection), so it must *not* be treated as a free, arbitrary posit: **constraining Σ as
+tightly as possible — from above, from what it must do (give QM via Ω-regions, support the
+records) — is legitimate, valuable work.** The more forced / less arbitrary the hidden Σ,
+the stronger the theory. Deriving Σ (from beneath) is the non-question; *constraining* it
+(from the requirements) is not. The structure-forcing results — μ_FS the **unique**
+SU(n)-compatible measure, the U(N) symmetry, the Kähler structure, minimality — are exactly
+this constraint work (not a frontier *like the record layer*, but not to be dismissed).
+
 **QM arises from Ω-regions on Σ.** A measurement context partitions the prepared region
 into outcome basins {Ωᵢ}; the invariant volume ratios μ(Ωᵢ)/μ(Ω₀) are the outcome
 weights, and — via typicality over repeated preparations (classical-statistical-mechanics

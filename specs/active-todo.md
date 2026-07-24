@@ -93,13 +93,14 @@ The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one
   μFS. (This is a *measure-layer* fact — a single epistemic flow is not ergodic; CSD's typicality is
   repeated-preparation ignorance over Ω₀, not epistemic time-averaging.)
 - `so1_onramp` capstone conjoins (A)+(B): typicality's *measure* is forced by the SYMMETRY (Paper B), and a
-  single flow does not force it. **NOTE (2026-07-24):** the old framing of these as "the SO-1 frontier /
-  deriving G" is **retired** — Σ (and its symmetry) is the **floor**, posited; deriving it is a non-question.
-  These are settled measure-layer theorems, not an open frontier. (Theorem names `so1_onramp` /
-  `so1_obstruction_capstone` are legacy labels; do not read them as an open goal.)
-Follow-up #32 (moment-fibre conserved quantities `momentMap ∘ obsFlow = momentMap`) is likewise measure-layer,
-not a frontier. The genuine near frontier is the **record layer** — measurement as record selection via
-Ω-basins on Σ (`specs/CSD-CHARTER.md`), which is how QM's measurement account becomes genuinely ontic.
+  single flow does not force it. **NOTE (2026-07-24):** "derive Σ / G" is **retired** — Σ (and its symmetry)
+  is the **floor**; deriving it is a non-question. BUT these are **constraint work on Σ** (Σ is hidden, so
+  pin its measure/symmetry down as tightly as possible — μ_FS *forced*, not chosen): legitimate and valuable,
+  though not a *frontier like the record layer*. (Theorem names `so1_onramp` / `so1_obstruction_capstone` are
+  legacy labels; do not read them as a "derive the sector" goal.)
+Follow-up #32 (moment-fibre conserved quantities `momentMap ∘ obsFlow = momentMap`) is likewise constraint
+work on Σ. The genuine near frontier is the **record layer** — measurement as record selection via Ω-basins
+on Σ (`specs/CSD-CHARTER.md`), which is how QM's measurement account becomes genuinely ontic.
 
 (superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
 (needs the SectorData on the dilated space).

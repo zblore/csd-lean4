@@ -169,14 +169,17 @@ genuine in Lean**:
   > **MD-1.** Separate preparation laws from context-fixed outcome partitions, then derive the outcome
   > probabilities by integrating the preparation law over those fixed regions.
 
-**The measure layer is settled — not a frontier.** μ_FS is the unique SU(n)-compatible measure (Paper B),
+**Constraining Σ (legitimate — *not* deriving it).** Σ is the floor (deriving it is a non-question), but it
+is not directly seen, so **constraining its structure as tightly as possible — from above, from what it must
+do — is valuable work**: the more forced/less arbitrary the hidden substrate, the stronger the theory. The
+structure-forcing results are exactly this. μ_FS is the **unique** SU(n)-compatible measure (Paper B),
 realized in Lean by `fubiniStudy_forced_by_symmetry` / `LocalisedTypicality.lean`
-(`region_measure_symmetry_forced`). The companion no-go (`SectorPostulateNoGo.lean`,
-`flow_admits_invariant_ne_fubiniStudy`) records only that a single *epistemic unitary* flow does not
-time-average to μ_FS — expected, and irrelevant to CSD's mechanism (typicality is repeated-preparation
-ignorance over `Ω₀` on Σ, not epistemic time-averaging). These are true theorems about the measure/symmetry
-layer; they are **not** progress toward "deriving Σ" (a non-question). The earlier "SO-1 / L7 Born-from-flow"
-framing that presented them as *the* frontier is a **retired error**.
+(`region_measure_symmetry_forced`) — so Σ's typicality measure is *forced*, not chosen. The companion no-go
+(`SectorPostulateNoGo.lean`, `flow_admits_invariant_ne_fubiniStudy`) records only that a single *epistemic
+unitary* flow does not time-average to μ_FS — expected, and irrelevant to CSD's mechanism (typicality is
+repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging). These are **constraint work on
+Σ** — pinning the hidden substrate down — not a *frontier like the record layer*, and NOT the retired
+"derive Σ / SO-1 / L7 Born-from-flow" non-question.
 
 **Remaining formalization gaps (engine-level, not the thesis):**
 
