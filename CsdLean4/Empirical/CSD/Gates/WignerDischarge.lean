@@ -36,8 +36,8 @@ condition on a projective self-map, rather than posited as a Hilbert isometry.
   packaged as a `CSDUnitaryBundle`: `U_isometry` is a THEOREM.
 * `Projectivization.conjProj_ne_projMap` / `smul_action_not_antiunitary` — the
   non-vacuity core: coordinatewise conjugation is not a unitary projective map
-  (`N ≥ 2`), so the sector action `g • ·` (a `Matrix.unitaryGroup` element, the A5
-  datum) satisfies the no-time-reversal selection.
+  (`N ≥ 2`), so the sector action `g • ·` (a `Matrix.unitaryGroup` element, the
+  posited-sector datum, SO-1) satisfies the no-time-reversal selection.
 * `cpSectorActionBundle` — a concrete `CSDUnitaryBundle` on `cpSectorData p₀`
   whose `U_isometry` is DERIVED (via the constructor, from the sector action's
   transition-probability preservation), not posited. Non-vacuous.
@@ -45,7 +45,7 @@ condition on a projective self-map, rather than posited as a Hilbert isometry.
   structure (that is exactly why `transProbPreserving_unitary g` and
   `smul_action_not_antiunitary` are provable), so for this concrete instance the
   Wigner step adds no content: an isometry realising `f` was in hand a priori.
-  Read this as "`U_isometry` derived from the A5 sector action (which already
+  Read this as "`U_isometry` derived from the posited-sector action (SO-1) (which already
   carries the isometry)", NOT as "isometry derived from blind deterministic
   dynamics". The content-adding case — Wigner manufacturing an isometry from a
   map NOT presented as one — is the general constructor
@@ -54,7 +54,7 @@ condition on a projective self-map, rather than posited as a Hilbert isometry.
 
 ## Honest status of §13.2
 
-**Discharged MODULO the sector symmetry (A5).** For projective dynamics that
+**Discharged MODULO the posited sector symmetry (SO-1).** For projective dynamics that
 preserve the transition-probability structure, `U_isometry` is a theorem via
 Wigner, non-vacuously realised by the sector action on the concrete Kähler
 instance. The primitive moves from "posit the Hilbert unitary `U` with
@@ -63,7 +63,7 @@ probabilities and is not time-reversal".
 
 **True residue (D1).** The transition-probability preservation is FORCED by the
 sector symmetry — the sector group `G` acting by Fubini–Study isometries, which
-is the A5 datum (`SectorData.(π, G)`) — **not** by `μL`-measure-preservation.
+is the SO-1 sector datum (`SectorData.(π, G)`) — **not** by `μL`-measure-preservation.
 Measure-preservation is strictly weaker than metric preservation: a
 `μFS`-measure-preserving self-map of `ℂℙ^{N-1}` need **not** preserve the
 Fubini–Study metric / transition probability, so no lemma
@@ -349,7 +349,7 @@ noncomputable def cpContext (p₀ : CPN N) :
 transition-probability preservation `transProbPreserving_unitary g`) rather than
 posited. The no-time-reversal selection is supplied by
 `smul_action_not_antiunitary` (`N ≥ 2`): the sector action `g • ·` is a
-`Matrix.unitaryGroup` element acting — the A5 sector-symmetry datum — hence not
+`Matrix.unitaryGroup` element acting — the posited-sector-symmetry datum (SO-1) — hence not
 time-reversal. Unitarity is the OUTPUT of Wigner. -/
 noncomputable def cpSectorActionBundle (hN : 2 ≤ N) (p₀ : CPN N)
     (g : Matrix.unitaryGroup (Fin N) ℂ) :

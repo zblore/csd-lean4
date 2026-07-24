@@ -79,7 +79,7 @@ reached at one point, not through an inequality.
   of the same Sigma-volume engine. `ghz_engine_marginal_factorises` (each
   single-wing marginal = 0, maximally mixed, no-signalling) holds even though the
   joint `<XXX>` does not factor (`ghz_engine_joint_nonfactorises`).
-- **Residue: A5.** This realises the GHZ correlations MODULO **A5**: the GHZ
+- **Residue: SO-1.** This realises the GHZ correlations MODULO the posited **CSD sector (SO-1)**: the GHZ
   entangled sector / preparation region is posited, not derived from deterministic
   dynamics (SO-1: the sector origin, distinct from Paper C Axiom A5). Same posture as the singlet (A.1).
 - **Scope: C.1 only.** THIS file is the forced-contextuality crux. The full GHZ

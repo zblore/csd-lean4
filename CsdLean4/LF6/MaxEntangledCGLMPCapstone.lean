@@ -37,7 +37,7 @@ facts) and swaps **only conjunct 7** for the `d`-intrinsic CGLMP force. The
 strictly stronger, dimension-intrinsic statement of the same non-factorisation.
 
 Foundational-triple-only (Gleason-free), like both parents. Residue unchanged:
-A5 (the entangled sector is posited, not derived).
+SO-1 (the entangled sector is posited, not derived).
 -/
 
 @[expose] public section

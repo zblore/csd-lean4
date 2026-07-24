@@ -24,7 +24,7 @@ permutation/diagonal involutions, so `Gᴴ * G = 1` (`qmG*_unitary`) gives membe
 
 ## Honest scope
 
-Identical to the single-qubit tier: **modulo A5** (the sector is posited), and per
+Identical to the single-qubit tier: **modulo the posited CSD sector (SO-1)** (the sector is posited), and per
 `PLACEHOLDERS.md §7` the `CSDUnitaryBundle` type carries `U` + `U_isometry` + a `Context`,
 not a Σ-flow — so these theorems establish the Prop *as typed*, not the stronger Σ-flow-lift
 prose (the open **D1** gap). `U_isometry` is derived from `qm{CNOT,SWAP,CZ} ∈ U(4)` — the
@@ -56,7 +56,7 @@ theorem qmCZ_mem_unitaryGroup : qmCZ ∈ Matrix.unitaryGroup (Fin 4) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose]; exact qmCZ_unitary
 
 /-- **§13.2 discharge (CNOT).** `cnot_realisable_for (cpSectorData p₀)` holds: the bundle's
-`U` is the CNOT action, `U_isometry` derived from `qmCNOT ∈ U(4)`. Modulo A5. -/
+`U` is the CNOT action, `U_isometry` derived from `qmCNOT ∈ U(4)`. Modulo the posited CSD sector (SO-1). -/
 theorem cnot_realisable_cpSector (p₀ : CPN 4) :
     CSD.Empirical.CSDBridge.Gates.TwoQubit.cnot_realisable_for (cpSectorData p₀) :=
   ⟨{ toContext := cpContext p₀

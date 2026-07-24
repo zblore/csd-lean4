@@ -58,7 +58,7 @@ tranche); this file leaves no volume-frequency headline merely
 classically-satisfiable. The honest-scope caveat is unchanged: this is the
 **measure-theoretic existence** of the i.i.d. sampling law; the physical reading
 of repeated preparation as FS-typical i.i.d. draws remains the LF1 typicality /
-A5 posit, not derived by constructing the process. Foundational-triple-only;
+the CSD sector posit (SO-1), not derived by constructing the process. Foundational-triple-only;
 Gleason-free (no `busch_effect_gleason`).
 -/
 

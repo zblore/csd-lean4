@@ -2,6 +2,24 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ★ North star — deliver CSD from its foundations, do not drift into "just reproducing QM"
+
+> **Read [`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) first.** CSD (the deterministic ontic
+> substrate `(Σ, μL)` + epistemic projection `π` + typicality via the LLN) is the **foundation**;
+> QM (Born, Schrödinger, measurement) is the **forward output**, not the goal. Two endpoints are
+> **never** conflated: (1) *operational finite-QM closure on a concrete projective witness* — done,
+> a consequence; (2) *a faithful derivation of the Paper C/D architecture from CSD's primitive
+> ontology* — the GOAL, open. The live foundational frontier is **SO-1** (the sector origin —
+> distinct from Paper C **Axiom A5** = projectability) and **MD-1** (context-fixed measurement
+> partitions). Adding gates/algorithms/empirical QM tests is **breadth**, legitimate only when
+> labelled as such.
+>
+> **Before landing any framing/prose/claim, or scoping new work, run the `csd-foundations` agent**
+> (`.claude/agents/csd-foundations.md`) against the change or plan — it is the anti-drift check.
+> The witness is **not** a derivation; the sector is **posited** (SO-1 open); never write "CSD
+> derives QM" or "the sector is derived". Keep A5 (projectability) and SO-1 (sector origin)
+> distinct — `scripts/check-claims.sh` guards the retired mislabels.
+
 ## Where to start (plans & todos)
 
 > **⚠️ Open work lives in ONE place: [`specs/BACKLOG.md`](specs/BACKLOG.md).** That is the

@@ -38,7 +38,7 @@ Both reduce to the same inner column sum `∑ₙ conj(√Eᵢ)_{n,m} (√Eᵢ)_{
 
 This removes the "supplied dilation" caveat: every POVM has a Naimark dilation, so
 the ontic POVM Born = Kähler-volume reading holds for every POVM. What remains
-posited is the *enlarged* sector structure on `Σ' = ℂℙ^{N·|ι|−1}` (the **A5** datum
+posited is the *enlarged* sector structure on `Σ' = ℂℙ^{N·|ι|−1}` (the **SO-1** sector datum
 on the dilated space — the ancilla is the apparatus/environment), and, beneath it,
 the dynamics (**D1**). The dilation is still non-canonical as a *choice* (Naimark
 dilations are non-unique); `canonicalNaimark` is *one* explicit, always-available

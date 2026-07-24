@@ -25,7 +25,7 @@ carries for a general sector element).
 
 ## Honest scope
 
-* **Modulo A5.** `cpSectorData` is the *posited* Kähler sector; this discharges the Props
+* **Modulo the posited CSD sector (SO-1).** `cpSectorData` is the *posited* Kähler sector; this discharges the Props
   *given* that sector, exactly as `WignerDischarge`/`cpSectorActionBundle` do. It does not
   derive the sector.
 * **What the type carries.** Per `PLACEHOLDERS.md §7` the `CSDUnitaryBundle` type carries
@@ -35,7 +35,7 @@ carries for a general sector element).
   the open **D1** gap and is NOT claimed here.
 * **`U_isometry` is derived, not posited.** It comes from `qm{H,S,T} ∈ U(2)`
   (`inner_toEuclideanLin_unitary`), i.e. from the gate being a Fubini–Study isometry — the
-  A5 sector datum — not from `μL`-measure-preservation (measure ≠ metric; see
+  posited-sector datum (SO-1) — not from `μL`-measure-preservation (measure ≠ metric; see
   `WignerDischarge`).
 
 Net effect: the three single-qubit gate placeholders (`PLACEHOLDERS.md §1`) become proved

@@ -22,7 +22,7 @@ computational-basis measurement as the C.2 flow: its context-fixed pointer-block
 Fubini-Study volumes are the GHZ Born weights `ghzWeight`. So the de-isolation
 needs **no non-local interaction** among the three parties; the GHZ non-locality
 lives entirely in the contextual carve (C.1/C.3) and the entangled preparation
-(A5).
+(SO-1).
 
 ## Honest framing (read this; do not get it wrong)
 
@@ -86,7 +86,7 @@ factor reuse A.3's `localDeisolation_pullback` verbatim.
   `(1/2, 0, …, 0, 1/2)`; the Mermin-context carve (whose block correlations carry
   GHZ's contextuality) is deferred. The contextuality is the C.1 no-go, never in
   the (local) flow.
-- **Residue: A5.** The entangled GHZ sector / preparation region is posited, not
+- **Residue: SO-1.** The entangled GHZ sector / preparation region is posited, not
   derived (SO-1: the sector origin, distinct from Paper C Axiom A5). The non-locality lives in the contextual carve and
   the entangled preparation, never in the (local) flow.
 
@@ -597,10 +597,10 @@ GHZ measurement.** Conjuncts:
 
 So the de-isolation needs NO non-local interaction among the three parties; the
 GHZ non-locality is entirely in the contextual carve (C.1/C.3) and the entangled
-preparation (A5). The `N=8`-adder C.2 flow is a non-factoring unitary completion
+preparation (SO-1). The `N=8`-adder C.2 flow is a non-factoring unitary completion
 of the same measurement (`ℤ/8 ≠ ℤ/2 × ℤ/2 × ℤ/2`); C.4's product flow is the
 manifestly-local one. Born = FS-volume is imported (LF5/DH/POVM-Naimark engine),
-not re-derived. Residue: A5 (the entangled GHZ sector posited). Honest ledger:
+not re-derived. Residue: SO-1 (the entangled GHZ sector posited). Honest ledger:
 module docstring. -/
 theorem ghzLocal_capstone {M : ℕ}
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

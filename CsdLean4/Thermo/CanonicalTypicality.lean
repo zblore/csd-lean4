@@ -59,9 +59,9 @@ mixing / ETH, out of scope).
 `fs_born_volume_ratio_N`, Gleason-free) becomes thermal-equilibrium-from-volume:
 the canonical subsystem state is the Fubini-Study volume-average. The
 CSD-distinctive claim that this equilibrium *emerges from deterministic
-microdynamics* rests on the A5 (sector / typicality-law posit) and D1 (dynamics)
+microdynamics* rests on the SO-1 (sector / typicality-law posit) and D1 (dynamics)
 residues shared with all of LF4/LF6; this file posits `mu_FS` as the sampling law
-(A5) and proves the statistical-mechanical consequence, it does not derive `mu_FS`
+(SO-1) and proves the statistical-mechanical consequence, it does not derive `mu_FS`
 from a flow.
 
 All results are foundational-triple-only (no `busch_effect_gleason`, no

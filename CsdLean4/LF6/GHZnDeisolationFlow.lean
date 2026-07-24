@@ -97,9 +97,9 @@ general `n ≥ 3`; the essentially-4-party case is additionally witnessed at `n 
   `⟨XXX…⟩ = +1`, `⟨XYY…⟩ = −1`, … are GHZ_n's actual Mermin correlations for every
   `n ≥ 3`, DERIVED here as `ghzN_mermin_correlations` — deliverable 5, general `n`;
   at `n = 3` this agrees with `Empirical.GHZ.ghz_expectation_*`).
-- **Residue: A5.** The GHZ_n entangled sector / preparation region is posited, not
+- **Residue: SO-1.** The GHZ_n entangled sector / preparation region is posited, not
   derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
-  measure (A5).
+  measure (SO-1).
 
 ## Residual (named, honestly)
 
@@ -565,7 +565,7 @@ Born = FS-volume is imported from the DH/FS-volume engine, not re-derived; the f
 realises (not derives) the GHZ_n measurement. The forcing is a genuine `n`-party
 statement whose mechanism is the three-party Mermin paradox embedded via
 `X`-spectators (`no_lhv_assignment_for_ghz4` is the essentially-four-party witness).
-Residue: A5 (the GHZ_n entangled sector posited). Honest ledger: module docstring. -/
+Residue: SO-1 (the GHZ_n entangled sector posited). Honest ledger: module docstring. -/
 theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
     (e : Fin (2 ^ n) × Fin (2 ^ n) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))

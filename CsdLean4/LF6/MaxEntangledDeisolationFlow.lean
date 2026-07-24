@@ -79,9 +79,9 @@ computed maximally-entangled Born weights `medWeight`.
   computed from `Ψ_d`'s actual Born probabilities via the Dirichlet-kernel closed
   form), with `d = 3` (`cglmp 3 pQM = (12+8√3)/9`) the concrete qutrit anchor. The
   general-`d` CGLMP result is now closed.
-- **Residue: A5.** The entangled sector / preparation region is posited, not
+- **Residue: SO-1.** The entangled sector / preparation region is posited, not
   derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
-  measure (A5).
+  measure (SO-1).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine is
 off Busch, A.1 is measure-theoretic Bell content).
@@ -642,7 +642,7 @@ superseded for **every** `d ≥ 2` by the genuinely `d`-intrinsic CGLMP violatio
 (`CGLMPQudit.no_lhv_realises_maxEntangled_cglmp_d`,
 `CGLMPQudit.cglmp_maxEntangled_qudit_gt_two`), with `d = 3`
 (`CGLMPQutrit.cglmp_maxEntangled_qutrit_gt_two`) the concrete qutrit anchor; the
-general-`d` CGLMP result is now closed. Residue: A5 (the entangled sector posited). -/
+general-`d` CGLMP result is now closed. Residue: SO-1 (the entangled sector posited). -/
 theorem no_product_partition_realises_maxEntangled (d : ℕ) (hd : 2 ≤ d) :
     -- (a) the sector diagonal Born-weight marginal is uniform (derived, general d)
     (∀ i : Fin 2, ∑ j : Fin 2,
@@ -693,7 +693,7 @@ realises (not derives) the measurement. Non-factorisation is Bell-forced via the
 CHSH-violating 2x2 `Φ⁺` sector (conjuncts 5-7): the sector is *derived* to be `Φ⁺`
 (6), whose two-qubit Pauli correlation is *computed* (`phiPlus_pauli_correlation`)
 and violates CHSH at `2√2 > 2` (7, via the `reflectXZ` reduction to the singlet).
-Residue: A5 (the entangled sector posited). Honest ledger: module docstring. -/
+Residue: SO-1 (the entangled sector posited). Honest ledger: module docstring. -/
 theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d) {M : ℕ}
     (e : Fin (d * d) × Fin (d * d) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))

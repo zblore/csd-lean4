@@ -9,13 +9,13 @@ public import Mathlib.Dynamics.Ergodic.Extreme
 public import CsdLean4.SigmaLayer.TheoremTargets
 
 /-!
-# SigmaLayer/UniqueErgodicity: the ergodic face of A5/L7, sharpened
+# SigmaLayer/UniqueErgodicity: the ergodic face of SO-1/L7, sharpened
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
 This module defines **unique ergodicity** (absent from Mathlib) and connects it to the
 SigmaLayer target scaffold `IsErgodicForOutcomeRegions` / `BornFromFlow` (`SigmaLayer/TheoremTargets.lean`),
-precisely locating the ergodic face of the A5/L7 frontier.
+precisely locating the ergodic face of the SO-1/L7 frontier.
 
 ## What this establishes (and, honestly, what it does NOT)
 
@@ -46,13 +46,13 @@ CSD takes:**
 2. CSD's typicality is forced by the **law of large numbers** over fresh i.i.d. preparations,
    NOT by single-trajectory time averages (`specs/active-todo.md`, framing correction 2026-06-29,
    Papers A & B). The ergodic / single-trajectory account is the *optional stronger* reading, not
-   the mechanism. So even a full pointwise Birkhoff theorem would sharpen A5's bracketing, not
-   close the A5 residue (which is the sector/symmetry ORIGIN, `G`-from-`D1`).
+   the mechanism. So even a full pointwise Birkhoff theorem would sharpen SO-1's bracketing, not
+   close the SO-1 residue (which is the sector/symmetry ORIGIN, `G`-from-`D1`).
 
 References: `SigmaLayer/TheoremTargets.lean` (`BornFromFlow`, `IsErgodicForOutcomeRegions`),
 `SigmaLayer/SectorPostulateNoGo.lean`, `LF4/TypicalityForcing.lean`, `LF4/KahlerVolumeForced.lean`
 (`IsForcedKahlerVolume` — the positive companion: `μ_FS` forced by the full `U(N)` symmetry),
-`specs/connectivity-manifest.md` (L7/A5), `specs/reconstruction-status.md` (T3 frontier).
+`specs/connectivity-manifest.md` (L7/SO-1), `specs/reconstruction-status.md` (T3 frontier).
 -/
 
 @[expose] public section

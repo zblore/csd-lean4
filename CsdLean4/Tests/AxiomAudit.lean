@@ -2888,7 +2888,7 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 -- isometry `U`, discharging `U_isometry`. `cpSectorActionBundle`: non-vacuous
 -- instantiation on the concrete Kähler instance via the sector action. All
 -- foundational-triple only; no `busch`, no `sorry`, no `native_decide`. §13.2
--- discharges modulo the sector symmetry (A5); the measure-⟹-metric route is false
+-- discharges modulo the posited sector symmetry (SO-1); the measure-⟹-metric route is false
 -- and not used.
 /-- info: 'Projectivization.conjProj_ne_projMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -2917,7 +2917,7 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 -- §13.2 CONCRETE gate discharge (2026-07-19): the three single-qubit gate realisability Props
 -- (hadamard/phaseS/phaseT_realisable_for) DISCHARGED on cpSectorData. Each gate's action is a genuine
 -- CSDUnitaryBundle whose U_isometry is derived from the gate ∈ U(2) (inner_toEuclideanLin_unitary),
--- modulo A5. Type carries U + U_isometry + Context, not a Σ-flow (PLACEHOLDERS §7), so the Σ-flow-lift
+-- modulo the posited CSD sector (SO-1). Type carries U + U_isometry + Context, not a Σ-flow (PLACEHOLDERS §7), so the Σ-flow-lift
 -- reading is the open D1 gap. Converts 3 of the 9 claim-shaped gate placeholders (PLACEHOLDERS §1) to proved.
 /-- info: 'CSD.LF4.hadamard_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -2933,7 +2933,7 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 
 -- §13.2 gate discharge COMPLETE (2026-07-19): the remaining six gate realisability Props discharged on
 -- cpSectorData (2-qubit CNOT/SWAP/CZ, multi-qubit Toffoli/Fredkin, composite Bell-prep). All nine gate
--- placeholders (PLACEHOLDERS §1) now proved; same honest scope (modulo A5; type carries U + U_isometry +
+-- placeholders (PLACEHOLDERS §1) now proved; same honest scope (modulo the posited CSD sector (SO-1); type carries U + U_isometry +
 -- Context, not a Σ-flow — D1 gap). U_isometry derived from the gate ∈ U(N) (inner_toEuclideanLin_unitary).
 /-- info: 'CSD.LF4.cnot_realisable_cpSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -2967,7 +2967,7 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 -- honest but degenerate (ray flow trivial; dynamics live in the T² fibre). Part 2 (genuine, caveat
 -- C-1): the sector U(N)-action carries the FS-isometry — kSectorActionBundle's U_isometry is a Wigner
 -- OUTPUT (kSectorActionBundle_U_isometry), not a posit. Does NOT derive TPP from measure-preservation
--- (that is the §13.2 trap / open D1 gap); A5 untouched.
+-- (that is the §13.2 trap / open D1 gap); SO-1 untouched.
 /-- info: 'CSD.LF4.kSectorDataFlow_projectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.kSectorDataFlow_projectable
@@ -3391,14 +3391,15 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.obsFlow_ne_id
 
--- A5 onramp (TypicalityForcing.lean): WHERE the Fubini–Study typicality measure comes from.
+-- SO-1 onramp (TypicalityForcing.lean): WHERE the Fubini–Study typicality measure comes from.
 -- (A) fubiniStudy_forced_by_symmetry — any U(N)-invariant probability measure on the sector
 -- ℂℙ^{N-1} IS the Fubini–Study measure (restates the axiom-free fubiniStudyMeasure_unique as
 -- the typicality-derivation: Born = FS-volume is DERIVED from the sector symmetry G = U(N),
 -- not posited). (B) obsFlow_not_uniquely_ergodic — a single ontic flow does NOT force FS: it
 -- has ≥2 distinct invariant probability measures (μFS and δ_{[e₀]} at a fixed basis ray).
--- a5_onramp conjoins them. HONEST: typicality is forced by the SYMMETRY, not any flow; residual
--- A5 primitive = G = U(N) itself, which reduces to D1 (G-from-dynamics, NOT done). A5 not closed.
+-- so1_onramp conjoins them. HONEST: typicality is forced by the SYMMETRY, not any flow; residual
+-- SO-1 primitive = G = U(N) itself, which reduces to D1 (G-from-CSD-dynamics, NOT done). SO-1 not
+-- closed. (SO-1 = the CSD sector origin, distinct from Paper C A5 = projectability.)
 -- Foundational-triple-only (no busch).
 /-- info: 'CSD.LF4.fubiniStudy_forced_by_symmetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3408,9 +3409,9 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.obsFlow_not_uniquely_ergodic
 
-/-- info: 'CSD.LF4.a5_onramp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.LF4.so1_onramp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.a5_onramp
+#print axioms CSD.LF4.so1_onramp
 
 -- (B′) STRENGTHENING (TypicalityForcing.lean): the obstruction to unique ergodicity is GENERIC,
 -- via a CONSERVED QUANTITY. map_withDensity_of_conserved — reweighting an invariant measure by a
@@ -3420,7 +3421,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- obsFlow_continuum_invariant — a CONTINUUM (Set.InjOn on [0,1]) of pairwise-distinct
 -- obsFlow-invariant PROBABILITY measures (convex-combo witness s·μFS+(1-s)·δ_{[e₀]}; the
 -- conserved Born coordinates are the structural WHY). HONEST: strengthens the obstruction;
--- still does NOT force FS / NOT close A5. Foundational-triple-only (no busch).
+-- still does NOT force FS / NOT close SO-1. Foundational-triple-only (no busch).
 /-- info: 'CSD.LF4.map_withDensity_of_conserved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.map_withDensity_of_conserved
@@ -3440,10 +3441,10 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- [e₁]). obsFlow_not_ergodic — therefore ¬ Ergodic obsFlow μFS: the conserved coordinate gives
 -- a non-trivial μFS-invariant set {m₀ ≥ m₁} of measure ∈ (0,1) (full support of μFS via the
 -- Haar pushforward bounds it away from 0 and 1), contradicting the zero-one law.
--- a5_obstruction_capstone — packages (1)⇒(2): single flow ⇒ non-constant conserved observable
+-- so1_obstruction_capstone — packages (1)⇒(2): single flow ⇒ non-constant conserved observable
 -- ⇒ not μFS-ergodic ⇒ cannot force μFS. HONEST: CLOSES the single-flow obstruction story; an
 -- ergodic flow (only-constant conserved observables) is what D1 must supply; residue = G-from-D1.
--- A5 NOT closed. Foundational-triple-only (no busch).
+-- SO-1 NOT closed. Foundational-triple-only (no busch).
 /-- info: 'CSD.LF4.momentMap_obsFlow_nonconstant_conserved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_obsFlow_nonconstant_conserved
@@ -3452,15 +3453,15 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.obsFlow_not_ergodic
 
-/-- info: 'CSD.LF4.a5_obstruction_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.LF4.so1_obstruction_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.a5_obstruction_capstone
+#print axioms CSD.LF4.so1_obstruction_capstone
 
 -- D1c-2: the concrete BASE SectorData carrying a PHYSICALLY-MEANINGFUL Φ = obsFlow ≠ id
 -- (the observable's Hamiltonian flow exp(i t Â) on the Fubini–Study Kähler base ℂℙ^{N-1}).
 -- Strictly stronger than D1c-1's free T²-fibre translation (kSectorDataFlow): dynamics on
 -- the actual projective state space, not a trivial fibre shift. obsFlow is a single
--- observable's periodic phase flow (not de-isolation Φ_vN, not ergodic); A5 ergodicity gap
+-- observable's periodic phase flow (not de-isolation Φ_vN, not ergodic); SO-1 ergodicity gap
 -- remains.
 /-- info: 'CSD.LF4.cpSectorDataFlow_phi_ne_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4170,7 +4171,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- The _canonical capstones are the originals with the trial bundle discharged,
 -- conclusions verbatim. Measure-theoretic existence of the sampling law only:
 -- the physical i.i.d.-preparation reading remains the LF1 typicality posit
--- (A5). Foundational triple throughout; Gleason-free.
+-- (SO-1). Foundational triple throughout; Gleason-free.
 /-- info: 'Set.indicator_const_preimage_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Set.indicator_const_preimage_comp
@@ -4252,7 +4253,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- Fubini–Study volumes (vnDilation_pointer_volume at N=8 + finite additivity);
 -- the codeword corollary gives the deterministic syndrome + matrix-transport
 -- recovery. Projective / coherent-error tier only; Born numbers reused from the
--- FS-volume engine; A5 posited; decoherence/partial-trace NOT here (gated
+-- FS-volume engine; the CSD sector is posited (SO-1); decoherence/partial-trace NOT here (gated
 -- entangled tier). Foundational triple only.
 /-- info: 'CSD.LF5.synClass_fiber_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4287,7 +4288,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- some-s fibre is the class-block union; the syndrome outcome event frequency
 -- (a single event per syndrome) converges a.s. to syndromeWeight (union-indicator
 -- split over the genuinely disjoint class cells via bornRegion_pairwiseDisjoint +
--- e injectivity). Projective / coherent-error tier; Born numbers reused; A5 posited;
+-- e injectivity). Projective / coherent-error tier; Born numbers reused; the CSD sector is posited (SO-1);
 -- decoherence NOT here. Foundational triple only.
 /-- info: 'CSD.LF5.syndrome_flow_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4322,7 +4323,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- marginal_*/no_signalling_*) are the Σ-volume engine's non-factorising-joint /
 -- factorising-marginal pair. productPartition_nonvacuous: product partitions exist
 -- and reproduce SOME (non-singlet) correlation, so the no-go is non-vacuous.
--- Residue A5 (entangled sector posited); LF6-A.2 (full ℂℙ¹⁵ de-isolation flow)
+-- Residue SO-1 (entangled sector posited); LF6-A.2 (full ℂℙ¹⁵ de-isolation flow)
 -- deferred. Foundational triple only.
 /-- info: 'CSD.LF6.no_product_partition_realises_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4354,7 +4355,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- locally realisable). ghz_engine_joint_nonfactorises (<XXX>=1 != 0*0*0) and
 -- ghz_engine_marginal_factorises (each single-wing marginal = 0, no-signalling)
 -- are the Sigma-volume engine's non-factorising-joint / factorising-marginal pair.
--- productPartition_ghz_nonvacuous: product partitions exist. Residue A5 (GHZ
+-- productPartition_ghz_nonvacuous: product partitions exist. Residue SO-1 (GHZ
 -- entangled sector posited); LF6-C.2 (full GHZ de-isolation flow) built below.
 -- Foundational triple only.
 /-- info: 'CSD.LF6.no_product_partition_realises_ghz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -4397,7 +4398,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- carve (the diagonal carve is NOT itself contextual; the Mermin X/Y carve tying block
 -- correlations to C.1, three-party analogue of A.2's blockVolume_correlation, is the deferred
 -- increment, as is the local product flow V_0⊗V_1⊗V_2). Flow REALISES (not derives) the GHZ
--- measurement. Residue A5 (GHZ entangled sector posited). Foundational triple only, no busch.
+-- measurement. Residue SO-1 (GHZ entangled sector posited). Foundational triple only, no busch.
 /-- info: 'CSD.LF6.ghzDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.ghzDeisolation_pointer_volume
@@ -4441,7 +4442,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- triggering Mermin's +1=−1 all-or-nothing contradiction; upgrades C.2's bare re-export
 -- ghzDeisolation_contextuality_anchor to a genuine carve-tied theorem. Born = FS-volume IMPORTED
 -- from the DH/moment-map engine, not re-derived; flow realises not derives; only the local
--- single-qubit eigen-equation proved (tripartite eigen-eq is the tensor, definitional). Residue A5
+-- single-qubit eigen-equation proved (tripartite eigen-eq is the tensor, definitional). Residue SO-1
 -- (GHZ entangled sector posited). Foundational triple only, no busch, no native_decide.
 /-- info: 'CSD.LF6.localEig_eigenvector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4496,7 +4497,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- carve is contextual (the safety anchor; does NOT assume the forbidden product structure).
 -- singletDeisolation_frequency: a.s. block frequencies → P_st (LF5 vnDilation_pointer_frequency
 -- @ N=4 + nudgedSinglet_born). Flow LOCAL (LF5 @ N=4); carve CONTEXTUAL (A.1). Flow
--- factorisation Φ = Φ_A ⊗ Φ_B deferred to LF6-A.3. Residue A5 (entangled sector posited);
+-- factorisation Φ = Φ_A ⊗ Φ_B deferred to LF6-A.3. Residue SO-1 (entangled sector posited);
 -- generic context (P_st > 0, every Bell setting). Foundational triple only, no busch.
 /-- info: 'CSD.LF6.singletDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4529,7 +4530,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 
 -- LF6-A.3 (2026-06-28): the LOCAL product de-isolation flow V_A ⊗ V_B realising the singlet.
 -- The de-isolation can be local (factorises); the non-locality is entirely in the contextual
--- carve (A.2) and the entangled preparation (A5). Foundational triple only, no busch.
+-- carve (A.2) and the entangled preparation (SO-1). Foundational triple only, no busch.
 /-- info: 'CSD.LF6.localDeisolation_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolation_factorises
@@ -4562,7 +4563,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- (povm_born_eq_dilated_volume_uncond ∘ nudgedGHZ_born); the projectivised product flow
 -- U_0 ⊗ U_1 ⊗ U_2 is FS-measure-preserving and ≠ id; the flow realises the local dilation.
 -- The de-isolation CAN be local (three-party product, no non-local interaction); the GHZ
--- non-locality lives in the contextual carve (C.1/C.3) and the entangled preparation (A5).
+-- non-locality lives in the contextual carve (C.1/C.3) and the entangled preparation (SO-1).
 -- Born = FS-volume imported, not re-derived. Foundational triple only, no busch.
 /-- info: 'CSD.LF6.ghzLocal_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4602,7 +4603,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- joint, dissipative only on the marginal). Foundational triple only, no busch (the
 -- partial-trace + dilation machinery is measure-theoretic / linear-algebraic, off the
 -- ontic Born path). DEFERRED: continuous-time Lindblad / T1-T2; system-marginal
--- FS-volume-drift geometry; purity/entropy. Residue A5 (FS-typicality posited).
+-- FS-volume-drift geometry; purity/entropy. Residue SO-1 (FS-typicality posited).
 /-- info: 'CSD.LF6.decoherence_dephases' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decoherence_dephases
@@ -4637,7 +4638,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- narrated in B.1 is now theorem-backed (linear-entropy witness 1 − Tr(ρ²) > 0). The
 -- superposition hypothesis is load-bearing (single eigenstate ⟹ purity stays 1). Foundational
 -- triple only, no busch. DEFERRED: von Neumann entropy increase; continuous-time Lindblad /
--- environment growth. Residue A5 (FS-typicality posited).
+-- environment growth. Residue SO-1 (FS-typicality posited).
 /-- info: 'CSD.LF6.decohereReduced_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decohereReduced_trace
@@ -4669,7 +4670,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- S > 0 — the entropy-increase irreversibility witness (0 → S > 0), completing B.1/B.2's
 -- linear-entropy / purity account. The superposition hypothesis is load-bearing (single eigenstate
 -- ⟹ S = 0, one pⱼ = 1 rest 0, negMulLog(1) = negMulLog(0) = 0). Foundational triple only, no busch.
--- DEFERRED: continuous-time Lindblad / environment growth. Residue A5 (FS-typicality posited).
+-- DEFERRED: continuous-time Lindblad / environment growth. Residue SO-1 (FS-typicality posited).
 /-- info: 'CSD.LF6.decohere_vonNeumann_entropy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decohere_vonNeumann_entropy_eq
@@ -4709,7 +4710,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- reducing to no_product_partition_realises_singlet on the relabeled partition. So the CHSH violation is
 -- DERIVED for Φ⁺ (not the singlet's imported by prose). Scope: forced by the CHSH-violating 2x2 Φ⁺
 -- sector; a full general-d CGLMP result is NOT claimed. Born IMPORTED not derived (DH engine); flow
--- realises not derives. Residue A5 (entangled sector posited). Foundational triple only, no busch, no
+-- realises not derives. Residue SO-1 (entangled sector posited). Foundational triple only, no busch, no
 -- native_decide.
 /-- info: 'CSD.LF6.maxEntangledDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4935,7 +4936,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- through the 3-party paradox embedded via X-spectators (does not exhibit essential n-party
 -- entanglement beyond 3); physical regime n≥3 (targets = GHZ_n's Mermin correlations). Residual: the
 -- uniform essentially-all-n-parties construction (n mod 4). Born IMPORTED not derived (DH engine);
--- flow realises not derives. Residue A5.
+-- flow realises not derives. Residue SO-1.
 -- Foundational triple only, no busch, no native_decide (decide not used on headlines; ghz4 via ring/norm_num).
 -- GHZ_n QM-link (deliverable 5, 2026-07-03): CLOSES the general-n QM-confirmation residual. The four ±1
 -- targets of ReproducesGHZN / no_lhvN_assignment_for_ghzN are DERIVED to be GHZ_n's OWN tensor-Pauli
@@ -5162,7 +5163,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- the Empirical/CSD headlines are centralised in
 -- Empirical/CSD/VolumeCanonical.lean. Coverage/completeness, not new
 -- mathematics: measure-theoretic existence of the i.i.d. sampling law only; the
--- physical FS-typical preparation reading remains the LF1 typicality / A5 posit.
+-- physical FS-typical preparation reading remains the LF1 typicality / sector posit (SO-1).
 -- Foundational triple throughout; Gleason-free.
 
 /-- info: 'CSD.LF4.povm_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -6881,15 +6882,15 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.compositeTensorEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compositeTensorEquiv_apply
 
--- SigmaLayer P3 resolution + localized A5 (2026-07-15): reducing the two deep posits.
+-- SigmaLayer P3 resolution + localized sector posit (SO-1) (2026-07-15): reducing the two deep posits.
 -- P3 (why tensor): single_prod (the joint basis matrix = product of local ones) + joint_mem_span_local
 -- (the commuting local subalgebras GENERATE the whole joint algebra) -- the tensor product carries no
 -- observables beyond local ones and their products, so B6 reduces from "posit ⊗" to "posit two full
--- local algebras that act and commute". A5 (sector origin) LOCALIZED: forcedVolume_unique /
+-- local algebras that act and commute". SO-1 (sector origin) LOCALIZED: forcedVolume_unique /
 -- region_measure_symmetry_forced (any two U(N)-invariant measures give the same region weights, so the
 -- Born weights are symmetry-forced, not measure-chosen); localised_sectorPostulate_capstone (the concrete sector's
--- typicality is forced by the U(N) symmetry the flow is part of -- "A5 in the appropriate places").
--- Neither closes the universal posit (P3 "why ⊗" / A5 sector-from-bare-flow); both reduce where it bites.
+-- typicality is forced by the U(N) symmetry the flow is part of -- "the sector posit in the appropriate places (SO-1)").
+-- Neither closes the universal posit (P3 "why ⊗" / sector-origin-from-bare-flow (SO-1)); both reduce where it bites.
 /-- info: 'CSD.SigmaLayer.single_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.single_prod
 
@@ -6902,9 +6903,9 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.localised_sectorPostulate_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.localised_sectorPostulate_capstone
 
--- SigmaLayer A5 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
+-- SigmaLayer SO-1 NO-GO (2026-07-15): the single-flow limit made a PROVED boundary. A projective unitary flow with
 -- two distinct fixed rays admits an invariant probability measure /= mu_FS (the two fixed-ray Diracs), so a
--- single deterministic flow does NOT pin the sector's typicality measure -- "A5 is posited" is a theorem
+-- single deterministic flow does NOT pin the sector's typicality measure -- "the CSD sector is posited (SO-1)" is a theorem
 -- about the limit, not a formalisation gap. phaseFlip_admits_invariant_ne_fubiniStudy exhibits it on the
 -- concrete nontrivial flow diag(1,-1) on CP^1. Positive companion: region_measure_symmetry_forced (full U(N)
 -- symmetry DOES pin mu_FS). Matches Paper C (S1.4): Sigma, pi, the A5 sector are assumed, not derived.
@@ -6914,11 +6915,11 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.SigmaLayer.phaseFlip_admits_invariant_ne_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.phaseFlip_admits_invariant_ne_fubiniStudy
 
--- UniqueErgodicity (2026-07-19, A5/L7 ergodic face sharpened): UniquelyErgodic defined (absent from
+-- UniqueErgodicity (2026-07-19, SO-1/L7 ergodic face sharpened): UniquelyErgodic defined (absent from
 -- Mathlib) + UniquelyErgodic ⇒ Ergodic (via Ergodic.of_mem_extremePoints: singleton invariant-measure
 -- set) + the scaffold link Ergodic(Φ_1) ⇒ IsErgodicForOutcomeRegions. Does NOT prove BornFromFlow
 -- (needs the Mathlib-absent pointwise Birkhoff theorem); the unitary no-gos above provably exclude the
--- hypothesis for the current flows (candidate must be non-unitary). Boundary-marking, not A5 closure.
+-- hypothesis for the current flows (candidate must be non-unitary). Boundary-marking, not SO-1 closure.
 /-- info: 'CSD.SigmaLayer.UniquelyErgodic.ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.UniquelyErgodic.ergodic
 

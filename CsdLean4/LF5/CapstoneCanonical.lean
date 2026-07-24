@@ -30,7 +30,7 @@ As in `TrialWitness.lean`: this is the measure-theoretic existence of the
 i.i.d. sampling law, turning the LF5-E hypothesis set from classically
 satisfiable into Lean-inhabited. The physical reading of repeated preparation
 as i.i.d. FS-typical draws on the dilated sector remains the LF1 typicality
-posit (A5, here on `Σ'`); the canonical process does not derive it.
+posit (SO-1, here on `Σ'`); the canonical process does not derive it.
 Foundational-triple-only, Gleason-free.
 -/
 

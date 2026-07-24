@@ -23,7 +23,7 @@ space, plus identity-transport re-exports. Same template as
 ## LF4 obligations
 
 LF4-todo §13.2 per gate. **DISCHARGED 2026-07-19** on `cpSectorData`
-(`Gates/MultiQubitDischarge.lean`: `toffoli_/fredkin_realisable_cpSector`), modulo A5;
+(`Gates/MultiQubitDischarge.lean`: `toffoli_/fredkin_realisable_cpSector`), modulo the posited CSD sector (SO-1);
 `U_isometry` derived from the gate ∈ `U(8)`. Honest scope (`PLACEHOLDERS.md §7`): the
 bundle type carries no Σ-flow, so this discharges the Prop as-typed, not the
 Σ-flow-lift prose (open D1 gap). See `BRIDGE-OBLIGATIONS.md` §2.6, `PLACEHOLDERS.md §1`.

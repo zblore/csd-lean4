@@ -97,7 +97,7 @@ K1-A entropy machinery; the decohered reduced state's diagonal IS the Born vecto
 **Explicitly DEFERRED** (not in this tranche): the continuous-time Lindblad /
 T₁–T₂ semigroup; the system-marginal FS-volume-**drift** geometry (the open
 symplectic drift as a measure statement on Σ); environment-growth / practical
-no-recoherence. **Residue: A5** (the sector / FS-typicality law is posited, reducing to D1).
+no-recoherence. **Residue: SO-1** (the sector / FS-typicality law is posited, reducing to D1).
 
 All exports are foundational-triple-only (the partial-trace and dilation machinery
 are measure-theoretic / linear-algebraic, off `busch_effect_gleason`).
@@ -269,7 +269,7 @@ the DH cluster, Gleason-free). Irreversibility is coarse-graining over a conserv
 flow — no fundamental stochasticity. This is reduced-density-operator-level
 decoherence; the conservative-flow-coarse-graining is the CSD reading. **DEFERRED:**
 continuous-time Lindblad / T₁–T₂ semigroup; the system-marginal FS-volume-drift
-geometry. **Residue: A5** (the sector / FS-typicality law posited). -/
+geometry. **Residue: SO-1** (the sector / FS-typicality law posited). -/
 theorem decoherence_capstone (ψ : EuclideanSpace ℂ (Fin N)) :
     (decohereReduced ψ
       = ∑ j : Fin N,
@@ -416,7 +416,7 @@ The pure input `|ψ⟩⟨ψ|` (purity 1) decoheres to a strictly mixed state: th
 irreversibility narrated in `decoherence_capstone` is now theorem-backed (linear-entropy
 witness `1 − Tr(ρ²) > 0`). The von Neumann entropy increase is DONE (LF6-B.3,
 `decohere_vonNeumann_entropy_pos_of_superposition`). DEFERRED: continuous-time
-Lindblad / environment growth. Residue A5 (FS-typicality posited). -/
+Lindblad / environment growth. Residue SO-1 (FS-typicality posited). -/
 theorem decoherence_irreversibility_capstone (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
     {j k : Fin N} (hjk : j ≠ k)
     (hj : ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2 ≠ 0)
@@ -537,7 +537,7 @@ statement, the pure→mixed jump `0 → S > 0`. The superposition hypothesis is 
 single measurement-basis eigenstate exactly one `pⱼ = 1` and the rest are `0`, so
 `S = negMulLog(1) + ∑ negMulLog(0) = 0` (the witness correctly does not fire). Two nonzero weights
 summing to `1` force each `∈ (0,1)`, where `negMulLog > 0`. The continuous-time Lindblad /
-environment-growth account remains DEFERRED; residue A5 (FS-typicality posited). -/
+environment-growth account remains DEFERRED; residue SO-1 (FS-typicality posited). -/
 theorem decohere_vonNeumann_entropy_pos_of_superposition (ψ : EuclideanSpace ℂ (Fin N))
     (hψ : ‖ψ‖ = 1) (hHerm : (decohereReduced ψ).IsHermitian)
     {j k : Fin N} (hjk : j ≠ k)
@@ -564,7 +564,7 @@ The pure input (`S = 0`) decoheres to a mixed state with strictly positive von N
 the pure→mixed jump `0 → S > 0`. This is the genuine (Shannon-of-the-Born-vector) entropy-increase
 irreversibility witness, completing B.1/B.2's linear-entropy / purity account. The superposition
 hypothesis is load-bearing (single eigenstate ⟹ `S = 0`). DEFERRED: continuous-time Lindblad /
-environment growth. Residue A5 (FS-typicality posited). -/
+environment growth. Residue SO-1 (FS-typicality posited). -/
 theorem decoherence_vonNeumann_irreversibility_capstone (ψ : EuclideanSpace ℂ (Fin N))
     (hψ : ‖ψ‖ = 1) {j k : Fin N} (hjk : j ≠ k)
     (hj : ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2 ≠ 0)

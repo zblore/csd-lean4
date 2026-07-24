@@ -85,7 +85,7 @@ pure-geometry region equals `‖⟨eᵢ,ψ⟩‖²`, Gleason-free, no Born put i
 **imported** here via `vnDilation_pointer_volume` / `bornRegion_fs_measure_uncond`;
 this module re-proves nothing about the number and takes Born as no primitive. Its
 increment is the syndrome-readout **dynamics**. What **is** posited is not Born but
-**A5** — that the sector's typicality law is the Fubini–Study measure; Born = volume
+the **CSD sector (SO-1)** — that the sector's typicality law is the Fubini–Study measure; Born = volume
 is a theorem, FS-as-typicality is the sector posit (reducing to D1). The syndrome partition into blocks is `synClass`, a
 fixed `ψ`-independent function; only the underlying cell *shapes*
 (`bornRegion ψ'`) are `ψ'`-dependent (engine realisation mechanism, measures
@@ -496,7 +496,7 @@ preparation `ψ` on the 3-qubit register:
 
 Pure assembly of the Stratum-1 / Stratum-2 results; the honest-scope ledger
 (coherent-error tier; Born = volume derived one layer down and imported, not
-re-proved nor postulated; the posited primitive is A5/FS-typicality; decoherence/partial-trace
+re-proved nor postulated; the posited primitive is SO-1 / FS-typicality; decoherence/partial-trace
 NOT here) is the module docstring. -/
 theorem syndrome_flow_born_volume
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

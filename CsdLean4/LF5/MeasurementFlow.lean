@@ -71,7 +71,7 @@ dilated ontic space — the D1 increment, under the de-isolation reading of
 regions are the context-fixed apparatus basis blocks, not carved). It does
 **not** re-derive the Born number: downstream (LF5-D) the Born weight still
 comes from the existing FS-volume = Born engine. Single-system projective
-tier; entangled measurements and the A5 sector posit are deferred
+tier; entangled measurements and the posited CSD sector (SO-1) are deferred
 (`specs/lf5-plan.md` §0).
 
 Reference: `specs/lf5-plan.md` (LF5-B).

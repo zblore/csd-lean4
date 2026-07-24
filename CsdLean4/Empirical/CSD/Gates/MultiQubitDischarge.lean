@@ -23,7 +23,7 @@ Toffoli and Fredkin are real Hermitian permutation involutions, so `Gᴴ * G = 1
 
 ## Honest scope
 
-Identical to the earlier tiers: **modulo A5**; the bundle type carries `U` + `U_isometry`
+Identical to the earlier tiers: **modulo the posited CSD sector (SO-1)**; the bundle type carries `U` + `U_isometry`
 + a `Context`, not a Σ-flow (`PLACEHOLDERS.md §7`), so this discharges the Prop *as typed*,
 not the Σ-flow-lift prose (open **D1** gap). `U_isometry` is derived from
 `qm{Toffoli,Fredkin} ∈ U(8)` (sector-symmetry membership), not `μL`-measure-preservation.

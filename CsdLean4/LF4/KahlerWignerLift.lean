@@ -11,12 +11,12 @@ public import CsdLean4.LF4.KahlerFlow
 /-!
 # SL-3: the §13.2 ontic lift on the non-trivial-fibre Kähler instance
 
-**Category:** 4-Foundations (the A5→Wigner→U_isometry chain, made explicit on `kSectorData`).
+**Category:** 4-Foundations (the sector-symmetry→Wigner→U_isometry chain, made explicit on `kSectorData`).
 
 The §13.2 ontic lift asks: on a concrete Kähler `SectorData`, thread the deterministic flow `Φ`
 down to a projective ray map `f_Φ`, prove `f_Φ` is transition-probability preserving, and feed
 that into Wigner rigidity to recover the Hilbert-space unitary (`U_isometry`) — the forward
-`A5 → Wigner → U_isometry` chain. This has been done for `cpSectorData` (`π = id`,
+`sector-symmetry → Wigner → U_isometry` chain. This has been done for `cpSectorData` (`π = id`,
 `cpSectorActionBundle`, `WignerDischarge.lean`); **SL-3 does it on the NON-TRIVIAL-FIBRE
 instance `kSectorData`** (`Σ = ℂℙ^{N-1} × T²`, `π = pr₁` genuinely many-to-one, fibres `= T²`),
 where the descent of `Φ` along a many-to-one `π` is a real quotient step, not identity-on-`Σ`.
@@ -35,11 +35,11 @@ where the descent of `Φ` along a many-to-one `π` is a real quotient step, not 
 
 * **Part 2 — the genuine content (caveat C-1: sector-action-carries-isometry).** The
   non-degenerate `TransProbPreserving` datum on this instance is the **sector `U(N)`-action**
-  `g • ·` (`transProbPreserving_unitary`), the A5 symmetry. The `cpSectorActionBundle` analogue
+  `g • ·` (`transProbPreserving_unitary`), the posited sector symmetry (SO-1). The `cpSectorActionBundle` analogue
   on `kSectorData` (`kSectorActionBundle`) builds a `CSDUnitaryBundle` whose `U_isometry` is
   DERIVED via Wigner from that action's transition-probability preservation, with the
   no-time-reversal selection from `smul_action_not_antiunitary` (`N ≥ 2`). Unitarity is the
-  OUTPUT of Wigner, not a posit. This is the `A5 → Wigner → U_isometry` chain on the
+  OUTPUT of Wigner, not a posit. This is the `sector-symmetry → Wigner → U_isometry` chain on the
   non-trivial-fibre Kähler `SectorData`.
 
 ## Honesty flag (what SL-3 does NOT do)
@@ -97,7 +97,7 @@ theorem kProjectedFlow_eq_one_smul (sh : KTorus) (p : CPN N) :
   (one_smul _ p).symm
 
 omit [NeZero N] in
-/-- **`A5 → Wigner → U_isometry`, made explicit on the projected dynamics.** Feeding the
+/-- **`sector-symmetry → Wigner → U_isometry`, made explicit on the projected dynamics.** Feeding the
 transition-probability preservation of the ray-descended flow into Wigner rigidity yields the
 unitary ∨ antiunitary dichotomy; the flow realises the **unitary** branch (with `U = 1`, since
 `f_Φ = id`, `kProjectedFlow_eq_one_smul`). The chain "deterministic `Σ`-flow → ray-descent `f_Φ`
@@ -140,7 +140,7 @@ Kähler instance whose `U_isometry` is DERIVED via Wigner
 (`CSDUnitaryBundle.ofTransProbPreserving`) from the sector action's transition-probability
 preservation (`transProbPreserving_unitary g`), with the no-time-reversal selection from
 `smul_action_not_antiunitary` (`N ≥ 2`). Unitarity is the OUTPUT of Wigner, not a posit — the
-`A5 → Wigner → U_isometry` chain, now on the non-trivial-fibre Kähler `SectorData`. -/
+`sector-symmetry → Wigner → U_isometry` chain, now on the non-trivial-fibre Kähler `SectorData`. -/
 noncomputable def kSectorActionBundle (hN : 2 ≤ N) (p₀ : CPN N)
     (g : Matrix.unitaryGroup (Fin N) ℂ) :
     CSD.Empirical.CSDBridge.Gates.CSDUnitaryBundle (kSectorData p₀) N

@@ -99,9 +99,9 @@ theorem tying the dynamical carve to C.1, not a juxtaposition.
   Only the local single-qubit eigen-equation is proved; the tripartite
   eigen-equation for `sigmaDotTriple` is the tensor of the three local
   eigen-equations (definitional, not separately proved).
-- **Residue: A5.** The GHZ entangled sector / preparation region is posited, not
+- **Residue: SO-1.** The GHZ entangled sector / preparation region is posited, not
   derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
-  measure (A5).
+  measure (SO-1).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine
 is off Busch, C.1 is measure-theoretic Mermin content).
@@ -564,7 +564,7 @@ The increment over C.2 is conjunct (3)/(4)/(5): a GENUINE dynamical Mermin
 correlation (a sign-product-weighted sum of `bornRegion` FS volumes = the Mermin
 expectation), not a diagonal-carve re-export. Born = FS-volume is imported from
 the DH/FS-volume engine, not re-derived; the flow realises (not derives) the
-Mermin measurement. Residue: A5 (the GHZ entangled sector posited). Honest
+Mermin measurement. Residue: SO-1 (the GHZ entangled sector posited). Honest
 ledger: module docstring. -/
 theorem ghzMermin_carve_capstone {M : ℕ}
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

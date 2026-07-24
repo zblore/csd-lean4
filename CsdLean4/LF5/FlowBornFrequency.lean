@@ -49,7 +49,7 @@ and out comes `‖⟨eᵢ,ψ⟩‖²`, with no Born put in, Gleason-free. This m
 re-prove it, and it does not take Born as a primitive. The increment here is the
 *dynamically realised* dilation (`vnNaimark`, LF5-C) wired into that engine
 without genericity — the measurement **dynamics** (`Φ ≠ id`), not the number.
-What **is** posited is not Born but **A5**: that the sector's typicality law is
+What **is** posited is not Born but the **CSD sector (SO-1)**: that the sector's typicality law is
 the Fubini–Study measure (i.i.d. trials with law `fubiniStudyMeasure`). Born =
 volume is a theorem; FS-as-the-typicality-measure is the sector posit, still
 undischarged (it reduces to D1, the dynamical sector origin). LF5-E wires the context-fixed pointer reading +
@@ -114,7 +114,7 @@ theorem vnDilation_pointer_volume {M : ℕ}
 
 /-- **The LF5-D capstone: pointer-block frequencies of the de-isolation flow
 converge to the Born weight, every unit `ψ`.** For i.i.d. FS-typical trials on
-the dilated `ℂℙ^{N²−1}` (the A5 posit on the enlarged sector), almost surely
+the dilated `ℂℙ^{N²−1}` (the posited CSD sector (SO-1) on the enlarged sector), almost surely
 **every** pointer outcome `i` has its context-fixed block frequency (the sum
 over the block `{(n, i) : n}` of per-cell empirical frequencies) converging to
 `‖⟨eᵢ, ψ⟩‖²` — no genericity, vanishing (off-diagonal) dilated amplitudes

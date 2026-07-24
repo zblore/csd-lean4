@@ -22,7 +22,7 @@ membership via `inner_toEuclideanLin_unitary`.
 
 ## Honest scope
 
-As in the earlier tiers: **modulo A5**; the bundle type carries `U` + `U_isometry` + a
+As in the earlier tiers: **modulo the posited CSD sector (SO-1)**; the bundle type carries `U` + `U_isometry` + a
 `Context`, not a Σ-flow (`PLACEHOLDERS.md §7`), so this discharges the Prop *as typed*, not
 the Σ-flow-lift prose (open **D1** gap). With this file **all nine gate realisability Props
 are discharged** on the concrete instance.
@@ -63,7 +63,7 @@ theorem qmH_tensor_I_mem_unitaryGroup : qmH_tensor_I ∈ Matrix.unitaryGroup (Fi
 
 /-- **§13.2 discharge (Bell-state preparation).** `bell_prep_realisable_for (cpSectorData p₀)`
 holds: bundles realising `H ⊗ I` and `CNOT`, each `U_isometry` derived from `U(4)` membership.
-Modulo A5. The ninth and last gate realisability Prop. -/
+Modulo the posited CSD sector (SO-1). The ninth and last gate realisability Prop. -/
 theorem bell_prep_realisable_cpSector (p₀ : CPN 4) :
     CSD.Empirical.CSDBridge.Gates.BellPrep.bell_prep_realisable_for (cpSectorData p₀) :=
   ⟨{ toContext := cpContext p₀

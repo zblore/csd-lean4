@@ -30,7 +30,7 @@ This is the sector INTERFACE, the forward-direction scaffold that the chain
            → unitary Schrödinger dynamics
 
 will consume (W3 Wigner-selection and W5 projected Schrödinger dynamics build
-on it). It is **not** a proof of `Σ`, **not** a derivation of the A5 sector
+on it). It is **not** a proof of `Σ`, **not** a derivation of the posited CSD sector (SO-1)
 posit, and **not** a claim the ontology is closed. The load-bearing dynamical
 content is carried by the `flow` / `projectable` / `flow_preserves_volume`
 fields; the Kähler-geometry data is carried by explicitly-labelled abstract

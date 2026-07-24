@@ -15,8 +15,8 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
-The localized A5 result (`SigmaLayer/LocalisedTypicality.lean`) shows the typicality measure is forced by the
-`U(N)` SYMMETRY. This module makes precise WHY the *universal* A5 — deriving the Born measure `μ_FS` from
+The localized sector posit (SO-1) result (`SigmaLayer/LocalisedTypicality.lean`) shows the typicality measure is forced by the
+`U(N)` SYMMETRY. This module makes precise WHY the *universal* sector origin (SO-1) — deriving the Born measure `μ_FS` from
 a single deterministic flow — is not reachable: **a single projective flow does not uniquely determine an
 invariant measure**, so it cannot single out `μ_FS`.
 
@@ -31,13 +31,14 @@ flow (the phase-flip `diag(1,-1)` on `ℂℙ¹`).
 ## What this establishes
 
 `μ_FS` is invariant under the flow (`fubiniStudyMeasure_smul_invariant`), but it is NOT distinguished
-among the flow's invariant measures — the flow admits others. So "A5 is posited" is not a temporary
+among the flow's invariant measures — the flow admits others. So "the CSD sector is posited (SO-1)" is not a temporary
 formalisation gap but a proved statement about the limit: the deterministic flow underdetermines the
 sector's typicality measure. Pinning `μ_FS` needs the full `U(N)` symmetry (`IsForcedKahlerVolume`'s
-uniqueness), which a single one-parameter flow does not carry. This matches Paper C (§1.4): `Σ`, `π`, the
-A5 sector are assumed, not derived.
+uniqueness), which a single one-parameter flow does not carry. This matches Paper C (§A/§3.6): `Σ`, `π`, and
+the quantum-effective sector (selected by Axiom A5) are assumed, not derived — the sector's deeper origin
+(SO-1) is left open.
 
-References: `specs/connectivity-manifest.md` (L7 / A5), `specs/reconstruction-status.md` (frontier),
+References: `specs/connectivity-manifest.md` (L7 / SO-1), `specs/reconstruction-status.md` (frontier),
 `SigmaLayer/LocalisedTypicality.lean` (`region_measure_symmetry_forced`, the positive companion),
 `LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`).
 -/
@@ -51,7 +52,7 @@ namespace CSD.SigmaLayer
 
 variable {N : ℕ}
 
-/-- **The single-flow limit (no-go for universal A5).** If a projective unitary flow `x ↦ V • x` fixes
+/-- **The single-flow limit (no-go for universal sector origin (SO-1)).** If a projective unitary flow `x ↦ V • x` fixes
 two DISTINCT rays `p ≠ q`, it admits an invariant probability measure that is NOT the Fubini–Study /
 Born measure. The two fixed-ray Diracs are both invariant and distinct, so at least one differs from
 `μ_FS`. Hence the flow does not uniquely determine the sector's typicality measure. -/

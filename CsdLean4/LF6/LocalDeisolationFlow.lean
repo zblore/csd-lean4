@@ -19,7 +19,7 @@ proving it realises the SAME joint measurement as the A.2 flow: its
 context-fixed pointer-block Fubini–Study volumes are the LF3 singlet kernel
 `P_st`. So the de-isolation needs **no non-local interaction**; the non-locality
 is entirely in the contextual carve (LF6-A.2) and the entangled preparation
-(A5).
+(SO-1).
 
 ## Honest framing (read this; do not get it wrong)
 
@@ -78,7 +78,7 @@ regrouping `((s_a,p_a),(s_b,p_b)) ↦ ((s_a,s_b),(p_a,p_b))`. The block reshuffl
   moment-map / Duistermaat–Heckman cluster, Gleason-free, no Born put in) and
   imported via `povm_born_eq_dilated_volume_uncond`; the singlet kernel `P_st`,
   its joint eigenstates, and the Born identity `singletJointEig_born` are LF3.
-- **Residue: A5.** The entangled sector / the singlet's preparation region is
+- **Residue: SO-1.** The entangled sector / the singlet's preparation region is
   posited, not derived (SO-1: the sector origin, distinct from Paper C Axiom A5). The non-locality lives in the
   contextual carve (A.2) and the entangled preparation, never in the (local)
   flow.
@@ -584,11 +584,11 @@ singlet.** Conjuncts:
    manifestly local flow, matching LF5's `measurement_flow_realises_dilation`.
 
 So the de-isolation needs NO non-local interaction; the non-locality is entirely
-in the contextual carve (LF6-A.2) and the entangled preparation (A5). The
+in the contextual carve (LF6-A.2) and the entangled preparation (SO-1). The
 `N=4`-adder A.2 flow is a non-factoring unitary completion of the same
 measurement (`ℤ/4 ≠ ℤ/2 × ℤ/2`); A.3's product flow is the manifestly-local one.
 Born = FS-volume is imported (LF5/DH/POVM-Naimark engine), not re-derived.
-Residue: A5 (the entangled sector posited). Honest ledger: module docstring. -/
+Residue: SO-1 (the entangled sector posited). Honest ledger: module docstring. -/
 theorem localDeisolation_capstone {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
     (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

@@ -53,7 +53,7 @@ Duistermaat–Heckman cluster, `fs_born_volume_ratio_N` /
 `born_frequency_convergence_N`, Gleason-free, no Born put in) and **imported** here
 via `vnDilation_pointer_volume` / `vnDilation_pointer_frequency`; this module
 re-proves nothing about the number — it just coarse-grains the pointer index by the
-fixed `synClass`. Born is taken as no primitive. What **is** posited is **A5**: that
+fixed `synClass`. Born is taken as no primitive. What **is** posited is the **CSD sector (SO-1)**: that
 the sector's typicality law is the Fubini–Study measure (Born = volume is a theorem;
 FS-as-typicality is the sector posit, reducing to D1). The syndrome partition
 into blocks is `synClass`, a fixed **ψ-independent** function (the pre-registered
@@ -94,7 +94,7 @@ theorem syndromeWeight_eq_inner_sum (ψ : EuclideanSpace ℂ (Fin 8)) (s : Fin 4
 /-! ## (A) Syndrome-class block frequencies converge to the syndrome weight -/
 
 /-- **Syndrome-class block frequencies → syndrome weight, every unit `ψ`.** For
-i.i.d. FS-typical trials on the dilated `ℂℙ^{63}` (the A5 posit on the enlarged
+i.i.d. FS-typical trials on the dilated `ℂℙ^{63}` (the posited CSD sector (SO-1) on the enlarged
 `N = 8` sector), almost surely **every** syndrome `s : Fin 4` has its
 syndrome-class block frequency — the double sum, over the pointers `i ∈ class s`
 and the apparatus index `n : Fin 8`, of the per-cell empirical frequencies

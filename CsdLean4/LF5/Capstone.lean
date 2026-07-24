@@ -37,7 +37,7 @@ microstate (deterministic — a Laplacian observer with access to the isolated
 degrees of freedom would predict it with certainty); the apparent randomness
 is epistemic, via typicality over the isolated DOF (the same
 ignorance-of-microstate that carries LF1 frequencies to ontic volume, with the
-FS measure as the A5 typicality law). The measurement *dynamics* is now
+FS measure as the CSD sector's typicality law (SO-1)). The measurement *dynamics* is now
 exercised (`Φ_vN ≠ id`, conjunct (1)), closing the single-system projective
 tier of the D1 debt ("`Φ = id` in every concrete instance").
 
@@ -84,7 +84,7 @@ conjunct-(5) theorem in `PointerOutcome.lean`.
   `povm_born_eq_dilated_volume_uncond` / `bornRegion_fs_measure_uncond`). This
   module re-proves nothing about the number and takes Born as no primitive; its
   increment is the measurement **dynamics** (`Φ_vN ≠ id`).
-- What **is** posited is not Born but **A5**: that the (apparatus-enlarged)
+- What **is** posited is not Born but the **CSD sector (SO-1)**: that the (apparatus-enlarged)
   sector's typicality law is the Fubini–Study measure (i.i.d. trials with law
   `fubiniStudyMeasure`). Born = volume is a theorem; FS-as-the-typicality-measure
   is the sector posit, not derived from the flow (it reduces to D1).

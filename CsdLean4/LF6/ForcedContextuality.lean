@@ -57,7 +57,7 @@ posited; it lives in the `Σ`-volume engine's reading of the entangled state.
   Duistermaat-Heckman volume) and non-locality (this file) are two outputs of
   the SAME `Σ`-volume engine. The marginals factorise (no-signalling,
   `engine_marginal_factorises`) even though the joint does not.
-- **(f) Residue: A5.** This realises the singlet correlations MODULO **A5** — the
+- **(f) Residue: SO-1.** This realises the singlet correlations MODULO the posited **CSD sector (SO-1)** — the
   entangled sector / the singlet's preparation region `Ω₀` is *posited*, not
   derived from deterministic dynamics (SO-1: the sector origin, distinct from Paper C Axiom A5). The forced-contextuality
   no-go is unconditional Bell content; the *engine reading* of the singlet rests

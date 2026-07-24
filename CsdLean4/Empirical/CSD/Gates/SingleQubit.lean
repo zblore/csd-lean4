@@ -55,7 +55,7 @@ measure-preserving π-equivariant flow on Σ.
 
 **Status: DISCHARGED 2026-07-19** on the concrete `cpSectorData`
 (`Gates/SingleQubitDischarge.lean`: `hadamard_/phaseS_/phaseT_realisable_cpSector`),
-modulo A5 (the posited sector). Each gate's action is a genuine `CSDUnitaryBundle`
+modulo the posited CSD sector (SO-1). Each gate's action is a genuine `CSDUnitaryBundle`
 whose `U_isometry` is derived from the gate lying in `U(2)`. Honest scope: the bundle
 type carries `U` + `U_isometry` + a `Context`, not a Σ-flow (`PLACEHOLDERS.md §7`), so
 the Σ-flow-lift prose reading is the open D1 gap, not established here.

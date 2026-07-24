@@ -12,13 +12,17 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import Mathlib.Dynamics.Ergodic.Ergodic
 
 /-!
-# A5 onramp: where the Fubini–Study typicality measure comes from
+# SO-1 onramp: where the Fubini–Study typicality measure comes from
 
 **Category:** 3-Local (where the Fubini–Study typicality measure comes from).
 
-This file isolates the honest content of the A5 datum (`SectorData.(π, G)`,
-`AXIOMS.md §3.3`) at the level of the **typicality measure**: which measure is the
-canonical sampling law on the sector `Σ = ℂℙ^{N-1}`, and by what.
+This file isolates the honest content of the **CSD sector posit** SO-1
+(`SectorData.(π, G)`, `AXIOMS.md §3.3`) at the level of the **typicality measure**:
+which measure is the canonical sampling law on the sector `Σ = ℂℙ^{N-1}`, and by what.
+SO-1 — deriving the sector `(Σ, π, μL)` from CSD's primitive deterministic ontology —
+is the *central* open CSD goal, not a footnote; this file pins exactly what remains.
+(SO-1 is distinct from Paper C **Axiom A5**, which is the quantum-effective /
+projectability condition on Hamiltonians, not the sector's origin.)
 
 ## IMPORTANT — what forces typicality (read first)
 
@@ -41,8 +45,8 @@ theorem `fubiniStudyMeasure_unique` (Phase G4,
 `U(N)`-invariant probability measure on the sector **is** the Fubini–Study measure.
 So FS is the *symmetry-canonical* sampling measure — the Born = FS-volume measure
 (the input to the Duistermaat–Heckman cluster `fs_born_volume_ratio_N` /
-`born_frequency_convergence_N`) is *singled out* by the sector symmetry, the A5
-`(π, G)` datum, rather than posited as an arbitrary independent law. The **LLN** then
+`born_frequency_convergence_N`) is *singled out* by the sector symmetry, the
+`(π, G)` sector datum (SO-1), rather than posited as an arbitrary independent law. The **LLN** then
 forces frequencies to its volume ratios. This is about the measure CHOICE, via the
 **symmetry group**, NOT via any single flow and NOT the convergence mechanism.
 
@@ -57,7 +61,7 @@ diagonal phase flow, every basis ray `[eⱼ]` is an eigenvector and is a fixed p
 `U(N)`-invariant while `δ_{[eⱼ]}` is moved by a unitary swapping `[eⱼ] ↔ [eₖ]`.
 Hence `obsFlow` is not uniquely ergodic: a single deterministic flow cannot single
 out FS. This is *why* the concrete instances `cpSectorDataFlow` / `kSectorDataFlow`
-(D1c-1/2), whose `Φ` is one such flow, do not discharge A5.
+(D1c-1/2), whose `Φ` is one such flow, do not discharge SO-1.
 
 **(B′) The obstruction is GENERIC, not accidental: a CONSERVED QUANTITY.**
 `obsFlow_continuum_invariant` strengthens (B) from "≥ 2" to a **continuum**
@@ -75,25 +79,25 @@ quantity; the obstruction to unique ergodicity is structural. (The explicit
 continuum witness is the convex-combination family
 `s ↦ s·μFS + (1−s)·δ_{[e₀]}`, `s ∈ [0,1]`, a clean genuine continuum; the
 conserved Born coordinates are the *why*.) This still does **not** force FS and
-does **not** close A5 — it sharpens the obstruction.
+does **not** close SO-1 — it sharpens the obstruction.
 
 ## Honest scope (the whole point — claim NOTHING more)
 
-This tranche does **not** close A5, and does **not** force typicality (the **LLN**
+This tranche does **not** close SO-1, and does **not** force typicality (the **LLN**
 does that, LF1 / papers A & B — see the note above). It (i) shows the FS typicality
 *measure* is **singled out** by the sector symmetry `G = U(N)` (a measure-characterisation,
 reusing the uniqueness theorem — the LLN then forces frequencies to it), (ii) proves
 *no single ontic flow* singles out FS via its own dynamics (the obstruction — a negative
 about the **single-flow ergodicity / Birkhoff route, which CSD does NOT use**; it
 reinforces that the LLN/i.i.d. route is the operative one), and (iii) thereby **pins the
-residual A5 primitive to `G` itself**: the symmetry group `U(N)` is the datum the
+residual SO-1 primitive to `G` itself**: the symmetry group `U(N)` is the datum the
 canonical measure follows from, and `G`-from-dynamics — deriving the `U(N)`-symmetry of
-the ontic flow from the deterministic substrate — is exactly **D1**, the deepest open
-content (`Φ = id` in every concrete `SectorData`, or a single non-ergodic phase flow in
-D1c). We claim **nothing** about deriving `G`, and nothing about typicality-forcing
+the ontic flow from CSD's deterministic substrate — is exactly **D1**, the deepest open
+CSD content (`Φ = id` in every concrete `SectorData`, or a single non-ergodic phase flow
+in D1c). We claim **nothing** about deriving `G`, and nothing about typicality-forcing
 beyond the LLN.
 
-`a5_onramp` conjoins (A) and (B). Foundational-triple-only (no `busch_effect_gleason`);
+`so1_onramp` conjoins (A) and (B). Foundational-triple-only (no `busch_effect_gleason`);
 `invariant_measure_uniqueness_cpn` / `fubiniStudyMeasure_unique` are axiom-free.
 -/
 
@@ -187,7 +191,7 @@ LLN, LF1 / papers A & B; see the file header). Any `U(N)`-invariant probability
 measure on the sector `Σ = ℂℙ^{N-1}` **is** the Fubini–Study measure. A restatement
 of the axiom-free `fubiniStudyMeasure_unique` (Phase G4): FS is the *symmetry-canonical*
 sampling measure — the Born = FS-volume measure consumed downstream is *singled out*
-by the `A5` `(π, G)` sector datum rather than posited as an arbitrary law; the LLN then
+by the `(π, G)` sector datum (SO-1) rather than posited as an arbitrary law; the LLN then
 forces frequencies to its volume ratios. The characterisation is via the symmetry
 *group*, not via any single flow (contrast (B) below). -/
 theorem fubiniStudy_forced_by_symmetry (p₀ : CPN N)
@@ -210,7 +214,7 @@ while `δ_{[e₀]}` is moved to `δ_{[e₁]}` by a unitary swapping the two rays
 So **no single deterministic ontic flow forces FS** — only the full sector symmetry
 `G = U(N)` does (result (A)). This is the obstruction behind the naive
 "single ergodic flow whose unique invariant measure is `μFS`" picture, and the reason
-`cpSectorDataFlow` / `kSectorDataFlow` (D1c) do not discharge A5. -/
+`cpSectorDataFlow` / `kSectorDataFlow` (D1c) do not discharge SO-1. -/
 theorem obsFlow_not_uniquely_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
     ∃ μ ν : Measure (CPN N),
       IsProbabilityMeasure μ ∧ IsProbabilityMeasure ν ∧
@@ -303,7 +307,7 @@ injective.
 (`momentMap_obsFlow`, `map_withDensity_of_conserved`,
 `withDensity_momentMap_obsFlow_invariant`): a deterministic flow with a
 non-trivial constant of motion cannot be uniquely ergodic. **Honest scope:** this
-does **not** force FS and does **not** close A5, and typicality is forced not by any
+does **not** force FS and does **not** close SO-1, and typicality is forced not by any
 flow but by the **LLN** (LF1 / papers A & B). The FS *measure* is singled out by the
 full sector symmetry `G = U(N)` (result (A), `fubiniStudy_forced_by_symmetry`); this
 result is a negative about the single-flow ergodicity route (which CSD does not use).
@@ -550,7 +554,7 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
 
 /-! ## Capstone -/
 
-/-- **A5 single-flow obstruction capstone.** Packages the obstruction story:
+/-- **SO-1 single-flow obstruction capstone.** Packages the obstruction story:
 
 1. `momentMap_obsFlow_nonconstant_conserved` — a single flow (`obsFlow`) carries a
    **non-constant conserved observable**, the Born coordinate `momentMap · 0` (conserved,
@@ -564,19 +568,19 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
 (Birkhoff) obstruction story** — a route CSD does NOT use: `obsFlow`, with its conserved Born
 coordinates, is provably not `μFS`-ergodic, so one cannot shortcut to `μFS` through one flow's
 dynamics. That reinforces the LLN/i.i.d. route rather than exposing a gap. It does **not** close
-A5: the FS *measure* is singled out by the full sector symmetry `G = U(N)`
+SO-1: the FS *measure* is singled out by the full sector symmetry `G = U(N)`
 (`fubiniStudy_forced_by_symmetry`) and the LLN forces frequencies to it; the residue is
-`G`-from-`D1` — deriving the `U(N)`-symmetry of the ontic dynamics from the deterministic
+`G`-from-`D1` — deriving the `U(N)`-symmetry of the ontic dynamics from CSD's deterministic
 substrate, which remains open (`Φ = id` / single non-ergodic phase flow in the concrete
 `SectorData` instances). -/
-theorem a5_obstruction_capstone (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
+theorem so1_obstruction_capstone (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
     ((∀ p, momentMap (obsFlow lam t p) (obsIdx0 hN) = momentMap p (obsIdx0 hN))
       ∧ Measurable (fun p : CPN N => momentMap p (obsIdx0 hN))
       ∧ ∃ p q : CPN N, momentMap p (obsIdx0 hN) ≠ momentMap q (obsIdx0 hN))
     ∧ ¬ Ergodic (obsFlow lam t) (fubiniStudyMeasure p₀) :=
   ⟨momentMap_obsFlow_nonconstant_conserved hN lam t, obsFlow_not_ergodic hN p₀ lam t⟩
 
-/-- **A5 onramp.** Conjunction of the two honest results:
+/-- **SO-1 onramp.** Conjunction of the two honest results:
 
 * **(A)** `fubiniStudy_forced_by_symmetry`: any `U(N)`-invariant probability measure on the
   sector `ℂℙ^{N-1}` **is** the Fubini–Study measure — so the FS sampling *measure* is
@@ -588,11 +592,11 @@ theorem a5_obstruction_capstone (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ
 volume weights — is forced by the **LAW OF LARGE NUMBERS** (LF1 / papers A & B) over i.i.d.
 preparations, NOT by symmetry and NOT by an ergodic flow. (A) only singles out *which* measure is
 canonical (the unique `G`-invariant one); (B) is a negative about the single-flow ergodicity route
-CSD does not use. So this does **not** force typicality (the LLN does) and does **not** close A5;
-the residual A5 primitive is `G = U(N)` **itself**, which reduces to **D1** (deriving the
-`U(N)`-symmetry of the ontic dynamics from the deterministic substrate — *not done*, the deepest
-open content). It locates the measure-characterisation in the symmetry and pins the residue. -/
-theorem a5_onramp (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
+CSD does not use. So this does **not** force typicality (the LLN does) and does **not** close SO-1;
+the residual SO-1 primitive is `G = U(N)` **itself**, which reduces to **D1** (deriving the
+`U(N)`-symmetry of the ontic dynamics from CSD's deterministic substrate — *not done*, the deepest
+open CSD content). It locates the measure-characterisation in the symmetry and pins the residue. -/
+theorem so1_onramp (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
     (∀ (μ : Measure (CPN N)), IsProbabilityMeasure μ →
         (∀ U : Matrix.unitaryGroup (Fin N) ℂ, MeasurePreserving (fun p => U • p) μ μ) →
         μ = fubiniStudyMeasure p₀)

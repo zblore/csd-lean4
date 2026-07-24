@@ -59,7 +59,7 @@ The outcome is **fixed by the microstate** (deterministic given `(ψ, context)`)
 the de-isolation reading required. Honest residue, unchanged from LF5-D/E: the
 cell *shapes* (`bornRegion ψ'`) remain `ψ'`-dependent — the engine's realisation
 mechanism, with measures forced by the Kähler geometry, not carved; the Born
-*number* is from the FS-volume engine; A5 is posited; entanglement is deferred
+*number* is from the FS-volume engine; the CSD sector is posited (SO-1); entanglement is deferred
 (Bell forces a non-local de-isolation map). Single-system projective tier only.
 
 Reference: `specs/lf5-plan.md` (LF5-F); the owed-since-`aeece86` outcome map.

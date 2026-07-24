@@ -86,9 +86,9 @@ claim the diagonal carve is the contextual one.
   correlations reproduce the four GHZ perfect correlations and tie dynamically
   to C.1 (the three-party analogue of A.2's contextual block-correlation), and
   the local product flow `V = V_0 ⊗ V_1 ⊗ V_2` (A.3's analogue).
-- **Residue: A5.** The GHZ entangled sector / preparation region is posited, not
+- **Residue: SO-1.** The GHZ entangled sector / preparation region is posited, not
   derived (SO-1: the sector origin, distinct from Paper C Axiom A5); the typicality law on `Σ'` is the Fubini-Study
-  measure (A5).
+  measure (SO-1).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine
 is off Busch, C.1 is measure-theoretic Mermin content).
@@ -313,7 +313,7 @@ anchor routed through C.1. Conjuncts:
 Minimal computational-basis carve (diagonal weights `(1/2, 0, …, 0, 1/2)`). Born
 = FS-volume is imported from the DH/FS-volume engine, not re-derived; the flow
 realises (not derives) the GHZ measurement. The Mermin-context carve and the
-local product flow `V = V_0 ⊗ V_1 ⊗ V_2` are deferred. Residue: A5 (the GHZ
+local product flow `V = V_0 ⊗ V_1 ⊗ V_2` are deferred. Residue: SO-1 (the GHZ
 entangled sector posited). Honest ledger: module docstring. -/
 theorem ghzDeisolation_flow_capstone {M : ℕ}
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

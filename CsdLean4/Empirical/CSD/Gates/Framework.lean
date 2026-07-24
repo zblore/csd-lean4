@@ -37,11 +37,11 @@ established by Tranche 0:
 - **KS/GHZ**: ontic-partition negative existential.
 - **Gates (new this file)**: positive-existence-conditional-on-LF4.
 
-## LF4 obligation — DISCHARGED via Wigner modulo A5 (2026-07-02)
+## LF4 obligation — DISCHARGED via Wigner modulo the posited CSD sector (SO-1) (2026-07-02)
 
 `CSDUnitaryBundle.U_isometry` carries the LF4-§13.2 obligation. It is now
 **discharged through Wigner from the intrinsic transition-probability
-condition**, modulo the sector symmetry (A5). See
+condition**, modulo the posited sector symmetry (SO-1). See
 `Empirical/CSD/Gates/WignerDischarge.lean`.
 
 Per the bridge-discipline rules at the top of `specs/LF4-todo.md`,
@@ -75,7 +75,7 @@ instantiation on `cpSectorData p₀`: the sector action `g • ·` is
 
 The transition-probability preservation `hf` is FORCED by the **sector
 symmetry** — the sector group `G` acting by Fubini–Study isometries, which is
-the A5 datum (`SectorData.(π, G)`) — **not** by `μL`-measure-preservation. The
+the SO-1 sector datum (`SectorData.(π, G)`) — **not** by `μL`-measure-preservation. The
 earlier reading of this obligation, that `U_isometry` "follows from a
 measure-preserving π-equivariant Σ-flow", is **false**: measure-preservation is
 strictly weaker than metric preservation. A `μFS`-measure-preserving self-map of
@@ -83,7 +83,7 @@ strictly weaker than metric preservation. A `μFS`-measure-preserving self-map o
 no lemma "measure-preserving `f_Φ` ⟹ `TransProbPreserving f_Φ`" is (or can be)
 proved. Deriving `TransProbPreserving f_Φ` from a *general* `μL`-flow for a
 non-symmetry flow is the open **D1** gap. §13.2 therefore discharges exactly
-modulo the posited sector symmetry (A5), which is CSD's intended structure.
+modulo the posited sector symmetry (SO-1), which is CSD's intended structure.
 
 ## Composition
 
@@ -152,8 +152,8 @@ transition-probability condition by
 OUTPUT, `U_isometry` a theorem. Non-vacuously instantiated by the sector
 action on the concrete Kähler instance (`cpSectorActionBundle`).
 
-**Status: DISCHARGED via Wigner modulo the sector symmetry (A5).**
-LF4-todo §13.2. The transition-probability preservation is forced by A5
+**Status: DISCHARGED via Wigner modulo the posited sector symmetry (SO-1).**
+LF4-todo §13.2. The transition-probability preservation is forced by the posited sector symmetry (SO-1)
 (G acting by FS isometries), not by `μL`-measure-preservation (measure ≠
 metric); the general-flow ⟹ isometry direction is the open D1 gap. A
 directly-posited `CSDUnitaryBundle` (via the primitive constructor) still

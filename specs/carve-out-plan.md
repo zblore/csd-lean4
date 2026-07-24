@@ -408,7 +408,7 @@ observable** `momentMap_obsFlow_nonconstant_conserved` (the Born coordinate, con
 measurable + values `1` at `[e₀]` vs `0` at `[e₁]`) yields a non-trivial `μFS`-invariant set
 `{m₀ ≥ m₁}` of measure `∈ (0,1)` (bounded away from `0`/`1` by FS full support, itself the
 Haar pushforward `fubiniStudyMeasure_pos_of_isOpen`), contradicting the zero-one law.
-`a5_obstruction_capstone` packages "single flow ⇒ non-constant constant of motion ⇒ not
+`so1_obstruction_capstone` packages "single flow ⇒ non-constant constant of motion ⇒ not
 `μFS`-ergodic ⇒ cannot force `μFS`". This **isolates exactly the property D1 must supply** —
 an *ergodic* ontic flow, one whose only conserved observables are a.e. constants — and proves
 `obsFlow` is provably not it. It does **not** close A5: residue = `G`-from-`D1`.

@@ -90,10 +90,10 @@ The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one
 - (B) `obsFlow_not_uniquely_ergodic` (the honest negative, genuine new content): `obsFlow` fixes the
   eigenstate rays, so `δ_{[e₀]}` is invariant and ≠ μFS (distinctness via a swap-unitary + FS's
   U(N)-invariance) — TWO distinct invariant probability measures, so a single ontic flow does NOT force
-  μFS. This is WHY D1c-1/2's single-flow instances do not discharge A5.
-- `a5_onramp` capstone conjoins (A)+(B). HONEST: A5 is NOT closed; typicality is forced by the SYMMETRY
-  (not a flow); the residual A5 primitive is G=U(N) ITSELF, reducing to D1 (deriving the U(N)-symmetry of
-  the ontic dynamics from the substrate — the deepest open content). Nothing claimed about deriving G.
+  μFS. This is WHY D1c-1/2's single-flow instances do not discharge SO-1.
+- `so1_onramp` capstone conjoins (A)+(B). HONEST: SO-1 is NOT closed; typicality is forced by the SYMMETRY
+  (not a flow); the residual SO-1 primitive is G=U(N) ITSELF, reducing to D1 (deriving the U(N)-symmetry of
+  the ontic dynamics from CSD's substrate — the deepest open CSD content). Nothing claimed about deriving G.
 Follow-up #32: strengthen (B) to a continuum of invariant measures via the moment-fibre conserved
 quantities (`momentMap ∘ obsFlow = momentMap`). The genuine SO-1/D1 frontier beyond: the entangled
 de-isolation tier (Bell-forced non-locality), where G could begin to be derived rather than posited.

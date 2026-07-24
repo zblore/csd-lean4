@@ -46,7 +46,7 @@ This is the **measure-theoretic existence** of the i.i.d. sampling law: the
 canonical product-measure process witnesses that the trial hypotheses are
 mutually consistent and realisable inside Lean. The **physical** reading of
 repeated preparation as i.i.d. FS-typical draws remains the LF1 typicality
-posit (the A5 sector/typicality datum); constructing the process does not
+posit (the posited-sector / typicality datum (SO-1)); constructing the process does not
 derive that posit. Foundational-triple-only; Gleason-free (no
 `busch_effect_gleason`).
 -/

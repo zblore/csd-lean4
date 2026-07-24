@@ -69,7 +69,7 @@ The bundle composition `b_CNOT.comp b_HI` then realises the
 Bell-state preparation circuit.
 
 **Status: DISCHARGED 2026-07-19** on the concrete `cpSectorData`
-(`Gates/BellPrepDischarge.lean`: `bell_prep_realisable_cpSector`), modulo A5.
+(`Gates/BellPrepDischarge.lean`: `bell_prep_realisable_cpSector`), modulo the posited CSD sector (SO-1).
 Both bundle existences (`H ⊗ I` and `CNOT`) are supplied with `U` the gate action
 and `U_isometry` derived from `U(4)` membership. This is the ninth and last of the
 gate realisability Props to be discharged. Honest scope (`PLACEHOLDERS.md §7`): the

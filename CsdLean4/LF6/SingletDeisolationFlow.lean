@@ -79,9 +79,9 @@ behind `MeasurementJointEig.born_eq_P_st`.
   weaken A.2: A.1 already establishes that the locality of the flow is consistent
   with the contextuality of the carve, and the safety anchor
   (`singletDeisolation_carve_contextual`) does not assume the product structure.
-- **Residue: A5.** The entangled sector / the singlet's preparation region `Ω₀`
+- **Residue: SO-1.** The entangled sector / the singlet's preparation region `Ω₀`
   is posited, not derived (SO-1: the sector origin, distinct from Paper C Axiom A5). `nudgedSinglet`'s amplitudes are the
-  singlet's; the *typicality law* on `Σ'` is the Fubini–Study measure (A5).
+  singlet's; the *typicality law* on `Σ'` is the Fubini–Study measure (SO-1).
 - **Generic context.** The four-sector construction needs `P_st a b s t > 0` for
   all `(s, t)` (`hgen`), i.e. `|a·b| < 1` — every Bell-test setting. Collinear
   axes have a vanishing sector and carry no Born information.
@@ -394,7 +394,7 @@ carve's own value, not a free `−a·b`, into `no_product_partition_realises_sin
 The flow is local (LF5 @ N=4); the carve is contextual (the joint moment
 subdivision, A.1). Born = FS-volume is imported from the DH/FS-volume engine, not
 re-derived. The flow factorisation `Φ = Φ_A ⊗ Φ_B` is deferred to LF6-A.3.
-Residue: A5 (the entangled sector posited). Honest ledger: module docstring. -/
+Residue: SO-1 (the entangled sector posited). Honest ledger: module docstring. -/
 theorem singletDeisolation_flow_capstone {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
     (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

@@ -193,7 +193,7 @@ The deterministic flow `kFlow sh` is applied to every sampled microstate, and it
 Liouville-preservation (`kFlow_measurePreserving_muPsi`) is exactly what keeps the
 limit at `P_st` (via `bridge_op_p` / `weight_eq_P_st`). This is D1c-1's
 load-bearing-flow achievement realised on the ENTANGLED singlet preparation.
-Foundational-triple-only / Gleason-free. Standing gap unchanged: A5 (the entangled
+Foundational-triple-only / Gleason-free. Standing gap unchanged: SO-1 (the entangled
 sector is posited) and `kFlow` is dynamically trivial (a free fibre translation). -/
 theorem ofKählerPreparationFlow_flow_frequency_convergence
     (p₀ : CPN 4) (sh : KTorus) (hgen : ∀ s t : Sign, 0 < P_st ctx.a ctx.b s t)

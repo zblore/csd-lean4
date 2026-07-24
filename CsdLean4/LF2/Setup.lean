@@ -39,7 +39,7 @@ namespace LF2
     projection `π` and a `G`-action satisfying `μL`-invariance and
     `π`-equivariance.
 
-    **A5 structural data, not a derivation.** Both `π : SigmaSpace → P` and the
+    **sector-posit (SO-1) structural data, not a derivation.** Both `π : SigmaSpace → P` and the
     group `G` are taken as structural inputs. Nothing in `SectorData` constrains
     `π` to project onto the quantum-effective sector specifically: any
     measurable map with the two coherence conditions
@@ -49,7 +49,7 @@ namespace LF2
     the lift of its action on `CP^{N-1}`, with `π` the standard projection,
     but no field forces this.
 
-    This labelling carries A5 in Paper B's framing: the physical motivation
+    This labelling carries the sector posit (SO-1) in Paper B's framing: the physical motivation
     for the quantum-effective sector assumption is a load-bearing external
     input to the corpus, not derived in v1.00. Concrete instantiation
     (`P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))`,

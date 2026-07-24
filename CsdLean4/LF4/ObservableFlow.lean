@@ -267,11 +267,11 @@ Kähler state space.
 **Honest scope.** `obsFlow` is a *single observable's* periodic phase flow. It is
 **not** the de-isolation / measurement flow `Φ_vN` (the dilated-space dynamics of
 LF5, the fuller deferred D1c content), and it is **not** ergodic / mixing (a
-periodic phase flow cannot be). **A5 is untouched** — D1c is
+periodic phase flow cannot be). **SO-1 is untouched** — D1c is
 necessary-but-not-sufficient for deriving the sector + Fubini–Study typicality from
-the dynamics: A5 additionally needs the flow ergodic / mixing to *force* `μFS`,
+the dynamics: SO-1 additionally needs the flow ergodic / mixing to *force* `μFS`,
 which `obsFlow` is not. So D1c-2 supplies the concrete base instance with genuine
-physical dynamics; the A5 ergodicity content remains the open gap. -/
+physical dynamics; the SO-1 ergodicity content remains the open gap. -/
 
 variable [NeZero N]
 
