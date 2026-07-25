@@ -144,6 +144,31 @@ flow**. The genuine remaining research:
    where typicality + Kähler dynamics enter.**
 3. Sequential/Lüders + POVM via the same fibre.
 
+### §3c. The dynamical picture (2026-07-25) — first-passage race at moment-map rates
+
+A CSD-native shape for the fibre model, verified
+(`scripts/experiments/record_layer_race_moment.py`), that is a *flow* and grounds the Born
+square in the corpus's own geometry:
+
+- **Measurement = a first-passage race.** `Σ = ℂℙⁿ⁻¹ × F`, base pinned to `[ψ]`, fibre carries
+  `n` clocks; clock `i` runs at speed `bᵢ` and fires at `ξᵢ/bᵢ`; **outcome = first to fire**.
+  `P(first=j)=bⱼ` exactly. The outcome is the *first jump* — the de-isolation completion, not a
+  static sample.
+- **The Born SQUARE = the torus moment map.** The rates `bᵢ = |⟨eᵢ|ψ⟩|²` **are** `momentMap([ψ])ᵢ`
+  of the `Tⁿ` action `z↦|zᵢ|²` (corpus `momentMap_mk_eq_inner_sq`). So the square is Kähler-geometric,
+  not injected.
+- **The exponential fibre measure is FORCED.** For iid linear clocks, first-to-fire `=bᵢ` holds
+  **iff** the waiting times are exponential (memoryless/Poisson). So the fibre typicality is pinned
+  by the first-passage structure. This is exactly the **quantum-jump / continuous-measurement** form
+  (jumps at exponential times, rates `∝|amplitude|²`) — a developed formalism to anchor to.
+
+**The honest frontier (the reconstruction step).** The rates are *read off* the moment map and the
+race is *posited* as the dynamics. The remaining step: **derive the first-passage race (rates =
+moment map, exponential clocks) from a genuine de-isolation interaction** `H_int(M)` on the fibred
+`Σ` under typicality — i.e. show the corpus's `measurementFlow`/`H_int(M)` *produces* jumps at rates
+`μ([ψ])ᵢ`. That is where "Born from the dynamics" closes; LF5 + the quantum-jump structure are the
+scaffolding. **← the next run.**
+
 ## 4. Lean status
 
 - **Qubit identity (§2):** an `S²` integral. Formalization is **Cat-1 sphere-measure
