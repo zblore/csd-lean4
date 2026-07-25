@@ -49,25 +49,39 @@ hat-box: λ·n ~ Uniform[−1,1]). ∎ Spot-checked n = m, n ⊥ m, n = −m.
 - **The record is clean:** `λ ↦ which hemisphere H±(n)` — context-fixed, prep-independent,
   the ontic selection. A genuine `RecordedFact`, strictly better than `vnPointerOutcome`.
 
-## 3. The N≥3 consequence — Gleason forces the fibre (why "constrain Σ" is now necessary)
+## 3. The N≥3 problem — OPEN (NOT a Gleason no-go)
 
-Route (i) is a *non-negative density on `ℂℙⁿ⁻¹` reproducing Born over context-fixed regions
-for all contexts*. For **N ≥ 3, Gleason's theorem forbids it** — no such density exists (it
-would be a non-contextual hidden-variable model in dim ≥ 3). The qubit works *only because*
-dim 2 escapes Gleason/KS.
+**Correction (2026-07-25).** An earlier version claimed Gleason forbids the base-only route
+for N≥3. **That is wrong.** The outcome regions {Ωᵢ(M)} are *context-fixed* — they **depend
+on the apparatus context M** (the Voronoi cell of eᵢ is defined relative to the *whole*
+basis). So `P(i|M) = ∫_{Ωᵢ(M)} ρ_ψ` depends on the projector eᵢ **and** the basis M → it is a
+measurement-**contextual** model, which Gleason/KS do **not** forbid (KS forbids
+noncontextual *deterministic value* assignments; this is a contextual *probabilistic* model).
+So N≥3 is **open**, not closed, and whether the fibre is even needed is the question.
 
-**Consequence:** a fixed epistemic density on `ℂℙⁿ⁻¹` cannot carry Born past N=2. The
-contextuality must live *below* ℂℙ — in the **fibre of the many-to-one π**. This is why Σ
-must be genuinely many-to-one over ℂℙ (Paper C A3), and it turns *constraining Σ's fibre*
-from optional into **necessary**: the fibre is not a spectator (contra the corpus's ad-hoc
-`T²`) — it supplies exactly the contextuality Gleason says ℂℙ cannot. The record — which
-ontic basin `π⁻¹Ωᵢ(M) ⊂ Σ` the trajectory realizes — depends on `ω` (fibre included), not on
-[ψ] alone, and *that* is how KS is evaded. **MD-1 and "constrain Σ" fuse here.**
+**The real question (decisive):**
+> Does a **base-only** preparation density reproduce Born for N≥3, or is the fibre needed?
+> By unitary covariance, any base-only prep is `ρ_ψ(φ) = g(|⟨ψ|φ⟩|²)` for a *single* function
+> `g:[0,1]→ℝ≥0`. Is there a `g` with `∫_{Ωᵢ(M)} g(|⟨ψ|φ⟩|²) dμ_FS = |⟨eᵢ|ψ⟩|²` for **all**
+> contexts M and states ψ?
 
-The N≥3 problem, sharply posed:
-> Design the Σ-fibre and the prepared region `Ω₀(ψ) ⊂ Σ` so that
-> `μL(Ω₀(ψ) ∩ π⁻¹Ωᵢ(M)) / μL(Ω₀(ψ)) = |⟨eᵢ|ψ⟩|²` for **all** contexts M — the fibre
-> supplying the context-dependence Gleason forbids on ℂℙ alone.
+Partial evidence (basis-vector prep, ψ = eⱼ): taking `g` supported on `(½,1]` — the
+"unambiguous cap" where φ is closest to eⱼ for *every* basis containing eⱼ — gives
+`∫_{Ωⱼ(M)}g = 1`, `∫_{i≠j}g = 0`, **M-independently**. So the base-only route is not
+obviously dead; the open case is **generic ψ** (where the cap around ψ overlaps the eᵢ-cells).
+
+**Two outcomes, both informative:**
+- **(A) g exists** ⟹ base-only reproduces Born, **no measurement-fibre needed**; the qubit
+  route (i) generalizes. (The many-to-one fibre would then be motivated by other structure —
+  records, dynamics — not by measurement.)
+- **(B) no g** ⟹ the base is insufficient; the many-to-one **fibre of Σ** must carry the
+  extra structure — *here* "constrain Σ" fuses with MD-1:
+  > Design the Σ-fibre + prepared region `Ω₀(ψ) ⊂ Σ` so that
+  > `μL(Ω₀(ψ) ∩ B_i(M)) / μL(Ω₀(ψ)) = |⟨eᵢ|ψ⟩|²` for all contexts M, the fibre supplying the
+  > context-dependence — where the ontic outcome basins `B_i(M) ⊂ Σ` use the fibre (they need
+  > NOT be plain π-pullbacks; if the outcome depended only on `π(ω)` the fibre would be inert).
+
+**Settling A vs B is the decisive next step** (Phase 1 below).
 
 ## 4. Lean status
 
@@ -84,11 +98,12 @@ The N≥3 problem, sharply posed:
 
 | Step | What | Risk |
 |---|---|---|
-| 1 | `MeasurementContext → {Ωᵢ(M)}` context-fixed **epistemic** partition on ℂℙ (Voronoi / moment-polytope), μ_FS-null boundaries | low |
-| 2 | **Qubit crux (§2)** — analytic DONE; Lean = sphere-measure infra (reflection-invariance of `toSphere` + Archimedes `∫|λ₃|=½`) | med (infra) |
-| 3 | The record as a context-fixed `RecordedFact` + ontic selection `ω ↦ i` (reuse `RecordSemantics`) | low |
-| 4 | **N≥3 fibre construction (§3)** — the fibre supplies contextuality; `Ω₀(ψ)` + Born for all contexts | **high — the research core** |
-| 5 | Wire into `FiniteQMClosure`; retire the prep-indexed readout | med |
+| **1 (Phase 1 — decisive)** | **Settle base-only vs fibre (§3).** Qutrit test: is there `g:[0,1]→ℝ≥0` with `∫_{Ωᵢ(M)} g(\|⟨ψ\|φ⟩\|²) dμ_FS = \|⟨eᵢ\|ψ⟩\|²` for all M, ψ? First **numerically** (Monte-Carlo on ℂℙ²), then analytically. Decides architecture. | med — decisive |
+| 2a (if A) | Base-only: fix `g` for general N, formalize (qutrit); qubit route (i) generalizes — no measurement-fibre | med |
+| 2b (if B) | Fibre construction: `Σ=ℂℙⁿ⁻¹×F`, outcome basins `B_i(M)⊂Σ` using the fibre, volume ratio = Born, contextual | **high — research core** |
+| 3 | The record: context-fixed `RecordedFact` + ontic selection `ω ↦ i` (reuse `RecordSemantics`) — independent of A/B | low |
+| 4 | The context-fixed regions `{Ωᵢ(M)}` def + μ_FS-null boundaries (Voronoi) | low |
+| 5 | Formalize (qutrit) + wire into `FiniteQMClosure`; retire the prep-indexed readout | med |
 
 ## 6. References
 
