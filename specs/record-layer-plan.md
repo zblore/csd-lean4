@@ -83,6 +83,33 @@ obviously dead; the open case is **generic ψ** (where the cap around ψ overlap
 
 **Settling A vs B is the decisive next step** (Phase 1 below).
 
+### Phase 1 RESULT (2026-07-25): Outcome B — base-only fails at N=3
+
+Decisive numerical test done (`scripts/experiments/record_layer_base_only_test.py`,
+Monte-Carlo on ℂℙ² + non-negative least-squares feasibility, `nnls`). The Born condition is
+linear in `g`; the diagnostic is the non-negative residual `r_nn` vs the noise floor `r_unc`
+(the signed-`g` residual):
+
+- **Qubit control (d=2, base-only KNOWN to work):** `r_nn ≈ r_unc ≈` MC noise (0.0008) — a
+  non-negative `g` exists. **Validates the test.**
+- **Qutrit (d=3):** `r_unc → 0` with more samples (a *signed* `g` fits Born), but `r_nn`
+  **plateaus at ~0.008 (~10× the noise floor) and does not shrink with 4× samples** — a genuine
+  model-misfit floor. **No non-negative base density fits.**
+
+So a covariant base-only density on `ℂℙ²` reproducing Born over FS-Voronoi regions **is forced
+to go negative** — the honest N=3 analog of the qubit's `c=2`, with no rescue. **Outcome B: the
+fibre is needed** — now *earned numerically* (this replaces the retracted Gleason argument;
+the impossibility is real but it is a forced-negativity result for the contextual Voronoi base
+model, established empirically and validated by the qubit control). (Diagnostic caveat learned:
+`min(g_unc)<0` is a red herring — `lstsq` returns the min-norm solution, negative even for the
+qubit where a non-negative `g` exists; rely on `r_nn`.)
+
+**Honest caveats:** (i) tested for **FS-Voronoi** regions (Paper C's canonical choice) — does
+not strictly rule out base-only with some *other* context-fixed region family (a worthwhile
+quick check); (ii) numerical, not yet a proof (the robust plateau + forced negativity suggest
+one exists — likely a clean "no covariant base density reproduces Born via context-fixed
+regions for N≥3" theorem).
+
 ## 4. Lean status
 
 - **Qubit identity (§2):** an `S²` integral. Formalization is **Cat-1 sphere-measure
@@ -98,9 +125,9 @@ obviously dead; the open case is **generic ψ** (where the cap around ψ overlap
 
 | Step | What | Risk |
 |---|---|---|
-| **1 (Phase 1 — decisive)** | **Settle base-only vs fibre (§3).** Qutrit test: is there `g:[0,1]→ℝ≥0` with `∫_{Ωᵢ(M)} g(\|⟨ψ\|φ⟩\|²) dμ_FS = \|⟨eᵢ\|ψ⟩\|²` for all M, ψ? First **numerically** (Monte-Carlo on ℂℙ²), then analytically. Decides architecture. | med — decisive |
-| 2a (if A) | Base-only: fix `g` for general N, formalize (qutrit); qubit route (i) generalizes — no measurement-fibre | med |
-| 2b (if B) | Fibre construction: `Σ=ℂℙⁿ⁻¹×F`, outcome basins `B_i(M)⊂Σ` using the fibre, volume ratio = Born, contextual | **high — research core** |
+| ~~1 (Phase 1 — decisive)~~ | **DONE 2026-07-25 → Outcome B** (§3): base-only fails at N=3 for FS-Voronoi (density forced negative; qubit control validates). Fibre needed. | — |
+| 1b (optional) | Quick check: does a *non-Voronoi* context-fixed region family rescue base-only? (bound the caveat before committing to the fibre) | low |
+| **2b (the research core)** | **Fibre construction:** `Σ=ℂℙⁿ⁻¹×F`, ontic outcome basins `B_i(M)⊂Σ` that USE the fibre (outcome depends on `ω`, not just `π(ω)`), volume ratio = Born for all contexts, contextual. Where MD-1 fuses with constrain-Σ. | **high — research core** |
 | 3 | The record: context-fixed `RecordedFact` + ontic selection `ω ↦ i` (reuse `RecordSemantics`) — independent of A/B | low |
 | 4 | The context-fixed regions `{Ωᵢ(M)}` def + μ_FS-null boundaries (Voronoi) | low |
 | 5 | Formalize (qutrit) + wire into `FiniteQMClosure`; retire the prep-indexed readout | med |
