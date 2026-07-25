@@ -104,11 +104,45 @@ model, established empirically and validated by the qubit control). (Diagnostic 
 `min(g_unc)<0` is a red herring — `lstsq` returns the min-norm solution, negative even for the
 qubit where a non-negative `g` exists; rely on `r_nn`.)
 
-**Honest caveats:** (i) tested for **FS-Voronoi** regions (Paper C's canonical choice) — does
-not strictly rule out base-only with some *other* context-fixed region family (a worthwhile
-quick check); (ii) numerical, not yet a proof (the robust plateau + forced negativity suggest
-one exists — likely a clean "no covariant base density reproduces Born via context-fixed
-regions for N≥3" theorem).
+**Honest caveats:** (i) tested for **FS-Voronoi** regions (Paper C's canonical choice) — but
+note Voronoi = *sharp regions on the base* ℂℙⁿ⁻¹, i.e. exactly the base-only structure, so this
+is not a real limitation: the resolution abandons base-sharp regions entirely (see §3b);
+(ii) numerical, not yet a proof (the robust plateau + forced negativity suggest a clean "no
+covariant base density reproduces Born via base-sharp regions for N≥3" theorem).
+
+### §3b. Phase 2b — the fibre model (Outcome B resolved: a working construction, N≥3)
+
+**Correct structure (drop Voronoi / base-sharp regions).** For a *sharp* prep the epistemic
+state is definite, `π(ω)=[ψ]`, so the prepared region sits **in the fibre over [ψ]**:
+`μL|Ω₀ = δ_{[ψ]} ⊗ ν` (this is already the corpus's `push_dirac`, `π_*μ_ψ = δ_ray`). The
+measurement carves the **fibre**, and the whole problem is one object:
+
+> **Born partition of the fibre.** For each base point `φ` and context `M`, a partition
+> `{Fᵢ(M,φ)}` of `(F,ν)` with `ν(Fᵢ(M,φ)) = |⟨eᵢ|φ⟩|²`. Outcome `ω=(φ,ξ)↦i` iff `ξ∈Fᵢ(M,φ)`;
+> Born = fibre volume. Probabilities depend only on `(eᵢ,φ)` (measurement-noncontextual, as QM
+> demands); regions may depend on the full `M` (contextual). Base-only failed precisely because
+> it forces this partition onto ℂℙⁿ⁻¹ itself (§3).
+
+**Existence + canonical instance (VERIFIED, N=3).** The Born partition always exists; the
+canonical symmetric one (no outcome ordering) is a noisy-argmax:
+`F=ℝⁿ, ν=iid Gumbel, Fᵢ(M,φ)={ξ : i=argmaxⱼ(log|⟨eⱼ|φ⟩|²+ξⱼ)}` ⟹ `ν(Fᵢ)=softmaxᵢ(log b)=bᵢ`
+**exactly** (Gumbel–max). Numerically confirmed at N=3 to MC precision, incl. the KS-relevant
+check that two bases sharing a vector give the same outcome probability (context-independent
+prob, context-dependent regions). Minimal fibre dim `= n−1`; `n=2` → a single logistic threshold
+(recovers the qubit `ρ_m`). Script: `scripts/experiments/record_layer_fibre_gumbel.py`.
+
+**Honest boundary — existence ≠ CSD-native.** The Gumbel model reproduces Born by *injected
+iid noise*; it is a valid ontological model that **settles the architecture** (the fibre can
+carry the contextuality), but it is NOT yet the CSD mechanism, which needs the fibre randomness
+from **typicality** (a fixed geometric fibre measure) resolved by a **deterministic de-isolation
+flow**. The genuine remaining research:
+1. **Canonical geometric fibre** `(F,ν)` — compact, natural Born partition, `μ_FS`-null
+   boundaries, continuous in `(M,φ)` (is `T²` rich enough? a simplex? `ℂℙⁿ⁻¹` self-similar?).
+2. **The deterministic de-isolation flow** `Φ_M:Σ→Σ` whose basins `Bᵢ(M)=Φ_M⁻¹(pointer_i)` ARE
+   the Born partition — Born as a typicality volume of a *flow-carved* basin, not injected noise
+   (the corpus's LF5 pointer-flow, generalized to be N≥3-contextual). **← the real next target;
+   where typicality + Kähler dynamics enter.**
+3. Sequential/Lüders + POVM via the same fibre.
 
 ## 4. Lean status
 
@@ -127,7 +161,8 @@ regions for N≥3" theorem).
 |---|---|---|
 | ~~1 (Phase 1 — decisive)~~ | **DONE 2026-07-25 → Outcome B** (§3): base-only fails at N=3 for FS-Voronoi (density forced negative; qubit control validates). Fibre needed. | — |
 | 1b (optional) | Quick check: does a *non-Voronoi* context-fixed region family rescue base-only? (bound the caveat before committing to the fibre) | low |
-| **2b (the research core)** | **Fibre construction:** `Σ=ℂℙⁿ⁻¹×F`, ontic outcome basins `B_i(M)⊂Σ` that USE the fibre (outcome depends on `ω`, not just `π(ω)`), volume ratio = Born for all contexts, contextual. Where MD-1 fuses with constrain-Σ. | **high — research core** |
+| ~~2b (existence)~~ | **DONE 2026-07-25 → §3b:** the fibre model reproduces Born exactly at N≥3 (Gumbel race; verified, `scripts/experiments/record_layer_fibre_gumbel.py`). Architecture settled: the fibre carries the contextuality. | — |
+| **2b′ (the real core)** | **CSD-native fibre model:** a *canonical geometric* fibre `(F,ν)` + a *deterministic de-isolation flow* `Φ_M` whose basins `B_i(M)=Φ_M⁻¹(pointer_i)` ARE the Born partition — Born as a typicality volume of a flow-carved basin, not injected noise. Where typicality + Kähler dynamics enter. | **high — research core** |
 | 3 | The record: context-fixed `RecordedFact` + ontic selection `ω ↦ i` (reuse `RecordSemantics`) — independent of A/B | low |
 | 4 | The context-fixed regions `{Ωᵢ(M)}` def + μ_FS-null boundaries (Voronoi) | low |
 | 5 | Formalize (qutrit) + wire into `FiniteQMClosure`; retire the prep-indexed readout | med |
