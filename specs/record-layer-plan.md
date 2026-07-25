@@ -162,12 +162,23 @@ square in the corpus's own geometry:
   by the first-passage structure. This is exactly the **quantum-jump / continuous-measurement** form
   (jumps at exponential times, rates `∝|amplitude|²`) — a developed formalism to anchor to.
 
-**The honest frontier (the reconstruction step).** The rates are *read off* the moment map and the
-race is *posited* as the dynamics. The remaining step: **derive the first-passage race (rates =
-moment map, exponential clocks) from a genuine de-isolation interaction** `H_int(M)` on the fibred
-`Σ` under typicality — i.e. show the corpus's `measurementFlow`/`H_int(M)` *produces* jumps at rates
-`μ([ψ])ᵢ`. That is where "Born from the dynamics" closes; LF5 + the quantum-jump structure are the
-scaffolding. **← the next run.**
+**The decomposition (2026-07-25) — two grounded parts.** The measurement factorises as
+*(moment map sets the rates) × (mixing de-isolation gives the exponential first-passage)*:
+
+- **(A) exponential first-passage — DERIVABLE (not injected).** For a **mixing** de-isolation flow
+  with disjoint environment targets `Aᵢ`, the first target entered is `i` with probability
+  `→ μ(Aᵢ)/Σⱼμ(Aⱼ)` — the **exponential law for competing hitting sets** (Galves–Schmitt / Abadi /
+  Hirata). So a deterministic mixing environment + typicality *produces* the exponential-clock /
+  first-jump structure; no injected noise. (Do not simulate — it is a theorem; naive chaotic-map
+  sims also hit float precision walls.)
+- **(B) rates = the moment map.** Winner probabilities `∝ μ(Aᵢ)`, so Born needs
+  `μ(Aᵢ) ∝ bᵢ = |⟨eᵢ|φ⟩|² = momentMap([ψ])ᵢ` — the torus moment map (`momentMap_mk_eq_inner_sq`),
+  Papers A/B territory.
+
+**The one remaining crux (narrowed, precise):** exhibit a **de-isolation coupling** whose environment
+target-measures are `∝ the moment map` — tying `|⟨eᵢ|φ⟩|²` to the environment geometry. That is the
+last "Born from the dynamics" step; LF5's `measurementFlow` + the moment-map engine + the
+exponential-law theorem are the scaffolding.
 
 ## 4. Lean status
 
