@@ -199,6 +199,7 @@ public import CsdLean4.Empirical.QM.USD
 public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 public import CsdLean4.Empirical.QM.QEC.PhaseFlip
 public import CsdLean4.Empirical.QM.QEC.ErrorDiscretization
+public import CsdLean4.Empirical.QM.QEC.SyndromeCollapse
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Multipartite.GHZ
@@ -1857,6 +1858,47 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on ax
 /-- info: 'CSD.Empirical.QM.QEC.errored_codeword_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.errored_codeword_eq
+
+-- Syndrome collapse (2026-07-27): the half that JOINS error discretization to the four
+-- point-checks. Before this, the corpus had "an arbitrary error is a combination of four"
+-- (ErrorDiscretization) and "each of the four is corrected" (ThreeQubit) with NOTHING connecting
+-- them -- a superposition of error branches is not obviously reducible to one branch, so
+-- discretization was true but load-BEARING on nothing. errored_pairwise_orthogonal supplies the
+-- missing fact: the four errored codewords are mutually orthogonal (their supports are disjoint --
+-- {000,111}, {100,011}, {010,101}, {001,110} -- which is the concrete form of the distinct
+-- (Z1Z2,Z2Z3) syndrome pairs; available directly, so no spectral theorem needed).
+-- branch_overlap_X1/X2/X3 is the collapse step proper: the overlap of the corrupted codeword with
+-- branch k is EXACTLY c_k times that branch's norm, so the syndrome measurement reads off one
+-- coefficient and is blind to the other three. three_qubit_corrects_span_error bundles all four
+-- ingredients (decomposition, orthogonality, extraction, branch-wise recovery): THE CODE CORRECTS
+-- AN ARBITRARY ERROR IN span C {I,X1,X2,X3} -- a continuum, not four points.
+-- SCOPE: still the BIT-FLIP span, the 3-qubit code's actual correctable set. Reaching all four
+-- Paulis per qubit (so pauli_span_top applies and EVERY single-qubit error is corrected) needs the
+-- concatenated Shor-9 code, open on 512-dimensional infrastructure (specs/BACKLOG.md). What closed
+-- here is the gap WITHIN the 3-qubit story.
+/-- info: 'CSD.Empirical.QM.QEC.errored_pairwise_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.errored_pairwise_orthogonal
+
+/-- info: 'CSD.Empirical.QM.QEC.spanError_logical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.spanError_logical
+
+/-- info: 'CSD.Empirical.QM.QEC.branch_overlap_X1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.branch_overlap_X1
+
+/-- info: 'CSD.Empirical.QM.QEC.branch_overlap_X2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.branch_overlap_X2
+
+/-- info: 'CSD.Empirical.QM.QEC.branch_overlap_X3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.branch_overlap_X3
+
+/-- info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_span_error' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_span_error
 
 -- Phase-flip identifiability (Hadamard dual; now inside the phase-flip capstone).
 /-- info: 'CSD.Empirical.QM.QEC.three_qubit_phaseflip_syndromes_distinct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
