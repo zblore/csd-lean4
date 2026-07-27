@@ -255,6 +255,7 @@ public import CsdLean4.Empirical.CSD.DoubleSlitVolume
 public import CsdLean4.Empirical.CSD.MalusVolume
 public import CsdLean4.Empirical.CSD.LeggettGargVolume
 public import CsdLean4.Empirical.CSD.ElitzurVaidmanVolume
+public import CsdLean4.Empirical.CSD.HongOuMandelVolume
 public import CsdLean4.Empirical.CSD.BellVolume
 public import CsdLean4.Empirical.CSD.GHZVolume
 public import CsdLean4.Empirical.CSD.HardyVolume

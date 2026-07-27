@@ -228,6 +228,7 @@ public import CsdLean4.Empirical.CSD.SternGerlachVolume
 public import CsdLean4.Empirical.CSD.MalusVolume
 public import CsdLean4.Empirical.CSD.LeggettGargVolume
 public import CsdLean4.Empirical.CSD.ElitzurVaidmanVolume
+public import CsdLean4.Empirical.CSD.HongOuMandelVolume
 public import CsdLean4.Empirical.Metrology.Ramsey
 public import CsdLean4.Empirical.CSD.MachZehnderVolume
 public import CsdLean4.Empirical.CSD.DoubleSlitVolume
@@ -721,6 +722,39 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.HOM.inputs_normalised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.inputs_normalised
+
+-- Hong-Ou-Mandel CSD twin (2026-07-27): the dip as an ONTIC IMPOSSIBILITY, not a statistical
+-- cancellation. hom_coincidence_typicality_zero -- the coincidence cell's fibre typicality is
+-- EXACTLY 0, so the set of microstates yielding a coincidence is NULL; there is nothing in Sigma
+-- to cancel. Same at the record level (hom_coincidence_record_null: the P5 record event "recorded
+-- a coincidence" is a null subset of Sigma) and as a Measurement (hom_coincidence_measurement_zero).
+-- hom_bunch_typicality_half confirms the weight went to the two bunched outcomes (1/2 each), so
+-- the vanishing is a genuine redistribution rather than a normalisation artefact. The occupation
+-- state is DERIVED from the QM module (homOut_eq_bsTwo_bosonIn: |20>/|02> are the diagonal entries
+-- of bsTwo bosonIn and the |11> amplitude is the symmetrised off-diagonal (S01+S10)/sqrt2), not
+-- re-asserted. ARCHITECTURAL NOTE: this twin uses the RECORD LAYER, not the Duistermaat-Heckman
+-- fs_born_volume_ratio_N / fsMeasure_bornRegionN route that every earlier ...Volume twin uses --
+-- because those carry hpos (STRICTLY POSITIVE Born weights) and HOM's defining feature is a ZERO
+-- amplitude. hpos is load-bearing there, not decorative: replaceMap_det b i = b i (Cramer), so a
+-- zero weight makes the vertex-replacement map SINGULAR, puts b on the simplex boundary
+-- (b in openSimplexFree fails) and breaks both the openness/measurability and volume-scaling steps.
+-- volume_cdfCell has NO positivity hypothesis (a zero rate is just a zero-width cell), so the
+-- record layer expresses the degenerate case the projective machinery cannot. Extending the DH
+-- lemmas to the simplex boundary is an open item (specs/BACKLOG.md).
+/-- info: 'CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_coincidence_typicality_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_coincidence_typicality_zero
+
+/-- info: 'CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_coincidence_record_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_coincidence_record_null
+
+/-- info: 'CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_coincidence_measurement_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_coincidence_measurement_zero
+
+/-- info: 'CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_bunch_typicality_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.HongOuMandelVolume.hom_bunch_typicality_half
+
+/-- info: 'CSD.Empirical.CSDBridge.HongOuMandelVolume.homOut_eq_bsTwo_bosonIn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.HongOuMandelVolume.homOut_eq_bsTwo_bosonIn
 
 -- CSD Volume twins (Born = Kähler typicality volume, 2026-07-27): LG survival cos²Δ and EV split 1/2
 -- realised as Fubini–Study moment-sublevel volumes on ℂℙ¹ via fs_born_volume_ratio_qubit_uncond (DH).

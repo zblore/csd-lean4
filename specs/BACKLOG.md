@@ -21,6 +21,12 @@
 | ~~**Busch–Gleason** (effect-Gleason, finite-dim)~~ | **DONE 2026-07-21** — see the "Discharge `busch_effect_gleason`" row below. Axiom deleted; corpus now imports **zero** axioms. | `AXIOMS.md §2.2` |
 | ~~**Separate the ecdsa.fail track**~~ | **DONE 2026-07-20** — extracted to its own repository and removed from this one (see the section below). | `ecdsafail-two-track.md` |
 
+## M — genuinely closeable, real content (continued)
+
+| Item | Status / what's needed | Former source |
+|---|---|---|
+| **Born-as-volume at the simplex boundary (zero Born weights)** | **OPEN — found 2026-07-27 while building the Hong–Ou–Mandel CSD twin.** `fs_born_volume_ratio_N` / `fs_born_volume_ratio_N_apex` / `fsMeasure_bornRegionN` (`LF4/MomentBornN.lean`, `LF4/ObservableCorrespondenceN.lean`) all carry `hpos : ∀ j, 0 < ‖⟨eⱼ,ψ⟩‖²` — **strictly positive** Born weights. It is load-bearing, not decorative: the region for index `i` is `replaceMap b i '' openSimplexFree` and `replaceMap_det b i = b i` (Cramer, `LF4/BornVolume.lean`), so a **zero** Born weight makes the vertex-replacement map singular, puts `b` on the simplex *boundary* (`b ∈ openSimplexFree` fails, since it needs all free coords `> 0` **and** the apex coord `> 0`), and breaks both the openness⇒measurability step (`LinearMap.equivOfDetNeZero`) and the volume-scaling step. **Consequence:** the projective/DH machinery cannot express *any* phenomenon whose signature is a vanishing amplitude — interference nulls, dark ports, HOM. **What's needed:** a boundary extension, `fsMeasure_bornRegionN_of_born_zero : ‖⟨e_k,ψ⟩‖² = 0 ⟹ fubiniStudyMeasure p₀ (bornRegionN ψ hψ0 k) = 0`. Sketch: the region sits inside the preimage of `range (replaceMap b i)`, a *proper* subspace when the det vanishes, hence Lebesgue-null; push through `fs_volume_eq_dirichlet` by monotonicity of the (outer) measure, intersecting with `openSimplexFree` to satisfy that lemma's subset hypothesis. The care needed is that `replaceMap_image_subset` also assumes `b ∈ openSimplexFree`. **Workaround in place:** the **record layer** has no such restriction — `volume_cdfCell` carries no positivity hypothesis (a zero rate is simply a zero-width CDF cell), so `Empirical/CSD/HongOuMandelVolume.lean` states the degenerate case there instead. This is a concrete architectural argument for the record layer over the DH route, independent of the foundational one. | `Empirical/CSD/HongOuMandelVolume.lean` |
+
 ## L — weeks
 
 | Item | Status / what's needed | Former source |
