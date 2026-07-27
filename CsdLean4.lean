@@ -310,6 +310,8 @@ public import CsdLean4.CV.Oscillator
 public import CsdLean4.CV.OscillatorSpectrum
 public import CsdLean4.CV.OscillatorBorn
 public import CsdLean4.CV.FieldModes
+public import CsdLean4.CV.Dispersion
+public import CsdLean4.CV.ModeLocality
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy

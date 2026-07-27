@@ -64,6 +64,8 @@ public import CsdLean4.CV.Oscillator
 public import CsdLean4.CV.OscillatorSpectrum
 public import CsdLean4.CV.OscillatorBorn
 public import CsdLean4.CV.FieldModes
+public import CsdLean4.CV.Dispersion
+public import CsdLean4.CV.ModeLocality
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
@@ -7505,6 +7507,73 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.CV.modeMarginal_tprod_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.modeMarginal_tprod_unit
+
+-- Dispersion (EFT Stage 2a: relativistic dispersion ω(m,p) = √(p²+m²), 2026-07-27). The mode
+-- frequencies that make the mode sum a RELATIVISTIC field: omega_sq_sub_sq is the MASS SHELL
+-- ω²−p²=m² (the Lorentz-invariant content, and why m is called the mass); abs_le_omega (|p| ≤ ω —
+-- excitations do not outrun the light cone); abs_mass_le_omega + omega_zero (the MASS GAP |m| ≤ ω,
+-- attained at rest); omega_massless (ω = |p| exactly, the light cone); omega_le_newtonian (ω ≤ m +
+-- p²/2m, the non-relativistic limit as a clean INEQUALITY, no asymptotics); omega_mono. The field:
+-- relFieldHamiltonian_mulVec_single + _isHermitian (still DIAGONAL in the configuration basis, so
+-- the OscillatorBorn record-layer account carries over verbatim — only the eigenvalues change),
+-- relFieldEnergy_quantum (THE HEADLINE: one quantum in mode k₀ costs exactly ω(m, p k₀), so the
+-- excitations ARE relativistic particles of mass m — the dispersion is about the particle content,
+-- not a parameter choice), relFieldEnergy_vacuum (zero-point ½∑ω), relFieldEnergy_cutoff_independent.
+/-- info: 'CSD.CV.omega_sq_sub_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.omega_sq_sub_sq
+
+/-- info: 'CSD.CV.abs_le_omega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.abs_le_omega
+
+/-- info: 'CSD.CV.abs_mass_le_omega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.abs_mass_le_omega
+
+/-- info: 'CSD.CV.omega_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.omega_zero
+
+/-- info: 'CSD.CV.omega_massless' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.omega_massless
+
+/-- info: 'CSD.CV.omega_le_newtonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.omega_le_newtonian
+
+/-- info: 'CSD.CV.omega_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.omega_mono
+
+/-- info: 'CSD.CV.relFieldHamiltonian_mulVec_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.relFieldHamiltonian_mulVec_single
+
+/-- info: 'CSD.CV.relFieldHamiltonian_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.relFieldHamiltonian_isHermitian
+
+/-- info: 'CSD.CV.relFieldEnergy_quantum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.relFieldEnergy_quantum
+
+/-- info: 'CSD.CV.relFieldEnergy_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.relFieldEnergy_vacuum
+
+/-- info: 'CSD.CV.relFieldEnergy_cutoff_independent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.relFieldEnergy_cutoff_independent
+
+-- ModeLocality (EFT Stage 2b: commuting algebras of disjoint mode sets, 2026-07-27). The HAAG-
+-- KASTLER kinematic locality axiom at the finite cutoff: commute_of_disjointSupport -- operators
+-- supported on DISJOINT mode sets commute (A*B = B*A), so observables of disjoint regions are
+-- jointly measurable and the record layer can assign them outcomes simultaneously. Proof = the
+-- uniqueness of the intermediate configuration (one surviving term per product, equal in pairs by
+-- the support conditions). NOT VACUOUS: modeOp_supportedOn exhibits SupportedOn {k₀} for every
+-- single-mode matrix, and commute_modeOp is the concrete instance at distinct modes.
+-- HONEST SCOPE (see the file's "does NOT claim" section): this is SUBSYSTEM locality, spatial only
+-- under the position-space reading of the modes (CV/Position.lean). Continuum microcausality
+-- [φ(x),φ(y)]=0 at spacelike separation is NOT proved and does NOT hold exactly at a finite cutoff;
+-- it needs the continuum limit, deliberately deferred (CV/ApproxCCR.no_exact_finite_ccr).
+/-- info: 'CSD.CV.commute_of_disjointSupport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commute_of_disjointSupport
+
+/-- info: 'CSD.CV.modeOp_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.modeOp_supportedOn
+
+/-- info: 'CSD.CV.commute_modeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commute_modeOp
 
 -- HatBox (context-fixed qubit measurement infra / A7, 2026-07-26): the Archimedes hat-box, the
 -- single-axis crux integral. hatBox_moment: the Fubini-Study average over ℂℙ¹ of the Bloch height
