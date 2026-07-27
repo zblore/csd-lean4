@@ -19,6 +19,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
+public import CsdLean4.Mathlib.QuantumInfo.Helstrom
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
@@ -833,6 +834,66 @@ arithmetic. -/
 /-- info: 'QuantumInfo.traceDist_conj_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceDist_conj_unitary
+
+-- Helstrom bound: minimum-error state discrimination (K3, Mathlib/QuantumInfo/Helstrom.lean).
+-- The OPERATIONAL meaning of the trace distance, and the converse companion to
+-- channel_traceDist_le above: channels cannot increase distinguishability, and the Helstrom
+-- bound is exactly how much distinguishability a measurement can extract. Both halves are
+-- pinned -- the bound (successProb_le, over every two-outcome test 0 ≤ E ≤ 1) AND its
+-- ATTAINMENT (successProb_helstromTest, at the positive-eigenspace projector of the Helstrom
+-- operator), so ½(1 + D) is the optimum, not merely an upper bound. Equal-prior form
+-- errorProb_helstromTest: P_error = ½(1 − D(ρ₀,ρ₁)); general-prior form successProbPrior_le:
+-- P_success ≤ ½(1 + ‖p₀ρ₀ − p₁ρ₁‖₁). Extremes: D = 0 forces a coin flip for EVERY E
+-- (helstrom_indistinguishable), D = 1 permits an error-free test (helstrom_perfect).
+-- Foundational triple, no `sorry`, no `native_decide`. Complements Empirical/QM/USD.lean
+-- (zero error at the cost of an inconclusive outcome) -- the other end of the trade-off.
+/-- info: 'QuantumInfo.re_trace_posPart_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.re_trace_posPart_eq
+
+/-- info: 'QuantumInfo.re_trace_mul_le_helstrom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.re_trace_mul_le_helstrom
+
+/-- info: 'QuantumInfo.re_trace_mul_helstrom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.re_trace_mul_helstrom
+
+/-- info: 'QuantumInfo.helstromTest_isTest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.helstromTest_isTest
+
+/-- info: 'QuantumInfo.successProb_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.successProb_le
+
+/-- info: 'QuantumInfo.successProb_helstromTest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.successProb_helstromTest
+
+/-- info: 'QuantumInfo.errorProb_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.errorProb_ge
+
+/-- info: 'QuantumInfo.errorProb_helstromTest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.errorProb_helstromTest
+
+/-- info: 'QuantumInfo.helstrom_indistinguishable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.helstrom_indistinguishable
+
+/-- info: 'QuantumInfo.helstrom_perfect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.helstrom_perfect
+
+/-- info: 'QuantumInfo.successProbPrior_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.successProbPrior_le
+
+/-- info: 'QuantumInfo.successProbPrior_helstromTest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.successProbPrior_helstromTest
 
 -- Spectral von Neumann entropy S(ρ) = ∑ᵢ negMulLog(λᵢ) = −Tr(ρ log ρ) (K1-A of specs/k1-plan.md).
 -- Cat-1 staging beside TraceDistance; the operator-form identity (via re_trace_cfc), S ≥ 0 for a

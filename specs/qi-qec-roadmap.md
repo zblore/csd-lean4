@@ -91,7 +91,28 @@ data-processing). Gleason-free, Hilbert/operator side — does not touch D1/A5.
 **K3 closers DONE 2026-06-09** (`DataProcessing.lean`): `traceDist_le_one` (states ⟹
 `D ≤ 1`, tight at 1 for orthogonal pure states — the bounded `[0,1]` distinguishability range)
 and `traceDist_conj_unitary` (`D(UρU†,UσU†) = D(ρ,σ)`, the equality case of data-processing,
-via the unitary channel both ways). Both Tier-A audited SOUND. The K3 metric-properties set is
+via the unitary channel both ways). Both Tier-A audited SOUND.
+
+**K3 operational meaning DONE 2026-07-27** (`Mathlib/QuantumInfo/Helstrom.lean`) — the
+**Helstrom bound**, which is what makes `traceDist` *the* metric of distinguishability rather
+than one metric among many. Over every two-outcome test (`IsTest E`: `0 ≤ E ≤ 1`), the optimal
+discrimination of `ρ₀` from `ρ₁` at equal priors is `P_success ≤ ½(1 + D(ρ₀,ρ₁))`
+(`successProb_le`), equivalently `P_error ≥ ½(1 − D)` (`errorProb_ge`) — **and the optimum is
+attained**, by the projector onto the positive eigenspace of the Helstrom operator
+(`helstromTest`, `successProb_helstromTest`, `errorProb_helstromTest`). General priors:
+`P_success ≤ ½(1 + ‖p₀ρ₀ − p₁ρ₁‖₁)`, attained (`successProbPrior_le`,
+`successProbPrior_helstromTest`). The two extremes are pinned as well:
+`helstrom_indistinguishable` (`D = 0` ⟹ error exactly `½` for *every* `E` — no measurement
+beats a coin flip) and `helstrom_perfect` (`D = 1` ⟹ an error-free test exists). Both halves
+reuse the existing Jordan-decomposition machinery: the bound is
+`re_trace_mul_le_re_trace_posPart` and the attainment is `mul_posProj_eq_posPart`, joined by
+the new `re_trace_posPart_eq` (`Re Tr(A₊) = ½(‖A‖₁ + Re Tr A)`). This is the **converse
+companion** to `channel_traceDist_le`: channels cannot increase distinguishability, and
+Helstrom says exactly how much of it a measurement can extract. It is also the complement of
+`Empirical/QM/USD.lean` (zero error at the cost of an inconclusive outcome) — the two are the
+endpoints of the discrimination trade-off. Foundational-triple, no `sorry`, AxiomAudit-pinned.
+
+The K3 metric-properties set is
 now closed; remaining QI keystones: K1 entropy, and K4 (the Lüders / outcome-conditioned
 update specifically — note the LF5 *layer* itself is built: LF5-A..F landed 2026-06-09..15,
 single-system projective measurement dynamics complete; what K4 still needs is the

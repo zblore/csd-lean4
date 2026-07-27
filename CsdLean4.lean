@@ -23,6 +23,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
+public import CsdLean4.Mathlib.QuantumInfo.Helstrom
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
