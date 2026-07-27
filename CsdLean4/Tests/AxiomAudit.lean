@@ -198,6 +198,7 @@ public import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
 public import CsdLean4.Empirical.QM.USD
 public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 public import CsdLean4.Empirical.QM.QEC.PhaseFlip
+public import CsdLean4.Empirical.QM.QEC.ErrorDiscretization
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Multipartite.GHZ
@@ -1816,6 +1817,46 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on ax
 -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip
+
+-- Error discretization (2026-07-27): WHY correcting four Paulis corrects a CONTINUUM of errors.
+-- pauli_decomposition -- every 2x2 complex matrix is c0.I + c1.X + c2.Z + c3.XZ with the
+-- coefficients read off its entries ((M00 +/- M11)/2, (M01 +/- M10)/2); no analysis, no choice.
+-- pauli_span_top says the same as span C {I,X,Z,XZ} = TOP: the Pauli set does not merely happen to
+-- cover the errors a given code faces, it EXHAUSTS the single-qubit operator space.
+-- error_discretization_qubit_1/2/3 lift it to the three-qubit code (kron3 is C-linear in each
+-- slot), and errored_codeword_eq lands it on states: an arbitrary single-qubit error produces
+-- exactly the corresponding combination of the four discrete corrupted states, so no continuum of
+-- OUTCOMES accompanies the continuum of ERRORS. This is the conceptual content that makes
+-- ThreeQubit (bit flips) + PhaseFlip (phase flips) a general error-correction claim rather than
+-- two special cases. HONEST SCOPE (see the module's "Scope" section): this is the DISCRETIZATION
+-- half only. It is NOT a proof that the three-qubit code corrects arbitrary errors -- that code's
+-- correctable set is {I,X1,X2,X3} and Z errors lie outside it. Completing the argument to "any
+-- single-qubit error" needs the CONCATENATED Shor 9-qubit code (open, specs/BACKLOG.md, blocked on
+-- 512-dimensional infrastructure); the syndrome-collapse half (error subspaces orthogonal, so
+-- measurement projects onto one correctable branch) is likewise not claimed here.
+/-- info: 'CSD.Empirical.QM.QEC.pauli_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.pauli_decomposition
+
+/-- info: 'CSD.Empirical.QM.QEC.pauli_span_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.pauli_span_top
+
+/-- info: 'CSD.Empirical.QM.QEC.error_discretization_qubit₁' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.error_discretization_qubit₁
+
+/-- info: 'CSD.Empirical.QM.QEC.error_discretization_qubit₂' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.error_discretization_qubit₂
+
+/-- info: 'CSD.Empirical.QM.QEC.error_discretization_qubit₃' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.error_discretization_qubit₃
+
+/-- info: 'CSD.Empirical.QM.QEC.errored_codeword_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.errored_codeword_eq
 
 -- Phase-flip identifiability (Hadamard dual; now inside the phase-flip capstone).
 /-- info: 'CSD.Empirical.QM.QEC.three_qubit_phaseflip_syndromes_distinct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
