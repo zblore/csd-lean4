@@ -205,6 +205,7 @@ public import CsdLean4.Empirical.QM.LeggettGarg
 public import CsdLean4.Empirical.QM.QuantumEraser
 public import CsdLean4.Empirical.QM.ElitzurVaidman
 public import CsdLean4.Empirical.QM.KCBS
+public import CsdLean4.Empirical.QM.HongOuMandel
 public import CsdLean4.Empirical.QM.NoCloning
 public import CsdLean4.Empirical.QM.NoDeleting
 public import CsdLean4.Empirical.QM.Resources.SuperdenseCoding

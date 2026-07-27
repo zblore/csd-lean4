@@ -180,6 +180,7 @@ public import CsdLean4.Empirical.QM.LeggettGarg
 public import CsdLean4.Empirical.QM.QuantumEraser
 public import CsdLean4.Empirical.QM.ElitzurVaidman
 public import CsdLean4.Empirical.QM.KCBS
+public import CsdLean4.Empirical.QM.HongOuMandel
 public import CsdLean4.Empirical.QM.NoCloning
 public import CsdLean4.Empirical.QM.NoDeleting
 public import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
@@ -684,6 +685,42 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.QM.KCBS.kv_orth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.QM.KCBS.kv_orth
+
+-- Hong-Ou-Mandel (two-photon interference, 2026-07-27). Two identical bosons entering opposite
+-- ports of a 50:50 beamsplitter (the corpus's own qmH) are NEVER found in different output ports:
+-- hom_coincidence_zero (the DIP, = 0) / hom_bunching_one (= 1, they always leave together). The
+-- whole effect is one matrix identity -- bsTwo_bosonIn, that H·σx·H is DIAGONAL, so the two
+-- exchange paths cancel. The point is that this is EXCHANGE SYMMETRY, not optics: with the SAME
+-- beamsplitter and the SAME input ports, distinct_coincidence_half gives 1/2 for distinguishable
+-- particles (the classical baseline the dip drops below) and fermion_coincidence_one gives 1 --
+-- Pauli anti-bunching, the exact opposite. hom_exchange_trichotomy is the 0 < 1/2 < 1 capstone;
+-- inputs_normalised confirms all three inputs are unit vectors, so the comparison is honest.
+-- Two-particle sector of two modes only -- no Fock space, no creation operators (CV/ApproxCCR
+-- shows a finite model cannot carry the CCR exactly); HOM's content lives in the two-photon
+-- amplitude, so this is the full effect, not a truncation of it.
+/-- info: 'CSD.Empirical.HOM.bsTwo_bosonIn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.bsTwo_bosonIn
+
+/-- info: 'CSD.Empirical.HOM.hom_coincidence_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.hom_coincidence_zero
+
+/-- info: 'CSD.Empirical.HOM.hom_bunching_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.hom_bunching_one
+
+/-- info: 'CSD.Empirical.HOM.distinct_coincidence_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.distinct_coincidence_half
+
+/-- info: 'CSD.Empirical.HOM.fermion_coincidence_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.fermion_coincidence_one
+
+/-- info: 'CSD.Empirical.HOM.hom_dip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.hom_dip
+
+/-- info: 'CSD.Empirical.HOM.hom_exchange_trichotomy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.hom_exchange_trichotomy
+
+/-- info: 'CSD.Empirical.HOM.inputs_normalised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.inputs_normalised
 
 -- CSD Volume twins (Born = Kähler typicality volume, 2026-07-27): LG survival cos²Δ and EV split 1/2
 -- realised as Fubini–Study moment-sublevel volumes on ℂℙ¹ via fs_born_volume_ratio_qubit_uncond (DH).
