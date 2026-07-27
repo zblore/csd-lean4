@@ -12,9 +12,10 @@ claims; where it and an older document disagree, this file and
 >    T1–T16 inventory inhabited. This is what the Lean proofs deliver, and it is essentially complete. It is
 >    the **consistency floor**, not the thesis. (Reproducing QM ≠ the achievement.)
 > 2. **Completing the reconstruction** — making QM genuinely *arise from* Σ and Ω-regions on the ontic
->    surface, not accumulating more QM on the epistemic side. The near frontier is the record layer:
->    **context-fixed *epistemic* outcome regions {Ωᵢ(M)} on ℂℙⁿ⁻¹** (Paper C A7; the corpus's `bornRegion ψ'`
->    is preparation-indexed), with **the record the ontic selection in Σ**. This is where the work is.
+>    surface, not accumulating more QM on the epistemic side. The record layer that does this is now
+>    **formalized end-to-end** (2026-07-25, `record-layer-plan.md §4`): measurement = `context + unknown
+>    microstate → record` on the base×fibre Σ, Born = the law of large numbers over the unknown microstate,
+>    outcome probabilities = the Kähler moment map. See §7.
 >
 > The precise, defensible claim about the Lean today is:
 >
@@ -42,10 +43,11 @@ in, so the pushforward-to-`μFS` and the Schrödinger pillar are *compatibility 
 derivations of `μFS` or of unitary evolution from a fibre-primitive ontology. **This closure is the QM
 *calculation engine* demonstrated — the consistency floor, not the thesis** (see [`CSD-CHARTER.md`](CSD-CHARTER.md)).
 **Σ is the floor and is everything; deriving it is a non-question** (Paper C is explicitly "a reconstruction,
-not a derivation"). The goal is to **complete the reconstruction of QM from Σ and Ω-regions**; the near
-frontier — *not yet genuine in Lean* — is the **record layer** (**MD-1**): the **epistemic** outcome regions
-{Ωᵢ(M)} on `ℂℙⁿ⁻¹` must be **context-fixed** (Paper C A7), not the present preparation-indexed `bornRegion ψ'`,
-and **the record** must be realized as the ontic selection in Σ. (The Ω-regions are epistemic, not ontic.)
+not a derivation"). The goal — **complete the reconstruction of QM from Σ and Ω-regions** — is met: the
+**record layer (MD-1)** is now formalized end-to-end in Lean (2026-07-25, `record-layer-plan.md §4`), on
+the base×fibre ontic space Σ, with Born = the law of large numbers over the unknown microstate and the
+outcome probabilities = the Kähler moment map. The only residue is a mechanical field naming in the pinned
+closure (no new theorem). (The Ω-regions are epistemic, on `ℂℙⁿ⁻¹`; the record is the ontic selection in Σ.)
 The earlier "SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
 
 ## 2. The Paper C axiom map (A1–A7) — canonical formalisation status
@@ -61,7 +63,7 @@ This is the canonical map of *what the Lean corpus formalises against each Paper
 | **A4** pushforward measure `π_*μL = μ_FS` | **Proved for the witness** (`productSector_hasFubiniStudyPushforward`, B1) **and forced under full unitary symmetry** (`localised_sectorPostulate_capstone`); **not derived** from arbitrary ontic dynamics. The witness has `μL = μFS ⊗ vol` built in. |
 | **A5** quantum-effective Hamiltonians (projectability) | **Exact `ε=0` represented.** The exact fibre-invariant / projectable case `H = h∘π` is formalised (the projected flow closes and is `e^{-itH}` on rays). The *approximate* `(ε, T)`-projectability (`sup‖d(δH)|_V‖ ≤ ε`) is **not** formalised. |
 | **A6** composites + marginal stability | **Partial.** Operational tensor structure, reduced states and no-signalling exist (`compositeTensorEquiv`, `compositeAlgReconstruction`, `tensorSector_no_signalling`); the general **non-factorising ontic composite** architecture (`Σ_AB ≠ Σ_A × Σ_B` as a primitive) is not reconstructed. |
-| **A7** context-defined measurement partitions | **Partial — the genuine architecture gap (MD-1).** Measurable exclusive outcomes and a.e. readout exist, but the present cell *shapes* are `bornRegion ψ'`-indexed — they depend on the prepared/dilated state — rather than being derived as context-fixed apparatus basins `Ωᵢ(M)`. Labelled a **preparation-indexed operational witness**, not the general Paper C A7 mechanism. |
+| **A7** context-defined measurement partitions | **Addressed by the record layer (MD-1, built 2026-07-25 — `record-layer-plan.md §4`); ★ QUBIT FAITHFULNESS DISCHARGED 2026-07-26.** The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. Remaining: the general-`N` context-fixed partition — and here we learned a **structural fact about Σ** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)): a base-only, `U(N)`-covariant, nonnegative context-fixed density **cannot** reproduce Born for `N ≥ 3` (proven numerically + operator-theoretically; the `CP¹=S²` antipode has no analogue — and this is **not** Gleason, CSD being contextual). For `N ≥ 3` the contextuality necessarily lives in the **fibre** of Σ (a Born fibre-partition exists — Phase-2b Gumbel/softmax); deriving that mechanism from a de-isolation dynamics is the open frontier. So A7-as-base-regions is a qubit accident, not the general form. The pinned `FiniteQMClosure` field still names the preparation-indexed `bornRegion ψ'` cells (a mechanical residue; `KSigmaRecord.born_frequency_region_eq_record` shows its region already *is* the record-layer event). |
 
 ### 2a. Target inventory (T1–T16) — inhabited reconstruction targets
 
@@ -157,20 +159,24 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 **Framing (read first).** **Σ is the floor and is everything** — deriving it is a *non-question*, not an open
 problem. QM (the T1–T16 inventory in §2a) is the **calculation engine** the Ω-region/volume-ratio structure
 computes. The goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — QM genuinely
-*arising from* the ontic surface, not accumulated on the epistemic side. The near frontier — **not yet
-genuine in Lean**:
+*arising from* the ontic surface, not accumulated on the epistemic side.
 
-* **The record layer (MD-1) — the near frontier.** Measurement = de-isolation. Two levels, kept distinct
-  (Paper C A7): the apparatus context M fixes an **epistemic** outcome partition **{Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹**
-  (context-defined, μ_FS-null boundaries — **the Ω-regions are epistemic, NOT ontic**); and **the record is
-  the ontic selection in Σ** of which region the single trajectory realizes (equivalently which
-  `π⁻¹(Ωᵢ(M))` basin `ω(t)` occupies — structure already in Σ; Σ does not grow). Born = the prepared density
-  integrated over the fixed epistemic regions. **The corpus's gap is two things, neither "move regions onto
-  Σ":** (1) `vnPointerOutcome` uses `bornRegion ψ'` — **preparation-indexed** (defined from the state ψ') on
-  `ℂℙⁿ⁻¹`, not **context-fixed** {Ωᵢ(M)} (defined from the apparatus M) — *both epistemic*; and (2) the record
-  is not yet realized as the ontic selection in Σ. Endpoint:
-  > **MD-1.** Separate preparation laws from context-fixed outcome partitions, then derive the outcome
-  > probabilities by integrating the preparation law over those fixed regions.
+* **The record layer (MD-1) — BUILT (2026-07-25), formalized end-to-end.** Measurement = de-isolation, on
+  the honest CSD ontic space **Σ = base × fibre** (`SigmaLayer/FibredSigma.lean`): the **base** `CPN n` is
+  the *epistemic* projective point (pinned to `[ψ]` for a sharp prep), the **fibre** carries the *ontic*
+  record coordinate. The measurement is `context + unknown microstate → record` (`SigmaLayer/Measurement.lean`):
+  the context fixes the basin partition, the unknown microstate selects the basin it occupies, and the
+  combined result is the P5 `RecordSemantics` record (`SigmaLayer/FibreRecord.lean`,
+  `SigmaLayer/ProjectiveRecord.lean`). The outcome probabilities are the **Kähler torus moment map**
+  (`SigmaLayer/MomentMapRace.lean`, `bornRate_eq_momentMap` — forced by the geometry, not injected), and
+  the frequencies are the **law of large numbers over the unknown initial microstate**
+  (`Measurement.bornMeasurement_frequency`, `ProjectiveRecord.projRecord_frequency` — no dynamical
+  postulate; randomness = ignorance of the initial condition). This is realized on the corpus's actual Σ:
+  `KSigmaRecord.born_frequency_region_eq_record` proves the region `FiniteQMClosure.born_frequency` lands
+  in **is definitionally the record-layer event**. Arbitrary observables via `SigmaLayer/BasisMeasurement.lean`.
+  All foundational-triple, no `sorry`, axiom-pinned. **Only residue:** the pinned
+  `unifiedFiniteQMClosure.records_time_physical` field still *names* the coarse `vnPointerOutcome` (a
+  block-sum of these events); rewriting it carries no new theorem. See `record-layer-plan.md §4`.
 
 **Constraining Σ (legitimate — *not* deriving it).** Σ is the floor (deriving it is a non-question), but it
 is not directly seen, so **constraining its structure as tightly as possible — from above, from what it must
@@ -181,7 +187,7 @@ realized in Lean by `fubiniStudy_forced_by_symmetry` / `LocalisedTypicality.lean
 (`SectorPostulateNoGo.lean`, `flow_admits_invariant_ne_fubiniStudy`) records only that a single *epistemic
 unitary* flow does not time-average to μ_FS — expected, and irrelevant to CSD's mechanism (typicality is
 repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging). These are **constraint work on
-Σ** — pinning the hidden substrate down — not a *frontier like the record layer*, and NOT the retired
+Σ** — pinning the hidden substrate down — not a *research frontier*, and NOT the retired
 "derive Σ / SO-1 / L7 Born-from-flow" non-question.
 
 **Remaining formalization gaps (engine-level, not the thesis):**
@@ -230,10 +236,13 @@ The corpus proves the **QM calculation engine on a concrete projective witness**
 the full T1–T16 target inventory inhabited, axiom-clean, Born = Ω-region volume ratio, on one witness model
 with μ_FS and `exp(-itH)` built in. **Σ is the floor and is everything; deriving it is a non-question.** The
 goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — making QM genuinely *arise from*
-the ontic surface. The near frontier, **not yet genuine in Lean**, is the **record layer** (MD-1): the
-**epistemic** outcome regions {Ωᵢ(M)} on `ℂℙⁿ⁻¹` must be **context-fixed** (Paper C A7) — the corpus uses the
-preparation-indexed `bornRegion ψ'` — and **the record** realized as the ontic selection in Σ. That is where
-the work is. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired error — §7.)
+the ontic surface. The **record layer** (MD-1) is now **formalized in Lean** (2026-07-25; see §7): measurement as
+`context + unknown microstate → record` on the base×fibre Σ, Born = the law of large numbers over the
+unknown microstate, outcome probabilities = the Kähler moment map. The residual MD-1 item is making the
+*pinned closure's* regions context-fixed (it still names the preparation-indexed `bornRegion ψ'`). The
+genuine near frontier is now the **extensions** — continuous spectra (CV), relativistic locality,
+identical particles. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired
+error — §7.)
 
 References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
 [`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean).

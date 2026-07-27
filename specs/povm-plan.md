@@ -25,8 +25,7 @@ volume route covers projective measurements only; Busch's representation theorem
 general POVMs, so the Gleason import becomes dispensable for the ontic reading even for
 non-projective effects.
 
-This is **consolidation of the achieved result**, not a new frontier (the frontier is D1,
-the physical-faithfulness question of exercising real measurement dynamics on `Σ`; see
+This is **consolidation of the achieved result**, not a new frontier (the frontier is D1 — specifically the *entangled* de-isolation dynamics; the single-system measurement dynamics and the record layer are built; see
 `carve-out-plan.md`). It completes the ontic stratum; it does not, by itself, derive
 anything new about nature.
 
@@ -137,7 +136,7 @@ inventory updated to sell the POVM achievement; `INDEX.md`, `CLAUDE.md` (where-t
 LF2/LF4 module chains), `AXIOMS.md` §2.4 (the open-POVM-step note rewritten — POVMs now
 covered, Busch off the ontic path) all refreshed. **Tranche complete.** The
 conditional-dilation caveat is discharged; what remains posited is the enlarged sector
-structure on `Σ'` (A5 on the ancilla) and the dynamics (D1, the open frontier).
+structure on `Σ'` (A5 on the ancilla) and the entangled de-isolation dynamics (D1, the open frontier).
 
 ## Detailed DAG (recon-grounded 2026-06-03)
 

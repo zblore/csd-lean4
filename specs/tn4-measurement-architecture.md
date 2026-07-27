@@ -15,8 +15,9 @@ TN4 answers: **how does a general measurement arise in CSD?** Everything below
 is support for that single question. The CSD answer, in one line: a general
 (POVM) measurement is a deterministic, measure-preserving de-isolation flow that
 realises a Naimark dilation, and its pointer-block typicality volumes are the
-Born weights. The single-system projective tier of that answer is closed (LF5);
-the entangled tier is the open frontier (D1, below).
+Born weights. The single-system projective tier of that answer is closed (LF5) and the record
+layer (MD-1, measurement as records on Σ) is built (2026-07-25); the entangled
+de-isolation *dynamics* tier remains the open frontier (D1, below).
 
 ## The stack
 

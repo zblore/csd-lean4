@@ -61,6 +61,8 @@ public import CsdLean4.CV.ApproxCCR
 public import CsdLean4.CV.Position
 public import CsdLean4.CV.Oscillator
 public import CsdLean4.CV.OscillatorSpectrum
+public import CsdLean4.CV.OscillatorBorn
+public import CsdLean4.CV.FieldModes
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
@@ -105,6 +107,13 @@ public import CsdLean4.LF4.MomentMarginalUniform
 public import CsdLean4.LF4.MomentRatioUniform
 public import CsdLean4.LF4.MomentRatioUniformN
 public import CsdLean4.LF4.MomentUniform
+public import CsdLean4.LF4.HatBox
+public import CsdLean4.LF4.QubitReflection
+public import CsdLean4.LF4.BlochProjection
+public import CsdLean4.LF4.AxisBridge
+public import CsdLean4.LF4.QubitDipole
+public import CsdLean4.LF4.QubitCrossTerm
+public import CsdLean4.LF4.QubitBorn
 public import CsdLean4.LF4.MomentBridgeN
 public import CsdLean4.LF4.MomentDirichletN
 public import CsdLean4.LF4.MomentBornN
@@ -164,6 +173,10 @@ public import CsdLean4.LF6.CGLMPQudit
 public import CsdLean4.LF6.MaxEntangledCGLMPCapstone
 public import CsdLean4.LF6.GHZnDeisolationFlow
 public import CsdLean4.Empirical.QM.Bell
+public import CsdLean4.Empirical.QM.LeggettGarg
+public import CsdLean4.Empirical.QM.QuantumEraser
+public import CsdLean4.Empirical.QM.ElitzurVaidman
+public import CsdLean4.Empirical.QM.KCBS
 public import CsdLean4.Empirical.QM.NoCloning
 public import CsdLean4.Empirical.QM.NoDeleting
 public import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
@@ -172,6 +185,8 @@ public import CsdLean4.Empirical.QM.NoCommunication
 public import CsdLean4.Empirical.QM.NoBroadcasting
 public import CsdLean4.Empirical.QM.Protocols.Basic
 public import CsdLean4.Empirical.QM.Crypto.QuantumMoney
+public import CsdLean4.Empirical.QM.Crypto.BB84
+public import CsdLean4.Empirical.QM.Crypto.B92
 public import CsdLean4.Empirical.QM.Crypto.E91
 public import CsdLean4.Empirical.QM.Crypto.E91KeyRate
 public import CsdLean4.Empirical.QM.Crypto.E91FiniteKey
@@ -207,6 +222,8 @@ public import CsdLean4.Empirical.CSD.Uncertainty
 public import CsdLean4.Empirical.CSD.SternGerlach
 public import CsdLean4.Empirical.CSD.SternGerlachVolume
 public import CsdLean4.Empirical.CSD.MalusVolume
+public import CsdLean4.Empirical.CSD.LeggettGargVolume
+public import CsdLean4.Empirical.CSD.ElitzurVaidmanVolume
 public import CsdLean4.Empirical.Metrology.Ramsey
 public import CsdLean4.Empirical.CSD.MachZehnderVolume
 public import CsdLean4.Empirical.CSD.DoubleSlitVolume
@@ -291,6 +308,17 @@ public import CsdLean4.LF2.ChoiConverse
 public import CsdLean4.SigmaLayer.MixedOntic
 public import CsdLean4.SigmaLayer.MixedFrequency
 public import CsdLean4.SigmaLayer.Symmetrization
+public import CsdLean4.SigmaLayer.OnticBornFrequency
+public import CsdLean4.SigmaLayer.BornFibrePartition
+public import CsdLean4.SigmaLayer.DeIsolationFlow
+public import CsdLean4.SigmaLayer.FibreRecord
+public import CsdLean4.SigmaLayer.RecordLayerClosure
+public import CsdLean4.SigmaLayer.MomentMapRace
+public import CsdLean4.SigmaLayer.Measurement
+public import CsdLean4.SigmaLayer.ProjectiveRecord
+public import CsdLean4.SigmaLayer.FibredSigma
+public import CsdLean4.SigmaLayer.BasisMeasurement
+public import CsdLean4.SigmaLayer.KSigmaRecord
 
 /-!
 # Axiom regression suite
@@ -595,6 +623,72 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.Bell.chsh_qm_tsirelson_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Empirical.Bell.chsh_qm_tsirelson_bound
+
+-- Leggett–Garg inequality (temporal CHSH / macrorealism test, 2026-07-26): the macrorealist bound
+-- K₃ ≤ 1 (genuine measure-theoretic model) + Born two-time correlation cos(2Δ) (from zenoU) +
+-- quantum violation K₃(π/6) = 3/2 (Lüders bound) > 1. The record-layer/de-isolation denial of
+-- non-invasive measurability is exactly why CSD is realist yet LG-violating.
+/-- info: 'CSD.Empirical.QM.LeggettGarg.lg_macrorealist_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.LeggettGarg.lg_macrorealist_bound
+
+/-- info: 'CSD.Empirical.QM.LeggettGarg.lgCorr_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.LeggettGarg.lgCorr_eq
+
+/-- info: 'CSD.Empirical.QM.LeggettGarg.lg_violation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.LeggettGarg.lg_violation
+
+/-- info: 'CSD.Empirical.QM.LeggettGarg.lg_macrorealist_bound_violated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.LeggettGarg.lg_macrorealist_bound_violated
+
+-- Quantum eraser (complementarity + which-path erasure, 2026-07-27): entangled path–marker Bell
+-- state; joint P(a,c)=(1+ac cosφ)/4 fringe (erasure, marker-conditioned) vs flat system marginal
+-- ∑_c P=1/2 (which-path info present) + bright/dark (visibility 1). Born-grounded (jointAmplitude).
+/-- info: 'CSD.Empirical.QM.QuantumEraser.eraser_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.QuantumEraser.eraser_joint
+
+/-- info: 'CSD.Empirical.QM.QuantumEraser.eraser_no_interference' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.QuantumEraser.eraser_no_interference
+
+/-- info: 'CSD.Empirical.QM.QuantumEraser.eraser_fringe_dark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.QuantumEraser.eraser_fringe_dark
+
+-- Elitzur–Vaidman bomb tester (interaction-free measurement, 2026-07-27): balanced MZ (H·H=I) →
+-- dark port 0 with no bomb (full interference); live bomb (which-path collapse) → dark port 1/4;
+-- interaction_free (0 < 1/4): a dark click certifies the bomb without the photon hitting it.
+/-- info: 'CSD.Empirical.QM.ElitzurVaidman.bomb_absent_dark_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.ElitzurVaidman.bomb_absent_dark_zero
+
+/-- info: 'CSD.Empirical.QM.ElitzurVaidman.bomb_present_dark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.ElitzurVaidman.bomb_present_dark
+
+/-- info: 'CSD.Empirical.QM.ElitzurVaidman.interaction_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.ElitzurVaidman.interaction_free
+
+-- KCBS pentagon (state-dependent contextuality, noncontextual bound, 2026-07-27): K₅=∑⟨Πᵢ⟩≤2 over a
+-- genuine measure-theoretic C₅ model (5 {0,1} observables, cyclic exclusivity) via the pentagon
+-- independence-number pointwise bound + integral_mono. (QM √5 violation = separate pentagon-trig build.)
+/-- info: 'CSD.Empirical.QM.KCBS.kcbs_noncontextual_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.KCBS.kcbs_noncontextual_bound
+
+-- KCBS QM √5 violation (pentagon on ℝ³, 2026-07-27): 5 unit vectors (kv_orth: consecutive
+-- orthogonal, exclusivity) + apex; kcbs_qm_value (∑⟨ψ|Πᵢ|ψ⟩ = 5·(1/√5) = √5), kcbs_quantum_violation
+-- (2 < √5). QM exceeds the noncontextual bound 2 → violates KCBS noncontextuality.
+/-- info: 'CSD.Empirical.QM.KCBS.kcbs_qm_value' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.KCBS.kcbs_qm_value
+
+/-- info: 'CSD.Empirical.QM.KCBS.kcbs_quantum_violation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.KCBS.kcbs_quantum_violation
+
+/-- info: 'CSD.Empirical.QM.KCBS.kv_orth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Empirical.QM.KCBS.kv_orth
+
+-- CSD Volume twins (Born = Kähler typicality volume, 2026-07-27): LG survival cos²Δ and EV split 1/2
+-- realised as Fubini–Study moment-sublevel volumes on ℂℙ¹ via fs_born_volume_ratio_qubit_uncond (DH).
+/-- info: 'CSD.Empirical.CSDBridge.LeggettGargVolume.lg_survival_as_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.LeggettGargVolume.lg_survival_as_volume
+
+/-- info: 'CSD.Empirical.CSDBridge.ElitzurVaidmanVolume.ev_split_as_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.ElitzurVaidmanVolume.ev_split_as_volume
 
 /-! ### Empirical predictions (no-cloning, Phase B2) -/
 
@@ -1360,6 +1454,86 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.QuantumMoney.quantum_money_unforgeable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumMoney.quantum_money_unforgeable
+
+-- BB84 QKD security (Crypto/BB84.lean): intercept-resend QBER (¼ sifted-key error),
+-- eavesdropping detectability (¼ > 0 baseline), and the non-orthogonality
+-- disturbance root (⟨0|+⟩ = (√2)⁻¹ ≠ 0). All Born-grounded via ‖⟨a|b⟩‖²; the
+-- intercept-resend error is a classical marginal over Eve's outcome (no collapse
+-- operator). Full composable finite-key security stays out of scope (LF5 gate).
+-- Foundational triple only.
+/-- info: 'CSD.Empirical.BB84.bb84_qber' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bb84_qber
+
+/-- info: 'CSD.Empirical.BB84.bb84_intercept_resend_wrong_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bb84_intercept_resend_wrong_basis
+
+/-- info: 'CSD.Empirical.BB84.bb84_intercept_resend_right_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bb84_intercept_resend_right_basis
+
+/-- info: 'CSD.Empirical.BB84.bb84_eavesdropping_detectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bb84_eavesdropping_detectable
+
+/-- info: 'CSD.Empirical.BB84.bb84_states_nonorthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bb84_states_nonorthogonal
+
+/-- info: 'CSD.Empirical.BB84.bb84_no_eavesdrop_error_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bb84_no_eavesdrop_error_zero
+
+/-- info: 'CSD.Empirical.BB84.bornProb_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bornProb_comm
+
+/-- info: 'CSD.Empirical.BB84.bornProb_ket0_ket0' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bornProb_ket0_ket0
+
+/-- info: 'CSD.Empirical.BB84.bornProb_ket0_ket1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bornProb_ket0_ket1
+
+/-- info: 'CSD.Empirical.BB84.bornProb_ket0_ketPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.BB84.bornProb_ket0_ketPlus
+
+-- B92 QKD security (Crypto/B92.lean): the two-state protocol. Unambiguous-
+-- discrimination structure (error-free conclusive events ⟨1|0⟩=⟨−|+⟩=0 + ½
+-- conclusive rates) and the no-cloning security root (no universal cloner copies
+-- both encoding states |0⟩, |+⟩). All Born-grounded via ‖⟨a|b⟩‖², reusing BB84's
+-- Born layer. Full composable finite-key security stays out of scope (LF5 gate).
+-- Foundational triple only.
+/-- info: 'CSD.Empirical.B92.b92_no_perfect_eavesdrop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_no_perfect_eavesdrop
+
+/-- info: 'CSD.Empirical.B92.b92_nonorthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_nonorthogonal
+
+/-- info: 'CSD.Empirical.B92.b92_unambiguous_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_unambiguous_one
+
+/-- info: 'CSD.Empirical.B92.b92_unambiguous_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_unambiguous_zero
+
+/-- info: 'CSD.Empirical.B92.b92_conclusive_rate_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_conclusive_rate_one
+
+/-- info: 'CSD.Empirical.B92.b92_conclusive_rate_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_conclusive_rate_zero
+
+/-- info: 'CSD.Empirical.B92.b92_encode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.B92.b92_encode
 
 -- Wiesner single-slot mint/verify protocol on top of quantum_money_unforgeable:
 -- honest money verifies with certainty (completeness), no isometry forges both
@@ -7072,5 +7246,297 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.SigmaLayer.antisymProj_tprod_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.antisymProj_tprod_self
+
+-- OnticBornFrequency (connectivity G1, 2026-07-25): Born grounded in the ONTIC typicality. The only
+-- hypothesis is ontic (trials sample μ_L = D.muL, the floor); the epistemic μ_FS and Born are DERIVED.
+-- onticBornVolume_eq: Born = the ontic typicality volume — μ_L(π⁻¹ bornRegion) = ‖⟨eᵢ,ψ⟩‖² via the
+-- pushforward bridge (HasFubiniStudyPushforward) + bornRegion_fs_measure_uncond, for ANY sector.
+-- born_frequency_from_ontic_sampling: iid ontic-μ_L trials → Born frequency (freq_tendsto_of_iid).
+-- productModel_onticBornVolume: non-vacuity — hpush discharged by the proved productSector pushforward.
+/-- info: 'CSD.SigmaLayer.onticBornVolume_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.onticBornVolume_eq
+
+/-- info: 'CSD.SigmaLayer.born_frequency_from_ontic_sampling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.born_frequency_from_ontic_sampling
+
+/-- info: 'CSD.SigmaLayer.productModel_onticBornVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.productModel_onticBornVolume
+
+-- BornFibrePartition (record layer / MD-1, 2026-07-25): the fibre-partition factor of measurement.
+-- The fibre F=ℝ is carved into cumulative (CDF) cells cdfCell whose Lebesgue measure equals a given
+-- rate rᵢ (volume_cdfCell); the cells are pairwise disjoint (cdfCell_pairwiseDisjoint) so the fibre
+-- is genuinely partitioned. Fed the Born rates rᵢ=‖ψ i‖²=|⟨eᵢ,ψ⟩|² (bornRate) the fibre measure of
+-- outcome i is the Born weight (volume_bornCell), and for a unit state the cells cover a set of
+-- measure exactly 1 (volume_iUnion_bornCell_unit) — the record-layer measure content. The open piece
+-- is the dynamical realisation (a de-isolation flow with moment-map target-measures), not this.
+/-- info: 'CSD.RecordLayer.volume_cdfCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.volume_cdfCell
+
+/-- info: 'CSD.RecordLayer.cdfCell_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.cdfCell_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.volume_bornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.volume_bornCell
+
+/-- info: 'CSD.RecordLayer.volume_iUnion_bornCell_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.volume_iUnion_bornCell_unit
+
+-- DeIsolationFlow (record layer / MD-1 step 2b′, 2026-07-25): the de-isolation outcome DISTRIBUTION.
+-- On the canonical fibre typicality measure fibreTypicality = vol|[0,1) (a probability measure), the
+-- Born cell i has fibre typicality exactly ‖ψ i‖² (fibreTypicality_bornCell = the outcome
+-- probability), the cells cover the fibre up to a null set (fibreTypicality_uncovered = pointer a.e.
+-- defined), and the abstract bridge map_pointer_apply shows ANY measurable pointer whose basins carry
+-- the Born cell measures pushes fibreTypicality forward to the Born distribution. The open piece is
+-- exhibiting such a pointer from a physical de-isolation Hamiltonian H_int(M) — the bridge's hbasin
+-- hypothesis IS that obligation, not this theorem.
+/-- info: 'CSD.RecordLayer.fibreTypicality_bornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_bornCell
+
+/-- info: 'CSD.RecordLayer.fibreTypicality_uncovered' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_uncovered
+
+/-- info: 'CSD.RecordLayer.map_pointer_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.map_pointer_apply
+
+-- FibreRecord (record layer / MD-1 step 3, 2026-07-25): the record-layer readout as a first-class
+-- postulate-P5 RecordSemantics on Σ=ℝ. fibreRecordSemantics: record event of "context c recorded
+-- outcome i" = cdfCell c.rate i, measurable + exclusive (distinct outcomes disjoint, from
+-- cdfCell_pairwiseDisjoint). fibreOutcome_eq_record: the ontic selection fibreOutcome IS the record
+-- (some i ↔ ξ in event). compatibleSet_fibre_single: isolation on one record = conditioning on the
+-- cell. fibreTypicality_bornRecord: the ontic typicality of recording outcome i is exactly ‖ψ i‖²
+-- (Born meets the record). The intended replacement for the prep-indexed LF5 vnPointerOutcome readout.
+/-- info: 'CSD.RecordLayer.fibreRecordSemantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreRecordSemantics
+
+/-- info: 'CSD.RecordLayer.fibreOutcome_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreOutcome_eq_record
+
+/-- info: 'CSD.RecordLayer.fibreTypicality_bornRecord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_bornRecord
+
+-- RecordLayerClosure (record layer / MD-1 step 5, 2026-07-25): the record-layer capstone bundle, the
+-- analog of FiniteQMClosure. recordLayerClosure discharges, for every unit ψ: exclusive (P5), the
+-- ontic selection IS the record, isolation = conditioning on the cell (P6), born_typicality (fibre
+-- typicality of the record event = ‖ψ i‖²), and ae_total (events cover the fibre up to null). The
+-- certified successor to the prep-indexed vnPointerOutcome readout — outcome probabilities are
+-- measurement-noncontextual. Migrating FiniteQMClosure's proved fields onto it stays open (MD-1).
+/-- info: 'CSD.RecordLayer.recordLayerClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.recordLayerClosure
+
+-- MomentMapRace (record layer / MD-1 step 2b′, 2026-07-25): grounds the fibre-partition rates in the
+-- Kähler geometry (feature 2 of §3c). bornRate_eq_momentMap: for a unit ψ the rate ‖ψ i‖² IS the
+-- i-th Fubini-Study torus moment-map coordinate at [ψ] (corpus LF4/MomentMap.momentMap) — forced by
+-- the Kähler structure, not injected. bornRate_eq_inner_sq: hence = the corpus Born weight ‖⟨eᵢ,ψ⟩‖²
+-- (FiniteQMClosure.born_frequency target). DeIsolationInteraction: the kinematic interface (pointer
+-- with moment-map basins) ⟹ Born (.born). Open: realising the interface from a Hamiltonian H_int(M).
+/-- info: 'CSD.RecordLayer.bornRate_eq_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.bornRate_eq_momentMap
+
+/-- info: 'CSD.RecordLayer.bornRate_eq_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.bornRate_eq_inner_sq
+
+/-- info: 'CSD.RecordLayer.DeIsolationInteraction.born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.DeIsolationInteraction.born
+
+-- Measurement (record layer / MD-1, 2026-07-25): the architecture in one object — context (measurement
+-- type, fixes the basins/probabilities) + unknown microstate ξ → outcome (the basin it occupies) →
+-- record. outcome_eq_some_iff (microstate selects its basin), record_of_mem_basin (combined result IS
+-- the record ⟨context,outcome,time⟩), bornMeasurement_prob (basins set the probabilities = ‖ψ i‖²),
+-- bornMeasurement_prob_momentMap (= the Kähler moment map, forced not injected), bornMeasurement_ae_total
+-- (a.e. microstate yields a record). Assembles the proven pieces; the physical flow H_int(M) stays open.
+/-- info: 'CSD.RecordLayer.Measurement.record_of_mem_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.Measurement.record_of_mem_basin
+
+/-- info: 'CSD.RecordLayer.Measurement.bornMeasurement_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.Measurement.bornMeasurement_prob
+
+/-- info: 'CSD.RecordLayer.Measurement.bornMeasurement_prob_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.Measurement.bornMeasurement_prob_momentMap
+
+-- The Born rule as LLN over the unknown microstate (2026-07-25): the whole probabilistic content is
+-- the strong law — i.i.d. typical microstates (law fibreTypicality) give outcome-i frequency → the
+-- basin measure ‖ψ i‖² = the moment map. Randomness = ignorance of the initial condition; no extra
+-- dynamical postulate (the "de-isolation flow" is just the deterministic microstate→basin map).
+/-- info: 'CSD.RecordLayer.Measurement.bornMeasurement_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.Measurement.bornMeasurement_frequency
+
+-- ProjectiveRecord (record layer migration onto the actual Σ, 2026-07-25): the record layer instantiated
+-- on the corpus's REAL model — Σ = CPN(M+1), events = the corpus's own bornRegion, outcome map =
+-- bornOutcome, measure = fubiniStudyMeasure. projRecordSemantics (P5 RecordSemantics on CPN, measurable
+-- + exclusive from bornRegion_measurable_uncond/bornRegion_pairwiseDisjoint); bornOutcome_eq_record (the
+-- corpus outcome map IS the record); fubiniStudy_projRecord (FS typicality of the record event = ‖⟨eᵢ,ψ⟩‖²);
+-- projRecord_frequency (Born = LLN over the unknown microstate on the real Σ = FiniteQMClosure.born_frequency
+-- conclusion, carried by the record-layer RecordSemantics). Not a parallel toy — the real Born machinery.
+/-- info: 'CSD.RecordLayer.projRecordSemantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.projRecordSemantics
+
+/-- info: 'CSD.RecordLayer.bornOutcome_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.bornOutcome_eq_record
+
+/-- info: 'CSD.RecordLayer.fubiniStudy_projRecord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fubiniStudy_projRecord
+
+/-- info: 'CSD.RecordLayer.projRecord_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.projRecord_frequency
+
+-- FibredSigma (record layer / MD-1, 2026-07-25): the ontic space assembled as Σ = base × fibre =
+-- CPN n × ℝ — the base the EPISTEMIC projective point (pinned to [ψ] for a sharp prep,
+-- baseProj_sharpTypicality), the fibre the ONTIC record coordinate (carves the Born partition). The
+-- sharp typicality δ_[ψ] ⊗ fibreTypicality gives Born as the fibre event's typicality
+-- (sharpTypicality_fibredEvent = ‖ψ i‖² = the moment map). The epistemic(base)/ontic(fibre) split of
+-- Papers C/D made literal — ties FibreRecord to the projective base.
+/-- info: 'CSD.RecordLayer.baseProj_sharpTypicality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.baseProj_sharpTypicality
+
+/-- info: 'CSD.RecordLayer.sharpTypicality_fibredEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.sharpTypicality_fibredEvent
+
+/-- info: 'CSD.RecordLayer.sharpTypicality_fibredEvent_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.sharpTypicality_fibredEvent_momentMap
+
+-- BasisMeasurement (record layer, arbitrary observable, 2026-07-25): the record layer for a general
+-- orthonormal basis b (any observable). bornRateBasis_eq_inner_sq (outcome prob = ‖⟨bᵢ,ψ⟩‖²),
+-- sum_bornRateBasis_unit (probability vector), bornMeasurementBasis_prob (the general measurement's
+-- outcome-i probability = ‖⟨bᵢ,ψ⟩‖²). Change of basis via the isometry b.repr.
+/-- info: 'CSD.RecordLayer.bornMeasurementBasis_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.bornMeasurementBasis_prob
+
+/-- info: 'CSD.RecordLayer.bornRateBasis_eq_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.bornRateBasis_eq_inner_sq
+
+-- KSigmaRecord (record layer on the closure's actual product Σ, 2026-07-25): the record layer on
+-- Σ = KSigma(M+1) = CPN × T² (the FiniteQMClosure space). kSigmaRecordSemantics (P5 RecordSemantics,
+-- events = bornRegion lifted through π = Prod.fst); born_frequency_region_eq_record (the region
+-- FiniteQMClosure.born_frequency lands in, π⁻¹'bornRegion, is DEFINITIONALLY the record event — the
+-- record layer is wired to the closure's actual field, field rewrite unnecessary); bornOutcome_base_eq_record.
+/-- info: 'CSD.RecordLayer.kSigmaRecordSemantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.kSigmaRecordSemantics
+
+/-- info: 'CSD.RecordLayer.born_frequency_region_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.born_frequency_region_eq_record
+
+-- OscillatorBorn (EFT Stage 0: the truncated CV mode as a record-layer measurement, 2026-07-25). The
+-- oscillator Hamiltonian is diagonal → number basis = standard basis → the mode's number/energy
+-- measurement IS the record-layer measurement. numberMeasurement_prob (= ‖⟨n|ψ⟩‖²),
+-- numberMeasurement_frequency (Born = LLN over the unknown microstate, inherited), numberBornProb_embed
+-- (cutoff-independence: raising the truncation N→M≥N leaves each level's Born prob unchanged). The
+-- gate step toward the EFT direction (QM→CV→EFT); single mode at finite cutoff, continuum not taken.
+/-- info: 'CSD.CV.numberMeasurement_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.numberMeasurement_prob
+
+/-- info: 'CSD.CV.numberMeasurement_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.numberMeasurement_frequency
+
+/-- info: 'CSD.CV.numberBornProb_embed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.numberBornProb_embed
+
+-- FieldModes (EFT Stage 1: a free scalar field at a cutoff as a product of modes, 2026-07-25). Field
+-- Hilbert space = tensor product of K truncated modes, indexed by occupation configs Fin K → Fin N.
+-- fieldHamiltonian_mulVec_single (free field = sum of oscillators, diagonal, eigenvalue ∑ oscEnergy),
+-- fieldEnergy_cutoff_independent, sum_fieldBornProb_unit (config Born distribution), norm_sq_tprodState
+-- (product state ‖⊗ψₖ‖²=∏‖ψₖ‖² — composite/tensor structure), and modeMarginal_tprod_unit (MODE-WISE
+-- BORN: the marginal of a product state = the single-mode Born weight ‖ψ_{k₀} n‖²). Free field, cutoff.
+/-- info: 'CSD.CV.fieldHamiltonian_mulVec_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.fieldHamiltonian_mulVec_single
+
+/-- info: 'CSD.CV.norm_sq_tprodState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_sq_tprodState
+
+/-- info: 'CSD.CV.modeMarginal_tprod_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.modeMarginal_tprod_unit
+
+-- HatBox (context-fixed qubit measurement infra / A7, 2026-07-26): the Archimedes hat-box, the
+-- single-axis crux integral. hatBox_moment: the Fubini-Study average over ℂℙ¹ of the Bloch height
+-- |λ·n| = |2·momentMap - 1| is 1/2. NOT raw S² integration — reduces to the proved moment coordinate
+-- being Uniform[0,1] (fs_moment_pushforward_uniform) + the 1D integral ∫_{[0,1]}|2t-1|=1/2
+-- (integral_abs_two_mul_sub_one). The foundation for the qubit context-fixed hemisphere+spread proof.
+/-- info: 'CSD.LF4.hatBox_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.hatBox_moment
+
+/-- info: 'CSD.LF4.integral_abs_two_mul_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.integral_abs_two_mul_sub_one
+
+-- spread-density normalisation (context-fixed qubit, 2026-07-26): ρ = 4·max(2·momentMap−1,0) (Bloch
+-- 4(m·λ)₊) integrates to 1 against μ_FS (spreadDensity_normalized) via the moment coordinate Uniform[0,1]
+-- + integral_max_two_mul_sub_one_zero (∫_{[0,1]}max(2t−1,0)=1/4). The "½"-term ingredient of §2.
+/-- info: 'CSD.LF4.spreadDensity_normalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.spreadDensity_normalized
+
+-- QubitReflection (context-fixed qubit, brick 1, 2026-07-26): the reflection identity — the C-term crux
+-- of §2. reflect_sq_add: ‖⟨ψ,φ⟩‖² + ‖⟨ψ,R_nφ⟩‖² = 2cu + 2(1−c)(1−u), R_n φ = 2⟨n,φ⟩·n − φ. Pure ℂ²
+-- linear algebra: completeness of {n,n^⊥} (`completeness`), Parseval (`parseval_vec`), parallelogram.
+/-- info: 'CSD.LF4.reflect_sq_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.reflect_sq_add
+
+/-- info: 'CSD.LF4.completeness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.completeness
+
+/-- info: 'CSD.LF4.parseval_vec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.parseval_vec
+
+-- BlochProjection (context-fixed qubit foundation, 2026-07-26): general-axis Born weight
+-- blochProj a p = |⟨a,rep p⟩|²/‖rep p‖² — shared foundation for the hemisphere cut (blochProj n) and
+-- the spread density (blochProj ψ). blochProj_smul: U(N)-equivariance; blochProj_measurable: Borel.
+/-- info: 'CSD.LF4.blochProj_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_smul
+
+/-- info: 'CSD.LF4.blochProj_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_measurable
+
+/-- info: 'CSD.LF4.blochProj_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_mk
+
+-- AxisBridge (context-fixed qubit, 2026-07-26): general axis ↦ reference axis for μ_FS integrals.
+-- blochProj_integral_bridge: ∫ f(blochProj n p) dμ_FS = ∫ f(momentMap p 0) dμ_FS (unit n), via
+-- fubiniStudyMeasure_smul_invariant. Lifts hatBox_moment/spreadDensity_normalized to any axis:
+-- hatBox_axis (∫|2·blochProj n−1|=½), spreadDensity_normalized_axis (∫4(2·blochProj n−1)₊=1).
+/-- info: 'CSD.LF4.blochProj_integral_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_integral_bridge
+
+/-- info: 'CSD.LF4.hatBox_axis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.hatBox_axis
+
+/-- info: 'CSD.LF4.spreadDensity_normalized_axis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.spreadDensity_normalized_axis
+
+-- QubitDipole (context-fixed qubit, brick 3 infra, 2026-07-26): R_n = 2|n⟩⟨n|−I as a Hermitian
+-- unitary (reflMat_mem_unitaryGroup, reflU), its action reflMat_toEuclideanLin (R_n w = 2⟨n,w⟩•n−w),
+-- and blochProj_refl_fixes (R_n fixes the n-coordinate). The dipole change-of-variables engine.
+/-- info: 'CSD.LF4.reflMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.reflMat_mem_unitaryGroup
+
+/-- info: 'CSD.LF4.reflMat_toEuclideanLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.reflMat_toEuclideanLin
+
+/-- info: 'CSD.LF4.blochProj_refl_fixes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_refl_fixes
+
+-- Dipole (context-fixed qubit, brick 3, 2026-07-26): D = ∫ rsign(2·blochProj n−1)(2·blochProj ψ−1)
+-- dμ_FS = (2c−1)/2, c=|⟨n,ψ⟩|². Via R_n reflection (μ_FS-preserving, fixes n) + reflect_sq_add
+-- (reflSum) linearising the paired density + hatBox_axis. The dipole term of the qubit Born rule.
+/-- info: 'CSD.LF4.dipole' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.dipole
+
+/-- info: 'CSD.LF4.reflSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.reflSum
+
+-- CrossTerm (context-fixed qubit, brick 2, 2026-07-26): T = ∫ rsign(2·blochProj n−1)|2·blochProj ψ−1|
+-- dμ_FS = 0 — the antipode symmetry (Haar right-mult by the e₀↔e₁ swap flips both Born coords via the
+-- ONB-complement Parseval flip inner_unitary_flip), so T = −T. The monopole cross-term vanishing.
+/-- info: 'CSD.LF4.crossTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.crossTerm
+
+/-- info: 'CSD.LF4.inner_unitary_flip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.inner_unitary_flip
+
+-- ★ QubitBorn (context-fixed qubit, brick 5 = THE PAYOFF, 2026-07-26): the qubit Born rule derived
+-- from the CSD spread density + context-fixed hemisphere against the Fubini–Study typicality measure:
+-- ∫ ½(1+rsign(2·blochProj n−1))·4(2·blochProj ψ−1)₊ dμ_FS = |⟨n,ψ⟩|². Assembles the four component
+-- integrals (∫(2s−1)=0, ∫|2s−1|=½ hat-box, dipole=(2c−1)/2, crossTerm=0) = c. Foundational-triple.
+/-- info: 'CSD.LF4.qubitBorn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.qubitBorn
+
+/-- info: 'CSD.LF4.blochProj_integral_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_integral_half
 
 end CSD.Tests.AxiomAudit

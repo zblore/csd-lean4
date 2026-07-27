@@ -136,6 +136,13 @@ public import CsdLean4.LF4.MomentMarginalUniform
 public import CsdLean4.LF4.MomentRatioUniformN
 public import CsdLean4.LF4.MomentRatioUniform
 public import CsdLean4.LF4.MomentUniform
+public import CsdLean4.LF4.HatBox
+public import CsdLean4.LF4.QubitReflection
+public import CsdLean4.LF4.BlochProjection
+public import CsdLean4.LF4.AxisBridge
+public import CsdLean4.LF4.QubitDipole
+public import CsdLean4.LF4.QubitCrossTerm
+public import CsdLean4.LF4.QubitBorn
 public import CsdLean4.LF4.MomentBridgeN
 public import CsdLean4.LF4.MomentDirichletN
 public import CsdLean4.LF4.MomentBornN
@@ -193,6 +200,10 @@ public import CsdLean4.LF6.CGLMPQudit
 public import CsdLean4.LF6.MaxEntangledCGLMPCapstone
 public import CsdLean4.LF6.GHZnDeisolationFlow
 public import CsdLean4.Empirical.QM.Bell
+public import CsdLean4.Empirical.QM.LeggettGarg
+public import CsdLean4.Empirical.QM.QuantumEraser
+public import CsdLean4.Empirical.QM.ElitzurVaidman
+public import CsdLean4.Empirical.QM.KCBS
 public import CsdLean4.Empirical.QM.NoCloning
 public import CsdLean4.Empirical.QM.NoDeleting
 public import CsdLean4.Empirical.QM.Resources.SuperdenseCoding
@@ -201,6 +212,8 @@ public import CsdLean4.Empirical.QM.NoCommunication
 public import CsdLean4.Empirical.QM.NoBroadcasting
 public import CsdLean4.Empirical.QM.Protocols.Basic
 public import CsdLean4.Empirical.QM.Crypto.QuantumMoney
+public import CsdLean4.Empirical.QM.Crypto.BB84
+public import CsdLean4.Empirical.QM.Crypto.B92
 public import CsdLean4.Empirical.QM.Crypto.E91
 public import CsdLean4.Empirical.QM.Crypto.E91KeyRate
 public import CsdLean4.Empirical.QM.Crypto.E91FiniteKey
@@ -238,6 +251,8 @@ public import CsdLean4.Empirical.CSD.SternGerlachVolume
 public import CsdLean4.Empirical.CSD.MachZehnderVolume
 public import CsdLean4.Empirical.CSD.DoubleSlitVolume
 public import CsdLean4.Empirical.CSD.MalusVolume
+public import CsdLean4.Empirical.CSD.LeggettGargVolume
+public import CsdLean4.Empirical.CSD.ElitzurVaidmanVolume
 public import CsdLean4.Empirical.CSD.BellVolume
 public import CsdLean4.Empirical.CSD.GHZVolume
 public import CsdLean4.Empirical.CSD.HardyVolume
@@ -292,6 +307,8 @@ public import CsdLean4.CV.ApproxCCR
 public import CsdLean4.CV.Position
 public import CsdLean4.CV.Oscillator
 public import CsdLean4.CV.OscillatorSpectrum
+public import CsdLean4.CV.OscillatorBorn
+public import CsdLean4.CV.FieldModes
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
@@ -333,6 +350,17 @@ public import CsdLean4.SigmaLayer.MixedOntic
 public import CsdLean4.SigmaLayer.MixedFrequency
 public import CsdLean4.SigmaLayer.Symmetrization
 public import CsdLean4.SigmaLayer.FiniteQMClosure
+public import CsdLean4.SigmaLayer.OnticBornFrequency
+public import CsdLean4.SigmaLayer.BornFibrePartition
+public import CsdLean4.SigmaLayer.DeIsolationFlow
+public import CsdLean4.SigmaLayer.FibreRecord
+public import CsdLean4.SigmaLayer.RecordLayerClosure
+public import CsdLean4.SigmaLayer.MomentMapRace
+public import CsdLean4.SigmaLayer.Measurement
+public import CsdLean4.SigmaLayer.ProjectiveRecord
+public import CsdLean4.SigmaLayer.FibredSigma
+public import CsdLean4.SigmaLayer.BasisMeasurement
+public import CsdLean4.SigmaLayer.KSigmaRecord
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

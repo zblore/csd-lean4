@@ -40,19 +40,23 @@ calculation engine born from this structure.
 
 The immediate deliverable is to make **the whole of finite-dimensional QM arise from Σ and
 Ω-regions**, on the ontic surface, with no epistemic shortcuts. The corpus has the
-calculation engine running on a projective *witness*, but two things are not yet genuine:
+calculation engine running on a projective *witness*, with two honest status notes (the first now
+resolved in Lean, the second the standing posit):
 
-- **The record — the near frontier.** Measurement = de-isolation. The apparatus context M
-  fixes the **epistemic** partition {Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹; the single trajectory's projection lands
-  in one region, and **the record is the ontic selection in Σ** of which one — equivalently
-  which `π⁻¹(Ωᵢ(M))` basin ω(t) occupies (a **selection of structure already in Σ**; Σ does
-  not grow). Born = the prepared density integrated over the fixed epistemic regions. **The
-  corpus's gap is two things, neither of them "move the regions onto Σ":** (1) `bornRegion ψ'`
-  is **preparation-indexed** (defined from the state ψ'), not **context-fixed** {Ωᵢ(M)}
-  (defined from the apparatus M) — *both are epistemic*; and (2) the record is not yet realized
-  as the ontic selection in Σ. **The Ω-regions stay epistemic (on ℂℙ) — do NOT relocate them to Σ.**
-  > Separate preparation laws from context-fixed outcome partitions, then derive the
-  > outcome probabilities by integrating the preparation law over those fixed regions.
+- **The record — BUILT (2026-07-25).** Measurement = de-isolation, formalized end-to-end
+  (`record-layer-plan.md §4`). The ontic space is **Σ = base × fibre** (`FibredSigma`): the base
+  `ℂℙⁿ⁻¹` is the *epistemic* projective point (pinned to `[ψ]` for a sharp prep), the fibre the
+  *ontic* record coordinate. A measurement is **`context + unknown microstate → record`**
+  (`Measurement`): the context fixes the basin partition, the unknown microstate selects the basin
+  it occupies, and the combined result is a genuine postulate-P5 `RecordSemantics` record. The
+  outcome probabilities are the **Kähler torus moment map** (`MomentMapRace` — forced, not injected),
+  and Born is nothing but the **law of large numbers over the unknown initial microstate**
+  (`Measurement.bornMeasurement_frequency`; randomness = ignorance of the initial condition). The
+  Ω-regions stay epistemic (on ℂℙ) — they were *not* relocated to Σ; the record is the ontic
+  selection in the fibre. Realized on the corpus's actual Σ (`KSigmaRecord`,
+  `born_frequency_region_eq_record`).
+  > Done: preparation laws (the base/epistemic point) separated from the context-fixed outcome
+  > partition (the fibre), with the outcome probabilities the LLN over the unknown microstate.
 - **The engine currently runs on a witness with μ_FS and `exp(-itH)` built in.** That
   demonstrates closure; it is not yet QM *arising from* a more primitive Σ+Ω account
   (Paper C is explicitly "a reconstruction, not a derivation" — that is by design, but the
@@ -93,13 +97,21 @@ calculation engine running on a projective *witness*, but two things are not yet
 - Measurement outcome regions **preparation-indexed** (`bornRegion ψ'`) instead of
   **context-fixed** {Ωᵢ(M)} — both epistemic; and the record not realized as the ontic
   selection in Σ. (The Ω-regions are epistemic; do not "relocate them to Σ".)
+- Re-proposing **base-only context-fixed regions for `N ≥ 3`**, or attributing that wall to Gleason.
+  **Structural lesson ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)):** Born =
+  typicality volume for all `N` (theorem), but measurement contextuality lives on the base only at
+  `N = 2` (`CP¹ = S²` accident) and **necessarily in the fibre for `N ≥ 3`**. This is a *constraint
+  on Σ's structure* (the fibre is load-bearing), not a defect — and it is **not** Gleason (CSD is
+  contextual). Deriving the fibre mechanism from a de-isolation dynamics is the open frontier.
 - The witness closure called "QM derived from CSD."
 
 ## How to use this
 
 Before landing framing/prose/claims, or scoping new work, run the **`csd-foundations`**
 agent (`.claude/agents/csd-foundations.md`) against the change or plan, or check it
-against this charter yourself. The immediate frontier is **the record layer** — context-fixed
-**epistemic** outcome regions {Ωᵢ(M)} on ℂℙ, with the **record the ontic selection in Σ** of
-which region the trajectory realizes — the step that makes QM's measurement genuinely arise
-from Σ + Ω.
+against this charter yourself. The record layer — the step that makes QM's measurement genuinely
+arise from Σ + Ω — is now **built** (2026-07-25, `record-layer-plan.md §4`): measurement =
+`context + unknown microstate → record` on the base×fibre Σ, outcome probabilities = the Kähler
+moment map, Born = the law of large numbers over the unknown microstate. What remains is optional
+(a mechanical field naming in the pinned closure, no new theorem) or unrelated open tiers (Lindblad,
+the Kähler 2-form) — not a foundational frontier.

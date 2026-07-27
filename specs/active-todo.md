@@ -3,6 +3,13 @@
 > **⚠️ Open items now live in [`BACKLOG.md`](BACKLOG.md).** This is a historical
 > session-queue record (mostly-DONE core rows + the #16/#15/framing notes). The ecdsa.fail /
 > ECDLP track was extracted to its own repository (2026-07-20) and is no longer tracked here.
+>
+> **★ The record layer (MD-1) is BUILT (2026-07-25)** — see [`record-layer-plan.md §4`](record-layer-plan.md).
+> Measurement = `context + unknown microstate → record` on the base×fibre Σ; outcome probabilities =
+> the Kähler moment map; Born = the law of large numbers over the unknown microstate. Formalized
+> end-to-end, foundational-triple, axiom-pinned (`SigmaLayer/{BornFibrePartition,DeIsolationFlow,
+> FibreRecord,RecordLayerClosure,MomentMapRace,Measurement,ProjectiveRecord,FibredSigma,
+> BasisMeasurement,KSigmaRecord}.lean`). The Σ+Ω reconstruction of QM is complete.
 
 **Purpose.** Durable copy of the session task list so it survives session loss. If the
 in-memory task list is gone, re-seed from the table below (each row → a task; keep the
@@ -96,11 +103,13 @@ The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one
   single flow does not force it. **NOTE (2026-07-24):** "derive Σ / G" is **retired** — Σ (and its symmetry)
   is the **floor**; deriving it is a non-question. BUT these are **constraint work on Σ** (Σ is hidden, so
   pin its measure/symmetry down as tightly as possible — μ_FS *forced*, not chosen): legitimate and valuable,
-  though not a *frontier like the record layer*. (Theorem names `so1_onramp` / `so1_obstruction_capstone` are
+  though not a *research frontier*. (Theorem names `so1_onramp` / `so1_obstruction_capstone` are
   legacy labels; do not read them as a "derive the sector" goal.)
 Follow-up #32 (moment-fibre conserved quantities `momentMap ∘ obsFlow = momentMap`) is likewise constraint
-work on Σ. The genuine near frontier is the **record layer** — measurement as record selection via Ω-basins
-on Σ (`specs/CSD-CHARTER.md`), which is how QM's measurement account becomes genuinely ontic.
+work on Σ. The **record layer** — measurement as record selection via Ω-basins on Σ — is now **BUILT**
+(2026-07-25; see the banner at the top of this file and `record-layer-plan.md §4`), so QM's measurement
+account is genuinely ontic; the near frontier is now the **extensions** (continuous spectra, relativistic
+locality, identical particles).
 
 (superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`
 (needs the SectorData on the dilated space).
