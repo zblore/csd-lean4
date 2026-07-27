@@ -1,9 +1,26 @@
 # Record layer (MD-1) — plan: measurement as context-fixed regions + the ontic record
 
-> **Status: LIVE plan (created 2026-07-25).** The near frontier for *completing the
-> reconstruction of QM from Σ + Ω* (see [`CSD-CHARTER.md`](CSD-CHARTER.md)). The qubit
-> crux is **solved analytically** (below); its Lean formalization is a scoped
-> sphere-measure infra task; the N≥3 case is the genuine research core. Open-item row:
+> **Status: BUILT 2026-07-25 (see §4).** The record layer is now formalized in Lean end-to-end
+> (measurement as `context + unknown microstate → record` on the base×fibre Σ, Born = the LLN over
+> the unknown microstate, probabilities = the Kähler moment map). This doc is retained as the record
+> of the build and of the **residual**: context-fixing the *pinned closure's* regions (it still names
+> the preparation-indexed `bornRegion ψ'`) and the qubit sphere-measure infra.
+>
+> **★ UPDATE 2026-07-26: the qubit context-fixed Born rule is now formalized END-TO-END in Lean**
+> ([`LF4/QubitBorn.lean`](../CsdLean4/LF4/QubitBorn.lean) `qubitBorn`, foundational-triple, pinned —
+> see §2 and §4). The epistemic hemisphere partition `{H±(n)}` is provably **context-fixed**
+> (prep-independent) and the Born weight `|⟨n|ψ⟩|²` is *derived* from the ontic Fubini–Study
+> typicality measure via the CSD spread density — for the **qubit**. Residual: the general-`N`
+> context-fixed partition, then the **extensions** (continuous spectra, relativistic locality,
+> identical particles). Historical planning notes (qubit crux, N≥3) follow.
+>
+> **★ STRUCTURAL LESSON (2026-07-27) — [`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md).**
+> The general-`N` residual taught us a fact about Σ: a base-only, `U(N)`-covariant, nonnegative
+> context-fixed density **provably cannot** reproduce Born for `N ≥ 3` (numerics + operator argument;
+> the `CP¹=S²` antipode has no analogue — and this is **not** Gleason). So measurement contextuality
+> lives on the projective **base** only at `N = 2` and necessarily in the **fibre** for `N ≥ 3`. The
+> fibre is load-bearing, not decorative — a *constraint on Σ's structure*, not a defect (existence of
+> a Born fibre-partition is proven, Phase-2b). Read that doc before touching general-`N` context-fixing. Open-item row:
 > [`BACKLOG.md`](BACKLOG.md) "record layer (MD-1)". This doc holds the detail; BACKLOG
 > holds the one-line status.
 
@@ -23,7 +40,11 @@
   of departure from the corpus's `bornRegion ψ` (which bakes ψ into the region geometry so
   its volume = |⟨eᵢ|ψ⟩|² — a preparation-indexed shortcut).
 
-## 2. The qubit crux — SOLVED (analytically; route (i), epistemic density)
+## 2. The qubit crux — SOLVED analytically AND FORMALIZED IN LEAN (2026-07-26)
+
+> **★ Now machine-checked.** The analytic argument below is fully formalized: see the "Qubit identity
+> (§2) — COMPLETE END-TO-END" entry in §4 for the 7-module chain and `qubitBorn`. What follows is the
+> original analytic derivation (retained for exposition).
 
 Setup: `ℂℙ¹` = Bloch sphere `S²`, μ_FS = uniform normalized area. Measurement context M
 along axis `n` gives the **context-fixed** outcome regions = hemispheres
@@ -180,16 +201,160 @@ target-measures are `∝ the moment map` — tying `|⟨eᵢ|φ⟩|²` to the en
 last "Born from the dynamics" step; LF5's `measurementFlow` + the moment-map engine + the
 exponential-law theorem are the scaffolding.
 
+**Feature (B) rates = moment map — GROUNDED IN LEAN 2026-07-25:**
+[`SigmaLayer/MomentMapRace.lean`](../CsdLean4/SigmaLayer/MomentMapRace.lean). For a unit `ψ` the
+fibre-partition rate `bornRate ψ i = ‖ψ i‖²` **is** the `i`-th Fubini–Study torus moment-map
+coordinate `momentMap([ψ])ᵢ` (`bornRate_eq_momentMap`, via corpus `LF4/MomentMap.momentMap_mk`) —
+hence `= ‖⟨eᵢ,ψ⟩‖²`, the `FiniteQMClosure.born_frequency` target (`bornRate_eq_inner_sq`). So the
+race rates are *forced by the Kähler structure*, not injected. The residual is sharpened to one
+statement: `DeIsolationInteraction` (a measurable pointer whose basins carry the moment-map rates)
+⟹ Born (`DeIsolationInteraction.born`); the open part is realising it from a Hamiltonian `H_int(M)`,
+i.e. feature (A) (the exponential first-passage from a mixing flow) tied to these rates. Kinematics
+done, dynamics open.
+
 ## 4. Lean status
 
-- **Qubit identity (§2):** an `S²` integral. Formalization is **Cat-1 sphere-measure
-  infra** — Mathlib has `Measure.toSphere` but not (a) rotation/reflection invariance of
-  it, (b) angular integration, or (c) Archimedes' hat-box (`∫|λ₃|dμ = ½`). A real focused
-  build, not blocked on CSD. Not yet attempted; **no `sorry`/axiom stub landed** (repo rule).
-- **The record (§2):** clean — reuse `SigmaLayer/RecordedFact.lean`, `RecordSemantics`,
-  `compatibleSet`, `flowedSemantics`; the record event is the context-fixed `π⁻¹Ωᵢ(M)`.
+- **The fibre-partition factor — LANDED 2026-07-25:**
+  [`SigmaLayer/BornFibrePartition.lean`](../CsdLean4/SigmaLayer/BornFibrePartition.lean). The
+  fibre `F = ℝ` is carved into cumulative (CDF) cells `cdfCell r i = [∑_{j<i}rⱼ, ∑_{j≤i}rⱼ)`
+  with **`volume (cdfCell r i) = ENNReal.ofReal (rᵢ)`** (`volume_cdfCell`), the cells are
+  **pairwise disjoint** for `r ≥ 0` (`cdfCell_pairwiseDisjoint`, via
+  `loSum_add_le_loSum` + `Set.Ico_disjoint_Ico`) — a genuine partition. Fed the **Born rates**
+  `rᵢ = ‖ψ i‖² = |⟨eᵢ,ψ⟩|²` (`bornRate`, `sum_bornRate_unit`), the fibre measure of outcome `i`
+  is the Born weight (`volume_bornCell`), and for a unit state the cells cover a set of measure
+  **exactly `1`** (`volume_iUnion_bornCell_unit`, via `measure_iUnion`). Foundational-triple, no
+  `sorry`; pinned in `Tests/AxiomAudit.lean`; exported from `CsdLean4.lean`. This discharges the
+  **measure content** of the record layer's fibre-partition factor — the "(A) mechanism" of the
+  §3c decomposition. What remains open is *not* this factor but the **dynamical realisation**
+  (§3c / step 2b′): a de-isolation flow whose basins reproduce `cdfCell (moment map)`.
+- **The outcome distribution + the flow ⟹ Born bridge — LANDED 2026-07-25 (step 2b′, partial):**
+  [`SigmaLayer/DeIsolationFlow.lean`](../CsdLean4/SigmaLayer/DeIsolationFlow.lean). On the canonical
+  **fibre typicality measure** `fibreTypicality = vol|[0,1)` (a probability measure,
+  `instIsProbabilityMeasure`): the Born cell `i` has fibre typicality **exactly `‖ψ i‖²`**
+  (`fibreTypicality_bornCell` = the outcome probability of `i`); the cells **cover the fibre up to a
+  null set** (`fibreTypicality_uncovered` = the de-isolation pointer is a.e. defined — no
+  positive-typicality "no outcome" set); and the **abstract bridge** `map_pointer_apply` proves
+  *any* measurable pointer `p` whose basins carry the Born cell measures pushes `fibreTypicality`
+  forward to the Born distribution (`(fibreTypicality.map p) {i} = ‖ψ i‖²`). This is the
+  **flow-independent** content of 2b′ — Born as a *typicality volume of a basin*, not injected noise.
+  **The wall that remains** is exactly `map_pointer_apply`'s `hbasin` hypothesis made physical:
+  exhibit a pointer `p` generated by a de-isolation Hamiltonian `H_int(M)`
+  (`p = readout ∘ flow(H_int(M))`) whose basins are `cdfCell (moment map)`. Foundational-triple, no
+  `sorry`; pinned; exported.
+- **★ Qubit identity (§2) — COMPLETE END-TO-END 2026-07-26:** the full **qubit context-fixed Born
+  rule** is proven, foundational-triple (`[propext, Classical.choice, Quot.sound]`), no `sorry`, no
+  extra axioms, pinned in `Tests/AxiomAudit.lean`, `check-claims.sh` passing. Headline
+  [`LF4/QubitBorn.lean`](../CsdLean4/LF4/QubitBorn.lean) `qubitBorn`:
+  `∫ ½(1 + rsign(2·blochProj n − 1))·4(2·blochProj ψ − 1)₊ dμ_FS = |⟨n|ψ⟩|²` — the CSD spread density
+  from prep `ψ`, weighted by the **context-fixed** hemisphere indicator `H₊(n)` (function of the
+  measurement axis `n` alone), integrated against the ontic Fubini–Study typicality measure, **equals
+  the Born weight**. The 7-module chain (all foundational-triple, all pinned):
+  1. [`LF4/HatBox.lean`](../CsdLean4/LF4/HatBox.lean) — Archimedes hat-box `∫|2·momentMap − 1| = ½`
+     (`hatBox_moment`) + density normalisation, via `fs_moment_pushforward_uniform` + `∫_{[0,1]}|2t−1| = ½`.
+  2. [`LF4/QubitReflection.lean`](../CsdLean4/LF4/QubitReflection.lean) — the reflection identity
+     `‖⟨ψ,φ⟩‖² + ‖⟨ψ,R_nφ⟩‖² = 2cu + 2(1−c)(1−u)` (`reflect_sq_add`), pure `ℂ²` linear algebra.
+  3. [`LF4/BlochProjection.lean`](../CsdLean4/LF4/BlochProjection.lean) — the general-axis Born weight
+     `blochProj a p = |⟨a,rep p⟩|²/‖rep p‖²` + `U(2)`-equivariance + measurability.
+  4. [`LF4/AxisBridge.lean`](../CsdLean4/LF4/AxisBridge.lean) — general-axis bridge
+     `∫ f(blochProj n) dμ_FS = ∫ f(momentMap · 0) dμ_FS` → general-axis hat-box `hatBox_axis`.
+  5. [`LF4/QubitDipole.lean`](../CsdLean4/LF4/QubitDipole.lean) — `R_n = 2|n⟩⟨n| − I` as a Hermitian
+     **unitary** (so `μ_FS`-preserving via the *existing* `U(2)`-invariance — the earlier "anti-unitary"
+     worry was unfounded); the **dipole** `∫ rsign(2u−1)(2s−1) dμ_FS = (2c−1)/2`.
+  6. [`LF4/QubitCrossTerm.lean`](../CsdLean4/LF4/QubitCrossTerm.lean) — the antipode symmetry via Haar
+     **right**-invariance (never needs the anti-unitary map on `Projectivization`); the **cross-term**
+     `∫ rsign(2u−1)|2s−1| dμ_FS = 0`.
+  7. [`LF4/QubitBorn.lean`](../CsdLean4/LF4/QubitBorn.lean) — assembles `0 + ½ + (2c−1)/2 + 0 = c`.
+
+  **A7-faithfulness for the qubit is discharged:** the epistemic partition `{H±(n)}` is provably
+  context-fixed (prep-independent) and the Born rule is *derived* from the ontic `μ_FS` volume, not
+  postulated. Next natural target: the general-`N` context-fixed partition (the `blochProj`/bridge
+  foundation is already `N`-agnostic; what remains `N`-specific is the `CP¹ = S²` reflection geometry).
+- **The record — LANDED 2026-07-25 (step 3):**
+  [`SigmaLayer/FibreRecord.lean`](../CsdLean4/SigmaLayer/FibreRecord.lean). The record-layer readout
+  as a first-class postulate-P5 `RecordSemantics` on `Σ = ℝ` (reusing `RecordedFact.lean`):
+  a **context** is a nonnegative rate vector `FibreContext`; the **record event** of "context `c`
+  recorded outcome `i`" is `cdfCell c.rate i` (`fibreRecordSemantics`), measurable and **exclusive**
+  within a context (distinct outcomes disjoint, from `cdfCell_pairwiseDisjoint`); the **ontic
+  selection** `fibreOutcome` *is* the record (`fibreOutcome_eq_record`); the **compatible region** of
+  one record is that cell (`compatibleSet_fibre_single` — isolation = conditioning on the outcome
+  cell, the P6 story); and **Born meets the record** — the fibre typicality of the Born-context
+  record event is exactly `‖ψ i‖²` (`fibreTypicality_bornRecord`). Foundational-triple, no `sorry`;
+  pinned; exported. This is the intended replacement for the prep-indexed `vnPointerOutcome` readout.
+- **The record-layer capstone bundle — LANDED 2026-07-25 (step 5):**
+  [`SigmaLayer/RecordLayerClosure.lean`](../CsdLean4/SigmaLayer/RecordLayerClosure.lean). The analog
+  of `FiniteQMClosure`: one `Prop` bundle `RecordLayerClosure`, discharged by `recordLayerClosure`
+  for every unit `ψ`, collecting the proved record-layer facts — `exclusive` (P5),
+  `selection_is_record`, `isolation_is_conditioning` (P6), `born_typicality` (fibre typicality of the
+  record event `= ‖ψ i‖²`), `ae_total`. The **certified successor** to `vnPointerOutcome`: outcome
+  probabilities are measurement-noncontextual. `FiniteQMClosure`'s MD-1 docstring now points at it.
+  Foundational-triple, no `sorry`; pinned; exported. **Open:** migrating `FiniteQMClosure`'s *proved*
+  fields off the `bornRegion`/`vnPointerOutcome` product-model engine onto this readout is
+  research-scale (the born-frequency/records machinery redone on the fibre model), gated on step 2b′.
+- **The rates are the Kähler moment map — LANDED 2026-07-25 (step 2b′ feature B):**
+  [`SigmaLayer/MomentMapRace.lean`](../CsdLean4/SigmaLayer/MomentMapRace.lean). `bornRate_eq_momentMap`
+  — for a unit `ψ` the fibre-partition rate `‖ψ i‖²` **is** the `i`-th Fubini–Study torus moment-map
+  coordinate at `[ψ]` (corpus `LF4/MomentMap.momentMap_mk`) — forced by the Kähler structure, not
+  injected. `bornRate_eq_inner_sq` — hence `= ‖⟨eᵢ,ψ⟩‖²`, the `FiniteQMClosure.born_frequency` target.
+  `fibreTypicality_bornCell_eq_momentMap` — the record-layer Born rule in moment-map terms.
+  `DeIsolationInteraction` — the sharpened residual: a measurable pointer whose basins carry the
+  moment-map rates ⟹ Born (`.born`). Foundational-triple, no `sorry`; pinned; exported. **Open (the
+  wall):** realise a `DeIsolationInteraction` from a physical Hamiltonian `H_int(M)` (feature A — the
+  exponential first-passage of a mixing de-isolation flow). Kinematics grounded; the dynamics is open.
+- **The measurement architecture in one object — LANDED 2026-07-25:**
+  [`SigmaLayer/Measurement.lean`](../CsdLean4/SigmaLayer/Measurement.lean). `Measurement` = a
+  **context** (the measurement type — fixes the basins, hence the probabilities) awaiting an
+  **unknown microstate** `ξ`. `outcome_eq_some_iff` (the microstate selects the basin it occupies);
+  `record_of_mem_basin` (the combined result *is* the record `⟨context, outcome, time⟩`);
+  `bornMeasurement_prob` (the basins set the probabilities `= ‖ψ i‖²`) and
+  `bornMeasurement_prob_momentMap` (`=` the Kähler moment map — forced, not injected);
+  `bornMeasurement_ae_total` (a.e. microstate yields a record). The whole record layer as one
+  measurement event. Foundational-triple, no `sorry`; pinned; exported. Assembles the proven pieces —
+  the physical flow `H_int(M)` behind the basins stays open (feature A).
+- **The Born rule as LLN over the unknown microstate — LANDED 2026-07-25:**
+  `Measurement.bornMeasurement_frequency` (in the file above). The whole probabilistic content, and
+  *nothing special*: i.i.d. typical microstates (law `fibreTypicality`) give outcome-`i` frequency
+  → the basin measure `‖ψ i‖²` = the moment map, by the strong law (`LF1.freq_tendsto_of_iid`).
+  Randomness = ignorance of the initial condition. This **dissolves the "feature A" wall**: the
+  de-isolation flow is just the deterministic microstate→basin map (= the measurement context), not a
+  thing to derive; the statistics are the standard Papers A/D typicality+LLN. Foundational-triple.
+- **The record layer on the ACTUAL projective Σ (migration) — LANDED 2026-07-25:**
+  [`SigmaLayer/ProjectiveRecord.lean`](../CsdLean4/SigmaLayer/ProjectiveRecord.lean). No longer a
+  fibre toy — the record layer instantiated on the corpus's real model `Σ = CPN(M+1)` with its own
+  `bornRegion` (events), `bornOutcome` (outcome map), and `fubiniStudyMeasure`: `projRecordSemantics`
+  (P5 `RecordSemantics`, measurable + exclusive via `bornRegion_measurable_uncond` /
+  `bornRegion_pairwiseDisjoint`), `bornOutcome_eq_record` (the corpus outcome map *is* the record),
+  `compatibleSet_proj_single` (isolation = conditioning on the region), `fubiniStudy_projRecord`
+  (FS typicality of the record event `= ‖⟨eᵢ,ψ⟩‖²`), and `projRecord_frequency` (**Born = LLN over the
+  unknown microstate on the real Σ** — the exact `FiniteQMClosure.born_frequency` conclusion, carried
+  by the record semantics instead of `vnPointerOutcome`). `FiniteQMClosure`'s MD-1 docstring points at
+  it. Only field re-plumbing (mechanical, no new theorem) is left. Foundational-triple, no `sorry`.
+- **The base×fibre ontic space Σ — LANDED 2026-07-25:**
+  [`SigmaLayer/FibredSigma.lean`](../CsdLean4/SigmaLayer/FibredSigma.lean). The ontic space assembled
+  as a product `Σ = base × fibre = CPN n × ℝ`, realising the epistemic/ontic split literally: the
+  **base** `CPN n` is the *epistemic* projective point, pinned to `[ψ]` for a sharp prep
+  (`baseProj_sharpTypicality`: `π_* (δ_{[ψ]} ⊗ fibreTypicality) = δ_{[ψ]}`); the **fibre** `ℝ` is the
+  *ontic* record coordinate carrying the Born partition. The sharp typicality
+  `δ_{[ψ]} ⊗ fibreTypicality` gives Born as the fibre event's typicality
+  (`sharpTypicality_fibredEvent = ‖ψ i‖²`, `sharpTypicality_fibredEvent_momentMap = ` the moment map).
+  Ties `FibreRecord` to the projective base: ψ-dependence in the (epistemic) base, context-fixed
+  partition in the (ontic) fibre — Papers C/D epistemic-base/ontic-fibre split made literal.
+  Foundational-triple, no `sorry`.
+- **The record layer on the closure's actual product Σ — LANDED 2026-07-25:**
+  [`SigmaLayer/KSigmaRecord.lean`](../CsdLean4/SigmaLayer/KSigmaRecord.lean). The record layer lifted to
+  `Σ = KSigma(M+1) = CPN × T²`, the exact space `FiniteQMClosure` lives on: `kSigmaRecordSemantics`
+  (P5 `RecordSemantics`, events = `bornRegion` lifted through `π = Prod.fst`), and — the key wire-in —
+  `born_frequency_region_eq_record`: the region `FiniteQMClosure.born_frequency` lands in
+  (`π⁻¹'bornRegion ψ i`) is **definitionally** the record-layer event. So the pinned closure's Born
+  frequencies already *are* record-layer frequencies; the literal field rewrite is unnecessary, not
+  merely deferred. Foundational-triple, no `sorry`.
+- **Arbitrary observable (general basis) — LANDED 2026-07-25:**
+  [`SigmaLayer/BasisMeasurement.lean`](../CsdLean4/SigmaLayer/BasisMeasurement.lean). The record layer
+  for any orthonormal basis `b`: `bornRateBasis_eq_inner_sq` (outcome probability `= ‖⟨bᵢ,ψ⟩‖²`),
+  `sum_bornRateBasis_unit`, `bornMeasurementBasis_prob`. Change of basis via the isometry `b.repr`.
+  Foundational-triple, no `sorry`.
 - **Corpus today:** `bornRegion ψ` (prep-indexed, state-shaped) + `vnPointerOutcome`
-  (prep-indexed) — to be replaced by context-fixed regions + the ontic record.
+  (prep-indexed) — the LF5 readout. `FibreRecord` supplies the record-layer replacement; retiring
+  `vnPointerOutcome` at the `FiniteQMClosure` wiring is staging step 5 (open).
 
 ## 5. Staging
 
@@ -198,15 +363,21 @@ exponential-law theorem are the scaffolding.
 | ~~1 (Phase 1 — decisive)~~ | **DONE 2026-07-25 → Outcome B** (§3): base-only fails at N=3 for FS-Voronoi (density forced negative; qubit control validates). Fibre needed. | — |
 | 1b (optional) | Quick check: does a *non-Voronoi* context-fixed region family rescue base-only? (bound the caveat before committing to the fibre) | low |
 | ~~2b (existence)~~ | **DONE 2026-07-25 → §3b:** the fibre model reproduces Born exactly at N≥3 (Gumbel race; verified, `scripts/experiments/record_layer_fibre_gumbel.py`). Architecture settled: the fibre carries the contextuality. | — |
-| **2b′ (the real core)** | **CSD-native fibre model:** a *canonical geometric* fibre `(F,ν)` + a *deterministic de-isolation flow* `Φ_M` whose basins `B_i(M)=Φ_M⁻¹(pointer_i)` ARE the Born partition — Born as a typicality volume of a flow-carved basin, not injected noise. Where typicality + Kähler dynamics enter. | **high — research core** |
-| 3 | The record: context-fixed `RecordedFact` + ontic selection `ω ↦ i` (reuse `RecordSemantics`) — independent of A/B | low |
+| 2b′ (flow-independent half) | **DONE 2026-07-25 → §4:** `SigmaLayer/DeIsolationFlow.lean` — canonical fibre typicality `fibreTypicality=vol\|[0,1)`; outcome prob = Born (`fibreTypicality_bornCell`); pointer a.e. defined (`fibreTypicality_uncovered`); **flow ⟹ Born bridge** `map_pointer_apply` (any pointer with Born basin measures → Born distribution). Born as a typicality volume of a basin. | — |
+| 2b′ feature (B) rates=moment map | **DONE 2026-07-25 → §3c/§4:** `SigmaLayer/MomentMapRace.lean` — `bornRate_eq_momentMap` (rate ‖ψ i‖² IS the torus moment-map coordinate, forced by Kähler), `bornRate_eq_inner_sq` (= corpus Born weight), `DeIsolationInteraction` (moment-map basins ⟹ Born). Feature (2) grounded. | — |
+| ~~2b′ feature (A) — "the wall"~~ | **DISSOLVED 2026-07-25 — not a research problem.** The probabilistic content is *just the law of large numbers over the unknown initial microstate*: each run is deterministic given its microstate, the microstate is typical (`fibreTypicality`), so the outcome frequency → the basin measure = `‖ψ i‖²` = the moment map. Proven: `Measurement.bornMeasurement_frequency` (via `LF1.freq_tendsto_of_iid`). The "de-isolation flow" is just the deterministic microstate→basin map (= the measurement context); there is no separate flow to derive. | — |
+| ~~fibre-partition factor~~ | **DONE 2026-07-25 → §4:** `SigmaLayer/BornFibrePartition.lean` — CDF cells, `volume_cdfCell = rᵢ`, pairwise-disjoint, Born rates → `volume_bornCell`, unit-state total measure `= 1`. Foundational-triple, pinned. The "(A) mechanism" of §3c. | — |
+| ~~3 (the record)~~ | **DONE 2026-07-25 → §4:** `SigmaLayer/FibreRecord.lean` — the readout as a first-class P5 `RecordSemantics` on `Σ=ℝ`: record event = `cdfCell c.rate i` (measurable + exclusive via `cdfCell_pairwiseDisjoint`); `fibreOutcome_eq_record` (selection = record); `compatibleSet_fibre_single` (isolation = conditioning on the cell); `fibreTypicality_bornRecord` (typicality of recording `i` = `‖ψ i‖²`). Replaces the prep-indexed `vnPointerOutcome` readout. | — |
 | 4 | The context-fixed regions `{Ωᵢ(M)}` def + μ_FS-null boundaries (Voronoi) | low |
-| 5 | Formalize (qutrit) + wire into `FiniteQMClosure`; retire the prep-indexed readout | med |
+| 5 (successor bundle) | **DONE 2026-07-25 → §4:** `SigmaLayer/RecordLayerClosure.lean` — the record-layer capstone `recordLayerClosure` (analog of `FiniteQMClosure`): exclusive, selection=record, isolation=conditioning, `born_typicality` (=‖ψ i‖²), `ae_total`. The certified successor to `vnPointerOutcome`; `FiniteQMClosure` docstring updated to point at it. | — |
+| 5 (migration onto the real Σ) | **DONE 2026-07-25 → §4:** `SigmaLayer/ProjectiveRecord.lean` — the record layer instantiated on the corpus's ACTUAL model `Σ = CPN(M+1)`, events = the corpus's own `bornRegion`, outcome map = `bornOutcome`, measure = `fubiniStudyMeasure`. `projRecordSemantics` (P5, measurable+exclusive), `bornOutcome_eq_record`, `fubiniStudy_projRecord` (FS typicality = `‖⟨eᵢ,ψ⟩‖²`), `projRecord_frequency` (Born = LLN over the unknown microstate on the real Σ = the `born_frequency` conclusion, carried by the record semantics). Not a parallel toy. | — |
+| ~~5 (field re-plumbing)~~ | **UNNECESSARY 2026-07-25 → §4:** `SigmaLayer/KSigmaRecord.lean` `born_frequency_region_eq_record` proves the closure's Born-frequency region `π⁻¹'bornRegion` is *definitionally* the record-layer event `kSigmaRecordSemantics` on the actual Σ=KSigma. So the closure's Born frequencies already ARE record-layer frequencies — no rewrite of the pinned field needed (and the field's coarse `vnPointerOutcome` is a block-sum of these events, `vnPointerOutcome_preimage_some`). | — |
+| ~~arbitrary observable~~ | **DONE 2026-07-25 → §4:** `SigmaLayer/BasisMeasurement.lean` — the record layer for any orthonormal basis `b`: `bornRateBasis_eq_inner_sq` (outcome prob `= ‖⟨bᵢ,ψ⟩‖²`), `sum_bornRateBasis_unit`, `bornMeasurementBasis_prob`. Change of basis via the isometry `b.repr`. | — |
 
 ## 6. References
 
 [`CSD-CHARTER.md`](CSD-CHARTER.md) (the north star); [`reconstruction-status.md`](reconstruction-status.md)
-§7 (the record layer as near frontier); [`BACKLOG.md`](BACKLOG.md) (record-layer row);
+§7 (the record layer, now built); [`BACKLOG.md`](BACKLOG.md) (record-layer row);
 [`future-work.md`](future-work.md) (record-layer row). Papers: Paper C **A7** (epistemic
 outcome regions {Ωᵢ(M)} ⊂ CPⁿ⁻¹), Paper A (typicality), Paper B (μ_FS unique by SU(n)),
 Gleason (N≥3 impossibility) — `.tmp_extract/PaperC.txt`, `.tmp_extract/PaperD.txt`.
