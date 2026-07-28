@@ -198,7 +198,9 @@ do not sell the epistemic witness as completing the reconstruction. Σ is the fl
   AxiomAudit-pinned (foundational triple). Removes the `π = id` degeneracy; does
   NOT touch L7 (Born still samples `kMuL`; fibre flow trivial).
 
-**Phase 3 — the record layer (BUILT 2026-07-25) + the extensions.**
+**Phase 3 — the record layer (kinematic interface BUILT 2026-07-25; MD-1 open) + the extensions.**
+⚠️ *Corrected 2026-07-28 (external review): general-`N` A7, the de-isolation `H_int`, and the A1-sector
+status of the fibred Σ are all open — see `BACKLOG.md` and `record-layer-plan.md`.*
 - **C6 (retired as stated).** "Derive the Born weights FROM the deterministic flow" is a
   **non-question** — Σ is the floor; Born *arises from* the Ω-region volume ratios +
   typicality (that is the reconstruction). The **record layer** is now **formalized in Lean**

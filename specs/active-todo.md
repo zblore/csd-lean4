@@ -4,12 +4,20 @@
 > session-queue record (mostly-DONE core rows + the #16/#15/framing notes). The ecdsa.fail /
 > ECDLP track was extracted to its own repository (2026-07-20) and is no longer tracked here.
 >
-> **★ The record layer (MD-1) is BUILT (2026-07-25)** — see [`record-layer-plan.md §4`](record-layer-plan.md).
+> **★ The record layer's KINEMATIC interface is BUILT (2026-07-25)** — see
+> [`record-layer-plan.md §4`](record-layer-plan.md).
 > Measurement = `context + unknown microstate → record` on the base×fibre Σ; outcome probabilities =
 > the Kähler moment map; Born = the law of large numbers over the unknown microstate. Formalized
 > end-to-end, foundational-triple, axiom-pinned (`SigmaLayer/{BornFibrePartition,DeIsolationFlow,
 > FibreRecord,RecordLayerClosure,MomentMapRace,Measurement,ProjectiveRecord,FibredSigma,
-> BasisMeasurement,KSigmaRecord}.lean`). The Σ+Ω reconstruction of QM is complete.
+> BasisMeasurement,KSigmaRecord}.lean`).
+>
+> ⚠️ **This banner previously ended "The Σ+Ω reconstruction of QM is complete." That was wrong and
+> is retracted (2026-07-28, external review).** What is complete is an operational finite-QM engine
+> on the concrete product witness, plus a kinematic definite-record model. Still open: **general-`N`
+> A7** (the partition is preparation-indexed; `Ωᵢ(M)` from the apparatus alone is proved only at
+> `N=2`), the **Hamiltonian de-isolation** generating the Born basins, and a **stable apparatus
+> record from joint dynamics**. The full Paper C/D reconstruction claim is not yet justified.
 
 **Purpose.** Durable copy of the session task list so it survives session loss. If the
 in-memory task list is gone, re-seed from the table below (each row → a task; keep the

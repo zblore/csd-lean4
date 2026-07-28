@@ -43,8 +43,13 @@ The immediate deliverable is to make **the whole of finite-dimensional QM arise 
 calculation engine running on a projective *witness*, with two honest status notes (the first now
 resolved in Lean, the second the standing posit):
 
-- **The record — BUILT (2026-07-25).** Measurement = de-isolation, formalized end-to-end
-  (`record-layer-plan.md §4`). The ontic space is **Σ = base × fibre** (`FibredSigma`): the base
+- **The record — the KINEMATIC interface is BUILT (2026-07-25); MD-1 is NOT discharged.**
+  ⚠️ *Scope corrected 2026-07-28 (external review): general-`N` A7 (`Ωᵢ(M)` from the apparatus
+  alone) is proved only at `N=2`, the partition here being preparation-indexed; the de-isolation
+  `H_int` is not constructed; and the fibred Σ is a measurable record model, not a proven A1
+  sector. See `record-layer-plan.md` and `BACKLOG.md`.* Measurement = de-isolation, formalized
+  end-to-end
+  (`record-layer-plan.md §4`). The model space is **Σ = base × fibre** (`FibredSigma`): the base
   `ℂℙⁿ⁻¹` is the *epistemic* projective point (pinned to `[ψ]` for a sharp prep), the fibre the
   *ontic* record coordinate. A measurement is **`context + unknown microstate → record`**
   (`Measurement`): the context fixes the basin partition, the unknown microstate selects the basin

@@ -161,8 +161,13 @@ problem. QM (the T1–T16 inventory in §2a) is the **calculation engine** the �
 computes. The goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — QM genuinely
 *arising from* the ontic surface, not accumulated on the epistemic side.
 
-* **The record layer (MD-1) — BUILT (2026-07-25), formalized end-to-end.** Measurement = de-isolation, on
-  the honest CSD ontic space **Σ = base × fibre** (`SigmaLayer/FibredSigma.lean`): the **base** `CPN n` is
+* **The record layer (MD-1) — the KINEMATIC interface is BUILT (2026-07-25), formalized end-to-end;
+  MD-1 itself is NOT discharged.** ⚠️ *Corrected 2026-07-28 (external review): the partition is
+  preparation-indexed, so general-`N` A7 is open (`N=2` is done, `LF4/QubitBorn.lean`); the
+  de-isolation Hamiltonian is not constructed (`DeIsolationInteraction.basin_rate` is a hypothesis
+  field); and the fibred Σ below is a measurable record model, not a proven A1 ontic sector.*
+  Measurement = de-isolation, on
+  the model space **Σ = base × fibre** (`SigmaLayer/FibredSigma.lean`): the **base** `CPN n` is
   the *epistemic* projective point (pinned to `[ψ]` for a sharp prep), the **fibre** carries the *ontic*
   record coordinate. The measurement is `context + unknown microstate → record` (`SigmaLayer/Measurement.lean`):
   the context fixes the basin partition, the unknown microstate selects the basin it occupies, and the

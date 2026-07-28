@@ -1,10 +1,26 @@
 # Record layer (MD-1) — plan: measurement as context-fixed regions + the ontic record
 
-> **Status: BUILT 2026-07-25 (see §4).** The record layer is now formalized in Lean end-to-end
-> (measurement as `context + unknown microstate → record` on the base×fibre Σ, Born = the LLN over
-> the unknown microstate, probabilities = the Kähler moment map). This doc is retained as the record
-> of the build and of the **residual**: context-fixing the *pinned closure's* regions (it still names
-> the preparation-indexed `bornRegion ψ'`) and the qubit sphere-measure infra.
+> **Status: the KINEMATIC record interface is BUILT 2026-07-25 (see §4); MD-1 is NOT discharged.**
+> Formalized in Lean end-to-end: measurement as `context + unknown microstate → record` on the
+> base×fibre Σ, Born = the LLN over the unknown microstate, probabilities = the Kähler moment map.
+>
+> ⚠️ **Scope corrected 2026-07-28 after an external review.** Earlier wording here ("the record
+> layer is BUILT", the staging table's "feature (A) DISSOLVED") overstated it. What is proved is:
+> *given* a basin partition, an unknown microstate selects one definite record, and repeated i.i.d.
+> preparations obey the LLN. What is **not** proved:
+> 1. **General-`N` A7** — the partition is constructed from the preparation (`bornContext ψ`,
+>    `cdfCell (bornRate ψ)`), so Paper C's `Ωᵢ(M)`, fixed by the apparatus alone, is established
+>    only at `N = 2` (§2, `LF4/QubitBorn.lean`). `N ≥ 3` is **open in both directions** — the
+>    earlier "provably dead" verdict rested on numerics plus an informal argument and is retracted
+>    (`BACKLOG.md`).
+> 2. **The de-isolation dynamics** — `DeIsolationInteraction.basin_rate` is a *hypothesis field*;
+>    no `H_int` generating those basins is constructed. `DeIsolationFlow.lean` states this
+>    correctly; §3c's staging row did not.
+> 3. **That the fibred Σ is an A1 sector** — `ℂℙⁿ⁻¹ × ℝ` with Lebesgue restricted to `[0,1)` is a
+>    measurable record model: non-compact fibre, no Kähler structure, measure not shown to be
+>    Liouville. It is not the completed Paper C ontic surface.
+>
+> This doc is retained as the record of the build and of those three open items.
 >
 > **★ UPDATE 2026-07-26: the qubit context-fixed Born rule is now formalized END-TO-END in Lean**
 > ([`LF4/QubitBorn.lean`](../CsdLean4/LF4/QubitBorn.lean) `qubitBorn`, foundational-triple, pinned —
@@ -314,9 +330,12 @@ done, dynamics open.
   `Measurement.bornMeasurement_frequency` (in the file above). The whole probabilistic content, and
   *nothing special*: i.i.d. typical microstates (law `fibreTypicality`) give outcome-`i` frequency
   → the basin measure `‖ψ i‖²` = the moment map, by the strong law (`LF1.freq_tendsto_of_iid`).
-  Randomness = ignorance of the initial condition. This **dissolves the "feature A" wall**: the
-  de-isolation flow is just the deterministic microstate→basin map (= the measurement context), not a
-  thing to derive; the statistics are the standard Papers A/D typicality+LLN. Foundational-triple.
+  Randomness = ignorance of the initial condition. ⚠️ **Corrected 2026-07-28:** this dissolves only
+  the *statistical* half of "feature A" — no extra probabilistic postulate is needed **once the
+  basins are given**. It does **not** dissolve the dynamical half: the basins themselves enter as
+  the hypothesis field `DeIsolationInteraction.basin_rate`, and constructing an `H_int` that
+  generates them is open (`DeIsolationFlow.lean` "the open research obligation"). The earlier claim
+  that there is "no separate flow to derive" was wrong. Foundational-triple.
 - **The record layer on the ACTUAL projective Σ (migration) — LANDED 2026-07-25:**
   [`SigmaLayer/ProjectiveRecord.lean`](../CsdLean4/SigmaLayer/ProjectiveRecord.lean). No longer a
   fibre toy — the record layer instantiated on the corpus's real model `Σ = CPN(M+1)` with its own
@@ -365,7 +384,7 @@ done, dynamics open.
 | ~~2b (existence)~~ | **DONE 2026-07-25 → §3b:** the fibre model reproduces Born exactly at N≥3 (Gumbel race; verified, `scripts/experiments/record_layer_fibre_gumbel.py`). Architecture settled: the fibre carries the contextuality. | — |
 | 2b′ (flow-independent half) | **DONE 2026-07-25 → §4:** `SigmaLayer/DeIsolationFlow.lean` — canonical fibre typicality `fibreTypicality=vol\|[0,1)`; outcome prob = Born (`fibreTypicality_bornCell`); pointer a.e. defined (`fibreTypicality_uncovered`); **flow ⟹ Born bridge** `map_pointer_apply` (any pointer with Born basin measures → Born distribution). Born as a typicality volume of a basin. | — |
 | 2b′ feature (B) rates=moment map | **DONE 2026-07-25 → §3c/§4:** `SigmaLayer/MomentMapRace.lean` — `bornRate_eq_momentMap` (rate ‖ψ i‖² IS the torus moment-map coordinate, forced by Kähler), `bornRate_eq_inner_sq` (= corpus Born weight), `DeIsolationInteraction` (moment-map basins ⟹ Born). Feature (2) grounded. | — |
-| ~~2b′ feature (A) — "the wall"~~ | **DISSOLVED 2026-07-25 — not a research problem.** The probabilistic content is *just the law of large numbers over the unknown initial microstate*: each run is deterministic given its microstate, the microstate is typical (`fibreTypicality`), so the outcome frequency → the basin measure = `‖ψ i‖²` = the moment map. Proven: `Measurement.bornMeasurement_frequency` (via `LF1.freq_tendsto_of_iid`). The "de-isolation flow" is just the deterministic microstate→basin map (= the measurement context); there is no separate flow to derive. | — |
+| 2b′ feature (A) — "the wall" | **STATISTICAL half done; DYNAMICAL half OPEN.** ⚠️ This row previously read "DISSOLVED — not a research problem"; that was wrong and is retracted (2026-07-28). **Done:** once the basins are given, no extra probabilistic postulate is needed — each run is deterministic given its microstate, the microstate is typical (`fibreTypicality`), so the outcome frequency → the basin measure `‖ψ i‖²` = the moment map (`Measurement.bornMeasurement_frequency`, via `LF1.freq_tendsto_of_iid`). **Open:** the basins are *assumed*, not derived — `DeIsolationInteraction.basin_rate` is a hypothesis field, and no interaction Hamiltonian `H_int(M)` generating `cdfCell (moment map)` is constructed. Paper D additionally wants system–apparatus–environment coupling, interaction-generated outcome regions, stable macroscopic correlations, and persistence of the record: none of that is formalized. `DeIsolationFlow.lean` states the obligation correctly; this table did not. | **open** |
 | ~~fibre-partition factor~~ | **DONE 2026-07-25 → §4:** `SigmaLayer/BornFibrePartition.lean` — CDF cells, `volume_cdfCell = rᵢ`, pairwise-disjoint, Born rates → `volume_bornCell`, unit-state total measure `= 1`. Foundational-triple, pinned. The "(A) mechanism" of §3c. | — |
 | ~~3 (the record)~~ | **DONE 2026-07-25 → §4:** `SigmaLayer/FibreRecord.lean` — the readout as a first-class P5 `RecordSemantics` on `Σ=ℝ`: record event = `cdfCell c.rate i` (measurable + exclusive via `cdfCell_pairwiseDisjoint`); `fibreOutcome_eq_record` (selection = record); `compatibleSet_fibre_single` (isolation = conditioning on the cell); `fibreTypicality_bornRecord` (typicality of recording `i` = `‖ψ i‖²`). Replaces the prep-indexed `vnPointerOutcome` readout. | — |
 | 4 | The context-fixed regions `{Ωᵢ(M)}` def + μ_FS-null boundaries (Voronoi) | low |
