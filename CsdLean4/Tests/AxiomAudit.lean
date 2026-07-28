@@ -320,6 +320,7 @@ public import CsdLean4.SigmaLayer.BornFibrePartition
 public import CsdLean4.SigmaLayer.DeIsolationFlow
 public import CsdLean4.SigmaLayer.FibreRecord
 public import CsdLean4.SigmaLayer.RecordLayerClosure
+public import CsdLean4.SigmaLayer.ContextFixedA7
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -724,6 +725,44 @@ arithmetic. -/
 
 /-- info: 'CSD.Empirical.HOM.inputs_normalised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.HOM.inputs_normalised
+
+-- Context-fixed A7 at general N: the SUPPORT REDUCTION (2026-07-28, SigmaLayer/ContextFixedA7).
+-- Step one of the general-N A7 no-go, and honest about being step one. Paper C A7 wants regions
+-- Omega_i(M) fixed by the APPARATUS ALONE plus a preparation law; U(N)-covariance collapses the
+-- density to g(|<psi|phi>|^2) for a SINGLE nonneg g. N=2 works (LF4/QubitBorn qubitBorn, g(s) =
+-- 4(2s-1)+); N>=3 is OPEN IN BOTH DIRECTIONS (the earlier "provably dead" verdict rested on
+-- numerics + an informal argument and was retracted 2026-07-28, specs/BACKLOG.md).
+-- The reduction: evaluate A7 at the n BASIS-VECTOR preparations psi = e_j, where the Born weights
+-- are delta_ij. For i != j the requirement makes a NONNEGATIVE integrand integrate to ZERO over
+-- Omega_i, forcing it to vanish a.e. there (ae_eq_zero_of_setIntegral_eq_zero -- nonnegativity is
+-- doing all the work, which is exactly what a SIGNED density would escape). Hence each support
+-- sits in its own region (overlapSupport_ae_subset), the n supports are pairwise a.e. disjoint
+-- (overlapSupports_ae_disjoint), and their measures sum to <= 1
+-- (sum_measure_overlapSupport_le_one) -- so by symmetry each is <= 1/n while still carrying total
+-- integral 1: a base-only density MUST SPIKE. That is what the N=2 solution, supported exactly on
+-- (1/2, 1], is doing.
+-- Stated over an ABSTRACT probability space on purpose: no projective geometry is needed, so the
+-- reduction also survives a move to a fibred Sigma. Intended instantiation X := CPN n,
+-- mu := fubiniStudyMeasure, s j := momentMap . j (momentMap_mk_eq_inner_sq).
+-- NOT THE NO-GO. It constrains g; it does not refute it. Untouched: the generic-psi requirement
+-- (everything here comes from the n basis-vector preps), and the harmonic argument (g(|<psi|phi>|^2)
+-- integrated over a fixed region has components of every degree (k,k) while the target is pure
+-- (1,1)) -- which needs harmonic analysis on CP^{n-1} that Mathlib does not have.
+/-- info: 'CSD.SigmaLayer.ae_eq_zero_of_setIntegral_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ae_eq_zero_of_setIntegral_eq_zero
+
+/-- info: 'CSD.SigmaLayer.overlapSupport_ae_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.overlapSupport_ae_subset
+
+/-- info: 'CSD.SigmaLayer.overlapSupports_ae_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.overlapSupports_ae_disjoint
+
+/-- info: 'CSD.SigmaLayer.sum_measure_overlapSupport_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_measure_overlapSupport_le_one
 
 -- Hong-Ou-Mandel CSD twin (2026-07-27): the dip as an ONTIC IMPOSSIBILITY, not a statistical
 -- cancellation. hom_coincidence_typicality_zero -- the coincidence cell's fibre typicality is

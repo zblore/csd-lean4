@@ -362,6 +362,7 @@ public import CsdLean4.SigmaLayer.BornFibrePartition
 public import CsdLean4.SigmaLayer.DeIsolationFlow
 public import CsdLean4.SigmaLayer.FibreRecord
 public import CsdLean4.SigmaLayer.RecordLayerClosure
+public import CsdLean4.SigmaLayer.ContextFixedA7
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
