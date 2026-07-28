@@ -32,8 +32,10 @@
 >
 > **★ STRUCTURAL LESSON (2026-07-27) — [`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md).**
 > The general-`N` residual taught us a fact about Σ: a base-only, `U(N)`-covariant, nonnegative
-> context-fixed density **provably cannot** reproduce Born for `N ≥ 3` (numerics + operator argument;
-> the `CP¹=S²` antipode has no analogue — and this is **not** Gleason). So measurement contextuality
+> context-fixed density is **conjectured not to** reproduce Born for `N ≥ 3` — numerics plus an
+> informal operator argument, **not a proof** (corrected 2026-07-28; the general-`N` item is OPEN,
+> `BACKLOG.md`). The `CP¹=S²` antipode has no `N ≥ 3` analogue, and this is **not** Gleason. On that
+> conjecture measurement contextuality
 > lives on the projective **base** only at `N = 2` and necessarily in the **fibre** for `N ≥ 3`. The
 > fibre is load-bearing, not decorative — a *constraint on Σ's structure*, not a defect (existence of
 > a Born fibre-partition is proven, Phase-2b). Read that doc before touching general-`N` context-fixing. Open-item row:
@@ -381,7 +383,7 @@ done, dynamics open.
 |---|---|---|
 | ~~1 (Phase 1 — decisive)~~ | **DONE 2026-07-25 → Outcome B** (§3): base-only fails at N=3 for FS-Voronoi (density forced negative; qubit control validates). Fibre needed. | — |
 | 1b (optional) | Quick check: does a *non-Voronoi* context-fixed region family rescue base-only? (bound the caveat before committing to the fibre) | low |
-| ~~2b (existence)~~ | **DONE 2026-07-25 → §3b:** the fibre model reproduces Born exactly at N≥3 (Gumbel race; verified, `scripts/experiments/record_layer_fibre_gumbel.py`). Architecture settled: the fibre carries the contextuality. | — |
+| 2b (existence) | **NUMERICALLY VERIFIED 2026-07-25 → §3b, not formalized.** A fibre model reproduces Born at N≥3 (Gumbel race; checked in `scripts/experiments/record_layer_fibre_gumbel.py`, no Lean theorem). Suggestive of where contextuality can live; it does **not** settle the architecture, and the Gumbel noise is injected rather than CSD-native. *(This row read "DONE … Architecture settled"; corrected 2026-07-28.)* | **open** |
 | 2b′ (flow-independent half) | **DONE 2026-07-25 → §4:** `SigmaLayer/DeIsolationFlow.lean` — canonical fibre typicality `fibreTypicality=vol\|[0,1)`; outcome prob = Born (`fibreTypicality_bornCell`); pointer a.e. defined (`fibreTypicality_uncovered`); **flow ⟹ Born bridge** `map_pointer_apply` (any pointer with Born basin measures → Born distribution). Born as a typicality volume of a basin. | — |
 | 2b′ feature (B) rates=moment map | **DONE 2026-07-25 → §3c/§4:** `SigmaLayer/MomentMapRace.lean` — `bornRate_eq_momentMap` (rate ‖ψ i‖² IS the torus moment-map coordinate, forced by Kähler), `bornRate_eq_inner_sq` (= corpus Born weight), `DeIsolationInteraction` (moment-map basins ⟹ Born). Feature (2) grounded. | — |
 | 2b′ feature (A) — "the wall" | **STATISTICAL half done; DYNAMICAL half OPEN.** ⚠️ This row previously read "DISSOLVED — not a research problem"; that was wrong and is retracted (2026-07-28). **Done:** once the basins are given, no extra probabilistic postulate is needed — each run is deterministic given its microstate, the microstate is typical (`fibreTypicality`), so the outcome frequency → the basin measure `‖ψ i‖²` = the moment map (`Measurement.bornMeasurement_frequency`, via `LF1.freq_tendsto_of_iid`). **Open:** the basins are *assumed*, not derived — `DeIsolationInteraction.basin_rate` is a hypothesis field, and no interaction Hamiltonian `H_int(M)` generating `cdfCell (moment map)` is constructed. Paper D additionally wants system–apparatus–environment coupling, interaction-generated outcome regions, stable macroscopic correlations, and persistence of the record: none of that is formalized. `DeIsolationFlow.lean` states the obligation correctly; this table did not. | **open** |

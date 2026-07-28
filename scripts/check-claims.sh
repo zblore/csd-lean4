@@ -17,6 +17,17 @@
 #   (4) every declared backing theorem still EXISTS as a declaration
 #       — catches a rename/deletion silently orphaning a CONNECTED claim.
 #   (5) the forbidden A5-overclaim phrases are absent from the forward-claim docs.
+#   (6) EPISTEMIC STATUS: no settled-claim word ("provably", "DISSOLVED", "is
+#       complete") sits beside a non-proof artifact (a Python experiment, numerics,
+#       a hypothesis field), and a blocklist of never-acceptable phrases is absent.
+#       Added 2026-07-28. Regression-tested against commit 4a31220: it fires on all
+#       three overclaims an external review found there, plus three more instances
+#       of the same class that a manual sweep had missed.
+#
+#       KNOWN LIMIT — it is a co-occurrence rule, so it only sees an overclaim that
+#       cites weak evidence ON THE SAME LINE. A bare "the goal is met", with nothing
+#       weak beside it, is invisible to it; two such lines in reconstruction-status.md
+#       had to be found by reading. This check narrows the surface; it does not close it.
 #
 # Scope: the core QM library. (The ecdsa.fail / ECDLP track was extracted to its own
 # repository 2026-07-20 and is no longer present here.)
@@ -88,6 +99,52 @@ FORBIDDEN_ALIASES=(
 ALIAS_DOCS=("README.md" "AXIOMS.md" "CLAUDE.md" "specs/reconstruction-status.md" \
             "specs/connectivity-manifest.md" "specs/INDEX.md" "specs/BACKLOG.md" \
             "specs/future-work.md")
+
+# ------------------------------------------------------ EPISTEMIC-STATUS SCAN --
+# Added 2026-07-28 after an external review found three overclaims that every
+# existing guard passed over silently. The defect class is NOT a false statement —
+# it is a STRONG claim word attached to a WEAK artifact:
+#
+#   "provably dead"                 cited to a Python experiment + an informal argument
+#   "DISSOLVED — not a research problem"   while the same doc and the Lean docstring
+#                                          both said the obligation was open
+#   "the reconstruction of QM is complete" while the partition was prep-indexed
+#
+# None of (1)–(5) can see this: they check axiom sets, field counts, declaration
+# existence and a fixed A5 phrase list. This one is a CO-OCCURRENCE rule — a strong
+# word is only a defect when the evidence cited beside it is weak — plus a small
+# blocklist of phrases that are never acceptable unretracted.
+#
+# Lines that are themselves RETRACTIONS are exempt, otherwise the scan fires on its
+# own corrections (which necessarily quote the old wording).
+EPISTEMIC_DOCS=("README.md" "EMPIRICAL.md" "AXIOMS.md" "specs/BACKLOG.md" \
+                "specs/record-layer-plan.md" "specs/active-todo.md" \
+                "specs/CSD-CHARTER.md" "specs/reconstruction-status.md" \
+                "specs/connectivity-manifest.md" "specs/future-work.md" \
+                "specs/INDEX.md")
+
+# Words asserting that something is SETTLED.
+EPISTEMIC_STRONG='provably|proves|proved|proven|no-go|[Dd]issolved|DISSOLVED|discharged|is complete|are complete|fully solved|settled|refuted|NOT A TARGET|confirmed dead'
+
+# Markers that the ARTIFACT being cited is not a proof.
+#
+# Deliberately narrow. The first draft also listed "posited", "assumed", "conjecture",
+# "informal" — and fired on five honest README lines, because those words are how a
+# careful author FLAGS weak evidence. Penalising them would train exactly the wrong
+# behaviour. Only artifact types belong here: a script, a number, a hypothesis field.
+# Specific known-bad wordings are handled by the blocklist below instead.
+EPISTEMIC_WEAK='scripts/experiments|\.py\b|numerics|numerically|Monte Carlo|hypothesis field'
+
+# Retraction / self-correction context — these lines legitimately quote the bad wording.
+EPISTEMIC_EXEMPT='retracted|RETRACTED|overclaim|overstated|was wrong|is lifted|no business|previously read|previously ended|corrected 20|CORRECTED 20|Corrected 20'
+
+# Phrases that are never acceptable outside a retraction, whatever else the line says.
+EPISTEMIC_BLOCKLIST=(
+  "provably dead"
+  "reconstruction of QM is complete"
+  "no separate flow to derive"
+  "not a research problem"
+)
 # ------------------------------------------------------------------------------
 
 fail=0
@@ -192,6 +249,35 @@ for doc in "${ALIAS_DOCS[@]}"; do
   done
 done
 [ "$alias_fail" -eq 0 ] && say_ok "no A5-mislabel aliases in the swept forward-claim docs (A5≠SO-1 kept distinct)" || true
+
+# (6) epistemic-status scan: strong claim word + weak evidence on the same line
+epi_fail=0
+for doc in "${EPISTEMIC_DOCS[@]}"; do
+  [ -f "$doc" ] || { say_fail "epistemic-scan doc missing: $doc"; epi_fail=1; continue; }
+
+  # (6a) co-occurrence: a settled-claim word beside evidence that is not a proof.
+  while IFS= read -r hit; do
+    [ -z "$hit" ] && continue
+    ln="${hit%%:*}"
+    say_fail "epistemic overclaim $doc:$ln — a settled-claim word cites non-proof evidence; qualify it or mark it a conjecture"
+    epi_fail=1
+  done < <(grep -nE "$EPISTEMIC_STRONG" "$doc" 2>/dev/null \
+           | grep -E "$EPISTEMIC_WEAK" \
+           | grep -vE "$EPISTEMIC_EXEMPT" \
+           | cut -d: -f1 | sed 's/$/:/')
+
+  # (6b) blocklist: phrases never acceptable unless the line retracts them.
+  for phrase in "${EPISTEMIC_BLOCKLIST[@]}"; do
+    while IFS= read -r ln; do
+      [ -z "$ln" ] && continue
+      say_fail "forbidden epistemic phrase in $doc:$ln — \"$phrase\" (retract it or state the actual evidence)"
+      epi_fail=1
+    done < <(grep -nF "$phrase" "$doc" 2>/dev/null \
+             | grep -vE "$EPISTEMIC_EXEMPT" \
+             | cut -d: -f1)
+  done
+done
+[ "$epi_fail" -eq 0 ] && say_ok "no epistemic overclaims (settled-claim words all cite proofs, not numerics/conjecture)" || true
 
 echo
 if [ "$fail" -eq 0 ]; then echo "check-claims: PASS"; exit 0
