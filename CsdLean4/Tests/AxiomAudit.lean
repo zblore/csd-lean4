@@ -760,6 +760,34 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.overlapSupports_ae_disjoint
 
+-- STEP TWO (2026-07-28): THE CAP. The supports are A_i = {phi | s_i(phi) in S_g}, and step one
+-- made them pairwise a.e. disjoint. If S_g contained a positive-measure set T of overlap values
+-- BELOW 1/2, two coordinates could both land in T -- they would sum to < 1, so nothing forbids it
+-- -- and at N >= 3 a third coordinate absorbs the remainder, so such states occur with POSITIVE
+-- measure. Any of them lies in A_j AND A_k, contradicting disjointness. Hence
+-- cap_of_joint_nondegenerate: g vanishes a.e. below 1/2. SHARP AND ATTAINED -- the N=2 solution
+-- 4(2s-1)+ is supported exactly on (1/2, 1].
+-- ★ WHY THE QUBIT ESCAPES, made precise: joint_degenerate_of_sum_eq_one. At N=2 the two Born
+-- weights exhaust the state, s_j + s_k = 1, so they can NEVER both be below 1/2 -- the set is
+-- literally EMPTY and the abundance hypothesis fails identically. That degeneracy IS the qubit's
+-- escape route, and it closes at N >= 3 where the coordinates stop being functionally dependent.
+-- base_only_density_confined assembles both halves: the density lives on measure <= 1/n AND only
+-- where the overlap exceeds 1/2, while still integrating to 1.
+-- The state-abundance input (hjoint) is an explicit HYPOTHESIS, not derived: deriving it is the
+-- Dirichlet pushforward of mu_FS, real work and orthogonal to the argument. Stating it that way is
+-- what makes the N=2 contrast visible.
+/-- info: 'CSD.SigmaLayer.cap_of_joint_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.cap_of_joint_nondegenerate
+
+/-- info: 'CSD.SigmaLayer.joint_degenerate_of_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.joint_degenerate_of_sum_eq_one
+
+/-- info: 'CSD.SigmaLayer.base_only_density_confined' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.base_only_density_confined
+
 /-- info: 'CSD.SigmaLayer.sum_measure_overlapSupport_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.sum_measure_overlapSupport_le_one

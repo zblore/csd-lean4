@@ -199,4 +199,87 @@ theorem sum_measure_overlapSupport_le_one [IsProbabilityMeasure μ]
         rw [measure_iUnion hdisj hmeas, tsum_fintype]
     _ ≤ 1 := prob_le_one
 
+/-! ### Step two: the cap — the density is confined above `½`
+
+The supports are `Aᵢ = {φ : sᵢ(φ) ∈ S_g}` for `S_g = {t | g t ≠ 0}`, and step one showed them
+pairwise a.e. disjoint. Now push on that.
+
+Suppose `S_g` contained a positive-measure set `T` of overlap values **below `½`**. Two
+coordinates taking values in `T` sum to less than `1`, so such states are not excluded by
+`∑ᵢ sᵢ = 1` — and at `N ≥ 3` there is a third coordinate free to absorb the remainder, so they
+occur with positive measure. Any such state lies in `Aⱼ ∩ Aₖ`, contradicting disjointness.
+
+Conclusion: `g` vanishes a.e. below `½`. The `N = 2` solution `4(2s−1)₊` is supported exactly on
+`(½, 1]`, so the bound is sharp and attained.
+
+The state-abundance input is taken as an explicit hypothesis (`hjoint`) rather than derived,
+because deriving it is the Dirichlet pushforward of `μ_FS` — real work, and orthogonal to the
+argument. What makes this worth stating that way is `joint_degenerate_of_sum_eq_one` below:
+**the hypothesis fails at `N = 2`, and that failure is exactly the qubit's escape route.** -/
+
+/-- **The cap bound.** If two overlap coordinates can jointly take values in any positive-measure
+set below `½`, then the preparation density vanishes almost everywhere below `½`. -/
+theorem cap_of_joint_nondegenerate {g : ℝ → ℝ} {s : Fin n → X → ℝ} {j k : Fin n}
+    (hdisj : μ (overlapSupport g (s j) ∩ overlapSupport g (s k)) = 0)
+    (hjoint : ∀ T : Set ℝ, T ⊆ Set.Iio (1 / 2 : ℝ) → 0 < volume T →
+      0 < μ {x | s j x ∈ T ∧ s k x ∈ T}) :
+    volume ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) = 0 := by
+  by_contra hne
+  have hpos : 0 < volume ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) := pos_iff_ne_zero.mpr hne
+  have hjk := hjoint _ Set.inter_subset_right hpos
+  -- A state whose `j`- and `k`-coordinates both land in the set lies in both supports.
+  have hcontain :
+      {x | s j x ∈ ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) ∧
+           s k x ∈ ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ))}
+        ⊆ overlapSupport g (s j) ∩ overlapSupport g (s k) := by
+    rintro x ⟨⟨h1, -⟩, ⟨h2, -⟩⟩
+    exact ⟨h1, h2⟩
+  have hlt := lt_of_lt_of_le hjk (measure_mono hcontain)
+  rw [hdisj] at hlt
+  exact lt_irrefl 0 hlt
+
+omit [MeasurableSpace X] in
+/-- **Why the qubit escapes.** When two overlap coordinates are complementary — `sⱼ + sₖ = 1`,
+which is forced at `N = 2` because the two Born weights exhaust the state — they can *never* both
+lie below `½`. So the abundance hypothesis of `cap_of_joint_nondegenerate` fails identically, and
+no cap bound follows.
+
+This is not a technicality: it is the structural reason `N = 2` admits a base-only density at all.
+At `N ≥ 3` the coordinates stop being functionally dependent, a third one is free to absorb the
+remainder, and the escape closes. -/
+theorem joint_degenerate_of_sum_eq_one {s : Fin n → X → ℝ} {j k : Fin n}
+    (hsum : ∀ x, s j x + s k x = 1) {T : Set ℝ} (hT : T ⊆ Set.Iio (1 / 2 : ℝ)) :
+    {x | s j x ∈ T ∧ s k x ∈ T} = ∅ := by
+  ext x
+  simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_and]
+  intro hj hk
+  have h1 : s j x < 1 / 2 := hT hj
+  have h2 : s k x < 1 / 2 := hT hk
+  have := hsum x
+  linarith
+
+/-- **The reduction, assembled.** Under the hypotheses of step one plus joint non-degeneracy of two
+overlap coordinates, a base-only `U(N)`-covariant non-negative preparation density is confined to
+overlap values `≥ ½` — up to a null set — while still having to integrate to `1`.
+
+Together with `sum_measure_overlapSupport_le_one` this is a genuine squeeze on any `N ≥ 3`
+construction: the density lives on a set of measure `≤ 1/n` **and** only where the overlap exceeds
+`½`. It is not yet a contradiction; see the module header for the two steps that remain. -/
+theorem base_only_density_confined [IsProbabilityMeasure μ]
+    {g : ℝ → ℝ} {s : Fin n → X → ℝ} {Ω : Fin n → Set X}
+    (hg : ∀ t, 0 ≤ g t)
+    (hint : ∀ i j, IntegrableOn (fun x => g (s j x)) (Ω i) μ)
+    (hoff : ∀ i j, i ≠ j → ∫ x in Ω i, g (s j x) ∂μ = 0)
+    (hcover : ∀ x, ∃ i, x ∈ Ω i)
+    (hmeas : ∀ i, MeasurableSet (Ω i))
+    (hdisj : Pairwise (Function.onFun Disjoint Ω))
+    {j k : Fin n} (hjk : j ≠ k)
+    (hjoint : ∀ T : Set ℝ, T ⊆ Set.Iio (1 / 2 : ℝ) → 0 < volume T →
+      0 < μ {x | s j x ∈ T ∧ s k x ∈ T}) :
+    volume ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) = 0 ∧
+    ∑ i, μ (overlapSupport g (s i)) ≤ 1 :=
+  ⟨cap_of_joint_nondegenerate
+      (overlapSupports_ae_disjoint hg hint hoff hcover hmeas hdisj hjk) hjoint,
+   sum_measure_overlapSupport_le_one hg hint hoff hcover hmeas hdisj⟩
+
 end CSD.SigmaLayer
