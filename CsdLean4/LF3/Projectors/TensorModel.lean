@@ -291,6 +291,25 @@ structure UnitaryTensorEmbedding (K_A K_B H_SA : Type*)
     (liftA_unitary vA).trans (liftB_unitary vB)
       = (liftB_unitary vB).trans (liftA_unitary vA)
 
+/-- **Local operations on independent wings commute, pointwise.** Applying the A-wing
+unitary and then the B-wing one gives the same state as the other order — the kinematic
+core of tensor-factor independence, and the level at which no-signalling starts.
+
+This is the **consumer** of `liftA_liftB_unitary_commute`. Until 2026-07-28 that field
+was carried by every instance and used by nothing (`scripts/check-vacuity.sh`); the
+docstring above says so honestly, but a hypothesis every instantiator must discharge
+should buy something. Now it does. -/
+theorem liftA_liftB_apply_comm
+    {K_A K_B H_SA : Type*}
+    [NormedAddCommGroup K_A] [InnerProductSpace ℂ K_A] [FiniteDimensional ℂ K_A]
+    [NormedAddCommGroup K_B] [InnerProductSpace ℂ K_B] [FiniteDimensional ℂ K_B]
+    [NormedAddCommGroup H_SA] [InnerProductSpace ℂ H_SA] [FiniteDimensional ℂ H_SA]
+    (E : UnitaryTensorEmbedding K_A K_B H_SA)
+    (vA : K_A ≃ₗᵢ[ℂ] K_A) (vB : K_B ≃ₗᵢ[ℂ] K_B) (x : H_SA) :
+    E.liftB_unitary vB (E.liftA_unitary vA x)
+      = E.liftA_unitary vA (E.liftB_unitary vB x) := by
+  simpa using DFunLike.congr_fun (E.liftA_liftB_unitary_commute vA vB) x
+
 /-- MeasurementUnitary from a UnitaryTensorEmbedding plus per-wing
     unitaries plus the joint-eigenstate / pointer-translation data.
 

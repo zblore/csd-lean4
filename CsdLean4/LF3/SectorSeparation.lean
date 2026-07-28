@@ -112,6 +112,68 @@ structure PointerLeakageBounds
   /-- Right-sector overlap on the B side is at least `1 - εB`. -/
   B_right : ∀ t, 1 - εB ≤ pointerOverlapB S M φB0 t t
 
+/-! ### The leakage bounds are non-vacuous (the consumers of `A_right` / `B_right`)
+
+`A_wrong` / `B_wrong` bound the *wrong*-sector overlap above; the sector-separation
+theorems below use only those. On their own they are satisfied by a **completely
+uninformative pointer** — set every overlap to `0` and any `εA, εB ≥ 0` works. What
+rules that out is `A_right` / `B_right`, the matching bounds *below* on the right-sector
+overlap.
+
+Until 2026-07-28 those two fields were carried by every instance and consumed by nothing
+(`scripts/check-vacuity.sh`), so the two-sided reading of `PointerLeakageBounds` was
+unsupported: nothing in the corpus depended on the pointer registering anything. The
+lemmas here are their consumers, and they say what the fields are for. -/
+
+variable {S : SystemApparatusSetup K_A K_B H_SA} {M : MeasurementUnitary S}
+  {φA0 : K_A} {φB0 : K_B}
+
+/-- **The A-wing pointer actually registers**: with leakage `εA < 1` the right-sector
+overlap is strictly positive. Consumes `A_right`. -/
+theorem pointerOverlapA_pos (L : PointerLeakageBounds S M φA0 φB0) (h : L.εA < 1) (s : Sign) :
+    0 < pointerOverlapA S M φA0 s s := by
+  have := L.A_right s
+  linarith
+
+/-- **The B-wing pointer actually registers.** Consumes `B_right`. -/
+theorem pointerOverlapB_pos (L : PointerLeakageBounds S M φA0 φB0) (h : L.εB < 1) (t : Sign) :
+    0 < pointerOverlapB S M φB0 t t := by
+  have := L.B_right t
+  linarith
+
+/-- **The A-wing pointer discriminates**: below `εA = ½` the right-sector overlap
+strictly exceeds the wrong-sector one, so the pointer carries genuine information about
+the sector rather than merely failing to leak. Consumes `A_right` *and* `A_wrong`. -/
+theorem pointerOverlapA_discriminates (L : PointerLeakageBounds S M φA0 φB0)
+    (h : L.εA < 1 / 2) (s : Sign) :
+    pointerOverlapA S M φA0 s.neg s < pointerOverlapA S M φA0 s s := by
+  have hw := L.A_wrong s
+  have hr := L.A_right s
+  linarith
+
+/-- **The B-wing pointer discriminates.** Consumes `B_right` *and* `B_wrong`. -/
+theorem pointerOverlapB_discriminates (L : PointerLeakageBounds S M φA0 φB0)
+    (h : L.εB < 1 / 2) (t : Sign) :
+    pointerOverlapB S M φB0 t.neg t < pointerOverlapB S M φB0 t t := by
+  have hw := L.B_wrong t
+  have hr := L.B_right t
+  linarith
+
+/-- **Non-vacuity of the leakage bounds, both wings.** Small leakage forces the pointers
+to register *and* to discriminate — so `PointerLeakageBounds` is not inhabited by the
+null model in which nothing is recorded. This is what the `A_right`/`B_right` fields buy,
+and the reason the sector-separation results below are about a real apparatus. -/
+theorem pointerLeakage_nonvacuous (L : PointerLeakageBounds S M φA0 φB0)
+    (hA : L.εA < 1 / 2) (hB : L.εB < 1 / 2) :
+    (∀ s : Sign, 0 < pointerOverlapA S M φA0 s s) ∧
+    (∀ t : Sign, 0 < pointerOverlapB S M φB0 t t) ∧
+    (∀ s : Sign, pointerOverlapA S M φA0 s.neg s < pointerOverlapA S M φA0 s s) ∧
+    (∀ t : Sign, pointerOverlapB S M φB0 t.neg t < pointerOverlapB S M φB0 t t) :=
+  ⟨fun s => pointerOverlapA_pos L (by linarith) s,
+   fun t => pointerOverlapB_pos L (by linarith) t,
+   fun s => pointerOverlapA_discriminates L hA s,
+   fun t => pointerOverlapB_discriminates L hB t⟩
+
 /-! ### Theorem targets (paper §4.11 / spec §9.6) -/
 
 /-- Sector decomposition of the final state (paper §4.5): the final state is

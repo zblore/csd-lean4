@@ -51,7 +51,19 @@ structure RecordedFact (R : RecordSignature) where
 
 /-- **Record semantics (postulate P5).** Each recorded fact is interpreted as a measurable ontic event
 (the region of `Sigma` compatible with that record), and within a single context at a single time the
-events for distinct outcomes are mutually exclusive. No exclusivity is asserted across contexts. -/
+events for distinct outcomes are mutually exclusive. No exclusivity is asserted across contexts.
+
+⚠️ **This structure is TRIVIALLY INHABITED, and exhibiting an instance therefore proves nothing on
+its own** (noted 2026-07-28, Tier-0 review). Take `event := fun _ => ∅`: every event is measurable,
+and `exclusive` holds vacuously because no state lies in any event. The structure constrains how
+records *may* be interpreted; it does not assert that anything is *ever* recorded.
+
+So a phrase like "a genuine postulate-P5 `RecordSemantics`" names the interface, not an achievement.
+The content lives in the accompanying **non-vacuity** results, which must be supplied separately and
+are what actually rule out the empty semantics — e.g. `RecordLayerClosure.ae_total`,
+`Measurement.bornMeasurement_ae_total`, `DeIsolationFlow.fibreTypicality_uncovered` (the record set
+has full typicality measure), and the Born-weight identities `fibreTypicality_bornRecord` /
+`fubiniStudy_projRecord`. When citing an instance, cite those too. -/
 structure RecordSemantics (Sigma : Type w) [MeasurableSpace Sigma] (R : RecordSignature) where
   /-- The measurable ontic event associated with a recorded fact. -/
   event : RecordedFact R → Set Sigma
