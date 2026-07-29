@@ -793,6 +793,31 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.sum_measure_overlapSupport_le_one
 
+-- BALANCED-STATE ABUNDANCE, DISCHARGED FOR mu_FS (2026-07-29, ContextFixedA7FS.lean).
+-- fs_balanced_abundance: for every c above the forced minimum 1/(M+1), the projective points whose
+-- moment coordinates are ALL <= c form a non-null set. This is the `hbalanced` hypothesis of
+-- vanishes_below_of_balanced, so step five now has one of its two inputs supplied for mu_FS.
+-- Proof: fs_volume_eq_dirichlet_inter reduces it to Lebesgue positivity, and a box about the
+-- simplex barycentre witnesses it -- centre b = 1/(M+1), half-width d = min(b, c-b)/(M+1), the two
+-- constraints being M*d < b (box stays inside sum t < 1) and M*d < c - b (the dropped coordinate
+-- 1 - sum t stays below c).
+-- ⚠️ LESSON: an earlier attempt on the same lemma FAILED across four iterations because b and d
+-- were introduced with `set`, which makes them opaque local definitions that linarith/nlinarith
+-- cannot see through. The fix was to SPLIT GEOMETRY FROM ARITHMETIC: box_in_simplex takes b and d
+-- as ABSTRACT reals constrained by linear relations plus the single identity M*b = 1 - b, so every
+-- step inside it is linear; the concrete choice is then made once, outside.
+-- ⚠️ SCOPE: this does NOT make the (n-1)/n bound unconditional. Step four's OTHER input -- hdense,
+-- the tilt fact that unit psi in the sphere of e_i-perp sweep overlaps across [0, 1 - s_i(phi)] --
+-- is still a hypothesis and has not been attempted. And even with both discharged, the result is a
+-- NECESSARY CONDITION on g, not a proof that A7 fails at N >= 3.
+/-- info: 'CSD.SigmaLayer.volume_balanced_inter_openSimplexFree_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.volume_balanced_inter_openSimplexFree_pos
+
+/-- info: 'CSD.SigmaLayer.fs_balanced_abundance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fs_balanced_abundance
+
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
 -- g == 0 on [0, 1 - s_i(phi)] -- and (b) that states with ALL overlaps <= c are non-null for every

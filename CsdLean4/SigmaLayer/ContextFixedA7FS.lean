@@ -208,18 +208,116 @@ theorem fs_cap_unconditional {M : ℕ} (p₀ : CPN (M + 1)) {j k : Fin M} (hjk :
     (j := Fin.castSucc j) (k := Fin.castSucc k) hgm hdisj
     fun _T hTm hT hpos => fs_joint_abundance p₀ hjk hTm hT hpos
 
-/-! ### Not landed: balanced-state abundance for `μ_FS`
+/-! ### Balanced states are not negligible
 
-`ContextFixedA7.vanishes_below_of_balanced` needs one more input to become unconditional for the
-Fubini–Study sector: that for every `c > 1/(M+1)` the states with **all** moment coordinates `≤ c`
-form a non-null set. It is true, and the proof is the same shape as `fs_joint_abundance` above —
-`fs_volume_eq_dirichlet_inter` reduces it to Lebesgue positivity, and a small box around the
-simplex barycentre `(1/n, …, 1/n)` witnesses it, with side `δ = min(b, c−b)/(M+1)` where
-`b = 1/(M+1)` chosen so that `M·δ < b` keeps the box inside `∑ t < 1` while `M·δ < c − b` keeps
-the dropped coordinate `1 − ∑ t` below `c`.
+`vanishes_below_of_balanced` needs states whose overlaps are *all* small — near the barycentre of
+the simplex. `∑ᵢ sᵢ = 1` forces `maxᵢ sᵢ ≥ 1/n`, and every threshold above that is met on a set of
+positive measure, witnessed by a box around the barycentre.
 
-It was attempted on 2026-07-29 and **not landed** — the geometry and the constant are settled, the
-remaining friction is Lean arithmetic plumbing around the `set`-bound `b` and `δ`. Recorded here
-rather than left as a stub, and tracked in `specs/BACKLOG.md`. -/
+The geometry is split from the arithmetic deliberately: `box_in_simplex` takes the centre `b` and
+half-width `d` as *abstract* reals constrained by linear relations plus the single identity
+`M·b = 1 − b`, so every step inside it is linear. The concrete choice `b = 1/(M+1)`,
+`d = min(b, c−b)/(M+1)` is then made once, in `volume_balanced_inter_openSimplexFree_pos`. -/
+
+/-- A box of half-width `d` about a centre `b` with `M·b = 1 − b` lies in the open simplex and is
+balanced below `c`. All hypotheses are linear in `b`, `d`, `c` and the products `M·b`, `M·d`. -/
+private theorem box_in_simplex {M : ℕ} (hM : 0 < M) {b d c : ℝ}
+    (hb : (M : ℝ) * b = 1 - b) (hbpos : 0 < b) (hd0 : 0 < d) (hdb : d < b)
+    (hdMb : (M : ℝ) * d < b) (hdMc : (M : ℝ) * d < c - b) (hbdc : b + d ≤ c) :
+    Set.pi Set.univ (fun _ : Fin M => Set.Ioo (b - d) (b + d))
+      ⊆ {t : Fin M → ℝ | (∀ i, t i ≤ c) ∧ 1 - ∑ i, t i ≤ c} ∩ openSimplexFree := by
+  classical
+  haveI : Nonempty (Fin M) := ⟨⟨0, hM⟩⟩
+  have hne : (Finset.univ : Finset (Fin M)).Nonempty := Finset.univ_nonempty
+  have hcard : (Finset.univ : Finset (Fin M)).card = M :=
+    Finset.card_univ.trans (Fintype.card_fin M)
+  have hplus : (M : ℝ) * (b + d) = (1 - b) + (M : ℝ) * d := by rw [mul_add, hb]
+  have hminus : (M : ℝ) * (b - d) = (1 - b) - (M : ℝ) * d := by rw [mul_sub, hb]
+  intro t ht
+  simp only [Set.mem_pi, Set.mem_univ, forall_true_left, Set.mem_Ioo] at ht
+  have hlo : ∀ i, b - d < t i := fun i => (ht i).1
+  have hhi : ∀ i, t i < b + d := fun i => (ht i).2
+  have hsum_lt : ∑ i, t i < (M : ℝ) * (b + d) := by
+    have h := Finset.sum_lt_sum_of_nonempty hne (fun i (_ : i ∈ Finset.univ) => hhi i)
+    rwa [Finset.sum_const, hcard, nsmul_eq_mul] at h
+  have hsum_gt : (M : ℝ) * (b - d) < ∑ i, t i := by
+    have h := Finset.sum_lt_sum_of_nonempty hne (fun i (_ : i ∈ Finset.univ) => hlo i)
+    rwa [Finset.sum_const, hcard, nsmul_eq_mul] at h
+  refine ⟨⟨fun i => ?_, ?_⟩, fun i => ?_, ?_⟩
+  · linarith [hhi i]
+  · linarith
+  · linarith [hlo i]
+  · linarith
+
+/-- **Balanced states occupy positive volume in the simplex.** -/
+theorem volume_balanced_inter_openSimplexFree_pos {M : ℕ} (hM : 0 < M) {c : ℝ}
+    (hc : 1 / ((M : ℝ) + 1) < c) :
+    0 < volume ({t : Fin M → ℝ | (∀ i, t i ≤ c) ∧ 1 - ∑ i, t i ≤ c} ∩ openSimplexFree) := by
+  classical
+  have hM1 : (0 : ℝ) < (M : ℝ) + 1 := by positivity
+  have hone : (1 : ℝ) ≤ (M : ℝ) := by exact_mod_cast hM
+  have hbpos : (0 : ℝ) < 1 / ((M : ℝ) + 1) := by positivity
+  have hb : (M : ℝ) * (1 / ((M : ℝ) + 1)) = 1 - 1 / ((M : ℝ) + 1) := by
+    field_simp; ring
+  -- `e` is the room available in both directions; `d = e/(M+1)` shrinks it enough for `M` copies.
+  have hepos : 0 < min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) :=
+    lt_min hbpos (by linarith)
+  have hMd : (M : ℝ) * (min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1))
+      < min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) := by
+    rw [mul_div_assoc', div_lt_iff₀ hM1]
+    have hring : min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) * ((M : ℝ) + 1)
+        = (M : ℝ) * min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1))
+          + min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) := by ring
+    rw [hring]; linarith
+  have hd0 : 0 < min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1) := by positivity
+  have hdle : min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1)
+      ≤ (M : ℝ) * (min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1)) :=
+    le_mul_of_one_le_left hd0.le hone
+  have hbox : 0 < volume (Set.pi Set.univ (fun _ : Fin M =>
+      Set.Ioo (1 / ((M : ℝ) + 1) - min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1))
+              (1 / ((M : ℝ) + 1) + min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1)))) := by
+    rw [volume_pi_pi, pos_iff_ne_zero, Finset.prod_ne_zero_iff]
+    intro i _
+    rw [Real.volume_Ioo]
+    exact ne_of_gt (ENNReal.ofReal_pos.mpr (by linarith))
+  have hdself : min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) / ((M : ℝ) + 1)
+      ≤ min (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1)) :=
+    div_le_self hepos.le (by linarith)
+  refine lt_of_lt_of_le hbox (measure_mono (box_in_simplex hM hb hbpos hd0 ?_ ?_ ?_ ?_))
+  · linarith [min_le_left (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1))]
+  · linarith [min_le_left (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1))]
+  · linarith [min_le_right (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1))]
+  · linarith [min_le_right (1 / ((M : ℝ) + 1)) (c - 1 / ((M : ℝ) + 1))]
+
+/-- **Balanced states have positive Fubini–Study measure** — the `hbalanced` hypothesis of
+`vanishes_below_of_balanced`, discharged for `μ_FS`. -/
+theorem fs_balanced_abundance {M : ℕ} (hM : 0 < M) (p₀ : CPN (M + 1)) {c : ℝ}
+    (hc : 1 / ((M : ℝ) + 1) < c) :
+    0 < fubiniStudyMeasure p₀ {p : CPN (M + 1) | ∀ i, momentMap p i ≤ c} := by
+  classical
+  have hRfor : MeasurableSet {t : Fin M → ℝ | ∀ i, t i ≤ c} := by
+    rw [Set.ofPred_forall]
+    exact MeasurableSet.iInter fun i => measurableSet_le (measurable_pi_apply i) measurable_const
+  have hRlast : MeasurableSet {t : Fin M → ℝ | 1 - ∑ i, t i ≤ c} :=
+    measurableSet_le
+      (measurable_const.sub (Finset.measurable_sum _ fun i _ => measurable_pi_apply i))
+      measurable_const
+  have hset : {p : CPN (M + 1) | ∀ i, momentMap p i ≤ c}
+      = (fun p => ratioN (fun i => momentMap p i)) ⁻¹'
+          {t : Fin M → ℝ | (∀ i, t i ≤ c) ∧ 1 - ∑ i, t i ≤ c} := by
+    ext p
+    have hsum : ∑ j, momentMap p j = 1 := momentMap_sum_eq_one p
+    have hsplit : (∑ i : Fin M, momentMap p (Fin.castSucc i)) + momentMap p (Fin.last M) = 1 := by
+      rw [← Fin.sum_univ_castSucc]; exact hsum
+    simp only [Set.mem_ofPred_eq, Set.mem_preimage, ratioN, hsum, div_one]
+    constructor
+    · exact fun h => ⟨fun i => h _, by linarith [h (Fin.last M)]⟩
+    · rintro ⟨h1, h2⟩ j
+      exact Fin.lastCases (by linarith) h1 j
+  have hR : MeasurableSet {t : Fin M → ℝ | (∀ i, t i ≤ c) ∧ 1 - ∑ i, t i ≤ c} :=
+    hRfor.inter hRlast
+  rw [hset, fs_volume_eq_dirichlet_inter p₀ hR]
+  exact ENNReal.mul_pos (by exact_mod_cast Nat.factorial_ne_zero M)
+    (ne_of_gt (volume_balanced_inter_openSimplexFree_pos hM hc))
 
 end CSD.SigmaLayer
