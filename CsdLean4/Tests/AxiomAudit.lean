@@ -793,6 +793,28 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.sum_measure_overlapSupport_le_one
 
+-- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
+-- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
+-- g == 0 on [0, 1 - s_i(phi)] -- and (b) that states with ALL overlaps <= c are non-null for every
+-- c above the forced minimum 1/n, the density VANISHES ON EVERY OVERLAP VALUE BELOW (n-1)/n.
+-- The step is short for a structural reason worth noting: step four's conclusion is POINTWISE IN g
+-- (g dies on a whole interval, for a.e. phi). g is a fixed function, so ONE suitable phi suffices
+-- and no almost-everywhere bookkeeping survives into the conclusion -- hence the helper
+-- exists_mem_of_measure_pos_of_ae (a positive-measure set meets any a.e. property) is all that is
+-- needed to bridge measure to pointwise.
+-- At n = 2 the bound reads "g vanishes below 1/2", exactly the support of the known solution
+-- 4(2s-1)+ -- sharp at the one dimension where a solution exists.
+-- STILL CONDITIONAL for mu_FS on hypothesis (b): the balanced-state abundance. Its proof shape is
+-- settled (barycentre box, side min(b,c-b)/(M+1)) but was NOT landed 2026-07-29 -- see the note in
+-- ContextFixedA7FS.lean and the BACKLOG row. Not stubbed, not claimed.
+/-- info: 'CSD.SigmaLayer.exists_mem_of_measure_pos_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_mem_of_measure_pos_of_ae
+
+/-- info: 'CSD.SigmaLayer.vanishes_below_of_balanced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.vanishes_below_of_balanced
+
 -- STEP FOUR (2026-07-29): ORTHOGONAL PREPARATIONS -- the first GENERIC-psi input.
 -- Steps one to three used only the n basis-vector preparations. This uses psi PERPENDICULAR to
 -- e_i: the Born weight |<e_i|psi>|^2 is then zero, so the same nonnegativity argument applies --

@@ -344,4 +344,42 @@ theorem vanishes_on_interval_of_dense {g : ℝ → ℝ} {Ω : Set X} {u : ℕ �
   obtain ⟨m, hm⟩ := hdense x hxΩ t ht δ hδ
   exact absurd (hx hxΩ m) (hball (by simpa [Real.dist_eq] using hm))
 
+/-! ### Step five: the `(n−1)/n` support bound
+
+Step four gives, for a.e. `φ`, an outcome `i` with `g ≡ 0` on `[0, 1 − sᵢ(φ)]`. To make that a
+statement about `g` alone, take `φ` as *balanced* as possible: the smaller `maxᵢ sᵢ(φ)`, the
+longer the interval. Since `∑ᵢ sᵢ = 1` forces `maxᵢ sᵢ ≥ 1/n`, the best available interval is
+`[0, 1 − 1/n]`, and states arbitrarily close to the barycentre occur with positive measure.
+
+The step is short because step four's conclusion is **pointwise in `g`** — `g` vanishes on a whole
+interval, for a.e. `φ`. `g` is a fixed function, so **one** suitable `φ` suffices; no almost-
+everywhere bookkeeping survives into the conclusion. -/
+
+/-- A positive-measure set meets any almost-everywhere property. -/
+theorem exists_mem_of_measure_pos_of_ae {A : Set X} {P : X → Prop}
+    (hA : 0 < μ A) (hP : ∀ᵐ x ∂μ, P x) : ∃ x ∈ A, P x := by
+  by_contra hcon
+  push Not at hcon
+  exact absurd (measure_mono_null (fun x hx => hcon x hx) (ae_iff.mp hP)) (ne_of_gt hA)
+
+/-- **★ The `(n−1)/n` support bound.** A base-only preparation density vanishes on every overlap
+value below `(n−1)/n`.
+
+`hvan` is what step four delivers (each state lies in *some* outcome region, and there `g` dies on
+`[0, 1 − sᵢ]`); `hbalanced` says states with all overlaps below `c` are not negligible, for any
+`c` above the forced minimum `1/n`.
+
+At `n = 2` the bound reads "`g` vanishes below `½`", which is exactly the support of the known
+solution `4(2s−1)₊` — sharp at the one dimension where a solution exists. -/
+theorem vanishes_below_of_balanced {g : ℝ → ℝ} {s : Fin n → X → ℝ} (hn : 0 < n)
+    (hvan : ∀ᵐ x ∂μ, ∃ i, ∀ t ∈ Set.Icc (0 : ℝ) (1 - s i x), g t = 0)
+    (hbalanced : ∀ c : ℝ, 1 / (n : ℝ) < c → 0 < μ {x | ∀ i, s i x ≤ c}) :
+    ∀ t ∈ Set.Ico (0 : ℝ) (1 - 1 / (n : ℝ)), g t = 0 := by
+  rintro t ⟨ht0, ht1⟩
+  -- Aim at states whose overlaps are all at most `1 - t`; that threshold exceeds `1/n`.
+  have hc : 1 / (n : ℝ) < 1 - t := by linarith
+  obtain ⟨x, hxA, i, hxi⟩ := exists_mem_of_measure_pos_of_ae (hbalanced (1 - t) hc) hvan
+  -- `s i x ≤ 1 - t` means the interval `g` dies on reaches at least as far as `t`.
+  exact hxi t ⟨ht0, by have := hxA i; linarith⟩
+
 end CSD.SigmaLayer

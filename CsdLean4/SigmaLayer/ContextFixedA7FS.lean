@@ -208,4 +208,18 @@ theorem fs_cap_unconditional {M : ℕ} (p₀ : CPN (M + 1)) {j k : Fin M} (hjk :
     (j := Fin.castSucc j) (k := Fin.castSucc k) hgm hdisj
     fun _T hTm hT hpos => fs_joint_abundance p₀ hjk hTm hT hpos
 
+/-! ### Not landed: balanced-state abundance for `μ_FS`
+
+`ContextFixedA7.vanishes_below_of_balanced` needs one more input to become unconditional for the
+Fubini–Study sector: that for every `c > 1/(M+1)` the states with **all** moment coordinates `≤ c`
+form a non-null set. It is true, and the proof is the same shape as `fs_joint_abundance` above —
+`fs_volume_eq_dirichlet_inter` reduces it to Lebesgue positivity, and a small box around the
+simplex barycentre `(1/n, …, 1/n)` witnesses it, with side `δ = min(b, c−b)/(M+1)` where
+`b = 1/(M+1)` chosen so that `M·δ < b` keeps the box inside `∑ t < 1` while `M·δ < c − b` keeps
+the dropped coordinate `1 − ∑ t` below `c`.
+
+It was attempted on 2026-07-29 and **not landed** — the geometry and the constant are settled, the
+remaining friction is Lean arithmetic plumbing around the `set`-bound `b` and `δ`. Recorded here
+rather than left as a stub, and tracked in `specs/BACKLOG.md`. -/
+
 end CSD.SigmaLayer
