@@ -8,7 +8,9 @@
 > `BRIDGE-OBLIGATIONS`) describe *what is proved*; they point here for *what is next*.
 >
 > Effort key: **S** hrs–day · **M** days–2wk · **L** weeks · **XL** Mathlib-scale.
-> Last updated 2026-07-21.
+> Last updated 2026-07-29.
+>
+> **★ For "how far is finite QM from Σ from closed?" read [`reconstruction-status.md`](reconstruction-status.md) §2a** — the A1–A7 audit and the **scoping decision**. Short version: A1's exterior calculus and A3's smoothness are **permanently scoped** (Mathlib has no manifold DG API; nothing downstream uses them); A4 is **closed as a posit** with `μ_FS` *forced* under unitary symmetry; and the genuinely open rows are **A2, A5, A6, A7** plus the fibred-Σ question. Do not read five "Partial" rows as five pieces of pending work.
 
 ---
 
@@ -35,6 +37,8 @@
 | **Adjudicate the contradiction-scan shortlist** (`scripts/check-contradictions.sh`, 2026-07-28) | **OPEN — 8 identifiers described as settled in one place and open in another.** ⚠️ **The scan has LOW PRECISION and does not catch its own motivating case** — see its header; both hits spot-checked were benign (`BornFromFlow`: proved *given* a Birkhoff hypothesis, open *because* Mathlib lacks it; `fs_born_volume_ratio_N`: proved, with a known open extension — the `hpos` boundary row above). Treat the list as reading material, not as defects. The eight: `IsKahlerSector`, `isFubiniStudyKahler`, `BornFromFlow`, `born_eq_P_st`, `fs_born_volume_ratio_N`, `productSector_hasFubiniStudyPushforward`, and two more the run prints. **What's needed:** read each pair and, where the two descriptions genuinely disagree, fix the wrong one rather than softening both until they agree. | `scripts/check-contradictions.sh` |
 
 | **★★ Is the fibred Σ a legitimate A1 ontic sector?** *(successor to the parked A7 row)* | **OPEN — now the load-bearing question, and nothing is pointed at it.** The A7 chain's substantive output is that **the fibre is where contextuality has to live at `N ≥ 3`** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)) — which makes the fibre's own legitimacy critical. `SigmaLayer/FibredSigma.lean` uses `Σ = ℂℙⁿ⁻¹ × ℝ` with Lebesgue restricted to `[0,1)`: **non-compact fibre, no Kähler structure, measure not shown to be Liouville**, while Paper C A1 wants a compact Kähler ontic surface. **What's needed:** either prove the fibred Σ satisfies A1 (or a defensible weakening), or replace `ℝ` with a compact fibre carrying the structure — `KSigma = ℂℙⁿ⁻¹ × T²` already exists in the corpus and is the obvious candidate — and re-run the record layer on it. Related and also open: the fibre *mechanism* (softmax/Gumbel) is **posited, not derived** from de-isolation dynamics, and the Gumbel form is injected noise rather than CSD-native. **Effort: L.** | `sigma-fibre-contextuality.md`, `SigmaLayer/FibredSigma.lean` |
+
+| **★ A5 approximate `(ε,T)`-projectability** | **OPEN — the highest-value remaining item after the fibre, and NOT blocked on Mathlib** (identified by the A1–A7 audit, 2026-07-29). Only the **exact** case `H = h∘π` is formalised (`kSectorDataFlow_projectable`, `SigmaLayer/DynamicsBridge.lean`); the corpus contains **no `ε`-projectability at all**. But A5's *physical* content is the approximate case — `sup‖d(δH)|_V‖ ≤ ε` over a window `T` — which is what makes a Hamiltonian **quantum-effective** rather than arbitrary, i.e. what **selects the sector**. So the axiom that does the selecting has its actual content unformalised. Ingredients are already here: operator norms, matrix-exp differentiability, `Mathlib/Analysis/Matrix/StoneC1.lean`. **What's needed:** state `(ε,T)`-projectability as a predicate on `(H, π, V)`, prove the exact case is the `ε = 0` instance, and show the projected flow tracks `e^{-itH}` to within a bound controlled by `ε` and `T`. **Effort: M–L.** | `reconstruction-status.md` §2a |
 
 ## L — weeks
 

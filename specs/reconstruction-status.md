@@ -70,6 +70,65 @@ This is the canonical map of *what the Lean corpus formalises against each Paper
 | **A6** composites + marginal stability | **Partial.** Operational tensor structure, reduced states and no-signalling exist (`compositeTensorEquiv`, `compositeAlgReconstruction`, `tensorSector_no_signalling`); the general **non-factorising ontic composite** architecture (`Σ_AB ≠ Σ_A × Σ_B` as a primitive) is not reconstructed. |
 | **A7** context-defined measurement partitions | **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. Remaining: the general-`N` context-fixed partition — and here we learned a **structural fact about Σ** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)): a base-only, `U(N)`-covariant, nonnegative context-fixed density **cannot** reproduce Born for `N ≥ 3` (proven numerically + operator-theoretically; the `CP¹=S²` antipode has no analogue — and this is **not** Gleason, CSD being contextual). For `N ≥ 3` the contextuality necessarily lives in the **fibre** of Σ (a Born fibre-partition exists — Phase-2b Gumbel/softmax); deriving that mechanism from a de-isolation dynamics is the open frontier. So A7-as-base-regions is a qubit accident, not the general form. The pinned `FiniteQMClosure` field still names the preparation-indexed `bornRegion ψ'` cells (a mechanical residue; `KSigmaRecord.born_frequency_region_eq_record` shows its region already *is* the record-layer event). |
 
+### 2a. Audit of this map (2026-07-29) — and the scoping decision
+
+**Audit result: all seven rows are accurate.** Every cited name resolves to a real declaration
+(`flow_preserves` is a `ConstraintDynamics` *field*, not a top-level theorem — correct as cited),
+`compact_sigma : CompactSpace Sigma` is a genuine carried field so A1's "compactness … represented"
+is fair, and A5's approximate case is *genuinely absent* from the corpus (no `ε`-projectability
+anywhere), so "not formalised" is exact. Worth stating plainly: after the A7 correction of
+2026-07-28 one might expect this map to be optimistic, and it is not.
+
+**The scoping decision.** Five rows read "Partial", which invites reading the whole map as
+unfinished. It is not: the rows fail for *different reasons*, and only some are work.
+
+**(i) Permanently scoped — blocked on Mathlib, not on us.** These will not be discharged here and
+should not be counted against the reconstruction.
+
+* **A1, the exterior-calculus half** — `dω = 0` and `ωⁿ/n! = μ_FS` need a manifold exterior-calculus
+  API that Mathlib does not have. The *formalizable core is done and consumed*
+  (`IsFubiniStudyKahler`, proved axiom-free, no longer a `True` placeholder). `IsKahlerSector` is
+  the slot to strengthen if Mathlib ever grows the API.
+* **A3, smoothness of `π`** — Lean requires *measurability*, which is what every downstream proof
+  actually uses. Smoothness needs the same absent differential-geometry API. Nothing is weakened by
+  the substitution; the witness `π = Prod.fst` is genuinely many-to-one.
+
+**(ii) Scoped by doctrine, not by tooling.**
+
+* **A4** — proved for the witness, which has `μL = μFS ⊗ vol` built in, and *not* derived from
+  arbitrary ontic dynamics. Under "Σ is the floor", deriving it is a non-question. The legitimate
+  content is constraining Σ from above, and that is exactly
+  `localised_sectorPostulate_capstone`: `μ_FS` is **forced** under full unitary symmetry. A4 is
+  closed in the only sense available.
+
+**(iii) Genuinely open — these are the reconstruction's remaining work.**
+
+* **A5 — approximate `(ε,T)`-projectability. NOT blocked on Mathlib**, and the highest-value item
+  after the fibre. Only the exact case `H = h∘π` is formalised
+  (`kSectorDataFlow_projectable`, `DynamicsBridge`), but A5's *physical* content is the approximate
+  one, `sup‖d(δH)|_V‖ ≤ ε` over a window — that is what makes a Hamiltonian *quantum-effective*
+  rather than arbitrary, i.e. what **selects the sector**. The ingredients exist here already
+  (operator norms, matrix-exp differentiability, `StoneC1`). Effort **M–L**.
+* **A2 — a generic ontic Hamiltonian vector field `X_H`.** Partly shares A1/A3's blocker, but the
+  physical content — a genuine, physically meaningful `Φ ≠ id` — is real work and overlaps the
+  de-isolation `H_int` item.
+* **A6 — the non-factorising ontic composite** (`Σ_AB ≠ Σ_A × Σ_B` as primitive). Architecture, not
+  tooling.
+* **A7 — ⏸ parked** at general `N`, discharged at `N = 2`. See
+  [`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md).
+
+**★ A1 splits, and the tractable half is the live one.** The exterior-calculus half is scoped (i),
+but "is the *fibred* Σ a compact Kähler sector at all?" is a **different and unblocked** question:
+`FibredSigma` uses `ℂℙⁿ⁻¹ × ℝ` — non-compact fibre, measure not shown Liouville — whereas
+`KSigma = ℂℙⁿ⁻¹ × T²` is compact and already in the corpus. Swapping the fibre needs no Mathlib
+API. Since the A7 work concluded that contextuality lives in the fibre, this is now the
+load-bearing question. `BACKLOG.md` ★★ row.
+
+**Net for "finite QM from Σ": two rows permanently scoped (A1-exterior, A3), one closed as a posit
+with the symmetry-forcing result (A4), and four genuinely open (A2, A5, A6, A7) plus the fibred-Σ
+question.** That is the honest distance to closed.
+
+
 ### 2a. Target inventory (T1–T16) — inhabited reconstruction targets
 
 The A1–A7 map above is the *axiom-formalisation* status. The following is the separate inventory of
