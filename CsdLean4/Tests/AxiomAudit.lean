@@ -793,6 +793,30 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.sum_measure_overlapSupport_le_one
 
+-- STEP FOUR (2026-07-29): ORTHOGONAL PREPARATIONS -- the first GENERIC-psi input.
+-- Steps one to three used only the n basis-vector preparations. This uses psi PERPENDICULAR to
+-- e_i: the Born weight |<e_i|psi>|^2 is then zero, so the same nonnegativity argument applies --
+-- but now for a whole FAMILY of psi rather than one. orthogonal_preparation_vanishes: on Omega_i
+-- the density vanishes at every overlap value any such psi realises.
+-- vanishes_on_interval_of_dense upgrades that from the realised values to an INTERVAL, given
+-- continuity of g and density of the realised values. The geometric input: for unit psi in the
+-- sphere of e_i-perp, |<psi|phi>|^2 is maximised at the normalised projection of phi into
+-- e_i-perp with value 1 - s_i(phi), and tilting psi within e_i-perp sweeps continuously down to 0.
+-- ★ THAT TILT NEEDS dim(e_i-perp) >= 2, i.e. N >= 3 -- at N=2 the orthocomplement is a LINE, psi
+-- is unique up to phase, and only the single value 1 - s_i(phi) is realised. Same threshold as
+-- steps two and three, for a THIRD independent reason.
+-- Consequence (analysis, not yet formalized -- the covering + max-coordinate step remains):
+-- g vanishes below (n-1)/n, sharpening the cap from 1/2. At n=2 that reads "below 1/2", which is
+-- exactly where the known solution 4(2s-1)+ is supported -- sharp at the one dimension where a
+-- solution exists.
+/-- info: 'CSD.SigmaLayer.orthogonal_preparation_vanishes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.orthogonal_preparation_vanishes
+
+/-- info: 'CSD.SigmaLayer.vanishes_on_interval_of_dense' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.vanishes_on_interval_of_dense
+
 -- STEP THREE (2026-07-28): THE CAP IS NOW UNCONDITIONAL AT N >= 3
 -- (SigmaLayer/ContextFixedA7FS.lean). Step two left the cap conditional on an ABUNDANCE
 -- hypothesis -- that two overlap coordinates can jointly take values in any positive-measure set

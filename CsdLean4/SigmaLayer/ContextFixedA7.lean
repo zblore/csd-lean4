@@ -285,4 +285,63 @@ theorem base_only_density_confined [IsProbabilityMeasure μ]
       (overlapSupports_ae_disjoint hg hint hoff hcover hmeas hdisj hjk) hjoint,
    sum_measure_overlapSupport_le_one hg hint hoff hcover hmeas hdisj⟩
 
+/-! ### Step four: orthogonal preparations, and the `(n−1)/n` support bound
+
+Steps one to three used only the `n` basis-vector preparations. The first genuinely
+**generic-`ψ`** input is the *orthogonal* one: whenever `ψ ⊥ eᵢ` the Born weight `|⟨eᵢ|ψ⟩|²`
+is zero, so the same non-negativity argument applies — `g ∘ sψ` must vanish a.e. on `Ωᵢ`.
+
+What makes this stronger than the basis-vector case is that there are *many* such `ψ`, and the
+overlap values they realise at a given `φ` sweep an entire interval. For unit `ψ ⊥ eᵢ`, the
+overlap `|⟨ψ|φ⟩|²` is maximised at the normalised projection of `φ` into `eᵢ^⊥`, with value
+`1 − sᵢ(φ)`; tilting `ψ` within `eᵢ^⊥` scales it continuously down to `0`. **That tilt needs
+`dim eᵢ^⊥ ≥ 2`, i.e. `n ≥ 3`** — at `n = 2` the orthocomplement is a line, `ψ` is unique up to
+phase, and only the single value `1 − sᵢ(φ)` is realised. The same threshold, for the third
+independent reason.
+
+So for `n ≥ 3`: a.e. `φ ∈ Ωᵢ` forces `g ≡ 0` on the whole interval `[0, 1 − sᵢ(φ)]`. Since the
+regions cover, a.e. `φ` has some `i` with `g ≡ 0` on `[0, 1 − sᵢ(φ)]`, and `maxᵢ sᵢ(φ)` can be
+made arbitrarily close to `1/n` on a positive-measure set — so `g` vanishes below `(n−1)/n`.
+
+At `n = 2` that reads `g = 0` below `½`, which is exactly where `4(2s−1)₊` is supported. The
+bound is sharp at the one dimension where a solution is known. -/
+
+/-- **Orthogonal-preparation confinement.** If a family of preparations all give outcome `i`
+zero Born weight, then on `Ωᵢ` the density vanishes at every overlap value any of them realises.
+
+Only the non-negativity of `g` and the vanishing of the Born weight are used, so this is the
+basis-vector argument of step one applied to a much larger family — the first step that uses
+preparations other than the `eⱼ`. -/
+theorem orthogonal_preparation_vanishes {g : ℝ → ℝ} {Ω : Set X} {u : ℕ → X → ℝ}
+    (hg : ∀ t, 0 ≤ g t)
+    (hint : ∀ m, IntegrableOn (fun x => g (u m x)) Ω μ)
+    (hzero : ∀ m, ∫ x in Ω, g (u m x) ∂μ = 0)
+    (hmeas : MeasurableSet Ω) :
+    ∀ᵐ x ∂μ, x ∈ Ω → ∀ m, g (u m x) = 0 := by
+  have hall : ∀ m, ∀ᵐ x ∂μ, x ∈ Ω → g (u m x) = 0 := by
+    intro m
+    have := ae_eq_zero_of_setIntegral_eq_zero hg (hint m) (hzero m)
+    rwa [ae_restrict_iff' hmeas] at this
+  rw [← ae_all_iff] at hall
+  filter_upwards [hall] with x hx hxΩ m using hx m hxΩ
+
+/-- **The interval form.** If, at almost every `x ∈ Ω`, the realised overlap values are dense in
+`[0, r x]` and `g` is continuous, the vanishing extends from those values to the whole interval.
+
+The density hypothesis is the geometric input: for `ψ` ranging over the unit sphere of `eᵢ^⊥`,
+the overlaps `|⟨ψ|φ⟩|²` sweep `[0, 1 − sᵢ(φ)]` — available exactly when `dim eᵢ^⊥ ≥ 2`, i.e.
+`n ≥ 3`. -/
+theorem vanishes_on_interval_of_dense {g : ℝ → ℝ} {Ω : Set X} {u : ℕ → X → ℝ} {r : X → ℝ}
+    (hgc : Continuous g)
+    (hvan : ∀ᵐ x ∂μ, x ∈ Ω → ∀ m, g (u m x) = 0)
+    (hdense : ∀ x ∈ Ω, ∀ t ∈ Set.Icc (0 : ℝ) (r x),
+      ∀ ε > 0, ∃ m, |u m x - t| < ε) :
+    ∀ᵐ x ∂μ, x ∈ Ω → ∀ t ∈ Set.Icc (0 : ℝ) (r x), g t = 0 := by
+  filter_upwards [hvan] with x hx hxΩ t ht
+  -- `g` is continuous and vanishes on a dense subset of `[0, r x]`, hence at `t`.
+  by_contra hne
+  obtain ⟨δ, hδ, hball⟩ := Metric.isOpen_iff.mp (isOpen_ne.preimage hgc) t hne
+  obtain ⟨m, hm⟩ := hdense x hxΩ t ht δ hδ
+  exact absurd (hx hxΩ m) (hball (by simpa [Real.dist_eq] using hm))
+
 end CSD.SigmaLayer
