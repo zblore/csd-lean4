@@ -117,11 +117,14 @@ ALIAS_DOCS=("README.md" "AXIOMS.md" "CLAUDE.md" "specs/reconstruction-status.md"
 #
 # Lines that are themselves RETRACTIONS are exempt, otherwise the scan fires on its
 # own corrections (which necessarily quote the old wording).
+# 2026-07-29: sigma-fibre-contextuality.md was NOT in this list and so was never scanned --
+# it still read "necessarily in the fibre" three days after that claim was retracted
+# elsewhere. A scan is only as good as its file list; add new claim docs here.
 EPISTEMIC_DOCS=("README.md" "EMPIRICAL.md" "AXIOMS.md" "specs/BACKLOG.md" \
                 "specs/record-layer-plan.md" "specs/active-todo.md" \
                 "specs/CSD-CHARTER.md" "specs/reconstruction-status.md" \
                 "specs/connectivity-manifest.md" "specs/future-work.md" \
-                "specs/INDEX.md")
+                "specs/INDEX.md" "specs/sigma-fibre-contextuality.md")
 
 # Words asserting that something is SETTLED.
 EPISTEMIC_STRONG='provably|proves|proved|proven|no-go|[Dd]issolved|DISSOLVED|discharged|is complete|are complete|fully solved|settled|refuted|NOT A TARGET|confirmed dead'

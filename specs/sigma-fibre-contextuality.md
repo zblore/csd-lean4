@@ -1,17 +1,65 @@
 # Where measurement contextuality lives in Σ — the qubit / general-`N` boundary
 
-> **A structural lesson about Σ, learned 2026-07-25…27.** Not a defect in CSD — a
-> *constraint* on its structure. This doc states precisely what is proven, what is
-> refuted, what is open, so it is not re-litigated. Read with
-> [`record-layer-plan.md`](record-layer-plan.md) (MD-1) and
+> **★ THE HEADLINE FINDING, and the decision that follows from it (updated 2026-07-29).**
+> This is the canonical record of the general-`N` contextuality question. **The base-only
+> route is PARKED — do not resume it.** Read this section before touching A7. Companions:
+> [`record-layer-plan.md`](record-layer-plan.md) (MD-1), [`BACKLOG.md`](BACKLOG.md),
 > [`CSD-CHARTER.md`](CSD-CHARTER.md).
 
 ## One-line lesson
 
 **The Born rule is an ontic typicality volume for every `N` (a theorem). But *where the
-measurement contextuality sits in Σ* is dimension-dependent: on the projective base for the
-qubit, and necessarily in the fibre for `N ≥ 3`.** The elegant "regions on the Bloch sphere"
-picture is a `CP¹ = S²` accident; it does not generalise as a base-only story.
+measurement contextuality sits in Σ* is dimension-dependent: it works on the projective base for
+the qubit, and at `N ≥ 3` the base-only route is so tightly constrained that the fibre is the
+live architecture.** The elegant "regions on the Bloch sphere" picture is a `CP¹ = S²` accident.
+
+⚠️ **Stated precisely, because an earlier version of this line said "necessarily in the fibre"
+and an earlier BACKLOG row said "provably dead" — both retracted 2026-07-28.** Base-only A7 at
+`N ≥ 3` is **open in both directions**: not proved impossible, not exhibited. What *is* proved is
+a chain of necessary conditions (below) that leaves very little room, plus a structural threshold
+separating `N = 2` from `N ≥ 3` that shows up three independent ways.
+
+## The derived constraint chain (2026-07-28/29) — what replaced the numerics
+
+Under `U(N)`-covariance a base-only preparation density collapses to `ρ_ψ(φ) = g(|⟨ψ|φ⟩|²)` for a
+single non-negative `g`. Everything below constrains that `g`. All Lean, foundational-triple,
+axiom-pinned (`SigmaLayer/ContextFixedA7.lean`, `ContextFixedA7FS.lean`).
+
+| # | Result | Content |
+|---|---|---|
+| 1 | `overlapSupport_ae_subset`, `overlapSupports_ae_disjoint`, `sum_measure_overlapSupport_le_one` | Evaluating A7 at the `n` basis-vector preparations forces each support into its own region; supports pairwise a.e. disjoint; measures sum to `≤ 1`, so each is `≤ 1/n`. **The density must spike.** |
+| 2 | `cap_of_joint_nondegenerate` | `g` vanishes a.e. below `½`. **Sharp and attained** — the `N = 2` solution `4(2s−1)₊` is supported exactly on `(½,1]`. |
+| 3 | `fs_joint_abundance`, `fs_cap_unconditional` | The cap made **unconditional** at `N ≥ 3` for the actual `μ_FS`, via the corpus's Dirichlet pushforward. |
+| 4 | `orthogonal_preparation_vanishes`, `vanishes_on_interval_of_dense` | First **generic-`ψ`** input: `ψ ⊥ eᵢ` also gives zero Born weight, and such `ψ` sweep an interval of overlap values. |
+| 5 | `vanishes_below_of_balanced`, `fs_balanced_abundance` | `g` vanishes below `(n−1)/n`. At `n = 2` that reads "below `½`" — again exactly the known solution's support. |
+
+**The `N = 2` vs `N ≥ 3` threshold appears three independent ways**, each exempting the qubit for
+the same structural reason:
+
+1. *Two coordinates below `½`* — impossible at `N = 2` where `s₂ = 1 − s₁` is functionally
+   dependent (`joint_degenerate_of_sum_eq_one`).
+2. *Two distinct free simplex coordinates* — needs `M = N − 1 ≥ 2`.
+3. *Tilting `ψ` inside `eᵢ^⊥`* — needs `dim eᵢ^⊥ ≥ 2`.
+
+## Why the chain stopped, and why that is the right call
+
+Two inputs remain undischarged (`hdense`, the tilt fact; and the residual generic-`ψ` gap), and the
+terminal step — a harmonic-analysis argument on `ℂℙⁿ⁻¹` — is **blocked on Mathlib infrastructure
+that does not exist**. One refutation route is also closed: the natural kill via the Fubini–Study
+triangle inequality is *exactly* tight (`arccos√σ + arccos√(1−σ) = π/2`), so it yields nothing. The
+constraint system sits **on** the boundary rather than over it.
+
+**The decisive argument for stopping: proving the no-go and assuming it lead to the same next
+action.** Either way the fibre carries contextuality at `N ≥ 3`. A constraint chain this tight —
+derived theorems, three independent thresholds, independent numerical agreement — falls short of a
+formal impossibility result, and that gap matters for a paper claim; it does not change what to
+build. So the base-only route is **parked as a well-characterised open problem**, not pursued
+further.
+
+*(Note: an earlier phrasing of that sentence tripped `check-claims` (6) by putting a settled-claim
+word beside the word "numerics" while explicitly denying the claim. It was reworded rather than
+exempted — the co-occurrence rule cannot read contrast, and adding exemptions to silence it would
+erode the guard. Documented in the script's KNOWN LIMIT section.)*
 
 ## The three-way split (keep these apart)
 
@@ -65,9 +113,11 @@ CSD structure: deterministic map + fixed typicality, not an external random orac
 
 ## Consequence for A7 and for Σ
 
-- **A7 as literally stated** ("epistemic outcome regions `{Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹`") is the whole story
-  **only at `N = 2`.** For `N ≥ 3` the operative regions are **fibre** regions over `Σ`, not on the
-  projective base. This is a substantive revision, not cosmetic.
+- **A7 as literally stated** ("epistemic outcome regions `{Ωᵢ(M)} ⊂ ℂℙⁿ⁻¹`") is *established* only
+  at `N = 2` (`LF4/QubitBorn.lean`). At `N ≥ 3` it is neither established nor refuted — but the
+  constraint chain above leaves so little room that the **fibre** is the architecture to build on.
+  This is a substantive revision, not cosmetic; it is also a *decision under uncertainty*, and the
+  docs must not restate it as a proved impossibility.
 - **What we learned about Σ:** the fibre is not decorative — it is *load-bearing* for measurement
   at `N ≥ 3`. The base `ℂℙⁿ⁻¹` is a lossy epistemic projection; the record-forming, contextual,
   non-local content lives over it in the fibre. This is consistent with (and pressure toward) the
@@ -96,5 +146,12 @@ adequacy or the Born-as-typicality theorem.
   `LF4/QubitCrossTerm.lean` (the antipode symmetry, `CP¹`-specific).
 - **Numerics (not Lean):** `scripts/experiments/record_layer_base_only_test.py` (Phase-1, base-only
   fails `N=3`); `record_layer_fibre_gumbel.py` (Phase-2b, fibre model reproduces Born).
-- **Guard:** [`record-layer-plan.md`](record-layer-plan.md) — do not re-propose base-only Voronoi
-  context-fixing for `N ≥ 3`.
+- **Lean (the constraint chain, 2026-07-28/29):** `SigmaLayer/ContextFixedA7.lean`,
+  `SigmaLayer/ContextFixedA7FS.lean`.
+- **★ STATUS / GUARD (2026-07-29): the base-only general-`N` route is PARKED.** Not because it is
+  refuted — it is *not* — but because the decision-relevant output is already in hand and the
+  remaining path is blocked. Do not resume it without a new idea that reaches the generic-`ψ`
+  regime or supplies harmonic analysis on `ℂℙⁿ⁻¹`. **Successor question:** is the fibred
+  `Σ = ℂℙⁿ⁻¹ × ℝ` a legitimate **A1 ontic sector**? Non-compact fibre, no Kähler structure, its
+  measure not shown to be Liouville — and if contextuality lives in the fibre, that is now the
+  load-bearing unproven thing. See the `BACKLOG.md` row.
