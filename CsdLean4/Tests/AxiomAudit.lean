@@ -321,6 +321,7 @@ public import CsdLean4.SigmaLayer.DeIsolationFlow
 public import CsdLean4.SigmaLayer.FibreRecord
 public import CsdLean4.SigmaLayer.RecordLayerClosure
 public import CsdLean4.SigmaLayer.ContextFixedA7
+public import CsdLean4.SigmaLayer.ContextFixedA7FS
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -791,6 +792,41 @@ arithmetic. -/
 /-- info: 'CSD.SigmaLayer.sum_measure_overlapSupport_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.sum_measure_overlapSupport_le_one
+
+-- STEP THREE (2026-07-28): THE CAP IS NOW UNCONDITIONAL AT N >= 3
+-- (SigmaLayer/ContextFixedA7FS.lean). Step two left the cap conditional on an ABUNDANCE
+-- hypothesis -- that two overlap coordinates can jointly take values in any positive-measure set
+-- below 1/2. fs_joint_abundance DISCHARGES it for the actual Fubini-Study measure, via the
+-- corpus's own pushforward fs_volume_eq_dirichlet_inter (mu_FS pushes to the UNIFORM/Dirichlet
+-- measure on the open simplex). Abundance then reduces to Lebesgue positivity on Fin M -> R, with
+-- an EXPLICIT witness: the two chosen coordinates in T, every other coordinate in a small (0, eps).
+-- The one subtlety is that T subset (0,1/2) bounds t_j + t_k < 1 POINTWISE BUT NOT UNIFORMLY, so
+-- exists_trunc_of_volume_pos first passes to a positive-measure part of T bounded away from 1/2 --
+-- only then is there uniform room for the remaining coordinates.
+-- ★ fs_cap_unconditional: a base-only, U(N)-covariant, NONNEGATIVE preparation density reproducing
+-- Born on the Fubini-Study sector VANISHES A.E. ON OVERLAP VALUES BELOW 1/2, with no hypothesis
+-- left over. Sharp and attained -- the N=2 density 4(2s-1)+ is supported exactly on (1/2, 1].
+-- ★ WHY N >= 3 IS EXACTLY THE THRESHOLD: M = N-1 is the number of free simplex coordinates, and
+-- two DISTINCT ones exist precisely when M >= 2. At N=2 there is one free coordinate and the second
+-- Born weight is 1 - s_1 -- functionally dependent (ContextFixedA7.joint_degenerate_of_sum_eq_one).
+-- So the dimension count that powers this file is the same one that exempts the qubit.
+-- This replaces the NUMERICAL evidence the retracted "provably dead" row rested on with a DERIVED
+-- constraint. Still not the no-go: generic-psi and the harmonic argument remain open.
+/-- info: 'CSD.SigmaLayer.exists_trunc_of_volume_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_trunc_of_volume_pos
+
+/-- info: 'CSD.SigmaLayer.volume_inter_openSimplexFree_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.volume_inter_openSimplexFree_pos
+
+/-- info: 'CSD.SigmaLayer.fs_joint_abundance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fs_joint_abundance
+
+/-- info: 'CSD.SigmaLayer.fs_cap_unconditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fs_cap_unconditional
 
 -- Hong-Ou-Mandel CSD twin (2026-07-27): the dip as an ONTIC IMPOSSIBILITY, not a statistical
 -- cancellation. hom_coincidence_typicality_zero -- the coincidence cell's fibre typicality is

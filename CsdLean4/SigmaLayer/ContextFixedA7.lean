@@ -220,17 +220,20 @@ argument. What makes this worth stating that way is `joint_degenerate_of_sum_eq_
 /-- **The cap bound.** If two overlap coordinates can jointly take values in any positive-measure
 set below `½`, then the preparation density vanishes almost everywhere below `½`. -/
 theorem cap_of_joint_nondegenerate {g : ℝ → ℝ} {s : Fin n → X → ℝ} {j k : Fin n}
+    (hgm : Measurable g)
     (hdisj : μ (overlapSupport g (s j) ∩ overlapSupport g (s k)) = 0)
-    (hjoint : ∀ T : Set ℝ, T ⊆ Set.Iio (1 / 2 : ℝ) → 0 < volume T →
+    (hjoint : ∀ T : Set ℝ, MeasurableSet T → T ⊆ Set.Ioo 0 (1 / 2 : ℝ) → 0 < volume T →
       0 < μ {x | s j x ∈ T ∧ s k x ∈ T}) :
-    volume ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) = 0 := by
+    volume ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ)) = 0 := by
   by_contra hne
-  have hpos : 0 < volume ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) := pos_iff_ne_zero.mpr hne
-  have hjk := hjoint _ Set.inter_subset_right hpos
+  have hpos : 0 < volume ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ)) := pos_iff_ne_zero.mpr hne
+  have hTm : MeasurableSet ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ)) :=
+    (hgm (measurableSet_singleton (0 : ℝ)).compl).inter measurableSet_Ioo
+  have hjk := hjoint _ hTm Set.inter_subset_right hpos
   -- A state whose `j`- and `k`-coordinates both land in the set lies in both supports.
   have hcontain :
-      {x | s j x ∈ ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) ∧
-           s k x ∈ ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ))}
+      {x | s j x ∈ ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ)) ∧
+           s k x ∈ ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ))}
         ⊆ overlapSupport g (s j) ∩ overlapSupport g (s k) := by
     rintro x ⟨⟨h1, -⟩, ⟨h2, -⟩⟩
     exact ⟨h1, h2⟩
@@ -273,12 +276,12 @@ theorem base_only_density_confined [IsProbabilityMeasure μ]
     (hcover : ∀ x, ∃ i, x ∈ Ω i)
     (hmeas : ∀ i, MeasurableSet (Ω i))
     (hdisj : Pairwise (Function.onFun Disjoint Ω))
-    {j k : Fin n} (hjk : j ≠ k)
-    (hjoint : ∀ T : Set ℝ, T ⊆ Set.Iio (1 / 2 : ℝ) → 0 < volume T →
+    {j k : Fin n} (hjk : j ≠ k) (hgm : Measurable g)
+    (hjoint : ∀ T : Set ℝ, MeasurableSet T → T ⊆ Set.Ioo 0 (1 / 2 : ℝ) → 0 < volume T →
       0 < μ {x | s j x ∈ T ∧ s k x ∈ T}) :
-    volume ({t | g t ≠ 0} ∩ Set.Iio (1 / 2 : ℝ)) = 0 ∧
+    volume ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ)) = 0 ∧
     ∑ i, μ (overlapSupport g (s i)) ≤ 1 :=
-  ⟨cap_of_joint_nondegenerate
+  ⟨cap_of_joint_nondegenerate hgm
       (overlapSupports_ae_disjoint hg hint hoff hcover hmeas hdisj hjk) hjoint,
    sum_measure_overlapSupport_le_one hg hint hoff hcover hmeas hdisj⟩
 
