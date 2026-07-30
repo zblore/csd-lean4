@@ -324,6 +324,7 @@ public import CsdLean4.SigmaLayer.ContextFixedA7
 public import CsdLean4.SigmaLayer.ContextFixedA7FS
 public import CsdLean4.SigmaLayer.CircleFibre
 public import CsdLean4.SigmaLayer.CircleRecord
+public import CsdLean4.SigmaLayer.TorusFibre
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -875,10 +876,15 @@ arithmetic. -/
 -- outcome probabilities. volume_circleBornCell: fed the Born rates, the measure is ||psi i||^2.
 -- circleCell_pairwiseDisjoint: distinct outcomes stay mutually exclusive.
 -- ⚠️ SCOPE: this supplies the FIBRE half. It does NOT by itself make the fibred Sigma an A1 ontic
--- surface -- no Kahler structure on the fibre (dw=0 needs the manifold exterior calculus Mathlib
--- lacks; see reconstruction-status.md 2a scoping decision), and the measure is exhibited as Haar,
--- not SHOWN to be Liouville. FibreRecord/Measurement/RecordLayerClosure still run on the R fibre and
--- would need re-plumbing onto this one -- mechanical, not done.
+-- surface, and the measure is exhibited as Haar, not SHOWN to be Liouville.
+-- FibreRecord/Measurement/RecordLayerClosure still run on the R fibre and would need re-plumbing
+-- onto this one -- NOT done (CircleRecord.lean is a PARALLEL counterpart, not a migration).
+-- ⚠️ CORRECTED 2026-07-30: this block previously said the missing Kahler structure needed "the
+-- manifold exterior calculus Mathlib lacks; see reconstruction-status.md 2a scoping decision".
+-- That was a MISCLASSIFICATION. CP^{n-1} x AddCircle 1 has real dimension 2n-1 -- ODD -- and no
+-- odd-dimensional manifold admits a symplectic, hence Kahler, structure. It is a PARITY fact, not
+-- a tooling gap, and no Mathlib API repairs it. See TorusFibre.lean, which moves the partition to
+-- the even-dimensional KTorus.
 /-- info: 'CSD.RecordLayer.circleFibre_volume_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.circleFibre_volume_univ
@@ -898,6 +904,54 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.volume_circleBornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.volume_circleBornCell
+
+-- THE PARITY FIX (2026-07-30, SigmaLayer/TorusFibre.lean) -- the Born partition on KTorus.
+-- ⚠️ WHAT THIS FIXES, and it is NOT what the fibre-swap block above first said. CircleFibre closed
+-- the COMPACTNESS objection but left a second one that is NOT a tooling gap: CP^{n-1} has real
+-- dimension 2n-2, so CP^{n-1} x AddCircle 1 has real dimension 2n-1 -- ODD. A symplectic form needs
+-- w^k as a volume form, so no odd-dimensional manifold carries one, hence none carries a Kahler
+-- structure. A SINGLE CIRCLE CAN THEREFORE NEVER BE THE FIBRE OF A PAPER C A1 SURFACE, however much
+-- differential-geometry API Mathlib grows. The same applies retroactively to FibredSigma's
+-- CP^{n-1} x R, also 2n-1.
+-- THE FIX WAS ALREADY IN THE CORPUS: LF4/KahlerInstance.lean's KTorus = AddCircle 1 x AddCircle 1,
+-- with KSigma N = CPN N x KTorus of real dimension 2n -- EVEN, compact, a product of Kahler
+-- manifolds. This file puts the cells on the FIRST torus coordinate, leaving the second free as its
+-- symplectic partner (mem_torusCell_iff states that freedom as a theorem, rather than leaving it to
+-- the prose).
+-- volume_torusCell: the cell carries EXACTLY the Born weight r_i -- the free coordinate contributes
+-- a factor of 1 because T^2's Haar measure is a probability measure -- so moving to the
+-- even-dimensional arena changes NOTHING about the outcome probabilities, just as compactifying did
+-- not. volume_torusBornCell: fed the Born rates, the measure is ||psi i||^2.
+-- torusCell_pairwiseDisjoint: exclusivity, inherited coordinatewise. torusCell_ae_total /
+-- torusBornCell_ae_total: the cells cover T^2 up to a null set.
+-- ⚠️ SCOPE: this REMOVES AN OBSTRUCTION to A1; it does not ESTABLISH A1. KSigma is not proved Kahler
+-- here, and the fibre measure is exhibited as Haar, not shown to be Liouville. The partition is also
+-- still KINEMATIC and still PREPARATION-INDEXED (the consumer feeds it bornRate psi). The successor
+-- is the global context-fixed basin B_i(M) with the moment map evaluated at the ONTIC POINT, which
+-- is NOT in this file and needs measurability of momentMap -- a lemma the corpus does not have.
+/-- info: 'CSD.RecordLayer.mem_torusCell_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_torusCell_iff
+
+/-- info: 'CSD.RecordLayer.measurableSet_torusCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_torusCell
+
+/-- info: 'CSD.RecordLayer.volume_torusCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_torusCell
+
+/-- info: 'CSD.RecordLayer.torusCell_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusCell_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.volume_torusBornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_torusBornCell
+
+/-- info: 'CSD.RecordLayer.torusBornCell_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusBornCell_ae_total
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
