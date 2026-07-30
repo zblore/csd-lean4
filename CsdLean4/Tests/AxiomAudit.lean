@@ -322,6 +322,7 @@ public import CsdLean4.SigmaLayer.FibreRecord
 public import CsdLean4.SigmaLayer.RecordLayerClosure
 public import CsdLean4.SigmaLayer.ContextFixedA7
 public import CsdLean4.SigmaLayer.ContextFixedA7FS
+public import CsdLean4.SigmaLayer.CircleFibre
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -817,6 +818,47 @@ arithmetic. -/
 /-- info: 'CSD.SigmaLayer.fs_balanced_abundance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.fs_balanced_abundance
+
+-- THE FIBRE SWAP (2026-07-29, SigmaLayer/CircleFibre.lean) -- the Born partition on a COMPACT fibre.
+-- ⚠️ THE DIAGNOSIS THIS FIXES: the corpus had TWO record-layer constructions and COMPACTNESS AND
+-- FIBRE-ACTIVITY SAT IN DIFFERENT ONES. KSigmaRecord puts a P5 RecordSemantics on the COMPACT
+-- KSigma = CPN x T^2, but its events are pi^-1(bornRegion psi i) -- pulled back from the BASE, so
+-- the torus fibre is INERT and it inherits the preparation-indexed base regions. FibredSigma has an
+-- ACTIVE fibre (it carries the CDF Born cells) but that fibre is R -- NOT COMPACT, so it cannot be a
+-- Paper C A1 ontic surface. Neither had both, and since the A7 work concluded contextuality must
+-- live in the FIBRE, active-fibre-on-compact-Sigma is exactly what was needed.
+-- circleFibre_volume_univ + the CompactSpace instance: the fibre is AddCircle 1 -- the same factor
+-- KTorus is built from -- compact, with Haar a genuine PROBABILITY measure (what restricted Lebesgue
+-- on R only had by fiat). circleCell is defined as a PREIMAGE under the canonical representative
+-- map, not as an image of cdfCell, so measurability is immediate (measurableSet_circleCell).
+-- volume_circleCell: the cell carries EXACTLY the Born weight r_i, via Mathlib's
+-- AddCircle.measurePreserving_equivIoc -- so moving to a compact fibre changes NOTHING about the
+-- outcome probabilities. volume_circleBornCell: fed the Born rates, the measure is ||psi i||^2.
+-- circleCell_pairwiseDisjoint: distinct outcomes stay mutually exclusive.
+-- ⚠️ SCOPE: this supplies the FIBRE half. It does NOT by itself make the fibred Sigma an A1 ontic
+-- surface -- no Kahler structure on the fibre (dw=0 needs the manifold exterior calculus Mathlib
+-- lacks; see reconstruction-status.md 2a scoping decision), and the measure is exhibited as Haar,
+-- not SHOWN to be Liouville. FibreRecord/Measurement/RecordLayerClosure still run on the R fibre and
+-- would need re-plumbing onto this one -- mechanical, not done.
+/-- info: 'CSD.RecordLayer.circleFibre_volume_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleFibre_volume_univ
+
+/-- info: 'CSD.RecordLayer.measurableSet_circleCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_circleCell
+
+/-- info: 'CSD.RecordLayer.circleCell_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleCell_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.volume_circleCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_circleCell
+
+/-- info: 'CSD.RecordLayer.volume_circleBornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_circleBornCell
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

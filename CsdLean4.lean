@@ -364,6 +364,7 @@ public import CsdLean4.SigmaLayer.FibreRecord
 public import CsdLean4.SigmaLayer.RecordLayerClosure
 public import CsdLean4.SigmaLayer.ContextFixedA7
 public import CsdLean4.SigmaLayer.ContextFixedA7FS
+public import CsdLean4.SigmaLayer.CircleFibre
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
