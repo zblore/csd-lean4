@@ -39,12 +39,25 @@ Born weight comes out identical (`volume_circleCell`), which is the content of t
 
 ## What is still not claimed
 
-Compactness and a genuine Haar probability measure, yes. **A1 in full, no** — there is no Kähler
-structure on the fibre, and `dω = 0` needs manifold exterior calculus Mathlib does not have (the
-*permanently scoped* row in `reconstruction-status.md` §2a). The fibre measure is exhibited as Haar,
-not shown to be a Liouville measure. And this is the *fibre* half: the general-`N` A7 question of
-whether context-fixed regions exist at all is ⏸ parked, not settled
-(`specs/sigma-fibre-contextuality.md`).
+Compactness and a genuine Haar probability measure, yes. **A1 in full, no** — and ⚠️ **not for the
+reason an earlier version of this docstring gave.** It said `dω = 0` was blocked on Mathlib's absent
+manifold exterior calculus. The real obstruction is **dimension parity**: `ℂℙⁿ⁻¹ × AddCircle 1` has
+real dimension `2n-1`, which is odd, and no odd-dimensional manifold admits a symplectic — hence a
+Kähler — structure. More tooling would not fix it. The successor construction moves to
+`KSigma = ℂℙⁿ⁻¹ × T²` (real dimension `2n`, even), putting the Born arcs on one torus coordinate;
+see `CircleFibre.lean`'s scope note and the ★★ `BACKLOG.md` row. The fibre measure is also exhibited
+as Haar, not shown to be a Liouville measure.
+
+⚠️ **AND THIS IS A PARALLEL CONSTRUCTION, NOT A MIGRATION (corrected 2026-07-30).** The commit that
+landed this file was headlined "the record layer now runs on the compact fibre", and the ★★ BACKLOG
+row recorded the re-plumbing as DONE. **Both overstated it.** What exists is a *compact counterpart*
+of the record semantics, proved in full. The corpus's actual capstones — `Measurement.lean`,
+`RecordLayerClosure.lean`, `FiniteQMClosure.lean`, `KSigmaRecord.lean` — still run on the `ℝ` fibre
+with `fibreTypicality`, and nothing outside `AxiomAudit.lean` imports this module. Retiring the `ℝ`
+closure is future work.
+
+And this is the *fibre* half: the general-`N` A7 question of whether context-fixed regions exist at
+all is ⏸ parked, not settled (`specs/sigma-fibre-contextuality.md`).
 
 ## References
 

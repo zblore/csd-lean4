@@ -30,17 +30,26 @@ vector. That is **feature (2)** of the §3c decomposition, and it is what this f
 * `fibreTypicality_bornCell_eq_momentMap` — the fibre typicality of the record event of outcome `i`
   equals the moment-map weight: the record-layer Born rule stated in Kähler/moment-map terms.
 
-## The residual is not a wall — it is LLN over the unknown microstate
+## The STATISTICAL residual is not a wall — it is LLN over the unknown microstate
 
 `DeIsolationInteraction` packages the interface a de-isolation flow presents to the fibre: a measurable
 pointer whose basins carry the (moment-map) rates. From it the Born outcome distribution is a
 **theorem** (`DeIsolationInteraction.born`), and its basins carry the moment-map weights
-(`DeIsolationInteraction.basin_momentMap`). There is **no separate dynamical problem to solve**: the
-de-isolation flow is just the deterministic microstate→basin map (which is what a measurement *context*
-is), and the probabilistic content is the plain **law of large numbers over the unknown initial
-microstate** (`SigmaLayer/Measurement.lean`, `bornMeasurement_frequency`) — randomness is ignorance of
-the initial condition, the standard Papers A/D typicality story. This file grounds the rates in the
-Kähler moment map; the statistics are LLN. Foundational-triple, no `sorry`.
+(`DeIsolationInteraction.basin_momentMap`). *Given the basins*, no extra stochastic postulate is
+needed: the de-isolation flow is the deterministic microstate→basin map (which is what a measurement
+*context* is), and the probabilistic content is the plain **law of large numbers over the unknown
+initial microstate** (`SigmaLayer/Measurement.lean`, `bornMeasurement_frequency`) — randomness is
+ignorance of the initial condition, the standard Papers A/D typicality story. This file grounds the
+rates in the Kähler moment map; the statistics are LLN. Foundational-triple, no `sorry`.
+
+⚠️ **CORRECTION 2026-07-30.** This section previously read "there is **no separate dynamical problem
+to solve**". That was wrong, and it contradicted `DeIsolationFlow.lean`, which states the obligation
+correctly. What is dissolved is the *statistical* residual — the need for a stochastic postulate on
+top of the basins. What is **not** dissolved is the **dynamical** one: `basin_rate` is a *hypothesis
+field*, and no interaction Hamiltonian `H_int(M)` whose flow generates those basins is constructed
+anywhere in the corpus. That is the open Paper D obligation (`DeIsolationFlow.lean`, plan §3c, step
+2b′), and this file does not touch it. Reading "the rates are the moment map" as "the dynamics are
+solved" is exactly the inference this note exists to block.
 
 ## References
 `specs/record-layer-plan.md` §3c (the first-passage race; step 2b′, feature 2); `LF4/MomentMap.lean`

@@ -48,12 +48,25 @@ This file supplies the fibre half: **the Born partition, on the circle.**
 ## Scope — what this does and does not settle
 
 It gives a **compact fibre carrying the active Born partition**, which is the piece A1 was missing.
-It does **not** by itself make the fibred `Σ` a Paper C A1 ontic surface: the **Kähler** structure
-on the fibre is not constructed (`dω = 0` needs manifold exterior calculus Mathlib lacks — see the
-scoping decision in `reconstruction-status.md` §2a), and the fibre measure is not *shown* to be a
-Liouville measure, only exhibited as Haar. The remaining record-layer modules
+It does **not** by itself make the fibred `Σ` a Paper C A1 ontic surface, and the fibre measure is
+not *shown* to be a Liouville measure, only exhibited as Haar. The remaining record-layer modules
 (`FibreRecord`, `Measurement`, `RecordLayerClosure`) still run on the `ℝ` fibre and would need
 re-plumbing onto this one; that is mechanical but not done here.
+
+⚠️ **A SINGLE CIRCLE CANNOT COMPLETE A1 — a dimension-parity fact, corrected 2026-07-30.** An earlier
+version of this docstring said the missing Kähler structure was blocked on Mathlib's absent manifold
+exterior calculus. **That was a misdiagnosis.** `ℂℙⁿ⁻¹` has real dimension `2n-2`, so
+`ℂℙⁿ⁻¹ × AddCircle 1` has real dimension `2n-1` — **odd**. A symplectic form needs `ωᵏ` as a volume
+form, so no odd-dimensional manifold carries one, hence none carries a Kähler structure. The A1
+obstruction here is therefore **not** missing tooling: it would survive any amount of Mathlib API.
+(The same parity objection applies retroactively to `FibredSigma`'s `ℂℙⁿ⁻¹ × ℝ`, also `2n-1`.)
+
+**The fix is already in the corpus and is cheap.** `LF4/KahlerInstance.lean` has
+`KTorus = AddCircle 1 × AddCircle 1` and `KSigma N = CPN N × KTorus`, of real dimension `2n` —
+**even**, and a product of Kähler manifolds. The intended successor construction puts *this* file's
+`circleCell` on the **first** torus coordinate, leaving the second as its symplectic partner. Every
+theorem below is stated about one `AddCircle 1` and transports to that factor; what is missing is
+the product-measure step, not new fibre mathematics. See `specs/BACKLOG.md` (the ★★ row).
 
 ## References
 

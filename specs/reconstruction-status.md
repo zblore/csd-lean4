@@ -62,13 +62,13 @@ This is the canonical map of *what the Lean corpus formalises against each Paper
 
 | Paper C axiom | Lean status |
 |---|---|
-| **A1** compact Kähler ontic surface | **Partial.** Compactness and the *pointwise* Kähler compatibility core are represented (`IsFubiniStudyKahler`, `fubiniStudy_pointwise_kahler_compatibility`); full manifold exterior calculus (`dω=0`, `ωⁿ/n! = μ_FS`) is not formalised (no Mathlib API). |
+| **A1** compact Kähler ontic surface | **Partial.** Compactness and the *pointwise* Kähler compatibility core are represented (`IsFubiniStudyKahler`, `fubiniStudy_pointwise_kahler_compatibility`); full manifold exterior calculus (`dω=0`, `ωⁿ/n! = μ_FS`) is not formalised (no Mathlib API). ⚠️ **Separately (2026-07-30): the *fibred* Σ's A1 status is a dimension-parity question, not a tooling one** — `ℂℙⁿ⁻¹ × ℝ` (`FibredSigma`) and `ℂℙⁿ⁻¹ × AddCircle 1` (`CircleFibre`) both have real dimension `2n-1`, **odd**, so neither admits *any* symplectic, hence Kähler, structure. Only `KSigma = ℂℙⁿ⁻¹ × T²` (dimension `2n`) can. See §2a. |
 | **A2** Hamiltonian ontic dynamics | **Partial.** A measure-preserving one-parameter group flow is formalised (`ConstraintDynamics.flow`, `flow_preserves`); a *generic* ontic Hamiltonian vector field `X_H` on `Σ` is not — the witness uses the projected `e^{-itH}` lift. |
 | **A3** smooth many-to-one projection | **Partial interface, concrete witness.** Lean requires *measurability* of `π` (not smoothness); the product witness `π = Prod.fst` is genuinely many-to-one (the `T²` fibre). |
 | **A4** pushforward measure `π_*μL = μ_FS` | **Proved for the witness** (`productSector_hasFubiniStudyPushforward`, B1) **and forced under full unitary symmetry** (`localised_sectorPostulate_capstone`); **not derived** from arbitrary ontic dynamics. The witness has `μL = μFS ⊗ vol` built in. |
 | **A5** quantum-effective Hamiltonians (projectability) | **Exact `ε=0` represented.** The exact fibre-invariant / projectable case `H = h∘π` is formalised (the projected flow closes and is `e^{-itH}` on rays). The *approximate* `(ε, T)`-projectability (`sup‖d(δH)|_V‖ ≤ ε`) is **not** formalised. |
 | **A6** composites + marginal stability | **Partial.** Operational tensor structure, reduced states and no-signalling exist (`compositeTensorEquiv`, `compositeAlgReconstruction`, `tensorSector_no_signalling`); the general **non-factorising ontic composite** architecture (`Σ_AB ≠ Σ_A × Σ_B` as a primitive) is not reconstructed. |
-| **A7** context-defined measurement partitions | **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. Remaining: the general-`N` context-fixed partition — and here we learned a **structural fact about Σ** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)): a base-only, `U(N)`-covariant, nonnegative context-fixed density **cannot** reproduce Born for `N ≥ 3` (proven numerically + operator-theoretically; the `CP¹=S²` antipode has no analogue — and this is **not** Gleason, CSD being contextual). For `N ≥ 3` the contextuality necessarily lives in the **fibre** of Σ (a Born fibre-partition exists — Phase-2b Gumbel/softmax); deriving that mechanism from a de-isolation dynamics is the open frontier. So A7-as-base-regions is a qubit accident, not the general form. The pinned `FiniteQMClosure` field still names the preparation-indexed `bornRegion ψ'` cells (a mechanical residue; `KSigmaRecord.born_frequency_region_eq_record` shows its region already *is* the record-layer event). |
+| **A7** context-defined measurement partitions | **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. Remaining: the general-`N` context-fixed partition. ⚠️ **This row previously said a base-only, `U(N)`-covariant, nonnegative context-fixed density "**cannot**" reproduce Born for `N ≥ 3`, "proven numerically + operator-theoretically". That is an overclaim and is retracted (it should have gone when the same claim was retracted from `BACKLOG.md` on 2026-07-28; it survived here — a staleness bug, corrected 2026-07-30).** What is actually established is a chain of **necessary conditions** on such a density (`SigmaLayer/ContextFixedA7*.lean`): it is confined to measure `≤ 1/n` and vanishes below `(n−1)/n`, with the `N=2` / `N≥3` threshold confirmed three independent ways. That constrains a base-only construction; it does **not** refute one, and no construction has been exhibited either. **General-`N` A7 is unresolved in both directions and is ⏸ parked** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)). The working architectural conclusion — that at `N ≥ 3` contextuality should live in the **fibre** of Σ — is what the parked chain *motivates*, not what it proves; a Born fibre-partition exists (Phase-2b), but its mechanism is posited, not derived from a de-isolation dynamics. So A7-as-base-regions is proved only at the qubit, where `CP¹=S²` supplies an antipode with no `N≥3` analogue. (And this is **not** Gleason — CSD is contextual.) The pinned `FiniteQMClosure` field still names the preparation-indexed `bornRegion ψ'` cells (a mechanical residue; `KSigmaRecord.born_frequency_region_eq_record` shows its region already *is* the record-layer event). |
 
 ### 2a. Audit of this map (2026-07-29) — and the scoping decision
 
@@ -89,6 +89,11 @@ should not be counted against the reconstruction.
   API that Mathlib does not have. The *formalizable core is done and consumed*
   (`IsFubiniStudyKahler`, proved axiom-free, no longer a `True` placeholder). `IsKahlerSector` is
   the slot to strengthen if Mathlib ever grows the API.
+  ⚠️ **Scope of this bullet, narrowed 2026-07-30.** It covers the exterior calculus **on `KSigma`**
+  and nothing else. It was being cited to excuse the *fibred* Σ's missing Kähler structure as well —
+  including by `CircleFibre.lean` and by the ★★ `BACKLOG.md` row. **That citation was wrong.** The
+  fibred Σ's problem is dimension parity (see the ★ paragraph below), which no Mathlib API can
+  repair. Do not use this bullet to classify an odd-dimensional arena as "scoped".
 * **A3, smoothness of `π`** — Lean requires *measurability*, which is what every downstream proof
   actually uses. Smoothness needs the same absent differential-geometry API. Nothing is weakened by
   the substitution; the witness `π = Prod.fst` is genuinely many-to-one.
@@ -124,9 +129,33 @@ but "is the *fibred* Σ a compact Kähler sector at all?" is a **different and u
 API. Since the A7 work concluded that contextuality lives in the fibre, this is now the
 load-bearing question. `BACKLOG.md` ★★ row.
 
-**Net for "finite QM from Σ": two rows permanently scoped (A1-exterior, A3), one closed as a posit
-with the symmetry-forcing result (A4), and four genuinely open (A2, A5, A6, A7) plus the fibred-Σ
-question.** That is the honest distance to closed.
+**★ UPDATE 2026-07-30 — the fibre swap half-landed, and the parity fact that reclassifies the rest.**
+Two modules landed on 2026-07-29/30. `SigmaLayer/CircleFibre.lean` puts the active Born partition on
+a **compact** fibre `AddCircle 1`, with Haar a genuine probability measure and cells carrying exactly
+the Born weights; `SigmaLayer/CircleRecord.lean` gives the compact counterpart of the P5 record
+semantics, with `ae_total` coming out *stronger* than on `ℝ` (whole-space, not a hand-chosen window).
+Two corrections attach to that work:
+
+* **It is a parallel construction, not a migration.** The landing commit was headlined "the record
+  layer now runs on the compact fibre" and the ★★ BACKLOG row logged the re-plumbing as DONE. Both
+  overstated it. `Measurement.lean`, `RecordLayerClosure.lean`, `FiniteQMClosure.lean` and
+  `KSigmaRecord.lean` still run on `ℝ` with `fibreTypicality`, and nothing outside `AxiomAudit.lean`
+  imports the circle modules. The accurate claim is *a compact counterpart of the record semantics
+  has been proved.*
+* **A single circle cannot complete A1, and this is not a tooling gap.** `ℂℙⁿ⁻¹ × AddCircle 1` has
+  real dimension `2n-1` — **odd** — and no odd-dimensional manifold admits a symplectic form (`ωᵏ`
+  must be a volume form), hence none admits a Kähler structure. The same applies retroactively to
+  `FibredSigma`'s `ℂℙⁿ⁻¹ × ℝ`. So the fibred Σ's missing Kähler structure was **never** blocked on
+  Mathlib's absent exterior calculus, and classifying it under (i) above was a **misclassification**.
+  The fix is in the corpus already: `KSigma = ℂℙⁿ⁻¹ × T²` (`LF4/KahlerInstance.lean`,
+  `KTorus = AddCircle 1 × AddCircle 1`) has real dimension `2n`, is even, compact, and is a product
+  of Kähler manifolds. The successor construction puts `circleCell` on **one** torus coordinate and
+  keeps the second as its symplectic partner. Effort **S–M**, and it needs no new fibre mathematics.
+
+**Net for "finite QM from Σ": two rows permanently scoped (A1-exterior *on `KSigma`*, A3), one closed
+as a posit with the symmetry-forcing result (A4), and four genuinely open (A2, A5, A6, A7) plus the
+fibred-Σ question — which is now a *tractable* item on `T²` rather than a scoped one.** That is the
+honest distance to closed.
 
 
 ### 2a. Target inventory (T1–T16) — inhabited reconstruction targets
