@@ -323,6 +323,7 @@ public import CsdLean4.SigmaLayer.RecordLayerClosure
 public import CsdLean4.SigmaLayer.ContextFixedA7
 public import CsdLean4.SigmaLayer.ContextFixedA7FS
 public import CsdLean4.SigmaLayer.CircleFibre
+public import CsdLean4.SigmaLayer.CircleRecord
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -818,6 +819,44 @@ arithmetic. -/
 /-- info: 'CSD.SigmaLayer.fs_balanced_abundance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.fs_balanced_abundance
+
+-- THE RE-PLUMBING (2026-07-29, SigmaLayer/CircleRecord.lean): the RECORD LAYER on the compact fibre.
+-- CircleFibre.lean moved the Born PARTITION to AddCircle 1; this moves the rest with it -- the P5
+-- record semantics, isolation-as-conditioning, measurement-as-(context + unknown microstate), the
+-- Born probabilities, and a.e. totality of the readout.
+-- ★ The RecordSignature is reused VERBATIM (fibreSignature: contexts are nonneg rate vectors,
+-- outcomes are Fin n) because it never mentioned the fibre at all -- so swapping R for the circle
+-- touches only the SEMANTICS, the assignment of ontic events. That is why nothing physical changes.
+-- circleRecordSemantics (P5 on CompactSpace CircleFibre: events measurable + mutually exclusive);
+-- compatibleSet_circle_single (P6 -- isolation = conditioning on the arc); circleOutcome_eq_record
+-- (the ontic selection IS the record); circleBornMeasurement_prob (= ||psi i||^2, the SAME weight
+-- the R fibre gave); circleBornMeasurement_ae_total.
+-- ★ NOTE THE IMPROVEMENT in ae_total: on R the statement had to be RESTRICTED to [0,1) by hand,
+-- because Lebesgue measure on the line is infinite. On the circle it is a statement about the WHOLE
+-- space, because the whole space has measure one. That is the compactness paying for itself.
+-- ⚠️ SCOPE unchanged: compactness + Haar probability measure YES; A1 in full NO (no Kahler structure
+-- on the fibre; dw=0 needs manifold exterior calculus Mathlib lacks -- permanently scoped, see
+-- reconstruction-status.md 2a). Measure exhibited as Haar, not SHOWN Liouville. And the general-N A7
+-- question is PARKED, not settled (specs/sigma-fibre-contextuality.md).
+/-- info: 'CSD.RecordLayer.circleRecordSemantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleRecordSemantics
+
+/-- info: 'CSD.RecordLayer.compatibleSet_circle_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compatibleSet_circle_single
+
+/-- info: 'CSD.RecordLayer.circleOutcome_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleOutcome_eq_record
+
+/-- info: 'CSD.RecordLayer.circleBornMeasurement_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleBornMeasurement_prob
+
+/-- info: 'CSD.RecordLayer.circleBornMeasurement_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleBornMeasurement_ae_total
 
 -- THE FIBRE SWAP (2026-07-29, SigmaLayer/CircleFibre.lean) -- the Born partition on a COMPACT fibre.
 -- ⚠️ THE DIAGNOSIS THIS FIXES: the corpus had TWO record-layer constructions and COMPACTNESS AND
