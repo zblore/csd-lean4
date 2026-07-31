@@ -326,6 +326,7 @@ public import CsdLean4.SigmaLayer.CircleFibre
 public import CsdLean4.SigmaLayer.CircleRecord
 public import CsdLean4.SigmaLayer.TorusFibre
 public import CsdLean4.SigmaLayer.GlobalBasin
+public import CsdLean4.SigmaLayer.GlobalRecordClosure
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1017,6 +1018,45 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.globalBasin_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.globalBasin_born
+
+-- ★★ THE RECORD-LAYER CAPSTONE, MIGRATED (2026-07-31, SigmaLayer/GlobalRecordClosure.lean).
+-- RecordLayerClosure certifies the record layer on the fibre Sigma = R with fibreTypicality, for the
+-- context bornContext psi -- BUILT FROM THE PREPARATION. This bundle certifies THE SAME FIVE FACTS on
+-- the corpus's actual compact sector KSigma = CPN x T^2, for a ContextField -- built from the
+-- APPARATUS ALONE. What moved: the arena (R, odd-dimensional, -> KSigma, even), the context type
+-- (bornContext psi -> ContextField), the measure (fibreTypicality -> epistemicMeasure p).
+-- ★ THE RECORD EVENT IS NOW A FUNCTION OF (context, outcome, time) AND NOTHING ELSE. That is visible
+-- in the TYPE of globalRecordSemantics and needs no theorem: the SAME set globalBasin c i serves
+-- every preparation, and only the epistemic measure moves. Under fibreRecordSemantics the event was
+-- cdfCell (bornRate psi), so it moved with psi. That is the defect A7 objected to.
+-- ★ globalOutcome is LITERALLY circleOutcome read at the point's own base, so the ontic selection
+-- needs no new machinery -- globalOutcome_eq_some_iff is circleOutcome_eq_some_iff plus unfolding.
+-- ★ ae_total STRENGTHENS: on R it had to be stated relative to Ico 0 1 because Lebesgue on the line
+-- is infinite; here it is about the WHOLE SPACE, which has measure one.
+-- THAT THE FIVE FIELDS ARE OTHERWISE IDENTICAL is the evidence that neither defect was ever
+-- load-bearing for the record layer's CONTENT.
+-- ⚠️ SCOPE, unchanged from GlobalBasin and repeated because this is the capstone. (1) epistemicMeasure
+-- is the EPISTEMIC measure, a definition not a disintegration, and NOT the Liouville measure.
+-- (2) KINEMATIC -- no H_int(M); the Paper D obligation is untouched and a certified readout is not a
+-- dynamical account of measurement. (3) Closes the PREPARATION-INDEXING defect, not general-N A7
+-- outright. (4) RecordLayerClosure is SUPERSEDED, NOT DELETED -- still true, still consumed -- and
+-- FiniteQMClosure still carries the older vnPointerOutcome readout; swapping THAT is a separate
+-- migration on the productDynamics engine and is NOT done here.
+/-- info: 'CSD.RecordLayer.globalOutcome_eq_some_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalOutcome_eq_some_iff
+
+/-- info: 'CSD.RecordLayer.compatibleSet_global_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compatibleSet_global_single
+
+/-- info: 'CSD.RecordLayer.globalRecordClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalRecordClosure
+
+/-- info: 'CSD.RecordLayer.globalRecordClosure_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalRecordClosure_born
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

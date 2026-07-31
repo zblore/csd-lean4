@@ -30,6 +30,28 @@ for the Born context of a unit state `ψ`:
   (the record-layer form of the Born rule);
 * `ae_total` — the record events cover the fibre up to a null set (the readout is a.e. total).
 
+## ⚠️ SUPERSEDED 2026-07-31 by `SigmaLayer/GlobalRecordClosure.lean`
+
+This bundle remains **true and is not deprecated**, but it is no longer the record layer's best
+statement. Two defects, both fixed by the successor:
+
+* **The context is built from the preparation.** Every field here is stated for `bornContext ψ`, so
+  the record *event* is `cdfCell (bornRate ψ)` and moves with `ψ`. Paper C A7 asks for regions fixed
+  by the apparatus; `GlobalRecordClosure` uses a `ContextField` — a rate field on the ontic base —
+  and its event `globalBasin c i` is the same set for every preparation, with only the epistemic
+  measure moving.
+* **The arena is `ℝ`.** `ℂℙⁿ⁻¹ × ℝ` has odd real dimension `2n-1`, so it admits no symplectic — hence
+  no Kähler — structure, and cannot be a Paper C A1 surface. (This is a *parity* fact, not a Mathlib
+  gap; see `specs/reconstruction-status.md` §2a.) The successor runs on the corpus's actual compact
+  sector `KSigma = ℂℙⁿ⁻¹ × T²`, of even dimension `2n`.
+
+The five closure fields are otherwise identical, which is the evidence that neither defect was ever
+load-bearing for the record layer's *content*. `ae_total` also strengthens: here it must be stated
+relative to `Ico 0 1` because Lebesgue measure on the line is infinite; there it is about the whole
+space, which has measure one.
+
+Kept rather than deleted because it is consumed and true. New work should cite the successor.
+
 ## Honest scope (what step 5 does and does not do)
 
 This is the record-layer readout as a first-class, certified bundle — the replacement candidate for
