@@ -27,16 +27,27 @@
       ],
       "relevant_declarations": [
         {
-          "name": "relativeEntropy_dataProcessing_channel_ge",
+          "name": "QIT.State.relativeEntropy_dataProcessing_channel_ge",
           "file": "QIT/Information/Entropy/RelativeEntropyDPI.lean",
-          "why": "Data-processing inequality for quantum relative entropy -- the upstream discharge of this corpus's `hDPI` hypothesis."
+          "why": "Data-processing inequality for quantum relative entropy -- the upstream discharge of this corpus's `hDPI` hypothesis.",
+          "statement": "∀ {a b} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (rho sigma : State a) (Phi : Channel a b), rho.relativeEntropy sigma ≥ (Phi.applyState rho).relativeEntropy (Phi.applyState sigma)",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "note": "STRONGER than this corpus needs: stated for an ARBITRARY channel, where `hDPI` requires only the partial-trace instance."
         },
         {
-          "name": "condMutualInfo_nonneg",
+          "name": "QIT.State.condMutualInfo_nonneg",
           "file": "QIT/Information/Entropy/StrongSubadditivity.lean",
-          "why": "Non-negativity of conditional mutual information, i.e. strong subadditivity."
+          "why": "Non-negativity of conditional mutual information, i.e. strong subadditivity.",
+          "statement": "∀ {a b c} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype c] [DecidableEq c] (ρ : State ((a × b) × c)), 0 ≤ ρ.condMutualInfo",
+          "axioms": ["propext", "Classical.choice", "Quot.sound"]
         }
       ],
+      "independent_verification": {
+        "date": "2026-07-31",
+        "method": "Cloned at the commit above, built standalone on its OWN toolchain (Lean v4.30.0), then `#print axioms` on both declarations via `lake env lean`.",
+        "result": "Both build clean and depend on exactly the foundational triple [propext, Classical.choice, Quot.sound] -- the same footprint this corpus holds itself to. Repo-wide: 0 `axiom`, 0 `sorry` across 322 modules.",
+        "what_this_does_NOT_establish": "That their `relativeEntropy` / `State` / `Channel` definitions agree with this corpus's `relEntropy` / `Matrix` + `PosSemidef` / `partialTraceRight` up to the intended correspondence. THAT is exactly the bridge's job and it has NOT been checked. The theorem is verified; the translation is not."
+      },
       "status": "CITED, NOT IMPORTED. Lake resolves one version per dependency and the toolchains differ (Lean v4.30.0 / Mathlib tag v4.30.0 upstream, vs v4.33.0-rc1 / Mathlib master c732b96d here), so no dependency edge exists. This corpus's SSA therefore REMAINS CONDITIONAL on `hDPI`. The citation records where the wall is climbed; it does not climb it here.",
       "planned_use": "A separate `csd-qit-bridge` package depending on both projects BY TAG, holding the Matrix<->State adapter, discharging `hDPI`, and exporting unconditional SSA. Neither project merges into the other; CsdLean4 keeps its Mathlib-only dependency footprint."
     },

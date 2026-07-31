@@ -304,8 +304,20 @@ genuine deep input and not a restatement of SSA. We apply it to the single traci
 
 `[LeanQIT2026]` (`QuAIR/Lean-QIT`, Apache-2.0) proves DPI and SSA:
 
-* `relativeEntropy_dataProcessing_channel_ge` — `QIT/Information/Entropy/RelativeEntropyDPI.lean`
-* `condMutualInfo_nonneg` — `QIT/Information/Entropy/StrongSubadditivity.lean`
+* `QIT.State.relativeEntropy_dataProcessing_channel_ge` — `.../Entropy/RelativeEntropyDPI.lean`
+  `∀ (rho sigma : State a) (Phi : Channel a b), D(rho‖sigma) ≥ D(Phi rho ‖ Phi sigma)`
+* `QIT.State.condMutualInfo_nonneg` — `.../Entropy/StrongSubadditivity.lean`
+  `∀ (ρ : State ((a × b) × c)), 0 ≤ ρ.condMutualInfo`
+
+**Independently verified 2026-07-31**: cloned at commit `48d4515`, built standalone on its *own*
+toolchain, and `#print axioms` run on both — each depends on exactly `[propext, Classical.choice,
+Quot.sound]`, the same footprint this corpus holds itself to. Their DPI is stated for an **arbitrary
+channel**, i.e. strictly stronger than `hDPI`, which needs only the partial-trace instance.
+
+⚠️ **What that verification does NOT establish:** that their `relativeEntropy` / `State` / `Channel`
+agree with this corpus's `relEntropy` / `Matrix` + `PosSemidef` / `partialTraceRight` under the
+intended correspondence. **The theorem is verified; the translation is not.** Establishing it is
+precisely the bridge's job, and until it exists the citation is a pointer, not a discharge.
 
 ⚠️ **This changes nothing about what THIS file proves. SSA here remains conditional on `hDPI`, and
 that is the correct reading of the corpus today.** The citation records that the wall is *known to be
