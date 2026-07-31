@@ -325,6 +325,7 @@ public import CsdLean4.SigmaLayer.ContextFixedA7FS
 public import CsdLean4.SigmaLayer.CircleFibre
 public import CsdLean4.SigmaLayer.CircleRecord
 public import CsdLean4.SigmaLayer.TorusFibre
+public import CsdLean4.SigmaLayer.GlobalBasin
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -952,6 +953,70 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.torusBornCell_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusBornCell_ae_total
+
+-- MOMENT-MAP REGULARITY (2026-07-30, LF4/MomentMap.lean) -- the prerequisite for the basin.
+-- momentMap is DEFINED through p.rep, a Classical.choice representative, so it cannot be attacked
+-- directly: Projectivization.rep is not continuous out of P, and no unfolding makes it so. The route
+-- is the QUOTIENT -- the coordinate ratio is continuous on the nonzero subtype and scale-invariant
+-- (momentRatio_smul), and mk' is a quotient map (Projectivization.isQuotientMap_mk'), so the
+-- descended function is continuous. Measurability is then IMMEDIATE, because P K V carries the BOREL
+-- sigma-algebra of that same topology (Projectivization.instBorelSpace).
+-- ⚠️ ESTIMATE CORRECTION: this was logged as effort M on the assumption the infrastructure was
+-- missing. It is S -- Projectivization/Topology.lean and Projectivization/MeasureSpace.lean already
+-- staged continuous_iff_continuous_comp_mk' and the Borel instance. The row was wrong, not the work.
+/-- info: 'CSD.LF4.continuous_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_momentMap
+
+/-- info: 'CSD.LF4.measurable_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.measurable_momentMap
+
+-- ★★ THE CONTEXT-FIXED GLOBAL BASIN (2026-07-30, SigmaLayer/GlobalBasin.lean) -- Paper C A7, fibred.
+-- THE DEFECT THIS CLOSES: the corpus's record-layer partition is cdfCell (bornRate psi) -- built from
+-- the PREPARATION -- so it was never the Omega_i(M) Paper C A7 asks for. QubitBorn does it at N = 2;
+-- the general-N BASE-ONLY question is PARKED (ContextFixedA7*, sigma-fibre-contextuality.md).
+-- THE CONSTRUCTION (due to an external review of 29c6afd): B_i = {(p, t1, t2) : t1 in circleCell
+-- (rate p) i}, with the rate vector read off AT THE ONTIC POINT p. NO psi APPEARS IN THE DEFINITION,
+-- so the basin is a function of the apparatus context alone. ContextField bundles what a context
+-- actually contributes: a measurable simplex-valued rate FIELD on the base.
+-- measurableSet_globalBasin: cut out by two inequalities between measurable real functions
+-- (measurable_rep, the rate field, its partial sums) -- this is the step measurable_momentMap unblocks.
+-- globalBasin_prob: conditioning the epistemic state on p returns rate p i, via Measure.prod_apply +
+-- lintegral_dirac and the TorusFibre slice (preimage_globalBasin). globalBasin_born: at preparation
+-- psi the probability is EXACTLY ||<e_i, psi>||^2 -- the Born rule from a partition that never
+-- mentions psi. globalBasin_pairwiseDisjoint, globalBasin_ae_total.
+-- ★ NOT CIRCULAR: bornRate_eq_momentMap already has the rates FORCED by the Kahler structure and the
+-- T^n action, not carved to a target. ★ DOES NOT COLLIDE with the parked N>=3 chain, which constrains
+-- BASE-ONLY densities; this partition is genuinely FIBRED, exactly where the fibre-contextuality
+-- finding said it must live.
+-- ⚠️ SCOPE. (1) dirac p (x) Haar is the EPISTEMIC measure, NOT the Liouville measure. Conditioning on
+-- a preparation conditions on a mu_FS-NULL set, so the Dirac product is taken as a DEFINITION rather
+-- than obtained by disintegration -- a modelling choice, not a theorem. kMuL = mu_FS (x) vol remains
+-- the Liouville measure. (2) KINEMATIC: no H_int(M) generating these basins is constructed; the Paper
+-- D obligation is untouched. (3) This does NOT close general-N A7 outright -- it closes the
+-- PREPARATION-INDEXING defect. Whether Paper C intends the regions to be BASE-ONLY (in which case the
+-- parked chain still governs) is a question about the axiom, not about this file. (4) KSigma is still
+-- not proved Kahler and the fibre measure is still Haar, not shown Liouville.
+/-- info: 'CSD.RecordLayer.measurableSet_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_globalBasin
+
+/-- info: 'CSD.RecordLayer.globalBasin_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.globalBasin_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_prob
+
+/-- info: 'CSD.RecordLayer.globalBasin_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_ae_total
+
+/-- info: 'CSD.RecordLayer.globalBasin_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_born
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

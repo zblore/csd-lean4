@@ -130,5 +130,55 @@ theorem momentMap_mk_eq_inner_sq (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ �
   rw [momentMap_mk ψ hψ0 i, hψ, one_pow, div_one,
       EuclideanSpace.inner_single_left, map_one, one_mul]
 
+/-! ### Regularity: `momentMap` is continuous, hence measurable
+
+`momentMap` is *defined* through `p.rep`, which is a `Classical.choice` representative — so it
+cannot be attacked directly: `Projectivization.rep` is not continuous as a map out of `ℙ`, and no
+amount of unfolding makes it so. The route is the **quotient**. The coordinate ratio
+`v ↦ ‖vᵢ‖²/‖v‖²` is continuous on the nonzero subtype and scale-invariant (`momentRatio_smul`), and
+`mk'` is a quotient map (`Projectivization.isQuotientMap_mk'`), so the descended function is
+continuous. Measurability is then immediate because `ℙ K V` carries the *Borel* σ-algebra of that
+same topology (`Projectivization.instBorelSpace`).
+
+Needed by the record layer: the context-fixed basin `Bᵢ(M)` is a preimage under
+`(p, θ) ↦ (momentMap p, θ)`, so its measurability rests on exactly this. -/
+
+/-- **The moment-map coordinate is continuous.** Proved by descent through the quotient map `mk'`,
+since `momentMap`'s defining formula goes through the choice-based `rep`. -/
+theorem continuous_momentMap (i : Fin N) :
+    Continuous (fun p : CPN N => momentMap p i) := by
+  rw [Projectivization.continuous_iff_continuous_comp_mk']
+  have hcomp : ((fun p : CPN N => momentMap p i) ∘ (Projectivization.mk' ℂ))
+      = fun v : { v : EuclideanSpace ℂ (Fin N) // v ≠ 0 } =>
+          ‖(v : EuclideanSpace ℂ (Fin N)) i‖ ^ 2 / ‖(v : EuclideanSpace ℂ (Fin N))‖ ^ 2 := by
+    funext v
+    exact momentMap_mk (v : EuclideanSpace ℂ (Fin N)) v.2 i
+  rw [hcomp]
+  have hnum : Continuous fun v : { v : EuclideanSpace ℂ (Fin N) // v ≠ 0 } =>
+      ‖(v : EuclideanSpace ℂ (Fin N)) i‖ ^ 2 :=
+    (((EuclideanSpace.proj (𝕜 := ℂ) i).continuous.comp continuous_subtype_val).norm).pow 2
+  have hden : Continuous fun v : { v : EuclideanSpace ℂ (Fin N) // v ≠ 0 } =>
+      ‖(v : EuclideanSpace ℂ (Fin N))‖ ^ 2 :=
+    (continuous_subtype_val.norm).pow 2
+  exact hnum.div hden fun v => pow_ne_zero _ (norm_ne_zero_iff.mpr v.2)
+
+/-- **The moment map is continuous as a map into the simplex coordinates.** The bundled form, for
+consumers that need all coordinates at once. -/
+theorem continuous_momentMap_vec :
+    Continuous (fun p : CPN N => (momentMap p : Fin N → ℝ)) :=
+  continuous_pi continuous_momentMap
+
+/-- **The moment-map coordinate is measurable.** Immediate from continuity, since `ℙ ℂ V` carries
+the Borel σ-algebra of the quotient topology (`Projectivization.instBorelSpace`). This is the
+prerequisite for the context-fixed basin `Bᵢ(M)` to be a measurable subset of `Σ`. -/
+theorem measurable_momentMap (i : Fin N) :
+    Measurable (fun p : CPN N => momentMap p i) :=
+  (continuous_momentMap i).measurable
+
+/-- **The bundled moment map is measurable.** -/
+theorem measurable_momentMap_vec :
+    Measurable (fun p : CPN N => (momentMap p : Fin N → ℝ)) :=
+  continuous_momentMap_vec.measurable
+
 end LF4
 end CSD

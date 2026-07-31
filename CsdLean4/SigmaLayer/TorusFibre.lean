@@ -78,6 +78,27 @@ open MeasureTheory Set
 
 namespace CSD.RecordLayer
 
+/-! ### A rate-vector helper
+
+`volume_circleCell` and `volume_torusCell` need each CDF cell to fit inside one turn of the circle,
+i.e. `loSum r i + r i ≤ 1`. For a *probability* rate vector that is automatic, and the argument was
+being repeated inline at each use site. Factored out here. -/
+
+/-- **A probability rate vector's CDF cells fit in one turn.** `loSum r j + r j` sums `r` over
+`{k < j} ∪ {j} ⊆ univ`, so it is at most the total, which is `1`. -/
+theorem loSum_add_self_le_one (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (htot : ∑ i, r i = 1)
+    (j : Fin n) : loSum r j + r j ≤ 1 := by
+  classical
+  have hnot : j ∉ Finset.univ.filter (fun k : Fin n => (k : ℕ) < (j : ℕ)) := by simp
+  have hins : loSum r j + r j
+      = ∑ k ∈ insert j (Finset.univ.filter (fun k : Fin n => (k : ℕ) < (j : ℕ))), r k := by
+    rw [Finset.sum_insert hnot, loSum]; ring
+  have hle : ∑ k ∈ insert j (Finset.univ.filter (fun k : Fin n => (k : ℕ) < (j : ℕ))), r k
+      ≤ ∑ k, r k :=
+    Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) (fun k _ _ => hr k)
+  rw [hins]
+  exact le_trans hle (le_of_eq htot)
+
 /-! ### The Born cell on the two-torus -/
 
 /-- **The Born cell on `T²`**: the circle cell in the *first* coordinate, with the second
@@ -146,18 +167,9 @@ theorem torusCell_ae_total (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i)
 
 /-- **Totality for the Born rates**, the form the record layer consumes. -/
 theorem torusBornCell_ae_total (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1) :
-    (volume : Measure LF4.KTorus) (univ \ ⋃ i, torusCell (bornRate ψ) i) = 0 := by
-  refine torusCell_ae_total _ (bornRate_nonneg ψ) (fun j => ?_) (sum_bornRate_unit ψ hψ)
-  classical
-  have hnot : j ∉ Finset.univ.filter (fun k : Fin n => (k : ℕ) < (j : ℕ)) := by simp
-  have hins : loSum (bornRate ψ) j + bornRate ψ j
-      = ∑ k ∈ insert j (Finset.univ.filter (fun k : Fin n => (k : ℕ) < (j : ℕ))), bornRate ψ k := by
-    rw [Finset.sum_insert hnot, loSum]; ring
-  have hle : ∑ k ∈ insert j (Finset.univ.filter (fun k : Fin n => (k : ℕ) < (j : ℕ))), bornRate ψ k
-      ≤ ∑ k, bornRate ψ k :=
-    Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
-      (fun k _ _ => bornRate_nonneg ψ k)
-  rw [hins]
-  exact le_trans hle (le_of_eq (sum_bornRate_unit ψ hψ))
+    (volume : Measure LF4.KTorus) (univ \ ⋃ i, torusCell (bornRate ψ) i) = 0 :=
+  torusCell_ae_total _ (bornRate_nonneg ψ)
+    (loSum_add_self_le_one _ (bornRate_nonneg ψ) (sum_bornRate_unit ψ hψ))
+    (sum_bornRate_unit ψ hψ)
 
 end CSD.RecordLayer
