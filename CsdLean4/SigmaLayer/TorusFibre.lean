@@ -78,6 +78,8 @@ open MeasureTheory Set
 
 namespace CSD.RecordLayer
 
+variable {n : ℕ}
+
 /-! ### A rate-vector helper
 
 `volume_circleCell` and `volume_torusCell` need each CDF cell to fit inside one turn of the circle,

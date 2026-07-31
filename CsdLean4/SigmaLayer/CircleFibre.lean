@@ -82,6 +82,8 @@ open MeasureTheory Set
 
 namespace CSD.RecordLayer
 
+variable {n : ℕ}
+
 /-! ### The compact fibre -/
 
 /-- The **compact record fibre**: the unit circle, the same factor the corpus's `KTorus` is built

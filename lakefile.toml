@@ -1,6 +1,15 @@
 name = "csd-lean4"
 defaultTargets = ["CsdLean4"]
 
+# Kill accidental implicit binders (CONVENTIONS.md §8.4, BACKLOG hardening row).
+# With autoImplicit ON, an unresolved identifier in a signature is silently
+# auto-bound as a new implicit variable instead of erroring — so a typo or a
+# missing namespace qualifier becomes a silent generalisation. Landed 2026-07-31
+# after `CPN N` (needing `LF4.CPN N`) was auto-bound rather than reported, which
+# surfaced as a cascade of unrelated elaboration errors.
+# Package-level so it applies to BOTH lean_lib targets, tests included.
+leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
+
 # Pin Mathlib to a specific commit for reproducible builds.
 # Bump in lockstep with `lean-toolchain` (currently v4.33.0-rc1).
 [[require]]

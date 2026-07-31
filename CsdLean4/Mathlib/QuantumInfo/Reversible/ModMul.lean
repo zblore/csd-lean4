@@ -130,7 +130,7 @@ theorem multiplier_cnot (adders : List (Circuit m)) :
 
 /-- The first `k` slices of a ripple adder cost `2 * k` Toffolis (derived, induction on `k` composing
 `cost_comp_toffoli_count` + `fullAdder_toffoli`). -/
-theorem ripplePrefix_toffoli (L : RippleLayout m n) (k : ℕ) :
+theorem ripplePrefix_toffoli {n : ℕ} (L : RippleLayout m n) (k : ℕ) :
     (circuitCost (ripplePrefix L k)).toffoli = 2 * k := by
   induction k with
   | zero => simp [ripplePrefix]
@@ -142,7 +142,7 @@ theorem ripplePrefix_toffoli (L : RippleLayout m n) (k : ℕ) :
     omega
 
 /-- A ripple adder block (`n` slices) costs `2 * n` Toffolis (derived). -/
-theorem rippleCirc_toffoli (L : RippleLayout m n) :
+theorem rippleCirc_toffoli {n : ℕ} (L : RippleLayout m n) :
     (circuitCost (rippleCirc L)).toffoli = 2 * n := ripplePrefix_toffoli L n
 
 /-- A multiplier built from `m'` width-`n` ripple-adder blocks costs `2 * n * m'` Toffolis (derived).

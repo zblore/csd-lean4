@@ -108,7 +108,7 @@ theorem traceRight_add (A B : Matrix (m × n) (m × n) R) :
 end AddCommMonoid
 
 section Smul
-variable [AddCommMonoid R] [Monoid S] [DistribMulAction S R]
+variable {S : Type*} [AddCommMonoid R] [Monoid S] [DistribMulAction S R]
 
 theorem traceRight_smul (c : S) (A : Matrix (m × n) (m × n) R) :
     traceRight (c • A) = c • traceRight A := by

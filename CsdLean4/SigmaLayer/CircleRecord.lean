@@ -75,6 +75,8 @@ open CSD.SigmaLayer
 
 namespace CSD.RecordLayer
 
+variable {n : ℕ}
+
 /-! ### The P5 record semantics on the compact fibre -/
 
 /-- **The circle record semantics (P5) on the compact `Σ`-fibre.** The ontic event of "context `c`
