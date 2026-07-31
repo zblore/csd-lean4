@@ -298,7 +298,31 @@ theorem rhoB_eq_traceC_BC (ρ : Matrix (a × b × c) (a × b × c) ℂ) :
 The hypothesis `hDPI` is the **data-processing inequality for quantum relative entropy under the
 partial trace** (= joint convexity of `D(·‖·)` = Lieb's concavity), stated abstractly so it is the
 genuine deep input and not a restatement of SSA. We apply it to the single tracing-out step
-`ρ_ABC ↦ ρ_AB` (trace `C` from the joint `A,BC` system) with `σ = ρ_A ⊗ ρ_BC ↦ ρ_A ⊗ ρ_B`. -/
+`ρ_ABC ↦ ρ_AB` (trace `C` from the joint `A,BC` system) with `σ = ρ_A ⊗ ρ_BC ↦ ρ_A ⊗ ρ_B`.
+
+### ★ `hDPI` is discharged UPSTREAM — cited, not imported (2026-07-31)
+
+`[LeanQIT2026]` (`QuAIR/Lean-QIT`, Apache-2.0) proves DPI and SSA:
+
+* `relativeEntropy_dataProcessing_channel_ge` — `QIT/Information/Entropy/RelativeEntropyDPI.lean`
+* `condMutualInfo_nonneg` — `QIT/Information/Entropy/StrongSubadditivity.lean`
+
+⚠️ **This changes nothing about what THIS file proves. SSA here remains conditional on `hDPI`, and
+that is the correct reading of the corpus today.** The citation records that the wall is *known to be
+climbed elsewhere, with a precise pointer* — not that we have climbed it. Do not restate SSA as
+unconditional on the strength of this note.
+
+**Why it is cited rather than imported.** Lean-QIT targets Lean `v4.30.0` with Mathlib pinned to tag
+`v4.30.0` (2026-05-26); this corpus is on Lean `v4.33.0-rc1` with Mathlib master `c732b96d`
+(2026-07-20). Lake resolves a single version per dependency, so the two cannot coexist until the
+toolchains reconcile.
+
+**How it will be discharged, when they do.** `hDPI` is stated entirely in *this corpus's* vocabulary
+(`relEntropy`, `Matrix (a × b × c)`, `partialTraceRight`), so discharging it means producing a term of
+that `Prop` — which can be done **outside this repository**. The plan is a separate `csd-qit-bridge`
+package depending on both projects by tag, holding the adapter and the unconditional SSA. Neither
+project merges into the other, and `CsdLean4` keeps its Mathlib-only dependency footprint. See
+`specs/BACKLOG.md` (the operator-convexity L-row) and `REFERENCES.json`. -/
 
 /-- **Strong subadditivity from DPI (the conditional reduction — the K1-C deliverable).**
 

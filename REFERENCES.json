@@ -1,0 +1,58 @@
+{
+  "$comment": [
+    "Machine-readable provenance for the CSD Lean corpus (CONVENTIONS.md §8.2).",
+    "SEEDED 2026-07-31, NOT COMPLETE: this file was created to carry the Lean-QIT",
+    "citation and currently holds only the entries that already have a concrete",
+    "consumer. The §8.2 obligation -- one entry per source, plus line-precise",
+    "[Key, file:Lstart-Lend] citations in every module docstring -- remains OPEN in",
+    "specs/BACKLOG.md. Do not read the size of this file as the corpus's citation",
+    "coverage; read it as the start of that migration.",
+    "Keys are stable citation handles used from module docstrings."
+  ],
+  "references": [
+    {
+      "key": "LeanQIT2026",
+      "title": "Lean-QIT: quantum information theory in Lean 4",
+      "authors": ["QuAIR Team"],
+      "year": 2026,
+      "kind": "software",
+      "url": "https://github.com/QuAIR/Lean-QIT",
+      "commit": "48d45151754c3f6a5c2c4a46d639526e41bd7456",
+      "commit_date": "2026-07-25",
+      "license": "Apache-2.0",
+      "toolchain": "leanprover/lean4:v4.30.0",
+      "mathlib_rev": "v4.30.0",
+      "cited_by": [
+        "CsdLean4/Mathlib/QuantumInfo/StrongSubadditivity.lean"
+      ],
+      "relevant_declarations": [
+        {
+          "name": "relativeEntropy_dataProcessing_channel_ge",
+          "file": "QIT/Information/Entropy/RelativeEntropyDPI.lean",
+          "why": "Data-processing inequality for quantum relative entropy -- the upstream discharge of this corpus's `hDPI` hypothesis."
+        },
+        {
+          "name": "condMutualInfo_nonneg",
+          "file": "QIT/Information/Entropy/StrongSubadditivity.lean",
+          "why": "Non-negativity of conditional mutual information, i.e. strong subadditivity."
+        }
+      ],
+      "status": "CITED, NOT IMPORTED. Lake resolves one version per dependency and the toolchains differ (Lean v4.30.0 / Mathlib tag v4.30.0 upstream, vs v4.33.0-rc1 / Mathlib master c732b96d here), so no dependency edge exists. This corpus's SSA therefore REMAINS CONDITIONAL on `hDPI`. The citation records where the wall is climbed; it does not climb it here.",
+      "planned_use": "A separate `csd-qit-bridge` package depending on both projects BY TAG, holding the Matrix<->State adapter, discharging `hDPI`, and exporting unconditional SSA. Neither project merges into the other; CsdLean4 keeps its Mathlib-only dependency footprint."
+    },
+    {
+      "key": "Busch2003",
+      "title": "Quantum States and Generalized Observables: A Simple Proof of Gleason's Theorem",
+      "authors": ["Paul Busch"],
+      "year": 2003,
+      "kind": "article",
+      "arxiv_id": "quant-ph/9909073",
+      "doi": "10.1103/PhysRevLett.91.120403",
+      "url": null,
+      "cited_by": [
+        "CsdLean4/LF2/EffectGleason.lean"
+      ],
+      "status": "The effect-Gleason result this corpus PROVES independently as `OperationalPackage.effect_gleason_representation` (2026-07-21), which deleted the last `axiom`. Cited as the source of the statement, not of the proof."
+    }
+  ]
+}

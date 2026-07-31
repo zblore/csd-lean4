@@ -160,7 +160,20 @@ No `axiom` declarations anywhere in the corpus. This is Physlib's hard rule ("ne
 - **Current state.** **Zero** `axiom` declarations. The last one, `busch_effect_gleason`, was **proved and deleted 2026-07-21** — it is now the theorem `OperationalPackage.effect_gleason_representation` in `LF2/EffectGleason.lean` ([`AXIOMS.md §2.2`](AXIOMS.md)). Every corpus export is now foundational-triple only (`propext`, `Classical.choice`, `Quot.sound`).
 - **Enforcement (live).** `scripts/check-claims.sh` sets `DECLARED_AXIOMS=""` and **fails on any `^axiom ` declaration** under `CsdLean4/` (the whitelist is empty now that `busch_effect_gleason` is gone). This complements — does not replace — the `#print axioms` pins in `Tests/AxiomAudit.lean`.
 
-### 8.2 Machine-readable provenance — *policy + to-implement*  (biggest structural win)
+### 8.2 Machine-readable provenance — *policy + SEEDED 2026-07-31, still to-implement*  (biggest structural win)
+
+> **Status.** [`REFERENCES.json`](REFERENCES.json) now **exists**, created 2026-07-31 to carry the
+> `[LeanQIT2026]` citation with the schema below. It holds **only** the entries that have a concrete
+> consumer today (`LeanQIT2026`, `Busch2003`) — it is a seed, not coverage. The obligation proper —
+> one entry per source, plus line-precise `[Key, file:Lstart-Lend]` citations in module docstrings —
+> **remains open** in `specs/BACKLOG.md`. Do not read the file's size as the corpus's citation
+> coverage.
+>
+> The `LeanQIT2026` entry also demonstrates the schema carrying something the original design did not
+> anticipate: an **external discharge that is cited but deliberately not imported**, with the reason
+> (toolchain skew), the current honest status (our result stays conditional), and the planned route
+> (a separate bridge package). That is exactly the auditability §8.2 exists for — a reader can check
+> the claim and see precisely what is and is not being asserted.
 
 A structured `REFERENCES.json` at repo root, and line-precise citations from module docstrings.
 
