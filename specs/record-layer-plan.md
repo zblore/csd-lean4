@@ -13,6 +13,13 @@
 >    only at `N = 2` (§2, `LF4/QubitBorn.lean`). `N ≥ 3` is **open in both directions** — the
 >    earlier "provably dead" verdict rested on numerics plus an informal argument and is retracted
 >    (`BACKLOG.md`).
+>    ⚠️ **UPDATED 2026-07-31 — this item is now split.** A **fibred** context-fixed partition exists
+>    at every `N`: `SigmaLayer/GlobalBasin.lean`'s `globalBasin c i` reads a `ContextField`'s rate
+>    **at the ontic point**, so its events mention no preparation, and `globalBasin_born` still
+>    returns `‖⟨eᵢ,ψ⟩‖²`; `SigmaLayer/GlobalRecordClosure.lean` carries the five record-layer facts on
+>    it. So the **preparation-indexing** half is closed. What remains open is the **base-only** half —
+>    whether `Ωᵢ(M)` can live on `ℂℙⁿ⁻¹` itself, which is the ⏸ parked `ContextFixedA7` chain, and
+>    which of the two Paper C actually intends is a question about the axiom, not about the Lean.
 > 2. **The de-isolation dynamics** — `DeIsolationInteraction.basin_rate` is a *hypothesis field*;
 >    no `H_int` generating those basins is constructed. `DeIsolationFlow.lean` states this
 >    correctly; §3c's staging row did not.

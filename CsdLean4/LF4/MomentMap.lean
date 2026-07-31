@@ -162,23 +162,12 @@ theorem continuous_momentMap (i : Fin N) :
     (continuous_subtype_val.norm).pow 2
   exact hnum.div hden fun v => pow_ne_zero _ (norm_ne_zero_iff.mpr v.2)
 
-/-- **The moment map is continuous as a map into the simplex coordinates.** The bundled form, for
-consumers that need all coordinates at once. -/
-theorem continuous_momentMap_vec :
-    Continuous (fun p : CPN N => (momentMap p : Fin N → ℝ)) :=
-  continuous_pi continuous_momentMap
-
 /-- **The moment-map coordinate is measurable.** Immediate from continuity, since `ℙ ℂ V` carries
 the Borel σ-algebra of the quotient topology (`Projectivization.instBorelSpace`). This is the
 prerequisite for the context-fixed basin `Bᵢ(M)` to be a measurable subset of `Σ`. -/
 theorem measurable_momentMap (i : Fin N) :
     Measurable (fun p : CPN N => momentMap p i) :=
   (continuous_momentMap i).measurable
-
-/-- **The bundled moment map is measurable.** -/
-theorem measurable_momentMap_vec :
-    Measurable (fun p : CPN N => (momentMap p : Fin N → ℝ)) :=
-  continuous_momentMap_vec.measurable
 
 end LF4
 end CSD

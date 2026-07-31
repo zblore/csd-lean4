@@ -135,10 +135,6 @@ apparatus. -/
 noncomputable def globalBasin (c : ContextField N) (i : Fin N) : Set (LF4.KSigma N) :=
   {x | x.2.1 ∈ circleCell (c.rate x.1) i}
 
-theorem mem_globalBasin_iff (c : ContextField N) (i : Fin N) (x : LF4.KSigma N) :
-    x ∈ globalBasin c i ↔ rep x.2.1 ∈ Ioc (loSum (c.rate x.1) i) (loSum (c.rate x.1) i + c.rate x.1 i) :=
-  Iff.rfl
-
 /-- **The basin is measurable.** The three ingredients are the measurability of the canonical
 representative (`measurable_rep`), of the rate field (`ContextField.measurable_rate`), and of its
 partial sums — combined by `measurableSet_lt` / `measurableSet_le`, since the basin is cut out by

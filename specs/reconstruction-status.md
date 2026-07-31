@@ -18,6 +18,14 @@ claims; where it and an older document disagree, this file and
 >    outcome probabilities = the Kähler moment map. ⚠️ *This is NOT the completed reconstruction (corrected
 >    2026-07-28): the partition is preparation-indexed, so general-`N` A7 is open; no `H_int` generating the
 >    basins is constructed; and the fibred Σ is not shown to be an A1 sector.* See §7.
+>    **UPDATE 2026-07-31 — the first of those three is now addressed, the other two are not.**
+>    `SigmaLayer/GlobalBasin.lean` + `GlobalRecordClosure.lean` put the record layer on a
+>    **context-fixed** partition at every `N`: `Bᵢ(c) = {(p,θ) : θ₁ ∈ circleCell (c.rate p) i}` reads
+>    the rate field **at the ontic point**, so the record event is a function of `(context, outcome,
+>    time)` and of no preparation, and `globalRecordClosure_born` still returns `‖⟨eᵢ,ψ⟩‖²`. ⚠️ This
+>    closes the **preparation-indexing** defect only. It is **fibred**, not base-only — whether Paper C
+>    intends `Ωᵢ(M)` to live on the base (where the ⏸ parked `ContextFixedA7` chain governs) is a
+>    question about the axiom. **Still no `H_int`, and `KSigma` is still not shown Kähler.**
 >
 > The precise, defensible claim about the Lean today is:
 >
@@ -52,6 +60,9 @@ outcome probabilities = the Kähler moment map. ⚠️ **The goal is NOT met** (
 review; an earlier version of this sentence said it was). Three items are open: general-`N` A7 (the partition
 is preparation-indexed — `N = 2` is done, `LF4/QubitBorn.lean`), the de-isolation `H_int` generating the
 basins (`DeIsolationInteraction.basin_rate` is a hypothesis field), and whether the fibred Σ is an A1 sector.
+⚠️ **Updated 2026-07-31: the first item is now addressed *on the fibre*** — `GlobalBasin` /
+`GlobalRecordClosure` give a partition whose events mention no preparation, at every `N`; the
+**base-only** question stays ⏸ parked. **Items two and three stand**, and the goal is still not met.
 Beyond those, the residue is a mechanical field naming in the pinned closure (no new theorem). (The Ω-regions are epistemic, on `ℂℙⁿ⁻¹`; the record is the ontic selection in Σ.)
 The earlier "SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
 
@@ -68,7 +79,16 @@ This is the canonical map of *what the Lean corpus formalises against each Paper
 | **A4** pushforward measure `π_*μL = μ_FS` | **Proved for the witness** (`productSector_hasFubiniStudyPushforward`, B1) **and forced under full unitary symmetry** (`localised_sectorPostulate_capstone`); **not derived** from arbitrary ontic dynamics. The witness has `μL = μFS ⊗ vol` built in. |
 | **A5** quantum-effective Hamiltonians (projectability) | **Exact `ε=0` represented.** The exact fibre-invariant / projectable case `H = h∘π` is formalised (the projected flow closes and is `e^{-itH}` on rays). The *approximate* `(ε, T)`-projectability (`sup‖d(δH)|_V‖ ≤ ε`) is **not** formalised. |
 | **A6** composites + marginal stability | **Partial.** Operational tensor structure, reduced states and no-signalling exist (`compositeTensorEquiv`, `compositeAlgReconstruction`, `tensorSector_no_signalling`); the general **non-factorising ontic composite** architecture (`Σ_AB ≠ Σ_A × Σ_B` as a primitive) is not reconstructed. |
-| **A7** context-defined measurement partitions | **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. Remaining: the general-`N` context-fixed partition. ⚠️ **This row previously said a base-only, `U(N)`-covariant, nonnegative context-fixed density "**cannot**" reproduce Born for `N ≥ 3`, "proven numerically + operator-theoretically". That is an overclaim and is retracted (it should have gone when the same claim was retracted from `BACKLOG.md` on 2026-07-28; it survived here — a staleness bug, corrected 2026-07-30).** What is actually established is a chain of **necessary conditions** on such a density (`SigmaLayer/ContextFixedA7*.lean`): it is confined to measure `≤ 1/n` and vanishes below `(n−1)/n`, with the `N=2` / `N≥3` threshold confirmed three independent ways. That constrains a base-only construction; it does **not** refute one, and no construction has been exhibited either. **General-`N` A7 is unresolved in both directions and is ⏸ parked** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)). The working architectural conclusion — that at `N ≥ 3` contextuality should live in the **fibre** of Σ — is what the parked chain *motivates*, not what it proves; a Born fibre-partition exists (Phase-2b), but its mechanism is posited, not derived from a de-isolation dynamics. So A7-as-base-regions is proved only at the qubit, where `CP¹=S²` supplies an antipode with no `N≥3` analogue. (And this is **not** Gleason — CSD is contextual.) The pinned `FiniteQMClosure` field still names the preparation-indexed `bornRegion ψ'` cells (a mechanical residue; `KSigmaRecord.born_frequency_region_eq_record` shows its region already *is* the record-layer event). |
+| **A7** context-defined measurement partitions | **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. **★ UPDATE 2026-07-31 — a context-fixed partition now exists at every `N`, on the fibre.**
+`SigmaLayer/GlobalBasin.lean` defines `ContextField` (a measurable simplex-valued rate *field* on the
+base) and `globalBasin c i = {x | x.2.1 ∈ circleCell (c.rate x.1) i}`, reading the rate **at the ontic
+point** — so no preparation enters the definition; `globalBasin_born` returns `‖⟨eᵢ,ψ⟩‖²`, and
+`SigmaLayer/GlobalRecordClosure.lean` carries the five record-layer facts on it over
+`KSigma = ℂℙⁿ⁻¹ × T²`. The prerequisite was `LF4.measurable_momentMap`, proved by quotient descent.
+⚠️ **What this closes is the preparation-indexing defect, not general-`N` A7 outright**: the partition
+is **fibred**, and the parked chain below concerns **base-only** regions. Whether A7 wants base-only
+regions is a question about the axiom, not about the Lean. Still kinematic — no `H_int`.
+Remaining: the general-`N` **base-only** context-fixed partition. ⚠️ **This row previously said a base-only, `U(N)`-covariant, nonnegative context-fixed density "**cannot**" reproduce Born for `N ≥ 3`, "proven numerically + operator-theoretically". That is an overclaim and is retracted (it should have gone when the same claim was retracted from `BACKLOG.md` on 2026-07-28; it survived here — a staleness bug, corrected 2026-07-30).** What is actually established is a chain of **necessary conditions** on such a density (`SigmaLayer/ContextFixedA7*.lean`): it is confined to measure `≤ 1/n` and vanishes below `(n−1)/n`, with the `N=2` / `N≥3` threshold confirmed three independent ways. That constrains a base-only construction; it does **not** refute one, and no construction has been exhibited either. **General-`N` A7 is unresolved in both directions and is ⏸ parked** ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)). The working architectural conclusion — that at `N ≥ 3` contextuality should live in the **fibre** of Σ — is what the parked chain *motivates*, not what it proves; a Born fibre-partition exists (Phase-2b), but its mechanism is posited, not derived from a de-isolation dynamics. So A7-as-base-regions is proved only at the qubit, where `CP¹=S²` supplies an antipode with no `N≥3` analogue. (And this is **not** Gleason — CSD is contextual.) The pinned `FiniteQMClosure` field still names the preparation-indexed `bornRegion ψ'` cells (a mechanical residue; `KSigmaRecord.born_frequency_region_eq_record` shows its region already *is* the record-layer event). |
 
 ### 2a. Audit of this map (2026-07-29) — and the scoping decision
 
@@ -255,7 +275,9 @@ computes. The goal now is to **complete the reconstruction of QM from Σ and Ω-
 *arising from* the ontic surface, not accumulated on the epistemic side.
 
 * **The record layer (MD-1) — the KINEMATIC interface is BUILT (2026-07-25), formalized end-to-end;
-  MD-1 itself is NOT discharged.** ⚠️ *Corrected 2026-07-28 (external review): the partition is
+  MD-1 itself is NOT discharged.** ⚠️ *Updated 2026-07-31: the preparation-indexing is fixed on the
+  fibre (`GlobalBasin`, `GlobalRecordClosure`); the base-only question stays parked, and `H_int` is
+  still open, so MD-1 is still not discharged.* ⚠️ *Corrected 2026-07-28 (external review): the partition is
   preparation-indexed, so general-`N` A7 is open (`N=2` is done, `LF4/QubitBorn.lean`); the
   de-isolation Hamiltonian is not constructed (`DeIsolationInteraction.basin_rate` is a hypothesis
   field); and the fibred Σ below is a measurable record model, not a proven A1 ontic sector.*
@@ -336,8 +358,11 @@ with μ_FS and `exp(-itH)` built in. **Σ is the floor and is everything; derivi
 goal now is to **complete the reconstruction of QM from Σ and Ω-regions** — making QM genuinely *arise from*
 the ontic surface. The **record layer** (MD-1) is now **formalized in Lean** (2026-07-25; see §7): measurement as
 `context + unknown microstate → record` on the base×fibre Σ, Born = the law of large numbers over the
-unknown microstate, outcome probabilities = the Kähler moment map. The residual MD-1 item is making the
-*pinned closure's* regions context-fixed (it still names the preparation-indexed `bornRegion ψ'`). The
+unknown microstate, outcome probabilities = the Kähler moment map. ⚠️ *Updated 2026-07-31:* the **record
+layer's own** closure is now context-fixed (`GlobalRecordClosure` on `KSigma`, events built from a
+`ContextField` rather than from `ψ`). The residual is that the **pinned `FiniteQMClosure`** still names
+the preparation-indexed `bornRegion ψ'` — a separate migration on the `productDynamics` engine, not a
+record-layer gap. The
 genuine near frontier is now the **extensions** — continuous spectra (CV), relativistic locality,
 identical particles. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired
 error — §7.)
