@@ -330,6 +330,7 @@ public import CsdLean4.SigmaLayer.GlobalRecordClosure
 public import CsdLean4.SigmaLayer.MeasurementConstraints
 public import CsdLean4.SigmaLayer.MeasurementProtocol
 public import CsdLean4.SigmaLayer.RecordPersistence
+public import CsdLean4.SigmaLayer.ShearWitness
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1181,6 +1182,53 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.MeasurementProtocol.postMeasure_supported_pointerRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.MeasurementProtocol.postMeasure_supported_pointerRegion
+
+-- ★★ THE CONCRETE MEASUREMENT WITNESS (2026-08-01, SigmaLayer/ShearWitness.lean) -- item 3, PARTLY.
+-- An explicit propagator on Sigma_sel x T^2_R that takes a ready pointer into one displaying the
+-- outcome the hidden selector had already fixed. It DISCHARGES BOTH standing hypotheses of the
+-- interface -- CorrelatesOn AND PointerInvariantOn -- so neither is assumed.
+-- THE PHYSICS: the von Neumann shear H_int(t) = g(t)(iota(x_sel)+1) delta p_R. Hamilton gives
+-- qdot_R = g(t)(iota+1)delta, pdot_R = 0, and -- the point -- xdot_sel ~ grad(iota) = 0 A.E.,
+-- because iota is LOCALLY CONSTANT off the seams between selector sectors. So the coupling moves the
+-- pointer at an outcome-dependent rate and does NOT disturb the selector, except on the measure-zero
+-- seam. ★ THAT IS EXACTLY WHERE no_everywhere_correlation SAID THE EXCEPTIONAL SET HAD TO LIVE --
+-- the constraint predicted the singularity's location before the construction existed. Two
+-- independent routes agreeing is the reason to think this is the right shape.
+-- DESIGN, each choice forced: shifts of (i+1)delta not i*delta (else the outcome-0 region IS the
+-- ready region and "no record" masquerades as a record); g SWITCHED OFF after T_M (which is why the
+-- interface is a TWO-TIME propagator -- a group cannot express the switch-off, and it is what makes
+-- shear_pointerInvariant PROVABLE); epsilon = delta/2 with delta = 1/(K+1) (arcs pairwise disjoint
+-- in one turn, AND every shifted ready state stays below 1 so no wraparound occurs and rep is
+-- additive -- rep_pshift_of_mem).
+-- shear_correlates: CorrelatesOn DISCHARGED. shear_pointerInvariant: PointerInvariantOn DISCHARGED.
+-- shear_readout_ready / shear_readout_after: the non-triviality pair -- NO record before, a unique
+-- record after -- which rules out an identity flow or a pre-existing label sold as record creation.
+-- ⚠️ SCOPE, and item 3 IS NOT CLOSED. (1) THE HAMILTONIAN GENERATION IS STATED, NOT FORMALISED: the
+-- propagator is constructed explicitly and every required property proved OF it, but that it is the
+-- time-T_M flow of that H_int is symplectic geometry and Mathlib has no manifold Hamiltonian-flow
+-- API (the section 2a permanently-scoped row). The plan's "propagator PROVED TO ARISE FROM that
+-- Hamiltonian" is therefore HALF done. Do not cite this as a formalised H_int. (2) MEASURE
+-- PRESERVATION IS NOT PROVED -- and it matters, because it is what makes this a DYNAMICS rather than
+-- an arbitrary relabelling, and every necessary condition in MeasurementConstraints assumes it.
+-- First thing to close. (3) NOT connected to the Born weights: that needs the selector sectors to be
+-- globalBasin's, which depends on (2). (4) A WITNESS, NOT A DERIVATION -- the coupling is ENGINEERED
+-- to work. (5) iota is the outcome index, so "the apparatus is coupled to the answer" -- an
+-- objection that applies verbatim to the textbook von Neumann coupling this is the ontic analogue of.
+/-- info: 'CSD.RecordLayer.rep_pshift_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_pshift_of_mem
+
+/-- info: 'CSD.RecordLayer.shear_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_correlates
+
+/-- info: 'CSD.RecordLayer.shear_pointerInvariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_pointerInvariant
+
+/-- info: 'CSD.RecordLayer.shear_readout_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_readout_after
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
