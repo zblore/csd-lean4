@@ -159,4 +159,60 @@ theorem no_everywhere_correlation
   have hin : Φ '' (S ×ˢ R₀) ⊆ U := himg.subset_left_of_subset_union hU hV hUV hsub hne
   exact (hUV.le_bot ⟨hin ⟨xv, hxv, rfl⟩, hxvV⟩ : Φ xv ∈ (⊥ : Set (Xsel × Xreg)))
 
+/-! ### The collapse no-gos (2026-08-01)
+
+Constraints on the *Lüders* half of the dynamical layer, derived before any collapse witness is
+built — the same cheap-failure discipline as above. The upshot of the pair: **exact pointwise
+collapse is impossible for a measure-preserving dynamics, and approximate collapse is paid for in
+ready-state improbability.** So any exact-Lüders witness must implement collapse as a measure-zero
+*relocation* (the epistemic Dirac slice moves) rather than a contraction of positive-measure sets.
+
+The continuous-collapse twin of `no_everywhere_correlation` — a continuous map cannot carry a
+connected ready set into disjoint neighbourhoods of the `N` basis vertices — is an *instantiation*
+of that theorem (take `U`, `V` to be the neighbourhoods), not a new statement; no separate
+declaration is added for it. -/
+
+/-- **★ No-go A: exact pointwise collapse is impossible.**
+
+If a measure-preserving `Φ` sends a positive-measure set `C` (the collapsing states) into a null
+target `T` (e.g. `{[e₁],…,[e_N]} × anything`, null because `μ_FS` is nonatomic), that contradicts
+measure preservation outright: `0 < μ C ≤ μ (Φ⁻¹ T) = μ T = 0`.
+
+Consequence: "conditioned on the outcome, the base moves **to** `[eᵢ]`" can hold only on a
+Liouville-null set of states — which the epistemic `δ_[ψ] ⊗ Haar` slice is. Collapse must be
+**relocation of a null slice, not contraction of a positive-measure one**. -/
+theorem no_exact_collapse
+    {X : Type*} [MeasurableSpace X] {μ : Measure X}
+    {Φ : X → X} (hΦ : MeasurePreserving Φ μ μ)
+    {C T : Set X} (hT : NullMeasurableSet T μ) (hTnull : μ T = 0)
+    (hsub : C ⊆ Φ ⁻¹' T) (hCpos : μ C ≠ 0) : False := by
+  apply hCpos
+  have h := (measure_mono hsub).trans (le_of_eq (hΦ.measure_preimage hT))
+  exact le_zero_iff.mp (h.trans (le_of_eq hTnull))
+
+/-- **★ No-go B: collapse accuracy is bought with ready-state improbability.**
+
+The mirror of `pointer_region_measure_ge` with the roles of base and register exchanged: if the
+correlation drives the *base* into an `ε`-target `B` (a small neighbourhood of a vertex), then
+`μ_sel(S) · μ_R(R₀) ≤ μ_sel(B)`. Summed over outcomes (with the selector weights summing to `1`)
+this reads `μ_R(R₀) ≤ ∑ᵢ μ_sel(Bᵢ)` — **the apparatus-ready region must shrink as the collapse
+targets do**, and exact collapse (`ε → 0`) forces a null ready set.
+
+This is Landauer's cost appearing as a measure inequality, and it *retroactively justifies* the
+corpus's Dirac-calibration convention: an exactly calibrated apparatus is a null set because it has
+to be. -/
+theorem collapse_accuracy_bound
+    {Xsel Xreg : Type*} [MeasurableSpace Xsel] [MeasurableSpace Xreg]
+    {μs : Measure Xsel} {μr : Measure Xreg} [SFinite μs] [SFinite μr] [IsProbabilityMeasure μr]
+    {Φ : Xsel × Xreg → Xsel × Xreg}
+    (hΦ : MeasurePreserving Φ (μs.prod μr) (μs.prod μr))
+    {S B : Set Xsel} {R₀ : Set Xreg} (hB : MeasurableSet B)
+    (hcorr : S ×ˢ R₀ ⊆ Φ ⁻¹' (B ×ˢ (univ : Set Xreg))) :
+    μs S * μr R₀ ≤ μs B := by
+  have h1 : (μs.prod μr) (S ×ˢ R₀) ≤ (μs.prod μr) (Φ ⁻¹' (B ×ˢ (univ : Set Xreg))) :=
+    measure_mono hcorr
+  rw [hΦ.measure_preimage (hB.prod MeasurableSet.univ).nullMeasurableSet,
+    Measure.prod_prod, Measure.prod_prod, measure_univ, mul_one] at h1
+  exact h1
+
 end CSD.RecordLayer

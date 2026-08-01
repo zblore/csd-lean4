@@ -261,6 +261,20 @@ noncomputable def shearEvolve (idx : Xsel → Fin K) (s t : OnticTime) :
     Xsel × LF4.KTorus → Xsel × LF4.KTorus :=
   fun x => (x.1, pshift ((elapsed t - elapsed s) * shearAmt K (idx x.1)) x.2)
 
+/-- The shear composes across time, standalone form (also a field of `shearProtocol`). -/
+theorem shearEvolve_comp' (idx : Xsel → Fin K) (s t u : OnticTime) :
+    shearEvolve idx t u ∘ shearEvolve idx s t = shearEvolve idx s u := by
+  funext x
+  simp only [shearEvolve, Function.comp_apply, pshift_add]
+  congr 1
+  ring
+
+/-- Right of the readout time the shear is frozen: the propagator is the identity. -/
+theorem shearEvolve_frozen (idx : Xsel → Fin K) {s t : OnticTime} (hs : 1 ≤ s) (ht : 1 ≤ t) :
+    shearEvolve idx s t = id := by
+  funext x
+  simp [shearEvolve, elapsed_of_one_le hs, elapsed_of_one_le ht]
+
 /-- **The measurement witness as a `MeasurementProtocol`.** -/
 noncomputable def shearProtocol (idx : Xsel → Fin K) (hidx : Measurable idx) :
     MeasurementProtocol (Xsel × LF4.KTorus) K where

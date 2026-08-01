@@ -335,6 +335,9 @@ public import CsdLean4.SigmaLayer.DynamicBorn
 public import CsdLean4.SigmaLayer.OutcomeField
 public import CsdLean4.SigmaLayer.OutcomeBasin
 public import CsdLean4.SigmaLayer.DynamicMeasurementClosure
+public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
+public import CsdLean4.SigmaLayer.SwapWitness
+public import CsdLean4.SigmaLayer.SwapLuders
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1361,6 +1364,98 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.shear_base_marginal_unchanged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shear_base_marginal_unchanged
+
+-- ★★ THE CALIBRATED-SWAP WITNESS AND THE LUDERS THEOREM (2026-08-01/02, SigmaLayer/SwapWitness.lean
+-- + SwapLuders.lean + MeasurementConstraints additions + Mathlib/MeasureTheory/PiecewisePreserving).
+-- shear_base_marginal_unchanged proved the shear CANNOT collapse: no back-reaction on the selector
+-- is exactly what prevents it. The design (Fable review, 2026-08-01) starts from TWO NO-GOS proved
+-- FIRST, in MeasurementConstraints:
+--   no_exact_collapse        a measure-preserving map cannot send a positive-measure set of states
+--                            into a NULL target (the basis vertices). So pointwise collapse across
+--                            preparations is IMPOSSIBLE, and collapse must be RELOCATION of a null
+--                            epistemic slice, never contraction.
+--   collapse_accuracy_bound  approximate collapse to eps-balls forces mu_R(R_0) <= N mu_FS(ball) --
+--                            COLLAPSE ACCURACY IS PAID IN READY-STATE IMPROBABILITY (Landauer as a
+--                            measure inequality). Retroactively FORCES the Dirac-calibration
+--                            convention rather than excusing it.
+-- THE CONSTRUCTION: enlarge the arena with an ANCILLA BANK, SwapArena = (Xsel x T^2_R) x (Fin K ->
+-- Xsel) -- K reference cells, one per outcome, each a full copy of the selector space. Propagator =
+-- record-triggered swap AFTER the shear: when the pointer sits in arc j, exchange the system's
+-- selector coordinate with bank slot j (swapG, an INVOLUTION).
+-- ★ THE RECORD-TRIGGER IS FORCED: the pieces {register in arc j} are invariant under the slot-j swap
+-- BECAUSE the swap never touches the register -- which is what makes swapG measure-preserving via
+-- measurePreserving_of_partition. Triggering on the SELECTOR index would move the coordinate the
+-- pieces are defined by, and the bookkeeping fails. The right causal story and the only working
+-- measure theory COINCIDE.
+-- ★ THE CROSSING PROPAGATOR IS SYMMETRIC -- a CORRECTION to the reviewed design, which fired the
+-- swap on forward readout-crossings only. evolve_comp is quantified over ALL time triples, and a
+-- forward-only flag FAILS on go-past-and-come-back paths. G being an involution, the repair fires it
+-- on crossings in EITHER direction; all eight side-of-readout cases close on G^2 = id + the shear
+-- frozen right of readout (swapEvolve_comp).
+-- swapEvolve_measurePreserving: the FULL propagator preserves the Liouville measure at every time
+-- pair. swap_correlates / swap_pointerInvariant: both hypotheses discharged again, now on the
+-- enlarged arena. Supporting Mathlib-dir lemmas (upstream candidates, CSD-free):
+-- measurable_of_partition, measurePreserving_of_partition, Measure.map_eval_pi',
+-- measurePreserving_swapSlot (via piFinSuccAbove -- a subtype-free split avoiding a Fintype
+-- instance diamond).
+-- ★★ swap_luders_marginal (SwapLuders.lean): CONDITIONED ON OUTCOME i, THE POST-MEASUREMENT SYSTEM
+-- MARGINAL IS THE SLOT-i CALIBRATION -- map projSys (postMeasure mu_in i) = nu i. Collapse as
+-- measure-preserving RELOCATION: nothing shrinks, the involution exchanges Liouville volume 1:1, and
+-- what moves is WHICH NULL SLICE the epistemic measure occupies. Slot i afterwards holds the
+-- PRE-measurement state and the depleted fibre -- a perfect ontic memory; irreversibility enters
+-- only at slot RESET (erasure, priced by collapse_accuracy_bound).
+-- ★★ swap_luders_born: with slots calibrated to the vertex preparations epistemicMeasure [e_j], the
+-- post-outcome-i system marginal IS epistemicMeasure [e_i], so for ANY context field c' the
+-- follow-up outcome-j probability is c'.rate [e_i] j -- THE BORN WEIGHTS OF THE COLLAPSED STATE.
+-- Sequential statistics are Luders at rank one.
+-- ⚠️ SCOPE. (1) NONDEGENERATE ONLY: at rank one the Luders channel IS measure-and-reprepare (a
+-- standard QI fact -- the objection "that is reprepare, not collapse" applies identically to the
+-- textbook channel); for DEGENERATE projectors it is NOT, and this witness does not cover them.
+-- (2) The calibration nu_j = epistemicMeasure [e_j] is a CONTEXT-FIXED EPISTEMIC POSIT, parallel to
+-- pointer-readiness, basis-dependent only, never psi-dependent -- A7-compatible -- and its
+-- Liouville-nullity is FORCED by no_exact_collapse. (3) ONE MEASUREMENT CONSUMES ONE BANK; reset =
+-- erasure, outside the protocol. (4) The Hamiltonian generation of the swap stage is STATED, NOT
+-- FORMALISED, as for the shear. (5) The Luders CHANNEL-level bridge to LF5's operational result
+-- (rho -> Pi rho Pi / Tr) is the rank-one reading recorded in the docstring, not a corpus theorem.
+/-- info: 'CSD.RecordLayer.no_exact_collapse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.no_exact_collapse
+
+/-- info: 'CSD.RecordLayer.collapse_accuracy_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.collapse_accuracy_bound
+
+/-- info: 'MeasureTheory.measurePreserving_swapSlot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurePreserving_swapSlot
+
+/-- info: 'CSD.RecordLayer.measurePreserving_swapG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_swapG
+
+/-- info: 'CSD.RecordLayer.swapEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swapEvolve_comp
+
+/-- info: 'CSD.RecordLayer.swapEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swapEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.swap_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_correlates
+
+/-- info: 'CSD.RecordLayer.swap_pointerInvariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_pointerInvariant
+
+/-- info: 'CSD.RecordLayer.swap_luders_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_luders_marginal
+
+/-- info: 'CSD.RecordLayer.swap_luders_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_luders_born
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

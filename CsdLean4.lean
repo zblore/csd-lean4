@@ -377,6 +377,9 @@ public import CsdLean4.SigmaLayer.DynamicBorn
 public import CsdLean4.SigmaLayer.OutcomeField
 public import CsdLean4.SigmaLayer.OutcomeBasin
 public import CsdLean4.SigmaLayer.DynamicMeasurementClosure
+public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
+public import CsdLean4.SigmaLayer.SwapWitness
+public import CsdLean4.SigmaLayer.SwapLuders
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
