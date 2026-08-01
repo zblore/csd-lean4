@@ -328,6 +328,7 @@ public import CsdLean4.SigmaLayer.TorusFibre
 public import CsdLean4.SigmaLayer.GlobalBasin
 public import CsdLean4.SigmaLayer.GlobalRecordClosure
 public import CsdLean4.SigmaLayer.MeasurementConstraints
+public import CsdLean4.SigmaLayer.MeasurementProtocol
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1093,6 +1094,51 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.no_everywhere_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.no_everywhere_correlation
+
+-- THE DYNAMICAL MEASUREMENT INTERFACE (2026-08-01, SigmaLayer/MeasurementProtocol.lean) -- items 1-2.
+-- Supplies what GlobalBasin structurally could not: a POINTER REGISTER whose ready region is
+-- disjoint from every outcome region, plus a TWO-TIME propagator Phi_{s->t} (not a one-parameter
+-- group -- a measurement interaction is switched on and off, and a time-dependent H_int(M,t) does
+-- not generate a group).
+-- ★ THE DESIGN RULE. The plan warns that a structure with fields like basin_has_born_measure or
+-- record_persists "would merely rename the assumptions". Taken literally here: MeasurementProtocol
+-- carries ONLY KINEMATICS -- propagator laws, regions, measurability, disjointness, every one a
+-- CHECKABLE property of the data. THE CORRELATION IS NOT A FIELD. It is CorrelatesOn, a HYPOTHESIS
+-- of the theorems that need it (CONVENTIONS 8.3 _of_ pattern), so discharging it is the visible act
+-- of REMOVING a hypothesis. The corpus already has one field-shaped assumption of the forbidden kind
+-- (DeIsolationInteraction.basin_rate) and this file deliberately does not add a second.
+-- readout_ready_eq_none: BEFORE THE INTERACTION THERE IS NO RECORD -- the non-triviality condition
+-- GlobalBasin could not state, and what stops a pre-existing label being sold as a created record.
+-- outcomeSector i = Phi_{0->T}^{-1}(B_i): the INITIAL states DESTINED for record i, as against the
+-- pointer region where a record is DISPLAYED. That is the TN6 two-level distinction, and conflating
+-- the two is what makes a kinematic partition look dynamical.
+-- readout_evolve_outcomeSector bridges the levels; outcomeSector_pairwiseDisjoint inherits
+-- exclusivity through the preimage.
+-- ★ measure_outcomeSector_eq_of_correlates: THE BORN WEIGHT, DERIVED. Given the correlation, the
+-- outcome sector's measure EQUALS the selector sector's -- so the dynamic probability is not a new
+-- postulate, it is the existing context-fixed selector weight transported by the interaction.
+-- Composed with globalBasin_born it yields ||<e_i,psi>||^2.
+-- ⚠️ NO INTERACTION HAMILTONIAN. Nothing here constructs a Phi satisfying CorrelatesOn; that is the
+-- open Paper D obligation. Every theorem is pure kinematics or explicitly conditional. This file is
+-- SCAFFOLDING FOR THE STATEMENT of the problem, NOT progress on its solution.
+-- ⚠️ And by no_everywhere_correlation above, the EVERYWHERE form of CorrelatesOn is UNSATISFIABLE at
+-- K >= 2 on a connected ready set. A real witness establishes it only off a null set and must say
+-- what happens on the seam.
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.readout_ready_eq_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.readout_ready_eq_none
+
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.outcomeSector_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.outcomeSector_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.readout_evolve_outcomeSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.readout_evolve_outcomeSector
+
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.measure_outcomeSector_eq_of_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.measure_outcomeSector_eq_of_correlates
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
