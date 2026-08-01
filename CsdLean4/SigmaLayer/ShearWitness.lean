@@ -52,6 +52,10 @@ it there. Two independent routes agreeing is the reason to believe this is the r
   measurability, disjoint pointer regions, and a ready region disjoint from all of them.
 * `shear_correlates` — **`CorrelatesOn` discharged.** `Sᵢ × R₀` lands in `Bᵢ`.
 * `shear_pointerInvariant` — **`PointerInvariantOn` discharged**, because the interaction is off.
+* `shear_measurePreserving` — **the propagator preserves the Liouville measure.** What makes this a
+  *dynamics* rather than an arbitrary relabelling, and the hypothesis every necessary condition in
+  `MeasurementConstraints.lean` assumes. A skew product: selector held fixed, each fibre translated
+  by a Haar-preserving shift.
 * `shear_readout_ready`, `shear_readout_after` — the non-triviality pair: **no record before, a
   unique record after**.
 
@@ -71,18 +75,14 @@ it there. Two independent routes agreeing is the reason to believe this is the r
    ontic analogue of. Recorded so the reader can weigh it rather than discover it.
 4. **`Σ_sel` is abstract here.** The witness needs only a measurable index function, so it is proved
    at that generality; instantiating `ι` from `globalBasin` is a separate step and is not done here.
-5. **Measure preservation is NOT proved.** An earlier draft of this docstring listed a
-   `shear_measurePreserving`; no such theorem exists and the claim is withdrawn. The map is a
-   fibrewise translation of a Haar-probability factor with the selector held fixed, so it *should*
-   preserve `μ_sel ⊗ vol` by translation invariance plus a Fubini/skew-product argument — but that is
-   real work and it has not been done. It matters: **measure preservation is what makes this a
-   dynamics rather than an arbitrary relabelling**, and until it is proved this witness is not known
-   to satisfy the necessary conditions in `MeasurementConstraints.lean`, which all assume it. This is
-   the first thing to close.
+5. ~~Measure preservation is not proved.~~ **RESOLVED** — `shear_measurePreserving`. *(An earlier
+   draft of this docstring listed the theorem before it existed; the claim was withdrawn and is now
+   restored because the proof is in.)* The witness is therefore known to satisfy the standing
+   hypothesis of every necessary condition in `MeasurementConstraints.lean`.
 6. **Not connected to the Born weights.** `measure_outcomeSector_eq_of_correlates` would turn
    `shear_correlates` into a dynamical Born statement, but that needs the selector sectors to be
-   `globalBasin`'s and their measures to be the Born weights — i.e. item 4's instantiation, which
-   depends on 4 and 5 above.
+   `globalBasin`'s and their measures to be the Born weights. **Now unblocked by (5)**, and the
+   remaining work is the instantiation, not a missing ingredient.
 
 ## References
 
@@ -263,6 +263,51 @@ noncomputable def shearProtocol (idx : Xsel → Fin K) (hidx : Measurable idx) :
       unfold shearAmt
       nlinarith
     linarith [hxr.2, hxp.1]
+
+/-! ### Measure preservation -/
+
+/-- Haar measure on the register is translation invariant. Not found by instance search: `volume` on
+a product is *definitionally* the product measure but the invariance instance does not fire through
+the `MeasureSpace` instance, so it is supplied here. -/
+instance instIsAddLeftInvariantKTorus :
+    (volume : Measure LF4.KTorus).IsAddLeftInvariant := by
+  have h : (volume : Measure LF4.KTorus)
+      = (volume : Measure (AddCircle (1:ℝ))).prod volume :=
+    Measure.volume_eq_prod _ _
+  rw [h]
+  infer_instance
+
+/-- Translating the pointer preserves Haar measure on the register — translation invariance of Haar
+on the compact group `T²`. -/
+theorem measurePreserving_pshift (a : ℝ) :
+    MeasurePreserving (pshift a) (volume : Measure LF4.KTorus) volume := by
+  have he : pshift a
+      = fun x : LF4.KTorus => (((a : AddCircle (1:ℝ)), (0 : AddCircle (1:ℝ))) + x) := by
+    funext x
+    simp [pshift, Prod.ext_iff, add_comm]
+  rw [he]
+  exact measurePreserving_add_left _ _
+
+/-- ★ **The shear propagator preserves the Liouville measure.**
+
+This is what makes the witness a **dynamics** rather than an arbitrary relabelling of states, and it
+is the hypothesis every necessary condition in `MeasurementConstraints.lean` assumes. A skew product:
+the selector is held fixed and each fibre is translated by a Haar-preserving shift. -/
+theorem shear_measurePreserving (idx : Xsel → Fin K) (hidx : Measurable idx)
+    (μ : Measure Xsel) [SFinite μ] (s t : OnticTime) :
+    MeasurePreserving (shearEvolve idx s t)
+      (μ.prod (volume : Measure LF4.KTorus)) (μ.prod volume) := by
+  have hgm : Measurable (Function.uncurry
+      fun (x : Xsel) (r : LF4.KTorus) =>
+        pshift ((elapsed t - elapsed s) * shearAmt K (idx x)) r) := by
+    have h1 : Measurable fun p : Xsel × LF4.KTorus =>
+        ((elapsed t - elapsed s) * shearAmt K (idx p.1), p.2) := by
+      refine Measurable.prodMk ?_ measurable_snd
+      exact (Measurable.of_discrete (f := fun i : Fin K =>
+        (elapsed t - elapsed s) * shearAmt K i)).comp (hidx.comp measurable_fst)
+    exact continuous_pshift_uncurry.measurable.comp h1
+  exact (MeasurePreserving.id μ).skew_product hgm
+    (Filter.Eventually.of_forall fun x => (measurePreserving_pshift _).map_eq)
 
 /-- The selector-and-ready sector for outcome `i`. -/
 def selReady (idx : Xsel → Fin K) (i : Fin K) : Set (Xsel × LF4.KTorus) :=

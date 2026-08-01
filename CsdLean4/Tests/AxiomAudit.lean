@@ -1230,6 +1230,27 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shear_readout_after
 
+-- MEASURE PRESERVATION FOR THE SHEAR (2026-08-01) -- closing scope item (2) of the block above.
+-- ⚠️ That block recorded measure preservation as NOT PROVED, and warned it MATTERED: it is what makes
+-- the witness a DYNAMICS rather than an arbitrary relabelling of states, and EVERY necessary
+-- condition in MeasurementConstraints assumes it. It is now proved, so that warning is discharged.
+-- shear_measurePreserving: a SKEW PRODUCT -- the selector is held fixed and each fibre is translated
+-- by a Haar-preserving shift (measurePreserving_pshift, from translation invariance of Haar on the
+-- compact group T^2). The instance IsAddLeftInvariant for volume on KTorus had to be supplied by
+-- hand: volume on a product IS the product measure, but the invariance instance does not fire
+-- through the MeasureSpace instance.
+-- CONSEQUENCE: the Born connection (scope item 6) is now UNBLOCKED -- what remains there is the
+-- instantiation of the selector sectors as globalBasin's, not a missing ingredient.
+-- ⚠️ STILL OPEN and unchanged: the Hamiltonian generation is stated, not formalised (no manifold
+-- Hamiltonian-flow API in Mathlib), so item 3 remains only PARTLY closed.
+/-- info: 'CSD.RecordLayer.measurePreserving_pshift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_pshift
+
+/-- info: 'CSD.RecordLayer.shear_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_measurePreserving
+
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
 -- g == 0 on [0, 1 - s_i(phi)] -- and (b) that states with ALL overlaps <= c are non-null for every
