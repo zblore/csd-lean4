@@ -332,6 +332,8 @@ public import CsdLean4.SigmaLayer.MeasurementProtocol
 public import CsdLean4.SigmaLayer.RecordPersistence
 public import CsdLean4.SigmaLayer.ShearWitness
 public import CsdLean4.SigmaLayer.DynamicBorn
+public import CsdLean4.SigmaLayer.OutcomeField
+public import CsdLean4.SigmaLayer.DynamicMeasurementClosure
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1279,6 +1281,52 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.shear_selector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shear_selector_born
+
+-- GENERALISATION AND THE DYNAMICAL CAPSTONE (2026-08-01, OutcomeField + DynamicMeasurementClosure)
+-- items 7-8.
+-- ITEM 7. ContextField N ties the OUTCOME COUNT to the DIMENSION (rate : CPN N -> Fin N), which is
+-- right for a NONDEGENERATE measurement and wrong for everything else. OutcomeField N K decouples
+-- them. ★ TWO PLAN CONSTRAINTS FOLLOWED LITERALLY: (a) introduced ALONGSIDE ContextField, NOT
+-- replacing its uses -- globalBasin and everything downstream are untouched, and
+-- ContextField.toOutcomeField shows the generalisation is CONSERVATIVE; (b) an arbitrary
+-- simplex-valued field is NOT treated as automatically physical -- OutcomeField is a
+-- measurability-and-simplex condition and inhabiting it proves nothing about an apparatus.
+-- The physical content is blockField: given a DEGENERACY MAP b : Fin N -> Fin K, the rate of outcome
+-- i is the total moment-map weight of its block, the ontic form of <psi, Pi_i psi>. Every field
+-- condition comes FREE from the moment map's, because it is a FINITE SUM OF MOMENT COORDINATES --
+-- the same object, coarse-grained. blockField_id recovers momentContext, so the nondegenerate case
+-- is recovered rather than replaced. ⚠️ globalBasin still consumes a ContextField, so an
+-- OutcomeField cannot yet DRIVE the dynamical layer -- that bridge is deliberately not built.
+-- ITEM 8. ADDITIVE, NOT DESTABILISING, exactly as the plan required: FiniteQMClosure is UNTOUCHED.
+-- DynamicMeasurementClosure bundles the five dynamical facts: ready => no record; a record is
+-- CREATED and is the outcome the selector fixed; outcomes exclusive; the record PERSISTS across the
+-- operational window; the selector weights ARE the Born weights.
+-- ★ NOTE WHAT IS ABSENT FROM ITS HYPOTHESES: CorrelatesOn and PointerInvariantOn DO NOT APPEAR,
+-- because ShearWitness discharged them from an explicitly constructed propagator. This bundle rests
+-- on a CONSTRUCTION, not on assumed dynamics -- the difference between it and every earlier
+-- record-layer bundle in the corpus.
+-- ⚠️ The post-measurement/Luders field is DELIBERATELY NOT bundled: postMeasure_supported_pointerRegion
+-- exists but the Luders bridge needs a system-reduction map the corpus lacks for this arena, so
+-- including it would overstate.
+-- CsdFiniteQMClosure combines operational + dynamic. ⚠️ IT ASSERTS BOTH BUNDLES HOLD; IT DOES NOT
+-- ASSERT THEY ARE ABOUT THE SAME ARENA. The operational closure lives on productDynamics over
+-- CP^M x T^2 for a composite indexed by Fin Nsub x Fin Nsub ~ Fin (M+1); the dynamical one on
+-- Sigma_sel x T^2_R in dimension Nsys. The parameter lists are DISJOINT, and that is the honest
+-- state of the corpus, not an encoding artefact. Unifying the arenas is the ENGINE MIGRATION and is
+-- NOT done. Read it as "both hold", not "one theory covers both".
+-- ⚠️ And item 3's residue is unchanged: the Hamiltonian generation is STATED, NOT FORMALISED. A
+-- capstone cannot launder that.
+/-- info: 'CSD.RecordLayer.blockField_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockField_id
+
+/-- info: 'CSD.RecordLayer.dynamicMeasurementClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dynamicMeasurementClosure
+
+/-- info: 'CSD.RecordLayer.csdFiniteQMClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csdFiniteQMClosure
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
