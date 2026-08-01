@@ -133,6 +133,30 @@ theorem rep_pshift_of_mem (x : LF4.KTorus) (a : ℝ) (h : rep x.1 + a ∈ Ioc (0
   show toIocMod (by norm_num : (0:ℝ) < 1) 0 (rep x.1 + a) = rep x.1 + a
   exact (toIocMod_eq_self _).mpr (by simpa using h)
 
+/-! ### Arc measures
+
+`volume_circleCell` computes the measure of a CDF cell. The witness needs the same fact for arcs
+specified by arbitrary endpoints, so the general statement is extracted here. -/
+
+/-- **The Haar measure of a circle arc**, for endpoints within one turn. -/
+theorem volume_repPreimage {a b : ℝ} (h0 : 0 ≤ a) (hab : a ≤ b) (hb : b ≤ 1) :
+    (volume : Measure CircleFibre) (rep ⁻¹' Ioc a b) = ENNReal.ofReal (b - a) := by
+  have hS : MeasurableSet (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))) :=
+    measurable_subtype_coe measurableSet_Ioc
+  have hpre : rep ⁻¹' Ioc a b
+      = (AddCircle.equivIoc (1:ℝ) 0) ⁻¹' (Subtype.val ⁻¹' Ioc a b) := rfl
+  rw [hpre, (AddCircle.measurePreserving_equivIoc (T := (1:ℝ)) (a := 0)).measure_preimage
+    hS.nullMeasurableSet,
+    Measure.comap_apply _ Subtype.val_injective
+      (fun s hs => measurableSet_Ioc.subtype_image hs) _ hS]
+  have himg : (Subtype.val '' (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))))
+      = Ioc a b := by
+    rw [Subtype.image_preimage_coe]
+    apply Set.inter_eq_self_of_subset_right
+    intro x hx
+    exact ⟨lt_of_le_of_lt h0 hx.1, le_trans hx.2 (by simpa using hb)⟩
+  rw [himg, Real.volume_Ioc]
+
 /-! ### The witness -/
 
 variable {Xsel : Type*} [MeasurableSpace Xsel] {K : ℕ}
@@ -210,6 +234,24 @@ theorem shearAmt_strictMono {i j : Fin K} (h : (i : ℕ) < (j : ℕ)) :
   have hij : ((i : ℕ) : ℝ) + 1 ≤ ((j : ℕ) : ℝ) := by exact_mod_cast Nat.succ_le_of_lt h
   unfold shearAmt
   nlinarith
+
+/-- The ready arc has positive Haar measure, so conditioning on it is legitimate. -/
+theorem volume_readyArc :
+    (volume : Measure LF4.KTorus) (readyArc K) = ENNReal.ofReal (shearWidth K) := by
+  have h : readyArc K
+      = (rep ⁻¹' Ioc (0:ℝ) (shearWidth K)) ×ˢ (univ : Set (AddCircle (1:ℝ))) := by
+    ext x; simp [readyArc]
+  have hle : shearWidth K ≤ 1 := by
+    unfold shearWidth
+    rw [div_le_one (by positivity)]
+    have : (0:ℝ) ≤ (K:ℝ) := Nat.cast_nonneg _
+    linarith
+  rw [h, Measure.volume_eq_prod, Measure.prod_prod, circleFibre_volume_univ, mul_one,
+    volume_repPreimage le_rfl (le_of_lt shearWidth_pos) hle, sub_zero]
+
+theorem volume_readyArc_ne_zero : (volume : Measure LF4.KTorus) (readyArc K) ≠ 0 := by
+  rw [volume_readyArc]
+  simp [ENNReal.ofReal_eq_zero, not_le, shearWidth_pos (K := K)]
 
 /-! ### The propagator -/
 

@@ -331,6 +331,7 @@ public import CsdLean4.SigmaLayer.MeasurementConstraints
 public import CsdLean4.SigmaLayer.MeasurementProtocol
 public import CsdLean4.SigmaLayer.RecordPersistence
 public import CsdLean4.SigmaLayer.ShearWitness
+public import CsdLean4.SigmaLayer.DynamicBorn
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1250,6 +1251,34 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.shear_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shear_measurePreserving
+
+-- THE SHEAR DRIVEN BY THE CONTEXT-FIXED BASINS (2026-08-01, SigmaLayer/DynamicBorn.lean) -- item 4.
+-- ShearWitness proves the correlation for an ABSTRACT measurable index. This supplies the index the
+-- architecture intends -- the one read off globalBasin -- so the dynamical sectors carry BORN
+-- WEIGHTS rather than arbitrary ones.
+-- basinIndex: the outcome index of a point of Sigma_sel. Its fibre over i is globalBasin c i, except
+-- over the DEFAULT index which also picks up the points in NO basin -- a null set by
+-- globalBasin_ae_total. measure_basinIndex_fibre: that null set costs nothing, so every fibre has
+-- exactly its basin's measure. (This is the one place the a.e.-totality that caused the original
+-- problem is actually USEFUL: it is what makes the default index harmless.)
+-- ★ shear_selector_born: at preparation psi the sector "hidden selector reads i AND apparatus ready"
+-- has measure ||<e_i,psi>||^2. Composed with shear_correlates and
+-- measure_outcomeSector_eq_of_correlates, the DYNAMICAL outcome weight IS the Born weight -- the
+-- probability is TRANSPORTED BY THE INTERACTION, not posited for it.
+-- ⚠️ SCOPE unchanged from ShearWitness: the propagator is explicit and every property proved OF it,
+-- but the HAMILTONIAN GENERATION IS STATED, NOT FORMALISED. This closes the BORN half of item 4, not
+-- item 3.
+/-- info: 'CSD.RecordLayer.measurable_basinIndex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_basinIndex
+
+/-- info: 'CSD.RecordLayer.measure_basinIndex_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_basinIndex_fibre
+
+/-- info: 'CSD.RecordLayer.shear_selector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_selector_born
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

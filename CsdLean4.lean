@@ -373,6 +373,7 @@ public import CsdLean4.SigmaLayer.MeasurementConstraints
 public import CsdLean4.SigmaLayer.MeasurementProtocol
 public import CsdLean4.SigmaLayer.RecordPersistence
 public import CsdLean4.SigmaLayer.ShearWitness
+public import CsdLean4.SigmaLayer.DynamicBorn
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
