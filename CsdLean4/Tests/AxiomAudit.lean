@@ -333,6 +333,7 @@ public import CsdLean4.SigmaLayer.RecordPersistence
 public import CsdLean4.SigmaLayer.ShearWitness
 public import CsdLean4.SigmaLayer.DynamicBorn
 public import CsdLean4.SigmaLayer.OutcomeField
+public import CsdLean4.SigmaLayer.OutcomeBasin
 public import CsdLean4.SigmaLayer.DynamicMeasurementClosure
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
@@ -1327,6 +1328,39 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.csdFiniteQMClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.csdFiniteQMClosure
+
+-- THE TWO REMAINING BRIDGES (2026-08-01).
+-- BRIDGE A -- OutcomeField -> basins (SigmaLayer/OutcomeBasin.lean). OutcomeField decoupled the
+-- outcome count from the dimension but globalBasin still consumed a ContextField, so a K-outcome
+-- field could not drive the record layer. outcomeBasin closes that: same construction, Fin K in
+-- place of Fin N, with measurability, exclusivity, outcomeBasin_prob and a.e. totality re-proved.
+-- ★ outcomeBasin_toOutcomeField: for a ContextField the generalised basin IS globalBasin,
+-- DEFINITIONALLY -- the generalisation adds cases without changing any existing one. So DEGENERATE
+-- PROJECTIVE MEASUREMENTS now reach the basins.
+-- BRIDGE B -- THE LUDERS CONNECTION, AND IT IS A NEGATIVE RESULT.
+-- ⚠️ shear_base_marginal_unchanged: Prod.fst . evolve = Prod.fst, so the base marginal of the
+-- POST-measurement ensemble is the base marginal of the SELECTED ensemble. NOTHING ABOUT THE SYSTEM
+-- HAS MOVED. The shear therefore gives REPEATABILITY (re-reading the same observable returns the
+-- same outcome) but does NOT implement the LUDERS UPDATE: after outcome i the system is still at
+-- [psi], not at [e_i], so a subsequent INCOMPATIBLE measurement would see the original preparation
+-- -- which is not what QM predicts.
+-- ★ THE TENSION IS STRUCTURAL, NOT AN OVERSIGHT. The property that makes this witness work --
+-- xdot_sel ~ grad(iota) = 0, NO BACK-REACTION on the selector -- is EXACTLY the property that
+-- prevents collapse. A witness reproducing Luders must DISTURB the selector, and then the clean
+-- correlation argument has to be redone. So item 6's Luders half is not merely unbuilt here: THIS
+-- WITNESS CANNOT SUPPLY IT, and a different coupling is required. Recorded as a theorem rather than
+-- left as an absence, so the limitation is machine-checked rather than asserted.
+/-- info: 'CSD.RecordLayer.outcomeBasin_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outcomeBasin_prob
+
+/-- info: 'CSD.RecordLayer.outcomeBasin_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outcomeBasin_ae_total
+
+/-- info: 'CSD.RecordLayer.shear_base_marginal_unchanged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_base_marginal_unchanged
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

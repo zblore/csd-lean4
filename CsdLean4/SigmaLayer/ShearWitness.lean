@@ -351,6 +351,33 @@ theorem shear_measurePreserving (idx : Xsel → Fin K) (hidx : Measurable idx)
   exact (MeasurePreserving.id μ).skew_product hgm
     (Filter.Eventually.of_forall fun x => (measurePreserving_pshift _).map_eq)
 
+/-! ### ⚠️ The system state does not collapse -/
+
+/-- **★ The interaction does not change the system's marginal.**
+
+`Prod.fst ∘ evolve = Prod.fst` — the shear moves only the pointer — so the base marginal of the
+post-measurement ensemble is the base marginal of the *selected* ensemble. Nothing about the system
+has moved.
+
+⚠️ **This is a genuine limitation of the witness, and it is worth stating rather than burying.** It
+means the shear gives **repeatability** (re-reading the same observable returns the same outcome —
+`readout_persists_on_interval`) but it does **not** implement the **Lüders update**: after outcome
+`i` the system is still at `[ψ]`, not at `[eᵢ]`. A subsequent *incompatible* measurement would
+therefore see the original preparation, which is not what quantum mechanics predicts.
+
+★ And the tension is structural, not an oversight: the property that makes this witness work —
+`ẋ_sel ∝ ∇ι = 0`, no back-reaction on the selector — is exactly the property that prevents collapse.
+A witness that reproduces Lüders must disturb the selector, and then the clean correlation argument
+has to be redone. So **item 6's Lüders half is not merely unbuilt here; this witness cannot supply
+it**, and a different coupling is required. -/
+theorem shear_base_marginal_unchanged (idx : Xsel → Fin K) (hidx : Measurable idx)
+    (μ : Measure (Xsel × LF4.KTorus)) (i : Fin K) :
+    Measure.map Prod.fst ((shearProtocol idx hidx).postMeasure μ i)
+      = Measure.map Prod.fst ((shearProtocol idx hidx).selectedMeasure μ i) := by
+  rw [MeasurementProtocol.postMeasure,
+    Measure.map_map measurable_fst ((shearProtocol idx hidx).measurable_evolve _ _)]
+  rfl
+
 /-- The selector-and-ready sector for outcome `i`. -/
 def selReady (idx : Xsel → Fin K) (i : Fin K) : Set (Xsel × LF4.KTorus) :=
   {p | idx p.1 = i ∧ p.2 ∈ readyArc K}
