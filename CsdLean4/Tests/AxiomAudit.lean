@@ -329,6 +329,7 @@ public import CsdLean4.SigmaLayer.GlobalBasin
 public import CsdLean4.SigmaLayer.GlobalRecordClosure
 public import CsdLean4.SigmaLayer.MeasurementConstraints
 public import CsdLean4.SigmaLayer.MeasurementProtocol
+public import CsdLean4.SigmaLayer.RecordPersistence
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1139,6 +1140,47 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.MeasurementProtocol.measure_outcomeSector_eq_of_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.MeasurementProtocol.measure_outcomeSector_eq_of_correlates
+
+-- PERSISTENCE AND THE POST-MEASUREMENT ENSEMBLE (2026-08-01, SigmaLayer/RecordPersistence.lean) --
+-- items 5-6.
+-- ★ BOTH USE THE EVOLUTION, WHICH IS THE POINT. The plan is explicit that reusing the same set at
+-- every time does not count as persistence. record_persists_on_interval is stated about
+-- evolve startTime t for a RANGE of t and its proof runs through evolve_comp
+-- (Phi_{0->t} = Phi_{T->t} . Phi_{0->T}), so it is a statement about the PROPAGATOR, not the
+-- observation that a time-independent set is time-independent. Likewise postMeasure is a genuine
+-- pushforward along the propagator, not a relabelling of the conditioned measure.
+-- PointerInvariantOn: the post-readout invariance HYPOTHESIS -- again NOT a field, for the same
+-- reason CorrelatesOn is not. It is an assumption ABOUT THE DYNAMICS; a witness must establish it,
+-- by forward invariance of B_i or by a conserved pointer observable.
+-- record_persists_on_interval: a state destined for i is in B_i at EVERY time of [T_M, T_M + tau_R].
+-- readout_persists_on_interval: the readout-level form -- and therefore the POINTER-LEVEL
+-- REPEATABILITY statement, a second look during the lifetime returns the recorded outcome.
+-- ★ SELECTION vs DISTURBANCE, which the corpus previously could not distinguish:
+-- measure_outcomeSector_eq_of_correlates says WHICH initial sector produced outcome i (selection);
+-- postMeasure says WHERE THE SELECTED ENSEMBLE ENDS UP (disturbance).
+-- postMeasure_supported_pointerRegion: the whole selected ensemble lands in B_i, probability one.
+-- Almost definitional -- Phi^{-1}(B_i) IS Omega_i by construction -- and that is the RIGHT shape,
+-- not a weakness: the content is the definitions lining up. Holds for ANY propagator, needing
+-- neither CorrelatesOn nor PointerInvariantOn.
+-- ⚠️ SCOPE. No interaction Hamiltonian: PointerInvariantOn is ASSUMED, not constructed, so nothing
+-- here advances the open Paper D obligation. AND THE LUDERS BRIDGE IS NOT HERE -- item 6 also asks
+-- that after the system-reduction map r_S this reproduce rho -> Pi_i rho Pi_i / Tr(rho Pi_i), which
+-- needs a reduction map from Sigma_meas to the system density operator that the corpus does NOT have
+-- for this arena. The measure-theoretic half is done; the bridge to LF5's Luders result is not, and
+-- is not claimed. The finite window [T_M, T_M + tau_R] is deliberate -- on a compact phase space with
+-- an invariant probability measure, indefinite stability raises recurrence questions finite-QM
+-- closure does not need.
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.record_persists_on_interval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.record_persists_on_interval
+
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.readout_persists_on_interval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.readout_persists_on_interval
+
+/-- info: 'CSD.RecordLayer.MeasurementProtocol.postMeasure_supported_pointerRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MeasurementProtocol.postMeasure_supported_pointerRegion
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

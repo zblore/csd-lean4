@@ -104,6 +104,10 @@ structure MeasurementProtocol (Sigma : Type*) [MeasurableSpace Sigma] (K : ℕ) 
   startTime : OnticTime
   /-- The time by which the record is established. -/
   readoutTime : OnticTime
+  /-- The operational record lifetime `τ_R`: how long the apparatus is claimed to hold a record.
+  A **finite** window, deliberately. On a compact phase space with an invariant probability measure,
+  indefinite stability raises recurrence questions that finite-QM closure does not need. -/
+  recordDuration : OnticTime
   /-- The apparatus-ready region: no outcome is recorded here. -/
   readyRegion : Set Sigma
   /-- The pointer region displaying outcome `i`. -/
