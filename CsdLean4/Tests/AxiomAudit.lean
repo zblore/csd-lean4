@@ -327,6 +327,7 @@ public import CsdLean4.SigmaLayer.CircleRecord
 public import CsdLean4.SigmaLayer.TorusFibre
 public import CsdLean4.SigmaLayer.GlobalBasin
 public import CsdLean4.SigmaLayer.GlobalRecordClosure
+public import CsdLean4.SigmaLayer.MeasurementConstraints
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1057,6 +1058,41 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.globalRecordClosure_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.globalRecordClosure_born
+
+-- CONSTRAINTS ON THE UNBUILT DYNAMICAL LAYER (2026-08-01, SigmaLayer/MeasurementConstraints.lean).
+-- ⚠️ THE DIAGNOSIS THAT FORCED THIS (external review, and it is SHARPER than the "still kinematic"
+-- caveat the GlobalBasin block carries): globalBasin_ae_total shows the basins cover Sigma up to a
+-- null set, so A.E. EVERY POINT ALREADY CARRIES A RECORD and there is no apparatus-ready state of
+-- positive measure. A flow cannot CREATE a record in such a space. So "add dynamics to
+-- GlobalRecordClosure" is not merely incomplete, it is STRUCTURALLY IMPOSSIBLE -- the repair has to
+-- split the hidden SELECTOR from a pointer REGISTER with its own ready region.
+-- This file builds none of that. It derives NECESSARY CONDITIONS on any such witness from measure
+-- preservation and continuity alone, BEFORE a Hamiltonian exists -- the same cheap-failure check the
+-- CP^{n-1} x S^1 parity argument would have been.
+-- pointer_region_measure_ge: mu_sel(S) * mu_R(R_0) <= mu_R(B). ⚠️ THE MEASURE CHECK COMES BACK
+-- NEGATIVE -- it does NOT obstruct. Granting the (unformalised) evaluation mu_sel(S_i) = 1/n, it
+-- reads mu_R(B_i) >= mu_R(R_0)/n, satisfiable with room. That is a GREEN LIGHT for attempting the
+-- concrete H_int, NOT evidence that a witness exists. ready_region_measure_le: the summed form,
+-- recorded explicitly AS WEAK rather than dressed up.
+-- ★ no_everywhere_correlation IS THE ONE WITH TEETH. A continuous Phi maps the preconnected
+-- S x R_0 to a preconnected image, which cannot meet two DISJOINT OPEN pointer regions. So an
+-- EVERYWHERE correlation is impossible for n >= 2. THEREFORE THE "a.e." IN THE CORRELATION THEOREM
+-- IS MATHEMATICALLY NECESSARY, NOT A CONVENIENCE: the exceptional set must be NON-EMPTY, it contains
+-- the seams between selector sectors, and its image threads the gaps between pointer regions.
+-- Consequences for the implementer: any candidate H_int advertised as giving an exact/everywhere
+-- correlation is wrong on these grounds alone; and a witness that leaves the seam unspecified has
+-- not addressed the hardest part of its own statement.
+/-- info: 'CSD.RecordLayer.pointer_region_measure_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointer_region_measure_ge
+
+/-- info: 'CSD.RecordLayer.ready_region_measure_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ready_region_measure_le
+
+/-- info: 'CSD.RecordLayer.no_everywhere_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.no_everywhere_correlation
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

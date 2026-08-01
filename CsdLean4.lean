@@ -369,6 +369,7 @@ public import CsdLean4.SigmaLayer.CircleRecord
 public import CsdLean4.SigmaLayer.TorusFibre
 public import CsdLean4.SigmaLayer.GlobalBasin
 public import CsdLean4.SigmaLayer.GlobalRecordClosure
+public import CsdLean4.SigmaLayer.MeasurementConstraints
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
