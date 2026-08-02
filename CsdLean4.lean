@@ -152,6 +152,7 @@ public import CsdLean4.LF4.ObservableCorrespondenceN
 public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
 public import CsdLean4.Empirical.CSD.Contextuality.KCBSVolume
+public import CsdLean4.Empirical.CSD.QuantumEraserVolume
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.LF4.SingletKahler

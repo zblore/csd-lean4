@@ -125,6 +125,7 @@ public import CsdLean4.LF4.ObservableCorrespondenceN
 public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
 public import CsdLean4.Empirical.CSD.Contextuality.KCBSVolume
+public import CsdLean4.Empirical.CSD.QuantumEraserVolume
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1739,6 +1740,41 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.CSDBridge.KCBS.kcbs_context_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.KCBS.kcbs_context_born_frequency_volume_canonical
+
+-- THE QUANTUM ERASER TWIN, VIA THE RECORD ROUTE (2026-08-02, Empirical/CSD/QuantumEraserVolume.lean).
+-- The eraser's signature is a VANISHING conditional probability (the dark fringe), which the
+-- Duistermaat-Heckman volume route cannot state (hpos is load-bearing: replaceMap_det). Like
+-- HongOuMandelVolume, this twin lives on the record layer, where a zero rate is a zero-width cell:
+-- ★ eraser_fringe_typicality: the full-visibility conditioned fringe (1 + c·cos φ)/2 is a fibre
+-- typicality volume at EVERY phase, boundary values included.
+-- ★ eraser_dark_typicality_zero (+ _record_null, _measurement_zero): at φ = π the dark cell is
+-- exactly null -- no microstate of Σ produces a dark-port detection; nothing cancels across runs.
+-- ★ eraser_dark_basin_null: the same zero at the v1.0 context-fixed basin layer -- at the dark point
+-- the conditioned state IS the vertex [e₁] (mk_eraserOut_pi), and the dark basin's fibre arc has
+-- width 0 there (globalBasin_prob + momentMap_vertex, the repeatability lemmas).
+-- eraserOut_rate_conditional ties the rates to the QM module: joint over marker marginal, both
+-- sides QM-side quantities -- the conditioned state is derived, not asserted.
+-- ⚠️ Realises the conditioned STATISTICS ontically; the conditioning PROCESS (marker measurement as
+-- swap-witness dynamics on the composite) needs the unitary-covariance extension (BACKLOG).
+/-- info: 'CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_fringe_typicality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_fringe_typicality
+
+/-- info: 'CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_dark_typicality_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_dark_typicality_zero
+
+/-- info: 'CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_dark_record_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_dark_record_null
+
+/-- info: 'CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_dark_basin_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumEraserVolume.eraser_dark_basin_null
+
+/-- info: 'CSD.Empirical.CSDBridge.QuantumEraserVolume.eraserOut_rate_conditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QuantumEraserVolume.eraserOut_rate_conditional
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
