@@ -126,6 +126,8 @@ public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
 public import CsdLean4.Empirical.CSD.Contextuality.KCBSVolume
 public import CsdLean4.Empirical.CSD.QuantumEraserVolume
+public import CsdLean4.SigmaLayer.RotatedContext
+public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1775,6 +1777,52 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.CSDBridge.QuantumEraserVolume.eraserOut_rate_conditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QuantumEraserVolume.eraserOut_rate_conditional
+
+-- BB84 INTERCEPT-RESEND WITH A DYNAMICAL COLLAPSE STEP (2026-08-02,
+-- Empirical/CSD/Crypto/BB84Sequential.lean + SigmaLayer/RotatedContext.lean).
+-- The QM module (Crypto/BB84.lean) models Eve's measure-and-resend as a CLASSICAL MARGINAL, with a
+-- scope note gating the collapse operator on "the LF5 gate". The dynamical measurement layer
+-- dissolved that gate; this entry replaces the posited marginal with the calibrated-swap dynamics:
+-- ★ basisContext_rate_mk (RotatedContext): the context field of an apparatus measuring in ANY
+-- orthonormal basis, rates = rotated Born weights ‖⟨b i, ψ⟩‖² -- the unitary-covariance seed. With
+-- it, csd_sequential_born extends to CROSS-BASIS follow-ups.
+-- ★ prep_outcome_pos (SequentialMeasurement): for the canonical ready preparation, hpos is a
+-- THEOREM whenever the Born weight is nonzero -- conditioning licensed by the preparation, the
+-- carried-hypothesis caveat discharged at every concrete preparation.
+-- ★ bb84_wrong_basis_bob (+ _error): Alice sends |+>, Eve Z-measures (the swap witness's native
+-- basis), Bob reads the rotated X-context: every Bob basin has probability EXACTLY 1/2 whatever
+-- Eve saw -- the 1/2 disturbance with the collapse a pushforward theorem. Both measurements are
+-- context-field reads of the dynamical layer: the sequential composition is end-to-end.
+-- ★ bb84_right_basis_no_disturbance / _faithful: Eve in the matching basis is exactly
+-- repeatability -- error basin null, correct basin certain. Eve learns the bit and disturbs nothing.
+-- bb84_eve_selector_born: Eve's outcome weights on |+> are a fair coin (the information side).
+-- ⚠️ Dual round of the QM module's (Alice X / Eve Z, so Eve is computational-basis); one sifted
+-- round; Eve's basis choice + the 1/4 average stay classical bookkeeping on the QM side
+-- (bb84_dynamical_matches_marginal records the correspondence); composable finite-key remains the
+-- recorded QKD tranche.
+/-- info: 'CSD.RecordLayer.basisContext_rate_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.basisContext_rate_mk
+
+/-- info: 'CSD.Empirical.CSDBridge.SequentialMeasurement.prep_outcome_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SequentialMeasurement.prep_outcome_pos
+
+/-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_eve_selector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.BB84Sequential.bb84_eve_selector_born
+
+/-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_wrong_basis_bob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.BB84Sequential.bb84_wrong_basis_bob
+
+/-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_right_basis_no_disturbance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.BB84Sequential.bb84_right_basis_no_disturbance
+
+/-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_right_basis_faithful' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.BB84Sequential.bb84_right_basis_faithful
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
