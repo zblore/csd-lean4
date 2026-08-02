@@ -40,17 +40,18 @@ preserves. That coincidence is the engine migration's mathematical content.
 | `born_frequency` | **migrated** — same i.i.d. LLN, trials sampling `arenaLiouville`, regions the arena cylinders of the Born regions |
 | `conditioning_is_luders` | **superseded** — the `measurement` field's `luders_followup` is the *dynamical* Lüders update (collapse as pushforward), strictly stronger than conditioning-as-prediction |
 | `mixed_born` | **migrated** — spectral mixtures of arena cylinder measures reproduce `Tr(ρEᵢ)` |
-| `mixed_born_frequency` | **not migrated** (recorded, `specs/BACKLOG.md`): the two-stage mixture LLN needs `mixtureMeasure`/`mixtureRegion` lifted to the arena — mechanical by the same marginal argument, effort S; carrying it as prose here rather than a field keeps the no-placeholder rule |
+| `mixed_born_frequency` | **migrated** (same day, second pass) — `arena_mixed_born_frequency`: the two-stage mixture LLN through the system-slot marginal, with `arenaMixtureRegion` a `Prod.map` preimage so the transfer is `rfl`-level |
 
 ## ⚠️ Honest scope
 
 * The isolated lift `arenaIso` acts by `exp(-itH)` on the **system slot** and identity on
   register and bank: the apparatus is idle between measurements, and the bank is re-calibrated
   per round (the calibration posit of `SwapLuders.lean`, unchanged).
-* The propagator alternation — isolate, then measure, then isolate — is available on this one
-  arena because both maps live on it and both preserve `arenaLiouville`; a *composed
-  round-trip* theorem (Schrödinger → measure → Schrödinger with records intact) is the natural
-  next statement and is recorded, not claimed.
+* The propagator alternation — isolate, then measure, then isolate — is now a **theorem**
+  (`arena_round_trip`, second pass same day): the record is created from the evolved state's
+  selector and survives subsequent isolated evolution, because the pointer register is a
+  conserved coordinate of the lifted flow (`readout_arenaIso` — definitional). The composition
+  was not even stateable before the migration.
 * Everything the predecessor capstones honestly scoped stays scoped: the piecewise-Hamiltonian
   classification of the measurement propagator (`PiecewiseHamiltonian.lean`), the calibration
   posit, rank-one first measurements.
@@ -246,5 +247,87 @@ theorem unifiedArenaClosure (hψ : ‖ψ‖ = 1) :
     have h := mixed_ontic_born_weight H hH p₀ ρ i
     rw [productDynamics_muL] at h
     simpa only [arenaLiouville_cylinder] using h
+
+/-! ### The mixed two-stage LLN, on the arena (the first recorded residue, discharged) -/
+
+/-- The two-stage mixture measure on the arena: draw a spectral component, then an arena
+microstate from the arena Liouville measure. -/
+noncomputable def arenaMixtureMeasure (ρ : DensityOperator (M + 1)) :
+    Measure (Fin (M + 1) × UnifiedArena M) :=
+  (eigenvalueMeasure ρ).prod (arenaLiouville M p₀)
+
+/-- The mixed outcome-`i` region on the arena: the system-slot cylinder of the two-stage Born
+region. -/
+def arenaMixtureRegion (ρ : DensityOperator (M + 1)) (i : Fin (M + 1)) :
+    Set (Fin (M + 1) × UnifiedArena M) :=
+  (Prod.map id (fun a : UnifiedArena M => a.1.1)) ⁻¹' mixtureRegion H hH p₀ ρ i
+
+/-- **Mixed-state Born frequencies, on the unified arena.** For i.i.d. two-stage trials of any
+density operator `ρ` — spectral component, then arena microstate — the outcome-`i` frequency
+converges a.s. to `Tr(ρ Eᵢ)`. Transfers from `unified_mixed_born_frequency` through the
+system-slot marginal; discharges the residue recorded at the migration. -/
+theorem arena_mixed_born_frequency (ρ : DensityOperator (M + 1))
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (Y : ℕ → Ω → Fin (M + 1) × UnifiedArena M) (hY : ∀ n, Measurable (Y n))
+    (hlaw : ∀ n, Measure.map (Y n) Pr = arenaMixtureMeasure p₀ ρ)
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise (Function.onFun (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+        (fun n => Set.indicator ((Y n) ⁻¹' arenaMixtureRegion H hH p₀ ρ i)
+          (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr, ∀ i : Fin (M + 1),
+      Filter.Tendsto
+        (fun m : ℕ =>
+          (∑ k ∈ Finset.range m,
+              Set.indicator ((Y k) ⁻¹' arenaMixtureRegion H hH p₀ ρ i)
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        Filter.atTop
+        (nhds (traceForm ρ (rankOneEffect (EuclideanSpace.single i (1 : ℂ))
+          (single_norm_one i)))) := by
+  have hm : Measurable (Prod.map (id : Fin (M + 1) → Fin (M + 1))
+      (fun a : UnifiedArena M => a.1.1)) :=
+    measurable_id.prodMap (measurable_fst.comp measurable_fst)
+  exact unified_mixed_born_frequency H hH p₀ ρ
+    (fun n ω => Prod.map id (fun a : UnifiedArena M => a.1.1) (Y n ω))
+    (fun n => hm.comp (hY n))
+    (fun n => by
+      have hg : Measurable fun a : UnifiedArena M => a.1.1 :=
+        measurable_fst.comp measurable_fst
+      rw [show (fun ω => Prod.map id (fun a : UnifiedArena M => a.1.1) (Y n ω))
+          = (Prod.map id (fun a : UnifiedArena M => a.1.1)) ∘ (Y n) from rfl,
+        ← Measure.map_map hm (hY n), hlaw n, arenaMixtureMeasure,
+        ← Measure.map_prod_map _ _ measurable_id hg,
+        Measure.map_id, arenaLiouville_sys_marginal p₀, mixtureMeasure, productDynamics_muL])
+    hindep
+
+/-! ### The round trip (the second recorded residue, discharged) -/
+
+/-- **Records are invariant under isolated evolution**: the lifted `exp(-itH)` never touches
+the pointer register, so the readout is a conserved quantity of the isolated flow. This is what
+"the record is a stable fact of `Σ`" means dynamically. -/
+theorem readout_arenaIso (s : ℝ) (y : UnifiedArena M) :
+    (swapProtocol (basinIndex (momentContext (M + 1)))
+        (measurable_basinIndex (momentContext (M + 1)))).readout (arenaIso H hH p₀ s y)
+      = (swapProtocol (basinIndex (momentContext (M + 1)))
+          (measurable_basinIndex (momentContext (M + 1)))).readout y := rfl
+
+/-- **★ The round trip: isolate, measure, isolate — the record is created and survives.**
+Evolve freely for time `r`; if the evolved state sits in the selector-`i` ready set, run the
+measurement: the record `i` is created, and any subsequent isolated evolution for time `s`
+leaves it standing. The first statement in the corpus that composes the Schrödinger propagator
+and the measurement propagator on one arena — the composition that was not even *stateable*
+before the migration. -/
+theorem arena_round_trip (r s : ℝ) (i : Fin (M + 1)) (x : UnifiedArena M)
+    (hx : arenaIso H hH p₀ r x ∈ selReadyBank (basinIndex (momentContext (M + 1))) i) :
+    (swapProtocol (basinIndex (momentContext (M + 1)))
+        (measurable_basinIndex (momentContext (M + 1)))).readout
+      (arenaIso H hH p₀ s
+        ((swapProtocol (basinIndex (momentContext (M + 1)))
+            (measurable_basinIndex (momentContext (M + 1)))).evolve 0 1
+          (arenaIso H hH p₀ r x)))
+      = some i := by
+  rw [readout_arenaIso]
+  exact (swapProtocol _ _).readout_evolve_outcomeSector
+    (swap_correlates (basinIndex (momentContext (M + 1)))
+      (measurable_basinIndex (momentContext (M + 1))) i hx)
 
 end CSD.RecordLayer

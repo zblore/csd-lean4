@@ -1965,6 +1965,20 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arenaRay_pushforward
 
+-- THE MIGRATION RESIDUES, DISCHARGED SAME DAY (2026-08-02, UnifiedArena.lean second pass):
+-- ★ arena_round_trip -- isolate → measure → isolate: the record is created from the evolved
+-- state's selector and SURVIVES subsequent isolated evolution (readout_arenaIso: the pointer
+-- register is a conserved coordinate of the lifted flow -- definitional, rfl). The first theorem
+-- composing the Schrödinger and measurement propagators; not stateable before the migration.
+-- arena_mixed_born_frequency -- the mixed two-stage LLN on the arena (rfl-level transfer).
+/-- info: 'CSD.RecordLayer.arena_round_trip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arena_round_trip
+
+/-- info: 'CSD.RecordLayer.arena_mixed_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arena_mixed_born_frequency
+
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
 -- g == 0 on [0, 1 - s_i(phi)] -- and (b) that states with ALL overlaps <= c are non-null for every
