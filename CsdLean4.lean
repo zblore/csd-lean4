@@ -383,6 +383,7 @@ public import CsdLean4.SigmaLayer.SwapWitness
 public import CsdLean4.SigmaLayer.SwapLuders
 public import CsdLean4.SigmaLayer.DegenerateLuders
 public import CsdLean4.SigmaLayer.ApproxProjectability
+public import CsdLean4.SigmaLayer.HamiltonianSignature
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord

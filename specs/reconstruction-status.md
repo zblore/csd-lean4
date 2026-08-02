@@ -74,7 +74,7 @@ This is the canonical map of *what the Lean corpus formalises against each Paper
 | Paper C axiom | Lean status |
 |---|---|
 | **A1** compact Kähler ontic surface | **Partial.** Compactness and the *pointwise* Kähler compatibility core are represented (`IsFubiniStudyKahler`, `fubiniStudy_pointwise_kahler_compatibility`); full manifold exterior calculus (`dω=0`, `ωⁿ/n! = μ_FS`) is not formalised (no Mathlib API). ⚠️ **Separately (2026-07-30): the *fibred* Σ's A1 status is a dimension-parity question, not a tooling one** — `ℂℙⁿ⁻¹ × ℝ` (`FibredSigma`) and `ℂℙⁿ⁻¹ × AddCircle 1` (`CircleFibre`) both have real dimension `2n-1`, **odd**, so neither admits *any* symplectic, hence Kähler, structure. Only `KSigma = ℂℙⁿ⁻¹ × T²` (dimension `2n`) can. See §2a. |
-| **A2** Hamiltonian ontic dynamics | **Partial.** A measure-preserving one-parameter group flow is formalised (`ConstraintDynamics.flow`, `flow_preserves`); a *generic* ontic Hamiltonian vector field `X_H` on `Σ` is not — the witness uses the projected `e^{-itH}` lift. |
+| **A2** Hamiltonian ontic dynamics | **Formalisable half DISCHARGED 2026-08-02** (`SigmaLayer/HamiltonianSignature.lean`): the witness flow carries every Hamiltonian **signature** a measure space can express — a canonical conserved energy (`onticEnergy`, ray-well-defined, conserved under the flow: `onticEnergy_flow_invariant`), which is *simultaneously* A5's exactly-projectable `h` (`onticEnergy_epsProjectable` — the A2/A5 junction); the commuting phase torus preserving every moment-map coordinate (`momentMap_phaseDiag_invariant`, `phaseDiag_comm`); plus the already-proved Liouville property and group laws, with the fibre translations measure-preserving (`ShearWitness`). **The vector-field equation `X_H = ω⁻¹dH` itself is §2a-scoped** (symplectic form + exterior derivative; verified a tooling gap). The witness uses the projected `e^{-itH}` lift. |
 | **A3** smooth many-to-one projection | **Partial interface, concrete witness.** Lean requires *measurability* of `π` (not smoothness); the product witness `π = Prod.fst` is genuinely many-to-one (the `T²` fibre). |
 | **A4** pushforward measure `π_*μL = μ_FS` | **Proved for the witness** (`productSector_hasFubiniStudyPushforward`, B1) **and forced under full unitary symmetry** (`localised_sectorPostulate_capstone`); **not derived** from arbitrary ontic dynamics. The witness has `μL = μFS ⊗ vol` built in. |
 | **A5** quantum-effective Hamiltonians (projectability) | **Approximate case FORMALISED 2026-08-02** (`SigmaLayer/ApproxProjectability.lean` + the Duhamel bound): `EpsProjectable` (oscillation form; the derivative form is the §2a-scoped manifold refinement, substitution stated), `epsProjectable_zero_iff` (exact case ⇔ `ε = 0`, an iff), and the **shadowing theorem** — `‖H−H₀‖ ≤ ε`, `|t| ≤ T` ⇒ sector dynamics tracks true dynamics within `ε·T`. The exact fibre-invariant case `H = h∘π` was already formalised (projected flow closes, `e^{-itH}` on rays). ⚠️ Residue: the shadowing is Hilbert-side; an ontic Hamiltonian *generating* the flow is A2's row. |
@@ -183,9 +183,10 @@ Two corrections attach to that work:
 **Net for "finite QM from Σ" (updated 2026-08-02): three rows permanently scoped (A1-exterior *on
 `KSigma`*, A3, witness-`H_int` origin), one closed as a posit with the symmetry-forcing result (A4),
 **A7 discharged** (fibred canonical; base-only = the parked qubit-special-case question), **A5's
-approximate case formalised 2026-08-02** (oscillation predicate + exact-case iff + `ε·T` shadowing;
-Hilbert-side, with the ontic-generator bridge belonging to A2), and the genuinely open rows are
-**A2 and A6**.** That is the honest distance to closed.
+approximate case formalised 2026-08-02** (oscillation predicate + exact-case iff + `ε·T` shadowing),
+**A2's formalisable half discharged 2026-08-02** (the Hamiltonian signature package; the vector-field
+equation is scoped), and the one genuinely open row is **A6** — the non-factorising ontic
+composite.** That is the honest distance to closed.
 
 
 ### 2a. Target inventory (T1–T16) — inhabited reconstruction targets
