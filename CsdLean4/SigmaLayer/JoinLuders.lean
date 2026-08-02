@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.SigmaLayer.JoinProtocol
+public import CsdLean4.Mathlib.Probability.ConditionalProbability
 
 /-!
 # SigmaLayer/JoinLuders: `BlockLudersObligation`, inhabited — the degenerate arc closed
@@ -42,7 +43,8 @@ The canonical preparation is a pushforward from a parameter space
 
 `goodTheta_vol_pos` discharges the conditioning positivity from `Πᵢψ ≠ 0` alone (a nonzero
 block coordinate has a positive-width basin cell), so the obligation carries no measure
-hypothesis.
+hypothesis. *(The generic conditioning toolkit was extracted to
+`CsdLean4/Mathlib/Probability/ConditionalProbability.lean` on 2026-08-02.)*
 
 ## What this closes
 
@@ -70,28 +72,9 @@ namespace CSD.RecordLayer
 
 variable {N K : ℕ}
 
-/-! ### Conditioning toolkit -/
-
-/-- Conditioning commutes with pushforward: `cond (f_*μ) S = f_* (cond μ (f⁻¹S))`. -/
-theorem cond_map {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
-    (μ : Measure X) {f : X → Y} (hf : Measurable f) {S : Set Y} (hS : MeasurableSet S) :
-    ProbabilityTheory.cond (Measure.map f μ) S
-      = Measure.map f (ProbabilityTheory.cond μ (f ⁻¹' S)) := by
-  show ((Measure.map f μ) S)⁻¹ • (Measure.map f μ).restrict S
-    = Measure.map f ((μ (f ⁻¹' S))⁻¹ • μ.restrict (f ⁻¹' S))
-  rw [Measure.map_apply hf hS, Measure.restrict_map hf hS, Measure.map_smul]
-
-/-- Conditioning a product on a product event conditions the factors independently. -/
-theorem cond_prod_prod {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
-    (μ : Measure X) (ν : Measure Y) [IsFiniteMeasure μ] [IsFiniteMeasure ν] [SFinite μ]
-    (A : Set X) (B : Set Y) :
-    ProbabilityTheory.cond (μ.prod ν) (A ×ˢ B)
-      = (ProbabilityTheory.cond μ A).prod (ProbabilityTheory.cond ν B) := by
-  show ((μ.prod ν) (A ×ˢ B))⁻¹ • (μ.prod ν).restrict (A ×ˢ B)
-    = ((μ A)⁻¹ • μ.restrict A).prod ((ν B)⁻¹ • ν.restrict B)
-  rw [Measure.prod_prod, ← Measure.prod_restrict,
-    ENNReal.mul_inv (Or.inr (measure_ne_top ν B)) (Or.inl (measure_ne_top μ A)),
-    Measure.prod_smul_left, Measure.prod_smul_right, smul_smul]
+/-! ### Conditioning toolkit — moved to the staging tree 2026-08-02
+(`CsdLean4/Mathlib/Probability/ConditionalProbability.lean`: `ProbabilityTheory.cond_map`,
+`cond_prod_prod`, `cond_eq_self`). -/
 
 /-- The ready register never leaves the ready arc. -/
 lemma readyMeasure_compl (K : ℕ) : readyMeasure K ((readyArc K)ᶜ) = 0 := by
@@ -448,7 +431,7 @@ theorem join_luders_marginal (i : Fin K) (hPi : blockProj b i ψ ≠ 0)
           (ProbabilityTheory.cond (paramMeasure K)
             (jF ψ α hψ0 ⁻¹' P.outcomeSector i)) := by
     rw [MeasurementProtocol.selectedMeasure, joinPrep,
-      cond_map (paramMeasure K) (measurable_jF ψ α hψ0) hsec_meas]
+      ProbabilityTheory.cond_map (paramMeasure K) (measurable_jF ψ α hψ0) hsec_meas]
   -- 2. Replace the pulled-back sector by the fibre cylinder (a.e. equal sets).
   have hae_set := preimage_sector_ae b ψ α hψ0 i
   have hcond_eq : ProbabilityTheory.cond (paramMeasure K)
@@ -463,11 +446,13 @@ theorem join_luders_marginal (i : Fin K) (hPi : blockProj b i ψ ≠ 0)
         (((univ ×ˢ goodTheta b ψ hψ0 i) ×ˢ (univ : Set LF4.KTorus)) ×ˢ readyArc K)
       = (((volume.prod (ProbabilityTheory.cond volume (goodTheta b ψ hψ0 i))).prod
           volume).prod (readyMeasure K)) := by
-    rw [paramMeasure, cond_prod_prod _ _ _ (readyArc K),
-      cond_prod_prod _ _ _ (univ : Set LF4.KTorus),
-      cond_prod_prod _ _ (univ : Set (AddCircle (1 : ℝ))) (goodTheta b ψ hψ0 i),
+    rw [paramMeasure, ProbabilityTheory.cond_prod_prod _ _ _ (readyArc K),
+      ProbabilityTheory.cond_prod_prod _ _ _ (univ : Set LF4.KTorus),
+      ProbabilityTheory.cond_prod_prod _ _ (univ : Set (AddCircle (1 : ℝ)))
+        (goodTheta b ψ hψ0 i),
       ProbabilityTheory.cond_univ, ProbabilityTheory.cond_univ,
-      cond_of_ae (readyMeasure K) measurableSet_readyArc (readyMeasure_compl K)]
+      ProbabilityTheory.cond_eq_self (readyMeasure K) measurableSet_readyArc
+        (readyMeasure_compl K)]
   -- 4. Push through the propagator and the readout; a.e. the composite is constant in all
   --    but the ancilla fibre.
   haveI : IsProbabilityMeasure (ProbabilityTheory.cond volume (goodTheta b ψ hψ0 i)) :=

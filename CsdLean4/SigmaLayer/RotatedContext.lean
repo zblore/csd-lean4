@@ -79,7 +79,7 @@ lemma continuous_basisCoord (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace �
 /-- **The rotated context field**: the context of an apparatus measuring in the orthonormal
 basis `b`. Rates are the moment map read in `b`-coordinates; the `ContextField` obligations
 transport along the coordinate isometry. `basisContext` of the standard basis has the same
-rates as `momentContext`. -/
+rates as `momentContext` (`basisContext_basisFun_rate`, below). -/
 noncomputable def basisContext (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) :
     ContextField N where
   rate p i := LF4.momentMap (basisCoord b p) i
@@ -101,5 +101,21 @@ theorem basisContext_rate_mk (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace �
   rw [basisContext_rate, basisCoord_mk,
     LF4.momentMap_mk_eq_inner_sq (b.repr ψ) (repr_ne_zero b hψ0) hnorm i,
     EuclideanSpace.inner_single_left, map_one, one_mul, OrthonormalBasis.repr_apply_apply]
+
+/-- **The standard basis reproduces `momentContext`**: the rotated construction at
+`EuclideanSpace.basisFun` has literally the moment map's rates — the consistency claim, as a
+theorem rather than prose. -/
+theorem basisContext_basisFun_rate (p : LF4.CPN N) (i : Fin N) :
+    (basisContext (EuclideanSpace.basisFun (Fin N) ℂ)).rate p i
+      = (momentContext N).rate p i := by
+  rw [basisContext_rate, momentContext_rate]
+  suffices h : basisCoord (EuclideanSpace.basisFun (Fin N) ℂ) p = p by rw [h]
+  conv_lhs => rw [← p.mk_rep]
+  conv_rhs => rw [← p.mk_rep]
+  rw [basisCoord_mk, Projectivization.mk_eq_mk_iff']
+  exact ⟨1, by
+    rw [one_smul]
+    exact (PiLp.ext fun j => rfl :
+      (EuclideanSpace.basisFun (Fin N) ℂ).repr p.rep = p.rep).symm⟩
 
 end CSD.RecordLayer

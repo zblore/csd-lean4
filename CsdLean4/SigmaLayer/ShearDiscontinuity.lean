@@ -34,11 +34,14 @@ This module machine-checks the review's claim: ★ `shearEvolve_not_continuous`.
 * It **confirms** the witness is a measurable, measure-preserving, *piecewise* map — not a
   continuous flow. The scope claims of `ShearWitness.lean` (which never asserted continuity)
   stand; the *classification* of the Hamiltonian-origin row is what changes.
-* It does **not** say the discontinuity is a defect unique to this witness:
-  `no_everywhere_correlation` (`MeasurementConstraints.lean`) already proves that **any**
-  continuous propagator fails to correlate a connected ready set with `≥ 2` disjoint open
-  pointer regions — so *some* seam set is forced for any exact-record dynamics. The witness's
-  jumps sit exactly on the seams the no-go says must exist.
+* ⚠️ *Corrected 2026-08-02 (second external review) — the original text here overread the
+  no-go.* `no_everywhere_correlation` forces an **exceptional (non-correlating) set**: a
+  continuous propagator cannot have its whole connected ready image inside `⋃ᵢ Bᵢ` while
+  meeting two of them. It does **not** force the propagator to be discontinuous — a
+  *continuous* (even smooth, globally Hamiltonian) propagator that sends the seams to
+  transition states *outside* `⋃ᵢ Bᵢ` remains mathematically open. What this module proves is
+  only that **this witness** is discontinuous; the review-recommended continuous route is the
+  compact Kähler pointer `ℂℙ^K` (`specs/BACKLOG.md`).
 * The two recorded repair routes (`specs/BACKLOG.md`): **(1)** smooth corridor regularisation —
   records and Born correct up to `ε`, priced by `collapse_accuracy_bound`; **(2)** classify the
   measurement dynamics as *piecewise Hamiltonian with null seam set* (standard in dynamics:
@@ -145,8 +148,9 @@ measurement interval, the propagator displaces the register by `shearAmt (basinI
 were continuous, the register marginal at a fixed ready register would be a continuous map from
 the *connected* space `KSigma N` onto `≥ 2` distinct points, whose fibres would give a clopen
 partition — impossible. So the witness is a measurable, measure-preserving, **piecewise** map,
-not a time slice of any continuous flow; by `no_everywhere_correlation`, *some* such seam set is
-forced for every exact-record dynamics. -/
+not a time slice of any continuous flow. *(Correction 2026-08-02: the no-go forces an exceptional
+non-correlating set, not discontinuity — see the module header; a continuous propagator with
+seams mapped outside the pointer regions remains open.)* -/
 theorem shearEvolve_not_continuous [NeZero N] (hN : 2 ≤ N) :
     ¬ Continuous (shearEvolve (basinIndex (momentContext N)) (0 : ℝ) 1) := by
   intro hcont

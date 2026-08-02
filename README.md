@@ -23,8 +23,8 @@ model, with no further axioms, the corpus derives:
   record from an apparatus-ready state, the record persists, distinct outcomes exclude each
   other, and the outcome statistics are exactly Born;
 - **wavefunction collapse as a theorem** — the post-measurement state update (the Lüders
-  rule), including the harder *degenerate* case, falls out as a pushforward of the dynamics
-  rather than being postulated. The apparatus never destroys information: what looks like
+  rule) falls out as a pushforward of the dynamics rather than being postulated; the harder
+  *degenerate* case is realised on a companion projective-join witness. The apparatus never destroys information: what looks like
   collapse is provably *relocation with storage*;
 - **the standard quantum canon** — entanglement and Bell/CGLMP/GHZ non-locality with
   no-signalling, contextuality, uncertainty, mixed states, quantum information theory,
@@ -44,9 +44,10 @@ The reconstruction is **conditional**: the sector itself is posited, never deriv
 substrate, projection, and typicality reading enter as hypotheses on the types, and the
 trials sample the ontic measure (see [`AXIOMS.md`](AXIOMS.md) §3 and the
 [connectivity manifest](specs/connectivity-manifest.md), which governs every end-to-end
-claim). The apparatus calibration is likewise a named posit, and the measurement dynamics is
-*piecewise* Hamiltonian — the seams are provably unavoidable, and the classification is
-itself machine-checked. "Kähler" names the standard geometric reading of the measures; no
+claim). The apparatus calibration is likewise a named posit, and the current measurement witness is a
+*piecewise rigid symplectic translation* — measure-preserving and machine-classified, but not
+a globally Hamiltonian flow (the torus-flux correction of 2026-08-02); building the genuinely
+Hamiltonian compact-pointer witness is the reopened row at the top of the backlog. "Kähler" names the standard geometric reading of the measures; no
 symplectic manifold is constructed in Lean (Mathlib has no such API — see
 [`MATHLIB-GAPS.md`](MATHLIB-GAPS.md)). The full non-claims list opens
 [`docs/TOUR.md`](docs/TOUR.md).

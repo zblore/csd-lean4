@@ -13,7 +13,8 @@ preparation, and arbitrary Hermitian `H`:
 - **isolated dynamics** projects to Schrödinger evolution `exp(-itH)` on rays
   (`projectedFlow_schrodinger_form`, instantiated non-trivially on `manyToOneSchrodingerSetup`);
 - **the Born rule is a theorem**: `‖⟨eᵢ,ψ⟩‖²` is a Fubini–Study typicality volume,
-  Gleason-free, POVMs included (`fs_born_volume_ratio_N`, `povm_born_frequency_volume`), with
+  Gleason-free, POVMs included (`fs_born_volume_ratio_N_uncond` — every unit preparation,
+  vanishing weights included — and `povm_born_frequency_volume`), with
   i.i.d. frequencies converging to it almost surely;
 - **measurement is a process**: an explicit measure-preserving propagator carries a
   positive-measure apparatus-ready state into created, persistent, mutually exclusive records
@@ -24,16 +25,19 @@ preparation, and arbitrary Hermitian `H`:
   inhabits `BlockLudersObligation`), each through Liouville-preserving dynamics;
 - **the apparatus basis is not preferred structure**: the full measurement closure holds for
   every orthonormal basis (`measurement_covariance`);
-- **one arena carries all of it** (`unifiedArenaClosure`): the isolated flow and the
-  record-creating propagator preserve the *same* Liouville measure, and the
-  isolate → measure → isolate round trip is a theorem (`arena_round_trip`).
+- **one arena carries isolated dynamics plus the complete rank-one measurement
+  reconstruction** (`unifiedArenaClosure`): the isolated flow and the record-creating
+  propagator preserve the *same* Liouville measure, and the isolate → measure → isolate round
+  trip is a theorem (`arena_round_trip`). The degenerate update runs on the companion
+  projective-join witness; a single capstone bundling rank-one, all bases, and degenerate is a
+  recorded open item.
 
 ## The results, by pillar
 
 | Reconstructed pillar | Headline theorem | Module |
 |---|---|---|
 | Schrödinger evolution from the sector flow | `projectedFlow_schrodinger_form`, `manyToOneSchrodingerSetup_both_pillars` | `LF4/PhaseLift`, `LF4/…` |
-| Born rule as FS typicality volume (all `N`, POVMs) | `fs_born_volume_ratio_N`, `povm_born_frequency_volume` | `LF4/…` |
+| Born rule as FS typicality volume (all `N`, POVMs, zero weights included) | `fs_born_volume_ratio_N_uncond`, `povm_born_frequency_volume` | `LF4/…` |
 | Fubini–Study bridge `π_*μL = μ_FS` | `productSector_hasFubiniStudyPushforward`, `arenaRay_pushforward` | `SigmaLayer/MeasureBridge`, `UnifiedArena` |
 | Context-fixed measurement partitions (Paper C A7) | `globalBasin_born`, `globalBasin_prob` | `SigmaLayer/GlobalBasin` |
 | Records created, persistent, exclusive — dynamically | `SwapMeasurementClosure` / `swapMeasurementClosure` | `SigmaLayer/SwapClosure` |
@@ -41,7 +45,7 @@ preparation, and arbitrary Hermitian `H`:
 | Rank-one Lüders as pushforward | `swap_luders_born` | `SigmaLayer/SwapLuders` |
 | Degenerate Lüders (the projective join) | `joinWitness_blockLuders`, `join_block_luders`, `joinSwap_measurePreserving` | `SigmaLayer/JoinLuders`, `JoinArena` |
 | Unitary covariance of measurement | `measurement_covariance` | `SigmaLayer/RotatedSwap` |
-| One arena, one Liouville measure family | `unifiedArenaClosure`, `arena_round_trip` | `SigmaLayer/UnifiedArena` |
+| One arena, one Liouville measure family (rank-one tier) | `unifiedArenaClosure`, `arena_round_trip` | `SigmaLayer/UnifiedArena` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |
@@ -56,8 +60,9 @@ successor, with an explicit field-by-field mapping table in `SigmaLayer/UnifiedA
 The dynamical arc is the corpus's most instructive chain, because every negative result became
 load-bearing:
 
-1. **Constraints before construction.** `no_everywhere_correlation`: continuous propagators
-   cannot make exact records — seams are forced. `no_exact_collapse`: measure-preserving
+1. **Constraints before construction.** `no_everywhere_correlation`: a continuous propagator
+   cannot correlate everywhere — an exceptional set is forced (though not, as first over-read,
+   discontinuity itself). `no_exact_collapse`: measure-preserving
    dynamics cannot contract; collapse must be *relocation with storage*.
    `collapse_accuracy_bound`: approximate collapse is priced in ready-state improbability,
    forcing Dirac calibration.
@@ -79,15 +84,19 @@ load-bearing:
    obligation the no-go had closed off — from a fixed calibration.
 7. **Covariance** (`RotatedSwap`): all of it, in every orthonormal basis
    (`measurement_covariance`).
-8. **Classification** (`ShearDiscontinuity`, `PiecewiseHamiltonian`): what kind of dynamics
-   this is — piecewise Hamiltonian with a provably-forced null seam set. Stated, not hidden.
+8. **Classification** (`ShearDiscontinuity`, `PiecewiseHamiltonian`): what this witness's
+   dynamics provably is — a piecewise rigid **symplectic** translation with null seam set
+   (*not* globally Hamiltonian: the torus-flux correction of 2026-08-02). A genuinely
+   Hamiltonian continuous witness — the compact Kähler pointer `ℂℙ^K` — is the reopened row's
+   recommended route (`specs/BACKLOG.md`).
 
 ## Three reading pathways, by reader
 
 **For the physicist** — what does CSD claim and what is actually proved?
 1. [`specs/CSD-CHARTER.md`](../specs/CSD-CHARTER.md) — the ontology and the anti-drift frame.
 2. [`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a — the A1–A7
-   audit; as of 2026-08-02 it has **no unscoped open rows**.
+   audit. One row is genuinely open: A2's **Hamiltonian-generation** sub-question (reopened
+   2026-08-02 on the torus-flux correction; the `ℂℙ^K` pointer route is recorded).
 3. `CsdLean4/SigmaLayer/GlobalBasin.lean` — measurement partitions fixed by the apparatus.
 4. `CsdLean4/SigmaLayer/SwapLuders.lean` → `UnifiedArena.lean` → `JoinLuders.lean` — the
    measurement story above, in code.
@@ -114,7 +123,8 @@ load-bearing:
 
 ## Status and open work
 
-The A1–A7 reconstruction map has no unscoped open rows
+The A1–A7 reconstruction map has one genuinely open row — A2's Hamiltonian-generation
+sub-question, reopened 2026-08-02 with the compact-Kähler-pointer route recorded
 ([`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a). The dynamical
 measurement layer is complete through degenerate Lüders and unitary covariance; its two
 recorded extensions are mixed preparations and POVM/instrument dynamics. The empirical suite

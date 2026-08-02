@@ -21,9 +21,12 @@ The eraser's defining empirical signature is the **dark fringe**: conditioned on
 marker outcome, the screen probability at phase `π` is **exactly `0`** (`eraser_fringe_dark`).
 The Duistermaat–Heckman volume route (`fs_born_volume_ratio_N`) carries `hpos` — *strictly
 positive* Born weights — and it is load-bearing (`replaceMap_det`: a zero weight makes the
-vertex-replacement map singular). So the DH route cannot state the eraser's central zero. The
-record layer can: `volume_cdfCell` has no positivity hypothesis — a zero rate is a zero-width
-cell. See `HongOuMandelVolume.lean` for the full architectural discussion.
+vertex-replacement map singular). So the *original* DH lemmas cannot state the eraser's central
+zero; the record layer can: `volume_cdfCell` has no positivity hypothesis — a zero rate is a
+zero-width cell. ⚠️ *Correction 2026-08-02 (external review):* the hpos-free `_uncond` engine
+(`fs_born_volume_ratio_N_uncond`, landed 2026-06-11) does state zero weights — the record
+route here is a **choice** (with its own foundational motivation), not a necessity. See
+`HongOuMandelVolume.lean` for the corrected architectural discussion.
 
 ## What is derived and what is transported
 

@@ -37,6 +37,14 @@ So the projective/DH machinery covers exactly the non-degenerate states — and 
 feature is a **vanishing** amplitude. Extending those lemmas to the simplex boundary is a real
 piece of work, recorded in `specs/BACKLOG.md`.
 
+⚠️ *Correction 2026-08-02 (external review):* the boundary extension had in fact **already
+landed 2026-06-11** — `fs_born_volume_ratio_N_uncond` / `born_frequency_convergence_N_uncond`
+(`LF4/BornRegionUncond.lean`) are hpos-free for every unit state, vanishing weights included,
+and the empirical volume engine routes through them. The paragraph above was written without
+noticing this, and its impossibility reading is **withdrawn**: the DH route *can* state HOM's
+zero. The record-layer route below stands as this module's **chosen** architecture — for the
+foundational reasons given — not as a necessity.
+
 The **record layer** (`SigmaLayer/{BornFibrePartition,DeIsolationFlow,FibreRecord,Measurement}`)
 has no such restriction: `volume_cdfCell` carries *no* positivity hypothesis, because a zero rate
 simply gives a zero-width CDF cell — a degenerate cell is still a cell. So the record layer

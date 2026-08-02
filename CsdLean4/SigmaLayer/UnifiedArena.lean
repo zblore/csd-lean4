@@ -17,9 +17,14 @@ public import CsdLean4.SigmaLayer.FiniteQMClosure
 
 `CsdFiniteQMClosure` was honest that it conjoined an **operational** closure on
 `productDynamics` over `ℂℙ^M × T²` with a **dynamical** closure on the swap arena — *"both
-hold"*, not *"one theory covers both"*. This module ends that split: **one arena carries the
-isolated Schrödinger dynamics AND the measurement dynamics AND Born AND Lüders AND mixed
-states.**
+hold"*, not *"one theory covers both"*. This module ends that split **for the rank-one
+projective tier**: one arena carries the isolated Schrödinger dynamics AND the rank-one
+measurement dynamics AND Born AND rank-one Lüders AND mixed-state weights/frequencies.
+*(Scope corrected 2026-08-02, second external review: the **degenerate** update lives on the
+companion projective-join witness (`JoinLuders.lean`), the any-basis closure is the separate
+`RotatedSwapClosure`, and mixed/POVM **dynamics** remain open — a single
+projective-measurement capstone bundling all of these is a recorded open item,
+`specs/BACKLOG.md`.)*
 
 The arena is `UnifiedArena M = ((ℂℙ^M × T²) × T²_R) × (Fin (M+1) → Σ_sys)` — system (base ray +
 system fibre), pointer register, calibrated ancilla bank. Its Liouville measure
@@ -167,7 +172,9 @@ theorem arenaRay_pushforward :
 
 variable (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0)
 
-/-- **★★ The unified-arena closure: one ontic model carries the finite-QM reconstruction.**
+/-- **★★ The unified-arena closure: one arena carries isolated dynamics and the complete
+rank-one projective measurement reconstruction.** *(Scope corrected 2026-08-02 — see the
+module header: degenerate Lüders lives on the join witness; a bundling capstone is recorded.)*
 
 The successor of `CsdFiniteQMClosure`'s two-arena conjunction: every field is a statement about
 `UnifiedArena M` and its Liouville measure `arenaLiouville`. Isolated Schrödinger dynamics,
@@ -221,7 +228,7 @@ structure UnifiedArenaClosure : Prop where
       = traceForm ρ (rankOneEffect (EuclideanSpace.single i (1 : ℂ)) (single_norm_one i))
 
 /-- **★★ The unified-arena closure holds** — for every Hermitian `H`, base point `p₀`, and unit
-state `ψ`. One ontic model, one Liouville measure family, the whole reconstruction. -/
+state `ψ`: one arena, one Liouville measure family, the rank-one reconstruction. -/
 theorem unifiedArenaClosure (hψ : ‖ψ‖ = 1) :
     UnifiedArenaClosure H hH p₀ ψ hψ0 where
   isolated_flow_measure_preserving := arenaIso_measurePreserving H hH p₀

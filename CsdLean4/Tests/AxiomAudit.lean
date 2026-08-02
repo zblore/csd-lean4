@@ -1757,7 +1757,7 @@ arithmetic. -/
 
 -- THE QUANTUM ERASER TWIN, VIA THE RECORD ROUTE (2026-08-02, Empirical/CSD/QuantumEraserVolume.lean).
 -- The eraser's signature is a VANISHING conditional probability (the dark fringe), which the
--- Duistermaat-Heckman volume route cannot state (hpos is load-bearing: replaceMap_det). Like
+-- Duistermaat-Heckman route's ORIGINAL lemmas could not state (hpos) -- corrected 2026-08-02: the _uncond engine (2026-06-11) does state zeros; the record route stands by choice. Like
 -- HongOuMandelVolume, this twin lives on the record layer, where a zero rate is a zero-width cell:
 -- ★ eraser_fringe_typicality: the full-visibility conditioned fringe (1 + c·cos φ)/2 is a fibre
 -- typicality volume at EVERY phase, boundary values included.
@@ -2140,9 +2140,15 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.goodTheta_vol_pos
 
-/-- info: 'CSD.RecordLayer.cond_prod_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+-- (conditioning toolkit moved to CsdLean4/Mathlib/Probability/ConditionalProbability.lean,
+-- 2026-08-02 -- the S-item extraction for upstream)
+/-- info: 'ProbabilityTheory.cond_prod_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.RecordLayer.cond_prod_prod
+#print axioms ProbabilityTheory.cond_prod_prod
+
+/-- info: 'CSD.RecordLayer.basisContext_basisFun_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.basisContext_basisFun_rate
 
 -- ★★ THE UNITARY-COVARIANCE LAW (2026-08-02, SigmaLayer/RotatedSwap.lean; the last extension
 -- item of the dynamical arc). The first measurement now runs in ANY orthonormal basis:
