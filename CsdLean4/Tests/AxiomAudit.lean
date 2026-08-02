@@ -342,6 +342,7 @@ public import CsdLean4.SigmaLayer.SwapLuders
 public import CsdLean4.SigmaLayer.DegenerateLuders
 public import CsdLean4.SigmaLayer.ApproxProjectability
 public import CsdLean4.SigmaLayer.HamiltonianSignature
+public import CsdLean4.SigmaLayer.OnticComposite
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1610,6 +1611,33 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.phaseDiag_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.phaseDiag_comm
+
+-- A6 STEP ONE: THE SEGRE EMBEDDING AND NON-FACTORISATION (2026-08-02,
+-- SigmaLayer/OnticComposite.lean).
+-- Paper C A6's "the composite ontic sector is NOT the product of the subsystem sectors" made sharp:
+-- segre ([u],[v]) = [u (x) v] is INJECTIVE (segre_injective -- product rays remember their factors;
+-- the scalar is recovered from a nonzero coordinate of the other factor) but NOT SURJECTIVE
+-- (segre_not_surjective) whenever both factors have dimension >= 2: the Bell-type ray
+-- [e0(x)e0 + e1(x)e1] is not a product ray -- the four corner coordinates give u0v0 = c, u1v1 = c,
+-- u0v1 = 0, u1v0 = 0, and (u0v0)(u1v1) = c^2 != 0 = (u0v1)(u1v0). Hence
+-- Sigma_AB STRICTLY EXCEEDS image(Sigma_A x Sigma_B): non-factorisation as a THEOREM, at every
+-- dimension pair >= 2x2.
+-- ⚠️ SCOPE: witness-level A6 content. The corpus CONSTRUCTS the composite sector from the composite
+-- Hilbert space; A6-as-philosophy ("Sigma_AB is primitive") is not a formalisation target and is not
+-- claimed. Steps 2-3 (ontic reduction maps via partialTrace; marginal stability under local flows =
+-- ontic no-signalling) are NOT in the file. Measure statements (Segre image mu_FS-null) not
+-- attempted; the strict inclusion carries the axiom's weight.
+/-- info: 'CSD.RecordLayer.segre_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segre_mk
+
+/-- info: 'CSD.RecordLayer.segre_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segre_injective
+
+/-- info: 'CSD.RecordLayer.segre_not_surjective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segre_not_surjective
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
