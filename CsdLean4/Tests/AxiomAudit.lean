@@ -131,6 +131,8 @@ public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
 public import CsdLean4.Empirical.CSD.Crypto.B92Sequential
 public import CsdLean4.Empirical.CSD.Crypto.WiesnerSequential
 public import CsdLean4.SigmaLayer.ShearDiscontinuity
+public import CsdLean4.SigmaLayer.PiecewiseHamiltonian
+public import CsdLean4.SigmaLayer.SwapClosure
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1807,9 +1809,10 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.basisContext_rate_mk
 
-/-- info: 'CSD.Empirical.CSDBridge.SequentialMeasurement.prep_outcome_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.RecordLayer.prep_outcome_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.CSDBridge.SequentialMeasurement.prep_outcome_pos
+-- (moved 2026-08-02 from Empirical/CSD/SequentialMeasurement.lean to SigmaLayer/SwapClosure.lean)
+#print axioms CSD.RecordLayer.prep_outcome_pos
 
 /-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_eve_selector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -1889,6 +1892,47 @@ arithmetic. -/
 /-- info: 'Projectivization.connectedSpace_of_isConnected_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.connectedSpace_of_isConnected_nonzero
+
+-- THE PIECEWISE-HAMILTONIAN CLASSIFICATION (2026-08-02, SigmaLayer/PiecewiseHamiltonian.lean;
+-- the decision resolving the reopened Hamiltonian-origin row -- route 2, user decision).
+-- ★ shear_piecewise_hamiltonian: (1) on every basin cylinder the propagator IS an explicit rigid
+-- register translation -- a Hamiltonian flow slice -- and is ContinuousOn there
+-- (shearEvolve_eq_translation_on_basin, shearEvolve_continuousOn_basin); (2) the seam set outside
+-- the cylinders is NULL (seam_null, via globalBasin_ae_total through the product). Together with
+-- shearEvolve_not_continuous (the seams are real) and no_everywhere_correlation (they are forced
+-- for every exact-record dynamics): piecewise Hamiltonian with null seam set, machine-checked.
+-- ⚠️ The h_i = shearAmt(i)·p_R reading of each piece is prose (the symplectic spelling is the
+-- genuine §2a Mathlib gap); corridor regularisation stays recorded as optional strengthening.
+/-- info: 'CSD.RecordLayer.shear_piecewise_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shear_piecewise_hamiltonian
+
+/-- info: 'CSD.RecordLayer.shearEvolve_eq_translation_on_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shearEvolve_eq_translation_on_basin
+
+/-- info: 'CSD.RecordLayer.seam_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.seam_null
+
+-- ALL SIX DYNAMICAL FACTS ON ONE ARENA (2026-08-02, SigmaLayer/SwapClosure.lean; the external
+-- review's step 2, the precursor to the engine migration).
+-- ★ swapMeasurementClosure: ready ⇒ no record, record created, outcomes exclusive, record persists,
+-- DYNAMICAL Born (sector measure = Born weight, via measure_outcomeSector_eq_of_correlates -- the
+-- correlation theorem genuinely consumed), and rank-one Lüders -- every field a swapProtocol
+-- statement on SwapArena at the canonical preparation swapPrep [ψ]. CorrelatesOn/PointerInvariantOn
+-- proved (swap_correlates/swap_pointerInvariant), never assumed. Lüders carries NO measure
+-- hypothesis: Born-weight positivity licenses the conditioning (prep_outcome_pos, moved here from
+-- the empirical layer). ⚠️ The OPERATIONAL closure still lives on its own arena -- CsdFiniteQMClosure
+-- remains a two-arena conjunction; this removes the split within the DYNAMICAL bundle only. The
+-- engine migration proper stays recorded (BACKLOG).
+/-- info: 'CSD.RecordLayer.swapMeasurementClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swapMeasurementClosure
+
+/-- info: 'CSD.RecordLayer.swap_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_sector_born
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

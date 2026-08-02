@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.SigmaLayer.SwapLuders
 public import CsdLean4.SigmaLayer.DegenerateLuders
+public import CsdLean4.SigmaLayer.SwapClosure
 
 /-!
 # Empirical/CSD/SequentialMeasurement: repeatability and sequential Born, from the dynamics
@@ -40,7 +41,9 @@ fall out, now as consequences of the dynamics rather than as separate posits:
   null outcome is undefined, as it should be. *(Upgrade 2026-08-02:)* for the **canonical ready
   preparation** `readyPrep p = epistemicMeasure p ⊗ readyMeasure N`, `prep_outcome_pos` proves
   `hpos` outright whenever the Born weight `momentMap p i` is nonzero — the preparation itself
-  licenses the conditioning.
+  licenses the conditioning. *(Moved 2026-08-02, same day:)* `readyPrep` and `prep_outcome_pos`
+  now live in `SigmaLayer/SwapClosure.lean` — they are `SigmaLayer` machinery, born one layer
+  too high here; re-exported through this module's imports, so consumers are unchanged.
 * These are theorems about the witness dynamics, inheriting the witness's own scope notes
   (calibration is a context-fixed posit; Hamiltonian origin of the propagator is §2a-scoped).
 
@@ -122,55 +125,5 @@ theorem csd_repeatability_other (μ12 : Measure (LF4.KSigma N × LF4.KTorus))
         ((fun y : SwapArena (LF4.KSigma N) N => y.1.1) ⁻¹' globalBasin (momentContext N) j)
       = 0 := by
   rw [csd_repeatability μ12 i hpos j, if_neg hj]
-
-/-! ### The canonical ready preparation, and `hpos` as a theorem -/
-
-/-- The canonical sequential-round preparation: system at the ontic point `p`, register in the
-ready arc. This is the preparation `swapPostMarg` conditions (`DegenerateLuders.lean`), exposed
-for the empirical entries. -/
-noncomputable def readyPrep (p : LF4.CPN N) : Measure (LF4.KSigma N × LF4.KTorus) :=
-  (epistemicMeasure p).prod (readyMeasure N)
-
-instance (p : LF4.CPN N) : IsProbabilityMeasure (readyPrep p) := by
-  unfold readyPrep
-  infer_instance
-
-/-- **`hpos` is a theorem for the canonical ready preparation.** The outcome-`i` sector has
-nonzero measure whenever the Born weight `momentMap p i` is nonzero: the selector-and-ready set
-sits inside the sector (`shear_correlates`) and factors as (basin fibre) × (ready arc), both of
-nonzero measure. Generalises `vertex_outcome_pos` from vertex preparations to arbitrary ones —
-so `csd_sequential_born`/`csd_repeatability` need no carried hypothesis at a concrete
-preparation. -/
-theorem prep_outcome_pos (p : LF4.CPN N) (i : Fin N) (hpos : LF4.momentMap p i ≠ 0) :
-    readyPrep p
-      ((shearProtocol (basinIndex (momentContext N))
-        (measurable_basinIndex (momentContext N))).outcomeSector i) ≠ 0 := by
-  classical
-  have hsub : selReady (basinIndex (momentContext N)) i
-      ⊆ (shearProtocol (basinIndex (momentContext N))
-          (measurable_basinIndex (momentContext N))).outcomeSector i :=
-    shear_correlates (basinIndex (momentContext N)) (measurable_basinIndex (momentContext N)) i
-  have hprod : selReady (basinIndex (momentContext N)) i
-      = {x : LF4.KSigma N | basinIndex (momentContext N) x = i} ×ˢ readyArc N := by
-    ext x
-    simp [selReady, Set.mem_prod]
-  have hbase : epistemicMeasure p {x : LF4.KSigma N | basinIndex (momentContext N) x = i}
-      ≠ 0 := by
-    have hset : {x : LF4.KSigma N | basinIndex (momentContext N) x = i}
-        = basinIndex (momentContext N) ⁻¹' {i} := rfl
-    rw [hset, measure_basinIndex_fibre, globalBasin_prob, momentContext_rate]
-    simp only [ne_eq, ENNReal.ofReal_eq_zero, not_le]
-    exact lt_of_le_of_ne (LF4.momentMap_nonneg p i) (Ne.symm hpos)
-  have hready : readyMeasure N (readyArc N) ≠ 0 := by
-    rw [readyMeasure, ProbabilityTheory.cond_apply measurableSet_readyArc, Set.inter_self]
-    exact mul_ne_zero (ENNReal.inv_ne_zero.mpr (measure_ne_top _ _)) volume_readyArc_ne_zero
-  intro h0
-  have hle : readyPrep p (selReady (basinIndex (momentContext N)) i)
-      ≤ readyPrep p
-        ((shearProtocol (basinIndex (momentContext N))
-          (measurable_basinIndex (momentContext N))).outcomeSector i) :=
-    measure_mono hsub
-  rw [h0, le_zero_iff, hprod, readyPrep, Measure.prod_prod] at hle
-  exact absurd hle (mul_ne_zero hbase hready)
 
 end CSD.Empirical.CSDBridge.SequentialMeasurement

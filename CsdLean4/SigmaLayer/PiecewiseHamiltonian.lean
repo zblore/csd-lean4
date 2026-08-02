@@ -1,0 +1,128 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
+module
+
+public import CsdLean4.SigmaLayer.ShearDiscontinuity
+
+/-!
+# SigmaLayer/PiecewiseHamiltonian: the classification of the measurement dynamics
+
+**Category:** dynamical measurement / classification (the decision resolving the reopened
+Hamiltonian-origin row, 2026-08-02).
+
+## The decision
+
+`ShearDiscontinuity.lean` proved the measurement propagator is **not** continuous, reopening the
+Hamiltonian-origin row with two recorded routes. **The decision (author, 2026-08-02): route (2)
+— CSD measurement dynamics is classified as *piecewise Hamiltonian with a null seam set*.**
+Corridor regularisation (route 1) stays recorded in `specs/BACKLOG.md` as an optional later
+strengthening, not an obligation.
+
+## What "piecewise Hamiltonian with null seam set" means, machine-checked
+
+Three facts, each a theorem:
+
+1. **The pieces are Hamiltonian flow slices** (`shearEvolve_eq_translation_on_basin` +
+   `shearEvolve_continuousOn_basin`): on each basin cylinder `Bᵢ × T²_R` the propagator *is* the
+   rigid register translation by `shearAmt i` — the time slice of the constant-rate translation
+   flow on the torus (generated, in the standard prose reading, by the linear Hamiltonian
+   `hᵢ = shearAmt(i)·p_R`; the symplectic-form spelling of that sentence is the §2a Mathlib
+   gap, which is *now* genuinely only a spelling matter, because the map on each piece is an
+   explicit continuous translation). Continuity holds piecewise — `ContinuousOn`, proved.
+2. **The seam set is null** (`seam_null`): the points lying in no basin cylinder have measure
+   zero for every preparation and every (s-finite) register measure — the pieces cover the
+   arena up to a null set (`globalBasin_ae_total` lifted through the product).
+3. **The seams cannot be removed** (`no_everywhere_correlation`,
+   `MeasurementConstraints.lean`): *any* exact-record dynamics must be discontinuous somewhere —
+   a continuous propagator cannot carry a connected ready set into `≥ 2` disjoint open pointer
+   regions. So the classification is not an apology for a defective witness; it is the general
+   shape *forced* on exact-record measurement dynamics. Piecewise-smooth Hamiltonian systems
+   with singular sets are standard objects (billiards, impact systems); CSD's measurement
+   dynamics now carries that classification explicitly.
+
+`shear_piecewise_hamiltonian` bundles (1) and (2) as one statement.
+
+## Honest boundary
+
+The identification of each piece's translation with "the flow of `hᵢ = shearAmt(i)·p_R`" is
+carried as prose (the standard reading of a rigid torus translation); Lean exhibits the
+translation and its continuity, not a symplectic form — that spelling is the §2a gap. What is
+*no longer* claimed anywhere: that the full propagator is a time slice of a single continuous
+Hamiltonian flow (`shearEvolve_not_continuous` refutes it).
+
+## References
+
+`SigmaLayer/ShearDiscontinuity.lean` (`shearEvolve_not_continuous` — why the classification is
+needed); `SigmaLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — why the seams
+are forced); `SigmaLayer/GlobalBasin.lean` (`globalBasin_ae_total` — why they are null);
+`SigmaLayer/ShearWitness.lean` (`shearEvolve`, `pshift`, `shearAmt`);
+`specs/BACKLOG.md`; `specs/reconstruction-status.md` §2a.
+-/
+
+@[expose] public section
+
+open MeasureTheory Set
+
+namespace CSD.RecordLayer
+
+variable {N : ℕ} [NeZero N]
+
+/-- **The pieces are rigid translations.** On the basin-`i` cylinder, the propagator is exactly
+the register translation by `(elapsed t − elapsed s)·shearAmt i` — no dependence on the point
+beyond its basin membership. -/
+theorem shearEvolve_eq_translation_on_basin (c : ContextField N) (i : Fin N) (s t : ℝ)
+    {x : LF4.KSigma N × LF4.KTorus} (hx : x.1 ∈ globalBasin c i) :
+    shearEvolve (basinIndex c) s t x
+      = (x.1, pshift ((elapsed t - elapsed s) * shearAmt N i) x.2) := by
+  unfold shearEvolve
+  rw [basinIndex_eq_of_mem hx]
+
+/-- **Each piece is continuous** — the restriction of a globally continuous rigid
+translation. -/
+theorem shearEvolve_continuousOn_basin (c : ContextField N) (i : Fin N) (s t : ℝ) :
+    ContinuousOn (shearEvolve (basinIndex c) s t)
+      (globalBasin c i ×ˢ (univ : Set LF4.KTorus)) := by
+  have htrans : Continuous fun x : LF4.KSigma N × LF4.KTorus =>
+      (x.1, pshift ((elapsed t - elapsed s) * shearAmt N i) x.2) := by
+    refine continuous_fst.prodMk ?_
+    have hinner : Continuous fun r : LF4.KTorus =>
+        pshift ((elapsed t - elapsed s) * shearAmt N i) r := by
+      unfold pshift
+      exact (continuous_fst.add continuous_const).prodMk continuous_snd
+    exact hinner.comp continuous_snd
+  refine htrans.continuousOn.congr ?_
+  intro x hx
+  exact shearEvolve_eq_translation_on_basin c i s t hx.1
+
+omit [NeZero N] in
+/-- **The seam set is null.** The points lying in no basin cylinder carry measure zero, for
+every preparation and every s-finite register measure: the Hamiltonian pieces cover the arena
+up to a null set. -/
+theorem seam_null (c : ContextField N) (p : LF4.CPN N) (ν : Measure LF4.KTorus) [SFinite ν] :
+    ((epistemicMeasure p).prod ν) {x : LF4.KSigma N × LF4.KTorus | ∀ i, x.1 ∉ globalBasin c i}
+      = 0 := by
+  have hsub : {x : LF4.KSigma N × LF4.KTorus | ∀ i, x.1 ∉ globalBasin c i}
+      ⊆ (univ \ ⋃ i, globalBasin c i) ×ˢ (univ : Set LF4.KTorus) := by
+    intro x hx
+    exact ⟨⟨mem_univ _, by simpa using hx⟩, mem_univ _⟩
+  refine measure_mono_null hsub ?_
+  rw [Measure.prod_prod, globalBasin_ae_total, zero_mul]
+
+/-- **★ The piecewise-Hamiltonian classification** (decision 2026-08-02, resolving the reopened
+Hamiltonian-origin row): the measurement propagator is continuous on every basin cylinder —
+where it is an explicit rigid translation, a Hamiltonian flow slice — and the seam set outside
+the cylinders is null. Together with `shearEvolve_not_continuous` (the seams are real) and
+`no_everywhere_correlation` (they are forced for every exact-record dynamics), this is the
+"piecewise Hamiltonian with null seam set" classification, machine-checked. -/
+theorem shear_piecewise_hamiltonian (c : ContextField N) (p : LF4.CPN N)
+    (ν : Measure LF4.KTorus) [SFinite ν] (s t : ℝ) :
+    (∀ i, ContinuousOn (shearEvolve (basinIndex c) s t)
+        (globalBasin c i ×ˢ (univ : Set LF4.KTorus))) ∧
+    ((epistemicMeasure p).prod ν) {x : LF4.KSigma N × LF4.KTorus | ∀ i, x.1 ∉ globalBasin c i}
+      = 0 :=
+  ⟨fun i => shearEvolve_continuousOn_basin c i s t, seam_null c p ν⟩
+
+end CSD.RecordLayer

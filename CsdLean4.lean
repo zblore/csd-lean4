@@ -158,6 +158,8 @@ public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
 public import CsdLean4.Empirical.CSD.Crypto.B92Sequential
 public import CsdLean4.Empirical.CSD.Crypto.WiesnerSequential
 public import CsdLean4.SigmaLayer.ShearDiscontinuity
+public import CsdLean4.SigmaLayer.PiecewiseHamiltonian
+public import CsdLean4.SigmaLayer.SwapClosure
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.LF4.SingletKahler
