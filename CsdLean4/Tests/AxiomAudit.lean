@@ -136,6 +136,7 @@ public import CsdLean4.SigmaLayer.SwapClosure
 public import CsdLean4.SigmaLayer.UnifiedArena
 public import CsdLean4.SigmaLayer.BlockCollapse
 public import CsdLean4.SigmaLayer.PhaseSlot
+public import CsdLean4.SigmaLayer.JoinArena
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -2047,6 +2048,37 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.measurable_pairSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measurable_pairSwap
+
+-- ★★ THE JOIN ARENA: LIOUVILLE-PRESERVING DEGENERATE LÜDERS (2026-08-02,
+-- SigmaLayer/JoinArena.lean; brick 3's Liouville half). The identification that closes the arc:
+-- THE PHASE-ENRICHED PAIR ARENA IS THE PROJECTIVE JOIN ℙ(ℂ^{N+N}) -- a system-slot pair
+-- quotiented only by the GLOBAL phase, so the relative phase (the join coordinate the wall
+-- demanded) lives in the point itself. There the component swap is a PERMUTATION UNITARY
+-- (joinMat_mem_unitaryGroup), and:
+-- ★★ joinSwap_measurePreserving -- Liouville preservation = Fubini-Study unitary invariance,
+-- discharged by fubiniStudyMeasure_smul_invariant. The obligation recorded as the route's hard
+-- half is a ONE-LINE consequence of the dynamics being unitary.
+-- ★★ join_block_luders -- the Lüders update POINTWISE: every join microstate [ψ ⊕ α] with
+-- nonvanishing block component and block-supported slot reads out post-swap to EXACTLY [Πᵢψ].
+-- Deterministic at every microstate; PhaseSlot's measure form is the orbit-averaged shadow.
+-- (The slot's nonvanishing is not even needed -- the hypothesis list is minimal.)
+-- ⚠️ Remaining (BACKLOG, mechanical M): the register/sector MeasurementProtocol on
+-- ℙ(ℂ^{N+N}) × T²_R firing joinSwap, mirroring SwapWitness. No new mathematics.
+/-- info: 'CSD.RecordLayer.join_block_luders' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.join_block_luders
+
+/-- info: 'CSD.RecordLayer.joinSwap_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinSwap_measurePreserving
+
+/-- info: 'CSD.RecordLayer.joinMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinMat_mem_unitaryGroup
+
+/-- info: 'CSD.RecordLayer.measurable_joinFst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_joinFst
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
