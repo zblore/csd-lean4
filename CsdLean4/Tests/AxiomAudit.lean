@@ -133,6 +133,7 @@ public import CsdLean4.Empirical.CSD.Crypto.WiesnerSequential
 public import CsdLean4.SigmaLayer.ShearDiscontinuity
 public import CsdLean4.SigmaLayer.PiecewiseHamiltonian
 public import CsdLean4.SigmaLayer.SwapClosure
+public import CsdLean4.SigmaLayer.UnifiedArena
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1933,6 +1934,36 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.swap_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.swap_sector_born
+
+-- ★★ THE ENGINE MIGRATION (2026-08-02, SigmaLayer/UnifiedArena.lean; review step 3 -- arena
+-- unification step 2 of 2). ONE ontic model now carries the finite-QM reconstruction:
+-- UnifiedArena M = ((ℂℙ^M × T²) × T²_R) × bank, with Liouville measure arenaLiouville =
+-- swapMeasure at μs = kMuL -- so the measure the MEASUREMENT dynamics preserves IS the Liouville
+-- measure the ISOLATED flow preserves (that coincidence is the migration's content).
+-- ★★ unifiedArenaClosure: isolated exp(-itH) lifted to the arena preserves arenaLiouville
+-- (arenaIso_measurePreserving) and projects to Schrödinger on rays (arenaIso_schrodinger); the
+-- FS bridge holds through the arena marginals (arenaRay_pushforward); swapEvolve preserves the
+-- SAME measure; the six dynamical facts hold (SwapMeasurementClosure field); i.i.d. Born
+-- frequencies and mixed-state Born weights transfer through the system-slot marginal
+-- (rfl-level cylinder identities). All ELEVEN operational fields accounted for in the module's
+-- mapping table: migrated / upgraded / superseded-by-stronger / one recorded (mixed LLN, S).
+-- ⚠️ CsdFiniteQMClosure (the two-arena conjunction) stays untouched as the historical capstone;
+-- the composed round-trip theorem (isolate → measure → isolate) is recorded, not claimed.
+/-- info: 'CSD.RecordLayer.unifiedArenaClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.unifiedArenaClosure
+
+/-- info: 'CSD.RecordLayer.arenaIso_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaIso_measurePreserving
+
+/-- info: 'CSD.RecordLayer.arenaIso_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaIso_schrodinger
+
+/-- info: 'CSD.RecordLayer.arenaRay_pushforward' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaRay_pushforward
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
