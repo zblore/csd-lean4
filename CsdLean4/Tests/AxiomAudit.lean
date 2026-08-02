@@ -138,6 +138,7 @@ public import CsdLean4.SigmaLayer.BlockCollapse
 public import CsdLean4.SigmaLayer.PhaseSlot
 public import CsdLean4.SigmaLayer.JoinArena
 public import CsdLean4.SigmaLayer.JoinProtocol
+public import CsdLean4.SigmaLayer.JoinLuders
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -2109,6 +2110,38 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.joinG_joinG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.joinG_joinG
+
+-- ★★ BlockLudersObligation, INHABITED (2026-08-02, SigmaLayer/JoinLuders.lean; brick 5 -- the
+-- degenerate-Lüders arc CLOSED). The §8.3 demand that swap_not_blockLuders proved impossible for
+-- every fixed ray-level calibration is DELIVERED by the join witness:
+-- ★★ joinWitness_blockLuders -- with any block-supported calibration family, the sector-
+-- conditioned post-measurement system readout equals epistemicMeasure [Πᵢψ] for EVERY preparation
+-- with nonvanishing block component. ψ-dependent post-states from a FIXED calibration, through
+-- Liouville-preserving dynamics inside the standard MeasurementProtocol architecture.
+-- ★ join_luders_marginal -- the computation: conditioning commutes with the preparation
+-- pushforward (cond_map); the sector pulls back to a SYSTEM-FIBRE cylinder (the phase orbit has
+-- constant ray, so the selector never sees the phase); product conditioning factorises
+-- (cond_prod_prod); on the conditioned support the readout is [Πᵢψ] at every phase with the
+-- ANCILLA's fibre; the conditioned original fibre integrates out -- stored, not destroyed.
+-- goodTheta_vol_pos: positivity from Πᵢψ ≠ 0 alone -- the obligation carries NO measure
+-- hypothesis. The rank-one (SwapLuders) and degenerate (here) updates now stand on the same
+-- architectural footing; swap_not_blockLuders stands as the theorem for WHY the ray-pair arena
+-- was too small.
+/-- info: 'CSD.RecordLayer.joinWitness_blockLuders' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinWitness_blockLuders
+
+/-- info: 'CSD.RecordLayer.join_luders_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.join_luders_marginal
+
+/-- info: 'CSD.RecordLayer.goodTheta_vol_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.goodTheta_vol_pos
+
+/-- info: 'CSD.RecordLayer.cond_prod_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cond_prod_prod
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
