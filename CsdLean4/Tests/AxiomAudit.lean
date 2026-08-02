@@ -340,6 +340,7 @@ public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
 public import CsdLean4.SigmaLayer.SwapWitness
 public import CsdLean4.SigmaLayer.SwapLuders
 public import CsdLean4.SigmaLayer.DegenerateLuders
+public import CsdLean4.SigmaLayer.ApproxProjectability
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1523,6 +1524,43 @@ arithmetic. -/
 /-- info: 'Matrix.norm_exp_smul_neg_I_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.norm_exp_smul_neg_I_sub_le
+
+-- A5 STEP TWO: THE (eps,T)-PROJECTABILITY PACKAGE (2026-08-02,
+-- SigmaLayer/ApproxProjectability.lean) -- the BACKLOG ★ A5 row's stated shape, delivered.
+-- EpsProjectable: the predicate on ontic Hamiltonians Sigma -> R in OSCILLATION form -- Hs varies by
+-- at most eps along each fibre of pi. ⚠️ The DERIVATIVE form sup||d(deltaH)|_V|| <= eps is the
+-- scoped manifold statement (section 2a; no exterior-calculus API); the oscillation form is its
+-- formalisable core, and the substitution is stated wherever it appears, not made silently.
+-- epsProjectable_zero_iff: THE EXACT CASE IS THE eps = 0 INSTANCE, AS AN IFF -- zero
+-- fibre-oscillation is precisely factoring through pi, tying the new predicate to the corpus's
+-- existing exact-case formalisation (kSectorDataFlow_projectable).
+-- diagOnticEnergy_epsProjectable: NON-VACUITY -- the moment-map energy of a diagonal observable
+-- (the ontic form of <psi, diag(lam) psi>) is an EpsProjectable _ 0 witness: the corpus's own
+-- Born-weight energies are exactly projectable.
+-- ★ quantum_effective_shadowing (+ _state): THE DYNAMICAL CONTENT. ||H - H_0|| <= eps and |t| <= T
+-- give ||e^{t(-iH)} - e^{t(-iH_0)}|| <= eps*T (and eps*T*||psi|| on states). Since H_0's witness
+-- flow is projectable (the exact case), THE SECTOR DYNAMICS TRACKS THE TRUE DYNAMICS TO WITHIN
+-- eps*T -- for times up to T the sector cannot tell a quantum-effective Hamiltonian from its
+-- projectable part. That is what "selects the sector" means operationally, and it is the content
+-- the exact case alone could not express.
+-- ⚠️ SCOPE: the shadowing lives on the HILBERT side, where the corpus's dynamics genuinely runs;
+-- the ontic predicate lives on Sigma. The bridge -- an ontic Hamiltonian GENERATING a flow whose
+-- projection is e^{-itH} -- is A2's open row, not A5's, and is not claimed.
+/-- info: 'CSD.RecordLayer.epsProjectable_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epsProjectable_zero_iff
+
+/-- info: 'CSD.RecordLayer.diagOnticEnergy_epsProjectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diagOnticEnergy_epsProjectable
+
+/-- info: 'CSD.RecordLayer.quantum_effective_shadowing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quantum_effective_shadowing
+
+/-- info: 'CSD.RecordLayer.quantum_effective_shadowing_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quantum_effective_shadowing_state
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
