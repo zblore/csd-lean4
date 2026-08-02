@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.SigmaLayer.OutcomeField
 public import CsdLean4.SigmaLayer.FiniteQMClosure
+public import CsdLean4.SigmaLayer.SwapLuders
 
 /-!
 # SigmaLayer/DynamicMeasurementClosure: the dynamical capstone (item 8)
@@ -36,6 +37,10 @@ dynamically created. `CsdFiniteQMClosure` below is what the combined claim looks
 * `dynamicMeasurementClosure` — discharged. ★ **Note what is *not* among its hypotheses:**
   `CorrelatesOn` and `PointerInvariantOn` do not appear, because `ShearWitness` proved them. The
   bundle rests on a constructed propagator, not on assumed dynamics.
+* **`luders_followup` (added 2026-08-02)** — the rank-one Lüders update, from the calibrated-swap
+  witness: after outcome `i`, follow-up statistics for *any* context are the collapsed state's Born
+  weights. With this field the plan's boxed completion criterion is met line-by-line for
+  nondegenerate computational-basis measurements.
 * `CsdFiniteQMClosure` — the combining capstone: operational closure **and** dynamical measurement.
 
 ## ⚠️ What the combined capstone does and does not assert
@@ -98,6 +103,25 @@ structure DynamicMeasurementClosure (N : ℕ) [NeZero N]
     epistemicMeasure (Projectivization.mk ℂ ψ hψ0)
         (basinIndex (momentContext N) ⁻¹' {i})
       = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)
+  /-- **★ The Lüders update (rank-one), on the calibrated-swap witness.** After outcome `i`, the
+  system behaves in *every* subsequent measurement as a fresh preparation of `eᵢ`: for any context
+  field `c'`, the follow-up outcome-`j` probability is the collapsed state's Born weight
+  `c'.rate [eᵢ] j`.
+
+  ⚠️ Stated for the **swap** witness (`swapProtocol`), where fields 1–5 concern the shear; the swap
+  discharges the same five hypotheses (`swap_correlates`, `swap_pointerInvariant`), and it alone
+  supplies collapse — `shear_base_marginal_unchanged` proves the shear cannot. Nondegenerate case
+  only; see `SwapLuders.lean` for the full scope notes. -/
+  luders_followup : ∀ (μ12 : Measure (LF4.KSigma N × LF4.KTorus))
+    [IsProbabilityMeasure μ12] (i : Fin N)
+    (_ : μ12 ((shearProtocol (basinIndex (momentContext N))
+      (measurable_basinIndex (momentContext N))).outcomeSector i) ≠ 0)
+    (c' : ContextField N) (j : Fin N),
+    ((swapProtocol (basinIndex (momentContext N))
+        (measurable_basinIndex (momentContext N))).postMeasure
+      (μ12.prod (Measure.pi fun k => epistemicMeasure (vertexPoint k))) i)
+      ((fun y : SwapArena (LF4.KSigma N) N => y.1.1) ⁻¹' globalBasin c' j)
+      = ENNReal.ofReal (c'.rate (vertexPoint i) j)
 
 /-- **★ The dynamical measurement closure holds** — for every state, with no hypotheses about the
 dynamics.
@@ -115,6 +139,7 @@ theorem dynamicMeasurementClosure (ψ : EuclideanSpace ℂ (Fin N)) :
     (shearProtocol _ _).readout_persists_on_interval
       (shear_pointerInvariant _ _) hx ht₁ ht₂
   selector_born hψ0 hψ i := shear_selector_born ψ hψ0 hψ i
+  luders_followup μ12 _ i hpos c' j := swap_luders_born μ12 i hpos c' j
 
 /-- **The combining capstone**: operational finite-QM closure **and** dynamical measurement.
 
