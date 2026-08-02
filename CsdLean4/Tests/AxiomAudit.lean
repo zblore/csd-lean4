@@ -10,6 +10,7 @@ public import CsdLean4.LF1.GeneralFrequency
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
 public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.LF2.BornWrapper
 public import CsdLean4.LF2.ReducedDensity
 public import CsdLean4.LF2.QuantumChannel
@@ -1499,6 +1500,29 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.swap_not_blockLuders' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.swap_not_blockLuders
+
+-- A5 STEP ONE: THE DUHAMEL BOUND (2026-08-02, Mathlib/Analysis/Matrix/DuhamelBound.lean).
+-- The quantitative engine of (eps,T)-projectability: for skew-Hermitian generators,
+-- ||exp(tC) - exp(tA)|| <= |t| ||C - A|| in the L2 operator norm; Hermitian corollary
+-- ||exp(t(-iH)) - exp(t(-iH_0))|| <= |t| ||H - H_0||. Proved WITHOUT integrals: the interpolant
+-- phi(s) = exp(sC) exp((t-s)A) has derivative exp(sC)(C-A)exp((t-s)A), of norm <= ||C-A|| because
+-- both exponential factors are UNITARY (l2_opNorm_exp_smul_skew, from StoneC1's unitarity + the
+-- L2 norm being a C*-norm), and the mean-value inequality finishes. CSD-free, upstream candidate.
+-- READING FOR A5: a Hamiltonian eps-close in operator norm to a sector-projectable one generates
+-- dynamics that sector dynamics SHADOWS to within eps*T over [-T, T] -- what makes a Hamiltonian
+-- QUANTUM-EFFECTIVE. The predicate + exact-case-iff + shadowing packaging is the next step
+-- (SigmaLayer/ApproxProjectability.lean, not yet written).
+/-- info: 'Matrix.l2_opNorm_exp_smul_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.l2_opNorm_exp_smul_skew
+
+/-- info: 'Matrix.norm_exp_smul_sub_exp_smul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_smul_sub_exp_smul_le
+
+/-- info: 'Matrix.norm_exp_smul_neg_I_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_smul_neg_I_sub_le
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
