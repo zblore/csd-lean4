@@ -137,6 +137,7 @@ public import CsdLean4.SigmaLayer.UnifiedArena
 public import CsdLean4.SigmaLayer.BlockCollapse
 public import CsdLean4.SigmaLayer.PhaseSlot
 public import CsdLean4.SigmaLayer.JoinArena
+public import CsdLean4.SigmaLayer.JoinProtocol
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -2079,6 +2080,35 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.measurable_joinFst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measurable_joinFst
+
+-- THE DEGENERATE MEASUREMENT AS A MeasurementProtocol (2026-08-02, SigmaLayer/JoinProtocol.lean;
+-- brick 4 -- the protocol plumbing). The join update now runs inside the standard architecture:
+-- arena = (join point, system fibre, ANCILLA fibre) x register; selector = coarse block index
+-- (joinIdx); propagator = register shear + record-triggered joinG at the readout crossing (join
+-- unitary on the point + system-fibre/ancilla-fibre exchange -- the degenerate analogue of the
+-- rank-one fresh slot: the original fibre is STORED, not destroyed). Region/readout/sector/
+-- persistence machinery inherited from shearProtocol by structure update.
+-- ★ joinEvolve_measurePreserving -- the FULL propagator preserves the join-arena Liouville
+-- measure (FS x vol x vol) x vol at every time pair (generic shear theorem + FS unitary
+-- invariance + the fibre-transposition shuffle, glued by the register-arc partition).
+-- join_correlates / join_pointerInvariant discharged from the construction; joinG_joinG is the
+-- involution (reversibility = storage). ⚠️ Brick 5 (last): the sector-conditioned post-marginal
+-- = epistemicMeasure [Πᵢψ] -- the BlockLudersObligation instance (BACKLOG).
+/-- info: 'CSD.RecordLayer.joinEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.join_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.join_correlates
+
+/-- info: 'CSD.RecordLayer.join_pointerInvariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.join_pointerInvariant
+
+/-- info: 'CSD.RecordLayer.joinG_joinG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinG_joinG
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
