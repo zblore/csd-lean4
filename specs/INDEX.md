@@ -57,7 +57,10 @@ LIVE doc for the tranche you are on.
 |---|---|
 | [`expert-system-prompt.md`](expert-system-prompt.md) | The project's expert-posture / system-prompt reference. |
 | [`spec-to-lean.md`](spec-to-lean.md) | Spec-to-Lean mapping notes. |
-| [`../README.md`](../README.md) | Authoritative status overview (layers, theorem tables, axiom posture). |
+| [`../README.md`](../README.md) | **Introductory** front page (rewritten 2026-08-02): plain-language claim, honesty frame, doc map. Detail lives in `docs/`. |
+| [`../docs/TOUR.md`](../docs/TOUR.md) | The detailed tour: precise claims with theorem names, the results-by-pillar table, the measurement story, reader-type pathways. |
+| [`../docs/PATHS.md`](../docs/PATHS.md) | Reading paths by quantum sector (foundations, dynamics, measurement, entanglement, QI, crypto, algorithms, thermodynamics). |
+| [`../MATHLIB-GAPS.md`](../MATHLIB-GAPS.md) | Mathlib gaps this project hit (what each blocks) + the staged upstream candidates and the suggested first batch. |
 | [`../EMPIRICAL.md`](../EMPIRICAL.md) | Per-test index of the empirical suite (both branches: file, headline theorem, claim, source). |
 | [`../CLAUDE.md`](../CLAUDE.md) | Working-with-the-code guide (architecture, conventions, module chains). |
 | [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: **zero imported axioms** (`busch_effect_gleason` proved and de-axiomatised 2026-07-21, §2.2; `invariant_measure_uniqueness` removed 2026-06-04, §2.1); every theorem reports only the foundational triple. Structural assumptions/posits in §3 (posited Σ, typicality reading, swap calibration), per-theorem audit §5. |
