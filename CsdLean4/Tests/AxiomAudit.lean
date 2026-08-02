@@ -343,6 +343,7 @@ public import CsdLean4.SigmaLayer.DegenerateLuders
 public import CsdLean4.SigmaLayer.ApproxProjectability
 public import CsdLean4.SigmaLayer.HamiltonianSignature
 public import CsdLean4.SigmaLayer.OnticComposite
+public import CsdLean4.SigmaLayer.OnticMarginals
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1638,6 +1639,50 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.segre_not_surjective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.segre_not_surjective
+
+-- A6 STEPS TWO AND THREE: ONTIC REDUCTION MAPS + MARGINAL STABILITY (2026-08-02,
+-- SigmaLayer/OnticMarginals.lean).
+-- STEP 2: rayDensity -- the density matrix of a composite ray, RAY-WELL-DEFINED (rayDensity_mk, the
+-- quotient-descent pattern) and UNIT TRACE (rayDensity_trace): a genuine state. reduceA / reduceB:
+-- the subsystem marginals as partial traces -- the ontic-level r_S, what a subsystem observer can
+-- see of a single composite point.
+-- STEP 3: actA U -- the local A-action (U (x) 1) in vector form, no Kronecker plumbing. The
+-- workhorse is actA_column_sums: for U^H U = 1 the A-sums of transformed products equal the A-sums
+-- of the originals, for EVERY pair of B-indices -- one computation carrying the norm preservation
+-- (norm_actA) and both marginal laws:
+-- ★★ reduceB_pointA_invariant  MARGINAL STABILITY = ONTIC NO-SIGNALLING: a local unitary on A
+--                              leaves the B-marginal of the composite ray UNCHANGED. Acting on A
+--                              changes nothing B can see, at the level of the single ontic point --
+--                              the ontic form of the operational tensorSector_no_signalling.
+-- reduceA_pointA_conj          the A-marginal evolves by CONJUGATION -- the Heisenberg law.
+-- ★★ reduceB_local_flow_invariant  the Schrodinger flow of ANY A-Hamiltonian leaves the B-marginal
+--                              fixed AT EVERY TIME -- A6's marginal-stability clause in flow form.
+-- ⚠️ SCOPE: kinematic identities about the reduction maps under local unitaries -- exactly what
+-- A6's clause asserts; no new dynamics claimed. Step 4 (DYNAMICAL no-signalling through the v0.7.0
+-- measurement layer) is NOT here. Defined at the projective level; the torus fibre plays no role in
+-- reduction.
+-- WITH THIS, EVERY A6 CLAUSE THE CORPUS CAN EXPRESS IS A THEOREM: non-factorisation (step 1),
+-- reduction maps (step 2), marginal stability (step 3). The A1-A7 map has NO unscoped open rows
+-- left.
+/-- info: 'CSD.RecordLayer.rayDensity_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rayDensity_trace
+
+/-- info: 'CSD.RecordLayer.actA_column_sums' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.actA_column_sums
+
+/-- info: 'CSD.RecordLayer.reduceB_pointA_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reduceB_pointA_invariant
+
+/-- info: 'CSD.RecordLayer.reduceA_pointA_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reduceA_pointA_conj
+
+/-- info: 'CSD.RecordLayer.reduceB_local_flow_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reduceB_local_flow_invariant
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
