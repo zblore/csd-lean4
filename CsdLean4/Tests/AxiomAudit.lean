@@ -124,6 +124,7 @@ public import CsdLean4.LF4.MomentBornN
 public import CsdLean4.LF4.ObservableCorrespondenceN
 public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
+public import CsdLean4.Empirical.CSD.Contextuality.KCBSVolume
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1710,6 +1711,34 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.CSDBridge.SequentialMeasurement.csd_repeatability_same' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.SequentialMeasurement.csd_repeatability_same
+
+-- KCBS PENTAGON BORN WEIGHTS AS KAHLER VOLUMES (2026-08-02,
+-- Empirical/CSD/Contextuality/KCBSVolume.lean) -- closing the audit's KCBS gap, the last flagship
+-- test without a CSD twin.
+-- The representative pentagon context {kv 0, kv 1} is completed to a projective frame by the CROSS
+-- PRODUCT kv 0 x kv 1 (orthogonal to both by dot_self_cross/dot_cross_self, unit by the Lagrange
+-- identity cross_dot_cross: 1*1 - 0^2 = 1), complexified via the transport c3_inner -- every
+-- orthonormality fact PULLED from the QM side's real dot products (kv_orth, kv_unit), nothing
+-- re-proved. kcbsContextBasis is the resulting OrthonormalBasis; the engine
+-- context_born_frequency_volume instantiates at it: every ray's context-dependent Born weight is
+-- the a.s. frequency limit of its barycentric Born region on the fixed ontic Sigma = CP^2 -- an FS
+-- typicality volume. kcbs_pentagon_weight: at the apex preparation the ray-0 weight is the pentagon
+-- number 1/sqrt(5) -- the quantity whose five-fold sum sqrt(5) violates the noncontextual bound 2
+-- (kcbs_quantum_violation). The _canonical form discharges the trial bundle on fsTrialMeasure.
+-- ⚠️ One representative context built (KS18Volume discipline): the other four are identical
+-- instantiations, orthogonality already certified for all five adjacencies by kv_orth. Realisation
+-- not derivation; Phi = id; the inequality itself stays at the QM layer.
+/-- info: 'CSD.Empirical.CSDBridge.KCBS.kcbs_pentagon_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.KCBS.kcbs_pentagon_weight
+
+/-- info: 'CSD.Empirical.CSDBridge.KCBS.kcbs_context_born_frequency_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.KCBS.kcbs_context_born_frequency_volume
+
+/-- info: 'CSD.Empirical.CSDBridge.KCBS.kcbs_context_born_frequency_volume_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.KCBS.kcbs_context_born_frequency_volume_canonical
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
