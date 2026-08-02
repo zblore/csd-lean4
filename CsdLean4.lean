@@ -155,6 +155,8 @@ public import CsdLean4.Empirical.CSD.Contextuality.KCBSVolume
 public import CsdLean4.Empirical.CSD.QuantumEraserVolume
 public import CsdLean4.SigmaLayer.RotatedContext
 public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
+public import CsdLean4.Empirical.CSD.Crypto.B92Sequential
+public import CsdLean4.Empirical.CSD.Crypto.WiesnerSequential
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.LF4.SingletKahler

@@ -128,6 +128,8 @@ public import CsdLean4.Empirical.CSD.Contextuality.KCBSVolume
 public import CsdLean4.Empirical.CSD.QuantumEraserVolume
 public import CsdLean4.SigmaLayer.RotatedContext
 public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
+public import CsdLean4.Empirical.CSD.Crypto.B92Sequential
+public import CsdLean4.Empirical.CSD.Crypto.WiesnerSequential
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1823,6 +1825,44 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_right_basis_faithful' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.BB84Sequential.bb84_right_basis_faithful
+
+-- B92 AND WIESNER SEQUENTIAL TWINS (2026-08-02, Empirical/CSD/Crypto/{B92,Wiesner}Sequential.lean).
+-- Instantiations of the BB84Sequential engine, recorded as such -- the dynamical fact is the same
+-- calibrated-swap composition, re-read on each protocol's semantics:
+-- B92: ★ b92_honest_false_click_null -- unambiguity as a NULL BASIN (a |+> carrier has a zero-width
+-- conclusive-bit-0 arc; the eraser-dark-fringe shape); ★ b92_eve_false_click -- after Eve's
+-- Z-intercept the false-click basin is exactly 1/2 whatever she recorded; ★ b92_eve_detectable --
+-- the strict contrast (intercept raises false clicks strictly above the honest zero).
+-- Wiesner: ★ wiesner_forge_x_pass_half / _caught_half -- the measure-resend counterfeit passes a
+-- conjugate-basis position with probability exactly 1/2 (collapse = pushforward theorem);
+-- ★ wiesner_forge_z_invisible -- matching basis = repeatability, the forger copies for free (the
+-- mint's secret basis IS the security); wiesner_rate_eq_verifyProb ties the ontic pass rate to the
+-- QM module's verifyProb; the 3/4 = (1/2)(1) + (1/2)(1/2) per-position average is the (3/4)^n
+-- counterfeiting value -- ⚠️ ATTAINED by measure-resend here; optimality (Molina-Vidick-Watrous
+-- 2012) out of scope. Both inherit the calibrated-swap scope notes.
+/-- info: 'CSD.Empirical.CSDBridge.B92Sequential.b92_honest_false_click_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.B92Sequential.b92_honest_false_click_null
+
+/-- info: 'CSD.Empirical.CSDBridge.B92Sequential.b92_eve_false_click' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.B92Sequential.b92_eve_false_click
+
+/-- info: 'CSD.Empirical.CSDBridge.B92Sequential.b92_eve_detectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.B92Sequential.b92_eve_detectable
+
+/-- info: 'CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_forge_x_pass_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_forge_x_pass_half
+
+/-- info: 'CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_forge_z_invisible' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_forge_z_invisible
+
+/-- info: 'CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_rate_eq_verifyProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_rate_eq_verifyProb
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
