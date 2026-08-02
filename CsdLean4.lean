@@ -162,6 +162,7 @@ public import CsdLean4.SigmaLayer.PiecewiseHamiltonian
 public import CsdLean4.SigmaLayer.SwapClosure
 public import CsdLean4.SigmaLayer.UnifiedArena
 public import CsdLean4.SigmaLayer.BlockCollapse
+public import CsdLean4.SigmaLayer.PhaseSlot
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.LF4.SingletKahler

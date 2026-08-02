@@ -135,6 +135,7 @@ public import CsdLean4.SigmaLayer.PiecewiseHamiltonian
 public import CsdLean4.SigmaLayer.SwapClosure
 public import CsdLean4.SigmaLayer.UnifiedArena
 public import CsdLean4.SigmaLayer.BlockCollapse
+public import CsdLean4.SigmaLayer.PhaseSlot
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -2013,6 +2014,39 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.measurable_blockCollapse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measurable_blockCollapse
+
+-- ★★ THE PHASE-CARRYING SLOT: DEGENERATE LÜDERS REALISED (2026-08-02,
+-- SigmaLayer/PhaseSlot.lean; route (ii) of the sharpened wall, brick 2).
+-- ★★ phase_slot_block_luders: prepare the PHASE ORBIT of ψ (uniform over the ontic phase --
+-- the enrichment adds ontic phase, not epistemic content: readout_phasePrep gives back the
+-- Dirac at [ψ]); calibrate the slot with a FIXED block-supported α; fire the pair swap; read
+-- out the system ray: the result is EXACTLY δ_{[Πᵢψ]} -- the blockLudersObligation target --
+-- for every preparation with nonvanishing block component.
+-- ★ pairSwap: TOTAL + INVOLUTIVE + MEASURABLE -- fire componentSwap exactly when both outputs
+-- are nonzero; at a fired image the condition holds automatically (componentSwap involutive +
+-- inputs nonzero), so the conditional map is a genuine involution: reversibility, hence
+-- storage, hence no_exact_collapse respected.
+-- WHY THE NO-GO IS EVADED, not contradicted: swap_not_blockLuders killed FULL swaps (post-
+-- system = slot's prior content, preparation-independent); the PARTIAL swap keeps the system's
+-- block part and stores its complement -- fixed calibration, preparation-dependent post-state.
+-- The partial swap needed the phase-enriched arena, exactly as the sharpened wall said.
+-- ⚠️ Brick 3 still owed (BACKLOG): register/sector protocol plumbing on the enriched arena +
+-- Liouville preservation (unitarily-invariant reference measure, e.g. Gaussian; effort M).
+/-- info: 'CSD.RecordLayer.phase_slot_block_luders' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.phase_slot_block_luders
+
+/-- info: 'CSD.RecordLayer.pairSwap_involutive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairSwap_involutive
+
+/-- info: 'CSD.RecordLayer.readout_phasePrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readout_phasePrep
+
+/-- info: 'CSD.RecordLayer.measurable_pairSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_pairSwap
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
