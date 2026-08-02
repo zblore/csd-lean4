@@ -43,7 +43,16 @@ The immediate deliverable is to make **the whole of finite-dimensional QM arise 
 calculation engine running on a projective *witness*, with two honest status notes (the first now
 resolved in Lean, the second the standing posit):
 
-- **The record — the KINEMATIC interface is BUILT (2026-07-25); MD-1 is NOT discharged.**
+- **The record — the KINEMATIC interface is BUILT (2026-07-25).** *Addendum 2026-08-02 — the
+  DYNAMICAL layer now exists and most of what this bullet listed as open has closed:* records are
+  **dynamically created** from a positive-measure ready state by an explicit measure-preserving
+  propagator, persist, and carry the Born weights (`SwapClosure`); A7 is **discharged** at every
+  `N` (fibred reading canonical, `GlobalBasin` + the dynamical realisation); the Lüders update is
+  a pushforward theorem, rank-one (`swap_luders_born`) **and** degenerate (on the projective join,
+  `join_block_luders`, Liouville-preserving); the `H_int` question resolved as the
+  **piecewise-Hamiltonian classification** (seams provably forced + null). Still open: the
+  join-arena protocol plumbing and the items in `BACKLOG.md`. The original bullet follows,
+  unedited, as the historical record. **(Original:) MD-1 was NOT discharged at that date.**
   ⚠️ *Scope corrected 2026-07-28 (external review): general-`N` A7 (`Ωᵢ(M)` from the apparatus
   alone) is proved only at `N=2`, the partition here being preparation-indexed; the de-isolation
   `H_int` is not constructed; and the fibred Σ is a measurable record model, not a proven A1

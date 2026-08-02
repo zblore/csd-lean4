@@ -1,6 +1,13 @@
 # Record layer (MD-1) — plan: measurement as context-fixed regions + the ontic record
 
-> **Status: the KINEMATIC record interface is BUILT 2026-07-25 (see §4); MD-1 is NOT discharged.**
+> **Status: the KINEMATIC record interface is BUILT 2026-07-25 (see §4).** *Addendum 2026-08-02:*
+> **the dynamical layer is now COMPLETE through the join arena** — of the three items the
+> correction below listed as open, general-`N` A7 is **discharged** (fibred reading canonical,
+> `GlobalBasin`), the de-isolation dynamics is **constructed** (shear/swap witnesses, with the
+> piecewise-Hamiltonian classification replacing the `H_int`-as-smooth-flow expectation), and the
+> fibred Σ's A1 status was resolved by the parity correction (`KSigma = ℂℙ^{N-1} × T²`). See
+> `reconstruction-status.md` §2a and `BACKLOG.md`. The original status and correction follow as
+> the historical record. **(Original:) MD-1 is NOT discharged.**
 > Formalized in Lean end-to-end: measurement as `context + unknown microstate → record` on the
 > base×fibre Σ, Born = the LLN over the unknown microstate, probabilities = the Kähler moment map.
 >

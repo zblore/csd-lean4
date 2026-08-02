@@ -127,7 +127,7 @@ The payoff is real and stateable without overclaim: in the ontic stratum the Bor
 
 ## 3. CSD's physical postulates (the theory's actual commitments)
 
-**This is the category that describes the theory** (see §0, category 3): what CSD asks you to accept. The Born rule is *not* here — it is a theorem of these postulates (Gleason-free, general dimension, general POVMs). The postulates are carried as structural data / hypotheses on the types rather than as `axiom` declarations, because CSD's claims are conditional on the ontic substrate existing with these properties; so they do not appear in `#print axioms`. The load-bearing ones are the **ontic substrate** (§3.1, §3.2: a measure space `(Σ, μL)` with a deterministic, measure-preserving flow `Φ`), the **sector posit** (§3.3: the projection `π` onto the quantum-effective sector and its symmetry `G`), and the **typicality reading** (probability *is* `μL`-volume ratio, the interpretive posit that LF1's repeated-trial law encodes and the strong law shows self-consistent). The deepest open item is the **dynamical origin of the sector**: deriving `π` / the outcome regions / `Φ` from the dynamics rather than positing them (the LF5 measurement flow `Φ_vN ≠ id` is exercised at the single-system projective tier as of 2026-06-11, but the concrete `SectorData` instances still carry `Φ = id` and the sector itself remains posited). These are honest assumptions about which class of mathematical objects the corpus is talking about; they are not derived inside the Lean tree.
+**This is the category that describes the theory** (see §0, category 3): what CSD asks you to accept. The Born rule is *not* here — it is a theorem of these postulates (Gleason-free, general dimension, general POVMs). The postulates are carried as structural data / hypotheses on the types rather than as `axiom` declarations, because CSD's claims are conditional on the ontic substrate existing with these properties; so they do not appear in `#print axioms`. The load-bearing ones are the **ontic substrate** (§3.1, §3.2: a measure space `(Σ, μL)` with a deterministic, measure-preserving flow `Φ`), the **sector posit** (§3.3: the projection `π` onto the quantum-effective sector and its symmetry `G`), and the **typicality reading** (probability *is* `μL`-volume ratio, the interpretive posit that LF1's repeated-trial law encodes and the strong law shows self-consistent). The deepest open item is the **dynamical origin of the sector**: deriving `π` / the outcome regions / `Φ` from the dynamics rather than positing them (the LF5 measurement flow `Φ_vN ≠ id` is exercised at the single-system projective tier as of 2026-06-11, but the concrete `SectorData` instances still carry `Φ = id` and the sector itself remains posited). *Addendum 2026-08-02:* the **measurement dynamics itself is now constructed, not posited** — explicit measure-preserving propagators create, persist, and Born-weight records and implement the Lüders update (rank-one: the calibrated swap; degenerate: the projective-join unitary), with the honest classification that these propagators are **piecewise Hamiltonian with a provably-forced null seam set** (`ShearDiscontinuity`/`PiecewiseHamiltonian`); the calibration itself is a posit, recorded as §3.8 below. These are honest assumptions about which class of mathematical objects the corpus is talking about; they are not derived inside the Lean tree.
 
 ### 3.1 `OnticSetup.μL` is a finite measure (preparation-measure origin)
 
@@ -146,6 +146,17 @@ This becomes load-bearing only when LF4 derives `μL` from a volume form (whereu
 The projection `π : SigmaSpace → P` and the symmetry group `G` are taken as structural fields with only the two coherence conditions (`μL`-invariance of the ontic action, `π`-equivariance) constraining them. Nothing forces `π` to project onto the quantum-effective sector specifically, and nothing forces `G = SU(N)`. The natural reading is `G = SU(N)` acting on `Σ` via the lift of its action on `CP^{N-1}`, with `π` the standard projection, but no field forces this.
 
 This is the **sector-posit assumption**: the physical motivation for the quantum-effective sector is a load-bearing external input. Concrete instantiation is [`specs/LF4-todo.md`](specs/LF4-todo.md) §8.
+
+### 3.8 The calibrated bank (swap / join witnesses) — *added 2026-08-02*
+
+The dynamical measurement witnesses posit an apparatus **calibration**: the swap witness's ancilla
+bank starts in the computational vertex states (`calibratedBank`, `SigmaLayer/SwapClosure.lean`),
+and the join witness's slot starts block-supported (`join_block_luders`'s `hα`). This is a
+*preparation-of-the-apparatus* posit — the analogue of "the pointer starts at zero" — carried as
+explicit hypotheses/definitions, never as `axiom`s. Two facts keep it honest: the Dirac form of the
+calibration is **forced** by `collapse_accuracy_bound` (approximate collapse is priced in
+ready-state improbability), and `swap_not_blockLuders` proves **no** fixed ray-level calibration
+can serve degenerate blocks — which is why the join arena carries the degenerate case.
 
 ### 3.4 `LeakageCompat` parameters `εA`, `εB` are stipulated
 

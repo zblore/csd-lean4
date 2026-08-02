@@ -5,7 +5,7 @@
 > status/claims layer. For "what is next", read `BACKLOG.md` — nothing else.
 
 **Start here.** This indexes every planning / todo / reference doc in the corpus, with
-one-line status. Updated 2026-07-26. When starting a session, read this first, then the
+one-line status. Updated 2026-08-02. When starting a session, read this first, then the
 LIVE doc for the tranche you are on.
 
 ## Live (actionable) — pick up work here
@@ -13,10 +13,11 @@ LIVE doc for the tranche you are on.
 | Doc | What it is | Status |
 |---|---|---|
 | [`CSD-CHARTER.md`](CSD-CHARTER.md) | **★ The north star — read before framing any claim or scoping work.** **Σ is the floor and is everything** (deriving Σ is a non-question); **QM arises from the *epistemic* Ω-region partition {Ωᵢ(M)} on ℂℙ + the *ontic* typicality volume on Σ** (→ Born; dynamics + measurement follow). **The goal now is to complete the reconstruction of QM from Σ and Ω-regions** — not to accumulate more QM on the epistemic side. The **record layer** (MD-1) that does this is **BUILT** (2026-07-25, `record-layer-plan.md §4`): measurement = `context + unknown microstate → record` on the base×fibre Σ, outcome probabilities = the Kähler moment map, Born = the LLN over the unknown microstate. Enforced by the `csd-foundations` agent + `check-claims.sh`. | **REWRITTEN 2026-07-24** to the actual CSD ontology (the earlier "derive Σ / SO-1-as-goal" framing was a retired error). The anti-drift anchor. |
+| [`reconstruction-status.md`](reconstruction-status.md) | **★ The A1–A7 audit — "how far is finite QM from Σ from closed?"** Per-axiom rows (proved / discharged / closed-as-posit / explicitly scoped, each with theorem names), the §2a scoping decisions, and the net line. **As of 2026-08-02: no unscoped open rows**; A7 discharged (fibred reading canonical, kinematic + dynamical); A2/A5 formalisable halves discharged; the Hamiltonian-origin row resolved as the **piecewise-Hamiltonian classification** (`PiecewiseHamiltonian.lean`, seams provably forced + null). | **THE status truth for the reconstruction.** Read §2a before claiming anything open or closed. |
 | [`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md) | **★ Structural lesson about Σ (2026-07-27).** Born = ontic typicality volume for all `N` (theorem); but *where measurement contextuality lives in Σ* is dimension-dependent — on the projective base for the qubit (`qubitBorn`, proven), and **necessarily in the fibre for `N ≥ 3`** (base-only covariant density provably fails; NOT Gleason — CSD is contextual). Not a defect: a constraint on Σ's structure. The fibre resolution (softmax/Gumbel) is CSD-legit; deriving it is the open frontier. | **READ before touching general-`N` context-fixing.** Prevents re-litigating the `N≥3` wall. |
-| [`record-layer-plan.md`](record-layer-plan.md) | **The record layer (MD-1) — kinematic interface BUILT 2026-07-25 (§4); MD-1 NOT discharged (general-`N` A7, the de-isolation `H_int`, and the A1-sector status of the fibred Σ are open — corrected 2026-07-28).** Measurement as `context + unknown microstate → record` on the base×fibre Σ, the piece that completes "how QM works" from Σ+Ω. Formalized end-to-end (foundational-triple, no `sorry`, axiom-pinned): fibre Born partition, P5 `RecordSemantics`, rates = the Kähler moment map (`MomentMapRace`), Born = LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`), the base×fibre ontic Σ (`FibredSigma`), realized on the corpus's actual Σ (`KSigmaRecord.born_frequency_region_eq_record`), arbitrary observables (`BasisMeasurement`). **★ 2026-07-26: the qubit context-fixed Born rule is now formalized end-to-end** (`LF4/QubitBorn.lean` `qubitBorn`) — the epistemic hemisphere partition `{H±(n)}` is provably context-fixed (prep-independent) and Born is derived from the ontic μ_FS typicality; see §2. | **Kinematic interface BUILT 2026-07-25; qubit (`N=2`) A7 Born DONE 2026-07-26; general-`N` A7 OPEN.** Read with `CSD-CHARTER.md`. |
+| [`record-layer-plan.md`](record-layer-plan.md) | **The record layer (MD-1) — kinematic interface BUILT 2026-07-25 (§4); MD-1 NOT discharged (general-`N` A7, the de-isolation `H_int`, and the A1-sector status of the fibred Σ are open — corrected 2026-07-28).** Measurement as `context + unknown microstate → record` on the base×fibre Σ, the piece that completes "how QM works" from Σ+Ω. Formalized end-to-end (foundational-triple, no `sorry`, axiom-pinned): fibre Born partition, P5 `RecordSemantics`, rates = the Kähler moment map (`MomentMapRace`), Born = LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`), the base×fibre ontic Σ (`FibredSigma`), realized on the corpus's actual Σ (`KSigmaRecord.born_frequency_region_eq_record`), arbitrary observables (`BasisMeasurement`). **★ 2026-07-26: the qubit context-fixed Born rule is now formalized end-to-end** (`LF4/QubitBorn.lean` `qubitBorn`) — the epistemic hemisphere partition `{H±(n)}` is provably context-fixed (prep-independent) and Born is derived from the ontic μ_FS typicality; see §2. | **Kinematic interface BUILT 2026-07-25; qubit A7 Born DONE 2026-07-26.** *Addendum 2026-08-02:* **general-`N` A7 DISCHARGED** (fibred reading canonical — `GlobalBasin`/`globalBasin_born`, author decision; see `reconstruction-status.md` A7 row) and the **dynamical measurement layer is COMPLETE through the join arena** (records created/persist/exclusive, dynamical Born, rank-one Lüders on the swap arena, degenerate Lüders on `ℙ(ℂ^{N+N})` — `SwapClosure`/`UnifiedArena`/`JoinArena`). Read with `CSD-CHARTER.md`. |
 | [`connectivity-manifest.md`](connectivity-manifest.md) | **THE single source of truth for end-to-end connectivity claims.** Per-link status (Kähler geometry → Σ → flow → projected flow → Born / Schrödinger), each row CONNECTED (with a named backing theorem) or BROKEN/CONDITIONAL/TRIVIAL-WITNESS-ONLY (with the exact gap), plus the sequenced fix course C1–C6. No doc may claim a stronger connection than a CONNECTED row here. | **CREATED 2026-07-07 after a provenance audit found the "one posited object ⇒ both pillars" claim was NOT realized in code.** Enforced by `scripts/check-connectivity.sh`. **Current state (2026-07-26): L4/L5/L6/L8/L9 CONNECTED** (a genuine `Φ≠id` sector yields both pillars on one model; the record layer is built and Born is ontic-grounded, L5); L1 is the Kähler-form Mathlib gap; L7 ("derive Σ") is retired as a non-question. Read before making any pillar/connectivity claim. |
-| [`active-todo.md`](active-todo.md) | **THE persistent session work queue** — the full task list (Category / Complexity / Status / Blocked-by) that survives session loss; re-seed the in-memory task tracker from it. Includes the #16 D1c plan, and the #15 open-system-empirical next-tranche scoping. | **LIVE, updated 2026-06-29.** Read first to see what is open and what is next. |
+| [`active-todo.md`](active-todo.md) | **THE persistent session work queue** — the full task list (Category / Complexity / Status / Blocked-by) that survives session loss; re-seed the in-memory task tracker from it. Includes the #16 D1c plan, and the #15 open-system-empirical next-tranche scoping. | **SUPERSEDED by [`BACKLOG.md`](BACKLOG.md)** (the banner above): last updated 2026-06-29, kept as historical record. Do not seed work from it. |
 | [`metrology-plan.md`](metrology-plan.md) | **Quantum sensing / metrology validation program** (parameter estimation, not static states): A1 Ramsey interferometry (volume-preserving phase flow → `cos²(φ/2)` fringe, reuses `MalusVolume`), A2 QFI = Fubini-Study metric, A3 Heisenberg `1/N` via dilated manifolds, A4 decoherence as open symplectic drift. | **A1 (Ramsey) / A2 (QFI = FS-metric pullback) / A3 (Heisenberg `F_Q^GHZ = N²` via the GHZ probe) DONE 2026-06-28; A4 (decoherence = D1) open.** A3: `Heisenberg.lean`, `ghz_qfi = N²` vs `sqlQFI = N`, `heisenberg_advantage` (N-fold), genuine `N`-qubit `Fin (2^N)` GHZ family + genuine derivative, foundational triple only. A4 tied to D1. |
 | [`tn4-measurement-architecture.md`](tn4-measurement-architecture.md) | **Orientation map for the measurement stack** (TN4): the single architectural view — pure → density → channels → {projective, POVM} → Naimark → Born → CSD volume → LF5 dynamics — annotated with the real theorem names, the two readings (QM-validity vs CSD-ontic; operational vs ontic stratum), where Born comes from (the DH cluster, derived not postulated), and the honest D1 / posited-Σ / `Φ=id` residue. Descriptive, not a plan. | **Reference doc** (written 2026-06-27). Read first when picking up measurement-theory work. |
 | [`carve-out-plan.md`](carve-out-plan.md) → **D1** | **The open frontier.** Exercise real measurement *dynamics* on `Σ`; the measurement-dynamics frontier (entangled de-isolation dynamics; the record layer itself is now built). | **OPEN at the deeper strata.** `Φ≠id` (non-collapse) done 2026-06-05 (`LF4/ObservableFlow.lean`); collapse semantics DECIDED 2026-06-09 (§6: the de-isolation reading); **the measurement-event half is now exercised at the single-system projective tier — LF5 COMPLETE 2026-06-11** (`measurement_flow_born_frequency`); **the per-microstate outcome map is DONE 2026-06-14** (LF5-F: `bornRegion_pairwiseDisjoint` → `vnPointerOutcome` → `measurement_flow_outcome_frequency`, a single union event per pointer). Remaining: entangled/non-local de-isolation dynamics; `SectorData` instances still `Φ = id`. (The record layer / MD-1 is now BUILT — 2026-07-25.) |
@@ -59,43 +60,31 @@ LIVE doc for the tranche you are on.
 | [`../README.md`](../README.md) | Authoritative status overview (layers, theorem tables, axiom posture). |
 | [`../EMPIRICAL.md`](../EMPIRICAL.md) | Per-test index of the empirical suite (both branches: file, headline theorem, claim, source). |
 | [`../CLAUDE.md`](../CLAUDE.md) | Working-with-the-code guide (architecture, conventions, module chains). |
-| [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: the one standing axiom (`busch_effect_gleason`, §2.2; `invariant_measure_uniqueness` removed 2026-06-04, §2.1), discharged ones (§2.3–§2.4), structural assumptions (§3, incl. the posited Σ / D1 / V≈1−I), per-theorem audit (§5). |
+| [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: **zero imported axioms** (`busch_effect_gleason` proved and de-axiomatised 2026-07-21, §2.2; `invariant_measure_uniqueness` removed 2026-06-04, §2.1); every theorem reports only the foundational triple. Structural assumptions/posits in §3 (posited Σ, typicality reading, swap calibration), per-theorem audit §5. |
 | [`../CONVENTIONS.md`](../CONVENTIONS.md) | Three-category (Cat-1/2/3) discipline, naming, namespace rules. |
 | [`../BRIDGE-OBLIGATIONS.md`](../BRIDGE-OBLIGATIONS.md) | Ledger of load-bearing Empirical/CSD bridge fields with LF4-todo cross-refs. |
 | [`../PLACEHOLDERS.md`](../PLACEHOLDERS.md) | Placeholder / stub tracking. |
 
 ## Current state of the programme (one paragraph)
 
-LF1–LF5 + Empirical merged and machine-verified. Born is **derived as the Fubini–Study
-typicality volume** on the ontic `Σ = ℂℙ^{N-1}` for general `N`, Gleason-free, and the
-LF3 empirical chain runs on that derivation. The **POVM tranche is closed** (2026-06-03):
-the ontic Born derivation now covers general (non-projective) measurements via the
-canonical Naimark dilation — `povm_born_frequency_volume` lands the POVM Born weight as a
-sum of FS volumes on a dilated `Σ'`, unconditionally and Gleason-free. The corpus has
-exactly **one** standing axiom (`busch_effect_gleason`); `invariant_measure_uniqueness` was
-**removed 2026-06-04** (the abstract bridge it served was unused; the concrete `ℂℙ^{N-1}`
-uniqueness is a proved theorem). `busch_effect_gleason` is confined to the **operational
-stratum** — it is no longer in the ontic Born path for *either* projective or POVM
-measurements. The **quantum-algorithm branch** (Deutsch–Jozsa, QFT, Grover, full Shor) is
-**complete 2026-06-08** — coverage breadth, foundational-triple-only, Tier-A-audited SOUND.
-The **LF5 measurement-dynamics layer is complete** (2026-06-11, single-system projective
-tier): the layer headline `measurement_flow_born_frequency` chains the de-isolation flow
-`Φ_vN ≠ id` (FS measure-preserving) through the dynamically-realised Naimark dilation to
-pointer-block volumes = Born and a.s. frequencies → Born, for every unit preparation (the
-engine's `hpos` genericity retired by `LF4/BornRegionUncond.lean`; the corpus-wide
-call-site migration onto the `_uncond` forms executed 2026-06-11 — the Empirical/CSD
-volume capstones are now genericity-free, boundary preparations included). **LF5-F (2026-06-14)
-adds the per-microstate outcome map** — `bornRegion_pairwiseDisjoint` (the moment-subdivision is a
-genuine partition) → `vnPointerOutcome` (deterministic, total off an FS-null set, measurable
-fibres) → `measurement_flow_outcome_frequency` (the conjunct-(5) upgrade to a single union event
-per pointer); the outcome-function caveat owed since `aeece86` is discharged. The **canonical i.i.d.
-trial witness** (`LF4/TrialWitness.lean`, 2026-06-11) inhabits the abstract trial bundle
-`(Ω, Pr, X, hX, hlaw, hindep)` at the in-tree FS coordinate process; as of **2026-06-15** every
-volume-frequency headline (the LF4 POVM engine plus all fifteen Empirical/CSD headlines, centralised
-in `Empirical/CSD/VolumeCanonical.lean`) has a `_canonical` corollary discharging that bundle,
-conclusions verbatim — so none is left merely classically-satisfiable. The remaining open work is D1.s deeper strata (entangled/non-local de-isolation dynamics; Lindblad) and the extensions (CV, relativistic locality, identical particles). The record layer / the A7
-partition mismatch; the concrete
-`SectorData` instances still carry `Φ = id` — see `carve-out-plan.md` §6). Axiom posture is
-regression-protected by
-`CsdLean4/Tests/AxiomAudit.lean` (`#guard_msgs` against `#print axioms`); build with
-`lake build` + `lake build CsdLeanTests`.
+*(Rewritten 2026-08-02; the previous version of this paragraph predated the record and dynamical
+layers and still named a standing axiom.)* The corpus machine-verifies finite-dimensional QM as
+theorems about one ontic model `Σ = ℂℙ^{N-1} × T²`: **both pillars** (Schrödinger evolution as the
+projected sector flow; Born as Fubini–Study typicality volume, Gleason-free, POVMs included) plus —
+as of the 2026-08 arc — **measurement as a process**: records dynamically created from a ready
+state, persistent, mutually exclusive, Born-weighted (`swap_sector_born`), with the rank-one Lüders
+update a pushforward theorem (`swap_luders_born`) and the **degenerate** Lüders update realised on
+the projective join `ℙ(ℂ^{N+N})` as a Liouville-preserving unitary, pointwise
+(`join_block_luders`). The **unified arena** (`unifiedArenaClosure`) carries isolated dynamics,
+measurement dynamics, Born frequencies, and mixed states on ONE space with ONE Liouville measure
+family, including the isolate→measure→isolate round trip. The **A1–A7 map has no unscoped open
+rows** (`reconstruction-status.md` §2a); measurement dynamics is classified **piecewise
+Hamiltonian with a provably-forced null seam set** (`ShearDiscontinuity`/`PiecewiseHamiltonian`).
+The **empirical suite** covers every flagship test on both branches (QM proof + CSD ontic twin;
+`../EMPIRICAL.md`), with the crypto tranche consuming the dynamical layer. The corpus imports
+**zero axioms** — every theorem reports only `[propext, Classical.choice, Quot.sound]` — is
+sorry-free, and is regression-protected by `CsdLean4/Tests/AxiomAudit.lean` + `check-claims.sh`;
+build with `lake build` **and** `lake build CsdLeanTests` (the second target runs the audit).
+Open work: the single canonical list is [`BACKLOG.md`](BACKLOG.md) (headlines: the join-arena
+measurement-protocol plumbing (M), any-basis first measurement (M–L), composable finite-key QKD
+(XL), Shor-9 (L)).
