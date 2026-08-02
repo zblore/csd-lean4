@@ -437,4 +437,30 @@ instance instContinuousConstSMul :
 
 end NormedFiniteDim
 
+/-! ### Connectedness
+
+The projectivization of a module whose nonzero vectors form a connected set is itself
+connected: it is the continuous image of `{v // v ≠ 0}` under `mk'`. Downstream, for an
+`RCLike` field and real rank `> 1`, the nonzero set is connected because the complement of a
+point in a real normed space of rank `> 1` is connected
+(`isConnected_compl_singleton_of_one_lt_rank`). -/
+
+section Connectedness
+
+variable [DivisionRing K] [AddCommGroup V] [Module K V] [TopologicalSpace V]
+
+omit [TopologicalSpace V] in
+/-- The canonical surjection `mk'` is surjective onto the projectivization. -/
+theorem mk'_surjective : Function.Surjective (mk' K (V := V)) := fun p =>
+  ⟨⟨p.rep, p.rep_nonzero⟩, by rw [mk'_eq_mk]; exact p.mk_rep⟩
+
+/-- If the nonzero vectors form a connected set, the projectivization is a connected
+space. -/
+theorem connectedSpace_of_isConnected_nonzero
+    (h : IsConnected {v : V | v ≠ 0}) : ConnectedSpace (ℙ K V) := by
+  have h' : ConnectedSpace {v : V // v ≠ 0} := Subtype.connectedSpace h
+  exact mk'_surjective.connectedSpace continuous_mk'
+
+end Connectedness
+
 end Projectivization

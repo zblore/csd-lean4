@@ -130,6 +130,7 @@ public import CsdLean4.SigmaLayer.RotatedContext
 public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
 public import CsdLean4.Empirical.CSD.Crypto.B92Sequential
 public import CsdLean4.Empirical.CSD.Crypto.WiesnerSequential
+public import CsdLean4.SigmaLayer.ShearDiscontinuity
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1863,6 +1864,31 @@ arithmetic. -/
 /-- info: 'CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_rate_eq_verifyProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.WiesnerSequential.wiesner_rate_eq_verifyProb
+
+-- THE MEASUREMENT PROPAGATOR IS PROVABLY NOT CONTINUOUS (2026-08-02,
+-- SigmaLayer/ShearDiscontinuity.lean; machine-checks an external review's claim).
+-- ★ shearEvolve_not_continuous: over the measurement interval the shear witness displaces the
+-- register by shearAmt(basinIndex x); if continuous, its register marginal would be a continuous
+-- map from the CONNECTED KSigma onto >= 2 distinct points, whose fibres give a clopen partition --
+-- impossible. Consequence: the witness is a measurable, measure-preserving, PIECEWISE map, not a
+-- time slice of any continuous flow -- so the earlier "Hamiltonian generation = permanently scoped
+-- (Mathlib gap)" classification was misjustified and is REOPENED (specs/BACKLOG.md). Context that
+-- keeps this honest in both directions: no_everywhere_correlation already proves SOME seam set is
+-- forced for every exact-record dynamics -- the witness's jumps sit exactly where the no-go says
+-- they must. Supporting: ℂℙ^{N-1} is CONNECTED (staged connectedSpace_of_isConnected_nonzero via
+-- isConnected_compl_singleton_of_one_lt_rank at real rank 2N); vertex basin inhabitants; pairwise
+-- distinct shear displacements.
+/-- info: 'CSD.RecordLayer.shearEvolve_not_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shearEvolve_not_continuous
+
+/-- info: 'CSD.RecordLayer.vertex_mem_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vertex_mem_globalBasin
+
+/-- info: 'Projectivization.connectedSpace_of_isConnected_nonzero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.connectedSpace_of_isConnected_nonzero
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
