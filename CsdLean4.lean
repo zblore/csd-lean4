@@ -166,6 +166,7 @@ public import CsdLean4.SigmaLayer.PhaseSlot
 public import CsdLean4.SigmaLayer.JoinArena
 public import CsdLean4.SigmaLayer.JoinProtocol
 public import CsdLean4.SigmaLayer.JoinLuders
+public import CsdLean4.SigmaLayer.RotatedSwap
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.LF4.SingletKahler

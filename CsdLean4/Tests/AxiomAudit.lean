@@ -139,6 +139,7 @@ public import CsdLean4.SigmaLayer.PhaseSlot
 public import CsdLean4.SigmaLayer.JoinArena
 public import CsdLean4.SigmaLayer.JoinProtocol
 public import CsdLean4.SigmaLayer.JoinLuders
+public import CsdLean4.SigmaLayer.RotatedSwap
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -2142,6 +2143,33 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.cond_prod_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.cond_prod_prod
+
+-- ★★ THE UNITARY-COVARIANCE LAW (2026-08-02, SigmaLayer/RotatedSwap.lean; the last extension
+-- item of the dynamical arc). The first measurement now runs in ANY orthonormal basis:
+-- ★★ measurement_covariance -- for EVERY orthonormal basis bON and every state, the full
+-- six-fact measurement closure holds (RotatedSwapClosure): selector = the rotated context's
+-- basins, bank calibrated on the rotated vertices [bON i], dynamical Born = ‖⟨bON i, ψ⟩‖²,
+-- Lüders to [bON i]. The apparatus basis is a PARAMETER of the context field, not a preferred
+-- structure of Σ. Pure instantiation: swap_luders_marginal was always selector- and
+-- calibration-generic; the new content is the context-generic swap-arena accounting
+-- (sector_born_ctx, prep_outcome_pos_ctx -- generalising the momentContext instances).
+-- ★ bb84_primal_wrong_basis (BB84Sequential): the QM module's OWN round (Alice Z / Eve X /
+-- Bob Z), end-to-end dynamical -- the dual-round caveat retired.
+/-- info: 'CSD.RecordLayer.measurement_covariance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurement_covariance
+
+/-- info: 'CSD.RecordLayer.rotated_swap_luders_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rotated_swap_luders_born
+
+/-- info: 'CSD.RecordLayer.sector_born_ctx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sector_born_ctx
+
+/-- info: 'CSD.Empirical.CSDBridge.BB84Sequential.bb84_primal_wrong_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.BB84Sequential.bb84_primal_wrong_basis
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

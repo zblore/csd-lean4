@@ -33,8 +33,8 @@ The recorded unitary-covariance extension asks for the full equivariance
 `rate (U • p) = rate p ∘ σ(U)` of the measurement layer under the projective unitary group. This
 module builds the *object* that extension quantifies over — the rotated context — and proves its
 `ContextField` obligations (measurability via `Projectivization.mapOfInjective_continuous`, the
-simplex constraints via transport along the isometry). The equivariance *law* itself remains the
-recorded open item (`specs/BACKLOG.md`).
+simplex constraints via transport along the isometry). *(Addendum 2026-08-02: the equivariance
+law itself has since landed — `SigmaLayer/RotatedSwap.lean`, `measurement_covariance`.)*
 
 ## References
 

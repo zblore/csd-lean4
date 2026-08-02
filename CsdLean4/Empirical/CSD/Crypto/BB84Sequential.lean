@@ -9,6 +9,7 @@ public import CsdLean4.Empirical.QM.Crypto.BB84
 public import CsdLean4.Empirical.QM.Crypto.B92
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
 public import CsdLean4.SigmaLayer.RotatedContext
+public import CsdLean4.SigmaLayer.RotatedSwap
 
 /-!
 # Empirical/CSD/Crypto: BB84 intercept-resend with a dynamical collapse step
@@ -34,6 +35,12 @@ context `basisContext xBasisON` from `SigmaLayer/RotatedContext.lean`. The two r
 same per-basis error values by the Z/X symmetry of the four states;
 `bb84_dynamical_matches_marginal` records that the dynamically derived numbers coincide with
 the QM module's classical-marginal ones.
+
+*Addendum 2026-08-02 — the dual-round caveat is retired:* with the unitary-covariance law
+(`SigmaLayer/RotatedSwap.lean`, `measurement_covariance`), the **primal** round is now directly
+formalised too: `bb84_primal_wrong_basis` — Eve X-measures the Z-carrier `|a⟩` (rotated
+selector, rotated bank), and whatever she records, Bob's Z-basin has probability exactly `½`.
+Both rounds now run natively; neither needs the other's symmetry.
 
 Unlike the eraser twin (`QuantumEraserVolume.lean`), where the cross-basis step was realised
 kinematically, **both** measurements here are context-field reads of the dynamical layer: Eve's
@@ -249,5 +256,55 @@ theorem bb84_dynamical_matches_marginal :
     irErrorZ0 zBasis = 0 ∧ irErrorZ0 xBasis = 1 / 2 ∧
     (1 / 2) * irErrorZ0 zBasis + (1 / 2) * irErrorZ0 xBasis = 1 / 4 :=
   ⟨bb84_intercept_resend_right_basis, bb84_intercept_resend_wrong_basis, bb84_qber⟩
+
+/-! ### The primal round, via the covariance law -/
+
+/-- `⟨eⱼ, xᵢ⟩` has squared norm `½`, all four ways. -/
+lemma normsq_inner_single_xVec (j i : Fin 2) :
+    ‖(inner ℂ (EuclideanSpace.single j (1 : ℂ)) (xVec i) : ℂ)‖ ^ 2 = 1 / 2 := by
+  fin_cases j <;> fin_cases i
+  · show ‖(inner ℂ ket0 ketPlus : ℂ)‖ ^ 2 = 1 / 2
+    rw [ket0_inner_ketPlus]; exact norm_sq_invSqrt2
+  · show ‖(inner ℂ ket0 ketMinus : ℂ)‖ ^ 2 = 1 / 2
+    rw [ket0_inner_ketMinus]; exact norm_sq_invSqrt2
+  · show ‖(inner ℂ ket1 ketPlus : ℂ)‖ ^ 2 = 1 / 2
+    rw [ket1_inner_ketPlus]; exact norm_sq_invSqrt2
+  · show ‖(inner ℂ ket1 ketMinus : ℂ)‖ ^ 2 = 1 / 2
+    rw [ket1_inner_ketMinus, norm_neg]; exact norm_sq_invSqrt2
+
+/-- `⟨xᵢ, eₐ⟩` has squared norm `½`, all four ways. -/
+lemma normsq_inner_xVec_single (i a : Fin 2) :
+    ‖(inner ℂ (xVec i) (EuclideanSpace.single a (1 : ℂ)) : ℂ)‖ ^ 2 = 1 / 2 := by
+  fin_cases i <;> fin_cases a
+  · show ‖(inner ℂ ketPlus ket0 : ℂ)‖ ^ 2 = 1 / 2
+    rw [ketPlus_inner_ket0]; exact norm_sq_invSqrt2
+  · show ‖(inner ℂ ketPlus ket1 : ℂ)‖ ^ 2 = 1 / 2
+    rw [ketPlus_inner_ket1]; exact norm_sq_invSqrt2
+  · show ‖(inner ℂ ketMinus ket0 : ℂ)‖ ^ 2 = 1 / 2
+    rw [ketMinus_inner_ket0]; exact norm_sq_invSqrt2
+  · show ‖(inner ℂ ketMinus ket1 : ℂ)‖ ^ 2 = 1 / 2
+    rw [ketMinus_inner_ket1, norm_neg]; exact norm_sq_invSqrt2
+
+/-- **★ The primal round (Alice Z, Eve X, Bob Z) — the dual-round caveat retired.** Eve
+measures the Z-carrier `|a⟩` in the X basis (rotated selector, rotated bank, via the
+unitary-covariance law); whatever she records and the dynamics resends, Bob's Z-basin `j`
+has probability exactly `½`. This is the QM module's own round, now end-to-end dynamical. -/
+theorem bb84_primal_wrong_basis (a i j : Fin 2) :
+    ((swapProtocol (basinIndex (basisContext xBasisON))
+        (measurable_basinIndex (basisContext xBasisON))).postMeasure
+      ((readyPrep (vertexPoint a)).prod (rotatedBank xBasisON)) i)
+      ((fun y : SwapArena (LF4.KSigma 2) 2 => y.1.1) ⁻¹' globalBasin (momentContext 2) j)
+      = ENNReal.ofReal (1 / 2) := by
+  have hpos : ‖(inner ℂ (xBasisON i) (EuclideanSpace.single a (1 : ℂ)) : ℂ)‖ ^ 2 ≠ 0 := by
+    rw [xBasisON_apply, normsq_inner_xVec_single]
+    norm_num
+  have hvp : vertexPoint a
+      = Projectivization.mk ℂ (EuclideanSpace.single a (1 : ℂ)) (single_ne_zero' a) := rfl
+  rw [hvp, rotated_swap_luders_born xBasisON (single_ne_zero' a) (by simp) i hpos
+    (momentContext 2) j, momentContext_rate,
+    show basisPoint xBasisON i
+      = Projectivization.mk ℂ (xBasisON i) (xBasisON.orthonormal.ne_zero i) from rfl,
+    LF4.momentMap_mk_eq_inner_sq (xBasisON i) (xBasisON.orthonormal.ne_zero i)
+      (xBasisON.orthonormal.1 i) j, xBasisON_apply, normsq_inner_single_xVec]
 
 end CSD.Empirical.CSDBridge.BB84Sequential
