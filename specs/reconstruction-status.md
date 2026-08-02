@@ -79,7 +79,7 @@ This is the canonical map of *what the Lean corpus formalises against each Paper
 | **A4** pushforward measure `π_*μL = μ_FS` | **Proved for the witness** (`productSector_hasFubiniStudyPushforward`, B1) **and forced under full unitary symmetry** (`localised_sectorPostulate_capstone`); **not derived** from arbitrary ontic dynamics. The witness has `μL = μFS ⊗ vol` built in. |
 | **A5** quantum-effective Hamiltonians (projectability) | **Exact `ε=0` represented.** The exact fibre-invariant / projectable case `H = h∘π` is formalised (the projected flow closes and is `e^{-itH}` on rays). The *approximate* `(ε, T)`-projectability (`sup‖d(δH)|_V‖ ≤ ε`) is **not** formalised. |
 | **A6** composites + marginal stability | **Partial.** Operational tensor structure, reduced states and no-signalling exist (`compositeTensorEquiv`, `compositeAlgReconstruction`, `tensorSector_no_signalling`); the general **non-factorising ontic composite** architecture (`Σ_AB ≠ Σ_A × Σ_B` as a primitive) is not reconstructed. |
-| **A7** context-defined measurement partitions | **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. **★ UPDATE 2026-07-31 — a context-fixed partition now exists at every `N`, on the fibre.**
+| **A7** context-defined measurement partitions | **DISCHARGED at every `N` (author decision 2026-08-02: the FIBRED reading is canonical).** Paper C A7's `Ωᵢ(M)` is the TN6 two-level structure: ontic basins `Bᵢ(M) ⊆ Σ` fixed by the apparatus (`globalBasin` — no `ψ` in the definition), with the epistemic response kernel induced on the base. That structure is now realised **kinematically** (`GlobalRecordClosure`, `globalBasin_born` = `‖⟨eᵢ,ψ⟩‖²`) **and dynamically** (v0.7.0: records created from a ready state, persistent, Born-weighted, with the rank-one Lüders update — `DynamicMeasurementClosure.luders_followup`). **Base-only regions on `ℂℙⁿ⁻¹` are the completed qubit special case** (`LF4/QubitBorn.lean`), not the general mechanism; whether a base-only realisation exists at `N ≥ 3` remains the ⏸ parked `ContextFixedA7` question — still open in both directions, now characterising the special case rather than gating the axiom. *(Historical row, superseded by the decision:)* **OPEN at general `N`; DISCHARGED at `N = 2` (2026-07-26).** ⚠️ *This row read "Addressed by the record layer"; corrected 2026-07-28 — the record layer's partition is built from the preparation (`bornContext ψ`), so it does not establish `Ωᵢ(M)` from the apparatus alone.* The record layer supplies the **kinematic** interface (MD-1, `record-layer-plan.md §4`); The record layer formalizes measurement as `context + unknown microstate → record` on the base×fibre Σ, with outcome probabilities = the Kähler moment map (`MomentMapRace`, forced not injected) and frequencies = the LLN over the unknown microstate (`Measurement.bornMeasurement_frequency`). **The A7 residual — that the epistemic partition be genuinely *context-fixed* (a function of the measurement context alone, not the preparation, rather than the corpus's preparation-indexed `bornRegion ψ`) — is now discharged for the qubit** (`LF4/QubitBorn.lean` `qubitBorn`, foundational-triple, pinned): the hemisphere partition `{H±(n)}` depends only on the axis `n`, and the Born weight `|⟨n\|ψ⟩|²` is *derived* from the ontic Fubini–Study typicality volume via the CSD spread density `4(2·blochProj ψ − 1)₊`. The 7-module `CP¹` chain (`QubitReflection`→`BlochProjection`→`AxisBridge`→`QubitDipole`→`QubitCrossTerm`→`QubitBorn`, + `HatBox`) is `record-layer-plan.md §2/§4`. **★ UPDATE 2026-07-31 — a context-fixed partition now exists at every `N`, on the fibre.**
 `SigmaLayer/GlobalBasin.lean` defines `ContextField` (a measurable simplex-valued rate *field* on the
 base) and `globalBasin c i = {x | x.2.1 ∈ circleCell (c.rate x.1) i}`, reading the rate **at the ontic
 point** — so no preparation enters the definition; `globalBasin_born` returns `‖⟨eᵢ,ψ⟩‖²`, and
@@ -117,6 +117,14 @@ should not be counted against the reconstruction.
 * **A3, smoothness of `π`** — Lean requires *measurability*, which is what every downstream proof
   actually uses. Smoothness needs the same absent differential-geometry API. Nothing is weakened by
   the substitution; the witness `π = Prod.fst` is genuinely many-to-one.
+* **Hamiltonian generation of the measurement witnesses** *(classified 2026-08-02, user decision)* —
+  the shear and calibrated-swap propagators are explicit, with every required property proved *of*
+  them (correlation, measure preservation, persistence, Lüders); that they arise as time-`T` flows
+  of `H_int = g(t)(ι+1)δ·p_R` (+ the record-triggered kick) is a symplectic-geometry statement
+  Mathlib cannot yet express (no manifold Hamiltonian-flow API). ⚠️ *Verified before classifying,
+  per the parity lesson:* this is a genuine tooling gap, **not** a falsity — the generating
+  Hamiltonians are written down and the claim is standard physics; nothing here is odd-dimensional.
+  Revisit if Mathlib grows the API.
 
 **(ii) Scoped by doctrine, not by tooling.**
 
@@ -172,10 +180,11 @@ Two corrections attach to that work:
   of Kähler manifolds. The successor construction puts `circleCell` on **one** torus coordinate and
   keeps the second as its symplectic partner. Effort **S–M**, and it needs no new fibre mathematics.
 
-**Net for "finite QM from Σ": two rows permanently scoped (A1-exterior *on `KSigma`*, A3), one closed
-as a posit with the symmetry-forcing result (A4), and four genuinely open (A2, A5, A6, A7) plus the
-fibred-Σ question — which is now a *tractable* item on `T²` rather than a scoped one.** That is the
-honest distance to closed.
+**Net for "finite QM from Σ" (updated 2026-08-02): three rows permanently scoped (A1-exterior *on
+`KSigma`*, A3, witness-`H_int` origin), one closed as a posit with the symmetry-forcing result (A4),
+**A7 discharged** (fibred canonical; base-only = the parked qubit-special-case question), and the
+genuinely open rows are **A2, A5, A6** — with A5 the live frontier.** That is the honest distance to
+closed.
 
 
 ### 2a. Target inventory (T1–T16) — inhabited reconstruction targets

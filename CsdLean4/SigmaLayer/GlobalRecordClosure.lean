@@ -50,9 +50,10 @@ Liouville measure; `kMuL = μ_FS ⊗ vol` remains that.
 (`SigmaLayer/DeIsolationFlow.lean`) is untouched, and a certified readout is not a dynamical account
 of measurement.
 
-⚠️ This closes the **preparation-indexing** defect, not general-`N` A7 outright — whether Paper C
-intends `Ωᵢ(M)` to be *base-only* (in which case the parked `ContextFixedA7` chain still governs) is
-a question about the axiom, not about this file.
+⚠️ ~~This closes the preparation-indexing defect, not general-`N` A7 outright~~ **ANSWERED
+2026-08-02 (author decision): the fibred reading of A7 is canonical, so with v0.7.0's dynamical
+layer this line of work discharges A7 at every `N`.** The parked base-only chain is now the
+qubit-special-case question. See `reconstruction-status.md` §2.
 
 ⚠️ **`RecordLayerClosure` is superseded, not deleted.** It remains true, and `FiniteQMClosure` still
 carries the older `vnPointerOutcome` readout — swapping *that* is a separate migration on the

@@ -67,9 +67,11 @@ is one.
 constructed — that is the open Paper D obligation (`SigmaLayer/DeIsolationFlow.lean`), and it is
 untouched here. A context-fixed partition is not a dynamical account of measurement.
 
-⚠️ **A7 at general `N` is not thereby closed.** What is closed is the *preparation-indexing* defect:
-`Bᵢ(M)` depends on the apparatus alone. Whether Paper C intends the regions to be base-only — in
-which case the parked chain still governs — is a question about the axiom, not about this file.
+⚠️ ~~A7 at general `N` is not thereby closed~~ **ANSWERED 2026-08-02 (author decision): the fibred
+reading is canonical, so this construction — with the dynamical layer of v0.7.0 on top — DOES
+discharge A7 at every `N`.** The parked `ContextFixedA7` chain now characterises whether a
+*base-only* realisation also exists (the qubit-special-case question); it no longer gates the
+axiom. See `reconstruction-status.md` §2.
 
 ⚠️ `KSigma` is still not proved Kähler, and the fibre measure is still exhibited as Haar rather than
 shown Liouville. See the ★★ `specs/BACKLOG.md` row.

@@ -23,6 +23,13 @@
 > 2. **The de-isolation dynamics** — `DeIsolationInteraction.basin_rate` is a *hypothesis field*;
 >    no `H_int` generating those basins is constructed. `DeIsolationFlow.lean` states this
 >    correctly; §3c's staging row did not.
+>    ⚠️ **UPDATED 2026-08-02 — the dynamical layer now EXISTS** (v0.7.0, `MeasurementProtocol` /
+>    `ShearWitness` / `SwapWitness` / `SwapLuders`): records are created from a ready state by an
+>    explicit measure-preserving propagator, persist, carry Born weights, and implement the
+>    rank-one Lüders update. The *Hamiltonian origin* of those propagators is **permanently
+>    scoped** (user decision 2026-08-02; no manifold Hamiltonian-flow API in Mathlib — verified a
+>    tooling gap, not a falsity). `basin_rate` remains a hypothesis field in the OLD
+>    `DeIsolationInteraction` interface only.
 > 3. **That the fibred Σ is an A1 sector** — `ℂℙⁿ⁻¹ × ℝ` with Lebesgue restricted to `[0,1)` is a
 >    measurable record model: non-compact fibre, no Kähler structure, measure not shown to be
 >    Liouville. It is not the completed Paper C ontic surface.
