@@ -52,7 +52,7 @@ status). For the axiom posture and the two-strata (operational vs ontic) reading
 | Hardy non-locality | `Hardy.lean` | `no_lhv_hardy`, `HardyQM.exists_hardy_realisation`, `HardyQMMax.hardyMax_probability_eq` | Hardy's ladder: a paradoxical outcome with no local-hidden-variable assignment; the optimal `≈ 9%` probability `(5√5−11)/2` | Hardy 1992, 1993 |
 | Unambiguous discrimination | `USD.lean` | `usd_unambiguous_1`, `usd_unambiguous_2`, `usd_success`, `usd_complete`, `usdPOVM` | Zero-error discrimination of two non-orthogonal states via a genuine non-projective POVM; success `1−s`; completeness `E₁+E₂+E?=I` | Ivanovic 1987; Dieks 1988; Peres 1988 |
 | Syndrome collapse (QEC) | `QEC/SyndromeCollapse.lean` | `errored_pairwise_orthogonal`, `spanError_logical`, `branch_overlap_X1`/`X2`/`X3`, `three_qubit_corrects_span_error` | The half that joins discretization to the four point-checks: the branches are mutually **orthogonal** (disjoint supports = the distinct syndromes), so the overlap with branch `k` extracts exactly `cₖ` and the measurement collapses onto one correctable branch. **The 3-qubit code corrects an arbitrary error in `span ℂ {I,X₁,X₂,X₃}`** — a continuum. Still the bit-flip span; all four Paulis needs Shor-9 | Shor 1995; Nielsen–Chuang §10.1 |
-| Error discretization (QEC) | `QEC/ErrorDiscretization.lean` | `pauli_decomposition`, `pauli_span_top`, `error_discretization_qubit₁`/`₂`/`₃`, `errored_codeword_eq` | Every single-qubit operator is `c₀I + c₁X + c₂Z + c₃XZ` (explicit coefficients), and `span ℂ {I,X,Z,XZ} = ⊤` — so an arbitrary error carries a codeword nowhere outside the span of the four *correctable* ones. Why correcting four discrete errors corrects a continuum. Discretization half only; the concatenated Shor-9 claim and the syndrome-collapse half remain open | Shor 1995; Nielsen–Chuang §10.2 |
+| Error discretization (QEC) | `QEC/ErrorDiscretization.lean` | `pauli_decomposition`, `pauli_span_top`, `error_discretization_qubit₁`/`₂`/`₃`, `errored_codeword_eq` | Every single-qubit operator is `c₀I + c₁X + c₂Z + c₃XZ` (explicit coefficients), and `span ℂ {I,X,Z,XZ} = ⊤` — so an arbitrary error carries a codeword nowhere outside the span of the four *correctable* ones. Why correcting four discrete errors corrects a continuum. ⚠️ *Row corrected 2026-08-02: an earlier version said the syndrome-collapse half was open — it landed 2026-07-27 (`QEC/SyndromeCollapse.lean`, the row above).* Discretization + syndrome collapse both done; the concatenated Shor-9 claim remains the open item (`specs/BACKLOG.md`) | Shor 1995; Nielsen–Chuang §10.2 |
 | Hong–Ou–Mandel (CSD twin) | `CSD/HongOuMandelVolume.lean` | `hom_coincidence_typicality_zero`, `hom_coincidence_record_null`, `hom_coincidence_measurement_zero`, `hom_bunch_typicality_half`, `homOut_eq_bsTwo_bosonIn` | The dip as an **ontic impossibility**: the coincidence outcome's typicality measure on `Σ` is exactly `0`, so no microstate yields a coincidence — nothing cancels, there is nothing there to cancel. Stated via the **record layer**, because the Duistermaat–Heckman route needs strictly positive Born weights (see `BACKLOG.md`) | — |
 | Hong–Ou–Mandel | `HongOuMandel.lean` | `bsTwo_bosonIn`, `hom_coincidence_zero`, `hom_bunching_one`, `distinct_coincidence_half`, `fermion_coincidence_one`, `hom_dip`, `hom_exchange_trichotomy` | Two identical bosons entering opposite ports of a 50:50 beamsplitter never exit separately (coincidence `0`); the same splitter gives `½` for distinguishable particles and `1` for fermions, so the coincidence rate reads out exchange symmetry alone. The effect is the single identity "`H·σₓ·H` is diagonal" | Hong–Ou–Mandel 1987 |
 | Minimum-error discrimination (Helstrom) | `Mathlib/QuantumInfo/Helstrom.lean` | `successProb_le`, `successProb_helstromTest`, `errorProb_ge`, `errorProb_helstromTest`, `successProbPrior_le`, `helstrom_indistinguishable`, `helstrom_perfect` | The optimal two-outcome test has `P_error = ½(1 − D(ρ₀,ρ₁))` — bound **and** attainment (at the Helstrom projector); general priors give `½(1 − ‖p₀ρ₀ − p₁ρ₁‖₁)`. The operational meaning of the trace distance; complements `USD.lean` (zero error, inconclusive outcome allowed) | Helstrom 1976; Holevo 1973 |
@@ -104,6 +104,15 @@ are canonical.
 ---
 
 ## CSD-ontic branch (`CsdLean4/Empirical/CSD/`)
+
+> **★ NEW 2026-08-02 — the first entry consuming the dynamical measurement layer**
+> (`SequentialMeasurement.lean`): **repeatability** (`csd_repeatability` — a repeated
+> computational-basis measurement gives the same outcome with probability 1, others 0) and
+> **sequential Born** (`csd_sequential_born` — after outcome `i`, follow-up statistics for *any*
+> context are the collapsed state's Born weights `c'.rate [eᵢ]`; the preparation has left the
+> statistics). Both **derived from the calibrated-swap dynamics** (`swap_luders_born` +
+> `momentMap_vertex`), not posited. Rank-one first measurement; inherits the witness's scope
+> notes.
 
 **Coverage relative to the QM branch.** Every QM-validity test now has a CSD-branch
 counterpart (a bridge transport, a derived volume reading, or both). USD has no bridge
@@ -214,7 +223,9 @@ Born = Kähler-volume machinery they instantiate lives in `CsdLean4/LF4/POVM*.le
 - [`specs/qm-empirical-tests.md`](specs/qm-empirical-tests.md) — the roadmap, per-item
   status tags, and the planned-but-not-yet-done items (BB84/B92, weak-measurement
   paradoxes, algorithms).
-- [`AXIOMS.md`](AXIOMS.md) — the one standing axiom (`busch_effect_gleason`;
-  `invariant_measure_uniqueness` removed 2026-06-04) and the operational/ontic two-strata
-  reading.
+- [`AXIOMS.md`](AXIOMS.md) — the axiom ledger. ⚠️ *Line corrected 2026-08-02: an earlier
+  version said `busch_effect_gleason` was the one standing axiom — it was **discharged
+  2026-07-21** (proved as `OperationalPackage.effect_gleason_representation`), and the corpus
+  imports **zero** axioms; `check-claims.sh` enforces this.* The operational/ontic two-strata
+  reading is unchanged.
 - [`CLAUDE.md`](CLAUDE.md) — architecture and module-chain guide.

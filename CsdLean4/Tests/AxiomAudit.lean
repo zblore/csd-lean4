@@ -123,6 +123,7 @@ public import CsdLean4.LF4.MomentDirichletN
 public import CsdLean4.LF4.MomentBornN
 public import CsdLean4.LF4.ObservableCorrespondenceN
 public import CsdLean4.Empirical.CSD.MixedStateBornVolume
+public import CsdLean4.Empirical.CSD.SequentialMeasurement
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1683,6 +1684,32 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.reduceB_local_flow_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.reduceB_local_flow_invariant
+
+-- THE FIRST DYNAMICAL EMPIRICAL ENTRY (2026-08-02, Empirical/CSD/SequentialMeasurement.lean).
+-- Every other empirical entry exercises the KINEMATIC Born machinery; this one exercises the
+-- MEASUREMENT DYNAMICS -- the calibrated-swap witness -- and two textbook empirical facts fall out
+-- as consequences rather than separate posits:
+-- ★★ csd_repeatability (+ _same/_other): measure in the computational basis, obtain i, measure
+-- again in the SAME basis -- outcome i recurs with probability 1, every other outcome 0. Von
+-- Neumann repeatability, DERIVED from swap_luders_born + momentMap_vertex (the follow-up context's
+-- rate at the collapsed vertex is the vertex's indicator).
+-- ★ csd_sequential_born: after outcome i, follow-up statistics for ANY context field c' are the
+-- COLLAPSED state's Born weights c'.rate [e_i] -- the preparation has left the statistics. The
+-- Luders update as an empirical prediction.
+-- ⚠️ Rank-one computational-basis first measurement (the swap witness's scope); hpos carried as a
+-- hypothesis (conditioning on a null outcome is undefined, as it should be); inherits the witness's
+-- calibration-posit and Hamiltonian-origin scope notes.
+/-- info: 'CSD.Empirical.CSDBridge.SequentialMeasurement.csd_sequential_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SequentialMeasurement.csd_sequential_born
+
+/-- info: 'CSD.Empirical.CSDBridge.SequentialMeasurement.csd_repeatability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SequentialMeasurement.csd_repeatability
+
+/-- info: 'CSD.Empirical.CSDBridge.SequentialMeasurement.csd_repeatability_same' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.SequentialMeasurement.csd_repeatability_same
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has

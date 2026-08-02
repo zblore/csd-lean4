@@ -1,0 +1,290 @@
+{
+ "total_files": 392,
+ "total_internal_edges": 1440,
+ "broken_imports": [],
+ "orphans": [],
+ "reachable": 392,
+ "mathlib_dir_violations": [],
+ "layer_violations": [
+  [
+   "CsdLean4.LF2.MixedEnsembleIx",
+   "CsdLean4.SigmaLayer.MixedEnsemble"
+  ],
+  [
+   "CsdLean4.LF4.KahlerWignerLift",
+   "CsdLean4.Empirical.CSD.Gates.WignerDischarge"
+  ],
+  [
+   "CsdLean4.LF4.QubitCrossTerm",
+   "CsdLean4.Empirical.CSD.UncertaintyVolume"
+  ],
+  [
+   "CsdLean4.LF4.UncertaintyKahler",
+   "CsdLean4.Empirical.QM.Uncertainty"
+  ],
+  [
+   "CsdLean4.LF5.SyndromeFlow",
+   "CsdLean4.Empirical.QM.QEC.ThreeQubit"
+  ],
+  [
+   "CsdLean4.LF6.ForcedContextuality",
+   "CsdLean4.Empirical.QM.Crypto.E91"
+  ],
+  [
+   "CsdLean4.LF6.GHZContextuality",
+   "CsdLean4.Empirical.QM.Multipartite.GHZ"
+  ],
+  [
+   "CsdLean4.SigmaLayer.BellGenerality",
+   "CsdLean4.Empirical.QM.Bell"
+  ],
+  [
+   "CsdLean4.SigmaLayer.BellGenerality",
+   "CsdLean4.Empirical.QM.Crypto.E91"
+  ],
+  [
+   "CsdLean4.SigmaLayer.BellGenerality",
+   "CsdLean4.Empirical.QM.Contextuality.KS18"
+  ],
+  [
+   "CsdLean4.SigmaLayer.CompositeAdapters",
+   "CsdLean4.Empirical.QM.Bell"
+  ],
+  [
+   "CsdLean4.SigmaLayer.CompositeAdapters",
+   "CsdLean4.Empirical.QM.Multipartite.GHZ"
+  ],
+  [
+   "CsdLean4.SigmaLayer.CompositeAdapters",
+   "CsdLean4.Empirical.QM.Contextuality.KS18"
+  ],
+  [
+   "CsdLean4.SigmaLayer.CompositeAdapters",
+   "CsdLean4.Empirical.QM.Contextuality.MerminPeres"
+  ],
+  [
+   "CsdLean4.SigmaLayer.Interference",
+   "CsdLean4.Empirical.QM.Algorithms.HadamardTest"
+  ],
+  [
+   "CsdLean4.SigmaLayer.TensorSector",
+   "CsdLean4.Empirical.QM.NoCommunication"
+  ]
+ ],
+ "duplicate_imports": [
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd"
+  ],
+  [
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub",
+   "CsdLean4.Mathlib.QuantumInfo.Reversible.Eval"
+  ]
+ ],
+ "group_counts": {
+  "CV": 8,
+  "Empirical.CSD": 54,
+  "Empirical.Metrology": 3,
+  "Empirical.QM": 52,
+  "LF1": 9,
+  "LF2": 15,
+  "LF3": 17,
+  "LF4": 65,
+  "LF5": 9,
+  "LF6": 18,
+  "Mathlib staging (Analysis)": 6,
+  "Mathlib staging (LinearAlgebra)": 13,
+  "Mathlib staging (MeasureTheory)": 3,
+  "Mathlib staging (Probability)": 2,
+  "Mathlib staging (QuantumInfo)": 39,
+  "Mathlib staging (Topology)": 1,
+  "SigmaLayer": 70,
+  "Tests": 2,
+  "Thermo": 4,
+  "root": 2
+ },
+ "group_edges": {
+  "CV -> SigmaLayer": 1,
+  "Empirical.CSD -> Empirical.Metrology": 1,
+  "Empirical.CSD -> Empirical.QM": 27,
+  "Empirical.CSD -> LF2": 9,
+  "Empirical.CSD -> LF3": 1,
+  "Empirical.CSD -> LF4": 31,
+  "Empirical.CSD -> LF6": 2,
+  "Empirical.CSD -> Mathlib staging (LinearAlgebra)": 1,
+  "Empirical.CSD -> Mathlib staging (QuantumInfo)": 1,
+  "Empirical.CSD -> SigmaLayer": 2,
+  "Empirical.Metrology -> Empirical.CSD": 1,
+  "Empirical.Metrology -> Empirical.QM": 1,
+  "Empirical.Metrology -> LF4": 1,
+  "Empirical.QM -> Empirical.CSD": 1,
+  "Empirical.QM -> Empirical.Metrology": 2,
+  "Empirical.QM -> LF2": 5,
+  "Empirical.QM -> LF3": 2,
+  "Empirical.QM -> Mathlib staging (LinearAlgebra)": 1,
+  "Empirical.QM -> Mathlib staging (QuantumInfo)": 13,
+  "LF2 -> LF1": 4,
+  "LF2 -> Mathlib staging (LinearAlgebra)": 1,
+  "LF2 -> Mathlib staging (QuantumInfo)": 1,
+  "LF2 -> SigmaLayer": 1,
+  "LF3 -> LF1": 2,
+  "LF3 -> LF2": 5,
+  "LF3 -> Mathlib staging (Analysis)": 1,
+  "LF3 -> Mathlib staging (Topology)": 1,
+  "LF4 -> Empirical.CSD": 2,
+  "LF4 -> Empirical.QM": 1,
+  "LF4 -> LF1": 5,
+  "LF4 -> LF2": 7,
+  "LF4 -> LF3": 6,
+  "LF4 -> Mathlib staging (Analysis)": 4,
+  "LF4 -> Mathlib staging (LinearAlgebra)": 23,
+  "LF4 -> Mathlib staging (MeasureTheory)": 2,
+  "LF4 -> Mathlib staging (Probability)": 1,
+  "LF5 -> Empirical.QM": 1,
+  "LF5 -> LF4": 6,
+  "LF5 -> Mathlib staging (LinearAlgebra)": 2,
+  "LF6 -> Empirical.QM": 2,
+  "LF6 -> LF2": 1,
+  "LF6 -> LF3": 3,
+  "LF6 -> LF5": 5,
+  "LF6 -> Mathlib staging (Probability)": 2,
+  "LF6 -> Mathlib staging (QuantumInfo)": 2,
+  "Mathlib staging (QuantumInfo) -> Mathlib staging (LinearAlgebra)": 1,
+  "SigmaLayer -> Empirical.QM": 9,
+  "SigmaLayer -> LF1": 4,
+  "SigmaLayer -> LF2": 3,
+  "SigmaLayer -> LF4": 24,
+  "SigmaLayer -> LF5": 1,
+  "SigmaLayer -> LF6": 1,
+  "SigmaLayer -> Mathlib staging (Analysis)": 1,
+  "SigmaLayer -> Mathlib staging (LinearAlgebra)": 5,
+  "SigmaLayer -> Mathlib staging (MeasureTheory)": 1,
+  "SigmaLayer -> Mathlib staging (Probability)": 2,
+  "Tests -> CV": 8,
+  "Tests -> Empirical.CSD": 50,
+  "Tests -> Empirical.Metrology": 3,
+  "Tests -> Empirical.QM": 52,
+  "Tests -> LF1": 3,
+  "Tests -> LF2": 11,
+  "Tests -> LF3": 8,
+  "Tests -> LF4": 64,
+  "Tests -> LF5": 9,
+  "Tests -> LF6": 18,
+  "Tests -> Mathlib staging (Analysis)": 5,
+  "Tests -> Mathlib staging (LinearAlgebra)": 12,
+  "Tests -> Mathlib staging (MeasureTheory)": 3,
+  "Tests -> Mathlib staging (Probability)": 1,
+  "Tests -> Mathlib staging (QuantumInfo)": 39,
+  "Tests -> SigmaLayer": 60,
+  "Tests -> Thermo": 4,
+  "Thermo -> LF4": 1,
+  "Thermo -> Mathlib staging (LinearAlgebra)": 2,
+  "Thermo -> Mathlib staging (QuantumInfo)": 6,
+  "root -> CV": 8,
+  "root -> Empirical.CSD": 54,
+  "root -> Empirical.Metrology": 3,
+  "root -> Empirical.QM": 52,
+  "root -> LF1": 9,
+  "root -> LF2": 15,
+  "root -> LF3": 17,
+  "root -> LF4": 65,
+  "root -> LF5": 9,
+  "root -> LF6": 18,
+  "root -> Mathlib staging (Analysis)": 6,
+  "root -> Mathlib staging (LinearAlgebra)": 13,
+  "root -> Mathlib staging (MeasureTheory)": 2,
+  "root -> Mathlib staging (Probability)": 2,
+  "root -> Mathlib staging (QuantumInfo)": 39,
+  "root -> Mathlib staging (Topology)": 1,
+  "root -> SigmaLayer": 70,
+  "root -> Thermo": 4
+ }
+}
