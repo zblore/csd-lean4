@@ -134,6 +134,7 @@ public import CsdLean4.SigmaLayer.ShearDiscontinuity
 public import CsdLean4.SigmaLayer.PiecewiseHamiltonian
 public import CsdLean4.SigmaLayer.SwapClosure
 public import CsdLean4.SigmaLayer.UnifiedArena
+public import CsdLean4.SigmaLayer.BlockCollapse
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -1978,6 +1979,40 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.arena_mixed_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arena_mixed_born_frequency
+
+-- DEGENERATE LÜDERS, THE JOIN ROUTE, BRICK 1 (2026-08-02, SigmaLayer/BlockCollapse.lean; review
+-- step 4 opened). swap_not_blockLuders proved no FIXED calibration works; this brick builds the
+-- object every witness must realise and the mechanism one level above the rays:
+-- ★ blockCollapse -- the measurable ray-level collapse [ψ] ↦ [Πᵢψ] (quotient descent via
+-- Projectivization.lift; measurability through measurable_iff_measurable_comp_mk').
+-- ★ luders_target_eq_relocation + blockLudersObligation_iff_relocation -- COLLAPSE AS RELOCATION:
+-- the §8.3 target epistemicMeasure [Πᵢψ] IS the pushforward of the preparation under the
+-- deterministic relocation (base ray collapses, fibre untouched); the obligation is exactly the
+-- demand that a witness realise this pushforward as its conditioned trace.
+-- ★ componentSwap_collapse/_stores (+ _involutive, _norm_sum) -- the VECTOR-LEVEL witness core:
+-- on ℂ^N ⊕ ℂ^N, keep block parts, swap complements: with a block-calibrated slot this performs
+-- exactly the collapse WITH THE RESIDUAL STORED (no_exact_collapse respected by storage), and it
+-- is involutive + summed-norm-preserving (the unitary content).
+-- ⚠️ THE WALL, SHARPENED: the ray-pair version is ill-defined -- the stored residual depends on
+-- the relative scale the product ℙ×ℙ quotient forgets (a surviving relative U(1) is needed).
+-- Recorded routes: (i) FS disintegration under join coordinates; (ii) NEW -- a phase-carrying
+-- slot (sphere-level bank), likely cheaper. swap_not_blockLuders remains the honest boundary;
+-- NO ray-level witness is claimed.
+/-- info: 'CSD.RecordLayer.luders_target_eq_relocation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.luders_target_eq_relocation
+
+/-- info: 'CSD.RecordLayer.blockLudersObligation_iff_relocation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockLudersObligation_iff_relocation
+
+/-- info: 'CSD.RecordLayer.componentSwap_collapse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.componentSwap_collapse
+
+/-- info: 'CSD.RecordLayer.measurable_blockCollapse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_blockCollapse
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
