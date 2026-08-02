@@ -338,6 +338,7 @@ public import CsdLean4.SigmaLayer.DynamicMeasurementClosure
 public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
 public import CsdLean4.SigmaLayer.SwapWitness
 public import CsdLean4.SigmaLayer.SwapLuders
+public import CsdLean4.SigmaLayer.DegenerateLuders
 public import CsdLean4.SigmaLayer.MomentMapRace
 public import CsdLean4.SigmaLayer.Measurement
 public import CsdLean4.SigmaLayer.ProjectiveRecord
@@ -1456,6 +1457,48 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.swap_luders_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.swap_luders_born
+
+-- DEGENERATE LUDERS: THE PROBLEM MADE PRECISE, THE BOUNDARY PROVED (2026-08-02,
+-- SigmaLayer/DegenerateLuders.lean).
+-- At rank one the Luders channel IS measure-and-reprepare and swap_luders_born delivers it. At
+-- higher rank the post-state is the NORMALISED PROJECTION [Pi_i psi] -- psi-DEPENDENT, coherence
+-- inside the block intact -- and that dependence is the whole difficulty. This module does three
+-- things and claims no fourth:
+-- (1) BlockLudersObligation -- the degenerate demand as a _statement Prop (CONVENTIONS 8.3):
+-- post-outcome-i marginal = epistemicMeasure [Pi_i psi]. NOTHING in the corpus inhabits it for a
+-- block of dimension >= 2.
+-- (2) ★★ swap_not_blockLuders -- THE BOUNDARY, AS A THEOREM: the calibrated-swap witness fails the
+-- obligation for ANY fixed calibration nu, whenever a block has dimension >= 2. The proof turns
+-- swap_luders_marginal's virtue against it: the swap's post-marginal is the FIXED slot state nu i,
+-- preparation-independent, while the obligation at two vertex preparations inside the block demands
+-- the two DISTINCT states epistemicMeasure [e_j1] != epistemicMeasure [e_j2]
+-- (vertexPoint_injective + epistemicMeasure_injective). So the fixed-calibration architecture is
+-- REFUTED for degenerate measurements -- a machine-checked scope boundary, not a scope note.
+-- (3) ★ degenerate_selector_born -- THE POSITIVE HALF THAT SURVIVES: the block-selector
+-- (blockIndex b = b . basinIndex) has outcome sectors carrying EXACTLY the coarse-grained Born
+-- weights, the dynamical realisation of OutcomeField's kinematic blockField. STATISTICS generalise
+-- to degenerate measurements; the UPDATE is what does not.
+-- Supporting: momentMap_vertex (the moment map at a vertex is its indicator -- also what makes
+-- vertex_outcome_pos work), vertexPoint_injective, epistemicMeasure_injective.
+-- ⚠️ WHAT REMAINS OPEN: the degenerate witness itself. It must relocate [psi] -> [Pi_i psi] -- a
+-- psi-dependent target -- while preserving measure; no_exact_collapse still governs, so the lost
+-- base data must be STORED. Route: the projective-join decomposition of CP^{N-1}, wall = the FS
+-- measure decomposition under the join, unformalised geometry, effort L. specs/BACKLOG.md.
+/-- info: 'CSD.RecordLayer.momentMap_vertex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.momentMap_vertex
+
+/-- info: 'CSD.RecordLayer.degenerate_selector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.degenerate_selector_born
+
+/-- info: 'CSD.RecordLayer.vertex_outcome_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vertex_outcome_pos
+
+/-- info: 'CSD.RecordLayer.swap_not_blockLuders' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_not_blockLuders
 
 -- STEP FIVE (2026-07-29): THE (n-1)/n SUPPORT BOUND, as a theorem.
 -- vanishes_below_of_balanced: given (a) step four's output -- for a.e. phi some outcome i has
