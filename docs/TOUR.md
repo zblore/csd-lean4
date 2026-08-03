@@ -34,10 +34,12 @@ preparation, and arbitrary Hermitian `H`:
 - ★★★ **one theorem now carries the whole projective-measurement layer**
   (`projectiveMeasurementCapstone`, `SigmaLayer/MeasurementCapstone.lean`): for every
   Hermitian generator, base point, and unit preparation — rank-one on the unified arena,
-  the six-fact closure in **every** apparatus basis, ψ-dependent degenerate Lüders for
-  **every** block structure, and the smooth `ε`-horn. The four fields quantify over
-  different witnesses by design (the two-horn framing); new prose cites this theorem and
-  the constituent closures remain as the construction record;
+  the six-fact closure in **every** apparatus basis, the **complete degenerate package on
+  one protocol** for every block structure (records, exclusivity, persistence, Liouville,
+  the coarse Born mass, ψ-dependent Lüders — `DegenerateMeasurementClosure`, upgraded
+  2026-08-03), the smooth `ε`-horn, and its Schrödinger generation. The fields quantify
+  over different witnesses by design (the two-horn framing); new prose cites this theorem
+  and the constituent closures remain as the construction record;
 - **no-signalling holds dynamically, in every basis** (`reduceA_localLudersOn_mixture`,
   with the local-measurement-is-block-measurement bridge `toComposite_blockProj` and the
   join witness supplying the post-states): the Born-weighted mixture of local marginals
@@ -90,7 +92,8 @@ preparation, and arbitrary Hermitian `H`:
 | One arena, one Liouville measure family (rank-one tier) | `unifiedArenaClosure`, `arena_round_trip` | `SigmaLayer/UnifiedArena` |
 | Smooth measurement dynamics: Schrödinger-generated, jointly continuous | `rampedU_schrodinger`, `continuous_pointerRampedEvolve` | `SigmaLayer/PointerGeneration`, `PointerProtocol` |
 | The ε-Born sandwich and the smooth-horn closure | `pointer_born_lower`/`pointer_born_upper`, `smoothWitnessClosure` | `SigmaLayer/PointerBorn` |
-| ★★★ The projective-measurement capstone (four closures, one theorem) | `projectiveMeasurementCapstone` | `SigmaLayer/MeasurementCapstone` |
+| ★★★ The projective-measurement capstone (five fields, one theorem) | `projectiveMeasurementCapstone` | `SigmaLayer/MeasurementCapstone` |
+| The degenerate one-protocol package; the coarse dynamical Born mass | `degenerateMeasurementClosure`, `join_sector_born` | `SigmaLayer/JoinClosure` |
 | Dynamical no-signalling, every basis; local = block-degenerate | `reduceA_localLudersOn_mixture`, `toComposite_blockProj` | `SigmaLayer/LocalLudersBasis`, `LocalBlockBridge` |
 | The eraser as a process; statistical irreversibility of records | `erased_amp`, `erased_rate`, `sequential_no_revival` | `Empirical/CSD/EraserDynamics`, `EraserSequential` |
 | Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |

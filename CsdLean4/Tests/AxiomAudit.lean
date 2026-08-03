@@ -156,6 +156,7 @@ public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.SigmaLayer.MeasurementCapstone
 public import CsdLean4.SigmaLayer.MixedSwap
 public import CsdLean4.SigmaLayer.PovmDynamics
+public import CsdLean4.SigmaLayer.JoinClosure
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9751,5 +9752,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.naimarkInstrumentClosureCanonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.naimarkInstrumentClosureCanonical
+
+-- JoinClosure (2026-08-03, SigmaLayer/JoinClosure.lean; the degenerate one-protocol package,
+-- fourth external review). The degenerate pieces existed as theorems on the join protocol but
+-- were never packaged as ONE closure on ONE protocol.
+-- ★ join_sector_born — the coarse dynamical Born mass: the canonical join preparation gives
+-- the outcome-i sector exactly the block Born weight Σ_{j: b j = i}‖⟨e_j,ψ⟩‖², independently
+-- of the ancilla calibration (quantified). Spine: preimage_sector_ae (sector = good-fibre
+-- cylinder a.e.) + volume_goodTheta (the Dirac slice of degenerate_selector_born).
+-- ★★ degenerateMeasurementClosure — ready/record/exclusivity/persistence + Liouville + the
+-- Born mass + ψ-dependent degenerate Lüders (joinWitness_blockLuders), one structure, one
+-- protocol, for every block structure and preparation. The capstone's degenerate field is
+-- upgraded to this closure (was bare BlockLudersObligation).
+/-- info: 'CSD.RecordLayer.join_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.join_sector_born
+
+/-- info: 'CSD.RecordLayer.degenerateMeasurementClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.degenerateMeasurementClosure
 
 end CSD.Tests.AxiomAudit
