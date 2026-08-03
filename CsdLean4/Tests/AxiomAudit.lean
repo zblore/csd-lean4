@@ -152,6 +152,7 @@ public import CsdLean4.SigmaLayer.LocalLuders
 public import CsdLean4.SigmaLayer.LocalBlockBridge
 public import CsdLean4.SigmaLayer.LocalLudersBasis
 public import CsdLean4.Empirical.CSD.EraserDynamics
+public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9669,5 +9670,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.erased_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.erased_weight
+
+-- EraserSequential (2026-08-03, Empirical/CSD/EraserSequential.lean; the row's residue). The
+-- two-stroke composition, in the decisive order: MARK FIRST (record exists), THEN ERASE.
+-- seqProfile_eq: the erase stroke only RESCALES the recorded ray |j⟩; weights stay 1/2
+-- (sequential_erase_weight); ★ sequential_no_revival — the screen rate stays 1/2 at every
+-- phase, port, and marker outcome: once a record exists, no later marker measurement revives
+-- the fringe. Records are statistically irreversible — the statistical face of
+-- relocation-with-storage. (The other residue, the measure-level ensemble integral, is closed
+-- as definitional: for finite outcomes the post ray-ensemble IS the discrete mixture and its
+-- barycenter statement IS reduceA_localLudersOn_mixture.)
+/-- info: 'CSD.Empirical.CSDBridge.EraserSequential.seqProfile_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserSequential.seqProfile_eq
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserSequential.sequential_erase_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserSequential.sequential_erase_weight
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserSequential.sequential_no_revival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserSequential.sequential_no_revival
 
 end CSD.Tests.AxiomAudit
