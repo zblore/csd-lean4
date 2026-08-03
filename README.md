@@ -21,7 +21,12 @@ model, with no further axioms, the corpus derives:
   dimension and for general (POVM) measurements, with observed frequencies converging to them;
 - **measurement as a physical process** — an explicit volume-preserving interaction creates a
   record from an apparatus-ready state, the record persists, distinct outcomes exclude each
-  other, and the outcome statistics are exactly Born;
+  other, and the outcome statistics are exactly Born. The whole layer is consolidated in a
+  single capstone theorem covering rank-one measurements, every apparatus basis, degenerate
+  blocks, and the smooth horn — with mixed preparations reproducing `Tr(ρE)` through the same
+  dynamics, no-signalling holding *dynamically* (a distant measurement — outcome or basis
+  choice — cannot move the local marginal), and the quantum eraser realised as a process:
+  erasure restores fringes only before a record exists, never after;
 - **wavefunction collapse as a theorem** — the post-measurement state update (the Lüders
   rule) falls out as a pushforward of the dynamics rather than being postulated; the harder
   *degenerate* case is realised on a companion projective-join witness. The apparatus never destroys information: what looks like
@@ -108,6 +113,7 @@ of the above on every push.
 | `v1.0.0-finite-qm-closure` | The combining capstone (`CsdFiniteQMClosure`) |
 | `v1.0.1-luders-covariance` | Unified arena; degenerate Lüders closed on the join; the covariance law |
 | `v1.0.2-smooth-witness` | The compact Kähler pointer witness: Schrödinger-generated measurement dynamics, continuous in time and state, Born up to `ε` |
+| `v1.0.3-measurement-capstone` | The projective-measurement capstone (four closures, one theorem); dynamical no-signalling in every basis; the eraser as a process with statistical irreversibility; mixed preparations |
 
 Versioning proceeds in patch increments. The project develops in dated, review-driven
 increments; superseded documents are archived, not rewritten — the previous README lives at

@@ -31,6 +31,25 @@ preparation, and arbitrary Hermitian `H`:
   trip is a theorem (`arena_round_trip`). The degenerate update runs on the companion
   projective-join witness; a single capstone bundling rank-one, all bases, and degenerate is a
   recorded open item.
+- ★★★ **one theorem now carries the whole projective-measurement layer**
+  (`projectiveMeasurementCapstone`, `SigmaLayer/MeasurementCapstone.lean`): for every
+  Hermitian generator, base point, and unit preparation — rank-one on the unified arena,
+  the six-fact closure in **every** apparatus basis, ψ-dependent degenerate Lüders for
+  **every** block structure, and the smooth `ε`-horn. The four fields quantify over
+  different witnesses by design (the two-horn framing); new prose cites this theorem and
+  the constituent closures remain as the construction record;
+- **no-signalling holds dynamically, in every basis** (`reduceA_localLudersOn_mixture`,
+  with the local-measurement-is-block-measurement bridge `toComposite_blockProj` and the
+  join witness supplying the post-states): the Born-weighted mixture of local marginals
+  after a distant measurement equals the marginal before — the distant party's outcome
+  *and basis choice* are invisible. **Mixed preparations** run through the same dynamics:
+  `mixedSwapPrep ρ (outcomeSector i) = Tr(ρ|eᵢ⟩⟨eᵢ|)` (`mixed_swap_sector_born`);
+- **the quantum eraser is a process, and records are irreversible**: the mark stroke
+  produces which-path states with flat statistics at every phase (`marked_no_fringe`);
+  the erase stroke on the *coherent* state produces exactly the conditioned fringe states
+  (`erased_amp` — the dynamical post-states are `√2·eraserOut`, dark zero included);
+  and erasing **after** the mark record revives nothing (`sequential_no_revival`) —
+  interference is recoverable only before a record exists;
 - **measurement dynamics has a smooth horn** (`smoothWitnessClosure`,
   `SigmaLayer/PointerBorn.lean`): on the pointer arena `ℂℙ^{N-1} × T² × ℂℙ^N`, one witness
   simultaneously carries a measurement protocol whose two-time law is the exponential group
@@ -58,6 +77,10 @@ preparation, and arbitrary Hermitian `H`:
 | One arena, one Liouville measure family (rank-one tier) | `unifiedArenaClosure`, `arena_round_trip` | `SigmaLayer/UnifiedArena` |
 | Smooth measurement dynamics: Schrödinger-generated, jointly continuous | `rampedU_schrodinger`, `continuous_pointerRampedEvolve` | `SigmaLayer/PointerGeneration`, `PointerProtocol` |
 | The ε-Born sandwich and the smooth-horn closure | `pointer_born_lower`/`pointer_born_upper`, `smoothWitnessClosure` | `SigmaLayer/PointerBorn` |
+| ★★★ The projective-measurement capstone (four closures, one theorem) | `projectiveMeasurementCapstone` | `SigmaLayer/MeasurementCapstone` |
+| Dynamical no-signalling, every basis; local = block-degenerate | `reduceA_localLudersOn_mixture`, `toComposite_blockProj` | `SigmaLayer/LocalLudersBasis`, `LocalBlockBridge` |
+| The eraser as a process; statistical irreversibility of records | `erased_amp`, `erased_rate`, `sequential_no_revival` | `Empirical/CSD/EraserDynamics`, `EraserSequential` |
+| Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |
@@ -167,8 +190,9 @@ The A1–A7 reconstruction map's last genuinely open row — A2's Hamiltonian-ge
 sub-question — was closed 2026-08-03 at the formalisable level by the smooth pointer witness
 ([`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a; the
 symplectic/moment-map *reading* of the generator remains the same scoped prose boundary as
-A1/A3). The dynamical measurement layer is complete through degenerate Lüders, unitary
-covariance, and the smooth horn; its recorded extensions are mixed preparations,
+A1/A3). The dynamical measurement layer is complete through the capstone — rank-one, every basis,
+degenerate blocks, the smooth horn, mixed preparations, dynamical no-signalling, and the
+eraser process with its irreversibility theorem; its recorded extensions are
 POVM/instrument dynamics, the smooth-witness Lüders composition, and the ε-Born frequency
 layer. The empirical suite
 covers every flagship test on both branches. Connectivity claims are governed by

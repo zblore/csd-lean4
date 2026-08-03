@@ -59,6 +59,13 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
    a projective pointer, a Hermitian coupling, a Schrödinger-generated propagator continuous
    in time and state, and Born up to a stated `ε` (`smoothWitnessClosure`,
    `rampedU_schrodinger`).
+10. `CsdLean4/SigmaLayer/{LocalLuders, LocalBlockBridge, LocalLudersBasis, MixedSwap,
+    MeasurementCapstone}.lean` and `CsdLean4/Empirical/CSD/{EraserDynamics,
+    EraserSequential}.lean` — the consolidation tier: local measurements are
+    block-degenerate measurements, no-signalling holds dynamically in every basis, mixed
+    preparations reproduce `Tr(ρE)`, the eraser runs as a process (with
+    `sequential_no_revival` — records are statistically irreversible), and
+    `projectiveMeasurementCapstone` bundles the layer into one theorem.
 
 ## 4 · Entanglement & non-locality
 
