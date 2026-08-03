@@ -67,6 +67,12 @@ preparation, and arbitrary Hermitian `H`:
   `rⱼ − 2ε ≤ sector ≤ rⱼ + 2(N−1)ε`. On the interaction window the propagator satisfies the
   **Schrödinger equation** with the explicit Hermitian coupling `H_eff`
   (`rampedU_schrodinger`) — the Hamiltonian-generation statement at the formalisable level.
+  *Precision (2026-08-03, fourth external review): the generation is **fibrewise** — the
+  joint-arena flow's register back-reaction is suppressed by design
+  (`pointerEvolve_base_marginal_unchanged` is the fingerprint; `ι_Vω ≠ d𝓗` on the
+  ε-collars, genuinely Hamiltonian off them), and the weight/ramp ingredients are proved
+  `Continuous`, not `C^∞`. The accurate label is continuous fibrewise-Schrödinger witness;
+  see `PointerGeneration.lean`'s honest-scope block and the backlog rows.*
 
 ## The results, by pillar
 
@@ -139,13 +145,19 @@ load-bearing:
    sector selecting the outcome, at the price of a stated `ε` in records and Born
    (`smoothWitnessClosure`). The trade-off forced by `no_everywhere_correlation` is now held
    from **both ends**, each machine-checked: exact records with seams, or seamless dynamics
-   with `ε`.
+   with `ε`. *(Precision, 2026-08-03: the no-go rules out **everywhere**-exact records
+   under continuity; it does not exclude a third option — continuous dynamics with records
+   exact off a* **null** *seam, devil's-staircase style, with exact Born. That is a
+   recorded candidate brick, not a proved impossibility.)*
 
 ### Which horn is the right one?
 
 Neither — and that is a settled framing (author decision, 2026-08-03), not an open question.
-`no_everywhere_correlation` forces the fork on **any** theory that models the apparatus as a
-dynamical system on a connected state space, and every measuring science has met it. Digital
+`no_everywhere_correlation` rules out **everywhere**-exact records for any continuous
+dynamics on a connected state space, and every measuring science has met that constraint.
+(*Precision added 2026-08-03, fourth external review: the two horns below are the two
+answers the corpus has formalised, not a proven exhaustive dichotomy — a continuous witness
+with records exact off a **null** seam is not excluded and is a recorded candidate brick.*) Digital
 electronics keeps continuous dynamics and engineers the `ε`: flip-flop *metastability* is an
 unresolved needle between the marks, its probability driven down exponentially with settling
 time — the classical twin of our no-go is Lamport's *Buridan's Principle* (1984), found by

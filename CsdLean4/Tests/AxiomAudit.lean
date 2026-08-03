@@ -9699,9 +9699,10 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- (measurement_covariance — the apparatus basis is a parameter, not preferred structure),
 -- degenerate (joinWitness_blockLuders — every block structure, ψ-dependent Lüders through
 -- Liouville-preserving dynamics), smooth (smoothWitnessClosureCanonical — the ε-horn at every
--- ε, as Nonempty since the closure carries its protocol). The four fields quantify over
--- different witnesses BY DESIGN: the two-horn framing (author decision 2026-08-03). New prose
--- cites this one theorem; the constituent closures remain as the construction record.
+-- ε, as Nonempty since the closure carries its protocol), generation (rampedU_schrodinger as
+-- a field — added 2026-08-03, fourth review). The fields quantify over different witnesses BY
+-- DESIGN: the two-horn framing (author decision 2026-08-03). New prose cites this one
+-- theorem; the constituent closures remain as the construction record.
 /-- info: 'CSD.RecordLayer.projectiveMeasurementCapstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.projectiveMeasurementCapstone
 

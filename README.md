@@ -21,9 +21,10 @@ model, with no further axioms, the corpus derives:
   dimension and for general (POVM) measurements, with observed frequencies converging to them;
 - **measurement as a physical process** — an explicit volume-preserving interaction creates a
   record from an apparatus-ready state, the record persists, distinct outcomes exclude each
-  other, and the outcome statistics are exactly Born. The whole layer is consolidated in a
-  single capstone theorem covering rank-one measurements, every apparatus basis, degenerate
-  blocks, and the smooth horn — with mixed preparations reproducing `Tr(ρE)` through the same
+  other, and the outcome statistics are exactly Born. A single capstone theorem
+  (`projectiveMeasurementCapstone`) indexes the layer — rank-one measurements, every
+  apparatus basis, degenerate blocks, the smooth horn, and its Schrödinger generation
+  (distinct witnesses per horn, by design) — with mixed preparations reproducing `Tr(ρE)` through the same
   dynamics, no-signalling holding *dynamically* (a distant measurement — outcome or basis
   choice — cannot move the local marginal), and the quantum eraser realised as a process:
   erasure restores fringes only before a record exists, never after — and POVMs and

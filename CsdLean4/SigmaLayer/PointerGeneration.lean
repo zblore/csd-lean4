@@ -46,6 +46,24 @@ stated as a theorem rather than left implicit.
   the FS moment map" remains prose: Mathlib has no symplectic-manifold API
   (`MATHLIB-GAPS.md`) — the *same* §2a-scoped boundary as A1/A3, but with no flux
   obstruction hiding behind it.
+* ⚠️ *Boundary sharpened 2026-08-03 (fourth external review, verified both ways):* the
+  generation is **fibrewise**, not joint-arena. The arena propagator's generator is
+  vertical, `(0, V_Q)`, while the natural joint scalar `𝓗(x,q) = μ_{H_eff(w(x))}(q)` has
+  `d𝓗` with a nonzero horizontal component wherever the weights vary — so `ι_V ω ≠ d𝓗`
+  on the ε-collars, and the flow there is *not* the Hamiltonian flow of any interaction
+  scalar on the product structure. The suppressed horizontal component is register
+  back-reaction, and `pointerEvolve_base_marginal_unchanged` below is its fingerprint,
+  stated as a theorem. Mitigation, also exact: off the collars the weights are locally
+  constant, `d𝓗` is vertical, and the flow is genuinely (locally) Hamiltonian — the
+  non-Hamiltonicity defect shares the Born error's `O(ε)` budget. The accurate label is
+  **continuous fibrewise-Schrödinger witness**; the full back-reacting joint flow (where
+  the register moves mid-stroke and the exact moment-transport argument no longer applies)
+  is the recorded research row in [`BACKLOG.md`](../../specs/BACKLOG.md).
+* *Same review, same date:* the weight and ramp ingredients (`clampDiv`, `min`/`max`, the
+  trapezoid) are Lipschitz and proved `Continuous`, not `C¹` at their joins — "smooth
+  horn" names the ε-corridor architecture, not a `C^∞` claim. The `Real.smoothTransition`
+  ingredient upgrade (plateaus cover the circle-distance kinks, so compositions stay
+  smooth) is a recorded `M` row.
 * **The Lüders composition is a recorded extension, not delivered here**: the smooth
   witness does not collapse (that is the no-collapse theorem above, a feature of its
   design); the ψ-dependent state update lives on the swap/join witnesses

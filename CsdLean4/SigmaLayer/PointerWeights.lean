@@ -54,6 +54,14 @@ arcs have those distance properties and carry `volume ≥ rⱼ − 2ε`, cells b
 context rates (`hc`); the witness instantiations (`momentContext`, `basisContext`) have
 them, but a bare `ContextField` promises only measurability.
 
+⚠️ *Boundary sharpened 2026-08-03 (fourth external review):* substituting the
+selector-dependent weights `w = w(x)` while keeping the base fixed makes the arena map
+**fibrewise**-Hamiltonian only — the joint flow of the scalar `𝓗(x,q) = μ_{H_eff(w(x))}(q)`
+would back-react on the register wherever the weights vary (`ι_Vω ≠ d𝓗` on the ε-collars;
+full accounting in `PointerGeneration.lean`'s honest-scope block). The weight functions
+here are Lipschitz (`clampDiv`/`min`/`max`), proved `Continuous`, not `C¹` at the joins;
+the `C^∞` upgrade via `Real.smoothTransition` is a recorded row (`BACKLOG.md`).
+
 ## References
 
 `specs/pointer-witness-plan.md` (bricks 2b, 3); `specs/BACKLOG.md` (the ★ L row);
