@@ -31,7 +31,8 @@ model, with no further axioms, the corpus derives:
   corpus therefore holds both horns: exact-record witnesses that are provably not continuous
   flows, and a *smooth* witness — a projective pointer whose propagator is continuous in time
   and state and satisfies the Schrödinger equation with an explicit Hermitian coupling — whose
-  records and Born weights are exact up to a stated, tunable `ε`;
+  records and Born weights are exact up to a stated, tunable `ε` — the same fork every
+  measuring science meets, and neither horn is canonical (the tour has the comparison);
 - **the standard quantum canon** — entanglement and Bell/CGLMP/GHZ non-locality with
   no-signalling, contextuality, uncertainty, mixed states, quantum information theory,
   cryptographic protocols, Shor's algorithm, and quantum thermodynamics through Landauer's

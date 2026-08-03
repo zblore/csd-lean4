@@ -110,6 +110,25 @@ load-bearing:
    from **both ends**, each machine-checked: exact records with seams, or seamless dynamics
    with `ε`.
 
+### Which horn is the right one?
+
+Neither — and that is a settled framing (author decision, 2026-08-03), not an open question.
+`no_everywhere_correlation` forces the fork on **any** theory that models the apparatus as a
+dynamical system on a connected state space, and every measuring science has met it. Digital
+electronics keeps continuous dynamics and engineers the `ε`: flip-flop *metastability* is an
+unresolved needle between the marks, its probability driven down exponentially with settling
+time — the classical twin of our no-go is Lamport's *Buridan's Principle* (1984), found by
+people building arbiter circuits. Thermodynamics keeps the exact jump and admits it is the
+infinite-size idealisation of a steep continuous crossover — bubble chambers and Geiger
+counters "jump" by phase transitions that are sharp only in the thermodynamic limit. Control
+engineering trades single-valued readout for hysteresis (Schmitt triggers); neurons near
+firing threshold do the same. Textbook QM alone promoted the jump to an *axiom* — collapse —
+instead of modelling the apparatus. The corpus's two witness families are these two universal
+answers, formalised: reach for the exact-record witnesses when the analysis needs sharp
+records (the operational closures do), and for the smooth witness when it needs honest
+Hamiltonian dynamics (the papers' architecture does). Neither is "the" CSD measurement; the
+trade-off theorem is.
+
 ## Three reading pathways, by reader
 
 **For the physicist** — what does CSD claim and what is actually proved?

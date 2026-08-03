@@ -33,6 +33,11 @@ images are partial rotations: legitimate transition states of the projective poi
 | Exact-record | `ShearWitness`/`SwapWitness`/join arc (landed) | yes | no — piecewise rigid symplectic translation (`PiecewiseHamiltonian.lean`, flux correction 2026-08-02) |
 | Smooth | `ℂℙ^K` pointer (this plan) | up to `ε`, `ε` arbitrary | yes (at the level formalisable — see Honest scope) |
 
+*Framing settled (author decision 2026-08-03): neither horn is canonical — context selects,
+both are maintained, and the reader-facing docs present the fork, not a winner; the
+cross-science context (metastability, thermodynamic-limit idealisation, hysteresis,
+collapse-as-axiom) is recorded in `docs/TOUR.md` §"Which horn is the right one?".*
+
 The `ε`-price is not new mathematics for the corpus: `collapse_accuracy_bound` prices
 approximate collapse, and `quantum_effective_shadowing` (A5) is already an `ε·T` tracking
 statement. The pointer witness extends that idiom to record creation.
