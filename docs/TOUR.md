@@ -108,6 +108,7 @@ preparation, and arbitrary Hermitian `H`:
 | The outcome-conditioned mixed update: Bayes posterior + rank-one collapse of ignorance | `mixed_post_bayes`, `mixed_luders_followup` | `SigmaLayer/MixedLuders` |
 | The dynamical POVM Born rule; the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
 | `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
+| The third horn: continuous, null (two-point) seam, exact Born — at Dirac calibration | `nullSeamClosure`, `nullSeam_born_left` | `SigmaLayer/NullSeamWitness` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |
@@ -159,18 +160,25 @@ load-bearing:
    (`smoothWitnessClosure`). The trade-off forced by `no_everywhere_correlation` is now held
    from **both ends**, each machine-checked: exact records with seams, or seamless dynamics
    with `ε`. *(Precision, 2026-08-03: the no-go rules out **everywhere**-exact records
-   under continuity; it does not exclude a third option — continuous dynamics with records
-   exact off a* **null** *seam, devil's-staircase style, with exact Born. That is a
-   recorded candidate brick, not a proved impossibility.)*
+   under continuity; the third option — continuous dynamics, records exact off a* **null**
+   *seam, exact Born — was exhibited the same day (`nullSeamClosure`), at the price of the
+   Dirac calibration. The fork is a trilemma; see §"Which horn is the right one?".)*
 
 ### Which horn is the right one?
 
 Neither — and that is a settled framing (author decision, 2026-08-03), not an open question.
 `no_everywhere_correlation` rules out **everywhere**-exact records for any continuous
 dynamics on a connected state space, and every measuring science has met that constraint.
-(*Precision added 2026-08-03, fourth external review: the two horns below are the two
-answers the corpus has formalised, not a proven exhaustive dichotomy — a continuous witness
-with records exact off a **null** seam is not excluded and is a recorded candidate brick.*) Digital
+(*Precision added 2026-08-03, fourth external review; the candidate third option was
+**exhibited the same day**: `nullSeamClosure` (`SigmaLayer/NullSeamWitness.lean`) is a
+continuous, Liouville-preserving witness with records exact off a **two-point** seam and
+**exact** Born — the transition crosses where the record regions kiss. Its price is the
+**Dirac calibration**: exactness holds at the calibrated ready point, and a positive-width
+ready region fattens the seam to order the calibration width. The honest classification is
+therefore a* **trilemma** *— each formalised horn pays exactly one of: seams (piecewise
+witness), ε-Born (smooth witness), Dirac calibration (null-seam witness), the last already
+priced by `collapse_accuracy_bound`. Whether a fourth combination is impossible is a
+recorded candidate sharpened no-go, not a claim.*) Digital
 electronics keeps continuous dynamics and engineers the `ε`: flip-flop *metastability* is an
 unresolved needle between the marks, its probability driven down exponentially with settling
 time — the classical twin of our no-go is Lamport's *Buridan's Principle* (1984), found by

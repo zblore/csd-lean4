@@ -159,6 +159,7 @@ public import CsdLean4.SigmaLayer.PovmDynamics
 public import CsdLean4.SigmaLayer.JoinClosure
 public import CsdLean4.SigmaLayer.MixedLuders
 public import CsdLean4.SigmaLayer.PointerSmoothProfile
+public import CsdLean4.SigmaLayer.NullSeamWitness
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9818,5 +9819,31 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.smoothRampedU_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothRampedU_schrodinger
+
+-- NullSeamWitness (2026-08-03, SigmaLayer/NullSeamWitness.lean; the "Cantor-horn" row, fourth
+-- external review — delivered, and SIMPLER than the devil's-staircase sketch: the transition
+-- between record regions dodges the record gap by crossing WHERE THE RECORD REGIONS KISS
+-- (m₁ = m₂ = ½), touching the complement at one projective point; the crossing angle sweeps
+-- continuously in the register, hitting π/4 exactly at the two cell boundaries.
+-- ★ nullSeam_seam_null — the seam is TWO POINTS (nullSeamSign = infDist-to-arc difference:
+-- negative exactly on the open first cell, positive exactly on the second, zero exactly at
+-- the boundaries). ★ nullSeam_born_left/right — EXACT Born (r and 1−r, no ε; closedBall
+-- sandwich + the two-point seam). ★★ continuous_nullSeamEvolve + Liouville preservation
+-- (skew product, FS unitary invariance). ★★ nullSeamClosure — THE THIRD HORN EXISTS.
+-- THE TRILEMMA: each horn pays exactly one of — seams (piecewise), ε-Born (smooth witness),
+-- Dirac calibration (this witness: exactness is at the calibrated ready point [f₀]; with a
+-- positive-width ready region the seam fattens to O(δ) — the price collapse_accuracy_bound
+-- already prices). Whether a fourth combination is impossible = recorded candidate no-go.
+/-- info: 'CSD.RecordLayer.nullSeam_seam_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeam_seam_null
+
+/-- info: 'CSD.RecordLayer.nullSeam_born_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeam_born_left
+
+/-- info: 'CSD.RecordLayer.continuous_nullSeamEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_nullSeamEvolve
+
+/-- info: 'CSD.RecordLayer.nullSeamClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamClosure
 
 end CSD.Tests.AxiomAudit
