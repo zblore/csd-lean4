@@ -31,7 +31,7 @@ exactly **one** projective point. Sweeping that crossing angle continuously in t
 register coordinate `θ` — crossing `π/4` exactly at the two cell-boundary points — gives:
 
 - ★★ `nullSeamClosure` — a **continuous** (`continuous_nullSeamEvolve`),
-  **Liouville-preserving** (`nullSeamEvolve_measurePreserving`) skew-unitary propagator
+  **measure-preserving** (`nullSeamEvolve_measurePreserving`) skew-unitary propagator
   on `S¹ × ℂℙ²` whose landing from the calibrated ready state is in the **correct record
   region for every `θ` off a two-point seam** (`nullSeam_landing_neg/pos`,
   `nullSeam_seam_null`), with **exact** Born weights `r` and `1 − r`
@@ -41,6 +41,16 @@ The seam profile is `nullSeamSign θ = infDist θ I₁ − infDist θ I₂` (the
 arcs): continuous, negative exactly on the open first cell, positive exactly on the open
 second, zero exactly at the two boundary points — circle-intrinsic, no fundamental-domain
 lift, no case analysis at the wrap point.
+
+⚠️ *Naming corrected 2026-08-03 (fifth external review, and the reviewer is right).* The
+invariant measure here was originally called `nullSeamMeasure`. **`S¹ × ℂℙ²` has real
+dimension 5 — odd — so it carries no symplectic structure and the word "Liouville" was
+unearned.** The measure (Haar ⊗ Fubini–Study) is genuinely invariant and every theorem below
+stands unchanged; only the name and the surrounding prose overclaimed. It is now
+`nullSeamMeasure`, and invariance is stated as measure-preservation. Earning the symplectic
+word means lifting the register `S¹` to the full `T²` and working on `T² × ℂℙ²` (even
+dimension) — recorded in `BACKLOG.md`, not done here. *(This is the corpus's second
+odd-dimension slip; the first is recorded in the fibred-Σ correction.)*
 
 ## The price — and the trilemma
 
@@ -673,7 +683,7 @@ theorem nullSeam_born_right (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1) :
     ENNReal.eq_sub_of_add_eq ENNReal.ofReal_ne_top htotal
   rw [hsolve, ← ENNReal.ofReal_one, ← ENNReal.ofReal_sub _ (by linarith : (0:ℝ) ≤ r)]
 
-/-! ### ★★ Continuity and Liouville preservation -/
+/-! ### ★★ Continuity and measure invariance -/
 
 /-- Entrywise continuity of the witness family over the register. -/
 lemma continuous_nullSeamMat_entry (r : ℝ) (a b : Fin 3) :
@@ -735,20 +745,21 @@ piecewise horn provably cannot have. -/
 theorem continuous_nullSeamEvolve (r : ℝ) : Continuous (nullSeamEvolve r) :=
   continuous_fst.prodMk (continuous_nullSeamEvolve_snd r)
 
-/-- The null-seam arena Liouville measure: Haar on the register, Fubini–Study on the
-pointer. -/
-noncomputable def nullSeamLiouville (q₀ : Pointer 2) : Measure (CircleFibre × Pointer 2) :=
+/-- The null-seam arena's invariant measure: Haar on the register, Fubini–Study on the
+pointer. **Not** called Liouville: `S¹ × ℂℙ²` is odd-dimensional, hence not symplectic
+(naming corrected 2026-08-03, fifth review). -/
+noncomputable def nullSeamMeasure (q₀ : Pointer 2) : Measure (CircleFibre × Pointer 2) :=
   (volume : Measure CircleFibre).prod (fubiniStudyMeasure q₀)
 
-instance (q₀ : Pointer 2) : IsProbabilityMeasure (nullSeamLiouville q₀) := by
-  unfold nullSeamLiouville
+instance (q₀ : Pointer 2) : IsProbabilityMeasure (nullSeamMeasure q₀) := by
+  unfold nullSeamMeasure
   infer_instance
 
-/-- ★★ **Liouville preservation** — a skew product: register conserved, every register
-slice acts by an FS-preserving unitary. -/
+/-- ★★ **Measure invariance** — a skew product: register conserved, every register slice
+acts by an FS-preserving unitary. -/
 theorem nullSeamEvolve_measurePreserving (r : ℝ) (q₀ : Pointer 2) :
-    MeasurePreserving (nullSeamEvolve r) (nullSeamLiouville q₀) (nullSeamLiouville q₀) := by
-  unfold nullSeamEvolve nullSeamLiouville
+    MeasurePreserving (nullSeamEvolve r) (nullSeamMeasure q₀) (nullSeamMeasure q₀) := by
+  unfold nullSeamEvolve nullSeamMeasure
   exact (MeasurePreserving.id (volume : Measure CircleFibre)).skew_product
     (continuous_nullSeamEvolve_snd r).measurable
     (Filter.Eventually.of_forall fun θ =>
@@ -756,15 +767,15 @@ theorem nullSeamEvolve_measurePreserving (r : ℝ) (q₀ : Pointer 2) :
 
 /-! ### ★★ The third horn, bundled -/
 
-/-- **The third horn**: continuous, Liouville-preserving dynamics whose records from the
+/-- **The third horn**: continuous, measure-preserving dynamics whose records from the
 calibrated ready state are exact and correct off a two-point seam, with exact Born
 weights. The price is the Dirac calibration — see the module docstring's trilemma. -/
 structure NullSeamClosure (r : ℝ) : Prop where
   /-- The propagator is continuous on the whole arena. -/
   continuity : Continuous (nullSeamEvolve r)
-  /-- Liouville preservation at every Fubini–Study base point. -/
-  liouville : ∀ q₀ : Pointer 2,
-    MeasurePreserving (nullSeamEvolve r) (nullSeamLiouville q₀) (nullSeamLiouville q₀)
+  /-- Measure invariance at every Fubini–Study base point. -/
+  invariant : ∀ q₀ : Pointer 2,
+    MeasurePreserving (nullSeamEvolve r) (nullSeamMeasure q₀) (nullSeamMeasure q₀)
   /-- Correct record in the open first cell — exactly. -/
   landing_left : ∀ θ, nullSeamSign r θ < 0 →
     (nullSeamEvolve r (θ, readyState)).2 ∈ recordRegion (K := 2) 0
@@ -785,7 +796,7 @@ structure NullSeamClosure (r : ℝ) : Prop where
 /-- ★★ **The third horn exists** — for every cell split `r ∈ (0, 1)`. -/
 theorem nullSeamClosure (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1) : NullSeamClosure r where
   continuity := continuous_nullSeamEvolve r
-  liouville := nullSeamEvolve_measurePreserving r
+  invariant := nullSeamEvolve_measurePreserving r
   landing_left := nullSeam_landing_neg r hr0 hr1
   landing_right := nullSeam_landing_pos r hr0 hr1
   seam_null := nullSeam_seam_null r hr0 hr1

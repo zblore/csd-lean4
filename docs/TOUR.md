@@ -109,6 +109,7 @@ preparation, and arbitrary Hermitian `H`:
 | The dynamical POVM Born rule; the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
 | `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
 | The third horn: continuous, null (two-point) seam, exact Born — at Dirac calibration | `nullSeamClosure`, `nullSeam_born_left` | `SigmaLayer/NullSeamWitness` |
+| The Kähler triple, pointwise (`g`, `ω`, `J`) — closedness `dω = 0` stays Mathlib-blocked | `fubiniStudy_pointwise_kahler_compatibility` | `Mathlib/Analysis/InnerProductSpace/KahlerForm` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |
@@ -171,7 +172,7 @@ Neither — and that is a settled framing (author decision, 2026-08-03), not an 
 dynamics on a connected state space, and every measuring science has met that constraint.
 (*Precision added 2026-08-03, fourth external review; the candidate third option was
 **exhibited the same day**: `nullSeamClosure` (`SigmaLayer/NullSeamWitness.lean`) is a
-continuous, Liouville-preserving witness with records exact off a **two-point** seam and
+continuous, measure-preserving witness with records exact off a **two-point** seam and
 **exact** Born — the transition crosses where the record regions kiss. Its price is the
 **Dirac calibration**: exactness holds at the calibrated ready point, and a positive-width
 ready region fattens the seam to order the calibration width. The honest classification is

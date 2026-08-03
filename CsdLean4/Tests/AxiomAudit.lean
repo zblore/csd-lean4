@@ -9829,7 +9829,9 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- negative exactly on the open first cell, positive exactly on the second, zero exactly at
 -- the boundaries). ★ nullSeam_born_left/right — EXACT Born (r and 1−r, no ε; closedBall
 -- sandwich + the two-point seam). ★★ continuous_nullSeamEvolve + Liouville preservation
--- (skew product, FS unitary invariance). ★★ nullSeamClosure — THE THIRD HORN EXISTS.
+-- (skew product, FS unitary invariance; the measure is NOT called Liouville — S¹ × ℂℙ² is
+-- odd-dimensional hence not symplectic, naming corrected 2026-08-03 by the fifth review).
+-- ★★ nullSeamClosure — THE THIRD HORN EXISTS.
 -- THE TRILEMMA: each horn pays exactly one of — seams (piecewise), ε-Born (smooth witness),
 -- Dirac calibration (this witness: exactness is at the calibrated ready point [f₀]; with a
 -- positive-width ready region the seam fattens to O(δ) — the price collapse_accuracy_bound

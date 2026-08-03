@@ -57,17 +57,21 @@ For every dimension, Hermitian generator, base point, and unit preparation:
   theorem — now a capstone field rather than a satellite*).
 
 ⚠️ **Honest scope.** The fields quantify over *different witnesses* — that is the
-two-horn framing (author decision 2026-08-03, `docs/TOUR.md` §"Which horn is the right
+multi-horn framing (author decision 2026-08-03, `docs/TOUR.md` §"Which horn is the right
 one?"), not an accident: exact **everywhere**-correlated records and continuous dynamics
 are jointly impossible (`no_everywhere_correlation`), so the capstone asserts each horn
-where it lives. It indexes the layer's closures; it does not claim one witness carries all
+where it lives. (Since that decision the fork has grown a third horn —
+`NullSeamWitness.lean` — making it a **trilemma**: seams, `ε`-Born, or Dirac calibration.
+This capstone indexes the first two; the third is stated on its own closure.) It indexes the layer's closures; it does not claim one witness carries all
 of them. The `generation` field is **fibrewise** Schrödinger — the joint-arena
 back-reacting flow is the recorded research row (`PointerGeneration.lean` honest-scope,
 fourth review). Mixed *preparations* landed separately (`MixedSwap.lean`), as did POVM /
 instrument dynamics (`PovmDynamics.lean`, 2026-08-03 — the "recorded extension" note that
-previously stood here is discharged); the outcome-conditioned mixed update remains open
-(`BACKLOG.md`). The `smooth` field is stated as `Nonempty` because `SmoothWitnessClosure`
-carries data (its protocol), keeping this capstone a `Prop`.
+previously stood here is discharged) and the outcome-conditioned mixed update
+(`MixedLuders.lean`, same day: `mixed_post_bayes`, `mixed_luders_followup` — *the stale
+"remains open" note that stood here is discharged, fifth review*). The `smooth` field is
+stated as `Nonempty` because `SmoothWitnessClosure` carries data (its protocol), keeping
+this capstone a `Prop`.
 
 ## References
 

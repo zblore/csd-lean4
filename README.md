@@ -3,7 +3,8 @@
 [![CI](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml)
 
 A Lean 4 / Mathlib formalisation of **Constraint-Surface Dynamics (CSD)** — a reconstruction
-of finite-dimensional quantum mechanics from a single deterministic ontic model.
+of finite-dimensional quantum mechanics from one deterministic ontic *surface* `Σ`, carrying a
+family of explicit volume-preserving witnesses.
 
 ## What this is, in plain terms
 
@@ -38,13 +39,16 @@ model, with no further axioms, the corpus derives:
   closure on one protocol (records, exclusivity, persistence, Liouville, coarse Born, and the
   ψ-dependent update together). The apparatus never destroys information: what looks like
   collapse is provably *relocation with storage*;
-- **measurement dynamics from both ends of a proven trade-off** — a machine-checked no-go
-  shows that continuity, exact records, and exact Born weights cannot all hold at once. The
-  corpus therefore holds both horns: exact-record witnesses that are provably not continuous
-  flows, and a *smooth* witness — a projective pointer whose propagator is continuous in time
-  and state and satisfies the Schrödinger equation with an explicit Hermitian coupling — whose
-  records and Born weights are exact up to a stated, tunable `ε` — the same fork every
-  measuring science meets, and neither horn is canonical (the tour has the comparison);
+- **measurement dynamics from every side of a proven trade-off** — a machine-checked no-go
+  shows that continuity and records that are exact **everywhere** cannot both hold. The corpus
+  holds three witness families, and each pays exactly one price — a **trilemma**: *seams*
+  (exact-record witnesses, provably not continuous flows); *`ε`-Born* (a smooth witness — a
+  projective pointer whose propagator is continuous in time and state and satisfies the
+  Schrödinger equation with an explicit Hermitian coupling — whose records and Born weights are
+  exact up to a stated, tunable `ε`); and *Dirac calibration* (a continuous witness with exact
+  Born and records exact off a two-point seam, at a point-calibrated ready state). No horn is
+  canonical, and whether a fourth combination is impossible is an open question, not a claim
+  (the tour has the comparison every measuring science meets);
 - **the standard quantum canon** — entanglement and Bell/CGLMP/GHZ non-locality with
   no-signalling, contextuality, uncertainty, mixed states, quantum information theory,
   cryptographic protocols, Shor's algorithm, and quantum thermodynamics through Landauer's
