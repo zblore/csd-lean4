@@ -149,6 +149,7 @@ public import CsdLean4.SigmaLayer.PointerProtocol
 public import CsdLean4.SigmaLayer.PointerBorn
 public import CsdLean4.SigmaLayer.PointerGeneration
 public import CsdLean4.SigmaLayer.LocalLuders
+public import CsdLean4.SigmaLayer.LocalBlockBridge
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9594,5 +9595,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.reduceA_localLuders_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_localLuders_mixture
+
+-- LocalBlockBridge (2026-08-03, SigmaLayer/LocalBlockBridge.lean; dynamical no-signalling
+-- brick 2). Under finProdFinEquiv, the block structure of a local B-measurement is the second
+-- projection (localBlock) and ★ the degenerate-Lüders block projector IS the local projector
+-- (toComposite_blockProj — a definitional identity, not an analogy), with isometric transport
+-- so block Born weights = local Born weights. ★★ reduceA_blockLuders_mixture — DYNAMICAL
+-- NO-SIGNALLING in the dynamics' own vocabulary: the Born-weighted mixture of A-marginals of
+-- the post-states the JOIN WITNESS delivers (BlockLudersObligation localBlock, inhabited by
+-- joinWitness_blockLuders; weights per degenerate_selector_born) equals the A-marginal of the
+-- preparation. Brick 3 (remaining): the measure-level ensemble integral + the eraser process.
+/-- info: 'CSD.RecordLayer.toComposite_blockProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.toComposite_blockProj
+
+/-- info: 'CSD.RecordLayer.norm_blockProj_localBlock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.norm_blockProj_localBlock
+
+/-- info: 'CSD.RecordLayer.reduceA_blockLuders_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_blockLuders_mixture
 
 end CSD.Tests.AxiomAudit
