@@ -32,6 +32,7 @@ All CSD-free (Category 1), Mathlib naming/docstring discipline, foundational-tri
 | `…/Projectivization/{TransitionProbability, WignerRigidity, Bargmann, PhaseRigidity, Unitary…}.lean` | Transition probabilities, Wigner rigidity chain, Bargmann invariant, `U(N)→PU(N)` kernel | staged pending the §13 pause decision |
 | `Analysis/Matrix/StoneC1.lean` | Finite-dimensional C¹ Stone theorem | `Mathlib.Analysis.Matrix` |
 | `Analysis/Matrix/DuhamelBound.lean` | `‖e^{tC}−e^{tA}‖ ≤ \|t\|‖C−A‖` for skew-Hermitian generators (integral-free) | ditto |
+| `Analysis/Matrix/L2OpNormEntry.lean` | `‖M a b‖ ≤ ‖M‖` (entry ≤ L2 operator norm) + `EuclideanSpace.norm_coord_le_norm` — the bridge from operator-norm estimates to entrywise (Pi-topology) continuity | `Mathlib.Analysis.CStarAlgebra.Matrix` (beside `entry_norm_bound_of_unitary`) |
 | `Analysis/Matrix/{OperatorConvex, OperatorConvexBridge}.lean` | Löwner operator-convexity predicate + rungs; the `CStarMatrix ↔ Matrix` CFC/order bridge | `Mathlib.Analysis.Matrix` (and an instance-hygiene issue upstream) |
 | `MeasureTheory/PiecewisePreserving.lean` | Measurability/measure-preservation by partition; `swapSlot` on `Measure.pi` | `Mathlib.MeasureTheory` |
 | `QuantumInfo/{Entropy, PartialTrace, Subadditivity, StrongSubadditivity, Channel, TraceDistance, Register, Helstrom}.lean` | von Neumann entropy (+ subadditivity, Araki–Lieb, conditional SSA), matrix partial trace, CPTP/Kraus/Stinespring, trace distance with DPI, n-qubit registers, Helstrom bound | a future `Mathlib.QuantumInfo` (none exists today) |

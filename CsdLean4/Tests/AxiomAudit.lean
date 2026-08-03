@@ -142,6 +142,7 @@ public import CsdLean4.SigmaLayer.JoinLuders
 public import CsdLean4.SigmaLayer.RotatedSwap
 public import CsdLean4.SigmaLayer.PointerArena
 public import CsdLean4.SigmaLayer.PointerRotation
+public import CsdLean4.SigmaLayer.PointerCoupling
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9405,5 +9406,33 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointerRotU_pi_div_two_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRotU_pi_div_two_ready
+
+-- PointerCoupling (2026-08-03, SigmaLayer/PointerCoupling.lean; pointer-witness-plan.md brick 2a,
+-- generator half). The selector-modulated coupling: couplingH w = Σⱼ wⱼ•hⱼ Hermitian for every
+-- real weight vector; couplingU w = exp((π/2)•(−i•couplingH w)) UNITARY (skew-Hermitian
+-- exponential; the hⱼ do NOT commute — genuine exp, no closed form). ★ pointerRot_eq_exp: the
+-- HAMILTONIAN-GENERATION IDENTIFICATION — brick 1's closed form IS exp(θ•(−i•hⱼ)), by ODE
+-- uniqueness (eq_exp_of_hasDeriv); brick 5's single-plane half, pulled forward because the
+-- landing theorem reads pure cells through couplingU_single = pointerRot (π/2) j. Entrywise
+-- Lipschitz continuity in the weights (continuous_couplingU_entry) via the Duhamel bound + the
+-- NEW staged entry bound Matrix.norm_entry_le_l2_opNorm (L2OpNormEntry.lean) — stated in the
+-- plain Pi topology, no scoped norm instances in the statement.
+/-- info: 'CSD.RecordLayer.couplingH_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.couplingH_isHermitian
+
+/-- info: 'CSD.RecordLayer.couplingU_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.couplingU_mem_unitaryGroup
+
+/-- info: 'CSD.RecordLayer.pointerRot_eq_exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRot_eq_exp
+
+/-- info: 'CSD.RecordLayer.couplingU_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.couplingU_single
+
+/-- info: 'CSD.RecordLayer.continuous_couplingU_entry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_couplingU_entry
+
+/-- info: 'Matrix.norm_entry_le_l2_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.norm_entry_le_l2_opNorm
 
 end CSD.Tests.AxiomAudit
