@@ -141,6 +141,7 @@ public import CsdLean4.SigmaLayer.JoinProtocol
 public import CsdLean4.SigmaLayer.JoinLuders
 public import CsdLean4.SigmaLayer.RotatedSwap
 public import CsdLean4.SigmaLayer.PointerArena
+public import CsdLean4.SigmaLayer.PointerRotation
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9378,5 +9379,31 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.arenaReady_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.arenaReady_pos
+
+-- PointerRotation (2026-08-03, SigmaLayer/PointerRotation.lean; pointer-witness-plan.md brick 1).
+-- The fixed-outcome pointer rotation: Hermitian generator h_j = |f0><f_{j+1}| + |f_{j+1}><f0|
+-- (pointerH_isHermitian), whose rotation family pointerRot θ j = 1 + (cosθ−1)•P_j − (i sinθ)•h_j
+-- is a CONTINUOUS ONE-PARAMETER UNITARY GROUP: group law (pointerRotU_add), unitarity via
+-- rotᴴ = rot(−θ), continuity (continuous_pointerRotU) — the properties shearEvolve provably
+-- lacks (shearEvolve_not_continuous). Quarter turn transports ready → record projectively
+-- (pointerRotU_pi_div_two_ready); FS measure preservation is unitary invariance
+-- (pointerRotU_measurePreserving). Honest scope: the exp(−iθh_j) identification is brick 5.
+/-- info: 'CSD.RecordLayer.pointerH_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerH_isHermitian
+
+/-- info: 'CSD.RecordLayer.pointerRot_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRot_mem_unitaryGroup
+
+/-- info: 'CSD.RecordLayer.pointerRotU_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRotU_add
+
+/-- info: 'CSD.RecordLayer.continuous_pointerRotU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_pointerRotU
+
+/-- info: 'CSD.RecordLayer.pointerRotU_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRotU_measurePreserving
+
+/-- info: 'CSD.RecordLayer.pointerRotU_pi_div_two_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRotU_pi_div_two_ready
 
 end CSD.Tests.AxiomAudit
