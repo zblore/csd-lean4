@@ -151,6 +151,7 @@ public import CsdLean4.SigmaLayer.PointerGeneration
 public import CsdLean4.SigmaLayer.LocalLuders
 public import CsdLean4.SigmaLayer.LocalBlockBridge
 public import CsdLean4.SigmaLayer.LocalLudersBasis
+public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9639,5 +9640,34 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.reduceA_localLudersOn_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_localLudersOn_mixture
+
+-- EraserDynamics (2026-08-03, Empirical/CSD/EraserDynamics.lean; dynamical no-signalling
+-- brick 3b — the eraser PROCESS). The two eraser arms are the corpus's local Lüders maps on
+-- the Bell path–marker state. MARK (computational marker): localProjB_bellE — the post-state
+-- IS the which-path product |j⟩⊗|j⟩; marked_no_fringe — screen rate 1/2 at EVERY phase (the
+-- fringe dies dynamically). ERASE (± marker, an instance of localProjOn at the genuine
+-- OrthonormalBasis pmBasis): ★ erased_amp — the dynamical post-state's screen amplitudes are
+-- EXACTLY √2·eraserOut, so every QuantumEraserVolume statistic is a statement about the state
+-- the measurement dynamics produces: erased_rate (conditional fringes), erased_dark (the
+-- exact dark-fringe zero, from the dynamics), erased_weight (marker weights 1/2 — the
+-- dynamical eraser_marker_marginal). With reduceA_localLudersOn_mixture: mark kills the
+-- fringe, erase restores it in the conditioned records, nothing reaches Alice's marginal.
+/-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.localProjB_bellE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.localProjB_bellE
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.marked_no_fringe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.marked_no_fringe
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.erased_amp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.erased_amp
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.erased_dark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.erased_dark
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.erased_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.erased_rate
+
+/-- info: 'CSD.Empirical.CSDBridge.EraserDynamics.erased_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserDynamics.erased_weight
 
 end CSD.Tests.AxiomAudit
