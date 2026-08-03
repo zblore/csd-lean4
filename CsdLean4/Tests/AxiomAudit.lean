@@ -143,6 +143,7 @@ public import CsdLean4.SigmaLayer.RotatedSwap
 public import CsdLean4.SigmaLayer.PointerArena
 public import CsdLean4.SigmaLayer.PointerRotation
 public import CsdLean4.SigmaLayer.PointerCoupling
+public import CsdLean4.SigmaLayer.PointerWeights
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9434,5 +9435,31 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'Matrix.norm_entry_le_l2_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.norm_entry_le_l2_opNorm
+
+-- PointerWeights (2026-08-03, SigmaLayer/PointerWeights.lean; pointer-witness-plan.md brick 2b).
+-- The selector-modulated weight field and the arena propagator. Weights are CIRCLE-INTRINSIC
+-- trapezoids clamp((r_j/2 − dist(θ₁, cellMid_j))/ε) with rates read at the base point
+-- (ContextField, no preparation) — so joint continuity is a composition, no lift, no seam.
+-- ★ continuous_pointerEvolve: THE FULL ARENA PROPAGATOR IS CONTINUOUS — the theorem
+-- shearEvolve_not_continuous proves no torus-register witness can have; proof descends through
+-- the open quotient id × mk' (IsOpenQuotientMap.prodMap) to entrywise-continuous matrix data.
+-- pointerEvolve_measurePreserving: Liouville preservation as a skew product (sector conserved,
+-- FS-preserving unitary on each pointer slice). pointerEvolve_pure: on shrunk cells the
+-- propagator IS the brick-1 quarter rotation (weights collapse to Pi.single) — the landing seed;
+-- the cell-geometry distance facts are brick 3's obligation.
+/-- info: 'CSD.RecordLayer.continuous_pointerWeights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_pointerWeights
+
+/-- info: 'CSD.RecordLayer.pointerWeights_eq_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerWeights_eq_single
+
+/-- info: 'CSD.RecordLayer.continuous_pointerEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_pointerEvolve
+
+/-- info: 'CSD.RecordLayer.pointerEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.pointerEvolve_pure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_pure
 
 end CSD.Tests.AxiomAudit
