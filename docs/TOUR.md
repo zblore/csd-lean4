@@ -45,7 +45,11 @@ preparation, and arbitrary Hermitian `H`:
   join witness supplying the post-states): the Born-weighted mixture of local marginals
   after a distant measurement equals the marginal before — the distant party's outcome
   *and basis choice* are invisible. **Mixed preparations** run through the same dynamics:
-  `mixedSwapPrep ρ (outcomeSector i) = Tr(ρ|eᵢ⟩⟨eᵢ|)` (`mixed_swap_sector_born`);
+  `mixedSwapPrep ρ (outcomeSector i) = Tr(ρ|eᵢ⟩⟨eᵢ|)` (`mixed_swap_sector_born`), and the
+  outcome-conditioned update is delivered too: the post-ensemble is the Bayes-posterior
+  mixture (`mixed_post_bayes`), and at rank one **the record erases the classical
+  ignorance** — follow-up statistics equal the pure Lüders update's
+  (`mixed_luders_followup`);
 - **the quantum eraser is a process, and records are irreversible**: the mark stroke
   produces which-path states with flat statistics at every phase (`marked_no_fringe`);
   the erase stroke on the *coherent* state produces exactly the conditioned fringe states
@@ -97,6 +101,7 @@ preparation, and arbitrary Hermitian `H`:
 | Dynamical no-signalling, every basis; local = block-degenerate | `reduceA_localLudersOn_mixture`, `toComposite_blockProj` | `SigmaLayer/LocalLudersBasis`, `LocalBlockBridge` |
 | The eraser as a process; statistical irreversibility of records | `erased_amp`, `erased_rate`, `sequential_no_revival` | `Empirical/CSD/EraserDynamics`, `EraserSequential` |
 | Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |
+| The outcome-conditioned mixed update: Bayes posterior + rank-one collapse of ignorance | `mixed_post_bayes`, `mixed_luders_followup` | `SigmaLayer/MixedLuders` |
 | The dynamical POVM Born rule; the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |

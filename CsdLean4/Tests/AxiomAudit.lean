@@ -157,6 +157,7 @@ public import CsdLean4.SigmaLayer.MeasurementCapstone
 public import CsdLean4.SigmaLayer.MixedSwap
 public import CsdLean4.SigmaLayer.PovmDynamics
 public import CsdLean4.SigmaLayer.JoinClosure
+public import CsdLean4.SigmaLayer.MixedLuders
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9769,5 +9770,28 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.degenerateMeasurementClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.degenerateMeasurementClosure
+
+-- MixedLuders (2026-08-03, SigmaLayer/MixedLuders.lean; the outcome-conditioned mixed update,
+-- MixedSwap's recorded extension + the fourth review's row). Spine: mixedSwapPrep FACTORS
+-- (mixedSwapPrep_eq_prod — the mixture lives on system-and-register, bank common), so the pure
+-- swap_luders_born (stated for arbitrary probability μ12) applies verbatim; positivity is a
+-- theorem (mixed_outcome_pos, from Tr(ρ|e_i⟩⟨e_i|) ≠ 0 through the spectral bridge).
+-- ★ mixed_post_bayes — the conditioned post-ensemble IS the Bayes-posterior mixture: component
+-- j carries λ_j·p_i|j / Tr(ρ|e_i⟩⟨e_i|) (prior × likelihood / evidence); engine = the newly
+-- staged ProbabilityTheory.cond_finsetSum (Bayes for finite mixtures, hypothesis-free by
+-- ℝ≥0∞ conventions).
+-- ★★ mixed_luders_followup — THE RECORD, NOT THE PEDIGREE, FIXES THE POST-STATE: follow-up
+-- statistics after outcome i on the mixture are c'.rate [e_i] — the pure rank-one Lüders
+-- update; at rank one the record erases the classical ignorance. ρ ↦ Π_iρΠ_i/Tr(ρΠ_i)
+-- dynamically. Degenerate-on-mixed = recorded extension (rides JoinClosure; posteriors do NOT
+-- coincide at rank ≥ 2 and no claim is made that they do).
+/-- info: 'ProbabilityTheory.cond_finsetSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.cond_finsetSum
+
+/-- info: 'CSD.RecordLayer.mixed_post_bayes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_post_bayes
+
+/-- info: 'CSD.RecordLayer.mixed_luders_followup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_luders_followup
 
 end CSD.Tests.AxiomAudit

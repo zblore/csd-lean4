@@ -14,24 +14,32 @@ public import Mathlib.MeasureTheory.Measure.WithDensity
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidates).
 
-Three small lemmas about `ProbabilityTheory.cond` that Mathlib does not currently provide:
+Four small lemmas about `ProbabilityTheory.cond` that Mathlib does not currently provide:
 
 - `cond_map` — conditioning commutes with pushforward:
   `cond (f_*μ) S = f_* (cond μ (f⁻¹S))`.
 - `cond_prod_prod` — conditioning a product measure on a product event conditions the
   factors independently.
 - `cond_eq_self` — conditioning a probability measure on a full-measure event does nothing.
+- `cond_finsetSum` — **Bayes for finite mixtures**: conditioning a finite mixture is the
+  posterior-weighted mixture of the conditionings,
+  `cond (∑ⱼ cⱼ•μⱼ) S = ∑ⱼ (cⱼ·μⱼ(S) / (∑ₖ cₖ•μₖ)(S)) • cond μⱼ S`. The degenerate cases
+  ride the `ℝ≥0∞` conventions: zero-mass components drop out of both sides, and a
+  zero-mass (or infinite-mass) mixture makes both sides the zero measure.
 
 ## Provenance
 
-Extracted 2026-08-02 from `CsdLean4/SigmaLayer/JoinLuders.lean` (where they were proved for
-the degenerate-Lüders conditioning bookkeeping); staged here for upstream. Naming and import
+`cond_map`/`cond_prod_prod`/`cond_eq_self` extracted 2026-08-02 from
+`CsdLean4/SigmaLayer/JoinLuders.lean` (the degenerate-Lüders conditioning bookkeeping);
+`cond_finsetSum` added 2026-08-03 for the outcome-conditioned mixed update
+(`CsdLean4/SigmaLayer/MixedLuders.lean`). Staged here for upstream. Naming and import
 discipline track Mathlib idiom; intended target `Mathlib.Probability.ConditionalProbability`.
 -/
 
 @[expose] public section
 
 open MeasureTheory
+open scoped ENNReal
 
 namespace ProbabilityTheory
 
@@ -69,5 +77,33 @@ theorem cond_eq_self (μ : Measure X) [IsProbabilityMeasure μ] {S : Set X}
   rw [hfull, inv_one, one_smul, Measure.restrict_eq_self_of_ae_mem]
   rw [MeasureTheory.ae_iff]
   exact h
+
+/-- **Bayes for finite mixtures**: conditioning a finite mixture of finite measures on an
+event is the posterior-weighted mixture of the conditioned components — the posterior of
+component `j` being its prior weight `cⱼ` times its likelihood `μⱼ S`, normalised by the
+mixture's total mass on `S`. Zero-mass components contribute zero to both sides, and a
+zero-mass mixture makes both sides the zero measure, so no positivity hypothesis is
+needed. -/
+theorem cond_finsetSum {ι : Type*} (s : Finset ι) (μ : ι → Measure X)
+    [∀ j, IsFiniteMeasure (μ j)] (c : ι → ℝ≥0∞) {S : Set X} (hS : MeasurableSet S) :
+    ProbabilityTheory.cond (∑ j ∈ s, c j • μ j) S
+      = ∑ j ∈ s, (c j * μ j S / (∑ k ∈ s, c k • μ k) S)
+          • ProbabilityTheory.cond (μ j) S := by
+  ext A hA
+  simp only [Measure.finsetSum_apply, Measure.smul_apply, smul_eq_mul,
+    ProbabilityTheory.cond_apply hS]
+  rw [Finset.mul_sum]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  by_cases hj : μ j S = 0
+  · have hm : μ j (S ∩ A) = 0 := measure_mono_null Set.inter_subset_left hj
+    simp [hj, hm]
+  · have hfin : μ j S ≠ ⊤ := measure_ne_top _ _
+    have hss : μ j S * (μ j S)⁻¹ = 1 := ENNReal.mul_inv_cancel hj hfin
+    rw [div_eq_mul_inv]
+    have hre : c j * μ j S * (∑ k ∈ s, c k * μ k S)⁻¹ * ((μ j S)⁻¹ * μ j (S ∩ A))
+        = c j * (μ j S * (μ j S)⁻¹) * ((∑ k ∈ s, c k * μ k S)⁻¹ * μ j (S ∩ A)) := by
+      ring
+    rw [hre, hss, mul_one]
+    ring
 
 end ProbabilityTheory
