@@ -153,6 +153,7 @@ public import CsdLean4.SigmaLayer.LocalBlockBridge
 public import CsdLean4.SigmaLayer.LocalLudersBasis
 public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
+public import CsdLean4.SigmaLayer.MeasurementCapstone
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9688,5 +9689,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.Empirical.CSDBridge.EraserSequential.sequential_no_revival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserSequential.sequential_no_revival
+
+-- MeasurementCapstone (2026-08-03, SigmaLayer/MeasurementCapstone.lean; the second review's
+-- step 4). ★★★ projectiveMeasurementCapstone — the corpus's four measurement closures as ONE
+-- Prop, for every Hermitian generator, base point, and unit preparation: rank_one
+-- (unifiedArenaClosure — one arena, one Liouville family), every_basis
+-- (measurement_covariance — the apparatus basis is a parameter, not preferred structure),
+-- degenerate (joinWitness_blockLuders — every block structure, ψ-dependent Lüders through
+-- Liouville-preserving dynamics), smooth (smoothWitnessClosureCanonical — the ε-horn at every
+-- ε, as Nonempty since the closure carries its protocol). The four fields quantify over
+-- different witnesses BY DESIGN: the two-horn framing (author decision 2026-08-03). New prose
+-- cites this one theorem; the constituent closures remain as the construction record.
+/-- info: 'CSD.RecordLayer.projectiveMeasurementCapstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.projectiveMeasurementCapstone
 
 end CSD.Tests.AxiomAudit
