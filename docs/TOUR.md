@@ -31,6 +31,16 @@ preparation, and arbitrary Hermitian `H`:
   trip is a theorem (`arena_round_trip`). The degenerate update runs on the companion
   projective-join witness; a single capstone bundling rank-one, all bases, and degenerate is a
   recorded open item.
+- **measurement dynamics has a smooth horn** (`smoothWitnessClosure`,
+  `SigmaLayer/PointerBorn.lean`): on the pointer arena `ℂℙ^{N-1} × T² × ℂℙ^N`, one witness
+  simultaneously carries a measurement protocol whose two-time law is the exponential group
+  property, a propagator **jointly continuous in time and state**
+  (`continuous_pointerRampedEvolve`), Liouville preservation, a positive-measure ready state
+  with no Dirac calibration posit, record creation with the ontic sector selecting the
+  outcome, structural persistence, and the Born sandwich
+  `rⱼ − 2ε ≤ sector ≤ rⱼ + 2(N−1)ε`. On the interaction window the propagator satisfies the
+  **Schrödinger equation** with the explicit Hermitian coupling `H_eff`
+  (`rampedU_schrodinger`) — the Hamiltonian-generation statement at the formalisable level.
 
 ## The results, by pillar
 
@@ -46,6 +56,8 @@ preparation, and arbitrary Hermitian `H`:
 | Degenerate Lüders (the projective join) | `joinWitness_blockLuders`, `join_block_luders`, `joinSwap_measurePreserving` | `SigmaLayer/JoinLuders`, `JoinArena` |
 | Unitary covariance of measurement | `measurement_covariance` | `SigmaLayer/RotatedSwap` |
 | One arena, one Liouville measure family (rank-one tier) | `unifiedArenaClosure`, `arena_round_trip` | `SigmaLayer/UnifiedArena` |
+| Smooth measurement dynamics: Schrödinger-generated, jointly continuous | `rampedU_schrodinger`, `continuous_pointerRampedEvolve` | `SigmaLayer/PointerGeneration`, `PointerProtocol` |
+| The ε-Born sandwich and the smooth-horn closure | `pointer_born_lower`/`pointer_born_upper`, `smoothWitnessClosure` | `SigmaLayer/PointerBorn` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |
@@ -84,19 +96,28 @@ load-bearing:
    obligation the no-go had closed off — from a fixed calibration.
 7. **Covariance** (`RotatedSwap`): all of it, in every orthonormal basis
    (`measurement_covariance`).
-8. **Classification** (`ShearDiscontinuity`, `PiecewiseHamiltonian`): what this witness's
-   dynamics provably is — a piecewise rigid **symplectic** translation with null seam set
-   (*not* globally Hamiltonian: the torus-flux correction of 2026-08-02). A genuinely
-   Hamiltonian continuous witness — the compact Kähler pointer `ℂℙ^K` — is the reopened row's
-   recommended route (`specs/BACKLOG.md`).
+8. **Classification** (`ShearDiscontinuity`, `PiecewiseHamiltonian`): what the exact-record
+   witness's dynamics provably is — a piecewise rigid **symplectic** translation with null
+   seam set (*not* globally Hamiltonian: the torus-flux correction of 2026-08-02). That
+   raised the question the final step answers.
+9. **The smooth horn** (`PointerArena` → `PointerGeneration`, eight modules): replace the
+   torus register with a projective pointer `ℂℙ^N`, and the seam-jumping readout with a
+   continuously modulated Hermitian coupling. The propagator becomes a ramped exponential —
+   jointly continuous in time and state, Liouville-preserving, Schrödinger-generated
+   (`rampedU_schrodinger`) — that lands ready states in the record regions with the ontic
+   sector selecting the outcome, at the price of a stated `ε` in records and Born
+   (`smoothWitnessClosure`). The trade-off forced by `no_everywhere_correlation` is now held
+   from **both ends**, each machine-checked: exact records with seams, or seamless dynamics
+   with `ε`.
 
 ## Three reading pathways, by reader
 
 **For the physicist** — what does CSD claim and what is actually proved?
 1. [`specs/CSD-CHARTER.md`](../specs/CSD-CHARTER.md) — the ontology and the anti-drift frame.
 2. [`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a — the A1–A7
-   audit. One row is genuinely open: A2's **Hamiltonian-generation** sub-question (reopened
-   2026-08-02 on the torus-flux correction; the `ℂℙ^K` pointer route is recorded).
+   audit. A2's **Hamiltonian-generation** sub-question — reopened 2026-08-02 on the
+   torus-flux correction — was closed 2026-08-03 by the smooth pointer witness, at the
+   formalisable level; §2a carries the full audit trail and the scoped residue.
 3. `CsdLean4/SigmaLayer/GlobalBasin.lean` — measurement partitions fixed by the apparatus.
 4. `CsdLean4/SigmaLayer/SwapLuders.lean` → `UnifiedArena.lean` → `JoinLuders.lean` — the
    measurement story above, in code.
@@ -123,11 +144,14 @@ load-bearing:
 
 ## Status and open work
 
-The A1–A7 reconstruction map has one genuinely open row — A2's Hamiltonian-generation
-sub-question, reopened 2026-08-02 with the compact-Kähler-pointer route recorded
-([`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a). The dynamical
-measurement layer is complete through degenerate Lüders and unitary covariance; its two
-recorded extensions are mixed preparations and POVM/instrument dynamics. The empirical suite
+The A1–A7 reconstruction map's last genuinely open row — A2's Hamiltonian-generation
+sub-question — was closed 2026-08-03 at the formalisable level by the smooth pointer witness
+([`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a; the
+symplectic/moment-map *reading* of the generator remains the same scoped prose boundary as
+A1/A3). The dynamical measurement layer is complete through degenerate Lüders, unitary
+covariance, and the smooth horn; its recorded extensions are mixed preparations,
+POVM/instrument dynamics, the smooth-witness Lüders composition, and the ε-Born frequency
+layer. The empirical suite
 covers every flagship test on both branches. Connectivity claims are governed by
 [`specs/connectivity-manifest.md`](../specs/connectivity-manifest.md) — nothing here may be
 read as stronger than a CONNECTED row there. Open work:

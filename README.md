@@ -26,6 +26,12 @@ model, with no further axioms, the corpus derives:
   rule) falls out as a pushforward of the dynamics rather than being postulated; the harder
   *degenerate* case is realised on a companion projective-join witness. The apparatus never destroys information: what looks like
   collapse is provably *relocation with storage*;
+- **measurement dynamics from both ends of a proven trade-off** — a machine-checked no-go
+  shows that continuity, exact records, and exact Born weights cannot all hold at once. The
+  corpus therefore holds both horns: exact-record witnesses that are provably not continuous
+  flows, and a *smooth* witness — a projective pointer whose propagator is continuous in time
+  and state and satisfies the Schrödinger equation with an explicit Hermitian coupling — whose
+  records and Born weights are exact up to a stated, tunable `ε`;
 - **the standard quantum canon** — entanglement and Bell/CGLMP/GHZ non-locality with
   no-signalling, contextuality, uncertainty, mixed states, quantum information theory,
   cryptographic protocols, Shor's algorithm, and quantum thermodynamics through Landauer's
@@ -44,10 +50,13 @@ The reconstruction is **conditional**: the sector itself is posited, never deriv
 substrate, projection, and typicality reading enter as hypotheses on the types, and the
 trials sample the ontic measure (see [`AXIOMS.md`](AXIOMS.md) §3 and the
 [connectivity manifest](specs/connectivity-manifest.md), which governs every end-to-end
-claim). The apparatus calibration is likewise a named posit, and the current measurement witness is a
-*piecewise rigid symplectic translation* — measure-preserving and machine-classified, but not
-a globally Hamiltonian flow (the torus-flux correction of 2026-08-02); building the genuinely
-Hamiltonian compact-pointer witness is the reopened row at the top of the backlog. "Kähler" names the standard geometric reading of the measures; no
+claim). The apparatus calibration of the exact-record witnesses is a named posit (the smooth witness
+needs none — its preparation conditions on a ready region of positive measure). Each
+measurement witness states what it gives up: the piecewise witnesses keep exact records but
+are provably not continuous flows (the torus-flux correction of 2026-08-02); the smooth
+pointer witness is Schrödinger-generated and continuous but carries records and Born only up
+to its stated `ε`. That split is a proven trade-off, not a defect of either construction.
+"Kähler" names the standard geometric reading of the measures; no
 symplectic manifold is constructed in Lean (Mathlib has no such API — see
 [`MATHLIB-GAPS.md`](MATHLIB-GAPS.md)). The full non-claims list opens
 [`docs/TOUR.md`](docs/TOUR.md).
@@ -97,6 +106,7 @@ of the above on every push.
 | `v0.7.0-dynamical-measurement` | The dynamical arc through rank-one Lüders |
 | `v1.0.0-finite-qm-closure` | The combining capstone (`CsdFiniteQMClosure`) |
 | `v1.0.1-luders-covariance` | Unified arena; degenerate Lüders closed on the join; the covariance law |
+| `v1.0.2-smooth-witness` | The compact Kähler pointer witness: Schrödinger-generated measurement dynamics, continuous in time and state, Born up to `ε` |
 
 Versioning proceeds in patch increments. The project develops in dated, review-driven
 increments; superseded documents are archived, not rewritten — the previous README lives at

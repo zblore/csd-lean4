@@ -54,6 +54,11 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
    round trip.
 8. `CsdLean4/SigmaLayer/{ShearDiscontinuity, PiecewiseHamiltonian}.lean` — what kind of
    dynamics this provably is.
+9. `CsdLean4/SigmaLayer/{PointerArena, PointerRotation, PointerCoupling, PointerWeights,
+   PointerLanding, PointerProtocol, PointerBorn, PointerGeneration}.lean` — the smooth horn:
+   a projective pointer, a Hermitian coupling, a Schrödinger-generated propagator continuous
+   in time and state, and Born up to a stated `ε` (`smoothWitnessClosure`,
+   `rampedU_schrodinger`).
 
 ## 4 · Entanglement & non-locality
 
