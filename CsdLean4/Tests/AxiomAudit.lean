@@ -150,6 +150,7 @@ public import CsdLean4.SigmaLayer.PointerBorn
 public import CsdLean4.SigmaLayer.PointerGeneration
 public import CsdLean4.SigmaLayer.LocalLuders
 public import CsdLean4.SigmaLayer.LocalBlockBridge
+public import CsdLean4.SigmaLayer.LocalLudersBasis
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9613,5 +9614,30 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.reduceA_blockLuders_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_blockLuders_mixture
+
+-- LocalLudersBasis (2026-08-03, SigmaLayer/LocalLudersBasis.lean; dynamical no-signalling
+-- brick 3a). The local Lüders map for an ARBITRARY orthonormal basis on the measured factor:
+-- localProjOn g j = 1_A (x) |g_j><g_j| in coordinate form; the computational case recovers
+-- localProjB exactly (localProjOn_basisFun). Identity resolution by basis expansion
+-- (sum_localProjOn), Born weights resolve the norm by Parseval per slice
+-- (sum_normSq_localProjOn), and ★★ reduceA_localLudersOn_mixture — MARGINAL INVARIANCE IN
+-- EVERY BASIS: Alice cannot detect Bob's outcome OR his basis choice; Parseval
+-- (sum_inner_mul_inner) does the work the ite-collapse did in brick 1. Brick 3b: the 2⊗2
+-- eraser instantiation (computational mark = which-path/no fringe; ± erase = eraserOut
+-- fringes + the exact dark zero).
+/-- info: 'CSD.RecordLayer.localProjOn_basisFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.localProjOn_basisFun
+
+/-- info: 'CSD.RecordLayer.sum_localProjOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.sum_localProjOn
+
+/-- info: 'CSD.RecordLayer.sum_normSq_localProjOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.sum_normSq_localProjOn
+
+/-- info: 'CSD.RecordLayer.traceRight_sum_vecOuter_localProjOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.traceRight_sum_vecOuter_localProjOn
+
+/-- info: 'CSD.RecordLayer.reduceA_localLudersOn_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_localLudersOn_mixture
 
 end CSD.Tests.AxiomAudit
