@@ -154,6 +154,7 @@ public import CsdLean4.SigmaLayer.LocalLudersBasis
 public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.SigmaLayer.MeasurementCapstone
+public import CsdLean4.SigmaLayer.MixedSwap
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9702,5 +9703,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- cites this one theorem; the constituent closures remain as the construction record.
 /-- info: 'CSD.RecordLayer.projectiveMeasurementCapstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.projectiveMeasurementCapstone
+
+-- MixedSwap (2026-08-03, SigmaLayer/MixedSwap.lean; the mixed-preparations row). A mixed
+-- preparation is two-stage sampling made a measure: mixedSwapPrep ρ = Σ_j λ_j • swapPrep [ψ_j]
+-- over the spectral ensemble (a probability measure by eigenvalues_isProbability).
+-- ★ mixed_swap_sector_born — THE MIXED DYNAMICAL BORN RULE: the mixture's mass on the
+-- measurement protocol's outcome sector is exactly Tr(ρ|e_i⟩⟨e_i|); same propagator, same
+-- sectors, classical ignorance responding as traceForm demands (spectral bridge
+-- spectral_born_eq_traceForm via swap_sector_born per eigenray + traceForm_eq_pureEnsemble +
+-- born_quadratic). Record creation/exclusivity/persistence are per-protocol facts, inherited
+-- verbatim; Bayes-conditioned mixture posts = recorded extension.
+/-- info: 'CSD.RecordLayer.spectral_born_eq_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.spectral_born_eq_traceForm
+
+/-- info: 'CSD.RecordLayer.mixed_swap_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_swap_sector_born
 
 end CSD.Tests.AxiomAudit
