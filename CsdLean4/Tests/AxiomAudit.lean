@@ -145,6 +145,7 @@ public import CsdLean4.SigmaLayer.PointerRotation
 public import CsdLean4.SigmaLayer.PointerCoupling
 public import CsdLean4.SigmaLayer.PointerWeights
 public import CsdLean4.SigmaLayer.PointerLanding
+public import CsdLean4.SigmaLayer.PointerProtocol
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9491,5 +9492,37 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.volume_shrunkCell_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.volume_shrunkCell_slice
+
+-- PointerProtocol (2026-08-03, SigmaLayer/PointerProtocol.lean; pointer-witness-plan.md brick 4a).
+-- The smooth witness in the standard record architecture: MeasurementProtocol on the pointer
+-- arena with evolve = ramped exponential of the selector-modulated coupling. The two-time law is
+-- THE GROUP PROPERTY of the exponential (couplingUAt_mul, exp_add_of_commute) — vs the swap's
+-- eight-case crossing proof; persistence is FREEZING (ramp constant after readout ⇒ identity ⇒
+-- PointerInvariantOn discharged outright); the correlation obligation is the landing theorem
+-- (pointerProtocol_correlatesOn, sectors = shrunk cell × ready). ★ Joint time–state continuity
+-- (continuous_pointerRampedEvolve, definitionally the protocol propagator): the two-sided
+-- Duhamel estimates (weights + angle: norm_couplingUAt_sub_time swaps the roles of time and
+-- generator) squeeze each entry (continuous_couplingUAt_entry_joint); the projective action by
+-- the generic open-quotient descent continuous_unitaryFamily_smul.
+/-- info: 'CSD.RecordLayer.couplingUAt_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.couplingUAt_mul
+
+/-- info: 'CSD.RecordLayer.norm_couplingUAt_sub_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.norm_couplingUAt_sub_time
+
+/-- info: 'CSD.RecordLayer.continuous_couplingUAt_entry_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_couplingUAt_entry_joint
+
+/-- info: 'CSD.RecordLayer.continuous_unitaryFamily_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_unitaryFamily_smul
+
+/-- info: 'CSD.RecordLayer.continuous_pointerRampedEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_pointerRampedEvolve
+
+/-- info: 'CSD.RecordLayer.pointerProtocol_correlatesOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerProtocol_correlatesOn
+
+/-- info: 'CSD.RecordLayer.pointerProtocol_pointerInvariantOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerProtocol_pointerInvariantOn
 
 end CSD.Tests.AxiomAudit
