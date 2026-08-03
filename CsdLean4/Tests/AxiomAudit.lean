@@ -144,6 +144,7 @@ public import CsdLean4.SigmaLayer.PointerArena
 public import CsdLean4.SigmaLayer.PointerRotation
 public import CsdLean4.SigmaLayer.PointerCoupling
 public import CsdLean4.SigmaLayer.PointerWeights
+public import CsdLean4.SigmaLayer.PointerLanding
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9461,5 +9462,34 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointerEvolve_pure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_pure
+
+-- PointerLanding (2026-08-03, SigmaLayer/PointerLanding.lean; pointer-witness-plan.md brick 3).
+-- The landing geometry. cellMid_dist_ge: distinct CDF-cell midpoints are ≥ (r_j+r_k)/2 apart on
+-- the circle (UnitAddCircle.norm_eq + round case analysis + the loSum interval ordering);
+-- shrunk_dist_other: triangle inequality discharges pointerEvolve_pure's second hypothesis — no
+-- per-cell inclusion geometry needed. momentMap_pointerRot_smul: m_{j+1}(U_j(π/2)•q) = m_0(q)
+-- EXACTLY, so the open ready region maps into the open record region with margin (δ ≤ 1/2).
+-- ★ pointer_landing: sector in the shrunk cell of j + pointer ready ⇒ the CONTINUOUS
+-- Liouville-preserving propagator lands in arenaRecord j — record creation with the ontic sector
+-- selecting the outcome. volume_shrunkCell_slice: the shrunk slice carries selector volume
+-- exactly r_j − 2ε (AddCircle.volume_closedBall) — the ε-Born seed; the 2ε deficit is the
+-- no_everywhere_correlation corridor, priced, never hidden.
+/-- info: 'CSD.RecordLayer.cellMid_dist_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.cellMid_dist_ge
+
+/-- info: 'CSD.RecordLayer.shrunk_dist_other' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.shrunk_dist_other
+
+/-- info: 'CSD.RecordLayer.momentMap_pointerRot_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.momentMap_pointerRot_smul
+
+/-- info: 'CSD.RecordLayer.pointer_landing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_landing
+
+/-- info: 'CSD.RecordLayer.measurableSet_shrunkCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.measurableSet_shrunkCell
+
+/-- info: 'CSD.RecordLayer.volume_shrunkCell_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.volume_shrunkCell_slice
 
 end CSD.Tests.AxiomAudit
