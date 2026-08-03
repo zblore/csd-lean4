@@ -76,9 +76,13 @@ preparation, and arbitrary Hermitian `H`:
   *Precision (2026-08-03, fourth external review): the generation is **fibrewise** — the
   joint-arena flow's register back-reaction is suppressed by design
   (`pointerEvolve_base_marginal_unchanged` is the fingerprint; `ι_Vω ≠ d𝓗` on the
-  ε-collars, genuinely Hamiltonian off them), and the weight/ramp ingredients are proved
-  `Continuous`, not `C^∞`. The accurate label is continuous fibrewise-Schrödinger witness;
-  see `PointerGeneration.lean`'s honest-scope block and the backlog rows.*
+  ε-collars, genuinely Hamiltonian off them), and the original trapezoid weight/ramp
+  ingredients are proved `Continuous`, not `C^∞` — *discharged same day at the ingredient
+  level*: `PointerSmoothProfile.lean` provides `Real.smoothTransition` profiles with the
+  identical plateau interface, a `C^∞` weight lift (`contDiff_smoothArcWeight_lift`), and
+  the Schrödinger equation at **every** time (`smoothRampedU_schrodinger`). The fibrewise
+  (not joint-arena Hamiltonian) character is unchanged; see `PointerGeneration.lean`'s
+  honest-scope block.*
 
 ## The results, by pillar
 
@@ -103,6 +107,7 @@ preparation, and arbitrary Hermitian `H`:
 | Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |
 | The outcome-conditioned mixed update: Bayes posterior + rank-one collapse of ignorance | `mixed_post_bayes`, `mixed_luders_followup` | `SigmaLayer/MixedLuders` |
 | The dynamical POVM Born rule; the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
+| `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |

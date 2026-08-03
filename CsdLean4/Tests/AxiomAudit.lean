@@ -158,6 +158,7 @@ public import CsdLean4.SigmaLayer.MixedSwap
 public import CsdLean4.SigmaLayer.PovmDynamics
 public import CsdLean4.SigmaLayer.JoinClosure
 public import CsdLean4.SigmaLayer.MixedLuders
+public import CsdLean4.SigmaLayer.PointerSmoothProfile
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9793,5 +9794,29 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.mixed_luders_followup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_luders_followup
+
+-- PointerSmoothProfile (2026-08-03, SigmaLayer/PointerSmoothProfile.lean; the C^∞-ingredients
+-- row, fourth external review's "continuous, not smooth"). Real.smoothTransition profiles with
+-- the plateau interface VERBATIM IDENTICAL to the trapezoids' (same statements, same
+-- hypotheses: =1 on the shrunk arc, =0 off the open arc, 0/π-halves around the stroke) — only
+-- the corridor's shape changed.
+-- contDiff_smoothClampDiv — the smooth clamp is C^∞ (what clampDiv could not be at its joins).
+-- ★ contDiff_smoothArcWeight_lift — the arc weight's 1-periodic lift is C^∞ on the universal
+-- cover: both circle-distance kinks fall inside plateaus (centre: 2ε < r; cut locus: r < 1),
+-- and the transition zone sees a locally affine distance (round locally constant strictly
+-- inside the half-integer window). The strongest formulation without a manifold structure on
+-- the arena (that stays §2a-scoped with A1/A3).
+-- ★ smoothRampedU_schrodinger — SCHRÖDINGER AT EVERY TIME: the smooth ramp removes the open-
+-- window restriction of rampedU_schrodinger (the corners are gone, as PointerGeneration's
+-- honest scope predicted); outside [0,1] the ODE reads U̇ = 0 — persistence as an ODE.
+-- Protocol re-instantiation = mechanical (identical interface), recorded.
+/-- info: 'CSD.RecordLayer.contDiff_smoothClampDiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.contDiff_smoothClampDiv
+
+/-- info: 'CSD.RecordLayer.contDiff_smoothArcWeight_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.contDiff_smoothArcWeight_lift
+
+/-- info: 'CSD.RecordLayer.smoothRampedU_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothRampedU_schrodinger
 
 end CSD.Tests.AxiomAudit

@@ -60,7 +60,8 @@ selector-dependent weights `w = w(x)` while keeping the base fixed makes the are
 would back-react on the register wherever the weights vary (`ι_Vω ≠ d𝓗` on the ε-collars;
 full accounting in `PointerGeneration.lean`'s honest-scope block). The weight functions
 here are Lipschitz (`clampDiv`/`min`/`max`), proved `Continuous`, not `C¹` at the joins;
-the `C^∞` upgrade via `Real.smoothTransition` is a recorded row (`BACKLOG.md`).
+the `C^∞` upgrade via `Real.smoothTransition` landed 2026-08-03
+(`PointerSmoothProfile.lean` — identical plateau interface, `C^∞` lift).
 
 ## References
 

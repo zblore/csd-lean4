@@ -39,9 +39,10 @@ stated as a theorem rather than left implicit.
 
 * The ODE holds on the **open** interaction window; at the ramp corners `t ∈ {0, 1}` the
   `C⁰` ramp is not differentiable (one-sided derivatives differ). A `C^∞` ramp variant
-  would move the corners' smoothing into the ramp with no structural change; recorded as a
-  presentational upgrade, not a gap — the propagator itself is continuous in time and state
-  everywhere (`continuous_pointerRampedEvolve`).
+  would move the corners' smoothing into the ramp with no structural change; ~~recorded as a
+  presentational upgrade~~ *delivered 2026-08-03: `PointerSmoothProfile.lean`'s
+  `smoothRampedU_schrodinger` — Schrödinger at every time, no window* — the propagator
+  itself is continuous in time and state everywhere (`continuous_pointerRampedEvolve`).
 * The **symplectic/moment-map reading** of "the flow of `H_eff` is the Hamiltonian flow of
   the FS moment map" remains prose: Mathlib has no symplectic-manifold API
   (`MATHLIB-GAPS.md`) — the *same* §2a-scoped boundary as A1/A3, but with no flux
@@ -63,7 +64,8 @@ stated as a theorem rather than left implicit.
   trapezoid) are Lipschitz and proved `Continuous`, not `C¹` at their joins — "smooth
   horn" names the ε-corridor architecture, not a `C^∞` claim. The `Real.smoothTransition`
   ingredient upgrade (plateaus cover the circle-distance kinks, so compositions stay
-  smooth) is a recorded `M` row.
+  smooth) *landed same day*: `PointerSmoothProfile.lean` — identical plateau interface,
+  `C^∞` weight lift, Schrödinger at every time.
 * **The Lüders composition is a recorded extension, not delivered here**: the smooth
   witness does not collapse (that is the no-collapse theorem above, a feature of its
   design); the ψ-dependent state update lives on the swap/join witnesses
