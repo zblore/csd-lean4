@@ -232,10 +232,15 @@ sub-question — was closed 2026-08-03 at the formalisable level by the smooth p
 ([`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a; the
 symplectic/moment-map *reading* of the generator remains the same scoped prose boundary as
 A1/A3). The dynamical measurement layer is complete through the capstone — rank-one, every basis,
-degenerate blocks, the smooth horn, mixed preparations, dynamical no-signalling, the
+the degenerate package on one protocol, the smooth horn and its Schrödinger generation,
+mixed preparations *and their outcome-conditioned update*, dynamical no-signalling, the
 eraser process with its irreversibility theorem, and POVM/instrument dynamics via Naimark
-dilation; its recorded extensions are the smooth-witness Lüders composition and the
-ε-Born frequency layer. The empirical suite
+dilation. Three witness families now populate the measurement **trilemma** (seams,
+`ε`-Born, Dirac calibration), and the transition profiles have `C^∞` variants with the
+plateau interface unchanged. Recorded extensions: the smooth-witness Lüders composition
+and the `ε`-Born frequency layer. Parked by author decision: the sharpened no-go that
+would make the trilemma provably exhaustive (`specs/BACKLOG.md` records why — the local
+version is tractable, the general one is research). The empirical suite
 covers every flagship test on both branches. Connectivity claims are governed by
 [`specs/connectivity-manifest.md`](../specs/connectivity-manifest.md) — nothing here may be
 read as stronger than a CONNECTED row there. Open work:

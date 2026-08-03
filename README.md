@@ -28,10 +28,15 @@ model, with no further axioms, the corpus derives:
   dynamics, no-signalling holding *dynamically* (a distant measurement — outcome or basis
   choice — cannot move the local marginal), and the quantum eraser realised as a process:
   erasure restores fringes only before a record exists, never after — and POVMs and
-  their instruments ride the same dynamics via Naimark dilation;
+  their instruments ride the same dynamics via Naimark dilation (Naimark-dilate, then run
+  the *existing* record protocol). Mixed preparations also update correctly on an outcome:
+  the conditioned ensemble is the Bayes posterior, and at rank one **the record, not the
+  pedigree, fixes the post-state**;
 - **wavefunction collapse as a theorem** — the post-measurement state update (the Lüders
   rule) falls out as a pushforward of the dynamics rather than being postulated; the harder
-  *degenerate* case is realised on a companion projective-join witness. The apparatus never destroys information: what looks like
+  *degenerate* case is realised on a companion projective-join witness, now packaged as one
+  closure on one protocol (records, exclusivity, persistence, Liouville, coarse Born, and the
+  ψ-dependent update together). The apparatus never destroys information: what looks like
   collapse is provably *relocation with storage*;
 - **measurement dynamics from both ends of a proven trade-off** — a machine-checked no-go
   shows that continuity, exact records, and exact Born weights cannot all hold at once. The
@@ -116,6 +121,7 @@ of the above on every push.
 | `v1.0.1-luders-covariance` | Unified arena; degenerate Lüders closed on the join; the covariance law |
 | `v1.0.2-smooth-witness` | The compact Kähler pointer witness: Schrödinger-generated measurement dynamics, continuous in time and state, Born up to `ε` |
 | `v1.0.3-measurement-capstone` | The projective-measurement capstone (four closures, one theorem); dynamical no-signalling in every basis; the eraser as a process with statistical irreversibility; mixed preparations |
+| `v1.0.5-trilemma` | POVM/instrument dynamics by Naimark dilation; the degenerate one-protocol package; the outcome-conditioned mixed update; `C^∞` transition profiles (Schrödinger at every time); and **the third measurement horn** — continuous, two-point seam, exact Born — turning the measurement fork into a **trilemma**: seams, `ε`-Born, or Dirac calibration |
 
 Versioning proceeds in patch increments. The project develops in dated, review-driven
 increments; superseded documents are archived, not rewritten — the previous README lives at
