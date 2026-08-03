@@ -50,6 +50,13 @@ preparation, and arbitrary Hermitian `H`:
   (`erased_amp` — the dynamical post-states are `√2·eraserOut`, dark zero included);
   and erasing **after** the mark record revives nothing (`sequential_no_revival`) —
   interference is recoverable only before a record exists;
+- **POVMs and instruments are dynamical too** (`povm_selector_born`, `povm_instrument`,
+  `naimarkInstrumentClosureCanonical`, `SigmaLayer/PovmDynamics.lean`): Naimark-dilate and
+  run the *existing* degenerate record protocol on the dilated arena — the ancilla block
+  structure IS `localBlock`, so no new dynamics or sectors are needed. Outcome sectors
+  carry `⟨ψ, Eᵢ ψ⟩` exactly, and the post-states the join witness delivers are the
+  Naimark–Lüders instrument posts `Πᵢ(Vψ)`. Every POVM, via the canonical dilation
+  (the instrument is dilation-relative — a POVM does not determine its instrument);
 - **measurement dynamics has a smooth horn** (`smoothWitnessClosure`,
   `SigmaLayer/PointerBorn.lean`): on the pointer arena `ℂℙ^{N-1} × T² × ℂℙ^N`, one witness
   simultaneously carries a measurement protocol whose two-time law is the exponential group
@@ -81,6 +88,7 @@ preparation, and arbitrary Hermitian `H`:
 | Dynamical no-signalling, every basis; local = block-degenerate | `reduceA_localLudersOn_mixture`, `toComposite_blockProj` | `SigmaLayer/LocalLudersBasis`, `LocalBlockBridge` |
 | The eraser as a process; statistical irreversibility of records | `erased_amp`, `erased_rate`, `sequential_no_revival` | `Empirical/CSD/EraserDynamics`, `EraserSequential` |
 | Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |
+| The dynamical POVM Born rule; the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
 | Entanglement / non-locality / no-signalling | `no_product_partition_realises_singlet`, CGLMP ∀`d`, GHZ ∀`n` | `LF6/…` |
@@ -191,10 +199,10 @@ sub-question — was closed 2026-08-03 at the formalisable level by the smooth p
 ([`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a; the
 symplectic/moment-map *reading* of the generator remains the same scoped prose boundary as
 A1/A3). The dynamical measurement layer is complete through the capstone — rank-one, every basis,
-degenerate blocks, the smooth horn, mixed preparations, dynamical no-signalling, and the
-eraser process with its irreversibility theorem; its recorded extensions are
-POVM/instrument dynamics, the smooth-witness Lüders composition, and the ε-Born frequency
-layer. The empirical suite
+degenerate blocks, the smooth horn, mixed preparations, dynamical no-signalling, the
+eraser process with its irreversibility theorem, and POVM/instrument dynamics via Naimark
+dilation; its recorded extensions are the smooth-witness Lüders composition and the
+ε-Born frequency layer. The empirical suite
 covers every flagship test on both branches. Connectivity claims are governed by
 [`specs/connectivity-manifest.md`](../specs/connectivity-manifest.md) — nothing here may be
 read as stronger than a CONNECTED row there. Open work:

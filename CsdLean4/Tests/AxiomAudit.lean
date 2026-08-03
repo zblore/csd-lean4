@@ -155,6 +155,7 @@ public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.SigmaLayer.MeasurementCapstone
 public import CsdLean4.SigmaLayer.MixedSwap
+public import CsdLean4.SigmaLayer.PovmDynamics
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9718,5 +9719,36 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.mixed_swap_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_swap_sector_born
+
+-- PovmDynamics (2026-08-03, SigmaLayer/PovmDynamics.lean; the POVM/instrument-dynamics row).
+-- A POVM is a projective measurement on a dilated space watched through an isometry — made
+-- DYNAMICAL: prepare the dilated ray [Vψ] on the flat index and run the EXISTING degenerate
+-- record protocol with the ancilla block structure localBlock N K (no new dynamics/sectors).
+-- ★ povm_selector_born — THE DYNAMICAL POVM BORN RULE: the block selector's outcome-i sector
+-- at [Vψ] carries exactly ⟨ψ, E_i ψ⟩ (degenerate_selector_born + born_transfer through the
+-- spectral bridge sum_block_normSq_dilate).
+-- ★ toComposite_blockProj_dilate — the record-layer block posts ARE the Naimark–Lüders posts
+-- Π_i(Vψ) under the index transport.
+-- ★★ povm_instrument — the join witness's post-marginals satisfy degenerate Lüders at the
+-- dilated preparation: outcome i relocates the dilated system to [Π_i(Vψ)], the instrument of
+-- the dilation (Liouville-preserving dynamics, not fiat).
+-- ★★ naimarkInstrumentClosure / …Canonical — the bundle for every dilation, and via
+-- canonicalNaimark for EVERY POVM. Honest scope: the instrument is dilation-relative (a POVM
+-- does not determine its instrument); realising V as a unitary-plus-ancilla stroke = recorded
+-- extension.
+/-- info: 'CSD.RecordLayer.povm_selector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.povm_selector_born
+
+/-- info: 'CSD.RecordLayer.toComposite_blockProj_dilate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.toComposite_blockProj_dilate
+
+/-- info: 'CSD.RecordLayer.povm_instrument' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.povm_instrument
+
+/-- info: 'CSD.RecordLayer.naimarkInstrumentClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.naimarkInstrumentClosure
+
+/-- info: 'CSD.RecordLayer.naimarkInstrumentClosureCanonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.naimarkInstrumentClosureCanonical
 
 end CSD.Tests.AxiomAudit

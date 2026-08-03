@@ -65,7 +65,9 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
     block-degenerate measurements, no-signalling holds dynamically in every basis, mixed
     preparations reproduce `Tr(ρE)`, the eraser runs as a process (with
     `sequential_no_revival` — records are statistically irreversible), and
-    `projectiveMeasurementCapstone` bundles the layer into one theorem.
+    `projectiveMeasurementCapstone` bundles the layer into one theorem. Then
+    `CsdLean4/SigmaLayer/PovmDynamics.lean` — POVMs and instruments by Naimark dilation
+    on the same machinery (`povm_selector_born`, `povm_instrument`).
 
 ## 4 · Entanglement & non-locality
 

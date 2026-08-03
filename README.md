@@ -26,7 +26,8 @@ model, with no further axioms, the corpus derives:
   blocks, and the smooth horn — with mixed preparations reproducing `Tr(ρE)` through the same
   dynamics, no-signalling holding *dynamically* (a distant measurement — outcome or basis
   choice — cannot move the local marginal), and the quantum eraser realised as a process:
-  erasure restores fringes only before a record exists, never after;
+  erasure restores fringes only before a record exists, never after — and POVMs and
+  their instruments ride the same dynamics via Naimark dilation;
 - **wavefunction collapse as a theorem** — the post-measurement state update (the Lüders
   rule) falls out as a pushforward of the dynamics rather than being postulated; the harder
   *degenerate* case is realised on a companion projective-join witness. The apparatus never destroys information: what looks like
