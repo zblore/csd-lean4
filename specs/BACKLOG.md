@@ -10,7 +10,7 @@
 > | **M–L** | Projective-measurement capstone | ONE bundle: rank-one + every basis + degenerate (currently `unifiedArenaClosure` + `RotatedSwapClosure` + the join witness, three closures) — the second review's step 4 |
 > | **M–L** | POVM / instrument dynamics | Naimark-dilate, then the swap witness on the dilated space |
 > | **M** (long elapsed) | Mathlib upstream batch 1 | Tracked row below; `MATHLIB-GAPS.md` |
-> | **L** | ★ **Compact Kähler pointer witness (`ℂℙ^K`)** | The REOPENED Hamiltonian row's route, **CONFIRMED (author decision 2026-08-03: retain the smooth-Hamiltonian architecture)** — a genuinely (globally) Hamiltonian, continuous record-creating propagator; kills the torus-flux obstruction; the second review's steps 1–3. Execution plan: [`pointer-witness-plan.md`](pointer-witness-plan.md) |
+> | **L** | ★ **Compact Kähler pointer witness (`ℂℙ^K`)** | The REOPENED Hamiltonian row's route, **CONFIRMED (author decision 2026-08-03: retain the smooth-Hamiltonian architecture)** — a genuinely (globally) Hamiltonian, continuous record-creating propagator; kills the torus-flux obstruction; the second review's steps 1–3. Execution plan: [`pointer-witness-plan.md`](pointer-witness-plan.md). **Brick 0 LANDED 2026-08-03** (`SigmaLayer/PointerArena.lean`, 5 pins — arena, open positive-measure ready/record regions, `arenaReady_pos`); bricks 1–5 remain |
 > | **L** | Shor-9 concatenation; Lindblad tier | QM-side QEC; open systems |
 > | **L** | Operator-convexity ladder → DPI → unconditional SSA | Gated on the `CStarMatrix` instance wall (`MATHLIB-GAPS.md`) |
 > | **L** (parked) | Wigner §13 normal form; Lévy concentration | Paused / Mathlib-gated; reopen only with cause |

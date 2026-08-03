@@ -140,6 +140,7 @@ public import CsdLean4.SigmaLayer.JoinArena
 public import CsdLean4.SigmaLayer.JoinProtocol
 public import CsdLean4.SigmaLayer.JoinLuders
 public import CsdLean4.SigmaLayer.RotatedSwap
+public import CsdLean4.SigmaLayer.PointerArena
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9355,5 +9356,27 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.LF4.blochProj_integral_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_integral_half
+
+-- PointerArena (2026-08-03, SigmaLayer/PointerArena.lean; pointer-witness-plan.md brick 0 — the
+-- smooth-Hamiltonian route's kinematic floor, architecture confirmed 2026-08-03). The compact
+-- Kähler pointer ℂℙ^K replacing the torus register (the flux correction's repair): open,
+-- disjoint, positive-FS-measure ready/record regions via the pointer moment map, and the arena
+-- KSigma N × ℂℙ^K with pointerLiouville = kMuL ⊗ μ_FS^ptr. Key structural fact: arenaReady_pos —
+-- a positive-measure apparatus-ready state EXISTS on this arena (contrast globalBasin_ae_total,
+-- where a.e. every point already carries a record). Kinematics only; the propagator is bricks 1–4.
+/-- info: 'CSD.RecordLayer.recordRegion_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.recordRegion_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.readyRegion_disjoint_recordRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.readyRegion_disjoint_recordRegion
+
+/-- info: 'CSD.RecordLayer.recordRegion_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.recordRegion_pos
+
+/-- info: 'CSD.RecordLayer.readyRegion_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.readyRegion_pos
+
+/-- info: 'CSD.RecordLayer.arenaReady_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.arenaReady_pos
 
 end CSD.Tests.AxiomAudit

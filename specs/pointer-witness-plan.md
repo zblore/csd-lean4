@@ -79,7 +79,7 @@ statement. The pointer witness extends that idiom to record creation.
 
 | Brick | Content | Effort |
 |---|---|---|
-| 0 | Arena + pointer definitions; `mⱼ` regularity; `Bⱼ` open/disjoint; ready region | S–M |
+| ~~0~~ | ~~Arena + pointer definitions; `mⱼ` regularity; `Bⱼ` open/disjoint; ready region~~ **DONE 2026-08-03** (`SigmaLayer/PointerArena.lean`, foundational-triple, 5 pins): `Pointer K = ℂℙ^K`, ready/record vertices via `vertexPoint`; `recordRegion`/`readyRegion` open + measurable + pairwise disjoint + positive FS measure (`fubiniStudyMeasure_pos_of_isOpen`); `PointerArena N K = KSigma N × ℂℙ^K`, `pointerLiouville` a probability measure; ★ `arenaReady_pos` — a positive-measure apparatus-ready state exists on this arena (contrast `globalBasin_ae_total`) | ~~S–M~~ S (one pass) |
 | 1 | Fixed-outcome rotation: `hⱼ` Hermitian, unitarity, `[f₀] ↦ [fⱼ]`, FS invariance, `t`-continuity | M |
 | 2 | Modulated coupling: `wⱼ` bumps, `H(p,θ)` Hermitian + jointly continuous, **full-propagator continuity** (the theorem the piecewise witness provably lacks — contrast `shearEvolve_not_continuous`), slice-wise measure preservation ⇒ product-measure preservation | M |
 | 3 | Landing theorem on shrunk cells; two-time law; persistence; `MeasurementProtocol` instance | M |
