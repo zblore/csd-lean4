@@ -147,6 +147,7 @@ public import CsdLean4.SigmaLayer.PointerWeights
 public import CsdLean4.SigmaLayer.PointerLanding
 public import CsdLean4.SigmaLayer.PointerProtocol
 public import CsdLean4.SigmaLayer.PointerBorn
+public import CsdLean4.SigmaLayer.PointerGeneration
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9553,5 +9554,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.smoothWitnessClosureCanonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothWitnessClosureCanonical
+
+-- PointerGeneration (2026-08-03, SigmaLayer/PointerGeneration.lean; pointer-witness-plan.md
+-- brick 5 -- COMPLETES THE LADDER). * rampedU_schrodinger: on the interaction window the ramped
+-- propagator satisfies the SCHRODINGER EQUATION U' = U*(-i*H_eff) with the explicit HERMITIAN
+-- generator H_eff = (pi/2) * couplingH w (pointerHeff_isHermitian) -- the Hamiltonian-generation
+-- statement at the formalisable level, with no flux obstruction (projective pointer, H^1 = 0);
+-- the symplectic/moment-map reading stays the A1/A3-scoped prose boundary (MATHLIB-GAPS).
+-- pointerEvolve_base_marginal_unchanged: the stroke leaves every sector marginal untouched --
+-- records WITHOUT back-reaction, the smooth counterpart of shear_base_marginal_unchanged;
+-- collapse stays on the swap/join witnesses, composition = the recorded M-L extension.
+/-- info: 'CSD.RecordLayer.pointerHeff_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerHeff_isHermitian
+
+/-- info: 'CSD.RecordLayer.rampedU_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.rampedU_schrodinger
+
+/-- info: 'CSD.RecordLayer.pointerEvolve_base_marginal_unchanged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_base_marginal_unchanged
 
 end CSD.Tests.AxiomAudit
