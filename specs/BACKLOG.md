@@ -6,7 +6,7 @@
 > |---|---|---|
 > | ~~S~~ | ~~Conditioning toolkit → staging; standard-basis lemma~~ | **DONE 2026-08-02** (`Mathlib/Probability/ConditionalProbability.lean`; `basisContext_basisFun_rate`) |
 > | **M** | Mixed preparations in the dynamical model | Spectral mixtures of `readyPrep`; the two-stage LLN pattern exists (`arena_mixed_born_frequency`) |
-> | **M–L** | **Dynamical no-signalling (A6 step 4) + the dynamical eraser process** | A *local* measurement on a composite IS a block-degenerate measurement; `joinWitness_blockLuders` + `reduceB` machinery is most of the route |
+> | **M–L** | **Dynamical no-signalling (A6 step 4) + the dynamical eraser process** | A *local* measurement on a composite IS a block-degenerate measurement; `joinWitness_blockLuders` + `reduceB` machinery is most of the route. **Brick 1 LANDED 2026-08-03** (`SigmaLayer/LocalLuders.lean`, 4 pins): the coordinate-form local projectors and ★★ `reduceA_localLuders_mixture` — the Born-weighted mixture of post-measurement `A`-marginals equals the pre-measurement `A`-marginal (the statics core, zero-weight branches honest). Brick 2 = the `Fin (nA·nB)` index bridge into `BlockLudersObligation`/the join witness (the dynamical realisation); brick 3 = the eraser process (mark, then erase, sequential) |
 > | **M–L** | Projective-measurement capstone | ONE bundle: rank-one + every basis + degenerate (currently `unifiedArenaClosure` + `RotatedSwapClosure` + the join witness, three closures) — the second review's step 4 |
 > | **M–L** | POVM / instrument dynamics | Naimark-dilate, then the swap witness on the dilated space |
 > | **M** (long elapsed) | Mathlib upstream batch 1 | Tracked row below; `MATHLIB-GAPS.md` |

@@ -148,6 +148,7 @@ public import CsdLean4.SigmaLayer.PointerLanding
 public import CsdLean4.SigmaLayer.PointerProtocol
 public import CsdLean4.SigmaLayer.PointerBorn
 public import CsdLean4.SigmaLayer.PointerGeneration
+public import CsdLean4.SigmaLayer.LocalLuders
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9572,5 +9573,26 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointerEvolve_base_marginal_unchanged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_base_marginal_unchanged
+
+-- LocalLuders (2026-08-03, SigmaLayer/LocalLuders.lean; dynamical no-signalling brick 1).
+-- A local B-measurement on the composite acts by the coordinate-form local projectors
+-- P_j = 1_A (x) |f_j><f_j| (localProjB): idempotent, identity-resolving (sum_localProjB),
+-- norm-resolving Born weights (sum_normSq_localProjB). ★★ reduceA_localLuders_mixture — THE
+-- STATICS CORE OF DYNAMICAL NO-SIGNALLING: the Born-weighted mixture of post-measurement
+-- A-marginals equals the pre-measurement A-marginal (zero-weight branches carry weight 0, no
+-- positivity smuggled). Unnormalised core traceRight_sum_vecOuter_localProjB: tracing out B
+-- collapses the Lüders sum entrywise. Brick 2 = wire to BlockLudersObligation through the
+-- Fin (nA·nB) index bridge; brick 3 = the eraser process (mark then erase, sequential).
+/-- info: 'CSD.RecordLayer.sum_localProjB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.sum_localProjB
+
+/-- info: 'CSD.RecordLayer.sum_normSq_localProjB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.sum_normSq_localProjB
+
+/-- info: 'CSD.RecordLayer.traceRight_sum_vecOuter_localProjB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.traceRight_sum_vecOuter_localProjB
+
+/-- info: 'CSD.RecordLayer.reduceA_localLuders_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_localLuders_mixture
 
 end CSD.Tests.AxiomAudit
