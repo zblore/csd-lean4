@@ -146,6 +146,7 @@ public import CsdLean4.SigmaLayer.PointerCoupling
 public import CsdLean4.SigmaLayer.PointerWeights
 public import CsdLean4.SigmaLayer.PointerLanding
 public import CsdLean4.SigmaLayer.PointerProtocol
+public import CsdLean4.SigmaLayer.PointerBorn
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9524,5 +9525,33 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointerProtocol_pointerInvariantOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerProtocol_pointerInvariantOn
+
+-- PointerBorn (2026-08-03, SigmaLayer/PointerBorn.lean; pointer-witness-plan.md brick 4b —
+-- closes brick 4). The ε-Born sandwich for the ready-CONDITIONED preparation
+-- pointerPrep = epistemicMeasure ⊗ FS[|ready] (legitimate: readyRegion_pos — NO Dirac
+-- calibration posit, unlike the swap): pointerPrep_sector_measure = r_j − 2ε EXACTLY (the
+-- brick-3 slice volume through the globalBasin_prob dirac-slice pattern);
+-- ★ pointer_born_lower (containment) and ★ pointer_born_upper — the upper bound needs NO cell
+-- geometry: disjoint sectors + the other N−1 lower bounds crowd out everything above
+-- r_j + 2(N−1)ε in a probability space. ★★ smoothWitnessClosure: ONE witness carrying protocol
+-- + joint time–state continuity + Liouville preservation + positive-measure ready state +
+-- record creation (sector-selected) + structural persistence + ε-Born; instantiated on the
+-- canonical moment-map context (smoothWitnessClosureCanonical). The smooth horn of the
+-- no_everywhere_correlation trade-off — complementing, never displacing, the exact-record
+-- piecewise closures.
+/-- info: 'CSD.RecordLayer.pointerPrep_sector_measure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerPrep_sector_measure
+
+/-- info: 'CSD.RecordLayer.pointer_born_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_born_lower
+
+/-- info: 'CSD.RecordLayer.pointer_born_upper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_born_upper
+
+/-- info: 'CSD.RecordLayer.smoothWitnessClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothWitnessClosure
+
+/-- info: 'CSD.RecordLayer.smoothWitnessClosureCanonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothWitnessClosureCanonical
 
 end CSD.Tests.AxiomAudit
