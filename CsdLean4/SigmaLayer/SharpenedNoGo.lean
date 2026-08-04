@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.SigmaLayer.PointerArena
+public import CsdLean4.SigmaLayer.MeasurementConstraints
 
 /-!
 # SigmaLayer/SharpenedNoGo: a positive-width ready region cannot hide the no-record set
@@ -40,15 +41,17 @@ corrected at its source; what stands is the qualitative statement above.
 
 Two further gaps, stated rather than papered over:
 
-* **The forcing step is a hypothesis, not a conclusion.** This module assumes some ready
-  state lands in `closure (interior R)`. Deriving *that* from "the propagator correlates
-  two outcomes" needs the connectedness argument of `no_everywhere_correlation` **plus** a
-  regularity condition on the no-record set (that it is the closure of its interior — true
-  for moment sublevel sets, not proved here). Until that is supplied, this is the
-  `_of_`-shaped half of the leg (`CONVENTIONS.md` §8.3).
-* Consequently the trilemma's third leg is **sharpened, not closed**: what is established
-  is the mechanism (open image ⇒ positive measure), not the full implication
-  "continuity + positive-width ready ⇒ no exact a.e. records".
+* ~~The forcing step is a hypothesis, not a conclusion.~~ **Closed in the same session**:
+  `exists_noRecord_of_meets_two` inverts `no_everywhere_correlation` — a correlating
+  propagator on a preconnected ready set *must* carry some state outside every record
+  region — and `posMeasure_noRecord_of_correlates` chains it to the measure bound. The
+  hypotheses now split by kind: everything about the **dynamics** is discharged, and what
+  remains is one assumption about the **record geometry**.
+* **The one remaining hypothesis is `hreg`**: the no-record set is contained in the closure
+  of its interior. This is true of the corpus's moment regions — a state with `m₁ = 1/2` is
+  approximated by states with both moments strictly below, obtained by moving toward the
+  ready vertex — but that perturbation is **not constructed here**, so the leg is closed
+  *modulo a geometric fact*, not closed outright.
 
 ## References
 
@@ -101,5 +104,59 @@ theorem posMeasure_noRecord_unitary {K : ℕ} (q₀ : Pointer K)
     (fun V hV hVne => LF4.fubiniStudyMeasure_pos_of_isOpen q₀ hV hVne)
     (IsOpenMap.of_inverse (continuous_const_smul U⁻¹) (fun q => by simp)
       (fun q => by simp)) (continuous_const_smul U) hA ha hUa
+
+/-! ### ★ The forcing step — no longer a hypothesis -/
+
+/-- ★ **A correlating propagator must pass through the no-record set.** The inverse of
+`no_everywhere_correlation`: rather than assuming the image is covered by two record
+regions and deriving `False`, conclude that it is **not** covered — some ready state lands
+outside both. Same connectedness argument, contrapositive shape. -/
+theorem exists_noRecord_of_meets_two
+    {X : Type*} [TopologicalSpace X] {Φ : X → X} (hcont : Continuous Φ)
+    {A : Set X} (hconn : IsPreconnected A)
+    {U V : Set X} (hU : IsOpen U) (hV : IsOpen V) (hUV : Disjoint U V)
+    (hmeetU : ∃ x ∈ A, Φ x ∈ U) (hmeetV : ∃ x ∈ A, Φ x ∈ V) :
+    ∃ x ∈ A, Φ x ∉ U ∪ V := by
+  by_contra hcon
+  have hall : ∀ x ∈ A, Φ x ∈ U ∪ V := by
+    intro x hx
+    by_contra hx2
+    exact hcon ⟨x, hx, hx2⟩
+  have himg : IsPreconnected (Φ '' A) := hconn.image Φ hcont.continuousOn
+  obtain ⟨xu, hxu, hxuU⟩ := hmeetU
+  obtain ⟨xv, hxv, hxvV⟩ := hmeetV
+  have hsub : Φ '' A ⊆ U ∪ V := by
+    rintro _ ⟨x, hx, rfl⟩
+    exact hall x hx
+  have hne : (Φ '' A ∩ U).Nonempty := ⟨Φ xu, ⟨xu, hxu, rfl⟩, hxuU⟩
+  have hin : Φ '' A ⊆ U := himg.subset_left_of_subset_union hU hV hUV hsub hne
+  exact (hUV.le_bot ⟨hin ⟨xv, hxv, rfl⟩, hxvV⟩ : Φ xv ∈ (⊥ : Set X))
+
+/-- ★★ **The trilemma's third leg, with only a geometric hypothesis left.** A continuous
+open-map propagator that correlates two outcomes on an **open preconnected** ready set
+gives the no-record set **positive measure** — provided the no-record set is *regular*
+(contained in the closure of its interior).
+
+The hypotheses now split cleanly by kind: everything about the *dynamics* is discharged
+(continuity, openness, correlation), and the single remaining assumption `hreg` is a
+property of the **record geometry** alone. For the corpus's moment regions
+`{m_{j+1} > 1/2}` the complement is a sublevel set of continuous moments and regularity
+holds — a point with `m₁ = 1/2` is approximated by points with both moments strictly
+below, obtained by moving toward the ready vertex — but that perturbation is not
+constructed here.
+
+This is why the Dirac calibration escapes: `hA : IsOpen A` fails for a point. -/
+theorem posMeasure_noRecord_of_correlates
+    {X : Type*} [TopologicalSpace X] [MeasurableSpace X] {μ : Measure X}
+    (hpos : ∀ W : Set X, IsOpen W → W.Nonempty → μ W ≠ 0)
+    {Φ : X → X} (hopen : IsOpenMap Φ) (hcont : Continuous Φ)
+    {A : Set X} (hA : IsOpen A) (hconn : IsPreconnected A)
+    {U V : Set X} (hU : IsOpen U) (hV : IsOpen V) (hUV : Disjoint U V)
+    (hreg : (U ∪ V)ᶜ ⊆ closure (interior ((U ∪ V)ᶜ)))
+    (hmeetU : ∃ x ∈ A, Φ x ∈ U) (hmeetV : ∃ x ∈ A, Φ x ∈ V) :
+    μ (A ∩ Φ ⁻¹' interior ((U ∪ V)ᶜ)) ≠ 0 := by
+  obtain ⟨x, hxA, hxOut⟩ :=
+    exists_noRecord_of_meets_two hcont hconn hU hV hUV hmeetU hmeetV
+  exact posMeasure_noRecord_of_isOpenMap hpos hopen hcont hA hxA (hreg hxOut)
 
 end CSD.RecordLayer

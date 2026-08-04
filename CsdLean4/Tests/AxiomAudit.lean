@@ -10011,4 +10011,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'CSD.RecordLayer.posMeasure_noRecord_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_unitary
 
+-- FORCING STEP CLOSED (same session): exists_noRecord_of_meets_two inverts
+-- no_everywhere_correlation -- instead of assuming the image is covered by two record
+-- regions and deriving False, conclude it is NOT covered, so a correlating propagator on a
+-- preconnected ready set MUST carry some state outside every record region.
+-- ★★ posMeasure_noRecord_of_correlates chains that to the measure bound. The hypotheses now
+-- split by KIND: everything about the DYNAMICS is discharged (continuity, open map,
+-- correlation), and the single remaining assumption is about the RECORD GEOMETRY -- that the
+-- no-record set is contained in the closure of its interior. True of the corpus's moment
+-- regions (perturb toward the ready vertex) but NOT constructed, so the leg is closed modulo
+-- a geometric fact rather than closed outright.
+/-- info: 'CSD.RecordLayer.exists_noRecord_of_meets_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.exists_noRecord_of_meets_two
+
+/-- info: 'CSD.RecordLayer.posMeasure_noRecord_of_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_of_correlates
+
 end CSD.Tests.AxiomAudit
