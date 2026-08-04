@@ -162,6 +162,7 @@ public import CsdLean4.SigmaLayer.PointerSmoothProfile
 public import CsdLean4.SigmaLayer.NullSeamWitness
 public import CsdLean4.SigmaLayer.JointFlowTransfer
 public import CsdLean4.SigmaLayer.ChartBracket
+public import CsdLean4.SigmaLayer.NullSeamLift
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9929,5 +9930,25 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
+
+-- NullSeamLift (2026-08-04, SigmaLayer/NullSeamLift.lean; BACKLOG B2). The third horn was
+-- built on S^1 x CP^2 -- real dimension 5, ODD, hence no symplectic structure, which is why
+-- its measure had to be renamed nullSeamMeasure. Giving the register its CONJUGATE coordinate
+-- makes the arena T^2 x CP^2, dimension 6. The construction is unchanged (the crossing still
+-- reads theta_1; theta_2 rides along untouched, as a conjugate variable does when the
+-- generator does not depend on it), so every transfer is a cylinder argument.
+-- ★★ nullSeamLiftClosure — the third horn on an even-dimensional arena; ★ born_left/right
+-- exact r and 1-r via Measure.prod_prod; seam still null (two points x T^1).
+-- EARNED: the parity obstruction is gone. NOT EARNED and not claimed: the symplectic FORM
+-- itself -- Mathlib has no symplectic API, so "this measure IS the Liouville volume of
+-- omega^3/3!" stays section-2a scoped (A4). Even dimension is necessary, not sufficient.
+/-- info: 'CSD.RecordLayer.nullSeamLiftClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamLiftClosure
+
+/-- info: 'CSD.RecordLayer.nullSeamLift_born_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamLift_born_left
+
+/-- info: 'CSD.RecordLayer.nullSeamEvolveLift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamEvolveLift_measurePreserving
 
 end CSD.Tests.AxiomAudit
