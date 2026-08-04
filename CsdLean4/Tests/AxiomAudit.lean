@@ -161,6 +161,7 @@ public import CsdLean4.SigmaLayer.MixedLuders
 public import CsdLean4.SigmaLayer.PointerSmoothProfile
 public import CsdLean4.SigmaLayer.NullSeamWitness
 public import CsdLean4.SigmaLayer.JointFlowTransfer
+public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9898,5 +9899,35 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.isJointLift_pointerEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.isJointLift_pointerEvolve
+
+-- ChartBracket (2026-08-04, SigmaLayer/ChartBracket.lean; BACKLOG A3 -- the formalisable
+-- fragment of the joint-arena Poisson argument). Stating {w_i,w_j}=0 on the ARENA needs
+-- omega^-1 dH, the one arrow Mathlib lacks. In a DARBOUX CHART it is a computation: the
+-- bracket is an explicit fderiv expression and the Hamiltonian field is the explicit
+-- swap-and-negate (no omega^-1 needed in canonical coordinates).
+-- ★ poissonBracket_eq_zero_of_disjoint — the FAITHFUL statement, and NOT the naive one:
+-- H = sum_j w_j(x) h_j(q) is NOT momentum-free (it depends on the pointer's momenta), so
+-- "both momentum-independent" would be false of H. What holds is DISJOINT SUPPORT: w is
+-- momentum-free and its position indices are disjoint from H's momentum indices -- which is
+-- exactly the product structure of the arena (base vs pointer).
+-- poissonBracket_comm_of_momentumIndep — the easy case {w_i,w_j}=0, no support hypothesis.
+-- ★ conserved_of_bracket_eq_zero / weight_conserved_of_disjoint — vanishing bracket implies
+-- constant along any integral curve of X_H: the conservation A2 needs, feeding A1's
+-- IsJointLift.weights_conserved.
+-- SCOPE: a chart MODEL. KSigma x CP^K is not globally R^{2n} and nothing here transports to
+-- the arena -- that transport IS the missing arrow (A4). d-omega = 0 is not stated because in
+-- a canonical chart it is automatic, which is precisely why this is weaker than the manifold
+-- statement.
+/-- info: 'CSD.SigmaLayer.poissonBracket_eq_zero_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.poissonBracket_eq_zero_of_disjoint
+
+/-- info: 'CSD.SigmaLayer.poissonBracket_comm_of_momentumIndep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.poissonBracket_comm_of_momentumIndep
+
+/-- info: 'CSD.SigmaLayer.conserved_of_bracket_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conserved_of_bracket_eq_zero
+
+/-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
 
 end CSD.Tests.AxiomAudit
