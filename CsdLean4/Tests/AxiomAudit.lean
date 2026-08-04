@@ -163,6 +163,7 @@ public import CsdLean4.SigmaLayer.NullSeamWitness
 public import CsdLean4.SigmaLayer.JointFlowTransfer
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.NullSeamLift
+public import CsdLean4.SigmaLayer.PointerFrequency
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9950,5 +9951,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.nullSeamEvolveLift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamEvolveLift_measurePreserving
+
+-- PointerFrequency (2026-08-04, SigmaLayer/PointerFrequency.lean; BACKLOG B3a). The smooth
+-- horn proved a SINGLE-SHOT sandwich but never said what an experimenter sees. The exact
+-- horns have had the frequency layer since LF1; the smooth horn did not.
+-- ★ pointer_born_frequency — i.i.d. trials of the smooth witness's preparation: the relative
+-- frequency of outcome j converges a.s., and the limit sits in the eps-window
+-- [r_j - 2eps, r_j + 2(N-1)eps] (pointerSectorProb_mem_window carries the ENNReal sandwich
+-- across toReal, safe because pointerPrep is a probability measure).
+-- Nothing new was needed: LF1's freq_tendsto_of_iid is already generic over (measurable
+-- space, probability measure, measurable event) and the smooth witness supplies all three.
+-- SCOPE: the limit is BRACKETED, not pinned -- the eps-horn's price; and eps -> 0 sharpens
+-- the window only ACROSS witnesses, since each eps is a different propagator.
+/-- info: 'CSD.RecordLayer.pointer_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_born_frequency
+
+/-- info: 'CSD.RecordLayer.pointerSectorProb_mem_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerSectorProb_mem_window
 
 end CSD.Tests.AxiomAudit
