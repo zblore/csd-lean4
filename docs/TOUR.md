@@ -109,6 +109,7 @@ preparation, and arbitrary Hermitian `H`:
 | The outcome-conditioned mixed update: Bayes posterior + rank-one collapse of ignorance | `mixed_post_bayes`, `mixed_luders_followup` | `SigmaLayer/MixedLuders` |
 | The POVM Born rule (selector level); the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
 | `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time — with the *time-dependent* generator `smoothTransition′(t)·H_eff` | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
+| ★★ Back-reaction is harmless: a joint lift's record preimages are the SAME SET as the fibrewise witness's | `IsJointLift.outcomeSector_eq`, `jointFlowTransfer` | `SigmaLayer/JointFlowTransfer` |
 | The third horn: continuous, null (two-point) seam, exact Born (of a free cell-split parameter — the module has no preparation or moment map) — at Dirac calibration | `nullSeamClosure`, `nullSeam_born_left` | `SigmaLayer/NullSeamWitness` |
 | The Kähler triple, pointwise (`g`, `ω`, `J`) — closedness `dω = 0` stays Mathlib-blocked | `fubiniStudy_pointwise_kahler_compatibility` | `Mathlib/Analysis/InnerProductSpace/KahlerForm` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
