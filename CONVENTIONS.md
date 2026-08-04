@@ -204,6 +204,41 @@ theorem bornFromVolume (S : SectorData) : bornFromVolume_statement S := …
 
 This is a direct upgrade for [`specs/BRIDGE-OBLIGATIONS.md`](specs/BRIDGE-OBLIGATIONS.md): obligations stop being prose in markdown and become **explicit `_of_` hypotheses in code**. Discharging an obligation becomes the visible act of *removing a hypothesis from the final theorem* — machine-checked, and unconditionality is legible at a glance. New bridge results should be shaped this way; the existing prose ledger is migrated opportunistically (not a mass refactor of tagged, axiom-audited layers).
 
+### 8.3a Names are claims: describe the construction, not the interpretation — *policy + ENFORCED 2026-08-04*
+
+Lean checks that a proof establishes its statement. **Nothing** checks that a *name* is
+honest about what its object is. Every defect the fourth and fifth external reviews found
+lived in that gap, and one was a genuine error: `nullSeamLiouville` named a measure on
+`S¹ × ℂℙ²` — real dimension 5, **odd**, hence not symplectic, so "Liouville" asserted
+structure the space cannot carry. The theorems were all true; the identifier was the lie.
+
+Rule: if a word carries mathematical content — *Liouville, symplectic, Kähler, Hamiltonian,
+smooth, canonical, unique, complete, exhaustive* — then either
+
+1. **make it a `Prop`** and discharge it (the corpus already does this: `IsFubiniStudyKahler`,
+   `IsForcedKahlerVolume`, `BlockLudersObligation`), or
+2. **name the object after its construction**, so the identifier states a fact rather than an
+   interpretation: `nullSeamMeasure`, not `nullSeamLiouville`.
+
+Enforced by `scripts/check-claims.sh` check (7): every declaration whose name contains
+Liouville / symplectic / Kähler must be listed in `DECLARED_SYMPLECTIC_VOCAB` with its
+arena's **dimension parity** recorded (symplectic ⇒ even). A new such name fails the guard,
+which forces the parity question to be answered consciously rather than assumed.
+
+**Parity is a reflex, not a lint.** This was the corpus's *second* odd-dimension slip — the
+first was the fibred-Σ row, mislabelled "Mathlib-gated" when `ℂℙⁿ⁻¹ × AddCircle 1` is simply
+odd-dimensional and admits no symplectic form at all. Before writing any of those words:
+compute the real dimension and check it is even.
+
+Companion, check (8): honest-scope phrases ("remains open", "recorded extension", "not
+claimed here") are inventoried per file. They are *good* — they are how a module states its
+boundary — so the inventory is not a budget to drive to zero. It exists because
+`MeasurementCapstone.lean` still said the conditioned mixed update "remains open" hours
+after `MixedLuders.lean` closed it. The guard fires when such a claim is added or removed;
+it **cannot** see a claim that stays put while the fact beneath it changes. Discharging a
+`BACKLOG.md` row therefore carries a mechanical companion step: re-read the sites check (8)
+prints.
+
 ### 8.4 File header and build hygiene — *mixed*
 
 Standard file opening (adapted to this project — copyright and authors are ours, not QuAIR's):

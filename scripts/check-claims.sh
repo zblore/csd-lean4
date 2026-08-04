@@ -28,11 +28,42 @@
 #       cites weak evidence ON THE SAME LINE. A bare "the goal is met", with nothing
 #       weak beside it, is invisible to it; two such lines in reconstruction-status.md
 #       had to be found by reading. This check narrows the surface; it does not close it.
+#       Checks (7) and (8) below were added to attack exactly that residue.
+#   (7) SYMPLECTIC-VOCABULARY INVENTORY: every declaration whose NAME contains a
+#       load-bearing geometric word (Liouville / symplectic / Kähler) must appear in
+#       the declared inventory, each entry carrying the arena and its DIMENSION PARITY.
+#       Added 2026-08-04 after the fifth external review found `nullSeamLiouville` on
+#       S^1 x CP^2 — real dimension 5, ODD, hence not symplectic, so "Liouville" was
+#       unearned. The name was a claim in an identifier, where nothing could check it.
+#       This is the corpus's SECOND odd-dimension slip (the fibred-Σ mislabel was the
+#       first), which is why it gets a guard rather than a resolution to be careful.
+#       Set equality, so a NEW such name fails loudly and forces a conscious parity
+#       justification; renaming to a construction-describing name (nullSeamMeasure)
+#       is the other way to pass.
+#   (8) OPEN-SCOPE INVENTORY: per-file counts of the honest-scope phrases ("remains
+#       open", "recorded extension", "not claimed here"). Added 2026-08-04, same
+#       review: MeasurementCapstone.lean still said the conditioned mixed update
+#       "remains open" hours after MixedLuders.lean closed it.
+#
+#       KNOWN LIMIT — this fires when such a claim is ADDED or REMOVED, not when the
+#       underlying fact changes underneath a claim that stays put. It cannot detect
+#       the stale note by itself; what it does is make the inventory visible and
+#       diffable, so discharging a BACKLOG row has a mechanical companion step:
+#       re-read the sites this check prints. Converting "remember to sweep" into
+#       "read this list" is the whole of the improvement — do not oversell it.
 #
 # Scope: the core QM library. (The ecdsa.fail / ECDLP track was extracted to its own
 # repository 2026-07-20 and is no longer present here.)
 #
-# Usage:  bash scripts/check-claims.sh   (grep/awk only, no Lean build; seconds)
+# Usage:  bash scripts/check-claims.sh   (grep/awk only, no Lean build)
+#
+# PERFORMANCE — this header said "seconds" for a year; measured 2026-08-04 on
+# Windows/git-bash it was 6m51s (user 1m05, sys 7m35: almost pure process-spawn
+# cost, ~2500 forks from the per-file `while read` loops in checks (1) and (2)).
+# "Seconds" was a Linux-CI figure that never held on the author's machine, which is
+# why a guard advertised as pre-commit-cheap was in practice only ever run inside
+# the long gate chain. Checks (1) and (2) now batch through xargs with a raw-grep
+# fast path, and the newer checks (7)/(8) batch by construction.
 
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -172,13 +203,75 @@ strip_comments() {
 
 srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null; }
 
+# --------------------------------------------- SYMPLECTIC-VOCABULARY INVENTORY --
+# Declarations whose NAME asserts geometric content. Each MUST record the arena and
+# its real-dimension parity: symplectic/Kähler/Liouville require EVEN dimension.
+# Adding a name here is a claim; if you cannot fill in the parity line, rename the
+# declaration after its construction instead (e.g. `…Measure`, not `…Liouville`).
+DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
+IsForcedKahlerVolume
+IsFubiniStudyKahler
+kahlerConstraintDynamics
+KahlerOnticSetup
+kahlerProjectiveSector
+ofKählerPreparation
+ofKählerPreparationFlow
+pointerLiouville
+trivialKahlerOnticSetup"
+#
+# PARITY LEDGER (why each name is earned):
+#   arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), all even factors. EVEN.
+#   pointerLiouville        — PointerArena: CP^{N-1} x T^2 x CP^K, dim 2(N-1)+2+2K.  EVEN.
+#   IsFubiniStudyKahler     — pointwise Kähler compatibility on a complex inner-product
+#                             space (KahlerForm.lean); complex ⇒ even by construction.
+#   IsForcedKahlerVolume    — the FS volume claim on CP^{N-1}: dim 2(N-1).           EVEN.
+#   kahlerProjectiveSector / KahlerOnticSetup / kahlerConstraintDynamics /
+#   trivialKahlerOnticSetup / ofKählerPreparation(Flow)
+#                           — all on CP^{N-1} (x T^2) sectors: even factors only.    EVEN.
+# REJECTED 2026-08-04: `nullSeamLiouville` on S^1 x CP^2 — dim 1 + 4 = 5, ODD. Renamed
+# `nullSeamMeasure`; the T^2 x CP^2 lift that would earn the word is a BACKLOG row.
+
+# ------------------------------------------------------- OPEN-SCOPE INVENTORY --
+# Per-file counts of honest-scope phrases. These are GOOD — they are how a module
+# states its boundary — so this is not a budget to drive to zero; it is a diffable
+# ledger so that a boundary claim cannot go stale unnoticed when the work lands.
+DECLARED_OPEN_SCOPE="CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
+CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean:1
+CsdLean4/LF4/PhaseLift.lean:1
+CsdLean4/LF4/TypicalityForcing.lean:1
+CsdLean4/SigmaLayer/ApproxProjectability.lean:1
+CsdLean4/SigmaLayer/DegenerateLuders.lean:1
+CsdLean4/SigmaLayer/FiniteQMClosure.lean:1
+CsdLean4/SigmaLayer/MeasurementCapstone.lean:2
+CsdLean4/SigmaLayer/MixedLuders.lean:1
+CsdLean4/SigmaLayer/MixedSwap.lean:1
+CsdLean4/SigmaLayer/PointerBorn.lean:1
+CsdLean4/SigmaLayer/PointerGeneration.lean:2
+CsdLean4/SigmaLayer/PovmDynamics.lean:1
+CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
+CsdLean4/SigmaLayer/ShearDiscontinuity.lean:1
+CsdLean4/Tests/AxiomAudit.lean:4"
+
+OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
+
 echo "check-claims: verifying code against the canonical claims block…"
 
 # (1) axiom set
-found_ax="$(srcfiles | while read -r f; do
-    strip_comments "$f" | grep -oE '^axiom[[:space:]]+[A-Za-z_][A-Za-z0-9_'\'']*' \
-      | awk '{print $2}'
-  done | sort -u)"
+# Fast path: a raw batched grep for `^axiom` is a strict SUPERSET of the
+# comment-stripped result (stripping can only remove matches, never add one), so
+# when it finds nothing the answer is provably empty and no per-file awk is needed.
+# Only candidate files pay the strip_comments cost.
+ax_candidates="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -lE '^axiom[[:space:]]' 2>/dev/null || true)"
+if [ -z "$ax_candidates" ]; then
+  found_ax=""
+else
+  found_ax="$(printf '%s\n' "$ax_candidates" | while read -r f; do
+      [ -n "$f" ] || continue
+      strip_comments "$f" | grep -oE '^axiom[[:space:]]+[A-Za-z_][A-Za-z0-9_'\'']*' \
+        | awk '{print $2}'
+    done | sort -u)"
+fi
 decl_ax="$(printf '%s\n' "$DECLARED_AXIOMS" | grep -v '^[[:space:]]*$' | sort -u)"
 if [ "$found_ax" = "$decl_ax" ]; then
   if [ -z "$found_ax" ]; then
@@ -191,10 +284,10 @@ else
 fi
 
 # (2) := True placeholder inventory
-found_ph="$(srcfiles | while read -r f; do
-    grep -nE '[A-Za-z_][A-Za-z0-9_]*[[:space:]]*:=[[:space:]]*True([[:space:]]|$)' "$f" \
-      | sed -E "s|^[0-9]+:[[:space:]]*([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*:=.*|$f:\1|"
-  done | sort -u)"
+found_ph="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -nE '[A-Za-z_][A-Za-z0-9_]*[[:space:]]*:=[[:space:]]*True([[:space:]]|$)' 2>/dev/null \
+  | sed -E 's|^([^:]+):[0-9]+:[[:space:]]*([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*:=.*|\1:\2|' \
+  | sort -u)"
 decl_ph="$(printf '%s\n' "$DECLARED_PLACEHOLDERS" | grep -v '^[[:space:]]*$' | sort -u)"
 if [ "$found_ph" = "$decl_ph" ]; then
   if [ -z "$found_ph" ]; then
@@ -281,6 +374,36 @@ for doc in "${EPISTEMIC_DOCS[@]}"; do
   done
 done
 [ "$epi_fail" -eq 0 ] && say_ok "no epistemic overclaims (settled-claim words all cite proofs, not numerics/conjecture)" || true
+
+# (7) symplectic-vocabulary inventory + parity discipline
+# NOTE: batched through xargs, one grep per BATCH not per file. The per-file
+# `while read` idiom used by checks (1)-(2) costs ~500 process spawns each, which is
+# cheap on Linux CI and expensive enough on Windows to push this script past a
+# five-minute timeout once two more passes were added (measured 2026-08-04).
+found_vocab="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -hoE "^(noncomputable )?(def|abbrev|structure) [A-Za-z0-9_']*([Ll]iouville|[Ss]ymplectic|[Kk]ahler|Kähler)[A-Za-z0-9_']*" 2>/dev/null \
+  | awk '{print $NF}' | sort -u)"
+decl_vocab="$(printf '%s\n' "$DECLARED_SYMPLECTIC_VOCAB" | grep -v '^[[:space:]]*$' | sort -u)"
+if [ "$found_vocab" = "$decl_vocab" ]; then
+  say_ok "symplectic-vocabulary names == declared inventory ($(printf '%s\n' "$decl_vocab" | grep -c .) names, each with a recorded EVEN-parity justification)"
+else
+  say_fail "symplectic-vocabulary drift. A declaration name asserting Liouville/symplectic/Kähler is a CLAIM: add it to DECLARED_SYMPLECTIC_VOCAB with its arena's dimension parity (must be EVEN), or rename it after its construction."
+  echo "        declared:"; printf '%s\n' "$decl_vocab" | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_vocab" | sed 's/^/          /'
+fi
+
+# (8) open-scope inventory: boundary claims are diffable, so they cannot go stale silently
+found_scope="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -cE "$OPEN_SCOPE_PHRASES" 2>/dev/null \
+  | grep -v ':0$' | sort)"
+decl_scope="$(printf '%s\n' "$DECLARED_OPEN_SCOPE" | grep -v '^[[:space:]]*$' | sort)"
+if [ "$found_scope" = "$decl_scope" ]; then
+  say_ok "open-scope claims == declared inventory ($(printf '%s\n' "$decl_scope" | grep -c .) files) — re-read these when a BACKLOG row is discharged"
+else
+  say_fail "open-scope inventory drift. An honest-scope claim was added or removed: update DECLARED_OPEN_SCOPE, and CHECK whether a claim that stayed put has gone stale (that is the case this guard cannot see)."
+  echo "        declared:"; printf '%s\n' "$decl_scope" | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_scope" | sed 's/^/          /'
+fi
 
 echo
 if [ "$fail" -eq 0 ]; then echo "check-claims: PASS"; exit 0
