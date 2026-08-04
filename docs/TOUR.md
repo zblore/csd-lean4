@@ -71,9 +71,9 @@ preparation, and arbitrary Hermitian `H`:
   (`continuous_pointerRampedEvolve`), Liouville preservation, a positive-measure ready state
   with no Dirac calibration posit, record creation with the ontic sector selecting the
   outcome, structural persistence, and the Born sandwich
-  `rⱼ − 2ε ≤ sector ≤ rⱼ + 2(N−1)ε`. On the interaction window the propagator satisfies the
-  **Schrödinger equation** with the explicit Hermitian coupling `H_eff`
-  (`rampedU_schrodinger`) — the Hamiltonian-generation statement at the formalisable level.
+  `rⱼ − 2ε ≤ sector ≤ rⱼ + 2(N−1)ε`. At **every** time the propagator satisfies the
+  **Schrödinger equation** with the explicit Hermitian coupling `H_eff` and the rate factor
+  `smoothTransition′(t)` (`rampedU_schrodinger`; window-free since B1b, 2026-08-04) — the Hamiltonian-generation statement at the formalisable level.
   *Precision (2026-08-03, fourth external review): the generation is **fibrewise** — the
   joint-arena flow's register back-reaction is suppressed by design
   (`pointerEvolve_base_marginal_unchanged` is the fingerprint; `ι_Vω ≠ d𝓗` on the

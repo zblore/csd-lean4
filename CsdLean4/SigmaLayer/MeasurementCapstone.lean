@@ -56,9 +56,9 @@ For every dimension, Hermitian generator, base point, and unit preparation:
   this bullet credited
   `SmoothWitnessClosure` with generation, which the very next bullet says it does not
   contain — that closure predates brick 5 and has no generator field.*
-* `generation` — the smooth horn's Schrödinger equation itself: on the interaction window
-  the ramped propagator satisfies the ODE with the explicit Hermitian generator
-  `pointerHeff w`, for every weight vector (*field added 2026-08-03, fourth external
+* `generation` — the smooth horn's Schrödinger equation itself: at **every** time the
+  ramped propagator satisfies the ODE with the explicit Hermitian generator `pointerHeff w`
+  and the rate factor `smoothTransition′(t)`, for every weight vector (*field added 2026-08-03, fourth external
   review: `SmoothWitnessClosure` predates brick 5 and does not contain the generation
   theorem — now a capstone field rather than a satellite*).
 
@@ -115,13 +115,16 @@ structure ProjectiveMeasurementCapstone : Prop where
   generator field; wording corrected 2026-08-04.) -/
   smooth : ∀ {ε δ : ℝ}, 0 < ε → 0 < δ → δ ≤ 1 / 2 →
     Nonempty (SmoothWitnessClosure (momentContext (M + 1)) ε δ)
-  /-- The generation theorem as a field: on the interaction window, the ramped propagator
-  satisfies the Schrödinger ODE with the explicit Hermitian generator `pointerHeff w`,
-  for every weight vector — hence at every ontic point of the smooth witness. Fibrewise
-  by design; the joint-arena back-reacting flow is the recorded research row. -/
-  generation : ∀ {K : ℕ} (w : Fin K → ℝ) (s : ℝ) {t : ℝ}, t ∈ Set.Ioo (0 : ℝ) 1 →
+  /-- The generation theorem as a field: at **every** time the ramped propagator satisfies
+  the Schrödinger ODE with the explicit Hermitian generator `pointerHeff w`, for every
+  weight vector — hence at every ontic point of the smooth witness. *Strengthened 2026-08-04
+  (B1b): the ramp is now `C^∞`, so the open-window restriction is gone; the price is the
+  rate factor `smoothTransition′(t)`, and outside `[0,1]` it vanishes so the ODE reads
+  `U̇ = 0` — persistence as an ODE.* Fibrewise by design; the joint-arena flow is A1/A2. -/
+  generation : ∀ {K : ℕ} (w : Fin K → ℝ) (s t : ℝ),
     HasDerivAt (fun u => couplingUAt (pointerRamp u - pointerRamp s) w)
-      (couplingUAt (pointerRamp t - pointerRamp s) w * ((-Complex.I) • pointerHeff w)) t
+      (deriv Real.smoothTransition t •
+        (couplingUAt (pointerRamp t - pointerRamp s) w * ((-Complex.I) • pointerHeff w))) t
 
 /-- ★★★ **The capstone holds** — for every Hermitian generator, base point, and unit
 preparation. One citation for the dynamical reconstruction of projective measurement. -/
@@ -131,6 +134,6 @@ theorem projectiveMeasurementCapstone (hψ : ‖ψ‖ = 1) :
   every_basis := measurement_covariance
   degenerate := fun b => degenerateMeasurementClosure b ψ
   smooth := fun hε hδpos hδ => ⟨smoothWitnessClosureCanonical hε hδpos hδ⟩
-  generation := fun w s _ ht => rampedU_schrodinger w s ht
+  generation := fun w s t => rampedU_schrodinger w s t
 
 end CSD.RecordLayer

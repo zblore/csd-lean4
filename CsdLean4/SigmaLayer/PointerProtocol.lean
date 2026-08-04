@@ -231,21 +231,35 @@ theorem continuous_unitaryFamily_smul {X : Type*} [TopologicalSpace X]
 
 /-! ### The ramp and the protocol -/
 
-/-- The measurement ramp: `κ(t) = (π/2) · clamp₀¹(t)` — zero before the interaction,
-frozen at the quarter-turn stroke after readout. -/
-noncomputable def pointerRamp (t : ℝ) : ℝ := Real.pi / 2 * min 1 (max 0 t)
+/-- The measurement ramp: zero before the interaction, frozen at the quarter-turn stroke
+after readout.
 
-theorem pointerRamp_zero : pointerRamp 0 = 0 := by
-  simp [pointerRamp]
+★ *Substituted onto the `C^∞` profile 2026-08-04 (`BACKLOG.md` B1b).* This was
+`(π/2)·clamp₀¹(t)`, piecewise-linear with corners at `t ∈ {0,1}` — which is why
+`rampedU_schrodinger` could only hold on the **open** window `(0,1)`. It is now
+`(π/2)·smoothTransition t`, `C^∞` everywhere. The plateau interface is unchanged
+(`pointerRamp_zero`, `pointerRamp_of_one_le`), so the protocol's two-time law, freezing and
+persistence are untouched; what changes is the generation statement, which now holds at
+**every** time and carries the rate factor `smoothTransition′(t)` — a window-free ODE in
+place of a constant-generator one on a punctured interval. -/
+noncomputable def pointerRamp (t : ℝ) : ℝ := smoothPointerRamp t
 
-theorem pointerRamp_of_one_le {t : ℝ} (ht : 1 ≤ t) : pointerRamp t = Real.pi / 2 := by
-  rw [pointerRamp, max_eq_right (zero_le_one.trans ht), min_eq_left ht, mul_one]
+theorem pointerRamp_zero : pointerRamp 0 = 0 :=
+  smoothPointerRamp_of_nonpos le_rfl
+
+theorem pointerRamp_of_one_le {t : ℝ} (ht : 1 ≤ t) : pointerRamp t = Real.pi / 2 :=
+  smoothPointerRamp_of_one_le ht
 
 theorem pointerRamp_one : pointerRamp 1 = Real.pi / 2 :=
   pointerRamp_of_one_le le_rfl
 
 theorem continuous_pointerRamp : Continuous pointerRamp :=
-  continuous_const.mul (continuous_const.min (continuous_const.max continuous_id))
+  (contDiff_smoothPointerRamp (n := 0)).continuous
+
+/-- **The ramp is `C^∞`** — new with the B1b substitution; the trapezoid was only
+Lipschitz. -/
+theorem contDiff_pointerRamp {n : ℕ∞} : ContDiff ℝ n pointerRamp :=
+  contDiff_smoothPointerRamp
 
 variable {N : ℕ} [NeZero N]
 

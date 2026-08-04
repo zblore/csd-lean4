@@ -13,11 +13,17 @@ public import CsdLean4.SigmaLayer.PointerBorn
 **Category:** dynamical measurement — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 5; completes the ladder).
 
-★ **The generation theorem** (`rampedU_schrodinger`): on the interaction window `t ∈ (0, 1)`,
-the ramped propagator of the smooth witness satisfies the **Schrödinger equation**
+★ **The generation theorem** (`rampedU_schrodinger`): at **every** time `t : ℝ` the ramped
+propagator of the smooth witness satisfies the **Schrödinger equation**
 
-  `U̇(t) = U(t) · (−i · H_eff(w))`,  `H_eff(w) = (π/2) • couplingH w`  **Hermitian**
-  (`pointerHeff_isHermitian`),
+  `U̇(t) = smoothTransition′(t) • (U(t) · (−i · H_eff(w)))`,
+  `H_eff(w) = (π/2) • couplingH w`  **Hermitian** (`pointerHeff_isHermitian`),
+
+*(B1b, 2026-08-04: the ramp is now `C^∞`, so the open-window restriction `t ∈ (0,1)` is
+gone. The price is the rate factor `smoothTransition′(t)` — a window-free ODE with a
+time-dependent generator, in place of a constant-generator ODE on a punctured interval.
+Outside `[0,1]` the factor vanishes and the equation reads `U̇ = 0`: persistence, as an
+ODE.)*
 
 as a machine-checked `HasDerivAt`, for **every** weight vector — in particular for the
 selector-modulated weights `w = pointerWeights c ε x` at every ontic point. Together with
@@ -38,12 +44,12 @@ stated as a theorem rather than left implicit.
 
 ⚠️ **Honest scope.**
 
-* The ODE holds on the **open** interaction window; at the ramp corners `t ∈ {0, 1}` the
-  `C⁰` ramp is not differentiable (one-sided derivatives differ). A `C^∞` ramp variant
-  would move the corners' smoothing into the ramp with no structural change; ~~recorded as a
-  presentational upgrade~~ *delivered 2026-08-03: `PointerSmoothProfile.lean`'s
-  `smoothRampedU_schrodinger` — Schrödinger at every time, no window* — the propagator
-  itself is continuous in time and state everywhere (`continuous_pointerRampedEvolve`).
+* ~~The ODE holds on the **open** interaction window; at the ramp corners the `C⁰` ramp is
+  not differentiable~~ — **superseded *B1b, 2026-08-04.***: `pointerRamp` *is* the `C^∞` profile now, so the
+  ODE holds at **every** time. The trade taken: a rate factor `smoothTransition′(t)`
+  multiplies the generator, i.e. a window-free ODE with a time-dependent generator replaces
+  a constant-generator ODE on a punctured interval. Outside `[0,1]` the factor vanishes and
+  the ODE reads `U̇ = 0` — persistence, as an ODE.
 * The **symplectic/moment-map reading** of "the flow of `H_eff` is the Hamiltonian flow of
   the FS moment map" remains prose: Mathlib has no symplectic-manifold API
   (`MATHLIB-GAPS.md`) — the *same* §2a-scoped boundary as A1/A3, but with no flux
@@ -114,41 +120,36 @@ theorem pointerHeff_isHermitian (w : Fin K → ℝ) : (pointerHeff w).IsHermitia
 
 /-! ### The generation theorem -/
 
-/-- ★ **The Schrödinger equation of the smooth witness**: on the interaction window
-`t ∈ (0, 1)`, the ramped propagator satisfies
+/-- ★ **The Schrödinger equation of the smooth witness**, at **every** time `t : ℝ`:
 
-  `U̇(t) = U(t) · (−i • H_eff(w))`
+  `U̇(t) = smoothTransition′(t) • (U(t) · (−i • H_eff(w)))`
 
 with the explicit Hermitian generator `pointerHeff w` — for every start time `s` and every
 weight vector, hence for the selector-modulated weights at every ontic point. The
-Hamiltonian-generation statement at the formalisable level. -/
-theorem rampedU_schrodinger (w : Fin K → ℝ) (s : ℝ) {t : ℝ} (ht : t ∈ Set.Ioo (0 : ℝ) 1) :
+Hamiltonian-generation statement at the formalisable level. (*B1b, 2026-08-04.*: the window `(0,1)` is
+gone with the trapezoid ramp; the rate factor is what it cost.) -/
+theorem rampedU_schrodinger (w : Fin K → ℝ) (s t : ℝ) :
     HasDerivAt (fun u => couplingUAt (pointerRamp u - pointerRamp s) w)
-      (couplingUAt (pointerRamp t - pointerRamp s) w * ((-Complex.I) • pointerHeff w))
+      (deriv Real.smoothTransition t •
+        (couplingUAt (pointerRamp t - pointerRamp s) w * ((-Complex.I) • pointerHeff w)))
       t := by
   set A := (-Complex.I) • couplingH w with hA
-  -- the affine angle on the window
-  have haff : HasDerivAt (fun u : ℝ => Real.pi / 2 * u - pointerRamp s) (Real.pi / 2) t := by
-    simpa using ((hasDerivAt_id t).const_mul (Real.pi / 2)).sub_const (pointerRamp s)
-  -- derivative of the exponential at the affine angle
-  have hexp := hasDerivAt_exp_smul_const A (Real.pi / 2 * t - pointerRamp s)
+  have hT : HasDerivAt Real.smoothTransition (deriv Real.smoothTransition t) t :=
+    ((Real.smoothTransition.contDiff (n := 1)).differentiable one_ne_zero t).hasDerivAt
+  have haff : HasDerivAt (fun u : ℝ => pointerRamp u - pointerRamp s)
+      (Real.pi / 2 * deriv Real.smoothTransition t) t :=
+    (hT.const_mul (Real.pi / 2)).sub_const (pointerRamp s)
+  have hexp := hasDerivAt_exp_smul_const A (pointerRamp t - pointerRamp s)
   have hcomp := HasDerivAt.scomp t hexp haff
-  -- the curve agrees with the affine-angle exponential near `t`
-  have hEE : (fun u => couplingUAt (pointerRamp u - pointerRamp s) w)
-      =ᶠ[nhds t] fun u => NormedSpace.exp ((Real.pi / 2 * u - pointerRamp s) • A) := by
-    filter_upwards [Ioo_mem_nhds ht.1 ht.2] with u hu
-    rw [couplingUAt, pointerRamp, max_eq_right hu.1.le, min_eq_right hu.2.le]
-  have hgoal := (hcomp.congr_of_eventuallyEq hEE)
-  -- massage the derivative and the point
-  have hpt : pointerRamp t = Real.pi / 2 * t := by
-    rw [pointerRamp, max_eq_right ht.1.le, min_eq_right ht.2.le]
-  have hder : couplingUAt (pointerRamp t - pointerRamp s) w * ((-Complex.I) • pointerHeff w)
-      = (Real.pi / 2 : ℝ) • (NormedSpace.exp ((Real.pi / 2 * t - pointerRamp s) • A) * A) := by
+  have hder : deriv Real.smoothTransition t •
+        (couplingUAt (pointerRamp t - pointerRamp s) w * ((-Complex.I) • pointerHeff w))
+      = (Real.pi / 2 * deriv Real.smoothTransition t) •
+        (NormedSpace.exp ((pointerRamp t - pointerRamp s) • A) * A) := by
     have h1 : (-Complex.I) • pointerHeff w = (Real.pi / 2 : ℝ) • A := by
       rw [pointerHeff, hA, smul_comm]
-    rw [h1, mul_smul_comm, couplingUAt, hpt]
+    rw [h1, mul_smul_comm, couplingUAt, smul_smul, mul_comm]
   rw [hder]
-  exact hgoal
+  exact hcomp
 
 /-! ### The no-collapse theorem -/
 

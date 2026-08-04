@@ -210,6 +210,7 @@ srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null; }
 # declaration after its construction instead (e.g. `…Measure`, not `…Liouville`).
 DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
 fieldHamiltonian
+hamiltonianField
 hamiltonian
 HasHamiltonianRealisation
 IsForcedKahlerVolume
@@ -240,6 +241,10 @@ trivialKahlerOnticSetup"
 #   the question is not parity but GENERATOR EXHIBITED?:
 #     hamiltonian / fieldHamiltonian / relFieldHamiltonian — CV energy matrices: Hermitian,
 #       with eigenvalue equations proved. The word names an OPERATOR, not a flow.  EARNED.
+#     hamiltonianField — (ChartBracket.lean, A3) the vector field `(∂_y H, −∂_x H)` in a
+#       DARBOUX CHART, written out explicitly. The name is earned because in canonical
+#       coordinates the field IS that formula: no `ω⁻¹` is invoked, nothing is asserted.
+#       Caught by this very check when it was added, 2026-08-04.        EARNED (chart-level).
 #     HasHamiltonianRealisation — a Prop DEMANDING an explicit Hermitian `H` with
 #       `U t = exp(-itH)`; `productProjectedFlow_hasHamiltonianRealisation` exhibits one.
 #       This is CONVENTIONS 8.3a option (1) done right.                            EARNED.

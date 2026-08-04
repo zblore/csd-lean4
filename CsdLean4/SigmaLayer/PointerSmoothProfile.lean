@@ -77,25 +77,7 @@ namespace CSD.RecordLayer
 open MeasureTheory Matrix NormedSpace Filter
 open scoped Matrix.Norms.L2Operator Topology
 
-/-! ### The smooth time ramp, and Schrödinger at every time -/
-
-/-- The smooth time ramp: `0` before the stroke, `π/2` after, `C^∞` throughout — the
-trapezoid `pointerRamp` with the corner-free profile. -/
-noncomputable def smoothPointerRamp (t : ℝ) : ℝ := Real.pi / 2 * Real.smoothTransition t
-
-/-- Before the stroke the smooth ramp is `0` — the same plateau as `pointerRamp`'s. -/
-lemma smoothPointerRamp_of_nonpos {t : ℝ} (ht : t ≤ 0) : smoothPointerRamp t = 0 := by
-  rw [smoothPointerRamp, Real.smoothTransition.zero_of_nonpos ht, mul_zero]
-
-/-- After the stroke the smooth ramp is `π/2` — the same plateau as `pointerRamp`'s, so
-freezing/persistence consume it unchanged. -/
-lemma smoothPointerRamp_of_one_le {t : ℝ} (ht : 1 ≤ t) :
-    smoothPointerRamp t = Real.pi / 2 := by
-  rw [smoothPointerRamp, Real.smoothTransition.one_of_one_le ht, mul_one]
-
-/-- **The smooth ramp is `C^∞`.** -/
-lemma contDiff_smoothPointerRamp {n : ℕ∞} : ContDiff ℝ n smoothPointerRamp :=
-  contDiff_const.mul Real.smoothTransition.contDiff
+/-! ### Schrödinger at every time -/
 
 /-- ★ **Schrödinger at every time.** With the smooth ramp, the ramped propagator
 satisfies the Schrödinger equation
