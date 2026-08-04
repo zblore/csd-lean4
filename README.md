@@ -28,9 +28,11 @@ model, with no further axioms, the corpus derives:
   (distinct witnesses per horn, by design) — with mixed preparations reproducing `Tr(ρE)` through the same
   dynamics, no-signalling holding *dynamically* (a distant measurement — outcome or basis
   choice — cannot move the local marginal), and the quantum eraser realised as a process:
-  erasure restores fringes only before a record exists, never after — and POVMs and
-  their instruments ride the same dynamics via Naimark dilation (Naimark-dilate, then run
-  the *existing* record protocol). Mixed preparations also update correctly on an outcome:
+  erasure restores fringes only before a record exists, never after. POVMs ride the same
+  machinery via Naimark dilation — their **instrument** (the state update) is delivered
+  dynamically, while their Born statistics are established at the *selector* level rather
+  than the protocol-sector level, a distinction the corpus keeps and this line previously
+  blurred (corrected 2026-08-04). Mixed preparations also update correctly on an outcome:
   the conditioned ensemble is the Bayes posterior, and at rank one **the record, not the
   pedigree, fixes the post-state**;
 - **wavefunction collapse as a theorem** — the post-measurement state update (the Lüders
