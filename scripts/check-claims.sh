@@ -219,15 +219,33 @@ ofKählerPreparationFlow
 pointerLiouville
 trivialKahlerOnticSetup"
 #
-# PARITY LEDGER (why each name is earned):
-#   arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), all even factors. EVEN.
-#   pointerLiouville        — PointerArena: CP^{N-1} x T^2 x CP^K, dim 2(N-1)+2+2K.  EVEN.
-#   IsFubiniStudyKahler     — pointwise Kähler compatibility on a complex inner-product
-#                             space (KahlerForm.lean); complex ⇒ even by construction.
-#   IsForcedKahlerVolume    — the FS volume claim on CP^{N-1}: dim 2(N-1).           EVEN.
-#   kahlerProjectiveSector / KahlerOnticSetup / kahlerConstraintDynamics /
-#   trivialKahlerOnticSetup / ofKählerPreparation(Flow)
-#                           — all on CP^{N-1} (x T^2) sectors: even factors only.    EVEN.
+# PARITY LEDGER (why each name is earned).
+# ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
+# CP^{N-1} (x T^2) sectors: even factors only" for five names at once. Three of them
+# do not fix an arena at all — they abstract over `Sigma : Type*` — so a parity claim
+# about them was not merely unverified, it was not even well-formed. Writing an
+# unchecked justification into the guard that exists to stop unchecked justifications
+# is precisely the failure mode this check is for; it was caught by reading the
+# definitions when asked whether the check had actually been run.
+#
+#   CONCRETE ARENA — parity verified by reading the definition:
+#     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
+#     pointerLiouville        — PointerArena: CP^{N-1} x T^2 x CP^K, 2(N-1)+2+2K.     EVEN.
+#     IsFubiniStudyKahler     — pointwise Kähler compatibility on a complex
+#                               inner-product space (KahlerForm.lean); complex ⇒      EVEN.
+#     IsForcedKahlerVolume    — `Measure (CPN N)`, i.e. CP^{N-1}: dim 2(N-1).         EVEN.
+#     trivialKahlerOnticSetup — Sigma := ℙ ℂ (EuclideanSpace ℂ (Fin N)) = CP^{N-1}.   EVEN.
+#     ofKählerPreparation(Flow) — CPN 4 = CP^3, dim 6.                                EVEN.
+#
+#   ABSTRACT ARENA — NO parity claim is made or possible here:
+#     KahlerOnticSetup        — a structure with `Sigma : Type*` as a FIELD.
+#     kahlerConstraintDynamics / kahlerProjectiveSector
+#                             — both consume `K : KahlerOnticSetup N` and work on
+#                               `K.Sigma`, whatever that is.
+#     For these the parity obligation belongs to whoever INSTANTIATES them; the only
+#     concrete instantiations in-tree (trivialKahlerOnticSetup, ManyToOnePillars) use
+#     CP^{N-1} and are even. A future instantiation on an odd-dimensional Sigma would
+#     be a real defect that this check cannot see.
 # REJECTED 2026-08-04: `nullSeamLiouville` on S^1 x CP^2 — dim 1 + 4 = 5, ODD. Renamed
 # `nullSeamMeasure`; the T^2 x CP^2 lift that would earn the word is a BACKLOG row.
 
@@ -251,6 +269,26 @@ CsdLean4/SigmaLayer/PovmDynamics.lean:1
 CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
 CsdLean4/SigmaLayer/ShearDiscontinuity.lean:1
 CsdLean4/Tests/AxiomAudit.lean:4"
+
+# (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
+# after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure
+# FIELDS, and (7a)'s regex is anchored to `def|abbrev|structure`, so it never saw
+# them. A name is a claim wherever it appears, not only at top level.
+# Matches declarations (`name : Type`) and deliberately not instantiations
+# (`name := value`), which are uses of an already-declared field.
+DECLARED_VOCAB_FIELDS="IsKahlerSector
+IsLiouvilleKahlerVolume
+kahler_condition
+liouville
+liouvilleMeasure
+liouville_eq_kahler_volume"
+#
+# FIELD LEDGER: all six are fields of `KahlerOnticSetup` (LF4/KahlerOnticSetup.lean),
+# whose `Sigma` is abstract — so, as above, they carry no parity claim in themselves.
+# Note `IsKahlerSector : Prop` and `IsLiouvilleKahlerVolume : Prop` are the honest
+# shape: the Kähler and Liouville conditions are *obligations the instantiator must
+# discharge*, not adjectives asserted by fiat. That is CONVENTIONS 8.3a option (1),
+# and it is why these names are earned where a bare `…Liouville` would not be.
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 
@@ -390,6 +428,19 @@ else
   say_fail "symplectic-vocabulary drift. A declaration name asserting Liouville/symplectic/Kähler is a CLAIM: add it to DECLARED_SYMPLECTIC_VOCAB with its arena's dimension parity (must be EVEN), or rename it after its construction."
   echo "        declared:"; printf '%s\n' "$decl_vocab" | sed 's/^/          /'
   echo "        found:";    printf '%s\n' "$found_vocab" | sed 's/^/          /'
+fi
+
+# (7b) the same vocabulary at structure-FIELD level
+found_vfields="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -hoE '^[[:space:]]+[A-Za-z0-9_]*([Ll]iouville|[Ss]ymplectic|[Kk]ahler|Kähler)[A-Za-z0-9_]*[[:space:]]*:[^=]' 2>/dev/null \
+  | sed -E 's/^[[:space:]]+//; s/[[:space:]]*:.*//' | sort -u)"
+decl_vfields="$(printf '%s\n' "$DECLARED_VOCAB_FIELDS" | grep -v '^[[:space:]]*$' | sort -u)"
+if [ "$found_vfields" = "$decl_vfields" ]; then
+  say_ok "symplectic-vocabulary FIELDS == declared inventory ($(printf '%s\n' "$decl_vfields" | grep -c .) fields)"
+else
+  say_fail "symplectic-vocabulary field drift. A structure field asserting Liouville/symplectic/Kähler is a claim too: add it to DECLARED_VOCAB_FIELDS with its justification, make it a Prop obligation, or rename it."
+  echo "        declared:"; printf '%s\n' "$decl_vfields" | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_vfields" | sed 's/^/          /'
 fi
 
 # (8) open-scope inventory: boundary claims are diffable, so they cannot go stale silently
