@@ -9813,6 +9813,17 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- and the transition zone sees a locally affine distance (round locally constant strictly
 -- inside the half-integer window). The strongest formulation without a manifold structure on
 -- the arena (that stays §2a-scoped with A1/A3).
+-- SUBSTITUTED 2026-08-04 (BACKLOG B1): the profile primitives moved DOWN the import graph to
+-- SigmaLayer/SmoothProfile.lean and pointerWeights is now built on smoothArcWeight, so the
+-- witness USES the C^infinity profile rather than citing it. The plateau interface is
+-- identical by construction, so every downstream landing/Born/protocol proof transferred with
+-- no change. contDiff_pointerWeights_lift is the new smoothness statement, and it is what
+-- makes {w_i, w_j} well-formed -- the prerequisite the joint-arena Poisson route turns on.
+-- The TIME RAMP is deliberately still the trapezoid (not a phase-space function; swapping it
+-- would put a rate factor in the capstone's generation field -- BACKLOG B1b).
+/-- info: 'CSD.RecordLayer.contDiff_pointerWeights_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.contDiff_pointerWeights_lift
+
 -- ★ smoothRampedU_schrodinger — SCHRÖDINGER AT EVERY TIME: the smooth ramp removes the open-
 -- window restriction of rampedU_schrodinger (the corners are gone, as PointerGeneration's
 -- honest scope predicted); outside [0,1] the ODE reads U̇ = 0 — persistence as an ODE.

@@ -62,7 +62,13 @@ stated as a theorem rather than left implicit.
   the register moves mid-stroke and the exact moment-transport argument no longer applies)
   is the recorded research row in [`BACKLOG.md`](../../specs/BACKLOG.md).
 * *Same review, same date:* the weight and ramp ingredients (`clampDiv`, `min`/`max`, the
-  trapezoid) are Lipschitz and proved `Continuous`, not `C¹` at their joins — "smooth
+  trapezoid) *were* Lipschitz and proved `Continuous`, not `C¹` at their joins — and the
+  **weights are now `C^∞`** (substituted 2026-08-04, `SigmaLayer/SmoothProfile.lean`;
+  `contDiff_pointerWeights_lift`), which the joint-arena Poisson route required, since
+  `{wᵢ,wⱼ}` is undefined on non-differentiable weights. The *time ramp* is deliberately
+  still the trapezoid `pointerRamp`: it is not a phase-space function, so it plays no part
+  in that argument, and swapping it would change this module's generation statement to
+  carry a rate factor (see `smoothRampedU_schrodinger`). Historically, "smooth
   horn" names the ε-corridor architecture, not a `C^∞` claim. The `Real.smoothTransition`
   ingredient upgrade (plateaus cover the circle-distance kinks, so compositions stay
   smooth) *landed same day*: `PointerSmoothProfile.lean` — identical plateau interface,
