@@ -30,7 +30,8 @@ exist here: the pointer is projective (`H¹(ℂℙ^K) = 0`), and the generator i
 asserted.
 
 **The no-collapse theorem** (`pointerEvolve_base_marginal_unchanged`): the measurement
-stroke leaves the sector marginal of **every** initial measure untouched — the smooth
+stroke leaves the sector marginal of **every** initial measure untouched (for every context
+with continuous rates — the theorem carries `hc`, *Corrected 2026-08-04 (codebase audit).*) — the smooth
 witness, like the shear (`shear_base_marginal_unchanged`), creates records **without
 back-reaction**. Records yes, collapse no: this is the honest boundary of the smooth horn,
 stated as a theorem rather than left implicit.

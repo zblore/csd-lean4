@@ -146,7 +146,17 @@ theorem naimarkV_pullback (P : POVM N ι) (i : ι) :
   exact sqrt_inner_sum P i m m'
 
 /-- **Every POVM has a Naimark dilation.** The canonical inhabitant of
-`NaimarkDilation P`, built from the CFC square roots `√Eᵢ`. This makes the Phase-1
+`NaimarkDilation P`, built from the CFC square roots `√Eᵢ`.
+⚠️ *Scope note 2026-08-04:* "canonical" names **this construction**, not a uniqueness
+claim. Naimark dilations are genuinely non-unique (`WV` works for suitable unitary `W`),
+and no uniqueness or universal property is proved here. What is canonical about it is that
+`cfc Real.sqrt` is basis-independent. Consumers needing dilation-independence must say so:
+`PovmDynamics.lean` records the instrument as dilation-relative for exactly this reason.
+⚠️ *Scope note 2026-08-04:* "canonical" names **this construction**, not a uniqueness
+claim. Naimark dilations are genuinely non-unique (`WV` works for suitable unitary `W`),
+and no uniqueness or universal property is proved here. What is canonical about it is that
+`cfc Real.sqrt` is basis-independent. Consumers needing dilation-independence must say so:
+`PovmDynamics.lean` records the instrument as dilation-relative for exactly this reason. This makes the Phase-1
 ontic POVM Born = Kähler-volume results hold for every POVM, modulo the dilation
 genericity condition. -/
 noncomputable def canonicalNaimark (P : POVM N ι) : NaimarkDilation P where

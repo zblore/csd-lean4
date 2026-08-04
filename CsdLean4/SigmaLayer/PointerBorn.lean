@@ -33,7 +33,9 @@ plus the correlation; the upper bound needs **no cell geometry at all** — the 
 are pairwise disjoint and the lower bounds of the other `N − 1` outcomes crowd out everything
 above `rⱼ + 2(N−1)ε` in a probability space.
 
-★★ **The smooth-horn closure** (`SmoothWitnessClosure` / `smoothWitnessClosure`, instantiated
+★★ **The smooth-horn closure** (*strengthened 2026-08-04: `evolve_eq`/`stroke_eq` fields
+added, so the continuity and Liouville claims are now about the bundled `protocol` rather
+than about globally-named maps that merely coincided with it*) (`SmoothWitnessClosure` / `smoothWitnessClosure`, instantiated
 on the canonical moment-map context by `smoothWitnessClosureCanonical`): one witness carries,
 simultaneously — the protocol (two-time law = exponential group property), **joint time–state
 continuity**, Liouville preservation, a positive-measure ready state, record creation with
@@ -218,6 +220,18 @@ structure SmoothWitnessClosure (c : ContextField N) (ε δ : ℝ) where
   born_upper : ∀ (p : LF4.CPN N) (q₀ : Pointer N) (j : Fin N),
     pointerPrep p q₀ δ (protocol.outcomeSector j)
       ≤ ENNReal.ofReal (c.rate p j + 2 * ((N : ℝ) - 1) * ε)
+  /-- **The continuity and Liouville fields are about THIS protocol.** Added 2026-08-04
+  (codebase audit): `jointly_continuous` and `liouville` are statements about the global
+  maps `pointerRampedEvolve`/`pointerEvolve`, and nothing in the type previously tied them
+  to `protocol`. That mattered because `MeasurementCapstone` exposes this closure
+  existentially (`Nonempty`), which erases *which* protocol it is — so "the witness is
+  jointly continuous" did not follow from the bundle. These two identifications close the
+  gap: with them, the continuity and measure-preservation claims transfer to `protocol`. -/
+  evolve_eq : ∀ (s : ℝ) (z : ℝ × PointerArena N N),
+    pointerRampedEvolve c ε s z = protocol.evolve s z.1 z.2
+  /-- The measurement stroke `Φ_{0→1}` of this protocol is the propagator `liouville`
+  speaks about. -/
+  stroke_eq : protocol.evolve 0 1 = pointerEvolve c ε
 
 /-- ★★ **The smooth-horn closure is inhabited**, for every context with continuous rates
 and every `0 < ε`, `0 < δ ≤ 1/2`. -/
@@ -230,6 +244,8 @@ noncomputable def smoothWitnessClosure (c : ContextField N)
   ready_pos p₀ q₀ := arenaReady_pos p₀ q₀ hδpos
   correlates := pointerProtocol_correlatesOn c hc hε hδ
   invariant := pointerProtocol_pointerInvariantOn c hc ε hδ
+  evolve_eq s z := pointerRampedEvolve_eq_protocol c hc ε hδ s z
+  stroke_eq := pointerProtocol_evolve_stroke c hc ε hδ
   born_lower p q₀ j := pointer_born_lower c hc hε hδpos hδ p q₀ j
   born_upper p q₀ j := pointer_born_upper c hc hε hδpos hδ p q₀ j
 

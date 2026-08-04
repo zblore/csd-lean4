@@ -32,7 +32,10 @@ outcome is communicated. The unnormalised form (`traceRight_sum_vecOuter_localPr
 two-line entrywise computation: tracing out `B` collapses the projector sum before it can be
 seen.
 
-⚠️ **Honest scope.** This brick is statics: the Lüders mixture is written down, not yet
+⚠️ **Honest scope.** (*2026-08-04: the propagator arrived in brick 2 —
+`reduceA_blockLuders_mixture`, `SigmaLayer/LocalBlockBridge.lean`; the sentence below
+scopes THIS module and stays true of it.*) This brick is statics: the Lüders mixture is
+written down, not yet
 produced by a propagator. Brick 2 wires it to the dynamical layer — the local `B`-block
 structure `b = snd` under the `Fin (nA·nB) ≃ Fin nA × Fin nB` index bridge feeds
 `BlockLudersObligation`, whose join witness (`joinWitness_blockLuders`) supplies the

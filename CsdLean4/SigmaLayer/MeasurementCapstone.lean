@@ -44,7 +44,10 @@ For every dimension, Hermitian generator, base point, and unit preparation:
   protocol** (`DegenerateMeasurementClosure`, `JoinClosure.lean`): ready/record creation/
   exclusivity/persistence, Liouville preservation, the coarse dynamical Born mass
   (calibration-independent), and the ψ-dependent degenerate Lüders update — the demand
-  `swap_not_blockLuders` proved impossible for fixed ray-level calibrations (*upgraded
+  `swap_not_blockLuders` proved impossible for fixed ray-level calibrations **on blocks of
+  dimension ≥ 2** (*Corrected 2026-08-04 (codebase audit).* — that hypothesis, `j₁ ≠ j₂` with `b j₁ = b j₂`, was omitted here;
+  at rank one the swap witness *does* satisfy the demand, which is `swap_luders_born`)
+  (*upgraded
   from bare `BlockLudersObligation` 2026-08-03, fourth external review*).
 * `smooth` — the smooth horn exists at every `ε`: a witness that is jointly continuous in
   time and state, with a positive-measure ready state and the `ε`-Born sandwich

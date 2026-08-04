@@ -36,8 +36,11 @@ hypotheses*. Only the shape of the transition corridor changed.
   as a periodic function.
 - ★ `smoothRampedU_schrodinger` — with the smooth time ramp
   `smoothPointerRamp t = (π/2)·smoothTransition t`, the ramped propagator satisfies the
-  **Schrödinger equation at every time** — the open-window restriction of
-  `rampedU_schrodinger` (forced by the trapezoid ramp's corners) disappears, exactly as
+  **Schrödinger equation at every time**, with the *time-dependent* generator
+  `smoothTransition′(t) · H_eff` rather than the constant `H_eff` of `rampedU_schrodinger`
+  (*Corrected 2026-08-04 (codebase audit).* — this header said simply "the Schrödinger equation"; the rate factor was always in
+  the theorem and its docstring). This removes the open-window restriction of
+  `rampedU_schrodinger`, which the trapezoid ramp's corners forced — exactly as
   `PointerGeneration.lean`'s honest scope predicted ("a `C^∞` ramp variant would move the
   corners' smoothing into the ramp with no structural change").
 

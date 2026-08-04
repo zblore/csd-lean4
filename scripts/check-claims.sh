@@ -209,6 +209,9 @@ srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null; }
 # Adding a name here is a claim; if you cannot fill in the parity line, rename the
 # declaration after its construction instead (e.g. `…Measure`, not `…Liouville`).
 DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
+fieldHamiltonian
+hamiltonian
+HasHamiltonianRealisation
 IsForcedKahlerVolume
 IsFubiniStudyKahler
 kahlerConstraintDynamics
@@ -217,6 +220,7 @@ kahlerProjectiveSector
 ofKählerPreparation
 ofKählerPreparationFlow
 pointerLiouville
+relFieldHamiltonian
 trivialKahlerOnticSetup"
 #
 # PARITY LEDGER (why each name is earned).
@@ -227,6 +231,18 @@ trivialKahlerOnticSetup"
 # unchecked justification into the guard that exists to stop unchecked justifications
 # is precisely the failure mode this check is for; it was caught by reading the
 # definitions when asked whether the check had actually been run.
+#
+#   HAMILTONIAN NAMES — the word was added to this check 2026-08-04. CONVENTIONS 8.3a
+#   listed "Hamiltonian" as claim-bearing from the day it was written, but the guard's
+#   pattern did not include it — which is exactly how `shear_piecewise_hamiltonian` (a
+#   THEOREM; see the theorem-level inventory below) escaped the sweep that caught
+#   `nullSeamLiouville`. The rule and the guard disagreed, and the guard lost. For these
+#   the question is not parity but GENERATOR EXHIBITED?:
+#     hamiltonian / fieldHamiltonian / relFieldHamiltonian — CV energy matrices: Hermitian,
+#       with eigenvalue equations proved. The word names an OPERATOR, not a flow.  EARNED.
+#     HasHamiltonianRealisation — a Prop DEMANDING an explicit Hermitian `H` with
+#       `U t = exp(-itH)`; `productProjectedFlow_hasHamiltonianRealisation` exhibits one.
+#       This is CONVENTIONS 8.3a option (1) done right.                            EARNED.
 #
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -287,6 +303,58 @@ liouville_eq_kahler_volume"
 # shape: the Kähler and Liouville conditions are *obligations the instantiator must
 # discharge*, not adjectives asserted by fiat. That is CONVENTIONS 8.3a option (1),
 # and it is why these names are earned where a bare `…Liouville` would not be.
+
+# (7c) THEOREM/LEMMA names carrying the vocabulary. Most inherit their object's word
+# (`trivialKahlerOnticSetup_*`, `hamiltonian_*`) and assert nothing new; the ones that
+# matter are those whose name states a CLASSIFICATION, and this inventory exists to keep
+# exactly those visible. Two are worth naming:
+#   shear_piecewise_hamiltonian — KNOWN MISNOMER, retained for pin stability. Its own
+#     module header withdrew the Hamiltonian reading (torus flux: `ι_Xω = a·dp` is closed
+#     but NOT exact on T^2, so no global generator exists) and gives the correct name,
+#     "piecewise rigid symplectic translation". Its statement proves ContinuousOn per basin
+#     cylinder plus a null seam set — no generator, no symplectic form, no flow appears in
+#     it. Declared here so the exception is VISIBLE rather than silent.
+#   schrodinger_flow_kahler_symplectomorphism — read 2026-08-04: an FS-isometry statement;
+#     "symplectomorphism" is carried by the pointwise Kähler triple (KahlerForm.lean),
+#     which is proved. No manifold-level symplectic claim is made.
+DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+arenaLiouville_sys_marginal
+fieldHamiltonian_mulVec_single
+fubiniStudy_pointwise_kahler_compatibility
+fubiniStudyMeasure_isForcedKahlerVolume
+hamiltonian_eq_diagonal
+hamiltonian_groundEnergy
+hamiltonian_isHermitian
+hamiltonian_mulVec_single
+isFubiniStudyKahler
+kahler_robertson_ontic_variance
+kahler_structure_isometry_invariant
+kahlerConstraintDynamics_flow
+kahlerProjectiveSector_pi
+manyToOneSetup_baseVolume_isForcedKahlerVolume
+manyToOneSetup_liouville_eq_product
+ofKählerPreparation_singlet_frequency_convergence
+ofKählerPreparationFlow_flow_frequency_convergence
+ofKählerPreparationFlow_phi_ne_id
+ofKählerPreparationFlow_preEvent
+pointerLiouville_arenaReady
+productProjectedFlow_hasHamiltonianRealisation
+relFieldHamiltonian_isHermitian
+relFieldHamiltonian_mulVec_single
+schrodinger_flow_kahler_symplectomorphism
+shear_piecewise_hamiltonian
+trivialKahlerOnticSetup_bargmann_selection
+trivialKahlerOnticSetup_eq_unitary_family
+trivialKahlerOnticSetup_phase_lift
+trivialKahlerOnticSetup_projective_representation
+trivialKahlerOnticSetup_projUnitary
+trivialKahlerOnticSetup_schrodinger_form
+trivialKahlerOnticSetup_sigmaFlow_schrodinger_form
+trivialKahlerOnticSetup_transProbPreserving
+trivialKahlerOnticSetup_unitary_of_clopen
+trivialKahlerOnticSetup_unitary_or_antiunitary
+unitaryFlowSetup_liouville_isForcedKahlerVolume
+unitaryFlowSetup_liouville_isProbability"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 
@@ -417,7 +485,7 @@ done
 # cheap on Linux CI and expensive enough on Windows to push this script past a
 # five-minute timeout once two more passes were added (measured 2026-08-04).
 found_vocab="$(srcfiles | tr '\n' '\0' \
-  | xargs -0 grep -hoE "^(noncomputable )?(def|abbrev|structure) [A-Za-z0-9_']*([Ll]iouville|[Ss]ymplectic|[Kk]ahler|Kähler)[A-Za-z0-9_']*" 2>/dev/null \
+  | xargs -0 grep -hoE "^(noncomputable )?(def|abbrev|structure) [A-Za-z0-9_']*([Ll]iouville|[Ss]ymplectic|[Kk]ahler|Kähler|[Hh]amiltonian)[A-Za-z0-9_']*" 2>/dev/null \
   | awk '{print $NF}' | sort -u)"
 decl_vocab="$(printf '%s\n' "$DECLARED_SYMPLECTIC_VOCAB" | grep -v '^[[:space:]]*$' | sort -u)"
 if [ "$found_vocab" = "$decl_vocab" ]; then
@@ -439,6 +507,19 @@ else
   say_fail "symplectic-vocabulary field drift. A structure field asserting Liouville/symplectic/Kähler is a claim too: add it to DECLARED_VOCAB_FIELDS with its justification, make it a Prop obligation, or rename it."
   echo "        declared:"; printf '%s\n' "$decl_vfields" | sed 's/^/          /'
   echo "        found:";    printf '%s\n' "$found_vfields" | sed 's/^/          /'
+fi
+
+# (7c) theorem/lemma names carrying the vocabulary
+found_vthms="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -hoE "^(theorem|lemma) [A-Za-z0-9_']*([Ll]iouville|[Ss]ymplectic|[Kk]ahler|Kähler|[Hh]amiltonian)[A-Za-z0-9_']*" 2>/dev/null \
+  | awk '{print $NF}' | sort -u)"
+decl_vthms="$(printf '%s\n' "$DECLARED_VOCAB_THEOREMS" | grep -v '^[[:space:]]*$' | sort -u)"
+if [ "$found_vthms" = "$decl_vthms" ]; then
+  say_ok "vocabulary-bearing THEOREM names == declared inventory ($(printf '%s\n' "$decl_vthms" | grep -c .) names; the one known misnomer is declared)"
+else
+  say_fail "vocabulary theorem drift. A theorem name asserting Liouville/symplectic/Kähler/Hamiltonian is a claim about what was PROVED: add it to DECLARED_VOCAB_THEOREMS with a justification, or rename it to what the statement establishes."
+  echo "        declared:"; printf '%s\n' "$decl_vthms" | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_vthms" | sed 's/^/          /'
 fi
 
 # (8) open-scope inventory: boundary claims are diffable, so they cannot go stale silently

@@ -52,6 +52,14 @@ word means lifting the register `S¹` to the full `T²` and working on `T² × �
 dimension) — recorded in `BACKLOG.md`, not done here. *(This is the corpus's second
 odd-dimension slip; the first is recorded in the fibred-Σ correction.)*
 
+⚠️ *Scope note 2026-08-04:* "Born" here is carried by the **cell split** `r`, a free
+parameter of the construction. Unlike every other horn (`pointer_born_lower` reads
+`c.rate p j`; `join_sector_born` reads `∑ ‖⟨eⱼ,ψ⟩‖²`), this module contains no preparation,
+no ray and no moment map. That is adequate for what the horn claims — an *existence* result
+against a no-go (`no_everywhere_correlation`) that is itself preparation-free, and every
+`r ∈ (0,1)` is some preparation's Born weight — but the identification of `r` with a Born
+weight is stated here, not formalised.
+
 ## The price — and the trilemma
 
 ⚠️ **Honest scope.** The exactness statements are at the **Dirac-calibrated ready point**

@@ -22,7 +22,9 @@ erase.** The mark post-state is the which-path product `|j⟩⊗|j⟩` (`localPr
 (`seqProfile_eq` — the erase stroke only rescales it), so the screen statistics remain flat
 at every phase:
 
-★ `sequential_no_revival` — **once a record exists, no later marker measurement revives the
+★ `sequential_no_revival` — **once a record exists, no later **±-basis** marker measurement (*Corrected 2026-08-04 (codebase audit).* — the second stroke's basis is fixed by
+`seqProfile`; only the *outcome* is quantified. A general-basis version via `localProjOn`
+is mechanical and not done here) revives the
 fringe**, whatever its outcome. Interference is recoverable only *before* the record
 (`erased_rate`), never after. This is the statistical face of what the corpus proves
 structurally elsewhere: records are relocation with storage, not erasable bookkeeping —
