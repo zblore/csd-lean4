@@ -30,8 +30,10 @@ sectors, no new arena:
   outcome *sector* appears in its type. The corpus draws exactly this distinction in
   `SwapClosure.lean` ("`sector_born` is the dynamical Born, **not** the kinematic selector
   Born"), and `join_sector_born` (`JoinClosure.lean`) shows what the protocol-level form
-  costs (`preimage_sector_ae` + `volume_goodTheta`). Lifting this to the sector form is a
-  recorded extension, not a claim made here.
+  costs (`preimage_sector_ae` + `volume_goodTheta`). ~~Lifting this to the sector form is a
+  recorded extension~~ — **delivered 2026-08-04**: `SigmaLayer/PovmSectorBorn.lean`,
+  `povm_sector_born`. The selector-level statement below remains as the kinematic
+  ingredient it always was.
 - ★ `toComposite_blockProj_dilate` — the record-layer block projection of the dilated
   preparation IS the ancilla projection `Πᵢ(Vψ)` under the index transport: the
   post-measurement rays the join witness delivers are the **Naimark–Lüders instrument**

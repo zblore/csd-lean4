@@ -164,6 +164,7 @@ public import CsdLean4.SigmaLayer.JointFlowTransfer
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.NullSeamLift
 public import CsdLean4.SigmaLayer.PointerFrequency
+public import CsdLean4.SigmaLayer.PovmSectorBorn
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9968,5 +9969,23 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointerSectorProb_mem_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerSectorProb_mem_window
+
+-- PovmSectorBorn (2026-08-04, SigmaLayer/PovmSectorBorn.lean; BACKLOG B4). Discharges the
+-- scope note the 2026-08-04 audit added to PovmDynamics: povm_selector_born was DESCRIBED as
+-- "the dynamical POVM Born rule" but measures a SELECTOR FIBRE, not a protocol outcome
+-- sector -- the distinction SwapClosure states explicitly.
+-- ★★ povm_sector_born — the JOIN PROTOCOL's outcome sector (initial states destined for
+-- record i) at the dilated preparation carries exactly <psi, E_i psi>. This is the dynamical
+-- statement the prose had claimed. povm_sector_born_canonical: every POVM, via canonicalNaimark.
+-- It is a two-line composition of join_sector_born (the protocol-sector spine,
+-- preimage_sector_ae + volume_goodTheta) with sum_block_normSq_dilate -- which is itself the
+-- evidence that the original defect was one of DESCRIPTION, not missing mathematics.
+-- Unchanged scope: the instrument stays dilation-relative, and V-as-unitary-stroke is still
+-- a recorded extension; both statements take the dilated ray [V psi] as entry point.
+/-- info: 'CSD.RecordLayer.povm_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.povm_sector_born
+
+/-- info: 'CSD.RecordLayer.povm_sector_born_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.povm_sector_born_canonical
 
 end CSD.Tests.AxiomAudit
