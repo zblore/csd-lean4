@@ -36,7 +36,10 @@ piecewise witnesses had to fight for arrives structurally:
   `pointer_landing` at the stroke `evolve 0 1 = pointerEvolve`
   (`pointerProtocol_evolve_stroke`);
 * ★ **the propagator is jointly continuous in time and state**
-  (`continuous_pointerProtocolEvolve`) — against not only `shearEvolve_not_continuous`
+  (`continuous_pointerRampedEvolve`, at every start time `s`; identified with the protocol's
+  `evolve` by `pointerRampedEvolve_eq_protocol`) — *Corrected 2026-08-04 (codebase audit).*: this cited
+  `continuous_pointerProtocolEvolve`, a name that exists nowhere in the corpus — against not
+  only `shearEvolve_not_continuous`
   (state discontinuity) but also the swap witnesses' record-triggered firing, which is
   discontinuous **in time**. Route: the entrywise time-Lipschitz estimate
   (`norm_couplingUAt_sub_time`, Duhamel with the roles of time and generator swapped) plus

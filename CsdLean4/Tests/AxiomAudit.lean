@@ -1927,7 +1927,11 @@ arithmetic. -/
 -- (shearEvolve_eq_translation_on_basin, shearEvolve_continuousOn_basin); (2) the seam set outside
 -- the cylinders is NULL (seam_null, via globalBasin_ae_total through the product). Together with
 -- shearEvolve_not_continuous (the seams are real) and no_everywhere_correlation (they are forced
--- for every exact-record dynamics): piecewise Hamiltonian with null seam set, machine-checked.
+-- for every exact-record dynamics): piecewise rigid SYMPLECTIC translation, null seam set.
+-- CORRECTED 2026-08-04 (audit): this read "piecewise Hamiltonian" long after
+-- PiecewiseHamiltonian.lean's header WITHDREW that reading (on T^2, iota_X omega = a*dp is
+-- closed but NOT exact, so no global generator exists). The pieces are symplectic, not
+-- Hamiltonian; the theorem name is a known misnomer kept for pin stability.
 -- ⚠️ The h_i = shearAmt(i)·p_R reading of each piece is prose (the symplectic spelling is the
 -- genuine §2a Mathlib gap); corridor regularisation stays recorded as optional strengthening.
 /-- info: 'CSD.RecordLayer.shear_piecewise_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3387,7 +3391,8 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on ax
 -- correctable set is {I,X1,X2,X3} and Z errors lie outside it. Completing the argument to "any
 -- single-qubit error" needs the CONCATENATED Shor 9-qubit code (open, specs/BACKLOG.md, blocked on
 -- 512-dimensional infrastructure); the syndrome-collapse half (error subspaces orthogonal, so
--- measurement projects onto one correctable branch) is likewise not claimed here.
+-- measurement projects onto one correctable branch) is not claimed by THESE pins -- it is
+-- delivered and pinned below (errored_pairwise_orthogonal, three_qubit_corrects_span_error).
 /-- info: 'CSD.Empirical.QM.QEC.pauli_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.pauli_decomposition
@@ -9718,7 +9723,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- sectors, classical ignorance responding as traceForm demands (spectral bridge
 -- spectral_born_eq_traceForm via swap_sector_born per eigenray + traceForm_eq_pureEnsemble +
 -- born_quadratic). Record creation/exclusivity/persistence are per-protocol facts, inherited
--- verbatim; Bayes-conditioned mixture posts = recorded extension.
+-- verbatim; the Bayes-conditioned mixture posts WERE a recorded extension and are now
+-- delivered (MixedLuders, pinned below: mixed_post_bayes, mixed_luders_followup).
 /-- info: 'CSD.RecordLayer.spectral_born_eq_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.spectral_born_eq_traceForm
 

@@ -106,7 +106,7 @@ preparation, and arbitrary Hermitian `H`:
 | The eraser as a process; statistical irreversibility of records | `erased_amp`, `erased_rate`, `sequential_no_revival` | `Empirical/CSD/EraserDynamics`, `EraserSequential` |
 | Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |
 | The outcome-conditioned mixed update: Bayes posterior + rank-one collapse of ignorance | `mixed_post_bayes`, `mixed_luders_followup` | `SigmaLayer/MixedLuders` |
-| The dynamical POVM Born rule; the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
+| The POVM Born rule (selector level); the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
 | `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
 | The third horn: continuous, null (two-point) seam, exact Born — at Dirac calibration | `nullSeamClosure`, `nullSeam_born_left` | `SigmaLayer/NullSeamWitness` |
 | The Kähler triple, pointwise (`g`, `ω`, `J`) — closedness `dω = 0` stays Mathlib-blocked | `fubiniStudy_pointwise_kahler_compatibility` | `Mathlib/Analysis/InnerProductSpace/KahlerForm` |

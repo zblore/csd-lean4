@@ -258,17 +258,15 @@ CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/SigmaLayer/ApproxProjectability.lean:1
-CsdLean4/SigmaLayer/DegenerateLuders.lean:1
 CsdLean4/SigmaLayer/FiniteQMClosure.lean:1
 CsdLean4/SigmaLayer/MeasurementCapstone.lean:2
 CsdLean4/SigmaLayer/MixedLuders.lean:1
 CsdLean4/SigmaLayer/MixedSwap.lean:1
 CsdLean4/SigmaLayer/PointerBorn.lean:1
 CsdLean4/SigmaLayer/PointerGeneration.lean:2
-CsdLean4/SigmaLayer/PovmDynamics.lean:1
+CsdLean4/SigmaLayer/PovmDynamics.lean:2
 CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
-CsdLean4/SigmaLayer/ShearDiscontinuity.lean:1
-CsdLean4/Tests/AxiomAudit.lean:4"
+CsdLean4/Tests/AxiomAudit.lean:3"
 
 # (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
 # after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure

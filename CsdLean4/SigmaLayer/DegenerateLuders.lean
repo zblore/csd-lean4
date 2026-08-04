@@ -28,7 +28,7 @@ preparation* — a superposition inside the block survives, with its internal co
    right — the block-selector's outcome sectors carry exactly the `blockField` rates
    (`degenerate_selector_born`). Statistics generalise; the *update* is what does not.
 
-## ⚠️ What remains open, and the route
+## ✅ How it was closed (the route, and how the anticipated wall dissolved)
 
 A degenerate witness must relocate the base point `[ψ] ↦ [Πᵢψ]` — a `ψ`-dependent target — while
 preserving measure globally. `no_exact_collapse` still governs: pointwise across preparations the
@@ -37,7 +37,15 @@ construction is the **projective join**: `ℂℙ^{N-1}` decomposes (off a null s
 `join(ℂℙ^{dᵢ-1}, ℂℙ^{N-dᵢ-1})` — block component, complement component, mixing angle, relative
 phase — with the update keeping the block component and banking the rest. The wall is the
 Fubini–Study measure decomposition under the join, which is unformalised geometry. **Effort L**;
-recorded in `specs/BACKLOG.md`. Nothing in this module claims progress on that construction.
+recorded in `specs/BACKLOG.md`.
+
+*Corrected 2026-08-04 (codebase audit).* The sentence "nothing in this module claims progress" stood long after the
+construction landed. **`BlockLudersObligation` — defined right here — is inhabited** by
+`joinWitness_blockLuders` (`SigmaLayer/JoinLuders.lean`), packaged as
+`degenerateMeasurementClosure` (`SigmaLayer/JoinClosure.lean`). The anticipated wall (an
+FS *measure decomposition* under the join) was **dissolved rather than crossed**: the pair
+arena simply *is* the projective join `ℙ(ℂ^{N+N})`, the update is a permutation unitary on
+it, and Liouville preservation is FS unitary invariance — no disintegration needed.
 
 ## References
 
@@ -150,7 +158,10 @@ noncomputable def blockIndex (b : Fin N → Fin K) : LF4.KSigma N → Fin K :=
 theorem measurable_blockIndex (b : Fin N → Fin K) : Measurable (blockIndex b) :=
   (Measurable.of_discrete (f := b)).comp (measurable_basinIndex (momentContext N))
 
-/-- **★ The degenerate dynamical Born weights.** The block-selector's outcome-`i` sector carries
+/-- **★ The degenerate SELECTOR Born weights.** (*Renamed in prose 2026-08-04:* this is the
+kinematic selector statement — the `epistemicMeasure` of a selector fibre — not the
+protocol-level *dynamical* Born, which is `join_sector_born` in `JoinClosure.lean`. The
+distinction is the corpus's own, stated in `SwapClosure.lean`.) The block-selector's outcome-`i` sector carries
 exactly the coarse-grained Born weight — the sum of the fine-grained weights over the block. With
 `momentMap_mk_eq_inner_sq` this is `(blockField b).rate` at the preparation: the kinematic
 `blockField` of `OutcomeField.lean`, now realised by a *selector*. Statistics generalise to
@@ -190,7 +201,11 @@ the degeneracy map `b` when, whenever the preparation has a component in block `
 post-outcome-`i` marginal is the epistemic state of the **normalised block projection** `[Πᵢψ]`.
 
 ★ The right-hand side depends on `ψ` — that is the entire content, and precisely what a fixed
-calibration cannot produce. Nothing in the corpus inhabits this for a block of dimension ≥ 2. -/
+calibration cannot produce. A fixed *ray-level* calibration cannot produce it
+(`swap_not_blockLuders`, below) — but the phase-carrying **join** witness does:
+`joinWitness_blockLuders` (`SigmaLayer/JoinLuders.lean`) inhabits this for **every** block
+structure, including blocks of dimension ≥ 2. (*Corrected 2026-08-04 (codebase audit).* — this line read "nothing in the
+corpus inhabits this", which the corpus itself had already contradicted.) -/
 def BlockLudersObligation (b : Fin N → Fin K)
     (postMarg : (ψ : EuclideanSpace ℂ (Fin N)) → ψ ≠ 0 → Fin K → Measure (LF4.KSigma N)) :
     Prop :=

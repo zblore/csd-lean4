@@ -48,7 +48,10 @@ the **concatenated** Shor 9-qubit code, whose correctable set spans all four Pau
 qubit; that is an open item (`specs/BACKLOG.md`) blocked on 9-qubit (512-dimensional)
 infrastructure, not on this file. The other half — that measuring the syndrome collapses a
 superposition of error branches onto one correctable branch — likewise needs the orthogonality of
-the error subspaces and is not claimed here.
+the error subspaces and ~~is not claimed here~~ **is delivered in
+`QEC/SyndromeCollapse.lean`** (`errored_pairwise_orthogonal`,
+`three_qubit_corrects_span_error`). *Corrected 2026-08-04 (codebase audit).* — it read as open beside the genuinely-open Shor-9
+item, and this file's References never pointed at its own sequel.
 
 ## References
 

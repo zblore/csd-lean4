@@ -43,7 +43,11 @@ The plan is explicit on two points, and both are followed:
 
 ## The remaining extensions, in the plan's order
 
-`blockField` covers **degenerate projective measurements** (step 2). Still open, and *not* attempted
+`blockField` covers **degenerate projective measurements** (step 2). *Corrected 2026-08-04 (codebase audit).* — **steps 1, 3, 4
+and 5 have all since landed** (`measurement_covariance`, `SigmaLayer/RotatedSwap.lean`;
+`mixed_swap_sector_born`, `MixedSwap.lean`, with the conditioned update in `MixedLuders.lean`;
+`povm_selector_born`/`povm_instrument`, `PovmDynamics.lean`). What this module does not do is
+*drive* them. Formerly: still open, and *not* attempted
 here: arbitrary orthonormal bases by unitary covariance (step 1 — the `U(N)` action on `CPN` exists,
 so this should be cheap); mixed preparations by trace linearity (step 3); POVMs through the existing
 Naimark machinery (step 4); instrument-level updates (step 5).

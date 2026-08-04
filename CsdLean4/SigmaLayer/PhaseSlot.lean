@@ -52,7 +52,13 @@ This is the **state-update core**, not yet the full protocol: (a) the register/s
 `SwapWitness`); (b) **Liouville preservation on the enriched arena** — `pairSwap` preserves
 summed norms (`componentSwap_norm_sum`), so the natural invariant reference measure is a
 unitarily-invariant one (e.g. Gaussian) on the doubled space; formalising that invariance is
-the recorded remaining work (`specs/BACKLOG.md`, effort M). Nothing here claims either. The
+the recorded remaining work (`specs/BACKLOG.md`, effort M). Nothing here claims either.
+
+*Corrected 2026-08-04 (codebase audit).* **Both debts were paid the same day (2026-08-02), and (b) did not need the Gaussian
+route**: the phase-enriched pair arena *is* the projective join, so Liouville preservation is
+FS unitary invariance (`joinSwap_measurePreserving`, `SigmaLayer/JoinArena.lean`), and the
+protocol plumbing (a) is `SigmaLayer/JoinProtocol.lean`. The paragraph above is kept as the
+construction record. The
 obligation is discharged at the level `BlockLudersObligation` actually demands — the
 post-state as a measure — for the canonical phase-orbit preparations and fixed calibration.
 

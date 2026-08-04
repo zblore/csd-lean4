@@ -93,7 +93,10 @@ WEIGHT-level representation (`mixed_born` / `mixed_ontic_born_weight`), AND the 
 QM content is complete on the witness. What remains open is NOT a QM item but the two architecture frontiers
 already named above:
 
-* **SO-1** — the sector-origin problem: derive `(Σ, π, μL)` + FS typicality from a primitive ontology
+* ~~**SO-1** — the sector-origin problem~~ **RETIRED as a non-question (2026-07-24; *Corrected 2026-08-04 (codebase audit).*):**
+  Σ is the floor — there is nothing beneath it to derive it *from*. What is legitimate, and
+  ongoing, is **constraining** Σ from above. Formerly: derive `(Σ, π, μL)` + FS typicality
+  from a primitive ontology
   (`specs/BACKLOG.md`, `SigmaLayer/SectorPostulateNoGo.lean` proves the single-flow no-go);
 * **MD-1** — the Paper C A7 measurement-partition mismatch: the outcome cells `bornRegion ψ'` are
   preparation-indexed, not the context-fixed `Ωᵢ(M)` of A7 (`specs/BACKLOG.md`). **Progress:** the

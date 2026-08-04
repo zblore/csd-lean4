@@ -114,8 +114,10 @@ theorem shearEvolve_continuousOn_basin (c : ContextField N) (i : Fin N) (s t : �
 
 omit [NeZero N] in
 /-- **The seam set is null.** The points lying in no basin cylinder carry measure zero, for
-every preparation and every s-finite register measure: the Hamiltonian pieces cover the arena
-up to a null set. -/
+every preparation and every s-finite register measure: the **symplectic** pieces cover the
+arena up to a null set. (*Not* "Hamiltonian pieces": the module header's flux correction
+proves each piece is symplectic but **not** the flow of any global Hamiltonian. Wording
+corrected 2026-08-04 — it had carried the withdrawn reading forward.) -/
 theorem seam_null (c : ContextField N) (p : LF4.CPN N) (ν : Measure LF4.KTorus) [SFinite ν] :
     ((epistemicMeasure p).prod ν) {x : LF4.KSigma N × LF4.KTorus | ∀ i, x.1 ∉ globalBasin c i}
       = 0 := by
@@ -132,7 +134,13 @@ where it is an explicit rigid translation (symplectic, locally Hamiltonian — s
 correction in the module header) — and the seam set outside
 the cylinders is null. Together with `shearEvolve_not_continuous` (the seams are real) and
 `no_everywhere_correlation` (they are forced for every exact-record dynamics), this is the
-"piecewise Hamiltonian with null seam set" classification, machine-checked. -/
+"piecewise rigid symplectic translation with null seam set"** classification,
+machine-checked. ⚠️ *The theorem NAME says "hamiltonian" and is a known misnomer, retained
+for pin stability per the header; the flux obstruction (`ι_Xω = a·dp` closed-not-exact on
+`T²`) means no global generator exists. What the statement literally proves is
+`ContinuousOn` per basin cylinder plus a null seam set — no generator, no symplectic form,
+no flow identification appears in it. Docstring corrected 2026-08-04; the name is declared
+as an exception in `scripts/check-claims.sh` check (7).* -/
 theorem shear_piecewise_hamiltonian (c : ContextField N) (p : LF4.CPN N)
     (ν : Measure LF4.KTorus) [SFinite ν] (s t : ℝ) :
     (∀ i, ContinuousOn (shearEvolve (basinIndex c) s t)

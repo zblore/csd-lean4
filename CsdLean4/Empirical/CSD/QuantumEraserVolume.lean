@@ -73,8 +73,11 @@ witness measures in the computational basis of a single `KSigma N`, while the er
 measurement is in a *rotated* basis on a *composite*. A fully dynamical eraser — marker
 measurement as swap-witness dynamics on the two-qubit arena, screen read via a rotated context
 field — needs the unitary-covariance extension and is recorded in `specs/BACKLOG.md`. This twin
-realises the conditioned *statistics* ontically; it does not yet realise the conditioning
-*process*.
+realises the conditioned *statistics* ontically, and *Corrected 2026-08-04 (codebase audit).* the conditioning
+**process** is now realised too: `Empirical/CSD/EraserDynamics.lean` (2026-08-03) proves the
+dynamical post-states' screen amplitudes are exactly `√2 ·` **this module's** `eraserOut`
+(`erased_amp`), so every statistic certified here is a statement about the measurement
+dynamics' own output; `sequential_no_revival` (`EraserSequential.lean`) adds irreversibility.
 
 **Experimental verification:** Kim et al. 2000 (delayed-choice); Scully–Drühl 1982 — via the QM
 module, whose delayed-choice remark applies verbatim: the statistics are the same whether the

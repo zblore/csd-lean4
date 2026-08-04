@@ -40,8 +40,12 @@ This module machine-checks the review's claim: ★ `shearEvolve_not_continuous`.
   meeting two of them. It does **not** force the propagator to be discontinuous — a
   *continuous* (even smooth, globally Hamiltonian) propagator that sends the seams to
   transition states *outside* `⋃ᵢ Bᵢ` remains mathematically open. What this module proves is
-  only that **this witness** is discontinuous; the review-recommended continuous route is the
-  compact Kähler pointer `ℂℙ^K` (`specs/BACKLOG.md`).
+  only that **this witness** is discontinuous. *Corrected 2026-08-04 (codebase audit).* — the continuous route was
+  **delivered twice on 2026-08-03**: the ε-corridor pointer witness
+  (`continuous_pointerEvolve`, `SigmaLayer/PointerWeights.lean`) and the exact-Born third
+  horn (`nullSeamClosure`, `SigmaLayer/NullSeamWitness.lean`, whose seams map to the
+  kissing state outside every record region). This module's negative result stands, and is
+  what makes its witness one horn of a trilemma rather than a defect.
 * The two recorded repair routes (`specs/BACKLOG.md`): **(1)** smooth corridor regularisation —
   records and Born correct up to `ε`, priced by `collapse_accuracy_bound`; **(2)** classify the
   measurement dynamics as *piecewise Hamiltonian with null seam set* (standard in dynamics:
@@ -150,7 +154,8 @@ the *connected* space `KSigma N` onto `≥ 2` distinct points, whose fibres woul
 partition — impossible. So the witness is a measurable, measure-preserving, **piecewise** map,
 not a time slice of any continuous flow. *(Correction 2026-08-02: the no-go forces an exceptional
 non-correlating set, not discontinuity — see the module header; a continuous propagator with
-seams mapped outside the pointer regions remains open.)* -/
+seams mapped outside the pointer regions was open when that was written and is now
+**delivered**: `continuous_pointerEvolve` and `nullSeamClosure`, both 2026-08-03. *Corrected 2026-08-04 (codebase audit).*)* -/
 theorem shearEvolve_not_continuous [NeZero N] (hN : 2 ≤ N) :
     ¬ Continuous (shearEvolve (basinIndex (momentContext N)) (0 : ℝ) 1) := by
   intro hcont

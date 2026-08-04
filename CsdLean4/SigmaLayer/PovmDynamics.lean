@@ -22,8 +22,16 @@ the dilated ray `[Vψ]` on the flat index and run the **existing** degenerate re
 protocol with the ancilla block structure `localBlock N K` — no new dynamics, no new
 sectors, no new arena:
 
-- ★ `povm_selector_born` — the block selector's outcome-`i` sector at the dilated
-  preparation carries exactly `⟨ψ, Eᵢ ψ⟩`: the **dynamical POVM Born rule**.
+- ★ `povm_selector_born` — the block **selector's** outcome-`i` fibre at the dilated
+  preparation carries exactly `⟨ψ, Eᵢ ψ⟩`: the POVM Born rule **at the selector level**.
+  ⚠️ *Corrected 2026-08-04 (codebase audit).* — this said "the **dynamical** POVM Born rule", which overstates it. The
+  statement is an `epistemicMeasure` of a selector fibre `blockIndex ⁻¹' {i}`, i.e.
+  `degenerate_selector_born` transported along the dilation; no protocol, propagator or
+  outcome *sector* appears in its type. The corpus draws exactly this distinction in
+  `SwapClosure.lean` ("`sector_born` is the dynamical Born, **not** the kinematic selector
+  Born"), and `join_sector_born` (`JoinClosure.lean`) shows what the protocol-level form
+  costs (`preimage_sector_ae` + `volume_goodTheta`). Lifting this to the sector form is a
+  recorded extension, not a claim made here.
 - ★ `toComposite_blockProj_dilate` — the record-layer block projection of the dilated
   preparation IS the ancilla projection `Πᵢ(Vψ)` under the index transport: the
   post-measurement rays the join witness delivers are the **Naimark–Lüders instrument**
@@ -169,9 +177,12 @@ lemma sum_block_normSq_dilate (P : POVM N (Fin K)) (D : LF4.NaimarkDilation P)
   rw [hL]
   exact hR.symm
 
-/-! ### ★ The dynamical POVM Born rule -/
+/-! ### ★ The POVM Born rule, at the selector level -/
 
-/-- ★ **The dynamical POVM Born rule.** Prepare the dilated ray `[Vψ]` and run the
+/-- ★ **The POVM Born rule at the selector level.** (*Prose corrected 2026-08-04:* this was
+called "the dynamical POVM Born rule"; the statement is the measure of a **selector
+fibre**, not of a protocol outcome sector — see the module docstring.) Prepare the dilated
+ray `[Vψ]` and run the
 degenerate record protocol with the ancilla block structure `localBlock N K`: the
 outcome-`i` sector carries exactly the POVM Born weight `⟨ψ, Eᵢ ψ⟩`. Statistics of an
 arbitrary POVM, realised by the *existing* projective record dynamics on the dilated
@@ -228,12 +239,12 @@ theorem povm_instrument (D : LF4.NaimarkDilation P)
 /-! ### ★★ The closure -/
 
 /-- **What the POVM/instrument tier delivers, bundled** — for a POVM `P` and a Naimark
-dilation `D`: the dynamical POVM Born rule at every unit preparation, the inhabited
+dilation `D`: the selector-level POVM Born rule at every unit preparation, the inhabited
 degenerate-Lüders obligation on the dilated arena (the instrument), and the
 identification of the block posts with the Naimark–Lüders posts `Πᵢ(Vψ)`. -/
 structure NaimarkInstrumentClosure (P : POVM N (Fin K)) (D : LF4.NaimarkDilation P) :
     Prop where
-  /-- The dynamical POVM Born rule. -/
+  /-- The POVM Born rule at the selector level. -/
   born : ∀ (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ ≠ 0), ‖ψ‖ = 1 → ∀ i : Fin K,
     epistemicMeasure (Projectivization.mk ℂ (dilateFlat D ψ) (dilateFlat_ne_zero D hψ0))
         (blockIndex (localBlock N K) ⁻¹' {i})
