@@ -48,7 +48,9 @@ model, with no further axioms, the corpus derives:
   projective pointer whose propagator is continuous in time and state and satisfies the
   Schrödinger equation with an explicit Hermitian coupling — whose records and Born weights are
   exact up to a stated, tunable `ε`); and *Dirac calibration* (a continuous witness with exact
-  Born and records exact off a two-point seam, at a point-calibrated ready state). No horn is
+  Born and records exact off a two-point seam, at a point-calibrated ready state — with the
+  caveat that in that witness "Born" is carried by a free cell-split parameter rather than
+  by a preparation's moment map). No horn is
   canonical, and whether a fourth combination is impossible is an open question, not a claim
   (the tour has the comparison every measuring science meets);
 - **the standard quantum canon** — entanglement and Bell/CGLMP/GHZ non-locality with

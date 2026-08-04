@@ -43,7 +43,9 @@ second, zero exactly at the two boundary points — circle-intrinsic, no fundame
 lift, no case analysis at the wrap point.
 
 ⚠️ *Naming corrected 2026-08-03 (fifth external review, and the reviewer is right).* The
-invariant measure here was originally called `nullSeamMeasure`. **`S¹ × ℂℙ²` has real
+invariant measure here was originally called `nullSeamLiouville`. (*Corrected 2026-08-04 (independent Opus review of HEAD).* — the global rename
+rewrote this sentence too, so the correction read as a no-op: it named the *new* name as the
+old one. Exactly the class of defect it was describing.) **`S¹ × ℂℙ²` has real
 dimension 5 — odd — so it carries no symplectic structure and the word "Liouville" was
 unearned.** The measure (Haar ⊗ Fubini–Study) is genuinely invariant and every theorem below
 stands unchanged; only the name and the surrounding prose overclaimed. It is now

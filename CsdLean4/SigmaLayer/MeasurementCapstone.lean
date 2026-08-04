@@ -55,7 +55,7 @@ For every dimension, Hermitian generator, base point, and unit preparation:
   is the separate `generation` field below.* ⚠️ *Corrected 2026-08-04 (codebase audit):
   this bullet credited
   `SmoothWitnessClosure` with generation, which the very next bullet says it does not
-  contain (that closure predates brick 5 and has no generator field).
+  contain — that closure predates brick 5 and has no generator field.*
 * `generation` — the smooth horn's Schrödinger equation itself: on the interaction window
   the ramped propagator satisfies the ODE with the explicit Hermitian generator
   `pointerHeff w`, for every weight vector (*field added 2026-08-03, fourth external

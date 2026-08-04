@@ -29,8 +29,9 @@ preparation, and arbitrary Hermitian `H`:
   reconstruction** (`unifiedArenaClosure`): the isolated flow and the record-creating
   propagator preserve the *same* Liouville measure, and the isolate → measure → isolate round
   trip is a theorem (`arena_round_trip`). The degenerate update runs on the companion
-  projective-join witness; a single capstone bundling rank-one, all bases, and degenerate is a
-  recorded open item.
+  projective-join witness; ~~a single capstone bundling rank-one, all bases, and degenerate is
+  a recorded open item~~ — **delivered 2026-08-03**, see the next bullet (*Corrected 2026-08-04 (independent Opus review of HEAD).*: this line
+  contradicted the bullet immediately below it).
 - ★★★ **one theorem now carries the whole projective-measurement layer**
   (`projectiveMeasurementCapstone`, `SigmaLayer/MeasurementCapstone.lean`): for every
   Hermitian generator, base point, and unit preparation — rank-one on the unified arena,
@@ -107,8 +108,8 @@ preparation, and arbitrary Hermitian `H`:
 | Mixed preparations: the mixed dynamical Born rule | `mixed_swap_sector_born` | `SigmaLayer/MixedSwap` |
 | The outcome-conditioned mixed update: Bayes posterior + rank-one collapse of ignorance | `mixed_post_bayes`, `mixed_luders_followup` | `SigmaLayer/MixedLuders` |
 | The POVM Born rule (selector level); the Naimark–Lüders instrument | `povm_selector_born`, `povm_instrument`, `naimarkInstrumentClosureCanonical` | `SigmaLayer/PovmDynamics` |
-| `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
-| The third horn: continuous, null (two-point) seam, exact Born — at Dirac calibration | `nullSeamClosure`, `nullSeam_born_left` | `SigmaLayer/NullSeamWitness` |
+| `C^∞` transition profiles: smooth weights (universal-cover `C^∞`) and Schrödinger at every time — with the *time-dependent* generator `smoothTransition′(t)·H_eff` | `contDiff_smoothArcWeight_lift`, `smoothRampedU_schrodinger` | `SigmaLayer/PointerSmoothProfile` |
+| The third horn: continuous, null (two-point) seam, exact Born (of a free cell-split parameter — the module has no preparation or moment map) — at Dirac calibration | `nullSeamClosure`, `nullSeam_born_left` | `SigmaLayer/NullSeamWitness` |
 | The Kähler triple, pointwise (`g`, `ω`, `J`) — closedness `dω = 0` stays Mathlib-blocked | `fubiniStudy_pointwise_kahler_compatibility` | `Mathlib/Analysis/InnerProductSpace/KahlerForm` |
 | Repeatability & sequential statistics | `csd_repeatability`, `csd_sequential_born` | `Empirical/CSD/SequentialMeasurement` |
 | Mixed states, weights and frequencies | `mixed_ontic_born_weight`, `arena_mixed_born_frequency` | `SigmaLayer/MixedOntic`, `UnifiedArena` |
