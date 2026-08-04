@@ -165,6 +165,7 @@ public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.NullSeamLift
 public import CsdLean4.SigmaLayer.PointerFrequency
 public import CsdLean4.SigmaLayer.PovmSectorBorn
+public import CsdLean4.SigmaLayer.SharpenedNoGo
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -9987,5 +9988,27 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.povm_sector_born_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.povm_sector_born_canonical
+
+-- SharpenedNoGo (2026-08-04, SigmaLayer/SharpenedNoGo.lean; BACKLOG B5, the trilemma's
+-- third leg -- SHARPENED, NOT CLOSED).
+-- ★ posMeasure_noRecord_of_isOpenMap — an OPEN-MAP propagator on an OPEN ready set cannot
+-- hide the no-record set in a null set: the image is an open neighbourhood, and any
+-- neighbourhood of a boundary point of the no-record set meets its INTERIOR, which has
+-- positive measure. posMeasure_noRecord_unitary specialises to a unitary stroke on CP^K
+-- (a homeomorphism; FS is positive on nonempty opens). This is exactly why a DIRAC
+-- calibration escapes: a point has no neighbourhood to spare, which is how the null-seam
+-- witness threads the kissing state and keeps its seam null.
+-- ⚠️ WHAT IT DOES NOT PROVE, and a correction to my own earlier claim: NullSeamWitness said
+-- a positive-width ready region fattens the seam "of order the calibration width". The ORDER
+-- is quantitative, does NOT follow from this topological argument, and is proved nowhere --
+-- corrected at source. Also: the forcing step (that some ready state MUST land in the
+-- closure of the no-record interior) is a HYPOTHESIS here, not a conclusion; deriving it
+-- needs no_everywhere_correlation's connectedness plus a regularity condition on the
+-- no-record set. Hence: the leg is sharpened, not closed.
+/-- info: 'CSD.RecordLayer.posMeasure_noRecord_of_isOpenMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_of_isOpenMap
+
+/-- info: 'CSD.RecordLayer.posMeasure_noRecord_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_unitary
 
 end CSD.Tests.AxiomAudit

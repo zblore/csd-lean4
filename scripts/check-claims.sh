@@ -286,6 +286,7 @@ CsdLean4/SigmaLayer/MixedSwap.lean:1
 CsdLean4/SigmaLayer/PointerBorn.lean:1
 CsdLean4/SigmaLayer/PointerGeneration.lean:2
 CsdLean4/SigmaLayer/PovmDynamics.lean:2
+CsdLean4/SigmaLayer/PovmSectorBorn.lean:1
 CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
 CsdLean4/Tests/AxiomAudit.lean:4"
 

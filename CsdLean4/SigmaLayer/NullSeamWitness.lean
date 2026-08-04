@@ -66,10 +66,16 @@ weight is stated here, not formalised.
 
 ⚠️ **Honest scope.** The exactness statements are at the **Dirac-calibrated ready point**
 `q = [f₀]` — this is the third horn's price, and it is real: with a positive-width ready
-region `{m₀ > 1 − δ}`, states near the crossing angle land near the kissing state, where
-an open set of nearby pointer states lies outside *both* record regions, so the seam
-fattens to a positive-measure set of order the calibration width (the same IVT mechanism
-the no-go runs on). The corpus already prices Dirac calibration:
+region `{m₀ > 1 − δ}`, states near the crossing angle land near the kissing state, and
+because the stroke is a homeomorphism their image is an **open** neighbourhood of it —
+which necessarily meets the interior of the no-record set, giving that set **positive
+measure** (`posMeasure_noRecord_of_isOpenMap`, `SigmaLayer/SharpenedNoGo.lean`). A Dirac
+calibration escapes precisely because a point has no neighbourhood to spare, which is how
+this witness threads the kissing state exactly. ⚠️ *Corrected 2026-08-04:* this note
+previously said the seam fattens "to a positive-measure set **of order the calibration
+width**". The *order* is a quantitative claim that the topological argument does not give
+and that is not proved anywhere; it needed an estimate on how far the landing moments move
+with the ready state. Positive measure stands; `O(δ)` was an over-assertion. The corpus already prices Dirac calibration:
 `collapse_accuracy_bound`. The honest classification is therefore a **trilemma** — each
 horn pays exactly one of: **seams** (piecewise witness, discontinuous propagator),
 **ε-Born** (smooth witness, positive-measure ready state), **Dirac calibration** (this
