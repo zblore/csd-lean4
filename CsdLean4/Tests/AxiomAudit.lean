@@ -166,6 +166,7 @@ public import CsdLean4.SigmaLayer.NullSeamLift
 public import CsdLean4.SigmaLayer.PointerFrequency
 public import CsdLean4.SigmaLayer.PovmSectorBorn
 public import CsdLean4.SigmaLayer.SharpenedNoGo
+public import CsdLean4.SigmaLayer.PointerLuders
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -10026,5 +10027,30 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.posMeasure_noRecord_of_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_of_correlates
+
+-- PointerLuders (2026-08-05, SigmaLayer/PointerLuders.lean; BACKLOG B3b, BRICK 1 ONLY).
+-- The smooth witness PROVABLY does not collapse (pointerEvolve_base_marginal_unchanged) --
+-- a feature, but it means the smooth horn gives records and Born and no state update.
+-- Composing with relocation needs an arena carrying pointer AND bank, and a relocation
+-- triggered by the POINTER's record region rather than a torus arc. That is this brick.
+-- pointerIndex — the readout off the record regions, well defined by their disjointness.
+-- pointerRelocate — swap system with bank slot j when the pointer displays j; ★ it never
+-- moves the pointer, so the record survives its own relocation.
+-- ★ pointerBankSwap_measurePreserving — the slot swap preserves the composed arena measure
+-- (same conjugation as the torus version; FS vs Haar plays no part).
+-- pointerLudersStroke — the two-stroke composite, DEFINED.
+-- ⚠️ NOT PROVED HERE, and the docstring says so: measure preservation of pointerRelocate
+-- ITSELF (a piecewise map -- needs the partition argument swapG uses, with record cylinders
+-- in place of register arcs), and the conditioned post-measurement marginal. Those are
+-- brick 2, and until they land this module is the ARENA AND DYNAMICS, not a Lüders theorem.
+-- Nothing here weakens pointerEvolve_base_marginal_unchanged: relocation is a SECOND stroke.
+/-- info: 'CSD.RecordLayer.pointerBankSwap_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerBankSwap_measurePreserving
+
+/-- info: 'CSD.RecordLayer.pointerRelocate_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRelocate_pointer
+
+/-- info: 'CSD.RecordLayer.pointerIndex_eq_some_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerIndex_eq_some_of_mem
 
 end CSD.Tests.AxiomAudit
