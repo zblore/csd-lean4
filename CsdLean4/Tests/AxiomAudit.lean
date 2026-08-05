@@ -168,6 +168,7 @@ public import CsdLean4.SigmaLayer.PovmSectorBorn
 public import CsdLean4.SigmaLayer.SharpenedNoGo
 public import CsdLean4.SigmaLayer.PointerLuders
 public import CsdLean4.SigmaLayer.NoRecordGeometry
+public import CsdLean4.SigmaLayer.PointerLudersMarginal
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -10047,6 +10048,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- in place of register arcs), and the conditioned post-measurement marginal. Those are
 -- brick 2, and until they land this module is the ARENA AND DYNAMICS, not a Lüders theorem.
 -- Nothing here weakens pointerEvolve_base_marginal_unchanged: relocation is a SECOND stroke.
+-- [2026-08-05: both owed items are now proved -- PointerLudersMarginal block below; the
+-- "arena and dynamics, not a Lüders theorem" qualifier is superseded and B3b is closed.]
 /-- info: 'CSD.RecordLayer.pointerBankSwap_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerBankSwap_measurePreserving
 
@@ -10085,5 +10088,49 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.posMeasure_noRecord_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_pointer
+
+-- PointerLudersMarginal (2026-08-05, SigmaLayer/PointerLudersMarginal.lean; BACKLOG B3b
+-- brick 2 -- and with it B3b CLOSED).
+-- Brick 1 explicitly owed two things; both land here.
+-- ★ pointerRelocate_measurePreserving — the piecewise invariance: the arena partitions
+-- into record cylinders (where the relocation is brick 1's measure-preserving slot swap,
+-- and fixes its own piece because it never moves the pointer) and the no-record piece
+-- (identity); measurePreserving_of_partition assembles -- the swapG argument with record
+-- cylinders in place of register arcs, exactly as the brick-1 gap note predicted.
+-- ★ pointerLudersStroke_measurePreserving — the WHOLE two-stroke composite conserves
+-- Liouville measure: collapse as relocation, not contraction, on the smooth horn.
+-- pointerProtocol_outcomeSector — the sector identification: the protocol's sector IS the
+-- brick-2b propagator's preimage of the record cylinder (the trigger the relocation reads).
+-- ★★ pointer_luders_marginal — THE LUDERS THEOREM for the smooth horn: conditioned on the
+-- outcome-i sector (a base cylinder -- the bank plays no part in which outcome occurs),
+-- the post-stroke system marginal IS the slot-i calibration. Same three moves as
+-- swap_luders_marginal; the trigger is the pointer's record region, not a torus arc.
+-- ★ pointer_luders_born — CSD form: follow-up statistics are the COLLAPSED state's Born
+-- weights, for any context field.
+-- ★★ pointer_luders_born_prep — on the witness's OWN preparation: 2eps < rate i makes the
+-- conditioning non-vacuous via the eps-Born lower bound, so the smooth horn now delivers
+-- records (eps-Born) AND a Lueders update on one arena.
+-- Honest scope unchanged: rank-one only (degenerate = join witness); one bank per
+-- measurement; the two-stroke composite is NOT a MeasurementProtocol (the relocation is a
+-- triggered map, not a flow -- its Hamiltonian generation stays the same recorded
+-- extension as the swap witness's); the eps lives in WHICH outcome occurs, never in the
+-- post-measurement state (the conditioned marginal is exact).
+/-- info: 'CSD.RecordLayer.pointerRelocate_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRelocate_measurePreserving
+
+/-- info: 'CSD.RecordLayer.pointerLudersStroke_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerLudersStroke_measurePreserving
+
+/-- info: 'CSD.RecordLayer.pointerProtocol_outcomeSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerProtocol_outcomeSector
+
+/-- info: 'CSD.RecordLayer.pointer_luders_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_luders_marginal
+
+/-- info: 'CSD.RecordLayer.pointer_luders_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_luders_born
+
+/-- info: 'CSD.RecordLayer.pointer_luders_born_prep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_luders_born_prep
 
 end CSD.Tests.AxiomAudit

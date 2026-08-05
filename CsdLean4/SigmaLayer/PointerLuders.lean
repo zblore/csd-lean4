@@ -40,26 +40,25 @@ is what this brick builds.
   Fubini–Study rather than Haar plays no part in the argument.
 * `pointerLudersStroke` — the two-stroke composite (record, then relocate), defined.
 
-⚠️ Deliberately **not** claimed here, and listed so the gap is visible: measure
-preservation of `pointerRelocate` *itself*. The relocation is a **piecewise** map (a case
-split on the readout), so its invariance needs the partition argument the torus version
-uses for `swapG` — the record cylinders in place of the register arcs. That is brick 2's
-first job, together with the conditioning below.
+~~⚠️ Deliberately **not** claimed here: measure preservation of `pointerRelocate`
+*itself*.~~ **Discharged 2026-08-05** (`SigmaLayer/PointerLudersMarginal.lean`,
+`pointerRelocate_measurePreserving`): exactly the predicted partition argument — the
+`swapG` route with record cylinders in place of register arcs.
 
-⚠️ **Honest scope — this is brick 1 of B3b, not B3b.** What is *not* here is the payoff:
-the conditioned post-measurement system marginal, i.e. that conditioning on record `j` and
-projecting to the system gives the collapsed state. That is the conditioning computation
-the swap witness needed `swap_luders_born` for, and it is brick 2. Until it lands, this
-module delivers the **arena and the dynamics**, not the Lüders theorem — and the smooth
-horn's collapse claim remains what it was: absent by design, with the update on the exact
-horns. Nothing here weakens `pointerEvolve_base_marginal_unchanged`; the relocation is a
-*second* stroke, so the first still does not collapse.
+~~⚠️ **Honest scope — this is brick 1 of B3b, not B3b.**~~ **Brick 2 landed 2026-08-05**
+(`SigmaLayer/PointerLudersMarginal.lean`): the conditioned post-measurement system marginal
+is now a theorem (`pointer_luders_marginal`), so the smooth horn claims a Lüders update —
+records (ε-Born) *and* collapse-as-relocation on one arena. **B3b is closed.** Nothing in
+brick 2 weakens `pointerEvolve_base_marginal_unchanged`: the relocation is a *second*
+stroke, so the first still does not collapse — that division of labour is now load-bearing
+rather than aspirational.
 
-## What brick 2 owes
+## What brick 2 owed — delivered 2026-08-05
 
-The conditioned post-measurement system marginal — conditioning on record `j`, projecting
-to the system, and finding the collapsed state — plus the piecewise invariance just noted.
-Together those are what would let the smooth horn claim a Lüders update at all.
+The conditioned post-measurement system marginal (`pointer_luders_marginal`, with the CSD
+forms `pointer_luders_born`/`pointer_luders_born_prep`) and the piecewise invariance
+(`pointerRelocate_measurePreserving`, plus the full-composite
+`pointerLudersStroke_measurePreserving`). See `SigmaLayer/PointerLudersMarginal.lean`.
 
 ## References
 

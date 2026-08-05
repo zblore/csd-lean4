@@ -245,8 +245,12 @@ mixed preparations *and their outcome-conditioned update*, dynamical no-signalli
 eraser process with its irreversibility theorem, and POVM/instrument dynamics via Naimark
 dilation. Three witness families now populate the measurement **trilemma** (seams,
 `ε`-Born, Dirac calibration), and the transition profiles have `C^∞` variants with the
-plateau interface unchanged. Recorded extensions: the smooth-witness Lüders composition
-and the `ε`-Born frequency layer. The **local sharpened no-go is now a theorem**
+plateau interface unchanged. The two formerly-recorded extensions are now theorems: the
+`ε`-Born frequency layer (`pointer_born_frequency`, 2026-08-04) and the **smooth-witness
+Lüders composition** (`pointer_luders_marginal`, `SigmaLayer/PointerLudersMarginal.lean`,
+2026-08-05) — conditioned on the outcome sector, the post-stroke system marginal is the
+slot calibration, so the smooth horn delivers records *and* a collapse-as-relocation
+update on one arena. The **local sharpened no-go is now a theorem**
 (`posMeasure_noRecord_pointer`, `SigmaLayer/NoRecordGeometry.lean`, 2026-08-05): on the
 pointer's moment-region geometry, exact-a.e. records force Dirac calibration — the
 trilemma's third leg closed with no geometric hypothesis. General exhaustiveness over all
