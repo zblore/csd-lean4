@@ -122,6 +122,7 @@ lake update
 bash scripts/check-axiom-imports.sh    # every AxiomAudit pin is import-reachable
 bash scripts/check-sector-linkage.sh   # the KahlerOnticSetup substrate is not carried-but-unused
 bash scripts/check-connectivity.sh     # docs don't overclaim end-to-end Kähler→Born/Schrödinger connectivity
+bash scripts/check-review-surface.sh   # expert-review triage: thin defs, no-API defs, single-use statements
 ```
 
 The build configuration lives in `lakefile.toml` (not `lakefile.lean`); Mathlib
@@ -155,6 +156,26 @@ README/INDEX, requires the honesty banner, and reports whether a non-trivial
 "single posited object / both pillars on one interface / end-to-end" framing
 until the manifest's L4∧L5∧L6 flip to CONNECTED.** The fix course is C1–C6 in the
 manifest; C1 (a genuine `Φ ≠ id` inhabitant) is the current priority.
+
+**Review-surface triage (`scripts/check-review-surface.sh`).** Ilin & Nugent's
+expert-review case study (arXiv 2606.13925) took a sorry-free, kernel-green Lean
+formalisation and had a mathlib expert review it as *library code*: of 62
+agent-generated definitions exactly one was written correctly. The kernel cannot
+see that defect class — bad definitions, over-specialised statements, missing
+API, walls of `have` — and at their rate (one expert-week per theorem) reviewing
+this corpus would cost ~25 expert-weeks, so the review has to be triaged
+mechanically and consumed by a human. The script ranks candidates in five
+sections: thin definitions (1–2 references; the zero case is check-vacuity's),
+definitions proofs reach *through* (`unfold`/`simp [name]`) with no lemma
+interface, statements referenced exactly once (AxiomAudit pins count as declared
+headlines and are excluded), per-file `have`-density and proof-length outliers,
+and off-norm definition names. Every metric is a proxy and the output says so —
+findings are questions for a review pass, never a quality score, and the guard is
+deliberately **not** a blocking CI gate. Run it before releases, after landing a
+multi-module tranche, or when deciding where a human review week would go; diff
+against [`docs/review-surface-baseline-2026-08-05.txt`](docs/review-surface-baseline-2026-08-05.txt)
+(regenerate with `--full`). First-run findings and open questions:
+[`specs/review-surface-findings.md`](specs/review-surface-findings.md).
 
 The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` plus a clean `lake build CsdLeanTests` with no errors and no `sorry`s constitutes a verified proof plus a green regression suite.
 
