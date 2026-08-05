@@ -79,9 +79,14 @@ with the ready state. Positive measure stands; `O(δ)` was an over-assertion. Th
 `collapse_accuracy_bound`. The honest classification is therefore a **trilemma** — each
 horn pays exactly one of: **seams** (piecewise witness, discontinuous propagator),
 **ε-Born** (smooth witness, positive-measure ready state), **Dirac calibration** (this
-witness, exact records a.e. and exact Born). Whether a fourth combination
+witness, exact records a.e. and exact Born). ~~Whether a fourth combination
 (continuous + positive-width ready + exact-Born-and-a.e.-records) is impossible is a
-candidate *sharpened no-go*, recorded, not claimed. Further scope: two cells and a
+candidate *sharpened no-go*, recorded, not claimed.~~ *Updated 2026-08-05:* on the
+pointer's moment-region geometry this is now a **theorem** — `posMeasure_noRecord_pointer`
+(`SigmaLayer/NoRecordGeometry.lean`): continuity + open-map + open preconnected
+positive-width ready + two-outcome correlation force a positive-measure no-record set, so
+exact-a.e. records force Dirac calibration. General exhaustiveness over *all* arenas
+remains research, not claimed. Further scope: two cells and a
 `ℂℙ²` pointer (the horn is an existence claim; general `N` is a mechanical extension of
 the same kissing-crossing, recorded); the terminal stroke is exhibited as a continuous
 skew-unitary map (time-ramping through `pointerRamp`/`smoothPointerRamp` is the same

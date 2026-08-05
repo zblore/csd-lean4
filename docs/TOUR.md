@@ -177,11 +177,16 @@ dynamics on a connected state space, and every measuring science has met that co
 continuous, measure-preserving witness with records exact off a **two-point** seam and
 **exact** Born — the transition crosses where the record regions kiss. Its price is the
 **Dirac calibration**: exactness holds at the calibrated ready point, and a positive-width
-ready region fattens the seam to order the calibration width. The honest classification is
+ready region gives the no-record set positive measure (qualitative — the earlier "of order
+the calibration width" was withdrawn 2026-08-04; the order would need a landing-moment
+estimate). The honest classification is
 therefore a* **trilemma** *— each formalised horn pays exactly one of: seams (piecewise
 witness), ε-Born (smooth witness), Dirac calibration (null-seam witness), the last already
-priced by `collapse_accuracy_bound`. Whether a fourth combination is impossible is a
-recorded candidate sharpened no-go, not a claim.*) Digital
+priced by `collapse_accuracy_bound`. On the pointer's own geometry the fourth combination
+is now provably impossible — `posMeasure_noRecord_pointer`
+(`SigmaLayer/NoRecordGeometry.lean`, 2026-08-05): continuity + open-map + open preconnected
+positive-width ready + correlation force a positive-measure no-record set. General
+exhaustiveness over all arenas remains research, not a claim.*) Digital
 electronics keeps continuous dynamics and engineers the `ε`: flip-flop *metastability* is an
 unresolved needle between the marks, its probability driven down exponentially with settling
 time — the classical twin of our no-go is Lamport's *Buridan's Principle* (1984), found by
@@ -241,9 +246,11 @@ eraser process with its irreversibility theorem, and POVM/instrument dynamics vi
 dilation. Three witness families now populate the measurement **trilemma** (seams,
 `ε`-Born, Dirac calibration), and the transition profiles have `C^∞` variants with the
 plateau interface unchanged. Recorded extensions: the smooth-witness Lüders composition
-and the `ε`-Born frequency layer. Parked by author decision: the sharpened no-go that
-would make the trilemma provably exhaustive (`specs/BACKLOG.md` records why — the local
-version is tractable, the general one is research). The empirical suite
+and the `ε`-Born frequency layer. The **local sharpened no-go is now a theorem**
+(`posMeasure_noRecord_pointer`, `SigmaLayer/NoRecordGeometry.lean`, 2026-08-05): on the
+pointer's moment-region geometry, exact-a.e. records force Dirac calibration — the
+trilemma's third leg closed with no geometric hypothesis. General exhaustiveness over all
+arenas stays research (`specs/BACKLOG.md`). The empirical suite
 covers every flagship test on both branches. Connectivity claims are governed by
 [`specs/connectivity-manifest.md`](../specs/connectivity-manifest.md) — nothing here may be
 read as stronger than a CONNECTED row there. Open work:

@@ -167,6 +167,7 @@ public import CsdLean4.SigmaLayer.PointerFrequency
 public import CsdLean4.SigmaLayer.PovmSectorBorn
 public import CsdLean4.SigmaLayer.SharpenedNoGo
 public import CsdLean4.SigmaLayer.PointerLuders
+public import CsdLean4.SigmaLayer.NoRecordGeometry
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -10022,6 +10023,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- no-record set is contained in the closure of its interior. True of the corpus's moment
 -- regions (perturb toward the ready vertex) but NOT constructed, so the leg is closed modulo
 -- a geometric fact rather than closed outright.
+-- [2026-08-05: that geometric fact IS now constructed -- NoRecordGeometry block below;
+-- the "closed modulo" qualifier above is superseded and B5 is closed outright.]
 /-- info: 'CSD.RecordLayer.exists_noRecord_of_meets_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.exists_noRecord_of_meets_two
 
@@ -10052,5 +10055,35 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointerIndex_eq_some_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerIndex_eq_some_of_mem
+
+-- NoRecordGeometry (2026-08-05, SigmaLayer/NoRecordGeometry.lean; BACKLOG B5-geom -- and
+-- with it B5 CLOSED OUTRIGHT).
+-- The single remaining hypothesis of the trilemma's third leg was GEOMETRIC: that the
+-- no-record set is contained in the closure of its interior. The construction: feed weight
+-- into the ready component (feedReady) -- every record numerator is fixed, the norm
+-- strictly grows, so every record moment strictly drops below 1/2; the family is
+-- phase-preserving on the nonzero branch, so convergence back to the ray is immediate and
+-- needs no chart argument.
+-- ★ noRecord_subset_closure_strict — the core, for an arbitrary index set of record
+-- moments (one proof serves the all-j and pair consumers).
+-- ★ noRecord_subset_closure_interior — B5-geom as stated in the BACKLOG row.
+-- ★ recordRegion_pair_compl_regular — the pair form posMeasure_noRecord_of_correlates's
+-- hreg consumes.
+-- ★★ posMeasure_noRecord_pointer — B5: on the pointer manifold, a continuous open-map
+-- propagator correlating two outcomes on an open preconnected ready set gives the
+-- no-record set positive FS measure. NO geometric hypothesis remains -- exact-a.e. records
+-- force Dirac calibration as a THEOREM. Honest scope unchanged: this is the LOCAL leg
+-- (the pointer's moment regions); general exhaustiveness over all arenas stays research.
+/-- info: 'CSD.RecordLayer.noRecord_subset_closure_strict' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.noRecord_subset_closure_strict
+
+/-- info: 'CSD.RecordLayer.noRecord_subset_closure_interior' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.noRecord_subset_closure_interior
+
+/-- info: 'CSD.RecordLayer.recordRegion_pair_compl_regular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.recordRegion_pair_compl_regular
+
+/-- info: 'CSD.RecordLayer.posMeasure_noRecord_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_pointer
 
 end CSD.Tests.AxiomAudit

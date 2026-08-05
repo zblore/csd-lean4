@@ -47,18 +47,20 @@ Two further gaps, stated rather than papered over:
   region — and `posMeasure_noRecord_of_correlates` chains it to the measure bound. The
   hypotheses now split by kind: everything about the **dynamics** is discharged, and what
   remains is one assumption about the **record geometry**.
-* **The one remaining hypothesis is `hreg`**: the no-record set is contained in the closure
-  of its interior. This is true of the corpus's moment regions — a state with `m₁ = 1/2` is
-  approximated by states with both moments strictly below, obtained by moving toward the
-  ready vertex — but that perturbation is **not constructed here**, so the leg is closed
-  *modulo a geometric fact*, not closed outright.
+* ~~The one remaining hypothesis is `hreg`~~ **Discharged 2026-08-05**
+  (`SigmaLayer/NoRecordGeometry.lean`): the no-record set IS contained in the closure of
+  its interior — the perturbation (feed weight into the ready component, fixing every
+  record numerator while the norm strictly grows) is now constructed, and
+  `posMeasure_noRecord_pointer` instantiates this theorem for the pointer's record regions
+  with **no geometric hypothesis left**. B5 is closed outright.
 
 ## References
 
 `specs/BACKLOG.md` B5; `SigmaLayer/NullSeamWitness.lean` (the third horn, and the scope
 note corrected alongside this); `SigmaLayer/MeasurementConstraints.lean`
 (`no_everywhere_correlation`, whose connectedness argument the forcing step would reuse);
-`docs/TOUR.md` §"Which horn is the right one?".
+`SigmaLayer/NoRecordGeometry.lean` (the geometric hypothesis `hreg`, discharged
+2026-08-05); `docs/TOUR.md` §"Which horn is the right one?".
 -/
 
 @[expose] public section
@@ -140,10 +142,10 @@ gives the no-record set **positive measure** — provided the no-record set is *
 The hypotheses now split cleanly by kind: everything about the *dynamics* is discharged
 (continuity, openness, correlation), and the single remaining assumption `hreg` is a
 property of the **record geometry** alone. For the corpus's moment regions
-`{m_{j+1} > 1/2}` the complement is a sublevel set of continuous moments and regularity
-holds — a point with `m₁ = 1/2` is approximated by points with both moments strictly
-below, obtained by moving toward the ready vertex — but that perturbation is not
-constructed here.
+`{m_{j+1} > 1/2}` regularity is now a theorem — `recordRegion_pair_compl_regular`
+(`SigmaLayer/NoRecordGeometry.lean`, 2026-08-05) constructs the perturbation toward the
+ready vertex, and `posMeasure_noRecord_pointer` instantiates this statement with `hreg`
+discharged.
 
 This is why the Dirac calibration escapes: `hA : IsOpen A` fails for a point. -/
 theorem posMeasure_noRecord_of_correlates
