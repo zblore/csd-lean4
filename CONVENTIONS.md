@@ -149,6 +149,14 @@ Timelines vary by item. Small lemmas can land in days to weeks with engagement f
 
 The corpus does not prioritise upstreaming over programme progress. The conventions exist to keep the option open, not to commit to it.
 
+**Decision 2026-08-06 (author): upstreaming is retired from the work queue.** Mathlib PRs,
+while nice, do not advance CSD and are not a need of this repository. The BACKLOG B6 row is
+struck; the staging discipline in this section and §1 stays exactly as is — Cat-1 modules
+remain CSD-free in `CsdLean4/Mathlib/` because that is a *code-hygiene* rule, not an
+upstreaming promise — and the option this section keeps open stays open for anyone
+(including a future decision) to exercise. Nothing is deleted; the readiness record
+(zero corpus imports, `Matrix.StoneC1` namespace, interface pass) lives in the struck row.
+
 ## 8. Conventions adopted from the Lean-QIT / Physlib comparison (2026-07-20)
 
 Drawn from an inspection of the QuAIR/Lean-QIT source and Physlib's contribution rules. Most of these also move the corpus toward Physlib's requirements, so adopting them serves both hardening and the upstreaming route. Each item below is marked with its **status**: *already-satisfied* (we do this or better), *policy* (adopted as a rule for new work), or *to-implement* (a concrete follow-up task, tracked in [`specs/BACKLOG.md`](specs/BACKLOG.md)).
@@ -331,6 +339,7 @@ mechanical tracker:
 
 **What this section does NOT change:** the correctness stack (kernel, AxiomAudit,
 `check-claims` and the guard family) remains the authority on soundness and claim
-honesty; §9 is an ergonomics-and-reuse bar layered on top, and the only place it is
-*load-bearing* is upstreaming (B6 and the Physlib route), which is why BACKLOG F1 leads
-the queue.
+honesty; §9 is an ergonomics-and-reuse bar layered on top. *(Historical note: when
+adopted, the externally-load-bearing case was upstreaming, which is why F1 led the
+queue; with upstreaming retired 2026-08-06 (§7), the standard stands on the author's
+decision alone — library-grade code as an intrinsic bar for this corpus.)*

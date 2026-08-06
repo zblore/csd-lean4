@@ -89,8 +89,9 @@ closed 2026-08-03 by the `ℂℙ^K` smooth pointer witness; the landed witness c
 (`ShearDiscontinuity`/`PiecewiseHamiltonian`). **Operational finite-QM closure was declared
 2026-08-06 (`v1.1.0-finite-qm-closed`)**: the README fixes the operational definition and the
 requirement→theorem role map; `reconstruction-status.md` carries the declaration against its
-net line. Remaining tracks are outside that definition by construction: B6 upstreaming, C1–C2
-paper alignment, and the foundations frontier (`CSD-CHARTER.md`).
+net line. Remaining tracks are outside that definition by construction: C1–C2 paper alignment
+and the foundations frontier (`CSD-CHARTER.md`). (B6 upstreaming was retired from the queue
+2026-08-06, author decision — `CONVENTIONS.md` §7; the staging discipline stays.)
 The **empirical suite** covers every flagship test on both branches (QM proof + CSD ontic twin;
 `../EMPIRICAL.md`), with the crypto tranche consuming the dynamical layer. The corpus imports
 **zero axioms** — every theorem reports only `[propext, Classical.choice, Quot.sound]` — is
