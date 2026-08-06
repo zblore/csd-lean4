@@ -74,8 +74,11 @@ sufficient condition. Correspondingly `vonNeumannEntropy_subadditive` hypothesis
 `ρ_A = Tr_B ρ_AB`, `ρ_B = Tr_A ρ_AB` **positive-definite** (so `ρ_A ⊗ ρ_B` is PD for the Klein
 step), and only `ρ_AB.PosSemidef` + `ρ_AB.trace = 1`. It does **NOT** assume `ρ_AB` itself
 positive-definite — that would exclude the physically important pure entangled states (where
-`S(ρ_AB) = 0` and the marginals are full-rank mixed), which the statement covers. The bound is
-genuinely an inequality on correlated `ρ_AB` (equality only at product states), not a vacuous
+`S(ρ_AB) = 0` and the marginals are full-rank mixed), which the statement covers precisely when
+the marginals are full-rank — a pure state has PD marginals iff its Schmidt rank equals BOTH
+dimensions (equal-dimension, full-Schmidt-rank pure states in; rank-deficient or unequal-dimension
+pure states out; scope sharpened 2026-08-06, CL-022 audit). The bound is genuinely an inequality on
+correlated `ρ_AB` *with PD marginals* (equality only at product states), not a vacuous
 product-state identity. The general singular-marginal case and **Araki–Lieb**
 `|S(ρ_A) − S(ρ_B)| ≤ S(ρ_AB)` (which needs a purification construction) are deferred. See
 `specs/k1-plan.md` for the ledger.
@@ -620,8 +623,10 @@ theorem cfc_log_kronecker {ρA : Matrix n n ℂ} {ρB : Matrix m m ℂ}
 
 Hypotheses: `ρ_AB.PosSemidef`, `ρ_AB.trace = 1`, and `(partialTraceRight ρ_AB).PosDef`,
 `(partialTraceLeft ρ_AB).PosDef`. **`ρ_AB` is NOT assumed positive-definite** — the statement
-covers pure entangled states (where `S(ρ_AB) = 0`, marginals full-rank mixed) and every correlated
-`ρ_AB`; the marginals-PD condition is the minimal one for the Klein step (`ρ_A ⊗ ρ_B` PD). The bound
+covers pure entangled states of full Schmidt rank (where `S(ρ_AB) = 0`, marginals full-rank mixed)
+and every correlated `ρ_AB` *whose marginals are PD* (a correlated state with a singular marginal
+is outside this form; scope sharpened 2026-08-06, CL-022 audit); the marginals-PD condition is what
+the Klein step consumes (`ρ_A ⊗ ρ_B` PD). The bound
 is a genuine inequality (equality only at product `ρ_AB = ρ_A ⊗ ρ_B`), not a product-state identity.
 
 Proof: `S(ρ_AB) = −Re Tr(ρ_AB log ρ_AB) ≤ −Re Tr(ρ_AB log(ρ_A⊗ρ_B))` by `klein_inequality` at

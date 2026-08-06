@@ -143,7 +143,17 @@ The converse of the realisability inclusion `transProbPreserving_unitary` is the
 
 equivalently, the isometry group of `ℂℙⁿ` with the Fubini–Study metric is the
 projective **semi**-unitary group. It is **not** stated here as an axiom or a
-`sorry`. Piece 3 (W5) delivers the branch-distinguishing machinery:
+`sorry`.
+
+**Scope note (CL-024 audit, 2026-08-06).** This module proves the EXISTENCE
+clause of the Wigner/Bargmann theorem only. Up-to-phase **uniqueness** of the
+inducing (anti)unitary — part of the classical statement — is deliberately not
+formalized here; the branch-EXCLUSIVITY facts (a map cannot be both
+unitary- and antiunitary-induced, `2 ≤ N`) live downstream:
+`Projectivization.conjProj_ne_projMap` / `smul_action_not_antiunitary`
+(`Empirical/CSD/Gates/WignerDischarge.lean`) and the Bargmann-invariant
+discriminator (`Projectivization/Bargmann.lean`, `LF4/BargmannSelection.lean`).
+Cite those, not this module, for uniqueness/exclusivity claims. Piece 3 (W5) delivers the branch-distinguishing machinery:
 
 * `two_level_imrelphase_of_fixes` / `_flips` — the **complex `I`-probe** pins the
   *imaginary* part of the relative phase, the datum the real probes of pieces 1–2
@@ -330,7 +340,9 @@ noncomputable def conjProj (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
 Reduce both image rays to `mk (conjVec ·.rep)` via `transProb_mk`, then apply
 `conjVec_transProbVec`. This exhibits a concrete `TransProbPreserving` inhabitant
 of the **antiunitary** class: `conjVec` is conjugate-linear (`conjVec_smul`), not
-the underlying map of any `≃ₗᵢ[ℂ]`, so `conjProj` is not `projMap` of a unitary.
+the underlying map of any `≃ₗᵢ[ℂ]`; for `2 ≤ N` the ray-level map `conjProj` is
+not `projMap` of any unitary (`conjProj_ne_projMap`, WignerDischarge — at
+`N ≤ 1` the projective space has at most one point and the distinction vanishes).
 The eventual Wigner dichotomy is thus non-vacuous on the antiunitary side. -/
 theorem conjProj_transProbPreserving :
     TransProbPreserving (conjProj (N := N)) := by

@@ -592,6 +592,11 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.PurePreparation.born_rank_one_direct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms PurePreparation.born_rank_one_direct
 
+-- Direct pin (CL-005 audit recommendation, 2026-08-06): the effect-Gleason theorem itself,
+-- previously pinned only transitively via pure_state_born_weights_of_certainty.
+/-- info: 'CSD.LF2.OperationalPackage.effect_gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms OperationalPackage.effect_gleason_representation
+
 -- F-01 discharge (G1, 2026-08-06): the bridge is load-bearing via the transport theorems —
 -- integral_comp_pi carries an ontic Σ-integral into the projective μFS-integral through
 -- bridge_eq, and fromPreparation_liouville_apply computes the Liouville-prepared operational

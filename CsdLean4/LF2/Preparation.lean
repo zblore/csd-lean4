@@ -48,7 +48,9 @@ axiom; the option-(b) discipline of `specs/pre-LF4-plan.md` was to route the
 chain through it to keep the citation in the audit. Both the constructor and the
 abstract `measure_bridge`/axiom were **removed** once it was clear nothing
 downstream used them (the concrete instances build the bridge directly and
-axiom-free), leaving `busch_effect_gleason` as the corpus's only imported axiom.
+axiom-free), leaving `busch_effect_gleason` as the corpus's only imported axiom —
+itself discharged 2026-07-21 (proved as `effect_gleason_representation`); the
+corpus has imported zero axioms since.
 -/
 
 @[expose] public section
@@ -291,8 +293,9 @@ theorem OP_certain_at_ψ
     chain critical path).** For a pure preparation and a rank-1 effect
     through `φ`, the operational package assigns `‖⟨ψ, φ⟩‖²`. Proof
     composes the volume-content step (`OP_certain_at_ψ`) with the Busch
-    packaging step (`pure_state_born_weights_of_certainty`, which uses
-    `busch_effect_gleason` + the now-proved
+    packaging step (`pure_state_born_weights_of_certainty`, which uses the
+    proved `effect_gleason_representation` — formerly the
+    `busch_effect_gleason` axiom, discharged 2026-07-21 — plus
     `rankOneDensity_unique_of_certainty` + `born_quadratic`).
 
     ## Busch is a spec-faithfulness choice, not a mathematical necessity
@@ -328,10 +331,10 @@ theorem OP_certain_at_ψ
     package (via the `OperationalPackage.fromPreparation` construction),
     Busch effect-Gleason (via `pure_state_born_weights_of_certainty`).
 
-    `#print axioms PurePreparation.born_rank_one` cites
-    `busch_effect_gleason` (extensionally, via Busch packaging). The
-    `bridge` argument carries no axiom — the concrete instances supply it
-    axiom-free. -/
+    `#print axioms PurePreparation.born_rank_one` reads only the
+    foundational triple (AxiomAudit-pinned) — the Busch step is the proved
+    `effect_gleason_representation` since 2026-07-21. The `bridge` argument
+    carries no axiom — the concrete instances supply it axiom-free. -/
 theorem born_rank_one
     (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : MeasureBridgeData D μFS)

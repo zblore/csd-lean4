@@ -175,7 +175,7 @@ The three LF3 chain capstones consume a `PureSingletPreparation D ctx N` structu
 - The projective reference measure `μFS` + its `IsProbabilityMeasure` instance.
 - The measure bridge data `bridge : LF2.MeasureBridgeData D μFS`.
 - The static pure preparation `PP : LF2.PurePreparation D prepMeasure N` (Hilbert-side ψ + Dirac concentration of `Measure.map D.π prepMeasure` on the projective ray of ψ).
-- The dimension bound `hN : 2 ≤ N` (required for `busch_effect_gleason`).
+- The dimension bound `hN : 2 ≤ N` (spec-signature compatibility; the proved `effect_gleason_representation` holds for every `N`, see `born_form_of_package` — mathematically unnecessary since 2026-07-21).
 - The measurement-context joint eigenstate data `jed : MeasurementJointEig ctx PP.ψ` (the four (s, t) joint spin eigenstates with unit norm, pairwise distinctness, and the Born identity `‖⟨PP.ψ, jed.eig s t⟩‖² = P_st ctx.a ctx.b s t`).
 - The per-sector ontic outcome regions `O_region : Sign → Sign → D.toOntic.OutcomeRegion`.
 - The **ontic weight ↔ OP.p bridge** `bridge_op_p : ∀ s t, prepMeasure((O_region s t).preEvent) = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))` where `OP = LF2.OperationalPackage.fromPreparation D μFS bridge prepMeasure PP.rep PP.hrep_unit PP.hrep_meas`.
@@ -235,7 +235,7 @@ For each headline exported theorem, the legible axiom citation:
 | `measure_bridge` | *(removed 2026-06-04 together with `invariant_measure_uniqueness` — the abstract statement was unused; the concrete instances carry `cp_measure_bridge` / `k_measure_bridge`, foundational-triple-only)* |
 | `born_quadratic` | `propext, Classical.choice, Quot.sound` |
 | `pure_state_born_weights` | `propext, Classical.choice, Quot.sound` |
-| `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `pure_state_born_weights_of_certainty` | `propext, Classical.choice, Quot.sound` (Busch step = the proved `effect_gleason_representation` since 2026-07-21; row corrected 2026-08-06) |
 | `LF3_main_theorem` | `propext, Classical.choice, Quot.sound` |
 | `LF3_finite_leakage_theorem` | `propext, Classical.choice, Quot.sound` |
 | `LF3_singlet_frequency_convergence` | `propext, Classical.choice, Quot.sound` (re-routed off Busch 2026-06-02) |
@@ -246,12 +246,12 @@ For each headline exported theorem, the legible axiom citation:
 | `LF3_singlet_frequency_convergence_born_inner_joint` | `propext, Classical.choice, Quot.sound` |
 | `PureSingletPreparation.ofHypothesis` | `propext, Classical.choice, Quot.sound` |
 | `PureSingletPreparation.weight_eq_P_st` | `propext, Classical.choice, Quot.sound` (via `OP_p_at_jointEig_eq_P_st_direct`) |
-| `LF3.OP_p_at_jointEig_eq_P_st` (operational-stratum, retained) | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
-| `LF2.PurePreparation.born_rank_one` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3.OP_p_at_jointEig_eq_P_st` (operational-stratum, retained) | `propext, Classical.choice, Quot.sound` (row corrected 2026-08-06) |
+| `LF2.PurePreparation.born_rank_one` | `propext, Classical.choice, Quot.sound` (row corrected 2026-08-06) |
 | `LF2.PurePreparation.born_rank_one_direct` | `propext, Classical.choice, Quot.sound` |
 | `LF2.PurePreparation.OP_certain_at_ψ` | `propext, Classical.choice, Quot.sound` |
 | `LF2.SectorData.outcomeOfProjective` | `propext, Classical.choice, Quot.sound` |
-| `LF3.OP_p_at_jointEig_eq_P_st` | `propext, Classical.choice, Quot.sound, busch_effect_gleason` |
+| `LF3.OP_p_at_jointEig_eq_P_st` | `propext, Classical.choice, Quot.sound` (row corrected 2026-08-06) |
 | `LF3.OP_p_at_jointEig_eq_P_st_direct` | `propext, Classical.choice, Quot.sound` |
 | `ProjectorAlgebra.ofTensorEmbedding` | `propext, Classical.choice, Quot.sound` |
 | `MeasurementUnitary.ofUnitaryTensorEmbedding` | `propext, Classical.choice, Quot.sound` |

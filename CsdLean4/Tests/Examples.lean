@@ -10,6 +10,7 @@ public import CsdLean4.LF2.BornWrapper
 public import CsdLean4.LF2.Interface
 public import CsdLean4.LF3.Interface
 public import CsdLean4.LF3.PurePreparation
+public import CsdLean4.Tests.EntropyWitness
 
 /-!
 # Examples and API smoke tests

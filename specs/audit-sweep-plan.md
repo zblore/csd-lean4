@@ -379,6 +379,31 @@ for the owner and is left uncommitted pending that call.
 leaves open is tracked as `specs/BACKLOG.md` **§G (G1–G7)** — this section
 records classification and verification evidence only, and is closed.
 
+**Specialist audits (same day, 2026-08-06 — the three `specialist-review`
+ledger claims, run as independent read-only deep audits, each verified
+both ways on intake):** CL-005 `effect_gleason_representation` —
+**VALIDATED-GRADE** (Busch 2003 hypothesis-by-hypothesis match; slightly
+stronger than the reference — all `N`; proof arc standard at every stage
+with boundedness legitimately replacing continuity; junk-value conventions
+clean; isolation probe compiled). Residue fixed same day: four stale
+AXIOMS.md §5 rows + related prose (the pre-discharge `busch_effect_gleason`
+citations), direct AxiomAudit pin added. CL-024 `wigner_rigidity` —
+**QUALIFIED** (no mathematical defect; hypothesis weaker than
+Wigner/Bargmann — bijectivity derived; antiunitary branch compile-probe
+forced at `N = 2`; up-to-phase uniqueness identified as the one substantive
+undocumented omission → module scope note added same day; five
+highest-risk tactic blocks named for the owner's hand pass, BACKLOG G11).
+CL-022/CL-023 entropy chain — **Entropy.lean VALIDATED-GRADE;
+Subadditivity/StrongSubadditivity QUALIFIED** (Klein's PD-σ hypothesis
+strictly stronger than the literature support condition — sound direction,
+counterexample-confirmed load-bearing; the ":624 every correlated ρ_AB"
+docstring overclaim fixed same day; SSA reduction verified as exactly one
+partial-trace DPI instance with correct Lieb–Ruskai index pattern;
+repo-wide SSA wording sweep clean; committed non-vacuity witness
+`Tests/EntropyWitness.lean` added). Ledger moves signed off by the author
+same day: CL-005 → validated; CL-022, CL-023, CL-024 → qualified
+(`specialist-review` count now 0).
+
 **Resolution (same day, 2026-08-06 — decisions by the author, execution per
 BACKLOG §G):** G1 resolved by the transport-theorem route
 (`MeasureBridgeData.integral_comp_pi` +

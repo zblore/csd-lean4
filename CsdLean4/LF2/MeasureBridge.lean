@@ -34,7 +34,9 @@ trivial / product-marginal fibres). The earlier abstract over-general statement
 were **removed (2026-06-04)**: nothing downstream used the abstract version, and
 the concrete `CP^{N-1}` uniqueness it would have needed is itself a proved,
 axiom-free theorem in the tree (`Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn`).
-The corpus's only remaining imported axiom is `busch_effect_gleason`.
+The last remaining imported axiom, `busch_effect_gleason`, was itself
+discharged 2026-07-21 (proved as `effect_gleason_representation`); the corpus
+now imports zero axioms.
 -/
 
 @[expose] public section
