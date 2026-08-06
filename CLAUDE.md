@@ -170,11 +170,14 @@ definitions proofs reach *through* (`unfold`/`simp [name]`) with no lemma
 interface, statements referenced exactly once (AxiomAudit pins count as declared
 headlines and are excluded), per-file `have`-density and proof-length outliers,
 and off-norm definition names. Every metric is a proxy and the output says so —
-findings are questions for a review pass, never a quality score, and the guard is
-deliberately **not** a blocking CI gate. Run it before releases, after landing a
-multi-module tranche, or when deciding where a human review week would go; diff
-against [`docs/review-surface-baseline-2026-08-05.txt`](docs/review-surface-baseline-2026-08-05.txt)
-(regenerate with `--full`). First-run findings and open questions:
+the guard is deliberately **not** a blocking CI gate. **Since 2026-08-06 the target
+it measures is an adopted standard** ([`CONVENTIONS.md`](CONVENTIONS.md) §9: library-grade
+code, mathlib naming in the `Mathlib/`-staged tree, documented physics-notation
+exceptions elsewhere), with the prioritised queue in `specs/BACKLOG.md` §F (F1, the
+`Reversible/` API pass, gates B6) and §9.5's diff discipline as enforcement: baseline
+re-captured per release, landings that regress (B) or (E) justify it in the commit.
+Diff against [`docs/review-surface-baseline-2026-08-05.txt`](docs/review-surface-baseline-2026-08-05.txt)
+(regenerate with `--full`). First-run findings:
 [`specs/review-surface-findings.md`](specs/review-surface-findings.md).
 
 The project uses **Lean 4.29.0-rc8** (see `lean-toolchain`) and depends on **Mathlib4**. There is no separate test runner — the Lean typechecker is the verification mechanism. A clean `lake build` plus a clean `lake build CsdLeanTests` with no errors and no `sorry`s constitutes a verified proof plus a green regression suite.

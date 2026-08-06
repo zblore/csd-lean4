@@ -69,6 +69,25 @@
 > | E4 | The CV programme |
 > | E5 | The two research frontiers — the fibre-from-dynamics question and general trilemma exhaustiveness |
 >
+> ### F. Library-grade quality programme (adopted as standard 2026-08-06 — `CONVENTIONS.md` §9)
+>
+> Author decision 2026-08-06: the corpus aims for **library-level code** — mathlib review
+> standards on the `Mathlib/`-staged tree, the same bar with documented physics-notation
+> exceptions elsewhere (the Lean-QIT/Physlib route). Motivated by Ilin & Nugent
+> (arXiv 2606.13925); measured by `scripts/check-review-surface.sh` against
+> `docs/review-surface-baseline-2026-08-05.txt`; rules in `CONVENTIONS.md` §9. Ordered by
+> forcing function, then cost-effectiveness. **F1 is the only externally-forced item**; a
+> mathlib reviewer at B6 will demand exactly what it delivers, so it precedes B6.
+>
+> | # | Size | Task |
+> |---|---|---|
+> | F1 | **M–L** — **before B6, and the reason B6 stays queued behind it** | **`Reversible/` API pass.** Equation-lemma interfaces for the reach-through tier the auditor ranks worst: the zero-API layout defs (`cuccaroMulModLayout3` 14 unfolds/0 lemmas, `wMulLoop` 9/0, `wAdd` 7/0, `wDbl` 6/0, `constMulLayout0`, `andSumPass`, `LayerWF`) and the interfaced-but-heavy tier (`gateWires` 40/6, `gateCost` 23/1, `cBank` 21/4, `modAddLayout2` 15/1, `modSubLayout2` 14/1, `cModAddLayout2` 11/1, `modSubState2` 10/2, `constMulLayout1/2` 8/1, `modReduceLayout2` 6/1, `cModAddState2` 8/2). Per def: a `_def`/`_apply` simp lemma plus component lemmas where correctness proofs project; convert `unfold` sites where the lemma shortens the proof. While in the tree: extract named lemmas from `cuccaroModAdd_spec` (313-line proof, the corpus's longest — §9.4 on-touch rule). Success metric: `Reversible/` rows in review-surface (B) with `api=0` → zero; `through/api` ratios collapse. Then B6's 68-file upstream batch goes out already wearing the interface mathlib review will ask for |
+> | F2 | **S** | **Witness-scalar and plumbing interfaces** — the cheap wins outside `Reversible/`: `alphaOff`/`betaOff` (18 unfolds each, 0 lemmas — the worst rows corpus-wide), `deltaOff`, `aAngle`/`bAngle`/`baseAngle` (`LF6/CGLMPQudit.lean`), `om2` (`MUB3Volume`), `innerProd` (`SternGerlach`), `boxSet` (`ContextFixedA7FS`), and the join plumbing (`joinArenaMeasure` 3/0, `paramMeasure`, `joinFstAux`, `blockCollapseAux`). One `_def` simp lemma each; swap unfold sites opportunistically. ~an hour of mechanical work, kills the top of the (B) list |
+> | F3 | **S — decisions taken 2026-08-06 (`CONVENTIONS.md` §9.2); renames land on-touch** | **Naming standard.** Decided: mathlib naming strict in `Mathlib/`-staged files; literature notation blessed in physics modules where it mirrors the cited source (the `HardyKahler` `A'`/`B'` family — ten (E) rows — is *compliant* under this rule, docstring citation required); theorem-style def names (`*_realisable_for` ×9, `b92_encode`, `P_st`) are defects of form, renamed when next touched, never swept. (E) tracks; no sweep row exists on purpose |
+> | F4 | **standing rule, no sweep** | **Rule of two** (`CONVENTIONS.md` §9.3): at a second near-use, generalise the existing single-use lemma instead of cloning. The 1,109-row (C) list is the where-to-look index; obligation `Prop`s are exempt by design (docstring must name the discharging witness). Per-file top offenders (`WignerRigidity` 24, `ShorCore` 21, `CanonicalTypicality` 17, `Grover` 16) get attention on touch only |
+> | F5 | **S** | **Auditor refinements** so the trackers track the standard: (a) (A)-exclusion for closure structures whose sole reference is a pinned inhabitation theorem (the `smoothWitnessClosure` false-positive class); (b) baseline re-capture at each release tag + the §9.5 diff discipline noted in the script header; (c) keep non-blocking — the proxy warning is part of the standard, not a caveat to it |
+> | F6 | **record** | **Ratchet discipline live from now**: any landing that increases the (B) no-API count or adds theorem-style def names states so with justification in its commit message. First exercised retroactively this week: brick 1's `pointerLudersStroke`/`pointerLudersMeasure` entered the lists on 2026-08-05 and left them when brick 2 consumed them — the intended lifecycle for definition-shaped debt: visible, short-lived, paid |
+>
 > ---
 >
 > ## What's next, by size & complexity (updated 2026-08-02, post-v1.0.1 + second review) *(HISTORICAL — see the live list above)*

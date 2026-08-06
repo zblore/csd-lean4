@@ -68,6 +68,19 @@ token-level estimate of ~22 was collision-inflated (short names) and is retired.
 
 ## Open questions (the human review queue, ranked)
 
+> **ANSWERED 2026-08-06 — library-grade code adopted as the corpus standard**
+> (`CONVENTIONS.md` §9, by author decision; prioritised queue `specs/BACKLOG.md` §F).
+> The answers, in the order asked:
+> 1. **Yes, and it now gates B6** (F1: the `Reversible/` API pass precedes upstreaming).
+> 2. **Defect of form, not of content** — theorem-style names on defs are renamed
+>    on-touch (§9.2); no sweep.
+> 3. **Yes** — 18 uninterfaced unfolds is a refactoring hazard, not transparency (F2,
+>    the cheap-wins pass).
+> 4. **On-touch only** (§9.4) — proven and stable; churn risks regressions for
+>    aesthetics. `cuccaroModAdd_spec` rides F1 since `Reversible/` is being touched.
+> 5. **The rule of two** (§9.3): generalise at the second near-use, never as a sweep;
+>    obligation `Prop`s exempt by design.
+
 1. Should the `Reversible/` layout defs get equation-lemma interfaces before any
    B6 mathlib upstreaming? (26 no-API defs; mathlib review would demand it.)
 2. Is the `*_realisable_for` family (nine thin, theorem-named defs) the right
@@ -82,4 +95,5 @@ token-level estimate of ~22 was collision-inflated (short names) and is retired.
 
 The guard is not a CI gate and must not become one on these numbers: 118+26+1102
 "findings" as a blocking gate would be a proxy worshipped as a target — the
-paper's own warning.
+paper's own warning. That remains true under the adopted standard: enforcement is
+§9.5's diff discipline (justify regressions per landing), never a threshold.

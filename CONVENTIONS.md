@@ -280,3 +280,57 @@ public import CsdLean4.LF2.BornWrapper
 4. **`autoImplicit=false`, module system, tagged pin, per-declaration docstrings** (§8.4) — fold the mechanical items into the next toolchain/module-system pass.
 
 Provenance: the 2026-07-20 Lean-QIT / Physlib overlap analysis.
+
+## 9. Library-grade quality standard (adopted 2026-08-06)
+
+**The corpus aims for library-level code**: the bar a mathlib reviewer would apply to the
+`Mathlib/`-staged tree, and the same bar — with the documented physics exceptions below —
+across the physics modules (the Lean-QIT / Physlib route of §8). Adopted by author
+decision 2026-08-06, motivated by Ilin & Nugent (arXiv 2606.13925): a corpus can be
+kernel-green, zero-axiom, and honestly claimed — all of which §1–§8 and the guard family
+already enforce — and still fail review *as a library* (definitions without interfaces,
+statements proved too narrow to reuse, names that assert nothing). The kernel cannot see
+that defect class; `scripts/check-review-surface.sh` measures it, and this section makes
+its target normative rather than descriptive.
+
+**The prioritised work queue is `specs/BACKLOG.md` §F.** The rules, each with its
+mechanical tracker:
+
+- **9.1 API-first definitions** *(tracker: review-surface (B)).* A definition that proofs
+  reach through carries an interface: a `_def`/`_apply` simp lemma at minimum, component
+  lemmas where consumers project. Raw `unfold`/`delta` of a *nonlocal* definition inside a
+  finished proof is a smell — it couples the proof to the definition's spelling, and 18
+  such couplings (the `alphaOff` case) is a refactoring hazard, not transparency. Local
+  plumbing (an `Aux` consumed only in its own file) is exempt. **Hard rule for new
+  modules; retrofit per BACKLOG F1–F2 for existing ones.**
+- **9.2 Naming** *(tracker: review-surface (E)).* `Mathlib/`-staged files follow mathlib
+  naming strictly — defs `lowerCamelCase`, Prop-valued predicates/structures
+  `UpperCamelCase`, theorems `snake_case` — since B6 review will demand exactly that.
+  Physics modules (`Empirical/`, `LF*`) may use **literature notation** where the name
+  mirrors the cited source (Hardy's `A'`/`B'` settings, gate names): domain fidelity beats
+  convention there, and the module docstring says which source the notation follows.
+  Theorem-style names on definitions (`*_realisable_for`, `b92_encode`) are a defect of
+  form: rename **when next touched** — a rename sweep is churn without content.
+- **9.3 Rule of two for statements** *(trackers: (A)/(C)).* Single-use support lemmas are
+  legitimate factoring — the 1,100-row list is a where-to-look index, not a to-zero
+  budget. The rule bites at the *second* consumer: when a new proof nearly-fits an
+  existing single-use lemma, **generalise the existing lemma** rather than clone it.
+  Obligation `Prop`s (§8.3: spec consumed by its one discharging witness) are refs=1 **by
+  design** and exempt; their docstring must name the discharging witness.
+- **9.4 Proof style** *(tracker: (D)).* A new proof exceeding ~150 lines extracts named
+  lemmas first. Existing outliers (`cuccaroModAdd_spec` at 313, the `have`-density top
+  ten) are refactored **on touch**, not as a campaign — they are proven and stable, and
+  churn risks regressions for aesthetics.
+- **9.5 The ratchet** *(enforcement).* `check-review-surface` stays **non-blocking** — its
+  counts include by-design patterns (9.2's physics names, 9.3's obligation Props), and a
+  blocking gate on a proxy is the failure mode its own header warns against. Enforcement
+  is by **diff discipline** instead: the baseline (`docs/review-surface-baseline-*.txt`)
+  is re-captured at each release tag; a landing that *increases* the no-API count (B) or
+  adds theorem-style def names (E) says so, with justification, in its commit message.
+  Unjustified regressions are review findings.
+
+**What this section does NOT change:** the correctness stack (kernel, AxiomAudit,
+`check-claims` and the guard family) remains the authority on soundness and claim
+honesty; §9 is an ergonomics-and-reuse bar layered on top, and the only place it is
+*load-bearing* is upstreaming (B6 and the Physlib route), which is why BACKLOG F1 leads
+the queue.

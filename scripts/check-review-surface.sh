@@ -23,6 +23,15 @@
 # CORRELATE with review findings; none of them IS one. The script reports
 # questions, not verdicts, and must never be read as a quality score.
 #
+# STATUS UPGRADE (2026-08-06): library-grade code is now an ADOPTED STANDARD
+# (CONVENTIONS.md §9, work queue BACKLOG §F), so the findings are ranked work
+# against a real target rather than a hypothetical one. Enforcement is the §9.5
+# DIFF DISCIPLINE — baseline re-captured per release tag; landings that increase
+# the (B) no-API count or add theorem-style def names must justify it in the
+# commit message. The script itself stays NON-BLOCKING: the counts still include
+# by-design patterns (obligation Props, blessed physics notation), and a blocking
+# gate on a proxy remains the failure mode this header warns against.
+#
 # WHAT IT REPORTS
 #   (A) thin definitions    — defs/abbrevs referenced only 1–2 times outside their
 #                             own declaration (the zero case is check-vacuity's)
