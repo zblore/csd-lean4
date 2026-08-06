@@ -27,6 +27,12 @@ while IFS=$'\t' read -r id module constant status kind load check finding extra;
   if [ "$status" = "needs-change" ] && [ "$finding" = "-" ]; then echo "FAIL $id needs-change without finding"; fail=1; fi
 done < "$ledger"
 
+# G8 facade sync: every ledger module must be imported by the Headlines facade.
+while IFS= read -r module; do
+  mod="CsdLean4.$(printf '%s' "${module%.lean}" | tr '/' '.')"
+  grep -q "^public import $mod\$" CsdLean4/Headlines.lean     || { echo "FAIL Headlines facade missing import of ledger module $mod"; fail=1; }
+done < <(tail -n +2 "$ledger" | cut -f2 | sort -u)
+
 count="$(tail -n +2 "$ledger" | wc -l | tr -d ' ')"
 [ "$count" -ge 30 ] || { echo "FAIL only $count headline claims; expected at least 30"; fail=1; }
 
