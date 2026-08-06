@@ -339,7 +339,8 @@ CsdLean4/SigmaLayer/PointerLudersMarginal.lean:1
 CsdLean4/SigmaLayer/PovmDynamics.lean:2
 CsdLean4/SigmaLayer/PovmSectorBorn.lean:1
 CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
-CsdLean4/Tests/AxiomAudit.lean:4"
+CsdLean4/Tests/AxiomAudit/MathlibStaging.lean:2
+CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 
 # --------------------------------------------- (8b) SCOPE-EXPIRY LEDGER --------
 # Closes check (8)'s documented blind spot (BACKLOG D1, closed 2026-08-06): (8) fires
@@ -375,7 +376,8 @@ CsdLean4/SigmaLayer/PointerLudersMarginal.lean|none
 CsdLean4/SigmaLayer/PovmDynamics.lean|none
 CsdLean4/SigmaLayer/PovmSectorBorn.lean|none
 CsdLean4/SigmaLayer/RecordLayerClosure.lean|none
-CsdLean4/Tests/AxiomAudit.lean|none"
+CsdLean4/Tests/AxiomAudit/MathlibStaging.lean|none
+CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 # WAIT LEDGER (why each tag):
 #   SyndromeCollapse|E1 — "full distance-3 correction needs concatenated Shor-9" waits on
 #     the E1 QEC tier.
@@ -398,12 +400,17 @@ CsdLean4/Tests/AxiomAudit.lean|none"
 # them. A name is a claim wherever it appears, not only at top level.
 # Matches declarations (`name : Type`) and deliberately not instantiations
 # (`name := value`), which are uses of an already-declared field.
-DECLARED_VOCAB_FIELDS="IsKahlerSector
-IsLiouvilleKahlerVolume
-kahler_condition
+# Inventory updated 2026-08-06 (G3 / F-04 tightening): the abstract pairs
+# IsKahlerSector/kahler_condition and IsLiouvilleKahlerVolume/liouville_eq_kahler_volume
+# were replaced by CONCRETE fields, each carrying its justification in the field type:
+#   kahler_pointwise : IsFubiniStudyKahler N  (the proved pointwise FS Kahler triple;
+#     flat d-omega = 0 also proved, KahlerClosed.lean 2026-08-06)
+#   liouville_isProbability : IsProbabilityMeasure liouvilleMeasure  (normalized volume,
+#     an instance)
+DECLARED_VOCAB_FIELDS="kahler_pointwise
 liouville
 liouvilleMeasure
-liouville_eq_kahler_volume"
+liouville_isProbability"
 #
 # FIELD LEDGER: all six are fields of `KahlerOnticSetup` (LF4/KahlerOnticSetup.lean),
 # whose `Sigma` is abstract — so, as above, they carry no parity claim in themselves.

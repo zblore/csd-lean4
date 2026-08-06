@@ -2041,4 +2041,21 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Kahler.quadraticEnergy_hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Kahler.quadraticEnergy_hamiltonian_duality
 
+-- Flat closedness of the Fubini-Study fundamental form (A4 residue brick, 2026-08-06,
+-- KahlerClosed.lean): extDeriv_const (constant differential forms are closed - the generic
+-- Mathlib-gap lemma), the packaged alternating 2-form fundamentalFormAlt, and the headline
+-- d(omega) = 0 on the flat tangent model. Manifold-level closedness on CP^{N-1} stays the
+-- honest open residual (connectivity L1); this discharges its formalisable fragment.
+/-- info: 'extDeriv_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms extDeriv_const
+
+/-- info: 'Kahler.fundamentalFormAlt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.fundamentalFormAlt
+
+/-- info: 'Kahler.extDeriv_fundamentalFormAlt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.extDeriv_fundamentalFormAlt
+
 end CSD.Tests.AxiomAudit

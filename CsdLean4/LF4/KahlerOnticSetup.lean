@@ -47,7 +47,10 @@ Every field is now real Mathlib content, forced on any inhabitant:
   Kähler-compatibility triple on the tangent model (`g = re⟪·,·⟫`,
   `ω = im⟪·,·⟫`, `J = i•·` with `J² = -1`, `ω = g∘J`, `g = ω∘J`, `ω` a
   `(1,1)`-form, `ω u (Ju) = ‖u‖²`), proved axiom-free via
-  `Kahler.fubiniStudy_pointwise_kahler_compatibility`;
+  `Kahler.fubiniStudy_pointwise_kahler_compatibility`; the FLAT closedness
+  `dω = 0` is also proved (`Kahler.extDeriv_fundamentalFormAlt`,
+  `KahlerClosed.lean`, 2026-08-06), leaving only the `ℂℙ^{N-1}` manifold
+  spelling open;
 - `liouvilleMeasure : Measure Σ` + `liouville_isProbability` : the typicality /
   Liouville measure, normalized (an instance, so
   `[IsProbabilityMeasure S.liouvilleMeasure]` is automatic);
@@ -74,9 +77,12 @@ external review. The pairs were therefore replaced by the concrete fields
 `kahler_pointwise` / `liouville_isProbability` above, with no change to any
 instance's proof obligations.
 
-The **manifold** residual is unchanged and honestly open: closedness
-`dω = 0` and the top-power identity `ω^{∧(N-1)}/(N-1)! = μ_FS` need exterior
-calculus absent from Mathlib. When Mathlib grows that API,
+The **manifold** residual is honestly open, and narrowed 2026-08-06: the FLAT
+closedness `dω = 0` on the tangent model is now proved
+(`Kahler.extDeriv_fundamentalFormAlt`, `KahlerClosed.lean`); what remains is
+the quotient/manifold spelling on `ℂℙ^{N-1}` — closedness there and the
+top-power identity `ω^{∧(N-1)}/(N-1)! = μ_FS` — pending Mathlib
+manifold-form API. When Mathlib grows that API,
 `kahler_pointwise` is the slot to strengthen from the pointwise
 `IsFubiniStudyKahler` to the full closed-2-form condition; the dynamical
 fields are unaffected. See `specs/connectivity-manifest.md` (link L1) and

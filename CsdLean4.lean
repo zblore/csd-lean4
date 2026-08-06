@@ -415,6 +415,7 @@ public import CsdLean4.SigmaLayer.KSigmaRecord
 public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.JoinClosure
