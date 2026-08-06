@@ -40,17 +40,25 @@
 #       Set equality, so a NEW such name fails loudly and forces a conscious parity
 #       justification; renaming to a construction-describing name (nullSeamMeasure)
 #       is the other way to pass.
+#   (7d) ABSTRACT-SIGMA INSTANTIATIONS: every declaration whose RESULT type is
+#       `KahlerOnticSetup` must appear in a declared inventory with a verified EVEN
+#       Sigma parity. Added 2026-08-06 (BACKLOG D2): (7a-c) see NAMES, so an abstract
+#       setup — whose `Sigma` is a structure field with no parity claim of its own —
+#       could be instantiated at an odd-dimensional Sigma with no name changing.
 #   (8) OPEN-SCOPE INVENTORY: per-file counts of the honest-scope phrases ("remains
 #       open", "recorded extension", "not claimed here"). Added 2026-08-04, same
 #       review: MeasurementCapstone.lean still said the conditioned mixed update
 #       "remains open" hours after MixedLuders.lean closed it.
 #
-#       KNOWN LIMIT — this fires when such a claim is ADDED or REMOVED, not when the
-#       underlying fact changes underneath a claim that stays put. It cannot detect
-#       the stale note by itself; what it does is make the inventory visible and
-#       diffable, so discharging a BACKLOG row has a mechanical companion step:
-#       re-read the sites this check prints. Converting "remember to sweep" into
-#       "read this list" is the whole of the improvement — do not oversell it.
+#       KNOWN LIMIT (narrowed 2026-08-06, not closed) — this fires when such a claim is
+#       ADDED or REMOVED, not when the underlying fact changes underneath a claim that
+#       stays put. Check (8b) attacks the tracked half of that residue.
+#   (8b) SCOPE-EXPIRY LEDGER: each open-scope file carries the BACKLOG row its boundary
+#       waits on (or `none`); when that row is struck DONE, this FAILS until the site
+#       is re-read and superseded at source. Added 2026-08-06 (BACKLOG D1). The `none`
+#       half — permanent boundaries and rowless extensions — remains untracked by
+#       construction; the improvement is that every boundary is now CLASSIFIED, and
+#       the tracked ones expire mechanically.
 #
 # Scope: the core QM library. (The ecdsa.fail / ECDLP track was extracted to its own
 # repository 2026-07-20 and is no longer present here.)
@@ -212,6 +220,7 @@ DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
 fieldHamiltonian
 hamiltonianField
 hamiltonian
+hamiltonianVectorFieldOf
 HasHamiltonianRealisation
 IsForcedKahlerVolume
 IsFubiniStudyKahler
@@ -248,6 +257,12 @@ trivialKahlerOnticSetup"
 #     HasHamiltonianRealisation — a Prop DEMANDING an explicit Hermitian `H` with
 #       `U t = exp(-itH)`; `productProjectedFlow_hasHamiltonianRealisation` exhibits one.
 #       This is CONVENTIONS 8.3a option (1) done right.                            EARNED.
+#     hamiltonianVectorFieldOf — (HamiltonianVectorField.lean, A4's linear fragment,
+#       2026-08-06) the ω-dual `-(J w)` of a gradient representative. The word is earned
+#       by the DEFINING-EQUATION THEOREM in the same module:
+#       `fundamentalForm_hamiltonianVectorFieldOf` proves `ω (X w) v = g w v`, i.e.
+#       `ι_X ω = dH` once `w` is the gradient (`hamiltonian_duality`). Flat model,
+#       constant ω; the manifold statement stays §2a.                EARNED (linear-level).
 #
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -270,6 +285,33 @@ trivialKahlerOnticSetup"
 # REJECTED 2026-08-04: `nullSeamLiouville` on S^1 x CP^2 — dim 1 + 4 = 5, ODD. Renamed
 # `nullSeamMeasure`; the T^2 x CP^2 lift that would earn the word is a BACKLOG row.
 
+# --------------------------------------- (7d) ABSTRACT-SIGMA INSTANTIATIONS ----
+# Closes check (7)'s documented blind spot (BACKLOG D2, closed 2026-08-06): the
+# vocabulary checks see NAMES, so an abstract `KahlerOnticSetup` — whose `Sigma` is a
+# structure field carrying no parity claim of its own — can be INSTANTIATED at an
+# odd-dimensional Sigma without any name anywhere changing. The corpus has hit the
+# odd-dimension slip twice (the fibred-Σ mislabel; `nullSeamLiouville` on S¹×ℂℙ²), so
+# instantiation sites get the same set-equality treatment as names: every declaration
+# whose RESULT type is `KahlerOnticSetup` must appear here, each with its concrete
+# `Sigma` and a verified EVEN real dimension.
+DECLARED_KAHLER_INSTANTIATIONS="manyToOneRotationSetup
+manyToOneSchrodingerSetup
+manyToOneSetup
+rotationSetup
+trivialKahlerOnticSetup
+unitaryFlowSetup"
+#
+# INSTANTIATION PARITY LEDGER (each read from its `Sigma :=` field, 2026-08-06):
+#   trivialKahlerOnticSetup   — Sigma := ℙ ℂ (E^N) = ℂℙ^{N-1}, dim 2(N-1).          EVEN.
+#   unitaryFlowSetup          — Sigma := ℙ ℂ (E^N) = ℂℙ^{N-1}.                       EVEN.
+#   rotationSetup             — = unitaryFlowSetup 2 rotU p₀ (ℂℙ¹, dim 2).           EVEN.
+#   manyToOneSetup            — Sigma := KSigma N = ℂℙ^{N-1} × T², dim 2(N-1)+2.     EVEN.
+#   manyToOneRotationSetup    — rides manyToOneSetup at N = 2 (dim 4).               EVEN.
+#   manyToOneSchrodingerSetup — rides manyToOneSetup (dim 2(N-1)+2).                 EVEN.
+# A new instantiation must add its row here WITH the parity computation, or the check
+# fails loudly. Consumers (declarations taking a KahlerOnticSetup argument) are exempt:
+# they inherit whatever parity their argument has and assert nothing.
+
 # ------------------------------------------------------- OPEN-SCOPE INVENTORY --
 # Per-file counts of honest-scope phrases. These are GOOD — they are how a module
 # states its boundary — so this is not a budget to drive to zero; it is a diffable
@@ -285,10 +327,61 @@ CsdLean4/SigmaLayer/MixedLuders.lean:1
 CsdLean4/SigmaLayer/MixedSwap.lean:1
 CsdLean4/SigmaLayer/PointerBorn.lean:1
 CsdLean4/SigmaLayer/PointerGeneration.lean:2
+CsdLean4/SigmaLayer/PointerLudersMarginal.lean:1
 CsdLean4/SigmaLayer/PovmDynamics.lean:2
 CsdLean4/SigmaLayer/PovmSectorBorn.lean:1
 CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
 CsdLean4/Tests/AxiomAudit.lean:4"
+
+# --------------------------------------------- (8b) SCOPE-EXPIRY LEDGER --------
+# Closes check (8)'s documented blind spot (BACKLOG D1, closed 2026-08-06): (8) fires
+# when a boundary claim is ADDED or REMOVED, never when the fact beneath a claim that
+# stays put changes. This ledger names, for each open-scope FILE above, the BACKLOG row
+# its boundary waits on — `none` for permanent physics/architecture boundaries and for
+# supersession records (struck notes kept as history). The check fires when a named row
+# is struck DONE (`| ~~TAG~~ |`) in BACKLOG.md while the file still carries its boundary:
+# the fix is to re-read the site, supersede the stale note at source, and re-tag `none`.
+#
+# Motivating case, found while building this ledger: PointerGeneration.lean still said
+# the Lüders composition "is a recorded extension, not delivered here" a day after B3b
+# delivered it — the exact staleness class, silent under (8) because the claim never
+# moved. (Fixed at source the same commit.)
+#
+# KNOWN LIMIT — a `none` tag is an untracked boundary: fine for genuinely permanent
+# scope (physics, architecture, supersession records), wrong if the boundary actually
+# waits on unlabelled work. §E items now carry stable IDs (E1–E5) so long-horizon waits
+# are taggable; foundations-frontier waits (MD-1, §2a) have no BACKLOG row and stay
+# `none` with the wait named in the site's own prose.
+DECLARED_SCOPE_WAITS="CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
+CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|E1
+CsdLean4/LF4/PhaseLift.lean|none
+CsdLean4/LF4/TypicalityForcing.lean|none
+CsdLean4/SigmaLayer/ApproxProjectability.lean|none
+CsdLean4/SigmaLayer/FiniteQMClosure.lean|none
+CsdLean4/SigmaLayer/MeasurementCapstone.lean|none
+CsdLean4/SigmaLayer/MixedLuders.lean|D3
+CsdLean4/SigmaLayer/MixedSwap.lean|none
+CsdLean4/SigmaLayer/PointerBorn.lean|none
+CsdLean4/SigmaLayer/PointerGeneration.lean|none
+CsdLean4/SigmaLayer/PointerLudersMarginal.lean|none
+CsdLean4/SigmaLayer/PovmDynamics.lean|none
+CsdLean4/SigmaLayer/PovmSectorBorn.lean|none
+CsdLean4/SigmaLayer/RecordLayerClosure.lean|none
+CsdLean4/Tests/AxiomAudit.lean|none"
+# WAIT LEDGER (why each tag):
+#   SyndromeCollapse|E1 — "full distance-3 correction needs concatenated Shor-9" waits on
+#     the E1 QEC tier.
+#   MixedLuders|D3 — "degenerate-on-mixed = recorded extension" is literally D3's first
+#     half; when D3 is struck this fires and the note gets superseded at source.
+#   ErrorDiscretization / MeasurementCapstone / MixedSwap / PovmDynamics(1 of 2) —
+#     supersession records: struck notes kept as history, nothing waited on.
+#   PhaseLift / TypicalityForcing / ApproxProjectability / FiniteQMClosure /
+#   RecordLayerClosure — architecture/foundations boundaries (§2a wall, ergodicity
+#     substrate, MD-1 frontier): no BACKLOG row; the wait is named in the site's prose.
+#   PointerBorn / PointerGeneration / PointerLudersMarginal / PovmSectorBorn /
+#   PovmDynamics(2 of 2) — recorded extensions without a BACKLOG row (mixed-ε weights,
+#     Hamiltonian relocation stroke, V-as-unitary-stroke): boundaries by design, not
+#     queued work; if one becomes a row, re-tag it here."
 
 # (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
 # after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure
@@ -323,10 +416,19 @@ liouville_eq_kahler_volume"
 #   schrodinger_flow_kahler_symplectomorphism — read 2026-08-04: an FS-isometry statement;
 #     "symplectomorphism" is carried by the pointwise Kähler triple (KahlerForm.lean),
 #     which is proved. No manifold-level symplectic claim is made.
+#   fundamentalForm_hamiltonianVectorFieldOf / hamiltonian_duality /
+#   quadraticEnergy_hamiltonian_duality / coupling_hamiltonian_duality — (2026-08-06,
+#     HamiltonianVectorField.lean + PointerHamiltonianField.lean, A4's linear fragment)
+#     each PROVES an ι_Xω = dH statement — the word names the established duality, with
+#     the Schrödinger field -(i•Ax) exhibited explicitly in the quadratic/coupling cases.
+#     Flat model, fixed weights; the joint-arena manifold form stays §2a.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 arenaLiouville_sys_marginal
+coupling_hamiltonian_duality
 fieldHamiltonian_mulVec_single
 fubiniStudy_pointwise_kahler_compatibility
+fundamentalForm_hamiltonianVectorFieldOf
+hamiltonian_duality
 fubiniStudyMeasure_isForcedKahlerVolume
 hamiltonian_eq_diagonal
 hamiltonian_groundEnergy
@@ -345,6 +447,7 @@ ofKählerPreparationFlow_phi_ne_id
 ofKählerPreparationFlow_preEvent
 pointerLiouville_arenaReady
 productProjectedFlow_hasHamiltonianRealisation
+quadraticEnergy_hamiltonian_duality
 relFieldHamiltonian_isHermitian
 relFieldHamiltonian_mulVec_single
 schrodinger_flow_kahler_symplectomorphism
@@ -528,6 +631,43 @@ else
   echo "        found:";    printf '%s\n' "$found_vthms" | sed 's/^/          /'
 fi
 
+# (7d) abstract-Sigma instantiation inventory + parity discipline
+# A declaration whose RESULT type is KahlerOnticSetup is an instantiation site: it fixes
+# the abstract Sigma and thereby OWES the parity claim the abstract structure cannot make.
+# Signature scan: from a def/abbrev line to the first `:=`/`where` (or the decl line
+# itself for one-liners), with parenthesised binder groups stripped so consumer arguments
+# `(d : KahlerOnticSetup N)` do not count.
+found_inst="$(srcfiles | tr '\n' '\0' | xargs -0 awk '
+  function flush() {
+    if (!inhdr) return
+    s = buf
+    while (match(s, /\([^()]*\)/)) { s = substr(s,1,RSTART-1) substr(s,RSTART+RLENGTH) }
+    if (s ~ /:[^:]*KahlerOnticSetup/) print decl
+    inhdr = 0
+  }
+  /^(noncomputable )?(def|abbrev) / {
+    flush()
+    decl = $0
+    sub(/^(noncomputable )?(def|abbrev) /, "", decl); sub(/[^A-Za-z0-9_'"'"'].*$/, "", decl)
+    buf = $0; inhdr = 1
+    if ($0 ~ /:=| where/) flush()
+    next
+  }
+  inhdr {
+    buf = buf " " $0
+    if ($0 ~ /:=|^ *where|[^A-Za-z]where$/) flush()
+  }
+  END { flush() }
+' 2>/dev/null | sort -u)"
+decl_inst="$(printf '%s\n' "$DECLARED_KAHLER_INSTANTIATIONS" | grep -v '^[[:space:]]*$' | sort -u)"
+if [ "$found_inst" = "$decl_inst" ]; then
+  say_ok "KahlerOnticSetup instantiations == declared inventory ($(printf '%s\n' "$decl_inst" | grep -c .) sites, each with a verified EVEN-parity Sigma)"
+else
+  say_fail "abstract-Sigma instantiation drift. A new KahlerOnticSetup instance fixes a concrete Sigma and OWES a parity justification: add it to DECLARED_KAHLER_INSTANTIATIONS with its Sigma's real dimension (must be EVEN)."
+  echo "        declared:"; printf '%s\n' "$decl_inst" | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_inst" | sed 's/^/          /'
+fi
+
 # (8) open-scope inventory: boundary claims are diffable, so they cannot go stale silently
 found_scope="$(srcfiles | tr '\n' '\0' \
   | xargs -0 grep -cE "$OPEN_SCOPE_PHRASES" 2>/dev/null \
@@ -540,6 +680,30 @@ else
   echo "        declared:"; printf '%s\n' "$decl_scope" | sed 's/^/          /'
   echo "        found:";    printf '%s\n' "$found_scope" | sed 's/^/          /'
 fi
+
+# (8b) scope-expiry ledger: a discharged BACKLOG row may not leave a boundary standing
+expiry_fail=0
+covered=""
+while IFS='|' read -r sf stag; do
+  [ -z "$sf" ] && continue
+  covered="$covered $sf"
+  if [ "$stag" != "none" ]; then
+    if grep -qE "\| ~~${stag}~~" specs/BACKLOG.md 2>/dev/null; then
+      say_fail "scope expiry: BACKLOG row ${stag} is struck DONE but ${sf} still carries the open boundary waiting on it — re-read the site, supersede the stale note at source, then re-tag it 'none' in DECLARED_SCOPE_WAITS"
+      expiry_fail=1
+    fi
+  fi
+done <<< "$DECLARED_SCOPE_WAITS"
+# every open-scope file must carry a wait tag, so a new boundary cannot skip the ledger
+while IFS=: read -r sf _; do
+  [ -z "$sf" ] && continue
+  case " $covered " in
+    *" $sf "*) : ;;
+    *) say_fail "scope expiry: $sf appears in DECLARED_OPEN_SCOPE but has no row in DECLARED_SCOPE_WAITS — classify its boundary (a BACKLOG row tag, or 'none' with a ledger note)"
+       expiry_fail=1 ;;
+  esac
+done <<< "$DECLARED_OPEN_SCOPE"
+[ "$expiry_fail" -eq 0 ] && say_ok "scope-expiry ledger: no boundary outlives its BACKLOG row (every open-scope file classified)" || true
 
 echo
 if [ "$fail" -eq 0 ]; then echo "check-claims: PASS"; exit 0

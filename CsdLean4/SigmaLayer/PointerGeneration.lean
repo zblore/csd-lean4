@@ -79,12 +79,12 @@ stated as a theorem rather than left implicit.
   ingredient upgrade (plateaus cover the circle-distance kinks, so compositions stay
   smooth) *landed same day*: `PointerSmoothProfile.lean` — identical plateau interface,
   `C^∞` weight lift, Schrödinger at every time.
-* **The Lüders composition is a recorded extension, not delivered here**: the smooth
-  witness does not collapse (that is the no-collapse theorem above, a feature of its
-  design); the ψ-dependent state update lives on the swap/join witnesses
-  (`swap_luders_born`, `joinWitness_blockLuders`). Composing the smooth record stroke with
-  the relocation machinery on one arena is the recorded `M–L` item in
-  [`BACKLOG.md`](../../specs/BACKLOG.md), alongside the LLN layer over the ε-Born sandwich.
+* ~~**The Lüders composition is a recorded extension, not delivered here**~~ **Delivered
+  2026-08-05** (`SigmaLayer/PointerLuders.lean` + `PointerLudersMarginal.lean`, BACKLOG
+  B3b): the smooth record stroke composed with record-triggered relocation on one arena,
+  with `pointer_luders_marginal` the conditioned post-measurement marginal. The
+  no-collapse theorem below is untouched — the update is a *second* stroke. The ε-Born
+  LLN layer landed 2026-08-04 (`PointerFrequency.lean`, B3a).
 
 ## References
 
@@ -158,7 +158,9 @@ variable {N : ℕ} [NeZero N]
 /-- **The smooth witness creates records without back-reaction**: the measurement stroke
 leaves the sector marginal of every initial measure untouched — the smooth counterpart of
 `shear_base_marginal_unchanged`. Records yes, collapse no; the ψ-dependent state update
-lives on the swap/join witnesses, and composing the two is the recorded extension. -/
+is a *second*, record-triggered stroke (~~recorded extension~~ delivered 2026-08-05,
+`PointerLudersMarginal.lean` — which leans on precisely this theorem's division of
+labour). -/
 theorem pointerEvolve_base_marginal_unchanged (c : ContextField N)
     (hc : ∀ j, Continuous fun p => c.rate p j) (ε : ℝ)
     (μ : Measure (PointerArena N N)) :

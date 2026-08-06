@@ -47,9 +47,14 @@ what `fubiniStudyMeasure` is at the measure level: it delivers the "compatible w
 structure, positive" half of "Kähler" as genuine theorems. It does **NOT** deliver:
 
 * **closedness** `dω = 0` — the defining *Kähler* (vs merely almost-Hermitian) condition, which needs
-  the exterior derivative on a manifold (absent from Mathlib);
+  the exterior derivative on a *manifold* (⚠️ scope narrowed 2026-08-06: Mathlib now has `extDeriv`
+  on **normed spaces** — `Analysis/Calculus/DifferentialForm/` — so the *flat* closedness of the
+  constant fundamental form is formalisable today; the manifold form is that file's own TODO);
 * the **global** identity `ω^{∧(N-1)}/(N-1)! = μ_FS` — which needs differential forms on the
   projective *manifold* and the form→measure integration (absent from Mathlib).
+
+The `X_H = ω⁻¹dH` duality this triple supports is now a theorem at the linear level:
+`HamiltonianVectorField.lean` (same directory), consumed by A4's corpus fragment.
 
 Those remain the Mathlib-blocked residue (KG-1 / the `IsKahlerSector` posit). This module works on the
 flat Hermitian model `E`; its restriction to the tangent space `ψ^⊥` is the Fubini–Study form

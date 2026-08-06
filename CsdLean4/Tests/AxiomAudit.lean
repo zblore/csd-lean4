@@ -169,6 +169,7 @@ public import CsdLean4.SigmaLayer.SharpenedNoGo
 public import CsdLean4.SigmaLayer.PointerLuders
 public import CsdLean4.SigmaLayer.NoRecordGeometry
 public import CsdLean4.SigmaLayer.PointerLudersMarginal
+public import CsdLean4.SigmaLayer.PointerHamiltonianField
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -10132,5 +10133,39 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.pointer_luders_born_prep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointer_luders_born_prep
+
+-- HamiltonianVectorField + PointerHamiltonianField (2026-08-06,
+-- Mathlib/Analysis/InnerProductSpace/HamiltonianVectorField.lean +
+-- SigmaLayer/PointerHamiltonianField.lean; BACKLOG A4's LINEAR FRAGMENT -- the manifold
+-- form stays the section-2a wall, now NARROWED: upstream extDeriv exists on normed
+-- spaces, manifold forms are upstream's own TODO).
+-- hamiltonianVectorFieldOf w = -(J w) -- the omega-dual of a gradient representative;
+-- the word is EARNED by the defining-equation theorem, not asserted:
+-- ★ fundamentalForm_hamiltonianVectorFieldOf — omega (X w) v = g w v, pure algebra.
+-- ★ hamiltonian_duality — X_H = omega^{-1} dH for ANY observable whose differential is
+-- g-represented; no inverse is ever formed.
+-- ★★ quadraticEnergy_hamiltonian_duality — the Hamiltonian vector field of the quantum
+-- energy (1/2)<x,Ax> IS the Schroedinger field -(i·Ax): Kibble/Ashtekar-Schilling
+-- "Schroedinger evolution is Hamiltonian flow" as a theorem, linear level.
+-- ★★ coupling_hamiltonian_duality — the same on the smooth witness's OWN fixed-weight
+-- generator couplingH w. With rampedU_schrodinger (the field generates the stroke) and
+-- schrodinger_flow_kahler_symplectomorphism (the flow preserves omega), the fixed-weight
+-- loop energy -> field -> flow -> form-preservation is closed at the formalisable level.
+-- Honest scope: FLAT model, FIXED weights, constant omega. The joint-arena manifold
+-- statement (H = sum w_j(x) h_j(q) on the product, X_H on the quotient) remains prose.
+/-- info: 'Kahler.fundamentalForm_hamiltonianVectorFieldOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_hamiltonianVectorFieldOf
+
+/-- info: 'Kahler.hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.hamiltonian_duality
+
+/-- info: 'Kahler.hasFDerivAt_quadraticEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.hasFDerivAt_quadraticEnergy
+
+/-- info: 'Kahler.quadraticEnergy_hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.quadraticEnergy_hamiltonian_duality
+
+/-- info: 'CSD.RecordLayer.coupling_hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.coupling_hamiltonian_duality
 
 end CSD.Tests.AxiomAudit
