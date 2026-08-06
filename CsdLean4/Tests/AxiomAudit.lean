@@ -170,6 +170,7 @@ public import CsdLean4.SigmaLayer.PointerLuders
 public import CsdLean4.SigmaLayer.NoRecordGeometry
 public import CsdLean4.SigmaLayer.PointerLudersMarginal
 public import CsdLean4.SigmaLayer.PointerHamiltonianField
+public import CsdLean4.SigmaLayer.MixedJoinLuders
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.QubitConsistency
 public import CsdLean4.Mathlib.MeasureTheory.PiCurry
@@ -10167,5 +10168,36 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'CSD.RecordLayer.coupling_hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.coupling_hamiltonian_duality
+
+-- MixedJoinLuders (2026-08-06, SigmaLayer/MixedJoinLuders.lean; BACKLOG D3a --
+-- degenerate outcomes on mixed preparations, riding JoinClosure exactly as
+-- MixedLuders's scope note predicted).
+-- ★ mixed_join_sector_born — the mixed BLOCK Born rule: sector mass = the block sum
+-- of Tr(rho|e_k><e_k|), via the block spectral bridge (sum interchange + one rank-one
+-- bridge per block member, spectral_block_born_eq_traceForm).
+-- ★ mixed_join_post_bayes — Bayes on a degenerate outcome: posterior weight
+-- lambda_j . p_{i|j} / sum_k Tr(...), likelihood = eigenvector j's block Born weight;
+-- the same cond_finsetSum engine as the rank-one case.
+-- ★★ mixed_join_luders — BLOCK LUDERS COMPOSED WITH BAYES: the conditioned system
+-- marginal is the Bayes mixture of the per-component degenerate posts
+-- epistemicMeasure [Pi_i psi_j]. At rank >= 2 the posteriors are GENUINELY DISTINCT:
+-- the record does not erase classical ignorance -- the density-operator update
+-- rho -> Pi rho Pi / Tr(rho Pi) realised as a mixture (contrast the rank-one vertex
+-- collapse of mixed_luders_followup).
+-- ⚠️ Scope: stated under hproj (every spectral component meets block i); a component
+-- with zero block projection has zero Bayes weight but no Lueders post AS A RAY, so
+-- the filtered refinement is recorded in-module rather than shipped as a weaker
+-- theorem under the same name.
+/-- info: 'CSD.RecordLayer.spectral_block_born_eq_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.spectral_block_born_eq_traceForm
+
+/-- info: 'CSD.RecordLayer.mixed_join_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_join_sector_born
+
+/-- info: 'CSD.RecordLayer.mixed_join_post_bayes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_join_post_bayes
+
+/-- info: 'CSD.RecordLayer.mixed_join_luders' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_join_luders
 
 end CSD.Tests.AxiomAudit

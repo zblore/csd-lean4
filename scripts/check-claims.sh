@@ -359,7 +359,7 @@ CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/SigmaLayer/ApproxProjectability.lean|none
 CsdLean4/SigmaLayer/FiniteQMClosure.lean|none
 CsdLean4/SigmaLayer/MeasurementCapstone.lean|none
-CsdLean4/SigmaLayer/MixedLuders.lean|D3
+CsdLean4/SigmaLayer/MixedLuders.lean|none
 CsdLean4/SigmaLayer/MixedSwap.lean|none
 CsdLean4/SigmaLayer/PointerBorn.lean|none
 CsdLean4/SigmaLayer/PointerGeneration.lean|none
@@ -371,8 +371,9 @@ CsdLean4/Tests/AxiomAudit.lean|none"
 # WAIT LEDGER (why each tag):
 #   SyndromeCollapse|E1 — "full distance-3 correction needs concatenated Shor-9" waits on
 #     the E1 QEC tier.
-#   MixedLuders|D3 — "degenerate-on-mixed = recorded extension" is literally D3's first
-#     half; when D3 is struck this fires and the note gets superseded at source.
+#   MixedLuders|none — was tagged D3 when the ledger was built; D3a landed the same day
+#     (MixedJoinLuders.lean) and the note was superseded at source, so the tag retired
+#     exactly as the mechanism intends.
 #   ErrorDiscretization / MeasurementCapstone / MixedSwap / PovmDynamics(1 of 2) —
 #     supersession records: struck notes kept as history, nothing waited on.
 #   PhaseLift / TypicalityForcing / ApproxProjectability / FiniteQMClosure /

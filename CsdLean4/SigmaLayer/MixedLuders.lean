@@ -38,12 +38,14 @@ theorem `swap_luders_born` (already stated for an arbitrary probability preparat
 applies verbatim once the outcome has nonzero mixed Born weight (`mixed_outcome_pos`,
 licensed by `Tr(ρ|eᵢ⟩⟨eᵢ|) ≠ 0` through the spectral bridge — no measure hypothesis).
 
-⚠️ **Honest scope.** Degenerate outcomes on mixtures (block-Lüders composed with Bayes)
-would ride `JoinClosure` the same way and are not restated; at rank ≥ 2 the posterior
-components do *not* coincide, and the conditioned mixture is the genuinely
-preparation-dependent Bayes mixture of `mixed_post_bayes` — nothing collapses to a
-vertex, and no claim is made that it does. The spectral ensemble is the canonical
-mixture realisation; nothing here depends on the choice (`MixedSwap.lean`).
+⚠️ **Honest scope.** ~~Degenerate outcomes on mixtures (block-Lüders composed with Bayes)
+would ride `JoinClosure` the same way and are not restated~~ **delivered 2026-08-06**
+(`SigmaLayer/MixedJoinLuders.lean`, BACKLOG D3 first half): it rides `JoinClosure`
+exactly as predicted, and at rank ≥ 2 the posterior components are proven genuinely
+distinct — `mixed_join_luders` exhibits the conditioned mixture as the Bayes mixture of
+the per-component block posts `epistemicMeasure [Πᵢψⱼ]`, nothing collapsing to a vertex.
+The spectral ensemble is the canonical mixture realisation; nothing here depends on the
+choice (`MixedSwap.lean`).
 
 ## References
 
