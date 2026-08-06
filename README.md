@@ -30,17 +30,24 @@ model, with no further axioms, the corpus derives:
   choice — cannot move the local marginal), and the quantum eraser realised as a process:
   erasure restores fringes only before a record exists, never after. POVMs ride the same
   machinery via Naimark dilation — their **instrument** (the state update) is delivered
-  dynamically, while their Born statistics are established at the *selector* level rather
-  than the protocol-sector level, a distinction the corpus keeps and this line previously
-  blurred (corrected 2026-08-04). Mixed preparations also update correctly on an outcome:
-  the conditioned ensemble is the Bayes posterior, and at rank one **the record, not the
-  pedigree, fixes the post-state**;
+  dynamically, and their Born statistics are proven at the protocol-**sector** level for
+  every POVM (`povm_sector_born_canonical`; the selector-level-only boundary this line
+  recorded until 2026-08-04 was discharged that day, and this sentence caught up on
+  2026-08-06 — an *under*claim outliving its fact, the mirror image of the drift the
+  guards police). Mixed preparations also update correctly on an outcome: the conditioned
+  ensemble is the Bayes posterior; at rank one **the record, not the pedigree, fixes the
+  post-state**, and on a degenerate outcome the conditioned mixture is the Bayes mixture
+  of the block posts — the density-operator update `ρ ↦ ΠᵢρΠᵢ/Tr(ρΠᵢ)` realised
+  dynamically at every rank (`mixed_join_luders`, 2026-08-06);
 - **wavefunction collapse as a theorem** — the post-measurement state update (the Lüders
   rule) falls out as a pushforward of the dynamics rather than being postulated; the harder
   *degenerate* case is realised on a companion projective-join witness, now packaged as one
   closure on one protocol (records, exclusivity, persistence, Liouville, coarse Born, and the
-  ψ-dependent update together). The apparatus never destroys information: what looks like
-  collapse is provably *relocation with storage*;
+  ψ-dependent update together), and the **smooth horn carries the update too**
+  (2026-08-05): the record stroke composed with a record-triggered relocation on one arena,
+  the whole composite measure-preserving, with the conditioned post-measurement marginal
+  **exact** — the `ε` lives only in *which* outcome occurs. The apparatus never destroys
+  information: what looks like collapse is provably *relocation with storage*;
 - **measurement dynamics from every side of a proven trade-off** — a machine-checked no-go
   shows that continuity and records that are exact **everywhere** cannot both hold. The corpus
   holds three witness families, and each pays exactly one price — a **trilemma**: *seams*
@@ -51,7 +58,11 @@ model, with no further axioms, the corpus derives:
   Born and records exact off a two-point seam, at a point-calibrated ready state — with the
   caveat that in that witness "Born" is carried by a free cell-split parameter rather than
   by a preparation's moment map). No horn is
-  canonical, and whether a fourth combination is impossible is an open question, not a claim
+  canonical — and on the pointer's own record geometry the fourth combination is now
+  **provably impossible** (`posMeasure_noRecord_pointer`, 2026-08-05: continuity, an open
+  positive-width ready region, and two-outcome correlation force a positive-measure
+  no-record set, so exact-a.e. records force Dirac calibration); whether that
+  exhaustiveness extends to *every* conceivable arena remains research, not a claim
   (the tour has the comparison every measuring science meets);
 - **the standard quantum canon** — entanglement and Bell/CGLMP/GHZ non-locality with
   no-signalling, contextuality, uncertainty, mixed states, quantum information theory,
@@ -64,6 +75,37 @@ theorem reports exactly Lean's foundational triple (`propext`, `Classical.choice
 CI. Second, the repository is aggressively honest about its boundaries — module headers carry
 ⚠️ honest-scope blocks, errors are corrected in place with dates, and automated guards scan
 the prose for overclaims.
+
+## Operational finite-QM closure (declared at `v1.1.0-finite-qm-closed`, 2026-08-06)
+
+Fix the definition first, so the goalposts cannot move:
+
+> **Operational finite QM** is the theory of density-operator preparations,
+> finite-dimensional transformations and composites, finite-outcome measurements, Born
+> probabilities, conditional updates and sequential statistics.
+
+Every requirement of that definition is carried by named, axiom-pinned theorems already in
+the corpus — **no additional capstone module exists or is needed**; the table below is the
+role map:
+
+| Requirement | Carried by |
+|---|---|
+| Pure and mixed states | `LF2` density operators; `mixedSwapPrep`/`eigRay` (spectral two-stage sampling) |
+| Schrödinger dynamics and channels | `manyToOneSchrodingerSetup_both_pillars`, `rampedU_schrodinger`; `LF2/QuantumChannel` (Kraus/CPTP) |
+| Composites and reduced states | `LF2/ReducedDensity`, the join/local arenas (`OnticComposite`, `LocalLuders*`) |
+| Projective measurement, incl. degeneracy | `projectiveMeasurementCapstone` (rank-one + every basis + degenerate + smooth, one theorem) |
+| POVMs and instruments | `naimarkInstrumentClosureCanonical` (dilation-relative, stated as physics not defect) |
+| Born probabilities and frequencies | `join_sector_born`, `povm_sector_born_canonical`, `mixed_swap_sector_born`; LLN layers (`freq_tendsto_of_iid`, `pointer_born_frequency`) |
+| Conditional and sequential update | `swap_luders_born`, `joinWitness_blockLuders`, `mixed_post_bayes`/`mixed_luders_followup`, `mixed_join_luders`, `csd_sequential_born`, `sequential_no_revival` |
+| Marginal stability / no-signalling | `reduceA_localLudersOn_mixture` (every basis, dynamically) |
+
+The closure is exactly as strong as its stated boundaries, which survive it unchanged: the
+sector is posited (previous section); instruments are dilation-relative; the measurement
+witnesses pay the trilemma's prices; the symplectic-manifold reading stays prose. What
+remains in the repository is deliberately **outside** this definition: Mathlib upstreaming
+(`BACKLOG` B6), paper–corpus alignment (C1–C2), and the CSD-foundations frontier
+([`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) — the record-layer residue and the
+fibre-mechanism question), none of which adds or removes an operational finite-QM theorem.
 
 ## What is honestly assumed
 
@@ -78,9 +120,10 @@ are provably not continuous flows (the torus-flux correction of 2026-08-02); the
 pointer witness is Schrödinger-generated and continuous but carries records and Born only up
 to its stated `ε`. That split is a proven trade-off, not a defect of either construction.
 "Kähler" names the standard geometric reading of the measures; no
-symplectic manifold is constructed in Lean (Mathlib has no such API — see
-[`MATHLIB-GAPS.md`](MATHLIB-GAPS.md)). The full non-claims list opens
-[`docs/TOUR.md`](docs/TOUR.md).
+symplectic *manifold* is constructed in Lean (Mathlib has no manifold-forms API — though the
+pointwise Kähler triple and the linear-level `X_H = ω⁻¹dH` duality, with the Schrödinger
+field exhibited, are proved; see [`MATHLIB-GAPS.md`](MATHLIB-GAPS.md)). The full non-claims
+list opens [`docs/TOUR.md`](docs/TOUR.md).
 
 ## Where to go next
 
@@ -130,7 +173,10 @@ of the above on every push.
 | `v1.0.2-smooth-witness` | The compact Kähler pointer witness: Schrödinger-generated measurement dynamics, continuous in time and state, Born up to `ε` |
 | `v1.0.3-measurement-capstone` | The projective-measurement capstone (four closures, one theorem); dynamical no-signalling in every basis; the eraser as a process with statistical irreversibility; mixed preparations |
 | `v1.0.5-trilemma` | POVM/instrument dynamics by Naimark dilation; the degenerate one-protocol package; the outcome-conditioned mixed update; `C^∞` transition profiles (Schrödinger at every time); and **the third measurement horn** — continuous, two-point seam, exact Born — turning the measurement fork into a **trilemma**: seams, `ε`-Born, or Dirac calibration |
+| `v1.0.6-audited` | The audited corpus: 15 verified claim-level corrections (no false theorem among them), the guard family extended |
+| `v1.1.0-finite-qm-closed` | **Operational finite-QM closure declared** (the section above). The week that earned the minor bump: the trilemma's third leg closed (`posMeasure_noRecord_pointer`); the smooth-witness Lüders composition (`pointer_luders_marginal`); degenerate-on-mixed (`mixed_join_luders`); sector-level POVM Born (`povm_sector_born_canonical`, from `v1.0.6`'s window); A4's linear fragment (`X_H = ω⁻¹dH` with the Schrödinger field exhibited); the library-grade standard (`CONVENTIONS` §9) with the review-surface auditor and the `Reversible/` API pass; two guard blind spots closed (scope-expiry ledger, instantiation-parity inventory) |
 
-Versioning proceeds in patch increments. The project develops in dated, review-driven
-increments; superseded documents are archived, not rewritten — the previous README lives at
+Versioning: patch increments for review-driven corrections, minor increments for closure
+declarations. The project develops in dated, review-driven increments; superseded documents
+are archived, not rewritten — the previous README lives at
 [`specs/archive/README-2026-07.md`](specs/archive/README-2026-07.md).

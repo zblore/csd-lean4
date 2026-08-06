@@ -53,6 +53,14 @@
 #       KNOWN LIMIT (narrowed 2026-08-06, not closed) — this fires when such a claim is
 #       ADDED or REMOVED, not when the underlying fact changes underneath a claim that
 #       stays put. Check (8b) attacks the tracked half of that residue.
+#
+#       ASYMMETRY, recorded 2026-08-06: this whole family polices OVERclaim. An
+#       UNDERclaim — a doc selling the corpus short — is invisible to every check here.
+#       Exhibit: README carried "Born statistics established at the selector level only"
+#       for two days after povm_sector_born discharged it; nothing fired, because no
+#       guard has a notion of a doc claiming less than the theorems deliver. Accepted as
+#       out of scope (an underclaim is honest, merely stale); the release-pass discipline
+#       — re-read the front page at each tag — is the compensating control.
 #   (8b) SCOPE-EXPIRY LEDGER: each open-scope file carries the BACKLOG row its boundary
 #       waits on (or `none`); when that row is struck DONE, this FAILS until the site
 #       is re-read and superseded at source. Added 2026-08-06 (BACKLOG D1). The `none`

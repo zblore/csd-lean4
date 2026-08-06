@@ -82,10 +82,15 @@ update a pushforward theorem (`swap_luders_born`) and the **degenerate** Lüders
 the projective join `ℙ(ℂ^{N+N})` as a Liouville-preserving unitary, pointwise
 (`join_block_luders`). The **unified arena** (`unifiedArenaClosure`) carries isolated dynamics,
 measurement dynamics, Born frequencies, and mixed states on ONE space with ONE Liouville measure
-family, including the isolate→measure→isolate round trip. The **A1–A7 map has one genuinely open
-row** — A2's Hamiltonian-generation sub-question, reopened 2026-08-02 (torus-flux correction;
-`ℂℙ^K` pointer route recorded); the landed witness classification is **piecewise rigid
-symplectic translation with null seam set** (`ShearDiscontinuity`/`PiecewiseHamiltonian`).
+family, including the isolate→measure→isolate round trip. The **A1–A7 map has no genuinely
+open row** — A2's Hamiltonian-generation sub-question (reopened 2026-08-02, torus-flux) was
+closed 2026-08-03 by the `ℂℙ^K` smooth pointer witness; the landed witness classification is
+**piecewise rigid symplectic translation with null seam set**
+(`ShearDiscontinuity`/`PiecewiseHamiltonian`). **Operational finite-QM closure was declared
+2026-08-06 (`v1.1.0-finite-qm-closed`)**: the README fixes the operational definition and the
+requirement→theorem role map; `reconstruction-status.md` carries the declaration against its
+net line. Remaining tracks are outside that definition by construction: B6 upstreaming, C1–C2
+paper alignment, and the foundations frontier (`CSD-CHARTER.md`).
 The **empirical suite** covers every flagship test on both branches (QM proof + CSD ontic twin;
 `../EMPIRICAL.md`), with the crypto tranche consuming the dynamical layer. The corpus imports
 **zero axioms** — every theorem reports only `[propext, Classical.choice, Quot.sound]` — is

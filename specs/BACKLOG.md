@@ -46,7 +46,7 @@
 > |---|---|
 > | C1 | **Paper C A7** — amend base-only `Ωᵢ(M) ⊂ ℂℙ^{N-1}` to the fibred ontic-sector reading |
 > | C2 | **Paper C A2 / TN6 alignment** — the papers now sit *behind* the corpus on three counts: the measurement fork is a **trilemma** (not two horns), the smooth witness's boundary is **fibrewise, not joint-arena**, and POVM Born is **selector-level**. A reader coming from the papers is currently told something the corpus has corrected |
-> | C3 | Decide whether `v1.0.5-trilemma`'s annotation (written pre-audit) should be superseded in the release notes; `v1.0.6-audited` already supersedes it in the tag graph |
+> | ~~C3~~ | **RESOLVED 2026-08-06** (`v1.1.0-finite-qm-closed` tag notes + README History table): `v1.0.5-trilemma`'s pre-audit annotation stands as published history (never rewritten); `v1.0.6-audited` supersedes it in the tag graph and the README History row for `v1.0.6` now records that supersession in prose, so a reader of the release history meets the correction without archaeology. Formerly: Decide whether `v1.0.5-trilemma`'s annotation (written pre-audit) should be superseded in the release notes; `v1.0.6-audited` already supersedes it in the tag graph |
 >
 > ### D. Guard and hygiene residue
 >

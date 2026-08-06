@@ -192,6 +192,15 @@ with a verified reason. The frontier is now the recorded L-scale items (degenera
 join, engine migration, Kähler/Liouville on `KSigma`, unitary covariance/POVMs, dynamical
 no-signalling).** That is the honest distance to closed.
 
+**Closure declared 2026-08-06 (`v1.1.0-finite-qm-closed`).** Every L-scale item the net line
+above listed as the frontier has since landed (degenerate Lüders via the join 2026-08-03,
+POVM/instrument + sector Born 2026-08-03/04, dynamical no-signalling 2026-08-03, the
+smooth-witness Lüders composition 2026-08-05, degenerate-on-mixed 2026-08-06), and the
+README's "Operational finite-QM closure" section fixes the operational definition and maps
+each requirement to its carrying theorems. The scoped rows above are unchanged by the
+declaration — closure is *of the operational surface, under the recorded posits and scopes*,
+exactly as this document has always measured it.
+
 
 ### 2a. Target inventory (T1–T16) — inhabited reconstruction targets
 
