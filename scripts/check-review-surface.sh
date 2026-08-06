@@ -58,6 +58,10 @@
 #     normal, intended shape of a headline result (check-vacuity precedent), and
 #     (C) additionally excludes anything pinned in Tests/AxiomAudit.lean, so a
 #     headline cited once by a downstream module is not flagged either.
+#   * Pinned DEFINITIONS in (A) — same logic extended to defs (F5, 2026-08-06): a
+#     pinned def, or a closure STRUCTURE whose first-letter-case twin is pinned
+#     (DegenerateMeasurementClosure / degenerateMeasurementClosure), is a declared
+#     headline whose thin-ness is the intended capstone shape, not a question.
 #   * Tests/AxiomAudit.lean as a consumer — an axiom pin mentions every headline,
 #     so counting pins as references would blind (A) and (C). It is read ONLY to
 #     harvest the pin registry.
@@ -215,8 +219,15 @@ printf '%s\n' $FILES | xargs awk '
           if (index(t, nm) > 0 && t != nm) api_named++
           if ((nm SUBSEP t) in sigpair) api_sig++
         }
+        # A def is a declared headline if it is pinned itself, or if its
+        # first-letter-case twin is (the closure-structure idiom: structure
+        # DegenerateMeasurementClosure inhabited by pinned theorem
+        # degenerateMeasurementClosure).
+        altup = toupper(substr(nm,1,1)) substr(nm,2)
+        altlo = tolower(substr(nm,1,1)) substr(nm,2)
+        pin = ((nm in pinned) || (altup in pinned) || (altlo in pinned)) ? 1 : 0
         print "DEFROW|" dloc[nm] "|" nm "|" (nm in ref ? ref[nm] : 0) "|" \
-              (nm in thru ? thru[nm] : 0) + (nm in simps ? simps[nm] : 0) "|" api_sig "|" api_named
+              (nm in thru ? thru[nm] : 0) + (nm in simps ? simps[nm] : 0) "|" api_sig "|" api_named "|" pin
       }
       for (nm in tkind)
         print "THMROW|" tloc[nm] "|" nm "|" (nm in ref ? ref[nm] : 0) "|" (nm in pinned ? 1 : 0)
@@ -233,10 +244,12 @@ cap () {  # cap <n> — passthrough under --full, else head -n with a trailer
 
 # ---------- (A) thin definitions ---------------------------------------------
 echo
-n_thin="$(awk -F'|' '$1=="DEFROW" && $4>=1 && $4<=2' "$OUT" | wc -l)"
+n_thin="$(awk -F'|' '$1=="DEFROW" && $4>=1 && $4<=2 && $8==0' "$OUT" | wc -l)"
+n_thin_pinned="$(awk -F'|' '$1=="DEFROW" && $4>=1 && $4<=2 && $8==1' "$OUT" | wc -l)"
 echo "  (A) thin definitions — referenced once or twice outside their declaration — $n_thin:"
-echo "      (zero-reference is check-vacuity.sh territory and is not repeated here)"
-awk -F'|' '$1=="DEFROW" && $4>=1 && $4<=2 {printf "        %-62s %-34s refs=%s\n",$2,$3,$4}' "$OUT" \
+echo "      (zero-reference is check-vacuity.sh territory; $n_thin_pinned pinned headline"
+echo "       defs/closure structures excluded — F5 refinement, 2026-08-06)"
+awk -F'|' '$1=="DEFROW" && $4>=1 && $4<=2 && $8==0 {printf "        %-62s %-34s refs=%s\n",$2,$3,$4}' "$OUT" \
   | sort -t= -k2 -n | cap 30
 
 # ---------- (B) definitions with no API --------------------------------------
