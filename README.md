@@ -137,7 +137,7 @@ list opens [`docs/TOUR.md`](docs/TOUR.md).
 | Every experiment, in both branches (QM proof + CSD ontic twin) | [`EMPIRICAL.md`](EMPIRICAL.md) |
 | What is assumed vs. proved; the per-theorem axiom ledger | [`AXIOMS.md`](AXIOMS.md) |
 | The A1–A7 axiom-level audit of the reconstruction | [`specs/reconstruction-status.md`](specs/reconstruction-status.md) |
-| Mathlib gaps this project hit, and what's staged for upstream | [`MATHLIB-GAPS.md`](MATHLIB-GAPS.md) |
+| Mathlib gaps this project hit, and the CSD-free material they produced | [`MATHLIB-GAPS.md`](MATHLIB-GAPS.md) |
 | What is open, with effort grades | [`specs/BACKLOG.md`](specs/BACKLOG.md) |
 | How the code is organised and disciplined | [`CONVENTIONS.md`](CONVENTIONS.md), [`specs/INDEX.md`](specs/INDEX.md) |
 
@@ -161,7 +161,7 @@ of the above on every push.
 | `CsdLean4/SigmaLayer/` | The projective-sector ontology: record layer, the dynamical measurement arc, the unified and join arenas, the capstones |
 | `CsdLean4/Empirical/` | `QM/` (validity regression suite) and `CSD/` (ontic twins) |
 | `CsdLean4/Thermo/` | Thermodynamics TH1–TH4 |
-| `CsdLean4/Mathlib/` | CSD-free staging for upstream |
+| `CsdLean4/Mathlib/` | CSD-free general-purpose material, kept to Mathlib conventions (a hygiene rule; upstreaming retired from the queue — `CONVENTIONS.md` §7) |
 | `CsdLean4/Tests/` | `AxiomAudit.lean` — the pin ledger |
 | `docs/`, `specs/` | The tour and sector paths; charter, status maps, plans, backlog, archives |
 
