@@ -380,7 +380,20 @@ def cuccaroModAdd (L : CuccaroModLayout m n) : Circuit m :=
     ++ [Gate.CX (L.Acc n) L.flag, Gate.X L.flag]
     ++ cuccaroAdd L.layB
 
-/-- Placeholder spec; proven below. -/
+/-- **The full nine-stage specification** of the carry-clean modular adder: the value
+`Acc = (a + b) mod N`, the flag/mask/ancilla/top-bit restorations, and the operand
+preservations, in one conjunction.
+
+*Factoring note (§9.4 review, 2026-08-06).* At 313 lines this is the corpus's longest
+proof, and it was reviewed for stage-lemma extraction under the library-grade standard.
+Verdict: **already maximally factored.** Every step is a one-to-three-line citation of a
+named block lemma (`cuccaroAdd_correct`, `cuccaroSub_correct`, `maskCopy_*`, the
+`*_preserves_*` frames); the length is the irreducible bookkeeping of nine stages × five
+tracked invariants (`Acc` value, `B`/`Nreg`/`Mask` preservation, flag/ancilla state),
+organised under the `===== STAGE k =====` banners. Re-packaging into per-stage invariant
+records was assessed and rejected: the record statements alone would add ~150 lines of
+boilerplate while every proof step already cites its named lemma — indirection without
+content. -/
 theorem cuccaroModAdd_spec (L : CuccaroModLayout m n) (s : State m)
     (hAccTop : s (L.Acc n) = false) (hBtop : s (L.B n) = false) (hNtop : s (L.Nreg n) = false)
     (hMask0 : ∀ j, j < n + 1 → s (L.Mask j) = false)
