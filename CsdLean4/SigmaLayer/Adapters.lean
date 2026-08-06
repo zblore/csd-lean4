@@ -112,8 +112,8 @@ Adapters (all one-directional, no existing file altered):
   the group laws `KahlerOnticSetup` lacks and `IsFiniteMeasure`).
 * `kahlerProjectiveSector : KahlerOnticSetup N -> ProjectiveSector N D` (total; `pi` is dynamics independent).
 
-`LF4.KahlerOnticSetup` field status: `IsKahlerSector` / `kahler_condition` and (on the trivial witness)
-`IsLiouvilleKahlerVolume` are documented placeholders; its `flow` is time-parameterised but does NOT
+`LF4.KahlerOnticSetup` field status: all fields concrete since the 2026-08-06 F-04 tightening
+(`kahler_pointwise`, `liouville_isProbability`); its `flow` is time-parameterised but does NOT
 carry `flow_zero` / `flow_add`, which the adapter supplies explicitly. This is exactly the drift the
 canonical core removes.
 -/

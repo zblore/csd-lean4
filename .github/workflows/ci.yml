@@ -28,9 +28,18 @@ jobs:
       - name: Build CsdLeanTests (regression suite + examples)
         run: lake build CsdLeanTests
 
-      - name: Static audit guards (connectivity / sector-linkage / axiom-imports / claims)
+      - name: Static validity controls
         run: |
+          bash scripts/check-module-coverage.sh
+          bash scripts/check-validation-ledger.sh
+          bash scripts/check-semantic-mutations.sh
           bash scripts/check-connectivity.sh
           bash scripts/check-sector-linkage.sh
           bash scripts/check-axiom-imports.sh
           bash scripts/check-claims.sh
+
+      - name: Advisory expert-review reports
+        run: |
+          bash scripts/check-vacuity.sh
+          bash scripts/check-contradictions.sh
+          bash scripts/check-review-surface.sh

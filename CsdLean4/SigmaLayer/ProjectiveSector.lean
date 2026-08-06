@@ -28,9 +28,10 @@ are theorem targets or named bridge assumptions elsewhere, never fields here.
 
 `kahlerConstraintDynamics` and `kahlerProjectiveSector` recover the SigmaLayer structures from
 `LF4.KahlerOnticSetup`. The `ConstraintDynamics` adapter is PARTIAL: `KahlerOnticSetup` does not carry
-the one-parameter-group laws (`flow_zero`, `flow_add`), so they are taken as explicit inputs, and it
-does not guarantee finiteness of `liouvilleMeasure`, so `IsFiniteMeasure` is required. `KahlerOnticSetup`'s
-`IsKahlerSector` and `IsLiouvilleKahlerVolume` fields are documented placeholders (see
+the one-parameter-group laws (`flow_zero`, `flow_add`), so they are taken as explicit inputs.
+Since the 2026-08-06 F-04 tightening, `KahlerOnticSetup`'s Kähler-geometry fields are concrete
+(`kahler_pointwise`, `liouville_isProbability` — the latter an instance, so finiteness of
+`liouvilleMeasure` is automatic; see
 `LF4/KahlerOnticSetup.lean`). The projection adapter is total: `pi` is dynamics independent.
 -/
 

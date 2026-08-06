@@ -14,14 +14,14 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 **Category:** 3-Local (the Kähler-sector VOLUME is forced, not posited).
 
-`KahlerOnticSetup` carries two abstract-placeholder pairs (see `KahlerOnticSetup.lean`):
+`KahlerOnticSetup` carries two concrete Kähler-geometry fields (tightened 2026-08-06, F-04; see
+`KahlerOnticSetup.lean`):
 
-* `IsKahlerSector` / `kahler_condition` — "`Σ` has a closed 2-form `ω` compatible with a complex
-  structure `J`". Genuinely **blocked**: Mathlib has no symplectic/Kähler-form API (KG-1 / link L1).
-  Stays an honest `True` posit; nothing here changes that.
-* `IsLiouvilleKahlerVolume` / `liouville_eq_kahler_volume` — "`liouvilleMeasure` is the top-power
-  Kähler volume `ω^{∧n}/n!`". Until now its only formalised content was the *normalisation* core
-  (`IsProbabilityMeasure`, fix C5). **This module upgrades that content** from "it is *a* probability
+* `kahler_pointwise : IsFubiniStudyKahler N` — the pointwise compatibility core of "`Σ` has a closed
+  2-form `ω` compatible with a complex structure `J`". The manifold residual (`dω = 0`, top-power)
+  is genuinely **blocked**: Mathlib has no symplectic/Kähler-form API (KG-1 / link L1).
+* `liouville_isProbability` — the *normalisation* core of "`liouvilleMeasure` is the top-power
+  Kähler volume `ω^{∧n}/n!`" (fix C5). **This module upgrades that content** from "it is *a* probability
   measure" to "it is *the* volume forced by the space and its symmetry".
 
 ## The upgrade — `IsForcedKahlerVolume`
@@ -54,8 +54,8 @@ ratio) consumes; the differential-geometric 2-form packaging is the part that st
 
 ## Honest scope
 
-This discharges the **formalisable core** of `IsLiouvilleKahlerVolume` (volume forced by symmetry),
-not the full differential-geometric `IsKahlerSector` (the 2-form), which remains Mathlib-blocked. And
+This discharges the **formalisable core** of the Liouville-volume posit (volume forced by symmetry),
+not the full differential-geometric 2-form content, which remains Mathlib-blocked. And
 it is FORWARD: it characterises the *posited* sector volume intrinsically; it does NOT derive the
 `U(N)`-symmetry itself from the deterministic dynamics (that reverse — deriving `G` — is SO-1,
 the sector-origin problem, untouched). "The volume is forced by the symmetry" still takes the symmetry `G = U(N)` as given.
@@ -87,7 +87,7 @@ structure IsForcedKahlerVolume (μ : Measure (CPN N)) : Prop where
 /-- **The Fubini–Study measure IS the forced Kähler volume.** `μ_FS` is a `U(N)`-invariant
 probability measure (`fubiniStudyMeasure_smul_invariant`) and the UNIQUE such
 (`fubiniStudyMeasure_unique`). So the Kähler volume of the ray space is completely determined by the
-space `ℂℙ^{N-1}` and its `U(N)`-symmetry — the intrinsic discharge of the `IsLiouvilleKahlerVolume`
+space `ℂℙ^{N-1}` and its `U(N)`-symmetry — the intrinsic discharge of the Liouville-volume
 posit's formalisable content. -/
 theorem fubiniStudyMeasure_isForcedKahlerVolume [NeZero N] (p₀ : CPN N) :
     IsForcedKahlerVolume (fubiniStudyMeasure p₀) where

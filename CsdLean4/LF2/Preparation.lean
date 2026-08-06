@@ -24,10 +24,20 @@ This module defines:
   `Measure.map D.π D.μL = c • μFS`. **Passive data**: callers supply the
   bridge equality directly, and the concrete instances supply it
   **axiom-free** (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`).
-- `OperationalPackage.fromPreparation` — the volume-ratio Born wrapper,
-  which takes a `MeasureBridgeData D μFS` argument but does **not**
-  extensionally invoke its `bridge_eq` content in the operational-axiom
-  field proofs, so `#print axioms` on it reads only the foundational triple.
+- `OperationalPackage.fromPreparation` — the projective Born wrapper
+  (representation layer), which takes a `MeasureBridgeData D μFS` argument
+  but does **not** extensionally invoke its `bridge_eq` content in the
+  operational-axiom field proofs, so `#print axioms` on it reads only the
+  foundational triple.
+- `MeasureBridgeData.integral_comp_pi` +
+  `OperationalPackage.fromPreparation_liouville_apply` — the theorems in
+  which `bridge_eq` **is** extensionally consumed (F-01 discharge,
+  2026-08-06): the bridge equality transports the ontic volume integral
+  over `Σ` into the projective reference integral, and for the Liouville
+  preparation of a `c = 1` bridge the operational probability IS the
+  `μFS`-integral of the effect function. This is the load-bearing form of
+  the symmetry datum; in `fromPreparation` itself the bridge stays
+  type-level (see below).
 
 ## History note (2026-06-04)
 
@@ -80,10 +90,40 @@ structure MeasureBridgeData (D : SectorData SigmaSpace P G) (μFS : Measure P) w
   /-- The bridge equality. -/
   bridge_eq : Measure.map D.π D.μL = c • μFS
 
+namespace MeasureBridgeData
+
+/-- **The bridge transports ontic integrals to projective integrals (F-01
+    discharge, 2026-08-06).** For any `μFS`-a.e.-strongly-measurable
+    `f : P → ℝ`, the ontic integral of `f ∘ π` against the Liouville
+    measure equals `c.toReal` times the projective integral of `f`
+    against the reference measure:
+
+        ∫ σ, f (D.π σ) ∂D.μL = c.toReal • ∫ p, f p ∂μFS.
+
+    This is the theorem in which `bridge_eq` is extensionally consumed —
+    the symmetry datum doing real work: an ontic volume computation over
+    `Σ` is carried into the projective probability integrand. The
+    2026-08-06 external review (F-01) observed that no theorem consumed
+    `bridge_eq`; this and `fromPreparation_liouville_apply` are the
+    response. `#print axioms` reads only the foundational triple (the
+    concrete bridge instances are axiom-free). -/
+theorem integral_comp_pi
+    {D : SectorData SigmaSpace P G} {μFS : Measure P}
+    (bridge : MeasureBridgeData D μFS)
+    {f : P → ℝ} (hf : AEStronglyMeasurable f μFS) :
+    ∫ σ, f (D.π σ) ∂D.μL = bridge.c.toReal • ∫ p, f p ∂μFS := by
+  have hmap : AEStronglyMeasurable f (Measure.map D.π D.μL) := by
+    rw [bridge.bridge_eq]
+    exact hf.smul_measure bridge.c
+  rw [← MeasureTheory.integral_map D.measurable_π.aemeasurable hmap,
+    bridge.bridge_eq, MeasureTheory.integral_smul_measure]
+
+end MeasureBridgeData
+
 /-! ### Operational package from a preparation
 
 `OperationalPackage.fromPreparation` constructs the operational
-probability assignment by integrating the volume-ratio effect function
+probability assignment by integrating the projective effect function
 `effectProjFn rep E` against the pushforward `Measure.map D.π μprep`.
 The four operational-axiom fields (`nonneg`, `le_one`, `total_one`,
 `additivity`) follow from the pointwise content of `effectProjFn` plus
@@ -102,7 +142,7 @@ its axiom. See the module docstring history note.
 
 variable {N : ℕ}
 
-/-- **`OperationalPackage.fromPreparation` (the volume-ratio Born
+/-- **`OperationalPackage.fromPreparation` (the projective Born
     wrapper, structural form).** Given a `SectorData`, the bridge data
     `bridge : MeasureBridgeData D μFS`, a probability preparation
     measure `μprep`, and a unit-norm measurable representative
@@ -176,7 +216,7 @@ Two Born theorems are proved:
   step (`OP_certain_at_ψ`) with the Busch packaging step
   (`pure_state_born_weights_of_certainty`). Matches spec §5.4 four-
   ingredient combinatorial framing.
-- `PurePreparation.born_rank_one_direct` (volume-ratio auxiliary) —
+- `PurePreparation.born_rank_one_direct` (direct auxiliary, representation layer) —
   derives the same conclusion by direct Dirac integration of
   `effectProjFn rep (rankOneEffect φ hφ)` against `Measure.dirac ray_point`,
   without invoking `busch_effect_gleason`. Tagged as the **eventual
@@ -260,7 +300,7 @@ theorem OP_certain_at_ψ
     The Born quadratic form on `fromPreparation` is **also derivable
     without `busch_effect_gleason`**: the Busch-free route is
     `born_rank_one_direct` below (direct Dirac integration of the
-    volume-ratio effect function). So in the LF2-only Hilbert-space
+    projective effect function). So in the LF2-only Hilbert-space
     view, the chain capstone is *not* mathematically dependent on the
     Busch axiom.
 
@@ -278,7 +318,7 @@ theorem OP_certain_at_ψ
        canonical operational-to-trace-form bridge. Citing it makes
        explicit that the LF2 wrapper *agrees* with the standard
        quantum-mechanical density-operator interpretation, beyond the
-       weaker statement that the volume-ratio integral equals
+       weaker statement that the projective integral equals
        `‖⟨ψ, φ⟩‖²` for rank-1 effects. The direct form proves the
        same equation but does not export the trace-form view.
 
@@ -308,38 +348,42 @@ theorem born_rank_one
     (PP.OP_certain_at_ψ D μFS bridge μprep)
     φ hφ
 
-/-- **Born quadratic form for pure preparations (volume-ratio direct
-    auxiliary).** Same conclusion as `born_rank_one`, but proved by direct
-    Dirac integration of `effectProjFn rep (rankOneEffect φ hφ)` against
+/-- **Born quadratic form for pure preparations (direct auxiliary, the
+    representation layer).** Same conclusion as `born_rank_one`, but proved by
+    direct Dirac integration of `effectProjFn rep (rankOneEffect φ hφ)` against
     `Measure.dirac ray_point`, without invoking `busch_effect_gleason`.
 
-    This is the **CSD volume-ratio foundational form**: the Born value
-    emerges from the volume integral alone, with no trace-form
-    characterisation step.
+    ## Honest scope (F-02, external review 2026-08-06)
 
-    **Symmetry + operations are still load-bearing.** The Busch-free
-    route is not assumption-free — it derives the Born rule from the
-    two structural inputs that LF2 always required:
+    `effectProjFn` is the Born quadratic form **by definition** (`Re(v†Ev)`),
+    so this theorem is a **representation/consistency** statement: it exhibits
+    the operational probability as the Dirac evaluation of an already-quadratic
+    integrand. What it avoids relative to `born_rank_one` is the **trace-form
+    characterisation step** (Busch's effect-Gleason theorem) — not the
+    quadratic form itself. The genuine Born-FROM-VOLUME content (the measure of
+    a separately specified region computed to be the Born weight) lives in the
+    LF4 engine (`MomentBornN`, `BornRegionUncond`); cite that, not this, for
+    "Born from volume".
 
-    - **Symmetry** enters via the `bridge : MeasureBridgeData D μFS`
-      argument (the `π*μL = c • μFS` bridge data). The concrete instances
-      supply this axiom-free (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`);
-      it is the structural symmetry datum, no longer an axiom.
+    **Where the structural inputs actually live** (corrected 2026-08-06 —
+    the earlier text claimed symmetry "enters via the `bridge` argument",
+    overstating a type-level binder):
+
+    - **Symmetry / the bridge**: in THIS theorem the `bridge` argument is
+      carried type-level only (spec §5.4 four-ingredient framing). Its
+      load-bearing form is `MeasureBridgeData.integral_comp_pi` and
+      `OperationalPackage.fromPreparation_liouville_apply`, where `bridge_eq`
+      is extensionally consumed. The concrete instances supply the bridge
+      axiom-free (`CSD.LF4.cp_measure_bridge`, `k_measure_bridge`).
     - **Operations** enter via the `OperationalPackage.fromPreparation`
       construction, whose `nonneg`/`le_one`/`total_one`/`additivity`
       fields formalise the operational consistency package of spec
       Definition 5.1 (the four-axiom characterisation of probability
       assignments on effects).
 
-    What the direct route avoids is the **trace-form characterisation
-    step** (Busch's effect-Gleason theorem), not the symmetry-and-
-    operations base. `busch_effect_gleason` corresponds to "the trace-form
-    characterisation of operations", not to "operations" themselves, which
-    are encoded structurally in `OperationalPackage`. The symmetry datum is
-    the `bridge` argument, supplied axiom-free by the concrete instances.
-
     This is the route the LF3 chain capstones now take (re-routed off Busch
-    2026-06-02), giving the explicit volume-ratio Born statement.
+    2026-06-02), giving the explicit quadratic-form Born statement
+    (representation layer; see the F-02 scope note above).
 
     `#print axioms PurePreparation.born_rank_one_direct` cites only the
     foundational triple `[propext, Classical.choice, Quot.sound]`. -/
@@ -362,6 +406,38 @@ theorem born_rank_one_direct
   rw [effectProjFn_rankOne, PP.rep_at_ray]
 
 end PurePreparation
+
+/-! ### The bridge is load-bearing: the Liouville-preparation transport form -/
+
+/-- **The operational probability from the ontic (Liouville) preparation IS the
+    projective reference integral (F-01 discharge, 2026-08-06).** For a
+    normalized Liouville measure and a `c = 1` bridge (the shape every concrete
+    instance supplies — `cp_measure_bridge`, `k_measure_bridge`), the
+    operational package built from the *ontic* preparation `D.μL` assigns to
+    every effect exactly the `μFS`-integral of the effect function:
+
+        (fromPreparation D μFS bridge D.μL rep …).p E
+          = ∫ p, effectProjFn rep E p ∂μFS.
+
+    The proof is `bridge_eq` doing the work — the pushforward `π_*μL` is
+    rewritten to `μFS` inside the volume integral. Together with
+    `MeasureBridgeData.integral_comp_pi` this is the extensional consumption of
+    the bridge the 2026-08-06 review (F-01) asked for; `fromPreparation` itself
+    still carries the bridge type-level only, so its own `#print axioms`
+    hygiene note is unchanged. -/
+theorem OperationalPackage.fromPreparation_liouville_apply
+    (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
+    (bridge : MeasureBridgeData D μFS) [IsProbabilityMeasure D.μL]
+    (hc : bridge.c = 1)
+    (rep : P → EuclideanSpace ℂ (Fin N))
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (E : Effect N) :
+    (OperationalPackage.fromPreparation D μFS bridge D.μL
+        rep hrep_unit hrep_meas).p E
+      = ∫ p, effectProjFn rep E p ∂μFS := by
+  show ∫ p, effectProjFn rep E p ∂(Measure.map D.π D.μL)
+      = ∫ p, effectProjFn rep E p ∂μFS
+  rw [bridge.bridge_eq, hc, one_smul]
 
 end LF2
 end CSD

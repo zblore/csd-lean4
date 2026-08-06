@@ -592,6 +592,18 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.PurePreparation.born_rank_one_direct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms PurePreparation.born_rank_one_direct
 
+-- F-01 discharge (G1, 2026-08-06): the bridge is load-bearing via the transport theorems —
+-- integral_comp_pi carries an ontic Σ-integral into the projective μFS-integral through
+-- bridge_eq, and fromPreparation_liouville_apply computes the Liouville-prepared operational
+-- probability AS the μFS-integral (c = 1). fromPreparation itself still carries the bridge
+-- type-level only (its own #print-axioms hygiene note is unchanged); check-semantic-mutations.sh
+-- guards all three facts.
+/-- info: 'CSD.LF2.MeasureBridgeData.integral_comp_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureBridgeData.integral_comp_pi
+
+/-- info: 'CSD.LF2.OperationalPackage.fromPreparation_liouville_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms OperationalPackage.fromPreparation_liouville_apply
+
 /-! ### LF3 -/
 
 /-- info: 'CSD.LF3.LF3_main_theorem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -1506,6 +1518,14 @@ arithmetic. -/
 /-- info: 'CSD.RecordLayer.swap_luders_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.swap_luders_marginal
+
+-- ★ swap_luders_iff_calibrated (F-05 discharge, G4, 2026-08-06): the MINIMAL CALIBRATION THEOREM —
+-- post-outcome-i system marginal = tau IFF nu i = tau. Both directions: calibration ⇒ Luders AND
+-- Luders ⇒ that exact calibration. "The update is calibration-encoded" is now a theorem, not a
+-- scope note.
+/-- info: 'CSD.RecordLayer.swap_luders_iff_calibrated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_luders_iff_calibrated
 
 /-- info: 'CSD.RecordLayer.swap_luders_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5010,16 +5030,17 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup
 
--- Connectivity fix C5 (manifest link L1): the IsLiouvilleKahlerVolume field is
--- now load-bearing. It carries the formalizable core of "Liouville = Kähler
--- volume" -- that μ_FS is a normalized volume (probability measure) -- and
--- unitaryFlowSetup_liouville_isProbability CONSUMES d.liouville_eq_kahler_volume.
+-- Connectivity fix C5 (manifest link L1): the Liouville-volume field is
+-- load-bearing. It carries the formalizable core of "Liouville = Kähler
+-- volume" -- that μ_FS is a normalized volume (probability measure). Since the
+-- 2026-08-06 F-04 tightening the field IS the concrete liouville_isProbability
+-- (an instance); this theorem stays as the thin projection exposing it.
 /-- info: 'CSD.LF4.unitaryFlowSetup_liouville_isProbability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.unitaryFlowSetup_liouville_isProbability
 
--- IsKahlerSector DE-VACUUMED (2026-07-19, manifest link L1): no longer `True`. Every ℂℙ-based instance
--- supplies IsKahlerSector := IsFubiniStudyKahler N -- the pointwise Fubini-Study Kähler-compatibility
+-- Kähler pointwise core (de-vacuumed 2026-07-19; field made CONCRETE 2026-08-06, F-04: the structure
+-- field is now kahler_pointwise : IsFubiniStudyKahler N) -- the pointwise Fubini-Study Kähler-compatibility
 -- triple (J²=-1, ω=g∘J, g=ω∘J, ω a (1,1)-form, ω u (Ju)=‖u‖²), PROVED axiom-free
 -- (fubiniStudy_pointwise_kahler_compatibility). Only the manifold residual (dω=0, top-power volume
 -- identity) stays unformalizable. isFubiniStudyKahler is the discharge.
@@ -5027,12 +5048,12 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.isFubiniStudyKahler
 
--- Move up the chain (2026-07-10): UPGRADE the IsLiouvilleKahlerVolume content from "μ is a
+-- Move up the chain (2026-07-10): UPGRADE the Liouville-volume content from "μ is a
 -- probability measure" (C5 core) to "μ is THE volume forced by the space + U(N)-symmetry"
 -- (IsForcedKahlerVolume: prob + invariant + UNIQUE, via fubiniStudyMeasure_unique). So the Kähler
 -- volume is an OUTCOME of Σ = ℂℙ^{N-1} and its symmetry, not posited: fubiniStudyMeasure IS the forced
 -- volume, the unitaryFlowSetup sector volume IS it, and the many-to-one instance's ray-space volume
--- π_*(kMuL) IS it (kMuL = forced-FS ⊗ Haar). IsKahlerSector (the 2-form) stays Mathlib-blocked (KG-1);
+-- π_*(kMuL) IS it (kMuL = forced-FS ⊗ Haar). The 2-form manifold residual stays Mathlib-blocked (KG-1);
 -- FORWARD (takes G=U(N) as given, does not derive it — SO-1 untouched).
 /-- info: 'CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

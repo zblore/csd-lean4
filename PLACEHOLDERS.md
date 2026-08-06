@@ -65,14 +65,14 @@ catalogued explicitly with a TODO marker pointing here.
 
 | File | Field | Status |
 |---|---|---|
-| `LF4/KahlerOnticSetup.lean` | `IsKahlerSector : Prop` + `kahler_condition` | **FORMALIZABLE CORE DISCHARGED 2026-07-19.** No longer `True`. Every `ℂℙ`-based instance now supplies `IsKahlerSector := IsFubiniStudyKahler N` — the pointwise Fubini–Study Kähler-compatibility triple (`g = re⟪·,·⟫`, `ω = im⟪·,·⟫`, `J = i•·`, with `J² = -1`, `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form, `ω u (Ju) = ‖u‖²`), PROVED axiom-free (`isFubiniStudyKahler` / `Kahler.fubiniStudy_pointwise_kahler_compatibility`). Only the **manifold** residual remains interpretive: closedness `dω = 0` and the top-power identity `ω^{∧(N-1)}/(N-1)! = μ_FS` need exterior calculus absent from Mathlib. See `specs/connectivity-manifest.md` link L1. |
+| `LF4/KahlerOnticSetup.lean` | `kahler_pointwise : IsFubiniStudyKahler N` (formerly the abstract pair `IsKahlerSector : Prop` + `kahler_condition`; made a CONCRETE field 2026-08-06, F-04 — consumers can now unpack the laws) | **FORMALIZABLE CORE DISCHARGED 2026-07-19.** The field carries the pointwise Fubini–Study Kähler-compatibility triple (`g = re⟪·,·⟫`, `ω = im⟪·,·⟫`, `J = i•·`, with `J² = -1`, `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form, `ω u (Ju) = ‖u‖²`), PROVED axiom-free (`isFubiniStudyKahler` / `Kahler.fubiniStudy_pointwise_kahler_compatibility`). Only the **manifold** residual remains interpretive: closedness `dω = 0` and the top-power identity `ω^{∧(N-1)}/(N-1)! = μ_FS` need exterior calculus absent from Mathlib. See `specs/connectivity-manifest.md` link L1. |
 
-The companion field `IsLiouvilleKahlerVolume` carries its formalizable core — that
+The companion field `liouville_isProbability` (formerly the abstract `IsLiouvilleKahlerVolume` pair; concrete + an instance since 2026-08-06) carries its formalizable core — that
 the Liouville measure is a *normalized* volume (probability measure) — on **all**
 concrete instances now (`unitaryFlowSetup`, `manyToOneSetup`, and the trivial
 witness `trivialKahlerOnticSetup`, all `IsProbabilityMeasure`); consumed by
 `unitaryFlowSetup_liouville_isProbability`. The full "top-power Kähler volume
-`ω^{∧n}/n!`" reading remains the same manifold residual as `IsKahlerSector`.
+`ω^{∧n}/n!`" reading remains the same manifold residual as the Kähler condition's.
 
 **No `:= True` placeholder fields remain in the corpus** (all four de-vacuumed
 2026-07-19); `scripts/check-claims.sh` enforces that a new `:= True` anywhere is

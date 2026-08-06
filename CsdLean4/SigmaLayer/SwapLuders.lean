@@ -44,6 +44,10 @@ theorem then applies to the follow-up unchanged, which is what makes sequential 
 * `cond_prod_cylinder` — conditioning a product measure on a first-factor event conditions the
   first factor. (Reusable; no CSD content.)
 * `swap_luders_marginal` — ★★ the headline above, for arbitrary calibrations `ν`.
+* `swap_luders_iff_calibrated` — ★ the **minimal calibration theorem** (F-05 discharge,
+  2026-08-06): post-marginal `= τ` ⟺ `ν i = τ`. The scope note below ("the calibration is a
+  posit") is thereby a theorem in both directions: calibration ⇒ Lüders AND Lüders ⇒ that exact
+  calibration — the update is calibration-encoded, provably, not an artifact of one construction.
 * `swap_luders_born` — the CSD form: the post-outcome-`i` system marginal is
   `epistemicMeasure [eᵢ]`, so for **any** context field `c'` the follow-up outcome-`j` probability
   is `c'.rate [eᵢ] j` — the Born weight of the *collapsed* state. Sequential statistics are Lüders.
@@ -170,6 +174,31 @@ theorem swap_luders_marginal (idx : Xsel → Fin K) (hidx : Measurable idx)
   have : IsProbabilityMeasure (ProbabilityTheory.cond μ12 C) :=
     ProbabilityTheory.cond_isProbabilityMeasure hpos
   rw [measure_univ, one_smul, Measure.map_eval_pi']
+
+/-! ### ★ The minimal calibration theorem (F-05 discharge, 2026-08-06) -/
+
+/-- **★ The apparatus hypothesis exactly equivalent to Lüders behavior is the
+calibration.** For the swap witness, the post-outcome-`i` system marginal equals
+a target state `τ` **iff** bank slot `i` is calibrated to `τ`:
+
+    map projSys (postMeasure (μ12 ⊗ Π ν) i) = τ  ↔  ν i = τ.
+
+The forward direction is `swap_luders_marginal` (calibration ⇒ Lüders); the
+converse is what makes the scope note "the Lüders map is encoded in the
+apparatus calibration, not forced by record creation alone" a THEOREM: no
+choice of calibration other than `ν i = epistemicMeasure [eᵢ]` produces the
+Lüders post-state, and any calibration produces *its own* post-state. This is
+the minimal calibration theorem the 2026-08-06 external review (F-05) asked
+for — the update is calibration-encoded, provably, in both directions. -/
+theorem swap_luders_iff_calibrated (idx : Xsel → Fin K) (hidx : Measurable idx)
+    (μ12 : Measure (Xsel × LF4.KTorus)) [IsProbabilityMeasure μ12]
+    (ν : Fin K → Measure Xsel) [∀ j, IsProbabilityMeasure (ν j)] (i : Fin K)
+    (hpos : μ12 ((shearProtocol idx hidx).outcomeSector i) ≠ 0)
+    (τ : Measure Xsel) :
+    Measure.map (fun y : SwapArena Xsel K => y.1.1)
+        ((swapProtocol idx hidx).postMeasure (μ12.prod (Measure.pi ν)) i) = τ
+      ↔ ν i = τ := by
+  rw [swap_luders_marginal idx hidx μ12 ν i hpos]
 
 /-! ### The CSD form: sequential statistics are Lüders -/
 

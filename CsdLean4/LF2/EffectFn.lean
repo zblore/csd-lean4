@@ -12,23 +12,31 @@ public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
 public import Mathlib.MeasureTheory.Integral.IntegrableOn
 
 /-!
-# Volume-ratio projective effect function
+# Projective effect function (the quadratic-form representation layer)
 
-**Category:** 3-Local (pre-LF4 plan Phase 2 — the volume-ratio
-foundational object: given a unit-vector representative map
+**Category:** 3-Local (pre-LF4 plan Phase 2 — the representation-layer
+object: given a unit-vector representative map
 `rep : P → EuclideanSpace ℂ (Fin N)` from an abstract projective space
 `P` and a finite-dimensional `Effect`, `effectProjFn rep E p` returns
 the real number that, integrated against `π_*μprep`, gives the
 probability of outcome `E` under a preparation pushing forward to a
-measure on `P`. This is the CSD-foundational object: probability is
-volume-integration of `effectProjFn` against the projective measure,
-not a Busch-derived trace-form expression.
+measure on `P`.
 
-For rank-1 effects, the function evaluates pointwise to `‖⟨rep p, φ⟩‖²`
-— the standard Born quadratic form at the representative vector. The
-trace-form / density-operator description is a reformulation, available
-via `traceForm` + `born_quadratic`; that reformulation is downstream of
-the volume integral, not foundational.
+## Honest scope (F-02, external review 2026-08-06)
+
+`effectProjFn` is the Born quadratic form **by definition**: it is
+`Re(v† E v)` at the representative `v = rep p`, and for rank-1 effects it
+evaluates pointwise to `‖⟨rep p, φ⟩‖²` (`effectProjFn_rankOne`). So the
+LF2 theorems that integrate it are **representation/consistency**
+statements — they exhibit the operational probability as an integral of
+an already-quadratic integrand, and (vs the Busch route) they avoid the
+trace-form characterisation step, not the quadratic form itself. The
+genuine **Born-from-volume** content — computing the Fubini–Study
+measure of a separately specified region and finding the Born weight —
+lives in LF4 (`MomentBornN`, `BornRegionUncond`,
+`born_frequency_convergence_N_uncond`); do not cite this layer for it.
+The trace-form / density-operator description is a reformulation,
+available via `traceForm` + `born_quadratic`.
 -/
 
 @[expose] public section
@@ -41,7 +49,7 @@ namespace LF2
 
 variable {N : ℕ} {P : Type*}
 
-/-- **Volume-ratio projective effect function.** Given a unit-vector
+/-- **Projective effect function (quadratic form).** Given a unit-vector
     representative map `rep : P → EuclideanSpace ℂ (Fin N)` and a
     finite-dimensional `Effect E`, returns the real number
     `RCLike.re (star v ⬝ᵥ E.M *ᵥ v)` where `v = (rep p).ofLp` is the
@@ -53,7 +61,7 @@ noncomputable def effectProjFn
     RCLike.re (star (WithLp.ofLp (rep p) : Fin N → ℂ) ⬝ᵥ
                 E.M *ᵥ WithLp.ofLp (rep p))
 
-/-- For the rank-1 effect `|φ⟩⟨φ|`, the volume-ratio effect function
+/-- For the rank-1 effect `|φ⟩⟨φ|`, the projective effect function
     evaluates pointwise to `‖⟨rep p, φ⟩‖²`. This is the standard Born
     quadratic form at the representative vector. -/
 lemma effectProjFn_rankOne
@@ -84,14 +92,14 @@ lemma effectProjFn_rankOne
   rw [h_conj, ← h_inner, RCLike.mul_conj]
   norm_cast
 
-/-- The zero effect's volume-ratio function is identically zero. -/
+/-- The zero effect's projective effect function is identically zero. -/
 @[simp]
 lemma effectProjFn_zero (rep : P → EuclideanSpace ℂ (Fin N)) :
     effectProjFn rep (Effect.zero : Effect N) = 0 := by
   funext p
   simp [effectProjFn, Effect.zero]
 
-/-- The identity effect's volume-ratio function is `‖rep p‖²` pointwise.
+/-- The identity effect's projective effect function is `‖rep p‖²` pointwise.
     For unit-norm `rep p` this is `1`. -/
 lemma effectProjFn_one (rep : P → EuclideanSpace ℂ (Fin N)) (p : P) :
     effectProjFn rep (Effect.one : Effect N) p = ‖rep p‖ ^ 2 := by
@@ -106,7 +114,7 @@ lemma effectProjFn_one (rep : P → EuclideanSpace ℂ (Fin N)) (p : P) :
   rw [hnorm]
   norm_cast
 
-/-- The volume-ratio effect function is additive in the effect argument
+/-- The projective effect function is additive in the effect argument
     (when the sum is itself an effect). -/
 lemma effectProjFn_add
     (rep : P → EuclideanSpace ℂ (Fin N)) (E F : Effect N)
@@ -117,11 +125,11 @@ lemma effectProjFn_add
 
 /-! ### Bounds
 
-The volume-ratio effect function is non-negative (from `E.nonneg`) and
+The projective effect function is non-negative (from `E.nonneg`) and
 bounded by `1` for unit-norm `rep p` (from `E.le_one`).
 -/
 
-/-- The volume-ratio effect function is pointwise non-negative.
+/-- The projective effect function is pointwise non-negative.
     Routes through `Matrix.PosSemidef.re_dotProduct_nonneg` applied to
     `E.M`'s PSD content. -/
 lemma effectProjFn_nonneg
@@ -129,7 +137,7 @@ lemma effectProjFn_nonneg
     0 ≤ effectProjFn rep E p :=
   E.nonneg.re_dotProduct_nonneg (WithLp.ofLp (rep p))
 
-/-- The volume-ratio effect function is pointwise bounded by `‖rep p‖²`.
+/-- The projective effect function is pointwise bounded by `‖rep p‖²`.
     For unit-norm `rep p` this is `1`. Routes through `E.le_one` applied
     via the same `re_dotProduct_nonneg` mechanism on `1 - E.M`. -/
 lemma effectProjFn_le_norm_sq
@@ -171,7 +179,7 @@ function decomposes as `rep` composed with a continuous map
 finite-dim normed spaces all polynomial expressions are continuous.
 -/
 
-/-- The volume-ratio effect function is measurable in its argument
+/-- The projective effect function is measurable in its argument
     when `rep` is measurable. -/
 @[fun_prop]
 lemma effectProjFn_measurable
@@ -208,7 +216,7 @@ lemma effectProjFn_measurable
     WithLp.measurable_ofLp 2 (Fin N → ℂ)
   exact h_F_meas.comp (h_ofLp_meas.comp hrep_meas)
 
-/-- The volume-ratio effect function is integrable against any finite
+/-- The projective effect function is integrable against any finite
     measure when `rep` is measurable and unit-norm. Routes via
     `Integrable.of_bound`: measurable + pointwise bounded by 1 (via
     `effectProjFn_le_one`) + finite measure ⟹ integrable. -/

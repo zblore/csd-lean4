@@ -56,7 +56,8 @@ structure, positive" half of "Kähler" as genuine theorems. It does **NOT** deli
 The `X_H = ω⁻¹dH` duality this triple supports is now a theorem at the linear level:
 `HamiltonianVectorField.lean` (same directory), consumed by A4's corpus fragment.
 
-Those remain the Mathlib-blocked residue (KG-1 / the `IsKahlerSector` posit). This module works on the
+Those remain the Mathlib-blocked residue (KG-1 / the manifold half of the Kähler-sector posit,
+`KahlerOnticSetup.kahler_pointwise`'s open residual). This module works on the
 flat Hermitian model `E`; its restriction to the tangent space `ψ^⊥` is the Fubini–Study form
 pointwise. The physically load-bearing datum — the volume — is already forced independently
 (`KahlerVolumeForced.lean`).

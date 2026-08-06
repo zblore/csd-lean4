@@ -409,6 +409,43 @@ public import CsdLean4.SigmaLayer.ProjectiveRecord
 public import CsdLean4.SigmaLayer.FibredSigma
 public import CsdLean4.SigmaLayer.BasisMeasurement
 public import CsdLean4.SigmaLayer.KSigmaRecord
+
+-- Root repair (G6 / F-07, 2026-08-06): the modules below were reachable only via the
+-- test roots; added so the default consumer root reaches every non-test module.
+public import CsdLean4.Empirical.CSD.EraserDynamics
+public import CsdLean4.Empirical.CSD.EraserSequential
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
+public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
+public import CsdLean4.SigmaLayer.ChartBracket
+public import CsdLean4.SigmaLayer.JoinClosure
+public import CsdLean4.SigmaLayer.JointFlowTransfer
+public import CsdLean4.SigmaLayer.LocalBlockBridge
+public import CsdLean4.SigmaLayer.LocalLuders
+public import CsdLean4.SigmaLayer.LocalLudersBasis
+public import CsdLean4.SigmaLayer.MeasurementCapstone
+public import CsdLean4.SigmaLayer.MixedJoinLuders
+public import CsdLean4.SigmaLayer.MixedLuders
+public import CsdLean4.SigmaLayer.MixedSwap
+public import CsdLean4.SigmaLayer.NoRecordGeometry
+public import CsdLean4.SigmaLayer.NullSeamLift
+public import CsdLean4.SigmaLayer.NullSeamWitness
+public import CsdLean4.SigmaLayer.PointerArena
+public import CsdLean4.SigmaLayer.PointerBorn
+public import CsdLean4.SigmaLayer.PointerCoupling
+public import CsdLean4.SigmaLayer.PointerFrequency
+public import CsdLean4.SigmaLayer.PointerGeneration
+public import CsdLean4.SigmaLayer.PointerHamiltonianField
+public import CsdLean4.SigmaLayer.PointerLanding
+public import CsdLean4.SigmaLayer.PointerLuders
+public import CsdLean4.SigmaLayer.PointerLudersMarginal
+public import CsdLean4.SigmaLayer.PointerProtocol
+public import CsdLean4.SigmaLayer.PointerRotation
+public import CsdLean4.SigmaLayer.PointerSmoothProfile
+public import CsdLean4.SigmaLayer.PointerWeights
+public import CsdLean4.SigmaLayer.PovmDynamics
+public import CsdLean4.SigmaLayer.PovmSectorBorn
+public import CsdLean4.SigmaLayer.SharpenedNoGo
+public import CsdLean4.SigmaLayer.SmoothProfile
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

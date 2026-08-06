@@ -1,0 +1,31 @@
+id	module	constant	status	claim_kind	load_bearing	independent_check	finding
+CL-001	LF1/MainTheorem.lean	CSD.LF1.main_theorem_ae	validated	probability	pairwise independence; common law	compare with Mathlib SLLN statement	-
+CL-002	LF1/GeneralFrequency.lean	CSD.LF1.freq_tendsto_of_iid	qualified	probability	indicator pairwise independence	mutation: do not describe as full iid	F-07
+CL-003	LF2/Preparation.lean	CSD.LF2.OperationalPackage.fromPreparation	qualified	representation	preparation measure; quadratic integrand; bridge type-level by design	mutation guard: transport theorems integral_comp_pi + fromPreparation_liouville_apply consume bridge_eq (G1 discharge 2026-08-06); fromPreparation body does not	F-01
+CL-004	LF2/Preparation.lean	CSD.LF2.PurePreparation.born_rank_one_direct	qualified	representation	Dirac concentration; effectProjFn definition	unfold integrand and compare quadratic form	F-02
+CL-005	LF2/EffectGleason.lean	CSD.LF2.OperationalPackage.effect_gleason_representation	specialist-review	functional-analysis	bounded effect additivity; normalization	independent Busch/Gleason proof audit	-
+CL-006	LF2/POVM.lean	CSD.LF2.weights_sum_eq_one	qualified	quantum-information	PSD effects; sum-to-identity	add per-outcome nonnegativity API test	-
+CL-007	LF2/QuantumChannel.lean	CSD.LF2.QuantumChannel.cptp_capstone	qualified	quantum-information	Kraus completeness	compare amplified CP formulation	-
+CL-008	LF3/Interface.lean	CSD.LF3.LF3_main_theorem	qualified	measurement	bundled singlet preparation hypotheses	trace each probability premise to constructor	-
+CL-009	LF3/Interface.lean	CSD.LF3.LF3_singlet_frequency_convergence_born	qualified	measurement	Born identification; trial independence	independent finite probability calculation	-
+CL-010	LF4/MomentBornN.lean	CSD.LF4.fs_volume_eq_dirichlet	validated	measure-geometry	Gaussian/projective pushforward	compare Dirichlet marginal calculation	-
+CL-011	LF4/BornFrequencyN.lean	CSD.LF4.born_frequency_convergence_N	needs-change	measurement	preparation-indexed bornRegion	mutation: vary preparation at fixed context	F-03
+CL-012	LF4/TypicalityForcing.lean	CSD.LF4.fubiniStudy_forced_by_symmetry	validated	measure-geometry	full unitary invariance; probability measure	compare invariant-measure uniqueness theorem	-
+CL-013	LF4/TypicalityForcing.lean	CSD.LF4.obsFlow_not_ergodic	validated	dynamics	N greater than one; conserved moment coordinate	exhibit invariant nontrivial measurable set	-
+CL-014	LF4/ProjectedDynamics.lean	CSD.LF4.projectedFlow_eq_unitary_family	qualified	dynamics	transition preservation; continuity; group law	compare Wigner hypotheses and antiunitary exclusion	-
+CL-015	LF4/PhaseLift.lean	CSD.LF4.projectedFlow_phase_lift	qualified	dynamics	coboundary and phase regularity hypotheses	delete each phase hypothesis independently	-
+CL-016	LF4/ManyToOnePillars.lean	CSD.LF4.manyToOneSetup_born_frequency	qualified	construction	chosen product measure and iid trials	mutation: flow is not used by sampling theorem	F-09
+CL-017	LF5/DilationFromFlow.lean	CSD.LF5.measurementFlow_realises_dilation	validated	measurement	chosen von Neumann permutation coupling	entrywise matrix/vector oracle for small N	-
+CL-018	LF5/Capstone.lean	CSD.LF5.measurement_flow_born_frequency	qualified	measurement	canonical dilation; independent trials	compare direct finite Born probabilities	-
+CL-019	LF6/Decoherence.lean	CSD.LF6.decoherence_offdiagonal_vanish	validated	open-systems	von Neumann dilation; partial trace	independent matrix calculation for N=2,3	-
+CL-020	LF6/ForcedContextuality.lean	CSD.LF6.no_product_partition_realises_singlet	qualified	foundations	product-partition/local-response definition	compare exact CHSH assumptions	-
+CL-021	LF6/GHZContextuality.lean	CSD.LF6.no_product_partition_realises_ghz	validated	foundations	perfect GHZ correlations; product assignment	exhaust all finite sign assignments	-
+CL-022	Mathlib/QuantumInfo/Subadditivity.lean	QuantumInfo.vonNeumannEntropy_subadditive	specialist-review	quantum-information	positive-definite marginals; trace normalization	compare standard spectral/relative-entropy proof	-
+CL-023	Mathlib/QuantumInfo/StrongSubadditivity.lean	QuantumInfo.strong_subadditivity_of_relEntropy_monotone	needs-change	quantum-information	explicit hDPI premise	mutation: checker requires DPI in signature	F-08
+CL-024	Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean	Projectivization.wigner_rigidity	specialist-review	geometry	transition-probability preservation	independent Wigner theorem expert review	-
+CL-025	SigmaLayer/SwapLuders.lean	CSD.SigmaLayer.swap_luders_marginal	qualified	measurement	pre-calibrated apparatus bank slot (equivalence now a theorem)	theorem: swap_luders_iff_calibrated, post-state = tau iff nu i = tau (G4 discharge 2026-08-06)	F-05
+CL-026	SigmaLayer/PovmDynamics.lean	CSD.SigmaLayer.povm_selector_born	qualified	measurement	already-dilated initial ray	separate ancilla-preparation obligation	F-09
+CL-027	SigmaLayer/MeasurementCapstone.lean	CSD.SigmaLayer.projectiveMeasurementCapstone	needs-change	architecture	heterogeneous witness bundle	check whether all fields share one arena	F-06
+CL-028	CV/ModeLocality.lean	CSD.CV.commute_of_disjointSupport	qualified	qft-cutoff	SupportedOn tensor factorization	compare continuum Haag-Kastler claim scope	F-10
+CL-029	Thermo/SecondLaw.lean	CSD.Thermo.vonNeumannEntropy_le_pinching	qualified	thermodynamics	positive diagonal/full-rank pinching	independent relative-entropy derivation	F-11
+CL-030	Thermo/Landauer.lean	CSD.Thermo.landauer_bound	qualified	thermodynamics	Gibbs bath; unitary joint evolution; PD marginals	check sign and temperature conventions numerically	F-11

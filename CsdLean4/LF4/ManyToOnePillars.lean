@@ -90,21 +90,20 @@ by `U t`, the fibre is fixed. So `projectedFlow t = (U t • ·)` is the genuine
 action (non-trivial for a non-trivial `U`), while `π` is genuinely many-to-one.
 
 Measure-preservation is `μ_FS`'s `U(N)`-invariance on the base times the identity
-on the fibre. The two Kähler-geometry placeholder fields mirror `unitaryFlowSetup`:
-`IsLiouvilleKahlerVolume` carries the normalized-volume core (`kMuL` is a
-probability measure, `instProbKMuL`); `IsKahlerSector := IsFubiniStudyKahler N`
-now carries the genuine pointwise FS Kähler-compatibility core (proved,
+on the fibre. The two Kähler-geometry fields mirror `unitaryFlowSetup`
+(concrete since the 2026-08-06 F-04 tightening):
+`liouville_isProbability` carries the normalized-volume core (`kMuL` is a
+probability measure, `instProbKMuL`); `kahler_pointwise : IsFubiniStudyKahler N`
+carries the genuine pointwise FS Kähler-compatibility core (proved,
 `isFubiniStudyKahler`), only the manifold `dω = 0` residual remaining. -/
 noncomputable def manyToOneSetup
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     KahlerOnticSetup N where
   Sigma := KSigma N
   compact_sigma := inferInstance
-  IsKahlerSector := IsFubiniStudyKahler N
-  kahler_condition := isFubiniStudyKahler N
+  kahler_pointwise := isFubiniStudyKahler N
   liouvilleMeasure := kMuL p₀
-  IsLiouvilleKahlerVolume := IsProbabilityMeasure (kMuL p₀)
-  liouville_eq_kahler_volume := inferInstance
+  liouville_isProbability := inferInstance
   pi := Prod.fst
   pi_measurable := measurable_fst
   flow := fun t p => (U t • p.1, p.2)

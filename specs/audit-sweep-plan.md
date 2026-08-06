@@ -235,3 +235,163 @@ commit; verification details in the session record):
    `MeasureBridgeData.ofSectorData`, EMPIRICAL.md + specs/INDEX.md "two
    standing axioms" (one since 2026-06-04), and LF4-todo §5's stale "count
    drop happens at §8" pickup note.
+
+## External review intake: codex, 2026-08-06 (triaged same day)
+
+Source: `specs/FOUNDATIONAL-CODE-REVIEW.md` (full 443-module review, 12
+cross-cutting findings F-01…F-12), with companion controls
+`specs/VALIDATION-LEDGER.md` + `specs/validation-claims.tsv` (30 headline
+claims), three new scripts (`check-module-coverage.sh`,
+`check-validation-ledger.sh`, `check-semantic-mutations.sh`), and a `ci.yml`
+edit. Headline: **no S4 findings** — no unsoundness, no trust escapes, no
+syntactic `axiom`/`sorry`/`admit`; all S3s are claim-alignment
+(prose/naming stronger than the proved type). The reviewer could not run
+`lake build` (its sandbox had no network for the pinned toolchain) — a
+sandbox artifact, not a repo defect. Every concrete claim below was
+re-verified against the source on intake day.
+
+1. **F-01 — LF2 bridge argument is type-level only (S3).**
+   *Classification: verified accurate; known-and-documented by design;
+   residual is one docstring over-claim + an open design decision.* The
+   `let _ : MeasureBridgeData D μFS := bridge` binding in
+   `OperationalPackage.fromPreparation` (`LF2/Preparation.lean`) is
+   deliberate and documented (module docstring + 2026-06-04 history note;
+   cf. 2026-06-11 intake item 5). Both-ways check: corpus-wide grep finds
+   **no consumption site** of `bridge_eq` — only the field declaration and
+   four axiom-free instance constructions (`SingletKahler`,
+   `SingletKahlerFlow`, `KahlerWignerLift`, `Gates/WignerDischarge`).
+   Residual over-claim: `born_rank_one_direct`'s docstring line "Symmetry
+   enters via the `bridge` argument" asserts load-bearing status the term
+   dependency does not support. Open decision (owner): drop the argument,
+   or state a genuine transport theorem in which `bridge_eq` computes the
+   projective probability from an ontic volume. Until decided, the current
+   state is **pinned** by the reviewer's own
+   `check-semantic-mutations.sh` guard (bridge accepted, not consumed;
+   re-review trigger CL-003).
+2. **F-02 — `effectProjFn` is the Born quadratic form by definition (S3).**
+   *Classification: verified accurate; agreed as a documentation-precision
+   gap (same genus as 2026-06-11 item 2); theorems unaffected.*
+   `effectProjFn` is literally `RCLike.re (star v ⬝ᵥ E.M *ᵥ v)`
+   (`LF2/EffectFn.lean:50`), so `born_rank_one_direct` is Dirac evaluation
+   of an already-quadratic integrand — a representation/consistency layer.
+   Action: reword the "volume-ratio foundational" phrasing in
+   `EffectFn.lean`/`Preparation.lean` docstrings; reserve "Born from
+   volume" for the LF4 engine (`MomentBornN`, `BornRegionUncond`,
+   `born_frequency_convergence_N_uncond`), where a separately specified
+   region's measure is genuinely computed.
+3. **F-03 — LF4 Born regions are preparation-indexed (S3).**
+   *Classification: verified accurate; known-and-ledgered — this IS the
+   MD-1 frontier.* `bornRegion ψ` contains `ψ` by construction; the corpus
+   already records this everywhere it matters (`FiniteQMClosure` docstring
+   names MD-1 explicitly; `specs/reconstruction-status.md` A7 row;
+   `specs/BACKLOG.md` MD-1; `specs/sigma-fibre-contextuality.md` for the
+   `N ≥ 3` structure). Codex independently converged on the standing plan
+   (`specs/record-layer-plan.md`): context-fixed readout as the
+   measurement-facing API — done at the qubit (`qubitBorn` chain), parked
+   at general `N` per the fibre-contextuality spec. No new action beyond
+   the standing plan.
+4. **F-04 — `KahlerOnticSetup` Prop fields don't force Kähler structure
+   (S3).** *Classification: verified accurate at the type level;
+   known-and-ledgered (`PLACEHOLDERS.md`, connectivity link L1); the
+   interface-level weakness is real.* Both-ways check: the fields are
+   labelled ABSTRACT PLACEHOLDER in the module's genuine-vs-placeholder
+   ledger, and **no instance supplies `True`** — all supply the proved
+   `IsFubiniStudyKahler N` core + `IsProbabilityMeasure`. But Codex's
+   sharper point stands: consumers quantified over `KahlerOnticSetup`
+   cannot extract those laws from `kahler_condition : IsKahlerSector`.
+   Open decision (owner, fits the F1 library-grade pass): rename per Codex
+   (`ProjectiveMeasureFlowSetup`) or replace the `Prop` pairs with the
+   concrete pointwise-Kähler interface now that `IsFubiniStudyKahler`
+   exists; the full strengthening waits on Mathlib exterior calculus.
+5. **F-05 — Lüders behavior supplied by calibrated storage (S3).**
+   *Classification: verified accurate; known-and-documented
+   (`SwapLuders.lean` ⚠️ Scope: "The calibration is a context-fixed
+   epistemic posit", A7-compatible, nullity forced by
+   `no_exact_collapse`).* Codex's framing matches the module's own.
+   Genuine new work item adopted: a **minimal calibration theorem**
+   identifying which apparatus hypotheses are *equivalent* to Lüders
+   behavior (candidate backlog row; S-size on the swap witness, where
+   `swap_luders_marginal` already gives calibration ⇒ Lüders — the
+   converse direction is the new content).
+6. **F-06 — capstones bundle heterogeneous witnesses (S3).**
+   *Classification: verified accurate; content known-and-documented
+   (`FiniteQMClosure` docstring: "a concrete consistency witness, not a
+   derivation"; `MeasurementCapstone` self-describes as an index); residual
+   is naming.* Rename decision (witness/feature index vs. unified closure)
+   deferred to the F1 library-grade pass; a genuinely unified closure
+   (single arena/preparation/dynamics/measurement interface) is a
+   legitimate L-size backlog candidate, not a doc fix. The
+   `MeasurementCapstone` root omission is folded into F-07.
+7. **F-07 — package-root and layer drift (S2).** *Classification: verified
+   accurate — reproduced exactly; agreed, genuine hygiene defect.*
+   Reproduction (intake day): 34 non-test modules unreachable from the
+   default `CsdLean4` root (35 counting `Basic`, which is intentionally
+   downstream per 2026-06-11 item 4) — concentrated in the newer
+   SigmaLayer pointer/record tranche + `Empirical/CSD/Eraser*` +
+   2 Mathlib support files; and exactly **16** reverse-layer imports incl.
+   `LF2.MixedEnsembleIx → SigmaLayer.MixedEnsemble` and the named
+   LF4/LF5/LF6 → Empirical edges. The union of the four declared roots
+   does reach all 443 files (audit coverage intact), so the defect is
+   consumer-root drift, not audit-coverage loss. Action: add the missing
+   modules to the root (mechanical, S) and consider Codex's generated
+   per-layer aggregates; move the generic Empirical/QM lemmas that
+   SigmaLayer/LF4-6 consume down-layer when touched (cf. LF4-todo §10
+   extraction discipline — reclassify on concrete consumer need, no bulk
+   refactor).
+8. **F-08 — SSA remains conditional on DPI (S3).** *Classification:
+   verified accurate; known-and-documented; prose survey clean.*
+   `strong_subadditivity_of_relEntropy_monotone` carries `hDPI`
+   explicitly; the module documents the wall and the upstream
+   `[LeanQIT2026]` discharge (cited, not imported). A prose sweep of
+   README/INDEX/reconstruction-status/future-work found **no**
+   unconditional "SSA proved" claim. The reviewer's mutation guard now
+   pins the `hDPI` premise (CL-023). No action.
+9. **F-09…F-11 — construction-vs-forcing recurrence; CV finite-cutoff;
+   thermo finite-dimensional (S3/S2).** *Classification: agreed; standing
+   corpus posture, no defect.* Witnesses prove consistency/realisability,
+   not uniqueness — stated per-module (and proved honestly where it bites:
+   `TypicalityForcing` shows the chosen flow is non-ergodic, reviewer
+   verdict Pass S0). CV is finite-mode by design (QFT is outside the
+   reality-scope ladder); thermo assumptions are explicit fields. Keep the
+   per-module scope statements; no action.
+10. **F-12 — proof-maintenance risk in very large files (S2).**
+    *Classification: agreed — actionable hygiene, aligns with the adopted
+    library-grade standard (CONVENTIONS §9) and the F1 Reversible API
+    pass already gating B6.* Targets in size order: `WignerRigidity`
+    (3,180 lines), `ShorRandomA`, `CuccaroModMul`, `MerminPeresVolume`,
+    `ShorCore`, `Subadditivity`, `EffectGleason` (~1,400). The
+    specialist-proof-pass recommendations coincide with
+    `VALIDATION-LEDGER` CL-024/CL-005/CL-022. Fold into the F1 ratchet;
+    no separate sweep.
+
+**Reviewer-supplied controls, intake status:** the three new scripts were
+re-verified logically (re-implemented independently on intake day: coverage
+0 missing from the 4-root union; ledger 30/30 rows structurally valid;
+mutation guards pass on the current tree — note they run Linux-only in CI
+and are impractically slow under Git Bash on Windows). The `ci.yml` edit
+wires them into the existing guard step and adds an advisory step for the
+pre-existing vacuity/contradiction/review-surface scripts — both fine. ⚠️
+It **also adds a `windows-latest` build matrix**, which roughly doubles CI
+cost per push on the slowest runner class; this is a cost/benefit decision
+for the owner and is left uncommitted pending that call.
+
+**Open remainder:** per the BACKLOG-only rule, every action this intake
+leaves open is tracked as `specs/BACKLOG.md` **§G (G1–G7)** — this section
+records classification and verification evidence only, and is closed.
+
+**Resolution (same day, 2026-08-06 — decisions by the author, execution per
+BACKLOG §G):** G1 resolved by the transport-theorem route
+(`MeasureBridgeData.integral_comp_pi` +
+`OperationalPackage.fromPreparation_liouville_apply` extensionally consume
+`bridge_eq`; the over-claiming docstring line corrected; the mutation guard
+now *requires* the transport theorems; CL-003 → qualified). G2 docstrings
+reworded (representation layer vs LF4 Born-from-volume). G3 resolved by
+tightening: `KahlerOnticSetup` now carries the concrete
+`kahler_pointwise : IsFubiniStudyKahler N` and
+`liouville_isProbability : IsProbabilityMeasure` fields (name kept; instances
+unchanged in obligation; `liouville_isProbability` an instance). G4 landed:
+`swap_luders_iff_calibrated` (post-marginal `= τ` ⟺ `ν i = τ`; CL-025
+updated). G5 decided: names kept, rename on-touch (F3 class); unified
+closure stays a listed candidate. G6 landed: 34 modules added to the
+default root. G7 decided: `windows-latest` leg dropped, reviewer's script
+wiring kept.

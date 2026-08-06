@@ -107,7 +107,7 @@ should not be counted against the reconstruction.
 
 * **A1, the exterior-calculus half** — `dω = 0` and `ωⁿ/n! = μ_FS` need a manifold exterior-calculus
   API that Mathlib does not have. The *formalizable core is done and consumed*
-  (`IsFubiniStudyKahler`, proved axiom-free, no longer a `True` placeholder). `IsKahlerSector` is
+  (`IsFubiniStudyKahler`, proved axiom-free, since 2026-08-06 the concrete structure field `kahler_pointwise`). The Kähler condition is
   the slot to strengthen if Mathlib ever grows the API.
   ⚠️ **Scope of this bullet, narrowed 2026-07-30.** It covers the exterior calculus **on `KSigma`**
   and nothing else. It was being cited to excuse the *fibred* Σ's missing Kähler structure as well —
@@ -235,7 +235,7 @@ See [`connectivity-manifest.md`](connectivity-manifest.md) for full evidence.
 
 | Link | Claim | Status |
 |---|---|---|
-| L1 | Kähler geometry ⇒ sector fields | PARTIAL — volume forced; 2-form's **pointwise** compatibility core now genuine & consumed (`IsKahlerSector := IsFubiniStudyKahler`); only manifold closedness `dω=0` / `ω^{∧n}/n!=μ_FS` unformalizable (no Mathlib API) |
+| L1 | Kähler geometry ⇒ sector fields | PARTIAL — volume forced; 2-form's **pointwise** compatibility core is the concrete field `kahler_pointwise : IsFubiniStudyKahler` (F-04 tightening 2026-08-06); only manifold closedness `dω=0` / `ω^{∧n}/n!=μ_FS` unformalizable (no Mathlib API) |
 | L2 | Σ+Φ+π ⇒ projected flow | CONNECTED |
 | L3 | projected flow ⇒ Schrödinger | CONNECTED — general `N`, arbitrary `H`; C¹-Stone derivation EXERCISED on the real nonzero generator (`manyToOneSchrodingerSetup_schrodinger_derived`) |
 | L4 | genuine `Φ ≠ id` inhabitant | CONNECTED — `rotationSetup`, `manyToOneSetup`, `unitaryFlowSetup` (4 total) |
