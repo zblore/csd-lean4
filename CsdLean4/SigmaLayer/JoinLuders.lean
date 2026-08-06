@@ -234,6 +234,10 @@ noncomputable def paramMeasure (K : ℕ) :
     Measure (((AddCircle (1 : ℝ) × LF4.KTorus) × LF4.KTorus) × LF4.KTorus) :=
   (((volume.prod volume).prod volume).prod (readyMeasure K))
 
+/-- The parameter measure, as its defining product (interface lemma, §9.1). -/
+lemma paramMeasure_def (K : ℕ) :
+    paramMeasure K = (((volume.prod volume).prod volume).prod (readyMeasure K)) := rfl
+
 instance : IsProbabilityMeasure (paramMeasure K) := by
   unfold paramMeasure
   infer_instance

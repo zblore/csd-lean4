@@ -113,6 +113,38 @@ noncomputable def alphaOff (x : Bool) : ℝ := if x then 1/2 else 0
 noncomputable def betaOff (y : Bool) : ℝ := if y then 1/4 else -1/4
 noncomputable def deltaOff (x y : Bool) : ℝ := alphaOff x - betaOff y
 
+/-! Interface lemmas (CONVENTIONS §9.1, F2): the values the case splits below keep
+re-deriving, stated once. Deliberately not `@[simp]` — existing proofs unfold by name and
+must not change behaviour. -/
+
+/-- Alice's setting offset, `x = false` branch. -/
+lemma alphaOff_false : alphaOff false = 0 := by simp [alphaOff]
+
+/-- Alice's setting offset, `x = true` branch. -/
+lemma alphaOff_true : alphaOff true = 1/2 := by simp [alphaOff]
+
+/-- Bob's setting offset, `y = false` branch. -/
+lemma betaOff_false : betaOff false = -1/4 := by simp [betaOff]
+
+/-- Bob's setting offset, `y = true` branch. -/
+lemma betaOff_true : betaOff true = 1/4 := by simp [betaOff]
+
+/-- The joint offset as its defining difference. -/
+lemma deltaOff_def (x y : Bool) : deltaOff x y = alphaOff x - betaOff y := rfl
+
+/-- The four joint-offset values, in one statement per setting pair. -/
+lemma deltaOff_false_false : deltaOff false false = 1/4 := by
+  simp [deltaOff_def, alphaOff_false, betaOff_false]; norm_num
+
+lemma deltaOff_false_true : deltaOff false true = -(1/4) := by
+  simp [deltaOff_def, alphaOff_false, betaOff_true]
+
+lemma deltaOff_true_false : deltaOff true false = 3/4 := by
+  rw [deltaOff_def, alphaOff_true, betaOff_false]; norm_num
+
+lemma deltaOff_true_true : deltaOff true true = 1/4 := by
+  rw [deltaOff_def, alphaOff_true, betaOff_true]; norm_num
+
 lemma sin_sq_pi_delta (x y : Bool) (m : ℤ) :
     Real.sin (π * ((m:ℝ) + deltaOff x y))^2 = 1/2 := by
   have hsin0 : Real.sin (π * (m:ℝ)) = 0 := by rw [mul_comm]; exact Real.sin_int_mul_pi m
@@ -157,6 +189,14 @@ noncomputable def aAngle (x : Bool) (k : ZMod d) (j : Fin d) : ℝ :=
   2 * Real.pi * (j.val : ℝ) * ((k.val : ℝ) + alphaOff x) / d
 noncomputable def bAngle (y : Bool) (l : ZMod d) (j : Fin d) : ℝ :=
   - (2 * Real.pi * (j.val : ℝ) * ((l.val : ℝ) + betaOff y) / d)
+
+/-- Alice's measurement phase, as its defining formula (interface lemma, §9.1). -/
+lemma aAngle_def (x : Bool) (k : ZMod d) (j : Fin d) :
+    aAngle d x k j = 2 * Real.pi * (j.val : ℝ) * ((k.val : ℝ) + alphaOff x) / d := rfl
+
+/-- Bob's measurement phase, as its defining formula (interface lemma, §9.1). -/
+lemma bAngle_def (y : Bool) (l : ZMod d) (j : Fin d) :
+    bAngle d y l j = - (2 * Real.pi * (j.val : ℝ) * ((l.val : ℝ) + betaOff y) / d) := rfl
 noncomputable def aVec (x : Bool) (k : ZMod d) : EuclideanSpace ℂ (Fin d) :=
   WithLp.toLp 2 (fun j => (Real.sqrt d : ℂ)⁻¹ * Complex.exp ((aAngle d x k j : ℝ) * Complex.I))
 noncomputable def bVec (y : Bool) (l : ZMod d) : EuclideanSpace ℂ (Fin d) :=
@@ -167,6 +207,11 @@ noncomputable def bornPair (x y : Bool) (k l : ZMod d) : ℝ :=
   ‖inner ℂ (outcome d x y k l) (maxEntangled d)‖ ^ 2
 noncomputable def baseAngle (x y : Bool) (k l : ZMod d) : ℝ :=
   - (2 * Real.pi * ((k.val : ℝ) - (l.val : ℝ) + deltaOff x y) / d)
+
+/-- The joint phase base, as its defining formula (interface lemma, §9.1). -/
+lemma baseAngle_def (x y : Bool) (k l : ZMod d) :
+    baseAngle d x y k l
+      = - (2 * Real.pi * ((k.val : ℝ) - (l.val : ℝ) + deltaOff x y) / d) := rfl
 
 variable [NeZero d]
 

@@ -161,6 +161,24 @@ noncomputable def blockCollapseAux (b : Fin N → Fin K) (i : Fin K)
     · rw [if_neg h]
       exact v.2⟩
 
+/-- On the physical branch (nonzero block component), the representative IS the block
+projection (interface lemma, §9.1 — the case split its unfold sites re-derive). -/
+lemma blockCollapseAux_coe_of_ne {b : Fin N → Fin K} {i : Fin K}
+    {v : { w : EuclideanSpace ℂ (Fin N) // w ≠ 0 }}
+    (h : blockProj b i (v : EuclideanSpace ℂ (Fin N)) ≠ 0) :
+    (blockCollapseAux b i v : EuclideanSpace ℂ (Fin N))
+      = blockProj b i (v : EuclideanSpace ℂ (Fin N)) := by
+  simp only [blockCollapseAux, if_pos h]
+
+/-- On the junk branch (vanishing block component), the representative is the identity
+(interface lemma, §9.1). -/
+lemma blockCollapseAux_coe_of_eq {b : Fin N → Fin K} {i : Fin K}
+    {v : { w : EuclideanSpace ℂ (Fin N) // w ≠ 0 }}
+    (h : blockProj b i (v : EuclideanSpace ℂ (Fin N)) = 0) :
+    (blockCollapseAux b i v : EuclideanSpace ℂ (Fin N))
+      = (v : EuclideanSpace ℂ (Fin N)) := by
+  simp only [blockCollapseAux, if_neg (not_not_intro h)]
+
 /-- **★ The ray-level collapse map** `[ψ] ↦ [Πᵢψ]` (identity where the block component
 vanishes), by quotient descent. This is the object any degenerate-Lüders witness must realise
 as the conditioned trace of its dynamics. -/

@@ -253,6 +253,22 @@ noncomputable def joinFstAux (v : { w : EuclideanSpace ℂ (Fin (N + N)) // w �
     · rw [if_neg h]
       exact single_ne_zero' 0⟩
 
+/-- On the physical branch (nonzero system component), the readout representative IS the
+first copy (interface lemma, §9.1 — the case split its unfold sites re-derive). -/
+lemma joinFstAux_coe_of_ne {v : { w : EuclideanSpace ℂ (Fin (N + N)) // w ≠ 0 }}
+    (h : fstPart (v : EuclideanSpace ℂ (Fin (N + N))) ≠ 0) :
+    (joinFstAux v : EuclideanSpace ℂ (Fin N))
+      = fstPart (v : EuclideanSpace ℂ (Fin (N + N))) := by
+  simp only [joinFstAux, if_pos h]
+
+/-- On the junk branch (vanishing system component), the readout representative is the
+documented junk vertex (interface lemma, §9.1). -/
+lemma joinFstAux_coe_of_eq {v : { w : EuclideanSpace ℂ (Fin (N + N)) // w ≠ 0 }}
+    (h : fstPart (v : EuclideanSpace ℂ (Fin (N + N))) = 0) :
+    (joinFstAux v : EuclideanSpace ℂ (Fin N))
+      = EuclideanSpace.single 0 (1 : ℂ) := by
+  simp only [joinFstAux, if_neg (not_not_intro h)]
+
 /-- **The system readout from the join**: project a join microstate to its system ray (junk
 vertex where the system component vanishes — documented, off the physical set). -/
 noncomputable def joinFst : LF4.CPN (N + N) → LF4.CPN N :=

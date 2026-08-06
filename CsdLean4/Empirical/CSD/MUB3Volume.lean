@@ -65,6 +65,9 @@ noncomputable def om : ℂ := ((-1 / 2 : ℝ) : ℂ) + ((Real.sqrt 3 / 2 : ℝ) 
 /-- `ω² = e^{−2πi/3} = −1/2 − i√3/2`. -/
 noncomputable def om2 : ℂ := ((-1 / 2 : ℝ) : ℂ) - ((Real.sqrt 3 / 2 : ℝ) : ℂ) * Complex.I
 
+/-- The conjugate cube root of unity, as its defining formula (interface lemma, §9.1). -/
+lemma om2_def : om2 = ((-1 / 2 : ℝ) : ℂ) - ((Real.sqrt 3 / 2 : ℝ) : ℂ) * Complex.I := rfl
+
 lemma r3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
 lemma r3_4 : Real.sqrt 3 ^ 4 = 9 := by
   rw [show (4 : ℕ) = 2 * 2 from rfl, pow_mul, r3]; norm_num

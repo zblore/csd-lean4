@@ -103,6 +103,9 @@ def xMinus : Fin 2 → ℂ := ![1, -1]
 /-- The Hermitian inner product `⟨a|b⟩ = ∑ star(a i) · b i`. -/
 noncomputable def innerProd (a b : Fin 2 → ℂ) : ℂ := ∑ i, star (a i) * b i
 
+/-- The inner product, as its defining sum (interface lemma, §9.1). -/
+lemma innerProd_def (a b : Fin 2 → ℂ) : innerProd a b = ∑ i, star (a i) * b i := rfl
+
 /-- The squared norm `‖a‖² = ∑ ‖a i‖²`, returned as a real number. -/
 noncomputable def normSq (a : Fin 2 → ℂ) : ℝ := ∑ i, ‖a i‖ ^ 2
 

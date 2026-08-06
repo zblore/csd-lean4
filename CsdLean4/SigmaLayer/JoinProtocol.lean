@@ -167,6 +167,10 @@ noncomputable def joinArenaMeasure (p₀ : LF4.CPN (N + N)) :
     Measure (JoinSel N × LF4.KTorus) :=
   (joinSelMeasure p₀).prod (volume : Measure LF4.KTorus)
 
+/-- The join arena measure, as its defining product (interface lemma, §9.1). -/
+lemma joinArenaMeasure_def (p₀ : LF4.CPN (N + N)) :
+    joinArenaMeasure p₀ = (joinSelMeasure p₀).prod (volume : Measure LF4.KTorus) := rfl
+
 instance : IsProbabilityMeasure (joinArenaMeasure (N := N) p₀) := by
   unfold joinArenaMeasure
   infer_instance
