@@ -145,15 +145,19 @@ equivalently, the isometry group of `ℂℙⁿ` with the Fubini–Study metric i
 projective **semi**-unitary group. It is **not** stated here as an axiom or a
 `sorry`.
 
-**Scope note (CL-024 audit, 2026-08-06).** This module proves the EXISTENCE
-clause of the Wigner/Bargmann theorem only. Up-to-phase **uniqueness** of the
-inducing (anti)unitary — part of the classical statement — is deliberately not
-formalized here; the branch-EXCLUSIVITY facts (a map cannot be both
-unitary- and antiunitary-induced, `2 ≤ N`) live downstream:
+**Scope note (CL-024 audit, 2026-08-06; updated same day).** This module
+proves the EXISTENCE clause of the Wigner/Bargmann theorem. The up-to-phase
+**uniqueness** clause is formalized in companion modules: matrix vocabulary in
+`PhaseRigidity.lean` (`exists_unit_smul_of_smul_eq_smul`, the `U(N) → PU(N)`
+circle kernel — predating the audit, which missed it) and this theorem's own
+`projMap`/`conjProj` vocabulary in `WignerUniqueness.lean`
+(`exists_unit_smul_of_projMap_eq`, `exists_unit_smul_of_projMap_conjProj_eq`,
+via the involution `conjProj_conjProj`). The branch-EXCLUSIVITY facts (a map
+cannot be both unitary- and antiunitary-induced, `2 ≤ N`) live downstream:
 `Projectivization.conjProj_ne_projMap` / `smul_action_not_antiunitary`
 (`Empirical/CSD/Gates/WignerDischarge.lean`) and the Bargmann-invariant
 discriminator (`Projectivization/Bargmann.lean`, `LF4/BargmannSelection.lean`).
-Cite those, not this module, for uniqueness/exclusivity claims. Piece 3 (W5) delivers the branch-distinguishing machinery:
+Cite those modules, not this one, for uniqueness/exclusivity claims. Piece 3 (W5) delivers the branch-distinguishing machinery:
 
 * `two_level_imrelphase_of_fixes` / `_flips` — the **complex `I`-probe** pins the
   *imaginary* part of the relative phase, the datum the real probes of pieces 1–2

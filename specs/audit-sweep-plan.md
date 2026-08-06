@@ -393,6 +393,18 @@ Wigner/Bargmann — bijectivity derived; antiunitary branch compile-probe
 forced at `N = 2`; up-to-phase uniqueness identified as the one substantive
 undocumented omission → module scope note added same day; five
 highest-risk tactic blocks named for the owner's hand pass, BACKLOG G11).
+⚠️ *Same-day correction to the audit's uniqueness claim (both-ways check):*
+the matrix-vocabulary uniqueness ALREADY EXISTED —
+`Projectivization.exists_unit_smul_of_smul_eq_smul`
+(`PhaseRigidity.lean`, built 2026-07-07 for W5-S1) — the audit (and the
+first intake note) missed it by sweeping only `WignerRigidity.lean`. The
+genuinely missing piece was the clause in `wigner_rigidity`'s own
+vocabulary; **landed same day** (`WignerUniqueness.lean`:
+`exists_unit_smul_of_projMap_eq`, `conjProj_conjProj`,
+`exists_unit_smul_of_projMap_conjProj_eq`, 3 pins,
+foundational-triple-only). The uniqueness clause of the classical theorem
+is now fully formalized; CL-024's reference-match criterion is complete,
+and only the owner's hand pass (G11) separates it from `validated`.
 CL-022/CL-023 entropy chain — **Entropy.lean VALIDATED-GRADE;
 Subadditivity/StrongSubadditivity QUALIFIED** (Klein's PD-σ hypothesis
 strictly stronger than the literature support condition — sound direction,

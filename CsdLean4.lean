@@ -64,6 +64,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerUniqueness
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
 public import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap

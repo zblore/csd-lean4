@@ -2058,4 +2058,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Kahler.extDeriv_fundamentalFormAlt
 
+-- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
+-- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
+-- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling
+-- (exists_unit_smul_of_smul_eq_smul, PhaseRigidity.lean) predates it. Together with the
+-- existence clause and the downstream exclusivity facts this completes the classical
+-- Wigner/Bargmann statement.
+/-- info: 'Projectivization.exists_unit_smul_of_projMap_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_unit_smul_of_projMap_eq
+
+/-- info: 'Projectivization.conjProj_conjProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.conjProj_conjProj
+
+/-- info: 'Projectivization.exists_unit_smul_of_projMap_conjProj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_unit_smul_of_projMap_conjProj_eq
+
 end CSD.Tests.AxiomAudit
