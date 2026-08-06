@@ -305,7 +305,7 @@ This `rfl`-form is BACKED by an exercised derivation, not standing alone:
 `manyToOneSchrodingerSetup_schrodinger_derived` (in `ManyToOneSchrodingerDerived`)
 exhibits the genuine skew-Hermitian generator `A = -iH`, DISCHARGES the C¹ smoothness
 datum `U' t = U t * A` for the real family, and runs the finite-dimensional Stone
-theorem (`CSD.StoneC1.eq_exp_of_hasDeriv`) to recover `U t = exp(t • A)` — at general
+theorem (`Matrix.StoneC1.eq_exp_of_hasDeriv`) to recover `U t = exp(t • A)` — at general
 `N` with arbitrary Hermitian `H`, no longer only the `A = 0` witness. -/
 theorem manyToOneSchrodingerSetup_schrodinger_form {M : ℕ}
     (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (M + 1)) :

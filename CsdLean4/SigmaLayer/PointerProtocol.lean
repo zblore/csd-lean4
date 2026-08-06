@@ -99,7 +99,7 @@ theorem couplingUAt_mem_unitaryGroup (a : ℝ) (w : Fin K → ℝ) :
     couplingUAt a w ∈ Matrix.unitaryGroup (Fin (K + 1)) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff']
   show (couplingUAt a w)ᴴ * couplingUAt a w = 1
-  exact CSD.StoneC1.exp_smul_unitary ((-Complex.I) • couplingH w) (couplingH_skew w) a
+  exact Matrix.StoneC1.exp_smul_unitary ((-Complex.I) • couplingH w) (couplingH_skew w) a
 
 /-- The angle-`a` propagator as a unitary-group element. -/
 noncomputable def couplingUUAt (a : ℝ) (w : Fin K → ℝ) :

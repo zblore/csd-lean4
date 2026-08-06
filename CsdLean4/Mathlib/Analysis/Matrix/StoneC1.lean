@@ -35,17 +35,17 @@ invertibility of `∫₀ˢ U` near `0`). Together they close the CSD dynamics-sp
 
 ## Main results
 
-* `CSD.StoneC1.eq_exp_of_hasDeriv` : ODE-uniqueness core. If `U' t = U t * A` and
+* `Matrix.StoneC1.eq_exp_of_hasDeriv` : ODE-uniqueness core. If `U' t = U t * A` and
   `U 0 = 1`, then `U t = exp (t • A)`. This recovers the generator from the group.
-* `CSD.StoneC1.exp_smul_unitary` : skew-Hermitian `A` gives each `exp (t • A)`
+* `Matrix.StoneC1.exp_smul_unitary` : skew-Hermitian `A` gives each `exp (t • A)`
   unitary (`(exp (t • A))ᴴ * exp (t • A) = 1`).
-* `CSD.StoneC1.stone_c1` : the packaged C^1 Stone theorem. From `star A = -A`,
+* `Matrix.StoneC1.stone_c1` : the packaged C^1 Stone theorem. From `star A = -A`,
   `∀ t, HasDerivAt U (U t * A) t`, `U 0 = 1`, conclude `∀ t, U t = exp (t • A)` and
   each `U t` is unitary.
-* `CSD.StoneC1.stone_continuous` : the **continuity-only** Stone theorem. From continuity of `U`,
+* `Matrix.StoneC1.stone_continuous` : the **continuity-only** Stone theorem. From continuity of `U`,
   `U 0 = 1`, the group law `U (s+t) = U s * U t`, and each `U t` unitary, conclude `∃ A`
   skew-Hermitian with `∀ t, U t = exp (t • A)` — no differentiability assumed.
-* `CSD.StoneC1.trivial_group`, `CSD.StoneC1.skew_witness` : non-vacuity round-trips.
+* `Matrix.StoneC1.trivial_group`, `Matrix.StoneC1.skew_witness` : non-vacuity round-trips.
 
 ## Implementation notes
 
@@ -70,8 +70,12 @@ with `module`, not the generic `zero_smul` / `smul_neg` rewrites: under the scop
 matrix-norm the `SMul ℝ (Matrix ...)` instance path defeats those rewrites, while
 `module` normalises through the correct instance.
 
-Declarations use dotted `CSD.StoneC1.*` names at top level rather than a
+Declarations use dotted `Matrix.StoneC1.*` names at top level rather than a
 `namespace ... end` block (a namespace block can select a spurious `SMul` diamond).
+
+*Renamed `CSD.StoneC1.*` → `Matrix.StoneC1.*` 2026-08-06 (BACKLOG B6 readiness): this file
+and `DuhamelBound.lean` were the staged tree's only real `CSD`-namespace content, blocking
+upstreaming. AxiomAudit pins and all corpus consumers updated in the same commit.*
 -/
 
 @[expose] public section
@@ -87,7 +91,7 @@ variable {N : ℕ}
 matrix exponential `t ↦ exp (t • A)`. Reuses `ODE_solution_unique_univ` (Gronwall)
 with the `‖A‖`-Lipschitz linear field `Y ↦ Y * A` and `hasDerivAt_exp_smul_const`
 for the reference solution. -/
-theorem CSD.StoneC1.eq_exp_of_hasDeriv (A : Matrix (Fin N) (Fin N) ℂ)
+theorem Matrix.StoneC1.eq_exp_of_hasDeriv (A : Matrix (Fin N) (Fin N) ℂ)
     (U : ℝ → Matrix (Fin N) (Fin N) ℂ)
     (hderiv : ∀ t, HasDerivAt U (U t * A) t) (hU0 : U 0 = 1) :
     ∀ t, U t = NormedSpace.exp (t • A) := by
@@ -107,7 +111,7 @@ theorem CSD.StoneC1.eq_exp_of_hasDeriv (A : Matrix (Fin N) (Fin N) ℂ)
 
 /-- For a skew-Hermitian generator `A` (`star A = -A`), each `exp (t • A)` is unitary.
 Reuses `Matrix.exp_conjTranspose` and `Matrix.exp_add_of_commute`. -/
-theorem CSD.StoneC1.exp_smul_unitary (A : Matrix (Fin N) (Fin N) ℂ)
+theorem Matrix.StoneC1.exp_smul_unitary (A : Matrix (Fin N) (Fin N) ℂ)
     (hA : star A = -A) (t : ℝ) :
     (NormedSpace.exp (t • A))ᴴ * NormedSpace.exp (t • A) = 1 := by
   have hAH : Aᴴ = -A := by rw [← Matrix.star_eq_conjTranspose]; exact hA
@@ -120,28 +124,28 @@ theorem CSD.StoneC1.exp_smul_unitary (A : Matrix (Fin N) (Fin N) ℂ)
 /-- **C^1 finite-dimensional Stone theorem.** A differentiable one-parameter unitary
 group with skew-Hermitian generator `A` is `t ↦ exp (t • A)`, and every `U t` is
 unitary. The generator is recovered from the group. -/
-theorem CSD.StoneC1.stone_c1 (A : Matrix (Fin N) (Fin N) ℂ)
+theorem Matrix.StoneC1.stone_c1 (A : Matrix (Fin N) (Fin N) ℂ)
     (U : ℝ → Matrix (Fin N) (Fin N) ℂ) (hA : star A = -A)
     (hderiv : ∀ t, HasDerivAt U (U t * A) t) (hU0 : U 0 = 1) :
     (∀ t, U t = NormedSpace.exp (t • A)) ∧
       (∀ t, (U t)ᴴ * U t = 1) := by
-  have hexp := CSD.StoneC1.eq_exp_of_hasDeriv A U hderiv hU0
+  have hexp := Matrix.StoneC1.eq_exp_of_hasDeriv A U hderiv hU0
   refine ⟨hexp, fun t => ?_⟩
   rw [hexp t]
-  exact CSD.StoneC1.exp_smul_unitary A hA t
+  exact Matrix.StoneC1.exp_smul_unitary A hA t
 
 /-- Non-vacuity: the trivial group. `A = 0` gives the constant unit curve, whose
 generator is recovered as `0` and `U t = exp (t • 0) = 1`. -/
-theorem CSD.StoneC1.trivial_group :
+theorem Matrix.StoneC1.trivial_group :
     ∀ t : ℝ, (fun _ : ℝ => (1 : Matrix (Fin 2) (Fin 2) ℂ)) t
       = NormedSpace.exp (t • (0 : Matrix (Fin 2) (Fin 2) ℂ)) := by
-  apply CSD.StoneC1.eq_exp_of_hasDeriv
+  apply Matrix.StoneC1.eq_exp_of_hasDeriv
   · intro t; simpa using hasDerivAt_const t (1 : Matrix (Fin 2) (Fin 2) ℂ)
   · rfl
 
 /-- Non-vacuity: a concrete skew-Hermitian generator `A = I • 1` on `Fin 2`. The
 skew-Hermitian hypothesis holds, so `exp (t • A)` is a genuine unitary group. -/
-theorem CSD.StoneC1.skew_witness :
+theorem Matrix.StoneC1.skew_witness :
     star (Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ))
         = -(Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ)) ∧
       ∀ t : ℝ, (NormedSpace.exp (t • (Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ))))ᴴ
@@ -150,14 +154,14 @@ theorem CSD.StoneC1.skew_witness :
   have hskew : star (Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ))
       = -(Complex.I • (1 : Matrix (Fin 2) (Fin 2) ℂ)) := by
     rw [star_smul, star_one, hI]; module
-  exact ⟨hskew, fun t => CSD.StoneC1.exp_smul_unitary _ hskew t⟩
+  exact ⟨hskew, fun t => Matrix.StoneC1.exp_smul_unitary _ hskew t⟩
 
 
 /-- **Continuity-only finite-dimensional Stone theorem.** A *strongly continuous* one-parameter
 unitary group `U : ℝ → Matrix N N ℂ` is `t ↦ exp (t • A)` for a skew-Hermitian generator `A`.
 No differentiability is assumed — it is derived by the integral-averaging argument (FTC +
 invertibility of `∫₀ˢ U` near `0`) and fed to the C¹ core `eq_exp_of_hasDeriv`. -/
-theorem CSD.StoneC1.stone_continuous (U : ℝ → Matrix (Fin N) (Fin N) ℂ)
+theorem Matrix.StoneC1.stone_continuous (U : ℝ → Matrix (Fin N) (Fin N) ℂ)
     (hcont : Continuous U) (hU0 : U 0 = 1) (hgroup : ∀ s t, U (s + t) = U s * U t)
     (hunit : ∀ t, (U t)ᴴ * U t = 1) :
     ∃ A : Matrix (Fin N) (Fin N) ℂ, star A = -A ∧ ∀ t, U t = NormedSpace.exp (t • A) := by
@@ -216,7 +220,7 @@ theorem CSD.StoneC1.stone_continuous (U : ℝ → Matrix (Fin N) (Fin N) ℂ)
       rw [hA, hgroup t s₀]; noncomm_ring
     rwa [hval] at hd
   have hexp : ∀ t, U t = NormedSpace.exp (t • A) :=
-    CSD.StoneC1.eq_exp_of_hasDeriv A U hUderiv hU0
+    Matrix.StoneC1.eq_exp_of_hasDeriv A U hUderiv hU0
   refine ⟨A, ?_, hexp⟩
   -- skew-Hermitian: differentiate `star (U t) * U t = 1` at `0`
   have hstar : HasDerivAt (fun t => star (U t) * U t)

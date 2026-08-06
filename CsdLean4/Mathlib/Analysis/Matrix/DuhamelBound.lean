@@ -28,7 +28,7 @@ norm to a sector-projectable one generates dynamics that the sector dynamics **s
 
 ## Provenance
 
-Staged as upstream Mathlib material; no `CsdLean4`-namespace content beyond the `CSD.StoneC1`
+Staged as upstream Mathlib material; no `CsdLean4`-namespace content beyond the `Matrix.StoneC1`
 unitarity input.
 -/
 
@@ -45,7 +45,7 @@ variable {n : ℕ}
 unitary, and the L2 operator norm is a C*-norm. -/
 theorem l2_opNorm_exp_smul_skew [NeZero n] (A : Matrix (Fin n) (Fin n) ℂ)
     (hA : Aᴴ = -A) (t : ℝ) : ‖exp (t • A)‖ = 1 := by
-  have h1 : (exp (t • A))ᴴ * exp (t • A) = 1 := CSD.StoneC1.exp_smul_unitary A hA t
+  have h1 : (exp (t • A))ᴴ * exp (t • A) = 1 := Matrix.StoneC1.exp_smul_unitary A hA t
   have h2 : exp (t • A) * (exp (t • A))ᴴ = 1 := mul_eq_one_comm.mp h1
   have hu : exp (t • A) ∈ unitary (Matrix (Fin n) (Fin n) ℂ) :=
     ⟨show star (exp (t • A)) * exp (t • A) = 1 from h1,

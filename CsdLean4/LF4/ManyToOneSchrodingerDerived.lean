@@ -17,7 +17,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 Schrödinger pillar `π (Φ_t x) = exp(-itH) • π x` by `rfl` — true, but only because
 the flow was *built* as `exp(-itH)`. That form does not, on its own, exhibit that
 the finite-dimensional **Stone/Wigner derivation machinery** actually FIRES on the
-real object: prior to this module the C¹-Stone core (`CSD.StoneC1.eq_exp_of_hasDeriv`,
+real object: prior to this module the C¹-Stone core (`Matrix.StoneC1.eq_exp_of_hasDeriv`,
 via `PhaseLift.sigmaFlow_schrodinger_form`) was only ever exercised on the trivial
 `A = 0` witness (`trivialKahlerOnticSetup_sigmaFlow_schrodinger_form`).
 
@@ -85,7 +85,7 @@ theorem CSD.LF4.schrodingerGen_eq_real_smul
 /-- **The C¹ smoothness datum, DISCHARGED (general `N`, arbitrary Hermitian `H`).**
 The real Schrödinger family `U t = exp(-itH)` has derivative `U t * (-iH)` at every
 `t`. This is the S2 hypothesis of `sigmaFlow_schrodinger_form` / the input of
-`CSD.StoneC1.eq_exp_of_hasDeriv`, here PROVED for the genuine nonzero generator
+`Matrix.StoneC1.eq_exp_of_hasDeriv`, here PROVED for the genuine nonzero generator
 rather than assumed or restricted to the `A = 0` witness. -/
 theorem CSD.LF4.schrodingerUnitary_hasDerivAt
     (H : Matrix (Fin N) (Fin N) ℂ) (hH : H.IsHermitian) (t : ℝ) :
@@ -111,7 +111,7 @@ a genuine skew-Hermitian generator `A = -iH` such that:
 * `∀ t, HasDerivAt U (U t * A) t` — the C¹ smoothness datum is DISCHARGED for the
   real family `U t = exp(-itH)` (not assumed, not the `A = 0` witness);
 * `∀ t, U t = exp (t • A)` — the finite-dimensional Stone theorem
-  (`CSD.StoneC1.eq_exp_of_hasDeriv`) recovers the family from its generator;
+  (`Matrix.StoneC1.eq_exp_of_hasDeriv`) recovers the family from its generator;
 * `∀ t x, π (Φ_t x) = exp(-itH) • π x` — the projected-flow Schrödinger pillar.
 
 This EXERCISES the Wigner/Stone derivation on the real nonzero-generator object at
@@ -136,7 +136,7 @@ theorem CSD.LF4.manyToOneSchrodingerSetup_schrodinger_derived {M : ℕ}
     show NormedSpace.exp (CSD.LF4.schrodingerGen H 0) = 1
     rw [show CSD.LF4.schrodingerGen H 0 = 0 from by unfold CSD.LF4.schrodingerGen; simp,
       NormedSpace.exp_zero]
-  exact CSD.StoneC1.eq_exp_of_hasDeriv ((-Complex.I) • H)
+  exact Matrix.StoneC1.eq_exp_of_hasDeriv ((-Complex.I) • H)
     (fun τ => (CSD.LF4.schrodingerUnitary hH τ : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ))
     (CSD.LF4.schrodingerUnitary_hasDerivAt H hH) hU0
 

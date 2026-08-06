@@ -5115,7 +5115,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- C¹-Stone derivation on the REAL nonzero generator at general N. schrodingerUnitary_hasDerivAt
 -- DISCHARGES the smoothness datum U' t = U t·(-iH); manyToOneSchrodingerSetup_schrodinger_derived
 -- exhibits the skew generator A = -iH, that discharged datum, the Stone conclusion U t = exp(t•A)
--- (CSD.StoneC1.eq_exp_of_hasDeriv), and the pillar — no longer only the A = 0 witness.
+-- (Matrix.StoneC1.eq_exp_of_hasDeriv), and the pillar — no longer only the A = 0 witness.
 /-- info: 'CSD.LF4.schrodingerUnitary_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.schrodingerUnitary_hasDerivAt
@@ -7466,30 +7466,30 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 
 /-! ### C^1 finite-dimensional Stone theorem (StoneC1.lean, W5-S2 under smoothness) -/
 
-/-- info: 'CSD.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.StoneC1.eq_exp_of_hasDeriv
+#print axioms Matrix.StoneC1.eq_exp_of_hasDeriv
 
-/-- info: 'CSD.StoneC1.exp_smul_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.StoneC1.exp_smul_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.StoneC1.exp_smul_unitary
+#print axioms Matrix.StoneC1.exp_smul_unitary
 
-/-- info: 'CSD.StoneC1.stone_c1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.StoneC1.stone_c1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.StoneC1.stone_c1
+#print axioms Matrix.StoneC1.stone_c1
 
 -- Continuity-only Stone (2026-07-23): differentiability derived (FTC + integral averaging), not assumed.
-/-- info: 'CSD.StoneC1.stone_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.StoneC1.stone_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.StoneC1.stone_continuous
+#print axioms Matrix.StoneC1.stone_continuous
 
-/-- info: 'CSD.StoneC1.trivial_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.StoneC1.trivial_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.StoneC1.trivial_group
+#print axioms Matrix.StoneC1.trivial_group
 
-/-- info: 'CSD.StoneC1.skew_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.StoneC1.skew_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.StoneC1.skew_witness
+#print axioms Matrix.StoneC1.skew_witness
 
 /-! ### ECDLP reversible-circuit substrate (Reversible/{Circuit,Cost}.lean) -/
 

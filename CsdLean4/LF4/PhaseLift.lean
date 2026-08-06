@@ -269,7 +269,7 @@ theorem projectedFlow_schrodinger_form
   have h0' : (phaseLiftFamily U b hb 0 : Matrix (Fin N) (Fin N) ℂ) = 1 := by
     rw [h0]
     rfl
-  have hexp := CSD.StoneC1.eq_exp_of_hasDeriv A
+  have hexp := Matrix.StoneC1.eq_exp_of_hasDeriv A
     (fun τ : ℝ => (phaseLiftFamily U b hb τ : Matrix (Fin N) (Fin N) ℂ))
     hderiv h0'
   have hH : (Complex.I • A).IsHermitian := by

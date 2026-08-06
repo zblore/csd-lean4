@@ -26,12 +26,12 @@ exponential, not a closed form:
   `couplingU w = exp((π/2) • (−i • couplingH w))`,
 
 unitary by the skew-Hermitian exponential theorem (`couplingU_mem_unitaryGroup`, via
-`CSD.StoneC1.exp_smul_unitary`). Three facts make it the right object:
+`Matrix.StoneC1.exp_smul_unitary`). Three facts make it the right object:
 
 * **On a pure weight it is the brick-1 rotation**: `couplingU (Pi.single j 1)
   = pointerRot (π/2) j` (`couplingU_single`) — through ★ `pointerRot_eq_exp`, the
   **Hamiltonian-generation identification** `pointerRot θ j = exp(θ • (−i • hⱼ))`, proved by
-  ODE uniqueness (`CSD.StoneC1.eq_exp_of_hasDeriv`: the closed form solves `Y' = Y·A`,
+  ODE uniqueness (`Matrix.StoneC1.eq_exp_of_hasDeriv`: the closed form solves `Y' = Y·A`,
   `Y 0 = 1`). This was scheduled as brick 5 but is pulled forward: the landing theorem
   (brick 3) reads the propagator on pure cells through it.
 * **It is entrywise Lipschitz in the weights** (`continuous_couplingU_entry`): the Duhamel
@@ -55,7 +55,7 @@ Mathlib has no symplectic API (`MATHLIB-GAPS.md`).
 ## References
 
 `specs/pointer-witness-plan.md` (bricks 2, 5); `specs/BACKLOG.md` (the ★ L row);
-`specs/future-work.md`. Reused corpus API: `CSD.StoneC1.eq_exp_of_hasDeriv` /
+`specs/future-work.md`. Reused corpus API: `Matrix.StoneC1.eq_exp_of_hasDeriv` /
 `exp_smul_unitary` (`Mathlib/Analysis/Matrix/StoneC1.lean` staging),
 `Matrix.norm_exp_smul_neg_I_sub_le` (`DuhamelBound.lean` staging),
 `Matrix.norm_entry_le_l2_opNorm` (`L2OpNormEntry.lean` staging, new),
@@ -139,7 +139,7 @@ theorem couplingU_mem_unitaryGroup (w : Fin K → ℝ) :
   rw [Matrix.mem_unitaryGroup_iff']
   show (couplingU w)ᴴ * couplingU w = 1
   unfold couplingU
-  exact CSD.StoneC1.exp_smul_unitary ((-Complex.I) • couplingH w) (couplingH_skew w)
+  exact Matrix.StoneC1.exp_smul_unitary ((-Complex.I) • couplingH w) (couplingH_skew w)
     (Real.pi / 2)
 
 /-- The coupling propagator as a unitary-group element. -/
@@ -172,11 +172,11 @@ closed form **is** the exponential of its Hermitian generator,
 
   `pointerRot θ j = exp(θ • (−i • hⱼ))`,
 
-by ODE uniqueness (`CSD.StoneC1.eq_exp_of_hasDeriv`): both sides solve `Y' = Y·(−i hⱼ)`
+by ODE uniqueness (`Matrix.StoneC1.eq_exp_of_hasDeriv`): both sides solve `Y' = Y·(−i hⱼ)`
 with `Y 0 = 1`. This discharges the single-plane half of brick 5's generation obligation. -/
 theorem pointerRot_eq_exp (θ : ℝ) (j : Fin K) :
     pointerRot θ j = NormedSpace.exp (θ • ((-Complex.I) • pointerH j)) := by
-  refine CSD.StoneC1.eq_exp_of_hasDeriv ((-Complex.I) • pointerH j)
+  refine Matrix.StoneC1.eq_exp_of_hasDeriv ((-Complex.I) • pointerH j)
     (fun s => pointerRot s j) (fun t => ?_) (pointerRot_zero j) θ
   have ha : HasDerivAt (fun s : ℝ => ((Real.cos s : ℂ) - 1)) (-(Real.sin t : ℂ)) t := by
     have h1 := (Real.hasDerivAt_cos t).ofReal_comp
