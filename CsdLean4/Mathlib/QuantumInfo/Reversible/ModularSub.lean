@@ -684,6 +684,34 @@ def modSubLayout2 : ModSubLayout 25 3 where
   hSubC i j := by split_ifs <;> decide
   hSubanc j := by split_ifs <;> decide
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the wire assignments of the concrete layout,
+one lemma per field. -/
+
+/-- `modSubLayout2`'s minuend wires. -/
+lemma modSubLayout2_B (i : ℕ) :
+    modSubLayout2.B i = if i = 0 then 0 else if i = 1 then 1 else 2 := rfl
+
+/-- `modSubLayout2`'s subtrahend wires. -/
+lemma modSubLayout2_Sub (i : ℕ) :
+    modSubLayout2.Sub i = if i = 0 then 3 else if i = 1 then 4 else 5 := rfl
+
+/-- `modSubLayout2`'s borrow-chain wires. -/
+lemma modSubLayout2_Bor (i : ℕ) :
+    modSubLayout2.Bor i
+      = if i = 0 then 6 else if i = 1 then 7 else if i = 2 then 8 else 9 := rfl
+
+/-- `modSubLayout2`'s fix-step constant-register wires. -/
+lemma modSubLayout2_Nreg (i : ℕ) :
+    modSubLayout2.Nreg i = if i = 0 then 10 else if i = 1 then 11 else 12 := rfl
+
+/-- `modSubLayout2`'s fix-step carry-chain wires. -/
+lemma modSubLayout2_C (i : ℕ) :
+    modSubLayout2.C i
+      = if i = 0 then 13 else if i = 1 then 14 else if i = 2 then 15 else 16 := rfl
+
+/-- `modSubLayout2`'s ancilla wire. -/
+lemma modSubLayout2_anc : modSubLayout2.anc = 17 := rfl
+
 /-- The headline is non-vacuous: it applies to the concrete `modSubLayout2`. -/
 example (s : State 25)
     (hBor : ∀ j, s (modSubLayout2.Bor j) = false) (hC : ∀ j, s (modSubLayout2.C j) = false)
@@ -701,6 +729,15 @@ def modSubState2 (a0 a1 a2 b0 b1 b2 : Bool) : State 25 := fun w =>
   else if w = 3 then b0 else if w = 4 then b1 else if w = 5 then b2
   else if w = 10 then true else if w = 12 then true   -- Nreg = 5 (bits 0, 2)
   else false
+
+/-- The concrete input state at a wire, as its defining case chain (interface lemma,
+§9.1). -/
+lemma modSubState2_apply (a0 a1 a2 b0 b1 b2 : Bool) (w : Fin 25) :
+    modSubState2 a0 a1 a2 b0 b1 b2 w
+      = (if w = 0 then a0 else if w = 1 then a1 else if w = 2 then a2
+          else if w = 3 then b0 else if w = 4 then b1 else if w = 5 then b2
+          else if w = 10 then true else if w = 12 then true
+          else false) := rfl
 
 /-- The hypotheses of `modSub_correct` hold at `modSubState2` (borrows / carries / ancilla clear,
 `Nreg = 5`), for any data bits. The `regValRange` register-value preconditions are concrete sums,

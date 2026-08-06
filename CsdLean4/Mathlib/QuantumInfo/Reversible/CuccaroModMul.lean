@@ -1203,6 +1203,35 @@ def cuccaroMulModLayout3 : CuccaroModLayout 24 3 where
   hNinj i j hi hj h := by split_ifs at h <;> omega
   hMinj i j hi hj h := by split_ifs at h <;> omega
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the wire assignments of the concrete layout,
+one lemma per field. -/
+
+/-- `cuccaroMulModLayout3`'s accumulator wires. -/
+lemma cuccaroMulModLayout3_Acc (i : ℕ) :
+    cuccaroMulModLayout3.Acc i
+      = if i = 0 then 0 else if i = 1 then 1 else if i = 2 then 2 else 3 := rfl
+
+/-- `cuccaroMulModLayout3`'s addend wires. -/
+lemma cuccaroMulModLayout3_B (i : ℕ) :
+    cuccaroMulModLayout3.B i
+      = if i = 0 then 4 else if i = 1 then 5 else if i = 2 then 6 else 7 := rfl
+
+/-- `cuccaroMulModLayout3`'s modulus-register wires. -/
+lemma cuccaroMulModLayout3_Nreg (i : ℕ) :
+    cuccaroMulModLayout3.Nreg i
+      = if i = 0 then 8 else if i = 1 then 9 else if i = 2 then 10 else 11 := rfl
+
+/-- `cuccaroMulModLayout3`'s mask-register wires. -/
+lemma cuccaroMulModLayout3_Mask (i : ℕ) :
+    cuccaroMulModLayout3.Mask i
+      = if i = 0 then 12 else if i = 1 then 13 else if i = 2 then 14 else 15 := rfl
+
+/-- `cuccaroMulModLayout3`'s comparison-flag wire. -/
+lemma cuccaroMulModLayout3_flag : cuccaroMulModLayout3.flag = 16 := rfl
+
+/-- `cuccaroMulModLayout3`'s borrow/carry ancilla wire. -/
+lemma cuccaroMulModLayout3_Z : cuccaroMulModLayout3.Z = 17 := rfl
+
 /-- A concrete `n = 3` carry-clean modular-multiply layout on `Fin 24`. -/
 def cuccaroMulLayout3 : CuccaroMulLayout 24 3 where
   mod := cuccaroMulModLayout3

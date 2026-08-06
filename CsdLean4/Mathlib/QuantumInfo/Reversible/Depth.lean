@@ -78,6 +78,12 @@ disjoint wires. Depth is physically meaningful for layered circuits whose every 
 def LayerWF (layer : Circuit n) : Prop :=
   layer.Pairwise (fun g h => Disjoint (gateWires g) (gateWires h))
 
+/-- Layer well-formedness, as its defining pairwise-disjointness (interface lemma,
+§9.1). -/
+lemma layerWF_iff (layer : Circuit n) :
+    LayerWF layer ↔ layer.Pairwise (fun g h => Disjoint (gateWires g) (gateWires h)) :=
+  Iff.rfl
+
 /-- A layered circuit is well-formed when every layer is. -/
 def LayeredWF (lc : LayeredCircuit n) : Prop := ∀ layer ∈ lc, LayerWF layer
 

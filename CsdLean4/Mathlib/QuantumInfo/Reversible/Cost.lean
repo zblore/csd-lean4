@@ -73,6 +73,30 @@ def gateCost : Gate n → Cost
   | .CCX _ _ _ => { qubits := 0, ancilla := 0, toffoli := 1, toffoliDepth := 1, cnot := 0, tCount := 0, meas := 0 }
   | .swap _ _ => { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 3, tCount := 0, meas := 0 }
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the per-constructor costs, stated once, so
+consumers cite a lemma instead of unfolding the match. Not `@[simp]` — existing proofs
+unfold by name and must keep their behaviour. -/
+
+/-- An `X` gate is free in every counted resource. -/
+lemma gateCost_X (i : Fin n) : gateCost (.X i)
+    = { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 0,
+        tCount := 0, meas := 0 } := rfl
+
+/-- A `CX` gate costs one CNOT. -/
+lemma gateCost_CX (c t : Fin n) : gateCost (.CX c t)
+    = { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 1,
+        tCount := 0, meas := 0 } := rfl
+
+/-- A `CCX` gate costs one Toffoli at depth one. -/
+lemma gateCost_CCX (c₁ c₂ t : Fin n) : gateCost (.CCX c₁ c₂ t)
+    = { qubits := 0, ancilla := 0, toffoli := 1, toffoliDepth := 1, cnot := 0,
+        tCount := 0, meas := 0 } := rfl
+
+/-- A `swap` costs three CNOTs. -/
+lemma gateCost_swap (i j : Fin n) : gateCost (.swap i j)
+    = { qubits := 0, ancilla := 0, toffoli := 0, toffoliDepth := 0, cnot := 3,
+        tCount := 0, meas := 0 } := rfl
+
 /-- The derived cost of a circuit: each additive field is the gate-list sum of that field of
 `gateCost`; the width is `qubits := n` (the circuit acts on `n` wires) with `ancilla := 0` (the
 classical reversible layer introduces no ancilla — ancilla accounting is a Pass-2 refinement). -/

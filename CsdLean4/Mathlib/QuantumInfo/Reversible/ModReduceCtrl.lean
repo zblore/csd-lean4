@@ -417,6 +417,32 @@ def modReduceLayout2 : ModReduceLayout 13 2 where
   hancA1 j := by split_ifs <;> decide
   hancC1 j := by split_ifs <;> decide
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the wire assignments of the concrete layout,
+one lemma per field. -/
+
+/-- `modReduceLayout2`'s data-register wires. -/
+lemma modReduceLayout2_B (i : ℕ) :
+    modReduceLayout2.B i = if i = 0 then 0 else 1 := rfl
+
+/-- `modReduceLayout2`'s step-1 constant-register wires. -/
+lemma modReduceLayout2_A1 (i : ℕ) :
+    modReduceLayout2.A1 i = if i = 0 then 2 else 3 := rfl
+
+/-- `modReduceLayout2`'s step-1 carry-chain wires. -/
+lemma modReduceLayout2_C1 (i : ℕ) :
+    modReduceLayout2.C1 i = if i = 0 then 4 else if i = 1 then 5 else 6 := rfl
+
+/-- `modReduceLayout2`'s step-3 constant-register wires. -/
+lemma modReduceLayout2_A2 (i : ℕ) :
+    modReduceLayout2.A2 i = if i = 0 then 7 else 8 := rfl
+
+/-- `modReduceLayout2`'s step-3 carry-chain wires. -/
+lemma modReduceLayout2_C2 (i : ℕ) :
+    modReduceLayout2.C2 i = if i = 0 then 9 else if i = 1 then 10 else 11 := rfl
+
+/-- `modReduceLayout2`'s ancilla wire. -/
+lemma modReduceLayout2_anc : modReduceLayout2.anc = 12 := rfl
+
 /-- The headline is non-vacuous: it applies to the concrete `modReduceLayout2`. -/
 example (s : State 13) (hC1 : ∀ j, s (modReduceLayout2.C1 j) = false)
     (hC2 : ∀ j, s (modReduceLayout2.C2 j) = false) (hanc : s modReduceLayout2.anc = false)

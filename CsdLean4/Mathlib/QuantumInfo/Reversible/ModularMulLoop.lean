@@ -515,6 +515,45 @@ def wDbl (base : ℕ) (hlo : 9 ≤ base) (hb : base + 22 ≤ 135) : ModDoubleLay
       hAopC2 i j := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
       hAopanc i := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega }
 
+section wDblInterface
+
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the doubling sub-layout's wire assignments at
+the value level, one lemma per bundled field. -/
+
+variable {base : ℕ} (hlo : 9 ≤ base) (hb : base + 22 ≤ 135)
+
+/-- `wDbl`'s operand wires, value level. -/
+lemma wDbl_Aop_val (i : ℕ) :
+    ((wDbl base hlo hb).addLayout.Aop i : ℕ) = base + 0 + min i 2 := rfl
+
+/-- `wDbl`'s accumulator wires, value level. -/
+lemma wDbl_B_val (i : ℕ) : ((wDbl base hlo hb).addLayout.B i : ℕ) = min i 2 := rfl
+
+/-- `wDbl`'s add-step carry wires, value level. -/
+lemma wDbl_Cadd_val (i : ℕ) :
+    ((wDbl base hlo hb).addLayout.Cadd i : ℕ) = base + 3 + min i 3 := rfl
+
+/-- `wDbl`'s step-1 constant-register wires, value level. -/
+lemma wDbl_A1_val (i : ℕ) :
+    ((wDbl base hlo hb).addLayout.A1 i : ℕ) = base + 7 + min i 2 := rfl
+
+/-- `wDbl`'s step-1 carry wires, value level. -/
+lemma wDbl_C1_val (i : ℕ) :
+    ((wDbl base hlo hb).addLayout.C1 i : ℕ) = base + 10 + min i 3 := rfl
+
+/-- `wDbl`'s step-3 constant-register wires, value level. -/
+lemma wDbl_A2_val (i : ℕ) :
+    ((wDbl base hlo hb).addLayout.A2 i : ℕ) = base + 14 + min i 2 := rfl
+
+/-- `wDbl`'s step-3 carry wires, value level. -/
+lemma wDbl_C2_val (i : ℕ) :
+    ((wDbl base hlo hb).addLayout.C2 i : ℕ) = base + 17 + min i 3 := rfl
+
+/-- `wDbl`'s ancilla wire, value level. -/
+lemma wDbl_anc_val : ((wDbl base hlo hb).addLayout.anc : ℕ) = base + 21 := rfl
+
+end wDblInterface
+
 /-- Bank `j`'s controlled-add sub-layout on `Fin 135`: operand `Y → {3,4,5}`, control `X (2-j)` =
 wire `6 + (2-j)`, private block `[base+22, base+42)` with `base = 9+42·j`. -/
 def wAdd (base ctrl : ℕ) (hlo : 9 ≤ base) (hb : base + 42 ≤ 135) (hc1 : 6 ≤ ctrl) (hc2 : ctrl < 9) :
@@ -585,6 +624,51 @@ def wAdd (base ctrl : ℕ) (hlo : 9 ≤ base) (hb : base + 42 ≤ 135) (hc1 : 6 
   hancCA2 j := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
   hancCC2 j := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
   hancCanc := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
+
+section wAddInterface
+
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the controlled-add sub-layout's wire
+assignments at the value level, one lemma per field. -/
+
+variable {base ctrl : ℕ} (hlo : 9 ≤ base) (hb : base + 42 ≤ 135)
+  (hc1 : 6 ≤ ctrl) (hc2 : ctrl < 9)
+
+/-- `wAdd`'s operand wires, value level. -/
+lemma wAdd_Aop_val (i : ℕ) : ((wAdd base ctrl hlo hb hc1 hc2).Aop i : ℕ) = 3 + min i 2 := rfl
+
+/-- `wAdd`'s accumulator wires, value level. -/
+lemma wAdd_B_val (i : ℕ) : ((wAdd base ctrl hlo hb hc1 hc2).B i : ℕ) = min i 2 := rfl
+
+/-- `wAdd`'s controlled-add carry wires, value level. -/
+lemma wAdd_Ccadd_val (i : ℕ) :
+    ((wAdd base ctrl hlo hb hc1 hc2).Ccadd i : ℕ) = base + 22 + min i 3 := rfl
+
+/-- `wAdd`'s control wire, value level. -/
+lemma wAdd_ctrl_val : ((wAdd base ctrl hlo hb hc1 hc2).ctrl : ℕ) = ctrl := rfl
+
+/-- `wAdd`'s clean-ancilla wire, value level. -/
+lemma wAdd_ancC_val : ((wAdd base ctrl hlo hb hc1 hc2).ancC : ℕ) = base + 26 := rfl
+
+/-- `wAdd`'s step-1 constant-register wires, value level. -/
+lemma wAdd_A1_val (i : ℕ) :
+    ((wAdd base ctrl hlo hb hc1 hc2).A1 i : ℕ) = base + 27 + min i 2 := rfl
+
+/-- `wAdd`'s step-1 carry wires, value level. -/
+lemma wAdd_C1_val (i : ℕ) :
+    ((wAdd base ctrl hlo hb hc1 hc2).C1 i : ℕ) = base + 30 + min i 3 := rfl
+
+/-- `wAdd`'s step-3 constant-register wires, value level. -/
+lemma wAdd_A2_val (i : ℕ) :
+    ((wAdd base ctrl hlo hb hc1 hc2).A2 i : ℕ) = base + 34 + min i 2 := rfl
+
+/-- `wAdd`'s step-3 carry wires, value level. -/
+lemma wAdd_C2_val (i : ℕ) :
+    ((wAdd base ctrl hlo hb hc1 hc2).C2 i : ℕ) = base + 37 + min i 3 := rfl
+
+/-- `wAdd`'s reduce-step ancilla wire, value level. -/
+lemma wAdd_anc_val : ((wAdd base ctrl hlo hb hc1 hc2).anc : ℕ) = base + 41 := rfl
+
+end wAddInterface
 
 /-- Bank `j` (`j < 3`) as a `HornerStepLayout 135 3`: doubling block `wDbl`, controlled-add block `wAdd`
 (control `X (2-j)` = wire `6 + (2-j)`), sharing `B → {0,1,2}`. The 70 cross-disjointness fields are all
@@ -699,6 +783,12 @@ def wMulLoop : MulLoopLayout 135 3 where
     have hval : (⟨6 + min i 2, by omega⟩ : Fin 135).val = 6 + i := by dsimp only; omega
     rw [hval] at ht
     omega
+
+/-- Every bank of the loop is the standard `wBank` (interface lemma, §9.1). -/
+lemma wMulLoop_bank (j : ℕ) : wMulLoop.bank j = wBank j := rfl
+
+/-- The loop's multiplier wires, value level (interface lemma, §9.1). -/
+lemma wMulLoop_X_val (i : ℕ) : (wMulLoop.X i : ℕ) = 6 + min i 2 := rfl
 
 /-! ### Concrete `#eval` cross-check: the verified `n = 3`, `N = 3` modular multiply on `Fin 135`
 

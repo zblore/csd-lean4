@@ -471,6 +471,43 @@ def modAddLayout2 : ModAddLayout 25 3 where
   hAopC2 i j := by split_ifs <;> decide
   hAopanc i := by split_ifs <;> decide
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the wire assignments of the concrete layout,
+one lemma per field, so consumers cite these instead of unfolding the whole structure. -/
+
+/-- `modAddLayout2`'s operand register wires. -/
+lemma modAddLayout2_Aop (i : ℕ) :
+    modAddLayout2.Aop i = if i = 0 then 0 else if i = 1 then 1 else 2 := rfl
+
+/-- `modAddLayout2`'s accumulator wires. -/
+lemma modAddLayout2_B (i : ℕ) :
+    modAddLayout2.B i = if i = 0 then 3 else if i = 1 then 4 else 5 := rfl
+
+/-- `modAddLayout2`'s add-step carry-chain wires. -/
+lemma modAddLayout2_Cadd (i : ℕ) :
+    modAddLayout2.Cadd i
+      = if i = 0 then 6 else if i = 1 then 7 else if i = 2 then 8 else 9 := rfl
+
+/-- `modAddLayout2`'s step-1 constant-register wires. -/
+lemma modAddLayout2_A1 (i : ℕ) :
+    modAddLayout2.A1 i = if i = 0 then 10 else if i = 1 then 11 else 12 := rfl
+
+/-- `modAddLayout2`'s step-1 carry-chain wires. -/
+lemma modAddLayout2_C1 (i : ℕ) :
+    modAddLayout2.C1 i
+      = if i = 0 then 13 else if i = 1 then 14 else if i = 2 then 15 else 16 := rfl
+
+/-- `modAddLayout2`'s step-3 constant-register wires. -/
+lemma modAddLayout2_A2 (i : ℕ) :
+    modAddLayout2.A2 i = if i = 0 then 17 else if i = 1 then 18 else 19 := rfl
+
+/-- `modAddLayout2`'s step-3 carry-chain wires. -/
+lemma modAddLayout2_C2 (i : ℕ) :
+    modAddLayout2.C2 i
+      = if i = 0 then 20 else if i = 1 then 21 else if i = 2 then 22 else 23 := rfl
+
+/-- `modAddLayout2`'s shared ancilla wire. -/
+lemma modAddLayout2_anc : modAddLayout2.anc = 24 := rfl
+
 /-- The headline is non-vacuous: it applies to the concrete `modAddLayout2`. -/
 example (s : State 25)
     (hCadd : ∀ j, s (modAddLayout2.Cadd j) = false) (hC1 : ∀ j, s (modAddLayout2.C1 j) = false)

@@ -156,6 +156,21 @@ def gateWires : Gate n → Finset (Fin n)
   | .CCX c₁ c₂ t => {c₁, c₂, t}
   | .swap i j => {i, j}
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): per-constructor wire sets, stated once. Not
+`@[simp]` — existing proofs unfold by name and must keep their behaviour. -/
+
+/-- The wires of an `X` gate. -/
+lemma gateWires_X (i : Fin n) : gateWires (.X i) = {i} := rfl
+
+/-- The wires of a `CX` gate. -/
+lemma gateWires_CX (c t : Fin n) : gateWires (.CX c t) = {c, t} := rfl
+
+/-- The wires of a `CCX` gate. -/
+lemma gateWires_CCX (c₁ c₂ t : Fin n) : gateWires (.CCX c₁ c₂ t) = {c₁, c₂, t} := rfl
+
+/-- The wires of a `swap` gate. -/
+lemma gateWires_swap (i j : Fin n) : gateWires (.swap i j) = {i, j} := rfl
+
 /-- **Frame lemma (single gate).** A wire outside `gateWires g` is left unchanged by `denoteGate g`. -/
 theorem denoteGate_apply_of_not_mem {g : Gate n} {s : State n} {i : Fin n}
     (hi : i ∉ gateWires g) : denoteGate g s i = s i := by

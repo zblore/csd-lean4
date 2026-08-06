@@ -392,6 +392,40 @@ def cBank (base : ℕ) (hlo : 8 ≤ base) (hb : base + 24 ≤ 200) : ModAddLayou
   hAopC2 i j := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
   hAopanc i := by rw [ne_eq, Fin.ext_iff]; dsimp only; omega
 
+section cBankInterface
+
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the bank's wire assignments at the value
+level, one lemma per field — what the range/interleaving proofs project out of the
+structure. -/
+
+variable {base : ℕ} (hlo : 8 ≤ base) (hb : base + 24 ≤ 200)
+
+/-- The bank's operand wires, value level. -/
+lemma cBank_Aop_val (i : ℕ) : ((cBank base hlo hb).Aop i : ℕ) = min i 3 := rfl
+
+/-- The bank's accumulator wires, value level. -/
+lemma cBank_B_val (i : ℕ) : ((cBank base hlo hb).B i : ℕ) = 4 + min i 3 := rfl
+
+/-- The bank's add-step carry wires, value level. -/
+lemma cBank_Cadd_val (i : ℕ) : ((cBank base hlo hb).Cadd i : ℕ) = base + min i 4 := rfl
+
+/-- The bank's step-1 constant-register wires, value level. -/
+lemma cBank_A1_val (i : ℕ) : ((cBank base hlo hb).A1 i : ℕ) = base + 5 + min i 3 := rfl
+
+/-- The bank's step-1 carry wires, value level. -/
+lemma cBank_C1_val (i : ℕ) : ((cBank base hlo hb).C1 i : ℕ) = base + 9 + min i 4 := rfl
+
+/-- The bank's step-3 constant-register wires, value level. -/
+lemma cBank_A2_val (i : ℕ) : ((cBank base hlo hb).A2 i : ℕ) = base + 14 + min i 3 := rfl
+
+/-- The bank's step-3 carry wires, value level. -/
+lemma cBank_C2_val (i : ℕ) : ((cBank base hlo hb).C2 i : ℕ) = base + 18 + min i 4 := rfl
+
+/-- The bank's ancilla wire, value level. -/
+lemma cBank_anc_val : ((cBank base hlo hb).anc : ℕ) = base + 23 := rfl
+
+end cBankInterface
+
 /-- Every `CClean (cBank' ·) k w` wire (`k < 3`) lies in bank `k`'s private block
 `[8 + 24·k, 8 + 24·k + 24)`. (All 6 clean / preset families are private; none is `Aop` or `B`.) -/
 theorem cBank_clean_range (k : ℕ) (hk : k < 3) (w : Fin 200)
@@ -421,6 +455,11 @@ def constMulLayout2 : ConstMulLayout 200 4 3 where
     have hc := cBank_clean_range k hk w hclean
     have ht := cBank_touch_range j hj w htouch
     omega
+
+/-- Every bank of `constMulLayout2` is the standard `cBank` at its stride-24 base
+(interface lemma, §9.1). -/
+lemma constMulLayout2_bank (j : ℕ) :
+    constMulLayout2.bank j = cBank (8 + 24 * min j 2) (by omega) (by omega) := rfl
 
 /-! ### Harness `#eval` cross-checks and proven instances (`c = 3, 8, 0, 1`)
 
@@ -527,6 +566,11 @@ def constMulLayout1 : ConstMulLayout 200 4 1 where
     have ht := cBank_touch_range j (by omega) w htouch
     omega
 
+/-- Every bank of `constMulLayout1` is the standard `cBank` at its stride-24 base
+(interface lemma, §9.1). -/
+lemma constMulLayout1_bank (j : ℕ) :
+    constMulLayout1.bank j = cBank (8 + 24 * min j 2) (by omega) (by omega) := rfl
+
 theorem constMulState1_pre (a0 a1 a2 : Bool) :
     (∀ j i, j < 1 → constMulState a0 a1 a2 ((constMulLayout1.bank j).Cadd i) = false)
       ∧ (∀ j i, j < 1 → constMulState a0 a1 a2 ((constMulLayout1.bank j).C1 i) = false)
@@ -571,6 +615,11 @@ def constMulLayout0 : ConstMulLayout 200 4 0 where
   hBShare j j' := by rfl
   hInter j k w hj hk hjk hclean htouch := by omega
 
+/-- Every bank of `constMulLayout0` is the standard `cBank` at its stride-24 base
+(interface lemma, §9.1). -/
+lemma constMulLayout0_bank (j : ℕ) :
+    constMulLayout0.bank j = cBank (8 + 24 * min j 2) (by omega) (by omega) := rfl
+
 example :
     regValRange constMulLayout0.B (denote (constMulCirc constMulLayout0) (constMulState false true false)) 4
       = (0 * 2) % 5 := by
@@ -597,6 +646,11 @@ def constMulLayout8 : ConstMulLayout 200 4 8 where
     rcases hclean with ⟨i, rfl⟩ | ⟨i, rfl⟩ | ⟨i, rfl⟩ | rfl | ⟨i, rfl⟩ | ⟨i, rfl⟩ <;>
     · rcases htouch with ⟨i', h⟩ | ⟨i', h⟩ | ⟨i', h⟩ | ⟨i', h⟩ | ⟨i', h⟩ | ⟨i', h⟩ | ⟨i', h⟩ | h <;>
         (rw [Fin.ext_iff] at h; dsimp only at h; omega)
+
+/-- Every bank of `constMulLayout8` is the standard `cBank` at its stride-24 base
+(interface lemma, §9.1). -/
+lemma constMulLayout8_bank (j : ℕ) :
+    constMulLayout8.bank j = cBank (8 + 24 * min j 7) (by omega) (by omega) := rfl
 
 /-- `constMulState8` presets all 8 banks' `A1 = 11` and `A2 = 5` (blocks `base = 8 + 24·j`, `j < 8`),
 `Aop = a`, `B = 0`. Bank `j`'s `A1` is `{base+5, base+6, base+8}`, `A2` is `{base+14, base+16}`. -/

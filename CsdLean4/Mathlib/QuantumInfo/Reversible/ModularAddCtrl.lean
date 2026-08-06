@@ -560,6 +560,49 @@ def cModAddLayout2 : CModAddLayout 27 3 where
   hancCC2 j := by split_ifs <;> decide
   hancCanc := by decide
 
+/-! Interface lemmas (CONVENTIONS §9.1, F1): the wire assignments of the concrete layout,
+one lemma per field. -/
+
+/-- `cModAddLayout2`'s operand register wires. -/
+lemma cModAddLayout2_Aop (i : ℕ) :
+    cModAddLayout2.Aop i = if i = 0 then 0 else if i = 1 then 1 else 2 := rfl
+
+/-- `cModAddLayout2`'s accumulator wires. -/
+lemma cModAddLayout2_B (i : ℕ) :
+    cModAddLayout2.B i = if i = 0 then 3 else if i = 1 then 4 else 5 := rfl
+
+/-- `cModAddLayout2`'s controlled-add carry-chain wires. -/
+lemma cModAddLayout2_Ccadd (i : ℕ) :
+    cModAddLayout2.Ccadd i
+      = if i = 0 then 6 else if i = 1 then 7 else if i = 2 then 8 else 9 := rfl
+
+/-- `cModAddLayout2`'s control wire. -/
+lemma cModAddLayout2_ctrl : cModAddLayout2.ctrl = 25 := rfl
+
+/-- `cModAddLayout2`'s controlled-add clean-ancilla wire. -/
+lemma cModAddLayout2_ancC : cModAddLayout2.ancC = 26 := rfl
+
+/-- `cModAddLayout2`'s step-1 constant-register wires. -/
+lemma cModAddLayout2_A1 (i : ℕ) :
+    cModAddLayout2.A1 i = if i = 0 then 10 else if i = 1 then 11 else 12 := rfl
+
+/-- `cModAddLayout2`'s step-1 carry-chain wires. -/
+lemma cModAddLayout2_C1 (i : ℕ) :
+    cModAddLayout2.C1 i
+      = if i = 0 then 13 else if i = 1 then 14 else if i = 2 then 15 else 16 := rfl
+
+/-- `cModAddLayout2`'s step-3 constant-register wires. -/
+lemma cModAddLayout2_A2 (i : ℕ) :
+    cModAddLayout2.A2 i = if i = 0 then 17 else if i = 1 then 18 else 19 := rfl
+
+/-- `cModAddLayout2`'s step-3 carry-chain wires. -/
+lemma cModAddLayout2_C2 (i : ℕ) :
+    cModAddLayout2.C2 i
+      = if i = 0 then 20 else if i = 1 then 21 else if i = 2 then 22 else 23 := rfl
+
+/-- `cModAddLayout2`'s reduce-step ancilla wire. -/
+lemma cModAddLayout2_anc : cModAddLayout2.anc = 24 := rfl
+
 /-- The headline is non-vacuous: it applies to the concrete `cModAddLayout2`. -/
 example (s : State 27)
     (hCcadd : ∀ j, s (cModAddLayout2.Ccadd j) = false) (hancC : s cModAddLayout2.ancC = false)
@@ -584,6 +627,17 @@ def cModAddState2 (a0 a1 a2 b0 b1 b2 c : Bool) : State 27 := fun w =>
   else if w = 17 then true else if w = 18 then true    -- A2 = 3 (bits 0, 1)
   else if w = 25 then c                                -- control
   else false
+
+/-- The concrete input state at a wire, as its defining case chain (interface lemma,
+§9.1). -/
+lemma cModAddState2_apply (a0 a1 a2 b0 b1 b2 c : Bool) (w : Fin 27) :
+    cModAddState2 a0 a1 a2 b0 b1 b2 c w
+      = (if w = 0 then a0 else if w = 1 then a1 else if w = 2 then a2
+          else if w = 3 then b0 else if w = 4 then b1 else if w = 5 then b2
+          else if w = 10 then true else if w = 12 then true
+          else if w = 17 then true else if w = 18 then true
+          else if w = 25 then c
+          else false) := rfl
 
 /-- The hypotheses of `cModAdd_correct` hold at `cModAddState2` (carries/ancillas clear, `A1 = 5`,
 `A2 = 3`), for any data / control bits. The `regValRange` register-value preconditions are concrete

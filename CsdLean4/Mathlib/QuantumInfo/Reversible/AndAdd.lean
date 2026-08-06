@@ -365,6 +365,9 @@ def andSumPrefix (L : AndAddLayout m n) (k : ℕ) : Circuit m :=
 /-- The full sum pass (all `n` bits). -/
 def andSumPass (L : AndAddLayout m n) : Circuit m := andSumPrefix L n
 
+/-- The sum pass is the full-length sum prefix (interface lemma, §9.1). -/
+lemma andSumPass_def (L : AndAddLayout m n) : andSumPass L = andSumPrefix L n := rfl
+
 /-- **The AND-based ripple adder.** Compute all carries into the fresh ancilla chain `G`
 (`andForward`), write the sums into `S` (`andSumPass`), then **uncompute** every carry via the reverse
 pass `inverse (andForward L)`. The uncompute pass is the explicit AND-uncompute sub-block — exactly
