@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # check-axiom-imports.sh
 #
-# Fast pre-commit safeguard against the recurring CI failure where AxiomAudit.lean
-# gains a `#print axioms Foo.bar` pin for a module that is NOT in AxiomAudit's
-# import closure (the "pins added, import forgotten" bug). The library fast-path
+# Fast pre-commit safeguard against the recurring CI failure where an AxiomAudit
+# file gains a `#print axioms Foo.bar` pin for a module that is NOT in the audit's
+# import closure (the "pins added, import forgotten" bug). Since the G9 split
+# (2026-08-06) pins live in the per-part files under Tests/AxiomAudit/; the
+# closure starts at the umbrella (which imports every part; parts import the
+# CsdLean4 root), and pins are collected from umbrella + parts. The library fast-path
 # build does not compile AxiomAudit, so the resulting "Unknown constant" only
 # surfaces in the slow CsdLeanTests / CI run.
 #
@@ -62,7 +65,7 @@ while read -r name; do
       "$name" "$(echo "$deffiles" | tr '\n' ' ')" "$AA"
     failures=$((failures+1))
   fi
-done < <(grep -oE '#print axioms[[:space:]]+[A-Za-z0-9_.]+' "$AA" | awk '{print $NF}' | sort -u)
+done < <(grep -ohE '#print axioms[[:space:]]+[A-Za-z0-9_.]+' "$AA" CsdLean4/Tests/AxiomAudit/*.lean | awk '{print $NF}' | sort -u)
 
 if [ "$failures" -gt 0 ]; then
   echo "check-axiom-imports: FAIL ($failures pinned constant(s) not in AxiomAudit's import closure)"
