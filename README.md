@@ -102,12 +102,13 @@ role map:
 The closure is exactly as strong as its stated boundaries, which survive it unchanged: the
 sector is posited (previous section); instruments are dilation-relative; the measurement
 witnesses pay the trilemma's prices; the symplectic-manifold reading stays prose. What
-remains in the repository is deliberately **outside** this definition: paper–corpus
-alignment (`BACKLOG` C1–C2) and the CSD-foundations frontier
-([`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) — the record-layer residue and the
-fibre-mechanism question), neither of which adds or removes an operational finite-QM
-theorem. (Mathlib upstreaming was retired from the queue 2026-08-06 — `CONVENTIONS.md` §7:
-it does not advance CSD; the staging discipline and the option remain.)
+remains in the repository is deliberately **outside** this definition: the CSD-foundations
+frontier ([`specs/CSD-CHARTER.md`](specs/CSD-CHARTER.md) — the record-layer residue and the
+fibre-mechanism question), which adds or removes no operational finite-QM theorem.
+(Mathlib upstreaming and paper–corpus alignment were both moved off this repository's
+queue 2026-08-06 — neither is a need of the repository; see `CONVENTIONS.md` §7 and
+`BACKLOG` §B6/§C. The staging discipline, and the corpus's role as the source of truth
+for what the papers owe it, both remain.)
 
 ## What is honestly assumed
 
