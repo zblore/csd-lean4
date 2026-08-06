@@ -119,6 +119,18 @@ resolved in Lean, the second the standing posit):
   contextual). Deriving the fibre mechanism from a de-isolation dynamics is the open frontier.
 - The witness closure called "QM derived from CSD."
 
+## Repository architecture (decided 2026-08-06)
+
+**`csd-lean4` is the unified formal repository for the complete CSD quantum
+programme. External Lean libraries provide generic mathematical and physical
+infrastructure through explicit interoperability layers.** One repository, one theorem
+graph — no satellite CSD repos (they would break end-to-end claims). External libraries
+(Mathlib now; Physlib / a QIT provider when toolchains align and a concrete need
+exists) sit *underneath* as dependencies: they own generic objects, `csd-lean4` owns
+the CSD theorems about them. Rules, ownership table, and the four-way
+check-before-implementing classification: [`external-library-map.md`](external-library-map.md);
+adapters live in `CsdLean4/Interop/`.
+
 ## How to use this
 
 Before landing framing/prose/claims, or scoping new work, run the **`csd-foundations`**
