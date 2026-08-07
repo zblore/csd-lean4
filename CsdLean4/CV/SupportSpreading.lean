@@ -42,9 +42,11 @@ CV-6 proved the free field never spreads support. This module bounds what an
   a real phenomenon, not a vacuous one.
 
 This retires CV-6's open boundary: interacting-drive spreading is now a
-theorem with a bound, not an unclaimed scope. What remains open is the
-*norm pricing* of the violation (CV-9, the Duhamel route) and non-diagonal
-(hopping) interactions.
+theorem with a bound, not an unclaimed scope. The norm pricing landed as
+CV-9 (`CV/InteractionPrice.lean`, covering non-diagonal perturbations too);
+what remains open is the light cone for *non-diagonal* (hopping) drives —
+the exp-closure-of-local-algebras route sketched in
+`specs/cv-stage3-plan.md` §3b.
 
 ## References
 

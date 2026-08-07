@@ -29,7 +29,11 @@ norm to a sector-projectable one generates dynamics that the sector dynamics **s
 ## Provenance
 
 Staged as upstream Mathlib material; no `CsdLean4`-namespace content beyond the `Matrix.StoneC1`
-unitarity input.
+unitarity input. Generalized 2026-08-07 from `Fin n` to an arbitrary finite index (the CV pricing
+route, CV-9, needs it at `FieldConfig K N`): every ingredient — `exp_conjTranspose`,
+`exp_add_of_commute`, `hasDerivAt_exp_smul_const`, the scoped C*-instances, the mean-value
+inequality — is index-generic, so the unitarity input is inlined and `[NeZero n]` becomes
+`[Nonempty m]`.
 -/
 
 @[expose] public section
@@ -39,25 +43,29 @@ open NormedSpace
 
 namespace Matrix
 
-variable {n : ℕ}
-
-/-- A skew-Hermitian generator exponentiates to a matrix of **unit L2 operator norm** — it is
-unitary, and the L2 operator norm is a C*-norm. -/
-theorem l2_opNorm_exp_smul_skew [NeZero n] (A : Matrix (Fin n) (Fin n) ℂ)
-    (hA : Aᴴ = -A) (t : ℝ) : ‖exp (t • A)‖ = 1 := by
-  have h1 : (exp (t • A))ᴴ * exp (t • A) = 1 := Matrix.StoneC1.exp_smul_unitary A hA t
-  have h2 : exp (t • A) * (exp (t • A))ᴴ = 1 := mul_eq_one_comm.mp h1
-  have hu : exp (t • A) ∈ unitary (Matrix (Fin n) (Fin n) ℂ) :=
-    ⟨show star (exp (t • A)) * exp (t • A) = 1 from h1,
-     show exp (t • A) * star (exp (t • A)) = 1 from h2⟩
-  exact CStarRing.norm_of_mem_unitary hu
+variable {m : Type*} [Fintype m] [DecidableEq m] [Nonempty m]
 
 /-- Real scaling preserves skew-Hermiticity. -/
-theorem conjTranspose_real_smul_skew {A : Matrix (Fin n) (Fin n) ℂ} (hA : Aᴴ = -A) (s : ℝ) :
+theorem conjTranspose_real_smul_skew {A : Matrix m m ℂ} (hA : Aᴴ = -A) (s : ℝ) :
     (s • A)ᴴ = -(s • A) := by
   rw [Matrix.conjTranspose_smul, hA]
   ext i j
   simp
+
+/-- A skew-Hermitian generator exponentiates to a matrix of **unit L2 operator norm** — it is
+unitary, and the L2 operator norm is a C*-norm. -/
+theorem l2_opNorm_exp_smul_skew (A : Matrix m m ℂ)
+    (hA : Aᴴ = -A) (t : ℝ) : ‖exp (t • A)‖ = 1 := by
+  have hskew : (t • A)ᴴ = -(t • A) := conjTranspose_real_smul_skew hA t
+  have hcomm : Commute (-(t • A)) (t • A) := (Commute.refl (t • A)).neg_left
+  have h1 : (exp (t • A))ᴴ * exp (t • A) = 1 := by
+    rw [← Matrix.exp_conjTranspose, hskew, ← Matrix.exp_add_of_commute _ _ hcomm,
+      neg_add_cancel, exp_zero]
+  have h2 : exp (t • A) * (exp (t • A))ᴴ = 1 := mul_eq_one_comm.mp h1
+  have hu : exp (t • A) ∈ unitary (Matrix m m ℂ) :=
+    ⟨show star (exp (t • A)) * exp (t • A) = 1 from h1,
+     show exp (t • A) * star (exp (t • A)) = 1 from h2⟩
+  exact CStarRing.norm_of_mem_unitary hu
 
 /-- **The Duhamel bound.** For skew-Hermitian generators `C, A`,
 `‖exp (t • C) − exp (t • A)‖ ≤ |t| · ‖C − A‖` in the L2 operator norm.
@@ -65,10 +73,10 @@ theorem conjTranspose_real_smul_skew {A : Matrix (Fin n) (Fin n) ℂ} (hA : Aᴴ
 Proof without integrals: the interpolant `φ(s) = exp (s • C) · exp ((t−s) • A)` has derivative
 `exp (s • C) · (C − A) · exp ((t−s) • A)`, of norm at most `‖C − A‖` since both exponentials are
 unitary; the mean-value inequality on `[0, t]` finishes. -/
-theorem norm_exp_smul_sub_exp_smul_le [NeZero n] (C A : Matrix (Fin n) (Fin n) ℂ)
+theorem norm_exp_smul_sub_exp_smul_le (C A : Matrix m m ℂ)
     (hC : Cᴴ = -C) (hA : Aᴴ = -A) (t : ℝ) :
     ‖exp (t • C) - exp (t • A)‖ ≤ |t| * ‖C - A‖ := by
-  set φ : ℝ → Matrix (Fin n) (Fin n) ℂ := fun s => exp (s • C) * exp ((t - s) • A) with hφ
+  set φ : ℝ → Matrix m m ℂ := fun s => exp (s • C) * exp ((t - s) • A) with hφ
   -- The derivative of the interpolant.
   have hderiv : ∀ s : ℝ, HasDerivAt φ (exp (s • C) * (C - A) * exp ((t - s) • A)) s := by
     intro s
@@ -119,10 +127,10 @@ theorem norm_exp_smul_sub_exp_smul_le [NeZero n] (C A : Matrix (Fin n) (Fin n) �
 within `|t| · ‖H − H₀‖` of one another:
 
   `‖exp (t • (−i H)) − exp (t • (−i H₀))‖ ≤ |t| · ‖H − H₀‖`. -/
-theorem norm_exp_smul_neg_I_sub_le [NeZero n] (H H₀ : Matrix (Fin n) (Fin n) ℂ)
+theorem norm_exp_smul_neg_I_sub_le (H H₀ : Matrix m m ℂ)
     (hH : H.IsHermitian) (hH₀ : H₀.IsHermitian) (t : ℝ) :
     ‖exp (t • ((-Complex.I) • H)) - exp (t • ((-Complex.I) • H₀))‖ ≤ |t| * ‖H - H₀‖ := by
-  have hskew : ∀ (M : Matrix (Fin n) (Fin n) ℂ), M.IsHermitian →
+  have hskew : ∀ (M : Matrix m m ℂ), M.IsHermitian →
       ((-Complex.I) • M)ᴴ = -((-Complex.I) • M) := by
     intro M hM
     have hstar : star (-Complex.I) = Complex.I := by simp

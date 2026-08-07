@@ -35,11 +35,11 @@ regions persists at every period.
   periods, still commute. The Haag–Kastler kinematic axiom is stable under
   the free dynamics.
 
-Honest scope: the free (mode-diagonal) drive only. An interacting drive can
-spread support — since CV-8 that is a *bounded theorem*, not an open scope:
-`CV/SupportSpreading.lean` confines it to the coupling-graph light cone and
-witnesses it at `K = N = 2`. The norm pricing of the violation (CV-9, the
-Duhamel route) is what is still not claimed here.
+Honest scope: the free (mode-diagonal) drive only. Interacting drives are
+handled downstream: CV-8 bounds *where* support goes
+(`CV/SupportSpreading.lean`, the coupling-graph light cone, with a
+`K = N = 2` witness), and CV-9 prices *how much* locality costs in norm
+(`CV/InteractionPrice.lean`, linear in the coupling).
 
 ## References
 

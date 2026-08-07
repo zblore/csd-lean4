@@ -275,9 +275,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- is a theorem, not a reading. CV-6: Heisenberg conjugation by the (mode-additive) free
 -- evolution preserves SupportedOn, so the Haag-Kastler kinematic axiom is DYNAMICALLY
 -- stable: disjointly supported observables still commute after ANY number of periods.
--- HONEST SCOPE: free (mode-diagonal) drive only; interacting-drive spreading is now
--- BOUNDED by CV-8 (SupportSpreading: coupling-graph light cone + K=N=2 witness); the
--- norm pricing (CV-9, Duhamel route) is what is still not claimed here.
+-- HONEST SCOPE: free (mode-diagonal) drive only; interacting-drive spreading is
+-- BOUNDED by CV-8 (SupportSpreading: coupling-graph light cone + K=N=2 witness) and
+-- PRICED by CV-9 (InteractionPrice: linear in the coupling).
 /-- info: 'CSD.CV.freeFieldU_eq_exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.freeFieldU_eq_exp
 
@@ -311,5 +311,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.CV.spreadKick_not_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.spreadKick_not_supportedOn
+
+-- CV-9 small-coupling pricing (2026-08-07). The Duhamel engine (generalized to any finite
+-- index) prices ANY Hermitian perturbation -- diagonal or hopping, no closed-form step
+-- needed: ||exp(-(i tau).(H+lam V)) - freeFieldU|| <= |tau||lam| ||V||; the diagonal drive
+-- specializes to |tau|(|lam| C) via l2_opNorm_diagonal_le; Heisenberg stability (C*-identity
+-- ||U||=1 + submultiplicativity) then puts the interacting Heisenberg observable of an
+-- S-supported A within 2|tau||lam|C||A|| of an S-SUPPORTED operator (the free-evolved one,
+-- CV-6): LOCALITY VIOLATION IS PRICED LINEARLY IN THE COUPLING -- the CV rhyme of the
+-- record half-life bound mu <= n.eps. Bounds are inequalities; attainment not claimed.
+/-- info: 'CSD.CV.freeField_perturbed_exp_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.freeField_perturbed_exp_dist_le
+
+/-- info: 'CSD.CV.interactingU_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.interactingU_dist_le
+
+/-- info: 'CSD.CV.heisenberg_interactingU_near_supported' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.heisenberg_interactingU_near_supported
 
 end CSD.Tests.AxiomAudit

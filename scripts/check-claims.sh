@@ -329,7 +329,7 @@ unitaryFlowSetup"
 # Per-file counts of honest-scope phrases. These are GOOD — they are how a module
 # states its boundary — so this is not a budget to drive to zero; it is a diffable
 # ledger so that a boundary claim cannot go stale unnoticed when the work lands.
-DECLARED_OPEN_SCOPE="CsdLean4/CV/DynamicalLocality.lean:1
+DECLARED_OPEN_SCOPE="CsdLean4/CV/InteractionPrice.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean:1
@@ -346,7 +346,6 @@ CsdLean4/SigmaLayer/PointerLudersMarginal.lean:1
 CsdLean4/SigmaLayer/PovmDynamics.lean:2
 CsdLean4/SigmaLayer/PovmSectorBorn.lean:1
 CsdLean4/SigmaLayer/RecordLayerClosure.lean:1
-CsdLean4/Tests/AxiomAudit/Extensions.lean:1
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean:2
 CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 
@@ -369,7 +368,7 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 # waits on unlabelled work. §E items now carry stable IDs (E1–E5) so long-horizon waits
 # are taggable; foundations-frontier waits (MD-1, §2a) have no BACKLOG row and stay
 # `none` with the wait named in the site's own prose.
-DECLARED_SCOPE_WAITS="CsdLean4/CV/DynamicalLocality.lean|none
+DECLARED_SCOPE_WAITS="CsdLean4/CV/InteractionPrice.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|E1
@@ -386,7 +385,6 @@ CsdLean4/SigmaLayer/PointerLudersMarginal.lean|none
 CsdLean4/SigmaLayer/PovmDynamics.lean|none
 CsdLean4/SigmaLayer/PovmSectorBorn.lean|none
 CsdLean4/SigmaLayer/RecordLayerClosure.lean|none
-CsdLean4/Tests/AxiomAudit/Extensions.lean|none
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean|none
 CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 # WAIT LEDGER (why each tag):
@@ -404,12 +402,13 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #   PovmDynamics(2 of 2) — recorded extensions without a BACKLOG row (mixed-ε weights,
 #     Hamiltonian relocation stroke, V-as-unitary-stroke): boundaries by design, not
 #     queued work; if one becomes a row, re-tag it here.
-#   DynamicalLocality / AxiomAudit-Extensions(CV-6 pin) / SupportSpreading — the CV-6
-#     boundary was NARROWED 2026-08-07 exactly as the ledger note intended: CV-8 landed
-#     the spreading bound (coupling-graph light cone + witness), both sites re-read and
-#     reworded at source. The remaining boundary at all three sites is the norm PRICING
-#     of the locality violation, waiting on CV-9 (future-work row; un-reffed in
-#     BACKLOG). When CV-9 lands, re-read all three and retire or narrow again."
+#   SupportSpreading / InteractionPrice — the CV-6 boundary, narrowed twice exactly as
+#     the ledger intended (CV-8 landed the spreading bound 2026-08-07; CV-9 landed the
+#     pricing the same day, and the DynamicalLocality + Extensions-pin sites RETIRED
+#     their boundaries at source). What stands now: SupportSpreading waits on the
+#     non-diagonal (hopping) light cone (exp-closure route, cv-stage3-plan section 3b,
+#     prose, no Ref); InteractionPrice waits on attainment (a dynamics question, no
+#     Ref). Re-read both when either lands."
 
 # (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
 # after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure
@@ -465,6 +464,7 @@ hamiltonian_duality
 fubiniStudyMeasure_isForcedKahlerVolume
 hamiltonian_eq_diagonal
 hamiltonian_groundEnergy
+fieldHamiltonian_isHermitian
 hamiltonian_isHermitian
 interactionHamiltonian_isHermitian
 hamiltonian_mulVec_single

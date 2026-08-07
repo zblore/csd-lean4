@@ -340,6 +340,7 @@ public import CsdLean4.CV.DynamicalLocality
 public import CsdLean4.CV.Interaction
 public import CsdLean4.CV.LocalAlgebra
 public import CsdLean4.CV.SupportSpreading
+public import CsdLean4.CV.InteractionPrice
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
@@ -423,6 +424,7 @@ public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
+public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.JoinClosure
 public import CsdLean4.SigmaLayer.JointFlowTransfer

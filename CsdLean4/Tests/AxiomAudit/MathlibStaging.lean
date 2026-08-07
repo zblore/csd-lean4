@@ -111,7 +111,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- ||exp(tC) - exp(tA)|| <= |t| ||C - A|| in the L2 operator norm; Hermitian corollary
 -- ||exp(t(-iH)) - exp(t(-iH_0))|| <= |t| ||H - H_0||. Proved WITHOUT integrals: the interpolant
 -- phi(s) = exp(sC) exp((t-s)A) has derivative exp(sC)(C-A)exp((t-s)A), of norm <= ||C-A|| because
--- both exponential factors are UNITARY (l2_opNorm_exp_smul_skew, from StoneC1's unitarity + the
+-- both exponential factors are UNITARY (l2_opNorm_exp_smul_skew; unitarity inlined when the file
+-- was GENERALIZED 2026-08-07 from Fin n to any finite index for the CV-9 pricing route + the
 -- L2 norm being a C*-norm), and the mean-value inequality finishes. CSD-free, upstream candidate.
 -- READING FOR A5: a Hamiltonian eps-close in operator norm to a sector-projectable one generates
 -- dynamics that sector dynamics SHADOWS to within eps*T over [-T, T] -- what makes a Hamiltonian
@@ -1992,6 +1993,13 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'Matrix.norm_entry_le_l2_opNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.norm_entry_le_l2_opNorm
+
+-- The diagonal bound for the L2 operator norm (2026-08-07, L2OpNormDiagonal.lean): a diagonal
+-- matrix with uniformly bounded entries has L2 opnorm at most that bound -- what turns the
+-- Duhamel price ||lam . V|| into |lam| . sup|v| for the CV-9 diagonal interacting drive.
+-- <=-direction only (what pricing consumes); equality is a separate upstream item.
+/-- info: 'Matrix.l2_opNorm_diagonal_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.l2_opNorm_diagonal_le
 
 -- MixedLuders (2026-08-03, SigmaLayer/MixedLuders.lean; the outcome-conditioned mixed update,
 -- MixedSwap's recorded extension + the fourth review's row). Spine: mixedSwapPrep FACTORS
