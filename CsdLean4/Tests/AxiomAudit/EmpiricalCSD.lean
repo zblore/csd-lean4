@@ -1715,4 +1715,11 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.kickedIsing_pilotClosure
 
+-- CV-5 CSD-side closure (2026-08-07): the free field at any cutoff, reindexed to
+-- Fin (card (FieldConfig K N)) = Fin (N^K), satisfies the full SH3 pilot closure --
+-- the quantum-chaos vertical and the CV vertical meet on the same closure instance.
+/-- info: 'CSD.Empirical.QuantumChaos.freeField_pilotClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.freeField_pilotClosure
+
 end CSD.Tests.AxiomAudit

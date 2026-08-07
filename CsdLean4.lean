@@ -335,6 +335,8 @@ public import CsdLean4.CV.OscillatorBorn
 public import CsdLean4.CV.FieldModes
 public import CsdLean4.CV.Dispersion
 public import CsdLean4.CV.ModeLocality
+public import CsdLean4.CV.FreeFieldFloquet
+public import CsdLean4.CV.DynamicalLocality
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
@@ -461,6 +463,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.RecordPersistence
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
 public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness
+public import CsdLean4.Empirical.CSD.QuantumChaos.FreeFieldClosure
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.
