@@ -50,4 +50,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumChaos.FloquetEvolution.ofUnitary
 
+-- H3 kicked-Ising pilot model (KickedIsingPilot.lean, 2026-08-07): explicit two-qubit
+-- Floquet unitary (Ising phase * kick x kick, membership by group multiplication;
+-- kronecker_mem_unitaryGroup is upstream-candidate(mathlib)), and the star
+-- accessibility-change witness: at b = pi/2 the reduced first-qubit state of the
+-- evolved |00> flips |0><0| -> |1><1| while all global overlaps are exactly invariant.
+/-- info: 'QuantumChaos.kronecker_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.kronecker_mem_unitaryGroup
+
+/-- info: 'QuantumChaos.kickedIsingFloquet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.kickedIsingFloquet
+
+/-- info: 'QuantumChaos.kickedIsing_changes_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.kickedIsing_changes_marginal
+
 end CSD.Tests.AxiomAudit

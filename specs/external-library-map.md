@@ -74,7 +74,7 @@ generic, may migrate), **missing** (nowhere yet), **CSD-permanent**.
 | Projectivization topology/measure, Wigner rigidity + uniqueness, FS uniqueness, Kähler pointwise + flat dω = 0 | csd-lean4 | local-upstream-candidate(mathlib) | The `CsdLean4/Mathlib/` staging tree; staging discipline stands even with B6 retired |
 | CSD ontic lift (Σ, π, μL), Born-from-volume, typicality | csd-lean4 | CSD-permanent | LF1–LF4 + SigmaLayer |
 | Records, de-isolation, Lüders/calibration, measurement dynamics | csd-lean4 | CSD-permanent | SigmaLayer/RecordLayer + LF5/LF6 |
-| Scrambling / chaos interpreted on Σ; record persistence under Floquet | csd-lean4 | CSD-permanent (missing — the §H workstream) | The chaos pilot's deliverable layer |
+| Scrambling / chaos interpreted on Σ; record persistence under Floquet | csd-lean4 | CSD-permanent (**pilot landed 2026-08-07**: `Empirical/CSD/QuantumChaos/` — ontic lift, sure record persistence, `floquetPilotClosure`) | Continuation: coupled post-record driving, diagnostics (class-3 route) |
 | CSD empirical corrections / departures | csd-lean4 | CSD-permanent | `csd-departures-eft.md` |
 
 ## Interop and interface policy

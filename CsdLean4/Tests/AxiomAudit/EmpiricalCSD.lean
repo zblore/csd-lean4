@@ -1660,4 +1660,26 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 /-- info: 'CSD.Empirical.CSDBridge.EraserSequential.sequential_no_revival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.EraserSequential.sequential_no_revival
 
+-- H3 quantum-chaos pilot, CSD side (Empirical/CSD/QuantumChaos/, 2026-08-07): the
+-- ontic lift of unitary-generated Floquet evolutions (Liouville-preserving, projects
+-- to the interface's ray dynamics period by period), sure record persistence under
+-- uncoupled post-record driving, and the pilot capstone bundling the four universal
+-- clauses for EVERY unitary U and base point (a witness/feature index; the
+-- accessibility-change clause is the kicked-Ising witness in the Incubator part).
+/-- info: 'CSD.Empirical.QuantumChaos.floquetOnticStep_iterate_lifts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.floquetOnticStep_iterate_lifts
+
+/-- info: 'CSD.Empirical.QuantumChaos.floquetOnticStep_iterate_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.floquetOnticStep_iterate_measurePreserving
+
+/-- info: 'CSD.Empirical.QuantumChaos.floquetRecordStep_record_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.floquetRecordStep_record_invariant
+
+/-- info: 'CSD.Empirical.QuantumChaos.floquetPilotClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.floquetPilotClosure
+
 end CSD.Tests.AxiomAudit
