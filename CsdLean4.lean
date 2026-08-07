@@ -455,10 +455,12 @@ public import CsdLean4.Headlines
 -- H2 (2026-08-07): the quantum-chaos incubator (CSD-free, upstream-candidate(physlib)).
 public import CsdLean4.Incubator.QuantumChaos.FloquetInterface
 public import CsdLean4.Incubator.QuantumChaos.KickedIsingPilot
+public import CsdLean4.Incubator.QuantumChaos.Diagnostics
 public import CsdLean4.Empirical.CSD.QuantumChaos.OnticLift
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordPersistence
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
+public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

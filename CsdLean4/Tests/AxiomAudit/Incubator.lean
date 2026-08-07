@@ -67,4 +67,24 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumChaos.kickedIsing_changes_marginal
 
+-- SH continuation bricks (2026-08-07): the Loschmidt echo (Diagnostics.lean - first
+-- chaos diagnostic behind the interface; echo decay = relocation of preserved
+-- information, never loss) and the Fin-4 reindex of the kicked-Ising model
+-- (reindex_mem_unitaryGroup = upstream-candidate(mathlib)).
+/-- info: 'QuantumChaos.loschmidtEcho_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.loschmidtEcho_le_one
+
+/-- info: 'QuantumChaos.loschmidtEcho_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.loschmidtEcho_self
+
+/-- info: 'QuantumChaos.reindex_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.reindex_mem_unitaryGroup
+
+/-- info: 'QuantumChaos.kickedIsingU₄' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.kickedIsingU₄
+
 end CSD.Tests.AxiomAudit

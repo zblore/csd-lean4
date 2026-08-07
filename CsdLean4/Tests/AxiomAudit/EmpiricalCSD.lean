@@ -1699,4 +1699,20 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.recordIntact_postRecordStep
 
+-- SH small-coupling witness + concrete-model closure (2026-08-07): the fibre-triggered
+-- record kick has coupling strength EXACTLY 1/2 (the half-life bound bites: survival
+-- except on measure <= n/2), and the kicked-Ising model reaches the ontic-lift clause
+-- at Fin 4 through the reindex.
+/-- info: 'CSD.Empirical.QuantumChaos.fibreTriggeredKick_coupling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.fibreTriggeredKick_coupling
+
+/-- info: 'CSD.Empirical.QuantumChaos.fibreTriggeredKick_record_halfLife' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.fibreTriggeredKick_record_halfLife
+
+/-- info: 'CSD.Empirical.QuantumChaos.kickedIsing_pilotClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.kickedIsing_pilotClosure
+
 end CSD.Tests.AxiomAudit

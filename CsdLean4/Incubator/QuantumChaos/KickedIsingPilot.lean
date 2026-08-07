@@ -63,7 +63,7 @@ lemma kickMat_mem_unitaryGroup (b : ℝ) :
   rw [Matrix.mem_unitaryGroup_iff']
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp only [kickMat, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
+    simp only [kickMat, Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val',
       Matrix.empty_val', Matrix.one_apply, RCLike.star_def, map_neg, map_mul,
       Complex.conj_ofReal, Complex.conj_I, Fin.zero_eta, Fin.mk_one, Fin.isValue] <;>
@@ -219,5 +219,27 @@ theorem kickedIsing_changes_marginal (J : ℝ) :
   rw [QuantumInfo.partialTraceRight_apply, QuantumInfo.partialTraceRight_apply] at h11
   simp [pilotOuter_apply, PiLp.single_apply, Fin.sum_univ_two,
     Prod.ext_iff] at h11
+
+/-! ### The `Fin 4` reindex: reaching the `Fin N` machinery -/
+
+/-- Reindexing along an index equivalence preserves unitarity
+(`upstream-candidate(mathlib)`). -/
+lemma reindex_mem_unitaryGroup {m n : Type*} [Fintype m] [DecidableEq m]
+    [Fintype n] [DecidableEq n] (e : m ≃ n) {M : Matrix m m ℂ}
+    (hM : M ∈ Matrix.unitaryGroup m ℂ) :
+    Matrix.reindex e e M ∈ Matrix.unitaryGroup n ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff'] at hM ⊢
+  rw [show star M = Mᴴ from rfl] at hM
+  rw [show star (Matrix.reindex e e M) = (Matrix.reindex e e M)ᴴ from rfl,
+    Matrix.reindex_apply, Matrix.conjTranspose_submatrix,
+    Matrix.submatrix_mul_equiv, hM, Matrix.submatrix_one_equiv]
+
+/-- The kicked-Ising Floquet unitary reindexed to `Fin 4` along
+`finProdFinEquiv`, so the concrete model reaches the `Fin N` ontic machinery
+(`KSigma 4`, `floquetOnticStep`, the pilot closure) directly. -/
+noncomputable def kickedIsingU₄ (J b : ℝ) : Matrix.unitaryGroup (Fin 4) ℂ :=
+  ⟨Matrix.reindex (finProdFinEquiv (m := 2) (n := 2))
+      (finProdFinEquiv (m := 2) (n := 2)) (kickedIsingU J b).val,
+    reindex_mem_unitaryGroup _ (kickedIsingU J b).property⟩
 
 end QuantumChaos

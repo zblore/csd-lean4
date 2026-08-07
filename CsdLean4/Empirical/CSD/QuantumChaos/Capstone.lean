@@ -93,4 +93,11 @@ theorem floquetPilotClosure [NeZero N]
   records_persist _Rec S n :=
     floquetRecordStep_record_invariant U S n
 
+/-- ★ **The concrete model reaches the ontic-lift clause**: the kicked-Ising
+pilot closure at `Fin 4` (through the `finProdFinEquiv` reindex
+`kickedIsingU₄`), for every parameter pair and base point. -/
+theorem kickedIsing_pilotClosure (J b : ℝ) (p₀ : CPN 4) :
+    FloquetPilotClosure (kickedIsingU₄ J b) p₀ :=
+  floquetPilotClosure _ _
+
 end CSD.Empirical.QuantumChaos
