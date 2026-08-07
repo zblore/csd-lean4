@@ -63,9 +63,9 @@ generic, may migrate), **missing** (nowhere yet), **CSD-permanent**.
 | Capability | Intended owner | Status | Notes |
 |---|---|---|---|
 | Basic mathematics (measure, spectral, matrix exp) | Mathlib | ext-available | The pin carries `NormedSpace.exp`, cfc, `extDeriv` (flat), manifolds without symplectic forms |
-| Finite quantum system abstraction, Hamiltonian time evolution | Physlib | ext-claimed | Physlib's stated core; verify APIs before the first adapter |
-| Floquet systems, kicked models | Physlib | missing / ext-claimed | First place to check before the chaos pilot writes anything generic |
-| Chaos diagnostics (spectral form factor, Loschmidt echo, OTOC) | Physlib | missing | Likely to need `local-upstream-candidate(physlib)` implementations first |
+| Finite quantum system abstraction | Physlib | ext-available (verified 2026-08-07) | `Physlib/QuantumMechanics/HilbertSpaces/FiniteTarget/` — `FiniteHilbertSpace d` is a structure **wrapping `EuclideanSpace ℂ d`**, the corpus's native carrier, so adapters are `.val`-thin. Their QM layer: FiniteTarget, HarmonicOscillator (1D ladder/TISE), FreeParticle. No generic time-evolution module found |
+| Floquet systems, kicked models | Physlib (target) | **missing (verified 2026-08-07: 0 matches in their 690-module tree)** | Class 3 confirmed → implemented locally behind the H2 `FloquetEvolution` interface (`Incubator/QuantumChaos/FloquetInterface.lean`), `upstream-candidate(physlib)` |
+| Chaos diagnostics (spectral form factor, Loschmidt echo, OTOC) | Physlib (target) | missing (verified 2026-08-07) | Will follow the same class-3 route when the §H thread reaches them |
 | Density states, channels, POVMs, partial trace | csd-lean4 today; Lean-QIT or Physlib-QuantumInfo later | local | Our `Mathlib/QuantumInfo` tree — audit-validated 2026-08-06 (CL-022/023 chain). The chaos pilot CONSUMES this; it does not expand it |
 | Entropy, subadditivity, Araki–Lieb, trace distance, DPI-conditional SSA | csd-lean4 today | local | Same tree; `Tests/EntropyWitness.lean` carries the committed witnesses |
 | **Unconditional SSA / DPI** | Lean-QIT **or** local E2 ladder | ext-available (Lean-QIT) | **The first concrete Lean-QIT decision point**, already named in `StrongSubadditivity.lean`: their `relativeEntropy_dataProcessing_channel_ge` is cited-not-imported; the alternative is the E2 operator-convexity ladder (BACKLOG §E). Decide when SSA-unconditional is actually consumed |
@@ -83,9 +83,11 @@ generic, may migrate), **missing** (nowhere yet), **CSD-permanent**.
   internal interfaces. Created 2026-08-06 (documentation only until the first
   dependency lands).
 - New generic objects the CSD layer consumes are declared as small abstract interfaces
-  (e.g. a `FloquetEvolution` structure with `step : H ≃ₗᵢ[ℂ] H` — an *equivalence*:
-  reversibility is load-bearing for the CSD reading), so CSD theorems never bind to a
-  locally-invented concrete model. Adapters later instantiate the interface from
+  — the first is LIVE (H2, 2026-08-07): `QuantumChaos.FloquetEvolution` with
+  `step : H ≃ₗᵢ[ℂ] H` (an *equivalence*: reversibility is load-bearing for the CSD
+  reading), `Incubator/QuantumChaos/FloquetInterface.lean`, with iteration,
+  information-preservation, induced ray dynamics, and the `ofUnitary` matrix adapter
+  seam. CSD theorems never bind to a locally-invented concrete model. Adapters later instantiate the interface from
   Physlib dynamics, Lean-QIT channels, or the existing local matrix dynamics.
 - **Consistency note (B6).** Upstreaming generic files to Physlib is NOT a reversal of
   the 2026-08-06 B6 retirement: B6 retired *Mathlib* PRs as a non-need. Physlib

@@ -2076,4 +2076,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.exists_unit_smul_of_projMap_conjProj_eq
 
+-- projMap functoriality (2026-08-07, added with the H2 interface): identity and
+-- composition laws for the ray map of a linear isometry equivalence.
+/-- info: 'Projectivization.projMap_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.projMap_refl
+
+/-- info: 'Projectivization.projMap_trans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.projMap_trans
+
 end CSD.Tests.AxiomAudit
