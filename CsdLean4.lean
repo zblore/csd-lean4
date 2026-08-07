@@ -458,6 +458,7 @@ public import CsdLean4.Incubator.QuantumChaos.KickedIsingPilot
 public import CsdLean4.Empirical.CSD.QuantumChaos.OnticLift
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordPersistence
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
+public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

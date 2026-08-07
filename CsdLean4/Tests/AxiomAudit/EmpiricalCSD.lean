@@ -1682,4 +1682,21 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.floquetPilotClosure
 
+-- Record degradation under COUPLED post-record driving (RecordDegradation.lean,
+-- 2026-08-07, the SH continuation): the record half-life bound - a formed record
+-- survives n periods of measure-preserving coupled driving except on a set of measure
+-- at most n * epsilon (epsilon = the per-step coupling set's measure); null coupling
+-- gives a.s. persistence; the pilot's uncoupled case recovered as epsilon = 0.
+/-- info: 'CSD.Empirical.QuantumChaos.recordIntact_compl_measure_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.recordIntact_compl_measure_le
+
+/-- info: 'CSD.Empirical.QuantumChaos.recordIntact_compl_null_of_flip_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.recordIntact_compl_null_of_flip_null
+
+/-- info: 'CSD.Empirical.QuantumChaos.recordIntact_postRecordStep' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.recordIntact_postRecordStep
+
 end CSD.Tests.AxiomAudit
