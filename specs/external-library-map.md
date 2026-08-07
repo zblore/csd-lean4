@@ -30,10 +30,19 @@ csd-lean4                 (the complete CSD quantum programme)
 **No external dependency is added today.** Toolchains (verified 2026-08-07):
 `csd-lean4` Lean 4.33.0-rc1 (Mathlib `c732b96`); Physlib Lean 4.32.0 (Mathlib
 `81a5d25`); Lean-QIT Lean **4.30.0** (Mathlib `c5ea003`). **Alignment target:
-Physlib** — one minor version behind, community-maintained, tracks releases; the
-convergence event is Lean 4.33.0 stable + Physlib's bump (our move is rc→stable,
-trivial). Downgrading csd-lean4 is not an option (the corpus consumes very fresh
-Mathlib surface — `extDeriv`/`KahlerClosed` among others). Lean-QIT at three minor
+Physlib** — one minor version behind, community-maintained, active (commits daily as
+of 2026-08-05; no 4.33-bump PR open yet); the convergence event is Lean 4.33.0
+stable + Physlib's bump (our move is rc→stable, trivial). **Downgrading csd-lean4 is
+FEASIBLE but not worth it** (measured 2026-08-07, correcting an earlier overstatement):
+their Mathlib pin is only ONE WEEK older than ours (2026-07-13 vs 07-20) and carries
+`extDeriv`/`alternatizeUncurryFin`/`skew_product`; the cost is a half-day of
+rename-chasing (`mem_ofPred_eq` and kin, concentrated in the newest modules) plus a
+full rebuild — but the benefit is nil: Physlib currently has NO theorem the corpus
+would import (FiniteTarget is a thin wrapper over our native carrier; no
+Floquet/chaos), so alignment today buys an unused dependency and chains our Mathlib
+cadence to theirs. For the CONTRIBUTION direction (upstreaming Incubator generics to
+PhyslibAlpha), develop the PR against THEIR toolchain in a separate worktree — no pin
+change in csd-lean4 needed. Lean-QIT at three minor
 versions behind validates the cited-not-imported posture on their DPI; if
 SSA-unconditional becomes load-bearing first, the E2 ladder beats waiting. Until
 versions align and a *specific theorem or API* is needed, external libraries are
