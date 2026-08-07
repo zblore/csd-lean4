@@ -329,4 +329,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.heisenberg_interactingU_near_supported' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.heisenberg_interactingU_near_supported
 
+-- CV-10 finite-cutoff power counting (2026-08-07). The honest EFT kernel: grade an
+-- interaction by operator content and track the cutoff scaling of the CV-9 price.
+-- Norm-growth bricks WITHOUT spectral asymptotics: ||a||^2 = ||a^dag a|| = ||N-hat|| <= N
+-- (C*-identity + the diagonal bound), so ||Q|| <= sqrt(2N); embedding into the field is
+-- norm-nonincreasing (l2_opNorm_modeOp_le: modeOp is block-diagonal over spectators).
+-- The grade-m interaction Q_k^m then has price <= |tau||lam| sqrt(2N)^m (exponent = the
+-- grade), and with the coupling renormalized as lam0/sqrt(2N)^m the price is <= |tau||lam0|
+-- UNIFORM IN THE CUTOFF: relevant/irrelevant as a theorem about price-bound scaling.
+-- HONEST SCOPE: upper bounds on the certified price only -- no lower bounds, no divergence
+-- claim, no RG, nothing continuum (ApproxCCR.no_exact_finite_ccr stands).
+/-- info: 'CSD.CV.Q_l2_opNorm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.Q_l2_opNorm_le
+
+/-- info: 'CSD.CV.l2_opNorm_modeOp_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.l2_opNorm_modeOp_le
+
+/-- info: 'CSD.CV.gradedInteraction_price_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.gradedInteraction_price_le
+
+/-- info: 'CSD.CV.gradedInteraction_renormalized_price_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.gradedInteraction_renormalized_price_le
+
 end CSD.Tests.AxiomAudit

@@ -341,6 +341,7 @@ public import CsdLean4.CV.Interaction
 public import CsdLean4.CV.LocalAlgebra
 public import CsdLean4.CV.SupportSpreading
 public import CsdLean4.CV.InteractionPrice
+public import CsdLean4.CV.PowerCounting
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy

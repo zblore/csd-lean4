@@ -1,8 +1,13 @@
 # CV chain Stage 3 plan: interactions and EFT power-counting at the cutoff
 
-Status: PLAN (2026-08-07). Owner queue: `specs/BACKLOG.md` §CV chain row; ref-tagged rows
-CV-7..CV-10 in [`future-work.md`](future-work.md). Nothing below is claimed until its row is
-struck.
+Status: **COMPLETE (2026-08-07, same day)** — all four stages landed: 3a+3b as rows
+~~CV-7~~/~~CV-8~~, 3c as ~~CV-9~~, 3d as ~~CV-10~~ (see [`future-work.md`](future-work.md)
+for what each delivered, including where the landed form differs from the sketch below —
+notably: 3b's light cone came from the local-algebra route as planned, but 3d's `‖Q‖` brick
+needed no Gershgorin work at all (C*-identity + `creation_mul_annihilation`), and 3c's
+pricing covers non-diagonal perturbations too. Kept as the design record. Recorded
+residues, not queued: the non-diagonal light cone (§3b exp-closure sketch) and price
+attainment.
 
 ## Goal and posture
 
