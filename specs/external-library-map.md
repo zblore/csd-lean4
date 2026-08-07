@@ -32,7 +32,12 @@ csd-lean4                 (the complete CSD quantum programme)
 `81a5d25`); Lean-QIT Lean **4.30.0** (Mathlib `c5ea003`). **Alignment target:
 Physlib** — one minor version behind, community-maintained, active (commits daily as
 of 2026-08-05; no 4.33-bump PR open yet); the convergence event is Lean 4.33.0
-stable + Physlib's bump (our move is rc→stable, trivial). **Downgrading csd-lean4 is
+stable + Physlib's bump (our move is rc→stable, trivial). Cadence, measured
+2026-08-07: Lean 4.33.0-rc2 is out (08-03; rc1→stable took ~4 weeks last cycle, so
+stable ≈ mid/late August); Physlib bumps stable-only, ~8 days after release (their
+toolchain history back to 4.29). Forecast alignment window: late August / early
+September. Do NOT bump to rc2 meanwhile — one jump rc1→stable, skipping rc2, is the
+plan. **Downgrading csd-lean4 is
 FEASIBLE but not worth it** (measured 2026-08-07, correcting an earlier overstatement):
 their Mathlib pin is only ONE WEEK older than ours (2026-07-13 vs 07-20) and carries
 `extDeriv`/`alternatizeUncurryFin`/`skew_product`; the cost is a half-day of
