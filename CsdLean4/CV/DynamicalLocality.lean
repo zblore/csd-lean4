@@ -36,9 +36,10 @@ regions persists at every period.
   the free dynamics.
 
 Honest scope: the free (mode-diagonal) drive only. An interacting drive can
-spread support across modes — that spreading is exactly the scrambling the
-§H diagnostics track (`Incubator/QuantumChaos/Diagnostics.lean`), and
-pricing it is future work, not claimed here.
+spread support — since CV-8 that is a *bounded theorem*, not an open scope:
+`CV/SupportSpreading.lean` confines it to the coupling-graph light cone and
+witnesses it at `K = N = 2`. The norm pricing of the violation (CV-9, the
+Duhamel route) is what is still not claimed here.
 
 ## References
 

@@ -226,6 +226,7 @@ srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null; }
 # declaration after its construction instead (e.g. `…Measure`, not `…Liouville`).
 DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
 fieldHamiltonian
+interactionHamiltonian
 hamiltonianField
 hamiltonian
 hamiltonianVectorFieldOf
@@ -258,6 +259,10 @@ trivialKahlerOnticSetup"
 #   the question is not parity but GENERATOR EXHIBITED?:
 #     hamiltonian / fieldHamiltonian / relFieldHamiltonian — CV energy matrices: Hermitian,
 #       with eigenvalue equations proved. The word names an OPERATOR, not a flow.  EARNED.
+#     interactionHamiltonian — (Interaction.lean, CV-7, 2026-08-07) diagonal real
+#       potential matrix: Hermitian PROVED (interactionHamiltonian_isHermitian) and the
+#       GENERATOR ROLE EXHIBITED — interactingU_eq_exp proves the drive is
+#       exp(-(i tau).(H_field + lam.V)). Same pattern as fieldHamiltonian.       EARNED.
 #     hamiltonianField — (ChartBracket.lean, A3) the vector field `(∂_y H, −∂_x H)` in a
 #       DARBOUX CHART, written out explicitly. The name is earned because in canonical
 #       coordinates the field IS that formula: no `ω⁻¹` is invoked, nothing is asserted.
@@ -325,6 +330,7 @@ unitaryFlowSetup"
 # states its boundary — so this is not a budget to drive to zero; it is a diffable
 # ledger so that a boundary claim cannot go stale unnoticed when the work lands.
 DECLARED_OPEN_SCOPE="CsdLean4/CV/DynamicalLocality.lean:1
+CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
@@ -364,6 +370,7 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 # are taggable; foundations-frontier waits (MD-1, §2a) have no BACKLOG row and stay
 # `none` with the wait named in the site's own prose.
 DECLARED_SCOPE_WAITS="CsdLean4/CV/DynamicalLocality.lean|none
+CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|E1
 CsdLean4/LF4/PhaseLift.lean|none
@@ -397,11 +404,12 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #   PovmDynamics(2 of 2) — recorded extensions without a BACKLOG row (mixed-ε weights,
 #     Hamiltonian relocation stroke, V-as-unitary-stroke): boundaries by design, not
 #     queued work; if one becomes a row, re-tag it here.
-#   DynamicalLocality / AxiomAudit-Extensions(CV-6 pin) — the CV-6 boundary: support
-#     spreading under an INTERACTING drive is not claimed (free drive only). Waits on
-#     the CV chain's Stage 3 (interactions), which lives inside the un-reffed CV-chain
-#     row in BACKLOG §CV rather than a strikeable Ref; when Stage 3 lands, re-read both
-#     sites and retire or narrow the boundary."
+#   DynamicalLocality / AxiomAudit-Extensions(CV-6 pin) / SupportSpreading — the CV-6
+#     boundary was NARROWED 2026-08-07 exactly as the ledger note intended: CV-8 landed
+#     the spreading bound (coupling-graph light cone + witness), both sites re-read and
+#     reworded at source. The remaining boundary at all three sites is the norm PRICING
+#     of the locality violation, waiting on CV-9 (future-work row; un-reffed in
+#     BACKLOG). When CV-9 lands, re-read all three and retire or narrow again."
 
 # (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
 # after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure
@@ -458,6 +466,7 @@ fubiniStudyMeasure_isForcedKahlerVolume
 hamiltonian_eq_diagonal
 hamiltonian_groundEnergy
 hamiltonian_isHermitian
+interactionHamiltonian_isHermitian
 hamiltonian_mulVec_single
 isFubiniStudyKahler
 kahler_robertson_ontic_variance

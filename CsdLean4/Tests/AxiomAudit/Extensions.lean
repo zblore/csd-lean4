@@ -275,8 +275,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- is a theorem, not a reading. CV-6: Heisenberg conjugation by the (mode-additive) free
 -- evolution preserves SupportedOn, so the Haag-Kastler kinematic axiom is DYNAMICALLY
 -- stable: disjointly supported observables still commute after ANY number of periods.
--- HONEST SCOPE: free (mode-diagonal) drive only; interacting drives can spread support
--- (that spreading is the scrambling the SH diagnostics track), not claimed here.
+-- HONEST SCOPE: free (mode-diagonal) drive only; interacting-drive spreading is now
+-- BOUNDED by CV-8 (SupportSpreading: coupling-graph light cone + K=N=2 witness); the
+-- norm pricing (CV-9, Duhamel route) is what is still not claimed here.
 /-- info: 'CSD.CV.freeFieldU_eq_exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.freeFieldU_eq_exp
 
@@ -285,5 +286,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.CV.commute_heisenberg_freeFieldU_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.commute_heisenberg_freeFieldU_pow
+
+-- CV-7 interacting drive + CV-8 local algebras & the light cone (2026-08-07). CV-7: a
+-- DIAGONAL (density-density) interaction commutes with H_free, so the interacting step is
+-- EXACT (one phaseDiagU, no Trotter) and interactingU_eq_exp proves it IS
+-- exp(-(i tau).(H_field + lam.V)). CV-8: SupportedOn S is a unital *-subalgebra
+-- (SupportedOn.mul = the closure keystone); conjugation by a T-supported unitary spreads
+-- at most onto S UNION T, disjoint couplings act TRIVIALLY, and the light cone: after n
+-- interacting periods support sits in the coupling graph's n-ball (one edge per period);
+-- observables outside each other's light cones still commute. NON-VACUOUS:
+-- spreadKick_not_supportedOn -- at K=N=2 the pair kick moves modeOp 0 off the single-mode
+-- algebra (evolved entries 1 vs -1), so the cone bounds a real phenomenon.
+/-- info: 'CSD.CV.interactingU_eq_exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.interactingU_eq_exp
+
+/-- info: 'CSD.CV.SupportedOn.mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.SupportedOn.mul
+
+/-- info: 'CSD.CV.heisenberg_graphInteractingU_pow_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.heisenberg_graphInteractingU_pow_supportedOn
+
+/-- info: 'CSD.CV.commute_heisenberg_graphInteractingU_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commute_heisenberg_graphInteractingU_pow
+
+/-- info: 'CSD.CV.spreadKick_not_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.spreadKick_not_supportedOn
 
 end CSD.Tests.AxiomAudit

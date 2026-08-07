@@ -1722,4 +1722,10 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.freeField_pilotClosure
 
+-- CV-7 CSD side (2026-08-07): the closure covers every diagonal interaction at every
+-- coupling strength -- the clauses are about unitarity, not freeness.
+/-- info: 'CSD.Empirical.QuantumChaos.interacting_pilotClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.interacting_pilotClosure
+
 end CSD.Tests.AxiomAudit

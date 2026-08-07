@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.CV.FreeFieldFloquet
+public import CsdLean4.CV.Interaction
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 
 /-!
@@ -29,12 +30,18 @@ machinery, which is stated over `Fin`-indexed unitaries:
   sure record persistence under uncoupled post-record driving — for every
   cutoff `(K, N)`, period `τ`, and base point.
 
+* ★ `interacting_pilotClosure` (CV-7 CSD side) — the closure also covers
+  **every diagonal interaction at every coupling strength**
+  (`interactingUFin`): the closure clauses are about unitarity, not
+  freeness.
+
 So the quantum-chaos vertical (interface → ontic lift → records) and the CV
-vertical (modes → free field) meet: the same closure instance covers both
-the kicked-Ising model and the free field at a cutoff. Honest scope: free
-dynamics at a finite cutoff; coupled record driving is priced separately
-(`RecordDegradation.lean`, `CouplingWitness.lean`), and interacting drives
-are future work.
+vertical (modes → free field → interactions) meet: the same closure
+instance covers the kicked-Ising model, the free field, and the interacting
+field at a cutoff. Honest scope: diagonal (density-coupled) drives at a
+finite cutoff; coupled record driving is priced separately
+(`RecordDegradation.lean`, `CouplingWitness.lean`), and non-diagonal
+(hopping) interactions enter through the CV-9 pricing route.
 
 ## References
 
@@ -80,6 +87,24 @@ record persistence — for every period `τ` and base point. -/
 theorem freeField_pilotClosure [NeZero N] (τ : ℝ)
     (p₀ : CPN (Fintype.card (FieldConfig K N))) :
     FloquetPilotClosure (freeFieldUFin K N τ) p₀ :=
+  floquetPilotClosure _ _
+
+/-- The interacting drive (CV-7), reindexed to
+`Fin (card (FieldConfig K N))` along the same seam. -/
+noncomputable def interactingUFin (K N : ℕ) (τ lam : ℝ)
+    (v : FieldConfig K N → ℝ) :
+    Matrix.unitaryGroup (Fin (Fintype.card (FieldConfig K N))) ℂ :=
+  ⟨Matrix.reindex (Fintype.equivFin (FieldConfig K N))
+      (Fintype.equivFin (FieldConfig K N)) (interactingU K N τ lam v).val,
+    reindex_mem_unitaryGroup _ (interactingU K N τ lam v).property⟩
+
+/-- ★ **The interacting drive reaches the §H3 pilot closure too** — every
+diagonal interaction, at every coupling strength: the closure clauses are
+about unitarity, not freeness. -/
+theorem interacting_pilotClosure [NeZero N] (τ lam : ℝ)
+    (v : FieldConfig K N → ℝ)
+    (p₀ : CPN (Fintype.card (FieldConfig K N))) :
+    FloquetPilotClosure (interactingUFin K N τ lam v) p₀ :=
   floquetPilotClosure _ _
 
 end CSD.Empirical.QuantumChaos
