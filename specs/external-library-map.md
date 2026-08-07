@@ -27,9 +27,17 @@ Mathlib
 csd-lean4                 (the complete CSD quantum programme)
 ```
 
-**No external dependency is added today.** Toolchains: `csd-lean4` is on Lean
-4.33.0-rc1; Physlib is on 4.32.0. Until versions align and a *specific theorem or API*
-is needed, external libraries are studied, not imported.
+**No external dependency is added today.** Toolchains (verified 2026-08-07):
+`csd-lean4` Lean 4.33.0-rc1 (Mathlib `c732b96`); Physlib Lean 4.32.0 (Mathlib
+`81a5d25`); Lean-QIT Lean **4.30.0** (Mathlib `c5ea003`). **Alignment target:
+Physlib** — one minor version behind, community-maintained, tracks releases; the
+convergence event is Lean 4.33.0 stable + Physlib's bump (our move is rc→stable,
+trivial). Downgrading csd-lean4 is not an option (the corpus consumes very fresh
+Mathlib surface — `extDeriv`/`KahlerClosed` among others). Lean-QIT at three minor
+versions behind validates the cited-not-imported posture on their DPI; if
+SSA-unconditional becomes load-bearing first, the E2 ladder beats waiting. Until
+versions align and a *specific theorem or API* is needed, external libraries are
+studied, not imported.
 
 ## The four-way classification rule
 
