@@ -156,10 +156,8 @@ theorem contDiff_smoothArcWeight_lift {ε r : ℝ} (hε : 0 < ε) (h2ε : 2 * ε
     intro y hy
     rw [round_eq]
     refine Int.floor_eq_iff.mpr ⟨?_, ?_⟩
-    · push_cast
-      linarith [hy.1]
-    · push_cast
-      linarith [hy.2]
+    · linarith [hy.1]
+    · linarith [hy.2]
   have hIoo1 : (R : ℝ) - 1 / 2 < s₀ - mid := by
     have h1 := htIoo.1
     linarith

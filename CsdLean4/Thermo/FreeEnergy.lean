@@ -72,7 +72,7 @@ noncomputable def partitionFn (H : Matrix n n ℂ) (hH : H.IsHermitian) (β : �
 
 lemma partitionFn_pos [Nonempty n] (H : Matrix n n ℂ) (hH : H.IsHermitian) (β : ℝ) :
     0 < partitionFn H hH β :=
-  Finset.sum_pos (fun i _ => Real.exp_pos _) Finset.univ_nonempty
+  Finset.sum_pos (fun _i _ => Real.exp_pos _) Finset.univ_nonempty
 
 /-- The **Gibbs weight** `x ↦ exp(-βx)/Z`, the function applied to the spectrum
 of `H` to build the Gibbs state. -/

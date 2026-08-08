@@ -63,20 +63,20 @@ noncomputable def darkProb (v : Fin 2 → ℂ) : ℝ := ‖v 1‖ ^ 2
 returns to `|0⟩` and the dark-port probability is `0` — perfect destructive interference. -/
 theorem bomb_absent_dark_zero : darkProb (bs (bs ket0)) = 0 := by
   have h : (bs (bs ket0)) 1 = 0 := by
-    simp only [bs, ket0, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+    simp only [bs, ket0, Matrix.cons_val_zero, Matrix.cons_val_one]
     ring
   simp [darkProb, h]
 
 /-- **The photon survives** (does not detonate the bomb) with probability `1/2`: after the first beam
 splitter `H|0⟩ = (|0⟩+|1⟩)/√2`, the amplitude on the empty (non-bomb) arm has weight `1/2`. -/
 theorem bomb_safe_prob : darkProb (bs ket0) = 1 / 2 := by
-  simp only [darkProb, bs, ket0, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  simp only [darkProb, bs, ket0, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [sub_zero, norm_div_rt2_sq, norm_one]; norm_num
 
 /-- **Conditioned on survival**, the second beam splitter sends the photon to the dark port with
 probability `1/2` (`H|1⟩ = (|0⟩−|1⟩)/√2`). -/
 theorem bomb_dark_given_safe : darkProb (bs ket1) = 1 / 2 := by
-  simp only [darkProb, bs, ket1, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  simp only [darkProb, bs, ket1, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [zero_sub, norm_div_rt2_sq, norm_neg, norm_one]; norm_num
 
 /-- Total dark-port probability with a **live bomb**: survive (`1/2`) then reach the dark port

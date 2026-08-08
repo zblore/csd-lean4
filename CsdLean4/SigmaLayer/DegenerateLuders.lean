@@ -98,17 +98,18 @@ theorem blockProj_single {b : Fin N → Fin K} {i : Fin K} {j : Fin N} (hb : b j
   by_cases hk : k = j
   · subst hk
     simp [hb]
-  · by_cases hbk : b k = i <;> simp [hbk, EuclideanSpace.single_apply, hk]
+  · by_cases hbk : b k = i <;> simp [hbk, hk]
 
 theorem single_ne_zero' (j : Fin N) : (EuclideanSpace.single j (1 : ℂ)) ≠ 0 := by
   intro h
   have := congrFun (congrArg (fun v : EuclideanSpace ℂ (Fin N) => (v : Fin N → ℂ)) h) j
-  simp [EuclideanSpace.single_apply] at this
+  simp at this
 
 /-! ### Vertex facts -/
 
 variable [NeZero N]
 
+omit [NeZero N] in
 /-- **The moment map at a vertex is the vertex's indicator**: `momentMap [eⱼ] k = δⱼₖ`. -/
 theorem momentMap_vertex (j k : Fin N) :
     LF4.momentMap (vertexPoint j) k = if k = j then 1 else 0 := by
@@ -119,9 +120,10 @@ theorem momentMap_vertex (j k : Fin N) :
   rw [hnorm]
   by_cases hk : k = j
   · subst hk
-    simp [EuclideanSpace.single_apply]
-  · simp [EuclideanSpace.single_apply, hk]
+    simp
+  · simp [hk]
 
+omit [NeZero N] in
 /-- Distinct vertices are distinct projective points. -/
 theorem vertexPoint_injective : Function.Injective (vertexPoint (N := N)) := by
   intro j1 j2 h
@@ -129,10 +131,11 @@ theorem vertexPoint_injective : Function.Injective (vertexPoint (N := N)) := by
   rw [vertexPoint, vertexPoint, Projectivization.mk_eq_mk_iff] at h
   obtain ⟨a, ha⟩ := h
   have h1 := congrArg (fun v : EuclideanSpace ℂ (Fin N) => v j1) ha
-  simp only [PiLp.smul_apply, EuclideanSpace.single_apply, if_pos rfl,
+  simp only [PiLp.smul_apply, PiLp.single_apply,
     if_neg hne, smul_eq_mul, mul_zero, Units.smul_def] at h1
   exact one_ne_zero h1.symm
 
+omit [NeZero N] in
 /-- Distinct base points give distinct epistemic measures — evaluate on the base singleton. -/
 theorem epistemicMeasure_injective {p q : LF4.CPN N} (h : p ≠ q) :
     epistemicMeasure p ≠ epistemicMeasure q := by

@@ -32,8 +32,14 @@ namespace CSD.SigmaLayer
 
 universe u v w
 
+set_option linter.checkUnivs false in
 /-- **A record signature (postulate P5 data).** A type of measurement contexts, and for each context a
-type of possible outcomes. -/
+type of possible outcomes.
+
+The two universes are deliberate: contexts and outcomes are independent data with no
+theorem in the corpus relating their sizes, so neither is forced into the other's
+universe. The `checkUnivs` linter flags the resulting `max` as *possibly* accidental
+generality; here it is intended, and every in-tree instantiation lives in `Type 0`. -/
 structure RecordSignature where
   /-- The type of measurement contexts. -/
   Context : Type u

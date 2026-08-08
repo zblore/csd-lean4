@@ -64,6 +64,7 @@ noncomputable def unifiedFlowedSemantics :
     (fun c i => (vnRecordSemanticsProd e ψ' hψ'0).measurable_event ⟨c, i, 0⟩)
     (fun c a b y => (vnRecordSemanticsProd e ψ' hψ'0).exclusive c a b 0 y)
 
+omit [NeZero N] in
 /-- **Records are time-physical on the unified model.** For every context/outcome, the time-indexed record
 probability is conserved by the isolated Hamiltonian evolution AND the record transforms covariantly with
 the flow — `flowedSemantics_persistence` instantiated on `productDynamics H hH p₀`. So the unified model's
@@ -79,6 +80,7 @@ theorem unified_records_persistence (c : (vnRecordSignature N).Context)
           (unifiedFlowedSemantics H hH p₀ e ψ' hψ'0).event ⟨c, i, t⟩) :=
   flowedSemantics_persistence (productDynamics H hH p₀) _ _ _ c i
 
+omit [NeZero N] in
 /-- **Consistency: the static capstone semantics is the `t = 0` slice.** At `t = 0` the time-indexed
 record event coincides with `vnRecordSemanticsProd`'s (since `Φ₀ = id`), so adding the flowed layer does
 not disturb `unified_projectiveSector_capstone`. -/

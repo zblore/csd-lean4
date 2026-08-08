@@ -163,7 +163,7 @@ theorem torusCell_ae_total (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i)
     rw [measure_iUnion (torusCell_pairwiseDisjoint r hr) hmeas, tsum_fintype,
       Finset.sum_congr rfl fun i (_ : i ∈ Finset.univ) => volume_torusCell r hr hsum i,
       ← ENNReal.ofReal_sum_of_nonneg (fun i _ => hr i), htot, ENNReal.ofReal_one]
-  rw [measure_diff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
+  rw [measure_sdiff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
       (by rw [hcover]; exact ENNReal.one_ne_top),
     measure_univ, hcover, tsub_self]
 

@@ -45,7 +45,7 @@ noncomputable def unitaryONB (U : Matrix.unitaryGroup (Fin 2) ℂ) :
     intro i j
     rw [Projectivization.inner_toEuclideanLin_unitary, EuclideanSpace.inner_single_left,
       map_one, one_mul]
-    simp [EuclideanSpace.single_apply, eq_comm]
+    simp [PiLp.single_apply]
   refine OrthonormalBasis.mk horth ?_
   have hcard : Fintype.card (Fin 2) = Module.finrank ℂ (EuclideanSpace ℂ (Fin 2)) := by
     rw [Fintype.card_fin, finrank_euclideanSpace_fin]
@@ -90,8 +90,7 @@ lemma swapMat_mem : swapMat ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [swapMat, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply,
-      Matrix.one_apply]
+    simp [swapMat, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply]
 
 /-- The swap unitary as a group element. -/
 noncomputable def swapU : Matrix.unitaryGroup (Fin 2) ℂ := ⟨swapMat, swapMat_mem⟩
@@ -99,12 +98,12 @@ noncomputable def swapU : Matrix.unitaryGroup (Fin 2) ℂ := ⟨swapMat, swapMat
 lemma single_zero_ne : (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) ≠ 0 := by
   intro h
   have : ‖EuclideanSpace.single (0 : Fin 2) (1 : ℂ)‖ = 0 := by rw [h, norm_zero]
-  rw [EuclideanSpace.norm_single, norm_one] at this; exact one_ne_zero this
+  rw [PiLp.norm_single, norm_one] at this; exact one_ne_zero this
 
 lemma single_one_ne : (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) ≠ 0 := by
   intro h
   have : ‖EuclideanSpace.single (1 : Fin 2) (1 : ℂ)‖ = 0 := by rw [h, norm_zero]
-  rw [EuclideanSpace.norm_single, norm_one] at this; exact one_ne_zero this
+  rw [PiLp.norm_single, norm_one] at this; exact one_ne_zero this
 
 /-- The swap sends `e₀` to `e₁`. -/
 lemma toEuclideanLin_swapMat_e0 :
@@ -115,7 +114,7 @@ lemma toEuclideanLin_swapMat_e0 :
   rw [show (Matrix.toEuclideanLin swapMat (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))).ofLp i
         = Matrix.mulVec swapMat (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)).ofLp i from rfl]
   fin_cases i <;>
-    simp [swapMat, Matrix.mulVec, Fin.sum_univ_two, dotProduct, EuclideanSpace.single_apply]
+    simp [swapMat, Matrix.mulVec, dotProduct, PiLp.single_apply]
 
 /-- `swapU • [e₀] = [e₁]`. -/
 lemma swapU_smul_e0 :
@@ -131,7 +130,7 @@ lemma blochProj_smul_single (a : EuclideanSpace ℂ (Fin 2)) (U : Matrix.unitary
     blochProj a (U • Projectivization.mk ℂ (EuclideanSpace.single i (1 : ℂ)) hi)
       = ‖inner ℂ a (Matrix.toEuclideanLin U.val (EuclideanSpace.single i (1 : ℂ)))‖ ^ 2 := by
   rw [Matrix.UnitaryGroup.smul_mk_eq_mk U _ hi, blochProj_mk, toEuclideanLin_unitary_norm,
-    EuclideanSpace.norm_single, norm_one, one_pow, div_one]
+    PiLp.norm_single, norm_one, one_pow, div_one]
 
 /-- Haar right-invariance in integral form. -/
 lemma haar_integral_mul_right (h : Matrix.unitaryGroup (Fin 2) ℂ → ℝ) (hh : Measurable h)

@@ -111,7 +111,7 @@ theorem fibreTypicality_uncovered (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ
     MeasurableSet.iUnion (measurableSet_cdfCell _)
   have hU : fibreTypicality (⋃ i, cdfCell (bornRate ψ) i) = 1 :=
     fibreTypicality_iUnion_bornCell ψ hψ
-  rw [measure_diff (iUnion_bornCell_subset_Ico01 ψ hψ) hmeasU.nullMeasurableSet
+  rw [measure_sdiff (iUnion_bornCell_subset_Ico01 ψ hψ) hmeasU.nullMeasurableSet
       (by rw [hU]; exact ENNReal.one_ne_top), hU, fibreTypicality_Ico01, tsub_self]
 
 /-- **De-isolation flow ⟹ Born.** *Any* measurable pointer `p` on the fibre whose basin `p⁻¹{i}` has

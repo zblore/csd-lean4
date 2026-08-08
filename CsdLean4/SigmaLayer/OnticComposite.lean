@@ -75,11 +75,11 @@ theorem prodVec_ne_zero {u : EuclideanSpace ℂ (Fin nA)} {v : EuclideanSpace �
     (hu : u ≠ 0) (hv : v ≠ 0) : prodVec u v ≠ 0 := by
   obtain ⟨j, hj⟩ : ∃ j, u j ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact hu (by apply PiLp.ext; intro j; simpa using h j)
   obtain ⟨k, hk⟩ : ∃ k, v k ≠ 0 := by
     by_contra h
-    push_neg at h
+    push Not at h
     exact hv (by apply PiLp.ext; intro k; simpa using h k)
   intro h0
   have := congrArg (fun w : EuclideanSpace ℂ (Fin nA × Fin nB) => w (j, k)) h0
@@ -133,7 +133,7 @@ theorem segre_injective : Function.Injective (segre (nA := nA) (nB := nB)) := by
   -- A nonzero coordinate of `q`.
   obtain ⟨k₀, hk₀⟩ : ∃ k, q.rep k ≠ 0 := by
     by_contra hz
-    push_neg at hz
+    push Not at hz
     exact q.rep_nonzero (by apply PiLp.ext; intro k; simpa using hz k)
   -- `q'` is nonzero at `k₀` too, else `p.rep = 0`.
   have hk₀' : q'.rep k₀ ≠ 0 := by
@@ -163,7 +163,7 @@ theorem segre_injective : Function.Injective (segre (nA := nA) (nB := nB)) := by
   -- Symmetrically for the second factor.
   obtain ⟨j₀, hj₀⟩ : ∃ j, p.rep j ≠ 0 := by
     by_contra hz
-    push_neg at hz
+    push Not at hz
     exact p.rep_nonzero (by apply PiLp.ext; intro j; simpa using hz j)
   have hj₀' : p'.rep j₀ ≠ 0 := by
     intro hz
@@ -249,13 +249,13 @@ theorem segre_not_surjective (hA : 2 ≤ nA) (hB : 2 ≤ nB) :
     have := congrArg Fin.val h
     simp [i0B, i1B] at this
   rw [show (bellVec hA hB) (i0A, i0B) = 1 by
-    simp [bellVec, i0A, i0B, i1A, i1B, Fin.ext_iff]] at h00
+    simp [bellVec, i0A, i0B, Fin.ext_iff]] at h00
   rw [show (bellVec hA hB) (i1A, i1B) = 1 by
-    simp [bellVec, i0A, i0B, i1A, i1B, Fin.ext_iff]] at h11
+    simp [bellVec, i1A, i1B, Fin.ext_iff]] at h11
   rw [show (bellVec hA hB) (i0A, i1B) = 0 by
-    simp [bellVec, i0A, i0B, i1A, i1B, Fin.ext_iff]] at h01
+    simp [bellVec, i0A, i1B, Fin.ext_iff]] at h01
   rw [show (bellVec hA hB) (i1A, i0B) = 0 by
-    simp [bellVec, i0A, i0B, i1A, i1B, Fin.ext_iff]] at h10
+    simp [bellVec, i1A, i0B, Fin.ext_iff]] at h10
   -- `(u₀v₀)(u₁v₁) = c² ≠ 0`, but it also equals `(u₀v₁)(u₁v₀) = 0`.
   rw [mul_zero] at h01 h10
   have hprod : ((c : ℂ) * 1) * ((c : ℂ) * 1) = 0 := by
@@ -264,7 +264,7 @@ theorem segre_not_surjective (hA : 2 ≤ nA) (hB : 2 ≤ nB) :
     calc p.rep i0A * q.rep i0B * (p.rep i1A * q.rep i1B)
         = (p.rep i0A * q.rep i1B) * (p.rep i1A * q.rep i0B) := by ring
       _ = 0 := by rw [h01, h10, mul_zero]
-  have hcc : (c : ℂ) * c = 0 := by simpa using hprod
+  have hcc : (c : ℂ) * c = 0 := by simp at hprod
   exact Units.ne_zero c (mul_self_eq_zero.mp hcc)
 
 end CSD.RecordLayer

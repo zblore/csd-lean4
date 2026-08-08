@@ -273,6 +273,7 @@ theorem continuous_pointerEvolve_snd (c : ContextField N)
   rw [hkey]
   exact Projectivization.continuous_mk'.comp (hvec.subtype_mk _)
 
+omit [NeZero N] in
 /-- ★ **The full arena propagator is continuous** — the property
 `shearEvolve_not_continuous` proves no torus-register witness can have: the smooth horn's
 record transport has no seams. -/
@@ -281,6 +282,7 @@ theorem continuous_pointerEvolve (c : ContextField N)
     Continuous (pointerEvolve c ε) :=
   continuous_fst.prodMk (continuous_pointerEvolve_snd c hc ε)
 
+omit [NeZero N] in
 /-- **Liouville preservation on the arena** — a skew product: the sector coordinate is
 conserved, and every pointer slice acts by an FS-preserving unitary. -/
 theorem pointerEvolve_measurePreserving (c : ContextField N)

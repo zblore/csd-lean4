@@ -199,6 +199,7 @@ theorem measurableSet_arenaRecord (j : Fin K) :
     MeasurableSet (arenaRecord (K := K) N j) :=
   MeasurableSet.univ.prod (measurableSet_recordRegion j)
 
+omit [NeZero N] in
 /-- The arena ready cylinder's Liouville measure is the pointer-side FS measure of the ready
 region (the sector factor integrates to `1`). -/
 theorem pointerLiouville_arenaReady (p₀ : LF4.CPN N) (q₀ : Pointer K) (δ : ℝ) :
@@ -206,6 +207,7 @@ theorem pointerLiouville_arenaReady (p₀ : LF4.CPN N) (q₀ : Pointer K) (δ : 
       = fubiniStudyMeasure q₀ (readyRegion (K := K) δ) := by
   rw [pointerLiouville, arenaReady, Measure.prod_prod, measure_univ, one_mul]
 
+omit [NeZero N] in
 /-- **The apparatus-ready state has positive Liouville measure** — the structural property the
 `GlobalBasin` arena provably lacks (`globalBasin_ae_total`: a.e. every point there already
 carries a record) and the reason the pointer factor exists at all. -/

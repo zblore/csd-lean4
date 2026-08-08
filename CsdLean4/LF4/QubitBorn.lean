@@ -67,13 +67,13 @@ theorem blochProj_integral_half (a : EuclideanSpace ℂ (Fin 2)) (ha0 : a ≠ 0)
 lemma four_max_eq (x : ℝ) : 4 * max x 0 = 2 * x + 2 * |x| := by
   by_cases h : 0 ≤ x
   · rw [max_eq_left h, abs_of_nonneg h]; ring
-  · push_neg at h
+  · push Not at h
     rw [max_eq_right h.le, abs_of_neg h]; ring
 
 /-- **The context-fixed qubit Born rule.** The CSD spread density `4(2·blochProj ψ − 1)₊` weighted by
 the context-fixed hemisphere indicator `½(1 + rsign(2·blochProj n − 1))` integrates against the
 Fubini–Study typicality measure to the Born weight `|⟨n|ψ⟩|²`. -/
-theorem qubitBorn (n ψ : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0) (hn : ‖n‖ = 1)
+theorem qubitBorn (n ψ : EuclideanSpace ℂ (Fin 2)) (_hn0 : n ≠ 0) (hn : ‖n‖ = 1)
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (p₀ : CPN 2) :
     ∫ p, (1 / 2 : ℝ) * (1 + rsign (2 * blochProj n p - 1))
         * (4 * max (2 * blochProj ψ p - 1) 0) ∂(fubiniStudyMeasure p₀)

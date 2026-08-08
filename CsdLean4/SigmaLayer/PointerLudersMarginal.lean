@@ -160,6 +160,7 @@ theorem pointerRelocate_of_noRecord {y : PointerLudersArena N}
   unfold pointerRelocate
   rw [pointerIndex_eq_none h]
 
+omit [NeZero N] in
 /-- The relocation agrees with the piece map on each piece. -/
 theorem pointerRelocate_agree (k : Option (Fin N)) :
     ∀ y ∈ relocPiece N k, pointerRelocate y = relocMap N k y := by
@@ -200,11 +201,13 @@ theorem measurable_relocMap (k : Option (Fin N)) : Measurable (relocMap N k) := 
   | none => exact measurable_id
   | some j => exact measurable_pointerBankSwap j
 
+omit [NeZero N] in
 /-- **The relocation is measurable** — piecewise, over the record-cylinder partition. -/
 theorem measurable_pointerRelocate : Measurable (pointerRelocate (N := N)) :=
   measurable_of_partition measurableSet_relocPiece relocPiece_cover
     measurable_relocMap pointerRelocate_agree
 
+omit [NeZero N] in
 /-- ★ **The record-triggered relocation preserves the arena measure** — brick 1's
 explicitly-owed piecewise invariance. On each record cylinder the relocation is the slot
 swap (measure-preserving, `pointerBankSwap_measurePreserving`) and the cylinder is its own
@@ -240,6 +243,7 @@ theorem pointerEvolve_measurePreserving_prod (c : ContextField N)
     (Filter.Eventually.of_forall fun x =>
       (couplingUU_measurePreserving (pointerWeights c ε x) q₀).map_eq)
 
+omit [NeZero N] in
 theorem measurable_pointerLudersStroke (c : ContextField N)
     (hc : ∀ j, Continuous fun p => c.rate p j) (ε : ℝ) :
     Measurable (pointerLudersStroke c ε) :=
@@ -247,6 +251,7 @@ theorem measurable_pointerLudersStroke (c : ContextField N)
     (((continuous_pointerEvolve c hc ε).measurable.comp measurable_fst).prodMk
       measurable_snd)
 
+omit [NeZero N] in
 /-- ★ **The two-stroke composite conserves Liouville measure**: record stroke (skew
 product) then relocation (piecewise slot swap). Collapse as relocation, not contraction —
 `no_exact_collapse` is respected because volume is exchanged 1:1, on the smooth horn
@@ -277,6 +282,7 @@ theorem pointerProtocol_outcomeSector (c : ContextField N)
       = (pointerProtocol c hc ε hδ).evolve 0 1 ⁻¹' arenaRecord N i := rfl
   rw [h, pointerProtocol_evolve_stroke]
 
+omit [NeZero N] in
 /-- On the outcome-`i` sector, the post-stroke system coordinate is bank slot `i`: the
 stroke lands the pointer in `recordRegion i`, so the relocation is the slot-`i` swap. -/
 theorem pointerLudersStroke_sys_on_sector (c : ContextField N)
@@ -296,6 +302,7 @@ theorem pointerLudersStroke_sys_on_sector (c : ContextField N)
   rw [hstroke]
   rfl
 
+omit [NeZero N] in
 /-- ★★ **The Lüders update for the smooth horn, as a pushforward.**
 
 Initial state: system-and-pointer `μsp`, bank slots independently calibrated to `ν j`.
@@ -355,6 +362,7 @@ theorem pointer_luders_marginal (c : ContextField N)
 
 /-! ### The CSD form: sequential statistics are Lüders on the smooth horn -/
 
+omit [NeZero N] in
 /-- ★ **Lüders for CSD on the smooth horn**: with the bank calibrated to the vertex
 preparations, the post-outcome-`i` system marginal is `epistemicMeasure (vertexPoint i)`,
 so for **any** context field `c'` the follow-up outcome-`j` probability is
@@ -378,6 +386,7 @@ theorem pointer_luders_born (c : ContextField N)
   rw [← Measure.map_apply hmeas_proj (measurableSet_globalBasin c' j), hmarg]
   exact globalBasin_prob c' j (vertexPoint i)
 
+omit [NeZero N] in
 /-- ★★ **The composite on the witness's own preparation — B3b closes.** For the smooth
 witness's ready-conditioned preparation `pointerPrep`, whenever the context gives outcome
 `i` a rate above the `ε`-floor (`2ε < rate i`), the `ε`-Born lower bound makes the

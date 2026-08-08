@@ -115,7 +115,7 @@ lemma sicState_norm (a b : Fin 3) : ‖sicState a b‖ = 1 := by
   fin_cases a <;> fin_cases b <;>
     simp only [sicAmp, cc, om, om2, normSq_coord, Complex.add_re, Complex.add_im,
       Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.ofReal_re,
-      Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.one_re, Complex.one_im,
+      Complex.ofReal_im, Complex.I_re, Complex.I_im,
       Complex.zero_re, Complex.zero_im, Complex.neg_re, Complex.neg_im] <;>
     nlinarith [r2, r3, r6]
 
@@ -142,11 +142,10 @@ lemma sic3_outer_sum :
     (apply Complex.ext <;>
       simp only [Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im,
         Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im, Complex.ofReal_re,
-        Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.one_re, Complex.one_im,
+        Complex.ofReal_im, Complex.I_re, Complex.I_im,
         Complex.zero_re, Complex.zero_im, Complex.neg_re, Complex.neg_im, Complex.re_ofNat,
         Complex.im_ofNat] <;>
-      ring_nf <;>
-      nlinarith [r2, r3, r6])
+      (ring_nf; try nlinarith [r2, r3, r6]))
 
 /-- The `(a,b)`-th SIC effect `E_{a,b} = (1/3)|ψ_{a,b}⟩⟨ψ_{a,b}|`. -/
 noncomputable def sicEffect (i : Fin 3 × Fin 3) : Effect 3 :=
@@ -193,8 +192,8 @@ lemma sic3_inner_normSq (a b c d : Fin 3) (h : (a, b) ≠ (c, d)) :
       | (simp only [sicAmp, cc, om, om2, Complex.star_def, Complex.add_re, Complex.add_im,
           Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.conj_re,
           Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-          Complex.one_re, Complex.one_im, Complex.zero_re, Complex.zero_im, Complex.neg_re,
-          Complex.neg_im] <;> ring_nf <;> nlinarith [r2, r3, r2_4, r3_4])
+          Complex.zero_re, Complex.zero_im, Complex.neg_re,
+          Complex.neg_im]; ring_nf; try nlinarith [r2, r3, r2_4, r3_4])
 
 /-! ### The Born weights as Kähler volumes -/
 

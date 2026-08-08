@@ -86,6 +86,7 @@ noncomputable def pointerIndex (q : Pointer N) : Option (Fin N) := by
   classical
   exact if h : ∃ j, q ∈ recordRegion j then some h.choose else none
 
+omit [NeZero N] in
 theorem pointerIndex_eq_some_of_mem {q : Pointer N} {j : Fin N} (hq : q ∈ recordRegion j) :
     pointerIndex q = some j := by
   classical
@@ -108,6 +109,7 @@ noncomputable def pointerRelocate (y : PointerLudersArena N) : PointerLudersAren
   | none => y
   | some j => pointerBankSwap j y
 
+omit [NeZero N] in
 /-- ★ **The relocation never moves the pointer** — so the record survives its own
 relocation, exactly as in the torus-triggered version. -/
 theorem pointerRelocate_pointer (y : PointerLudersArena N) :
@@ -115,6 +117,7 @@ theorem pointerRelocate_pointer (y : PointerLudersArena N) :
   unfold pointerRelocate
   rcases h : pointerIndex y.1.2 with _ | j <;> simp [pointerBankSwap]
 
+omit [NeZero N] in
 theorem pointerRelocate_of_record {y : PointerLudersArena N} {j : Fin N}
     (h : y.1.2 ∈ recordRegion j) : pointerRelocate y = pointerBankSwap j y := by
   unfold pointerRelocate
@@ -128,6 +131,7 @@ noncomputable def pointerLudersStroke (c : ContextField N) (ε : ℝ) :
     PointerLudersArena N → PointerLudersArena N :=
   fun y => pointerRelocate (pointerEvolve c ε y.1, y.2)
 
+omit [NeZero N] in
 /-- The composite leaves the bank's *slot count* and the pointer's record intact: the record
 that triggers the relocation is the one the stroke just created. -/
 theorem pointerLudersStroke_pointer (c : ContextField N) (ε : ℝ)
@@ -147,6 +151,7 @@ instance (μs : Measure (LF4.KSigma N)) [IsProbabilityMeasure μs] (q₀ : Point
   unfold pointerLudersMeasure
   infer_instance
 
+omit [NeZero N] in
 /-- ★ **The slot swap preserves the arena measure** — the same conjugation the torus
 version uses (`measurePreserving_bankSwap`); that the register measure is Fubini–Study
 rather than Haar plays no part in the argument. -/

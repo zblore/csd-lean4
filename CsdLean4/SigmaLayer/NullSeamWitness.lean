@@ -356,7 +356,7 @@ lemma cos_sq_gt_half_iff {χ : ℝ} (hχ : χ ∈ Set.Ioo (0 : ℝ) (Real.pi / 2
   · intro h
     have hcos : 0 < Real.cos (2 * χ) := by linarith
     by_contra hge
-    push_neg at hge
+    push Not at hge
     have : Real.cos (2 * χ) ≤ 0 :=
       Real.cos_nonpos_of_pi_div_two_le_of_le (by linarith)
         (by nlinarith [hχ.2, Real.pi_pos])
@@ -377,7 +377,7 @@ lemma sin_sq_gt_half_iff {χ : ℝ} (hχ : χ ∈ Set.Ioo (0 : ℝ) (Real.pi / 2
   · intro h
     have hcos : Real.cos (2 * χ) < 0 := by linarith
     by_contra hge
-    push_neg at hge
+    push Not at hge
     have : 0 ≤ Real.cos (2 * χ) :=
       Real.cos_nonneg_of_mem_Icc ⟨by nlinarith [hχ.1, Real.pi_pos], by linarith⟩
     linarith
@@ -546,10 +546,10 @@ lemma nullSeam_outcome_left (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1) :
     rcases eq_or_lt_of_le (not_lt.mp hge') with heq | hpos
     · -- on the seam: the landing is the kissing state, in no record region
       have hmem := h
-      rw [Set.mem_setOf_eq, nullSeamEvolve_ready r hr0 hr1 θ] at hmem
+      rw [Set.mem_ofPred_eq, nullSeamEvolve_ready r hr0 hr1 θ] at hmem
       have : (1 : ℝ) / 2 < ‖((Real.cos (nullSeamAngle r θ) : ℝ) : ℂ)‖ ^ 2 := by
         have := hmem
-        rw [recordRegion, Set.mem_setOf_eq,
+        rw [recordRegion, Set.mem_ofPred_eq,
           show Fin.succ (0 : Fin 2) = (1 : Fin 3) from rfl,
           momentMap_nullSeamVec _ (nullSeamAngle_mem r hr0 hr1 θ)] at this
         exact this
@@ -638,10 +638,10 @@ lemma nullSeam_outcome_right (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1) :
     have hge' : ¬ 0 < nullSeamSign r θ := hge
     rcases eq_or_lt_of_le (not_lt.mp hge') with heq | hneg
     · have hmem := h
-      rw [Set.mem_setOf_eq, nullSeamEvolve_ready r hr0 hr1 θ] at hmem
+      rw [Set.mem_ofPred_eq, nullSeamEvolve_ready r hr0 hr1 θ] at hmem
       have : (1 : ℝ) / 2 < ‖((Real.sin (nullSeamAngle r θ) : ℝ) : ℂ)‖ ^ 2 := by
         have := hmem
-        rw [recordRegion, Set.mem_setOf_eq,
+        rw [recordRegion, Set.mem_ofPred_eq,
           show Fin.succ (1 : Fin 2) = (2 : Fin 3) from rfl,
           momentMap_nullSeamVec _ (nullSeamAngle_mem r hr0 hr1 θ)] at this
         exact this
@@ -669,7 +669,7 @@ theorem nullSeam_born_right (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1) :
   have hcompl : {θ | 0 < nullSeamSign r θ}ᶜ
       = {θ | nullSeamSign r θ < 0} ∪ {θ | nullSeamSign r θ = 0} := by
     ext θ
-    simp only [Set.mem_compl_iff, Set.mem_setOf_eq, Set.mem_union, not_lt]
+    simp only [Set.mem_compl_iff, Set.mem_ofPred_eq, Set.mem_union, not_lt]
     constructor
     · intro h
       rcases lt_or_eq_of_le h with h' | h'
@@ -718,8 +718,8 @@ lemma continuous_nullSeamMat_entry (r : ℝ) (a b : Fin 3) :
       ((Real.sin (nullSeamAngle r θ) : ℝ) : ℂ) :=
     Complex.continuous_ofReal.comp (Real.continuous_sin.comp hχ)
   fin_cases a <;> fin_cases b <;>
-    simp only [nullSeamMat, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
-      Matrix.cons_val_one, Matrix.head_cons, Matrix.head_fin_const, Matrix.cons_val_fin_one,
+    simp only [nullSeamMat, Matrix.of_apply, Matrix.cons_val',
+      Matrix.cons_val_fin_one,
       Matrix.empty_val'] <;>
     first
       | exact continuous_const

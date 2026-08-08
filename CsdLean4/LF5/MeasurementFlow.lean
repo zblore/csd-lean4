@@ -200,7 +200,7 @@ lemma measurementFlow_mk_single (e : Fin N × Fin N ≃ Fin m) (a : Fin N × Fin
   exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (single_one_ne_zero _)).mpr
     ⟨1, by rw [one_smul]; exact (vnUnitaryReindexed_toEuclideanLin_single e a).symm⟩
 
-@[measurability, fun_prop]
+@[fun_prop]
 lemma measurementFlow_measurable (e : Fin N × Fin N ≃ Fin m) :
     Measurable (measurementFlow N e) :=
   (continuous_const_smul (vnUnitaryReindexed N e)).measurable

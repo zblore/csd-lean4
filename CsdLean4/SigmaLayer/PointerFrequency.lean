@@ -89,12 +89,13 @@ theorem pointerSectorProb_mem_window (c : ContextField N)
       linarith
     exact ENNReal.toReal_le_of_le_ofReal hBnn hup
 
+omit [NeZero N] in
 /-- ★ **The `ε`-Born frequency layer.** For i.i.d. trials of the smooth witness's
 preparation, the relative frequency of outcome `j` converges almost surely, and the limit
 sits inside the single-shot `ε`-window. This is what an experimenter running the smooth
 horn would actually measure. -/
 theorem pointer_born_frequency (c : ContextField N)
-    (hc : ∀ j, Continuous fun p => c.rate p j) {ε δ : ℝ} (hε : 0 < ε) (hδpos : 0 < δ)
+    (hc : ∀ j, Continuous fun p => c.rate p j) {ε δ : ℝ} (_hε : 0 < ε) (_hδpos : 0 < δ)
     (hδ : δ ≤ 1 / 2) (p : LF4.CPN N) (q₀ : Pointer N) (j : Fin N)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → PointerArena N N) (hX : ∀ n, Measurable (X n))

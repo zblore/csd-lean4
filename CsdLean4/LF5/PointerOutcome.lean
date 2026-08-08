@@ -145,7 +145,7 @@ Proof: rewrite the outcome event into the pointer-block union
 sub-family of `bornRegion_pairwiseDisjoint`), and land on
 `vnDilation_pointer_frequency`. -/
 theorem measurement_flow_outcome_frequency
-    [NeZero N] (hN : 1 < N)
+    [NeZero N] (_hN : 1 < N)
     (e : Fin N × Fin N ≃ Fin (M + 1))
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))

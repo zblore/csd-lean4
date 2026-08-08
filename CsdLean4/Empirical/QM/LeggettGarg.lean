@@ -96,7 +96,7 @@ lemma inner_single_zenoU (Δ : ℝ) (s t : Fin 2) :
   rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_two]
   simp only [toEuclideanLin_ofLp]
   fin_cases s <;> fin_cases t <;>
-    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, EuclideanSpace.single_apply]
+    simp [Matrix.mulVec, dotProduct, PiLp.single_apply]
 
 /-- The Born transition probability is `|matrix entry|²`. -/
 lemma bornTP_eq (Δ : ℝ) (s t : Fin 2) : bornTP Δ s t = ‖(zenoU Δ) t s‖ ^ 2 := by
@@ -124,7 +124,7 @@ theorem lgCorr_eq (Δ : ℝ) : lgCorr Δ = Real.cos (2 * Δ) := by
   have key : lgCorr Δ = Real.cos Δ ^ 2 - Real.sin Δ ^ 2 := by
     unfold lgCorr
     rw [Fin.sum_univ_two, Fin.sum_univ_two, Fin.sum_univ_two, h00, h01, h10, h11]
-    simp only [sgn, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+    simp only [sgn, Matrix.cons_val_zero, Matrix.cons_val_one]
     ring
   rw [key, Real.cos_two_mul]
   linarith [Real.sin_sq_add_cos_sq Δ]

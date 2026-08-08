@@ -117,7 +117,7 @@ lemma mubVec_norm (b : Fin 4) (j : Fin 3) : ‖mubVec b j‖ = 1 := by
     simp only [mubAmp, cc, om, om2, normSq_coord, Complex.add_re, Complex.add_im,
       Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.ofReal_re,
       Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.one_re, Complex.one_im,
-      Complex.zero_re, Complex.zero_im, Complex.neg_re, Complex.neg_im] <;>
+      Complex.zero_re, Complex.zero_im] <;>
     nlinarith [r3, r3_4]
 
 /-! ### The tight-frame relation and the POVM -/
@@ -145,7 +145,7 @@ lemma mub3_outer_sum :
       simp only [Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im,
         Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im, Complex.ofReal_re,
         Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.one_re, Complex.one_im,
-        Complex.zero_re, Complex.zero_im, Complex.neg_re, Complex.neg_im, Complex.re_ofNat,
+        Complex.zero_re, Complex.zero_im, Complex.re_ofNat,
         Complex.im_ofNat] <;>
       ring_nf <;>
       nlinarith [r3, r3_4])
@@ -194,8 +194,8 @@ lemma mub3_unbiased (b b' : Fin 4) (j j' : Fin 3) (h : b ≠ b') :
       | (simp only [mubAmp, cc, om, om2, Complex.star_def, Complex.add_re, Complex.add_im,
           Complex.sub_re, Complex.sub_im, Complex.mul_re, Complex.mul_im, Complex.conj_re,
           Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-          Complex.one_re, Complex.one_im, Complex.zero_re, Complex.zero_im, Complex.neg_re,
-          Complex.neg_im] <;> ring_nf <;> nlinarith [r3, r3_4])
+          Complex.one_re, Complex.one_im, Complex.zero_re,
+          Complex.zero_im]; ring_nf; try nlinarith [r3, r3_4])
 
 /-! ### The Born weights as Kähler volumes -/
 

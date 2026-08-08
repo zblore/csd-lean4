@@ -371,7 +371,7 @@ value below `(n−1)/n`.
 
 At `n = 2` the bound reads "`g` vanishes below `½`", which is exactly the support of the known
 solution `4(2s−1)₊` — sharp at the one dimension where a solution exists. -/
-theorem vanishes_below_of_balanced {g : ℝ → ℝ} {s : Fin n → X → ℝ} (hn : 0 < n)
+theorem vanishes_below_of_balanced {g : ℝ → ℝ} {s : Fin n → X → ℝ} (_hn : 0 < n)
     (hvan : ∀ᵐ x ∂μ, ∃ i, ∀ t ∈ Set.Icc (0 : ℝ) (1 - s i x), g t = 0)
     (hbalanced : ∀ c : ℝ, 1 / (n : ℝ) < c → 0 < μ {x | ∀ i, s i x ≤ c}) :
     ∀ t ∈ Set.Ico (0 : ℝ) (1 - 1 / (n : ℝ)), g t = 0 := by

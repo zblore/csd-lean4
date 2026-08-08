@@ -123,6 +123,7 @@ lemma sliceAt_apply (s : Fin 2 × ι → ℂ) (a : Fin 2) (j : ι) :
     sliceAt s a j = s (a, j) := by
   simp only [sliceAt, WithLp.ofLp_toLp]
 
+omit [Fintype ι] in
 lemma cU_apply (s : Fin 2 × ι → ℂ) (a : Fin 2) (i : ι) :
     cU U s (a, i) = if a = 1 then U (sliceAt s 1) i else s (a, i) := rfl
 
@@ -143,6 +144,7 @@ lemma had1_apply (a : Fin 2) (i : ι) :
   rw [hadAnc_apply, Fin.sum_univ_two, hadInit_apply, hadInit_apply, if_pos rfl,
       if_neg (by decide : ¬ (1 : Fin 2) = 0), mul_zero, add_zero, hadEntry_zero_right]
 
+omit [Fintype ι] in
 /-- After the controlled-`U` the two pointer branches carry `ψ` and `Uψ`: ancilla `1`
 applies `U`. -/
 lemma cU_had1_apply (a : Fin 2) (i : ι) :
@@ -157,6 +159,7 @@ lemma cU_had1_apply (a : Fin 2) (i : ι) :
   · rw [hslice, map_smul, PiLp.smul_apply, smul_eq_mul]
   · rw [had1_apply]
 
+omit [Fintype ι] in
 /-- **The ancilla-`0` amplitude after the full circuit.** The two-Hadamard collapse on the
 ancilla (`hadEntry` orthogonality) leaves the symmetric combination:
 
@@ -170,6 +173,7 @@ lemma hadTest_apply (i : ι) :
     rw [← mul_inv, sqrt2_mul_self]; norm_num
   linear_combination (ψ i + (U ψ) i) * h2
 
+omit [Fintype ι] in
 /-- **The ancilla-`1` amplitude after the full circuit.** The `(-1)` interference entry
 flips the sign of the `Uψ` branch:
 
@@ -303,6 +307,7 @@ noncomputable def swapMap : EuclideanSpace ℂ (κ × κ) →ₗ[ℂ] EuclideanS
     ext p
     simp only [WithLp.ofLp_smul, Pi.smul_apply, RingHom.id_apply]
 
+omit [Fintype κ] in
 lemma swapMap_apply (v : EuclideanSpace ℂ (κ × κ)) (i j : κ) :
     swapMap v (i, j) = v (j, i) := by
   simp only [swapMap, LinearMap.coe_mk, AddHom.coe_mk, WithLp.ofLp_toLp]
@@ -316,6 +321,7 @@ lemma tensorEuc_apply (ψ φ : EuclideanSpace ℂ κ) (i j : κ) :
     tensorEuc ψ φ (i, j) = ψ i * φ j := by
   simp only [tensorEuc, WithLp.ofLp_toLp]
 
+omit [Fintype κ] in
 /-- **Amplitude unification.** At `U = swapMap`, `ψ = ψ⊗φ` the Hadamard-test ancilla-`0`
 amplitude equals the swap-test amplitude: both are `(1/2)(ψ i φ j + ψ j φ i)`. -/
 lemma hadTest_swap_apply (ψ φ : EuclideanSpace ℂ κ) (i j : κ) :
@@ -341,6 +347,7 @@ lemma inner_tensorEuc (ψ φ ψ' φ' : EuclideanSpace ℂ κ) :
   simp only [tensorEuc_apply, map_mul]
   ring
 
+omit [Fintype κ] in
 /-- `swap(ψ⊗φ) = φ⊗ψ` (the swap reindexing exchanges the two factors). -/
 lemma swapMap_tensorEuc (ψ φ : EuclideanSpace ℂ κ) :
     swapMap (tensorEuc ψ φ) = tensorEuc φ ψ := by

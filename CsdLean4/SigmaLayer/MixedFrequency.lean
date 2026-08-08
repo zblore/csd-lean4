@@ -61,7 +61,7 @@ noncomputable def eigenvalueMeasure (ρ : DensityOperator (M + 1)) : Measure (Fi
 theorem eigenvalueMeasure_singleton (ρ : DensityOperator (M + 1)) (k : Fin (M + 1)) :
     eigenvalueMeasure ρ {k} = ENNReal.ofReal (ρ.isHermitian.eigenvalues k) := by
   rw [eigenvalueMeasure, Measure.finsetSum_apply]
-  simp [Measure.dirac_apply, Set.indicator_apply, Finset.sum_ite_eq']
+  simp [Set.indicator_apply, Finset.sum_ite_eq']
 
 instance eigenvalueMeasure_isProbability (ρ : DensityOperator (M + 1)) :
     IsProbabilityMeasure (eigenvalueMeasure ρ) := by

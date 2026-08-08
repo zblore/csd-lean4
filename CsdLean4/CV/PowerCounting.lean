@@ -144,7 +144,7 @@ lemma update_modeSplit_symm (k : Fin K)
   funext j
   by_cases h : j = k
   · subst h; simp [modeSplit]
-  · simp [modeSplit, Function.update_apply, h]
+  · simp [modeSplit, h]
 
 /-- The field action of `modeOp` collapses to the single-mode action along
 the `k`-fibre. -/
@@ -167,14 +167,14 @@ lemma modeOp_mulVec_apply (k : Fin K) (a : Matrix (Fin N) (Fin N) ℂ)
     intro hall
     exact hd (Finset.mem_image.mpr ⟨d k, Finset.mem_univ _, funext fun j => by
       by_cases hj : j = k
-      · subst hj; simp [Function.update_apply]
-      · simp [Function.update_apply, hj, hall j hj]⟩)
+      · subst hj; simp
+      · simp [hj, hall j hj]⟩)
   rw [himg, Finset.sum_image fun n _ n' _ h => hinj h]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [modeOp_apply_of_agree k a fun j hj => by
-      simp [Function.update_apply, hj]]
+      simp [hj]]
   congr 1
-  simp [Function.update_apply]
+  simp
 
 /-- **Embedding a single-mode operator into the field does not increase its
 norm**: `modeOp` is block-diagonal over the spectator configurations. -/

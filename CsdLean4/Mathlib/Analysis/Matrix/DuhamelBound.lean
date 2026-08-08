@@ -45,6 +45,7 @@ namespace Matrix
 
 variable {m : Type*} [Fintype m] [DecidableEq m] [Nonempty m]
 
+omit [Fintype m] [DecidableEq m] [Nonempty m] in
 /-- Real scaling preserves skew-Hermiticity. -/
 theorem conjTranspose_real_smul_skew {A : Matrix m m ℂ} (hA : Aᴴ = -A) (s : ℝ) :
     (s • A)ᴴ = -(s • A) := by

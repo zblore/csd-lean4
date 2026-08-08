@@ -598,6 +598,7 @@ noncomputable local instance instNormedSpaceRealMatrix : NormedSpace ℝ (Matrix
 noncomputable local instance instNormedSpaceComplexMatrix : NormedSpace ℂ (Matrix n n ℂ) where
   norm_smul_le := (Matrix.normedSpace (R := ℂ) (m := n) (n := n) (α := ℂ)).norm_smul_le
 
+omit [DecidableEq n] in
 /-- **Entrywise integral commutation.** The Bochner integral of a matrix-valued integrable family is
 computed entrywise. Proof: each entry projection `entryLinearMap ℝ ℂ i j` is a (finite-dimensional,
 hence continuous) ℝ-linear map; `ContinuousLinearMap.integral_comp_comm` pulls it through. -/
@@ -695,6 +696,7 @@ end BochnerMatrix
 
 /-! #### Löwner-order topology instances on the ambient (product) matrix topology -/
 
+omit [DecidableEq n] in
 /-- **The PSD cone is closed** in the Frobenius topology. It is the intersection of the closed
 Hermitian subspace `{M | Mᴴ = M}` with the closed half-spaces `{M | 0 ≤ star x ⬝ᵥ (M *ᵥ x)}`
 (`x` ranging over `n → ℂ`), each closed since `M ↦ star x ⬝ᵥ (M *ᵥ x)` is continuous and

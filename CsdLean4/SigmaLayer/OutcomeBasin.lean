@@ -111,7 +111,7 @@ theorem outcomeBasin_ae_total (c : OutcomeField N K) (p : LF4.CPN N) :
     rw [measure_iUnion (outcomeBasin_pairwiseDisjoint c) hmeas, tsum_fintype,
       Finset.sum_congr rfl fun i (_ : i ∈ Finset.univ) => outcomeBasin_prob c i p,
       ← ENNReal.ofReal_sum_of_nonneg (fun i _ => c.nonneg p i), c.sum_one p, ENNReal.ofReal_one]
-  rw [measure_diff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
+  rw [measure_sdiff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
       (by rw [hcover]; exact ENNReal.one_ne_top),
     measure_univ, hcover, tsub_self]
 

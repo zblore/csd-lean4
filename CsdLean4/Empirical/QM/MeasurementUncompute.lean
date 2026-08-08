@@ -180,7 +180,7 @@ noncomputable def uncomputedData (c : Fin 2 → Fin 2 → ℂ) (m : Fin 2) : QRe
 /-- The ancilla-Hadamard block entries are the corpus single-qubit Hadamard `qmH`. -/
 lemma hadEntry_eq_qmH (a b : Fin 2) : hadEntry a b = qmH a b := by
   fin_cases a <;> fin_cases b <;>
-    simp [hadEntry, qmH, Matrix.smul_apply] <;> ring
+    (simp [hadEntry, qmH, Matrix.smul_apply]; try ring)
 
 /-- The data-CZ phase matches the corpus controlled-Z `qmCZ` on its diagonal (phase flip on
 `|11⟩`): the four computational diagonal values agree. -/
@@ -210,7 +210,7 @@ by the `|1⟩` projection is exactly cancelled by the data CZ, leaving amplitude
 every data branch `(x,y)`. This is `((-1)^{x∧y})² = 1`. -/
 lemma czPhase_mul_hadEntry (x y : Fin 2) :
     czPhase x y * hadEntry 1 (x * y) = (Real.sqrt 2 : ℂ)⁻¹ := by
-  fin_cases x <;> fin_cases y <;> simp [czPhase, hadEntry] <;> ring
+  fin_cases x <;> fin_cases y <;> (simp [czPhase, hadEntry]; try ring)
 
 /-- The combined correction × Hadamard-projection amplitude, both outcomes: `(√2)⁻¹` for
 every `m` and every data branch `(x,y)`. The `m = 0` branch is the clean projection

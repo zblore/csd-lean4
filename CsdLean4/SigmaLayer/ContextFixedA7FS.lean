@@ -222,7 +222,7 @@ half-width `d` as *abstract* reals constrained by linear relations plus the sing
 /-- A box of half-width `d` about a centre `b` with `M·b = 1 − b` lies in the open simplex and is
 balanced below `c`. All hypotheses are linear in `b`, `d`, `c` and the products `M·b`, `M·d`. -/
 private theorem box_in_simplex {M : ℕ} (hM : 0 < M) {b d c : ℝ}
-    (hb : (M : ℝ) * b = 1 - b) (hbpos : 0 < b) (hd0 : 0 < d) (hdb : d < b)
+    (hb : (M : ℝ) * b = 1 - b) (_hbpos : 0 < b) (_hd0 : 0 < d) (hdb : d < b)
     (hdMb : (M : ℝ) * d < b) (hdMc : (M : ℝ) * d < c - b) (hbdc : b + d ≤ c) :
     Set.pi Set.univ (fun _ : Fin M => Set.Ioo (b - d) (b + d))
       ⊆ {t : Fin M → ℝ | (∀ i, t i ≤ c) ∧ 1 - ∑ i, t i ≤ c} ∩ openSimplexFree := by

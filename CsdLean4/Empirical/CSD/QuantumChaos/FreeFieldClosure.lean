@@ -64,7 +64,7 @@ variable {K N : ℕ}
 /-- The configuration space of `K` modes at `N` levels has `N ^ K` points. -/
 theorem card_fieldConfig (K N : ℕ) :
     Fintype.card (FieldConfig K N) = N ^ K := by
-  simp [Fintype.card_fun]
+  simp
 
 instance [NeZero N] : NeZero (Fintype.card (FieldConfig K N)) := by
   have : Nonempty (FieldConfig K N) :=

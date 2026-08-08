@@ -308,18 +308,32 @@ theorem hardyAmp_A'_B' :
 /-- **QM realises the Hardy constraints.** A specific 2-qubit state
 and four observables exhibit the four Hardy probability identities,
 demonstrating that the LHV-impossibility theorem `no_lhv_hardy` has
-empirical content (QM violates LHV on this Hardy instance). -/
+empirical content (QM violates LHV on this Hardy instance).
+
+Strengthened 2026-08-08 (vacuity audit): the statement now records the
+witnesses' nondegeneracy — the primed vectors are nonzero and each `_perp`
+is orthogonal to its primed partner — so degenerate (zero-vector) witnesses
+no longer satisfy it; the Hardy content is in the statement, not only in
+the proof's choice of witnesses. -/
 theorem exists_hardy_realisation :
     ∃ (ψ : Fin 2 × Fin 2 → ℂ) (a aPrime b bPrime aPrime_perp bPrime_perp : Fin 2 → ℂ),
+      aPrime ≠ 0 ∧ aPrime_perp ≠ 0 ∧ bPrime ≠ 0 ∧ bPrime_perp ≠ 0 ∧
+      (∑ i, star (aPrime i) * aPrime_perp i) = 0 ∧
+      (∑ i, star (bPrime i) * bPrime_perp i) = 0 ∧
       jointAmplitude a b ψ ≠ 0 ∧
       jointAmplitude a bPrime_perp ψ = 0 ∧
       jointAmplitude aPrime_perp b ψ = 0 ∧
-      jointAmplitude aPrime bPrime ψ = 0 :=
-  ⟨hardyVec, zPlus, xPlus, zPlus, xPlus, xMinus, xMinus,
-   by rw [hardyAmp_AB]; norm_num,
-   hardyAmp_A_B'minus,
-   hardyAmp_A'minus_B,
-   hardyAmp_A'_B'⟩
+      jointAmplitude aPrime bPrime ψ = 0 := by
+  refine ⟨hardyVec, zPlus, xPlus, zPlus, xPlus, xMinus, xMinus,
+    ?_, ?_, ?_, ?_, ?_, ?_, ?_,
+    hardyAmp_A_B'minus, hardyAmp_A'minus_B, hardyAmp_A'_B'⟩
+  · intro h; have := congrFun h 0; simp [xPlus] at this
+  · intro h; have := congrFun h 1; simp [xMinus] at this
+  · intro h; have := congrFun h 0; simp [xPlus] at this
+  · intro h; have := congrFun h 1; simp [xMinus] at this
+  · simp [Fin.sum_univ_two, xPlus, xMinus]
+  · simp [Fin.sum_univ_two, xPlus, xMinus]
+  · rw [hardyAmp_AB]; norm_num
 
 end HardyQM
 
@@ -443,19 +457,31 @@ theorem hardyMaxAmp_A'_B' :
     rw [this, hpc]; push_cast; ring
   linear_combination (2 - (phi : ℂ)^2) * hsq - hcube
 
-/-- **QM realises the Hardy constraints at the golden-ratio maximum.** -/
+/-- **QM realises the Hardy constraints at the golden-ratio maximum.**
+
+Strengthened 2026-08-08 (vacuity audit), as `exists_hardy_realisation`:
+nondegeneracy and orthogonality of the witnesses are part of the
+statement. -/
 theorem exists_hardy_realisation_max :
     ∃ (ψ : Fin 2 × Fin 2 → ℂ) (a aPrime b bPrime aPrime_perp bPrime_perp : Fin 2 → ℂ),
+      aPrime ≠ 0 ∧ aPrime_perp ≠ 0 ∧ bPrime ≠ 0 ∧ bPrime_perp ≠ 0 ∧
+      (∑ i, star (aPrime i) * aPrime_perp i) = 0 ∧
+      (∑ i, star (bPrime i) * bPrime_perp i) = 0 ∧
       HardyQM.jointAmplitude a b ψ ≠ 0 ∧
       HardyQM.jointAmplitude a bPrime_perp ψ = 0 ∧
       HardyQM.jointAmplitude aPrime_perp b ψ = 0 ∧
-      HardyQM.jointAmplitude aPrime bPrime ψ = 0 :=
-  ⟨hardyMaxVec, HardyQM.zPlus, aPrimeMax, HardyQM.zPlus, aPrimeMax,
-   aPrimeMinusMax, aPrimeMinusMax,
-   by rw [hardyMaxAmp_AB]; norm_num,
-   hardyMaxAmp_A_B'minus,
-   hardyMaxAmp_A'minus_B,
-   hardyMaxAmp_A'_B'⟩
+      HardyQM.jointAmplitude aPrime bPrime ψ = 0 := by
+  refine ⟨hardyMaxVec, HardyQM.zPlus, aPrimeMax, HardyQM.zPlus, aPrimeMax,
+    aPrimeMinusMax, aPrimeMinusMax,
+    ?_, ?_, ?_, ?_, ?_, ?_, ?_,
+    hardyMaxAmp_A_B'minus, hardyMaxAmp_A'minus_B, hardyMaxAmp_A'_B'⟩
+  · intro h; have := congrFun h 0; simp [aPrimeMax] at this
+  · intro h; have := congrFun h 1; simp [aPrimeMinusMax] at this
+  · intro h; have := congrFun h 0; simp [aPrimeMax] at this
+  · intro h; have := congrFun h 1; simp [aPrimeMinusMax] at this
+  · simp [Fin.sum_univ_two, aPrimeMax, aPrimeMinusMax, Complex.conj_ofReal]
+  · simp [Fin.sum_univ_two, aPrimeMax, aPrimeMinusMax, Complex.conj_ofReal]
+  · rw [hardyMaxAmp_AB]; norm_num
 
 /-! ### Hardy maximum probability value
 

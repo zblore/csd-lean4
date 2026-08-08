@@ -121,6 +121,7 @@ noncomputable def blockField (b : Fin N → Fin K) : OutcomeField N K where
     rw [← LF4.momentMap_sum_eq_one p]
     exact Finset.sum_fiberwise_of_maps_to (fun j _ => Finset.mem_univ (b j)) _
 
+omit [NeZero N] in
 /-- **The nondegenerate case is recovered, not replaced.** With the identity degeneracy map every
 block is a single direction, so `blockField id` is `momentContext` viewed as an `OutcomeField`. -/
 theorem blockField_id (p : LF4.CPN N) (i : Fin N) :

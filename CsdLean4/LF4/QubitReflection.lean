@@ -64,8 +64,7 @@ theorem completeness (n ψ φ : EuclideanSpace ℂ (Fin 2)) (hn : ‖n‖ = 1) :
     (inner ℂ ψ φ : ℂ)
       = inner ℂ ψ n * inner ℂ n φ + inner ℂ ψ (perp n) * inner ℂ (perp n) φ := by
   have hnorm := normSq_eq_one_of_norm n hn
-  simp only [inner_two, perp_zero, perp_one, map_neg, map_mul, RingHomCompTriple.comp_apply,
-    RCLike.star_def, Complex.conj_conj]
+  simp only [inner_two, perp_zero, perp_one, map_neg, RingHomCompTriple.comp_apply]
   linear_combination (-(conj (ψ 0) * φ 0 + conj (ψ 1) * φ 1)) * hnorm
 
 /-- The inner-product norm is symmetric: `‖⟨x,y⟩‖ = ‖⟨y,x⟩‖`. -/

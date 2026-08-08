@@ -458,7 +458,7 @@ lemma coeff_nonneg (hd : 2 ≤ d) (k : ℕ) (hk : k < d/2) : 0 ≤ 1 - 2*(k:ℝ)
   have h2k : (2*k:ℝ) ≤ (d:ℝ)-2 := by
     have h1 : 2*(k+1) ≤ d := by omega
     have h2 : (2*(k+1):ℝ) ≤ (d:ℝ) := by exact_mod_cast h1
-    push_cast at h2; linarith
+    linarith
   rw [sub_nonneg, div_le_one hd1]; linarith [h2k]
 
 omit [NeZero d] in
@@ -469,7 +469,7 @@ lemma bracketClosed_nonneg (hd : 2 ≤ d) (k : ℕ) (hk : k < d/2) : 0 ≤ brack
   have h2k : (2*k:ℝ) ≤ (d:ℝ)-2 := by
     have h1 : 2*(k+1) ≤ d := by omega
     have h2 : (2*(k+1):ℝ) ≤ (d:ℝ) := by exact_mod_cast h1
-    push_cast at h2; linarith
+    linarith
   have haA : (0:ℝ) < π*((k:ℝ)+1/4)/d := by positivity
   have haB : (0:ℝ) < π*((k:ℝ)+3/4)/d := by positivity
   have hBle : π*((k:ℝ)+3/4)/d ≤ π/2 := by rw [div_le_iff₀ hd0]; nlinarith [hpi, h2k]

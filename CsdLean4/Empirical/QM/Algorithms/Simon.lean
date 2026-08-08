@@ -147,7 +147,7 @@ theorem simon_orthogonal (x₀ s y : Fin n → Fin 2) (hodd : Odd (bitInner s y)
 
 `hs : s ≠ 0` is *not* load-bearing here (the formula holds for all `s`); see the module
 docstring. -/
-theorem simon_uniform (x₀ s y : Fin n → Fin 2) (hs : s ≠ 0)
+theorem simon_uniform (x₀ s y : Fin n → Fin 2) (_hs : s ≠ 0)
     (heven : Even (bitInner s y)) :
     prob (simonCircuit x₀ s) y = 2 / 2 ^ n := by
   rw [prob, simon_amplitude, heven.neg_one_pow, show (1 + (1 : ℂ)) = 2 from by norm_num]

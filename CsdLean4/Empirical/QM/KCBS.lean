@@ -186,7 +186,7 @@ lemma kv_unit (k : Fin 5) : dot3 (kv k) (kv k) = 1 := by
 /-- The apex overlap Born weight `⟨ψ|Πₖ|ψ⟩ = cos²θ = 1/√5`. -/
 lemma kv_apex_born (k : Fin 5) : (dot3 apex (kv k)) ^ 2 = 1 / Real.sqrt 5 := by
   have : dot3 apex (kv k) = cc := by
-    simp [dot3, apex, kv, kvA, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+    simp [dot3, apex, kv, kvA, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [this, cc_sq]
 
 /-- **The quantum KCBS value is `√5`.** `∑ₖ ⟨ψ|Πₖ|ψ⟩ = 5·(1/√5) = √5`. -/

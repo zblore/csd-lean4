@@ -288,7 +288,8 @@ BornWrapper.lean   — concrete Effect / DensityOperator (N×N complex matrices)
                      traceForm, Effect.one / .zero / .add helpers,
                      outerProduct + all projection lemmas,
                      rankOneEffect / rankOneDensity, OperationalPackage,
-                     busch_effect_gleason AXIOM, born_form_of_package,
+                     busch_effect_gleason (an AXIOM until 2026-07-21; now
+                     proved via EffectGleason.lean), born_form_of_package,
                      born_quadratic (proved), pure_state_born_weights
 PhaseInvariance.lean — outerProduct_phase_invariant, rankOneEffect /
                      rankOneDensity phase invariance under unit-modulus
@@ -310,13 +311,17 @@ Interface.lean     — lf1_weight_eq_projective_weight, LF1_main_theorem_project
                      SectorData.outcomeOfProjective (Phase 5)
 ```
 
-**LF2 is the first layer with an `axiom` declaration.** LF1 is
-axiom-and-sorry-free; LF2 has exactly **one** axiom:
+**The corpus imports ZERO axioms beyond Lean's foundational triple**
+(`propext`, `Classical.choice`, `Quot.sound`) — since 2026-07-21. LF2 was
+historically the one layer with an `axiom` declaration:
 
 - `busch_effect_gleason` — effect-additive probability on finite-dim
   operational packages admits a unique trace-form density operator.
-  Spec-mandated (§7.4). Not in Mathlib. Confined to the operational stratum;
-  the ontic Born derivation is Gleason-free.
+  Spec-mandated (§7.4). Not in Mathlib. **DISCHARGED 2026-07-21**: proved as
+  `OperationalPackage.effect_gleason_representation` in `LF2/EffectGleason.lean`
+  (Busch's finite-dimensional argument); the `axiom` declaration is gone.
+  Confined to the operational stratum; the ontic Born derivation was always
+  Gleason-free.
 
 A second axiom, `invariant_measure_uniqueness` (invariant-measure uniqueness on
 the abstract projective target), was **removed 2026-06-04**: nothing downstream
@@ -327,11 +332,12 @@ and its concrete `ℂℙ^{N-1}` content is a proved axiom-free theorem
 `measure_bridge` lemma and the `MeasureBridgeData.ofSectorData` constructor were
 deleted with it.
 
-Note on the axiom posture vs CSD's physical postulates: this `busch_effect_gleason`
-import is *library debt* (a standard theorem not yet in Mathlib), not a commitment
-of the physical theory. CSD's actual postulates — the ontic substrate, the sector
-posit, and typicality — are carried as hypotheses/structure fields, so they never
-appear in `#print axioms`. See `AXIOMS.md §0`.
+Note on the axiom posture vs CSD's physical postulates: while it lasted, the
+`busch_effect_gleason` import was *library debt* (a standard theorem not then in
+Mathlib), not a commitment of the physical theory — and that debt is now paid.
+CSD's actual postulates — the ontic substrate, the sector posit, and typicality —
+are carried as hypotheses/structure fields, so they never appear in
+`#print axioms`. See `AXIOMS.md §0`.
 
 `rankOneDensity_unique_of_certainty` was carried as a third axiom in earlier
 revisions (a density operator that assigns probability one to `|ψ⟩⟨ψ|` is

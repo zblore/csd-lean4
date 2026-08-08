@@ -155,6 +155,7 @@ theorem rampedU_schrodinger (w : Fin K → ℝ) (s t : ℝ) :
 
 variable {N : ℕ} [NeZero N]
 
+omit [NeZero N] in
 /-- **The smooth witness creates records without back-reaction**: the measurement stroke
 leaves the sector marginal of every initial measure untouched — the smooth counterpart of
 `shear_base_marginal_unchanged`. Records yes, collapse no; the ψ-dependent state update

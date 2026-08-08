@@ -147,7 +147,7 @@ theorem rotationSetup_schrodinger_form
 /-- The recovered generator is non-trivial: `H = iJ = σ_y ≠ 0`, so this is a
 genuine (`H ≠ 0`) Schrödinger evolution, not the trivial `exp(0) = 1`. -/
 theorem rotationSetup_generator_ne_zero
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin 2))) :
+    (_p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin 2))) :
     (Complex.I • rotGen) ≠ 0 := by
   intro h
   have h01 := congrFun (congrFun h 0) 1

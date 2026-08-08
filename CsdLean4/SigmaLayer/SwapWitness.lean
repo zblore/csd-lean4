@@ -104,7 +104,7 @@ theorem pointerArc_pairwiseDisjoint :
     Pairwise (Function.onFun Disjoint (pointerArc K)) := by
   intro i j hij
   refine Set.disjoint_left.mpr fun r hri hrj => ?_
-  simp only [pointerArc, Set.mem_setOf_eq, Set.mem_Ioc] at hri hrj
+  simp only [pointerArc, Set.mem_ofPred_eq, Set.mem_Ioc] at hri hrj
   rcases lt_or_gt_of_ne (fun h : (i : ℕ) = (j : ℕ) => hij (Fin.ext h)) with h | h
   · exact absurd (lt_of_le_of_lt hri.2 (shearAmt_strictMono h)) (not_lt.mpr hrj.1.le)
   · exact absurd (lt_of_le_of_lt hrj.2 (shearAmt_strictMono h)) (not_lt.mpr hri.1.le)
@@ -164,21 +164,25 @@ noncomputable def swapG : SwapArena Xsel K → SwapArena Xsel K := fun x =>
   | none => x
   | some j => bankSwap j x
 
+omit [MeasurableSpace Xsel] in
 /-- The swap never moves the register. -/
 theorem swapG_register (x : SwapArena Xsel K) : (swapG x).1.2 = x.1.2 := by
   unfold swapG
   rcases h : arcIndex K x.1.2 with _ | j <;> simp [bankSwap]
 
+omit [MeasurableSpace Xsel] in
 theorem swapG_of_mem {x : SwapArena Xsel K} {j : Fin K} (h : x.1.2 ∈ pointerArc K j) :
     swapG x = bankSwap j x := by
   unfold swapG
   rw [(arcIndex_eq_some_iff _ j).mpr h]
 
+omit [MeasurableSpace Xsel] in
 theorem swapG_of_none {x : SwapArena Xsel K} (h : ∀ j, x.1.2 ∉ pointerArc K j) :
     swapG x = x := by
   unfold swapG
   rw [(arcIndex_eq_none_iff _).mpr h]
 
+omit [MeasurableSpace Xsel] in
 /-- **`G` is an involution** — which is what lets the crossing propagator fire it symmetrically in
 both time directions and still satisfy the two-time composition law. -/
 theorem swapG_swapG (x : SwapArena Xsel K) : swapG (swapG x) = x := by
@@ -257,6 +261,7 @@ theorem measurableSet_arcPiece (o : Option (Fin K)) :
     exact (MeasurableSet.iUnion fun j => hreg (measurableSet_pointerArc j)).compl
   · exact hreg (measurableSet_pointerArc j)
 
+omit [MeasurableSpace Xsel] in
 theorem arcPiece_disjoint :
     Pairwise (Function.onFun Disjoint (arcPiece (Xsel := Xsel) K)) := by
   intro o o' hoo
@@ -268,6 +273,7 @@ theorem arcPiece_disjoint :
     exact Set.disjoint_left.mpr fun x hx hx' =>
       Set.disjoint_left.mp (pointerArc_pairwiseDisjoint hjj) hx hx'
 
+omit [MeasurableSpace Xsel] in
 theorem arcPiece_cover : (⋃ o, arcPiece (Xsel := Xsel) K o) = univ := by
   classical
   ext x
@@ -277,6 +283,7 @@ theorem arcPiece_cover : (⋃ o, arcPiece (Xsel := Xsel) K o) = univ := by
     exact ⟨some j, hj⟩
   · exact ⟨none, by simpa [arcPiece] using fun j hj => h ⟨j, hj⟩⟩
 
+omit [MeasurableSpace Xsel] in
 theorem swapG_agree (o : Option (Fin K)) (x : SwapArena Xsel K)
     (hx : x ∈ arcPiece (Xsel := Xsel) K o) :
     swapG x = (match o with | none => id | some j => bankSwap j) x := by
@@ -319,6 +326,7 @@ noncomputable def liftShear (idx : Xsel → Fin K) (s t : OnticTime) :
     SwapArena Xsel K → SwapArena Xsel K :=
   Prod.map (shearEvolve idx s t) id
 
+omit [MeasurableSpace Xsel] in
 theorem liftShear_comp (idx : Xsel → Fin K) (s t u : OnticTime) (x : SwapArena Xsel K) :
     liftShear idx t u (liftShear idx s t x) = liftShear idx s u x := by
   unfold liftShear
@@ -327,6 +335,7 @@ theorem liftShear_comp (idx : Xsel → Fin K) (s t u : OnticTime) (x : SwapArena
   simp only [Function.comp_apply] at h
   rw [h]
 
+omit [MeasurableSpace Xsel] in
 theorem liftShear_frozen (idx : Xsel → Fin K) {s t : OnticTime} (hs : 1 ≤ s) (ht : 1 ≤ t)
     (x : SwapArena Xsel K) : liftShear idx s t x = x := by
   unfold liftShear
@@ -334,12 +343,14 @@ theorem liftShear_frozen (idx : Xsel → Fin K) {s t : OnticTime} (hs : 1 ≤ s)
   rw [shearEvolve_frozen idx hs ht]
   rfl
 
+omit [MeasurableSpace Xsel] in
 theorem liftShear_congr (idx : Xsel → Fin K) {s t t' : OnticTime}
     (h : elapsed t = elapsed t') (x : SwapArena Xsel K) :
     liftShear idx s t x = liftShear idx s t' x := by
   unfold liftShear
   simp only [Prod.map, id_eq, shearEvolve, h]
 
+omit [MeasurableSpace Xsel] in
 theorem liftShear_congr_left (idx : Xsel → Fin K) {s s' t : OnticTime}
     (h : elapsed s = elapsed s') (x : SwapArena Xsel K) :
     liftShear idx s t x = liftShear idx s' t x := by
@@ -358,23 +369,28 @@ noncomputable def swapEvolve (idx : Xsel → Fin K) (s t : OnticTime) :
   else if t < 1 ∧ 1 ≤ s then liftShear idx s t ∘ swapG
   else liftShear idx s t
 
+omit [MeasurableSpace Xsel] in
 theorem swapEvolve_fwd (idx : Xsel → Fin K) {s t : OnticTime} (hs : s < 1) (ht : 1 ≤ t) :
     swapEvolve idx s t = swapG ∘ liftShear idx s t := if_pos ⟨hs, ht⟩
 
+omit [MeasurableSpace Xsel] in
 theorem swapEvolve_bwd (idx : Xsel → Fin K) {s t : OnticTime} (ht : t < 1) (hs : 1 ≤ s) :
     swapEvolve idx s t = liftShear idx s t ∘ swapG := by
   rw [swapEvolve, if_neg (fun h => absurd hs (not_le.mpr h.1)), if_pos ⟨ht, hs⟩]
 
+omit [MeasurableSpace Xsel] in
 theorem swapEvolve_lo (idx : Xsel → Fin K) {s t : OnticTime} (hs : s < 1) (ht : t < 1) :
     swapEvolve idx s t = liftShear idx s t := by
   rw [swapEvolve, if_neg (fun h => absurd h.2 (not_le.mpr ht)),
     if_neg (fun h => absurd h.2 (not_le.mpr hs))]
 
+omit [MeasurableSpace Xsel] in
 theorem swapEvolve_hi (idx : Xsel → Fin K) {s t : OnticTime} (hs : 1 ≤ s) (ht : 1 ≤ t) :
     swapEvolve idx s t = liftShear idx s t := by
   rw [swapEvolve, if_neg (fun h => absurd h.1 (not_lt.mpr hs)),
     if_neg (fun h => absurd h.1 (not_lt.mpr ht))]
 
+omit [MeasurableSpace Xsel] in
 /-- **The two-time composition law**, all eight side-of-readout cases. Closes on `G² = id` and the
 shear being frozen right of readout. -/
 theorem swapEvolve_comp (idx : Xsel → Fin K) (s t u : OnticTime) :
@@ -467,7 +483,7 @@ noncomputable def swapProtocol (idx : Xsel → Fin K) (hidx : Measurable idx) :
     exact Set.disjoint_left.mp (pointerArc_pairwiseDisjoint hij) hxi hxj
   ready_disjoint_pointer i := by
     refine Set.disjoint_left.mpr fun x hxr hxp => ?_
-    simp only [Set.mem_setOf_eq, readyArc, pointerArc, Set.mem_Ioc] at hxr hxp
+    simp only [Set.mem_ofPred_eq, readyArc, pointerArc, Set.mem_Ioc] at hxr hxp
     have h1 : shearWidth K < shearAmt K i := by
       have hw := shearWidth_lt_gap (K := K)
       have hg := shearGap_pos (K := K)
@@ -512,7 +528,7 @@ theorem swap_correlates (idx : Xsel → Fin K) (hidx : Measurable idx) :
   have hreg : (shearEvolve idx 0 1 x.1).2 ∈ pointerArc K i := hshear
   show (swapEvolve idx 0 1 x) ∈ {y : SwapArena Xsel K | y.1.2 ∈ pointerArc K i}
   rw [swapEvolve_fwd idx (by norm_num) le_rfl]
-  simp only [Function.comp_apply, Set.mem_setOf_eq]
+  simp only [Function.comp_apply, Set.mem_ofPred_eq]
   rw [swapG_register]
   exact hreg
 

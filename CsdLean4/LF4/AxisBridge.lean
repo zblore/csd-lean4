@@ -49,7 +49,7 @@ lemma exists_unitary_moment_axis (n : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0
   have he0 : (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) ≠ 0 := by
     intro h
     have hz : ‖EuclideanSpace.single (0 : Fin 2) (1 : ℂ)‖ = 0 := by rw [h, norm_zero]
-    rw [EuclideanSpace.norm_single, norm_one] at hz
+    rw [PiLp.norm_single, norm_one] at hz
     exact one_ne_zero hz
   obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin 2) ℂ)
     (Projectivization.mk ℂ (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) he0)
@@ -65,7 +65,7 @@ lemma exists_unitary_moment_axis (n : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0
         = ‖(Matrix.toEuclideanLin U.val) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))‖ := by
       rw [hc]
     rw [norm_smul, hn, mul_one, toEuclideanLin_unitary_norm,
-      EuclideanSpace.norm_single, norm_one] at h1
+      PiLp.norm_single, norm_one] at h1
     exact h1
   have hn_eq : n
       = (c⁻¹ : ℂ) • (Matrix.toEuclideanLin U.val) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) := by

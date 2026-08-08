@@ -77,8 +77,8 @@ lemma jointAmp_eq (φ a c : ℝ) :
     jointAmplitude (sysBra φ a) (markBra c) bellVec
       = 1 + (a : ℂ) * (c : ℂ) * ((Real.cos φ : ℂ) - (Real.sin φ : ℂ) * Complex.I) := by
   simp only [jointAmplitude, Fintype.sum_prod_type, Fin.sum_univ_two, sysBra, markBra, bellVec,
-    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, mul_zero, mul_one, add_zero,
-    zero_add, star_one, one_mul, Complex.star_def, map_mul, map_add, map_one, Complex.conj_ofReal,
+    Matrix.cons_val_zero, Matrix.cons_val_one, mul_zero, mul_one, add_zero,
+    zero_add, one_mul, Complex.star_def, map_mul, map_add, map_one, Complex.conj_ofReal,
     Complex.conj_I]
   ring
 

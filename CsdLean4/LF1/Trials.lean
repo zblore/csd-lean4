@@ -58,7 +58,7 @@ variable {S}
 variable {Ω : Type*} [MeasurableSpace Ω]
 variable (T : S.TrialModel Ω)
 
-@[measurability, fun_prop]
+@[fun_prop]
 lemma measurable_X (n : ℕ) : Measurable (T.X n) :=
   T.hX_measurable n
 

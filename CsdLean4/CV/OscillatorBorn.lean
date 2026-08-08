@@ -102,7 +102,7 @@ theorem numberMeasurement_frequency (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖
 
 /-- Zero-padding embedding of a cutoff-`N` mode state into a larger cutoff `M ≥ N`: keep the low
 levels, set the new high levels to `0`. -/
-noncomputable def embedMode {N M : ℕ} (h : N ≤ M) (ψ : EuclideanSpace ℂ (Fin N)) :
+noncomputable def embedMode {N M : ℕ} (_h : N ≤ M) (ψ : EuclideanSpace ℂ (Fin N)) :
     EuclideanSpace ℂ (Fin M) :=
   WithLp.toLp 2 (fun j : Fin M => if hj : (j : ℕ) < N then ψ ⟨(j : ℕ), hj⟩ else 0)
 

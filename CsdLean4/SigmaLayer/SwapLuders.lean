@@ -94,7 +94,7 @@ theorem swap_outcomeSector_cylinder (idx : Xsel → Fin K) (hidx : Measurable id
   show swapEvolve idx 0 1 x ∈ {y : SwapArena Xsel K | y.1.2 ∈ pointerArc K i}
     ↔ (x.1 ∈ (shearProtocol idx hidx).outcomeSector i ∧ x.2 ∈ univ)
   rw [swapEvolve_fwd idx (by norm_num) le_rfl]
-  simp only [Function.comp_apply, Set.mem_setOf_eq, swapG_register, Set.mem_univ, and_true]
+  simp only [Function.comp_apply, Set.mem_ofPred_eq, swapG_register, Set.mem_univ, and_true]
   exact Iff.rfl
 
 /-- On the outcome-`i` sector, the post-evolution system coordinate is bank slot `i`. -/
@@ -209,7 +209,7 @@ noncomputable def vertexPoint (j : Fin N) : LF4.CPN N :=
   Projectivization.mk ℂ (EuclideanSpace.single j (1 : ℂ)) (by
     intro h
     have := congrFun (congrArg (fun v : EuclideanSpace ℂ (Fin N) => (v : Fin N → ℂ)) h) j
-    simp [EuclideanSpace.single_apply] at this)
+    simp at this)
 
 /-- **★★ Lüders for CSD: after outcome `i`, follow-up statistics are the collapsed state's Born
 weights.** With the bank calibrated to the vertex preparations, the post-outcome-`i` system marginal

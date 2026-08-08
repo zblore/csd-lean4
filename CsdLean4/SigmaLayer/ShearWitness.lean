@@ -112,7 +112,7 @@ noncomputable def pshift (a : ℝ) (x : LF4.KTorus) : LF4.KTorus :=
 
 theorem pshift_add (a b : ℝ) (x : LF4.KTorus) :
     pshift a (pshift b x) = pshift (a + b) x := by
-  simp [pshift, add_assoc, add_comm, add_left_comm]
+  simp [pshift, add_comm, add_left_comm]
 
 theorem continuous_pshift_uncurry :
     Continuous fun ar : ℝ × LF4.KTorus => pshift ar.1 ar.2 := by
@@ -139,7 +139,7 @@ theorem rep_pshift_of_mem (x : LF4.KTorus) (a : ℝ) (h : rep x.1 + a ∈ Ioc (0
 specified by arbitrary endpoints, so the general statement is extracted here. -/
 
 /-- **The Haar measure of a circle arc**, for endpoints within one turn. -/
-theorem volume_repPreimage {a b : ℝ} (h0 : 0 ≤ a) (hab : a ≤ b) (hb : b ≤ 1) :
+theorem volume_repPreimage {a b : ℝ} (h0 : 0 ≤ a) (_hab : a ≤ b) (hb : b ≤ 1) :
     (volume : Measure CircleFibre) (rep ⁻¹' Ioc a b) = ENNReal.ofReal (b - a) := by
   have hS : MeasurableSet (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))) :=
     measurable_subtype_coe measurableSet_Ioc
@@ -261,6 +261,7 @@ noncomputable def shearEvolve (idx : Xsel → Fin K) (s t : OnticTime) :
     Xsel × LF4.KTorus → Xsel × LF4.KTorus :=
   fun x => (x.1, pshift ((elapsed t - elapsed s) * shearAmt K (idx x.1)) x.2)
 
+omit [MeasurableSpace Xsel] in
 /-- The shear composes across time, standalone form (also a field of `shearProtocol`). -/
 theorem shearEvolve_comp' (idx : Xsel → Fin K) (s t u : OnticTime) :
     shearEvolve idx t u ∘ shearEvolve idx s t = shearEvolve idx s u := by
@@ -269,6 +270,7 @@ theorem shearEvolve_comp' (idx : Xsel → Fin K) (s t u : OnticTime) :
   congr 1
   ring
 
+omit [MeasurableSpace Xsel] in
 /-- Right of the readout time the shear is frozen: the propagator is the identity. -/
 theorem shearEvolve_frozen (idx : Xsel → Fin K) {s t : OnticTime} (hs : 1 ≤ s) (ht : 1 ≤ t) :
     shearEvolve idx s t = id := by
@@ -303,13 +305,13 @@ noncomputable def shearProtocol (idx : Xsel → Fin K) (hidx : Measurable idx) :
   pointer_pairwiseDisjoint := by
     intro i j hij
     refine Set.disjoint_left.mpr fun x hxi hxj => ?_
-    simp only [Set.mem_preimage, pointerArc, Set.mem_setOf_eq, Set.mem_Ioc] at hxi hxj
+    simp only [Set.mem_preimage, pointerArc, Set.mem_ofPred_eq, Set.mem_Ioc] at hxi hxj
     rcases lt_or_gt_of_ne (fun h : (i : ℕ) = (j : ℕ) => hij (Fin.ext h)) with h | h
     · exact absurd (lt_of_le_of_lt hxi.2 (shearAmt_strictMono h)) (not_lt.mpr hxj.1.le)
     · exact absurd (lt_of_le_of_lt hxj.2 (shearAmt_strictMono h)) (not_lt.mpr hxi.1.le)
   ready_disjoint_pointer i := by
     refine Set.disjoint_left.mpr fun x hxr hxp => ?_
-    simp only [Set.mem_preimage, readyArc, pointerArc, Set.mem_setOf_eq, Set.mem_Ioc] at hxr hxp
+    simp only [Set.mem_preimage, readyArc, pointerArc, Set.mem_ofPred_eq, Set.mem_Ioc] at hxr hxp
     have h1 : shearWidth K < shearAmt K i := by
       have := shearWidth_lt_gap (K := K)
       have hg := shearGap_pos (K := K)
@@ -405,7 +407,7 @@ theorem shear_correlates (idx : Xsel → Fin K) (hidx : Measurable idx) :
   obtain ⟨hidxp, hready⟩ := hp
   simp only [MeasurementProtocol.outcomeSector, Set.mem_preimage]
   show (shearEvolve idx 0 1 p).2 ∈ pointerArc K i
-  simp only [readyArc, Set.mem_setOf_eq, Set.mem_Ioc] at hready
+  simp only [readyArc, Set.mem_ofPred_eq, Set.mem_Ioc] at hready
   have hamt : (elapsed 1 - elapsed 0) * shearAmt K (idx p.1) = shearAmt K i := by
     rw [elapsed_zero, elapsed_one, hidxp]; ring
   have hno : rep p.2.1 + shearAmt K i ∈ Ioc (0 : ℝ) 1 := by
@@ -413,7 +415,7 @@ theorem shear_correlates (idx : Xsel → Fin K) (hidx : Measurable idx) :
     · have := shearAmt_pos (K := K) i
       linarith [hready.1]
     · linarith [hready.2, shearAmt_add_width_le_one (K := K) i]
-  simp only [shearEvolve, pointerArc, Set.mem_setOf_eq, Set.mem_Ioc]
+  simp only [shearEvolve, pointerArc, Set.mem_ofPred_eq, Set.mem_Ioc]
   rw [hamt, rep_pshift_of_mem p.2 _ hno]
   exact ⟨by linarith [hready.1], by linarith [hready.2]⟩
 

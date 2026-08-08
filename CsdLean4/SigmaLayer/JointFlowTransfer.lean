@@ -150,6 +150,7 @@ theorem moment_marginal_unchanged (h : IsJointLift c ε Φ) :
   funext y
   rw [funext (h.rate_conserved y), h.register_conserved y]
 
+omit [NeZero N] in
 /-- ★ **Landing transfers.** A ready pointer over the `ε`-shrunk cell of outcome `j` lands
 in `j`'s record region under **any** joint lift — back-reaction included. -/
 theorem landing (h : IsJointLift c ε Φ) {δ : ℝ} (hε : 0 < ε) (hδ : δ ≤ 1 / 2)
@@ -168,6 +169,7 @@ lemma protocol_outcomeSector_eq (c : ContextField N)
   show (pointerProtocol c hc ε hδ).evolve 0 1 ⁻¹' arenaRecord N j = _
   rw [pointerProtocol_evolve_stroke c hc ε hδ]
 
+omit [NeZero N] in
 /-- ★ **The lower Born bound transfers.** -/
 theorem born_lower (h : IsJointLift c ε Φ) (hc : ∀ j, Continuous fun p => c.rate p j)
     {δ : ℝ} (hε : 0 < ε) (hδpos : 0 < δ) (hδ : δ ≤ 1 / 2)
@@ -188,6 +190,7 @@ theorem born_upper (h : IsJointLift c ε Φ) (hc : ∀ j, Continuous fun p => c.
 
 end IsJointLift
 
+omit [NeZero N] in
 /-- **The fibrewise witness is a joint lift** — with zero back-reaction. Non-vacuity: every
 theorem above has at least this instance, so the hypotheses are satisfiable. -/
 theorem isJointLift_pointerEvolve (c : ContextField N) (ε : ℝ) :

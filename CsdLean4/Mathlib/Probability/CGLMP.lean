@@ -341,7 +341,7 @@ theorem cglmpDet_le_two {d : ℕ} (hd : 2 ≤ d)
     linarith
   rw [cglmp_detTable_eq hd, div_le_iff₀ hpos]
   have hcast : (scaledDetZ a1 a2 b1 b2 : ℝ) ≤ 2 * ((d : ℝ) - 1) := by
-    have := hb a1 a2 b1 b2; push_cast at this ⊢; exact_mod_cast this
+    have := hb a1 a2 b1 b2; exact_mod_cast this
   linarith
 
 /-- **CGLMP LHV bound, `d = 2`.** Reduces to CHSH; sanity anchor. -/

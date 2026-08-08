@@ -98,9 +98,11 @@ noncomputable def dilateFlat (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace �
     EuclideanSpace ℂ (Fin (N * K)) :=
   WithLp.toLp 2 fun j => dilate D ψ (finProdFinEquiv.symm j)
 
+omit [NeZero N] [NeZero K] in
 @[simp] lemma dilateFlat_apply (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace ℂ (Fin N))
     (j : Fin (N * K)) : dilateFlat D ψ j = dilate D ψ (finProdFinEquiv.symm j) := rfl
 
+omit [NeZero N] [NeZero K] in
 /-- The index transport recovers the composite form of the dilated preparation. -/
 lemma toComposite_dilateFlat (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace ℂ (Fin N)) :
     toComposite (dilateFlat D ψ) = dilate D ψ := by
@@ -109,6 +111,7 @@ lemma toComposite_dilateFlat (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace �
   show dilate D ψ (finProdFinEquiv.symm (finProdFinEquiv ak)) = dilate D ψ ak
   rw [Equiv.symm_apply_apply]
 
+omit [NeZero N] [NeZero K] in
 /-- **The dilation is isometric on preparations**: `‖Vψ‖ = ‖ψ‖`, from `Vᴴ V = 1`. -/
 lemma norm_dilate (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace ℂ (Fin N)) :
     ‖dilate D ψ‖ = ‖ψ‖ := by
@@ -130,10 +133,12 @@ lemma norm_dilate (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace ℂ (Fin N)) 
   have h3 := congrArg Real.sqrt h2
   rwa [Real.sqrt_sq (norm_nonneg _), Real.sqrt_sq (norm_nonneg _)] at h3
 
+omit [NeZero N]   [NeZero K] in
 lemma norm_dilateFlat (D : LF4.NaimarkDilation P) (ψ : EuclideanSpace ℂ (Fin N)) :
     ‖dilateFlat D ψ‖ = ‖ψ‖ := by
   rw [← norm_toComposite, toComposite_dilateFlat, norm_dilate]
 
+omit [NeZero N]   [NeZero K] in
 lemma dilateFlat_ne_zero (D : LF4.NaimarkDilation P) {ψ : EuclideanSpace ℂ (Fin N)}
     (hψ0 : ψ ≠ 0) : dilateFlat D ψ ≠ 0 := by
   intro h
@@ -144,6 +149,7 @@ lemma dilateFlat_ne_zero (D : LF4.NaimarkDilation P) {ψ : EuclideanSpace ℂ (F
 
 /-! ### The block Born weights of the dilated preparation are the POVM weights -/
 
+omit [NeZero N] [NeZero K] in
 /-- **The spectral bridge for POVMs**: the fine-grained Born weights of the dilated
 preparation, summed over the ancilla block of outcome `i`, are exactly the POVM Born
 weight `⟨ψ, Eᵢ ψ⟩`. Left side: the sum `degenerate_selector_born` produces. Right side:
@@ -200,6 +206,7 @@ theorem povm_selector_born (P : POVM N (Fin K)) (D : LF4.NaimarkDilation P)
 
 /-! ### ★ The post-states are the Naimark–Lüders instrument -/
 
+omit [NeZero N]   [NeZero K] in
 /-- ★ **The record-layer block posts are the Naimark–Lüders posts.** The block projection
 of the dilated preparation, transported back to the composite index, IS the ancilla
 projection `Πᵢ(Vψ)` — so the post-measurement rays the join witness delivers on the

@@ -89,6 +89,7 @@ step of a de-isolation measurement. -/
 noncomputable def pinch (ρ : Matrix n n ℂ) : Matrix n n ℂ :=
   diagonal (fun i => ((ρ i i).re : ℂ))
 
+omit [Fintype n] in
 @[simp] lemma pinch_apply (ρ : Matrix n n ℂ) (i j : n) :
     pinch ρ i j = if i = j then ((ρ i i).re : ℂ) else 0 := by
   simp [pinch, diagonal_apply]
@@ -99,6 +100,7 @@ lemma pinch_isHermitian (ρ : Matrix n n ℂ) : (pinch ρ).IsHermitian :=
   isHermitian_diagonal_of_self_adjoint _
     (funext fun i => (RCLike.conj_ofReal ((ρ i i).re)))
 
+omit [Fintype n] [DecidableEq n] in
 /-- On a Hermitian `ρ`, the pinched diagonal entry IS the original diagonal
 entry: `ρ i i = (ρ i i).re`, since Hermitian forces real diagonal. -/
 lemma diag_ofReal_re_of_isHermitian {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian)
@@ -123,6 +125,7 @@ lemma pinch_trace_one {ρ : Matrix n n ℂ} (hρ : ρ.IsHermitian) (htr : ρ.tra
     (pinch ρ).trace = 1 := by
   rw [pinch_trace_of_isHermitian hρ, htr]
 
+omit [Fintype n] in
 /-- When all pointer weights `(ρ i i).re` are strictly positive, `pinch ρ` is
 positive-definite (Klein's support condition). -/
 lemma pinch_posDef {ρ : Matrix n n ℂ} (hpos : ∀ i, 0 < (ρ i i).re) :
@@ -214,7 +217,7 @@ reversible de-isolation microdynamics) conserves entropy, and the subsequent
 The entropy of the isolated (unitarily-evolved) system is unchanged; all
 entropy production is in the coarse-graining. -/
 theorem entropy_reversible_then_coarsegrain {ρ U : Matrix n n ℂ}
-    (hpsd : ρ.PosSemidef) (htr : ρ.trace = 1)
+    (hpsd : ρ.PosSemidef) (_htr : ρ.trace = 1)
     (hU : star U * U = 1)
     (hUρU : (U * ρ * star U).IsHermitian)
     (hpsdU : (U * ρ * star U).PosSemidef)

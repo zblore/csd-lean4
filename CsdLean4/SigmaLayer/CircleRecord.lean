@@ -202,7 +202,7 @@ theorem circleBornMeasurement_ae_total (ψ : EuclideanSpace ℂ (Fin n)) (hψ : 
     rw [measure_iUnion hdisj hmeas, tsum_fintype,
       Finset.sum_congr rfl fun i (_ : i ∈ Finset.univ) => hb i,
       ← ENNReal.ofReal_sum_of_nonneg (fun i _ => by positivity), hsum, ENNReal.ofReal_one]
-  rw [measure_diff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
+  rw [measure_sdiff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
       (by rw [hcover]; exact ENNReal.one_ne_top),
     circleFibre_volume_univ, hcover, tsub_self]
 

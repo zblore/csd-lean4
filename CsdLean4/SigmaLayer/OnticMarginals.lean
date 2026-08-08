@@ -166,7 +166,7 @@ theorem actA_one (v : EuclideanSpace ℂ (Fin nA × Fin nB)) : actA 1 v = v := b
   rw [Finset.sum_eq_single jk.1]
   · simp
   · intro a _ ha
-    simp [Matrix.one_apply, Ne.symm ha]
+    simp [Ne.symm ha]
   · simp
 
 theorem actA_zero (U : Matrix (Fin nA) (Fin nA) ℂ) :
@@ -225,7 +225,7 @@ theorem actA_column_sums {U : Matrix (Fin nA) (Fin nA) ℂ}
         rw [Finset.sum_eq_single a]
         · simp
         · intro b _ hb
-          simp [Matrix.one_apply, hb]
+          simp [hb]
         · simp
 
 /-- The bilinear expansion of a row sum — no unitarity needed. -/

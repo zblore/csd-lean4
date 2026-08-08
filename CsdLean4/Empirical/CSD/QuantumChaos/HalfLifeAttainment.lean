@@ -97,7 +97,6 @@ lemma cyclicKick_iterate (m : ℕ) [NeZero m] (δ : RecordCircle) (x : Fin m)
     · show _ = r + ∑ j ∈ Finset.range (k + 1),
         if x + Fin.ofNat m j = 0 then δ else 0
       rw [Finset.sum_range_succ, ← add_assoc]
-      congr 1
       by_cases hmem : x + Fin.ofNat m k = 0
       · rw [if_pos hmem,
           if_pos (show x + Fin.ofNat m k ∈ ({0} : Set (Fin m)) from hmem)]

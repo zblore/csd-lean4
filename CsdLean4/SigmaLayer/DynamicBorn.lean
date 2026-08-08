@@ -124,7 +124,7 @@ theorem measure_basinIndex_fibre (c : ContextField N) (p : LF4.CPN N) (i : Fin N
     · exact Or.inr (by simpa [Set.mem_iUnion] using hex)
   have hnull : epistemicMeasure p ((⋃ j, globalBasin c j)ᶜ) = 0 := by
     have h := globalBasin_ae_total c p
-    rwa [Set.compl_eq_univ_diff]
+    rwa [Set.compl_eq_univ_sdiff]
   refine le_antisymm ?_ (measure_mono hsub1)
   calc epistemicMeasure p (basinIndex c ⁻¹' {i})
       ≤ epistemicMeasure p (globalBasin c i ∪ (⋃ j, globalBasin c j)ᶜ) := measure_mono hsub2

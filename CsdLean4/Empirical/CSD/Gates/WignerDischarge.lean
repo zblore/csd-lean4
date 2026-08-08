@@ -104,10 +104,10 @@ theorem conjProj_ne_projMap (hN : 2 ≤ N)
   set u1 : EuclideanSpace ℂ (Fin N) := EuclideanSpace.single i1 (1:ℂ) with hu1def
   have hu0 : u0 ≠ 0 := by
     rw [hu0def]
-    simpa using (EuclideanSpace.single_ne_zero_iff (i := i0) (a := (1:ℂ))).mpr one_ne_zero
+    simp
   have hu1 : u1 ≠ 0 := by
     rw [hu1def]
-    simpa using (EuclideanSpace.single_ne_zero_iff (i := i1) (a := (1:ℂ))).mpr one_ne_zero
+    simp
   -- coordinates of the two probe basis vectors
   have c00 : u0.ofLp i0 = 1 := by simp [hu0def]
   have c01 : u0.ofLp i1 = 0 := by simp [hu0def, hne01.symm]

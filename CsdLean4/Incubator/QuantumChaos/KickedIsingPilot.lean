@@ -65,10 +65,10 @@ lemma kickMat_mem_unitaryGroup (b : ℝ) :
   fin_cases i <;> fin_cases j <;>
     simp only [kickMat, Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val',
-      Matrix.empty_val', Matrix.one_apply, RCLike.star_def, map_neg, map_mul,
-      Complex.conj_ofReal, Complex.conj_I, Fin.zero_eta, Fin.mk_one, Fin.isValue] <;>
+      Matrix.empty_val', Matrix.one_apply, Fin.zero_eta, Fin.mk_one,
+      Fin.isValue] <;>
     norm_num <;>
-    simp only [hc, hs, Complex.I_sq] <;>
+    simp only [hc, hs] <;>
     (first
       | linear_combination Complex.sin_sq_add_cos_sq (b : ℂ)
           - (Complex.sin (b : ℂ)) ^ 2 * Complex.I_sq
@@ -87,7 +87,7 @@ lemma phaseEntry_star_mul_self (J : ℝ) (p : Fin 2 × Fin 2) :
   rw [phaseEntry, Complex.star_def, ← Complex.exp_conj, ← Complex.exp_add]
   have : (starRingEnd ℂ) (Complex.I * J * (if p.1 = p.2 then -1 else 1))
       = -(Complex.I * J * (if p.1 = p.2 then -1 else 1)) := by
-    split <;> simp [Complex.conj_I, Complex.conj_ofReal] <;> ring
+    split <;> simp [Complex.conj_I, Complex.conj_ofReal]
   rw [this, neg_add_cancel, Complex.exp_zero]
 
 /-- The Ising phase `exp(-iJ σᶻ⊗σᶻ)` as a diagonal matrix. -/
@@ -186,9 +186,7 @@ lemma kickedIsing_step_e00 (J : ℝ) :
     simp [Matrix.mulVec, Matrix.mul_apply, dotProduct, Fintype.sum_prod_type,
       Fin.sum_univ_two, phaseMat, Matrix.diagonal_apply, kickMat,
       Matrix.kroneckerMap_apply, PiLp.single_apply, Prod.ext_iff,
-      Real.cos_pi_div_two, Real.sin_pi_div_two, Pi.smul_apply] <;>
-    ring_nf <;>
-    simp [phaseEntry]
+      Real.cos_pi_div_two, Real.sin_pi_div_two, Pi.smul_apply]
 
 /-- The phase in `kickedIsing_step_e00` has unit modulus. -/
 lemma kickedIsing_phase_norm (J : ℝ) :
@@ -217,7 +215,7 @@ theorem kickedIsing_changes_marginal (J : ℝ) :
   intro h
   have h11 := congrFun (congrFun h (1 : Fin 2)) (1 : Fin 2)
   rw [QuantumInfo.partialTraceRight_apply, QuantumInfo.partialTraceRight_apply] at h11
-  simp [pilotOuter_apply, PiLp.single_apply, Fin.sum_univ_two,
+  simp [pilotOuter_apply, PiLp.single_apply,
     Prod.ext_iff] at h11
 
 /-! ### The `Fin 4` reindex: reaching the `Fin N` machinery -/
