@@ -87,4 +87,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumChaos.kickedIsingU₄
 
+-- SH diagnostics completed (2026-08-08): the three standard chaos probes behind the
+-- interface, each with its exact structural envelope. SFF: normalized |Tr U^n|^2/N^2 --
+-- bounded by 1 (unitary entries <= opnorm 1, the staged entry bound), basis-independent
+-- (conjugation invariance), explicit exponential sum for diagonal drives. OTOC
+-- (commutator-norm form): vanishing = exact commutation, a-priori envelope 2||A||||B||.
+-- Echo-perturbation bound: 1 - L(n) <= 2 n ||U - W|| (telescoping + Cauchy-Schwarz) --
+-- echo decay at most linear in period count and drive distance. NO RMT/level-statistics
+-- or Lyapunov-rate claims; the CV instantiations put the teeth in (Extensions part).
+/-- info: 'QuantumChaos.sff_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.sff_le_one
+
+/-- info: 'QuantumChaos.sff_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.sff_conj
+
+/-- info: 'QuantumChaos.otoc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.otoc_le
+
+/-- info: 'QuantumChaos.one_sub_loschmidtEcho_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumChaos.one_sub_loschmidtEcho_le
+
 end CSD.Tests.AxiomAudit

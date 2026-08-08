@@ -342,6 +342,7 @@ public import CsdLean4.CV.LocalAlgebra
 public import CsdLean4.CV.SupportSpreading
 public import CsdLean4.CV.InteractionPrice
 public import CsdLean4.CV.PowerCounting
+public import CsdLean4.CV.ChaosBounds
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
@@ -464,12 +465,16 @@ public import CsdLean4.Headlines
 public import CsdLean4.Incubator.QuantumChaos.FloquetInterface
 public import CsdLean4.Incubator.QuantumChaos.KickedIsingPilot
 public import CsdLean4.Incubator.QuantumChaos.Diagnostics
+public import CsdLean4.Incubator.QuantumChaos.SpectralFormFactor
+public import CsdLean4.Incubator.QuantumChaos.Otoc
+public import CsdLean4.Incubator.QuantumChaos.EchoBound
 public import CsdLean4.Empirical.CSD.QuantumChaos.OnticLift
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordPersistence
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
 public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness
 public import CsdLean4.Empirical.CSD.QuantumChaos.FreeFieldClosure
+public import CsdLean4.Empirical.CSD.QuantumChaos.HalfLifeAttainment
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
 -- `lake build CsdLeanTests` (see lakefile.lean) to exercise the
 -- AxiomAudit regression suite and Examples worked computations.

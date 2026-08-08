@@ -351,4 +351,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.gradedInteraction_renormalized_price_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.gradedInteraction_renormalized_price_le
 
+-- SH diagnostics meet Stage 3 (2026-08-08, CV/ChaosBounds.lean). The OTOC LIGHT-CONE GATE:
+-- for A supported on R and a static probe B on T, the out-of-time-order commutator is
+-- EXACTLY zero at every period where the coupling graph's n-ball of R is still disjoint
+-- from T -- scrambling provably cannot begin before A's cone reaches the probe (CV-8
+-- re-expressed as the standard diagnostic; exact but one-directional, no growth claim).
+-- The ECHO PRICE: Loschmidt decay between free and interacting drives <= 2n|tau||lam|C --
+-- the third linear-pricing rhyme (records mu <= n.eps; locality 2|tau||lam|C||A||; echo).
+-- Free-field SFF = explicit exponential sum (the integrable baseline).
+/-- info: 'CSD.CV.otoc_graphInteractingU_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.otoc_graphInteractingU_eq_zero
+
+/-- info: 'CSD.CV.one_sub_loschmidtEcho_interacting_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.one_sub_loschmidtEcho_interacting_le
+
+/-- info: 'CSD.CV.sff_freeFieldU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.sff_freeFieldU
+
 end CSD.Tests.AxiomAudit

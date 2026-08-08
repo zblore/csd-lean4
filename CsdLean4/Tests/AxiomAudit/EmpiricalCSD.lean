@@ -1728,4 +1728,14 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.interacting_pilotClosure
 
+-- SH attainment (2026-08-08, HalfLifeAttainment.lean): the record half-life bound is
+-- SHARP. The cyclic-shift kick (uniform cycle Fin m, trigger {0}) attains mu(intact n)^c
+-- = n.eps with eps = 1/m EXACTLY on the window n <= m: within one cycle every trajectory
+-- visits the trigger at most once, so the unstable set IS the reach-the-trigger cylinder
+-- (set equality, not an estimate). Linear degradation at exactly the coupling rate is
+-- realised; sharpness exhibited for this drive, with no claim every drive attains it.
+/-- info: 'CSD.Empirical.QuantumChaos.cyclicKick_halfLife_attained' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.cyclicKick_halfLife_attained
+
 end CSD.Tests.AxiomAudit
