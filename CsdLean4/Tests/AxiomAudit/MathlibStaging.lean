@@ -2094,4 +2094,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.projMap_trans
 
+-- The Lie-Trotter product formula, skew-Hermitian case (2026-08-09,
+-- TrotterProduct.lean; NO Trotter statement exists in Mathlib at the pin, checked).
+-- The chain: the quantitative second-order remainder ||exp X - 1 - X|| <= ||X||^2 e^||X||
+-- (series tail, termwise dominated); the one-step defect
+-- ||exp X exp Y - exp(X+Y)|| <= (||X||+||Y||)^2 (3+||X||+||Y||) e^(||X||+||Y||) (four-term
+-- split; only Y's skewness is needed); growth-free unitary telescoping
+-- ||S^n - T^n|| <= n ||S - T||; and the formula: (exp(A/n) exp(B/n))^n -> exp(A+B) --
+-- defect O(1/n^2), telescoping x n, total O(1/n) squeezed. CV-12: arbitrary-Hermitian
+-- interacting drives become limits of constructible steps. CSD-free, upstream candidate.
+/-- info: 'Matrix.norm_exp_sub_one_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.norm_exp_sub_one_sub_le
+
+/-- info: 'Matrix.norm_pow_sub_pow_le_of_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.norm_pow_sub_pow_le_of_unitary
+
+/-- info: 'Matrix.trotter_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.trotter_skew
+
 end CSD.Tests.AxiomAudit

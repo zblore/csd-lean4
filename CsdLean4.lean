@@ -429,6 +429,7 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
+public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.JoinClosure
 public import CsdLean4.SigmaLayer.JointFlowTransfer
