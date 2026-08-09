@@ -72,12 +72,27 @@ payoff), then CV-14/CV-15 as cheap closers, then the CV-16 gate.
 - **No continuum limit** — `no_exact_finite_ccr` is the standing wall; every statement is
   at finite `(K, N)`, chosen to survive the limit as the standard axiom.
 - **No infinite-dimensional QFT** — per the programme's scope ladder; not required.
-- **No Lieb–Robinson velocity bounds** — CV-11 covers kicked drives; the full-exponential
-  cone is the recorded frontier beyond it.
+- **No Lieb–Robinson velocity bounds in Stage 4** — CV-11 covers kicked drives; the
+  full-exponential cone is promoted to the Stage-5 headline (horizon note below), gated
+  on CV-11 + CV-12.
 - **No RG flow claims** — CV-16 is a gated question, not a promise; relevant/irrelevant
   remains, until then, the CV-10 price-bound statement.
 - **Covariance is one-particle and kinematic** (CV-14); the lattice breaks Lorentz and the
   plan says so rather than hiding it.
+
+## Stage 5 horizon (recorded intent, author-confirmed 2026-08-09)
+
+**Lieb–Robinson velocity bounds are promoted from non-goal to the Stage-5 headline.** The
+light cone for the full `exp(-(iτ)(H_free + V))` — commutators exponentially small outside
+an effective cone, rather than exactly zero inside a ball — is genuine research-grade
+formalization (to our knowledge unformalized in any proof assistant), it is NOT
+Mathlib-blocked (finite matrices, series bounds), and Stage 4 builds its exact
+prerequisites: the kicked cone (CV-11) supplies the exact-locality skeleton, Trotter
+(CV-12) the approximation bridge, and the quantitative ingredient — per-step support
+leakage bounded in norm, summed geometrically — is the actual Lieb–Robinson argument.
+The naive route (Trotterize, use the kicked cone per step) provably gives nothing: `n`
+Trotter steps grow the exact ball by `n` edges. Stage 5 is gated on CV-11 + CV-12 landing
+and a fresh feasibility pass. Not part of Stage 4's claims.
 
 ## Gates and discipline (every brick)
 

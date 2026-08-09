@@ -330,6 +330,7 @@ unitaryFlowSetup"
 # states its boundary — so this is not a budget to drive to zero; it is a diffable
 # ledger so that a boundary claim cannot go stale unnoticed when the work lands.
 DECLARED_OPEN_SCOPE="CsdLean4/CV/InteractionPrice.lean:1
+CsdLean4/CV/LocalAlgebraClosed.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean:1
@@ -369,6 +370,7 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 # are taggable; foundations-frontier waits (MD-1, §2a) have no BACKLOG row and stay
 # `none` with the wait named in the site's own prose.
 DECLARED_SCOPE_WAITS="CsdLean4/CV/InteractionPrice.lean|none
+CsdLean4/CV/LocalAlgebraClosed.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|E1
@@ -402,13 +404,14 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #   PovmDynamics(2 of 2) — recorded extensions without a BACKLOG row (mixed-ε weights,
 #     Hamiltonian relocation stroke, V-as-unitary-stroke): boundaries by design, not
 #     queued work; if one becomes a row, re-tag it here.
-#   SupportSpreading / InteractionPrice — the CV-6 boundary, narrowed twice exactly as
-#     the ledger intended (CV-8 landed the spreading bound 2026-08-07; CV-9 landed the
-#     pricing the same day, and the DynamicalLocality + Extensions-pin sites RETIRED
-#     their boundaries at source). What stands now: SupportSpreading waits on the
-#     non-diagonal (hopping) light cone (exp-closure route, cv-stage3-plan section 3b,
-#     prose, no Ref); InteractionPrice waits on attainment (a dynamics question, no
-#     Ref). Re-read both when either lands."
+#   SupportSpreading / InteractionPrice / LocalAlgebraClosed — the CV-6 boundary,
+#     narrowed three times exactly as the ledger intended (CV-8 spreading bound; CV-9
+#     pricing; CV-11 the non-diagonal KICKED cone 2026-08-09, SupportSpreading re-read
+#     and re-worded at source). What stands now: SupportSpreading and LocalAlgebraClosed
+#     both wait on the full-exponential cone = Lieb-Robinson, the promoted Stage-5
+#     headline (eft-stage4-plan horizon note; gated on CV-12, no Ref yet);
+#     InteractionPrice waits on attainment (a dynamics question, no Ref). Re-read all
+#     three when Stage 5 opens."
 
 # (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
 # after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure

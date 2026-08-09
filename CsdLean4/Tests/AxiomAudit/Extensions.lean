@@ -368,4 +368,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.sff_freeFieldU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.sff_freeFieldU
 
+-- CV-11 non-diagonal light cone (2026-08-09, CV/LocalAlgebraClosed.lean). The local algebra
+-- is packaged (Submodule/Subalgebra) and TOPOLOGICALLY CLOSED (finite-dim subspace), so
+-- exp of a T-supported matrix is T-supported (partial sums in the algebra + closedness):
+-- SupportedOn.exp. KickData.ofGenerator then admits ANY skew-Hermitian edge-supported
+-- generator -- hopping terms included -- as a local kick, and the kicked drive's n-period
+-- Heisenberg support is confined to the kickFold ball (in-period chaining recorded
+-- honestly by the fold); observables with disjoint fold-balls still commute. HONEST
+-- SCOPE: kicked drives; the full-exponential cone is Lieb-Robinson, the PROMOTED Stage-5
+-- headline (eft-stage4-plan.md horizon note), gated on CV-11 + CV-12.
+/-- info: 'CSD.CV.SupportedOn.exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.SupportedOn.exp
+
+/-- info: 'CSD.CV.heisenberg_kickedStep_pow_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.heisenberg_kickedStep_pow_supportedOn
+
+/-- info: 'CSD.CV.commute_heisenberg_kickedStep_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commute_heisenberg_kickedStep_pow
+
 end CSD.Tests.AxiomAudit

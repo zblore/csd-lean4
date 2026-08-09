@@ -43,10 +43,11 @@ CV-6 proved the free field never spreads support. This module bounds what an
 
 This retires CV-6's open boundary: interacting-drive spreading is now a
 theorem with a bound, not an unclaimed scope. The norm pricing landed as
-CV-9 (`CV/InteractionPrice.lean`, covering non-diagonal perturbations too);
-what remains open is the light cone for *non-diagonal* (hopping) drives —
-the exp-closure-of-local-algebras route sketched in
-`specs/cv-stage3-plan.md` §3b.
+CV-9 (`CV/InteractionPrice.lean`, covering non-diagonal perturbations too),
+and the non-diagonal KICKED cone landed as CV-11
+(`CV/LocalAlgebraClosed.lean`, the exp-closure route delivered); what
+remains open is the full-exponential cone — Lieb–Robinson velocity bounds,
+the promoted Stage-5 headline (`specs/eft-stage4-plan.md`, horizon note).
 
 ## References
 
