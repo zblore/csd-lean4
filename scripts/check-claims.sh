@@ -742,6 +742,57 @@ while IFS=: read -r sf _; do
 done <<< "$DECLARED_OPEN_SCOPE"
 [ "$expiry_fail" -eq 0 ] && say_ok "scope-expiry ledger: no boundary outlives its BACKLOG row (every open-scope file classified)" || true
 
+# ------------------------------------------------------- LANDING-SURFACE GUARDS --
+# The README is the surface a citing reader meets first, so it carries its own
+# rules: the axiom claim must never appear unqualified, the register excludes em
+# dashes, dated correction narratives belong in specs/archive, and the file must
+# stay short enough to read in one screen.
+
+# (9) "zero axioms" must be qualified in the same paragraph.
+if [ -f README.md ]; then
+  zero_bad=0
+  while IFS= read -r para; do
+    case "$para" in
+      *"zero axiom"*)
+        case "$para" in
+          *logical*|*foundational*|*"physical posit"*) : ;;
+          *) zero_bad=1 ;;
+        esac ;;
+    esac
+  done <<< "$(awk 'BEGIN{RS="";ORS="\n"} {gsub(/\n/," "); print}' README.md)"
+  if [ "$zero_bad" -eq 0 ]; then
+    say_ok "README: no unqualified \"zero axioms\" claim"
+  else
+    say_fail "README says \"zero axioms\" without qualifying it (logical vs physical) in the same paragraph"
+  fi
+
+  # (10) register: no em dashes in the two landing documents.
+  em_readme=$(grep -c '—' README.md || true)
+  em_tour=0
+  [ -f docs/TOUR.md ] && em_tour=$(grep -c '—' docs/TOUR.md || true)
+  if [ "$em_readme" -eq 0 ] && [ "$em_tour" -eq 0 ]; then
+    say_ok "landing surface: no em dashes in README or docs/TOUR.md"
+  else
+    say_fail "em dash found in README ($em_readme) or docs/TOUR.md ($em_tour); use commas, colons, parentheses, or separate sentences"
+  fi
+
+  # (11) no dated correction narrative in README.
+  dated=$(grep -cE '(^|[^0-9])(19|20)[0-9]{2}-[0-9]{2}-[0-9]{2}([^0-9]|$)' README.md || true)
+  if [ "$dated" -eq 0 ]; then
+    say_ok "README: no dated correction lines (they belong in specs/archive)"
+  else
+    say_fail "README carries $dated dated line(s); move correction narrative to docs/TOUR.md or specs/archive/"
+  fi
+
+  # (12) size guard.
+  readme_bytes=$(wc -c < README.md | tr -d ' ')
+  if [ "$readme_bytes" -le 6144 ]; then
+    say_ok "README size ${readme_bytes}B (limit 6144B)"
+  else
+    say_fail "README is ${readme_bytes}B, over the 6144B landing-surface limit"
+  fi
+fi
+
 echo
 if [ "$fail" -eq 0 ]; then echo "check-claims: PASS"; exit 0
 else echo "check-claims: FAIL — code and the canonical claims block disagree (fix code or update the CLAIMS block)"; exit 1; fi
