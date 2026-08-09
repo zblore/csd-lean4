@@ -407,4 +407,23 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.twoPoint_interacting_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.twoPoint_interacting_dist_le
 
+-- CV-14 boost covariance of the mass shell (2026-08-09, CV/Boost.lean). The 1+1D boost
+-- at rapidity chi is a genuine one-parameter GROUP (boostE_add/boostP_add: rapidities add,
+-- via the cosh/sinh addition formulas), it preserves E^2 - p^2 (cosh^2 - sinh^2 = 1), and
+-- therefore the boosted dispersion pair satisfies the SAME mass shell with the SAME mass:
+-- boost_mass_shell. Sharp form boost_omega: the boosted energy IS omega at the boosted
+-- momentum -- the dispersion relation is boost-covariant on the nose. boost_forward
+-- (|p| <= omega + |sinh| <= cosh) keeps the forward shell: no physical mode is boosted to
+-- negative energy. HONEST SCOPE: ONE-PARTICLE KINEMATIC covariance at the dispersion
+-- level; NO boost action on the mode lattice is claimed (a finite mode lattice is not
+-- boost-invariant -- standard cutoff honesty, stated in the module).
+/-- info: 'CSD.CV.boost_mass_shell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.boost_mass_shell
+
+/-- info: 'CSD.CV.boost_omega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.boost_omega
+
+/-- info: 'CSD.CV.boostE_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.boostE_add
+
 end CSD.Tests.AxiomAudit
