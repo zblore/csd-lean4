@@ -464,4 +464,29 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.exists_unitary_compress_not_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.exists_unitary_compress_not_unitary
 
+-- CV-17/CV-18 the linear Lieb-Robinson bound (2026-08-09, CV/LiebRobinson.lean). Stage 5's
+-- first two bricks, for a skew-Hermitian generator S = -iH so the propagators are unitary.
+-- CV-17: hasDerivAt_heisenbergFlow -- the Heisenberg flow solves d/dt A(t) = [A(t), S].
+-- The split (commutator_deriv_eq): writing S = S_X + T with S_X commuting with the probe B,
+-- f(t) = [A(t), B] obeys f' = [f, S_X] + [[A(t), T], B]; the S_X term is a pure conjugation
+-- carrying no growth, and the Jacobi cancellation A[S_X,B] - [S_X,B]A = 0 is what puts it
+-- there. CV-18: conjugating that term away and applying the mean-value inequality (the
+-- DuhamelBound pattern) gives ||[A(t),B]|| <= 4|t| ||T|| ||A|| ||B|| -- INFORMATION CANNOT
+-- LEAVE A REGION INSTANTANEOUSLY, at a rate set by the coupling ACROSS THE CUT alone, not
+-- by the total energy. On the field, CV-8's commute_of_disjointSupport supplies [A,B] = 0.
+-- HONEST SCOPE: this is the LINEAR bound. The exponential form e^{-mu(d - v|t|)}, with a
+-- velocity and a distance, needs the iteration over chains and the path count = CV-19,
+-- gated research (eft-stage5-plan.md). Nothing here claims a velocity.
+/-- info: 'CSD.CV.hasDerivAt_heisenbergFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.hasDerivAt_heisenbergFlow
+
+/-- info: 'CSD.CV.commutator_deriv_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commutator_deriv_eq
+
+/-- info: 'CSD.CV.norm_commutator_heisenbergFlow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_heisenbergFlow_le
+
+/-- info: 'CSD.CV.norm_commutator_field_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_field_le
+
 end CSD.Tests.AxiomAudit
