@@ -550,4 +550,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.norm_commutator_spatial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_le
 
+-- The factorial strengthening (2026-08-09, CV/LiebRobinson.lean): the recorded remaining
+-- delta on CV-19, taken. norm_flowRemainder_le_factorial replaces the mean-value step by an
+-- integral estimate (FTC on the remainder + norm_integral_le_integral_norm +
+-- integral_mono_on + integral_pow), sharpening ||R_k(t)|| to (2||S||t)^k/k! ||A||. Hence
+-- norm_commutator_spatial_factorial_le: ||[A(t),B]|| <= 2||A|| ||B|| (2||S||t)^d/d! for
+-- every d whose ball has not reached B. The factorial is what makes the bound decay in the
+-- graph distance at EVERY time rather than only below 2||S||t = 1 -- the textbook
+-- Lieb-Robinson shape. No velocity constant is extracted or claimed optimal.
+/-- info: 'CSD.CV.norm_flowRemainder_le_factorial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_flowRemainder_le_factorial
+
+/-- info: 'CSD.CV.norm_commutator_spatial_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_factorial_le
+
 end CSD.Tests.AxiomAudit

@@ -9,6 +9,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.CV.SupportSpreading
 public import CsdLean4.CV.LocalAlgebraClosed
 public import Mathlib.Analysis.ODE.Gronwall
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-!
 # CV-17/CV-18: the Heisenberg flow and the linear Lieb-Robinson bound
@@ -69,15 +70,22 @@ are unitary and the L2 operator norm sees them as isometries.
   term commutes with `B` exactly, because `k` nested commutators reach at
   most `k` edges, so the whole commutator is carried by the remainder.
 
-⚠️ Honest scope. The bound proved here is the geometric form
-`(2‖S‖|t|)^d`, obtained by bounding the Taylor remainder with the
-mean-value inequality. The textbook Lieb-Robinson bound carries a
-factorial, `(2‖S‖|t|)^d/d!`, giving decay at all times rather than only
-for `2‖S‖|t| < 1`; recovering it means replacing the mean-value step by an
-integral (Duhamel) estimate, which is recorded as the remaining
-strengthening and is not claimed. No velocity constant is extracted or
-optimised: Lieb-Robinson velocities are famously not tight, and none is
-asserted. No continuum (`ApproxCCR.no_exact_finite_ccr` stands).
+* ★★★ `norm_commutator_spatial_factorial_le` — **the Lieb-Robinson bound
+  with its factorial**: `‖[A(t), B]‖ ≤ 2‖A‖‖B‖·(2‖S‖t)^d/d!`, obtained by
+  replacing the mean-value step in the remainder estimate with an integral
+  one (`norm_flowRemainder_le_factorial`). Because of the factorial this
+  decays in the graph distance at **every** time rather than only below
+  `2‖S‖t = 1`: at fixed `t` the bound falls faster than geometrically in
+  `d`, which is the standard statement that the commutator is
+  exponentially small outside an effective light cone.
+
+⚠️ Honest scope. Both the geometric and factorial forms are proved; the
+factorial one is the sharper and is the textbook shape. No velocity
+constant is extracted or optimised: Lieb-Robinson velocities are famously
+not tight, and none is asserted here, so "light cone" refers to the decay
+in `d` at fixed `t` and not to an optimal speed. The interaction is a
+finite sum of edge-supported terms on a finite mode graph; nothing is
+claimed in the continuum (`ApproxCCR.no_exact_finite_ccr` stands).
 
 ## References
 
@@ -597,6 +605,104 @@ theorem norm_flowRemainder_le {S : Matrix m m ℂ} (hS : Sᴴ = -S)
         ≤ 2 * ‖S‖ * ((2 * ‖S‖ * |t|) ^ k * ‖A‖) * |t| := hmvt
       _ = (2 * ‖S‖ * |t|) ^ (k + 1) * ‖A‖ := by ring
 
+/-! ### The factorial remainder bound -/
+
+omit [Nonempty m] in
+/-- The remainder is differentiable at every time, hence continuous. -/
+lemma exists_hasDerivAt_flowRemainder (S A : Matrix m m ℂ) (k : ℕ) (t : ℝ) :
+    ∃ v, HasDerivAt (flowRemainder S A k) v t := by
+  cases k with
+  | zero =>
+    refine ⟨heisenbergFlow S t A * S - S * heisenbergFlow S t A, ?_⟩
+    have h := hasDerivAt_heisenbergFlow S A t
+    have hfun : (fun u => heisenbergFlow S u A) = flowRemainder S A 0 := by
+      funext u; rw [flowRemainder_zero_terms]
+    rwa [hfun] at h
+  | succ k => exact ⟨_, hasDerivAt_flowRemainder S A k t⟩
+
+omit [Nonempty m] in
+lemma continuous_flowRemainder (S A : Matrix m m ℂ) (k : ℕ) :
+    Continuous (flowRemainder S A k) := by
+  rw [continuous_iff_continuousAt]
+  intro t
+  obtain ⟨v, hv⟩ := exists_hasDerivAt_flowRemainder S A k t
+  exact hv.continuousAt
+
+omit [Nonempty m] in
+lemma continuous_adOne_flowRemainder (S A : Matrix m m ℂ) (k : ℕ) :
+    Continuous (fun s => -adOne S (flowRemainder S A k s)) := by
+  have hc := continuous_flowRemainder S A k
+  simp only [adOne]
+  exact ((continuous_const.mul hc).sub (hc.mul continuous_const)).neg
+
+/-- ★★★ **The factorial remainder bound.** Replacing the mean-value step
+by an integral estimate sharpens `norm_flowRemainder_le` to
+`‖Rₖ(t)‖ ≤ (2‖S‖t)ᵏ/k!·‖A‖`. The factorial is what makes the spatial
+bound decay at *every* time rather than only below `2‖S‖t = 1`. -/
+theorem norm_flowRemainder_le_factorial {S : Matrix m m ℂ} (hS : Sᴴ = -S)
+    (A : Matrix m m ℂ) (k : ℕ) {t : ℝ} (ht : 0 ≤ t) :
+    ‖flowRemainder S A k t‖ ≤ (2 * ‖S‖ * t) ^ k / k.factorial * ‖A‖ := by
+  induction k generalizing t with
+  | zero =>
+    rw [flowRemainder_zero_terms, pow_zero, Nat.factorial_zero,
+      Nat.cast_one, div_one, one_mul]
+    exact norm_heisenbergFlow_le hS t A
+  | succ k ih =>
+    have h2 : (0 : ℝ) ≤ 2 * ‖S‖ := by positivity
+    have hkfac : (0 : ℝ) < (k.factorial : ℝ) := by
+      exact_mod_cast Nat.factorial_pos k
+    set c : ℝ := 2 * ‖S‖ * ((2 * ‖S‖) ^ k / k.factorial * ‖A‖) with hcdef
+    have hzero : flowRemainder S A (k + 1) 0 = 0 := by
+      rw [flowRemainder, Finset.sum_range_succ']
+      simp [flowCoef, heisenbergFlow]
+    have hcont := continuous_adOne_flowRemainder S A k
+    have hint : IntervalIntegrable
+        (fun s => -adOne S (flowRemainder S A k s))
+        MeasureTheory.volume 0 t := hcont.intervalIntegrable 0 t
+    have hftc : ∫ s in (0 : ℝ)..t, -adOne S (flowRemainder S A k s)
+        = flowRemainder S A (k + 1) t := by
+      rw [intervalIntegral.integral_eq_sub_of_hasDerivAt
+        (fun s _ => hasDerivAt_flowRemainder S A k s) hint, hzero, sub_zero]
+    have hintnorm : IntervalIntegrable
+        (fun s => ‖-adOne S (flowRemainder S A k s)‖)
+        MeasureTheory.volume 0 t := hcont.norm.intervalIntegrable 0 t
+    have hintbound : IntervalIntegrable (fun s : ℝ => c * s ^ k)
+        MeasureTheory.volume 0 t :=
+      (continuous_const.mul (continuous_pow k)).intervalIntegrable 0 t
+    have hpt : ∀ s ∈ Set.Icc (0 : ℝ) t,
+        ‖-adOne S (flowRemainder S A k s)‖ ≤ c * s ^ k := by
+      intro s hs
+      have hstep : ‖adOne S (flowRemainder S A k s)‖
+          ≤ 2 * ‖S‖ * ‖flowRemainder S A k s‖ := by
+        calc ‖adOne S (flowRemainder S A k s)‖
+            ≤ ‖S * flowRemainder S A k s‖ + ‖flowRemainder S A k s * S‖ :=
+              norm_sub_le _ _
+          _ ≤ ‖S‖ * ‖flowRemainder S A k s‖
+              + ‖flowRemainder S A k s‖ * ‖S‖ :=
+              add_le_add (norm_mul_le _ _) (norm_mul_le _ _)
+          _ = 2 * ‖S‖ * ‖flowRemainder S A k s‖ := by ring
+      rw [norm_neg]
+      refine hstep.trans ?_
+      refine (mul_le_mul_of_nonneg_left (ih hs.1) h2).trans ?_
+      rw [hcdef, mul_pow]
+      ring_nf
+      rfl
+    calc ‖flowRemainder S A (k + 1) t‖
+        = ‖∫ s in (0 : ℝ)..t, -adOne S (flowRemainder S A k s)‖ := by
+          rw [hftc]
+      _ ≤ ∫ s in (0 : ℝ)..t, ‖-adOne S (flowRemainder S A k s)‖ :=
+          intervalIntegral.norm_integral_le_integral_norm ht
+      _ ≤ ∫ s in (0 : ℝ)..t, c * s ^ k :=
+          intervalIntegral.integral_mono_on ht hintnorm hintbound hpt
+      _ = c * (t ^ (k + 1) / (k + 1)) := by
+          rw [intervalIntegral.integral_const_mul, integral_pow]
+          simp
+      _ = (2 * ‖S‖ * t) ^ (k + 1) / (k + 1).factorial * ‖A‖ := by
+          rw [hcdef, Nat.factorial_succ, mul_pow]
+          push_cast
+          field_simp
+          ring
+
 /-! ### Toward the spatial cone: nested commutators stay in the ball -/
 
 end CSD.CV
@@ -739,6 +845,55 @@ theorem norm_commutator_spatial_le [NeZero N]
         gcongr
         exact norm_flowRemainder_le hS A d t
     _ = 2 * (2 * ‖S‖ * |t|) ^ d * ‖A‖ * ‖B‖ := by ring
+
+/-- ★★★ **The Lieb-Robinson bound.** Sharpening the geometric bound with
+the factorial remainder estimate:
+`‖[A(t), B]‖ ≤ 2‖A‖‖B‖·(2‖S‖t)^d/d!` for every `d` whose graph ball around
+`A`'s region has not reached `B`'s.
+
+Because of the factorial this decays in the graph distance at **every**
+time, not only for `2‖S‖t < 1`: at fixed `t` the bound falls faster than
+geometrically in `d`, which is the standard Lieb-Robinson statement that
+the commutator is exponentially small outside an effective light cone. -/
+theorem norm_commutator_spatial_factorial_le [NeZero N]
+    {E : Finset (Fin K × Fin K)}
+    {G : Fin K × Fin K → Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hG : ∀ e ∈ E, SupportedOn {e.1, e.2} (G e))
+    (hS : (∑ e ∈ E, G e)ᴴ = -(∑ e ∈ E, G e))
+    {R Y : Finset (Fin K)}
+    {A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (hB : SupportedOn Y B) {d : ℕ}
+    (hcone : Disjoint (graphBall E R d) Y) {t : ℝ} (ht : 0 ≤ t) :
+    ‖heisenbergFlow (∑ e ∈ E, G e) t A * B
+        - B * heisenbergFlow (∑ e ∈ E, G e) t A‖
+      ≤ 2 * ((2 * ‖∑ e ∈ E, G e‖ * t) ^ d / d.factorial) * ‖A‖ * ‖B‖ := by
+  set S := ∑ e ∈ E, G e with hSdef
+  have hvanish : ∀ j ∈ Finset.range d,
+      adIter S j A * B = B * adIter S j A := by
+    intro j hj
+    exact commutator_adIter_eq_zero hG hA hB
+      (Finset.disjoint_of_subset_left
+        (graphBall_mono E R (le_of_lt (Finset.mem_range.mp hj))) hcone)
+  have hsumcomm : (∑ j ∈ Finset.range d, flowCoef t j • adIter S j A) * B
+      = B * (∑ j ∈ Finset.range d, flowCoef t j • adIter S j A) := by
+    rw [Finset.sum_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j hj => ?_
+    rw [Matrix.smul_mul, Matrix.mul_smul, hvanish j hj]
+  have hkey : heisenbergFlow S t A * B - B * heisenbergFlow S t A
+      = flowRemainder S A d t * B - B * flowRemainder S A d t := by
+    rw [flowRemainder, sub_mul, mul_sub, hsumcomm]
+    abel
+  rw [hkey]
+  calc ‖flowRemainder S A d t * B - B * flowRemainder S A d t‖
+      ≤ ‖flowRemainder S A d t * B‖ + ‖B * flowRemainder S A d t‖ :=
+        norm_sub_le _ _
+    _ ≤ ‖flowRemainder S A d t‖ * ‖B‖ + ‖B‖ * ‖flowRemainder S A d t‖ :=
+        add_le_add (norm_mul_le _ _) (norm_mul_le _ _)
+    _ = 2 * ‖flowRemainder S A d t‖ * ‖B‖ := by ring
+    _ ≤ 2 * ((2 * ‖S‖ * t) ^ d / d.factorial * ‖A‖) * ‖B‖ := by
+        gcongr
+        exact norm_flowRemainder_le_factorial hS A d ht
+    _ = 2 * ((2 * ‖S‖ * t) ^ d / d.factorial) * ‖A‖ * ‖B‖ := by ring
 
 /-! ### The CV instantiation -/
 
