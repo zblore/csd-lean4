@@ -386,4 +386,25 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.commute_heisenberg_kickedStep_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.commute_heisenberg_kickedStep_pow
 
+-- CV-13 the finite free propagator (2026-08-09, CV/Propagator.lean). THE CHAIN'S FIRST
+-- COMPUTED CORRELATION FUNCTION: <vac| Q_k(n) Q_l |vac> = (1/2) e^{-i n tau} delta_{kl}
+-- -- diagonal in the mode index (free modes do not mix) and oscillating at the excitation
+-- energy, so the dispersion appears as an OBSERVABLE TIME DEPENDENCE, not a spectrum
+-- label. Route: one-quantum intermediate state (the only survivor from the vacuum),
+-- phaseDiagU_pow for the n-period drive, the CV-6 Heisenberg entry formula for the phase
+-- difference, and fieldEnergy_excCfg_sub = 1 for the spacing. norm_freeTwoPoint: modulus
+-- period-independent (the free propagator does not decay). The interacting correction is
+-- PRICED (twoPoint_interacting_dist_le, via CV-9's Duhamel bound + CV-12's unitary
+-- telescoping + the entrywise bound). HONEST SCOPE: quadrature two-point function at a
+-- finite cutoff, not a general Wightman function; the relativistic reading is the same
+-- computation with relFieldHamiltonian (spacing 1 -> omega(m,p_l)), recorded residue.
+/-- info: 'CSD.CV.freeTwoPoint_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.freeTwoPoint_eq
+
+/-- info: 'CSD.CV.norm_freeTwoPoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_freeTwoPoint
+
+/-- info: 'CSD.CV.twoPoint_interacting_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.twoPoint_interacting_dist_le
+
 end CSD.Tests.AxiomAudit
