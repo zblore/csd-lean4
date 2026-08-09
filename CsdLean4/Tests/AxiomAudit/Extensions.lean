@@ -426,4 +426,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.boostE_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.boostE_add
 
+-- CV-15 the renormalization-trivial class (2026-08-09, CV/CutoffStability.lean). The
+-- COMPLEMENT of CV-10: interactions defined by OCCUPATION NUMBERS through a cutoff-uniform
+-- kernel g need no renormalization at all. embedCfg carries a cutoff-N configuration into
+-- cutoff M >= N; both the free energy and the interaction are cutoff-independent there, so
+-- interactingU_cutoff_independent: the two drives have EQUAL matrix elements between
+-- corresponding configurations at the SAME coupling (diagonal equal, off-diagonal zero on
+-- both sides) -- raising the cutoff does not move predictions on configurations that
+-- already existed. And natDensityCoupling_price_uniform: the CV-9 price is |tau||lam|C
+-- with C independent of N and K, versus CV-10's sqrt(2N)^m growth for quadrature-graded
+-- interactions. RELEVANT/IRRELEVANT IS NOW A THEOREM ON BOTH SIDES. HONEST SCOPE: cutoff
+-- STABILITY of this class on the shared low-energy sector, not a renormalization group;
+-- matching for interactions that need it is CV-16 (gated); no continuum.
+/-- info: 'CSD.CV.interactingU_cutoff_independent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.interactingU_cutoff_independent
+
+/-- info: 'CSD.CV.natDensityCoupling_price_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.natDensityCoupling_price_uniform
+
 end CSD.Tests.AxiomAudit

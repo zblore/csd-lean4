@@ -347,6 +347,7 @@ public import CsdLean4.CV.ChaosBounds
 public import CsdLean4.CV.LocalAlgebraClosed
 public import CsdLean4.CV.Propagator
 public import CsdLean4.CV.Boost
+public import CsdLean4.CV.CutoffStability
 public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
