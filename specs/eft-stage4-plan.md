@@ -1,6 +1,6 @@
 # EFT Stage 4 plan: dynamics completed, observables, and the covariance seam
 
-Status: PLAN (2026-08-09). Owner queue: `specs/BACKLOG.md` §CV chain row; ref-tagged rows
+Status: **COMPLETE (2026-08-09, same day)** — CV-11..CV-15 landed as planned; CV-16's gate did its job and **changed the statement** (its feasibility pass proved the planned form unattainable: decimation of a support-spreading unitary is not unitary, so the effective theory is necessarily open — positive matching half + no-go landed, the RG proper re-scoped to a channel-level statement with an error budget, recorded unqueued). Kept as the design record. Deltas from the sketch are noted in the struck rows of [`future-work.md`](future-work.md); the Stage-5 horizon note below stands, with both prerequisites now landed. Original status line: PLAN (2026-08-09). Owner queue: `specs/BACKLOG.md` §CV chain row; ref-tagged rows
 CV-11..CV-16 in [`future-work.md`](future-work.md). Nothing below is claimed until its row
 is struck. Predecessor: [`cv-stage3-plan.md`](cv-stage3-plan.md) (Stage 3, complete).
 

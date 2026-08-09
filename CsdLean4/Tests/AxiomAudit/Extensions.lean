@@ -444,4 +444,24 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.natDensityCoupling_price_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.natDensityCoupling_price_uniform
 
+-- CV-16 decimation between cutoffs (2026-08-09, CV/Decimation.lean). The GATED RG row,
+-- resolved by running its feasibility pass first (the CV-10 discipline) -- and the pass
+-- found the row's PLANNED statement unattainable. Positive half: compressCfg_interactingU
+-- -- decimating the cutoff-M drive of an occupation-defined coupling gives EXACTLY the
+-- cutoff-N drive of the same coupling, so for that class the RG map is the identity on
+-- couplings (CV-15 in decimation language, matching as a matrix identity). NO-GO half:
+-- compress_hopU_not_unitary / exists_unitary_compress_not_unitary -- a unitary at cutoff 3
+-- decimates to diag(1,0) at cutoff 2, NOT unitary. The failure is LOSS OF NORM, not a
+-- wrong parameter value, so no coupling redefinition repairs it: the effective low-cutoff
+-- dynamics of a support-spreading drive is NECESSARILY NON-UNITARY. Consequence recorded
+-- in the module: an honest RG statement must be about CHANNELS AND OBSERVABLES WITH AN
+-- ERROR BUDGET (CP map + correlator agreement up to a bound), needing a leakage estimate
+-- the corpus does not have -- research-grade, deferred, not attempted. NO flow, NO fixed
+-- points, NO beta function claimed.
+/-- info: 'CSD.CV.compressCfg_interactingU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.compressCfg_interactingU
+
+/-- info: 'CSD.CV.exists_unitary_compress_not_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.exists_unitary_compress_not_unitary
+
 end CSD.Tests.AxiomAudit
