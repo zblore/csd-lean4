@@ -489,4 +489,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.norm_commutator_field_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_field_le
 
+-- CV-19 PARTIAL: the Gronwall (exponential-in-time) Lieb-Robinson bound (2026-08-09,
+-- CV/LiebRobinson.lean). The gated row's feasibility pass found a concrete route to a
+-- strictly stronger result than CV-18, so that much was taken: the Jacobi re-split
+-- (leak_jacobi) turns the leakage term into (current commutator).T plus a source
+-- proportional to [T,B], which is exactly Gronwall shape, and Mathlib's
+-- norm_le_gronwallBound_of_norm_deriv_right_le closes it:
+-- ||[A(t),B]|| <= gronwallBound 0 (2||T||) (2||A|| ||[T,B]||) t, i.e.
+-- (||A|| ||[T,B]||/||T||)(e^{2||T||t} - 1). The prefactor ||[T,B]|| is the part of the
+-- coupling that REACHES the probe, so a coupling commuting with B contributes exactly
+-- nothing at any time (commutator_eq_zero_of_coupling_commutes) -- the seed of a light
+-- cone. NOT PROVED, and the module says so: the spatial form e^{-mu(d - v|t|)}. No
+-- velocity is defined, no lattice distance appears, and the chain iteration with its
+-- path count is not attempted. That is the remaining CV-19 frontier.
+/-- info: 'CSD.CV.norm_commutator_gronwall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_gronwall_le
+
+/-- info: 'CSD.CV.commutator_eq_zero_of_coupling_commutes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commutator_eq_zero_of_coupling_commutes
+
+/-- info: 'CSD.CV.norm_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_conj_eq
+
 end CSD.Tests.AxiomAudit
