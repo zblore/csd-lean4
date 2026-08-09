@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "csd-lean4: a Lean 4 formalisation of Constraint-Surface Dynamics"
+abstract: >-
+  Machine-verified reconstruction of finite-dimensional quantum mechanics from a
+  deterministic ontic surface carrying a Liouville measure and a
+  measure-preserving flow, with the Born rule derived as a volume ratio.
+type: software
+authors:
+  - family-names: Blore
+    given-names: Zayn
+    orcid: "https://orcid.org/0009-0009-8447-7247"
+    email: zayn.blore@ou.ac.uk
+repository-code: "https://github.com/zblore/csd-lean4"
+url: "https://constraintsurfacedynamics.com"
+license: Apache-2.0
+keywords:
+  - lean4
+  - mathlib
+  - formal-verification
+  - quantum-foundations
+  - born-rule
+  - quantum-mechanics
+  - interactive-theorem-proving
+preferred-citation:
+  type: generic
+  title: "Constraint-Surface Dynamics: the LF series"
+  authors:
+    - family-names: Blore
+      given-names: Zayn
+      orcid: "https://orcid.org/0009-0009-8447-7247"
+  url: "https://constraintsurfacedynamics.com"
