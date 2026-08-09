@@ -59,16 +59,25 @@ are unitary and the L2 operator norm sees them as isometries.
   whenever the `k`-ball has not yet reached `B`'s region. That is what makes
   a Lieb-Robinson series start at the graph distance rather than at zero.
 
-⚠️ Honest scope, stated precisely because CV-19 was gated. Proved: the
-exponential-in-time bound, and the exact vanishing of the series terms
-below the graph distance. **Not** proved: the spatial form
-`e^{-μ(d − v|t|)}` itself. Assembling it needs the analytic half, namely
-that the Heisenberg flow equals `∑ₖ (−t)ᵏ/k! · ad_S^k(A)` with a tail
-estimate, at which point the vanishing terms below distance `d` turn the
-series into `∑_{k ≥ d} (2‖S‖|t|)ᵏ/k!` and the decay follows. No velocity is
-defined here and no such series is claimed. That assembly remains the open
-frontier (`specs/eft-stage5-plan.md`). No continuum
-(`ApproxCCR.no_exact_finite_ccr` stands).
+* ★★★ `norm_commutator_spatial_le` — **the spatial bound**:
+  `‖[A(t), B]‖ ≤ 2‖A‖‖B‖·(2‖S‖|t|)^d` for every `d` whose graph ball
+  around `A`'s region has not reached `B`'s. Whenever `2‖S‖|t| < 1` this
+  decays geometrically in the graph distance, so an observable at distance
+  `d` is disturbed only after a time of order `d/(2‖S‖)`: **the propagation
+  speed is bounded by the coupling strength**. The two halves meet here.
+  The Taylor remainder controls the flow to order `d`, and every discarded
+  term commutes with `B` exactly, because `k` nested commutators reach at
+  most `k` edges, so the whole commutator is carried by the remainder.
+
+⚠️ Honest scope. The bound proved here is the geometric form
+`(2‖S‖|t|)^d`, obtained by bounding the Taylor remainder with the
+mean-value inequality. The textbook Lieb-Robinson bound carries a
+factorial, `(2‖S‖|t|)^d/d!`, giving decay at all times rather than only
+for `2‖S‖|t| < 1`; recovering it means replacing the mean-value step by an
+integral (Duhamel) estimate, which is recorded as the remaining
+strengthening and is not claimed. No velocity constant is extracted or
+optimised: Lieb-Robinson velocities are famously not tight, and none is
+asserted. No continuum (`ApproxCCR.no_exact_finite_ccr` stands).
 
 ## References
 
@@ -405,7 +414,7 @@ theorem commutator_eq_zero_of_coupling_commutes {S S_X T : Matrix m m ℂ}
   simp only [zero_mul] at h
   exact norm_le_zero_iff.mp h
 
-/-! ### Toward the spatial cone: nested commutators stay in the ball -/
+/-! ### The adjoint action -/
 
 /-- One step of the adjoint action: `ad_G(A) = [G, A]`. -/
 def adOne {n : Type*} [Fintype n] [DecidableEq n] (G A : Matrix n n ℂ) :
@@ -431,6 +440,164 @@ lemma adOne_sum {n ι : Type*} [Fintype n] [DecidableEq n] (E : Finset ι)
     (G : ι → Matrix n n ℂ) (A : Matrix n n ℂ) :
     adOne (∑ e ∈ E, G e) A = ∑ e ∈ E, adOne (G e) A := by
   simp only [adOne, Finset.sum_mul, Finset.mul_sum, Finset.sum_sub_distrib]
+
+/-! ### The Taylor remainder of the flow -/
+
+/-- The Taylor coefficients of the Heisenberg flow, as real scalars. -/
+noncomputable def flowCoef (t : ℝ) (k : ℕ) : ℝ :=
+  ((-1 : ℝ) ^ k / k.factorial) * t ^ k
+
+@[simp] lemma flowCoef_zero (t : ℝ) : flowCoef t 0 = 1 := by
+  rw [flowCoef]; simp
+
+/-- The Taylor remainder of the flow after `k` terms of its adjoint
+series. -/
+noncomputable def flowRemainder (S A : Matrix m m ℂ) (k : ℕ) (t : ℝ) :
+    Matrix m m ℂ :=
+  heisenbergFlow S t A - ∑ j ∈ Finset.range k, flowCoef t j • adIter S j A
+
+omit [Nonempty m] in
+@[simp] lemma flowRemainder_zero_terms (S A : Matrix m m ℂ) (t : ℝ) :
+    flowRemainder S A 0 t = heisenbergFlow S t A := by
+  rw [flowRemainder]; simp
+
+omit [Nonempty m] in
+/-- The adjoint action commutes with real scalars in its second
+argument. -/
+lemma adOne_smul (S : Matrix m m ℂ) (c : ℝ) (A : Matrix m m ℂ) :
+    adOne S (c • A) = c • adOne S A := by
+  rw [adOne, adOne, Matrix.mul_smul, Matrix.smul_mul, smul_sub]
+
+omit [Nonempty m] in
+lemma adOne_sub (S X Y : Matrix m m ℂ) :
+    adOne S (X - Y) = adOne S X - adOne S Y := by
+  rw [adOne, adOne, adOne]
+  noncomm_ring
+
+omit [Nonempty m] in
+lemma adOne_sum_range (S : Matrix m m ℂ) (k : ℕ) (f : ℕ → Matrix m m ℂ) :
+    adOne S (∑ j ∈ Finset.range k, f j)
+      = ∑ j ∈ Finset.range k, adOne S (f j) := by
+  simp only [adOne, Finset.mul_sum, Finset.sum_mul, Finset.sum_sub_distrib]
+
+omit [Nonempty m] in
+/-- The norm of a nested commutator grows by at most `2‖S‖` per step. -/
+theorem norm_adIter_le (S A : Matrix m m ℂ) (k : ℕ) :
+    ‖adIter S k A‖ ≤ (2 * ‖S‖) ^ k * ‖A‖ := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    have h2 : (0 : ℝ) ≤ 2 * ‖S‖ := by positivity
+    rw [adIter_succ]
+    calc ‖adOne S (adIter S k A)‖
+        ≤ ‖S * adIter S k A‖ + ‖adIter S k A * S‖ := norm_sub_le _ _
+      _ ≤ ‖S‖ * ‖adIter S k A‖ + ‖adIter S k A‖ * ‖S‖ :=
+          add_le_add (norm_mul_le _ _) (norm_mul_le _ _)
+      _ = 2 * ‖S‖ * ‖adIter S k A‖ := by ring
+      _ ≤ 2 * ‖S‖ * ((2 * ‖S‖) ^ k * ‖A‖) := mul_le_mul_of_nonneg_left ih h2
+      _ = (2 * ‖S‖) ^ (k + 1) * ‖A‖ := by ring
+
+/-- Each Taylor coefficient differentiates into its predecessor. -/
+lemma hasDerivAt_flowCoef (t : ℝ) (j : ℕ) :
+    HasDerivAt (fun u : ℝ => flowCoef u (j + 1)) (-flowCoef t j) t := by
+  have hpow : HasDerivAt (fun u : ℝ => u ^ (j + 1))
+      (((j : ℝ) + 1) * t ^ j) t := by
+    simpa using hasDerivAt_pow (j + 1) t
+  have hmul := hpow.const_mul ((-1 : ℝ) ^ (j + 1) / (j + 1).factorial)
+  refine hmul.congr_deriv ?_
+  rw [flowCoef, Nat.factorial_succ, pow_succ]
+  have hj : ((j.factorial : ℝ)) ≠ 0 := by
+    exact_mod_cast Nat.factorial_ne_zero j
+  have hj1 : ((j : ℝ) + 1) ≠ 0 := by positivity
+  push_cast
+  field_simp
+
+omit [Nonempty m] in
+/-- The remainder solves the same linear equation the flow does: the
+Taylor terms differentiate into one another and cancel, leaving
+`d/dt Rₖ₊₁(t) = -ad_S(Rₖ(t))`. -/
+theorem hasDerivAt_flowRemainder (S A : Matrix m m ℂ) (k : ℕ) (t : ℝ) :
+    HasDerivAt (flowRemainder S A (k + 1))
+      (-adOne S (flowRemainder S A k t)) t := by
+  have hF : HasDerivAt (fun u => heisenbergFlow S u A)
+      (-adOne S (heisenbergFlow S t A)) t := by
+    refine (hasDerivAt_heisenbergFlow S A t).congr_deriv ?_
+    rw [adOne]; noncomm_ring
+  have hfun : (fun u : ℝ => ∑ j ∈ Finset.range (k + 1),
+        flowCoef u j • adIter S j A)
+      = fun u : ℝ => (∑ j ∈ Finset.range k,
+          flowCoef u (j + 1) • adIter S (j + 1) A) + A := by
+    funext u
+    rw [Finset.sum_range_succ']
+    simp
+  have hsum : HasDerivAt
+      (fun u : ℝ => ∑ j ∈ Finset.range (k + 1), flowCoef u j • adIter S j A)
+      (∑ j ∈ Finset.range k, (-flowCoef t j) • adIter S (j + 1) A) t := by
+    rw [hfun]
+    have hterms : ∀ j ∈ Finset.range k,
+        HasDerivAt (fun u : ℝ => flowCoef u (j + 1) • adIter S (j + 1) A)
+          ((-flowCoef t j) • adIter S (j + 1) A) t :=
+      fun j _ => (hasDerivAt_flowCoef t j).smul_const _
+    simpa using (HasDerivAt.sum hterms).add_const A
+  refine ((hF.sub hsum)).congr_deriv ?_
+  rw [flowRemainder, adOne_sub, adOne_sum_range]
+  have hshift : ∀ j : ℕ, adOne S (flowCoef t j • adIter S j A)
+      = flowCoef t j • adIter S (j + 1) A := by
+    intro j
+    rw [adOne_smul, adIter_succ]
+  simp only [hshift, neg_smul, Finset.sum_neg_distrib]
+  abel
+
+/-- ★★ **The Taylor remainder is small**: `‖Rₖ(t)‖ ≤ (2‖S‖|t|)ᵏ‖A‖`, so
+the flow is approximated by the first `k` terms of its adjoint series to
+that order. -/
+theorem norm_flowRemainder_le {S : Matrix m m ℂ} (hS : Sᴴ = -S)
+    (A : Matrix m m ℂ) (k : ℕ) (t : ℝ) :
+    ‖flowRemainder S A k t‖ ≤ (2 * ‖S‖ * |t|) ^ k * ‖A‖ := by
+  induction k generalizing t with
+  | zero =>
+    rw [flowRemainder_zero_terms, pow_zero, one_mul]
+    exact norm_heisenbergFlow_le hS t A
+  | succ k ih =>
+    have h2 : (0 : ℝ) ≤ 2 * ‖S‖ := by positivity
+    have hzero : flowRemainder S A (k + 1) 0 = 0 := by
+      rw [flowRemainder, Finset.sum_range_succ']
+      simp [flowCoef, heisenbergFlow]
+    have hbound : ∀ u ∈ Set.uIcc (0 : ℝ) t,
+        ‖-adOne S (flowRemainder S A k u)‖
+          ≤ 2 * ‖S‖ * ((2 * ‖S‖ * |t|) ^ k * ‖A‖) := by
+      intro u hu
+      have hut : |u| ≤ |t| := by
+        rcases Set.mem_uIcc.mp hu with ⟨h1, h2'⟩ | ⟨h1, h2'⟩
+        · rw [abs_of_nonneg h1, abs_of_nonneg (h1.trans h2')]; exact h2'
+        · rw [abs_of_nonpos h2', abs_of_nonpos (h1.trans h2')]; linarith
+      have hstep : ‖adOne S (flowRemainder S A k u)‖
+          ≤ 2 * ‖S‖ * ‖flowRemainder S A k u‖ := by
+        calc ‖adOne S (flowRemainder S A k u)‖
+            ≤ ‖S * flowRemainder S A k u‖ + ‖flowRemainder S A k u * S‖ :=
+              norm_sub_le _ _
+          _ ≤ ‖S‖ * ‖flowRemainder S A k u‖
+              + ‖flowRemainder S A k u‖ * ‖S‖ :=
+              add_le_add (norm_mul_le _ _) (norm_mul_le _ _)
+          _ = 2 * ‖S‖ * ‖flowRemainder S A k u‖ := by ring
+      have hmono : (2 * ‖S‖ * |u|) ^ k * ‖A‖ ≤ (2 * ‖S‖ * |t|) ^ k * ‖A‖ := by
+        gcongr
+      rw [norm_neg]
+      exact hstep.trans ((mul_le_mul_of_nonneg_left (ih u) h2).trans
+        (mul_le_mul_of_nonneg_left hmono h2))
+    have hmvt := Convex.norm_image_sub_le_of_norm_hasDerivWithin_le
+      (f := flowRemainder S A (k + 1))
+      (f' := fun u => -adOne S (flowRemainder S A k u))
+      (s := Set.uIcc (0 : ℝ) t)
+      (C := 2 * ‖S‖ * ((2 * ‖S‖ * |t|) ^ k * ‖A‖))
+      (fun u _ => (hasDerivAt_flowRemainder S A k u).hasDerivWithinAt)
+      hbound (convex_uIcc 0 t) Set.left_mem_uIcc Set.right_mem_uIcc
+    simp only [hzero, sub_zero] at hmvt
+    calc ‖flowRemainder S A (k + 1) t‖
+        ≤ 2 * ‖S‖ * ((2 * ‖S‖ * |t|) ^ k * ‖A‖) * |t| := hmvt
+      _ = (2 * ‖S‖ * |t|) ^ (k + 1) * ‖A‖ := by ring
+
+/-! ### Toward the spatial cone: nested commutators stay in the ball -/
 
 end CSD.CV
 
@@ -512,6 +679,66 @@ theorem commutator_adIter_eq_zero
     (hcone : Disjoint (graphBall E R n) Y) :
     adIter (∑ e ∈ E, G e) n A * B = B * adIter (∑ e ∈ E, G e) n A :=
   commute_of_disjointSupport hcone (adIter_supportedOn_graphBall hG hA n) hB
+
+/-! ### The spatial Lieb-Robinson bound -/
+
+/-- ★★★ **The spatial Lieb-Robinson bound.** For observables supported on
+regions `R` and `Y` of the coupling graph, and a skew-Hermitian generator
+that is a sum of edge-supported terms, the commutator after time `t` is
+bounded by `2‖A‖‖B‖·(2‖S‖|t|)^d` for **every** `d` whose graph ball around
+`R` has not yet reached `Y`.
+
+This is a light cone. Whenever `2‖S‖|t| < 1`, the bound decays
+geometrically in the graph distance, so an observable at distance `d`
+feels a disturbance only after a time of order `d / (2‖S‖)`: the
+propagation speed is bounded by the coupling strength.
+
+The proof combines the two halves. The Taylor remainder controls the flow
+to order `d` (`norm_flowRemainder_le`), and every discarded term commutes
+with `B` exactly, because `k` nested commutators reach at most `k` graph
+edges (`commutator_adIter_eq_zero`). So the entire commutator is carried
+by the remainder alone. -/
+theorem norm_commutator_spatial_le [NeZero N]
+    {E : Finset (Fin K × Fin K)}
+    {G : Fin K × Fin K → Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hG : ∀ e ∈ E, SupportedOn {e.1, e.2} (G e))
+    (hS : (∑ e ∈ E, G e)ᴴ = -(∑ e ∈ E, G e))
+    {R Y : Finset (Fin K)}
+    {A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (hB : SupportedOn Y B) {d : ℕ}
+    (hcone : Disjoint (graphBall E R d) Y) (t : ℝ) :
+    ‖heisenbergFlow (∑ e ∈ E, G e) t A * B
+        - B * heisenbergFlow (∑ e ∈ E, G e) t A‖
+      ≤ 2 * (2 * ‖∑ e ∈ E, G e‖ * |t|) ^ d * ‖A‖ * ‖B‖ := by
+  set S := ∑ e ∈ E, G e with hSdef
+  -- every discarded Taylor term commutes with the probe
+  have hvanish : ∀ j ∈ Finset.range d,
+      adIter S j A * B = B * adIter S j A := by
+    intro j hj
+    exact commutator_adIter_eq_zero hG hA hB
+      (Finset.disjoint_of_subset_left
+        (graphBall_mono E R (le_of_lt (Finset.mem_range.mp hj))) hcone)
+  have hsumcomm : (∑ j ∈ Finset.range d, flowCoef t j • adIter S j A) * B
+      = B * (∑ j ∈ Finset.range d, flowCoef t j • adIter S j A) := by
+    rw [Finset.sum_mul, Finset.mul_sum]
+    refine Finset.sum_congr rfl fun j hj => ?_
+    rw [Matrix.smul_mul, Matrix.mul_smul, hvanish j hj]
+  -- so the commutator is carried entirely by the remainder
+  have hkey : heisenbergFlow S t A * B - B * heisenbergFlow S t A
+      = flowRemainder S A d t * B - B * flowRemainder S A d t := by
+    rw [flowRemainder, sub_mul, mul_sub, hsumcomm]
+    abel
+  rw [hkey]
+  calc ‖flowRemainder S A d t * B - B * flowRemainder S A d t‖
+      ≤ ‖flowRemainder S A d t * B‖ + ‖B * flowRemainder S A d t‖ :=
+        norm_sub_le _ _
+    _ ≤ ‖flowRemainder S A d t‖ * ‖B‖ + ‖B‖ * ‖flowRemainder S A d t‖ :=
+        add_le_add (norm_mul_le _ _) (norm_mul_le _ _)
+    _ = 2 * ‖flowRemainder S A d t‖ * ‖B‖ := by ring
+    _ ≤ 2 * ((2 * ‖S‖ * |t|) ^ d * ‖A‖) * ‖B‖ := by
+        gcongr
+        exact norm_flowRemainder_le hS A d t
+    _ = 2 * (2 * ‖S‖ * |t|) ^ d * ‖A‖ * ‖B‖ := by ring
 
 /-! ### The CV instantiation -/
 

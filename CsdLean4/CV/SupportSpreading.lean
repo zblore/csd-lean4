@@ -161,6 +161,18 @@ def graphBall (E : Finset (Fin K × Fin K)) (R : Finset (Fin K)) :
     (R : Finset (Fin K)) (n : ℕ) :
     graphBall E R (n + 1) = graphNeighborhood E (graphBall E R n) := rfl
 
+/-- The balls grow with the period count. -/
+lemma graphBall_mono (E : Finset (Fin K × Fin K)) (R : Finset (Fin K))
+    {i j : ℕ} (hij : i ≤ j) : graphBall E R i ⊆ graphBall E R j := by
+  induction j with
+  | zero =>
+    rw [Nat.le_zero.mp hij]
+  | succ j ih =>
+    rcases Nat.lt_or_ge i (j + 1) with h | h
+    · exact (ih (Nat.lt_succ_iff.mp h)).trans
+        (subset_graphNeighborhood E (graphBall E R j))
+    · rw [Nat.le_antisymm hij h]
+
 /-! ### The phase-difference collapse for edge sums -/
 
 /-- Off-`R` agreement collapses an edge-sum difference to the edges that

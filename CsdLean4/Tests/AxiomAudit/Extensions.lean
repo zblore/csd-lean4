@@ -528,4 +528,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.commutator_adIter_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.commutator_adIter_eq_zero
 
+-- CV-19 COMPLETED: the SPATIAL Lieb-Robinson bound (2026-08-09, CV/LiebRobinson.lean).
+-- The two halves assembled. Analytic half: flowRemainder is the flow minus the first d
+-- terms of its adjoint series, hasDerivAt_flowRemainder shows d/dt R_{k+1} = -ad_S(R_k)
+-- (the Taylor terms differentiate into one another and cancel), and norm_flowRemainder_le
+-- bounds ||R_k(t)|| <= (2||S|| |t|)^k ||A|| by induction with the mean-value inequality.
+-- Combinatorial half: every discarded term commutes with B exactly, since k nested
+-- commutators reach at most k graph edges. Hence norm_commutator_spatial_le:
+-- ||[A(t),B]|| <= 2||A|| ||B|| (2||S|| |t|)^d for every d whose ball has not reached B.
+-- For 2||S|| |t| < 1 this DECAYS GEOMETRICALLY IN THE GRAPH DISTANCE: propagation speed is
+-- bounded by the coupling strength. HONEST SCOPE: the geometric form, not the textbook
+-- factorial form (2||S|| |t|)^d/d! -- recovering that means replacing the mean-value step
+-- by an integral estimate, recorded as the remaining strengthening. No velocity constant
+-- is extracted or claimed optimal.
+/-- info: 'CSD.CV.norm_flowRemainder_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_flowRemainder_le
+
+/-- info: 'CSD.CV.hasDerivAt_flowRemainder' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.hasDerivAt_flowRemainder
+
+/-- info: 'CSD.CV.norm_commutator_spatial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_le
+
 end CSD.Tests.AxiomAudit
