@@ -2658,4 +2658,29 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_join_luders
 
 
+-- A1 parity: the record layer on the EVEN-dimensional fibre (2026-08-09,
+-- SigmaLayer/TorusRecord.lean). CircleFibre/CircleRecord fixed the fibre's non-compactness
+-- but not its parity: a single circle is 1-dimensional, so CP^{N-1} x S^1 has ODD real
+-- dimension and cannot carry a symplectic or Kaehler structure at all. TorusFibre put the
+-- Born cells on T^2 (cells constrain the first angle, the second stays free); this file
+-- ports the rest of the record layer there, so the ACTIVE fibre and the A1-admissible
+-- arena are finally the same object: torusRecordSemantics (P5), compatibleSet_torus_single
+-- (P6 isolation = conditioning), torusOutcome_eq_record (the ontic selection IS the
+-- record), and the Born weight ||psi i||^2 unchanged from the R and S^1 fibres.
+-- HONEST SCOPE, in the module: no Kaehler form is constructed on the arena and the fibre
+-- measure is not shown to be a Liouville volume for one (Mathlib has no manifold forms
+-- API; standing KG-1 block). Parity was a NECESSARY condition that was violated and now is
+-- not. That is not sufficiency, and no A1 discharge is claimed.
+/-- info: 'CSD.RecordLayer.torusOutcome_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusOutcome_eq_record
+
+/-- info: 'CSD.RecordLayer.torusBornMeasurement_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusBornMeasurement_prob
+
+/-- info: 'CSD.RecordLayer.torusBornMeasurement_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusBornMeasurement_ae_total
+
 end CSD.Tests.AxiomAudit
