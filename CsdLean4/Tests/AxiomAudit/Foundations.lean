@@ -127,6 +127,15 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.OperationalPackage.effect_gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms OperationalPackage.effect_gleason_representation
 
+-- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
+-- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
+-- published LF-series papers, discharged 2026-05-18 via
+-- Matrix.PosSemidef.dotProduct_mulVec_zero_iff, but never pinned -- so CI could not have
+-- caught drift in the one remaining paper-vs-repo axiom item that lacked coverage.
+-- See specs/papers-vs-repo.md.
+/-- info: 'CSD.LF2.rankOneDensity_unique_of_certainty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms rankOneDensity_unique_of_certainty
+
 -- F-01 discharge (G1, 2026-08-06): the bridge is load-bearing via the transport theorems —
 -- integral_comp_pi carries an ontic Σ-integral into the projective μFS-integral through
 -- bridge_eq, and fromPreparation_liouville_apply computes the Liouville-prepared operational

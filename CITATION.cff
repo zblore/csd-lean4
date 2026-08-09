@@ -23,10 +23,30 @@ keywords:
   - quantum-mechanics
   - interactive-theorem-proving
 preferred-citation:
-  type: generic
-  title: "Constraint-Surface Dynamics: the LF series"
+  type: article
+  title: "LF3: Machine-Verified Singlet Kernel, Sector Volumes, and Empirical Chain Capstones for Bell-Singlet Correlations"
+  doi: "10.5281/zenodo.20354293"
   authors:
     - family-names: Blore
       given-names: Zayn
       orcid: "https://orcid.org/0009-0009-8447-7247"
-  url: "https://constraintsurfacedynamics.com"
+  url: "https://constraintsurfacedynamics.com/papers"
+references:
+  - type: article
+    title: "LF1: Machine-Verified Volume Typicality and Frequency Convergence for Deterministic Repeated Trials"
+    doi: "10.5281/zenodo.19472011"
+    authors:
+      - family-names: Blore
+        given-names: Zayn
+  - type: article
+    title: "LF2: The Measure Bridge and Born-Weight Wrapper"
+    doi: "10.5281/zenodo.20100580"
+    authors:
+      - family-names: Blore
+        given-names: Zayn
+  - type: article
+    title: "Paper C: A Deterministic Reconstruction of Finite-Dimensional Quantum Mechanics"
+    doi: "10.5281/zenodo.18098064"
+    authors:
+      - family-names: Blore
+        given-names: Zayn

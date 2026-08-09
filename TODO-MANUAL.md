@@ -1,27 +1,23 @@
 # Manual items outstanding after the landing-surface rewrite
 
-## 1. Zenodo DOI for `CITATION.cff` (blocking for the preferred citation)
+## 1. Zenodo DOIs
 
-No Zenodo DOI is recorded anywhere in the repository, so none was written into
-`CITATION.cff`. A DOI was not invented for it. The file is schema-valid without
-one (validated against CFF 1.2.0 with `cffconvert`).
+Done, not outstanding. Retrieved from constraintsurfacedynamics.com/papers on
+2026-08-09 and written into `CITATION.cff`:
 
-To complete the citation, add the DOI line to the `preferred-citation` block:
+| Record | DOI |
+|---|---|
+| LF3 (preferred citation for this repository) | 10.5281/zenodo.20354293 |
+| LF2 | 10.5281/zenodo.20100580 |
+| LF1 | 10.5281/zenodo.19472011 |
+| Paper C, the reconstruction paper | 10.5281/zenodo.18098064 |
 
-```yaml
-preferred-citation:
-  type: generic
-  title: "Constraint-Surface Dynamics: the LF series"
-  doi: "10.5281/zenodo.XXXXXXX"          # <- add this line
-  authors:
-    - family-names: Blore
-      given-names: Zayn
-      orcid: "https://orcid.org/0009-0009-8447-7247"
-  url: "https://constraintsurfacedynamics.com"
-```
-
-A top-level `identifiers:` entry with the concept DOI can be added at the same
-time if the record has one.
+Judgement call, flagged for the maintainer: LF3 is used as `preferred-citation`
+because it is the most recent Lean-formalisation record of the three, and the
+site lists no concept DOI covering all versions. The repository now spans more
+than LF3 covers. If a concept DOI is minted for the series, or a later LF record
+is published, replace the `preferred-citation` DOI with it. The other records are
+listed under `references:`.
 
 ## 2. GitHub repository settings
 
