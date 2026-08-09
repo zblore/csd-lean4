@@ -79,6 +79,16 @@ protected theorem SupportedOn.add (hA : SupportedOn S A)
     rw [Matrix.add_apply, Matrix.add_apply, hA.indep h1 h2 h3 h4,
       hB.indep h1 h2 h3 h4]
 
+/-- Differences of `S`-supported operators are `S`-supported. -/
+protected theorem SupportedOn.sub (hA : SupportedOn S A)
+    (hB : SupportedOn S B) : SupportedOn S (A - B) := by
+  constructor
+  · intro c d k hk hcd
+    rw [Matrix.sub_apply, hA.offDiag hk hcd, hB.offDiag hk hcd, sub_zero]
+  · intro c d c' d' h1 h2 h3 h4
+    rw [Matrix.sub_apply, Matrix.sub_apply, hA.indep h1 h2 h3 h4,
+      hB.indep h1 h2 h3 h4]
+
 /-- Scalar multiples of `S`-supported operators are `S`-supported. -/
 protected theorem SupportedOn.smul (z : ℂ) (hA : SupportedOn S A) :
     SupportedOn S (z • A) := by

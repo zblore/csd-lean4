@@ -511,4 +511,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.norm_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_conj_eq
 
+-- CV-19 second pass: the combinatorial half of the SPATIAL cone (2026-08-09,
+-- CV/LiebRobinson.lean). The Heisenberg flow is the exponential generating series of the
+-- nested commutators ad_S^k(A). For a generator that is a sum of edge-supported terms,
+-- adIter_supportedOn_graphBall shows those iterates stay inside the coupling graph's
+-- k-ball: a term whose edge MISSES the current region commutes with the observable and
+-- drops out (commute_of_disjointSupport), so k steps reach at most k edges. Hence
+-- commutator_adIter_eq_zero: ad_S^k(A) commutes with B EXACTLY while the k-ball has not
+-- reached B's region -- which is what makes a Lieb-Robinson series start at the graph
+-- distance rather than at zero. STILL NOT PROVED, and the module says so: the spatial
+-- form itself. It needs the analytic half (flow = sum_k (-t)^k/k! ad^k(A) plus a tail
+-- estimate); no velocity is defined and no such series is claimed here.
+/-- info: 'CSD.CV.adIter_supportedOn_graphBall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.adIter_supportedOn_graphBall
+
+/-- info: 'CSD.CV.commutator_adIter_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.commutator_adIter_eq_zero
+
 end CSD.Tests.AxiomAudit

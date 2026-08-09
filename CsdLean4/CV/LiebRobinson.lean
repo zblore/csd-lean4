@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.CV.SupportSpreading
+public import CsdLean4.CV.LocalAlgebraClosed
 public import Mathlib.Analysis.ODE.Gronwall
 
 /-!
@@ -48,13 +49,25 @@ are unitary and the L2 operator norm sees them as isometries.
   `commutator_eq_zero_of_coupling_commutes`: a coupling commuting with `B`
   contributes exactly nothing, at any time.
 
-⚠️ Honest scope, stated precisely because CV-19 was gated. What is proved
-is the exponential-in-time bound above, whose vanishing prefactor is the
-seed of a light cone. What is **not** proved is the spatial form
-`e^{-μ(d − v|t|)}`: no velocity is defined, no lattice distance appears,
-and the iteration over chains of interaction terms with its path count is
-not attempted. That remains the open frontier
-(`specs/eft-stage5-plan.md`). No continuum
+* ★★ `adIter_supportedOn_graphBall` and `commutator_adIter_eq_zero` — the
+  **combinatorial half of the spatial cone**. The Heisenberg flow is the
+  exponential generating series of the nested commutators `ad_S^k(A)`, and
+  for a generator that is a sum of edge-supported terms those iterates stay
+  inside the coupling graph's `k`-ball: a term whose edge misses the current
+  region commutes with the observable and drops out, so `k` steps reach at
+  most `k` edges. Consequently `ad_S^k(A)` commutes with `B` **exactly**
+  whenever the `k`-ball has not yet reached `B`'s region. That is what makes
+  a Lieb-Robinson series start at the graph distance rather than at zero.
+
+⚠️ Honest scope, stated precisely because CV-19 was gated. Proved: the
+exponential-in-time bound, and the exact vanishing of the series terms
+below the graph distance. **Not** proved: the spatial form
+`e^{-μ(d − v|t|)}` itself. Assembling it needs the analytic half, namely
+that the Heisenberg flow equals `∑ₖ (−t)ᵏ/k! · ad_S^k(A)` with a tail
+estimate, at which point the vanishing terms below distance `d` turn the
+series into `∑_{k ≥ d} (2‖S‖|t|)ᵏ/k!` and the decay follows. No velocity is
+defined here and no such series is claimed. That assembly remains the open
+frontier (`specs/eft-stage5-plan.md`). No continuum
 (`ApproxCCR.no_exact_finite_ccr` stands).
 
 ## References
@@ -391,6 +404,114 @@ theorem commutator_eq_zero_of_coupling_commutes {S S_X T : Matrix m m ℂ}
   rw [sub_eq_zero.mpr hTB, norm_zero, mul_zero, gronwallBound_ε0] at h
   simp only [zero_mul] at h
   exact norm_le_zero_iff.mp h
+
+/-! ### Toward the spatial cone: nested commutators stay in the ball -/
+
+/-- One step of the adjoint action: `ad_G(A) = [G, A]`. -/
+def adOne {n : Type*} [Fintype n] [DecidableEq n] (G A : Matrix n n ℂ) :
+    Matrix n n ℂ := G * A - A * G
+
+/-- The `k`-fold adjoint action `ad_S^k`. The Heisenberg flow is its
+exponential generating series, which is why the support of these iterates
+controls the spatial reach of the dynamics. -/
+def adIter {n : Type*} [Fintype n] [DecidableEq n] (S : Matrix n n ℂ) :
+    ℕ → Matrix n n ℂ → Matrix n n ℂ
+  | 0, A => A
+  | k + 1, A => adOne S (adIter S k A)
+
+@[simp] lemma adIter_zero {n : Type*} [Fintype n] [DecidableEq n]
+    (S A : Matrix n n ℂ) : adIter S 0 A = A := rfl
+
+@[simp] lemma adIter_succ {n : Type*} [Fintype n] [DecidableEq n]
+    (S A : Matrix n n ℂ) (k : ℕ) :
+    adIter S (k + 1) A = adOne S (adIter S k A) := rfl
+
+/-- The adjoint action is linear in the generator. -/
+lemma adOne_sum {n ι : Type*} [Fintype n] [DecidableEq n] (E : Finset ι)
+    (G : ι → Matrix n n ℂ) (A : Matrix n n ℂ) :
+    adOne (∑ e ∈ E, G e) A = ∑ e ∈ E, adOne (G e) A := by
+  simp only [adOne, Finset.sum_mul, Finset.mul_sum, Finset.sum_sub_distrib]
+
+end CSD.CV
+
+namespace CSD.CV
+
+variable {K N : ℕ}
+
+/-- **One adjoint step grows support by at most one graph edge.** A term
+whose edge misses the current region commutes with the observable and
+contributes nothing; a term whose edge touches it contributes inside the
+one-step neighbourhood. -/
+theorem adOne_supportedOn_graphNeighborhood
+    {E : Finset (Fin K × Fin K)}
+    {G : Fin K × Fin K → Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hG : ∀ e ∈ E, SupportedOn {e.1, e.2} (G e))
+    {R : Finset (Fin K)}
+    {A : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) :
+    SupportedOn (graphNeighborhood E R) (adOne (∑ e ∈ E, G e) A) := by
+  classical
+  rw [adOne_sum]
+  refine Finset.sum_induction _ (SupportedOn (graphNeighborhood E R))
+    (fun a b ha hb => ha.add hb) SupportedOn.zero ?_
+  intro e he
+  by_cases htouch : e.1 ∈ R ∨ e.2 ∈ R
+  · -- the edge touches the region: stay inside the neighbourhood
+    have hGe : SupportedOn (graphNeighborhood E R) (G e) := by
+      refine (hG e he).mono ?_
+      intro x hx
+      rcases Finset.mem_insert.mp hx with h1 | h2
+      · exact h1 ▸ mem_graphNeighborhood_fst he htouch
+      · rw [Finset.mem_singleton.mp h2]
+        exact mem_graphNeighborhood_snd he htouch
+    have hAn : SupportedOn (graphNeighborhood E R) A :=
+      hA.mono (subset_graphNeighborhood E R)
+    exact (hGe.mul hAn).sub (hAn.mul hGe)
+  · -- the edge misses the region: the term commutes, so it drops out
+    have hdisj : Disjoint ({e.1, e.2} : Finset (Fin K)) R := by
+      rw [Finset.disjoint_left]
+      intro x hx hxR
+      rcases Finset.mem_insert.mp hx with h1 | h2
+      · exact htouch (Or.inl (h1 ▸ hxR))
+      · exact htouch (Or.inr (Finset.mem_singleton.mp h2 ▸ hxR))
+    have hcomm := commute_of_disjointSupport hdisj (hG e he) hA
+    rw [show adOne (G e) A = 0 from by rw [adOne, hcomm, sub_self]]
+    exact SupportedOn.zero
+
+/-- ★★ **The iterated adjoint action stays inside the graph ball.** After
+`n` nested commutators with a sum of edge-supported generators, the
+observable is still supported within the coupling graph's `n`-ball. This
+is the combinatorial heart of a spatial light cone: it is the statement
+that `n` steps of the dynamics reach at most `n` edges. -/
+theorem adIter_supportedOn_graphBall
+    {E : Finset (Fin K × Fin K)}
+    {G : Fin K × Fin K → Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hG : ∀ e ∈ E, SupportedOn {e.1, e.2} (G e))
+    {R : Finset (Fin K)}
+    {A : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (n : ℕ) :
+    SupportedOn (graphBall E R n) (adIter (∑ e ∈ E, G e) n A) := by
+  induction n with
+  | zero => exact hA
+  | succ n ih =>
+    rw [adIter_succ, graphBall_succ]
+    exact adOne_supportedOn_graphNeighborhood hG ih
+
+/-- ★★ **Exact vanishing below the light cone.** If the coupling graph's
+`n`-ball around `A`'s region has not yet reached `B`'s region, the `n`-th
+nested commutator commutes with `B` exactly. Since the Heisenberg flow is
+the exponential generating series of these iterates, this is what makes a
+Lieb-Robinson series start at the graph distance rather than at zero. -/
+theorem commutator_adIter_eq_zero
+    {E : Finset (Fin K × Fin K)}
+    {G : Fin K × Fin K → Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hG : ∀ e ∈ E, SupportedOn {e.1, e.2} (G e))
+    {R Y : Finset (Fin K)}
+    {A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (hB : SupportedOn Y B) {n : ℕ}
+    (hcone : Disjoint (graphBall E R n) Y) :
+    adIter (∑ e ∈ E, G e) n A * B = B * adIter (∑ e ∈ E, G e) n A :=
+  commute_of_disjointSupport hcone (adIter_supportedOn_graphBall hG hA n) hB
 
 /-! ### The CV instantiation -/
 
