@@ -343,3 +343,35 @@ honesty; §9 is an ergonomics-and-reuse bar layered on top. *(Historical note: w
 adopted, the externally-load-bearing case was upstreaming, which is why F1 led the
 queue; with upstreaming retired 2026-08-06 (§7), the standard stands on the author's
 decision alone — library-grade code as an intrinsic bar for this corpus.)*
+
+## 10. Landing-surface standard (adopted 2026-08-09)
+
+The README and `docs/TOUR.md` are the two documents a citing reader meets before
+any Lean. They are held to a fixed shape, and the shape is the point: a reader
+should be able to find the claim, the axiom posture, and the non-claims without
+scrolling past narrative.
+
+**README, fixed structure.** Title and badge; one paragraph stating the posit;
+a results table of four or five rows carrying plain-English result, theorem name,
+and the literal `#print axioms` output; one paragraph separating logical axioms
+from physical posits; four non-claims; the repository-versus-papers note; the
+verification block; routing by reader question; layout; citation.
+
+**Rules, mechanically enforced by `scripts/check-claims.sh`.** No unqualified
+"zero axioms": the logical and physical senses must be separated in the same
+paragraph. No em dashes in README or `docs/TOUR.md`; use commas, colons,
+parentheses, or separate sentences. No dated correction lines in README, which
+belong in `docs/TOUR.md` or `specs/archive/`. README under 6 KB, and in practice
+under 4 KB. `scripts/check-connectivity.sh` independently requires the
+connectivity-manifest link and the sector-posited phrasing to stay present.
+
+**Change policy.** Do not restyle the landing surface incrementally. Edit it only
+when a headline claim actually changes: a new result displacing one of the table
+rows, a change in the axiom posture, or a new non-claim. Routine landings update
+`specs/`, `docs/TOUR.md`, and the audit pins, and leave the README alone. Nothing
+dated and no process commentary enters the README, ever; that material has homes
+in `specs/archive/` and the tour.
+
+**Nothing is deleted.** Passages removed from the landing surface move to
+`docs/TOUR.md` or `specs/archive/`; the release history lives at
+`specs/archive/HISTORY.md`.
