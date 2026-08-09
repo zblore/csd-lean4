@@ -219,6 +219,7 @@ public import CsdLean4.LF6.CGLMPQutrit
 public import CsdLean4.LF6.CGLMPQudit
 public import CsdLean4.LF6.MaxEntangledCGLMPCapstone
 public import CsdLean4.LF6.GHZnDeisolationFlow
+public import CsdLean4.LF6.BlochContraction
 public import CsdLean4.Empirical.QM.Bell
 public import CsdLean4.Empirical.QM.LeggettGarg
 public import CsdLean4.Empirical.QM.QuantumEraser

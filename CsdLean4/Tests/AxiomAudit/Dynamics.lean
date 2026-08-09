@@ -914,4 +914,30 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.no_product_partition_realises_ghzN_qm
 
+-- LF6-3/LF6-4 Bloch-volume contraction (2026-08-09, LF6/BlochContraction.lean). The
+-- geometric open-vs-closed signature on the two proved dissipators: dephasing acts as
+-- diag(e,e,1) and damping as diag(sqrt(e),sqrt(e),e) + trace-weighted pole offset on the
+-- Bloch vector (blochVec_dephasing/_damping) -- and BOTH determinants equal e^{-2 gamma t}:
+-- the marginal volume drift is a dissipation invariant, blind to how the contraction is
+-- distributed over axes. Metrology A4: gamma*t = 0 gives factor 1 (closed = drift-free),
+-- gamma*t > 0 strictly contracts (openness detected), the initial drift rate is exactly
+-- -2 gamma, and one drift sample at any t > 0 identifies gamma. HONEST SCOPE: the two
+-- exhibited dissipators; the general-generator form waits on LF6-9's exponential-CP
+-- residual (Mathlib-scale).
+/-- info: 'CSD.LF6.det_blochLinearDephasing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.det_blochLinearDephasing
+
+/-- info: 'CSD.LF6.det_blochLinearDamping' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.det_blochLinearDamping
+
+/-- info: 'CSD.LF6.bloch_volume_decay_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.bloch_volume_decay_rate
+
+/-- info: 'CSD.LF6.volume_drift_determines_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.volume_drift_determines_rate
+
 end CSD.Tests.AxiomAudit
