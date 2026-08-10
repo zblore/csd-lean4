@@ -2112,4 +2112,21 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Matrix.trotter_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.trotter_skew
 
+-- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
+-- Mathlib has the covering-space apparatus (path lifting, monodromy,
+-- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient
+-- covering with deck group 2piZ, but nowhere states that pi_1(S^1) is Z or even that it
+-- is nontrivial -- checked at the pin. These three supply it: the deck-group equivalence,
+-- and the nontriviality that downstream obstruction arguments consume (a time-one flow
+-- map is homotopic to the identity, hence acts trivially on pi_1; a factor exchange on a
+-- product arena does not). First brick of the relocation-generation obstruction.
+/-- info: 'Circle.fundamentalGroupEquivZMultiples' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Circle.fundamentalGroupEquivZMultiples
+
+/-- info: 'Circle.fundamentalGroup_nontrivial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Circle.fundamentalGroup_nontrivial
+
+/-- info: 'Circle.not_simplyConnectedSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Circle.not_simplyConnectedSpace
+
 end CSD.Tests.AxiomAudit

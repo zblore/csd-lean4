@@ -68,6 +68,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerUniqueness
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
 public import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
+public import CsdLean4.Mathlib.Topology.Homotopy.CircleFundamentalGroup
 public import CsdLean4.LF1.Setup
 public import CsdLean4.LF1.Preparation
 public import CsdLean4.LF1.Outcomes
