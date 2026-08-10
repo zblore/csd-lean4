@@ -404,7 +404,7 @@ theorem pointer_luders_born_prep (c : ContextField N)
           ((pointerProtocol c hc ε hδ).outcomeSector i ×ˢ Set.univ)))
       ((fun y : PointerLudersArena N => y.1.1) ⁻¹' globalBasin c' j)
       = ENNReal.ofReal (c'.rate (vertexPoint i) j) := by
-  haveI := isProbabilityMeasure_pointerPrep p q₀ hδpos
+  have := isProbabilityMeasure_pointerPrep p q₀ hδpos
   have hpos : pointerPrep p q₀ δ ((pointerProtocol c hc ε hδ).outcomeSector i) ≠ 0 := by
     intro h0
     have hlow := pointer_born_lower c hc hε hδpos hδ p q₀ i

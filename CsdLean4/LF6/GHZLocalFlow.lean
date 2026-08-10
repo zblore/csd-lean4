@@ -403,7 +403,7 @@ lemma ghzLocalFlow_mk_single (z0 z1 z2 : Fin 2 × Fin 2) :
       = Projectivization.mk ℂ
           (EuclideanSpace.single (ghzFlowEquiv (vnPerm 2 z0, vnPerm 2 z1, vnPerm 2 z2)) (1 : ℂ))
           (single_one_ne_zero _) := by
-  haveI : NeZero (8 * 8) := ⟨by norm_num⟩
+  have : NeZero (8 * 8) := ⟨by norm_num⟩
   refine (smul_mk_eq_mk ghzLocalFlowUnitary _ (single_one_ne_zero _)).trans ?_
   exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (single_one_ne_zero _)).mpr
     ⟨1, by rw [one_smul]; exact (ghzLocalFlowUnitary_toEuclideanLin_single z0 z1 z2).symm⟩
@@ -569,7 +569,7 @@ theorem ghzLocalFlow_realises_localNaimark
           ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
             (Matrix.toEuclideanLin ghzLocalV ψ))
           (ghzLocalDil_ne_zero ψ hψ) := by
-  haveI : NeZero (8 * 8) := ⟨by norm_num⟩
+  have : NeZero (8 * 8) := ⟨by norm_num⟩
   refine (smul_mk_eq_mk ghzLocalFlowUnitary _ (ghzLocalEmbed_ne_zero ψ hψ)).trans ?_
   exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (ghzLocalDil_ne_zero ψ hψ)).mpr
     ⟨1, by rw [one_smul]; exact ghzLocalFlow_realises_operator ψ⟩

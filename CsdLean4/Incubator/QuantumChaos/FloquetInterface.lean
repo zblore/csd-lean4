@@ -185,7 +185,7 @@ noncomputable def FloquetEvolution.ofUnitaryMatrix
     (U : Matrix.unitaryGroup n ℂ) :
     FloquetEvolution (EuclideanSpace ℂ n) where
   step :=
-    { toLinearEquiv := LinearEquiv.ofLinear
+    { toLinearEquiv := LinearEquiv.ofLinearMap
         (Matrix.toEuclideanLin (U.val : Matrix n n ℂ))
         (Matrix.toEuclideanLin (star U.val : Matrix n n ℂ))
         (by

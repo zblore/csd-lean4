@@ -496,7 +496,7 @@ theorem measurementFlow_realises_dilation {m : ℕ} (e : Fin N × Fin N ≃ Fin 
           ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e)
             (Matrix.toEuclideanLin (vnDilationV N) ψ))
           (piLpCongrLeft_vnDilationV_ne_zero e ψ hψ) := by
-  haveI : NeZero m := ⟨fun h => Fin.elim0 (h ▸ e ((0 : Fin N), 0))⟩
+  have : NeZero m := ⟨fun h => Fin.elim0 (h ▸ e ((0 : Fin N), 0))⟩
   rw [measurementFlow_apply]
   refine (smul_mk_eq_mk (vnUnitaryReindexed N e) _
       (piLpCongrLeft_embedGround_ne_zero e ψ hψ)).trans ?_

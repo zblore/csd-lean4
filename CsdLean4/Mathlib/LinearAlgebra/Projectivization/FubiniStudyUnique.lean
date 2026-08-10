@@ -119,7 +119,7 @@ instance instIsMulRightInvariantUnitaryHaarProb (N : ℕ) :
     MeasureTheory.Measure.IsMulRightInvariant
       (unitaryHaarProb : MeasureTheory.Measure (Matrix.unitaryGroup (Fin N) ℂ)) where
   map_mul_right_eq_self g := by
-    haveI : MeasureTheory.IsProbabilityMeasure
+    have : MeasureTheory.IsProbabilityMeasure
         (MeasureTheory.Measure.map (· * g)
           (unitaryHaarProb : MeasureTheory.Measure
             (Matrix.unitaryGroup (Fin N) ℂ))) :=
@@ -298,7 +298,7 @@ theorem invariant_finiteMeasure_eq_smul_fubiniStudy
   · exact ⟨0, by rw [zero_smul]; exact MeasureTheory.Measure.measure_univ_eq_zero.mp h0⟩
   · have htop : μ Set.univ ≠ ⊤ := MeasureTheory.measure_ne_top μ Set.univ
     -- The mass-normalised measure is a probability measure.
-    haveI hprob : MeasureTheory.IsProbabilityMeasure ((μ Set.univ)⁻¹ • μ) := by
+    have hprob : MeasureTheory.IsProbabilityMeasure ((μ Set.univ)⁻¹ • μ) := by
       refine ⟨?_⟩
       rw [MeasureTheory.Measure.smul_apply, smul_eq_mul]
       exact ENNReal.inv_mul_cancel h0 htop

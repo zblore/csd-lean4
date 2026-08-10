@@ -138,7 +138,7 @@ This is the Schur-complement witness of operator convexity of the inverse: the S
 the `A`-block is `A⁻¹ - 1·A⁻¹·1 = 0 ≥ 0`. -/
 theorem fromBlocks_inv_posSemidef {A : Matrix n n ℂ} (hA : A.PosDef) :
     (fromBlocks A 1 1 A⁻¹).PosSemidef := by
-  letI : Invertible A := hA.isUnit.invertible
+  let : Invertible A := hA.isUnit.invertible
   have h := Matrix.PosDef.fromBlocks₁₁ (1 : Matrix n n ℂ) A⁻¹ hA
   rw [show (1 : Matrix n n ℂ)ᴴ = 1 from Matrix.conjTranspose_one] at h
   rw [h]; simpa using PosSemidef.zero
@@ -174,7 +174,7 @@ theorem inv_loewner_convex {A B : Matrix n n ℂ} (hA : A.PosDef) (hB : B.PosDef
     have he : ((1 : ℂ) - t) = ((1 - t : ℝ) : ℂ) := by push_cast; ring
     rw [he]; exact_mod_cast h
   have hCpd : ((t : ℂ) • A + ((1 : ℂ) - t) • B).PosDef := convexComb_posDef hA hB ht0 ht1
-  letI : Invertible ((t : ℂ) • A + ((1 : ℂ) - t) • B) := hCpd.isUnit.invertible
+  let : Invertible ((t : ℂ) • A + ((1 : ℂ) - t) • B) := hCpd.isUnit.invertible
   -- convex combination of the two block PSD witnesses
   have hPSD : ((t : ℂ) • fromBlocks A 1 1 A⁻¹ + ((1 : ℂ) - t) • fromBlocks B 1 1 B⁻¹).PosSemidef :=
     ((fromBlocks_inv_posSemidef hA).smul hc0).add ((fromBlocks_inv_posSemidef hB).smul hc1)

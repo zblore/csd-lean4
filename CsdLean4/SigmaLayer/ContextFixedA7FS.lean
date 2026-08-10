@@ -227,7 +227,7 @@ private theorem box_in_simplex {M : ℕ} (hM : 0 < M) {b d c : ℝ}
     Set.pi Set.univ (fun _ : Fin M => Set.Ioo (b - d) (b + d))
       ⊆ {t : Fin M → ℝ | (∀ i, t i ≤ c) ∧ 1 - ∑ i, t i ≤ c} ∩ openSimplexFree := by
   classical
-  haveI : Nonempty (Fin M) := ⟨⟨0, hM⟩⟩
+  have : Nonempty (Fin M) := ⟨⟨0, hM⟩⟩
   have hne : (Finset.univ : Finset (Fin M)).Nonempty := Finset.univ_nonempty
   have hcard : (Finset.univ : Finset (Fin M)).card = M :=
     Finset.card_univ.trans (Fintype.card_fin M)

@@ -256,7 +256,7 @@ theorem shor_factor_of_even_order (N : ℕ) (hN : 1 < N) (a : (ZMod N)ˣ)
     (hy2 : ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N) ≠ -1)
     (x : ℤ) (hx : (x : ZMod N) = ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N)) :
     1 < Int.gcd (x - 1) (N : ℤ) ∧ Int.gcd (x - 1) (N : ℤ) < N ∧ Int.gcd (x - 1) (N : ℤ) ∣ N := by
-  haveI : NeZero N := ⟨by omega⟩
+  have : NeZero N := ⟨by omega⟩
   obtain ⟨hsq, hn1, hn2⟩ := even_order_sqrt_unity N a hr hy1 hy2 x hx
   exact nontrivial_factor N hN x hsq hn1 hn2
 

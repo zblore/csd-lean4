@@ -140,7 +140,7 @@ finite-dim normed `Matrix (Fin N) (Fin N) ℂ` (proper via
 `FiniteDimensional.proper_rclike`), discharging `IsClosed` via
 `isClosed_underlyingSet` and `IsBounded` via `isBounded_underlyingSet`. -/
 instance instCompactSpace : CompactSpace (Matrix.unitaryGroup (Fin N) ℂ) := by
-  haveI : ProperSpace (Matrix (Fin N) (Fin N) ℂ) :=
+  have : ProperSpace (Matrix (Fin N) (Fin N) ℂ) :=
     FiniteDimensional.proper_rclike ℂ _
   have h_compact :
       IsCompact ((Matrix.unitaryGroup (Fin N) ℂ : Submonoid _) :

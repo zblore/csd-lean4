@@ -2960,7 +2960,7 @@ theorem diagReducedMap_complexSign_closure
             (Projectivization.mk ℂ (b i + Complex.I • b j) (Iadd_basis_ne_zero b hij))
           = Projectivization.mk ℂ (b i - Complex.I • b j) (subI_basis_ne_zero b hij)) := by
   rcases lt_or_ge N 2 with hN | hN
-  · haveI : Subsingleton (Fin N) := Fin.subsingleton_iff_le_one.mpr (by omega)
+  · have : Subsingleton (Fin N) := Fin.subsingleton_iff_le_one.mpr (by omega)
     exact Or.inl (fun i j hij => absurd (Subsingleton.elim i j) hij)
   · have h01 : (⟨0, by omega⟩ : Fin N) ≠ ⟨1, by omega⟩ := Fin.ne_of_val_ne (by norm_num)
     rcases diagReducedMap_complex_probe_general hf b i₀ h01 with hfix | hflip

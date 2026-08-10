@@ -100,7 +100,7 @@ theorem csd_lhv_chsh_bound
     (bun : CSDLHVBundle D Λ SettingA SettingB)
     (a a' : SettingA) (b b' : SettingB) :
     |CSD.Empirical.QM.E91.lhvCHSH bun.μ bun.A bun.B a a' b b'| ≤ 2 := by
-  haveI := bun.hμ
+  have := bun.hμ
   exact CSD.Empirical.QM.E91.lhvCHSH_abs_le_two bun.μ bun.A bun.B
     bun.hA bun.hB bun.hApm bun.hBpm a a' b b'
 

@@ -202,7 +202,7 @@ theorem integral_spectralOnticCentered_eq_variance {N M : ℕ}
         ∂((Measure.dirac p₀).prod (volume : Measure KTorus))
       = spectralVariance hA ψ := by
   unfold spectralOnticCentered spectralVariance
-  haveI : IsProbabilityMeasure ((Measure.dirac p₀).prod (volume : Measure KTorus)) :=
+  have : IsProbabilityMeasure ((Measure.dirac p₀).prod (volume : Measure KTorus)) :=
     inferInstance
   rw [MeasureTheory.integral_finsetSum]
   · apply Finset.sum_congr rfl

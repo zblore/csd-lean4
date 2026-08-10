@@ -70,7 +70,7 @@ compact, second-countable `ℝ^M`, hence itself a locally compact second-countab
 space, hence σ-compact (`sigmaCompactSpace_of_locallyCompact_secondCountable`). -/
 theorem isSigmaCompact_openSimplexFree :
     IsSigmaCompact (openSimplexFree (M := M)) := by
-  haveI : LocallyCompactSpace (openSimplexFree (M := M)) :=
+  have : LocallyCompactSpace (openSimplexFree (M := M)) :=
     (isOpen_openSimplexFree (M := M)).locallyCompactSpace
   exact isSigmaCompact_iff_sigmaCompactSpace.mpr inferInstance
 

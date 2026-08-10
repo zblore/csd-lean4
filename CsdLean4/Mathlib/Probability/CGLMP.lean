@@ -541,7 +541,7 @@ This closes the numeric bound at full dimensional generality; the `d = 2, 3, 4`
 theorem cglmp_lhv_bound (μ : Measure Λ) [IsProbabilityMeasure μ] (hd : 2 ≤ d)
     (A B : Bool → Λ → ZMod d) (hA : ∀ x, Measurable (A x)) (hB : ∀ y, Measurable (B y)) :
     cglmpLHV μ A B ≤ 2 := by
-  haveI : NeZero d := ⟨by omega⟩
+  have : NeZero d := ⟨by omega⟩
   exact cglmpLHV_le_of_det_le μ A B hA hB 2
     (fun a1 a2 b1 b2 =>
       cglmpDet_le_two hd (fun a1 a2 b1 b2 => scaledDetZ_le_general hd a1 a2 b1 b2) a1 a2 b1 b2)
@@ -578,7 +578,7 @@ EXACT local-hidden-variable optimum in every dimension — the CGLMP bound is sa
 upper estimate. -/
 theorem cglmp_detTable_tight_general (hd : 2 ≤ d) :
     cglmp d (detTable (K := ℝ) (0 : ZMod d) 0 0 0) = 2 := by
-  haveI : NeZero d := ⟨by omega⟩
+  have : NeZero d := ⟨by omega⟩
   have hne : ((d : ℝ) - 1) ≠ 0 := by
     have : (2 : ℝ) ≤ (d : ℝ) := by exact_mod_cast hd
     linarith

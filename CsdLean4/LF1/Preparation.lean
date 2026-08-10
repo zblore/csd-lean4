@@ -30,7 +30,7 @@ variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
 noncomputable def prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace :=
   ⟨((S.μL : Measure SigmaSpace).restrict S.Ω0), by
     -- finiteness follows from finiteness of μL
-    haveI := S.μL.isFiniteMeasure
+    have := S.μL.isFiniteMeasure
     infer_instance
   ⟩
 

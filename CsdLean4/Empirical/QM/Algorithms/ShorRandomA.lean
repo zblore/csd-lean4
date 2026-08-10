@@ -1347,15 +1347,15 @@ theorem shor_random_a_success_general (N : ℕ) [NeZero N] (hodd : Odd N)
     rw [hcon] at hdvd
     exact (Nat.not_even_iff_odd.mpr hodd) (even_iff_two_dvd.mpr hdvd)
   -- per-factor NeZero
-  haveI hNZ : ∀ p : N.primeFactors, NeZero (N' p) := by
+  have hNZ : ∀ p : N.primeFactors, NeZero (N' p) := by
     intro p
     refine ⟨?_⟩
     rw [hN'def]
     exact pow_ne_zero _ (hp_prime p).ne_zero
   -- NeZero of the product (= N)
-  haveI hNZprod : NeZero (∏ p, N' p) := ⟨by rw [← hprod]; exact hN0⟩
+  have hNZprod : NeZero (∏ p, N' p) := ⟨by rw [← hprod]; exact hN0⟩
   -- per-factor cyclicity of the units group
-  haveI hcyc : ∀ p : N.primeFactors, IsCyclic (ZMod (N' p))ˣ := by
+  have hcyc : ∀ p : N.primeFactors, IsCyclic (ZMod (N' p))ˣ := by
     intro p
     rw [hN'def]
     exact ZMod.isCyclic_units_of_prime_pow (p : ℕ) (hp_prime p) (hp_ne2 p) (N.factorization p)

@@ -2683,4 +2683,65 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusBornMeasurement_ae_total
 
+-- The relocation-generation obstruction (2026-08-10, RelocationObstruction.lean).
+-- PointerGeneration closed the record-CREATING half (rampedU_schrodinger: the stroke is the
+-- flow of an explicit Hermitian generator). These four close the COLLAPSE half negatively.
+-- Horn 1: the bank swap exchanges the system factor with slot j, so it collapses the circle
+-- section embedded in the system's torus angle (after the exchange that coordinate reads
+-- slot j, held constant) -- and the circle is not contractible. NOT the PiecewiseHamiltonian
+-- flux obstruction: flux obstructs within the identity component, this never reaches it, and
+-- the H^1(CP^K)=0 escape does not apply because the obstruction is in the bank's product
+-- structure. Horn 2: the non-permutation alternative (imprint into a ready slot) is not
+-- injective, hence not a homeomorphism, hence not a flow map either. Scope: the SWAP
+-- architecture, not collapse-as-dynamics in general.
+/-- info: 'CSD.RecordLayer.pointerBankSwap_not_homotopic_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerBankSwap_not_homotopic_id
+
+/-- info: 'CSD.RecordLayer.pointerBankSwap_not_flow_time_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerBankSwap_not_flow_time_one
+
+/-- info: 'CSD.RecordLayer.pointerImprint_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerImprint_not_injective
+
+/-- info: 'CSD.RecordLayer.pointerImprint_not_homeomorph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerImprint_not_homeomorph
+
+-- The join relocation IS generated (2026-08-10, JoinGeneration.lean) -- the POSITIVE
+-- counterpart to RelocationObstruction. The bank arena is a PRODUCT and pointerBankSwap
+-- exchanges two of its factors; the join arena is CP^{N+N-1}, a SINGLE projective space, and
+-- joinSwap is one unitary acting on it. So neither horn applies: nothing to exchange, and a
+-- projective unitary is bijective. Constructively: joinMat is a Hermitian involution (real
+-- permutation matrix of an involutive permutation), so Q = (1-P)/2 is a Hermitian idempotent,
+-- so U(t) = (1-Q) + e^{i*pi*t}Q is unitary with U 0 = 1 and U 1 = joinMat, and it solves the
+-- Schrodinger ODE for the explicit Hermitian generator H = pi*Q. No matrix exponential is
+-- needed: on an idempotent the series collapses to 1 + (e^z - 1)Q, written down in closed
+-- form. Collapse CAN be dynamics; the obstruction really was about the swap architecture.
+/-- info: 'CSD.RecordLayer.joinMat_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinMat_mul_self
+
+/-- info: 'CSD.RecordLayer.joinProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinProj_mul_self
+
+/-- info: 'CSD.RecordLayer.joinFlowMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinFlowMat_mem_unitaryGroup
+
+/-- info: 'CSD.RecordLayer.joinGen_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinGen_isHermitian
+
+/-- info: 'CSD.RecordLayer.joinFlowMat_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinFlowMat_hasDerivAt
+
+/-- info: 'CSD.RecordLayer.joinSwap_eq_flowTimeOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinSwap_eq_flowTimeOne
+
 end CSD.Tests.AxiomAudit

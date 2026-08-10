@@ -55,7 +55,7 @@ theorem shor_random_a_yields_factor (N : ℕ) (hN : 1 < N) (a : (ZMod N)ˣ)
     (hx : (x : ZMod N) = ((a ^ (orderOf a / 2) : (ZMod N)ˣ) : ZMod N)) :
     1 < Int.gcd (x - 1) (N : ℤ) ∧ Int.gcd (x - 1) (N : ℤ) < N
       ∧ Int.gcd (x - 1) (N : ℤ) ∣ N := by
-  haveI : NeZero N := ⟨by omega⟩
+  have : NeZero N := ⟨by omega⟩
   obtain ⟨hr, hne⟩ := hgood
   -- the half exponent is strictly between 0 and the order
   have hopos : 0 < orderOf a := orderOf_pos a

@@ -459,7 +459,7 @@ theorem join_luders_marginal (i : Fin K) (hPi : blockProj b i ψ ≠ 0)
         (readyMeasure_compl K)]
   -- 4. Push through the propagator and the readout; a.e. the composite is constant in all
   --    but the ancilla fibre.
-  haveI : IsProbabilityMeasure (ProbabilityTheory.cond volume (goodTheta b ψ hψ0 i)) :=
+  have : IsProbabilityMeasure (ProbabilityTheory.cond volume (goodTheta b ψ hψ0 i)) :=
     ProbabilityTheory.cond_isProbabilityMeasure hGood
   have hmeas_ev : Measurable (P.evolve P.startTime P.readoutTime) := P.measurable_evolve _ _
   rw [MeasurementProtocol.postMeasure, Measure.map_map measurable_sysRead hmeas_ev, hsel,
