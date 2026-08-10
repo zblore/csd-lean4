@@ -91,4 +91,20 @@ theorem not_simplyConnectedSpace : ¬ SimplyConnectedSpace Circle := by
   have hsub : Subsingleton (FundamentalGroup Circle 1) := inferInstance
   exact (not_subsingleton_iff_nontrivial.mpr fundamentalGroup_nontrivial) hsub
 
+/-- ★ **The circle is not contractible.** A contractible space is simply
+connected (`SimplyConnectedSpace.ofContractible`). -/
+theorem not_contractibleSpace : ¬ ContractibleSpace Circle := fun _ =>
+  not_simplyConnectedSpace inferInstance
+
 end Circle
+
+namespace AddCircle
+
+/-- ★ **The additive circle is not contractible**, for any nonzero period,
+transported from `Circle.not_contractibleSpace` along
+`AddCircle.homeomorphCircle`. This is the form the record arenas consume, since
+`LF4.KTorus` is a product of copies of `AddCircle 1`. -/
+theorem not_contractibleSpace {T : ℝ} (hT : T ≠ 0) : ¬ ContractibleSpace (AddCircle T) :=
+  fun _ => Circle.not_contractibleSpace (AddCircle.homeomorphCircle hT).symm.contractibleSpace
+
+end AddCircle

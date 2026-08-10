@@ -2683,4 +2683,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusBornMeasurement_ae_total
 
+-- The relocation-generation obstruction (2026-08-10, RelocationObstruction.lean).
+-- PointerGeneration closed the record-CREATING half (rampedU_schrodinger: the stroke is the
+-- flow of an explicit Hermitian generator). These four close the COLLAPSE half negatively.
+-- Horn 1: the bank swap exchanges the system factor with slot j, so it collapses the circle
+-- section embedded in the system's torus angle (after the exchange that coordinate reads
+-- slot j, held constant) -- and the circle is not contractible. NOT the PiecewiseHamiltonian
+-- flux obstruction: flux obstructs within the identity component, this never reaches it, and
+-- the H^1(CP^K)=0 escape does not apply because the obstruction is in the bank's product
+-- structure. Horn 2: the non-permutation alternative (imprint into a ready slot) is not
+-- injective, hence not a homeomorphism, hence not a flow map either. Scope: the SWAP
+-- architecture, not collapse-as-dynamics in general.
+/-- info: 'CSD.RecordLayer.pointerBankSwap_not_homotopic_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerBankSwap_not_homotopic_id
+
+/-- info: 'CSD.RecordLayer.pointerBankSwap_not_flow_time_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerBankSwap_not_flow_time_one
+
+/-- info: 'CSD.RecordLayer.pointerImprint_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerImprint_not_injective
+
+/-- info: 'CSD.RecordLayer.pointerImprint_not_homeomorph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerImprint_not_homeomorph
+
 end CSD.Tests.AxiomAudit

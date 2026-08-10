@@ -2129,4 +2129,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Circle.not_simplyConnectedSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Circle.not_simplyConnectedSpace
 
+-- Non-contractibility, and the homotopy obstruction it powers (2026-08-10,
+-- CircleFundamentalGroup.lean + FactorExchangeObstruction.lean). A self-map joined to the
+-- identity by a flow is homotopic to the identity; if it collapses a section of a retract
+-- onto a constant, that retract is forced contractible. One non-contractible retract
+-- therefore obstructs. Stated basepoint-free: the usual pi_1 route must conjugate by the
+-- path the basepoint traces under the homotopy, and none of that is needed here.
+/-- info: 'Circle.not_contractibleSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Circle.not_contractibleSpace
+
+/-- info: 'AddCircle.not_contractibleSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.not_contractibleSpace
+
+/-- info: 'not_homotopic_id_of_section_collapsed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms not_homotopic_id_of_section_collapsed
+
+/-- info: 'not_isFlowTimeOne_of_section_collapsed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms not_isFlowTimeOne_of_section_collapsed
+
 end CSD.Tests.AxiomAudit

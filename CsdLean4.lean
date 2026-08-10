@@ -69,6 +69,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
 public import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
 public import CsdLean4.Mathlib.Topology.Homotopy.CircleFundamentalGroup
+public import CsdLean4.Mathlib.Topology.Homotopy.FactorExchangeObstruction
 public import CsdLean4.LF1.Setup
 public import CsdLean4.LF1.Preparation
 public import CsdLean4.LF1.Outcomes
@@ -459,6 +460,7 @@ public import CsdLean4.SigmaLayer.PointerHamiltonianField
 public import CsdLean4.SigmaLayer.PointerLanding
 public import CsdLean4.SigmaLayer.PointerLuders
 public import CsdLean4.SigmaLayer.PointerLudersMarginal
+public import CsdLean4.SigmaLayer.RelocationObstruction
 public import CsdLean4.SigmaLayer.PointerProtocol
 public import CsdLean4.SigmaLayer.PointerRotation
 public import CsdLean4.SigmaLayer.PointerSmoothProfile
