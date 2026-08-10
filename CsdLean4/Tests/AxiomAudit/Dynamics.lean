@@ -449,6 +449,14 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolation_capstone
 
+-- C1 support (2026-08-10, Phase 0 of the C1 correction): the flow-level
+-- measure preservation was the one C1 support theorem with no pin. The other nine
+-- listed in the C1 work order were already pinned in their namespace-matched parts
+-- (EmpiricalQM, Dynamics, LF4), per the G9 rule, so no duplicate C1 part is created.
+/-- info: 'CSD.LF6.localDeisolationFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolationFlow_measurePreserving
+
 -- LF6-A.3 flow ↔ dilation tie (2026-06-28): the LOCAL flow realises the local Naimark
 -- dilation, Φ_loc [ψ ⊗ (a₀⊗a₀)] = [V_loc ψ] for every nonzero ψ (matches LF5's
 -- measurementFlow_realises_dilation). Closes the auditor Minor: the capstone now ties
