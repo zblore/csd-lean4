@@ -230,7 +230,7 @@ theorem volume_shrunkCell_slice (c : ContextField N) {ε : ℝ} (hε : 0 ≤ ε)
     (volume : Measure LF4.KTorus)
         {θ : LF4.KTorus | dist θ.1 (cellMid (c.rate p) j) ≤ c.rate p j / 2 - ε}
       = ENNReal.ofReal (c.rate p j - 2 * ε) := by
-  haveI : Fact ((0 : ℝ) < 1) := ⟨one_pos⟩
+  have : Fact ((0 : ℝ) < 1) := ⟨one_pos⟩
   have hset : {θ : LF4.KTorus | dist θ.1 (cellMid (c.rate p) j) ≤ c.rate p j / 2 - ε}
       = Metric.closedBall (cellMid (c.rate p) j) (c.rate p j / 2 - ε) ×ˢ Set.univ := by
     ext θ

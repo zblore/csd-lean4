@@ -396,7 +396,7 @@ lemma localDeisolationFlow_mk_single (z1 z2 : Fin 2 × Fin 2) :
       = Projectivization.mk ℂ
           (EuclideanSpace.single (jointFlowEquiv (vnPerm 2 z1, vnPerm 2 z2)) (1 : ℂ))
           (single_one_ne_zero _) := by
-  haveI : NeZero (4 * 4) := ⟨by norm_num⟩
+  have : NeZero (4 * 4) := ⟨by norm_num⟩
   refine (smul_mk_eq_mk localFlowUnitary _ (single_one_ne_zero _)).trans ?_
   exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (single_one_ne_zero _)).mpr
     ⟨1, by rw [one_smul]; exact (localFlowUnitary_toEuclideanLin_single z1 z2).symm⟩
@@ -557,7 +557,7 @@ theorem localDeisolationFlow_realises_localNaimark
           ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ finProdFinEquiv)
             (Matrix.toEuclideanLin localDeisolationV ψ))
           (localDil_ne_zero ψ hψ) := by
-  haveI : NeZero (4 * 4) := ⟨by norm_num⟩
+  have : NeZero (4 * 4) := ⟨by norm_num⟩
   refine (smul_mk_eq_mk localFlowUnitary _ (localEmbed_ne_zero ψ hψ)).trans ?_
   exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (localDil_ne_zero ψ hψ)).mpr
     ⟨1, by rw [one_smul]; exact localDeisolationFlow_realises_operator ψ⟩

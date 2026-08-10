@@ -80,7 +80,7 @@ theorem weights_sum_eq_one
     (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
     (π_part : MeasurablePartition P (Measure.map D.π μprep) n) :
     ∑ i : Fin n, projectiveWeight D μprep (π_part.parts i) = 1 := by
-  haveI : IsProbabilityMeasure (Measure.map D.π μprep) :=
+  have : IsProbabilityMeasure (Measure.map D.π μprep) :=
     Measure.isProbabilityMeasure_map D.measurable_π.aemeasurable
   have hpw : Pairwise (AEDisjoint (Measure.map D.π μprep) on π_part.parts) :=
     fun i j hij => π_part.pairwise_null i j hij

@@ -28,7 +28,12 @@ csd-lean4                 (the complete CSD quantum programme)
 ```
 
 **No external dependency is added today.** Toolchains (verified 2026-08-07):
-`csd-lean4` Lean 4.33.0-rc1 (Mathlib `c732b96`); Physlib Lean 4.32.0 (Mathlib
+`csd-lean4` Lean **4.33.0 stable** (Mathlib tag `v4.33.0` = `db584cd6`; **bumped
+2026-08-10**, the day 4.33.0 released — the planned single rc1→stable jump, skipping
+rc2; cost: 2 call sites for a generalised `integrableOn_rpow_mul_exp_neg_mul_rpow`
+hypothesis, 2 for the `LinearEquiv.ofLinear`→`ofLinearMap` rename, and 60 sites of the
+new `have`-over-`haveI` / `let`-over-`letI` style linter; **every axiom pin passed
+unchanged**). Physlib Lean 4.32.0 (Mathlib
 `81a5d25`); Lean-QIT Lean **4.30.0** (Mathlib `c5ea003`). **Alignment target:
 Physlib** — one minor version behind, community-maintained, active (commits daily as
 of 2026-08-05; no 4.33-bump PR open yet); the convergence event is Lean 4.33.0

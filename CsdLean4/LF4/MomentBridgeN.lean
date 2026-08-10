@@ -80,7 +80,7 @@ theorem blockSqNormCurry_map_pi {N : ℕ} :
   rw [hcomp, ← Measure.map_map hblock hcurry,
     map_curryProd_pi (ν := fun _ : Fin N × Fin 2 => gaussianReal 0 1)]
   -- per-factor map: `map (fun w i => gBlock (w i)) (pi μ) = pi (fun i => map gBlock (μ i))`.
-  haveI hsf : ∀ _i : Fin N,
+  have hsf : ∀ _i : Fin N,
       SigmaFinite (Measure.map gBlock (Measure.pi (fun _ : Fin 2 => gaussianReal 0 1))) := by
     intro _i; rw [gBlock_map_pi]; infer_instance
   rw [Measure.pi_map_pi (f := fun _ : Fin N => gBlock)

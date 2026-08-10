@@ -243,8 +243,8 @@ theorem weight_eq_P_st
     (prep : PureSingletPreparation D ctx N) (s t : Sign) :
     prep.μψ (prep.O_region s t).preEvent
       = ENNReal.ofReal (P_st ctx.a ctx.b s t) := by
-  haveI := prep.hμFS_prob
-  haveI := prep.hμψ_prob
+  have := prep.hμFS_prob
+  have := prep.hμψ_prob
   rw [prep.bridge_op_p s t,
       OP_p_at_jointEig_eq_P_st_direct D prep.μFS prep.bridge prep.μψ
         prep.PP prep.jed s t]

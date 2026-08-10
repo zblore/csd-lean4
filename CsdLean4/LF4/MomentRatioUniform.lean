@@ -70,7 +70,7 @@ theorem lintegral_radial_const :
   -- Integrability of `t·e^{−t/2}` on `Ioi 0` (needed for the ofReal↔lintegral bridge).
   have hint : IntegrableOn (fun t : ℝ => t * Real.exp (-t / 2)) (Ioi 0) := by
     have h := integrableOn_rpow_mul_exp_neg_mul_rpow (s := 1) (p := 1) (b := 1 / 2)
-      (by norm_num) (le_refl 1) (by norm_num)
+      (by norm_num) one_pos (by norm_num)
     apply h.congr_fun ?_ measurableSet_Ioi
     intro t ht
     simp only [mem_Ioi, Real.rpow_one] at *

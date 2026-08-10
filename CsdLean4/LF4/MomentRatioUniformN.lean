@@ -75,7 +75,7 @@ theorem lintegral_radial_moment (n : ℕ) :
   -- Integrability of `tⁿ·e^{−t/2}` on `Ioi 0`.
   have hint : IntegrableOn (fun t : ℝ => t ^ n * Real.exp (-t / 2)) (Ioi 0) := by
     have h := integrableOn_rpow_mul_exp_neg_mul_rpow (s := (n : ℝ)) (p := 1) (b := 1 / 2)
-      (by have := Nat.cast_nonneg (α := ℝ) n; linarith) (le_refl 1) (by norm_num)
+      (by have := Nat.cast_nonneg (α := ℝ) n; linarith) one_pos (by norm_num)
     apply h.congr_fun ?_ measurableSet_Ioi
     intro t _
     show t ^ (n : ℝ) * Real.exp (-(1 / 2) * t ^ (1 : ℝ)) = t ^ n * Real.exp (-t / 2)
@@ -162,8 +162,8 @@ theorem psiMat_det (S : ℝ) (t : Fin M → ℝ) : (psiMat S t).det = S ^ M := b
   rw [hdet_eq, B.twoBlockTriangular_det (· ≠ Fin.last M) htri]
   -- Corner block (i = last): 1×1 with entry B last last = 1.
   have hcorner : (B.toSquareBlockProp (fun i => ¬ (i ≠ Fin.last M))).det = 1 := by
-    haveI hne : Nonempty {i : Fin (M + 1) // ¬ (i ≠ Fin.last M)} := ⟨⟨Fin.last M, by simp⟩⟩
-    haveI hsub : Subsingleton {i : Fin (M + 1) // ¬ (i ≠ Fin.last M)} := by
+    have hne : Nonempty {i : Fin (M + 1) // ¬ (i ≠ Fin.last M)} := ⟨⟨Fin.last M, by simp⟩⟩
+    have hsub : Subsingleton {i : Fin (M + 1) // ¬ (i ≠ Fin.last M)} := by
       constructor; rintro ⟨a, ha⟩ ⟨b, hb⟩; rw [not_not] at ha hb; simp [ha, hb]
     rw [Matrix.det_eq_elem_of_subsingleton _ (Classical.arbitrary _)]
     obtain ⟨k, hk⟩ := (Classical.arbitrary {i : Fin (M + 1) // ¬ (i ≠ Fin.last M)})
@@ -425,7 +425,7 @@ theorem ratioSqNorm_map_expHalf_pi :
   have hprod_meas : Measurable (fun x : Fin (M + 1) → ℝ => ∏ i, dExp (x i)) :=
     Finset.measurable_prod _ fun i _ => measurable_dExp.comp (measurable_pi_apply i)
   -- σ-finite of `expHalf` (probability measure) for the pi-withDensity bridge.
-  haveI hsf : SigmaFinite ((volume : Measure ℝ).withDensity dExp) := by
+  have hsf : SigmaFinite ((volume : Measure ℝ).withDensity dExp) := by
     rw [← expHalf_eq_withDensity_dExp]; infer_instance
   -- `pi expHalf = volume.withDensity (∏ dExp)` (D.5b + volume_pi).
   have hpiexp : (Measure.pi (fun _ : Fin (M + 1) => expHalf))

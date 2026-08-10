@@ -95,7 +95,7 @@ theorem fubiniStudyMeasure_isForcedKahlerVolume [NeZero N] (p₀ : CPN N) :
   invariant := fun U =>
     ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
   unique := fun ν hν hν_inv => by
-    haveI := hν
+    have := hν
     exact fubiniStudyMeasure_unique p₀ ν (fun U => (hν_inv U).map_eq)
 
 /-- **The `π = id` sector's Liouville volume is forced.** For `unitaryFlowSetup N U p₀` the Liouville

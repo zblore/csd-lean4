@@ -390,7 +390,7 @@ sphere is a continuous surjection from sphere to `ℙ K V` (every
 projective point has a unit-norm representative obtained by
 normalising `p.rep`). -/
 instance instCompactSpace : CompactSpace (ℙ K V) := by
-  haveI : ProperSpace V := FiniteDimensional.proper_rclike K V
+  have : ProperSpace V := FiniteDimensional.proper_rclike K V
   -- Define the corestricted projection sphere → ℙ K V.
   let g : Metric.sphere (0 : V) 1 → ℙ K V :=
     fun v => mk K (v : V) (by

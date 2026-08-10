@@ -2,7 +2,8 @@
 
 Created 2026-08-06 (architecture decision: one unified CSD repository, external
 libraries underneath as dependencies). **Documentation-only for now** — no external
-dependency exists yet (`csd-lean4` is on Lean 4.33.0-rc1; Physlib on 4.32.0), so this
+dependency exists yet (`csd-lean4` is on Lean 4.33.0 stable as of 2026-08-10; Physlib
+still on 4.32.0, expected to bump ~8 days after the 4.33.0 release), so this
 directory holds no `.lean` files until the first provider lands.
 
 Policy (canonical statement: `specs/external-library-map.md`; charter:

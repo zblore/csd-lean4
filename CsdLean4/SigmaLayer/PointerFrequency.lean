@@ -71,7 +71,7 @@ theorem pointerSectorProb_mem_window (c : ContextField N)
     (hδ : δ ≤ 1 / 2) (p : LF4.CPN N) (q₀ : Pointer N) (j : Fin N) :
     c.rate p j - 2 * ε ≤ pointerSectorProb c hc ε hδ p q₀ j ∧
       pointerSectorProb c hc ε hδ p q₀ j ≤ c.rate p j + 2 * ((N : ℝ) - 1) * ε := by
-  haveI := isProbabilityMeasure_pointerPrep p q₀ hδpos
+  have := isProbabilityMeasure_pointerPrep p q₀ hδpos
   have hfin : pointerPrep p q₀ δ ((pointerProtocol c hc ε hδ).outcomeSector j) ≠ ⊤ :=
     measure_ne_top _ _
   constructor

@@ -61,13 +61,13 @@ namespace CSD.SigmaLayer
 fact that makes any unital map out of `M_m ⊗ M_n` injective. -/
 instance matrixTensor_isSimpleRing (m n : ℕ) [NeZero m] [NeZero n] :
     IsSimpleRing (Matrix (Fin m) (Fin m) ℂ ⊗[ℂ] Matrix (Fin n) (Fin n) ℂ) := by
-  haveI : Nonempty (Fin m) := ⟨⟨0, Nat.pos_of_ne_zero (NeZero.ne m)⟩⟩
-  haveI : Nonempty (Fin n) := ⟨⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩⟩
+  have : Nonempty (Fin m) := ⟨⟨0, Nat.pos_of_ne_zero (NeZero.ne m)⟩⟩
+  have : Nonempty (Fin n) := ⟨⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩⟩
   -- ℂ ⊗[ℂ] ℂ is simple (≃ ℂ)
-  haveI hcc : IsSimpleRing (ℂ ⊗[ℂ] ℂ) :=
+  have hcc : IsSimpleRing (ℂ ⊗[ℂ] ℂ) :=
     IsSimpleRing.of_ringEquiv (Algebra.TensorProduct.lid ℂ ℂ).symm.toRingEquiv inferInstance
   -- M_{m×n}(ℂ⊗ℂ) is simple
-  haveI hmat : IsSimpleRing (Matrix (Fin m × Fin n) (Fin m × Fin n) (ℂ ⊗[ℂ] ℂ)) :=
+  have hmat : IsSimpleRing (Matrix (Fin m × Fin n) (Fin m × Fin n) (ℂ ⊗[ℂ] ℂ)) :=
     IsSimpleRing.matrix (Fin m × Fin n) (ℂ ⊗[ℂ] ℂ)
   -- transport back along the Kronecker AlgEquiv
   exact IsSimpleRing.of_ringEquiv

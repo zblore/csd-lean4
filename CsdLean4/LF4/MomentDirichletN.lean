@@ -55,7 +55,7 @@ theorem pi_gaussianReal_prod_singleton_zero :
         = Set.univ.pi (fun _ => {(0 : ℝ)}) by
       ext f; simp only [Set.mem_singleton_iff, Set.mem_univ_pi, funext_iff]; rfl,
     Measure.pi_pi]
-  haveI : NullSingletonClass (gaussianReal 0 1) := nullSingletonClass_gaussianReal one_ne_zero
+  have : NullSingletonClass (gaussianReal 0 1) := nullSingletonClass_gaussianReal one_ne_zero
   exact Finset.prod_eq_zero (Finset.mem_univ ((0 : Fin (M + 1)), (0 : Fin 2)))
     (measure_singleton _)
 
@@ -67,7 +67,7 @@ Foundational-triple-only; **no** `busch_effect_gleason`. -/
 theorem fs_moment_joint_dirichlet_N (p₀ : CPN (M + 1)) :
     Measure.map (fun p : CPN (M + 1) => ratioN (fun i => momentMap p i)) (fubiniStudyMeasure p₀)
       = (Nat.factorial M : ℝ≥0∞) • volume.restrict openSimplexFree := by
-  haveI : NeZero (M + 1) := ⟨Nat.succ_ne_zero M⟩
+  have : NeZero (M + 1) := ⟨Nat.succ_ne_zero M⟩
   have hratio_meas : Measurable (ratioN (M := M)) := by
     unfold ratioN
     apply measurable_pi_lambda; intro k

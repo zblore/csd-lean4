@@ -195,7 +195,7 @@ lemma measurementFlow_mk_single (e : Fin N × Fin N ≃ Fin m) (a : Fin N × Fin
           (single_one_ne_zero _))
       = Projectivization.mk ℂ (EuclideanSpace.single (e (vnPerm N a)) (1 : ℂ))
           (single_one_ne_zero _) := by
-  haveI : NeZero m := ⟨fun h => Fin.elim0 (h ▸ e a)⟩
+  have : NeZero m := ⟨fun h => Fin.elim0 (h ▸ e a)⟩
   refine (smul_mk_eq_mk (vnUnitaryReindexed N e) _ (single_one_ne_zero _)).trans ?_
   exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (single_one_ne_zero _)).mpr
     ⟨1, by rw [one_smul]; exact (vnUnitaryReindexed_toEuclideanLin_single e a).symm⟩

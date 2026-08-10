@@ -606,7 +606,7 @@ theorem so1_onramp (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
         Measure.map (obsFlow lam t) μ = μ ∧
         Measure.map (obsFlow lam t) ν = ν ∧ μ ≠ ν) := by
   refine ⟨fun μ hp h => ?_, obsFlow_not_uniquely_ergodic hN p₀ lam t⟩
-  haveI := hp
+  have := hp
   exact fubiniStudy_forced_by_symmetry p₀ μ h
 
 end LF4

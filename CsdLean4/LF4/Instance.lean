@@ -64,8 +64,8 @@ abbrev CPN (N : ℕ) := ℙ ℂ (EuclideanSpace ℂ (Fin N))
 /-- `ℂℙ^{N-1}` is nonempty for `N ≥ 1` (it carries projective rays of a
 nonzero space). -/
 instance instNonemptyCPN : Nonempty (CPN N) := by
-  haveI : Nonempty (Fin N) := ⟨⟨0, Nat.pos_of_ne_zero (NeZero.ne N)⟩⟩
-  haveI : Nontrivial (EuclideanSpace ℂ (Fin N)) := inferInstance
+  have : Nonempty (Fin N) := ⟨⟨0, Nat.pos_of_ne_zero (NeZero.ne N)⟩⟩
+  have : Nontrivial (EuclideanSpace ℂ (Fin N)) := inferInstance
   infer_instance
 
 /-- The minimal ontic-shell `OnticSetup`: `μL` is Fubini–Study, the flow is

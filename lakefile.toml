@@ -11,11 +11,11 @@ defaultTargets = ["CsdLean4"]
 leanOptions = { autoImplicit = false, relaxedAutoImplicit = false }
 
 # Pin Mathlib to a specific commit for reproducible builds.
-# Bump in lockstep with `lean-toolchain` (currently v4.33.0-rc1).
+# Bump in lockstep with `lean-toolchain` (currently v4.33.0).
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4"
-rev = "c732b96d05efdb1fb84511dfdc24a8f70005ae99"
+rev = "db584cd6d46c92f209a44c0f1c829460d327499d"
 
 # Library target: LF1–LF5 + Empirical + Mathlib upstream-tracking.
 # Consumers `import CsdLean4` or `import CsdLean4.Basic` get the full

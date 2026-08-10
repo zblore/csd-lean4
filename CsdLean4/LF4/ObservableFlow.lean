@@ -186,7 +186,7 @@ is non-collinear with `(1,1,…)`. Any `c • v = (phase·v)` forces `c = 1` at 
 non-triviality witness. -/
 theorem obsFlow_ne_id (hN : 1 < N) :
     obsFlow (N := N) (obsLamWitness hN) obsTWitness ≠ id := by
-  haveI : NeZero N := ⟨by omega⟩
+  have : NeZero N := ⟨by omega⟩
   intro hid
   set v := obsWitnessVec hN with hv
   have hv0 : v ≠ 0 := obsWitnessVec_ne_zero hN

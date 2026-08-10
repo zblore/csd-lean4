@@ -83,7 +83,7 @@ noncomputable def pointerPrep (p : LF4.CPN N) (q₀ : Pointer N) (δ : ℝ) :
 omit [NeZero N] in
 theorem isProbabilityMeasure_pointerPrep (p : LF4.CPN N) (q₀ : Pointer N) {δ : ℝ}
     (hδpos : 0 < δ) : IsProbabilityMeasure (pointerPrep p q₀ δ) := by
-  haveI := ProbabilityTheory.cond_isProbabilityMeasure
+  have := ProbabilityTheory.cond_isProbabilityMeasure
     (μ := fubiniStudyMeasure q₀) (readyRegion_pos q₀ hδpos)
   unfold pointerPrep
   infer_instance
@@ -96,7 +96,7 @@ theorem pointerPrep_sector_measure (c : ContextField N) {ε δ : ℝ} (hε : 0 �
     (hδpos : 0 < δ) (p : LF4.CPN N) (q₀ : Pointer N) (j : Fin N) :
     pointerPrep p q₀ δ (pointerSector c ε δ j)
       = ENNReal.ofReal (c.rate p j - 2 * ε) := by
-  haveI := ProbabilityTheory.cond_isProbabilityMeasure
+  have := ProbabilityTheory.cond_isProbabilityMeasure
     (μ := fubiniStudyMeasure q₀) (readyRegion_pos q₀ hδpos)
   rw [pointerPrep, pointerSector, Measure.prod_prod,
     ProbabilityTheory.cond_apply_self (readyRegion_pos q₀ hδpos) (measure_ne_top _ _),
@@ -136,7 +136,7 @@ theorem pointer_born_upper (c : ContextField N)
     pointerPrep p q₀ δ ((pointerProtocol c hc ε hδ).outcomeSector i)
       ≤ ENNReal.ofReal (c.rate p i + 2 * ((N : ℝ) - 1) * ε) := by
   classical
-  haveI := isProbabilityMeasure_pointerPrep p q₀ hδpos
+  have := isProbabilityMeasure_pointerPrep p q₀ hδpos
   set P := pointerProtocol c hc ε hδ with hP
   set μ := pointerPrep p q₀ δ with hμ
   have hunion : μ (⋃ j ∈ (Finset.univ : Finset (Fin N)), P.outcomeSector j)

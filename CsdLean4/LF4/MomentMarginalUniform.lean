@@ -267,7 +267,7 @@ theorem blockSqNorm_map_gaussian2_prod :
         (gaussian2.prod gaussian2)
       = expHalf.prod expHalf := by
   have hLsq_meas : Measurable (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2) := by fun_prop
-  haveI : SFinite gaussian2 := by unfold gaussian2; infer_instance
+  have : SFinite gaussian2 := by unfold gaussian2; infer_instance
   rw [← Measure.map_prod_map gaussian2 gaussian2 hLsq_meas hLsq_meas, sqNorm_map_gaussian2]
 
 /-! ## Slice C (Part 2a, general N): the N-fold block law
