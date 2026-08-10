@@ -2710,4 +2710,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.pointerImprint_not_homeomorph
 
+-- The join relocation IS generated (2026-08-10, JoinGeneration.lean) -- the POSITIVE
+-- counterpart to RelocationObstruction. The bank arena is a PRODUCT and pointerBankSwap
+-- exchanges two of its factors; the join arena is CP^{N+N-1}, a SINGLE projective space, and
+-- joinSwap is one unitary acting on it. So neither horn applies: nothing to exchange, and a
+-- projective unitary is bijective. Constructively: joinMat is a Hermitian involution (real
+-- permutation matrix of an involutive permutation), so Q = (1-P)/2 is a Hermitian idempotent,
+-- so U(t) = (1-Q) + e^{i*pi*t}Q is unitary with U 0 = 1 and U 1 = joinMat, and it solves the
+-- Schrodinger ODE for the explicit Hermitian generator H = pi*Q. No matrix exponential is
+-- needed: on an idempotent the series collapses to 1 + (e^z - 1)Q, written down in closed
+-- form. Collapse CAN be dynamics; the obstruction really was about the swap architecture.
+/-- info: 'CSD.RecordLayer.joinMat_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinMat_mul_self
+
+/-- info: 'CSD.RecordLayer.joinProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinProj_mul_self
+
+/-- info: 'CSD.RecordLayer.joinFlowMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinFlowMat_mem_unitaryGroup
+
+/-- info: 'CSD.RecordLayer.joinGen_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinGen_isHermitian
+
+/-- info: 'CSD.RecordLayer.joinFlowMat_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinFlowMat_hasDerivAt
+
+/-- info: 'CSD.RecordLayer.joinSwap_eq_flowTimeOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joinSwap_eq_flowTimeOne
+
 end CSD.Tests.AxiomAudit

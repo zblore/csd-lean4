@@ -461,6 +461,7 @@ public import CsdLean4.SigmaLayer.PointerLanding
 public import CsdLean4.SigmaLayer.PointerLuders
 public import CsdLean4.SigmaLayer.PointerLudersMarginal
 public import CsdLean4.SigmaLayer.RelocationObstruction
+public import CsdLean4.SigmaLayer.JoinGeneration
 public import CsdLean4.SigmaLayer.PointerProtocol
 public import CsdLean4.SigmaLayer.PointerRotation
 public import CsdLean4.SigmaLayer.PointerSmoothProfile
