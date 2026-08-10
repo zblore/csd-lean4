@@ -140,6 +140,69 @@ does not license per-cell phases in the **statement**. D3 is the operative form.
 Items 8, 19 and parts of 27 are contingent on it. **If nudge locality does not
 close, stop and report. Do not proceed to item 8, and do not soften item 19.**
 
+## 3b. ★★ Task 7 is FALSE as stated (Phase 1 probe, 2026-08-10)
+
+⚠️ **This supersedes D3's optimism above.** D3's construction is still the right
+*repair*, but the theorem it was meant to prove about the **existing**
+`nudgedSinglet` does not hold.
+
+`singletJointEig_born`'s own proof contains
+
+    inner ℂ singlet (singletJointEig s t a b) = (Real.sqrt (P_st a b s t) : ℂ)
+
+so with `nudgedSinglet_coord`, **`nudgedSinglet a b` is the vector
+`(√P_st)_{s,t}` — all real, all non-negative, every phase stripped.**
+
+**Counterexample.** With `c = a·b` and `P_st = (1 − s·t·c)/4`, as a 2×2 matrix
+`M = ½[[√(1−c), √(1+c)], [√(1+c), √(1−c)]]`, giving
+`MᵀM = ½[[1, √(1−c²)], [√(1−c²), 1]]` and Schmidt coefficients
+`½(1 ± √(1−c²))`. Local unitaries preserve Schmidt spectra and `ψ⁻` is maximally
+entangled, so `(U_A ⊗ U_B)ᴴψ⁻` is maximally entangled for **any** unitaries. At
+`a ⊥ b` all four `P_st = ¼`, so `nudgedSinglet = ½(1,1,1,1)`, a **product
+state**. No local unitary carries a maximally entangled state to a product state.
+
+`nudgedSinglet` is a local-unitary image of the singlet **only at `a·b = ±1`** —
+precisely the endpoint set `hgen` excludes.
+
+**Diagnosis.** `singletJointEig := (√P_st)⁻¹ • (Πˢ(a) ⊗ Πᵗ(b)) ψ⁻` fixes each
+basis vector's phase by projecting `ψ⁻` itself: four independent phases, where a
+product unitary supplies only separable ones (`α_s + β_t`). **The phase trap,
+baked into the definition rather than the statement.**
+
+**Why nothing caught it.** Every consumer uses only `‖·‖²`, so any
+phase-representative passes every existing proof. Lean cannot help:
+`nudgedSinglet` is a *definition* (true by fiat) and the false claim lived only
+in a docstring.
+
+### Resolution options
+
+* **A.** Fix the definition: `spinor a s`, `wingBasisUnitary a`, and
+  `nudgedSinglet' a b := (wingBasisUnitary a ⊗ₖ wingBasisUnitary b)ᴴ *ᵥ singlet`.
+  Locality becomes definitional.
+* **B.** Keep the definition, drop the claim. C1 then asserts only that the
+  *coupling* factorises (`localDeisolation_factorises`, genuinely proved).
+  Documentation-only.
+* **C.** Chain locality at `a·b = ±1` only. True, measure-zero, same set `hgen`
+  excludes.
+* **D. A, staged — recommended.** Add `nudgedSinglet'` alongside, prove equal
+  moduli, re-route the pointer-volume theorem, deprecate the old object.
+
+**Why D is cheaper than it looks:** downstream uses *only* moduli, and
+`|⟨u_s ⊗ w_t, ψ⁻⟩|² = P_st` still holds, so the pointer-volume theorem and the
+capstone should transfer with proofs essentially intact.
+
+### Probe result: option D is viable
+
+Machine-checked on a scratch file: **`‖col₀ s a‖² = (1 + s·a_z)/2`**, via
+`DetectorSetting.sum_sq_components_eq_one` and `Complex.sq_norm`. So column 0 of
+`Πˢ(a)` vanishes **iff** `a_z = −s`, column 1 **iff** `a_z = +s`, never both
+(that would need `s = −s`). The two-case spinor definition is therefore total and
+the pole is a clean `by_cases`, not a chart obstruction. Matrix entries fall to
+`simp [spinProj, pauliDot]`. Estimate **M**, with the residual risk in
+orthonormality/unitarity bookkeeping rather than the construction.
+
+**Blocked pending the author's choice of A/B/C/D:** tasks 8, 19, part of 27.
+
 ## 4. Phase 1 order
 
 1. **T2** `LF3/SharedContextMap.lean`: `SharedContextOutcomeMaps Λ` with

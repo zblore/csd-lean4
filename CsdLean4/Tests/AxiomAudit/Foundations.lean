@@ -261,4 +261,22 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 /-- info: 'CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone
 
+-- The detector-axis spinors (2026-08-10, LF3/Spinor.lean). Built for the C1
+-- nudge-locality correction: `nudgedSinglet` is the vector of sqrt(P_st), all phases
+-- stripped, so it is NOT a local-unitary image of the singlet (at a perp b it is a
+-- PRODUCT state while the singlet is maximally entangled). These supply the genuine
+-- local eigenbasis. `spinProj_eq_outer` is the load-bearing one: it gives
+-- Pi^s(a) (x) Pi^t(b) = (u (x) w)(u (x) w)^H, hence the Born identity on the local object.
+/-- info: 'CSD.LF3.two_mul_spinProj_eq_raw_outer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.two_mul_spinProj_eq_raw_outer
+
+/-- info: 'CSD.LF3.spinor_normSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.spinor_normSq
+
+/-- info: 'CSD.LF3.spinProj_eq_outer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.spinProj_eq_outer
+
 end CSD.Tests.AxiomAudit

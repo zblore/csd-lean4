@@ -95,6 +95,7 @@ public import CsdLean4.LF2.POVM
 public import CsdLean4.LF2.EffectAux
 public import CsdLean4.LF2.QuantumChannel
 public import CsdLean4.LF3.Setup
+public import CsdLean4.LF3.Spinor
 public import CsdLean4.LF3.Hamiltonian
 public import CsdLean4.LF3.SectorSeparation
 public import CsdLean4.LF3.Projectors.Core
