@@ -990,4 +990,21 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localMeasurementChain_factorises
 
+-- The C1 four-answer obstruction (2026-08-10, LF6/C1BellConsistency.lean). LF3/ContextMap
+-- used to claim that ContextIndexedOutcomeMaps and GlobalCHSHAssignment being DIFFERENT
+-- TYPES carries the Bell-consistency content. That is false -- different structures give
+-- only definitional separation. This is the actual obstruction, on the ONE shared state
+-- space C1 posits: no measurable shared-context outcome family compatible with any global
+-- CHSH assignment reproduces the singlet at the four CHSH settings. Measurability is assumed
+-- only of the posited object S; the four setting-local responses are DERIVED from it plus
+-- compatibility. The non-vacuity companion makes it a separation rather than an artefact,
+-- mirroring productPartition_nonvacuous.
+/-- info: 'CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet
+
+/-- info: 'CSD.LF6.compatibleGlobalCHSH_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.compatibleGlobalCHSH_nonvacuous
+
 end CSD.Tests.AxiomAudit

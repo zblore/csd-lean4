@@ -96,6 +96,7 @@ public import CsdLean4.LF2.EffectAux
 public import CsdLean4.LF2.QuantumChannel
 public import CsdLean4.LF3.Setup
 public import CsdLean4.LF3.Spinor
+public import CsdLean4.LF3.SharedContextMap
 public import CsdLean4.LF3.Hamiltonian
 public import CsdLean4.LF3.SectorSeparation
 public import CsdLean4.LF3.Projectors.Core
@@ -208,6 +209,7 @@ public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF6.GHZContextuality
 public import CsdLean4.LF6.SingletDeisolationFlow
 public import CsdLean4.LF6.NudgeLocality
+public import CsdLean4.LF6.C1BellConsistency
 public import CsdLean4.LF6.GHZDeisolationFlow
 public import CsdLean4.LF6.GHZMerminCarve
 public import CsdLean4.LF6.LocalDeisolationFlow
