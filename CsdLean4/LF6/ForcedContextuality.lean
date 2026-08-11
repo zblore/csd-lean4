@@ -62,10 +62,22 @@ posited; it lives in the `Σ`-volume engine's reading of the entangled state.
   derived from deterministic dynamics (SO-1: the sector origin, distinct from Paper C Axiom A5). The forced-contextuality
   no-go is unconditional Bell content; the *engine reading* of the singlet rests
   on the posited entangled sector.
-- **(g) Scope: LF6-A.1 only.** THIS file is the conceptual crux (LF6-A.1). The
-  full de-isolation flow on `ℂℙ¹⁵` (pointer-block volumes `= P_st`, local flow
-  factorisation `Φ = Φ_A ⊗ Φ_B`, a.s. frequencies → `P_st`, composing LF5
-  `vnDilation_pointer_volume` + LF3 `born_eq_P_st`) is **LF6-A.2, deferred**.
+- **(g) Scope: LF6-A.1 only.** THIS file is the conceptual crux (LF6-A.1). Status
+  of the rest of the A-tier, *corrected 2026-08-10* (this note previously said
+  A.2 was deferred, which went stale when A.2 and A.3 landed):
+  - **LF6-A.2 LANDED** (`SingletDeisolationFlow.lean`): the de-isolation flow on
+    `ℂℙ¹⁵` with pointer-block volumes `= P_st`.
+  - **LF6-A.3 LANDED** (`LocalDeisolationFlow.lean`): the *local product*
+    dilation, `localDeisolation_factorises`. ⚠️ The original `N = 4` adder flow
+    of A.2 does **not** factorise; A.3 is a separate local product dilation
+    realising the same pointer statistics.
+  - **Setting-dependent nudge locality LANDED 2026-08-10**
+    (`NudgeLocality.lean`): `localNudge`, `localMeasurementChain_factorises`.
+    ⚠️ This is a **correction**, not an addition — `nudgedSinglet` is not a
+    local-unitary image of the singlet at all.
+  - **Generic-context restriction REMOVED** for the local route
+    (`localDeisolation_pointer_volume_local`, no `hgen`); it is retained on the
+    original `localDeisolation_pointer_volume`.
 
 ## What is reused (no Bell re-proof)
 

@@ -50,7 +50,10 @@ trap 'rm -f "$tmp".*' EXIT
 # Declared entries are "path|substring"; a hit is permitted only if it is in
 # that file AND the line contains the substring. Each carries its reason.
 # ---------------------------------------------------------------------------
-STRUCTURAL_PATTERN='type-level separation|different types.{0,40}carries|carries the [A-Za-z-]+ content|no [A-Za-z-]+ axiom is needed|architectural point.{0,40}carries'
+# 'carries the ... architectural point' and 'structure != structure' were found in the
+# wild in specs/LF3-plan.md on 2026-08-10, AFTER the first version of this guard passed
+# clean -- exactly the documented failure mode of a lexical rule. Pattern extended.
+STRUCTURAL_PATTERN='type-level separation|different types.{0,40}carries|carries the [A-Za-z-]+ (content|architectural point)|no [A-Za-z-]+ axiom is needed|architectural point.{0,40}carries|structure . structure'
 
 cat > "$tmp".allow <<'ALLOW'
 CsdLean4/Empirical/QM/Crypto/WiesnerProtocol.lean|non-orthogonality
@@ -61,6 +64,9 @@ CsdLean4/LF3/ContextMap.lean|Type separation alone does NOT
 CsdLean4/Tests/AxiomAudit/Dynamics.lean|That is false
 scripts/check-claim-provenance.sh|
 specs/c1-correction-plan.md|
+specs/LF3-plan.md|Corrected 2026-08-10
+docs/C1-FORMAL-SUPPORT.md|
+specs/publication-errata.md|
 ALLOW
 
 git ls-files 'CsdLean4/**/*.lean' '*.md' 'specs/*.md' 'docs/*.md' 'scripts/*.sh' \

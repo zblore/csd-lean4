@@ -573,7 +573,11 @@ singlet.** Conjuncts:
    `(V_A⊗V_B)ᴴ (Π^A_i ⊗ Π^B_j) (V_A⊗V_B) = |a_i⊗b_j⟩⟨a_i⊗b_j|`
    (`localDeisolation_pullback`), composing the two wing LF5 pullbacks;
 3. the LOCAL product flow reproduces the singlet: pointer-block FS volume
-   `= P_st` every sector (`localDeisolation_pointer_volume`);
+   `= P_st` for every `(s,t)` sector (`localDeisolation_pointer_volume`).
+   ⚠️ **Generic contexts only** — this conjunct carries `hgen`, so it says
+   nothing at `a·b = ±1`. The `hgen`-free version is
+   `LF6.localDeisolation_pointer_volume_local` (`NudgeLocality.lean`), which
+   covers every setting pair including the perfectly (anti)correlated ones;
 4. the projectivised product flow is FS-measure-preserving
    (`localDeisolationFlow_measurePreserving`);
 5. and genuinely `≠ id` (`localDeisolationFlow_ne_id`);
@@ -583,12 +587,29 @@ singlet.** Conjuncts:
    dilation whose carve gives `P_st` (conjunct 3) is *dynamically realised* by the
    manifestly local flow, matching LF5's `measurement_flow_realises_dilation`.
 
-So the de-isolation needs NO non-local interaction; the non-locality is entirely
-in the contextual carve (LF6-A.2) and the entangled preparation (SO-1). The
+So the de-isolation **apparatus coupling** needs no non-local interaction. The
 `N=4`-adder A.2 flow is a non-factoring unitary completion of the same
 measurement (`ℤ/4 ≠ ℤ/2 × ℤ/2`); A.3's product flow is the manifestly-local one.
 Born = FS-volume is imported (LF5/DH/POVM-Naimark engine), not re-derived.
-Residue: SO-1 (the entangled sector posited). Honest ledger: module docstring. -/
+
+⚠️ **Three distinct things, which must not be run together** (sharpened
+2026-08-10):
+
+1. **The local context-setting operation.** LOCAL, but only via
+   `LF6.localNudge` — *not* via `nudgedSinglet`, which strips every phase and is
+   a product state at `a ⊥ b`, hence no local-unitary image of the singlet.
+2. **The local de-isolation apparatus coupling.** LOCAL, and proved here
+   (`localDeisolation_factorises`). Composed with (1), the whole finite chain
+   factorises: `LF6.localMeasurementChain_factorises`.
+3. **Bell factorisation of outcomes.** **IMPOSSIBLE** for the singlet
+   (`no_product_partition_realises_singlet`), and nothing above weakens that.
+
+(1) and (2) are dynamical locality of the *finite dilated construction*; they
+are not a canonical subsystem decomposition of an arbitrary ontic `Σ`, and none
+is used or implied.
+
+Residue: SO-1 (the entangled sector posited, never derived). Honest ledger:
+module docstring. -/
 theorem localDeisolation_capstone {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
     (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))

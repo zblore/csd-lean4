@@ -355,11 +355,19 @@ discharges each carve correlation to the singlet's `−a·b` via
 `singletDeisolation_carve_contextual`. So the statement is about the dynamical
 carve exhibited above, not about an externally supplied `−a·b`.
 
-The carve data is a family indexed by the setting pair (`ψ' a b` is the prepared
-nudged singlet `(U_A^x ⊗ U_B^y)† ψ⁻` for that context); the CHSH no-go consumes
-all four setting pairs, so the family is essential — no single product partition
-can match the contextual carve across the canonical Bell settings. Generic
-context (`hgen`) at every setting. -/
+The carve data is a family indexed by the setting pair (`ψ' a b` is built from
+`nudgedSinglet a b` for that context); the CHSH no-go consumes all four setting
+pairs, so the family is essential — no single product partition can match the
+contextual carve across the canonical Bell settings.
+
+⚠️ **Corrected 2026-08-10.** This previously described `ψ' a b` as the prepared
+`(U_A^x ⊗ U_B^y)† ψ⁻`. It is not: `nudgedSinglet` strips every phase, so it is
+not a local-unitary image of the singlet. See its docstring, and use
+`LF6.localNudgeVec` where locality matters.
+
+⚠️ **Scope:** `hgen` is required **at each of the four settings**, so this
+theorem does **not** cover `a·b = ±1`. The local route
+(`localDeisolation_pointer_volume_local`) carries no such restriction. -/
 theorem singletDeisolation_carve_not_product {M : ℕ}
     (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
     (ψ' : DetectorSetting → DetectorSetting → EuclideanSpace ℂ (Fin (M + 1)))

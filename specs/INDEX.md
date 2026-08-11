@@ -105,3 +105,8 @@ build with `lake build` **and** `lake build CsdLeanTests` (the second target run
 Open work: the single canonical list is [`BACKLOG.md`](BACKLOG.md) (headlines: the join-arena
 measurement-protocol plumbing (M), any-basis first measurement (M–L), composable finite-key QKD
 (XL), Shor-9 (L)).
+
+## C1 correction (2026-08-10)
+
+- [`publication-errata.md`](publication-errata.md) — claims in non-editable manuscripts that the formal work has since falsified (E-1 type separation, E-2 the nudge).
+- [`c1-correction-plan.md`](c1-correction-plan.md) — the C1 correction: phasing, design corrections, and the finding that work-order item 7 was FALSE.
