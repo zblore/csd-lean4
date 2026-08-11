@@ -948,4 +948,19 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.volume_drift_determines_rate
 
+-- The LOCAL nudge (2026-08-10, LF6/NudgeLocality.lean). `nudgedSinglet` is the vector of
+-- sqrt(P_st) -- all phases stripped -- so it is NOT a local-unitary image of the singlet
+-- (at a perp b it is a PRODUCT state while the singlet is maximally entangled). `localNudge`
+-- is the object `nudgedSinglet` was DESCRIBED as: defined as the action of the product
+-- unitary (wingBasisUnitary a) (x) (wingBasisUnitary b) on the singlet, so locality is
+-- definitional. `localNudge_born` shows it reproduces the same Born statistics, and carries
+-- NO genericity hypothesis (no hgen).
+/-- info: 'CSD.LF6.localNudge_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localNudge_coord
+
+/-- info: 'CSD.LF6.localNudge_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localNudge_born
+
 end CSD.Tests.AxiomAudit

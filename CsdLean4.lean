@@ -207,6 +207,7 @@ public import CsdLean4.LF5.SyndromeOutcome
 public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF6.GHZContextuality
 public import CsdLean4.LF6.SingletDeisolationFlow
+public import CsdLean4.LF6.NudgeLocality
 public import CsdLean4.LF6.GHZDeisolationFlow
 public import CsdLean4.LF6.GHZMerminCarve
 public import CsdLean4.LF6.LocalDeisolationFlow

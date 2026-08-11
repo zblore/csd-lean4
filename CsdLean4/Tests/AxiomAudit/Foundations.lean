@@ -279,4 +279,12 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF3.spinProj_eq_outer
 
+/-- info: 'CSD.LF3.wingBasisUnitary_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.wingBasisUnitary_mem_unitaryGroup
+
+/-- info: 'CSD.LF3.jointSpinProj_eq_outer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.jointSpinProj_eq_outer
+
 end CSD.Tests.AxiomAudit

@@ -244,4 +244,80 @@ lemma spinProj_eq_outer (s : Sign) (a : DetectorSetting) (i j : Fin 2) :
       simp [spinProj, pauliDot, Matrix.cons_val_zero, Matrix.cons_val_one, hx, hy, hzC]
     all_goals norm_num
 
+
+/-! ### The wing basis unitary
+
+The two spinors are the columns of a unitary. Completeness of the spin
+projectors gives `U Uᴴ = 1` in one step, with no orthogonality argument:
+`(U Uᴴ)ᵢⱼ = Σₛ (u_s)ᵢ conj((u_s)ⱼ) = Σₛ Πˢ(a)ᵢⱼ = δᵢⱼ`. -/
+
+/-- The two signs, indexed by `Fin 2`. -/
+def signOfFin : Fin 2 → Sign := ![Sign.plus, Sign.minus]
+
+@[simp] lemma signOfFin_zero : signOfFin 0 = Sign.plus := rfl
+@[simp] lemma signOfFin_one : signOfFin 1 = Sign.minus := rfl
+
+/-- **Completeness of the spin projectors**: `Π⁺(a) + Π⁻(a) = 1`. -/
+theorem spinProj_add_eq_one (a : DetectorSetting) :
+    spinProj Sign.plus a + spinProj Sign.minus a = 1 := by
+  simp only [spinProj, Sign.val]
+  rw [← smul_add]
+  norm_num
+  module
+
+/-- Summing the projectors over both signs. -/
+lemma sum_spinProj (a : DetectorSetting) (i j : Fin 2) :
+    ∑ k : Fin 2, spinProj (signOfFin k) a i j = (1 : Matrix (Fin 2) (Fin 2) ℂ) i j := by
+  rw [Fin.sum_univ_two, signOfFin_zero, signOfFin_one]
+  have := spinProj_add_eq_one a
+  calc spinProj Sign.plus a i j + spinProj Sign.minus a i j
+      = (spinProj Sign.plus a + spinProj Sign.minus a) i j := by
+        rw [Matrix.add_apply]
+    _ = (1 : Matrix (Fin 2) (Fin 2) ℂ) i j := by rw [this]
+
+/-- **The wing basis unitary.** Columns are the two detector-axis spinors, so
+conjugating by it is the change of basis into the `σ·a` eigenbasis. -/
+noncomputable def wingBasisUnitary (a : DetectorSetting) : Matrix (Fin 2) (Fin 2) ℂ :=
+  Matrix.of fun i k => spinor (signOfFin k) a i
+
+/-- ★★ **The wing basis matrix is unitary.** -/
+theorem wingBasisUnitary_mem_unitaryGroup (a : DetectorSetting) :
+    wingBasisUnitary a ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff]
+  ext i j
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  have hstep : ∀ k : Fin 2,
+      wingBasisUnitary a i k * (star (wingBasisUnitary a)) k j
+        = spinProj (signOfFin k) a i j := by
+    intro k
+    rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_apply, wingBasisUnitary,
+      Matrix.of_apply, Matrix.of_apply, spinProj_eq_outer (signOfFin k) a i j]
+  rw [Finset.sum_congr rfl (fun k _ => hstep k), sum_spinProj a i j, Matrix.one_apply]
+
+/-- The wing basis unitary, as an element of the unitary group. -/
+noncomputable def wingBasisU (a : DetectorSetting) : Matrix.unitaryGroup (Fin 2) ℂ :=
+  ⟨wingBasisUnitary a, wingBasisUnitary_mem_unitaryGroup a⟩
+
+@[simp] lemma wingBasisU_val (a : DetectorSetting) :
+    (wingBasisU a : Matrix (Fin 2) (Fin 2) ℂ) = wingBasisUnitary a := rfl
+
+
+
+/-! ### The two-qubit product spinor -/
+
+/-- The product spinor `u_s(a) ⊗ w_t(b)` on the two-qubit space. -/
+noncomputable def spinorPair (s t : Sign) (a b : DetectorSetting) : Fin 2 × Fin 2 → ℂ :=
+  fun p => spinor s a p.1 * spinor t b p.2
+
+/-- ★★ **The joint projector is the outer product of the product spinor**:
+`Πˢ(a) ⊗ Πᵗ(b) = (u ⊗ w)(u ⊗ w)ᴴ`. -/
+lemma jointSpinProj_eq_outer (s t : Sign) (a b : DetectorSetting) (I J : Fin 2 × Fin 2) :
+    jointSpinProj s t a b I J = spinorPair s t a b I * star (spinorPair s t a b J) := by
+  obtain ⟨i1, i2⟩ := I
+  obtain ⟨j1, j2⟩ := J
+  simp only [jointSpinProj, Matrix.kroneckerMap_apply, spinorPair,
+    spinProj_eq_outer, star_mul']
+  ring
+
+
 end CSD.LF3
