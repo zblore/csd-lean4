@@ -139,6 +139,29 @@ while IFS= read -r p; do
   fail=1
 done < "$tmp".props
 
+# ---------------------------------------------------------------------------
+# MODE 3: "every/all Bell-test setting" attached to an hgen-restricted claim.
+#
+# Added 2026-08-11 after an external verification of 7347e62 found this wording
+# surviving in JointEig.lean, SingletDeisolationFlow.lean and specs/LF4-todo.md
+# -- places the item-31 sweep did not reach. `hgen` excludes the collinear
+# settings a.b = +-1, so "every Bell-test setting" is false: Bell experiments
+# routinely discuss aligned and anti-aligned axes. Correct wording is "the
+# generic non-collinear contexts" or "the four canonical CHSH-optimal pairs".
+# ---------------------------------------------------------------------------
+git ls-files 'CsdLean4/**/*.lean' '*.md' 'specs/*.md' 'docs/*.md'   | xargs grep -niE "(all|every) Bell-test setting" 2>/dev/null   | grep -v 'check-claim-provenance'   | grep -viE 'too broad|was false|corrected 20|previously' > "$tmp".bell || true
+
+while IFS= read -r b; do
+  [ -z "$b" ] && continue
+  if [ "$fail" -eq 0 ]; then
+    echo 'FAIL "every/all Bell-test setting" attached to a genericity-restricted claim.'
+    echo '     hgen excludes the collinear settings a.b = +-1. Say "the generic'
+    echo '     non-collinear contexts" or "the four canonical CHSH-optimal pairs".'
+  fi
+  echo "  $b"
+  fail=1
+done < "$tmp".bell
+
 if [ "$fail" -eq 0 ]; then
   echo "check-claim-provenance: OK (no unwitnessed property claims, no type-level content claims)"
 fi

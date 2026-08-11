@@ -100,12 +100,18 @@ Theorem strength is stated per claim, so nothing inherits a neighbour's status.
 | Arbitrary non-factorising Σ no-signalling | **OPEN** — `specs/BACKLOG.md` row; no axiom added |
 | Singlet sector origin (SO-1) | **assumed / open** — posited, never derived |
 
-⚠️ **Not promoted to headline claims.** The C1 theorems above are *not* rows in
-`CsdLean4/Headlines.lean` / `specs/validation-claims.tsv`, which carry the
-thirty CL-numbered claims. Promoting them (CL-031 onward) would change the
-drift-guard surface and the ledger, and is an **author decision**, not one this
-correction should make unilaterally. Their axiom pins already live in the
-namespace-matched audit parts, so they are gated either way.
+**Headline status (updated 2026-08-10, after promotion).**
+`no_compatible_global_chsh_assignment_realises_singlet` **is now CL-031**, a row
+in `CsdLean4/Headlines.lean` and `specs/validation-claims.tsv`, which now carry
+**31** CL-numbered claims. It sits beside CL-020 and CL-021, the other Bell
+no-gos, and its `finding` column records that it arrived through this correction
+and replaces the false type-separation claim.
+
+The locality and no-signalling results remain **sub-headline formal support**,
+deliberately: the local-de-isolation tier they extend is itself unlisted, so
+promoting successors above their predecessors would make the ledger less
+coherent. Their axiom pins live in the namespace-matched audit parts, so they
+are gated regardless of ledger status.
 
 ## References
 

@@ -38,8 +38,13 @@ the two-qubit singlet), discharging the bundle's load-bearing fields as
   `singletJointEig_born`).
 
 **Generic-context hypothesis.** Restricted to `∀ s t, 0 < P_st ctx.a ctx.b s t`,
-i.e. `|a·b| < 1`. All Bell-test settings qualify; collinear settings (`a = ±b`)
-are excluded as they carry no Born-content.
+i.e. `|a·b| < 1` — the generic non-collinear contexts, which include the four
+canonical CHSH-optimal pairs. ⚠️ Collinear settings (`a = ±b`) are **excluded**;
+the earlier wording "all Bell-test settings qualify" was too broad, since Bell
+experiments routinely discuss aligned and anti-aligned axes (corrected
+2026-08-11). Those settings carry perfect (anti)correlation, not "no
+Born-content"; two of the four `P_st` vanish, which is exactly what `hgen`
+forbids. The local route `LF6.localDeisolation_pointer_volume_local` covers them.
 
 **Axiom posture.** `ofKählerPreparation` is foundational-triple only (the
 constant `rep` + the `_direct` Born theorem keep Busch out of the construction).

@@ -320,7 +320,7 @@ The four committed modules:
   `[propext, Classical.choice, Quot.sound, busch_effect_gleason]`.
 
 Restricted to **generic contexts** `|a·b| < 1` (all four `P_st > 0`);
-all Bell-test settings qualify.
+the generic non-collinear contexts qualify, which include the four canonical CHSH-optimal pairs but not the collinear ones (corrected 2026-08-10; the local route `LF6.localDeisolation_pointer_volume_local` now covers the collinear endpoints too).
 
 The LF3 chain is now **non-vacuous on a genuinely compact-Kähler `Σ`**: the
 capstone has a concrete exhibited inhabitant.

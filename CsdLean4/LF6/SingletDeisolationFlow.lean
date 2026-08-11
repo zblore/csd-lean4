@@ -32,14 +32,25 @@ single-system LF5 de-isolation at `N = 4`); the non-locality is **not** in the
 flow but in the *outcome carve*, which is the joint `BornRegion`
 moment-subdivision of `LF4/BornRegionUncond`, and is jointly contextual by A.1.
 
-The prepared state is the singlet expressed in the rotated (axis-context)
-measurement basis,
-`φ = nudgedSinglet a b`, whose computational coordinate at the pointer cell
-`(s, t)` is the singlet's joint-spin-eigenstate amplitude:
-`φ_{stIdx (s,t)} = ⟨ψ⁻, singletJointEig s t a b⟩`. This is `φ = (U_A^x ⊗ U_B^y)† ψ⁻`
-in coordinates — the pre-measurement *nudge* `U_A^x ⊗ U_B^y` (a reversible
-context-setting symmetry, not the carve) rotates the computational basis onto the
-joint spin eigenbasis `a_s ⊗ b_t = singletJointEig s t a b`. Then the headline:
+The prepared state used here is `φ = nudgedSinglet a b`, whose computational
+coordinate at the pointer cell `(s, t)` is the singlet's joint-spin-eigenstate
+amplitude `φ_{stIdx (s,t)} = ⟨ψ⁻, singletJointEig s t a b⟩`.
+
+⚠️ **`nudgedSinglet` is the MODULI, not a locally rotated singlet** (corrected
+2026-08-10; this paragraph previously read it as `(U_A^x ⊗ U_B^y)† ψ⁻`, which is
+false). `singletJointEig` normalises by the real `√P_st`, so every coordinate
+here is real and non-negative and all relative phase is discarded. At `a ⊥ b`
+that gives `½(1,1,1,1)`, a **product state**, while `ψ⁻` is maximally entangled —
+so it is a local-unitary image of the singlet only at `a·b = ±1`. Nothing below
+is affected, because everything here consumes only `‖·‖²`.
+
+**What is valid here:** the probability results — `nudgedSinglet_norm`,
+`nudgedSinglet_born`, and the pointer-volume headline — all of which are
+statements about moduli and all of which carry `hgen`.
+
+**Where to go for locality:** `LF6.localNudgeVec` (`NudgeLocality.lean`), defined
+as `(U_A(a) ⊗ U_B(b))ᴴ ψ⁻` for the proved-unitary `wingBasisUnitary`, with the
+same Born statistics and **no `hgen`**. Then the headline:
 
 ```
 pointer-block (s,t) FS volume  =  ‖⟨e_{stIdx (s,t)}, φ⟩‖²        -- LF5 vnDilation_pointer_volume @ N=4
@@ -72,7 +83,13 @@ behind `MeasurementJointEig.born_eq_P_st`.
   correlation is `−a·b` (`singletDeisolation_blockVolume_correlation`), the
   singlet's, which A.1 forbids any product partition to produce. The flow may be
   local; the carve is contextual. Measurement is contextual.
-- **Deferred (A.3).** The flow factorisation `Φ = Φ_A ⊗ Φ_B` (the tensor
+- **A.3 — LANDED** (`LocalDeisolationFlow.lean`; this bullet previously said
+  "deferred", corrected 2026-08-10). ⚠️ The `N = 4` adder flow *below* still does
+  not factorise (`ℤ/4 ≠ ℤ/2 × ℤ/2`); A.3 supplies a **separate** local product
+  dilation `V_loc = V_A ⊗ V_B` realising the same pointer statistics, and
+  `LF6.localMeasurementChain_factorises` extends that to the whole finite chain.
+  The original wording, retained for the record: the flow factorisation
+  `Φ = Φ_A ⊗ Φ_B` (the tensor
   reindexing `(sys_A ⊗ ptr_A) ⊗ (sys_B ⊗ ptr_B)`). The de-isolation here is the
   `N = 4` joint coupling; its decomposition into two wing couplings is the heavy
   tensor-reindex piece, deferred (`specs/lf6-plan.md` LF6-A.3). This does **not**
@@ -83,7 +100,8 @@ behind `MeasurementJointEig.born_eq_P_st`.
   is posited, not derived (SO-1: the sector origin, distinct from Paper C Axiom A5). `nudgedSinglet`'s amplitudes are the
   singlet's; the *typicality law* on `Σ'` is the Fubini–Study measure (SO-1).
 - **Generic context.** The four-sector construction needs `P_st a b s t > 0` for
-  all `(s, t)` (`hgen`), i.e. `|a·b| < 1` — every Bell-test setting. Collinear
+  all `(s, t)` (`hgen`), i.e. `|a·b| < 1` — the generic non-collinear contexts,
+  which include the four canonical CHSH-optimal pairs. Collinear
   axes have a vanishing sector and carry no Born information.
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine is
@@ -414,7 +432,8 @@ carve's own value, not a free `−a·b`, into `no_product_partition_realises_sin
 
 The flow is local (LF5 @ N=4); the carve is contextual (the joint moment
 subdivision, A.1). Born = FS-volume is imported from the DH/FS-volume engine, not
-re-derived. The flow factorisation `Φ = Φ_A ⊗ Φ_B` is deferred to LF6-A.3.
+re-derived. The flow factorisation `Φ = Φ_A ⊗ Φ_B` is supplied by LF6-A.3,
+**landed** in `LocalDeisolationFlow.lean` as a separate local product dilation.
 Residue: SO-1 (the entangled sector posited). Honest ledger: module docstring. -/
 theorem singletDeisolation_flow_capstone {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)

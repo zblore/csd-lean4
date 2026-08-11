@@ -30,7 +30,9 @@ All over `EuclideanSpace ℂ (Fin 2 × Fin 2)`; the LF4 bundle re-indexes to
 
 **Generic-context restriction.** The `(√P_st)⁻¹` normalisation requires
 `P_st a b s t ≠ 0`, i.e. `s·t·(a·b) ≠ 1`. For a *generic* context
-(`|a·b| < 1`, e.g. all Bell-test settings) every sector has `P_st > 0`, so the
+(`|a·b| < 1` — the generic non-collinear contexts, which include the four
+canonical CHSH-optimal pairs, but NOT the collinear ones) every sector has
+`P_st > 0`, so the
 construction covers all four sectors. Collinear settings (`a = ±b`) have one
 vanishing sector and are excluded; they carry no Born information anyway.
 -/

@@ -164,6 +164,44 @@ and `finding` columns. For this theorem the `finding` column is the valuable
 part: it can record that the C1 tier arrived via a correction of a false claim,
 which is exactly the context a later reviewer needs and which no pin carries.
 
+## Post-closure update (2026-08-10)
+
+The report above is the record **as of `612d9ec`**, and is preserved unedited.
+Two things happened after it:
+
+1. **CL-031 promoted at `7347e62`.**
+   `no_compatible_global_chsh_assignment_realises_singlet` is now a headline
+   claim; the corpus carries **31**, not 30. `Headlines.lean` (facade import,
+   layer entry, drift-guard line), `validation-claims.tsv`,
+   `VALIDATION-LEDGER.md` (Validated 8 → 9) and the count in `CsdLean4.lean`,
+   `specs/INDEX.md` and `specs/audit-sweep-plan.md` were all updated. The
+   locality and no-signalling results were deliberately **not** promoted — see
+   the recommendation in this report, which was followed.
+
+   ⚠️ So this report's "recommended release action" and the
+   `docs/C1-FORMAL-SUPPORT.md` note about promotion being a pending author
+   decision were both **superseded within the same session**; the support map has
+   been corrected, and this note records the sequence.
+
+2. **Tag `v1.2.0-c1-correction` created and pushed at `7347e62`.**
+
+**Residual hygiene pass (2026-08-11).** An external verification of `7347e62`
+found five documentation defects that the item-31 sweep missed, all now fixed:
+the `SingletDeisolationFlow` module introduction still carried the false
+local-unitary reading of `nudgedSinglet` and an "A.3 deferred" bullet, so the
+file contradicted its own corrected docstring; over-broad "every Bell-test"
+wording
+attached to `hgen` survived in `JointEig.lean`, `SingletDeisolationFlow.lean` and
+`specs/LF4-todo.md`; and `Tests/AxiomAudit/Dynamics.lean` still described the GHZ
+Mermin carve and local product flow as deferred, though both landed as C.3 and
+C.4. The lesson is the same one this correction kept re-learning: a lexical sweep
+narrows the surface and does not close it.
+
+**On item 35.** This report records builds and guards as run **locally**. No
+GitHub Actions status is attached to `7347e62`, so remote CI confirmation is not
+independently established — the claim is "locally reported clean", not
+"CI-confirmed".
+
 ## References
 
 `specs/c1-correction-plan.md`; `docs/C1-FORMAL-SUPPORT.md`;
