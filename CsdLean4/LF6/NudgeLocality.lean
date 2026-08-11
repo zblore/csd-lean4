@@ -7,6 +7,8 @@ module
 
 public import CsdLean4.LF3.Spinor
 public import CsdLean4.LF3.Singlet.JointProjector
+public import CsdLean4.LF6.SingletDeisolationFlow
+public import CsdLean4.LF6.LocalDeisolationFlow
 
 /-!
 # LF6/NudgeLocality: the setting-dependent nudge, done locally
@@ -58,10 +60,13 @@ object this replaces); `specs/c1-correction-plan.md` §3b.
 
 @[expose] public section
 
-open Matrix Complex
+open Matrix Complex MeasureTheory Matrix.UnitaryGroup
+open scoped ENNReal Kronecker LinearAlgebra.Projectivization
 open CSD.LF3
 
 namespace CSD.LF6
+
+open CSD.LF2 CSD.LF4 CSD.LF5
 
 /-- **The product unitary** `U_A(a) ⊗ U_B(b)` implementing the setting change. -/
 noncomputable def wingPairUnitary (a b : DetectorSetting) :
@@ -133,6 +138,88 @@ theorem localNudge_born (a b : DetectorSetting) (k l : Fin 2) :
   have h1 : ((P_st a b (signOfFin k) (signOfFin l) : ℝ) : ℂ) = ((‖c‖ ^ 2 : ℝ) : ℂ) := by
     rw [houter, Complex.sq_norm, Complex.normSq_eq_conj_mul_self]
   exact (Complex.ofReal_inj.mp h1).symm
+
+/-! ### Transport to the `Fin 4` pointer indexing
+
+The downstream volume machinery indexes pointer cells by `Fin 4` through
+`stIdx`. This carries `localNudge` across, so it is a drop-in replacement for
+`nudgedSinglet` — with the genericity hypothesis gone. -/
+
+lemma signOfFin_signEquiv (s : Sign) : signOfFin (signEquiv s) = s := by
+  cases s <;> rfl
+
+/-- The local nudge in the `Fin 4` pointer indexing. -/
+noncomputable def localNudgeVec (a b : DetectorSetting) : EuclideanSpace ℂ (Fin 4) :=
+  WithLp.toLp 2 (fun k =>
+    localNudge a b (signEquiv (stIdx.symm k).1, signEquiv (stIdx.symm k).2))
+
+/-- ★ **The pointer-cell Born identity, with no genericity hypothesis.**
+Compare `nudgedSinglet_coord_normSq`, which needs `hgen`. -/
+lemma localNudgeVec_coord_normSq (a b : DetectorSetting) (st : Sign × Sign) :
+    ‖localNudgeVec a b (stIdx st)‖ ^ 2 = P_st a b st.1 st.2 := by
+  obtain ⟨s, t⟩ := st
+  show ‖localNudge a b (signEquiv (stIdx.symm (stIdx (s, t))).1,
+    signEquiv (stIdx.symm (stIdx (s, t))).2)‖ ^ 2 = _
+  rw [Equiv.symm_apply_apply, localNudge_born, signOfFin_signEquiv, signOfFin_signEquiv]
+
+/-- ★ **Unit norm, with no genericity hypothesis.** Compare
+`nudgedSinglet_norm`, which needs `hgen`. -/
+theorem localNudgeVec_norm (a b : DetectorSetting) : ‖localNudgeVec a b‖ = 1 := by
+  rw [EuclideanSpace.norm_eq]
+  have hsum : ∑ k : Fin 4, ‖(localNudgeVec a b) k‖ ^ 2 = 1 := by
+    calc ∑ k : Fin 4, ‖(localNudgeVec a b) k‖ ^ 2
+        = ∑ st : Sign × Sign, ‖(localNudgeVec a b) (stIdx st)‖ ^ 2 :=
+          (Equiv.sum_comp stIdx (fun k => ‖(localNudgeVec a b) k‖ ^ 2)).symm
+      _ = ∑ st : Sign × Sign, P_st a b st.1 st.2 :=
+          Finset.sum_congr rfl (fun st _ => localNudgeVec_coord_normSq a b st)
+      _ = 1 := sum_P_st_eq_one a b
+  rw [hsum, Real.sqrt_one]
+
+/-- ★ **The pointer-cell Born identity in single-basis form**, matching
+`basisPOVM_weight`. No genericity hypothesis. -/
+lemma localNudgeVec_born (a b : DetectorSetting) (s t : Sign) :
+    ‖inner ℂ (EuclideanSpace.single (stIdx (s, t)) (1 : ℂ)) (localNudgeVec a b)‖ ^ 2
+      = P_st a b s t := by
+  rw [EuclideanSpace.inner_single_left, map_one, one_mul]
+  exact localNudgeVec_coord_normSq a b (s, t)
+
+/-- The local nudge is nonzero, with no genericity hypothesis. -/
+theorem localNudgeVec_ne_zero (a b : DetectorSetting) : localNudgeVec a b ≠ 0 := by
+  intro h
+  have := localNudgeVec_norm a b
+  rw [h, norm_zero] at this
+  exact one_ne_zero this.symm
+
+
+/-! ### The pointer-volume theorem, re-routed and genericity-free -/
+
+/-- ★★ **The local de-isolation reproduces the singlet, at EVERY setting pair.**
+
+This is `localDeisolation_pointer_volume` with `nudgedSinglet` replaced by
+`localNudgeVec`, and **without `hgen`**. The genericity restriction was never
+intrinsic to the volume machinery — `povm_born_eq_dilated_volume_uncond` is
+already hpos-free — it entered only through `singletJointEig`'s division by
+`√P_st`. Routing through the local object removes it, so the perfectly
+(anti)correlated endpoints `a·b = ±1` are now covered. -/
+theorem localDeisolation_pointer_volume_local {M : ℕ}
+    (a b : DetectorSetting)
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
+    (hψ'0 : ψ' ≠ 0) (s t : Sign) :
+    ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      = P_st a b s t := by
+  have hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+      (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b))‖ = 1 := by
+    rw [LinearIsometryEquiv.norm_map, localDeisolation_norm_map, localNudgeVec_norm a b]
+  have h := povm_born_eq_dilated_volume_uncond (basisPOVM 4) localNaimark
+      (localNudgeVec a b) (stIdx (s, t)) e p₀ hnorm
+  rw [basisPOVM_weight, localNudgeVec_born a b s t] at h
+  subst hψ'eq
+  exact h.symm
+
 
 end CSD.LF6
 

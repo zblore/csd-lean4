@@ -118,12 +118,25 @@ def stIdx : Sign × Sign ≃ Fin 4 :=
 
 /-! ### The nudged singlet (the prepared state `φ = (U_A^x ⊗ U_B^y)† ψ⁻`) -/
 
-/-- **The prepared state.** The singlet expressed in the rotated (axis-context)
-measurement basis: the computational coordinate at the pointer cell `(s, t)` is
-the singlet's amplitude on the joint spin eigenstate `singletJointEig s t a b`
-(`= ⟨ψ⁻, a_s ⊗ b_t⟩`). This is `(U_A^x ⊗ U_B^y)† ψ⁻` in coordinates, the nudge
-of `specs/lf6-plan.md` (reversible, pre-measurement, context-setting). Only
-`‖·‖²` of these coordinates is consumed downstream. -/
+/-- **The prepared-state MODULI.** The pointer-cell `(s, t)` coordinate is the
+singlet's overlap with the joint spin eigenstate `singletJointEig s t a b`.
+
+⚠️ **This is NOT `(U_A ⊗ U_B)† ψ⁻`, and the earlier docstring saying so was
+false.** `singletJointEig` normalises by the real `√P_st`, fixing each basis
+vector's phase by projecting `ψ⁻` itself, so every coordinate here is real and
+non-negative: `nudgedSinglet a b = (√P_st)_{s,t}`, with all relative phase
+discarded. Local unitaries preserve Schmidt spectra and `ψ⁻` is maximally
+entangled, but at `a ⊥ b` all four `P_st = ¼`, making this `½(1,1,1,1)` — a
+**product** state. So it is a local-unitary image of `ψ⁻` only at `a·b = ±1`,
+precisely where `hgen` fails.
+
+Only `‖·‖²` is consumed downstream, which is why the defect never surfaced: any
+phase-representative passes every proof here.
+
+**Use `LF6.localNudgeVec` instead** where locality matters. It is *defined* as
+`(U_A(a) ⊗ U_B(b))† ψ⁻` for the proved-unitary `wingBasisUnitary`, carries the
+same Born statistics (`localNudgeVec_coord_normSq`), and needs **no** `hgen`.
+See `LF6/NudgeLocality.lean` and `specs/c1-correction-plan.md` §3b. -/
 noncomputable def nudgedSinglet (a b : DetectorSetting) : EuclideanSpace ℂ (Fin 4) :=
   WithLp.toLp 2 (fun k : Fin 4 =>
     inner ℂ singlet (singletJointEig (stIdx.symm k).1 (stIdx.symm k).2 a b))

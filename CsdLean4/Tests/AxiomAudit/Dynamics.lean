@@ -963,4 +963,21 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localNudge_born
 
+-- The re-route, and with it the endpoint case. localDeisolation_pointer_volume carries
+-- hgen (so it EXCLUDES a.b = +-1, perfect anticorrelation); the local version does not.
+-- The genericity restriction was never intrinsic to the volume machinery --
+-- povm_born_eq_dilated_volume_uncond is already hpos-free -- it entered only through
+-- singletJointEig's division by sqrt(P_st). Work-order item 12 closes as a side effect.
+/-- info: 'CSD.LF6.localNudgeVec_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localNudgeVec_born
+
+/-- info: 'CSD.LF6.localNudgeVec_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localNudgeVec_norm
+
+/-- info: 'CSD.LF6.localDeisolation_pointer_volume_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_pointer_volume_local
+
 end CSD.Tests.AxiomAudit
