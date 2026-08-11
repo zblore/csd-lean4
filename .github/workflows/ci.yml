@@ -40,6 +40,7 @@ jobs:
           bash scripts/check-claim-provenance.sh
           bash scripts/check-citation-use.sh
           bash scripts/check-axiom-sweep.sh
+          bash scripts/check-import-negative.sh
 
       - name: Advisory expert-review reports
         run: |
