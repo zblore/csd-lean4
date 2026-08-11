@@ -817,8 +817,11 @@ structure ContextIndexedOutcomeMaps where
     simultaneous outcomes for all four Bell-test settings. Spec §8.7 / §9.9:
     the architectural point is that this is *not* the same data type as
     `ContextIndexedOutcomeMaps`, different fields, different domains. The
-    type-level separation carries the Bell-consistency content; no Fine
-    axiom is needed for any LF3 theorem. -/
+    ⚠️ **Type separation alone does NOT prove incompatibility** (corrected
+    2026-08-10): different structures give definitional separation only, and
+    the per-context domains actually PREVENT the no-go from being stated. The
+    obstruction is `LF6.no_product_partition_realises_singlet`, and on one
+    shared state space `LF6.no_compatible_global_chsh_assignment_realises_singlet`. -/
 structure GlobalCHSHAssignment (HiddenState : Type*) where
   A1 A2 : HiddenState → Sign
   B1 B2 : HiddenState → Sign

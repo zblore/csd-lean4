@@ -14,11 +14,15 @@ public import CsdLean4.LF3.Singlet.Kernel
 
 Paper §8 / §9.9.
 
-Definitional separation of context-indexed outcome maps from a global CHSH
-assignment. The architectural point, that these are different types, carries
-the Bell-consistency content; no Fine-theorem axiom is needed. Six context
-theorems re-state `Singlet/Kernel` results in `MeasurementContext` form for
-the paper's §8.12 export list.
+`ContextMap` records the distinction between context-indexed realised outcomes
+and a setting-local global CHSH assignment. **Type separation alone does NOT
+prove incompatibility** — different structures establish only definitional
+separation. The mathematical obstruction is supplied downstream by the CHSH
+theorem and `LF6.no_product_partition_realises_singlet`, and on one shared state
+space by `LF6.no_compatible_global_chsh_assignment_realises_singlet`.
+
+Six context theorems re-state `Singlet/Kernel` results in `MeasurementContext`
+form for the paper's §8.12 export list.
 -/
 
 @[expose] public section
@@ -47,10 +51,18 @@ structure ContextIndexedOutcomeMaps where
 
 /-- A **global CHSH assignment**: a single map from one hidden-state space to
     simultaneous outcomes for all four Bell-test settings (paper §8.7).
-    The architectural point is that this is *not* the same data type as
-    `ContextIndexedOutcomeMaps`, different fields, different domains. The
-    type-level separation alone carries the Bell-consistency content; no Fine
-    axiom is needed. -/
+    This is *not* the same data type as `ContextIndexedOutcomeMaps` — different
+    fields, different domains. ⚠️ **Type separation alone does NOT prove
+    incompatibility**; the earlier claim that it "carries the Bell-consistency
+    content" was false. Different structures give definitional separation and
+    nothing more.
+
+    Worse, the separation did not merely fail to prove the no-go — it
+    *prevented the no-go from being stated*, because `ContextIndexedOutcomeMaps`
+    gives each context its own `Domain ctx`, so there is nothing to compare
+    against a global assignment on one state space. The obstruction becomes
+    expressible only on a shared domain (`LF3.SharedContextOutcomeMaps`), and is
+    proved there by `LF6.no_compatible_global_chsh_assignment_realises_singlet`. -/
 structure GlobalCHSHAssignment (HiddenState : Type*) where
   /-- A-wing outcome for setting 1. -/
   A1 : HiddenState → Sign

@@ -37,6 +37,7 @@ jobs:
           bash scripts/check-sector-linkage.sh
           bash scripts/check-axiom-imports.sh
           bash scripts/check-claims.sh
+          bash scripts/check-claim-provenance.sh
 
       - name: Advisory expert-review reports
         run: |
