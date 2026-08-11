@@ -22,6 +22,30 @@ keywords:
   - born-rule
   - quantum-mechanics
   - interactive-theorem-proving
+# ---------------------------------------------------------------------------
+# Citing a THEOREM rather than the software as a whole.
+#
+# Formal results in this repository are cited by naming, together:
+#
+#   1. this repository (the `repository-code` URL below),
+#   2. a tagged release, or failing that the exact commit SHA,
+#   3. the module path, e.g. `CsdLean4/LF6/C1BellConsistency.lean`,
+#   4. the fully-qualified theorem name, e.g.
+#      `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet`.
+#
+# That quadruple is reproducible: the toolchain and Mathlib revision are pinned
+# in `lean-toolchain` and `lakefile.toml` at that commit, so the theorem can be
+# rechecked exactly as stated.
+#
+# DO NOT cite the manuscript layers "LF5" or "LF6" as documents. They are
+# unpublished, and citing them would be a dependency-order violation. The
+# repository is one artefact with its own DOI; citing it at a tag is not.
+# See `docs/C1-FORMAL-SUPPORT.md` for the claim-to-theorem map.
+#
+# A release/tag for the C1 correction is PREPARED but deliberately NOT created
+# here: creating or pushing one is an author decision.
+# ---------------------------------------------------------------------------
+
 preferred-citation:
   type: article
   title: "LF3: Machine-Verified Singlet Kernel, Sector Volumes, and Empirical Chain Capstones for Bell-Singlet Correlations"

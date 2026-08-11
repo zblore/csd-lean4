@@ -1,0 +1,170 @@
+# C1 correction: formal closure report
+
+Work-order item 36. Written 2026-08-10.
+
+**Starting HEAD** `f5384515724754d4035d9feb2326e11e1ce8afb9`
+**Ending HEAD** `612d9ecd4f640e59ce6ea1ef1bf35a4eb8fd9414`
+
+Ten commits, in three gated phases with a stop for review after each.
+
+> *Closed* means a theorem exists where one was required, or a claim was
+> explicitly corrected to record that no theorem establishes it. Documentation
+> edits alone close nothing.
+
+## The two headline findings
+
+**Item 7 was FALSE, not merely unproved.** `nudgedSinglet a b` is the vector
+`(√P_st)_{s,t}` — real, non-negative, every relative phase discarded. Local
+unitaries preserve Schmidt spectra and `ψ⁻` is maximally entangled; at `a ⊥ b`
+all four `P_st = ¼`, so the object is `½(1,1,1,1)`, a **product state**. It is a
+local-unitary image of the singlet only at `a·b = ±1` — exactly the endpoint set
+`hgen` excluded. Cause: `singletJointEig` divides by the real `√P_st`, fixing
+each basis vector's phase by projecting `ψ⁻` itself, giving four independent
+phases where a product unitary supplies only separable ones.
+
+**Item 12 dissolved rather than being solved.** The same division was the sole
+source of `hgen`. Removing it to repair locality removed the genericity
+restriction at the same time; the two problems had one cause. The volume engine
+was never implicated (`povm_born_eq_dilated_volume_uncond` is hpos-free).
+
+## Items
+
+| # | Outcome |
+|---|---|
+| 1 | **Closed.** Landed early, forced by the new guard. |
+| 2–5 | **Closed.** Shared-domain interface, compatibility, obstruction, non-vacuity. |
+| 6 | **Closed by not needing an adapter** — reduced directly to `lhvCHSH_abs_le_two`, per fidelity-over-reuse. |
+| 7 | **Closed as a CORRECTION.** The claim was false; `localNudge` is the repair. |
+| 8 | **Closed.** `localMeasurementChain_factorises`. |
+| 9 | **Closed.** Capstone conjunct 3 qualified; three-way locality distinction added. |
+| 10 | **Closed.** `hgen` scope stated wherever the claim appears. |
+| 11 | **Superseded.** The local route has no `hgen` to discharge. |
+| 12 | **Closed.** `a·b = ±1` now covered. |
+| 13–15 | **Closed.** Measure-level predicate, kernel theorem, marginal-volume lift. |
+| 16 | **Recorded OPEN.** BACKLOG row; no axiom added. |
+| 17–19 | **Closed.** Stale A.2/A.3 status; the false claim in two further places. |
+| 20 | **Closed.** SO-1 preserved as an upstream input throughout. |
+| 21 | **Closed, swept clean.** No ℂℙ¹ used for the joint two-qubit space. |
+| 22 | **Closed.** Locality scoped to the finite dilated construction. |
+| 23–24 | **Closed in Phase 0.** See below. |
+| 25 | **Recorded as erratum E-1**; the manuscript is not editable from here. |
+| 26–28 | **Closed.** Spec sync, claim status, `docs/C1-FORMAL-SUPPORT.md`. |
+| 29 | **Closed.** `CITATION.cff` extended; **no tag created** — author decision. |
+| 30 | **Closed, swept clean.** No LF3 → LF6 cycle; new modules in the root. |
+| 31 | **Closed.** Sweep found one residual the guard missed; pattern extended. |
+| 32, 33, 34 | **Honoured throughout** (constraints, not tasks). |
+| 35 | **Closed.** Both targets clean, zero warnings, nine guards green. |
+
+## Files
+
+**Added (9):** `LF3/{Spinor,SharedContextMap,OperationalNoSignalling}.lean`,
+`LF6/{NudgeLocality,C1BellConsistency}.lean`, `docs/C1-FORMAL-SUPPORT.md`,
+`specs/{c1-correction-plan,publication-errata}.md`,
+`scripts/check-claim-provenance.sh`. **Modified:** 12.
+
+## Theorems added
+
+Signatures verbatim from Lean; every one reports exactly
+`[propext, Classical.choice, Quot.sound]`.
+
+* `CSD.LF3.spinProj_eq_outer` — `spinProj s a i j = spinor s a i * star (spinor s a j)`
+* `CSD.LF3.wingBasisUnitary_mem_unitaryGroup`
+* `CSD.LF3.jointSpinProj_eq_outer`, `spinor_normSq`, `two_mul_spinProj_eq_raw_outer`
+* `CSD.LF6.localNudge_born` — `‖(localNudge a b) (k,l)‖ ^ 2 = P_st a b (signOfFin k) (signOfFin l)`
+* `CSD.LF6.localMeasurementChain_factorises` —
+  `(V_A ⊗ V_B) * (wingPairUnitary a b)ᴴ = (V_A * U_Aᴴ) ⊗ (V_B * U_Bᴴ)`
+* `CSD.LF6.localDeisolation_pointer_volume_local` — **no `hgen`**
+* `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet` —
+  `Measurable S → Compatible S G → ReproducesSingletAtCHSH μ S → False`
+* `CSD.LF6.compatibleGlobalCHSH_nonvacuous`
+* `CSD.LF3.singlet_operational_no_signalling`, `singlet_marginals_eq_half`
+* `CSD.LF6.localDeisolation_{A,B}_marginal_volume_eq_half`,
+  `localDeisolation_no_signalling_{A,B}`
+* `CSD.LF6.localNudgeVec_{coord_normSq,born,norm,ne_zero}`
+
+## Status of each obligation
+
+* **Endpoint `a·b = ±1`** — **CLOSED** on the local route; retained on the
+  original `localDeisolation_pointer_volume`.
+* **Nudge locality** — **CLOSED as a correction.**
+* **Full-chain locality** — **CLOSED**, scoped to the finite dilated
+  construction. Not a subsystem decomposition of arbitrary `Σ`.
+* **C1 Bell adapter** — **CLOSED**, four CHSH settings only, reduced to E91.
+* **Kernel no-signalling** — **CLOSED.**
+* **LF6 pointer-volume no-signalling** — **CLOSED**, marginal *volumes*.
+* **SO-1** — **assumed/open**, preserved as an upstream input.
+* **General non-factorising-`Σ` no-signalling** — **OPEN**, BACKLOG row.
+* **Bell-local outcome factorisation** — **impossible**, unchanged.
+
+## Axiom results
+
+All C1 support theorems, old and new: `[propext, Classical.choice, Quot.sound]`.
+
+Item 24 specifically: the Born-volume chain is clean, and stronger than clean —
+`EffectGleason` is **not in the 53-module transitive import closure** of
+`LF6/LocalDeisolationFlow.lean`. It never reaches Busch, so this is a fact about
+the dependency graph rather than about axiom bookkeeping.
+
+**No `Tests/AxiomAudit/C1.lean` was created**, deviating from the work order:
+nine of its ten listed theorems were *already* pinned in the namespace-matched
+parts the G9 split mandates, so a dedicated part meant nine duplicate pins. The
+one genuinely missing pin was added to `Dynamics.lean`.
+
+## Build and guards
+
+`lake build` and `lake build CsdLeanTests`: **0 errors, 0 warnings**.
+**Nine guards green**, including the new `check-claim-provenance`.
+
+## Remaining debts
+
+1. **Erratum E-1** (type separation) and **E-2** (the nudge) — the manuscript
+   is not editable from here. Close only when the *text* is amended.
+2. **General no-signalling over non-factorising `Σ`** — open research.
+3. **SO-1** — the entangled sector posited, never derived.
+4. **`hgen` on the original `localDeisolation_pointer_volume`** — retained
+   deliberately; the local route supersedes it.
+5. **Promotion to CL-031+** — author decision, see below.
+
+## Recommended release action
+
+A tag is **prepared but not created**: `CITATION.cff` now records the
+theorem-citation quadruple (repository, tag or SHA, module path, theorem name)
+and the rule that "LF5"/"LF6" must never be cited as documents. Creating and
+pushing a tag is an author decision.
+
+Recommendation: tag after the CL-031 decision, so the ledger surface is stable
+at the tagged commit.
+
+## On promoting the C1 theorems to CL-031 onward
+
+**Recommendation: promote exactly one —
+`no_compatible_global_chsh_assignment_realises_singlet`.**
+
+It is a genuinely new no-go, and a direct sibling of CL-020
+(`no_product_partition_realises_singlet`) and CL-021 (the GHZ analogue), which
+*are* headlines. A new no-go of that family belongs beside them.
+
+Leave the locality results sub-headline. `localDeisolation_factorises`,
+`localDeisolation_pointer_volume` and the rest of the local-de-isolation tier
+are **not** CL rows today, so promoting their successors while their
+predecessors stay unlisted would make the ledger less coherent, not more.
+
+Cost of promoting, concretely: a `public import` plus a drift-guard
+`example := @…` line in `Headlines.lean`; a row in `validation-claims.tsv` and
+`VALIDATION-LEDGER.md`; and the "30 headline claims" count updated in
+`Headlines.lean` (twice), `CsdLean4.lean`, `specs/INDEX.md` and
+`specs/audit-sweep-plan.md`. That last one touches the landing surface, which
+`CONVENTIONS.md` §10 permits only when a headline claim actually changes —
+which this would be.
+
+Benefit beyond what already exists: the axiom pins already give rename and
+deletion protection, since a renamed constant fails to elaborate. What a CL row
+adds is the **review surface** — `status`, `load_bearing`, `independent_check`
+and `finding` columns. For this theorem the `finding` column is the valuable
+part: it can record that the C1 tier arrived via a correction of a false claim,
+which is exactly the context a later reviewer needs and which no pin carries.
+
+## References
+
+`specs/c1-correction-plan.md`; `docs/C1-FORMAL-SUPPORT.md`;
+`specs/publication-errata.md`; `scripts/check-claim-provenance.sh`.
