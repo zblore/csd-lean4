@@ -287,4 +287,15 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF3.jointSpinProj_eq_outer
 
+-- Operational no-signalling at the MEASURE level (2026-08-10). The pointwise form
+-- (F_A(a,b,x) = F_A(a,b',x) on both wings) is not merely too strong -- over a
+-- deterministic shared state it IS the setting-local response pair that
+-- no_product_partition_realises_singlet rules out, so it is inconsistent with the corpus.
+-- Equality of MARGINAL MEASURES is the correct condition. WARNING: stated relative to one
+-- fixed mu across all four contexts, and that fixture IS measurement independence -- a
+-- genuine Bell premise, previously invisible.
+/-- info: 'CSD.LF3.singlet_operational_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.singlet_operational_no_signalling
+
 end CSD.Tests.AxiomAudit

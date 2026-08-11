@@ -9,6 +9,7 @@ public import CsdLean4.LF3.Spinor
 public import CsdLean4.LF3.Singlet.JointProjector
 public import CsdLean4.LF6.SingletDeisolationFlow
 public import CsdLean4.LF6.LocalDeisolationFlow
+public import CsdLean4.LF3.OperationalNoSignalling
 
 /-!
 # LF6/NudgeLocality: the setting-dependent nudge, done locally
@@ -246,6 +247,94 @@ theorem localMeasurementChain_factorises (a b : DetectorSetting) :
       = (wingDeisolationV * (wingBasisUnitary a)ᴴ)
         ⊗ₖ (wingDeisolationV * (wingBasisUnitary b)ᴴ) := by
   rw [wingPairUnitary, Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul]
+
+
+/-! ### Operational no-signalling of the explicit construction (item 15)
+
+The pointer-block volumes reproduce `P_st`, so summing out one wing gives that
+wing's marginal. Because the singlet marginals are `1/2` at *every* context,
+the A-marginal volume does not move when B's setting changes.
+
+⚠️ These are equalities of **marginal volumes**, never of the underlying
+outcome partitions. The microscopic regions differ between contexts; only their
+measures agree. And the whole statement sits under **measurement independence**,
+as `LF3.OperationalNoSignalling` records. -/
+
+/-- ★ **The A-wing marginal volume is `1/2`.** Summing the pointer-block volumes
+over the B outcome recovers the A marginal, which the singlet fixes at one half.
+No genericity hypothesis. -/
+theorem localDeisolation_A_marginal_volume_eq_half {M : ℕ}
+    (a b : DetectorSetting)
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
+    (hψ'0 : ψ' ≠ 0) (s : Sign) :
+    ∑ t : Sign, ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      = 1 / 2 := by
+  have hcell : ∀ t : Sign, ∑ n : Fin 4,
+      (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        = P_st a b s t :=
+    fun t => localDeisolation_pointer_volume_local a b e p₀ ψ' hψ'eq hψ'0 s t
+  rw [Finset.sum_congr rfl (fun t _ => hcell t)]
+  exact marginal_a_eq_half a b s
+
+/-- ★ **The B-wing marginal volume is `1/2`**, symmetrically. -/
+theorem localDeisolation_B_marginal_volume_eq_half {M : ℕ}
+    (a b : DetectorSetting)
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
+    (hψ'0 : ψ' ≠ 0) (t : Sign) :
+    ∑ s : Sign, ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      = 1 / 2 := by
+  have hcell : ∀ s : Sign, ∑ n : Fin 4,
+      (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        = P_st a b s t :=
+    fun s => localDeisolation_pointer_volume_local a b e p₀ ψ' hψ'eq hψ'0 s t
+  rw [Finset.sum_congr rfl (fun s _ => hcell s)]
+  exact marginal_b_eq_half a b t
+
+/-- ★★ **A-wing operational no-signalling for the explicit construction.**
+Changing B's setting from `b` to `b'` leaves the A-marginal volume unchanged.
+
+The two sides are built from *different* prepared states, so the underlying
+pointer regions differ; what agrees is their measure. -/
+theorem localDeisolation_no_signalling_A {M : ℕ}
+    (a b b' : DetectorSetting)
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (ψ' ψ'' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
+    (hψ''eq : ψ'' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b')))
+    (hψ'0 : ψ' ≠ 0) (hψ''0 : ψ'' ≠ 0) (s : Sign) :
+    ∑ t : Sign, ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      = ∑ t : Sign, ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ'' hψ''0 (e (n, stIdx (s, t))))).toReal := by
+  rw [localDeisolation_A_marginal_volume_eq_half a b e p₀ ψ' hψ'eq hψ'0 s,
+    localDeisolation_A_marginal_volume_eq_half a b' e p₀ ψ'' hψ''eq hψ''0 s]
+
+/-- ★★ **B-wing operational no-signalling for the explicit construction.** -/
+theorem localDeisolation_no_signalling_B {M : ℕ}
+    (a a' b : DetectorSetting)
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (ψ' ψ'' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
+    (hψ''eq : ψ'' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a' b)))
+    (hψ'0 : ψ' ≠ 0) (hψ''0 : ψ'' ≠ 0) (t : Sign) :
+    ∑ s : Sign, ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      = ∑ s : Sign, ∑ n : Fin 4,
+        (fubiniStudyMeasure p₀ (bornRegion ψ'' hψ''0 (e (n, stIdx (s, t))))).toReal := by
+  rw [localDeisolation_B_marginal_volume_eq_half a b e p₀ ψ' hψ'eq hψ'0 t,
+    localDeisolation_B_marginal_volume_eq_half a' b e p₀ ψ'' hψ''eq hψ''0 t]
 
 
 end CSD.LF6

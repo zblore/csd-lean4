@@ -1007,4 +1007,24 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.compatibleGlobalCHSH_nonvacuous
 
+-- Item 15: operational no-signalling of the EXPLICIT construction. Equalities of marginal
+-- VOLUMES, never of the underlying outcome partitions -- the microscopic regions differ
+-- between contexts (the two sides are built from different prepared states); only their
+-- measures agree. Under measurement independence, per LF3/OperationalNoSignalling.
+/-- info: 'CSD.LF6.localDeisolation_A_marginal_volume_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_A_marginal_volume_eq_half
+
+/-- info: 'CSD.LF6.localDeisolation_B_marginal_volume_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_B_marginal_volume_eq_half
+
+/-- info: 'CSD.LF6.localDeisolation_no_signalling_A' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_no_signalling_A
+
+/-- info: 'CSD.LF6.localDeisolation_no_signalling_B' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolation_no_signalling_B
+
 end CSD.Tests.AxiomAudit
