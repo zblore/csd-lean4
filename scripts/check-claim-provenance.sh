@@ -71,12 +71,28 @@ specs/VALIDATION-LEDGER.md|Different structures give definitional
 specs/c1-closure-report.md|
 ALLOW
 
+# MULTILINE (2026-08-11). This was a line-by-line grep, carrying exactly the wrapping
+# weakness that let an instance slip past mode 3: `different types.{0,40}carries` cannot
+# match when the phrase wraps, and doc comments wrap. Now PARAGRAPH-scoped -- lines are
+# joined up to a blank line, which is the right unit for both Lean doc blocks and Markdown
+# prose, and keeps the allowlist meaningful (a whole-file join would let one excusing
+# phrase anywhere excuse everything in the file).
 git ls-files 'CsdLean4/**/*.lean' '*.md' 'specs/*.md' 'docs/*.md' 'scripts/*.sh' \
-  | xargs grep -niE "$STRUCTURAL_PATTERN" 2>/dev/null > "$tmp".hits || true
+  | xargs awk -v pat="$STRUCTURAL_PATTERN" '
+      function flush() {
+        if (fname != "" && buf != "" && tolower(buf) ~ tolower(pat))
+          print fname "\t" buf
+        buf = ""
+      }
+      FNR == 1 { flush(); fname = FILENAME }
+      /^[ \t]*$/ { flush(); next }
+      { buf = (buf == "" ? $0 : buf " " $0) }
+      END { flush() }
+    ' 2>/dev/null > "$tmp".hits || true
 
 while IFS= read -r hit; do
   [ -z "$hit" ] && continue
-  file="${hit%%:*}"; rest="${hit#*:}"; line="${rest#*:}"
+  file="${hit%%$'\t'*}"; line="${hit#*$'\t'}"
   ok=0
   while IFS='|' read -r dfile dsub; do
     [ "$file" = "$dfile" ] || continue
@@ -88,7 +104,7 @@ while IFS= read -r hit; do
       echo '     Type distinctions are stipulations, not discoveries. Name the theorem'
       echo '     that establishes the content, or delete the claim.'
     fi
-    echo "  $hit"
+    echo "  $file: $(printf '%s' "$line" | cut -c1-110)"
     fail=1
   fi
 done < "$tmp".hits
@@ -119,8 +135,14 @@ git ls-files 'CsdLean4/**/*.lean' | xargs awk '
   FILENAME ~ skip { next }
   /^\/--/ { buf = $0; inblk = 1; if ($0 ~ /-\//) inblk = 2; next }
   inblk == 1 { buf = buf " " $0; if ($0 ~ /-\//) inblk = 2; next }
+  # The block match above is already multiline -- buf holds the WHOLE doc block, so a
+  # wrapped phrase matches. The bug fixed here (2026-08-11) was on the other side: this
+  # used to demand that the VERY NEXT line be the declaration, so a docstring followed by
+  # a blank line, an attribute, or an `omit ... in` was silently discarded and never
+  # checked at all. Skip over those instead, and accept the modifiers actually used here.
   inblk == 2 {
-    if ($0 ~ /^(noncomputable )?(def|structure|abbrev) /) {
+    if ($0 ~ /^[ \t]*$/ || $0 ~ /^@\[/ || $0 ~ /^omit / || $0 ~ /^open / || $0 ~ /^variable /) next
+    if ($0 ~ /^(private |protected |public |noncomputable |partial |unsafe )*(def|structure|abbrev|instance) /) {
       if (buf ~ prop && buf !~ mark && buf !~ cite && buf !~ /⚠/)
         print FILENAME "\t" substr(buf, 1, 120)
     }
