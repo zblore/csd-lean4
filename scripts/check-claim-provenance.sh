@@ -63,6 +63,7 @@ CsdLean4/LF6/C1BellConsistency.lean|being different types
 CsdLean4/LF3/ContextMap.lean|Type separation alone does NOT
 CsdLean4/Tests/AxiomAudit/Dynamics.lean|That is false
 scripts/check-claim-provenance.sh|
+scripts/check-guards.sh|
 specs/c1-correction-plan.md|
 specs/LF3-plan.md|Corrected 2026-08-10
 docs/C1-FORMAL-SUPPORT.md|

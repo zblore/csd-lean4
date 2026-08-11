@@ -27,6 +27,13 @@
 # SCOPE. Covers the text-based guards, which need no rebuild. The two Lean-based checkers
 # (citation-use, axiom-sweep) need the probe compiled into the environment first, so their
 # probes require a `lake build` cycle; run `--with-lean` for those (slow, minutes).
+#
+# SELF-REFERENCE. This file contains defect text as literals, so it must be excused in
+# check-claim-provenance's mode-2 allowlist. That was not obvious in testing: while this
+# script was UNTRACKED it was invisible to `git ls-files`, so every guard passed locally
+# and CI failed on the first push after it became tracked. The same trap voided the first
+# negative test written for check-claim-provenance mode 4 — guards see tracked files only,
+# so anything guard-relevant must be re-checked AFTER `git add`, not before.
 
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
