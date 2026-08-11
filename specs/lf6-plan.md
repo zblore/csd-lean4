@@ -1,12 +1,22 @@
 > ⚠️ HISTORICAL — layer complete; frozen execution log. Open items live in [BACKLOG.md](BACKLOG.md).
 # LF6 — the entangled de-isolation tier (D1 frontier) — plan
 
+**⚠️ C1 CORRECTIONS 2026-08-10** (`specs/c1-correction-plan.md`): the setting-dependent nudge is
+**not** local as originally described — `nudgedSinglet` is the moduli, corrected below and repaired
+by `LF6.localNudge`; the genericity restriction `hgen` is **removed** on the local route
+(`localDeisolation_pointer_volume_local` covers `a·b = ±1`); full chain locality now holds
+(`localMeasurementChain_factorises`); and the C1 four-answer obstruction is proved
+(`no_compatible_global_chsh_assignment_realises_singlet`). Type separation proves **nothing** —
+see `specs/publication-errata.md` E-1.
+
 **Status: A.1 + A.2 + A.3 DONE 2026-06-28 (entangled-tier A-stage complete); B.1 (decoherence) + B.2 (purity-drop witness) DONE 2026-06-28; C.1 (general-N tier: GHZ forced-contextuality crux) + C.2 (GHZ de-isolation flow, minimal computational-basis carve) + C.3 (GHZ Mermin-context carve: genuine dynamical contextuality) DONE 2026-06-30; C.4 (3-party GHZ local product flow) DONE 2026-07-02.** LF6 is the first concrete attack on the entangled / non-local
 stratum of D1 (measurement dynamics), the deepest open debt. LF5 closed the single-system projective
 measurement-dynamics tier (`Φ_vN ≠ id` de-isolation flow on the dilated projective space). LF6
 extends de-isolation to the entangled case, where Bell forces non-locality. Target: a deterministic,
 FS-measure-preserving de-isolation account that reproduces the LF3 singlet kernel `P_st`, with the
-non-locality located honestly and no-signalling proven.
+non-locality located honestly, and no-signalling **verified in the constructed sector** — not
+derived from primitives, and under measurement independence (one `μ` across all four contexts).
+See `LF3/OperationalNoSignalling.lean` and the open `specs/BACKLOG.md` row.
 
 ## The conceptual frame (settled in design, 2026-06-28)
 
@@ -52,8 +62,14 @@ AxiomAudit pins. The dynamical realisation on `Σ' = ℂℙ¹⁵ = ℙ(Euclidean
 ℂℙ¹⁵ build:
 - `singletDeisolationFlow := measurementFlow 4 finProdFinEquiv` with `singletDeisolation_measurePreserving`
   / `singletDeisolation_ne_id` (inherited from LF5-B); the flow is LOCAL (the LF5 de-isolation at N=4).
-- `nudgedSinglet a b` — the prepared state `φ = (U_A^x⊗U_B^y)† ψ⁻`, the singlet in the rotated
-  axis-context basis, in coordinates `φ_{stIdx(s,t)} = ⟨ψ⁻, singletJointEig s t a b⟩`; `nudgedSinglet_norm`
+- `nudgedSinglet a b` — the prepared-state **MODULI**.
+  ⚠️ **Corrected 2026-08-10: this is NOT `(U_A^x⊗U_B^y)† ψ⁻`.** `singletJointEig` normalises by the
+  real `√P_st`, so every coordinate is real and non-negative and all relative phase is discarded.
+  At `a ⊥ b` it is `½(1,1,1,1)`, a **product state**, while `ψ⁻` is maximally entangled — so it is a
+  local-unitary image of the singlet only at `a·b = ±1`. Use `LF6.localNudgeVec`
+  (`NudgeLocality.lean`) where locality matters: defined as `(U_A(a)⊗U_B(b))ᴴψ⁻` for the
+  proved-unitary `wingBasisUnitary`, same Born statistics, **no `hgen`**.
+  In coordinates `φ_{stIdx(s,t)} = ⟨ψ⁻, singletJointEig s t a b⟩`; `nudgedSinglet_norm`
   (unit, `∑ P_st = 1`), `nudgedSinglet_born` (`‖⟨e_{stIdx(s,t)}, φ⟩‖² = P_st`, the unitary-invariance +
   LF3 `singletJointEig_born` step).
 - `singletDeisolation_pointer_volume` (the headline) — joint `BornRegion` pointer-block `(s,t)` FS

@@ -80,6 +80,33 @@ are the real non-negative `√P_st`, all phase discarded, making it a **product
 state** at `a ⊥ b` where the singlet is maximally entangled. The earlier
 docstring saying otherwise was false and is corrected. Use `localNudgeVec`.
 
+## Claim status, explicitly (work-order item 27)
+
+Theorem strength is stated per claim, so nothing inherits a neighbour's status.
+
+| Claim | Status |
+|---|---|
+| Bell CHSH bound | **proved** (`lhvCHSH_abs_le_two`) |
+| Singlet Bell violation | **proved** (`chsh_singlet_at_optimal_angles`) |
+| No setting-local product reproduction | **proved** (`no_product_partition_realises_singlet`), every setting pair |
+| Shared-domain C1 compatibility obstruction | **proved** (`no_compatible_global_chsh_assignment_realises_singlet`), four CHSH settings only |
+| Local de-isolation coupling | **proved** (`localDeisolation_factorises`) |
+| Local nudge | **proved, and a CORRECTION** — the original claim about `nudgedSinglet` was false; `localNudge` is the repair |
+| Full local measurement chain | **proved** (`localMeasurementChain_factorises`), composing the two above |
+| Pointer-volume reproduction, generic contexts | **proved** with `hgen` (`localDeisolation_pointer_volume`) |
+| Pointer-volume reproduction, **all settings** | **proved without `hgen`** (`localDeisolation_pointer_volume_local`), including `a·b = ±1` |
+| No-signalling, kernel level | **proved** (`singlet_operational_no_signalling`) |
+| No-signalling, LF6 pointer-volume construction | **proved** (`localDeisolation_no_signalling_A/B`), marginal volumes, under measurement independence |
+| Arbitrary non-factorising Σ no-signalling | **OPEN** — `specs/BACKLOG.md` row; no axiom added |
+| Singlet sector origin (SO-1) | **assumed / open** — posited, never derived |
+
+⚠️ **Not promoted to headline claims.** The C1 theorems above are *not* rows in
+`CsdLean4/Headlines.lean` / `specs/validation-claims.tsv`, which carry the
+thirty CL-numbered claims. Promoting them (CL-031 onward) would change the
+drift-guard surface and the ledger, and is an **author decision**, not one this
+correction should make unilaterally. Their axiom pins already live in the
+namespace-matched audit parts, so they are gated either way.
+
 ## References
 
 `specs/c1-correction-plan.md` (the correction's plan and findings);
