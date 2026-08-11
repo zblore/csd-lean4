@@ -980,4 +980,14 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolation_pointer_volume_local
 
+-- Work-order item 8: the whole setting-dependent chain is a product of wing-local maps,
+-- (V_A (x) V_B)(U_A(a) (x) U_B(b))^H = (V_A U_A(a)^H) (x) (V_B U_B(b)^H). Available only
+-- because localNudge replaced nudgedSinglet: the old object is not a product-unitary image
+-- of the singlet at all, so no such factorisation existed for it. DYNAMICAL locality of the
+-- chain, NOT Bell factorisation of outcomes (impossible, no_product_partition_realises_singlet).
+-- Scope: the finite dilated construction, not arbitrary ontic Sigma.
+/-- info: 'CSD.LF6.localMeasurementChain_factorises' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localMeasurementChain_factorises
+
 end CSD.Tests.AxiomAudit

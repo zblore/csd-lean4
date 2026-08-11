@@ -221,5 +221,32 @@ theorem localDeisolation_pointer_volume_local {M : ℕ}
   exact h.symm
 
 
+/-! ### The complete finite measurement chain factorises
+
+⚠️ **Scope.** This is a statement about the **finite dilated construction** — the
+wing de-isolation isometries and the wing basis unitaries — not about arbitrary
+ontic `Σ`. No canonical subsystem decomposition of `Σ` is used or implied. -/
+
+/-- ★★ **The whole setting-dependent chain is a product of wing-local maps.**
+
+Composing the context-setting nudge with the apparatus coupling gives
+
+    (V_A ⊗ V_B) · (U_A(a) ⊗ U_B(b))ᴴ  =  (V_A · U_A(a)ᴴ) ⊗ (V_B · U_B(b)ᴴ)
+
+so each wing's operation depends only on that wing's setting. This is work-order
+item 8, and it is available only because `localNudge` replaced `nudgedSinglet`:
+the old object is not a product-unitary image of the singlet at all, so no such
+factorisation existed for it.
+
+⚠️ This is **dynamical** locality of the chain. It is emphatically **not** Bell
+factorisation of outcomes, which `no_product_partition_realises_singlet` proves
+impossible for the singlet. -/
+theorem localMeasurementChain_factorises (a b : DetectorSetting) :
+    (wingDeisolationV ⊗ₖ wingDeisolationV) * (wingPairUnitary a b)ᴴ
+      = (wingDeisolationV * (wingBasisUnitary a)ᴴ)
+        ⊗ₖ (wingDeisolationV * (wingBasisUnitary b)ᴴ) := by
+  rw [wingPairUnitary, Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul]
+
+
 end CSD.LF6
 
