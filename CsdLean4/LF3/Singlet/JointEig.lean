@@ -32,10 +32,10 @@ All over `EuclideanSpace ℂ (Fin 2 × Fin 2)`; the LF4 bundle re-indexes to
 `P_st a b s t ≠ 0`, i.e. `s·t·(a·b) ≠ 1`. For a *generic* context
 (`|a·b| < 1` — the generic non-collinear contexts, which include the four
 canonical CHSH-optimal pairs, but NOT the collinear ones) every sector has
-`P_st > 0`, so the
-construction covers all four sectors. Collinear settings (`a = ±b`) have one
-⚠️ **Corrected 2026-08-11** (the previous wording said "one vanishing sector"
-and "no Born information"; both were wrong).
+`P_st > 0`, so the construction covers all four sectors.
+
+⚠️ **Corrected 2026-08-11.** The previous wording said collinear settings have
+"one vanishing sector" and "no Born information"; both halves were wrong.
 At `a·b = ±1` **two** of the four sectors have probability zero and the other
 two carry `1/2` each — perfect (anti)correlation, which is among the most
 informative Bell data, not an absence of Born content. They are excluded here
