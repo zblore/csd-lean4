@@ -476,7 +476,7 @@ public import CsdLean4.SigmaLayer.PovmSectorBorn
 public import CsdLean4.SigmaLayer.SharpenedNoGo
 public import CsdLean4.SigmaLayer.SmoothProfile
 
--- G8 (2026-08-06): the curated consumer facade over the 30 headline claims.
+-- G8 (2026-08-06): the curated consumer facade over the 31 headline claims.
 public import CsdLean4.Headlines
 
 -- H2 (2026-08-07): the quantum-chaos incubator (CSD-free, upstream-candidate(physlib)).

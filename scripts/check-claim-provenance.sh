@@ -67,6 +67,8 @@ specs/c1-correction-plan.md|
 specs/LF3-plan.md|Corrected 2026-08-10
 docs/C1-FORMAL-SUPPORT.md|
 specs/publication-errata.md|
+specs/VALIDATION-LEDGER.md|Different structures give definitional
+specs/c1-closure-report.md|
 ALLOW
 
 git ls-files 'CsdLean4/**/*.lean' '*.md' 'specs/*.md' 'docs/*.md' 'scripts/*.sh' \

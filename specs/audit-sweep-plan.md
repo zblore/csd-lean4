@@ -240,7 +240,7 @@ commit; verification details in the session record):
 
 Source: `specs/FOUNDATIONAL-CODE-REVIEW.md` (full 443-module review, 12
 cross-cutting findings F-01…F-12), with companion controls
-`specs/VALIDATION-LEDGER.md` + `specs/validation-claims.tsv` (30 headline
+`specs/VALIDATION-LEDGER.md` + `specs/validation-claims.tsv` (31 headline
 claims), three new scripts (`check-module-coverage.sh`,
 `check-validation-ledger.sh`, `check-semantic-mutations.sh`), and a `ci.yml`
 edit. Headline: **no S4 findings** — no unsoundness, no trust escapes, no

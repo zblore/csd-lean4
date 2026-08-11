@@ -16,17 +16,27 @@ Statuses:
 - `needs-change`: the public claim/API should be narrowed or strengthened.
 - `specialist-review`: mathematically deep proof requiring independent domain proof review.
 
-The TSV is canonical for automation. It records 30 headline claims, their defining modules, exact Lean
+The TSV is canonical for automation. It records 31 headline claims, their defining modules, exact Lean
 constants, load-bearing assumptions, an independent validation route, and any linked review finding.
 
 ## Current result
 
 | Status | Count | Meaning |
 |---|---:|---|
-| Validated | 8 | No material claim mismatch found at current depth. |
+| Validated | 9 | No material claim mismatch found at current depth. |
 | Qualified | 20 | Formally coherent, but assumptions or construction scope must accompany the claim. |
 | Needs change | 2 | Concrete semantic/API mismatch recorded in the main review ledger. |
 | Specialist review | 0 | All three commissioned audits (CL-005/CL-022+CL-023/CL-024) completed 2026-08-06. |
+
+**CL-031 added 2026-08-10** (`no_compatible_global_chsh_assignment_realises_singlet`,
+validated — hence Validated 8 → 9). It arrived through the C1 correction and
+**replaces** a false claim: `LF3/ContextMap.lean` previously asserted that type
+separation between `ContextIndexedOutcomeMaps` and `GlobalCHSHAssignment`
+"carries the Bell-consistency content". Different structures give definitional
+separation only, and the per-context domains in fact *prevented* the no-go from
+being stated. CL-031 is the theorem that states it, on the shared domain C1
+posits. Scope: four CHSH settings only, so it does **not** subsume CL-020.
+See `specs/publication-errata.md` E-1 and `docs/C1-FORMAL-SUPPORT.md`.
 
 (Counts updated 2026-08-06 after same-day resolution of CL-003 (G1 discharge, -> qualified) and the
 three specialist audits with author sign-off: CL-005 -> validated; CL-022, CL-023, CL-024 ->

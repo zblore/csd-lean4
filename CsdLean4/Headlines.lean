@@ -23,6 +23,7 @@ public import CsdLean4.LF5.Capstone
 public import CsdLean4.LF6.Decoherence
 public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF6.GHZContextuality
+public import CsdLean4.LF6.C1BellConsistency
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
@@ -39,7 +40,7 @@ public import CsdLean4.Thermo.Landauer
 **Category:** Special (facade — the reconstruction's actual API in one import).
 
 `import CsdLean4.Headlines` gives a reviewer or downstream consumer exactly the
-modules carrying the corpus's **30 headline claims** — the rows of
+modules carrying the corpus's **31 headline claims** — the rows of
 `specs/validation-claims.tsv` (canonical; human view `specs/VALIDATION-LEDGER.md`)
 — without pulling the full 400+-module implementation surface through a single
 flat root. Created 2026-08-06 (BACKLOG G8, the adopted half of the 2026-08-06
@@ -57,7 +58,7 @@ missing `OnticSetup.TrialModel` prefix; all fixed in the tsv same day).
 `check-validation-ledger.sh` also enforces that every ledger module is imported
 above, so the facade cannot silently drop a headline.
 
-## The 30 headline claims, by layer
+## The 31 headline claims, by layer
 
 * **LF1 — typicality → frequencies:** `CSD.LF1.OnticSetup.TrialModel.main_theorem_ae` (CL-001),
   `CSD.LF1.freq_tendsto_of_iid` (CL-002).
@@ -81,6 +82,11 @@ above, so the facade cannot silently drop a headline.
   `CSD.LF6.decoherence_offdiagonal_vanish` (CL-019),
   `CSD.LF6.no_product_partition_realises_singlet` (CL-020),
   `CSD.LF6.no_product_partition_realises_ghz` (CL-021).
+* **C1 shared-domain obstruction:**
+  `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet` (CL-031 — no
+  measurable shared-context outcome family compatible with any global CHSH
+  assignment reproduces the singlet at the four CHSH settings; added 2026-08-10,
+  **replacing** the false type-separation claim, see `specs/publication-errata.md`).
 * **Mathlib-staged (CSD-free):** `QuantumInfo.vonNeumannEntropy_subadditive`
   (CL-022), `QuantumInfo.strong_subadditivity_of_relEntropy_monotone` (CL-023 —
   SSA **from** the explicit `hDPI` premise, by design),
@@ -103,7 +109,7 @@ Claim-status vocabulary, scope qualifications, and the open-work queue live in
 
 namespace CSD.Headlines
 
-/-! ### Drift guard — every ledger constant, by full name (CL-001 … CL-030) -/
+/-! ### Drift guard — every ledger constant, by full name (CL-001 … CL-031) -/
 
 /-! The drift guard: each `example` elaborates one ledger constant by its full
 name (universe metavariables generalized at top level; the one noncomputable
@@ -140,5 +146,6 @@ example := @CSD.RecordLayer.projectiveMeasurementCapstone -- CL-027
 example := @CSD.CV.commute_of_disjointSupport -- CL-028
 example := @CSD.Thermo.vonNeumannEntropy_le_pinching -- CL-029
 example := @CSD.Thermo.landauer_bound -- CL-030
+example := @CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet -- CL-031
 
 end CSD.Headlines
