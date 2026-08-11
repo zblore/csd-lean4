@@ -38,6 +38,7 @@ jobs:
           bash scripts/check-axiom-imports.sh
           bash scripts/check-claims.sh
           bash scripts/check-claim-provenance.sh
+          bash scripts/check-citation-use.sh
 
       - name: Advisory expert-review reports
         run: |

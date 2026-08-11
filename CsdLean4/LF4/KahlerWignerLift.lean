@@ -81,7 +81,8 @@ theorem kSectorDataFlow_projectable (p₀ : CPN N) (sh : KTorus) (x : KSigma N) 
 omit [NeZero N] in
 /-- **SL-3 Part 1 headline (thread `Φ`): the projected flow `f_Φ` is transition-probability
 preserving.** Since `f_Φ = kProjectedFlow sh = id` (the flow is fibre-trivial on rays), this is
-honest but degenerate — the exact pattern of `trivialKahlerOnticSetup_transProbPreserving`. It is
+honest but degenerate — compare `trivialKahlerOnticSetup_transProbPreserving`, which degenerates
+the same way (a comparison, not a dependency: this proof is `rfl` and uses nothing). It is
 NOT derived from measure-preservation of `Φ` (the §13.2 trap / open D1 gap); it holds because the
 ray-descent is literally the identity. The moving dynamics of this instance lives in the `T²`
 fibre; the non-degenerate isometry content is the sector `U(N)`-action (Part 2). -/

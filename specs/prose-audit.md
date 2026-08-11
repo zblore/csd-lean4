@@ -20,9 +20,14 @@ distinct from what the guards catch, and it is invisible to all of them:
 
 **A guard cannot detect a wrong reason retroactively — but it can require every
 reason to name its witness at write time**, which is enough. That rule is now
-mode 4, below. What remains unmechanisable is a reason that cites a *real*
-theorem which does not actually support it; that still needs a reader, which is
-why this file tracks progress rather than reporting a pass/fail.
+mode 4, below.
+
+And the obvious next objection — "it could cite a real theorem that doesn't
+support it" — is *also* partly mechanisable: if the reason is real, the proof
+should use the theorem. That is `check-citation-use`, below. What survives both
+is a citation that **is** used but does not establish the stated reason; that
+needs a reader, which is why this file tracks progress rather than reporting a
+pass/fail.
 
 ## Surface
 
@@ -121,6 +126,65 @@ own regex**: mode 1's citation pattern rejects *namespaced* identifiers, and
 `ContextFixedA7.joint_degenerate_of_sum_eq_one` all along. Mode 4 uses a pattern
 that accepts dots. Worth recording, because a guard that cannot recognise a
 normal Lean name trains authors to write worse citations to appease it.
+
+## The dependency check (`check-citation-use`, added 2026-08-11)
+
+Mode 4 leaves a residue this file first called unmechanisable: *a reason citing a
+**real** theorem that does not support it.* **Part of that is mechanisable too.**
+
+If a cited theorem genuinely explains why a result is restricted, **the proof
+should use it.** A reason clause naming `T` where `T` is nowhere in the
+declaration's dependency graph is a claim the Lean itself disagrees with.
+
+`scripts/citation-use.lean` checks exactly that, run by
+`scripts/check-citation-use.sh` and wired into CI. Unlike every other guard here
+it runs **inside Lean**, because it needs proof terms rather than text. ~25 s on
+a built tree.
+
+It is **sentence-scoped**: only the clause actually giving the reason is checked.
+Citations elsewhere in a docstring are navigation ("see", "compare", "unlike",
+"superseded by") and are excused, as are the mode-4 honesty markers. Applying the
+rule to whole docstrings gives mostly false positives — measured, not assumed.
+
+### What it found immediately
+
+* ★ **A defect I had introduced an hour earlier**, while fixing mode 4.
+  `LF1.prepMeasure_toMeasure_eq` was documented "Since the restricted measure is
+  nonzero (`prepFiniteMeasure_ne_zero`), normalization gives back the usual
+  conditional preparation law". **The proof is `rfl`** — the equation is
+  definitional and nonzeroness plays no part in it. The docstring attributed to
+  the lemma a content it does not have. Corrected.
+* Two citations that were **navigation written as reasons**
+  (`LF4.kProjectedFlow_transProbPreserving`, `SigmaLayer.fs_cap_unconditional`),
+  now phrased as comparisons. The second gained a genuinely better explanation
+  in the process: `N = 2` is excluded **structurally** there — `j ≠ k` in `Fin M`
+  forces `M ≥ 2` — which is stronger than the pointer it previously offered.
+* A **WARN** channel for citations resolving to no constant found
+  `ContextFixedA7.joint_degenerate_of_sum_eq_one`, which is *module*-qualified
+  rather than a Lean name. Now cites the real constant.
+
+### Three implementation traps, all hit
+
+1. **`ConstantInfo.value?` returns `none` for theorems** under the module system.
+   A naive traversal therefore reports *every* citation as unused — which is what
+   the first run did, flagging proofs that demonstrably used their citations. The
+   proof term is still reachable via the `.thmInfo` constructor directly. **A
+   green run here would have been meaningless without checking a known-good case
+   first.**
+2. **Citations are rarely full Lean names.** They are module-qualified or
+   root-qualified, so namespace-walking resolves neither; a suffix index over the
+   environment is needed. Without it the checker silently skips what it cannot
+   resolve — passing, while checking nothing.
+3. **Unresolvable citations must be reported.** Found while negative-testing:
+   the first probe cited a real theorem under the wrong namespace and was
+   skipped in silence. That is a worse failure than an unused citation. Now a
+   warning — not fatal, since hypothesis names are legitimately backticked.
+
+### What is still not mechanised
+
+A citation that *is* used but does not establish the stated reason. That is about
+the meaning of prose and stays with the reader. **The residue is narrower, not
+gone.**
 
 ## Method note
 

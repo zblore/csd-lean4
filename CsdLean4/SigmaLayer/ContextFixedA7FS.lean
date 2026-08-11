@@ -39,7 +39,7 @@ by first passing to a positive-measure part of `T` bounded away from `½`.
 `M = N − 1` is the number of free simplex coordinates. Two *distinct* free coordinates exist
 exactly when `M ≥ 2`, i.e. `N ≥ 3`. At `N = 2` there is a single free coordinate and the second
 Born weight is `1 − s₁` — functionally dependent, which is precisely
-`ContextFixedA7.joint_degenerate_of_sum_eq_one`, the qubit's escape route. So the dimension count
+`CSD.SigmaLayer.joint_degenerate_of_sum_eq_one` (`SigmaLayer/ContextFixedA7.lean`), the qubit's escape route. So the dimension count
 that makes this file work is the same one that makes the qubit exempt.
 
 ## Status
@@ -195,8 +195,12 @@ theorem fs_joint_abundance {M : ℕ} (p₀ : CPN (M + 1)) {j k : Fin M} (hjk : j
 A base-only, `U(N)`-covariant, non-negative preparation density reproducing Born on the
 Fubini–Study sector **vanishes almost everywhere on overlap values below `½`** — no hypothesis
 left over. The `N = 2` solution `4(2s−1)₊` is supported exactly on `(½, 1]`, so the bound is
-sharp and attained; and `N = 2` is exempt for the reason recorded in
-`ContextFixedA7.joint_degenerate_of_sum_eq_one`. -/
+sharp and attained.
+
+`N = 2` is exempt **structurally**, and this proof needs nothing to exclude it: the statement
+quantifies over distinct `j k : Fin M`, which is uninhabited unless `M ≥ 2`, i.e. `N = M + 1 ≥ 3`.
+For *why* the qubit escapes the cap — the mathematical content, which is not used here — see
+`CSD.SigmaLayer.joint_degenerate_of_sum_eq_one` (`SigmaLayer/ContextFixedA7.lean`). -/
 theorem fs_cap_unconditional {M : ℕ} (p₀ : CPN (M + 1)) {j k : Fin M} (hjk : j ≠ k)
     {g : ℝ → ℝ} (hgm : Measurable g)
     (hdisj : fubiniStudyMeasure p₀

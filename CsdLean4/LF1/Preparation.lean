@@ -50,8 +50,14 @@ lemma prepFiniteMeasure_ne_zero :
   rw [prepFiniteMeasure_toMeasure, Ne, Measure.restrict_eq_zero]
   exact S.hΩ0_nonzero
 
-/-- Since the restricted measure is nonzero (`prepFiniteMeasure_ne_zero`), normalization gives
-back the usual conditional preparation law on `Ω0`. -/
+/-- The preparation law unfolds to the normalisation of the restricted measure. This equation is
+**definitional** (`rfl`) and assumes nothing.
+
+⚠️ Corrected 2026-08-11. This docstring previously read "Since the restricted measure is nonzero,
+normalization gives back the usual conditional preparation law" — attributing to *this* lemma a
+content it does not have. Nonzeroness is what makes the normalisation the genuine conditional law
+rather than a fallback, but it plays no part in the equation proved here; compare
+`prepFiniteMeasure_ne_zero`, which is where that fact lives. -/
 lemma prepMeasure_toMeasure_eq :
     ((S.prepMeasure : MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) =
       (((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace).normalize :
