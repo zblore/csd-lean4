@@ -57,6 +57,12 @@ unique.
 - `einselectionWitness` — a concrete superposition `(2,1)` with `p₀ = 4 ≠ 1 = p₁`
   (non-vacuity), and `einselectionWitness_offDiag` — its rotated off-diagonal is
   `3/2 ≠ 0`.
+  ⚠️ **The witness is deliberately UNNORMALISED** (`‖ψ‖² = 5`), so `p₀`, `p₁` are
+  squared moduli, **not** probabilities, and `decohereReduced` has trace `5`
+  rather than `1`. That is why an off-diagonal of `3/2` appears, which would be
+  impossible for a trace-one density matrix (`|ρ₀₁| ≤ ½`). Nothing here depends
+  on normalisation — the claims are "diagonal" versus "off-diagonal ≠ 0" — but
+  the values should not be read as Born probabilities.
 - `einselection` (capstone) — diagonal in the pointer basis (off-diag `0`) AND
   off-diagonal `3/2 ≠ 0` in the Hadamard rotation, for the witness.
 
