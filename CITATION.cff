@@ -42,8 +42,10 @@ keywords:
 # repository is one artefact with its own DOI; citing it at a tag is not.
 # See `docs/C1-FORMAL-SUPPORT.md` for the claim-to-theorem map.
 #
-# A release/tag for the C1 correction is PREPARED but deliberately NOT created
-# here: creating or pushing one is an author decision.
+# C1 formal support is available at tagged release `v1.2.1-c1-R1` (the current
+# one; `v1.2.0-c1-correction` is its predecessor and contains stale prose that
+# `v1.2.1-c1-R1` corrects — cite the later tag). Cite the tag together with the
+# exact module path and fully-qualified theorem name.
 # ---------------------------------------------------------------------------
 
 preferred-citation:

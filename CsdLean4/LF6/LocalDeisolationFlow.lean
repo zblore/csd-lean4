@@ -82,8 +82,10 @@ regrouping `((s_a,p_a),(s_b,p_b)) ↦ ((s_a,s_b),(p_a,p_b))`. The block reshuffl
   posited, not derived (SO-1: the sector origin, distinct from Paper C Axiom A5). The non-locality lives in the
   contextual carve (A.2) and the entangled preparation, never in the (local)
   flow.
-- **Generic context.** `hgen : ∀ s t, 0 < P_st a b s t` (`|a·b| < 1`, every
-  Bell-test setting).
+- **Generic context.** `hgen : ∀ s t, 0 < P_st a b s t` (`|a·b| < 1`) — the
+  generic **non-collinear** contexts, which include the four canonical
+  CHSH-optimal pairs. ⚠️ Collinear settings are Bell-test settings too and are
+  **excluded** here; `LF6.localDeisolation_pointer_volume_local` covers them.
 
 All exports are foundational-triple-only (Gleason-free; the LF4/LF5 POVM-Naimark
 volume engine is off Busch).

@@ -27,7 +27,11 @@ contextuality anchor.
 The system is the joint two-qubit register `ℂ⁴ ≅ ℂ² ⊗ ℂ²`, measured by the LF5
 von Neumann de-isolation flow `measurementFlow 4 e` on the dilated projective
 ontic space `Σ' = ℂℙ¹⁵ = ℙ(EuclideanSpace ℂ (Fin 16))` (`e = finProdFinEquiv`,
-`16 = 4·4 = 15 + 1`). The flow is **local** as an apparatus dynamics (it is the
+`16 = 4·4 = 15 + 1`).
+
+⚠️ **Not shown to factorise by wing (clarified 2026-08-11).** The A.2 `N = 4` adder flow reproduces the required contextual statistics, but `ℤ/4 ≠ ℤ/2 × ℤ/2`, so it is **not** a product `Φ_A ⊗ Φ_B`. Product locality is exhibited separately by A.3 (`LocalDeisolationFlow.localDeisolation_factorises`, `V_loc = V_A ⊗ V_B`) and extended to the whole finite chain by `LF6.localMeasurementChain_factorises`. C1's locality claim rests on those, not on calling this joint apparatus interaction "local".
+
+The flow is an *apparatus* dynamics (it is the
 single-system LF5 de-isolation at `N = 4`); the non-locality is **not** in the
 flow but in the *outcome carve*, which is the joint `BornRegion`
 moment-subdivision of `LF4/BornRegionUncond`, and is jointly contextual by A.1.
@@ -102,7 +106,14 @@ behind `MeasurementJointEig.born_eq_P_st`.
 - **Generic context.** The four-sector construction needs `P_st a b s t > 0` for
   all `(s, t)` (`hgen`), i.e. `|a·b| < 1` — the generic non-collinear contexts,
   which include the four canonical CHSH-optimal pairs. Collinear
-  axes have a vanishing sector and carry no Born information.
+  axes are excluded. ⚠️ **Corrected 2026-08-11**: the previous wording said they
+  "have a vanishing sector and carry no Born information"; both halves were
+  wrong. At `a·b = ±1` **two** of the four sectors have probability zero and the other
+  two carry `1/2` each — perfect (anti)correlation, which is among the most
+  informative Bell data, not an absence of Born content. They are excluded here
+  only because the legacy `singletJointEig` normalisation divides by `√P_st` and
+  so needs all four `P_st > 0`. `LF6.localNudgeVec` has no such division and
+  covers them (`localDeisolation_pointer_volume_local`).
 
 All exports are foundational-triple-only (Gleason-free; the LF5 pointer engine is
 off Busch, A.1 is measure-theoretic Bell content).
@@ -223,7 +234,9 @@ theorem nudgedSinglet_ne_zero (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st 
 /-- **The singlet de-isolation flow** `Φ = measurementFlow 4 finProdFinEquiv` on
 the dilated projective ontic space `Σ' = ℂℙ¹⁵ = ℙ(EuclideanSpace ℂ (Fin 16))`
 (`16 = 4·4`). This is the LF5-B von Neumann de-isolation flow instantiated at the
-joint two-qubit system `N = 4`; it is **local** as an apparatus dynamics. -/
+joint two-qubit system `N = 4`. ⚠️ It is an *apparatus* dynamics; it is **not**
+shown to factorise by wing (`ℤ/4 ≠ ℤ/2 × ℤ/2`). Product locality is A.3's
+`localDeisolation_factorises`, extended by `localMeasurementChain_factorises`. -/
 noncomputable def singletDeisolationFlow :
     ℙ ℂ (EuclideanSpace ℂ (Fin (4 * 4))) → ℙ ℂ (EuclideanSpace ℂ (Fin (4 * 4))) :=
   measurementFlow 4 finProdFinEquiv
@@ -430,7 +443,8 @@ achieved block-volume correlation (`carveBlockCorrelation`, the `s·t`-weighted 
 of the carve's `bornRegion` FS volumes) with A.1 in one theorem — feeding the
 carve's own value, not a free `−a·b`, into `no_product_partition_realises_singlet`.
 
-The flow is local (LF5 @ N=4); the carve is contextual (the joint moment
+The flow is an apparatus dynamics (LF5 @ N=4) — **not** shown to be a wing
+product; see the module header. The carve is contextual (the joint moment
 subdivision, A.1). Born = FS-volume is imported from the DH/FS-volume engine, not
 re-derived. The flow factorisation `Φ = Φ_A ⊗ Φ_B` is supplied by LF6-A.3,
 **landed** in `LocalDeisolationFlow.lean` as a separate local product dilation.

@@ -149,7 +149,31 @@ done < "$tmp".props
 # routinely discuss aligned and anti-aligned axes. Correct wording is "the
 # generic non-collinear contexts" or "the four canonical CHSH-optimal pairs".
 # ---------------------------------------------------------------------------
-git ls-files 'CsdLean4/**/*.lean' '*.md' 'specs/*.md' 'docs/*.md'   | xargs grep -niE "(all|every) Bell-test setting" 2>/dev/null   | grep -v 'check-claim-provenance'   | grep -viE 'too broad|was false|corrected 20|previously' > "$tmp".bell || true
+# WARNING - MULTILINE. A line-by-line grep MISSED an instance in
+# LocalDeisolationFlow.lean on 2026-08-11 because the phrase was wrapped across
+# two lines. Doc comments wrap, so any prose rule that greps line-by-line is
+# unreliable by construction. This joins each file's lines with awk before
+# matching, and reports the file (a joined stream has no useful line number).
+# ONE awk pass: buffers each file, joins its lines, matches on the joined text.
+# Per-file awk spawns took 8 minutes on Windows; this takes seconds.
+git ls-files 'CsdLean4/**/*.lean' '*.md' 'specs/*.md' 'docs/*.md' \
+  | grep -v 'check-claim-provenance' \
+  | xargs awk '
+      function flush(   s, low, seg, from) {
+        if (fname == "") return
+        s = buf; low = tolower(s)
+        while (match(low, /(all|every)[ \t]+bell-test[ \t]+setting/)) {
+          from = (RSTART > 80) ? RSTART - 80 : 1
+          seg = substr(s, from, 130)
+          if (tolower(seg) !~ /too broad|was false|corrected 20|previously|excluded here/)
+            print "  " fname ": " seg
+          s = substr(s, RSTART + RLENGTH); low = tolower(s)
+        }
+      }
+      FNR == 1 { flush(); fname = FILENAME; buf = "" }
+      { buf = buf " " $0 }
+      END { flush() }
+    ' > "$tmp".bell 2>/dev/null || true
 
 while IFS= read -r b; do
   [ -z "$b" ] && continue
@@ -158,7 +182,7 @@ while IFS= read -r b; do
     echo '     hgen excludes the collinear settings a.b = +-1. Say "the generic'
     echo '     non-collinear contexts" or "the four canonical CHSH-optimal pairs".'
   fi
-  echo "  $b"
+  echo "$b"
   fail=1
 done < "$tmp".bell
 

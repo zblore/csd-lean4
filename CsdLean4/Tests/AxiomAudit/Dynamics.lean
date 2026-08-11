@@ -296,11 +296,11 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- 0 elsewhere). ghzDeisolation_frequency: a.s. block frequencies → the GHZ Born weight (LF5
 -- vnDilation_pointer_frequency @ N=8 + nudgedGHZ_born). This is the MINIMAL computational-basis
 -- carve (diagonal weights); ghzDeisolation_contextuality_anchor RE-EXPORTS C.1
--- no_product_partition_realises_ghz as the contextuality anchor of the DEFERRED Mermin-context
--- carve (the diagonal carve is NOT itself contextual). NB (corrected 2026-08-10, stale prose):
--- the Mermin X/Y carve tying block correlations to C.1 -- the three-party analogue of A.2's
--- blockVolume_correlation -- and the local product flow V_0(x)V_1(x)V_2 are NOT deferred; both
--- LANDED as C.3 (GHZMerminCarve.lean) and C.4 (GHZLocalFlow.lean). Flow REALISES (not derives) the GHZ
+-- no_product_partition_realises_ghz as the contextuality anchor of the Mermin-context carve
+-- (the diagonal carve is NOT itself contextual). The Mermin X/Y carve tying block correlations
+-- to C.1 -- the three-party analogue of A.2's blockVolume_correlation -- is C.3
+-- (GHZMerminCarve.lean), and the local product flow V_0(x)V_1(x)V_2 is C.4 (GHZLocalFlow.lean);
+-- both have landed. Flow REALISES (not derives) the GHZ
 -- measurement. Residue SO-1 (GHZ entangled sector posited). Foundational triple only, no busch.
 /-- info: 'CSD.LF6.ghzDeisolation_pointer_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

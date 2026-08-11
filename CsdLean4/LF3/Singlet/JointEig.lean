@@ -34,7 +34,14 @@ All over `EuclideanSpace ℂ (Fin 2 × Fin 2)`; the LF4 bundle re-indexes to
 canonical CHSH-optimal pairs, but NOT the collinear ones) every sector has
 `P_st > 0`, so the
 construction covers all four sectors. Collinear settings (`a = ±b`) have one
-vanishing sector and are excluded; they carry no Born information anyway.
+⚠️ **Corrected 2026-08-11** (the previous wording said "one vanishing sector"
+and "no Born information"; both were wrong).
+At `a·b = ±1` **two** of the four sectors have probability zero and the other
+two carry `1/2` each — perfect (anti)correlation, which is among the most
+informative Bell data, not an absence of Born content. They are excluded here
+only because the legacy `singletJointEig` normalisation divides by `√P_st` and
+so needs all four `P_st > 0`. `LF6.localNudgeVec` has no such division and
+covers them (`localDeisolation_pointer_volume_local`).
 -/
 
 @[expose] public section
