@@ -956,6 +956,20 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- unitary (wingBasisUnitary a) (x) (wingBasisUnitary b) on the singlet, so locality is
 -- definitional. `localNudge_born` shows it reproduces the same Born statistics, and carries
 -- NO genericity hypothesis (no hgen).
+--
+-- Added 2026-08-11 (external review, recommended hardening): the modules called wingPairUnitary
+-- a "product unitary" in prose while only its FACTORS carried an exported unitarity theorem
+-- (LF3.wingBasisUnitary_mem_unitaryGroup), leaving the word "unitary" as an inference sitting in
+-- documentation. Mathematically immediate from Matrix.kronecker_mem_unitary, but the repository is
+-- eliminating prose-only property claims, so it is now machine-checked and pinned.
+/-- info: 'CSD.LF6.wingPairUnitary_mem_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.wingPairUnitary_mem_unitary
+
+/-- info: 'CSD.LF6.wingPairUnitary_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.wingPairUnitary_mem_unitaryGroup
+
 /-- info: 'CSD.LF6.localNudge_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localNudge_coord

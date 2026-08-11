@@ -92,11 +92,14 @@ behind `MeasurementJointEig.born_eq_P_st`.
   not factorise (`ℤ/4 ≠ ℤ/2 × ℤ/2`); A.3 supplies a **separate** local product
   dilation `V_loc = V_A ⊗ V_B` realising the same pointer statistics, and
   `LF6.localMeasurementChain_factorises` extends that to the whole finite chain.
-  The original wording, retained for the record: the flow factorisation
-  `Φ = Φ_A ⊗ Φ_B` (the tensor
-  reindexing `(sys_A ⊗ ptr_A) ⊗ (sys_B ⊗ ptr_B)`). The de-isolation here is the
-  `N = 4` joint coupling; its decomposition into two wing couplings is the heavy
-  tensor-reindex piece, deferred (`specs/lf6-plan.md` LF6-A.3). This does **not**
+  ★ **A.3 does not factorise A.2.** It supplies an *alternative* factorised
+  realisation of the same joint measurement: A.2 gives a joint `N = 4`
+  realisation that is not wing-factorised, and A.3 independently gives a
+  factorised local one. The decomposition of the `N = 4` joint coupling itself
+  into two wing couplings is **not** established, and is not needed — the
+  locality claim rests on A.3's construction, not on decomposing A.2's.
+  (Superseded historical status for this bullet is in
+  `specs/c1-closure-report.md`, not here.) This does **not**
   weaken A.2: A.1 already establishes that the locality of the flow is consistent
   with the contextuality of the carve, and the safety anchor
   (`singletDeisolation_carve_contextual`) does not assume the product structure.
@@ -145,7 +148,12 @@ outcome at `N = 4` to the LF3 sign pair. -/
 def stIdx : Sign × Sign ≃ Fin 4 :=
   (signEquiv.prodCongr signEquiv).trans finProdFinEquiv
 
-/-! ### The nudged singlet (the prepared state `φ = (U_A^x ⊗ U_B^y)† ψ⁻`) -/
+/-! ### The legacy singlet-moduli representative
+
+⚠️ This heading previously read "the prepared state `φ = (U_A^x ⊗ U_B^y)† ψ⁻`". **That was
+false** — see `nudgedSinglet`'s docstring below. The object here is the vector of moduli
+`√(P_st a b s t)`, not a local-unitary image of the singlet. The genuine
+`(U_A(a) ⊗ U_B(b))ᴴ ψ⁻` is `LF6.localNudgeVec`. -/
 
 /-- **The prepared-state MODULI.** The pointer-cell `(s, t)` coordinate is the
 singlet's overlap with the joint spin eigenstate `singletJointEig s t a b`.
@@ -446,8 +454,11 @@ carve's own value, not a free `−a·b`, into `no_product_partition_realises_sin
 The flow is an apparatus dynamics (LF5 @ N=4) — **not** shown to be a wing
 product; see the module header. The carve is contextual (the joint moment
 subdivision, A.1). Born = FS-volume is imported from the DH/FS-volume engine, not
-re-derived. The flow factorisation `Φ = Φ_A ⊗ Φ_B` is supplied by LF6-A.3,
-**landed** in `LocalDeisolationFlow.lean` as a separate local product dilation.
+re-derived. ⚠️ **A.3 does not factorise this flow.** A.2 (here) provides a joint
+`N = 4` realisation that is **not** wing-factorised; LF6-A.3
+(`LocalDeisolationFlow.localDeisolation_factorises`) independently supplies a
+*factorised local realisation of the same joint measurement*, extended to the
+whole finite chain by `LF6.localMeasurementChain_factorises`.
 Residue: SO-1 (the entangled sector posited). Honest ledger: module docstring. -/
 theorem singletDeisolation_flow_capstone {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)

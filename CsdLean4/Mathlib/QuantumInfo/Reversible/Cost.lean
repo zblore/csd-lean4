@@ -59,7 +59,10 @@ structure Cost where
 /-- Per-gate resource cost. `X` is free (a classical bit flip, no T/Toffoli); `CX` is one CNOT;
 `CCX` is one Toffoli at depth one; `swap` is three CNOTs (the standard CNOT decomposition). The
 width fields (`qubits`/`ancilla`) are `0` here — they are supplied at the circuit level by
-`circuitCost`, since a single gate does not determine the register width.
+`circuitCost`, since a single gate does not determine the register width. That last point is a
+**modelling decision, not proved** and not provable from the gate alone: nothing forces width `0`
+rather than, say, the largest index mentioned. It is chosen so that width composes at the circuit
+level instead of being double-counted per gate.
 
 Cost is **syntactic**: it is a function of the gate, not of the permutation it realises. A
 degenerate gate (control = target, e.g. `CCX i j i`) acts as the identity under `denoteGate` yet is

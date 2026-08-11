@@ -12,15 +12,17 @@ Both C1 defects were **prose giving a *reason* for a formal fact** — why
 `nudgedSinglet` is what it is, why collinear settings are excluded. This is
 distinct from what the guards catch, and it is invisible to all of them:
 
-* `check-claim-provenance` targets claims *about objects* — a definition
-  asserting a property it does not have. A wrong **reason** attached to a
-  **true** statement trips nothing.
+* `check-claim-provenance` modes 1–3 target claims *about objects* — a
+  definition asserting a property it does not have. A wrong **reason** attached
+  to a **true** statement trips nothing.
 * Lean cannot help at all. Nothing in Lean states reasons, so nothing can
   disagree with one. The theorem is true; only the explanation is false.
 
-**No guard can close this class.** It needs a reader who knows the mathematics.
-That is a real limitation, and it is the reason this file tracks progress
-explicitly rather than reporting a pass/fail.
+**A guard cannot detect a wrong reason retroactively — but it can require every
+reason to name its witness at write time**, which is enough. That rule is now
+mode 4, below. What remains unmechanisable is a reason that cites a *real*
+theorem which does not actually support it; that still needs a reader, which is
+why this file tracks progress rather than reporting a pass/fail.
 
 ## Surface
 
@@ -82,6 +84,43 @@ sentences before the wrong one. The right answer was already written down and
 the wrong sentence still propagated to four modules. **A defect being known
 somewhere in the repository does not stop it spreading**, which is an argument
 for settling this kind of claim with a theorem rather than a better sentence.
+
+## The guard (mode 4, added 2026-08-11)
+
+This file first said no guard could close the class. **That was too pessimistic,
+and the correction is the useful part**: a guard cannot detect a *wrong* reason
+after the fact, but it can require a reason to **name its witness when written**
+— and that is enough, because a wrong reason then has nothing to point at.
+
+`check-claim-provenance.sh` mode 4 enforces: a doc block giving a causal reason
+(`because` / `since` / `the reason`) for a restriction (`restrict` / `excluded` /
+`by hand` / `genericity` / `hgen` / `degenerate`) must **either** cite a theorem
+(a backticked identifier) **or** carry an explicit marker that the reason is
+unwitnessed (`⚠`, "not proved", "posited", "intuition", "informal",
+"motivation").
+
+**Both known defects fail this rule**, which is the test that matters:
+
+* "hgen excludes collinear settings because …" — the real cause was division by
+  `√P_st`, named nowhere.
+* "restricted to `[0,1)` because Lebesgue measure on the line is infinite" —
+  `fibreTypicality` is a probability measure and the restriction was not forced.
+  Neither fact was cited, **because citing either would have exposed the reason
+  as false.**
+
+Negative-tested on the original defect's wording; it fires. Runs in ~7 s.
+
+**Cost when introduced: 67 reason-blocks corpus-wide, 6 unwitnessed.** All six
+were resolved rather than grandfathered, so there is no ratchet and no legacy
+allowlist — and there should not be one, since an allowlist here would re-admit
+exactly the class the rule exists to exclude.
+
+⚠️ **The guard's first run flagged a seventh, which was a false positive of its
+own regex**: mode 1's citation pattern rejects *namespaced* identifiers, and
+`ContextFixedA7FS.lean` had been correctly citing
+`ContextFixedA7.joint_degenerate_of_sum_eq_one` all along. Mode 4 uses a pattern
+that accepts dots. Worth recording, because a guard that cannot recognise a
+normal Lean name trains authors to write worse citations to appease it.
 
 ## Method note
 

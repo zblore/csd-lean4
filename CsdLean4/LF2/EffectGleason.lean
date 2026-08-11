@@ -1129,7 +1129,9 @@ theorem qsesq_conj_symm (u v : EuclideanSpace ℂ (Fin N)) :
 
 /-- **`S` restricts to `q` on the diagonal:** `S(v,v) = q v`. The diagonal value is
 `f v v = 4 q v` (degree-2 homogeneity at `2`), and the imaginary term vanishes because
-`q(v − i·v) = q(v + i·v)` (unit phase `−i`). -/
+`q(v − i·v) = q(v + i·v)` (unit phase `−i`). Both steps are the same witness,
+`OperationalPackage.qform_smul` (`q(c • v) = ‖c‖² q v`): at `c = 2` it gives the diagonal value,
+and at `c = −i` it gives `‖−i‖² = 1`, collapsing the imaginary term. -/
 theorem qsesq_self (v : EuclideanSpace ℂ (Fin N)) :
     OP.qsesq v v = ((OP.qform v : ℝ) : ℂ) := by
   have hdiag : OP.qpolar v v = 4 * OP.qform v := by

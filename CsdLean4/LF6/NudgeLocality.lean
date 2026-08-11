@@ -74,8 +74,29 @@ noncomputable def wingPairUnitary (a b : DetectorSetting) :
     Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
   Matrix.kroneckerMap (· * ·) (wingBasisUnitary a) (wingBasisUnitary b)
 
+/-- **`wingPairUnitary` really is a product *unitary*.** Both wing factors are
+unitary (`LF3.wingBasisUnitary_mem_unitaryGroup`) and the Kronecker product of
+unitaries is unitary (`Matrix.kronecker_mem_unitary`).
+
+Added 2026-08-11. The modules below called this object a "product unitary" in
+prose while only its *factors* carried an exported unitarity theorem — leaving
+the word "unitary" as an inference sitting in documentation. It is now a
+machine-checked statement, which is the standard the rest of the C1 tier is
+held to. -/
+theorem wingPairUnitary_mem_unitary (a b : DetectorSetting) :
+    wingPairUnitary a b ∈ unitary (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :=
+  Matrix.kronecker_mem_unitary
+    (LF3.wingBasisUnitary_mem_unitaryGroup a) (LF3.wingBasisUnitary_mem_unitaryGroup b)
+
+/-- The same fact in `unitaryGroup` form, matching `wingBasisUnitary_mem_unitaryGroup`. -/
+theorem wingPairUnitary_mem_unitaryGroup (a b : DetectorSetting) :
+    wingPairUnitary a b ∈ Matrix.unitaryGroup (Fin 2 × Fin 2) ℂ :=
+  wingPairUnitary_mem_unitary a b
+
 /-- ★ **The nudge, done locally.** The singlet rotated into the `(a,b)`
-eigenbasis by a **product** unitary. Locality is definitional. -/
+eigenbasis by a **product** unitary — unitary as a *theorem*
+(`wingPairUnitary_mem_unitaryGroup`), not by assertion. Locality is
+definitional. -/
 noncomputable def localNudge (a b : DetectorSetting) : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
   Matrix.toEuclideanLin (wingPairUnitary a b)ᴴ singlet
 

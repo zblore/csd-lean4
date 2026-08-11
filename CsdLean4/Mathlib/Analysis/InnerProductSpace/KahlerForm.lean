@@ -202,8 +202,10 @@ theorem fubiniStudy_pointwise_kahler_compatibility (u v : E) :
 
 At a ray `[ψ] ∈ ℂℙ^{N-1}` the (holomorphic) tangent space is modelled by the orthogonal complement
 `(span ℂ {ψ})ᗮ = ψ^⊥`. The complex structure `J = i • ·` preserves it, so `ψ^⊥` is a complex
-(`J`-invariant) subspace — and since the Kähler-triple identities above hold on all of `E`, they
-restrict to `ψ^⊥`: the flat Hermitian structure on `E` **induces** the Fubini–Study Kähler structure on
+(`J`-invariant) subspace (`complexStructure_mem_orthogonal`, proved immediately below) — and since
+the Kähler-triple identities above are universally quantified over `E`
+(`fundamentalForm_eq_metric_complexStructure`, `fundamentalForm_complexStructure`), they
+restrict to `ψ^⊥` with nothing to prove: the flat Hermitian structure on `E` **induces** the Fubini–Study Kähler structure on
 each tangent space. This ties the ambient pointwise form to the actual tangent model of `ℂℙ^{N-1}`
 (still pointwise — no manifold structure needed). -/
 

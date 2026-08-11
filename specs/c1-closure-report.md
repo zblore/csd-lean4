@@ -222,7 +222,57 @@ So item 35 is **CI-confirmed**, not merely locally reported — and CI verified
 strictly more than the local runs did. The lesson is the same one this
 correction kept producing: check the endpoint before recording an absence.
 
+## Post-R1 history (added 2026-08-11 — this section was itself behind)
+
+An external review found that this report had **again** fallen behind the
+repository, recording only up to the CI correction. That is an audit-trail
+defect in a document whose only job is the audit trail, so the remaining
+history is recorded here and this section is to be extended with every C1 tag.
+
+3. **R2 correction** (`6771214`, tagged `v1.2.2-c1-R2` at `b38c110`). The
+   endpoint treatment in `JointEig.lean` was corrected: at `a·b = ±1` two
+   sectors vanish and the other two carry probability `1/2`, giving perfect
+   correlation or anticorrelation. The legacy restriction comes from division
+   by `√P_st`, **not** from any absence of physical information — the earlier
+   text said the collinear settings "carry no Born information", which was
+   false. `b38c110` then repaired a dangling clause the R2 edit left stranded.
+
+4. **R3, this pass** (tagged `v1.2.3-c1-R3`). A second external review found
+   four live-documentation residuals and one hardening opportunity; all five
+   are closed:
+
+   * `SingletDeisolationFlow.lean` — the section heading still read "the
+     prepared state `φ = (U_A ⊗ U_B)† ψ⁻`" **directly above** the docstring
+     saying that identification is false. Retitled "The legacy singlet-moduli
+     representative". Historical "deferred" prose removed from the live A.3
+     description (it belongs in this report, not in a module specification).
+   * **"A.3 factorises A.2" was wrong wording in two places.** A.3 does *not*
+     factorise the A.2 flow: A.2 gives a joint `N = 4` realisation that is not
+     wing-factorised, and A.3 *independently* supplies a factorised local
+     realisation of the same joint measurement. Corrected in the module header
+     and the capstone.
+   * `ContextMap.lean` — the **category line** still read "Bell-consistency
+     boundary via definitional separation, no Fine axiom", contradicting the
+     body, which correctly says type separation proves nothing. This is the
+     precise phrase that caused the original defect, surviving in the one place
+     nobody re-read.
+   * `CITATION.cff` pointed at `v1.2.1-c1-R1`, whose prose R2 had superseded.
+     Now points at `v1.2.3-c1-R3`, with the tag history and an explicit warning
+     that the line is not self-maintaining — it has now gone stale twice.
+   * **Hardening:** `wingPairUnitary` was called a "product unitary" in prose
+     while only its *factors* carried an exported unitarity theorem.
+     `wingPairUnitary_mem_unitary` / `_mem_unitaryGroup` now export it
+     (via `Matrix.kronecker_mem_unitary`), pinned in `AxiomAudit/Dynamics.lean`.
+
+   Old tags were **not** moved. They are audit history.
+
+**No theorem-level C1 defect was found by either review.** The reviews have
+converged from mathematical defects, through conceptual documentation defects,
+to release hygiene — which is the expected shape of convergence, and the reason
+to stop iterating on the repository for C1 after this tag.
+
 ## References
 
 `specs/c1-correction-plan.md`; `docs/C1-FORMAL-SUPPORT.md`;
-`specs/publication-errata.md`; `scripts/check-claim-provenance.sh`.
+`specs/publication-errata.md`; `scripts/check-claim-provenance.sh`;
+`specs/prose-audit.md` (the standing audit whose mode-4 rule came out of this).

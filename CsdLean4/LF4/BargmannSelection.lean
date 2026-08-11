@@ -126,7 +126,13 @@ theorem not_projUnitary_and_projAntiunitary {d : KahlerOnticSetup N} {t : ℝ}
 projected flow whose Bargmann observable along a non-degenerate probe triple
 is continuous in `t`, the unitary-time set is clopen: it is the preimage of
 the closed singleton `{Δ₀}` and its complement the preimage of `{conj Δ₀}`,
-`Δ₀ ≠ conj Δ₀` since `Im Δ₀ ≠ 0`. This discharges (ii) — the branch
+`Δ₀ ≠ conj Δ₀` since `Im Δ₀ ≠ 0`.
+
+The complement step is the load-bearing one, and it is *not* formal: it needs
+the two values to be **exhaustive**. That is supplied by the Wigner dichotomy
+`projectedFlow_unitary_or_antiunitary` (from `hTPP`), together with
+`bargmannObservable_of_projUnitary` and `bargmannObservable_of_projAntiunitary`
+pinning the observable's value on each branch. This discharges (ii) — the branch
 separation — outright, and reduces (i) to the scalar continuity hypothesis
 `hcont`. -/
 theorem projUnitary_isClopen_of_bargmann_continuous

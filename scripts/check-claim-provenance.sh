@@ -186,7 +186,76 @@ while IFS= read -r b; do
   fail=1
 done < "$tmp".bell
 
+# ---------------------------------------------------------------------------
+# MODE 4: an UNWITNESSED REASON for a formal restriction.
+#
+# Added 2026-08-11. The C1 correction and the prose audit both found defects of
+# a shape modes 1-3 cannot see: prose giving a REASON for a formal fact, where
+# the theorem is true and only the explanation is false. Modes 1-3 target claims
+# ABOUT OBJECTS, so a wrong reason attached to a true statement trips nothing,
+# and Lean cannot help -- nothing in Lean states reasons, so nothing can
+# disagree with one.
+#
+# Retroactively detecting a WRONG reason is not mechanisable. But requiring a
+# reason to NAME ITS WITNESS when written is, and that is enough: a wrong reason
+# then has nothing to point at. The two known instances both fail this rule.
+#
+#   - "hgen excludes collinear settings because ..." -- the real cause was
+#     division by sqrt(P_st), named nowhere.
+#   - "restricted to [0,1) because Lebesgue measure on the line is infinite" --
+#     fibreTypicality is a PROBABILITY measure and the restriction was not
+#     forced (fibreTypicality_uncovered_univ). Neither fact was cited, because
+#     citing either would have exposed the reason as false.
+#
+# RULE. A doc block that gives a causal reason (because / since / the reason)
+# for a restriction (restrict / excluded / by hand / genericity / hgen /
+# degenerate) must EITHER cite a theorem (a backticked snake_case identifier)
+# OR carry an explicit marker that the reason is unwitnessed (a warning sign,
+# "not proved", "posited", "intuition", "informal", "motivation").
+#
+# Measured cost when introduced: 67 reason-blocks corpus-wide, 7 unwitnessed.
+# All 7 were resolved rather than grandfathered, so this needs no ratchet and
+# has no legacy allowlist. Keep it that way -- an allowlist here would re-admit
+# exactly the class the rule exists to exclude.
+#
+# ONE awk pass, for the Windows performance reasons documented above.
+git ls-files 'CsdLean4/**/*.lean' | xargs awk '
+  BEGIN {
+    cause = "because|since |the reason|owing to|which is why"
+    restr = "restrict|excluded|only holds|by hand|genericity|hgen|must be stated|degenerate"
+    # NOTE the dots. Mode 1 uses `[a-zA-Z][a-zA-Z0-9]*_...`, which rejects NAMESPACED
+    # identifiers -- and namespaced is the norm here. When mode 4 was first run that regex
+    # produced a false positive on ContextFixedA7FS.lean, which was correctly citing
+    # `ContextFixedA7.joint_degenerate_of_sum_eq_one` all along. A guard that cannot recognise
+    # a normal Lean name would train authors to write worse citations to appease it.
+    cite  = "`[A-Za-z][A-Za-z0-9.]*_[A-Za-z0-9_.]*`"
+    mark  = "not proved|NOT proved|posited|intuition|informal|motivation"
+  }
+  function flush(   low) {
+    if (fname == "" || buf == "") return
+    low = tolower(buf)
+    if (low ~ cause && low ~ restr && buf !~ cite && buf !~ mark && buf !~ /⚠/)
+      print "  " fname ": " substr(buf, 1, 110)
+  }
+  FNR == 1 { flush(); fname = FILENAME; buf = ""; inblk = 0 }
+  /^\/-[-!]/ { flush(); buf = $0; inblk = 1; if ($0 ~ /-\//) { flush(); inblk = 0; buf = "" } next }
+  inblk { buf = buf " " $0; if ($0 ~ /-\//) { flush(); inblk = 0; buf = "" } }
+  END { flush() }
+' > "$tmp".reason 2>/dev/null || true
+
+while IFS= read -r r; do
+  [ -z "$r" ] && continue
+  if [ "$fail" -eq 0 ]; then
+    echo 'FAIL a doc block gives a REASON for a formal restriction without naming its'
+    echo '     witness. Cite the theorem that establishes the reason, or mark the reason'
+    echo '     explicitly unwitnessed. A reason that can cite nothing is the shape both'
+    echo '     known prose defects had.'
+  fi
+  echo "$r"
+  fail=1
+done < "$tmp".reason
+
 if [ "$fail" -eq 0 ]; then
-  echo "check-claim-provenance: OK (no unwitnessed property claims, no type-level content claims)"
+  echo "check-claim-provenance: OK (no unwitnessed property claims, no type-level content claims, no unwitnessed reasons)"
 fi
 exit "$fail"

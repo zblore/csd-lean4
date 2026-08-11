@@ -43,14 +43,15 @@ lemma prepFiniteMeasure_toMeasure :
     ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace) : Measure SigmaSpace) =
       (S.μL : Measure SigmaSpace).restrict S.Ω0 := rfl
 
-/-- The restricted preparation measure is nonzero because `μL Ω0 ≠ 0`. -/
+/-- The restricted preparation measure is nonzero because `μL Ω0 ≠ 0` — the structure field
+`hΩ0_nonzero`, transferred across the restriction by `Measure.restrict_eq_zero`. -/
 lemma prepFiniteMeasure_ne_zero :
     ((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace) : Measure SigmaSpace) ≠ 0 := by
   rw [prepFiniteMeasure_toMeasure, Ne, Measure.restrict_eq_zero]
   exact S.hΩ0_nonzero
 
-/-- Since the restricted measure is nonzero, normalization gives back the usual
-conditional preparation law on `Ω0`. -/
+/-- Since the restricted measure is nonzero (`prepFiniteMeasure_ne_zero`), normalization gives
+back the usual conditional preparation law on `Ω0`. -/
 lemma prepMeasure_toMeasure_eq :
     ((S.prepMeasure : MeasureTheory.ProbabilityMeasure SigmaSpace) : Measure SigmaSpace) =
       (((S.prepFiniteMeasure : MeasureTheory.FiniteMeasure SigmaSpace).normalize :

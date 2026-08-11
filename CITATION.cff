@@ -42,10 +42,22 @@ keywords:
 # repository is one artefact with its own DOI; citing it at a tag is not.
 # See `docs/C1-FORMAL-SUPPORT.md` for the claim-to-theorem map.
 #
-# C1 formal support is available at tagged release `v1.2.1-c1-R1` (the current
-# one; `v1.2.0-c1-correction` is its predecessor and contains stale prose that
-# `v1.2.1-c1-R1` corrects — cite the later tag). Cite the tag together with the
-# exact module path and fully-qualified theorem name.
+# C1 formal support: cite tagged release `v1.2.3-c1-R3`, together with the exact
+# module path and fully-qualified theorem name.
+#
+# ⚠️ THIS LINE HAS GONE STALE TWICE (at R2, and again at R3). It is not
+# self-maintaining: adding a C1 tag without editing this line silently points
+# citations at superseded prose. **Update it in the same commit that precedes a
+# new C1 tag.**
+#
+# Tag history — do NOT move or delete these; they are audit history, and each is
+# immutable by design:
+#   v1.2.0-c1-correction  the C1 correction itself (superseded prose)
+#   v1.2.1-c1-R1          first hygiene pass (still has the old endpoint text)
+#   v1.2.2-c1-R2          endpoint treatment corrected
+#   v1.2.3-c1-R3          CURRENT — live-documentation residuals closed,
+#                         wingPairUnitary unitarity exported, prose-audit
+#                         guard mode 4 added
 # ---------------------------------------------------------------------------
 
 preferred-citation:
