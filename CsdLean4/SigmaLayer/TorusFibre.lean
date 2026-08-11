@@ -152,8 +152,10 @@ theorem volume_torusBornCell (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ =
 /-! ### Totality -/
 
 /-- **The cells cover `T²` up to a null set**, so a.e. microstate of the even-dimensional fibre
-yields a record. As on the circle — and unlike on `ℝ` — this is a statement about the *whole*
-space, since the whole space has measure one. -/
+yields a record. As on the circle, this is a statement about the *whole* space — and here the mass
+one is Haar mass on a compact group rather than a restriction imposed by hand, so no point is
+excused by the measure. (⚠️ The `univ` *form* is available on `ℝ` too — `fibreTypicality_uncovered_univ`
+— so the contrast is about where the mass comes from, not about which sets can be quantified over.) -/
 theorem torusCell_ae_total (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i)
     (hsum : ∀ i : Fin n, loSum r i + r i ≤ 1) (htot : ∑ i, r i = 1) :
     (volume : Measure LF4.KTorus) (univ \ ⋃ i, torusCell r i) = 0 := by

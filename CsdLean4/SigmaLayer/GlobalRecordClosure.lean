@@ -28,7 +28,7 @@ content depended on the preparation-indexing. What changes is the arena and the 
 | arena | `ℝ` (non-compact, odd-dim'l product) | `KSigma = ℂℙⁿ⁻¹ × T²` (compact, even) |
 | context | `bornContext ψ` — the *preparation* | `ContextField` — the *apparatus* |
 | measure | `fibreTypicality` (Lebesgue on `[0,1)`) | `epistemicMeasure p = δ_p ⊗ Haar` |
-| `ae_total` | on `Ico 0 1`, by hand | on `univ` — the whole space has measure one |
+| `ae_total` | on `Ico 0 1` (⚠️ not forced — `fibreTypicality_uncovered_univ`) | on `univ`; mass one is Haar, not a restriction |
 
 ★ **The record event is now a function of `(context, outcome, time)` and of nothing else.** That is
 visible in the type of `globalRecordSemantics` and needs no theorem to state: the *same* set
@@ -150,8 +150,10 @@ structure GlobalRecordClosure (N : ℕ) (c : ContextField N) (p : LF4.CPN N) : P
   born_typicality : ∀ (i : Fin N) (t : OnticTime),
     epistemicMeasure p ((globalRecordSemantics N).event ⟨c, i, t⟩)
       = ENNReal.ofReal (c.rate p i)
-  /-- The record events cover `Σ` up to a null set. ★ On `ℝ` this had to be stated relative to
-  `Ico 0 1`; here it is about the **whole space**, which has measure one. -/
+  /-- The record events cover `Σ` up to a null set. ★ On `ℝ` this was stated relative to `Ico 0 1`
+  — ⚠️ not because it had to be (`fibreTypicality_uncovered_univ` gives the `univ` form there too),
+  but because the mass one was imposed by restricting Lebesgue. Here the whole space carries mass
+  one intrinsically. -/
   ae_total : ∀ t : OnticTime,
     epistemicMeasure p (univ \ ⋃ i, (globalRecordSemantics N).event ⟨c, i, t⟩) = 0
 

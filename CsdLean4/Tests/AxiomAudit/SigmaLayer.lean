@@ -1830,6 +1830,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.map_pointer_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.map_pointer_apply
 
+-- Added 2026-08-11 by the prose audit. Five record-layer modules explained the Ico 0 1 in
+-- fibreTypicality_uncovered by saying "Lebesgue measure on the line is infinite". That reason was
+-- wrong twice over: fibreTypicality is vol|[0,1), a PROBABILITY measure (instIsProbabilityMeasure),
+-- and the restriction was never forced. These two theorems settle it rather than asserting it.
+-- fibreTypicality_uncovered_univ gives the univ form on R outright; fibreTypicality_Ici_one states
+-- what compactness actually buys, by making the fiat explicit -- the fibre's complement carries
+-- infinite Lebesgue measure and zero typicality, so a point there is excused by the measure rather
+-- than covered by a cell. On CircleFibre/TorusFibre the mass one is Haar mass instead.
+
+/-- info: 'CSD.RecordLayer.fibreTypicality_uncovered_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_uncovered_univ
+
+/-- info: 'CSD.RecordLayer.fibreTypicality_Ici_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_Ici_one
+
 -- FibreRecord (record layer / MD-1 step 3, 2026-07-25): the record-layer readout as a first-class
 -- postulate-P5 RecordSemantics on Σ=ℝ. fibreRecordSemantics: record event of "context c recorded
 -- outcome i" = cdfCell c.rate i, measurable + exclusive (distinct outcomes disjoint, from

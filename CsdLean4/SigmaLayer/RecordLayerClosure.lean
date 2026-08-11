@@ -46,9 +46,13 @@ statement. Two defects, both fixed by the successor:
   sector `KSigma = ℂℙⁿ⁻¹ × T²`, of even dimension `2n`.
 
 The five closure fields are otherwise identical, which is the evidence that neither defect was ever
-load-bearing for the record layer's *content*. `ae_total` also strengthens: here it must be stated
-relative to `Ico 0 1` because Lebesgue measure on the line is infinite; there it is about the whole
-space, which has measure one.
+load-bearing for the record layer's *content*. `ae_total` also strengthens — though ⚠️ **not for the
+reason this file used to give.** It said the `ℝ` form "must be stated relative to `Ico 0 1` because
+Lebesgue measure on the line is infinite". `fibreTypicality` is a *probability* measure, not
+Lebesgue on the line, and `fibreTypicality_uncovered_univ` proves the `univ` form on `ℝ` outright.
+The genuine strengthening is that there the mass one is Haar mass on a compact space, whereas here
+it is imposed by restriction and the fibre's complement is excused rather than covered
+(`fibreTypicality_Ici_one`).
 
 Kept rather than deleted because it is consumed and true. New work should cite the successor.
 

@@ -114,6 +114,50 @@ theorem fibreTypicality_uncovered (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ
   rw [measure_sdiff (iUnion_bornCell_subset_Ico01 ψ hψ) hmeasU.nullMeasurableSet
       (by rw [hU]; exact ENNReal.one_ne_top), hU, fibreTypicality_Ico01, tsub_self]
 
+/-- **The `[0,1)` in `fibreTypicality_uncovered` is not forced**: the same statement holds on
+`univ`.
+
+This corrects a reason that several record-layer modules gave for the restriction — that "Lebesgue
+measure on the line is infinite". `fibreTypicality` is *not* Lebesgue measure on the line: it is
+`volume.restrict (Ico 0 1)`, a **probability** measure (`instIsProbabilityMeasure`, proved directly
+above), so nothing about infinite mass obstructs the `univ` form.
+
+⚠️ But this theorem is weaker than it looks, and that is the real difference from the compact fibre.
+It holds because `fibreTypicality` **assigns measure zero to everything outside `[0,1)`**
+(`fibreTypicality_Ici_one`): points off the unit fibre are *excused by the measure*, not covered by
+cells. On `CircleFibre` the total mass one is Haar mass on a compact group rather than a restriction
+imposed by hand, so there is nowhere for an uncovered point to hide. See
+`RecordLayer.circleBornMeasurement_ae_total`. -/
+theorem fibreTypicality_uncovered_univ (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1) :
+    fibreTypicality (univ \ ⋃ i, cdfCell (bornRate ψ) i) = 0 := by
+  have hmeasU : MeasurableSet (⋃ i, cdfCell (bornRate ψ) i) :=
+    MeasurableSet.iUnion (measurableSet_cdfCell _)
+  have h := fibreTypicality_uncovered ψ hψ
+  rw [fibreTypicality, Measure.restrict_apply (measurableSet_Ico.diff hmeasU),
+    inter_eq_left.mpr sdiff_subset] at h
+  rw [fibreTypicality, Measure.restrict_apply (MeasurableSet.univ.diff hmeasU)]
+  have hset : (univ \ ⋃ i, cdfCell (bornRate ψ) i) ∩ Ico (0 : ℝ) 1
+      = Ico (0 : ℝ) 1 \ ⋃ i, cdfCell (bornRate ψ) i := by
+    ext x
+    constructor
+    · rintro ⟨⟨-, hx⟩, hI⟩; exact ⟨hI, hx⟩
+    · rintro ⟨hI, hx⟩; exact ⟨⟨mem_univ x, hx⟩, hI⟩
+  rw [hset]
+  exact h
+
+/-- **Why the `univ` form above is cheap on `ℝ`.** The unit fibre's complement carries infinite
+Lebesgue measure but zero *typicality*: `fibreTypicality` excuses it by fiat. This is the honest
+statement of what compactifying the fibre buys, and it is a fact about the restriction, not about
+Lebesgue measure being infinite. -/
+theorem fibreTypicality_Ici_one : fibreTypicality (Ici (1 : ℝ)) = 0 := by
+  rw [fibreTypicality, Measure.restrict_apply measurableSet_Ici]
+  have hempty : Ici (1 : ℝ) ∩ Ico 0 1 = ∅ := by
+    ext x
+    constructor
+    · rintro ⟨h1, -, h2⟩; exact absurd h2 (not_lt.mpr h1)
+    · exact fun h => h.elim
+  rw [hempty, measure_empty]
+
 /-- **De-isolation flow ⟹ Born.** *Any* measurable pointer `p` on the fibre whose basin `p⁻¹{i}` has
 the Born cell measure pushes the fibre typicality forward to the Born distribution: the outcome-`i`
 mass of `fibreTypicality.map p` is exactly `‖ψ i‖² = |⟨eᵢ, ψ⟩|²`.

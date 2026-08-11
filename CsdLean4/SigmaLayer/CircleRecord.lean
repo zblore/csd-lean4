@@ -34,8 +34,9 @@ Born weight comes out identical (`volume_circleCell`), which is the content of t
 * `CircleMeasurement` / `prob` / `circleBornMeasurement` — measurement as context-plus-microstate,
   with `circleBornMeasurement_prob : prob i = ‖ψ i‖²`.
 * `circleBornMeasurement_ae_total` — the arcs cover the circle up to a null set, so a.e. microstate
-  yields a record. On `ℝ` this needed restricting to `[0,1)` by hand; on the circle it is a
-  statement about the whole space, because the whole space now has measure one.
+  yields a record. On `ℝ` this was stated on `[0,1)`; on the circle it is about the whole space.
+  ⚠️ The `ℝ` restriction was **not forced** — see `fibreTypicality_uncovered_univ`. What compactness
+  buys is stated precisely at `circleBornMeasurement_ae_total`.
 
 ## What is still not claimed
 
@@ -177,9 +178,18 @@ theorem circleBornMeasurement_prob (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖�
 /-- **A.e. every microstate yields a record.** The arcs cover the circle up to a null set, so there
 is no positive-measure "no outcome" set.
 
-Note the improvement over `ℝ`: there the analogous statement had to be *restricted* to `[0,1)` by
-hand, because Lebesgue measure on the line is infinite. Here it is a statement about the whole
-space, because the whole space has measure one. -/
+**On the comparison with `ℝ` — CORRECTED 2026-08-11.** This module previously said the `ℝ`
+statement "had to be restricted to `[0,1)` by hand, because Lebesgue measure on the line is
+infinite". **Both halves were wrong.** `fibreTypicality` is not Lebesgue measure on the line but
+`volume.restrict (Ico 0 1)`, a *probability* measure; and the restriction was not forced —
+`fibreTypicality_uncovered_univ` proves the identical `univ`-form statement on `ℝ`.
+
+The real difference is not which sets the statement ranges over but **where the mass one comes
+from**. On `ℝ` it is imposed by fiat: `fibreTypicality_Ici_one` shows the fibre's complement, of
+infinite Lebesgue measure, is assigned typicality zero, so an uncovered point off `[0,1)` is
+*excused by the measure* rather than covered by a cell. Here mass one is Haar mass on a compact
+group (`circleFibre_volume_univ`), every nonempty open set has positive measure, and there is
+nowhere for an uncovered point to hide. That is the improvement — genuine, but a different one. -/
 theorem circleBornMeasurement_ae_total (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1)
     (t : OnticTime) :
     volume (univ \ ⋃ i, (circleBornMeasurement ψ t).basin i) = 0 := by
