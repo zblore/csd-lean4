@@ -41,6 +41,7 @@ jobs:
           bash scripts/check-citation-use.sh
           bash scripts/check-axiom-sweep.sh
           bash scripts/check-import-negative.sh
+          bash scripts/check-guards.sh
 
       - name: Advisory expert-review reports
         run: |
