@@ -197,10 +197,30 @@ Mermin carve and local product flow as deferred, though both landed as C.3 and
 C.4. The lesson is the same one this correction kept re-learning: a lexical sweep
 narrows the surface and does not close it.
 
-**On item 35.** This report records builds and guards as run **locally**. No
-GitHub Actions status is attached to `7347e62`, so remote CI confirmation is not
-independently established — the claim is "locally reported clean", not
-"CI-confirmed".
+**On item 35 — CORRECTED 2026-08-11.** An earlier revision of this note said
+remote CI confirmation was "not independently established". **That was wrong**,
+and it was wrong because both the external reviewer and I checked the legacy
+commit-*status* endpoint, which GitHub Actions does not populate: Actions
+reports through **check runs**, not statuses.
+
+CI has in fact run on every push throughout this correction and **passed every
+time**. Run `31500132916` covers `b0d94b2` (this pass) and completed `success`
+in 5m13s, executing the full guard suite including the new
+`check-claim-provenance`.
+
+Two guards ran in CI that were **never run locally** in the correction session,
+and both passed:
+
+* `check-axiom-imports` — OK, every locatable pinned constant is in AxiomAudit's
+  import closure (this is the ~10-minute guard);
+* `check-module-coverage` — OK, 495 modules reachable.
+
+`check-validation-ledger` also reports **OK (31 linked headline claims)**,
+independently confirming the CL-031 wiring.
+
+So item 35 is **CI-confirmed**, not merely locally reported — and CI verified
+strictly more than the local runs did. The lesson is the same one this
+correction kept producing: check the endpoint before recording an absence.
 
 ## References
 
