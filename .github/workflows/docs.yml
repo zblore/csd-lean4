@@ -1,0 +1,89 @@
+name: Docs
+
+# API-documentation generation smoke test (validation-hardening WS-N,
+# specs/validation-hardening-plan.md, 2026-08-12).
+#
+# Deliberately NOT part of the fast blocking CI: doc-gen4 is heavy. Runs monthly and
+# on demand. The point is not publishing — it is knowing the public API surface stays
+# DOCUMENTABLE: doc-gen4 completes, and representative pages for the load-bearing
+# public surfaces actually exist with their declarations in them. Failure is loud
+# (the job fails); nothing is published from here.
+
+on:
+  schedule:
+    # Monthly, 1st at 06:00 UTC.
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-smoke:
+    name: doc-gen4 build + representative-page smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache and build the library
+        run: |
+          lake exe cache get
+          lake build CsdLean4
+
+      - name: Set up the docbuild scratch project (runtime only, never committed)
+        run: |
+          TOOLCHAIN_TAG="$(cut -d: -f2 lean-toolchain)"
+          mkdir docbuild
+          cp lean-toolchain docbuild/
+          cat > docbuild/lakefile.toml <<EOF
+          name = "docbuild"
+          defaultTargets = ["docbuild"]
+
+          [[require]]
+          name = "csd-lean4"
+          path = "../"
+
+          [[require]]
+          scope = "leanprover"
+          name = "doc-gen4"
+          rev = "$TOOLCHAIN_TAG"
+
+          [[lean_lib]]
+          name = "docbuild"
+          EOF
+          echo "-- docbuild scratch root" > docbuild/Docbuild.lean
+
+      - name: Generate API documentation
+        working-directory: docbuild
+        run: |
+          lake update doc-gen4
+          lake build CsdLean4:docs
+
+      - name: Smoke-check representative pages
+        working-directory: docbuild
+        run: |
+          DOC=.lake/build/doc
+          fail=0
+          check() {
+            local page="$1" decl="$2"
+            if [ ! -f "$DOC/$page" ]; then
+              echo "MISSING PAGE: $page"; fail=1
+            elif ! grep -q "$decl" "$DOC/$page"; then
+              echo "PAGE EXISTS BUT DECLARATION MISSING: $decl in $page"; fail=1
+            else
+              echo "ok: $decl in $page"
+            fi
+          }
+          check "CsdLean4/LF1/MainTheorem.html"    "LF1_main_theorem_ae"
+          check "CsdLean4/LF2/Preparation.html"    "fromPreparation_liouville_apply"
+          check "CsdLean4/LF3/Interface.html"      "LF3_singlet_frequency_convergence"
+          check "CsdLean4/LF6/ForcedContextuality.html" "no_product_partition_realises_singlet"
+          check "CsdLean4/SigmaLayer/SwapLuders.html"   "swap_luders_born"
+          exit $fail

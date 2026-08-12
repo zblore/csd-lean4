@@ -118,6 +118,23 @@ else
 fi
 rm -f "$tmpg"
 
+# --- check-import-hygiene (WS-L, 2026-08-12): three probes, one per rule.
+# (10a) a bare whole-Mathlib import in a production module;
+expect_fail "hygiene-10a (bare import Mathlib)" check-import-hygiene \
+'import Mathlib
+def guardSelfTestHygieneA : Nat := 0'
+
+# (10b) a production module importing the Tests subtree;
+expect_fail "hygiene-10b (production imports Tests)" check-import-hygiene \
+'import CsdLean4.Tests.Witnesses
+def guardSelfTestHygieneB : Nat := 0'
+
+# (10c) an UNDECLARED stable->Incubator seam (the probe lives in SigmaLayer, which is
+# not in the declared seam inventory).
+expect_fail "hygiene-10c (undeclared Incubator seam)" check-import-hygiene \
+'import CsdLean4.Incubator.QuantumChaos.FloquetInterface
+def guardSelfTestHygieneC : Nat := 0'
+
 # --- Lean-based checkers: need the probe COMPILED, so they cost a build cycle.
 if [ "$WITH_LEAN" -eq 1 ]; then
   echo "  (--with-lean: rebuilding for the environment-based checkers, minutes…)"
@@ -142,7 +159,7 @@ else
 fi
 
 # --- Every guard must also PASS on the clean tree; a guard stuck at FAIL is equally bad.
-for g in check-claim-provenance check-import-negative; do
+for g in check-claim-provenance check-import-negative check-import-hygiene; do
   if ! bash "scripts/$g.sh" >/dev/null 2>&1; then
     echo "  BROKEN  $g — fails on the CLEAN tree"
     fail=1

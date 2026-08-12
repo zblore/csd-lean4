@@ -1,0 +1,92 @@
+name: Compat
+
+# Forward-compatibility + platform canaries (validation-hardening WS-M / WS-O,
+# specs/validation-hardening-plan.md, 2026-08-12).
+#
+# NON-BLOCKING BY CONSTRUCTION: this workflow never runs on push/PR, so the pinned
+# scientific baseline in ci.yml is untouched. A red run here is an early warning
+# about the ecosystem (or macOS), never a statement about main.
+#
+# Nothing is committed: the toolchain/rev overrides happen in the runner workspace.
+
+on:
+  schedule:
+    # Weekly, Monday 05:30 UTC.
+    - cron: "30 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      mathlib_ref:
+        description: >-
+          Mathlib ref to test against. Prefer TAGGED RELEASES (e.g. v4.34.0) so
+          `lake exe cache get` hits; master also works (mathlib CI populates the
+          cache per master commit).
+        required: false
+        default: "master"
+
+permissions:
+  contents: read
+
+jobs:
+  forward-compat:
+    name: Forward compat (newer Lean/Mathlib)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Point at the selected Mathlib ref (workspace only, never committed)
+        run: |
+          REF="${{ github.event.inputs.mathlib_ref || 'master' }}"
+          echo "Testing against mathlib4@$REF"
+          # A coherent pair: take the toolchain FROM the mathlib ref itself.
+          curl -fsSL "https://raw.githubusercontent.com/leanprover-community/mathlib4/$REF/lean-toolchain" \
+            -o lean-toolchain
+          echo "Toolchain: $(cat lean-toolchain)"
+          # Repoint the pinned rev in the workspace copy of lakefile.toml.
+          sed -i "s#^rev = \".*\"#rev = \"$REF\"#" lakefile.toml
+          grep -n "rev" lakefile.toml
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Update deps and fetch Mathlib cache
+        run: |
+          lake update mathlib
+          lake exe cache get
+
+      - name: Build CsdLean4 (production, warnings fatal)
+        run: lake build --wfail CsdLean4
+
+      - name: Build CsdLeanTests (regression suite, warnings fatal)
+        run: lake build --wfail CsdLeanTests
+
+      - name: Core static controls on the forward build
+        run: |
+          bash scripts/check-module-coverage.sh
+          bash scripts/check-axiom-imports.sh
+          bash scripts/check-import-hygiene.sh
+
+  macos-pinned:
+    name: macOS build (pinned toolchain, WS-O)
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-init.sh \
+            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+
+      - name: Build CsdLean4 (pinned, warnings fatal)
+        run: lake build --wfail CsdLean4
+
+      - name: Build CsdLeanTests (pinned, warnings fatal)
+        run: lake build --wfail CsdLeanTests

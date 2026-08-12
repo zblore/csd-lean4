@@ -46,6 +46,7 @@ jobs:
           bash scripts/check-citation-use.sh
           bash scripts/check-axiom-sweep.sh
           bash scripts/check-import-negative.sh
+          bash scripts/check-import-hygiene.sh
           bash scripts/check-guards.sh
 
       - name: Advisory expert-review reports
@@ -53,3 +54,4 @@ jobs:
           bash scripts/check-vacuity.sh
           bash scripts/check-contradictions.sh
           bash scripts/check-review-surface.sh
+          bash scripts/check-std-lint.sh
