@@ -120,17 +120,20 @@
 > | ~~H6~~ | **DONE 2026-08-07** (3 bricks, 7 pins) | **The §H5 continuation trio, landed.** (a) **Small-coupling witness** (`Empirical/CSD/QuantumChaos/CouplingWitness.lean`): `triggeredRecordKick` — record kicked exactly when the system enters a trigger region; measure-preserving by Mathlib's skew-product theorem; **the coupling set IS the trigger cylinder**, so coupling strength = trigger measure. CSD instantiation `fibreTriggeredKick`: quarter-ball fibre-arc trigger, coupling **exactly `1/2`** (`AddCircle.volume_closedBall`) — `0 < ε < 1`, the half-life bound genuinely bites (★ `fibreTriggeredKick_record_halfLife`: survival except on `≤ n/2`). (b) **Loschmidt echo** (`Incubator/QuantumChaos/Diagnostics.lean`, class-3): `loschmidtEcho` with endpoint/unit-interval/symmetry API; CSD reading fixed in-module — both drives preserve every overlap exactly, so echo decay measures RELOCATION of preserved information, never loss. (c) **KI `Fin 4` reindex** (`kickedIsingU₄` via `reindex_mem_unitaryGroup`, upstream-candidate(mathlib)): ★ `kickedIsing_pilotClosure` — the concrete model reaches the ontic-lift clause at `Fin 4`, every parameter pair and base point. All foundational-triple-only. Thread continuation: attainment (actual erasure rate vs the bound), SFF/OTOC diagnostics |
 > | H4 | **record** | Root-wire every new module (the job-count tell); `Empirical/CSD/QuantumChaos` rows inherit the transport/ledger discipline; guard inventories (`check-claims.sh`) get their rows in the same commit that adds boundary phrases |
 >
-> ### V. Validation-hardening campaign (adopted 2026-08-12 — [`validation-hardening-plan.md`](validation-hardening-plan.md))
+> ### ~~V. Validation-hardening campaign~~ (adopted AND CLOSED 2026-08-12 — [`validation-hardening-plan.md`](validation-hardening-plan.md))
 >
-> Validation machinery on the **sufficiency/inhabitation leg** (explicit nontrivial
-> inhabitants of the assumption packages, driven through the headline chains) — not
-> reconstruction progress, and distinct from the necessity-audit conditionality gap.
-> Per-workstream detail + status live in the plan file; this row is the single
-> BACKLOG anchor. Workstreams: A `--wfail` CI · B witness skeleton · E+H singlet/Bell
-> witness · I composite nonfactorisation · C LF1 honest i.i.d. TrialModel · D LF2
-> bridge witness · F+G LF4/LF5 operational+sequential · J dynamics (cite production) ·
-> K std linters · L import hygiene · M compat workflow · N docs smoke · O macOS.
-> Struck through here when the whole campaign closes.
+> **ALL 13 WORKSTREAMS DONE 2026-08-12, single-day campaign.** Validation machinery
+> on the **sufficiency/inhabitation leg** (explicit nontrivial inhabitants of the
+> assumption packages, driven through the headline chains) — not reconstruction
+> progress, and distinct from the necessity-audit conditionality gap. Landed:
+> `--wfail` CI (A) · `Tests/Witnesses/` suite, 8 modules + 22 pins, all
+> foundational-triple (B, C, D, E+H, F+G, I, J — incl. the honest
+> `Measure.infinitePi` trial model for **every** `OnticSetup`, discharging the
+> Examples.lean caveat) · `check-import-hygiene.sh` blocking + 3 permanent
+> check-guards probes (L) · advisory `check-std-lint.sh`, 25 s (K) ·
+> `compat.yml` forward-compat + macOS (M, O) · `docs.yml` doc-gen4 smoke (N).
+> Residue: none blocking; the first scheduled compat/docs runs validate their
+> runner plumbing; std-lint's `unusedArguments` list is the F3 on-touch class.
 >
 > ---
 >

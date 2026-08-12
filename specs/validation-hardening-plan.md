@@ -1,6 +1,13 @@
 # Validation hardening: warnings-as-errors, the concrete-witness suite, and CI depth
 
-Adopted 2026-08-12. Campaign doc for the validation-hardening work order (user-supplied
+Adopted 2026-08-12. **CAMPAIGN CLOSED 2026-08-12 — all 13 workstreams DONE.**
+Final verification (2026-08-12, post-WS-O): `lake build --wfail CsdLean4` green
+(4001 jobs), `lake build --wfail CsdLeanTests` green (4022 jobs), all 13 blocking
+guards PASS (the original 12 + `check-import-hygiene`), all 4 advisory reports run
+(`check-std-lint` new). No new axioms, no `sorry`; every witness pin reads exactly
+the foundational triple.
+
+Campaign doc for the validation-hardening work order (user-supplied
 plan, amended per the pre-dispatch review). Run in gated phases, C1-campaign style:
 each phase lands green with its own commit(s); a phase is not "done" until both targets
 build `--wfail`-clean and every blocking guard passes. **A row in the status table
