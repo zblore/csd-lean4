@@ -64,4 +64,39 @@ open CSD.Tests.Witnesses
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Tests.Witnesses.cpSectorDataFlow_frequency_convergence_concrete
 
+-- WS-E/H witnesses (SingletBell.lean, 2026-08-12): the LF3 chain capstone on
+-- the fully concrete model (perpendicular axes, hgen discharged, honest
+-- infinitePi trials) + the C1 CHSH obstruction and its non-vacuity
+-- instantiated on the same concrete arena (KSigma 4, kMuPsi).
+/-- info: 'CSD.Tests.Witnesses.perpContext_singlet_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.perpContext_singlet_frequency_convergence
+
+/-- info: 'CSD.Tests.Witnesses.P_st_setting_dependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.P_st_setting_dependent
+
+/-- info: 'CSD.Tests.Witnesses.kMuPsi_no_global_chsh_assignment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kMuPsi_no_global_chsh_assignment
+
+/-- info: 'CSD.Tests.Witnesses.kMuPsi_chsh_obstruction_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kMuPsi_chsh_obstruction_nonvacuous
+
+-- WS-I witnesses (Composite.lean, 2026-08-12): partition-level composite
+-- nonfactorisation on the concrete arenas — singlet on (KSigma 4, kMuPsi)
+-- with non-vacuity, GHZ on (CP^7, mu_FS).
+/-- info: 'CSD.Tests.Witnesses.kMuPsi_no_product_partition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kMuPsi_no_product_partition
+
+/-- info: 'CSD.Tests.Witnesses.kMuPsi_productPartition_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kMuPsi_productPartition_nonvacuous
+
+/-- info: 'CSD.Tests.Witnesses.fs_no_product_partition_ghz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.fs_no_product_partition_ghz
+
 end CSD.Tests.AxiomAudit

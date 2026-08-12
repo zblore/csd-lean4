@@ -70,6 +70,40 @@ theorem pairwise_indepFun_comp_eval (μ : Measure σ) [IsProbabilityMeasure μ]
     iIndepFun_infinitePi (fun _ => measurable_id)
   exact (hIndep.indepFun hij).comp (hf i) (hf j)
 
+omit [MeasurableSpace σ] in
+/-- Indicator of a coordinate-preimage event, rewritten as a fixed statistic
+of the coordinate (the shape `pairwise_indepFun_comp_eval` consumes). -/
+theorem indicator_preimage_eval {E : Set σ} (n : ℕ) :
+    Set.indicator ((fun ω : ℕ → σ => ω n) ⁻¹' E) (fun _ => (1 : ℝ))
+      = fun ω : ℕ → σ => Set.indicator E (fun _ => (1 : ℝ)) (ω n) := by
+  funext ω
+  by_cases h : ω n ∈ E
+  · rw [Set.indicator_of_mem (show ω ∈ (fun ω' : ℕ → σ => ω' n) ⁻¹' E from h),
+      Set.indicator_of_mem h]
+  · rw [Set.indicator_of_notMem (show ω ∉ (fun ω' : ℕ → σ => ω' n) ⁻¹' E from h),
+      Set.indicator_of_notMem h]
+
+/-- Pairwise independence of coordinate-preimage event indicators on the
+honest product — the `hindep` shape of the LF3 chain capstones (and of any
+consumer sampling with `X n = ` the `n`-th coordinate). -/
+theorem pairwise_indicator_eval_indep (μ : Measure σ) [IsProbabilityMeasure μ]
+    {E : Set σ} (hE : MeasurableSet E) :
+    Pairwise
+      (Function.onFun
+        (fun f g : (ℕ → σ) → ℝ => IndepFun f g (Measure.infinitePi fun _ : ℕ => μ))
+        (fun n => Set.indicator ((fun ω : ℕ → σ => ω n) ⁻¹' E)
+          (fun _ => (1 : ℝ)))) := by
+  have h := pairwise_indepFun_comp_eval μ
+    (fun _ => Set.indicator E (fun _ => (1 : ℝ)))
+    (fun _ => measurable_const.indicator hE)
+  intro i j hij
+  show IndepFun
+    (Set.indicator ((fun ω : ℕ → σ => ω i) ⁻¹' E) (fun _ => (1 : ℝ)))
+    (Set.indicator ((fun ω : ℕ → σ => ω j) ⁻¹' E) (fun _ => (1 : ℝ)))
+    (Measure.infinitePi fun _ : ℕ => μ)
+  rw [indicator_preimage_eval i, indicator_preimage_eval j]
+  exact h hij
+
 /-! ## The honest trial model for every `OnticSetup` -/
 
 variable [Nonempty σ]

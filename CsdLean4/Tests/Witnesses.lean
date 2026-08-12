@@ -8,6 +8,8 @@ module
 public import CsdLean4.Tests.Witnesses.IIDSampling
 public import CsdLean4.Tests.Witnesses.LF1Trial
 public import CsdLean4.Tests.Witnesses.Dynamics
+public import CsdLean4.Tests.Witnesses.SingletBell
+public import CsdLean4.Tests.Witnesses.Composite
 
 /-!
 # Concrete-witness suite (umbrella)
