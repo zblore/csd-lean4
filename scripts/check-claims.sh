@@ -457,7 +457,12 @@ liouville_isProbability"
 #     each PROVES an ι_Xω = dH statement — the word names the established duality, with
 #     the Schrödinger field -(i•Ax) exhibited explicitly in the quadratic/coupling cases.
 #     Flat model, fixed weights; the joint-arena manifold form stays §2a.
+#   kSectorData_fromPreparation_liouville_apply — (2026-08-12, witness suite WS-D)
+#     inherits the word from the production OperationalPackage.fromPreparation_
+#     liouville_apply it instantiates; the statement genuinely concerns the Liouville
+#     preparation (the package built from kMuL). No new Liouville claim.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal
 coupling_hamiltonian_duality
 fieldHamiltonian_mulVec_single

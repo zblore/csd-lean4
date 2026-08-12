@@ -10,6 +10,9 @@ public import CsdLean4.Tests.Witnesses.LF1Trial
 public import CsdLean4.Tests.Witnesses.Dynamics
 public import CsdLean4.Tests.Witnesses.SingletBell
 public import CsdLean4.Tests.Witnesses.Composite
+public import CsdLean4.Tests.Witnesses.LF2Bridge
+public import CsdLean4.Tests.Witnesses.Operational
+public import CsdLean4.Tests.Witnesses.Sequential
 
 /-!
 # Concrete-witness suite (umbrella)

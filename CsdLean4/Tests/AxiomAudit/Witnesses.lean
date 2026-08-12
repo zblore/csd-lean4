@@ -99,4 +99,46 @@ open CSD.Tests.Witnesses
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Tests.Witnesses.fs_no_product_partition_ghz
 
+-- WS-D witnesses (LF2Bridge.lean, 2026-08-12): the G1 transport theorems
+-- consumed on the concrete kBridge (c = 1) — ontic-to-projective integral
+-- transport, the Liouville operational form, and the Born endpoint.
+/-- info: 'CSD.Tests.Witnesses.kBridge_integral_comp_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kBridge_integral_comp_pi
+
+/-- info: 'CSD.Tests.Witnesses.kSectorData_fromPreparation_liouville_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kSectorData_fromPreparation_liouville_apply
+
+/-- info: 'CSD.Tests.Witnesses.kPurePrep_born_rank_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kPurePrep_born_rank_one
+
+-- WS-F witnesses (Operational.lean, 2026-08-12): the maximally mixed qubit
+-- (a DensityOperator beyond the rank-one image), the unsharp POVM at
+-- eta = 1/2 exercised, and the mixed reduced state of the de-isolated
+-- superposition.
+/-- info: 'CSD.Tests.Witnesses.mixedHalf_ne_pure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.mixedHalf_ne_pure
+
+/-- info: 'CSD.Tests.Witnesses.weakPOVM_half_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.weakPOVM_half_weights
+
+/-- info: 'CSD.Tests.Witnesses.plusVec_reduced_strictly_mixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.plusVec_reduced_strictly_mixed
+
+-- WS-G witnesses (Sequential.lean, 2026-08-12): repeatability on the concrete
+-- superposition preparation, hpos discharged, through the production
+-- rank-one Lüders update.
+/-- info: 'CSD.Tests.Witnesses.superposition_ne_vertex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.superposition_ne_vertex
+
+/-- info: 'CSD.Tests.Witnesses.sequential_repeatability_concrete' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.sequential_repeatability_concrete
+
 end CSD.Tests.AxiomAudit
