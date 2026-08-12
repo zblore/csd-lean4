@@ -17,16 +17,21 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Build CsdLean4 (library)
+      # Both targets build with warnings-as-errors (validation-hardening WS-A,
+      # 2026-08-12). The corpus is warning-clean at baseline; a landing that
+      # introduces a warning now fails CI instead of accumulating silently.
+      # Mutation-tested 2026-08-12: a planted unused-variable warning fails
+      # `lake build --wfail CsdLeanTests` (exit 1) and passes without --wfail.
+      - name: Build CsdLean4 (library, warnings fatal)
         uses: leanprover/lean-action@v1
         with:
           auto-config: false
           build: true
-          build-args: "CsdLean4"
+          build-args: "--wfail CsdLean4"
           use-mathlib-cache: true
 
-      - name: Build CsdLeanTests (regression suite + examples)
-        run: lake build CsdLeanTests
+      - name: Build CsdLeanTests (regression suite + examples, warnings fatal)
+        run: lake build --wfail CsdLeanTests
 
       - name: Static validity controls
         run: |

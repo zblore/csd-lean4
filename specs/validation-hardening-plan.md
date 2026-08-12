@@ -57,7 +57,7 @@ i.i.d. infrastructure turns out to be shared.)
 
 | # | Workstream | Amendments from the pre-dispatch review | Status |
 |---|---|---|---|
-| A | Warnings-as-errors (`--wfail` both targets in CI) | none — verified nearly free at baseline | queued |
+| A | Warnings-as-errors (`--wfail` both targets in CI) | none — verified nearly free at baseline | **DONE 2026-08-12** — ci.yml: `--wfail` on both build steps; mutation-tested (see record below) |
 | B | Witness framework skeleton (`Tests/Witnesses/` + umbrella + AxiomAudit part) | Anti-duplication rule in the umbrella docstring; new `Tests/AxiomAudit/Witnesses.lean` part | queued |
 | E+H | LF3 singlet/Bell witness (priority) | Build on the C1 tranche (`C1BellConsistency` → `lhvCHSH_abs_le_two`; `compatibleGlobalCHSH_nonvacuous`); may share i.i.d. infrastructure with C | queued |
 | I | Composite nonfactorisation witness | Cite, don't construct (`no_product_partition_realises_singlet`, GHZ chain) | queued |
@@ -80,6 +80,7 @@ i.i.d. infrastructure turns out to be shared.)
 
 | Control | Probe | Result |
 |---|---|---|
+| `--wfail` CI steps (WS-A) | appended `private def wfailProbe (unusedArg : Nat) : Nat := 0` (unused-variable warning) to `Tests/Examples.lean` | `lake build --wfail CsdLeanTests` exit 1 with probe; exit 0 restored. Probe removed, not committed |
 
 ## Blockers (genuine walls only; classified Mathlib gap / CSD API gap / missing physical construction / engineering)
 
