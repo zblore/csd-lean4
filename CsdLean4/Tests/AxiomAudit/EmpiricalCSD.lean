@@ -1773,4 +1773,26 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.deficitKick_persists_of_id
 
+-- Q2: the derived coupling bites, exactly (DerivedCoupling.lean bite
+-- section, 2026-08-12): the qubit phase flip's deficit = 2 * momentMap, the
+-- trigger measure = 1 - delta/2 via the Duistermaat-Heckman law (exact,
+-- where Markov could only bound), strictly-between-0-and-1 coupling, and
+-- the half-life at the exact rate. Generic attainment was already settled
+-- by cyclicKick_halfLife_attained.
+/-- info: 'CSD.Empirical.QuantumChaos.overlapDeficit_phaseFlipW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.overlapDeficit_phaseFlipW
+
+/-- info: 'CSD.Empirical.QuantumChaos.measure_deficitTrigger_phaseFlipW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.measure_deficitTrigger_phaseFlipW
+
+/-- info: 'CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_bites' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_bites
+
+/-- info: 'CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_halfLife' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_halfLife
+
 end CSD.Tests.AxiomAudit

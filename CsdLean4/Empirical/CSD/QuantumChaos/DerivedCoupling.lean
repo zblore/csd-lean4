@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness
 public import CsdLean4.LF4.ObservableFlow
+public import CsdLean4.LF4.MomentUniform
 
 /-!
 # Q1: the derived coupling — operator norm → flip measure
@@ -359,5 +360,147 @@ theorem deficitKick_persists_of_id
   rw [deficitTriggeredKick, measure_recordFlip_triggeredRecordKick _ _ hkick,
     hempty]
   exact measure_empty
+
+/-! ### The derived coupling bites: the qubit phase flip, exactly
+
+Generic attainment of the half-life bound is already settled
+(`HalfLifeAttainment.lean`: `cyclicKick_halfLife_attained`, equality on the
+cyclic kick). What remained for the *derived* coupling was the bite: is the
+deficit trigger ever more than null? Here it is computed **exactly**. For
+the qubit phase flip `W = diag(−1, 1)` the deficit is *twice the moment
+coordinate* (`overlapDeficit_phaseFlipW`), so the trigger is a moment
+super-level set — and the Duistermaat–Heckman law
+(`fs_moment_pushforward_uniform`) evaluates its typicality measure exactly:
+`1 − δ/2`, strictly between `0` and `1` on `δ ∈ (0, 2)`. The exact value
+also shows where Markov is loose: `‖W − 1‖ = 2`, so the generic Q1 bound
+`δ·μ ≤ 2` is trivial on this window, while the DH law pins the coupling —
+the generic bridge is for drives whose deficit law is unknown; when the law
+is available it should be used instead. -/
+
+/-- The qubit phase flip `diag(−1, 1)`: the observable unitary
+`exp(iπ·diag(1, 0))`. -/
+noncomputable def phaseFlipW : Matrix.unitaryGroup (Fin 2) ℂ :=
+  obsUnitary (fun i => if i = 0 then 1 else 0) Real.pi
+
+lemma phaseFlipW_phase_zero :
+    obsPhase (fun i : Fin 2 => if i = 0 then (1:ℝ) else 0) Real.pi 0 = -1 := by
+  rw [obsPhase, if_pos rfl, mul_one]
+  rw [show Complex.I * ((Real.pi : ℝ) : ℂ) = (Real.pi : ℂ) * Complex.I from
+    mul_comm _ _]
+  exact Complex.exp_pi_mul_I
+
+lemma phaseFlipW_phase_one :
+    obsPhase (fun i : Fin 2 => if i = 0 then (1:ℝ) else 0) Real.pi 1 = 1 := by
+  rw [obsPhase, if_neg (by norm_num : (1 : Fin 2) ≠ 0), mul_zero]
+  simp
+
+/-- **The deficit of the phase flip is twice the moment coordinate**:
+`overlapDeficit (diag(−1,1)) p = 2·m₀(p)`. The perturbation's disturbance is
+read off the Kähler moment map. -/
+theorem overlapDeficit_phaseFlipW (p : CPN 2) :
+    overlapDeficit phaseFlipW p = 2 * LF4.momentMap p 0 := by
+  have hu0 : p.rep ≠ 0 := Projectivization.rep_nonzero p
+  have hpos : (0:ℝ) < ‖p.rep‖ ^ 2 := by
+    have := norm_pos_iff.mpr hu0
+    positivity
+  have hinner : RCLike.re
+      (inner ℂ p.rep (Matrix.toEuclideanLin phaseFlipW.val p.rep))
+      = -(‖p.rep 0‖ ^ 2) + ‖p.rep 1‖ ^ 2 := by
+    rw [PiLp.inner_apply, Fin.sum_univ_two]
+    rw [show (Matrix.toEuclideanLin phaseFlipW.val p.rep) 0
+        = obsPhase (fun i : Fin 2 => if i = 0 then (1:ℝ) else 0) Real.pi 0
+            * p.rep 0 from obsUnitary_toEuclideanLin_apply _ _ _ 0,
+      show (Matrix.toEuclideanLin phaseFlipW.val p.rep) 1
+        = obsPhase (fun i : Fin 2 => if i = 0 then (1:ℝ) else 0) Real.pi 1
+            * p.rep 1 from obsUnitary_toEuclideanLin_apply _ _ _ 1,
+      phaseFlipW_phase_zero, phaseFlipW_phase_one]
+    rw [show (inner ℂ (p.rep 0) (-1 * p.rep 0) : ℂ)
+        = -(inner ℂ (p.rep 0) (p.rep 0)) from by
+      rw [neg_one_mul, inner_neg_right],
+      show (inner ℂ (p.rep 1) (1 * p.rep 1) : ℂ)
+        = inner ℂ (p.rep 1) (p.rep 1) from by rw [one_mul]]
+    rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K]
+    rw [map_add, map_neg]
+    rw [← RCLike.ofReal_pow, ← RCLike.ofReal_pow, RCLike.ofReal_re,
+      RCLike.ofReal_re]
+  have hnormsq : ‖p.rep‖ ^ 2 = ‖p.rep 0‖ ^ 2 + ‖p.rep 1‖ ^ 2 := by
+    rw [LF4.euclidean_norm_sq_eq_sum, Fin.sum_univ_two]
+  rw [overlapDeficit, hinner, LF4.momentMap]
+  field_simp
+  linarith [hnormsq]
+
+/-- ★ **The derived coupling, exactly** (qubit, phase flip): the trigger's
+typicality measure is `1 − δ/2` — the Duistermaat–Heckman law evaluates
+what Markov could only bound. -/
+theorem measure_deficitTrigger_phaseFlipW (p₀ : CPN 2) {δ : ℝ}
+    (hδ0 : 0 < δ) :
+    fubiniStudyMeasure p₀ (deficitTrigger phaseFlipW δ)
+      = ENNReal.ofReal (1 - δ / 2) := by
+  have hset : deficitTrigger phaseFlipW δ
+      = (fun p => LF4.momentMap p 0) ⁻¹' Set.Ici (δ / 2) := by
+    ext p
+    rw [deficitTrigger, Set.mem_ofPred_eq, overlapDeficit_phaseFlipW,
+      Set.mem_preimage, Set.mem_Ici]
+    constructor <;> intro h <;> linarith
+  rw [hset, ← Measure.map_apply (LF4.momentMap_measurable 0) measurableSet_Ici,
+    LF4.fs_moment_pushforward_uniform p₀,
+    Measure.restrict_apply measurableSet_Ici]
+  rw [show Set.Ici (δ / 2) ∩ Set.Icc (0:ℝ) 1 = Set.Icc (δ / 2) 1 from by
+    ext x
+    simp only [Set.mem_inter_iff, Set.mem_Ici, Set.mem_Icc]
+    constructor
+    · rintro ⟨h1, -, h3⟩
+      exact ⟨h1, h3⟩
+    · rintro ⟨h1, h2⟩
+      exact ⟨h1, by linarith, h2⟩]
+  rw [Real.volume_Icc]
+
+/-- The derived kick's coupling strength, exactly. -/
+theorem deficitKick_phaseFlip_coupling (V : Matrix.unitaryGroup (Fin 2) ℂ)
+    (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ)
+    {kick : RecordCircle} (hkick : kick ≠ 0) :
+    ((fubiniStudyMeasure p₀).prod volume)
+        (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd)
+      = ENNReal.ofReal (1 - δ / 2) := by
+  rw [deficitTriggeredKick, measure_recordFlip_triggeredRecordKick _ _ hkick]
+  exact measure_deficitTrigger_phaseFlipW p₀ hδ0
+
+/-- ★★ **The derived coupling bites**: for `δ ∈ (0, 2)` the flip probability
+is strictly between `0` and `1` — the deficit-triggered kick genuinely
+couples, and the derived half-life bound below is about a real erosion
+channel, not a vacuous one. -/
+theorem deficitKick_phaseFlip_bites (V : Matrix.unitaryGroup (Fin 2) ℂ)
+    (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ) (hδ2 : δ < 2)
+    {kick : RecordCircle} (hkick : kick ≠ 0) :
+    0 < ((fubiniStudyMeasure p₀).prod volume)
+        (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd)
+      ∧ ((fubiniStudyMeasure p₀).prod volume)
+          (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd)
+        < 1 := by
+  rw [deficitKick_phaseFlip_coupling V p₀ hδ0 hkick]
+  constructor
+  · exact ENNReal.ofReal_pos.mpr (by linarith)
+  · rw [show (1 : ENNReal) = ENNReal.ofReal 1 from ENNReal.ofReal_one.symm,
+      ENNReal.ofReal_lt_ofReal_iff (by norm_num)]
+    linarith
+
+/-- **The half-life at the exact rate** (qubit, phase flip): a formed record
+survives `n` periods except on measure at most `n·(1 − δ/2)` — the generic
+bound instantiated with the coupling the DH law computed, rather than the
+Markov estimate. -/
+theorem deficitKick_phaseFlip_halfLife (V : Matrix.unitaryGroup (Fin 2) ℂ)
+    (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ)
+    {kick : RecordCircle} (hkick : kick ≠ 0) (n : ℕ) :
+    ((fubiniStudyMeasure p₀).prod volume)
+        (recordIntact (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd n)ᶜ
+      ≤ n • ENNReal.ofReal (1 - δ / 2) := by
+  have hflip_meas : MeasurableSet
+      (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd) := by
+    rw [deficitTriggeredKick, recordFlip_triggeredRecordKick _ _ hkick]
+    exact (measurableSet_deficitTrigger phaseFlipW δ).prod MeasurableSet.univ
+  have h := recordIntact_compl_measure_le
+    (deficitTriggeredKick_measurePreserving V phaseFlipW δ kick p₀)
+    hflip_meas n
+  rwa [deficitKick_phaseFlip_coupling V p₀ hδ0 hkick] at h
 
 end CSD.Empirical.QuantumChaos
