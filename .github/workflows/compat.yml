@@ -57,11 +57,16 @@ jobs:
           lake update mathlib
           lake exe cache get
 
-      - name: Build CsdLean4 (production, warnings fatal)
-        run: lake build --wfail CsdLean4
+      # Deliberately NOT --wfail: against a moving Mathlib, deprecation warnings fire
+      # essentially always, and warnings-as-errors would saturate the canary (red every
+      # week, signal lost). Hard errors are the early warning this job exists for; the
+      # first live run (2026-08-12) confirmed this — the corpus built 3.7k+ jobs against
+      # master and failed only on if_true/ite_true deprecation warnings.
+      - name: Build CsdLean4 (production)
+        run: lake build CsdLean4
 
-      - name: Build CsdLeanTests (regression suite, warnings fatal)
-        run: lake build --wfail CsdLeanTests
+      - name: Build CsdLeanTests (regression suite)
+        run: lake build CsdLeanTests
 
       - name: Core static controls on the forward build
         run: |
@@ -76,17 +81,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install elan
-        run: |
-          curl -sSfL https://github.com/leanprover/elan/releases/latest/download/elan-init.sh \
-            | sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-
-      - name: Fetch Mathlib cache
-        run: lake exe cache get
-
+      # lean-action handles elan + the Mathlib cache cross-platform (the hand-rolled
+      # elan install died with exit 127 on the macOS runner, first live run 2026-08-12).
+      # Pinned toolchain, so --wfail is kept: the pinned corpus is warning-clean.
       - name: Build CsdLean4 (pinned, warnings fatal)
-        run: lake build --wfail CsdLean4
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: true
+          build-args: "--wfail CsdLean4"
+          use-mathlib-cache: true
 
       - name: Build CsdLeanTests (pinned, warnings fatal)
         run: lake build --wfail CsdLeanTests
