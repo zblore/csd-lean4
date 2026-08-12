@@ -1753,4 +1753,24 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.recordIntact_antitone
 
+-- Q1: the derived coupling (DerivedCoupling.lean, 2026-08-12) — the
+-- operator-norm -> flip-measure bridge: the overlap-deficit trigger's
+-- typicality measure is Markov-bounded by |W - 1|, and the record
+-- half-life bound inherits the derived rate; W = 1 gives a.s. persistence.
+/-- info: 'CSD.Empirical.QuantumChaos.overlapDeficit_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.overlapDeficit_le
+
+/-- info: 'CSD.Empirical.QuantumChaos.measure_deficitTrigger_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.measure_deficitTrigger_le
+
+/-- info: 'CSD.Empirical.QuantumChaos.deficitKick_record_halfLife' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.deficitKick_record_halfLife
+
+/-- info: 'CSD.Empirical.QuantumChaos.deficitKick_persists_of_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.deficitKick_persists_of_id
+
 end CSD.Tests.AxiomAudit

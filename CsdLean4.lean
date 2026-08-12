@@ -494,6 +494,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.CarrierPersistence
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
 public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness
+public import CsdLean4.Empirical.CSD.QuantumChaos.DerivedCoupling
 public import CsdLean4.Empirical.CSD.QuantumChaos.FreeFieldClosure
 public import CsdLean4.Empirical.CSD.QuantumChaos.HalfLifeAttainment
 -- Tests/ deliberately excluded from the consumer-facing root. Build via
