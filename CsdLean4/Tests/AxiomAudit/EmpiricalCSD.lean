@@ -1795,4 +1795,37 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_halfLife
 
+-- Q4: the entropy ledger (EntropyLedger.lean, 2026-08-12): retrodiction
+-- reliability, the one-way erosion fraction, and the two-cell coarse
+-- entropy ledger, all priced by the same per-step coupling; the ledger
+-- identified with the von Neumann entropy of the register's diagonal
+-- state; the phase-flip instantiation with the DH-computed coupling.
+/-- info: 'CSD.Empirical.QuantumChaos.measure_retrodictionSuccess_compl_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.measure_retrodictionSuccess_compl_le
+
+/-- info: 'CSD.Empirical.QuantumChaos.erosionFraction_monotone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.erosionFraction_monotone
+
+/-- info: 'CSD.Empirical.QuantumChaos.erosionFraction_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.erosionFraction_le
+
+/-- info: 'CSD.Empirical.QuantumChaos.ledgerEntropy_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.ledgerEntropy_le
+
+/-- info: 'CSD.Empirical.QuantumChaos.vonNeumannEntropy_ledgerState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.vonNeumannEntropy_ledgerState
+
+/-- info: 'CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_reliability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_reliability
+
+/-- info: 'CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_ledger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_ledger
+
 end CSD.Tests.AxiomAudit
