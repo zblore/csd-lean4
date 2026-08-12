@@ -1738,4 +1738,19 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.cyclicKick_halfLife_attained
 
+-- H7 level 2 (Empirical/CSD/QuantumChaos/CarrierPersistence.lean,
+-- 2026-08-12): the event/carrier separation — events reindex and conserve
+-- probability; carriers are antitone (perishable).
+/-- info: 'CSD.Empirical.QuantumChaos.recordEvent_preimage_step' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.recordEvent_preimage_step
+
+/-- info: 'CSD.Empirical.QuantumChaos.recordEvent_measure_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.recordEvent_measure_invariant
+
+/-- info: 'CSD.Empirical.QuantumChaos.recordIntact_antitone' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QuantumChaos.recordIntact_antitone
+
 end CSD.Tests.AxiomAudit

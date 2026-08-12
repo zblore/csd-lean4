@@ -350,6 +350,7 @@ public import CsdLean4.CV.LocalAlgebra
 public import CsdLean4.CV.SupportSpreading
 public import CsdLean4.CV.InteractionPrice
 public import CsdLean4.CV.PowerCounting
+public import CsdLean4.CV.CarrierPersistence
 public import CsdLean4.CV.ChaosBounds
 public import CsdLean4.CV.LocalAlgebraClosed
 public import CsdLean4.CV.Propagator
@@ -489,6 +490,7 @@ public import CsdLean4.Incubator.QuantumChaos.Otoc
 public import CsdLean4.Incubator.QuantumChaos.EchoBound
 public import CsdLean4.Empirical.CSD.QuantumChaos.OnticLift
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordPersistence
+public import CsdLean4.Empirical.CSD.QuantumChaos.CarrierPersistence
 public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
 public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness

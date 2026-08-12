@@ -564,4 +564,25 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.norm_commutator_spatial_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_factorial_le
 
+-- H7 level 1 (CV/CarrierPersistence.lean, 2026-08-12): carrier persistence
+-- priced by locality — exact in the cone-complement (an equality, not a
+-- bound), einselection of the configuration basis under the whole diagonal
+-- family, the telescoped Duhamel bound, and the window headline (zero until
+-- the cone arrives, the derived rate after).
+/-- info: 'CSD.CV.heisenberg_perturbed_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.heisenberg_perturbed_pow_eq
+
+/-- info: 'CSD.CV.heisenberg_diagonal_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.heisenberg_diagonal_pow_eq
+
+/-- info: 'CSD.CV.heisenberg_perturbed_pow_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.heisenberg_perturbed_pow_dist_le
+
+/-- info: 'CSD.CV.carrier_persistence_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.carrier_persistence_window
+
 end CSD.Tests.AxiomAudit
