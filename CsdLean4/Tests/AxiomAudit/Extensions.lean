@@ -585,4 +585,19 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.carrier_persistence_window
 
+-- Q3 (2026-08-12): the diagnostics beyond the light-cone gate — the linear
+-- OTOC growth cap (slow scrambling) and the free field's exact SFF revival
+-- at τ = 2π (the integrable baseline).
+/-- info: 'CSD.CV.otoc_interactingU_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.otoc_interactingU_le
+
+/-- info: 'CSD.CV.freeField_phase_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.freeField_phase_two_pi
+
+/-- info: 'CSD.CV.sff_freeFieldU_revival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sff_freeFieldU_revival
+
 end CSD.Tests.AxiomAudit
