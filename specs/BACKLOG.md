@@ -7,6 +7,33 @@
 > record. **This is the live list.** It is ordered so that the top item is the one that
 > unblocks the programme's single remaining scientific blocker.
 >
+> ### Q. The numbered quick queue (added 2026-08-12 — say "do Qn" to reference)
+>
+> | # | Item | Pillar | Cx | Status | Row |
+> |---|---|---|---|---|---|
+> | Q1 | Derived-ε ontic bridge (operator norm → `recordFlip` measure) | Chaos/records | M | open | H7 residue |
+> | Q2 | Half-life attainment (rate vs the `n·ε` bound) | Chaos | M | open | §H thread |
+> | Q3 | Chaos diagnostics: SFF growth / OTOC beyond the gate | Chaos | M | open | §H thread |
+> | Q4 | Entropy-ledger link (carrier erosion vs coarse entropy production, as retrodiction reliability) | Chaos/records | M–L | open | H7 follow-up |
+> | Q5 | Shor-9 concatenation + Lindblad tier | QI ladders | L | open | E1 |
+> | Q6 | Composable finite-key QKD | QI ladders | XL | open | E3 |
+> | Q7 | CV programme, post-Stage-5 | CV/EFT | L | open | E4 |
+> | Q8 | Manifold forms on `ℂℙ^{N-1}` (A4 manifold half) | Geometry | XL | **Mathlib wall** | A4 |
+> | Q9 | DPI → SSA ladder | QI ladders | L | **user-deferred 2026-07-23 — leave alone** | E2 |
+> | Q10 | Non-factorising-Σ no-signalling from primitives | Foundations | Research | scoping-first | C1 item 16 |
+> | Q11 | U(N) / hTPP discharge (the conditionality gap) | Necessity | Research | open | necessity audit |
+> | Q12 | Fibre mechanism from de-isolation dynamics | Σ structure | Research | open | E5 |
+> | Q13 | Trilemma exhaustiveness over all arenas | Measurement | Research | open | E5 |
+> | Q14 | Poisson-argument paper section | Paper (authorial) | — | unblocked since B1 | A2 |
+> | Q15 | SigmaLayer role split | Infra | L | deferred to consolidation release | G10 |
+> | Q16 | Metrology A4 (decoherence) | Empirical | XL | tied to Q5 | metrology plan |
+>
+> **Settled non-goal (2026-08-12, author decision):** the beyond-horizon permanence toy
+> (expanding-chain "Λ > 0 ⇒ records beyond the cosmological horizon persist forever") is
+> **off the queue** — its physical referent is unmeasurable in principle from inside the
+> horizon, so it fails the present-tense-checkable test however formalizable it is. Do
+> not re-propose; the idea stays recorded in the vault navigation note only.
+>
 > ### A. The blocker, split into what is doable and what is not
 >
 > The one open scientific requirement is Paper C A2 / TN6's **joint-arena Hamiltonian
