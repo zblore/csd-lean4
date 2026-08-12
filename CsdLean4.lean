@@ -454,6 +454,7 @@ public import CsdLean4.SigmaLayer.MixedJoinLuders
 public import CsdLean4.SigmaLayer.MixedLuders
 public import CsdLean4.SigmaLayer.MixedSwap
 public import CsdLean4.SigmaLayer.NoRecordGeometry
+public import CsdLean4.SigmaLayer.NullSeamGeneralN
 public import CsdLean4.SigmaLayer.NullSeamLift
 public import CsdLean4.SigmaLayer.NullSeamWitness
 public import CsdLean4.SigmaLayer.PointerArena

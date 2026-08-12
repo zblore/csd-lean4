@@ -87,8 +87,9 @@ pointer's moment-region geometry this is now a **theorem** — `posMeasure_noRec
 positive-width ready + two-outcome correlation force a positive-measure no-record set, so
 exact-a.e. records force Dirac calibration. General exhaustiveness over *all* arenas
 remains research, not claimed. Further scope: two cells and a
-`ℂℙ²` pointer (the horn is an existence claim; general `N` is a mechanical extension of
-the same kissing-crossing, recorded); the terminal stroke is exhibited as a continuous
+`ℂℙ²` pointer (the horn is an existence claim; **general `N` DONE 2026-08-12** —
+`NullSeamGeneralN.lean`, `nullSeamGenClosure`: every `N ≥ 2` and every weight vector,
+via plateau tents and a single amplitude-polynomial rotation); the terminal stroke is exhibited as a continuous
 skew-unitary map (time-ramping through `pointerRamp`/`smoothPointerRamp` is the same
 mechanical wrapping as brick 4 and is not duplicated); no protocol packaging.
 

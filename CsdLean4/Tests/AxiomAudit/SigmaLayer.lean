@@ -2759,4 +2759,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.joinSwap_eq_flowTimeOne
 
+-- D3b: the general-N null-seam witness (NullSeamGeneralN.lean, 2026-08-12) —
+-- the third horn at every N >= 2 and every weight vector: continuity, measure
+-- invariance, exact records off an N-point null seam, exact Born mass r i per
+-- cell; plateau tents + the amplitude-polynomial seam rotation (no
+-- per-boundary gluing, no monodromy). Two-cell witness unchanged as the
+-- minimal exhibit.
+/-- info: 'CSD.RecordLayer.nullSeamGenClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nullSeamGenClosure
+
+/-- info: 'CSD.RecordLayer.nullSeamGenClosure_uniform' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nullSeamGenClosure_uniform
+
+/-- info: 'CSD.RecordLayer.nullSeamGen_outcome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nullSeamGen_outcome
+
+/-- info: 'CSD.RecordLayer.nullSeamGen_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nullSeamGen_born
+
+/-- info: 'CSD.RecordLayer.seamRotationR_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.seamRotationR_orthogonal
+
 end CSD.Tests.AxiomAudit
