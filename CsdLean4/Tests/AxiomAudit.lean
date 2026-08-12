@@ -14,6 +14,7 @@ public import CsdLean4.Tests.AxiomAudit.SigmaLayer
 public import CsdLean4.Tests.AxiomAudit.MathlibStaging
 public import CsdLean4.Tests.AxiomAudit.Extensions
 public import CsdLean4.Tests.AxiomAudit.Incubator
+public import CsdLean4.Tests.AxiomAudit.Witnesses
 
 /-!
 # Axiom regression suite (umbrella)
@@ -37,7 +38,9 @@ by the pinned constant's namespace (blocks keep their original relative
 order): `Foundations` (LF1–LF3, incl. relative-name pins), `EmpiricalQM`,
 `EmpiricalCSD`, `LF4`, `Dynamics` (LF5+LF6), `SigmaLayer` (+RecordLayer),
 `MathlibStaging` (the Cat-1 tree incl. Reversible arithmetic), `Extensions`
-(CV+Thermo), `Incubator` (§H workstream staging; added 2026-08-07). This umbrella imports them all, so `lake build CsdLeanTests`
+(CV+Thermo), `Incubator` (§H workstream staging; added 2026-08-07),
+`Witnesses` (the concrete-witness suite; added 2026-08-12,
+`specs/validation-hardening-plan.md`). This umbrella imports them all, so `lake build CsdLeanTests`
 is the unchanged full gate; a layer touch gates locally on its own part
 (`lake build CsdLean4.Tests.AxiomAudit.<Part>`), and the parts build in
 parallel. **New pins go in the part matching the constant's namespace.**

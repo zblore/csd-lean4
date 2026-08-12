@@ -109,13 +109,14 @@ script can mechanically catch.
 # Build the library (CsdLean4 target — LF1/LF2/LF3/LF4/Empirical/Mathlib, no tests)
 lake build
 
-# Build the test target (AxiomAudit + Examples; required to fire #guard_msgs).
-# Since the G9 split (2026-08-06) the pins live in 8 per-layer part files under
-# Tests/AxiomAudit/ and the full sweep takes ~26 s on a built tree.
+# Build the test target (AxiomAudit + Examples + Witnesses; required to fire
+# #guard_msgs). Since the G9 split (2026-08-06) the pins live in per-layer part
+# files under Tests/AxiomAudit/ (ten parts as of 2026-08-12) and the full sweep
+# takes ~26 s on a built tree.
 lake build CsdLeanTests
 
 # Layer-local pin gate (seconds; parts: Foundations, EmpiricalQM, EmpiricalCSD,
-# LF4, Dynamics, SigmaLayer, MathlibStaging, Extensions)
+# LF4, Dynamics, SigmaLayer, MathlibStaging, Extensions, Incubator, Witnesses)
 lake build CsdLean4.Tests.AxiomAudit.SigmaLayer
 
 # Check a single file

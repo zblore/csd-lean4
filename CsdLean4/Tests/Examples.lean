@@ -25,10 +25,13 @@ catching API drift without requiring axiom inspection.
 
 **LF1.** A concrete `OnticSetup Bool` instantiates the abstract layer
 against a coin-toss state space (two outcomes, deterministic identity
-flow, uniform Liouville measure). The `TrialModel` is taken as a
-parameter rather than constructed; building an honest i.i.d. infinite
-product on `ℕ → Bool` is Mathlib-substantial work that does not change
-on the LF1 side and would only obscure the API check.
+flow, uniform Liouville measure). The smoke test below takes the
+`TrialModel` as a parameter (the API check); the **honest constructed**
+model — the i.i.d. infinite product on `ℕ → Bool` via
+`Measure.infinitePi`, with the independence hypothesis discharged — is
+`Tests/Witnesses/LF1Trial.lean`'s `coinTrialModel` (2026-08-12; the
+earlier note here that the construction was blocked on Mathlib is
+superseded — the upstream machinery landed).
 
 **LF2.** Concrete edge cases for `born_quadratic`: orthogonal vectors
 give probability 0, identical vectors give probability 1. These are
@@ -101,9 +104,9 @@ noncomputable def headsOutcome : coinSetup.OutcomeRegion where
     pairwise independence of the heads-indicator across trials, LF1's
     main theorem applies and the empirical frequency converges almost
     surely to the real-valued weight of the heads outcome. The
-    `TrialModel` itself stays abstract: constructing the honest i.i.d.
-    product on `ℕ → Bool` is Mathlib-substantial and orthogonal to the
-    LF1 API check. -/
+    `TrialModel` stays abstract *here* — this is the API-shape check;
+    the honest constructed model (i.i.d. product on `ℕ → Bool`, all
+    hypotheses discharged) is `Tests/Witnesses/LF1Trial.lean`. -/
 example
     {Ω : Type*} [MeasurableSpace Ω]
     (T : coinSetup.TrialModel Ω)

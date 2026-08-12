@@ -58,13 +58,13 @@ i.i.d. infrastructure turns out to be shared.)
 | # | Workstream | Amendments from the pre-dispatch review | Status |
 |---|---|---|---|
 | A | Warnings-as-errors (`--wfail` both targets in CI) | none — verified nearly free at baseline | **DONE 2026-08-12** — ci.yml: `--wfail` on both build steps; mutation-tested (see record below) |
-| B | Witness framework skeleton (`Tests/Witnesses/` + umbrella + AxiomAudit part) | Anti-duplication rule in the umbrella docstring; new `Tests/AxiomAudit/Witnesses.lean` part | queued |
+| B | Witness framework skeleton (`Tests/Witnesses/` + umbrella + AxiomAudit part) | Anti-duplication rule in the umbrella docstring; new `Tests/AxiomAudit/Witnesses.lean` part | **DONE 2026-08-12** — umbrella + lakefile root + pin part (7 pins, all foundational-triple), landed non-empty (with C and J) |
 | E+H | LF3 singlet/Bell witness (priority) | Build on the C1 tranche (`C1BellConsistency` → `lhvCHSH_abs_le_two`; `compatibleGlobalCHSH_nonvacuous`); may share i.i.d. infrastructure with C | queued |
 | I | Composite nonfactorisation witness | Cite, don't construct (`no_product_partition_realises_singlet`, GHZ chain) | queued |
-| C | LF1 honest i.i.d. `TrialModel` | Check `Measure.infinitePi` on the pinned Mathlib **before** declaring a wall (check-impossible-first); if walled, document the exact missing upstream theorem here — never an axiom | queued |
+| C | LF1 honest i.i.d. `TrialModel` | Check `Measure.infinitePi` on the pinned Mathlib **before** declaring a wall (check-impossible-first); if walled, document the exact missing upstream theorem here — never an axiom | **DONE 2026-08-12** — NOT walled: `Measure.infinitePi` + `iIndepFun_infinitePi` are on the pin. `Witnesses/IIDSampling.lean` (the honest model for **every** `OnticSetup`, `hindep` a theorem) + `Witnesses/LF1Trial.lean` (`coinTrialModel`, weight = ½ from Liouville volumes, convergence to ½). Examples.lean's stale "Mathlib-substantial" caveat superseded at source |
 | D | LF2 bridge witness | The targets are the G1 transport theorems (`MeasureBridgeData.integral_comp_pi`, `OperationalPackage.fromPreparation_liouville_apply`, CL-003-guarded) | queued |
 | F+G | LF4 operational (mixed state / POVM / partial trace) + LF5 sequential witnesses | Invoke existing LF4/LF5 surfaces, never reimplement | queued |
-| J | Dynamics witness | **Cite the existing production flows** (`kSectorDataFlow`, `cpSectorDataFlow`, `rotationSetup`, …) — D1c discharged this 2026-06-29; construct nothing | queued |
+| J | Dynamics witness | **Cite the existing production flows** (`kSectorDataFlow`, `cpSectorDataFlow`, `rotationSetup`, …) — D1c discharged this 2026-06-29; construct nothing | **DONE 2026-08-12** — `Witnesses/Dynamics.lean`: `exists_cp/kSectorData_nontrivial_flow` (inhabited existentials, every clause a named production theorem), `qubit_dynamics_witness` (concrete `N = 2`), `cpSectorDataFlow_frequency_convergence_concrete` (production capstone on honest `infinitePi` trials). ⚠️ Snag for the ledger: applying the capstone with an **unannotated** sample lambda put unification under metas and whnf-exploded (same class as the B3b/B5-geom notes); fix = pin `(Ω := …) (Pr := …)` and annotate the lambda — normal heartbeats after |
 | K | Standard linter integration | Baseline-first per the §9.5 ratchet; F3 naming decisions on the documented-exclusions list from day one; advisory unless zero-churn | queued |
 | L | Import hygiene guard | Extend the `check-import-negative.sh` idiom; permanent mutation cases in `check-guards.sh` | queued |
 | M | Forward-compat workflow | **Tagged Mathlib releases only** (cache hits); nothing committed to lakefile.toml | queued |
@@ -75,12 +75,16 @@ i.i.d. infrastructure turns out to be shared.)
 
 | Layer | Explicit witness | Nontriviality | Headline theorem exercised |
 |---|---|---|---|
+| LF1 | `coinTrialModel` (`Witnesses/LF1Trial.lean`) — honest i.i.d. product on `ℕ → Bool` via `Measure.infinitePi`, coordinate trials, every `TrialModel` field proved | weight = ½ (`headsOutcome_weightReal`, from `weight_eq_prepEvent_div`), `coin_witness_nontrivial`: ∉ {0, 1} | `LF1_main_theorem_ae` via `iidTrialModel_frequency_convergence` — zero abstract hypotheses |
+| LF1 (generic) | `iidTrialModel` (`Witnesses/IIDSampling.lean`) — the honest trial model for **every** `OnticSetup`; `hindep` discharged by `iIndepFun_infinitePi` | law + independence are Mathlib theorems, not posits | `LF1_main_theorem_ae`, all setups |
+| Dynamics | `exists_cp/kSectorData_nontrivial_flow`, `qubit_dynamics_witness` (`Witnesses/Dynamics.lean`) — production `cpSectorDataFlow`/`kSectorDataFlow` cited, nothing constructed | `Φ ≠ id` (production `obsFlow_ne_id`/`kFlow_ne_id`); concrete shift `(½, 0) ≠ 0` proved | `cpSectorDataFlow_frequency_convergence` on honest `infinitePi` trials (`_concrete`) |
 
 ## Mutation-test record (one-off hand-run probes; permanent probes live in check-guards.sh)
 
 | Control | Probe | Result |
 |---|---|---|
 | `--wfail` CI steps (WS-A) | appended `private def wfailProbe (unusedArg : Nat) : Nat := 0` (unused-variable warning) to `Tests/Examples.lean` | `lake build --wfail CsdLeanTests` exit 1 with probe; exit 0 restored. Probe removed, not committed |
+| Witness suite (WS-B/C/J) | falsified `coin_frequency_convergence`'s limit (`nhds (1/2)` → `nhds 1`) | `lake build --wfail CsdLeanTests` exit 1 with probe; exit 0 restored. Probe removed, not committed |
 
 ## Blockers (genuine walls only; classified Mathlib gap / CSD API gap / missing physical construction / engineering)
 

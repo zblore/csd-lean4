@@ -29,10 +29,17 @@ name = "CsdLean4"
 roots = ["CsdLean4", "CsdLean4.Basic"]
 
 # Test target: AxiomAudit regression suite (`#guard_msgs` pins on
-# `#print axioms` for every headline theorem) and Examples worked
-# computations. Build with `lake build CsdLeanTests`. CI exercises
-# both targets (see `.github/workflows/ci.yml`); drift detection
-# requires this target to be built, not just the library.
+# `#print axioms` for every headline theorem), Examples worked
+# computations, and the Witnesses concrete-witness suite (explicit
+# nontrivial inhabitants of the assumption packages, driven through the
+# headline chains — specs/validation-hardening-plan.md). Build with
+# `lake build CsdLeanTests`. CI exercises both targets (see
+# `.github/workflows/ci.yml`); drift detection requires this target to
+# be built, not just the library.
 [[lean_lib]]
 name = "CsdLeanTests"
-roots = ["CsdLean4.Tests.AxiomAudit", "CsdLean4.Tests.Examples"]
+roots = [
+  "CsdLean4.Tests.AxiomAudit",
+  "CsdLean4.Tests.Examples",
+  "CsdLean4.Tests.Witnesses",
+]
