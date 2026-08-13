@@ -141,4 +141,12 @@ open CSD.Tests.Witnesses
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Tests.Witnesses.sequential_repeatability_concrete
 
+-- Q19 (2026-08-13): the WS-H positive half -- the explicit contextual singlet model
+-- witnessed on the same concrete arena the WS-E chain samples from. See the Q19 block in
+-- the Dynamics part for the construction; the witness contribution is the arena-level
+-- statement alongside WS-E.
+/-- info: 'CSD.Tests.Witnesses.kMuPsi_singlet_contextual_model' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Tests.Witnesses.kMuPsi_singlet_contextual_model
+
 end CSD.Tests.AxiomAudit

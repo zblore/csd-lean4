@@ -1046,6 +1046,40 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet
 
+-- Q19 (2026-08-13): the POSITIVE half of the C1 separation. Until Q19 the obstruction
+-- above was conditional in its reproduction slot -- nothing inhabited
+-- ReproducesSingletAtCHSH, and the recorded non-vacuity covered only the compatibility
+-- conjunct (the all-plus family, constant correlation 1). The explicit contextual model
+-- closes it: for each context the first torus coordinate of (KSigma 4, kMuPsi) is read
+-- through the four cumulative arcs (RecordLayer.circleCell) whose lengths are the
+-- context's own singlet weights, so every joint outcome carries EXACTLY P_st -- the FULL
+-- TABLE, at every context, not only the four CHSH ones (a correlation-only witness could
+-- cheat with degenerate marginals; the table cannot -- the E-1 lesson applied in
+-- advance). integral_wing_mul_of_table converts the table into the correlation form
+-- (correlation IS the weighted table sum by definition), and the capstone conjoins
+-- existence with the obstruction: contextual families carry the singlet, no globally
+-- CHSH-compatible family can. Scope unchanged: the incompatibility half constrains only
+-- the four CHSH settings; does not subsume no_product_partition_realises_singlet.
+/-- info: 'CSD.LF6.integral_wing_mul_of_table' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.integral_wing_mul_of_table
+
+/-- info: 'CSD.LF6.kMuPsi_singletCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.kMuPsi_singletCell
+
+/-- info: 'CSD.LF6.singletContextualModel_table' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletContextualModel_table
+
+/-- info: 'CSD.LF6.singletContextualModel_reproduces' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletContextualModel_reproduces
+
+/-- info: 'CSD.LF6.c1_singlet_contextual_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.c1_singlet_contextual_capstone
+
 /-- info: 'CSD.LF6.compatibleGlobalCHSH_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.compatibleGlobalCHSH_nonvacuous

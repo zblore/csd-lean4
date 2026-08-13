@@ -43,6 +43,10 @@ namespace CSD.LF3
 /-- The discrete σ-algebra on `Sign`: every subset is measurable. -/
 instance : MeasurableSpace Sign := ⊤
 
+/-- Singletons are measurable in the discrete σ-algebra — the companion instance the
+level-set arguments of `LF6/C1BellConsistency.lean` consume. -/
+instance : MeasurableSingletonClass Sign := ⟨fun _ => trivial⟩
+
 /-- Every function out of `Sign` is measurable, `Sign` being discrete. -/
 lemma measurable_of_sign {α : Type*} [MeasurableSpace α] (f : Sign → α) :
     Measurable f := fun _ _ => trivial

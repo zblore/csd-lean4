@@ -40,7 +40,16 @@ concrete measurement context:
   `(KSigma 4, kMuPsi)`: no measurable shared-context family compatible with a
   global CHSH assignment reproduces the singlet correlations there, and the
   obstruction is populated (compatible families exist), so the separation is
-  genuine on the witness space, not vacuous.
+  genuine on the witness space, not vacuous;
+* `kMuPsi_singlet_contextual_model` — **the WS-H positive half (upgraded
+  2026-08-13, Q19)**: until Q19 the obstruction was conditional in its
+  *reproduction* slot (nothing inhabited `ReproducesSingletAtCHSH`); this
+  witnesses the production capstone `c1_singlet_contextual_capstone` on the
+  same arena — an explicit measurable shared-context family exists that
+  reproduces the singlet (the full `P_st` table at every context, hence the
+  CHSH correlations) and is incompatible with every global CHSH assignment.
+  The conditional obstruction above is thereby exercised on a genuine
+  inhabitant, not an empty hypothesis class.
 
 **Anti-duplication scope.** Everything is cited: the chain capstone
 (`ofKählerPreparation_singlet_frequency_convergence`), the obstruction
@@ -172,6 +181,23 @@ theorem kMuPsi_chsh_obstruction_nonvacuous :
         ∫ l, ((S.wingA (chshContext i j) l).val : ℝ)
             * ((S.wingB (chshContext i j) l).val : ℝ) ∂kMuPsi = 1 :=
   compatibleGlobalCHSH_nonvacuous kMuPsi
+
+/-- **WS-H upgrade (2026-08-13, Q19): the positive half on the same arena.** An explicit
+measurable shared-context outcome family on `(KSigma 4, kMuPsi)` reproduces the singlet —
+the full `P_st` table at **every** context, hence the four CHSH correlations — and no
+global CHSH assignment is compatible with it. Together with
+`kMuPsi_no_global_chsh_assignment` this makes the C1 separation two-sided on the witness
+arena: contextual families can carry the singlet, non-contextual ones provably cannot,
+and both halves are witnessed rather than hypothesised. Cites
+`c1_singlet_contextual_capstone` (`LF6/C1BellConsistency.lean`); the witness contribution
+is the arena-level statement alongside WS-E, per the anti-duplication scope. -/
+theorem kMuPsi_singlet_contextual_model :
+    ∃ S : SharedContextOutcomeMaps (KSigma 4),
+      MeasurableSharedContextOutcomeMaps S ∧
+      (∀ C, ReproducesSingletTableAt kMuPsi S C) ∧
+      ReproducesSingletAtCHSH kMuPsi S ∧
+      ∀ G : GlobalCHSHAssignment (KSigma 4), ¬ CompatibleWithGlobalCHSH S G :=
+  c1_singlet_contextual_capstone
 
 end Witnesses
 end Tests
