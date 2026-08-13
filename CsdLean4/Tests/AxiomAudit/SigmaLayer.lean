@@ -2785,4 +2785,55 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.seamRotationR_orthogonal
 
+
+-- Q18 / the Q11 first brick (2026-08-13, RecordLayer/StatisticsRigidity): transition
+-- probabilities are RECORD OBSERVABLES, and both necessity-audit conditioners convert.
+-- recordKernel p q is the Born rate a context containing q assigns to the unit preparation
+-- representative of p, defined through bornRateBasis (never the inner product); every ray is
+-- an outcome of some context (exists_context_extending_ray, Gram-Schmidt extension); the
+-- HEADLINE recordKernel_eq_transProb identifies the operational statistic with the FS
+-- transition probability, recordKernel_well_defined makes it apparatus-independent, and the
+-- iff makes "preserves record statistics" THE SAME predicate as TransProbPreserving. The two
+-- conversions: projectedFlow_unitary_of_record_statistics (W3+Bargmann with the record-level
+-- premise in place of the hTPP FS-isometry posit -- a premise CONVERSION, honestly a thin
+-- wrapper) and measure_eq_fubiniStudy_of_record_statistics_invariant (any probability measure
+-- invariant under every statistics-preserving symmetry IS fubiniStudyMeasure -- U(N) in the
+-- proof, never the statement). recordStatisticsPreserving_realisation pins the operational
+-- symmetry group semi-unitary via Wigner. NOT claimed: elimination of the posits (the
+-- operational premises survive, papers owe motivation); TPP from measure preservation (the
+-- section-13.2 trap, untouched); the FS-invariance converse (needs conjProj pushforward
+-- invariance, absent); D1 G-from-dynamics (still obstructed, sidestepped). See
+-- specs/unitary-tpp-scoping.md sections 4-5 and BACKLOG row Q18.
+/-- info: 'CSD.RecordLayer.exists_context_extending_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_context_extending_ray
+
+/-- info: 'CSD.RecordLayer.transProb_mk_eq_bornRateBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transProb_mk_eq_bornRateBasis
+
+/-- info: 'CSD.RecordLayer.recordKernel_eq_transProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordKernel_eq_transProb
+
+/-- info: 'CSD.RecordLayer.recordKernel_well_defined' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordKernel_well_defined
+
+/-- info: 'CSD.RecordLayer.recordStatisticsPreserving_iff_transProbPreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordStatisticsPreserving_iff_transProbPreserving
+
+/-- info: 'CSD.RecordLayer.recordStatisticsPreserving_realisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordStatisticsPreserving_realisation
+
+/-- info: 'CSD.RecordLayer.projectedFlow_unitary_of_record_statistics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.projectedFlow_unitary_of_record_statistics
+
+/-- info: 'CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant
+
 end CSD.Tests.AxiomAudit
