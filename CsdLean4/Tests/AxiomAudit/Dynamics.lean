@@ -749,6 +749,34 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.dephasingChannel_master_equation
 
+-- Lindblad semigroup tier (LindbladSemigroup.lean, Q5/LF6-9, 2026-08-13):
+-- Phi_t = exp(t.L) for an ARBITRARY GKSL generator -- semigroup law, the
+-- master equation, trace preservation, and Hermiticity preservation at the
+-- flow level. CP of exp(t.L) remains the recorded Mathlib-scale gap.
+/-- info: 'CSD.LF6.lindbladSemigroup_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_add
+
+/-- info: 'CSD.LF6.lindbladSemigroup_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_hasDerivAt
+
+/-- info: 'CSD.LF6.lindbladSemigroup_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_trace
+
+/-- info: 'CSD.LF6.lindbladGenerator_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladGenerator_conjTranspose
+
+/-- info: 'CSD.LF6.lindbladSemigroup_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_conjTranspose
+
+/-- info: 'CSD.LF6.lindbladSemigroup_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_isHermitian
+
 /-- info: 'CSD.LF6.no_product_partition_realises_maxEntangled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.no_product_partition_realises_maxEntangled

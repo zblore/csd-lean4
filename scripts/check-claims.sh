@@ -333,7 +333,6 @@ DECLARED_OPEN_SCOPE="CsdLean4/CV/InteractionPrice.lean:1
 CsdLean4/CV/LocalAlgebraClosed.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
-CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/SigmaLayer/ApproxProjectability.lean:1
@@ -373,7 +372,7 @@ DECLARED_SCOPE_WAITS="CsdLean4/CV/InteractionPrice.lean|none
 CsdLean4/CV/LocalAlgebraClosed.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
-CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|E1
+CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
 CsdLean4/LF4/PhaseLift.lean|none
 CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/SigmaLayer/ApproxProjectability.lean|none
@@ -390,8 +389,9 @@ CsdLean4/SigmaLayer/RecordLayerClosure.lean|none
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean|none
 CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 # WAIT LEDGER (why each tag):
-#   SyndromeCollapse|E1 — "full distance-3 correction needs concatenated Shor-9" waits on
-#     the E1 QEC tier.
+#   SyndromeCollapse|none — was tagged E1; ShorNine.lean landed the concatenated code
+#     (2026-08-13) and the boundary was superseded at source, so the tag retired exactly
+#     as the mechanism intends (supersession record kept in the module docstring).
 #   MixedLuders|none — was tagged D3 when the ledger was built; D3a landed the same day
 #     (MixedJoinLuders.lean) and the note was superseded at source, so the tag retired
 #     exactly as the mechanism intends.

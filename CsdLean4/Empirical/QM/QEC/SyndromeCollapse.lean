@@ -55,17 +55,21 @@ that branch's coefficient — and each branch is corrected by re-applying its ow
 ## Scope
 
 Still the **bit-flip** span `{I, X₁, X₂, X₃}` — the three-qubit code's actual correctable set.
-Extending to all four Paulis per qubit (so that `pauli_span_top` applies and *every* single-qubit
-error is corrected) needs the concatenated Shor 9-qubit code, which remains open on 512-dimensional
-infrastructure (`specs/BACKLOG.md`). What is closed here is the gap *within* the three-qubit
-story: four corrected errors plus discretization now genuinely imply a corrected continuum.
+~~Extending to all four Paulis per qubit needs the concatenated Shor 9-qubit code, which remains
+open on 512-dimensional infrastructure.~~ **Superseded 2026-08-13: the concatenated Shor-9 code
+landed** (`QEC/ShorNine.lean`, Q5/E1) — `{X, Z, XZ}` corrected at every one of the nine positions
+via the block-Kronecker combinator, no 512-dimensional entry-wise work. The *collapse* half at
+nine qubits (this module's syndrome-projection argument re-established on the concatenated
+stabilisers) is not restated there; it remains the natural next brick if the QEC ladder continues
+(Q16 metrology is the consumer). What is closed here is the gap *within* the three-qubit story:
+four corrected errors plus discretization genuinely imply a corrected continuum.
 
 ## References
 
 `QEC/ThreeQubit.lean` (`logical`, `X1`/`X2`/`X3`, `bitflip_recovers`,
 `three_qubit_syndromes_distinct`, `three_qubit_syndrome_eigenstates`);
 `QEC/ErrorDiscretization.lean` (`pauli_decomposition`, `pauli_span_top`);
-`specs/BACKLOG.md` (Shor-9 / concatenation); `specs/future-work.md`.
+`specs/BACKLOG.md` (Shor-9 / concatenation, DONE — `QEC/ShorNine.lean`); `specs/future-work.md`.
 Shor 1995; Nielsen–Chuang §10.1–10.2.
 -/
 

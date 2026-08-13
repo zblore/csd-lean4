@@ -222,6 +222,7 @@ public import CsdLean4.LF6.GisinTheorem
 public import CsdLean4.LF6.DephasingSemigroup
 public import CsdLean4.LF6.AmplitudeDamping
 public import CsdLean4.LF6.LindbladGenerator
+public import CsdLean4.LF6.LindbladSemigroup
 public import CsdLean4.LF6.CGLMPQutrit
 public import CsdLean4.LF6.CGLMPQudit
 public import CsdLean4.LF6.MaxEntangledCGLMPCapstone
@@ -250,6 +251,7 @@ public import CsdLean4.Empirical.QM.Crypto.WiesnerProtocol
 public import CsdLean4.Empirical.QM.USD
 public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 public import CsdLean4.Empirical.QM.QEC.PhaseFlip
+public import CsdLean4.Empirical.QM.QEC.ShorNine
 public import CsdLean4.Empirical.QM.QEC.ErrorDiscretization
 public import CsdLean4.Empirical.QM.QEC.SyndromeCollapse
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel

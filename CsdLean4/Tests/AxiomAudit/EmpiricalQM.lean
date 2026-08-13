@@ -671,6 +671,47 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on ax
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip
 
+-- Shor-9 by concatenation (ShorNine.lean, Q5/E1, 2026-08-13): the combinator
+-- (block Kronecker action factorises through the block tensor), all eight
+-- stabilisers fix the code space, the X/Z syndrome tables (Z degenerate in
+-- the inner position), and the correction set {X, Z, XZ} at every one of the
+-- nine positions -- with the Z recovery needing only the block syndrome.
+/-- info: 'CSD.Empirical.QM.QEC.tel9_bkron_vkron' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.tel9_bkron_vkron
+
+/-- info: 'CSD.Empirical.QM.QEC.innerStab_fixes_shorLogical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.innerStab_fixes_shorLogical
+
+/-- info: 'CSD.Empirical.QM.QEC.outerStab_fixes_shorLogical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.outerStab_fixes_shorLogical
+
+/-- info: 'CSD.Empirical.QM.QEC.innerStab_syndrome_X' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.innerStab_syndrome_X
+
+/-- info: 'CSD.Empirical.QM.QEC.outerStab_syndrome_Z' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.outerStab_syndrome_Z
+
+/-- info: 'CSD.Empirical.QM.QEC.xSyndromeSign_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.xSyndromeSign_injective
+
+/-- info: 'CSD.Empirical.QM.QEC.shor_corrects_X' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.shor_corrects_X
+
+/-- info: 'CSD.Empirical.QM.QEC.shor_corrects_Z_degenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.shor_corrects_Z_degenerate
+
+/-- info: 'CSD.Empirical.QM.QEC.shor_corrects_XZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.shor_corrects_XZ
+
 -- Error discretization (2026-07-27): WHY correcting four Paulis corrects a CONTINUUM of errors.
 -- pauli_decomposition -- every 2x2 complex matrix is c0.I + c1.X + c2.Z + c3.XZ with the
 -- coefficients read off its entries ((M00 +/- M11)/2, (M01 +/- M10)/2); no analysis, no choice.
