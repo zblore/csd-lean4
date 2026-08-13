@@ -85,5 +85,5 @@ jobs:
           check "CsdLean4/LF2/Preparation.html"    "fromPreparation_liouville_apply"
           check "CsdLean4/LF3/Interface.html"      "LF3_singlet_frequency_convergence"
           check "CsdLean4/LF6/ForcedContextuality.html" "no_product_partition_realises_singlet"
-          check "CsdLean4/SigmaLayer/SwapLuders.html"   "swap_luders_born"
+          check "CsdLean4/RecordLayer/SwapLuders.html"   "swap_luders_born"
           exit $fail

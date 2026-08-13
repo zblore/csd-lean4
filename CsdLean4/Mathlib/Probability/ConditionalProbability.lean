@@ -30,9 +30,9 @@ Four small lemmas about `ProbabilityTheory.cond` that Mathlib does not currently
 ## Provenance
 
 `cond_map`/`cond_prod_prod`/`cond_eq_self` extracted 2026-08-02 from
-`CsdLean4/SigmaLayer/JoinLuders.lean` (the degenerate-Lüders conditioning bookkeeping);
+`CsdLean4/RecordLayer/JoinLuders.lean` (the degenerate-Lüders conditioning bookkeeping);
 `cond_finsetSum` added 2026-08-03 for the outcome-conditioned mixed update
-(`CsdLean4/SigmaLayer/MixedLuders.lean`). Staged here for upstream. Naming and import
+(`CsdLean4/RecordLayer/MixedLuders.lean`). Staged here for upstream. Naming and import
 discipline track Mathlib idiom; intended target `Mathlib.Probability.ConditionalProbability`.
 -/
 

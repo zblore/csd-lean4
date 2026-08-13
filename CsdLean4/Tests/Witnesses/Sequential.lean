@@ -6,8 +6,8 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
-public import CsdLean4.SigmaLayer.DegenerateLuders
-public import CsdLean4.SigmaLayer.DynamicBorn
+public import CsdLean4.RecordLayer.DegenerateLuders
+public import CsdLean4.RecordLayer.DynamicBorn
 public import CsdLean4.LF4.ObservableFlow
 
 /-!

@@ -25,7 +25,7 @@
 > | Q12 | Fibre mechanism from de-isolation dynamics | Σ structure | Research | open | E5 |
 > | Q13 | Trilemma exhaustiveness over all arenas | Measurement | Research | open | E5 |
 > | Q14 | Poisson-argument paper section | Paper (authorial) | — | unblocked since B1 | A2 |
-> | Q15 | SigmaLayer role split | Infra | L | deferred to consolidation release | G10 |
+> | ~~Q15~~ | ~~SigmaLayer role split~~ **DONE 2026-08-13** (the consolidation moment G10 named: the record-layer tranche is stable and the M/L brick queue is empty). The split is exactly the namespace/directory mismatch, measured mechanically: of 115 files in `SigmaLayer/`, **74 declared `namespace CSD.RecordLayer`** and moved to `CsdLean4/RecordLayer/`; 41 genuine `CSD.SigmaLayer` files remain. **Namespaces unchanged, so all 1,700+ axiom pins and the Headlines facade drift-guard survive untouched** — only module paths moved. 85 reference surfaces rewritten (root, `Headlines.lean`, all importers, `check-claims.sh` scope ledgers, `docs.yml` smoke page, `docs/TOUR.md`, `docs/PATHS.md`). Policy per G10's spirit: **historical BACKLOG/plan rows keep pre-split paths** (they are construction records; the archaeology stays true to its date). Residues, recorded not queued: the `Tests/AxiomAudit/SigmaLayer.lean` part still carries both namespaces' pins (G9's classifier keys on namespace, placement never affects resolution — a `RecordLayer` part split is cosmetic); G10(b)/(c) declines reaffirmed | Infra | L | **done** | G10 |
 > | Q16 | Metrology A4 (decoherence) | Empirical | XL | tied to Q5 | metrology plan |
 >
 > **Settled non-goal (2026-08-12, author decision):** the beyond-horizon permanence toy

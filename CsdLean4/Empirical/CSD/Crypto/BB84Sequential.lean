@@ -8,8 +8,8 @@ module
 public import CsdLean4.Empirical.QM.Crypto.BB84
 public import CsdLean4.Empirical.QM.Crypto.B92
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
-public import CsdLean4.SigmaLayer.RotatedContext
-public import CsdLean4.SigmaLayer.RotatedSwap
+public import CsdLean4.RecordLayer.RotatedContext
+public import CsdLean4.RecordLayer.RotatedSwap
 
 /-!
 # Empirical/CSD/Crypto: BB84 intercept-resend with a dynamical collapse step

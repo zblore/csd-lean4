@@ -27,9 +27,9 @@ public import CsdLean4.LF6.C1BellConsistency
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
-public import CsdLean4.SigmaLayer.SwapLuders
-public import CsdLean4.SigmaLayer.PovmDynamics
-public import CsdLean4.SigmaLayer.MeasurementCapstone
+public import CsdLean4.RecordLayer.SwapLuders
+public import CsdLean4.RecordLayer.PovmDynamics
+public import CsdLean4.RecordLayer.MeasurementCapstone
 public import CsdLean4.CV.ModeLocality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.Landauer

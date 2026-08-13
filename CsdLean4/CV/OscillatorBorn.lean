@@ -6,7 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.CV.OscillatorSpectrum
-public import CsdLean4.SigmaLayer.Measurement
+public import CsdLean4.RecordLayer.Measurement
 
 /-!
 # CV/OscillatorBorn: the truncated mode as a record-layer measurement (EFT Stage 0)

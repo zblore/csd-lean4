@@ -5,9 +5,9 @@ Authors: Zayn Blore
 -/
 module
 
-public import CsdLean4.SigmaLayer.SwapLuders
-public import CsdLean4.SigmaLayer.DegenerateLuders
-public import CsdLean4.SigmaLayer.SwapClosure
+public import CsdLean4.RecordLayer.SwapLuders
+public import CsdLean4.RecordLayer.DegenerateLuders
+public import CsdLean4.RecordLayer.SwapClosure
 
 /-!
 # Empirical/CSD/SequentialMeasurement: repeatability and sequential Born, from the dynamics

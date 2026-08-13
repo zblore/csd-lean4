@@ -5,7 +5,7 @@ Authors: Zayn Blore
 -/
 module
 
-public import CsdLean4.SigmaLayer.LocalLudersBasis
+public import CsdLean4.RecordLayer.LocalLudersBasis
 public import CsdLean4.Empirical.CSD.QuantumEraserVolume
 
 /-!

@@ -39,9 +39,9 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
 
 1. `CsdLean4/LF4/…` (Born-from-volume cluster) — `momentMap_mk_eq_inner_sq`,
    `fs_born_volume_ratio_N`, POVMs via `canonicalNaimark`.
-2. `CsdLean4/SigmaLayer/GlobalBasin.lean` — context-fixed basins: the partition is the
+2. `CsdLean4/RecordLayer/GlobalBasin.lean` — context-fixed basins: the partition is the
    apparatus's, the preparation only picks the point (`globalBasin_born`).
-3. `CsdLean4/SigmaLayer/MeasurementConstraints.lean` — the no-gos that shaped everything:
+3. `CsdLean4/RecordLayer/MeasurementConstraints.lean` — the no-gos that shaped everything:
    forced seams, no exact collapse, the accuracy price.
 4. `CsdLean4/SigmaLayer/{ShearWitness, SwapWitness, SwapLuders, SwapClosure}.lean` — records
    created → collapse as relocation → rank-one Lüders → the six-fact closure.
@@ -50,7 +50,7 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
    `BlockLudersObligation` inhabited.
 6. `CsdLean4/SigmaLayer/{RotatedContext, RotatedSwap}.lean` — any-basis follow-ups and the
    unitary-covariance law (`measurement_covariance`).
-7. `CsdLean4/SigmaLayer/UnifiedArena.lean` — one arena, one Liouville measure family; the
+7. `CsdLean4/RecordLayer/UnifiedArena.lean` — one arena, one Liouville measure family; the
    round trip.
 8. `CsdLean4/SigmaLayer/{ShearDiscontinuity, PiecewiseHamiltonian}.lean` — what kind of
    dynamics this provably is.
@@ -66,7 +66,7 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
     preparations reproduce `Tr(ρE)`, the eraser runs as a process (with
     `sequential_no_revival` — records are statistically irreversible), and
     `projectiveMeasurementCapstone` bundles the layer into one theorem. Then
-    `CsdLean4/SigmaLayer/PovmDynamics.lean` — POVMs and instruments by Naimark dilation
+    `CsdLean4/RecordLayer/PovmDynamics.lean` — POVMs and instruments by Naimark dilation
     on the same machinery (`povm_selector_born`, `povm_instrument`).
 
 ## 4 · Entanglement & non-locality

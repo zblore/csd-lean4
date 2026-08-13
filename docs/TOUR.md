@@ -251,8 +251,8 @@ trade-off theorem is.
    audit. A2's **Hamiltonian-generation** sub-question, reopened 2026-08-02 on the
    torus-flux correction, was closed 2026-08-03 by the smooth pointer witness, at the
    formalisable level; §2a carries the full audit trail and the scoped residue.
-3. `CsdLean4/SigmaLayer/GlobalBasin.lean`, measurement partitions fixed by the apparatus.
-4. `CsdLean4/SigmaLayer/SwapLuders.lean` → `UnifiedArena.lean` → `JoinLuders.lean`, the
+3. `CsdLean4/RecordLayer/GlobalBasin.lean`, measurement partitions fixed by the apparatus.
+4. `CsdLean4/RecordLayer/SwapLuders.lean` → `UnifiedArena.lean` → `JoinLuders.lean`, the
    measurement story above, in code.
 5. [`EMPIRICAL.md`](../EMPIRICAL.md), every flagship experiment, QM proof + CSD ontic twin.
 

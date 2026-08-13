@@ -6,7 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Empirical.QM.HongOuMandel
-public import CsdLean4.SigmaLayer.Measurement
+public import CsdLean4.RecordLayer.Measurement
 
 /-!
 # Empirical/CSD: the Hong–Ou–Mandel dip as an ontic typicality measure

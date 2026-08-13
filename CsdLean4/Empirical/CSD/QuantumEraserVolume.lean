@@ -6,8 +6,8 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Empirical.QM.QuantumEraser
-public import CsdLean4.SigmaLayer.Measurement
-public import CsdLean4.SigmaLayer.DegenerateLuders
+public import CsdLean4.RecordLayer.Measurement
+public import CsdLean4.RecordLayer.DegenerateLuders
 
 /-!
 # Empirical/CSD: the quantum eraser — the conditioned fringe as an ontic typicality volume
