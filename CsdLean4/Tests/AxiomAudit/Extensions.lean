@@ -561,6 +561,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.norm_flowRemainder_le_factorial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_flowRemainder_le_factorial
 
+-- CV-20 (Stage 6 opener, 2026-08-13): the velocity, made explicit. The Stage-5
+-- non-claim discharged: pow_pow_le_exp_mul_factorial (d^d <= e^d d!, one term of
+-- the exponential series) + pow_div_factorial_le_exp_neg give
+-- norm_commutator_velocity_le -- outside the cone v*t <= d with v = 2e^2 ||S||,
+-- ||[A(t),B]|| <= 2||A|| ||B|| e^{-d}: exponential decay in the graph distance
+-- with the velocity constant explicit. Optimality of the constant NOT claimed.
+/-- info: 'CSD.CV.pow_div_factorial_le_exp_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.pow_div_factorial_le_exp_neg
+
+/-- info: 'CSD.CV.norm_commutator_velocity_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_velocity_le
+
 /-- info: 'CSD.CV.norm_commutator_spatial_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_factorial_le
 

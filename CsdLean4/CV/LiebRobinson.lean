@@ -913,4 +913,78 @@ theorem norm_commutator_field_le {K N : ℕ} [NeZero N]
   norm_commutator_heisenbergFlow_le hS hSX hsplit hcomm
     (commute_of_disjointSupport hRY hA hB) t
 
+/-! ### CV-20 (Stage 6): the velocity, made explicit -/
+
+/-- The exponential-series lower bound in the form the velocity extraction
+needs: `d^d ≤ e^d · d!` (one term of the series for `exp d`). -/
+lemma pow_pow_le_exp_mul_factorial (d : ℕ) :
+    (d : ℝ) ^ d ≤ Real.exp d * d.factorial := by
+  have hsum := Real.sum_le_exp_of_nonneg (x := (d : ℝ)) (Nat.cast_nonneg d)
+    (d + 1)
+  have hterm : (d : ℝ) ^ d / d.factorial
+      ≤ ∑ i ∈ Finset.range (d + 1), (d : ℝ) ^ i / i.factorial :=
+    Finset.single_le_sum (f := fun i => (d : ℝ) ^ i / i.factorial)
+      (fun i _ => by positivity) (Finset.self_mem_range_succ d)
+  have hfac : (0 : ℝ) < d.factorial := by exact_mod_cast d.factorial_pos
+  have hle := hterm.trans hsum
+  calc (d : ℝ) ^ d = ((d : ℝ) ^ d / d.factorial) * d.factorial := by
+        field_simp
+    _ ≤ Real.exp d * d.factorial := mul_le_mul_of_nonneg_right hle hfac.le
+
+/-- Outside `x ≤ d/e²` the series term dies exponentially:
+`x^d/d! ≤ e^{−d}`. The arithmetic engine of the velocity bound. -/
+lemma pow_div_factorial_le_exp_neg {x : ℝ} (hx : 0 ≤ x) {d : ℕ}
+    (h : Real.exp 1 ^ 2 * x ≤ d) :
+    x ^ d / d.factorial ≤ Real.exp (-(d : ℝ)) := by
+  have he2 : (0 : ℝ) < Real.exp 1 ^ 2 := by positivity
+  have hfac : (0 : ℝ) < (d.factorial : ℝ) := by exact_mod_cast d.factorial_pos
+  have hxd : x ≤ (d : ℝ) / Real.exp 1 ^ 2 := by
+    rw [le_div_iff₀ he2]
+    linarith
+  have hpow : x ^ d ≤ ((d : ℝ) / Real.exp 1 ^ 2) ^ d :=
+    pow_le_pow_left₀ hx hxd d
+  have hepow : (Real.exp 1 ^ 2) ^ d = Real.exp (2 * d) := by
+    rw [← pow_mul, Real.exp_one_pow]
+    push_cast
+    ring_nf
+  have hkey : ((d : ℝ) / Real.exp 1 ^ 2) ^ d
+      ≤ Real.exp (-(d : ℝ)) * d.factorial := by
+    rw [div_pow, hepow, div_le_iff₀ (by positivity)]
+    calc (d : ℝ) ^ d ≤ Real.exp d * d.factorial :=
+          pow_pow_le_exp_mul_factorial d
+      _ = Real.exp (-(d : ℝ)) * (d.factorial : ℝ) * Real.exp (2 * d) := by
+          rw [mul_right_comm, ← Real.exp_add]
+          ring_nf
+  rw [div_le_iff₀ hfac]
+  exact hpow.trans hkey
+
+/-- ★★★ **The Lieb–Robinson velocity** (CV-20, Stage 6): outside the cone
+`v·t ≤ d` with `v := 2e²·‖S‖`, the commutator is **exponentially small in
+the graph distance** — `‖[A(t), B]‖ ≤ 2‖A‖‖B‖·e^{−d}`. The Stage-5
+factorial bound with the velocity constant made explicit: information
+propagates through the coupling graph no faster than `2e²‖S‖` edges per
+unit time, up to exponentially small tails. No optimality of the constant
+is claimed. -/
+theorem norm_commutator_velocity_le {K N : ℕ} [NeZero N]
+    {E : Finset (Fin K × Fin K)}
+    {G : Fin K × Fin K → Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hG : ∀ e ∈ E, SupportedOn {e.1, e.2} (G e))
+    (hS : (∑ e ∈ E, G e)ᴴ = -(∑ e ∈ E, G e))
+    {R Y : Finset (Fin K)}
+    {A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (hB : SupportedOn Y B) {d : ℕ}
+    (hcone : Disjoint (graphBall E R d) Y) {t : ℝ} (ht : 0 ≤ t)
+    (hv : Real.exp 1 ^ 2 * (2 * ‖∑ e ∈ E, G e‖ * t) ≤ d) :
+    ‖heisenbergFlow (∑ e ∈ E, G e) t A * B
+        - B * heisenbergFlow (∑ e ∈ E, G e) t A‖
+      ≤ 2 * Real.exp (-(d : ℝ)) * ‖A‖ * ‖B‖ := by
+  have hx : (0 : ℝ) ≤ 2 * ‖∑ e ∈ E, G e‖ * t := by positivity
+  calc ‖heisenbergFlow (∑ e ∈ E, G e) t A * B
+        - B * heisenbergFlow (∑ e ∈ E, G e) t A‖
+      ≤ 2 * ((2 * ‖∑ e ∈ E, G e‖ * t) ^ d / d.factorial) * ‖A‖ * ‖B‖ :=
+        norm_commutator_spatial_factorial_le hG hS hA hB hcone ht
+    _ ≤ 2 * Real.exp (-(d : ℝ)) * ‖A‖ * ‖B‖ := by
+        gcongr
+        exact pow_div_factorial_le_exp_neg hx hv
+
 end CSD.CV
