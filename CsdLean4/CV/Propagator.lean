@@ -387,4 +387,302 @@ theorem vacuum_clustering [NeZero N] {R Y : Finset (Fin K)}
       = A (vacCfg K N) (vacCfg K N) * B (vacCfg K N) (vacCfg K N) :=
   diag_entry_mul_of_disjointSupport hRY hA hB (vacCfg K N)
 
+/-! ### CV-22 (Stage 6): the four-point Wick table
+
+The equal-time four-point function `⟨vac∣Q_k Q_l Q_m Q_p∣vac⟩`, resolved
+by coincidence pattern. Every 4-tuple of modes falls into exactly one of:
+some mode appears **once** (`eqFourPoint_single₁`–`₄`: the expectation
+vanishes — every Wick pairing would carry a mismatched `δ`), **two
+pairs** in any arrangement (`eqFourPoint_pair`/`_alt`/`_outer`: `= 1/4`,
+the one surviving pairing `(½)²`), or **all four equal**
+(`eqFourPoint_same`: `= 3/4 = 3·(½)²`, all three pairings surviving).
+These are exactly Wick's values `Σ_pairings ∏ G` with `G(a,b) = ½δ_{ab}`
+(`freeTwoPoint` at `n = 0`) — the table IS the four-point Wick theorem at
+the cutoff, stated pattern-resolved; the packaged single-formula `δ`-sum
+is a recorded packaging residue (assembly, not mathematics). Truncation
+honesty: the all-equal case needs `2 < N` (the walk visits the two-quantum
+level — at `N = 2` the value is `1/4`, not `3/4`); the two-pair cases need
+only `1 < N`. Higher `2n`-point Wick is not claimed. -/
+
+/-- `Q` vanishes on the vacuum diagonal. -/
+lemma Q_zero_zero [NeZero N] : Q N 0 0 = 0 := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply,
+    creation_apply]
+  simp
+
+/-- `Q` connects the first to the second level with amplitude `1`
+(`√2/√2`). -/
+lemma Q_one_two [NeZero N] (hN2 : 2 < N) :
+    Q N ⟨1, by omega⟩ ⟨2, hN2⟩ = 1 := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply,
+    creation_apply]
+  norm_num
+
+/-- `Q` connects the second level back to the first with amplitude `1`. -/
+lemma Q_two_one [NeZero N] (hN2 : 2 < N) :
+    Q N ⟨2, hN2⟩ ⟨1, by omega⟩ = 1 := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply,
+    creation_apply]
+  norm_num
+
+/-- `Q` reaches the first level only from the vacuum and the second
+level. -/
+lemma Q_apply_one_eq_zero [NeZero N] (hN : 1 < N) {m : Fin N}
+    (h0 : (m : ℕ) ≠ 0) (h2 : (m : ℕ) ≠ 2) :
+    Q N m ⟨1, hN⟩ = 0 := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply,
+    creation_apply,
+    if_neg (show ¬((m : ℕ) + 1 = ((1 : ℕ))) from by omega),
+    if_neg (show ¬((1 : ℕ) + 1 = ((m : ℕ))) from by omega)]
+  simp
+
+/-- The quadrature is a symmetric matrix. -/
+lemma Q_symm [NeZero N] (i j : Fin N) : Q N i j = Q N j i := by
+  rw [Q, Matrix.smul_apply, Matrix.smul_apply, Matrix.add_apply,
+    Matrix.add_apply, annihilation_apply, annihilation_apply,
+    creation_apply, creation_apply]
+  rw [add_comm]
+
+/-- The mode quadrature is a symmetric matrix. -/
+lemma modeOpQ_symm [NeZero N] (k : Fin K) (c d : FieldConfig K N) :
+    modeOp k (Q N) c d = modeOp k (Q N) d c := by
+  rw [modeOp, modeOp]
+  by_cases h : ∀ j, j ≠ k → c j = d j
+  · rw [if_pos h, if_pos (fun j hj => (h j hj).symm), Q_symm]
+  · rw [if_neg h, if_neg (fun h' => h (fun j hj => (h' j hj).symm))]
+
+/-- The **two-quantum configuration** at mode `l`. -/
+def exc2Cfg [NeZero N] (hN2 : 2 < N) (l : Fin K) : FieldConfig K N :=
+  Function.update (vacCfg K N) l ⟨2, hN2⟩
+
+@[simp] lemma exc2Cfg_self [NeZero N] (hN2 : 2 < N) (l : Fin K) :
+    (exc2Cfg (K := K) hN2 l) l = ⟨2, hN2⟩ := by
+  simp [exc2Cfg]
+
+lemma exc2Cfg_of_ne [NeZero N] (hN2 : 2 < N) {l j : Fin K} (h : j ≠ l) :
+    (exc2Cfg (K := K) hN2 l) j = 0 := by
+  simp [exc2Cfg, h]
+
+lemma vacCfg_ne_exc2Cfg [NeZero N] (hN2 : 2 < N) (k : Fin K) :
+    vacCfg K N ≠ exc2Cfg hN2 k := by
+  intro h
+  have hk := congrFun h k
+  rw [vacCfg_apply, exc2Cfg_self] at hk
+  exact absurd (congrArg Fin.val hk) (by simp)
+
+/-- From the one-quantum configuration, the mode quadrature reaches only
+the vacuum and the two-quantum configuration. -/
+lemma modeOp_Q_apply_exc [NeZero N] (hN2 : 2 < N) (k : Fin K)
+    {e : FieldConfig K N} (h0 : e ≠ vacCfg K N) (h2 : e ≠ exc2Cfg hN2 k) :
+    modeOp k (Q N) e (excCfg (show 1 < N by omega) k) = 0 := by
+  by_cases hoff : ∀ j, j ≠ k → e j = (vacCfg K N) j
+  · rw [modeOp_apply_of_agree k _ (fun j hj => by
+      rw [hoff j hj, vacCfg_apply, excCfg_of_ne _ hj]),
+      excCfg_self]
+    refine Q_apply_one_eq_zero (show 1 < N by omega) ?_ ?_
+    · intro hval
+      refine h0 (funext fun j => ?_)
+      by_cases hj : j = k
+      · subst hj
+        rw [vacCfg_apply]
+        exact Fin.ext (by simpa using hval)
+      · rw [hoff j hj]
+    · intro hval
+      refine h2 (funext fun j => ?_)
+      by_cases hj : j = k
+      · subst hj
+        rw [exc2Cfg_self]
+        exact Fin.ext (by simpa using hval)
+      · rw [hoff j hj, vacCfg_apply, exc2Cfg_of_ne hN2 hj]
+  · rw [modeOp, if_neg (fun h' => hoff (fun j hj => by
+      rw [h' j hj, excCfg_of_ne _ hj, vacCfg_apply]))]
+
+/-- The equal-time single-mode second moment: `(Q_k²)(vac, vac) = 1/2`. -/
+lemma modeOpQ_sq_vac [NeZero N] (hN : 1 < N) (k : Fin K) :
+    (modeOp k (Q N) * modeOp k (Q N)) (vacCfg K N) (vacCfg K N)
+      = 2⁻¹ := by
+  classical
+  rw [Matrix.mul_apply, Finset.sum_eq_single (excCfg hN k)]
+  · rw [modeOpQ_symm,
+      modeOp_apply_of_agree k _ (fun j hj => by
+        rw [excCfg_of_ne hN hj, vacCfg_apply]),
+      excCfg_self, vacCfg_apply, Q_one_zero hN]
+    rw [← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]
+    norm_num
+  · intro c _ hc
+    rw [modeOp_Q_apply_vac hN k c hc, mul_zero]
+  · intro h
+    exact absurd (Finset.mem_univ _) h
+
+/-- The column of `Q_k²` at the vacuum: mass `1/2` on the vacuum, `1/√2`
+on the two-quantum configuration, nothing else. -/
+lemma modeOpQ_sq_apply_vac [NeZero N] (hN2 : 2 < N) (k : Fin K)
+    (e : FieldConfig K N) :
+    (modeOp k (Q N) * modeOp k (Q N)) e (vacCfg K N)
+      = if e = vacCfg K N then 2⁻¹
+        else if e = exc2Cfg hN2 k then (((Real.sqrt 2 : ℝ) : ℂ))⁻¹
+        else 0 := by
+  classical
+  have hN : 1 < N := by omega
+  split_ifs with h1 h2
+  · subst h1
+    exact modeOpQ_sq_vac hN k
+  · subst h2
+    rw [Matrix.mul_apply, Finset.sum_eq_single (excCfg hN k)]
+    · rw [modeOp_apply_of_agree k _ (fun j hj => by
+          rw [exc2Cfg_of_ne hN2 hj, excCfg_of_ne hN hj]),
+        modeOp_apply_of_agree k _ (fun j hj => by
+          rw [excCfg_of_ne hN hj, vacCfg_apply]),
+        exc2Cfg_self, excCfg_self, vacCfg_apply, Q_two_one hN2,
+        Q_one_zero hN, one_mul]
+    · intro c _ hc
+      rw [modeOp_Q_apply_vac hN k c hc, mul_zero]
+    · intro h
+      exact absurd (Finset.mem_univ _) h
+  · rw [Matrix.mul_apply, Finset.sum_eq_single (excCfg hN k)]
+    · rw [modeOp_Q_apply_exc hN2 k h1 h2, zero_mul]
+    · intro c _ hc
+      rw [modeOp_Q_apply_vac hN k c hc, mul_zero]
+    · intro h
+      exact absurd (Finset.mem_univ _) h
+
+/-- The `Q_k²` column value at the two-quantum configuration. -/
+lemma modeOpQ_sq_exc2_vac [NeZero N] (hN2 : 2 < N) (k : Fin K) :
+    (modeOp k (Q N) * modeOp k (Q N)) (exc2Cfg hN2 k) (vacCfg K N)
+      = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ := by
+  rw [modeOpQ_sq_apply_vac hN2 k,
+    if_neg (Ne.symm (vacCfg_ne_exc2Cfg hN2 k)), if_pos rfl]
+
+/-- **The equal-time four-point function**
+`⟨vac∣ Q_k Q_l Q_m Q_p ∣vac⟩`. -/
+noncomputable def eqFourPoint [NeZero N] (k l m p : Fin K) : ℂ :=
+  (modeOp k (Q N) * modeOp l (Q N) * modeOp m (Q N) * modeOp p (Q N))
+    (vacCfg K N) (vacCfg K N)
+
+/-- ★★ **All four equal**: `⟨vac∣Q_k⁴∣vac⟩ = 3/4` — Wick's three pairings
+of `½` each, and the first place the two-quantum level enters (`2 < N`
+required: at `N = 2` the value is `1/4`). -/
+theorem eqFourPoint_same [NeZero N] (hN2 : 2 < N) (k : Fin K) :
+    eqFourPoint (N := N) k k k k = 3 / 4 := by
+  classical
+  rw [eqFourPoint, mul_assoc (modeOp k (Q N) * modeOp k (Q N)),
+    Matrix.mul_apply]
+  have hsym : ∀ e, (modeOp k (Q N) * modeOp k (Q N)) (vacCfg K N) e
+      = (modeOp k (Q N) * modeOp k (Q N)) e (vacCfg K N) := by
+    intro e
+    rw [Matrix.mul_apply, Matrix.mul_apply]
+    refine Finset.sum_congr rfl fun c _ => ?_
+    rw [modeOpQ_symm k (vacCfg K N) c, modeOpQ_symm k c e, mul_comm]
+  rw [Finset.sum_congr rfl (fun e _ => by rw [hsym e])]
+  rw [← Finset.sum_subset
+      (Finset.subset_univ ({vacCfg K N, exc2Cfg hN2 k} : Finset _))
+      (fun e _ he => by
+        rw [modeOpQ_sq_apply_vac hN2 k e,
+          if_neg (fun h => he (by simp [h])),
+          if_neg (fun h => he (by simp [h])), zero_mul])]
+  rw [Finset.sum_pair (vacCfg_ne_exc2Cfg hN2 k),
+    modeOpQ_sq_vac (show 1 < N by omega) k, modeOpQ_sq_exc2_vac hN2 k]
+  rw [show ((((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * (((Real.sqrt 2 : ℝ) : ℂ))⁻¹)
+      = 2⁻¹ from by
+    rw [← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]
+    norm_num]
+  norm_num
+
+/-- ★★ **Two pairs, grouped**: `⟨vac∣Q_k²Q_l²∣vac⟩ = 1/4` for `k ≠ l` —
+the one surviving Wick pairing, via clustering
+(`diag_entry_mul_of_disjointSupport`). -/
+theorem eqFourPoint_pair [NeZero N] (hN : 1 < N) {k l : Fin K}
+    (hkl : k ≠ l) :
+    eqFourPoint (N := N) k k l l = 1 / 4 := by
+  rw [eqFourPoint, mul_assoc (modeOp k (Q N) * modeOp k (Q N)),
+    diag_entry_mul_of_disjointSupport (by simpa using hkl)
+      ((modeOp_supportedOn k (Q N)).mul (modeOp_supportedOn k (Q N)))
+      ((modeOp_supportedOn l (Q N)).mul (modeOp_supportedOn l (Q N))),
+    modeOpQ_sq_vac hN k, modeOpQ_sq_vac hN l]
+  norm_num
+
+/-- **Two pairs, alternating**: `⟨vac∣Q_kQ_lQ_kQ_l∣vac⟩ = 1/4` — the
+commutation of disjoint modes reduces it to the grouped case. -/
+theorem eqFourPoint_alt [NeZero N] (hN : 1 < N) {k l : Fin K}
+    (hkl : k ≠ l) :
+    eqFourPoint (N := N) k l k l = 1 / 4 := by
+  have h := eqFourPoint_pair (N := N) hN hkl
+  rw [eqFourPoint] at h ⊢
+  rw [mul_assoc (modeOp k (Q N)) (modeOp k (Q N)) (modeOp l (Q N)),
+    commute_modeOp hkl, ← mul_assoc] at h
+  exact h
+
+/-- **Two pairs, nested**: `⟨vac∣Q_kQ_lQ_lQ_k∣vac⟩ = 1/4`. -/
+theorem eqFourPoint_outer [NeZero N] (hN : 1 < N) {k l : Fin K}
+    (hkl : k ≠ l) :
+    eqFourPoint (N := N) k l l k = 1 / 4 := by
+  have h := eqFourPoint_alt (N := N) hN hkl
+  rw [eqFourPoint] at h ⊢
+  rw [mul_assoc (modeOp k (Q N) * modeOp l (Q N))] at h
+  nth_rewrite 2 [commute_modeOp hkl] at h
+  rw [← mul_assoc] at h
+  exact h
+
+/-- A mode appearing **once** (first position) kills the expectation:
+`Q` has no vacuum diagonal, and clustering isolates it. -/
+theorem eqFourPoint_single₁ [NeZero N] {k l m p : Fin K}
+    (h1 : k ≠ l) (h2 : k ≠ m) (h3 : k ≠ p) :
+    eqFourPoint (N := N) k l m p = 0 := by
+  classical
+  have hsupp : SupportedOn ({l} ∪ {m} ∪ {p} : Finset (Fin K))
+      (modeOp l (Q N) * modeOp m (Q N) * modeOp p (Q N)) := by
+    refine SupportedOn.mul (SupportedOn.mul ?_ ?_) ?_
+    · exact SupportedOn.mono
+        (Finset.Subset.trans Finset.subset_union_left
+          Finset.subset_union_left) (modeOp_supportedOn l (Q N))
+    · exact SupportedOn.mono
+        (Finset.Subset.trans Finset.subset_union_right
+          Finset.subset_union_left) (modeOp_supportedOn m (Q N))
+    · exact SupportedOn.mono Finset.subset_union_right
+        (modeOp_supportedOn p (Q N))
+  have hdisj : Disjoint ({k} : Finset (Fin K)) ({l} ∪ {m} ∪ {p}) := by
+    simp only [Finset.disjoint_left, Finset.mem_singleton,
+      Finset.mem_union]
+    rintro x rfl
+    simp [h1, h2, h3]
+  rw [eqFourPoint, mul_assoc (modeOp k (Q N) * modeOp l (Q N)),
+    mul_assoc (modeOp k (Q N)),
+    diag_entry_mul_of_disjointSupport hdisj (modeOp_supportedOn k (Q N))
+      (by rw [← mul_assoc]; exact hsupp),
+    modeOp_apply_of_agree k _ (fun j _ => rfl), vacCfg_apply,
+    Q_zero_zero, zero_mul]
+
+/-- A mode appearing once (second position) kills the expectation. -/
+theorem eqFourPoint_single₂ [NeZero N] {k l m p : Fin K}
+    (h1 : l ≠ k) (h2 : l ≠ m) (h3 : l ≠ p) :
+    eqFourPoint (N := N) k l m p = 0 := by
+  have h := eqFourPoint_single₁ (N := N) (k := l) (l := k) (m := m)
+    (p := p) h1 h2 h3
+  rw [eqFourPoint] at h ⊢
+  rw [commute_modeOp h1] at h
+  exact h
+
+/-- A mode appearing once (third position) kills the expectation. -/
+theorem eqFourPoint_single₃ [NeZero N] {k l m p : Fin K}
+    (h1 : m ≠ k) (h2 : m ≠ l) (h3 : m ≠ p) :
+    eqFourPoint (N := N) k l m p = 0 := by
+  have h := eqFourPoint_single₁ (N := N) (k := m) (l := k) (m := l)
+    (p := p) h1 h2 h3
+  rw [eqFourPoint] at h ⊢
+  rw [commute_modeOp h1, mul_assoc (modeOp k (Q N)),
+    commute_modeOp h2, ← mul_assoc] at h
+  exact h
+
+/-- A mode appearing once (fourth position) kills the expectation. -/
+theorem eqFourPoint_single₄ [NeZero N] {k l m p : Fin K}
+    (h1 : p ≠ k) (h2 : p ≠ l) (h3 : p ≠ m) :
+    eqFourPoint (N := N) k l m p = 0 := by
+  have h := eqFourPoint_single₁ (N := N) (k := p) (l := k) (m := l)
+    (p := m) h1 h2 h3
+  rw [eqFourPoint] at h ⊢
+  rw [commute_modeOp h1, mul_assoc (modeOp k (Q N)), commute_modeOp h2,
+    ← mul_assoc, mul_assoc (modeOp k (Q N) * modeOp l (Q N)),
+    commute_modeOp h3, ← mul_assoc] at h
+  exact h
+
 end CSD.CV

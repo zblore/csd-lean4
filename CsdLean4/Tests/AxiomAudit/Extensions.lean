@@ -585,6 +585,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.vacuum_clustering' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.vacuum_clustering
 
+-- CV-22 (Stage 6 close, 2026-08-13): the four-point Wick table, pattern-
+-- resolved (the gated feasibility pass PASSED at the sanctioned scope).
+-- eqFourPoint_same: <vac|Q_k^4|vac> = 3/4 (three pairings; needs 2 < N --
+-- the two-quantum level enters); the three two-pair arrangements = 1/4
+-- (one surviving pairing, via clustering + disjoint-mode commutation);
+-- a mode appearing once kills the expectation (all four positions).
+-- Exactly Wick's values Sum_pairings Prod G with G = (1/2)delta.
+/-- info: 'CSD.CV.modeOpQ_sq_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.modeOpQ_sq_vac
+
+/-- info: 'CSD.CV.eqFourPoint_same' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.eqFourPoint_same
+
+/-- info: 'CSD.CV.eqFourPoint_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.eqFourPoint_pair
+
+/-- info: 'CSD.CV.eqFourPoint_alt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.eqFourPoint_alt
+
+/-- info: 'CSD.CV.eqFourPoint_outer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.eqFourPoint_outer
+
+/-- info: 'CSD.CV.eqFourPoint_single₁' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.eqFourPoint_single₁
+
+/-- info: 'CSD.CV.eqFourPoint_single₄' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.eqFourPoint_single₄
+
 /-- info: 'CSD.CV.norm_commutator_spatial_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_factorial_le
 
