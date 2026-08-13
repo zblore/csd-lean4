@@ -339,4 +339,52 @@ theorem twoPoint_interacting_dist_le [NeZero N] (τ lam : ℝ)
           * ‖modeOp l (Q N)‖ :=
         mul_le_mul_of_nonneg_right hXY (norm_nonneg _)
 
+/-! ### CV-21 (Stage 6): vacuum clustering — correlations are local too
+
+The dynamic cone (CV-18/19/20) says *signals* cannot cross disjoint
+supports faster than the coupling allows. The statics companion: at the
+cutoff, *correlations* across disjoint supports do not exist at all in the
+vacuum — expectations factorise exactly. The proof is the same uniqueness
+of the intermediate configuration that powers `commute_of_disjointSupport`:
+between two visits to the same configuration, an `R`-supported and a
+`Y`-supported operator admit only the trivial intermediate. -/
+
+/-- **Diagonal entries multiply across disjoint supports**: for any
+configuration `v`, `(A·B)(v,v) = A(v,v)·B(v,v)` when `A` and `B` live on
+disjoint mode sets — the only intermediate configuration both tolerate is
+`v` itself. -/
+theorem diag_entry_mul_of_disjointSupport [NeZero N] {R Y : Finset (Fin K)}
+    (hRY : Disjoint R Y)
+    {A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (hB : SupportedOn Y B) (v : FieldConfig K N) :
+    (A * B) v v = A v v * B v v := by
+  rw [Matrix.mul_apply]
+  rw [Finset.sum_eq_single v]
+  · intro c _ hc
+    by_cases hcR : ∀ k, k ∉ R → v k = c k
+    · obtain ⟨k, hk⟩ := Function.ne_iff.mp hc
+      have hkR : k ∈ R := by
+        by_contra hkR
+        exact hk (hcR k hkR).symm
+      have hkY : k ∉ Y := fun hkY => Finset.disjoint_left.mp hRY hkR hkY
+      rw [hB.offDiag hkY hk, mul_zero]
+    · push Not at hcR
+      obtain ⟨k, hkR, hk⟩ := hcR
+      rw [hA.offDiag hkR hk, zero_mul]
+  · intro hv
+    exact absurd (Finset.mem_univ v) hv
+
+/-- ★★ **Vacuum clustering at the cutoff** (CV-21, Stage 6): vacuum
+expectations of disjointly supported observables factorise exactly,
+`⟨vac∣AB∣vac⟩ = ⟨vac∣A∣vac⟩·⟨vac∣B∣vac⟩`. There are no vacuum correlations
+across disjoint mode sets — the statics companion to the Lieb–Robinson
+cone: at the cutoff, correlations, like signals, are local. -/
+theorem vacuum_clustering [NeZero N] {R Y : Finset (Fin K)}
+    (hRY : Disjoint R Y)
+    {A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ}
+    (hA : SupportedOn R A) (hB : SupportedOn Y B) :
+    (A * B) (vacCfg K N) (vacCfg K N)
+      = A (vacCfg K N) (vacCfg K N) * B (vacCfg K N) (vacCfg K N) :=
+  diag_entry_mul_of_disjointSupport hRY hA hB (vacCfg K N)
+
 end CSD.CV

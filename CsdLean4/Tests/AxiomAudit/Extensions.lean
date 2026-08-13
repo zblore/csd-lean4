@@ -573,6 +573,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.CV.norm_commutator_velocity_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_velocity_le
 
+-- CV-21 (Stage 6, 2026-08-13): vacuum clustering -- the statics companion to
+-- the cone. diag_entry_mul_of_disjointSupport: (A*B)(v,v) = A(v,v)*B(v,v) for
+-- disjointly supported A, B at ANY configuration (unique-intermediate argument,
+-- the commute_of_disjointSupport engine); vacuum_clustering instantiates at
+-- vacCfg: <vac|AB|vac> = <vac|A|vac><vac|B|vac> -- no vacuum correlations
+-- across disjoint mode sets at the cutoff.
+/-- info: 'CSD.CV.diag_entry_mul_of_disjointSupport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.diag_entry_mul_of_disjointSupport
+
+/-- info: 'CSD.CV.vacuum_clustering' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.CV.vacuum_clustering
+
 /-- info: 'CSD.CV.norm_commutator_spatial_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.CV.norm_commutator_spatial_factorial_le
 
