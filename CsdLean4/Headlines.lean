@@ -33,6 +33,22 @@ public import CsdLean4.RecordLayer.MeasurementCapstone
 public import CsdLean4.CV.ModeLocality
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.Landauer
+public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.CV.ApproxCCR
+public import CsdLean4.CV.LiebRobinson
+public import CsdLean4.CV.Propagator
+public import CsdLean4.SigmaLayer.TensorReconstruction
+public import CsdLean4.RecordLayer.MeasurementConstraints
+public import CsdLean4.RecordLayer.NoRecordGeometry
+public import CsdLean4.RecordLayer.NullSeamGeneralN
+public import CsdLean4.RecordLayer.StatisticsRigidity
+public import CsdLean4.RecordLayer.PovmSectorBorn
+public import CsdLean4.RecordLayer.PointerLudersMarginal
+public import CsdLean4.LF4.QubitBorn
+public import CsdLean4.Empirical.CSD.QuantumChaos.DerivedCoupling
+public import CsdLean4.Empirical.CSD.QuantumChaos.EntropyLedger
+public import CsdLean4.Empirical.QM.QEC.ShorNine
+public import CsdLean4.LF6.LindbladSemigroup
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -40,13 +56,16 @@ public import CsdLean4.Thermo.Landauer
 **Category:** Special (facade — the reconstruction's actual API in one import).
 
 `import CsdLean4.Headlines` gives a reviewer or downstream consumer exactly the
-modules carrying the corpus's **31 headline claims** — the rows of
+modules carrying the corpus's **51 headline claims** — the rows of
 `specs/validation-claims.tsv` (canonical; human view `specs/VALIDATION-LEDGER.md`)
 — without pulling the full 400+-module implementation surface through a single
 flat root. Created 2026-08-06 (BACKLOG G8, the adopted half of the 2026-08-06
-external review's facade recommendation). The exhaustive root `CsdLean4` remains
-available for whole-corpus consumers; `Tests/AxiomAudit.lean` remains the axiom
-gate.
+external review's facade recommendation); **extended 2026-08-13 (Q17 census):
+CL-032…CL-051**, admitted under the criteria in `VALIDATION-LEDGER.md` — the
+necessity audit's named strongest-direction omissions, the 2026-08-12/13
+tranche's starred headliners, and the Q18 conversions. The exhaustive root
+`CsdLean4` remains available for whole-corpus consumers; `Tests/AxiomAudit.lean`
+remains the axiom gate.
 
 The `example := @…` block at the bottom is the **drift guard**: it elaborates
 every ledger constant by its full name, so a rename, namespace move, or deletion
@@ -99,6 +118,35 @@ above, so the facade cannot silently drop a headline.
   `CSD.Thermo.vonNeumannEntropy_le_pinching` (CL-029),
   `CSD.Thermo.landauer_bound` (CL-030).
 
+## The 2026-08-13 census extension (Q17): CL-032 … CL-051
+
+* **Forcing / no-go tier (the necessity audit's named omissions):**
+  `Matrix.StoneC1.stone_continuous` (CL-032 — the second unconditional
+  necessity), `CSD.CV.no_exact_finite_ccr` (CL-033),
+  `CSD.RecordLayer.no_everywhere_correlation` /
+  `no_exact_collapse` / `collapse_accuracy_bound` (CL-034/035/036 — the
+  trilemma price list), `CSD.SigmaLayer.compositeAlgReconstruction` (CL-037 —
+  tensor forcing), `CSD.RecordLayer.posMeasure_noRecord_pointer` (CL-038 —
+  the third leg on the pointer).
+* **Record layer / measurement:** `CSD.LF4.qubitBorn` (CL-039 — the
+  A7-faithful context-fixed qubit Born),
+  `CSD.RecordLayer.nullSeamGenClosure` (CL-047 — the third horn at every `N`),
+  `CSD.RecordLayer.recordKernel_eq_transProb` (CL-048) and
+  `CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant`
+  (CL-049) — the Q18 conditioner conversions,
+  `CSD.RecordLayer.povm_sector_born` (CL-050 — the dynamical POVM Born),
+  `CSD.RecordLayer.pointer_luders_born_prep` (CL-051 — records and update on
+  one arena).
+* **Chaos / records tranche:**
+  `CSD.Empirical.QuantumChaos.deficitKick_record_halfLife` (CL-040 — derived
+  coupling), `deficitKick_phaseFlip_halfLife` (CL-041 — DH-exact rate),
+  `ledgerEntropy_le` (CL-042 — the entropy ledger).
+* **QI / open systems / CV:** `CSD.Empirical.QM.QEC.shor_corrects_Z_degenerate`
+  (CL-043 — Shor-9 degeneracy as a theorem),
+  `CSD.LF6.lindbladSemigroup_hasDerivAt` (CL-044 — the master equation),
+  `CSD.CV.norm_commutator_velocity_le` (CL-045 — the explicit LR velocity),
+  `CSD.CV.vacuum_clustering` (CL-046).
+
 Claim-status vocabulary, scope qualifications, and the open-work queue live in
 `specs/VALIDATION-LEDGER.md`, `specs/reconstruction-status.md`, and
 `specs/future-work.md` / `specs/BACKLOG.md`; no import here upgrades a
@@ -147,5 +195,25 @@ example := @CSD.CV.commute_of_disjointSupport -- CL-028
 example := @CSD.Thermo.vonNeumannEntropy_le_pinching -- CL-029
 example := @CSD.Thermo.landauer_bound -- CL-030
 example := @CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet -- CL-031
+example := @Matrix.StoneC1.stone_continuous -- CL-032
+example := @CSD.CV.no_exact_finite_ccr -- CL-033
+example := @CSD.RecordLayer.no_everywhere_correlation -- CL-034
+example := @CSD.RecordLayer.no_exact_collapse -- CL-035
+example := @CSD.RecordLayer.collapse_accuracy_bound -- CL-036
+noncomputable example := @CSD.SigmaLayer.compositeAlgReconstruction -- CL-037
+example := @CSD.RecordLayer.posMeasure_noRecord_pointer -- CL-038
+example := @CSD.LF4.qubitBorn -- CL-039
+example := @CSD.Empirical.QuantumChaos.deficitKick_record_halfLife -- CL-040
+example := @CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_halfLife -- CL-041
+example := @CSD.Empirical.QuantumChaos.ledgerEntropy_le -- CL-042
+example := @CSD.Empirical.QM.QEC.shor_corrects_Z_degenerate -- CL-043
+example := @CSD.LF6.lindbladSemigroup_hasDerivAt -- CL-044
+example := @CSD.CV.norm_commutator_velocity_le -- CL-045
+example := @CSD.CV.vacuum_clustering -- CL-046
+example := @CSD.RecordLayer.nullSeamGenClosure -- CL-047
+example := @CSD.RecordLayer.recordKernel_eq_transProb -- CL-048
+example := @CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant -- CL-049
+example := @CSD.RecordLayer.povm_sector_born -- CL-050
+example := @CSD.RecordLayer.pointer_luders_born_prep -- CL-051
 
 end CSD.Headlines

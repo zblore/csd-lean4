@@ -16,15 +16,51 @@ Statuses:
 - `needs-change`: the public claim/API should be narrowed or strengthened.
 - `specialist-review`: mathematically deep proof requiring independent domain proof review.
 
-The TSV is canonical for automation. It records 31 headline claims, their defining modules, exact Lean
+The TSV is canonical for automation. It records 51 headline claims, their defining modules, exact Lean
 constants, load-bearing assumptions, an independent validation route, and any linked review finding.
+
+## Admission criteria (defined 2026-08-13, Q17 — the census is now criteria-driven)
+
+The original 30 rows were a hand-curated selection by the 2026-08-06 codex external-review
+session — a defensible register, but with no stated admission rule, so "the 30" was an
+artifact of one session's reading. A constant is now admitted as a headline claim when
+**all four** hold:
+
+1. **Terminal** — it is the strongest statement of its result chain in the corpus (the
+   capstone, closure, or sharpest bound; never a lemma feeding a stronger landed statement).
+2. **Claim-bearing** — the corpus cites it as delivering a named result (a ★★/★★★ BACKLOG
+   strike, README/TOUR headline, or paper claim): something the programme would defend to an
+   external reviewer as a *result*, not infrastructure.
+3. **Pinned** — axiom-audited (foundational triple, or the deviation explicitly disclosed).
+4. **Distinct** — not propositionally subsumed by an existing row; when a stronger form
+   lands, the row is *replaced*, not duplicated (precedent: CL-031).
+
+Census sources: the Headlines facade, ★★/★★★ markers in BACKLOG strikes and module
+docstrings, and the necessity audit's named omissions. The ledger remains a curated
+register, not an exhaustive census of the corpus's ~4,100 statements — but admission is
+now a rule, and `check-validation-ledger.sh`'s known blind spot (it enforces consistency
+of listed rows, not completeness of the list) is mitigated by re-running this census when
+a tranche closes with starred headliners.
+
+**Extension 2026-08-13 (CL-032 … CL-051, 20 rows, all `qualified`):** the necessity
+audit's named strongest-direction omissions (`stone_continuous`, `no_exact_finite_ccr`,
+the three `MeasurementConstraints` no-gos, `compositeAlgReconstruction`,
+`posMeasure_noRecord_pointer`), the A7-faithful `qubitBorn`, the 2026-08-12/13 tranche's
+starred headliners (derived coupling, DH-exact rate, entropy ledger, Shor-9 degeneracy,
+the Lindblad master equation, LR velocity, vacuum clustering, the general-`N` third horn),
+the Q18 conditioner conversions (`recordKernel_eq_transProb`,
+`measure_eq_fubiniStudy_of_record_statistics_invariant`), and the two record-layer ★★
+results that discharge earlier rows' known boundaries (`povm_sector_born` vs CL-026,
+`pointer_luders_born_prep`). All entered as `qualified` with load-bearing posits named —
+promotion to `validated` stays claim-by-claim sign-off, per the rules below. Necessity
+classification of the extended set: `necessity-audit.md`, addendum 2026-08-13.
 
 ## Current result
 
 | Status | Count | Meaning |
 |---|---:|---|
 | Validated | 9 | No material claim mismatch found at current depth. |
-| Qualified | 20 | Formally coherent, but assumptions or construction scope must accompany the claim. |
+| Qualified | 40 | Formally coherent, but assumptions or construction scope must accompany the claim. |
 | Needs change | 2 | Concrete semantic/API mismatch recorded in the main review ledger. |
 | Specialist review | 0 | All three commissioned audits (CL-005/CL-022+CL-023/CL-024) completed 2026-08-06. |
 

@@ -405,11 +405,84 @@ the template, because it converted "the law is Fubini-Study" into the weaker
 "the law is invariant under the group". Another conversion of that kind is worth
 more than any number of further witnesses.
 
+## Addendum 2026-08-13 — the extended census (Q17), and the Q18 premise conversion
+
+The body above audited the ledger as it stood on 2026-08-09: thirty rows. Two
+things have changed since, and this addendum brings the classification current
+without rewriting the dated body.
+
+### The rows the audit had not seen, classified by the same rubric
+
+CL-031 (added 2026-08-10) and the twenty-row census extension CL-032 to CL-051
+(added 2026-08-13 under the admission criteria now stated in
+`VALIDATION-LEDGER.md`):
+
+| Claim | Constant | Class | Load-bearing posit |
+|---|---|---|---|
+| CL-031 | `LF6.no_compatible_global_chsh_assignment_realises_singlet` | IMPOSSIBILITY | The shared-domain C1 posits; four CHSH settings only. |
+| CL-032 | `Matrix.StoneC1.stone_continuous` | **NECESSITY** | Continuity, the group law, unitarity — differentiability derived. The body already named it the second unconditional necessity; it is now a row. |
+| CL-033 | `CV.no_exact_finite_ccr` | IMPOSSIBILITY | Finite dimension only. CSD-free. |
+| CL-034 | `RecordLayer.no_everywhere_correlation` | IMPOSSIBILITY | Continuity and connectedness only. Pure topology. |
+| CL-035 | `RecordLayer.no_exact_collapse` | IMPOSSIBILITY | Measure preservation only. Pure measure theory. |
+| CL-036 | `RecordLayer.collapse_accuracy_bound` | IMPOSSIBILITY | As CL-035; the quantitative price. |
+| CL-037 | `SigmaLayer.compositeAlgReconstruction` | CONDITIONAL NECESSITY | The finite-dimensional complex matrix-algebra setting; commuting + generating embeddings. Classified in the body's composite section; now a row. |
+| CL-038 | `RecordLayer.posMeasure_noRecord_pointer` | IMPOSSIBILITY | Scoped to the pointer arena — the trilemma's third leg with no geometric hypothesis left. |
+| CL-039 | `LF4.qubitBorn` | SUFFICIENCY | Context-fixed hemispheres, spread density, FS typicality. The A7-faithful qubit case the body's first scope finding holds up as the model. |
+| CL-040 | `Empirical.QuantumChaos.deficitKick_record_halfLife` | CONDITIONAL NECESSITY | The triggered-kick hypothesis class; constrains every drive in it (the `recordIntact` precedent). |
+| CL-041 | `Empirical.QuantumChaos.deficitKick_phaseFlip_halfLife` | SUFFICIENCY | The phase-flip witness; the DH law computes the rate exactly. |
+| CL-042 | `Empirical.QuantumChaos.ledgerEntropy_le` | CONDITIONAL NECESSITY | The register/carrier model; carrier antitonicity; below half-filling. |
+| CL-043 | `Empirical.QM.QEC.shor_corrects_Z_degenerate` | SUFFICIENCY | The Shor-9 construction. |
+| CL-044 | `LF6.lindbladSemigroup_hasDerivAt` | SUFFICIENCY | An arbitrary GKSL generator; CP of the exponential not claimed. |
+| CL-045 | `CV.norm_commutator_velocity_le` | CONDITIONAL NECESSITY | The mode-product space and `SupportedOn`, as CL-028. |
+| CL-046 | `CV.vacuum_clustering` | SUFFICIENCY | The cutoff model; forward computation. |
+| CL-047 | `RecordLayer.nullSeamGenClosure` | INSTANTIATION | The third horn inhabited at every `N` — a witness closure, and honest about it. |
+| CL-048 | `RecordLayer.recordKernel_eq_transProb` | SUFFICIENCY | None beyond the record-layer definitions. Its force is indirect: it is the premise-conversion enabler (below). |
+| CL-049 | `RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant` | CONDITIONAL NECESSITY | Invariance under every record-statistics-preserving symmetry — the indifference premise; the group is not named. |
+| CL-050 | `RecordLayer.povm_sector_born` | SUFFICIENCY | The join arena, context field, Naimark dilation — the dynamical statement CL-026 was once over-read as. |
+| CL-051 | `RecordLayer.pointer_luders_born_prep` | SUFFICIENCY | The pointer arena and calibrated bank; `2ε < rate i` makes the conditioning non-vacuous. |
+
+**Updated tally over the 51-row ledger: two necessity, thirteen conditional
+necessity, nine impossibility, twenty-four sufficiency, three instantiation.**
+The body's headline sentence — "the corpus's strongest-direction results are
+mostly not among its declared headlines" — is now discharged: they are.
+
+### The Q18 premise conversion — re-annotation, not re-classification
+
+`RecordLayer/StatisticsRigidity.lean` (Q18, 2026-08-13) proved the kernel
+identification (CL-048): the record layer's operational pairwise statistic IS
+the transition probability, so *"preserves record statistics"* and *"preserves
+the FS metric"* are the same predicate
+(`recordStatisticsPreserving_iff_transProbPreserving`). Consequences for the
+body's classifications:
+
+* **CL-012** (`fubiniStudy_forced_by_symmetry`): stays CONDITIONAL NECESSITY,
+  but the load-bearing posit has a proven conversion — via CL-049 the premise
+  "invariance under the group, and the group `U(N)` itself" weakens to
+  "invariance under every record-statistics-preserving symmetry", with `U(N)`
+  never named and the group pinned semi-unitary by Wigner
+  (`recordStatisticsPreserving_realisation`).
+* **The Schrödinger chain** (CL-014/CL-015 and every Wigner-selection result on
+  a `KahlerOnticSetup`): stays honest conditional necessity, but the `hTPP`
+  conditioner is no longer only the geometric FS-isometry posit — it is
+  consumable as the operational premise "the projected flow preserves observed
+  record statistics" (`projectedFlow_unitary_of_record_statistics`), which is
+  what a symmetry means operationally.
+* **What did NOT change:** these are premise *conversions*, not eliminations —
+  the operational premises survive as posits whose physical motivation the
+  papers owe; nothing derives TPP from measure preservation (the §13.2 trap
+  stands); and D1 (`G`-from-dynamics) remains open and obstructed. The body's
+  closing recommendation — "another conversion of that kind is worth more than
+  any number of further witnesses" — has now been executed once, in exactly the
+  template it named (`specs/unitary-tpp-scoping.md`).
+
 ## References
 
-`CsdLean4/Headlines.lean` (the thirty-claim inventory and its drift guard);
+`CsdLean4/Headlines.lean` (the claim inventory and its drift guard — thirty
+rows at the body's review date, fifty-one after the 2026-08-13 census);
 `specs/VALIDATION-LEDGER.md` and `specs/validation-claims.tsv` (the ledger rows
-classified above); `PLACEHOLDERS.md` §7 to §10 (the transport-only empirical
+classified above, including the admission criteria added 2026-08-13);
+`specs/unitary-tpp-scoping.md` (the Q11 scoping the addendum's conversion
+section executes); `PLACEHOLDERS.md` §7 to §10 (the transport-only empirical
 bundles); `specs/sigma-fibre-contextuality.md` (why the fibre is load-bearing);
 `specs/reconstruction-status.md`; `specs/future-work.md` and `specs/BACKLOG.md`
 (the open queue, including the record-layer frontier this audit's first scope
