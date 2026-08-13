@@ -87,8 +87,8 @@ antiunitary class, so the realisation disjunction is non-vacuous on both branche
 ## Provenance
 
 Foundational-triple only (`propext, Classical.choice, Quot.sound`); no `sorry`, no new
-axioms. Wigner is consumed (`wigner_rigidity_unitaryGroup`), not re-proved; the measure
-uniqueness is consumed (`fubiniStudyMeasure_unique`), not re-proved.
+axioms. Wigner (`wigner_rigidity_unitaryGroup`) and the measure uniqueness
+(`fubiniStudyMeasure_unique`) are consumed as-is, not rebuilt here.
 
 ## References
 

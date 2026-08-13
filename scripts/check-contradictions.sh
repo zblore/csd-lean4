@@ -59,7 +59,10 @@ specs/active-todo.md specs/CSD-CHARTER.md specs/reconstruction-status.md
 specs/connectivity-manifest.md specs/future-work.md specs/INDEX.md"
 
 SETTLED='DONE|BUILT|DISSOLVED|discharged|DISCHARGED|is complete|CLOSED|closed|settled|SETTLED|proved|PROVED|NOT A TARGET|no longer open'
-OPENISH='OPEN|open item|remains open|the wall|still open|not constructed|not derived|not formalized|not formalised|is a hypothesis|hypothesis field|residual|RESIDUAL|deferred|blocked|TODO'
+# 'not proved|NOT proved' added 2026-08-13 (D5 sweep): "What is NOT proved here" was
+# classifying as SETTLED via the bare 'proved' token — negation-blindness. With both in
+# OPENISH such lines carry both tokens and are skipped as nuanced, which is correct.
+OPENISH='OPEN|open item|remains open|the wall|still open|not constructed|not derived|not formalized|not formalised|not proved|NOT proved|is a hypothesis|hypothesis field|residual|RESIDUAL|deferred|blocked|TODO'
 # Lines that are self-corrections legitimately mention both sides.
 EXEMPT='retracted|RETRACTED|overclaim|overstated|was wrong|is lifted|previously read|previously ended|corrected 20|CORRECTED 20|Corrected 20|Corrected 2026'
 
