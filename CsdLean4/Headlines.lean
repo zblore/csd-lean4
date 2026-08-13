@@ -105,7 +105,12 @@ above, so the facade cannot silently drop a headline.
   `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet` (CL-031 — no
   measurable shared-context outcome family compatible with any global CHSH
   assignment reproduces the singlet at the four CHSH settings; added 2026-08-10,
-  **replacing** the false type-separation claim, see `specs/publication-errata.md`).
+  **replacing** the false type-separation claim, see `specs/publication-errata.md`)
+  and `CSD.LF6.c1_singlet_contextual_capstone` (CL-052, added 2026-08-13, Q19 —
+  the **positive half**: an explicit measurable shared-context family on
+  `(KSigma 4, kMuPsi)` reproduces the singlet, the full `P_st` table at every
+  context, and no global CHSH assignment is compatible with it — the C1
+  separation two-sided, existence and obstruction in one statement).
 * **Mathlib-staged (CSD-free):** `QuantumInfo.vonNeumannEntropy_subadditive`
   (CL-022), `QuantumInfo.strong_subadditivity_of_relEntropy_monotone` (CL-023 —
   SSA **from** the explicit `hDPI` premise, by design),
@@ -215,5 +220,6 @@ example := @CSD.RecordLayer.recordKernel_eq_transProb -- CL-048
 example := @CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant -- CL-049
 example := @CSD.RecordLayer.povm_sector_born -- CL-050
 example := @CSD.RecordLayer.pointer_luders_born_prep -- CL-051
+example := @CSD.LF6.c1_singlet_contextual_capstone -- CL-052
 
 end CSD.Headlines

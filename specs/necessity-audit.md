@@ -440,9 +440,10 @@ CL-031 (added 2026-08-10) and the twenty-row census extension CL-032 to CL-051
 | CL-049 | `RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant` | CONDITIONAL NECESSITY | Invariance under every record-statistics-preserving symmetry — the indifference premise; the group is not named. |
 | CL-050 | `RecordLayer.povm_sector_born` | SUFFICIENCY | The join arena, context field, Naimark dilation — the dynamical statement CL-026 was once over-read as. |
 | CL-051 | `RecordLayer.pointer_luders_born_prep` | SUFFICIENCY | The pointer arena and calibrated bank; `2ε < rate i` makes the conditioning non-vacuous. |
+| CL-052 | `LF6.c1_singlet_contextual_capstone` | INSTANTIATION | The concrete arena `(KSigma 4, kMuPsi)` and the explicit arc model. Added 2026-08-13 (Q19, author sign-off same day): the existence half CL-031 lacked, with CL-031's impossibility applied to the witness as its fourth conjunct — so the row carries the two-sided C1 separation, but its *own* logical force is the witness (the obstruction's force is CL-031's row). |
 
-**Updated tally over the 51-row ledger: two necessity, thirteen conditional
-necessity, nine impossibility, twenty-four sufficiency, three instantiation.**
+**Updated tally over the 52-row ledger: two necessity, thirteen conditional
+necessity, nine impossibility, twenty-four sufficiency, four instantiation.**
 The body's headline sentence — "the corpus's strongest-direction results are
 mostly not among its declared headlines" — is now discharged: they are.
 

@@ -16,7 +16,7 @@ Statuses:
 - `needs-change`: the public claim/API should be narrowed or strengthened.
 - `specialist-review`: mathematically deep proof requiring independent domain proof review.
 
-The TSV is canonical for automation. It records 51 headline claims, their defining modules, exact Lean
+The TSV is canonical for automation. It records 52 headline claims, their defining modules, exact Lean
 constants, load-bearing assumptions, an independent validation route, and any linked review finding.
 
 ## Admission criteria (defined 2026-08-13, Q17 — the census is now criteria-driven)
@@ -55,12 +55,23 @@ results that discharge earlier rows' known boundaries (`povm_sector_born` vs CL-
 promotion to `validated` stays claim-by-claim sign-off, per the rules below. Necessity
 classification of the extended set: `necessity-audit.md`, addendum 2026-08-13.
 
+**CL-052 added 2026-08-13** (`c1_singlet_contextual_capstone`, qualified; Q19, author
+sign-off same day): the **positive half** of the C1 separation — an explicit measurable
+shared-context family on `(KSigma 4, kMuPsi)` reproduces the singlet (the full `P_st`
+table at **every** context, hence the CHSH correlations) and no global CHSH assignment
+is compatible with it. Until Q19 CL-031's reproduction hypothesis had no inhabitant;
+this row supplies it, making the separation two-sided. The table-level reproduction is
+deliberate: a correlation-only witness could carry degenerate marginals, and
+"reproduces the singlet" would over-read it (the E-1 lesson applied in advance). CL-031
+is retained as the general obstruction; the two rows are read together, existence +
+no-go. Classification: INSTANTIATION (`necessity-audit.md` addendum).
+
 ## Current result
 
 | Status | Count | Meaning |
 |---|---:|---|
 | Validated | 9 | No material claim mismatch found at current depth. |
-| Qualified | 40 | Formally coherent, but assumptions or construction scope must accompany the claim. |
+| Qualified | 41 | Formally coherent, but assumptions or construction scope must accompany the claim. |
 | Needs change | 2 | Concrete semantic/API mismatch recorded in the main review ledger. |
 | Specialist review | 0 | All three commissioned audits (CL-005/CL-022+CL-023/CL-024) completed 2026-08-06. |
 
