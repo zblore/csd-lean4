@@ -247,6 +247,35 @@ it **cannot** see a claim that stays put while the fact beneath it changes. Disc
 `BACKLOG.md` row therefore carries a mechanical companion step: re-read the sites check (8)
 prints.
 
+### 8.3b Capstone discipline: strengthen, don't multiply — *policy, adopted 2026-08-14*
+
+Author decision (2026-08-14, after the Q19/Q20 C1 arc): **limit capstone/closure bundles
+to only where required, and use existing ones wherever possible.**
+
+A capstone is a claim-surface's single terminal statement — the thing a paper cites. A
+*parallel* capstone for the same claim-surface fragments that citation surface, doubles
+the drift-guard/ledger/pin burden, and invites the two-constructions-on-two-spaces
+confusion the C1 arc had to delete (a dilated system-plus-pointer variant was written and
+removed the same day, 2026-08-13 — it closed a gap only by leaving `Σ`, and left C1 with
+two constructions on two spaces). The Q19 review's finding generalises: the missing
+bridge is usually **a missing conjunct in a closure that already exists**, not a new
+feature.
+
+Rules:
+
+1. **Default move: amend in place.** Before proposing any new `*Capstone` / `*Closure` /
+   closure bundle, find the existing terminal statement of that claim-surface and
+   strengthen it — add the missing conjunct, as Q19 did to `C1BellConsistency` rather
+   than adding a capstone file.
+2. **A new capstone requires a genuinely new claim-surface** — one with no existing
+   terminal home — and its docstring must say which claim-surface it terminates and why
+   no existing bundle could carry it.
+3. **One claim-surface, one capstone.** If a stronger form lands, the row/statement is
+   replaced or strengthened, never duplicated (the ledger's CL-031 replacement
+   precedent, and admission criterion 4 in `VALIDATION-LEDGER.md`).
+4. **Witness files instantiate and cite capstones; they never grow rival ones** (the
+   `Tests/Witnesses` anti-duplication scope, stated in each witness header).
+
 ### 8.4 File header and build hygiene — *mixed*
 
 Standard file opening (adapted to this project — copyright and authors are ours, not QuAIR's):
