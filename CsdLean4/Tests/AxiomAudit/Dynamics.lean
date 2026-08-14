@@ -1080,6 +1080,18 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.c1_singlet_contextual_capstone
 
+-- Q20: the operational no-signalling predicate, inhabited by the same model. Until now
+-- `LF3.OperationalNoSignalling` had no inhabitant anywhere; C1 §4 cites it while the only
+-- available theorems were finite sums over the closed-form kernel.
+/-- info: 'CSD.LF6.singletContextualModel_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletContextualModel_no_signalling
+
+-- Q20: the every-setting no-go, discharged against the exhibited model.
+/-- info: 'CSD.LF6.singletContextualModel_not_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.singletContextualModel_not_product
+
 /-- info: 'CSD.LF6.compatibleGlobalCHSH_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.compatibleGlobalCHSH_nonvacuous

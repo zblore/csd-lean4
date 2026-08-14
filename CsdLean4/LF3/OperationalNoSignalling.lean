@@ -58,19 +58,19 @@ open MeasureTheory
 
 namespace CSD.LF3
 
-variable {Λ : Type*} [MeasurableSpace Λ]
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
 
 /-- **A-wing remote marginal invariance.** The measure of the event "A reads
 `s`" is unchanged when B's setting moves from `b` to `b'`.
 
 Equality of **measures**, not of the underlying outcome sets: the microscopic
 region realising "A reads `s`" may differ entirely between the two contexts. -/
-def RemoteMarginalInvariantA (μ : Measure Λ) (S : SharedContextOutcomeMaps Λ) : Prop :=
+def RemoteMarginalInvariantA (μ : Measure SigmaSpace) (S : SharedContextOutcomeMaps SigmaSpace) : Prop :=
   ∀ (a b b' : DetectorSetting) (s : Sign),
     μ {l | S.wingA ⟨a, b⟩ l = s} = μ {l | S.wingA ⟨a, b'⟩ l = s}
 
 /-- **B-wing remote marginal invariance**, symmetrically. -/
-def RemoteMarginalInvariantB (μ : Measure Λ) (S : SharedContextOutcomeMaps Λ) : Prop :=
+def RemoteMarginalInvariantB (μ : Measure SigmaSpace) (S : SharedContextOutcomeMaps SigmaSpace) : Prop :=
   ∀ (a a' b : DetectorSetting) (t : Sign),
     μ {l | S.wingB ⟨a, b⟩ l = t} = μ {l | S.wingB ⟨a', b⟩ l = t}
 
@@ -79,7 +79,7 @@ remote setting change.
 
 ⚠️ Stated relative to a single fixed `μ` across all four contexts. That fixture
 is **measurement independence**, and it is a premise, not a consequence. -/
-def OperationalNoSignalling (μ : Measure Λ) (S : SharedContextOutcomeMaps Λ) : Prop :=
+def OperationalNoSignalling (μ : Measure SigmaSpace) (S : SharedContextOutcomeMaps SigmaSpace) : Prop :=
   RemoteMarginalInvariantA μ S ∧ RemoteMarginalInvariantB μ S
 
 /-! ### The singlet kernel is operationally no-signalling -/

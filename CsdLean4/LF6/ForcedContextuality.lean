@@ -19,10 +19,10 @@ In CSD a measurement is **de-isolation** (LF5): the deterministic
 FS-measure-preserving flow carves the ontic space `Σ` into pointer-outcome
 volumes. A *product* (factorising, non-contextual) outcome-partition of `Σ` —
 one where Alice's outcome is a function of her setting and the shared microstate
-alone, `RA : SettingA → Λ → Sign`, and Bob's of his setting alone,
-`RB : SettingB → Λ → Sign`, on **one shared probability space** `(Λ, μ)` — is
+alone, `RA : SettingA → SigmaSpace → Sign`, and Bob's of his setting alone,
+`RB : SettingB → SigmaSpace → Sign`, on **one shared probability space** `(SigmaSpace, μ)` — is
 *precisely* a deterministic local-hidden-variable model. The setting-locality on
-a shared `Λ` (`RA a` depends on `a` only, `RB b` on `b` only) **is** the
+a shared `SigmaSpace` (`RA a` depends on `a` only, `RB b` on `b` only) **is** the
 factorisation / non-contextuality being ruled out.
 
 By Bell/CHSH (already in the corpus, `E91.lhvCHSH_abs_le_two`) no such product
@@ -40,7 +40,7 @@ posited; it lives in the `Σ`-volume engine's reading of the entangled state.
   `P_st`-arithmetic fact; the correlations are the *derived* source.
 - **(b) Contextuality is FORCED (Bell).** By
   `no_product_partition_realises_singlet`, no setting-local `Σ`-partition on a
-  shared `(Λ, μ)` reproduces the singlet correlations. Hence any de-isolation
+  shared `(SigmaSpace, μ)` reproduces the singlet correlations. Hence any de-isolation
   carve realising the singlet is contextual. This is `e91_no_lhv_reproduces_singlet`'s
   content re-expressed for setting-local `Σ`-partitions; it REUSES
   `lhvCHSH_abs_le_two` and the singlet `2√2`, it does not re-prove Bell.
@@ -120,33 +120,33 @@ theorem singletCorrelation_eq_neg_dot (a b : DetectorSetting) :
 
 /-! ### The product-partition predicate
 
-A **product partition** of the shared ontic space `(Λ, μ)` is a pair of
+A **product partition** of the shared ontic space `(SigmaSpace, μ)` is a pair of
 setting-local `±1` measurable response functions. `RA a` depends only on
 Alice's setting `a`, `RB b` only on Bob's setting `b`: that setting-locality on
-a *shared* `Λ` is exactly the factorisation / non-contextuality assumption — it
+a *shared* `SigmaSpace` is exactly the factorisation / non-contextuality assumption — it
 is a deterministic local-hidden-variable model. -/
 
 /-- `RA, RB` form a **product (non-contextual) partition** of the shared ontic
-space `(Λ, μ)`: setting-local, measurable, `±1`-valued responses. The
+space `(SigmaSpace, μ)`: setting-local, measurable, `±1`-valued responses. The
 load-bearing structural point is the *setting-locality* — `RA a` is a function of
 Alice's setting `a` and the shared microstate alone, `RB b` of Bob's setting `b`
 alone. -/
-def IsProductPartition {Λ : Type*} [MeasurableSpace Λ]
-    (RA RB : DetectorSetting → Λ → ℝ) : Prop :=
+def IsProductPartition {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
+    (RA RB : DetectorSetting → SigmaSpace → ℝ) : Prop :=
   (∀ a, Measurable (RA a)) ∧ (∀ b, Measurable (RB b)) ∧
     (∀ a l, RA a l = 1 ∨ RA a l = -1) ∧ (∀ b l, RB b l = 1 ∨ RB b l = -1)
 
 /-- A product partition **reproduces the singlet correlations** if its
 factorisable LHV correlation `∫ RA(a,·)·RB(b,·) dμ` matches the singlet's
 `−a·b` at every pair of settings. -/
-def ReproducesSinglet {Λ : Type*} [MeasurableSpace Λ] (μ : Measure Λ)
-    (RA RB : DetectorSetting → Λ → ℝ) : Prop :=
+def ReproducesSinglet {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] (μ : Measure SigmaSpace)
+    (RA RB : DetectorSetting → SigmaSpace → ℝ) : Prop :=
   ∀ a b, lhvCorrelation μ RA RB a b = singletCorrelation a b
 
 /-- A reproducing product partition's CHSH combination is *literally* the singlet
 CHSH operator: rewrite each LHV correlation by the reproduction hypothesis. -/
-theorem lhvCHSH_eq_chshOperator {Λ : Type*} [MeasurableSpace Λ]
-    (μ : Measure Λ) (RA RB : DetectorSetting → Λ → ℝ)
+theorem lhvCHSH_eq_chshOperator {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
+    (μ : Measure SigmaSpace) (RA RB : DetectorSetting → SigmaSpace → ℝ)
     (hRep : ReproducesSinglet μ RA RB) (a a' b b' : DetectorSetting) :
     lhvCHSH μ RA RB a a' b b' = Empirical.Bell.chshOperator a a' b b' := by
   -- `singletCorrelation = Bell.correlation` definitionally, so `hRep` rewrites
@@ -160,7 +160,7 @@ theorem lhvCHSH_eq_chshOperator {Λ : Type*} [MeasurableSpace Λ]
 
 /-- **`no_product_partition_realises_singlet` (LF6-A.1, load-bearing).** There is
 NO product (setting-local, non-contextual) partition of any shared probability
-space `(Λ, μ)` whose factorisable correlations reproduce the singlet
+space `(SigmaSpace, μ)` whose factorisable correlations reproduce the singlet
 correlations.
 
 Proof: such a partition gives `lhvCHSH = chshOperator = −2√2` at the canonical
@@ -171,8 +171,8 @@ This is `e91_no_lhv_reproduces_singlet`'s content re-expressed for setting-local
 `Σ`-partitions: it reuses `lhvCHSH_abs_le_two` and the singlet `2√2` directly and
 does NOT re-prove Bell. The forced contextuality: any `Σ`-partition realising the
 singlet must be jointly contextual. -/
-theorem no_product_partition_realises_singlet {Λ : Type*} [MeasurableSpace Λ]
-    (μ : Measure Λ) [IsProbabilityMeasure μ] (RA RB : DetectorSetting → Λ → ℝ)
+theorem no_product_partition_realises_singlet {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
+    (μ : Measure SigmaSpace) [IsProbabilityMeasure μ] (RA RB : DetectorSetting → SigmaSpace → ℝ)
     (hPP : IsProductPartition RA RB) (hRep : ReproducesSinglet μ RA RB) :
     False := by
   obtain ⟨hA, hB, hApm, hBpm⟩ := hPP
@@ -200,18 +200,18 @@ all-`+1` responses form a product partition whose correlation is the constant
 `1`; since the singlet correlation is non-constant (`−a·b`), this partition does
 not reproduce the singlet, so `no_product_partition_realises_singlet` is a
 genuine separation, not a vacuous predicate. -/
-theorem productPartition_nonvacuous {Λ : Type*} [MeasurableSpace Λ]
-    (μ : Measure Λ) [IsProbabilityMeasure μ] :
-    IsProductPartition (Λ := Λ) (fun (_ : DetectorSetting) (_ : Λ) => (1 : ℝ))
-        (fun (_ : DetectorSetting) (_ : Λ) => (1 : ℝ)) ∧
+theorem productPartition_nonvacuous {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
+    (μ : Measure SigmaSpace) [IsProbabilityMeasure μ] :
+    IsProductPartition (SigmaSpace := SigmaSpace) (fun (_ : DetectorSetting) (_ : SigmaSpace) => (1 : ℝ))
+        (fun (_ : DetectorSetting) (_ : SigmaSpace) => (1 : ℝ)) ∧
       (∀ a b : DetectorSetting,
-        lhvCorrelation μ (fun (_ : DetectorSetting) (_ : Λ) => (1 : ℝ))
-          (fun (_ : DetectorSetting) (_ : Λ) => (1 : ℝ)) a b = 1) := by
+        lhvCorrelation μ (fun (_ : DetectorSetting) (_ : SigmaSpace) => (1 : ℝ))
+          (fun (_ : DetectorSetting) (_ : SigmaSpace) => (1 : ℝ)) a b = 1) := by
   refine ⟨⟨fun _ => measurable_const, fun _ => measurable_const,
       fun _ _ => Or.inl rfl, fun _ _ => Or.inl rfl⟩, ?_⟩
   intro a b
   unfold lhvCorrelation
-  rw [show (fun l : Λ => (1 : ℝ) * 1) = fun _ : Λ => (1 : ℝ) from by funext l; ring,
+  rw [show (fun l : SigmaSpace => (1 : ℝ) * 1) = fun _ : SigmaSpace => (1 : ℝ) from by funext l; ring,
       integral_const]
   simp
 

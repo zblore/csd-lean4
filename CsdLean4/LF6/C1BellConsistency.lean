@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF3.SharedContextMap
+public import CsdLean4.LF3.OperationalNoSignalling
 public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF4.SingletKahler
 public import CsdLean4.RecordLayer.CircleFibre
@@ -19,7 +20,7 @@ public import CsdLean4.RecordLayer.CircleFibre
 `GlobalCHSHAssignment` "being different types carries the Bell-consistency
 content". **That is false**: different structures establish only definitional
 separation. This module supplies the actual obstruction, on the shared state
-space `Λ` that C1 posits.
+space `SigmaSpace` that C1 posits.
 
 * `CompatibleWithGlobalCHSH` — at each of the four CHSH contexts, the joint
   outcome's components *are* the global assignment's setting-local responses.
@@ -83,7 +84,7 @@ namespace CSD.LF6
 
 open CSD.Empirical.QM.E91 CSD.Empirical.Bell
 
-variable {Λ : Type*} [MeasurableSpace Λ]
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
 
 /-- The A-wing setting selected by `i : Fin 2` in the CHSH quadruple. -/
 noncomputable def chshSettingA (i : Fin 2) : DetectorSetting :=
@@ -98,24 +99,24 @@ noncomputable def chshContext (i j : Fin 2) : MeasurementContext :=
   ⟨chshSettingA i, chshSettingB j⟩
 
 /-- The global assignment's A-wing response at index `i`. -/
-def globalA (G : GlobalCHSHAssignment Λ) (i : Fin 2) (l : Λ) : Sign :=
+def globalA (G : GlobalCHSHAssignment SigmaSpace) (i : Fin 2) (l : SigmaSpace) : Sign :=
   if i = 0 then G.A1 l else G.A2 l
 
 /-- The global assignment's B-wing response at index `j`. -/
-def globalB (G : GlobalCHSHAssignment Λ) (j : Fin 2) (l : Λ) : Sign :=
+def globalB (G : GlobalCHSHAssignment SigmaSpace) (j : Fin 2) (l : SigmaSpace) : Sign :=
   if j = 0 then G.B1 l else G.B2 l
 
 /-- **Compatibility.** At each of the four CHSH contexts the shared-context
 outcome map's components are exactly the global assignment's setting-local
 responses. This is compatibility of the local *components*, not merely the
 existence of some map carrying four context-labelled results. -/
-def CompatibleWithGlobalCHSH (S : SharedContextOutcomeMaps Λ)
-    (G : GlobalCHSHAssignment Λ) : Prop :=
-  ∀ (i j : Fin 2) (l : Λ), S.F (chshContext i j) l = (globalA G i l, globalB G j l)
+def CompatibleWithGlobalCHSH (S : SharedContextOutcomeMaps SigmaSpace)
+    (G : GlobalCHSHAssignment SigmaSpace) : Prop :=
+  ∀ (i j : Fin 2) (l : SigmaSpace), S.F (chshContext i j) l = (globalA G i l, globalB G j l)
 
 /-- **Reproducing the singlet at the four CHSH contexts.** -/
-noncomputable def ReproducesSingletAtCHSH (μ : Measure Λ)
-    (S : SharedContextOutcomeMaps Λ) : Prop :=
+noncomputable def ReproducesSingletAtCHSH (μ : Measure SigmaSpace)
+    (S : SharedContextOutcomeMaps SigmaSpace) : Prop :=
   ∀ i j : Fin 2,
     ∫ l, ((S.wingA (chshContext i j) l).val : ℝ) * ((S.wingB (chshContext i j) l).val : ℝ) ∂μ
       = correlation (chshSettingA i) (chshSettingB j)
@@ -124,7 +125,7 @@ noncomputable def ReproducesSingletAtCHSH (μ : Measure Λ)
 its singlet weight `P_st`. Strictly stronger than matching the correlation — a family can
 match `∑ st·P` with degenerate marginals, but the table pins the marginals at `1/2` too.
 This is the predicate the positive model is proved against, at every context. -/
-noncomputable def ReproducesSingletTableAt (μ : Measure Λ) (S : SharedContextOutcomeMaps Λ)
+noncomputable def ReproducesSingletTableAt (μ : Measure SigmaSpace) (S : SharedContextOutcomeMaps SigmaSpace)
     (C : MeasurementContext) : Prop :=
   ∀ s t : Sign, μ {l | S.F C l = (s, t)} = ENNReal.ofReal (P_st C.a C.b s t)
 
@@ -132,8 +133,8 @@ noncomputable def ReproducesSingletTableAt (μ : Measure Λ) (S : SharedContextO
 at a context has wing-product expectation equal to the singlet correlation there — the
 outcome partition decomposes the product into four indicator terms whose masses are the
 table entries, and `correlation` *is* that weighted sum by definition. -/
-theorem integral_wing_mul_of_table (μ : Measure Λ) [IsProbabilityMeasure μ]
-    (S : SharedContextOutcomeMaps Λ) (C : MeasurementContext)
+theorem integral_wing_mul_of_table (μ : Measure SigmaSpace) [IsProbabilityMeasure μ]
+    (S : SharedContextOutcomeMaps SigmaSpace) (C : MeasurementContext)
     (hS : Measurable (S.F C))
     (htab : ReproducesSingletTableAt μ S C) :
     ∫ l, ((S.wingA C l).val : ℝ) * ((S.wingB C l).val : ℝ) ∂μ
@@ -180,17 +181,17 @@ theorem integral_wing_mul_of_table (μ : Measure Λ) [IsProbabilityMeasure μ]
 
 /-! ### The obstruction -/
 
-omit [MeasurableSpace Λ] in
+omit [MeasurableSpace SigmaSpace] in
 /-- Compatibility identifies the A-wing component with the global response. -/
-lemma wingA_eq_globalA {S : SharedContextOutcomeMaps Λ} {G : GlobalCHSHAssignment Λ}
-    (hcomp : CompatibleWithGlobalCHSH S G) (i j : Fin 2) (l : Λ) :
+lemma wingA_eq_globalA {S : SharedContextOutcomeMaps SigmaSpace} {G : GlobalCHSHAssignment SigmaSpace}
+    (hcomp : CompatibleWithGlobalCHSH S G) (i j : Fin 2) (l : SigmaSpace) :
     S.wingA (chshContext i j) l = globalA G i l := by
   rw [SharedContextOutcomeMaps.wingA, hcomp i j l]
 
-omit [MeasurableSpace Λ] in
+omit [MeasurableSpace SigmaSpace] in
 /-- Compatibility identifies the B-wing component with the global response. -/
-lemma wingB_eq_globalB {S : SharedContextOutcomeMaps Λ} {G : GlobalCHSHAssignment Λ}
-    (hcomp : CompatibleWithGlobalCHSH S G) (i j : Fin 2) (l : Λ) :
+lemma wingB_eq_globalB {S : SharedContextOutcomeMaps SigmaSpace} {G : GlobalCHSHAssignment SigmaSpace}
+    (hcomp : CompatibleWithGlobalCHSH S G) (i j : Fin 2) (l : SigmaSpace) :
     S.wingB (chshContext i j) l = globalB G j l := by
   rw [SharedContextOutcomeMaps.wingB, hcomp i j l]
 
@@ -202,13 +203,13 @@ assignment reproduces the singlet correlations at the four CHSH settings.
 Measurability is assumed only of `S` — the object C1 posits — and the four
 setting-local responses are derived from it. -/
 theorem no_compatible_global_chsh_assignment_realises_singlet
-    (μ : Measure Λ) [IsProbabilityMeasure μ]
-    (S : SharedContextOutcomeMaps Λ) (G : GlobalCHSHAssignment Λ)
+    (μ : Measure SigmaSpace) [IsProbabilityMeasure μ]
+    (S : SharedContextOutcomeMaps SigmaSpace) (G : GlobalCHSHAssignment SigmaSpace)
     (hS : MeasurableSharedContextOutcomeMaps S)
     (hcomp : CompatibleWithGlobalCHSH S G)
     (hrep : ReproducesSingletAtCHSH μ S) :
     False := by
-  refine absurd (lhvCHSH_abs_le_two (Λ := Λ) (SettingA := Fin 2) (SettingB := Fin 2) μ
+  refine absurd (lhvCHSH_abs_le_two (Λ := SigmaSpace) (SettingA := Fin 2) (SettingB := Fin 2) μ
     (fun i l => ((globalA G i l).val : ℝ)) (fun j l => ((globalB G j l).val : ℝ))
     ?_ ?_ ?_ ?_ 0 1 0 1) ?_
   · -- A-wing measurability, DERIVED from `hS` and compatibility
@@ -263,8 +264,8 @@ does not reproduce the singlet.
 So `no_compatible_global_chsh_assignment_realises_singlet` is a genuine
 **separation** and not an artefact of an unsatisfiable predicate. This mirrors
 `productPartition_nonvacuous`, which exists for exactly the same reason. -/
-theorem compatibleGlobalCHSH_nonvacuous (μ : Measure Λ) [IsProbabilityMeasure μ] :
-    ∃ (S : SharedContextOutcomeMaps Λ) (G : GlobalCHSHAssignment Λ),
+theorem compatibleGlobalCHSH_nonvacuous (μ : Measure SigmaSpace) [IsProbabilityMeasure μ] :
+    ∃ (S : SharedContextOutcomeMaps SigmaSpace) (G : GlobalCHSHAssignment SigmaSpace),
       MeasurableSharedContextOutcomeMaps S ∧ CompatibleWithGlobalCHSH S G ∧
       ∀ i j : Fin 2,
         ∫ l, ((S.wingA (chshContext i j) l).val : ℝ)
@@ -275,7 +276,7 @@ theorem compatibleGlobalCHSH_nonvacuous (μ : Measure Λ) [IsProbabilityMeasure 
   · intro i j l
     fin_cases i <;> fin_cases j <;> rfl
   · intro i j
-    show ∫ _ : Λ, ((Sign.plus.val : ℝ) * (Sign.plus.val : ℝ)) ∂μ = 1
+    show ∫ _ : SigmaSpace, ((Sign.plus.val : ℝ) * (Sign.plus.val : ℝ)) ∂μ = 1
     simp [Sign.val]
 
 /-! ### The positive half: the explicit contextual model on `(KSigma 4, kMuPsi)` -/
@@ -518,6 +519,143 @@ theorem c1_singlet_contextual_capstone :
     singletContextualModel_table, singletContextualModel_reproduces, fun G hcomp => ?_⟩
   exact no_compatible_global_chsh_assignment_realises_singlet kMuPsi singletContextualModel G
     singletContextualModel_measurable hcomp singletContextualModel_reproduces
+
+/-! ### The operational no-signalling predicate, inhabited
+
+`LF3/OperationalNoSignalling.lean` defines `OperationalNoSignalling μ S` of an
+outcome family and a measure, but until now nothing inhabited it: the only
+theorems in that module (`singlet_operational_no_signalling`,
+`singlet_marginals_eq_half`) are finite-sum identities over the closed-form
+kernel `P_st`, with no measure and no outcome map in sight. C1 §4 states its
+marginals as `μ(F⁻¹{(s,t)})`, so the kernel lemmas were standing in for a claim
+about a different object — the same substitution Q19 removed from the
+reproduction slot. With the full table in hand the repair is a corollary. -/
+
+omit [MeasurableSpace SigmaSpace] in
+/-- The A-wing fibre is the union of the two joint fibres above it. -/
+lemma wingA_fibre_eq (S : SharedContextOutcomeMaps SigmaSpace) (C : MeasurementContext) (s : Sign) :
+    {l | S.wingA C l = s}
+      = {l | S.F C l = (s, Sign.plus)} ∪ {l | S.F C l = (s, Sign.minus)} := by
+  ext l
+  show S.wingA C l = s ↔ _
+  rw [SharedContextOutcomeMaps.wingA]
+  rcases hF : S.F C l with ⟨s', t'⟩
+  cases t' <;> simp [Set.mem_union, hF]
+
+omit [MeasurableSpace SigmaSpace] in
+/-- The B-wing fibre, symmetrically. -/
+lemma wingB_fibre_eq (S : SharedContextOutcomeMaps SigmaSpace) (C : MeasurementContext) (t : Sign) :
+    {l | S.wingB C l = t}
+      = {l | S.F C l = (Sign.plus, t)} ∪ {l | S.F C l = (Sign.minus, t)} := by
+  ext l
+  show S.wingB C l = t ↔ _
+  rw [SharedContextOutcomeMaps.wingB]
+  rcases hF : S.F C l with ⟨s', t'⟩
+  cases s' <;> simp [Set.mem_union, hF]
+
+omit [MeasurableSpace SigmaSpace] in
+/-- The two joint fibres above a wing value are disjoint. -/
+lemma joint_fibre_disjoint (S : SharedContextOutcomeMaps SigmaSpace) (C : MeasurementContext)
+    {p q : Sign × Sign} (h : p ≠ q) :
+    Disjoint {l | S.F C l = p} {l | S.F C l = q} := by
+  rw [Set.disjoint_left]
+  intro l hp hq
+  exact h (hp ▸ hq ▸ rfl)
+
+/-- **A-wing marginal of any table-reproducing family is `1/2`.** The wing fibre is
+the disjoint union of its two joint fibres, whose masses are `P_st`, and those sum
+to `1/2` by `marginal_a_eq_half`. -/
+lemma wingA_marginal_of_table {μ : Measure SigmaSpace} (S : SharedContextOutcomeMaps SigmaSpace)
+    (C : MeasurementContext) (hS : Measurable (S.F C))
+    (htab : ReproducesSingletTableAt μ S C) (s : Sign) :
+    μ {l | S.wingA C l = s} = ENNReal.ofReal (1 / 2) := by
+  have hm : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} := fun p => by
+    have : {l | S.F C l = p} = S.F C ⁻¹' {p} := rfl
+    rw [this]
+    exact hS (measurableSet_singleton p)
+  rw [wingA_fibre_eq, measure_union (joint_fibre_disjoint S C (by simp)) (hm _),
+    htab s Sign.plus, htab s Sign.minus,
+    ← ENNReal.ofReal_add (P_st_nonneg C.a C.b s Sign.plus) (P_st_nonneg C.a C.b s Sign.minus)]
+  congr 1
+  have h := marginal_a_eq_half C.a C.b s
+  rwa [Sign.sum_univ] at h
+
+/-- **B-wing marginal of any table-reproducing family is `1/2`.** -/
+lemma wingB_marginal_of_table {μ : Measure SigmaSpace} (S : SharedContextOutcomeMaps SigmaSpace)
+    (C : MeasurementContext) (hS : Measurable (S.F C))
+    (htab : ReproducesSingletTableAt μ S C) (t : Sign) :
+    μ {l | S.wingB C l = t} = ENNReal.ofReal (1 / 2) := by
+  have hm : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} := fun p => by
+    have : {l | S.F C l = p} = S.F C ⁻¹' {p} := rfl
+    rw [this]
+    exact hS (measurableSet_singleton p)
+  rw [wingB_fibre_eq, measure_union (joint_fibre_disjoint S C (by simp)) (hm _),
+    htab Sign.plus t, htab Sign.minus t,
+    ← ENNReal.ofReal_add (P_st_nonneg C.a C.b Sign.plus t) (P_st_nonneg C.a C.b Sign.minus t)]
+  congr 1
+  have h := marginal_b_eq_half C.a C.b t
+  rwa [Sign.sum_univ] at h
+
+/-- ★ **The exhibited model is operationally no-signalling.** Every wing marginal is
+`1/2` at every context, so it is in particular invariant under a change of the remote
+setting. This inhabits `LF3.OperationalNoSignalling` — the predicate C1 §4 is about —
+rather than restating the kernel identity. -/
+theorem singletContextualModel_no_signalling :
+    OperationalNoSignalling kMuPsi singletContextualModel := by
+  constructor
+  · intro a b b' s
+    rw [wingA_marginal_of_table singletContextualModel ⟨a, b⟩
+        (singletContextualModel_measurable _) (singletContextualModel_table _) s,
+      wingA_marginal_of_table singletContextualModel ⟨a, b'⟩
+        (singletContextualModel_measurable _) (singletContextualModel_table _) s]
+  · intro a a' b t
+    rw [wingB_marginal_of_table singletContextualModel ⟨a, b⟩
+        (singletContextualModel_measurable _) (singletContextualModel_table _) t,
+      wingB_marginal_of_table singletContextualModel ⟨a', b⟩
+        (singletContextualModel_measurable _) (singletContextualModel_table _) t]
+
+/-! ### The every-setting no-go, discharged against the exhibited model
+
+`no_product_partition_realises_singlet` is C1's *stronger* result (§3.2, §5.1): it
+quantifies over every detector-setting pair, not just the four CHSH ones. But its
+reproduction hypothesis `ReproducesSinglet` had no inhabitant either, so the no-go
+was conditional in exactly the way the CHSH one was before Q19. The exhibited model
+discharges it: its table holds at **every** context, so its correlation is the
+singlet's everywhere, and the no-go then says the model's own wing responses cannot
+be detached from the context. -/
+
+/-- The model reproduces the singlet correlation at every context, not only the
+four CHSH ones -- immediate from the every-context table. -/
+theorem singletContextualModel_correlation (C : MeasurementContext) :
+    integral kMuPsi (fun l => ((singletContextualModel.wingA C l).val : Real)
+        * ((singletContextualModel.wingB C l).val : Real))
+      = correlation C.a C.b :=
+  integral_wing_mul_of_table kMuPsi singletContextualModel C
+    (singletContextualModel_measurable C) (singletContextualModel_table C)
+
+/-- **The exhibited model is irreducibly contextual.** Its wing responses cannot be
+written as setting-local functions `RA a`, `RB b` of the state alone. This is C1 section
+5.1's claim -- that Alice's response cannot be detached from the complete measurement
+context and reused across Bob's alternatives -- as a theorem about an exhibited object
+rather than a hypothesis. Routed through the every-setting no-go, whose reproduction
+hypothesis the model discharges. -/
+theorem singletContextualModel_not_product :
+    Not (exists RA RB : DetectorSetting -> KSigma 4 -> Real,
+        IsProductPartition RA RB /\
+        (forall (a b : DetectorSetting) (l : KSigma 4),
+          ((singletContextualModel.wingA (MeasurementContext.mk a b) l).val : Real) = RA a l) /\
+        (forall (a b : DetectorSetting) (l : KSigma 4),
+          ((singletContextualModel.wingB (MeasurementContext.mk a b) l).val : Real) = RB b l)) := by
+  rintro ⟨RA, RB, hPP, hA, hB⟩
+  refine no_product_partition_realises_singlet kMuPsi RA RB hPP ?_
+  intro a b
+  have hfun : (fun l => RA a l * RB b l)
+      = fun l => ((singletContextualModel.wingA (MeasurementContext.mk a b) l).val : Real)
+          * ((singletContextualModel.wingB (MeasurementContext.mk a b) l).val : Real) := by
+    funext l
+    rw [← hA a b l, ← hB a b l]
+  show integral kMuPsi (fun l => RA a l * RB b l) = _
+  rw [hfun, singletContextualModel_correlation (MeasurementContext.mk a b), singletCorrelation]
 
 end SingletModel
 

@@ -15,12 +15,12 @@ public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
 
 `ContextIndexedOutcomeMaps` gives each context its **own** state space
 `Domain ctx`. That is the wrong shape for the C1 Bell analysis, which fixes a
-single ontic state space `Λ` and asks what a family of context-indexed outcome
+single ontic state space `SigmaSpace` and asks what a family of context-indexed outcome
 maps on it can do. This module supplies that shape.
 
-* `SharedContextOutcomeMaps Λ` — one common `Λ`, an outcome map per context.
+* `SharedContextOutcomeMaps SigmaSpace` — one common `SigmaSpace`, an outcome map per context.
   The state type does **not** depend on the context.
-* `MeasurableSharedContextOutcomeMaps` — each `F C : Λ → Sign × Sign` is
+* `MeasurableSharedContextOutcomeMaps` — each `F C : SigmaSpace → Sign × Sign` is
   measurable. This is the **only** measurability assumed anywhere in the C1
   chain: the four setting-local responses of a `GlobalCHSHAssignment` are
   *derived* measurable from it and compatibility, never assumed. See
@@ -52,26 +52,26 @@ lemma measurable_of_sign {α : Type*} [MeasurableSpace α] (f : Sign → α) :
     Measurable f := fun _ _ => trivial
 
 /-- **Outcome maps on one shared state space.** Every context reads the *same*
-`Λ`; only the outcome map varies. This is the C1 shape: a fixed ontic state
+`SigmaSpace`; only the outcome map varies. This is the C1 shape: a fixed ontic state
 space, with the context selecting how it is read. -/
-structure SharedContextOutcomeMaps (Λ : Type*) where
+structure SharedContextOutcomeMaps (SigmaSpace : Type*) where
   /-- The context-indexed joint outcome map on the shared state space. -/
-  F : MeasurementContext → Λ → Sign × Sign
+  F : MeasurementContext → SigmaSpace → Sign × Sign
 
 /-- Each context's outcome map is measurable. -/
-def MeasurableSharedContextOutcomeMaps {Λ : Type*} [MeasurableSpace Λ]
-    (S : SharedContextOutcomeMaps Λ) : Prop :=
+def MeasurableSharedContextOutcomeMaps {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
+    (S : SharedContextOutcomeMaps SigmaSpace) : Prop :=
   ∀ C, Measurable (S.F C)
 
 namespace SharedContextOutcomeMaps
 
-variable {Λ : Type*} [MeasurableSpace Λ] (S : SharedContextOutcomeMaps Λ)
+variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] (S : SharedContextOutcomeMaps SigmaSpace)
 
 /-- The A-wing component of the joint outcome. -/
-def wingA (C : MeasurementContext) (l : Λ) : Sign := (S.F C l).1
+def wingA (C : MeasurementContext) (l : SigmaSpace) : Sign := (S.F C l).1
 
 /-- The B-wing component of the joint outcome. -/
-def wingB (C : MeasurementContext) (l : Λ) : Sign := (S.F C l).2
+def wingB (C : MeasurementContext) (l : SigmaSpace) : Sign := (S.F C l).2
 
 /-- The A-wing component is measurable, **derived** from measurability of the
 joint map. -/

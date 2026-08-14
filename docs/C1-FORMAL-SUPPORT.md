@@ -46,6 +46,8 @@ absence is a fact about the dependency graph rather than about axiom bookkeeping
 | Pointer reproduction, generic | `localDeisolation_pointer_volume` | `LF6/LocalDeisolationFlow.lean` | ⚠️ Carries `hgen`, so **excludes `a·b = ±1`**. |
 | Pointer reproduction, **all settings** | `localDeisolation_pointer_volume_local` | `LF6/NudgeLocality.lean` | **No `hgen`.** Covers perfect (anti)correlation. |
 | No-signalling of the construction | `localDeisolation_no_signalling_A` / `_B` | `LF6/NudgeLocality.lean` | Equality of **marginal volumes**, not of outcome partitions. Under measurement independence. |
+| **Operational no-signalling, outcome-map level** | `singletContextualModel_no_signalling` | `LF6/C1BellConsistency.lean` (added 2026-08-13, Q20) | Inhabits `LF3.OperationalNoSignalling` — the predicate C1 §4 is *about*. Until Q20 nothing inhabited it anywhere, and the paper's §4 cited `singlet_operational_no_signalling` / `singlet_marginals_eq_half`, which are finite sums over the closed-form kernel with no measure and no outcome map in them. General route: `wingA_marginal_of_table` / `wingB_marginal_of_table`. |
+| **Every-setting no-go, discharged** | `singletContextualModel_not_product` | same | `no_product_partition_realises_singlet`'s reproduction hypothesis `ReproducesSinglet` had no inhabitant either. The exhibited model's every-context table discharges it: the model's wing responses provably cannot be written as setting-local `RA a`, `RB b`. This is C1 §5.1 as a theorem about an exhibited object. |
 
 ## What is NOT established
 
@@ -65,6 +67,14 @@ the `specs/BACKLOG.md` row. The measure-level predicate is close to a
 restatement of the conclusion, so §4.2 of C1 is a **verification of
 no-signalling in the constructed sector, not a derivation from primitives**, and
 should say so in those words.
+
+**The outcome family on `Σ` is a chosen partition, not a readout.**
+`singletContextualModel` carves torus arcs of the right lengths on the arena; it is
+not derived from the de-isolation dynamics. Deriving the outcome family on `Σ` from
+the flow is the record-layer problem (MD-1) and is **not** established. A version
+built on the *dilated* system-plus-pointer space was written and removed on
+2026-08-13: it closed that gap only by leaving `Σ`, which is the wrong direction and
+left C1 with two constructions on two spaces.
 
 **Measurement independence is assumed.** `OperationalNoSignalling` fixes one `μ`
 across all four contexts, and that fixture *is* measurement independence — a
@@ -100,6 +110,9 @@ Theorem strength is stated per claim, so nothing inherits a neighbour's status.
 | No-signalling, kernel level | **proved** (`singlet_operational_no_signalling`) |
 | No-signalling, LF6 pointer-volume construction | **proved** (`localDeisolation_no_signalling_A/B`), marginal volumes, under measurement independence |
 | Arbitrary non-factorising Σ no-signalling | **OPEN** — `specs/BACKLOG.md` row; no axiom added |
+| Operational no-signalling, outcome-map level | **proved** (`singletContextualModel_no_signalling`) — the predicate, inhabited |
+| Every-setting no-go, non-conditional | **proved** (`singletContextualModel_not_product`) |
+| Outcome family on `Σ` derived from the flow | **OPEN** — MD-1, the record layer; the exhibited family is a chosen partition |
 | Singlet sector origin (SO-1) | **assumed / open** — posited, never derived |
 
 **Headline status (updated 2026-08-10, after promotion).**

@@ -68,7 +68,7 @@ theorem kMuPsi_no_product_partition :
 so `kMuPsi_no_product_partition` is a genuine separation, not an artefact of
 an unsatisfiable predicate. Instantiates `productPartition_nonvacuous`. -/
 theorem kMuPsi_productPartition_nonvacuous :
-    IsProductPartition (Λ := KSigma 4)
+    IsProductPartition (SigmaSpace := KSigma 4)
         (fun (_ : DetectorSetting) (_ : KSigma 4) => (1 : ℝ))
         (fun (_ : DetectorSetting) (_ : KSigma 4) => (1 : ℝ)) ∧
       (∀ a b : DetectorSetting,
