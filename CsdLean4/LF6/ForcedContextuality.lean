@@ -170,7 +170,13 @@ hence `|lhvCHSH| = 2√2`; but `lhvCHSH_abs_le_two` caps it at `2`, and `2 < 2�
 This is `e91_no_lhv_reproduces_singlet`'s content re-expressed for setting-local
 `Σ`-partitions: it reuses `lhvCHSH_abs_le_two` and the singlet `2√2` directly and
 does NOT re-prove Bell. The forced contextuality: any `Σ`-partition realising the
-singlet must be jointly contextual. -/
+singlet must be jointly contextual.
+
+**Notation bridge.** The binder `SigmaSpace` is named for the intended CSD
+instantiation, but mathematically it is **Bell's `Λ`**: the theorem quantifies
+over an *arbitrary* measurable space with a probability measure — no
+CSD-specific hypothesis anywhere, so it transfers to rival theories of the same
+shape (its recorded force in `necessity-audit.md`). -/
 theorem no_product_partition_realises_singlet {SigmaSpace : Type*} [MeasurableSpace SigmaSpace]
     (μ : Measure SigmaSpace) [IsProbabilityMeasure μ] (RA RB : DetectorSetting → SigmaSpace → ℝ)
     (hPP : IsProductPartition RA RB) (hRep : ReproducesSinglet μ RA RB) :

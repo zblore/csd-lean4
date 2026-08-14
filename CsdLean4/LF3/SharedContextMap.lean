@@ -29,6 +29,13 @@ maps on it can do. This module supplies that shape.
 `Sign` carries the discrete (`⊤`) σ-algebra, the canonical choice for a finite
 type and the one that makes "measurable outcome map" mean what it should.
 
+**Notation bridge.** The type variable `SigmaSpace` is named for the intended
+CSD instantiation (the ontic surface `Σ`), but it is **Bell's `Λ`** — an
+arbitrary shared state space, nothing CSD-specific. The general theorems built
+on this interface owe their transfer-to-rivals force to exactly that
+generality; the QM-side `E91.lean` keeps Bell's `Λ` spelling because it is
+literature-facing. One object, two communities' names.
+
 ## References
 
 `LF3/ContextMap.lean` (`MeasurementContext`, `GlobalCHSHAssignment`);

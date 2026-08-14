@@ -201,7 +201,16 @@ No measurable shared-context outcome family compatible with any global CHSH
 assignment reproduces the singlet correlations at the four CHSH settings.
 
 Measurability is assumed only of `S` — the object C1 posits — and the four
-setting-local responses are derived from it. -/
+setting-local responses are derived from it.
+
+**Notation bridge.** The binder `SigmaSpace` is named for the intended CSD
+instantiation (the ontic surface `Σ`; the capstone below instantiates it at
+`KSigma 4`), but mathematically it is **Bell's `Λ`** — an *arbitrary* measurable
+space with a probability measure. Nothing in the hypotheses restricts to CSD's
+substrate; the theorem transfers to any theory of this shape, which is exactly
+its force (`necessity-audit.md`). The QM-side LHV bound it reduces to
+(`lhvCHSH_abs_le_two`, `E91.lean`) keeps Bell's `Λ` for the same reason in the
+other direction: it is literature-facing. -/
 theorem no_compatible_global_chsh_assignment_realises_singlet
     (μ : Measure SigmaSpace) [IsProbabilityMeasure μ]
     (S : SharedContextOutcomeMaps SigmaSpace) (G : GlobalCHSHAssignment SigmaSpace)
