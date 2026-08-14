@@ -31,7 +31,7 @@ absence is a fact about the dependency graph rather than about axiom bookkeeping
 |---|---|---|---|
 | Bell-local CHSH bound | `lhvCHSH_abs_le_two` | `Empirical/QM/Crypto/E91.lean` (ns `CSD.Empirical.QM.E91`) | Any shared probability space; measurable `±1` responses. No CSD content. |
 | Singlet violates it | `chsh_singlet_at_optimal_angles` | `Empirical/QM/Bell.lean` | Canonical CHSH quadruple. |
-| Forced contextuality | `no_product_partition_realises_singlet` | `LF6/ForcedContextuality.lean` | Quantifies over **any** `(Λ, μ)`; setting-local `±1` product responses. Reproduction required at **every** setting pair. |
+| Forced contextuality | `no_product_partition_realises_singlet` | `LF6/ForcedContextuality.lean` | Quantifies over **any** state space with a probability measure (`SigmaSpace, μ`); setting-local `±1` product responses. Reproduction required at **every** setting pair. |
 | — its non-vacuity | `productPartition_nonvacuous` | same | Makes the no-go a separation. |
 | **C1 four-answer obstruction** | `no_compatible_global_chsh_assignment_realises_singlet` | `LF6/C1BellConsistency.lean` | **One shared state space.** Reproduction required only at the **four CHSH settings**, so strictly weaker in hypothesis than the row above and not subsumed by it. Measurability assumed **only** of the posited `S`; the global assignment's four responses are *derived* measurable. |
 | — its non-vacuity | `compatibleGlobalCHSH_nonvacuous` | same | Separation, not artefact — for the **compatibility** conjunct. The *reproduction* conjunct's inhabitant is the row below (Q19). |
