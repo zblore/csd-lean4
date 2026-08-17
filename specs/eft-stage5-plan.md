@@ -1,6 +1,13 @@
 # EFT Stage 5 plan: Lieb–Robinson bounds
 
-Status: PLAN (2026-08-09). Owner queue: `specs/BACKLOG.md` §CV chain row; ref-tagged rows
+Status: **COMPLETE (2026-08-09, same day)** — CV-17, CV-18, CV-19 all landed, and the
+CV-19 gate never had to fire its abort: the iteration route was found and pushed through
+four passes (linear → Grönwall → spatial cone → the textbook factorial shape), with
+nothing recorded against the stage. *(Status header corrected 2026-08-17: it still said
+"PLAN" eight days after completion — found by the Stage-7 completeness check, the exact
+doc-currency staleness class; the completion record had lived only in the BACKLOG CV
+chain row and the struck `future-work.md` rows. Original status line: PLAN (2026-08-09).)*
+Owner queue: `specs/BACKLOG.md` §CV chain row; ref-tagged rows
 CV-17..CV-19 in [`future-work.md`](future-work.md). Predecessor:
 [`eft-stage4-plan.md`](eft-stage4-plan.md) (Stage 4, complete). Promoted from non-goal to
 headline by the Stage-4 horizon note (author-confirmed 2026-08-09).
