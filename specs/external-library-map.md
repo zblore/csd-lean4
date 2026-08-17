@@ -42,8 +42,45 @@ stable + Physlib's bump (our move is rc→stable, trivial). Cadence, measured
 stable ≈ mid/late August); Physlib bumps stable-only, ~8 days after release (their
 toolchain history back to 4.29). Forecast alignment window: late August / early
 September. Do NOT bump to rc2 meanwhile — one jump rc1→stable, skipping rc2, is the
-plan. **Downgrading csd-lean4 is
-FEASIBLE but not worth it** (measured 2026-08-07, correcting an earlier overstatement):
+plan.
+
+> **⚡ ALIGNMENT VERIFIED 2026-08-17 — and the full rescan ran the same day.** Physlib
+> took 4.33.0 stable on cadence: toolchain `leanprover/lean4:v4.33.0`, Mathlib
+> `db584cd6…` — **byte-identical to our pins**, two weeks ahead of the forecast window.
+> The contribution direction is now frictionless (their environment IS ours; the
+> separate-worktree precaution below is moot while alignment holds).
+>
+> **Rescan of their tree (707 modules, was 690 on 2026-08-07). Consumption verdict
+> unchanged: nothing to import.** Still absent: Floquet/kicked/stroboscopic (0 hits),
+> chaos diagnostics (SFF/OTOC/Loschmidt: 0 hits) — the `upstream-candidate(physlib)`
+> marks stand and are STILL new content for them; density matrices, channels, POVMs,
+> partial trace, entropy, measurement theory, Lindblad (0 hits) — no external provider
+> for our `QuantumInfo` tree, no help for the E2 ladder or the Q16 CP-of-`e^{tℒ}` wall;
+> symplectic/Kähler manifold API (their Kähler hits are SUSY prose; no help for Q8/KG-1).
+> What they DID add since the baseline, none of it consumable: `FiniteTarget.timeEvolution
+> = NormedSpace.exp(-(it/ℏ)•Ham)` (supersedes the "no generic time-evolution" note below —
+> but a thin wrapper; ours carries the C¹-Stone derivation and Kähler invariance), a
+> continuum `Operators/` tree (unbounded operators, spectral measures `SpectralTheory/`,
+> completed tensor products — the infinite-dim rung our scope ladder defers), Wirtinger
+> calculus with Schwarz's theorem (`Mathematics/Calculus/Wirtinger/` — adjacent to the
+> KG-3 holomorphic route at best), and pedagogical potentials (Hydrogen, Pöschl–Teller,
+> square wells).
+>
+> **Two coordination signals, both watch-items not work-items.** (i) A top-level
+> `QuantumInfo/` tree now EXISTS in their repo — `States/Pure/{Braket, BlochSphere,
+> BargmannInvariant}.lean`, the latter two not yet imported into their build — and the
+> Qubit API-map's roadmap explicitly plans density matrices "with their evolution,
+> measurements and distinguishability measures" as a separate API map. **Physlib-QuantumInfo
+> (this map's named "later" provider) is visibly under construction**: when their
+> density-matrix layer lands, the four-way check starts hitting it. (ii) **Bargmann
+> collision surface**: their unbuilt `bargmannInvariantThree` (117 lines, Ket-level)
+> overlaps our proved, projective, branch-separating `Projectivization.bargmann` stack
+> (load-bearing in W3 unitary selection). When upstreaming resumes, our Bargmann +
+> WignerRigidity staging is the natural PR into exactly this lane — offer ours before
+> they rebuild it.
+
+**Downgrading csd-lean4 is
+FEASIBLE but not worth it** (measured 2026-08-07, correcting an earlier overstatement — and MOOT since the 2026-08-17 alignment):
 their Mathlib pin is only ONE WEEK older than ours (2026-07-13 vs 07-20) and carries
 `extDeriv`/`alternatizeUncurryFin`/`skew_product`; the cost is a half-day of
 rename-chasing (`mem_ofPred_eq` and kin, concentrated in the newest modules) plus a
@@ -90,9 +127,9 @@ generic, may migrate), **missing** (nowhere yet), **CSD-permanent**.
 | Capability | Intended owner | Status | Notes |
 |---|---|---|---|
 | Basic mathematics (measure, spectral, matrix exp) | Mathlib | ext-available | The pin carries `NormedSpace.exp`, cfc, `extDeriv` (flat), manifolds without symplectic forms |
-| Finite quantum system abstraction | Physlib | ext-available (verified 2026-08-07) | `Physlib/QuantumMechanics/HilbertSpaces/FiniteTarget/` — `FiniteHilbertSpace d` is a structure **wrapping `EuclideanSpace ℂ d`**, the corpus's native carrier, so adapters are `.val`-thin. Their QM layer: FiniteTarget, HarmonicOscillator (1D ladder/TISE), FreeParticle. No generic time-evolution module found |
-| Floquet systems, kicked models | Physlib (target) | **missing (verified 2026-08-07: 0 matches in their 690-module tree)** | Class 3 confirmed → implemented locally behind the H2 `FloquetEvolution` interface (`Incubator/QuantumChaos/FloquetInterface.lean`), `upstream-candidate(physlib)` |
-| Chaos diagnostics (spectral form factor, Loschmidt echo, OTOC) | Physlib (target) | missing (verified 2026-08-07) | Class 3 — ALL THREE implemented locally 2026-08-07/08 behind the interface (`Diagnostics`, `SpectralFormFactor`, `Otoc`, `EchoBound`), `upstream-candidate(physlib)` |
+| Finite quantum system abstraction | Physlib | ext-available (verified 2026-08-07; re-scanned 2026-08-17) | `Physlib/QuantumMechanics/HilbertSpaces/FiniteTarget/` — `FiniteHilbertSpace d` is a structure **wrapping `EuclideanSpace ℂ d`**, the corpus's native carrier, so adapters are `.val`-thin. Their QM layer: FiniteTarget, HarmonicOscillator (1D ladder/TISE), FreeParticle. ~~No generic time-evolution module found~~ *Superseded 2026-08-17:* `FiniteTarget.timeEvolution = exp(-(it/ℏ)•Ham)` now exists — a thin `NormedSpace.exp` wrapper with matrix forms; ours keeps the C¹-Stone derivation and Kähler invariance, so consumption value stays nil |
+| Floquet systems, kicked models | Physlib (target) | **missing (verified 2026-08-07; re-verified 2026-08-17: 0 matches in 707 modules)** | Class 3 confirmed → implemented locally behind the H2 `FloquetEvolution` interface (`Incubator/QuantumChaos/FloquetInterface.lean`), `upstream-candidate(physlib)` — with pins now byte-aligned, the PR costs no toolchain work |
+| Chaos diagnostics (spectral form factor, Loschmidt echo, OTOC) | Physlib (target) | missing (verified 2026-08-07; re-verified 2026-08-17) | Class 3 — ALL THREE implemented locally 2026-08-07/08 behind the interface (`Diagnostics`, `SpectralFormFactor`, `Otoc`, `EchoBound`), `upstream-candidate(physlib)` |
 | Density states, channels, POVMs, partial trace | csd-lean4 today; Lean-QIT or Physlib-QuantumInfo later | local | Our `Mathlib/QuantumInfo` tree — audit-validated 2026-08-06 (CL-022/023 chain). The chaos pilot CONSUMES this; it does not expand it |
 | Entropy, subadditivity, Araki–Lieb, trace distance, DPI-conditional SSA | csd-lean4 today | local | Same tree; `Tests/EntropyWitness.lean` carries the committed witnesses |
 | **Unconditional SSA / DPI** | Lean-QIT **or** local E2 ladder | ext-available (Lean-QIT) | **The first concrete Lean-QIT decision point**, already named in `StrongSubadditivity.lean`: their `relativeEntropy_dataProcessing_channel_ge` is cited-not-imported; the alternative is the E2 operator-convexity ladder (BACKLOG §E). Decide when SSA-unconditional is actually consumed |
