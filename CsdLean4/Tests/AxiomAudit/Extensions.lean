@@ -711,4 +711,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.eqFourPoint_wick
 
+-- CV-23b (2026-08-17, CV\Wick.lean, Stage 7): Wick's four-point theorem at DISTINCT times --
+-- the eqFourPoint_wick pairing sum with the phases on. twoPointKernel n m = (1/2)e^{-i n tau}
+-- e^{+i m tau} is the stroboscopic kernel, kept in two-factor form so Nat-subtraction never
+-- appears; timeTwoPoint_eq is the two-time propagator delta_kl * K(n,m). The four-point
+-- coincidence table transfers verbatim (singleton modes die; the two-pair patterns give the
+-- kernel product of the paired TIMES -- the arrangement now carries content the equal-time
+-- table could not see: pair/alt/outer pick different time pairings), and the all-equal
+-- pattern is the three-pairing sum. The load-bearing identity: the level-2 walk 0->1->2->1->0
+-- carries (1/2)e^{-i(t1+t2-t3-t4)} and the two cross-pairings are EACH a quarter of that one
+-- exponent -- their sum IS the walk term, which is why Wick survives truncation exactly
+-- above threshold (2 < N load-bearing exactly where eqFourPoint_same says; at N = 2 the walk
+-- dies). Equal periods recover eqFourPoint_wick through twoPointKernel_self = 1/2; all
+-- periods 0 recover eqFourPoint at the definition level. Scope: free drive only; no
+-- continuum limit; the 2n-point theorem NOT claimed (CV-23c, gated on the six-point pass).
+/-- info: 'CSD.CV.timeTwoPoint_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeTwoPoint_eq
+
+/-- info: 'CSD.CV.timeFourPoint_same' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeFourPoint_same
+
+/-- info: 'CSD.CV.timeFourPoint_wick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeFourPoint_wick
+
+/-- info: 'CSD.CV.timeFourPoint_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeFourPoint_zero
+
 end CSD.Tests.AxiomAudit

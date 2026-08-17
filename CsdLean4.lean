@@ -437,6 +437,7 @@ public import CsdLean4.RecordLayer.FibredSigma
 public import CsdLean4.RecordLayer.BasisMeasurement
 public import CsdLean4.RecordLayer.StatisticsRigidity
 public import CsdLean4.CV.ThermalPropagator
+public import CsdLean4.CV.Wick
 public import CsdLean4.RecordLayer.KSigmaRecord
 
 -- Root repair (G6 / F-07, 2026-08-06): the modules below were reachable only via the
