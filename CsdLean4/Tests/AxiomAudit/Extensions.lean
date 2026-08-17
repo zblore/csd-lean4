@@ -652,4 +652,52 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.sff_freeFieldU_revival
 
+-- CV-24 (2026-08-17, CV/ThermalPropagator.lean, Stage 7): the thermal tier at the cutoff --
+-- the first join of the Thermo and CV verticals, and the corpus's FIRST KMS statement.
+-- thermalFieldState is THE TH3 gibbsState instantiated on fieldHamiltonian (not a separately
+-- posited Boltzmann matrix); the diagonal Hamiltonian gives the closed form via
+-- cfc_eq_conj_diagonal at U = 1, with the configuration-basis partition function reconciled
+-- to TH3's eigenvalue form through the trace normalisation. The partition function
+-- factorises over modes (Z = z^K), the thermal mode marginal reduces field expectations to
+-- single-mode Gibbs averages, and thermal_kms is EXACT: at finite dimension with diagonal H,
+-- complex-time evolution is entrywise and the KMS identity is the Boltzmann weight
+-- transport w_c = w_d e^{-beta(Ec-Ed)} plus an index shuffle -- no analytic continuation,
+-- no approximation. The thermal propagator: modes do not mix (offdiag = 0), the diagonal is
+-- a single-mode Boltzmann average of one up-step and one down-step with the TRUNCATION EDGE
+-- EXPLICIT (the top level has no up-step -- the eqFourPoint_same honesty at every level),
+-- and the beta -> infinity limit recovers freeTwoPoint exactly (zero-point energies cancel,
+-- geometric weights, ground level dominates; finite sums, no dominated convergence).
+-- Scope: free (mode-diagonal) drive, matching freeTwoPoint; no continuum limit
+-- (no_exact_finite_ccr stands); no thermodynamic limit in K. Proof-engineering notes: the
+-- Pi.div module-system defeq wall (Complex.mulAux unexposed) bridged via Pi.div_apply; the
+-- unannotated-binder nat-default trap on oscEnergy sums; Fin-literal if_pos conditions
+-- stated via show-ascriptions (the B5-geom idiom family).
+/-- info: 'CSD.CV.thermalFieldState_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.thermalFieldState_eq
+
+/-- info: 'CSD.CV.fieldPartition_eq_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.fieldPartition_eq_pow
+
+/-- info: 'CSD.CV.thermalExpect_modeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.thermalExpect_modeOp
+
+/-- info: 'CSD.CV.thermal_kms' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.thermal_kms
+
+/-- info: 'CSD.CV.thermalTwoPoint_offdiag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.thermalTwoPoint_offdiag
+
+/-- info: 'CSD.CV.thermalTwoPoint_diag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.thermalTwoPoint_diag
+
+/-- info: 'CSD.CV.thermalTwoPoint_tendsto_vacuum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.thermalTwoPoint_tendsto_vacuum
+
 end CSD.Tests.AxiomAudit
