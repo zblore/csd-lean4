@@ -741,4 +741,27 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.timeFourPoint_zero
 
+-- CV-23c GATE (2026-08-17, CV\Wick.lean, Stage 7): the six-point pass -- RESULT: PASSED.
+-- The all-equal sixth moment <Q^6> = 15/8 = 5!!(1/2)^3 for 3 < N via the Q^3 column at the
+-- vacuum (the plan's ||Q^3 e0||^2 anchor in walk-collapse form: mass (3/2)/sqrt2 on the
+-- one-quantum configuration, sqrt3/2 on the three-quantum configuration), plus the mixed
+-- pattern <Q_k^4 Q_l^2> = 3/8 by clustering into eqFourPoint_same. fin_cases-free; the
+-- idiom scaled by exactly ONE RUNG (one new configuration exc3Cfg, one entry-ladder level
+-- Q_two_three/Q_three_two, one reachability lemma modeOp_Q_apply_exc2) -- linear growth,
+-- no combinatorial blowup, exactly as the feasibility check predicted. Threshold honesty
+-- one rung up: at N = 3 the level-3 walk dies and the all-equal value is 9/8, not 15/8
+-- (documented, guarded by 3 < N). The general 2n-point theorem is NOT claimed -- the gate
+-- un-gates that work (L residue, queue decision). Proof-engineering snag for the ledger:
+-- rw of a naked Nat-literal equation (show (6:N) = 3+3) in a goal containing complex
+-- numerals corrupts the OfNat/AtLeastTwo instance terms (the raw 6 lives inside 8's
+-- instance) -- do pow-expansions in a standalone have with no other numerals, then rw the
+-- matrix-level equation.
+/-- info: 'CSD.CV.modeOpQ_six_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeOpQ_six_vac
+
+/-- info: 'CSD.CV.modeOpQ_four_two_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeOpQ_four_two_vac
+
 end CSD.Tests.AxiomAudit

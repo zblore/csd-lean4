@@ -42,6 +42,15 @@ four-point function equal to the pairing sum over stroboscopic kernels.
   one formula over every mode pattern, with `K_{ij} = twoPointKernel τ n_i n_j`.
   All periods `0` (or the formula at equal periods, via `twoPointKernel_self`)
   recover CV-23a: `timeFourPoint_zero`.
+* **The CV-23c gate — the six-point pass** (equal time): ★ `modeOpQ_six_vac` — the
+  sixth moment `⟨vac∣Q_k⁶∣vac⟩ = 15/8 = 5!!·(½)³` for `3 < N`, via the `Q³` column
+  at the vacuum (`modeOpQ_cube_apply_vac` — the plan's `‖Q³e₀‖²` anchor, computed
+  in walk-collapse form); `modeOpQ_four_two_vac` — the mixed pattern
+  `⟨Q_k⁴·Q_l²⟩ = 3/8` by clustering into `eqFourPoint_same`. At `N = 3` the
+  level-3 walk dies and the all-equal value is `9/8`, not `15/8` — the threshold
+  honesty one rung up, guarded by `3 < N`. The idiom scaled by exactly one rung
+  (one configuration, one entry-ladder level, one reachability lemma,
+  `fin_cases`-free): **the gate passes**.
 
 **Why Wick survives truncation exactly** (the load-bearing identity): the all-equal
 pattern is one level-2 walk `0→1→2→1→0` with amplitude `½·e^{-i(t₁+t₂−t₃−t₄)}`, and
@@ -52,9 +61,10 @@ the `2 < N` hypothesis is load-bearing exactly where `eqFourPoint_same` says.
 ⚠️ Honest scope: the free (mode-diagonal) drive only, matching `freeTwoPoint`'s
 scope; interacting corrections are priced by the CV-9/CV-12 ladder
 (`twoPoint_interacting_dist_le`) and not restated. No continuum limit
-(`ApproxCCR.no_exact_finite_ccr` stands). Higher `2n`-point Wick is not claimed —
-that is CV-23c, gated on the six-point pass. The relativistic reading is the CV-13
-substitution (`relFieldHamiltonian`, spacing `ω(m, p)`), recorded not restated.
+(`ApproxCCR.no_exact_finite_ccr` stands). The general `2n`-point Wick theorem is
+**not claimed**: the CV-23c gate below lands the six-point pass (which un-gates that
+work), not the theorem itself. The relativistic reading is the CV-13 substitution
+(`relFieldHamiltonian`, spacing `ω(m, p)`), recorded not restated.
 
 ## References
 
@@ -568,5 +578,198 @@ theorem timeFourPoint_wick [NeZero N] (hN2 : 2 < N) (τ : ℝ) (n₁ n₂ n₃ n
           simp [h12, Ne.symm h12, h23]
       · rw [timeFourPoint_single₁ τ n₁ n₂ n₃ n₄ h12 h13 h14]
         simp [h12, h13, h14]
+
+/-! ### The CV-23c gate: the six-point pass
+
+The go/no-go probe for the `2n`-point Wick theorem, agreed in advance
+(`eft-stage7-plan.md`): the six-point all-equal pattern and one mixed pattern must
+land with the walk-collapse idiom, `fin_cases`-free, thresholds explicit. The idiom
+scales by exactly one rung: one new configuration (`exc3Cfg`), one new level of the
+`Q` entry ladder (`Q_two_three`/`Q_three_two`), one new reachability lemma
+(`modeOp_Q_apply_exc2`), and the `Q³` column at the vacuum. The general `2n`-point
+theorem is NOT claimed here — the gate un-gates it. -/
+
+/-- `Q` connects the second to the third level with amplitude `√3/√2`. -/
+lemma Q_two_three [NeZero N] (hN3 : 3 < N) :
+    Q N ⟨2, by omega⟩ ⟨3, hN3⟩
+      = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * ((Real.sqrt 3 : ℝ) : ℂ) := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply, creation_apply]
+  norm_num
+
+/-- `Q` connects the third level back to the second with the same amplitude. -/
+lemma Q_three_two [NeZero N] (hN3 : 3 < N) :
+    Q N ⟨3, hN3⟩ ⟨2, by omega⟩
+      = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * ((Real.sqrt 3 : ℝ) : ℂ) := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply, creation_apply]
+  norm_num
+
+/-- `Q` reaches the second level only from the first and the third. -/
+lemma Q_apply_two_eq_zero [NeZero N] (hN2 : 2 < N) {m : Fin N} (h1 : (m : ℕ) ≠ 1)
+    (h3 : (m : ℕ) ≠ 3) : Q N m ⟨2, hN2⟩ = 0 := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply, creation_apply,
+    if_neg (show ¬((m : ℕ) + 1 = ((2 : ℕ))) from by omega),
+    if_neg (show ¬((2 : ℕ) + 1 = ((m : ℕ))) from by omega)]
+  simp
+
+/-- The **three-quantum configuration** at mode `l`. -/
+def exc3Cfg [NeZero N] (hN3 : 3 < N) (l : Fin K) : FieldConfig K N :=
+  Function.update (vacCfg K N) l ⟨3, hN3⟩
+
+@[simp] lemma exc3Cfg_self [NeZero N] (hN3 : 3 < N) (l : Fin K) :
+    (exc3Cfg (K := K) hN3 l) l = ⟨3, hN3⟩ := by
+  simp [exc3Cfg]
+
+lemma exc3Cfg_of_ne [NeZero N] (hN3 : 3 < N) {l j : Fin K} (h : j ≠ l) :
+    (exc3Cfg (K := K) hN3 l) j = 0 := by
+  simp [exc3Cfg, h]
+
+lemma excCfg_ne_exc3Cfg [NeZero N] (hN3 : 3 < N) (hN : 1 < N) (k : Fin K) :
+    excCfg (K := K) hN k ≠ exc3Cfg hN3 k := by
+  intro h
+  have hk := congrFun h k
+  rw [excCfg_self, exc3Cfg_self] at hk
+  exact absurd (congrArg Fin.val hk) (by simp)
+
+/-- From the two-quantum configuration, the mode quadrature reaches only the
+one- and three-quantum configurations. -/
+lemma modeOp_Q_apply_exc2 [NeZero N] (hN3 : 3 < N) (hN2 : 2 < N) (hN : 1 < N)
+    (k : Fin K) {e : FieldConfig K N} (h1 : e ≠ excCfg hN k)
+    (h3 : e ≠ exc3Cfg hN3 k) :
+    modeOp k (Q N) e (exc2Cfg hN2 k) = 0 := by
+  by_cases hoff : ∀ j, j ≠ k → e j = (vacCfg K N) j
+  · rw [modeOp_apply_of_agree k _ (fun j hj => by
+      rw [hoff j hj, vacCfg_apply, exc2Cfg_of_ne hN2 hj]),
+      exc2Cfg_self]
+    refine Q_apply_two_eq_zero hN2 ?_ ?_
+    · intro hval
+      refine h1 (funext fun j => ?_)
+      by_cases hj : j = k
+      · subst hj
+        rw [excCfg_self]
+        exact Fin.ext (by simpa using hval)
+      · rw [hoff j hj, vacCfg_apply, excCfg_of_ne hN hj]
+    · intro hval
+      refine h3 (funext fun j => ?_)
+      by_cases hj : j = k
+      · subst hj
+        rw [exc3Cfg_self]
+        exact Fin.ext (by simpa using hval)
+      · rw [hoff j hj, vacCfg_apply, exc3Cfg_of_ne hN3 hj]
+  · rw [modeOp, if_neg (fun h' => hoff (fun j hj => by
+      rw [h' j hj, exc2Cfg_of_ne hN2 hj, vacCfg_apply]))]
+
+/-- The mode quadrature is symmetric as a matrix transpose identity. -/
+lemma modeOpQ_transpose [NeZero N] (k : Fin K) :
+    (modeOp k (Q N))ᵀ = modeOp k (Q N) := by
+  ext c d
+  rw [Matrix.transpose_apply, modeOpQ_symm]
+
+/-- The cube of the mode quadrature is symmetric — powers of a symmetric matrix
+stay symmetric, entrywise form. -/
+lemma modeOpQ_cube_symm [NeZero N] (k : Fin K) (c d : FieldConfig K N) :
+    (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N)) c d
+      = (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N)) d c := by
+  have h : (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))ᵀ
+      = modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N) := by
+    rw [Matrix.transpose_mul, Matrix.transpose_mul, modeOpQ_transpose, ← mul_assoc]
+  conv_lhs => rw [← h]
+  rw [Matrix.transpose_apply]
+
+/-- The column of `Q_k³` at the vacuum — the plan's `Q³e₀ = (3/(2√2))·e₁ + (√3/2)·e₃`
+anchor, in walk-collapse form: mass `(3/2)·(√2)⁻¹` on the one-quantum configuration,
+`√3/2` on the three-quantum configuration, nothing else. -/
+lemma modeOpQ_cube_apply_vac [NeZero N] (hN3 : 3 < N) (hN2 : 2 < N) (hN : 1 < N)
+    (k : Fin K) (e : FieldConfig K N) :
+    (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N)) e (vacCfg K N)
+      = if e = excCfg hN k then (3 / 2 : ℂ) * (((Real.sqrt 2 : ℝ) : ℂ))⁻¹
+        else if e = exc3Cfg hN3 k then ((Real.sqrt 3 : ℝ) : ℂ) * (2 : ℂ)⁻¹
+        else 0 := by
+  classical
+  rw [mul_assoc, Matrix.mul_apply]
+  rw [← Finset.sum_subset
+      (Finset.subset_univ ({vacCfg K N, exc2Cfg hN2 k} : Finset _))
+      (fun c _ hc => by
+        rw [modeOpQ_sq_apply_vac hN2 k c, if_neg (fun h => hc (by simp [h])),
+          if_neg (fun h => hc (by simp [h])), mul_zero])]
+  rw [Finset.sum_pair (vacCfg_ne_exc2Cfg hN2 k), modeOpQ_sq_vac hN k,
+    modeOpQ_sq_exc2_vac hN2 k]
+  split_ifs with he1 he3
+  · subst he1
+    rw [modeOp_apply_of_agree k (Q N) (fun j hj => excCfg_agree hN k hj),
+      excCfg_self, vacCfg_apply, Q_one_zero hN,
+      modeOp_apply_of_agree k (Q N) (fun j hj => by
+        rw [excCfg_of_ne hN hj, exc2Cfg_of_ne hN2 hj]),
+      excCfg_self, exc2Cfg_self, Q_one_two hN2]
+    ring
+  · subst he3
+    rw [modeOp_Q_apply_vac hN k _ (excCfg_ne_exc3Cfg hN3 hN k).symm,
+      modeOp_apply_of_agree k (Q N) (fun j hj => by
+        rw [exc3Cfg_of_ne hN3 hj, exc2Cfg_of_ne hN2 hj]),
+      exc3Cfg_self, exc2Cfg_self, Q_three_two hN3]
+    linear_combination (((Real.sqrt 3 : ℝ) : ℂ)) * inv_sqrt_two_mul_self
+  · rw [modeOp_Q_apply_vac hN k e he1, modeOp_Q_apply_exc2 hN3 hN2 hN k he1 he3]
+    norm_num
+
+/-- ★ **The six-point pass, all-equal pattern**: the equal-time sixth moment
+`⟨vac∣Q_k⁶∣vac⟩ = 15/8 = 5!!·(½)³` for `3 < N` — Wick's fifteen pairings, all
+surviving at `(½)³` each. Via `‖Q³e₀‖² = 9/8 + 3/4`: the walk through
+the one-quantum configuration squared plus the walk through the three-quantum
+configuration squared. At `N = 3` the level-3 walk dies and the value is `9/8` —
+the truncation honesty one rung above `eqFourPoint_same`'s. -/
+theorem modeOpQ_six_vac [NeZero N] (hN3 : 3 < N) (k : Fin K) :
+    (modeOp k (Q N) ^ 6) (vacCfg K N) (vacCfg K N) = 15 / 8 := by
+  classical
+  have hN : 1 < N := by omega
+  have hN2 : 2 < N := by omega
+  have h1 : (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
+      (excCfg hN k) (vacCfg K N)
+      = (3 / 2 : ℂ) * (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ := by
+    rw [modeOpQ_cube_apply_vac hN3 hN2 hN k, if_pos rfl]
+  have h3 : (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
+      (exc3Cfg hN3 k) (vacCfg K N)
+      = ((Real.sqrt 3 : ℝ) : ℂ) * (2 : ℂ)⁻¹ := by
+    rw [modeOpQ_cube_apply_vac hN3 hN2 hN k,
+      if_neg (excCfg_ne_exc3Cfg hN3 hN k).symm, if_pos rfl]
+  have hpow : modeOp k (Q N) ^ 6
+      = (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
+        * (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N)) := by
+    rw [show (6 : ℕ) = 3 + 3 from rfl, pow_add, show (3 : ℕ) = 2 + 1 from rfl,
+      pow_succ, pow_two]
+  rw [hpow, Matrix.mul_apply]
+  rw [Finset.sum_congr rfl (fun e _ => by
+    rw [modeOpQ_cube_symm k (vacCfg K N) e])]
+  rw [← Finset.sum_subset
+      (Finset.subset_univ ({excCfg hN k, exc3Cfg hN3 k} : Finset _))
+      (fun e _ he => by
+        rw [modeOpQ_cube_apply_vac hN3 hN2 hN k e,
+          if_neg (fun h => he (by simp [h])), if_neg (fun h => he (by simp [h])),
+          zero_mul])]
+  rw [Finset.sum_pair (excCfg_ne_exc3Cfg hN3 hN k), h1, h3]
+  have hs3 : ((Real.sqrt 3 : ℝ) : ℂ) * ((Real.sqrt 3 : ℝ) : ℂ) = 3 := by
+    rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]
+    norm_num
+  linear_combination (9 / 4 : ℂ) * inv_sqrt_two_mul_self + (4 : ℂ)⁻¹ * hs3
+
+/-- **The six-point pass, mixed pattern**: `⟨vac∣Q_k⁴·Q_l²∣vac⟩ = 3/8 = (3/4)·(1/2)`
+for `k ≠ l` — clustering splits the modes, and the factors are the four-point
+all-equal value and the vacuum fluctuation. Needs only `2 < N` (the thresholds of
+its factors). -/
+theorem modeOpQ_four_two_vac [NeZero N] (hN2 : 2 < N) {k l : Fin K} (hkl : k ≠ l) :
+    (modeOp k (Q N) ^ 4 * modeOp l (Q N) ^ 2) (vacCfg K N) (vacCfg K N) = 3 / 8 := by
+  classical
+  have hN : 1 < N := by omega
+  have hpow : modeOp k (Q N) ^ 4
+      = modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N) := by
+    rw [show (4 : ℕ) = 3 + 1 from rfl, pow_succ, show (3 : ℕ) = 2 + 1 from rfl,
+      pow_succ, pow_two]
+  rw [hpow, pow_two,
+    diag_entry_mul_of_disjointSupport (by simpa using hkl)
+      ((((modeOp_supportedOn k (Q N)).mul (modeOp_supportedOn k (Q N))).mul
+        (modeOp_supportedOn k (Q N))).mul (modeOp_supportedOn k (Q N)))
+      ((modeOp_supportedOn l (Q N)).mul (modeOp_supportedOn l (Q N))),
+    show (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
+        (vacCfg K N) (vacCfg K N) = eqFourPoint (N := N) k k k k from rfl,
+    eqFourPoint_same hN2 k, modeOpQ_sq_vac hN l]
+  norm_num
 
 end CSD.CV

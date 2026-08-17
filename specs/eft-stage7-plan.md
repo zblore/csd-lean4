@@ -47,7 +47,7 @@ free field but no thermal field statement, and **no KMS anywhere** (verified
 
 | # | Item | Deps | Size | Status |
 |---|---|---|---|---|
-| CV-23 | **The Wick closure** — the Stage-6 residues, in three parts. **(a)** the packaged single-formula `δ`-sum over pairings (assembly of the existing `eqFourPoint` table into `Σ_pairings ∏ ½δ` form — per `CONVENTIONS.md` §8.3b this strengthens the existing Propagator table, no new capstone); **(b)** the **time-separated four-point** `⟨vac∣Q_{k₁}(n₁)Q_{k₂}(n₂)Q_{k₃}(n₃)Q_{k₄}∣vac⟩` — Heisenberg factors at distinct periods; the phase bookkeeping rides `heisenberg_phaseDiagU_apply` + `phaseDiagU_pow` exactly as the two-point did; **(c)** the **`2n`-point Wick theorem at the cutoff**, pattern-resolved with the truncation threshold explicit (`n < N` shaped — the honesty that made `eqFourPoint_same` state its `2 < N`). | CV-22 | (a) S, (b) M, (c) **L, GATED** | **(a) DONE 2026-08-17** (`eqFourPoint_wick`); **(b) DONE 2026-08-17** (`CV/Wick.lean`: ★★ `timeFourPoint_wick`, 4 pins — the notes below executed as written); (c) gate not yet run |
+| CV-23 | **The Wick closure** — the Stage-6 residues, in three parts. **(a)** the packaged single-formula `δ`-sum over pairings (assembly of the existing `eqFourPoint` table into `Σ_pairings ∏ ½δ` form — per `CONVENTIONS.md` §8.3b this strengthens the existing Propagator table, no new capstone); **(b)** the **time-separated four-point** `⟨vac∣Q_{k₁}(n₁)Q_{k₂}(n₂)Q_{k₃}(n₃)Q_{k₄}∣vac⟩` — Heisenberg factors at distinct periods; the phase bookkeeping rides `heisenberg_phaseDiagU_apply` + `phaseDiagU_pow` exactly as the two-point did; **(c)** the **`2n`-point Wick theorem at the cutoff**, pattern-resolved with the truncation threshold explicit (`n < N` shaped — the honesty that made `eqFourPoint_same` state its `2 < N`). | CV-22 | (a) S, (b) M, (c) **L, GATED** | **(a) DONE 2026-08-17** (`eqFourPoint_wick`); **(b) DONE 2026-08-17** (`CV/Wick.lean`: ★★ `timeFourPoint_wick`, 4 pins — the notes below executed as written); **(c) gate RUN and PASSED 2026-08-17** (`CV/Wick.lean`: ★ `modeOpQ_six_vac` `= 15/8` at `3 < N` + `modeOpQ_four_two_vac` `= 3/8`, `fin_cases`-free, one-rung scale-up; 2 pins) — the `2n`-point closure is **un-gated but not claimed**: it returns to the queue as an L item on its own merits |
 | CV-24 | **The thermal tier at the cutoff** (`CV/ThermalPropagator.lean`): `thermalFieldState β := gibbsState fieldHamiltonian _ β` with its closed-form diagonal Boltzmann weights; ★ the **thermal two-point function** `⟨Q_k(n) Q_l⟩_β` in closed form, with the vacuum recovered in the `β → ∞` limit (`freeTwoPoint` as a theorem-level limit, not a remark); ★★ **exact KMS at the cutoff** — the first KMS statement in the corpus, and the first join of the two complete verticals (Thermo TH1–TH4 ↔ CV). Relativistic reading by the same substitution as CV-13 (`relFieldHamiltonian`, spacing `ω(m,p)`), recorded not restated. | CV-13, TH3 | M/L | **DONE 2026-08-17** — all landed incl. the `β → ∞` vacuum limit; no residue. See the `future-work.md` CV-24 strike for the full record |
 | CV-25 | **Channel-level RG — the scoping session ONLY** (Q11 mold: a doc, not theorems). Map the CPTP coarse-graining candidates (partial trace over decimated modes vs `compressCfg`-conjugation Kraus), fix the norm, and determine whether the existing Duhamel/price ladder already supplies the error budget `ε(λ, τ, distance)`; name the first brick or return the row to unqueued. The Stage-4 no-go is the floor any statement must respect: exact unitary matching is impossible for support-spreading drives, so the target is approximate channel matching with a priced defect. | Stage 4 record, K2 channels | **Research, GATED** | queued |
 
@@ -86,7 +86,10 @@ The CV-23c notes remain live for the gate.
   (each mode walks only to level 1 — no threshold); the all-equal pattern is one
   three-intermediate collapse with the identity above. Expected size M.
 
-**CV-23c — the gate, not yet run.**
+**CV-23c — the gate. RUN 2026-08-17: PASSED** (`CV/Wick.lean` §"The CV-23c gate"; the
+route below was followed as written — the `‖Q³e₀‖²` anchor became
+`modeOpQ_cube_apply_vac`, and the walk-collapse idiom scaled by exactly one rung:
+one configuration, one entry-ladder level, one reachability lemma. No abort.)
 
 * Gate content: the six-point all-equal pattern (`3 < N`) plus one mixed pattern,
   `fin_cases`-free. Target value: `⟨Q⁶⟩ = 15/8` for `3 < N` (Gaussian `5!!·(½)³`).
@@ -113,7 +116,12 @@ syntactic condition (the B5-geom idiom family).
   threshold explicit. If the idiom blows up combinatorially, **abort to
   (a)+(b) only** — the four-point table remains the headline and the `2n`-point
   residue returns to the recorded-not-queued state. No shame recorded either
-  way.
+  way. **OUTCOME 2026-08-17: PASSED** — both patterns landed `fin_cases`-free
+  (`modeOpQ_six_vac`, `modeOpQ_four_two_vac`), growth was linear (one rung per
+  level, as the feasibility check predicted), and the `N = 3` honesty is
+  documented (`9/8`, level-3 walk cut). Consequence: the `2n`-point closure is
+  un-gated; whether to run the L-work is a queue decision, not part of this
+  gate's mandate.
 * **CV-25 gate:** one focused scoping pass. If no statement with a *provable*
   error budget emerges, the row returns to unqueued research and says so —
   the Stage-4 record is not to be re-litigated by optimism.
