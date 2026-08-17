@@ -42,22 +42,36 @@ keywords:
 # repository is one artefact with its own DOI; citing it at a tag is not.
 # See `docs/C1-FORMAL-SUPPORT.md` for the claim-to-theorem map.
 #
-# C1 formal support: cite tagged release `v1.2.3-c1-R3`, together with the exact
-# module path and fully-qualified theorem name.
+# C1 formal support: cite tagged release `v1.4.1-c1-complete`, together with the
+# exact module path and fully-qualified theorem name. The revised paper's pair:
+# CL-031 `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet` (the
+# general obstruction) + CL-052 `CSD.LF6.c1_singlet_contextual_capstone` (the
+# positive half: existence and obstruction in one statement), both in
+# `CsdLean4/LF6/C1BellConsistency.lean`.
 #
-# ⚠️ THIS LINE HAS GONE STALE TWICE (at R2, and again at R3). It is not
-# self-maintaining: adding a C1 tag without editing this line silently points
-# citations at superseded prose. **Update it in the same commit that precedes a
-# new C1 tag.**
+# ⚠️ THIS LINE HAS GONE STALE THREE TIMES (at R2, at R3, and through the whole
+# v1.4.x pair — found 2026-08-17). Its "update it in the same commit" instruction
+# demonstrably does not self-execute, so it is now GUARDED: `check-claims.sh`
+# check (13) fails when the newest `v*-c1-*` tag is not the one this line names.
+# Cutting a C1 tag therefore requires updating this line in the same stroke, on
+# pain of CI.
 #
 # Tag history — do NOT move or delete these; they are audit history, and each is
 # immutable by design:
 #   v1.2.0-c1-correction  the C1 correction itself (superseded prose)
 #   v1.2.1-c1-R1          first hygiene pass (still has the old endpoint text)
 #   v1.2.2-c1-R2          endpoint treatment corrected
-#   v1.2.3-c1-R3          CURRENT — live-documentation residuals closed,
-#                         wingPairUnitary unitarity exported, prose-audit
-#                         guard mode 4 added
+#   v1.2.3-c1-R3          live-documentation residuals closed, wingPairUnitary
+#                         unitarity exported, prose-audit guard mode 4 added
+#                         (superseded: its "final C1 repository tag" note
+#                         predated the two-sided separation)
+#   v1.3.0-consolidation  Q1-Q5/Q7/Q15 consolidation release (not C1-specific)
+#   v1.4.0-c1-two-sided   CL-052 lands: the explicit contextual model; superseded
+#                         same-week by v1.4.1 (predates Q20 and the notation
+#                         bridge)
+#   v1.4.1-c1-complete    CURRENT — the complete C1 stack: CL-031 + CL-052, the
+#                         Q20 section-4/5.1 theorems, the SigmaSpace/Bell-Lambda
+#                         notation bridge
 # ---------------------------------------------------------------------------
 
 preferred-citation:

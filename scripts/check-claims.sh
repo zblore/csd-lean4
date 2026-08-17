@@ -798,6 +798,20 @@ if [ -f README.md ]; then
   fi
 fi
 
+# (13) CITATION.cff C1 anchor: the "cite tagged release" line must name the newest C1
+# tag. The line went stale three times (R2, R3, and the v1.4.x pair — found 2026-08-17);
+# its own "update it in the same commit" instruction does not self-execute, so the guard
+# executes it. Skips gracefully when tags are absent (shallow CI checkouts fetch none —
+# the check then binds locally and on any full clone).
+newest_c1=$(git tag -l 'v*-c1-*' 2>/dev/null | sort -V | tail -1)
+if [ -n "$newest_c1" ] && [ -f CITATION.cff ]; then
+  if grep -q "cite tagged release \`$newest_c1\`" CITATION.cff; then
+    say_ok "CITATION.cff C1 anchor names the newest C1 tag ($newest_c1)"
+  else
+    say_fail "CITATION.cff C1 anchor is stale: newest C1 tag is $newest_c1 but the 'cite tagged release' line does not name it"
+  fi
+fi
+
 echo
 if [ "$fail" -eq 0 ]; then echo "check-claims: PASS"; exit 0
 else echo "check-claims: FAIL — code and the canonical claims block disagree (fix code or update the CLAIMS block)"; exit 1; fi
