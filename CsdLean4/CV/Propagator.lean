@@ -685,4 +685,61 @@ theorem eqFourPoint_single₄ [NeZero N] {k l m p : Fin K}
     commute_modeOp h3, ← mul_assoc] at h
   exact h
 
+/-- ★★ **Wick's four-point theorem at the cutoff, packaged** (CV-23a): above the
+truncation threshold `2 < N` the equal-time four-point function IS the pairing sum
+
+  `⟨Q_k Q_l Q_m Q_p⟩ = Σ_pairings ∏ ½δ
+     = ¼(δ_{kl}δ_{mp} + δ_{km}δ_{lp} + δ_{kp}δ_{lm})`,
+
+one formula over every mode pattern — the coincidence-pattern table (`eqFourPoint_same`,
+`_pair`/`_alt`/`_outer`, `_single₁`–`₄`) assembled into the textbook shape. The `2 < N`
+hypothesis is load-bearing exactly where the table says: at `N = 2` the all-equal
+pattern is `1/4`, not the Gaussian `3/4`, and the formula fails — truncation honesty,
+not a technical convenience. -/
+theorem eqFourPoint_wick [NeZero N] (hN2 : 2 < N) (k l m p : Fin K) :
+    eqFourPoint (N := N) k l m p
+      = (if k = l then (2 : ℂ)⁻¹ else 0) * (if m = p then (2 : ℂ)⁻¹ else 0)
+        + (if k = m then (2 : ℂ)⁻¹ else 0) * (if l = p then (2 : ℂ)⁻¹ else 0)
+        + (if k = p then (2 : ℂ)⁻¹ else 0) * (if l = m then (2 : ℂ)⁻¹ else 0) := by
+  have hN : 1 < N := by omega
+  by_cases hkl : k = l
+  · subst hkl
+    by_cases hkm : k = m
+    · subst hkm
+      by_cases hkp : k = p
+      · subst hkp
+        rw [eqFourPoint_same hN2]
+        norm_num
+      · rw [eqFourPoint_single₄ (fun h => hkp h.symm) (fun h => hkp h.symm)
+          (fun h => hkp h.symm)]
+        simp [hkp]
+    · by_cases hmp : m = p
+      · subst hmp
+        rw [eqFourPoint_pair hN hkm]
+        simp [hkm]
+        norm_num
+      · rw [eqFourPoint_single₃ (fun h => hkm h.symm) (fun h => hkm h.symm) hmp]
+        simp [hkm, hmp]
+  · by_cases hkm : k = m
+    · subst hkm
+      by_cases hlp : l = p
+      · subst hlp
+        rw [eqFourPoint_alt hN (fun h => hkl h)]
+        simp [hkl]
+        norm_num
+      · rw [eqFourPoint_single₂ (fun h => hkl h.symm) (fun h => hkl h.symm) hlp]
+        simp [hkl, Ne.symm hkl, hlp]
+    · by_cases hkp : k = p
+      · subst hkp
+        by_cases hlm : l = m
+        · subst hlm
+          rw [eqFourPoint_outer hN hkl]
+          simp [hkl]
+          norm_num
+        · rw [eqFourPoint_single₂ (fun h => hkl h.symm) hlm (fun h => hkl h.symm)]
+          simp [hkl, Ne.symm hkl, hlm]
+      · rw [eqFourPoint_single₁ hkl hkm hkp]
+        simp [hkl, hkm, hkp]
+
 end CSD.CV
+

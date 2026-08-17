@@ -700,4 +700,15 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.thermalTwoPoint_tendsto_vacuum
 
+-- CV-23a (2026-08-17, CV/Propagator.lean, Stage 7): Wick's four-point theorem PACKAGED --
+-- the eqFourPoint coincidence table assembled into the single pairing-sum formula
+-- 1/4(d_kl d_mp + d_km d_lp + d_kp d_lm), one statement over every mode pattern, per the
+-- CONVENTIONS 8.3b discipline (the existing table strengthened in place, no new capstone
+-- file). The 2 < N hypothesis is load-bearing exactly where the table says: at N = 2 the
+-- all-equal pattern is 1/4 not the Gaussian 3/4. CV-23b (time-separated four-point) and
+-- CV-23c (2n-point, gated on the six-point pass) remain queued.
+/-- info: 'CSD.CV.eqFourPoint_wick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.eqFourPoint_wick
+
 end CSD.Tests.AxiomAudit
