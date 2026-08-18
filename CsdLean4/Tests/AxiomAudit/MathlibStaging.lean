@@ -2147,4 +2147,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'not_isFlowTimeOne_of_section_collapsed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms not_isFlowTimeOne_of_section_collapsed
 
+-- CR-1 (2026-08-18, Mathlib\QuantumInfo\UnitaryPerturbation.lean, CV-26): the bridge between
+-- the two norms a perturbative quantum argument uses -- drives are estimated in the L2
+-- operator norm (Duhamel, Trotter), states are compared in the trace distance (where the DPI
+-- lives). traceDist_conj_sub_le: D(U rho U+, V rho V+) <= 2||U - V||, uniform in the state and
+-- free of dimension factors. Route: the difference is Hermitian AND traceless, so the
+-- variational collapse applies and D+ = D P+; splitting (U-V)rho U+ + V rho (U-V)+ and cycling
+-- the trace reduces to the Hoelder-lite |re tr(rho M)| <= ||M|| re tr rho, proved by
+-- diagonalising rho (spectral_theorem) and bounding each rotated diagonal entry by the
+-- operator norm (norm_entry_le_l2_opNorm). norm_cfc_le is the general functional-calculus norm
+-- bound that gives ||P+|| <= 1. Named and feasibility-checked in specs\channel-rg-scoping.md
+-- Sec 6 before any Lean was written; consumed by CV\ChannelRG.lean (CR-3).
+/-- info: 'QuantumInfo.norm_cfc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.norm_cfc_le
+
+/-- info: 'QuantumInfo.abs_re_trace_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.abs_re_trace_mul_le
+
+/-- info: 'QuantumInfo.traceDist_conj_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.traceDist_conj_sub_le
+
 end CSD.Tests.AxiomAudit

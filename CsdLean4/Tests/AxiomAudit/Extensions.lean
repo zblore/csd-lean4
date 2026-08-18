@@ -794,4 +794,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.modeOpQ_pow_mul_pow_vac
 
+-- CV-26 (2026-08-18, CV\ChannelRG.lean): channel-level RG at the cutoff -- the statement the
+-- Stage-4 no-go said had to replace unitary RG matching. The coarse-graining is MODE TRACING
+-- (keep the spectators, discard mode k), built as the Stinespring channel of the mode-split
+-- permutation isometry, so CPTP is free and the DPI applies. CR-2
+-- (coarseChannel_free_intertwine) is EXACT: the traced mode's phase meets its own conjugate in
+-- every surviving entry and cancels, so at zero coupling the RG step incurs no error at all --
+-- the whole CR-3 budget is the price of the interaction. CR-3 (channelRG_dist_le) is the
+-- capstone: D(C(U^n rho U^n+), U_eff^n C(rho) U_eff^n+) <= 2n |tau| |lam| C for every density
+-- operator, with 2 from the CR-1 bridge, n from the CV-12 telescoping, and |tau||lam|C from
+-- the CV-9 Duhamel price; the DPI is what lets the channel be applied AFTER the estimate.
+-- Scope: ONE coarse-graining step, not a flow -- no iteration, no fixed point, no beta
+-- function; no level decimation (compressCfg is trace-decreasing, needs a leakage arm the
+-- corpus lacks); uniform in distance (the cone-refined budget is deferred). Executes
+-- specs\channel-rg-scoping.md exactly as scoped, both missing links discharged.
+/-- info: 'CSD.CV.coarseChannel_apply_entry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.coarseChannel_apply_entry
+
+/-- info: 'CSD.CV.coarseChannel_free_intertwine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.coarseChannel_free_intertwine
+
+/-- info: 'CSD.CV.spectatorU_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spectatorU_pow
+
+/-- info: 'CSD.CV.channelRG_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.channelRG_dist_le
+
 end CSD.Tests.AxiomAudit

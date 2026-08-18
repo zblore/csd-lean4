@@ -1,6 +1,15 @@
 # CV-25 scoping: channel-level RG at the cutoff — the coarse dynamics as a priced CPTP statement
 
-Status: **SCOPING COMPLETE 2026-08-18** (BACKLOG row Q21, the third Stage-7 row;
+Status: **SCOPING COMPLETE 2026-08-18 — and the arc it named is now EXECUTED
+(CV-26, same day)**: CR-1/CR-2/CR-3 all landed in
+`Mathlib/QuantumInfo/UnitaryPerturbation.lean` and `CV/ChannelRG.lean` (7 pins), exactly
+as scoped below — mode tracing as the route, trace distance as the norm, the budget
+`ε = 2n·|τ|·|λ|·C_v`, and both §5 "missing, provable" links discharged with no
+re-scoping. This document is therefore a **spent scoping pass**: it is kept as the
+feasibility record (and as the model for the check-before-scoping discipline), not as an
+open plan. Deviations from the plan: none in substance; CR-2's proof turned out simpler
+than the §5 sketch (the traced mode's phase cancels its own conjugate entrywise, so the
+Kronecker factorisation the sketch anticipated was never needed). (BACKLOG row Q21, the third Stage-7 row;
 [`eft-stage7-plan.md`](eft-stage7-plan.md) row CV-25). One focused pass, per the gate
 agreed in advance. Deliverable of this document: the CPTP coarse-graining candidates
 mapped, the norm fixed, the error-budget chain checked link by link against the
