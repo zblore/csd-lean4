@@ -764,4 +764,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.modeOpQ_four_two_vac
 
+-- CV-23c CLOSURE (2026-08-17, CV\Wick.lean, Stage 7): the 2n-point theorem, pattern-resolved.
+-- The moment ladder: <0|Q^{2n}|0> = (2n-1)!! (1/2)^n EXACTLY for n < N -- the vacuum moments
+-- of the truncated quadrature are Gaussian below threshold, with (2n-1)!! counting Wick's
+-- pairings. The threshold is n < N shaped exactly as the row scoped: a 2n-step return walk
+-- reaches at most level n, so the cutoff is invisible iff n < N. Proof = the commutator
+-- recursion <Q^{2n+2}> = (2n+1)/2 <Q^{2n}> against truncated_ccr ([a,a+] = 1 - N topProj):
+-- the rank-one defect is sandwiched as <0|Q^j topProj Q^i|0> with i+j = 2n < 2(N-1), so at
+-- most one factor reaches the top level and the walk band (Q_pow_apply_vac_of_lt) kills it.
+-- Odd moments vanish by walk parity. modeOp is multiplicative (modeOp_mul/modeOp_pow, new
+-- API), so the ladder transports verbatim to the field; grouped patterns factorise by
+-- clustering (modeOpQ_pow_mul_pow_vac), longer grouped words iterate it, and interleavings
+-- reduce via commute_modeOp. NOT claimed: the one-shot sum-over-perfect-matchings formula
+-- for an arbitrary 2n-letter word (the four-point case has it: eqFourPoint_wick). The
+-- generic ring identity commutator_pow_expand ([A,B^m] telescoped) landed as a helper.
+/-- info: 'CSD.CV.Q_pow_two_mul_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Q_pow_two_mul_vac
+
+/-- info: 'CSD.CV.modeOpQ_pow_two_mul_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeOpQ_pow_two_mul_vac
+
+/-- info: 'CSD.CV.modeOpQ_pow_two_mul_add_one_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeOpQ_pow_two_mul_add_one_vac
+
+/-- info: 'CSD.CV.modeOpQ_pow_mul_pow_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeOpQ_pow_mul_pow_vac
+
 end CSD.Tests.AxiomAudit

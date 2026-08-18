@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.CV.ThermalPropagator
+public import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # CV-23b: the time-separated four-point function — Wick's theorem with the phases on
@@ -51,6 +52,21 @@ four-point function equal to the pairing sum over stroboscopic kernels.
   honesty one rung up, guarded by `3 < N`. The idiom scaled by exactly one rung
   (one configuration, one entry-ladder level, one reachability lemma,
   `fin_cases`-free): **the gate passes**.
+* **The `2n`-point closure (CV-23c)**: ★★ `Q_pow_two_mul_vac` and its field-level
+  form `modeOpQ_pow_two_mul_vac` — **the moment ladder**: below the truncation
+  threshold the vacuum moments of the quadrature are exactly Gaussian,
+  `⟨vac∣Q_k^{2n}∣vac⟩ = (2n−1)‼·(½)ⁿ` for `n < N`. `(2n−1)‼` counts Wick's
+  pairings of `2n` insertions, each pairing carrying `(½)ⁿ`; the threshold is
+  `n < N` shaped exactly as scoped — a `2n`-step return walk reaches at most
+  level `n`, so the cutoff is invisible iff `n < N`. Proved by the commutator
+  recursion `⟨Q^{2n+2}⟩ = (2n+1)/2·⟨Q^{2n}⟩` (`Q_pow_vac_recursion`) against the
+  truncated CCR (`truncated_ccr`), the rank-one defect killed by the walk band
+  (`Q_pow_apply_vac_of_lt`: at most one of the two sandwich entries can reach the
+  top level). Odd moments vanish by walk parity
+  (`modeOpQ_pow_two_mul_add_one_vac`). ★ `modeOpQ_pow_mul_pow_vac`: grouped
+  two-block patterns factorise into single-mode moments; longer grouped words
+  iterate the same clustering, and arbitrary interleavings reduce to grouped
+  form mode-by-mode via `commute_modeOp`.
 
 **Why Wick survives truncation exactly** (the load-bearing identity): the all-equal
 pattern is one level-2 walk `0→1→2→1→0` with amplitude `½·e^{-i(t₁+t₂−t₃−t₄)}`, and
@@ -61,10 +77,16 @@ the `2 < N` hypothesis is load-bearing exactly where `eqFourPoint_same` says.
 ⚠️ Honest scope: the free (mode-diagonal) drive only, matching `freeTwoPoint`'s
 scope; interacting corrections are priced by the CV-9/CV-12 ladder
 (`twoPoint_interacting_dist_le`) and not restated. No continuum limit
-(`ApproxCCR.no_exact_finite_ccr` stands). The general `2n`-point Wick theorem is
-**not claimed**: the CV-23c gate below lands the six-point pass (which un-gates that
-work), not the theorem itself. The relativistic reading is the CV-13 substitution
-(`relFieldHamiltonian`, spacing `ω(m, p)`), recorded not restated.
+(`ApproxCCR.no_exact_finite_ccr` stands). The `2n`-point closure is **pattern-resolved**:
+single-mode moments (`Q_pow_two_mul_vac`) plus two-block factorisation
+(`modeOpQ_pow_mul_pow_vac`), from which any grouped multi-mode word follows by
+iterating the clustering, and any interleaved word by first commuting distinct modes
+(`commute_modeOp`) into grouped form. The one-shot combinatorial pairing-sum formula
+over an arbitrary `2n`-letter word (a sum over perfect matchings) is **not separately
+stated** — `(2n−1)‼` carries that content on the mode diagonal, and the four-point
+case has it explicitly (`eqFourPoint_wick`, `timeFourPoint_wick`). Equal-time only:
+the time-separated story above stops at four points. The relativistic reading is the
+CV-13 substitution (`relFieldHamiltonian`, spacing `ω(m, p)`), recorded not restated.
 
 ## References
 
@@ -73,7 +95,10 @@ executes: the two-factor kernel, the cross-pairing exponent identity, the brick
 list); `specs/BACKLOG.md` (Q21); `specs/future-work.md` (row CV-23);
 `CV/Propagator.lean` (`eqFourPoint` and its coincidence table, `eqFourPoint_wick`,
 `freeTwoPoint_eq`, `diag_entry_mul_of_disjointSupport`, the `Q` entry ladder);
-`CV/ThermalPropagator.lean` (`heisenberg_freeFieldU_pow_apply`);
+`CV/ThermalPropagator.lean` (`heisenberg_freeFieldU_pow_apply`,
+`sum_collapse_of_support`); `CV/Oscillator.lean` (`truncated_ccr` — the engine of
+the moment recursion; `annihilation_apply`/`creation_apply`, `topProj`);
+`Mathlib/Data/Nat/Factorial/DoubleFactorial.lean` (`Nat.doubleFactorial`);
 `CV/ModeLocality.lean` (`commute_of_disjointSupport`, `modeOp_supportedOn`);
 `CV/DynamicalLocality.lean` (`heisenberg_freeFieldU_pow_supportedOn`);
 `CONVENTIONS.md` §8.3b (the pattern lemmas feed the one packaged capstone).
@@ -82,6 +107,7 @@ list); `specs/BACKLOG.md` (Q21); `specs/future-work.md` (row CV-23);
 @[expose] public section
 
 open Matrix
+open scoped Nat
 
 namespace CSD.CV
 
@@ -771,5 +797,307 @@ theorem modeOpQ_four_two_vac [NeZero N] (hN2 : 2 < N) {k l : Fin K} (hkl : k ≠
         (vacCfg K N) (vacCfg K N) = eqFourPoint (N := N) k k k k from rfl,
     eqFourPoint_same hN2 k, modeOpQ_sq_vac hN l]
   norm_num
+
+/-! ### The `2n`-point closure: the moment ladder
+
+The gate passed; this section lands the closure it un-gated. The heart is the
+single-mode statement: below the truncation threshold the vacuum moments of the
+quadrature are **exactly** Gaussian, `⟨0∣Q^{2n}∣0⟩ = (2n−1)‼·(½)ⁿ` for `n < N`,
+where `(2n−1)‼` counts Wick's pairings. The proof is the commutator recursion
+`⟨Q^{2n+2}⟩ = (2n+1)/2·⟨Q^{2n}⟩` against the truncated CCR
+`[a,a†] = 1 − N·topProj`: the CCR's rank-one defect is sandwiched as
+`⟨0∣Q^j·topProj·Q^i∣0⟩` with `i + j = 2n`, and the walk band kills it — a `j`-step
+walk from the vacuum reaches at most level `j`, and `i + j = 2n < 2(N−1)` means at
+most one of the two factors can reach the top level. That inequality IS the
+`n < N` threshold: truncation is invisible exactly while no return walk needs the
+ceiling. Odd moments vanish by walk parity. `modeOp` is multiplicative, so the
+single-mode ladder transports verbatim to the field, and clustering resolves the
+grouped multi-mode patterns. -/
+
+/-- The commutator telescopes through a power:
+`[A, Bᵐ] = Σ_{j<m} Bʲ·[A,B]·B^{m−1−j}` — a generic ring identity. -/
+lemma commutator_pow_expand {R : Type*} [Ring R] (A B : R) (m : ℕ) :
+    A * B ^ m - B ^ m * A
+      = ∑ j ∈ Finset.range m, B ^ j * (A * B - B * A) * B ^ (m - 1 - j) := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+    have hstep : A * B ^ (m + 1) - B ^ (m + 1) * A
+        = (A * B ^ m - B ^ m * A) * B + B ^ m * (A * B - B * A) := by
+      rw [pow_succ]
+      noncomm_ring
+    rw [hstep, ih, Finset.sum_mul, Finset.sum_range_succ, Nat.add_sub_cancel,
+      Nat.sub_self, pow_zero, mul_one]
+    congr 1
+    refine Finset.sum_congr rfl fun j hj => ?_
+    have hj' : j < m := Finset.mem_range.mp hj
+    rw [mul_assoc, ← pow_succ, show m - 1 - j + 1 = m - j from by omega]
+
+/-- `Q` is strictly tridiagonal: entries vanish off the two hop diagonals. -/
+lemma Q_apply_eq_zero_of_far [NeZero N] {i j : Fin N} (h1 : (i : ℕ) + 1 ≠ (j : ℕ))
+    (h2 : (j : ℕ) + 1 ≠ (i : ℕ)) : Q N i j = 0 := by
+  rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply, creation_apply,
+    if_neg h1, if_neg h2]
+  simp
+
+/-- The quadrature is symmetric as a transpose identity. -/
+lemma Q_transpose [NeZero N] : (Q N)ᵀ = Q N := by
+  ext i j
+  rw [Matrix.transpose_apply, Q_symm]
+
+/-- **The walk band** (column form): a `j`-step walk from the vacuum reaches at
+most level `j`, so the power's column at the vacuum vanishes above the band. -/
+lemma Q_pow_apply_vac_of_lt [NeZero N] (j : ℕ) :
+    ∀ {m : Fin N}, j < (m : ℕ) → (Q N ^ j) m 0 = 0 := by
+  induction j with
+  | zero =>
+    intro m hm
+    rw [pow_zero]
+    exact Matrix.one_apply_ne (fun h => by rw [h] at hm; simp at hm)
+  | succ j ih =>
+    intro m hm
+    rw [pow_succ', Matrix.mul_apply]
+    refine Finset.sum_eq_zero fun c _ => ?_
+    by_cases hadj : (m : ℕ) + 1 = (c : ℕ) ∨ (c : ℕ) + 1 = (m : ℕ)
+    · have hc : j < (c : ℕ) := by rcases hadj with h | h <;> omega
+      rw [ih hc, mul_zero]
+    · rw [Q_apply_eq_zero_of_far (fun h => hadj (Or.inl h)) (fun h => hadj (Or.inr h)),
+        zero_mul]
+
+/-- The walk band, row form (by symmetry of the quadrature). -/
+lemma Q_pow_vac_apply_of_lt [NeZero N] (j : ℕ) {m : Fin N} (h : j < (m : ℕ)) :
+    (Q N ^ j) 0 m = 0 := by
+  have hT : (Q N ^ j)ᵀ = Q N ^ j := by
+    rw [Matrix.transpose_pow, Q_transpose]
+  conv_lhs => rw [← hT]
+  rw [Matrix.transpose_apply, Q_pow_apply_vac_of_lt j h]
+
+/-- **Walk parity**: a `j`-step walk from the vacuum lands only on levels of `j`'s
+parity. -/
+lemma Q_pow_apply_vac_parity [NeZero N] (j : ℕ) :
+    ∀ {m : Fin N}, (m : ℕ) % 2 ≠ j % 2 → (Q N ^ j) m 0 = 0 := by
+  induction j with
+  | zero =>
+    intro m hm
+    rw [pow_zero]
+    exact Matrix.one_apply_ne (fun h => hm (by rw [h]; simp))
+  | succ j ih =>
+    intro m hm
+    rw [pow_succ', Matrix.mul_apply]
+    refine Finset.sum_eq_zero fun c _ => ?_
+    by_cases hadj : (m : ℕ) + 1 = (c : ℕ) ∨ (c : ℕ) + 1 = (m : ℕ)
+    · have hc : (c : ℕ) % 2 ≠ j % 2 := by rcases hadj with h | h <;> omega
+      rw [ih hc, mul_zero]
+    · rw [Q_apply_eq_zero_of_far (fun h => hadj (Or.inl h)) (fun h => hadj (Or.inr h)),
+        zero_mul]
+
+/-- **Odd moments vanish** at the single-mode level: `⟨0∣Q^{2n+1}∣0⟩ = 0`, no
+threshold needed. -/
+theorem Q_pow_two_mul_add_one_vac [NeZero N] (n : ℕ) :
+    (Q N ^ (2 * n + 1)) 0 0 = 0 :=
+  Q_pow_apply_vac_parity (2 * n + 1) (by simp only [Fin.val_zero]; omega)
+
+/-- The ladder–quadrature commutator at the cutoff:
+`[a, Q] = (√2)⁻¹·(1 − N·topProj)` — the truncated CCR, one hop down the ladder. -/
+lemma annihilation_Q_commutator [NeZero N] :
+    annihilation N * Q N - Q N * annihilation N
+      = (((Real.sqrt 2 : ℝ) : ℂ))
+          ⁻¹ • ((1 : Matrix (Fin N) (Fin N) ℂ) - (N : ℂ) • topProj N) := by
+  rw [← truncated_ccr, Q, mul_smul_comm, smul_mul_assoc, ← smul_sub]
+  congr 1
+  rw [mul_add, add_mul]
+  abel
+
+/-- The defect sandwich reads one row and one column at the top level:
+`(X·topProj·Y)(0,0) = X(0, N−1)·Y(N−1, 0)`. -/
+lemma mul_topProj_mul_apply [NeZero N] (hlt : N - 1 < N)
+    (X Y : Matrix (Fin N) (Fin N) ℂ) :
+    (X * topProj N * Y) 0 0 = X 0 ⟨N - 1, hlt⟩ * Y ⟨N - 1, hlt⟩ 0 := by
+  classical
+  rw [mul_assoc, Matrix.mul_apply, Finset.sum_eq_single (⟨N - 1, hlt⟩ : Fin N)]
+  · rw [topProj, Matrix.diagonal_mul, if_pos rfl, one_mul]
+  · intro j _ hj
+    rw [topProj, Matrix.diagonal_mul, if_neg (fun h => hj (Fin.ext h)), zero_mul,
+      mul_zero]
+  · intro h
+    exact absurd (Finset.mem_univ _) h
+
+/-- ★ **The moment recursion below threshold**:
+`⟨0∣Q^{2n+2}∣0⟩ = (2n+1)/2 · ⟨0∣Q^{2n}∣0⟩` for `n + 1 < N`. The `(2n+1)` counts the
+partners the leftmost insertion can pair with; the `½` is the pairing's kernel; the
+CCR defect dies because `i + j = 2n < 2(N−1)` lets at most one sandwich factor
+reach the top level. -/
+theorem Q_pow_vac_recursion [NeZero N] (n : ℕ) (hn : n + 1 < N) :
+    (Q N ^ (2 * n + 2)) 0 0 = ((2 * n + 1 : ℕ) : ℂ) / 2 * (Q N ^ (2 * n)) 0 0 := by
+  classical
+  have hlt : N - 1 < N := by omega
+  have hannihilation_col : ∀ c : Fin N, annihilation N c 0 = 0 := fun c => by
+    rw [annihilation_apply, if_neg (by simp)]
+  have hcreation_row : ∀ c : Fin N, creation N 0 c = 0 := fun c => by
+    rw [creation_apply, if_neg (by simp)]
+  have hX_a : (Q N ^ (2 * n + 1) * annihilation N) 0 0 = 0 := by
+    rw [Matrix.mul_apply]
+    exact Finset.sum_eq_zero fun c _ => by rw [hannihilation_col c, mul_zero]
+  have hdefect : ∀ j ∈ Finset.range (2 * n + 1),
+      (Q N ^ j * topProj N * Q N ^ (2 * n + 1 - 1 - j)) 0 0 = 0 := by
+    intro j hj
+    have hj' : j < 2 * n + 1 := Finset.mem_range.mp hj
+    rw [mul_topProj_mul_apply hlt]
+    by_cases hjN : j < N - 1
+    · rw [Q_pow_vac_apply_of_lt j (show j < ((⟨N - 1, hlt⟩ : Fin N) : ℕ) from hjN),
+        zero_mul]
+    · rw [Q_pow_apply_vac_of_lt (2 * n + 1 - 1 - j)
+        (show 2 * n + 1 - 1 - j < ((⟨N - 1, hlt⟩ : Fin N) : ℕ) from by
+          show 2 * n + 1 - 1 - j < N - 1
+          omega),
+        mul_zero]
+  have hterm : ∀ j ∈ Finset.range (2 * n + 1),
+      (Q N ^ j * ((((Real.sqrt 2 : ℝ) : ℂ))
+          ⁻¹ • ((1 : Matrix (Fin N) (Fin N) ℂ) - (N : ℂ) • topProj N))
+        * Q N ^ (2 * n + 1 - 1 - j)) 0 0
+        = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * (Q N ^ (2 * n)) 0 0 := by
+    intro j hj
+    have hj' : j < 2 * n + 1 := Finset.mem_range.mp hj
+    rw [mul_smul_comm, smul_mul_assoc, Matrix.smul_apply, smul_eq_mul]
+    congr 1
+    rw [mul_sub, mul_one, mul_smul_comm, sub_mul, smul_mul_assoc, Matrix.sub_apply,
+      Matrix.smul_apply, smul_eq_mul, hdefect j hj, mul_zero, sub_zero, ← pow_add,
+      show j + (2 * n + 1 - 1 - j) = 2 * n from by omega]
+  have ha_X : (annihilation N * Q N ^ (2 * n + 1)) 0 0
+      = ((2 * n + 1 : ℕ) : ℂ) * ((((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * (Q N ^ (2 * n)) 0 0) := by
+    have hcomm := commutator_pow_expand (annihilation N) (Q N) (2 * n + 1)
+    rw [annihilation_Q_commutator] at hcomm
+    have h0 := congrArg (fun M : Matrix (Fin N) (Fin N) ℂ => M 0 0) hcomm
+    simp only [Matrix.sub_apply] at h0
+    rw [hX_a, sub_zero] at h0
+    rw [h0, Matrix.sum_apply, Finset.sum_congr rfl hterm, Finset.sum_const,
+      Finset.card_range, nsmul_eq_mul]
+  have hmat : Q N ^ (2 * n + 2)
+      = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ • (annihilation N * Q N ^ (2 * n + 1)
+          + creation N * Q N ^ (2 * n + 1)) := by
+    have hQdef : (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ • (annihilation N + creation N) = Q N :=
+      rfl
+    rw [← add_mul, ← smul_mul_assoc, hQdef,
+      show 2 * n + 2 = (2 * n + 1) + 1 from by omega, pow_succ']
+  have hcre : (creation N * Q N ^ (2 * n + 1)) 0 0 = 0 := by
+    rw [Matrix.mul_apply]
+    exact Finset.sum_eq_zero fun c _ => by rw [hcreation_row c, zero_mul]
+  rw [hmat, Matrix.smul_apply, Matrix.add_apply, hcre, add_zero, smul_eq_mul, ha_X]
+  linear_combination
+    ((2 * n + 1 : ℕ) : ℂ) * ((Q N ^ (2 * n)) 0 0) * inv_sqrt_two_mul_self
+
+/-- ★★ **The `2n`-point theorem at a single mode** (the CV-23c closure): below the
+truncation threshold the vacuum moments of the quadrature are exactly Gaussian,
+
+  `⟨0∣Q^{2n}∣0⟩ = (2n−1)‼ · (½)ⁿ`  for `n < N`,
+
+`(2n−1)‼` counting Wick's pairings of the `2n` insertions, each pairing carrying
+`(½)ⁿ`. The threshold is `n < N` shaped: a `2n`-step return walk from the vacuum
+reaches at most level `n`, so the cutoff is invisible exactly while `n < N` — at
+`n = N` the value departs (the gate documents `⟨Q⁶⟩ = 9/8 ≠ 15/8` at `N = 3`). -/
+theorem Q_pow_two_mul_vac [NeZero N] :
+    ∀ n, n < N → (Q N ^ (2 * n)) 0 0 = (((2 * n - 1)‼ : ℕ) : ℂ) / 2 ^ n := by
+  intro n
+  induction n with
+  | zero =>
+    intro _
+    norm_num [Nat.doubleFactorial]
+  | succ n ih =>
+    intro hn
+    rw [show 2 * (n + 1) = 2 * n + 2 from by omega, Q_pow_vac_recursion n hn,
+      ih (by omega), show 2 * n + 2 - 1 = 2 * n + 1 from by omega,
+      Nat.doubleFactorial_add_one]
+    push_cast
+    ring
+
+/-! #### Transport to the field -/
+
+/-- `modeOp` sends the identity to the identity. -/
+lemma modeOp_one (k : Fin K) : modeOp k (1 : Matrix (Fin N) (Fin N) ℂ) = 1 := by
+  classical
+  ext c d
+  by_cases h : ∀ j, j ≠ k → c j = d j
+  · rw [modeOp_apply_of_agree k _ h]
+    by_cases hcd : c = d
+    · subst hcd
+      rw [Matrix.one_apply_eq, Matrix.one_apply_eq]
+    · have hk : c k ≠ d k := fun hk => hcd (funext fun j => by
+        by_cases hj : j = k
+        · subst hj; exact hk
+        · exact h j hj)
+      rw [Matrix.one_apply_ne hk, Matrix.one_apply_ne hcd]
+  · rw [show modeOp k (1 : Matrix (Fin N) (Fin N) ℂ) c d = 0 from by
+      rw [modeOp, if_neg h]]
+    push Not at h
+    obtain ⟨j, hjk, hne⟩ := h
+    exact (Matrix.one_apply_ne (fun hcd => hne (congrFun hcd j))).symm
+
+/-- `modeOp` is multiplicative on a fixed mode: single-mode matrices compose
+before or after embedding, indifferently. -/
+lemma modeOp_mul (k : Fin K) (a b : Matrix (Fin N) (Fin N) ℂ) :
+    modeOp k a * modeOp k b = modeOp k (a * b) := by
+  classical
+  ext c d
+  rw [Matrix.mul_apply]
+  by_cases h : ∀ j, j ≠ k → c j = d j
+  · rw [modeOp_apply_of_agree k _ h, Matrix.mul_apply,
+      sum_collapse_of_support c k _ (fun e he => by
+        rw [show modeOp k a c e = 0 from by rw [modeOp, if_neg he], zero_mul])]
+    refine Finset.sum_congr rfl fun m _ => ?_
+    rw [modeOp_apply_of_agree k a (fun j hj => (Function.update_of_ne hj _ _).symm),
+      modeOp_apply_of_agree k b (fun j hj =>
+        (Function.update_of_ne hj _ _).trans (h j hj)),
+      Function.update_self]
+  · rw [show modeOp k (a * b) c d = 0 from by rw [modeOp, if_neg h]]
+    refine Finset.sum_eq_zero fun e _ => ?_
+    by_cases hce : ∀ j, j ≠ k → c j = e j
+    · have hed : ¬ ∀ j, j ≠ k → e j = d j :=
+        fun hed => h (fun j hj => (hce j hj).trans (hed j hj))
+      rw [show modeOp k b e d = 0 from by rw [modeOp, if_neg hed], mul_zero]
+    · rw [show modeOp k a c e = 0 from by rw [modeOp, if_neg hce], zero_mul]
+
+/-- `modeOp` respects powers. -/
+lemma modeOp_pow (k : Fin K) (a : Matrix (Fin N) (Fin N) ℂ) (m : ℕ) :
+    modeOp k a ^ m = modeOp k (a ^ m) := by
+  induction m with
+  | zero => rw [pow_zero, pow_zero, modeOp_one]
+  | succ m ih => rw [pow_succ, pow_succ, ih, modeOp_mul]
+
+/-- A power of the mode quadrature reads its vacuum diagonal at the single-mode
+level. -/
+lemma modeOpQ_pow_vac_entry [NeZero N] (k : Fin K) (m : ℕ) :
+    (modeOp k (Q N) ^ m) (vacCfg K N) (vacCfg K N) = (Q N ^ m) 0 0 := by
+  rw [modeOp_pow, modeOp_apply_of_agree k _ (fun _ _ => rfl), vacCfg_apply]
+
+/-- ★★ **The `2n`-point theorem on the field** (CV-23c): the equal-time vacuum
+moments of any mode quadrature are exactly Gaussian below threshold,
+`⟨vac∣Q_k^{2n}∣vac⟩ = (2n−1)‼·(½)ⁿ` for `n < N`. -/
+theorem modeOpQ_pow_two_mul_vac [NeZero N] (n : ℕ) (hn : n < N) (k : Fin K) :
+    (modeOp k (Q N) ^ (2 * n)) (vacCfg K N) (vacCfg K N)
+      = (((2 * n - 1)‼ : ℕ) : ℂ) / 2 ^ n := by
+  rw [modeOpQ_pow_vac_entry, Q_pow_two_mul_vac n hn]
+
+/-- Odd moments vanish on the field: `⟨vac∣Q_k^{2n+1}∣vac⟩ = 0`. -/
+theorem modeOpQ_pow_two_mul_add_one_vac [NeZero N] (n : ℕ) (k : Fin K) :
+    (modeOp k (Q N) ^ (2 * n + 1)) (vacCfg K N) (vacCfg K N) = 0 := by
+  rw [modeOpQ_pow_vac_entry, Q_pow_two_mul_add_one_vac]
+
+/-- ★ **Grouped patterns factorise**: `⟨vac∣Q_k^{m₁}·Q_l^{m₂}∣vac⟩` splits into
+single-mode moments for `k ≠ l`. Longer grouped words iterate this clustering
+block by block, and arbitrary interleavings reduce to grouped form via
+`commute_modeOp` — together with the moment ladder, this is the equal-time
+`2n`-point function pattern-resolved. -/
+theorem modeOpQ_pow_mul_pow_vac [NeZero N] {k l : Fin K} (hkl : k ≠ l) (m₁ m₂ : ℕ) :
+    (modeOp k (Q N) ^ m₁ * modeOp l (Q N) ^ m₂) (vacCfg K N) (vacCfg K N)
+      = (Q N ^ m₁) 0 0 * (Q N ^ m₂) 0 0 := by
+  classical
+  have hs1 : SupportedOn {k} (modeOp k (Q N) ^ m₁) := by
+    rw [modeOp_pow]
+    exact modeOp_supportedOn k _
+  have hs2 : SupportedOn {l} (modeOp l (Q N) ^ m₂) := by
+    rw [modeOp_pow]
+    exact modeOp_supportedOn l _
+  rw [diag_entry_mul_of_disjointSupport (by simpa using hkl) hs1 hs2,
+    modeOpQ_pow_vac_entry, modeOpQ_pow_vac_entry]
 
 end CSD.CV
