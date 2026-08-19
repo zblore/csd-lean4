@@ -200,6 +200,7 @@ for e in entries:
     s_layman = linkify(e["layman"], slug, used, sources)
     s_incsd = linkify(e["in_csd"], slug, used, sources)
     s_math = linkify(e["mathematical"], slug, used, sources)
+    s_person = linkify(e["person"], slug, used, sources) if e.get("person") else ""
 
     chips = ['<span class="chip"><b>' + E(st.replace("-", " ")) + "</b> &middot; "
              + E(STATUS_GLOSS.get(st, "")) + "</span>"]
@@ -236,6 +237,12 @@ for e in entries:
         + s_incsd + "</p></section>"
         + '<section class="r3"><h2>Mathematically</h2><p>'
         + s_math + "</p></section>"
+        # Optional fourth register: who the name belongs to. A reader meeting an
+        # eponym often wants the person, not only the concept, and an entry titled
+        # after someone that never says who they were is a small failure of the
+        # form. Rendered last because it is context, not content.
+        + ('<section class="r4"><h2>The name</h2><p>' + s_person + "</p></section>"
+           if s_person else "")
         + '<div class="foot"><dl>'
         + "".join("<dt>" + k + "</dt><dd>" + v + "</dd>" for k, v in rows)
         + "</dl>"

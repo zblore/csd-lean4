@@ -26,7 +26,7 @@
 meta:
   site: https://glossary.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 01801b28f5315f7a5943472904f3c7693210113a
+  sha: cddf84b67cfbdd8ec08bee231d53c06a0b4546e0
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -121,7 +121,19 @@ entries:
       the top exterior power of the associated Kahler form over n factorial.
       Uniqueness is Haar uniqueness. An invariant measure on a homogeneous space is
       unique up to scale when the action is transitive, and normalisation fixes the
-      scale. Proved here at general N with no imported axioms.
+      scale. Proved here at general N with no imported axioms. The construction takes a
+      reference point, but that is bookkeeping rather than a degree of freedom:
+      `fubiniStudyMeasure_basepoint_independent` shows any two choices give the same
+      measure, so the canonical `defaultFubiniStudyMeasure` is *the* Fubini-Study
+      measure and not one of a family.
+    person: >
+      Guido Fubini (1879-1943), Italian, is best known for the theorem on exchanging
+      the order of integration that carries his name, and worked extensively on
+      projective differential geometry. Stripped of his university post by the racial
+      laws of fascist Italy in 1938, he emigrated to the United States and taught at
+      Princeton until his death. Eduard Study (1862-1930), German, worked on invariant
+      theory and the geometry of complex spaces. The two arrived at this metric
+      independently around 1904-1905, which is why it carries both names.
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean
       theorem: fubiniStudyMeasure_unique

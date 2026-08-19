@@ -11,7 +11,7 @@ public import Mathlib.MeasureTheory.Measure.Haar.Unique
 public import Mathlib.Topology.Instances.Matrix
 
 /-!
-# Joint continuity of the unitary action on complex projective space (Phase G1)
+# Uniqueness of the invariant measure on complex projective space (Phases G1, G4, G5)
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
@@ -39,10 +39,20 @@ Use the open-quotient-map structure of
   (`Continuous.matrix_mulVec`), `PiLp.continuous_toLp`, `continuous_mk'`,
   and subtype machinery.
 
-## Main result
+## Main results
 
-`Matrix.UnitaryGroup.instContinuousSMul_projectivization` —
-`ContinuousSMul (Matrix.unitaryGroup (Fin N) ℂ) (ℙ ℂ (EuclideanSpace ℂ (Fin N)))`.
+The file is named for its headline, `fubiniStudyMeasure_unique`, but it carries the
+whole chain from joint continuity to base-point independence. (The title said only
+Phase G1 until 2026-08-19, which understated it by two phases.)
+
+* **G1** `Matrix.UnitaryGroup.instContinuousSMul_projectivization` —
+  `ContinuousSMul (Matrix.unitaryGroup (Fin N) ℂ) (ℙ ℂ (EuclideanSpace ℂ (Fin N)))`.
+  Joint continuity, hence joint measurability, which the Fubini swap in G4 needs.
+* ★★ **G4** `fubiniStudyMeasure_unique` — any `U(N)`-invariant probability measure on
+  `ℂℙ^(N-1)` IS `fubiniStudyMeasure p₀`. The uniqueness the whole programme leans on.
+* ★ **G5** `fubiniStudyMeasure_basepoint_independent` / `fubiniStudyMeasure_eq_default`
+  — the reference point is immaterial, so `defaultFubiniStudyMeasure` names *the*
+  measure rather than one of a family. A corollary of G4.
 
 ## What this unlocks
 
