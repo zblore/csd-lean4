@@ -17,6 +17,10 @@ public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 frontier; the multipartite analogue of LF6-A.1's singlet forced-contextuality
 crux).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/ghz-state/
+Plain-language, CSD-role and formal statements of the GHZ state, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## The idea
 
 LF6-A.1 (`ForcedContextuality.lean`) showed: a *product* (setting-local,

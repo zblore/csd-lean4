@@ -57,25 +57,30 @@ refs:
   "Kahler form":             {url: "https://en.wikipedia.org/wiki/K%C3%A4hler_manifold", source: Wikipedia}
   "Kahler":                  {url: "https://en.wikipedia.org/wiki/K%C3%A4hler_manifold", source: Wikipedia}
   "Fubini-Study metric":     {url: "https://en.wikipedia.org/wiki/Fubini%E2%80%93Study_metric", source: Wikipedia}
-  "Born rule":               {url: "https://en.wikipedia.org/wiki/Born_rule", source: Wikipedia}
-  "Gleason":                 {url: "https://en.wikipedia.org/wiki/Gleason%27s_theorem", source: Wikipedia}
-  "Busch":                   {url: "https://doi.org/10.1103/PhysRevLett.91.120403", source: "Busch 2003, PRL"}
-  "Duistermaat-Heckman":     {url: "https://en.wikipedia.org/wiki/Duistermaat%E2%80%93Heckman_formula", source: Wikipedia}
+  # NOTE: terms that became entries in the 2026-08-19 tranche were removed from
+  # this registry, per the rule above — they now resolve internally. (Entries are
+  # loaded into the link table before refs and `setdefault` keeps the first, so
+  # entries win regardless; the removal keeps the source honest rather than
+  # changing output.) Removed: Born rule, Gleason, Busch, Duistermaat-Heckman,
+  # Wigner, Stone, Bell, GHZ, Tsirelson, Landauer.
   "Liouville":               {url: "https://en.wikipedia.org/wiki/Liouville%27s_theorem_(Hamiltonian)", source: Wikipedia}
   "Naimark":                 {url: "https://en.wikipedia.org/wiki/Naimark%27s_dilation_theorem", source: Wikipedia}
   "POVM":                    {url: "https://en.wikipedia.org/wiki/POVM", source: Wikipedia}
   "Luders":                  {url: "https://en.wikipedia.org/wiki/L%C3%BCders_rule", source: Wikipedia}
-  "Wigner":                  {url: "https://en.wikipedia.org/wiki/Wigner%27s_theorem", source: Wikipedia}
-  "Bell":                    {url: "https://en.wikipedia.org/wiki/Bell%27s_theorem", source: Wikipedia}
-  "GHZ":                     {url: "https://en.wikipedia.org/wiki/Greenberger%E2%80%93Horne%E2%80%93Zeilinger_state", source: Wikipedia}
   "CGLMP":                   {url: "https://doi.org/10.1103/PhysRevLett.88.040404", source: "Collins et al. 2002, PRL"}
   "Kochen-Specker":          {url: "https://plato.stanford.edu/entries/kochen-specker/", source: "Stanford Encyclopedia"}
-  "Tsirelson":               {url: "https://en.wikipedia.org/wiki/Tsirelson%27s_bound", source: Wikipedia}
   "Dirichlet":               {url: "https://en.wikipedia.org/wiki/Dirichlet_distribution", source: Wikipedia}
   "Bargmann":                {url: "https://en.wikipedia.org/wiki/Wigner%27s_theorem#Bargmann", source: Wikipedia}
-  "Stone":                   {url: "https://en.wikipedia.org/wiki/Stone%27s_theorem_on_one-parameter_unitary_groups", source: Wikipedia}
-  "Landauer":                {url: "https://en.wikipedia.org/wiki/Landauer%27s_principle", source: Wikipedia}
+  "von Neumann entropy":     {url: "https://en.wikipedia.org/wiki/Von_Neumann_entropy", source: Wikipedia}
   "Gibbs":                   {url: "https://en.wikipedia.org/wiki/Gibbs_measure", source: Wikipedia}
+  "Clausius":                {url: "https://en.wikipedia.org/wiki/Clausius_theorem", source: Wikipedia}
+  "hidden-variable":         {url: "https://en.wikipedia.org/wiki/Hidden-variable_theory", source: Wikipedia}
+  "moment map":              {url: "https://en.wikipedia.org/wiki/Moment_map", source: Wikipedia}
+  "simplex":                 {url: "https://en.wikipedia.org/wiki/Simplex", source: Wikipedia}
+  "skew-Hermitian":          {url: "https://en.wikipedia.org/wiki/Skew-Hermitian_matrix", source: Wikipedia}
+  "one-parameter":           {url: "https://en.wikipedia.org/wiki/One-parameter_group", source: Wikipedia}
+  "antiunitary":             {url: "https://en.wikipedia.org/wiki/Antiunitary_operator", source: Wikipedia}
+  "subadditivity":           {url: "https://en.wikipedia.org/wiki/Von_Neumann_entropy#Subadditivity", source: Wikipedia}
   "Levy":                    {url: "https://en.wikipedia.org/wiki/Concentration_of_measure", source: Wikipedia}
   "Helland":                 {url: "https://doi.org/10.1063/5.0218982", source: "Helland 2024, APL Quantum"}
   "Ashtekar":                {url: "https://arxiv.org/abs/gr-qc/9706069", source: "Ashtekar & Schilling 1997"}
@@ -129,3 +134,327 @@ entries:
       - text: "Bengtsson and Zyczkowski, Geometry of Quantum States, 2nd ed., CUP 2020"
         url: https://www.cambridge.org/core/books/geometry-of-quantum-states/
     related: [duistermaat-heckman, liouville-measure, kahler-form, born-weight]
+
+  - slug: born-weight
+    term: Born rule
+    eponyms: [Born]
+    status: proved-in-corpus
+    hook: >
+      Quantum mechanics' probability rule is not assumed here. It is what you get
+      by measuring the size of a region, once the ruler is fixed.
+    layman: >
+      Ask a quantum system a question and you get one answer, but ask many times and
+      the answers come in stable proportions. Textbook quantum mechanics writes those
+      proportions down as a law and leaves it there. Here they are not a law but a
+      consequence of size: the space of states divides into regions, one per outcome,
+      and an outcome's frequency is the fraction of the space its region occupies.
+      Nothing is put in by hand except the ruler, and the ruler is forced.
+    in_csd: >
+      This is the programme's central result and the reason the rest exists. The
+      outcome regions carve the state space, the Fubini-Study measure supplies the
+      only unbiased notion of their size, and the ratio of volumes comes out equal to
+      the textbook weight. It is derived at general dimension, not checked on
+      examples, and without the usual route through Gleason's theorem, which is why
+      the corpus can claim a derivation rather than a rediscovery. What turns on it:
+      if this failed, the programme would be a reinterpretation of quantum mechanics
+      instead of a reconstruction of it.
+    mathematical: >
+      For a preparation vector psi on CP^(N-1), the Fubini-Study measure of the
+      barycentric outcome region attached to basis vector e_k equals the Born weight
+      |<e_k, psi>|^2. Proved coordinate-by-coordinate at general N, unconditional, and
+      Gleason-free. The companion apex statement covers the dropped vertex, so the
+      identity holds on all N coordinates of a generic preparation.
+    lean:
+      module: CsdLean4/LF4/MomentBornN.lean
+      theorem: fs_born_volume_ratio_N
+    related: [fubini-study-measure, duistermaat-heckman, gleason-theorem]
+
+  - slug: duistermaat-heckman
+    term: Duistermaat-Heckman formula
+    eponyms: [Duistermaat, Heckman]
+    status: proved-in-corpus
+    hook: >
+      Project the space of quantum states down onto its outcome probabilities and the
+      curvature disappears: what lands is flat.
+    layman: >
+      The space of quantum states is curved, and one might expect that measuring
+      regions of it would be a delicate business. It is not. There is a natural way of
+      recording only the outcome probabilities of a state, discarding everything else,
+      and under that recording the curved space flattens completely. Sizes become
+      ordinary volumes of the kind you would measure in a triangle. This is why the
+      probability calculation stays tractable at any number of outcomes.
+    in_csd: >
+      This is the engine that makes Born weights computable rather than merely
+      defined. The moment map sends a state to its tuple of outcome probabilities,
+      and the pushforward of the Fubini-Study measure along it is flat on the
+      probability simplex. So a volume ratio in a curved high-dimensional space
+      becomes a Lebesgue volume in a simplex, which is what turns the Born statement
+      into a finite computation at general N.
+    mathematical: >
+      For a measurable region R of the open free moment simplex, the Fubini-Study
+      measure of its preimage under the normalised moment map equals M factorial times
+      the Lebesgue volume of R. Equivalently the pushforward of the Fubini-Study
+      measure along the moment map is the flat (uniform Dirichlet) distribution on the
+      simplex. Unconditional, and the genuine general-N Duistermaat-Heckman content on
+      this space.
+    lean:
+      module: CsdLean4/LF4/MomentBornN.lean
+      theorem: fs_volume_eq_dirichlet
+    related: [fubini-study-measure, born-weight]
+
+  - slug: gleason-theorem
+    term: Gleason and Busch theorems
+    eponyms: [Gleason, Busch]
+    status: proved-in-corpus
+    hook: >
+      The standard route to the Born rule was carried here as a borrowed assumption
+      for months. It is now proved, and the corpus imports no axioms at all.
+    layman: >
+      There is a celebrated argument that any consistent way of assigning
+      probabilities to quantum questions must be the standard one. It is powerful and
+      it is hard, so formalisation projects usually assume it and move on. Assuming it
+      is not free: it means the probability rule was put in rather than derived. Here
+      the effect-valued version was assumed at first, then proved outright, so nothing
+      of the sort is borrowed any more.
+    in_csd: >
+      Two things turn on this. First, honesty of the axiom ledger: with this discharged
+      the corpus depends on no imported result and no postulate beyond the foundations
+      of its proof assistant. Second, independence: the programme's own Born derivation
+      goes through volume ratios and does not use this theorem, so the two routes are
+      genuinely separate confirmations rather than one argument wearing two hats. A
+      published abstract once described this as an external input; that was true when
+      written and false by the time it was read, which is the reason this glossary is
+      guarded.
+    mathematical: >
+      Every operational package on a finite-dimensional space admits an effect-Gleason
+      representation: the probability assignment on effects is given by a density
+      operator through the trace pairing. This is the Busch effect-valued form, which
+      unlike the original projection-valued Gleason theorem holds in dimension two as
+      well. Proved in-corpus 2026-07-21, foundational-triple only.
+    lean:
+      module: CsdLean4/LF2/EffectGleason.lean
+      theorem: effect_gleason_representation
+    papers:
+      - doi: 10.5281/zenodo.20100580
+        note: LF2, the measure bridge and Born-weight wrapper
+    related: [born-weight, fubini-study-measure]
+
+  - slug: wigner-rigidity
+    term: Wigner rigidity
+    eponyms: [Wigner]
+    status: proved-in-corpus
+    hook: >
+      Preserve the overlaps between quantum states and you have no freedom left: you
+      are a symmetry, whether you meant to be one or not.
+    layman: >
+      Quantum states have a notion of how much any two of them agree. Suppose you
+      rearrange the space of states in any way at all, subject to one condition: the
+      agreement between any two states is unchanged. That sounds like weak information,
+      and yet it pins you down completely. The only rearrangements are the rigid
+      motions physics already knows about. You cannot be creative here; the structure
+      leaves no room.
+    in_csd: >
+      This is the single strongest result in the corpus by logical type: an
+      unconditional necessity, not a consistency check and not conditional on a posited
+      symmetry. Almost everything else that is called "forced" here rests on assuming a
+      symmetry group; this one assumes only that overlaps are preserved and derives the
+      group. It is what licenses treating unitary evolution as compelled rather than
+      chosen, and it is a natural anchor for the record layer, where the preserved
+      quantity is a record statistic.
+    mathematical: >
+      Every transition-probability-preserving self-map of CP^(N-1) is induced by a
+      unitary or by an antiunitary map. Linearity is an output of the construction and
+      is never assumed; the antiunitary branch is genuinely present, and the global
+      unitary-or-antiunitary alternative is forced by overlap preservation alone.
+      Foundational-triple only.
+    lean:
+      module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean
+      theorem: wigner_rigidity
+    related: [fubini-study-measure, stone-theorem]
+
+  - slug: stone-theorem
+    term: Stone's theorem
+    eponyms: [Stone]
+    status: proved-in-corpus
+    hook: >
+      Continuity is enough. Ask only that time evolution not jump, and differentiability
+      and a Hamiltonian follow.
+    layman: >
+      A system evolving in time is described by a family of transformations, one for
+      each moment. It is tempting to assume this family is smooth, so that one can
+      differentiate it and speak of a rate of change. That assumption is stronger than
+      it looks and it is unnecessary. Merely requiring that the evolution not jump
+      forces smoothness, and with it the existence of the object whose rate of change
+      it is, which physics calls the Hamiltonian.
+    in_csd: >
+      The programme needs the generator of evolution to be earned, not posited, because
+      a posited generator would smuggle in the dynamics it is trying to derive. This
+      supplies exactly that at finite dimension: from continuity alone it produces the
+      skew-Hermitian generator, so the Schrodinger form of the dynamics is an output.
+      Together with Wigner rigidity it is the second unconditional necessity in the
+      corpus.
+    mathematical: >
+      A strongly continuous one-parameter group of unitary matrices is the exponential
+      of t times a skew-Hermitian generator. Continuity-only hypothesis: the C^1
+      assumption of the earlier packaged version is derived rather than assumed. Note
+      that the proof assistant's library carries no Stone theorem at this pin, so this
+      is supplied here.
+    lean:
+      module: CsdLean4/Mathlib/Analysis/Matrix/StoneC1.lean
+      theorem: Matrix.StoneC1.stone_continuous
+    related: [wigner-rigidity]
+
+  - slug: bell-chsh
+    term: Bell and CHSH
+    eponyms: [Bell]
+    status: proved-in-corpus
+    hook: >
+      No assignment of definite outcomes to all four measurement settings at once can
+      reproduce what a singlet does. The obstruction is a theorem here, not a slogan.
+    layman: >
+      Take two particles prepared together and then separated, and measure each with a
+      choice of settings. Common sense suggests every possible measurement already has
+      an answer waiting, and that we simply reveal it. The correlations rule that out.
+      What is proved here is the sharp form of the impossibility: on a single shared
+      space of hidden states, no way of writing down answers for all the settings at
+      once matches the quantum predictions.
+    in_csd: >
+      The programme is explicitly contextual and non-local at the level of its
+      substrate, so it must show its own model cannot be quietly rewritten as the naive
+      alternative. This is that demonstration, and it comes with a positive companion:
+      an explicit contextual model that does reproduce the singlet. Existence and
+      obstruction in one place is what makes the claim two-sided rather than a bare
+      no-go. Getting the statement expressible at all required replacing per-setting
+      state spaces with one shared space; while each setting had its own space there
+      was nothing to compare against, and the missing theorem went unnoticed.
+    mathematical: >
+      Over a single shared measurable state space, no jointly-defined assignment of
+      outcomes to the four CHSH settings reproduces the singlet correlations. Companion
+      results give the same conclusion over any shared probability space at every
+      setting pair, and the GHZ analogue.
+    lean:
+      module: CsdLean4/LF6/C1BellConsistency.lean
+      theorem: no_compatible_global_chsh_assignment_realises_singlet
+    papers:
+      - doi: 10.5281/zenodo.20354293
+        note: LF3, the machine-verified singlet kernel and empirical chain
+    related: [ghz-state, tsirelson-bound]
+
+  - slug: ghz-state
+    term: GHZ state
+    eponyms: [GHZ]
+    status: proved-in-corpus
+    hook: >
+      Three particles can contradict local realism with certainty, in a single run.
+      No statistics, no inequality, no margin.
+    layman: >
+      Bell's argument needs many repetitions: the disagreement with common sense shows
+      up in the proportions. With three particles the disagreement becomes sharper.
+      There is a set of measurements whose outcomes any common-sense account must
+      predict one way, and quantum mechanics predicts the opposite every single time.
+      One run suffices in principle, because the prediction is certainty against
+      certainty rather than a difference of averages.
+    in_csd: >
+      The corpus carries the GHZ obstruction alongside the two-particle one so that the
+      contextuality claim does not rest on a single example or on a single logical
+      shape. The Bell case is a statistical impossibility; this one is an
+      all-or-nothing algebraic impossibility, and a substrate account has to survive
+      both.
+    mathematical: >
+      No product partition of a shared hidden-state space reproduces the GHZ
+      correlations. Proved as a theorem over an arbitrary measurable state space rather
+      than exhibited on a chosen model.
+    lean:
+      module: CsdLean4/LF6/GHZContextuality.lean
+      theorem: no_product_partition_realises_ghz
+    related: [bell-chsh, tsirelson-bound]
+
+  - slug: tsirelson-bound
+    term: Tsirelson bound
+    eponyms: [Tsirelson]
+    status: proved-in-corpus
+    hook: >
+      Quantum mechanics breaks the classical limit on correlations, but not by as much
+      as it could. Something stops it well short of the logical maximum.
+    layman: >
+      There is a standard score summarising how correlated two separated measurements
+      are. Any common-sense account keeps that score at or below two. Quantum mechanics
+      exceeds it, which is the content of Bell's argument. But it does not run away:
+      it stops at roughly 2.83, while nothing about signalling or logic would forbid
+      going all the way to four. Why the ceiling sits where it does, rather than higher,
+      is a question the bare formalism does not answer.
+    in_csd: >
+      A reconstruction has to reproduce not only that the classical bound is violated
+      but by exactly how much, since the gap between the quantum ceiling and the
+      logical one is a real feature to be explained rather than a coincidence to be
+      inherited. The bound is proved here universally: every unit bipartite state, all
+      settings, not merely the singlet at optimal angles.
+    mathematical: >
+      For every unit bipartite state and all detector settings, the CHSH combination of
+      spin correlations satisfies |S| <= 2 times the square root of 2. The
+      singlet-specific attainment is proved separately, so the ceiling and its
+      saturation are distinct statements.
+    lean:
+      module: CsdLean4/SigmaLayer/BellGenerality.lean
+      theorem: qm_chsh_le_tsirelson
+    related: [bell-chsh, ghz-state]
+
+  - slug: landauer-principle
+    term: Landauer's principle
+    eponyms: [Landauer]
+    status: proved-in-corpus
+    hook: >
+      Forgetting costs heat. The price is fixed by temperature alone, and it is a
+      theorem here rather than a thermodynamic slogan.
+    layman: >
+      Erasing information is not free. Resetting a memory to a definite state means
+      reducing the number of ways it could be, and that reduction has to be paid for
+      by dumping heat into the surroundings. The exchange rate is set purely by the
+      temperature of those surroundings. This is the point where information stops
+      being an abstraction and acquires a physical cost.
+    in_csd: >
+      Thermodynamics is not bolted onto this programme; the substrate is
+      measure-preserving underneath and irreversibility appears only when a record is
+      coarse-grained. That makes an erasure bound a natural consequence rather than an
+      import, and it is the tightest link between the record layer and physical cost.
+      It is also the fourth tranche of a thermodynamics track whose earlier results
+      derive temperature and free energy rather than assuming them.
+    mathematical: >
+      The entropy removed from a system by a process is bounded by beta times the heat
+      delivered to the bath. Proof route: entropy conservation under unitary evolution
+      on a product state, plus subadditivity, bound the system entropy drop by the bath
+      entropy rise; the bath Clausius inequality converts that into the heat bound.
+    lean:
+      module: CsdLean4/Thermo/Landauer.lean
+      theorem: landauer_bound
+    related: [von-neumann-entropy]
+
+  - slug: von-neumann-entropy
+    term: von Neumann entropy
+    eponyms: [Neumann]
+    status: proved-in-corpus
+    hook: >
+      Two systems together can be perfectly known while each of them separately is
+      not. Entropy is where entanglement stops being a metaphor.
+    layman: >
+      Entropy counts how much you do not know. For ordinary objects, knowing the whole
+      means knowing the parts. Quantum systems break that: a pair can be in a
+      completely definite joint state while each member, considered alone, is as
+      undetermined as possible. The missing information is not in either part; it is in
+      the relationship. Entropy is the quantity that makes this precise, and the
+      inequalities it obeys are the arithmetic of that fact.
+    in_csd: >
+      The corpus needs entropy for two jobs. It measures the irreversibility produced
+      when a pure state is coarse-grained into a record, which is how the second law
+      enters a substrate that is reversible underneath. And its inequalities are the
+      working machinery of the thermodynamics track, subadditivity being the step that
+      converts an entropy statement into the Landauer heat bound.
+    mathematical: >
+      For a bipartite density operator the von Neumann entropy is subadditive: the
+      entropy of the whole is at most the sum of the entropies of its marginals. Stated
+      here at positive-definite marginal scope. The strong subadditivity strengthening
+      is carried separately, from an explicit data-processing premise.
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
+      theorem: vonNeumannEntropy_subadditive
+    related: [landauer-principle]

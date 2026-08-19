@@ -13,6 +13,14 @@ public import CsdLean4.LF4.BornVolume
 
 **Category:** 3-Local (Born = Fubini–Study volume ratio on Σ).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/born-weight/
+Plain-language, CSD-role and formal statements of the Born rule, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
+**Glossary:** https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/
+Plain-language, CSD-role and formal statements of the Duistermaat-Heckman formula, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The general-N analogue of `fs_born_volume_ratio_qubit` (qubit, `N = 2`), now
 **unconditional** — the qubit's `h_uniform` hypothesis is the Slice E headline
 `fs_moment_joint_dirichlet_N`, which is a theorem. Three steps:

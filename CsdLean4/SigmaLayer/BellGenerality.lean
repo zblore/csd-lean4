@@ -16,6 +16,10 @@ public import CsdLean4.Mathlib.Probability.CGLMP
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/tsirelson-bound/
+Plain-language, CSD-role and formal statements of the Tsirelson bound, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Where `SigmaLayer/CompositeAdapters.lean` inhabits the T13/T14 predicates with SPECIFIC violation witnesses
 (the singlet, the maximally-entangled qudit, Cabello-18, Mermin-Peres, GHZ), this module exposes the
 UNIVERSAL bounds behind them — the general form of Bell's theorem and Kochen-Specker, quantified over ALL

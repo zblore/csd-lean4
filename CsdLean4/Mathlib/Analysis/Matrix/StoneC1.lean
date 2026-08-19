@@ -22,6 +22,12 @@ public import Mathlib.Analysis.Calculus.Deriv.Shift
 
 **Category:** 1-Mathlib (Finite-dimensional Stone's theorem).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/stone-theorem/
+Plain-language, CSD-role and formal statements of Stone's theorem, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**On upstreaming:** this is a Category 1 file. Strip this Glossary block before any
+Mathlib or Physlib PR; a personal project link has no place in a canonical header.
+
 A one-parameter unitary group of `N x N` complex matrices is `t ↦ exp (t • A)` for its
 skew-Hermitian generator `A`. This is the load-bearing content of Stone's theorem in finite
 dimensions: the group IS the exponential of its generator.

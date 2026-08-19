@@ -12,6 +12,10 @@ public import CsdLean4.LF2.BornWrapper
 
 **Category:** 3-Local (LF2 operational stratum — the effect-Gleason representation theorem).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/gleason-theorem/
+Plain-language, CSD-role and formal statements of the Gleason and Busch theorems, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Earlier revisions of `LF2/BornWrapper.lean` imported the Busch effect-Gleason theorem as the
 axiom `busch_effect_gleason`: every effect-additive, bounded, normalised probability assignment
 `OP.p` on effects is `OP.p E = Tr(ρ E)` for a *unique* density operator `ρ`. This module

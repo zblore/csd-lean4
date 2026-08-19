@@ -12,3 +12,13 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | Term | Lean anchor | Status |
 |---|---|---|
 | [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
+| [Born rule](https://glossary.constraintsurfacedynamics.com/born-weight/) | `fs_born_volume_ratio_N` | proved-in-corpus |
+| [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
+| [Gleason and Busch theorems](https://glossary.constraintsurfacedynamics.com/gleason-theorem/) | `effect_gleason_representation` | proved-in-corpus |
+| [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |
+| [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
+| [Bell and CHSH](https://glossary.constraintsurfacedynamics.com/bell-chsh/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
+| [GHZ state](https://glossary.constraintsurfacedynamics.com/ghz-state/) | `no_product_partition_realises_ghz` | proved-in-corpus |
+| [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
+| [Landauer's principle](https://glossary.constraintsurfacedynamics.com/landauer-principle/) | `landauer_bound` | proved-in-corpus |
+| [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |

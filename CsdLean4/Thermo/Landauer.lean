@@ -15,6 +15,12 @@ public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 **Category:** conceptually 1-Mathlib (CSD-free general quantum statistical
 mechanics) with a CSD reading; kept in the `CSD.Thermo` tree alongside TH1–TH3.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/landauer-principle/
+Plain-language, CSD-role and formal statements of Landauer's principle, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**On upstreaming:** this is a Category 1 file. Strip this Glossary block before any
+Mathlib or Physlib PR; a personal project link has no place in a canonical header.
+
 Landauer's principle: erasing information has an unavoidable thermodynamic cost.
 In the information-theoretic (Reeb–Wolf) form, a system `S` coupled unitarily to
 a bath `B` initially in the Gibbs state `τ_B = exp(-βH_B)/Z` at inverse

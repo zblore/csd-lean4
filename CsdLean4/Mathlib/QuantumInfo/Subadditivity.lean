@@ -17,6 +17,12 @@ public import Mathlib.Analysis.Matrix.PosDef
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/
+Plain-language, CSD-role and formal statements of the von Neumann entropy, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**On upstreaming:** this is a Category 1 file. Strip this Glossary block before any
+Mathlib or Physlib PR; a personal project link has no place in a canonical header.
+
 This file delivers the **quantum relative entropy** `D(ρ‖σ) = Tr(ρ log ρ) − Tr(ρ log σ)`,
 **Klein's inequality** `D(ρ‖σ) ≥ 0` (for positive-definite `σ`), the **Kronecker-log operator
 split** `log(ρ_A ⊗ ρ_B) = log ρ_A ⊗ I + I ⊗ log ρ_B` (`cfc_log_kronecker`), and the von Neumann
