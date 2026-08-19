@@ -15,6 +15,12 @@ public import Mathlib.Topology.Instances.Matrix
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/fubini-study-measure/
+Plain-language, CSD-role and formal statements of the Fubini-Study measure, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**On upstreaming:** this is a Category 1 file. Strip this Glossary block before any
+Mathlib or Physlib PR; a personal project link has no place in a canonical header.
+
 Strengthens the `ContinuousConstSMul` instance from `Unitary.lean`
 (continuity in the projective argument for fixed unitary) to the
 full `ContinuousSMul` (joint continuity in both arguments).

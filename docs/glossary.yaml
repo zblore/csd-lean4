@@ -1,0 +1,131 @@
+# docs/glossary.yaml - the ONLY prose source for the CSD glossary.
+#
+# One record per CONCEPT, keyed by the eponym(s) that name it. The key set comes
+# from scripts/extract-eponyms.sh, which reads declaration and module names: the
+# corpus decides what needs explaining, not taste. Pairs collapse here (Fubini +
+# Study are one measure), because collapsing is editorial and the extractor
+# deliberately refuses to do it.
+#
+# FIELDS
+#   hook          one sentence, the thing a reader would repeat to someone else.
+#                 Not a definition and not a category label. If it is neither
+#                 surprising nor consequential, the entry has no reason to exist.
+#   layman        no notation, no jargon. Carry ONE metaphor and reuse it in the
+#                 registers below, so the entry reads as a single thought rather
+#                 than three disconnected blocks.
+#   in_csd        the role it plays in THIS programme, and what turns on it.
+#   mathematical  the formal statement, for a specialist.
+#
+# Three registers because the CSD query research found eight of nine reader
+# personas have a repo path built for them and no page that says what the thing is.
+#
+# status must be one of the controlled values in scripts/check-glossary.sh. The
+# vocabulary follows AXIOMS.md section 0 so the glossary cannot disagree with the
+# ledger. lean.sha pins source links: paths on a moving branch rot, permalinks do not.
+
+meta:
+  site: https://glossary.constraintsurfacedynamics.com
+  repo: https://github.com/zblore/csd-lean4
+  sha: 1f8a0163fcb97cea4c003b0502174aa99069d58c
+
+# ---------------------------------------------------------------------------
+# refs — the external reference registry.
+#
+# The generator links the FIRST occurrence of each of these in an entry's prose,
+# automatically. Written once here, applied across every entry forever, so adding
+# an entry costs no link-marking. Terms that match another entry's term or eponym
+# resolve INTERNALLY instead and need no record here.
+#
+# Longest match wins, so "Fubini-Study metric" beats "Fubini". Matching is
+# case-insensitive and whole-word. An entry never links to itself.
+#
+# Choose the reference a specialist would accept and a newcomer can read. For a
+# person, link the CONCEPT they are named for, not the biography: a reader meeting
+# "Haar" here wants Haar measure, not Alfred Haar's dates.
+# ---------------------------------------------------------------------------
+refs:
+  "Haar measure":            {url: "https://en.wikipedia.org/wiki/Haar_measure", source: Wikipedia}
+  "Haar":                    {url: "https://en.wikipedia.org/wiki/Haar_measure", source: Wikipedia}
+  "unitary group":           {url: "https://en.wikipedia.org/wiki/Unitary_group", source: Wikipedia}
+  "homogeneous space":       {url: "https://en.wikipedia.org/wiki/Homogeneous_space", source: Wikipedia}
+  "Borel":                   {url: "https://en.wikipedia.org/wiki/Borel_measure", source: Wikipedia}
+  "transitive":              {url: "https://en.wikipedia.org/wiki/Group_action#Types_of_actions", source: Wikipedia}
+  "transitively":            {url: "https://en.wikipedia.org/wiki/Group_action#Types_of_actions", source: Wikipedia}
+  "projective state space":  {url: "https://en.wikipedia.org/wiki/Complex_projective_space", source: Wikipedia}
+  "complex projective space": {url: "https://en.wikipedia.org/wiki/Complex_projective_space", source: Wikipedia}
+  "Riemannian":              {url: "https://en.wikipedia.org/wiki/Riemannian_manifold", source: Wikipedia}
+  "Kahler form":             {url: "https://en.wikipedia.org/wiki/K%C3%A4hler_manifold", source: Wikipedia}
+  "Kahler":                  {url: "https://en.wikipedia.org/wiki/K%C3%A4hler_manifold", source: Wikipedia}
+  "Fubini-Study metric":     {url: "https://en.wikipedia.org/wiki/Fubini%E2%80%93Study_metric", source: Wikipedia}
+  "Born rule":               {url: "https://en.wikipedia.org/wiki/Born_rule", source: Wikipedia}
+  "Gleason":                 {url: "https://en.wikipedia.org/wiki/Gleason%27s_theorem", source: Wikipedia}
+  "Busch":                   {url: "https://doi.org/10.1103/PhysRevLett.91.120403", source: "Busch 2003, PRL"}
+  "Duistermaat-Heckman":     {url: "https://en.wikipedia.org/wiki/Duistermaat%E2%80%93Heckman_formula", source: Wikipedia}
+  "Liouville":               {url: "https://en.wikipedia.org/wiki/Liouville%27s_theorem_(Hamiltonian)", source: Wikipedia}
+  "Naimark":                 {url: "https://en.wikipedia.org/wiki/Naimark%27s_dilation_theorem", source: Wikipedia}
+  "POVM":                    {url: "https://en.wikipedia.org/wiki/POVM", source: Wikipedia}
+  "Luders":                  {url: "https://en.wikipedia.org/wiki/L%C3%BCders_rule", source: Wikipedia}
+  "Wigner":                  {url: "https://en.wikipedia.org/wiki/Wigner%27s_theorem", source: Wikipedia}
+  "Bell":                    {url: "https://en.wikipedia.org/wiki/Bell%27s_theorem", source: Wikipedia}
+  "GHZ":                     {url: "https://en.wikipedia.org/wiki/Greenberger%E2%80%93Horne%E2%80%93Zeilinger_state", source: Wikipedia}
+  "CGLMP":                   {url: "https://doi.org/10.1103/PhysRevLett.88.040404", source: "Collins et al. 2002, PRL"}
+  "Kochen-Specker":          {url: "https://plato.stanford.edu/entries/kochen-specker/", source: "Stanford Encyclopedia"}
+  "Tsirelson":               {url: "https://en.wikipedia.org/wiki/Tsirelson%27s_bound", source: Wikipedia}
+  "Dirichlet":               {url: "https://en.wikipedia.org/wiki/Dirichlet_distribution", source: Wikipedia}
+  "Bargmann":                {url: "https://en.wikipedia.org/wiki/Wigner%27s_theorem#Bargmann", source: Wikipedia}
+  "Stone":                   {url: "https://en.wikipedia.org/wiki/Stone%27s_theorem_on_one-parameter_unitary_groups", source: Wikipedia}
+  "Landauer":                {url: "https://en.wikipedia.org/wiki/Landauer%27s_principle", source: Wikipedia}
+  "Gibbs":                   {url: "https://en.wikipedia.org/wiki/Gibbs_measure", source: Wikipedia}
+  "Levy":                    {url: "https://en.wikipedia.org/wiki/Concentration_of_measure", source: Wikipedia}
+  "Helland":                 {url: "https://doi.org/10.1063/5.0218982", source: "Helland 2024, APL Quantum"}
+  "Ashtekar":                {url: "https://arxiv.org/abs/gr-qc/9706069", source: "Ashtekar & Schilling 1997"}
+  "Kibble":                  {url: "https://doi.org/10.1007/BF01225149", source: "Kibble 1979, CMP"}
+  "Wootters":                {url: "https://doi.org/10.1103/PhysRevD.23.357", source: "Wootters 1981, PRD"}
+  "Zurek":                   {url: "https://doi.org/10.1103/PhysRevLett.90.120404", source: "Zurek 2003, PRL"}
+
+entries:
+  - slug: fubini-study-measure
+    term: Fubini-Study measure
+    eponyms: [Fubini, Study]
+    status: proved-in-corpus
+    hook: >
+      There is exactly one way to measure the space of quantum states without
+      secretly favouring a direction. The Born rule is what that measure says.
+    layman: >
+      Every state a quantum system can be in is a point in a curved space, much as
+      every place on Earth is a point on a globe. To ask how likely an outcome is,
+      you need to know how large a region of that space is. But size needs a ruler,
+      and a carelessly chosen ruler would quietly build the answer you wanted into
+      the question. The Fubini-Study measure is the one ruler that treats every
+      direction alike. Because it is the only such ruler, the sizes it reports are
+      not anybody's choice.
+    in_csd: >
+      CSD does not assume the Born rule. It derives outcome probabilities as ratios
+      of volumes, and a ratio of volumes means nothing until the ruler is fixed.
+      This is the ruler, and the point is that it is forced rather than picked. The
+      unitary group acts transitively on projective state space, and a space with a
+      transitive symmetry admits exactly one invariant probability measure. So the
+      measure falls out of the state space and its symmetry instead of going in as
+      an assumption, which is the whole reason Born weights arrive here as theorems
+      rather than postulates. Helland reaches the same uniqueness from group
+      representation theory over accessible variables. CSD reaches it from geometry.
+    mathematical: >
+      CP^(N-1) is the compact homogeneous space U(N)/(U(1) x U(N-1)). The
+      Fubini-Study measure is the unique U(N)-invariant Borel probability measure on
+      it: the normalised Riemannian volume of the Fubini-Study metric, equivalently
+      the top exterior power of the associated Kahler form over n factorial.
+      Uniqueness is Haar uniqueness. An invariant measure on a homogeneous space is
+      unique up to scale when the action is transitive, and normalisation fixes the
+      scale. Proved here at general N with no imported axioms.
+    lean:
+      module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean
+      theorem: fubiniStudyMeasure_unique
+    papers:
+      - doi: 10.5281/zenodo.19557174
+        note: TN1, the Fubini-Study measure as an SU(N)-equivariant pushforward
+      - doi: 10.5281/zenodo.16746829
+        note: Paper B, the symmetry argument that fixes the measure
+    external:
+      - text: "Bengtsson and Zyczkowski, Geometry of Quantum States, 2nd ed., CUP 2020"
+        url: https://www.cambridge.org/core/books/geometry-of-quantum-states/
+    related: [duistermaat-heckman, liouville-measure, kahler-form, born-weight]
