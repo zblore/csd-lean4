@@ -26,7 +26,7 @@
 meta:
   site: https://glossary.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: cddf84b67cfbdd8ec08bee231d53c06a0b4546e0
+  sha: 6b7e3c0a1a01373448827642b9e6beb877192f75
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -176,6 +176,8 @@ entries:
       |<e_k, psi>|^2. Proved coordinate-by-coordinate at general N, unconditional, and
       Gleason-free. The companion apex statement covers the dropped vertex, so the
       identity holds on all N coordinates of a generic preparation.
+    person: >
+      Max Born (1882-1970), German, gave the probability reading of the wavefunction in a 1926 footnote -- added at proof stage, and the reason he is remembered. Dismissed from Gottingen in 1933 under the Nazi civil-service laws and exiled to Edinburgh, he received the Nobel Prize in 1954, nearly three decades after the work.
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_born_volume_ratio_N
@@ -209,6 +211,8 @@ entries:
       measure along the moment map is the flat (uniform Dirichlet) distribution on the
       simplex. Unconditional, and the genuine general-N Duistermaat-Heckman content on
       this space.
+    person: >
+      Hans Duistermaat (1942-2010) and Gerrit Heckman, both Dutch, proved the exact-stationary-phase formula in 1982. Its striking feature is that an approximation which is normally only a first term happens to be exact here, and the reason is symmetry.
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_volume_eq_dirichlet
@@ -243,6 +247,8 @@ entries:
       operator through the trace pairing. This is the Busch effect-valued form, which
       unlike the original projection-valued Gleason theorem holds in dimension two as
       well. Proved in-corpus 2026-07-21, foundational-triple only.
+    person: >
+      Andrew Gleason (1921-2008), American, worked as a Navy cryptanalyst before proving in 1957 that the probability rule is forced -- a result he regarded as a minor piece. Paul Busch (1955-2018), German, later extended it to generalised measurements, which is the form that survives in dimension two and the form proved here.
     lean:
       module: CsdLean4/LF2/EffectGleason.lean
       theorem: effect_gleason_representation
@@ -279,6 +285,8 @@ entries:
       is never assumed; the antiunitary branch is genuinely present, and the global
       unitary-or-antiunitary alternative is forced by overlap preservation alone.
       Foundational-triple only.
+    person: >
+      Eugene Wigner (1902-1995), Hungarian, left Europe in the 1930s and shared the 1963 Nobel Prize for symmetry principles in physics. His theorem on symmetries of quantum states dates from 1931; the antiunitary alternative it uncovers is what later accounted for time reversal.
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean
       theorem: wigner_rigidity
@@ -311,6 +319,8 @@ entries:
       assumption of the earlier packaged version is derived rather than assumed. Note
       that the proof assistant's library carries no Stone theorem at this pin, so this
       is supplied here.
+    person: >
+      Marshall Stone (1903-1989), American, proved the theorem on one-parameter unitary groups in 1932, connecting continuous symmetry to its generator. He is equally remembered for the Stone-Weierstrass theorem and for rebuilding the Chicago mathematics department after the war.
     lean:
       module: CsdLean4/Mathlib/Analysis/Matrix/StoneC1.lean
       theorem: Matrix.StoneC1.stone_continuous
@@ -344,6 +354,8 @@ entries:
       outcomes to the four CHSH settings reproduces the singlet correlations. Companion
       results give the same conclusion over any shared probability space at every
       setting pair, and the GHZ analogue.
+    person: >
+      John Stewart Bell (1928-1990), from Belfast, worked at CERN on accelerator physics and treated foundations as, in his phrase, a hobby. His 1964 paper showed the question of hidden variables was experimentally decidable rather than philosophical. Clauser, Horne, Shimony and Holt gave the testable form in 1969. Bell died before the Nobel recognising the experiments.
     lean:
       module: CsdLean4/LF6/C1BellConsistency.lean
       theorem: no_compatible_global_chsh_assignment_realises_singlet
@@ -376,6 +388,8 @@ entries:
       No product partition of a shared hidden-state space reproduces the GHZ
       correlations. Proved as a theorem over an arbitrary measurable state space rather
       than exhibited on a chosen model.
+    person: >
+      Daniel Greenberger, Michael Horne and Anton Zeilinger introduced the three-particle argument in 1989, showing the conflict could be made all-or-nothing rather than statistical. Zeilinger shared the 2022 Nobel Prize for experimental work on entanglement.
     lean:
       module: CsdLean4/LF6/GHZContextuality.lean
       theorem: no_product_partition_realises_ghz
@@ -406,6 +420,8 @@ entries:
       spin correlations satisfies |S| <= 2 times the square root of 2. The
       singlet-specific attainment is proved separately, so the ceiling and its
       saturation are distinct statements.
+    person: >
+      Boris Tsirelson (1950-2020), Soviet-born and later Israeli, proved in 1980 that quantum correlations stop well short of the logical maximum. Why they stop exactly there became a research programme of its own.
     lean:
       module: CsdLean4/SigmaLayer/BellGenerality.lean
       theorem: qm_chsh_le_tsirelson
@@ -436,6 +452,8 @@ entries:
       delivered to the bath. Proof route: entropy conservation under unitary evolution
       on a product state, plus subadditivity, bound the system entropy drop by the bath
       entropy rise; the bath Clausius inequality converts that into the heat bound.
+    person: >
+      Rolf Landauer (1927-1999), German-born American, worked at IBM and argued that information is physical -- that erasing a bit has an unavoidable thermodynamic cost. The principle dates from 1961 and was confirmed experimentally only in 2012.
     lean:
       module: CsdLean4/Thermo/Landauer.lean
       theorem: landauer_bound
@@ -466,6 +484,8 @@ entries:
       entropy of the whole is at most the sum of the entropies of its marginals. Stated
       here at positive-definite marginal scope. The strong subadditivity strengthening
       is carried separately, from an explicit data-processing premise.
+    person: >
+      John von Neumann (1903-1957), Hungarian, gave quantum mechanics its Hilbert-space formulation in 1932 and introduced this entropy there, before Shannon's classical version. His contributions to computing, game theory and mathematics were of comparable scale.
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: vonNeumannEntropy_subadditive
@@ -501,6 +521,8 @@ entries:
       Scope to disclose: measure-preservation of the flow is carried as a structure
       field for physical admissibility (an ontic postulate), not derived; what is
       proved is that IF the sector is this one, the volume is forced.
+    person: >
+      Joseph Liouville (1809-1882), French, proved in 1838 that phase-space volume is conserved by Hamiltonian motion. He also founded a major mathematics journal and was the first to exhibit transcendental numbers.
     lean:
       module: CsdLean4/LF4/KahlerVolumeForced.lean
       theorem: unitaryFlowSetup_liouville_isForcedKahlerVolume
@@ -538,6 +560,8 @@ entries:
       differential-form API the proof assistant does not yet carry. Kahler
       differential geometry must therefore not be described as load-bearing here; the
       pointwise core is what the corpus owns.
+    person: >
+      Erich Kahler (1906-2000), German, introduced these manifolds in 1933. The compatibility of metric, complex structure and area form he identified turned out to be the natural setting for much of modern geometry and, later, for the geometry of quantum states.
     lean:
       module: CsdLean4/LF4/KahlerOnticSetup.lean
       theorem: isFubiniStudyKahler
@@ -569,6 +593,8 @@ entries:
       of the preparation and the post-measurement state is the block projection of the
       Lueders form. Degenerate (block) measurements are the general case treated; the
       rank-one projective case is the specialisation.
+    person: >
+      Gerhart Luders (1920-1995), German, gave the general state-update rule in 1951, correcting von Neumann's version for measurements with repeated eigenvalues. He is also known for the CPT theorem.
     lean:
       module: CsdLean4/RecordLayer/PointerLudersMarginal.lean
       theorem: pointer_luders_born_prep
@@ -597,6 +623,8 @@ entries:
       For a POVM with a Naimark dilation, the Born weight of an effect equals the
       Fubini-Study volume of the corresponding outcome region in the dilated space, and
       the frequency statement transfers with it. Stated unconditionally.
+    person: >
+      Mark Naimark (1909-1978), Soviet, proved the dilation theorem in 1940. It says any generalised measurement is a simple one on a larger space, and it is what lets results proved for ideal measurements reach realistic ones.
     lean:
       module: CsdLean4/LF4/BornRegionUncond.lean
       theorem: povm_born_eq_dilated_volume_uncond
@@ -683,6 +711,8 @@ entries:
       The corpus uses it as the invariant separating the unitary branch from the antiunitary one in the Wigner analysis, since the two conjugate it oppositely. Honest scope: Bargmann's theorem proper, that continuity kills the projective cocycle, is recorded as a gap the proof assistant cannot yet close, not as something proved here.
     mathematical: >
       For rays u, v, w the Bargmann invariant is the phase of the product of the three pairwise overlaps taken around the cycle. It is unchanged under independent rescaling of each representative vector.
+    person: >
+      Valentine Bargmann (1908-1989), German-born, worked as Einstein's assistant at Princeton. His 1954 paper on projective representations settled when a symmetry's phase ambiguity can be removed, which is what completes Wigner's theorem into a statement about groups.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Wigner%27s_theorem
@@ -699,6 +729,8 @@ entries:
       Used throughout the qubit-level results as the concrete arena. The programme flags the accident explicitly: at two levels the projective state space IS a sphere, so structure that must in general live in a fibre above the space can sit on the space itself. Conclusions drawn from the sphere therefore do not automatically generalise, and the corpus makes that point rather than glossing it.
     mathematical: >
       The projective space of a two-dimensional complex Hilbert space is diffeomorphic to the two-sphere, antipodal points being orthogonal states, with the Fubini-Study measure the normalised round area.
+    person: >
+      Felix Bloch (1905-1983), Swiss, shared the 1952 Nobel Prize for nuclear magnetic resonance -- the technique behind MRI. The sphere comes from that work on spins in magnetic fields, not from quantum information, where it later became the standard picture.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Bloch_sphere
@@ -715,6 +747,8 @@ entries:
       Every measure in the corpus is a Borel measure on its state space, and the outcome regions whose volumes give Born weights are required to be Borel. This is background machinery, used as any measure-theoretic development uses it; nothing particular is claimed about it here.
     mathematical: >
       The sigma-algebra generated by the open sets of a topological space. The measures used here are Borel probability measures.
+    person: >
+      Emile Borel (1871-1956), French, founded measure theory around 1898, making it possible to say which sets have a size at all. He also served in the French government and the Resistance, and was imprisoned by the Vichy regime.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Borel_set
@@ -731,6 +765,8 @@ entries:
       The corpus carries it so the contextuality results are not confined to two-level systems. A reconstruction claiming to recover quantum mechanics in general must reproduce the higher-outcome conflicts as well, not only the two-outcome one.
     mathematical: >
       A Bell-type inequality for bipartite systems with d outcomes per measurement, due to Collins, Gisin, Linden, Massar and Popescu, violated by quantum mechanics for every d of at least two.
+    person: >
+      Named for Daniel Collins, Nicolas Gisin, Noah Linden, Serge Massar and Sandu Popescu, whose 2002 paper extended Bell's argument beyond two outcomes per measurement.
     external:
       - text: "Overview and history"
         url: https://doi.org/10.1103/PhysRevLett.88.040404
@@ -747,6 +783,8 @@ entries:
       Held in the corpus as one of the algorithm witnesses. Its role is scope-marking rather than foundational: it shows the formalised machinery is strong enough to state and verify real quantum algorithms, which is a different claim from anything about the substrate.
     mathematical: >
       Given an oracle for a function promised constant or balanced, a single query decides which, against a classical worst case exponential in the number of input bits.
+    person: >
+      David Deutsch, British, formulated the universal quantum computer in 1985 and, with Richard Jozsa, gave this algorithm in 1992 -- the first clear separation between quantum and classical query complexity.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Deutsch%E2%80%93Jozsa_algorithm
@@ -763,6 +801,8 @@ entries:
       This is what the state space looks like once the moment map has discarded everything except the outcome probabilities. The flat member is what the Fubini-Study measure becomes under that projection, which is the content of the Duistermaat-Heckman statement and the reason Born weights reduce to ordinary volumes of regions in a simplex.
     mathematical: >
       A family of distributions on the probability simplex. The uniform member is flat Lebesgue measure on the simplex, and it is the pushforward of the Fubini-Study measure along the moment map.
+    person: >
+      Peter Gustav Lejeune Dirichlet (1805-1859), German, worked on number theory and Fourier analysis. The modern definition of a function as an arbitrary rule rather than a formula is largely his.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Dirichlet_distribution
@@ -779,6 +819,8 @@ entries:
       Carried as one of the empirical twins: a prediction counterintuitive enough that reproducing it is a genuine test of an account rather than a formality. Interaction-free measurement is a sharp probe of what a substrate story must say about the path not taken.
     mathematical: >
       An interferometer in which a blocking object destroys the interference, so a detection at the normally dark port certifies the object's presence without absorbing anything.
+    person: >
+      Avshalom Elitzur and Lev Vaidman, both Israeli, published the bomb-tester in 1993 as a sharp demonstration that quantum mechanics permits learning about an object without interacting with it.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Elitzur%E2%80%93Vaidman_bomb-tester
@@ -795,6 +837,8 @@ entries:
       State vectors live in finite complex Euclidean space and operators are matrices on it. This is the base setting rather than a subject of claims; what carries content is the projective space built from it and the measures on that space.
     mathematical: >
       Finite-dimensional complex inner product space, written here in its L2 form on a finite index type, with matrices carrying the induced operator norm.
+    person: >
+      Euclid of Alexandria, active around 300 BC, organised geometry into axioms and proofs in the Elements -- the model for deductive mathematics ever since, and the reason a formal proof looks the way it does.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Euclidean_space
@@ -811,6 +855,8 @@ entries:
       Used in the metrology strand, where quantum precision limits are stated. That strand is an adjacent arm rather than part of the reconstruction: it consumes the formalised machinery instead of contributing to the derivation of quantum mechanics.
     mathematical: >
       The variance of the score of a parametrised family; its inverse bounds the variance of any unbiased estimator through the Cramer-Rao inequality, with a quantum analogue for parametrised families of states.
+    person: >
+      Ronald Fisher (1890-1962), British, largely created modern statistics: maximum likelihood, experimental design, analysis of variance. His advocacy of eugenics is part of the record and is not incidental to how his statistical work was applied.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Fisher_information
@@ -827,6 +873,8 @@ entries:
       The thermodynamics strand instantiates it on the field Hamiltonian and derives temperature and free energy rather than positing them. It is also the object joined to the field-theoretic strand by the exact equilibrium condition proved at the cutoff, which is where those two strands of the corpus meet.
     mathematical: >
       The density operator proportional to the exponential of minus beta times the Hamiltonian, normalised by the partition function; the unique minimiser of the free energy functional at inverse temperature beta.
+    person: >
+      Josiah Willard Gibbs (1839-1903), American, worked in near-obscurity at Yale and founded statistical mechanics, deriving thermodynamics from the statistics of molecular states.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Gibbs_measure
@@ -843,6 +891,8 @@ entries:
       The corpus carries the CHSH machinery in a form general enough that the singlet is an instance rather than the subject, which is what makes statements of this shape expressible. It matters to the programme because a substrate account cannot treat weak entanglement as effectively classical.
     mathematical: >
       Every pure entangled bipartite state violates the CHSH inequality for some choice of settings. The corpus proves the universal quantum ceiling and the singlet's saturation of it separately.
+    person: >
+      Nicolas Gisin, Swiss, proved in 1991 that every entangled pure state violates a Bell inequality, and led much of the experimental work on quantum communication over deployed telecom fibre.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Nicolas_Gisin
@@ -859,6 +909,8 @@ entries:
       One of the algorithm witnesses in the corpus. Like the others it marks scope: the machinery can express and verify real algorithms. It bears on the substrate story only indirectly, by showing the formalised dynamics is the genuine article rather than a restricted fragment.
     mathematical: >
       Amplitude amplification finds a marked element among N with order square root of N oracle queries, which is optimal for unstructured search.
+    person: >
+      Lov Grover, Indian-born American, published the search algorithm in 1996 while at Bell Labs. Its quadratic speedup is provably optimal for unstructured search, which is unusual: the algorithm and its lower bound arrived together.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Grover%27s_algorithm
@@ -875,6 +927,8 @@ entries:
       This is the engine behind the claim that the programme's ruler is forced rather than chosen. The unitary group carries its Haar measure; the state space is a quotient of that group; and uniqueness of the invariant measure downstairs is inherited from uniqueness upstairs. Remove this and the Fubini-Study measure becomes a preference instead of a consequence.
     mathematical: >
       A compact topological group carries a unique translation-invariant Borel probability measure. Invariant measures on a homogeneous space of such a group are unique up to scale, and normalisation fixes the scale.
+    person: >
+      Alfred Haar (1885-1933), Hungarian, proved the existence of the invariant measure on a group in 1933, the year he died. It became one of the foundations of harmonic analysis.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Haar_measure
@@ -891,6 +945,8 @@ entries:
       Observables, Hamiltonians and density operators in the corpus are all Hermitian, and the spectral decomposition that follows is used constantly, notably to diagonalise a state before integrating against it. Standard machinery: the corpus makes no claim about it, though it does prove the finite-dimensional spectral facts it consumes.
     mathematical: >
       A matrix equal to its own conjugate transpose. Its eigenvalues are real and it is unitarily diagonalisable, which supports the functional calculus used throughout.
+    person: >
+      Charles Hermite (1822-1901), French, worked on number theory and proved that e is transcendental. He was born with a deformed foot and, refusing to have it treated, was barred from the career in engineering he had trained for.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hermitian_matrix
@@ -907,6 +963,8 @@ entries:
       The programme's ontology is deliberately not here. Physical states are points of the constraint surface, and the Hilbert space enters as the epistemic bookkeeping built over it: the projective space of rays is what carries the outcome regions. Saying that quantum mechanics happens in Hilbert space is, on this account, describing the shadow rather than the object.
     mathematical: >
       A complete complex inner product space. Everything in this corpus is finite-dimensional, so completeness is automatic and the relevant object is the projective space of rays.
+    person: >
+      David Hilbert (1862-1943), German, was the leading mathematician of his era. His 1900 list of twenty-three problems set much of the century's agenda, and his formalist programme -- that mathematics could be made complete and consistent -- was limited by Godel in 1931.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hilbert_space
@@ -923,6 +981,8 @@ entries:
       One of the empirical twins in the corpus. It is a useful test case because the effect is pure interference between alternatives rather than a correlation between separated wings, so it probes a different part of an account than the Bell family does.
     mathematical: >
       For two indistinguishable bosons entering the separate input ports of a balanced beam splitter, the amplitudes for both-transmitted and both-reflected cancel, so the coincidence rate falls to zero.
+    person: >
+      Chung Ki Hong, Zheyu Ou and Leonard Mandel demonstrated the effect at Rochester in 1987. Mandel (1927-2001) was a founder of quantum optics as an experimental subject.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hong%E2%80%93Ou%E2%80%93Mandel_effect
@@ -939,6 +999,8 @@ entries:
       It sits underneath the correspondence the programme leans on: the classical bracket and the quantum commutator obey the same law, which is what lets a Hamiltonian description translate between the ontic flow and the operator picture. Background structure rather than a subject of claims here.
     mathematical: >
       For a Lie bracket, the cyclic sum of the bracket of x with the bracket of y and z vanishes. Both the matrix commutator and the Poisson bracket satisfy it.
+    person: >
+      Carl Gustav Jacob Jacobi (1804-1851), German, worked on elliptic functions and dynamics. The Hamiltonian formulation of mechanics owes much of its modern shape to him.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Jacobi_identity
@@ -955,6 +1017,8 @@ entries:
       The concrete realisation of composition throughout the corpus. It carries real weight in the results about composite systems, where the tensor structure is not assumed but forced from commuting local subalgebras, and in the partial trace used to discard an environment. Standard machinery in itself.
     mathematical: >
       The matrix realisation of the tensor product of operators, with the identity that the product of Kronecker products is the Kronecker product of the products.
+    person: >
+      Leopold Kronecker (1823-1891), German, was a successful businessman before returning to mathematics. He is remembered for insisting that mathematics be constructive, and for his hostility to Cantor's infinities.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Kronecker_product
@@ -971,6 +1035,8 @@ entries:
       Useful to the programme precisely because it isolates the temporal assumption. A substrate account naturally suggests that properties are definite between measurements, so a test targeting exactly that assumption is more searching, for this kind of theory, than a spatial Bell test.
     mathematical: >
       A bound on combinations of two-time correlation functions that follows from macrorealism plus non-invasive measurability, violated by quantum mechanics.
+    person: >
+      Anthony Leggett, British-American, shared the 2003 Nobel Prize for work on superfluidity. With Anupam Garg he proposed in 1985 the temporal analogue of Bell's inequalities, testing whether a system has definite properties between measurements.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Leggett%E2%80%93Garg_inequality
@@ -987,6 +1053,8 @@ entries:
       Used in the corpus's entropy and channel results, where inequalities between operators are the working currency, and in the operator-convexity development that supports them. Standard machinery, imported rather than claimed.
     mathematical: >
       The partial order in which A is at most B when B minus A is positive semidefinite. Operator monotone and operator convex functions are those respecting it under the functional calculus.
+    person: >
+      Charles Loewner (1893-1968), Czech-born, emigrated after the Nazi occupation. His 1934 work on operator monotone functions established which functions respect the order on operators -- a question that turned out to matter for quantum information.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Loewner_order
@@ -1003,6 +1071,8 @@ entries:
       The standard arena for the corpus's interference twins, including the interaction-free measurement and the eraser. Its value to the programme is that it forces an account to say something definite about the unmeasured alternative, which is exactly where interpretations differ.
     mathematical: >
       A two-path interferometer with two balanced beam splitters, whose output port intensities depend on the relative phase accumulated between the arms.
+    person: >
+      Ludwig Mach (1868-1951) and Ludwig Zehnder (1854-1949) devised the interferometer independently in the 1890s. Ludwig was the son of Ernst Mach, the physicist and philosopher whose critique of absolute space influenced Einstein.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Mach%E2%80%93Zehnder_interferometer
@@ -1019,6 +1089,8 @@ entries:
       The corpus derives it as a volume ratio rather than assuming it, which makes it the smallest complete instance of the programme's central claim. It is the case where the general statement can be seen entirely by hand, and it is also where the two-level accident is easiest to mistake for the general situation.
     mathematical: >
       The transmitted intensity through crossed polarisers is proportional to the squared cosine of the angle between them, matching the Born weight for a spin measurement on the corresponding axis.
+    person: >
+      Etienne-Louis Malus (1775-1812), French, served as an engineer in Napoleon's Egyptian campaign and discovered polarisation by reflection in 1808, reportedly while looking at sunlight reflected from a Paris window. He died at thirty-six.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Malus%27s_law
@@ -1035,6 +1107,8 @@ entries:
       The corpus carries the multi-party form alongside the two-party one so that its contextuality results are not tied to the smallest case. Together with the GHZ obstruction it establishes that the conflict is a structural feature at every size, which is a stronger obligation for a substrate account to meet.
     mathematical: >
       A family of multipartite Bell inequalities whose classical bound is exceeded by quantum mechanics by a factor growing exponentially in the number of parties.
+    person: >
+      David Mermin, American, is known for lucid writing on quantum foundations as much as for his research -- the phrase shut up and calculate is his, coined as a criticism. He gave these multi-party inequalities in 1990.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/GHZ_experiment
@@ -1051,6 +1125,8 @@ entries:
       Used everywhere the corpus touches spin: the detector settings in the Bell and GHZ results are built from them, the singlet correlations are computed with them, and the Bloch picture is their geometry. Standard machinery, and the corpus claims nothing about the matrices themselves.
     mathematical: >
       Three traceless Hermitian involutions on a two-dimensional space, pairwise anticommuting, which with the identity form a basis of the Hermitian operators there.
+    person: >
+      Wolfgang Pauli (1900-1958), Austrian, formulated the exclusion principle at twenty-four and won the Nobel Prize for it. Famously severe as a critic, he is the source of the phrase not even wrong.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Pauli_matrices
@@ -1067,6 +1143,8 @@ entries:
       Carried in the corpus alongside the Bell results as the structural counterpart to them: Bell inequalities detect entanglement through statistics, this detects it through algebra. Having both matters because they are not equivalent in general, and an account should not conflate correlation strength with entanglement.
     mathematical: >
       If a bipartite state is separable then its partial transpose is positive semidefinite. The converse holds in dimensions two by two and two by three.
+    person: >
+      Asher Peres (1934-2005), Israeli, gave the partial-transpose test for entanglement in 1996 and co-authored the quantum teleportation protocol. His textbook is among the clearest written on quantum theory.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Peres%E2%80%93Horodecki_criterion
@@ -1083,6 +1161,8 @@ entries:
       Load-bearing for the programme's ambition, since the ontic side is a deterministic measure-preserving flow and the epistemic side is operator dynamics, and the bracket is the bridge. The corpus's formal content here is at the pointwise and volume level; the manifold-level symplectic geometry remains outside what the proof assistant can currently express.
     mathematical: >
       The bilinear antisymmetric bracket on functions of phase space determined by the symplectic form, satisfying the Jacobi identity and generating Hamiltonian flow.
+    person: >
+      Simeon Denis Poisson (1781-1840), French, introduced the bracket in 1809. His name attaches to results across probability, mechanics and electrostatics; the Poisson distribution is the best known.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Poisson_bracket
@@ -1099,6 +1179,8 @@ entries:
       The corpus uses it in the metrology strand, where precision limits are stated and the standard and Heisenberg scalings compared. That strand consumes the formalised dynamics rather than contributing to the reconstruction, and is labelled as an adjacent arm.
     mathematical: >
       A two-pulse scheme in which the accumulated relative phase during free evolution produces fringes whose spacing narrows with the free-evolution time.
+    person: >
+      Norman Ramsey (1915-2011), American, invented the separated-oscillatory-fields method in 1949 and received the 1989 Nobel Prize for it. The definition of the second rests on the technique.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Ramsey_interferometry
@@ -1115,6 +1197,8 @@ entries:
       This is the second of the programme's two pillars, the first being the Born rule, and both are demonstrated on a single sector so they are not separate stories. The route is Wigner rigidity followed by the finite-dimensional Stone theorem. Honest scope: the sector is posited, and what is proved is that a flow on it must take this form, not that this flow must exist.
     mathematical: >
       For a strongly continuous projective flow preserving transition probabilities, the induced evolution is a one-parameter unitary group and so is generated by a Hamiltonian, giving the usual equation of motion up to phase.
+    person: >
+      Erwin Schrodinger (1887-1961), Austrian, wrote down the wave equation in 1926 and shared the Nobel Prize in 1933. He disliked the probabilistic reading his own equation received, and devised the cat as a reductio against it -- an argument now more often quoted as an illustration of the thing it was meant to refute.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation
@@ -1131,6 +1215,8 @@ entries:
       Present in the corpus as the most demanding of the algorithm witnesses, with the reversible arithmetic beneath it built and verified. It bears on the substrate story only as scope evidence: the formalised machinery is strong enough to carry a full algorithm rather than a toy. The programme makes no claim about cryptography.
     mathematical: >
       Quantum order-finding gives the period of modular exponentiation in polynomial time, from which a factor follows classically with high probability.
+    person: >
+      Peter Shor, American, published the factoring algorithm in 1994, turning quantum computing from a theoretical curiosity into a subject with a budget. He also gave the first quantum error-correcting code.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Shor%27s_algorithm
@@ -1147,6 +1233,231 @@ entries:
       The reference example for measurement in the corpus, and a useful one for the programme because the second half, the destruction of the earlier sorting, is exactly the contextuality that any substrate account must produce rather than explain away.
     mathematical: >
       A spatial separation of beams according to the eigenvalues of a spin component along the field gradient, with successive measurements along non-commuting axes failing to preserve the earlier outcome.
+    person: >
+      Otto Stern (1888-1969) and Walther Gerlach (1889-1979) performed the experiment in Frankfurt in 1922. Stern, who was Jewish, left Germany in 1933 and received the Nobel Prize in 1943; Gerlach remained and led part of the German nuclear programme.
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Stern%E2%80%93Gerlach_experiment
+
+  - slug: contextuality
+    term: Contextuality
+    status: proved-in-corpus
+    source: curated
+    hook: >
+      An outcome can depend on what else you chose to measure alongside it. Not a disturbance, and not ignorance: no consistent set of answers exists.
+    layman: >
+      It is natural to think a measurement reveals a property the system already had, and that measuring something else at the same time is irrelevant. Quantum mechanics denies it. There are collections of questions for which no assignment of answers works at all, no matter how the answers are chosen, provided each answer is required to be the same regardless of which companion questions are asked. The result depends on the company the question keeps.
+    in_csd: >
+      CSD is contextual by construction, so this is a commitment rather than a concession. The substrate carries a definite microstate, and a measurement context fixes which partition of the epistemic space the outcome is read against; change the context and you change the partition, so the same microstate can yield different answers. The corpus proves the obstruction rather than asserting it, and pairs it with an explicit contextual model that reproduces the singlet, so the position is two-sided: contextuality is not a gap in the account but the shape of it.
+    mathematical: >
+      Over a single shared measurable state space, no jointly-defined assignment of outcomes to the four CHSH settings reproduces the singlet correlations. Companion statements give the same conclusion over any shared probability space at every setting pair, and for GHZ.
+    lean:
+      module: CsdLean4/LF6/C1BellConsistency.lean
+      theorem: no_compatible_global_chsh_assignment_realises_singlet
+    external:
+      - text: "Stanford Encyclopedia: the Kochen-Specker theorem"
+        url: https://plato.stanford.edu/entries/kochen-specker/
+
+  - slug: hidden-variables
+    term: Hidden variables
+    status: proved-in-corpus
+    source: curated
+    hook: >
+      A theory can have a definite underlying state and still reproduce quantum mechanics, provided it gives up the right thing. The no-go theorems say what.
+    layman: >
+      If quantum mechanics is about our knowledge rather than the world, something must be there to be known. A hidden-variable theory supplies it: an underlying state, definite at all times, of which the quantum description is a summary. A series of famous theorems constrain such theories severely. They do not, contrary to a common reading, rule them out; they rule out the well-behaved ones, and the price of survival is precisely stated.
+    in_csd: >
+      The constraint surface is a hidden-variable theory in the technical sense, and the programme accepts the price openly. What Bell's argument forbids is a theory that is both local and non-contextual; this one is neither, and the corpus proves the obstructions itself rather than citing them. Two things follow that are easy to get wrong. First, the substrate is not a repair of quantum mechanics -- it reproduces the same predictions, and where it might one day differ is recorded as owed rather than claimed. Second, the state on the epistemic side is not the hidden variable; it is the summary. The hidden variable is the point of the constraint surface beneath it.
+    mathematical: >
+      No product partition of a shared hidden-state space reproduces the singlet correlations, at any setting pair, and likewise for GHZ. The obstruction is proved over an arbitrary measurable state space rather than exhibited on a chosen model.
+    lean:
+      module: CsdLean4/LF6/ForcedContextuality.lean
+      theorem: no_product_partition_realises_singlet
+    external:
+      - text: "Overview and history"
+        url: https://en.wikipedia.org/wiki/Hidden-variable_theory
+
+  - slug: measurement-problem
+    term: Measurement problem
+    status: proved-in-corpus
+    source: curated
+    hook: >
+      Evolution is continuous and reversible; measurement is abrupt and not. The theory contains both and does not say where one stops.
+    layman: >
+      Left alone, a quantum system evolves smoothly and reversibly, and superpositions persist. Measured, it yields one definite result and the alternatives are gone. Textbook quantum mechanics supplies both rules and no account of which applies when. It is not a puzzle about interpretation only: the two rules are mathematically incompatible, so something in the picture has to give.
+    in_csd: >
+      The programme's answer is that nothing abrupt happens on the substrate. The underlying motion is deterministic and measure-preserving throughout; what changes at a measurement is which region of the epistemic space the trajectory is recorded against. Where this becomes sharp rather than a story is the trilemma: the corpus proves that no measure-preserving map implements exact collapse, that no continuous propagator correlates a pointer everywhere on a connected arena, and that buying accuracy costs improbability in the ready state, with the exchange rate stated. So the account does not dissolve the problem by assertion. It proves which of the desirable properties cannot be had together, and then says which one it gives up.
+    mathematical: >
+      Three impossibility results on the pointer arena: no exact collapse by a measure-preserving map, no everywhere-correlating continuous propagator, and a quantitative bound trading collapse accuracy against ready-state improbability. All CSD-free in statement.
+    lean:
+      module: CsdLean4/RecordLayer/MeasurementConstraints.lean
+      theorem: no_exact_collapse
+    external:
+      - text: "Stanford Encyclopedia: measurement in quantum theory"
+        url: https://plato.stanford.edu/entries/qt-issues/
+
+  - slug: collapse
+    term: Collapse
+    status: proved-in-corpus
+    source: curated
+    hook: >
+      The state does not jump here. Something is proved about why it cannot, rather than assumed about why it need not.
+    layman: >
+      The standard account says that on measurement the state discontinuously becomes the one matching the result. Whether that is a physical event or a bookkeeping update is the oldest dispute in the subject. If it is physical, it is unlike anything else in the theory: abrupt, irreversible and unexplained.
+    in_csd: >
+      There is no collapse on the substrate, and the corpus makes that a theorem rather than a preference: no measure-preserving map implements exact collapse, so a deterministic volume-preserving substrate could not contain one even if it wanted to. What replaces it is a record. The apparatus and system evolve together, the record selects which epistemic region the trajectory realises, and the update rule textbooks postulate separately is what the record layer does. The state that changes is the summary, not the world.
+    mathematical: >
+      No measure-preserving map on the arena implements exact collapse; the accuracy of any approximate collapse is bounded against the improbability of the ready state. The post-measurement update appears instead as the block projection realised on the pointer arena.
+    lean:
+      module: CsdLean4/RecordLayer/MeasurementConstraints.lean
+      theorem: no_exact_collapse
+    external:
+      - text: "Stanford Encyclopedia: collapse theories"
+        url: https://plato.stanford.edu/entries/qm-collapse/
+
+  - slug: typicality
+    term: Typicality
+    status: proved-in-corpus
+    source: curated
+    hook: >
+      Probability without randomness: the answer is fixed, and the question is what fraction of the possibilities give it.
+    layman: >
+      If the world is deterministic, where do the odds come from? The typicality answer is that they come from counting. Fix what you know about a system, look at the space of states consistent with it, and ask what fraction of that space leads to each outcome. Nothing is random; you are simply ignorant of which state you have, and the fractions are facts about the space rather than about chance.
+    in_csd: >
+      This is the engine the whole account runs on, and it is why the Born rule can be a theorem here rather than a postulate. The outcome weight is a ratio of volumes on the constraint surface, and the law of large numbers converts that ratio into observed frequencies over repeated preparations. Two points the programme is careful about. The measure doing the counting is not chosen but forced by symmetry, which is what answers the standard objection that typicality arguments presuppose their own measure. And frequencies are forced by the law of large numbers, not by an ergodic or single-flow argument -- that route is recorded as a proved dead end.
+    mathematical: >
+      For independent trials, the observed relative frequency of an outcome converges almost surely to its volume fraction. Combined with the volume-ratio identification of the Born weight, this delivers Born frequencies at general dimension.
+    lean:
+      module: CsdLean4/LF1/GeneralFrequency.lean
+      theorem: freq_tendsto_of_iid
+    external:
+      - text: "Goldstein, typicality in statistical mechanics and quantum theory"
+        url: https://arxiv.org/abs/1110.1349
+
+  - slug: psi-epistemic
+    term: Psi-epistemic
+    status: definition
+    source: curated
+    hook: >
+      The quantum state describes what is known, not what is there. Everything else in the programme follows from taking that literally.
+    layman: >
+      There are two ways to read the quantum state. Either it is a thing in the world, in which case its abrupt change on measurement is a physical event needing explanation; or it is a description of what an observer knows, in which case the change is just an update and needs no more explanation than revising a probability after looking. The second reading is the epistemic one. Its difficulty has always been saying what the state is knowledge *of*.
+    in_csd: >
+      The programme is epistemic about the state and answers the standing difficulty directly: the state is knowledge of which region of the constraint surface the microstate lies in. That gives the position a floor. The projective space of states, the outcome regions and the probabilities are all on the epistemic side; the substrate and the measure that weights it are ontic. Keeping the two levels apart is the discipline the whole account rests on, and the fibre analysis sharpened it -- the projective space is a lossy epistemic projection, with the record-forming content living above it.
+    mathematical: >
+      Not a theorem and not stated as one. It is the reading OF the theorems: the projective state space carries the epistemic outcome partition, while the typicality measure that weights those regions is defined on the substrate.
+    external:
+      - text: "Epistemic views of the quantum state"
+        url: https://en.wikipedia.org/wiki/Epistemic_view_of_quantum_states
+
+  - slug: determinism
+    term: Determinism
+    status: definition
+    source: curated
+    hook: >
+      The substrate has no chance in it. The randomness is in which state you happen to have, not in what it does.
+    layman: >
+      A deterministic theory fixes the future from the present with no room left over. Quantum mechanics appears to violate this: identically prepared systems give different results. The deterministic response is that the preparations were not identical -- they agreed on everything recorded and differed in what was not -- and that the observed spread reflects that unrecorded variation rather than genuine chance.
+    in_csd: >
+      The substrate is deterministic and its motion preserves volume, so nothing probabilistic is built into the dynamics. Probability enters exactly once, as ignorance of which microstate a preparation produced, and the volume of the region of states compatible with what was fixed is what turns that ignorance into numbers. This is the same manoeuvre classical statistical mechanics makes, which is deliberate. What the programme owes, and records as owed rather than claimed, is that a deterministic substrate with memory would show departures from the independence assumed in the frequency argument -- which is one of the few places it could differ from quantum mechanics observably.
+    mathematical: >
+      Positional. The formal content is that the flow is measure-preserving and the outcome weights are volume ratios; determinism is the reading of that structure, not a separate statement.
+    external:
+      - text: "Stanford Encyclopedia: causal determinism"
+        url: https://plato.stanford.edu/entries/determinism-causal/
+
+  - slug: kochen-specker
+    term: Kochen-Specker theorem
+    status: standard-mathematics
+    source: curated
+    hook: >
+      A finite set of questions with no consistent set of answers. Contextuality proved by counting, with no reference to distance or separation.
+    layman: >
+      Bell's argument needs two separated wings and a statistical comparison. Kochen and Specker showed something starker and purely local: in three dimensions or more there is a finite collection of measurement directions such that no assignment of answers is consistent with the algebraic relations among them. No experiment is needed to see the contradiction, and no appeal to separation.
+    in_csd: >
+      The programme is contextual, so this theorem is a constraint it satisfies rather than a threat -- and the corpus is careful about a related trap. Its own fibre analysis found that at three levels and above the contextual content cannot sit on the projective base and must live in the fibre above it, and that conclusion does NOT come from Kochen-Specker or Gleason: those constrain non-contextual assignments, and this account is contextual, so they do not apply. The obstruction is instead covariance together with non-negativity. Keeping the two arguments apart matters, because borrowing this theorem's authority for a result it does not support would be a subtle overclaim.
+    mathematical: >
+      For Hilbert spaces of dimension at least three there is no non-contextual assignment of definite values to all observables consistent with the functional relations among commuting sets. Finite explicit sets of vectors witness it.
+    external:
+      - text: "Stanford Encyclopedia: the Kochen-Specker theorem"
+        url: https://plato.stanford.edu/entries/kochen-specker/
+
+  - slug: copenhagen
+    term: Copenhagen interpretation
+    status: definition
+    source: curated
+    hook: >
+      The oldest position, and the one that declines the question. Measurement is where the theory stops rather than something it explains.
+    layman: >
+      The traditional teaching account treats the measuring apparatus as classical and outside the quantum description, and the state's change on measurement as a primitive fact rather than a process. It is not so much an explanation of measurement as a decision not to require one. That has been enough to do a century of physics with, which is why it survived.
+    in_csd: >
+      The programme's disagreement is narrow and specific. It agrees the state is not a physical thing and it agrees the classical/quantum divide is where the interesting content is; it declines to leave the divide unanalysed. Measurement here is a physical interaction on the substrate producing a record, and the two rules the traditional account keeps apart are one process. This is an interpretive contrast rather than an empirical one -- no experiment distinguishes them -- and this entry states a position rather than reporting a theorem.
+    mathematical: >
+      No formal content. Included so a reader comparing accounts can place this one.
+    external:
+      - text: "Stanford Encyclopedia: the Copenhagen interpretation"
+        url: https://plato.stanford.edu/entries/qm-copenhagen/
+
+  - slug: many-worlds
+    term: Many-Worlds interpretation
+    status: definition
+    source: curated
+    hook: >
+      Keep the smooth evolution and drop the single outcome. This programme does the opposite.
+    layman: >
+      If the smooth reversible evolution is the whole story and never gets interrupted, then after a measurement the apparatus and observer are themselves in a superposition of registering each result. The Everettian move is to accept that at face value: every outcome happens, in branches that no longer interfere. Nothing is added to the formalism, and the difficulty moves to explaining why the branches carry the weights they do.
+    in_csd: >
+      This account is single-trajectory, and that is settled rather than an open question. One microstate, one history, one outcome; the alternatives are regions of the epistemic space that the trajectory did not enter, not places where something else occurred. Because it retains a definite state throughout, the probability difficulty that Everettian accounts face -- why branch weights should be the observed ones -- takes a different form here, as a question about the measure on the substrate, which is answered by a uniqueness argument. This entry is positional; the single-trajectory commitment is recorded in the programme's non-goals.
+    mathematical: >
+      No formal content. The contrast is the single-trajectory commitment: outcome weights are volume ratios on one constraint surface, not weights across branches.
+    external:
+      - text: "Stanford Encyclopedia: Everett's relative-state formulation"
+        url: https://plato.stanford.edu/entries/qm-everett/
+
+  - slug: bohmian-mechanics
+    term: Bohmian mechanics
+    status: definition
+    source: curated
+    hook: >
+      The nearest neighbour: deterministic, definite configurations, explicitly non-local. The differences are in what plays the role of the state.
+    layman: >
+      The pilot-wave account gives particles definite positions at all times and has them guided by a wave. It is deterministic, it reproduces quantum predictions exactly, and it purchases this with explicit non-locality: the guidance of one particle depends instantaneously on where the others are. It is the standing proof that a deterministic account of quantum mechanics is possible at all.
+    in_csd: >
+      This is the closest relative among established accounts, and the similarities are real: determinism, a definite underlying state, non-locality accepted rather than avoided, and probabilities from ignorance about that state. The differences are in ontology. There the wave is a physical guiding field and the configuration is the extra variable; here the underlying object is the constraint surface itself, and the quantum state is epistemic rather than a guiding thing. The equilibrium assumption that supplies Bohmian probabilities has its counterpart here in the typicality measure -- with the difference that the measure is forced by symmetry rather than assumed as a starting distribution, which is the standing objection Bohmian accounts have to answer.
+    mathematical: >
+      No formal content. The nearest formal point of contact is that both accounts derive probabilities from a measure over an underlying state space rather than postulating the Born rule.
+    external:
+      - text: "Stanford Encyclopedia: Bohmian mechanics"
+        url: https://plato.stanford.edu/entries/qm-bohm/
+
+  - slug: spontaneous-collapse
+    term: Spontaneous collapse (GRW)
+    status: definition
+    source: curated
+    hook: >
+      The rival that changes the predictions, and can therefore be ruled out by experiment. This programme cannot.
+    layman: >
+      Rather than interpreting quantum mechanics, spontaneous-collapse theories modify it: the state undergoes rare random localisations, negligible for a single particle and overwhelming for anything macroscopic, so superpositions of large objects decay on their own. Because the modification has parameters, it makes predictions that differ from standard quantum mechanics, and experiments have been narrowing the allowed range for decades.
+    in_csd: >
+      The contrast is instructive and slightly uncomfortable. These theories are honest in a way this programme currently is not: they can be killed by an experiment. This account reproduces standard quantum mechanics exactly at leading order, so at present nothing distinguishes it empirically, and its own documentation records the candidate departures as owed by the papers rather than established. It also differs structurally -- there is no stochastic modification here, the substrate is deterministic and volume-preserving, and definite outcomes come from records rather than from a physical collapse process.
+    mathematical: >
+      No formal content. The structural contrast is that no stochastic term modifies the dynamics here; the corpus proves that exact collapse is unavailable to a measure-preserving substrate.
+    external:
+      - text: "Stanford Encyclopedia: collapse theories"
+        url: https://plato.stanford.edu/entries/qm-collapse/
+
+  - slug: qbism
+    term: QBism
+    status: definition
+    source: curated
+    hook: >
+      Epistemic all the way down: the state is one agent's betting odds, and there is nothing underneath. This programme keeps a floor.
+    layman: >
+      QBism takes the epistemic reading to its conclusion. Quantum states are an agent's personal degrees of belief, probabilities are subjective, and a measurement outcome is an experience for the agent who made it. The measurement problem dissolves because there was never a physical state to collapse. The cost is that the theory declines to describe a world independent of agents.
+    in_csd: >
+      The agreement is genuine and the disagreement is sharp. Both hold the state is epistemic, so both refuse to treat its update as a physical event. But this account keeps an ontic floor: the constraint surface exists whether or not anyone is looking, probabilities are volume ratios on it rather than personal credences, and the measure is forced by symmetry rather than chosen by an agent. The slogan version -- epistemic states over an ontic substrate, rather than epistemic states over nothing -- is fair to both. This entry is positional and no theorem states it.
+    mathematical: >
+      No formal content. The formal contrast is that outcome weights here are ratios of an invariant measure on a state space, which is not an agent-relative quantity.
+    external:
+      - text: "Stanford Encyclopedia: QBism and quantum Bayesianism"
+        url: https://plato.stanford.edu/entries/quantum-bayesian/

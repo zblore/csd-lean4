@@ -13,6 +13,10 @@ public import CsdLean4.Empirical.QM.Crypto.E91
 **Category:** 6-Local (first concrete attack on CSD's D1 entangled frontier; the
 conceptual crux of the entangled-singlet de-isolation tier).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/hidden-variables/
+Plain-language, CSD-role and formal statements of hidden variables, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## The idea
 
 In CSD a measurement is **de-isolation** (LF5): the deterministic

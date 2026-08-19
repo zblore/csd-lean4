@@ -12,6 +12,14 @@ public import CsdLean4.RecordLayer.GlobalBasin
 
 **Category:** 7-SigmaLayer (the record layer — constraints on the *unbuilt* dynamical layer).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/collapse/
+Plain-language, CSD-role and formal statements of collapse, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
+**Glossary:** https://glossary.constraintsurfacedynamics.com/measurement-problem/
+Plain-language, CSD-role and formal statements of the measurement problem, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## Why this exists, and what it is not
 
 `GlobalRecordClosure` supplies a context-fixed partition, but `globalBasin_ae_total` shows the

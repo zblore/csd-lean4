@@ -16,6 +16,10 @@ public import CsdLean4.RecordLayer.CircleFibre
 
 **Category:** 6-Entanglement (the C1 four-answer obstruction).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/contextuality/
+Plain-language, CSD-role and formal statements of contextuality, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 **Glossary:** https://glossary.constraintsurfacedynamics.com/bell-chsh/
 Plain-language, CSD-role and formal statements of Bell and CHSH, with
 this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.

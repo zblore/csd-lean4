@@ -67,7 +67,13 @@ REQUIRED = ("slug", "term", "status", "hook", "layman", "in_csd", "mathematical"
 # to land; they cite outward and anchor nothing, and demanding a theanchor for them
 # would either block them or invite a decorative one, which is worse. Entries that
 # DO carry `lean` are still checked for a live anchor and for link symmetry below.
-LEAN_OPTIONAL_STATUSES = {"standard-mathematics"}
+# `standard-mathematics` — vocabulary the corpus uses without doing anything particular
+# to it. `definition` — a term with no claim attached, which for the curated half means
+# the positional and interpretive entries (Copenhagen, Many-Worlds, psi-epistemic): they
+# state where this programme stands, and no theorem says that. Both cite outward and
+# anchor nothing. Every OTHER status asserts something about the corpus and must name the
+# constant that carries it.
+LEAN_OPTIONAL_STATUSES = {"standard-mathematics", "definition"}
 # How far the pinned sha may fall behind HEAD before it is worth saying so. Small
 # enough to catch a pin left behind across a working session, large enough that a
 # couple of unrelated commits do not nag.

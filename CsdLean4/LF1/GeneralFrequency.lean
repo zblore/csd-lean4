@@ -14,6 +14,10 @@ public import Mathlib.MeasureTheory.Integral.Bochner.Set
 
 **Category:** 3-Local.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/typicality/
+Plain-language, CSD-role and formal statements of typicality, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The law-agnostic core of `LF1_main_theorem_ae`. For i.i.d. `Σ`-valued trials
 `X : ℕ → Ω → Σ` with a *common law* `μp` (any probability measure), the empirical
 frequency of a measurable outcome region `O ⊆ Σ` converges almost surely to the
