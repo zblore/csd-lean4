@@ -106,16 +106,27 @@ arena (`arenaObs_kick_of_disjointSupport`), and ★★ `arena_lightcone` — **t
 very Lieb-Robinson-at-the-record-layer statement that was unstatable on
 2026-08-10**, now a theorem with the CV-20 factorial tail as its bound.
 
-**P1 remainder** (the honest-scope block of the module): (i) the fibre-active
-extension — the bridge covers the projective *base*; functions on the fibred
-`ℂℙ^{N-1} × T²` arenas that factor through the base inherit everything, but the
-fibre-carrying content does not yet; (ii) the definitional half — a
-*field-structured flow* as a structure whose generator decomposes into
-`SupportedOn` pieces, stated against this transport. (ii) is now bounded rather
-than research-flavoured: the transport it needed is what this arc built.
+**THE DEFINITIONAL HALF IS ALSO DONE (2026-08-20 — `CV/FieldStructuredFlow.lean`,
+4 pins).** `FieldStructuredFlow K N`: a skew generator presented as a sum of
+edge-supported pieces (on-site terms as self-edges), with the induced
+one-parameter families on the operators (`flow_add`) and on the arena
+(`arenaFlow_add`, via the kick group law `arenaKick_mul`). The characterisation
+this pillar asked for is ★★ `FieldStructuredFlow.lightcone`: **every**
+field-structured flow's arena action has the Lieb-Robinson cone — a property of
+the structure, not of a chosen drive. Non-vacuity is tied to the corpus's own
+dynamics rather than toys: `freeFieldStructured_flow_eq` identifies the
+structured free flow with `freeFieldU`, and `graphStructured_flow_eq` identifies
+the structured graph flow with `interactingU` at the graph potential — so the
+drives the EFT chain has studied all along are instances, and the arena cone
+applies to them with no further hypotheses.
+
+**P1 remainder** (single item): the fibre-active extension — the bridge and the
+characterisation cover the projective *base*; functions on the fibred
+`ℂℙ^{N-1} × T²` arenas that factor through the base inherit everything, but
+fibre-carrying content does not yet.
 
 Effort: ~~L, research-flavoured but not unbounded~~ → remainder **M** (the
-bottleneck half is done; what is left is a definition and its instances).
+fibre extension only; bridge and definition both landed).
 
 ### P2. Composite arenas
 

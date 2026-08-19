@@ -853,4 +853,32 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.arena_lightcone
 
+-- P1 definitional layer (2026-08-19, CV\FieldStructuredFlow.lean): what it MEANS for a
+-- flow to have field structure -- a skew generator presented as a sum of edge-supported
+-- pieces (on-site terms as self-edges), with the induced one-parameter families on the
+-- operators (flow_add) and on the record arena (arenaFlow_add, via the kick group law
+-- arenaKick_mul). The characterisation P1 asked for: FieldStructuredFlow.lightcone --
+-- EVERY field-structured flow's arena action has the Lieb-Robinson cone, as a property
+-- of the structure, not of a chosen drive. Non-vacuity tied to the corpus's own drives:
+-- freeFieldStructured_flow_eq identifies the structured free flow with freeFieldU at
+-- accumulated phase, and graphStructured_flow_eq identifies the structured graph flow
+-- with interactingU at the graph potential (same coupling; no-self-loops needed only for
+-- the identification, not the structure). So the EFT chain's drives are instances and
+-- the arena cone applies to them with no further hypotheses.
+/-- info: 'CSD.CV.FieldStructuredFlow.lightcone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.lightcone
+
+/-- info: 'CSD.CV.FieldStructuredFlow.arenaFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.arenaFlow_add
+
+/-- info: 'CSD.CV.freeFieldStructured_flow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.freeFieldStructured_flow_eq
+
+/-- info: 'CSD.CV.graphStructured_flow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphStructured_flow_eq
+
 end CSD.Tests.AxiomAudit
