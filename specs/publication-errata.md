@@ -16,6 +16,11 @@ now says instead, and what the paper must do.
 
 **Status:** OPEN (paper edit required; the repository side is corrected).
 **Found:** 2026-08-10, during the C1 correction.
+**Repository side re-verified 2026-08-19:** clean. `LF3/ContextMap.lean:18,55`,
+`specs/LF3-plan.md:820`, `specs/lf6-plan.md:9` and `docs/C1-FORMAL-SUPPORT.md:83,123`
+all carry the correction; the surviving `§8.7`/`§9.9` strings are section *pointers*,
+not restatements of the false argument. Nothing further to fix here — this entry is
+now **manuscript-only**.
 
 **What the text claims.** That `ContextIndexedOutcomeMaps` and
 `GlobalCHSHAssignment` being *different data types* carries the
@@ -56,8 +61,27 @@ modelling intuition.
 
 ## E-2 — the "nudge" is not a local basis rotation
 
-**Status:** OPEN (paper edit required; the repository side is corrected).
+**Status:** OPEN (paper edit required; the repository side is corrected **as of
+2026-08-19 — it was not before**).
 **Found:** 2026-08-10.
+
+⚠️ **Repo-side residue found and fixed 2026-08-19.** This entry claimed the
+repository side was corrected; that was true at the *definition* site
+(`SingletDeisolationFlow.nudgedSinglet`, `NudgeLocality.lean`,
+`ForcedContextuality.lean:76`) but **two prose blocks in
+`CsdLean4/LF6/LocalDeisolationFlow.lean` still asserted the falsified reading** —
+`localDeisolation_pullback`'s docstring said the axis context was "carried by the
+`nudgedSinglet a b` rotation" and that the computational projectors were "the
+physical eigenprojectors expressed in the rotated frame", and
+`localDeisolation_pointer_volume`'s said `φ = nudgedSinglet a b` was "the singlet in
+the rotated axis-context basis". Both now state the correct reading (the preparation
+carries the context through its setting-dependent moduli `√(P_st a b s t)`; no
+rotation is invoked) and both point at `LF6.localNudgeVec`. No proof changed — the
+statements consume only `‖·‖²` — and the full tree stays green (4013 jobs).
+**Lesson for this file: "the repository side is corrected" needs a grep across every
+consumer, not just the definition site.** The prose-audit defect class
+(`specs/prose-audit.md`) is exactly this: a false claim that survives only in prose,
+downstream of a corrected definition.
 
 **What the text claims.** That the prepared state is the singlet in the rotated
 axis-context basis, `(U_A ⊗ U_B)† ψ⁻` — a *local* basis rotation.

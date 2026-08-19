@@ -175,13 +175,24 @@ Kronecker `|e_i⟩⟨e_i| ⊗ |e_j⟩⟨e_j| = |e_{(i,j)}⟩⟨e_{(i,j)}|`
 
 **Reading the projector (do not mistake the computational for the physical).** The
 proved RHS `|e_{(i,j)}⟩⟨e_{(i,j)}|` is the *computational-basis* rank-1 projector.
-It is the physical product-eigenbasis projector `|a_i ⊗ b_j⟩⟨a_i ⊗ b_j|` (wing-`A`
-detector outcome `a_i`, wing-`B` outcome `b_j`) **read in the nudged axis basis**:
-the axis context `(a, b)` is carried by the `nudgedSinglet a b` rotation applied to
-the preparation (the prepared state in `localDeisolation_pointer_volume` is
-`nudgedSinglet a b`, not the bare singlet), so the computational projectors here are
-the physical eigenprojectors expressed in the rotated frame, not a different
-observable. -/
+It reads the physical wing outcomes (`a_i` at wing `A`, `b_j` at wing `B`) because
+the **preparation** carries the axis context, not because the frame is rotated: the
+prepared state in `localDeisolation_pointer_volume` is `nudgedSinglet a b`, not the
+bare singlet, and its coordinates are the setting-dependent moduli
+`√(P_st a b s t)` (each the overlap `⟨ψ⁻, singletJointEig s t a b⟩`). So the
+computational weight at cell `(s, t)` is the `(a, b)`-context outcome probability
+by `nudgedSinglet_born`, and no basis rotation is invoked.
+
+⚠️ **Do not read this as a rotated frame** (corrected 2026-08-19; erratum **E-2**,
+`specs/publication-errata.md`). This paragraph previously said the axis context was
+"carried by the `nudgedSinglet a b` rotation" and that these were "the physical
+eigenprojectors expressed in the rotated frame". That is false for the same reason
+the definition site records: `nudgedSinglet` discards every relative phase, and at
+`a ⊥ b` it is `½(1,1,1,1)`, a product state, while `ψ⁻` is maximally entangled — so
+no local unitary relates them off `a·b = ±1`. The genuinely local-unitary object
+with the same Born statistics is `LF6.localNudgeVec`; cite that if a rotated-frame
+reading is wanted. Nothing here is affected, because this proof consumes only
+`‖·‖²`. -/
 theorem localDeisolation_pullback (i j : Fin 2) :
     (wingDeisolationV ⊗ₖ wingDeisolationV)ᴴ * (blockProj 2 i ⊗ₖ blockProj 2 j)
         * (wingDeisolationV ⊗ₖ wingDeisolationV)
@@ -286,8 +297,10 @@ theorem localDeisolation_norm_map (ψ : EuclideanSpace ℂ (Fin 4)) :
 /-- **The reproduction (the A.3 headline).** The LOCAL product de-isolation
 `V_loc = V_A ⊗ V_B` reproduces the singlet: its context-fixed pointer-block
 `(s, t)` Fubini–Study volume equals the LF3 singlet kernel `P_st a b s t`, for
-the prepared state `φ = nudgedSinglet a b` (the singlet in the rotated
-axis-context basis, reused from A.2).
+the prepared state `φ = nudgedSinglet a b` (the setting-dependent **moduli**
+`√(P_st a b s t)`, reused from A.2 — *not* a locally rotated singlet; see the
+erratum note on `localDeisolation_pullback` above and `LF6.localNudgeVec` for the
+object that genuinely is a local-unitary image).
 
 The proof routes the local product Naimark dilation `localNaimark` through the
 LF4 POVM-Naimark **volume machinery** `povm_born_eq_dilated_volume_uncond`

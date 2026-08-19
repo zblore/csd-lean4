@@ -195,10 +195,35 @@ unfalsifiable sentence into a Lean obligation, which is the only durable fix —
 the two theorems added in pass 2 are pinned, so the corrected reason cannot
 silently rot back.
 
+### Pass 3 (2026-08-19) — the E-2 consumer sweep
+
+Triggered by a question about the two open publication debts, not by a scheduled
+pass. Method: take a claim already known false and corrected at its **definition**
+site, and grep every **consumer** for restatements of it.
+
+Target: erratum **E-2** (`nudgedSinglet` is the moduli, not a locally rotated
+singlet). The definition site, `NudgeLocality.lean` and `ForcedContextuality.lean`
+were all correct. **Two prose blocks in `LF6/LocalDeisolationFlow.lean` were not** —
+`localDeisolation_pullback` ("the axis context is carried by the `nudgedSinglet a b`
+rotation… the physical eigenprojectors expressed in the rotated frame") and
+`localDeisolation_pointer_volume` ("the singlet in the rotated axis-context basis").
+Both asserted precisely the falsified reading, nine days after the correction landed,
+and `specs/publication-errata.md` meanwhile recorded the repository side as
+corrected. Fixed 2026-08-19; no proof changed (the statements consume only `‖·‖²`).
+
+**The generalisable lesson, and it is new:** correcting a definition's docstring does
+not correct its consumers, and an erratum entry asserting "the repository side is
+corrected" is an unverified claim unless a consumer grep backs it. The two earlier
+passes hunted *reasons given for restrictions*; this one hunts **stale restatements
+downstream of a fixed definition**, which is a different and cheaper sweep — one grep
+per corrected term. Worth running against every past correction, not just E-2.
+
 ## Status
 
-**Roughly a fifth of the surface covered. One defect found.** The remaining
-blocks are recorded here rather than implied to be clean.
+**Roughly a fifth of the surface covered. Two defects found** (one per method: pass 2
+the false reason, pass 3 the stale downstream restatement). The remaining blocks are
+recorded here rather than implied to be clean. **Unrun cheap sweep:** the pass-3
+consumer grep against the corpus's other recorded corrections.
 
 ## References
 
