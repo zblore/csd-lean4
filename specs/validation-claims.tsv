@@ -4,7 +4,7 @@ CL-002	LF1/GeneralFrequency.lean	CSD.LF1.freq_tendsto_of_iid	qualified	probabili
 CL-003	LF2/Preparation.lean	CSD.LF2.OperationalPackage.fromPreparation	qualified	representation	preparation measure; quadratic integrand; bridge type-level by design	mutation guard: transport theorems integral_comp_pi + fromPreparation_liouville_apply consume bridge_eq (G1 discharge 2026-08-06); fromPreparation body does not	F-01
 CL-004	LF2/Preparation.lean	CSD.LF2.PurePreparation.born_rank_one_direct	qualified	representation	Dirac concentration; effectProjFn definition	unfold integrand and compare quadratic form	F-02
 CL-005	LF2/EffectGleason.lean	CSD.LF2.OperationalPackage.effect_gleason_representation	validated	functional-analysis	bounded effect additivity; normalization; finite dimension	2026-08-06 specialist audit: Busch 2003 hypothesis-by-hypothesis match, full arc re-derived, isolation probe compiled; direct AxiomAudit pin added; signed off same day	-
-CL-006	LF2/POVM.lean	CSD.LF2.weights_sum_eq_one	qualified	quantum-information	PSD effects; sum-to-identity	add per-outcome nonnegativity API test	-
+CL-006	LF2/POVM.lean	CSD.LF2.POVM.weights_sum_eq_one	qualified	quantum-information	PSD effects; sum-to-identity	add per-outcome nonnegativity API test	-
 CL-007	LF2/QuantumChannel.lean	CSD.LF2.QuantumChannel.cptp_capstone	qualified	quantum-information	Kraus completeness	compare amplified CP formulation	-
 CL-008	LF3/Interface.lean	CSD.LF3.LF3_main_theorem	qualified	measurement	bundled singlet preparation hypotheses	trace each probability premise to constructor	-
 CL-009	LF3/Interface.lean	CSD.LF3.LF3_singlet_frequency_convergence_born	qualified	measurement	Born identification; trial independence	independent finite probability calculation	-

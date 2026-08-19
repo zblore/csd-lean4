@@ -107,6 +107,58 @@ for p in files:
             continue
         findings.append((p, head, " ".join(line.split())[:96]))
 
+# ---------------------------------------------------------------------------
+# (B) The same defect in the VALIDATION LEDGER: a claim naming a constant that does
+# not resolve. `check-validation-ledger.sh` verifies that a row's module and constant
+# are LINKED, not that the constant exists under that exact name — so CL-006 recorded
+# `CSD.LF2.weights_sum_eq_one` for years while the declaration sits inside
+# `namespace POVM` and is really `CSD.LF2.POVM.weights_sum_eq_one`. The ledger checker
+# reported OK. Same class as the docstring case above: a name asserted in prose or data
+# that no declaration answers to.
+# ---------------------------------------------------------------------------
+import csv
+pinned = set()
+for dp, dn, fn in os.walk("CsdLean4/Tests"):
+    for f in fn:
+        if f.endswith(".lean"):
+            for mm in re.finditer(r"#print axioms\s+([A-Za-z_][A-Za-z0-9_.'!?]*)",
+                                  open(os.path.join(dp, f), encoding="utf-8",
+                                       errors="replace").read()):
+                pinned.add(mm.group(1))
+
+ledger = "specs/validation-claims.tsv"
+if os.path.exists(ledger):
+    with open(ledger, encoding="utf-8") as fh:
+        for row in csv.DictReader(fh, delimiter="\t"):
+            const = (row.get("constant") or "").strip()
+            mod = "CsdLean4/" + (row.get("module") or "").strip()
+            if not const or not os.path.exists(mod):
+                continue
+            # Regex cannot decide this: a declaration may be written at any level of
+            # qualification depending on open namespaces, so strict matching gives false
+            # positives and suffix matching gives false negatives — suffix matching would
+            # have accepted the very CL-006 error that motivated this check, because the
+            # final segment resolved while the namespace was wrong.
+            #
+            # The audit pin settles it instead. `#print axioms <name>` is elaborated by
+            # Lean, so a pin naming a constant that does not resolve fails the build. A
+            # ledger constant that appears verbatim in a pin is therefore a constant Lean
+            # itself has confirmed. Requiring the pin does double duty: it is promotion
+            # criterion 2 (the axiom footprint is evidenced) AND the name check.
+            # A pin may be written partially qualified, because the audit parts `open`
+            # the layer namespaces — `#print axioms OperationalPackage.effect_gleason…`
+            # elaborates to the full name. So a pin counts when it is a dot-aligned
+            # SUFFIX of the recorded constant: opens only ever shorten a name, never
+            # lengthen it. That asymmetry is what still catches CL-006, where the pin
+            # (`CSD.LF2.POVM.weights_sum_eq_one`) was LONGER than the ledger's recorded
+            # `CSD.LF2.weights_sum_eq_one` — a wrong namespace, not an open.
+            if any(const == p or const.endswith("." + p) for p in pinned):
+                continue
+            findings.append((ledger, const,
+                             "ledger row %s: headline constant is not axiom-pinned under this "
+                             "exact name — so neither its axiom footprint nor its spelling is "
+                             "checked by anything" % row.get("id")))
+
 if findings:
     print("check-doc-promises: FAIL — %d docstring promise(s) with no declaration:" % len(findings))
     print()

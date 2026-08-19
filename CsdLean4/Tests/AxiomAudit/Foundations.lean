@@ -35,6 +35,13 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.LF1.OnticSetup.LF1_main_theorem_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms LF1_main_theorem_ae
 
+-- CL-001's ledger constant is the UNDERLYING theorem; the pin above names the top-level
+-- alias that matches the manuscript. The alias is defined by the theorem, so its footprint
+-- already covered it transitively, but the ledger row pointed at a name nothing pinned
+-- directly. Pinned in its own right 2026-08-19 so the row is evidenced by its own constant.
+/-- info: 'CSD.LF1.OnticSetup.TrialModel.main_theorem_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF1.OnticSetup.TrialModel.main_theorem_ae
+
 /-- info: 'CSD.LF1.freq_tendsto_of_iid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF1.freq_tendsto_of_iid
@@ -260,6 +267,20 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 
 /-- info: 'CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone
+
+-- CL-007 (added 2026-08-19): the CPTP capstone was a LEDGER HEADLINE with no axiom pin.
+-- Found by a mechanical sweep of the 43 non-validated claims against the pin set, not by
+-- any guard: `check-validation-ledger` verifies that a claim's module and constant are
+-- linked, not that the constant is pinned. Promotion criterion 2 (`#print axioms` shows
+-- only the foundational footprint) was therefore unevidenced for this row.
+/-- info: 'CSD.LF2.QuantumChannel.cptp_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.QuantumChannel.cptp_capstone
+
+-- CL-003 (added 2026-08-19, same sweep): the ledger headline itself was unpinned. Its
+-- CONSEQUENCES were pinned (bridge_eq, fromPreparation_liouville_apply, the F-01 row),
+-- which is how it went unnoticed — the neighbourhood looked covered.
+/-- info: 'CSD.LF2.OperationalPackage.fromPreparation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.OperationalPackage.fromPreparation
 
 -- The detector-axis spinors (2026-08-10, LF3/Spinor.lean). Built for the C1
 -- nudge-locality correction: `nudgedSinglet` is the vector of sqrt(P_st), all phases

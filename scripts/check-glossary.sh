@@ -68,6 +68,10 @@ REQUIRED = ("slug", "term", "status", "hook", "layman", "in_csd", "mathematical"
 # would either block them or invite a decorative one, which is worse. Entries that
 # DO carry `lean` are still checked for a live anchor and for link symmetry below.
 LEAN_OPTIONAL_STATUSES = {"standard-mathematics"}
+# How far the pinned sha may fall behind HEAD before it is worth saying so. Small
+# enough to catch a pin left behind across a working session, large enough that a
+# couple of unrelated commits do not nag.
+STALE_LIMIT = 10
 
 d = yaml.safe_load(open("docs/glossary.yaml", encoding="utf-8"))
 entries = d.get("entries") or []
@@ -95,6 +99,27 @@ if sha:
     r = subprocess.run(["git", "cat-file", "-t", sha], capture_output=True, text=True)
     if r.stdout.strip() != "commit":
         B.append(f"meta.sha {sha[:12]} is not a commit in this repo")
+    else:
+        # Staleness. The pinned sha is deliberately not HEAD — permalinks must not
+        # move — but it must still be an ANCESTOR of HEAD, or the site links into a
+        # branch this one never took. And if it has fallen far behind, the source
+        # links show a tree older than the prose describing it: on 2026-08-19 the pin
+        # was four commits stale and pointed at a tree predating two theorems the
+        # entry discussed. A warning, not a failure: a few commits of lag is normal
+        # between a content change and the next glossary edit.
+        anc = subprocess.run(["git", "merge-base", "--is-ancestor", sha, "HEAD"],
+                             capture_output=True, text=True)
+        if anc.returncode != 0:
+            B.append(f"meta.sha {sha[:12]} is not an ancestor of HEAD — the site would "
+                     f"link into a branch this one never took")
+        else:
+            cnt = subprocess.run(["git", "rev-list", "--count", f"{sha}..HEAD"],
+                                 capture_output=True, text=True).stdout.strip()
+            behind = int(cnt) if cnt.isdigit() else 0
+            if behind > STALE_LIMIT:
+                D.append(f"meta.sha {sha[:12]} is {behind} commits behind HEAD "
+                         f"(limit {STALE_LIMIT}) — source permalinks may predate the "
+                         f"prose; re-pin with `git rev-parse HEAD`")
 for e in entries:
     s, ln = e.get("slug"), (e.get("lean") or {})
     mod, thm = ln.get("module"), ln.get("theorem")
