@@ -42,7 +42,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Full history is REQUIRED, not a nicety. check-glossary.sh resolves
+      # `meta.sha` with `git cat-file -t`, and glossary.yaml pins that sha to a
+      # commit deliberately older than HEAD (permalinks must not move). The
+      # default depth-1 checkout has only the tip commit, so every pinned sha
+      # reads as "not a commit in this repo" and the guard fails on a file that
+      # is perfectly correct. Caught on this workflow's first run, 2026-08-19.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
