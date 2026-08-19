@@ -66,10 +66,25 @@ _PAT = re.compile(
 
 def linkify(text, self_slug, used, sources):
     """Escape, then link the first occurrence of each known term. Single pass, so
-    inserted markup is never rescanned."""
-    esc = E(" ".join(text.split()))
+    inserted markup is never rescanned.
+
+    Paragraphs: a blank line in the YAML folded scalar arrives as a newline in the
+    parsed value. Render each as its own <p> block (the caller wraps the whole
+    return in one <p>...</p>, so the joiner closes and reopens). Before 2026-08-19
+    this function collapsed ALL whitespace, which made paragraphs impossible to
+    write no matter what the source did -- long registers rendered as one wall."""
+    paras = [p for p in re.split(r"\n+", text.strip()) if p.strip()]
+    if not paras:
+        return ""
+
+    def _one(ptext):
+        esc = E(" ".join(ptext.split()))
+        if not _PAT:
+            return esc
+        return _PAT.sub(sub, esc)
+
     if not _PAT:
-        return esc
+        return "</p><p>".join(E(" ".join(p.split())) for p in paras)
 
     def sub(m):
         key = m.group(1).lower()
@@ -82,7 +97,7 @@ def linkify(text, self_slug, used, sources):
         cls = "" if slug else ' class="ext"'
         return '<a href="' + url + '"' + cls + ">" + m.group(0) + "</a>"
 
-    return _PAT.sub(sub, esc)
+    return "</p><p>".join(_one(p) for p in paras)
 
 CSS = (
     "*{box-sizing:border-box}"
