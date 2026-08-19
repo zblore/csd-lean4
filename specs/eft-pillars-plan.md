@@ -93,7 +93,29 @@ A result that recurs as a blocker in unrelated attempts is the structural
 bottleneck, not a detail. Building it is the highest-value structural item on
 this page.
 
-Effort: **L**, research-flavoured but not unbounded.
+**THE BRIDGE IS BUILT (first arc, 2026-08-19 — `CV/ArenaBridge.lean`,
+[`arena-bridge-plan.md`](arena-bridge-plan.md), 4 pins).** The translation is
+three definitions and one inequality: `arenaObs A p = re tr(ρ_p A)` reads a
+matrix observable as a *function on the projective arena*; `arenaObs_kick` is
+the bridge identity (Schrödinger on the arena IS Heisenberg on the operator);
+and CR-1's Hölder-lite bound — landed 2026-08-19 for the channel-RG arc, and
+turning out to be exactly the missing category interface — makes arena
+observables 1-Lipschitz in the operator norm, so the whole CV estimate stack
+crosses over. Delivered on the far side: ★ exact Haag–Kastler statics on the
+arena (`arenaObs_kick_of_disjointSupport`), and ★★ `arena_lightcone` — **the
+very Lieb-Robinson-at-the-record-layer statement that was unstatable on
+2026-08-10**, now a theorem with the CV-20 factorial tail as its bound.
+
+**P1 remainder** (the honest-scope block of the module): (i) the fibre-active
+extension — the bridge covers the projective *base*; functions on the fibred
+`ℂℙ^{N-1} × T²` arenas that factor through the base inherit everything, but the
+fibre-carrying content does not yet; (ii) the definitional half — a
+*field-structured flow* as a structure whose generator decomposes into
+`SupportedOn` pieces, stated against this transport. (ii) is now bounded rather
+than research-flavoured: the transport it needed is what this arc built.
+
+Effort: ~~L, research-flavoured but not unbounded~~ → remainder **M** (the
+bottleneck half is done; what is left is a definition and its instances).
 
 ### P2. Composite arenas
 

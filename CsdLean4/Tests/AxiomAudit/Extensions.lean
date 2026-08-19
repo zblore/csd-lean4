@@ -824,4 +824,33 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.channelRG_dist_le
 
+-- P1 first arc (2026-08-19, CV\ArenaBridge.lean): THE ARENA BRIDGE -- operator locality
+-- carried onto the projective record arena, the twice-observed category bottleneck of
+-- eft-pillars-plan P1. arenaObs A p = re tr(rho_p A) reads a matrix observable as a
+-- FUNCTION on the arena; arenaObs_kick is the bridge identity (Schrodinger on the arena
+-- IS Heisenberg on the operator); arenaObs_sub_le is CR-1's Hoelder-lite doing the
+-- category translation (arena observables are 1-Lipschitz in the operator norm).
+-- Statics: arenaObs_kick_of_disjointSupport -- an arena observable of mode set S is
+-- EXACTLY invariant under any kick supported on disjoint T (Haag-Kastler on the arena).
+-- Dynamics: arena_lightcone -- the previously UNSTATABLE theorem: a kick outside the
+-- graph d-ball of R changes any region-R arena observable after time t by at most the
+-- CV-20 factorial tail 2(2||S||t)^d/d! ||A||. Far interventions cannot reach the
+-- epistemic regions faster than the cone. Scope: base arena only (fibred T^2 extension
+-- and the field-structured-flow definitional layer are the recorded P1 remainder).
+/-- info: 'CSD.CV.arenaObs_kick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick
+
+/-- info: 'CSD.CV.arenaObs_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_sub_le
+
+/-- info: 'CSD.CV.arenaObs_kick_of_disjointSupport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_of_disjointSupport
+
+/-- info: 'CSD.CV.arena_lightcone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arena_lightcone
+
 end CSD.Tests.AxiomAudit
