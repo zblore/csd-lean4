@@ -458,3 +458,203 @@ entries:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: vonNeumannEntropy_subadditive
     related: [landauer-principle]
+
+  - slug: liouville-measure
+    term: Liouville measure
+    eponyms: [Liouville]
+    status: proved-in-corpus
+    hook: >
+      The substrate's own notion of volume is not chosen. On the sector the programme
+      works with, it is forced to be the same measure the Born rule uses.
+    layman: >
+      An underlying deterministic world needs a way of saying how much of it is of
+      one kind rather than another, and that means a notion of volume that the motion
+      does not distort as it flows. Classical mechanics has one and calls it after
+      Liouville. The worry is that such a volume might be picked to order, tuned to
+      produce whatever answer was wanted. On the space this programme uses, it cannot
+      be: the space and its symmetry leave exactly one option.
+    in_csd: >
+      This is the hinge between the ontic story and the probability story. The
+      substrate carries a finite Liouville measure and a motion that preserves it;
+      the epistemic side needs the Fubini-Study measure to turn regions into Born
+      weights. On the identity-projection sector those two are proved to be the same
+      object, so the ruler used for probability is the substrate's own volume rather
+      than a second, convenient assumption. It is also the honest reply to the
+      standard objection that typicality arguments smuggle in the measure they
+      justify.
+    mathematical: >
+      For the unitary-flow sector the Liouville measure is the Fubini-Study measure,
+      and it is the forced Kahler volume: the sector's typicality measure is
+      determined by the state space and its unitary symmetry rather than posited.
+      Scope to disclose: measure-preservation of the flow is carried as a structure
+      field for physical admissibility (an ontic postulate), not derived; what is
+      proved is that IF the sector is this one, the volume is forced.
+    lean:
+      module: CsdLean4/LF4/KahlerVolumeForced.lean
+      theorem: unitaryFlowSetup_liouville_isForcedKahlerVolume
+    related: [fubini-study-measure, kahler-form, born-weight]
+
+  - slug: kahler-form
+    term: Kahler form
+    eponyms: [Kahler]
+    status: proved-in-corpus
+    hook: >
+      The space of quantum states carries a metric and a rotation that agree with each
+      other. That agreement is what makes its volume canonical rather than arbitrary.
+    layman: >
+      The space of quantum states has three structures that could each have been
+      independent: a way of measuring distance, a way of measuring area, and a
+      quarter-turn operation coming from the complex numbers. In fact they lock
+      together, each recoverable from the other two. A space where they lock together
+      in this way has a volume nothing else has to supply, which is why the ruler used
+      throughout this programme is not an extra ingredient.
+    in_csd: >
+      This underwrites the claim that the typicality measure is geometric rather than
+      chosen. What is proved here is the pointwise compatibility on the tangent model:
+      the quarter-turn squares to minus one, the area form is the metric composed with
+      it and vice versa, the form is invariant under the quarter-turn on both slots,
+      and pairing a vector with its own turn returns its squared length. Flat
+      closedness is likewise proved on the tangent model.
+    mathematical: >
+      With g the real part of the inner product, omega the imaginary part, and J
+      multiplication by i, the Fubini-Study Kahler compatibility holds pointwise:
+      J^2 = -1, omega = g composed with J, g = omega composed with J, omega is of type
+      (1,1), and omega(u, Ju) = the squared norm of u. Proved axiom-free.
+      Scope to disclose, and it is load-bearing: the MANIFOLD residual is NOT
+      formalised. Closedness and the top-power identity omega^(N-1)/(N-1)! = the
+      Fubini-Study measure ON the projective space itself await a manifold
+      differential-form API the proof assistant does not yet carry. Kahler
+      differential geometry must therefore not be described as load-bearing here; the
+      pointwise core is what the corpus owns.
+    lean:
+      module: CsdLean4/LF4/KahlerOnticSetup.lean
+      theorem: isFubiniStudyKahler
+    related: [liouville-measure, fubini-study-measure]
+
+  - slug: luders-rule
+    term: Luders rule
+    eponyms: [Luders]
+    status: proved-in-corpus
+    hook: >
+      The textbook rule for how a state changes when it is measured is not a second
+      postulate here. It is what the record layer does.
+    layman: >
+      Measure a quantum system and two things happen: an outcome appears, and the
+      state afterwards is different from the state before. Textbook quantum mechanics
+      states the update as a rule of its own. In this programme the update is not a
+      separate rule but a description of what the recording apparatus has already
+      done, so the outcome and the new state come from one mechanism rather than two
+      postulates that must be kept consistent by hand.
+    in_csd: >
+      This is the record layer earning its keep. Records and the state update live on
+      the same pointer arena, and the Born weights of the recorded outcomes come out
+      of the same construction that produces the updated state. The degenerate case
+      matters here rather than being a technicality: when several outcomes share a
+      value the update must project onto a block rather than a ray, and it is that
+      block form the arena realises.
+    mathematical: >
+      On the pointer arena, the record-conditioned marginal reproduces the Born weights
+      of the preparation and the post-measurement state is the block projection of the
+      Lueders form. Degenerate (block) measurements are the general case treated; the
+      rank-one projective case is the specialisation.
+    lean:
+      module: CsdLean4/RecordLayer/PointerLudersMarginal.lean
+      theorem: pointer_luders_born_prep
+    related: [born-weight, naimark-dilation]
+
+  - slug: naimark-dilation
+    term: Naimark dilation
+    eponyms: [Naimark]
+    status: proved-in-corpus
+    hook: >
+      Every generalised measurement is a plain one performed in a larger room. That is
+      what lets the volume derivation cover generalised measurements at all.
+    layman: >
+      Not every quantum measurement is of the simple kind that sorts states into
+      mutually exclusive alternatives; real detectors are noisier and more flexible
+      than that. The saving fact is that any such general measurement can be seen as a
+      simple one carried out on the system together with an extra piece of apparatus.
+      Enlarge the room and the complicated thing becomes the simple thing again.
+    in_csd: >
+      Without this the programme's Born derivation would apply only to idealised
+      measurements, which would be a serious limitation for a claim about physics
+      rather than about textbooks. Dilating a generalised measurement to a projective
+      one on a larger space lets the same volume-ratio argument run, so the
+      generalised case is closed by transfer rather than by a separate derivation.
+    mathematical: >
+      For a POVM with a Naimark dilation, the Born weight of an effect equals the
+      Fubini-Study volume of the corresponding outcome region in the dilated space, and
+      the frequency statement transfers with it. Stated unconditionally.
+    lean:
+      module: CsdLean4/LF4/BornRegionUncond.lean
+      theorem: povm_born_eq_dilated_volume_uncond
+    related: [born-weight, luders-rule]
+
+  - slug: no-exact-finite-ccr
+    term: No exact finite-dimensional CCR
+    status: proved-in-corpus
+    hook: >
+      Position and momentum cannot satisfy their textbook relation in any finite
+      system. The proof is one line of trace arithmetic, and it constrains every
+      finite theory, not only this one.
+    layman: >
+      Position and momentum are related by a rule that sits at the heart of quantum
+      mechanics. If the world had only finitely many distinguishable states, that rule
+      could not hold exactly: a simple counting argument forbids it. So any finite
+      theory must either give up the exact relation or explain where it fails. Here it
+      fails only at the very top of the energy ladder, and the failure is displayed
+      rather than hidden.
+    in_csd: >
+      The programme is finite by construction, so it owes an account of this rather
+      than an apology. The account is sharp: the relation holds exactly on the
+      low-energy sector and breaks by a single rank-one defect at the ceiling, by
+      precisely the amount that makes the trace argument come out right. The wider
+      point is that this obligation is not peculiar to this programme; it applies to
+      any finite-dimensional reconstruction, which is why the result is stated in
+      CSD-free form.
+    mathematical: >
+      There are no finite matrices with the commutator of Q and P equal to a nonzero
+      multiple of the identity: the trace of a commutator vanishes while the trace of
+      c times the identity is c times the dimension. The companion construction gives
+      a conjugate pair whose commutator is exactly i on every level but the top, with
+      the defect a rank-one term at the highest level.
+    lean:
+      module: CsdLean4/CV/ApproxCCR.lean
+      theorem: no_exact_finite_ccr
+    related: [canonical-typicality]
+
+  - slug: canonical-typicality
+    term: Canonical typicality
+    status: proved-in-corpus
+    hook: >
+      A small piece of a large quantum system looks thermal not because it was
+      prepared that way, but because almost every state of the whole makes it so.
+    layman: >
+      Thermodynamics usually begins by assuming an ensemble: a collection of possible
+      states, weighted somehow. Canonical typicality removes the assumption. Take one
+      large system in a single definite state, look at a small part of it, and the part
+      appears thermal for almost any choice of the whole. Equilibrium becomes a
+      statement about how much room there is in the space of states, not about an
+      ensemble anyone had to posit.
+    in_csd: >
+      This is the closest point of contact between the programme and mainstream
+      statistical mechanics, and the contact runs both ways. Thermal behaviour here is
+      volume again, exactly as Born weights are, so thermodynamics is native to the
+      construction rather than bolted on. In the other direction, the literature's
+      standing complaint about canonical typicality is that its reference measure is an
+      unmotivated prior; on this account that measure is the substrate's own volume,
+      which is a reply the usual presentations cannot give.
+    mathematical: >
+      For a global pure state drawn from the Fubini-Study measure, the average reduced
+      state of a tensor subsystem is maximally mixed on that subsystem. Scope to
+      disclose, and it is the difference between this and the literature's headline:
+      what is proved is the EXPECTATION, not the concentration. The typical-state
+      statement, that a single drawn state has a reduced state close to maximally mixed
+      with probability exponentially near one, needs measure concentration on
+      high-dimensional spheres, which the proof assistant does not carry. The mean is
+      exactly the value concentration would concentrate around; only the deviation
+      bound is absent. This is also not dynamical thermalisation.
+    lean:
+      module: CsdLean4/Thermo/CanonicalTypicality.lean
+      theorem: canonical_typicality_expectation
+    related: [fubini-study-measure, von-neumann-entropy, born-weight]

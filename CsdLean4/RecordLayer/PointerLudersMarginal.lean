@@ -14,6 +14,10 @@ public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
 
 **Category:** dynamical measurement — `specs/BACKLOG.md` **B3b**, second (final) brick.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/luders-rule/
+Plain-language, CSD-role and formal statements of the Luders rule, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## What brick 1 owed, delivered here
 
 Brick 1 (`PointerLuders.lean`) built the composed arena `(Σ × ℂℙ^N) × bank` and *defined*

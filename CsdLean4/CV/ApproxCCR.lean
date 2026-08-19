@@ -14,6 +14,10 @@ public import Mathlib.Data.Complex.Basic
 
 **Category:** 3-Local (the finite-dimensional obstruction to exact canonical commutation).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/no-exact-finite-ccr/
+Plain-language, CSD-role and formal statements of the no-exact-finite-CCR obstruction, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 For finite complex matrices the trace of a commutator vanishes,
 `trace (Q * P - P * Q) = 0`, because `trace (Q * P) = trace (P * Q)`. A scalar
 multiple of the identity has trace `c * card`, which is nonzero exactly when

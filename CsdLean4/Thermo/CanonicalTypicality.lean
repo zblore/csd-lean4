@@ -17,6 +17,10 @@ public import Mathlib.LinearAlgebra.Matrix.Permutation
 mechanics on the Fubini-Study Kaehler structure); kept under `CSD.Thermo` as the
 flagship first tranche of the thermodynamics track (`specs/thermo-plan.md`, TH1).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/canonical-typicality/
+Plain-language, CSD-role and formal statements of canonical typicality, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## What is proved (the achievable core, EXPECTATION only)
 
 For a global pure state drawn from the Fubini-Study measure `mu_FS` on

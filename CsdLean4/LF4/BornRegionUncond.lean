@@ -13,6 +13,10 @@ public import CsdLean4.LF4.POVMVolume
 
 **Category:** 3-Local (LF4 Born-from-Kähler-volume engine, hpos-free upgrade).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/naimark-dilation/
+Plain-language, CSD-role and formal statements of Naimark dilation, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The general-`N` Born = FS-volume engine (`fs_born_volume_ratio_N` / `_apex`,
 `bornRegion_fs_measure`, `born_frequency_convergence_N`) and the POVM tranche
 wrappers (`povm_born_eq_dilated_volume`, `povm_born_frequency_volume`) carried a

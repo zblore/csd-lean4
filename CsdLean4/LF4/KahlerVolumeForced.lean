@@ -14,6 +14,10 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 
 **Category:** 3-Local (the Kähler-sector VOLUME is forced, not posited).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/liouville-measure/
+Plain-language, CSD-role and formal statements of the Liouville measure, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 `KahlerOnticSetup` carries two concrete Kähler-geometry fields (tightened 2026-08-06, F-04; see
 `KahlerOnticSetup.lean`):
 

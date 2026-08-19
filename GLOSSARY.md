@@ -22,3 +22,9 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
 | [Landauer's principle](https://glossary.constraintsurfacedynamics.com/landauer-principle/) | `landauer_bound` | proved-in-corpus |
 | [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
+| [Liouville measure](https://glossary.constraintsurfacedynamics.com/liouville-measure/) | `unitaryFlowSetup_liouville_isForcedKahlerVolume` | proved-in-corpus |
+| [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `isFubiniStudyKahler` | proved-in-corpus |
+| [Luders rule](https://glossary.constraintsurfacedynamics.com/luders-rule/) | `pointer_luders_born_prep` | proved-in-corpus |
+| [Naimark dilation](https://glossary.constraintsurfacedynamics.com/naimark-dilation/) | `povm_born_eq_dilated_volume_uncond` | proved-in-corpus |
+| [No exact finite-dimensional CCR](https://glossary.constraintsurfacedynamics.com/no-exact-finite-ccr/) | `no_exact_finite_ccr` | proved-in-corpus |
+| [Canonical typicality](https://glossary.constraintsurfacedynamics.com/canonical-typicality/) | `canonical_typicality_expectation` | proved-in-corpus |
