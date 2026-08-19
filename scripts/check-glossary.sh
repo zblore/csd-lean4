@@ -60,7 +60,14 @@ STATUSES = {
     "definition",             # a definition, no claim attached
     "open",                   # named, not settled
 }
-REQUIRED = ("slug", "term", "status", "hook", "layman", "in_csd", "mathematical", "lean")
+REQUIRED = ("slug", "term", "status", "hook", "layman", "in_csd", "mathematical")
+# `lean` is required for every entry that makes a CSD claim, and optional for
+# `standard-mathematics` — the vocabulary this corpus uses without doing anything
+# particular to it. Those entries exist so a reader meeting the name has somewhere
+# to land; they cite outward and anchor nothing, and demanding a theanchor for them
+# would either block them or invite a decorative one, which is worse. Entries that
+# DO carry `lean` are still checked for a live anchor and for link symmetry below.
+LEAN_OPTIONAL_STATUSES = {"standard-mathematics"}
 
 d = yaml.safe_load(open("docs/glossary.yaml", encoding="utf-8"))
 entries = d.get("entries") or []
@@ -77,6 +84,9 @@ for e in entries:
     st = e.get("status")
     if st and st not in STATUSES:
         A.append(f"{s}: status `{st}` not in the controlled vocabulary")
+    if not e.get("lean") and st not in LEAN_OPTIONAL_STATUSES:
+        A.append(f"{s}: missing required field `lean` (only `standard-mathematics` "
+                 f"entries may omit it; this one is `{st}`)")
     slugs.add(s)
 
 # --- (B) dead anchors ------------------------------------------------------

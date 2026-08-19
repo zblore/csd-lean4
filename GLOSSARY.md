@@ -11,20 +11,50 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 
 | Term | Lean anchor | Status |
 |---|---|---|
-| [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
-| [Born rule](https://glossary.constraintsurfacedynamics.com/born-weight/) | `fs_born_volume_ratio_N` | proved-in-corpus |
-| [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
-| [Gleason and Busch theorems](https://glossary.constraintsurfacedynamics.com/gleason-theorem/) | `effect_gleason_representation` | proved-in-corpus |
-| [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |
-| [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
+| [Bargmann invariant](https://glossary.constraintsurfacedynamics.com/bargmann/) | `` | standard-mathematics |
 | [Bell and CHSH](https://glossary.constraintsurfacedynamics.com/bell-chsh/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
+| [Bloch sphere](https://glossary.constraintsurfacedynamics.com/bloch-sphere/) | `` | standard-mathematics |
+| [Borel set](https://glossary.constraintsurfacedynamics.com/borel-set/) | `` | standard-mathematics |
+| [Born rule](https://glossary.constraintsurfacedynamics.com/born-weight/) | `fs_born_volume_ratio_N` | proved-in-corpus |
+| [Canonical typicality](https://glossary.constraintsurfacedynamics.com/canonical-typicality/) | `canonical_typicality_expectation` | proved-in-corpus |
+| [CGLMP inequality](https://glossary.constraintsurfacedynamics.com/cglmp-inequality/) | `` | standard-mathematics |
+| [Deutsch-Jozsa algorithm](https://glossary.constraintsurfacedynamics.com/deutsch-jozsa/) | `` | standard-mathematics |
+| [Dirichlet distribution](https://glossary.constraintsurfacedynamics.com/dirichlet-distribution/) | `` | standard-mathematics |
+| [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
+| [Elitzur-Vaidman bomb tester](https://glossary.constraintsurfacedynamics.com/elitzur-vaidman/) | `` | standard-mathematics |
+| [Euclidean space](https://glossary.constraintsurfacedynamics.com/euclidean-space/) | `` | standard-mathematics |
+| [Fisher information](https://glossary.constraintsurfacedynamics.com/fisher-information/) | `` | standard-mathematics |
+| [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
 | [GHZ state](https://glossary.constraintsurfacedynamics.com/ghz-state/) | `no_product_partition_realises_ghz` | proved-in-corpus |
-| [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
-| [Landauer's principle](https://glossary.constraintsurfacedynamics.com/landauer-principle/) | `landauer_bound` | proved-in-corpus |
-| [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
-| [Liouville measure](https://glossary.constraintsurfacedynamics.com/liouville-measure/) | `unitaryFlowSetup_liouville_isForcedKahlerVolume` | proved-in-corpus |
+| [Gibbs state](https://glossary.constraintsurfacedynamics.com/gibbs-state/) | `` | standard-mathematics |
+| [Gisin's theorem](https://glossary.constraintsurfacedynamics.com/gisin-theorem/) | `` | standard-mathematics |
+| [Gleason and Busch theorems](https://glossary.constraintsurfacedynamics.com/gleason-theorem/) | `effect_gleason_representation` | proved-in-corpus |
+| [Grover's algorithm](https://glossary.constraintsurfacedynamics.com/grover-algorithm/) | `` | standard-mathematics |
+| [Haar measure](https://glossary.constraintsurfacedynamics.com/haar-measure/) | `` | standard-mathematics |
+| [Hermitian operator](https://glossary.constraintsurfacedynamics.com/hermitian-operator/) | `` | standard-mathematics |
+| [Hilbert space](https://glossary.constraintsurfacedynamics.com/hilbert-space/) | `` | standard-mathematics |
+| [Hong-Ou-Mandel effect](https://glossary.constraintsurfacedynamics.com/hong-ou-mandel/) | `` | standard-mathematics |
+| [Jacobi identity](https://glossary.constraintsurfacedynamics.com/jacobi-identity/) | `` | standard-mathematics |
 | [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `isFubiniStudyKahler` | proved-in-corpus |
+| [Kronecker product](https://glossary.constraintsurfacedynamics.com/kronecker-product/) | `` | standard-mathematics |
+| [Landauer's principle](https://glossary.constraintsurfacedynamics.com/landauer-principle/) | `landauer_bound` | proved-in-corpus |
+| [Leggett-Garg inequality](https://glossary.constraintsurfacedynamics.com/leggett-garg/) | `` | standard-mathematics |
+| [Liouville measure](https://glossary.constraintsurfacedynamics.com/liouville-measure/) | `unitaryFlowSetup_liouville_isForcedKahlerVolume` | proved-in-corpus |
+| [Loewner order](https://glossary.constraintsurfacedynamics.com/loewner-order/) | `` | standard-mathematics |
 | [Luders rule](https://glossary.constraintsurfacedynamics.com/luders-rule/) | `pointer_luders_born_prep` | proved-in-corpus |
+| [Mach-Zehnder interferometer](https://glossary.constraintsurfacedynamics.com/mach-zehnder/) | `` | standard-mathematics |
+| [Malus's law](https://glossary.constraintsurfacedynamics.com/malus-law/) | `` | standard-mathematics |
+| [Mermin inequality](https://glossary.constraintsurfacedynamics.com/mermin-inequality/) | `` | standard-mathematics |
 | [Naimark dilation](https://glossary.constraintsurfacedynamics.com/naimark-dilation/) | `povm_born_eq_dilated_volume_uncond` | proved-in-corpus |
 | [No exact finite-dimensional CCR](https://glossary.constraintsurfacedynamics.com/no-exact-finite-ccr/) | `no_exact_finite_ccr` | proved-in-corpus |
-| [Canonical typicality](https://glossary.constraintsurfacedynamics.com/canonical-typicality/) | `canonical_typicality_expectation` | proved-in-corpus |
+| [Pauli matrices](https://glossary.constraintsurfacedynamics.com/pauli-matrices/) | `` | standard-mathematics |
+| [Peres criterion](https://glossary.constraintsurfacedynamics.com/peres-criterion/) | `` | standard-mathematics |
+| [Poisson bracket](https://glossary.constraintsurfacedynamics.com/poisson-bracket/) | `` | standard-mathematics |
+| [Ramsey interferometry](https://glossary.constraintsurfacedynamics.com/ramsey-interferometry/) | `` | standard-mathematics |
+| [Schrodinger equation](https://glossary.constraintsurfacedynamics.com/schrodinger-equation/) | `` | standard-mathematics |
+| [Shor's algorithm](https://glossary.constraintsurfacedynamics.com/shor-algorithm/) | `` | standard-mathematics |
+| [Stern-Gerlach experiment](https://glossary.constraintsurfacedynamics.com/stern-gerlach/) | `` | standard-mathematics |
+| [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
+| [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
+| [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
+| [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |

@@ -25,6 +25,19 @@ import yaml
 
 d = yaml.safe_load(open("docs/glossary.yaml", encoding="utf-8"))
 meta, entries = d["meta"], d["entries"]
+
+# Presentation order is ALPHABETICAL and is decided here, not in the source file.
+# glossary.yaml stays in whatever order entries were written, because a source file
+# that must be kept sorted by hand is a source file that will not be. Sorting is a
+# render concern. Case- and accent-insensitive on the term, so "von Neumann" files
+# under v and "Kahler" under k, next to where a reader will look for them.
+def _sortkey(e):
+    t = (e.get("term") or e.get("slug") or "").lower()
+    for a, b in (("ä", "a"), ("ö", "o"), ("ü", "u"), ("é", "e"), ("è", "e")):
+        t = t.replace(a, b)
+    return t
+
+entries = sorted(entries, key=_sortkey)
 SITE, REPO, SHA = meta["site"].rstrip("/"), meta["repo"].rstrip("/"), meta["sha"]
 REFS = d.get("refs") or {}
 OUT = "docs/_site"
