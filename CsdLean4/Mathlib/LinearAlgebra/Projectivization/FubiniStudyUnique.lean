@@ -345,4 +345,37 @@ theorem invariant_measure_uniqueness_cpn
   obtain ⟨c, hc⟩ := invariant_finiteMeasure_eq_smul_fubiniStudy p₀ μ hμ_inv
   exact ⟨c, by rw [hc, hFS]⟩
 
+/-! ## Phase G5 — the base point is not a degree of freedom
+
+`fubiniStudyMeasure` is defined as a pushforward along the orbit map at a chosen `p₀`,
+so on its face it is a family of measures. It is not: the choice is immaterial, and G4
+says why in one step. Any `U(N)`-invariant probability measure equals
+`fubiniStudyMeasure p₀`, and `fubiniStudyMeasure p₁` is such a measure, so the two agree.
+
+Recorded because it was a real defect rather than a missing convenience: the
+`FubiniStudy.lean` module docstring advertised `defaultPoint` and
+`defaultFubiniStudyMeasure` as the "canonical choice" while neither existed, and nothing
+anywhere proved the base point could be dropped. Both are now supplied (2026-08-19).
+
+⚠️ Deliberately **not** `@[simp]`. Rewriting every `fubiniStudyMeasure p₀` in the corpus
+to the default form would touch several hundred sites for no proof-level gain, and simp
+lemmas that rename a widely-used term are how a build becomes unpredictable. Consumers
+that want the canonical form should rewrite with it explicitly. -/
+
+/-- ★ **The Fubini–Study measure does not depend on its base point.** Immediate from
+Phase G4: `fubiniStudyMeasure p₀` is a `U(N)`-invariant probability measure
+(`fubiniStudyMeasure_smul_invariant`), and G4 says every such measure is
+`fubiniStudyMeasure p₁`. -/
+theorem fubiniStudyMeasure_basepoint_independent
+    (p₀ p₁ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    fubiniStudyMeasure p₀ = fubiniStudyMeasure p₁ :=
+  fubiniStudyMeasure_unique p₁ (fubiniStudyMeasure p₀)
+    (fun U => fubiniStudyMeasure_smul_invariant U p₀)
+
+/-- The Fubini–Study measure at any base point IS the canonical one. This is what makes
+`defaultFubiniStudyMeasure` an honest name rather than one choice among many. -/
+theorem fubiniStudyMeasure_eq_default (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    fubiniStudyMeasure p₀ = defaultFubiniStudyMeasure N :=
+  fubiniStudyMeasure_basepoint_independent p₀ (defaultPoint N)
+
 end Matrix.UnitaryGroup

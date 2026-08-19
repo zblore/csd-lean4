@@ -37,7 +37,7 @@ are unitary and the L2 operator norm sees them as isometries.
   `‖[A(t), B]‖ ≤ 4·|t|·‖T‖·‖A‖·‖B‖`. **Information cannot leave a region
   instantaneously**: the commutator grows at most linearly in time, at a
   rate set by the coupling across the cut alone, not by the total energy.
-* `norm_commutator_freeFieldGen_le` — the CV instantiation: disjointly
+* `norm_commutator_field_le` — the CV instantiation: disjointly
   supported observables of the field, with `[A,B] = 0` supplied by CV-8's
   `commute_of_disjointSupport`.
 

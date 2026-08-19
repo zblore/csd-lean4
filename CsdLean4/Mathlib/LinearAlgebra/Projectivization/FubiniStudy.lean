@@ -168,4 +168,36 @@ theorem fubiniStudyMeasure_smul_invariant
   congr 1
   exact map_mul_left_eq_self unitaryHaarProb U'
 
+/-! ## Phase E — the canonical reference point
+
+`fubiniStudyMeasure` takes a base point, and every consumer has had to supply one.
+The measure does not in fact depend on it (`fubiniStudyMeasure_basepoint_independent`,
+proved in `FubiniStudyUnique.lean` where uniqueness is available), so a canonical
+choice can be named here and the dependence discharged there. Landed 2026-08-19; the
+module docstring had advertised these two definitions since the file was written
+without either existing. -/
+
+/-- The **canonical reference point** `[e₀]` of `ℂℙ^{N-1}`: the ray through the first
+standard basis vector. -/
+noncomputable def defaultPoint (N : ℕ) [NeZero N] :
+    ℙ ℂ (EuclideanSpace ℂ (Fin N)) :=
+  Projectivization.mk ℂ (EuclideanSpace.single (0 : Fin N) (1 : ℂ)) (by
+    intro h
+    have hz : ‖(EuclideanSpace.single (0 : Fin N) (1 : ℂ))‖ = 0 := by
+      rw [h, norm_zero]
+    rw [PiLp.norm_single, norm_one] at hz
+    exact one_ne_zero hz)
+
+/-- The **Fubini–Study measure at the canonical point**. By
+`fubiniStudyMeasure_basepoint_independent` this is *the* Fubini–Study measure: the base
+point is not a degree of freedom. -/
+noncomputable def defaultFubiniStudyMeasure (N : ℕ) [NeZero N] :
+    Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
+  fubiniStudyMeasure (defaultPoint N)
+
+instance instIsProbabilityMeasureDefaultFubiniStudyMeasure (N : ℕ) [NeZero N] :
+    IsProbabilityMeasure (defaultFubiniStudyMeasure N) := by
+  unfold defaultFubiniStudyMeasure
+  infer_instance
+
 end Matrix.UnitaryGroup

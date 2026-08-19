@@ -24,7 +24,7 @@ the composite index the corpus's partial-trace machinery consumes directly.
 
 * `kickMat b` — the one-qubit kick `[[cos b, -i sin b], [-i sin b, cos b]]`,
   unitary (`kickMat_mem_unitaryGroup`, the `sin² + cos²` computation).
-* `phaseU J` — the Ising phase `diag(e^{-iJ}, e^{iJ}, e^{iJ}, e^{-iJ})`,
+* `phaseMat J` — the Ising phase `diag(e^{-iJ}, e^{iJ}, e^{iJ}, e^{-iJ})`,
   unitary (unit-modulus diagonal).
 * `kronecker_mem_unitaryGroup` — the Kronecker product of unitaries is
   unitary (generic; `upstream-candidate(mathlib)`).

@@ -55,9 +55,12 @@ computational-basis machinery (`basisPOVM`, `vnNaimark`, `measurementFlow`,
   FS-measure-preserving, inherited directly.
 
 **Stratum 2 — codeword specialisation + recovery.**
-- `synClass_logicalSupport` / `synClass_erroredSupport`: the Z-basis support of
-  `logical a b` is `{000, 111} ⊆ class 0`, and of `Xⱼ · logical` is `⊆ class j`.
-- `syndromeWeight_logical_deterministic`: `syndromeWeight (Xⱼ·logical) s =
+- The Z-basis support of `logical a b` is `{000, 111} ⊆ class 0`, and of `Xⱼ · logical`
+  is `⊆ class j`. (Established inline inside the weight computation below; there is no
+  standalone support lemma. This bullet previously named `synClass_logicalSupport` /
+  `synClass_erroredSupport`, neither of which was ever written — corrected 2026-08-19,
+  see `scripts/check-doc-promises.sh`.)
+- `syndromeWeight_logical`: `syndromeWeight (Xⱼ·logical) s =
   (if s = j then ‖a‖²+‖b‖² else 0)` — the **deterministic syndrome** (indicator on
   block `j` for a unit codeword).
 - Recovery is the matrix transport of `bitflip_recovers` /

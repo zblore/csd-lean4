@@ -19,7 +19,7 @@ its invariant.
 
 * `boostE` / `boostP` — the 1+1D boost at rapidity `χ`:
   `E ↦ E cosh χ − p sinh χ`, `p ↦ p cosh χ − E sinh χ`.
-* `boost_zero`, `boostE_add` / `boostP_add` — the boosts form a
+* `boostE_zero` / `boostP_zero`, `boostE_add` / `boostP_add` — the boosts form a
   one-parameter group: rapidities add (`cosh`/`sinh` addition formulas).
   So "boost" is earned, not a name for an arbitrary map.
 * ★ `boost_invariant` — `E'² − p'² = E² − p²` for every rapidity: the
