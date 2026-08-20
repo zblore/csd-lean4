@@ -332,6 +332,7 @@ unitaryFlowSetup"
 DECLARED_OPEN_SCOPE="CsdLean4/CV/ChannelRG.lean:1
 CsdLean4/CV/CompositeArena.lean:1
 CsdLean4/CV/DispersionEarned.lean:1
+CsdLean4/CV/EntangledWeights.lean:1
 CsdLean4/CV/FibredArenaBridge.lean:1
 CsdLean4/CV/LocalAlgebraClosed.lean:1
 CsdLean4/CV/PriceAttainment.lean:1
@@ -376,6 +377,7 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 DECLARED_SCOPE_WAITS="CsdLean4/CV/ChannelRG.lean|none
 CsdLean4/CV/CompositeArena.lean|none
 CsdLean4/CV/DispersionEarned.lean|none
+CsdLean4/CV/EntangledWeights.lean|Q27
 CsdLean4/CV/FibredArenaBridge.lean|none
 CsdLean4/CV/LocalAlgebraClosed.lean|none
 CsdLean4/CV/PriceAttainment.lean|none
@@ -416,6 +418,10 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #     field-native case). Heterogeneous composites need the arena API generalised over
 #     its index type: a rule-of-two note on ArenaBridge, not a queued row. Also states
 #     that composite mixed-state theory is CV-26 coarse-graining territory by design.
+#   EntangledWeights|Q27 — boundary stated at the Q27 first-brick landing (2026-08-20):
+#     the Fin-indexed LF2 mixed-tier transport of the delivered re tr(reducedDM·A) form
+#     is declared index plumbing and not claimed; sequential/record-conditioned versions
+#     are Q25's territory. Tagged Q27 so the note is force-re-read when the row is struck.
 #   LindbladPositivity|none — scope boundary stated at the Q16 CP-brick landing (2026-08-20):
 #     the id-tensor-Phi identification of the amplified generator's flow (the lemma that
 #     would let amplified positivity be cited as "CP of Phi" in so many words) is the named
