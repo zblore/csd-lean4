@@ -78,6 +78,24 @@ theorem weights_sum_eq_one (P : POVM N ι) (ψ : EuclideanSpace ℂ (Fin N)) (h�
     ∑ i, P.weight ψ i = 1 := by
   rw [weights_sum_eq_normSq, hψ, one_pow]
 
+open scoped ComplexOrder in
+/-- **Per-outcome nonnegativity of the Born weights** (the CL-006 named API
+test, landed 2026-08-20): every POVM weight is nonnegative — the effect's
+positivity read through the quadratic form. Together with
+`weights_sum_eq_one`, the weights of a unit preparation form a genuine
+probability vector. -/
+theorem weight_nonneg (P : POVM N ι) (ψ : EuclideanSpace ℂ (Fin N)) (i : ι) :
+    0 ≤ P.weight ψ i := by
+  rw [weight]
+  have hq : 0 ≤ star (WithLp.ofLp ψ) ⬝ᵥ ((P.E i).M *ᵥ WithLp.ofLp ψ) :=
+    (P.E i).nonneg.dotProduct_mulVec_nonneg _
+  have hin : inner ℂ ψ (Matrix.toEuclideanLin (P.E i).M ψ)
+      = star (WithLp.ofLp ψ) ⬝ᵥ ((P.E i).M *ᵥ WithLp.ofLp ψ) := by
+    rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toLpLin,
+      Matrix.toLin'_apply, dotProduct_comm]
+  rw [hin, RCLike.re_to_complex]
+  exact (Complex.nonneg_iff.mp hq).1
+
 end POVM
 end LF2
 end CSD

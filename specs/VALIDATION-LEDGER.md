@@ -70,8 +70,8 @@ no-go. Classification: INSTANTIATION (`necessity-audit.md` addendum).
 
 | Status | Count | Meaning |
 |---|---:|---|
-| Validated | 21 | No material claim mismatch found at current depth. |
-| Qualified | 30 | Formally coherent, but assumptions or construction scope must accompany the claim. |
+| Validated | 26 | No material claim mismatch found at current depth. |
+| Qualified | 25 | Formally coherent, but assumptions or construction scope must accompany the claim. |
 | Needs change | 1 | Concrete semantic/API mismatch recorded in the main review ledger. |
 | Specialist review | 0 | All three commissioned audits (CL-005/CL-022+CL-023/CL-024) completed 2026-08-06. |
 
@@ -104,6 +104,13 @@ TSV `finding` column naming its evidence or its remaining gap. Outcomes:
 The earlier in-session estimate "28 one-sign-off-away" was optimistic: it
 counted the by-design rows as promotable. This pass does not — a permanent
 scope qualification is not a missing signature.
+
+**Follow-up S2 (same day):** the two S-sized outcomes executed. CL-006's named
+API test landed as `POVM.weight_nonneg` and the row promoted; the four rows
+left unconfirmed at S1 depth were read to promotion standard and all four
+promoted — CL-034/035/036 on their textbook mechanisms with CL-047's seam
+witness as the sharpness companion (and consumers for CL-035), CL-046 on the
+exact propagator tables in its own module. Validated 21 → 26.
 
 **CL-031 added 2026-08-10** (`no_compatible_global_chsh_assignment_realises_singlet`,
 validated — hence Validated 8 → 9). It arrived through the C1 correction and
