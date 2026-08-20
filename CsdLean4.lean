@@ -444,6 +444,7 @@ public import CsdLean4.CV.ArenaBridge
 public import CsdLean4.CV.FieldStructuredFlow
 public import CsdLean4.CV.FibredArenaBridge
 public import CsdLean4.CV.DispersionEarned
+public import CsdLean4.CV.CompositeArena
 public import CsdLean4.RecordLayer.KSigmaRecord
 
 -- Root repair (G6 / F-07, 2026-08-06): the modules below were reachable only via the

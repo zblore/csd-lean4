@@ -934,4 +934,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.massless_covariance_not_selecting
 
+-- P2 (2026-08-20, CV\CompositeArena.lean): THE COMPOSITE ARENA -- two sectors compose by
+-- mode concatenation (FieldArena (K1+K2) N; configSplit), the join is the Segre/Kronecker
+-- map (arenaJoin, norm multiplicative), and the algebra forcing transports. Statics:
+-- leftOp/rightOp are SupportedOn their mode blocks (P1 machinery applies for free), so
+-- composite_no_signalling -- a right-sector kick leaves every left-sector observable
+-- invariant EXACTLY, for ALL states including entangled ones (instance of the P1 statics,
+-- not a consequence of the join). Transport: arenaDM_join (rho tensor factorises),
+-- arenaObs_join_left/right (exact marginals), arenaObs_join_mul (local tomography on the
+-- arena), arenaKick_join (product dynamics restrict). Entanglement: bell_not_join -- the
+-- Bell ray is NOT a join (composite strictly larger than the pair; the arena-side
+-- signature of tensor vs Cartesian). Forcing: composite_generate (the mode-local
+-- subalgebras generate, arena-natively) + compositeArenaForced (the landed
+-- compositeAlgReconstruction CONSUMED at the arena's own algebras, pinned on tmuls by
+-- compositeArenaForced_tmul). Scope: homogeneous field sectors (module scope block).
+/-- info: 'CSD.CV.composite_no_signalling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.composite_no_signalling
+
+/-- info: 'CSD.CV.bell_not_join' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.bell_not_join
+
+/-- info: 'CSD.CV.arenaObs_join_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_join_mul
+
+/-- info: 'CSD.CV.arenaKick_join' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_join
+
+/-- info: 'CSD.CV.composite_generate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.composite_generate
+
+/-- info: 'CSD.CV.compositeArenaForced_tmul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.compositeArenaForced_tmul
+
 end CSD.Tests.AxiomAudit

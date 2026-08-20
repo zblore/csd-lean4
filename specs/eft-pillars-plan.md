@@ -1,8 +1,8 @@
 # EFT pillars: what stands between the corpus and a field theory
 
 Created 2026-08-10. **Brought current 2026-08-20** (the CV ladder finished; P5's
-RG half discharged; P3 reclassified from gap to ceiling; **P1 and P4 complete**
-— see the change log at the end). Companion to `specs/external-library-map.md` (alignment),
+RG half discharged; P3 reclassified from gap to ceiling; **P1, P2, and P4
+complete** — see the change log at the end). Companion to `specs/external-library-map.md` (alignment),
 `specs/cv-stage3-plan.md` / `eft-stage4-plan.md` / `eft-stage5-plan.md` /
 `eft-stage6-plan.md` / `eft-stage7-plan.md` (the CV ladder as built), and
 `specs/necessity-audit.md` (what the constraint set actually pins down).
@@ -10,9 +10,9 @@ RG half discharged; P3 reclassified from gap to ceiling; **P1 and P4 complete**
 **Status of the ladder this page measures against: COMPLETE.** Rows CV-1…CV-26
 are all closed (Stages 4, 5, 6, 7 each COMPLETE; 26 modules in `CsdLean4/CV/`).
 So this page is no longer "what stands between the corpus and Route A" — Route A
-is built. **P1 and P4 are now also complete** (P1 in three arcs 2026-08-19/20;
-P4 the same day). What remains is P2 as listed and P5's attainment half, plus
-the standing ceiling P3.
+is built. **P1, P2, and P4 are now also complete** (P1 in three arcs
+2026-08-19/20; P2 and P4 the same day). What remains as *work* is P5's
+attainment half; P3 stands as the ceiling.
 
 ## 0. Alignment: the window is open *(historical — resolved 2026-08-17, see §5.2)*
 
@@ -150,7 +150,7 @@ Effort: ~~L, research-flavoured but not unbounded~~ → **spent**. All three
 arcs landed (bridge 2026-08-19; definition and fibre extension 2026-08-20;
 11 pins total).
 
-### P2. Composite arenas
+### P2. Composite arenas — **COMPLETE 2026-08-20**
 
 The arena models one isolated sector. A field theory needs many, and a rule for
 composing them.
@@ -162,10 +162,45 @@ over arbitrary embeddings. Per `specs/necessity-audit.md` this is the strongest
 composition result in the corpus, and it is conditional only on the ambient
 matrix-algebra setting.
 
-What is missing is the arena-side analogue: what the composite of two ontic
-sectors *is*, and whether the algebra-side forcing transports to it.
+~~What is missing is the arena-side analogue: what the composite of two ontic
+sectors *is*, and whether the algebra-side forcing transports to it.~~ Both
+questions are answered (`CV/CompositeArena.lean`, scoped in
+[`composite-arena-plan.md`](composite-arena-plan.md), 6 pins):
 
-Effort: **M–L**. The algebra half is done; the transport is the work.
+* **What the composite is: mode concatenation.** The composite of a `K₁`-mode
+  and a `K₂`-mode sector is the `(K₁+K₂)`-mode sector — an arena the corpus
+  already has, not a new species. The join is the Segre map `arenaJoin`
+  (Kronecker vector, multiplicative norm), and the two local operator algebras
+  (`leftOp`/`rightOp`) are ★ `SupportedOn` their mode blocks — so **every P1
+  theorem (statics, cones, strokes) applies to the composite with zero new
+  proofs**. Everything transports along the join: densities factor
+  (`arenaDM_join`), marginals are exact (★ `arenaObs_join_left/right`), joint
+  expectations of product observables factor (★ `arenaObs_join_mul` — local
+  tomography on the arena), product dynamics restrict (★ `arenaKick_join`).
+* ★★ `composite_no_signalling` — exact, for ALL states including entangled
+  ones: a right-sector kick leaves every left-sector arena observable
+  invariant, as an instance of P1's statics, not a consequence of the join.
+* ★★ `bell_not_join` — entanglement is real at the arena level: the Bell ray
+  is not a join, so the composite arena is strictly larger than the pair —
+  the arena-side signature of `⊗` versus `×` (`exists_bell_witness` for
+  non-vacuity at every `N ≥ 2`).
+* ★★ **The forcing transports** (`composite_generate` +
+  `compositeArenaForced`): the composite arena's own algebra with its
+  mode-local subalgebras satisfies the reconstruction's premises — commuting
+  (`leftOp_comm_rightOp`) and generating (`composite_generate`, proved
+  arena-natively via matrix units) — so `compositeAlgReconstruction` applies
+  and forces `Matrix C₁ ⊗[ℂ] Matrix C₂ ≃ₐ Matrix C₁₂`, pinned on generators
+  by `compositeArenaForced_tmul` (`A ⊗ₜ B ↦ leftOp A · rightOp B`). Consumed
+  from the landed theorem, not re-proved.
+
+Honest boundary (declared in the module and the wait ledger): homogeneous
+field sectors — same level count `N`, mode-disjoint composition, the
+field-native case. Heterogeneous composites need the arena API generalised
+over its index type (rule-of-two note on `ArenaBridge`); composite
+mixed-state theory is CV-26's coarse-graining territory by design.
+
+Effort: ~~**M–L**. The algebra half is done; the transport is the work.~~ →
+**spent**; the transport is done.
 
 ### P3. The factorisation problem — a CEILING, not a gap (reclassified 2026-08-19)
 
@@ -302,10 +337,11 @@ what unblocks EFT specifically.
 **What else is missing?** ~~P1 (the arena bridge and a field-structured flow)
 carries the weight~~ — **P1 is done** (2026-08-20): bridge, definition, and the
 fibre-active record cone all landed. **P4 is also done** (2026-08-20): the
-dispersion is now selected by cone symmetry, not defined. P2 is the bounded
-remainder; P5's attainment half is a ledger note. **P3 is not "missing" — it is
-a ceiling** (reclassified 2026-08-19), so the honest list of *work* is P2 and
-P5-attainment.
+dispersion is now selected by cone symmetry, not defined. **P2 is also done**
+(2026-08-20): the composite arena is mode concatenation, and the algebra
+forcing transports to it. P5's attainment half is a ledger note. **P3 is not
+"missing" — it is a ceiling** (reclassified 2026-08-19), so the honest list of
+*work* is P5-attainment alone.
 
 ## 5. Sequencing
 
@@ -326,7 +362,10 @@ P5-attainment.
    the twice-observed bottleneck.~~ **DONE 2026-08-20** — all three arcs
    (`ArenaBridge`, `FieldStructuredFlow`, `FibredArenaBridge`), 11 pins; the
    twice-observed bottleneck is a theorem family now.
-5. **Alongside:** P2, which has the algebra half already proved.
+5. ~~**Alongside:** P2, which has the algebra half already proved.~~ **DONE
+   2026-08-20** (`CV/CompositeArena.lean`): the composite is mode
+   concatenation, the join is Segre, and the forcing is consumed at the
+   arena's own algebras. **P5-attainment is the only remaining work item.**
 6. **Recorded, never scheduled:** P3 — a ceiling, cited when scoping.
 
 ## 6. Change log
@@ -368,6 +407,19 @@ P5-attainment.
   counterexample. The stale necessity-audit line superseded at source; the
   kinematic/no-LR-identification boundary declared in the module and the wait
   ledger. **The honest list of work is now P2 and P5-attainment.**
+
+* **2026-08-20. P2 CLOSED** (`CV/CompositeArena.lean`, scoped in
+  `composite-arena-plan.md`, 6 pins). The arena-side analogue asked for by
+  this row, both halves: the composite of two field sectors IS the
+  mode-concatenated sector (`configSplit`, the Segre `arenaJoin`, mode-local
+  `leftOp`/`rightOp` with `SupportedOn` — P1 machinery free), and the
+  algebra-side forcing transports (`composite_generate` arena-natively, then
+  `compositeAlgReconstruction` consumed to force
+  `Matrix C₁ ⊗ Matrix C₂ ≃ₐ Matrix C₁₂`). Headlines:
+  `composite_no_signalling` (exact, all states, entangled included) and
+  `bell_not_join` (the composite is strictly larger than the pair — `⊗` vs
+  `×` at the arena). Homogeneous-sector boundary declared in the module and
+  the wait ledger. **The honest list of work is now P5-attainment alone.**
 
 ## References
 
