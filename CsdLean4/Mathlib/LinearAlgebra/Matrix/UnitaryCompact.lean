@@ -45,7 +45,7 @@ ingredients (`MeasurableSpace`, `BorelSpace`) are also installed here.
 
 Specialised to `Matrix.unitaryGroup (Fin N) ℂ`. The argument works for
 any `Matrix.unitaryGroup n α` where `n` is finite and `α` is an `RCLike`
-field, but we install the concrete case used by LF4's eventual SU(N)
+field, but we install the concrete case used by LF4's eventual U(N)
 Haar construction.
 
 ## Provenance

@@ -169,7 +169,7 @@ entries:
       theorem: fubiniStudyMeasure_unique
     papers:
       - doi: 10.5281/zenodo.19557174
-        note: TN1, the Fubini-Study measure as an SU(N)-equivariant pushforward
+        note: TN1, the Fubini-Study measure as a U(N)-equivariant pushforward
       - doi: 10.5281/zenodo.16746829
         note: Paper B, the symmetry argument that fixes the measure
     external:

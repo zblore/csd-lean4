@@ -33,7 +33,7 @@ realised, and the abstract `measure_bridge` lemma it served, were **removed
 - `Σ = P = ℂℙ^{N-1} = ℙ ℂ (EuclideanSpace ℂ (Fin N))`;
 - `G = U(N) = Matrix.unitaryGroup (Fin N) ℂ`, acting on `ℂℙ^{N-1}` as usual;
 - `π = id`;
-- `μL = fubiniStudyMeasure p₀` (the SU(N)-invariant Borel probability
+- `μL = fubiniStudyMeasure p₀` (the U(N)-invariant Borel probability
   measure), `Φ = id`, `Ω₀ = univ`.
 
 **Honest scope.** This is the *base case*. With `π = id` the projection has

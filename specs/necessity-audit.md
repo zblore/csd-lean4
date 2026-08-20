@@ -337,6 +337,16 @@ read as an unconditional one.
     theorem read literally assumes invariance under the larger group and is
     formally the weaker statement. Anyone citing "the SU(N)-invariant measure is
     unique" from these names is citing something the files do not state.
+    **Fixed at source 2026-08-20** (surfaced independently by the author's
+    definitional-precision review — this item had recorded the defect without
+    queueing the fix): all module docstrings, section headers, and keyword
+    lines across `FubiniStudy.lean`, `FubiniStudyUnique.lean`, `Unitary.lean`,
+    `UnitaryCompact.lean`, `UnitaryHaar.lean`, `LF4/Instance.lean`, and
+    `LF2/Setup.lean` now say `U(N)`, matching the quantifier, with the
+    centre-acts-trivially equivalence recorded once in `FubiniStudy.lean`'s
+    header; the glossary's TN1 note updated. Paper-B attributions ("SU(n)-fixed
+    μ_FS") are left as the papers' own wording, which the equivalence makes
+    correct.
 14. **Two stale "open target" notes.** `WignerRigidity.lean` describes Wigner
     rigidity as a deferred, unproved target in its header and in a definition
     docstring, while proving it later in the same file;

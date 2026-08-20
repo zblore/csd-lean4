@@ -15,18 +15,25 @@ public import Mathlib.Topology.Instances.Matrix
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
-Constructs the SU(N)-invariant Borel probability measure on
+Constructs the U(N)-invariant Borel probability measure on
 `Projectivization ℂ (EuclideanSpace ℂ (Fin N))` by pushing the
 probability-normalised Haar measure `unitaryHaarProb` (from
 `UnitaryHaar.lean`) forward through the orbit map `U ↦ U • p₀`
 for a fixed reference point `p₀`.
+
+Invariance is stated over the full unitary group
+`Matrix.unitaryGroup (Fin N) ℂ = U(N)` — the group every definition and
+theorem here actually quantifies over. On projective space the central
+`U(1)` acts trivially, so `U(N)`- and `SU(N)`-invariance are the same
+condition on measures over `ℂℙ^{N-1}`; the literature's "SU(N)-invariant
+Fubini–Study measure" is this measure.
 
 ## Main definitions
 
 - `Matrix.UnitaryGroup.orbitMap p₀` — the orbit map at `p₀`,
   `U ↦ U • p₀ : Matrix.unitaryGroup (Fin N) ℂ → ℙ ℂ (EuclideanSpace ℂ (Fin N))`.
 - `fubiniStudyMeasure p₀` — `Measure.map (orbitMap p₀) unitaryHaarProb`.
-  The SU(N)-invariant Borel probability measure on `ℂℙ^{N-1}`.
+  The U(N)-invariant Borel probability measure on `ℂℙ^{N-1}`.
 - `defaultPoint`, `defaultFubiniStudyMeasure` — canonical choice
   using `EuclideanSpace.single 0 1` as the reference (requires `[NeZero N]`).
 
@@ -35,7 +42,7 @@ for a fixed reference point `p₀`.
 - `orbit_map_continuous` — continuity of the orbit map (Phase A).
 - `orbit_map_measurable` — measurability corollary.
 - `instIsProbabilityMeasureFubiniStudyMeasure` — pushforward is a probability measure.
-- `fubiniStudyMeasure_smul_invariant` — SU(N)-invariance.
+- `fubiniStudyMeasure_smul_invariant` — U(N)-invariance.
 
 ## Provenance
 
@@ -44,7 +51,7 @@ Staged as upstream Mathlib material. Intended location:
 
 ## Tags
 
-projectivization, Fubini-Study, Haar measure, SU(N), invariant measure
+projectivization, Fubini-Study, Haar measure, U(N), invariant measure
 -/
 
 @[expose] public section
@@ -129,7 +136,7 @@ instance instIsProbabilityMeasureFubiniStudyMeasure
   unfold fubiniStudyMeasure
   exact Measure.isProbabilityMeasure_map (orbit_map_measurable p₀).aemeasurable
 
-/-! ## Phase D — SU(N)-invariance -/
+/-! ## Phase D — U(N)-invariance -/
 
 /-- Compatibility lemma: `(U' • ·) ∘ orbitMap p₀ = orbitMap p₀ ∘ (U' * ·)`.
 The MulAction axiom `(U' * U) • p₀ = U' • (U • p₀)` makes the two
@@ -141,7 +148,7 @@ lemma smul_comp_orbitMap (U' : Matrix.unitaryGroup (Fin N) ℂ)
   show U' • (U • p₀) = (U' * U) • p₀
   exact smul_smul U' U p₀
 
-/-- **SU(N)-invariance of the Fubini–Study measure.** For any unitary
+/-- **U(N)-invariance of the Fubini–Study measure.** For any unitary
 `U'`, pushing forward `fubiniStudyMeasure p₀` by the action of `U'`
 yields the same measure.
 

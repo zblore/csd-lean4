@@ -37,7 +37,7 @@ unitary group on the projective space of Euclidean space.
 
 ## What this unlocks
 
-These instances are the substrate for the SU(N)-invariant Borel
+These instances are the substrate for the U(N)-invariant Borel
 probability measure on `ℂℙ^{N-1}` (`fubiniStudyMeasure`) and the associated
 uniqueness theorem (`fubiniStudyMeasure_unique`). Together with the
 finite-measure normalisation `invariant_measure_uniqueness_cpn`

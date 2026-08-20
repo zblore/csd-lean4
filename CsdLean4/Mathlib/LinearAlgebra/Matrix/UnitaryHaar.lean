@@ -104,8 +104,8 @@ We can therefore rescale by `(unitaryHaar Set.univ)⁻¹` to obtain a
 probability measure that is still Haar (Haar property is preserved
 under positive finite scaling).
 
-The resulting `unitaryHaarProb` is the canonical SU(N)-invariant
-probability measure on the matrix unitary group, and the
+The resulting `unitaryHaarProb` is the canonical translation-invariant
+(Haar) probability measure on the unitary group `U(N)`, and the
 ingredient that the Fubini-Study measure on `ℂℙ^{N-1}` will be
 constructed from via pushforward (next tranche).
 -/

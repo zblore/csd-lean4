@@ -45,9 +45,11 @@ namespace LF2
     measurable map with the two coherence conditions
     (`μL`-invariance of the ontic action, `π`-equivariance) qualifies.
     Similarly, `G` is any group acting measurably on both spaces with the two
-    coherence conditions. The natural reading is `G = SU(N)` acting on `Σ` via
-    the lift of its action on `CP^{N-1}`, with `π` the standard projection,
-    but no field forces this.
+    coherence conditions. The natural reading is `G = U(N)` acting on `Σ` via
+    the lift of its action on `CP^{N-1}` — the group the corpus's witness
+    (`LF4/Instance.lean`) instantiates; on `CP^{N-1}` the central phase acts
+    trivially, so the literature's `SU(N)` reading is the same action — with
+    `π` the standard projection, but no field forces this.
 
     This labelling carries the sector posit (SO-1) in Paper B's framing: the physical motivation
     for the quantum-effective sector assumption is a load-bearing external

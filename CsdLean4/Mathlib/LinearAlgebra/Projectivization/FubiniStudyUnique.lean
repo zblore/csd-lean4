@@ -182,9 +182,9 @@ lemma haar_orbit_indicator_eq
         (continuous_mul_const V_p).measurable h_S_meas,
       MeasureTheory.map_mul_right_eq_self]
 
-/-! ## Phase G4 — uniqueness of the SU(N)-invariant probability measure
+/-! ## Phase G4 — uniqueness of the U(N)-invariant probability measure
 
-Headline theorem: any SU(N)-invariant probability measure on
+Headline theorem: any U(N)-invariant probability measure on
 `ℂℙ^(N-1)` equals `fubiniStudyMeasure p₀` for any reference point `p₀`.
 
 Proof via Fubini chain:
@@ -198,7 +198,7 @@ Proof via Fubini chain:
 where λ = `unitaryHaarProb`, ν = `fubiniStudyMeasure p₀`.
 -/
 
-/-- **Phase G4.** Uniqueness of the SU(N)-invariant probability measure
+/-- **Phase G4.** Uniqueness of the U(N)-invariant probability measure
 on `ℂℙ^(N-1)`: any invariant probability measure `μ` equals
 `fubiniStudyMeasure p₀`. (`[NeZero N]` is required by the implicit
 transitivity-instance synthesis through `haar_orbit_indicator_eq`,
