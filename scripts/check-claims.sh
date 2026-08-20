@@ -337,6 +337,7 @@ CsdLean4/CV/LocalAlgebraClosed.lean:1
 CsdLean4/CV/PriceAttainment.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
+CsdLean4/LF6/LindbladPositivity.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/RecordLayer/ApproxProjectability.lean:1
@@ -381,6 +382,7 @@ CsdLean4/CV/PriceAttainment.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
+CsdLean4/LF6/LindbladPositivity.lean|none
 CsdLean4/LF4/PhaseLift.lean|none
 CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/RecordLayer/ApproxProjectability.lean|none
@@ -414,6 +416,11 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #     field-native case). Heterogeneous composites need the arena API generalised over
 #     its index type: a rule-of-two note on ArenaBridge, not a queued row. Also states
 #     that composite mixed-state theory is CV-26 coarse-graining territory by design.
+#   LindbladPositivity|none — scope boundary stated at the Q16 CP-brick landing (2026-08-20):
+#     the id-tensor-Phi identification of the amplified generator's flow (the lemma that
+#     would let amplified positivity be cited as "CP of Phi" in so many words) is the named
+#     remainder, an M-sized Kronecker computation on the P2 machinery; no queued row yet —
+#     queue it when the metrology tier (Q16 proper) opens.
 #   DispersionEarned|none — permanent physics boundary stated at the P4 close (2026-08-20):
 #     the identification of the (E,p) light rays with the dynamical Lieb-Robinson cone is
 #     not made — the LR cone is an upper bound with a model-dependent velocity, not an

@@ -39,16 +39,17 @@ an **arbitrary** GKSL generator, with the flow-level laws.
 
 ## Honest scope
 
-**Complete positivity of `e^{tℒ}` is NOT claimed** — that is the remaining
-genuinely-Mathlib-scale half recorded on the LF6-9 row (it needs a
-Lie–Trotter/Euler-approximant limit theorem or resolvent positivity,
-neither of which Mathlib has). What this module delivers is everything on
-the near side of that wall: the semigroup exists, solves the master
-equation, and preserves trace and Hermiticity for arbitrary `H, {Lₖ}`. CP
-of the *jump part* stays at the generator tier
-(`lindblad_dissipation_posSemidef`); CP of the exponentiated flow for the
-exhibited instances stays with them (`dephasingChannel`,
-`LF6/DephasingSemigroup.lean`).
+~~Complete positivity of `e^{tℒ}` is NOT claimed — that is the remaining
+genuinely-Mathlib-scale half recorded on the LF6-9 row.~~ **Superseded
+2026-08-20**: positivity of `e^{tℒ}` for every GKSL generator with Hermitian
+`H`, at every `t ≥ 0`, is now proved in `LF6/LindbladPositivity.lean`
+(`lindbladSemigroup_posSemidef`, via the de-skewed Banach-algebra Trotter
+formula), together with its stability under every ancilla amplification of
+the generator (`lindbladSemigroup_amplified_posSemidef`). The "needs a
+Lie–Trotter limit theorem Mathlib does not have" wall was stale — the
+theorem was buildable in-corpus. What this module still delivers is the
+tier below: the semigroup exists, solves the master equation, and preserves
+trace and Hermiticity for arbitrary `H, {Lₖ}`.
 
 Proof-engineering note: several scalar-action facts (`0 • ℒ = 0`,
 `(s+t) • ℒ`, commutation of the scaled generators, powers of `t • ℒ`) are

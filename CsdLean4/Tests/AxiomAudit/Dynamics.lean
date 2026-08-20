@@ -1116,4 +1116,24 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolation_no_signalling_B
 
+-- Q16 CP brick (2026-08-20, LF6/LindbladPositivity.lean): POSITIVITY OF THE LINDBLAD
+-- SEMIGROUP -- the half LindbladSemigroup.lean deferred as out of Mathlib's reach, closed
+-- in-corpus. For Hermitian H the generator splits as drift + jump: the drift flow is
+-- conjugation e^(tG) rho e^(tG*) (G = -iH - (1/2) Sum L*L; left/right multiplications
+-- commute, NO Trotter needed), the jump exponential is a positive series of Kraus
+-- conjugations (PSD passes to limits via the dotProduct_mulVec characterisation), and
+-- the Banach-algebra Trotter formula assembles e^(tL) as a limit of products of the two
+-- positive flows. lindbladSemigroup_posSemidef: every GKSL flow with Hermitian H is a
+-- positive map at every t >= 0. lindbladSemigroup_amplified_posSemidef: the CP shape --
+-- positivity survives every ancilla amplification of the generator (the amplified
+-- generator is itself GKSL; literal instantiation). Scope: the id (x) Phi identification
+-- is the named remainder (module scope block).
+/-- info: 'CSD.LF6.lindbladSemigroup_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_posSemidef
+
+/-- info: 'CSD.LF6.lindbladSemigroup_amplified_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_amplified_posSemidef
+
 end CSD.Tests.AxiomAudit

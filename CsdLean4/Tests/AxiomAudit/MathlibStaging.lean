@@ -2167,4 +2167,14 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'QuantumInfo.traceDist_conj_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms QuantumInfo.traceDist_conj_sub_le
 
+-- Q16 CP brick, staging half (2026-08-20, Mathlib/Analysis/NormedSpace/TrotterGeneral.lean):
+-- the Lie-Trotter product formula in a general complete normed R-algebra with ||1|| = 1 --
+-- the de-skewed trotter_skew. Skewness entered the staged proof exactly twice and both
+-- uses generalize: ||exp Y|| = 1 becomes <= e^||Y|| (absorbed by the same final constant),
+-- and the norm-one telescoping becomes n*C^n with C = e^(s/n), so C^n = e^s stays bounded.
+-- Explicit rate (1/n) s^2 (3+s) e^(2s). Consumed by LF6/LindbladPositivity.lean in the
+-- endomorphism algebra of matrix space.
+/-- info: 'NormedSpace.trotter_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms NormedSpace.trotter_product
+
 end CSD.Tests.AxiomAudit
