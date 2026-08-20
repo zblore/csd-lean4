@@ -48,13 +48,18 @@ ingredient landed previously, several within the last two days:
 
 ## Honest scope
 
-* **Base arena only.** The fibred arenas (`ℂℙ^{N-1} × T²`) are not touched;
+* ~~**Base arena only.** The fibred arenas (`ℂℙ^{N-1} × T²`) are not touched;
   functions on the fibred arena that factor through the base inherit everything,
-  and the fibre-active extension is the named follow-up.
-* **The bridge, not the characterisation.** P1's definitional half — *a
+  and the fibre-active extension is the named follow-up.~~ **Superseded
+  2026-08-20**: the fibre-active extension landed as `CV/FibredArenaBridge.lean`
+  (`recordStroke`, ★★ `record_lightcone`), closing P1. The stroke-vs-velocity
+  boundary is stated there.
+* ~~**The bridge, not the characterisation.** P1's definitional half — *a
   field-structured flow* as a structure, with the generator decomposing into local
   pieces — is not claimed here; this arc supplies the transport that any such
-  definition will be stated against.
+  definition will be stated against.~~ **Superseded 2026-08-20**: the definitional
+  half landed as `CV/FieldStructuredFlow.lean` (★★
+  `FieldStructuredFlow.lightcone`), stated against exactly this transport.
 * Observables enter as `re tr(ρA)`; general measurable functions on the arena are
   outside this arc (the Lipschitz class through matrices is what the LR machinery
   can price).

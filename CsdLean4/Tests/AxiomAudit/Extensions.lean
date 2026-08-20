@@ -881,4 +881,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.graphStructured_flow_eq
 
+-- P1 close (2026-08-20, CV\FibredArenaBridge.lean): THE FIBRE-ACTIVE EXTENSION -- the
+-- record arena fibred by the flat torus (FibredFieldArena = FieldArena x RecordFibre,
+-- RecordFibre defeq LF4.KTorus), with the record write as the ShearWitness skew stroke
+-- (recordStroke: fibre translated by g(arenaObs A .), a base-dependent shift factoring
+-- through a region-supported arena observable). Statics: fibredObs_kick_of_disjoint-
+-- Support (fibre-carrying observables exactly invariant under disjoint kicks) and
+-- recordStroke_comm_kick (kicks outside the read region commute with record writing,
+-- exactly). Dynamics: record_lightcone -- kick outside the graph d-ball of the read
+-- region, evolve under ANY field-structured flow, write the record, read any Lipschitz
+-- fibre observable: the readout moves by at most Lh*Lg * 2(2||S||t)^d/d! * ||A|| (the
+-- rigid fibre rotation cancels between the two histories). The record cell -- a fibre
+-- fact, where record content necessarily lives for N >= 3 -- cannot be steered from
+-- outside the cone. Scope: stroke-shaped fibre activity (base-coupled fibre VELOCITY
+-- is declared out of scope in the module and in check-claims' wait ledger).
+/-- info: 'CSD.CV.fibredObs_kick_of_disjointSupport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.fibredObs_kick_of_disjointSupport
+
+/-- info: 'CSD.CV.recordStroke_comm_kick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_comm_kick
+
+/-- info: 'CSD.CV.record_lightcone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.record_lightcone
+
 end CSD.Tests.AxiomAudit

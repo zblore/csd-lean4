@@ -329,8 +329,8 @@ unitaryFlowSetup"
 # Per-file counts of honest-scope phrases. These are GOOD — they are how a module
 # states its boundary — so this is not a budget to drive to zero; it is a diffable
 # ledger so that a boundary claim cannot go stale unnoticed when the work lands.
-DECLARED_OPEN_SCOPE="CsdLean4/CV/ArenaBridge.lean:1
-CsdLean4/CV/ChannelRG.lean:1
+DECLARED_OPEN_SCOPE="CsdLean4/CV/ChannelRG.lean:1
+CsdLean4/CV/FibredArenaBridge.lean:1
 CsdLean4/CV/InteractionPrice.lean:1
 CsdLean4/CV/LocalAlgebraClosed.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
@@ -370,8 +370,8 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 # waits on unlabelled work. §E items now carry stable IDs (E1–E5) so long-horizon waits
 # are taggable; foundations-frontier waits (MD-1, §2a) have no BACKLOG row and stay
 # `none` with the wait named in the site's own prose.
-DECLARED_SCOPE_WAITS="CsdLean4/CV/ArenaBridge.lean|none
-CsdLean4/CV/ChannelRG.lean|none
+DECLARED_SCOPE_WAITS="CsdLean4/CV/ChannelRG.lean|none
+CsdLean4/CV/FibredArenaBridge.lean|none
 CsdLean4/CV/InteractionPrice.lean|none
 CsdLean4/CV/LocalAlgebraClosed.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
@@ -401,9 +401,15 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #     exactly as the mechanism intends.
 #   ErrorDiscretization / MeasurementCapstone / MixedSwap / PovmDynamics(1 of 2) —
 #     supersession records: struck notes kept as history, nothing waited on.
-#   ArenaBridge|none — the P1 boundary (2026-08-19): the fibre-active extension and the
-#     field-structured-flow definitional layer are the pillars doc's P1 remainder, an
-#     architecture frontier, not a queued BACKLOG row. Re-read on any P1 landing.
+#   ArenaBridge|(retired 2026-08-20) — was tagged none as "the P1 boundary: re-read on
+#     any P1 landing". P1 landed in full (FieldStructuredFlow.lean and
+#     FibredArenaBridge.lean, both 2026-08-20) and the boundary note was superseded at source,
+#     so the entry retired exactly as the mechanism intends.
+#   FibredArenaBridge|none — permanent scope boundary stated at the P1 close (2026-08-20):
+#     fibre activity is the STROKE shape (base-dependent fibre shifts, the corpus's own
+#     ShearWitness record mechanism); continuous-time skew flows with base-coupled fibre
+#     VELOCITY are a stronger class nothing in the record layer needs. Covering them
+#     would be a new scoping decision, not the discharge of this boundary — no row.
 #   ChannelRG|none — permanent physics boundaries stated at CV-26 (2026-08-18): one
 #     coarse-graining step and not an RG flow (no iteration, no fixed point, no beta
 #     function); mode tracing only, level decimation unselected pending a leakage

@@ -1,8 +1,8 @@
 # EFT pillars: what stands between the corpus and a field theory
 
-Created 2026-08-10. **Brought current 2026-08-19** (the CV ladder finished; P5's
-RG half discharged; P3 reclassified from gap to ceiling — see the change log at
-the end). Companion to `specs/external-library-map.md` (alignment),
+Created 2026-08-10. **Brought current 2026-08-20** (the CV ladder finished; P5's
+RG half discharged; P3 reclassified from gap to ceiling; **P1 complete** — see
+the change log at the end). Companion to `specs/external-library-map.md` (alignment),
 `specs/cv-stage3-plan.md` / `eft-stage4-plan.md` / `eft-stage5-plan.md` /
 `eft-stage6-plan.md` / `eft-stage7-plan.md` (the CV ladder as built), and
 `specs/necessity-audit.md` (what the constraint set actually pins down).
@@ -10,7 +10,9 @@ the end). Companion to `specs/external-library-map.md` (alignment),
 **Status of the ladder this page measures against: COMPLETE.** Rows CV-1…CV-26
 are all closed (Stages 4, 5, 6, 7 each COMPLETE; 26 modules in `CsdLean4/CV/`).
 So this page is no longer "what stands between the corpus and Route A" — Route A
-is built. What remains is P1–P4 as listed, plus the standing ceiling P3.
+is built. **P1 is now also complete** (all three arcs, 2026-08-19/20). What
+remains is P2 and P4 as listed, P5's attainment half, plus the standing ceiling
+P3.
 
 ## 0. Alignment: the window is open *(historical — resolved 2026-08-17, see §5.2)*
 
@@ -65,11 +67,12 @@ P3 below.
 
 Recommendation: pursue A's bounded items for their own sake, since they harden
 claims the corpus already makes, while treating pillar P1 below as the item that
-serves both routes. Do **not** queue P3 as an approach to spatial structure.
+serves both routes *(followed: P1 closed 2026-08-20)*. Do **not** queue P3 as an
+approach to spatial structure.
 
 ## 2. The pillars
 
-### P1. A field-structured flow (the central gap, serves both routes)
+### P1. A field-structured flow — **COMPLETE 2026-08-20** (was the central gap)
 
 Today the arena's flow is characterised only as measure-preserving and
 projectable. Explicit Hermitian generators exist in exactly two places, both on
@@ -120,13 +123,32 @@ the structured graph flow with `interactingU` at the graph potential — so the
 drives the EFT chain has studied all along are instances, and the arena cone
 applies to them with no further hypotheses.
 
-**P1 remainder** (single item): the fibre-active extension — the bridge and the
-characterisation cover the projective *base*; functions on the fibred
-`ℂℙ^{N-1} × T²` arenas that factor through the base inherit everything, but
-fibre-carrying content does not yet.
+**THE FIBRE-ACTIVE EXTENSION IS DONE, CLOSING P1 (2026-08-20 —
+`CV/FibredArenaBridge.lean`, 3 pins).** The arena is fibred as the record layer
+fibres it: `FibredFieldArena = FieldArena × RecordFibre`, with `RecordFibre`
+definitionally `LF4.KTorus` (the flat `T²`), so record-layer consumers need no
+glue. The record write is the corpus's own mechanism — the `ShearWitness` skew
+stroke, base held fixed, fibre translated by a base-dependent shift — realised
+through the bridge: `recordStroke A g` shifts the fibre by `g (arenaObs A ·)`,
+a base-reading factoring through a region-supported arena observable. Delivered
+on the fibre: ★ exact statics (`fibredObs_kick_of_disjointSupport`), ★
+`recordStroke_comm_kick` (interventions outside the read region commute with
+record writing, exactly), and ★★ `record_lightcone` — kick outside the graph
+`d`-ball of the read region, evolve under **any** field-structured flow, write
+the record, read any Lipschitz fibre observable, and the readout moves by at
+most `L_h·L_g · 2(2‖S‖t)^d/d! · ‖A‖`. The record cell a trajectory lands in — a
+fibre fact, which is where record-forming content necessarily lives for `N ≥ 3`
+(`sigma-fibre-contextuality.md`) — cannot be steered from outside the cone.
 
-Effort: ~~L, research-flavoured but not unbounded~~ → remainder **M** (the
-fibre extension only; bridge and definition both landed).
+Honest scope of the close: fibre activity is the **stroke** shape (the record
+layer's own mechanism); continuous-time skew flows with base-coupled fibre
+*velocity* are a stronger class, declared out of scope in the module and in
+`check-claims`' wait ledger — covering them would be a new scoping decision,
+not a residue of this pillar.
+
+Effort: ~~L, research-flavoured but not unbounded~~ → **spent**. All three
+arcs landed (bridge 2026-08-19; definition and fibre extension 2026-08-20;
+11 pins total).
 
 ### P2. Composite arenas
 
@@ -256,10 +278,12 @@ route B they are the path. Under either, the record layer is what gives the
 theory contact with anything observable, so it is not optional — it is just not
 what unblocks EFT specifically.
 
-**What else is missing?** P1 (the arena bridge and a field-structured flow)
-carries the weight; P2 and P4 are the bounded remainder; P5's attainment half is a
-ledger note. **P3 is not "missing" — it is a ceiling** (reclassified 2026-08-19),
-so the honest list of *work* is P1, P2, P4, and P5-attainment.
+**What else is missing?** ~~P1 (the arena bridge and a field-structured flow)
+carries the weight~~ — **P1 is done** (2026-08-20): bridge, definition, and the
+fibre-active record cone all landed. P2 and P4 are the bounded remainder; P5's
+attainment half is a ledger note. **P3 is not "missing" — it is a ceiling**
+(reclassified 2026-08-19), so the honest list of *work* is P2, P4, and
+P5-attainment.
 
 ## 5. Sequencing
 
@@ -274,9 +298,11 @@ so the honest list of *work* is P1, P2, P4, and P5-attainment.
    dispersion from light-cone structure plus a symmetry posit rather than defining
    `ω = √(p² + m²)` and doing algebra from it — the difference between having
    written relativity down and having it forced.
-4. **Medium-term structural:** P1, starting with the arena bridge, since it is
-   the twice-observed bottleneck. With the CV specification complete and P3 closed
-   as a ceiling, this is the highest-value item on the page.
+4. ~~**Medium-term structural:** P1, starting with the arena bridge, since it is
+   the twice-observed bottleneck.~~ **DONE 2026-08-20** — all three arcs
+   (`ArenaBridge`, `FieldStructuredFlow`, `FibredArenaBridge`), 11 pins; the
+   twice-observed bottleneck is a theorem family now. P4 (item 3) is the front
+   of the queue.
 5. **Alongside:** P2, which has the algebra half already proved.
 6. **Recorded, never scheduled:** P3 — a ceiling, cited when scoping.
 
@@ -291,6 +317,22 @@ so the honest list of *work* is P1, P2, P4, and P5-attainment.
   gained the all-orders correlators, the thermal/KMS tier, and the priced RG step.
   (v) §5 items 2 and 3 struck; P4 named as the next bounded item, P1 as the next
   structural one.
+
+* **2026-08-19/20. P1 CLOSED, in three arcs.** (i) The arena bridge
+  (`CV/ArenaBridge.lean`, 2026-08-19): `arenaObs` + the bridge identity
+  `arenaObs_kick` + CR-1's Hölder-lite as the category interface;
+  ★★ `arena_lightcone` turned the 2026-08-10 "unstatable" Lieb-Robinson-at-the-
+  record-layer statement into a theorem. (ii) The definitional layer
+  (`CV/FieldStructuredFlow.lean`, 2026-08-20): field structure as a structure,
+  ★★ `FieldStructuredFlow.lightcone` making the cone a property of *every*
+  instance, non-vacuity via `freeFieldU` / `interactingU` themselves.
+  (iii) The fibre-active extension (`CV/FibredArenaBridge.lean`, 2026-08-20):
+  the record write as the `ShearWitness` skew stroke through the bridge,
+  ★★ `record_lightcone` — the record cell in the `T²` fibre cannot be steered
+  from outside the cone. Section 1's status line, §4, and §5 item 4 updated;
+  `ArenaBridge`'s open-scope boundary superseded at source and retired from
+  `check-claims`' ledgers; the stroke-vs-velocity boundary declared in the new
+  module and in the wait ledger.
 
 ## References
 

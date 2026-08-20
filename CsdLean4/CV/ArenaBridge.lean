@@ -47,12 +47,14 @@ twice-observed bottleneck). This module is the translation.
   record-arena level: far-away interventions cannot reach the epistemic regions
   faster than the cone.
 
-⚠️ Honest scope: the **base** arena only — the fibred arenas (`ℂℙ^{N-1} × T²`)
-inherit these statements for functions that factor through the base, and the
-fibre-active extension is the recorded follow-up. P1's definitional half (a
-*field-structured flow* as a structure with a locally-decomposed generator) is
-not claimed here; this arc supplies the transport any such definition will be
-stated against. `euclidean_norm_map_of_isom` restates LF5's
+⚠️ Honest scope: the **base** arena — this arc is the transport layer. Both
+halves it originally deferred have since landed, closing P1: the definitional
+half (a *field-structured flow* as a structure with a locally-decomposed
+generator) in `CV/FieldStructuredFlow.lean` (2026-08-20), and the fibre-active
+extension (records written into the `T²` fibre by base-dependent strokes
+inherit the cone) in `CV/FibredArenaBridge.lean` (2026-08-20). What stays true
+of this module: its statements concern the base factor, and the fibred module
+consumes them through `arenaObs`. `euclidean_norm_map_of_isom` restates LF5's
 `toEuclideanLin_norm_map_of_isom` (same proof) to keep CV free of an LF5 import
 — rule-of-two note: unify in Mathlib staging when next touched.
 

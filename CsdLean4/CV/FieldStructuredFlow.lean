@@ -43,8 +43,8 @@ is neither empty nor decorative:
 ⚠️ Honest scope: this characterises flows whose generator is **diagonal-local or
 edge-local in the given mode factorisation** — field structure relative to a
 factorisation, which is all Route A can mean (the factorisation itself is
-epistemic; `eft-pillars-plan.md` P3). The fibre-active arenas are the recorded
-extension, as in `ArenaBridge.lean`.
+epistemic; `eft-pillars-plan.md` P3). The fibre-active arenas are covered in
+`CV/FibredArenaBridge.lean` (the record stroke and its cone, 2026-08-20).
 
 ## References
 
