@@ -907,4 +907,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.record_lightcone
 
+-- P4 (2026-08-20, CV\DispersionEarned.lean): THE DISPERSION EARNED -- the converse the
+-- necessity audit recorded as proved nowhere. cone_preserving_is_boost: a linear map of
+-- the (E,p) plane preserving both light rays forward with unit determinant IS a boost
+-- (cosh/sinh derived, chi = -arsinh b). boost_covariance_selects_omega: rest energy
+-- m > 0 + boost-covariant graph forces omega = sqrt(p^2+m^2) -- one orbit through the
+-- rest point covers every momentum; no continuity/evenness/measurability assumed.
+-- cone_symmetry_characterises_omega: the iff (backward = the corpus's own boost_omega
+-- via omega_cone_covariant, so the hypothesis is non-vacuous by theorem, not by toy).
+-- massless_covariance_not_selecting: at m = 0 selection fails (omega = id is covariant
+-- with rest energy 0 but is not |p|), so the mass gap is sharp. Kinematic level;
+-- no lattice boost action, no LR-cone identification (module scope block).
+/-- info: 'CSD.CV.boost_covariance_selects_omega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.boost_covariance_selects_omega
+
+/-- info: 'CSD.CV.cone_preserving_is_boost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cone_preserving_is_boost
+
+/-- info: 'CSD.CV.cone_symmetry_characterises_omega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cone_symmetry_characterises_omega
+
+/-- info: 'CSD.CV.massless_covariance_not_selecting' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.massless_covariance_not_selecting
+
 end CSD.Tests.AxiomAudit

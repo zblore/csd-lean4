@@ -330,6 +330,7 @@ unitaryFlowSetup"
 # states its boundary — so this is not a budget to drive to zero; it is a diffable
 # ledger so that a boundary claim cannot go stale unnoticed when the work lands.
 DECLARED_OPEN_SCOPE="CsdLean4/CV/ChannelRG.lean:1
+CsdLean4/CV/DispersionEarned.lean:1
 CsdLean4/CV/FibredArenaBridge.lean:1
 CsdLean4/CV/InteractionPrice.lean:1
 CsdLean4/CV/LocalAlgebraClosed.lean:1
@@ -371,6 +372,7 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
 # are taggable; foundations-frontier waits (MD-1, §2a) have no BACKLOG row and stay
 # `none` with the wait named in the site's own prose.
 DECLARED_SCOPE_WAITS="CsdLean4/CV/ChannelRG.lean|none
+CsdLean4/CV/DispersionEarned.lean|none
 CsdLean4/CV/FibredArenaBridge.lean|none
 CsdLean4/CV/InteractionPrice.lean|none
 CsdLean4/CV/LocalAlgebraClosed.lean|none
@@ -405,6 +407,11 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #     any P1 landing". P1 landed in full (FieldStructuredFlow.lean and
 #     FibredArenaBridge.lean, both 2026-08-20) and the boundary note was superseded at source,
 #     so the entry retired exactly as the mechanism intends.
+#   DispersionEarned|none — permanent physics boundary stated at the P4 close (2026-08-20):
+#     the identification of the (E,p) light rays with the dynamical Lieb-Robinson cone is
+#     not made — the LR cone is an upper bound with a model-dependent velocity, not an
+#     exact invariant set. Kinematic scope inherited from Boost.lean (no lattice boost
+#     action). No queued row; making the identification would be a new scoping decision.
 #   FibredArenaBridge|none — permanent scope boundary stated at the P1 close (2026-08-20):
 #     fibre activity is the STROKE shape (base-dependent fibre shifts, the corpus's own
 #     ShearWitness record mechanism); continuous-time skew flows with base-coupled fibre

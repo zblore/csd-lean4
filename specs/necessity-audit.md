@@ -221,10 +221,18 @@ generator split handed in rather than constructed; and in thermodynamics the
 pointer basis, the Gibbs bath, and the product initial state.
 
 The dispersion cluster, boost covariance, the propagator, cutoff stability, and
-decimation matching are sufficiency. The direction is never reversed anywhere in
-this layer. Disjoint mode supports yield commuting algebras, but observed
-locality is not shown to require the mode-product model. The relativistic
-dispersion is boost-covariant, but covariance is not shown to select it. Gibbs
+decimation matching are sufficiency. ~~The direction is never reversed anywhere
+in this layer.~~ *(One reversal landed 2026-08-20:
+`CV/DispersionEarned.lean` — covariance now IS shown to select the dispersion;
+see below.)* Disjoint mode supports yield commuting algebras, but observed
+locality is not shown to require the mode-product model. ~~The relativistic
+dispersion is boost-covariant, but covariance is not shown to select it.~~
+**Superseded 2026-08-20 (P4, `CV/DispersionEarned.lean`)**: covariance selects
+it — `cone_symmetry_characterises_omega` proves `ω = √(p² + m²)` **iff** `ω`
+has rest energy `m > 0` and its graph is covariant under every ray-preserving
+unimodular linear symmetry of the `(E, p)` plane (with the boost form itself
+derived from ray preservation, and the mass-gap hypothesis shown sharp by a
+massless counterexample). Gibbs
 attains the free-energy minimum, but uniqueness of the minimiser is not
 extracted, so minimisation is not shown to force the Gibbs form.
 

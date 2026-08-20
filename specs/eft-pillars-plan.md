@@ -1,8 +1,8 @@
 # EFT pillars: what stands between the corpus and a field theory
 
 Created 2026-08-10. **Brought current 2026-08-20** (the CV ladder finished; P5's
-RG half discharged; P3 reclassified from gap to ceiling; **P1 complete** — see
-the change log at the end). Companion to `specs/external-library-map.md` (alignment),
+RG half discharged; P3 reclassified from gap to ceiling; **P1 and P4 complete**
+— see the change log at the end). Companion to `specs/external-library-map.md` (alignment),
 `specs/cv-stage3-plan.md` / `eft-stage4-plan.md` / `eft-stage5-plan.md` /
 `eft-stage6-plan.md` / `eft-stage7-plan.md` (the CV ladder as built), and
 `specs/necessity-audit.md` (what the constraint set actually pins down).
@@ -10,9 +10,9 @@ the change log at the end). Companion to `specs/external-library-map.md` (alignm
 **Status of the ladder this page measures against: COMPLETE.** Rows CV-1…CV-26
 are all closed (Stages 4, 5, 6, 7 each COMPLETE; 26 modules in `CsdLean4/CV/`).
 So this page is no longer "what stands between the corpus and Route A" — Route A
-is built. **P1 is now also complete** (all three arcs, 2026-08-19/20). What
-remains is P2 and P4 as listed, P5's attainment half, plus the standing ceiling
-P3.
+is built. **P1 and P4 are now also complete** (P1 in three arcs 2026-08-19/20;
+P4 the same day). What remains is P2 as listed and P5's attainment half, plus
+the standing ceiling P3.
 
 ## 0. Alignment: the window is open *(historical — resolved 2026-08-17, see §5.2)*
 
@@ -200,19 +200,40 @@ scoping, not a queue item. Concretely:
 
 Effort: **not applicable** (not a work item).
 
-### P4. Relativistic structure earned rather than defined
+### P4. Relativistic structure earned rather than defined — **COMPLETE 2026-08-20**
 
 `omega m p := √(p² + m²)` and the standard boost are **definitions**, and
-`boost_invariant` / `boost_omega` are algebra from them. The converse, that
-covariance selects this dispersion, is proved nowhere. `specs/necessity-audit.md`
-records the prose here as overstating the statements.
+`boost_invariant` / `boost_omega` are algebra from them. ~~The converse, that
+covariance selects this dispersion, is proved nowhere.~~ The converse is now
+proved (`CV/DispersionEarned.lean`, scoped in
+[`dispersion-earned-plan.md`](dispersion-earned-plan.md), 4 pins), in exactly
+the shape this row asked for — the light-cone structure plus a symmetry posit:
 
-What would close it: derive the dispersion from the light-cone structure plus a
-symmetry posit, or import genuine representation theory. This is the difference
-between having written relativity down and having it forced.
+* ★ `cone_preserving_is_boost` — **the cone selects the boosts**: a linear map
+  of the `(E, p)` plane preserving both light rays forward, with unit
+  determinant, IS a boost; the `cosh/sinh` form is derived, not posited.
+* ★ `boost_covariance_selects_omega` — **the boosts select the dispersion**:
+  rest energy `m > 0` plus a boost-covariant graph forces `ω = √(p² + m²)`.
+  One orbit through the rest point covers every momentum; no continuity,
+  evenness, or measurability assumed.
+* ★★ `cone_symmetry_characterises_omega` — the **iff**: `ω = omega m` exactly
+  when `ω` has rest energy `m` and is covariant under every ray-preserving
+  unimodular linear symmetry. The backward direction is the corpus's own
+  `boost_omega`, so the hypothesis is non-vacuous by theorem.
+* `massless_covariance_not_selecting` — the mass gap is **sharp**: at `m = 0`
+  the selection genuinely fails (`ω = id` is covariant), so the hypothesis is
+  necessary, not a convenience.
 
-Effort: **M**. Bounded, and it converts a sufficiency cluster into something
-with direction.
+The `specs/necessity-audit.md` line this row cited ("covariance is not shown
+to select it") is superseded at source. Honest boundary, declared in the
+module and in `check-claims`' wait ledger: kinematic level (no boost action on
+the mode lattice), and no identification of the `(E, p)` rays with the
+dynamical Lieb-Robinson cone — the LR cone is an upper bound, not an exact
+invariant set.
+
+Effort: ~~**M**. Bounded, and it converts a sufficiency cluster into something
+with direction.~~ → **spent**; the sufficiency cluster now has its direction
+reversed at the shell.
 
 ### P5. Interactions past upper bounds
 
@@ -280,9 +301,10 @@ what unblocks EFT specifically.
 
 **What else is missing?** ~~P1 (the arena bridge and a field-structured flow)
 carries the weight~~ — **P1 is done** (2026-08-20): bridge, definition, and the
-fibre-active record cone all landed. P2 and P4 are the bounded remainder; P5's
-attainment half is a ledger note. **P3 is not "missing" — it is a ceiling**
-(reclassified 2026-08-19), so the honest list of *work* is P2, P4, and
+fibre-active record cone all landed. **P4 is also done** (2026-08-20): the
+dispersion is now selected by cone symmetry, not defined. P2 is the bounded
+remainder; P5's attainment half is a ledger note. **P3 is not "missing" — it is
+a ceiling** (reclassified 2026-08-19), so the honest list of *work* is P2 and
 P5-attainment.
 
 ## 5. Sequencing
@@ -294,15 +316,16 @@ P5-attainment.
    rescan ran the same day and consumed nothing, per
    `specs/external-library-map.md`. The align-don't-depend posture stands.
 3. ~~**Near-term Lean:** P5's RG-as-open-map, then P4.~~ **RG half DONE
-   2026-08-18** (CV-26). **P4 is now the next bounded item**: derive the
+   2026-08-18** (CV-26). ~~**P4 is now the next bounded item**: derive the
    dispersion from light-cone structure plus a symmetry posit rather than defining
    `ω = √(p² + m²)` and doing algebra from it — the difference between having
-   written relativity down and having it forced.
+   written relativity down and having it forced.~~ **P4 DONE 2026-08-20**
+   (`CV/DispersionEarned.lean`) in exactly that shape. **P2 is now the front of
+   the queue.**
 4. ~~**Medium-term structural:** P1, starting with the arena bridge, since it is
    the twice-observed bottleneck.~~ **DONE 2026-08-20** — all three arcs
    (`ArenaBridge`, `FieldStructuredFlow`, `FibredArenaBridge`), 11 pins; the
-   twice-observed bottleneck is a theorem family now. P4 (item 3) is the front
-   of the queue.
+   twice-observed bottleneck is a theorem family now.
 5. **Alongside:** P2, which has the algebra half already proved.
 6. **Recorded, never scheduled:** P3 — a ceiling, cited when scoping.
 
@@ -333,6 +356,18 @@ P5-attainment.
   `ArenaBridge`'s open-scope boundary superseded at source and retired from
   `check-claims`' ledgers; the stroke-vs-velocity boundary declared in the new
   module and in the wait ledger.
+
+* **2026-08-20. P4 CLOSED** (`CV/DispersionEarned.lean`, scoped in
+  `dispersion-earned-plan.md`, 4 pins). The converse the necessity audit
+  recorded as proved nowhere: the cone selects the boosts
+  (`cone_preserving_is_boost` — ray preservation + unimodularity derive the
+  `cosh/sinh` form), the boosts select the dispersion
+  (`boost_covariance_selects_omega` — one orbit through the rest point), the
+  characterisation is an iff whose backward half is the corpus's own
+  `boost_omega`, and the mass gap is shown sharp by a massless
+  counterexample. The stale necessity-audit line superseded at source; the
+  kinematic/no-LR-identification boundary declared in the module and the wait
+  ledger. **The honest list of work is now P2 and P5-attainment.**
 
 ## References
 
