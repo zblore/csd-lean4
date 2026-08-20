@@ -1,6 +1,6 @@
 # Headline claim validation ledger
 
-Review date: 2026-08-06  
+Review date: 2026-08-06; sign-off session S1 2026-08-20 (see below)  
 Machine-readable source: `specs/validation-claims.tsv`
 
 ## Purpose
@@ -70,10 +70,40 @@ no-go. Classification: INSTANTIATION (`necessity-audit.md` addendum).
 
 | Status | Count | Meaning |
 |---|---:|---|
-| Validated | 9 | No material claim mismatch found at current depth. |
-| Qualified | 41 | Formally coherent, but assumptions or construction scope must accompany the claim. |
-| Needs change | 2 | Concrete semantic/API mismatch recorded in the main review ledger. |
+| Validated | 21 | No material claim mismatch found at current depth. |
+| Qualified | 30 | Formally coherent, but assumptions or construction scope must accompany the claim. |
+| Needs change | 1 | Concrete semantic/API mismatch recorded in the main review ledger. |
 | Specialist review | 0 | All three commissioned audits (CL-005/CL-022+CL-023/CL-024) completed 2026-08-06. |
+
+## Sign-off session S1 (2026-08-20, author-directed)
+
+Authorised by the author in-session and executed claim by claim against the
+promotion rules below; every touched row carries an `S1-2026-08-20` tag in the
+TSV `finding` column naming its evidence or its remaining gap. Outcomes:
+
+- **12 promotions to `validated`**, each on a named in-corpus artifact
+  completing criteria 5–6: CL-003 (G1 transport theorems), CL-007
+  (`ChoiConverse` as the independent CP characterisation), CL-020 (the
+  CL-031 assumption-comparison work), CL-025 (`swap_luders_iff_calibrated`),
+  CL-026 (boundary discharged by CL-050), CL-033 (two independently pinned
+  trace facts + textbook comparison), CL-037 (the P2 instantiation
+  `compositeArenaForced` freshly exercises the premises), CL-041 (the DH
+  exact-coupling oracle), CL-043 (exhaustive blocks + structural lift),
+  CL-048 (consumer chain), CL-049 (G4-uniqueness consistency), CL-052 (the
+  table equality is itself an exhaustive finite check).
+- **CL-027 needs-change → qualified**: the G5 decision (2026-08-06) had
+  already resolved the API question; the status was stale.
+- **17 rows confirmed `qualified`-by-design**: their qualification is the
+  claim's permanent honest scope (e.g. CL-002's pairwise-not-full-iid,
+  CL-028's cutoff scope, CL-044's CP gap), so `qualified` is their correct
+  terminal status and the sign-off records exactly that.
+- **12 rows left `qualified` pending real work**, each gap named in the TSV
+  (CL-024's is the author hand-pass, G11); CL-011 stands `needs-change` as
+  the MD-1 frontier (Q12).
+
+The earlier in-session estimate "28 one-sign-off-away" was optimistic: it
+counted the by-design rows as promotable. This pass does not — a permanent
+scope qualification is not a missing signature.
 
 **CL-031 added 2026-08-10** (`no_compatible_global_chsh_assignment_realises_singlet`,
 validated — hence Validated 8 → 9). It arrived through the C1 correction and
