@@ -372,7 +372,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- cross-term spectral expansion Tr(ρ · cfc g σ) = ∑ᵢⱼ pᵢ g(qⱼ) ‖Vᵢⱼ‖² (trace_mul_cfc_eq), which
 -- expresses a trace of a product of two operators in DIFFERENT eigenbases. The reduced-trace
 -- identities (trace_mul_kronecker_one_right / _left, Tr(M(X⊗I)) = Tr(Tr_B M · X)) are the
--- subadditivity prerequisites. Foundational triple. The Kronecker-log split and the resulting
+-- subadditivity prerequisites (rehomed to PartialTrace.lean 2026-08-20, the Q27 arc; same
+-- names, same namespace). Foundational triple. The Kronecker-log split and the resulting
 -- subadditivity headline are the remaining K1-B.2 wall (see specs/k1-plan.md).
 /-- info: 'QuantumInfo.relEntropy_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

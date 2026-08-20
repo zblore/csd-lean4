@@ -374,62 +374,11 @@ theorem klein_inequality {ρ σ : Matrix n n ℂ} (hpsdρ : ρ.PosSemidef) (hpd�
 
 /-! ## Partial-trace / Kronecker-identity trace lemmas (subadditivity prerequisites)
 
-These connect a bipartite trace against a `X ⊗ I` (resp. `I ⊗ Y`) observable to a trace of the
-reduced state, the bridge needed to read `Tr(ρ_AB · log(ρ_A ⊗ ρ_B))` as `−S(ρ_A) − S(ρ_B)` once
-the **Kronecker-log split** `log(ρ_A ⊗ ρ_B) = log ρ_A ⊗ I + I ⊗ log ρ_B` is available. See the
-module docstring and `specs/k1-plan.md` for the status of that split (the remaining K1-B.2 wall). -/
-
-section PartialTraceTrace
-
-variable {m : Type*} [Fintype m] [DecidableEq m]
-
-omit [DecidableEq n] in
-/-- **Reduced-trace identity (right):** `Tr(M · (X ⊗ I)) = Tr(Tr_B(M) · X)`. Pairing a bipartite
-operator against a `X ⊗ I_B` observable collapses to the right partial trace. Basis-free; from
-expanding the trace, collapsing the `I_B` Kronecker factor (`l = k`), and `Finset.sum_comm`. -/
-theorem trace_mul_kronecker_one_right (M : Matrix (n × m) (n × m) ℂ) (X : Matrix n n ℂ) :
-    (M * (X ⊗ₖ (1 : Matrix m m ℂ))).trace = (partialTraceRight M * X).trace := by
-  rw [Matrix.trace, Matrix.trace]
-  simp only [Matrix.diag_apply, Matrix.mul_apply, partialTraceRight_apply]
-  rw [Fintype.sum_prod_type]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [show (∑ j, (∑ k, M (i, k) (j, k)) * X j i)
-      = ∑ k, ∑ j, M (i, k) (j, k) * X j i from by
-    rw [Finset.sum_comm]
-    exact Finset.sum_congr rfl fun j _ => by rw [Finset.sum_mul]]
-  refine Finset.sum_congr rfl fun k _ => ?_
-  rw [Fintype.sum_prod_type]
-  refine Finset.sum_congr rfl fun j _ => ?_
-  rw [Finset.sum_eq_single k]
-  · rw [Matrix.kronecker_apply, Matrix.one_apply_eq, mul_one]
-  · intro l _ hl
-    rw [Matrix.kronecker_apply, Matrix.one_apply, if_neg hl, mul_zero, mul_zero]
-  · intro hk; exact absurd (Finset.mem_univ k) hk
-
-omit [DecidableEq m] in
-/-- **Reduced-trace identity (left):** `Tr(M · (I ⊗ Y)) = Tr(Tr_A(M) · Y)`. -/
-theorem trace_mul_one_kronecker_left (M : Matrix (n × m) (n × m) ℂ) (Y : Matrix m m ℂ) :
-    (M * ((1 : Matrix n n ℂ) ⊗ₖ Y)).trace = (partialTraceLeft M * Y).trace := by
-  rw [Matrix.trace, Matrix.trace]
-  simp only [Matrix.diag_apply, Matrix.mul_apply, partialTraceLeft_apply]
-  rw [Fintype.sum_prod_type]
-  rw [Finset.sum_comm]
-  refine Finset.sum_congr rfl fun k _ => ?_
-  rw [show (∑ l, (∑ i, M (i, k) (i, l)) * Y l k)
-      = ∑ i, ∑ l, M (i, k) (i, l) * Y l k from by
-    rw [Finset.sum_comm]
-    exact Finset.sum_congr rfl fun l _ => by rw [Finset.sum_mul]]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [Fintype.sum_prod_type]
-  rw [Finset.sum_comm]
-  refine Finset.sum_congr rfl fun l _ => ?_
-  rw [Finset.sum_eq_single i]
-  · rw [Matrix.kronecker_apply, Matrix.one_apply_eq, one_mul]
-  · intro i' _ hi'
-    rw [Matrix.kronecker_apply, Matrix.one_apply, if_neg hi', zero_mul, mul_zero]
-  · intro hi; exact absurd (Finset.mem_univ i) hi
-
-end PartialTraceTrace
+The reduced-trace identities `trace_mul_kronecker_one_right` / `trace_mul_one_kronecker_left`
+(`Tr(M · (X ⊗ I)) = Tr(Tr_B(M) · X)` and its mirror) were **rehomed to `PartialTrace.lean`**
+(2026-08-20, the Q27 arc): the defining property of the partial trace lives beside the
+definition, and the CV entangled-weights bridge consumes it without this module's entropy
+stack. This module keeps consuming them through its public import of `PartialTrace`. -/
 
 /-! ## The Kronecker-log operator split (the former K1-B.2 wall)
 

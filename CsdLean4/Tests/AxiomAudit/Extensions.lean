@@ -996,4 +996,47 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.price_linear_attained
 
+-- Q27 first brick (2026-08-20, CV\EntangledWeights.lean): WHAT ENTANGLEMENT DOES TO THE
+-- WEIGHTS -- local observations are reduced-state expectations. reducedDM (right partial
+-- trace of arenaDM read on the pair index) is a genuine density operator for EVERY
+-- composite point (reducedDM_posSemidef / reducedDM_trace). The bridge:
+-- arenaObs_leftOp_eq_reduced -- arenaObs (leftOp A) x = re tr(reducedDM x * A) for every
+-- composite point x, entangled included; local arena observations ARE mixed-Born pairings
+-- against the reduced state. Contrast: reducedDM_join -- on a product point the reduced
+-- state is the pure local state arenaDM p, so departure from rank-one is exactly
+-- entanglement's contribution. The Bell answer: reducedDM_bell -- the Bell ray's reduced
+-- state is the equal mixture (1/2)(|x0><x0| + |x1><x1|); corollaries bell_local_weight0/1:
+-- each correlated pattern's local weight is exactly 1/2 (maximal mixing; no remote labels
+-- survive -- composite_no_signalling read as a consequence). Scope: weights delivered in
+-- the re tr(reducedDM * A) mixed-Born form on the field-configuration index; the
+-- Fin-indexed LF2 mixed-tier transport is declared index plumbing, not claimed;
+-- sequential/record-conditioned versions are Q25 (module scope block).
+/-- info: 'CSD.CV.reducedDM_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.reducedDM_posSemidef
+
+/-- info: 'CSD.CV.reducedDM_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.reducedDM_trace
+
+/-- info: 'CSD.CV.arenaObs_leftOp_eq_reduced' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_leftOp_eq_reduced
+
+/-- info: 'CSD.CV.reducedDM_join' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.reducedDM_join
+
+/-- info: 'CSD.CV.reducedDM_bell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.reducedDM_bell
+
+/-- info: 'CSD.CV.bell_local_weight₀' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.bell_local_weight₀
+
+/-- info: 'CSD.CV.bell_local_weight₁' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.bell_local_weight₁
+
 end CSD.Tests.AxiomAudit
