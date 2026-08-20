@@ -327,7 +327,12 @@ read as an unconditional one.
     no witness shows they are jointly satisfiable, so the corollary is not shown
     non-vacuous in file.
 
-**Prose weaker than the statement, or stale.**
+**Prose weaker than the statement, or stale.** *(Tracking note, 2026-08-20:
+findings in this section are actionable and must not sit recorded-but-unfixed —
+item 13 did for eleven days because nothing expired it. When a finding is
+fixed, annotate it in place (item 13 is the precedent); where a finding admits
+a mechanical residue, add it to a guard (`check-claims` (7e) is item 13's);
+the prose-audit (`prose-audit.md`) is the standing sweep for this class.)*
 
 13. **"SU(N)" claimed, U(N) proved, systematically.** Section headers, theorem
     docstrings, and keyword lines across the Fubini-Study modules say `SU(N)`;

@@ -548,6 +548,19 @@ unitaryFlowSetup_liouville_isProbability"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 
+# ------------------------------------------------- (7e) GROUP-NAMING INVENTORY --
+# Added 2026-08-20 after the SU(N)/U(N) fix. Every definition and theorem in the
+# Fubini-Study layer quantifies over Matrix.unitaryGroup = U(N), but docstrings said
+# "SU(N)" for a year — recorded by necessity-audit item 13 (2026-08-09) yet never
+# fixed, because audit findings have no expiry hook. This check is the mechanical
+# residue: any "SU(" in Lean source outside the declared explanatory sites fails
+# loudly, forcing the U(N)-vs-SU(N) question to be answered consciously at the site.
+# The two declared sites are the equivalence remarks kept ON PURPOSE (the centre
+# acts trivially on projective space, so the literature's SU(N) reading is the same
+# condition; FubiniStudy.lean header) and LF2/Setup.lean's abstract-G note.
+DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
+CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2"
+
 echo "check-claims: verifying code against the canonical claims block…"
 
 # (1) axiom set
@@ -747,6 +760,19 @@ else
   say_fail "abstract-Sigma instantiation drift. A new KahlerOnticSetup instance fixes a concrete Sigma and OWES a parity justification: add it to DECLARED_KAHLER_INSTANTIATIONS with its Sigma's real dimension (must be EVEN)."
   echo "        declared:"; printf '%s\n' "$decl_inst" | sed 's/^/          /'
   echo "        found:";    printf '%s\n' "$found_inst" | sed 's/^/          /'
+fi
+
+# (7e) group-naming inventory: SU( mentions must be the declared explanatory sites
+found_su="$(srcfiles | tr '\n' '\0' \
+  | xargs -0 grep -cE 'SU\(' 2>/dev/null \
+  | grep -v ':0$' | sort)"
+decl_su="$(printf '%s\n' "$DECLARED_SU_MENTIONS" | grep -v '^[[:space:]]*$' | sort)"
+if [ "$found_su" = "$decl_su" ]; then
+  say_ok "group naming: SU( mentions == declared explanatory sites ($(printf '%s\n' "$decl_su" | grep -c .) files) — everything else says U(N), matching the quantifier"
+else
+  say_fail "group-naming drift. The corpus quantifies over Matrix.unitaryGroup = U(N); a new 'SU(' mention must either become U(N) or be added to DECLARED_SU_MENTIONS with its equivalence justification (necessity-audit item 13 is the case history)."
+  echo "        declared:"; printf '%s\n' "$decl_su" | sed 's/^/          /'
+  echo "        found:";    printf '%s\n' "$found_su" | sed 's/^/          /'
 fi
 
 # (8) open-scope inventory: boundary claims are diffable, so they cannot go stale silently
