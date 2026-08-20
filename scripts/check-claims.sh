@@ -333,8 +333,8 @@ DECLARED_OPEN_SCOPE="CsdLean4/CV/ChannelRG.lean:1
 CsdLean4/CV/CompositeArena.lean:1
 CsdLean4/CV/DispersionEarned.lean:1
 CsdLean4/CV/FibredArenaBridge.lean:1
-CsdLean4/CV/InteractionPrice.lean:1
 CsdLean4/CV/LocalAlgebraClosed.lean:1
+CsdLean4/CV/PriceAttainment.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
@@ -376,8 +376,8 @@ DECLARED_SCOPE_WAITS="CsdLean4/CV/ChannelRG.lean|none
 CsdLean4/CV/CompositeArena.lean|none
 CsdLean4/CV/DispersionEarned.lean|none
 CsdLean4/CV/FibredArenaBridge.lean|none
-CsdLean4/CV/InteractionPrice.lean|none
 CsdLean4/CV/LocalAlgebraClosed.lean|none
+CsdLean4/CV/PriceAttainment.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
@@ -436,14 +436,21 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #   PovmDynamics(2 of 2) — recorded extensions without a BACKLOG row (mixed-ε weights,
 #     Hamiltonian relocation stroke, V-as-unitary-stroke): boundaries by design, not
 #     queued work; if one becomes a row, re-tag it here.
-#   SupportSpreading / InteractionPrice / LocalAlgebraClosed — the CV-6 boundary,
-#     narrowed three times exactly as the ledger intended (CV-8 spreading bound; CV-9
-#     pricing; CV-11 the non-diagonal KICKED cone 2026-08-09, SupportSpreading re-read
-#     and re-worded at source). What stands now: SupportSpreading and LocalAlgebraClosed
-#     both wait on the full-exponential cone = Lieb-Robinson, the promoted Stage-5
-#     headline (eft-stage4-plan horizon note; gated on CV-12, no Ref yet);
-#     InteractionPrice waits on attainment (a dynamics question, no Ref). Re-read all
-#     three when Stage 5 opens."
+#   SupportSpreading / LocalAlgebraClosed — the CV-6 boundary, narrowed three times
+#     exactly as the ledger intended (CV-8 spreading bound; CV-9 pricing; CV-11 the
+#     non-diagonal KICKED cone 2026-08-09, SupportSpreading re-read and re-worded at
+#     source). What stands now: both wait on the full-exponential cone = Lieb-Robinson,
+#     the promoted Stage-5 headline (eft-stage4-plan horizon note; gated on CV-12, no
+#     Ref yet). Re-read both when Stage 5 opens.
+#   InteractionPrice|(retired 2026-08-20) — waited on attainment; P5-attainment landed
+#     (CV/PriceAttainment.lean) and the boundary was superseded at source (both halves:
+#     attainment closed, and the non-diagonal-cone half had been stale since CV-11),
+#     so the entry retired exactly as the mechanism intends.
+#   PriceAttainment|none — scope boundary stated at the P5-attainment close (2026-08-20):
+#     attainment is an existence claim discharged by one witness (K = N = 2, one coupling
+#     shape); the exact-distance identification on the witness and constant-matching
+#     (1/π vs 2) are not claimed. No queued row; sharpening constants would be a new
+#     scoping decision."
 
 # (7b) STRUCTURE FIELDS carrying the same vocabulary. Found 2026-08-04 immediately
 # after (7a) shipped: `liouvilleMeasure`, `IsKahlerSector` and friends are structure

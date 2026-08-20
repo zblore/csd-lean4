@@ -972,4 +972,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.compositeArenaForced_tmul
 
+-- P5-attainment (2026-08-20, CV\PriceAttainment.lean): THE LINEAR PRICE IS ATTAINED --
+-- CV-9's declared boundary closed. The commutator functional (any S-supported B
+-- commutes with a disjoint probe, so a single computable commutator lower-bounds the
+-- distance to the WHOLE supported subalgebra) evaluated on the K=N=2 witness: the
+-- interacting drive is a diagonal phase, the free phases cancel between the two
+-- commutator paths (energy is mode-additive), the coupling phase survives (it reads
+-- both modes), and the commutator entry has modulus 2|sin(tau*lam/2)| EXACTLY
+-- (comm_entry_norm). price_lower_bound: every {0}-supported operator is at least
+-- |sin(tau*lam/2)| from the interacting Heisenberg observable. price_linear_attained:
+-- the sandwich tau*lam/pi <= dist <= 2*tau*lam (Jordan below, CV-9 above) -- the price
+-- is linear on BOTH sides; "costs at most" is now "costs exactly" up to [1/pi, 2].
+-- Scope: one witness (attainment is an existence claim; module scope block).
+/-- info: 'CSD.CV.comm_entry_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.comm_entry_norm
+
+/-- info: 'CSD.CV.price_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.price_lower_bound
+
+/-- info: 'CSD.CV.price_linear_attained' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.price_linear_attained
+
 end CSD.Tests.AxiomAudit

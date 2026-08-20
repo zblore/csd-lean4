@@ -39,10 +39,12 @@ for exactly this use):
 
 ⚠️ All norms here are the **scoped `Matrix.Norms.L2Operator` (C*) norm**
 (`open scoped Matrix.Norms.L2Operator`), never the elementwise or Frobenius
-norm — consumers must open the same scope. Honest scope: the bounds are
-inequalities; whether the linear price is attained (an actual violation
-rate) is a dynamics question not claimed here, and the light cone for
-non-diagonal drives is CV-8's recorded residue.
+norm — consumers must open the same scope. Honest scope, both original
+boundaries since superseded: whether the linear price is attained was closed
+by `CV/PriceAttainment.lean` (P5-attainment, 2026-08-20 — a witness where
+the distance to the supported subalgebra is at least `|sin(τλ/2)|`, linear
+on both sides), and the non-diagonal light cone landed as CV-11
+(`eft-stage4-plan.md`, exp-closure route, 2026-08-09).
 
 ## References
 

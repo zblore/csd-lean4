@@ -1,8 +1,9 @@
 # EFT pillars: what stands between the corpus and a field theory
 
-Created 2026-08-10. **Brought current 2026-08-20** (the CV ladder finished; P5's
-RG half discharged; P3 reclassified from gap to ceiling; **P1, P2, and P4
-complete** — see the change log at the end). Companion to `specs/external-library-map.md` (alignment),
+Created 2026-08-10. **Brought current 2026-08-20 — EVERY PILLAR IS NOW
+RESOLVED**: P1, P2, P4, and P5 complete; P3 a standing ceiling, cited when
+scoping, never scheduled. This page has no open work items; see the change
+log at the end. Companion to `specs/external-library-map.md` (alignment),
 `specs/cv-stage3-plan.md` / `eft-stage4-plan.md` / `eft-stage5-plan.md` /
 `eft-stage6-plan.md` / `eft-stage7-plan.md` (the CV ladder as built), and
 `specs/necessity-audit.md` (what the constraint set actually pins down).
@@ -10,9 +11,9 @@ complete** — see the change log at the end). Companion to `specs/external-libr
 **Status of the ladder this page measures against: COMPLETE.** Rows CV-1…CV-26
 are all closed (Stages 4, 5, 6, 7 each COMPLETE; 26 modules in `CsdLean4/CV/`).
 So this page is no longer "what stands between the corpus and Route A" — Route A
-is built. **P1, P2, and P4 are now also complete** (P1 in three arcs
-2026-08-19/20; P2 and P4 the same day). What remains as *work* is P5's
-attainment half; P3 stands as the ceiling.
+is built. **P1, P2, P4, and P5 are now also complete** (P1 in three arcs
+2026-08-19/20; P2, P4, and P5-attainment the same day). No work items remain
+on this page; P3 stands as the ceiling.
 
 ## 0. Alignment: the window is open *(historical — resolved 2026-08-17, see §5.2)*
 
@@ -270,16 +271,31 @@ Effort: ~~**M**. Bounded, and it converts a sufficiency cluster into something
 with direction.~~ → **spent**; the sufficiency cluster now has its direction
 reversed at the shell.
 
-### P5. Interactions past upper bounds
+### P5. Interactions past upper bounds — **COMPLETE 2026-08-20**
 
 Stage 3 delivered the Duhamel price ladder and power counting as **upper bounds
 with no matching lower bounds**, and the audit found `CutoffStability.lean` and
 `PowerCounting.lean` contradicting each other on whether renormalisation is
 forced. Two concrete pieces:
 
-* **Attainment.** A lower bound, or a witness showing the linear price is
+* ~~**Attainment.** A lower bound, or a witness showing the linear price is
   achieved, would turn "costs at most" into "costs exactly". **STILL OPEN** (it
-  stays a ledger note per the Stage-6/7 non-goals).
+  stays a ledger note per the Stage-6/7 non-goals).~~ **DONE 2026-08-20**
+  (`CV/PriceAttainment.lean`, scoped in
+  [`price-attainment-plan.md`](price-attainment-plan.md), 3 pins). The
+  commutator functional — any `S`-supported operator commutes with a
+  disjointly supported probe, so a single computable commutator lower-bounds
+  the distance to the whole `S`-supported subalgebra — evaluated on a
+  `K = N = 2` witness where the interacting phase is exact: the free phases
+  cancel between the two commutator paths (energy is mode-additive), the
+  coupling phase survives (it reads both modes), and the commutator entry has
+  modulus `2|sin(τλ/2)|` exactly. ★★ `price_lower_bound`: every
+  `{0}`-supported operator is at least `|sin(τλ/2)|` from the interacting
+  Heisenberg observable. ★★ `price_linear_attained`: the sandwich
+  `τλ/π ≤ dist ≤ 2τλ` (Jordan below, CV-9 above) — **the price of locality
+  violation is linear in the coupling on both sides**. CV-9's declared
+  boundary superseded at source; scope (one witness; constants not matched)
+  declared in the module and the wait ledger.
 * ~~**An actual RG step.**~~ **DONE 2026-08-18 (CV-26, `CV/ChannelRG.lean`).** The
   lead this row named was right: `exists_unitary_compress_not_unitary` says the
   effective low-cutoff dynamics must be an open map, and that is the shape the
@@ -293,7 +309,8 @@ forced. Two concrete pieces:
   fixed point, no beta function; level decimation stays unselected pending a
   leakage estimate.
 
-Effort: attainment **M**; the RG half is closed.
+Effort: ~~attainment **M**; the RG half is closed.~~ → **spent**; both halves
+closed (RG 2026-08-18, attainment 2026-08-20).
 
 ## 3. Already settled — do not redo
 
@@ -339,9 +356,10 @@ carries the weight~~ — **P1 is done** (2026-08-20): bridge, definition, and th
 fibre-active record cone all landed. **P4 is also done** (2026-08-20): the
 dispersion is now selected by cone symmetry, not defined. **P2 is also done**
 (2026-08-20): the composite arena is mode concatenation, and the algebra
-forcing transports to it. P5's attainment half is a ledger note. **P3 is not
-"missing" — it is a ceiling** (reclassified 2026-08-19), so the honest list of
-*work* is P5-attainment alone.
+forcing transports to it. **P5 is also done in full** (2026-08-20): the RG
+half at CV-26, and attainment — the linear price sandwiched from both sides.
+**P3 is not "missing" — it is a ceiling** (reclassified 2026-08-19). The
+honest list of *work* on this page is now empty.
 
 ## 5. Sequencing
 
@@ -365,7 +383,9 @@ forcing transports to it. P5's attainment half is a ledger note. **P3 is not
 5. ~~**Alongside:** P2, which has the algebra half already proved.~~ **DONE
    2026-08-20** (`CV/CompositeArena.lean`): the composite is mode
    concatenation, the join is Segre, and the forcing is consumed at the
-   arena's own algebras. **P5-attainment is the only remaining work item.**
+   arena's own algebras. ~~**P5-attainment is the only remaining work
+   item.**~~ **DONE 2026-08-20** (`CV/PriceAttainment.lean`) — the sequencing
+   list is exhausted.
 6. **Recorded, never scheduled:** P3 — a ceiling, cited when scoping.
 
 ## 6. Change log
@@ -420,6 +440,21 @@ forcing transports to it. P5's attainment half is a ledger note. **P3 is not
   `bell_not_join` (the composite is strictly larger than the pair — `⊗` vs
   `×` at the arena). Homogeneous-sector boundary declared in the module and
   the wait ledger. **The honest list of work is now P5-attainment alone.**
+
+* **2026-08-20. P5-ATTAINMENT CLOSED — the page has no open work items.**
+  (`CV/PriceAttainment.lean`, scoped in `price-attainment-plan.md`, 3 pins.)
+  The commutator functional lower-bounds the distance to the supported
+  subalgebra by one computable commutator; on the `K = N = 2` witness the
+  entry is `2|sin(τλ/2)|` exactly (free phases cancel by mode-additivity,
+  the coupling phase reads both modes and survives), giving
+  `price_lower_bound` and the sandwich `price_linear_attained`
+  (`τλ/π ≤ dist ≤ 2τλ`). CV-9's declared attainment boundary superseded at
+  source (together with its stale non-diagonal-cone half, closed since
+  CV-11); `InteractionPrice` retired from the guard ledgers,
+  `PriceAttainment`'s one-witness scope declared in its place. The pillar
+  arc also gained its BACKLOG row (Q22) the same day — the pillars had been
+  tracked only on this page, which the canonical-list discipline does not
+  allow.
 
 ## References
 
