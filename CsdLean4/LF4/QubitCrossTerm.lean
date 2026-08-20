@@ -8,6 +8,11 @@ module
 public import CsdLean4.LF4.QubitDipole
 public import CsdLean4.Empirical.CSD.UncertaintyVolume
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+-- Direct import of `Measurable.abs`'s provider (`to_additive` from `Measurable.mabs`).
+-- The 2026-08-17 forward-compat canary failed here: the name arrived only transitively
+-- through the pinned Mathlib's import closure, and Mathlib master's import trimming
+-- dropped the path. A name a proof uses gets its providing module imported directly.
+public import Mathlib.MeasureTheory.Order.Group.Lattice
 
 /-!
 # LF4/QubitCrossTerm: the cross-term vanishes (context-fixed qubit, A7)

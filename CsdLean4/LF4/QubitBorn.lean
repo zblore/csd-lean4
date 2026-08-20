@@ -6,6 +6,9 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.QubitCrossTerm
+-- Direct import of `Measurable.abs`'s provider — this file uses the name too (`hms.abs`);
+-- see the note in `QubitCrossTerm.lean` (2026-08-17 forward-compat canary).
+public import Mathlib.MeasureTheory.Order.Group.Lattice
 
 /-!
 # LF4/QubitBorn: the context-fixed qubit Born rule (A7)
