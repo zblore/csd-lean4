@@ -3778,3 +3778,433 @@ entries:
     status: definition
     source: curated
     related: [typicality-volume, duistermaat-heckman, born-weight, fubini-study-measure]
+
+  - slug: fibre
+    hook: >
+      The arena is bigger than the state space by exactly one compact factor -- and at
+      dimension three and above, that factor provably cannot be dispensed with.
+    layman: >
+      Here is the problem. If quantum states are shadows of a richer arena, what is in
+      the part that does not show up in the shadow? It had better not be idle decoration:
+      hidden structure that never does anything is the first thing a critic should cut.
+
+      In CSD's working arena the hidden part is a small compact fibre -- a torus --
+      attached over every point of the state space. It is where the arena keeps what the
+      state cannot: which outcome basin the trajectory actually occupies, the raw
+      material of records.
+
+      The satisfying twist is that the fibre earned its keep by a theorem, not by
+      taste. At the qubit you can just about manage without it. One dimension higher,
+      you provably cannot.
+    in_csd: >
+      The fibre is where the record layer lives: the context-fixed outcome basins are
+      arcs in the fibre coordinate, read off at each base point. The epistemic measure
+      spreads evenly over the fibre; the basin a trajectory occupies is the ontic
+      record.
+
+      The load-bearing discovery is dimensional. At N = 2 a context-fixed partition can
+      be built on the base alone -- a special accident of the two-dimensional state
+      space. At N >= 3 the corpus's analysis shows a base-only construction fails: the
+      constraints of covariance and positivity kill every candidate density, so the
+      contextual structure is forced into the fibre. That narrows where the mechanism
+      can live; it does not refute it -- existence is proved, and deriving the fibre
+      mechanism from de-isolation dynamics is the stated open frontier.
+    mathematical: >
+      The arena is CP^(N-1) x T^2 with the flat torus fibre carrying normalised Haar
+      measure. Basins are preimages of arcs under the first fibre coordinate, with the
+      arc endpoints set by the context's rate field. The N >= 3 obstruction is not a
+      Gleason-type theorem -- CSD's partitions are contextual, so Gleason and
+      Kochen-Specker do not apply -- but an explicit analysis showing covariance plus
+      nonnegativity leave no room for a base-only radial density.
+    term: Fibre
+    status: definition
+    source: curated
+    lean:
+      module: CsdLean4/LF4/KahlerInstance.lean
+    related: [constraint-surface, outcome-region, record-layer, contextuality, haar-measure]
+
+  - slug: many-to-one-projection
+    hook: >
+      One quantum state, a crowd of world-states behind it. The projection losing
+      information is not a defect -- it is where quantum probability comes from.
+    layman: >
+      Here is the problem. If the world is deterministic and you know the quantum state
+      exactly, why can you not predict the outcome? Something must separate what the
+      state tells you from what the world knows.
+
+      The answer is a projection that forgets. Many distinct points of the arena map to
+      the same quantum state -- the map is many-to-one, deliberately. Knowing the state
+      pins down the visible coordinate and says nothing about the rest. Outcomes depend
+      on the rest.
+
+      This is the oldest move in statistical physics, relocated: temperature does not
+      determine the positions of molecules either. The novelty is in what gets proved
+      about the projection, not in the move itself.
+    in_csd: >
+      The projection pi from Sigma to the projective sector is postulated measurable
+      and many-to-one -- non-injectivity is intended, stated in the source. Everything
+      epistemic happens downstream of pi; everything ontic happens upstream. The Born
+      weight of a sector region is the ontic volume of its pi-preimage, so the
+      information pi forgets is exactly the information typicality averages over.
+
+      What keeps this from being a shell game is the anti-circularity discipline: the
+      projection carries no Born equality, no measure identity, no unitarity. Those
+      are theorems proved about it downstream, not properties packed into it.
+    mathematical: >
+      ProjectiveSector carries the measurable pi with no further structure; the
+      projective law is the pushforward of an ontic measure along it. On the Kahler
+      instance pi is the product projection CP^(N-1) x T^2 -> CP^(N-1), every fibre a
+      full torus. The pushforward identity -- Liouville measure to Fubini-Study
+      measure -- is proved, and the guard scripts enforce that the projection's
+      descent equation is genuinely consumed downstream rather than decoratively
+      carried.
+    term: Many-to-one projection
+    status: definition
+    source: curated
+    related: [projectability, projective-sector, fibre, epistemic-measure]
+
+  - slug: pointer-basis
+    hook: >
+      The apparatus does not measure what you ask it to. It measures what it can keep
+      -- and what it can keep is decided by the interaction, not the experimenter.
+    layman: >
+      Here is the problem. A measuring device is supposed to end up in one of several
+      stable readings. But quantum mechanics happily writes down superpositions of
+      pointer readings, and nobody has ever seen one. Why do pointers settle into some
+      states and not others?
+
+      The standard answer, which CSD adopts and then formalises, is einselection: the
+      environment constantly interacts with the apparatus, and only certain states
+      survive that interaction unscrambled. Those survivors are the pointer basis. A
+      pointer position is robust because bumping into air molecules does not change
+      it; a superposition of two positions is fragile because the first bump marks
+      which.
+
+      The pointer basis is thus not chosen -- it is selected, dynamically, by what the
+      interaction commutes with.
+    in_csd: >
+      In the record layer the pointer basis is what makes a record a record: a stable,
+      re-readable configuration the de-isolation dynamics writes and the environment
+      does not erase. The corpus proves the einselection story at the density-matrix
+      level -- decoherence drives the apparatus state diagonal in the pointer basis,
+      at every finite dimension, with the degenerate boundary cases handled rather
+      than waved at.
+
+      The two-level reading applies here too: the pointer basis is a fact about the
+      dynamics (ontic side); which pointer reading obtains for a given run is the
+      record, selected by the trajectory.
+    mathematical: >
+      The einselection theorems: under the modelled system-environment coupling the
+      reduced state's off-diagonal terms in the pointer basis are damped to zero,
+      diagonal terms preserved -- proved for qubit witnesses and at general N, with
+      explicit treatment of degenerate couplings. The continuous-time companions are
+      the dephasing and amplitude-damping semigroups of the open-system tier, whose
+      pointer-basis coherence decay is exact.
+    term: Pointer basis
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/Empirical/CSD/Einselection.lean
+      theorem: einselectionN
+    related: [de-isolation, record-layer, collapse, von-neumann-entropy]
+
+  - slug: preparation-region
+    hook: >
+      "The same experiment, repeated" is a physical claim, and this is its referent: a
+      region of the arena, not a single point, that preparation lands you in.
+    layman: >
+      Here is the problem. No laboratory procedure controls a system completely. Cool
+      an atom, align a polariser, fire the same laser -- what you fix is everything
+      your instruments can see, and the world keeps the rest. So "prepare the same
+      state a thousand times" cannot mean "the same world-state a thousand times".
+
+      The preparation region is the honest version: the set of all arena points
+      compatible with what the procedure fixed. Each run of the experiment is one
+      point drawn from that region. The statistics of many runs are the statistics of
+      the region.
+
+      Once you say it this way, quantum probability stops being mysterious in kind:
+      it is the same ignorance-over-a-region that classical statistical mechanics
+      runs on. The work is in proving the numbers come out right, and that is where
+      the measure theorems earn their keep.
+    in_csd: >
+      The preparation region is a primitive of the LF1 layer: a measurable subset of
+      Sigma with positive Liouville volume, from which repeated trials draw
+      independently under the conditioned measure. Every frequency theorem in the
+      corpus is stated relative to it -- the outcome weight is the volume of the
+      outcome's preimage intersected with the preparation region, normalised by the
+      region's volume.
+
+      The pure-state refinement has its own honesty note: under the continuous
+      measure bridge a single state's fibre is a null set, so pure preparations
+      carry a posited fibre trial law rather than a conditional of the ambient
+      measure -- stated as such where it is used.
+    mathematical: >
+      prepMeasure conditions the Liouville measure on the preparation region;
+      repeated trials are i.i.d. draws from it; the LF1 main theorem sends empirical
+      frequencies to volume weights almost surely. The conditional-measure formula
+      and the weight-as-volume-ratio identity are the exported infrastructure the
+      higher layers consume.
+    term: Preparation region
+    status: definition
+    source: curated
+    lean:
+      module: CsdLean4/LF1/Preparation.lean
+    related: [constraint-surface, typicality, typicality-volume, liouville-measure]
+
+  - slug: measurement-context
+    hook: >
+      A measurement is not a question asked of the state. It is an apparatus, and the
+      apparatus brings its own partition of the world.
+    layman: >
+      Here is the problem. Quantum mechanics is contextual: you cannot assign answers
+      to all possible measurements at once, only to the ones an actual arrangement of
+      equipment can co-ask. So "the measurement" is never just an observable on paper
+      -- it is a physical context, and which context is in place matters to what can
+      happen.
+
+      CSD takes the context seriously enough to give it a data type. A context is the
+      information the apparatus actually contributes: for every possible state of
+      affairs, a set of outcome rates. Fix the context and the outcome regions are
+      fixed; change the context and a genuinely different partition applies.
+
+      That is the referee's-rulebook picture again: the rulebook belongs to the
+      referee, exists before the match, and does not consult the players.
+    in_csd: >
+      Formally a context is a rate field on the base of the arena: a measurable,
+      simplex-valued assignment of outcome weights to each ontic base point. The
+      preparation plays no part in the assignment -- that is the A7 requirement, and
+      the corpus's basins are built from the context's field alone. The canonical
+      context reads its rates off the moment map, so even the rates are geometry
+      rather than bookkeeping.
+
+      Contextuality then has a precise home: distinct contexts induce distinct
+      partitions, and the no-go theorems against context-independent global
+      assignments are proved in-corpus, alongside the positive witness showing a
+      contextual model reproduces the singlet statistics in full.
+    mathematical: >
+      ContextField: rate functions p -> Fin N -> R, measurable per outcome,
+      nonnegative, summing to one at every point. The induced basins are measurable
+      and pairwise disjoint with Born-weight epistemic probabilities; the canonical
+      instance takes rate := momentMap with measurability supplied by the moment-map
+      infrastructure.
+    term: Measurement context
+    status: definition
+    source: curated
+    related: [outcome-region, contextuality, kochen-specker, record-layer]
+
+  - slug: single-trajectory
+    hook: >
+      One world, one path. Probability lives in how experiments are repeated, not in
+      how the world evolves -- and the two are kept apart by theorems, not by wording.
+    layman: >
+      Here is the problem. Deterministic accounts of quantum mechanics face a fork:
+      either the world splits, or there are many worlds' worth of possibilities and
+      one actual path. CSD takes the second branch without hedging: a single
+      trajectory, on a single arena, deterministically.
+
+      Then where do statistics come from? From repetition. Each run of an experiment
+      re-prepares the system, landing the world at a fresh point of the preparation
+      region. A thousand runs sample the region a thousand times. The frequencies
+      those samples produce is what the volume theorems compute.
+
+      What statistics do NOT come from is one run watched forever. Whether a single
+      evolving path eventually visits everywhere fairly -- ergodicity -- is a
+      different and much stronger property, and the programme does not lean on it.
+    in_csd: >
+      CSD is a single-trajectory theory: physical reality is one deterministic path
+      on Sigma. Its typicality is repeated-preparation typicality -- ignorance across
+      runs, priced by the conditioned Liouville measure -- not time-averaging along
+      one path.
+
+      The corpus even proves the cautionary half: the projected unitary flow on the
+      sector is not ergodic, so a time-average route to the Born weights is closed
+      at that level. That is a narrow fact about one flow on the projective space,
+      not an objection to the mechanism -- the frequency theorems never invoke
+      ergodicity, which is exactly the point.
+    mathematical: >
+      The LF1 chain formalises the repetition: i.i.d. draws from the conditioned
+      measure, indicator processes per outcome, and the strong law delivering
+      almost-sure convergence of empirical frequencies to volume weights. The
+      non-ergodicity of the epistemic unitary flow is a proved theorem kept as a
+      boundary marker: the volume route and the time-average route are not the same
+      route, and only the first is claimed.
+    term: Single trajectory
+    status: definition
+    source: curated
+    related: [determinism, constraint-surface, typicality, many-worlds]
+
+  - slug: witness-and-engine
+    hook: >
+      A working model proves the machinery runs. It does not prove the machinery is
+      the world. CSD names that distinction and audits itself against it.
+    layman: >
+      Here is the problem with demonstrations, in any foundational programme: build a
+      concrete model where your mechanism visibly works, and it is fatally easy to
+      announce that the mechanism explains everything the model contains. The model
+      had quantum mechanics built into its bones; of course quantum mechanics came
+      out.
+
+      CSD's vocabulary for staying honest is witness versus engine. The engine is the
+      general machinery -- typicality over a preparation region, volume weights,
+      symmetry-forced measure. A witness is a concrete arena on which the engine
+      demonstrably runs, with familiar structures built in.
+
+      The claim "the engine runs, and here is a witness" is provable and proved. The
+      claim "therefore quantum mechanics is derived" would be an overclaim, and the
+      corpus's own guard documents exist to keep it from being made.
+    in_csd: >
+      The finite-QM closure is the flagship example: a concrete projective witness
+      carrying the symmetric measure and unitary evolution, on which the full
+      reconstruction pipeline executes. It demonstrates the engine. It is not "QM
+      derived from CSD", because the witness supplies structures a derivation would
+      have to earn.
+
+      The distinction is enforced, not just stated: the connectivity manifest names
+      exactly which end-to-end claims are backed by theorems, the claims guard
+      rejects retracted overclaim phrasings, and results are labelled by which side
+      of the realisation-versus-derivation line they sit on.
+    mathematical: >
+      The witness tier: SectorData instances on CP^(N-1) and on the Kahler arena,
+      with the measure bridge proved instance-by-instance rather than assumed
+      abstractly. The engine tier: the frequency and volume theorems quantified over
+      the structures, consuming the postulates as hypotheses. The audit tier is
+      mechanical: guard scripts that fail the build when prose claims outrun the
+      proved connectivity.
+    term: Witness and engine
+    status: definition
+    source: curated
+    related: [carving, projective-sector, constraint-surface]
+
+  - slug: field-arena
+    hook: >
+      Take finitely many field modes, cut the ladder at N quanta, and the whole
+      quantum-field toolbox -- propagators, light cones, Wick's theorem, KMS states
+      -- reappears as theorems on one finite arena.
+    layman: >
+      Here is the problem. Everything so far talks about finitely many outcomes, and
+      the world's working theory is quantum field theory -- infinitely many modes,
+      infinitely many quanta. A reconstruction that cannot even gesture at fields is
+      a reconstruction of a toy.
+
+      The field arena is the gesture made precise, deliberately at finite resolution.
+      Keep finitely many modes; let each hold at most N quanta. On the projective
+      space of those configurations, the field-theory canon is then re-proved as
+      exact finite theorems: free propagators oscillating at the right frequency,
+      interaction effects priced linearly in the coupling, a genuine light cone with
+      an explicit velocity bound, thermal states satisfying the exact KMS condition.
+
+      This is breadth, and it is labelled as such: the image of standard physics
+      inside the programme's arena, not the frontier of the reconstruction.
+    in_csd: >
+      The field arena is the CV track's stage: FieldArena K N, the projective space
+      over configurations of K modes at cutoff N. Its role in the programme is
+      honestly bounded -- it is the isolated-piece image, showing that effective
+      field-theory structure survives at finite cutoff on exactly the kind of arena
+      the reconstruction runs on, with no continuum limit and no RG flow claimed.
+
+      The bridge theorems tie it back to the record layer: arena observations are
+      density pairings, dynamics act by kicks, disjointly supported observables
+      commute exactly, and the Lieb-Robinson cone bounds how fast a record cell in
+      the fibre can be steered from afar.
+    mathematical: >
+      Mode-local subalgebras are unital star-subalgebras supported on their blocks;
+      free and interacting drives are exact matrix exponentials; the two-point and
+      four-point functions close into Wick's pairing sum at explicit thresholds; the
+      commutator bound decays factorially in graph distance with velocity constant
+      2e^2 times the coupling norm; and composite arenas compose by mode
+      concatenation, with no-signalling exact for all states, entangled included.
+    term: Field arena
+    status: definition
+    source: curated
+    lean:
+      module: CsdLean4/CV/ArenaBridge.lean
+    related: [constraint-surface, kronecker-product, no-exact-finite-ccr, gibbs-state]
+
+  - slug: isolation
+    hook: >
+      "Isolated" is not scene-setting -- it is the variable the whole theory turns
+      on. Quantum mechanics is what isolated pieces of the arena look like.
+    layman: >
+      Here is the problem. Quantum mechanics works flawlessly for systems carefully
+      shielded from everything else, and its rules seem to bend exactly when that
+      shielding fails -- at measurement, at decoherence, wherever the outside gets
+      in. Most formulations treat this as a nuisance. It is more productive to treat
+      it as the signal.
+
+      In CSD, isolation is the operative condition. An isolated subsystem follows
+      the smooth unitary rule. Measurement is de-isolation -- the engineered
+      breaking of the condition. And the familiar quantum state describes exactly
+      what an isolated piece of the arena presents to the outside.
+
+      The slogan form: quantum mechanics is the physics of isolation, and the
+      measurement rule is the physics of ending it.
+    in_csd: >
+      Isolation enters the formal layer as conditioning: the isolation-conditioned
+      state of knowledge at a preparation is the epistemic measure, exact on the
+      visible coordinate and Haar-spread on the fibre. That is the P6 reading --
+      isolation is conditioning -- written into the record layer's definitions.
+
+      The complementary dynamical statement is the de-isolation tier: coupling an
+      isolated system to a pointer is what produces records, and the flows that do
+      it are exhibited. The isolated-piece image also frames the field track: the
+      CV arena shows standard physics reappearing on an isolated finite piece,
+      labelled as breadth.
+    mathematical: >
+      The epistemic measure implements conditioning on isolation; the de-isolation
+      flows implement its termination; and the open-system tier prices partial
+      isolation quantitatively -- dephasing and damping semigroups with exact decay
+      laws, and the Lindblad flow now proved completely positive, so the effective
+      dynamics of an imperfectly isolated system is a legitimate quantum channel at
+      every time.
+    term: Isolation
+    status: definition
+    source: curated
+    related: [de-isolation, epistemic-measure, collapse, measurement-problem]
+
+  - slug: moment-map
+    hook: >
+      The Born probabilities are coordinates. The moment map reads them straight off
+      the geometry of the state space, no measurement postulate consulted.
+    layman: >
+      Here is the problem. You can accept that probabilities are volumes and still
+      find the connection between a quantum state and its outcome weights opaque:
+      why THESE numbers? Symplectic geometry has a classical answer waiting. On a
+      phase space with symmetry, conserved quantities organise themselves into a
+      map -- the moment map -- sending each state to the values of its natural
+      coordinates.
+
+      The space of quantum states has exactly the right symmetry: rotate each
+      outcome's phase independently and nothing physical changes. The moment map of
+      that torus symmetry sends a state to a list of numbers summing to one. Compute
+      the list, and it is the Born weights.
+
+      The probabilities were sitting in the geometry all along, as the conserved
+      coordinates of phase rotation.
+    in_csd: >
+      The moment map is the corpus's carving-free route to the Born numbers: the
+      weight of outcome i is the i-th moment coordinate -- a forced symplectic
+      invariant, with no partition drawn and no operational input consulted. It also
+      supplies the canonical measurement context, whose rate field IS the moment
+      map, making even the record layer's rates geometric.
+
+      Downstream, the pushforward of the symmetric measure under the moment map is
+      the uniform law on the probability simplex -- the Duistermaat-Heckman fact
+      that converts volume statements into simplex integrals and closes the
+      general-N Born-from-volume programme.
+    mathematical: >
+      For the torus action on CP^(N-1) the moment map sends a ray to its vector of
+      squared amplitudes; the identity is proved as momentMap_mk_eq_inner_sq. The
+      joint pushforward of the Fubini-Study measure is N-1-factorial times Lebesgue
+      on the open simplex -- the flat Dirichlet law -- proved via the Gaussian
+      representation and a product-index bridge, and consumed by the unconditional
+      volume-ratio and frequency theorems at every N.
+    term: Moment map
+    status: standard-mathematics
+    source: curated
+    external:
+      - text: "Wikipedia: moment map"
+        url: https://en.wikipedia.org/wiki/Moment_map
+      - text: "Atiyah, Convexity and commuting Hamiltonians, Bull. LMS 1982"
+        url: https://doi.org/10.1112/blms/14.1.1
+    related: [duistermaat-heckman, born-weight, kahler-form, fubini-study-measure, dirichlet-distribution]

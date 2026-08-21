@@ -16,6 +16,10 @@ public import Mathlib.LinearAlgebra.Projectivization.Basic
 **Category:** CV (continuous variables — the bridge from mode-local operators to
 the projective record arena).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/field-arena/
+Plain-language, CSD-role and formal statements of the field arena, with this
+module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The CV chain states locality as an **operator** notion: `SupportedOn S A`,
 commutators, the Lieb-Robinson cone. The record layer's arenas are projective
 spaces, where locality is a **measure-and-set** notion. Nothing translated

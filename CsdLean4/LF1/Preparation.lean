@@ -13,6 +13,10 @@ public import Mathlib.MeasureTheory.Measure.FiniteMeasure
 # LF1 Preparation
 
 **Category:** 3-Local (LF1 conditional preparation measure on `Ω0`).
+
+**Glossary:** https://glossary.constraintsurfacedynamics.com/preparation-region/
+Plain-language, CSD-role and formal statements of the preparation region, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 -/
 
 @[expose] public section

@@ -32,6 +32,8 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Elitzur-Vaidman bomb tester](https://glossary.constraintsurfacedynamics.com/elitzur-vaidman/) | `` | standard-mathematics |
 | [Epistemic measure](https://glossary.constraintsurfacedynamics.com/epistemic-measure/) | `` | definition |
 | [Euclidean space](https://glossary.constraintsurfacedynamics.com/euclidean-space/) | `` | standard-mathematics |
+| [Fibre](https://glossary.constraintsurfacedynamics.com/fibre/) | `` | definition |
+| [Field arena](https://glossary.constraintsurfacedynamics.com/field-arena/) | `` | definition |
 | [Fisher information](https://glossary.constraintsurfacedynamics.com/fisher-information/) | `` | standard-mathematics |
 | [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
 | [GHZ state](https://glossary.constraintsurfacedynamics.com/ghz-state/) | `no_product_partition_realises_ghz` | proved-in-corpus |
@@ -44,6 +46,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Hidden variables](https://glossary.constraintsurfacedynamics.com/hidden-variables/) | `no_product_partition_realises_singlet` | proved-in-corpus |
 | [Hilbert space](https://glossary.constraintsurfacedynamics.com/hilbert-space/) | `` | standard-mathematics |
 | [Hong-Ou-Mandel effect](https://glossary.constraintsurfacedynamics.com/hong-ou-mandel/) | `` | standard-mathematics |
+| [Isolation](https://glossary.constraintsurfacedynamics.com/isolation/) | `` | definition |
 | [Jacobi identity](https://glossary.constraintsurfacedynamics.com/jacobi-identity/) | `` | standard-mathematics |
 | [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `isFubiniStudyKahler` | proved-in-corpus |
 | [Kochen-Specker theorem](https://glossary.constraintsurfacedynamics.com/kochen-specker/) | `` | standard-mathematics |
@@ -55,16 +58,21 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Luders rule](https://glossary.constraintsurfacedynamics.com/luders-rule/) | `pointer_luders_born_prep` | proved-in-corpus |
 | [Mach-Zehnder interferometer](https://glossary.constraintsurfacedynamics.com/mach-zehnder/) | `` | standard-mathematics |
 | [Malus's law](https://glossary.constraintsurfacedynamics.com/malus-law/) | `` | standard-mathematics |
+| [Many-to-one projection](https://glossary.constraintsurfacedynamics.com/many-to-one-projection/) | `` | definition |
 | [Many-Worlds interpretation](https://glossary.constraintsurfacedynamics.com/many-worlds/) | `` | definition |
+| [Measurement context](https://glossary.constraintsurfacedynamics.com/measurement-context/) | `` | definition |
 | [Measurement problem](https://glossary.constraintsurfacedynamics.com/measurement-problem/) | `no_exact_collapse` | proved-in-corpus |
 | [Mermin inequality](https://glossary.constraintsurfacedynamics.com/mermin-inequality/) | `` | standard-mathematics |
+| [Moment map](https://glossary.constraintsurfacedynamics.com/moment-map/) | `` | standard-mathematics |
 | [Naimark dilation](https://glossary.constraintsurfacedynamics.com/naimark-dilation/) | `povm_born_eq_dilated_volume_uncond` | proved-in-corpus |
 | [No exact finite-dimensional CCR](https://glossary.constraintsurfacedynamics.com/no-exact-finite-ccr/) | `no_exact_finite_ccr` | proved-in-corpus |
 | [Ontic vs epistemic](https://glossary.constraintsurfacedynamics.com/ontic-vs-epistemic/) | `` | definition |
 | [Outcome region](https://glossary.constraintsurfacedynamics.com/outcome-region/) | `globalBasin_born` | proved-in-corpus |
 | [Pauli matrices](https://glossary.constraintsurfacedynamics.com/pauli-matrices/) | `` | standard-mathematics |
 | [Peres criterion](https://glossary.constraintsurfacedynamics.com/peres-criterion/) | `` | standard-mathematics |
+| [Pointer basis](https://glossary.constraintsurfacedynamics.com/pointer-basis/) | `einselectionN` | proved-in-corpus |
 | [Poisson bracket](https://glossary.constraintsurfacedynamics.com/poisson-bracket/) | `` | standard-mathematics |
+| [Preparation region](https://glossary.constraintsurfacedynamics.com/preparation-region/) | `` | definition |
 | [Projectability](https://glossary.constraintsurfacedynamics.com/projectability/) | `` | physical-postulate |
 | [Projective sector](https://glossary.constraintsurfacedynamics.com/projective-sector/) | `` | physical-postulate |
 | [Psi-epistemic](https://glossary.constraintsurfacedynamics.com/psi-epistemic/) | `` | definition |
@@ -73,6 +81,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Record layer](https://glossary.constraintsurfacedynamics.com/record-layer/) | `` | definition |
 | [Schrodinger equation](https://glossary.constraintsurfacedynamics.com/schrodinger-equation/) | `` | standard-mathematics |
 | [Shor's algorithm](https://glossary.constraintsurfacedynamics.com/shor-algorithm/) | `` | standard-mathematics |
+| [Single trajectory](https://glossary.constraintsurfacedynamics.com/single-trajectory/) | `` | definition |
 | [Spontaneous collapse (GRW)](https://glossary.constraintsurfacedynamics.com/spontaneous-collapse/) | `` | definition |
 | [Stern-Gerlach experiment](https://glossary.constraintsurfacedynamics.com/stern-gerlach/) | `` | standard-mathematics |
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
@@ -81,3 +90,4 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N` | proved-in-corpus |
 | [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
 | [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |
+| [Witness and engine](https://glossary.constraintsurfacedynamics.com/witness-and-engine/) | `` | definition |

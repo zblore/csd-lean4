@@ -14,6 +14,10 @@ public import CsdLean4.Empirical.QM.Gates.SingleQubit
 **Category:** 6-Local (the open-system / decoherence stratum of D1; the first
 einselection result on the LF6-B decoherence machinery).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/pointer-basis/
+Plain-language, CSD-role and formal statements of the pointer basis, with this
+module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Decoherence (LF6-B.1, `LF6/Decoherence.lean`) does not merely make the system
 state mixed: it **selects a preferred basis**. The reduced state
 `decohereReduced ψ = partialTraceRight (V |ψ⟩⟨ψ| Vᴴ)` is *diagonal* in the

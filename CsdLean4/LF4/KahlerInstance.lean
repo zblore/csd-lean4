@@ -16,6 +16,10 @@ public import Mathlib.MeasureTheory.Measure.Prod
 
 **Category:** 3-Local (a non-trivial-fibre compact-Kähler `SectorData`).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/fibre/
+Plain-language, CSD-role and formal statements of the torus fibre, with this
+module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Builds the first `SectorData` with **non-trivial fibres**, faithful to the
 Σ0 / Paper A ontology (`Σ` a finite compact symplectic Kähler space):
 
