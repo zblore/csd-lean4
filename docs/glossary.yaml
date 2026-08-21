@@ -17,6 +17,12 @@
 #   mathematical  what was proved and how it was proved, for a specialist.
 #   person        who the name belongs to: places, universities, and the story of
 #                 how the result was written or published, when there is one.
+#   site_link     OPTIONAL {url, text}: the ONE onward link into the main site
+#                 (meta.site_main) a reader of this entry would actually want.
+#                 The text is a specific sentence -- "Paper B derives the Born
+#                 rule from this measure" -- never "Read more about CSD".
+#                 check-glossary.sh verifies the URL is on the site_main domain
+#                 and returns 200; an entry without one draws a warning.
 #
 # VOICE (author direction, 2026-08-19): write like Sean Carroll talks. Direct
 # address, short sentences, the problem before the answer, stakes before formalism,
@@ -35,6 +41,7 @@
 
 meta:
   site: https://glossary.constraintsurfacedynamics.com
+  site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
   sha: 46ae65edbce6dc882f4f072518e3776eb8373cd5
 
@@ -175,6 +182,9 @@ entries:
     external:
       - text: "Bengtsson and Zyczkowski, Geometry of Quantum States, 2nd ed., CUP 2020"
         url: https://www.cambridge.org/core/books/geometry-of-quantum-states/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper B derives the Born rule from this measure
     related: [duistermaat-heckman, liouville-measure, kahler-form, born-weight]
 
   - slug: born-weight

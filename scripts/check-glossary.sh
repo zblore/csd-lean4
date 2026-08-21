@@ -23,6 +23,12 @@
 #                       Both directions, because a dead link in the Lean source is
 #                       worse than one on a website: the source is what reviewers read.
 #   (D) dangling refs — `related:` slugs with no entry yet
+#   (E) site links    — a `site_link.url` off the `meta.site_main` domain, or one
+#                       that does not return HTTP 200. Same family as the anchor
+#                       checks: the page must not ship a dead or off-site onward
+#                       link. An entry with NO site_link is a WARNING (D-family),
+#                       not a failure — the field is specific by design and a
+#                       missing link is better than a generic one.
 #
 # WHAT IT DELIBERATELY DOES NOT DO
 #   It does not check whether the mathematics is RIGHT. It cannot. An AI-drafted
@@ -162,6 +168,50 @@ for e in entries:
         if r_ not in slugs:
             D.append(f"{e.get('slug')}: related `{r_}` has no entry yet")
 
+# --- (E) site links --------------------------------------------------------
+# The onward links into the programme's main site. Off-domain is a hard finding
+# (the field exists precisely to point INTO the site); a non-200 response is a
+# hard finding (the page would ship a dead link); an unreachable network is a
+# warning, because a build machine without a route to the site is not evidence
+# the link is dead. Distinct URLs are fetched once.
+Ee = []
+SITE_MAIN = (meta.get("site_main") or "").rstrip("/")
+if not SITE_MAIN:
+    A.append("meta.site_main missing — the glossary cannot say what site it belongs to")
+
+import urllib.request, urllib.error
+_status_cache = {}
+def _http_status(url):
+    if url not in _status_cache:
+        try:
+            req = urllib.request.Request(
+                url, headers={"User-Agent": "Mozilla/5.0 (csd-lean4 check-glossary)"})
+            with urllib.request.urlopen(req, timeout=15) as r:
+                _status_cache[url] = r.status
+        except urllib.error.HTTPError as ex:
+            _status_cache[url] = ex.code
+        except Exception:
+            _status_cache[url] = None   # no route / DNS / TLS — network, not the link
+    return _status_cache[url]
+
+for e in entries:
+    s, sl = e.get("slug"), e.get("site_link")
+    if not sl:
+        D.append(f"{s}: no site_link — no specific onward path into the main site yet")
+        continue
+    url, text = sl.get("url"), sl.get("text")
+    if not url or not text:
+        Ee.append(f"{s}: site_link must carry both `url` and `text`")
+        continue
+    if SITE_MAIN and not (url == SITE_MAIN or url.startswith(SITE_MAIN + "/")):
+        Ee.append(f"{s}: site_link.url is off the site_main domain — {url}")
+        continue
+    st_ = _http_status(url)
+    if st_ is None:
+        D.append(f"{s}: site_link.url unreachable (network?) — {url}")
+    elif st_ != 200:
+        Ee.append(f"{s}: site_link.url returned HTTP {st_}, not 200 — {url}")
+
 def show(title, items):
     if not items:
         return
@@ -173,9 +223,10 @@ def show(title, items):
 show("A) schema", A)
 show("B) dead anchors", B)
 show("C) one-way links", C)
-show("D) dangling related — WARNING only", D)
+show("E) site links", Ee)
+show("D) dangling related / missing site_link — WARNING only", D)
 
-hard = len(A) + len(B) + len(C)
+hard = len(A) + len(B) + len(C) + len(Ee)
 print(f"check-glossary: {len(entries)} entr{'y' if len(entries)==1 else 'ies'}, "
       f"{hard} hard finding{'' if hard==1 else 's'}, {len(D)} warning{'' if len(D)==1 else 's'}.")
 if hard == 0:

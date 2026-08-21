@@ -39,6 +39,9 @@ def _sortkey(e):
 
 entries = sorted(entries, key=_sortkey)
 SITE, REPO, SHA = meta["site"].rstrip("/"), meta["repo"].rstrip("/"), meta["sha"]
+# The programme's front door. Every outward link to the main site reads from this
+# one field; nothing below hardcodes the domain.
+SITE_MAIN = meta["site_main"].rstrip("/")
 REFS = d.get("refs") or {}
 OUT = "docs/_site"
 shutil.rmtree(OUT, ignore_errors=True)
@@ -116,8 +119,12 @@ CSS = (
     ".sans{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}"
     ".crumb{font:500 .72rem/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
     "letter-spacing:.13em;text-transform:uppercase;color:var(--faint);"
-    "text-decoration:none;display:block;margin-bottom:2.6rem}"
-    ".crumb:hover{color:var(--acc)}"
+    "display:block;margin-bottom:2.6rem}"
+    ".crumb a{color:var(--faint);text-decoration:none}"
+    ".crumb a:hover{color:var(--acc)}"
+    ".crumb .sep{margin:0 .5em;color:var(--line)}"
+    ".orient{font:400 .95rem/1.65 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
+    "color:var(--mut);margin:-.9rem 0 2.6rem}"
     "h1{font-size:2.05rem;line-height:1.15;letter-spacing:-.015em;margin:0 0 1.4rem;"
     "font-weight:400}"
     ".hook{font-size:1.3rem;line-height:1.45;color:var(--fg);margin:0 0 1.9rem;"
@@ -195,6 +202,12 @@ STATUS_GLOSS = {
     "open": "named, not settled",
 }
 
+# One line, on every page, below the existing note: where this glossary belongs
+# and where the proofs live. Deliberately not a nav bar and not a call to action.
+SITE_LINE = ('<p class="note">Part of <a href="' + SITE_MAIN
+             + '/">Constraint-Surface Dynamics</a> &middot; Formalised in '
+             + '<a href="' + REPO + '">csd-lean4</a>.</p>')
+
 idx_items, sitemap, llms, md = [], [SITE + "/"], [], []
 
 for e in entries:
@@ -230,6 +243,13 @@ for e in entries:
     for p in e.get("papers") or []:
         rows.append(("Paper", '<a href="https://doi.org/' + p["doi"] + '">'
                      + E(p.get("note", p["doi"])) + "</a>"))
+    # The specific onward link into the main site — one page, one sentence saying
+    # why a reader of THIS entry would go there. Never a generic call to action;
+    # check-glossary.sh validates the URL is on the site_main domain and live.
+    sl = e.get("site_link")
+    if sl:
+        rows.append(("On the site", '<a href="' + sl["url"] + '">'
+                     + E(sl["text"]) + "</a>"))
     for x in e.get("external") or []:
         rows.append(("Background", '<a href="' + x["url"] + '">' + E(x["text"]) + "</a>"))
     rel = ", ".join('<a href="' + SITE + "/" + r + '/">' + E(r.replace("-", " ")) + "</a>"
@@ -242,7 +262,9 @@ for e in entries:
             for s, u in sorted(sources.items()))))
 
     body = (
-        '<a class="crumb" href="' + SITE + '/">CSD Glossary</a>'
+        '<nav class="crumb"><a href="' + SITE_MAIN + '/">Constraint-Surface Dynamics</a>'
+        + '<span class="sep">&rsaquo;</span>'
+        + '<a href="' + SITE + '/">Glossary</a></nav>'
         + "<h1>" + E(term) + "</h1>"
         + '<p class="hook">' + E(hook) + "</p>"
         + '<div class="strip">' + "".join(chips) + "</div>"
@@ -264,7 +286,8 @@ for e in entries:
         + '<p class="note">Source links are pinned to a commit, so they do not drift. '
         + "The anchors above are checked mechanically against the Lean tree on every "
         + "build. The mathematics is not, and cannot be: that is a human "
-        + "responsibility and it rests with the author.</p></div>"
+        + "responsibility and it rests with the author.</p>"
+        + SITE_LINE + "</div>"
     )
 
     jl = {
@@ -307,15 +330,23 @@ open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page(
     "CSD Glossary",
     "The vocabulary of Constraint-Surface Dynamics, each term explained plainly, "
     "in its role in the programme, and formally, with a machine-checked theorem behind it.",
-    '<a class="crumb" href="' + REPO + '">csd-lean4</a>'
+    '<nav class="crumb"><a href="' + SITE_MAIN + '/">Constraint-Surface Dynamics</a></nav>'
     + "<h1>Glossary</h1>"
     + '<p class="hook">The vocabulary of Constraint-Surface Dynamics. Every term three '
     + "ways: plainly, in the role it plays here, and formally. Each one has a "
     + "machine-checked theorem behind it.</p>"
+    # One orienting sentence: what CSD is and where it lives. A reader who lands
+    # here from a search result should not have to guess what programme owns the
+    # vocabulary. Not a nav bar, not a pitch — one line, two links.
+    + '<p class="orient">Constraint-Surface Dynamics is a research programme '
+    + "reconstructing quantum mechanics from a single deterministic arena &mdash; start at "
+    + '<a href="' + SITE_MAIN + '/">the main site</a> or go straight to '
+    + '<a href="' + SITE_MAIN + '/papers">the papers</a>.</p>'
     + '<ul class="idx">' + "".join(idx_items) + "</ul>"
     + '<div class="foot"><p class="note">Generated from a single source file in '
     + '<a href="' + REPO + '">csd-lean4</a>. Every anchor is verified against the Lean '
-    + "tree on each build, and the source links are pinned to a commit.</p></div>",
+    + "tree on each build, and the source links are pinned to a commit.</p>"
+    + SITE_LINE + "</div>",
     json.dumps(setld, ensure_ascii=False), SITE + "/"))
 
 open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8").write(
