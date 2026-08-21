@@ -42,14 +42,14 @@ The route:
   shape**: the amplified generator `(1 ⊗ H, 1 ⊗ Lₖ)` is itself GKSL, so
   positivity survives every ancilla amplification of the generator — a
   literal instantiation.
-
-⚠️ Honest scope: the identification of the amplified generator's flow with
-`id ⊗ Φₜ` (the block-structure lemma that would let the amplified positivity
-be cited as "CP of `Φₜ`" in so many words) is not claimed here — it is the
-named remainder, an M-sized Kronecker computation on the P2 machinery. What
-is proved: positivity of `e^{tℒ}` for every GKSL generator with Hermitian
-`H`, at every `t ≥ 0`, stable under every ancilla amplification of the
-generator.
+* ★★ `idTensor_lindbladSemigroup` + ★★ `lindbladSemigroup_completelyPositive`
+  — **the `id ⊗ Φ` identification (Q23, 2026-08-20)**: the amplified
+  generator's flow IS `id ⊗ Φₜ` (blockwise action, exponential-series
+  transport of the blockwise generator through `expCLM_apply_hasSum`), so the
+  amplified positivity is **complete positivity of `Φₜ` in so many words**.
+  *Supersession record*: this was the module's declared boundary at the Q16
+  CP-brick landing (the missing block-structure lemma); Q23 delivered it the
+  same week and the boundary retired — see `specs/BACKLOG.md` (Q23).
 
 ## References
 
@@ -458,5 +458,234 @@ theorem lindbladSemigroup_amplified_posSemidef
     show ((1 : Matrix m' m' ℂ) ⊗ₖ H)ᴴ = (1 : Matrix m' m' ℂ) ⊗ₖ H
     rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one, hH.eq]
   exact lindbladSemigroup_posSemidef h1H _ ht hρ
+
+/-! ### The `id ⊗ Φ` identification (Q23)
+
+The amplified generator's flow IS `id ⊗ Φₜ`: the flow of `(1 ⊗ H, 1 ⊗ Lₖ)`
+acts on each ancilla block of the composite matrix by `Φₜ` separately. With
+this, `lindbladSemigroup_amplified_posSemidef` is complete positivity of `Φₜ`
+in so many words (`lindbladSemigroup_completelyPositive`). -/
+
+section IdTensor
+
+variable {m' : Type*} [Fintype m'] [DecidableEq m']
+
+/-- The `(i,j)` ancilla block of a composite matrix, as a continuous
+`ℝ`-linear map: `blockAtCLM i j M k l = M (i,k) (j,l)`. -/
+noncomputable def blockAtCLM (i j : m') :
+    Matrix (m' × n) (m' × n) ℂ →L[ℝ] Matrix n n ℂ :=
+  (LinearMap.toContinuousLinearMap
+    ({ toFun := fun M => Matrix.of fun k l => M (i, k) (j, l)
+       map_add' := fun M N => by
+         ext k l
+         simp only [Matrix.of_apply, Matrix.add_apply]
+       map_smul' := fun c M => by
+         ext k l
+         simp only [Matrix.of_apply, Matrix.smul_apply, RingHom.id_apply] } :
+      Matrix (m' × n) (m' × n) ℂ →ₗ[ℂ] Matrix n n ℂ)).restrictScalars ℝ
+
+omit [DecidableEq n] [DecidableEq m'] in
+@[simp] lemma blockAtCLM_apply_entry (i j : m')
+    (M : Matrix (m' × n) (m' × n) ℂ) (k l : n) :
+    blockAtCLM i j M k l = M (i, k) (j, l) := rfl
+
+omit [DecidableEq n] [DecidableEq m'] in
+/-- `blockAtCLM` commutes with complex scaling (it is `ℝ`-bundled but
+`ℂ`-linear as a function). -/
+lemma blockAtCLM_csmul (i j : m') (c : ℂ)
+    (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (c • M) = c • blockAtCLM i j M := by
+  ext k l
+  rw [blockAtCLM_apply_entry, Matrix.smul_apply, Matrix.smul_apply,
+    blockAtCLM_apply_entry]
+
+omit [DecidableEq n] in
+/-- **Left Kronecker collapse**: multiplying by `1 ⊗ A` on the left acts on
+each ancilla block by left multiplication by `A`. -/
+lemma blockAtCLM_one_kronecker_mul (i j : m') (A : Matrix n n ℂ)
+    (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (((1 : Matrix m' m' ℂ) ⊗ₖ A) * M)
+      = A * blockAtCLM i j M := by
+  ext k l
+  rw [blockAtCLM_apply_entry, Matrix.mul_apply, Matrix.mul_apply,
+    Fintype.sum_prod_type]
+  rw [Finset.sum_eq_single i]
+  · refine Finset.sum_congr rfl fun k' _ => ?_
+    rw [Matrix.kronecker_apply, Matrix.one_apply_eq, one_mul,
+      blockAtCLM_apply_entry]
+  · intro i' _ hi'
+    refine Finset.sum_eq_zero fun k' _ => ?_
+    rw [Matrix.kronecker_apply, Matrix.one_apply,
+      if_neg (fun h => hi' h.symm), zero_mul, zero_mul]
+  · intro hi
+    exact absurd (Finset.mem_univ i) hi
+
+omit [DecidableEq n] in
+/-- **Right Kronecker collapse**: multiplying by `1 ⊗ B` on the right acts on
+each ancilla block by right multiplication by `B`. -/
+lemma blockAtCLM_mul_one_kronecker (i j : m') (B : Matrix n n ℂ)
+    (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (M * ((1 : Matrix m' m' ℂ) ⊗ₖ B))
+      = blockAtCLM i j M * B := by
+  ext k l
+  rw [blockAtCLM_apply_entry, Matrix.mul_apply, Matrix.mul_apply,
+    Fintype.sum_prod_type]
+  rw [Finset.sum_eq_single j]
+  · refine Finset.sum_congr rfl fun l' _ => ?_
+    rw [Matrix.kronecker_apply, Matrix.one_apply_eq, one_mul,
+      blockAtCLM_apply_entry]
+  · intro j' _ hj'
+    refine Finset.sum_eq_zero fun l' _ => ?_
+    rw [Matrix.kronecker_apply, Matrix.one_apply, if_neg hj', zero_mul,
+      mul_zero]
+  · intro hj
+    exact absurd (Finset.mem_univ j) hj
+
+omit [DecidableEq n] in
+/-- The amplified dissipator acts blockwise. -/
+lemma blockAtCLM_ampDissipator (i j : m') (L : Matrix n n ℂ)
+    (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (lindbladDissipator ((1 : Matrix m' m' ℂ) ⊗ₖ L) M)
+      = lindbladDissipator L (blockAtCLM i j M) := by
+  have hconj : ((1 : Matrix m' m' ℂ) ⊗ₖ L)ᴴ
+      = (1 : Matrix m' m' ℂ) ⊗ₖ Lᴴ := by
+    rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one]
+  have hLL : ((1 : Matrix m' m' ℂ) ⊗ₖ Lᴴ) * ((1 : Matrix m' m' ℂ) ⊗ₖ L)
+      = (1 : Matrix m' m' ℂ) ⊗ₖ (Lᴴ * L) := by
+    rw [← Matrix.mul_kronecker_mul, Matrix.one_mul]
+  rw [lindbladDissipator, lindbladDissipator, hconj, hLL, map_sub,
+    blockAtCLM_csmul, map_add, Matrix.mul_assoc,
+    blockAtCLM_one_kronecker_mul, blockAtCLM_mul_one_kronecker,
+    blockAtCLM_one_kronecker_mul, blockAtCLM_mul_one_kronecker,
+    ← Matrix.mul_assoc]
+
+/-- ★ **The amplified generator acts blockwise**: the GKSL generator of
+`(1 ⊗ H, 1 ⊗ Lₖ)` applied to a composite matrix is the GKSL generator of
+`(H, Lₖ)` applied to each ancilla block. No Hermiticity is needed — this is
+pure Kronecker algebra. -/
+theorem blockAtCLM_ampGenerator (i j : m') (H : Matrix n n ℂ)
+    (L : ι → Matrix n n ℂ) (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+        (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k) M)
+      = lindbladGeneratorCLM H L (blockAtCLM i j M) := by
+  rw [lindbladGeneratorCLM_apply, lindbladGeneratorCLM_apply,
+    lindbladGenerator, lindbladGenerator, map_add, blockAtCLM_csmul,
+    map_sub, blockAtCLM_one_kronecker_mul, blockAtCLM_mul_one_kronecker,
+    map_sum]
+  congr 1
+  exact Finset.sum_congr rfl fun k _ => blockAtCLM_ampDissipator i j (L k) M
+
+/-- Powers of the scaled amplified generator act blockwise. -/
+lemma blockAtCLM_smul_ampGen_pow (i j : m') (H : Matrix n n ℂ)
+    (L : ι → Matrix n n ℂ) (t : ℝ) (p : ℕ)
+    (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (((t • lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+        (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k)) ^ p) M)
+      = ((t • lindbladGeneratorCLM H L) ^ p) (blockAtCLM i j M) := by
+  induction p generalizing M with
+  | zero => simp
+  | succ p ih =>
+    rw [pow_succ,
+      show ((t • lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+            (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k)) ^ p
+          * (t • lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+            (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k))) M
+        = ((t • lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+            (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k)) ^ p)
+          ((t • lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+            (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k)) M) from rfl,
+      ih, _root_.smul_apply, map_smul, blockAtCLM_ampGenerator, pow_succ]
+    rfl
+
+/-- ★★ **The amplified flow acts blockwise** — the block form of
+`id ⊗ Φₜ`: the Lindblad semigroup of `(1 ⊗ H, 1 ⊗ Lₖ)` applied to a
+composite matrix is `Φₜ` applied to each ancilla block. Exponential-series
+transport of `blockAtCLM_ampGenerator` through `expCLM_apply_hasSum`. -/
+theorem blockAtCLM_lindbladSemigroup_amplified (i j : m')
+    (H : Matrix n n ℂ) (L : ι → Matrix n n ℂ) (t : ℝ)
+    (M : Matrix (m' × n) (m' × n) ℂ) :
+    blockAtCLM i j (lindbladSemigroup ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+        (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k) t M)
+      = lindbladSemigroup H L t (blockAtCLM i j M) := by
+  have hamp := expCLM_apply_hasSum
+    (t • lindbladGeneratorCLM ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+      (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k)) M
+  have hblk := hamp.mapL (blockAtCLM i j)
+  have hbase := expCLM_apply_hasSum (t • lindbladGeneratorCLM H L)
+    (blockAtCLM i j M)
+  have hterms : (fun p : ℕ => blockAtCLM i j
+      ((((p.factorial : ℝ))⁻¹ • (t • lindbladGeneratorCLM
+          ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+          (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k)) ^ p) M))
+      = fun p : ℕ => ((((p.factorial : ℝ))⁻¹
+          • (t • lindbladGeneratorCLM H L) ^ p) (blockAtCLM i j M)) := by
+    funext p
+    rw [_root_.smul_apply, map_smul, blockAtCLM_smul_ampGen_pow,
+      ← _root_.smul_apply]
+  rw [hterms] at hblk
+  rw [lindbladSemigroup, lindbladSemigroup]
+  exact hblk.unique hbase
+
+/-- **`id ⊗ Φ`**: the ancilla amplification of a superoperator, acting on
+each ancilla block of the composite matrix by `Φ` separately —
+`(idTensorCLM m' Φ) M (i,k) (j,l) = Φ (blockAtCLM i j M) k l`. -/
+noncomputable def idTensorCLM (m' : Type*) [Fintype m'] [DecidableEq m']
+    (Φ : Matrix n n ℂ →L[ℝ] Matrix n n ℂ) :
+    Matrix (m' × n) (m' × n) ℂ →L[ℝ] Matrix (m' × n) (m' × n) ℂ :=
+  LinearMap.toContinuousLinearMap
+    { toFun := fun M => Matrix.of fun p q => Φ (blockAtCLM p.1 q.1 M) p.2 q.2
+      map_add' := fun M N => by
+        ext p q
+        simp only [Matrix.of_apply, Matrix.add_apply, map_add]
+      map_smul' := fun c M => by
+        ext p q
+        simp only [Matrix.of_apply, Matrix.smul_apply, map_smul,
+          RingHom.id_apply] }
+
+omit [DecidableEq n] in
+@[simp] lemma idTensorCLM_apply_entry (Φ : Matrix n n ℂ →L[ℝ] Matrix n n ℂ)
+    (M : Matrix (m' × n) (m' × n) ℂ) (p q : m' × n) :
+    idTensorCLM m' Φ M p q = Φ (blockAtCLM p.1 q.1 M) p.2 q.2 := rfl
+
+omit [DecidableEq n] in
+/-- Amplifying the identity gives the identity: the blocks reassemble. -/
+lemma idTensorCLM_one :
+    idTensorCLM m' (1 : Matrix n n ℂ →L[ℝ] Matrix n n ℂ) = 1 := by
+  refine ContinuousLinearMap.ext fun M => ?_
+  ext p q
+  rw [idTensorCLM_apply_entry, one_apply_eq_self, one_apply_eq_self,
+    blockAtCLM_apply_entry]
+
+/-- ★★ **The identification**: `id ⊗ Φₜ` IS the flow of the amplified
+generator `(1 ⊗ H, 1 ⊗ Lₖ)` — as an equality of superoperators on the
+composite matrix space. This is the lemma that lets
+`lindbladSemigroup_amplified_posSemidef` be cited as complete positivity of
+`Φₜ` in so many words. -/
+theorem idTensor_lindbladSemigroup (H : Matrix n n ℂ)
+    (L : ι → Matrix n n ℂ) (t : ℝ) :
+    idTensorCLM m' (lindbladSemigroup H L t)
+      = lindbladSemigroup ((1 : Matrix m' m' ℂ) ⊗ₖ H)
+        (fun k => (1 : Matrix m' m' ℂ) ⊗ₖ L k) t := by
+  refine ContinuousLinearMap.ext fun M => ?_
+  ext p q
+  obtain ⟨i, k⟩ := p
+  obtain ⟨j, l⟩ := q
+  rw [idTensorCLM_apply_entry, ← blockAtCLM_lindbladSemigroup_amplified,
+    blockAtCLM_apply_entry]
+
+/-- ★★ **The Lindblad semigroup is completely positive** — in so many words:
+for every GKSL generator with Hermitian `H`, every `t ≥ 0`, and every finite
+ancilla, `id ⊗ Φₜ` maps positive semidefinite composite matrices to positive
+semidefinite composite matrices. The identification rewrites the claim onto
+`lindbladSemigroup_amplified_posSemidef`. -/
+theorem lindbladSemigroup_completelyPositive [Nonempty m'] [Nonempty n]
+    {H : Matrix n n ℂ} (hH : H.IsHermitian) (L : ι → Matrix n n ℂ)
+    {t : ℝ} (ht : 0 ≤ t)
+    {ρ : Matrix (m' × n) (m' × n) ℂ} (hρ : ρ.PosSemidef) :
+    (idTensorCLM m' (lindbladSemigroup H L t) ρ).PosSemidef := by
+  rw [idTensor_lindbladSemigroup]
+  exact lindbladSemigroup_amplified_posSemidef hH L ht hρ
+
+end IdTensor
 
 end CSD.LF6

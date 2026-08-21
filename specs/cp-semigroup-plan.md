@@ -42,12 +42,18 @@ re-check found that label stale: every ingredient is now derivable in-corpus.
    GKSL generator, so ★ `lindbladSemigroup_amplified_posSemidef` is a literal
    instantiation of (4).
 
-## Honest boundary
+## Honest boundary — SUPERSEDED (Q23, DONE 2026-08-21)
 
-The identification of the amplified generator's flow with `id ⊗ Φₜ` (the
-block-structure lemma that would let the amplified positivity be *cited* as
-"CP of `Φₜ`" in so many words) is not claimed here; it is the named remainder,
-an M-sized Kronecker computation on the P2 machinery. What is proved:
-positivity of `e^{tℒ}` for every GKSL generator with Hermitian `H`, at every
-`t ≥ 0`, and its stability under every ancilla amplification of the
-generator.
+At the 2026-08-20 landing, the identification of the amplified generator's
+flow with `id ⊗ Φₜ` (the block-structure lemma that lets the amplified
+positivity be *cited* as "CP of `Φₜ`" in so many words) was the named
+remainder. **Q23 delivered it the next day**, in the same module's `IdTensor`
+section: `blockAtCLM` + Kronecker collapse lemmas → `blockAtCLM_ampGenerator`
+(the amplified generator acts blockwise, no Hermiticity needed) →
+`blockAtCLM_lindbladSemigroup_amplified` (the flow acts blockwise, by
+exponential-series transport through `expCLM_apply_hasSum`) →
+★★ `idTensor_lindbladSemigroup` (the identification as an equality of
+superoperators) → ★★ `lindbladSemigroup_completelyPositive` (CP of `Φₜ`,
+Hermitian `H`, `t ≥ 0`, every finite ancilla). Route note: the P2 reindex
+machinery anticipated at queueing was not needed — the amplified flow already
+lives on the pair index. See `specs/BACKLOG.md` (Q23).

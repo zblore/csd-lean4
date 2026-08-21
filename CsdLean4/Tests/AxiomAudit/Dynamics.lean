@@ -1127,7 +1127,7 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- positive map at every t >= 0. lindbladSemigroup_amplified_posSemidef: the CP shape --
 -- positivity survives every ancilla amplification of the generator (the amplified
 -- generator is itself GKSL; literal instantiation). Scope: the id (x) Phi identification
--- is the named remainder (module scope block).
+-- was the named remainder at this landing; Q23 delivered it same week (next block).
 /-- info: 'CSD.LF6.lindbladSemigroup_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.lindbladSemigroup_posSemidef
@@ -1135,5 +1135,32 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 /-- info: 'CSD.LF6.lindbladSemigroup_amplified_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.lindbladSemigroup_amplified_posSemidef
+
+-- Q23 (2026-08-21, LF6/LindbladPositivity.lean IdTensor section): THE id (x) Phi
+-- IDENTIFICATION -- the amplified generator's flow IS id (x) Phi_t, so the amplified
+-- positivity is complete positivity of Phi_t in so many words. blockAtCLM (the (i,j)
+-- ancilla block as a continuous map) collapses 1 (x) A Kronecker multiplications
+-- blockwise; blockAtCLM_ampGenerator: the amplified GKSL generator acts blockwise
+-- (pure Kronecker algebra, no Hermiticity); blockAtCLM_lindbladSemigroup_amplified:
+-- the FLOW acts blockwise (exponential-series transport through expCLM_apply_hasSum).
+-- idTensor_lindbladSemigroup: id (x) Phi_t = the amplified flow, as superoperators.
+-- lindbladSemigroup_completelyPositive: for Hermitian H, t >= 0, and every finite
+-- ancilla, id (x) Phi_t preserves PSD -- the citable CP statement. Retires the Q16
+-- landing's declared remainder (module supersession record; wait-ledger entry retired).
+/-- info: 'CSD.LF6.blockAtCLM_ampGenerator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.blockAtCLM_ampGenerator
+
+/-- info: 'CSD.LF6.blockAtCLM_lindbladSemigroup_amplified' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.blockAtCLM_lindbladSemigroup_amplified
+
+/-- info: 'CSD.LF6.idTensor_lindbladSemigroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.idTensor_lindbladSemigroup
+
+/-- info: 'CSD.LF6.lindbladSemigroup_completelyPositive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.lindbladSemigroup_completelyPositive
 
 end CSD.Tests.AxiomAudit

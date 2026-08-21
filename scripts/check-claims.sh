@@ -338,7 +338,6 @@ CsdLean4/CV/LocalAlgebraClosed.lean:1
 CsdLean4/CV/PriceAttainment.lean:1
 CsdLean4/CV/SupportSpreading.lean:1
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
-CsdLean4/LF6/LindbladPositivity.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/RecordLayer/ApproxProjectability.lean:1
@@ -384,7 +383,6 @@ CsdLean4/CV/PriceAttainment.lean|none
 CsdLean4/CV/SupportSpreading.lean|none
 CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean|none
 CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
-CsdLean4/LF6/LindbladPositivity.lean|none
 CsdLean4/LF4/PhaseLift.lean|none
 CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/RecordLayer/ApproxProjectability.lean|none
@@ -422,11 +420,12 @@ CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
 #     the Fin-indexed LF2 mixed-tier transport of the delivered re tr(reducedDM·A) form
 #     is declared index plumbing and not claimed; sequential/record-conditioned versions
 #     are Q25's territory. Tagged Q27 so the note is force-re-read when the row is struck.
-#   LindbladPositivity|none — scope boundary stated at the Q16 CP-brick landing (2026-08-20):
-#     the id-tensor-Phi identification of the amplified generator's flow (the lemma that
-#     would let amplified positivity be cited as "CP of Phi" in so many words) is the named
-#     remainder, an M-sized Kronecker computation on the P2 machinery; no queued row yet —
-#     queue it when the metrology tier (Q16 proper) opens.
+#   LindbladPositivity|(retired 2026-08-21) — was tagged none at the Q16 CP-brick landing
+#     as "the id-tensor-Phi identification is the named remainder". The remainder was
+#     queued as Q23 the same day and Q23 delivered it (idTensor_lindbladSemigroup +
+#     lindbladSemigroup_completelyPositive); the boundary note was superseded at source
+#     (supersession record kept in the module docstring), so the entry retired exactly
+#     as the mechanism intends.
 #   DispersionEarned|none — permanent physics boundary stated at the P4 close (2026-08-20):
 #     the identification of the (E,p) light rays with the dynamical Lieb-Robinson cone is
 #     not made — the LR cone is an upper bound with a model-dependent velocity, not an
