@@ -107,13 +107,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- twirl/Schur integral via FS U(N)-invariance, sign-flip + permutation
 -- unitaries), and the average reduced state E[Tr_E |psi><psi|] = (1/d_S) I_S
 -- (canonical typicality IN EXPECTATION, generalising maxEntangled_marginal_uniform).
--- Concentration/Levy (the typical-state upgrade) is the NAMED residual, not
--- proved. Foundational-triple; Gleason-free.
+-- Exponential concentration/Levy (the typical-state upgrade) is the NAMED
+-- residual, not proved; the POLYNOMIAL (Chebyshev) tier is proved (Q24, below).
+-- Foundational-triple; Gleason-free.
 /-- info: 'CSD.Thermo.fs_first_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_first_moment
 
 /-- info: 'CSD.Thermo.canonical_typicality_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.canonical_typicality_expectation
+
+-- Q24 (2026-08-21, specs/th1-concentration-scoping.md): the Chebyshev tier.
+-- Fubini-Study second moments by pure twirl algebra -- a two-coordinate
+-- Hadamard rotation plus the sign-flip and quarter-phase kills give
+-- E[x_i^2] = 2*E[x_i x_j] per pair; with the integrated normalisation this
+-- pins E[x_i^2] = 2/(N(N+1)), E[x_i x_j] = 1/(N(N+1)) (the Dirichlet values,
+-- no simplex integrals). Downstream: exact second moment of any diagonal
+-- statistic and polynomial-rate canonical typicality via Chebyshev
+-- (meas_ge_le_variance_div_sq). The exponential (Levy/isoperimetry) tier
+-- stays the recorded residual (MATHLIB-GAPS.md).
+/-- info: 'CSD.Thermo.fs_x_sq_eq_two_cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_x_sq_eq_two_cross
+
+/-- info: 'CSD.Thermo.fs_x_sq_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_x_sq_moment
+
+/-- info: 'CSD.Thermo.fs_x_cross_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_x_cross_moment
+
+/-- info: 'CSD.Thermo.fs_linear_sq_moment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_linear_sq_moment
+
+/-- info: 'CSD.Thermo.fs_chebyshev_concentration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_chebyshev_concentration
 
 -- TH2: the second law as coarse-grained entropy monotonicity. Pinching
 -- (dephasing to the pointer-basis diagonal) never decreases the von Neumann

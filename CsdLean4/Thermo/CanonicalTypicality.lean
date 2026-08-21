@@ -9,6 +9,7 @@ public import CsdLean4.LF4.BornFS
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import Mathlib.LinearAlgebra.Matrix.Permutation
+public import Mathlib.Probability.Moments.Variance
 
 /-!
 # TH1: canonical typicality -- thermal equilibrium from Fubini-Study volume
@@ -45,15 +46,19 @@ reduced state of any tensor subsystem is maximally mixed on that subsystem:
 
 ## Honest scope (load-bearing)
 
-**EXPECTATION, not TYPICAL.** This tranche proves the reduced state is canonical
-*in expectation* over `mu_FS`. The strictly stronger *typical-state*
-(concentration / Levy) statement -- that a `mu_FS`-typical single pure state has a
-reduced state close to `I_S/d_S` with probability `1 - O(exp(-c d_E))` for a small
+**EXPECTATION + CHEBYSHEV, not exponential.** This tranche proves the reduced
+state is canonical *in expectation* over `mu_FS`, and (Q24, 2026-08-21) that
+diagonal statistics of a *single* `mu_FS`-sample concentrate at the
+maximally-mixed value at polynomial rate `Var = O(1/N)`
+(`fs_chebyshev_concentration`, from the exact second moments
+`fs_x_sq_moment` / `fs_x_cross_moment` -- twirl algebra, no isoperimetry).
+The strictly stronger EXPONENTIAL *typical-state* (Levy) statement -- reduced
+state close to `I_S/d_S` with probability `1 - O(exp(-c d_E))` for a small
 subsystem in a large environment (Popescu-Short-Winter / Goldstein-Lebowitz-
-Tumulka-Zanghi) -- is the named residual (see the `Concentration residual` section
-below). It is NOT proved here: it needs measure concentration on high-dimensional
-spheres (Levy's lemma: Lipschitz + isoperimetry), which Mathlib does not carry.
-No `sorry`, no axiom is used to paper over this; the average is what lands.
+Tumulka-Zanghi) -- is the named residual (see the `Concentration residual`
+section below). It is NOT proved here: it needs measure concentration on
+high-dimensional spheres (Levy's lemma: Lipschitz + isoperimetry), which
+Mathlib does not carry. No `sorry`, no axiom is used to paper over this.
 
 **NOT dynamical thermalisation.** This is a typicality (volume-average) statement,
 not a proof that a given initial state thermalises under a dynamics (that needs
@@ -495,8 +500,746 @@ concentration upgrade is the named residual of this tranche. The `fs_first_momen
 result above is exactly the *mean* around which Levy's lemma would concentrate;
 what is missing is only the deviation bound, not the target value.
 
-No `sorry` / axiom stands in for this: TH1 delivers the EXPECTATION, and names the
-concentration precisely as the residual. -/
+No `sorry` / axiom stands in for this: TH1 delivers the EXPECTATION and (Q24,
+below) the POLYNOMIAL Chebyshev tier, and names the exponential tier precisely
+as the residual. -/
+
+/-! ## Q24: the Chebyshev tier — second moments and polynomial concentration
+
+(2026-08-21, `specs/th1-concentration-scoping.md`.) The concentration residual
+above splits into two tiers. The EXPONENTIAL (Lévy) tier still needs spherical
+isoperimetry and stays the recorded Mathlib-scale residual. The POLYNOMIAL
+(Chebyshev) tier needs only second moments, and those turn out to require **no
+integrals at all**: TH1's own twirl style, one moment higher, determines them
+algebraically. With `a := E[xᵢ²]`, `b := E[xᵢxⱼ]` (`i ≠ j`, `x := momentMap`):
+permutation swaps make `a` index-free; the pointwise normalisation integrates
+to `a + (N−1)b = 1/N`; and invariance under a two-coordinate Hadamard rotation
+— with a sign flip killing the linear cross term and a quarter-phase flip
+halving the squared real part — gives `a = 2b` FOR EACH PAIR separately. Solve:
+`a = 2/(N(N+1))`, `b = 1/(N(N+1))` — the Dirichlet values, by twirl algebra.
+Downstream: the second moment of any diagonal statistic is exact
+(`fs_linear_sq_moment`, giving `Var = O(1/N)`) and Chebyshev gives
+polynomial-rate typicality (`fs_chebyshev_concentration`), with no
+isoperimetry anywhere. -/
+
+/-! ### The quarter-phase unitary -/
+
+/-- **The quarter-phase matrix** `diag(1, ..., I, ..., 1)` with `Complex.I` at
+index `i`. The `signFlipMat` pattern with a genuinely complex phase; used to
+kill squared off-diagonal entries (`r² ↦ −r²`) and to equate `E[(Re r)²]` with
+`E[(Im r)²]`. -/
+noncomputable def phaseFlipMat (i : Fin N) : Matrix (Fin N) (Fin N) ℂ :=
+  Matrix.diagonal (fun k => if k = i then Complex.I else 1)
+
+lemma phaseFlipMat_mem (i : Fin N) : phaseFlipMat i ∈ Matrix.unitaryGroup (Fin N) ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff']
+  rw [Matrix.star_eq_conjTranspose, phaseFlipMat, Matrix.diagonal_conjTranspose,
+    Matrix.diagonal_mul_diagonal]
+  rw [show (fun k : Fin N => (star fun k : Fin N => if k = i then Complex.I else 1) k
+        * (if k = i then Complex.I else 1)) = (1 : Fin N → ℂ) by
+    funext k
+    rw [Pi.star_apply, Pi.one_apply]
+    split_ifs <;> simp]
+  exact Matrix.diagonal_one
+
+/-- The quarter-phase unitary as a group element. -/
+noncomputable def phaseFlip (i : Fin N) : Matrix.unitaryGroup (Fin N) ℂ :=
+  ⟨phaseFlipMat i, phaseFlipMat_mem i⟩
+
+@[simp] lemma phaseFlip_val (i : Fin N) : (phaseFlip i).val = phaseFlipMat i := rfl
+
+/-- Coordinate action of the quarter-phase. -/
+lemma toEuclideanLin_phaseFlip_coord (i : Fin N) (v : EuclideanSpace ℂ (Fin N)) (a : Fin N) :
+    (Matrix.toEuclideanLin (phaseFlipMat i) v) a = (if a = i then Complex.I else 1) * v a := by
+  rw [phaseFlipMat, Matrix.toLpLin_apply]
+  simp [Matrix.mulVec_diagonal]
+
+/-- The quarter-phase is norm-preserving (squared form). -/
+lemma phaseFlip_normSq (i : Fin N) (v : EuclideanSpace ℂ (Fin N)) :
+    ‖(Matrix.toEuclideanLin (phaseFlipMat i) v)‖ ^ 2 = ‖v‖ ^ 2 := by
+  rw [euclidean_norm_sq_eq_sum, euclidean_norm_sq_eq_sum]
+  refine Finset.sum_congr rfl (fun a _ => ?_)
+  rw [toEuclideanLin_phaseFlip_coord, norm_mul]
+  rw [show ‖(if a = i then Complex.I else 1)‖ = 1 by split_ifs <;> simp, one_mul]
+
+/-! ### The two-coordinate Hadamard rotation -/
+
+/-- **The Hadamard rotation matrix** at the (distinct) coordinate pair `(i, j)`:
+the `(1/√2)·[[1,1],[1,−1]]` block on `{i,j}`, the identity elsewhere. Real
+symmetric; mixes exactly two coordinates. -/
+noncomputable def hadamardMat (i j : Fin N) : Matrix (Fin N) (Fin N) ℂ :=
+  Matrix.of fun a b =>
+    if a = i then (if b = i then ((Real.sqrt 2 : ℝ) : ℂ)⁻¹
+      else if b = j then ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ else 0)
+    else if a = j then (if b = i then ((Real.sqrt 2 : ℝ) : ℂ)⁻¹
+      else if b = j then -((Real.sqrt 2 : ℝ) : ℂ)⁻¹ else 0)
+    else (if b = a then 1 else 0)
+
+/-- The Hadamard-rotation entries, unfolded. -/
+lemma hadamardMat_apply (i j a b : Fin N) :
+    hadamardMat i j a b =
+      if a = i then (if b = i then ((Real.sqrt 2 : ℝ) : ℂ)⁻¹
+        else if b = j then ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ else 0)
+      else if a = j then (if b = i then ((Real.sqrt 2 : ℝ) : ℂ)⁻¹
+        else if b = j then -((Real.sqrt 2 : ℝ) : ℂ)⁻¹ else 0)
+      else (if b = a then 1 else 0) := rfl
+
+/-- Off the pair `{i, j}`, a Hadamard-rotation row is a delta row. -/
+lemma hadamardMat_apply_of_ne (i j : Fin N) {a : Fin N} (hai : a ≠ i) (haj : a ≠ j)
+    (b : Fin N) : hadamardMat i j a b = if b = a then 1 else 0 := by
+  rw [hadamardMat_apply, if_neg hai, if_neg haj]
+
+/-- The Hadamard rotation is Hermitian (real symmetric). -/
+lemma hadamardMat_conjTranspose (i j : Fin N) (hij : i ≠ j) :
+    (hadamardMat i j)ᴴ = hadamardMat i j := by
+  ext a b
+  rw [Matrix.conjTranspose_apply, hadamardMat_apply, hadamardMat_apply]
+  by_cases hai : a = i <;> by_cases haj : a = j <;>
+    by_cases hbi : b = i <;> by_cases hbj : b = j <;>
+    simp_all [Complex.conj_ofReal, Ne.symm hij, eq_comm]
+
+lemma hadamardMat_mem (i j : Fin N) (hij : i ≠ j) :
+    hadamardMat i j ∈ Matrix.unitaryGroup (Fin N) ℂ := by
+  have hs : ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ = 2⁻¹ := by
+    rw [← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]
+    norm_num [Complex.ofReal_inv]
+  rw [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose,
+    hadamardMat_conjTranspose i j hij]
+  ext a b
+  rw [Matrix.mul_apply, Matrix.one_apply]
+  -- Restrict the sum to the pair `{i, j}` in the two block rows; the delta rows
+  -- collapse to a single term.
+  by_cases hai : a = i
+  · -- row `i`: supported on `{i, j}`.
+    rw [hai]
+    rw [show (∑ c, hadamardMat i j i c * hadamardMat i j c b)
+        = ∑ c ∈ ({i, j} : Finset (Fin N)), hadamardMat i j i c * hadamardMat i j c b from
+      (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
+        rw [Finset.mem_insert, Finset.mem_singleton] at hc
+        push Not at hc
+        rw [hadamardMat_apply i j i c, if_pos rfl, if_neg hc.1, if_neg hc.2,
+          zero_mul])).symm]
+    rw [Finset.sum_pair hij]
+    rw [hadamardMat_apply i j i i, if_pos rfl, if_pos rfl,
+      hadamardMat_apply i j i j, if_pos rfl, if_neg (Ne.symm hij), if_pos rfl,
+      hadamardMat_apply i j i b, if_pos rfl,
+      hadamardMat_apply i j j b, if_neg (Ne.symm hij), if_pos rfl]
+    by_cases hbi : b = i
+    · rw [if_pos hbi, if_pos hbi, if_pos hbi.symm, hs]
+      norm_num
+    · rw [if_neg hbi, if_neg hbi, if_neg (fun h : i = b => hbi h.symm)]
+      by_cases hbj : b = j
+      · rw [if_pos hbj, if_pos hbj]
+        ring
+      · rw [if_neg hbj, if_neg hbj]
+        ring
+  · by_cases haj : a = j
+    · -- row `j`: supported on `{i, j}`.
+      rw [haj]
+      rw [show (∑ c, hadamardMat i j j c * hadamardMat i j c b)
+          = ∑ c ∈ ({i, j} : Finset (Fin N)), hadamardMat i j j c * hadamardMat i j c b from
+        (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
+          rw [Finset.mem_insert, Finset.mem_singleton] at hc
+          push Not at hc
+          rw [hadamardMat_apply i j j c, if_neg (Ne.symm hij), if_pos rfl,
+            if_neg hc.1, if_neg hc.2, zero_mul])).symm]
+      rw [Finset.sum_pair hij]
+      rw [hadamardMat_apply i j j i, if_neg (Ne.symm hij), if_pos rfl, if_pos rfl,
+        hadamardMat_apply i j j j, if_neg (Ne.symm hij), if_pos rfl,
+        if_neg (Ne.symm hij), if_pos rfl,
+        hadamardMat_apply i j i b, if_pos rfl,
+        hadamardMat_apply i j j b, if_neg (Ne.symm hij), if_pos rfl]
+      by_cases hbi : b = i
+      · rw [if_pos hbi, if_pos hbi, if_neg (fun h : j = b => hij (h.trans hbi).symm)]
+        ring
+      · rw [if_neg hbi, if_neg hbi]
+        by_cases hbj : b = j
+        · rw [if_pos hbj, if_pos hbj, if_pos hbj.symm]
+          rw [show -((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * -((Real.sqrt 2 : ℝ) : ℂ)⁻¹
+              = ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ by ring, hs]
+          norm_num
+        · rw [if_neg hbj, if_neg hbj, if_neg (fun h : j = b => hbj h.symm)]
+          ring
+    · -- delta row: the sum collapses to `c = a`.
+      rw [Finset.sum_eq_single a
+        (fun c _ hca => by rw [hadamardMat_apply_of_ne i j hai haj, if_neg hca, zero_mul])
+        (fun ha => absurd (Finset.mem_univ a) ha)]
+      rw [hadamardMat_apply_of_ne i j hai haj, if_pos rfl, one_mul,
+        hadamardMat_apply i j a b, if_neg hai, if_neg haj]
+      by_cases hab : b = a
+      · rw [if_pos hab, if_pos hab.symm]
+      · rw [if_neg hab, if_neg (fun h : a = b => hab h.symm)]
+
+/-- The Hadamard rotation as a unitary group element. -/
+noncomputable def hadamardU (i j : Fin N) (hij : i ≠ j) : Matrix.unitaryGroup (Fin N) ℂ :=
+  ⟨hadamardMat i j, hadamardMat_mem i j hij⟩
+
+@[simp] lemma hadamardU_val (i j : Fin N) (hij : i ≠ j) :
+    (hadamardU i j hij).val = hadamardMat i j := rfl
+
+/-! ### Coordinate actions of the new unitaries -/
+
+/-- Coordinate `i` of the Hadamard rotation: `(H v)ᵢ = (vᵢ + vⱼ)/√2`. -/
+lemma toEuclideanLin_hadamard_coord_i (i j : Fin N) (hij : i ≠ j)
+    (v : EuclideanSpace ℂ (Fin N)) :
+    (Matrix.toEuclideanLin (hadamardMat i j) v) i
+      = ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * (v i + v j) := by
+  rw [Matrix.toLpLin_apply]
+  show ∑ c, hadamardMat i j i c * v c = ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * (v i + v j)
+  rw [show (∑ c, hadamardMat i j i c * v c)
+      = ∑ c ∈ ({i, j} : Finset (Fin N)), hadamardMat i j i c * v c from
+    (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
+      rw [Finset.mem_insert, Finset.mem_singleton] at hc
+      push Not at hc
+      rw [hadamardMat_apply i j i c, if_pos rfl, if_neg hc.1, if_neg hc.2,
+        zero_mul])).symm]
+  rw [Finset.sum_pair hij]
+  rw [hadamardMat_apply i j i i, if_pos rfl, if_pos rfl,
+    hadamardMat_apply i j i j, if_pos rfl, if_neg (Ne.symm hij), if_pos rfl]
+  ring
+
+/-- Coordinate `j` of the Hadamard rotation: `(H v)ⱼ = (vᵢ − vⱼ)/√2`. -/
+lemma toEuclideanLin_hadamard_coord_j (i j : Fin N) (hij : i ≠ j)
+    (v : EuclideanSpace ℂ (Fin N)) :
+    (Matrix.toEuclideanLin (hadamardMat i j) v) j
+      = ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * (v i - v j) := by
+  rw [Matrix.toLpLin_apply]
+  show ∑ c, hadamardMat i j j c * v c = ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * (v i - v j)
+  rw [show (∑ c, hadamardMat i j j c * v c)
+      = ∑ c ∈ ({i, j} : Finset (Fin N)), hadamardMat i j j c * v c from
+    (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
+      rw [Finset.mem_insert, Finset.mem_singleton] at hc
+      push Not at hc
+      rw [hadamardMat_apply i j j c, if_neg (Ne.symm hij), if_pos rfl,
+        if_neg hc.1, if_neg hc.2, zero_mul])).symm]
+  rw [Finset.sum_pair hij]
+  rw [hadamardMat_apply i j j i, if_neg (Ne.symm hij), if_pos rfl, if_pos rfl,
+    hadamardMat_apply i j j j, if_neg (Ne.symm hij), if_pos rfl,
+    if_neg (Ne.symm hij), if_pos rfl]
+  ring
+
+/-- Away from the pair, the Hadamard rotation fixes coordinates. -/
+lemma toEuclideanLin_hadamard_coord_ne (i j : Fin N) {a : Fin N}
+    (hai : a ≠ i) (haj : a ≠ j) (v : EuclideanSpace ℂ (Fin N)) :
+    (Matrix.toEuclideanLin (hadamardMat i j) v) a = v a := by
+  rw [Matrix.toLpLin_apply]
+  show ∑ c, hadamardMat i j a c * v c = v a
+  rw [Finset.sum_eq_single a
+    (fun c _ hca => by
+      rw [hadamardMat_apply_of_ne i j hai haj, if_neg hca, zero_mul])
+    (fun ha => absurd (Finset.mem_univ a) ha)]
+  rw [hadamardMat_apply_of_ne i j hai haj, if_pos rfl, one_mul]
+
+/-- The Hadamard rotation is norm-preserving (squared form): the parallelogram
+law on the pair, the identity elsewhere. -/
+lemma hadamard_normSq (i j : Fin N) (hij : i ≠ j) (v : EuclideanSpace ℂ (Fin N)) :
+    ‖(Matrix.toEuclideanLin (hadamardMat i j) v)‖ ^ 2 = ‖v‖ ^ 2 := by
+  have hs2 : ((Real.sqrt 2 : ℝ))⁻¹ ^ 2 = 2⁻¹ := by
+    rw [inv_pow, Real.sq_sqrt (by norm_num)]
+  rw [euclidean_norm_sq_eq_sum, euclidean_norm_sq_eq_sum,
+    ← Finset.sum_add_sum_compl ({i, j} : Finset (Fin N))
+      (fun a => ‖(Matrix.toEuclideanLin (hadamardMat i j) v) a‖ ^ 2),
+    ← Finset.sum_add_sum_compl ({i, j} : Finset (Fin N))
+      (fun a => ‖v a‖ ^ 2)]
+  congr 1
+  · rw [Finset.sum_pair hij, Finset.sum_pair hij,
+      toEuclideanLin_hadamard_coord_i i j hij, toEuclideanLin_hadamard_coord_j i j hij]
+    have hnorm : ‖((Real.sqrt 2 : ℝ) : ℂ)⁻¹‖ = (Real.sqrt 2)⁻¹ := by
+      rw [norm_inv, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_nonneg (Real.sqrt_nonneg 2)]
+    rw [norm_mul, norm_mul, hnorm, mul_pow, mul_pow, hs2]
+    have hpar := parallelogram_law_with_norm ℂ (v i) (v j)
+    rw [show ‖v i + v j‖ ^ 2 = ‖v i + v j‖ * ‖v i + v j‖ from sq _,
+      show ‖v i - v j‖ ^ 2 = ‖v i - v j‖ * ‖v i - v j‖ from sq _,
+      show ‖v i‖ ^ 2 = ‖v i‖ * ‖v i‖ from sq _,
+      show ‖v j‖ ^ 2 = ‖v j‖ * ‖v j‖ from sq _]
+    linarith [hpar]
+  · refine Finset.sum_congr rfl (fun a ha => ?_)
+    rw [Finset.mem_compl, Finset.mem_insert, Finset.mem_singleton] at ha
+    push Not at ha
+    rw [toEuclideanLin_hadamard_coord_ne i j ha.1 ha.2]
+
+/-! ### Actions on the moment coordinates and the density entry -/
+
+/-- The sign flip fixes every moment coordinate. -/
+lemma momentMap_signFlip [NeZero N] (i : Fin N) (p : CPN N) (a : Fin N) :
+    momentMap ((signFlip i) • p) a = momentMap p a := by
+  rw [smul_eq_mk, momentMap_mk]
+  unfold momentMap
+  rw [signFlip_val, toEuclideanLin_signFlip_coord, signFlip_normSq]
+  rw [norm_mul, show ‖(if a = i then (-1 : ℂ) else 1)‖ = 1 by split_ifs <;> simp,
+    one_mul]
+
+/-- The quarter-phase fixes every moment coordinate. -/
+lemma momentMap_phaseFlip [NeZero N] (i : Fin N) (p : CPN N) (a : Fin N) :
+    momentMap ((phaseFlip i) • p) a = momentMap p a := by
+  rw [smul_eq_mk, momentMap_mk]
+  unfold momentMap
+  rw [phaseFlip_val, toEuclideanLin_phaseFlip_coord, phaseFlip_normSq]
+  rw [norm_mul, show ‖(if a = i then Complex.I else 1)‖ = 1 by split_ifs <;> simp,
+    one_mul]
+
+/-- The quarter-phase multiplies the `(i, j)` density entry by `I` (`j ≠ i`). -/
+lemma phaseFlip_smul_cross [NeZero N] (i j : Fin N) (hji : j ≠ i) (p : CPN N) :
+    rayDensity ((phaseFlip i) • p) i j = Complex.I * rayDensity p i j := by
+  rw [smul_eq_mk, rayDensity_mk, phaseFlip_val, toEuclideanLin_phaseFlip_coord,
+      toEuclideanLin_phaseFlip_coord, if_pos rfl, if_neg hji, one_mul]
+  have hden : (‖(Matrix.toEuclideanLin (phaseFlipMat i) p.rep)‖ : ℂ) ^ 2
+      = (‖p.rep‖ : ℂ) ^ 2 := by
+    rw [← Complex.ofReal_pow, phaseFlip_normSq, Complex.ofReal_pow]
+  rw [hden]
+  unfold rayDensity
+  ring
+
+/-- **The Hadamard rotation mixes the pair through the density entry**:
+`x'ᵢ = (xᵢ + xⱼ + 2·Re r)/2` with `r` the `(i,j)` density entry. -/
+lemma momentMap_hadamard [NeZero N] (i j : Fin N) (hij : i ≠ j) (p : CPN N) :
+    momentMap ((hadamardU i j hij) • p) i
+      = (momentMap p i + momentMap p j + 2 * (rayDensity p i j).re) / 2 := by
+  rw [smul_eq_mk, momentMap_mk]
+  rw [show (hadamardU i j hij).val = hadamardMat i j from rfl]
+  rw [toEuclideanLin_hadamard_coord_i i j hij, hadamard_normSq i j hij]
+  unfold momentMap rayDensity
+  have hD : (0 : ℝ) < ‖p.rep‖ ^ 2 := pow_pos (norm_pos_iff.mpr p.rep_nonzero) 2
+  have hnorm : ‖((Real.sqrt 2 : ℝ) : ℂ)⁻¹‖ = (Real.sqrt 2)⁻¹ := by
+    rw [norm_inv, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg (Real.sqrt_nonneg 2)]
+  rw [norm_mul, hnorm, mul_pow,
+    show ((Real.sqrt 2 : ℝ))⁻¹ ^ 2 = 2⁻¹ by
+      rw [inv_pow, Real.sq_sqrt (by norm_num)]]
+  -- ‖z + w‖² = ‖z‖² + ‖w‖² + 2·Re(z·conj w), then divide through.
+  have hexp : ‖p.rep i + p.rep j‖ ^ 2
+      = ‖p.rep i‖ ^ 2 + ‖p.rep j‖ ^ 2 + 2 * ((p.rep i) * conj (p.rep j)).re := by
+    have h := Complex.normSq_add (p.rep i) (p.rep j)
+    rw [Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq,
+      Complex.normSq_eq_norm_sq] at h
+    exact h
+  rw [hexp]
+  rw [show ((‖p.rep‖ : ℝ) : ℂ) ^ 2 = ((‖p.rep‖ ^ 2 : ℝ) : ℂ) by push_cast; ring]
+  rw [Complex.div_ofReal_re]
+  field_simp
+
+/-! ### The twirl transport, packaged once -/
+
+/-- **The change-of-variables engine**: a Fubini–Study integral of a measurable
+real statistic equals its integral against any unitary pushforward. The
+`fsFirstMoment_offdiag` calc, packaged for reuse. -/
+lemma fs_integral_unitary (p₀ : CPN N) (U : Matrix.unitaryGroup (Fin N) ℂ)
+    {f : CPN N → ℝ} (hf : Measurable f) :
+    ∫ p, f p ∂(fubiniStudyMeasure p₀) = ∫ p, f (U • p) ∂(fubiniStudyMeasure p₀) := by
+  set μ := fubiniStudyMeasure p₀ with hμ
+  have hg : Measurable fun p : CPN N => U • p := (continuous_const_smul U).measurable
+  have hinv : Measure.map (fun p : CPN N => U • p) μ = μ :=
+    fubiniStudyMeasure_smul_invariant U p₀
+  calc ∫ p, f p ∂μ
+      = ∫ p, f p ∂(Measure.map (fun p : CPN N => U • p) μ) := by rw [hinv]
+    _ = ∫ p, f (U • p) ∂μ :=
+        integral_map hg.aemeasurable (by rw [hinv]; exact hf.aestronglyMeasurable)
+
+/-! ### Measurability and integrability of the second-moment integrands -/
+
+lemma re_rayDensity_measurable (i j : Fin N) :
+    Measurable fun p : CPN N => (rayDensity p i j).re :=
+  Complex.measurable_re.comp (rayDensity_measurable i j)
+
+lemma abs_re_rayDensity_le_one (p : CPN N) (i j : Fin N) :
+    |(rayDensity p i j).re| ≤ 1 :=
+  (Complex.abs_re_le_norm _).trans (rayDensity_norm_le_one p i j)
+
+lemma abs_im_rayDensity_le_one (p : CPN N) (i j : Fin N) :
+    |(rayDensity p i j).im| ≤ 1 :=
+  (Complex.abs_im_le_norm _).trans (rayDensity_norm_le_one p i j)
+
+lemma abs_momentMap_le_one (p : CPN N) (i : Fin N) : |momentMap p i| ≤ 1 := by
+  rw [abs_of_nonneg (momentMap_nonneg p i)]
+  exact momentMap_le_one p i
+
+/-- Integrability of a product of two of the bounded statistics, from explicit
+`[-1, 1]` bounds. -/
+lemma fs_integrable_mul (p₀ : CPN N) {f g : CPN N → ℝ}
+    (hf : Measurable f) (hg : Measurable g)
+    (hfb : ∀ p, |f p| ≤ 1) (hgb : ∀ p, |g p| ≤ 1) :
+    Integrable (fun p => f p * g p) (fubiniStudyMeasure p₀) :=
+  Integrable.of_bound (hf.mul hg).aestronglyMeasurable 1
+    (ae_of_all _ (fun p => by
+      rw [Real.norm_eq_abs, abs_mul]
+      exact mul_le_one₀ (hfb p) (abs_nonneg _) (hgb p)))
+
+/-! ### The kill lemmas -/
+
+/-- **The linear cross terms die**: `E[xₐ · Re r] = 0` for the `(i,j)` density
+entry `r` (`j ≠ i`), by the sign flip at `i`. -/
+lemma fs_cross_linear_zero (p₀ : CPN N) [NeZero N] (a i j : Fin N) (hji : j ≠ i) :
+    ∫ p, momentMap p a * (rayDensity p i j).re ∂(fubiniStudyMeasure p₀) = 0 := by
+  set μ := fubiniStudyMeasure p₀ with hμ
+  have hmeas : Measurable fun p : CPN N => momentMap p a * (rayDensity p i j).re :=
+    (momentMap_measurable a).mul (re_rayDensity_measurable i j)
+  have hM : ∫ p, momentMap p a * (rayDensity p i j).re ∂μ
+      = - ∫ p, momentMap p a * (rayDensity p i j).re ∂μ := by
+    calc ∫ p, momentMap p a * (rayDensity p i j).re ∂μ
+        = ∫ p, momentMap ((signFlip i) • p) a
+            * (rayDensity ((signFlip i) • p) i j).re ∂μ :=
+          fs_integral_unitary p₀ (signFlip i) hmeas
+      _ = ∫ p, -(momentMap p a * (rayDensity p i j).re) ∂μ :=
+          integral_congr_ae (ae_of_all _ (fun p => by
+            dsimp only
+            rw [momentMap_signFlip, signFlip_smul_offdiag i j hji, Complex.neg_re]
+            ring))
+      _ = - ∫ p, momentMap p a * (rayDensity p i j).re ∂μ := integral_neg _
+  linarith
+
+/-- Pointwise: `(Re r)² + (Im r)² = xᵢ·xⱼ` — the squared modulus of the density
+entry is the product of the two moment coordinates. -/
+lemma rayDensity_re_sq_add_im_sq (p : CPN N) (i j : Fin N) :
+    (rayDensity p i j).re ^ 2 + (rayDensity p i j).im ^ 2
+      = momentMap p i * momentMap p j := by
+  have h2 : Complex.normSq (rayDensity p i j) = momentMap p i * momentMap p j := by
+    unfold rayDensity momentMap
+    rw [map_div₀ Complex.normSq, map_mul Complex.normSq, Complex.normSq_conj]
+    rw [show Complex.normSq ((‖p.rep‖ : ℂ) ^ 2) = (‖p.rep‖ ^ 2) ^ 2 by
+      rw [map_pow, Complex.normSq_ofReal]; ring]
+    rw [Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq]
+    have hD : (0 : ℝ) < ‖p.rep‖ ^ 2 := pow_pos (norm_pos_iff.mpr p.rep_nonzero) 2
+    field_simp
+  rw [← h2, Complex.normSq_apply, pow_two, pow_two]
+
+/-- `E[(Re r)²] = E[(Im r)²]`, by the quarter-phase flip at `i`. -/
+lemma fs_re_sq_eq_im_sq (p₀ : CPN N) [NeZero N] (i j : Fin N) (hji : j ≠ i) :
+    ∫ p, (rayDensity p i j).re ^ 2 ∂(fubiniStudyMeasure p₀)
+      = ∫ p, (rayDensity p i j).im ^ 2 ∂(fubiniStudyMeasure p₀) := by
+  have hmeas : Measurable fun p : CPN N => (rayDensity p i j).re ^ 2 :=
+    (re_rayDensity_measurable i j).pow_const 2
+  calc ∫ p, (rayDensity p i j).re ^ 2 ∂(fubiniStudyMeasure p₀)
+      = ∫ p, (rayDensity ((phaseFlip i) • p) i j).re ^ 2 ∂(fubiniStudyMeasure p₀) :=
+        fs_integral_unitary p₀ (phaseFlip i) hmeas
+    _ = ∫ p, (rayDensity p i j).im ^ 2 ∂(fubiniStudyMeasure p₀) :=
+        integral_congr_ae (ae_of_all _ (fun p => by
+          dsimp only
+          rw [phaseFlip_smul_cross i j hji]
+          rw [show (Complex.I * rayDensity p i j).re = -(rayDensity p i j).im by
+            rw [Complex.mul_re, Complex.I_re, Complex.I_im]; ring]
+          ring))
+
+/-- **The squared real part carries half the product**: `E[(Re r)²] = E[xᵢxⱼ]/2`. -/
+lemma fs_re_sq_moment (p₀ : CPN N) [NeZero N] (i j : Fin N) (hij : i ≠ j) :
+    ∫ p, (rayDensity p i j).re ^ 2 ∂(fubiniStudyMeasure p₀)
+      = (∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀)) / 2 := by
+  have int_re2 : Integrable (fun p : CPN N => (rayDensity p i j).re ^ 2)
+      (fubiniStudyMeasure p₀) := by
+    refine fs_integrable_mul p₀ (re_rayDensity_measurable i j)
+      (re_rayDensity_measurable i j) (abs_re_rayDensity_le_one · i j)
+      (abs_re_rayDensity_le_one · i j) |>.congr ?_
+    exact ae_of_all _ (fun p => by simp only [pow_two])
+  have int_im2 : Integrable (fun p : CPN N => (rayDensity p i j).im ^ 2)
+      (fubiniStudyMeasure p₀) := by
+    refine fs_integrable_mul p₀ (Complex.measurable_im.comp (rayDensity_measurable i j))
+      (Complex.measurable_im.comp (rayDensity_measurable i j))
+      (abs_im_rayDensity_le_one · i j) (abs_im_rayDensity_le_one · i j) |>.congr ?_
+    exact ae_of_all _ (fun p => by simp only [Function.comp_apply, pow_two])
+  have hsum : ∫ p, ((rayDensity p i j).re ^ 2 + (rayDensity p i j).im ^ 2)
+        ∂(fubiniStudyMeasure p₀)
+      = ∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀) :=
+    integral_congr_ae (ae_of_all _ (fun p => rayDensity_re_sq_add_im_sq p i j))
+  rw [integral_add int_re2 int_im2] at hsum
+  rw [← fs_re_sq_eq_im_sq p₀ i j (Ne.symm hij)] at hsum
+  linarith
+
+/-- Second moments of the coordinates are index-independent (permutation swap). -/
+lemma fs_x_sq_swap (p₀ : CPN N) [NeZero N] (i k : Fin N) :
+    ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
+      = ∫ p, momentMap p k ^ 2 ∂(fubiniStudyMeasure p₀) := by
+  calc ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
+      = ∫ p, momentMap ((permU (Equiv.swap i k)) • p) i ^ 2 ∂(fubiniStudyMeasure p₀) :=
+        fs_integral_unitary p₀ (permU (Equiv.swap i k))
+          ((momentMap_measurable i).pow_const 2)
+    _ = ∫ p, momentMap p ((Equiv.swap i k) i) ^ 2 ∂(fubiniStudyMeasure p₀) :=
+        integral_congr_ae (ae_of_all _ (fun p => by dsimp only; rw [momentMap_permU]))
+    _ = ∫ p, momentMap p k ^ 2 ∂(fubiniStudyMeasure p₀) := by
+        rw [Equiv.swap_apply_left]
+
+/-! ### The engine: `a = 2b`, per pair -/
+
+/-- ★ **The Hadamard identity `a = 2b`** (Q24, the route discovery): invariance of
+the second moment under the two-coordinate Hadamard rotation, with the sign flip
+killing the linear cross terms and the quarter-phase halving the squared real
+part, forces `E[xᵢ²] = 2·E[xᵢxⱼ]` — for each pair separately, with no integral
+ever computed. -/
+theorem fs_x_sq_eq_two_cross (p₀ : CPN N) [NeZero N] {i j : Fin N} (hij : i ≠ j) :
+    ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
+      = 2 * ∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀) := by
+  set μ := fubiniStudyMeasure p₀ with hμ
+  -- integrability of the six expansion pieces
+  have hx : ∀ a : Fin N, Measurable fun p : CPN N => momentMap p a := momentMap_measurable
+  have hr : Measurable fun p : CPN N => (rayDensity p i j).re :=
+    re_rayDensity_measurable i j
+  have int_xi2 : Integrable (fun p : CPN N => momentMap p i ^ 2) μ := by
+    refine (fs_integrable_mul p₀ (hx i) (hx i) (abs_momentMap_le_one · i)
+      (abs_momentMap_le_one · i)).congr (ae_of_all _ (fun p => by simp only [pow_two]))
+  have int_xj2 : Integrable (fun p : CPN N => momentMap p j ^ 2) μ := by
+    refine (fs_integrable_mul p₀ (hx j) (hx j) (abs_momentMap_le_one · j)
+      (abs_momentMap_le_one · j)).congr (ae_of_all _ (fun p => by simp only [pow_two]))
+  have int_re2 : Integrable (fun p : CPN N => (rayDensity p i j).re ^ 2) μ := by
+    refine (fs_integrable_mul p₀ hr hr (abs_re_rayDensity_le_one · i j)
+      (abs_re_rayDensity_le_one · i j)).congr (ae_of_all _ (fun p => by simp only [pow_two]))
+  have int_xy : Integrable (fun p : CPN N => momentMap p i * momentMap p j) μ :=
+    fs_integrable_mul p₀ (hx i) (hx j) (abs_momentMap_le_one · i)
+      (abs_momentMap_le_one · j)
+  have int_xire : Integrable (fun p : CPN N => momentMap p i * (rayDensity p i j).re) μ :=
+    fs_integrable_mul p₀ (hx i) hr (abs_momentMap_le_one · i)
+      (abs_re_rayDensity_le_one · i j)
+  have int_xjre : Integrable (fun p : CPN N => momentMap p j * (rayDensity p i j).re) μ :=
+    fs_integrable_mul p₀ (hx j) hr (abs_momentMap_le_one · j)
+      (abs_re_rayDensity_le_one · i j)
+  -- the Hadamard transport
+  have key : ∫ p, momentMap p i ^ 2 ∂μ
+      = ∫ p, ((momentMap p i + momentMap p j + 2 * (rayDensity p i j).re) / 2) ^ 2 ∂μ := by
+    calc ∫ p, momentMap p i ^ 2 ∂μ
+        = ∫ p, momentMap ((hadamardU i j hij) • p) i ^ 2 ∂μ :=
+          fs_integral_unitary p₀ (hadamardU i j hij) ((hx i).pow_const 2)
+      _ = _ := integral_congr_ae (ae_of_all _ (fun p => by
+            dsimp only
+            rw [momentMap_hadamard i j hij p]))
+  -- expand the square into six integrable pieces
+  have hpt : ∀ p : CPN N,
+      ((momentMap p i + momentMap p j + 2 * (rayDensity p i j).re) / 2) ^ 2
+        = (momentMap p i ^ 2 + (momentMap p j ^ 2 + (4 * (rayDensity p i j).re ^ 2
+          + (2 * (momentMap p i * momentMap p j)
+            + (4 * (momentMap p i * (rayDensity p i j).re)
+              + 4 * (momentMap p j * (rayDensity p i j).re)))))) / 4 :=
+    fun p => by ring
+  simp only [hpt] at key
+  rw [integral_div] at key
+  -- cumulative integrabilities, stated in lambda form so `integral_add` matches
+  have i6 : Integrable (fun p : CPN N =>
+      4 * (momentMap p j * (rayDensity p i j).re)) μ := int_xjre.const_mul 4
+  have i5l : Integrable (fun p : CPN N =>
+      4 * (momentMap p i * (rayDensity p i j).re)) μ := int_xire.const_mul 4
+  have i5 : Integrable (fun p : CPN N =>
+      4 * (momentMap p i * (rayDensity p i j).re)
+        + 4 * (momentMap p j * (rayDensity p i j).re)) μ := i5l.add i6
+  have i4l : Integrable (fun p : CPN N =>
+      2 * (momentMap p i * momentMap p j)) μ := int_xy.const_mul 2
+  have i4 : Integrable (fun p : CPN N =>
+      2 * (momentMap p i * momentMap p j)
+        + (4 * (momentMap p i * (rayDensity p i j).re)
+          + 4 * (momentMap p j * (rayDensity p i j).re))) μ := i4l.add i5
+  have i3l : Integrable (fun p : CPN N =>
+      4 * (rayDensity p i j).re ^ 2) μ := int_re2.const_mul 4
+  have i3 : Integrable (fun p : CPN N =>
+      4 * (rayDensity p i j).re ^ 2
+        + (2 * (momentMap p i * momentMap p j)
+          + (4 * (momentMap p i * (rayDensity p i j).re)
+            + 4 * (momentMap p j * (rayDensity p i j).re)))) μ := i3l.add i4
+  have i2 : Integrable (fun p : CPN N =>
+      momentMap p j ^ 2 + (4 * (rayDensity p i j).re ^ 2
+        + (2 * (momentMap p i * momentMap p j)
+          + (4 * (momentMap p i * (rayDensity p i j).re)
+            + 4 * (momentMap p j * (rayDensity p i j).re))))) μ := int_xj2.add i3
+  rw [integral_add int_xi2 i2, integral_add int_xj2 i3, integral_add i3l i4,
+    integral_add i4l i5, integral_add i5l i6,
+    integral_const_mul, integral_const_mul, integral_const_mul,
+    integral_const_mul] at key
+  -- the values, bridged through the `set`-folded measure
+  have hz1 : ∫ p, momentMap p i * (rayDensity p i j).re ∂μ = 0 := by
+    rw [hμ]; exact fs_cross_linear_zero p₀ i i j (Ne.symm hij)
+  have hz2 : ∫ p, momentMap p j * (rayDensity p i j).re ∂μ = 0 := by
+    rw [hμ]; exact fs_cross_linear_zero p₀ j i j (Ne.symm hij)
+  have hre : ∫ p, (rayDensity p i j).re ^ 2 ∂μ
+      = (∫ p, momentMap p i * momentMap p j ∂μ) / 2 := by
+    rw [hμ]; exact fs_re_sq_moment p₀ i j hij
+  have hsw : ∫ p, momentMap p j ^ 2 ∂μ = ∫ p, momentMap p i ^ 2 ∂μ := by
+    rw [hμ]; exact (fs_x_sq_swap p₀ i j).symm
+  rw [hz1, hz2, hre, hsw] at key
+  linarith
+
+/-! ### The second moments themselves
+
+With `a = 2b` (per pair) and the integrated normalisation
+`a + (N−1)·b = 1/N`, both moments are determined: `a = 2/(N(N+1))`,
+`b = 1/(N(N+1))` — the Dirichlet values, with no simplex integral in sight. -/
+
+/-- ★ **The diagonal second moment**: `E[xᵢ²] = 2/(N(N+1))`. -/
+theorem fs_x_sq_moment [NeZero N] (p₀ : CPN N) (i : Fin N) :
+    ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
+      = 2 / ((N : ℝ) * ((N : ℝ) + 1)) := by
+  have hx : ∀ a : Fin N, Measurable fun p : CPN N => momentMap p a := momentMap_measurable
+  have int_pair : ∀ k : Fin N, Integrable
+      (fun p : CPN N => momentMap p i * momentMap p k) (fubiniStudyMeasure p₀) :=
+    fun k => fs_integrable_mul p₀ (hx i) (hx k) (abs_momentMap_le_one · i)
+      (abs_momentMap_le_one · k)
+  have hNpos : (0 : ℝ) < N := by
+    exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+  -- the integrated normalisation: `Σ_k E[xᵢxₖ] = E[xᵢ] = 1/N`
+  have hsum : ∑ k : Fin N, ∫ p, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀)
+      = (N : ℝ)⁻¹ := by
+    rw [← integral_finsetSum Finset.univ (fun k _ => int_pair k)]
+    calc ∫ p, ∑ k : Fin N, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀)
+        = ∫ p, momentMap p i ∂(fubiniStudyMeasure p₀) :=
+          integral_congr_ae (ae_of_all _ (fun p => by
+            dsimp only
+            rw [← Finset.mul_sum, momentMap_sum_eq_one, mul_one]))
+      _ = (N : ℝ)⁻¹ := fsFirstMoment_diag p₀ i
+  -- split off the diagonal term
+  rw [← Finset.add_sum_erase Finset.univ
+    (fun k => ∫ p, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀))
+    (Finset.mem_univ i)] at hsum
+  have hdiag : ∫ p, momentMap p i * momentMap p i ∂(fubiniStudyMeasure p₀)
+      = ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀) :=
+    integral_congr_ae (ae_of_all _ (fun p => by dsimp only; rw [← pow_two]))
+  rw [hdiag] at hsum
+  -- every off-diagonal term is half the diagonal one (`a = 2b`)
+  rw [show ∑ k ∈ Finset.univ.erase i,
+        ∫ p, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀)
+      = ∑ _k ∈ Finset.univ.erase i,
+        (∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)) / 2 from
+    Finset.sum_congr rfl (fun k hk => by
+      rw [fs_x_sq_eq_two_cross p₀ ((Finset.ne_of_mem_erase hk).symm)]
+      ring)] at hsum
+  rw [Finset.sum_const, Finset.card_erase_of_mem (Finset.mem_univ i),
+    Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    Nat.cast_sub (Nat.one_le_iff_ne_zero.mpr (NeZero.ne N)), Nat.cast_one] at hsum
+  -- solve the linear equation `S + (N−1)·S/2 = 1/N`
+  rw [show ((N : ℝ))⁻¹ = 1 / (N : ℝ) from (one_div _).symm,
+    eq_div_iff hNpos.ne'] at hsum
+  rw [eq_div_iff (mul_pos hNpos (by linarith : (0:ℝ) < (N:ℝ) + 1)).ne']
+  linear_combination 2 * hsum
+
+/-- ★ **The cross second moment**: `E[xᵢxⱼ] = 1/(N(N+1))` for `i ≠ j`. -/
+theorem fs_x_cross_moment [NeZero N] (p₀ : CPN N) {i j : Fin N} (hij : i ≠ j) :
+    ∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀)
+      = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
+  have h := fs_x_sq_eq_two_cross p₀ hij
+  rw [fs_x_sq_moment p₀ i] at h
+  linear_combination -h / 2
+
+/-! ### Diagonal statistics: expectation, second moment, Chebyshev -/
+
+/-- The expectation of a diagonal statistic `Σ λₖ·xₖ` is `(Σλ)/N` — the
+maximally-mixed value. -/
+theorem fs_linear_expectation [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
+    ∫ p, ∑ k, lam k * momentMap p k ∂(fubiniStudyMeasure p₀)
+      = (∑ k, lam k) / N := by
+  rw [integral_finsetSum Finset.univ (fun k _ =>
+    (momentMap_integrable p₀ k).const_mul (lam k))]
+  calc ∑ k : Fin N, ∫ p, lam k * momentMap p k ∂(fubiniStudyMeasure p₀)
+      = ∑ k : Fin N, lam k * (N : ℝ)⁻¹ :=
+        Finset.sum_congr rfl (fun k _ => by
+          rw [integral_const_mul, fsFirstMoment_diag p₀ k])
+    _ = (∑ k, lam k) / N := by rw [div_eq_mul_inv, ← Finset.sum_mul]
+
+/-- ★ **The second moment of a diagonal statistic**:
+`E[(Σ λₖxₖ)²] = ((Σλ)² + Σλ²)/(N(N+1))`. -/
+theorem fs_linear_sq_moment [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
+    ∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fubiniStudyMeasure p₀)
+      = ((∑ k, lam k) ^ 2 + ∑ k, lam k ^ 2) / ((N : ℝ) * ((N : ℝ) + 1)) := by
+  have hx : ∀ a : Fin N, Measurable fun p : CPN N => momentMap p a := momentMap_measurable
+  have int_pair : ∀ a b : Fin N, Integrable
+      (fun p : CPN N => lam a * lam b * (momentMap p a * momentMap p b))
+      (fubiniStudyMeasure p₀) := fun a b =>
+    (fs_integrable_mul p₀ (hx a) (hx b) (abs_momentMap_le_one · a)
+      (abs_momentMap_le_one · b)).const_mul (lam a * lam b)
+  calc ∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fubiniStudyMeasure p₀)
+      = ∫ p, ∑ a, ∑ b, lam a * lam b * (momentMap p a * momentMap p b)
+          ∂(fubiniStudyMeasure p₀) :=
+        integral_congr_ae (ae_of_all _ (fun p => by
+          dsimp only
+          rw [pow_two, Finset.sum_mul_sum]
+          exact Finset.sum_congr rfl (fun a _ =>
+            Finset.sum_congr rfl (fun b _ => by ring))))
+    _ = ∑ a, ∑ b, ∫ p, lam a * lam b * (momentMap p a * momentMap p b)
+          ∂(fubiniStudyMeasure p₀) := by
+        rw [integral_finsetSum Finset.univ (fun a _ =>
+          integrable_finsetSum Finset.univ (fun b _ => int_pair a b))]
+        exact Finset.sum_congr rfl (fun a _ =>
+          integral_finsetSum Finset.univ (fun b _ => int_pair a b))
+    _ = ∑ a, ∑ b, lam a * lam b *
+          (if b = a then 2 / ((N:ℝ) * ((N:ℝ)+1)) else 1 / ((N:ℝ) * ((N:ℝ)+1))) :=
+        Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => by
+          rw [integral_const_mul]
+          by_cases hba : b = a
+          · rw [if_pos hba, hba]
+            congr 1
+            calc ∫ p, momentMap p a * momentMap p a ∂(fubiniStudyMeasure p₀)
+                = ∫ p, momentMap p a ^ 2 ∂(fubiniStudyMeasure p₀) :=
+                  integral_congr_ae (ae_of_all _ (fun p => by
+                    dsimp only; rw [← pow_two]))
+              _ = 2 / ((N:ℝ) * ((N:ℝ)+1)) := fs_x_sq_moment p₀ a
+          · rw [if_neg hba, fs_x_cross_moment p₀ (fun h => hba h.symm)]))
+    _ = ((∑ k, lam k) ^ 2 + ∑ k, lam k ^ 2) / ((N : ℝ) * ((N : ℝ) + 1)) := by
+        rw [show (∑ a, ∑ b, lam a * lam b *
+            (if b = a then 2 / ((N:ℝ) * ((N:ℝ)+1)) else 1 / ((N:ℝ) * ((N:ℝ)+1))))
+          = ∑ a : Fin N, (lam a * (∑ k, lam k) * (1 / ((N:ℝ) * ((N:ℝ)+1)))
+              + lam a ^ 2 * (1 / ((N:ℝ) * ((N:ℝ)+1)))) from
+          Finset.sum_congr rfl (fun a _ => by
+            rw [show (∑ b, lam a * lam b *
+                (if b = a then 2 / ((N:ℝ) * ((N:ℝ)+1)) else 1 / ((N:ℝ) * ((N:ℝ)+1))))
+              = ∑ b : Fin N, (lam a * (1 / ((N:ℝ) * ((N:ℝ)+1))) * lam b
+                  + (if b = a then lam a * lam b * (1 / ((N:ℝ) * ((N:ℝ)+1))) else 0)) from
+              Finset.sum_congr rfl (fun b _ => by split_ifs <;> ring)]
+            rw [Finset.sum_add_distrib, ← Finset.mul_sum,
+              Finset.sum_eq_single a (fun b _ hba => if_neg hba)
+                (fun ha => absurd (Finset.mem_univ a) ha), if_pos rfl]
+            ring)]
+        rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
+          ← Finset.sum_mul]
+        ring
+
+/-- ★★ **Chebyshev-grade canonical typicality** (Q24, diagonal form): a single
+Fubini–Study sample concentrates its diagonal statistics at the
+maximally-mixed value, at rate `Var = (N·Σλ² − (Σλ)²)/(N²(N+1)) = O(1/N)` —
+polynomial concentration with no isoperimetry, from the twirl algebra alone. -/
+theorem fs_chebyshev_concentration [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ)
+    {ε : ℝ} (hε : 0 < ε) :
+    (fubiniStudyMeasure p₀)
+        {p | ε ≤ |(∑ k, lam k * momentMap p k) - (∑ k, lam k) / N|}
+      ≤ ENNReal.ofReal ((((N:ℝ) * ∑ k, lam k ^ 2 - (∑ k, lam k) ^ 2)
+          / ((N:ℝ) ^ 2 * ((N:ℝ) + 1))) / ε ^ 2) := by
+  have hNpos : (0 : ℝ) < N := by
+    exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
+  have hXmeas : Measurable fun p : CPN N => ∑ k, lam k * momentMap p k :=
+    Finset.measurable_sum Finset.univ (fun k _ =>
+      (momentMap_measurable k).const_mul (lam k))
+  have hX2 : MemLp (fun p : CPN N => ∑ k, lam k * momentMap p k) 2
+      (fubiniStudyMeasure p₀) :=
+    MemLp.of_bound hXmeas.aestronglyMeasurable (∑ k, |lam k|)
+      (ae_of_all _ (fun p => by
+        rw [Real.norm_eq_abs]
+        refine (Finset.abs_sum_le_sum_abs _ _).trans
+          (Finset.sum_le_sum (fun k _ => ?_))
+        rw [abs_mul]
+        calc |lam k| * |momentMap p k| ≤ |lam k| * 1 :=
+              mul_le_mul_of_nonneg_left (abs_momentMap_le_one p k) (abs_nonneg _)
+          _ = |lam k| := mul_one _))
+  have hEX : ∫ p, ∑ k, lam k * momentMap p k ∂(fubiniStudyMeasure p₀)
+      = (∑ k, lam k) / N := fs_linear_expectation p₀ lam
+  have hvar : ProbabilityTheory.variance
+        (fun p : CPN N => ∑ k, lam k * momentMap p k) (fubiniStudyMeasure p₀)
+      = ((N:ℝ) * ∑ k, lam k ^ 2 - (∑ k, lam k) ^ 2)
+          / ((N:ℝ) ^ 2 * ((N:ℝ) + 1)) := by
+    rw [ProbabilityTheory.variance_eq_sub hX2]
+    rw [show ((fun p : CPN N => ∑ k, lam k * momentMap p k) ^ 2)
+        = fun p : CPN N => (∑ k, lam k * momentMap p k) ^ 2 from
+      funext (fun p => Pi.pow_apply _ _ _)]
+    rw [show (∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fubiniStudyMeasure p₀))
+        = ((∑ k, lam k) ^ 2 + ∑ k, lam k ^ 2) / ((N : ℝ) * ((N : ℝ) + 1)) from
+      fs_linear_sq_moment p₀ lam]
+    rw [show (∫ p, ∑ k, lam k * momentMap p k ∂(fubiniStudyMeasure p₀))
+        = (∑ k, lam k) / N from hEX]
+    have hN1 : ((N:ℝ) + 1) ≠ 0 := by positivity
+    field_simp
+    ring
+  calc (fubiniStudyMeasure p₀)
+        {p | ε ≤ |(∑ k, lam k * momentMap p k) - (∑ k, lam k) / N|}
+      = (fubiniStudyMeasure p₀)
+          {p | ε ≤ |(∑ k, lam k * momentMap p k)
+            - ∫ q, ∑ k, lam k * momentMap q k ∂(fubiniStudyMeasure p₀)|} := by
+        rw [hEX]
+    _ ≤ ENNReal.ofReal (ProbabilityTheory.variance
+          (fun p : CPN N => ∑ k, lam k * momentMap p k)
+          (fubiniStudyMeasure p₀) / ε ^ 2) :=
+        ProbabilityTheory.meas_ge_le_variance_div_sq hX2 hε
+    _ = ENNReal.ofReal ((((N:ℝ) * ∑ k, lam k ^ 2 - (∑ k, lam k) ^ 2)
+          / ((N:ℝ) ^ 2 * ((N:ℝ) + 1))) / ε ^ 2) := by rw [hvar]
 
 end Thermo
 end CSD

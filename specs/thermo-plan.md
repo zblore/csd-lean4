@@ -1,7 +1,9 @@
 # Thermodynamics track — plan
 
-**Status: TH1 DONE 2026-07-05 (EXPECTATION core; concentration/Levy staged as the named
-residual); TH2 DONE 2026-07-07 (the H-theorem / second law as pinching entropy monotonicity);
+**Status: TH1 DONE 2026-07-05 (EXPECTATION core), UPGRADED 2026-08-21 (Q24: the polynomial
+Chebyshev concentration tier landed — `fs_chebyshev_concentration` via twirl-algebra second
+moments, `specs/th1-concentration-scoping.md`; only exponential concentration/Levy stays the
+named residual); TH2 DONE 2026-07-07 (the H-theorem / second law as pinching entropy monotonicity);
 TH3 DONE 2026-07-07 (temperature / free energy / Gibbs variational principle); TH4 DONE 2026-07-07
 (Landauer's principle, the Reeb–Wolf bound); TH5 stretch planned.** The thermodynamics track formalises the
 statistical-mechanical content that CSD's foundations already imply: Born weights are equilibrium
@@ -57,10 +59,13 @@ concentration/typicality result, not a dynamical thermalisation theorem.
   `E_{μ_FS}[ Tr_E |ψ><ψ| ] = (1/d_S) I_S`. Partial-traces the FS first moment through the genuine corpus
   `Matrix.traceRight`. The FS-average ANALOGUE of `LF6.maxEntangled_marginal_uniform` (the specific
   maximally-entangled state's marginal) -- an analogy, not a formal Lean dependency (does not cite it).
-- HONEST SCOPE: EXPECTATION (average) only. The TYPICAL-state (concentration/Levy) upgrade is the NAMED
-  residual (module docstring `Concentration residual`): it needs Levy's lemma / spherical isoperimetry,
-  not in Mathlib. No `sorry`/axiom stands in. `fs_first_moment` is exactly the mean Levy would
-  concentrate around; only the deviation bound is missing. NOT dynamical thermalisation (needs mixing/ETH).
+- HONEST SCOPE: EXPECTATION plus the POLYNOMIAL concentration tier (Q24, 2026-08-21:
+  `fs_chebyshev_concentration` — diagonal statistics of a single μ_FS-sample concentrate at the
+  maximally-mixed value with `Var = O(1/N)`, from twirl-algebra second moments; see
+  `specs/th1-concentration-scoping.md`, B4/B5 gated). The EXPONENTIAL typical-state
+  (concentration/Levy) upgrade is the NAMED residual (module docstring `Concentration residual`):
+  it needs Levy's lemma / spherical isoperimetry, not in Mathlib. No `sorry`/axiom stands in.
+  NOT dynamical thermalisation (needs mixing/ETH).
   CSD-microdynamics reading rests on the shared A5/D1 residue (μ_FS posited as sampling law).
   Foundational-triple; Gleason-free. AxiomAudit-pinned (`fs_first_moment`,
   `canonical_typicality_expectation`).

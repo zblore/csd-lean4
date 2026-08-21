@@ -1116,20 +1116,26 @@ entries:
       uniqueness theorem behind it. That converts the programme's central manoeuvre into a
       contribution to someone else's open problem.
 
-      The corpus is precise about what it has: the expectation, not yet the concentration.
-      Read the next register before citing this one.
+      The corpus is precise about what it has: the expectation, and polynomial-rate
+      concentration for diagonal statistics -- a single sample does see the thermal value,
+      up to Chebyshev. The exponential rate is the one piece still owed. Read the next
+      register before citing this one.
     mathematical: >
       For a global pure state drawn from the Fubini-Study measure, the average reduced state
-      of a tensor subsystem is exactly maximally mixed. That is the theorem: the
+      of a tensor subsystem is exactly maximally mixed. That is the first theorem: the
       EXPECTATION.
 
-      The literature's headline -- a single typical state has a near-thermal reduced state
-      with probability exponentially close to one -- needs Levy's lemma, concentration of
-      measure on high-dimensional spheres, which the proof assistant's library does not
-      carry. The mean proved here is exactly the value concentration would concentrate
-      around; the deviation bound is the missing piece, recorded as a named residual rather
-      than papered over. And none of this is dynamical thermalisation, which would need
-      mixing assumptions and is out of scope.
+      The second is concentration at polynomial rate. The Fubini-Study second moments turn
+      out to be pure symmetry algebra -- a two-coordinate Hadamard rotation, a sign flip and
+      a quarter-phase force E[x_i^2] = 2/(N(N+1)) and E[x_i x_j] = 1/(N(N+1)) with no
+      integral ever computed -- so every diagonal statistic has variance O(1/N) and
+      Chebyshev makes a single sample typical (fs_chebyshev_concentration).
+
+      The literature's headline rate -- exponentially close to one -- needs Levy's lemma,
+      concentration of measure on high-dimensional spheres, which the proof assistant's
+      library does not carry. That deviation-rate upgrade is the one piece recorded as a
+      named residual rather than papered over. And none of this is dynamical
+      thermalisation, which would need mixing assumptions and is out of scope.
     person: >
       The modern result has two independent birth certificates, both from 2006: Goldstein,
       Lebowitz, Tumulka and Zanghi -- the Rutgers-Bochum-Genoa axis of the Bohmian school,
