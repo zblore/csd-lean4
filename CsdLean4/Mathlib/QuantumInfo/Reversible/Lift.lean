@@ -40,10 +40,19 @@ over a gate list lifts a whole permutation circuit basis-state by basis-state.
 
 ## What is deliberately NOT here
 
-Nothing about non-permutation operations: a mid-circuit measurement gadget is not a basis
-permutation, and lifting one as a local tensor factor of `QReg m` needs the factorisation
-`QReg m ≅ QReg 3 ⊗ QReg (m − 3)`, which is out of scope for this file (see the consumers'
-scope notes).
+* **The general lift** — per-constructor lemmas for `X`, `CX` and `swap` (each easier than the
+  CCX case done here) plus the gate-list fold (a nontrivial induction) — is a recorded
+  **pure-optionality** item (decision 2026-08-21): nothing in flight needs it. The Boolean
+  frontier (`denote = divstepRev`-style results) never touches amplitudes; the measurement-gadget
+  strand needs amplitudes but is walled on a *different* obstruction (the gadget is not a
+  permutation, so it needs the tensor factorisation `QReg m ≅ QReg 3 ⊗ QReg (m − 3)`, which
+  Mathlib does not provide — the permutation lift would not unblock it); and the
+  documented-count QFT gap needs the *converse* direction on a non-permutation. Build it only
+  when a consumer appears or as a Mathlib submission in its own right; if picked up, scope it
+  fresh (prior sizing estimates oscillated and are not to be trusted).
+* Nothing about non-permutation operations: a mid-circuit measurement gadget is not a basis
+  permutation, and lifting one as a local tensor factor of `QReg m` needs the factorisation
+  named above, out of scope for this file (see the consumers' scope notes).
 
 ## References
 
