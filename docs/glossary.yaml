@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 67f292038594c64309fa6ffd7aa3f9a06178944f
+  sha: 87e92fe6915cfa1f4b0ab1295196ff5765ff45fb
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
