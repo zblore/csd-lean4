@@ -72,6 +72,46 @@ theorem conditionalMeasure_apply (P : Preparation D) (A : Set Sigma) (hA : Measu
       (D.muL : Measure Sigma) (A ∩ P.region) / (D.muL : Measure Sigma) P.region :=
   (P.toOnticSetup 0).prepMeasure_apply A hA
 
+/-- A conditional-measure null set meets the preparation region in a
+Liouville-null set: `muH(A) = 0` forces `muL (A ∩ region) = 0`. The division
+cannot hide mass because the Liouville measure is finite. -/
+theorem measure_inter_region_eq_zero_of_conditionalMeasure_eq_zero
+    (P : Preparation D) {A : Set Sigma} (hA : MeasurableSet A)
+    (h : ((P.conditionalMeasure : ProbabilityMeasure Sigma) : Measure Sigma) A = 0) :
+    (D.muL : Measure Sigma) (A ∩ P.region) = 0 := by
+  have happ := P.conditionalMeasure_apply A hA
+  rw [h] at happ
+  rcases ENNReal.div_eq_zero_iff.mp happ.symm with h0 | htop
+  · exact h0
+  · exact absurd htop (measure_ne_top _ _)
+
+/-- ★★ **Overlapping preparations are not mutually singular** (Q28 item 4 —
+the formal content of "CSD is ψ-epistemic" at the level of physical, region-based
+preparations). If two preparation regions share Liouville-positive overlap, their
+normalised conditional measures cannot be separated onto disjoint supports.
+
+The argument is a density argument, NOT a shared-support one — two measures can
+both charge a common set and still be mutually singular. On the overlap both
+conditionals are normalised restrictions of the same Liouville measure: a
+singularity witness `S` would make `muL (S ∩ Ω_Q)` null, hence
+`muL (S ∩ Ω_P ∩ Ω_Q)` null, while `Sᶜ` is `P`-null, making
+`muL (Sᶜ ∩ Ω_P)` null — and the overlap would be covered by two null sets. -/
+theorem conditional_not_mutuallySingular (P Q : Preparation D)
+    (h : (D.muL : Measure Sigma) (P.region ∩ Q.region) ≠ 0) :
+    ¬ ((P.conditionalMeasure : ProbabilityMeasure Sigma) : Measure Sigma).MutuallySingular
+        ((Q.conditionalMeasure : ProbabilityMeasure Sigma) : Measure Sigma) := by
+  rintro ⟨S, hS, hPS, hQSc⟩
+  have h1 : (D.muL : Measure Sigma) (S ∩ P.region) = 0 :=
+    P.measure_inter_region_eq_zero_of_conditionalMeasure_eq_zero hS hPS
+  have h2 : (D.muL : Measure Sigma) (Sᶜ ∩ Q.region) = 0 :=
+    Q.measure_inter_region_eq_zero_of_conditionalMeasure_eq_zero hS.compl hQSc
+  have hsplit : P.region ∩ Q.region ⊆ (S ∩ P.region) ∪ (Sᶜ ∩ Q.region) := by
+    intro x hx
+    by_cases hxS : x ∈ S
+    · exact Or.inl ⟨hxS, hx.1⟩
+    · exact Or.inr ⟨hxS, hx.2⟩
+  exact h (measure_mono_null hsplit (measure_union_null h1 h2))
+
 end Preparation
 
 /-- **An isolation preparation from a record history (postulate P6).** No new record is established;

@@ -1,5 +1,12 @@
 # C2 support: the entangled-positive-measure arc — scoping note
 
+**EXECUTED 2026-08-21, same day as the scoping — items 1–4 all landed** (see
+the BACKLOG Q28 row for the full landing record and snag ledger; item 5 stays
+research-gated as scoped). One route improvement over the plan below: item 2b's
+perturbation is a single standard-basis vector `e_{(j₁,k₁)}`, not `a' ⊗ b'` —
+no orthogonal complements anywhere — and the reusable minor criterion
+`not_mem_range_segre` replaces the bespoke rank argument.
+
 Created 2026-08-21, from the external C2 review brief ("what the paper needs, and
 what it does not"), verified claim-by-claim against the corpus the same day. The
 Q11 mold: routes checked before scoping, gates and abort criteria fixed in

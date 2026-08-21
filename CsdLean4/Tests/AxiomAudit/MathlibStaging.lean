@@ -677,6 +677,22 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_unique
 
+-- Q28 item 1 (2026-08-21, FubiniStudyUnique.lean): FUBINI-STUDY ATOMLESSNESS by pigeonhole,
+-- no stabiliser Haar measure. Transitivity + invariance make all singletons equal in mass
+-- (fubiniStudyMeasure_singleton_eq); the projective space is infinite for 2 <= N
+-- (projectivization_infinite -- the rays [e0 + t*e1], t : NAT, pairwise distinct); a
+-- probability measure cannot give arbitrarily many disjoint points a common positive mass.
+-- Retires KahlerInstance.lean's "Haar-of-subgroup" caveat; feeds the null-fibre corollary
+-- (SigmaLayer/PreparationDensity.lean) that makes the pure-state Dirac wrapper unreachable
+-- as a physical preparation (the C2 region-preparation proposition's last step).
+/-- info: 'Matrix.UnitaryGroup.projectivization_infinite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.UnitaryGroup.projectivization_infinite
+
+/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_singleton
+
 -- Pointwise Kähler fundamental form (2026-07-10): the form-level analogue of fubiniStudyMeasure. On a
 -- complex inner-product space (the tangent model ψ^⊥ of ℂℙ^{N-1}) the flat Hermitian structure gives the
 -- Kähler triple g = re⟪·,·⟫, ω = im⟪·,·⟫, J = i•·. Proved pointwise & axiom-free: J²=-1, ω alternating

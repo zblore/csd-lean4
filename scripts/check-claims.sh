@@ -234,6 +234,7 @@ HasHamiltonianRealisation
 IsForcedKahlerVolume
 IsFubiniStudyKahler
 kahlerConstraintDynamics
+kahlerFstSector
 KahlerOnticSetup
 kahlerProjectiveSector
 ofKählerPreparation
@@ -286,6 +287,10 @@ trivialKahlerOnticSetup"
 #     trivialKahlerOnticSetup — Sigma := ℙ ℂ (EuclideanSpace ℂ (Fin N)) = CP^{N-1}.   EVEN.
 #     ofKählerPreparation(Flow) — CPN 4 = CP^3, dim 6.                                EVEN.
 #
+#   kahlerFstSector — (2026-08-21, Q28, SigmaLayer/PreparationDensity.lean) the base
+#     projection of the CONCRETE Kähler arena `KSigma N = ℂℙ^{N-1} × T²` as a
+#     ProjectiveSector. Real dimension 2(N−1) + 2 — EVEN. The word names the arena the
+#     declaration is anchored to (same referent as kMuL/KSigma), not a new Kähler claim.
 #   ABSTRACT ARENA — NO parity claim is made or possible here:
 #     KahlerOnticSetup        — a structure with `Sigma : Type*` as a FIELD.
 #     kahlerConstraintDynamics / kahlerProjectiveSector
@@ -512,7 +517,16 @@ liouville_isProbability"
 #     inherits the word from the production OperationalPackage.fromPreparation_
 #     liouville_apply it instantiates; the statement genuinely concerns the Liouville
 #     preparation (the package built from kMuL). No new Liouville claim.
+#   kahlerFstSector_projectiveLaw / kahler_preparation_density /
+#   kahler_preparations_overlap — (2026-08-21, Q28 items 3-4,
+#     SigmaLayer/PreparationDensity.lean) all three are statements ABOUT the concrete
+#     Kähler arena KSigma N (the c = 1 base pushforward of kMuL; ρ_ep against μFS; the
+#     ψ-epistemic overlap witness). The word names the arena — the same earned referent
+#     as kMuL/kahlerFstSector — and no new Kähler-structure claim is made.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+kahlerFstSector_projectiveLaw
+kahler_preparation_density
+kahler_preparations_overlap
 kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal
 coupling_hamiltonian_duality

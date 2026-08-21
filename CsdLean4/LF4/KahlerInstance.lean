@@ -38,10 +38,14 @@ freedom whose volume fractions realise the Born weights downstream
 
 **Why a torus and not `ℂℙ^M`.** Carving the FS measure on `ℂℙ^M` into regions
 of prescribed volume needs the atomless intermediate-value theorem, which is
-not in Mathlib (and FS-atomlessness is itself a Haar-of-subgroup argument). The
-flat torus is equally compact Kähler but its uniform volume carves into arcs
-elementarily — so the Born-weight regions are genuine flat-Kähler volumes with
-no measure-isomorphism machinery.
+not in Mathlib. (This note used to add "and FS-atomlessness is itself a
+Haar-of-subgroup argument" — superseded 2026-08-21, Q28 item 1:
+`fubiniStudyMeasure_singleton` proves atomlessness by pigeonhole, with no
+stabiliser Haar measure; the fibres of `π` are `kMuL`-null,
+`SigmaLayer/PreparationDensity.lean`. The atomless IVT remains the genuinely
+missing carving ingredient.) The flat torus is equally compact Kähler but its
+uniform volume carves into arcs elementarily — so the Born-weight regions are
+genuine flat-Kähler volumes with no measure-isomorphism machinery.
 
 **Bridge is axiom-free for this instance.** `π∗μL = μFS` is the product
 marginal (`Measure.fst_prod`, `c = 1`), citing only the foundational triple —

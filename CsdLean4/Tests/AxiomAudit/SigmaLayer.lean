@@ -884,6 +884,86 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.segre_not_surjective
 
+-- Q28 ITEM 2 (2026-08-21, OnticComposite.lean + EntangledMeasure.lean): ENTANGLED RAYS
+-- CARRY POSITIVE FUBINI-STUDY WEIGHT -- the C2-blocking item, in topological-neighbourhood
+-- form (no metric on P exists; MATHLIB-GAPS). Topology: segre_range_isClosed (compact image
+-- in a Hausdorff target -- the product rays are closed, so the entangled rays are OPEN);
+-- not_mem_range_segre (the reusable minor criterion: one unbalanced 2x2 minor of the
+-- coefficient matrix puts a ray outside the Segre image; segre_not_surjective's Bell
+-- computation is the (0,0,1,1) case); exists_entangled_mem_nhds (the path
+-- [a (x) b + t e_(j1,k1)] -- a SINGLE standard-basis perturbation, no orthogonal
+-- complements -- is continuous, lands on the product ray at t = 0, and fails the minor
+-- criterion for t /= 0). Measure: compositeFubiniStudy (THE FS measure carried across the
+-- canonical index bijection Fin nA x Fin nB ~ Fin (nA*nB); probability; full support --
+-- compositeFubiniStudy_pos_of_isOpen); compositeFubiniStudy_entangled_pos_global (the
+-- entangled complement has positive measure -- open by 2a, nonempty by
+-- segre_not_surjective); compositeFubiniStudy_entangled_pos (EVERY open neighbourhood of a
+-- product ray meets the entangled complement in positive measure -- the set a PBR-style
+-- product-supported law must give measure zero; the C2 contradiction).
+/-- info: 'CSD.RecordLayer.segre_range_isClosed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segre_range_isClosed
+
+/-- info: 'CSD.RecordLayer.not_mem_range_segre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_mem_range_segre
+
+/-- info: 'CSD.RecordLayer.exists_entangled_mem_nhds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_entangled_mem_nhds
+
+/-- info: 'CSD.RecordLayer.compositeFubiniStudy_pos_of_isOpen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeFubiniStudy_pos_of_isOpen
+
+/-- info: 'CSD.RecordLayer.compositeFubiniStudy_entangled_pos_global' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeFubiniStudy_entangled_pos_global
+
+/-- info: 'CSD.RecordLayer.compositeFubiniStudy_entangled_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeFubiniStudy_entangled_pos
+
+-- Q28 ITEMS 3 AND 4 (2026-08-21, IsolationPreparation.lean + PreparationDensity.lean):
+-- RHO_EP AND THE PSI-EPISTEMIC OVERLAP. Item 4a: conditional_not_mutuallySingular --
+-- preparations with Liouville-positive region overlap have NON-mutually-singular
+-- conditional laws (a DENSITY argument, not shared support: on the overlap both are
+-- normalised restrictions of the same Liouville measure, so a singularity witness covers
+-- the overlap by two null sets). Item 3: projectivePreparationLaw_absolutelyContinuous
+-- (under a bridge pi_* muL = c * muFS -- no c /= 0 needed for this direction) and
+-- projectivePreparationLaw_withDensity (rho_ep := rnDeriv; the law IS muFS.withDensity
+-- rho_ep -- the object Papers C and TN2 use, in the corpus for the first time).
+-- The Kahler seam at c = 1: kahlerFstSector_projectiveLaw (the base pushforward of kMuL
+-- IS the FS measure), kahler_preparation_density (rho_ep concrete for every region
+-- preparation on KSigma -- the first statement mentioning both SigmaLayer.Preparation and
+-- the LF4 bridge, the seam where C2 v1.01 tore). Item 4b: kahler_preparations_overlap --
+-- preparations localised on overlapping open neighbourhoods of their own rays are not
+-- mutually singular (the psi-epistemic witness, topological existence form; the epsilon-
+-- ball form needs the FS metric, MATHLIB-GAPS).
+/-- info: 'CSD.SigmaLayer.Preparation.conditional_not_mutuallySingular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.Preparation.conditional_not_mutuallySingular
+
+/-- info: 'CSD.SigmaLayer.ProjectiveSector.projectivePreparationLaw_absolutelyContinuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ProjectiveSector.projectivePreparationLaw_absolutelyContinuous
+
+/-- info: 'CSD.SigmaLayer.ProjectiveSector.projectivePreparationLaw_withDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ProjectiveSector.projectivePreparationLaw_withDensity
+
+/-- info: 'CSD.SigmaLayer.kahlerFstSector_projectiveLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.kahlerFstSector_projectiveLaw
+
+/-- info: 'CSD.SigmaLayer.kahler_preparation_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.kahler_preparation_density
+
+/-- info: 'CSD.SigmaLayer.kahler_preparations_overlap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.kahler_preparations_overlap
+
 -- A6 STEPS TWO AND THREE: ONTIC REDUCTION MAPS + MARGINAL STABILITY (2026-08-02,
 -- SigmaLayer/OnticMarginals.lean).
 -- STEP 2: rayDensity -- the density matrix of a composite ray, RAY-WELL-DEFINED (rayDensity_mk, the

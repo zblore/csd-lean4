@@ -388,4 +388,109 @@ theorem fubiniStudyMeasure_eq_default (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N
     fubiniStudyMeasure p₀ = defaultFubiniStudyMeasure N :=
   fubiniStudyMeasure_basepoint_independent p₀ (defaultPoint N)
 
+open MeasureTheory
+
+/-! ### Atomlessness (Q28 item 1)
+
+Every singleton is `μ_FS`-null for `2 ≤ N`, by pigeonhole: transitivity and
+invariance make all singletons equal in measure, the projective space is
+infinite, and a probability measure cannot give arbitrarily many disjoint
+points a common positive mass. No stabiliser subgroup is consulted — the
+"Haar-of-subgroup" route the corpus once assumed necessary
+(`LF4/KahlerInstance.lean`) is bypassed entirely. -/
+
+/-- All singletons carry the same Fubini–Study mass: move one point onto the
+other by transitivity, and use invariance. -/
+lemma fubiniStudyMeasure_singleton_eq
+    (p₀ q q' : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    fubiniStudyMeasure p₀ {q} = fubiniStudyMeasure p₀ {q'} := by
+  obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) q q'
+  have hpre : (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) ⁻¹' {q'} = {q} := by
+    ext p
+    simp only [Set.mem_preimage, Set.mem_singleton_iff]
+    constructor
+    · intro h
+      exact smul_left_cancel U (h.trans hU.symm)
+    · rintro rfl
+      exact hU
+  calc fubiniStudyMeasure p₀ {q}
+      = fubiniStudyMeasure p₀
+          ((fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) ⁻¹' {q'}) := by
+        rw [hpre]
+    _ = (Measure.map (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p)
+          (fubiniStudyMeasure p₀)) {q'} := by
+        rw [Measure.map_apply (continuous_const_smul U).measurable
+          isClosed_singleton.measurableSet]
+    _ = fubiniStudyMeasure p₀ {q'} := by
+        rw [fubiniStudyMeasure_smul_invariant U p₀]
+
+/-- For `2 ≤ N` the projective space is infinite: the rays `[e₀ + t • e₁]` for
+`t : ℕ` are pairwise distinct. -/
+theorem projectivization_infinite (hN : 2 ≤ N) :
+    Infinite (ℙ ℂ (EuclideanSpace ℂ (Fin N))) := by
+  set i0 : Fin N := ⟨0, by omega⟩ with hi0_def
+  set i1 : Fin N := ⟨1, by omega⟩ with hi1_def
+  have hne : i0 ≠ i1 := by
+    intro h
+    have := congrArg Fin.val h
+    simp [hi0_def, hi1_def] at this
+  set v : ℕ → EuclideanSpace ℂ (Fin N) := fun t =>
+    EuclideanSpace.single i0 1 + (t : ℂ) • EuclideanSpace.single i1 1 with hv_def
+  have hv0 : ∀ t, v t i0 = 1 := by
+    intro t
+    simp [hv_def, PiLp.add_apply, PiLp.smul_apply, hne]
+  have hv1 : ∀ t, v t i1 = (t : ℂ) := by
+    intro t
+    simp [hv_def, PiLp.add_apply, PiLp.smul_apply, Ne.symm hne]
+  have hvne : ∀ t, v t ≠ 0 := by
+    intro t h0
+    have := congrArg (fun z : EuclideanSpace ℂ (Fin N) => z i0) h0
+    rw [hv0 t] at this
+    simp at this
+  refine Infinite.of_injective
+    (fun t => Projectivization.mk ℂ (v t) (hvne t)) ?_
+  intro s t hst
+  rw [Projectivization.mk_eq_mk_iff] at hst
+  obtain ⟨c, hc⟩ := hst
+  have h0 := congrArg (fun z : EuclideanSpace ℂ (Fin N) => z i0) hc
+  have h1 := congrArg (fun z : EuclideanSpace ℂ (Fin N) => z i1) hc
+  simp only [Units.smul_def, PiLp.smul_apply, smul_eq_mul, hv0, hv1,
+    mul_one] at h0 h1
+  rw [h0] at h1
+  rw [one_mul] at h1
+  exact_mod_cast h1.symm
+
+/-- ★ **The Fubini–Study measure is atomless** (Q28 item 1): for `2 ≤ N` every
+singleton is null. Pigeonhole, with no stabiliser Haar measure anywhere: all
+singletons share one mass `a` by transitivity + invariance; were `a ≠ 0`, a
+finite set of more than `1/a` distinct points — available since the space is
+infinite — would carry measure exceeding `1`. -/
+theorem fubiniStudyMeasure_singleton (hN : 2 ≤ N)
+    (p₀ q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    fubiniStudyMeasure p₀ {q} = 0 := by
+  by_contra ha
+  have := projectivization_infinite hN
+  set a := fubiniStudyMeasure p₀ {q} with ha_def
+  have ha_le : a ≤ 1 :=
+    (measure_mono (Set.subset_univ _)).trans_eq measure_univ
+  have ha_ne_top : a ≠ ⊤ := (ha_le.trans_lt ENNReal.one_lt_top).ne
+  obtain ⟨n, hn⟩ := ENNReal.exists_nat_gt
+    (ENNReal.div_lt_top ENNReal.one_ne_top ha).ne
+  obtain ⟨S, hScard⟩ :=
+    Infinite.exists_subset_card_eq (ℙ ℂ (EuclideanSpace ℂ (Fin N))) n
+  have : MeasurableSingletonClass (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
+    ⟨fun _ => isClosed_singleton.measurableSet⟩
+  have hSmeas : fubiniStudyMeasure p₀ ↑S = n * a := by
+    calc fubiniStudyMeasure p₀ ↑S
+        = ∑ x ∈ S, fubiniStudyMeasure p₀ {x} := sum_measure_singleton.symm
+      _ = ∑ _x ∈ S, a :=
+          Finset.sum_congr rfl fun x _ =>
+            fubiniStudyMeasure_singleton_eq p₀ x q
+      _ = n * a := by rw [Finset.sum_const, hScard, nsmul_eq_mul]
+  have hcontr : (1 : ENNReal) < n * a :=
+    (ENNReal.div_lt_iff (Or.inl ha) (Or.inl ha_ne_top)).mp hn
+  have hle : fubiniStudyMeasure p₀ ↑S ≤ 1 := prob_le_one
+  rw [hSmeas] at hle
+  exact absurd (hcontr.trans_le hle) (lt_irrefl _)
+
 end Matrix.UnitaryGroup
