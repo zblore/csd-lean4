@@ -14,6 +14,11 @@ public import CsdLean4.LF1.Preparation
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/psi-epistemic/
+Plain-language, CSD-role and formal statements of the ψ-epistemic reading, with
+this module — `conditional_not_mutuallySingular`, the overlap theorem — as its
+Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 A `Preparation` restricts the ontic state to a measurable region of nonzero Liouville measure. The LF1
 adapter (`Preparation.toOnticSetup`) turns a preparation plus a time into an existing `LF1.OnticSetup`,
 so the isolated epistemic law reuses LF1's normalised conditional measure `prepMeasure` rather than a

@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 46ae65edbce6dc882f4f072518e3776eb8373cd5
+  sha: 818b770010ae90cea1995acf0f87cefc0bc67a45
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -3015,20 +3015,32 @@ entries:
       space turns out to be a lossy projection, with the record-forming content living above
       it, not on it.
 
-      This entry carries no theorem, and says so. It is the reading OF the theorems -- the
-      anchored entries hold the formal content.
+      The reading's load-bearing sentence is now a theorem. Preparations whose regions
+      overlap have conditional laws that provably cannot be separated onto disjoint
+      supports -- distinct states of knowledge about overlapping ontic situations, which
+      is what psi-epistemic asserts at the level of preparations a laboratory can
+      actually make.
     mathematical: >
-      Positional, not proved. The formal counterpart is the two-level structure itself:
-      outcome partitions live on the projective space, the typicality measure lives on the
-      substrate.
+      The overlap statement is proved: conditional_not_mutuallySingular -- overlapping
+      preparation regions give non-mutually-singular conditional laws, by a density
+      argument, since two measures can share support and still be separable -- with the
+      concrete witness kahler_preparations_overlap instantiating it on open
+      neighbourhoods of any two rays of the working arena. The complementary facts are
+      proved too: conditioning on an exact pure state is an unreachable idealisation
+      (single fibres are Liouville-null), and what a physical preparation projects to is
+      a density against the Fubini-Study measure, not a point.
 
-      Which literature constraints bite -- PBR and its relatives -- depends delicately on
-      what the state is taken to be knowledge of, and on the ontology's independence
-      assumptions. The corpus does not currently formalise that boundary; a reader should
-      treat it as live terrain rather than settled ground.
+      Which literature constraints bite -- PBR and its relatives -- still depends
+      delicately on what the state is taken to be knowledge of, and on independence
+      assumptions. The full mapping of that boundary is not formalised; treat it as live
+      terrain.
     term: Psi-epistemic
-    status: definition
+    status: proved-in-corpus
     source: curated
+    lean:
+      module: CsdLean4/SigmaLayer/IsolationPreparation.lean
+      theorem: conditional_not_mutuallySingular
+    related: [does-csd-conflict-with-pbr, epistemic-measure, ontic-vs-epistemic, hidden-variables]
     external:
       - text: "Epistemic views of the quantum state"
         url: https://en.wikipedia.org/wiki/Epistemic_view_of_quantum_states
@@ -5283,18 +5295,34 @@ entries:
       learning, not physics. Those are two different uses of the word, and
       collapsing them is the category error behind "PBR rules this out".
 
-      The honest boundary, kept honestly: the corpus does not formalise the PBR
-      boundary itself, and the psi-epistemic entry marks the wider terrain as
-      live rather than settled. What is beyond dispute is the structural fact
-      the question turns on: the epistemic measures of distinct preparations
-      are disjoint by construction.
+      Since 2026-08-21 the story has its second half as theorems. Conditioning
+      on an EXACT pure state is an unreachable idealisation -- single fibres of
+      the projection are Liouville-null -- so the preparations a laboratory can
+      make are regions. And region preparations around distinct states provably
+      DO overlap: their conditional laws cannot be separated onto disjoint
+      supports. That overlap lives outside PBR's premises too, because a region
+      preparation projects to a mixed density, not a pure state -- and PBR is a
+      theorem about pure-state preparations.
+
+      The honest boundary, kept honestly: the full mapping of PBR's boundary
+      onto the programme is not formalised, and the psi-epistemic entry marks
+      that terrain as live rather than settled. What is machine-checked is the
+      structural pair the question turns on: disjoint supports for the
+      idealised states, proved overlap for the physical preparations.
     mathematical: >
-      The epistemic measure at preparation p is the Dirac mass at p on the base
-      times Haar on the fibre; for p distinct from p' the supports lie over
-      distinct base points and are disjoint. That is definitional, not deep --
-      which is the point: the overlap PBR needs is absent from the model's
-      construction. No PBR-specific theorem is claimed or needed for that
-      observation.
+      The idealised half is definitional: the epistemic measure at an exact
+      preparation p is the Dirac mass at p on the base times Haar on the fibre,
+      and for distinct p the supports are disjoint -- the overlap PBR needs is
+      absent by construction.
+
+      The physical half is proved: kMuL_fibre_null (exact pure-state
+      conditioning conditions on a null set, so the Dirac wrapper is
+      unreachable as a physical preparation); conditional_not_mutuallySingular
+      and its witness kahler_preparations_overlap (region preparations on
+      overlapping neighbourhoods of any two rays have non-separable conditional
+      laws); and the rho_ep theorems (a region preparation's projective law is
+      a density against the Fubini-Study measure -- a mixed state, outside
+      PBR's pure-state premises).
     term: Does the PBR theorem rule out CSD?
     status: definition
     source: curated

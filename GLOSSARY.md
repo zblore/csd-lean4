@@ -98,7 +98,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Preparation region](https://glossary.constraintsurfacedynamics.com/preparation-region/) | `` | definition |
 | [Projectability](https://glossary.constraintsurfacedynamics.com/projectability/) | `` | physical-postulate |
 | [Projective sector](https://glossary.constraintsurfacedynamics.com/projective-sector/) | `` | physical-postulate |
-| [Psi-epistemic](https://glossary.constraintsurfacedynamics.com/psi-epistemic/) | `` | definition |
+| [Psi-epistemic](https://glossary.constraintsurfacedynamics.com/psi-epistemic/) | `conditional_not_mutuallySingular` | proved-in-corpus |
 | [QBism](https://glossary.constraintsurfacedynamics.com/qbism/) | `` | definition |
 | [Quantum channel](https://glossary.constraintsurfacedynamics.com/quantum-channel/) | `choiMatrix_posSemidef` | proved-in-corpus |
 | [Ramsey interferometry](https://glossary.constraintsurfacedynamics.com/ramsey-interferometry/) | `` | standard-mathematics |

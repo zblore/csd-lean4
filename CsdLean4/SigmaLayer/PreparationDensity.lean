@@ -167,6 +167,18 @@ theorem kahler_preparation_density (p₀ : CSD.LF4.CPN N) [NeZero N]
     (kahlerFstSector D).projectivePreparationLaw_withDensity P
       (kahlerFstSector_projectiveLaw p₀ D hmuL)⟩
 
+/-- ★ **Single fibres are Liouville-null** (via Q28 item 1's atomlessness):
+conditioning on an exact pure state conditions on a `kMuL`-null set, so the
+Dirac-wrapper pure-state preparation is unreachable as a physical (region)
+preparation. The physical story is the region one, with its density ρ_ep. -/
+theorem kMuL_fibre_null (hN : 2 ≤ N) (p₀ q : CSD.LF4.CPN N) :
+    CSD.LF4.kMuL p₀ (Prod.fst ⁻¹' {q}) = 0 := by
+  have : NeZero N := ⟨by omega⟩
+  show ((fubiniStudyMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
+    (Prod.fst ⁻¹' {q}) = 0
+  rw [← Set.prod_univ, Measure.prod_prod,
+    fubiniStudyMeasure_singleton hN p₀ q, zero_mul]
+
 /-! ### Item 4b — overlapping preparations on the Kähler arena -/
 
 /-- A region preparation carved from a projective open set: the region is the
