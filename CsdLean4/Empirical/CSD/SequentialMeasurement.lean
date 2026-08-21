@@ -46,6 +46,11 @@ fall out, now as consequences of the dynamics rather than as separate posits:
   too high here; re-exported through this module's imports, so consumers are unchanged.
 * These are theorems about the witness dynamics, inheriting the witness's own scope notes
   (calibration is a context-fixed posit; Hamiltonian origin of the propagator is §2a-scoped).
+* *(Upgrade 2026-08-21, Q25:)* these are CONDITIONAL statements — probabilities of the second
+  outcome given the first, read off the post-measurement ensemble. The composed **two-time joint
+  law on one arena** (both records on a single composite space, the first persisting) is
+  `RecordLayer/TwoTimeLuders.lean` (`two_time_born`, `two_time_repeat`,
+  `two_time_other_fate`).
 
 ## References
 

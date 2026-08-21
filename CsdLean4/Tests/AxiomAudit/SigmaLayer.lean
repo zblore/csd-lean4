@@ -730,6 +730,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.swap_luders_born
 
+-- Q25 (2026-08-21, specs/two-time-luders-scoping.md): TWO-TIME LUDERS ON ONE ARENA
+-- (RecordLayer/TwoTimeLuders.lean + swap_sector_born_ctx in SwapClosure.lean).
+-- The swap arena extended with a SECOND apparatus (fresh register + fresh bank); stage 2 acts
+-- through the regroup shuffle and provably never touches the first record (structural
+-- persistence). The engine: the stage-2 record event reads only the SYSTEM marginal of the
+-- conditioned post-measurement state (= swap_luders_marginal), so the joint law factors.
+-- ★ swap_sector_born_ctx — the dynamical sector Born for an ARBITRARY context field.
+-- ★★ two_stage_joint — the generic composition: joint record probability = (stage-1 sector
+-- measure) × (stage-2 sector measure at the relocated state).
+-- ★★ two_time_born — P(record i at t₁ ∧ record j at t₂) = momentMap p i · c₂.rate [e_i] j:
+-- Born-then-Luders-Born as ONE number on ONE arena, any second context.
+-- ★ two_time_repeat — von Neumann repeatability in composed form: same context twice gives
+-- momentMap p i · δ_ij at the two-record sector.
+-- ★ two_time_other_fate — the post-outcome fate of the OTHER Ω_j: conditioned on record i at
+-- t₁, the next partition carries the collapsed weights c₂.rate [e_i] (repeat context: the other
+-- regions are NULL, Ω_i certain).
+/-- info: 'CSD.RecordLayer.swap_sector_born_ctx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swap_sector_born_ctx
+
+/-- info: 'CSD.RecordLayer.two_stage_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_stage_joint
+
+/-- info: 'CSD.RecordLayer.two_time_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_time_born
+
+/-- info: 'CSD.RecordLayer.two_time_repeat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_time_repeat
+
+/-- info: 'CSD.RecordLayer.two_time_other_fate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_time_other_fate
+
 -- DEGENERATE LUDERS: THE PROBLEM MADE PRECISE, THE BOUNDARY PROVED (2026-08-02,
 -- SigmaLayer/DegenerateLuders.lean).
 -- At rank one the Luders channel IS measure-and-reprepare and swap_luders_born delivers it. At

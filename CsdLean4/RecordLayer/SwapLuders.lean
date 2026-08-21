@@ -62,7 +62,8 @@ theorem then applies to the follow-up unchanged, which is what makes sequential 
   never on `ψ` — so it is A7-compatible. Its Liouville-nullity is *forced* by `no_exact_collapse`,
   not chosen for convenience.
 * **One measurement consumes one bank.** Sequential measurements need fresh banks; resetting is
-  erasure and is deliberately outside the protocol.
+  erasure and is deliberately outside the protocol. (The composed two-measurement statement, with
+  its fresh second apparatus, is `RecordLayer/TwoTimeLuders.lean` — Q25, 2026-08-21.)
 * **The Hamiltonian generation of the swap stage is stated, not formalised** — as for the shear.
 
 ## References

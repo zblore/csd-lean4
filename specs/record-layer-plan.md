@@ -394,6 +394,17 @@ done, dynamics open.
   for any orthonormal basis `b`: `bornRateBasis_eq_inner_sq` (outcome probability `= ‖⟨bᵢ,ψ⟩‖²`),
   `sum_bornRateBasis_unit`, `bornMeasurementBasis_prob`. Change of basis via the isometry `b.repr`.
   Foundational-triple, no `sorry`.
+- **Two-time Lüders on one arena (Q25) — LANDED 2026-08-21:**
+  [`RecordLayer/TwoTimeLuders.lean`](../CsdLean4/RecordLayer/TwoTimeLuders.lean)
+  (+ `swap_sector_born_ctx` in `SwapClosure.lean`; `specs/two-time-luders-scoping.md`). The
+  post-outcome fate of the other `Ω_j`, composed: the swap arena extended with a fresh second
+  apparatus, the first record persisting **structurally** through the second measurement, and the
+  joint two-record law ★★ `two_time_born`
+  `P(record i at t₁ ∧ record j at t₂) = momentMap p i · c₂.rate [eᵢ] j` for any second context —
+  with ★ `two_time_repeat` (von Neumann repeatability composed) and ★ `two_time_other_fate` (the
+  conditioned re-partition: the repeated context's other regions are null, a fresh context sees
+  the collapsed weights). Foundational-triple, pinned. Gated residue: the clock-glued two-epoch
+  protocol and the entangled/composite instantiation (Q27's mixed tier).
 - **Corpus today:** `bornRegion ψ` (prep-indexed, state-shaped) + `vnPointerOutcome`
   (prep-indexed) — the LF5 readout. `FibreRecord` supplies the record-layer replacement; retiring
   `vnPointerOutcome` at the `FiniteQMClosure` wiring is staging step 5 (open).

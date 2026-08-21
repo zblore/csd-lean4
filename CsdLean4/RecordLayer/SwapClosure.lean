@@ -193,6 +193,52 @@ theorem swap_sector_born (p : LF4.CPN N) (i : Fin N) :
     i]
   exact swapPrep_selReadyBank p i
 
+/-! ### The dynamical Born for an arbitrary context (Q25, 2026-08-21)
+
+The two-time composition (`RecordLayer/TwoTimeLuders.lean`) needs the sector
+Born for the SECOND measurement's context, which is arbitrary. The assembly is
+`swap_sector_born`'s, with `globalBasin_prob` consumed at a general
+`ContextField` — the momentContext statement above stays as the canonical
+special case. -/
+
+/-- The canonical preparation weights the selector-and-ready-and-bank set of an ARBITRARY
+context with that context's rate. Generalises `swapPrep_selReadyBank`. -/
+lemma swapPrep_selReadyBank_ctx (c : ContextField N) (p : LF4.CPN N) (i : Fin N) :
+    swapPrep p (selReadyBank (basinIndex c) i) = ENNReal.ofReal (c.rate p i) := by
+  have h1 : selReadyBank (basinIndex c) i
+      = (({x : LF4.KSigma N | basinIndex c x = i} ×ˢ readyArc N)
+          ×ˢ (univ : Set (Fin N → LF4.KSigma N))) := by
+    ext x
+    simp [selReadyBank, Set.mem_prod]
+  rw [swapPrep, readyPrep, h1, Measure.prod_prod, Measure.prod_prod]
+  have hset : {x : LF4.KSigma N | basinIndex c x = i} = basinIndex c ⁻¹' {i} := rfl
+  rw [hset, measure_basinIndex_fibre, globalBasin_prob, readyMeasure_readyArc,
+    measure_univ, mul_one, mul_one]
+
+lemma swapPrep_selReadyBank_cover_ctx (c : ContextField N) (p : LF4.CPN N) :
+    ∑ i, swapPrep p (selReadyBank (basinIndex c) i) = 1 := by
+  simp_rw [swapPrep_selReadyBank_ctx]
+  rw [← ENNReal.ofReal_sum_of_nonneg (fun i _ => c.nonneg p i), c.sum_one p,
+    ENNReal.ofReal_one]
+
+/-- **★ The dynamical Born weight for an arbitrary context, on the swap arena.** The measure of
+the outcome-`i` sector of the swap protocol built on ANY context field `c` equals that context's
+rate at the preparation — `swap_sector_born` with the context general. This is what lets a
+SECOND measurement, in whatever basis, read its Born weights off the relocated state
+(`RecordLayer/TwoTimeLuders.lean`). -/
+theorem swap_sector_born_ctx (c : ContextField N) (p : LF4.CPN N) (i : Fin N) :
+    swapPrep p
+      ((swapProtocol (basinIndex c) (measurable_basinIndex c)).outcomeSector i)
+      = ENNReal.ofReal (c.rate p i) := by
+  rw [(swapProtocol (basinIndex c)
+      (measurable_basinIndex c)).measure_outcomeSector_eq_of_correlates
+    (measurableSet_selReadyBank c)
+    (selReadyBank_pairwiseDisjoint c)
+    (swapPrep_selReadyBank_cover_ctx c p)
+    (swap_correlates (basinIndex c) (measurable_basinIndex c))
+    i]
+  exact swapPrep_selReadyBank_ctx c p i
+
 /-! ### The closure: six facts, one arena, one preparation -/
 
 /-- **The swap-arena measurement closure.** The six dynamical facts, every one a statement
