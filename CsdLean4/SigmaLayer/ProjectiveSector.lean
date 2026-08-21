@@ -13,6 +13,10 @@ public import CsdLean4.LF4.KahlerOnticSetup
 
 **Category:** 7-SigmaLayer (the projective-sector layer (Paper C)).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/projective-sector/
+Plain-language, CSD-role and formal statements of the projective sector, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Postulates P7, P8, P9: for each finite dimension `N` the operational pure-state target is `CP^{N-1}`
 (`ProjectiveState N`), and there is a measurable projection `pi : Sigma -> CP^{N-1}` which need NOT be
 injective (many-to-one is intended). The projective probability law is the pushforward of an ontic

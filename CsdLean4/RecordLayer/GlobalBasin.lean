@@ -13,6 +13,12 @@ public import CsdLean4.LF4.MomentMap
 
 **Category:** 7-SigmaLayer (the record layer — Paper C A7).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/outcome-region/ and
+https://glossary.constraintsurfacedynamics.com/epistemic-measure/
+Plain-language, CSD-role and formal statements of the outcome regions and the
+epistemic measure, with this module as their Lean anchor. Kept symmetric by
+`scripts/check-glossary.sh`.
+
 ## The problem this addresses
 
 Paper C A7 asks for measurement regions `Ωᵢ(M)` **fixed by the apparatus alone**. The corpus's

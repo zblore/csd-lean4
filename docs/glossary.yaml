@@ -3342,3 +3342,439 @@ entries:
     external:
       - text: "Stanford Encyclopedia: QBism and quantum Bayesianism"
         url: https://plato.stanford.edu/entries/quantum-bayesian/
+
+  - slug: constraint-surface
+    hook: >
+      There is one arena, it is deterministic, and it does not grow. Everything else in the
+      programme is bookkeeping about how much of it a context lets you see.
+    layman: >
+      Here is the problem. Quantum mechanics is spectacularly good at predicting what
+      detectors do, and spectacularly silent about what the world is. The textbook hands
+      you a recipe for outcomes and no picture of what exists between them.
+
+      CSD starts by paying the cost most approaches defer: it posits the world. One total
+      space of everything that exists -- called Sigma, the constraint surface -- with a
+      single deterministic trajectory running on it. No branching, no dice, no observer in
+      the basement. What you cannot do is ask what Sigma is made of. It is the floor.
+      Every theory has a floor; this programme just says where its floor is out loud.
+
+      The surprise is how little freedom the floor turns out to have. Ask what Sigma must
+      look like for quantum statistics to come out, and symmetry pins down its measure
+      uniquely, its geometry tightly. Posited, then constrained until almost nothing about
+      it is a choice.
+    in_csd: >
+      Sigma is the floor and Sigma is everything: the total, fixed, local ontic space.
+      Deriving it is a non-question -- there is nothing beneath a floor to derive it from.
+      What is legitimate, and actively pursued, is constraining it from above: the measure
+      on the projected state space is forced by unitary symmetry, and the concrete working
+      arena is a compact Kahler space.
+
+      Everything quantum then happens at two levels. Contexts partition the projected view
+      of Sigma into outcome regions -- that partition is epistemic. The weight of each
+      region is an honest volume on Sigma -- that measure is ontic. The Born rule is the
+      meeting point of the two.
+    mathematical: >
+      The corpus carries Sigma as the OnticSetup structure: a measurable space with a
+      probability measure (the Liouville measure), a deterministic measure-preserving flow,
+      and a preparation region. Outcome frequencies converge almost surely to volume
+      ratios by the strong law -- the LF1 main theorem, with no probabilistic input beyond
+      repeated-preparation sampling.
+
+      The concrete instance is Sigma = CP^(N-1) x T^2 with the Fubini-Study measure on the
+      base times normalised Haar on the torus fibre. Compactness does real work: it is
+      what forces the invariant measure to be unique.
+    term: Constraint surface
+    status: physical-postulate
+    source: curated
+    lean:
+      module: CsdLean4/LF1/Setup.lean
+    related: [liouville-measure, projective-sector, typicality, determinism, fibre]
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper A builds outcome frequencies on exactly this arena
+
+  - slug: ontic-vs-epistemic
+    hook: >
+      What exists is one question; what a context lets you say is another. Most quantum
+      paradoxes are category errors between the two.
+    layman: >
+      Here is the problem. Quantum mechanics keeps two kinds of statement in one notation.
+      "The atom is here" sounds like a fact about the world. "The atom has a 30 percent
+      chance of being here" sounds like a fact about what you know. The wavefunction
+      carries both voices at once, and a century of argument has been about which voice is
+      fundamental.
+
+      The map-versus-territory distinction is old and boring until you enforce it. Ontic:
+      belonging to the territory, true whether or not anyone looks. Epistemic: belonging
+      to the map some agent or apparatus draws. The trouble starts when a map-fact is
+      mistaken for a territory-fact -- when a change in the description is read as a
+      change in the world.
+
+      Collapse is the canonical casualty. If the state is a map, its abrupt update on
+      measurement is no stranger than a weather forecast changing when you open the
+      curtains.
+    in_csd: >
+      CSD makes the split load-bearing and never lets it blur. The outcome regions a
+      measurement context defines live on the projected state space, and they are
+      epistemic: the apparatus fixes the partition, and the partition is a description.
+      The measure that weights those regions is ontic: an invariant volume on the
+      constraint surface itself, fixed by symmetry, indifferent to anyone's knowledge.
+
+      The Born rule is precisely the handshake: an epistemic region, weighed by an ontic
+      volume. Measurement is the ontic selection -- the record, on the surface -- of
+      which epistemic region the one real trajectory realises. Keeping the two levels
+      distinct is not philosophical hygiene; it is the structure of the reconstruction.
+    mathematical: >
+      The two-strata reading is written into the axiom ledger. The operational stratum
+      speaks the effect-and-density language and carries the Gleason-type representation;
+      the ontic stratum computes weights as ratios of the Liouville measure over the
+      preparation region. The corpus proves the two strata meet: the same Born vector is
+      reached by the operational route and by the volume route, through structurally
+      distinct machinery.
+    term: Ontic vs epistemic
+    status: definition
+    source: curated
+    related: [constraint-surface, outcome-region, psi-epistemic, typicality-volume, collapse]
+
+  - slug: projectability
+    hook: >
+      The one genuine postulate at the interface: the ontic arena projects onto the space
+      quantum mechanics is written on. Downstream of that, symmetry does the choosing.
+    layman: >
+      Here is the problem. If the world is a big deterministic space and quantum
+      mechanics is written on a much smaller curved one, something must connect them. You
+      cannot get the small picture out of the big one for free; the connection is
+      structure, and structure has to be paid for.
+
+      Projectability is the payment, made openly. It says: the arena admits a many-to-one
+      projection onto the quantum state space, compatible with the dynamics and the
+      symmetry. One postulate, stated once, carried honestly as a hypothesis everywhere
+      it is used.
+
+      The discipline is in what is NOT postulated. Not the measure -- forced by symmetry.
+      Not the Born rule -- computed as volume. Not the dynamics on the projected space --
+      derived from record statistics. The programme keeps its postulate count where you
+      can audit it.
+    in_csd: >
+      This is Paper C's sector postulate: the assumption that Sigma projects onto a
+      projective sector on which the reconstruction runs. It is projectability -- never
+      "the origin of Sigma". The projection points the wrong way for that reading: Sigma
+      is the floor, and the sector is a view of it, not its source.
+
+      In the Lean corpus the postulate is a structure field, not an axiom: theorems that
+      need it take it as a hypothesis, so the kernel's axiom report stays clean and the
+      cost is visible at every use site.
+    mathematical: >
+      SectorData packages the postulate: a measurable projection from the ontic space to
+      an abstract projective target, a group acting on both sides, invariance of the
+      Liouville measure, and equivariance of the projection. A guard script enforces that
+      the descent equation is genuinely consumed downstream -- the corpus has been burned
+      once by a substrate that was carried but unused, and the linkage is now checked
+      mechanically.
+    term: Projectability
+    status: physical-postulate
+    source: curated
+    lean:
+      module: CsdLean4/LF2/Setup.lean
+    related: [constraint-surface, projective-sector, many-to-one-projection]
+
+  - slug: projective-sector
+    hook: >
+      Quantum mechanics is written on a curved projective space. Here that space is not
+      fundamental -- it is the sector the arena projects onto, with its geometry forced
+      by symmetry.
+    layman: >
+      Here is the problem. The space of quantum states is not a vector space, whatever
+      the textbooks' opening chapters suggest. Two state vectors that differ by an
+      overall phase are the same physical state, and once you quotient that redundancy
+      away you are standing on complex projective space -- a compact, curved, highly
+      symmetric arena.
+
+      Most formulations treat that space as the fundamental stage. CSD demotes it: the
+      projective space is a sector, the image of the real arena under a many-to-one
+      projection. States are shadows; the surface casting them is bigger.
+
+      Demotion has a payoff. Questions that are awkward to even pose on the state space
+      -- which outcome actually happened, what carries the record -- have room to be
+      answered one level down.
+    in_csd: >
+      The sector is where the epistemic half of the reconstruction lives: measurement
+      contexts partition the sector into outcome regions, and the Fubini-Study measure --
+      unique by unitary invariance -- prices them. The ontic half stays below: the weight
+      of a sector region is the Liouville volume of its preimage on Sigma.
+
+      The sector is posited, via projectability, and then heavily constrained: compact,
+      Kahler, unique invariant measure. The corpus's working instance takes the sector to
+      be CP^(N-1) exactly, with the projection's fibre carrying what the sector cannot.
+    mathematical: >
+      ProjectiveSector bundles the measurable projection to CP^(N-1) with the pushforward
+      law connecting the ontic measure to the sector measure. The Kahler instance
+      instantiates it on CP^(N-1) x T^2 with projection onto the first factor; the
+      pushforward of the Liouville measure is the Fubini-Study measure, and that
+      identification is a theorem, not a stipulation.
+    term: Projective sector
+    status: physical-postulate
+    source: curated
+    lean:
+      module: CsdLean4/SigmaLayer/ProjectiveSector.lean
+    related: [projectability, fubini-study-measure, constraint-surface, kahler-form]
+
+  - slug: record-layer
+    hook: >
+      A measurement is over when the world itself carries which outcome happened. The
+      record layer is where that fact lives -- on the arena, not in anyone's notebook.
+    layman: >
+      Here is the problem. Suppose outcome probabilities really are volumes of regions.
+      You still owe an account of the outcome itself: after the experiment, something in
+      the world -- a pointer, a grain of silver, a memory -- holds which result occurred.
+      A theory that prices outcomes but cannot say where the outcome is written has
+      stopped one step short.
+
+      The record layer is that last step. It asks for two things. The outcome regions
+      must be fixed by the apparatus alone, the way a referee's rulebook does not depend
+      on which team is playing. And the record must be a physical configuration of the
+      arena -- an ontic fact, selected by the one real trajectory.
+
+      Nothing mystical is on offer: a record is structure the arena already has, singled
+      out by where the trajectory went.
+    in_csd: >
+      This is the programme's near frontier, and it is partly built. The context-fixed
+      partition exists: basins defined from the apparatus's rate field, with no
+      preparation anywhere in the definition, whose weights come out as Born weights. At
+      the qubit the whole story is proved end to end; at higher dimension the analysis
+      shows the contextual structure cannot live on the base alone -- it must live in the
+      fibre, and that placement is itself a theorem-shaped discovery, narrowing where the
+      mechanism can be.
+
+      What remains open, and is stated as open: deriving the fibre mechanism from
+      de-isolation dynamics rather than exhibiting it. The record layer is where the
+      reconstruction is completed or not.
+    mathematical: >
+      The proved tier: a measurable simplex-valued rate field on the base defines
+      pairwise-disjoint basins whose epistemic probability at preparation psi is the Born
+      weight -- a partition that never mentions psi. Sequential and mixed-state versions
+      run through the Luders tier. The open tier is dynamical, not kinematic: no
+      interaction Hamiltonian generating the basins is constructed, and the corpus says
+      so in the module that would need it.
+    term: Record layer
+    status: definition
+    source: curated
+    related: [outcome-region, de-isolation, pointer-basis, collapse, measurement-problem]
+
+  - slug: de-isolation
+    hook: >
+      Nothing collapses. A measured system stops being isolated, and measurement is what
+      de-isolation dynamics looks like from inside.
+    layman: >
+      Here is the problem. Textbook quantum mechanics has two rules for change: smooth
+      deterministic evolution while nobody looks, and an abrupt jump when somebody does.
+      Two rules, one world, and no principled statement of when each applies. That is not
+      a paradox; it is an unfinished theory.
+
+      CSD's diagnosis is that the second rule describes a change of circumstance, not a
+      change of law. An isolated system follows the smooth rule. Measurement is the
+      deliberate destruction of that isolation -- coupling the system to an apparatus --
+      and the jump is what the resulting joint dynamics looks like when you only track
+      the system.
+
+      One law, applied twice. The dial that turns is isolation, and it is a physical
+      dial, not an interpretive one.
+    in_csd: >
+      De-isolation is the programme's word for the measurement interaction seen on the
+      arena. The corpus realises it concretely: a deterministic, measure-preserving
+      de-isolation flow -- genuinely not the identity -- couples system to pointer,
+      realises the measurement dilation dynamically, and its pointer-block volumes
+      reproduce the Born weights for every preparation. The entangled tier has its own
+      witness: the singlet's non-factorisation is realised by an explicit de-isolation
+      flow on the enlarged arena.
+
+      What de-isolation does NOT yet do is generate the record layer's fibre mechanism
+      from first principles. That is the open frontier, and the honest boundary between
+      "exhibited" and "derived" is maintained wherever the flows appear.
+    mathematical: >
+      The measurement-dynamics tier: a von Neumann de-isolation flow on the dilated
+      space, measure-preserving and distinct from the identity, whose pointer-block
+      volumes and almost-sure frequencies are the Born weights. The Naimark dilation is
+      realised dynamically rather than cited abstractly, and the outcome map per
+      microstate is delivered by the pointer-partition theorems.
+    term: De-isolation
+    status: definition
+    source: curated
+    related: [collapse, measurement-problem, record-layer, pointer-basis, naimark-dilation]
+
+  - slug: typicality-volume
+    hook: >
+      Almost every way the experiment could have started gives the quantum statistics.
+      That is not an assumption about probability -- it is a measured volume.
+    layman: >
+      Here is the problem. A deterministic world has no dice, so where do quantum
+      probabilities come from? The classical answer -- ignorance of initial conditions --
+      always carried a hidden debt: WHICH initial conditions count as typical depends on
+      how you measure sets of them, and choosing the measure to get the answer you wanted
+      is circular.
+
+      Typicality volume is the debt paid. Fix the one measure the symmetry of the state
+      space allows. Then ask: of all the microstates compatible with how the experiment
+      was prepared, what fraction sits in the region belonging to outcome i? That
+      fraction is the outcome's weight. Run the experiment many times, drawing fresh
+      microstates each run, and the observed frequency converges to it.
+
+      No randomness enters the dynamics. The probability is entirely in the ignorance,
+      and the ignorance is priced by a ruler nobody chose.
+    in_csd: >
+      This is the ontic half of the Born rule. The outcome regions are epistemic --
+      context-fixed partitions of the sector -- but the weight of each region is the
+      Liouville volume of its preimage on Sigma, conditioned on the preparation region.
+      Typicality here is repeated-preparation typicality: each trial draws a fresh
+      microstate from the conditional measure, and the strong law does the rest.
+
+      The volume reading is proved at full generality: frequencies converge jointly to
+      the complete Born vector, for every unit preparation, with the genericity
+      hypotheses retired. What remains queued is concentration -- upgrading "the mean is
+      the Born weight" to "a single long run concentrates around it" at an explicit
+      polynomial rate.
+    mathematical: >
+      The chain runs LF1 to LF4: i.i.d. preparation sampling, indicator variables per
+      outcome region, the strong law of large numbers, and the identification of the
+      limiting weight with a Fubini-Study volume ratio via the moment map and the
+      Duistermaat-Heckman law. The general-N statement is unconditional and
+      foundational-triple-only: no Gleason-type input anywhere on the volume route.
+    term: Typicality volume
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF4/BornFrequencyN.lean
+      theorem: born_frequency_convergence_N
+    related: [typicality, born-weight, fubini-study-measure, liouville-measure, canonical-typicality]
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper A is the volume-based account of outcome frequencies
+
+  - slug: outcome-region
+    hook: >
+      An outcome is a region, and the apparatus alone draws its boundary. The preparation
+      decides where the trajectory lands; it does not get to draw the map.
+    layman: >
+      Here is the problem. If outcome probabilities are sizes of regions, who draws the
+      regions? There is a wrong answer available, and early versions of any volume
+      picture flirt with it: let the prepared state draw its own regions, sized to the
+      probabilities you already knew. That is bookkeeping wearing the costume of an
+      explanation.
+
+      The honest requirement is that the measuring device fixes the partition before the
+      state shows up -- the way a roulette wheel's pockets exist before the ball drops.
+      Same wheel for every ball. Then the fact that the frequencies match the pocket
+      sizes is a discovery about the dynamics, not a definition.
+
+      CSD's outcome regions meet that requirement: they are built from the apparatus's
+      own data, and no preparation appears anywhere in their definition.
+    in_csd: >
+      The outcome regions are the epistemic half of the two-level structure: a
+      measurement context M fixes a partition of the sector, and Paper C's A7 demands
+      the partition depend on M alone. The corpus discharges this with basins built from
+      a context's rate field read at the ontic point -- the preparation plays no part --
+      and proves their epistemic weights are exactly the Born weights.
+
+      The dimension story is a genuine discovery: at the qubit the regions can live on
+      the base of the sector, and at higher dimension they provably cannot -- the
+      contextual structure is forced into the fibre. The regions stay epistemic
+      throughout; what the trajectory selects among them, the record, is ontic.
+    mathematical: >
+      A ContextField assigns each base point a measurable probability vector over
+      outcomes; the basin for outcome i is the set of arena points whose fibre
+      coordinate falls in the i-th arc of the field's cumulative weights. Basins are
+      measurable, pairwise disjoint, almost-everywhere exhaustive, and their epistemic
+      probability at preparation psi is the Born weight -- the headline globalBasin_born,
+      from a partition that never mentions psi.
+    term: Outcome region
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/RecordLayer/GlobalBasin.lean
+      theorem: globalBasin_born
+    related: [record-layer, epistemic-measure, born-weight, contextuality, fibre]
+
+  - slug: epistemic-measure
+    hook: >
+      Condition on what a preparation actually fixes and the leftover ignorance is a
+      measure. CSD writes that measure down outright -- and keeps the upgrade to a
+      theorem on its public work queue.
+    layman: >
+      Here is the problem. You prepared the system carefully, so you know its quantum
+      state exactly. On the arena picture that knowledge is radically incomplete: one
+      state corresponds to a whole crowd of microstates, all projecting to the same
+      point. What should you believe about the part you cannot see?
+
+      The natural answer: you know the visible coordinate exactly, so put all your
+      credence there; you know nothing about the hidden coordinate, so spread your
+      credence evenly over it, using the fibre's own symmetry to define "evenly". That
+      combined object is the epistemic measure.
+
+      One honesty note, and it is the interesting part: "evenly" is currently a
+      definition, not a theorem. Deriving it -- showing it is the unique disintegration
+      of the arena's own volume -- is queued work, stated as such in the source.
+    in_csd: >
+      The epistemic measure is what "isolation is conditioning" means in practice: the
+      isolation-conditioned state of knowledge at preparation p is the Dirac mass at p
+      on the base times normalised Haar on the fibre. Every record-layer probability --
+      including the Born weights of the context-fixed basins -- is computed against it.
+
+      Because conditioning on a single state conditions on a set the base measure calls
+      null, the corpus takes the Dirac-times-Haar form as a definition rather than
+      deriving it by disintegration. The derivation is a named backlog item: the
+      machinery exists, and the identification would turn a modelling choice into a
+      theorem.
+    mathematical: >
+      epistemicMeasure p is the product of the Dirac measure at p with normalised Haar
+      on the torus fibre -- a probability measure on the arena for every p. The queued
+      upgrade: the Liouville measure disintegrates along the base projection, and the
+      disintegration kernel should be almost-everywhere the constant Haar kernel, making
+      Dirac-times-Haar the fibre of the disintegration rather than a stipulation.
+    term: Epistemic measure
+    status: definition
+    source: curated
+    lean:
+      module: CsdLean4/RecordLayer/GlobalBasin.lean
+    related: [liouville-measure, haar-measure, outcome-region, typicality, ontic-vs-epistemic]
+
+  - slug: carving
+    hook: >
+      The programme's own word for the move it refuses to count as a derivation: cutting
+      a region to have exactly the size you wanted to explain.
+    layman: >
+      Here is the problem with volume explanations of probability, stated as bluntly as
+      a critic would: if you are allowed to draw the regions yourself, you can make any
+      probability come out of any measure. Draw a region of size 0.3, announce that the
+      outcome has probability 0.3, and you have explained nothing. The explanation was
+      smuggled in with the scissors.
+
+      CSD calls this move carving, by name, in its own documentation -- because early
+      layers of the formalisation genuinely did it, and the honest label is what kept
+      the debt visible. A carved region realises the Born value. It does not derive it.
+
+      The interesting history is the repayment: for the corpus's central results the
+      carving was eliminated. The sizes now come out of the geometry -- forced by
+      symmetry and the moment map -- with no hand on the scissors.
+    in_csd: >
+      Carving is the boundary marker between two kinds of result the programme keeps
+      separate. Realisation: a fibre partition cut by construction so that its volumes
+      match a target -- proved, useful, and honestly labelled as putting the value in.
+      Derivation: the Born weight equal to a volume the geometry fixes independently --
+      the moment-map identity and the Duistermaat-Heckman law, where nobody chose the
+      sizes.
+
+      The corpus's documentation flags every result with which side of the line it sits
+      on, and the volume route to the Born rule now runs entirely on the derived side.
+      The word survives as an audit tool: when a new result lands on a specific number,
+      the first question asked is whether anything was carved.
+    mathematical: >
+      The carved tier: fibre arcs of prescribed length realising prescribed weights --
+      genuine disjointness and correct totals, with the target built in. The derived
+      tier: the Born weight as a moment-map coordinate, a forced symplectic invariant;
+      the joint pushforward of the Fubini-Study measure under the moment map equal to
+      the uniform simplex law; and the resulting volume-ratio theorems at every N,
+      unconditional.
+    term: Carving
+    status: definition
+    source: curated
+    related: [typicality-volume, duistermaat-heckman, born-weight, fubini-study-measure]

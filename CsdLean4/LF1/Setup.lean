@@ -13,6 +13,10 @@ public import Mathlib.MeasureTheory.Measure.MeasureSpace
 # LF1 Setup
 
 **Category:** 3-Local (LF1 ontic phase-space data: measurable space, Liouville measure, deterministic flow, preparation region).
+
+**Glossary:** https://glossary.constraintsurfacedynamics.com/constraint-surface/
+Plain-language, CSD-role and formal statements of the constraint surface, with
+this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 -/
 
 @[expose] public section

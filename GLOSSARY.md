@@ -18,15 +18,19 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Borel set](https://glossary.constraintsurfacedynamics.com/borel-set/) | `` | standard-mathematics |
 | [Born rule](https://glossary.constraintsurfacedynamics.com/born-weight/) | `fs_born_volume_ratio_N` | proved-in-corpus |
 | [Canonical typicality](https://glossary.constraintsurfacedynamics.com/canonical-typicality/) | `canonical_typicality_expectation` | proved-in-corpus |
+| [Carving](https://glossary.constraintsurfacedynamics.com/carving/) | `` | definition |
 | [CGLMP inequality](https://glossary.constraintsurfacedynamics.com/cglmp-inequality/) | `` | standard-mathematics |
 | [Collapse](https://glossary.constraintsurfacedynamics.com/collapse/) | `no_exact_collapse` | proved-in-corpus |
+| [Constraint surface](https://glossary.constraintsurfacedynamics.com/constraint-surface/) | `` | physical-postulate |
 | [Contextuality](https://glossary.constraintsurfacedynamics.com/contextuality/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
 | [Copenhagen interpretation](https://glossary.constraintsurfacedynamics.com/copenhagen/) | `` | definition |
+| [De-isolation](https://glossary.constraintsurfacedynamics.com/de-isolation/) | `` | definition |
 | [Determinism](https://glossary.constraintsurfacedynamics.com/determinism/) | `` | definition |
 | [Deutsch-Jozsa algorithm](https://glossary.constraintsurfacedynamics.com/deutsch-jozsa/) | `` | standard-mathematics |
 | [Dirichlet distribution](https://glossary.constraintsurfacedynamics.com/dirichlet-distribution/) | `` | standard-mathematics |
 | [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
 | [Elitzur-Vaidman bomb tester](https://glossary.constraintsurfacedynamics.com/elitzur-vaidman/) | `` | standard-mathematics |
+| [Epistemic measure](https://glossary.constraintsurfacedynamics.com/epistemic-measure/) | `` | definition |
 | [Euclidean space](https://glossary.constraintsurfacedynamics.com/euclidean-space/) | `` | standard-mathematics |
 | [Fisher information](https://glossary.constraintsurfacedynamics.com/fisher-information/) | `` | standard-mathematics |
 | [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
@@ -56,12 +60,17 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Mermin inequality](https://glossary.constraintsurfacedynamics.com/mermin-inequality/) | `` | standard-mathematics |
 | [Naimark dilation](https://glossary.constraintsurfacedynamics.com/naimark-dilation/) | `povm_born_eq_dilated_volume_uncond` | proved-in-corpus |
 | [No exact finite-dimensional CCR](https://glossary.constraintsurfacedynamics.com/no-exact-finite-ccr/) | `no_exact_finite_ccr` | proved-in-corpus |
+| [Ontic vs epistemic](https://glossary.constraintsurfacedynamics.com/ontic-vs-epistemic/) | `` | definition |
+| [Outcome region](https://glossary.constraintsurfacedynamics.com/outcome-region/) | `globalBasin_born` | proved-in-corpus |
 | [Pauli matrices](https://glossary.constraintsurfacedynamics.com/pauli-matrices/) | `` | standard-mathematics |
 | [Peres criterion](https://glossary.constraintsurfacedynamics.com/peres-criterion/) | `` | standard-mathematics |
 | [Poisson bracket](https://glossary.constraintsurfacedynamics.com/poisson-bracket/) | `` | standard-mathematics |
+| [Projectability](https://glossary.constraintsurfacedynamics.com/projectability/) | `` | physical-postulate |
+| [Projective sector](https://glossary.constraintsurfacedynamics.com/projective-sector/) | `` | physical-postulate |
 | [Psi-epistemic](https://glossary.constraintsurfacedynamics.com/psi-epistemic/) | `` | definition |
 | [QBism](https://glossary.constraintsurfacedynamics.com/qbism/) | `` | definition |
 | [Ramsey interferometry](https://glossary.constraintsurfacedynamics.com/ramsey-interferometry/) | `` | standard-mathematics |
+| [Record layer](https://glossary.constraintsurfacedynamics.com/record-layer/) | `` | definition |
 | [Schrodinger equation](https://glossary.constraintsurfacedynamics.com/schrodinger-equation/) | `` | standard-mathematics |
 | [Shor's algorithm](https://glossary.constraintsurfacedynamics.com/shor-algorithm/) | `` | standard-mathematics |
 | [Spontaneous collapse (GRW)](https://glossary.constraintsurfacedynamics.com/spontaneous-collapse/) | `` | definition |
@@ -69,5 +78,6 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
 | [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
 | [Typicality](https://glossary.constraintsurfacedynamics.com/typicality/) | `freq_tendsto_of_iid` | proved-in-corpus |
+| [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N` | proved-in-corpus |
 | [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
 | [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |

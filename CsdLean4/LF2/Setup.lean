@@ -14,6 +14,10 @@ public import Mathlib.Dynamics.Ergodic.MeasurePreserving
 
 **Category:** 3-Local (LF2 `SectorData`: LF1 `OnticSetup` plus projective target, projection, and group action).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/projectability/
+Plain-language, CSD-role and formal statements of the projectability postulate,
+with this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Extends the LF1 `OnticSetup` with:
 
 - a measurable projection `π : Σ → P` onto an abstract epistemic measurable
