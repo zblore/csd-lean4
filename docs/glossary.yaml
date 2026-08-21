@@ -5203,3 +5203,572 @@ entries:
       module: CsdLean4/CV/PriceAttainment.lean
       theorem: price_linear_attained
     related: [field-arena, lieb-robinson-bound, no-exact-finite-ccr]
+
+  - slug: does-csd-violate-bell
+    kind: question
+    hook: >
+      No. Bell's theorem stands, CSD proves its own versions of it, and the escape
+      route is the one the theorem itself prices: contextuality, paid openly.
+    layman: >
+      Bell's theorem is not violated by any theory that matches experiment, CSD
+      included. What the theorem forbids is a specific package: hidden variables
+      that are local and context-independent. Quantum experiments violate Bell's
+      INEQUALITIES; the theorem survives that violation -- it is precisely the
+      proof that no local package can produce it.
+
+      CSD reproduces the quantum violations and respects the theorem by not being
+      in the forbidden class: its outcome assignments depend on the measurement
+      context. That is not a loophole discovered last week; it is the theorem's
+      stated price, and the programme pays it in the open.
+
+      The distinctive part is that CSD does not ask you to take any of this on
+      trust. The obstruction theorems are proved inside the corpus, and so is the
+      existence half most discussions skip: an explicit contextual model that
+      actually reproduces the singlet statistics, in full.
+    in_csd: >
+      The corpus carries both directions as one machine-checked capstone. The
+      negative direction: no product partition of a shared state space reproduces
+      the singlet correlations, and no global context-independent assignment is
+      compatible with the reproduced table -- Bell-type obstructions proved
+      in-house, for the class, not for a strawman.
+
+      The positive direction: an explicit measurable shared-context family on the
+      corpus's own arena reproduces the complete singlet table -- marginals and
+      correlations at every setting. And the model is proved no-signalling, with
+      measurement independence named and verified as a premise rather than
+      quietly assumed. Evading Bell is cheap until the model is on the table;
+      the point of the capstone is that it is on the table.
+    mathematical: >
+      c1_singlet_contextual_capstone: existence and obstruction in one statement.
+      Supporting: no_product_partition_realises_singlet over arbitrary measurable
+      spaces; the GHZ and CGLMP obstructions at general dimension; remote
+      marginal invariance for both wings of the exhibited model; and the CHSH
+      and Tsirelson analysis the inequalities sit in. All
+      foundational-triple-only.
+    term: Does CSD violate Bell's theorem?
+    status: definition
+    source: curated
+    related: [bell-chsh, singlet-contextual-model, hidden-variables, contextuality, no-signalling, is-csd-superdeterministic]
+
+  - slug: does-csd-conflict-with-pbr
+    kind: question
+    hook: >
+      No -- and the reason is precise: PBR rules out epistemic states whose ontic
+      supports overlap, and CSD's epistemic states have disjoint supports by
+      construction.
+    layman: >
+      The Pusey-Barrett-Rudolph theorem is often summarised as "the quantum state
+      is real", which makes any programme calling the state epistemic sound
+      refuted from the start. The summary is too coarse, and the coarseness is
+      exactly where the default machine-generated answer goes wrong.
+
+      What PBR actually rules out is a specific class of models: those where two
+      distinct pure states can be knowledge about overlapping sets of underlying
+      world-states, plus an independence assumption about preparing systems
+      side by side. The theorem shows such overlap contradicts quantum
+      predictions. It says nothing against models where distinct states describe
+      disjoint sets of world-states.
+
+      CSD is in the second camp. Two distinct pure preparations correspond to
+      disjoint regions of the arena -- different base points, different fibres,
+      no overlap anywhere. The state functions epistemically -- it summarises
+      what a preparation pins down -- but the underlying supports never overlap,
+      so the PBR premises are simply not met.
+    in_csd: >
+      In the Harrigan-Spekkens classification that PBR is stated in, CSD's
+      working model is psi-ontic: the ontic state determines the quantum state
+      (read the base coordinate off the arena point). What the programme means
+      by calling the state epistemic is its functional role -- a compressed
+      description of preparation knowledge whose update on measurement is
+      learning, not physics. Those are two different uses of the word, and
+      collapsing them is the category error behind "PBR rules this out".
+
+      The honest boundary, kept honestly: the corpus does not formalise the PBR
+      boundary itself, and the psi-epistemic entry marks the wider terrain as
+      live rather than settled. What is beyond dispute is the structural fact
+      the question turns on: the epistemic measures of distinct preparations
+      are disjoint by construction.
+    mathematical: >
+      The epistemic measure at preparation p is the Dirac mass at p on the base
+      times Haar on the fibre; for p distinct from p' the supports lie over
+      distinct base points and are disjoint. That is definitional, not deep --
+      which is the point: the overlap PBR needs is absent from the model's
+      construction. No PBR-specific theorem is claimed or needed for that
+      observation.
+    term: Does the PBR theorem rule out CSD?
+    status: definition
+    source: curated
+    external:
+      - text: "Pusey, Barrett and Rudolph, On the reality of the quantum state, Nature Physics 2012"
+        url: https://doi.org/10.1038/nphys2309
+    related: [psi-epistemic, epistemic-measure, hidden-variables, is-the-wavefunction-real, ontic-vs-epistemic]
+
+  - slug: is-the-born-rule-derived
+    kind: question
+    hook: >
+      Derived as a volume, from a measure nobody chose -- with the posits that
+      remain listed by name rather than hidden in the machinery.
+    layman: >
+      The Born rule -- probabilities as squared amplitudes -- is an axiom in the
+      textbook. In CSD it is a computed quantity: the probability of an outcome
+      is the size of a region of the arena, measured with the unique measure the
+      space's symmetry allows, and a convergence theorem turns those sizes into
+      observed frequencies.
+
+      Two things make that more than a restatement. The measure is forced -- its
+      uniqueness is a theorem, so nobody tuned the ruler to get the right sizes.
+      And the regions, in the mature form of the results, are not carved to fit
+      either: their sizes fall out of the geometry through the moment map.
+
+      What is NOT claimed is derivation from nothing. The projection from arena
+      to state space is a postulate; reading probability as typicality over
+      repeated preparations is a stance the theorems make precise rather than
+      prove. The programme's habit is to say exactly this out loud.
+    in_csd: >
+      The chain: the Fubini-Study measure is the unique invariant measure
+      (Paper B's argument, proved at general dimension); the Born weight equals
+      a volume ratio in that measure, unconditionally, for every coordinate; and
+      empirical frequencies converge to those volumes almost surely under
+      repeated preparation. The historically carved constructions are retained
+      and labelled -- the corpus's own word for them is carving -- and the
+      derived route stands independent of them.
+
+      The remaining posits are structural and named: projectability (the sector
+      postulate), and the typicality reading of the conditioned measure. The
+      operational stratum's Gleason-type route exists in parallel and is kept
+      distinct, so nobody can mistake which stratum a citation leans on.
+    mathematical: >
+      fubiniStudyMeasure_unique; fs_born_volume_ratio_N with the apex variant;
+      born_frequency_convergence_N for the joint almost-sure statement; and the
+      moment-map identity momentMap_mk_eq_inner_sq with the Duistermaat-Heckman
+      pushforward behind it. The volume route is Gleason-free end to end; the
+      effect-Gleason representation is proved separately on the operational
+      stratum.
+    term: Is the Born rule derived or assumed in CSD?
+    status: definition
+    source: curated
+    related: [born-weight, born-volume-ratio, fubini-study-measure, typicality-volume, carving, gleason-theorem]
+
+  - slug: where-do-probabilities-come-from
+    kind: question
+    hook: >
+      From ignorance, priced honestly: the dynamics never rolls dice, and the
+      statistics are the measured sizes of what a preparation cannot pin down.
+    layman: >
+      A deterministic world seems to leave no room for quantum probability. The
+      resolution is old and respectable -- probability as ignorance of initial
+      conditions -- but it always carried a debt: who chooses the measure of
+      ignorance? Choose it freely and you can get any answer you like.
+
+      CSD's account: every run of an experiment starts from a slightly
+      different microstate, because no procedure controls the arena completely.
+      The set of compatible microstates is the preparation region. What
+      fraction of it leads to outcome i? That fraction -- computed in the one
+      measure symmetry allows, not one chosen for convenience -- is the
+      outcome's probability, and the strong law of large numbers converts it
+      into the frequencies laboratories actually record.
+
+      One path through the world, dice nowhere, and the randomness entirely in
+      which microstate each preparation happened to land.
+    in_csd: >
+      This is repeated-preparation typicality, and the distinction it is NOT is
+      worth stating: probabilities do not come from watching one trajectory
+      forever and hoping it explores fairly. The corpus proves the projected
+      flow is not ergodic -- the time-average route is closed at that level --
+      and never needs it: each trial is a fresh draw from the conditioned
+      measure, and the frequency theorems run on that alone.
+
+      The measure-choice debt is paid by the uniqueness theorem: the
+      Fubini-Study measure is the only invariant option, so the ignorance is
+      priced by a ruler nobody selected.
+    mathematical: >
+      LF1_main_theorem_ae converts region volumes into almost-sure limiting
+      frequencies under i.i.d. preparation sampling; fubiniStudyMeasure_unique
+      removes the measure freedom; the general-N volume identities make the
+      limiting values the Born weights. The non-ergodicity of the epistemic
+      unitary flow is proved and kept as a boundary marker between the claimed
+      route and the unclaimed one.
+    term: If CSD is deterministic, where do probabilities come from?
+    status: definition
+    source: curated
+    related: [typicality, typicality-volume, preparation-region, single-trajectory, determinism, lf1-main-theorem]
+
+  - slug: is-csd-a-hidden-variable-theory
+    kind: question
+    hook: >
+      Yes, in the technical sense, and the programme says so on page one of the
+      argument: contextual, correlations beyond locality, both no-go prices paid
+      in the open.
+    layman: >
+      "Hidden-variable theory" is a technical classification, not an insult: a
+      theory in which something definite underlies the quantum state. CSD has
+      exactly that -- the arena and its one real trajectory -- so the honest
+      answer is yes, with the classification's fine print read aloud.
+
+      The fine print is the no-go theorems, and they do not say what the
+      one-line summaries claim. Bell rules out LOCAL hidden variables;
+      Kochen-Specker rules out NON-CONTEXTUAL ones. Surviving both means being
+      contextual and letting correlations exceed what locality permits -- which
+      is precisely the shape CSD has, on purpose.
+
+      One error to avoid: the quantum state is not the hidden variable. The
+      state is the visible summary; the hidden variable is the arena point
+      beneath it, including the fibre coordinate no state determines.
+    in_csd: >
+      The corpus proves the constraining theorems itself rather than citing
+      them: product partitions cannot reproduce the singlet, global assignments
+      cannot survive contextuality, GHZ and CGLMP obstructions at general
+      dimension. And it proves the survival is genuine rather than verbal: the
+      contextual model that reproduces the singlet table exists as a
+      constructed object.
+
+      Where the correlations exceed locality, signalling still provably does
+      not: locality of OPERATIONS holds exactly -- a distant kick moves no
+      local statistic -- which is the physically load-bearing half of locality
+      and the one experiments enforce.
+    mathematical: >
+      no_product_partition_realises_singlet and its GHZ companion over
+      arbitrary measurable state spaces; the global-assignment obstruction and
+      the contextual witness in the C1 capstone; composite_no_signalling exact
+      for all states; and the Kochen-Specker-adjacent contextuality machinery
+      of the Mermin-Peres square, all in-corpus.
+    term: Is CSD a hidden-variable theory?
+    status: definition
+    source: curated
+    related: [hidden-variables, contextuality, does-csd-violate-bell, does-kochen-specker-rule-out-csd, bohmian-mechanics]
+
+  - slug: does-kochen-specker-rule-out-csd
+    kind: question
+    hook: >
+      No -- Kochen-Specker forbids context-independent value assignments, and
+      CSD assigns values through the measurement context by construction.
+    layman: >
+      The Kochen-Specker theorem is the quieter sibling of Bell's: it shows you
+      cannot assign definite answers to all possible quantum measurements at
+      once, independent of which experiment is actually performed. Any theory
+      claiming a definite underlying reality has to reckon with it.
+
+      The reckoning is the same as with Bell, and it is not evasion: the
+      theorem's target is NON-CONTEXTUAL assignment. A theory whose outcome
+      map depends on the measurement context -- on the actual physical
+      arrangement doing the asking -- is outside the theorem's scope, at the
+      declared cost of accepting that dependence.
+
+      CSD accepts the dependence and then does something the usual discussion
+      does not: it makes the context a formal object with its own data, so
+      "the outcome depends on the context" is a definition you can compute
+      with, not a slogan.
+    in_csd: >
+      A measurement context is a rate field on the arena's base -- the
+      apparatus's own data -- and outcome basins are built from it. Distinct
+      contexts genuinely induce distinct partitions, which is exactly the
+      dependence Kochen-Specker demands of a surviving theory. The corpus
+      proves the obstruction side too, in its own frame: no global assignment
+      is compatible with the exhibited contextual statistics, and the
+      Mermin-Peres machinery pins the finite-dimensional contradiction.
+
+      One clarification the fibre analysis added: the base-only failure at
+      dimension three and above is NOT a Kochen-Specker corollary -- CSD's
+      partitions being contextual, the classical no-gos do not apply to them
+      -- it is a separate covariance-and-positivity obstruction, proved on
+      its own.
+    mathematical: >
+      The contextuality tier: the global-assignment obstruction in the C1
+      chain; the Mermin-Peres square's contextuality witness; the
+      context-indexed outcome map machinery with its definitional separation
+      -- no Fine-theorem shortcut assumed; and the N >= 3 fibre-forcing
+      analysis, explicitly distinguished from Gleason and Kochen-Specker in
+      the source.
+    term: Does the Kochen-Specker theorem rule out CSD?
+    status: definition
+    source: curated
+    related: [kochen-specker, contextuality, measurement-context, mermin-inequality, is-csd-a-hidden-variable-theory]
+
+  - slug: is-csd-superdeterministic
+    kind: question
+    hook: >
+      No. The exhibited Bell model satisfies measurement independence -- named as
+      a premise and proved for the model -- and the escape from Bell runs through
+      contextual outcome maps, not conspiratorial settings.
+    layman: >
+      Superdeterminism is the escape from Bell's theorem most physicists find too
+      expensive: deny that measurement settings can be chosen independently of
+      the hidden state, so the correlations were arranged in the initial
+      conditions of the universe. It saves locality by making experiments
+      unreadable -- if settings and systems conspire, no measurement tests
+      anything.
+
+      CSD does not take that route, and the claim is checkable rather than
+      rhetorical. In the corpus's Bell analysis, measurement independence -- one
+      shared distribution over the hidden states, the same across all setting
+      choices -- is stated as an explicit premise and PROVED for the exhibited
+      model. The model's escape from Bell is contextuality of the outcome maps:
+      what depends on the setting is how outcomes are read off, not which
+      hidden states occur.
+
+      Deterministic, yes. Superdeterministic -- settings correlated with the
+      hidden state -- demonstrably not.
+    in_csd: >
+      The distinction the question turns on is between two places setting-
+      dependence could enter: the distribution over hidden states (that is
+      superdeterminism) and the outcome functions (that is contextuality). The
+      corpus's model has one fixed measure across every context -- measurement
+      independence holding by construction and stated in-module -- while the
+      per-context outcome maps carry all the setting dependence.
+
+      The honesty note the documentation itself makes: measurement independence
+      is a genuine premise of Bell derivations, and naming it is part of
+      keeping the Bell analysis auditable. Naming a premise is not denying it.
+    mathematical: >
+      The C1 chain's operational no-signalling stack: remote marginal
+      invariance for both wings under a single shared measure -- which IS
+      measurement independence, stated in-module -- proved for the
+      singlet-reproducing contextual model; the model's context dependence
+      isolated in the outcome family; and the obstruction theorems showing the
+      dependence cannot be removed.
+    term: Is CSD superdeterministic?
+    status: definition
+    source: curated
+    related: [does-csd-violate-bell, singlet-contextual-model, contextuality, determinism, hidden-variables]
+
+  - slug: is-the-wavefunction-real
+    kind: question
+    hook: >
+      The arena is real; the wavefunction is its visible coordinate. Real enough
+      to be readable off the world, too thin to be the world.
+    layman: >
+      "Is the wavefunction real?" runs two questions together. Does something in
+      the world correspond to it? And is it the complete story of what exists?
+      CSD's answers come apart cleanly: yes, and emphatically no.
+
+      Yes: the quantum state is not a fiction or a mere gambling position. Every
+      arena point projects to a definite state, so the state tracks a genuine
+      feature of the world -- you could read it off the world's actual
+      configuration if you had access.
+
+      No: the state is radically incomplete. The projection that produces it is
+      many-to-one, and everything that decides measurement outcomes -- the
+      fibre coordinate, the basin the trajectory occupies -- lives in what the
+      projection forgets. Treating the state as the whole world is exactly the
+      move that generates the measurement problem; treating it as a lossy
+      coordinate dissolves it.
+    in_csd: >
+      The state's dual character is structural, not rhetorical. Functionally it
+      is epistemic: it summarises what a preparation pins down, and its update
+      on measurement is learning. Ontologically its supports are disjoint --
+      distinct states describe disjoint sets of arena points -- which is why
+      the reality theorems aimed at overlapping-support models do not bite.
+
+      The programme's discipline is to refuse the shorter slogans in both
+      directions: "the wavefunction is everything" overclaims what the sector
+      carries -- the fibre analysis proves record-forming content cannot live
+      there at higher dimension -- and "the wavefunction is nothing" ignores
+      that it is a faithful coordinate of the real arena.
+    mathematical: >
+      The formal content is the projection structure: a measurable many-to-one
+      pi from the arena to the projective sector, the epistemic measure exact
+      on the base and spread on the fibre, and the record layer's theorems
+      placing outcome-deciding structure in the fibre at N >= 3. The
+      operational stratum's state notion -- density operators and effects --
+      is proved consistent with the volume stratum wherever both speak.
+    term: Is the wavefunction real in CSD?
+    status: definition
+    source: curated
+    related: [psi-epistemic, does-csd-conflict-with-pbr, many-to-one-projection, ontic-vs-epistemic, fibre]
+
+  - slug: what-happens-during-measurement
+    kind: question
+    hook: >
+      The system stops being isolated, the joint dynamics writes a record into
+      the arena, and "collapse" is the update of a description -- one law,
+      no switch.
+    layman: >
+      The textbook's answer is famously two answers: smooth evolution until a
+      measurement, then a jump, with no rule for when to switch. CSD's answer
+      has one law and three stages, each of them ordinary physics.
+
+      First, de-isolation: measuring means coupling the system to an apparatus,
+      deliberately ending its isolation. Second, sorting: the joint
+      deterministic dynamics carries the arena point into one of the outcome
+      basins -- regions fixed by the apparatus alone, before the system
+      arrived. Third, the record: which basin the trajectory occupies is a
+      physical fact of the arena, stable, re-readable, protected from distant
+      interference by a light-cone theorem.
+
+      The state's jump is then bookkeeping: you learned which basin, you update
+      the description. Nothing physical collapsed; your summary caught up with
+      the world.
+    in_csd: >
+      Each stage is formalised at its own tier. De-isolation flows exist as
+      constructed objects -- deterministic, measure-preserving, provably not
+      the identity -- realising the measurement dilation dynamically, with
+      pointer-block volumes equal to the Born weights. The basins are the
+      record layer's context-fixed partition, Born-weighted by theorem. The
+      Luders update rule is derived as the correct conditional bookkeeping in
+      the sequential and mixed tiers.
+
+      The stated open frontier is the junction: deriving the fibre-level
+      record mechanism from the de-isolation dynamics, rather than exhibiting
+      each side separately. The programme calls this the record layer's
+      remaining work, in public.
+    mathematical: >
+      measurement_flow_born_frequency for the dynamics tier;
+      globalBasin_born and the disjointness and exhaustion theorems for the
+      kinematic tier; record_lightcone for the record's stability; the Luders
+      tier for sequential conditioning; and the einselection theorems for why
+      pointer readings are the stable alphabet.
+    term: What happens during a measurement in CSD?
+    status: definition
+    source: curated
+    related: [de-isolation, measurement-problem, collapse, outcome-region, record-layer, measurement-flow]
+
+  - slug: what-is-machine-checked
+    kind: question
+    hook: >
+      Every theorem in the corpus, from zero imported axioms -- and the honest
+      list of what a proof assistant cannot check is published next to it.
+    layman: >
+      "Machine-checked" gets used loosely, so here is the strict version this
+      programme means. Every theorem in the csd-lean4 corpus is verified by the
+      Lean proof assistant down to its logical kernel: tens of thousands of
+      lines in which no step is taken on trust.
+
+      Two facts sharpen it. The corpus imports zero axioms beyond Lean's
+      foundational three -- an early reliance on an unproved representation
+      theorem was discharged by proving it. And the physical postulates are not
+      axioms smuggled in: they are hypotheses carried visibly in theorem
+      statements, so the cost of each result is auditable at its use site.
+
+      Equally strict is what checking cannot do: it cannot certify that a
+      formal statement MEANS what the prose says it means. A fluent, false
+      description of a true theorem is the actual failure mode -- so the
+      repository runs mechanical guards against prose drift, and says plainly
+      that the mathematics-to-physics reading is a human responsibility.
+    in_csd: >
+      The verification posture is layered: the library and its regression
+      suite build with warnings as errors; an axiom-audit suite pins every
+      headline constant's axiom set; a validation ledger tracks each claim's
+      status row by row; and a battery of guard scripts checks the things a
+      compiler cannot see -- vacuous statements, carried-but-unused
+      hypotheses, prose claims outrunning proved connectivity, and glossary
+      anchors like the ones behind this page.
+
+      The distinctive commitments: postulates as hypotheses rather than
+      axioms, honest-scope notes in the modules themselves, and a stated rule
+      that a wall is reported rather than papered over with a stub.
+    mathematical: >
+      The kernel-checked corpus spans the frequency layer, the measure and
+      Born tiers, measurement dynamics, the entangled tier, the record layer,
+      thermodynamics and the finite field track, with every pinned constant
+      reporting exactly propext, Classical.choice and Quot.sound. The staging
+      tree contributes Mathlib-candidate infrastructure -- partial trace,
+      the general Lie-Trotter formula -- built CSD-free.
+    term: What exactly is machine-checked in CSD?
+    status: definition
+    source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/formalisation
+      text: The formalisation page tracks the Lean corpus and its scope
+    related: [partial-trace, lie-trotter-formula, lf1-main-theorem, witness-and-engine]
+
+  - slug: does-csd-make-new-predictions
+    kind: question
+    hook: >
+      Not yet, and it does not pretend otherwise: the current claim is
+      reproduction with fewer postulates, verified -- with candidate departures
+      recorded as owed, not asserted.
+    layman: >
+      The blunt question deserves a blunt answer. At present, CSD claims no
+      experiment whose outcome it predicts differently from quantum mechanics.
+      The corpus's empirical suite consists of formal twins of the flagship
+      experiments -- interference, Bell tests, quantum eraser, interaction-free
+      measurement and the rest -- each reproduced within the programme's frame.
+
+      What the programme claims instead is a different kind of gain: the same
+      predictions from less. Fewer postulates, a probability rule computed
+      rather than assumed, a measurement account with one law instead of two --
+      and the whole thing machine-checked, which no rival interpretation
+      currently offers.
+
+      Whether genuinely new physics emerges -- departures at regimes the
+      reconstruction constrains -- is treated as owed future work in the
+      papers, not as a present claim. A reader should hold the programme to
+      exactly that standard.
+    in_csd: >
+      The empirical layer's design is reproduction with receipts: every
+      flagship quantum experiment in the suite has a CSD-side twin, and the
+      validation ledger tracks what each twin actually establishes. The
+      interpretive contrast with rivals is stated as interpretive -- the
+      corpus's own comparison entries say no experiment currently
+      distinguishes the positions.
+
+      The disciplined phrasing matters because overclaiming here is the
+      commonest failure of reconstruction programmes; the repository's claims
+      guard exists to keep the public statements at exactly the strength of
+      the theorems.
+    mathematical: >
+      The Empirical tree: the QM branch reproducing standard results in the
+      operational formalism, and the CSD branch re-deriving the same
+      experiments through the volume machinery -- double-slit, singlet and
+      CHSH, GHZ, CGLMP, eraser and Elitzur-Vaidman among them -- with the
+      chain capstones connecting frequencies to Born weights on the
+      programme's own route.
+    term: Does CSD make new predictions?
+    status: definition
+    source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page states what is and is not claimed
+    related: [what-is-machine-checked, hidden-variables, copenhagen, is-the-born-rule-derived]
+
+  - slug: csd-vs-bohmian-mechanics
+    kind: question
+    hook: >
+      Cousins, not twins: both pay the no-go price, but Bohm postulates his
+      equilibrium measure where CSD proves its measure unique -- and the arenas
+      underneath are different objects.
+    layman: >
+      Bohmian mechanics is the standing proof that deterministic quantum
+      theories exist: particles with definite positions, guided by the wave,
+      reproducing quantum statistics. Any deterministic programme owes an
+      account of how it differs, and the differences here are structural, not
+      cosmetic.
+
+      The arena: Bohm's world is particle configurations, with the
+      wavefunction as a real field guiding them. CSD's arena is not
+      configuration space -- it is a compact geometric space projecting onto
+      the quantum state space, and the state is the projection's output, not
+      an extra field with dynamics of its own.
+
+      The measure: Bohm's statistics require quantum equilibrium -- the
+      assumption that positions are distributed by the squared amplitude. CSD's
+      analogous input is a theorem: the measure is the unique invariant one,
+      so the distributional assumption is replaced by a uniqueness proof.
+
+      The records: Bohmian outcomes are particle positions; CSD outcomes are
+      basin memberships written into the arena's fibre, with their own
+      stability theorem.
+    in_csd: >
+      The programme's respect for Bohm is on record -- the standing
+      counterexample to "hidden variables are dead" -- and so is the
+      divergence. CSD keeps the state epistemic in function where Bohm makes
+      it a dynamical agent; CSD's contextuality lives in apparatus-fixed
+      outcome maps where Bohm's lives in the guidance dynamics' contextual
+      responses; and the equilibrium question -- WHY the right measure --
+      is answered by symmetry-forced uniqueness rather than by hypothesis or
+      relaxation arguments.
+
+      No experiment currently separates the two, and neither side claims one.
+      The separation is in what must be assumed, and in what has been
+      machine-checked -- where the comparison is presently one-sided.
+    mathematical: >
+      The contrast is carried by the corpus's uniqueness and reconstruction
+      theorems rather than by any formalisation of Bohmian mechanics itself:
+      fubiniStudyMeasure_unique versus the quantum equilibrium hypothesis;
+      the projection postulate carried as a hypothesis versus the guidance
+      equation carried as dynamics; and the record layer's basin machinery
+      versus position as the universal pointer.
+    term: How does CSD differ from Bohmian mechanics?
+    status: definition
+    source: curated
+    related: [bohmian-mechanics, hidden-variables, fubini-study-measure, is-csd-a-hidden-variable-theory, determinism]

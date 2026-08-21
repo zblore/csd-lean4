@@ -208,10 +208,17 @@ SITE_LINE = ('<p class="note">Part of <a href="' + SITE_MAIN
              + '/">Constraint-Surface Dynamics</a> &middot; Formalised in '
              + '<a href="' + REPO + '">csd-lean4</a>.</p>')
 
-idx_items, sitemap, llms, md = [], [SITE + "/"], [], []
+idx_items, q_items, sitemap, llms, md = [], [], [SITE + "/"], [], []
 
 for e in entries:
     slug, term, st = e["slug"], e["term"], e["status"]
+    # kind: "question" switches the page from a DefinedTerm to an FAQ answer.
+    # Question pages are argumentative rather than definitional: they carry
+    # FAQPage schema, answer-shaped section headings, and no status chip (the
+    # controlled status vocabulary describes claims, and a question page's
+    # claims live in the theorem pages it links). They are excluded from the
+    # DefinedTermSet and listed in their own index section.
+    is_q = e.get("kind") == "question"
     url = SITE + "/" + slug + "/"
     ln = e.get("lean") or {}
     mod, thm = ln.get("module"), ln.get("theorem")
@@ -230,8 +237,12 @@ for e in entries:
     s_math = linkify(e["mathematical"], slug, used, sources)
     s_person = linkify(e["person"], slug, used, sources) if e.get("person") else ""
 
-    chips = ['<span class="chip"><b>' + E(st.replace("-", " ")) + "</b> &middot; "
-             + E(STATUS_GLOSS.get(st, "")) + "</span>"]
+    if is_q:
+        chips = ['<span class="chip"><b>question</b> &middot; answered against '
+                 "the machine-checked corpus</span>"]
+    else:
+        chips = ['<span class="chip"><b>' + E(st.replace("-", " ")) + "</b> &middot; "
+                 + E(STATUS_GLOSS.get(st, "")) + "</span>"]
     if thm and src:
         chips.append('<a class="chip" href="' + src + '">Lean <b><code>'
                      + E(thm) + "</code></b></a>")
@@ -268,12 +279,12 @@ for e in entries:
         + "<h1>" + E(term) + "</h1>"
         + '<p class="hook">' + E(hook) + "</p>"
         + '<div class="strip">' + "".join(chips) + "</div>"
-        + '<section class="r1"><h2>In plain terms</h2><p>'
-        + s_layman + "</p></section>"
-        + '<section class="r2"><h2>In CSD</h2><p>'
-        + s_incsd + "</p></section>"
-        + '<section class="r3"><h2>Mathematically</h2><p>'
-        + s_math + "</p></section>"
+        + '<section class="r1"><h2>' + ("The short answer" if is_q else "In plain terms")
+        + "</h2><p>" + s_layman + "</p></section>"
+        + '<section class="r2"><h2>' + ("The longer answer" if is_q else "In CSD")
+        + "</h2><p>" + s_incsd + "</p></section>"
+        + '<section class="r3"><h2>' + ("What is actually proved" if is_q else "Mathematically")
+        + "</h2><p>" + s_math + "</p></section>"
         # Optional fourth register: who the name belongs to. A reader meeting an
         # eponym often wants the person, not only the concept, and an entry titled
         # after someone that never says who they were is a small failure of the
@@ -290,31 +301,45 @@ for e in entries:
         + SITE_LINE + "</div>"
     )
 
-    jl = {
-        "@context": "https://schema.org",
-        "@type": "DefinedTerm",
-        "name": term,
-        "description": hook + " " + layman,
-        "url": url,
-        "inDefinedTermSet": {
-            "@type": "DefinedTermSet",
-            "name": "Constraint-Surface Dynamics Glossary",
-            "url": SITE + "/",
-        },
-    }
-    if e.get("papers"):
-        jl["sameAs"] = ["https://doi.org/" + p["doi"] for p in e["papers"]]
+    if is_q:
+        jl = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "url": url,
+            "mainEntity": [{
+                "@type": "Question",
+                "name": term,
+                "acceptedAnswer": {"@type": "Answer", "text": hook + " " + layman},
+            }],
+        }
+    else:
+        jl = {
+            "@context": "https://schema.org",
+            "@type": "DefinedTerm",
+            "name": term,
+            "description": hook + " " + layman,
+            "url": url,
+            "inDefinedTermSet": {
+                "@type": "DefinedTermSet",
+                "name": "Constraint-Surface Dynamics Glossary",
+                "url": SITE + "/",
+            },
+        }
+        if e.get("papers"):
+            jl["sameAs"] = ["https://doi.org/" + p["doi"] for p in e["papers"]]
 
     os.makedirs(os.path.join(OUT, slug), exist_ok=True)
     open(os.path.join(OUT, slug, "index.html"), "w", encoding="utf-8").write(
         page(term + " - CSD Glossary", hook, body,
              json.dumps(jl, ensure_ascii=False), url))
 
-    idx_items.append('<li><a href="' + url + '"><span class="t">' + E(term)
-                     + '</span><span class="h">' + E(hook) + "</span></a></li>")
+    item = ('<li><a href="' + url + '"><span class="t">' + E(term)
+            + '</span><span class="h">' + E(hook) + "</span></a></li>")
+    (q_items if is_q else idx_items).append(item)
     sitemap.append(url)
     llms.append("- [" + term + "](" + url + "): " + hook)
-    md.append("| [" + term + "](" + url + ") | `" + (thm or "") + "` | " + st + " |")
+    md.append("| [" + term + "](" + url + ") | `" + (thm or "") + "` | "
+              + ("question" if is_q else st) + " |")
 
 setld = {
     "@context": "https://schema.org",
@@ -323,7 +348,7 @@ setld = {
     "url": SITE + "/",
     "hasDefinedTerm": [
         {"@type": "DefinedTerm", "name": e["term"], "url": SITE + "/" + e["slug"] + "/"}
-        for e in entries
+        for e in entries if e.get("kind") != "question"
     ],
 }
 open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page(
@@ -343,6 +368,11 @@ open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page(
     + '<a href="' + SITE_MAIN + '/">the main site</a> or go straight to '
     + '<a href="' + SITE_MAIN + '/papers">the papers</a>.</p>'
     + '<ul class="idx">' + "".join(idx_items) + "</ul>"
+    # Question pages get their own index section: they answer what a sceptical
+    # reader types, and burying "Does CSD violate Bell's theorem?" between
+    # alphabetical term entries serves nobody. A section heading, not a nav bar.
+    + (("<h2 style=\"margin-top:3rem\">Questions</h2>"
+        '<ul class="idx">' + "".join(q_items) + "</ul>") if q_items else "")
     + '<div class="foot"><p class="note">Generated from a single source file in '
     + '<a href="' + REPO + '">csd-lean4</a>. Every anchor is verified against the Lean '
     + "tree on each build, and the source links are pinned to a commit.</p>"

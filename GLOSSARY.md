@@ -31,6 +31,10 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Determinism](https://glossary.constraintsurfacedynamics.com/determinism/) | `` | definition |
 | [Deutsch-Jozsa algorithm](https://glossary.constraintsurfacedynamics.com/deutsch-jozsa/) | `` | standard-mathematics |
 | [Dirichlet distribution](https://glossary.constraintsurfacedynamics.com/dirichlet-distribution/) | `` | standard-mathematics |
+| [Does CSD make new predictions?](https://glossary.constraintsurfacedynamics.com/does-csd-make-new-predictions/) | `` | question |
+| [Does CSD violate Bell's theorem?](https://glossary.constraintsurfacedynamics.com/does-csd-violate-bell/) | `` | question |
+| [Does the Kochen-Specker theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-kochen-specker-rule-out-csd/) | `` | question |
+| [Does the PBR theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-csd-conflict-with-pbr/) | `` | question |
 | [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
 | [Elitzur-Vaidman bomb tester](https://glossary.constraintsurfacedynamics.com/elitzur-vaidman/) | `` | standard-mathematics |
 | [Entropy subadditivity](https://glossary.constraintsurfacedynamics.com/entropy-subadditivity/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
@@ -50,7 +54,13 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Hidden variables](https://glossary.constraintsurfacedynamics.com/hidden-variables/) | `no_product_partition_realises_singlet` | proved-in-corpus |
 | [Hilbert space](https://glossary.constraintsurfacedynamics.com/hilbert-space/) | `` | standard-mathematics |
 | [Hong-Ou-Mandel effect](https://glossary.constraintsurfacedynamics.com/hong-ou-mandel/) | `` | standard-mathematics |
+| [How does CSD differ from Bohmian mechanics?](https://glossary.constraintsurfacedynamics.com/csd-vs-bohmian-mechanics/) | `` | question |
+| [If CSD is deterministic, where do probabilities come from?](https://glossary.constraintsurfacedynamics.com/where-do-probabilities-come-from/) | `` | question |
 | [Interaction price](https://glossary.constraintsurfacedynamics.com/interaction-price/) | `price_linear_attained` | proved-in-corpus |
+| [Is CSD a hidden-variable theory?](https://glossary.constraintsurfacedynamics.com/is-csd-a-hidden-variable-theory/) | `` | question |
+| [Is CSD superdeterministic?](https://glossary.constraintsurfacedynamics.com/is-csd-superdeterministic/) | `` | question |
+| [Is the Born rule derived or assumed in CSD?](https://glossary.constraintsurfacedynamics.com/is-the-born-rule-derived/) | `` | question |
+| [Is the wavefunction real in CSD?](https://glossary.constraintsurfacedynamics.com/is-the-wavefunction-real/) | `` | question |
 | [Isolation](https://glossary.constraintsurfacedynamics.com/isolation/) | `` | definition |
 | [Jacobi identity](https://glossary.constraintsurfacedynamics.com/jacobi-identity/) | `` | standard-mathematics |
 | [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `isFubiniStudyKahler` | proved-in-corpus |
@@ -108,6 +118,8 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Typicality](https://glossary.constraintsurfacedynamics.com/typicality/) | `freq_tendsto_of_iid` | proved-in-corpus |
 | [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N` | proved-in-corpus |
 | [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
+| [What exactly is machine-checked in CSD?](https://glossary.constraintsurfacedynamics.com/what-is-machine-checked/) | `` | question |
+| [What happens during a measurement in CSD?](https://glossary.constraintsurfacedynamics.com/what-happens-during-measurement/) | `` | question |
 | [Wick's theorem](https://glossary.constraintsurfacedynamics.com/wick-theorem/) | `timeFourPoint_wick` | proved-in-corpus |
 | [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |
 | [Witness and engine](https://glossary.constraintsurfacedynamics.com/witness-and-engine/) | `` | definition |
