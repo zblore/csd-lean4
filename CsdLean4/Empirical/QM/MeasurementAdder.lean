@@ -49,10 +49,13 @@ AND-uncompute blocks per carry bit (`andAdd_uncompute_toffoli : … = 3 * n`). E
   per-block `#31` saving `(circuitCost (andUncompute a b g)).toffoli - gadgetBlockToffoli = 1`
   (`perBlock_saving`, from `andUncompute_measurement_saving`). The count provably aggregates `3n`
   proven-equivalent block replacements.
-* STRETCH (single carry, unitary side done; gadget n-fold amplitude WALLED): `ccxAtMat_lifts_denote`
-  lifts a **single** AND-uncompute CCX block into the full register `QReg m` as the permutation matrix
-  `ccxAtMat`, generalizing `#31`'s fixed-wire (`0,1,2`) `B3` lift to arbitrary wires of any width.
-  This shows the per-block **unitary** embedding into the full register is **not** the obstruction.
+* STRETCH (single carry, unitary side done; gadget n-fold amplitude WALLED):
+  `Reversible.ccxAtMat_lifts_denote` lifts a **single** AND-uncompute CCX block into the full
+  register `QReg m` as the permutation matrix `ccxAtMat`, generalizing `#31`'s fixed-wire
+  (`0,1,2`) lift to arbitrary wires of any width. This shows the per-block **unitary** embedding
+  into the full register is **not** the obstruction. *(Extracted 2026-08-21: the lift cluster is
+  generic mathematics and now lives Category-1 in `Mathlib/QuantumInfo/Reversible/Lift.lean`,
+  beside the DSL it bridges; this file keeps the cost accounting and the wall documentation.)*
 
   **The wall (precise, decision-relevant).** The genuine gadget hybrid — replacing one AND-uncompute
   by the *measurement gadget* and proving the full-register data output on `S` unchanged — walls at
@@ -203,95 +206,14 @@ theorem measAdd_saving_aggregates (L : AndAddLayout m n) (a b g : Fin m) :
 
 /-! ## Part 2 (stretch) — the single-block unitary lift into the full register `QReg m`
 
-The `#31` lift was done in `B3 = Fin 3 → Fin 2` on the fixed wires `0,1,2`. Here it is generalized to
-**arbitrary wires of any width `m`** (`QReg m = EuclideanSpace ℂ (Fin m → Fin 2)`), showing the
-per-block **unitary** embedding into the full register is not the obstruction. The wall is the
-non-permutation *measurement gadget* tensor-factor, documented in the module header. -/
-
-/-- General `toEuclideanLin` column read on `QReg m` (the `#31` `toEuclideanLin_basisState`, off `B3`):
-a register operator applied to a basis state reads off the corresponding matrix column. -/
-lemma toEuclideanLin_basisState_m (A : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ)
-    (w z : Fin m → Fin 2) :
-    Matrix.toEuclideanLin A (basisState w) z = A z w := by
-  rw [Matrix.toLpLin_apply]
-  show (A *ᵥ (basisState w).ofLp) z = A z w
-  simp only [basisState, show (EuclideanSpace.single w (1 : ℂ)).ofLp = Pi.single w 1 from rfl,
-    Matrix.mulVec_single, Matrix.col_apply, MulOpposite.op_one, one_smul]
-
-/-- **The full-register CCX permutation** at wires `(wa, wb, wg)`: flip wire `wg` by `wa ∧ wb`
-(`+ w wa * w wb` on `Fin 2`). The width-`m`, arbitrary-wire generalization of `#31`'s `ccx`. -/
-def ccxAt (wa wb wg : Fin m) (w : Fin m → Fin 2) : Fin m → Fin 2 :=
-  Function.update w wg (w wg + w wa * w wb)
-
-/-- **The single-block amplitude unitary on `QReg m`**: the permutation matrix of `ccxAt`. A genuine
-permutation matrix on the full register (identity off `wg`), the local tensor factor of one
-AND-uncompute CCX — no `B3`, no `Fin 8` reindex. -/
-noncomputable def ccxAtMat (wa wb wg : Fin m) :
-    Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ :=
-  Matrix.of fun z w => if z = ccxAt wa wb wg w then 1 else 0
-
-lemma ccxAtMat_apply (wa wb wg : Fin m) (z w : Fin m → Fin 2) :
-    ccxAtMat wa wb wg z w = if z = ccxAt wa wb wg w then 1 else 0 := rfl
-
-/-- The unitary permutes basis states by `ccxAt`. -/
-lemma ccxAtMat_apply_basisState (wa wb wg : Fin m) (w : Fin m → Fin 2) :
-    Matrix.toEuclideanLin (ccxAtMat wa wb wg) (basisState w) = basisState (ccxAt wa wb wg w) := by
-  ext z
-  rw [toEuclideanLin_basisState_m, ccxAtMat_apply, basisState_apply]
-
-/-- Recast a `QReg m` index to a Boolean reversible state (`a ↦ (a = 1)`). -/
-def stateOfReg (w : Fin m → Fin 2) : Reversible.State m := fun i => decide (w i = 1)
-
-/-- Recast a Boolean reversible state back to a `QReg m` index (`b ↦ if b then 1 else 0`). -/
-def regOfState (s : Reversible.State m) : Fin m → Fin 2 := fun i => if s i then 1 else 0
-
-/-- The Boolean AND-uncompute on wires `wa, wb, wg` (with `wg` distinct from the controls) is a single
-Toffoli flipping wire `wg`. The arbitrary-wire generalization of `#31`'s `denote_andUncompute_012`. -/
-lemma denote_andUncompute (wa wb wg : Fin m) (hga : wg ≠ wa) (hgb : wg ≠ wb)
-    (s : Reversible.State m) :
-    Reversible.denote (Reversible.andUncompute wa wb wg) s
-      = Function.update s wg (s wg ^^ (s wa && s wb)) := by
-  show Reversible.denoteGate (Reversible.Gate.CCX wa wb wg) s = _
-  simp only [Reversible.denoteGate, if_neg (not_or.mpr ⟨hga, hgb⟩)]
-
-/-- **The Boolean ↔ `Fin 2` link, arbitrary wires.** `ccxAt` is the recast of the Boolean
-`denote (andUncompute wa wb wg)`: the full-register `Fin 2` permutation and the Boolean Toffoli agree
-wire-by-wire under `stateOfReg` / `regOfState`. *Computed*, not asserted (the ancilla wire is the
-genuine `g + a*b` content; the others round-trip via `b3OfState_decide`). -/
-lemma ccxAt_eq_denote_recast (wa wb wg : Fin m) (hga : wg ≠ wa) (hgb : wg ≠ wb)
-    (w : Fin m → Fin 2) :
-    ccxAt wa wb wg w
-      = regOfState (Reversible.denote (Reversible.andUncompute wa wb wg) (stateOfReg w)) := by
-  have hidx : ∀ a b g : Fin 2,
-      g + a * b
-        = (if (decide (g = 1) ^^ (decide (a = 1) && decide (b = 1))) then (1 : Fin 2) else 0) := by
-    intro a b g; fin_cases a <;> fin_cases b <;> fin_cases g <;> decide
-  rw [denote_andUncompute wa wb wg hga hgb]
-  funext i
-  simp only [ccxAt, regOfState, stateOfReg, Function.update_apply]
-  by_cases h : i = wg
-  · subst h
-    rw [if_pos rfl, if_pos rfl]
-    exact hidx (w wa) (w wb) (w i)
-  · simp only [if_neg h]
-    exact (b3OfState_decide (w i)).symm
-
-/-- **The single-block unitary amplitude lift into `QReg m` (the stretch deliverable).** The
-full-register unitary `ccxAtMat` acts on computational basis states **exactly as the Boolean
-`denote (andUncompute wa wb wg)` permutation**, modulo the `Bool ↔ Fin 2` recast — for arbitrary wires
-`wa, wb, wg` of any width `m` (with `wg` distinct from the controls). This generalizes `#31`'s
-fixed-wire `B3` lift `andUncompMat_lifts_denote` off the `0,1,2` wires and off `B3`, showing the
-per-block **unitary** embedding into the full register is sound (NOT the obstruction).
-
-The genuine gadget hybrid — the *measurement gadget* replacement and the full-register `S`-output
-equality — walls at the `QReg m ≅ QReg 3 ⊗ QReg (m−3)` tensor factor, because the gadget is not a
-permutation; see the module header. -/
-theorem ccxAtMat_lifts_denote (wa wb wg : Fin m) (hga : wg ≠ wa) (hgb : wg ≠ wb)
-    (w : Fin m → Fin 2) :
-    Matrix.toEuclideanLin (ccxAtMat wa wb wg) (basisState w)
-      = basisState
-          (regOfState (Reversible.denote (Reversible.andUncompute wa wb wg) (stateOfReg w))) := by
-  rw [ccxAtMat_apply_basisState, ccxAt_eq_denote_recast wa wb wg hga hgb]
+*(Extracted 2026-08-21.)* The stretch deliverable — `Reversible.ccxAtMat_lifts_denote`, the
+arbitrary-wire, any-width generalization of `#31`'s fixed-wire lift, with its cluster
+(`ccxAt` / `ccxAtMat` / `stateOfReg` / `regOfState` / `toEuclideanLin_basisState_m`) — is generic
+mathematics and lives Category-1 in `Mathlib/QuantumInfo/Reversible/Lift.lean`, beside the DSL it
+bridges (available here through the import chain). It shows the per-block **unitary** embedding
+into the full register is not the obstruction; the wall is the non-permutation *measurement
+gadget* tensor-factor, documented in the module header, which is application content and stays
+here. -/
 
 /-! ## Non-vacuity witness -/
 

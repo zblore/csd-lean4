@@ -897,9 +897,9 @@ The unitarity proofs cite only the foundational triple; the
 
 /-! ### #31 localized amplitude lift of the AND-uncompute block (L5-c bridge, cell granularity) -/
 
-/-- info: 'CSD.Empirical.QM.andUncompMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.andUncompMat_lifts_denote
+-- The gate-lift layer (andUncompMat_lifts_denote and its cluster) was EXTRACTED 2026-08-21 to
+-- Mathlib/QuantumInfo/Reversible/Lift.lean (Cat-1, namespace Reversible); its pins moved to the
+-- MathlibStaging part. The gadget-equivalence pins below stay — that content is 3-Local.
 
 /-- info: 'CSD.Empirical.QM.andUncompMat_uncomputes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -1003,8 +1003,8 @@ The unitarity proofs cite only the foundational triple; the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.gidneyMeas_cheapest
 
-/-- info: 'CSD.Empirical.QM.ccxAtMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.ccxAtMat_lifts_denote
+-- ccxAtMat_lifts_denote (the arbitrary-wire lift): EXTRACTED 2026-08-21 to
+-- Mathlib/QuantumInfo/Reversible/Lift.lean; pinned in the MathlibStaging part as
+-- Reversible.ccxAtMat_lifts_denote.
 
 end CSD.Tests.AxiomAudit

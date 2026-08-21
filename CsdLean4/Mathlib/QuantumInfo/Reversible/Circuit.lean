@@ -11,23 +11,24 @@ public import Mathlib.Data.List.Basic
 public import Mathlib.Data.Finset.Basic
 
 /-!
-# Reversible classical circuits — the gate-list DSL  (ECDLP Tranche 1)
+# Reversible classical circuits — the gate-list DSL
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
-A minimal, **derived-cost** abstraction for reversible classical circuits, the semantic substrate
-for the ECDLP / reversible-arithmetic programme (`specs/ecdlp-resource-plan.md`). The design
+A minimal, **derived-cost** abstraction for reversible classical circuits. The design
 choice is deliberate: a circuit is a *list of gates*, its action is the fold of the per-gate
 semantics, and (in `Cost.lean`) its resource cost is a *function of the gate list*. Resource
 bounds are therefore theorems about an exhibited circuit, not numbers annotated onto an opaque
-`Equiv` — the prerequisite for the cost accounting to be genuinely machine-checked.
+`Equiv` — the prerequisite for cost accounting to be genuinely machine-checked. (The
+reversible-arithmetic application this substrate was built for lives in the `Ecdsafail`
+repository, `specs/ecdsa/ecdlp-resource-plan.md` there.)
 
 Each primitive gate (`X` flip, `CX` = CNOT, `CCX` = Toffoli, `swap`) is an **involution**:
 degenerate forms (control = target) act as the identity, so every gate is its own inverse
 unconditionally. Hence a circuit's inverse is the *reversed* gate list (`inverse = List.reverse`),
 and `denote` is a bijection. State is `Fin n → Bool`; the bridge to the quantum register
-`QReg n` (basis states indexed by `Fin n → Fin 2`) is a later embedding step, kept out of this
-classical layer.
+`QReg n` (basis states indexed by `Fin n → Fin 2`) is kept out of this classical layer — it is
+the embedding `Reversible/Lift.lean` provides (basis-state permutation semantics).
 -/
 
 @[expose] public section

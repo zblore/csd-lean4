@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Empirical.QM.MeasurementUncompute
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Lift
 
 /-!
 # Localized amplitude lift of the AND-uncompute block  (Build #31, L5-c bridge at cell granularity)
@@ -26,18 +27,15 @@ The **key steer** here is to do the lift **entirely in the `B3` representation**
 
 ## What is built (B3 representation throughout, no `Fin 8`)
 
-1. `ccx : B3 → B3` — the CCX permutation on `B3` in the `Fin 2` representation: flip ancilla wire `2`
-   (`g`) iff data wires `0` (`a`) and `1` (`b`) are both `1`. On `Fin 2`, "flip by `a ∧ b`" is
-   `+ (w 0 * w 1)` (since `(1:Fin 2) + 1 = 0`).
-2. `andUncompMat : Matrix B3 B3 ℂ` — the permutation matrix of `ccx`: `andUncompMat z w = [z = ccx w]`.
-3. `andUncompMat_apply_basisState` — `andUncompMat` acts on a computational basis state by permuting
-   the index: `toEuclideanLin andUncompMat (basisState w) = basisState (ccx w)` (reads off the column
-   via `toEuclideanLin_basisState`).
-4. **The localized gate-lift** `andUncompMat_lifts_denote` (the crux): the `B3` unitary `andUncompMat`
-   acts on computational basis states **exactly as the Boolean `denote (andUncompute 0 1 2)`
-   permutation**, modulo the `Bool ↔ Fin 2` recast of the three wires (`stateOfB3` / `b3OfState`).
-   This is the localized version of the general `denote ↔ toEuclideanLin` lift — **for the single
-   block only, in `B3`, with no `Fin 8`**. It is *computed* (`ccx_eq_denote_recast`), not asserted.
+1.–4. *(Extracted 2026-08-21.)* The generic gate-lift layer — `ccx` (the CCX permutation in the
+   `Fin 2` representation), its permutation matrix `andUncompMat`,
+   `andUncompMat_apply_basisState`, the `Bool ↔ Fin 2` recasts (`stateOfB3` / `b3OfState`), and
+   **the localized gate-lift `andUncompMat_lifts_denote`** (the L5-c crux: the unitary acts on
+   computational basis states exactly as the Boolean `denote (andUncompute 0 1 2)` permutation) —
+   is generic mathematics with no gadget content, and now lives Category-1 beside the DSL:
+   `Mathlib/QuantumInfo/Reversible/Lift.lean` (namespace `Reversible`, re-exported here through
+   the import). This file keeps what is genuinely gadget-specific: `ccx_andIdx` (the AND-shaped
+   index is uncomputed) and everything below.
 5. **The equivalence** `andUncompute_eq_measureUncompute_on_block`: on the `andInput`-shaped subspace
    (`g = a ∧ b`), the unitary lift and the measurement gadget have the **same data effect**. The
    unitary deterministically uncomputes to ancilla `0`
@@ -57,8 +55,9 @@ The **key steer** here is to do the lift **entirely in the `B3` representation**
 This **closes the L5-c wall at CELL granularity**: the single AND-uncompute block is lifted to the
 amplitude model in `B3` (sidestepping the `Fin 8` reindex), and the unitary uncompute is **proven** to
 have the same data effect as the measurement gadget, so the Toffoli-free replacement is sound. The
-**trusted base grows** by this localized amplitude lift — the `B3` permutation-matrix lift of the block
-(`andUncompMat_lifts_denote`) plus the data-agreement (`andUncompMat_uncomputes`).
+**trusted base grows** by this localized amplitude lift — the permutation-matrix lift of the block
+(`Reversible.andUncompMat_lifts_denote`, `Mathlib/QuantumInfo/Reversible/Lift.lean`) plus the
+data-agreement (`andUncompMat_uncomputes`, here).
 
 The amplitude model is **required**: the measurement gadget uses phases (X-basis + CZ), which the
 Boolean reversible DSL cannot express.
@@ -73,16 +72,17 @@ circuit-level re-cost claim is made here, and no ECDSA resource-score change.**
 
 open scoped Matrix
 open QuantumInfo
+open Reversible
 
 namespace CSD.Empirical.QM
 
-/-! ## The CCX permutation on `B3` (the `Fin 2` representation, no `Fin 8`) -/
+/-! ## The gate-lift layer, imported
 
-/-- The **CCX permutation on `B3`** in the `Fin 2` representation: flip the ancilla wire `2` (`g`) iff
-data wires `0` (`a`) and `1` (`b`) are both `1`. On `Fin 2`, "flip by `a ∧ b`" is `+ (w 0 * w 1)`
-(`(1:Fin 2) + 1 = 0`, so a double flip is the identity — this is what makes `ccx` an involution and
-uncomputes `andIdx`). -/
-def ccx (w : B3) : B3 := Function.update w 2 (w 2 + w 0 * w 1)
+The CCX permutation `ccx`, its permutation matrix `andUncompMat`, the `Bool ↔ Fin 2` recasts
+(`stateOfB3` / `b3OfState`), and the localized gate-lift `andUncompMat_lifts_denote` are generic
+mathematics and live Category-1 in `Mathlib/QuantumInfo/Reversible/Lift.lean` (namespace
+`Reversible`, opened above; extracted from this file 2026-08-21). What is gadget-specific stays
+here. -/
 
 /-- `ccx` uncomputes the AND-entangled index: `ccx ![x, y, x∧y] = ![x, y, 0]`. The ancilla bit
 `x*y + x*y = 0` in `Fin 2`; the data `(x,y)` is untouched. -/
@@ -93,83 +93,6 @@ lemma ccx_andIdx (x y : Fin 2) : ccx (andIdx x y) = ![x, y, 0] := by
   · simp only [ccx, Function.update_of_ne (show (1 : Fin 3) ≠ 2 by decide), andIdx_one]
   · simp only [ccx, Function.update_self, andIdx_zero, andIdx_one, andIdx_two]
     fin_cases x <;> fin_cases y <;> decide
-
-/-! ## The `B3` amplitude unitary (permutation matrix of `ccx`) -/
-
-/-- **The AND-uncompute block lifted to a `B3` amplitude unitary**: the permutation matrix of `ccx`,
-`andUncompMat z w = [z = ccx w]`. A genuine permutation matrix on `B3` (3 wires), in the same
-`Matrix B3 B3 ℂ` representation as `hadA` / `projA` / `correctionMat`. No `Fin 8`. -/
-noncomputable def andUncompMat : Matrix B3 B3 ℂ :=
-  Matrix.of fun z w => if z = ccx w then 1 else 0
-
-lemma andUncompMat_apply (z w : B3) :
-    andUncompMat z w = if z = ccx w then 1 else 0 := rfl
-
-/-- **The unitary permutes basis states by `ccx`**: `toEuclideanLin andUncompMat (basisState w) =
-basisState (ccx w)`. Reads off the `w`-th column via `toEuclideanLin_basisState`. -/
-lemma andUncompMat_apply_basisState (w : B3) :
-    Matrix.toEuclideanLin andUncompMat (basisState w) = basisState (ccx w) := by
-  ext z
-  rw [toEuclideanLin_basisState, andUncompMat_apply, basisState_apply]
-
-/-! ## The `Bool ↔ Fin 2` recast for the three wires (stated explicitly, per the honesty note) -/
-
-/-- Recast a `B3` index (`Fin 3 → Fin 2`) to a Boolean reversible state (`Fin 3 → Bool`):
-`a ↦ (a = 1)`. -/
-def stateOfB3 (w : B3) : Reversible.State 3 := fun i => decide (w i = 1)
-
-/-- Recast a Boolean reversible state back to a `B3` index: `b ↦ if b then 1 else 0`. -/
-def b3OfState (s : Reversible.State 3) : B3 := fun i => if s i then 1 else 0
-
-/-- `b3OfState ∘ stateOfB3 = id` pointwise: the recast round-trips on a single `Fin 2` value. -/
-lemma b3OfState_decide (a : Fin 2) : (if decide (a = 1) then (1 : Fin 2) else 0) = a := by
-  fin_cases a <;> decide
-
-/-- The Boolean AND-uncompute on wires `0,1,2` is a single Toffoli flipping wire `2`:
-`denote (andUncompute 0 1 2) s = update s 2 (s 2 ⊕ (s 0 ∧ s 1))`. -/
-lemma denote_andUncompute_012 (s : Reversible.State 3) :
-    Reversible.denote (Reversible.andUncompute 0 1 2) s
-      = Function.update s 2 (s 2 ^^ (s 0 && s 1)) := by
-  show Reversible.denoteGate (Reversible.Gate.CCX 0 1 2) s = _
-  simp only [Reversible.denoteGate, if_neg (show ¬((2 : Fin 3) = 0 ∨ (2 : Fin 3) = 1) by decide)]
-
-/-- **The genuine Boolean ↔ Fin 2 link.** `ccx` is exactly the recast of the Boolean
-`denote (andUncompute 0 1 2)`: the `Fin 2` permutation and the Boolean Toffoli agree wire-by-wire
-under `stateOfB3` / `b3OfState`. *Computed*, not asserted — the ancilla wire is the genuine
-`g + a*b = [decide g ⊕ (decide a ∧ decide b)]` content (`ccx_index2`), the data wires round-trip
-(`b3OfState_decide`). -/
-lemma ccx_eq_denote_recast (w : B3) :
-    ccx w = b3OfState (Reversible.denote (Reversible.andUncompute 0 1 2) (stateOfB3 w)) := by
-  have ccx_index2 : ∀ a b g : Fin 2,
-      g + a * b
-        = (if (decide (g = 1) ^^ (decide (a = 1) && decide (b = 1))) then (1 : Fin 2) else 0) := by
-    intro a b g; fin_cases a <;> fin_cases b <;> fin_cases g <;> decide
-  rw [denote_andUncompute_012]
-  funext i
-  simp only [ccx, b3OfState, stateOfB3, Function.update_apply]
-  by_cases h : i = 2
-  · subst h
-    rw [if_pos (rfl : (2 : Fin 3) = 2), if_pos (rfl : (2 : Fin 3) = 2)]
-    exact ccx_index2 (w 0) (w 1) (w 2)
-  · simp only [if_neg h]
-    exact (b3OfState_decide (w i)).symm
-
-/-! ## The localized gate-lift (the crux) -/
-
-/-- **The localized amplitude gate-lift (the L5-c crux, in `B3`).** The `B3` unitary `andUncompMat`
-acts on computational basis states **exactly as the Boolean `denote (andUncompute 0 1 2)`
-permutation**, modulo the explicit `Bool ↔ Fin 2` recast of the three wires:
-
-  `toEuclideanLin andUncompMat (basisState w) = basisState (recast (denote (andUncompute 0 1 2)
-  (recast w)))`.
-
-This is the localized version of the general `denote ↔ toEuclideanLin` lift the L5-c probe flagged —
-**for the single AND-uncompute block only, in `B3`, with no `Fin 8` reindex**. It is *computed*
-(`andUncompMat_apply_basisState` + `ccx_eq_denote_recast`), not asserted. -/
-theorem andUncompMat_lifts_denote (w : B3) :
-    Matrix.toEuclideanLin andUncompMat (basisState w)
-      = basisState (b3OfState (Reversible.denote (Reversible.andUncompute 0 1 2) (stateOfB3 w))) := by
-  rw [andUncompMat_apply_basisState, ccx_eq_denote_recast]
 
 /-! ## The equivalence: same data effect (unitary uncompute vs measurement gadget) -/
 

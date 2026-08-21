@@ -58,6 +58,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Lift
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy

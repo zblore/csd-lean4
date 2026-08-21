@@ -2194,4 +2194,17 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'NormedSpace.trotter_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms NormedSpace.trotter_product
 
+-- The Boolean -> amplitude lift of reversible circuits (2026-08-21,
+-- Mathlib/QuantumInfo/Reversible/Lift.lean): a reversible gate acts on the quantum register
+-- QReg n as a permutation matrix on computational basis states, and the permutation is exactly
+-- the gate's Boolean denote semantics modulo the Bool <-> Fin 2 recast. Extracted from
+-- Empirical/QM/Measurement{UncomputeLift,Adder}.lean (Builds #31/#21), where the generic bridge
+-- between two Cat-1 layers was invisibly filed as 3-Local regression content. Fixed-wire form
+-- (andUncompMat_lifts_denote) and arbitrary-wire any-width form (ccxAtMat_lifts_denote).
+/-- info: 'Reversible.andUncompMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.andUncompMat_lifts_denote
+
+/-- info: 'Reversible.ccxAtMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Reversible.ccxAtMat_lifts_denote
+
 end CSD.Tests.AxiomAudit
