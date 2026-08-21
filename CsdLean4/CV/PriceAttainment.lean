@@ -18,6 +18,10 @@ public import Mathlib.Data.Matrix.Basis
 **Category:** CV (continuous variables — the attainment half of P5;
 `eft-pillars-plan.md` P5).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/interaction-price/
+Plain-language, CSD-role and formal statements of the interaction price, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 CV-9 priced locality violation from above: switching on a coupling `λ` moves
 an `S`-supported observable at most `2·|τ|·|λ|·C·‖A‖` from the `S`-supported
 subalgebra (`heisenberg_interactingU_near_supported`). Whether that linear

@@ -14,6 +14,10 @@ public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 
 **Category:** 3-Programme (CSD dynamics spine, W5 residual S1).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/schrodinger-from-records/
+Plain-language, CSD-role and formal statements of Schrodinger dynamics from record statistics, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 This module discharges the S1 residual of W5 (`ProjectedDynamics.lean`): it
 makes the `U(1)` phase cocycle of the projected-flow unitary family a real
 object, proves it obeys the 2-cocycle law, and shows that a trivialising

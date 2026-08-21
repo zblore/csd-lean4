@@ -13,6 +13,10 @@ public import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 **Category:** CV (continuous variables — the multi-mode field).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/wick-theorem/
+Plain-language, CSD-role and formal statements of Wick's theorem at the cutoff, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 CV-22/CV-23a proved Wick's four-point theorem at equal times (`eqFourPoint_wick`);
 CV-13 computed the two-point function with one factor evolved (`freeTwoPoint_eq`).
 This module joins them: each quadrature at its **own** Heisenberg period, and the

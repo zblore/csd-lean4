@@ -14,6 +14,10 @@ public import Mathlib.Analysis.Normed.Group.AddCircle
 **Category:** CV (continuous variables — the fibred completion of the arena
 bridge; P1's last item).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/record-light-cone/
+Plain-language, CSD-role and formal statements of the record light cone, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 `ArenaBridge.lean` carried operator locality onto the projective **base**;
 `FieldStructuredFlow.lean` made field structure a definition whose every
 instance has the cone there. What remained of P1 was the **fibre**: the record

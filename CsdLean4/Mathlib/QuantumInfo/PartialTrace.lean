@@ -15,6 +15,10 @@ public import Mathlib.Data.Fintype.BigOperators
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/partial-trace/
+Plain-language, CSD-role and formal statements of the partial trace, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The **partial trace** of a bipartite matrix `M : Matrix (n × m) (n × m) ℂ`. Mathlib has **no**
 matrix partial trace (the only `partialTrace` declarations are category-theoretic / probability
 kernels), so this is genuinely new infrastructure. It is the shared prerequisite for K1-B

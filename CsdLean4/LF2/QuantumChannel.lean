@@ -14,6 +14,10 @@ public import Mathlib.LinearAlgebra.Matrix.PosDef
 
 **Category:** 2-LF2 (the operational / Born layer).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/quantum-channel/
+Plain-language, CSD-role and formal statements of quantum channels, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The general open-system dynamics pillar: a quantum channel is a completely-positive trace-preserving (CPTP)
 map on density operators. We take the operational **Kraus** definition — a finite family of operators
 `Kₖ` with `∑ₖ Kₖ† Kₖ = 1` — and prove the CPTP-forward content: a channel maps density operators to

@@ -17,6 +17,10 @@ public import Mathlib.Analysis.Matrix.PosDef
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/entropy-subadditivity/
+Plain-language, CSD-role and formal statements of entropy subadditivity, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 **Glossary:** https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/
 Plain-language, CSD-role and formal statements of the von Neumann entropy, with
 this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.

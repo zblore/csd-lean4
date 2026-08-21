@@ -13,6 +13,10 @@ public import CsdLean4.LF2.MixedEnsembleIx
 
 **Category:** 2-LF2 (the operational / Born layer).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/choi-theorem/
+Plain-language, CSD-role and formal statements of Choi's theorem, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 `LF2/QuantumChannel.lean` proves the **easy** direction of Choi's theorem: a Kraus-form
 channel has a positive-semidefinite Choi matrix (`choiMatrix_posSemidef`) — the
 Choi–Jamiołkowski witness of complete positivity. This module proves the **converse**:

@@ -4208,3 +4208,998 @@ entries:
       - text: "Atiyah, Convexity and commuting Hamiltonians, Bull. LMS 1982"
         url: https://doi.org/10.1112/blms/14.1.1
     related: [duistermaat-heckman, born-weight, kahler-form, fubini-study-measure, dirichlet-distribution]
+
+  - slug: lf1-main-theorem
+    hook: >
+      The foundation stone, machine-checked: in a deterministic world with repeated
+      preparations, observed frequencies converge to volume ratios -- almost surely,
+      with no randomness anywhere in the dynamics.
+    layman: >
+      Here is the problem. Any volume account of probability owes one non-negotiable
+      theorem: run the experiment over and over, and the fraction of runs giving
+      outcome i must actually approach the volume assigned to i. Without that bridge,
+      "probability is volume" is a metaphor.
+
+      This is that bridge, formalised. The world evolves deterministically; each run
+      draws a fresh microstate from the preparation region; outcome i happens when
+      the microstate sits in region i. The theorem: with probability one over the
+      draws, the running frequency converges to the region's relative volume.
+
+      The proof engine is the strong law of large numbers -- the same theorem that
+      makes casinos solvent -- applied to indicator variables the deterministic flow
+      defines. Chance lives entirely in the sampling; the physics never rolls dice.
+    in_csd: >
+      Every empirical claim in the corpus stands on this layer. The higher layers
+      change what the regions are -- projective regions, Born-weight regions,
+      context-fixed basins -- but the frequency-to-volume conversion is always this
+      theorem, applied through the layer's interface.
+
+      The design is deliberately spare: one outcome region at a time, with joint
+      statements assembled by intersecting almost-sure events, and the only
+      hypothesis left to the caller is pairwise independence of the trial
+      indicators. Integrability and identical distribution are proved internally.
+    mathematical: >
+      LF1_main_theorem_ae: for a trial model over an ontic setup and an outcome
+      region O, the empirical frequencies of O converge almost surely to O's
+      volume weight under the conditioned Liouville measure. The chain behind it --
+      conditional preparation measure, pullback events, indicator integrability,
+      identical distribution -- is exported as reusable infrastructure, and the
+      whole layer carries no axioms beyond Lean's foundational three.
+    term: LF1 main theorem
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF1/MainTheorem.lean
+      theorem: LF1_main_theorem_ae
+    related: [typicality, typicality-volume, preparation-region, constraint-surface]
+
+  - slug: born-volume-ratio
+    hook: >
+      At every finite dimension, the Born weight equals a Fubini-Study volume ratio
+      -- unconditionally, for every coordinate, with the last genericity hypothesis
+      retired.
+    layman: >
+      Here is the problem. Showing "probability equals volume" for one contrived
+      example proves little. The claim earns its keep only at full strength: every
+      dimension, every state, every outcome coordinate, no fine print.
+
+      This theorem is the full-strength version. Take a quantum state in any finite
+      dimension. Its Born weight for outcome i -- the number the textbook computes
+      as a squared amplitude -- equals the Fubini-Study volume of an explicitly
+      described region, divided by the total. Not approximately, not generically:
+      exactly, and for states with vanishing amplitudes too.
+
+      The regions are barycentric cells over the probability simplex, and nobody
+      carved them to fit. The sizes come out of the geometry.
+    in_csd: >
+      This is the derived side of the carving line, at general N: the theorem that
+      turned the volume story from realisation into derivation. The route runs
+      through the moment map and the Duistermaat-Heckman law -- the pushforward of
+      the symmetric measure to the flat simplex law -- so the volume of a cell is
+      an honest simplex integral, computed once and equal to the Born weight.
+
+      Downstream, the frequency companion turns it empirical: i.i.d. draws from
+      the Fubini-Study measure give frequencies converging jointly to the full
+      Born vector.
+    mathematical: >
+      fs_born_volume_ratio_N and its apex variant: the Born weight of each of the
+      N coordinates equals the Fubini-Study volume ratio of the corresponding
+      barycentric region, unconditional in the preparation. The proof composes
+      the Gaussian representation of the Fubini-Study measure, the
+      product-index bridge to exponential laws, and the joint Dirichlet
+      pushforward; the earlier positivity hypothesis was retired by a per-cell
+      dichotomy on closed simplex faces.
+    term: Born volume ratio
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF4/MomentBornN.lean
+      theorem: fs_born_volume_ratio_N
+    related: [born-weight, fubini-study-measure, moment-map, duistermaat-heckman, typicality-volume]
+
+  - slug: measurement-flow
+    hook: >
+      A deterministic, volume-preserving flow that carries out a measurement -- and
+      whose pointer-block volumes are the Born weights, for every preparation.
+    layman: >
+      Here is the problem. Saying "measurement is de-isolation dynamics" is a
+      picture. The debt behind the picture: exhibit actual dynamics -- one map,
+      deterministic, respecting the arena's volume -- that couples a system to a
+      pointer and sorts trajectories into outcome blocks with the right sizes.
+
+      This theorem pays that debt at the projective level. The flow exists, is
+      measure-preserving, is provably not the identity, and after it runs, the
+      arena decomposes into pointer blocks -- one per outcome -- whose volumes are
+      exactly the Born weights. Repeat preparations and the block frequencies
+      converge to those weights almost surely.
+
+      No collapse anywhere: one deterministic map, run once per trial, plus
+      ignorance of the starting point.
+    in_csd: >
+      This is the LF5 tier: the von Neumann measurement scheme realised
+      dynamically on the dilated arena, closing the gap between the kinematic
+      volume results and the de-isolation picture. The dilation that abstract
+      measurement theory cites is here an actual flow, and the per-microstate
+      outcome map -- which block a given starting point lands in -- is delivered
+      by the pointer-partition theorems, discharging an outcome-function debt the
+      corpus had carried explicitly.
+
+      Its honest boundary is equally explicit: the flow realises measurement
+      dynamics at the projective level; deriving the record layer's fibre
+      mechanism from such dynamics is the stated open frontier.
+    mathematical: >
+      measurement_flow_born_frequency: the de-isolation flow is Fubini-Study
+      measure-preserving with pointer-block volumes equal to the Born weights,
+      and empirical block frequencies converge almost surely, for every unit
+      preparation -- the earlier genericity hypothesis retired by the
+      unconditional volume engine. The disjointness of the pointer blocks and
+      the outcome map per microstate are separate, reusable theorems.
+    term: Measurement flow
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF5/Capstone.lean
+      theorem: measurement_flow_born_frequency
+    related: [de-isolation, pointer-basis, naimark-dilation, born-weight]
+
+  - slug: singlet-contextual-model
+    hook: >
+      Both halves of the Bell story, proved in one theorem: an explicit contextual
+      model reproduces the singlet's statistics in full, and no context-independent
+      assignment can.
+    layman: >
+      Here is the problem. Bell's theorem says no local hidden-variable model
+      matches quantum predictions for entangled pairs. A deterministic programme
+      must answer two questions, not one. Can you evade the no-go -- and can you
+      actually deliver? Most discussions stop at the first. The second is where
+      models die: it is easy to be contextual, hard to be contextual and correct.
+
+      This capstone does both, in one machine-checked statement. Existence: an
+      explicit model, with shared context dependence, reproduces the singlet's
+      full outcome table -- marginals and correlations -- at every measurement
+      setting. Obstruction: no global, context-independent assignment is
+      compatible with that same table.
+
+      Evading Bell is cheap talk until the model is on the table. Here it is on
+      the table, with a proof assistant checking both directions.
+    in_csd: >
+      The model is built from the corpus's own arena -- the Kahler instance with
+      its fibre measure -- with per-context outcome maps read through arc
+      partitions of the fibre, weighted by the singlet kernel. Contextuality is
+      not a bug being excused; it is the mechanism, and the companion theorems
+      locate it precisely: the model's wings provably cannot be setting-local,
+      and the operational no-signalling conditions are proved for it rather than
+      assumed.
+
+      The pair of results -- existence plus obstruction -- is the citation anchor
+      for the programme's Bell analysis.
+    mathematical: >
+      c1_singlet_contextual_capstone: a measurable shared-context family
+      reproduces the full singlet table (marginals one-half, correlations minus
+      the dot product) at every CHSH context, and no global assignment is
+      compatible with it. Supporting theorems prove the model's remote marginal
+      invariance -- measurement independence named as a premise, not smuggled --
+      and its non-product character. The general obstruction is retained as a
+      separate ledger row; the two are designed to be read together.
+    term: Singlet contextual model
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF6/C1BellConsistency.lean
+      theorem: c1_singlet_contextual_capstone
+    related: [bell-chsh, contextuality, hidden-variables, no-signalling, gisin-theorem]
+
+  - slug: no-signalling
+    hook: >
+      Whatever happens to the far wing, the near wing's statistics do not move --
+      proved exactly, for every state, entangled ones included.
+    layman: >
+      Here is the problem. Entangled particles show correlations that no local
+      story explains, and the first thing every newcomer asks is whether that
+      lets you send messages faster than light. Quantum mechanics says no. A
+      programme reconstructing quantum mechanics had better say no as a theorem,
+      not as an apology.
+
+      Here it is a theorem, twice over. At the level of composite arenas:
+      disturb one sector however you like -- any local operation -- and every
+      observable of the other sector keeps exactly the same value. Not
+      approximately: the change cancels identically. And at the level of the
+      Bell model: the explicit contextual model that reproduces the singlet
+      statistics has provably invariant remote marginals.
+
+      Correlation without signalling is not a tension to manage. It falls out of
+      what local operations can and cannot touch.
+    in_csd: >
+      No-signalling in CSD is a statement about operator support, not a
+      constraint imposed on probabilities: a kick supported on the right modes
+      commutes past every left-supported observable, so the left statistics are
+      untouched -- an instance of the arena's locality statics, holding for all
+      states because it never mentions the state.
+
+      The Bell-model version matters separately: contextual models are exactly
+      the kind critics suspect of hidden signalling, so the corpus proves the
+      operational no-signalling predicates for its exhibited model rather than
+      gesturing at them.
+    mathematical: >
+      composite_no_signalling: on the composite field arena, conjugating by any
+      unitary supported on one sector leaves every observable of the other
+      sector's subalgebra exactly invariant, for every composite state. The
+      contextual-model version proves remote marginal invariance for both wings
+      -- one shared measure across contexts, which is measurement independence
+      stated in-module. Both are foundational-triple-only.
+    term: No-signalling
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/CompositeArena.lean
+      theorem: composite_no_signalling
+    related: [bell-chsh, singlet-contextual-model, bell-not-join, field-arena]
+
+  - slug: bell-not-join
+    hook: >
+      Entanglement, located exactly: the composite arena is strictly bigger than
+      its parts placed side by side, and the Bell state is a point of the excess.
+    layman: >
+      Here is the problem. "Entanglement means the whole is more than its parts"
+      is repeated so often it has stopped meaning anything. Can it be made into a
+      theorem with actual content -- a precise inventory of what the whole
+      contains that the parts do not?
+
+      On the arena picture, yes. Combine two systems and there are two candidate
+      constructions: the mere pairing of the two arenas -- every joint
+      configuration is just a left point plus a right point -- and the genuine
+      composite arena the theory demands. The theorem: the Bell state lives in
+      the composite and is provably NOT any pairing. No left point and right
+      point jointly produce it.
+
+      That is entanglement as an address: the strict gap between product and
+      composite, with the most famous quantum state exhibited inside the gap.
+    in_csd: >
+      The composite arena is mode concatenation, with the join of two component
+      points given by the Segre construction -- the arena-level tensor product.
+      bell_not_join is the arena-side signature of tensor-versus-Cartesian: the
+      composite strictly exceeds the image of the join map, and the Bell ray
+      witnesses it.
+
+      The follow-up question -- what the excess DOES -- has its own answer: the
+      reduced state of the Bell ray is the maximally mixed ensemble on the
+      correlated patterns, so entanglement is exactly what turns a local
+      context's pure-state weights into mixed-state weights, while the remote
+      pattern labels drop out entirely.
+    mathematical: >
+      bell_not_join: the Bell ray over distinct correlated configuration pairs
+      is not in the image of the arena join. Companions: the join factorises
+      densities as Kronecker products with exact marginal and local-tomography
+      laws; the composite algebras are generated by the mode-local subalgebras
+      with the reconstruction theorem consumed arena-natively; and the reduced
+      density of the Bell ray is the equal mixture with local weights exactly
+      one-half.
+    term: Bell state is not a join
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/CompositeArena.lean
+      theorem: bell_not_join
+    related: [no-signalling, bell-chsh, ghz-state, field-arena, kronecker-product]
+
+  - slug: lieb-robinson-bound
+    hook: >
+      Even without relativity, information has a speed limit -- and on the finite
+      field arena that limit is a theorem with the velocity constant written out.
+    layman: >
+      Here is the problem. Nothing in non-relativistic quantum mechanics obviously
+      forbids an effect here from showing up arbitrarily fast over there. Yet
+      matter behaves locally. Lieb and Robinson proved in 1972 that lattice
+      systems with local interactions enforce their own speed limit: outside an
+      effective cone, influence is not merely weak, it is exponentially
+      negligible.
+
+      The corpus proves the finite-arena version from scratch, in stages that
+      mirror the physics: influences commute exactly below the graph distance;
+      the leading term decays like a power; the factorial strengthening makes
+      the bound decay at every time; and the closing form extracts an explicit
+      velocity -- outside the cone set by that velocity, the commutator is
+      suppressed by an exponential in the distance.
+
+      A light cone, earned from coupling structure alone.
+    in_csd: >
+      The bound is load-bearing, not decorative: it is the mechanism behind the
+      programme's locality story on the field arena. The record-layer bridge
+      runs it through the arena: a record cell in the fibre cannot be steered
+      from outside the cone, which is what makes records stable against distant
+      meddling by theorem rather than hope.
+
+      The scope is honest: velocity bounded, not optimal; a finite mode graph,
+      not a continuum; and the identification of this dynamical cone with the
+      kinematic light rays of the dispersion analysis is explicitly NOT made.
+    mathematical: >
+      The chain: nested commutators of edge-supported generators stay in the
+      coupling graph's k-ball and vanish exactly below the graph distance; the
+      flow remainder obeys a factorial estimate via an integral bound; hence
+      the commutator of time-evolved and static observables is bounded by
+      2 norm(A) norm(B) (2 norm(S) t)^d / d!, and outside v t <= d with
+      v = 2 e^2 norm(S) it is at most 2 norm(A) norm(B) e^(-d).
+    person: >
+      Elliott Lieb, born 1932, is an American mathematical physicist at
+      Princeton whose name attaches to an improbable number of sharp
+      inequalities across analysis and quantum theory. Derek Robinson
+      (1935-2021) was a British-Australian mathematical physicist, long at the
+      Australian National University, co-author of the standard operator-algebra
+      treatment of quantum statistical mechanics. Their 1972 paper in
+      Communications in Mathematical Physics proved the group velocity bound
+      for lattice spin systems; it waited three decades for its renaissance,
+      then became the workhorse of quantum information theory's locality
+      estimates.
+    term: Lieb-Robinson bound
+    eponyms: [Lieb, Robinson]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/LiebRobinson.lean
+      theorem: norm_commutator_velocity_le
+    related: [field-arena, record-light-cone, no-signalling]
+
+  - slug: wick-theorem
+    hook: >
+      The combinatorial engine of field theory -- correlators as sums over
+      pairings -- survives the finite cutoff exactly, with the threshold where it
+      fails stated as part of the theorem.
+    layman: >
+      Here is the problem. Quantum field theory computes everything from a
+      miracle of bookkeeping: any correlation of many field operators reduces to
+      a sum over ways of pairing them up, each pair contributing a basic
+      propagator. That is Wick's theorem, and it is usually proved with
+      infinitely many oscillator levels in hand.
+
+      Cut the ladder at N quanta -- as any finite arena must -- and the question
+      becomes quantitative: does the pairing formula survive, and where exactly
+      does it break? The corpus's answer: it survives verbatim below an explicit
+      threshold, because a 2n-step return walk simply cannot reach the missing
+      levels; at the threshold it fails by a computed amount.
+
+      Approximation with an error bar is replaced by exactness with a boundary.
+    in_csd: >
+      This is the field track's breadth at its most textbook: four-point
+      functions at equal and distinct times closing into the pairing sum, the
+      two-time kernel carrying the time dependence, and the full moment ladder
+      -- the double-factorial law for arbitrary even powers -- proved by a
+      commutator recursion in which the cutoff defect is killed by the walk
+      band, not ignored.
+
+      The honest boundary is in the header: the one-shot sum-over-matchings
+      formula for arbitrary interleaved operator words is not claimed; the
+      double factorial carries that content on the mode diagonal.
+    mathematical: >
+      timeFourPoint_wick: the distinct-times four-point function equals the
+      pairing sum of two-time kernels over every mode pattern, for cutoffs
+      above two. The moment ladder: the vacuum expectation of Q to the 2n is
+      (2n-1) double factorial times one-half to the n, exactly, for n below
+      the cutoff, via the recursion against the truncated commutation relation;
+      odd moments vanish by walk parity, and grouped mode patterns factorise
+      by clustering.
+    person: >
+      Gian Carlo Wick (1909-1992) was born in Turin, worked alongside Fermi in
+      Rome in the 1930s, and after the war held positions at Berkeley --
+      which he left rather than sign the loyalty oath -- then Carnegie Tech,
+      Brookhaven and Columbia. The 1950 theorem on evaluating products of
+      field operators, published in the Physical Review, systematised the
+      calculations of the newly renormalised quantum electrodynamics and has
+      been the daily tool of the subject ever since.
+    term: Wick's theorem
+    eponyms: [Wick]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/Wick.lean
+      theorem: timeFourPoint_wick
+    related: [field-arena, gibbs-state, kms-condition]
+
+  - slug: kms-condition
+    hook: >
+      The algebraic fingerprint of thermal equilibrium holds exactly on the finite
+      arena -- the corpus's first KMS statement, with the vacuum recovered in the
+      zero-temperature limit.
+    layman: >
+      Here is the problem. What makes a state thermal? Temperature talk usually
+      leans on infinite systems, baths, and limits. The Kubo-Martin-Schwinger
+      condition is the sharp answer algebraists settled on: a state is in
+      equilibrium at a given temperature precisely when its correlation
+      functions obey one specific symmetry -- evolve one observable forward in
+      imaginary time by the inverse temperature and the order of the pair swaps.
+
+      On the finite field arena this is not an axiom or a limit: the Boltzmann
+      state at the cutoff satisfies the KMS symmetry exactly, by computation.
+      Cool it all the way down and the thermal two-point function converges to
+      the vacuum one -- zero-point contributions cancelling on the way.
+
+      Thermal physics, at finite resolution, with no hand-waving about baths.
+    in_csd: >
+      The thermal tier joins the programme's thermodynamics track to the field
+      track: the thermal state IS the Gibbs state of the field Hamiltonian, the
+      partition function factorises across modes, and the propagator's
+      truncation edge is explicit rather than hidden -- the same honesty about
+      the cutoff that the Wick tier maintains.
+
+      Labelled breadth, as ever: equilibrium structure on the isolated finite
+      piece, not a claim about continuum thermodynamics.
+    mathematical: >
+      thermal_kms: for the diagonal field Hamiltonian at cutoff, the thermal
+      two-point function satisfies the exact KMS identity -- complex-time
+      evolution entrywise, the identity reducing to Boltzmann-weight transport
+      and an index shuffle. Companions: closed-form diagonal Boltzmann weights
+      via the continuous functional calculus, mode marginals, the off-diagonal
+      vanishing, and the beta-to-infinity vacuum limit recovering the free
+      propagator with no residue.
+    person: >
+      Ryogo Kubo (1920-1995), at Tokyo, built the linear-response formalism of
+      statistical mechanics; Paul Martin (1931-2016), at Harvard, and Julian
+      Schwinger (1918-1994) wrote the 1959 paper whose boundary condition
+      carried the same content. It was Haag, Hugenholtz and Winnink in 1967 who
+      recognised the shared condition as the definition of equilibrium for
+      infinite systems and attached the three initials to it.
+    term: KMS condition
+    eponyms: [Kubo, Martin, Schwinger]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/ThermalPropagator.lean
+      theorem: thermal_kms
+    related: [gibbs-state, field-arena, wick-theorem, von-neumann-entropy]
+
+  - slug: lindblad-equation
+    hook: >
+      The master equation of open quantum systems, formalised end to end: the flow
+      of every Lindblad generator is completely positive -- literally, with the
+      ancilla identification proved, not gestured at.
+    layman: >
+      Here is the problem. Real systems leak: they dephase, decay, decohere. The
+      equation governing an open quantum system's density matrix is the Lindblad
+      equation, and its defining virtue is supposed to be that it generates
+      legitimate physics at every time -- probabilities stay probabilities, even
+      when the system is entangled with a bystander.
+
+      That virtue -- complete positivity -- is precisely what is delicate to
+      prove, because the flow is an exponential of a generator with competing
+      parts. The corpus does it from first principles: split the generator into
+      a drift that acts by conjugation and a jump part whose exponential is a
+      positive series, reassemble by a Trotter product formula proved for the
+      purpose, and then show the flow of the ancilla-amplified generator IS the
+      identity-tensor-flow map, so amplified positivity is complete positivity
+      in so many words.
+
+      A staple of every open-systems textbook, now with a kernel-checked proof.
+    in_csd: >
+      The open-system tier is where the programme prices imperfect isolation:
+      the exhibited dephasing and amplitude-damping semigroups are Lindblad
+      flows, and the general theorem certifies that every such flow -- for any
+      Hermitian Hamiltonian and any jump operators -- is a legitimate quantum
+      channel at every nonnegative time.
+
+      The supporting Banach-algebra Trotter formula was deliberately proved in
+      Mathlib-upstreamable generality, and the label the corpus once carried --
+      that exponentiated positivity was out of reach -- was retired when the
+      gate was re-checked and the route found to be entirely in-corpus.
+    mathematical: >
+      lindbladSemigroup_completelyPositive: for Hermitian H, jump family L,
+      t >= 0 and every finite ancilla, the identity-tensor amplification of
+      the flow maps positive semidefinite matrices to positive semidefinite
+      matrices. Route: the drift flow is conjugation by a matrix exponential;
+      the jump exponential is a positive Kraus series with positivity closed
+      under limits; the general Lie-Trotter formula assembles the flow; and
+      the blockwise identification of the amplified generator's flow with
+      id-tensor-Phi makes the amplified statement literally complete
+      positivity.
+    person: >
+      Goran Lindblad (1940-2022) was a Swedish mathematical physicist at the
+      Royal Institute of Technology in Stockholm. His 1976 paper on generators
+      of quantum dynamical semigroups gave the general form of the equation;
+      Gorini, Kossakowski and Sudarshan published the finite-dimensional
+      classification the same year, which is why careful writers say GKSL. By
+      the standards of a result used daily across quantum optics and quantum
+      information, its authors are remarkably rarely read.
+    term: Lindblad equation
+    eponyms: [Lindblad]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF6/LindbladPositivity.lean
+      theorem: lindbladSemigroup_completelyPositive
+    related: [quantum-channel, choi-theorem, pointer-basis, lie-trotter-formula]
+
+  - slug: lie-trotter-formula
+    hook: >
+      Split an exponential into alternating small steps and the error dies like one
+      over n -- proved here for general Banach algebras, in Mathlib-ready form,
+      because the open-systems tier needed it and nothing on the shelf existed.
+    layman: >
+      Here is the problem. The exponential of a sum is not the product of the
+      exponentials when the pieces do not commute -- and in quantum mechanics the
+      interesting pieces never commute. The Lie-Trotter formula is the repair:
+      alternate many tiny steps of each piece, and in the limit you recover the
+      exponential of the sum exactly.
+
+      Physicists use this daily; it is the licence behind every quantum
+      simulation. The corpus needed it in a form its libraries did not have: for
+      operators on matrix space, with a quantitative error, and without special
+      structural assumptions on the pieces.
+
+      So it was proved from scratch, at textbook generality: any complete normed
+      algebra, explicit convergence rate, one step's defect controlled by a
+      series-tail estimate and telescoped without growth.
+    in_csd: >
+      The formula is the assembly step in the complete-positivity proof of the
+      Lindblad flow: the drift and jump parts of the generator are separately
+      positive flows, and Trotter is what lets their alternation converge to the
+      full flow so positivity passes to the limit.
+
+      It is staged as a Mathlib-upstream candidate -- CSD-free by construction,
+      the kind of infrastructure the formalisation deliberately leaves better
+      than it found.
+    mathematical: >
+      NormedSpace.trotter_product: in a complete normed real algebra with unit
+      norm one, the n-fold alternating product of exp(A/n) and exp(B/n)
+      converges to exp(A+B), with a one-step defect of order one over n
+      squared, telescoped to an overall rate with the explicit constant
+      s^2 (3 + s) e^(2s) over n for s the sum of the norms. The earlier staged
+      version required skew-adjointness; the de-skewed form replaces the two
+      places skewness entered by norm bounds the final constant absorbs.
+    person: >
+      Hale Trotter (1931-2022) was a Canadian-American mathematician at
+      Princeton; the 1959 product formula came out of his thesis work on
+      semigroups of operators. The finite-dimensional antecedent is Sophus
+      Lie's, from the nineteenth-century theory of continuous groups, which is
+      why the formula carries both names -- and Masuo Suzuki's later
+      higher-order refinements are why simulation people say Trotter-Suzuki.
+    term: Lie-Trotter product formula
+    eponyms: [Trotter]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/Mathlib/Analysis/NormedSpace/TrotterGeneral.lean
+      theorem: trotter_product
+    related: [lindblad-equation, stone-theorem, schrodinger-equation]
+
+  - slug: choi-theorem
+    hook: >
+      A quantum channel is legitimate exactly when one matrix built from it is
+      positive semidefinite -- both directions machine-checked, so "is this map
+      physical" is a decidable linear-algebra question.
+    layman: >
+      Here is the problem. Which transformations of a quantum state are
+      physically allowed? The abstract answer -- completely positive
+      trace-preserving maps -- involves a quantifier over all possible bystander
+      systems, which is not something you can check by computation.
+
+      Choi's 1975 insight collapses the quantifier: encode the whole map into a
+      single matrix -- feed it half of a maximally entangled pair -- and the map
+      is legitimate precisely when that one matrix is positive semidefinite.
+      An infinite family of conditions becomes one eigenvalue check.
+
+      The corpus proves both directions: every Kraus-form channel has a
+      positive Choi matrix, and every positive matrix on the composite index
+      arises from some Kraus family. The equivalence is the theorem.
+    in_csd: >
+      Choi's theorem is the workhorse of the corpus's channel layer: the
+      generator-tier positivity witnesses in the open-system results, the
+      channel constructions of the coarse-graining tier, and the jump-part
+      arguments in the Lindblad complete-positivity proof all route through
+      Kraus decompositions certified by it.
+
+      It sits on the operational stratum -- standard quantum information,
+      formalised because the programme's claims lean on it, with the
+      construction fully explicit: the converse direction actually builds the
+      Kraus family from the spectral decomposition of the Choi matrix.
+    mathematical: >
+      choi_iff_posSemidef: a matrix on the composite index is the Choi matrix
+      of some Kraus family if and only if it is positive semidefinite. The
+      forward direction is the rank-one decomposition of the Choi matrix into
+      outer products of vectorised Kraus operators; the converse reconstructs
+      Kraus operators from a PSD matrix's spectral square roots, de-vectorised
+      along the index pairing.
+    person: >
+      Man-Duen Choi, born 1945 in Hong Kong, spent his career at the
+      University of Toronto working in operator algebras. The 1975 paper --
+      Completely positive linear maps on complex matrices, in Linear Algebra
+      and its Applications -- is a model of brevity, and its central object
+      was independently studied by Andrzej Jamiolkowski, which is why the
+      encoding is often called the Choi-Jamiolkowski isomorphism.
+    term: Choi's theorem
+    eponyms: [Choi]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF2/ChoiConverse.lean
+      theorem: choi_iff_posSemidef
+    related: [quantum-channel, lindblad-equation, loewner-order]
+
+  - slug: quantum-channel
+    hook: >
+      The most general thing that can happen to a quantum state, as a data type:
+      a Kraus family with a completeness law, and the physicality certificates
+      proved rather than assumed.
+    layman: >
+      Here is the problem. Unitary evolution is what happens to a perfectly
+      isolated system, and nothing is perfectly isolated. Send a photon down a
+      real fibre and it attenuates, dephases, mixes with noise. The general
+      description of any such process -- any physically realisable
+      transformation of quantum states -- is called a channel.
+
+      The structure theorem for channels says every one of them can be written
+      as a family of simpler operators applied and summed -- the Kraus form --
+      subject to one completeness condition that guarantees probabilities
+      still add to one afterwards.
+
+      The corpus formalises channels in exactly that form and then proves the
+      certificates: trace preserved, positivity preserved, and the Choi-matrix
+      criterion for complete positivity, in both directions.
+    in_csd: >
+      Channels are the vocabulary of the programme's open-system and
+      coarse-graining tiers: the dephasing and damping semigroups are channel
+      families in time; the mode-tracing coarse-graining of the field arena is
+      a channel built from an explicit isometry; and the renormalisation-step
+      error budget is stated as a distance between channel outputs.
+
+      The layer is operational-stratum breadth, formalised to the corpus's
+      usual standard: no channel property is used anywhere without a named
+      theorem carrying it.
+    mathematical: >
+      QuantumChannel: an indexed Kraus family with the completeness law summing
+      adjoint-products to the identity; apply is the Kraus sum. Proved:
+      trace preservation, PSD preservation, unitality criteria, and
+      choiMatrix_posSemidef -- the easy direction of Choi -- with the converse
+      in the companion module closing the equivalence. Composition and the
+      dilation-side constructions live where their consumers need them.
+    term: Quantum channel
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF2/QuantumChannel.lean
+      theorem: choiMatrix_posSemidef
+    related: [choi-theorem, lindblad-equation, naimark-dilation]
+
+  - slug: record-light-cone
+    hook: >
+      Records are safe from distant meddling by theorem: nothing outside the
+      light cone can steer which outcome the arena's fibre has written down.
+    layman: >
+      Here is the problem. If measurement outcomes are written into a hidden
+      part of the arena, a skeptic should ask how robust the writing is. Could
+      a distant disturbance -- some operation far from the apparatus -- reach
+      in and rewrite the record? If so, records would be too fragile to ground
+      anything.
+
+      The answer is a locality theorem aimed exactly at that worry. Take a
+      record written into the arena's fibre by a local interaction. Take any
+      disturbance supported far away, and let everything evolve. The theorem
+      bounds how much the record cell can move by a quantity that dies
+      factorially in the graph distance -- the same light-cone suppression
+      that governs ordinary observables.
+
+      Distant meddling does not slightly corrupt records. It exponentially
+      fails to touch them.
+    in_csd: >
+      This is the record layer and the field track meeting: the fibred arena
+      carries record strokes -- fibre shifts controlled by base observables --
+      and the Lieb-Robinson machinery transports its cone through the bridge.
+      Disjoint kicks commute with record writing exactly; distant kicks steer
+      the written cell by at most the cone bound.
+
+      Scope, stated where it is proved: the stroke shape of fibre activity --
+      base-dependent fibre shifts, the corpus's own record mechanism -- not
+      arbitrary base-coupled fibre velocities, which nothing in the record
+      layer needs.
+    mathematical: >
+      record_lightcone: for a record stroke driven by an observable A and a
+      disturbance outside distance d, the displacement of the recorded fibre
+      cell after time t is bounded by the Lipschitz data of the stroke times
+      2 (2 norm(S) t)^d / d! times norm(A) -- the rigid part of the fibre
+      rotation cancelling between the disturbed and undisturbed histories.
+      Companions: exact commutation of disjoint kicks with record writing,
+      and the arena-level cone the bridge transports.
+    term: Record light cone
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/FibredArenaBridge.lean
+      theorem: record_lightcone
+    related: [lieb-robinson-bound, record-layer, fibre, field-arena]
+
+  - slug: partial-trace
+    hook: >
+      Mathlib has no matrix partial trace, so the corpus built one -- the
+      staple operation of quantum information, staged for upstreaming with its
+      API proved.
+    layman: >
+      Here is the problem, and it is the formal-methods reader's problem more
+      than the physicist's. Ignoring part of a quantum system -- tracing out
+      the environment, keeping the subsystem -- is the single most common
+      operation in quantum information. Ask what a library of formalised
+      mathematics offers for it, and until recently the answer for Lean's
+      Mathlib was: nothing at the matrix level.
+
+      The corpus's staging tree fills the gap: the partial trace over either
+      tensor factor, with the lemmas one actually needs -- linearity, trace
+      preservation, positivity preservation, the reduced state of a density
+      matrix being a density matrix, and the defining identities pairing a
+      joint operator against one-sided observables.
+
+      Category-one infrastructure: nothing CSD-specific anywhere in it, built
+      to be given away.
+    in_csd: >
+      The partial trace is load-bearing across the corpus: reduced states in
+      the decoherence and einselection tiers, marginals of the composite field
+      arena -- where local observations on entangled points are exactly
+      reduced-state expectations -- and the entropy tier's subadditivity
+      arguments all consume it.
+
+      A small library-hygiene story attaches: the defining reduced-trace
+      identities were originally proved in the entropy module, and when the
+      entangled-weights work needed them without the entropy stack they were
+      rehomed beside the definition -- the rule that the defining property of
+      an operation lives with the operation.
+    mathematical: >
+      partialTraceRight and partialTraceLeft on Matrix (n x m) (n x m), with:
+      bundled linearity; trace preservation; Kronecker reduction, the trace of
+      the traced-out factor scaling the survivor; Hermiticity and positivity
+      preservation via tensor witness vectors; density-to-density; and the
+      reduced-trace identities Tr(M (X (x) I)) = Tr(Tr_B M X) and its mirror.
+      All foundational-triple-only.
+    term: Partial trace
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/PartialTrace.lean
+      theorem: partialTraceRight
+    related: [quantum-channel, von-neumann-entropy, entropy-subadditivity, kronecker-product]
+
+  - slug: entropy-subadditivity
+    hook: >
+      Information in the whole never exceeds the sum of its parts -- von
+      Neumann's inequality, proved at the matrix level with the operator
+      logarithm split that usually gets waved through.
+    layman: >
+      Here is the problem. Entropy measures missing information, and for
+      quantum systems the basic sanity check is subadditivity: the entropy of
+      a joint system is at most the sum of the entropies of its parts.
+      Correlations can only make the whole MORE predictable than its parts
+      suggest, never less.
+
+      Every textbook states it; the proof leans on two steps that are easy to
+      say and laborious to formalise. Klein's inequality -- relative entropy
+      is nonnegative -- needs a careful spectral argument with a
+      doubly-stochastic overlap matrix. And the logarithm of a tensor product
+      splitting into a sum needs the operator functional calculus to commute
+      with the Kronecker structure, which is exactly the step informal proofs
+      wave through.
+
+      Both are done, so the inequality stands on checked ground, including for
+      pure entangled states -- the case where the whole has zero entropy and
+      the parts do not, which is the quantum signature classical entropy
+      forbids.
+    in_csd: >
+      The entropy tier serves the programme's thermodynamics track and its
+      decoherence accounting: entropy production in measurement, the entropy
+      ledger of the chaos diagnostics, and the Landauer touchpoint all cite
+      the von Neumann entropy machinery this inequality anchors.
+
+      Deferred pieces are named rather than hidden: the strong version --
+      subadditivity with three parties -- is proved conditionally on the data
+      processing inequality, stated as an explicit hypothesis, and the
+      triangle inequality's purification construction is recorded as the
+      missing step.
+    mathematical: >
+      vonNeumannEntropy_subadditive: S(rho_AB) <= S(rho_A) + S(rho_B) for a
+      bipartite density with positive-definite marginals, the joint state
+      merely PSD. Route: Klein's inequality via the doubly-stochastic overlap
+      expansion; the Kronecker-log split log(A (x) B) = log A (x) I + I (x)
+      log B via a diagonalisation-respecting functional calculus; and the
+      reduced-trace identities collapsing the cross terms. Araki-Lieb's one
+      side is proved under its stated hypotheses.
+    term: Entropy subadditivity
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
+      theorem: vonNeumannEntropy_subadditive
+    related: [von-neumann-entropy, partial-trace, landauer-principle, gibbs-state]
+
+  - slug: schrodinger-from-records
+    hook: >
+      The Schrodinger equation is not postulated here. Preserving record
+      statistics forces unitarity, unitarity plus continuity forces a
+      Hamiltonian, and the exponential form is a theorem at the end of a chain.
+    layman: >
+      Here is the problem. Reconstructions of quantum mechanics usually spend
+      their effort on probability and quietly assume the dynamics: states
+      evolve by the Schrodinger equation because that is the theory being
+      reconstructed. If the arena picture is doing real work, the dynamics
+      should be earned too.
+
+      The corpus's route earns it from records. Suppose the arena's dynamics
+      preserves record statistics -- the pairwise outcome frequencies that
+      experiments actually accumulate. A rigidity theorem going back to Wigner
+      says a map preserving those statistics must be unitary or antiunitary; a
+      selection argument kills the antiunitary branch along a continuous flow;
+      a phase-lifting step and a continuity theorem of Stone's type then
+      deliver a self-adjoint generator.
+
+      The endpoint is the exponential form of the Schrodinger equation,
+      derived -- with the premise being about statistics of records, not about
+      Hilbert-space structure.
+    in_csd: >
+      The W-series is the dynamics spine: the projected sector flow is
+      conjugation by a one-parameter unitary group, proved from the descent
+      structure rather than assumed, with the record-level premise conversion
+      making the hypothesis operational -- transition probabilities ARE record
+      observables, so preserving record statistics and preserving transition
+      probabilities are the same predicate, by theorem.
+
+      The honest scope is tracked mechanically: the sector-linkage guard
+      enforces that the descent equation is genuinely consumed, and the
+      connectivity manifest -- not this page -- is the single source of truth
+      for which end-to-end connective claims are backed.
+    mathematical: >
+      sigmaFlow_schrodinger_form: for sector data with a projectable flow, the
+      projected dynamics is exp(-itH)-conjugation on rays, via Wigner rigidity
+      on the transition-probability-preserving hypothesis, the Bargmann branch
+      discriminator, the U(1) phase lift, and a C^1 Stone theorem. The
+      record-level conversion equates the operational premise with the
+      geometric one and re-derives the flow theorem from record statistics,
+      with the invariance of the Fubini-Study measure obtained with U(N) in
+      the proof and never in the statement.
+    term: Schrodinger from records
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF4/PhaseLift.lean
+      theorem: sigmaFlow_schrodinger_form
+    related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann]
+
+  - slug: shor-code
+    hook: >
+      The first quantum error-correcting code that fixes everything, verified
+      gate by gate: nine qubits, any single-qubit error, built by concatenation
+      and proved including its famous degeneracy.
+    layman: >
+      Here is the problem. Quantum information cannot be copied, and measuring
+      it disturbs it -- so error correction, which classically works by
+      redundancy and inspection, looks impossible. Shor's nine-qubit code was
+      the 1995 proof that it is not: encode one qubit across nine, and any
+      error on any single qubit -- flip, phase, or both -- can be detected and
+      undone without ever learning the protected information.
+
+      The corpus verifies the code as built objects, not as prose: the
+      stabiliser checks, the syndrome extraction, the correction operations,
+      and the recovery theorems for each error type.
+
+      The subtle point survives formalisation intact: two different phase
+      errors can produce the same syndrome and the same correction still
+      works -- the degeneracy that makes quantum codes stranger than
+      classical ones.
+    in_csd: >
+      The QEC suite is empirical breadth, labelled as such: quantum mechanics'
+      own machinery reproduced inside the corpus's formal frame, part of the
+      regression suite that keeps the programme's operational layer honest.
+      The code is built by concatenation -- the phase-flip code layered over
+      the bit-flip code -- so the module structure mirrors the pedagogy.
+
+      For the formal-methods reader the interest is the object level:
+      encoders, syndromes and corrections are explicit maps with theorems,
+      not a stabiliser formalism cited from outside.
+    mathematical: >
+      shor_corrects_X, shor_corrects_Z_degenerate, shor_corrects_XZ: for every
+      block position and every logical state, applying the error followed by
+      syndrome-directed correction returns the encoded state -- with the Z
+      case proved through the degeneracy (correction at any position within
+      the affected block) and the combined XZ case composing both recoveries.
+      Stabiliser fixing lemmas certify the code space.
+    term: Shor code
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/Empirical/QM/QEC/ShorNine.lean
+      theorem: shor_corrects_XZ
+    related: [shor-algorithm, pauli-matrices, quantum-channel]
+
+  - slug: robertson-uncertainty
+    hook: >
+      The uncertainty principle, with its ontic half computed: the variances in
+      Robertson's inequality are honest integrals over the arena, not just
+      Hilbert-space expectations.
+    layman: >
+      Here is the problem. The uncertainty principle is quantum mechanics'
+      most famous export and its most misquoted. The precise statement is
+      Robertson's: for any two observables, the product of their spreads in a
+      given state is bounded below by half the expectation of their
+      commutator. No measurement-disturbance story required -- it is a fact
+      about statistics.
+
+      The corpus proves Robertson's inequality and then does the part that
+      belongs to the arena picture: it identifies each variance as an
+      integral over the ontic space, so the spread the inequality bounds is
+      the spread of a genuinely distributed quantity, not an abstract
+      expectation.
+
+      Two concrete witnesses pin it down, including a case where the bound is
+      saturated -- the inequality is tight, and the formalisation exhibits
+      the tightness.
+    in_csd: >
+      This is the observable-correspondence tier: Hermitian observables
+      acquire ontic representatives whose Lebesgue integrals reproduce
+      Hilbert-space expectations, via a genuine spectral expansion on one
+      side and the fibre partition on the other. Robertson's inequality then
+      holds with the left-hand side read ontically -- the uncertainty bound
+      as a statement about spreads of arena quantities.
+
+      The witnesses are Pauli pairs on explicit states: saturation at the
+      qubit, and the parametric axis version quantified over unit directions.
+    mathematical: >
+      kahler_robertson_ontic_variance: the product of ontic-side variances
+      dominates the commutator bound, with the variance identification
+      running through the spectral-region integral identities -- the ontic
+      centred second moment equals the Hilbert-space variance. Companions:
+      pauli_xy_robertson_saturation with both sides equal to one, and the
+      parametric pauliDot version over arbitrary axes.
+    person: >
+      Howard Percy Robertson (1903-1961) was an American mathematical
+      physicist at Caltech and Princeton, known jointly for the
+      Robertson-Walker metric of cosmology and the 1929 general uncertainty
+      relation -- a one-page Physical Review note sharpening Heisenberg's
+      heuristic into an inequality for arbitrary observable pairs, later
+      refined by Schrodinger with the covariance term.
+    term: Robertson uncertainty relation
+    eponyms: [Robertson]
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/LF4/UncertaintyKahler.lean
+      theorem: kahler_robertson_ontic_variance
+    related: [hermitian-operator, pauli-matrices, poisson-bracket]
+
+  - slug: interaction-price
+    hook: >
+      Turning on an interaction costs locality at a linear rate -- and the price
+      is exact on both sides: bounded below by the coupling and above by twice
+      the coupling.
+    layman: >
+      Here is the problem. Free field dynamics keeps observables confined to
+      their modes forever. Interactions spread them. The qualitative statement
+      is folklore; the quantitative question is the interesting one: at what
+      RATE does interaction buy delocalisation, and is the rate you can prove
+      also the rate that actually occurs?
+
+      The corpus answers with a sandwich. Upper bound: after one period of an
+      interacting drive, every local observable stays within twice
+      coupling-times-time of some exactly local operator -- locality violation
+      priced linearly. Lower bound, on an explicit witness: a computable
+      commutator forces every exactly local operator to be at least a
+      comparable linear distance away.
+
+      Between the two, "costs at most" becomes "costs exactly", up to a
+      constant between one-over-pi and two.
+    in_csd: >
+      The price ladder is the field track's quantitative locality backbone: it
+      feeds the propagator's interacting corrections, the cutoff-uniform
+      renormalised couplings, and the channel-level coarse-graining budget,
+      where the whole error of a renormalisation step is the interaction's
+      price because the free part intertwines exactly.
+
+      The attainment closed a declared boundary: the upper bound had stood
+      alone with its sharpness explicitly unclaimed, and the witness
+      construction retired that caveat.
+    mathematical: >
+      price_linear_attained: the distance from the interacting Heisenberg
+      observable to the subalgebra supported on the free modes satisfies
+      tau lambda / pi <= dist <= 2 tau lambda -- the lower bound via the
+      commutator functional (any supported operator commutes with a disjoint
+      probe, so one computed commutator bounds the distance to the whole
+      subalgebra) with the commutator entry of modulus 2 sin(tau lambda / 2)
+      exactly, and the Jordan inequality converting the sine to the linear
+      form.
+    term: Interaction price
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/CV/PriceAttainment.lean
+      theorem: price_linear_attained
+    related: [field-arena, lieb-robinson-bound, no-exact-finite-ccr]

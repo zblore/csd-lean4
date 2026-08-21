@@ -18,6 +18,10 @@ public import CsdLean4.LF1.Convergence
 
 **Category:** 3-Local (LF1 headline theorem: deterministic repeated-trial frequency convergence).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/lf1-main-theorem/
+Plain-language, CSD-role and formal statements of the LF1 main theorem, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The theorem proved here is a deterministic repeated-trial typicality theorem.
 The ontic flow and outcome assignment are deterministic. Probability enters only
 through the repeated-preparation model on initial conditions. The convergence

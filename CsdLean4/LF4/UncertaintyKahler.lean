@@ -14,6 +14,10 @@ public import CsdLean4.Empirical.QM.Uncertainty
 **Category:** 3-Local (LF4 §14.2 follow-up — concrete Robertson bound
 expressed in terms of ontic-side integrated variances).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/robertson-uncertainty/
+Plain-language, CSD-role and formal statements of the Robertson uncertainty relation, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Connects `CsdLean4/LF4/SpectralVariance.lean` (the Hilbert ↔ ontic
 variance correspondence at the integration level) to
 `CsdLean4/Empirical/QM/Uncertainty.lean` (the QM Robertson bound on

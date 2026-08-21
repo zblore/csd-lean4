@@ -18,6 +18,11 @@ public import Mathlib.RingTheory.TensorProduct.Basic
 **Category:** CV (continuous variables — composition of sectors at the arena
 level; `eft-pillars-plan.md` P2).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/no-signalling/ and
+https://glossary.constraintsurfacedynamics.com/bell-not-join/
+Plain-language, CSD-role and formal statements of no-signalling and the Bell-is-not-a-join theorem, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The algebra half of composition is landed: `compositeAlgReconstruction`
 (`SigmaLayer/TensorReconstruction.lean`) forces any composite carrying
 commuting, generating local matrix algebras to BE the tensor product. P2 asked

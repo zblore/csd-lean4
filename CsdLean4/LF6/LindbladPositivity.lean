@@ -19,6 +19,10 @@ positivity, neither of which Mathlib has". The 2026-08-20 gate re-check found
 the label stale, and this module closes the gap in-corpus. Scoped first in
 `specs/cp-semigroup-plan.md`.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/lindblad-equation/
+Plain-language, CSD-role and formal statements of the Lindblad equation and its complete positivity, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The route:
 
 * **The drift needs no Trotter at all.** For Hermitian `H` the generator

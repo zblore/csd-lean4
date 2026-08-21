@@ -12,6 +12,10 @@ public import CsdLean4.LF5.FlowBornFrequency
 
 **Category:** 3-Local (LF5 measurement-dynamics layer).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/measurement-flow/
+Plain-language, CSD-role and formal statements of the measurement flow, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 This is **LF5-E** of `specs/lf5-plan.md`: the LF5 capstone, the layer's named
 headline `measurement_flow_born_frequency`. Every conjunct is an existing
 LF5-B/C/D theorem; this module's content is the single named chain statement

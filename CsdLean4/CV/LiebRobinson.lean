@@ -17,6 +17,10 @@ public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 **Category:** CV (continuous variables); the general lemmas are CSD-free
 (`upstream-candidate(mathlib)`).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/lieb-robinson-bound/
+Plain-language, CSD-role and formal statements of the Lieb-Robinson bound, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Stage 5's first two bricks. Everything is stated for a skew-Hermitian
 generator `S`, which is `-i H` for Hermitian `H`, so that the propagators
 are unitary and the L2 operator norm sees them as isometries.

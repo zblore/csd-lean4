@@ -17,6 +17,10 @@ arbitrary single-qubit Pauli error, built as the **concatenation** of the
 two landed 3-qubit halves — the phase-flip code (`PhaseFlip.lean`) outside,
 the bit-flip code (`ThreeQubit.lean`) inside.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/shor-code/
+Plain-language, CSD-role and formal statements of the Shor code, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## The combinator, and why 512 dimensions never appear entry-wise
 
 The E1 row recorded the obstacle as dimensional: entry-wise tactics do not

@@ -12,6 +12,10 @@ public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
 
 **Category:** 1-Mathlib (CSD-free, staged for upstream).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/lie-trotter-formula/
+Plain-language, CSD-role and formal statements of the Lie-Trotter product formula, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 For arbitrary elements `A, B` of a complete normed algebra over `ℝ` with
 `‖1‖ = 1`,
 

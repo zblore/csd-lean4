@@ -13,6 +13,10 @@ public import CsdLean4.Thermo.FreeEnergy
 
 **Category:** CV (continuous variables — the multi-mode field at finite temperature).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/kms-condition/
+Plain-language, CSD-role and formal statements of the KMS condition, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The first join of the two complete verticals: the Thermo track's Gibbs state (TH3,
 `Thermo/FreeEnergy.lean`) instantiated on the CV track's free-field Hamiltonian. Every
 temperature statement below is about **that** state — the object the TH3 variational

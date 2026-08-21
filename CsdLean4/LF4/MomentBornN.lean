@@ -13,6 +13,10 @@ public import CsdLean4.LF4.BornVolume
 
 **Category:** 3-Local (Born = Fubini–Study volume ratio on Σ).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/born-volume-ratio/
+Plain-language, CSD-role and formal statements of the Born volume ratio, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 **Glossary:** https://glossary.constraintsurfacedynamics.com/born-weight/
 Plain-language, CSD-role and formal statements of the Born rule, with
 this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
