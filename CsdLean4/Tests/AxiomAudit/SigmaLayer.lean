@@ -968,6 +968,29 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.kMuL_fibre_null
 
+-- Q26 (2026-08-21, RecordLayer/EpistemicDisintegration.lean): THE EPISTEMIC MEASURE IS A
+-- DISINTEGRATION, NOT A DEFINITION -- the external review's third point, and the gap
+-- GlobalBasin's own design note named. kMuL_fst (the c = 1 bridge as a marginal);
+-- kMuL_eq_compProd_const (kMuL = fst (x)_m const-Haar); kMuL_condKernel_ae -- THE
+-- IDENTIFICATION: the disintegration kernel of kMuL is mu_FS-a.e. the constant Haar
+-- kernel (Mathlib standard-Borel condKernel + a.e. uniqueness applied to the constant
+-- kernel); epistemicMeasure_eq_disintegration -- THE HEADLINE: delta_p (x) Haar IS the
+-- fibre of the arena's own disintegration, planted at its base point, mu_FS-a.e.;
+-- kMuL_disintegration (the reassembly kMuL = mu_FS (x)_m condKernel). The a.e. form IS
+-- the theorem (kernels are only determined up to base-null sets). GlobalBasin's
+-- "modelling choice stated as a definition" note superseded at source.
+/-- info: 'CSD.RecordLayer.kMuL_condKernel_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.kMuL_condKernel_ae
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_eq_disintegration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_eq_disintegration
+
+/-- info: 'CSD.RecordLayer.kMuL_disintegration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.kMuL_disintegration
+
 -- A6 STEPS TWO AND THREE: ONTIC REDUCTION MAPS + MARGINAL STABILITY (2026-08-02,
 -- SigmaLayer/OnticMarginals.lean).
 -- STEP 2: rayDensity -- the density matrix of a composite ray, RAY-WELL-DEFINED (rayDensity_mk, the

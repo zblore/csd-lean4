@@ -38,7 +38,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
 | [Elitzur-Vaidman bomb tester](https://glossary.constraintsurfacedynamics.com/elitzur-vaidman/) | `` | standard-mathematics |
 | [Entropy subadditivity](https://glossary.constraintsurfacedynamics.com/entropy-subadditivity/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
-| [Epistemic measure](https://glossary.constraintsurfacedynamics.com/epistemic-measure/) | `` | definition |
+| [Epistemic measure](https://glossary.constraintsurfacedynamics.com/epistemic-measure/) | `epistemicMeasure_eq_disintegration` | proved-in-corpus |
 | [Euclidean space](https://glossary.constraintsurfacedynamics.com/euclidean-space/) | `` | standard-mathematics |
 | [Fibre](https://glossary.constraintsurfacedynamics.com/fibre/) | `` | definition |
 | [Field arena](https://glossary.constraintsurfacedynamics.com/field-arena/) | `` | definition |

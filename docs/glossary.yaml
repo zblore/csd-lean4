@@ -3709,8 +3709,8 @@ entries:
   - slug: epistemic-measure
     hook: >
       Condition on what a preparation actually fixes and the leftover ignorance is a
-      measure. CSD writes that measure down outright -- and keeps the upgrade to a
-      theorem on its public work queue.
+      measure -- and it is now a theorem, not a stipulation: the arena's own volume
+      disintegrates into exactly this.
     layman: >
       Here is the problem. You prepared the system carefully, so you know its quantum
       state exactly. On the arena picture that knowledge is radically incomplete: one
@@ -3722,9 +3722,10 @@ entries:
       credence evenly over it, using the fibre's own symmetry to define "evenly". That
       combined object is the epistemic measure.
 
-      One honesty note, and it is the interesting part: "evenly" is currently a
-      definition, not a theorem. Deriving it -- showing it is the unique disintegration
-      of the arena's own volume -- is queued work, stated as such in the source.
+      The satisfying part is that "evenly" is not a choice. The arena's own volume,
+      disintegrated along the projection -- sliced into per-state fibres -- gives
+      exactly this measure, almost everywhere. What began as a stated definition was
+      later proved to be the unique answer the geometry had waiting.
     in_csd: >
       The epistemic measure is what "isolation is conditioning" means in practice: the
       isolation-conditioned state of knowledge at preparation p is the Dirac mass at p
@@ -3732,21 +3733,27 @@ entries:
       including the Born weights of the context-fixed basins -- is computed against it.
 
       Because conditioning on a single state conditions on a set the base measure calls
-      null, the corpus takes the Dirac-times-Haar form as a definition rather than
-      deriving it by disintegration. The derivation is a named backlog item: the
-      machinery exists, and the identification would turn a modelling choice into a
-      theorem.
+      null, the corpus originally took the Dirac-times-Haar form as a stated definition.
+      The derivation has since landed: the Liouville measure disintegrates along the
+      base projection, its disintegration kernel is almost everywhere the constant Haar
+      kernel, and the epistemic measure is the fibre of that disintegration planted at
+      its base point. The modelling choice turned out to be the theorem.
     mathematical: >
       epistemicMeasure p is the product of the Dirac measure at p with normalised Haar
-      on the torus fibre -- a probability measure on the arena for every p. The queued
-      upgrade: the Liouville measure disintegrates along the base projection, and the
-      disintegration kernel should be almost-everywhere the constant Haar kernel, making
-      Dirac-times-Haar the fibre of the disintegration rather than a stipulation.
+      on the torus fibre -- a probability measure on the arena for every p. The
+      derivation: kMuL_condKernel_ae identifies the disintegration kernel of the
+      Liouville measure with the constant Haar kernel, almost everywhere in the
+      Fubini-Study base measure, via the standard-Borel conditional-kernel machinery
+      and almost-everywhere uniqueness of disintegrations;
+      epistemicMeasure_eq_disintegration then equates the epistemic measure with the
+      Dirac-paired disintegration fibre. The almost-everywhere qualifier is intrinsic:
+      disintegration kernels are only determined up to a null set of base points.
     term: Epistemic measure
-    status: definition
+    status: proved-in-corpus
     source: curated
     lean:
-      module: CsdLean4/RecordLayer/GlobalBasin.lean
+      module: CsdLean4/RecordLayer/EpistemicDisintegration.lean
+      theorem: epistemicMeasure_eq_disintegration
     related: [liouville-measure, haar-measure, outcome-region, typicality, ontic-vs-epistemic]
 
   - slug: carving

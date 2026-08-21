@@ -63,11 +63,14 @@ densities. This partition is genuinely *fibred* — the cell is an arc in `θ₁
 ## Scope — read before citing
 
 ⚠️ **`δ_p ⊗ Haar` is the EPISTEMIC measure, not the sector's Liouville measure.** Conditioning on a
-preparation means conditioning on `p = [ψ]`, a **null set** for `μ_FS`; rather than disintegrate, we
-take the isolation-conditioned state to be the Dirac product outright. That is the corpus's
-"isolation is conditioning" reading (P6), and it is a *modelling choice stated as a definition*, not
-a theorem. `kMuL = μ_FS ⊗ vol` remains the Liouville measure, and nothing here claims `δ_p ⊗ Haar`
-is one.
+preparation means conditioning on `p = [ψ]`, a **null set** for `μ_FS`; the isolation-conditioned
+state is taken to be the Dirac product outright — the corpus's "isolation is conditioning" reading
+(P6). ~~a modelling choice stated as a definition, not a theorem~~ **SUPERSEDED 2026-08-21 (Q26)**:
+the choice is now the theorem `epistemicMeasure_eq_disintegration`
+(`RecordLayer/EpistemicDisintegration.lean`) — `kMuL` disintegrates along the base projection and
+its disintegration kernel is `μ_FS`-a.e. the constant Haar kernel, so `δ_p ⊗ Haar` is the fibre of
+the arena's own disintegration, planted at its base point. `kMuL = μ_FS ⊗ vol` remains the
+Liouville measure, and nothing here claims `δ_p ⊗ Haar` is one.
 
 ⚠️ **This is KINEMATIC.** No interaction Hamiltonian `H_int(M)` generating these basins is
 constructed — that is the open Paper D obligation (`SigmaLayer/DeIsolationFlow.lean`), and it is
