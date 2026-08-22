@@ -523,6 +523,25 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.instCompactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instCompactSpace
 
+-- MG-1 (2026-08-22, Projectivization/Metric.lean, specs/mathlib-gaps-plan.md): the first
+-- METRIC on Projectivization anywhere — the rank-one projection embedding p -> P_p (scale-
+-- invariant, descends by lift), injective, continuous off the staged quotient topology,
+-- hence a CLOSED embedding from the compact P into the Hausdorff operator space; the metric
+-- pulls back via IsEmbedding.comapMetricSpace, whose replaceTopology makes the metric
+-- topology DEFINITIONALLY the staged quotient topology (no diamond).
+-- dist p q = ||P_p - P_q|| (dist_eq). Unlocks the epsilon-ball forms of the C2 arc (Q28).
+/-- info: 'Projectivization.injective_toProjCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.injective_toProjCLM
+
+/-- info: 'Projectivization.isClosedEmbedding_toProjCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.isClosedEmbedding_toProjCLM
+
+/-- info: 'Projectivization.instMetricSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.instMetricSpace
+
+/-- info: 'Projectivization.dist_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.dist_eq
+
 /-- info: 'Projectivization.instMeasurableSingletonClass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instMeasurableSingletonClass
 

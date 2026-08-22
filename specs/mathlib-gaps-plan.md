@@ -81,6 +81,19 @@ idiom). Unlocks: the quantified ε-ball forms of the C2 arc (Q28's "every ε-bal
 product ray", "states closer than 2ε have overlapping ε-preparations"). Home:
 `Mathlib/LinearAlgebra/Projectivization/Metric.lean` (staged, Cat-1).
 
+> **EXECUTED 2026-08-22, same day** (`Projectivization/Metric.lean`, 4 pins; two build
+> rounds — the only real error was `lift_mk`'s argument count; the notation open
+> `LinearAlgebra.Projectivization` was the other). Delivered exactly as routed:
+> `rankOneProj` (+ scale invariance via `RCLike.conj_mul` + `field_simp`, self-application,
+> `normSq_coe_ne_zero`), `toProjCLM` by `Projectivization.lift`, continuity through the staged
+> `continuous_lift` (the bounded-bilinear `smulRightL` + `innerSL` route), injectivity by
+> applying equal projections to a representative (`mk_eq_mk_iff'`), ★
+> `isClosedEmbedding_toProjCLM` (compact→Hausdorff), the `instMetricSpace` via
+> `Topology.IsEmbedding.comapMetricSpace` (topology definitionally the staged quotient
+> topology — no diamond), and `dist_eq`. `CPN N` inherits the instance with no further work.
+> The C2 ε-ball corollaries are the recorded follow-up (a Q28 rider, not this brick). The
+> ledger row is CLOSED in-corpus; the file joins the upstream first batch.
+
 ### MG-2 (M + S–M + M) — polynomial null sets → almost every composite state is entangled
 
 Converts the research-gated Q28 item 5 into a bounded three-brick chain with no genuine wall:
