@@ -960,6 +960,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.compositeFubiniStudy_entangled_pos
 
+-- Q28 ITEM 5, DE-RESEARCH-GATED 2026-08-22 (MG-2, specs/mathlib-gaps-plan.md): the positive-
+-- measure statements above upgrade to the SHARP form. The Segre (product) rays are NULL, so a
+-- Fubini-Study-typical composite state is entangled. Route: Fubini-Study is the
+-- projectivization of a Lebesgue-a.c. measure (FubiniStudyLebesgue.lean), so a ray set whose
+-- vector cone is Lebesgue-null is null; the Segre cone sits inside the zero set of ONE
+-- coordinate quadratic (segre_minor_eq's 2x2 minor at the corner, read through the index
+-- bijection), and that is null by Fubini slicing. The general polynomial-zero-set lemma was
+-- NOT needed and is recorded as pure optionality.
+/-- info: 'CSD.RecordLayer.compositeFubiniStudy_range_segre_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeFubiniStudy_range_segre_null
+
+/-- info: 'CSD.RecordLayer.ae_not_mem_range_segre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ae_not_mem_range_segre
+
 -- Q28 ITEMS 3 AND 4 (2026-08-21, IsolationPreparation.lean + PreparationDensity.lean):
 -- RHO_EP AND THE PSI-EPISTEMIC OVERLAP. Item 4a: conditional_not_mutuallySingular --
 -- preparations with Liouville-positive region overlap have NON-mutually-singular

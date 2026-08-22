@@ -542,6 +542,25 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.dist_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.dist_eq
 
+-- MG-2 bricks a/b (2026-08-22, Projectivization/FubiniStudyLebesgue.lean): Fubini-Study as a
+-- LEBESGUE-ABSOLUTELY-CONTINUOUS pushforward. The normalized Lebesgue measure on the punctured
+-- unit ball of C^N is U(N)-invariant (unitaries act by isometries, which preserve the canonical
+-- volume and the ball), so its projectivization IS fubiniStudyMeasure by the staged uniqueness
+-- theorem. Payoff: the null-transport principle -- a ray set whose vector cone is Lebesgue-null
+-- is Fubini-Study-null -- plus the elementary Fubini-slicing lemmas (coordinate hyperplanes and
+-- the coordinate quadratic's zero set are null; NO polynomial-zero-set theory needed).
+/-- info: 'Matrix.UnitaryGroup.pi_quadratic_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.pi_quadratic_null
+
+/-- info: 'Matrix.UnitaryGroup.volume_ofLp_preimage_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.volume_ofLp_preimage_null
+
+/-- info: 'Matrix.UnitaryGroup.map_ballMeasure_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.map_ballMeasure_eq_fubiniStudy
+
+/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone
+
 /-- info: 'Projectivization.instMeasurableSingletonClass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instMeasurableSingletonClass
 

@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.RecordLayer.OnticComposite
 public import CsdLean4.LF4.TypicalityForcing
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgue
 
 /-!
 # Q28 item 2: entangled rays carry positive Fubini–Study weight
@@ -182,5 +183,74 @@ theorem compositeFubiniStudy_entangled_pos
   obtain ⟨q, hqU, hq⟩ := exists_entangled_mem_nhds hA hB hp hU hpU
   exact compositeFubiniStudy_pos_of_isOpen p₀
     (hU.sdiff segre_range_isClosed) ⟨q, hqU, hq⟩
+
+/-! ### ★★ Almost every composite state is entangled (MG-2, 2026-08-22)
+
+The positive-measure statements above say the entangled rays are not negligible. This upgrades
+them to the sharp form: the PRODUCT rays are null, so a Fubini–Study-typical composite state is
+entangled. The route is `Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone`
+(`Mathlib/LinearAlgebra/Projectivization/FubiniStudyLebesgue.lean`): Fubini–Study is the
+projectivization of a Lebesgue-absolutely-continuous measure, so a ray set whose vector cone is
+Lebesgue-null is Fubini–Study-null. The Segre cone sits inside the zero set of ONE coordinate
+quadratic — the `2×2` minor `segre_minor_eq` at the corner `(j₀,j₁,k₀,k₁)`, read through the
+index bijection — and that zero set is null by Fubini slicing (`pi_quadratic_null'`). No
+polynomial-zero-set theory is needed. -/
+
+/-- ★★ **The product rays are null**: for factors of dimension `≥ 2`, the Segre image has
+composite Fubini–Study measure zero. With `compositeFubiniStudy_entangled_pos_global` this is
+the sharp statement — entanglement is not merely non-negligible but generic. -/
+theorem compositeFubiniStudy_range_segre_null (hA : 2 ≤ nA) (hB : 2 ≤ nB)
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (nA * nB)))) :
+    compositeFubiniStudy p₀ (Set.range (segre (nA := nA) (nB := nB))) = 0 := by
+  have hNZ : NeZero (nA * nB) := ⟨Nat.mul_ne_zero (by omega) (by omega)⟩
+  -- the four corner indices of the minor, read flat
+  let j₀ : Fin nA := ⟨0, by omega⟩
+  let j₁ : Fin nA := ⟨1, by omega⟩
+  let k₀ : Fin nB := ⟨0, by omega⟩
+  let k₁ : Fin nB := ⟨1, by omega⟩
+  let a : Fin (nA * nB) := finProdFinEquiv (j₀, k₀)
+  let b : Fin (nA * nB) := finProdFinEquiv (j₁, k₁)
+  let c : Fin (nA * nB) := finProdFinEquiv (j₀, k₁)
+  let d : Fin (nA * nB) := finProdFinEquiv (j₁, k₀)
+  have hj : j₁ ≠ j₀ := Fin.ne_of_val_ne (by norm_num)
+  have hk : k₁ ≠ k₀ := Fin.ne_of_val_ne (by norm_num)
+  have hba : b ≠ a := fun h => hj (congrArg Prod.fst (finProdFinEquiv.injective h))
+  have hca : c ≠ a := fun h => hk (congrArg Prod.snd (finProdFinEquiv.injective h))
+  have hda : d ≠ a := fun h => hj (congrArg Prod.fst (finProdFinEquiv.injective h))
+  -- the quadratic's zero set on the flat vector space is null
+  have hquad : (volume : Measure (EuclideanSpace ℂ (Fin (nA * nB))))
+      ((Matrix.UnitaryGroup.euclideanCLE (nA * nB)) ⁻¹'
+        {u : Fin (nA * nB) → ℂ | u a * u b = u c * u d}) = 0 :=
+    Matrix.UnitaryGroup.volume_ofLp_preimage_null
+      (measurableSet_eq_fun
+        ((measurable_pi_apply a).mul (measurable_pi_apply b))
+        ((measurable_pi_apply c).mul (measurable_pi_apply d)))
+      (Matrix.UnitaryGroup.pi_quadratic_null' hba hca hda)
+  rw [compositeFubiniStudy,
+    Measure.map_apply rayReindexInv_continuous.measurable measurableSet_range_segre]
+  refine Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone p₀
+    (rayReindexInv_continuous.measurable measurableSet_range_segre) ?_
+  refine measure_mono_null ?_ hquad
+  rintro v ⟨hv, hmem⟩
+  -- the ray's flat representative satisfies the minor equation
+  rw [Set.mem_preimage, rayReindexInv, Projectivization.map_mk] at hmem
+  have hminor := segre_minor_eq hmem j₀ j₁ k₀ k₁
+  -- read the reindexed coordinates back as coordinates of `v` at the bijected indices
+  simp only [LinearEquiv.coe_coe, LinearIsometryEquiv.coe_toLinearEquiv,
+    tensorReindexL, LinearIsometryEquiv.piLpCongrLeft_symm,
+    LinearIsometryEquiv.piLpCongrLeft_apply, Equiv.piCongrLeft'_apply,
+    Equiv.symm_symm] at hminor
+  exact hminor
+
+/-- ★★ **Almost every composite state is entangled** — the a.e. form of
+`compositeFubiniStudy_range_segre_null`. The C2 headline, upgraded from "the entangled set has
+positive measure" to "the product set is null". -/
+theorem ae_not_mem_range_segre (hA : 2 ≤ nA) (hB : 2 ≤ nB)
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (nA * nB)))) :
+    ∀ᵐ x ∂(compositeFubiniStudy (nA := nA) (nB := nB) p₀),
+      x ∉ Set.range (segre (nA := nA) (nB := nB)) := by
+  rw [MeasureTheory.ae_iff]
+  simpa only [not_not, Set.ofPred_mem_eq] using
+    compositeFubiniStudy_range_segre_null hA hB p₀
 
 end CSD.RecordLayer

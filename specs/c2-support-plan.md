@@ -1,8 +1,15 @@
 # C2 support: the entangled-positive-measure arc — scoping note
 
 **EXECUTED 2026-08-21, same day as the scoping — items 1–4 all landed** (see
-the BACKLOG Q28 row for the full landing record and snag ledger; item 5 stays
-research-gated as scoped). One route improvement over the plan below: item 2b's
+the BACKLOG Q28 row for the full landing record and snag ledger). ~~item 5 stays
+research-gated as scoped~~ **ITEM 5 LANDED 2026-08-22** via the MG-2 arc
+(`specs/mathlib-gaps-plan.md`): `compositeFubiniStudy_range_segre_null` and
+`ae_not_mem_range_segre` — *almost every composite state is entangled*. The
+research gate dissolved because the general polynomial-zero-set lemma was never
+needed: the Segre cone lies in the zero set of ONE coordinate quadratic (the
+`segre_minor_eq` corner minor through the index bijection), which is null by
+Fubini slicing, and Fubini–Study is a Lebesgue-absolutely-continuous
+pushforward (`fubiniStudyMeasure_null_of_cone`). One route improvement over the plan below: item 2b's
 perturbation is a single standard-basis vector `e_{(j₁,k₁)}`, not `a' ⊗ b'` —
 no orthogonal complements anywhere — and the reusable minor criterion
 `not_mem_range_segre` replaces the bespoke rank argument.

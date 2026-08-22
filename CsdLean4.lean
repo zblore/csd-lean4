@@ -12,6 +12,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Metric
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgue
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact

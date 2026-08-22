@@ -115,6 +115,69 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
    entangled"**, the C2 prose upgraded to a theorem. Closes the ledger's polynomial-zero-sets
    row AND Q28 item 5.
 
+> **MG-2 SCOPING EXECUTED 2026-08-22** (feasibility probe `scratch_mg2_probe.lean` + corpus
+> reads; the route SIMPLIFIED twice during the pass):
+>
+> 1. **The general `polynomial_zeroSet_null` is NOT needed** for the headline. The reindex
+>    `rayReindexInv` computes on `mk` as a COORDINATE PERMUTATION (`tensorReindexL` is
+>    `piLpCongrLeft` of `finProdFinEquiv`), so `segre_minor_eq`'s fixed corner minor pulls
+>    back to the bare quadratic `v a · v b = v c · v d` at four DISTINCT indices of
+>    `Fin (nA·nB)`. Its zero set is null by a two-step hand slicing (fix all but `v a`: the
+>    `v b ≠ 0` slice is a singleton, null since `ℂ`'s volume has no atoms; the `v b = 0`
+>    parameter set is a coordinate hyperplane, null by the same one-step slice), via
+>    `measurePreserving_piEquivPiSubtypeProd` + `measure_prod_null` (both at pin ✓). The
+>    general MvPolynomial lemma is RECORDED as a pure-optionality upstream candidate
+>    (general-lift precedent): nothing in flight needs it once the specific quadratic lands.
+> 2. **Probe results (round 1)**: `MeasureSpace (EuclideanSpace ℂ (Fin N))` FIRES (the
+>    canonical inner-product-space volume), `IsAddHaarMeasure` ✓, `measure_ball_lt_top` ✓,
+>    `LinearIsometryEquiv.measurePreserving` ✓ for ℝ-isometry equivs of `E`. Spelling
+>    residue: `measure_ball_pos` needs its import; `LinearIsometryEquiv.restrictScalars`
+>    doesn't exist (construct the ℝ-isometry by hand from the ℂ one); `NoAtoms` deprecated
+>    → `NullSingletonClass`/`measure_singleton`; the pi-side lemmas return `Measure.pi`
+>    form (bridge with `volume_pi`).
+> 3. **The `E ↔ pi` volume bridge for ℂ components does NOT exist upstream**
+>    (`PiLp.volume_preserving_ofLp` is ℝ-only). Not needed in full: NULL-transport suffices —
+>    `map ofLp volume_E` is addHaar on the pi space (pushforward through
+>    `PiLp.continuousLinearEquiv`), and two Haar measures are equal up to a positive scalar
+>    (`Haar/Unique.lean`'s `…eq_smul_of_regular` family, spelling at build time), so null
+>    sets coincide.
+> 4. **Unitary norm-preservation on `E`** (`toEuclideanLin U` is an isometry) is not in the
+>    corpus or upstream by that name — build it via the matrix-adjoint relation
+>    (`U†U = 1` + the `toEuclideanLin`/adjoint bridge; spelling at build time).
+> 5. **The action side is free**: `smul_mk_eq_mk` is `rfl` (UnitaryTransitive), the
+>    uniqueness theorem `fubiniStudyMeasure_unique` takes exactly `[IsProbabilityMeasure] +
+>    ∀ U, map (U • ·) μ = μ`, and `measurableSet_range_segre` is landed (Q28).
+>
+> **MG-2 EXECUTED 2026-08-22, same day as scoped.** All three bricks landed:
+> `Mathlib/LinearAlgebra/Projectivization/FubiniStudyLebesgue.lean` (new, staged Cat-1: the
+> Fubini slicing vehicle, `pi_coord_zero_null`, ★ `pi_quadratic_null`(`'`),
+> `volume_ofLp_preimage_null` (Haar↔Haar null transport), `toEuclideanIsometry` (unitary as a
+> `ℂ`-isometry via `toEuclideanCLM`), `ballMeasure`, `projOfVec`, ★
+> `map_ballMeasure_eq_fubiniStudy`, ★★ `fubiniStudyMeasure_null_of_cone`) and the assembly in
+> `RecordLayer/EntangledMeasure.lean` (extended in place): ★★
+> `compositeFubiniStudy_range_segre_null` + ★★ `ae_not_mem_range_segre` — **almost every
+> composite state is entangled**. The general polynomial lemma was never needed (route
+> simplification 1 held). Snags: `Set.restrict` → `Set.domRestrict` and subtype binders need
+> `show` to pin; `simpa using x.2` over-simplifies a subtype property to `True` (use `x.2`
+> directly — membership in `{a}`/`{a}ᶜ` is definitional); `private` conflicts with the module
+> system's public section; `EuclideanSpace` has no `NoAtoms` instance (route the origin's
+> nullity through the pi space); the reindex's coordinate reading needs the coercion-normalising
+> simp set (`LinearEquiv.coe_coe`, `LinearIsometryEquiv.coe_toLinearEquiv`) before
+> `piLpCongrLeft_symm`/`_apply`; CLM `(f*g) x = f (g x)` and `1 x = x` are `rfl` (the
+> deprecation replacements live in a different namespace).
+>
+> **Bricks**: **B-a** (S–M) the quadratic zero-set null lemma on the pi space + transport to
+> `volume_E`; **B-b** (S–M) `fubiniStudyMeasure` as the `mk`-pushforward of the normalized
+> ball measure (a.c. source; junk-totalised `mk`, invariance by isometry + ball, uniqueness)
+> — the reusable API is `fubiniStudyMeasure_null_of_cone` (cone volume-null ⇒ FS-null);
+> **B-c** (S) the assembly in `EntangledMeasure.lean` (extend in place): ★★
+> `compositeFubiniStudy_range_segre_null` + the a.e.-entangled form. Home for B-a/B-b: new
+> staged `Mathlib/LinearAlgebra/Projectivization/FubiniStudyLebesgue.lean` (upstream can
+> split the pi-null lemma out later; noted in the header). GATE: if the Haar-uniqueness or
+> adjoint spellings fight beyond a session, B-a falls back to a direct Fubini computation on
+> the prod split and B-b to an explicit `withDensity` comparison; the physics target is
+> unchanged.
+
 ### MG-4 (M, opportunistic) — chart-level Kähler closedness on `ℂℙ^{N−1}`
 
 The flat half of the Kähler gap is gone upstream (`extDeriv` on normed spaces) and the corpus
