@@ -30,6 +30,33 @@ explicit `hDPI` hypothesis and eventually the bridge file itself. If NO: record 
 output in the gap row (upgrading "discrimination-key failures" to a dated, reproducible
 witness — the shape an upstream instance-hygiene issue needs anyway) and stop.
 
+> **PROBE EXECUTED 2026-08-22** (`scratch_mg3_probe.lean` at the root, five rounds — the
+> resume seed until B.4 lands). Verdict, sharper than either branch anticipated:
+>
+> 1. `CStarAlgebra` / `PartialOrder` / `StarOrderedRing` on `CStarMatrix n n ℂ` all RESOLVE
+>    at the pin (round-1 "failures" on these were noncomputable-compilation noise).
+> 2. The wall is **exactly two non-firing generic instances**, each provable by a one-line
+>    application of its own generic provider: `ContinuousFunctionalCalculus ℝ … IsSelfAdjoint`
+>    (the bridge's existing shim) and `NonnegSpectrumClass ℝ …`
+>    (`CStarAlgebra.instNonnegSpectrumClass` — the second shim the bridge does not yet have).
+> 3. With BOTH shims registered, the **entire upstream monotonicity tier fires on
+>    `CStarMatrix n n ℂ`**: `CFC.monotone_nnrpow` + `CFC.monotone_rpow` (operator
+>    monotonicity of `x^p`, `p ∈ [0,1]` — which now EXISTS upstream,
+>    `…/Rpow/Order.lean`, postdating the gap row), `CFC.monotone_sqrt`, `CFC.rpow`,
+>    `CFC.log_le_log` (this last needs only shim 1).
+> 4. The bare-`Matrix` side ℝ≥0-CFC fires already (scoped `MatrixOrder`), so `A ^ p`
+>    (`p : ℝ≥0`) elaborates on the `Matrix` carrier — only the ORDER lemma needs transporting.
+>
+> **Re-rating.** The "rpow wall" of `OperatorConvexBridge.lean` is now an **M brick (B.4)**:
+> register shim 2, prove the ℝ≥0-CFC naturality across `e` (the `map_cfc`/`map_cfcₙ` shape of
+> B.1), transport `monotone_nnrpow` to `Matrix.rpow_le_rpow` on the Löwner order (+ sqrt as a
+> corollary), supersede the honest-scope paragraph. The **DPI/SSA prize is NOT unlocked by
+> instances alone**: operator CONVEXITY (Lieb) is still absent upstream (their own TODO list
+> in `Rpow/Order.lean`), but upstream's new `Rpow/IntegralRepresentation.lean` supplies the
+> integral-representation machinery the convexity rungs would consume — the L programme is
+> better-provisioned than when the ladder was parked. Upstream note: the two-instance witness
+> is the crisp reproduction an instance-hygiene issue/PR needs.
+
 ### MG-1 (M) — the Fubini–Study metric on `ℙ`, in-corpus
 
 Kills a ledger row with no upstream dependency, and is a prime Mathlib candidate (there is no
