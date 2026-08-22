@@ -5,6 +5,13 @@ material this repo has already staged for upstream. Each gap names the corpus it
 so contributors can see the physics payoff of a library PR. The single open-work list remains
 [`specs/BACKLOG.md`](specs/BACKLOG.md); this page is the Mathlib-facing cut of it.)*
 
+**Triage 2026-08-22** ([`specs/mathlib-gaps-plan.md`](specs/mathlib-gaps-plan.md)): every row
+below was re-probed at the pin. Birkhoff and Lévy verified standing; the `CStarAlgebra`
+row is a SOFT wall (the instances exist at the pin — the failure is discrimination-tree
+resolution, probe-first as MG-3); the FS-metric and polynomial-zero-sets rows are **attackable
+in-corpus** (MG-1, MG-2 — the latter converts "almost every composite state is entangled" from
+research-gated prose to a bounded three-brick chain).
+
 ## Genuine absences (no Mathlib API today)
 
 | Gap | What it is | What it blocks here | Current workaround |
@@ -16,6 +23,7 @@ so contributors can see the physics payoff of a library PR. The single open-work
 | **Lévy concentration / spherical isoperimetry** | Measure concentration on high-dimensional spheres | Canonical-typicality **exponential** concentration (TH1 carries expectation + the Q24 Chebyshev tier) | Named residual, recorded; expectation form proved (`fs_first_moment`); polynomial-rate concentration proved (Q24, 2026-08-21: `fs_chebyshev_concentration`, twirl-algebra second moments — no isoperimetry); only the `exp(−c·d_E·ε²)` rate still waits on this gap |
 | **Fubini–Study metric on `ℙ`** | A `MetricSpace` instance on `Projectivization` (Mathlib has topology only, staged here; no `dist` anywhere) | The quantified ε-ball forms of the C2 support arc (BACKLOG Q28): "every ε-ball around a product ray", "states closer than 2ε have overlapping ε-preparations". The topological forms land without it | The Q28 statements are formulated with open neighbourhoods instead of balls; the contradiction C2 runs on is unaffected |
 | **Polynomial zero sets are null** | Zero set of a nonzero (multivariate/holomorphic) polynomial has measure zero, in a form transportable through `Measure.map (orbitMap p₀) unitaryHaarProb` (equivalently: analytic identity theorem on the connected group `U(N)`) | `segre_range_null` — "almost every composite state is entangled" (`specs/c2-support-plan.md` Item 5); prose-strength only, the C2 argument runs on the positive form | The positive-measure form (Q28 item 2) carries the argument; the null form is research-gated |
+| **Hilbert tensor factorisation of registers** | `QReg m ≅ QReg 3 ⊗ QReg (m − 3)` as Hilbert spaces (inner product carried), from the `Fin m ≃ Fin 3 ⊕ (m−3)` reindex — `EuclideanSpace`/`PiLp` has no tensor-split API | The measurement-gadget hybrid at full-register level (`MeasurementAdder.lean`'s wall: the gadget is not a permutation, so it needs the local tensor factor); also cited by the general-lift optionality verdict (`Reversible/Lift.lean`) | The per-block equivalence + cost aggregation carry the result; the n-fold amplitude state-equality is recorded as WALLED. Attack gated on a consumer (`specs/mathlib-gaps-plan.md` MG-5) |
 | **Stone's theorem (general)** | Strongly continuous one-parameter unitary groups ↔ self-adjoint generators | Full-continuity Schrödinger recovery (we require C¹) | Staged finite-dimensional C¹ version (`StoneC1.lean`) — itself an upstream candidate |
 | **Bargmann's theorem** | Continuity ⇒ vanishing of the projective-representation cocycle | Would discharge the coboundary *datum* in the W-series phase lift from continuity alone | The coboundary is an explicit named hypothesis, non-vacuously inhabited |
 | **Wigner normal form** | The last normal-form lemma behind full Wigner rigidity | Closing `LF4-todo.md` §13 without the staged pause | §13 is paused at that single lemma; the rigidity chain up to it is staged and audited |
