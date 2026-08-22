@@ -464,6 +464,7 @@ public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPotential
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
 public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct

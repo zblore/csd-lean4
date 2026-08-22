@@ -180,6 +180,25 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
 
 ### MG-4 (M, opportunistic) — chart-level Kähler closedness on `ℂℙ^{N−1}`
 
+> **EXECUTED 2026-08-22** (`Mathlib/Analysis/InnerProductSpace/KahlerPotential.lean`, 4 pins;
+> four build rounds). **Route correction found during the feasibility pass:** the coordinate
+> route (`ω = i∂∂̄K` expanded in a basis) is a dead end — upstream has neither a wedge product
+> nor `∂`/`∂̄` operators. But it also has **`extDeriv_extDeriv` (`d² = 0`)**, so closedness
+> should come from EXACTNESS, not computation. Hence the `dd^c` construction: `complexStructureL`
+> (J bundled as an `ℝ`-CLM), `packL` (`ofSubsingletonLIE`, the bundled `1`-form packaging —
+> the plain `ofSubsingleton` is a bare `Equiv` and cannot carry smoothness), `dForm` with
+> `dForm_eq_extDeriv` anchoring it to `extDeriv_constOfIsEmpty`, `dcForm`, `ddcForm`, and
+> ★ `extDeriv_ddcForm` — **every `dd^c` of a smooth potential is closed**. Then
+> `fsPotential = log(1+‖z‖²)` with `contDiff_fsPotential` (`contDiff_norm_sq ℂ` +
+> `ContDiffAt.log`, the argument never below `1`) gives ★★ `extDeriv_fsChartForm`.
+> **Honest residue, recorded in the module and the ledger:** the chart form is *defined* by its
+> potential (the standard potential-theoretic definition); identifying it with the pullback of
+> `Kahler.fundamentalForm` is a second-derivative computation NOT done here, and the manifold
+> spelling stays Mathlib-blocked. So the Kähler row is narrowed, not closed.
+> *Snags:* the smoothness index is `WithTop ℕ∞` — `∞` is scoped notation, use `(⊤ : ℕ∞)`, and
+> `minSmoothness ℝ 2 ≤ ↑⊤` needs the numeral pushed through `WithTop.coe_le_coe` by hand
+> (`exact_mod_cast` does not see `(2 : WithTop ℕ∞)` as a coercion).
+
 The flat half of the Kähler gap is gone upstream (`extDeriv` on normed spaces) and the corpus
 already proved flat `dω = 0` for the constant form (`KahlerClosed.lean`). The next narrowing:
 the genuine FS fundamental form **in an affine chart** (potential `K = log (1 + ‖z‖²)`,

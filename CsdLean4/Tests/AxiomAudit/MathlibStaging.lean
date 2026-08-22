@@ -2140,6 +2140,30 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Kahler.extDeriv_fundamentalFormAlt
 
+-- MG-4 (2026-08-22, KahlerPotential.lean): the NON-CONSTANT step. A form presented as dd^c of
+-- a potential is closed for free (d^2 = 0, extDeriv_extDeriv), so the genuine Fubini-Study
+-- form of an affine chart -- potential log(1 + ||z||^2), smooth because the argument stays
+-- >= 1 -- is closed. dForm_eq_extDeriv checks the 1-form packaging really is the exterior
+-- derivative of the 0-form (extDeriv_constOfIsEmpty), so the construction is not ad hoc.
+-- HONEST SCOPE: the chart form is DEFINED by its potential; identifying it with the pullback
+-- of Kahler.fundamentalForm is a second-derivative computation NOT done here, and the
+-- manifold statement on CP^{N-1} remains Mathlib-blocked.
+/-- info: 'Kahler.dForm_eq_extDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.dForm_eq_extDeriv
+
+/-- info: 'Kahler.extDeriv_ddcForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.extDeriv_ddcForm
+
+/-- info: 'Kahler.contDiff_fsPotential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.contDiff_fsPotential
+
+/-- info: 'Kahler.extDeriv_fsChartForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.extDeriv_fsChartForm
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling
