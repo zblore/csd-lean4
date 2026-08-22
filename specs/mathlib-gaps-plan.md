@@ -207,6 +207,26 @@ holding ONLY the quotient/manifold glue. Do when touching that area; not a sessi
 
 ### MG-5 (row only — gated) — the register tensor factorisation
 
+> **GATE OPENED BY QUEUE DECISION and EXECUTED 2026-08-22** (`QuantumInfo/RegisterTensor.lean`,
+> 4 pins; **first-try compile**). The feasibility pass found the row's premise had partly
+> expired: Mathlib now carries the inner product on `E ⊗[𝕜] F`
+> (`Analysis/InnerProductSpace/TensorProduct.lean`) *and* `OrthonormalBasis.tensorProduct`, so
+> the missing piece was only the bridge to the concrete `EuclideanSpace` model — which the
+> change-of-basis between two orthonormal bases indexed by `ι × κ` supplies immediately. Hence
+> the row is closed LITERALLY (`regTensorEquiv`), not worked around: `regSplitEquiv` (wire-index
+> currying) → `splitReg` → `prodTensorEquiv` (reusable: the product-index model of a Hilbert
+> tensor product, nothing qubit-specific) → ★★ `regTensorEquiv` + `regTensorEquiv_basisState`,
+> plus the consumer-facing `tensorFirst` (operator on a wire block, identity elsewhere),
+> `tensorFirst_basisState`, `tensorFirst_one`.
+>
+> **Honest boundary, and a stale-note correction.** This delivers the API the measurement-gadget
+> wall named — it does NOT prove the gadget hybrid. `MeasurementAdder.lean`'s wall note claimed
+> the factorisation "Mathlib does not cleanly provide"; that sentence is now false and has been
+> corrected at source (the obstruction is the n-fold amplitude argument, which is open work, not
+> a missing library). `Reversible/Lift.lean`'s optionality verdict was updated the same way: its
+> conclusion stands (the permutation lift still would not unblock the gadget), but its reason no
+> longer cites a missing tensor API.
+
 `QReg m ≅ QReg 3 ⊗ QReg (m − 3)` (as Hilbert spaces, with the inner product carried) is a gap
 this project has HIT (the measurement-gadget wall, `MeasurementAdder.lean`; also what the
 general-lift optionality verdict cites) but never recorded in the ledger — added now. Attack

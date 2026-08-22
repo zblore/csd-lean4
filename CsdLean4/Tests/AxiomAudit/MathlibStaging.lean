@@ -2275,6 +2275,28 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'NormedSpace.trotter_product' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms NormedSpace.trotter_product
 
+-- MG-5 (2026-08-22, QuantumInfo/RegisterTensor.lean): the REGISTER TENSOR FACTORISATION that
+-- MATHLIB-GAPS recorded as missing. Mathlib has the inner product on E (x) F but nothing tying
+-- it to the concrete EuclideanSpace/PiLp model QReg uses. Two reindexings plus
+-- OrthonormalBasis.tensorProduct (the tensor of orthonormal bases is orthonormal, so both
+-- sides carry ONBs indexed by the product and the isometry is the change of basis) give
+-- regTensorEquiv : QReg (a+b) = QReg a (x) QReg b, with the basis-state computation rule.
+-- tensorFirst is the consumer-facing payoff: an operator on the first block extended by the
+-- identity, with its action on basis states. NOTE the honest boundary: this supplies the
+-- INFRASTRUCTURE the measurement-gadget wall named; the n-fold hybrid amplitude equality is
+-- separate work and is NOT claimed here.
+/-- info: 'QuantumInfo.prodTensorEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.prodTensorEquiv
+
+/-- info: 'QuantumInfo.regTensorEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.regTensorEquiv
+
+/-- info: 'QuantumInfo.regTensorEquiv_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.regTensorEquiv_basisState
+
+/-- info: 'QuantumInfo.tensorFirst_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.tensorFirst_basisState
+
 -- The Boolean -> amplitude lift of reversible circuits (2026-08-21,
 -- Mathlib/QuantumInfo/Reversible/Lift.lean): a reversible gate acts on the quantum register
 -- QReg n as a permutation matrix on computational basis states, and the permutation is exactly

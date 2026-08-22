@@ -33,6 +33,7 @@ public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 public import CsdLean4.Mathlib.QuantumInfo.Register
+public import CsdLean4.Mathlib.QuantumInfo.RegisterTensor
 public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 public import CsdLean4.Mathlib.QuantumInfo.Fourier
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit

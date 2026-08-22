@@ -65,9 +65,14 @@ AND-uncompute blocks per carry bit (`andAdd_uncompute_toffoli : … = 3 * n`). E
   unitary permutation circuits (and underlies `ccxAtMat_lifts_denote`) **breaks at the replaced
   block**: the post-gadget full-register state is no longer a basis-state permutation of the input.
   Applying the gadget as a *local tensor factor* `measureUncompute ⊗ I` to a general entangled
-  full-register superposition requires the factorization `QReg m ≅ QReg 3 ⊗ QReg (m−3)`, which
-  Mathlib's `EuclideanSpace` tensor API does not cleanly provide. The single-block unitary embedding
-  is sound; the *non-permutation gadget* tensor-factor on a general superposition is the obstruction.
+  full-register superposition requires the factorization `QReg m ≅ QReg 3 ⊗ QReg (m−3)`.
+  ⚠️ **Wall note updated 2026-08-22 (MG-5):** that factorization is no longer missing — it is
+  `QuantumInfo.regTensorEquiv` (`Mathlib/QuantumInfo/RegisterTensor.lean`), together with
+  `tensorFirst`, the "operator on a wire block, identity elsewhere" construction and its
+  basis-state computation rule. So the obstruction is **not** the absence of API. What remains
+  undone is the argument itself: threading the non-permutation gadget through the adder's `3n`
+  blocks and proving the full-register data output on `S` unchanged. The single-block unitary
+  embedding is sound; the n-fold hybrid amplitude equality is open work, not a missing library.
 
 ## Honest scope (Part 3)
 
