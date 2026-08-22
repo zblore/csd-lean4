@@ -5,7 +5,15 @@
 `x ↦ -(x+s)⁻¹` + affine-output-transform helper) **DONE 2026-06-17**;
 **`CStarMatrix ↔ Matrix` transport bridge DONE 2026-06-18** (B.1 cfc transport +
 B.2 order transport + B.3 `log` operator-monotonicity transported onto `Matrix`;
-`Mathlib/Analysis/Matrix/OperatorConvexBridge.lean`; rpow transport WALLED, see B.3 note);
+`Mathlib/Analysis/Matrix/OperatorConvexBridge.lean`; ~~rpow transport WALLED, see B.3 note~~
+**rpow wall DISSOLVED 2026-08-22 — B.4 LANDED** (MG-3, `specs/mathlib-gaps-plan.md`): the
+wall was exactly two non-firing generic instances (the second shim
+`instCStarMatrixNonnegSpectrumClass` now registered); upstream gained
+`CFC.monotone_nnrpow`/`monotone_rpow` (`Rpow/Order.lean`) since the wall note, and B.4
+transports them — `Matrix.matrix_nnrpow_le_nnrpow` (`x^p` operator MONOTONE on the Löwner
+order, `p ∈ [0,1]`, the L.3 monotonicity input) + `matrix_sqrt_le_sqrt`, via the ℝ≥0-`cfcₙ`
+naturality `cstar_cfcₙ_nnreal`. Upstream also gained `Rpow/IntegralRepresentation.lean` —
+fresh machinery for the L.3a INTERIOR-concavity assembly, which remains the open rung);
 **REFRAMING LEMMA DONE 2026-06-18** (operator concavity ↔ ordinary `ConcaveOn` of `A ↦ cfc f A`
 on the Löwner-ordered codomain; `convex_spectralSet_Ioi`; bridge-independent, on the `Matrix`
 carrier — the high-leverage unlock that makes Mathlib's `ConcaveOn` API apply to operator

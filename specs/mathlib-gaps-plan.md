@@ -56,6 +56,17 @@ witness — the shape an upstream instance-hygiene issue needs anyway) and stop.
 > integral-representation machinery the convexity rungs would consume — the L programme is
 > better-provisioned than when the ladder was parked. Upstream note: the two-instance witness
 > is the crisp reproduction an instance-hygiene issue/PR needs.
+>
+> **B.4 LANDED same day 2026-08-22** (`OperatorConvexBridge.lean` extended in place, first-try
+> compile; 3 pins in the MathlibStaging part): `instCStarMatrixNonnegSpectrumClass` (shim 2),
+> `cstar_cfcₙ_nnreal` (ℝ≥0-`cfcₙ` naturality across `e`, via
+> `NonUnitalStarAlgHomClass.map_cfcₙ`), ★ `matrix_nnrpow_le_nnrpow` (`x^p` operator monotone,
+> `p ∈ [0,1]`, Löwner order, on the BARE `Matrix` carrier's own `^` notation — the `p = 0`
+> junk-value case branched, `p ≠ 0` zero-preserving pointwise), `matrix_sqrt_le_sqrt`. The
+> rpow-wall paragraph superseded at source; `operator-convexity-plan.md` L.3 note updated.
+> The probe file has served and is deleted; its content is reproduced by the shims + this
+> record. MG-3's residue = the L.3a interior CONCAVITY assembly (Lieb direction), now with
+> upstream's integral-representation machinery as input — still the ladder's open rung.
 
 ### MG-1 (M) — the Fubini–Study metric on `ℙ`, in-corpus
 

@@ -1203,6 +1203,25 @@ info: 'ProbabilityTheory.iIndepFun.pairwise_indepFun_indicator_preimage' depends
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.matrix_log_le_log
 
+-- B.4 (2026-08-22, MG-3): the rpow wall dissolved. The MG-3 probe found the obstruction was
+-- exactly two generic instances not firing through the discrimination tree (the R-CFC over
+-- IsSelfAdjoint — the existing shim — and NonnegSpectrumClass R, the second shim); with both
+-- registered the upstream monotonicity tier (Rpow/Order.lean, post-dating the wall note)
+-- fires on CStarMatrix, and B.4 transports it: the R>=0-cfcn naturality across the synonym
+-- equiv, operator monotonicity of x^p (p in [0,1]) on the Loewner order, and sqrt
+-- monotonicity, all on the bare Matrix carrier.
+/-- info: 'Matrix.cstar_cfcₙ_nnreal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.cstar_cfcₙ_nnreal
+
+/-- info: 'Matrix.matrix_nnrpow_le_nnrpow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.matrix_nnrpow_le_nnrpow
+
+/-- info: 'Matrix.matrix_sqrt_le_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.matrix_sqrt_le_sqrt
+
 /-! ### C^1 finite-dimensional Stone theorem (StoneC1.lean, W5-S2 under smoothness) -/
 
 /-- info: 'Matrix.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/

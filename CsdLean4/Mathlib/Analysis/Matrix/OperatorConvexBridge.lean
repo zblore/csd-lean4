@@ -10,6 +10,8 @@ public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.ExpLog.Order
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Order
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 
 /-!
@@ -49,27 +51,27 @@ C⋆-generic facts back onto `Matrix`.
   what makes the conclusion expressible on the `Matrix` carrier of the `OperatorConcaveOn`
   predicate.
 
-## Honest scope (rpow wall)
+## ~~Honest scope (rpow wall)~~ SUPERSEDED 2026-08-22 (MG-3): the rpow rung is LANDED
 
-The analogous **rpow** transport (`x ↦ x ^ p` operator monotone, `p ∈ [0,1]`) is **not** landed
-here. The C⋆-generic `CFC.rpow_le_rpow` is stated with the `Pow A ℝ` notation
-(`CFC.instPowReal`), whose instance — together with `NonnegSpectrumClass ℝ A` — does **not**
-resolve on `CStarMatrix n n ℂ` at this Mathlib pin: the generic `ℝ`-CFC instance
-`IsSelfAdjoint.instContinuousFunctionalCalculus` does not fire on `CStarMatrix` via the
-discrimination tree (a local shim `instCStarMatrixRealCFC` is required even to state the goal),
-and the `NonnegSpectrumClass ℝ (CStarMatrix n n ℂ)` subgoal — though provable as a *term* — is
-not *found* by instance synthesis when nested inside the `Pow`/`CFC.rpow` resolution (the
-repeated-index `CStarMatrix n n ℂ` discrimination key blocks the `Fintype n`/`DecidableEq n`
-side-conditions). The `log` route needs only `[CStarAlgebra A]` (via `IsStrictlyPositive`), so
-it transports cleanly; the rpow route additionally needs `NonnegSpectrumClass` + `Pow`, which do
-not. See `specs/operator-convexity-plan.md` (L.2 / L.3 sections) for the precise residual.
+The rpow wall recorded here previously is dissolved. The MG-3 probe
+(`specs/mathlib-gaps-plan.md`; `scratch_mg3_probe.lean`, five rounds) established that the
+obstruction was **exactly two** generic instances failing to fire through the discrimination
+tree — the `ℝ`-CFC over `IsSelfAdjoint` (the shim below, already present) and
+`NonnegSpectrumClass ℝ` (`instCStarMatrixNonnegSpectrumClass`, the second shim, added with
+B.4) — and that with both registered the entire upstream monotonicity tier fires on
+`CStarMatrix n n ℂ`, including `CFC.monotone_nnrpow` (operator monotonicity of `x ^ p`,
+`p ∈ [0,1]`, which landed upstream in `…/Rpow/Order.lean` after the wall note was written).
+**B.4** transports it to the `Matrix` carrier: `matrix_nnrpow_le_nnrpow` (the L.3 rung) and
+`matrix_sqrt_le_sqrt`, via the `ℝ≥0`-`cfcₙ` naturality `cstar_cfcₙ_nnreal` (the `ℝ≥0`
+companion of B.1). The remaining C⋆-side absence for the DPI ladder is operator CONVEXITY
+(Lieb) — upstream's own TODO; see `specs/operator-convexity-plan.md` and `MATHLIB-GAPS.md`.
 
 **Category:** 1-Mathlib (CSD-free). Natural Mathlib namespace `Matrix`.
 -/
 
 @[expose] public section
 
-open scoped MatrixOrder ComplexOrder
+open scoped MatrixOrder ComplexOrder NNReal
 
 namespace Matrix
 
@@ -178,6 +180,67 @@ theorem matrix_log_le_log {A B : Matrix n n ℂ} (hA : A.PosDef) (hB : B.PosDef)
   rw [← hlogA, ← hlogB] at key
   exact (cstar_le_iff (cfc Real.log A) (cfc Real.log B)).mp key
 
+/-! ### The second shim + B.4 — rpow operator monotonicity on `Matrix` (2026-08-22, MG-3) -/
+
+/-- The second non-firing generic instance found by the MG-3 probe: `NonnegSpectrumClass ℝ`
+on `CStarMatrix n n ℂ`, registered explicitly from its own generic provider
+(`CStarAlgebra.instNonnegSpectrumClass` — provable as a term, not found by synthesis through
+the repeated-index discrimination key). With this and the `ℝ`-CFC shim above, the upstream
+rpow/sqrt/log order tier fires on `CStarMatrix`. -/
+instance instCStarMatrixNonnegSpectrumClass :
+    NonnegSpectrumClass ℝ (CStarMatrix n n ℂ) :=
+  CStarAlgebra.instNonnegSpectrumClass
+
+/-- **B.4a.** `ℝ≥0`-`cfcₙ` naturality across the synonym equivalence, on nonnegative
+matrices: `e (cfcₙ f A) = cfcₙ f (e A)`. The `ℝ≥0` companion of B.1, by
+`NonUnitalStarAlgHomClass.map_cfcₙ` (the two `cfcₙ`s come from the `Matrix`-side and
+`CStarMatrix`-side `ℝ≥0` functional calculi respectively). -/
+theorem cstar_cfcₙ_nnreal {A : Matrix n n ℂ} (hA : 0 ≤ A) (f : ℝ≥0 → ℝ≥0)
+    (hf : ContinuousOn f (quasispectrum ℝ≥0 A)) (hf0 : f 0 = 0) :
+    CStarMatrix.ofMatrixStarAlgEquiv (cfcₙ f A)
+      = cfcₙ f (CStarMatrix.ofMatrixStarAlgEquiv A) := by
+  have hA' : (0 : CStarMatrix n n ℂ) ≤ CStarMatrix.ofMatrixStarAlgEquiv A := by
+    have := (cstar_le_iff 0 A).mpr hA
+    rwa [map_zero] at this
+  exact NonUnitalStarAlgHomClass.map_cfcₙ CStarMatrix.ofMatrixStarAlgEquiv f A hf hf0
+    ofMatrixStarAlgEquiv_continuous hA hA'
+
+/-- **B.4 (rpow, the L.3 rung).** Operator **monotonicity** of the nonnegative power
+`A ↦ A ^ p` (`p : ℝ≥0`, `p ≤ 1`) on positive-semidefinite matrices in the Löwner order —
+`CFC.monotone_nnrpow` transported onto the `Matrix` carrier. The `p = 0` exponent is junk-valued
+(`A ^ 0 = 0` by the `cfcₙ` zero convention) and handled separately; for `p ≠ 0` the pointwise
+function is zero-preserving and the naturality B.4a identifies the powers across `e`. -/
+theorem matrix_nnrpow_le_nnrpow {A B : Matrix n n ℂ} {p : ℝ≥0} (hp : p ∈ Set.Icc 0 1)
+    (hA : 0 ≤ A) (hAB : A ≤ B) :
+    A ^ p ≤ B ^ p := by
+  obtain rfl | hp0 := eq_or_ne p 0
+  · rw [CFC.nnrpow_zero, CFC.nnrpow_zero]
+  · have hB : (0 : Matrix n n ℂ) ≤ B := hA.trans hAB
+    have hf0 : NNReal.nnrpow 0 p = 0 := by
+      rw [NNReal.nnrpow_def, NNReal.zero_rpow (by exact_mod_cast hp0)]
+    have hEA : (CStarMatrix.ofMatrixStarAlgEquiv A) ^ p
+        = CStarMatrix.ofMatrixStarAlgEquiv (A ^ p) := by
+      rw [CFC.nnrpow_def, CFC.nnrpow_def]
+      exact (cstar_cfcₙ_nnreal hA _
+        ((NNReal.continuous_nnrpow_const p).continuousOn) hf0).symm
+    have hEB : (CStarMatrix.ofMatrixStarAlgEquiv B) ^ p
+        = CStarMatrix.ofMatrixStarAlgEquiv (B ^ p) := by
+      rw [CFC.nnrpow_def, CFC.nnrpow_def]
+      exact (cstar_cfcₙ_nnreal hB _
+        ((NNReal.continuous_nnrpow_const p).continuousOn) hf0).symm
+    have key : (CStarMatrix.ofMatrixStarAlgEquiv A) ^ p
+        ≤ (CStarMatrix.ofMatrixStarAlgEquiv B) ^ p :=
+      CFC.monotone_nnrpow hp ((cstar_le_iff A B).mpr hAB)
+    rw [hEA, hEB] at key
+    exact (cstar_le_iff (A ^ p) (B ^ p)).mp key
+
+/-- **B.4 corollary (sqrt).** Operator monotonicity of the matrix square root on the Löwner
+order: `0 ≤ A ≤ B → √A ≤ √B`. -/
+theorem matrix_sqrt_le_sqrt {A B : Matrix n n ℂ} (hA : 0 ≤ A) (hAB : A ≤ B) :
+    CFC.sqrt A ≤ CFC.sqrt B := by
+  rw [CFC.sqrt_eq_nnrpow A, CFC.sqrt_eq_nnrpow B]
+  exact matrix_nnrpow_le_nnrpow ⟨by norm_num, by norm_num⟩ hA hAB
+
 /-! ### Non-vacuity witness
 
 The bridge is non-vacuous: it applies to a concrete non-commuting positive-definite pair.
@@ -186,5 +249,9 @@ genuine carriers (the `Matrix` Löwner order and the `CStarMatrix` spectral orde
 degenerate or mismatched structure. -/
 example {A B : Matrix n n ℂ} (hA : A.PosDef) (hB : B.PosDef) (hAB : A ≤ B) :
     cfc Real.log A ≤ cfc Real.log B := matrix_log_le_log hA hB hAB
+
+example {A B : Matrix n n ℂ} (hA : 0 ≤ A) (hAB : A ≤ B) :
+    A ^ (2⁻¹ : ℝ≥0) ≤ B ^ (2⁻¹ : ℝ≥0) :=
+  matrix_nnrpow_le_nnrpow ⟨by norm_num, by norm_num⟩ hA hAB
 
 end Matrix
