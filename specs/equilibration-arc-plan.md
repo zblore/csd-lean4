@@ -104,6 +104,51 @@ case honestly** — either exhibit the obstruction or find the invariance that s
 deliverable the brief asks for. It gets stated in the module header and the ledger, never left
 implicit.
 
+> ### ★★ E3 EXECUTED 2026-08-22 — verdict: **FAIL on the naive statement**, with diagnosis
+>
+> `Thermo/SectorRestriction.lean` (new) + `fubiniStudyMeasure_subspaceRays` in the staged
+> `FubiniStudyLebesgue.lean`; 4 pins. The spike did its job on the first attempt: **the naive
+> E3 statement is false, and the reason is sharper than "the constant does not compute".**
+>
+> **What is true** — `projectiveLaw_restrict_saturated`: for a **fibre-saturated** surface
+> `S = π⁻¹B` (constraining only the base), `π_*(μ_L|_S) = μ_FS|_B` exactly. This is the honest
+> generalisation of the unrestricted `c = 1`, and it needs saturation because the proof is the
+> product computation `Prod.fst ⁻¹' B = B ×ˢ univ`.
+>
+> **What is false** — ★★ `projectiveLaw_restrict_sector_eq_zero`: for a **proper** spectral
+> sector `R ⊊ H`, `π_*(μ_L|_{π⁻¹(rays in R)}) = 0`. **The constraint set is Fubini–Study-null**
+> (`fubiniStudyMeasure_subspaceRays`: the rays of a proper subspace have the subspace as their
+> cone, and a proper subspace is Lebesgue-null by `Measure.addHaar_submodule`). So there is
+> nothing to condition on and no normalisation repairs it. `kMuL_sector_eq_zero` says the same
+> at the surface level: the constraint surface carries **zero Liouville weight**.
+>
+> **Why this is the useful outcome.** The brief anticipated a possible failure of the form "the
+> pushforward does not restrict cleanly". The actual failure is more specific and more
+> actionable: *exact spectral sectors are measure-zero in the ambient arena*, which is a fact
+> about the geometry, not about our proof technique. It kills one route decisively and names
+> the only two survivors:
+>
+> 1. **Positive-measure energy windows** (`{p | ⟨H⟩_p ∈ [E, E+Δ]}`). Conditioning is then well
+>    defined, but the conditioned law is **not** `μ_FS` on any `ℙ(H_R)` — it is a distinct shell
+>    measure. Σ-level content survives; this is a **theorem route**, and it is the recommended
+>    one.
+> 2. **The sector as its own arena** (`Σ_R = ℙ(H_R) × T²`). Then the pushforward is the existing
+>    `c = 1` theorem at dimension `d_R` — but about a *different* `Σ`, so "the constrained
+>    dynamics is described by the sector arena" becomes a **posit**.
+>
+> **Gate outcome: PARTIAL, not FAIL-and-abort.** The arc proceeds, with these consequences:
+> * **E2 must be re-scoped to route 1** (energy windows), and its signature must carry the
+>   window and its positivity — *not* an eigenspace. Cost likely rises (a positive-measure
+>   window needs `⟨H⟩` measurability and a non-degeneracy hypothesis).
+> * **E2/E4 must never say "μ_FS on the sector"** — these theorems refute it. The phrase is a
+>   candidate `check-claims.sh` guard entry in E5.
+> * **E1 is untouched** (it is about the unrestricted `μ_FS`, which is fine).
+>
+> **The brief's own warning, discharged:** it said item 3 was the thing that could sink the arc
+> and that finding out early beats the other four succeeding. It did not sink it, but it *did*
+> invalidate the intended formulation of item 2 — which is exactly the value of running it
+> first, and would have been expensive to discover after building E1 and E2 on top.
+
 ---
 
 ## E1 — FS second moment for reduced states (= Q24-B4 + B5, with H-TENSOR explicit)

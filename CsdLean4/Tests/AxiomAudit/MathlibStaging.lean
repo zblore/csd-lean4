@@ -561,6 +561,14 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone
 
+-- E3 spike (2026-08-22, equilibration-arc-plan.md): the rays of a PROPER subspace are
+-- Fubini-Study-null. Their cone is the subspace, and a proper subspace is Lebesgue-null
+-- (Measure.addHaar_submodule). Reusable, and the reason a microcanonical restriction to an
+-- exact spectral sector cannot be defined by restricting mu_FS -- see
+-- Thermo/SectorRestriction.lean for the arena-level consequence.
+/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays
+
 /-- info: 'Projectivization.instMeasurableSingletonClass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instMeasurableSingletonClass
 

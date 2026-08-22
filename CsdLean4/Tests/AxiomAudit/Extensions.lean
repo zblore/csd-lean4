@@ -140,6 +140,27 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.fs_chebyshev_concentration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_chebyshev_concentration
 
+-- E3, THE EQUILIBRATION-ARC SPIKE (2026-08-22, Thermo/SectorRestriction.lean,
+-- specs/equilibration-arc-plan.md). Run first because it was the item most likely to sink the
+-- arc. VERDICT: the naive statement is FALSE, and these theorems record why.
+-- projectiveLaw_restrict_saturated -- the POSITIVE half: a fibre-saturated constraint surface
+-- (S = pi^-1 B, constraining only the base) pushes forward to the restricted Fubini-Study
+-- measure. The honest generalisation of the unrestricted c = 1; it needs saturation because
+-- the proof is a product computation.
+-- ★★ projectiveLaw_restrict_sector_eq_zero -- the NO-GO: for a proper spectral sector the
+-- restriction is the ZERO measure. Not a normalisation failure -- the constraint set is
+-- Fubini-Study-NULL, so there is nothing to condition on. A microcanonical statement must
+-- therefore either use positive-measure energy windows (whose conditioned law is NOT mu_FS on
+-- any P(H_R)) or treat the sector as its own arena (making the mu_L relation a POSIT).
+/-- info: 'CSD.Thermo.projectiveLaw_restrict_saturated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.projectiveLaw_restrict_saturated
+
+/-- info: 'CSD.Thermo.projectiveLaw_restrict_sector_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.projectiveLaw_restrict_sector_eq_zero
+
+/-- info: 'CSD.Thermo.kMuL_sector_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.kMuL_sector_eq_zero
+
 -- TH2: the second law as coarse-grained entropy monotonicity. Pinching
 -- (dephasing to the pointer-basis diagonal) never decreases the von Neumann
 -- entropy -- S(rho) <= S(pinch rho) -- via Klein's inequality against the

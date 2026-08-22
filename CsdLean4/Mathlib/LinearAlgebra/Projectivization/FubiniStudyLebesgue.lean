@@ -501,4 +501,85 @@ theorem fubiniStudyMeasure_null_of_cone (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin
 
 end Pushforward
 
+/-! ### ★★ Rays inside a proper subspace are null
+
+A companion to `fubiniStudyMeasure_null_of_cone`, and the reason a "microcanonical restriction
+to a spectral sector" cannot be defined by restricting `μ_FS`: the rays lying inside a **proper**
+subspace form a Fubini–Study-null set, because their cone is that subspace, and a proper subspace
+is Lebesgue-null (`Measure.addHaar_submodule`). -/
+
+section SubspaceRays
+
+variable {N : ℕ} [NeZero N]
+
+/-- The rays lying inside a subspace. -/
+def subspaceRays (R : Submodule ℂ (EuclideanSpace ℂ (Fin N))) :
+    Set (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
+  {p | p.rep ∈ R}
+
+omit [NeZero N] in
+/-- Membership is representative-independent: a ray lies in `R` exactly when any (hence every)
+representative does. -/
+lemma mem_subspaceRays_mk (R : Submodule ℂ (EuclideanSpace ℂ (Fin N)))
+    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
+    Projectivization.mk ℂ v hv ∈ subspaceRays R ↔ v ∈ R := by
+  have hmk : Projectivization.mk ℂ (Projectivization.mk ℂ v hv).rep
+      (Projectivization.mk ℂ v hv).rep_nonzero = Projectivization.mk ℂ v hv :=
+    Projectivization.mk_rep _
+  obtain ⟨a, ha⟩ := (Projectivization.mk_eq_mk_iff' ℂ _ v
+    (Projectivization.mk ℂ v hv).rep_nonzero hv).mp hmk
+  have ha0 : a ≠ 0 := by
+    intro h
+    rw [h, zero_smul] at ha
+    exact (Projectivization.mk ℂ v hv).rep_nonzero ha.symm
+  constructor
+  · intro hmem
+    have : a • v ∈ R := ha ▸ hmem
+    have := R.smul_mem a⁻¹ this
+    rwa [smul_smul, inv_mul_cancel₀ ha0, one_smul] at this
+  · intro hmem
+    show (Projectivization.mk ℂ v hv).rep ∈ R
+    rw [← ha]
+    exact R.smul_mem a hmem
+
+omit [NeZero N] in
+lemma measurableSet_subspaceRays (R : Submodule ℂ (EuclideanSpace ℂ (Fin N))) :
+    MeasurableSet (subspaceRays R) := by
+  have hclosed : IsClosed (R : Set (EuclideanSpace ℂ (Fin N))) :=
+    Submodule.closed_of_finiteDimensional R
+  rw [subspaceRays, measurableSet_setOfPred,
+    Projectivization.measurable_iff_measurable_comp_mk']
+  have hfun : ((fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => p.rep ∈ R)
+      ∘ (Projectivization.mk' ℂ))
+      = fun v : {v : EuclideanSpace ℂ (Fin N) // v ≠ 0} =>
+          (v : EuclideanSpace ℂ (Fin N)) ∈ R := by
+    funext v
+    exact propext (mem_subspaceRays_mk R v.2)
+  rw [hfun, ← measurableSet_setOfPred]
+  exact measurable_subtype_coe hclosed.measurableSet
+
+/-- ★★ **The rays of a proper subspace are Fubini–Study-null.** Their cone is the subspace
+itself, and a proper subspace is Lebesgue-null. Consequence for statistical mechanics: a
+"microcanonical restriction to a spectral sector" is **not** definable by restricting `μ_FS` —
+the restriction is the zero measure. -/
+theorem fubiniStudyMeasure_subspaceRays (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
+    {R : Submodule ℂ (EuclideanSpace ℂ (Fin N))} (hR : R ≠ ⊤) :
+    fubiniStudyMeasure p₀ (subspaceRays R) = 0 := by
+  refine fubiniStudyMeasure_null_of_cone p₀ (measurableSet_subspaceRays R) ?_
+  have hne : (R.restrictScalars ℝ : Submodule ℝ (EuclideanSpace ℂ (Fin N))) ≠ ⊤ := by
+    intro h
+    refine hR (SetLike.ext' ?_)
+    have hset := congrArg
+      (fun s : Submodule ℝ (EuclideanSpace ℂ (Fin N)) => (s : Set (EuclideanSpace ℂ (Fin N)))) h
+    simpa using hset
+  have hnull : (volume : Measure (EuclideanSpace ℂ (Fin N)))
+      ((R.restrictScalars ℝ : Submodule ℝ (EuclideanSpace ℂ (Fin N))) :
+        Set (EuclideanSpace ℂ (Fin N))) = 0 :=
+    Measure.addHaar_submodule _ _ hne
+  refine measure_mono_null ?_ hnull
+  rintro v ⟨hv, hmem⟩
+  exact (mem_subspaceRays_mk R hv).mp hmem
+
+end SubspaceRays
+
 end Matrix.UnitaryGroup
