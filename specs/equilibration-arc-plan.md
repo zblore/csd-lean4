@@ -170,6 +170,32 @@ doing load-bearing work.
 
 **Cost.** M (both bricks pre-routed). This is the cheapest item in the arc.
 
+> ### E1 EXECUTED 2026-08-22 — **PARTIAL: moments proved, assembly deferred**
+>
+> `Thermo/ReducedSecondMoment.lean` (new), 4 pins. **H-TENSOR discipline honoured**: the
+> bipartition is an explicit `e : Fin N ≃ Fin dA × Fin dB` in every signature.
+>
+> **Proved.** `blockPop` (the subsystem populations) is a *linear* statistic in the moment map
+> (`blockPop_eq_linear`), so Q24's linear moments apply verbatim: ★ `fs_blockPop_mean`
+> (`E[(ρ_A)_{aa}] = d_B/N = 1/d_A`) and ★ `fs_blockPop_sq`
+> (`E[(ρ_A)_{aa}²] = (d_B²+d_B)/(N(N+1))`). Plus the two new twirl lemmas that are the real
+> content: `signFlip_smul_rayDensity_ne` (a flip touching neither index does nothing) and ★
+> `fs_redOff_cross_vanish` (**the four-index expectations vanish** — a coordinate occurring an
+> odd number of times is killed by the sign flip).
+>
+> **Deferred, and NOT asserted.** The off-diagonal second moment `E|(ρ_A)_{aa'}|² =
+> d_B/(N(N+1))` and the Hilbert–Schmidt assembly `E‖ρ_A − I_A/d_A‖₂² = (d_A+d_B)/(N+1) − 1/d_A`
+> (the Lubkin–Page purity average). Both are *determined* by what is proved — the route is
+> written into the module's closing section and the arithmetic checked on paper — but paper
+> arithmetic is not a theorem. What remains is Lean plumbing: the `normSq`-of-a-sum expansion
+> into real and imaginary parts, integrability side conditions, and the final algebra with
+> `N = d_A d_B`.
+>
+> **Honest cost correction.** The planning note called E1 "the cheapest item in the arc" on the
+> grounds that its ingredients were landed. The ingredients *were* landed and the mathematics
+> went through; the underestimate was the assembly plumbing, not the mathematics. Remaining
+> work is S–M and mechanical.
+
 ---
 
 ## E2 — the constrained microcanonical statement

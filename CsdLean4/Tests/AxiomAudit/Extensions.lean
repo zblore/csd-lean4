@@ -161,6 +161,32 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.kMuL_sector_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.kMuL_sector_eq_zero
 
+-- E1, PARTIAL (2026-08-22, Thermo/ReducedSecondMoment.lean): the reduced state's moments.
+-- H-TENSOR discipline: the bipartition is an EXPLICIT argument e : Fin N = Fin dA x Fin dB in
+-- every signature, never inferred from a tensor API -- a silently chosen factorisation would
+-- be a structural posit doing load-bearing work (a second D1).
+-- blockPop = the subsystem populations, a LINEAR statistic in the moment map
+-- (blockPop_eq_linear), so Q24's linear moments apply verbatim:
+--   fs_blockPop_mean : E[(rho_A)_aa] = d_B/N  (= 1/d_A)
+--   fs_blockPop_sq   : E[(rho_A)_aa^2] = (d_B^2 + d_B)/(N(N+1))
+-- ★ fs_redOff_cross_vanish -- the novel ingredient: the genuinely four-index expectations
+-- vanish, because a coordinate occurring an odd number of times is killed by the sign flip
+-- (signFlip_smul_rayDensity_ne is its companion: a flip touching neither index does nothing).
+-- NOT PROVED HERE and recorded as the named remainder: the off-diagonal second moment and the
+-- Hilbert-Schmidt assembly E||rho_A - I_A/d_A||_2^2 = (d_A+d_B)/(N+1) - 1/d_A. The arithmetic
+-- is checked on paper; that is not a theorem, so it is not asserted.
+/-- info: 'CSD.Thermo.fs_blockPop_mean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_blockPop_mean
+
+/-- info: 'CSD.Thermo.fs_blockPop_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_blockPop_sq
+
+/-- info: 'CSD.Thermo.signFlip_smul_rayDensity_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.signFlip_smul_rayDensity_ne
+
+/-- info: 'CSD.Thermo.fs_redOff_cross_vanish' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_redOff_cross_vanish
+
 -- TH2: the second law as coarse-grained entropy monotonicity. Pinching
 -- (dephasing to the pointer-basis diagonal) never decreases the von Neumann
 -- entropy -- S(rho) <= S(pinch rho) -- via Klein's inequality against the
