@@ -77,10 +77,10 @@ that kind is currently in the corpus's Σ vocabulary.
   (`grep` for `memoryless` returns nothing). Galves–Schmitt is not upstream and formalising it
   would be a research-grade project in its own right, not a brick.
 
-### W3 — `DeIsolationInteraction` has **no witness instance**
+### W3 — `DeIsolationInteraction` had **no witness instance** (✅ closed same day by Q12-a)
 
-`grep` finds only documentation references and the audit pin; no term of the structure is ever
-constructed. That is precisely the defect E5 fixed for E4: an interface whose antecedent is never
+*As found:* `grep` found only documentation references and the audit pin; no term of the structure
+was ever constructed. **Fixed 2026-08-23** — see the Q12-a record below. That is precisely the defect E5 fixed for E4: an interface whose antecedent is never
 shown to be satisfiable. Here it plainly *is* satisfiable — `RecordLayer/BornFibrePartition.lean`
 already proves `volume_bornCell`, `cdfCell_pairwiseDisjoint` and `fibreOutcome_eq_some_iff` on the
 compact fibre `fibreTypicality = volume.restrict (Ico 0 1)` — but nobody has assembled them.
@@ -106,6 +106,25 @@ interface is populated rather than hypothetical.
 * **Value:** removes a live non-vacuity hole of exactly the kind E5 just closed elsewhere.
 * **Honest caveat to record in the module:** the CDF-stacking pointer imposes an **outcome
   order**, so it is a witness of satisfiability, *not* the canonical symmetric mechanism.
+
+> ### ✅ Q12-a EXECUTED 2026-08-23
+>
+> ★★ `RecordLayer.cdfDeIsolationInteraction` — every unit state admits a `DeIsolationInteraction`,
+> so `DeIsolationInteraction.born` now has a **populated** antecedent. `cdfPointer` makes
+> `fibreOutcome` total by sending the leftover to a default outcome; `cdfPointer_preimage` gives the
+> basin exactly (cell, plus the leftover only at the default), `measurable_cdfPointer` follows via
+> `measurable_to_countable'`, and `fibreTypicality_compl_iUnion_bornCell` shows the leftover is null.
+>
+> **The gate did its job in an unexpected direction.** Every containment lemma I started to write —
+> `cdfCell_subset_Ico`, `bornCell_subset_Ico01`, `fibreTypicality_bornCell`,
+> `fibreTypicality_iUnion_bornCell` — **already existed** in `RecordLayer/DeIsolationFlow.lean`. I
+> duplicated four of them before the name clash surfaced, and reverted. The witness needed no new
+> analysis at all: only `cdfPointer`, its preimage, and the null-leftover step. **Grep the
+> neighbouring module before adding lemmas to a mature area**, which is the same
+> probe-don't-assume lesson as E6's rotted wall label, one layer down.
+>
+> Caveats are recorded at the section, in the module header, and on the audit pin: it witnesses
+> **satisfiability only** — arbitrary outcome order, and no dynamics carves the cells.
 
 ### Q12-b — the symmetric race (M)
 
@@ -172,7 +191,7 @@ only if Q12-d is ever written up, since it is the precise statement of why the r
 
 ## 6. Recommendation
 
-Run **Q12-a** (certain, closes a real non-vacuity hole), then **probe** Q12-b before committing.
+~~Run **Q12-a**~~ **done 2026-08-23**. Next: **probe** Q12-b before committing to it.
 Treat Q12-c as the stretch. Leave Q12-d closed with W1 recorded as the reason.
 
 The honest headline for the queue: **Q12's frontier half is blocked by a theorem the corpus now

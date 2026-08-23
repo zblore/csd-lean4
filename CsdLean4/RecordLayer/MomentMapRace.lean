@@ -29,6 +29,13 @@ vector. That is **feature (2)** of the §3c decomposition, and it is what this f
   whole record-layer ladder to the established Born number.
 * `fibreTypicality_bornCell_eq_momentMap` — the fibre typicality of the record event of outcome `i`
   equals the moment-map weight: the record-layer Born rule stated in Kähler/moment-map terms.
+* ★★ `cdfDeIsolationInteraction` (Q12-a, 2026-08-23) — **a witness**: every unit state admits a
+  `DeIsolationInteraction`, so `DeIsolationInteraction.born` is a conditional with a *populated*
+  antecedent. Until this was built the structure had **no instance anywhere in the corpus** — an
+  interface whose satisfiability was never exhibited, the defect `E5` closed for `E4`.
+  ⚠️ It witnesses satisfiability only: CDF stacking imposes an arbitrary outcome **order** (the
+  mechanism `record-layer-plan.md` §3b wants is order-free), and **no dynamics carves these cells**.
+  See `specs/q12-fibre-mechanism-scoping.md`.
 
 ## The STATISTICAL residual is not a wall — it is LLN over the unknown microstate
 
@@ -125,5 +132,109 @@ theorem DeIsolationInteraction.basin_momentMap {ψ : EuclideanSpace ℂ (Fin n)}
     fibreTypicality (D.pointer ⁻¹' {i})
       = ENNReal.ofReal (momentMap (Projectivization.mk ℂ ψ hψ0) i) := by
   rw [D.basin_rate i, bornRate_eq_momentMap ψ hψ0 hψ i]
+
+/-! ### ★ Q12-a: the interface is populated
+
+`DeIsolationInteraction` had **no instance** anywhere in the corpus — an interface whose antecedent
+was never shown satisfiable, the same defect the equilibration arc's `E5` closed for `E4`. It is
+satisfiable, and the pieces were already landed in `BornFibrePartition`; this section assembles
+them.
+
+⚠️ **What this is and is not.** It witnesses *satisfiability*, so the Born conclusion
+`DeIsolationInteraction.born` is not vacuous. It is **not** the canonical mechanism: CDF stacking
+imposes an arbitrary **outcome order**, whereas the mechanism §3b asks for is order-free (the
+symmetric race). And no *dynamics* carves these cells — they are defined, not flowed to. Deriving
+them from a de-isolation flow is `Q12-d`, which `specs/q12-fibre-mechanism-scoping.md` records as
+blocked: the mixing hypothesis it needs is unsatisfiable by any flow the corpus defines. -/
+
+/-- The **CDF pointer**: read the outcome off the fibre point, sending the leftover (a null set)
+to a default outcome so that the pointer is total, as the interface requires. -/
+noncomputable def cdfPointer (r : Fin n → ℝ) (i₀ : Fin n) (ξ : ℝ) : Fin n :=
+  (fibreOutcome r ξ).getD i₀
+
+lemma cdfPointer_preimage (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (i₀ i : Fin n) :
+    cdfPointer r i₀ ⁻¹' {i}
+      = cdfCell r i ∪ (if i = i₀ then (⋃ j, cdfCell r j)ᶜ else ∅) := by
+  ext ξ
+  simp only [Set.mem_preimage, Set.mem_singleton_iff, cdfPointer, Set.mem_union]
+  cases hopt : fibreOutcome r ξ with
+  | none =>
+      have hnone : ∀ j, ξ ∉ cdfCell r j := (fibreOutcome_eq_none_iff r ξ).mp hopt
+      simp only [Option.getD_none]
+      constructor
+      · rintro rfl
+        refine Or.inr ?_
+        rw [if_pos rfl, Set.mem_compl_iff, Set.mem_iUnion]
+        rintro ⟨j, hj⟩
+        exact hnone j hj
+      · rintro (hmem | hmem)
+        · exact absurd hmem (hnone i)
+        · by_cases hii : i = i₀
+          · exact hii.symm
+          · rw [if_neg hii] at hmem
+            exact absurd hmem (by simp)
+  | some j =>
+      have hj : ξ ∈ cdfCell r j := (fibreOutcome_eq_some_iff r hr ξ j).mp hopt
+      have hin : ξ ∈ ⋃ k, cdfCell r k := Set.mem_iUnion.mpr ⟨j, hj⟩
+      simp only [Option.getD_some]
+      constructor
+      · rintro rfl
+        exact Or.inl hj
+      · rintro (hmem | hmem)
+        · have hsome := (fibreOutcome_eq_some_iff r hr ξ i).mpr hmem
+          rw [hopt, Option.some_inj] at hsome
+          exact hsome
+        · by_cases hii : i = i₀
+          · rw [if_pos hii, Set.mem_compl_iff] at hmem
+            exact absurd hin hmem
+          · rw [if_neg hii] at hmem
+            exact absurd hmem (by simp)
+
+lemma measurable_cdfPointer (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (i₀ : Fin n) :
+    Measurable (cdfPointer r i₀) := by
+  refine measurable_to_countable' (fun i => ?_)
+  rw [cdfPointer_preimage r hr i₀ i]
+  refine (measurableSet_cdfCell r i).union ?_
+  by_cases hii : i = i₀
+  · rw [if_pos hii]
+    exact (MeasurableSet.iUnion (fun j => measurableSet_cdfCell r j)).compl
+  · rw [if_neg hii]
+    exact MeasurableSet.empty
+
+/-- The leftover — the fibre points lying in no cell — is `fibreTypicality`-null for a unit state,
+because the cells sit inside `[0,1)` (`iUnion_bornCell_subset_Ico01`) and already carry its whole
+measure (`fibreTypicality_iUnion_bornCell`). -/
+lemma fibreTypicality_compl_iUnion_bornCell (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1) :
+    fibreTypicality ((⋃ j, cdfCell (bornRate ψ) j)ᶜ) = 0 := by
+  have hmeas : MeasurableSet (⋃ j, cdfCell (bornRate ψ) j) :=
+    MeasurableSet.iUnion (fun j => measurableSet_cdfCell _ j)
+  have htot : fibreTypicality (⋃ j, cdfCell (bornRate ψ) j) = 1 :=
+    fibreTypicality_iUnion_bornCell ψ hψ
+  rw [measure_compl hmeas (by rw [htot]; exact ENNReal.one_ne_top), htot, measure_univ, tsub_self]
+
+/-- ★★ **The witness.** Every unit state admits a `DeIsolationInteraction`, so
+`DeIsolationInteraction.born` is a conditional with a **populated** antecedent. The pointer is the
+CDF readout; its basins are the Born cells, whose fibre typicality is the Born weight
+(`fibreTypicality_bornCell`), and the leftover is null
+(`fibreTypicality_compl_iUnion_bornCell`).
+
+See the section note above for what this does *not* settle. -/
+noncomputable def cdfDeIsolationInteraction (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1)
+    (i₀ : Fin n) : DeIsolationInteraction ψ where
+  pointer := cdfPointer (bornRate ψ) i₀
+  measurable_pointer := measurable_cdfPointer _ (bornRate_nonneg ψ) i₀
+  basin_rate := by
+    intro i
+    have hcell : fibreTypicality (cdfCell (bornRate ψ) i) = ENNReal.ofReal (bornRate ψ i) :=
+      fibreTypicality_bornCell ψ hψ i
+    rw [cdfPointer_preimage _ (bornRate_nonneg ψ) i₀ i]
+    by_cases hii : i = i₀
+    · rw [if_pos hii]
+      refine le_antisymm ?_ ?_
+      · refine le_trans (measure_union_le _ _) ?_
+        rw [hcell, fibreTypicality_compl_iUnion_bornCell ψ hψ, add_zero]
+      · rw [← hcell]
+        exact measure_mono Set.subset_union_left
+    · rw [if_neg hii, Set.union_empty, hcell]
 
 end CSD.RecordLayer

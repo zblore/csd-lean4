@@ -2044,6 +2044,24 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.DeIsolationInteraction.born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.DeIsolationInteraction.born
 
+-- Q12-a (2026-08-23): a WITNESS for that interface.  Until this was built DeIsolationInteraction had
+-- NO instance anywhere in the corpus -- an interface whose satisfiability was never exhibited, the
+-- same defect E5 closed for E4.  cdfDeIsolationInteraction assembles the already-landed pieces:
+-- the CDF pointer (fibreOutcome, made total by sending the leftover to a default outcome), its
+-- basins are the Born cells (fibreTypicality_bornCell), and the leftover is null
+-- (fibreTypicality_compl_iUnion_bornCell, from fibreTypicality_iUnion_bornCell = 1).
+-- ⚠️ WITNESSES SATISFIABILITY ONLY.  CDF stacking imposes an arbitrary outcome ORDER, whereas the
+-- mechanism record-layer-plan.md §3b asks for is order-free; and NO DYNAMICS carves these cells --
+-- they are defined, not flowed to.  Deriving them from a de-isolation flow is Q12-d, which
+-- specs/q12-fibre-mechanism-scoping.md records as BLOCKED: the mixing hypothesis it needs is
+-- unsatisfiable by any flow the corpus defines (E6).  Reading this pin as "the dynamical problem is
+-- solved" is exactly the inference MomentMapRace's 2026-07-30 correction note exists to block.
+/-- info: 'CSD.RecordLayer.cdfDeIsolationInteraction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.cdfDeIsolationInteraction
+
+/-- info: 'CSD.RecordLayer.fibreTypicality_compl_iUnion_bornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_compl_iUnion_bornCell
+
 -- Measurement (record layer / MD-1, 2026-07-25): the architecture in one object — context (measurement
 -- type, fixes the basins/probabilities) + unknown microstate ξ → outcome (the basin it occupies) →
 -- record. outcome_eq_some_iff (microstate selects its basin), record_of_mem_basin (combined result IS

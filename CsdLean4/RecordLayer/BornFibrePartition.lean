@@ -177,4 +177,13 @@ theorem volume_iUnion_bornCell_unit (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖
     volume (⋃ i, cdfCell (bornRate ψ) i) = 1 := by
   rw [volume_iUnion_cdfCell _ (bornRate_nonneg ψ), sum_bornRate_unit ψ hψ, ENNReal.ofReal_one]
 
+/-- `fibreOutcome` is `none` exactly off every cell — the companion of
+`fibreOutcome_eq_some_iff`, and what identifies the leftover set as a complement. -/
+theorem fibreOutcome_eq_none_iff (r : Fin n → ℝ) (ξ : ℝ) :
+    fibreOutcome r ξ = none ↔ ∀ i, ξ ∉ cdfCell r i := by
+  unfold fibreOutcome
+  split
+  · next h => exact ⟨by simp, fun hall => absurd h.choose_spec (hall _)⟩
+  · next h => exact ⟨fun _ i hi => h ⟨i, hi⟩, fun _ => rfl⟩
+
 end CSD.RecordLayer
