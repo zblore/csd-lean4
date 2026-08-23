@@ -1,6 +1,6 @@
 # Q12-c2 — a route to "the exponential clock law is forced"
 
-**Status: a proof on paper, and a mapped Lean project. No Lean written.** Everything below is a
+**Status: a proof on paper, and a mapped Lean project. Step 3 is now Lean; the rest is not.** Everything below is a
 route memo. Nothing here is a corpus theorem, and the `record-layer-plan.md` §3c claim it targets
 stays unproved until it is.
 
@@ -91,7 +91,7 @@ keep.**
 |---|---|---|
 | 1 | the `k`-clock race probability for *general* iid clocks | needs the product-measure setup of `Q12-b` redone without the exponential assumption — the fiddliest part |
 | 2 | probability integral transform | standard; check Mathlib coverage |
-| 3 | Hausdorff determinacy on `[0,1]` | **assemblable**: `polynomialFunctions_closure_eq_top` (Weierstrass) + `ext_of_forall_integral_eq_of_IsFiniteMeasure` |
+| 3 | Hausdorff determinacy on `[0,1]` | ✅ **DONE 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq` (`Mathlib/MeasureTheory/MomentDeterminacy.lean`). Assembled from Weierstrass + `ext_of_forall_integral_eq_of_IsFiniteMeasure`, as predicted |
 | 3′ | two increasing functions of `U` with equal law are equal | elementary; quantile argument |
 | 4 | substitution | trivial |
 
@@ -112,6 +112,20 @@ determinacy, which Mathlib provisions but does not state.
 * **Two-clock + Mellin.** The route that made this look like research. Strictly harder; skip.
 
 ---
+
+## 6a. Progress
+
+* ✅ **Step 3 landed 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq`, exactly the
+  assembly this memo predicted (Weierstrass + `ext_of_forall_integral_eq_of_IsFiniteMeasure`, an
+  elementary three-term triangle inequality). It is Cat-1 and reusable well beyond this route.
+* ⏳ **Next increment**: restate determinacy for measures on `ℝ` supported in `[0,1]` (the subtype
+  form is awkward to apply to laws of `[0,1]`-valued variables), then steps 2, 3′ and 4 — which are
+  elementary — giving the characterisation *with the moment identity as hypothesis*. That is a
+  complete quotable theorem on its own.
+* ⏳ **Then step 1**, the expensive half: the `k`-clock race for *general* iid clocks, i.e. Q12-b's
+  product-measure setup without the exponential assumption.
+
+⚠️ Until step 1 lands, the corpus has the *characterisation*, not §3c's claim.
 
 ## 7. Recommendation
 

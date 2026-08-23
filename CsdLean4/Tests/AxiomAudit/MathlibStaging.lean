@@ -2443,4 +2443,21 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.HasCorrelationDecay.upTo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.HasCorrelationDecay.upTo
 
+-- Q12-c2 step 3 (2026-08-23, Mathlib/MeasureTheory/MomentDeterminacy.lean): HAUSDORFF MOMENT
+-- DETERMINACY on a compact interval -- two finite Borel measures with the same moment sequence are
+-- equal.  Mathlib provisions both halves (polynomialFunctions_closure_eq_top and
+-- ext_of_forall_integral_eq_of_IsFiniteMeasure) but does not state the conclusion.
+-- This is the key assembly named by specs/q12c-exponential-characterisation-route.md: that memo
+-- turns the race property into a moment sequence on [0,1] via the k-CLOCK family, and determinacy
+-- is what converts it back into a distributional identity.
+-- Proof is elementary: equal moments give equal integrals of polynomials by linearity; polynomials
+-- are uniformly dense; the integral against a finite measure is sup-norm-Lipschitz; so equality
+-- passes to every continuous function and then to the measures.  A three-term triangle inequality,
+-- no functional-analytic packaging.
+-- ⚠️ This is ONE STEP of Q12-c2, not Q12-c2.  §3c's "the exponential fibre measure is FORCED"
+-- remains unproved in the corpus; the remaining chain (the general iid-clock race, the probability
+-- integral transform, and monotone-equal-in-law) is mapped in the route memo.
+/-- info: 'MeasureTheory.ext_of_forall_integral_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.ext_of_forall_integral_pow_eq
+
 end CSD.Tests.AxiomAudit

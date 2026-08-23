@@ -434,6 +434,7 @@ public import CsdLean4.RecordLayer.OutcomeBasin
 public import CsdLean4.RecordLayer.DynamicMeasurementClosure
 public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
 public import CsdLean4.Mathlib.MeasureTheory.CellPointer
+public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
