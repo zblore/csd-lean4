@@ -240,6 +240,22 @@ times are exponential. If provable, the fibre law stops being a free choice and 
 >
 > **Recommendation:** leave Q12-c unstarted. Record (c2) as research alongside `Q12-d`; take (c1)
 > only if the narrowing is wanted for its own sake, with the labelling agreed in advance.
+>
+> ### ⚠️ The "(c2) is research" verdict above is SUPERSEDED (same day)
+>
+> It was reached by looking only at the **two-clock** condition, where it is correct — the Mellin
+> transform there constrains only the even part of `log E[e^{s log ξ}]`, which is genuinely a
+> moment-problem shape. **With the `k`-clock family the problem collapses**: instantiating the race
+> at rates `(1, c, c, …, c)` gives `E[G(cξ)^k] = 1/(1+kc)`, turning the integral equation into a
+> moment sequence on `[0,1]`, where moments determine the law. Four elementary steps then finish,
+> with no Cauchy equation and no Laplace inversion.
+>
+> Written up in **`specs/q12c-exponential-characterisation-route.md`**: a proof on paper plus a
+> mapped Lean project at **L**, needing no mathematics Mathlib lacks (Weierstrass +
+> `ext_of_forall_integral_eq_of_IsFiniteMeasure` give the determinacy step). One real caveat: it
+> needs races with arbitrarily many clocks, so what is forced is *the exponential law given that a
+> single clock law serves every `n`* — which is the measurement-independence CSD has already
+> committed to in `sigma-fibre-contextuality.md`.
 
 ### Q12-d — the genuine frontier: derive the race from a deterministic flow (**BLOCKED**, foundations)
 
