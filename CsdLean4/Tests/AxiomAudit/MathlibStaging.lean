@@ -2460,4 +2460,11 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.ext_of_forall_integral_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.ext_of_forall_integral_pow_eq
 
+-- ...and the form the route actually consumes: measures on R concentrated on the interval,
+-- transferred through Subtype.val by map_comap_subtype_coe.  The subtype statement is the natural
+-- one to PROVE; this is the natural one to APPLY, since the laws one meets are laws of
+-- [a,b]-valued random variables and so live on R.
+/-- info: 'MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl
+
 end CSD.Tests.AxiomAudit

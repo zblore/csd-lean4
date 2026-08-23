@@ -133,4 +133,46 @@ theorem ext_of_forall_integral_pow_eq {μ ν : Measure (Set.Icc a b)}
   refine ext_of_forall_integral_eq_of_IsFiniteMeasure (fun f => ?_)
   exact hcont f.toContinuousMap
 
+/-! ### The form actually used: measures on `ℝ` concentrated on the interval
+
+The subtype statement above is the natural one to prove but an awkward one to apply, since the
+laws one meets in practice are laws of `[a,b]`-valued random variables and so live on `ℝ`. This
+transfers it. -/
+
+theorem ext_of_forall_integral_pow_eq_of_null_compl {μ ν : Measure ℝ}
+    [IsFiniteMeasure μ] [IsFiniteMeasure ν]
+    (hμ : μ (Set.Icc a b)ᶜ = 0) (hν : ν (Set.Icc a b)ᶜ = 0)
+    (h : ∀ k : ℕ, ∫ x, x ^ k ∂μ = ∫ x, x ^ k ∂ν) : μ = ν := by
+  have hmeas : MeasurableSet (Set.Icc a b) := measurableSet_Icc
+  have hemb : MeasurableEmbedding ((↑) : Set.Icc a b → ℝ) :=
+    MeasurableEmbedding.subtype_coe hmeas
+  -- the comaps are finite
+  have hfin : ∀ ρ : Measure ℝ, IsFiniteMeasure ρ →
+      IsFiniteMeasure (Measure.comap ((↑) : Set.Icc a b → ℝ) ρ) := by
+    intro ρ hρ
+    have := hρ
+    refine ⟨?_⟩
+    rw [hemb.comap_apply]
+    exact lt_of_le_of_lt (measure_mono (Set.subset_univ _)) (measure_lt_top ρ _)
+  have hfinμ := hfin μ inferInstance
+  have hfinν := hfin ν inferInstance
+  -- each measure is the pushforward of its comap
+  have hback : ∀ ρ : Measure ℝ, ρ (Set.Icc a b)ᶜ = 0 →
+      (Measure.comap ((↑) : Set.Icc a b → ℝ) ρ).map (↑) = ρ := by
+    intro ρ hρ
+    rw [map_comap_subtype_coe hmeas]
+    exact Measure.restrict_eq_self_of_ae_mem (by rw [ae_iff]; exact hρ)
+  -- moments transfer through the embedding
+  have hmom : ∀ (ρ : Measure ℝ), ρ (Set.Icc a b)ᶜ = 0 → ∀ k : ℕ,
+      ∫ x : Set.Icc a b, (x : ℝ) ^ k ∂(Measure.comap ((↑) : Set.Icc a b → ℝ) ρ)
+        = ∫ x, x ^ k ∂ρ := by
+    intro ρ hρ k
+    rw [← hemb.integral_map (fun y : ℝ => y ^ k), hback ρ hρ]
+  refine (hback μ hμ) ▸ (hback ν hν) ▸ ?_
+  congr 1
+  have := hfinμ
+  have := hfinν
+  exact ext_of_forall_integral_pow_eq (fun k => by
+    rw [hmom μ hμ k, hmom ν hν k, h k])
+
 end MeasureTheory

@@ -118,10 +118,23 @@ determinacy, which Mathlib provisions but does not state.
 * ✅ **Step 3 landed 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq`, exactly the
   assembly this memo predicted (Weierstrass + `ext_of_forall_integral_eq_of_IsFiniteMeasure`, an
   elementary three-term triangle inequality). It is Cat-1 and reusable well beyond this route.
-* ⏳ **Next increment**: restate determinacy for measures on `ℝ` supported in `[0,1]` (the subtype
-  form is awkward to apply to laws of `[0,1]`-valued variables), then steps 2, 3′ and 4 — which are
-  elementary — giving the characterisation *with the moment identity as hypothesis*. That is a
-  complete quotable theorem on its own.
+* ✅ **The `ℝ`-supported restatement landed too** —
+  `ext_of_forall_integral_pow_eq_of_null_compl`, transferring through `Subtype.val` with
+  `map_comap_subtype_coe`. This is the form the route actually consumes.
+* ⚠️ **A fork discovered while building, which the four-step sketch hid.** Step 3′ ("both are
+  increasing functions of the same `U`, so they agree") is *not* a one-liner, and there are two
+  ways past it:
+  * **(i) the monotone route** — two antitone functions of the same variable with equal laws are
+    equal a.e. This is decreasing-rearrangement uniqueness; Mathlib has no quantile machinery for
+    it, so it would be built from scratch (order + topology fiddling, no deep analysis).
+  * **(ii) the two-dimensional route** — use the *joint* moments. The `k`-clock family also gives
+    `E[G(c₁ξ)^{k₁} G(c₂ξ)^{k₂}] = 1/(1 + k₁c₁ + k₂c₂)`, so the joint law of `(G(cξ), G(ξ))` matches
+    that of `(U^c, U)`, which is **supported on a graph** — giving `G(cξ) = G(ξ)^c` a.s. directly,
+    with no monotonicity argument at all. The cost is 2-D determinacy on `[0,1]²`, i.e. redoing the
+    assembly above with general Stone–Weierstrass (the coordinate algebra separates points) instead
+    of Weierstrass.
+  **Route (ii) is the better bet**: it replaces bespoke order theory with one more instance of an
+  assembly already done once, and it yields the a.e. identity in the form step 4 wants.
 * ⏳ **Then step 1**, the expensive half: the `k`-clock race for *general* iid clocks, i.e. Q12-b's
   product-measure setup without the exponential assumption.
 
