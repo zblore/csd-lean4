@@ -369,7 +369,8 @@ CsdLean4/RecordLayer/PovmDynamics.lean:2
 CsdLean4/RecordLayer/PovmSectorBorn.lean:1
 CsdLean4/RecordLayer/RecordLayerClosure.lean:1
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean:2
-CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2"
+CsdLean4/Tests/AxiomAudit/SigmaLayer.lean:2
+CsdLean4/Thermo/Equilibration.lean:1"
 
 # --------------------------------------------- (8b) SCOPE-EXPIRY LEDGER --------
 # Closes check (8)'s documented blind spot (BACKLOG D1, closed 2026-08-06): (8) fires
@@ -403,7 +404,6 @@ CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
 CsdLean4/LF4/PhaseLift.lean|none
 CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/RecordLayer/ApproxProjectability.lean|none
-CsdLean4/SigmaLayer/FiniteQMClosure.lean|none
 CsdLean4/RecordLayer/MeasurementCapstone.lean|none
 CsdLean4/RecordLayer/MixedLuders.lean|none
 CsdLean4/RecordLayer/MixedSwap.lean|none
@@ -413,8 +413,10 @@ CsdLean4/RecordLayer/PointerLudersMarginal.lean|none
 CsdLean4/RecordLayer/PovmDynamics.lean|none
 CsdLean4/RecordLayer/PovmSectorBorn.lean|none
 CsdLean4/RecordLayer/RecordLayerClosure.lean|none
+CsdLean4/SigmaLayer/FiniteQMClosure.lean|none
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean|none
-CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none"
+CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none
+CsdLean4/Thermo/Equilibration.lean|Q12"
 # WAIT LEDGER (why each tag):
 #   SyndromeCollapse|none — was tagged E1; ShorNine.lean landed the concatenated code
 #     (2026-08-13) and the boundary was superseded at source, so the tag retired exactly

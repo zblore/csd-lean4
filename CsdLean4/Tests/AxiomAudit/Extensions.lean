@@ -273,6 +273,16 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary
 
+-- Q12-d route 2 (2026-08-23, Thermo/Equilibration.lean): the statement E6 does NOT block.
+-- blockPop_timeAverage_le_of_finiteHorizon -- if the population's correlations are within eps on
+-- lags BELOW T, the time average at horizon T sits within (2/T) sum_{u<T} eps u of the
+-- maximally-mixed value.  No summability, no limit, and therefore no conflict with E6.
+-- E4's conclusion is NOT lost for finite-dimensional unitary dynamics; its ASYMPTOTIC FORM is.
+-- ⚠️ Still conditional and still not exhibited for any Sigma-flow.  Q12-d as originally scoped
+-- (derive the race from a MIXING flow) remains blocked -- see q12-fibre-mechanism-scoping.md W1.
+/-- info: 'CSD.Thermo.blockPop_timeAverage_le_of_finiteHorizon' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.blockPop_timeAverage_le_of_finiteHorizon
+
 -- E2 (2026-08-23, Thermo/EnergyWindow.lean), RE-SCOPED BY E3's VERDICT. The original "E1 on
 -- the unit sphere of a spectral sector" is refuted (an exact sector is Fubini-Study-NULL,
 -- SectorRestriction.lean), so the surviving route is a POSITIVE-MEASURE ENERGY WINDOW.

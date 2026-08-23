@@ -2423,4 +2423,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ProbabilityTheory.raceCell_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.raceCell_pairwiseDisjoint
 
+-- Q12-d ROUTE 2 (2026-08-23): the FINITE-HORIZON antecedent, which E6 does not reach.
+-- HasCorrelationDecayUpTo bounds the correlations only on lags BELOW T.  E6
+-- (not_hasCorrelationDecay_blockPop_of_unitary) kills the asymptotic antecedent for every unitary
+-- flow -- its powers recur, so the correlations recur -- but that argument needs the bound at
+-- ARBITRARILY LARGE lags and says nothing over a bounded window.  A unitary flow on a large space
+-- can decorrelate for a very long time before recurring, which is what a physical environment
+-- does, and the finite-horizon estimate is exactly what survives.
+-- The weakening was nearly free: hdec was only ever applied at s, t in Finset.range T, so binding
+-- the membership hypotheses (previously discarded) sufficed.  HasCorrelationDecay.upTo makes the
+-- asymptotic theorems corollaries, so nothing downstream changed.
+-- ⚠️ STILL CONDITIONAL AND STILL NOT EXHIBITED: nothing shows any particular Sigma-flow has small
+-- eps on lags below T.  What changed is that the hypothesis is no longer PROVABLY UNSATISFIABLE,
+-- which is what E6 established for the asymptotic version.  Q12-d as originally scoped -- derive
+-- the race from a MIXING flow -- remains blocked (specs/q12-fibre-mechanism-scoping.md, W1).
+/-- info: 'MeasureTheory.integral_birkhoffAverage_sub_sq_le_cesaro' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.integral_birkhoffAverage_sub_sq_le_cesaro
+
+/-- info: 'MeasureTheory.HasCorrelationDecay.upTo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.HasCorrelationDecay.upTo
+
 end CSD.Tests.AxiomAudit

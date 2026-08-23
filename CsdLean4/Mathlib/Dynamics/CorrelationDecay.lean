@@ -92,7 +92,7 @@ This is the whole combinatorial content of the Cesàro estimate below: within a 
 `t ↦ Nat.dist s t` is injective on each side of the diagonal separately (not globally — the
 truncated subtraction `t - s` collapses the whole left half to `0`), so the row splits into two
 injective pieces, each of which reindexes into `range T`. -/
-lemma sum_sum_nat_dist_le {ε : ℕ → ℝ} (hε : ∀ u, 0 ≤ ε u) (T : ℕ) :
+lemma sum_sum_nat_dist_le {ε : ℕ → ℝ} {T : ℕ} (hε : ∀ u, u < T → 0 ≤ ε u) :
     ∑ s ∈ Finset.range T, ∑ t ∈ Finset.range T, ε (Nat.dist s t)
       ≤ 2 * T * ∑ u ∈ Finset.range T, ε u := by
   classical
@@ -100,7 +100,8 @@ lemma sum_sum_nat_dist_le {ε : ℕ → ℝ} (hε : ∀ u, 0 ≤ ε u) (T : ℕ)
       ∑ a ∈ A, ε (g a) ≤ ∑ u ∈ Finset.range T, ε u := by
     intro A g hinj hlt
     rw [← Finset.sum_image hinj]
-    refine Finset.sum_le_sum_of_subset_of_nonneg ?_ (fun i _ _ => hε i)
+    refine Finset.sum_le_sum_of_subset_of_nonneg ?_
+      (fun i hi _ => hε i (Finset.mem_range.mp hi))
     intro u hu
     obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp hu
     exact Finset.mem_range.mpr (hlt a ha)
@@ -159,6 +160,33 @@ lemma HasCorrelationDecay.nonneg {μ : Measure X} {Φ : X → X} {f : X → ℝ}
   rw [show Nat.dist 0 u = u by simp [Nat.dist]] at hu
   exact le_trans (abs_nonneg _) hu
 
+/-- **Finite-horizon correlation decay** — the antecedent weakened to a bounded window of lags.
+
+This is the escape route from the arc's own no-go. `E6`
+(`CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary`) shows that no unitary flow on a
+finite-dimensional space can satisfy `HasCorrelationDecay` with a summable envelope: its powers
+recur, so the correlations recur too. **That argument needs the bound at arbitrarily large lags.**
+Over a bounded window it says nothing, and a unitary flow on a large space can decorrelate for a
+very long time before recurring — which is what a physical environment actually does.
+
+So the theorems below are the honest form for finite-dimensional dynamics: a statement *at horizon
+`T`*, with no asymptotics and no conflict with `E6`. See `specs/q12-fibre-mechanism-scoping.md`
+(`W1`, and `Q12-d` route 2). -/
+def HasCorrelationDecayUpTo (μ : Measure X) (Φ : X → X) (f : X → ℝ) (ε : ℕ → ℝ) (T : ℕ) : Prop :=
+  ∀ s t : ℕ, s < T → t < T →
+    |(∫ x, f (Φ^[s] x) * f (Φ^[t] x) ∂μ) - (∫ y, f y ∂μ) ^ 2| ≤ ε (Nat.dist s t)
+
+/-- Asymptotic decay is finite-horizon decay at every horizon. -/
+lemma HasCorrelationDecay.upTo {μ : Measure X} {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ}
+    (h : HasCorrelationDecay μ Φ f ε) (T : ℕ) : HasCorrelationDecayUpTo μ Φ f ε T :=
+  fun s t _ _ => h s t
+
+lemma HasCorrelationDecayUpTo.nonneg {μ : Measure X} {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ} {T : ℕ}
+    (h : HasCorrelationDecayUpTo μ Φ f ε T) {u : ℕ} (hu : u < T) : 0 ≤ ε u := by
+  have h0 := h 0 u (by omega) hu
+  rw [show Nat.dist 0 u = u by simp [Nat.dist]] at h0
+  exact le_trans (abs_nonneg _) h0
+
 /-! ### ★ The Cesàro estimate -/
 
 /-- ★ **The sharp `L²` Cesàro estimate.** The mean square deviation of the Birkhoff average from
@@ -171,7 +199,7 @@ theorem integral_birkhoffAverage_sub_sq_le {μ : Measure X} [IsProbabilityMeasur
     {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ} {C : ℝ}
     (hΦ : Measurable Φ) (hf : Measurable f) (hC : 0 ≤ C) (hfb : ∀ x, |f x| ≤ C)
     (hmean : ∀ t : ℕ, ∫ x, f (Φ^[t] x) ∂μ = ∫ y, f y ∂μ)
-    (hdec : HasCorrelationDecay μ Φ f ε) {T : ℕ} (hT : 0 < T) :
+    {T : ℕ} (hdec : HasCorrelationDecayUpTo μ Φ f ε T) (hT : 0 < T) :
     ∫ x, (birkhoffAverage ℝ Φ f T x - ∫ y, f y ∂μ) ^ 2 ∂μ
       ≤ ((T : ℝ) ^ 2)⁻¹ * ∑ s ∈ Finset.range T, ∑ t ∈ Finset.range T, ε (Nat.dist s t) := by
   have hT0 : (T : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hT.ne'
@@ -217,9 +245,9 @@ theorem integral_birkhoffAverage_sub_sq_le {μ : Measure X} [IsProbabilityMeasur
   rw [integral_congr_ae (ae_of_all _ hexp), integral_const_mul]
   refine mul_le_mul_of_nonneg_left ?_ (by positivity)
   rw [integral_finsetSum _ (fun s _ => integrable_finsetSum _ (fun t _ => hintd s t))]
-  refine Finset.sum_le_sum (fun s _ => ?_)
+  refine Finset.sum_le_sum (fun s hs => ?_)
   rw [integral_finsetSum _ (fun t _ => hintd s t)]
-  refine Finset.sum_le_sum (fun t _ => ?_)
+  refine Finset.sum_le_sum (fun t ht => ?_)
   have hcov : ∫ x, (f (Φ^[s] x) - m) * (f (Φ^[t] x) - m) ∂μ
       = (∫ x, f (Φ^[s] x) * f (Φ^[t] x) ∂μ) - m ^ 2 := by
     have hpt : ∀ x, (f (Φ^[s] x) - m) * (f (Φ^[t] x) - m)
@@ -239,7 +267,7 @@ theorem integral_birkhoffAverage_sub_sq_le {μ : Measure X} [IsProbabilityMeasur
       integral_sub i1 i2, integral_const_mul, integral_const_mul, hmean s, hmean t]
     ring
   rw [hcov]
-  exact le_of_abs_le (hdec s t)
+  exact le_of_abs_le (hdec s t (Finset.mem_range.mp hs) (Finset.mem_range.mp ht))
 
 /-- ★★ **The Cesàro estimate in usable form**: the mean square deviation of the time average
 from the space average is at most `(2/T) Σ_{u<T} ε u`.
@@ -250,14 +278,15 @@ theorem integral_birkhoffAverage_sub_sq_le_cesaro {μ : Measure X} [IsProbabilit
     {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ} {C : ℝ}
     (hΦ : Measurable Φ) (hf : Measurable f) (hC : 0 ≤ C) (hfb : ∀ x, |f x| ≤ C)
     (hmean : ∀ t : ℕ, ∫ x, f (Φ^[t] x) ∂μ = ∫ y, f y ∂μ)
-    (hdec : HasCorrelationDecay μ Φ f ε) {T : ℕ} (hT : 0 < T) :
+    {T : ℕ} (hdec : HasCorrelationDecayUpTo μ Φ f ε T) (hT : 0 < T) :
     ∫ x, (birkhoffAverage ℝ Φ f T x - ∫ y, f y ∂μ) ^ 2 ∂μ
       ≤ 2 * (T : ℝ)⁻¹ * ∑ u ∈ Finset.range T, ε u := by
   have hTpos : (0 : ℝ) < T := by exact_mod_cast hT
   refine (integral_birkhoffAverage_sub_sq_le hΦ hf hC hfb hmean hdec hT).trans ?_
   calc ((T : ℝ) ^ 2)⁻¹ * ∑ s ∈ Finset.range T, ∑ t ∈ Finset.range T, ε (Nat.dist s t)
       ≤ ((T : ℝ) ^ 2)⁻¹ * (2 * T * ∑ u ∈ Finset.range T, ε u) :=
-        mul_le_mul_of_nonneg_left (sum_sum_nat_dist_le hdec.nonneg T) (by positivity)
+        mul_le_mul_of_nonneg_left (sum_sum_nat_dist_le (fun u hu => hdec.nonneg hu))
+          (by positivity)
     _ = 2 * (T : ℝ)⁻¹ * ∑ u ∈ Finset.range T, ε u := by
         field_simp
 
@@ -287,7 +316,7 @@ theorem tendsto_integral_birkhoffAverage_sub_sq {μ : Measure X} [IsProbabilityM
     simpa using h1.mul h2
   refine squeeze_zero' (Filter.Eventually.of_forall hnn) ?_ hg
   filter_upwards [Filter.eventually_gt_atTop 0] with T hT
-  exact integral_birkhoffAverage_sub_sq_le_cesaro hΦ hf hC hfb hmean hdec hT
+  exact integral_birkhoffAverage_sub_sq_le_cesaro hΦ hf hC hfb hmean (hdec.upTo T) hT
 
 /-! ### ★ The antecedent has teeth: periodic dynamics cannot satisfy it -/
 

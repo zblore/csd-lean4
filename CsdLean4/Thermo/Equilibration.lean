@@ -204,6 +204,44 @@ theorem not_hasCorrelationDecay_blockPop_of_periodic
         (fun q => blockPop e q a) ε := fun hdec =>
   blockPop_variance_ne p₀ e a hdA (hdec.integral_mul_self_eq_of_periodic hk hper hsum)
 
+/-! ### ★★ Q12-d route 2: the finite-horizon statement, which E6 does *not* reach -/
+
+/-- ★★ **Equilibration at a finite horizon — and this one a unitary Σ-flow can have.**
+
+If the population's correlations are within `ε` on lags *below `T`*, the time average at horizon
+`T` sits within `(2/T) Σ_{u<T} ε u` of the maximally-mixed value. No summability, no limit.
+
+**Why this matters.** `not_hasCorrelationDecay_blockPop_of_unitary` (E6) shows no unitary flow can
+satisfy the *asymptotic* antecedent: its powers recur, so the correlations recur. That argument
+needs the bound **at arbitrarily large lags** and says nothing over a bounded window. A unitary
+flow on a large space can decorrelate for a very long time before recurring — which is what a
+physical environment does — and this theorem is exactly the statement that survives.
+
+So E4's conclusion is *not* lost for finite-dimensional unitary dynamics; what is lost is its
+asymptotic form. `specs/q12-fibre-mechanism-scoping.md` records this as `Q12-d` route 2, the
+recommended escape from `W1`.
+
+⚠️ **Still conditional, and the antecedent is still not exhibited.** Nothing here shows any
+particular Σ-flow has small `ε` on lags below `T`; that is a quantitative estimate about a specific
+dynamics, and it remains open. What has changed is that the hypothesis is no longer *provably
+unsatisfiable* — which is what E6 established for the asymptotic version. -/
+theorem blockPop_timeAverage_le_of_finiteHorizon (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
+    (a : Fin dA) {Φ : CPN N → CPN N} {ε : ℕ → ℝ} {T : ℕ}
+    (hΦ : MeasurePreserving Φ (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
+    (hdec : MeasureTheory.HasCorrelationDecayUpTo (fubiniStudyMeasure p₀) Φ
+      (fun q => blockPop e q a) ε T)
+    (hT : 0 < T) :
+    ∫ p, (birkhoffAverage ℝ Φ (fun q => blockPop e q a) T p - (dB : ℝ) / N) ^ 2
+        ∂(fubiniStudyMeasure p₀)
+      ≤ 2 * (T : ℝ)⁻¹ * ∑ u ∈ Finset.range T, ε u := by
+  have hf : Measurable (fun q : CPN N => blockPop e q a) := blockPop_measurable e a
+  have hmean : ∀ t : ℕ, ∫ p, blockPop e (Φ^[t] p) a ∂(fubiniStudyMeasure p₀)
+      = ∫ q, blockPop e q a ∂(fubiniStudyMeasure p₀) := fun t =>
+    MeasureTheory.integral_iterate_of_measurePreserving hΦ hf.aestronglyMeasurable t
+  have h := MeasureTheory.integral_birkhoffAverage_sub_sq_le_cesaro hΦ.measurable hf
+    zero_le_one (fun p => abs_blockPop_le_one e p a) hmean hdec hT
+  rwa [fs_blockPop_mean p₀ e a] at h
+
 /-! ### E6: the analytic bridge to the general unitary no-go
 
 The three lemmas below are generic (no CSD content) and are **extraction candidates** for

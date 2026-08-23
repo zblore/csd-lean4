@@ -262,6 +262,34 @@ escape routes, in the order I would rate them:
 **Do not open Q12-d as a Lean brick.** It is a foundations question, and the memory note saying so
 was right.
 
+> ### ✅ Q12-d ROUTE 2 EXECUTED 2026-08-23 — the original stays blocked; the escape is taken
+>
+> **Q12-d as scoped is untouched**: no de-isolation coupling is exhibited, and `W1` still blocks the
+> mixing route. What is now done is **route 2**, which `W1` never blocked.
+>
+> `MeasureTheory.HasCorrelationDecayUpTo μ Φ f ε T` bounds the correlations only on lags **below
+> `T`**, and the two Cesàro estimates now take it. ★★
+> `CSD.Thermo.blockPop_timeAverage_le_of_finiteHorizon`: the time average at horizon `T` sits within
+> `(2/T) Σ_{u<T} ε u` of the maximally-mixed value. No summability, no limit.
+>
+> **Why E6 does not reach it.** E6 kills the asymptotic antecedent for every unitary flow — the
+> powers recur, so the correlations recur — but that argument needs the bound at *arbitrarily large*
+> lags. Over a bounded window it says nothing, and a unitary flow on a large space decorrelates for
+> a very long time before recurring. **So E4's conclusion is not lost for finite-dimensional unitary
+> Σ-dynamics; its asymptotic form is.** That is the substantive correction to how `W1` should be
+> read.
+>
+> **The weakening was nearly free** — `hdec` was only ever applied at `s, t ∈ Finset.range T`, so
+> binding the two membership hypotheses (previously discarded as `_`) sufficed.
+> `HasCorrelationDecay.upTo` makes the asymptotic theorems corollaries, so nothing downstream moved.
+> Worth noting for its own sake: the original proof had been *finite-horizon all along*, and only
+> the hypothesis was stated asymptotically.
+>
+> ⚠️ **Still conditional, and still not exhibited.** Nothing shows any particular Σ-flow has small
+> `ε` on lags below `T`; that is a quantitative estimate about specific dynamics and it remains
+> open. What changed is that the hypothesis is no longer *provably unsatisfiable*, which is what E6
+> established for the asymptotic version.
+
 ### Q12-w — optional, cheap: record W1 as a theorem (S)
 
 One-shot application of `integral_mul_self_eq_of_recurrent` + `exists_le_pow_mem_of_compactSpace`
