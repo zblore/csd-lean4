@@ -196,6 +196,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.fs_redOff_normSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_redOff_normSq
 
+-- E2 (2026-08-23, Thermo/EnergyWindow.lean), RE-SCOPED BY E3's VERDICT. The original "E1 on
+-- the unit sphere of a spectral sector" is refuted (an exact sector is Fubini-Study-NULL,
+-- SectorRestriction.lean), so the surviving route is a POSITIVE-MEASURE ENERGY WINDOW.
+-- For a diagonal Hamiltonian the energy expectation is the LINEAR statistic sum lam_k x_k, so
+-- Q24's moments and Chebyshev bound control the window directly.
+-- ★★ energyWindow_ne_zero -- the window provably carries weight once it is wider than the
+-- fluctuation scale (Var/eps^2 < 1). This is exactly the hypothesis E3 made load-bearing, and
+-- it is QUANTITATIVE rather than assumed.
+-- ★★ micro_redOff_cross_vanish + map_signFlip_microMeasure -- THE STRUCTURAL FINDING:
+-- conditioning breaks U(N) invariance, but NOT uniformly. A sign flip fixes every moment
+-- coordinate, hence fixes the energy, hence preserves the window -- so the sign-flip half of
+-- the twirl toolkit survives conditioning and the four-index vanishing still holds. The
+-- permutations and the Hadamard rotation move coordinates and change the energy, so the moment
+-- VALUES do not transfer; conditional moments are a microcanonical density-of-states problem
+-- and are NOT attempted.
+/-- info: 'CSD.Thermo.energyWindow_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.energyWindow_ne_zero
+
+/-- info: 'CSD.Thermo.map_signFlip_microMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.map_signFlip_microMeasure
+
+/-- info: 'CSD.Thermo.micro_redOff_cross_vanish' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.micro_redOff_cross_vanish
+
 -- TH2: the second law as coarse-grained entropy monotonicity. Pinching
 -- (dephasing to the pointer-basis diagonal) never decreases the von Neumann
 -- entropy -- S(rho) <= S(pinch rho) -- via Klein's inequality against the

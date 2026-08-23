@@ -219,6 +219,38 @@ an assertion); what "effective dimension" means (`d_R = finrank ℂ R`, and its 
 **Depends on E3's verdict** for the `μ_L ↔ μ_FS^{H_R}` relation, and inherits its status
 (theorem / hypothesis-carried / posit). Cost M–L.
 
+> ### E2 EXECUTED 2026-08-23 — re-scoped to energy windows, **with a structural finding**
+>
+> `Thermo/EnergyWindow.lean` (new), 3 pins. Built **incrementally** (definitions+positivity,
+> build, then the invariance+vanishing, build) — the corrective from E1's process note, and it
+> worked: no reverts.
+>
+> **The setting.** For a diagonal Hamiltonian the energy expectation is the *linear* statistic
+> `⟨H⟩_p = Σ_k λ_k x_k`, which is exactly what Q24's moments and Chebyshev bound speak about.
+> So the window is controlled by landed results with no new integral.
+>
+> **★★ `energyWindow_ne_zero`** — the window provably carries weight once it is wider than the
+> fluctuation scale (`Var/ε² < 1`). This is precisely the hypothesis E3's verdict made
+> load-bearing, and it is **quantitative**: the width condition is explicit in `λ` and `N`
+> rather than assumed. `microMeasure` (μ_FS conditioned on the window) is then a probability
+> measure.
+>
+> **★★ The structural finding — what conditioning preserves.** Conditioning breaks the `U(N)`
+> invariance Q24's twirl runs on, but **not uniformly**, and the split is sharp:
+> * a **sign flip fixes every moment coordinate** (`momentMap_signFlip`), hence fixes the
+>   energy, hence preserves the window — so `map_signFlip_microMeasure` holds and the entire
+>   sign-flip half of the toolkit survives conditioning. ★★ `micro_redOff_cross_vanish`: the
+>   four-index expectations still vanish **microcanonically**.
+> * the **permutations and the Hadamard rotation move coordinates**, changing the energy, so the
+>   moment *values* (`E[x_i²] = 2/(N(N+1))` etc.) do **not** transfer.
+>
+> That asymmetry is the useful output: it says exactly which half of E1's machinery is available
+> inside a microcanonical shell. Computing conditional moments is a genuinely different problem
+> (microcanonical density of states) and is **not** attempted — recorded, not asserted.
+>
+> **E3's refutation is respected throughout**: nothing here calls the conditioned law "`μ_FS` on
+> the sector", which those theorems disprove.
+
 ---
 
 ## E4 — equilibration as a conditional mixing theorem
