@@ -2318,4 +2318,33 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Reversible.ccxAtMat_lifts_denote' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Reversible.ccxAtMat_lifts_denote
 
+-- E4's generic engine (2026-08-23, Mathlib/Dynamics/CorrelationDecay.lean): quantitative
+-- correlation decay forces time averages to the space average, with an explicit rate.
+-- ROUTE DECISION, and it is the whole feasibility question: the antecedent is stated as an
+-- explicit bound |<(f.Phi^s)(f.Phi^t)> - <f>^2| <= eps(dist s t), NOT as abstract mixing.
+-- Mathlib has no mixing definition and no pointwise Birkhoff, so the abstract route stops at
+-- once. WALL NOTE CORRECTED AT SOURCE: Mathlib DOES have the von Neumann mean ergodic theorem
+-- (ContinuousLinearMap.tendsto_birkhoffAverage_orthogonalProjection); the arc plan said
+-- otherwise and was stale. It is still not what E4 needs -- no rate, and its limit is the
+-- invariant projection, which is the space average only under an ergodicity hypothesis.
+-- sum_sum_nat_dist_le is the only combinatorial content: within a row the map to the distance
+-- is injective on each side of the diagonal SEPARATELY (truncated subtraction collapses the
+-- left half to 0), hence the factor two.
+-- Convergence is L^2. The in-measure form is NOT stated; a.e. convergence is what pointwise
+-- Birkhoff would buy and is not available.
+/-- info: 'MeasureTheory.sum_sum_nat_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.sum_sum_nat_dist_le
+
+/-- info: 'MeasureTheory.integral_birkhoffAverage_sub_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.integral_birkhoffAverage_sub_sq_le
+
+/-- info: 'MeasureTheory.integral_birkhoffAverage_sub_sq_le_cesaro' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.integral_birkhoffAverage_sub_sq_le_cesaro
+
+/-- info: 'MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq
+
+/-- info: 'MeasureTheory.HasCorrelationDecay.of_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.HasCorrelationDecay.of_measurePreserving
+
 end CSD.Tests.AxiomAudit

@@ -72,7 +72,7 @@ And then the assembly those moments were for:
 * The concentration here is **Markov on a quadratic functional**, which is weaker than
   `fs_chebyshev_concentration`. Chebyshev does apply, but to the *linear* statistics: each
   individual population `blockPop e · a` is one of Q24's `∑ λₖ xₖ` and gets the `O(1/N)` rate.
-  Exponential (Lévy) rates remain out of reach — see `specs/MATHLIB-GAPS.md`.
+  Exponential (Lévy) rates remain out of reach — see `MATHLIB-GAPS.md`.
 -/
 
 @[expose] public section
@@ -615,6 +615,59 @@ lemma hsDeviationNormSq_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin d
     Integrable (fun p : CPN N => hsDeviationNormSq e p) (fubiniStudyMeasure p₀) :=
   integrable_finsetSum Finset.univ (fun a _ =>
     integrable_finsetSum Finset.univ (fun a' _ => normSq_hsDeviation_integrable p₀ e a a'))
+
+omit [NeZero N] in
+lemma normSq_hsDeviation_measurable (e : Fin N ≃ Fin dA × Fin dB) (a a' : Fin dA) :
+    Measurable (fun p : CPN N => Complex.normSq (hsDeviation e p a a')) := by
+  by_cases haa : a = a'
+  · subst haa
+    have hrw : (fun p : CPN N => Complex.normSq (hsDeviation e p a a))
+        = fun p => (blockPop e p a - ((dA : ℝ))⁻¹) ^ 2 :=
+      funext (fun p => by rw [hsDeviation_diag, Complex.normSq_ofReal]; ring)
+    rw [hrw]
+    exact ((blockPop_measurable e a).sub measurable_const).pow_const 2
+  · have hrw : (fun p : CPN N => Complex.normSq (hsDeviation e p a a'))
+        = fun p => Complex.normSq (redOff e p a a') :=
+      funext (fun p => by rw [hsDeviation_off e p haa])
+    rw [hrw]
+    exact normSq_redOff_measurable e a a'
+
+omit [NeZero N] in
+lemma hsDeviationNormSq_measurable (e : Fin N ≃ Fin dA × Fin dB) :
+    Measurable (fun p : CPN N => hsDeviationNormSq e p) :=
+  Finset.measurable_sum _ (fun a _ =>
+    Finset.measurable_sum _ (fun a' _ => normSq_hsDeviation_measurable e a a'))
+
+omit [NeZero N] in
+/-- A crude but uniform entry bound, enough to make the functional a bounded observable. -/
+lemma normSq_hsDeviation_le (e : Fin N ≃ Fin dA × Fin dB) (p : CPN N) (a a' : Fin dA) :
+    Complex.normSq (hsDeviation e p a a') ≤ 1 + (dB : ℝ) ^ 2 := by
+  by_cases haa : a = a'
+  · subst haa
+    have hdApos : 0 < dA := Fin.pos a
+    have hdA1 : (1 : ℝ) ≤ (dA : ℝ) := Nat.one_le_cast.mpr hdApos
+    have hd0 : (0 : ℝ) ≤ ((dA : ℝ))⁻¹ := inv_nonneg.mpr (Nat.cast_nonneg dA)
+    have hd1 : ((dA : ℝ))⁻¹ ≤ 1 := by
+      rw [inv_eq_one_div, div_le_one (by linarith : (0 : ℝ) < (dA : ℝ))]
+      exact hdA1
+    rw [hsDeviation_diag, Complex.normSq_ofReal]
+    nlinarith [blockPop_nonneg e p a, blockPop_le_one e p a, sq_nonneg ((dB : ℝ))]
+  · rw [hsDeviation_off e p haa, Complex.normSq_eq_norm_sq]
+    nlinarith [norm_nonneg (redOff e p a a'), norm_redOff_le e p a a']
+
+omit [NeZero N] in
+/-- The Hilbert–Schmidt functional is a **bounded** observable — what lets the equilibration
+engine (`MeasureTheory.HasCorrelationDecay`) accept it. -/
+lemma hsDeviationNormSq_le (e : Fin N ≃ Fin dA × Fin dB) (p : CPN N) :
+    hsDeviationNormSq e p ≤ (dA : ℝ) ^ 2 * (1 + (dB : ℝ) ^ 2) := by
+  calc hsDeviationNormSq e p
+      = ∑ a : Fin dA, ∑ a' : Fin dA, Complex.normSq (hsDeviation e p a a') := rfl
+    _ ≤ ∑ _a : Fin dA, ∑ _a' : Fin dA, (1 + (dB : ℝ) ^ 2) :=
+        Finset.sum_le_sum (fun a _ =>
+          Finset.sum_le_sum (fun a' _ => normSq_hsDeviation_le e p a a'))
+    _ = (dA : ℝ) ^ 2 * (1 + (dB : ℝ) ^ 2) := by
+        simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+        ring
 
 /-- ★ **Canonical typicality, in usable form.** Markov's inequality on the second moment: the
 Fubini–Study probability that a ray's subsystem state sits Hilbert–Schmidt-far from maximally

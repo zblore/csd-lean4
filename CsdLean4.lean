@@ -369,6 +369,7 @@ public import CsdLean4.Thermo.CanonicalTypicality
 public import CsdLean4.Thermo.SectorRestriction
 public import CsdLean4.Thermo.ReducedSecondMoment
 public import CsdLean4.Thermo.EnergyWindow
+public import CsdLean4.Thermo.Equilibration
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
 public import CsdLean4.Thermo.Landauer
@@ -431,6 +432,7 @@ public import CsdLean4.RecordLayer.OutcomeField
 public import CsdLean4.RecordLayer.OutcomeBasin
 public import CsdLean4.RecordLayer.DynamicMeasurementClosure
 public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
+public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders

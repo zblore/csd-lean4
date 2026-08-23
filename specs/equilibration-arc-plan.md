@@ -290,8 +290,21 @@ an assertion); what "effective dimension" means (`d_R = finrank ℂ R`, and its 
 by that decay." **Explicitly conditional; mixing is never proved.**
 
 **Wall check — and a route decision that matters.** Mathlib has `Ergodic` as a structure but
-**no mixing definition, no mean ergodic theorem, and no pointwise Birkhoff** (the Birkhoff row
-in `MATHLIB-GAPS.md`, re-verified standing 2026-08-22). Therefore:
+**no mixing definition and no pointwise Birkhoff** (the Birkhoff row in `MATHLIB-GAPS.md`,
+re-verified standing 2026-08-22). Therefore:
+
+> ⚠️ **Correction 2026-08-23, found while executing E4.** This note originally also said "no mean
+> ergodic theorem". **That was wrong**: Mathlib has the von Neumann mean ergodic theorem in
+> `Mathlib/Analysis/InnerProductSpace/MeanErgodic.lean`
+> (`ContinuousLinearMap.tendsto_birkhoffAverage_orthogonalProjection`), and a whole
+> `Mathlib/Dynamics/BirkhoffSum/` directory with `birkhoffSum`/`birkhoffAverage`. The route
+> decision below is **unaffected, and for a reason worth recording**: von Neumann gives *no rate*,
+> and its limit is the orthogonal projection onto the invariant subspace — which equals the space
+> average only under an *ergodicity* hypothesis we are not entitled to. Quantitative correlation
+> decay delivers both the rate and the identification of the limit. So the right conclusion was
+> reached from a partly wrong premise; another instance of the "wall labels rot" lesson (Q16, MG-5).
+> `birkhoffAverage` *is* reused rather than redefined.
+
 * **Do not** state the antecedent as abstract mixing and route through ergodic theory — that
   path hits the recorded Birkhoff wall immediately.
 * **Do** state the antecedent as **quantitative correlation decay**
@@ -302,6 +315,49 @@ This is the difference between a feasible M–L brick and a blocked one.
 **Contribution claim, stated carefully.** The value is converting equilibration from a
 dephasing statement into an ergodic-theoretic one with an available toolkit — *not* proving
 that any particular Σ mixes. Prose must carry the hypothesis every time (see E5).
+
+> ### E4 EXECUTED 2026-08-23 — **done, as a conditional**
+>
+> Two modules. The generic engine is **`CsdLean4/Mathlib/Dynamics/CorrelationDecay.lean`**
+> (Cat-1, 5 pins, nothing CSD in it):
+>
+> * `HasCorrelationDecay μ Φ f ε` — the antecedent, as the explicit two-index bound
+>   `|⟨(f∘Φ^s)(f∘Φ^t)⟩ − ⟨f⟩²| ≤ ε (Nat.dist s t)`;
+> * `sum_sum_nat_dist_le` — the only combinatorial content, and the source of the factor two:
+>   within a row, `t ↦ Nat.dist s t` is injective on each side of the diagonal **separately**
+>   (not globally — truncated subtraction collapses the left half to `0`), so the row splits
+>   into two injective pieces that each reindex into `range T`;
+> * ★ `integral_birkhoffAverage_sub_sq_le` (sharp, double-sum form) →
+>   ★★ `integral_birkhoffAverage_sub_sq_le_cesaro`: `E[(A_T f − ⟨f⟩)²] ≤ (2/T) Σ_{u<T} ε u`;
+> * ★★ `tendsto_integral_birkhoffAverage_sub_sq` — summable envelope ⇒ **`L²` convergence** of
+>   the time averages to the space average;
+> * `integral_iterate_of_measurePreserving` + `HasCorrelationDecay.of_measurePreserving` — the
+>   bridge from a measure-preserving map plus a **one-lag** bound, which is the form a physical
+>   estimate actually produces.
+>
+> **A design point that paid off.** The analytic core takes mean-stationarity (`hmean`) and the
+> two-index decay as *bare hypotheses*, with no `MeasurePreserving` anywhere; the dynamics enters
+> only through the two bridge lemmas. That kept the fiddly measure-preservation reindexing out of
+> the estimate entirely, and it means the estimate is reusable for any stationary sequence.
+>
+> The arc instantiation is **`CsdLean4/Thermo/Equilibration.lean`** (2 pins):
+> ★★ `blockPop_timeAverage_tendsto` (time-averaged populations → `d_B/N = 1/d_A`) and
+> ★★ `hsDeviationNormSq_timeAverage_tendsto` — **E4 composed with E1**: the time-averaged
+> Hilbert–Schmidt deviation converges to the Lubkin–Page value `(d_A+d_B)/(N+1) − 1/d_A`.
+>
+> **Honest scope, and it is large.** Both hypotheses (μ_FS-preservation, correlation decay) are
+> *assumed*; no Σ-dynamics is constructed, so `D1` is untouched. Discrete time only — a continuous
+> flow enters by sampling. Convergence is `L²`; the in-measure form follows by Chebyshev but is
+> **not stated**, and a.e. convergence is exactly what pointwise Birkhoff would buy and is not
+> available. The observable must be bounded. **Until E5 supplies a witness these are conditionals
+> with an unpopulated antecedent** — which is why the hypothesis sits in the signature.
+>
+> Snags: `Integrable` unfolds to an `And`, so a dot-notation miss reports a baffling
+> `And.<name>` — and `Integrable.sub` yields the Pi-level `f - g`, which `integral_sub`/`add`
+> cannot match under `rw`; state each combination as an explicit-lambda `have`.
+> `Integrable.of_bound` lives in `Mathlib.MeasureTheory.Integral.IntegrableOn`, which is *not* in
+> `Bochner.Basic`'s closure. `fubiniStudyMeasure` is in the `Matrix.UnitaryGroup` namespace.
+> `field_simp` again closed what a trailing `ring` would have re-visited.
 
 ---
 

@@ -214,6 +214,25 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.fs_hsDeviation_typicality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_hsDeviation_typicality
 
+-- E4 (2026-08-23, Thermo/Equilibration.lean): equilibration as a CONDITIONAL theorem, the arc
+-- instantiation of Mathlib/Dynamics/CorrelationDecay.lean on E1's observables.
+-- BOTH theorems are conditionals and the antecedent is the content: IF the flow preserves mu_FS
+-- AND its correlations for that observable decay with a summable envelope, THEN the time averages
+-- converge in L^2 to the Fubini-Study average. NEITHER hypothesis is proved or exhibited for any
+-- Sigma -- that is E5's job, and until a witness exists these are conditionals with an
+-- unpopulated antecedent. The correlation hypothesis is taken at ONE LAG, the form a physical
+-- estimate produces.
+-- blockPop_timeAverage_tendsto  : time-averaged populations -> d_B/N = 1/d_A (fs_blockPop_mean).
+-- hsDeviationNormSq_timeAverage_tendsto : E4 composed with E1 -- the time-averaged Hilbert-
+-- Schmidt deviation -> the Lubkin-Page value (d_A+d_B)/(N+1) - 1/d_A (fs_hsDeviationNormSq).
+-- Discrete time (a continuous flow enters by sampling); no Sigma-dynamics is built, so the D1
+-- residue is untouched.
+/-- info: 'CSD.Thermo.blockPop_timeAverage_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.blockPop_timeAverage_tendsto
+
+/-- info: 'CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto
+
 -- E2 (2026-08-23, Thermo/EnergyWindow.lean), RE-SCOPED BY E3's VERDICT. The original "E1 on
 -- the unit sphere of a spectral sector" is refuted (an exact sector is Fubini-Study-NULL,
 -- SectorRestriction.lean), so the surviving route is a POSITIVE-MEASURE ENERGY WINDOW.
