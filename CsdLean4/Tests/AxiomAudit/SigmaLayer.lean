@@ -2059,8 +2059,23 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.cdfDeIsolationInteraction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.cdfDeIsolationInteraction
 
-/-- info: 'CSD.RecordLayer.fibreTypicality_compl_iUnion_bornCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.fibreTypicality_compl_iUnion_bornCell
+-- Q12-b' (2026-08-23): the interface was GENERALISED to an arbitrary fibre (F, nu) -- it had been
+-- hard-wired to pointer : R -> Fin n.  That mismatch was the finding of Q12-b: the order-free race
+-- lives on Fin (n+1) -> R, and record-layer-plan.md §3b says the minimal fibre dimension is n-1, so
+-- the old interface was committed to the ORDERED construction.  With the generalisation the race
+-- instantiates it, giving a SECOND and symmetric witness.
+-- The shared machinery is Mathlib/MeasureTheory/CellPointer.lean (extracted at the second consumer,
+-- CONVENTIONS §9 rule of two): cellPointer makes a disjoint measurable cell family into a TOTAL
+-- readout by sending the leftover to a default index, and measure_cellPointer_preimage shows the
+-- leftover is null whenever the cell weights already exhaust the probability.
+-- ⚠️ NEITHER witness is the dynamical result: the CDF cells are stacked in index order, the race
+-- cells are symmetric but their clock law is POSITED, and NO FLOW carves either family (Q12-d,
+-- blocked -- see specs/q12-fibre-mechanism-scoping.md).
+/-- info: 'MeasureTheory.measure_cellPointer_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.measure_cellPointer_preimage
+
+/-- info: 'CSD.RecordLayer.raceDeIsolationInteraction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.raceDeIsolationInteraction
 
 -- Measurement (record layer / MD-1, 2026-07-25): the architecture in one object — context (measurement
 -- type, fixes the basins/probabilities) + unknown microstate ξ → outcome (the basin it occupies) →

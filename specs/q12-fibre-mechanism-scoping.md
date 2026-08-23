@@ -175,6 +175,28 @@ order-free partition §3b asks for, and it is the first genuinely *race*-shaped 
 > it first); `lintegral_withDensity_eq_lintegral_mul` produces a **Pi-level** product, so the
 > pointwise lemma must be stated in that shape and in the density-first order.
 
+> ### ✅ Q12-b′ EXECUTED 2026-08-23 — finding 1 acted on the same day
+>
+> The interface mismatch is gone. `DeIsolationInteraction` now takes an **arbitrary fibre**
+> `(F, ν)` instead of the hard-wired `ℝ`, so the race instantiates it:
+> ★★ `raceDeIsolationInteraction` — for a unit state with every amplitude nonzero, the
+> competing-clock race is a `DeIsolationInteraction` on `Fin (n+1) → ℝ`. There are now **two**
+> witnesses: the ordered CDF one and the symmetric race one.
+>
+> Generalising was a strict widening — `map_pointer_apply`'s proof was already fibre-agnostic, and
+> the only consumers were inside the module plus the audit pins.
+>
+> **Extracted at the second consumer** (`CONVENTIONS.md` §9, rule of two):
+> `Mathlib/MeasureTheory/CellPointer.lean` — `cellPointer` turns a disjoint measurable cell family
+> into a **total** readout by sending the leftover to a default index, and
+> ★ `measure_cellPointer_preimage` shows the leftover is null whenever the cell weights already
+> exhaust the probability. Q12-a's bespoke `cdfPointer` machinery was deleted and re-derived from
+> it, so the argument now exists once rather than twice.
+>
+> ⚠️ **Neither witness is the dynamical result.** The CDF cells are stacked in index order; the race
+> cells are symmetric but their clock law is *posited*; and **no flow carves either family**. That
+> remains `Q12-c` and `Q12-d`.
+
 ### Q12-c — the characterisation: is the exponential law *forced*? (M–L)
 
 §3c asserts that first-to-fire `∝ bᵢ` for independent linear clocks holds **iff** the waiting
@@ -228,7 +250,7 @@ only if Q12-d is ever written up, since it is the precise statement of why the r
 
 ## 6. Recommendation
 
-~~Run **Q12-a**~~ **done 2026-08-23**. ~~Next: probe Q12-b~~ **Q12-b done 2026-08-23**. Next candidate: generalise the record-layer interface to an `n`-dimensional fibre (finding 1 above) — cheaper than Q12-c and it is what would let the race actually replace the ordered construction.
+~~Run **Q12-a**~~ **done 2026-08-23**. ~~Next: probe Q12-b~~ **Q12-b done 2026-08-23**. ~~Next candidate: generalise the record-layer interface~~ **done 2026-08-23 (Q12-b′)**. Remaining: **Q12-c** (is the exponential law forced?), the stretch; **Q12-d** stays blocked with W1 as the reason.
 Treat Q12-c as the stretch. Leave Q12-d closed with W1 recorded as the reason.
 
 The honest headline for the queue: **Q12's frontier half is blocked by a theorem the corpus now

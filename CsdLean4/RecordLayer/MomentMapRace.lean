@@ -7,6 +7,8 @@ module
 
 public import CsdLean4.RecordLayer.FibreRecord
 public import CsdLean4.LF4.MomentMap
+public import CsdLean4.Mathlib.MeasureTheory.CellPointer
+public import CsdLean4.Mathlib.Probability.CompetingExponentials
 
 /-!
 # SigmaLayer/MomentMapRace: the record-layer rates are the Kähler moment map (MD-1, step 2b′)
@@ -33,9 +35,13 @@ vector. That is **feature (2)** of the §3c decomposition, and it is what this f
   `DeIsolationInteraction`, so `DeIsolationInteraction.born` is a conditional with a *populated*
   antecedent. Until this was built the structure had **no instance anywhere in the corpus** — an
   interface whose satisfiability was never exhibited, the defect `E5` closed for `E4`.
-  ⚠️ It witnesses satisfiability only: CDF stacking imposes an arbitrary outcome **order** (the
-  mechanism `record-layer-plan.md` §3b wants is order-free), and **no dynamics carves these cells**.
-  See `specs/q12-fibre-mechanism-scoping.md`.
+* ★★ `raceDeIsolationInteraction` (Q12-b′, 2026-08-23) — the **order-free** witness. The interface
+  now takes an arbitrary fibre `(F, ν)` rather than the hard-wired `ℝ`, which is what lets the
+  competing-clock race (on `Fin (n+1) → ℝ`, the dimension `record-layer-plan.md` §3b requires)
+  instantiate it. Unlike the CDF witness this privileges no outcome.
+  ⚠️ **Neither witness is the dynamical result.** The CDF cells are stacked in index order; the race
+  cells are symmetric but their clock law is *posited*, and **no flow carves either family**. See
+  `specs/q12-fibre-mechanism-scoping.md` (`Q12-c`, and `Q12-d` which is blocked).
 
 ## The STATISTICAL residual is not a wall — it is LLN over the unknown microstate
 
@@ -110,26 +116,28 @@ resolves — not an open research obligation: the de-isolation flow is just the 
 microstate→basin map, and the probabilities are the law of large numbers over the unknown initial
 microstate (`Measurement.bornMeasurement_frequency`). Nothing here needs a bespoke Hamiltonian
 derivation beyond the standard Papers A/D typicality story. -/
-structure DeIsolationInteraction (ψ : EuclideanSpace ℂ (Fin n)) where
+structure DeIsolationInteraction {F : Type*} [MeasurableSpace F] (ν : Measure F)
+    (ψ : EuclideanSpace ℂ (Fin n)) where
   /-- The de-isolation flow's pointer readout on the fibre. -/
-  pointer : ℝ → Fin n
+  pointer : F → Fin n
   /-- The pointer is measurable. -/
   measurable_pointer : Measurable pointer
   /-- The pointer's basins carry the moment-map/Born rates (the dynamical requirement). -/
-  basin_rate : ∀ i, fibreTypicality (pointer ⁻¹' {i}) = ENNReal.ofReal (bornRate ψ i)
+  basin_rate : ∀ i, ν (pointer ⁻¹' {i}) = ENNReal.ofReal (bornRate ψ i)
 
 /-- **A de-isolation interaction reproduces Born.** Its pointer pushes the fibre typicality forward to
 the Born distribution: outcome `i` has probability `‖ψ i‖²`. This is the Born conclusion *given* the
 kinematic interface; the open part is realising the interface from a Hamiltonian. -/
-theorem DeIsolationInteraction.born {ψ : EuclideanSpace ℂ (Fin n)}
-    (D : DeIsolationInteraction ψ) (i : Fin n) :
-    (fibreTypicality.map D.pointer) {i} = ENNReal.ofReal (‖ψ i‖ ^ 2) :=
+theorem DeIsolationInteraction.born {F : Type*} [MeasurableSpace F] {ν : Measure F}
+    {ψ : EuclideanSpace ℂ (Fin n)} (D : DeIsolationInteraction ν ψ) (i : Fin n) :
+    (ν.map D.pointer) {i} = ENNReal.ofReal (‖ψ i‖ ^ 2) :=
   map_pointer_apply D.measurable_pointer ψ i (D.basin_rate i)
 
 /-- A de-isolation interaction's basins carry the Kähler moment-map weights. -/
-theorem DeIsolationInteraction.basin_momentMap {ψ : EuclideanSpace ℂ (Fin n)}
-    (D : DeIsolationInteraction ψ) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (i : Fin n) :
-    fibreTypicality (D.pointer ⁻¹' {i})
+theorem DeIsolationInteraction.basin_momentMap {F : Type*} [MeasurableSpace F] {ν : Measure F}
+    {ψ : EuclideanSpace ℂ (Fin n)} (D : DeIsolationInteraction ν ψ) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
+    (i : Fin n) :
+    ν (D.pointer ⁻¹' {i})
       = ENNReal.ofReal (momentMap (Projectivization.mk ℂ ψ hψ0) i) := by
   rw [D.basin_rate i, bornRate_eq_momentMap ψ hψ0 hψ i]
 
@@ -147,94 +155,60 @@ symmetric race). And no *dynamics* carves these cells — they are defined, not 
 them from a de-isolation flow is `Q12-d`, which `specs/q12-fibre-mechanism-scoping.md` records as
 blocked: the mixing hypothesis it needs is unsatisfiable by any flow the corpus defines. -/
 
-/-- The **CDF pointer**: read the outcome off the fibre point, sending the leftover (a null set)
-to a default outcome so that the pointer is total, as the interface requires. -/
-noncomputable def cdfPointer (r : Fin n → ℝ) (i₀ : Fin n) (ξ : ℝ) : Fin n :=
-  (fibreOutcome r ξ).getD i₀
-
-lemma cdfPointer_preimage (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (i₀ i : Fin n) :
-    cdfPointer r i₀ ⁻¹' {i}
-      = cdfCell r i ∪ (if i = i₀ then (⋃ j, cdfCell r j)ᶜ else ∅) := by
-  ext ξ
-  simp only [Set.mem_preimage, Set.mem_singleton_iff, cdfPointer, Set.mem_union]
-  cases hopt : fibreOutcome r ξ with
-  | none =>
-      have hnone : ∀ j, ξ ∉ cdfCell r j := (fibreOutcome_eq_none_iff r ξ).mp hopt
-      simp only [Option.getD_none]
-      constructor
-      · rintro rfl
-        refine Or.inr ?_
-        rw [if_pos rfl, Set.mem_compl_iff, Set.mem_iUnion]
-        rintro ⟨j, hj⟩
-        exact hnone j hj
-      · rintro (hmem | hmem)
-        · exact absurd hmem (hnone i)
-        · by_cases hii : i = i₀
-          · exact hii.symm
-          · rw [if_neg hii] at hmem
-            exact absurd hmem (by simp)
-  | some j =>
-      have hj : ξ ∈ cdfCell r j := (fibreOutcome_eq_some_iff r hr ξ j).mp hopt
-      have hin : ξ ∈ ⋃ k, cdfCell r k := Set.mem_iUnion.mpr ⟨j, hj⟩
-      simp only [Option.getD_some]
-      constructor
-      · rintro rfl
-        exact Or.inl hj
-      · rintro (hmem | hmem)
-        · have hsome := (fibreOutcome_eq_some_iff r hr ξ i).mpr hmem
-          rw [hopt, Option.some_inj] at hsome
-          exact hsome
-        · by_cases hii : i = i₀
-          · rw [if_pos hii, Set.mem_compl_iff] at hmem
-            exact absurd hin hmem
-          · rw [if_neg hii] at hmem
-            exact absurd hmem (by simp)
-
-lemma measurable_cdfPointer (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (i₀ : Fin n) :
-    Measurable (cdfPointer r i₀) := by
-  refine measurable_to_countable' (fun i => ?_)
-  rw [cdfPointer_preimage r hr i₀ i]
-  refine (measurableSet_cdfCell r i).union ?_
-  by_cases hii : i = i₀
-  · rw [if_pos hii]
-    exact (MeasurableSet.iUnion (fun j => measurableSet_cdfCell r j)).compl
-  · rw [if_neg hii]
-    exact MeasurableSet.empty
-
-/-- The leftover — the fibre points lying in no cell — is `fibreTypicality`-null for a unit state,
-because the cells sit inside `[0,1)` (`iUnion_bornCell_subset_Ico01`) and already carry its whole
-measure (`fibreTypicality_iUnion_bornCell`). -/
-lemma fibreTypicality_compl_iUnion_bornCell (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1) :
-    fibreTypicality ((⋃ j, cdfCell (bornRate ψ) j)ᶜ) = 0 := by
-  have hmeas : MeasurableSet (⋃ j, cdfCell (bornRate ψ) j) :=
-    MeasurableSet.iUnion (fun j => measurableSet_cdfCell _ j)
-  have htot : fibreTypicality (⋃ j, cdfCell (bornRate ψ) j) = 1 :=
-    fibreTypicality_iUnion_bornCell ψ hψ
-  rw [measure_compl hmeas (by rw [htot]; exact ENNReal.one_ne_top), htot, measure_univ, tsub_self]
-
-/-- ★★ **The witness.** Every unit state admits a `DeIsolationInteraction`, so
+/-- ★★ **The CDF witness.** Every unit state admits a `DeIsolationInteraction` on the fibre `ℝ`, so
 `DeIsolationInteraction.born` is a conditional with a **populated** antecedent. The pointer is the
-CDF readout; its basins are the Born cells, whose fibre typicality is the Born weight
-(`fibreTypicality_bornCell`), and the leftover is null
-(`fibreTypicality_compl_iUnion_bornCell`).
+generic `cellPointer` of the Born cells; the cells are disjoint (`cdfCell_pairwiseDisjoint`) and
+carry the Born weights (`fibreTypicality_bornCell`), which is all `measure_cellPointer_preimage`
+needs.
 
 See the section note above for what this does *not* settle. -/
 noncomputable def cdfDeIsolationInteraction (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1)
-    (i₀ : Fin n) : DeIsolationInteraction ψ where
-  pointer := cdfPointer (bornRate ψ) i₀
-  measurable_pointer := measurable_cdfPointer _ (bornRate_nonneg ψ) i₀
-  basin_rate := by
-    intro i
-    have hcell : fibreTypicality (cdfCell (bornRate ψ) i) = ENNReal.ofReal (bornRate ψ i) :=
-      fibreTypicality_bornCell ψ hψ i
-    rw [cdfPointer_preimage _ (bornRate_nonneg ψ) i₀ i]
-    by_cases hii : i = i₀
-    · rw [if_pos hii]
-      refine le_antisymm ?_ ?_
-      · refine le_trans (measure_union_le _ _) ?_
-        rw [hcell, fibreTypicality_compl_iUnion_bornCell ψ hψ, add_zero]
-      · rw [← hcell]
-        exact measure_mono Set.subset_union_left
-    · rw [if_neg hii, Set.union_empty, hcell]
+    (i₀ : Fin n) : DeIsolationInteraction fibreTypicality ψ where
+  pointer := cellPointer (cdfCell (bornRate ψ)) i₀
+  measurable_pointer :=
+    measurable_cellPointer (measurableSet_cdfCell _)
+      (cdfCell_pairwiseDisjoint _ (bornRate_nonneg ψ)) i₀
+  basin_rate := fun i =>
+    measure_cellPointer_preimage (measurableSet_cdfCell _)
+      (cdfCell_pairwiseDisjoint _ (bornRate_nonneg ψ)) (bornRate_nonneg ψ)
+      (fun j => fibreTypicality_bornCell ψ hψ j) (sum_bornRate_unit ψ hψ) i₀ i
+
+/-! ### ★★ Q12-b′: the **order-free** witness, on an `n`-dimensional fibre
+
+`Q12-b` proved the competing-clock race reproduces Born without privileging any outcome
+(`ProbabilityTheory.measure_raceCell_of_sum_eq_one`), but the race lives on `Fin (n+1) → ℝ` while
+the interface above was written for the fibre `ℝ`. That mismatch is now gone: the interface takes
+an arbitrary fibre `(F, ν)`, so the race supplies a **second, symmetric** witness.
+
+⚠️ Still not the dynamical result. No flow carves these cells either — the clocks' law is posited,
+not derived. That is `Q12-c` (is the exponential law forced?) and `Q12-d` (blocked; see
+`specs/q12-fibre-mechanism-scoping.md`). -/
+
+/-- ★★ **The race witness.** For a unit state with every amplitude nonzero, the competing-clock
+race is a `DeIsolationInteraction` on the fibre `Fin (n+1) → ℝ`.
+
+Unlike `cdfDeIsolationInteraction` this privileges no outcome: the cells are "clock `i` fires
+strictly first", and relabelling the clocks merely permutes them. This is the mechanism
+`record-layer-plan.md` §3b asks for.
+
+The positivity hypothesis is real, not technical: an exponential clock needs a positive rate, so a
+zero amplitude — a clock that never fires — is outside the construction. -/
+noncomputable def raceDeIsolationInteraction {m : ℕ} (ψ : EuclideanSpace ℂ (Fin (m + 1)))
+    (hψ : ‖ψ‖ = 1) (hpos : ∀ j, 0 < bornRate ψ j) (i₀ : Fin (m + 1)) :
+    DeIsolationInteraction
+      (Measure.pi (fun j => ProbabilityTheory.expMeasure (bornRate ψ j))) ψ where
+  pointer := cellPointer ProbabilityTheory.raceCell i₀
+  measurable_pointer :=
+    measurable_cellPointer ProbabilityTheory.measurableSet_raceCell
+      ProbabilityTheory.raceCell_pairwiseDisjoint i₀
+  basin_rate := fun i => by
+    have hprob : ∀ j : Fin (m + 1),
+        IsProbabilityMeasure (ProbabilityTheory.expMeasure (bornRate ψ j)) :=
+      fun j => ProbabilityTheory.isProbabilityMeasure_expMeasure (hpos j)
+    exact measure_cellPointer_preimage ProbabilityTheory.measurableSet_raceCell
+      ProbabilityTheory.raceCell_pairwiseDisjoint (bornRate_nonneg ψ)
+      (fun j => ProbabilityTheory.measure_raceCell_of_sum_eq_one _ hpos
+        (sum_bornRate_unit ψ hψ) j)
+      (sum_bornRate_unit ψ hψ) i₀ i
 
 end CSD.RecordLayer
