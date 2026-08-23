@@ -208,6 +208,39 @@ times are exponential. If provable, the fibre law stops being a free choice and 
 * **Abort criterion:** if the functional-equation half is not upstream, stop. Do **not** formalise
   Cauchy's equation as a side quest.
 
+> ### ⛔ Q12-c PROBED 2026-08-23 — **not started; the gate fires, though not where it expected to**
+>
+> **The gate's own question came back "mostly yes".** `AddMonoidHom.toRealLinearMap` solves Cauchy
+> for *continuous additive maps on a group*, which is enough for a memorylessness characterisation
+> modulo two gaps: the survival function lives on `[0,∞)` and would need extending to `ℝ` to be a
+> group hom, and **monotone ⇒ linear is not upstream**, so continuity has to be *assumed* rather
+> than derived from monotonicity.
+>
+> **But the functional equation was not the blocker.** This scoping note wrote "is the exponential
+> law *forced*?" as one question. It is two, and §3c states the harder one:
+>
+> * **(c1) memorylessness ⇒ exponential.** `G(s+t) = G(s)G(t)` with `G` continuous forces
+>   `G(t) = e^{-rt}`. Tractable — **M** — via the extension plus `toRealLinearMap`.
+> * **(c2) §3c's actual claim:** *first-to-fire `= bᵢ` holds **iff** the waiting times are
+>   exponential*. The forward direction is an **integral equation in the unknown law**:
+>   `∫ G(x/b) dF(x) = b/(b+1)` for every `b > 0`. Classically this is solved by Laplace-transform /
+>   Choquet–Deny methods. That is **research-grade, not a brick**, and the abort criterion applies.
+>
+> ⚠️ **Correction to `record-layer-plan.md` §3c — of status, not of truth.** The "iff" is classically
+> true under mild regularity; nothing here disputes it. What the plan understates is its *cost*: it
+> reads as a step one takes in passing, and it is a research formalisation. The phrase "the
+> exponential fibre measure is **FORCED**" should be read as *forced in the literature*, not *forced
+> in the corpus*.
+>
+> **What (c1) would and would not buy.** It would narrow the posit from "some memoryless clock law"
+> to "the exponential, given the rate" — a family down to a point, which is real. It would **not**
+> establish §3c's claim, and a module proving (c1) would sit one careless sentence away from being
+> read as if it had. Given how much of this corpus's discipline is about that exact gap, (c1) is a
+> **decision for the author**, not a default.
+>
+> **Recommendation:** leave Q12-c unstarted. Record (c2) as research alongside `Q12-d`; take (c1)
+> only if the narrowing is wanted for its own sake, with the labelling agreed in advance.
+
 ### Q12-d — the genuine frontier: derive the race from a deterministic flow (**BLOCKED**, foundations)
 
 Exhibit a de-isolation coupling whose environment target-measures are `∝ the moment map`, with the
@@ -250,7 +283,7 @@ only if Q12-d is ever written up, since it is the precise statement of why the r
 
 ## 6. Recommendation
 
-~~Run **Q12-a**~~ **done 2026-08-23**. ~~Next: probe Q12-b~~ **Q12-b done 2026-08-23**. ~~Next candidate: generalise the record-layer interface~~ **done 2026-08-23 (Q12-b′)**. Remaining: **Q12-c** (is the exponential law forced?), the stretch; **Q12-d** stays blocked with W1 as the reason.
+~~Run **Q12-a**~~ **done 2026-08-23**. ~~Next: probe Q12-b~~ **Q12-b done 2026-08-23**. ~~Next candidate: generalise the record-layer interface~~ **done 2026-08-23 (Q12-b′)**. Remaining: **Q12-c2** (§3c's iff) is **research**, alongside **Q12-d** (blocked, W1). **Q12-c1** (memorylessness ⇒ exponential, M) is available but weaker than the row promises — an author decision, not a default.
 Treat Q12-c as the stretch. Leave Q12-d closed with W1 recorded as the reason.
 
 The honest headline for the queue: **Q12's frontier half is blocked by a theorem the corpus now
