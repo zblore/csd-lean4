@@ -124,4 +124,65 @@ theorem hsDeviationNormSq_timeAverage_tendsto (p₀ : CPN N) (e : Fin N ≃ Fin 
     hmean hdec hsum
   rwa [fs_hsDeviationNormSq p₀ e] at h
 
+/-! ### ⚠️ E5's sharpness check: when the antecedent is *empty* -/
+
+/-- ⚠️ **No periodic flow satisfies E4's antecedent for a nontrivial subsystem.**
+
+If `Φ^[k] = id` and `d_A ≥ 2`, then `HasCorrelationDecay` for the population observable is
+**false** for every summable envelope. So `blockPop_timeAverage_tendsto`, applied to a periodic
+Σ-flow, is a conditional whose antecedent cannot be met.
+
+The proof is Q24 arithmetic against the periodic no-go. A periodic map forces `⟨x²⟩ = ⟨x⟩²`
+(`HasCorrelationDecay.integral_mul_self_eq_of_periodic`), whereas `fs_blockPop_sq` and
+`fs_blockPop_mean` give `⟨x²⟩ = (d_B²+d_B)/(N(N+1))` and `⟨x⟩ = d_B/N`. Those agree exactly when
+`N = d_B`, i.e. when `d_A = 1` — no subsystem at all.
+
+**Why this matters for the arc.** A unitary acting on `ℂℙ^{N-1}` generates a relatively compact
+group, so its correlations are almost periodic and cannot decay either; the finite-order case
+proved here is the piece of that statement available without a recurrence argument, and the
+general version is *believed but not proved* (see `specs/equilibration-arc-plan.md` E5). Either
+way the honest reading is that E4's antecedent is **not** populated by finite-dimensional unitary
+Σ-dynamics, and a genuine witness needs a non-atomic space with a genuinely mixing map — which is
+what `CsdLean4/Mathlib/Dynamics/CorrelationDecayWitness.lean` supplies for the engine. -/
+theorem not_hasCorrelationDecay_blockPop_of_periodic
+    (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) (hdA : 2 ≤ dA)
+    {Φ : CPN N → CPN N} {ε : ℕ → ℝ} {k : ℕ} (hk : 0 < k) (hper : Φ^[k] = id)
+    (hsum : Summable ε) :
+    ¬ MeasureTheory.HasCorrelationDecay (fubiniStudyMeasure p₀) Φ
+        (fun q => blockPop e q a) ε := by
+  intro hdec
+  have hvar := hdec.integral_mul_self_eq_of_periodic hk hper hsum
+  have hsq : ∫ p, blockPop e p a * blockPop e p a ∂(fubiniStudyMeasure p₀)
+      = ((dB : ℝ) ^ 2 + (dB : ℝ)) / ((N : ℝ) * ((N : ℝ) + 1)) := by
+    rw [integral_congr_ae (ae_of_all _ (fun p => (pow_two (blockPop e p a)).symm))]
+    exact fs_blockPop_sq p₀ e a
+  rw [hsq, fs_blockPop_mean p₀ e a] at hvar
+  -- arithmetic: the two Q24 values agree only when `N = d_B`, i.e. `d_A = 1`
+  have hN0 : N ≠ 0 := NeZero.ne N
+  have hNmul := card_eq_mul_of_tensorEquiv e
+  have hdBn : dB ≠ 0 := by rintro rfl; exact hN0 (by simpa using hNmul)
+  have hNne : (N : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hN0
+  have hdBne : (dB : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hdBn
+  have hN1ne : (N : ℝ) + 1 ≠ 0 := by positivity
+  have hNR : (N : ℝ) = (dA : ℝ) * (dB : ℝ) := by exact_mod_cast hNmul
+  have hcross : ((dB : ℝ) ^ 2 + (dB : ℝ)) * (N : ℝ) ^ 2
+      = (dB : ℝ) ^ 2 * ((N : ℝ) * ((N : ℝ) + 1)) := by
+    have e1 : ((dB : ℝ) ^ 2 + (dB : ℝ)) / ((N : ℝ) * ((N : ℝ) + 1))
+        * ((N : ℝ) * ((N : ℝ) + 1)) * (N : ℝ) ^ 2
+        = ((dB : ℝ) ^ 2 + (dB : ℝ)) * (N : ℝ) ^ 2 := by field_simp
+    have e2 : ((dB : ℝ) / (N : ℝ)) ^ 2 * ((N : ℝ) * ((N : ℝ) + 1)) * (N : ℝ) ^ 2
+        = (dB : ℝ) ^ 2 * ((N : ℝ) * ((N : ℝ) + 1)) := by field_simp
+    rw [← e1, ← e2, hvar]
+  have hfac : (N : ℝ) * (dB : ℝ) * ((N : ℝ) - (dB : ℝ)) = 0 := by linear_combination hcross
+  rcases mul_eq_zero.mp hfac with h | h
+  · rcases mul_eq_zero.mp h with h' | h'
+    · exact hNne h'
+    · exact hdBne h'
+  · have hNd : (N : ℝ) = (dB : ℝ) := by linarith [sub_eq_zero.mp h]
+    have hdA1 : (dA : ℝ) = 1 := by
+      have hmul : (dA : ℝ) * (dB : ℝ) = 1 * (dB : ℝ) := by rw [one_mul, ← hNR, hNd]
+      exact mul_right_cancel₀ hdBne hmul
+    have h2 : (2 : ℝ) ≤ (dA : ℝ) := by exact_mod_cast hdA
+    linarith
+
 end CSD.Thermo

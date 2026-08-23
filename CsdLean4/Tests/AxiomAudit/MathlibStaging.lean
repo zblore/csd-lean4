@@ -2347,4 +2347,35 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.HasCorrelationDecay.of_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.HasCorrelationDecay.of_measurePreserving
 
+-- E5(a) (2026-08-23, Mathlib/Dynamics/CorrelationDecayWitness.lean): the NON-VACUITY witness.
+-- E4 is a conditional, so somebody must show its antecedent is satisfiable at all.
+-- WHY THE WITNESS LOOKS LIKE THIS, and it is forced: a summable envelope makes the correlations
+-- converge to <f>^2, so eps cannot be chosen large enough to cheat; and
+-- integral_mul_self_eq_of_periodic says a PERIODIC map forces <f^2> = <f>^2. Every
+-- measure-preserving map of a finite or countable probability space is periodic on its support,
+-- so no atomic space carries a witness -- a genuine one needs a NON-ATOMIC space and a
+-- non-periodic map. The doubling map on R/Z is the minimal such object.
+-- Every correlation is computed by the Q24 SIGN-FLIP argument, not by integration: rotating by
+-- 2^-(s+1) sends 2^s x to 2^s x + 1/2 (so circObs, being odd under the half-turn, flips) while
+-- sending 2^t x to 2^t x + an INTEGER (so it is fixed) whenever s < t.  <circObs^2> = 1/2 comes
+-- from the quarter-turn exchanging real and imaginary parts -- Q24's phaseFlip move.
+-- circ_nontrivial is what makes this a certificate rather than a restatement of "constants have
+-- no correlations"; doubling_not_periodic cross-checks the witness against the no-go.
+-- SCOPE: this witnesses the ENGINE, not CSD. Periodic Sigma-flows provably CANNOT satisfy the
+-- antecedent (CSD.Thermo.not_hasCorrelationDecay_blockPop_of_periodic).
+/-- info: 'MeasureTheory.HasCorrelationDecay.integral_mul_self_eq_of_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.HasCorrelationDecay.integral_mul_self_eq_of_periodic
+
+/-- info: 'MeasureTheory.circ_hasCorrelationDecay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.circ_hasCorrelationDecay
+
+/-- info: 'MeasureTheory.integral_circObs_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.integral_circObs_sq
+
+/-- info: 'MeasureTheory.circ_nontrivial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.circ_nontrivial
+
+/-- info: 'MeasureTheory.doubling_not_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.doubling_not_periodic
+
 end CSD.Tests.AxiomAudit

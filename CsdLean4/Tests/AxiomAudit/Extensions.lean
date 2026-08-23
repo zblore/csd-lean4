@@ -233,6 +233,17 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto
 
+-- E5's sharpness check (2026-08-23, Thermo/Equilibration.lean): E4's antecedent is EMPTY for
+-- periodic Sigma-flows whenever the subsystem is nontrivial (dA >= 2).  Q24 arithmetic against
+-- the periodic no-go: a periodic map forces <x^2> = <x>^2, but fs_blockPop_sq and
+-- fs_blockPop_mean give (d_B^2+d_B)/(N(N+1)) and d_B/N, which agree exactly when N = d_B, i.e.
+-- d_A = 1 -- no subsystem at all.  A unitary on CP^{N-1} generates a relatively compact group, so
+-- its correlations are almost periodic and cannot decay either; the finite-order case proved here
+-- is the part of that available without a recurrence argument (the general version is argued in
+-- the module docstring and in equilibration-arc-plan.md E5, and is NOT proved).
+/-- info: 'CSD.Thermo.not_hasCorrelationDecay_blockPop_of_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.not_hasCorrelationDecay_blockPop_of_periodic
+
 -- E2 (2026-08-23, Thermo/EnergyWindow.lean), RE-SCOPED BY E3's VERDICT. The original "E1 on
 -- the unit sphere of a spectral sector" is refuted (an exact sector is Fubini-Study-NULL,
 -- SectorRestriction.lean), so the surviving route is a POSITIVE-MEASURE ENERGY WINDOW.

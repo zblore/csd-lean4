@@ -194,6 +194,18 @@ EPISTEMIC_BLOCKLIST=(
   "reconstruction of QM is complete"
   "no separate flow to derive"
   "not a research problem"
+  # E5(b), 2026-08-23. E4 (Thermo/Equilibration.lean) is a CONDITIONAL: its
+  # consequent holds only given (i) a mu_FS-preserving flow and (ii) quantitative
+  # correlation decay with a summable envelope. Neither is proved for any Sigma, and
+  # not_hasCorrelationDecay_blockPop_of_periodic shows periodic flows CANNOT satisfy
+  # (ii) for a nontrivial subsystem. These phrasings drop the antecedent and are the
+  # exact overclaim the arc plan asked to be blocked at the doc surface.
+  "equilibration is derived"
+  "equilibration is proved"
+  "the flow is shown to mix"
+  "mixing is established"
+  "CSD derives thermalisation"
+  "CSD derives thermalization"
 )
 # ------------------------------------------------------------------------------
 

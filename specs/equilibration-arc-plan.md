@@ -375,6 +375,54 @@ its antecedent. Add the guard so E4 cannot appear in external prose without its 
 a `check-claims.sh` phrase entry (the mechanism that already blocks unqualified Born/typicality
 prose), plus the glossary `status:` field if a page is created.
 
+> ### E5 EXECUTED 2026-08-23 — **done, and goal (a) came back with a partial NO**
+>
+> **The finding that matters, and it was not anticipated by this plan.** The brief asked for a
+> Σ + Hamiltonian satisfying E4's hypotheses *nontrivially*. For finite-dimensional unitary
+> dynamics **there is none**, and this is now a theorem in the periodic case:
+>
+> * ★ `HasCorrelationDecay.integral_mul_self_eq_of_periodic` (generic) — if `Φ^[k] = id` for some
+>   `k ≥ 1`, a summable envelope forces `⟨f²⟩ = ⟨f⟩²`, i.e. an a.e. **constant** observable. The
+>   proof is two lines: the correlation at lag `k·m` is *exactly* `⟨f²⟩`, and a constant bounded
+>   by a null subsequence is zero.
+> * ★★ `CSD.Thermo.not_hasCorrelationDecay_blockPop_of_periodic` — so for `d_A ≥ 2` **no periodic
+>   flow satisfies E4's antecedent for the population observable, for any summable envelope.**
+>   Q24 arithmetic does the rest: `fs_blockPop_sq` and `fs_blockPop_mean` agree with the periodic
+>   conclusion exactly when `N = d_B`, i.e. `d_A = 1` — no subsystem at all.
+>
+> A unitary on `ℂℙ^{N−1}` generates a relatively compact group, so its correlations are almost
+> periodic and cannot decay either. The finite-order case is the piece available without a
+> recurrence argument; **the general almost-periodic statement is argued but NOT proved** and is
+> recorded as such in the module docstring. Either way the honest reading is that E4's antecedent
+> is *not* populated by finite-dimensional unitary Σ-dynamics. This is the referee's attack, found
+> before the referee.
+>
+> **Goal (a), positive half — the engine is not vacuous.**
+> `CsdLean4/Mathlib/Dynamics/CorrelationDecayWitness.lean` (Cat-1, 5 pins): the doubling map on
+> `ℝ ⧸ ℤ` with `circObs x = cos 2πx`. ★★ `circ_hasCorrelationDecay` with the finitely-supported
+> envelope, and ★★ `circ_nontrivial` (`⟨f²⟩ = 1/2 ≠ 0 = ⟨f⟩²`) certifying it is not the trivial
+> constant case. ★ `doubling_not_periodic` falls out for free and cross-checks the no-go.
+>
+> **Every correlation is computed by `Q24`'s sign-flip argument, not by integration** — rotating
+> by `2^{-(s+1)}` sends `2^s x ↦ 2^s x + 1/2` (so the odd-under-half-turn factor flips) while
+> sending `2^t x ↦ 2^t x +` an *integer* for `s < t` (so the other factor is fixed). `⟨f²⟩ = 1/2`
+> comes from the quarter-turn exchanging real and imaginary parts — `phaseFlip` again. No Fourier
+> analysis was needed, which is why this cost hours rather than days.
+>
+> **Why the witness must be non-atomic** (worth keeping — it forecloses cheaper attempts): a
+> measure-preserving map of a finite or countable probability space is periodic on its support, so
+> by the no-go above no atomic space carries a witness at all.
+>
+> **Goal (b) done.** Five rows `CL-053…CL-057` in `specs/validation-claims.tsv` (E1, E2, the E4
+> engine, the E4 arc statement, the E5 witness), each with `load_bearing` naming the hypothesis —
+> CL-056's names the antecedent explicitly and its `independent_check` cites the periodic no-go.
+> Six phrases added to `check-claims.sh`'s `EPISTEMIC_BLOCKLIST` ("equilibration is derived",
+> "mixing is established", …) so E4's consequent cannot reach the doc surface stripped of its
+> antecedent. ⚠️ **Premise correction:** the plan offered `conditional` as a status; the ledger
+> schema allows only `validated | qualified | needs-change | specialist-review`, so the four
+> conditional rows are `qualified` with the antecedent in `load_bearing`. Ledger modules must also
+> be imported by `CsdLean4/Headlines.lean` — that is enforced, and was easy to miss.
+
 ---
 
 ## Cut (adopted from the brief)

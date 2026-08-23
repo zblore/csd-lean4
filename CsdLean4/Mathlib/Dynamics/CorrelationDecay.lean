@@ -286,6 +286,42 @@ theorem tendsto_integral_birkhoffAverage_sub_sq {μ : Measure X} [IsProbabilityM
   filter_upwards [Filter.eventually_gt_atTop 0] with T hT
   exact integral_birkhoffAverage_sub_sq_le_cesaro hΦ hf hC hfb hmean hdec hT
 
+/-! ### ★ The antecedent has teeth: periodic dynamics cannot satisfy it -/
+
+/-- ★ **A periodic map forces zero variance.** If `Φ^[k] = id` for some `k ≥ 1`, then the only
+observables with summably-decaying correlations are the ones with `⟨f²⟩ = ⟨f⟩²`, i.e. the a.e.
+constant ones.
+
+The proof is one line of dynamics and one of analysis: `Φ^[k*m] = id` for every `m`, so the
+correlation at lag `k*m` is *exactly* `⟨f²⟩`; a summable envelope tends to zero along that
+subsequence, and a constant bounded by a null sequence is zero.
+
+This is the sharpness statement for `HasCorrelationDecay` — it rules out the cheap witnesses.
+Every measure-preserving map of a finite or countable probability space is periodic on its
+support, so **no such space carries a non-trivial witness**: a genuine one needs a non-atomic
+space, which is why `CorrelationDecayWitness` builds on the circle. -/
+theorem HasCorrelationDecay.integral_mul_self_eq_of_periodic {μ : Measure X}
+    {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ} {k : ℕ} (hk : 0 < k) (hper : Φ^[k] = id)
+    (hdec : HasCorrelationDecay μ Φ f ε) (hsum : Summable ε) :
+    ∫ x, f x * f x ∂μ = (∫ y, f y ∂μ) ^ 2 := by
+  have hiter : ∀ m : ℕ, Φ^[k * m] = id := by
+    intro m
+    rw [Function.iterate_mul, hper, Function.iterate_id]
+  have hbound : ∀ m : ℕ,
+      |(∫ x, f x * f x ∂μ) - (∫ y, f y ∂μ) ^ 2| ≤ ε (k * m) := by
+    intro m
+    have h := hdec 0 (k * m)
+    rw [show Nat.dist 0 (k * m) = k * m by simp [Nat.dist], hiter m] at h
+    simpa using h
+  have hzero : Filter.Tendsto (fun m : ℕ => ε (k * m)) Filter.atTop (nhds 0) :=
+    hsum.tendsto_atTop_zero.comp
+      (Filter.tendsto_atTop_atTop.mpr (fun b => ⟨b, fun n hn => le_trans hn
+        (Nat.le_mul_of_pos_left n hk)⟩))
+  have := ge_of_tendsto' hzero hbound
+  have habs : |(∫ x, f x * f x ∂μ) - (∫ y, f y ∂μ) ^ 2| = 0 :=
+    le_antisymm this (abs_nonneg _)
+  linarith [sub_eq_zero.mp (abs_eq_zero.mp habs)]
+
 /-! ### The measure-preserving bridge
 
 The analytic core above deliberately takes `hmean` and the two-index decay as bare hypotheses, so
@@ -293,14 +329,30 @@ that it contains no dynamics at all. These two lemmas supply both from the natur
 measure-preserving map and a **one-lag** decay bound, which is what a physical estimate actually
 provides. -/
 
+/-- Precomposing with a measure-preserving self-map does not change an integral. -/
+lemma integral_comp_of_measurePreserving {μ : Measure X} {Ψ : X → X}
+    (hΨ : MeasurePreserving Ψ μ μ) {f : X → ℝ} (hf : AEStronglyMeasurable f μ) :
+    ∫ x, f (Ψ x) ∂μ = ∫ y, f y ∂μ := by
+  have hmap : Measure.map Ψ μ = μ := hΨ.map_eq
+  calc ∫ x, f (Ψ x) ∂μ = ∫ y, f y ∂(Measure.map Ψ μ) :=
+        (integral_map hΨ.measurable.aemeasurable (by rw [hmap]; exact hf)).symm
+    _ = ∫ y, f y ∂μ := by rw [hmap]
+
 /-- Along a measure-preserving map, the mean of an observable is stationary — this is `hmean`. -/
 lemma integral_iterate_of_measurePreserving {μ : Measure X} {Φ : X → X}
     (hΦ : MeasurePreserving Φ μ μ) {f : X → ℝ} (hf : AEStronglyMeasurable f μ) (t : ℕ) :
-    ∫ x, f (Φ^[t] x) ∂μ = ∫ y, f y ∂μ := by
-  have hmap : Measure.map (Φ^[t]) μ = μ := (hΦ.iterate t).map_eq
-  calc ∫ x, f (Φ^[t] x) ∂μ = ∫ y, f y ∂(Measure.map (Φ^[t]) μ) :=
-        (integral_map (hΦ.iterate t).measurable.aemeasurable (by rw [hmap]; exact hf)).symm
-    _ = ∫ y, f y ∂μ := by rw [hmap]
+    ∫ x, f (Φ^[t] x) ∂μ = ∫ y, f y ∂μ :=
+  integral_comp_of_measurePreserving (hΦ.iterate t) hf
+
+/-- **An odd symmetry kills an integral.** If some measure-preserving involution-like translation
+negates the integrand, the integral vanishes — the sign-flip argument of `Q24`, in the form the
+circle witness uses. -/
+lemma integral_eq_zero_of_measurePreserving_neg {μ : Measure X} {Ψ : X → X}
+    (hΨ : MeasurePreserving Ψ μ μ) {g : X → ℝ} (hg : Integrable g μ)
+    (hflip : ∀ x, g (Ψ x) = - g x) : ∫ x, g x ∂μ = 0 := by
+  have h := integral_comp_of_measurePreserving hΨ hg.aestronglyMeasurable
+  rw [integral_congr_ae (ae_of_all _ hflip), integral_neg] at h
+  linarith
 
 /-- **From a one-lag bound to the two-index antecedent.** For a measure-preserving map the pair
 correlation depends only on the lag, so a decay estimate at each lag `u` — the form a physical

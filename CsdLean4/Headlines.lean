@@ -49,6 +49,11 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.DerivedCoupling
 public import CsdLean4.Empirical.CSD.QuantumChaos.EntropyLedger
 public import CsdLean4.Empirical.QM.QEC.ShorNine
 public import CsdLean4.LF6.LindbladSemigroup
+public import CsdLean4.Thermo.ReducedSecondMoment
+public import CsdLean4.Thermo.EnergyWindow
+public import CsdLean4.Thermo.Equilibration
+public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
+public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -221,5 +226,10 @@ example := @CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invarian
 example := @CSD.RecordLayer.povm_sector_born -- CL-050
 example := @CSD.RecordLayer.pointer_luders_born_prep -- CL-051
 example := @CSD.LF6.c1_singlet_contextual_capstone -- CL-052
+example := @CSD.Thermo.fs_hsDeviationNormSq -- CL-053
+example := @CSD.Thermo.energyWindow_ne_zero -- CL-054
+example := @MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq -- CL-055
+example := @CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto -- CL-056
+example := @MeasureTheory.circ_hasCorrelationDecay -- CL-057
 
 end CSD.Headlines
