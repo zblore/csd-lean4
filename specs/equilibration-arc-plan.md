@@ -183,13 +183,23 @@ doing load-bearing work.
 > `fs_redOff_cross_vanish` (**the four-index expectations vanish** — a coordinate occurring an
 > odd number of times is killed by the sign flip).
 >
-> **Deferred, and NOT asserted.** The off-diagonal second moment `E|(ρ_A)_{aa'}|² =
-> d_B/(N(N+1))` and the Hilbert–Schmidt assembly `E‖ρ_A − I_A/d_A‖₂² = (d_A+d_B)/(N+1) − 1/d_A`
-> (the Lubkin–Page purity average). Both are *determined* by what is proved — the route is
-> written into the module's closing section and the arithmetic checked on paper — but paper
-> arithmetic is not a theorem. What remains is Lean plumbing: the `normSq`-of-a-sum expansion
-> into real and imaginary parts, integrability side conditions, and the final algebra with
-> `N = d_A d_B`.
+> **Extended 2026-08-23 — the off-diagonal moment is now proved too.** ★★ `fs_redOff_normSq`:
+> `E|(ρ_A)_{aa'}|² = d_B/(N(N+1))` for `a ≠ a'`. Expanding the modulus of the sum into real and
+> imaginary parts, the `b = b'` terms are the landed cross moment and the `b ≠ b'` terms vanish
+> by `fs_redOff_cross_vanish`. **This closes E1's mathematical content**: every moment the
+> Lubkin–Page average needs is now a theorem.
+>
+> **Still deferred, and NOT asserted.** The Hilbert–Schmidt *assembly*
+> `E‖ρ_A − I_A/d_A‖₂² = (d_A+d_B)/(N+1) − 1/d_A`. It is pure bookkeeping over the proved
+> moments — expanding the square under the integral, the `sum_ite` count of off-diagonal pairs,
+> and the `N = d_A d_B` cast algebra — and the arithmetic is checked on paper, but paper
+> arithmetic is not a theorem. Recorded in the module's closing section.
+>
+> **Process note worth keeping.** The assembly was attempted twice and abandoned twice: in both
+> attempts the draft came out with placeholder `sorry`s at the bookkeeping step, which the house
+> rule forbids, so the work was reverted rather than patched. The moments landed cleanly; the
+> failure mode was long single-shot proof drafting late in a session, not the mathematics. The
+> remainder is best done fresh and in small increments.
 >
 > **Honest cost correction.** The planning note called E1 "the cheapest item in the arc" on the
 > grounds that its ingredients were landed. The ingredients *were* landed and the mathematics

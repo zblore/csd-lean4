@@ -187,6 +187,15 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.fs_redOff_cross_vanish' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_redOff_cross_vanish
 
+-- ★★ fs_redOff_normSq (2026-08-23): E|(rho_A)_{a a'}|^2 = d_B/(N(N+1)) for a /= a'. Expanding
+-- the modulus of the sum into real and imaginary parts, the b = b' terms are the landed cross
+-- moment E[x_i x_j] and the b /= b' terms vanish by fs_redOff_cross_vanish. This closes E1's
+-- MATHEMATICAL content; only the Hilbert-Schmidt bookkeeping (expanding the square under the
+-- integral, the sum_ite pair count, the N = d_A d_B cast algebra) remains, and it is recorded
+-- as a named remainder rather than asserted.
+/-- info: 'CSD.Thermo.fs_redOff_normSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_redOff_normSq
+
 -- TH2: the second law as coarse-grained entropy monotonicity. Pinching
 -- (dephasing to the pointer-basis diagonal) never decreases the von Neumann
 -- entropy -- S(rho) <= S(pinch rho) -- via Klein's inequality against the

@@ -45,13 +45,14 @@ With `x_i = momentMap p i` and `r_{ij} = rayDensity p i j`:
   neither index (companion to `signFlip_smul_offdiag`);
 * ★ `fs_redOff_cross_vanish` — the genuinely four-index expectations vanish: a coordinate
   occurring an odd number of times is killed by the sign flip. This is the novel ingredient;
-  everything else here is Q24 specialised.
+  everything else here is Q24 specialised;
+* ★★ `fs_redOff_normSq` — `E|(ρ_A)_{aa'}|² = d_B/(N(N+1))` for `a ≠ a'`: expanding the modulus
+  of the sum, the `b = b'` terms are the landed cross moment and the `b ≠ b'` terms vanish.
 
 ## ⚠️ Honest scope — what is NOT yet proved
 
-* **The off-diagonal second moment and the Hilbert–Schmidt assembly are NOT formalised here.**
-  The two ingredients above determine them (see the closing section for the exact statement and
-  route), and the arithmetic has been checked on paper — `E‖ρ_A − I_A/d_A‖₂² =
+* **The Hilbert–Schmidt assembly is NOT formalised here.** The moments above determine it (see
+  the closing section), and the arithmetic has been checked on paper — `E‖ρ_A − I_A/d_A‖₂² =
   (d_A+d_B)/(N+1) − 1/d_A`, the Lubkin–Page purity average — but arithmetic checked on paper is
   not a theorem, so it is recorded as a named remainder and not asserted.
 * The **trace-norm** form the brief asks for would follow by `‖·‖₁ ≤ √d_A ‖·‖₂`, which needs the
@@ -215,23 +216,116 @@ theorem fs_redOff_cross_vanish (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     integral_neg] at h
   linarith
 
-/-! ### Remaining: the off-diagonal second moment and the Hilbert-Schmidt assembly
+/-! ### ★★ The off-diagonal second moment -/
 
-The two ingredients above (`fs_redOff_cross_vanish` and Q24's `fs_x_cross_moment`, applied
-through `rayDensity_re_sq_add_im_sq`) determine
+/-- The `b`-th summand of an off-diagonal reduced entry, named so the expansion below stays
+readable. -/
+noncomputable def redTerm (e : Fin N ≃ Fin dA × Fin dB) (a a' : Fin dA) (b : Fin dB)
+    (p : CPN N) : ℂ :=
+  rayDensity p (e.symm (a, b)) (e.symm (a', b))
 
-  `E|(rho_A)_{a a'}|^2 = d_B / (N (N+1))`   for `a != a'`,
+omit [NeZero N] in
+lemma redOff_eq_sum (e : Fin N ≃ Fin dA × Fin dB) (p : CPN N) (a a' : Fin dA) :
+    redOff e p a a' = ∑ b : Fin dB, redTerm e a a' b p := rfl
 
-because expanding `normSq (sum_b r_b)` into real and imaginary parts gives `d_B` diagonal terms
-`E[x_i x_j] = 1/(N(N+1))` and `d_B (d_B - 1)` off-diagonal terms killed by
-`fs_redOff_cross_vanish`. Combining with `fs_blockPop_mean` and `fs_blockPop_sq` yields the
-Lubkin-Page purity average and the Hilbert-Schmidt deviation
+omit [NeZero N] in
+/-- The `b = b'` term of the expansion is a product of two moment-map coordinates. -/
+lemma redTerm_self (e : Fin N ≃ Fin dA × Fin dB) (a a' : Fin dA) (b : Fin dB) (p : CPN N) :
+    (redTerm e a a' b p).re * (redTerm e a a' b p).re
+        + (redTerm e a a' b p).im * (redTerm e a a' b p).im
+      = momentMap p (e.symm (a, b)) * momentMap p (e.symm (a', b)) := by
+  rw [← pow_two, ← pow_two]
+  exact rayDensity_re_sq_add_im_sq p _ _
 
-  `E||rho_A - I_A/d_A||_2^2 = (d_A + d_B)/(N + 1) - 1/d_A`      (using `N = d_A d_B`),
+omit [NeZero N] in
+lemma redTerm_measurable (e : Fin N ≃ Fin dA × Fin dB) (a a' : Fin dA) (b : Fin dB) :
+    Measurable (redTerm e a a' b) := rayDensity_measurable _ _
 
-which is the arc's E1 headline. That assembly is *arithmetic on the moments proved here* plus
-the `normSq`-of-a-sum expansion; it is NOT yet formalised, and is recorded as the named
-remainder rather than asserted. See `specs/equilibration-arc-plan.md` (E1).
+/-- ★★ **The off-diagonal entries' second moment**: `E|(ρ_A)_{aa'}|² = d_B/(N(N+1))` for
+`a ≠ a'`. The `b = b'` terms contribute the landed cross moment `E[x_i x_j]`; the `b ≠ b'`
+terms vanish by `fs_redOff_cross_vanish`. -/
+theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
+    {a a' : Fin dA} (haa : a ≠ a') :
+    ∫ p, Complex.normSq (redOff e p a a') ∂(fubiniStudyMeasure p₀)
+      = (dB : ℝ) / ((N : ℝ) * ((N : ℝ) + 1)) := by
+  classical
+  have hexp : ∀ p : CPN N, Complex.normSq (redOff e p a a')
+      = ∑ b : Fin dB, ∑ b' : Fin dB,
+          ((redTerm e a a' b p).re * (redTerm e a a' b' p).re
+            + (redTerm e a a' b p).im * (redTerm e a a' b' p).im) := by
+    intro p
+    rw [Complex.normSq_apply, redOff_eq_sum, Complex.re_sum, Complex.im_sum,
+      Finset.sum_mul_sum, Finset.sum_mul_sum, ← Finset.sum_add_distrib]
+    exact Finset.sum_congr rfl (fun b _ => (Finset.sum_add_distrib).symm)
+  have hmeas : ∀ b b' : Fin dB, Measurable (fun p : CPN N =>
+      (redTerm e a a' b p).re * (redTerm e a a' b' p).re
+        + (redTerm e a a' b p).im * (redTerm e a a' b' p).im) := by
+    intro b b'
+    exact ((Complex.measurable_re.comp (redTerm_measurable e a a' b)).mul
+        (Complex.measurable_re.comp (redTerm_measurable e a a' b'))).add
+      ((Complex.measurable_im.comp (redTerm_measurable e a a' b)).mul
+        (Complex.measurable_im.comp (redTerm_measurable e a a' b')))
+  have hint : ∀ b b' : Fin dB, Integrable (fun p : CPN N =>
+      (redTerm e a a' b p).re * (redTerm e a a' b' p).re
+        + (redTerm e a a' b p).im * (redTerm e a a' b' p).im)
+      (fubiniStudyMeasure p₀) := by
+    intro b b'
+    refine Integrable.of_bound (hmeas b b').aestronglyMeasurable 2
+      (ae_of_all _ (fun p => ?_))
+    have h1 := abs_re_rayDensity_le_one p (e.symm (a, b)) (e.symm (a', b))
+    have h2 := abs_re_rayDensity_le_one p (e.symm (a, b')) (e.symm (a', b'))
+    have h3 := abs_im_rayDensity_le_one p (e.symm (a, b)) (e.symm (a', b))
+    have h4 := abs_im_rayDensity_le_one p (e.symm (a, b')) (e.symm (a', b'))
+    have hb1 := abs_le.mp (show |(redTerm e a a' b p).re * (redTerm e a a' b' p).re| ≤ 1 by
+      rw [abs_mul]; exact mul_le_one₀ h1 (abs_nonneg _) h2)
+    have hb2 := abs_le.mp (show |(redTerm e a a' b p).im * (redTerm e a a' b' p).im| ≤ 1 by
+      rw [abs_mul]; exact mul_le_one₀ h3 (abs_nonneg _) h4)
+    rw [Real.norm_eq_abs, abs_le]
+    constructor <;> linarith [hb1.1, hb1.2, hb2.1, hb2.2]
+  have hdiag : ∀ b : Fin dB, ∫ p,
+      ((redTerm e a a' b p).re * (redTerm e a a' b p).re
+        + (redTerm e a a' b p).im * (redTerm e a a' b p).im)
+      ∂(fubiniStudyMeasure p₀) = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
+    intro b
+    have hne : e.symm (a, b) ≠ e.symm (a', b) :=
+      fun h => haa (congrArg Prod.fst (e.symm.injective h))
+    rw [integral_congr_ae (ae_of_all _ (fun p => redTerm_self e a a' b p))]
+    exact fs_x_cross_moment p₀ hne
+  have hoff : ∀ b b' : Fin dB, b ≠ b' → ∫ p,
+      ((redTerm e a a' b p).re * (redTerm e a a' b' p).re
+        + (redTerm e a a' b p).im * (redTerm e a a' b' p).im)
+      ∂(fubiniStudyMeasure p₀) = 0 :=
+    fun b b' hbb => fs_redOff_cross_vanish p₀ e haa hbb
+  rw [integral_congr_ae (ae_of_all _ hexp),
+    integral_finsetSum Finset.univ
+      (fun b _ => integrable_finsetSum Finset.univ (fun b' _ => hint b b'))]
+  have hrow : ∀ b : Fin dB, ∫ p, (∑ b' : Fin dB,
+      ((redTerm e a a' b p).re * (redTerm e a a' b' p).re
+        + (redTerm e a a' b p).im * (redTerm e a a' b' p).im))
+      ∂(fubiniStudyMeasure p₀) = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
+    intro b
+    rw [integral_finsetSum Finset.univ (fun b' _ => hint b b'),
+      Finset.sum_eq_single b
+        (fun b' _ hb' => hoff b b' (Ne.symm hb'))
+        (fun h => absurd (Finset.mem_univ b) h)]
+    exact hdiag b
+  rw [Finset.sum_congr rfl (fun b _ => hrow b), Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul]
+  ring
+
+/-! ### Remaining: the Hilbert-Schmidt assembly
+
+The moments above determine the Lubkin-Page purity average. Writing `c = 1/d_A` and using
+`N = d_A d_B`:
+
+  `sum_a E[(blockPop a - c)^2]  = d_A (d_B^2 + d_B)/(N(N+1)) - 1/d_A`
+  `sum_{a != a'} E|redOff a a'|^2 = d_A (d_A - 1) d_B/(N(N+1))`
+
+and the two add to `(d_A + d_B)/(N+1) - 1/d_A`, i.e. `E[Tr rho_A^2] = (d_A+d_B)/(N+1)`. Every
+ingredient is proved above (`fs_blockPop_mean`, `fs_blockPop_sq`, `fs_redOff_normSq`); what
+remains is the bookkeeping -- expanding the square under the integral, the `sum_ite` count of
+the off-diagonal pairs, and the final cast algebra with `N = d_A d_B`. It is NOT formalised
+here and is therefore NOT asserted. See `specs/equilibration-arc-plan.md` (E1).
 -/
 
 end CSD.Thermo
