@@ -50,7 +50,10 @@ Birkhoff average, and the double sum is controlled by counting how often each di
 * ★★ `tendsto_integral_birkhoffAverage_sub_sq` — if `ε` is summable then the time averages
   converge to the space average **in `L²`**, which is E4's consequent;
 * `integral_iterate_of_measurePreserving` and `HasCorrelationDecay.of_measurePreserving` — the
-  bridge supplying both hypotheses from a measure-preserving map plus a **one-lag** bound.
+  bridge supplying both hypotheses from a measure-preserving map plus a **one-lag** bound;
+* ★★ `HasCorrelationDecay.integral_mul_self_eq_of_recurrent` — the sharpness direction: if the
+  correlation returns near its lag-zero value at arbitrarily large lags, decay forces an a.e.
+  constant observable. ★ `…_of_periodic` is the special case where it returns *exactly*.
 
 ## ⚠️ Honest scope
 
@@ -288,15 +291,47 @@ theorem tendsto_integral_birkhoffAverage_sub_sq {μ : Measure X} [IsProbabilityM
 
 /-! ### ★ The antecedent has teeth: periodic dynamics cannot satisfy it -/
 
-/-- ★ **A periodic map forces zero variance.** If `Φ^[k] = id` for some `k ≥ 1`, then the only
-observables with summably-decaying correlations are the ones with `⟨f²⟩ = ⟨f⟩²`, i.e. the a.e.
-constant ones.
+/-- ★★ **Recurrence of the correlation function kills decay.** If the correlation returns
+arbitrarily close to its lag-zero value `⟨f²⟩` at arbitrarily large lags, then a summable envelope
+forces `⟨f²⟩ = ⟨f⟩²` — an a.e. constant observable.
 
-The proof is one line of dynamics and one of analysis: `Φ^[k*m] = id` for every `m`, so the
-correlation at lag `k*m` is *exactly* `⟨f²⟩`; a summable envelope tends to zero along that
-subsequence, and a constant bounded by a null sequence is zero.
+This is the sharpness statement for `HasCorrelationDecay`, and `hrec` is exactly the property
+that **almost periodic** dynamics has: a system that keeps returning near its starting
+configuration cannot have correlations that fade. Two systems of interest satisfy `hrec`:
+periodic maps (below, exactly) and unitary flows on a finite-dimensional space
+(`CSD.Thermo`, via compactness of the unitary group).
 
-This is the sharpness statement for `HasCorrelationDecay` — it rules out the cheap witnesses.
+The proof is a three-term triangle inequality: `⟨f²⟩` is near `C u` by recurrence, `C u` is near
+`⟨f⟩²` by decay, and both gaps can be made smaller than half of `|⟨f²⟩ − ⟨f⟩²|`. -/
+theorem HasCorrelationDecay.integral_mul_self_eq_of_recurrent {μ : Measure X}
+    {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ}
+    (hrec : ∀ δ : ℝ, 0 < δ → ∀ M : ℕ, ∃ u, M ≤ u ∧
+      |(∫ x, f x * f (Φ^[u] x) ∂μ) - (∫ x, f x * f x ∂μ)| < δ)
+    (hdec : HasCorrelationDecay μ Φ f ε) (hsum : Summable ε) :
+    ∫ x, f x * f x ∂μ = (∫ y, f y ∂μ) ^ 2 := by
+  by_contra hne
+  set A : ℝ := ∫ x, f x * f x ∂μ with hA
+  set B : ℝ := (∫ y, f y ∂μ) ^ 2 with hB
+  have hpos : 0 < |A - B| / 2 := by
+    have : A - B ≠ 0 := sub_ne_zero.mpr hne
+    positivity
+  -- the envelope is eventually below the half-gap
+  obtain ⟨M, hM⟩ := Filter.eventually_atTop.mp
+    (hsum.tendsto_atTop_zero.eventually (gt_mem_nhds hpos))
+  obtain ⟨u, hMu, hru⟩ := hrec (|A - B| / 2) hpos M
+  -- decay at the pair (0, u)
+  have hdu := hdec 0 u
+  rw [show Nat.dist 0 u = u by simp [Nat.dist]] at hdu
+  simp only [Function.iterate_zero_apply] at hdu
+  have h1 : |(∫ x, f x * f (Φ^[u] x) ∂μ) - B| < |A - B| / 2 := lt_of_le_of_lt hdu (hM u hMu)
+  rw [abs_lt] at hru h1
+  rcases abs_cases (A - B) with ⟨he, _⟩ | ⟨he, _⟩ <;>
+    linarith [hru.1, hru.2, h1.1, h1.2]
+
+/-- ★ **A periodic map forces zero variance** — the special case of
+`integral_mul_self_eq_of_recurrent` in which the correlation does not merely return *near*
+`⟨f²⟩` but hits it exactly, at every multiple of the period.
+
 Every measure-preserving map of a finite or countable probability space is periodic on its
 support, so **no such space carries a non-trivial witness**: a genuine one needs a non-atomic
 space, which is why `CorrelationDecayWitness` builds on the circle. -/
@@ -304,23 +339,10 @@ theorem HasCorrelationDecay.integral_mul_self_eq_of_periodic {μ : Measure X}
     {Φ : X → X} {f : X → ℝ} {ε : ℕ → ℝ} {k : ℕ} (hk : 0 < k) (hper : Φ^[k] = id)
     (hdec : HasCorrelationDecay μ Φ f ε) (hsum : Summable ε) :
     ∫ x, f x * f x ∂μ = (∫ y, f y ∂μ) ^ 2 := by
-  have hiter : ∀ m : ℕ, Φ^[k * m] = id := by
-    intro m
-    rw [Function.iterate_mul, hper, Function.iterate_id]
-  have hbound : ∀ m : ℕ,
-      |(∫ x, f x * f x ∂μ) - (∫ y, f y ∂μ) ^ 2| ≤ ε (k * m) := by
-    intro m
-    have h := hdec 0 (k * m)
-    rw [show Nat.dist 0 (k * m) = k * m by simp [Nat.dist], hiter m] at h
-    simpa using h
-  have hzero : Filter.Tendsto (fun m : ℕ => ε (k * m)) Filter.atTop (nhds 0) :=
-    hsum.tendsto_atTop_zero.comp
-      (Filter.tendsto_atTop_atTop.mpr (fun b => ⟨b, fun n hn => le_trans hn
-        (Nat.le_mul_of_pos_left n hk)⟩))
-  have := ge_of_tendsto' hzero hbound
-  have habs : |(∫ x, f x * f x ∂μ) - (∫ y, f y ∂μ) ^ 2| = 0 :=
-    le_antisymm this (abs_nonneg _)
-  linarith [sub_eq_zero.mp (abs_eq_zero.mp habs)]
+  refine hdec.integral_mul_self_eq_of_recurrent (fun δ hδ M => ⟨k * M, ?_, ?_⟩) hsum
+  · exact Nat.le_mul_of_pos_left M hk
+  · rw [show Φ^[k * M] = id by rw [Function.iterate_mul, hper, Function.iterate_id]]
+    simpa using hδ
 
 /-! ### The measure-preserving bridge
 

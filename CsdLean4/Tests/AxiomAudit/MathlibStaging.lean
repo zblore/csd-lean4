@@ -2378,4 +2378,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.doubling_not_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.doubling_not_periodic
 
+-- The almost-periodicity route (2026-08-23), two of its three pieces.
+-- integral_mul_self_eq_of_recurrent GENERALISES the periodic no-go: what actually kills decay is
+-- that the correlation RETURNS near its lag-zero value at arbitrarily large lags.  The periodic
+-- case is now a corollary (it returns exactly).  Three-term triangle inequality, nothing more.
+-- exists_le_pow_mem_of_compactSpace is the classical pigeonhole behind almost periodicity: in a
+-- compact topological group the powers of any element return to EVERY neighbourhood of 1 at
+-- arbitrarily large exponents (cluster point of U^n, then continuity of (x,y) |-> y * x^-1 at
+-- (g,g), then two exponents far apart; powers of one element commute so the quotient IS U^(j-i)).
+-- Matrix.unitaryGroup IS a compact topological group (UnitaryGroup.instCompactSpace -- a wall
+-- label that had rotted; an earlier grep missed it).
+-- STILL MISSING, and it is the only gap left in the general statement: the uniform estimate
+-- |f (V . p) - f p| <= c * sqrt (dev V) transferring group recurrence to the correlation.
+-- Uniform rather than dominated-convergence because FirstCountableTopology does NOT synthesize
+-- for Matrix.unitaryGroup, so continuous_of_dominated is unavailable.  Queued in BACKLOG.
+/-- info: 'MeasureTheory.HasCorrelationDecay.integral_mul_self_eq_of_recurrent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.HasCorrelationDecay.integral_mul_self_eq_of_recurrent
+
+/-- info: 'exists_le_pow_mem_of_compactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms exists_le_pow_mem_of_compactSpace
+
 end CSD.Tests.AxiomAudit

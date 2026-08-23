@@ -391,11 +391,32 @@ prose), plus the glossary `status:` field if a page is created.
 >   conclusion exactly when `N = d_B`, i.e. `d_A = 1` — no subsystem at all.
 >
 > A unitary on `ℂℙ^{N−1}` generates a relatively compact group, so its correlations are almost
-> periodic and cannot decay either. The finite-order case is the piece available without a
-> recurrence argument; **the general almost-periodic statement is argued but NOT proved** and is
-> recorded as such in the module docstring. Either way the honest reading is that E4's antecedent
+> periodic and cannot decay either. Either way the honest reading is that E4's antecedent
 > is *not* populated by finite-dimensional unitary Σ-dynamics. This is the referee's attack, found
 > before the referee.
+>
+> #### E6 opened the same day — the general case, narrowed to one estimate
+>
+> The general almost-periodic statement was left *argued but not proved*. Two of its three pieces
+> landed on 2026-08-23, so the gap is now precisely located rather than hand-waved:
+>
+> * ★★ `HasCorrelationDecay.integral_mul_self_eq_of_recurrent` — the whole statement reduces to
+>   one property `hrec`: the correlation must return near its lag-zero value at arbitrarily large
+>   lags. The periodic no-go is now a *corollary* of this, not a separate argument.
+> * ★ `exists_le_pow_mem_of_compactSpace` (`Mathlib/Topology/Algebra/CompactRecurrence.lean`,
+>   Cat-1) — the pigeonhole: powers of any element of a compact topological group return to every
+>   neighbourhood of `1` at arbitrarily large exponents. Cluster point of `U ^ n`, continuity of
+>   `(x, y) ↦ y * x⁻¹` at `(g, g)`, two exponents far apart; powers of one element commute so the
+>   quotient *is* `U ^ (j - i)`.
+>
+> ⚠️ **Another rotted wall label**: `UnitaryGroup.instCompactSpace` exists — an earlier grep of
+> mine missed it and I nearly recorded compactness as the obstruction. Probe, don't grep.
+>
+> **What remains is exactly one analytic bridge**, and it is a brick rather than a tidy-up: the
+> *uniform* estimate `|f (V • p) − f p| ≤ c · √(dev V)` with `dev` continuous and vanishing at
+> `V = 1`. It must be uniform because **`FirstCountableTopology` does not synthesize for
+> `Matrix.unitaryGroup`**, so `continuous_of_dominated` is unavailable. Route and probed
+> sub-steps are in the `E6` BACKLOG row. **Sizing correction: I called this bounded; it is M–L.**
 >
 > **Goal (a), positive half — the engine is not vacuous.**
 > `CsdLean4/Mathlib/Dynamics/CorrelationDecayWitness.lean` (Cat-1, 5 pins): the doubling map on

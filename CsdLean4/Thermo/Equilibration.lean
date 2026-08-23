@@ -138,12 +138,24 @@ The proof is Q24 arithmetic against the periodic no-go. A periodic map forces `�
 `N = d_B`, i.e. when `d_A = 1` — no subsystem at all.
 
 **Why this matters for the arc.** A unitary acting on `ℂℙ^{N-1}` generates a relatively compact
-group, so its correlations are almost periodic and cannot decay either; the finite-order case
-proved here is the piece of that statement available without a recurrence argument, and the
-general version is *believed but not proved* (see `specs/equilibration-arc-plan.md` E5). Either
-way the honest reading is that E4's antecedent is **not** populated by finite-dimensional unitary
-Σ-dynamics, and a genuine witness needs a non-atomic space with a genuinely mixing map — which is
-what `CsdLean4/Mathlib/Dynamics/CorrelationDecayWitness.lean` supplies for the engine. -/
+group, so its correlations are almost periodic and cannot decay either. That general statement is
+**not yet proved**, but it is no longer hand-waving — two of its three pieces are theorems:
+
+* `MeasureTheory.HasCorrelationDecay.integral_mul_self_eq_of_recurrent` reduces it to a single
+  property `hrec`: the correlation must return near its lag-zero value at arbitrarily large lags;
+* `exists_le_pow_mem_of_compactSpace` supplies the recurrence of `U ^ n` itself — the powers of a
+  unitary return to *every* neighbourhood of `1`, at arbitrarily large exponents, since
+  `Matrix.unitaryGroup` is a compact topological group.
+
+What remains is exactly one analytic bridge: a **uniform** estimate
+`|f (V • p) - f p| ≤ c · √(dev V)` with `dev` continuous and vanishing at `V = 1`, transferring
+the group recurrence to the correlation. (Uniform, because `FirstCountableTopology` does not
+synthesize for `Matrix.unitaryGroup`, so `continuous_of_dominated` is unavailable.) That estimate
+is a queued BACKLOG item, not a claim made here.
+
+Either way the honest reading is that E4's antecedent is **not** populated by finite-dimensional
+unitary Σ-dynamics, and a genuine witness needs a non-atomic space with a genuinely mixing map —
+which is what `CsdLean4/Mathlib/Dynamics/CorrelationDecayWitness.lean` supplies for the engine. -/
 theorem not_hasCorrelationDecay_blockPop_of_periodic
     (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) (hdA : 2 ≤ dA)
     {Φ : CPN N → CPN N} {ε : ℕ → ℝ} {k : ℕ} (hk : 0 < k) (hper : Φ^[k] = id)

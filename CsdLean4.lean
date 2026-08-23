@@ -432,6 +432,7 @@ public import CsdLean4.RecordLayer.OutcomeField
 public import CsdLean4.RecordLayer.OutcomeBasin
 public import CsdLean4.RecordLayer.DynamicMeasurementClosure
 public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
+public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
 public import CsdLean4.RecordLayer.SwapWitness
