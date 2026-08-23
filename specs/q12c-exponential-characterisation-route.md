@@ -92,7 +92,7 @@ keep.**
 | 1 | the `k`-clock race probability for *general* iid clocks | needs the product-measure setup of `Q12-b` redone without the exponential assumption — the fiddliest part |
 | 2 | probability integral transform | standard; check Mathlib coverage |
 | 3 | Hausdorff determinacy on `[0,1]` | ✅ **DONE 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq` (`Mathlib/MeasureTheory/MomentDeterminacy.lean`). Assembled from Weierstrass + `ext_of_forall_integral_eq_of_IsFiniteMeasure`, as predicted |
-| 3′ | two increasing functions of `U` with equal law are equal | elementary; quantile argument |
+| 3′ | ✅ **DONE 2026-08-24** — `eq_of_forall_integral_mul_pow_eq`. Not the quantile argument: continuous functions with equal moments against all powers, via the same Weierstrass density argument |
 | 4 | substitution | trivial |
 
 **Estimate: L.** The analytic content is light; the cost is step 1's plumbing plus assembling
@@ -121,9 +121,22 @@ determinacy, which Mathlib provisions but does not state.
 * ✅ **The `ℝ`-supported restatement landed too** —
   `ext_of_forall_integral_pow_eq_of_null_compl`, transferring through `Subtype.val` with
   `map_comap_subtype_coe`. This is the form the route actually consumes.
-* ⚠️ **A fork discovered while building, which the four-step sketch hid.** Step 3′ ("both are
-  increasing functions of the same `U`, so they agree") is *not* a one-liner, and there are two
-  ways past it:
+* ✅ **The fork is dissolved — step 3′ is done, by a third route neither branch anticipated.**
+  `eq_of_forall_integral_mul_pow_eq`: *two continuous functions on a compact interval with the same
+  moments against all powers are equal.* Applied to `H_c` and `u ↦ u^c` — both continuous, because
+  `G` is continuous and strictly decreasing — this gives `H_c = u^c` directly.
+
+  The route works because the `k`-clock family delivers more than the marginal moments: with `j`
+  clocks at rate `c` and `k` at rate `1` it gives `E[H_c(U)^j U^k] = 1/(1 + jc + k)`, and taking
+  `j = 1` leaves `∫ H_c(u)·u^k du = ∫ u^c·u^k du` for every `k` — a *fixed continuous weight*
+  against all powers, which is exactly the hypothesis above. No rearrangement theory, no joint
+  law, no `[0,1]²`.
+
+  `IsOpenPosMeasure` is what upgrades "a.e. equal" to "equal", and full support on the interval
+  supplies it.
+
+* ~~**A fork discovered while building, which the four-step sketch hid.**~~ *(Retired — kept for the
+  record.)* Step 3′ looked like it needed one of two branches:
   * **(i) the monotone route** — two antitone functions of the same variable with equal laws are
     equal a.e. This is decreasing-rearrangement uniqueness; Mathlib has no quantile machinery for
     it, so it would be built from scratch (order + topology fiddling, no deep analysis).
@@ -133,8 +146,10 @@ determinacy, which Mathlib provisions but does not state.
     with no monotonicity argument at all. The cost is 2-D determinacy on `[0,1]²`, i.e. redoing the
     assembly above with general Stone–Weierstrass (the coordinate algebra separates points) instead
     of Weierstrass.
-  **Route (ii) is the better bet**: it replaces bespoke order theory with one more instance of an
-  assembly already done once, and it yields the a.e. identity in the form step 4 wants.
+  Route (ii) was the better of the two, but **route (iii) above beat both** — it reuses the
+  Weierstrass argument already written, against a fixed weight instead of between two measures.
+  Worth remembering: when a step looks like it needs a *stronger determinacy theorem*, check first
+  whether it needs only the *same* theorem against a different object.
 * ⏳ **Then step 1**, the expensive half: the `k`-clock race for *general* iid clocks, i.e. Q12-b's
   product-measure setup without the exponential assumption.
 

@@ -2467,4 +2467,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl
 
+-- Q12-c2 step 3' (2026-08-24): eq_of_forall_integral_mul_pow_eq -- two CONTINUOUS functions on a
+-- compact interval with the same moments against all powers are equal.
+-- This DISSOLVED the route's step-3' fork.  The memo had identified two ways past that step --
+-- decreasing-rearrangement uniqueness (no Mathlib quantile machinery) or two-dimensional
+-- determinacy on [0,1]^2 (general Stone-Weierstrass) -- and neither is needed.  The k-clock family
+-- delivers more than the marginal moments: with j clocks at rate c and k at rate 1 it gives
+-- E[H_c(U)^j U^k] = 1/(1 + jc + k), and j = 1 leaves a FIXED CONTINUOUS WEIGHT integrated against
+-- all powers, which is exactly this lemma's hypothesis.
+-- Lesson recorded in the memo: when a step looks like it needs a STRONGER determinacy theorem,
+-- check first whether it needs only the SAME theorem against a different object.
+-- IsOpenPosMeasure is what upgrades "a.e. equal" to "equal".
+/-- info: 'MeasureTheory.eq_of_forall_integral_mul_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.eq_of_forall_integral_mul_pow_eq
+
 end CSD.Tests.AxiomAudit

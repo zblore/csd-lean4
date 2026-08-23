@@ -175,4 +175,124 @@ theorem ext_of_forall_integral_pow_eq_of_null_compl {μ ν : Measure ℝ}
   exact ext_of_forall_integral_pow_eq (fun k => by
     rw [hmom μ hμ k, hmom ν hν k, h k])
 
+/-! ### ★ Continuous functions determined by their moments against powers
+
+The form the `Q12-c2` route actually needs, and the one that dissolves its step-3′ fork: no
+monotone-rearrangement argument and no two-dimensional determinacy, just the same Weierstrass
+density argument run against a *fixed* continuous weight. -/
+
+/-- The `k`-th coordinate power, bundled. -/
+def coordPow (k : ℕ) : C(Set.Icc a b, ℝ) :=
+  ⟨fun x => (x : ℝ) ^ k, continuous_subtype_val.pow k⟩
+
+@[simp] lemma coordPow_apply (k : ℕ) (x : Set.Icc a b) : coordPow k x = (x : ℝ) ^ k := rfl
+
+lemma integrable_mul_continuousMap (ρ : Measure (Set.Icc a b)) [IsFiniteMeasure ρ]
+    (f g : C(Set.Icc a b, ℝ)) : Integrable (fun x => f x * g x) ρ := by
+  have h := integrable_continuousMap ρ (f * g)
+  simpa using h
+
+lemma integrable_mul_pow (ρ : Measure (Set.Icc a b)) [IsFiniteMeasure ρ]
+    (f : C(Set.Icc a b, ℝ)) (k : ℕ) :
+    Integrable (fun x : Set.Icc a b => f x * (x : ℝ) ^ k) ρ :=
+  integrable_mul_continuousMap ρ f (coordPow k)
+
+/-- A continuous function orthogonal to every power is orthogonal to every polynomial. -/
+lemma integral_mul_polynomial_eq_zero {ρ : Measure (Set.Icc a b)} [IsFiniteMeasure ρ]
+    {d : C(Set.Icc a b, ℝ)} (h : ∀ k : ℕ, ∫ x, d x * (x : ℝ) ^ k ∂ρ = 0) (p : Polynomial ℝ) :
+    ∫ x, d x * p.eval (x : ℝ) ∂ρ = 0 := by
+  have hpt : ∀ x : Set.Icc a b,
+      d x * p.eval (x : ℝ)
+        = ∑ k ∈ Finset.range (p.natDegree + 1), p.coeff k * (d x * (x : ℝ) ^ k) := by
+    intro x
+    rw [Polynomial.eval_eq_sum_range, Finset.mul_sum]
+    exact Finset.sum_congr rfl (fun k _ => by ring)
+  rw [integral_congr_ae (ae_of_all _ hpt),
+    integral_finsetSum _ (fun k _ => (integrable_mul_pow ρ d k).const_mul _)]
+  refine Finset.sum_eq_zero (fun k _ => ?_)
+  rw [integral_const_mul, h k, mul_zero]
+
+/-- ★★ **Two continuous functions with the same moments against all powers are equal.**
+
+`IsOpenPosMeasure` is what upgrades "equal almost everywhere" to "equal", and it is exactly what a
+measure with full support on the interval provides. -/
+theorem eq_of_forall_integral_mul_pow_eq {μ : Measure (Set.Icc a b)}
+    [IsFiniteMeasure μ] [μ.IsOpenPosMeasure] {f g : C(Set.Icc a b, ℝ)}
+    (h : ∀ k : ℕ, ∫ x, f x * (x : ℝ) ^ k ∂μ = ∫ x, g x * (x : ℝ) ^ k ∂μ) : f = g := by
+  set d : C(Set.Icc a b, ℝ) := f - g with hddef
+  have hdapp : ∀ x : Set.Icc a b, d x = f x - g x := fun x => rfl
+  -- `d` is orthogonal to every power, hence to every polynomial
+  have hpow : ∀ k : ℕ, ∫ x, d x * (x : ℝ) ^ k ∂μ = 0 := by
+    intro k
+    have hpt : ∀ x : Set.Icc a b,
+        d x * (x : ℝ) ^ k = f x * (x : ℝ) ^ k - g x * (x : ℝ) ^ k := by
+      intro x; rw [hdapp]; ring
+    rw [integral_congr_ae (ae_of_all _ hpt),
+      integral_sub (integrable_mul_pow μ f k) (integrable_mul_pow μ g k), h k, sub_self]
+  -- hence `∫ d² = 0`, by uniform approximation
+  have hsq : ∫ x, d x * d x ∂μ = 0 := by
+    by_contra hne
+    set e : ℝ := |∫ x, d x * d x ∂μ| with hedef
+    have hepos : 0 < e := abs_pos.mpr hne
+    have hμnn : (0 : ℝ) ≤ (μ Set.univ).toReal := ENNReal.toReal_nonneg
+    set K : ℝ := ‖d‖ * (μ Set.univ).toReal + 1 with hKdef
+    have hKpos : 0 < K := by
+      have : (0 : ℝ) ≤ ‖d‖ * (μ Set.univ).toReal := mul_nonneg (norm_nonneg _) hμnn
+      rw [hKdef]; linarith
+    have hclosure : d ∈ (polynomialFunctions (Set.Icc a b)).topologicalClosure := by
+      rw [polynomialFunctions_closure_eq_top]; exact Algebra.mem_top
+    obtain ⟨q, hq, hdq⟩ := Metric.mem_closure_iff.mp hclosure (e / K) (by positivity)
+    obtain ⟨p, -, rfl⟩ := hq
+    set q : C(Set.Icc a b, ℝ) := Polynomial.toContinuousMapOnAlgHom (Set.Icc a b) p with hqdef
+    have hqp : ∀ x : Set.Icc a b, q x = p.eval (x : ℝ) := fun x => rfl
+    have hdqn : ‖d - q‖ < e / K := by rwa [dist_eq_norm] at hdq
+    -- split `d² = d·(d − q) + d·q`, the second term vanishing
+    have hzero : ∫ x, d x * q x ∂μ = 0 := by
+      rw [integral_congr_ae (ae_of_all _ (fun x => by rw [hqp]))]
+      exact integral_mul_polynomial_eq_zero hpow p
+    have hsplit : ∫ x, d x * d x ∂μ = ∫ x, d x * (d x - q x) ∂μ := by
+      have hpt : ∀ x : Set.Icc a b, d x * d x = d x * (d x - q x) + d x * q x := by
+        intro x; ring
+      have hdq_int : Integrable (fun x : Set.Icc a b => d x * (d x - q x)) μ :=
+        integrable_mul_continuousMap μ d (d - q)
+      rw [integral_congr_ae (ae_of_all _ hpt),
+        integral_add hdq_int (integrable_mul_continuousMap μ d q), hzero, add_zero]
+    have hbd : |∫ x, d x * (d x - q x) ∂μ| ≤ (‖d‖ * ‖d - q‖) * (μ Set.univ).toReal := by
+      have hpt : ∀ x : Set.Icc a b, ‖d x * (d x - q x)‖ ≤ ‖d‖ * ‖d - q‖ := by
+        intro x
+        rw [Real.norm_eq_abs, abs_mul]
+        exact mul_le_mul (by rw [← Real.norm_eq_abs]; exact d.norm_coe_le_norm x)
+          (by rw [← Real.norm_eq_abs]; exact (d - q).norm_coe_le_norm x)
+          (abs_nonneg _) (norm_nonneg _)
+      have := norm_integral_le_of_norm_le_const (μ := μ) (ae_of_all _ hpt)
+      rwa [Real.norm_eq_abs] at this
+    rw [hsplit] at hedef
+    have hlt : (‖d‖ * ‖d - q‖) * (μ Set.univ).toReal < e := by
+      have h1 : ‖d‖ * ‖d - q‖ * (μ Set.univ).toReal
+          ≤ ‖d‖ * (e / K) * (μ Set.univ).toReal := by
+        have := mul_le_mul_of_nonneg_left hdqn.le (norm_nonneg d)
+        exact mul_le_mul_of_nonneg_right this hμnn
+      have h2 : ‖d‖ * (e / K) * (μ Set.univ).toReal = (e / K) * (‖d‖ * (μ Set.univ).toReal) := by
+        ring
+      have h3 : ‖d‖ * (μ Set.univ).toReal < K := by rw [hKdef]; linarith
+      have h4 : (e / K) * (‖d‖ * (μ Set.univ).toReal) < (e / K) * K :=
+        mul_lt_mul_of_pos_left h3 (by positivity)
+      have h5 : (e / K) * K = e := div_mul_cancel₀ _ hKpos.ne'
+      linarith [h1, h2 ▸ h1, h4, h5]
+    rw [hedef] at hepos
+    linarith [hbd, hlt, le_abs_self (∫ x, d x * (d x - q x) ∂μ)]
+  -- a nonnegative continuous function with zero integral vanishes
+  have hdz : d = 0 := by
+    have hnn : (0 : Set.Icc a b → ℝ) ≤ fun x => d x * d x := fun x => mul_self_nonneg _
+    have hae := (integral_eq_zero_iff_of_nonneg hnn
+      (integrable_mul_continuousMap μ d d)).mp hsq
+    have hcont : Continuous (fun x : Set.Icc a b => d x * d x) := d.continuous.mul d.continuous
+    have heq : (fun x : Set.Icc a b => d x * d x) = fun _ => (0 : ℝ) :=
+      (hcont.ae_eq_iff_eq μ continuous_const).mp hae
+    ext x
+    have := congrFun heq x
+    simpa [mul_self_eq_zero] using this
+  have : f - g = 0 := hdz
+  rwa [sub_eq_zero] at this
+
 end MeasureTheory
