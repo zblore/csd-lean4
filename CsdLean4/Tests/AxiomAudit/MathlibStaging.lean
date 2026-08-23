@@ -2398,4 +2398,29 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'exists_le_pow_mem_of_compactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms exists_le_pow_mem_of_compactSpace
 
+-- Q12-b (2026-08-23, Mathlib/Probability/CompetingExponentials.lean): the ORDER-FREE Born
+-- partition.  RecordLayer's cdfCell reproduces Born by stacking intervals in INDEX ORDER;
+-- record-layer-plan.md §3b asks instead for the symmetric race, in which no outcome is
+-- privileged.  measure_raceCell: for independent exponential clocks at rates b, clock i fires
+-- first with probability b_i / sum_j b_j; measure_raceCell_of_sum_eq_one specialises to a
+-- probability vector.  Proof route: split coordinate i off the product
+-- (measurePreserving_piFinSuccAbove), read the remaining clocks' survival as a BOX
+-- (Measure.pi_pi on Set.pi univ (Ioi t)), then integrate e^{-St} against clock i.
+-- lintegral_exp_neg_expMeasure evaluates NO improper integral: the integrand times the Exp r
+-- density is a constant multiple of the Exp (r+S) density, whose mass is one.
+-- ⚠️ TWO FINDINGS.  (1) The race does NOT fit RecordLayer.DeIsolationInteraction, whose pointer
+-- is ℝ → Fin n (a ONE-dimensional fibre) while the race needs Fin (n+1) → ℝ; §3b says the minimal
+-- fibre dimension is n-1, so the existing interface is committed to the ordered construction and
+-- would have to be generalised.  cdfDeIsolationInteraction (Q12-a) remains the only instance.
+-- (2) Strictly positive rates only -- an exponential clock needs r > 0, so a zero amplitude
+-- (a clock that never fires) is outside expMeasure's domain.
+/-- info: 'ProbabilityTheory.measure_raceCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.measure_raceCell
+
+/-- info: 'ProbabilityTheory.measure_raceCell_of_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.measure_raceCell_of_sum_eq_one
+
+/-- info: 'ProbabilityTheory.raceCell_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.raceCell_pairwiseDisjoint
+
 end CSD.Tests.AxiomAudit

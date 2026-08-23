@@ -138,6 +138,43 @@ order-free partition §3b asks for, and it is the first genuinely *race*-shaped 
 * **Abort criterion:** if the independence plumbing exceeds the estimate, stop and record —
   Q12-a already delivers non-vacuity, and Q12-b is an elegance upgrade, not a new claim.
 
+> ### ✅ Q12-b EXECUTED 2026-08-23
+>
+> **Probe outcome: the gate's premise was wrong in a useful way.** Mathlib *does* have the density
+> (`exponentialPDF`), the measure (`expMeasure`), the CDF (`cdf_expMeasure_eq`), boxes
+> (`Measure.pi_pi`) and the coordinate split (`measurePreserving_piFinSuccAbove`). Hand-rolling was
+> never needed. The cost driver was the **product-measure plumbing**, which the gate had not named,
+> and it came in at M–L rather than M. Not aborted: no step was blocked, and one shortcut collapsed
+> the worst of it.
+>
+> `Mathlib/Probability/CompetingExponentials.lean` (Cat-1, 3 pins):
+> `raceCell i` (fires strictly first — no index order anywhere in the definition),
+> `raceCell_pairwiseDisjoint` (partition content, no hypothesis on the rates),
+> ★★ `measure_raceCell` (`P(i wins) = bᵢ/Σⱼbⱼ`) and
+> ★★ `measure_raceCell_of_sum_eq_one` (`= bᵢ` for a probability vector).
+>
+> **The shortcut worth keeping.** `lintegral_exp_neg_expMeasure` evaluates *no* improper integral:
+> `e^{-St}` times the `Exp r` density is exactly `r/(r+S)` times the `Exp (r+S)` density, whose mass
+> is one by `lintegral_exponentialPDF_eq_one`. Recognising a rescaled density beats integrating it.
+>
+> **⚠️ Two findings, and the first is decision-relevant for Q12.**
+>
+> 1. **The race does not fit the corpus's record-layer interface.** `DeIsolationInteraction` takes
+>    `pointer : ℝ → Fin n` — a **one-dimensional** fibre — while the race needs `Fin (n+1) → ℝ`.
+>    That is not incidental: `record-layer-plan.md` §3b states the minimal fibre dimension is
+>    `n − 1`. So **the existing interface is committed to the ordered CDF construction**, and
+>    admitting the symmetric mechanism §3b actually asks for would mean generalising it.
+>    `cdfDeIsolationInteraction` (Q12-a) remains the only instance. *This is the next natural
+>    record-layer question, and it is cheaper than Q12-c.*
+> 2. **Strictly positive rates only.** An exponential clock needs `r > 0`, so the theorem covers
+>    states with every amplitude nonzero. A zero amplitude is a clock that never fires — right
+>    physics, outside `expMeasure`'s domain.
+>
+> Snags: `Finset.prod_congr` inline in a `rw` leaves metavariables (state it as a `have`);
+> `MeasurableSet.nullMeasurableSet` inside a `rw` argument leaves the measure a metavariable (bind
+> it first); `lintegral_withDensity_eq_lintegral_mul` produces a **Pi-level** product, so the
+> pointwise lemma must be stated in that shape and in the density-first order.
+
 ### Q12-c — the characterisation: is the exponential law *forced*? (M–L)
 
 §3c asserts that first-to-fire `∝ bᵢ` for independent linear clocks holds **iff** the waiting
@@ -191,7 +228,7 @@ only if Q12-d is ever written up, since it is the precise statement of why the r
 
 ## 6. Recommendation
 
-~~Run **Q12-a**~~ **done 2026-08-23**. Next: **probe** Q12-b before committing to it.
+~~Run **Q12-a**~~ **done 2026-08-23**. ~~Next: probe Q12-b~~ **Q12-b done 2026-08-23**. Next candidate: generalise the record-layer interface to an `n`-dimensional fibre (finding 1 above) — cheaper than Q12-c and it is what would let the race actually replace the ordered construction.
 Treat Q12-c as the stretch. Leave Q12-d closed with W1 recorded as the reason.
 
 The honest headline for the queue: **Q12's frontier half is blocked by a theorem the corpus now

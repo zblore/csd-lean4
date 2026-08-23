@@ -21,6 +21,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 public import CsdLean4.Mathlib.Probability.CGLMP
+public import CsdLean4.Mathlib.Probability.CompetingExponentials
 public import CsdLean4.Mathlib.QuantumInfo.Channel
 public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
