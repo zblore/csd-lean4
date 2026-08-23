@@ -161,7 +161,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.kMuL_sector_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.kMuL_sector_eq_zero
 
--- E1, PARTIAL (2026-08-22, Thermo/ReducedSecondMoment.lean): the reduced state's moments.
+-- E1, COMPLETE (2026-08-22/23, Thermo/ReducedSecondMoment.lean): the reduced state's moments.
 -- H-TENSOR discipline: the bipartition is an EXPLICIT argument e : Fin N = Fin dA x Fin dB in
 -- every signature, never inferred from a tensor API -- a silently chosen factorisation would
 -- be a structural posit doing load-bearing work (a second D1).
@@ -172,9 +172,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- ★ fs_redOff_cross_vanish -- the novel ingredient: the genuinely four-index expectations
 -- vanish, because a coordinate occurring an odd number of times is killed by the sign flip
 -- (signFlip_smul_rayDensity_ne is its companion: a flip touching neither index does nothing).
--- NOT PROVED HERE and recorded as the named remainder: the off-diagonal second moment and the
--- Hilbert-Schmidt assembly E||rho_A - I_A/d_A||_2^2 = (d_A+d_B)/(N+1) - 1/d_A. The arithmetic
--- is checked on paper; that is not a theorem, so it is not asserted.
+-- Still NOT proved here (and not asserted): the trace-norm form, which needs the matrix-norm
+-- API rather than moments, and the identification of these entries with Matrix.traceRight of
+-- the projector, which is index bookkeeping in a different vocabulary.
 /-- info: 'CSD.Thermo.fs_blockPop_mean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_blockPop_mean
 
@@ -189,12 +189,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 -- ★★ fs_redOff_normSq (2026-08-23): E|(rho_A)_{a a'}|^2 = d_B/(N(N+1)) for a /= a'. Expanding
 -- the modulus of the sum into real and imaginary parts, the b = b' terms are the landed cross
--- moment E[x_i x_j] and the b /= b' terms vanish by fs_redOff_cross_vanish. This closes E1's
--- MATHEMATICAL content; only the Hilbert-Schmidt bookkeeping (expanding the square under the
--- integral, the sum_ite pair count, the N = d_A d_B cast algebra) remains, and it is recorded
--- as a named remainder rather than asserted.
+-- moment E[x_i x_j] and the b /= b' terms vanish by fs_redOff_cross_vanish.
 /-- info: 'CSD.Thermo.fs_redOff_normSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.fs_redOff_normSq
+
+-- ★★ THE HILBERT-SCHMIDT ASSEMBLY (2026-08-23) -- E1's target, previously the named remainder.
+-- fs_hsDeviationNormSq : E||rho_A - I_A/d_A||_2^2 = (d_A + d_B)/(N+1) - 1/d_A, the Lubkin-Page
+-- purity average. The d_A diagonal entries contribute fs_hsDeviation_diag_sq (where the mean
+-- population is EXACTLY 1/d_A, so the cross term collapses against the constant) and the
+-- d_A(d_A - 1) off-diagonal entries contribute fs_hsDeviation_off_sq. The cardinality identity
+-- N = d_A d_B is read off the bipartition e itself (card_eq_mul_of_tensorEquiv), not assumed --
+-- H-TENSOR again: what the equivalence carries, its arithmetic carries too.
+-- fs_hsDeviation_typicality is the usable form: MARKOV on that second moment (not Chebyshev --
+-- the functional is quadratic; Chebyshev applies to the linear populations individually).
+/-- info: 'CSD.Thermo.fs_hsDeviation_diag_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_hsDeviation_diag_sq
+
+/-- info: 'CSD.Thermo.fs_hsDeviation_off_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_hsDeviation_off_sq
+
+/-- info: 'CSD.Thermo.fs_hsDeviationNormSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_hsDeviationNormSq
+
+/-- info: 'CSD.Thermo.fs_hsDeviation_typicality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.fs_hsDeviation_typicality
 
 -- E2 (2026-08-23, Thermo/EnergyWindow.lean), RE-SCOPED BY E3's VERDICT. The original "E1 on
 -- the unit sphere of a spectral sector" is refuted (an exact sector is Fubini-Study-NULL,

@@ -189,22 +189,52 @@ doing load-bearing work.
 > by `fs_redOff_cross_vanish`. **This closes E1's mathematical content**: every moment the
 > Lubkin–Page average needs is now a theorem.
 >
-> **Still deferred, and NOT asserted.** The Hilbert–Schmidt *assembly*
-> `E‖ρ_A − I_A/d_A‖₂² = (d_A+d_B)/(N+1) − 1/d_A`. It is pure bookkeeping over the proved
-> moments — expanding the square under the integral, the `sum_ite` count of off-diagonal pairs,
-> and the `N = d_A d_B` cast algebra — and the arithmetic is checked on paper, but paper
-> arithmetic is not a theorem. Recorded in the module's closing section.
+> ### E1 CLOSED 2026-08-23 — **the Hilbert–Schmidt assembly landed**
 >
-> **Process note worth keeping.** The assembly was attempted twice and abandoned twice: in both
-> attempts the draft came out with placeholder `sorry`s at the bookkeeping step, which the house
-> rule forbids, so the work was reverted rather than patched. The moments landed cleanly; the
-> failure mode was long single-shot proof drafting late in a session, not the mathematics. The
-> remainder is best done fresh and in small increments.
+> Same module, 4 further pins. The remainder recorded above is now a theorem:
+>
+> * `reducedMatrix` / `hsDeviation` / `hsDeviationNormSq` — the reduced state as a matrix, the
+>   deviation `ρ_A − I_A/d_A`, and the entrywise Hilbert–Schmidt norm squared. `redOff_diag`
+>   (`rayDensity_diag` under the `b`-sum) is the bridge between this file's two vocabularies.
+> * ★ `fs_hsDeviation_diag_sq` — the diagonal entries. Worth noting *why* it is short: the mean
+>   population is **exactly** `1/d_A` (that is what `d_B/N = 1/d_A` says once `N = d_A d_B` is
+>   known), so the cross term collapses against the constant and only one subtraction survives.
+> * ★ `fs_hsDeviation_off_sq` — the off-diagonal entries, i.e. `fs_redOff_normSq` transported
+>   through `hsDeviation_off` (subtracting a multiple of `I` does not touch them).
+> * ★★ `fs_hsDeviationNormSq` — **the Lubkin–Page purity average**
+>   `E‖ρ_A − I_A/d_A‖₂² = (d_A + d_B)/(N + 1) − 1/d_A`.
+> * ★ `fs_hsDeviation_typicality` — Markov on that moment, the statement in usable form.
+>
+> **An H-TENSOR dividend.** `N = d_A d_B` is *not* an added hypothesis: it is read off the
+> bipartition itself by `card_eq_mul_of_tensorEquiv` (`Fintype.card_congr e`). Carrying the
+> factorisation as an explicit equivalence, which the discipline demanded for honesty reasons,
+> also paid for the arithmetic the assembly needed. Worth remembering the next time H-TENSOR
+> looks like pure overhead.
+>
+> **Honest residue** (unchanged, and stated in the module header): the **trace-norm** form needs
+> the matrix-norm API, not moments; and the identification of these entries with
+> `Matrix.traceRight` of the projector is index bookkeeping in a different vocabulary. Also
+> `hsDeviationNormSq` is *defined* entrywise rather than derived from a `Matrix` norm instance.
+> And the concentration delivered is **Markov on a quadratic functional** — weaker than
+> `fs_chebyshev_concentration`, which applies to the *linear* statistics (each individual
+> population does get the `O(1/N)` Chebyshev rate).
+>
+> **Process note, and it worked.** The assembly had been attempted twice before and abandoned
+> twice: in both attempts the draft came out with placeholder `sorry`s at the bookkeeping step,
+> which the house rule forbids, so the work was reverted rather than patched. The failure mode
+> was long single-shot proof drafting, not the mathematics. This pass was built in four
+> increments with a build after each (plumbing → diagonal → off-diagonal + integrability →
+> assembly), and needed no reverts. Snags were all shallow: `Integrable.add_const` does not
+> exist under that name (dot notation unfolds `Integrable` to an `And` and reports a confusing
+> `And.add_const`) — use `integrable_add_const_iff.mpr`; `integral_congr_ae` inside a `rw` leaves
+> the target function a metavariable, so `dsimp only` solves it by `rfl` and the rewrite becomes
+> a no-op — state the pointwise equality as an explicit `have` instead; and `omit … in` before
+> the docstring, once again.
 >
 > **Honest cost correction.** The planning note called E1 "the cheapest item in the arc" on the
 > grounds that its ingredients were landed. The ingredients *were* landed and the mathematics
-> went through; the underestimate was the assembly plumbing, not the mathematics. Remaining
-> work is S–M and mechanical.
+> went through on schedule; the underestimate was the assembly plumbing. Actual: M, spread over
+> two sessions.
 
 ---
 
