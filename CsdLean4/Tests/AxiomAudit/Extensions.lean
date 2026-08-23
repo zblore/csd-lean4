@@ -244,6 +244,35 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.not_hasCorrelationDecay_blockPop_of_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.not_hasCorrelationDecay_blockPop_of_periodic
 
+-- E6 COMPLETE (2026-08-23, Thermo/Equilibration.lean): the ALMOST-PERIODIC no-go in full.
+-- not_hasCorrelationDecay_blockPop_of_unitary -- for d_A >= 2 and ANY unitary U, E4's antecedent
+-- is FALSE along p |-> U . p, for every summable envelope.  No periodicity hypothesis.
+-- Three proved ingredients: (i) exists_le_pow_mem_of_compactSpace (powers of U recur in the
+-- compact group Matrix.unitaryGroup), (ii) the UNIFORM transfer abs_corr_smul_sub_le, and
+-- (iii) integral_mul_self_eq_of_recurrent (decay reduces to recurrence).  blockPop_variance_ne
+-- supplies the Q24 contradiction and is shared with the periodic version.
+-- WHY UNIFORM rather than dominated convergence: FirstCountableTopology does NOT synthesize for
+-- Matrix.unitaryGroup, so continuous_of_dominated is unavailable.  The estimate
+-- |blockPop (V.p) a - blockPop p a| <= 2 * matDev V holds UNIFORMLY IN THE STATE, with matDev the
+-- ENTRYWISE l^1 deviation of V from 1 -- l^1 rather than l^2 so the proof is a triangle
+-- inequality plus coord_norm_le, with no Cauchy-Schwarz and no square roots.
+-- norm_toEuclideanLin_unitary is the general isometry statement behind CanonicalTypicality's
+-- per-gate signFlip_normSq / perm_normSq / hadamard_normSq.
+-- READ AS A LIMITATION, NOT A REFUTATION: E4's machinery is sound; its antecedent is simply not
+-- populated by finite-dimensional unitary Sigma-dynamics, so equilibration there rests on the
+-- TYPICALITY results (E1/E2), not on mixing.
+/-- info: 'CSD.Thermo.blockPop_variance_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.blockPop_variance_ne
+
+/-- info: 'CSD.Thermo.abs_blockPop_smul_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.abs_blockPop_smul_sub_le
+
+/-- info: 'CSD.Thermo.abs_corr_smul_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.abs_corr_smul_sub_le
+
+/-- info: 'CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary
+
 -- E2 (2026-08-23, Thermo/EnergyWindow.lean), RE-SCOPED BY E3's VERDICT. The original "E1 on
 -- the unit sphere of a spectral sector" is refuted (an exact sector is Fubini-Study-NULL,
 -- SectorRestriction.lean), so the surviving route is a POSITIVE-MEASURE ENERGY WINDOW.

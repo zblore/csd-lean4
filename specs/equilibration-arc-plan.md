@@ -412,11 +412,36 @@ prose), plus the glossary `status:` field if a page is created.
 > ⚠️ **Another rotted wall label**: `UnitaryGroup.instCompactSpace` exists — an earlier grep of
 > mine missed it and I nearly recorded compactness as the obstruction. Probe, don't grep.
 >
-> **What remains is exactly one analytic bridge**, and it is a brick rather than a tidy-up: the
-> *uniform* estimate `|f (V • p) − f p| ≤ c · √(dev V)` with `dev` continuous and vanishing at
-> `V = 1`. It must be uniform because **`FirstCountableTopology` does not synthesize for
-> `Matrix.unitaryGroup`**, so `continuous_of_dominated` is unavailable. Route and probed
-> sub-steps are in the `E6` BACKLOG row. **Sizing correction: I called this bounded; it is M–L.**
+> #### E6 CLOSED the same day — the general no-go is a theorem
+>
+> ★★ **`not_hasCorrelationDecay_blockPop_of_unitary`**: for `d_A ≥ 2` and **any** unitary `U`,
+> E4's antecedent is false along `p ↦ U • p`, for every summable envelope. No periodicity
+> hypothesis — the periodic version is now the weaker sibling, kept because it covers non-unitary
+> periodic `Φ` too.
+>
+> The bridge that was missing: ★ `abs_blockPop_smul_sub_le`
+> (`|blockPop (V•p) a − blockPop p a| ≤ 2 · matDev V`, **uniformly in the state**) →
+> ★ `abs_corr_smul_sub_le` at the level of the correlation. It has to be uniform because
+> `FirstCountableTopology` does not synthesize for `Matrix.unitaryGroup`, so
+> `continuous_of_dominated` is unavailable.
+>
+> **The simplification that made it cheap.** `matDev` is the **entrywise ℓ¹** deviation of `V`
+> from `1`, not ℓ². With ℓ¹ the whole estimate is a triangle inequality plus `coord_norm_le` —
+> **no Cauchy–Schwarz, no square roots, no operator-norm scopes**. The ℓ² route I first scoped
+> would have needed all three. Worth remembering: when a bound only has to be *uniform*, the
+> crude norm is often the cheap one.
+>
+> **What unblocked it.** The corpus already had `(continuous_const_smul U).measurable` and
+> `fubiniStudyMeasure_smul_invariant` — the projective action is *continuous*, so none of the
+> quotient-topology work I had been avoiding was needed. Supporting lemmas landed alongside:
+> `norm_toEuclideanLin_unitary` (the general isometry statement behind `CanonicalTypicality`'s
+> per-gate `signFlip_normSq` / `perm_normSq` / `hadamard_normSq` — an extraction candidate),
+> `toEuclideanLin_comp`, `smul_iterate`, and `blockPop_variance_ne` factored out so both no-goes
+> share the Q24 arithmetic.
+>
+> **Sizing note kept for calibration:** I called E6 bounded, then revised it to M–L on probing the
+> ℓ² route, then it closed the same day once the ℓ¹ simplification appeared. The estimate was
+> wrong in both directions; the variance was in the *route*, not the mathematics.
 >
 > **Goal (a), positive half — the engine is not vacuous.**
 > `CsdLean4/Mathlib/Dynamics/CorrelationDecayWitness.lean` (Cat-1, 5 pins): the doubling map on
