@@ -124,6 +124,7 @@ public import CsdLean4.LF3.Interface
 public import CsdLean4.LF4.Instance
 public import CsdLean4.LF4.KahlerInstance
 public import CsdLean4.LF4.KahlerFlow
+public import CsdLean4.LF4.KahlerFlowNoMixing
 public import CsdLean4.LF4.KahlerOnticSetup
 public import CsdLean4.LF4.NonTrivialSetup
 public import CsdLean4.LF4.UnitarySelection
@@ -438,6 +439,7 @@ public import CsdLean4.Mathlib.MeasureTheory.CellPointer
 public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
+public import CsdLean4.Mathlib.Dynamics.CompactGroupNoMixing
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders

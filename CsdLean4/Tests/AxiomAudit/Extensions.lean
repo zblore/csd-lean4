@@ -273,6 +273,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.not_hasCorrelationDecay_blockPop_of_unitary
 
+-- W1 COMPLETED (2026-08-24, Mathlib/Dynamics/CompactGroupNoMixing.lean + LF4/KahlerFlowNoMixing.lean).
+-- q12-fibre-mechanism-scoping.md's W1 says NO flow the corpus defines can supply E4's mixing
+-- hypothesis.  It was HALF A THEOREM: the unitary base action was proved (above), the T^2 fibre
+-- shift kFlow was asserted by analogy ("the identical argument applies"), and only
+-- kProjectedFlow = id was covered (by the periodic case).  Both halves are now theorems.
+-- ★★ not_hasCorrelationDecay_of_compactGroup is the GENERAL form, extracted from the unitary
+-- proof: for a flow Psi U with U in a COMPACT GROUP, no observable of nonzero variance has a
+-- summable decay envelope, given only that V |-> int f(x) f(Psi V x) is continuous at 1.
+-- W1 is therefore no longer an enumeration of the three flows the corpus happens to have today --
+-- it is a structural statement that covers any compact-group flow added later.
+-- ★ Stated with a bare Psi and hpow : (Psi U)^[n] = Psi (U^n), NOT a MulAction, because the two
+-- consumers are a multiplicative group action and an ADDITIVE torus shift; to_additive then lets
+-- one proof serve both.  exists_le_pow_mem_of_compactSpace gained @[to_additive] for the same
+-- reason (twin: exists_le_nsmul_mem_of_compactSpace).
+-- not_hasCorrelationDecay_blockPop_of_unitary was REFACTORED to be a corollary rather than a
+-- parallel proof (CONVENTIONS §8.3b), which is what gives the general lemma its second consumer.
+-- ★ The kFlow half was cheap because the EXACT correlation is never needed: shifting the fibre
+-- replaces the character e(x) by e(v)e(x), so the observable moves by Re((e(v)-1)e(x)) and the
+-- correlation by at most ||e(v)-1|| -- a continuous modulus vanishing at 0, which is all
+-- continuousAt_correlation_of_abs_sub_le_add asks for.  Every Fubini argument is dodged; only the
+-- VARIANCE needs the product structure, via Measure.map_fst_prod/map_snd_prod.
+-- fibreObs reuses MeasureTheory.circObs, built as E5's mixing WITNESS for the doubling map; here
+-- the same function certifies that the fibre flow CANNOT mix.  The difference is entirely the map.
+-- ⚠️ A LIMITATION ON THE ROUTE, NOT ON CSD.  Mixing systems exist (circ_hasCorrelationDecay) and
+-- are exactly the ones that are not compact-group translations.  What is ruled out is deriving the
+-- race from ASYMPTOTIC mixing of any dynamics the corpus currently has.  Q12-d route 2
+-- (HasCorrelationDecayUpTo, finite horizon) is untouched and remains the recommended escape.
+/-- info: 'MeasureTheory.not_hasCorrelationDecay_of_compactGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.not_hasCorrelationDecay_of_compactGroup
+
+/-- info: 'MeasureTheory.not_hasCorrelationDecay_of_compactAddGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.not_hasCorrelationDecay_of_compactAddGroup
+
+/-- info: 'CSD.LF4.not_hasCorrelationDecay_kFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.not_hasCorrelationDecay_kFlow
+
 -- Q12-d route 2 (2026-08-23, Thermo/Equilibration.lean): the statement E6 does NOT block.
 -- blockPop_timeAverage_le_of_finiteHorizon -- if the population's correlations are within eps on
 -- lags BELOW T, the time average at horizon T sits within (2/T) sum_{u<T} eps u of the

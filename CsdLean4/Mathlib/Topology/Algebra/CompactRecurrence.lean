@@ -44,6 +44,7 @@ there is an exponent `n ≥ M` with `U ^ n ∈ V`.
 The `M` is the whole point: without it the statement is trivially witnessed by `n = 0`. With it,
 the conclusion is that the orbit returns near the identity *forever*, which is what forbids any
 quantity built from `U ^ n` from settling to a different value. -/
+@[to_additive]
 theorem exists_le_pow_mem_of_compactSpace {G : Type*} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [CompactSpace G] (U : G) {V : Set G} (hV : V ∈ 𝓝 (1 : G)) (M : ℕ) :
     ∃ n, M ≤ n ∧ U ^ n ∈ V := by

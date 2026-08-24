@@ -44,7 +44,41 @@ structure DeIsolationInteraction (ψ) where
 
 ### W1 — **No flow currently in the corpus can supply (A)'s mixing hypothesis.** (New, decisive.)
 
-This was an impression before today; it is now a consequence of machinery the corpus owns.
+> ### ✅ **COMPLETED 2026-08-24 — W1 is now a theorem, and a structural one**
+>
+> As written below, W1 was **half a theorem**: the unitary base action was proved, the `T²` fibre
+> shift was asserted by analogy ("the identical argument applies"), and only `kProjectedFlow = id`
+> was otherwise covered. Both gaps are closed, and the fix generalised the wall rather than
+> enumerating it.
+>
+> * ★★ `MeasureTheory.not_hasCorrelationDecay_of_compactGroup`
+>   (`Mathlib/Dynamics/CompactGroupNoMixing.lean`, Cat-1) — **for any flow `Ψ U` with `U` in a
+>   compact group, no observable of nonzero variance has a summable decay envelope**, given only
+>   that `V ↦ ∫ f(x)·f(Ψ V x)` is continuous at `1`. So W1 is no longer a list of the three flows
+>   the corpus happens to have today; it covers any compact-group flow added later.
+> * ★ It is stated with a **bare `Ψ` and `hpow : (Ψ U)^[n] = Ψ (U ^ n)`, not a `MulAction`**,
+>   because the two consumers are a multiplicative group action and an **additive** torus shift.
+>   `to_additive` then makes one proof serve both; `exists_le_pow_mem_of_compactSpace` gained
+>   `@[to_additive]` for the same reason.
+> * `not_hasCorrelationDecay_blockPop_of_unitary` was **refactored into a corollary** rather than
+>   left as a parallel proof (CONVENTIONS §8.3b), which is what gives the general lemma its second
+>   consumer.
+> * ★★ `CSD.LF4.not_hasCorrelationDecay_kFlow` (`LF4/KahlerFlowNoMixing.lean`) is the missing half
+>   — the `Q12-w` brick below. It came cheap because **the exact correlation is never needed**:
+>   shifting the fibre replaces the character `e(x)` by `e(v)·e(x)`, so the observable moves by
+>   `Re((e(v) − 1)·e(x))` and the correlation by at most `‖e(v) − 1‖`, a continuous modulus
+>   vanishing at `0`. Every Fubini argument is dodged; only the *variance* needs the product
+>   structure. The observable reuses `MeasureTheory.circObs`, built as E5's mixing **witness** for
+>   the doubling map — here the same function certifies that the fibre flow **cannot** mix, the
+>   difference being entirely the map.
+>
+> ⚠️ **This strengthens the wall; it does not move the frontier.** Mixing systems exist and are
+> exactly the ones that are not compact-group translations. What is ruled out is deriving the race
+> from **asymptotic** mixing of any dynamics the corpus currently has. `Q12-d` route 2
+> (`HasCorrelationDecayUpTo`, finite horizon) is untouched and remains the recommended escape — the
+> theorem kills the asymptotic antecedent only.
+
+This was an impression before 2026-08-23; it is now a consequence of machinery the corpus owns.
 
 `MeasureTheory.HasCorrelationDecay.integral_mul_self_eq_of_recurrent` (E6) says: if the
 correlation function returns near its lag-zero value at arbitrarily large lags, then summable
@@ -306,11 +340,18 @@ was right.
 > open. What changed is that the hypothesis is no longer *provably unsatisfiable*, which is what E6
 > established for the asymptotic version.
 
-### Q12-w — optional, cheap: record W1 as a theorem (S)
+### Q12-w — ✅ **DONE 2026-08-24** (was: optional, cheap: record W1 as a theorem (S))
 
-One-shot application of `integral_mul_self_eq_of_recurrent` + `exists_le_pow_mem_of_compactSpace`
-to `kFlow`, giving "the Kähler fibre flow cannot have decaying correlations either". Worth doing
-only if Q12-d is ever written up, since it is the precise statement of why the route is blocked.
+Scoped as a one-shot application of `integral_mul_self_eq_of_recurrent` +
+`exists_le_pow_mem_of_compactSpace` to `kFlow`. Executed as something better: the argument was
+**extracted into a general theorem about compact-group flows** first
+(`not_hasCorrelationDecay_of_compactGroup`), and `kFlow` and the unitary action are both now
+corollaries of it. See the W1 box above.
+
+★ Worth carrying: the scoping note said this was worth doing "only if Q12-d is ever written up".
+That undersold it. Doing it turned W1 from an enumeration of the corpus's current flows into a
+statement about a *class* of flows — which is the form in which a wall is actually useful, because
+it says what an escape must avoid rather than what happens to be present.
 
 ---
 
