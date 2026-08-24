@@ -157,7 +157,20 @@ CSS = (
     ".foot dd{margin:0}"
     "a.ext{background-image:linear-gradient(var(--faint),var(--faint));background-size:100% 1px;background-repeat:no-repeat;background-position:0 1.15em;text-decoration:none}a.ext:hover{background-image:linear-gradient(var(--acc),var(--acc))}"
     ".note{margin-top:2rem;font-size:.8rem;color:var(--faint);line-height:1.6}"
-    ".cookie{border-top:1px solid var(--line);padding-top:1.1rem;margin-top:2.6rem}"
+    ".ck{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--card);"
+    "border-top:1px solid var(--line);"
+    "font:400 .82rem/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
+    "color:var(--mut)}"
+    ".ck[hidden]{display:none}"
+    ".ck .in{max-width:38rem;margin:0 auto;padding:.9rem 1.35rem;display:flex;"
+    "gap:1.1rem;align-items:center;justify-content:space-between}"
+    ".ck p{margin:0}"
+    ".ck button{flex:none;font:500 .8rem/1 -apple-system,BlinkMacSystemFont,"
+    "'Segoe UI',sans-serif;color:var(--bg);background:var(--acc);border:0;"
+    "border-radius:5px;padding:.6rem 1rem;cursor:pointer}"
+    ".ck button:hover{opacity:.87}"
+    "@media(max-width:32rem){.ck .in{flex-direction:column;align-items:flex-start;"
+    "gap:.7rem}}"
     "ul.idx{list-style:none;padding:0;margin:0}"
     "ul.idx li{border-bottom:1px solid var(--line);padding:1.15rem 0}"
     "ul.idx a{text-decoration:none}"
@@ -183,13 +196,31 @@ ANALYTICS = (
     'gtag("js",new Date());gtag("config","' + GA_ID + '");</script>'
 )
 
-COOKIE_NOTICE = (
-    '<p class="note cookie"><strong>Cookies.</strong> This page uses Google Analytics to count '
-    "visits, which stores cookies in your browser. They record how the page is reached and which "
-    "entries are read; they do not identify you, and nothing is sold or shared onward. Blocking "
-    "cookies for this site leaves everything on the page working."
+# A dismissible banner, and the markup ships it `hidden`: script reveals it, so
+# with JavaScript off it never appears -- which is the correct coupling rather
+# than an oversight, because with JavaScript off `gtag` never runs either, no
+# cookies are set, and there is nothing to disclose. The same reasoning is why
+# the banner cannot strand a reader: if the reveal never runs it stays out of
+# the way instead of covering the page forever.
+#
+# Every `localStorage` access is guarded. A browser that blocks site data throws
+# on read, and the catch leaves the banner shown rather than crashing the page.
+COOKIE_BANNER = (
+    '<div class="ck" id="ck" hidden><div class="in">'
+    "<p>Google Analytics counts visits to this page, which stores cookies in your browser. "
+    "They record how the page was reached, not who you are, and nothing is passed on. "
+    "Blocking cookies for this site breaks nothing here."
     ' <a class="ext" href="https://policies.google.com/technologies/cookies"'
-    ' rel="noopener nofollow">How Google uses cookies</a>.</p>'
+    ' rel="noopener nofollow">Details</a>.</p>'
+    '<button type="button" id="ckb">Got it</button>'
+    "</div></div>"
+    '<script>(function(){var k="csd-cookie-ack",e=document.getElementById("ck");'
+    "if(!e)return;var d=false;"
+    'try{d=localStorage.getItem(k)==="1"}catch(x){}'
+    "if(!d)e.hidden=false;"
+    'var b=document.getElementById("ckb");'
+    "if(b)b.addEventListener(\"click\",function(){e.hidden=true;"
+    'try{localStorage.setItem(k,"1")}catch(x){}});})();</script>'
 )
 
 
@@ -203,7 +234,9 @@ def page(title, desc, body, jsonld, canon):
         + "<style>" + CSS + "</style>"
         + '<script type="application/ld+json">' + jsonld + "</script>"
         + ANALYTICS
-        + '</head><body><div class="w">' + body + COOKIE_NOTICE + "</div></body></html>"
+        + '</head><body><div class="w">' + body + "</div>"
+        + COOKIE_BANNER
+        + "</body></html>"
     )
 
 
