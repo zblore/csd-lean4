@@ -197,6 +197,45 @@ noncomputable def phaseLiftFamily (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
     (phaseLiftFamily U b hb t : Matrix (Fin N) (Fin N) ℂ)
       = b t • (U t : Matrix (Fin N) (Fin N) ℂ) := rfl
 
+/-- ★ **The coboundary hypothesis is NECESSARY, not merely sufficient.**
+
+If the rescaled family `t ↦ b t • U t` is a genuine vector-level group, then `b` *must* trivialise
+the cocycle: `c s t * b (s+t) = b s * b t`. So `projectedFlow_phase_lift`'s `hcob` is not a
+convenient sufficient condition that a cleverer proof might drop — it is equivalent to the
+conclusion it buys.
+
+The argument is a cancellation: both sides are scalar multiples of the same invertible matrix
+`U s * U t`, and a unitary is nonzero, so the scalars agree.
+
+Recorded as the CL-015 mutation study (2026-08-24). `hb` is load-bearing for a different and more
+basic reason: without `‖b t‖ = 1` the rescaled matrix is not unitary, so `phaseLiftFamily` cannot be
+formed at all and the conclusion cannot even be stated. -/
+theorem cob_of_phaseLiftFamily_group [NeZero N] (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
+    (c : ℝ → ℝ → ℂ)
+    (hc : ∀ s t, (U (s + t) : Matrix (Fin N) (Fin N) ℂ)
+        = c s t • ((U s : Matrix (Fin N) (Fin N) ℂ) * (U t : Matrix (Fin N) (Fin N) ℂ)))
+    (b : ℝ → ℂ) (hb : ∀ t, ‖b t‖ = 1)
+    (hgroup : ∀ s t, phaseLiftFamily U b hb (s + t)
+        = phaseLiftFamily U b hb s * phaseLiftFamily U b hb t) :
+    ∀ s t, c s t * b (s + t) = b s * b t := by
+  intro s t
+  have h := congrArg (fun x : Matrix.unitaryGroup (Fin N) ℂ => (x : Matrix (Fin N) (Fin N) ℂ))
+    (hgroup s t)
+  simp only [phaseLiftFamily_val, Submonoid.coe_mul, hc s t] at h
+  rw [smul_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul] at h
+  have hne : (U s : Matrix (Fin N) (Fin N) ℂ) * (U t : Matrix (Fin N) (Fin N) ℂ) ≠ 0 := by
+    intro hzero
+    have hu := (U s * U t).property
+    rw [Matrix.mem_unitaryGroup_iff] at hu
+    rw [Submonoid.coe_mul, hzero] at hu
+    simp at hu
+  have hsub := sub_eq_zero.mpr h
+  rw [← sub_smul] at hsub
+  rcases smul_eq_zero.mp hsub with hα | hM
+  · have hfin : b (s + t) * c s t = b s * b t := by linear_combination hα
+    linear_combination hfin
+  · exact absurd hM hne
+
 /-- **The projective-to-vector phase lift (residual S1, discharged on the
 coboundary datum).** If the phase cocycle `c` of the unitary family is a
 coboundary — trivialised by a unit-phase function `b` via

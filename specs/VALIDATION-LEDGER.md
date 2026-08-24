@@ -169,8 +169,29 @@ classification is unchanged (SUFFICIENCY).
   passes it) and keeps the hypothesis list reading as the standard four-part Stone statement. The
   redundancy is now in the theorem's own docstring so it cannot be mistaken for an oversight.
 
-All three rows stay `qualified` — their load-bearing scope is unchanged; what was missing was the
-recorded independent check, and that is what these supply.
+* **CL-008** (`LF3_main_theorem`), premise-to-constructor trace: ★ **two findings, and the row's own
+  load-bearing description was wrong.** It said "bundled singlet preparation hypotheses". The bundle
+  carries **no singlet content**: conjuncts 1–6 (kernel, correlation, both marginals, both
+  no-signalling readouts) depend only on `ctx : MeasurementContext`, which **is** constructed
+  (`chshContext`). `S` enters only conjuncts 7–8, and `pointer_a_complete S` is literally
+  `S.ptrA.complete` — the field projected out. (1) **Unpopulated interface**: `SystemApparatusSetup`
+  has no inhabitant anywhere; every occurrence is a hypothesis binder. Same defect class as W3's
+  `DeIsolationInteraction` before Q12-a. Not vacuous in the damaging sense — the Bell content rides
+  on `ctx` — but it wants a witness. ⚠️ **Not the degenerate one** (`proj .plus = 1`,
+  `proj .minus = 0` satisfies every field and would populate the interface while proving nothing).
+  (2) **Phantom parameter**: `SystemApparatusSetup K_A K_B H_SA` never mentions `H_SA` in any field.
+* **CL-015** (`projectedFlow_phase_lift`), phase-hypothesis mutation study: ★ **strongest possible
+  verdict — `hcob` is necessary, not merely sufficient.** `CSD.LF4.cob_of_phaseLiftFamily_group`
+  proves the converse: if `t ↦ b t • U t` is a genuine vector-level group then `b` *must* trivialise
+  the cocycle. Both sides are scalar multiples of the same invertible `U s * U t`, and a unitary is
+  nonzero. **So no cleverer proof can drop it** — the `H²(ℝ, U(1))` residual the module docstring
+  names is real and irreducible, not an artefact of this proof. `hb` is load-bearing more basically:
+  without `‖b t‖ = 1` the rescaled matrix is not unitary and the conclusion cannot even be stated.
+
+All five rows stay `qualified` — their load-bearing scope is unchanged (CL-008's *description* is
+corrected, not its scope); what was missing was the recorded check, and that is what these supply.
+**Of the seven named-gap rows, five are now cleared; CL-024 (author hand-pass, G11) and CL-014
+(rides CL-024) remain, and both are author-side.**
 
 **Follow-up S2 (same day):** the two S-sized outcomes executed. CL-006's named
 API test landed as `POVM.weight_nonneg` and the row promoted; the four rows
