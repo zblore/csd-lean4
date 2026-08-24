@@ -9,6 +9,7 @@ public import Mathlib.Topology.ContinuousMap.Weierstrass
 public import Mathlib.MeasureTheory.Measure.HasOuterApproxClosed
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Hausdorff moment determinacy on a compact interval
@@ -294,5 +295,62 @@ theorem eq_of_forall_integral_mul_pow_eq {μ : Measure (Set.Icc a b)}
     simpa [mul_self_eq_zero] using this
   have : f - g = 0 := hdz
   rwa [sub_eq_zero] at this
+
+/-! ### The carrier: Lebesgue measure on a compact interval
+
+Mathlib has no `MeasureSpace` instance on the subtype `Set.Icc a b`, so the measure the results
+above are stated against has to be built. It is the comap of `volume`, and it has the two
+properties they need: finiteness, and full support (which is what turns "equal almost everywhere"
+into "equal"). -/
+
+/-- Lebesgue measure on a compact interval, as a measure on the subtype. -/
+noncomputable def intervalMeasure (a b : ℝ) : Measure (Set.Icc a b) :=
+  Measure.comap Subtype.val volume
+
+instance instIsFiniteMeasureIntervalMeasure (a b : ℝ) : IsFiniteMeasure (intervalMeasure a b) := by
+  refine ⟨?_⟩
+  rw [intervalMeasure, (MeasurableEmbedding.subtype_coe (measurableSet_Icc (a := a) (b := b)))
+    |>.comap_apply]
+  exact lt_of_le_of_lt (measure_mono (by rintro y ⟨z, -, rfl⟩; exact z.2)) measure_Icc_lt_top
+
+/-- On a **nondegenerate** interval the measure has full support, which is what upgrades
+"equal almost everywhere" to "equal". -/
+lemma isOpenPosMeasure_intervalMeasure {a b : ℝ} (hab : a < b) :
+    (intervalMeasure a b).IsOpenPosMeasure := by
+  refine ⟨fun U hU hne hzero => ?_⟩
+  obtain ⟨x, hx⟩ := hne
+  obtain ⟨V, hV, hVU⟩ := isOpen_induced_iff.mp hU
+  have hxV : (x : ℝ) ∈ V := by rw [← hVU] at hx; exact hx
+  obtain ⟨ε, hε, hball⟩ := Metric.isOpen_iff.mp hV _ hxV
+  -- a nondegenerate subinterval of `Icc a b` inside the ball
+  have hxab : (x : ℝ) ∈ Set.Icc a b := x.2
+  obtain ⟨u, v, huv, hsub⟩ :
+      ∃ u v : ℝ, u < v ∧ Set.Ioo u v ⊆ Metric.ball (x : ℝ) ε ∩ Set.Icc a b := by
+    refine ⟨max a ((x : ℝ) - ε / 2), min b ((x : ℝ) + ε / 2), ?_, ?_⟩
+    · refine max_lt (lt_min hab (by linarith [hxab.1])) (lt_min ?_ (by linarith))
+      linarith [hxab.2]
+    · rintro y ⟨hy1, hy2⟩
+      have hya : a < y := lt_of_le_of_lt (le_max_left _ _) hy1
+      have hyb : y < b := lt_of_lt_of_le hy2 (min_le_left _ _)
+      have hy1' : (x : ℝ) - ε / 2 < y := lt_of_le_of_lt (le_max_right _ _) hy1
+      have hy2' : y < (x : ℝ) + ε / 2 := lt_of_lt_of_le hy2 (min_le_right _ _)
+      refine ⟨?_, ⟨hya.le, hyb.le⟩⟩
+      rw [Metric.mem_ball, Real.dist_eq, abs_lt]
+      constructor <;> linarith
+  -- that subinterval has positive Lebesgue measure, contradicting `hzero`
+  have himg : Set.Ioo u v ⊆ Subtype.val '' U := by
+    intro y hy
+    obtain ⟨hyb, hyI⟩ := hsub hy
+    refine ⟨⟨y, hyI⟩, ?_, rfl⟩
+    rw [← hVU]
+    exact hball hyb
+  have hUimg : (intervalMeasure a b) U = volume (Subtype.val '' U) := by
+    rw [intervalMeasure,
+      (MeasurableEmbedding.subtype_coe (measurableSet_Icc (a := a) (b := b))).comap_apply]
+  rw [hUimg] at hzero
+  have : volume (Set.Ioo u v) = 0 := measure_mono_null himg hzero
+  rw [Real.volume_Ioo] at this
+  simp only [ENNReal.ofReal_eq_zero, tsub_le_iff_right, zero_add] at this
+  linarith
 
 end MeasureTheory

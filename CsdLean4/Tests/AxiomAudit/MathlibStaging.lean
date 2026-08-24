@@ -2481,4 +2481,13 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.eq_of_forall_integral_mul_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.eq_of_forall_integral_mul_pow_eq
 
+-- The CARRIER (2026-08-24): Mathlib has no MeasureSpace instance on the subtype Set.Icc a b, so
+-- the measure these results are stated against had to be built -- intervalMeasure, the comap of
+-- volume -- together with its two needed properties.  Finiteness is immediate; full support
+-- (isOpenPosMeasure_intervalMeasure) needs a < b and is what upgrades "equal almost everywhere"
+-- to "equal".  Proof: a nonempty relatively-open subset of a nondegenerate interval contains
+-- Ioo (max a (x - eps/2)) (min b (x + eps/2)), which has positive Lebesgue measure.
+/-- info: 'MeasureTheory.isOpenPosMeasure_intervalMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.isOpenPosMeasure_intervalMeasure
+
 end CSD.Tests.AxiomAudit

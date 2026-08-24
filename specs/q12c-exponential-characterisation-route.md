@@ -150,8 +150,18 @@ determinacy, which Mathlib provisions but does not state.
   Weierstrass argument already written, against a fixed weight instead of between two measures.
   Worth remembering: when a step looks like it needs a *stronger determinacy theorem*, check first
   whether it needs only the *same* theorem against a different object.
+* ✅ **The carrier is built** (2026-08-24). Mathlib has no `MeasureSpace` instance on the subtype
+  `Set.Icc a b`, so `intervalMeasure` (the comap of `volume`) and its two needed properties had to
+  be supplied: finiteness, and `isOpenPosMeasure_intervalMeasure` (needs `a < b`), which is what
+  upgrades a.e.-equality to equality. The analytic half of the route is now complete infrastructure.
+* ⏳ **Next: step 2**, the probability integral transform — `μ.map G = Uniform[0,1]`, which is what
+  converts the `μ`-integrals of the race into Lebesgue integrals on `[0,1]`. Note it comes *free
+  from the hypothesis at `c = 1`* rather than needing a separate PIT theorem: the `c = 1` moments
+  are exactly the moments of the uniform law, so `ext_of_forall_integral_pow_eq_of_null_compl`
+  delivers it. Step 4 is then a substitution.
 * ⏳ **Then step 1**, the expensive half: the `k`-clock race for *general* iid clocks, i.e. Q12-b's
-  product-measure setup without the exponential assumption.
+  product-measure setup without the exponential assumption. This is the only remaining piece that
+  is plumbing rather than mathematics, and it is what ties the result to §3c.
 
 ⚠️ Until step 1 lands, the corpus has the *characterisation*, not §3c's claim.
 
