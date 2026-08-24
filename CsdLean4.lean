@@ -126,6 +126,7 @@ public import CsdLean4.LF4.KahlerInstance
 public import CsdLean4.LF4.KahlerFlow
 public import CsdLean4.LF4.KahlerFlowNoMixing
 public import CsdLean4.LF4.KahlerFlowFiniteHorizon
+public import CsdLean4.LF4.KahlerFibreMixing
 public import CsdLean4.LF4.KahlerOnticSetup
 public import CsdLean4.LF4.NonTrivialSetup
 public import CsdLean4.LF4.UnitarySelection

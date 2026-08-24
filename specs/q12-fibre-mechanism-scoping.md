@@ -309,6 +309,31 @@ escape routes, in the order I would rate them:
    corpus's fibre is `T²` (compact) while §3c's race wants `ℝⁿ` — the successor question at the
    end of `sigma-fibre-contextuality.md` is exactly this tension, and it is unresolved.
 
+> ### ★ **BRICK (i) DONE 2026-08-24 — and it corrects how W1 should be read**
+>
+> ⚠️ **`W1` does not say "Σ cannot mix".** It rules out flows whose iterates are the **powers of an
+> element of a compact group**. `kFlow` is one, because translations are `T²` acting on itself. An
+> **endomorphism** of the same torus is not, because its iterates are powers in a *discrete,
+> non-compact* monoid.
+>
+> ★★ `CSD.LF4.torusDouble_hasCorrelationDecay` (`LF4/KahlerFibreMixing.lean`): the doubling map
+> `y ↦ 2y` on the corpus's **own** fibre `KTorus` has correlations that are **exactly zero at every
+> nonzero lag**. Same fibre, same observable as `not_hasCorrelationDecay_kFlow`, opposite verdict.
+> **So the obstruction is the choice of map, not the ontic space** — Σ is untouched, and route 3
+> does not require leaving `T²` after all.
+>
+> The proof is free: the observable reads one angle, the map acts coordinatewise, so every
+> correlation collapses to E5's circle witness.
+>
+> ⚠️ **Three things it does not settle.** (1) It does not replace `kFlow` — that is the *phase*
+> translation, and a phase should translate; `torusDouble` is a candidate for the **de-isolation**
+> map. (2) It is **not invertible**, so it is not yet a physically admissible Σ-flow; the invertible
+> case is a hyperbolic toral automorphism (cat map), same character argument, extra cost being
+> Haar-invariance of a toral automorphism, which Mathlib lacks. (3) ★ **Mixing is not the race** —
+> `Q12-d` still needs first-passage times *exponential at moment-map rates*, and that link
+> (Galves–Schmitt/Abadi) is `W2`'s research-grade item. **That, not Σ's vocabulary, is the real
+> blocker**, which is the correction this brick makes to the reading of `W1`.
+
 **Do not open Q12-d as a Lean brick.** It is a foundations question, and the memory note saying so
 was right.
 

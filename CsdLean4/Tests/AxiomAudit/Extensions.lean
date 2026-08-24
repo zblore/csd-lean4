@@ -337,6 +337,41 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.LF4.exists_lag_envelope_ge_quarter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF4.exists_lag_envelope_ge_quarter
 
+-- Q12-d BRICK (i) (2026-08-24, LF4/KahlerFibreMixing.lean): the fibre torus DOES admit a mixing
+-- map.  W1 plus the finite-horizon result are easy to misread as "Sigma cannot mix"; that reading
+-- is WRONG, and this is the counterexample on the corpus's OWN fibre.
+-- ★★ torusDouble_hasCorrelationDecay: the doubling endomorphism y |-> 2y of KTorus has circEnv as
+-- an envelope -- 1 at lag zero, 0 at EVERY other lag.  Not merely decay: exact decorrelation.
+-- ★ WHY IT ESCAPES W1, precisely: not_hasCorrelationDecay_of_compactGroup rules out flows whose
+-- iterates are POWERS OF AN ELEMENT OF A COMPACT GROUP.  kFlow is one (translations are T^2 acting
+-- on itself).  torusDouble is an ENDOMORPHISM; its iterates are y |-> 2^n y, powers in the
+-- multiplicative monoid of naturals -- discrete and NON-compact.  No compact group, no recurrence.
+-- So W1 constrains the CHOICE OF MAP, not the ontic space.  Sigma is unchanged: KTorus is the
+-- fibre the Kahler instance already has.  Same fibre and same observable as
+-- not_hasCorrelationDecay_kFlow, opposite verdicts.
+-- The proof is free: torusObs reads only the first angle and torusDouble acts coordinatewise, so
+-- every correlation collapses to the 1-D integral and E5's circ_hasCorrelationDecay answers it;
+-- the second factor integrates out via Measure.map_fst_prod.  Nothing about doubling is re-proved.
+-- torusObs_variance_ne is the non-triviality check (the observable is not a.e. constant), so this
+-- is a genuine witness and not the degenerate case integral_mul_self_eq_of_recurrent forces.
+-- ⚠️ THREE THINGS THIS DOES NOT SETTLE.  (1) It does NOT replace kFlow: kFlow is the PHASE
+-- translation (free evolution) and it is correct that a phase translates; torusDouble is a
+-- candidate for the DE-ISOLATION map, which Q12-d asks for and the corpus otherwise lacks.
+-- (2) torusDouble is NOT INVERTIBLE -- a symplectic/Hamiltonian Sigma-flow would be, so this
+-- witnesses that the MIXING half of Q12-d is satisfiable on T^2, not yet a physically admissible
+-- de-isolation dynamics.  The invertible case is a hyperbolic toral automorphism (cat map); the
+-- character argument has the same shape and the extra cost is Haar-invariance of a toral
+-- automorphism, which Mathlib does not provide.
+-- (3) ⚠️ MIXING IS NOT THE RACE.  Q12-d still needs first-passage times EXPONENTIAL AT MOMENT-MAP
+-- RATES.  That link (hitting times of small sets in mixing systems are asymptotically exponential,
+-- Galves-Schmitt/Abadi) is rated research-grade and not upstream in W2.  THAT, not Sigma's
+-- vocabulary, is what actually blocks Q12-d.
+/-- info: 'CSD.LF4.torusDouble_hasCorrelationDecay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.torusDouble_hasCorrelationDecay
+
+/-- info: 'CSD.LF4.torusObs_variance_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.torusObs_variance_ne
+
 -- Q12-d route 2 (2026-08-23, Thermo/Equilibration.lean): the statement E6 does NOT block.
 -- blockPop_timeAverage_le_of_finiteHorizon -- if the population's correlations are within eps on
 -- lags BELOW T, the time average at horizon T sits within (2/T) sum_{u<T} eps u of the
