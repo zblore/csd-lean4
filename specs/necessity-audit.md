@@ -52,7 +52,7 @@ as the spine means the audit cannot be accused of sampling favourably.
 | CL-008 | `LF3.LF3_main_theorem` | SUFFICIENCY | The `SystemApparatusSetup`. The singlet correlations are computed from it. |
 | CL-009 | `LF3.LF3_singlet_frequency_convergence_born` | SUFFICIENCY | The `PureSingletPreparation` bundle, whose `bridge_op_p` field its own docstring flags as the single largest external hypothesis, to be read with the scrutiny of an axiom. |
 | CL-010 | `LF4.fs_volume_eq_dirichlet` | SUFFICIENCY | None beyond the definition of the measure. Genuine Duistermaat-Heckman geometry. |
-| CL-011 | `LF4.born_frequency_convergence_N` | SUFFICIENCY | The sampling law is posited, and the regions are preparation-indexed. |
+| CL-011 | `RecordLayer.globalRecordClosure_born` | SUFFICIENCY | The sampling law is posited. ⚠️ **Row replaced 2026-08-24**: the regions are no longer preparation-indexed — `globalBasin (momentContext N) i` is the same set for every `ψ`, only the epistemic measure moves. The classification is unchanged (still sufficiency, still kinematic: no `H_int(M)` produces these basins). |
 | CL-012 | `LF4.fubiniStudy_forced_by_symmetry` | CONDITIONAL NECESSITY | Invariance under the group, and the group `U(N)` itself. |
 | CL-013 | `LF4.obsFlow_not_ergodic` | IMPOSSIBILITY | `1 < N`. No flow of this kind selects the typicality measure. |
 | CL-014 | `LF4.projectedFlow_eq_unitary_family` | SUFFICIENCY | Per-time unitarity, repackaged by choice. |

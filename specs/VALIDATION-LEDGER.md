@@ -119,6 +119,29 @@ The earlier in-session estimate "28 one-sign-off-away" was optimistic: it
 counted the by-design rows as promotable. This pass does not — a permanent
 scope qualification is not a missing signature.
 
+**CL-011 REPLACED 2026-08-24** (author sign-off) — `CSD.LF4.born_frequency_convergence_N`
+→ `CSD.RecordLayer.globalRecordClosure_born`, `needs-change` → `qualified`. **The ledger's only
+`needs-change` row is now cleared, and it was cleared by a theorem that had been in the corpus since
+July.**
+
+CL-011 stood `needs-change` from finding F-03 because its outcome regions were
+**preparation-indexed** (`bornRegion ψ'`), and S1 (2026-08-20) left it standing with the reason
+"the MD-1 frontier, Q12". That reason was already wrong twice over. Q12 was the **dynamics** half of
+MD-1, not the preparation-indexing half; and the preparation-indexing half had been closed on
+2026-07-31 by `GlobalBasin`/`GlobalRecordClosure`. The ledger simply had not caught up, and Q12's
+closure on 2026-08-24 made the stale pin visible.
+
+`globalRecordClosure_born` discharges the defect **by construction rather than by argument**: the
+record event `globalBasin (momentContext N) i` is literally the same set for every `ψ`, and only the
+epistemic measure moves. Its own docstring names it *"`RecordLayerClosure.born_typicality`'s
+successor, with the preparation-indexing removed"*. Replacement rather than a new row is admission
+criterion 4 — *when a stronger form lands, the row is replaced, not duplicated* (precedent CL-031).
+
+⚠️ `qualified`, **not** `validated`: the theorem's own docstring keeps the honest caveat, *"Still
+kinematic: no `H_int(M)` produces these basins."* The preparation-indexing defect is fixed; the
+kinematic scope is not, and that is the permanent honest scope of the claim. The necessity
+classification is unchanged (SUFFICIENCY).
+
 **Follow-up S2 (same day):** the two S-sized outcomes executed. CL-006's named
 API test landed as `POVM.weight_nonneg` and the row promoted; the four rows
 left unconfirmed at S1 depth were read to promotion standard and all four

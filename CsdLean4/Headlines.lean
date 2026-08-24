@@ -28,6 +28,7 @@ public import CsdLean4.Mathlib.Probability.IidClockRace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+public import CsdLean4.RecordLayer.GlobalRecordClosure
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.PovmDynamics
 public import CsdLean4.RecordLayer.MeasurementCapstone
@@ -95,7 +96,8 @@ above, so the facade cannot silently drop a headline.
 * **LF3 — the singlet chain:** `CSD.LF3.LF3_main_theorem` (CL-008),
   `CSD.LF3.LF3_singlet_frequency_convergence_born` (CL-009).
 * **LF4 — Born from Kähler volume:** `CSD.LF4.fs_volume_eq_dirichlet` (CL-010),
-  `CSD.LF4.born_frequency_convergence_N` (CL-011),
+  `CSD.RecordLayer.globalRecordClosure_born` (CL-011, replacing
+  `CSD.LF4.born_frequency_convergence_N` 2026-08-24 -- preparation-indexing removed),
   `CSD.LF4.fubiniStudy_forced_by_symmetry` (CL-012),
   `CSD.LF4.obsFlow_not_ergodic` (CL-013),
   `CSD.LF4.projectedFlow_eq_unitary_family` (CL-014),
@@ -185,7 +187,7 @@ example := @CSD.LF2.QuantumChannel.cptp_capstone -- CL-007
 example := @CSD.LF3.LF3_main_theorem -- CL-008
 example := @CSD.LF3.LF3_singlet_frequency_convergence_born -- CL-009
 example := @CSD.LF4.fs_volume_eq_dirichlet -- CL-010
-example := @CSD.LF4.born_frequency_convergence_N -- CL-011
+example := @CSD.RecordLayer.globalRecordClosure_born -- CL-011
 example := @CSD.LF4.fubiniStudy_forced_by_symmetry -- CL-012
 example := @CSD.LF4.obsFlow_not_ergodic -- CL-013
 example := @CSD.LF4.projectedFlow_eq_unitary_family -- CL-014
