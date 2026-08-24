@@ -160,7 +160,16 @@ classification is unchanged (SUFFICIENCY).
   `P(ρ) = (1/N) Σₘ Zᵐ ρ Zᵐ*` over diagonal phase unitaries, so **concavity of `S` plus unitary
   invariance** gives the inequality with no Klein and no relative entropy.
 
-Both rows stay `qualified` — their load-bearing scope is unchanged; what was missing was the
+* **CL-032** (`stone_continuous`), criterion 6: **done, by specialist proof review of the
+  statement — which found a redundant hypothesis.** `hU0 : U 0 = 1` follows from `hgroup` and
+  `hunit` alone (`U 0 = U 0 * U 0` by the group law at `(0,0)`; `U 0` is left-invertible by
+  unitarity; cancel). The finding is *verified in Lean*, not asserted:
+  `Matrix.StoneC1.apply_zero_eq_one`. So the statement carries four hypotheses where three suffice.
+  ⚠️ `hU0` is **deliberately retained** — it is free at every call site (nothing outside its own file
+  passes it) and keeps the hypothesis list reading as the standard four-part Stone statement. The
+  redundancy is now in the theorem's own docstring so it cannot be mistaken for an oversight.
+
+All three rows stay `qualified` — their load-bearing scope is unchanged; what was missing was the
 recorded independent check, and that is what these supply.
 
 **Follow-up S2 (same day):** the two S-sized outcomes executed. CL-006's named

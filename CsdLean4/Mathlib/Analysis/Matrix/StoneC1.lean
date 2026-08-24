@@ -163,10 +163,36 @@ theorem Matrix.StoneC1.skew_witness :
   exact ⟨hskew, fun t => Matrix.StoneC1.exp_smul_unitary _ hskew t⟩
 
 
+/-- ★ **A one-parameter unitary group is normalised at zero automatically.**
+
+`U 0 = 1` follows from the group law and unitarity alone: `U 0 = U 0 * U 0` by the group law at
+`(0,0)`, and `U 0` is left-invertible by unitarity, so cancelling gives `1`.
+
+Recorded as part of the CL-032 criterion-6 audit (2026-08-24), which is where the redundancy was
+noticed. `stone_continuous` still *takes* `hU0` — see its docstring. -/
+theorem Matrix.StoneC1.apply_zero_eq_one (U : ℝ → Matrix (Fin N) (Fin N) ℂ)
+    (hgroup : ∀ s t, U (s + t) = U s * U t) (hunit : ∀ t, (U t)ᴴ * U t = 1) :
+    U 0 = 1 := by
+  have hsq : U 0 * U 0 = U 0 := by
+    have h := hgroup 0 0
+    rw [add_zero] at h
+    exact h.symm
+  calc U 0 = 1 * U 0 := (one_mul _).symm
+    _ = ((U 0)ᴴ * U 0) * U 0 := by rw [hunit 0]
+    _ = (U 0)ᴴ * (U 0 * U 0) := by rw [Matrix.mul_assoc]
+    _ = (U 0)ᴴ * U 0 := by rw [hsq]
+    _ = 1 := hunit 0
+
 /-- **Continuity-only finite-dimensional Stone theorem.** A *strongly continuous* one-parameter
 unitary group `U : ℝ → Matrix N N ℂ` is `t ↦ exp (t • A)` for a skew-Hermitian generator `A`.
 No differentiability is assumed — it is derived by the integral-averaging argument (FTC +
-invertibility of `∫₀ˢ U` near `0`) and fed to the C¹ core `eq_exp_of_hasDeriv`. -/
+invertibility of `∫₀ˢ U` near `0`) and fed to the C¹ core `eq_exp_of_hasDeriv`.
+
+⚠️ **`hU0` is redundant** — it is derivable from `hgroup` and `hunit` by
+`Matrix.StoneC1.apply_zero_eq_one` (found in the CL-032 criterion-6 audit, 2026-08-24). It is
+retained in the signature because it is free at every call site and makes the hypothesis list read
+as the standard four-part statement of the theorem. Anyone minimising hypotheses should drop it and
+call `apply_zero_eq_one` internally; nothing outside this file passes it. -/
 theorem Matrix.StoneC1.stone_continuous (U : ℝ → Matrix (Fin N) (Fin N) ℂ)
     (hcont : Continuous U) (hU0 : U 0 = 1) (hgroup : ∀ s t, U (s + t) = U s * U t)
     (hunit : ∀ t, (U t)ᴴ * U t = 1) :
