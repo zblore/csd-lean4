@@ -205,6 +205,15 @@ ANALYTICS = (
 #
 # Every `localStorage` access is guarded. A browser that blocks site data throws
 # on read, and the catch leaves the banner shown rather than crashing the page.
+# The glossary is served as its own site, so the main site's footer does not reach
+# these pages and the policy has to be linked from here. It rides in `page()`
+# alongside the banner so every generated page carries it -- and unlike the banner
+# it is permanent, because a dismissed notice must not take the policy link with it.
+PRIVACY_LINE = (
+    '<p class="note privacy"><a class="ext"'
+    ' href="https://www.constraintsurfacedynamics.com/privacy">Privacy policy</a></p>'
+)
+
 COOKIE_BANNER = (
     '<div class="ck" id="ck" hidden><div class="in">'
     "<p>Google Analytics counts visits to this page, which stores cookies in your browser. "
@@ -234,7 +243,7 @@ def page(title, desc, body, jsonld, canon):
         + "<style>" + CSS + "</style>"
         + '<script type="application/ld+json">' + jsonld + "</script>"
         + ANALYTICS
-        + '</head><body><div class="w">' + body + "</div>"
+        + '</head><body><div class="w">' + body + PRIVACY_LINE + "</div>"
         + COOKIE_BANNER
         + "</body></html>"
     )
