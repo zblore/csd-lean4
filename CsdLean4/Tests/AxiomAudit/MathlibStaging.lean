@@ -2490,4 +2490,62 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.isOpenPosMeasure_intervalMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.isOpenPosMeasure_intervalMeasure
 
+-- Q12-c2 STEP 1 (2026-08-24, Mathlib/Probability/IidClockRace.lean): the k-CLOCK RACE FOR
+-- GENERAL IID CLOCKS -- the route memo's "fiddliest part", and the piece that ties the analytic
+-- half (steps 3/3') to record-layer-plan.md §3c.
+-- THE CHANGE OF FRAMING is what makes it work.  CompetingExponentials gave each clock j its own
+-- law Exp b_j and raced them unscaled; that is unusable here, because the law is the UNKNOWN.
+-- scaledRaceCell puts one iid law mu on every clock and carries the rate as a SCALING of the
+-- reading: clock j fires at (xi j)/(b j).  scaledRaceCell_one records that the two framings agree
+-- at unit rates, and hasRaceProperty_expMeasure that they agree for the exponential at all rates
+-- (the rate r cancels out of r/(r + r*S/b_i)) -- the non-vacuity check on the hypothesis.
+-- measure_scaledRaceCell is the KERNEL IDENTITY: clock i wins with probability
+-- int prod_j G(b_j/b_i * t) dmu(t), G t = mu (Ioi t) the survival function.  Same proof route as
+-- measure_raceCell (measurePreserving_piFinSuccAbove split, Measure.pi_pi on a box) but STRICTLY
+-- CLEANER: because the rate scales the reading rather than the law, the slice is a box at EVERY
+-- t, so the a.e.-nonnegativity step of the exponential case disappears.
+-- Then the k-clock family (rates (1, c, ..., c)) turns an integral equation into a MOMENT
+-- SEQUENCE: lintegral_measure_Ioi_pow is E[G(c xi)^k] = 1/(1+kc), the memo's (1), and
+-- lintegral_measure_Ioi_pow_mul_pow is the mixed form E[G(c xi)^p G(xi)^k] = 1/(1+pc+k) at rates
+-- (1, c^p, 1^k) -- the form eq_of_forall_integral_mul_pow_eq consumes, since at p = 1 it is a
+-- fixed continuous weight integrated against every power.
+-- ⚠️ THIS IS NOT §3c.  Steps 2 and 4 (the probability integral transform, and the substitution
+-- t = 1) are NOT in the corpus, so "the exponential fibre measure is FORCED" remains unproved.
+-- ⚠️ And when it lands the headline carries a SECOND CONJUNCT: HasRaceProperty quantifies over
+-- EVERY number of clocks.  At a fixed number of outcomes n the family gives only n-1 moments and
+-- finitely many moments determine nothing, so the exponential is forced only GIVEN THAT ONE CLOCK
+-- LAW SERVES EVERY n -- the measurement-independence specs/sigma-fibre-contextuality.md commits
+-- to.  Do not state the first conjunct without the second.
+/-- info: 'ProbabilityTheory.measure_scaledRaceCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.measure_scaledRaceCell
+
+/-- info: 'ProbabilityTheory.HasRaceProperty.lintegral_measure_Ioi_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.HasRaceProperty.lintegral_measure_Ioi_pow
+
+/-- info: 'ProbabilityTheory.HasRaceProperty.lintegral_measure_Ioi_pow_mul_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.HasRaceProperty.lintegral_measure_Ioi_pow_mul_pow
+
+/-- info: 'ProbabilityTheory.hasRaceProperty_expMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.hasRaceProperty_expMeasure
+
+-- Q12-c2 STEP 2 (2026-08-24, same file): the PROBABILITY INTEGRAL TRANSFORM -- and the route
+-- memo's regularity hypothesis turns out to be UNNECESSARY.
+-- map_survival: G(xi) is uniform on [0,1], where G t = mu (Ioi t) is the survival function
+-- (survival, with its Icc-valued/antitone/measurable API).
+-- The memo expected to need a PIT theorem and assumed G continuous and strictly decreasing to get
+-- one.  Neither is required.  The c = 1 case of step 1's moment family already says
+-- E[G(xi)^k] = 1/(1+k) for every k, and those are EXACTLY the moments of the uniform law, so
+-- ext_of_forall_integral_pow_eq_of_null_compl (step 3) closes it with NO hypothesis on mu at all.
+-- ★ The regularity is therefore DERIVED, not assumed: mu is atomless because the (k+1)-clock race
+-- at equal rates says the smallest of k+1 iid readings is STRICTLY smallest with probability
+-- 1/(k+1), and ties would cost.  This is the second time the k-clock family has paid for a step
+-- the two-clock framing made look expensive.
+-- ⚠️ STILL NOT §3c.  What remains is the ASSEMBLY, and the memo's cost accounting hid it: applying
+-- eq_of_forall_integral_mul_pow_eq needs H_c(u) = G(c * G-inverse(u)) as a CONTINUOUS FUNCTION on
+-- [0,1], i.e. it needs the quantile G-inverse (with the endpoints handled), which Mathlib does not
+-- provide.  Equivalently one may push the weighted measures forward and then need G_* injective on
+-- densities.  Either way "the exponential fibre measure is FORCED" remains unproved here.
+/-- info: 'ProbabilityTheory.HasRaceProperty.map_survival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.HasRaceProperty.map_survival
+
 end CSD.Tests.AxiomAudit

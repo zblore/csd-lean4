@@ -1,8 +1,9 @@
 # Q12-c2 — a route to "the exponential clock law is forced"
 
-**Status: a proof on paper, and a mapped Lean project. Step 3 is now Lean; the rest is not.** Everything below is a
-route memo. Nothing here is a corpus theorem, and the `record-layer-plan.md` §3c claim it targets
-stays unproved until it is.
+**Status: steps 1, 2, 3 and 3′ are Lean; the ASSEMBLY is not.** The probabilistic half and the
+analytic half are both built and neither is joined to the other, because joining them needs an
+object nothing yet constructs — `H_c` — see §5a. Everything below is a route memo. The
+`record-layer-plan.md` §3c claim it targets **stays unproved until the assembly lands**.
 
 **Supersedes my own assessment of 2026-08-23**, recorded in `q12-fibre-mechanism-scoping.md`, that
 c2 is "research-grade, not a brick". That verdict came from looking only at the **two-clock**
@@ -89,14 +90,45 @@ keep.**
 
 | Step | Ingredient | Status |
 |---|---|---|
-| 1 | the `k`-clock race probability for *general* iid clocks | needs the product-measure setup of `Q12-b` redone without the exponential assumption — the fiddliest part |
-| 2 | probability integral transform | standard; check Mathlib coverage |
+| 1 | the `k`-clock race probability for *general* iid clocks | ✅ **DONE 2026-08-24** — `ProbabilityTheory.HasRaceProperty.lintegral_measure_Ioi_pow` and `…_pow_mul_pow` (`Mathlib/Probability/IidClockRace.lean`). Not the fiddliest part after all: see §6a |
+| 2 | probability integral transform | ✅ **DONE 2026-08-24** — `HasRaceProperty.map_survival`, and it needs **no regularity hypothesis on `μ` whatsoever** |
 | 3 | Hausdorff determinacy on `[0,1]` | ✅ **DONE 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq` (`Mathlib/MeasureTheory/MomentDeterminacy.lean`). Assembled from Weierstrass + `ext_of_forall_integral_eq_of_IsFiniteMeasure`, as predicted |
 | 3′ | ✅ **DONE 2026-08-24** — `eq_of_forall_integral_mul_pow_eq`. Not the quantile argument: continuous functions with equal moments against all powers, via the same Weierstrass density argument |
 | 4 | substitution | trivial |
 
-**Estimate: L.** The analytic content is light; the cost is step 1's plumbing plus assembling
-determinacy, which Mathlib provisions but does not state.
+**Estimate: L** — and the estimate was right about the size, wrong about *where it sits*. See §5a.
+
+---
+
+## 5a. ⚠️ Where the remaining cost actually is: `H_c`
+
+The four-step table above hides its own hardest item, and this is the finding of the 2026-08-24
+session. Steps 3 and 3′ are theorems **about** `H_c`; step 4 is a substitution **into** the
+conclusion about `H_c`. Nothing anywhere **constructs** `H_c(u) = G(c·G⁻¹(u))`, and
+`eq_of_forall_integral_mul_pow_eq` wants it as an element of `C(Icc 0 1, ℝ)`. That needs:
+
+* the **quantile** `G⁻¹`, i.e. the inverse of a continuous strictly antitone surjection
+  `(0,∞) → (0,1)`, which Mathlib does not hand over (this is the same wall route (i) hit, arriving
+  from a different direction — dissolving the *fork* did not dissolve the *inverse*); and
+* the **endpoints**: `G⁻¹` lives on the open interval, `H_c` has to be continuous on the closed
+  one, extended by `H_c(0) = 0`, `H_c(1) = 1`.
+
+There is a second route to the same place which trades the quantile for a measure-theoretic
+statement, and it may be the cheaper one:
+
+* Push the *weighted* measures forward instead of changing variables. `ν₁ := G_*(G(c·) dμ)` and
+  `ν₂ := G_*(G(·)ᶜ dμ)` have the same moments by the mixed-moment identity plus step 2, so
+  `ν₁ = ν₂` by `ext_of_forall_integral_pow_eq_of_null_compl` — provable **today**, with no `H_c`.
+  What it gives is `𝔼[G(cξ) ∣ G(ξ)] = G(ξ)ᶜ`, a *conditional* statement; upgrading it to the
+  pointwise identity needs `G_*` injective on densities.
+* That injectivity is within reach and does not need step 2: `G` is antitone, so for `s < t` with
+  `G s = G t` one has `μ (Ioc s t) = 0`; hence `Ioi a ▵ G⁻¹(Iio (G a))` is contained in
+  `{t > a ∣ G t = G a}`, an interval of zero `μ`-measure. So `σ(G)` contains the Borel sets mod
+  `μ`-null, and a π-λ argument finishes. **Written down here because it was worked out and not
+  built — do not re-derive it.**
+
+Neither route is research. Both are a day's build. Until one of them lands, the corpus has the
+*ingredients*, not the characterisation.
 
 ---
 
@@ -154,21 +186,40 @@ determinacy, which Mathlib provisions but does not state.
   `Set.Icc a b`, so `intervalMeasure` (the comap of `volume`) and its two needed properties had to
   be supplied: finiteness, and `isOpenPosMeasure_intervalMeasure` (needs `a < b`), which is what
   upgrades a.e.-equality to equality. The analytic half of the route is now complete infrastructure.
-* ⏳ **Next: step 2**, the probability integral transform — `μ.map G = Uniform[0,1]`, which is what
-  converts the `μ`-integrals of the race into Lebesgue integrals on `[0,1]`. Note it comes *free
-  from the hypothesis at `c = 1`* rather than needing a separate PIT theorem: the `c = 1` moments
-  are exactly the moments of the uniform law, so `ext_of_forall_integral_pow_eq_of_null_compl`
-  delivers it. Step 4 is then a substitution.
-* ⏳ **Then step 1**, the expensive half: the `k`-clock race for *general* iid clocks, i.e. Q12-b's
-  product-measure setup without the exponential assumption. This is the only remaining piece that
-  is plumbing rather than mathematics, and it is what ties the result to §3c.
+* ✅ **Step 1 landed 2026-08-24** — `Mathlib/Probability/IidClockRace.lean`. It was billed as "the
+  fiddliest part" and was not, because of a **change of framing** the memo had not spelled out.
+  `CompetingExponentials` gave each clock its own law `Exp bⱼ` and raced them unscaled; that is
+  unusable when the law is the unknown. `scaledRaceCell` instead puts one iid law on every clock and
+  carries the rate as a **scaling of the reading** — clock `j` fires at `ξⱼ / bⱼ`. The proof is then
+  the *same* `measurePreserving_piFinSuccAbove` split and `Measure.pi_pi` box, but strictly cleaner:
+  because the rate scales the reading rather than the law, each slice is a box at **every** `t`, and
+  the almost-everywhere step of the exponential case disappears.
+  `hasRaceProperty_expMeasure` is the non-vacuity witness — every exponential law has the property,
+  which is the `⇐` direction restated in the iid framing, and it is where the two framings visibly
+  agree (the rate `r` cancels out of `r/(r + r·S/bᵢ)`).
+  `HasRaceProperty` quantifies over the number of clocks, so §4's caveat is now **encoded in the
+  Lean statement** rather than only in prose. Good.
+* ✅ **Step 2 landed 2026-08-24, and is stronger than this memo predicted.**
+  `HasRaceProperty.map_survival` — `G(ξ)` is uniform on `[0,1]` — holds with **no regularity
+  hypothesis on `μ` at all**. §3's "regularity assumed: `G` continuous and strictly decreasing" is
+  not needed for this step: the `c = 1` moments are exactly the uniform moments, and step 3 closes
+  it. ★ So atomlessness of `μ` is **derived from the race property, not assumed of it** — as it
+  must be, since the `(k+1)`-clock race at equal rates says the smallest of `k+1` iid readings is
+  *strictly* smallest with probability `1/(k+1)`, and ties would cost. That is the second time the
+  `k`-clock family has paid for a step the two-clock framing made look expensive.
+* ⏳ **What is left is the assembly, and it is not step 4.** See §5a: `H_c` is used by steps 3, 3′
+  and 4 and constructed by none of them. Two routes are mapped there, both a day's build, neither
+  research.
 
-⚠️ Until step 1 lands, the corpus has the *characterisation*, not §3c's claim.
+⚠️ Until the assembly lands, the corpus has the *ingredients*, not §3c's claim. In particular do
+not read `map_survival` as "the fibre law is pinned down": it says the survival function is a
+uniform variable, which every atomless law satisfies.
 
 ## 7. Recommendation
 
 The route above is the one to take if c2 is wanted. It is **L**, it is fully mapped, and it needs
-no upstream mathematics that Mathlib lacks. It is *not* recommended ahead of frontier work: c2
+no upstream mathematics that Mathlib lacks. As of 2026-08-24 four of its five pieces are built and
+the fifth (§5a) is the only one outstanding. It is *not* recommended ahead of frontier work: c2
 would tighten a posit that is already narrow, and `Q12-d`'s original form stays blocked either way.
 
 If it is built, the honest headline is: **the exponential fibre law is forced by the race property
