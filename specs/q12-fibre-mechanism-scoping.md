@@ -339,6 +339,35 @@ was right.
 > `ε` on lags below `T`; that is a quantitative estimate about specific dynamics and it remains
 > open. What changed is that the hypothesis is no longer *provably unsatisfiable*, which is what E6
 > established for the asymptotic version.
+>
+> ### ⚠️ **ROUTE 2 IS CLOSED FOR `kFlow` — 2026-08-24**
+>
+> The caveat above turned out to be answerable, and the answer is negative for the corpus's own
+> fibre flow. ★★ `CSD.LF4.exists_lag_le_envelope` (`LF4/KahlerFlowFiniteHorizon.lean`): for every
+> `δ > 0` there is a lag bound `n` such that on **any** horizon `T > n`, a finite-horizon envelope
+> for `kFlow sh` must already exceed `1/2 − δ` at some lag in `[1, n]`.
+>
+> The mechanism is **quantitative recurrence**. Dirichlet's approximation theorem
+> (`AddCircle.exists_norm_nsmul_le`, in Mathlib) returns `j • sh` to within `1/(n+1)` of the
+> identity at some lag `j ≤ n`, **for every shift**. So the correlation is back near its lag-zero
+> value `1/2` at a lag bounded by a number depending only on how close you want to get.
+>
+> ★ **What is uniform is the whole point.** The bound `n` depends on `δ` **alone** — not on the
+> shift, not on the base point, and *not on the horizon*. Route 2's physical picture is a system
+> that wanders long enough to decorrelate before recurring; a torus shift has no such room, and the
+> bound is blind to every parameter one might hope to tune. Enlarging `T` buys nothing, because the
+> return has already happened inside it.
+>
+> **Non-vacuous**: `ε = 1` does satisfy `HasCorrelationDecayUpTo` (the observable is bounded by
+> one), so the hypothesis is satisfiable and "the envelope is `≥ 1/2 − δ` at a small lag" is a real
+> constraint rather than an empty one. `exists_lag_envelope_ge_quarter` states it with a number.
+>
+> ⚠️ **Scope.** This is about `kFlow`, *not* about finite-horizon decorrelation in general. Route
+> 2's engine (`blockPop_timeAverage_le_of_finiteHorizon`) is untouched and still correct; what is
+> ruled out is **instantiating its antecedent on the Kähler fibre shift**. Nothing here says CSD
+> cannot have a de-isolation flow with finite-horizon decorrelation — it says no flow currently in
+> the corpus is one. **With `W1`, `Q12-d` now has no route the corpus's present Σ-vocabulary can
+> supply**, and the open question is a Σ-vocabulary question, not a proof-technique one.
 
 ### Q12-w — ✅ **DONE 2026-08-24** (was: optional, cheap: record W1 as a theorem (S))
 

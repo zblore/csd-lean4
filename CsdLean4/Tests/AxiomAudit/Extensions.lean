@@ -309,6 +309,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.LF4.not_hasCorrelationDecay_kFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF4.not_hasCorrelationDecay_kFlow
 
+-- Q12-d ROUTE 2 CLOSED FOR kFlow (2026-08-24, LF4/KahlerFlowFiniteHorizon.lean).
+-- W1 kills the ASYMPTOTIC mixing hypothesis; the scoping doc's recommended escape is route 2 --
+-- weaken it to FINITE-HORIZON decorrelation (HasCorrelationDecayUpTo), on the physical grounds
+-- that a real environment decorrelates on a timescale, and that a unitary flow on a large space
+-- can wander a long time before it recurs.  ★★ exists_lag_le_envelope says the corpus's own fibre
+-- flow does NOT get that room.
+-- The mechanism is QUANTITATIVE RECURRENCE.  Dirichlet's approximation theorem
+-- (AddCircle.exists_norm_nsmul_le, Mathlib) returns j*sh to within 1/(n+1) of the identity at some
+-- lag j <= n, for EVERY shift.  So the correlation is back near its lag-zero value 1/2 at a lag
+-- bounded by a number depending only on how close you want to get.
+-- ★ WHAT IS UNIFORM IS THE POINT: the lag bound n depends on delta ALONE -- not on the shift sh,
+-- not on the base point p0, and NOT ON THE HORIZON T.  Route 2's picture is "a big system wanders
+-- before coming back"; a torus shift has no such room, and the bound is blind to every parameter
+-- one might hope to tune.  Enlarging T buys nothing because the return already happened inside it.
+-- exists_lag_envelope_ge_quarter is the same statement with a number in it (envelope >= 1/4).
+-- Non-vacuous: eps = 1 satisfies HasCorrelationDecayUpTo (|f| <= 1), so the hypothesis is
+-- satisfiable and "eps j >= 1/2 - delta at some small lag" is a real constraint, not an empty one.
+-- ⚠️ SCOPE.  This is about kFlow, NOT about finite-horizon decorrelation in general: route 2's
+-- engine (blockPop_timeAverage_le_of_finiteHorizon) is untouched and still correct -- what is ruled
+-- out is INSTANTIATING its antecedent on the Kahler fibre shift.  Nothing here says CSD cannot have
+-- a de-isolation flow with finite-horizon decorrelation; it says no flow currently in the corpus is
+-- one.  With W1 that leaves Q12-d with NO route the corpus's present Sigma-vocabulary can supply.
+/-- info: 'CSD.LF4.exists_lag_le_envelope' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.exists_lag_le_envelope
+
+/-- info: 'CSD.LF4.exists_lag_envelope_ge_quarter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.exists_lag_envelope_ge_quarter
+
 -- Q12-d route 2 (2026-08-23, Thermo/Equilibration.lean): the statement E6 does NOT block.
 -- blockPop_timeAverage_le_of_finiteHorizon -- if the population's correlations are within eps on
 -- lags BELOW T, the time average at horizon T sits within (2/T) sum_{u<T} eps u of the
