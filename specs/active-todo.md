@@ -14,10 +14,20 @@
 >
 > ⚠️ **This banner previously ended "The Σ+Ω reconstruction of QM is complete." That was wrong and
 > is retracted (2026-07-28, external review).** What is complete is an operational finite-QM engine
-> on the concrete product witness, plus a kinematic definite-record model. Still open: **general-`N`
-> A7** (the partition is preparation-indexed; `Ωᵢ(M)` from the apparatus alone is proved only at
-> `N=2`), the **Hamiltonian de-isolation** generating the Born basins, and a **stable apparatus
-> record from joint dynamics**. The full Paper C/D reconstruction claim is not yet justified.
+> on the concrete product witness, plus a kinematic definite-record model.
+>
+> ⚠️ **Banner corrected 2026-08-24 — it had gone stale by six weeks.** It listed **general-`N` A7**
+> as open ("the partition is preparation-indexed; `Ωᵢ(M)` from the apparatus alone is proved only at
+> `N=2`"). **That closed on 2026-07-31** — `SigmaLayer/GlobalRecordClosure.lean` makes the record
+> event a function of `(context, outcome, time)` and nothing else, so the same set serves every
+> preparation and only the epistemic measure moves. Ledger row CL-011 was replaced on exactly that
+> basis 2026-08-24.
+>
+> **Still open, and it is two things, not three:** the **Hamiltonian de-isolation** generating the
+> Born basins (no `H_int(M)` produces them; ⚠️ the *mixing* route to it was **retired 2026-08-24** as
+> mis-specified — successor question: what supplies the **independence** of the outcome clocks?), and
+> the **A1 ontic-sector status** of the fibred Σ. A **stable apparatus record from joint dynamics**
+> sits inside the first. The full Paper C/D reconstruction claim is not yet justified.
 
 **Purpose.** Durable copy of the session task list so it survives session loss. If the
 in-memory task list is gone, re-seed from the table below (each row → a task; keep the

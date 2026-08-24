@@ -116,7 +116,17 @@ resolved in Lean, the second the standing posit):
   typicality volume for all `N` (theorem), but measurement contextuality lives on the base only at
   `N = 2` (`CP¹ = S²` accident) and **necessarily in the fibre for `N ≥ 3`**. This is a *constraint
   on Σ's structure* (the fibre is load-bearing), not a defect — and it is **not** Gleason (CSD is
-  contextual). Deriving the fibre mechanism from a de-isolation dynamics is the open frontier.
+  contextual). ⚠️ **Frontier restated 2026-08-24.** This line previously read "deriving the fibre
+  mechanism from a de-isolation dynamics is the open frontier". That formulation — derive the
+  first-passage race from a **mixing** de-isolation flow — was **retired as mis-specified**, not
+  merely hard: the hitting-time limit theorems need vanishingly rare sets while a Born partition's
+  cells sum to one; an asymptotic law would deliver the Born weights only in a limit, weaker than the
+  corpus already proves exactly; and the race needs **independent** clocks, which one deterministic
+  trajectory cannot supply. ★ **That last point strengthens the lesson above rather than weakening
+  it: the fibre carries the independence the base cannot, which is a second and independent reason it
+  is load-bearing, alongside the dimensional one.** The mechanism is still underived — no `H_int(M)`
+  produces the basins — but the open question is now **what structure supplies the independence**,
+  and it is a question about Σ's *structure*, not its dynamics.
 - The witness closure called "QM derived from CSD."
 
 ## Repository architecture (decided 2026-08-06)
