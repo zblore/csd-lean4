@@ -142,6 +142,27 @@ kinematic: no `H_int(M)` produces these basins."* The preparation-indexing defec
 kinematic scope is not, and that is the permanent honest scope of the claim. The necessity
 classification is unchanged (SUFFICIENCY).
 
+**S3 (2026-08-24) — two of the seven named-gap rows cleared, and one of the gaps was itself wrong.**
+
+* **CL-030** (`landauer_bound`), sign/temperature convention check: **clean.** The statement matches
+  Reeb–Wolf 2014 exactly (`ΔS ≤ βΔQ`, system entropy *decrease* against heat *absorbed by the
+  bath*); `gibbsWeight = exp(−βx)/Z` is the standard convention and is cross-checked internally by
+  `re_trace_mul_log_gibbs`; the signs are consistent on both sides. ★ **Finding:** the docstring says
+  "at inverse temperature `β > 0`" while the signature carries **no positivity hypothesis** — and
+  that is correct, because the inequality descends from `D(ρ_B'‖τ_B) ≥ 0`, which holds for any real
+  `β`. The `β > 0` is a physical gloss, not a hypothesis. **Do not "fix" it by adding `0 < β`**; that
+  would strictly weaken a correct theorem.
+* **CL-029** (`vonNeumannEntropy_le_pinching`): ★ **the audit's own suggested check was circular.**
+  It asked for an "independent relative-entropy derivation", but Klein's inequality
+  `tr[ρ log ρ] ≥ tr[ρ log σ]` **is** nonnegativity of quantum relative entropy, and the corpus proof
+  already runs on it — so a relative-entropy derivation would restate the proof rather than check it.
+  Replaced with a genuinely independent route: pinching is the uniform mixture
+  `P(ρ) = (1/N) Σₘ Zᵐ ρ Zᵐ*` over diagonal phase unitaries, so **concavity of `S` plus unitary
+  invariance** gives the inequality with no Klein and no relative entropy.
+
+Both rows stay `qualified` — their load-bearing scope is unchanged; what was missing was the
+recorded independent check, and that is what these supply.
+
 **Follow-up S2 (same day):** the two S-sized outcomes executed. CL-006's named
 API test landed as `POVM.weight_nonneg` and the row promoted; the four rows
 left unconfirmed at S1 depth were read to promotion standard and all four
