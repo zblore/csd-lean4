@@ -157,6 +157,7 @@ CSS = (
     ".foot dd{margin:0}"
     "a.ext{background-image:linear-gradient(var(--faint),var(--faint));background-size:100% 1px;background-repeat:no-repeat;background-position:0 1.15em;text-decoration:none}a.ext:hover{background-image:linear-gradient(var(--acc),var(--acc))}"
     ".note{margin-top:2rem;font-size:.8rem;color:var(--faint);line-height:1.6}"
+    ".cookie{border-top:1px solid var(--line);padding-top:1.1rem;margin-top:2.6rem}"
     "ul.idx{list-style:none;padding:0;margin:0}"
     "ul.idx li{border-bottom:1px solid var(--line);padding:1.15rem 0}"
     "ul.idx a{text-decoration:none}"
@@ -169,6 +170,29 @@ CSS = (
 )
 
 
+GA_ID = "G-W92F78PH51"
+
+# Google Analytics, and the disclosure that goes with it. GA4 sets first-party
+# cookies (`_ga`, `_ga_<id>`), so the notice is not optional decoration -- it
+# rides in `page()` rather than in any one builder so that every generated page
+# carries it, including ones added later.
+ANALYTICS = (
+    '<script async src="https://www.googletagmanager.com/gtag/js?id=' + GA_ID + '"></script>'
+    '<script>window.dataLayer=window.dataLayer||[];'
+    "function gtag(){dataLayer.push(arguments);}"
+    'gtag("js",new Date());gtag("config","' + GA_ID + '");</script>'
+)
+
+COOKIE_NOTICE = (
+    '<p class="note cookie"><strong>Cookies.</strong> This page uses Google Analytics to count '
+    "visits, which stores cookies in your browser. They record how the page is reached and which "
+    "entries are read; they do not identify you, and nothing is sold or shared onward. Blocking "
+    "cookies for this site leaves everything on the page working."
+    ' <a class="ext" href="https://policies.google.com/technologies/cookies"'
+    ' rel="noopener nofollow">How Google uses cookies</a>.</p>'
+)
+
+
 def page(title, desc, body, jsonld, canon):
     return (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
@@ -178,7 +202,8 @@ def page(title, desc, body, jsonld, canon):
         + '<link rel="canonical" href="' + canon + '">'
         + "<style>" + CSS + "</style>"
         + '<script type="application/ld+json">' + jsonld + "</script>"
-        + '</head><body><div class="w">' + body + "</div></body></html>"
+        + ANALYTICS
+        + '</head><body><div class="w">' + body + COOKIE_NOTICE + "</div></body></html>"
     )
 
 
