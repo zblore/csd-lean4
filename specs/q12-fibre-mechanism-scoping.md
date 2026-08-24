@@ -394,7 +394,7 @@ was right.
 > the corpus is one. **With `W1`, `Q12-d` now has no route the corpus's present Σ-vocabulary can
 > supply**, and the open question is a Σ-vocabulary question, not a proof-technique one.
 
-### ★ Q12-d — the recommendation, logged 2026-08-24 (author decision pending)
+### ✅ Q12-d — **MIXING FORMULATION RETIRED 2026-08-24** (author decision taken)
 
 **Recommendation: retire `Q12-d`'s *mixing* formulation.** Not because it is hard, but because it
 cannot deliver what it promises. Three independent reasons, none about formalisation effort:
@@ -417,8 +417,12 @@ cannot deliver what it promises. Three independent reasons, none about formalisa
 the target rather than proving it. A correct successor question would ask what structure supplies
 the *independence*, which is where the content actually sits.
 
-⚠️ **Not executed.** Retiring a frontier row is an author decision; this is the recommendation on
-the record, awaiting it.
+✅ **Executed 2026-08-24.** `Q12-d`'s mixing formulation is **retired**. It is not "blocked" and not
+"open" — it is **withdrawn as mis-specified**, and should not be reopened in that form.
+
+**The successor question, for whoever picks this up:** *what structure supplies the independence of
+the outcome clocks?* That is where the content sits. Note it is a question about Σ's structure, not
+about its dynamics — which is why no amount of work on flows was going to reach it.
 
 **What was salvaged instead** — ★★ `MeasureTheory.tsum_measure_lt_returnTime` (Kac's formula,
 `Mathlib/Dynamics/Kac.lean`, Cat-1, absent from Mathlib). Kac is the one piece that is

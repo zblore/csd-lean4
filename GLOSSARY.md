@@ -42,6 +42,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Euclidean space](https://glossary.constraintsurfacedynamics.com/euclidean-space/) | `` | standard-mathematics |
 | [Fibre](https://glossary.constraintsurfacedynamics.com/fibre/) | `` | definition |
 | [Field arena](https://glossary.constraintsurfacedynamics.com/field-arena/) | `` | definition |
+| [First-passage race](https://glossary.constraintsurfacedynamics.com/first-passage-race/) | `hasRaceProperty_iff_exists_expMeasure` | proved-in-corpus |
 | [Fisher information](https://glossary.constraintsurfacedynamics.com/fisher-information/) | `` | standard-mathematics |
 | [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
 | [GHZ state](https://glossary.constraintsurfacedynamics.com/ghz-state/) | `no_product_partition_realises_ghz` | proved-in-corpus |

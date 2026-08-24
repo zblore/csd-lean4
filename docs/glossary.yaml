@@ -3607,8 +3607,17 @@ entries:
       flow on the enlarged arena.
 
       What de-isolation does NOT yet do is generate the record layer's fibre mechanism
-      from first principles. That is the open frontier, and the honest boundary between
-      "exhibited" and "derived" is maintained wherever the flows appear.
+      from first principles, and the honest boundary between "exhibited" and "derived" is
+      maintained wherever the flows appear.
+
+      The specific attempt to derive it -- from a MIXING de-isolation flow, with
+      exponential first-passage arriving as a limit theorem -- was retired in 2026-08 as
+      mis-specified rather than merely hard. Three things defeat it: the hitting-time
+      limit theorems need vanishingly rare sets while a Born partition's cells sum to
+      one; an asymptotic law would deliver the Born weights only in a limit, weaker than
+      the corpus already proves exactly; and the race needs independent clocks, which one
+      deterministic trajectory cannot supply. What survived is the clock LAW, now forced
+      rather than chosen, and the RATES, which Kac's formula reads off any ergodic flow.
     mathematical: >
       The measurement-dynamics tier: a von Neumann de-isolation flow on the dilated
       space, measure-preserving and distinct from the identity, whose pointer-block
@@ -3618,7 +3627,7 @@ entries:
     term: De-isolation
     status: definition
     source: curated
-    related: [collapse, measurement-problem, record-layer, pointer-basis, naimark-dilation]
+    related: [collapse, measurement-problem, record-layer, pointer-basis, naimark-dilation, first-passage-race]
 
   - slug: typicality-volume
     hook: >
@@ -3804,6 +3813,50 @@ entries:
     source: curated
     related: [typicality-volume, duistermaat-heckman, born-weight, fubini-study-measure]
 
+  - slug: first-passage-race
+    hook: >
+      The outcome is whichever clock fires first -- and the law those clocks obey is not
+      a modelling choice. It is forced, and the proof is an if-and-only-if.
+    layman: >
+      Here is the problem. If a measurement outcome is settled by something physical
+      rather than by a postulate, the something has to be specified, and every detail you
+      specify is a detail a critic can call arbitrary.
+
+      CSD's picture is a race. Each possible outcome carries a clock; the clocks run at
+      speeds set by the state; the outcome is whichever fires first. That reproduces the
+      quantum probabilities exactly. But it seems to buy the result by choosing the
+      clocks -- why exponential waiting times and not some other law?
+
+      The answer is that no other law works. If first-to-fire is to match the rates for
+      every number of outcomes, the waiting times have to be exponential. Not a natural
+      choice, not a convenient one: the only one.
+    in_csd: >
+      The race is the record layer's order-free construction: no outcome is privileged,
+      unlike the earlier partition that stacked intervals in index order. Its rates are
+      the Kahler torus moment map, so the Born square is geometry rather than input, and
+      the clock law is now a theorem rather than a citation.
+
+      Two riders travel with the result and should never be dropped. First, the
+      characterisation quantifies over EVERY number of outcomes; at a fixed number the
+      race pins down only finitely many moments and determines nothing, so what is forced
+      is the exponential law GIVEN that one clock law serves every case -- the
+      measurement-independence the programme already commits to. Second, this is a posit
+      removed, not a mechanism supplied: no dynamics carves the race cells, and the
+      attempt to derive them from a mixing flow was retired as mis-specified.
+    mathematical: >
+      For independent identically distributed clocks read at rates b, first-to-fire has
+      probability b_i / sum_j b_j for every rate vector and every number of clocks if and
+      only if the waiting-time law is exponential. The forward direction turns the race
+      into a moment family via the k-clock instantiation, and atomlessness and support in
+      the positive reals come out derived rather than assumed.
+    term: First-passage race
+    status: proved-in-corpus
+    source: curated
+    lean:
+      module: CsdLean4/Mathlib/Probability/IidClockRace.lean
+      theorem: hasRaceProperty_iff_exists_expMeasure
+    related: [fibre, de-isolation, record-layer, born-weight]
+
   - slug: fibre
     hook: >
       The arena is bigger than the state space by exactly one compact factor -- and at
@@ -3832,8 +3885,18 @@ entries:
       space. At N >= 3 the corpus's analysis shows a base-only construction fails: the
       constraints of covariance and positivity kill every candidate density, so the
       contextual structure is forced into the fibre. That narrows where the mechanism
-      can live; it does not refute it -- existence is proved, and deriving the fibre
-      mechanism from de-isolation dynamics is the stated open frontier.
+      can live; it does not refute it -- existence is proved.
+
+      A second and independent reason the fibre earns its keep arrived in 2026-08. The
+      outcome race needs several INDEPENDENT clocks, and a single deterministic
+      trajectory on the base is one process, so the independence has to come from
+      somewhere; the fibre is where it comes from. That argument does not use the
+      dimensional one, so a critic who wants the fibre gone must now dispose of two.
+
+      The older frontier -- derive the fibre mechanism from a MIXING de-isolation flow --
+      was retired the same month as mis-specified rather than merely hard. The successor
+      question is what supplies the independence, and it is a question about the
+      structure of the arena rather than about its dynamics.
     mathematical: >
       The arena is CP^(N-1) x T^2 with the flat torus fibre carrying normalised Haar
       measure. Basins are preimages of arcs under the first fibre coordinate, with the
@@ -3846,7 +3909,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF4/KahlerInstance.lean
-    related: [constraint-surface, outcome-region, record-layer, contextuality, haar-measure]
+    related: [constraint-surface, outcome-region, record-layer, contextuality, haar-measure, first-passage-race]
 
   - slug: many-to-one-projection
     hook: >

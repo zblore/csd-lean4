@@ -15,6 +15,10 @@ public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 **Category:** 1-Mathlib. No CSD content: this is the classical competing-risks characterisation,
 which Mathlib does not have.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/first-passage-race/
+Plain-language, CSD-role and formal statements of the first-passage race, with this module as the
+Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ★★★ **`hasRaceProperty_iff_exists_expMeasure`** — for iid clocks at linear rates, the first to fire
 wins in proportion to its rate **iff** the waiting-time law is exponential. This is the statement of
 `specs/record-layer-plan.md` §3c, and the route to it is
