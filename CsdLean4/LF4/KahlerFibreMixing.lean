@@ -6,6 +6,8 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.KahlerFlowNoMixing
+public import CsdLean4.Mathlib.Dynamics.Kac
+public import Mathlib.Dynamics.Ergodic.AddCircle
 
 /-!
 # The fibre torus does admit a mixing map — the wall is about the map, not about Σ
@@ -173,6 +175,26 @@ theorem torusObs_variance_ne :
     rw [integral_torus_fst hm hbd, MeasureTheory.integral_circObs_sq]
   rw [hsq, integral_torusObs]
   norm_num
+
+/-! ### Kac on the same map -/
+
+/-- ★★ **Kac's formula on the mixing fibre map**, which is also the non-vacuity check for
+`MeasureTheory.tsum_measure_lt_returnTime`: its hypotheses (ergodic, measure-preserving, positive
+measure) are satisfiable, and satisfied by the very map brick (i) exhibits.
+
+The content: a fibre cell of measure `b` is returned to on average every `1/b` steps. **That is the
+rate content of the record layer's race, derived from the dynamics rather than posited** — and it is
+regime-correct, holding for any cell of positive measure rather than only for rare ones.
+
+⚠️ It gives the **rates**, not the exponential **law**. See the `Q12-d` row. -/
+theorem kac_doubling {A : Set MeasureTheory.Circ} (hA : MeasurableSet A)
+    (hApos : volume A ≠ 0) :
+    ∑' n : ℕ,
+        volume (A ∩ {x | (n : ℕ∞) < MeasureTheory.returnTime MeasureTheory.doubling A x}) = 1 := by
+  have herg : Ergodic (fun y : MeasureTheory.Circ => (2 : ℕ) • y) :=
+    AddCircle.ergodic_nsmul (T := 1) (n := 2) (by norm_num)
+  exact MeasureTheory.tsum_measure_lt_returnTime herg.toMeasurePreserving
+    herg.toPreErgodic hA hApos MeasureTheory.measurable_doubling
 
 end LF4
 end CSD

@@ -372,6 +372,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.LF4.torusObs_variance_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF4.torusObs_variance_ne
 
+-- KAC'S FORMULA (2026-08-24, Mathlib/Dynamics/Kac.lean): the mean return time is 1/measure.
+-- Mathlib has Poincare recurrence and ergodicity but NOT this, and no return times at all.
+-- tsum_measure_lt_returnTime: for an ergodic measure-preserving map of a probability space and any
+-- A of positive measure, sum_n mu {x in A : n < n_A x} = 1.  That sum is the expectation of the
+-- first return time over A, so conditioned on starting in A the mean return time is exactly 1/mu A.
+-- ★ THE PROOF AVOIDS THE TOWER.  The textbook argument builds the Kakutani skyscraper and needs the
+-- pieces f^k(A_n) disjoint and exhausting -- the awkward part to formalise.  This telescopes
+-- instead, using no IMAGES at all, only preimages, where measure preservation applies directly:
+-- f^-1(notYet n) splits into (A cap f^-1 notYet n) and notYet (n+1), and measure preservation turns
+-- its measure back into mu(notYet n).  Ergodicity kills the tail via Poincare recurrence plus
+-- PreErgodic.ae_empty_or_univ on the strictly-invariant "meets A infinitely often" set.
+-- ⚠️ returnTime is ENat-VALUED AND THAT IS NOT COSMETIC: with a natural-number junk value the
+-- bridge lemma is FALSE -- a point that never returns would have n_A = 0, so n < n_A fails, while
+-- it does belong to every notYet n.  The two sides disagree exactly on the never-returning set.
+-- That set is null here, but the identity is wanted POINTWISE, so top is the honest value.
+-- ★ WHY IT IS THE RIGHT PIECE: Kac is REGIME-CORRECT for the record layer.  It holds for ANY set of
+-- positive measure, with no rarity hypothesis -- unlike the hitting-time limit theorems
+-- (Galves-Schmitt/Abadi) which need mu A -> 0 and therefore CANNOT be instantiated on a Born
+-- partition, whose cells have measures summing to one.
+-- ⚠️ IT GIVES THE RATES, NOT THE LAW.  Mean return time to a cell of Born weight b_i is 1/b_i,
+-- derived from the dynamics rather than posited.  The EXPONENTIAL LAW does not follow, and by
+-- Q12-c2 exact Born needs an exactly exponential law.  See the Q12-d row for the recommendation.
+-- kac_doubling is the non-vacuity check: the hypotheses are satisfiable, and satisfied by the very
+-- map brick (i) exhibits (AddCircle.ergodic_nsmul at n = 2).
+/-- info: 'MeasureTheory.tsum_measure_lt_returnTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.tsum_measure_lt_returnTime
+
+/-- info: 'MeasureTheory.tsum_measure_lt_returnTime_div' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.tsum_measure_lt_returnTime_div
+
+/-- info: 'CSD.LF4.kac_doubling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.kac_doubling
+
 -- Q12-d route 2 (2026-08-23, Thermo/Equilibration.lean): the statement E6 does NOT block.
 -- blockPop_timeAverage_le_of_finiteHorizon -- if the population's correlations are within eps on
 -- lags BELOW T, the time average at horizon T sits within (2/T) sum_{u<T} eps u of the

@@ -442,6 +442,7 @@ public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
 public import CsdLean4.Mathlib.Dynamics.CompactGroupNoMixing
+public import CsdLean4.Mathlib.Dynamics.Kac
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders

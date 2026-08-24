@@ -394,6 +394,42 @@ was right.
 > the corpus is one. **With `W1`, `Q12-d` now has no route the corpus's present Σ-vocabulary can
 > supply**, and the open question is a Σ-vocabulary question, not a proof-technique one.
 
+### ★ Q12-d — the recommendation, logged 2026-08-24 (author decision pending)
+
+**Recommendation: retire `Q12-d`'s *mixing* formulation.** Not because it is hard, but because it
+cannot deliver what it promises. Three independent reasons, none about formalisation effort:
+
+1. **Regime mismatch.** Galves–Schmitt/Abadi is a theorem about **rare** sets: `μ A → 0`, with the
+   conclusion about `μ(A)·τ_A`. A Born partition has cells of measure `bᵢ` with `Σbᵢ = 1` — order
+   one, not vanishing. The theorem's hypothesis is the opposite of the regime `§3c` lives in, so it
+   cannot be instantiated where the record layer needs it.
+2. **Exact versus asymptotic — this is `Q12-c2` talking.** `hasRaceProperty_iff_exists_expMeasure`
+   says the race gives *exactly* `bᵢ/Σb` **iff** the clock law is *exactly* exponential. A
+   hitting-time limit theorem gives exponential only in a limit, so the "derived" construction would
+   yield Born asymptotically — **strictly weaker than `measure_raceCell`, which already proves it
+   exactly.** The derivation would trade an exact result for an approximate one.
+3. **Independence.** The race needs `n` **independent** clocks. A single deterministic trajectory on
+   Σ is one process, and hitting times of the `n` cells along one orbit are strongly dependent — the
+   same orbit. ★ **The fibre is not scaffolding standing in for work not yet done: it is carrying the
+   independence that base dynamics cannot supply.** That is why it is there.
+
+**So `Q12-d` is not one theorem away — it is mis-specified**, and closing it honestly means retiring
+the target rather than proving it. A correct successor question would ask what structure supplies
+the *independence*, which is where the content actually sits.
+
+⚠️ **Not executed.** Retiring a frontier row is an author decision; this is the recommendation on
+the record, awaiting it.
+
+**What was salvaged instead** — ★★ `MeasureTheory.tsum_measure_lt_returnTime` (Kac's formula,
+`Mathlib/Dynamics/Kac.lean`, Cat-1, absent from Mathlib). Kac is the one piece that is
+**regime-correct**: it needs no rarity hypothesis, holding for *any* cell of positive measure. It
+gives mean return time `= 1/μ A`, so a cell of Born weight `bᵢ` is returned to on average every
+`1/bᵢ` steps — **feature (B) of `§3c`, the rates, derived from the dynamics instead of posited.**
+`CSD.LF4.kac_doubling` instantiates it on brick (i)'s map, which is also the non-vacuity check.
+⚠️ It gives the **rates**, not the **law**; by reason 2 above, nothing regime-correct gives the law.
+
+---
+
 ### Q12-w — ✅ **DONE 2026-08-24** (was: optional, cheap: record W1 as a theorem (S))
 
 Scoped as a one-shot application of `integral_mul_self_eq_of_recurrent` +
