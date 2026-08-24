@@ -419,11 +419,11 @@ setld = {
     ],
 }
 open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page(
-    "CSD Glossary",
+    "Quantum Physics Glossary — Constraint-Surface Dynamics",
     "The vocabulary of Constraint-Surface Dynamics, each term explained plainly, "
     "in its role in the programme, and formally, with a machine-checked theorem behind it.",
     '<nav class="crumb"><a href="' + SITE_MAIN + '/">Constraint-Surface Dynamics</a></nav>'
-    + "<h1>Glossary</h1>"
+    + "<h1>Quantum Physics Glossary</h1>"
     + '<p class="hook">The vocabulary of Constraint-Surface Dynamics. Every term three '
     + "ways: plainly, in the role it plays here, and formally. Each one has a "
     + "machine-checked theorem behind it.</p>"
