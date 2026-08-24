@@ -71,7 +71,9 @@ open scoped ENNReal
 
 namespace MeasureTheory
 
-variable {α : Type*} [MeasurableSpace α] {μ : Measure α} {f : α → α} {A : Set α}
+-- `notYet` and its three characterisation lemmas are pure set theory: they must NOT pull in
+-- `[MeasurableSpace α]`, or the unused-section-variable linter fires and CI (`--wfail`) rejects it.
+variable {α : Type*} {f : α → α} {A : Set α}
 
 /-! ### The sets that have not met `A` yet -/
 
@@ -102,6 +104,8 @@ lemma mem_notYet_iff (n : ℕ) (x : α) : x ∈ notYet f A n ↔ ∀ k < n, f^[k
       refine ⟨by simpa using h 0 (by omega), (ih (f x)).mpr (fun k hk => ?_)⟩
       have := h (k + 1) (by omega)
       rwa [Function.iterate_succ_apply] at this
+
+variable [MeasurableSpace α] {μ : Measure α}
 
 lemma measurableSet_notYet (hf : Measurable f) (hA : MeasurableSet A) :
     ∀ n, MeasurableSet (notYet f A n)
@@ -200,6 +204,7 @@ is load-bearing — see the module docstring. -/
 noncomputable def returnTime (f : α → α) (A : Set α) (x : α) : ℕ∞ :=
   if h : ∃ n : ℕ, 1 ≤ n ∧ f^[n] x ∈ A then (Nat.find h : ℕ∞) else ⊤
 
+omit [MeasurableSpace α] in
 /-- ★ **The bridge.** Starting anywhere, "the first return exceeds `n`" is exactly "the `n` steps
 after the first all miss `A`". This is what lets the whole proof avoid mentioning `returnTime`. -/
 lemma lt_returnTime_iff (n : ℕ) (x : α) :
@@ -229,6 +234,7 @@ lemma lt_returnTime_iff (n : ℕ) (x : α) :
     · intro _
       simp
 
+omit [MeasurableSpace α] in
 lemma inter_lt_returnTime (n : ℕ) :
     A ∩ {x | (n : ℕ∞) < returnTime f A x} = A ∩ f ⁻¹' notYet f A n := by
   ext x
