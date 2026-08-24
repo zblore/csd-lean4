@@ -217,10 +217,21 @@ square in the corpus's own geometry:
 - **The Born SQUARE = the torus moment map.** The rates `bᵢ = |⟨eᵢ|ψ⟩|²` **are** `momentMap([ψ])ᵢ`
   of the `Tⁿ` action `z↦|zᵢ|²` (corpus `momentMap_mk_eq_inner_sq`). So the square is Kähler-geometric,
   not injected.
-- **The exponential fibre measure is FORCED.** For iid linear clocks, first-to-fire `=bᵢ` holds
-  **iff** the waiting times are exponential (memoryless/Poisson). So the fibre typicality is pinned
-  by the first-passage structure. This is exactly the **quantum-jump / continuous-measurement** form
-  (jumps at exponential times, rates `∝|amplitude|²`) — a developed formalism to anchor to.
+- **The exponential fibre measure is FORCED** — ✅ **now a corpus theorem (2026-08-24)**, not a
+  citation: `ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure`
+  (`Mathlib/Probability/IidClockRace.lean`, Q12-c2). For iid linear clocks, first-to-fire `= bᵢ`
+  holds **iff** the waiting times are exponential (memoryless/Poisson), so the fibre typicality is
+  pinned by the first-passage structure rather than chosen. This is exactly the **quantum-jump /
+  continuous-measurement** form (jumps at exponential times, rates `∝|amplitude|²`) — a developed
+  formalism to anchor to.
+  - ⚠️ **State the second conjunct with it.** `HasRaceProperty` quantifies over the **number of
+    clocks**; at a fixed number of outcomes `n` the race supplies only `n−1` moments, and finitely
+    many moments determine nothing. What is forced is the exponential law *given that one clock law
+    serves every `n`* — the measurement-independence `specs/sigma-fibre-contextuality.md` already
+    commits to. This is where that commitment earns its keep.
+  - ⚠️ **A posit removed, not a mechanism supplied.** The *law* is no longer a choice; **no dynamics
+    carves the race cells**. The frontier half (`Q12-d`) stays blocked by `W1`, and neither
+    `DeIsolationInteraction` witness is dynamical.
 
 **The decomposition (2026-07-25) — two grounded parts.** The measurement factorises as
 *(moment map sets the rates) × (mixing de-isolation gives the exponential first-passage)*:

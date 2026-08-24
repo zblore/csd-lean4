@@ -16,7 +16,7 @@ Statuses:
 - `needs-change`: the public claim/API should be narrowed or strengthened.
 - `specialist-review`: mathematically deep proof requiring independent domain proof review.
 
-The TSV is canonical for automation. It records 52 headline claims, their defining modules, exact Lean
+The TSV is canonical for automation. It records 58 headline claims, their defining modules, exact Lean
 constants, load-bearing assumptions, an independent validation route, and any linked review finding.
 
 ## Admission criteria (defined 2026-08-13, Q17 — the census is now criteria-driven)
@@ -65,6 +65,20 @@ deliberate: a correlation-only witness could carry degenerate marginals, and
 "reproduces the singlet" would over-read it (the E-1 lesson applied in advance). CL-031
 is retained as the general obstruction; the two rows are read together, existence +
 no-go. Classification: INSTANTIATION (`necessity-audit.md` addendum).
+
+**CL-058 added 2026-08-24** (`hasRaceProperty_iff_exists_expMeasure`, qualified; Q12-c2). The
+classical competing-risks characterisation, absent from Mathlib: first-to-fire proportional to the
+rate **iff** the waiting-time law is exponential. It closes `record-layer-plan.md` §3c, which until
+now cited the literature. Admitted as terminal (the `iff` subsumes both directions), claim-bearing
+(★★★ BACKLOG strike), pinned, and distinct.
+
+`qualified`, on two counts that must travel with any statement of it. (i) `HasRaceProperty`
+quantifies over the **number of clocks**; at a fixed number of outcomes `n` the race supplies only
+`n−1` moments and finitely many moments determine nothing, so the exponential is forced *given that
+one clock law serves every `n`* — the measurement-independence `sigma-fibre-contextuality.md`
+commits to. (ii) It is **a posit removed, not a mechanism supplied**: the fibre law is no longer a
+choice, but no dynamics carves the race cells, `Q12-d` stays blocked by `W1`, and neither
+`DeIsolationInteraction` witness is dynamical.
 
 ## Current result
 

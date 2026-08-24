@@ -2509,13 +2509,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- lintegral_measure_Ioi_pow_mul_pow is the mixed form E[G(c xi)^p G(xi)^k] = 1/(1+pc+k) at rates
 -- (1, c^p, 1^k) -- the form eq_of_forall_integral_mul_pow_eq consumes, since at p = 1 it is a
 -- fixed continuous weight integrated against every power.
--- ⚠️ THIS IS NOT §3c.  Steps 2 and 4 (the probability integral transform, and the substitution
--- t = 1) are NOT in the corpus, so "the exponential fibre measure is FORCED" remains unproved.
--- ⚠️ And when it lands the headline carries a SECOND CONJUNCT: HasRaceProperty quantifies over
--- EVERY number of clocks.  At a fixed number of outcomes n the family gives only n-1 moments and
--- finitely many moments determine nothing, so the exponential is forced only GIVEN THAT ONE CLOCK
--- LAW SERVES EVERY n -- the measurement-independence specs/sigma-fibre-contextuality.md commits
--- to.  Do not state the first conjunct without the second.
+-- Steps 2, 3 and 4 landed the same day and close §3c -- see the block below for the finish and for
+-- the SECOND CONJUNCT that must travel with the headline.
 /-- info: 'ProbabilityTheory.measure_scaledRaceCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.measure_scaledRaceCell
 
@@ -2540,12 +2535,49 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- at equal rates says the smallest of k+1 iid readings is STRICTLY smallest with probability
 -- 1/(k+1), and ties would cost.  This is the second time the k-clock family has paid for a step
 -- the two-clock framing made look expensive.
--- ⚠️ STILL NOT §3c.  What remains is the ASSEMBLY, and the memo's cost accounting hid it: applying
--- eq_of_forall_integral_mul_pow_eq needs H_c(u) = G(c * G-inverse(u)) as a CONTINUOUS FUNCTION on
--- [0,1], i.e. it needs the quantile G-inverse (with the endpoints handled), which Mathlib does not
--- provide.  Equivalently one may push the weighted measures forward and then need G_* injective on
--- densities.  Either way "the exponential fibre measure is FORCED" remains unproved here.
 /-- info: 'ProbabilityTheory.HasRaceProperty.map_survival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.HasRaceProperty.map_survival
+
+-- Q12-c2 STEPS 3 + 4 (2026-08-24, same file): §3c CLOSED.  hasRaceProperty_iff_exists_expMeasure --
+-- for iid linear clocks, first-to-fire is proportional to the rate IFF the waiting-time law is
+-- exponential.  The ⇐ half is hasRaceProperty_expMeasure; exists_eq_expMeasure is the ⇒ half.
+-- ★ THE ROUTE MEMO'S THREE MAPPED ASSEMBLIES WERE ALL UNNECESSARY, and so was its §5a successor.
+-- Steps 3/3' were built to compare H_c(u) = G(c * G-inverse(u)) against u^c, which needs the
+-- quantile G-inverse as a continuous function on a CLOSED interval -- machinery Mathlib lacks.
+-- survival_natMul_ae sidesteps all of it: restrict the ratio to a NATURAL NUMBER m, and G(t)^m is
+-- itself a product of m survival factors at rate 1, so ALL THREE terms of the expansion of
+-- int (G(mt) - G(t)^m)^2 dmu are instances of the SAME race family --
+--   int G(mt)^2       = 1/(1+2m)   at rates (1, m, m)
+--   int G(mt) G(t)^m  = 1/(1+2m)   at rates (1, m, 1^m)
+--   int G(t)^(2m)     = 1/(1+2m)   at rates (1, 1^(2m))
+-- -- and they cancel.  A nonnegative function with zero integral vanishes a.e.  No quantile, no
+-- two-dimensional determinacy, no injectivity of G, no Stone-Weierstrass.
+-- ★ The integers are enough because ANTITONICITY supplies the missing real ratios (raceRate_le):
+-- the functional equation ties G together only along the lattice {mt}, but m*t <= n*t' forces
+-- G(t)^m >= G(t')^n, so m*lambda(t)*t <= n*lambda(t')*t', and letting the integer ratio m/n climb
+-- to t'/t gives lambda(t) <= lambda(t').  Symmetry gives equality, so one lambda serves everywhere.
+-- ★ pos_ae is DERIVED too: the memo sets the problem up with xi supported on (0,infinity); for
+-- t <= 0 one has 2t <= t, so G(t) <= G(2t) = G(t)^2, false for G(t) in (0,1).  The m = 2 case alone.
+-- The finish reads the law off through map_survival: on the good set t > s iff G t < exp(-lambda s),
+-- so mu (Ioi s) = (mu.map G) (Iio exp(-lambda s)) = Lebesgue's, and Measure.ext_of_Iic closes it.
+-- ⚠️ THE SECOND CONJUNCT IS NOT OPTIONAL.  HasRaceProperty quantifies over the NUMBER OF CLOCKS.
+-- At a fixed number of outcomes n the family gives only n-1 moments and finitely many moments
+-- determine nothing, so what is forced is the exponential law GIVEN THAT ONE CLOCK LAW SERVES
+-- EVERY n -- the measurement-independence specs/sigma-fibre-contextuality.md commits to.  Do not
+-- state the first conjunct without the second.
+-- ⚠️ AND THIS IS A POSIT REMOVED, NOT A MECHANISM SUPPLIED.  §3c's exponential fibre measure is no
+-- longer a choice, but NO DYNAMICS carves the race cells -- Q12's frontier half (Q12-d) stays
+-- blocked by W1, and neither DeIsolationInteraction witness is dynamical.
+/-- info: 'ProbabilityTheory.HasRaceProperty.survival_natMul_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.HasRaceProperty.survival_natMul_ae
+
+/-- info: 'ProbabilityTheory.raceRate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.raceRate_le
+
+/-- info: 'ProbabilityTheory.HasRaceProperty.exists_eq_expMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.HasRaceProperty.exists_eq_expMeasure
+
+/-- info: 'ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure
 
 end CSD.Tests.AxiomAudit

@@ -1,9 +1,13 @@
 # Q12-c2 — a route to "the exponential clock law is forced"
 
-**Status: steps 1, 2, 3 and 3′ are Lean; the ASSEMBLY is not.** The probabilistic half and the
-analytic half are both built and neither is joined to the other, because joining them needs an
-object nothing yet constructs — `H_c` — see §5a. Everything below is a route memo. The
-`record-layer-plan.md` §3c claim it targets **stays unproved until the assembly lands**.
+**Status: ✅ DONE 2026-08-24. `record-layer-plan.md` §3c is a corpus theorem** —
+`ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure` in
+`Mathlib/Probability/IidClockRace.lean`, `sorry`-free, five pins.
+
+⚠️ **Read §5a before reusing this memo.** The route below is *not* the route that closed it. Steps
+1 and 2 landed as written (step 2 stronger than written); steps 3 and 3′ — the Hausdorff-determinacy
+work in `MomentDeterminacy.lean` — turned out **not to be needed for this result at all**. §5a
+records what replaced them and why, because the lesson generalises.
 
 **Supersedes my own assessment of 2026-08-23**, recorded in `q12-fibre-mechanism-scoping.md`, that
 c2 is "research-grade, not a brick". That verdict came from looking only at the **two-clock**
@@ -92,43 +96,64 @@ keep.**
 |---|---|---|
 | 1 | the `k`-clock race probability for *general* iid clocks | ✅ **DONE 2026-08-24** — `ProbabilityTheory.HasRaceProperty.lintegral_measure_Ioi_pow` and `…_pow_mul_pow` (`Mathlib/Probability/IidClockRace.lean`). Not the fiddliest part after all: see §6a |
 | 2 | probability integral transform | ✅ **DONE 2026-08-24** — `HasRaceProperty.map_survival`, and it needs **no regularity hypothesis on `μ` whatsoever** |
-| 3 | Hausdorff determinacy on `[0,1]` | ✅ **DONE 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq` (`Mathlib/MeasureTheory/MomentDeterminacy.lean`). Assembled from Weierstrass + `ext_of_forall_integral_eq_of_IsFiniteMeasure`, as predicted |
-| 3′ | ✅ **DONE 2026-08-24** — `eq_of_forall_integral_mul_pow_eq`. Not the quantile argument: continuous functions with equal moments against all powers, via the same Weierstrass density argument |
-| 4 | substitution | trivial |
+| 3 | Hausdorff determinacy on `[0,1]` | ✅ **DONE 2026-08-23** — `MeasureTheory.ext_of_forall_integral_pow_eq` (`Mathlib/MeasureTheory/MomentDeterminacy.lean`). Consumed by step 2 |
+| 3′ | ✅ built 2026-08-24 — `eq_of_forall_integral_mul_pow_eq`. ⚠️ **Not used**: the route that closed c2 needs no comparison of `H_c` with `u^c` at all (§5a). Cat-1 and reusable; left in place |
+| 4 | substitution | ✅ **DONE 2026-08-24**, but not as a substitution — `survival_natMul_ae` + `raceRate_le` + `map_survival`, per §5a |
 
 **Estimate: L** — and the estimate was right about the size, wrong about *where it sits*. See §5a.
 
 ---
 
-## 5a. ⚠️ Where the remaining cost actually is: `H_c`
+## 5a. ★ What actually closed it, and why the mapped assemblies were all unnecessary
 
-The four-step table above hides its own hardest item, and this is the finding of the 2026-08-24
-session. Steps 3 and 3′ are theorems **about** `H_c`; step 4 is a substitution **into** the
-conclusion about `H_c`. Nothing anywhere **constructs** `H_c(u) = G(c·G⁻¹(u))`, and
-`eq_of_forall_integral_mul_pow_eq` wants it as an element of `C(Icc 0 1, ℝ)`. That needs:
+Steps 3 and 3′ exist to compare `H_c(u) = G(c·G⁻¹(u))` against `u^c`. Every one of them needs `H_c`
+as a *continuous function on a closed interval*, hence the quantile `G⁻¹`, which Mathlib does not
+provide. Halfway through the build this looked like the remaining cost, and three routes past it
+were mapped: build the quantile; or push weighted measures forward and prove `G_*` injective on
+densities; or do determinacy in two variables on `[0,1]²` via Stone–Weierstrass.
 
-* the **quantile** `G⁻¹`, i.e. the inverse of a continuous strictly antitone surjection
-  `(0,∞) → (0,1)`, which Mathlib does not hand over (this is the same wall route (i) hit, arriving
-  from a different direction — dissolving the *fork* did not dissolve the *inverse*); and
-* the **endpoints**: `G⁻¹` lives on the open interval, `H_c` has to be continuous on the closed
-  one, extended by `H_c(0) = 0`, `H_c(1) = 1`.
+**All three were unnecessary.** The observation that dissolves them:
 
-There is a second route to the same place which trades the quantile for a measure-theoretic
-statement, and it may be the cheaper one:
+> Restrict the ratio to a **natural number** `m`. Then `G(t)^m` is *itself a product of `m` survival
+> factors at rate `1`*, so it lives inside the race family — and every term of the expansion of
+> `∫ (G(mt) − G(t)ᵐ)² dμ` is an instance of that one family:
+>
+> * `∫ G(mt)² dμ = 1/(1+2m)` at rates `(1, m, m)`;
+> * `∫ G(mt)·G(t)ᵐ dμ = 1/(1+2m)` at rates `(1, m, 1ᵐ)`;
+> * `∫ G(t)²ᵐ dμ = 1/(1+2m)` at rates `(1, 1²ᵐ)`.
+>
+> They cancel. A nonnegative function with zero integral vanishes almost everywhere, so
+> `G(mt) = G(t)ᵐ` a.e. (`HasRaceProperty.survival_natMul_ae`).
 
-* Push the *weighted* measures forward instead of changing variables. `ν₁ := G_*(G(c·) dμ)` and
-  `ν₂ := G_*(G(·)ᶜ dμ)` have the same moments by the mixed-moment identity plus step 2, so
-  `ν₁ = ν₂` by `ext_of_forall_integral_pow_eq_of_null_compl` — provable **today**, with no `H_c`.
-  What it gives is `𝔼[G(cξ) ∣ G(ξ)] = G(ξ)ᶜ`, a *conditional* statement; upgrading it to the
-  pointwise identity needs `G_*` injective on densities.
-* That injectivity is within reach and does not need step 2: `G` is antitone, so for `s < t` with
-  `G s = G t` one has `μ (Ioc s t) = 0`; hence `Ioi a ▵ G⁻¹(Iio (G a))` is contained in
-  `{t > a ∣ G t = G a}`, an interval of zero `μ`-measure. So `σ(G)` contains the Borel sets mod
-  `μ`-null, and a π-λ argument finishes. **Written down here because it was worked out and not
-  built — do not re-derive it.**
+The cross term is the whole difficulty, and it is computable *exactly when the ratio is an integer*.
+That is why the real ratios the four-step sketch reaches for are never needed.
 
-Neither route is research. Both are a day's build. Until one of them lands, the corpus has the
-*ingredients*, not the characterisation.
+**And the integers are enough, because antitonicity supplies what they leave out.** The functional
+equation ties `G` together only along the lattice `{mt}`, and a priori nothing connects the lattices
+of two different readings. Monotonicity connects them (`raceRate_le`): `mt ≤ nt'` forces
+`G(t)ᵐ = G(mt) ≥ G(nt') = G(t')ⁿ`, hence `m·λ(t)·t ≤ n·λ(t')·t'`; let the integer ratio `m/n` climb
+to `t'/t` and `λ(t) ≤ λ(t')`, with symmetry giving equality. **One `λ` serves every good reading**,
+and no density of the support is needed anywhere.
+
+The finish reads the law off through step 2 rather than through a functional equation: on the good
+set `t > s ↔ G t < e^{−λs}`, so `μ (Ioi s) = (μ.map G) (Iio e^{−λs}) = e^{−λs}`, and
+`Measure.ext_of_Iic` closes it. Two further hypotheses of §3 also came out **derived, not assumed**:
+atomlessness (§6a, step 2) and support in `(0,∞)` — for `t ≤ 0` one has `2t ≤ t`, so
+`G(t) ≤ G(2t) = G(t)²`, false for `G(t) ∈ (0,1)`; the `m = 2` case alone.
+
+★ **The lesson, and it is the same one twice.** §6a already records: *when a step looks like it
+needs a stronger determinacy theorem, check whether it needs only the same theorem against a
+different object.* The stronger version is: **check whether it needs a determinacy theorem at all.**
+Both times the fix was to ask what the race family can already compute, and to shape the question to
+fit that, rather than to build machinery that would answer the question as first posed. The
+`k`-clock family paid for four separate steps here (the moment sequence, the transform, the
+functional equation, and positivity of the support); the two-clock framing that made this look like
+research could pay for none of them.
+
+**What `MomentDeterminacy.lean` is still for.** It is not wasted: `map_survival` (step 2) uses
+`ext_of_forall_integral_pow_eq_of_null_compl`, and it is Cat-1 and reusable. But
+`eq_of_forall_integral_mul_pow_eq` and the `intervalMeasure` carrier are **currently unconsumed** —
+built for a step this route no longer takes. Leave them; do not build `H_c` to justify them.
 
 ---
 
@@ -207,19 +232,27 @@ Neither route is research. Both are a day's build. Until one of them lands, the 
   must be, since the `(k+1)`-clock race at equal rates says the smallest of `k+1` iid readings is
   *strictly* smallest with probability `1/(k+1)`, and ties would cost. That is the second time the
   `k`-clock family has paid for a step the two-clock framing made look expensive.
-* ⏳ **What is left is the assembly, and it is not step 4.** See §5a: `H_c` is used by steps 3, 3′
-  and 4 and constructed by none of them. Two routes are mapped there, both a day's build, neither
-  research.
-
-⚠️ Until the assembly lands, the corpus has the *ingredients*, not §3c's claim. In particular do
-not read `map_survival` as "the fibre law is pinned down": it says the survival function is a
-uniform variable, which every atomless law satisfies.
+* ✅ **Steps 3 and 4 landed 2026-08-24 — by a route this memo did not contain.** See §5a. The
+  headline is `hasRaceProperty_iff_exists_expMeasure`; the `⇒` half is
+  `HasRaceProperty.exists_eq_expMeasure`, resting on `survival_natMul_ae` (the integer-ratio L²
+  cancellation) and `raceRate_le` (antitonicity across lattices).
+* ⚠️ **Two things this does NOT say**, and both are easy to overstate:
+  * `map_survival` alone is not "the fibre law is pinned down" — it says the survival function is a
+    uniform variable, which *every* atomless law satisfies. The pinning is `exists_eq_expMeasure`.
+  * The characterisation is **a posit removed, not a mechanism supplied.** §3c's exponential fibre
+    measure is no longer a choice; **no dynamics carves the race cells.** `Q12-d`'s frontier half
+    stays blocked by `W1`, and neither `DeIsolationInteraction` witness is dynamical. The
+    reconstruction frontier has not moved.
 
 ## 7. Recommendation
 
-The route above is the one to take if c2 is wanted. It is **L**, it is fully mapped, and it needs
-no upstream mathematics that Mathlib lacks. As of 2026-08-24 four of its five pieces are built and
-the fifth (§5a) is the only one outstanding. It is *not* recommended ahead of frontier work: c2
+*(Historical — the recommendation as written before the build.)* The route above is the one to take
+if c2 is wanted. It is **L**, it is fully mapped, and it needs no upstream mathematics that Mathlib
+lacks.
+
+**Executed 2026-08-24, in one session, and the estimate was right about the size while being wrong
+about the shape**: steps 1 and 2 as written, steps 3/4 by the integer-ratio argument of §5a instead
+of by the determinacy comparison this memo built for. Keep §5a; it is the part worth rereading. It is *not* recommended ahead of frontier work: c2
 would tighten a posit that is already narrow, and `Q12-d`'s original form stays blocked either way.
 
 If it is built, the honest headline is: **the exponential fibre law is forced by the race property

@@ -24,6 +24,7 @@ public import CsdLean4.LF6.Decoherence
 public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF6.GHZContextuality
 public import CsdLean4.LF6.C1BellConsistency
+public import CsdLean4.Mathlib.Probability.IidClockRace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
@@ -231,5 +232,6 @@ example := @CSD.Thermo.energyWindow_ne_zero -- CL-054
 example := @MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq -- CL-055
 example := @CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto -- CL-056
 example := @MeasureTheory.circ_hasCorrelationDecay -- CL-057
+example := @ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure -- CL-058
 
 end CSD.Headlines

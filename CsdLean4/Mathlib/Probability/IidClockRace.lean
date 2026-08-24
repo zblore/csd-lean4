@@ -10,14 +10,16 @@ public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 /-!
-# The race of iid clocks at general rates, and the moments it forces
+# The race of iid clocks: the exponential law is forced
 
-**Category:** 1-Mathlib. No CSD content: this is the competing-risks computation of
-`CompetingExponentials.lean` with the exponential assumption removed.
+**Category:** 1-Mathlib. No CSD content: this is the classical competing-risks characterisation,
+which Mathlib does not have.
 
-That file proves the `⇐` half of `specs/record-layer-plan.md` §3c: *exponential* waiting times make
-the first clock to fire win in proportion to its rate. This file is the apparatus for the `⇒` half
-— step 1 of `specs/q12c-exponential-characterisation-route.md`.
+★★★ **`hasRaceProperty_iff_exists_expMeasure`** — for iid clocks at linear rates, the first to fire
+wins in proportion to its rate **iff** the waiting-time law is exponential. This is the statement of
+`specs/record-layer-plan.md` §3c, and the route to it is
+`specs/q12c-exponential-characterisation-route.md`. `CompetingExponentials.lean` supplies the `⇐`
+direction in its own framing; everything here is the `⇒` direction.
 
 ## The change of framing
 
@@ -29,41 +31,51 @@ second makes sense, because "the law of the clock" is exactly what is being solv
 * `scaledRaceCell` — the readings on which clock `i` fires first. `scaledRaceCell_one` records that
   at unit rates it is `raceCell`.
 * ★★ `measure_scaledRaceCell` — the **kernel identity**: the winning probability is
-  `∫ ∏ⱼ G(bⱼ/bᵢ · t) dμ(t)`, with `G t = μ (Ioi t)` the survival function. No hypothesis on `μ`
-  beyond being a probability measure, and — unlike the exponential case — the slice is a box at
-  *every* `t`, not merely almost every one.
+  `∫ ∏ⱼ G(bⱼ/bᵢ · t) dμ(t)`, with `G t = μ (Ioi t)` the survival function (`survival`). No
+  hypothesis on `μ` beyond being a probability measure, and — unlike the exponential case — the
+  slice is a box at *every* `t`, not merely almost every one.
 * `HasRaceProperty` — the hypothesis of §3c, quantified over **every** number of clocks.
-* `hasRaceProperty_expMeasure` — the witness that the hypothesis is satisfiable at all.
 
 ## ★ What the `k`-clock family buys
 
 Instantiating the race at rates `(1, c, c, …, c)` turns an integral equation into a **moment
-sequence**:
+sequence** — ★★ `HasRaceProperty.lintegral_measure_Ioi_pow` gives `E[G(cξ)ᵏ] = 1/(1 + kc)`, and
+★★ `…_pow_mul_pow` the mixed form `E[G(cξ)ᵖ G(ξ)ᵏ] = 1/(1 + pc + k)`. `G(cξ)` takes values in
+`[0,1]`, where moments determine the law — which is why the two-clock version of the same question
+looks like Choquet–Deny and this one does not. Three consequences, in order:
 
-* ★★ `HasRaceProperty.lintegral_measure_Ioi_pow` — `E[G(cξ)ᵏ] = 1/(1 + kc)` for every `k`, which is
-  `(1)` of the route memo, and
-* ★★ `HasRaceProperty.lintegral_measure_Ioi_pow_mul_pow` — the mixed form
-  `E[G(cξ)ᵖ G(ξ)ᵏ] = 1/(1 + pc + k)` at rates `(1, c^p, 1^k)`, which is the form step 3′
-  (`MeasureTheory.eq_of_forall_integral_mul_pow_eq`) consumes: at `p = 1` it is a *fixed continuous
-  weight* integrated against every power.
+1. ★★ `HasRaceProperty.map_survival` — `G(ξ)` is uniform on `[0,1]`, with **no regularity
+   hypothesis on `μ`**: the `c = 1` moments *are* the uniform moments, so Hausdorff determinacy
+   (`MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl`) closes it. Atomlessness of `μ` is
+   therefore *derived* from the race property, not assumed of it.
+2. ★★ `HasRaceProperty.survival_natMul_ae` — `G(mt) = G(t)ᵐ` almost everywhere, for every natural
+   `m`. ★ The proof needs no quantile, no determinacy in two variables and no injectivity of `G`:
+   when the ratio is a **natural number**, `G(t)ᵐ` is itself a product of `m` survival factors at
+   rate `1`, so all three terms of `∫ (G(mt) − G(t)ᵐ)² dμ` are instances of the *same* race family
+   and cancel.
+3. ★ `raceRate_le` — the rate is the same at every good reading. The functional equation ties `G`
+   together only along the lattice `{mt}`; **antitonicity** connects two lattices, because
+   `mt ≤ nt'` forces `G(t)ᵐ ≥ G(t')ⁿ`. Letting the integer ratio climb to `t'/t` gives the
+   comparison, and the real ratios the argument never had are not missed.
 
-`G(cξ)` takes values in `[0,1]`, where moments determine the law — which is why the two-clock
-version of the same question looks like Choquet–Deny and this one does not.
+Then `HasRaceProperty.exists_eq_expMeasure` reads the law off through `map_survival`.
 
-## ⚠️ Scope
+## ⚠️ The second conjunct is not optional
 
-Nothing here is a new physical claim, and **this file does not prove §3c**. It supplies the
-probabilistic input; converting the moment identities into `G(ct) = G(t)ᶜ` is steps 2–4 of the route
-memo, which are not in the corpus. The hypothesis `HasRaceProperty` also quantifies over the number
-of clocks, and that is not free: at a *fixed* number of outcomes the moment sequence is finite and
-determines nothing. The honest reading of anything built on it carries a second conjunct — *given
-that one clock law serves every `n`* — which is the measurement-independence
-`specs/sigma-fibre-contextuality.md` already commits to.
+`HasRaceProperty` quantifies over the **number of clocks**, and that is load-bearing: at a fixed
+number of outcomes `n` the family supplies only `n−1` moments, and finitely many moments determine
+nothing. What is forced is the exponential law *given that one clock law serves every `n`* — the
+measurement-independence of the fibre law that `specs/sigma-fibre-contextuality.md` commits to.
+Never state the conclusion without it.
 
-Reference: `specs/q12c-exponential-characterisation-route.md` (the four-step route, and step 1 in
-particular); `specs/q12-fibre-mechanism-scoping.md`; `specs/record-layer-plan.md` §3b–§3c;
-`specs/future-work.md`. See `ProbabilityTheory.measure_raceCell` for the `⇐` direction and
-`MeasureTheory.eq_of_forall_integral_mul_pow_eq` for the determinacy step downstream.
+Nothing here is a new physical claim: it removes a posit from the record layer's fibre construction
+rather than adding one.
+
+Reference: `specs/q12c-exponential-characterisation-route.md`;
+`specs/q12-fibre-mechanism-scoping.md`; `specs/record-layer-plan.md` §3b–§3c;
+`specs/sigma-fibre-contextuality.md`; `specs/future-work.md`. See
+`ProbabilityTheory.measure_raceCell` for the `⇐` direction in the other framing and
+`MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl` for the determinacy step.
 -/
 
 @[expose] public section
@@ -353,5 +365,300 @@ theorem HasRaceProperty.map_survival {μ : Measure ℝ} [IsProbabilityMeasure μ
       ring
     rw [integral_map (f := fun x : ℝ => x ^ k) hmeas.aemeasurable
       (Continuous.aestronglyMeasurable (by fun_prop)), hL, hR]
+
+/-! ### Step 3: the multiplicative functional equation, almost everywhere -/
+
+lemma ofReal_survival (μ : Measure ℝ) [IsFiniteMeasure μ] (t : ℝ) :
+    ENNReal.ofReal (survival μ t) = μ (Ioi t) :=
+  ENNReal.ofReal_toReal (measure_ne_top μ _)
+
+lemma measurable_survival_pow_mul_pow (μ : Measure ℝ) [IsFiniteMeasure μ] (c : ℝ) (p k : ℕ) :
+    Measurable (fun t => (survival μ (c * t)) ^ p * (survival μ t) ^ k) :=
+  (((measurable_survival μ).comp (measurable_id.const_mul c)).pow_const p).mul
+    ((measurable_survival μ).pow_const k)
+
+lemma survival_pow_mul_pow_nonneg (μ : Measure ℝ) (c : ℝ) (p k : ℕ) (t : ℝ) :
+    0 ≤ (survival μ (c * t)) ^ p * (survival μ t) ^ k :=
+  mul_nonneg (pow_nonneg (survival_nonneg _ _) _) (pow_nonneg (survival_nonneg _ _) _)
+
+lemma integrable_survival_pow_mul_pow (μ : Measure ℝ) [IsProbabilityMeasure μ] (c : ℝ)
+    (p k : ℕ) : Integrable (fun t => (survival μ (c * t)) ^ p * (survival μ t) ^ k) μ := by
+  refine Integrable.of_bound (measurable_survival_pow_mul_pow μ c p k).aestronglyMeasurable 1
+    (ae_of_all _ (fun t => ?_))
+  rw [Real.norm_eq_abs, abs_of_nonneg (survival_pow_mul_pow_nonneg μ c p k t)]
+  exact mul_le_one₀ (pow_le_one₀ (survival_nonneg _ _) (survival_le_one _ _))
+    (pow_nonneg (survival_nonneg _ _) _)
+    (pow_le_one₀ (survival_nonneg _ _) (survival_le_one _ _))
+
+/-- The mixed moment identity as a **real** integral of `survival`. -/
+theorem HasRaceProperty.integral_survival_pow_mul_pow {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    (h : HasRaceProperty μ) {c : ℝ} (hc : 0 < c) (p k : ℕ) :
+    ∫ t, (survival μ (c * t)) ^ p * (survival μ t) ^ k ∂μ = 1 / (1 + p * c + k) := by
+  rw [integral_eq_lintegral_of_nonneg_ae
+      (ae_of_all _ (survival_pow_mul_pow_nonneg μ c p k))
+      (measurable_survival_pow_mul_pow μ c p k).aestronglyMeasurable]
+  have hpt : ∀ t : ℝ, ENNReal.ofReal ((survival μ (c * t)) ^ p * (survival μ t) ^ k)
+      = (μ (Ioi (c * t))) ^ p * (μ (Ioi t)) ^ k := by
+    intro t
+    rw [ENNReal.ofReal_mul (pow_nonneg (survival_nonneg _ _) _),
+      ENNReal.ofReal_pow (survival_nonneg _ _),
+      ENNReal.ofReal_pow (survival_nonneg _ _), ofReal_survival, ofReal_survival]
+  rw [lintegral_congr hpt, h.lintegral_measure_Ioi_pow_mul_pow hc p k,
+    ENNReal.toReal_ofReal (by positivity)]
+
+/-- ★★ **The multiplicative functional equation.** For every `m ≥ 1`, `G(mt) = G(t)ᵐ` for
+`μ`-almost every `t`.
+
+★ This is the route's real surprise, and it replaces all three of the assemblies the memo had
+mapped — no quantile `G⁻¹`, no two-dimensional determinacy, no injectivity of `G`. The reason is
+that when the ratio is a **natural number** `m`, the function `G(t)ᵐ` is *itself a product of `m`
+survival factors at rate `1`*, so all three terms of `∫ (G(mt) − G(t)ᵐ)² dμ` are instances of the
+same race family:
+
+* `∫ G(mt)² dμ = 1/(1+2m)` at rates `(1, m, m)`;
+* `∫ G(mt)·G(t)ᵐ dμ = 1/(1+2m)` at rates `(1, m, 1ᵐ)`;
+* `∫ G(t)²ᵐ dμ = 1/(1+2m)` at rates `(1, 1²ᵐ)`.
+
+They cancel, so the square has integral zero and vanishes almost everywhere. Restricting the ratio
+to the integers is exactly what makes the cross term computable — and `HasRaceProperty.eq_expMeasure`
+shows the integers are enough, because monotonicity supplies what the missing real ratios would
+have. -/
+theorem HasRaceProperty.survival_natMul_ae {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    (h : HasRaceProperty μ) {m : ℕ} (hm : 0 < m) :
+    ∀ᵐ t ∂μ, survival μ ((m : ℝ) * t) = (survival μ t) ^ m := by
+  have hmR : (0 : ℝ) < m := Nat.cast_pos.mpr hm
+  have hexp : ∀ t : ℝ, (survival μ ((m : ℝ) * t) - (survival μ t) ^ m) ^ 2
+      = ((survival μ ((m : ℝ) * t)) ^ 2 * (survival μ t) ^ 0
+        - 2 * ((survival μ ((m : ℝ) * t)) ^ 1 * (survival μ t) ^ m))
+        + (survival μ ((m : ℝ) * t)) ^ 0 * (survival μ t) ^ (2 * m) := by
+    intro t
+    rw [pow_mul]
+    ring
+  have hI2 : Integrable
+      (fun t => 2 * ((survival μ ((m : ℝ) * t)) ^ 1 * (survival μ t) ^ m)) μ :=
+    (integrable_survival_pow_mul_pow μ (m : ℝ) 1 m).const_mul 2
+  have hIsub : Integrable (fun t => (survival μ ((m : ℝ) * t)) ^ 2 * (survival μ t) ^ 0
+      - 2 * ((survival μ ((m : ℝ) * t)) ^ 1 * (survival μ t) ^ m)) μ :=
+    (integrable_survival_pow_mul_pow μ (m : ℝ) 2 0).sub hI2
+  have hIall : Integrable (fun t => (survival μ ((m : ℝ) * t) - (survival μ t) ^ m) ^ 2) μ :=
+    (hIsub.add (integrable_survival_pow_mul_pow μ (m : ℝ) 0 (2 * m))).congr
+      (ae_of_all _ (fun t => (hexp t).symm))
+  have hzero : ∫ t, (survival μ ((m : ℝ) * t) - (survival μ t) ^ m) ^ 2 ∂μ = 0 := by
+    rw [integral_congr_ae (ae_of_all _ hexp),
+      integral_add hIsub (integrable_survival_pow_mul_pow μ (m : ℝ) 0 (2 * m)),
+      integral_sub (integrable_survival_pow_mul_pow μ (m : ℝ) 2 0) hI2,
+      integral_const_mul, h.integral_survival_pow_mul_pow hmR 2 0,
+      h.integral_survival_pow_mul_pow hmR 1 m, h.integral_survival_pow_mul_pow hmR 0 (2 * m)]
+    push_cast
+    ring
+  have hae := (integral_eq_zero_iff_of_nonneg (fun t => sq_nonneg _) hIall).mp hzero
+  filter_upwards [hae] with t ht
+  have hsq : (survival μ ((m : ℝ) * t) - (survival μ t) ^ m) ^ 2 = 0 := ht
+  have hz := pow_eq_zero_iff (n := 2) (by norm_num) |>.mp hsq
+  linarith [hz]
+
+/-! ### Step 4: from the functional equation to the exponential law -/
+
+/-- The survival function avoids both endpoints almost everywhere — immediate from step 2, since
+`{0, 1}` is Lebesgue-null. -/
+theorem HasRaceProperty.survival_mem_Ioo_ae {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    (h : HasRaceProperty μ) : ∀ᵐ t ∂μ, survival μ t ∈ Ioo (0 : ℝ) 1 := by
+  have hmeas := measurable_survival μ
+  have hfin' : ({0, 1} : Set ℝ).Finite := Set.toFinite _
+  have hfin : MeasurableSet ({0, 1} : Set ℝ) := hfin'.measurableSet
+  have hnull : μ ((survival μ) ⁻¹' ({0, 1} : Set ℝ)) = 0 := by
+    rw [← Measure.map_apply hmeas hfin, h.map_survival, Measure.restrict_apply hfin]
+    exact measure_mono_null Set.inter_subset_left (hfin'.measure_zero _)
+  rw [ae_iff]
+  refine measure_mono_null (fun t ht => ?_) hnull
+  simp only [Set.mem_ofPred_eq, Set.mem_Ioo, not_and, not_lt] at ht
+  have h0 := survival_nonneg μ t
+  have h1 := survival_le_one μ t
+  rcases eq_or_lt_of_le h0 with heq | hpos
+  · simp [Set.mem_preimage, ← heq]
+  · have : survival μ t = 1 := le_antisymm h1 (ht hpos)
+    simp [Set.mem_preimage, this]
+
+/-- The clock readings are almost surely **positive** — derived, not assumed.
+
+The route memo sets the problem up with `ξ` supported on `(0,∞)`; it does not have to. Antitonicity
+plus the `m = 2` case of the functional equation is enough: for `t ≤ 0` one has `2t ≤ t`, so
+`G(t) ≤ G(2t) = G(t)²`, which is false for `G(t) ∈ (0,1)`. -/
+theorem HasRaceProperty.pos_ae {μ : Measure ℝ} [IsProbabilityMeasure μ] (h : HasRaceProperty μ) :
+    ∀ᵐ t ∂μ, 0 < t := by
+  filter_upwards [h.survival_mem_Ioo_ae, h.survival_natMul_ae (m := 2) two_pos] with t ht h2
+  by_contra hle
+  push Not at hle
+  have hmono : survival μ t ≤ survival μ ((2 : ℕ) * t) := by
+    refine antitone_survival μ ?_
+    push_cast
+    linarith
+  rw [h2] at hmono
+  nlinarith [ht.1, ht.2]
+
+/-- **A good reading**: positive, with the survival function strictly inside `(0,1)`, and satisfying
+the whole multiplicative family. `HasRaceProperty.ae_regular` says almost every reading is good;
+everything after this point is an argument about good readings and their ratios to one another. -/
+def RaceRegular (μ : Measure ℝ) (t : ℝ) : Prop :=
+  0 < t ∧ survival μ t ∈ Ioo (0 : ℝ) 1 ∧
+    ∀ m : ℕ, 0 < m → survival μ ((m : ℝ) * t) = (survival μ t) ^ m
+
+/-- The three almost-everywhere facts, bundled: positivity, both endpoints avoided, and the whole
+multiplicative family at once (a countable intersection, via `ae_all_iff`). -/
+theorem HasRaceProperty.ae_regular {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    (h : HasRaceProperty μ) : ∀ᵐ t ∂μ, RaceRegular μ t := by
+  have hall : ∀ᵐ t ∂μ, ∀ m : ℕ, 0 < m → survival μ ((m : ℝ) * t) = (survival μ t) ^ m := by
+    rw [ae_all_iff]
+    intro m
+    by_cases hm : 0 < m
+    · filter_upwards [h.survival_natMul_ae hm] with t ht using fun _ => ht
+    · exact ae_of_all _ (fun _ hm' => absurd hm' hm)
+  filter_upwards [h.pos_ae, h.survival_mem_Ioo_ae, hall] with t h1 h2 h3
+  exact ⟨h1, h2, h3⟩
+
+/-- The rate read off at a good reading: the `λ` for which `G t = e^{-λt}` at that one point. -/
+noncomputable def raceRate (μ : Measure ℝ) (t : ℝ) : ℝ := -Real.log (survival μ t) / t
+
+lemma raceRate_pos {μ : Measure ℝ} {t : ℝ} (ht : RaceRegular μ t) : 0 < raceRate μ t := by
+  have hlog : Real.log (survival μ t) < 0 := Real.log_neg ht.2.1.1 ht.2.1.2
+  exact div_pos (by linarith) ht.1
+
+lemma survival_eq_exp_raceRate {μ : Measure ℝ} {t : ℝ} (ht : RaceRegular μ t) :
+    survival μ t = Real.exp (-(raceRate μ t * t)) := by
+  simp only [raceRate]
+  rw [div_mul_cancel₀ _ ht.1.ne', neg_neg, Real.exp_log ht.2.1.1]
+
+/-- ★ **The rate is the same at every good reading**, which is what makes the *integer* ratios of
+`survival_natMul_ae` enough to pin the law down.
+
+The functional equation ties `G` together only along the lattice `{mt}`, and a priori nothing
+connects the lattices of two different readings. **Antitonicity connects them**: whenever `mt ≤ nt'`
+one has `G(t)ᵐ = G(mt) ≥ G(nt') = G(t')ⁿ`, so `m·λ(t)·t ≤ n·λ(t')·t'`. Letting the integer ratio
+`m/n` climb to `t'/t` gives `λ(t) ≤ λ(t')`, and symmetry gives equality. Neither density of the
+support nor a real ratio is needed anywhere. -/
+lemma raceRate_le {μ : Measure ℝ} [IsFiniteMeasure μ] {t t' : ℝ}
+    (ht : RaceRegular μ t) (ht' : RaceRegular μ t') : raceRate μ t ≤ raceRate μ t' := by
+  set a : ℝ := -Real.log (survival μ t) with ha
+  set b : ℝ := -Real.log (survival μ t') with hb
+  have hapos : 0 < a := by
+    have := Real.log_neg ht.2.1.1 ht.2.1.2
+    rw [ha]; linarith
+  have hbpos : 0 < b := by
+    have := Real.log_neg ht'.2.1.1 ht'.2.1.2
+    rw [hb]; linarith
+  have key : ∀ m n : ℕ, 0 < m → 0 < n → (m : ℝ) * t ≤ (n : ℝ) * t' →
+      (m : ℝ) * a ≤ (n : ℝ) * b := by
+    intro m n hm hn hle
+    have h1 : survival μ ((n : ℝ) * t') ≤ survival μ ((m : ℝ) * t) := antitone_survival μ hle
+    rw [ht.2.2 m hm, ht'.2.2 n hn] at h1
+    have h2 := Real.log_le_log (pow_pos ht'.2.1.1 n) h1
+    rw [Real.log_pow, Real.log_pow] at h2
+    rw [ha, hb]
+    linarith
+  have hmain : a * t' ≤ b * t := by
+    by_contra hcon
+    push Not at hcon
+    set d : ℝ := a * t' - b * t with hd
+    have hdpos : 0 < d := by rw [hd]; linarith
+    obtain ⟨n, hn⟩ := exists_nat_gt (max (a * t / d) (t / t'))
+    have hn1 : a * t / d < (n : ℝ) := lt_of_le_of_lt (le_max_left _ _) hn
+    have hn2 : t / t' < (n : ℝ) := lt_of_le_of_lt (le_max_right _ _) hn
+    have hnpos : 0 < (n : ℝ) := lt_trans (div_pos ht.1 ht'.1) hn2
+    have hnnat : 0 < n := Nat.cast_pos.mp hnpos
+    have hone : (1 : ℝ) ≤ (n : ℝ) * t' / t := by
+      rw [le_div_iff₀ ht.1]
+      rw [div_lt_iff₀ ht'.1] at hn2
+      linarith
+    have hmpos : 0 < ⌊(n : ℝ) * t' / t⌋₊ := Nat.le_floor (by exact_mod_cast hone)
+    have hmle : ((⌊(n : ℝ) * t' / t⌋₊ : ℕ) : ℝ) ≤ (n : ℝ) * t' / t := Nat.floor_le (div_nonneg (mul_nonneg (Nat.cast_nonneg n) ht'.1.le) ht.1.le)
+    have hmgt : (n : ℝ) * t' / t < ((⌊(n : ℝ) * t' / t⌋₊ : ℕ) : ℝ) + 1 := Nat.lt_floor_add_one _
+    have hmt : ((⌊(n : ℝ) * t' / t⌋₊ : ℕ) : ℝ) * t ≤ (n : ℝ) * t' := by
+      rw [le_div_iff₀ ht.1] at hmle; linarith
+    have hkey := key _ n hmpos hnnat hmt
+    have hmt' : (n : ℝ) * t' - t < ((⌊(n : ℝ) * t' / t⌋₊ : ℕ) : ℝ) * t := by
+      rw [div_lt_iff₀ ht.1] at hmgt; linarith
+    have hcontra : (n : ℝ) * d < a * t := by
+      rw [hd]
+      nlinarith [hkey, hmt', hapos, ht.1, ht'.1]
+    rw [div_lt_iff₀ hdpos] at hn1
+    linarith
+  simp only [raceRate, ← ha, ← hb]
+  rw [div_le_div_iff₀ ht.1 ht'.1]
+  exact hmain
+
+/-- ★★★ **The race property forces the exponential law.**
+
+This is the `⇒` direction of `specs/record-layer-plan.md` §3c: if for **every** number of clocks and
+every positive rate vector the first of `n` iid clocks to fire is clock `i` with probability
+`bᵢ/Σⱼbⱼ`, then the clock law is exponential. With `hasRaceProperty_expMeasure` for the converse it
+is the characterisation.
+
+⚠️ **The second conjunct travels with the first.** `HasRaceProperty` quantifies over the number of
+clocks, and that is not a formality: at a *fixed* number of outcomes `n` the family supplies only
+`n−1` moments, and finitely many moments determine nothing. So what is forced is the exponential law
+**given that one clock law serves every `n`** — the measurement-independence of the fibre law that
+`specs/sigma-fibre-contextuality.md` commits to. Never state the conclusion without it. -/
+theorem HasRaceProperty.exists_eq_expMeasure {μ : Measure ℝ} [IsProbabilityMeasure μ]
+    (h : HasRaceProperty μ) : ∃ lam : ℝ, 0 < lam ∧ μ = expMeasure lam := by
+  have hreg := h.ae_regular
+  obtain ⟨t₀, ht₀⟩ := hreg.exists
+  set lam : ℝ := raceRate μ t₀ with hlamdef
+  have hlampos : 0 < lam := raceRate_pos ht₀
+  refine ⟨lam, hlampos, ?_⟩
+  have hprobExp : IsProbabilityMeasure (expMeasure lam) := isProbabilityMeasure_expMeasure hlampos
+  have hmeas := measurable_survival μ
+  have hG : ∀ t, RaceRegular μ t → survival μ t = Real.exp (-(lam * t)) := by
+    intro t ht
+    have hrate : raceRate μ t = lam := le_antisymm (raceRate_le ht ht₀) (raceRate_le ht₀ ht)
+    rw [survival_eq_exp_raceRate ht, hrate]
+  have hIoi : ∀ s : ℝ, μ (Ioi s) = expMeasure lam (Ioi s) := by
+    intro s
+    set c : ℝ := Real.exp (-(lam * s)) with hc
+    have hcpos : 0 < c := Real.exp_pos _
+    have hset : Ioi s =ᵐ[μ] (survival μ) ⁻¹' (Iio c) := by
+      rw [Filter.eventuallyEq_set]
+      filter_upwards [hreg] with t ht
+      rw [Set.mem_Ioi, Set.mem_preimage, Set.mem_Iio, hG t ht, hc, Real.exp_lt_exp]
+      constructor <;> intro hh <;> nlinarith [hlampos]
+    rw [measure_congr hset, ← Measure.map_apply hmeas measurableSet_Iio, h.map_survival,
+      Measure.restrict_apply measurableSet_Iio]
+    rcases le_or_gt 0 s with hs | hs
+    · have hc1 : c ≤ 1 := by
+        rw [hc, Real.exp_le_one_iff]
+        nlinarith
+      have hslice : Iio c ∩ Icc (0 : ℝ) 1 = Ico 0 c := by
+        ext x
+        simp only [Set.mem_inter_iff, Set.mem_Iio, Set.mem_Icc, Set.mem_Ico]
+        constructor
+        · rintro ⟨h1, h2, -⟩; exact ⟨h2, h1⟩
+        · rintro ⟨h1, h2⟩; exact ⟨h2, h1, le_trans h2.le hc1⟩
+      rw [hslice, Real.volume_Ico, sub_zero, expMeasure_Ioi hlampos hs, hc]
+    · have hc1 : 1 < c := by
+        rw [hc, ← Real.exp_zero]
+        exact Real.exp_lt_exp.mpr (by nlinarith)
+      have hslice : Iio c ∩ Icc (0 : ℝ) 1 = Icc 0 1 := by
+        ext x
+        simp only [Set.mem_inter_iff, Set.mem_Iio, Set.mem_Icc]
+        exact ⟨fun hx => hx.2, fun hx => ⟨lt_of_le_of_lt hx.2 hc1, hx⟩⟩
+      have hIic : expMeasure lam (Iic s) = 0 := by
+        rw [← ofReal_cdf, cdf_expMeasure_eq hlampos s, if_neg (not_le.mpr hs)]
+        simp
+      rw [hslice, Real.volume_Icc, ← compl_Iic, prob_compl_eq_one_sub measurableSet_Iic, hIic]
+      simp
+  refine Measure.ext_of_Iic μ (expMeasure lam) (fun s => ?_)
+  rw [← compl_Ioi, prob_compl_eq_one_sub measurableSet_Ioi,
+    prob_compl_eq_one_sub measurableSet_Ioi, hIoi s]
+
+/-- ★★★ **The characterisation** of `specs/record-layer-plan.md` §3c: for iid linear clocks,
+first-to-fire is proportional to the rate **iff** the waiting times are exponential.
+
+The `⇐` direction is `hasRaceProperty_expMeasure`; the `⇒` direction is
+`HasRaceProperty.exists_eq_expMeasure`, and it carries the second conjunct documented there —
+`HasRaceProperty` quantifies over the number of clocks, so what is characterised is *the law that
+serves every `n`*. -/
+theorem hasRaceProperty_iff_exists_expMeasure {μ : Measure ℝ} [IsProbabilityMeasure μ] :
+    HasRaceProperty μ ↔ ∃ lam : ℝ, 0 < lam ∧ μ = expMeasure lam :=
+  ⟨fun h => h.exists_eq_expMeasure,
+    fun ⟨_, hlam, hμ⟩ => hμ ▸ hasRaceProperty_expMeasure hlam⟩
 
 end ProbabilityTheory
