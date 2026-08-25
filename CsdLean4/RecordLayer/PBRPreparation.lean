@@ -58,8 +58,15 @@ claims about different objects. Conflating (3) with (2) was the error this modul
   no region, no finiteness: the hypothesis is the Dirac projective pushforward and nothing else.
 * `epistemicMeasure_mutuallySingular` — the concrete corollary, derived through the general theorem
   rather than around it, so the dependency C2 cites is the one the kernel checked.
-* `no_region_preparation_exact_fibre` — an exact projective fibre is `kMuL`-null, so it is **not**
-  the region of any positive-volume `SigmaLayer.Preparation`.
+* `epistemicMeasure_fibre_one` — the exact sharp law puts all its mass on its own fibre.
+* `epistemicMeasure_mutuallySingular_kMuL` — the exact sharp law is mutually singular with the
+  Liouville measure itself; the exact fibre separates them outright.
+* ★★ `exact_sharp_ne_region_conditional` — **the two preparation classes are distinct as
+  probability LAWS.** No positive-volume region-conditioned preparation law equals an exact sharp
+  preparation law, however the region is chosen. This is the statement C2 should cite for class
+  separation.
+* `no_region_preparation_exact_fibre` — the weaker SET-level companion: an exact projective fibre is
+  `kMuL`-null, so it is not the *region* of any positive-volume `SigmaLayer.Preparation`.
 
 ## ⚠️ What is NOT proved, and must not be inferred
 
@@ -69,8 +76,9 @@ claims about different objects. Conflating (3) with (2) was the error this modul
 * **Global non-factorisation of the composite ontology does NOT imply PI fails.** The Segre-layer
   results (`RecordLayer/OnticComposite.lean`) are composite-*geometry* results. Reading them as a
   PBR contradiction was the superseded Q28 interpretation; see `specs/c2-support-plan.md`.
-* **`no_region_preparation_exact_fibre` does not say sharp preparations are illegitimate.** It says
-  exact fibre-supported measures are *singular* objects, not obtainable by conditioning `kMuL` on a
+* **The class-separation theorems do not say sharp preparations are illegitimate.** Neither
+  `exact_sharp_ne_region_conditional` nor `no_region_preparation_exact_fibre` does. They say exact
+  fibre-supported measures are *singular* objects, not obtainable by conditioning `kMuL` on a
   positive-volume region. Singular exact preparations remain a separate admissible interface — that
   is precisely the interface classified in (2).
 
@@ -162,14 +170,70 @@ theorem epistemicMeasure_mutuallySingular {p q : LF4.CPN N} (hne : p ≠ q) :
 
 /-! ### Part F — an exact fibre is not a positive-volume region -/
 
+/-- The exact sharp preparation puts **all** its mass on its own projective fibre.
+
+Read off the Dirac projective law: the fibre is `Prod.fst ⁻¹' {q}`, so its `epistemicMeasure q`
+measure is `(Measure.map Prod.fst (epistemicMeasure q)) {q} = Measure.dirac q {q} = 1`. -/
+theorem epistemicMeasure_fibre_one (q : LF4.CPN N) :
+    epistemicMeasure q (Prod.fst ⁻¹' {q}) = 1 := by
+  rw [← Measure.map_apply measurable_fst (measurableSet_singleton q),
+    epistemicMeasure_projectiveLaw, Measure.dirac_apply]
+  simp
+
+/-- ★ **The exact sharp law is mutually singular with the Liouville measure itself.**
+
+The exact fibre separates them outright: it carries all of `epistemicMeasure q` and none of
+`kMuL p₀`. This is the measure-level reason the sharp interface is not a Liouville-conditioning
+interface, and it is what `exact_sharp_ne_region_conditional` below localises to region
+preparations. -/
+theorem epistemicMeasure_mutuallySingular_kMuL (hN : 2 ≤ N) (p₀ q : LF4.CPN N) :
+    (epistemicMeasure q).MutuallySingular (LF4.kMuL p₀) := by
+  refine ⟨(Prod.fst ⁻¹' {q})ᶜ, (measurable_fst (measurableSet_singleton q)).compl, ?_, ?_⟩
+  · have h := epistemicMeasure_fibre_one q
+    have hcompl := measure_compl (μ := epistemicMeasure q)
+      (measurable_fst (measurableSet_singleton q)) (by rw [h]; exact ENNReal.one_ne_top)
+    rw [hcompl, h, measure_univ, tsub_self]
+  · rw [compl_compl]
+    exact SigmaLayer.kMuL_fibre_null hN p₀ q
+
+/-- ★★ **The measure-level class separation C2 needs.** No positive-volume region-conditioned
+preparation law **equals** an exact sharp preparation law.
+
+Stronger than `no_region_preparation_exact_fibre`, which only rules out the region being *literally*
+the fibre: this rules out the two *probability laws* coinciding, however the region was chosen.
+
+The argument is one line of measure theory. A region-conditioned law is absolutely continuous with
+respect to `kMuL` (`conditionalMeasure_absolutelyContinuous`), and the exact fibre is `kMuL`-null
+(`kMuL_fibre_null`), so the conditional law gives the fibre mass `0`. The exact sharp law gives it
+mass `1` (`epistemicMeasure_fibre_one`). `0 ≠ 1`.
+
+⚠️ Says nothing about PBR preparation independence, and does not make either class illegitimate. -/
+theorem exact_sharp_ne_region_conditional [NeZero N] (hN : 2 ≤ N) (p₀ q : LF4.CPN N)
+    (P : SigmaLayer.Preparation
+      (SigmaLayer.trivialDynamics
+        (⟨LF4.kMuL p₀, inferInstance⟩ : MeasureTheory.FiniteMeasure (LF4.KSigma N)))) :
+    ((P.conditionalMeasure : ProbabilityMeasure (LF4.KSigma N)) : Measure (LF4.KSigma N))
+      ≠ epistemicMeasure q := by
+  intro hEq
+  have hzero :
+      ((P.conditionalMeasure : ProbabilityMeasure (LF4.KSigma N)) : Measure (LF4.KSigma N))
+        (Prod.fst ⁻¹' {q}) = 0 :=
+    P.conditionalMeasure_absolutelyContinuous (SigmaLayer.kMuL_fibre_null hN p₀ q)
+  rw [hEq, epistemicMeasure_fibre_one] at hzero
+  exact one_ne_zero hzero
+
 /-- ★ **An exact projective fibre is not the region of any `SigmaLayer.Preparation`.**
 
 `Preparation.nonzero_region` demands positive Liouville measure; `kMuL_fibre_null` says the exact
 fibre `Prod.fst ⁻¹' {q}` has measure exactly zero. So the two preparation classes are genuinely
 disjoint as *objects*, not merely described differently.
 
-⚠️ **This does not say sharp preparations are illegitimate or unphysical.** Its content is narrow
-and exact: an exact fibre-supported sharp measure is a **singular** preparation object, and is not
+⚠️ **This is the weaker, SET-level statement**: it rules out the region being literally the fibre.
+For the measure-level separation — no region-conditioned *law* equals an exact sharp *law*, however
+the region is chosen — see `exact_sharp_ne_region_conditional`, which is what C2 should cite.
+
+⚠️ **Neither says sharp preparations are illegitimate or unphysical.** The content is narrow and
+exact: an exact fibre-supported sharp measure is a **singular** preparation object, and is not
 obtainable by ordinary positive-volume Liouville conditioning. That is all it says. Singular exact
 preparations remain a separate admissible interface — the one `sharp_preparations_mutuallySingular`
 classifies as ψ-ontic. -/

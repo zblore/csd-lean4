@@ -222,8 +222,12 @@ classes** that the superseded Q28 interpretation ran together:
   `kahler_preparations_overlap` are theorems about `SigmaLayer.Preparation` — positive-volume
   regions, absolutely continuous with a Fubini–Study density. They may overlap. This does **not**
   classify exact pure states as ψ-epistemic.
-- The classes are disjoint as objects: `no_region_preparation_exact_fibre`, via the
-  `kMuL`-nullity of an exact fibre.
+- The classes are distinct **as probability laws**: `exact_sharp_ne_region_conditional` — no
+  positive-volume region-conditioned law equals an exact sharp law, however the region is chosen
+  (region laws are `kMuL`-absolutely-continuous and so give the exact fibre mass `0`, while
+  `epistemicMeasure_fibre_one` gives it mass `1`). The weaker set-level companion
+  `no_region_preparation_exact_fibre` is retained. `epistemicMeasure_mutuallySingular_kMuL` records
+  the same separation against the Liouville measure itself.
 
 ⚠️ **Outside the proved conclusion: PBR preparation independence.** PI is a compositional
 assumption and is neither established nor refuted anywhere in the corpus. In particular, global

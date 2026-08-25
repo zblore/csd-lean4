@@ -5565,8 +5565,11 @@ entries:
 
       The finite-resolution half is also proved, about different objects:
       kMuL_fibre_null (a single exact projective fibre is Liouville-null, so an exact
-      sharp preparation is not obtainable by conditioning on a positive-volume region --
-      stated as class-disjointness in no_region_preparation_exact_fibre);
+      sharp preparation is not obtainable by conditioning on a positive-volume region).
+      The class separation is stated at the level of probability LAWS by
+      exact_sharp_ne_region_conditional -- no positive-volume region-conditioned law equals
+      an exact sharp law, however the region is chosen -- with
+      no_region_preparation_exact_fibre the weaker set-level companion;
       conditional_not_mutuallySingular and kahler_preparations_overlap (region
       preparations on overlapping neighbourhoods have non-separable conditional laws);
       and the rho_ep density theorems.

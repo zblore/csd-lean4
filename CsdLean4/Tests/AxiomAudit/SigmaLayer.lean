@@ -3047,8 +3047,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- no region, no finiteness. epistemicMeasure_mutuallySingular -- the concrete corollary,
 -- routed THROUGH the general theorem so the proof graph C2 cites is the checked one.
 -- no_region_preparation_exact_fibre -- an exact fibre is kMuL-null (kMuL_fibre_null) and so
--- is not the region of any positive-volume SigmaLayer.Preparation: the two preparation
--- classes are disjoint as objects. pbr_sharp_preparation_capstone -- the single citable
+-- is not the region of any positive-volume SigmaLayer.Preparation (SET-level).
+-- STRENGTHENED 2026-08-25 to the MEASURE level: epistemicMeasure_fibre_one (the exact sharp
+-- law puts mass 1 on its own fibre); epistemicMeasure_mutuallySingular_kMuL (the exact fibre
+-- separates the sharp law from the Liouville measure outright); and
+-- exact_sharp_ne_region_conditional -- no positive-volume region-conditioned LAW equals an
+-- exact sharp LAW, however the region is chosen (region laws are kMuL-absolutely-continuous,
+-- so they give the fibre 0; the sharp law gives it 1). That last is what C2 cites for class
+-- separation; the set-level form is kept as the weaker companion. pbr_sharp_preparation_capstone -- the single citable
 -- conjunction (both Dirac laws AND the singularity).
 -- NOT PROVED, and not to be inferred: anything about PBR preparation independence, which
 -- is a compositional assumption and remains neither established nor refuted.
@@ -3071,5 +3077,17 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pbr_sharp_preparation_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.pbr_sharp_preparation_capstone
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_fibre_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_fibre_one
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_mutuallySingular_kMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_mutuallySingular_kMuL
+
+/-- info: 'CSD.RecordLayer.exact_sharp_ne_region_conditional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exact_sharp_ne_region_conditional
 
 end CSD.Tests.AxiomAudit
