@@ -1216,7 +1216,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- region, evolve under ANY field-structured flow, write the record, read any Lipschitz
 -- fibre observable: the readout moves by at most Lh*Lg * 2(2||S||t)^d/d! * ||A|| (the
 -- rigid fibre rotation cancels between the two histories). The record cell -- a fibre
--- fact, where record content necessarily lives for N >= 3 -- cannot be steered from
+-- fact, and the fibre is where the corpus places record content for N >= 3 (one natural
+-- class of base candidate refuted, not every candidate) -- cannot be steered from
 -- outside the cone. Scope: stroke-shaped fibre activity (base-coupled fibre VELOCITY
 -- is declared out of scope in the module and in check-claims' wait ledger).
 /-- info: 'CSD.CV.fibredObs_kick_of_disjointSupport' depends on axioms: [propext, Classical.choice, Quot.sound] -/

@@ -152,9 +152,10 @@ differs from the unkicked run by at most
 
   `L_h · L_g · 2·(2‖S‖t)^d/d! · ‖A‖`.
 
-The record cell the trajectory lands in — a fibre fact, where the
-record-forming content necessarily lives for `N ≥ 3` — cannot be steered from
-outside the cone. The write map's and read map's Lipschitz constants are the
+The record cell the trajectory lands in — a fibre fact, and the fibre is where
+the corpus places the record-forming content for `N ≥ 3` (one natural class of
+base candidate is refuted, not every candidate: `specs/sigma-fibre-contextuality.md`)
+— cannot be steered from outside the cone. The write map's and read map's Lipschitz constants are the
 only prices added to the base cone, and the rigid fibre rotation drops out
 because it is common to both histories. -/
 theorem record_lightcone [NeZero N] (F : FieldStructuredFlow K N)

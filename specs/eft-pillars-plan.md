@@ -138,8 +138,9 @@ record writing, exactly), and ★★ `record_lightcone` — kick outside the gra
 `d`-ball of the read region, evolve under **any** field-structured flow, write
 the record, read any Lipschitz fibre observable, and the readout moves by at
 most `L_h·L_g · 2(2‖S‖t)^d/d! · ‖A‖`. The record cell a trajectory lands in — a
-fibre fact, which is where record-forming content necessarily lives for `N ≥ 3`
-(`sigma-fibre-contextuality.md`) — cannot be steered from outside the cone.
+fibre fact, and the fibre is where the corpus places record-forming content for
+`N ≥ 3` (`sigma-fibre-contextuality.md`; a constraint chain, not a no-go) — cannot
+be steered from outside the cone.
 
 Honest scope of the close: fibre activity is the **stroke** shape (the record
 layer's own mechanism); continuous-time skew flows with base-coupled fibre

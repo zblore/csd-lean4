@@ -75,12 +75,22 @@ erode the guard. Documented in the script's KNOWN LIMIT section.)*
    preparation) weighted by the prep spread density `4(2·blochProj ψ − 1)₊` integrates against
    `μ_FS` to the Born weight `|⟨n|ψ⟩|²`. A7-faithful, on the base, for the qubit.
 
-3. **Base-only, context-fixed measurement — IMPOSSIBLE at `N ≥ 3`.** There is **no**
-   `U(N)`-covariant, radial, nonnegative base density `g(|⟨ψ|φ⟩|²)` on `ℂℙⁿ⁻¹` with
-   `∫_{Ωᵢ(M)} g dμ_FS = |⟨eᵢ|ψ⟩|²` for the max-overlap (Voronoi) cells and all `M, ψ`.
-   - **Evidence:** (a) Phase-1 numerics on `ℂℙ²` — non-negative least-squares forces the
-     covariant base density *negative* (`r_nn` plateaus ~10× the noise floor, stable under 4×
-     samples; the qubit control passes). (b) Operator argument: the affine "dipole"
+3. **Base-only, context-fixed measurement — OPEN at `N ≥ 3`, and tightly constrained.**
+   ⚠️ **This item read "IMPOSSIBLE" until 2026-08-25.** That wording contradicted the
+   retraction recorded in the one-line lesson above (2026-07-28) and was the source of a
+   month of downstream drift — it propagated into the published glossary, `docs/PATHS.md`,
+   `CSD-CHARTER.md`, `INDEX.md`, `paper-candidates.md` and two Lean docstrings, all of
+   which stated the `N ≥ 3` base-only failure as proved. It is not proved.
+
+   The open question is whether there is a `U(N)`-covariant, radial, nonnegative base
+   density `g(|⟨ψ|φ⟩|²)` on `ℂℙⁿ⁻¹` with `∫_{Ωᵢ(M)} g dμ_FS = |⟨eᵢ|ψ⟩|²` for the
+   max-overlap (Voronoi) cells and all `M, ψ`. The derived constraint chain above is the
+   current state of the answer: machine-checked necessary conditions that leave very
+   little room, short of a no-go. **Do not restate this as settled in either direction.**
+   - **Superseded evidence** (kept for provenance; replaced by the constraint chain, and
+     load-bearing for nothing): (a) Phase-1 sampling on `ℂℙ²` — the non-negative
+     least-squares fit came back negative on the covariant base density (`r_nn` plateaus
+     ~10× the noise floor, stable under 4× samples; the qubit control passes). (b) Operator argument: the affine "dipole"
      `∫_{Ωᵢ}|φ⟩⟨φ|dμ = a·Pᵢ + b(I−Pᵢ)` *does* reproduce Born, but only as a **signed** density;
      restoring nonnegativity needs a monopole rectifier whose per-cell integral is `ψ`-independent
      **only via the qubit antipode `s ↔ 1−s`, `H₊ ↔ H₋`** (a `CP¹ = S²` involution with no `N ≥ 3`

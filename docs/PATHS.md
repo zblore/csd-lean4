@@ -15,8 +15,9 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
 4. `CsdLean4/SigmaLayer/SectorPostulateNoGo.lean` — why "derive Σ from a single flow" is
    provably not available (the SO-1 no-go).
 5. [`specs/sigma-fibre-contextuality.md`](../specs/sigma-fibre-contextuality.md) — the
-   structural lesson: for `N ≥ 3`, contextuality necessarily lives in Σ's *fibre*. The open
-   foundations frontier.
+   structural lesson: at `N ≥ 3` the natural base-only route fails and the corpus places
+   contextuality in Σ's *fibre* — one specific radial base ansatz is refuted, not every
+   candidate, and the doc says so. The open foundations frontier.
 6. [`specs/reconstruction-status.md`](../specs/reconstruction-status.md) §2a — the A1–A7
    audit, row by row.
 

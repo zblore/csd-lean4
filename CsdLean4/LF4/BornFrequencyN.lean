@@ -14,8 +14,10 @@ public import CsdLean4.LF4.BornFrequencyPartition
 **Category:** 3-Local (Busch-free frequency → Born for all N coordinates).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/typicality-volume/
-Plain-language, CSD-role and formal statements of the typicality volume, with
-this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+Plain-language, CSD-role and formal statements of the typicality volume. ⚠️ The entry
+anchors `born_frequency_convergence_N_uncond` (`BornRegionUncond.lean`), not the form
+here: the published text says the genericity hypotheses are retired, and `hpos` below is
+exactly such a hypothesis. Kept symmetric by `scripts/check-glossary.sh`.
 
 The headline empirical payoff of the general-N Duistermaat–Heckman / Born-from-Kähler-
 volume programme. The qubit had `qubit_born_frequency_convergence_uncond` (single

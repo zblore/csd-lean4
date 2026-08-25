@@ -188,6 +188,7 @@ entries:
     related: [duistermaat-heckman, liouville-measure, kahler-form, born-weight]
 
   - slug: born-weight
+    reviewed: 2026-08-25
     hook: >
       Quantum probabilities are not a law of nature here. They are the sizes of regions,
       measured with a ruler nobody got to choose.
@@ -223,8 +224,12 @@ entries:
     mathematical: >
       For a preparation vector psi on CP^(N-1), the Fubini-Study measure of the barycentric
       outcome region attached to basis vector e_k equals the squared modulus of the inner
-      product of e_k with psi. Proved coordinate by coordinate at general N,
-      unconditionally, with no Gleason and no Busch.
+      product of e_k with psi. Proved coordinate by coordinate at general N, with no
+      Gleason and no Busch. Unconditional in the sense that decides circularity -- nothing
+      about the measure or the weights is assumed -- while the headline form does carry a
+      genericity hypothesis of no vanishing amplitude. That hypothesis is retired in the
+      companion unconditional forms, where a vanishing amplitude simply gives a cell of
+      measure zero and the identity still holds.
 
       The route runs through the moment map. Outcome regions pull back to regions of the
       probability simplex, where the Fubini-Study measure becomes flat by Duistermaat-
@@ -312,6 +317,7 @@ entries:
     related: [fubini-study-measure, born-weight]
 
   - slug: gleason-theorem
+    reviewed: 2026-08-25
     hook: >
       The standard route to the Born rule was, for a while, this corpus's one borrowed
       assumption. Then it got proved, and the ledger went to zero.
@@ -1231,9 +1237,10 @@ entries:
       general must live in a fibre above the state space can sit on the space itself, and
       nothing warns you this is happening.
 
-      The programme's fibre analysis makes the warning quantitative: contextual content can
-      live on the base at N equals two purely because of this accident, and provably cannot
-      from three levels up. That finding narrowed the programme's own claims. The sphere is
+      The programme's fibre analysis makes the warning concrete: contextual content can
+      live on the base at N equals two purely because of this accident, and from three
+      levels up the natural ways of keeping it there stop working. That finding narrowed
+      the programme's own claims. The sphere is
       where everyone's intuition is formed; the corpus treats it as a crime scene to be
       handled with gloves.
     mathematical: >
@@ -3566,9 +3573,9 @@ entries:
       partition exists: basins defined from the apparatus's rate field, with no
       preparation anywhere in the definition, whose weights come out as Born weights. At
       the qubit the whole story is proved end to end; at higher dimension the analysis
-      shows the contextual structure cannot live on the base alone -- it must live in the
-      fibre, and that placement is itself a theorem-shaped discovery, narrowing where the
-      mechanism can be.
+      indicates the contextual structure does not sit on the base alone, and the corpus
+      places it in the fibre. That placement narrows where the mechanism can be, though
+      it rests on refuting one natural class of base candidate rather than on a no-go.
 
       What remains open, and is stated as open: deriving the fibre mechanism from
       de-isolation dynamics rather than exhibiting it. The record layer is where the
@@ -3636,6 +3643,7 @@ entries:
     related: [collapse, measurement-problem, record-layer, pointer-basis, naimark-dilation, first-passage-race]
 
   - slug: typicality-volume
+    reviewed: 2026-08-25
     hook: >
       Almost every way the experiment could have started gives the quantum statistics.
       That is not an assumption about probability -- it is a measured volume.
@@ -3676,8 +3684,8 @@ entries:
     status: proved-in-corpus
     source: curated
     lean:
-      module: CsdLean4/LF4/BornFrequencyN.lean
-      theorem: born_frequency_convergence_N
+      module: CsdLean4/LF4/BornRegionUncond.lean
+      theorem: born_frequency_convergence_N_uncond
     related: [typicality, born-weight, fubini-study-measure, liouville-measure, canonical-typicality]
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
@@ -3709,13 +3717,18 @@ entries:
       a context's rate field read at the ontic point -- the preparation plays no part --
       and proves their epistemic weights are exactly the Born weights.
 
-      The dimension story is a genuine discovery: at the qubit the regions can live on
-      the base of the sector, and at higher dimension the natural way of doing so provably
-      fails -- covariance and nonnegativity leave no room for a radial, preparation-only
-      base density -- which is why the contextual structure is taken to live in the fibre.
-      Note the scope: what is refuted is that one natural class of candidate. Whether NO
-      base-only construction can work is open, and recorded as such. The regions stay epistemic
-      throughout; what the trajectory selects among them, the record, is ontic.
+       The dimension story is a genuine discovery: at the qubit the regions can live on
+       the base of the sector, and at higher dimension the natural way of doing so is
+       squeezed very hard: covariance plus positivity force a chain of machine-checked
+       conditions on any radial, preparation-only base density -- disjoint supports, and
+       vanishing below a threshold that rises with dimension -- with the qubit exempted for
+       the same structural reason three independent ways. Note the scope, because it is
+       easy to overstate and has been overstated on this page before: that is a tight
+       constraint, not a no-go. The closing step needs machinery that does not exist yet,
+       so base-only at higher dimension is open in BOTH directions -- not proved
+       impossible, not exhibited -- and parked as such. The fibre is where the corpus
+       builds, by a judgement that either answer would leave unchanged. The regions stay
+       epistemic throughout; what the trajectory selects among them, the record, is ontic.
     mathematical: >
       A ContextField assigns each base point a measurable probability vector over
       outcomes; the basin for outcome i is the set of arena points whose fibre
@@ -3871,8 +3884,8 @@ entries:
 
   - slug: fibre
     hook: >
-      The arena is bigger than the state space by exactly one compact factor -- and at
-      dimension three and above, that factor provably cannot be dispensed with.
+      The arena is bigger than the state space by exactly one compact factor -- and from
+      dimension three up, the natural ways of doing without that factor stop working.
     layman: >
       Here is the problem. If quantum states are shadows of a richer arena, what is in
       the part that does not show up in the shadow? It had better not be idle decoration:
@@ -3883,23 +3896,30 @@ entries:
       state cannot: which outcome basin the trajectory actually occupies, the raw
       material of records.
 
-      The satisfying twist is that the fibre earned its keep by a theorem, not by
-      taste. At the qubit you can just about manage without it. One dimension higher,
-      you provably cannot.
+      The satisfying twist is that the fibre earned its keep by argument, not by taste.
+      At the qubit you can just about manage without it: the two-level case has a
+      coincidence that lets the structure sit on the state space itself. One dimension
+      higher that coincidence is gone, and the natural candidates for doing without a
+      fibre fail -- so the fibre is where the corpus puts the structure. That the
+      failure extends to every conceivable candidate is expected but not established.
     in_csd: >
       The fibre is where the record layer lives: the context-fixed outcome basins are
       arcs in the fibre coordinate, read off at each base point. The epistemic measure
       spreads evenly over the fibre; the basin a trajectory occupies is the ontic
       record.
 
-      The load-bearing discovery is dimensional. At N = 2 a context-fixed partition can
-      be built on the base alone -- a special accident of the two-dimensional state
-      space. At N >= 3 the natural base-only construction fails: covariance and positivity
-      kill the radial, preparation-only candidate density, which is why the contextual
-      structure is taken to live in the fibre. Scope, and it matters: one natural class of
-      candidate is refuted, not every conceivable one. Class-generality of that verdict is
-      open, and the fibred reading is canonical by author decision rather than by a no-go. That narrows where the mechanism
-      can live; it does not refute it -- existence is proved.
+       The load-bearing discovery is dimensional. At N = 2 a context-fixed partition can
+       be built on the base alone -- a special accident of the two-dimensional state
+       space. At N >= 3 the natural base-only construction is constrained to very little:
+       covariance and positivity force a radial, preparation-only density to have disjoint
+       supports and to vanish below a threshold rising with dimension, and the N = 2 versus
+       N >= 3 split shows up three independent ways. Scope, and it matters, because this
+       page has overstated it twice: the chain stops short of a no-go. Two of its inputs
+       are undischarged and the closing step needs machinery that does not exist, so
+       base-only is open in BOTH directions -- neither refuted nor exhibited -- and parked.
+       The fibred reading is canonical by author decision, taken because either answer
+       leads to the same next move. That narrows where the mechanism can live; it does not
+       refute it -- existence is proved.
 
       A second and independent reason the fibre earns its keep arrived in 2026-08. The
       outcome race needs several INDEPENDENT clocks, and a single deterministic
@@ -3973,6 +3993,7 @@ entries:
     related: [projectability, projective-sector, fibre, epistemic-measure]
 
   - slug: pointer-basis
+    reviewed: 2026-08-25
     hook: >
       The apparatus does not measure what you ask it to. It measures what it can keep
       -- and what it can keep is decided by the interaction, not the experimenter.
@@ -3982,33 +4003,47 @@ entries:
       pointer readings, and nobody has ever seen one. Why do pointers settle into some
       states and not others?
 
-      The standard answer, which CSD adopts and then formalises, is einselection: the
-      environment constantly interacts with the apparatus, and only certain states
-      survive that interaction unscrambled. Those survivors are the pointer basis. A
-      pointer position is robust because bumping into air molecules does not change
-      it; a superposition of two positions is fragile because the first bump marks
-      which.
+      The standard answer, which CSD adopts, is einselection: the environment constantly
+      interacts with the apparatus, and only certain states survive that interaction
+      unscrambled. Those survivors are the pointer basis. A pointer position is robust
+      because bumping into air molecules does not change it; a superposition of two
+      positions is fragile because the first bump marks which.
 
-      The pointer basis is thus not chosen -- it is selected, dynamically, by what the
-      interaction commutes with.
+      The pointer basis is thus meant to be selected, dynamically, by what the interaction
+      commutes with -- and that is the part still owed. What the corpus formalises is the
+      channel: given that the interaction dephases in a particular basis, the consequences
+      are worked out exactly. Deriving which basis that is from the arena's own dynamics
+      is open, and the corpus says so where it says it.
     in_csd: >
       In the record layer the pointer basis is what makes a record a record: a stable,
       re-readable configuration the de-isolation dynamics writes and the environment
-      does not erase. The corpus proves the einselection story at the density-matrix
-      level -- decoherence drives the apparatus state diagonal in the pointer basis,
-      at every finite dimension, with the degenerate boundary cases handled rather
-      than waved at.
+      does not erase. Be precise about what is proved. At general N the dephasing channel
+      is DEFINED as the map sending a density matrix to its diagonal, so the statement
+      that it kills coherences and preserves populations is a definitional unfolding, and
+      the pointer basis is the computational basis by construction. The corpus flags this
+      in the theorem's own docstring rather than leaving it to be discovered.
+
+      The content near it is real but narrower: the channel genuinely acts on a coherent
+      state, the degenerate boundary is handled rather than waved at, and at the qubit the
+      continuous-time law is exact. The ontic origin -- einselection from the arena's
+      dynamics rather than from a modelled channel -- is explicitly gated to a later tier.
 
       The two-level reading applies here too: the pointer basis is a fact about the
       dynamics (ontic side); which pointer reading obtains for a given run is the
       record, selected by the trajectory.
     mathematical: >
-      The einselection theorems: under the modelled system-environment coupling the
-      reduced state's off-diagonal terms in the pointer basis are damped to zero,
-      diagonal terms preserved -- proved for qubit witnesses and at general N, with
-      explicit treatment of degenerate couplings. The continuous-time companions are
-      the dephasing and amplitude-damping semigroups of the open-system tier, whose
-      pointer-basis coherence decay is exact.
+      einselectionN: the general-N dephasing channel zeroes off-diagonal terms in the
+      pointer basis and preserves the diagonal populations. Stated alone this is
+      definitional -- the channel is diagonal(rho i i), so "off-diagonal of a diagonal is
+      zero" -- and the docstring says so. The content sits in the companions: that the
+      channel acts non-trivially on a coherent state, that it restricts to the derived
+      qubit reduction, and that at equal populations it degenerates to a multiple of the
+      identity, invariant under any unitary conjugation, so no basis is preferred.
+
+      The genuinely dynamical statement is the qubit dephasing semigroup, where the
+      off-diagonal coherence decays exactly as exp(-gamma t) with populations conserved
+      and the limit at large t proved; amplitude damping is its companion. Both are
+      two-level. Einselection from Sigma-dynamics is gated to the entangled tier.
     term: Pointer basis
     status: proved-in-corpus
     source: curated
@@ -4319,6 +4354,7 @@ entries:
     related: [duistermaat-heckman, born-weight, kahler-form, fubini-study-measure, dirichlet-distribution]
 
   - slug: lf1-main-theorem
+    reviewed: 2026-08-25
     hook: >
       The foundation stone, machine-checked: in a deterministic world with repeated
       preparations, observed frequencies converge to volume ratios -- almost surely,
@@ -4967,9 +5003,11 @@ entries:
     related: [choi-theorem, lindblad-equation, naimark-dilation]
 
   - slug: record-light-cone
+    reviewed: 2026-08-25
     hook: >
-      Records are safe from distant meddling by theorem: nothing outside the
-      light cone can steer which outcome the arena's fibre has written down.
+      Records are safe from distant meddling by theorem: what lies outside the
+      light cone can shift the outcome the arena's fibre wrote by no more than a
+      bound that collapses factorially with distance.
     layman: >
       Here is the problem. If measurement outcomes are written into a hidden
       part of the arena, a skeptic should ask how robust the writing is. Could
@@ -4984,8 +5022,8 @@ entries:
       factorially in the graph distance -- the same light-cone suppression
       that governs ordinary observables.
 
-      Distant meddling does not slightly corrupt records. It exponentially
-      fails to touch them.
+      Distant meddling does not slightly corrupt records. It fails to touch them
+      by a margin that shrinks factorially in the distance.
     in_csd: >
       This is the record layer and the field track meeting: the fibred arena
       carries record strokes -- fibre shifts controlled by base observables --
@@ -5113,6 +5151,7 @@ entries:
     related: [von-neumann-entropy, partial-trace, landauer-principle, gibbs-state]
 
   - slug: schrodinger-from-records
+    reviewed: 2026-08-25
     hook: >
       The Schrodinger equation is not postulated here. Preserving record
       statistics forces unitarity, unitarity plus continuity forces a
@@ -5134,7 +5173,10 @@ entries:
 
       The endpoint is the exponential form of the Schrodinger equation,
       derived -- with the premise being about statistics of records, not about
-      Hilbert-space structure.
+      Hilbert-space structure. The chain is assembled from separate theorems
+      rather than proved in one stroke, and the final link carries real
+      hypotheses: a smoothness condition, and a coboundary condition on the
+      phase that the corpus shows is unavoidable rather than convenient.
     in_csd: >
       The W-series is the dynamics spine: the projected sector flow is
       conjugation by a one-parameter unitary group, proved from the descent
@@ -5149,10 +5191,18 @@ entries:
       for which end-to-end connective claims are backed.
     mathematical: >
       sigmaFlow_schrodinger_form: for sector data with a projectable flow, the
-      projected dynamics is exp(-itH)-conjugation on rays, via Wigner rigidity
-      on the transition-probability-preserving hypothesis, the Bargmann branch
-      discriminator, the U(1) phase lift, and a C^1 Stone theorem. The
-      record-level conversion equates the operational premise with the
+      projected dynamics is exp(-itH)-conjugation on rays. Read the hypotheses,
+      because they are where the content sits. The theorem takes the projected
+      flow as ALREADY given by a unitary family, so Wigner rigidity and the
+      Bargmann branch discriminator stand upstream supplying that premise rather
+      than inside this statement; it then takes a cocycle for the family, a
+      unit-modulus phase satisfying a coboundary condition, an anti-Hermitian
+      generator, and a C^1 derivative hypothesis. The coboundary condition is not
+      a convenience -- the corpus proves it necessary, so the phase lift exists
+      exactly when it holds. What the capstone adds over the ray-level form is
+      that it genuinely consumes the sector fields, the flow, the projection and
+      projectability, rather than restating a result about an already-projected
+      map. The record-level conversion equates the operational premise with the
       geometric one and re-derives the flow theorem from record statistics,
       with the invariance of the Fubini-Study measure obtained with U(N) in
       the proof and never in the statement.

@@ -114,8 +114,10 @@ resolved in Lean, the second the standing posit):
 - Re-proposing **base-only context-fixed regions for `N ≥ 3`**, or attributing that wall to Gleason.
   **Structural lesson ([`sigma-fibre-contextuality.md`](sigma-fibre-contextuality.md)):** Born =
   typicality volume for all `N` (theorem), but measurement contextuality lives on the base only at
-  `N = 2` (`CP¹ = S²` accident) and **necessarily in the fibre for `N ≥ 3`**. This is a *constraint
-  on Σ's structure* (the fibre is load-bearing), not a defect — and it is **not** Gleason (CSD is
+  `N = 2` (`CP¹ = S²` accident) and, at `N ≥ 3`, **in the fibre by author decision against a tight
+  but unclosed constraint chain** — ⚠️ base-only at `N ≥ 3` is **open in both directions**, and
+  "necessarily in the fibre" was retracted 2026-07-28 (this line still carried it until
+  2026-08-25). This is a *constraint on Σ's structure* (the fibre is load-bearing), not a defect — and it is **not** Gleason (CSD is
   contextual). ⚠️ **Frontier restated 2026-08-24.** This line previously read "deriving the fibre
   mechanism from a de-isolation dynamics is the open frontier". That formulation — derive the
   first-passage race from a **mixing** de-isolation flow — was **retired as mis-specified**, not
