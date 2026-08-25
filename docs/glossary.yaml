@@ -707,6 +707,7 @@ entries:
     related: [bell-chsh, ghz-state]
 
   - slug: landauer-principle
+    reviewed: 2026-08-25
     hook: >
       Forgetting costs heat, at a rate set by temperature alone. This is where information
       stops being an abstraction.
@@ -744,9 +745,12 @@ entries:
       the bath's Clausius inequality converts entropy rise into heat.
 
       Stated in the Reeb-Wolf form, which forces the assumptions into the open -- the bath
-      starts in a Gibbs state, everything is finite-dimensional. That explicitness matters,
-      because several informal derivations of the principle are known to smuggle assumptions
-      at exactly the step this version makes visible.
+      starts in a Gibbs state, everything is finite-dimensional, the initial system state is
+      positive-definite, and BOTH final marginals are full-rank. Those last two are not
+      decoration: they are what the subadditivity step consumes, and that step is proved only
+      at positive-definite marginal scope. Naming them is the point, because several informal
+      derivations of the principle are known to smuggle assumptions at exactly the step this
+      version makes visible.
     person: >
       Rolf Landauer (1927-1999) was born in Stuttgart; his family fled to New York in 1938
       after his father's death. Harvard degrees, then IBM from 1952, where he spent his
@@ -769,6 +773,7 @@ entries:
     related: [von-neumann-entropy]
 
   - slug: von-neumann-entropy
+    reviewed: 2026-08-25
     hook: >
       A quantum whole can be perfectly known while its parts are maximally unknown. Entropy
       is where that stops being a metaphor and becomes arithmetic.
@@ -803,9 +808,10 @@ entries:
       not discovered by a reader.
     mathematical: >
       For a bipartite density operator, the entropy of the whole is at most the sum of the
-      entropies of the marginals, with equality exactly on product states. Proved here at
-      positive-definite marginal scope -- for pure global states, that means full Schmidt
-      rank.
+      entropies of the marginals. Proved here at positive-definite marginal scope -- for pure
+      global states, that means full Schmidt rank. The standard equality condition, that the
+      bound is attained exactly on product states, is stated in the module as the reason the
+      inequality is not vacuous; it is not itself formalised, so do not cite it as proved.
 
       Strong subadditivity, the three-party inequality of Lieb and Ruskai from which most
       structural results of quantum information follow, is not re-proved from scratch: it is
@@ -1119,6 +1125,7 @@ entries:
     related: [canonical-typicality]
 
   - slug: canonical-typicality
+    reviewed: 2026-08-25
     hook: >
       A small piece of a big quantum system looks thermal not because anything prepared it
       that way, but because almost every state of the whole makes it so.
@@ -4675,6 +4682,7 @@ entries:
     related: [no-signalling, bell-chsh, ghz-state, field-arena, kronecker-product]
 
   - slug: lieb-robinson-bound
+    reviewed: 2026-08-25
     hook: >
       Even without relativity, information has a speed limit -- and on the finite
       field arena that limit is a theorem with the velocity constant written out.
@@ -4840,6 +4848,7 @@ entries:
     related: [gibbs-state, field-arena, wick-theorem, von-neumann-entropy]
 
   - slug: lindblad-equation
+    reviewed: 2026-08-25
     hook: >
       The master equation of open quantum systems, formalised end to end: the flow
       of every Lindblad generator is completely positive -- literally, with the
@@ -4900,6 +4909,7 @@ entries:
     related: [quantum-channel, choi-theorem, pointer-basis, lie-trotter-formula]
 
   - slug: lie-trotter-formula
+    reviewed: 2026-08-25
     hook: >
       Split an exponential into alternating small steps and the error dies like one
       over n -- proved here for general Banach algebras, in Mathlib-ready form,
@@ -4953,6 +4963,7 @@ entries:
     related: [lindblad-equation, stone-theorem, schrodinger-equation]
 
   - slug: choi-theorem
+    reviewed: 2026-08-25
     hook: >
       A quantum channel is legitimate exactly when one matrix built from it is
       positive semidefinite -- both directions machine-checked, so "is this map
@@ -5006,6 +5017,7 @@ entries:
     related: [quantum-channel, lindblad-equation, loewner-order]
 
   - slug: quantum-channel
+    reviewed: 2026-08-25
     hook: >
       The most general thing that can happen to a quantum state, as a data type:
       a Kraus family with a completeness law, and the physicality certificates
@@ -5148,6 +5160,7 @@ entries:
     related: [quantum-channel, von-neumann-entropy, entropy-subadditivity, kronecker-product]
 
   - slug: entropy-subadditivity
+    reviewed: 2026-08-25
     hook: >
       Information in the whole never exceeds the sum of its parts -- von
       Neumann's inequality, proved at the matrix level with the operator
@@ -5263,10 +5276,11 @@ entries:
     related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann]
 
   - slug: shor-code
+    reviewed: 2026-08-25
     hook: >
       The first quantum error-correcting code that fixes everything, verified
-      gate by gate: nine qubits, any single-qubit error, built by concatenation
-      and proved including its famous degeneracy.
+      gate by gate: nine qubits, the Pauli errors that span every single-qubit
+      error, built by concatenation and proved including its famous degeneracy.
     layman: >
       Here is the problem. Quantum information cannot be copied, and measuring
       it disturbs it -- so error correction, which classically works by
