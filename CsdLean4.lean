@@ -124,6 +124,7 @@ public import CsdLean4.LF3.PointerWitness
 public import CsdLean4.LF3.Interface
 public import CsdLean4.LF4.Instance
 public import CsdLean4.LF4.KahlerInstance
+public import CsdLean4.LF4.LiouvilleUnique
 public import CsdLean4.LF4.KahlerFlow
 public import CsdLean4.LF4.KahlerFlowNoMixing
 public import CsdLean4.LF4.KahlerFlowFiniteHorizon

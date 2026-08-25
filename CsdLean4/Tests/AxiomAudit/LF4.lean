@@ -1279,4 +1279,35 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.blochProj_integral_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_integral_half
 
+-- A1 ONTIC-SECTOR ROW, item (b) (2026-08-25, LF4/LiouvilleUnique.lean): THE SECTOR MEASURE IS
+-- FORCED, NOT CHOSEN.
+-- ⚠️ The gap was NARROWER than the BACKLOG row implied.  KahlerOnticSetup.liouvilleMeasure is NAMED
+-- Liouville but only TYPED as Measure Sigma + liouville_isProbability -- nothing in the structure
+-- forced the sector's measure to be canonical, so kMuL = mu_FS (x) Haar read as a CHOICE.
+-- ★★ kMuL_unique: kMuL p0 is the ONLY probability measure on CP^{N-1} x T^2 invariant under U(N) on
+-- the base and T^2 on the fibre.  Forced by the symmetry, not selected.
+-- ★ WHY THIS IS THE RIGHT READING OF "LIOUVILLE".  The textbook definition is the top exterior power
+-- of the Kahler form, and it is NOT available and will not be: connectivity-manifest L1 records that
+-- manifold residual (d-omega = 0, top-power volume identity) as blocked on Mathlib, Q8 rated XL.
+-- Symmetry-uniqueness is the formalisable content of the SAME fact -- on a homogeneous space the
+-- Liouville measure IS the invariant one -- and it is the reading the corpus already uses for the
+-- base (invariant_measure_uniqueness_cpn).  This extends it to the whole fibred sector.
+-- Two independent halves joined by Measure.prod_eq (rectangles suffice):
+--   FIBRE -- fst_prod_volume_of_fibreShift_invariant.  For measurable A, the pushforward of
+--     mu.restrict (A x univ) to the fibre is a finite translation-invariant measure on T^2.
+--     ★ Because T^2 is COMPACT, isAddInvariant_eq_smul_of_compactSpace pins it to a multiple of Haar
+--     with NO regularity side conditions.  Fibre compactness is LOAD-BEARING here, not decoration --
+--     and it is exactly what TorusFibre/GlobalRecordClosure bought in July when the record layer
+--     moved off the non-compact R fibre.  The scalar is read off at univ.
+--   BASE -- the marginal is U(N)-invariant, so invariant_measure_uniqueness_cpn applies and total
+--     mass one fixes the multiplier.
+-- ⚠️ SCOPE: forced GIVEN the symmetry group.  This does NOT derive the group, and Sigma stays the
+-- floor (deriving Sigma is a non-question, CSD-CHARTER).  It also does NOT touch the record layer's
+-- other open item: no H_int(M) produces the basins.
+/-- info: 'CSD.LF4.fst_prod_volume_of_fibreShift_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.fst_prod_volume_of_fibreShift_invariant
+
+/-- info: 'CSD.LF4.kMuL_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF4.kMuL_unique
+
 end CSD.Tests.AxiomAudit
