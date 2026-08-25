@@ -23,6 +23,13 @@
 #                       Both directions, because a dead link in the Lean source is
 #                       worse than one on a website: the source is what reviewers read.
 #   (D) dangling refs — `related:` slugs with no entry yet
+#   (F) staleness    — an entry whose anchored Lean module has a commit NEWER than the
+#                       entry's `reviewed:` date, i.e. the ground moved under the prose.
+#                       WARNING by default (most Lean edits do not invalidate an entry,
+#                       and failing on every one would train people to bump the date
+#                       without reading, which is worse than no check). `--strict`
+#                       escalates it. Entries with no `reviewed:` are reported separately
+#                       as never-reviewed.
 #   (E) site links    — a `site_link.url` off the `meta.site_main` domain, or one
 #                       that does not return HTTP 200. Same family as the anchor
 #                       checks: the page must not ship a dead or off-site onward
@@ -212,6 +219,28 @@ for e in entries:
     elif st_ != 200:
         Ee.append(f"{s}: site_link.url returned HTTP {st_}, not 200 — {url}")
 
+# (F) STALENESS — has the Lean module an entry anchors to moved since the entry
+# was last reviewed? This is the one drift signal that IS mechanically checkable.
+# It does not check the mathematics (nothing can); it checks whether the ground
+# under the prose has shifted, which is exactly when the prose is most likely to
+# have gone stale. Motivating case: six record-layer records were found wrong in
+# one week (2026-08-24/25), every one of them prose that stopped matching a module
+# that had moved underneath it.
+F, Fnew = [], []
+for e in entries:
+    s_ = e.get("slug")
+    mod = (e.get("lean") or {}).get("module")
+    if not mod:
+        continue
+    rev = e.get("reviewed")
+    if not rev:
+        Fnew.append(f"{s_}: no `reviewed:` date — never checked against {mod}")
+        continue
+    out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", mod],
+                         capture_output=True, text=True, check=False).stdout.strip()
+    if out and str(rev) < out:
+        F.append(f"{s_}: {mod} changed {out}, entry reviewed {rev}")
+
 def show(title, items):
     if not items:
         return
@@ -225,10 +254,17 @@ show("B) dead anchors", B)
 show("C) one-way links", C)
 show("E) site links", Ee)
 show("D) dangling related / missing site_link — WARNING only", D)
+show("F) STALE — module moved since the entry was reviewed", F)
+show("F) never reviewed against their module — WARNING only", Fnew)
 
 hard = len(A) + len(B) + len(C) + len(Ee)
 print(f"check-glossary: {len(entries)} entr{'y' if len(entries)==1 else 'ies'}, "
       f"{hard} hard finding{'' if hard==1 else 's'}, {len(D)} warning{'' if len(D)==1 else 's'}.")
+print(f"  staleness: {len(F)} entr{'y' if len(F)==1 else 'ies'} STALE against a moved module, "
+      f"{len(Fnew)} never reviewed.")
+if F:
+    print("  ^ a stale entry describes a module that has since changed. Re-read it, then")
+    print("    bump its `reviewed:` date. Do NOT bump the date without re-reading.")
 if hard == 0:
     print("  PASS — every anchor resolves and every link is symmetric.")
     print("  NOTE: this says nothing about whether the mathematics is correct.")
@@ -239,5 +275,5 @@ print()
 # this on STRICT, so the guard reported "1 hard finding" and exited 0; CI wired to
 # it would have gone green over a dead theorem anchor. --strict now escalates the
 # (D) warnings instead, which is what an optional flag should be for.
-sys.exit(1 if (hard or (STRICT and D)) else 0)
+sys.exit(1 if (hard or (STRICT and (D or F or Fnew))) else 0)
 PY

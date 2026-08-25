@@ -3849,6 +3849,7 @@ entries:
       only if the waiting-time law is exponential. The forward direction turns the race
       into a moment family via the k-clock instantiation, and atomlessness and support in
       the positive reals come out derived rather than assumed.
+    reviewed: 2026-08-25
     term: First-passage race
     status: proved-in-corpus
     source: curated
@@ -3910,6 +3911,7 @@ entries:
       Gleason-type theorem -- CSD's partitions are contextual, so Gleason and
       Kochen-Specker do not apply -- but an explicit analysis showing covariance plus
       nonnegativity leave no room for a base-only radial density.
+    reviewed: 2026-08-25
     term: Fibre
     status: definition
     source: curated
