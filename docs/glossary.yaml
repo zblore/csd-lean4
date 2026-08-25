@@ -589,6 +589,7 @@ entries:
     related: [ghz-state, tsirelson-bound]
 
   - slug: ghz-state
+    reviewed: 2026-08-25
     hook: >
       Three particles can contradict local realism with certainty, in a single run. No
       statistics, no inequality, no margin of error.
@@ -3418,6 +3419,7 @@ entries:
         url: https://plato.stanford.edu/entries/quantum-bayesian/
 
   - slug: constraint-surface
+    reviewed: 2026-08-25
     hook: >
       There is one arena, it is deterministic, and it does not grow. Everything else in the
       programme is bookkeeping about how much of it a context lets you see.
@@ -3449,10 +3451,17 @@ entries:
       meeting point of the two.
     mathematical: >
       The corpus carries Sigma as the OnticSetup structure: a measurable space with a
-      probability measure (the Liouville measure), a deterministic measure-preserving flow,
-      and a preparation region. Outcome frequencies converge almost surely to volume
-      ratios by the strong law -- the LF1 main theorem, with no probabilistic input beyond
+      FINITE measure (the Liouville measure -- finite, not normalised; weights are ratios,
+      and the preparation region is required to have nonzero measure so the normalisation is
+      well-defined), a deterministic flow with a measure-preservation field, and a
+      preparation region. Outcome frequencies converge almost surely to volume ratios by the
+      strong law -- the LF1 main theorem, with no probabilistic input beyond
       repeated-preparation sampling.
+
+      One disclosure the module makes and this page should repeat: through LF1 to LF3 only
+      MEASURABILITY of the flow is consumed. The measure-preservation content is carried as
+      structural payload for physical admissibility and becomes load-bearing only when LF4
+      derives the measure from a concrete volume form.
 
       The concrete instance is Sigma = CP^(N-1) x T^2 with the Fubini-Study measure on the
       base times normalised Haar on the torus fibre. Compactness does real work: it is
@@ -3511,6 +3520,7 @@ entries:
     related: [constraint-surface, outcome-region, psi-epistemic, typicality-volume, collapse]
 
   - slug: projectability
+    reviewed: 2026-08-25
     hook: >
       The one genuine postulate at the interface: the ontic arena projects onto the space
       quantum mechanics is written on. Downstream of that, symmetry does the choosing.
@@ -4100,6 +4110,7 @@ entries:
     related: [de-isolation, record-layer, collapse, von-neumann-entropy]
 
   - slug: preparation-region
+    reviewed: 2026-08-25
     hook: >
       "The same experiment, repeated" is a physical claim, and this is its referent: a
       region of the arena, not a single point, that preparation lands you in.
@@ -4268,6 +4279,7 @@ entries:
     related: [carving, projective-sector, constraint-surface]
 
   - slug: field-arena
+    reviewed: 2026-08-25
     hook: >
       Take finitely many field modes, cut the ladder at N quanta, and the whole
       quantum-field toolbox -- propagators, light cones, Wick's theorem, KMS states
@@ -4635,6 +4647,7 @@ entries:
     related: [bell-chsh, singlet-contextual-model, bell-not-join, field-arena]
 
   - slug: bell-not-join
+    reviewed: 2026-08-25
     hook: >
       Entanglement, located exactly: the composite arena is strictly bigger than
       its parts placed side by side, and the Bell state is a point of the excess.
@@ -4741,6 +4754,7 @@ entries:
     related: [field-arena, record-light-cone, no-signalling]
 
   - slug: wick-theorem
+    reviewed: 2026-08-25
     hook: >
       The combinatorial engine of field theory -- correlators as sums over
       pairings -- survives the finite cutoff exactly, with the threshold where it
@@ -4796,6 +4810,7 @@ entries:
     related: [field-arena, gibbs-state, kms-condition]
 
   - slug: kms-condition
+    reviewed: 2026-08-25
     hook: >
       The algebraic fingerprint of thermal equilibrium holds exactly on the finite
       arena -- the corpus's first KMS statement, with the vacuum recovered in the
@@ -5112,6 +5127,7 @@ entries:
     related: [lieb-robinson-bound, record-layer, fibre, field-arena]
 
   - slug: partial-trace
+    reviewed: 2026-08-25
     hook: >
       Mathlib has no matrix partial trace, so the corpus built one -- the
       staple operation of quantum information, staged for upstreaming with its
@@ -5379,6 +5395,7 @@ entries:
     related: [hermitian-operator, pauli-matrices, poisson-bracket]
 
   - slug: interaction-price
+    reviewed: 2026-08-25
     hook: >
       Turning on an interaction costs locality at a linear rate -- and the price
       is exact on both sides: bounded below by the coupling and above by twice
@@ -5410,9 +5427,11 @@ entries:
       alone with its sharpness explicitly unclaimed, and the witness
       construction retired that caveat.
     mathematical: >
-      price_linear_attained: the distance from the interacting Heisenberg
-      observable to the subalgebra supported on the free modes satisfies
-      tau lambda / pi <= dist <= 2 tau lambda -- the lower bound via the
+      price_linear_attained: on the two-mode witness pair, and for tau lambda in
+      the window from zero to pi (both bounds are hypotheses of the theorem, not
+      decoration -- the sine is only monotone there), the distance from the
+      interacting Heisenberg observable to the subalgebra supported on the free
+      modes satisfies tau lambda / pi <= dist <= 2 tau lambda -- the lower bound via the
       commutator functional (any supported operator commutes with a disjoint
       probe, so one computed commutator bounds the distance to the whole
       subalgebra) with the commutator entry of modulus 2 sin(tau lambda / 2)

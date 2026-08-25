@@ -175,6 +175,58 @@ for e in entries:
         if r_ not in slugs:
             D.append(f"{e.get('slug')}: related `{r_}` has no entry yet")
 
+# --- (G) retracted-claim scan ----------------------------------------------
+# Added 2026-08-25, after a five-batch manual review of every anchored entry.
+#
+# WHY THIS LIVES HERE. check-claims.sh owns the epistemic-status scan and the A5
+# phrase lists, and its own header records the lesson that "a scan is only as good
+# as its file list" — logged on 2026-07-29 when sigma-fibre-contextuality.md was
+# found unscanned. But NEITHER of its lists has ever contained docs/glossary.yaml,
+# which is the most public artifact in the repo: it is a published website. So the
+# guard built specifically to catch a strong claim word on a weak artifact has
+# never looked at the surface where such a claim does the most damage.
+#
+# Concretely, this scan would have caught, on the day each was published:
+#   * "at higher dimension they provably cannot [live on the base]"  (outcome-region)
+#   * "kill every candidate density"                                  (fibre)
+#   * "the fibre analysis PROVES record-forming content cannot live there"
+#                                                     (is-the-wavefunction-real)
+# all of which restated a claim retracted on 2026-07-28, and all of which were live
+# on the site for a month. They were found by hand, one batch at a time.
+#
+# WARNING, not a hard finding: this is a heuristic over prose, and prose that
+# legitimately reports a no-go ("no product partition reproduces the singlet") must
+# not be blocked from shipping. It flags for a human read.
+# The claim: at N>=3, contextual / record-forming content cannot sit on the
+# projective BASE and must live in the FIBRE. Retracted 2026-07-28 — the corpus has
+# a tight constraint chain, NOT a no-go, and base-only is open in BOTH directions.
+#
+# Matching on "fibre" alone does not work: the published wordings said "live on the
+# base of the sector", "leave the projective base", "the projection forgets" — the
+# word "fibre" was often absent. A first draft of this scan matched fibre+strong-word
+# and missed the very sentence it was written for. So the rule is a THREE-way
+# co-occurrence over one sentence: a locus word, a settled word, and a dimension cue.
+LOCUS   = r"(?i)(fibre|fiber|projective base|the base|base-only|the projective)"
+SETTLED = r"(?i)(provably|provable|proves|proved|proven|impossible|cannot|can no longer|no room|forced|forcing|necessarily|refuted|obstruction|must move|must live|must leave|kill|kills|leave no room|leaves no room|rules out|ruled out|dead)"
+DIMCUE  = r"(?i)(higher dimension|dimension three|three levels|three and above|N >= 3|N of three|at higher|above the qubit|one dimension higher|three levels up)"
+RETRACTED = [
+    (None, "asserts the N>=3 base/fibre placement as settled — retracted 2026-07-28; "
+           "base-only is open in BOTH directions (specs/sigma-fibre-contextuality.md)"),
+]
+G = []
+for e in entries:
+    for k in ("hook", "layman", "in_csd", "mathematical"):
+        for sent in re.split(r"(?<=[.;])\s+", (e.get(k) or "")):
+            # A sentence that is itself a retraction or a scope note is exempt,
+            # otherwise the scan fires on its own corrections.
+            if re.search(r"(?i)open in both|stops? short|not a no-go|retract|"
+                         r"constraint chain|do not cite|overstated", sent):
+                continue
+            if (re.search(LOCUS, sent) and re.search(SETTLED, sent)
+                    and re.search(DIMCUE, sent)):
+                why = RETRACTED[0][1]
+                G.append(f"{e.get('slug')} [{k}]: {why} >> {sent.strip()[:130]}")
+
 # --- (E) site links --------------------------------------------------------
 # The onward links into the programme's main site. Off-domain is a hard finding
 # (the field exists precisely to point INTO the site); a non-200 response is a
@@ -256,12 +308,15 @@ show("E) site links", Ee)
 show("D) dangling related / missing site_link — WARNING only", D)
 show("F) STALE — module moved since the entry was reviewed", F)
 show("F) never reviewed against their module — WARNING only", Fnew)
+show("G) restates a RETRACTED claim as settled — WARNING only", G)
 
 hard = len(A) + len(B) + len(C) + len(Ee)
 print(f"check-glossary: {len(entries)} entr{'y' if len(entries)==1 else 'ies'}, "
       f"{hard} hard finding{'' if hard==1 else 's'}, {len(D)} warning{'' if len(D)==1 else 's'}.")
 print(f"  staleness: {len(F)} entr{'y' if len(F)==1 else 'ies'} STALE against a moved module, "
       f"{len(Fnew)} never reviewed.")
+print(f"  retracted-claim scan: {len(G)} sentence{'' if len(G)==1 else 's'} restating a "
+      f"retracted claim as settled.")
 if F:
     print("  ^ a stale entry describes a module that has since changed. Re-read it, then")
     print("    bump its `reviewed:` date. Do NOT bump the date without re-reading.")
@@ -275,5 +330,5 @@ print()
 # this on STRICT, so the guard reported "1 hard finding" and exited 0; CI wired to
 # it would have gone green over a dead theorem anchor. --strict now escalates the
 # (D) warnings instead, which is what an optional flag should be for.
-sys.exit(1 if (hard or (STRICT and (D or F or Fnew))) else 0)
+sys.exit(1 if (hard or (STRICT and (D or F or Fnew or G))) else 0)
 PY
