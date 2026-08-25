@@ -120,6 +120,7 @@ public import CsdLean4.LF3.Singlet.Leakage
 public import CsdLean4.LF3.ContextMap
 public import CsdLean4.LF3.SingletProjective
 public import CsdLean4.LF3.PurePreparation
+public import CsdLean4.LF3.PointerWitness
 public import CsdLean4.LF3.Interface
 public import CsdLean4.LF4.Instance
 public import CsdLean4.LF4.KahlerInstance

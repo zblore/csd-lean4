@@ -319,4 +319,30 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF3.singlet_operational_no_signalling
 
+-- CL-008 UNPOPULATED INTERFACE CLOSED (2026-08-25, LF3/PointerWitness.lean).
+-- LF3_main_theorem takes S : SystemApparatusSetup, and until now NO TERM OF THAT TYPE EXISTED
+-- anywhere in the corpus -- every occurrence was a hypothesis binder.  Same defect class as
+-- RecordLayer.DeIsolationInteraction before Q12-a: an interface whose antecedent is never shown
+-- satisfiable.  Found by the CL-008 premise-to-constructor trace (S3, 2026-08-24).
+-- ⚠️ NOT the degenerate witness.  proj .plus = 1, proj .minus = 0 satisfies EVERY field
+-- (self-adjoint, idempotent, orthogonal, complete) and would populate the interface while proving
+-- nothing -- it describes a pointer that always reads +.  spinPointerProjectors is the genuine
+-- two-outcome algebra Pi^±(a) = (1 ± sigma.a)/2, both projectors rank one.
+-- ★ Built entirely from the corpus's own concrete spin layer: spinProj plus three of the four field
+-- obligations were already proved in LF3/Setup.lean (spinProj_isHermitian, spinProj_idem,
+-- spinProj_complete).  Only ORTHOGONALITY was missing, and it falls out of pauliDot_sq:
+-- Pi^+ Pi^- = (1 - (sigma.a)^2)/4 = 0.  Matrix.toEuclideanCLM is a STAR-algebra equivalence, so each
+-- field transports by the structure map it corresponds to -- map_mul for idempotence and
+-- orthogonality, map_add/map_one for completeness, map_star for self-adjointness.
+-- ⚠️ INHABITATION ONLY.  This does not change what the bundle CONTRIBUTES: CL-008's trace found the
+-- singlet content of LF3_main_theorem rides entirely on ctx : MeasurementContext (conjuncts 1-6),
+-- while S enters only conjuncts 7-8, which are its own axioms echoed back (pointer_a_complete S is
+-- literally S.ptrA.complete).  The row's old load-bearing text "bundled singlet preparation
+-- hypotheses" misdescribed that and was corrected.
+/-- info: 'CSD.LF3.spinProj_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF3.spinProj_orthogonal
+
+/-- info: 'CSD.LF3.spinSystemApparatusSetup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF3.spinSystemApparatusSetup
+
 end CSD.Tests.AxiomAudit
