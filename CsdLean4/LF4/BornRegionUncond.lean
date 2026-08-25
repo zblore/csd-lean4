@@ -17,6 +17,11 @@ public import CsdLean4.LF4.POVMVolume
 Plain-language, CSD-role and formal statements of Naimark dilation, with
 this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/born-volume-ratio/
+The published entry states the Born-weight = FS-volume-ratio identity with the genericity
+hypothesis retired, so it anchors `fs_born_volume_ratio_N_uncond` here rather than the
+`hpos`-carrying form in `MomentBornN.lean`. Kept symmetric by `scripts/check-glossary.sh`.
+
 **Glossary:** https://glossary.constraintsurfacedynamics.com/typicality-volume/
 The published entry claims the genericity hypotheses are retired, so it anchors
 `born_frequency_convergence_N_uncond` here rather than the `hpos`-carrying form in

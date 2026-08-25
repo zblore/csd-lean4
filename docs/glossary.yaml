@@ -508,6 +508,7 @@ entries:
     related: [wigner-rigidity]
 
   - slug: bell-chsh
+    reviewed: 2026-08-25
     hook: >
       No pre-written answer sheet for all four measurement settings can match what a singlet
       does. Proved here as a theorem about every possible answer sheet.
@@ -544,9 +545,11 @@ entries:
       the theorem above.
     mathematical: >
       Over a single shared measurable state space, no jointly-defined assignment of outcomes
-      to the four CHSH settings reproduces the singlet correlations. Companion results: the
-      same over any shared probability space at every setting pair, and the GHZ analogue for
-      three parties.
+      to the four CHSH settings reproduces the singlet correlations. Companion results rule
+      out a DIFFERENT class rather than restating this one: no setting-local (product) pair
+      of response functions reproduces the singlet at every setting pair, over any shared
+      probability space. Neither result subsumes the other, and the corpus says so. The GHZ
+      analogue for three parties is proved separately.
 
       The shared-space form is the load-bearing one -- it is the shape the contextuality
       claim actually posits. The corpus pairs the obstruction with an explicit contextual
@@ -635,6 +638,7 @@ entries:
     related: [bell-chsh, tsirelson-bound]
 
   - slug: tsirelson-bound
+    reviewed: 2026-08-25
     hook: >
       Quantum mechanics breaks the classical correlation limit -- and then stops, well short
       of what logic allows. Why it stops there is a genuinely open question.
@@ -656,21 +660,27 @@ entries:
       A reconstruction has to get the ceiling right, not just the violation. Reproducing
       Bell violation with the wrong maximum would mean you had built a different theory that
       agrees qualitatively -- interesting, but not quantum mechanics. So the corpus proves
-      the bound universally: every bipartite state, every choice of settings, not just the
-      singlet at the textbook angles.
+      the bound over the whole two-qubit family: every unit state of a qubit pair and every
+      choice of spin settings, not just the singlet at the textbook angles.
 
       Saturation is proved separately -- there really are settings where the singlet hits
       2.83 exactly. Ceiling and attainment are two theorems, not one observation, and
       keeping them apart is what lets each be checked on its own.
     mathematical: >
-      For every unit bipartite state and all detector settings, the CHSH combination
-      satisfies absolute value at most 2 root 2. Delivered in the Khalfin-Tsirelson
-      algebraic form: an operator inequality about products of anticommuting involutions, no
-      state mentioned. The state-dependent bound follows by taking expectations.
+      For every unit two-qubit state and all detector settings, the CHSH combination of
+      Pauli correlations satisfies absolute value at most 2 root 2. The route is algebraic
+      but not operator-algebraic: the load-bearing lemma bounds
+      Re<alpha,beta> - Re<alpha,beta'> + Re<alpha',beta> + Re<alpha',beta'> for any four
+      unit VECTORS in a complex inner product space, by the parallelogram law and
+      Cauchy-Schwarz, and the quantum bound follows by the standard Tsirelson substitution
+      alpha = (sigma.a tensor I)psi, beta = (I tensor sigma.b)psi.
 
-      That ordering carries the content -- an algebraic bound constrains the entire theory
-      at once, where a state-by-state estimate would constrain examples. Saturation by the
-      singlet is exhibited explicitly and separately.
+      Be precise about the form, because it is easy to overstate: the operator-form
+      Loewner-order statement -- the inequality about products of anticommuting involutions
+      with no state mentioned -- is NOT what the corpus has. It was the original target and
+      is blocked upstream on a missing ordered-module instance for matrices, as the module
+      records. The vector form is general in its own right and yields the same expectation
+      bound. Saturation by the singlet is exhibited explicitly and separately.
     person: >
       Boris Tsirelson (1950-2020) was born in Leningrad and trained there under Ibragimov,
       mostly in probability -- Brownian motion, exotic noises, what he called black noise.
@@ -996,6 +1006,7 @@ entries:
     related: [born-weight, naimark-dilation]
 
   - slug: naimark-dilation
+    reviewed: 2026-08-25
     hook: >
       Every messy real-world measurement is a clean textbook measurement in a bigger room.
       That one fact is why the Born derivation covers actual experiments.
@@ -2749,6 +2760,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Stern%E2%80%93Gerlach_experiment
 
   - slug: contextuality
+    reviewed: 2026-08-25
     hook: >
       For some sets of quantum questions, no consistent answer sheet exists at all. CSD's
       response: stop demanding one answer per question, and say what the answer depends on.
@@ -2782,14 +2794,18 @@ entries:
       weaker.
     mathematical: >
       Over one shared measurable state space, no jointly-defined outcome assignment for the
-      four CHSH settings reproduces the singlet correlations; likewise over any shared
-      probability space at every setting pair, and for GHZ.
+      four CHSH settings reproduces the singlet correlations. A separate result rules out a
+      different class: no setting-local (product) pair of response functions reproduces the
+      singlet at every setting pair. The corpus keeps these apart deliberately -- neither
+      subsumes the other -- and proves the GHZ analogue for three parties.
 
-      One conflation to avoid, flagged in the corpus itself: its fibre analysis --
-      contextual content must leave the projective base for N of three and above -- is NOT a
+      One conflation to avoid, flagged in the corpus itself: its fibre analysis is NOT a
       Kochen-Specker or Gleason consequence. Those constrain non-contextual assignments,
-      which this account never makes. The fibre obstruction comes from covariance plus non-
-      negativity, a different argument with a different shape.
+      which this account never makes. The fibre argument comes from covariance plus
+      non-negativity, a different argument with a different shape -- and, unlike the Bell
+      obstructions above, it is a constraint chain rather than a no-go: whether contextual
+      content can stay on the projective base at N of three and above is open in both
+      directions, not settled.
     term: Contextuality
     status: proved-in-corpus
     source: curated
@@ -2801,6 +2817,7 @@ entries:
         url: https://plato.stanford.edu/entries/kochen-specker/
 
   - slug: hidden-variables
+    reviewed: 2026-08-25
     hook: >
       The no-go theorems do not kill hidden variables. They price them. CSD reads the price
       tag and pays.
@@ -2952,6 +2969,7 @@ entries:
         url: https://plato.stanford.edu/entries/qm-collapse/
 
   - slug: typicality
+    reviewed: 2026-08-25
     hook: >
       Probability without randomness: the world is deterministic, you do not know which
       state you have, and the odds are the sizes of the possibilities.
@@ -4399,6 +4417,7 @@ entries:
     related: [typicality, typicality-volume, preparation-region, constraint-surface]
 
   - slug: born-volume-ratio
+    reviewed: 2026-08-25
     hook: >
       At every finite dimension, the Born weight equals a Fubini-Study volume ratio
       -- unconditionally, for every coordinate, with the last genericity hypothesis
@@ -4438,11 +4457,12 @@ entries:
     status: proved-in-corpus
     source: curated
     lean:
-      module: CsdLean4/LF4/MomentBornN.lean
-      theorem: fs_born_volume_ratio_N
+      module: CsdLean4/LF4/BornRegionUncond.lean
+      theorem: fs_born_volume_ratio_N_uncond
     related: [born-weight, fubini-study-measure, moment-map, duistermaat-heckman, typicality-volume]
 
   - slug: measurement-flow
+    reviewed: 2026-08-25
     hook: >
       A deterministic, volume-preserving flow that carries out a measurement -- and
       whose pointer-block volumes are the Born weights, for every preparation.
@@ -4488,6 +4508,7 @@ entries:
     related: [de-isolation, pointer-basis, naimark-dilation, born-weight]
 
   - slug: singlet-contextual-model
+    reviewed: 2026-08-25
     hook: >
       Both halves of the Bell story, proved in one theorem: an explicit contextual
       model reproduces the singlet's statistics in full, and no context-independent
@@ -4521,8 +4542,11 @@ entries:
     mathematical: >
       c1_singlet_contextual_capstone: a measurable shared-context family
       reproduces the full singlet table (marginals one-half, correlations minus
-      the dot product) at every CHSH context, and no global assignment is
-      compatible with it. Supporting theorems prove the model's remote marginal
+      the dot product) at every context, and no global assignment is compatible
+      with it. Scope, carried over from the obstruction and stated in the
+      theorem's own docstring: the table half holds at every context, but the
+      incompatibility half constrains only the four CHSH settings, and this
+      capstone does not subsume the separate product-partition result. Supporting theorems prove the model's remote marginal
       invariance -- measurement independence named as a premise, not smuggled --
       and its non-product character. The general obstruction is retained as a
       separate ledger row; the two are designed to be read together.
@@ -4535,6 +4559,7 @@ entries:
     related: [bell-chsh, contextuality, hidden-variables, no-signalling, gisin-theorem]
 
   - slug: no-signalling
+    reviewed: 2026-08-25
     hook: >
       Whatever happens to the far wing, the near wing's statistics do not move --
       proved exactly, for every state, entangled ones included.
