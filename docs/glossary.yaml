@@ -107,6 +107,7 @@ refs:
 
 entries:
   - slug: fubini-study-measure
+    reviewed: 2026-08-25
     hook: >
       There is exactly one fair way to measure the space of quantum states. The Born rule is
       what that ruler reports.
@@ -142,9 +143,12 @@ entries:
       same answer is worth more than either alone.
     mathematical: >
       CP^(N-1) is the compact homogeneous space U(N)/(U(1) x U(N-1)). The Fubini-Study
-      measure is the unique U(N)-invariant Borel probability measure on it -- equivalently
-      the normalised Riemannian volume of the Fubini-Study metric, or the top power of the
-      Kahler form over n factorial.
+      measure is the unique U(N)-invariant Borel probability measure on it -- equivalently,
+      as standard mathematics, the normalised Riemannian volume of the Fubini-Study metric,
+      or the top power of the Kahler form over n factorial. Those last two are cited as
+      background, not as corpus results: the manifold-level top-power identity is NOT
+      formalised here and is recorded as blocked, so the invariance characterisation is the
+      one that carries the weight. See the Kahler form entry, which states that residual.
 
       The proof is Haar uniqueness carried downstairs. The unitary group has a unique
       invariant probability measure by compactness; the state space is a quotient of the
@@ -259,6 +263,7 @@ entries:
     related: [fubini-study-measure, duistermaat-heckman, gleason-theorem]
 
   - slug: duistermaat-heckman
+    reviewed: 2026-08-25
     hook: >
       Project the curved space of quantum states down to its outcome probabilities and the
       curvature vanishes. Exactly. That accident is why the Born rule is computable.
@@ -386,6 +391,7 @@ entries:
     related: [born-weight, fubini-study-measure]
 
   - slug: wigner-rigidity
+    reviewed: 2026-08-25
     hook: >
       Preserve the overlaps between quantum states and you have no freedom left. You are a
       unitary or an anti-unitary, whether you meant to be or not.
@@ -451,6 +457,7 @@ entries:
     related: [fubini-study-measure, stone-theorem]
 
   - slug: stone-theorem
+    reviewed: 2026-08-25
     hook: >
       Ask only that time evolution not jump, and you get differentiability, a generator, and
       the Hamiltonian -- free.
@@ -824,6 +831,7 @@ entries:
     related: [landauer-principle]
 
   - slug: liouville-measure
+    reviewed: 2026-08-25
     hook: >
       A deterministic substrate needs a notion of volume its own motion cannot distort. On
       CSD's sector, that volume is forced -- and it is the Born measure.
@@ -881,6 +889,7 @@ entries:
     related: [fubini-study-measure, kahler-form, born-weight]
 
   - slug: kahler-form
+    reviewed: 2026-08-25
     hook: >
       Distance, area, and a quarter-turn from the complex numbers all lock together on the
       space of states. That lock is what makes its volume nobody's choice.
@@ -1064,6 +1073,7 @@ entries:
     related: [born-weight, luders-rule]
 
   - slug: no-exact-finite-ccr
+    reviewed: 2026-08-25
     hook: >
       In any finite world, the founding equation of quantum mechanics cannot hold exactly.
       One line of arithmetic says so -- and CSD says precisely where it gives.
@@ -1245,7 +1255,7 @@ entries:
       The corpus computes on the sphere wherever qubits appear -- Bell settings, the singlet
       correlations, the qubit Born rule -- and flags the accident explicitly rather than
       trading on it. At two levels the projective space IS a sphere, so structure that in
-      general must live in a fibre above the state space can sit on the space itself, and
+      general is placed in a fibre above the state space can sit on the space itself, and
       nothing warns you this is happening.
 
       The programme's fibre analysis makes the warning concrete: contextual content can
@@ -1356,8 +1366,9 @@ entries:
       The corpus carries it so the contextuality results do not lean on two-level systems,
       which are special in ways that keep surprising people. And there is a structural echo
       worth noticing: three outcomes is precisely where the corpus's own fibre analysis
-      finds that contextual content can no longer live on the projective base and must move
-      to the fibre above it. The dimension where this inequality becomes necessary is the
+      finds the natural base-only constructions stop working, which is why it places
+      contextual content in the fibre above the base -- a judgement against a tight
+      constraint chain, not a proved dichotomy. The dimension where this inequality becomes necessary is the
       dimension where the programme's geometry changes character. That is either a
       coincidence or a hint, and the honest label for now is coincidence.
     mathematical: >
@@ -3023,6 +3034,7 @@ entries:
         url: https://arxiv.org/abs/1110.1349
 
   - slug: psi-epistemic
+    reviewed: 2026-08-25
     hook: >
       The quantum state is what you know, not what exists. The hard part was always saying
       what it is knowledge OF -- and CSD's whole architecture is an answer to that.
@@ -3048,9 +3060,11 @@ entries:
       Everything in the programme sorts into two levels, and keeping them apart is the
       discipline the whole account depends on. Epistemic: the projective state space, the
       outcome regions, the probabilities. Ontic: the substrate and the measure that weights
-      it. The corpus's fibre analysis sharpened the split late in the day: the projective
-      space turns out to be a lossy projection, with the record-forming content living above
-      it, not on it.
+      it. The corpus's fibre analysis sharpened the split late in the day: it treats the
+      projective space as a lossy projection, with the record-forming content placed in the
+      fibre above it rather than on it. That placement is a judgement against a tight
+      constraint chain, not a proved dichotomy -- whether the content could stay on the base
+      at N of three and above is open in both directions.
 
       The reading's load-bearing sentence is now a theorem. Preparations whose regions
       overlap have conditional laws that provably cannot be separated onto disjoint
@@ -3060,7 +3074,9 @@ entries:
     mathematical: >
       The overlap statement is proved: conditional_not_mutuallySingular -- overlapping
       preparation regions give non-mutually-singular conditional laws, by a density
-      argument, since two measures can share support and still be separable -- with the
+      argument rather than a shared-support one, because two measures can both charge a
+      common set and still be mutually singular, so overlap alone would not settle it --
+      with the
       concrete witness kahler_preparations_overlap instantiating it on open
       neighbourhoods of any two rays of the working arena. The complementary facts are
       proved too: conditioning on an exact pure state is an unreachable idealisation
@@ -3146,12 +3162,14 @@ entries:
       accommodation needed. What the corpus is genuinely careful about is a tempting
       misattribution nearby.
 
-      The programme's fibre analysis found that at three levels and above, contextual
-      content cannot live on the projective base and must move to the fibre above it. It
+      The programme's fibre analysis found that at three levels and above the natural
+      base-only constructions stop working, which is why it places contextual content in the
+      fibre above the base -- a judgement against a constraint chain, with the base-only
+      question open in both directions. It
       would be natural -- and wrong -- to cite Kochen-Specker for that. KS constrains NON-
       contextual value assignments, and CSD never makes one, so the theorem simply does not
-      engage. The fibre obstruction comes from covariance plus non-negativity: a different
-      argument, a different shape. The corpus flags the distinction precisely because
+      engage. The fibre argument comes from covariance plus non-negativity: a different
+      argument, a different shape, and a constraint chain rather than a no-go. The corpus flags the distinction precisely because
       borrowing this theorem's authority would be such an easy overclaim.
     mathematical: >
       In dimension three and above, no non-contextual assignment of definite values to all
@@ -3528,6 +3546,7 @@ entries:
     related: [constraint-surface, projective-sector, many-to-one-projection]
 
   - slug: projective-sector
+    reviewed: 2026-08-25
     hook: >
       Quantum mechanics is written on a curved projective space. Here that space is not
       fundamental -- it is the sector the arena projects onto, with its geometry forced
@@ -3958,10 +3977,13 @@ entries:
     mathematical: >
       The arena is CP^(N-1) x T^2 with the flat torus fibre carrying normalised Haar
       measure. Basins are preimages of arcs under the first fibre coordinate, with the
-      arc endpoints set by the context's rate field. The N >= 3 obstruction is not a
+      arc endpoints set by the context's rate field. The N >= 3 argument is not a
       Gleason-type theorem -- CSD's partitions are contextual, so Gleason and
-      Kochen-Specker do not apply -- but an explicit analysis showing covariance plus
-      nonnegativity leave no room for a base-only radial density.
+      Kochen-Specker do not apply -- but a chain of machine-checked necessary conditions on
+      a base-only radial density: disjoint supports, and vanishing below a threshold rising
+      with dimension. It leaves very little room and stops short of closing it. Two inputs
+      are undischarged and the terminal step needs machinery Mathlib does not have, so the
+      base-only route is open in both directions and parked as such.
     reviewed: 2026-08-25
     term: Fibre
     status: definition
@@ -4675,9 +4697,10 @@ entries:
     in_csd: >
       The bound is load-bearing, not decorative: it is the mechanism behind the
       programme's locality story on the field arena. The record-layer bridge
-      runs it through the arena: a record cell in the fibre cannot be steered
-      from outside the cone, which is what makes records stable against distant
-      meddling by theorem rather than hope.
+      runs it through the arena: a record cell in the fibre can be steered from
+      outside the cone by no more than a bound that collapses factorially with
+      distance, which is what makes records stable against distant meddling by
+      theorem rather than hope.
 
       The scope is honest: velocity bounded, not optimal; a finite mode graph,
       not a continuum; and the identification of this dynamical cone with the
@@ -5286,6 +5309,7 @@ entries:
     related: [shor-algorithm, pauli-matrices, quantum-channel]
 
   - slug: robertson-uncertainty
+    reviewed: 2026-08-25
     hook: >
       The uncertainty principle, with its ontic half computed: the variances in
       Robertson's inequality are honest integrals over the arena, not just
@@ -5670,15 +5694,15 @@ entries:
       One clarification the fibre analysis added: the base-only failure at
       dimension three and above is NOT a Kochen-Specker corollary -- CSD's
       partitions being contextual, the classical no-gos do not apply to them
-      -- it is a separate covariance-and-positivity obstruction, proved on
+      -- it is a separate covariance-and-positivity constraint, argued on
       its own.
     mathematical: >
       The contextuality tier: the global-assignment obstruction in the C1
       chain; the Mermin-Peres square's contextuality witness; the
       context-indexed outcome map machinery with its definitional separation
-      -- no Fine-theorem shortcut assumed; and the N >= 3 fibre-forcing
+      -- no Fine-theorem shortcut assumed; and the N >= 3 fibre-placement
       analysis, explicitly distinguished from Gleason and Kochen-Specker in
-      the source.
+      the source, and short of a no-go in its own right.
     term: Does the Kochen-Specker theorem rule out CSD?
     status: definition
     source: curated
@@ -5761,8 +5785,9 @@ entries:
 
       The programme's discipline is to refuse the shorter slogans in both
       directions: "the wavefunction is everything" overclaims what the sector
-      carries -- the fibre analysis proves record-forming content cannot live
-      there at higher dimension -- and "the wavefunction is nothing" ignores
+      carries -- the fibre analysis places record-forming content above it at
+      higher dimension, on a constraint chain that stops short of proving the
+      base cannot carry it -- and "the wavefunction is nothing" ignores
       that it is a faithful coordinate of the real arena.
     mathematical: >
       The formal content is the projection structure: a measurable many-to-one
