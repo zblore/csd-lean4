@@ -39,7 +39,8 @@ exactly at that unspoken seam; this module is the seam, spoken.
   exactly `1` (`kahlerFstSector_projectiveLaw`), and every region preparation's
   projective law has a density against THE Fubini–Study measure.
 * `openBasePreparation` + ★★ `kahler_preparations_overlap` (Q28 item 4b) — the
-  ψ-epistemic witness: preparations localised on overlapping projective opens
+  **finite-resolution preparation-overlap** witness: preparations localised on overlapping
+  projective opens
   — each an open neighbourhood of its own ray — have conditional measures that
   are NOT mutually singular (`Preparation.conditional_not_mutuallySingular`,
   the item-4a density argument).
@@ -167,10 +168,18 @@ theorem kahler_preparation_density (p₀ : CSD.LF4.CPN N) [NeZero N]
     (kahlerFstSector D).projectivePreparationLaw_withDensity P
       (kahlerFstSector_projectiveLaw p₀ D hmuL)⟩
 
-/-- ★ **Single fibres are Liouville-null** (via Q28 item 1's atomlessness):
-conditioning on an exact pure state conditions on a `kMuL`-null set, so the
-Dirac-wrapper pure-state preparation is unreachable as a physical (region)
-preparation. The physical story is the region one, with its density ρ_ep. -/
+/-- ★ **Single fibres are Liouville-null** (via Q28 item 1's atomlessness).
+
+Single projective fibres are `kMuL`-null, so an exact fibre-supported sharp preparation
+cannot be obtained by conditioning `kMuL` on a positive-volume region. Singular exact
+preparations remain a **separate admissible preparation interface** — see
+`RecordLayer.no_region_preparation_exact_fibre` for this stated as the disjointness of the
+two classes, and `RecordLayer.sharp_preparations_mutuallySingular` for that interface's
+Harrigan–Spekkens classification.
+
+⚠️ **Commentary corrected 2026-08-25.** This read "the physical story is the region one",
+which wrongly implied exact sharp measures are illegitimate. They are not; they are
+singular rather than absolutely continuous, which is a different thing. -/
 theorem kMuL_fibre_null (hN : 2 ≤ N) (p₀ q : CSD.LF4.CPN N) :
     CSD.LF4.kMuL p₀ (Prod.fst ⁻¹' {q}) = 0 := by
   have : NeZero N := ⟨by omega⟩
@@ -196,12 +205,18 @@ noncomputable def openBasePreparation (p₀ : CSD.LF4.CPN N) [NeZero N]
     rw [← Set.prod_univ, Measure.prod_prod, measure_univ, mul_one]
     exact CSD.LF4.fubiniStudyMeasure_pos_of_isOpen p₀ hV hne
 
-/-- ★★ **The ψ-epistemic overlap witness** (Q28 item 4b): two preparations,
-each localised on an open neighbourhood of its own ray, with overlapping
-neighbourhoods, have conditional measures that are NOT mutually singular. For
-distinct rays `x ≠ y` this is the statement that distinct quantum states can
-be knowledge about overlapping ontic situations — at the level of physical,
-region-based preparations. -/
+/-- ★★ **The finite-resolution preparation-overlap witness** (Q28 item 4b): two
+preparations, each localised on an open neighbourhood of its own ray, with overlapping
+neighbourhoods, have conditional measures that are NOT mutually singular. For distinct
+rays `x ≠ y` this is the statement that distinct quantum states can be knowledge about
+overlapping ontic situations — **at the level of finite-resolution, region-based
+preparations**.
+
+⚠️ **Scope corrected 2026-08-25.** This was labelled "the ψ-epistemic overlap witness".
+Region-preparation overlap does NOT establish Harrigan–Spekkens ψ-epistemicity of exact
+pure states: that classification is about the exact sharp interface, where the corpus
+proves ψ-**onticity** (`RecordLayer.sharp_preparations_mutuallySingular`). Two different
+preparation classes, two different claims, both true. -/
 theorem kahler_preparations_overlap (p₀ : CSD.LF4.CPN N) [NeZero N]
     {x y : CSD.LF4.CPN N} {Ux Uy : Set (CSD.LF4.CPN N)}
     (hUx : IsOpen Ux) (hUy : IsOpen Uy) (hx : x ∈ Ux) (hy : y ∈ Uy)

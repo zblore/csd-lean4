@@ -1,5 +1,36 @@
 # C2 support: the entangled-positive-measure arc — scoping note
 
+> ## ⚠️ SUPERSEDED INTERPRETATION — read before using anything below (2026-08-25)
+>
+> **The mathematics in this plan is valid and landed. Its PBR interpretation is withdrawn.**
+> Nothing here is deleted: the Q28 theorems are correct, useful, and still cited. What is
+> retracted is what they were said to *mean*.
+>
+> 1. **WITHDRAWN — the route from non-factorising composite geometry to failure of PBR
+>    preparation independence.** §"What C2 needs" below argues that a PBR-style product law
+>    must be supported on the Segre image, so positive entangled measure near a product ray
+>    yields "the C2 contradiction". That inference does not hold. The Segre results are
+>    composite-**geometry** results; global non-factorisation of the composite ontology does
+>    **not** establish that preparation independence fails. **Do not cite that reasoning.**
+> 2. **WITHDRAWN — region-preparation overlap as Harrigan–Spekkens ψ-epistemicity of exact
+>    states.** Item 4's overlap theorems concern positive-volume *region* preparations. They
+>    say nothing about the exact pure-state interface, and the doc-currency rider under Item
+>    4b (glossary pages citing 4a for the ψ-epistemic reading) is superseded accordingly.
+> 3. **RETAINED — all Q28 mathematics.** `segre_*`, `compositeFubiniStudy_*`,
+>    `ae_not_mem_range_segre`, `conditional_not_mutuallySingular`,
+>    `kahler_preparations_overlap`, `kMuL_fibre_null`, the ρ_ep density chain: all stand.
+> 4. **HOW C2 USES THEM NOW.** They distinguish two preparation *classes*: finite-resolution
+>    region preparations (absolutely continuous, may overlap) from singular exact sharp
+>    preparations (Dirac projective law, mutually singular). `kMuL_fibre_null` is the hinge —
+>    an exact fibre is null, so it is not a region preparation.
+> 5. **THE CORRECTED CAPSTONE IS `CsdLean4/RecordLayer/PBRPreparation.lean`.** For the
+>    canonical exact sharp interface CSD is ψ-**ONTIC**: distinct exact pure states have
+>    mutually singular ontic measures (`sharp_preparations_mutuallySingular`,
+>    `epistemicMeasure_mutuallySingular`). CSD **satisfies** the PBR disjointness conclusion;
+>    it does not evade it, and PBR is not "inapplicable".
+> 6. **PREPARATION INDEPENDENCE IS NEITHER PROVED NOR DISPROVED**, here or anywhere in the
+>    corpus. It is a compositional assumption and remains open. No theorem claims either way.
+
 **EXECUTED 2026-08-21, same day as the scoping — items 1–4 all landed** (see
 the BACKLOG Q28 row for the full landing record and snag ledger). ~~item 5 stays
 research-gated as scoped~~ **ITEM 5 LANDED 2026-08-22** via the MG-2 arc
@@ -60,12 +91,17 @@ a separate Mathlib-gap item (it would also serve Item 5 and the quantified
 
 ## What C2 needs (and the one selected form)
 
-One fact: near a product ray, the CSD preparation weight charges rays outside
+⚠️ **THIS SECTION'S INFERENCE IS SUPERSEDED (2026-08-25) — see the banner at the top.**
+Retained as the historical record of what was attempted, not as a live claim.
+
+~~One fact: near a product ray, the CSD preparation weight charges rays outside
 the Segre image. A PBR-style product law is supported on the Segre image, so it
 gives that set measure zero; the two measures differ, and no reshuffling repairs
-a discrepancy on a coordinate-free set. The **positive form** (every
-neighbourhood of a product ray meets the complement in positive μ_FS measure)
-is enough; the **null form** (Segre image is μ_FS-null) is Item 5, later.
+a discrepancy on a coordinate-free set.~~ **The step from "the composite ontology does not
+factorise through the Segre image" to "PBR preparation independence fails" is invalid and is
+withdrawn.** The geometry is right; the PBR conclusion drawn from it was not. The **positive
+form** (every neighbourhood of a product ray meets the complement in positive μ_FS measure)
+and the **null form** (Item 5) both stand as geometry.
 
 ## Item 2 — entangled rays have positive measure near every product ray
 **C2-BLOCKING. Do first. Home: `RecordLayer/OnticComposite.lean`, extending in
@@ -129,12 +165,13 @@ place per §8.3b (the scope caveat is superseded at source when 2c lands).**
   quantified "any two states closer than 2ε with ε-balls" form NEEDS the
   Fubini–Study metric (Mathlib gap, recorded below); the existence form is
   the ψ-epistemic content and is metric-free. Size S–M.
-* **Doc-currency rider:** when 4a lands, the glossary's `psi-epistemic` and
-  `does-csd-conflict-with-pbr` pages should cite it — the pages currently
-  carry the disjoint-support story of the idealised `δ_p ⊗ Haar` states; 4a
-  is the overlapping-support story of PHYSICAL (region) preparations. Both
-  are true of different objects; after 4a the pages can and should say both,
-  with the theorem name.
+* **Doc-currency rider — SUPERSEDED 2026-08-25.** ~~when 4a lands, the glossary's
+  `psi-epistemic` and `does-csd-conflict-with-pbr` pages should cite it~~ 4a is the
+  **finite-resolution** overlap story and must NOT be cited as the ψ-epistemic
+  classification of exact states. The glossary now anchors the exact-state classification to
+  `RecordLayer/PBRPreparation.lean` (ψ-ontic) and keeps `PreparationDensity.lean` as the
+  anchor for finite-resolution overlap. Both are true of different objects — which was the
+  rider's correct instinct; the error was calling 4a the ψ-epistemic one.
 
 ## Item 3 — the preparation pushforward has a projective density (ρ_ep)
 **Home: `SigmaLayer/ProjectiveSector.lean` or a small

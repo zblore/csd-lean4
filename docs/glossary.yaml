@@ -3074,11 +3074,19 @@ entries:
       constraint chain, not a proved dichotomy -- whether the content could stay on the base
       at N of three and above is open in both directions.
 
-      The reading's load-bearing sentence is now a theorem. Preparations whose regions
-      overlap have conditional laws that provably cannot be separated onto disjoint
-      supports -- distinct states of knowledge about overlapping ontic situations, which
-      is what psi-epistemic asserts at the level of preparations a laboratory can
-      actually make.
+      Keep three claims apart, because the corpus once ran them together. (A) CSD
+      epistemicity: [psi] does not completely specify the microstate -- the projection is
+      many-to-one. That is this entry's subject. (B) The technical Harrigan-Spekkens
+      classification: on the canonical EXACT sharp interface CSD is psi-ONTIC, because
+      distinct exact pure states have mutually singular ontic measures
+      (RecordLayer.sharp_preparations_mutuallySingular). (C) Finite-resolution overlap:
+      positive-volume REGION preparations whose regions overlap have conditional laws that
+      provably cannot be separated onto disjoint supports.
+
+      (C) is the theorem anchored here. ⚠️ It does NOT establish (B) in the epistemic
+      direction: region preparations are a different preparation class from exact pure
+      states, and describing (C) as technical psi-epistemicity of exact states was an error,
+      corrected 2026-08-25. (A) and (C) are true; on (B) the exact interface is psi-ontic.
     mathematical: >
       The overlap statement is proved: conditional_not_mutuallySingular -- overlapping
       preparation regions give non-mutually-singular conditional laws, by a density
@@ -5494,9 +5502,9 @@ entries:
   - slug: does-csd-conflict-with-pbr
     kind: question
     hook: >
-      No -- and the reason is precise: PBR rules out epistemic states whose ontic
-      supports overlap, and CSD's epistemic states have disjoint supports by
-      construction.
+      No. On the canonical exact sharp interface CSD satisfies the PBR disjointness
+      conclusion -- distinct exact pure states have mutually singular ontic measures,
+      and that is now a theorem rather than a definition.
     layman: >
       The Pusey-Barrett-Rudolph theorem is often summarised as "the quantum state
       is real", which makes any programme calling the state epistemic sound
@@ -5510,51 +5518,67 @@ entries:
       predictions. It says nothing against models where distinct states describe
       disjoint sets of world-states.
 
-      CSD is in the second camp. Two distinct pure preparations correspond to
-      disjoint regions of the arena -- different base points, different fibres,
-      no overlap anywhere. The state functions epistemically -- it summarises
-      what a preparation pins down -- but the underlying supports never overlap,
-      so the PBR premises are simply not met.
+      CSD is in the second camp, and the corpus proves it rather than arranging
+      it. Two distinct exact pure preparations correspond to ontic measures with
+      no overlap at all. So CSD does not evade PBR and PBR is not inapplicable to
+      it: CSD lands on the side of the disjointness conclusion that PBR argues
+      for. The state still functions epistemically -- it summarises what a
+      preparation pins down, and it does not determine the microstate -- but that
+      is a different sense of the word, which is the distinction the whole
+      question turns on.
     in_csd: >
-      In the Harrigan-Spekkens classification that PBR is stated in, CSD's
-      working model is psi-ontic: the ontic state determines the quantum state
-      (read the base coordinate off the arena point). What the programme means
-      by calling the state epistemic is its functional role -- a compressed
-      description of preparation knowledge whose update on measurement is
-      learning, not physics. Those are two different uses of the word, and
-      collapsing them is the category error behind "PBR rules this out".
+      Three claims have to be kept apart here, and running them together is what
+      generated the old answer to this question.
 
-      Since 2026-08-21 the story has its second half as theorems. Conditioning
-      on an EXACT pure state is an unreachable idealisation -- single fibres of
-      the projection are Liouville-null -- so the preparations a laboratory can
-      make are regions. And region preparations around distinct states provably
-      DO overlap: their conditional laws cannot be separated onto disjoint
-      supports. That overlap lives outside PBR's premises too, because a region
-      preparation projects to a mixed density, not a pure state -- and PBR is a
-      theorem about pure-state preparations.
+      First, CSD epistemicity: the projective state is a many-to-one, incomplete
+      coordinate on the arena. Second, the Harrigan-Spekkens classification that
+      PBR is stated in: an interface is psi-ontic when distinct exact pure-state
+      preparations have mutually singular ontic measures. On that classification
+      CSD's exact sharp interface is psi-ONTIC, and since 2026-08-25 that is a
+      machine-checked theorem -- sharp_preparations_mutuallySingular, with the
+      concrete witness epistemicMeasure_mutuallySingular. Third, finite-resolution
+      overlap: positive-volume REGION preparations around distinct states provably
+      do overlap. All three are true, of different objects.
 
-      The honest boundary, kept honestly: the full mapping of PBR's boundary
-      onto the programme is not formalised, and the psi-epistemic entry marks
-      that terrain as live rather than settled. What is machine-checked is the
-      structural pair the question turns on: disjoint supports for the
-      idealised states, proved overlap for the physical preparations.
+      What changed. This entry previously said the disjointness held "by
+      construction" and that "the PBR premises are simply not met", and it offered
+      region-preparation overlap as a second way CSD sits outside PBR. Both
+      framings are withdrawn. Disjointness is a theorem, not a construction; and
+      region overlap concerns a different preparation class, so it neither
+      establishes nor softens the exact-state classification.
+
+      The honest boundary. PBR also assumes preparation independence, a
+      compositional premise about systems prepared side by side. The corpus
+      neither proves nor refutes it, and -- this matters -- global
+      non-factorisation of the composite ontology does NOT settle it. Reading the
+      Segre-layer geometry as a PBR contradiction was a superseded interpretation,
+      recorded as such in specs/c2-support-plan.md.
     mathematical: >
-      The idealised half is definitional: the epistemic measure at an exact
-      preparation p is the Dirac mass at p on the base times Haar on the fibre,
-      and for distinct p the supports are disjoint -- the overlap PBR needs is
-      absent by construction.
+      The exact half is now proved, not definitional. epistemicMeasure_projectiveLaw:
+      the exact sharp preparation delta_p (x) Haar has projective pushforward exactly
+      delta_p, so the corpus's own witness demonstrably meets the classification's
+      hypothesis. sharp_preparations_mutuallySingular: ANY two ontic measures whose
+      projective laws are Diracs at distinct points are mutually singular -- no
+      Preparation structure, no region, no finiteness assumed. epistemicMeasure_
+      mutuallySingular is the concrete corollary, routed through the general theorem.
+      pbr_sharp_preparation_capstone bundles both for citation.
 
-      The physical half is proved: kMuL_fibre_null (exact pure-state
-      conditioning conditions on a null set, so the Dirac wrapper is
-      unreachable as a physical preparation); conditional_not_mutuallySingular
-      and its witness kahler_preparations_overlap (region preparations on
-      overlapping neighbourhoods of any two rays have non-separable conditional
-      laws); and the rho_ep theorems (a region preparation's projective law is
-      a density against the Fubini-Study measure -- a mixed state, outside
-      PBR's pure-state premises).
+      The finite-resolution half is also proved, about different objects:
+      kMuL_fibre_null (a single exact projective fibre is Liouville-null, so an exact
+      sharp preparation is not obtainable by conditioning on a positive-volume region --
+      stated as class-disjointness in no_region_preparation_exact_fibre);
+      conditional_not_mutuallySingular and kahler_preparations_overlap (region
+      preparations on overlapping neighbourhoods have non-separable conditional laws);
+      and the rho_ep density theorems.
+
+      Not proved, either way: PBR preparation independence.
     term: Does the PBR theorem rule out CSD?
     status: definition
     source: curated
+    reviewed: 2026-08-25
+    lean:
+      module: CsdLean4/RecordLayer/PBRPreparation.lean
+      theorem: pbr_sharp_preparation_capstone
     external:
       - text: "Pusey, Barrett and Rudolph, On the reality of the quantum state, Nature Physics 2012"
         url: https://doi.org/10.1038/nphys2309

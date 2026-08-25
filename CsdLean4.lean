@@ -19,6 +19,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
+public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
 public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 public import CsdLean4.Mathlib.Probability.CGLMP
 public import CsdLean4.Mathlib.Probability.CompetingExponentials
@@ -473,6 +474,7 @@ public import CsdLean4.CV.EntangledWeights
 public import CsdLean4.RecordLayer.EntangledMeasure
 public import CsdLean4.SigmaLayer.PreparationDensity
 public import CsdLean4.RecordLayer.EpistemicDisintegration
+public import CsdLean4.RecordLayer.PBRPreparation
 public import CsdLean4.Mathlib.Analysis.NormedSpace.TrotterGeneral
 public import CsdLean4.LF6.LindbladPositivity
 public import CsdLean4.RecordLayer.KSigmaRecord

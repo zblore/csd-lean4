@@ -18,7 +18,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Bohmian mechanics](https://glossary.constraintsurfacedynamics.com/bohmian-mechanics/) | `` | definition |
 | [Borel set](https://glossary.constraintsurfacedynamics.com/borel-set/) | `` | standard-mathematics |
 | [Born rule](https://glossary.constraintsurfacedynamics.com/born-weight/) | `fs_born_volume_ratio_N` | proved-in-corpus |
-| [Born volume ratio](https://glossary.constraintsurfacedynamics.com/born-volume-ratio/) | `fs_born_volume_ratio_N` | proved-in-corpus |
+| [Born volume ratio](https://glossary.constraintsurfacedynamics.com/born-volume-ratio/) | `fs_born_volume_ratio_N_uncond` | proved-in-corpus |
 | [Canonical typicality](https://glossary.constraintsurfacedynamics.com/canonical-typicality/) | `canonical_typicality_expectation` | proved-in-corpus |
 | [Carving](https://glossary.constraintsurfacedynamics.com/carving/) | `` | definition |
 | [CGLMP inequality](https://glossary.constraintsurfacedynamics.com/cglmp-inequality/) | `` | standard-mathematics |
@@ -34,7 +34,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Does CSD make new predictions?](https://glossary.constraintsurfacedynamics.com/does-csd-make-new-predictions/) | `` | question |
 | [Does CSD violate Bell's theorem?](https://glossary.constraintsurfacedynamics.com/does-csd-violate-bell/) | `` | question |
 | [Does the Kochen-Specker theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-kochen-specker-rule-out-csd/) | `` | question |
-| [Does the PBR theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-csd-conflict-with-pbr/) | `` | question |
+| [Does the PBR theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-csd-conflict-with-pbr/) | `pbr_sharp_preparation_capstone` | question |
 | [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
 | [Elitzur-Vaidman bomb tester](https://glossary.constraintsurfacedynamics.com/elitzur-vaidman/) | `` | standard-mathematics |
 | [Entropy subadditivity](https://glossary.constraintsurfacedynamics.com/entropy-subadditivity/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
@@ -117,7 +117,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
 | [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
 | [Typicality](https://glossary.constraintsurfacedynamics.com/typicality/) | `freq_tendsto_of_iid` | proved-in-corpus |
-| [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N` | proved-in-corpus |
+| [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N_uncond` | proved-in-corpus |
 | [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
 | [What exactly is machine-checked in CSD?](https://glossary.constraintsurfacedynamics.com/what-is-machine-checked/) | `` | question |
 | [What happens during a measurement in CSD?](https://glossary.constraintsurfacedynamics.com/what-happens-during-measurement/) | `` | question |

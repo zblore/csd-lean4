@@ -16,8 +16,11 @@ public import CsdLean4.LF1.Preparation
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/psi-epistemic/
 Plain-language, CSD-role and formal statements of the ψ-epistemic reading, with
-this module — `conditional_not_mutuallySingular`, the overlap theorem — as its
-Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+this module — `conditional_not_mutuallySingular` — as the Lean anchor for
+**finite-resolution preparation overlap**. ⚠️ The Harrigan–Spekkens classification
+of the EXACT sharp interface is a different claim and is anchored elsewhere
+(`RecordLayer/PBRPreparation.lean`, where it comes out ψ-**ontic**). Kept
+symmetric by `scripts/check-glossary.sh`.
 
 A `Preparation` restricts the ontic state to a measurable region of nonzero Liouville measure. The LF1
 adapter (`Preparation.toOnticSetup`) turns a preparation plus a time into an existing `LF1.OnticSetup`,
@@ -90,10 +93,18 @@ theorem measure_inter_region_eq_zero_of_conditionalMeasure_eq_zero
   · exact h0
   · exact absurd htop (measure_ne_top _ _)
 
-/-- ★★ **Overlapping preparations are not mutually singular** (Q28 item 4 —
-the formal content of "CSD is ψ-epistemic" at the level of physical, region-based
-preparations). If two preparation regions share Liouville-positive overlap, their
-normalised conditional measures cannot be separated onto disjoint supports.
+/-- ★★ **Finite-resolution preparation overlap** (Q28 item 4). If two preparation
+regions share Liouville-positive overlap, their normalised conditional measures
+cannot be separated onto disjoint supports.
+
+⚠️ **Interpretation corrected 2026-08-25.** This was described as "the formal
+content of 'CSD is ψ-epistemic'". It is not. It is a statement about
+positive-volume REGION preparations, a different preparation class from exact
+pure states, and it does **not** classify exact pure-state preparations as
+ψ-epistemic in the Harrigan–Spekkens sense. On the exact sharp interface the
+corpus proves the opposite — distinct exact pure states have mutually singular
+ontic measures, i.e. ψ-ONTICITY — in
+`RecordLayer.sharp_preparations_mutuallySingular`.
 
 The argument is a density argument, NOT a shared-support one — two measures can
 both charge a common set and still be mutually singular. On the overlap both

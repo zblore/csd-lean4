@@ -934,8 +934,13 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- compositeFubiniStudy_pos_of_isOpen); compositeFubiniStudy_entangled_pos_global (the
 -- entangled complement has positive measure -- open by 2a, nonempty by
 -- segre_not_surjective); compositeFubiniStudy_entangled_pos (EVERY open neighbourhood of a
--- product ray meets the entangled complement in positive measure -- the set a PBR-style
--- product-supported law must give measure zero; the C2 contradiction).
+-- product ray meets the entangled complement in positive measure).
+-- SCOPE CORRECTED 2026-08-25: this block previously ended "the set a PBR-style product-
+-- supported law must give measure zero; the C2 contradiction". That reading is WITHDRAWN.
+-- These are composite-GEOMETRY results. Global non-factorisation of the composite ontology
+-- does NOT establish that PBR preparation independence fails, and nothing here is a PBR
+-- contradiction. The corrected exact-state PBR classification is
+-- RecordLayer/PBRPreparation.lean; see specs/c2-support-plan.md for the supersession.
 /-- info: 'CSD.RecordLayer.segre_range_isClosed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.segre_range_isClosed
@@ -977,7 +982,11 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.ae_not_mem_range_segre
 
 -- Q28 ITEMS 3 AND 4 (2026-08-21, IsolationPreparation.lean + PreparationDensity.lean):
--- RHO_EP AND THE PSI-EPISTEMIC OVERLAP. Item 4a: conditional_not_mutuallySingular --
+-- RHO_EP AND FINITE-RESOLUTION PREPARATION OVERLAP. (Header corrected 2026-08-25: this
+-- read "THE PSI-EPISTEMIC OVERLAP". Region-preparation overlap is NOT Harrigan-Spekkens
+-- psi-epistemicity of exact pure states -- it is a fact about a different preparation
+-- class. The exact interface is psi-ONTIC: RecordLayer/PBRPreparation.lean.)
+-- Item 4a: conditional_not_mutuallySingular --
 -- preparations with Liouville-positive region overlap have NON-mutually-singular
 -- conditional laws (a DENSITY argument, not shared support: on the overlap both are
 -- normalised restrictions of the same Liouville measure, so a singularity witness covers
@@ -990,8 +999,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- preparation on KSigma -- the first statement mentioning both SigmaLayer.Preparation and
 -- the LF4 bridge, the seam where C2 v1.01 tore). Item 4b: kahler_preparations_overlap --
 -- preparations localised on overlapping open neighbourhoods of their own rays are not
--- mutually singular (the psi-epistemic witness, topological existence form; the epsilon-
--- ball form needs the FS metric, MATHLIB-GAPS).
+-- mutually singular (the FINITE-RESOLUTION preparation-overlap witness, topological
+-- existence form; the epsilon-ball form needs the FS metric, MATHLIB-GAPS). This does not
+-- classify exact pure-state preparations as psi-epistemic.
 /-- info: 'CSD.SigmaLayer.Preparation.conditional_not_mutuallySingular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.Preparation.conditional_not_mutuallySingular
@@ -3027,5 +3037,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant
+
+-- C2 PBR PREPARATION CAPSTONE (2026-08-25, RecordLayer/PBRPreparation.lean): THE EXACT
+-- SHARP INTERFACE IS PSI-ONTIC. epistemicMeasure_projectiveLaw -- the concrete exact
+-- witness delta_p (x) Haar pushes forward to delta_p on the base (shown, not assumed, so
+-- the witness is demonstrably inside the classified class). sharp_preparations_
+-- mutuallySingular -- ANY two ontic measures whose projective laws are Diracs at distinct
+-- points are mutually singular; hypothesis is the Dirac pushforward alone, no Preparation,
+-- no region, no finiteness. epistemicMeasure_mutuallySingular -- the concrete corollary,
+-- routed THROUGH the general theorem so the proof graph C2 cites is the checked one.
+-- no_region_preparation_exact_fibre -- an exact fibre is kMuL-null (kMuL_fibre_null) and so
+-- is not the region of any positive-volume SigmaLayer.Preparation: the two preparation
+-- classes are disjoint as objects. pbr_sharp_preparation_capstone -- the single citable
+-- conjunction (both Dirac laws AND the singularity).
+-- NOT PROVED, and not to be inferred: anything about PBR preparation independence, which
+-- is a compositional assumption and remains neither established nor refuted.
+/-- info: 'CSD.RecordLayer.epistemicMeasure_projectiveLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_projectiveLaw
+
+/-- info: 'CSD.RecordLayer.sharp_preparations_mutuallySingular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_preparations_mutuallySingular
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_mutuallySingular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_mutuallySingular
+
+/-- info: 'CSD.RecordLayer.no_region_preparation_exact_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.no_region_preparation_exact_fibre
+
+/-- info: 'CSD.RecordLayer.pbr_sharp_preparation_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pbr_sharp_preparation_capstone
 
 end CSD.Tests.AxiomAudit

@@ -202,6 +202,37 @@ This bundle is a hypothesis structure, not an axiom: callers must supply the dis
 
 **Why the OP.p bridge (option (B)) rather than direct projectiveWeight.** The previous (v0.3.4-lf3) bundle had a `weight_eq_P_st : projectiveWeight D μprep (O_st s t) = ENNReal.ofReal P_st` field — direct measure equality on a projective outcome region. Under the Phase 4 Dirac model of `PurePreparation`, `Measure.map D.π μprep = Dirac ray_point`, and the direct measure of a projective outcome region is 0 or 1, not a generic `P_st ∈ (0, 1)`. The OP.p bridge resolves this: probability is the OP-integral of `effectProjFn` (the CSD-foundational object in the volume-ratios reading), and `OP.p (rankOneEffect (jed.eig s t)) = ‖⟨ψ, jed.eig s t⟩‖² = P_st` via `born_rank_one` + the Born identity, both for a Dirac `μprep`. The bridge_op_p field ties the ontic outcome weight to this OP-integral content; concretely, what LF4 discharges is the structural relationship between the ontic outcome region's preEvent volume and the OP integration. The four-ingredient combinatorial framing applies.
 
+### 3.9 The C2 preparation interfaces (PBR classification) — *added 2026-08-25*
+
+**No new imported mathematical axiom. No new physical postulate.** `#print axioms` reports the
+foundational triple on every theorem below (pinned in `Tests/AxiomAudit/SigmaLayer.lean`).
+
+The C2 capstone (`CsdLean4/RecordLayer/PBRPreparation.lean`) distinguishes **two preparation
+classes** that the superseded Q28 interpretation ran together:
+
+- **Exact sharp preparations.** `sharp_preparations_mutuallySingular` proves that ontic measures
+  whose projective laws are Dirac at distinct points are mutually singular. This is a **theorem
+  conditional on the stated interface** — the hypothesis is exactly "the projective law is a
+  Dirac pushforward", and nothing else (no `Preparation` structure, no region, no finiteness). It
+  is not a postulate, and the corpus's own witness is *shown* to satisfy the hypothesis
+  (`epistemicMeasure_projectiveLaw`) rather than assumed to. On the Harrigan–Spekkens
+  classification this makes the exact sharp interface ψ-**ontic**: CSD satisfies the PBR
+  disjointness conclusion.
+- **Finite-resolution region preparations.** `Preparation.conditional_not_mutuallySingular` and
+  `kahler_preparations_overlap` are theorems about `SigmaLayer.Preparation` — positive-volume
+  regions, absolutely continuous with a Fubini–Study density. They may overlap. This does **not**
+  classify exact pure states as ψ-epistemic.
+- The classes are disjoint as objects: `no_region_preparation_exact_fibre`, via the
+  `kMuL`-nullity of an exact fibre.
+
+⚠️ **Outside the proved conclusion: PBR preparation independence.** PI is a compositional
+assumption and is neither established nor refuted anywhere in the corpus. In particular, global
+non-factorisation of the composite ontology (the Segre-layer results) does **not** settle it;
+reading it as a PBR contradiction was withdrawn 2026-08-25 (`specs/c2-support-plan.md`).
+
+One Cat-1 staging lemma was added for this work — `Measure.MutuallySingular.of_map`
+(`CsdLean4/Mathlib/MeasureTheory/MutuallySingularMap.lean`), CSD-free, foundational-triple-only.
+
 ## 4. Deferred items (LF4 and later)
 
 Nine concrete items are tracked in [`specs/LF4-todo.md`](specs/LF4-todo.md). The summary:

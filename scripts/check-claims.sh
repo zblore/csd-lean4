@@ -535,10 +535,17 @@ liouville_isProbability"
 #   kahler_preparations_overlap — (2026-08-21, Q28 items 3-4,
 #     SigmaLayer/PreparationDensity.lean) all three are statements ABOUT the concrete
 #     Kähler arena KSigma N (the c = 1 base pushforward of kMuL; ρ_ep against μFS; the
-#     ψ-epistemic overlap witness). The word names the arena — the same earned referent
-#     as kMuL/kahlerFstSector — and no new Kähler-structure claim is made.
+#     finite-resolution preparation-overlap witness — relabelled 2026-08-25, it is NOT the
+#     Harrigan-Spekkens ψ-epistemic classification). The word names the arena — the same
+#     earned referent as kMuL/kahlerFstSector — and no new Kähler-structure claim is made.
+#   kahlerFstSector_epistemicMeasure_projectiveLaw — (2026-08-25, C2 PBR capstone,
+#     RecordLayer/PBRPreparation.lean) the Dirac projective law of the exact sharp
+#     preparation, restated through the concrete kahlerFstSector. Same earned referent as
+#     kahlerFstSector_projectiveLaw above: the word names the arena's base projection, and
+#     the statement is a pushforward identity with no Kähler-structure content.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
+kahlerFstSector_epistemicMeasure_projectiveLaw
 kahler_preparation_density
 kahler_preparations_overlap
 kSectorData_fromPreparation_liouville_apply
