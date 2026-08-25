@@ -15,6 +15,10 @@ public import Mathlib.MeasureTheory.Measure.Haar.Unique
 **Category:** 3-CSD. The `(b)` half of the A1 ontic-sector row in `specs/BACKLOG.md` — *"exhibit the
 fibre measure as Liouville rather than merely Haar"*.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/fibre/
+The published entry records this result in plain language, with this module as one of its Lean
+anchors. Kept symmetric by `scripts/check-glossary.sh`.
+
 ## The gap this closes
 
 `LF4.KahlerOnticSetup` carries a field `liouvilleMeasure : Measure Sigma` together with

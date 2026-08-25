@@ -3897,6 +3897,12 @@ entries:
       was retired the same month as mis-specified rather than merely hard. The successor
       question is what supplies the independence, and it is a question about the
       structure of the arena rather than about its dynamics.
+
+      A third thing settled in 2026-08. The fibre's measure is not a modelling choice
+      either: the arena's measure is the ONLY probability measure invariant under the
+      arena's own symmetry -- unitaries turning the state space, translations turning the
+      fibre. The base half of that was already known; the fibre half closes it, so nothing
+      about how the arena is weighted is left to taste.
     mathematical: >
       The arena is CP^(N-1) x T^2 with the flat torus fibre carrying normalised Haar
       measure. Basins are preimages of arcs under the first fibre coordinate, with the
