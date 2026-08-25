@@ -927,6 +927,7 @@ entries:
     related: [liouville-measure, fubini-study-measure]
 
   - slug: luders-rule
+    reviewed: 2026-08-25
     hook: >
       The textbook's second rule -- how a state changes when measured -- is not a second
       rule here. It is what the record layer does.
@@ -959,7 +960,10 @@ entries:
       reproduces the update for all preparations, so the block form is not optional.
     mathematical: >
       On the pointer arena, the record-conditioned marginal reproduces the Born weights of
-      the preparation, and the post-measurement state is the Luders block projection.
+      the preparation, and the post-measurement state is the Luders block projection. The
+      conditioning carries a smallness condition that should travel with the statement: the
+      outcome's weight must exceed the width of the corridor the smooth witness leaves
+      unrecorded, so the result says nothing about outcomes weighted below it.
       Degenerate block measurements are the case treated; rank-one projective measurements
       are the specialisation where every block is a single ray.
 
@@ -2840,6 +2844,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Hidden-variable_theory
 
   - slug: measurement-problem
+    reviewed: 2026-08-25
     hook: >
       Quantum mechanics contains two incompatible rules and no instruction for when to
       switch. CSD replaces the switch with a theorem about what no dynamics can do.
@@ -2892,6 +2897,7 @@ entries:
         url: https://plato.stanford.edu/entries/qt-issues/
 
   - slug: collapse
+    reviewed: 2026-08-25
     hook: >
       The state never jumps here -- and that is a theorem about volume-preserving maps, not
       a preference about interpretations.
@@ -3678,6 +3684,7 @@ entries:
       text: Paper A is the volume-based account of outcome frequencies
 
   - slug: outcome-region
+    reviewed: 2026-08-25
     hook: >
       An outcome is a region, and the apparatus alone draws its boundary. The preparation
       decides where the trajectory lands; it does not get to draw the map.
@@ -3703,8 +3710,11 @@ entries:
       and proves their epistemic weights are exactly the Born weights.
 
       The dimension story is a genuine discovery: at the qubit the regions can live on
-      the base of the sector, and at higher dimension they provably cannot -- the
-      contextual structure is forced into the fibre. The regions stay epistemic
+      the base of the sector, and at higher dimension the natural way of doing so provably
+      fails -- covariance and nonnegativity leave no room for a radial, preparation-only
+      base density -- which is why the contextual structure is taken to live in the fibre.
+      Note the scope: what is refuted is that one natural class of candidate. Whether NO
+      base-only construction can work is open, and recorded as such. The regions stay epistemic
       throughout; what the trajectory selects among them, the record, is ontic.
     mathematical: >
       A ContextField assigns each base point a measurable probability vector over
@@ -3722,6 +3732,7 @@ entries:
     related: [record-layer, epistemic-measure, born-weight, contextuality, fibre]
 
   - slug: epistemic-measure
+    reviewed: 2026-08-25
     hook: >
       Condition on what a preparation actually fixes and the leftover ignorance is a
       measure -- and it is now a theorem, not a stipulation: the arena's own volume
@@ -3883,9 +3894,11 @@ entries:
 
       The load-bearing discovery is dimensional. At N = 2 a context-fixed partition can
       be built on the base alone -- a special accident of the two-dimensional state
-      space. At N >= 3 the corpus's analysis shows a base-only construction fails: the
-      constraints of covariance and positivity kill every candidate density, so the
-      contextual structure is forced into the fibre. That narrows where the mechanism
+      space. At N >= 3 the natural base-only construction fails: covariance and positivity
+      kill the radial, preparation-only candidate density, which is why the contextual
+      structure is taken to live in the fibre. Scope, and it matters: one natural class of
+      candidate is refuted, not every conceivable one. Class-generality of that verdict is
+      open, and the fibred reading is canonical by author decision rather than by a no-go. That narrows where the mechanism
       can live; it does not refute it -- existence is proved.
 
       A second and independent reason the fibre earns its keep arrived in 2026-08. The
