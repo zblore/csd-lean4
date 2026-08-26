@@ -448,3 +448,34 @@ Gleason (N≥3 impossibility) — `.tmp_extract/PaperC.txt`, `.tmp_extract/Paper
 Corpus: `LF1/Outcomes.lean` (`OutcomeRegion`, `weight = μL(Ω₀ ∩ Φ⁻¹Ω)/μL(Ω₀)`),
 `LF4/BornFrequencyN.lean` (`bornRegion`, the prep-indexed engine),
 `LF5/PointerOutcome.lean` (`vnPointerOutcome`), `SigmaLayer/RecordedFact.lean`.
+
+## Measurement, stated structurally (2026-08-26, author-approved framing)
+
+Records are prior. The apparatus **is** a record history; isolation is conditioning Σ on
+compatibility with that history (P6, `HistoryPreparation`); de-isolation extends the history with a
+new fact (`appendFact`, `compatibleSet (h ++ [r]) = compatibleSet h ∩ event r`). Isolation is the
+manufactured special condition, de-isolation the default — so there is no bootstrap problem about a
+first record.
+
+A measurement is reading the actual location of a point. Its probability is volume, and the volume
+is epistemic — ignorance of which point. Two inputs fix the reading: **how the apparatus is
+constructed**, which fixes the context field `c`, and **the unknowable microstate of Σ at the moment
+of de-isolation**, which fixes where in the field the point sits.
+`globalBasin c i = {x | x.2.1 ∈ circleCell (c.rate x.1) i}` is exactly this.
+
+**Two partitions, kept apart.** The Ω-regions on the projective base are epistemic — a calculation
+space (A7); nothing sculpts them, and they match volume because `μ_FS` is forced by symmetry and the
+weights are the moment map. The fibre cells sit on the ontic fibre and the selection is ontic, though
+the particular cell family is one realisation of an interface, so the cell *shapes* are bookkeeping.
+
+**What this dissolves.** Not the Born weights — those are geometry, and `map_pointer_apply` makes
+them flow-independent. It dissolves the demand for a carving Hamiltonian: if isolation is maintained
+conditioning, de-isolation is its cessation, and nothing needs to carve. ⚠️ On that reading
+`DeIsolationFlow.lean`'s "exhibit `p = readout ∘ flow(H_int(M))`" asks for the wrong object.
+**FLAGGED, NOT DECIDED** — this obligation has been mis-stated repeatedly and needs `csd-foundations`
+sign-off before the Lean-side docstring is amended.
+
+**What remains.** The physical origin of the context field: why *this* apparatus has *that* rate
+field. Pointer-basis / einselection territory; the corpus's general-`N` einselection is currently
+definitional with the ontic origin gated to the entangled tier. ✅ Exclusivity is **not** in the
+residue — `globalRecordSemantics.exclusive` is *derived* from `globalBasin_pairwiseDisjoint`.
