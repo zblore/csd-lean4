@@ -131,8 +131,13 @@ syntactic condition (the B5-geom idiom family).
   (`ε = 2n·|τ|·|λ|·C_v`, trace distance on states, the chain in
   [`channel-rg-scoping.md`](channel-rg-scoping.md) §5 with four links landed
   and two wall-checked bricks missing). First brick CR-1 named; the arc
-  (CV-26) is queued on decision, not started — naming, not optimism, was the
-  mandate. **With this, all three Stage-7 rows are closed: Stage 7 is
+  (CV-26) was ~~queued on decision, not started~~ **EXECUTED the same day
+  (2026-08-18)** — CR-1/CR-2/CR-3 all landed
+  (`Mathlib/QuantumInfo/UnitaryPerturbation.lean`, `CV/ChannelRG.lean`,
+  ★★ `channelRG_dist_le`, 7 pins), with no re-scoping. ⚠️ This line still read
+  "queued, not started" until 2026-08-26, and misled a status check into
+  reporting CV-26 as the one remaining EFT arc. It is not: **no EFT/CV row is
+  open.** **With this, all three Stage-7 rows are closed: Stage 7 is
   COMPLETE.**
 
 ## Non-goals (Stage 7)
