@@ -62,7 +62,11 @@ is preparation-indexed — `N = 2` is done, `LF4/QubitBorn.lean`), the de-isolat
 basins (`DeIsolationInteraction.basin_rate` is a hypothesis field), and whether the fibred Σ is an A1 sector.
 ⚠️ **Updated 2026-07-31: the first item is now addressed *on the fibre*** — `GlobalBasin` /
 `GlobalRecordClosure` give a partition whose events mention no preparation, at every `N`; the
-**base-only** question stays ⏸ parked. **Items two and three stand**, and the goal is still not met.
+**base-only** question stays ⏸ parked. ⚠️ **Updated 2026-08-25: item three is now CLOSED** —
+`kMuL_unique` (`LF4/LiouvilleUnique.lean`) exhibits the sector's measure as forced by its own
+symmetry rather than merely Haar, completing the A1 ontic-sector row (all three sub-items done;
+the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one). **Item two stands** —
+no `H_int` generates the basins — and the goal is still not met.
 Beyond those, the residue is a mechanical field naming in the pinned closure (no new theorem). (The Ω-regions are epistemic, on `ℂℙⁿ⁻¹`; the record is the ontic selection in Σ.)
 The earlier "SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
 

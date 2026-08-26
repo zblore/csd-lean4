@@ -218,9 +218,11 @@ work: it treats the obstruction as difficulty. The obstruction is **placement**.
 tensor factorisation, and the regions defined over it, sit on the *epistemic* side
 of the theory — `specs/sigma-fibre-contextuality.md` reaches the same placement
 independently, finding the `ℂℙⁿ⁻¹` base to be "a lossy epistemic projection" with
-the record-forming and contextual content living in the fibre above it, and for
-`N ≥ 3` finding that it *must* (covariance plus non-negativity kill the
-base-only alternative — not a Gleason/KS argument). Anchoring an epistemic
+the record-forming and contextual content placed in the fibre above it, and for
+`N ≥ 3` finding the natural base-only alternatives tightly constrained by covariance
+plus non-negativity — ⚠️ a constraint chain, NOT a no-go: base-only at `N ≥ 3` is open
+in both directions, "must" was retracted 2026-07-28, and this line still carried it
+until 2026-08-26. (Not a Gleason/KS argument either way.) Anchoring an epistemic
 construct more tightly does not convert it into ontic structure.
 
 **Consequence.** P3 is a standing statement of Route A's limit, to be cited when
