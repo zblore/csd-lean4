@@ -427,7 +427,7 @@ carries the reasoning). Time in Σ is a single shared parameter (`flow : ℝ →
 construction never raced anything — `volume_circleCell` gives the weights as ARC LENGTHS of a
 partition of ONE uniformly-distributed fibre coordinate. Nothing needs supplying.
 
-*The successor question is: **what dynamics carves the fibre into cells of the Born sizes?*** That is
+*The successor question is: **what physical de-isolation interaction generates a READOUT whose level sets carry the Born measures? (⚠️ not "what carves the regions into Sigma" -- the Omega-regions are EPISTEMIC, a calculation space on CP^(n-1); nothing sculpts them, and they match volume because mu_FS is forced by symmetry and the weights are the moment map. What is ontic is the RECORD: the selection, and its stability. The obligation is DeIsolationFlow.lean's: exhibit a pointer p = readout . flow(H_int(M)) whose basins are cdfCell(moment map).)*** That is
 the `H_int` question, and unlike the withdrawn version it IS about Σ's dynamics. Retiring the mixing
 route was right; the successor question was mis-stated.
 

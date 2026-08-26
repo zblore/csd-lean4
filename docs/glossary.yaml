@@ -3994,9 +3994,17 @@ entries:
 
       The older frontier -- derive the fibre mechanism from a MIXING de-isolation flow --
       was retired the same month as mis-specified rather than merely hard. Its successor
-      question was mis-stated too, and is now: what dynamics carves the fibre into cells of
-      the Born sizes? That is a question about the arena's dynamics, and it is the one thing
-      in the measurement account still genuinely undone.
+      question was mis-stated too. ⚠️ Be careful how the successor is phrased, because the
+      obvious phrasing is also wrong: nothing carves the outcome regions into the arena. The
+      regions are EPISTEMIC -- a calculation space on the projective state space -- and they
+      match volume because the measure is forced by symmetry and the weights are the moment
+      map, not because any dynamics sculpted them. What is ontic is the RECORD: which region
+      the trajectory realises, and whether that selection is stable.
+
+      So the successor question is about the READOUT, not the regions: does a physical
+      de-isolation interaction generate a pointer whose level sets carry the Born measures?
+      Note the Born weights themselves do not wait on the answer -- the corpus proves that
+      ANY measurable pointer with those basin measures gives Born, flow-independently.
 
       A third thing settled in 2026-08. The fibre's measure is not a modelling choice
       either: the arena's measure is the ONLY probability measure invariant under the

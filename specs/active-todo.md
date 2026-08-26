@@ -26,8 +26,7 @@
 > **Still open, and it is two things, not three:** the **Hamiltonian de-isolation** generating the
 > Born basins (no `H_int(M)` produces them; ⚠️ the *mixing* route to it was **retired 2026-08-24** as
 > mis-specified; ⚠️ its successor question was itself corrected 2026-08-26 from "what supplies the
-> independence of the outcome clocks?" to **what dynamics carves the fibre into cells of the Born
-> sizes?** — see `CSD-CHARTER.md`), and
+> independence of the outcome clocks?" to **what physical de-isolation interaction generates a READOUT whose level sets carry the Born measures? (⚠️ not "what carves the regions into Sigma" -- the Omega-regions are EPISTEMIC, a calculation space on CP^(n-1); nothing sculpts them, and they match volume because mu_FS is forced by symmetry and the weights are the moment map. What is ontic is the RECORD: the selection, and its stability. The obligation is DeIsolationFlow.lean's: exhibit a pointer p = readout . flow(H_int(M)) whose basins are cdfCell(moment map).)** — see `CSD-CHARTER.md`), and
 > the **A1 ontic-sector status** of the fibred Σ. A **stable apparatus record from joint dynamics**
 > sits inside the first. The full Paper C/D reconstruction claim is not yet justified.
 
