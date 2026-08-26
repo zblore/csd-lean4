@@ -420,9 +420,16 @@ the *independence*, which is where the content actually sits.
 ✅ **Executed 2026-08-24.** `Q12-d`'s mixing formulation is **retired**. It is not "blocked" and not
 "open" — it is **withdrawn as mis-specified**, and should not be reopened in that form.
 
-**The successor question, for whoever picks this up:** *what structure supplies the independence of
-the outcome clocks?* That is where the content sits. Note it is a question about Σ's structure, not
-about its dynamics — which is why no amount of work on flows was going to reach it.
+**The successor question, for whoever picks this up:** ⚠️ **CORRECTED 2026-08-26 — this read "what
+structure supplies the independence of the outcome clocks?" and that is WITHDRAWN** (`CSD-CHARTER.md`
+carries the reasoning). Time in Σ is a single shared parameter (`flow : ℝ → Σ → Σ`, P3), so the
+"clocks" are Σ-aligned deterministic readings, not independent processes; and the proved Born
+construction never raced anything — `volume_circleCell` gives the weights as ARC LENGTHS of a
+partition of ONE uniformly-distributed fibre coordinate. Nothing needs supplying.
+
+*The successor question is: **what dynamics carves the fibre into cells of the Born sizes?*** That is
+the `H_int` question, and unlike the withdrawn version it IS about Σ's dynamics. Retiring the mixing
+route was right; the successor question was mis-stated.
 
 **What was salvaged instead** — ★★ `MeasureTheory.tsum_measure_lt_returnTime` (Kac's formula,
 `Mathlib/Dynamics/Kac.lean`, Cat-1, absent from Mathlib). Kac is the one piece that is

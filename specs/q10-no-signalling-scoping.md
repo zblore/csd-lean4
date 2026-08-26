@@ -95,9 +95,12 @@ dynamics":
   structure, not its dynamics, because one deterministic trajectory cannot supply independence.
 * **Q10's hidden premise** (W3): fixing one `μ` across contexts **is measurement independence**.
 
-Both bottom out in **independence as a primitive on `Σ`**. And Q12 produced a positive result about
-where independence lives: the **fibre** carries independence the base cannot
-(`specs/CSD-CHARTER.md`, restated 2026-08-24).
+Both bottom out in **factorisation of the fibre measure** — ⚠️ **relabelled 2026-08-26.** This read
+"independence as a primitive on `Σ`", citing Q12's "the fibre carries independence the base cannot",
+a framing since withdrawn (`CSD-CHARTER.md`). The correction does NOT weaken this row, it sharpens
+it: what Q10 needs was never *dynamical* independence (separate processes — CSD has none) but a
+**factorisation property of the typicality measure on the fibre**, which is exactly what the
+conjecture below states and what a Fubini argument consumes.
 
 **Conjecture worth scoping (not a claim):** the fibre is also where Q10's primitive lives. If the
 fibre factorises across the wings while the **base** does not, then remote marginal invariance could

@@ -124,11 +124,34 @@ resolved in Lean, the second the standing posit):
   merely hard: the hitting-time limit theorems need vanishingly rare sets while a Born partition's
   cells sum to one; an asymptotic law would deliver the Born weights only in a limit, weaker than the
   corpus already proves exactly; and the race needs **independent** clocks, which one deterministic
-  trajectory cannot supply. ★ **That last point strengthens the lesson above rather than weakening
-  it: the fibre carries the independence the base cannot, which is a second and independent reason it
-  is load-bearing, alongside the dimensional one.** The mechanism is still underived — no `H_int(M)`
-  produces the basins — but the open question is now **what structure supplies the independence**,
-  and it is a question about Σ's *structure*, not its dynamics.
+  trajectory cannot supply. ⚠️ **SUCCESSOR QUESTION CORRECTED 2026-08-26 (author call). This line
+  previously read: "the fibre carries the independence the base cannot … the open question is now
+  what structure supplies the independence." That framing is WITHDRAWN — it was over-fitted to the
+  very race picture the retirement discarded, and it pointed work at a property the corpus does not
+  use.**
+
+  Three things settle it. **(1) Time in Σ is single and shared.** `ConstraintDynamics.flow :
+  OnticTime → Σ → Σ` (`OnticTime := ℝ`) is ONE one-parameter group acting on all of Σ (P3). There
+  are no per-outcome clocks in the ontology; there is one flow and one microstate, so the "clocks"
+  are Σ-aligned deterministic readings, maximally dependent, not independent processes. **(2) The
+  proved Born construction never used a race.** `RecordLayer/CircleFibre.lean`'s `circleCell` cuts
+  the fibre circle into consecutive ARCS at the running sums of the rates, and ★ `volume_circleCell`
+  gives the Born weight as the ARC LENGTH under Haar. One uniformly-distributed fibre coordinate,
+  partitioned. No independence anywhere, because there is only one variable. **(3) So there is
+  nothing to supply.** The question presupposed independent stochastic processes; CSD has none, wants
+  none, and derives Born without them.
+
+  ★ **Keep two senses of "independence" apart, permanently.** *Dynamical* independence — separate
+  processes running in time — CSD does not have and does not need. *Measure factorisation* — the
+  typicality measure on the fibre factorising — is a property of the ignorance distribution over
+  starting points, is legitimate, and is what the Gumbel construction and the Q10 conjecture actually
+  use. Conflating them is what produced the withdrawn framing.
+
+  **The open question is the one that was always there:** the mechanism is still underived — no
+  `H_int(M)` produces the basins — and the successor question is **what dynamics carves the fibre
+  into cells of the Born sizes?** That is the `H_int` question, and it is about Σ's dynamics, not
+  about supplying a probabilistic structure. Retiring the mixing route was right; the successor
+  question was mis-stated.
 - The witness closure called "QM derived from CSD."
 
 ## Repository architecture (decided 2026-08-06)
