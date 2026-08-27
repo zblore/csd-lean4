@@ -49,8 +49,16 @@ Gleason-family of derivations rather than specific to this programme.
 
 ## The claim, precisely
 
-On the ontic surface `Σ = ℂℙ^{N-1} × T²` with its Liouville measure `μL = μ_FS ⊗ vol` and the
-projection `π` to rays, the corpus machine-verifies, for every dimension `N`, every unit
+Constraint-Surface Dynamics provides a machine-checked reconstruction of the principal
+finite-dimensional measurement statistics and update structure on its stated ontic witness:
+deterministic ontic dynamics give definite context-indexed outcomes without stochastic collapse
+or branching; Born weights follow from the Fubini-Study/Kähler moment-map geometry and are
+realised as the measures of explicit ontic fibre outcome cells rather than postulated as an
+independent probability law; and outcome conditioning reproduces the Lüders update.
+Basis-selective decoherence is proved for a supplied measurement context.
+
+In detail: on the ontic surface `Σ = ℂℙ^{N-1} × T²` with its Liouville measure `μL = μ_FS ⊗ vol`
+and the projection `π` to rays, the corpus machine-verifies, for every dimension `N`, every unit
 preparation, and arbitrary Hermitian `H`:
 
 - **isolated dynamics** projects to Schrödinger evolution `exp(-itH)` on rays
@@ -126,6 +134,21 @@ preparation, and arbitrary Hermitian `H`:
   the Schrödinger equation at **every** time (`smoothRampedU_schrodinger`). The fibrewise
   (not joint-arena Hamiltonian) character is unchanged; see `PointerGeneration.lean`'s
   honest-scope block.*
+- **the de-isolation interface is populated by the dynamics** (2026-08-27,
+  `RecordLayer/ShearDeIsolation.lean`): the pointer of `shearDeIsolationInteraction` is the
+  readout of the constructed propagator, pointwise (`cellPointer_outcomeSector_eq_readout`),
+  and its basins carry the moment-map weights under the ontic ready preparation
+  (`shear_sector_born`, `shearDeIsolation_born`), the state entering only through the
+  preparation measure while readout arcs, basins, and propagator stay context-fixed. The
+  **einselection criterion is a characterisation**: the pointer observables of a supplied
+  interaction are exactly the commuting ones (`pointer_invariant_iff_commute`, with the
+  disturbed contrast `einselection_commutation_contrast` and coherence survival under the
+  flow, `coherence_modulus_preserved`; `Empirical/CSD/PointerCommutation.lean`). The
+  **externality pair** joined the dynamical bundle (`outcome_system_dependent`: before the
+  stroke a system-only change moves the outcome; the after half is recorded as vacuous by
+  architecture). Standing residue, carried not laundered: the interaction is an input, and
+  the propagator's Hamiltonian generation is stated, not formalised (no manifold symplectic
+  API; `ShearWitness` item 1).
 
 ## The results, by pillar
 

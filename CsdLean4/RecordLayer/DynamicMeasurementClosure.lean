@@ -34,6 +34,9 @@ dynamically created. `CsdFiniteQMClosure` below is what the combined claim looks
   the Born weights. ⚠️ The **post-measurement/Lüders** field is deliberately *not* among them —
   `postMeasure_supported_pointerRegion` exists but the Lüders bridge needs a system-reduction map the
   corpus lacks for this arena (`RecordPersistence.lean`), so bundling it would overstate.
+  *(Strengthened 2026-08-27: the **externality pair** joined the bundle — `outcome_system_dependent`,
+  the contentful before half, and `record_system_invariant`, the after half, vacuous by
+  architecture and carried as documentation. See `ShearWitness.lean`'s externality section.)*
 * `dynamicMeasurementClosure` — discharged. ★ **Note what is *not* among its hypotheses:**
   `CorrelatesOn` and `PointerInvariantOn` do not appear, because `ShearWitness` proved them. The
   bundle rests on a constructed propagator, not on assumed dynamics.
@@ -122,6 +125,32 @@ structure DynamicMeasurementClosure (N : ℕ) [NeZero N]
       (μ12.prod (Measure.pi fun k => epistemicMeasure (vertexPoint k))) i)
       ((fun y : SwapArena (LF4.KSigma N) N => y.1.1) ⁻¹' globalBasin c' j)
       = ENNReal.ofReal (c'.rate (vertexPoint i) j)
+  /-- ★ **Externality, the before half (A1, added 2026-08-27).** Before the stroke a system-only
+  transformation moving the selector across basins changes which outcome gets recorded: the
+  outcome information is still in the system, and the stroke is what exports it to the
+  register. -/
+  outcome_system_dependent : ∀ (i j : Fin N), i ≠ j →
+    ∀ (s s' : LF4.KSigma N), basinIndex (momentContext N) s = i →
+      basinIndex (momentContext N) s' = j →
+      ∀ (q : LF4.KTorus), q ∈ readyArc N →
+        (shearProtocol (basinIndex (momentContext N))
+            (measurable_basinIndex (momentContext N))).readout
+            ((shearProtocol (basinIndex (momentContext N))
+              (measurable_basinIndex (momentContext N))).evolve 0 1 (s, q))
+          ≠ (shearProtocol (basinIndex (momentContext N))
+              (measurable_basinIndex (momentContext N))).readout
+              ((shearProtocol (basinIndex (momentContext N))
+                (measurable_basinIndex (momentContext N))).evolve 0 1 (s', q))
+  /-- ⚠️ **Externality, the after half (A2, added 2026-08-27) — vacuous by architecture, carried
+  as documentation, not content:** the displayed record is invariant under *every* system-side
+  map because the readout reads the register factor only (`rfl`-backed,
+  `readout_system_invariant`). The contentful half is `outcome_system_dependent`. -/
+  record_system_invariant : ∀ (f : LF4.KSigma N → LF4.KSigma N)
+      (x : LF4.KSigma N × LF4.KTorus),
+    (shearProtocol (basinIndex (momentContext N))
+        (measurable_basinIndex (momentContext N))).readout (f x.1, x.2)
+      = (shearProtocol (basinIndex (momentContext N))
+          (measurable_basinIndex (momentContext N))).readout x
 
 /-- **★ The dynamical measurement closure holds** — for every state, with no hypotheses about the
 dynamics.
@@ -140,6 +169,9 @@ theorem dynamicMeasurementClosure (ψ : EuclideanSpace ℂ (Fin N)) :
       (shear_pointerInvariant _ _) hx ht₁ ht₂
   selector_born hψ0 hψ i := shear_selector_born ψ hψ0 hψ i
   luders_followup μ12 _ i hpos c' j := swap_luders_born μ12 i hpos c' j
+  outcome_system_dependent := fun _i _j hij _s _s' hs hs' _q hq =>
+    outcome_system_dependent_before _ _ hij hs hs' hq
+  record_system_invariant f x := readout_system_invariant _ _ f x
 
 /-- **The combining capstone**: operational finite-QM closure **and** dynamical measurement.
 

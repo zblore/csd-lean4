@@ -468,4 +468,36 @@ theorem shear_readout_after (idx : Xsel → Fin K) (hidx : Measurable idx)
       ((shearProtocol idx hidx).evolve 0 1 x) = some i :=
   (shearProtocol idx hidx).readout_evolve_outcomeSector (shear_correlates idx hidx i hx)
 
+/-! ### Externality: the before/after pair
+
+The record-network programme's necessary condition — externality, the outcome information having
+left the measured system — has a before/after pair on this witness. ⚠️ The "after" half is
+**structurally vacuous** here and is recorded as such rather than re-landed as content: the
+readout reads the register factor only, so the *displayed* record is invariant under every
+system-side map by `rfl` (`readout_system_invariant`); that is architecture, not physics. The
+standalone content is the "before" half: prior to the stroke, a system-only transformation
+changes which outcome gets recorded (`outcome_system_dependent_before`) — the outcome information
+is still in the system, and the stroke is what exports it to the register. -/
+
+/-- ★ **Before the stroke, the outcome is system-dependent.** A system-only change moving the
+selector across basins changes the record the propagator will create: the outcome information has
+not yet left the system. The contentful half of the externality pair. -/
+theorem outcome_system_dependent_before (idx : Xsel → Fin K) (hidx : Measurable idx)
+    {i j : Fin K} (hij : i ≠ j) {s s' : Xsel} (hs : idx s = i) (hs' : idx s' = j)
+    {q : LF4.KTorus} (hq : q ∈ readyArc K) :
+    (shearProtocol idx hidx).readout ((shearProtocol idx hidx).evolve 0 1 (s, q))
+      ≠ (shearProtocol idx hidx).readout ((shearProtocol idx hidx).evolve 0 1 (s', q)) := by
+  rw [shear_readout_after idx hidx (show (s, q) ∈ selReady idx i from ⟨hs, hq⟩),
+    shear_readout_after idx hidx (show (s', q) ∈ selReady idx j from ⟨hs', hq⟩)]
+  exact fun h => hij (Option.some_inj.mp h)
+
+/-- ⚠️ **The "after" half, vacuous by architecture and recorded so it is not re-landed as
+content**: the readout reads the register factor only, so the displayed record is invariant under
+*every* system-side map, definitionally. Externality of a displayed record is a property of the
+arena's product structure here, not a theorem with content; the contentful half is
+`outcome_system_dependent_before`. -/
+theorem readout_system_invariant (idx : Xsel → Fin K) (hidx : Measurable idx)
+    (f : Xsel → Xsel) (x : Xsel × LF4.KTorus) :
+    (shearProtocol idx hidx).readout (f x.1, x.2) = (shearProtocol idx hidx).readout x := rfl
+
 end CSD.RecordLayer

@@ -16,7 +16,7 @@ Statuses:
 - `needs-change`: the public claim/API should be narrowed or strengthened.
 - `specialist-review`: mathematically deep proof requiring independent domain proof review.
 
-The TSV is canonical for automation. It records 58 headline claims, their defining modules, exact Lean
+The TSV is canonical for automation. It records 60 headline claims, their defining modules, exact Lean
 constants, load-bearing assumptions, an independent validation route, and any linked review finding.
 
 ## Admission criteria (defined 2026-08-13, Q17 — the census is now criteria-driven)
@@ -41,6 +41,15 @@ register, not an exhaustive census of the corpus's ~4,100 statements — but adm
 now a rule, and `check-validation-ledger.sh`'s known blind spot (it enforces consistency
 of listed rows, not completeness of the list) is mitigated by re-running this census when
 a tranche closes with starred headliners.
+
+**Extension 2026-08-27 (CL-059, CL-060, both `qualified`):** the measurement-closure
+campaign's two terminal results — `shearDeIsolation_born` (the flow-carved
+`DeIsolationInteraction`: `basin_rate` discharged from the constructed shear propagator, the Q12
+successor question in its honest form; qualified by the stated-not-formalised Hamiltonian
+generation and the engineered coupling) and `pointer_invariant_iff_commute` (the einselection
+commutation criterion as a characterisation; qualified by the interaction being the measurement
+context, an input). CL-058's finding tail annotated the same day: a flow-carved witness now
+exists. Promotion to `validated` stays claim-by-claim sign-off.
 
 **Extension 2026-08-13 (CL-032 … CL-051, 20 rows, all `qualified`):** the necessity
 audit's named strongest-direction omissions (`stone_continuous`, `no_exact_finite_ccr`,

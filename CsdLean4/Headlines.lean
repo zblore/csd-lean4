@@ -56,6 +56,8 @@ public import CsdLean4.Thermo.EnergyWindow
 public import CsdLean4.Thermo.Equilibration
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
+public import CsdLean4.RecordLayer.ShearDeIsolation
+public import CsdLean4.Empirical.CSD.PointerCommutation
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -235,5 +237,7 @@ example := @MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq -- CL-055
 example := @CSD.Thermo.hsDeviationNormSq_timeAverage_tendsto -- CL-056
 example := @MeasureTheory.circ_hasCorrelationDecay -- CL-057
 example := @ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure -- CL-058
+example := @CSD.RecordLayer.shearDeIsolation_born -- CL-059
+example := @CSD.Empirical.CSDBridge.Einselection.pointer_invariant_iff_commute -- CL-060
 
 end CSD.Headlines

@@ -248,6 +248,95 @@ theorem pointer_basis_of_commuting {ι : Type*}
    fun i t ρ => pointer_population_conserved hH (hcomm i) ρ t,
    fun i t _ρ hρ => sector_state_invariant hH (hcomm i) t hρ⟩
 
+/-! ### The converse: invariance forces commutation — the criterion is a characterisation -/
+
+/-- Heisenberg invariance at a time transfers to plain commutation with the flow at that time:
+`U(t)ᴴ P U(t) = P ⟹ P U(t) = U(t) P` (left-multiply by `U(t)` and cancel `U Uᴴ = 1`). -/
+lemma commute_intFlow_of_invariant {P Hint : Matrix (Fin N) (Fin N) ℂ}
+    (hH : Hint.IsHermitian) {t : ℝ}
+    (hinv : (intFlow Hint t)ᴴ * P * intFlow Hint t = P) :
+    P * intFlow Hint t = intFlow Hint t * P := by
+  have h := congrArg (fun M => intFlow Hint t * M) hinv
+  rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, intFlow_mul_conjTranspose hH,
+    Matrix.one_mul] at h
+  exact h
+
+/-- The derivative of the interaction flow at time zero is its generator `−i • Hint`. -/
+lemma hasDerivAt_intFlow_zero (Hint : Matrix (Fin N) (Fin N) ℂ) :
+    HasDerivAt (fun t : ℝ => intFlow Hint t) ((-Complex.I) • Hint) 0 := by
+  simp only [intFlow_def]
+  have h := hasDerivAt_exp_smul_const ((-Complex.I) • Hint) (0 : ℝ)
+  rwa [zero_smul, exp_zero, one_mul] at h
+
+/-- ★ **The converse of the criterion.** An observable that is a constant of the interaction
+motion at every time commutes with the interaction: differentiate `P · U(t) = U(t) · P` at
+`t = 0` to recover `[P, H_int] = 0`. -/
+theorem commute_of_pointer_invariant {P Hint : Matrix (Fin N) (Fin N) ℂ}
+    (hH : Hint.IsHermitian)
+    (hinv : ∀ t : ℝ, (intFlow Hint t)ᴴ * P * intFlow Hint t = P) :
+    Commute P Hint := by
+  have hcomm : (fun t : ℝ => P * intFlow Hint t) = fun t : ℝ => intFlow Hint t * P :=
+    funext fun t => commute_intFlow_of_invariant hH (hinv t)
+  have hf : HasDerivAt (fun t : ℝ => P * intFlow Hint t) (P * ((-Complex.I) • Hint)) 0 :=
+    (hasDerivAt_intFlow_zero Hint).const_mul P
+  have hg : HasDerivAt (fun t : ℝ => intFlow Hint t * P) (((-Complex.I) • Hint) * P) 0 :=
+    (hasDerivAt_intFlow_zero Hint).mul_const P
+  have hf' : HasDerivAt (fun t : ℝ => intFlow Hint t * P) (P * ((-Complex.I) • Hint)) 0 := by
+    rw [← hcomm]; exact hf
+  have hAP : P * ((-Complex.I) • Hint) = ((-Complex.I) • Hint) * P := hf'.unique hg
+  have h2 : Commute P (Complex.I • ((-Complex.I) • Hint)) :=
+    Commute.smul_right hAP Complex.I
+  rwa [smul_smul, show Complex.I * -Complex.I = 1 by
+      rw [mul_neg, Complex.I_mul_I, neg_neg],
+    one_smul] at h2
+
+/-- ★★ **The einselection criterion is a characterisation.** A pointer observable is a constant of
+the interaction motion at every time **iff** it commutes with the interaction: the pointer
+observables of `H_int` are *exactly* the commuting ones. Forward: differentiate at `t = 0`
+(`commute_of_pointer_invariant`); backward: `pointer_invariant_of_commute`. This upgrades the
+criterion from sufficient to characterising, which is the form the einselection literature
+intends. -/
+theorem pointer_invariant_iff_commute {P Hint : Matrix (Fin N) (Fin N) ℂ}
+    (hH : Hint.IsHermitian) :
+    (∀ t : ℝ, (intFlow Hint t)ᴴ * P * intFlow Hint t = P) ↔ Commute P Hint :=
+  ⟨commute_of_pointer_invariant hH, fun hcomm t => pointer_invariant_of_commute hH hcomm t⟩
+
+/-- Trace separation: distinct matrices are told apart by some trace pairing (the matrix witness
+`ρ = single j i 1` reads entry `(i, j)`; `ρ` is a matrix, not necessarily a state — the
+state-level witness is the `N = 2` contrast below). -/
+lemma exists_trace_mul_ne {X Y : Matrix (Fin N) (Fin N) ℂ} (hXY : X ≠ Y) :
+    ∃ ρ : Matrix (Fin N) (Fin N) ℂ, (X * ρ).trace ≠ (Y * ρ).trace := by
+  obtain ⟨i, j, hij⟩ : ∃ i j, X i j ≠ Y i j := by
+    by_contra h
+    push Not at h
+    exact hXY (Matrix.ext h)
+  refine ⟨Matrix.single j i 1, ?_⟩
+  rw [Matrix.trace_mul_single, Matrix.trace_mul_single]
+  simpa using hij
+
+/-- ★ **A non-commuting observable is disturbed.** If `[P, H_int] ≠ 0` then at some time some
+trace-functional detects the change: `tr (P · U ρ Uᴴ) ≠ tr (P · ρ)`. (The witness `ρ` is a
+matrix; the concrete state-level disturbance is `noncommuting_population_disturbed`.) With
+`pointer_population_conserved` this separates the commuting from the non-commuting observables
+at the population level. -/
+theorem exists_population_ne_of_not_commute {P Hint : Matrix (Fin N) (Fin N) ℂ}
+    (hH : Hint.IsHermitian) (hnc : ¬ Commute P Hint) :
+    ∃ (t : ℝ) (ρ : Matrix (Fin N) (Fin N) ℂ),
+      (P * (intFlow Hint t * ρ * (intFlow Hint t)ᴴ)).trace ≠ (P * ρ).trace := by
+  have hinv : ¬ ∀ t : ℝ, (intFlow Hint t)ᴴ * P * intFlow Hint t = P :=
+    fun h => hnc (commute_of_pointer_invariant hH h)
+  push Not at hinv
+  obtain ⟨t, ht⟩ := hinv
+  obtain ⟨ρ, hρ⟩ := exists_trace_mul_ne ht
+  refine ⟨t, ρ, ?_⟩
+  calc (P * (intFlow Hint t * ρ * (intFlow Hint t)ᴴ)).trace
+      = ((P * intFlow Hint t * ρ) * (intFlow Hint t)ᴴ).trace := by
+        simp only [Matrix.mul_assoc]
+    _ = ((intFlow Hint t)ᴴ * (P * intFlow Hint t * ρ)).trace := Matrix.trace_mul_comm _ _
+    _ = (((intFlow Hint t)ᴴ * P * intFlow Hint t) * ρ).trace := by
+        simp only [Matrix.mul_assoc]
+    _ ≠ (P * ρ).trace := hρ
+
 /-! ### The class: pointer-diagonal interactions -/
 
 /-- Every computational pointer projection `|eᵢ⟩⟨eᵢ| = Matrix.single i i 1`

@@ -9,6 +9,15 @@ of it, and probability is read as a fraction of ontic volume. This repository is
 Lean 4 and Mathlib formalisation of the finite-dimensional quantum mechanics that
 results.
 
+Constraint-Surface Dynamics provides a machine-checked reconstruction of the
+principal finite-dimensional measurement statistics and update structure on its
+stated ontic witness: deterministic ontic dynamics give definite context-indexed
+outcomes without stochastic collapse or branching; Born weights follow from the
+Fubini-Study/Kähler moment-map geometry and are realised as the measures of
+explicit ontic fibre outcome cells rather than postulated as an independent
+probability law; and outcome conditioning reproduces the Lüders update.
+Basis-selective decoherence is proved for a supplied measurement context.
+
 ## Results
 
 | Result | Theorem | `#print axioms` |

@@ -1870,4 +1870,23 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Einselection.einselection_commutation_contrast
 
+-- The criterion upgraded to a CHARACTERISATION (2026-08-27, same day): invariance at every time
+-- FORCES commutation -- differentiate P.U(t) = U(t).P at t = 0 (hasDerivAt_exp_smul_const), strip
+-- the scalar. pointer_invariant_iff_commute: the pointer observables of H_int are EXACTLY the
+-- commuting ones, which is the form the einselection literature intends. The disturbance side is
+-- general too: exists_population_ne_of_not_commute (a non-commuting observable is detected by some
+-- trace-functional at some time; the witness rho is a matrix, the state-level witness being the
+-- N=2 contrast). Residue unchanged: H_int is the measurement context, an input.
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.commute_of_pointer_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.commute_of_pointer_invariant
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.pointer_invariant_iff_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.pointer_invariant_iff_commute
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.exists_population_ne_of_not_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.exists_population_ne_of_not_commute
+
 end CSD.Tests.AxiomAudit

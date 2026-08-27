@@ -2120,6 +2120,20 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.shearDeIsolation_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.shearDeIsolation_born
 
+-- Externality, the before/after pair (ShearWitness, 2026-08-27; the record-network programme's
+-- necessary condition, first brick).  outcome_system_dependent_before (A1, the CONTENTFUL half):
+-- before the stroke a system-only transformation moving the selector across basins changes which
+-- outcome gets recorded -- the outcome information is still in the system, and the stroke is what
+-- exports it to the register.  readout_system_invariant (A2): the displayed record is invariant
+-- under EVERY system-side map -- ⚠️ VACUOUS BY ARCHITECTURE (the readout reads the register
+-- factor only; the proof is rfl), pinned so it is documented rather than re-landed as content.
+-- Both joined DynamicMeasurementClosure as fields the same day (A3).
+/-- info: 'CSD.RecordLayer.outcome_system_dependent_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.outcome_system_dependent_before
+
+/-- info: 'CSD.RecordLayer.readout_system_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.readout_system_invariant
+
 -- Measurement (record layer / MD-1, 2026-07-25): the architecture in one object — context (measurement
 -- type, fixes the basins/probabilities) + unknown microstate ξ → outcome (the basin it occupies) →
 -- record. outcome_eq_some_iff (microstate selects its basin), record_of_mem_basin (combined result IS
