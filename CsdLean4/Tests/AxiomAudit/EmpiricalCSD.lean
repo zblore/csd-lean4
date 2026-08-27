@@ -1828,4 +1828,46 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QuantumChaos.deficitKick_phaseFlip_ledger
 
+-- Einselection commutation criterion (PointerCommutation, 2026-08-27): the
+-- Hamiltonian-level pointer-basis criterion [P, H_int] = 0, discharging in part Build 15a's
+-- honest-scope note ("the basis is the de-isolation's by construction"). intFlow Hint t =
+-- exp (t • (−i • Hint)) is unitary (via StoneC1's exp_smul_unitary); commutation transfers
+-- to the flow (Commute.exp_right), so a commuting P is a CONSTANT OF THE INTERACTION MOTION
+-- (pointer_invariant_of_commute, Heisenberg U†PU = P), its populations exactly conserved in
+-- every state (pointer_population_conserved), sector states confined
+-- (sector_state_invariant); pointer_basis_of_commuting packages all three for a family —
+-- commutation ALONE is load-bearing, no projection hypothesis. Class-level:
+-- every computational projection |eᵢ⟩⟨eᵢ| commutes with EVERY pointer-diagonal interaction
+-- (pointer_basis_of_diagonal), whose flow is diagonal phases (intFlow_diagonal) preserving
+-- every coherence modulus (coherence_modulus_preserved) — flow preserves, the LF6-B trace
+-- selects. Contrast: the Hadamard-rotated projection |+⟩⟨+| = qmH|e₀⟩⟨e₀|qmH fails the
+-- criterion against diag(0,π) (rotatedProj_not_commute) and its own-eigenstate population is
+-- driven 1 → 0 in one stroke (noncommuting_population_disturbed);
+-- einselection_commutation_contrast bundles the separation. RESIDUE: H_int is the
+-- measurement context, an input — the criterion einselects GIVEN the interaction.
+-- Foundational triple only (off busch).
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.pointer_invariant_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.pointer_invariant_of_commute
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.pointer_basis_of_commuting' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.pointer_basis_of_commuting
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.coherence_modulus_preserved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.coherence_modulus_preserved
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.pointer_basis_of_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.pointer_basis_of_diagonal
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.noncommuting_population_disturbed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.noncommuting_population_disturbed
+
+/-- info: 'CSD.Empirical.CSDBridge.Einselection.einselection_commutation_contrast' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Einselection.einselection_commutation_contrast
+
 end CSD.Tests.AxiomAudit

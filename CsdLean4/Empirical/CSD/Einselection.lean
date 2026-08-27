@@ -114,6 +114,13 @@ predictability-sieve dynamics, a Hamiltonian-level account) is **not** modelled 
 here the basis is the de-isolation's by construction, and the theorem is that
 decoherence is basis-**selective** (diagonal in exactly one basis up to
 degeneracy), not that the basis is derived from an environment Hamiltonian.
+*Superseded in part 2026-08-27* (`Empirical/CSD/PointerCommutation.lean`): the
+Hamiltonian-level commutation criterion `[P, H_int] = 0` is now a theorem —
+a commuting pointer observable is a constant of the interaction flow, its
+populations exactly conserved (`pointer_basis_of_commuting`), while a
+non-commuting projection is disturbed (`einselection_commutation_contrast`).
+Given `H_int`, the pointer basis is the commutation-selected one; the
+interaction itself remains an input (the residue).
 
 All exports are foundational-triple-only (off `busch_effect_gleason`): the result
 is concrete `Matrix` arithmetic on `Fin 2` over the LF6-B `decohereReduced`.
