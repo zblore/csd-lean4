@@ -41,7 +41,14 @@ vector. That is **feature (2)** of the §3c decomposition, and it is what this f
   instantiate it. Unlike the CDF witness this privileges no outcome.
   ⚠️ **Neither witness is the dynamical result.** The CDF cells are stacked in index order; the race
   cells are symmetric but their clock law is *posited*, and **no flow carves either family**. See
-  `specs/q12-fibre-mechanism-scoping.md` (`Q12-c`, and `Q12-d` which is blocked).
+  `specs/q12-fibre-mechanism-scoping.md` (`Q12-c`, and `Q12-d` — since retired 2026-08-24; the
+  successor question is the `H_int` readout question).
+  *Addendum 2026-08-27:* a **third** witness whose basins ARE flow-carved landed —
+  `RecordLayer/ShearDeIsolation.lean`, ★★ `shearDeIsolationInteraction`: pointer = the constructed
+  shear propagator's readout (`cellPointer_outcomeSector_eq_readout`), `basin_rate` discharged from
+  ★★ `shear_sector_born`. The statement above remains true of *these two* families; the surviving
+  D1 residue is the propagator's Hamiltonian generation, stated not formalised
+  (`ShearWitness` item 1).
 
 ## The STATISTICAL residual is not a wall — it is LLN over the unknown microstate
 
@@ -63,6 +70,11 @@ field*, and no interaction Hamiltonian `H_int(M)` whose flow generates those bas
 anywhere in the corpus. That is the open Paper D obligation (`DeIsolationFlow.lean`, plan §3c, step
 2b′), and this file does not touch it. Reading "the rates are the moment map" as "the dynamics are
 solved" is exactly the inference this note exists to block.
+*Addendum 2026-08-27:* the readout∘flow shape of that obligation is now exhibited
+(`RecordLayer/ShearDeIsolation.lean` — `basin_rate` discharged from the **constructed** shear
+propagator via `shear_sector_born`); what survives of the correction is its core: the propagator's
+`H_int(M)` generation is stated, not formalised (the permanently-scoped symplectic row), so "a
+formalised Hamiltonian generates the basins" remains exactly as unclaimed as this note demands.
 
 ## References
 `specs/record-layer-plan.md` §3c (the first-passage race; step 2b′, feature 2); `LF4/MomentMap.lean`
@@ -118,7 +130,9 @@ large numbers over the unknown initial microstate (`Measurement.bornMeasurement_
 is **not** supplied is the dynamics — no interaction Hamiltonian `H_int(M)` whose flow generates
 these basins is constructed anywhere in the corpus (`DeIsolationFlow.lean`, plan §3c, step 2b′).
 The witnesses below (`cdfDeIsolationInteraction`, `raceDeIsolationInteraction`) discharge
-`basin_rate` from *defined* cells — satisfiability, not a flow. -/
+`basin_rate` from *defined* cells — satisfiability, not a flow. A third witness discharges it from
+the constructed de-isolation propagator: `RecordLayer/ShearDeIsolation.lean`
+(`shearDeIsolationInteraction`, 2026-08-27), with the Hamiltonian-generation caveat carried there. -/
 structure DeIsolationInteraction {F : Type*} [MeasurableSpace F] (ν : Measure F)
     (ψ : EuclideanSpace ℂ (Fin n)) where
   /-- The de-isolation flow's pointer readout on the fibre. -/

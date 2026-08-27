@@ -457,6 +457,7 @@ public import CsdLean4.RecordLayer.HamiltonianSignature
 public import CsdLean4.RecordLayer.OnticComposite
 public import CsdLean4.RecordLayer.OnticMarginals
 public import CsdLean4.RecordLayer.MomentMapRace
+public import CsdLean4.RecordLayer.ShearDeIsolation
 public import CsdLean4.RecordLayer.Measurement
 public import CsdLean4.RecordLayer.ProjectiveRecord
 public import CsdLean4.RecordLayer.FibredSigma

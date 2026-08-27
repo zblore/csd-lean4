@@ -2087,6 +2087,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.raceDeIsolationInteraction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.raceDeIsolationInteraction
 
+-- Q12 successor question, executed in its honest form (ShearDeIsolation, 2026-08-27): the THIRD
+-- DeIsolationInteraction witness, and the first whose pointer is the readout of the CONSTRUCTED
+-- de-isolation propagator rather than a defined cell family.  The pointer is cellPointer over the
+-- flow-carved outcome sectors Omega_i = Phi_{0->1}^{-1}(B_i) of the shear protocol driven by the
+-- context-fixed momentContext basins; cellPointer_outcomeSector_eq_readout certifies it equals
+-- (readout . flow).getD i0 POINTWISE -- the p = readout . flow(H_int(M)) shape of step 2b' as a
+-- theorem, not a reading.  basin_rate is DISCHARGED from shear_sector_born (the bankless mirror of
+-- swap_sector_born: readyPrep [psi] (Omega_i) = the moment-map weight, via
+-- measure_outcomeSector_eq_of_correlates, so the discharged correlation theorem is consumed).
+-- The psi-dependence lives ONLY in the ontic preparation measure readyPrep [psi]; readout arcs,
+-- basins and propagator are context-fixed.  ⚠️ CARRIED, NOT LAUNDERED: the propagator's Hamiltonian
+-- generation is stated, not formalised (ShearWitness item 1 -- no manifold symplectic API, the
+-- permanently-scoped row), and the coupling is engineered (witness, not derivation).  Read these
+-- pins as "basin_rate discharged from the constructed de-isolation propagator", never as a
+-- formalised H_int.
+/-- info: 'CSD.RecordLayer.readyPrep_selReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.readyPrep_selReady
+
+/-- info: 'CSD.RecordLayer.shear_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.shear_sector_born
+
+/-- info: 'CSD.RecordLayer.cellPointer_outcomeSector_eq_readout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.cellPointer_outcomeSector_eq_readout
+
+/-- info: 'CSD.RecordLayer.shearDeIsolationInteraction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.shearDeIsolationInteraction
+
+/-- info: 'CSD.RecordLayer.shearDeIsolationInteraction_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.shearDeIsolationInteraction_pointer
+
+/-- info: 'CSD.RecordLayer.shearDeIsolation_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.shearDeIsolation_born
+
 -- Measurement (record layer / MD-1, 2026-07-25): the architecture in one object — context (measurement
 -- type, fixes the basins/probabilities) + unknown microstate ξ → outcome (the basin it occupies) →
 -- record. outcome_eq_some_iff (microstate selects its basin), record_of_mem_basin (combined result IS

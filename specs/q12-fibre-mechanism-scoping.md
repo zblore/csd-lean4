@@ -431,6 +431,40 @@ partition of ONE uniformly-distributed fibre coordinate. Nothing needs supplying
 the `H_int` question, and unlike the withdrawn version it IS about Σ's dynamics. Retiring the mixing
 route was right; the successor question was mis-stated.
 
+> ### ★ SUCCESSOR QUESTION — EXECUTED IN ITS HONEST FORM 2026-08-27
+>
+> `RecordLayer/ShearDeIsolation.lean`: ★★ `shearDeIsolationInteraction` — the **third**
+> `DeIsolationInteraction` witness, and the first whose pointer is the **readout of the constructed
+> de-isolation propagator** rather than a defined cell family. ★ `cellPointer_outcomeSector_eq_readout`
+> certifies the shape pointwise: `pointer x = (readout (Φ_{0→1} x)).getD i₀` — the
+> `p = readout ∘ flow(H_int(M))` obligation as a theorem of the construction. `basin_rate` is
+> **discharged from the dynamics**: ★★ `shear_sector_born` (the bankless mirror of
+> `swap_sector_born`) gives `readyPrep [ψ] (Ωᵢ) = momentMap [ψ] i` via
+> `measure_outcomeSector_eq_of_correlates`, so the discharged correlation theorem is genuinely
+> consumed. The ψ-dependence lives **only** in the ontic preparation measure
+> `readyPrep [ψ] = epistemicMeasure [ψ] ⊗ readyMeasure`; the readout arcs, the basins
+> (`momentContext`) and the propagator are all context-fixed — which is exactly the scoping above:
+> cell shapes bookkeeping, fibre/rates/selection carried.
+>
+> ⚠️ **What this is NOT, carried not laundered.** (1) Not a formalised `H_int`: the propagator's
+> Hamiltonian generation is stated, not formalised (`ShearWitness` item 1 — no manifold symplectic
+> API in Mathlib, the permanently-scoped `reconstruction-status.md` §2a row). What the brick
+> discharges is *basin_rate from the constructed de-isolation propagator*; the surviving D1 residue
+> is precisely that formalisation gap. (2) The coupling is engineered (the ontic von Neumann shape,
+> coupled to the outcome index) — a witness that a de-isolation interaction with the required
+> readout exists on the arena, not a derivation that a natural interaction must take this form.
+> (3) The everywhere-correlation is impossible (`no_everywhere_correlation`); the witness's
+> correlation holds on the selector-and-ready sectors, which exhaust the ready preparation
+> (`readyPrep_selReady_cover`) — the exceptional set is the null seam, where the constraint said it
+> must live.
+>
+> ★ **Process note.** The assembly was already three-quarters landed and distributed:
+> `swap_sector_born` (SwapClosure) had the dynamical Born on the *swap* arena, `shear_correlates` +
+> `shear_selector_born` the shear-side pieces, `cellPointer` the totalisation. What was missing was
+> the bankless sector-Born on the shear arena and the bridge to `DeIsolationInteraction` — the
+> grep-the-neighbouring-module lesson of Q12-a, one layer up: the obligation's shape was sitting in
+> the corpus unassembled.
+
 **What was salvaged instead** — ★★ `MeasureTheory.tsum_measure_lt_returnTime` (Kac's formula,
 `Mathlib/Dynamics/Kac.lean`, Cat-1, absent from Mathlib). Kac is the one piece that is
 **regime-correct**: it needs no rarity hypothesis, holding for *any* cell of positive measure. It
@@ -464,6 +498,8 @@ it says what an escape must avoid rather than what happens to be present.
   nonnegativity killing one radial ansatz. `sigma-fibre-contextuality.md` §"This is NOT Gleason".
 * **Not** resuming the base-only general-`N` route (parked 2026-07-29, and still parked).
 * **Not** claiming any de-isolation Hamiltonian exists. `D1` is untouched by every brick above.
+  *(2026-08-27: the successor-question brick discharges the readout∘flow shape from the constructed
+  propagator; the non-goal stands — no formalised `H_int` is claimed, per `ShearWitness` item 1.)*
 
 ---
 

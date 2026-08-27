@@ -398,6 +398,26 @@ theorem shear_base_marginal_unchanged (idx : Xsel → Fin K) (hidx : Measurable 
 def selReady (idx : Xsel → Fin K) (i : Fin K) : Set (Xsel × LF4.KTorus) :=
   {p | idx p.1 = i ∧ p.2 ∈ readyArc K}
 
+omit [MeasurableSpace Xsel] in
+/-- The selector-and-ready sector factors as a product: selector fibre × ready arc. -/
+theorem selReady_eq_prod (idx : Xsel → Fin K) (i : Fin K) :
+    selReady idx i = (idx ⁻¹' {i}) ×ˢ readyArc K := by
+  ext p
+  simp [selReady, Set.mem_prod]
+
+theorem measurableSet_selReady (idx : Xsel → Fin K) (hidx : Measurable idx) (i : Fin K) :
+    MeasurableSet (selReady idx i) := by
+  rw [selReady_eq_prod]
+  exact (hidx (measurableSet_singleton i)).prod measurableSet_readyArc
+
+omit [MeasurableSpace Xsel] in
+/-- Distinct selector-and-ready sectors are disjoint: the selector reads one index. -/
+theorem selReady_pairwiseDisjoint (idx : Xsel → Fin K) :
+    Pairwise (Function.onFun Disjoint (selReady idx)) := by
+  intro i j hij
+  refine Set.disjoint_left.mpr fun p hpi hpj => ?_
+  exact hij (hpi.1.symm.trans hpj.1)
+
 /-- **★ `CorrelatesOn` DISCHARGED.** The interaction carries a ready pointer, over a selector
 reading `i`, into the pointer arc displaying `i`. This is the correlation theorem the Paper D
 obligation asks for — here proved of an explicit propagator rather than assumed. -/

@@ -39,6 +39,15 @@ whose basins are `cdfCell (moment map)`. This file proves the Born *conclusion* 
 measures; it does **not** derive the basins from a Hamiltonian. `map_pointer_apply` makes the
 remaining obligation precise: supply a measurable `p` with `fibreTypicality (p⁻¹{i}) = ‖ψ i‖²`.
 
+*Status 2026-08-27* (`RecordLayer/ShearDeIsolation.lean`): the readout∘flow **shape** is exhibited —
+`shearDeIsolationInteraction`'s pointer is the constructed shear propagator's readout
+(`cellPointer_outcomeSector_eq_readout`, pointwise) and its `basin_rate` is discharged from
+`shear_sector_born`, on the fibred arena `Σ_sel × T²_R` with the ontic ready preparation
+`readyPrep [ψ]` (not on this file's `[0,1)` fibre — per the 2026-08-26 scoping the cell shapes are
+bookkeeping; the fibre, rates and selection are what is carried). The surviving residue is
+`ShearWitness` item 1: the propagator's Hamiltonian generation is stated, not formalised (the
+permanently-scoped symplectic row).
+
 ## References
 `specs/record-layer-plan.md` §3c (the de-isolation flow / first-passage race; step 2b′);
 `SigmaLayer/BornFibrePartition.lean` (the fibre partition — `cdfCell`, `bornRate`, `volume_bornCell`,
