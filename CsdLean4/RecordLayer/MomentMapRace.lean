@@ -107,15 +107,18 @@ theorem fibreTypicality_bornCell_eq_momentMap (ψ : EuclideanSpace ℂ (Fin n)) 
   exact bornRate_eq_momentMap ψ hψ0 hψ i
 
 /-- **A de-isolation interaction (the residual kinematic input for step 2b′).** The data a
-measurement's de-isolation dynamics must present to the fibre: a measurable pointer `ℝ → Fin n` (the
+measurement's de-isolation dynamics must present to the fibre: a measurable pointer `F → Fin n` (the
 flow's readout) whose basins carry the (moment-map) rates `bornRate ψ`. The Born outcome distribution
 is then a theorem (`born`), not a posit.
 
-The `basin_rate` field is the measurement context's *specification* — which observable the apparatus
-resolves — not an open research obligation: the de-isolation flow is just the deterministic
-microstate→basin map, and the probabilities are the law of large numbers over the unknown initial
-microstate (`Measurement.bornMeasurement_frequency`). Nothing here needs a bespoke Hamiltonian
-derivation beyond the standard Papers A/D typicality story. -/
+⚠️ The `basin_rate` field is a **hypothesis field** — the open dynamical obligation, not a settled
+specification (see the 2026-07-30 correction in the file header, which this docstring previously
+contradicted). *Given* the basins no stochastic postulate remains: the probabilities are the law of
+large numbers over the unknown initial microstate (`Measurement.bornMeasurement_frequency`). What
+is **not** supplied is the dynamics — no interaction Hamiltonian `H_int(M)` whose flow generates
+these basins is constructed anywhere in the corpus (`DeIsolationFlow.lean`, plan §3c, step 2b′).
+The witnesses below (`cdfDeIsolationInteraction`, `raceDeIsolationInteraction`) discharge
+`basin_rate` from *defined* cells — satisfiability, not a flow. -/
 structure DeIsolationInteraction {F : Type*} [MeasurableSpace F] (ν : Measure F)
     (ψ : EuclideanSpace ℂ (Fin n)) where
   /-- The de-isolation flow's pointer readout on the fibre. -/
