@@ -55,6 +55,10 @@ jobs:
       - name: Update deps and fetch Mathlib cache
         run: |
           lake update mathlib
+          # Two passes: a partial first download (the 2026-08-24 flake — one Mathlib
+          # module's artifacts missing from an in-flight master cache) is completed by
+          # the second, which is a cheap no-op when the first was already complete.
+          lake exe cache get
           lake exe cache get
 
       # Deliberately NOT --wfail: against a moving Mathlib, deprecation warnings fire
