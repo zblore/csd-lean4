@@ -1,0 +1,14 @@
+# Line-ending pin (2026-08-29). Every tracked file is LF in the index (700/700 at
+# the time of adding); this declares it so Windows checkouts with
+# core.autocrlf=true stop wanting CRLF working copies — the source of phantom
+# modified-badges in editors after LF-writing tools touch files.
+* text=auto
+*.lean text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.tsv text eol=lf
+*.sh text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.cff text eol=lf
