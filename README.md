@@ -73,7 +73,8 @@ lake build CsdLeanTests  # the axiom audit: REQUIRED, root target does NOT run i
 | What is open, with effort grades | [`specs/BACKLOG.md`](specs/BACKLOG.md) |
 | How the code is organised | [`CONVENTIONS.md`](CONVENTIONS.md), [`specs/INDEX.md`](specs/INDEX.md) |
 | Release history | [`specs/archive/HISTORY.md`](specs/archive/HISTORY.md) |
-| The papers | [`CITATION.cff`](CITATION.cff); constraintsurfacedynamics.com |
+| The papers | [`CITATION.cff`](CITATION.cff); [constraintsurfacedynamics.com](https://www.constraintsurfacedynamics.com) |
+| Plain-language definitions | [glossary.constraintsurfacedynamics.com](https://glossary.constraintsurfacedynamics.com) |
 
 ## Layout
 
@@ -92,4 +93,5 @@ lake build CsdLeanTests  # the axiom audit: REQUIRED, root target does NOT run i
 
 Repository: [`CITATION.cff`](CITATION.cff), carrying ORCID and repository URL.
 Programme: the LF-series Zenodo record named there.
-Background: constraintsurfacedynamics.com.
+Background: [constraintsurfacedynamics.com](https://www.constraintsurfacedynamics.com).
+Glossary: [glossary.constraintsurfacedynamics.com](https://glossary.constraintsurfacedynamics.com), the plain-language companion to the module headers.
