@@ -1,8 +1,8 @@
 # Amplitude amplification (Brassard–Høyer–Mosca–Tapp) — scoping and plan
 
-**Status:** scoped 2026-08-29 and **EXECUTED same day (AA-1..AA-4, then the AA-5a slice after
-its gate run)** — see the execution record before the references. AA-5b stays gated on the
-tensor generalization; AA-6 not scheduled. Gates and abort criteria on the
+**Status:** scoped 2026-08-29 and **FULLY EXECUTED same day — AA-1..AA-4, AA-5a, and the
+AA-5b assembly (amplitude estimation, BHMT Thm 12)** — see the execution record before the
+references. Only AA-6 (QSearch, unknown `a`) remains, and it was never scheduled. Gates and abort criteria on the
 Q11 mold; walls were pre-checked (the Q12 lesson: probe before rating), and none fired.
 
 **Provenance.** Candidate 2 of the five from the 2026-08-28 algorithms discussion (candidate 1,
@@ -265,6 +265,25 @@ unchanged, pins untouched; `qftInvCount_tensorCN` closes by cross-module `@[expo
 against `applyQFTinv`). 2 new MathlibStaging pins. What remains of AA-5b: the eigen
 -decomposition of `ampState`, the kickback state `(1/√T)Σₓ |x⟩ ⊗ Qˣψ`, its marginal via the
 mixture law, and the per-branch `4/π²` instantiation — one assembly session, no plumbing left.
+
+**AA-5b assembly EXECUTED 2026-08-29, same session — the plan is complete.**
+`Mathlib/QuantumInfo/AmplitudeEstimation.lean` (~230 lines, Cat-1), where the three prepared
+layers meet: `kickbackState` `(1/√T)Σₓ|x⟩ ⊗ Qˣψ` is proved EQUAL to the two-branch phase form
+(★ `kickbackState_ampState`: the `ampState` eigen-decomposition threaded through the iterated
+eigen-action, branch coefficients of modulus `1/2`, orthogonal eigenvector companions), the
+counting marginal after the partial inverse QFT is EXACTLY the half-half mixture of the two
+single-phase distributions (★ `amplitude_estimation_marginal`, an equality — the mixture law
+doing its job), ★★ `amplitude_estimation` gives `≥ 2/π²` at any index in the closest-index
+window of `θ/π`, and ★ `amplitude_estimation_close` bounds the estimate error by
+`π√(a(1−a))/T + π²/(4T²)` (Lemma 7 at `ε = π/(2T)` — sharper than the paper's `π/T`
+constant). Honest scope recorded in the module: single-branch single-index bound; BHMT's
+`8/π²` both-branch refinement is downstream arithmetic on the exact marginal, not attempted.
+Supporting additions: `ampStep_iterate_eigenMinus`/`iterate_add`/`iterate_smul`,
+`ampState_eq_eigen`, the eigen inner products (orthogonality, `‖v±‖² = 2`) in
+AmplitudeAmplification.lean; `tensorState_add_right`, `matrixLeft_add`, and the two-branch
+mixture corollary `probLeft_add_tensor_orthogonal` in JointRegister.lean. 4 new MathlibStaging
+pins; glossary entry `amplitude-estimation` (121 entries). The whole AA-5b assembly ran
+~70 minutes wall-clock including build iterations.
 
 One more snag for the pile: `push_cast` rewrites `↑(Real.sin x)` to `Complex.sin ↑x`
 mid-goal, splitting what `linear_combination` needs to be ONE atom — prefer targeted

@@ -659,6 +659,117 @@ theorem ampStep_iterate_eigenPlus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b
     push_cast
     ring
 
+/-- **Iterated eigen-action, `−` branch:** `j` steps scale the `−` eigenvector by
+`e^{−2ijθ}`. -/
+theorem ampStep_iterate_eigenMinus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) (j : ℕ) :
+    (ampStep (ampState g b θ) G)^[j] (eigenMinus g b)
+      = Complex.exp ((-(2 * j * θ) : ℝ) * Complex.I) • eigenMinus g b := by
+  induction j with
+  | zero =>
+    rw [Function.iterate_zero_apply,
+      show ((-(2 * (0 : ℕ) * θ) : ℝ)) = 0 from by push_cast; ring, Complex.ofReal_zero,
+      zero_mul, Complex.exp_zero, one_smul]
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', ih, ampStep_smul,
+      ampStep_eigenMinus hgg hbb hgb hgsupp hbsupp θ, smul_smul, ← Complex.exp_add]
+    congr 2
+    push_cast
+    ring
+
+/-- The iterated amplification step is additive. -/
+lemma ampStep_iterate_add (φ : EuclideanSpace ℂ ι) (G : Finset ι) (j : ℕ)
+    (ψ χ : EuclideanSpace ℂ ι) :
+    (ampStep φ G)^[j] (ψ + χ) = (ampStep φ G)^[j] ψ + (ampStep φ G)^[j] χ := by
+  induction j with
+  | zero => rw [Function.iterate_zero_apply, Function.iterate_zero_apply,
+      Function.iterate_zero_apply]
+  | succ k ih => rw [Function.iterate_succ_apply', Function.iterate_succ_apply',
+      Function.iterate_succ_apply', ih, ampStep_add]
+
+/-- The iterated amplification step is `ℂ`-homogeneous. -/
+lemma ampStep_iterate_smul (φ : EuclideanSpace ℂ ι) (G : Finset ι) (j : ℕ) (k : ℂ)
+    (ψ : EuclideanSpace ℂ ι) :
+    (ampStep φ G)^[j] (k • ψ) = k • (ampStep φ G)^[j] ψ := by
+  induction j with
+  | zero => rw [Function.iterate_zero_apply, Function.iterate_zero_apply]
+  | succ n ih => rw [Function.iterate_succ_apply', Function.iterate_succ_apply', ih,
+      ampStep_smul]
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- **The eigen-decomposition of the rotation-plane state:**
+`ampState γ = (−i/2)e^{iγ}·v₊ + (i/2)e^{−iγ}·v₋` — branch weights `1/4·‖v₊‖² = 1/2` each. The
+bridge from the amplification plane to the phase-estimation branches. -/
+lemma ampState_eq_eigen (g b : EuclideanSpace ℂ ι) (γ : ℝ) :
+    ampState g b γ
+      = (-Complex.I / 2 * Complex.exp ((γ : ℝ) * Complex.I)) • eigenPlus g b
+        + (Complex.I / 2 * Complex.exp ((-γ : ℝ) * Complex.I)) • eigenMinus g b := by
+  rw [show Complex.exp ((-γ : ℝ) * Complex.I)
+      = (Real.cos γ : ℂ) - (Real.sin γ : ℂ) * Complex.I from by
+    rw [exp_ofReal_mul_I, Real.cos_neg, Real.sin_neg, Complex.ofReal_neg]; ring,
+    exp_ofReal_mul_I]
+  ext i
+  simp only [eigenPlus, eigenMinus, ampState_apply, WithLp.ofLp_add, Pi.add_apply,
+    WithLp.ofLp_sub, Pi.sub_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul]
+  linear_combination ((Real.sin γ : ℂ) * g i + (Real.cos γ : ℂ) * b i) * Complex.I_mul_I
+
+omit [DecidableEq ι] in
+/-- The two eigenvectors are orthogonal. -/
+lemma inner_eigenPlus_eigenMinus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) :
+    inner ℂ (eigenPlus g b) (eigenMinus g b) = 0 := by
+  have hbg : inner ℂ b g = 0 := by rw [← inner_conj_symm, hgb, map_zero]
+  simp only [eigenPlus, eigenMinus, inner_add_left, inner_sub_right, inner_smul_left,
+    inner_smul_right, hgg, hbb, hgb, hbg, Complex.conj_I]
+  linear_combination Complex.I_mul_I
+
+omit [DecidableEq ι] in
+/-- `‖v₊‖² = 2`. -/
+lemma inner_eigenPlus_self (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) :
+    inner ℂ (eigenPlus g b) (eigenPlus g b) = 2 := by
+  have hbg : inner ℂ b g = 0 := by rw [← inner_conj_symm, hgb, map_zero]
+  simp only [eigenPlus, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
+    hgg, hbb, hgb, hbg, Complex.conj_I]
+  linear_combination (-1 : ℂ) * Complex.I_mul_I
+
+omit [DecidableEq ι] in
+/-- `‖v₋‖² = 2`. -/
+lemma inner_eigenMinus_self (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) :
+    inner ℂ (eigenMinus g b) (eigenMinus g b) = 2 := by
+  have hbg : inner ℂ b g = 0 := by rw [← inner_conj_symm, hgb, map_zero]
+  simp only [eigenMinus, inner_sub_left, inner_sub_right, inner_smul_left, inner_smul_right,
+    hgg, hbb, hgb, hbg, Complex.conj_I]
+  linear_combination (-1 : ℂ) * Complex.I_mul_I
+
+omit [DecidableEq ι] in
+/-- The coordinate-sum form of `‖v₊‖² = 2`. -/
+lemma sum_sq_eigenPlus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) :
+    ∑ y, ‖eigenPlus g b y‖ ^ 2 = 2 := by
+  have h : (inner ℂ (eigenPlus g b) (eigenPlus g b) : ℂ)
+      = ((∑ y, ‖eigenPlus g b y‖ ^ 2 : ℝ) : ℂ) := by
+    rw [PiLp.inner_apply]
+    simp only [RCLike.inner_apply', RCLike.conj_mul]
+    norm_cast
+  have h2 := h.symm.trans (inner_eigenPlus_self hgg hbb hgb)
+  exact_mod_cast h2
+
+omit [DecidableEq ι] in
+/-- The coordinate-sum form of `‖v₋‖² = 2`. -/
+lemma sum_sq_eigenMinus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) :
+    ∑ y, ‖eigenMinus g b y‖ ^ 2 = 2 := by
+  have h : (inner ℂ (eigenMinus g b) (eigenMinus g b) : ℂ)
+      = ((∑ y, ‖eigenMinus g b y‖ ^ 2 : ℝ) : ℂ) := by
+    rw [PiLp.inner_apply]
+    simp only [RCLike.inner_apply', RCLike.conj_mul]
+    norm_cast
+  have h2 := h.symm.trans (inner_eigenMinus_self hgg hbb hgb)
+  exact_mod_cast h2
+
 end EigenStructure
 
 /-! ## The estimate's error algebra (BHMT Lemma 7 shape) -/

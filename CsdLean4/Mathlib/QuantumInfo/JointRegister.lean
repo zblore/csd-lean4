@@ -108,6 +108,16 @@ omit [Fintype ι₁] [Fintype ι₂] in
   by_cases hc : c' = c <;> by_cases hy : y' = y <;>
     simp [hc, hy, Prod.ext_iff]
 
+omit [Fintype ι₁] [Fintype ι₂] [DecidableEq ι₁] [DecidableEq ι₂] in
+/-- The tensor is additive in the second factor. -/
+lemma tensorState_add_right (φ : EuclideanSpace ℂ ι₁) (ψ χ : EuclideanSpace ℂ ι₂) :
+    tensorState φ (ψ + χ) = tensorState φ ψ + tensorState φ χ := by
+  ext p
+  obtain ⟨c, y⟩ := p
+  rw [WithLp.ofLp_add, Pi.add_apply, tensorState_apply, tensorState_apply, tensorState_apply,
+    WithLp.ofLp_add, Pi.add_apply]
+  ring
+
 /-! ## A matrix kernel on the first factor -/
 
 /-- A matrix kernel acting on the **first factor only**: coordinate
@@ -163,6 +173,18 @@ lemma matrixLeft_tensorState (M : Matrix ι₁ ι₁ ℂ) (φ : EuclideanSpace �
   obtain ⟨c, y⟩ := p
   rw [matrixLeft_apply, tensorState_apply, toEuclideanLin_coord, Finset.sum_mul]
   exact Finset.sum_congr rfl fun x _ => by rw [tensorState_apply, mul_assoc]
+
+omit [DecidableEq ι₁] [Fintype ι₂] [DecidableEq ι₂] in
+/-- The partial matrix action is additive. -/
+lemma matrixLeft_add (M : Matrix ι₁ ι₁ ℂ) (Φ Ψ : EuclideanSpace ℂ (ι₁ × ι₂)) :
+    matrixLeft M (Φ + Ψ) = matrixLeft M Φ + matrixLeft M Ψ := by
+  ext p
+  obtain ⟨c, y⟩ := p
+  rw [WithLp.ofLp_add, Pi.add_apply, matrixLeft_apply, matrixLeft_apply, matrixLeft_apply,
+    ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun x _ => ?_
+  rw [WithLp.ofLp_add, Pi.add_apply]
+  ring
 
 /-! ## The second-register slice and the Born marginal on the first register -/
 
@@ -253,5 +275,22 @@ theorem probLeft_sum_tensor_orthogonal {κ : Type*} (s : Finset κ)
     rw [probLeft_eq_inner, hslice, sum_inner, Finset.sum_congr rfl hrow]
     norm_cast
   exact_mod_cast hC
+
+omit [Fintype ι₁] [DecidableEq ι₁] [DecidableEq ι₂] in
+/-- ★ **The two-branch mixture law:** for two product states with orthogonal second factors,
+the first-register marginal is the sum of the branch marginals — the form the two-eigenvector
+kickback state consumes. -/
+theorem probLeft_add_tensor_orthogonal (φ₁ φ₂ : EuclideanSpace ℂ ι₁)
+    (u₁ u₂ : EuclideanSpace ℂ ι₂) (h12 : inner ℂ u₁ u₂ = 0) (c : ι₁) :
+    probLeft (tensorState φ₁ u₁ + tensorState φ₂ u₂) c
+      = ‖φ₁ c‖ ^ 2 * ∑ y, ‖u₁ y‖ ^ 2 + ‖φ₂ c‖ ^ 2 * ∑ y, ‖u₂ y‖ ^ 2 := by
+  have h21 : inner ℂ u₂ u₁ = 0 := by rw [← inner_conj_symm, h12, map_zero]
+  have key := probLeft_sum_tensor_orthogonal (Finset.univ : Finset (Fin 2))
+    ![φ₁, φ₂] ![u₁, u₂]
+    (by
+      intro k _ l _ hkl
+      fin_cases k <;> fin_cases l <;> simp_all) c
+  simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at key
+  exact key
 
 end QuantumInfo

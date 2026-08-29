@@ -588,6 +588,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.probLeft_sum_tensor_orthogonal
 
+-- Amplitude ESTIMATION, BHMT Thm 12 (Mathlib/QuantumInfo/AmplitudeEstimation.lean,
+-- 2026-08-29; plan AA-5b assembly -- the module where all three prepared layers meet: the
+-- eigenstructure of the amplification step, the joint-register mixture law, and the 4/pi^2
+-- phase-estimation bound). kickbackState (1/sqrt T) sum_x |x> tensor Q^x psi is proved to be
+-- EXACTLY the two-branch phase form c+ (phaseStateR(theta/pi)) tensor v+ + c- (...) tensor v-
+-- (kickbackState_ampState, |c+-| = 1/2, orthogonal eigenvector companions), so the counting
+-- marginal after the partial inverse QFT is EXACTLY the half-half mixture of the two
+-- single-phase distributions (amplitude_estimation_marginal -- an equality, not a bound).
+-- Headlines: amplitude_estimation -- at any index in the closest-index window of theta/pi the
+-- marginal carries >= 2/pi^2 (the + branch's 4/pi^2, halved by the branch weight; the -
+-- branch kept only as >= 0) -- and amplitude_estimation_close: any such index yields the
+-- estimate sin^2(pi c/T) within pi sqrt(a(1-a))/T + pi^2/(4T^2) of a (BHMT Lemma 7 at
+-- eps = pi/(2T); sharper than the paper's pi/T constant). HONEST SCOPE: single-branch
+-- single-index bound; BHMT's 8/pi^2 both-branch both-rounding refinement is downstream
+-- arithmetic on the exact marginal, not attempted. No controlled-gate decomposition claimed.
+-- Foundational triple.
+/-- info: 'QuantumInfo.kickbackState_ampState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.kickbackState_ampState
+
+/-- info: 'QuantumInfo.amplitude_estimation_marginal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_marginal
+
+/-- info: 'QuantumInfo.amplitude_estimation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation
+
+/-- info: 'QuantumInfo.amplitude_estimation_close' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_close
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef
