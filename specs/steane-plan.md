@@ -50,10 +50,11 @@ then instantiated it with all `𝔽₂` side conditions kernel-checked. Snag for
 with an over-general `if_neg` lambda targets the FIRST `ite` in the goal — ascribe the
 binder's type (`fun h : condition => …`) to aim it at the intended one.
 
-**Named residues:** (i) GK-3 uniqueness/dimension (rank-equals-trace for self-adjoint
-idempotents — spectral machinery); (ii) the stabiliser measurement-update rule; (iii)
-Knill–Laflamme / recovery for Steane. Each is a scoped future brick, none is silently
-claimed.
+**Named residues (updated 2026-08-29, the "Complete GK" pass):** (i) GK-3
+uniqueness/dimension — DISCHARGED same day (`stabProjector_rank`, `stabState_unique`, via
+Mathlib's `LinearMap.IsProj.trace`); (ii) the stabiliser measurement-update rule —
+DISCHARGED same day (the `measProj` section of `Stabilizer.lean`); (iii) Knill–Laflamme /
+recovery for Steane — still open, still named. None was ever silently claimed.
 
 ## References
 

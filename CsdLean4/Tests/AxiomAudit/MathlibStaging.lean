@@ -696,6 +696,56 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.stabState_exists' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.stabState_exists
+
+-- GK COMPLETION (2026-08-29, same file, later the same day): both residues named at the
+-- GK-3 landing are DISCHARGED. (i) Rank/uniqueness: the group average is a genuine linear
+-- projection (stabProjectorL, IsProj onto its range = the fixed space), so Mathlib's
+-- rank-equals-trace for projections turns the trace count into finrank(fixed space) =
+-- 2^(n-m) (stabProjector_rank) -- and for a full stabiliser the stabilised state is UNIQUE
+-- up to scalar (stabState_unique). (ii) The measurement-update rule (measProj section):
+-- measuring an involutive Pauli on a stabilised state -- deterministic outcome when the
+-- signed observable is in the group (meas_deterministic); when it anticommutes with a group
+-- element, the expectation vanishes (meas_expectation_zero) and both outcomes carry
+-- probability EXACTLY 1/2 (meas_prob_half); the post-measurement branch is stabilised by
+-- the signed observable itself (pauliOp_measProj) and by every commuting group element
+-- (meas_update_fixes) -- the standard stabiliser update, operator-free. Foundational triple.
+/-- info: 'QuantumInfo.stabProjector_rank' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stabProjector_rank
+
+/-- info: 'QuantumInfo.stabState_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stabState_unique
+
+/-- info: 'QuantumInfo.meas_prob_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.meas_prob_half
+
+/-- info: 'QuantumInfo.meas_update_fixes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.meas_update_fixes
+
+-- The magic layer, candidate 5 of the 2026-08-28 five (Mathlib/QuantumInfo/Magic.lean,
+-- 2026-08-29; plan specs/magic-plan.md). The precise complement of Gottesman-Knill: T^2 = S
+-- (the hierarchy descends, tGate_tGate); the level-3 identity T X T+ = (X + i XZ)/sqrt 2
+-- (tGate_conj_X -- out of the Pauli family, into its two-term span); and the NO-GO
+-- tGate_conj_X_not_pauli: no c, a, b give T X T+ = c X^a Z^b -- pinning two basis columns
+-- forces 1 = +-i. Together with the GK-2 closure this brackets the Clifford boundary from
+-- both sides. The magic state |T> = T H |0> with closed coordinates and unit norm
+-- (inner_magicState_self). HONEST SCOPE: distillation (Bravyi-Kitaev 15-to-1), universality
+-- (gate-synthesis density), and the T-injection circuit are named residues in the plan, not
+-- attempted. Foundational triple.
+/-- info: 'QuantumInfo.tGate_conj_X' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.tGate_conj_X
+
+/-- info: 'QuantumInfo.tGate_conj_X_not_pauli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.tGate_conj_X_not_pauli
+
+/-- info: 'QuantumInfo.inner_magicState_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.inner_magicState_self
 /-- info: 'QuantumInfo.kickbackState_ampState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.kickbackState_ampState

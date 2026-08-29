@@ -1,8 +1,12 @@
 # Gottesman–Knill / stabiliser mechanics — scoping and plan
 
 **Status:** scoped 2026-08-29; **GK-1 + GK-2 EXECUTED same session** ("Do 3"), **GK-3
-EXECUTED later the same day** ("Do GK3 then 4") — see the execution record. Remaining named
-residues: uniqueness/dimension, the measurement-update rule.
+EXECUTED later the same day** ("Do GK3 then 4"), and **the two GK-3 residues DISCHARGED the
+same day again** ("Complete GK then 5") — the plan is **CLOSED** with no open residues:
+uniqueness/dimension landed via `IsProj.trace` (rank-equals-trace, `stabProjector_rank` +
+`stabState_unique`), and the measurement-update rule landed in full (`measProj` section:
+deterministic case, vanishing expectation, probability exactly `1/2`, the commutant
+update). See `specs/magic-plan.md` for the paired magic layer and the session record.
 
 **Provenance.** Candidate 3 of the five from the 2026-08-28 algorithms discussion (candidates
 1–2, QFT/phase-estimation and the full BHMT arc, executed 2026-08-29 —
