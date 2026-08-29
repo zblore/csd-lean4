@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: e7898be0468999d66af8c7d6f3ae34b5974ba292
+  sha: 1e7ebbafb5cf51d2bd1fe2786cf365bfb158effa
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -6404,8 +6404,11 @@ entries:
 
       The corpus's Grover module is rebuilt on it: the search step is proved to BE the
       amplification step, the headline is re-derived as an instance, and the k-marked-items
-      distribution arrives free. The standing disclaimer applies: the algorithm layer
-      consumes the unitary pillar and does not support foundations.
+      distribution arrives free. For UNKNOWN success probability the module also carries the
+      QSearch engine (BHMT Lemma 2): a uniformly random round count below M succeeds with
+      average probability at least 1/4 once M * 2 sqrt(a(1-a)) >= 1 -- the odd-angle sum
+      telescopes to an exact closed form. The standing disclaimer applies: the algorithm
+      layer consumes the unitary pillar and does not support foundations.
     mathematical: >
       On EuclideanSpace C over a finite basis with good set G: the step is reflection about
       the initial state composed with the sign flip on the good coordinates. On the plane
