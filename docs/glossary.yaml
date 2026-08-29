@@ -1830,6 +1830,7 @@ entries:
     term: Grover's algorithm
     eponyms: [Grover]
     status: standard-mathematics
+    related: [amplitude-amplification]
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Grover%27s_algorithm
@@ -6372,3 +6373,68 @@ entries:
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Hadamard_test
+
+  - slug: amplitude-amplification
+    reviewed: 2026-08-29
+    hook: >
+      The theorem Grover's algorithm is a shadow of: any quantum procedure with any success
+      probability can have that probability pumped up by pure interference, quadratically
+      faster than retrying.
+    layman: >
+      Here is the problem. Your quantum procedure sometimes succeeds -- with probability a --
+      and classically the only remedy for a small a is repetition, about 1/a runs. Surely
+      that is what "boosting success" must cost.
+
+      Brassard, Hoyer, Mosca and Tapp found the general trick hiding inside Grover's search:
+      reflect the state about the failures, then reflect about where you started. Two
+      reflections make a rotation, and each round rotates the state a fixed angle toward
+      success. After about 1/sqrt(a) rounds -- not 1/a -- you measure and win, with the exact
+      success curve known in closed form at every round.
+
+      Run past the sweet spot and you rotate beyond the target: the procedure has a timer,
+      just like Grover. Grover's search is exactly this machine pointed at a uniform start
+      with one marked item.
+    in_csd: >
+      A Cat-1 library theorem, deliberately CSD-free and generic: any finite register, any
+      good set of outcomes, any starting state with success probability strictly between zero
+      and one. The two-reflection rotation and the closed form sin^2((2j+1) arcsin sqrt(a))
+      are exact statements, not asymptotics; the floor(pi/4theta) round count succeeds with
+      probability at least 1 - a, and the round count is at most pi/(4 sqrt a) -- the
+      quadratic speedup as a named inequality.
+
+      The corpus's Grover module is rebuilt on it: the search step is proved to BE the
+      amplification step, the headline is re-derived as an instance, and the k-marked-items
+      distribution arrives free. The standing disclaimer applies: the algorithm layer
+      consumes the unitary pillar and does not support foundations.
+    mathematical: >
+      On EuclideanSpace C over a finite basis with good set G: the step is reflection about
+      the initial state composed with the sign flip on the good coordinates. On the plane
+      spanned by the normalised good and bad components the step is a rotation by 2 theta with
+      sin theta = sqrt(goodProb); j rounds send the plane angle to (2j+1) theta, so the
+      success probability is exactly sin^2((2j+1) theta).
+
+      The optimal count m = floor(pi/(4 theta)) lands the angle within theta of pi/2, giving
+      success at least cos^2(theta) = 1 - a; and m <= pi/(4 sqrt a) since
+      sqrt a = sin theta <= theta. Degenerate boundaries a = 0 (no plane) and a = 1 (nothing
+      to amplify) are excluded by hypothesis. Round counting is abstract; no oracle model or
+      gate decomposition is claimed.
+    person: >
+      Gilles Brassard (Montreal) is one half of the BB84 quantum-cryptography protocol; Peter
+      Hoyer (Calgary), Michele Mosca (Waterloo, later a founder of the Institute for Quantum
+      Computing) and Alain Tapp (Montreal) were his collaborators in the Quebec-Ontario
+      quantum information school of the late 1990s.
+
+      The paper, "Quantum Amplitude Amplification and Estimation" (2000, published 2002),
+      unified a string of post-Grover boosting tricks into one two-reflection geometry and
+      paired it with amplitude estimation -- the phase-estimation reading of the same
+      rotation, which is where the two workhorse subroutines of the field meet.
+    term: amplitude amplification
+    eponyms: [Brassard, Hoyer, Mosca, Tapp]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/AmplitudeAmplification.lean
+      theorem: amplitude_amplification
+    related: [grover-algorithm, phase-estimation, quantum-fourier-transform]
+    external:
+      - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055)"
+        url: https://arxiv.org/abs/quant-ph/0005055

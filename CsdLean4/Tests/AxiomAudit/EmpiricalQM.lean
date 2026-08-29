@@ -268,9 +268,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- oracle = I - 2|w⟩⟨w| and diffusion = 2|s⟩⟨s| - I keep the evolution in the 2D (|w⟩, rest)
 -- plane, where one step is a rotation by 2θ (sin θ = 1/√N). The closed form for the success
 -- probability after k steps is sin²((2k+1)θ) (grover_success). Foundational triple.
+-- RE-DERIVED 2026-08-29 from the general BHMT theorem (Mathlib/QuantumInfo/
+-- AmplitudeAmplification.lean, pinned in the MathlibStaging part): groverStep w =
+-- ampStep uniformState {w} (groverStep_eq_ampStep), uniformState is the rotation-plane state at
+-- the Grover angle (uniformState_eq_ampState), and ampStep_iterate carries the closed form. The
+-- file's previous self-contained symState rotation development was retired (the priced
+-- atlas-extraction pilot, plan AA-3); statements of both pinned theorems unchanged. NEW at the
+-- same stroke: the k-marked-items instance (grover_multi_success, |G| marked of 2^n on the
+-- uniform start, success sin²((2j+1)·arcsin √(|G|/N)) exactly).
 /-- info: 'CSD.Empirical.QM.Grover.grover_success' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Grover.grover_success
+
+/-- info: 'CSD.Empirical.QM.Grover.grover_multi_success' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.Grover.grover_multi_success
 
 -- Grover optimal iteration: when the accumulated angle hits π/2 ((2k+1)θ = π/2) the marked
 -- item is measured with certainty (grover_certain, prob = 1). Foundational triple.

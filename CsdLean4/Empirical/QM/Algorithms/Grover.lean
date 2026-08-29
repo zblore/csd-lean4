@@ -6,37 +6,45 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.QuantumInfo.Hadamard
+public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 
 /-!
-# Grover's search algorithm (R5+)
+# Grover's search algorithm (R5+) — as an instance of amplitude amplification
 
 **Category:** 3-Local (QM-validity).
 
-Grover's algorithm (phase R5+ of `specs/nqubit-register-plan.md`): amplitude amplification of a
-single marked item `w : Fin n → Fin 2` in an unstructured database of `N = 2ⁿ` items. The
-search step is the composition of the **oracle** (phase flip on `w`, `I - 2|w⟩⟨w|`) and the
-**diffusion** operator (inversion about the mean, `2|s⟩⟨s| - I`, where `|s⟩` is the uniform
-superposition).
+Grover's algorithm: search for a single marked item `w : Fin n → Fin 2` in an unstructured
+database of `N = 2ⁿ` items. The search step is the composition of the **oracle** (phase flip on
+`w`, `I - 2|w⟩⟨w|`) and the **diffusion** operator (inversion about the mean, `2|s⟩⟨s| - I`,
+where `|s⟩` is the uniform superposition).
 
-The whole evolution stays inside the two-dimensional subspace spanned by `|w⟩` and the uniform
-state, where one Grover step is a **rotation by `2θ`** with `sin θ = 1/√N`. The symmetric-state
-family `symState w a b` (amplitude `a` on the marked item, `b` on each of the others) carries
-that 2D plane; the operator action lemmas (`oracle_symState`, `diffusion_symState`,
-`groverStep_symState`) compute the step as a linear map of the `(a, b)` coefficients.
+*Rebuilt 2026-08-29 (plan `specs/amplitude-amplification-plan.md`, brick AA-3):* the step
+operators are proved to be the **BHMT amplification step** of
+`Mathlib/QuantumInfo/AmplitudeAmplification.lean` — `oracle w = oracleFlip {w}`
+(`oracle_eq_oracleFlip`) and `diffusion = reflect uniformState` (`diffusion_eq_reflect`) — and
+the headline is **re-derived from the general theorem**: the uniform state is the rotation-plane
+state at the Grover angle (`uniformState_eq_ampState`), so `ampStep_iterate` gives
 
-The headline (`grover_success`) is the closed form for the success probability after `k` steps:
+  `grover_success : prob ((groverStep w)^[k] uniformState) w = sin²((2k+1)·θ)`,
 
-  `prob ((groverStep w)^[k] uniformState) w = sin²((2k+1)·θ)`,
+`sin θ = 1/√N`. The file's previous self-contained rotation development (the `symState`
+coefficient family and its operator-action lemmas) is **retired** — the general two-reflection
+rotation now carries it, and keeping both would be exactly the parallel-development duplication
+the Algorithm Atlas assessment (RESULT 4) documents. New at the same stroke, free from the
+general theorem: the **`k`-marked-items** distribution `grover_multi_success`, which the
+single-marked file could not state.
 
-obtained by iterating the single-step rotation lemma (`groverStep_rotates`) from the starting
-angle `θ` (`uniformState_eq_symState_theta`).
+**Honest scope.** QM-validity breadth: genuine reflection operators on the `EuclideanSpace`
+inner-product structure; amplitudes real, carried as `ℂ`-coercions. The optimal iteration count
+and the success bound live with the general theorem (`amplitude_amplification_succeeds`,
+`amplification_query_bound`) — the deferral the earlier version of this file recorded is closed
+there, not here. Round counting is abstract-step counting; no oracle model is claimed.
 
-**Honest scope.** This is QM-validity breadth: the genuine reflection operators are built on the
-`EuclideanSpace` inner-product structure (`oracle = I - 2|w⟩⟨w|`, `diffusion = 2|s⟩⟨s| - I`), so
-the rotation is a real Hilbert-space computation. The amplitudes are real throughout; they are
-carried as `ℂ`-coercions of `ℝ` so the operators stay genuinely complex / Hilbert. The optimal
-iteration count and the success-probability bound are downstream arithmetic on this closed form;
-they are not formalised here.
+**Extraction cost record (the atlas assessment's priced pilot, AA-3):** the rebuild of this
+file on the general theorem — bridge lemmas, plane instantiation, re-derived headlines, deleted
+parallel development — took ≈25 minutes wall-clock including two build-fix iterations
+(2026-08-29, 14:22–14:47 session segment). The full AA-1..AA-3 session (general module written
+and debugged + this refactor) was ≈90 minutes. See `specs/amplitude-amplification-plan.md`.
 -/
 
 @[expose] public section
@@ -70,11 +78,6 @@ lemma J_coord (z : Fin n → Fin 2) : J n z = ∑ x, (basisState x z) := by
   · rw [basisState_apply, if_pos rfl]
   · intro b _ hb; rw [basisState_apply]; rw [if_neg (Ne.symm hb)]
   · intro h; exact absurd (Finset.mem_univ _) h
-
-/-- The number of basis states summed as a complex constant: `∑ z, (1 : ℂ) = N`. -/
-lemma sum_one_eq_N : (∑ _z : (Fin n → Fin 2), (1 : ℂ)) = ((2 : ℂ) ^ n) := by
-  rw [Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_fin,
-    Fintype.card_fin, nsmul_eq_mul, mul_one, Nat.cast_pow, Nat.cast_ofNat]
 
 /-- The **uniform superposition** `|s⟩ = (1/√N) ∑ z |z⟩`. -/
 noncomputable def uniformState : QReg n := (Real.sqrt (databaseSize n))⁻¹ • J n
@@ -110,121 +113,30 @@ noncomputable def diffusion (ψ : QReg n) : QReg n :=
 noncomputable def groverStep (w : Fin n → Fin 2) (ψ : QReg n) : QReg n :=
   diffusion (oracle w ψ)
 
-/-! ## The symmetric-state family -/
+/-! ## The bridge: Grover's operators ARE the BHMT amplification step -/
 
-/-- The **symmetric state** with amplitude `a` on the marked item `w` and amplitude `b` on each
-of the other `N - 1` items: `symState w a b = b·J + (a - b)·|w⟩`. -/
-noncomputable def symState (w : Fin n → Fin 2) (a b : ℂ) : QReg n :=
-  b • J n + (a - b) • basisState w
-
-@[simp] lemma symState_apply (w : Fin n → Fin 2) (a b : ℂ) (z : Fin n → Fin 2) :
-    symState w a b z = if z = w then a else b := by
-  rw [symState, WithLp.ofLp_add, Pi.add_apply, WithLp.ofLp_smul, WithLp.ofLp_smul, Pi.smul_apply,
-    Pi.smul_apply, J_apply, basisState_apply, smul_eq_mul, smul_eq_mul, mul_one]
-  split
+/-- **The oracle is the good-set reflection at `G = {w}`.** -/
+lemma oracle_eq_oracleFlip (w : Fin n → Fin 2) (ψ : QReg n) :
+    oracle w ψ = oracleFlip {w} ψ := by
+  ext z
+  rw [oracleFlip_apply, oracle, WithLp.ofLp_sub, Pi.sub_apply, WithLp.ofLp_smul,
+    Pi.smul_apply, basisState_apply, smul_eq_mul]
+  simp only [Finset.mem_singleton]
+  split_ifs with h
+  · rw [h]
+    ring
   · ring
-  · ring
 
-/-- The uniform state is the symmetric state with all coefficients `(√N)⁻¹`. -/
-lemma uniformState_eq_symState (w : Fin n → Fin 2) :
-    uniformState = symState w (Real.sqrt (databaseSize n) : ℂ)⁻¹
-      (Real.sqrt (databaseSize n) : ℂ)⁻¹ := by
-  ext z
-  rw [uniformState_apply, symState_apply]
-  split <;> rfl
+/-- **The diffusion is the reflection about the uniform state.** -/
+lemma diffusion_eq_reflect (ψ : QReg n) : diffusion ψ = reflect uniformState ψ := rfl
 
-/-! ## Operator actions on the symmetric family -/
+/-- **One Grover step is one amplification step** at `φ = uniformState`, `G = {w}`. -/
+lemma groverStep_eq_ampStep (w : Fin n → Fin 2) :
+    groverStep w = ampStep (uniformState : QReg n) {w} := by
+  funext ψ
+  rw [groverStep, oracle_eq_oracleFlip, diffusion_eq_reflect, ampStep]
 
-/-- The oracle flips the sign of the marked-item amplitude: `O_w (symState a b) = symState (-a) b`. -/
-lemma oracle_symState (w : Fin n → Fin 2) (a b : ℂ) :
-    oracle w (symState w a b) = symState w (-a) b := by
-  ext z
-  rw [oracle, WithLp.ofLp_sub, Pi.sub_apply, WithLp.ofLp_smul, Pi.smul_apply, basisState_apply,
-    smul_eq_mul]
-  simp only [symState_apply]
-  by_cases h : z = w
-  · subst h; simp only [if_pos]; ring
-  · simp only [if_neg h]; ring
-
-/-- `∑ z, (if z = w then a else b) = a + (N - 1)·b` (split the `z = w` term off the constant `b`). -/
-lemma sum_ite_eq_symState (w : Fin n → Fin 2) (a b : ℂ) :
-    (∑ z : (Fin n → Fin 2), (if z = w then a else b)) = a + ((2 : ℂ) ^ n - 1) * b := by
-  have hsplit : ∀ z : (Fin n → Fin 2),
-      (if z = w then a else b) = b + (if z = w then a - b else 0) := by
-    intro z; split <;> ring
-  simp_rw [hsplit]
-  rw [Finset.sum_add_distrib, Finset.sum_const, Finset.sum_ite_eq' Finset.univ w (fun _ => a - b),
-    if_pos (Finset.mem_univ w)]
-  rw [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, Fintype.card_fin, nsmul_eq_mul,
-    Nat.cast_pow, Nat.cast_ofNat]
-  ring
-
-/-- `inner ℂ (uniformState) (symState a b) = (√N)⁻¹ · (a + (N - 1)·b)`. -/
-lemma inner_uniformState_symState (w : Fin n → Fin 2) (a b : ℂ) :
-    inner ℂ (uniformState) (symState w a b)
-      = (Real.sqrt (databaseSize n) : ℂ)⁻¹ * (a + ((2 : ℂ) ^ n - 1) * b) := by
-  rw [PiLp.inner_apply]
-  simp only [RCLike.inner_apply', uniformState_apply, symState_apply]
-  rw [Complex.conj_inv, Complex.conj_ofReal, ← Finset.mul_sum, sum_ite_eq_symState]
-
-/-- `(√N)⁻¹ · (√N)⁻¹ = N⁻¹` over `ℂ`, with `N = 2ⁿ`. -/
-lemma inv_sqrt_databaseSize_sq :
-    (Real.sqrt (databaseSize n) : ℂ)⁻¹ * (Real.sqrt (databaseSize n) : ℂ)⁻¹
-      = ((2 : ℂ) ^ n)⁻¹ := by
-  rw [← mul_inv, ← Complex.ofReal_mul,
-    Real.mul_self_sqrt (by rw [databaseSize]; positivity : (0 : ℝ) ≤ databaseSize n)]
-  rw [databaseSize, Complex.ofReal_pow, Complex.ofReal_ofNat]
-
-/-- `2ⁿ ≠ 0` over `ℂ`. -/
-lemma two_pow_ne_zero_C : ((2 : ℂ) ^ n) ≠ 0 := pow_ne_zero n two_ne_zero
-
-/-- The diffusion (inversion about the mean) acts on the symmetric family by sending both
-coefficients to `mean - coefficient`, where `mean = 2·(a + (N-1)·b)/N`. -/
-lemma diffusion_symState (w : Fin n → Fin 2) (a b : ℂ) :
-    diffusion (symState w a b)
-      = symState w (2 * (a + ((2 : ℂ) ^ n - 1) * b) / (2 : ℂ) ^ n - a)
-          (2 * (a + ((2 : ℂ) ^ n - 1) * b) / (2 : ℂ) ^ n - b) := by
-  have hN : ((2 : ℂ) ^ n) ≠ 0 := pow_ne_zero n two_ne_zero
-  ext z
-  rw [diffusion, WithLp.ofLp_sub, Pi.sub_apply, WithLp.ofLp_smul, Pi.smul_apply,
-    inner_uniformState_symState, uniformState_apply, smul_eq_mul]
-  simp only [symState_apply]
-  by_cases h : z = w
-  · subst h
-    simp only [if_pos]
-    rw [show (2 * ((Real.sqrt (databaseSize n) : ℂ)⁻¹ * (a + ((2 : ℂ) ^ n - 1) * b)))
-          * (Real.sqrt (databaseSize n) : ℂ)⁻¹
-          = 2 * (a + ((2 : ℂ) ^ n - 1) * b)
-            * ((Real.sqrt (databaseSize n) : ℂ)⁻¹ * (Real.sqrt (databaseSize n) : ℂ)⁻¹) from by
-        ring, inv_sqrt_databaseSize_sq]
-    field_simp
-  · simp only [if_neg h]
-    rw [show (2 * ((Real.sqrt (databaseSize n) : ℂ)⁻¹ * (a + ((2 : ℂ) ^ n - 1) * b)))
-          * (Real.sqrt (databaseSize n) : ℂ)⁻¹
-          = 2 * (a + ((2 : ℂ) ^ n - 1) * b)
-            * ((Real.sqrt (databaseSize n) : ℂ)⁻¹ * (Real.sqrt (databaseSize n) : ℂ)⁻¹) from by
-        ring, inv_sqrt_databaseSize_sq]
-    field_simp
-
-/-- **One Grover step on the symmetric family** is the linear coefficient map
-`(a, b) ↦ ((N-2)/N·a + 2(N-1)/N·b, -2/N·a + (N-2)/N·b)` — a rotation in the `(|w⟩, rest)`
-plane. -/
-lemma groverStep_symState (w : Fin n → Fin 2) (a b : ℂ) :
-    groverStep w (symState w a b)
-      = symState w
-          (((2 : ℂ) ^ n - 2) / (2 : ℂ) ^ n * a + 2 * ((2 : ℂ) ^ n - 1) / (2 : ℂ) ^ n * b)
-          (-2 / (2 : ℂ) ^ n * a + ((2 : ℂ) ^ n - 2) / (2 : ℂ) ^ n * b) := by
-  have hN : ((2 : ℂ) ^ n) ≠ 0 := two_pow_ne_zero_C
-  rw [groverStep, oracle_symState, diffusion_symState]
-  congr 1
-  · field_simp; ring
-  · field_simp; ring
-
-/-! ## The rotation angle and the closed-form iterate
-
-The Grover step is a rotation by `2θ` in the `(|w⟩, rest)` plane, with `sin θ = 1/√N`. We carry
-the angle as a real parameter `θ` constrained by `sin θ = (√N)⁻¹` and `cos θ = √(N-1)/√N`, and
-derive the double-angle values `cos 2θ = (N-2)/N`, `sin 2θ = 2√(N-1)/N`. -/
+/-! ## The rotation plane: `|w⟩` and the normalized rest -/
 
 /-- `1 ≤ 2ⁿ` as a real, hence `0 ≤ 2ⁿ - 1`. -/
 lemma one_le_two_pow : (1 : ℝ) ≤ (2 : ℝ) ^ n := by
@@ -236,168 +148,191 @@ lemma two_le_two_pow (hn : 1 ≤ n) : (2 : ℝ) ≤ (2 : ℝ) ^ n := by
   calc (2 : ℝ) = (2 : ℝ) ^ 1 := by norm_num
     _ ≤ (2 : ℝ) ^ n := by apply pow_le_pow_right₀ (by norm_num) hn
 
-/-- `√(N-1) · √(N-1) = N - 1` for `n ≥ 1` (so `N - 1 ≥ 0`). -/
+/-- `√(N-1) · √(N-1) = N - 1`. -/
 lemma sqrt_sub_one_mul_self :
     Real.sqrt ((2 : ℝ) ^ n - 1) * Real.sqrt ((2 : ℝ) ^ n - 1) = (2 : ℝ) ^ n - 1 :=
   Real.mul_self_sqrt (by linarith [one_le_two_pow (n := n)])
 
-/-- `√N · √N = N` (with `N = 2ⁿ ≥ 0`). -/
-lemma sqrt_two_pow_mul_self :
-    Real.sqrt ((2 : ℝ) ^ n) * Real.sqrt ((2 : ℝ) ^ n) = (2 : ℝ) ^ n :=
-  Real.mul_self_sqrt (by positivity)
+lemma sqrt_sub_one_ne (hn : 1 ≤ n) : Real.sqrt ((2 : ℝ) ^ n - 1) ≠ 0 := by
+  rw [Real.sqrt_ne_zero (by linarith [one_le_two_pow (n := n)])]
+  linarith [two_le_two_pow hn]
 
-/-- **Double-angle cosine:** `cos 2θ = (N-2)/N`, from `cos 2θ = 1 - 2 sin²θ` and `sin²θ = 1/N`. -/
-lemma cos_two_theta {θ : ℝ} (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹) :
-    Real.cos (2 * θ) = ((2 : ℝ) ^ n - 2) / (2 : ℝ) ^ n := by
-  have hN : ((2 : ℝ) ^ n) ≠ 0 := by positivity
-  rw [Real.cos_two_mul_eq_one_sub]
-  rw [hsin]
-  rw [show ((Real.sqrt ((2 : ℝ) ^ n))⁻¹) ^ 2 = ((2 : ℝ) ^ n)⁻¹ from by
-    rw [← Real.sqrt_inv, Real.sq_sqrt (by positivity)]]
-  field_simp
+/-- The **normalized rest state** `(√(N-1))⁻¹ (J − |w⟩)`: the bad unit component of the uniform
+state against `{w}`. -/
+noncomputable def restState (w : Fin n → Fin 2) : QReg n :=
+  (Real.sqrt ((2 : ℝ) ^ n - 1) : ℂ)⁻¹ • (J n - basisState w)
 
-/-- **Double-angle sine:** `sin 2θ = 2√(N-1)/N`, from `sin 2θ = 2 sinθ cosθ` and the hypotheses. -/
-lemma sin_two_theta {θ : ℝ}
-    (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
-    (hcos : Real.cos θ = Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n)) :
-    Real.sin (2 * θ) = 2 * Real.sqrt ((2 : ℝ) ^ n - 1) / (2 : ℝ) ^ n := by
-  have hN : ((2 : ℝ) ^ n) ≠ 0 := by positivity
-  have hsN : Real.sqrt ((2 : ℝ) ^ n) ≠ 0 := by
-    rw [Real.sqrt_ne_zero']; positivity
-  rw [Real.sin_two_mul, hsin, hcos]
-  have hkey : (Real.sqrt ((2 : ℝ) ^ n))⁻¹ * (Real.sqrt ((2 : ℝ) ^ n))⁻¹ = ((2 : ℝ) ^ n)⁻¹ := by
-    rw [← mul_inv, sqrt_two_pow_mul_self]
-  rw [show 2 * (Real.sqrt ((2 : ℝ) ^ n))⁻¹ * (Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n))
-        = 2 * Real.sqrt ((2 : ℝ) ^ n - 1)
-          * ((Real.sqrt ((2 : ℝ) ^ n))⁻¹ * (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
-      from by rw [div_eq_mul_inv]; ring]
-  rw [hkey, ← div_eq_mul_inv, mul_div_assoc]
+lemma restState_apply (w z : Fin n → Fin 2) :
+    restState w z
+      = (Real.sqrt ((2 : ℝ) ^ n - 1) : ℂ)⁻¹ * (1 - if z = w then 1 else 0) := by
+  rw [restState, WithLp.ofLp_smul, Pi.smul_apply, WithLp.ofLp_sub, Pi.sub_apply, J_apply,
+    basisState_apply, smul_eq_mul]
 
-/-- `(N-1)/√(N-1) = √(N-1)`. -/
-lemma sub_one_div_sqrt :
-    ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n - 1) = Real.sqrt ((2 : ℝ) ^ n - 1) := by
-  by_cases h : Real.sqrt ((2 : ℝ) ^ n - 1) = 0
-  · rw [h, div_zero]
-  · rw [eq_comm, eq_div_iff h, sqrt_sub_one_mul_self (n := n)]
-
-/-- **Marked-amplitude rotation identity (real):**
-`(N-2)/N·sin γ + 2(N-1)/N·(cos γ/√(N-1)) = sin(γ + 2θ)`. -/
-lemma rot_a {θ : ℝ}
-    (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
-    (hcos : Real.cos θ = Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n)) (γ : ℝ) :
-    ((2 : ℝ) ^ n - 2) / (2 : ℝ) ^ n * Real.sin γ
-      + 2 * ((2 : ℝ) ^ n - 1) / (2 : ℝ) ^ n
-        * (Real.cos γ / Real.sqrt ((2 : ℝ) ^ n - 1))
-      = Real.sin (γ + 2 * θ) := by
-  rw [Real.sin_add, cos_two_theta hsin, sin_two_theta hsin hcos]
-  have hb : ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n - 1) = Real.sqrt ((2 : ℝ) ^ n - 1) :=
-    sub_one_div_sqrt
-  rw [show 2 * ((2 : ℝ) ^ n - 1) / (2 : ℝ) ^ n * (Real.cos γ / Real.sqrt ((2 : ℝ) ^ n - 1))
-        = Real.cos γ * (2 * (((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n - 1)) / (2 : ℝ) ^ n)
-      from by ring, hb]
+/-- `∑ z, (if z = w then a else b) = a + (N-1)·b`. -/
+lemma sum_ite_single (w : Fin n → Fin 2) (a b : ℂ) :
+    (∑ z : (Fin n → Fin 2), (if z = w then a else b)) = a + ((2 : ℂ) ^ n - 1) * b := by
+  have hsplit : ∀ z : (Fin n → Fin 2),
+      (if z = w then a else b) = b + (if z = w then a - b else 0) := by
+    intro z; split <;> ring
+  simp_rw [hsplit]
+  rw [Finset.sum_add_distrib, Finset.sum_const, Finset.sum_ite_eq' Finset.univ w (fun _ => a - b),
+    if_pos (Finset.mem_univ w)]
+  rw [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, Fintype.card_fin, nsmul_eq_mul,
+    Nat.cast_pow, Nat.cast_ofNat]
   ring
 
-/-- **Off-amplitude rotation identity (real):**
-`-2/N·sin γ + (N-2)/N·(cos γ/√(N-1)) = cos(γ + 2θ)/√(N-1)`. -/
-lemma rot_b (hn : 1 ≤ n) {θ : ℝ}
-    (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
-    (hcos : Real.cos θ = Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n)) (γ : ℝ) :
-    (-2) / (2 : ℝ) ^ n * Real.sin γ
-      + ((2 : ℝ) ^ n - 2) / (2 : ℝ) ^ n
-        * (Real.cos γ / Real.sqrt ((2 : ℝ) ^ n - 1))
-      = Real.cos (γ + 2 * θ) / Real.sqrt ((2 : ℝ) ^ n - 1) := by
-  rw [Real.cos_add, cos_two_theta hsin, sin_two_theta hsin hcos]
-  by_cases h : Real.sqrt ((2 : ℝ) ^ n - 1) = 0
-  · -- then N - 1 = 0, impossible for n ≥ 1
-    exfalso
-    have : (2 : ℝ) ^ n - 1 = 0 := by
-      have := sqrt_sub_one_mul_self (n := n); rw [h] at this; simpa using this.symm
-    linarith [two_le_two_pow hn]
-  · have hsq : Real.sqrt ((2 : ℝ) ^ n - 1) * Real.sqrt ((2 : ℝ) ^ n - 1) = (2 : ℝ) ^ n - 1 :=
-      sqrt_sub_one_mul_self (n := n)
-    have hN : ((2 : ℝ) ^ n) ≠ 0 := by positivity
-    field_simp
-    nlinarith [hsq]
+/-- The marked basis state is supported on `{w}`. -/
+lemma basisState_supp (w : Fin n → Fin 2) :
+    ∀ z ∉ ({w} : Finset (Fin n → Fin 2)), basisState w z = 0 := by
+  intro z hz
+  rw [basisState_apply, if_neg (by simpa using hz)]
 
-/-! ## The single-step rotation and the closed-form iterate -/
+/-- The rest state vanishes on `{w}`. -/
+lemma restState_supp (w : Fin n → Fin 2) :
+    ∀ z ∈ ({w} : Finset (Fin n → Fin 2)), restState w z = 0 := by
+  intro z hz
+  rw [restState_apply, if_pos (by simpa using hz), sub_self, mul_zero]
 
-/-- `(2 : ℂ)^n = ↑((2 : ℝ)^n)`. -/
-lemma two_pow_C_eq_ofReal : ((2 : ℂ) ^ n) = ((2 : ℝ) ^ n : ℝ) := by
-  rw [Complex.ofReal_pow, Complex.ofReal_ofNat]
+/-- `⟨|w⟩, |w⟩⟩ = 1`. -/
+lemma inner_basis_self (w : Fin n → Fin 2) :
+    inner ℂ (basisState w : QReg n) (basisState w) = 1 := by
+  rw [PiLp.inner_apply, Finset.sum_eq_single w]
+  · rw [RCLike.inner_apply', basisState_apply, if_pos rfl, map_one, one_mul]
+  · intro z _ hz
+    rw [RCLike.inner_apply', basisState_apply, if_neg hz, map_zero, zero_mul]
+  · intro h; exact absurd (Finset.mem_univ _) h
 
-/-- The angle-parametrized symmetric state `symState w (↑sin γ) (↑(cos γ / √(N-1)))`. -/
-noncomputable def rotState (w : Fin n → Fin 2) (γ : ℝ) : QReg n :=
-  symState w (Real.sin γ : ℂ) ((Real.cos γ / Real.sqrt ((2 : ℝ) ^ n - 1) : ℝ) : ℂ)
+/-- `⟨rest, rest⟩ = 1` for `n ≥ 1`. -/
+lemma inner_rest_self (hn : 1 ≤ n) (w : Fin n → Fin 2) :
+    inner ℂ (restState w : QReg n) (restState w) = 1 := by
+  have hs := sqrt_sub_one_mul_self (n := n)
+  have hne := sqrt_sub_one_ne hn
+  rw [PiLp.inner_apply]
+  have hterm : ∀ z : Fin n → Fin 2,
+      inner ℂ (restState w z) (restState w z)
+        = if z = w then (0 : ℂ) else ((((2 : ℝ) ^ n - 1)⁻¹ : ℝ) : ℂ) := by
+    intro z
+    by_cases h : z = w
+    · rw [if_pos h, RCLike.inner_apply', restState_apply, if_pos h, sub_self, mul_zero,
+        map_zero, zero_mul]
+    · rw [if_neg h, RCLike.inner_apply', restState_apply, if_neg h, sub_zero, mul_one,
+        map_inv₀, Complex.conj_ofReal, ← mul_inv, ← Complex.ofReal_mul, hs,
+        Complex.ofReal_inv]
+  rw [Finset.sum_congr rfl fun z _ => hterm z, sum_ite_single w (0 : ℂ) _, zero_add]
+  have hNne : ((2 : ℝ) ^ n - 1) ≠ 0 :=
+    ne_of_gt (by linarith [two_le_two_pow (n := n) hn])
+  rw [show ((2 : ℂ) ^ n - 1) = (((2 : ℝ) ^ n - 1 : ℝ) : ℂ) from by push_cast; ring,
+    ← Complex.ofReal_mul, mul_inv_cancel₀ hNne, Complex.ofReal_one]
 
-/-- **Single-step rotation lemma:** one Grover step advances the angle by `2θ`. -/
-lemma groverStep_rotates (hn : 1 ≤ n) (w : Fin n → Fin 2) {θ : ℝ}
-    (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
-    (hcos : Real.cos θ = Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n)) (γ : ℝ) :
-    groverStep w (rotState w γ) = rotState w (γ + 2 * θ) := by
-  rw [rotState, groverStep_symState, rotState]
-  have hN : ((2 : ℝ) ^ n) ≠ 0 := by positivity
-  congr 1
-  · -- marked-item coordinate: matches `sin (γ + 2θ)`
-    rw [← rot_a hsin hcos γ, two_pow_C_eq_ofReal]
-    push_cast
-    ring
-  · -- off coordinate: matches `cos (γ + 2θ) / √(N-1)`
-    rw [← rot_b hn hsin hcos γ, two_pow_C_eq_ofReal]
-    push_cast
-    ring
+/-- `⟨|w⟩, rest⟩ = 0`. -/
+lemma inner_basis_rest (w : Fin n → Fin 2) :
+    inner ℂ (basisState w : QReg n) (restState w) = 0 := by
+  rw [PiLp.inner_apply, Finset.sum_eq_single w]
+  · rw [RCLike.inner_apply', restState_supp w w (by simp), mul_zero]
+  · intro z _ hz
+    rw [RCLike.inner_apply', basisState_apply, if_neg hz, map_zero, zero_mul]
+  · intro h; exact absurd (Finset.mem_univ _) h
 
-/-- The uniform state is the angle-`θ` rotation state: `uniformState = rotState w θ`. -/
-lemma uniformState_eq_rotState (hn : 1 ≤ n) (w : Fin n → Fin 2) {θ : ℝ}
+/-- **The uniform state is the rotation-plane state at the Grover angle:** given
+`sin θ = 1/√N`, `cos θ = √(N-1)/√N`, `uniformState = ampState |w⟩ rest θ`. -/
+lemma uniformState_eq_ampState (hn : 1 ≤ n) (w : Fin n → Fin 2) {θ : ℝ}
     (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
     (hcos : Real.cos θ = Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n)) :
-    uniformState = rotState w θ := by
-  rw [uniformState_eq_symState w, rotState]
-  have hsN : Real.sqrt ((2 : ℝ) ^ n) ≠ 0 := by rw [Real.sqrt_ne_zero']; positivity
-  have hsN1 : Real.sqrt ((2 : ℝ) ^ n - 1) ≠ 0 := by
-    rw [Real.sqrt_ne_zero (by linarith [one_le_two_pow (n := n)])]
-    linarith [two_le_two_pow hn]
-  congr 1
-  · rw [databaseSize, ← Complex.ofReal_inv, hsin]
-  · -- (√N)⁻¹ = cos θ / √(N-1) = (√(N-1)/√N)/√(N-1) = 1/√N
-    rw [databaseSize, ← Complex.ofReal_inv]
+    (uniformState : QReg n) = ampState (basisState w) (restState w) θ := by
+  have hne := sqrt_sub_one_ne hn
+  ext z
+  rw [uniformState_apply, ampState_apply, basisState_apply, restState_apply, databaseSize]
+  by_cases h : z = w
+  · rw [if_pos h, sub_self, mul_zero, mul_zero, add_zero, mul_one, hsin,
+      Complex.ofReal_inv]
+  · rw [if_neg h, mul_zero, zero_add, sub_zero, mul_one, hcos]
+    have hN : Real.sqrt ((2 : ℝ) ^ n) ≠ 0 := by positivity
+    rw [← Complex.ofReal_inv, ← Complex.ofReal_inv, ← Complex.ofReal_mul]
     congr 1
-    rw [hcos, div_div, eq_div_iff (mul_ne_zero hsN hsN1)]
-    rw [show (Real.sqrt ((2:ℝ)^n))⁻¹ * (Real.sqrt ((2:ℝ)^n) * Real.sqrt ((2:ℝ)^n - 1))
-          = ((Real.sqrt ((2:ℝ)^n))⁻¹ * Real.sqrt ((2:ℝ)^n)) * Real.sqrt ((2:ℝ)^n - 1) from by ring,
-      inv_mul_cancel₀ hsN, one_mul]
+    field_simp
 
-/-- **The closed-form iterate:** `k` Grover steps from the uniform state advance the angle to
-`(2k+1)·θ`. -/
-lemma groverStep_iterate (hn : 1 ≤ n) (w : Fin n → Fin 2) {θ : ℝ}
-    (hsin : Real.sin θ = (Real.sqrt ((2 : ℝ) ^ n))⁻¹)
-    (hcos : Real.cos θ = Real.sqrt ((2 : ℝ) ^ n - 1) / Real.sqrt ((2 : ℝ) ^ n)) (k : ℕ) :
-    (groverStep w)^[k] (rotState w θ) = rotState w ((2 * k + 1) * θ) := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-    rw [Function.iterate_succ_apply', ih, groverStep_rotates hn w hsin hcos]
-    congr 1
-    push_cast
-    ring
+/-- `∑ z ∈ {w}, ‖(basisState w) z‖² = 1`. -/
+lemma basisState_weight (w : Fin n → Fin 2) :
+    ∑ z ∈ ({w} : Finset (Fin n → Fin 2)), ‖basisState w z‖ ^ 2 = 1 := by
+  rw [Finset.sum_singleton, basisState_apply, if_pos rfl, norm_one, one_pow]
+
+/-! ## The headline, re-derived from the general theorem -/
 
 /-- **Grover success probability (headline):** after `k` Grover steps from the uniform
 superposition, the probability of measuring the marked item `w` is `sin²((2k+1)·θ)`, where
-`θ` is the Grover rotation half-angle (`sin θ = 1/√N`, `cos θ = √(N-1)/√N`). -/
+`θ` is the Grover rotation half-angle (`sin θ = 1/√N`, `cos θ = √(N-1)/√N`). Re-derived from
+`ampStep_iterate` (BHMT) via the operator identity `groverStep_eq_ampStep`. -/
 theorem grover_success {n : ℕ} (hn : 1 ≤ n) (w : Fin n → Fin 2) (k : ℕ) (θ : ℝ)
     (hsin : Real.sin θ = (Real.sqrt (2 ^ n))⁻¹)
     (hcos : Real.cos θ = Real.sqrt (2 ^ n - 1) / Real.sqrt (2 ^ n)) :
     prob ((groverStep w)^[k] uniformState) w = Real.sin ((2 * k + 1) * θ) ^ 2 := by
-  rw [uniformState_eq_rotState hn w hsin hcos, groverStep_iterate hn w hsin hcos, prob, rotState,
-    symState_apply, if_pos rfl]
-  rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
+  rw [groverStep_eq_ampStep w, uniformState_eq_ampState hn w hsin hcos,
+    ampStep_iterate (inner_basis_self w) (inner_rest_self hn w) (inner_basis_rest w)
+      (basisState_supp w) (restState_supp w) θ k]
+  rw [prob, ampState_apply, basisState_apply, if_pos rfl, mul_one,
+    restState_supp w w (by simp), mul_zero, add_zero, Complex.norm_real,
+    Real.norm_eq_abs, sq_abs]
 
 /-- **Optimal iteration gives certainty:** when the accumulated angle hits `π/2`, i.e.
-`(2k+1)·θ = π/2`, the marked item is measured with probability `1`. (The integer `k` realising
-this exactly is `k = π/(4θ) - 1/2 ≈ (π/4)√N` for `sin θ = 1/√N`; the closest-integer rounding
-bound for general `N` is downstream arithmetic on the `sin²` closed form, not formalised here.) -/
+`(2k+1)·θ = π/2`, the marked item is measured with probability `1`. (The general
+closest-integer bound is `amplitude_amplification_succeeds` in
+`Mathlib/QuantumInfo/AmplitudeAmplification.lean`.) -/
 theorem grover_certain {n : ℕ} (hn : 1 ≤ n) (w : Fin n → Fin 2) (k : ℕ) (θ : ℝ)
     (hsin : Real.sin θ = (Real.sqrt (2 ^ n))⁻¹)
     (hcos : Real.cos θ = Real.sqrt (2 ^ n - 1) / Real.sqrt (2 ^ n))
     (hopt : (2 * k + 1) * θ = Real.pi / 2) :
     prob ((groverStep w)^[k] uniformState) w = 1 := by
   rw [grover_success hn w k θ hsin hcos, hopt, Real.sin_pi_div_two, one_pow]
+
+/-! ## The `k`-marked generalisation — free from the general theorem -/
+
+/-- Each uniform amplitude has squared norm `N⁻¹`. -/
+lemma uniform_amp_sq (z : Fin n → Fin 2) :
+    ‖(uniformState : QReg n) z‖ ^ 2 = ((2 : ℝ) ^ n)⁻¹ := by
+  rw [uniformState_apply, norm_inv, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_nonneg (Real.sqrt_nonneg _), inv_pow, databaseSize,
+    Real.sq_sqrt (by positivity : (0:ℝ) ≤ (2:ℝ) ^ n)]
+
+/-- The uniform state is a unit vector. -/
+lemma uniformState_norm : ‖(uniformState : QReg n)‖ = 1 := by
+  have h := normSq_eq_sum_prob (uniformState : QReg n)
+  have hsum : ∑ z, prob (uniformState : QReg n) z = 1 := by
+    have hterm : ∀ z : Fin n → Fin 2, prob (uniformState : QReg n) z = ((2 : ℝ) ^ n)⁻¹ :=
+      fun z => uniform_amp_sq z
+    rw [Finset.sum_congr rfl fun z _ => hterm z, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fun, Fintype.card_fin, Fintype.card_fin, nsmul_eq_mul]
+    rw [show ((2 ^ n : ℕ) : ℝ) = (2 : ℝ) ^ n from by push_cast; ring]
+    exact mul_inv_cancel₀ (by positivity)
+  rw [hsum] at h
+  nlinarith [norm_nonneg (uniformState : QReg n)]
+
+/-- The uniform success probability against a good set of size `k` is `k/N`. -/
+lemma goodProb_uniform (G : Finset (Fin n → Fin 2)) :
+    goodProb G (uniformState : QReg n) = G.card / (2 : ℝ) ^ n := by
+  rw [goodProb, Finset.sum_congr rfl fun z _ => uniform_amp_sq z, Finset.sum_const,
+    nsmul_eq_mul, div_eq_mul_inv]
+
+/-- ★ **The `k`-marked-items Grover distribution.** For a good set `G` of size strictly between
+`0` and `N` on the uniform start, `j` amplification rounds give success probability exactly
+`sin²((2j+1)·arcsin √(|G|/N))` — the generalisation the single-marked development could not
+state, obtained as a direct instance of `amplitude_amplification`. -/
+theorem grover_multi_success {n : ℕ} (G : Finset (Fin n → Fin 2))
+    (hG0 : 0 < G.card) (hG1 : G.card < 2 ^ n) (j : ℕ) :
+    goodProb G ((ampStep (uniformState : QReg n) G)^[j] uniformState)
+      = Real.sin ((2 * j + 1)
+          * Real.arcsin (Real.sqrt (G.card / (2 : ℝ) ^ n))) ^ 2 := by
+  have ha : goodProb G (uniformState : QReg n) = G.card / (2 : ℝ) ^ n :=
+    goodProb_uniform G
+  have h := amplitude_amplification G (uniformState : QReg n) uniformState_norm
+    (by rw [ha]; positivity)
+    (by
+      rw [ha, div_lt_one (by positivity : (0:ℝ) < (2:ℝ) ^ n)]
+      exact_mod_cast hG1)
+    j
+  rw [ha] at h
+  exact h
+
+end Grover
+end QM
+end Empirical
+end CSD

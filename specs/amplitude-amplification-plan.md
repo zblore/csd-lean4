@@ -1,7 +1,8 @@
 # Amplitude amplification (Brassard–Høyer–Mosca–Tapp) — scoping and plan
 
-**Status:** scoped 2026-08-29, not started. Gates and abort criteria below on the Q11 mold;
-walls pre-checked (the Q12 lesson: probe before rating).
+**Status:** scoped 2026-08-29 and **EXECUTED same day (AA-1..AA-4)** — see the execution record
+before the references. AA-5 stays gated; AA-6 not scheduled. Gates and abort criteria on the
+Q11 mold; walls were pre-checked (the Q12 lesson: probe before rating), and none fired.
 
 **Provenance.** Candidate 2 of the five from the 2026-08-28 algorithms discussion (candidate 1,
 QFT + phase estimation extraction, executed 2026-08-29 → `Mathlib/QuantumInfo/Fourier.lean` +
@@ -193,6 +194,38 @@ Sequencing note: nothing here blocks or is blocked by the measurement-closure th
 residues are foundations/tooling, not algorithm work) or by C2/PBR. Per the atlas assessment,
 this is a breadth play and knows it; the queue's research frontier (Q10 scoping) is untouched
 by doing or not doing this.
+
+## Execution record — 2026-08-29, same day as scoping
+
+**AA-1..AA-4 EXECUTED.** `Mathlib/QuantumInfo/AmplitudeAmplification.lean` (475 lines, Cat-1):
+★ `ampStep_ampState` (the two-reflection rotation), ★★ `amplitude_amplification` (the closed
+form against `θ = arcsin √a`), ★ `amplitude_amplification_succeeds` (`⌊π/(4θ)⌋` rounds ⇒
+success `≥ 1 − a` — closing the bound the old Grover file deferred), ★
+`amplification_query_bound` (`m ≤ π/(4√a)`), `amplification_quarter` (the `a = 1/4`
+single-round-certainty closed instance). Grover.lean rebuilt as the instance (404 → 335 lines):
+`oracle_eq_oracleFlip`, `diffusion_eq_reflect` (a `rfl`!), `groverStep_eq_ampStep`,
+`uniformState_eq_ampState`; `grover_success`/`grover_certain` re-derived with statements
+unchanged (pins untouched); the `symState` parallel development deleted; ★
+`grover_multi_success` (the `k`-marked instance) new. 6 MathlibStaging pins + 1 EmpiricalQM
+pin; glossary entry `amplitude-amplification` (anchored, symmetric); full tree + audit parts
+green.
+
+**The priced-pilot number (the atlas assessment's ask):** the AA-3 refactor alone ≈ **25
+minutes** wall-clock (two build-fix iterations); the whole general-module-plus-refactor session
+≈ 90 minutes. At that rate "extract a mechanism, rebuild the instances on it" is S per
+mechanism when the mathematics is already proved once — the atlas question is priced, and the
+price is low.
+
+**Snags worth carrying:** `rw [if_pos h]` rewrites every same-condition `ite` at once — dedupe
+the rewrite list; an `ite` whose branches are real numerals in a ℂ-valued equation gets the
+coercion wrapped OUTSIDE the `ite` (state branches as `(0 : ℂ)`/`↑(…)` explicitly); two `ite`s
+on the same condition can carry different `Decidable` instances (`Finset.decidableMem` vs
+`DecidableEq`-derived) making `if_pos/if_neg` miss — `simp only [Finset.mem_singleton]` +
+`split_ifs` is the robust route; `rw [← Complex.ofReal_inv]` instantiates once per call, so two
+distinct `(↑r)⁻¹` need two calls; higher-order `rw [Finset.sum_congr …]` under binders is
+fragile — `norm_cast` + term-mode `sum_congr` instead.
+
+AA-5 (amplitude estimation) remains gated as scoped; AA-6 not scheduled.
 
 ## References
 

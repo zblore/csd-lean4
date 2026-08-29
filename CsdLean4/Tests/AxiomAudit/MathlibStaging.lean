@@ -517,6 +517,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.phase_estimation_lower_bound
 
+-- Amplitude amplification, BHMT (Mathlib/QuantumInfo/AmplitudeAmplification.lean, 2026-08-29;
+-- specs/amplitude-amplification-plan.md AA-1..AA-3). The theorem Grover's algorithm is an
+-- instance of, generic in the register basis and the good set: the amplification step
+-- reflect(phi) . oracleFlip(G) acts on the good/bad plane as a rotation by 2*theta
+-- (ampStep_ampState, the two-reflection heart), so j rounds give success EXACTLY
+-- sin^2((2j+1) arcsin sqrt(a)) (amplitude_amplification, closed form, no asymptotics; hypotheses
+-- 0 < a < 1 are the honest degenerate boundary). floor(pi/(4 theta)) rounds succeed with
+-- probability >= 1 - a (amplitude_amplification_succeeds -- the bound Grover analyses defer),
+-- and the round count is <= pi/(4 sqrt a) (amplification_query_bound, the quadratic speedup,
+-- via sqrt a = sin theta <= theta). Round counting is abstract-step counting; no oracle model or
+-- gate decomposition claimed. Grover.lean re-derives its headline from this module and gains the
+-- k-marked instance. Foundational triple.
+/-- info: 'QuantumInfo.ampStep_ampState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ampStep_ampState
+
+/-- info: 'QuantumInfo.amplitude_amplification' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_amplification
+
+/-- info: 'QuantumInfo.amplitude_amplification_succeeds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_amplification_succeeds
+
+/-- info: 'QuantumInfo.amplification_query_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplification_query_bound
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef

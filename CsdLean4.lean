@@ -40,6 +40,7 @@ public import CsdLean4.Mathlib.QuantumInfo.RegisterTensor
 public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 public import CsdLean4.Mathlib.QuantumInfo.Fourier
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
+public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ConstProp
