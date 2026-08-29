@@ -600,10 +600,37 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- marginal carries >= 2/pi^2 (the + branch's 4/pi^2, halved by the branch weight; the -
 -- branch kept only as >= 0) -- and amplitude_estimation_close: any such index yields the
 -- estimate sin^2(pi c/T) within pi sqrt(a(1-a))/T + pi^2/(4T^2) of a (BHMT Lemma 7 at
--- eps = pi/(2T); sharper than the paper's pi/T constant). HONEST SCOPE: single-branch
--- single-index bound; BHMT's 8/pi^2 both-branch both-rounding refinement is downstream
--- arithmetic on the exact marginal, not attempted. No controlled-gate decomposition claimed.
+-- eps = pi/(2T); sharper than the paper's pi/T constant). MIRROR REFINEMENT (2026-08-29,
+-- same day): the - branch's distribution is the exact mirror image of the + branch's
+-- (prob_applyQFTinv_phaseStateR_neg, a conjugation symmetry), the mirror index -c decodes to
+-- the SAME estimate (sin_sq_mirror), and the pair {c, -c} jointly carries >= 4/pi^2
+-- (amplitude_estimation_pair; degenerate c = -c double-count noted in the docstring).
+-- HONEST SCOPE, CORRECTED: the earlier note here called the full 8/pi^2 "downstream
+-- arithmetic" -- WRONG for the both-rounding half: it needs a two-index lower bound on the
+-- Dirichlet kernel (a single index at distance up to 1/T can carry probability 0), a genuine
+-- new kernel inequality, recorded in the plan and not attempted. The corpus's bound on the
+-- estimate tops out at 4/pi^2. No controlled-gate decomposition claimed. Foundational triple.
+/-- info: 'QuantumInfo.prob_applyQFTinv_phaseStateR_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.prob_applyQFTinv_phaseStateR_neg
+
+/-- info: 'QuantumInfo.amplitude_estimation_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_pair
+
+-- QSearch engine, BHMT Lemma 2 (AmplitudeAmplification.lean final section, 2026-08-29; plan
+-- AA-6 in engine form). When a is UNKNOWN the optimal count cannot be computed; BHMT's
+-- remedy is a uniformly random round count below a guess M. The odd-angle sin^2 sum
+-- telescopes to an exact closed form (sum_sin_sq_odd_mul, product form, no division), and
+-- once M sin(2 theta) >= 1 the average success probability is >= 1/4 independent of a
+-- (sum_sin_sq_odd_ge); on the register: qsearch_average -- for any unit state with unknown
+-- 0 < a < 1 and M with M * 2 sqrt(a(1-a)) >= 1, the rounds 0..M-1 have total success
+-- probability >= M/4. The exponential-doubling schedule wrapping this (BHMT Thm 3, expected
+-- O(1/sqrt a) total) is a probabilistic-process argument, recorded and not formalised.
 -- Foundational triple.
+/-- info: 'QuantumInfo.qsearch_average' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.qsearch_average
 /-- info: 'QuantumInfo.kickbackState_ampState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.kickbackState_ampState

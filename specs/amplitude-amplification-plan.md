@@ -1,8 +1,10 @@
 # Amplitude amplification (Brassard–Høyer–Mosca–Tapp) — scoping and plan
 
-**Status:** scoped 2026-08-29 and **FULLY EXECUTED same day — AA-1..AA-4, AA-5a, and the
-AA-5b assembly (amplitude estimation, BHMT Thm 12)** — see the execution record before the
-references. Only AA-6 (QSearch, unknown `a`) remains, and it was never scheduled. Gates and abort criteria on the
+**Status:** scoped 2026-08-29 and **FULLY EXECUTED same day — AA-1..AA-4, AA-5a, the AA-5b
+assembly (amplitude estimation, BHMT Thm 12), then AA-6 in engine form plus the mirror-index
+refinement** — see the execution record before the references. Nothing on this plan remains
+open; the two recorded residues (the straddling-kernel inequality for literal `8/π²`, and the
+Thm 3 doubling-schedule bookkeeping) are named below with reasons. Gates and abort criteria on the
 Q11 mold; walls were pre-checked (the Q12 lesson: probe before rating), and none fired.
 
 **Provenance.** Candidate 2 of the five from the 2026-08-28 algorithms discussion (candidate 1,
@@ -184,7 +186,7 @@ session → per the gate, (i)+(ii) landed as **AA-5a** (executed same day, see b
 of `ampState` (mechanical from `eigenPlus_add/sub_eigenMinus`, coefficients `(∓i/2)e^{±iγ}`,
 branch weights `1/2` each).
 
-### AA-6 — QSearch, unknown `a` (NOT planned; research-adjacent, author decision)
+### AA-6 — QSearch, unknown `a` (EXECUTED in engine form 2026-08-29, on author instruction)
 
 BHMT Thm 3's exponentially-growing randomized schedule (expected `O(1/√a)` with no knowledge
 of `a`) needs expected-value analysis over the random iteration count — probability plumbing
@@ -284,6 +286,38 @@ AmplitudeAmplification.lean; `tensorState_add_right`, `matrixLeft_add`, and the 
 mixture corollary `probLeft_add_tensor_orthogonal` in JointRegister.lean. 4 new MathlibStaging
 pins; glossary entry `amplitude-estimation` (121 entries). The whole AA-5b assembly ran
 ~70 minutes wall-clock including build iterations.
+
+**AA-6 (engine form) + the mirror refinement EXECUTED 2026-08-29, author instruction
+("do those 2").**
+
+*AA-6, the QSearch engine (BHMT Lemma 2):* `AmplitudeAmplification.lean` final section. The
+odd-angle `sin²` sum telescopes exactly — `4 sin2θ · Σ_{m<M} sin²((2m+1)θ) = 2M sin2θ −
+sin(4Mθ)` (`sum_sin_sq_odd_mul`, deliberately stated in product form, no division to fight) —
+via `sin(2A+2θ) − sin(2A−2θ) = 2 cos(2A) sin2θ` at the odd angles and
+`Finset.sum_range_succ` induction. Corollary: `M sin2θ ≥ 1` ⇒ the sum is `≥ M/4`
+(`sum_sin_sq_odd_ge`), and on the register: ★ `qsearch_average` — for unknown `0 < a < 1`
+and any guess `M` with `M·2√(a(1−a)) ≥ 1`, a uniformly random round count below `M` succeeds
+with average probability `≥ 1/4`, no knowledge of `a`. **Residue (named):** the
+exponential-doubling schedule and its expected-`O(1/√a)` total (the paper's Thm 3 wrapper) is
+a probabilistic-process argument — algorithmic bookkeeping over runs, not amplitude algebra —
+and is not formalised.
+
+*The mirror refinement (both branches counted):* `AmplitudeEstimation.lean` mirror section.
+Negating phase and index conjugates every processed amplitude
+(`applyQFTinv_phaseStateR_neg_neg`, with the `Fin` negation cast handled by
+`(−c : Fin T) = (T − c) % T` and `e^{−2πix} = 1`), so the `−` branch's distribution is the
+exact mirror image of the `+` branch's (`prob_applyQFTinv_phaseStateR_neg`), the mirror index
+decodes to the SAME estimate (`sin_sq_mirror`, via `sin(π − x) = sin x`), and the pair
+`{c, −c}` jointly carries ★ `4/π²` (`amplitude_estimation_pair`; the degenerate `c = −c`
+double-count at `c = 0` or `c = T/2` is noted in the docstring — the inequality holds
+literally there but the two-index reading collapses). **Correction recorded:** the AA-5b
+record below called the full `8/π²` "downstream arithmetic on the exact marginal" — that was
+WRONG for the both-rounding half. The two straddling grid points need a two-index lower bound
+on the Dirichlet kernel (`f(δ) + f(1/T − δ) ≥ 8/π²`); a single index at distance up to `1/T`
+can carry probability `0`, so no single-index bound composes to it. That kernel inequality is
+a genuine new analytic brick (S–M, on the Jordan-inequality machinery of
+`PhaseEstimation.lean`), left open with this honest name. The corpus's bound on the estimate
+tops out at `4/π²`.
 
 One more snag for the pile: `push_cast` rewrites `↑(Real.sin x)` to `Complex.sin ↑x`
 mid-goal, splitting what `linear_combination` needs to be ONE atom — prefer targeted

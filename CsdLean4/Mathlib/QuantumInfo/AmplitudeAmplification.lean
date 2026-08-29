@@ -45,9 +45,13 @@ Grover's algorithm is the instance `φ = uniform superposition`, `G = {w}`
 Query counting is by rounds of the abstract step; no oracle model or gate decomposition is
 claimed (the same matrix-level scope as `Fourier.lean`/`PhaseEstimation.lean`). The degenerate
 boundaries are real and excluded by hypothesis: `goodProb = 0` leaves no plane to rotate and
-`goodProb = 1` nothing to amplify. The unknown-`a` QSearch schedule (BHMT Thm 3) and amplitude
-*estimation* (BHMT Thm 12, which would consume `PhaseEstimation.lean`) are recorded in
-`specs/amplitude-amplification-plan.md` (AA-5/AA-6) and not attempted here.
+`goodProb = 1` nothing to amplify. Amplitude *estimation* (BHMT Thm 12) is assembled in
+`AmplitudeEstimation.lean` from this module's eigenstructure section. For unknown `a`, the
+**QSearch engine** (BHMT Lemma 2) is the final section here: a uniformly random round count
+below `M` succeeds with average probability `≥ 1/4` once `M·sin 2θ ≥ 1`
+(`qsearch_average`) — the paper's Thm 3 wraps this in an exponential-doubling schedule whose
+expected-runtime bookkeeping is a probabilistic-process argument, recorded in
+`specs/amplitude-amplification-plan.md` (AA-6) and not formalised.
 -/
 
 @[expose] public section
@@ -821,5 +825,86 @@ theorem amplitude_estimation_error {a : ℝ} (ha0 : 0 ≤ a)
       ≤ 2 * Real.sqrt (a * (1 - a)) * ε :=
     mul_le_mul_of_nonneg_left hδ (by positivity)
   linarith
+
+/-! ## Unknown amplitude: the averaged rotation (QSearch engine, BHMT Lemma 2)
+
+When `a` is unknown the optimal count `⌊π/(4θ)⌋` cannot be computed. BHMT's remedy: pick the
+round count uniformly at random below a guess `M`. The average success probability has an
+exact closed form — the odd-angle `sin²` sum telescopes — and once `M·sin 2θ ≥ 1` it is at
+least `1/4`, independent of `a`. The exponential-doubling schedule built on this
+(BHMT Thm 3) is algorithmic bookkeeping and not formalised. -/
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- The double angle of the odd angle: `cos(2·(2m+1)θ) = 1 − 2 sin²((2m+1)θ)`. -/
+lemma cos_two_mul_odd (t : ℝ) :
+    Real.cos (2 * t) = 1 - 2 * Real.sin t ^ 2 := by
+  rw [Real.cos_two_mul]
+  linear_combination 2 * Real.sin_sq_add_cos_sq t
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- **The telescoped average (product form, BHMT Lemma 2):**
+`4 sin(2θ) · ∑_{m<M} sin²((2m+1)θ) = 2M sin(2θ) − sin(4Mθ)` — exactly, for every `θ`. The
+`sin²` sum telescopes through `sin(2A+2θ) − sin(2A−2θ) = 2 cos(2A) sin(2θ)` at the odd
+angles `A = (2m+1)θ`. -/
+lemma sum_sin_sq_odd_mul (θ : ℝ) (M : ℕ) :
+    4 * Real.sin (2 * θ) * ∑ m ∈ Finset.range M, Real.sin ((2 * m + 1) * θ) ^ 2
+      = 2 * M * Real.sin (2 * θ) - Real.sin (4 * M * θ) := by
+  induction M with
+  | zero => simp
+  | succ k ih =>
+    rw [Finset.sum_range_succ, mul_add, ih]
+    have key : Real.sin (4 * ((k : ℝ) + 1) * θ) - Real.sin (4 * k * θ)
+        = 2 * Real.sin (2 * θ) * (1 - 2 * Real.sin ((2 * k + 1) * θ) ^ 2) := by
+      rw [show 4 * ((k : ℝ) + 1) * θ = 2 * ((2 * k + 1) * θ) + 2 * θ from by ring,
+        show 4 * (k : ℝ) * θ = 2 * ((2 * k + 1) * θ) - 2 * θ from by ring,
+        Real.sin_add, Real.sin_sub, cos_two_mul_odd ((2 * (k : ℝ) + 1) * θ)]
+      ring
+    push_cast
+    linear_combination key
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- **The quarter bound:** once the guess `M` satisfies `M·sin 2θ ≥ 1`, the average success
+probability of a uniformly random round count below `M` is at least `1/4`
+(the sum is at least `M/4`). -/
+lemma sum_sin_sq_odd_ge (θ : ℝ) (M : ℕ) (hpos : 0 < Real.sin (2 * θ))
+    (hM : 1 ≤ M * Real.sin (2 * θ)) :
+    (M : ℝ) / 4 ≤ ∑ m ∈ Finset.range M, Real.sin ((2 * m + 1) * θ) ^ 2 := by
+  have h := sum_sin_sq_odd_mul θ M
+  have hb : Real.sin (4 * M * θ) ≤ 1 := Real.sin_le_one _
+  nlinarith [h, hb, hM, hpos]
+
+/-- ★ **The QSearch engine (BHMT Lemma 2 on the register):** for any unit state with unknown
+success probability `0 < a < 1`, as soon as the guess `M` satisfies `M · 2√(a(1−a)) ≥ 1`, the
+amplification rounds `0, …, M−1` have **total** success probability at least `M/4` — i.e., a
+uniformly random round count below `M` succeeds with average probability `≥ 1/4`, with no
+knowledge of `a`. This is the engine of BHMT's unknown-`a` search; the exponential-doubling
+schedule wrapping it (their Thm 3) is not formalised. -/
+theorem qsearch_average (G : Finset ι) (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1)
+    (ha0 : 0 < goodProb G ψ) (ha1 : goodProb G ψ < 1) (M : ℕ)
+    (hM : 1 ≤ M * (2 * Real.sqrt (goodProb G ψ * (1 - goodProb G ψ)))) :
+    (M : ℝ) / 4 ≤ ∑ m ∈ Finset.range M, goodProb G ((ampStep ψ G)^[m] ψ) := by
+  set a := goodProb G ψ with ha
+  set θ := Real.arcsin (Real.sqrt a) with hθdef
+  have hterm : ∀ m : ℕ, goodProb G ((ampStep ψ G)^[m] ψ) = Real.sin ((2 * m + 1) * θ) ^ 2 :=
+    fun m => amplitude_amplification G ψ hψ ha0 ha1 m
+  rw [Finset.sum_congr rfl fun m _ => hterm m]
+  have hsqle : Real.sqrt a ≤ 1 := by
+    rw [← Real.sqrt_one]
+    exact Real.sqrt_le_sqrt ha1.le
+  have hsθ : Real.sin θ = Real.sqrt a :=
+    Real.sin_arcsin (le_trans (by norm_num) (Real.sqrt_nonneg a)) hsqle
+  have hcθ : Real.cos θ = Real.sqrt (1 - a) := by
+    rw [hθdef, Real.cos_arcsin, Real.sq_sqrt ha0.le]
+  have hs2 : Real.sin (2 * θ) = 2 * Real.sqrt (a * (1 - a)) := by
+    rw [Real.sin_two_mul, hsθ, hcθ, Real.sqrt_mul ha0.le]
+    ring
+  have hpos : 0 < Real.sin (2 * θ) := by
+    rw [hs2]
+    have h1a : 0 < a * (1 - a) := mul_pos ha0 (by linarith)
+    have := Real.sqrt_pos.mpr h1a
+    linarith
+  refine sum_sin_sq_odd_ge θ M hpos ?_
+  rw [hs2]
+  exact hM
 
 end QuantumInfo

@@ -43,16 +43,22 @@ hence the amplitude `a = sin²θ`.
 
 ## Honest scope
 
-The `2/π²` is the **single-branch, single-index** bound: the `+` branch's `4/π²` halves
-against the branch weight, and the `−` branch's contribution at the same index is kept only as
-`≥ 0`. BHMT's `8/π²` (Thm 12 via their Thm 11) counts both rounding directions of both
-branches; that strengthening is `Fin` wraparound bookkeeping on the mirror index `T − c` and
-is not attempted here — the exact marginal (`amplitude_estimation_marginal`) is stated in full,
-so the refinement is downstream arithmetic on a closed form, the same posture as
-`Grover.lean`'s deferrals. Query counting is by rounds of the abstract step; no controlled-gate
-decomposition is claimed. The construction takes the rotation-plane data (`g`, `b`, `θ`) as
-input — the plane exists for any state with `0 < goodProb < 1` (`ampState_decomposition` in
-`AmplitudeAmplification.lean`).
+`amplitude_estimation` is the single-branch, single-index `2/π²`. The **mirror section**
+doubles it: the `−` branch's distribution is the exact mirror image of the `+` branch's
+(`prob_applyQFTinv_phaseStateR_neg`, a conjugation symmetry), so the mirror index `−c` also
+carries `2/π²` (`amplitude_estimation_mirror`), both indices yield the **same** estimate
+`sin²(πc/T)` (`sin_sq_mirror`), and the pair carries `4/π²` (★ `amplitude_estimation_pair`).
+Two honest residues: (i) when `c = −c` (only `c = 0`, or `c = T/2` for even `T`) the pair sum
+double-counts one index — the bound still holds literally, but the "measure c or −c" reading
+collapses to a single index there; (ii) BHMT's literal `8/π²` (their Thm 11) additionally
+counts **both rounding directions** — the two grid points straddling `Tθ/π` — which needs a
+two-index lower bound on the Dirichlet kernel (`f(δ) + f(1/T − δ) ≥ 8/π²`, a genuine new
+kernel inequality, NOT downstream arithmetic; a single index at distance up to `1/T` can carry
+probability `0`). That inequality is recorded in the plan and not attempted; the corpus's
+bound on the estimate tops out at `4/π²`. Query counting is by rounds of the abstract step; no
+controlled-gate decomposition is claimed. The construction takes the rotation-plane data
+(`g`, `b`, `θ`) as input — the plane exists for any state with `0 < goodProb < 1`
+(`ampState_decomposition` in `AmplitudeAmplification.lean`).
 -/
 
 @[expose] public section
@@ -221,5 +227,124 @@ theorem amplitude_estimation_close {a : ℝ} (ha0 : 0 ≤ a)
     _ = Real.pi * Real.sqrt (a * (1 - a)) / T + Real.pi ^ 2 / (4 * T ^ 2) := by
         field_simp
         ring
+
+/-! ## The mirror index: both branches counted
+
+The `−` branch's counting distribution is the exact mirror image of the `+` branch's: negating
+the phase and the index conjugates every amplitude. So the mirror index `−c` carries the `−`
+branch's `4/π²`, it decodes to the **same** amplitude estimate, and accepting `{c, −c}`
+doubles the success bound to `4/π²`. -/
+
+omit [Fintype ι] [DecidableEq ι] [NeZero T] in
+/-- The `ℕ`-value of the negated index: `(−c : Fin T) = (T − c) % T`. -/
+lemma val_neg_fin (c : Fin T) : ((-c : Fin T) : ℕ) = (T - (c : ℕ)) % T := by
+  rfl
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- **The conjugation symmetry:** negating both the phase and the counting index conjugates
+the processed amplitude. -/
+lemma applyQFTinv_phaseStateR_neg_neg (φ : ℝ) (c : Fin T) :
+    applyQFTinv T (phaseStateR T (-φ)) (-c)
+      = (starRingEnd ℂ) (applyQFTinv T (phaseStateR T φ) c) := by
+  rw [applyQFTinv_phaseStateR_apply, applyQFTinv_phaseStateR_apply, map_mul, map_sum]
+  congr 1
+  · rw [map_inv₀, map_natCast]
+  · refine Finset.sum_congr rfl fun x _ => ?_
+    rw [← Complex.exp_conj,
+      show (starRingEnd ℂ) (2 * ↑Real.pi * Complex.I
+            * (↑(φ - ((c : ℕ) : ℝ) / (T : ℝ)) : ℂ) * ↑(x : ℕ))
+          = -(2 * ↑Real.pi * Complex.I * (↑(φ - ((c : ℕ) : ℝ) / (T : ℝ)) : ℂ) * ↑(x : ℕ))
+        from by
+      simp only [map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat, map_natCast]
+      ring]
+    by_cases hc : c = 0
+    · subst hc
+      rw [neg_zero]
+      congr 1
+      simp only [Fin.val_zero]
+      push_cast
+      ring
+    · have hm : ((-c : Fin T) : ℕ) = T - (c : ℕ) := by
+        rw [val_neg_fin, Nat.mod_eq_of_lt]
+        have h0 : 0 < (c : ℕ) := Nat.pos_of_ne_zero (fun h => hc (Fin.ext h))
+        omega
+      have hT : ((T : ℕ) : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne T)
+      rw [hm,
+        show (2 * ↑Real.pi * Complex.I
+              * (↑(-φ - ((T - (c : ℕ) : ℕ) : ℝ) / (T : ℝ)) : ℂ) * ↑(x : ℕ))
+            = -(2 * ↑Real.pi * Complex.I * (↑(φ - ((c : ℕ) : ℝ) / (T : ℝ)) : ℂ) * ↑(x : ℕ))
+              + (-(x : ℕ) : ℤ) * (2 * ↑Real.pi * Complex.I) from by
+          push_cast [Nat.cast_sub c.isLt.le]
+          have hTc : ((T : ℕ) : ℂ) ≠ 0 := by exact_mod_cast Nat.cast_ne_zero.mpr (NeZero.ne T)
+          field_simp
+          ring,
+        Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- **The mirror distribution:** the `−` branch at the mirror index equals the `+` branch at
+the original index. -/
+lemma prob_applyQFTinv_phaseStateR_neg (φ : ℝ) (c : Fin T) :
+    prob (applyQFTinv T (phaseStateR T (-φ))) (-c)
+      = prob (applyQFTinv T (phaseStateR T φ)) c := by
+  rw [prob, prob, applyQFTinv_phaseStateR_neg_neg, RCLike.norm_conj]
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- **The mirror index decodes to the same estimate:** `sin²(π·(−c)/T) = sin²(π·c/T)`. -/
+lemma sin_sq_mirror (c : Fin T) :
+    Real.sin (Real.pi * ((-c : Fin T) : ℕ) / T) ^ 2
+      = Real.sin (Real.pi * (c : ℕ) / T) ^ 2 := by
+  by_cases hc : c = 0
+  · subst hc
+    rw [neg_zero]
+  · have hm : ((-c : Fin T) : ℕ) = T - (c : ℕ) := by
+      rw [val_neg_fin, Nat.mod_eq_of_lt]
+      have h0 : 0 < (c : ℕ) := Nat.pos_of_ne_zero (fun h => hc (Fin.ext h))
+      omega
+    have hT : ((T : ℕ) : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (NeZero.ne T)
+    rw [hm,
+      show Real.pi * ((T - (c : ℕ) : ℕ) : ℝ) / T = Real.pi - Real.pi * ((c : ℕ) : ℝ) / T
+        from by
+        push_cast [Nat.cast_sub c.isLt.le]
+        field_simp,
+      Real.sin_pi_sub]
+
+/-- **The mirror index also carries `2/π²`:** under the same closest-index hypothesis for
+`θ/π`, the `−` branch concentrates at `−c`. -/
+theorem amplitude_estimation_mirror (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) (c : Fin T)
+    (hclose : |θ / Real.pi - (c : ℝ) / T| ≤ 1 / (2 * T)) :
+    2 / Real.pi ^ 2 ≤ probLeft (matrixLeft (qftMatrix T)ᴴ
+        (kickbackState T (ampState g b θ) G (ampState g b θ))) (-c) := by
+  rw [amplitude_estimation_marginal T hgg hbb hgb hgsupp hbsupp θ (-c)]
+  have h1 : 4 / Real.pi ^ 2 ≤ prob (applyQFTinv T (phaseStateR T (-(θ / Real.pi)))) (-c) := by
+    rw [prob_applyQFTinv_phaseStateR_neg]
+    exact phase_estimation_lower_bound T (θ / Real.pi) c hclose
+  have h2 : 0 ≤ prob (applyQFTinv T (phaseStateR T (θ / Real.pi))) (-c) := by
+    rw [prob]
+    positivity
+  calc 2 / Real.pi ^ 2 = (0 + 4 / Real.pi ^ 2) / 2 := by ring
+    _ ≤ (prob (applyQFTinv T (phaseStateR T (θ / Real.pi))) (-c)
+          + prob (applyQFTinv T (phaseStateR T (-(θ / Real.pi)))) (-c)) / 2 := by
+        linarith [add_le_add h2 h1]
+
+/-- ★ **The both-branch success bound (the mirror refinement):** the pair `{c, −c}` — two
+indices decoding to the **same** estimate (`sin_sq_mirror`) — jointly carries at least
+`4/π²`. When `c = −c` (only `c = 0`, or `c = T/2` for even `T`) the sum double-counts a
+single index; the inequality still holds literally. BHMT's `8/π²` additionally needs the
+both-rounding-directions kernel inequality — see the module header. -/
+theorem amplitude_estimation_pair (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) (c : Fin T)
+    (hclose : |θ / Real.pi - (c : ℝ) / T| ≤ 1 / (2 * T)) :
+    4 / Real.pi ^ 2 ≤ probLeft (matrixLeft (qftMatrix T)ᴴ
+          (kickbackState T (ampState g b θ) G (ampState g b θ))) c
+        + probLeft (matrixLeft (qftMatrix T)ᴴ
+          (kickbackState T (ampState g b θ) G (ampState g b θ))) (-c) := by
+  have h1 := amplitude_estimation T hgg hbb hgb hgsupp hbsupp θ c hclose
+  have h2 := amplitude_estimation_mirror T hgg hbb hgb hgsupp hbsupp θ c hclose
+  have h4 : (4 : ℝ) / Real.pi ^ 2 = 2 / Real.pi ^ 2 + 2 / Real.pi ^ 2 := by ring
+  rw [h4]
+  exact add_le_add h1 h2
 
 end QuantumInfo
