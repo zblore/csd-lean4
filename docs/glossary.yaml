@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 1e7ebbafb5cf51d2bd1fe2786cf365bfb158effa
+  sha: 98def75c281ee9e869ba5488b8357e24cec7614c
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -6511,3 +6511,73 @@ entries:
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055), Thm 12"
         url: https://arxiv.org/abs/quant-ph/0005055
+
+  - slug: gottesman-knill
+    reviewed: 2026-08-29
+    hook: >
+      The boundary of quantum advantage: circuits built from the Clifford gates can be
+      simulated classically, because in the right picture they are just linear algebra on
+      bits.
+    layman: >
+      Not everything a quantum computer does is hard to imitate. Gottesman and Knill drew a
+      startling line: a large, useful family of quantum circuits -- everything built from the
+      Hadamard, phase and controlled-NOT gates -- can be tracked perfectly by an ordinary
+      computer, no exponential effort required.
+
+      The trick is to stop watching the quantum state, which is exponentially large, and
+      instead watch a small set of operators that pin the state down -- its "stabilisers".
+      Each such operator is described by two bitstrings and a sign. The magic of the Clifford
+      gates is that they shuffle these descriptions AMONG THEMSELVES: push a stabiliser
+      through a gate and out comes another stabiliser, its bitstrings updated by a fixed
+      linear rule.
+
+      So the whole circuit collapses to bookkeeping on bits. Quantum advantage, wherever it
+      lives, must come from the gates OUTSIDE this family.
+    in_csd: >
+      A Cat-1 library layer, CSD-free, in two modules. The Pauli module proves the algebra:
+      the operators X^a Z^b close under composition with a phase governed by the F2 pairing,
+      commute exactly when the symplectic form of their labels vanishes, and every
+      non-identity Pauli is traceless -- the seed of the stabiliser-state uniqueness argument.
+      The Clifford module proves the mechanism itself: conjugation by each generator (CNOT,
+      S, H) maps every Pauli to a phase times a Pauli, with the label map explicit and
+      F2-linear per gate.
+
+      Honest scope: the Heisenberg-picture closure is proved in full; the "classically
+      simulable in polynomial time" reading is a complexity claim about the update rule, and
+      the corpus has no computation model, so it stays prose. The stabiliser-group and
+      measurement-update layer is a gated next brick. The standing disclaimer applies: the
+      algorithm layer consumes the unitary pillar and does not support foundations.
+    mathematical: >
+      On the register over Fin n -> Fin 2: pauliOp a b acts by (X^a Z^b psi)(z) =
+      (-1)^(b.(z+a)) psi(z+a). The group law X^a Z^b . X^a' Z^b' = (-1)^(b.a') X^(a+a')
+      Z^(b+b') makes the family closed with F2-symplectic phase bookkeeping; the character
+      sum over z of (-1)^(b.z) equals 2^n exactly when b = 0, so non-identity Paulis are
+      traceless.
+
+      The conjugation theorems: CNOT_jk carries (a, b) to (a[k += a_j], b[j += b_k]) with no
+      phase; S_j carries b to b[j += a_j] with phase i^(a_j); H_j swaps a_j and b_j with sign
+      (-1)^(a_j b_j). Every sign in the development is the character of an F2-valued form,
+      so the bookkeeping reduces to finite F2 identities checked by decision procedure.
+    person: >
+      Daniel Gottesman introduced the stabiliser formalism in his 1997 Caltech thesis and
+      distilled the simulability observation in "The Heisenberg representation of quantum
+      computers" (1998), crediting the theorem's joint form to a conversation with Emanuel
+      Knill -- hence the name. Knill, at Los Alamos, was simultaneously laying the
+      foundations of fault-tolerant quantum computation.
+
+      The theorem is the reason quantum error correction does not already grant quantum
+      advantage: the codes are Clifford objects. Aaronson and Gottesman's 2004 "Improved
+      simulation of stabilizer circuits" made the bookkeeping practical, and stabiliser
+      theory became the lingua franca of the field -- including the research programme of
+      David Gross on Clifford orbits and designs.
+    term: Gottesman-Knill theorem
+    eponyms: [Gottesman, Knill]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Clifford.lean
+      theorem: hGate_conj_pauliOp
+    external:
+      - text: "Gottesman, The Heisenberg representation of quantum computers (quant-ph/9807006)"
+        url: https://arxiv.org/abs/quant-ph/9807006
+      - text: "Aaronson-Gottesman, Improved simulation of stabilizer circuits (quant-ph/0406196)"
+        url: https://arxiv.org/abs/quant-ph/0406196

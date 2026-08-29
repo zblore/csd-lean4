@@ -52,6 +52,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Gibbs state](https://glossary.constraintsurfacedynamics.com/gibbs-state/) | `` | standard-mathematics |
 | [Gisin's theorem](https://glossary.constraintsurfacedynamics.com/gisin-theorem/) | `` | standard-mathematics |
 | [Gleason and Busch theorems](https://glossary.constraintsurfacedynamics.com/gleason-theorem/) | `effect_gleason_representation` | proved-in-corpus |
+| [Gottesman-Knill theorem](https://glossary.constraintsurfacedynamics.com/gottesman-knill/) | `hGate_conj_pauliOp` | proved-in-corpus |
 | [Grover's algorithm](https://glossary.constraintsurfacedynamics.com/grover-algorithm/) | `` | standard-mathematics |
 | [Haar measure](https://glossary.constraintsurfacedynamics.com/haar-measure/) | `` | standard-mathematics |
 | [Hadamard test](https://glossary.constraintsurfacedynamics.com/hadamard-test/) | `` | standard-mathematics |

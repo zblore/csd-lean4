@@ -12,6 +12,10 @@ public import CsdLean4.Mathlib.QuantumInfo.Pauli
 
 **Category:** 1-Mathlib (CSD-free).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/gottesman-knill/
+Plain-language, CSD-role and formal statements of the Gottesman–Knill theorem, with this
+module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The three Clifford generator families as concrete coordinate operators — `cnotGate j k`
 (controlled-NOT), `sGate j` (the phase gate), `hGate j` (the single-qubit Hadamard) — and the
 theorem family that IS the Gottesman–Knill mechanism: **conjugation by each generator maps
