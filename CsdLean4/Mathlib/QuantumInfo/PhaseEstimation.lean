@@ -14,6 +14,10 @@ public import Mathlib.Analysis.Real.Pi.Bounds
 
 **Category:** 1-Mathlib (CSD-free).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/phase-estimation/
+Plain-language, CSD-role and formal statements of phase estimation, with this
+module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Phase estimation on a `T`-level counting register `EuclideanSpace ℂ (Fin T)`, entirely generic
 in `T` — the standard textbook results (Nielsen–Chuang §5.2), machine-checked:
 

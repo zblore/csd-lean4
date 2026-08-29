@@ -14,6 +14,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Bargmann invariant](https://glossary.constraintsurfacedynamics.com/bargmann/) | `` | standard-mathematics |
 | [Bell and CHSH](https://glossary.constraintsurfacedynamics.com/bell-chsh/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
 | [Bell state is not a join](https://glossary.constraintsurfacedynamics.com/bell-not-join/) | `bell_not_join` | proved-in-corpus |
+| [Bernstein-Vazirani algorithm](https://glossary.constraintsurfacedynamics.com/bernstein-vazirani/) | `` | standard-mathematics |
 | [Bloch sphere](https://glossary.constraintsurfacedynamics.com/bloch-sphere/) | `` | standard-mathematics |
 | [Bohmian mechanics](https://glossary.constraintsurfacedynamics.com/bohmian-mechanics/) | `` | definition |
 | [Borel set](https://glossary.constraintsurfacedynamics.com/borel-set/) | `` | standard-mathematics |
@@ -51,6 +52,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Gleason and Busch theorems](https://glossary.constraintsurfacedynamics.com/gleason-theorem/) | `effect_gleason_representation` | proved-in-corpus |
 | [Grover's algorithm](https://glossary.constraintsurfacedynamics.com/grover-algorithm/) | `` | standard-mathematics |
 | [Haar measure](https://glossary.constraintsurfacedynamics.com/haar-measure/) | `` | standard-mathematics |
+| [Hadamard test](https://glossary.constraintsurfacedynamics.com/hadamard-test/) | `` | standard-mathematics |
 | [Hermitian operator](https://glossary.constraintsurfacedynamics.com/hermitian-operator/) | `` | standard-mathematics |
 | [Hidden variables](https://glossary.constraintsurfacedynamics.com/hidden-variables/) | `no_product_partition_realises_singlet` | proved-in-corpus |
 | [Hilbert space](https://glossary.constraintsurfacedynamics.com/hilbert-space/) | `` | standard-mathematics |
@@ -94,6 +96,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Partial trace](https://glossary.constraintsurfacedynamics.com/partial-trace/) | `partialTraceRight` | proved-in-corpus |
 | [Pauli matrices](https://glossary.constraintsurfacedynamics.com/pauli-matrices/) | `` | standard-mathematics |
 | [Peres criterion](https://glossary.constraintsurfacedynamics.com/peres-criterion/) | `` | standard-mathematics |
+| [phase estimation](https://glossary.constraintsurfacedynamics.com/phase-estimation/) | `phase_estimation_lower_bound` | proved-in-corpus |
 | [Pointer basis](https://glossary.constraintsurfacedynamics.com/pointer-basis/) | `einselectionN` | proved-in-corpus |
 | [Poisson bracket](https://glossary.constraintsurfacedynamics.com/poisson-bracket/) | `` | standard-mathematics |
 | [Preparation region](https://glossary.constraintsurfacedynamics.com/preparation-region/) | `` | definition |
@@ -102,6 +105,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Psi-epistemic](https://glossary.constraintsurfacedynamics.com/psi-epistemic/) | `conditional_not_mutuallySingular` | proved-in-corpus |
 | [QBism](https://glossary.constraintsurfacedynamics.com/qbism/) | `` | definition |
 | [Quantum channel](https://glossary.constraintsurfacedynamics.com/quantum-channel/) | `choiMatrix_posSemidef` | proved-in-corpus |
+| [quantum Fourier transform](https://glossary.constraintsurfacedynamics.com/quantum-fourier-transform/) | `qft_unitary` | proved-in-corpus |
 | [Ramsey interferometry](https://glossary.constraintsurfacedynamics.com/ramsey-interferometry/) | `` | standard-mathematics |
 | [Record layer](https://glossary.constraintsurfacedynamics.com/record-layer/) | `` | definition |
 | [Record light cone](https://glossary.constraintsurfacedynamics.com/record-light-cone/) | `record_lightcone` | proved-in-corpus |
@@ -110,11 +114,13 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Schrodinger from records](https://glossary.constraintsurfacedynamics.com/schrodinger-from-records/) | `sigmaFlow_schrodinger_form` | proved-in-corpus |
 | [Shor code](https://glossary.constraintsurfacedynamics.com/shor-code/) | `shor_corrects_XZ` | proved-in-corpus |
 | [Shor's algorithm](https://glossary.constraintsurfacedynamics.com/shor-algorithm/) | `` | standard-mathematics |
+| [Simon's algorithm](https://glossary.constraintsurfacedynamics.com/simon-algorithm/) | `` | standard-mathematics |
 | [Single trajectory](https://glossary.constraintsurfacedynamics.com/single-trajectory/) | `` | definition |
 | [Singlet contextual model](https://glossary.constraintsurfacedynamics.com/singlet-contextual-model/) | `c1_singlet_contextual_capstone` | proved-in-corpus |
 | [Spontaneous collapse (GRW)](https://glossary.constraintsurfacedynamics.com/spontaneous-collapse/) | `` | definition |
 | [Stern-Gerlach experiment](https://glossary.constraintsurfacedynamics.com/stern-gerlach/) | `` | standard-mathematics |
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
+| [swap test](https://glossary.constraintsurfacedynamics.com/swap-test/) | `` | standard-mathematics |
 | [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
 | [Typicality](https://glossary.constraintsurfacedynamics.com/typicality/) | `freq_tendsto_of_iid` | proved-in-corpus |
 | [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N_uncond` | proved-in-corpus |

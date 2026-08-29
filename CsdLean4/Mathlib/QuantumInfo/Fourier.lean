@@ -14,6 +14,10 @@ public import Mathlib.Algebra.Field.GeomSum
 
 **Category:** 1-Mathlib (CSD-free).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/quantum-fourier-transform/
+Plain-language, CSD-role and formal statements of the QFT, with this module as
+its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Phase R5 of `specs/nqubit-register-plan.md`: the **quantum Fourier transform** on `N`
 levels, as the `N × N` matrix
 

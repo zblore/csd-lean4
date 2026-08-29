@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 87e92fe6915cfa1f4b0ab1295196ff5765ff45fb
+  sha: e7898be0468999d66af8c7d6f3ae34b5974ba292
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -104,6 +104,10 @@ refs:
   "Kibble":                  {url: "https://doi.org/10.1007/BF01225149", source: "Kibble 1979, CMP"}
   "Wootters":                {url: "https://doi.org/10.1103/PhysRevD.23.357", source: "Wootters 1981, PRD"}
   "Zurek":                   {url: "https://doi.org/10.1103/PhysRevLett.90.120404", source: "Zurek 2003, PRL"}
+  "Nielsen and Chuang":      {url: "https://en.wikipedia.org/wiki/Quantum_Computation_and_Quantum_Information", source: "Nielsen & Chuang, CUP"}
+  "Nielsen-Chuang":          {url: "https://en.wikipedia.org/wiki/Quantum_Computation_and_Quantum_Information", source: "Nielsen & Chuang, CUP"}
+  "Dirichlet kernel":        {url: "https://en.wikipedia.org/wiki/Dirichlet_kernel", source: Wikipedia}
+  "Jordan's inequality":     {url: "https://en.wikipedia.org/wiki/Jordan%27s_inequality", source: Wikipedia}
 
 entries:
   - slug: fubini-study-measure
@@ -4073,7 +4077,7 @@ entries:
     related: [projectability, projective-sector, fibre, epistemic-measure]
 
   - slug: pointer-basis
-    reviewed: 2026-08-25
+    reviewed: 2026-08-29
     hook: >
       The apparatus does not measure what you ask it to. It measures what it can keep
       -- and what it can keep is decided by the interaction, not the experimenter.
@@ -4089,11 +4093,12 @@ entries:
       because bumping into air molecules does not change it; a superposition of two
       positions is fragile because the first bump marks which.
 
-      The pointer basis is thus meant to be selected, dynamically, by what the interaction
-      commutes with -- and that is the part still owed. What the corpus formalises is the
-      channel: given that the interaction dephases in a particular basis, the consequences
-      are worked out exactly. Deriving which basis that is from the arena's own dynamics
-      is open, and the corpus says so where it says it.
+      The pointer basis is thus selected by what the interaction commutes with -- and since
+      2026 that selection is a theorem here, not a slogan: an observable survives the
+      interaction at every time exactly when it commutes with it. What remains owed sits
+      one level up -- which interaction a given apparatus realises is an input, and
+      deriving it from the arena's own dynamics is open. The corpus says so where it says
+      it.
     in_csd: >
       In the record layer the pointer basis is what makes a record a record: a stable,
       re-readable configuration the de-isolation dynamics writes and the environment
@@ -4105,8 +4110,12 @@ entries:
 
       The content near it is real but narrower: the channel genuinely acts on a coherent
       state, the degenerate boundary is handled rather than waved at, and at the qubit the
-      continuous-time law is exact. The ontic origin -- einselection from the arena's
-      dynamics rather than from a modelled channel -- is explicitly gated to a later tier.
+      continuous-time law is exact. The commutation criterion itself is now a
+      characterisation (PointerCommutation.lean, 2026): the pointer observables of a
+      supplied interaction are exactly the commuting ones -- constants of the interaction
+      motion, populations conserved in every state, a non-commuting projection provably
+      disturbed. The ontic origin -- einselection from the arena's dynamics rather than
+      from a supplied interaction -- is explicitly gated to a later tier.
 
       The two-level reading applies here too: the pointer basis is a fact about the
       dynamics (ontic side); which pointer reading obtains for a given run is the
@@ -4123,7 +4132,11 @@ entries:
       The genuinely dynamical statement is the qubit dephasing semigroup, where the
       off-diagonal coherence decays exactly as exp(-gamma t) with populations conserved
       and the limit at large t proved; amplitude damping is its companion. Both are
-      two-level. Einselection from Sigma-dynamics is gated to the entangled tier.
+      two-level. At general N the criterion is characterised: pointer_invariant_iff_commute
+      proves an observable is a constant of the interaction flow at every time iff it
+      commutes with the Hermitian generator, with the disturbance of any non-commuting
+      observable proved alongside. The interaction is the input; einselection from
+      Sigma-dynamics is gated to the entangled tier.
     term: Pointer basis
     status: proved-in-corpus
     source: curated
@@ -6072,3 +6085,290 @@ entries:
     status: definition
     source: curated
     related: [bohmian-mechanics, hidden-variables, fubini-study-measure, is-csd-a-hidden-variable-theory, determinism]
+
+  # -------------------------------------------------------------------------
+  # 2026-08-29 tranche: the quantum-algorithm layer, completed. Prompted by the
+  # extraction of phase estimation to Cat-1 (PhaseEstimation.lean): the two
+  # library primitives get anchored entries, and the four algorithm witnesses
+  # that had no page (Simon, Bernstein-Vazirani, swap test, Hadamard test) get
+  # the same treatment as Grover / Deutsch-Jozsa / Shor.
+  # -------------------------------------------------------------------------
+
+  - slug: quantum-fourier-transform
+    reviewed: 2026-08-29
+    hook: >
+      Fourier's transform run as a single reversible motion of a quantum register -- the
+      lens that turns hidden periods and phases into things a measurement can land on.
+    layman: >
+      Here is the problem. Quantum interference only helps you if the structure you care
+      about -- a repeating period, an invisible phase -- can be steered onto outcomes a
+      measurement actually produces. You need a lens that focuses spread-out regularity
+      into sharp peaks.
+
+      The quantum Fourier transform is that lens. It is the ordinary discrete Fourier
+      transform, the workhorse of signal processing, executed as one physical evolution of
+      the register rather than as arithmetic on a list of numbers. Feed it a state whose
+      amplitudes repeat with some period and the output piles up at the frequencies of that
+      period.
+
+      Shor's algorithm is the famous customer: load a modular sequence, apply the transform,
+      and the period that encodes the factors stands out like a struck bell.
+    in_csd: >
+      A Cat-1 library primitive, deliberately CSD-free: the N-level transform matrix with
+      its unitarity proved from roots-of-unity orthogonality -- a geometric series, nothing
+      deeper. The algorithm witnesses (Shor's algorithm, phase estimation) consume it; the
+      standing disclaimer applies, the algorithms consume the unitary pillar and do not
+      support foundations.
+
+      The transform is defined at a general level count N, not just powers of two, so it is
+      directly the discrete Fourier unitary; the qubit case is an instance.
+    mathematical: >
+      F j k = (1/sqrt N) omega^{jk} with omega = exp(2 pi i / N) a primitive N-th root of
+      unity; unitarity F^H F = 1 is the orthogonality sum over k of zeta^k = N [zeta = 1],
+      closed by the geometric series (qft_unitary).
+
+      Matrix level only: the corpus states the transform as an N x N unitary and proves its
+      algebra; no gate-level circuit decomposition is claimed.
+    person: >
+      Joseph Fourier (1768-1830) was an orphan from Auxerre who taught at the Ecole
+      Polytechnique, governed Lower Egypt under Napoleon, and administered the Isere from
+      Grenoble -- where, between prefectural duties, he wrote the analytical theory of heat.
+      His claim that arbitrary functions decompose into sines scandalised Lagrange and
+      became the spine of applied mathematics anyway.
+
+      The quantum version arrived with Shor's 1994 paper and its predecessors: the insight
+      that the transform's butterfly structure makes it exponentially cheap as a quantum
+      circuit, which is exactly what period-finding needed.
+    term: quantum Fourier transform
+    eponyms: [Fourier]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Fourier.lean
+      theorem: qft_unitary
+    related: [phase-estimation, shor-algorithm, deutsch-jozsa]
+    external:
+      - text: "Overview"
+        url: https://en.wikipedia.org/wiki/Quantum_Fourier_transform
+
+  - slug: phase-estimation
+    reviewed: 2026-08-29
+    hook: >
+      The workhorse subroutine of quantum computing carries a guarantee: read the dial at
+      the nearest tick and you are right at least 4/pi-squared of the time -- about forty
+      percent -- no matter how fine the dial.
+    layman: >
+      Here is the problem. A quantum computation's answer often arrives as a phase -- an
+      angle wound into the state, invisible to any direct look. You need to read an angle
+      you cannot see, using a register with finitely many dial positions.
+
+      Phase estimation is the reading procedure: spread the phase across the register, run
+      the Fourier transform backwards, and the amplitude concentrates at the dial position
+      closest to the true angle. If the angle sits exactly on a tick, you read it with
+      certainty.
+
+      Generically it sits between ticks -- and the textbook promise is that the nearest tick
+      still comes up with probability at least 4/pi-squared, independent of the register
+      size. That constant is the Dirichlet kernel talking, and it is what makes the
+      subroutine composable: whatever consumes the reading can budget for a fixed success
+      floor.
+    in_csd: >
+      Both halves are corpus theorems, in the CSD-free Cat-1 tree where an outside project
+      can import them: the exact case (phase_estimation_exact, an inverse-QFT inversion) and
+      the 4/pi-squared floor for an arbitrary real phase (phase_estimation_lower_bound).
+
+      The result was proved inside the Shor development and extracted in 2026 once it was
+      noticed that the statements never mention orders or modular arithmetic -- the module
+      is generic in the register size, and Shor's order-finding consumes it at phase s/r.
+      The standing disclaimer applies: the algorithm layer consumes the unitary pillar, it
+      does not support foundations.
+    mathematical: >
+      On the T-level counting register, the phase state (1/sqrt T) sum over x of
+      e^{2 pi i phi x} |x> read by the inverse QFT at index c has amplitude the Dirichlet
+      sum (1/T) sum over x of e^{2 pi i (phi - c/T) x}; the geometric series closes it and
+      the norm reduces to T^{-2} sin^2(pi delta T) / sin^2(pi delta) with
+      delta = phi - c/T.
+
+      For |delta| <= 1/(2T), Jordan's inequality bounds the numerator below and
+      |sin t| <= |t| the denominator above, giving probability at least 4/pi^2 at the
+      closest index (Nielsen and Chuang section 5.2); on resonance the probability is one.
+      Single-phase statement only: a consumer racing several eigenvalue branches must
+      control its own cross-terms.
+    term: phase estimation
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/PhaseEstimation.lean
+      theorem: phase_estimation_lower_bound
+    related: [quantum-fourier-transform, shor-algorithm]
+    external:
+      - text: "Overview"
+        url: https://en.wikipedia.org/wiki/Quantum_phase_estimation_algorithm
+
+  - slug: simon-algorithm
+    hook: >
+      The exponential separation that convinced Shor: a hidden XOR mask, unfindable
+      classically without exponential work, falls to a handful of quantum queries and some
+      linear algebra.
+    layman: >
+      Here is the problem. A black-box function repeats itself under a hidden bitwise mask:
+      two inputs collide exactly when they differ by a secret string s. Find s. Classically
+      all you can do is hunt for a collision, and birthday arithmetic says that costs
+      exponentially many queries.
+
+      Simon's procedure queries the box once in superposition, then measures in the Hadamard
+      basis. Each run hands you one random linear equation that the secret must satisfy.
+      About n runs, one Gaussian elimination, and s is yours.
+
+      It was the first exponential quantum-classical separation for a promise problem, and
+      its direct descendant is famous: Shor read Simon's paper and asked what the same trick
+      does to periods that are arithmetic rather than bitwise.
+    in_csd: >
+      One of the corpus's algorithm witnesses (the Hadamard-oracle family, beside
+      Deutsch-Jozsa and Bernstein-Vazirani), with the standing disclaimer: witnesses mark
+      scope, they do not support foundations.
+
+      What is proved is the per-outcome content of one round on the coset state:
+      outcomes not orthogonal to the secret have probability zero (simon_orthogonal), and
+      every orthogonal outcome carries the same probability (simon_uniform). The classical
+      post-processing -- collecting equations and solving -- is stated as the reading, not
+      re-verified.
+    mathematical: >
+      After the oracle query and a second-register measurement, the first register is a
+      coset state |x0> + |x0 + s>; the Hadamard transform gives outcome y the amplitude
+      (1/sqrt 2)^{n+1} (-1)^{<x0,y>} (1 + (-1)^{<s,y>}), which vanishes unless <s,y> = 0
+      mod 2 and is otherwise uniform of squared norm 2/2^n.
+
+      So each round samples uniformly from the subspace orthogonal to s; n - 1 independent
+      samples determine s by linear algebra over F_2.
+    person: >
+      Daniel Simon proved the separation in 1993 while at the Universite de Montreal; the
+      paper was initially rejected before landing at FOCS 1994 -- the same conference, the
+      same session, as Shor's factoring paper, which cites it as the trigger. Simon spent
+      most of his subsequent career at Microsoft Research working on cryptography.
+    term: Simon's algorithm
+    eponyms: [Simon]
+    status: standard-mathematics
+    related: [deutsch-jozsa, bernstein-vazirani, shor-algorithm]
+    external:
+      - text: "Overview"
+        url: https://en.wikipedia.org/wiki/Simon%27s_problem
+
+  - slug: bernstein-vazirani
+    hook: >
+      A hidden n-bit string, n classical questions -- or exactly one quantum question. The
+      cleanest single-query win the field has.
+    layman: >
+      Here is the problem. An oracle computes the parity of your input against a secret
+      string: one bit out per query. Classically each query buys you one bit of the secret,
+      so n bits cost n queries, and no cleverness helps.
+
+      Bernstein and Vazirani ask once. Prepare the uniform superposition, let the oracle
+      write its parities into phases, undo the superposition. The interference is total: the
+      register reads the secret string itself, with certainty, every time.
+
+      No probability, no repetition, no post-processing. One query, one answer.
+    in_csd: >
+      An algorithm witness in the Hadamard-oracle family, and the corpus proves the strong
+      version: the full circuit's output amplitude is the Kronecker delta at the secret
+      string -- outcome a with probability one (bv_certain), every other outcome zero
+      (bv_zero). Unlike the reduced Simon analysis this is the complete phase-oracle
+      sandwich, no measurement reduction.
+
+      Standing disclaimer as ever: the algorithms consume the unitary pillar; they do not
+      support foundations.
+    mathematical: >
+      The circuit is H^n then the phase oracle |x> to (-1)^{<a,x>} |x> then H^n, on |0^n>.
+      The output amplitude at y is (1/2^n) sum over x of (-1)^{<y+a, x>}, and the character
+      sum collapses to 2^n [y = a] -- the delta.
+
+      The content is one orthogonality of characters over F_2^n; the algorithm is the
+      observation that a single physical query evaluates all the parities in superposition.
+    person: >
+      Ethan Bernstein and Umesh Vazirani published it inside their 1993 STOC paper on
+      quantum complexity theory -- the paper that defined BQP and made quantum computation a
+      complexity class rather than a curiosity. Vazirani, at Berkeley, went on to shape much
+      of the field's theory; Bernstein was his doctoral student.
+    term: Bernstein-Vazirani algorithm
+    eponyms: [Bernstein, Vazirani]
+    status: standard-mathematics
+    related: [deutsch-jozsa, simon-algorithm, grover-algorithm]
+    external:
+      - text: "Overview"
+        url: https://en.wikipedia.org/wiki/Bernstein%E2%80%93Vazirani_algorithm
+
+  - slug: swap-test
+    hook: >
+      Measure how alike two quantum states are without learning anything about what either
+      one is -- a comparison that keeps both secrets.
+    layman: >
+      Here is the problem. Two devices each hand you a quantum state and you want to know
+      whether they agree. Reading either state destroys it and tells you almost nothing;
+      comparing amplitude lists is not an operation nature offers.
+
+      The swap test threads one extra qubit through both: put the ancilla in superposition,
+      conditionally swap the two states, close the superposition, read the one qubit.
+      Identical states leave the ancilla reading zero always; orthogonal states leave it at
+      a coin flip; in between, the bias measures the overlap.
+
+      Repeat to taste: the overlap is estimated to any accuracy, and neither state is ever
+      identified. It is the standard likeness-meter of quantum information.
+    in_csd: >
+      The witness that opens the corpus's ancilla-interferometry family (beside the
+      Hadamard-oracle family): the ancilla-zero probability is proved to be
+      (1 + |<psi, phi>|^2)/2 exactly (swap_test_prob), with the equal-state and
+      orthogonal-state readings as corollaries.
+
+      Standing disclaimer: the algorithms consume the unitary pillar; they do not support
+      foundations.
+    mathematical: >
+      H on the ancilla, controlled swap, H again, on |0> tensor psi tensor phi; the
+      ancilla-zero marginal is (1/4) times the squared norm of psi tensor phi + phi tensor
+      psi, and the cross term <psi tensor phi, phi tensor psi> = |<psi, phi>|^2 closes it.
+
+      P(0) = 1 iff the states coincide up to phase; P(0) = 1/2 iff they are orthogonal; the
+      estimator is quadratic in the overlap, which is why it reveals magnitude and not
+      phase.
+    term: swap test
+    status: standard-mathematics
+    related: [hadamard-test, hong-ou-mandel]
+    external:
+      - text: "Overview"
+        url: https://en.wikipedia.org/wiki/Swap_test
+
+  - slug: hadamard-test
+    hook: >
+      Turn a matrix element -- a complex number buried inside an operator -- into the bias
+      of a single coin.
+    layman: >
+      Here is the problem. Quantum algorithms constantly need expectation values: the
+      number a state assigns to an operator. That number lives in the amplitudes, and
+      amplitudes are not observables.
+
+      The Hadamard test converts it to a coin. One ancilla qubit, put into superposition,
+      controls whether the operator acts; closing the superposition makes the two histories
+      interfere, and the ancilla's bias toward zero is exactly the real part of the
+      expectation value. A phase tweak on the ancilla reads the imaginary part.
+
+      Flip the coin enough times and the number emerges. It is the parent trick behind the
+      swap test and half of variational quantum algorithms.
+    in_csd: >
+      The parent witness of the corpus's ancilla-interferometry family: the ancilla-zero
+      probability is proved to be (1 + Re<psi, U psi>)/2 exactly (hadamard_test_prob), with
+      the complementary outcome and the sign reading P(0) - P(1) = Re<psi, U psi>
+      (hadamard_test_prob_diff), and the swap test recovered as the U = swap instance
+      (hadamard_test_swap_closed).
+
+      Standing disclaimer: the algorithms consume the unitary pillar; they do not support
+      foundations.
+    mathematical: >
+      H on the ancilla, controlled-U, H again, on |0> tensor psi: the ancilla marginals are
+      (1 plus-or-minus Re<psi, U psi>)/2. The estimator is linear in the operator, which is
+      what makes it the general-purpose expectation-value primitive.
+
+      The corpus also closes the family loop: at U the swap on a doubled system the test's
+      bias reproduces the swap test's, tying parent to child in one theorem.
+    term: Hadamard test
+    status: standard-mathematics
+    related: [swap-test, quantum-fourier-transform]
+    external:
+      - text: "Overview"
+        url: https://en.wikipedia.org/wiki/Hadamard_test
