@@ -46,11 +46,17 @@ surely to `‖⟨e₀, ψ⟩‖²`. Instantiating:
 These are exactly the Stern-Gerlach predictions `P(+z | +z) = 1` and the canonical
 `50/50` split (`|⟨+z|+x⟩|² = 1/2`).
 
-**Not claimed (still LF4-todo §14).** Identifying the moment-sublevel region with
-the physical "the `+z` (resp. `+x`) detector fired" measurement outcome is the
-§14 observable correspondence, undischarged pre-LF5. This file derives the Born
-*numbers* as Kähler volumes; it does not provide the operator → measurable-Σ-
-function dictionary. The carved capstone (2) carries the same boundary.
+**Not claimed (the interpretive §14 boundary).** Identifying the moment-sublevel
+region with the physical "the `+z` (resp. `+x`) detector fired" measurement
+outcome is the interpretive §14 labelling. *(Status updated 2026-08-30, audit
+pass: the header previously said the §14 observable correspondence was
+"undischarged pre-LF5" — the FORMAL operator → Σ-volume dictionary has since
+been proved, 2026-07-22/23, `LF4/ObservableCorrespondenceN.lean`:
+`observable_correspondence_diagonal` + `pure_state_born_prob_eq_volume`. What
+remains outside the theorem layer is only the interpretive detector-labelling of
+the region — the same boundary the newer Volume-series files state.)* This file
+derives the Born *numbers* as Kähler volumes. The carved capstone (2) carries
+the same boundary.
 
 ## Experimental verification
 

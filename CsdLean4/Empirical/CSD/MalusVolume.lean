@@ -43,10 +43,15 @@ region cut by `[ψ_θ]` converges almost surely to `cos²(θ/2)`, with `volume =
 `cos²(θ/2)` is the genuine Fubini–Study volume of the moment-sublevel region,
 foundational triple only.
 
-**Not claimed (still LF4-todo §14).** Identifying the moment-sublevel region with
-the physical "the spin-`θ` `+` detector fired" outcome is the §14 observable
-correspondence, undischarged pre-LF5. This file derives the Born *number* as a
-Kähler volume; it does not provide the operator → measurable-Σ-function dictionary.
+**Not claimed (the interpretive §14 boundary).** Identifying the moment-sublevel
+region with the physical "the spin-`θ` `+` detector fired" outcome is the
+interpretive §14 labelling. *(Status updated 2026-08-30, audit pass: the header
+previously said this was "undischarged pre-LF5" — the FORMAL operator →
+Σ-volume dictionary has since been proved, 2026-07-22/23,
+`LF4/ObservableCorrespondenceN.lean`: `observable_correspondence_diagonal` +
+`pure_state_born_prob_eq_volume`; only the interpretive detector-labelling
+remains outside the theorem layer, as the newer Volume-series files state.)*
+This file derives the Born *number* as a Kähler volume.
 
 ## Experimental verification
 
