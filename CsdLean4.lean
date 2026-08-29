@@ -44,6 +44,7 @@ public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeEstimation
 public import CsdLean4.Mathlib.QuantumInfo.Pauli
 public import CsdLean4.Mathlib.QuantumInfo.Clifford
+public import CsdLean4.Mathlib.QuantumInfo.Stabilizer
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
@@ -274,6 +275,7 @@ public import CsdLean4.Empirical.QM.QEC.ShorNine
 public import CsdLean4.Empirical.QM.QEC.ErrorDiscretization
 public import CsdLean4.Empirical.QM.QEC.SyndromeCollapse
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
+public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Multipartite.GHZ
 public import CsdLean4.Empirical.QM.Contextuality.KS18

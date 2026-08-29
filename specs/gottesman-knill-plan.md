@@ -1,7 +1,8 @@
 # Gottesman–Knill / stabiliser mechanics — scoping and plan
 
-**Status:** scoped 2026-08-29; **GK-1 + GK-2 EXECUTED same session** (author instruction:
-"Do 3") — see the execution record. GK-3 gated; GK-4 housekeeping done with the landing.
+**Status:** scoped 2026-08-29; **GK-1 + GK-2 EXECUTED same session** ("Do 3"), **GK-3
+EXECUTED later the same day** ("Do GK3 then 4") — see the execution record. Remaining named
+residues: uniqueness/dimension, the measurement-update rule.
 
 **Provenance.** Candidate 3 of the five from the 2026-08-28 algorithms discussion (candidates
 1–2, QFT/phase-estimation and the full BHMT arc, executed 2026-08-29 —
@@ -94,9 +95,17 @@ anything multiplicative; `simp +decide` evaluates closed `Fin 2` conditions insi
 `I·(−I)` never presents `I*I` adjacently — close the surviving cases with
 `first | ring1 | linear_combination (±ψ)·Complex.I_sq` instead of chasing associativity.
 
-**GK-3 (stabiliser groups, the projector, state uniqueness, measurement update) stays
-gated** — it needs a finite-subgroup-of-operators layer; scope on paper first, per the plan.
-The trace seed (`pauliOp_trace`) and the commutation criterion are already in place for it.
+**GK-3 EXECUTED 2026-08-29, later the same day** (author instruction: "Do GK3 then 4"),
+`Mathlib/QuantumInfo/Stabilizer.lean`, with the paper scope run first as the gate demanded.
+The design that dissolved the "finite-subgroup-of-operators layer": index the group by
+`𝔽₂^m` DIRECTLY — linear label maps `A, B` and a sign function `σ` under the one coherence
+law `σ(x+y) = σx + σy + B(x)·A(y)`, which is simultaneously the group law's phase
+bookkeeping, the `−I ∉ S` condition, and (applied at `(x,y)` and `(y,x)`) the proof the
+family is abelian. Absorption = one reindex; idempotence = three lines from absorption;
+trace `= 2ⁿ/2^m`; ★★ `stabState_exists` — a nonzero state fixed by every group element,
+from `tr P ≠ 0` + idempotence, NO spectral machinery. Named residues: uniqueness/dimension
+(rank-equals-trace) and the measurement-update rule. First consumer: the Steane code
+(`specs/steane-plan.md`, same session).
 
 ## References
 

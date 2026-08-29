@@ -1006,6 +1006,35 @@ The unitarity proofs cite only the foundational triple; the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.gidneyMeas_cheapest
 
+-- The Steane [[7,1,3]] code (Empirical/QM/QEC/Steane.lean, 2026-08-29; plan
+-- specs/steane-plan.md; candidate 4 of the 2026-08-28 five). The first genuine CSS
+-- instance of the GK-3 stabiliser layer: the Hamming [7,4] parity rows give 3 X-type + 3
+-- Z-type generators, the CSS condition H H^T = 0 (kernel-checked) makes the trivial sign
+-- coherent, and the general layer instantiates -- trace 2^7/2^6 = 2 (one logical qubit,
+-- steane_code_dimension). The logical states (uniform superpositions over the row space
+-- and its all-ones coset) are proved stabilised by ALL 64 group elements and orthonormal;
+-- Xbar = X^{1} swaps them, Zbar = Z^{1} fixes |0bar> and negates |1bar> -- a genuine
+-- encoded qubit. Distance mechanism: single-qubit errors have nonzero pairwise-distinct
+-- syndromes (the Hamming distance-3 property; via pauliOp_comm = anticommutation with a
+-- syndrome-identified generator; CSS self-duality covers both error types). HONEST SCOPE:
+-- no recovery map, no Knill-Laflamme, no fault tolerance -- same posture as the
+-- three-qubit modules. Foundational triple.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_code_dimension' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_code_dimension
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneZero_stabilised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneZero_stabilised
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.logicalZ_steaneOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.logicalZ_steaneOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_syndrome_single_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_syndrome_single_injective
+
 -- ccxAtMat_lifts_denote (the arbitrary-wire lift): EXTRACTED 2026-08-21 to
 -- Mathlib/QuantumInfo/Reversible/Lift.lean; pinned in the MathlibStaging part as
 -- Reversible.ccxAtMat_lifts_denote.

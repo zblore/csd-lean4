@@ -154,6 +154,41 @@ noncomputable def pauliOp (a b : Fin n → Fin 2) (ψ : QReg n) : QReg n :=
   ext z
   rw [pauliOp_apply, pauliSign_zero_left, one_mul, add_zero]
 
+/-- The Pauli operator is homogeneous. -/
+lemma pauliOp_smul (a b : Fin n → Fin 2) (c : ℂ) (ψ : QReg n) :
+    pauliOp a b (c • ψ) = c • pauliOp a b ψ := by
+  ext z
+  rw [WithLp.ofLp_smul, Pi.smul_apply, pauliOp_apply, pauliOp_apply, WithLp.ofLp_smul,
+    Pi.smul_apply, smul_eq_mul, smul_eq_mul]
+  ring
+
+/-- The Pauli operator is additive. -/
+lemma pauliOp_add (a b : Fin n → Fin 2) (ψ χ : QReg n) :
+    pauliOp a b (ψ + χ) = pauliOp a b ψ + pauliOp a b χ := by
+  ext z
+  rw [WithLp.ofLp_add, Pi.add_apply, pauliOp_apply, pauliOp_apply, pauliOp_apply,
+    WithLp.ofLp_add, Pi.add_apply]
+  ring
+
+/-- The Pauli operator commutes with finite sums. -/
+lemma pauliOp_sum {κ : Type*} (a b : Fin n → Fin 2) (s : Finset κ) (f : κ → QReg n) :
+    pauliOp a b (∑ k ∈ s, f k) = ∑ k ∈ s, pauliOp a b (f k) := by
+  ext z
+  rw [pauliOp_apply, sum_coord, sum_coord, Finset.mul_sum]
+  exact Finset.sum_congr rfl fun k _ => by rw [pauliOp_apply]
+
+/-- The Pauli action on a basis state: `X^a Z^b |w⟩ = (−1)^{b·w} |w + a⟩`. -/
+lemma pauliOp_basisState (a b w : Fin n → Fin 2) :
+    pauliOp a b (basisState w) = pauliSign b w • basisState (w + a) := by
+  have haa : a + a = 0 := funext fun i => fin2_add_self _
+  ext z
+  rw [pauliOp_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul, basisState_apply,
+    basisState_apply]
+  by_cases h : z + a = w
+  · rw [if_pos h, if_pos (by rw [← h, add_assoc, haa, add_zero]), h]
+  · rw [if_neg h, if_neg (fun hz => h (by rw [hz, add_assoc, haa, add_zero])), mul_zero,
+      mul_zero]
+
 /-- ★ **The Pauli group law:** `X^a Z^b · X^{a'} Z^{b'} = (−1)^{b·a'} · X^{a+a'} Z^{b+b'}`.
 The family is closed under composition; the phase is the `𝔽₂` pairing `b·a'`. -/
 theorem pauliOp_mul (a b a' b' : Fin n → Fin 2) (ψ : QReg n) :

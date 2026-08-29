@@ -671,6 +671,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.hGate_conj_pauliOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.hGate_conj_pauliOp
+
+-- The stabiliser layer, GK-3 (Mathlib/QuantumInfo/Stabilizer.lean, 2026-08-29; plan
+-- specs/gottesman-knill-plan.md). A stabiliser family indexed by F_2^m directly: linear
+-- label maps A B and a sign function sigma under ONE coherence law
+-- sigma(x+y) = sigma(x) + sigma(y) + B(x).A(y) -- exactly the condition that the signed
+-- Paulis form a group (the pairing is pauliOp_mul's phase), i.e. "-I not in S"; coherence
+-- at (x,y) and (y,x) IMPLIES the family is abelian (stab_symp_zero). Headlines: absorption
+-- (every signed element fixes the group average; one reindex), idempotence (three lines
+-- from absorption), the trace 2^n/2^m (the code-space dimension count; 1 for a full
+-- stabiliser), and stabState_exists -- a nonzero state fixed by the average and by EVERY
+-- group element, extracted from tr P != 0 + idempotence with no spectral machinery.
+-- HONEST RESIDUES (named in the plan): uniqueness/dimension needs rank-equals-trace for
+-- self-adjoint idempotents (spectral machinery not built); the measurement-update rule is
+-- not attempted. Foundational triple.
+/-- info: 'QuantumInfo.stabProjector_idem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stabProjector_idem
+
+/-- info: 'QuantumInfo.stabProjector_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stabProjector_trace
+
+/-- info: 'QuantumInfo.stabState_exists' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stabState_exists
 /-- info: 'QuantumInfo.kickbackState_ampState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.kickbackState_ampState
