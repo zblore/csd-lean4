@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.JoinProtocol
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.Probability.ConditionalProbability
 
 /-!
@@ -261,7 +262,7 @@ noncomputable def joinPrep : Measure (JoinSel N × LF4.KTorus) :=
   Measure.map (jF ψ α hψ0) (paramMeasure K)
 
 instance : IsProbabilityMeasure (joinPrep (K := K) ψ α hψ0) :=
-  MeasureTheory.Measure.isProbabilityMeasure_map (measurable_jF ψ α hψ0).aemeasurable
+  MeasureTheory.Measure.isProbabilityMeasure_map' (measurable_jF ψ α hψ0).aemeasurable
 
 /-! ### The selector on the orbit -/
 

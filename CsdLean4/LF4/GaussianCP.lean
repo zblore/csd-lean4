@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.GaussianFS
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import Mathlib.Probability.Distributions.Gaussian.Multivariate
 public import Mathlib.Probability.Distributions.Gaussian.Fernique
 
@@ -79,7 +80,7 @@ noncomputable def gaussianH : Measure (EuclideanSpace ℂ (Fin 2)) :=
 
 instance instProbGaussianH : IsProbabilityMeasure gaussianH := by
   unfold gaussianH
-  exact Measure.isProbabilityMeasure_map coords.continuous.measurable.aemeasurable
+  exact Measure.isProbabilityMeasure_map' coords.continuous.measurable.aemeasurable
 
 /-- The projectivization map `ℂ² → ℂℙ¹`, with junk value `p₀` at `0` (which is
 `gaussianH`-null). -/
@@ -104,7 +105,7 @@ noncomputable def gaussianCP (p₀ : CPN 2) : Measure (CPN 2) :=
 
 instance instProbGaussianCP (p₀ : CPN 2) : IsProbabilityMeasure (gaussianCP p₀) := by
   unfold gaussianCP
-  exact Measure.isProbabilityMeasure_map (measurable_gaussianProj p₀).aemeasurable
+  exact Measure.isProbabilityMeasure_map' (measurable_gaussianProj p₀).aemeasurable
 
 /-! ### C4 — `U(2)`-invariance of `gaussianCP` -/
 

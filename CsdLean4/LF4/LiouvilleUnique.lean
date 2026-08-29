@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.KahlerInstance
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 public import Mathlib.MeasureTheory.Measure.Haar.Unique
 
@@ -194,7 +195,7 @@ theorem kMuL_unique [NeZero N] (p₀ : CPN N) (μ : Measure (KSigma N)) [IsProba
     μ = kMuL p₀ := by
   have : IsProbabilityMeasure μ.fst := by
     rw [Measure.fst]
-    exact Measure.isProbabilityMeasure_map measurable_fst.aemeasurable
+    exact Measure.isProbabilityMeasure_map' measurable_fst.aemeasurable
   obtain ⟨c, hc⟩ := invariant_measure_uniqueness_cpn p₀ (fubiniStudyMeasure p₀)
     (fun U => ⟨measurable_const_smul U, fubiniStudyMeasure_smul_invariant U p₀⟩) μ.fst
     (measurePreserving_fst_of_baseRotate μ hU)

@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.ObservableFlow
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.LF4.BornFS
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
@@ -382,7 +383,7 @@ theorem obsFlow_continuum_invariant (hN : 1 < N) (p₀ : CPN N) (lam : Fin N →
           measure_univ, measure_univ, mul_one, mul_one,
           ← ENNReal.ofReal_add hs0 (by linarith), show s + (1 - s) = 1 by ring,
           ENNReal.ofReal_one]
-    · rw [Measure.map_add _ _ hmeas, Measure.map_smul, Measure.map_smul,
+    · rw [Measure.map_add _ _ hmeas, Measure.map_smul' _ _ hmeas, Measure.map_smul' _ _ hmeas,
           (obsFlow_measurePreserving lam t p₀).map_eq, hdinv]
   · -- Pairwise distinct: `s ↦ f s ({[e₀]}ᶜ) = ofReal s · μFS({[e₀]}ᶜ)` is injective.
     intro s hs s' hs' hss

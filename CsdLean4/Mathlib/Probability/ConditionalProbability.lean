@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import Mathlib.Probability.ConditionalProbability
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import Mathlib.MeasureTheory.Measure.Prod
 public import Mathlib.MeasureTheory.Measure.WithDensity
 
@@ -52,10 +53,9 @@ theorem cond_map (μ : Measure X) {f : X → Y} (hf : Measurable f) {S : Set Y}
       = Measure.map f (ProbabilityTheory.cond μ (f ⁻¹' S)) := by
   show ((Measure.map f μ) S)⁻¹ • (Measure.map f μ).restrict S
     = Measure.map f ((μ (f ⁻¹' S))⁻¹ • μ.restrict (f ⁻¹' S))
-  -- Shape-tolerant closer: on the pin the three rewrites close by `rfl`; Mathlib
-  -- master's `map_smul` normal form drifted (2026-08-29 canary), and `simp` absorbs
-  -- either shape.
-  simp [Measure.map_apply hf hS, Measure.restrict_map hf hS, Measure.map_smul]
+  -- `Measure.map_smul'` is the compat spelling: master's `map_smul` takes a
+  -- measurability hypothesis the pin's does not (2026-08-29 canary).
+  rw [Measure.map_apply hf hS, Measure.restrict_map hf hS, Measure.map_smul' _ _ hf]
 
 /-- Conditioning a product on a product event conditions the factors independently. -/
 theorem cond_prod_prod (μ : Measure X) (ν : Measure Y) [IsFiniteMeasure μ]

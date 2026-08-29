@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.SigmaLayer.IsolationPreparation
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.SigmaLayer.ProjectiveSector
 public import CsdLean4.LF4.KahlerInstance
 public import CsdLean4.LF4.TypicalityForcing
@@ -86,7 +87,7 @@ instance instIsProbabilityMeasureProjectivePreparationLaw
     (Q : ProjectiveSector N D) (P : Preparation D) :
     IsProbabilityMeasure (Q.projectivePreparationLaw P) := by
   unfold ProjectiveSector.projectivePreparationLaw ProjectiveSector.projectiveLaw
-  exact Measure.isProbabilityMeasure_map Q.measurable_pi.aemeasurable
+  exact Measure.isProbabilityMeasure_map' Q.measurable_pi.aemeasurable
 
 /-- ★ **The projective preparation law is absolutely continuous w.r.t. the
 Fubini–Study measure**, under a measure bridge `π_* muL = c • μFS`. Note no

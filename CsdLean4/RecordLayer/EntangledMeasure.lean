@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.OnticComposite
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.LF4.TypicalityForcing
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgue
 
@@ -125,7 +126,7 @@ instance instIsProbabilityMeasureCompositeFubiniStudy
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (nA * nB)))) :
     IsProbabilityMeasure (compositeFubiniStudy (nA := nA) (nB := nB) p₀) := by
   unfold compositeFubiniStudy
-  exact Measure.isProbabilityMeasure_map
+  exact Measure.isProbabilityMeasure_map'
     rayReindexInv_continuous.measurable.aemeasurable
 
 /-- **The composite Fubini–Study measure has full support**: every nonempty
