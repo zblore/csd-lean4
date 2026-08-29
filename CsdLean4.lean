@@ -20,6 +20,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 public import CsdLean4.Mathlib.Probability.CGLMP
 public import CsdLean4.Mathlib.Probability.CompetingExponentials

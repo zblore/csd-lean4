@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import Mathlib.Analysis.SpecialFunctions.PolarCoord
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import Mathlib.MeasureTheory.Function.JacobianOneDim
 public import Mathlib.MeasureTheory.Measure.Prod
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
@@ -288,7 +289,7 @@ instance instProbGaussian2 : IsProbabilityMeasure gaussian2 := by
 `gaussian2`, a probability measure). -/
 instance instProbExpHalf : IsProbabilityMeasure expHalf := by
   rw [← sqNorm_map_gaussian2]
-  exact Measure.isProbabilityMeasure_map (by fun_prop)
+  exact Measure.isProbabilityMeasure_map' (by fun_prop)
 
 /-- **Slice C (general N): the N-fold block law.** The joint law of the `N` block
 squared-norms factors as the `N`-fold product `Exp(1/2)^{⊗N}`:

@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Probability.CompetingExponentials
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
@@ -347,7 +348,7 @@ theorem HasRaceProperty.map_survival {μ : Measure ℝ} [IsProbabilityMeasure μ
     μ.map (survival μ) = volume.restrict (Icc 0 1) := by
   have hmeas := measurable_survival μ
   have : IsProbabilityMeasure (μ.map (survival μ)) :=
-    Measure.isProbabilityMeasure_map hmeas.aemeasurable
+    Measure.isProbabilityMeasure_map' hmeas.aemeasurable
   have : IsFiniteMeasure (volume.restrict (Icc (0 : ℝ) 1)) :=
     ⟨by rw [Measure.restrict_apply_univ]; exact measure_Icc_lt_top⟩
   refine MeasureTheory.ext_of_forall_integral_pow_eq_of_null_compl (a := 0) (b := 1) ?_ ?_ ?_

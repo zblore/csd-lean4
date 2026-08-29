@@ -52,7 +52,10 @@ theorem cond_map (μ : Measure X) {f : X → Y} (hf : Measurable f) {S : Set Y}
       = Measure.map f (ProbabilityTheory.cond μ (f ⁻¹' S)) := by
   show ((Measure.map f μ) S)⁻¹ • (Measure.map f μ).restrict S
     = Measure.map f ((μ (f ⁻¹' S))⁻¹ • μ.restrict (f ⁻¹' S))
-  rw [Measure.map_apply hf hS, Measure.restrict_map hf hS, Measure.map_smul]
+  -- Shape-tolerant closer: on the pin the three rewrites close by `rfl`; Mathlib
+  -- master's `map_smul` normal form drifted (2026-08-29 canary), and `simp` absorbs
+  -- either shape.
+  simp [Measure.map_apply hf hS, Measure.restrict_map hf hS, Measure.map_smul]
 
 /-- Conditioning a product on a product event conditions the factors independently. -/
 theorem cond_prod_prod (μ : Measure X) (ν : Measure Y) [IsFiniteMeasure μ]

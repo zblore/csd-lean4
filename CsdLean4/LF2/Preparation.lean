@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF2.MeasureBridge
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.LF2.EffectFn
 public import CsdLean4.LF2.EffectGleason
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
@@ -165,7 +166,7 @@ noncomputable def OperationalPackage.fromPreparation
   let _ : MeasureBridgeData D μFS := bridge
   let μP : Measure P := Measure.map D.π μprep
   haveI : IsProbabilityMeasure μP :=
-    Measure.isProbabilityMeasure_map D.measurable_π.aemeasurable
+    Measure.isProbabilityMeasure_map' D.measurable_π.aemeasurable
   {
     p := fun E => ∫ p, effectProjFn rep E p ∂μP
     nonneg := fun E =>

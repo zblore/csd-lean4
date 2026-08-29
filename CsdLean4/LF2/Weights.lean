@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF2.MeasureBridge
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 /-!
 # LF2 Projective Weights
@@ -81,7 +82,7 @@ theorem weights_sum_eq_one
     (π_part : MeasurablePartition P (Measure.map D.π μprep) n) :
     ∑ i : Fin n, projectiveWeight D μprep (π_part.parts i) = 1 := by
   have : IsProbabilityMeasure (Measure.map D.π μprep) :=
-    Measure.isProbabilityMeasure_map D.measurable_π.aemeasurable
+    Measure.isProbabilityMeasure_map' D.measurable_π.aemeasurable
   have hpw : Pairwise (AEDisjoint (Measure.map D.π μprep) on π_part.parts) :=
     fun i j hij => π_part.pairwise_null i j hij
   have hnm : ∀ i, NullMeasurableSet (π_part.parts i) (Measure.map D.π μprep) :=
