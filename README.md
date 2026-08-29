@@ -26,7 +26,7 @@ Basis-selective decoherence is proved for a supplied measurement context.
 | The flow on rays is `exp(-itH)` | `projectedFlow_schrodinger_form` | propext, Classical.choice, Quot.sound |
 | Rank-one Lüders update is a pushforward | `swap_luders_born` | propext, Classical.choice, Quot.sound |
 | Frequencies converge to Born weights | `pointer_born_frequency` | propext, Classical.choice, Quot.sound |
-| POVM Born statistics at sector level | `povm_sector_born_canonical` | propext, Classical.choice, Quot.sound |
+| Born basins carved by the de-isolation propagator | `shearDeIsolation_born` | propext, Classical.choice, Quot.sound |
 
 ## Axioms, of two kinds
 

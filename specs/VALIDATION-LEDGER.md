@@ -16,7 +16,7 @@ Statuses:
 - `needs-change`: the public claim/API should be narrowed or strengthened.
 - `specialist-review`: mathematically deep proof requiring independent domain proof review.
 
-The TSV is canonical for automation. It records 60 headline claims, their defining modules, exact Lean
+The TSV is canonical for automation. It records 61 headline claims, their defining modules, exact Lean
 constants, load-bearing assumptions, an independent validation route, and any linked review finding.
 
 ## Admission criteria (defined 2026-08-13, Q17 — the census is now criteria-driven)
@@ -41,6 +41,20 @@ register, not an exhaustive census of the corpus's ~4,100 statements — but adm
 now a rule, and `check-validation-ledger.sh`'s known blind spot (it enforces consistency
 of listed rows, not completeness of the list) is mitigated by re-running this census when
 a tranche closes with starred headliners.
+
+**Sign-off session S3 2026-08-29 (delegated by the author this session):** CL-059 and
+CL-060 reviewed and **confirmed qualified-by-design** — their qualifications (the
+stated-not-formalised Hamiltonian generation plus engineered coupling; the
+interaction-as-input) are the claims' permanent scope, so neither row is ever counted
+promotable. **CL-061 admitted `validated`** (`phase_estimation_lower_bound`): the external
+mechanization cross-check doubles as the independent route — Coq/SQIR's certified Shor
+(PNAS 2023) proves the same 4/π² bound, an independent formalisation agreeing on the
+constant; within Lean the searchable ecosystem carries only the exact/dyadic case. The row
+records the public-priority framing ("first in Lean, as far as we can find"; never "first
+machine-checked" unqualified). Swept the S1-pending markers: CL-006/034/035/036/046 were
+already closed by S2 same-day promotions; **CL-014/CL-024 remain the only open pending
+items, gated on the author's G11 hand-pass of the five named Wigner tactic blocks** — the
+one item a delegated session cannot perform.
 
 **Extension 2026-08-27 (CL-059, CL-060, both `qualified`):** the measurement-closure
 campaign's two terminal results — `shearDeIsolation_born` (the flow-carved
