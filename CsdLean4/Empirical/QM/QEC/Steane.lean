@@ -12,6 +12,10 @@ public import CsdLean4.Mathlib.QuantumInfo.Stabilizer
 
 **Category:** 3-Local (QM-validity).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/steane-code/
+Plain-language, CSD-role and formal statements of the Steane code, with this module as its
+Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The Steane `[[7,1,3]]` code, built as the first genuine **CSS instance** of the Cat-1
 stabiliser layer (`Mathlib/QuantumInfo/Stabilizer.lean`, GK-3; plan `specs/steane-plan.md`):
 the parity-check rows of the classical Hamming `[7,4]` code give three `X`-type and three

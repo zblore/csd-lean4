@@ -121,6 +121,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Single trajectory](https://glossary.constraintsurfacedynamics.com/single-trajectory/) | `` | definition |
 | [Singlet contextual model](https://glossary.constraintsurfacedynamics.com/singlet-contextual-model/) | `c1_singlet_contextual_capstone` | proved-in-corpus |
 | [Spontaneous collapse (GRW)](https://glossary.constraintsurfacedynamics.com/spontaneous-collapse/) | `` | definition |
+| [Steane code](https://glossary.constraintsurfacedynamics.com/steane-code/) | `steaneZero_stabilised` | proved-in-corpus |
 | [Stern-Gerlach experiment](https://glossary.constraintsurfacedynamics.com/stern-gerlach/) | `` | standard-mathematics |
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
 | [swap test](https://glossary.constraintsurfacedynamics.com/swap-test/) | `` | standard-mathematics |

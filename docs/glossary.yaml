@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 98def75c281ee9e869ba5488b8357e24cec7614c
+  sha: d4434b79f1704a355881eb3cb697fbe010f59f46
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -6544,8 +6544,10 @@ entries:
 
       Honest scope: the Heisenberg-picture closure is proved in full; the "classically
       simulable in polynomial time" reading is a complexity claim about the update rule, and
-      the corpus has no computation model, so it stays prose. The stabiliser-group and
-      measurement-update layer is a gated next brick. The standing disclaimer applies: the
+      the corpus has no computation model, so it stays prose. The stabiliser-group layer
+      itself (the group projector, its trace, and the existence of the stabilised state) is
+      now proved in the same tree, with the Steane code as its first CSS instance; the
+      measurement-update rule remains a named residue. The standing disclaimer applies: the
       algorithm layer consumes the unitary pillar and does not support foundations.
     mathematical: >
       On the register over Fin n -> Fin 2: pauliOp a b acts by (X^a Z^b psi)(z) =
@@ -6572,6 +6574,7 @@ entries:
       David Gross on Clifford orbits and designs.
     term: Gottesman-Knill theorem
     eponyms: [Gottesman, Knill]
+    related: [steane-code]
     status: proved-in-corpus
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Clifford.lean
@@ -6581,3 +6584,70 @@ entries:
         url: https://arxiv.org/abs/quant-ph/9807006
       - text: "Aaronson-Gottesman, Improved simulation of stabilizer circuits (quant-ph/0406196)"
         url: https://arxiv.org/abs/quant-ph/0406196
+
+  - slug: steane-code
+    reviewed: 2026-08-29
+    hook: >
+      Seven qubits protecting one: the first code to correct any single-qubit error using the
+      same classical Hamming code twice, once for bit flips and once for phase flips.
+    layman: >
+      Classical error correction has a gem called the Hamming code: seven bits carry four,
+      arranged so that any single flipped bit announces its own position. Steane's insight
+      was that quantum errors come in two flavours -- bit flips and phase flips -- and that
+      one and the same Hamming code can police both at once, provided its parity checks are
+      compatible with each other in a precise sense.
+
+      They are, and the result is seven qubits protecting one logical qubit against any
+      single-qubit error. Measure six "stabiliser" checks; the answers spell out which qubit
+      went wrong and how, without ever looking at the protected information itself.
+
+      The construction -- classical code plus its own dual, run in the X and Z bases -- is
+      called CSS after Calderbank, Shor and Steane, and it is the template from which most
+      practical quantum codes descend.
+    in_csd: >
+      The first genuine CSS instance of the corpus's stabiliser layer, landed the same day
+      as the layer itself: the Hamming parity rows give three X-type and three Z-type
+      generators, the CSS orthogonality condition is kernel-checked, and the general
+      stabiliser machinery instantiates wholesale -- the code space has dimension exactly
+      two by the general trace formula, one logical qubit.
+
+      Both logical states are exhibited concretely as uniform superpositions over the
+      Hamming row space and its all-ones coset, proved stabilised by all sixty-four group
+      elements and orthonormal; the logical X and Z operators act on them as a genuine
+      encoded qubit. Single-qubit errors are proved to carry nonzero, pairwise-distinct
+      syndromes -- the distance-3 property. Honest scope: no recovery map, no
+      Knill-Laflamme conditions, no fault-tolerance claims -- the same posture as the
+      three-qubit code modules it generalises.
+    mathematical: >
+      Take H the 3-by-7 Hamming parity matrix whose columns are the binary expansions of 1
+      through 7. The rows satisfy H H^T = 0 over F2, so the six Pauli operators X^(h_i) and
+      Z^(h_i) commute and generate a 64-element stabiliser group with trivial signs. The
+      stabiliser trace formula gives code dimension 2^7/2^6 = 2.
+
+      The logical zero is the uniform superposition over the row space C2 (eight strings);
+      the logical one over the coset C2 + 1111111 -- the all-ones string is a Hamming
+      codeword outside the row space, so the supports are disjoint. X^(all-ones) swaps the
+      two states; Z^(all-ones) fixes the zero and negates the one, since the all-ones
+      string has odd weight against itself and even against the rows. Single-error
+      syndromes are the columns of H: nonzero and pairwise distinct, hence distance 3.
+    person: >
+      Andrew Steane, an Oxford atomic physicist, found the seven-qubit code in 1996 within
+      months of Shor's nine-qubit construction, and independently of the
+      Calderbank-Shor paper whose framework it shares -- hence "CSS codes" carries all
+      three names. Steane's version is smaller than Shor's and self-dual, which makes its
+      logical gates unusually clean: the transversal application of a Clifford gate to all
+      seven qubits implements the same gate on the logical qubit.
+
+      Steane went on to become one of the architects of fault-tolerant quantum computation;
+      the seven-qubit code remains the standard pedagogical example and a building block of
+      colour codes.
+    term: Steane code
+    eponyms: [Steane]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Empirical/QM/QEC/Steane.lean
+      theorem: steaneZero_stabilised
+    related: [gottesman-knill]
+    external:
+      - text: "Steane, Error correcting codes in quantum theory (PRL 77, 793)"
+        url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
