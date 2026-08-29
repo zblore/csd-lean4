@@ -497,6 +497,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.qft_unitary
 
+-- Quantum phase estimation (Mathlib/QuantumInfo/PhaseEstimation.lean, relocated from
+-- Empirical/QM/Algorithms/ShorCore.lean 2026-08-29 — entirely generic in the register size T,
+-- no statement changed, no new mathematics). The exact case: the inverse QFT inverts the QFT
+-- (applyQFTinv_phaseColumn), so a QFT column is read with certainty (phase_estimation_exact).
+-- The general case (Nielsen-Chuang 5.2): for an ARBITRARY real phase φ read at the closest
+-- counting index c (|φ - c/T| ≤ 1/(2T)), the probability is ≥ 4/π²
+-- (phase_estimation_lower_bound) — the Dirichlet amplitude (applyQFTinv_phaseStateR_apply)
+-- closed by geom_sum_eq, reduced to a sine ratio (prob_phaseStateR_eq) via
+-- Complex.norm_exp_I_mul_ofReal_sub_one, bounded by the Jordan inequality
+-- Real.mul_abs_le_abs_sin against |sin t| ≤ |t|. Single-phase statement only: a consumer
+-- racing several eigenvalue branches controls its own cross-terms (ShorCore documents the
+-- deferred two-register marginal). Foundational triple.
+/-- info: 'QuantumInfo.phase_estimation_exact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.phase_estimation_exact
+
+/-- info: 'QuantumInfo.phase_estimation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.phase_estimation_lower_bound
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef

@@ -281,17 +281,13 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- Shor's algorithm, quantum core (M1 = S1+S2+S3-core; specs/shor-plan.md). The genuine
 -- multiply-by-a oracle |y⟩↦|a·y⟩ on EuclideanSpace ℂ (ZMod N) has eigenvectors u_s with
 -- eigenvalues ω_r^s (mulOracle_eigU, r = orderOf a); the QFT inverse inverts the QFT exactly so
--- phase estimation reads a QFT column with certainty (phase_estimation_exact); and in the ideal
--- case r ∣ T the eigenphase ω_r^s is read off as the basis state s·(T/r) with prob 1
--- (shor_order_readout, the M1 headline). Foundational triple. The uniform-1/r joint marginal is
--- deferred (next tranche).
+-- phase estimation reads a QFT column with certainty (phase_estimation_exact — RELOCATED
+-- 2026-08-29 to Cat-1 Mathlib/QuantumInfo/PhaseEstimation.lean, pinned in the MathlibStaging
+-- part); and in the ideal case r ∣ T the eigenphase ω_r^s is read off as the basis state
+-- s·(T/r) with prob 1 (shor_order_readout, the M1 headline). Foundational triple.
 /-- info: 'CSD.Empirical.QM.Shor.mulOracle_eigU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.mulOracle_eigU
-
-/-- info: 'CSD.Empirical.QM.Shor.phase_estimation_exact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.Shor.phase_estimation_exact
 
 /-- info: 'CSD.Empirical.QM.Shor.shor_order_readout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -308,17 +304,12 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.Empirical.QM.Shor.shor_order_distribution
 
 -- Shor's algorithm, S4 (phase estimation lower bound, general r ∤ T; specs/shor-plan.md §S4). The
--- single-eigenvector / generic-phase Dirichlet-kernel estimate: the inverse-QFT amplitude of the
--- phase state phaseStateR φ at index c is the Dirichlet sum (1/T) ∑_x e^{2πi(φ-c/T)x}
--- (applyQFTinv_phaseStateR_apply); when c is the closest index to φ·T (|φ-c/T| ≤ 1/(2T)) the readout
--- probability is ≥ 4/π² (phase_estimation_lower_bound), via geom_sum_eq +
--- Complex.norm_exp_I_mul_ofReal_sub_one + the Jordan inequality Real.mul_abs_le_abs_sin. The Shor
--- corollary instantiates φ = s/r. Foundational triple. The two-register r ∤ T marginal (cross-term
--- control across the r eigen-branches) is beyond S4 and deferred.
-/-- info: 'CSD.Empirical.QM.Shor.phase_estimation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.Shor.phase_estimation_lower_bound
-
+-- single-eigenvector / generic-phase Dirichlet-kernel 4/π² estimate is generic in T and was
+-- RELOCATED 2026-08-29 to Cat-1 Mathlib/QuantumInfo/PhaseEstimation.lean (phaseStateR,
+-- applyQFTinv_phaseStateR_apply, prob_phaseStateR_eq, phase_estimation_lower_bound — pinned in
+-- the MathlibStaging part). What stays Shor's is the corollary instantiating φ = s/r.
+-- Foundational triple. The two-register r ∤ T marginal (cross-term control across the r
+-- eigen-branches) is beyond S4 and deferred.
 /-- info: 'CSD.Empirical.QM.Shor.shor_phase_estimation_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.Shor.shor_phase_estimation_lower_bound

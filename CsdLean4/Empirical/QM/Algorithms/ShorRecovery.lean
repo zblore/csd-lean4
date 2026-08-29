@@ -38,7 +38,9 @@ possible: the measurement has a unique consistent answer). It is NOT the constru
 continued-fraction *computation* of `r` from `c/T`; the constructive Legendre-on-`GenContFract`
 extraction is a heavier, separately-scoped alternative, deferred.
 
-Composition with S4 (`ShorCore.phase_estimation_lower_bound`): S4 gives `prob ≥ 4/π²` for the
+Composition with S4 (`QuantumInfo.phase_estimation_lower_bound`,
+`Mathlib/QuantumInfo/PhaseEstimation.lean` since 2026-08-29, with the Shor corollary
+`shor_phase_estimation_lower_bound` in `ShorCore.lean`): S4 gives `prob ≥ 4/π²` for the
 closest-integer outcome, i.e. the event `|c/T - s/r| ≤ 1/(2T)`; S5 shows that on that event `r` is
 determined. For Shor with `T ≥ N² > r²` (so `r, r' < √T` and `r·r' < T` with slack) a single run
 determines `r` with probability `≥ 4/π²`.
