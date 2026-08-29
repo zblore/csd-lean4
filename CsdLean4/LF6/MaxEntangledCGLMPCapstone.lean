@@ -34,7 +34,11 @@ module states the same capstone with conjunct 7 replaced:
 from the flow capstone (dynamics + Born-from-volume + the derived `Φ⁺`-sector
 facts) and swaps **only conjunct 7** for the `d`-intrinsic CGLMP force. The
 `Φ⁺`/CHSH form remains available as the original theorem's conjunct 7; this is the
-strictly stronger, dimension-intrinsic statement of the same non-factorisation.
+dimension-intrinsic statement of the same non-factorisation — forced directly in
+dimension `d`, with no qubit-sector reduction. (No implication between the two
+conjunct-7 forms is proved in either direction: they are different formal statements
+— LHV tables over `ZMod d` versus product partitions realising `Φ⁺` — so neither is
+claimed "stronger"; wording corrected 2026-08-29, audit pass.)
 
 Foundational-triple-only (Gleason-free), like both parents. Residue unchanged:
 SO-1 (the entangled sector is posited, not derived).
