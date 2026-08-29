@@ -489,16 +489,6 @@ lemma sum_negMulLog_pos_of_two_nonzero {ι : Type*} [Fintype ι] [DecidableEq ι
   exact Finset.sum_pos' (fun i _ => Real.negMulLog_nonneg (hnn i) (hle i))
     ⟨j, Finset.mem_univ j, Real.negMulLog_pos hjpos hjlt⟩
 
-/-- Entropy is independent of the supplied Hermitian witness and transports across a matrix
-equality: if `ρ = σ` then `S(ρ) = S(σ)` (the eigenvalue values are matrix-determined). The
-proof-irrelevance / matrix-equality hinge used to move the entropy computation onto the diagonal
-form. -/
-lemma entropy_congr_of_eq {n : Type*} [Fintype n] [DecidableEq n]
-    {ρ σ : Matrix n n ℂ} (heq : ρ = σ) (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
-    QuantumInfo.vonNeumannEntropy hρ = QuantumInfo.vonNeumannEntropy hσ := by
-  subst heq
-  rfl
-
 /-- **The decohered von Neumann entropy is the Shannon entropy of the Born vector.**
 `S(decohereReduced ψ) = ∑ⱼ negMulLog(‖⟨eⱼ,ψ⟩‖²) = −∑ⱼ pⱼ log pⱼ`, GENUINELY derived by transporting
 along `decohereReduced_eq_diagonal_born` (the reduced state is diagonal with the Born vector on the

@@ -566,4 +566,16 @@ theorem vonNeumannEntropy_diagonal {d : n → ℝ}
   unfold vonNeumannEntropy
   exact spectral_sum_eq_of_charpoly_prod h d Real.negMulLog hchar
 
+/-- **Entropy is independent of the supplied Hermitian witness and transports across a matrix
+equality:** if `ρ = σ` then `S(ρ) = S(σ)` (the eigenvalue values are matrix-determined). The
+proof-irrelevance / matrix-equality hinge used to move an entropy computation onto a diagonal
+form. *(Promoted here 2026-08-30 from `LF6/Decoherence.lean` on its second consumer, per the
+library-grade rule of two — the flag `Tests/EntropyWitness.lean` carried; it is generic Cat-1
+API with no CSD content.)* -/
+lemma entropy_congr_of_eq {ρ σ : Matrix n n ℂ} (heq : ρ = σ)
+    (hρ : ρ.IsHermitian) (hσ : σ.IsHermitian) :
+    vonNeumannEntropy hρ = vonNeumannEntropy hσ := by
+  subst heq
+  rfl
+
 end QuantumInfo

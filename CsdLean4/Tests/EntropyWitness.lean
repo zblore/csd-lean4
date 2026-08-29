@@ -30,9 +30,10 @@ is the reproducible artifact:
   `ρ_AB.PosDef` hypothesis is satisfiable at a correlated state
   (`corrStatePD_araki_lieb`).
 
-Reuses `CSD.LF6.entropy_congr_of_eq` to transport entropy along marginal
-equalities (second use of that lemma — the F4 rule-of-two flag: on next touch
-it belongs down in `Mathlib/QuantumInfo/Entropy.lean` as generic Cat-1 API).
+Reuses `QuantumInfo.entropy_congr_of_eq` to transport entropy along marginal
+equalities. *(That lemma was promoted from `LF6/Decoherence.lean` down into
+`Mathlib/QuantumInfo/Entropy.lean` on 2026-08-30 — this file's second-consumer
+use was the rule-of-two trigger the header previously flagged; debt paid.)*
 -/
 
 @[expose] public section
@@ -113,7 +114,7 @@ lemma corrState_entropy :
   have hd : (Matrix.diagonal fun p : Fin 2 × Fin 2 => ((corrDiag p : ℝ) : ℂ)).IsHermitian :=
     heq ▸ corrState_posSemidef.1
   have h := vonNeumannEntropy_diagonal (d := corrDiag) hd
-  rw [LF6.entropy_congr_of_eq heq corrState_posSemidef.1 hd, h]
+  rw [entropy_congr_of_eq heq corrState_posSemidef.1 hd, h]
   simp only [corrDiag, Fintype.sum_prod_type, Fin.sum_univ_two]
   norm_num [Real.negMulLog_zero]
   rw [Real.negMulLog, one_div, Real.log_inv]
@@ -128,11 +129,11 @@ theorem corrState_subadditivity_strict :
       < vonNeumannEntropy corrState_marginalRight_posDef.1
         + vonNeumannEntropy corrState_marginalLeft_posDef.1 := by
   have hA : vonNeumannEntropy corrState_marginalRight_posDef.1 = Real.log 2 := by
-    rw [LF6.entropy_congr_of_eq corrState_traceRight
+    rw [entropy_congr_of_eq corrState_traceRight
       corrState_marginalRight_posDef.1 halfDiag_posDef.1]
     exact halfDiag_entropy
   have hB : vonNeumannEntropy corrState_marginalLeft_posDef.1 = Real.log 2 := by
-    rw [LF6.entropy_congr_of_eq corrState_traceLeft
+    rw [entropy_congr_of_eq corrState_traceLeft
       corrState_marginalLeft_posDef.1 halfDiag_posDef.1]
     exact halfDiag_entropy
   rw [corrState_entropy, hA, hB]
