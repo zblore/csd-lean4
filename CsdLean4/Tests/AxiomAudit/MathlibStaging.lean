@@ -152,6 +152,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.traceLeft_sum_conjTranspose_kronecker_one
 
+-- The named CP witness (stated 2026-08-30, audit pass): for every idle factor b, the
+-- local channel Phi (x) id_b is positive -- complete positivity as a theorem, immediate
+-- from tensorRight being a Channel + apply_posSemidef. Closes the "open upstream-prep
+-- work" item Channel.lean's C1 header carried since 2026-06-05.
+/-- info: 'QuantumInfo.Channel.tensorRight_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.tensorRight_posSemidef
+
 /-- info: 'QuantumInfo.Channel.tensorRight_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Channel.tensorRight_apply

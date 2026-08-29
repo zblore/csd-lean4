@@ -24,12 +24,15 @@ of Kraus operators `Kᵢ : Matrix m n ℂ` with the **trace-preserving** constra
 This file (phase C1 of `specs/channels-plan.md`) establishes the type and the core
 properties: the action is linear, **trace-preserving** (`apply_trace`), **positive**
 (`apply_posSemidef`), and **Hermiticity-preserving** (`apply_isHermitian`) — so a channel
-maps density operators to density operators. (Complete positivity — positivity of `Φ ⊗ id`
-— is *justified* by the Kraus form but is **not formalised here**: the file proves plain
-positivity `apply_posSemidef`, not the tensored statement, and no consumer in the corpus
-currently requires CP. Adding `Channel.tensorRight` PSD-preservation as the formal CP witness
-is open upstream-prep work.) The Stinespring dilation (the "unitary-on-system⊗environment
-then trace the environment" form) and the canonical channels are later phases.
+maps density operators to density operators. Complete positivity — positivity of
+`Φ ⊗ id_b` for every idle factor — is **formalised downstream**:
+`CanonicalChannels.lean` builds the local channel `Channel.tensorRight` (Kraus operators
+`Kᵢ ⊗ I_b`) and `tensorRight_posSemidef` is the named CP witness, immediate from this
+file's `apply_posSemidef`. The Stinespring dilation lives in `Stinespring.lean` (C2) and
+the canonical channels in `CanonicalChannels.lean` (C3), both landed 2026-06-05 alongside
+C1. *(Header corrected 2026-08-30, audit pass: it previously called C2/C3 "later phases"
+and the CP witness "open upstream-prep work" — the phases had landed the same day as C1,
+and the witness was a one-line corollary of the existing lemmas, now stated.)*
 
 The Kraus index `ι` is an arbitrary `Fintype` (matching `CSD.LF2.POVM`'s convention).
 -/

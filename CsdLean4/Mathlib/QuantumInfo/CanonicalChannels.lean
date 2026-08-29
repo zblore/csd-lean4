@@ -139,5 +139,16 @@ noncomputable def tensorRight (Φ : Channel n p ι) (b : Type*) [Fintype b] [Dec
       = ∑ i, (Φ.kraus i ⊗ₖ (1 : Matrix b b ℂ)) * ρ * (Φ.kraus i ⊗ₖ (1 : Matrix b b ℂ))ᴴ := by
   rw [apply_def]; rfl
 
+/-- **Complete positivity, witnessed.** For every idle factor `b`, the local channel
+`Φ ⊗ id_b` maps positive-semidefinite operators to positive-semidefinite operators — the
+formal CP statement the Kraus form justifies, immediate because `tensorRight` is itself a
+`Channel` and every channel's action is positive (`apply_posSemidef`). Discharges the
+"CP witness" item recorded as open in `Channel.lean`'s C1 header (stated 2026-08-30, audit
+pass — the construction had existed since C3 without the named statement). -/
+lemma tensorRight_posSemidef (Φ : Channel n p ι) (b : Type*) [Fintype b] [DecidableEq b]
+    {ρ : Matrix (n × b) (n × b) ℂ} (hρ : ρ.PosSemidef) :
+    ((Φ.tensorRight b).apply ρ).PosSemidef :=
+  (Φ.tensorRight b).apply_posSemidef hρ
+
 end Channel
 end QuantumInfo

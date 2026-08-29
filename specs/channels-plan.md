@@ -59,6 +59,11 @@ Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empiric
   *Difficulty was: medium* (reindex/block algebra; partial trace already built).
 
 ### C3 — the canonical channels — **DONE 2026-06-05**
+
+> **CP witness named (2026-08-30, audit pass):** `tensorRight_posSemidef` — for every idle
+> factor `b`, `Φ ⊗ id_b` is positive: complete positivity as an explicit pinned theorem
+> (one line from `tensorRight` + `apply_posSemidef`). `Channel.lean`'s C1 header, which
+> still called C2/C3 "later phases" and the CP witness "open work", corrected same day.
 - `unitaryChannel U hU` (single Kraus, `apply ρ = U ρ Uᴴ`; generalises `Channel.id`);
   `traceOutChannel s env` (`apply ρ = traceRight ρ` — the literal volume-loss-to-environment,
   obtained for free as C2's `ofIsometry 1`); `mixedUnitaryChannel U hU p hp0 hp`
