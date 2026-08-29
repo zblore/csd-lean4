@@ -21,17 +21,27 @@ lives in the companion `Empirical/CSD/Gates/SingleQubit.lean`.
 
 ## Contents
 
-- `qmH`: Hadamard `(1/√2) !![1, 1; 1, -1]`. Involutive (`qmH * qmH = 1`).
-- `qmS`: Phase `!![1, 0; 0, I]`. Diagonal; `qmS² = qmZ` (Pauli Z).
-- `qmT`: π/4-phase `!![1, 0; 0, exp(iπ/4)]`. Diagonal; `qmT² = qmS`.
+- `qmH`: Hadamard `(1/√2) !![1, 1; 1, -1]`. Involutive (`qmH * qmH = 1`),
+  Hermitian (`qmH_hermitian`), unitary (`qmH_unitary`).
+- `qmS`: Phase `!![1, 0; 0, I]`. Diagonal; `qmS² = qmZ` (Pauli Z);
+  unitary (`qmS_unitary`).
+- `qmT`: π/4-phase `!![1, 0; 0, exp(iπ/4)]`. Diagonal; `qmT² = qmS`;
+  unitary (`qmT_unitary`).
 
 `qmZ` is included as an auxiliary (also re-exportable; conventional
-Pauli `σ_z`).
+Pauli `σ_z`). (The unitarity lemmas were added 2026-08-29: an audit found
+the header promising them while only the squaring identities were proved —
+the sibling `MultiQubit.lean` standard, `Gᴴ * G = 1`, now holds here too.)
 
 ## Naming
 
-`qm`-prefixed to avoid clashes with potential Mathlib upstream Pauli/
-Clifford content. The CSD-side companion uses `csd`-prefixed names.
+`qm`-prefixed matrix-level gates, serving the density-matrix / CSD-gates
+ecosystem (`Empirical/CSD/Gates/`, `Einselection.lean`). The
+**coordinate-operator** siblings on the register live in the Cat-1 tree
+(`Mathlib/QuantumInfo/Clifford.lean`'s `sGate`/`hGate`, `Magic.lean`'s
+`tGate` — where `T² = S` is `tGate_tGate`); the two layers serve different
+consumer bases and neither derives from the other. The CSD-side companion
+uses `csd`-prefixed names.
 
 ## Experimental provenance
 
@@ -73,6 +83,18 @@ theorem qmH_mul_self : qmH * qmH = 1 := by
   fin_cases i <;> fin_cases j <;>
     simp <;> ring
 
+/-- `Hᴴ = H`: the Hadamard is Hermitian (real symmetric). -/
+theorem qmH_hermitian : qmHᴴ = qmH := by
+  unfold qmH
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.conjTranspose_apply, Complex.conj_ofReal]
+
+/-- `Hᴴ * H = 1`: the Hadamard is unitary (Hermitian + involutive). -/
+theorem qmH_unitary : qmHᴴ * qmH = 1 := by
+  rw [qmH_hermitian]
+  exact qmH_mul_self
+
 /-! ## Phase S -/
 
 /-- Phase gate `S = !![1, 0; 0, I]`. -/
@@ -85,6 +107,13 @@ theorem qmS_sq : qmS * qmS = qmZ := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.mul_apply, Fin.sum_univ_two, Complex.I_mul_I]
+
+/-- `Sᴴ * S = 1`: the phase gate is unitary (`conj i · i = 1`). -/
+theorem qmS_unitary : qmSᴴ * qmS = 1 := by
+  unfold qmS
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply, Complex.conj_I]
 
 /-! ## Phase T -/
 
@@ -106,6 +135,21 @@ theorem qmT_sq : qmT * qmT = qmS := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [Matrix.mul_apply, Fin.sum_univ_two, h]
+
+/-- `Tᴴ * T = 1`: the T gate is unitary (`e^{−iπ/4} · e^{iπ/4} = 1`). -/
+theorem qmT_unitary : qmTᴴ * qmT = 1 := by
+  have h : (starRingEnd ℂ) (Complex.exp (Complex.I * (Real.pi / 4)))
+      * Complex.exp (Complex.I * (Real.pi / 4)) = 1 := by
+    rw [← Complex.exp_conj, ← Complex.exp_add,
+      show (starRingEnd ℂ) (Complex.I * ((Real.pi : ℂ) / 4))
+            + Complex.I * ((Real.pi : ℂ) / 4) = 0 from by
+        simp only [map_mul, map_div₀, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
+        ring,
+      Complex.exp_zero]
+  unfold qmT
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply, h]
 
 end Gates
 end QM
