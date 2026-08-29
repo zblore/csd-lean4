@@ -476,4 +476,239 @@ theorem amplification_quarter (hψ : ‖ψ‖ = 1) (ha : goodProb G ψ = 1 / 4) 
 
 end OptimalCount
 
+/-! ## The eigenstructure of the amplification step (AA-5a)
+
+On the rotation plane the step `Q = ampStep (ampState θ) G` is a rotation by `2θ`, so its
+eigenvectors there are `g ± i·b` with eigenvalues `e^{±2iθ}` — the fact amplitude *estimation*
+(BHMT Thm 12) feeds to phase estimation. This section delivers the eigenstructure and the
+estimate's error algebra; the two-register kickback marginal is AA-5b
+(`specs/amplitude-amplification-plan.md`). -/
+
+section EigenStructure
+
+omit [Fintype ι] in
+lemma goodProj_add (G : Finset ι) (ψ χ : EuclideanSpace ℂ ι) :
+    goodProj G (ψ + χ) = goodProj G ψ + goodProj G χ := by
+  ext i
+  simp only [WithLp.ofLp_add, Pi.add_apply, goodProj_apply]
+  split_ifs
+  · rfl
+  · norm_num
+
+omit [Fintype ι] in
+lemma goodProj_smul (G : Finset ι) (c : ℂ) (ψ : EuclideanSpace ℂ ι) :
+    goodProj G (c • ψ) = c • goodProj G ψ := by
+  ext i
+  simp only [WithLp.ofLp_smul, Pi.smul_apply, goodProj_apply, smul_eq_mul]
+  split_ifs
+  · rfl
+  · rw [mul_zero]
+
+omit [Fintype ι] in
+lemma oracleFlip_add (G : Finset ι) (ψ χ : EuclideanSpace ℂ ι) :
+    oracleFlip G (ψ + χ) = oracleFlip G ψ + oracleFlip G χ := by
+  rw [oracleFlip, oracleFlip, oracleFlip, goodProj_add]
+  module
+
+omit [Fintype ι] in
+lemma oracleFlip_smul (G : Finset ι) (c : ℂ) (ψ : EuclideanSpace ℂ ι) :
+    oracleFlip G (c • ψ) = c • oracleFlip G ψ := by
+  rw [oracleFlip, oracleFlip, goodProj_smul]
+  module
+
+omit [DecidableEq ι] in
+lemma reflect_add (φ ψ χ : EuclideanSpace ℂ ι) :
+    reflect φ (ψ + χ) = reflect φ ψ + reflect φ χ := by
+  rw [reflect, reflect, reflect, inner_add_right]
+  module
+
+omit [DecidableEq ι] in
+lemma reflect_smul (φ : EuclideanSpace ℂ ι) (c : ℂ) (ψ : EuclideanSpace ℂ ι) :
+    reflect φ (c • ψ) = c • reflect φ ψ := by
+  rw [reflect, reflect, inner_smul_right]
+  module
+
+/-- **The amplification step is additive.** -/
+lemma ampStep_add (φ : EuclideanSpace ℂ ι) (G : Finset ι) (ψ χ : EuclideanSpace ℂ ι) :
+    ampStep φ G (ψ + χ) = ampStep φ G ψ + ampStep φ G χ := by
+  rw [ampStep, ampStep, ampStep, oracleFlip_add, reflect_add]
+
+/-- **The amplification step is `ℂ`-homogeneous.** -/
+lemma ampStep_smul (φ : EuclideanSpace ℂ ι) (G : Finset ι) (c : ℂ)
+    (ψ : EuclideanSpace ℂ ι) :
+    ampStep φ G (c • ψ) = c • ampStep φ G ψ := by
+  rw [ampStep, ampStep, oracleFlip_smul, reflect_smul]
+
+omit [Fintype ι] [DecidableEq ι] in
+lemma ampState_zero (g b : EuclideanSpace ℂ ι) : ampState g b 0 = b := by
+  rw [ampState, Real.sin_zero, Real.cos_zero]
+  push_cast
+  module
+
+omit [Fintype ι] [DecidableEq ι] in
+lemma ampState_pi_div_two (g b : EuclideanSpace ℂ ι) :
+    ampState g b (Real.pi / 2) = g := by
+  rw [ampState, Real.sin_pi_div_two, Real.cos_pi_div_two]
+  push_cast
+  module
+
+/-- `e^{ix} = cos x + (sin x)·i` with the real trigonometric functions, coerced. -/
+lemma exp_ofReal_mul_I (x : ℝ) :
+    Complex.exp ((x : ℝ) * Complex.I)
+      = (Real.cos x : ℂ) + (Real.sin x : ℂ) * Complex.I := by
+  rw [Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin]
+
+/-- The `e^{+2iθ}` eigenvector of the amplification step on the rotation plane: `g + i·b`. -/
+noncomputable def eigenPlus (g b : EuclideanSpace ℂ ι) : EuclideanSpace ℂ ι :=
+  g + Complex.I • b
+
+/-- The `e^{−2iθ}` eigenvector: `g − i·b`. -/
+noncomputable def eigenMinus (g b : EuclideanSpace ℂ ι) : EuclideanSpace ℂ ι :=
+  g - Complex.I • b
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- The eigenvectors recombine to the good component: `v₊ + v₋ = 2g`. -/
+lemma eigenPlus_add_eigenMinus (g b : EuclideanSpace ℂ ι) :
+    eigenPlus g b + eigenMinus g b = (2 : ℂ) • g := by
+  rw [eigenPlus, eigenMinus]
+  module
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- The eigenvectors recombine to the bad component: `v₊ − v₋ = 2i·b`. -/
+lemma eigenPlus_sub_eigenMinus (g b : EuclideanSpace ℂ ι) :
+    eigenPlus g b - eigenMinus g b = (2 * Complex.I) • b := by
+  rw [eigenPlus, eigenMinus]
+  module
+
+variable {G : Finset ι} {g b : EuclideanSpace ℂ ι}
+
+private lemma ampStep_g (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) :
+    ampStep (ampState g b θ) G g = ampState g b (Real.pi / 2 + 2 * θ) := by
+  have h := ampStep_ampState hgg hbb hgb hgsupp hbsupp θ (Real.pi / 2)
+  rwa [ampState_pi_div_two] at h
+
+private lemma ampStep_b (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) :
+    ampStep (ampState g b θ) G b = ampState g b (2 * θ) := by
+  have h := ampStep_ampState hgg hbb hgb hgsupp hbsupp θ 0
+  rw [ampState_zero] at h
+  rwa [zero_add] at h
+
+/-- ★ **The `+` eigenvector equation:** on the rotation plane the amplification step has
+`g + i·b` as an eigenvector with eigenvalue `e^{2iθ}`. This is the spectral fact amplitude
+estimation hands to phase estimation. -/
+theorem ampStep_eigenPlus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) :
+    ampStep (ampState g b θ) G (eigenPlus g b)
+      = Complex.exp ((2 * θ : ℝ) * Complex.I) • eigenPlus g b := by
+  rw [eigenPlus, ampStep_add, ampStep_smul,
+    ampStep_g hgg hbb hgb hgsupp hbsupp θ, ampStep_b hgg hbb hgb hgsupp hbsupp θ]
+  have hsin : Real.sin (Real.pi / 2 + 2 * θ) = Real.cos (2 * θ) := by
+    rw [Real.sin_add, Real.sin_pi_div_two, Real.cos_pi_div_two]
+    ring
+  have hcos : Real.cos (Real.pi / 2 + 2 * θ) = -Real.sin (2 * θ) := by
+    rw [Real.cos_add, Real.sin_pi_div_two, Real.cos_pi_div_two]
+    ring
+  ext i
+  simp only [WithLp.ofLp_add, Pi.add_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul,
+    ampState_apply, hsin, hcos, exp_ofReal_mul_I, Complex.ofReal_neg]
+  linear_combination (-(Real.sin (2 * θ) : ℂ) * b i) * Complex.I_mul_I
+
+/-- ★ **The `−` eigenvector equation:** `g − i·b` carries eigenvalue `e^{−2iθ}`. -/
+theorem ampStep_eigenMinus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) :
+    ampStep (ampState g b θ) G (eigenMinus g b)
+      = Complex.exp ((-(2 * θ) : ℝ) * Complex.I) • eigenMinus g b := by
+  rw [eigenMinus, sub_eq_add_neg, ← neg_smul, ampStep_add, ampStep_smul,
+    ampStep_g hgg hbb hgb hgsupp hbsupp θ, ampStep_b hgg hbb hgb hgsupp hbsupp θ]
+  have hsin : Real.sin (Real.pi / 2 + 2 * θ) = Real.cos (2 * θ) := by
+    rw [Real.sin_add, Real.sin_pi_div_two, Real.cos_pi_div_two]
+    ring
+  have hcos : Real.cos (Real.pi / 2 + 2 * θ) = -Real.sin (2 * θ) := by
+    rw [Real.cos_add, Real.sin_pi_div_two, Real.cos_pi_div_two]
+    ring
+  rw [show Complex.exp ((-(2 * θ) : ℝ) * Complex.I)
+      = (Real.cos (2 * θ) : ℂ) - (Real.sin (2 * θ) : ℂ) * Complex.I from by
+    rw [exp_ofReal_mul_I, Real.cos_neg, Real.sin_neg, Complex.ofReal_neg]; ring]
+  ext i
+  simp only [WithLp.ofLp_add, Pi.add_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul,
+    ampState_apply, hsin, hcos, Complex.ofReal_neg]
+  linear_combination (-(Real.sin (2 * θ) : ℂ) * b i) * Complex.I_mul_I
+
+/-- **Iterated eigen-action:** `j` amplification steps scale the `+` eigenvector by
+`e^{2ijθ}` — the phase a counting register would estimate. -/
+theorem ampStep_iterate_eigenPlus (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
+    (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
+    (θ : ℝ) (j : ℕ) :
+    (ampStep (ampState g b θ) G)^[j] (eigenPlus g b)
+      = Complex.exp ((2 * j * θ : ℝ) * Complex.I) • eigenPlus g b := by
+  induction j with
+  | zero =>
+    rw [Function.iterate_zero_apply,
+      show ((2 * (0 : ℕ) * θ : ℝ)) = 0 from by push_cast; ring, Complex.ofReal_zero,
+      zero_mul, Complex.exp_zero, one_smul]
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', ih, ampStep_smul,
+      ampStep_eigenPlus hgg hbb hgb hgsupp hbsupp θ, smul_smul, ← Complex.exp_add]
+    congr 2
+    push_cast
+    ring
+
+end EigenStructure
+
+/-! ## The estimate's error algebra (BHMT Lemma 7 shape) -/
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- The `sin²` difference in product form: `sin²x − sin²y = sin(x+y)·sin(x−y)`. -/
+lemma sin_sq_sub_sin_sq (x y : ℝ) :
+    Real.sin x ^ 2 - Real.sin y ^ 2 = Real.sin (x + y) * Real.sin (x - y) := by
+  rw [Real.sin_add, Real.sin_sub]
+  linear_combination (-(Real.sin x ^ 2)) * Real.sin_sq_add_cos_sq y
+    + (Real.sin y ^ 2) * Real.sin_sq_add_cos_sq x
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- ★ **The `sin²` perturbation bound:**
+`|sin²x − sin²y| ≤ |sin 2y|·|x−y| + |x−y|²` — the Lipschitz-plus-quadratic control that turns
+a phase-estimate error into an amplitude-estimate error. -/
+theorem abs_sin_sq_sub_sin_sq_le (x y : ℝ) :
+    |Real.sin x ^ 2 - Real.sin y ^ 2| ≤ |Real.sin (2 * y)| * |x - y| + |x - y| ^ 2 := by
+  rw [sin_sq_sub_sin_sq, abs_mul]
+  have h1 : |Real.sin (x + y)| ≤ |Real.sin (2 * y)| + |x - y| := by
+    have hlip := Real.abs_sin_sub_sin_le (x + y) (2 * y)
+    rw [show x + y - 2 * y = x - y from by ring] at hlip
+    have htri : |Real.sin (x + y)| - |Real.sin (2 * y)|
+        ≤ |Real.sin (x + y) - Real.sin (2 * y)| := abs_sub_abs_le_abs_sub _ _
+    linarith
+  have h2 : |Real.sin (x - y)| ≤ |x - y| := Real.abs_sin_le_abs
+  nlinarith [h1, h2, abs_nonneg (x - y), abs_nonneg (Real.sin (x + y))]
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- ★ **The amplitude-estimation error bound (BHMT Lemma 7).** If the true amplitude is
+`a = sin²θ` (with `cos θ = √(1−a)`) and the estimated angle `θ'` is within `ε` of `θ`, then
+the estimated amplitude `sin²θ'` is within `2√(a(1−a))·ε + ε²` of `a`. With the
+phase-estimation window `ε = π/T` this is the standard
+`|ã − a| ≤ 2π√(a(1−a))/T + π²/T²`; instantiating it on the two-register kickback marginal is
+AA-5b. -/
+theorem amplitude_estimation_error {a : ℝ} (ha0 : 0 ≤ a)
+    {θ θ' : ℝ} (hθ : Real.sin θ = Real.sqrt a) (hθc : Real.cos θ = Real.sqrt (1 - a))
+    {ε : ℝ} (hδ : |θ' - θ| ≤ ε) :
+    |Real.sin θ' ^ 2 - a| ≤ 2 * Real.sqrt (a * (1 - a)) * ε + ε ^ 2 := by
+  have hsin2 : |Real.sin (2 * θ)| = 2 * Real.sqrt (a * (1 - a)) := by
+    rw [Real.sin_two_mul, hθ, hθc, Real.sqrt_mul ha0,
+      abs_of_nonneg (by positivity)]
+    ring
+  have ha' : Real.sin θ ^ 2 = a := by rw [hθ, Real.sq_sqrt ha0]
+  have h := abs_sin_sq_sub_sin_sq_le θ' θ
+  rw [ha', hsin2] at h
+  have habs2 : |θ' - θ| ^ 2 ≤ ε ^ 2 := by nlinarith [abs_nonneg (θ' - θ)]
+  have hmul : 2 * Real.sqrt (a * (1 - a)) * |θ' - θ|
+      ≤ 2 * Real.sqrt (a * (1 - a)) * ε :=
+    mul_le_mul_of_nonneg_left hδ (by positivity)
+  linarith
+
 end QuantumInfo

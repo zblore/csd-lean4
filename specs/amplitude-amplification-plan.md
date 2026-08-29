@@ -1,7 +1,8 @@
 # Amplitude amplification (Brassard–Høyer–Mosca–Tapp) — scoping and plan
 
-**Status:** scoped 2026-08-29 and **EXECUTED same day (AA-1..AA-4)** — see the execution record
-before the references. AA-5 stays gated; AA-6 not scheduled. Gates and abort criteria on the
+**Status:** scoped 2026-08-29 and **EXECUTED same day (AA-1..AA-4, then the AA-5a slice after
+its gate run)** — see the execution record before the references. AA-5b stays gated on the
+tensor generalization; AA-6 not scheduled. Gates and abort criteria on the
 Q11 mold; walls were pre-checked (the Q12 lesson: probe before rating), and none fired.
 
 **Provenance.** Candidate 2 of the five from the 2026-08-28 algorithms discussion (candidate 1,
@@ -167,6 +168,22 @@ real cost). **Gate:** scope the error-propagation arithmetic on paper first; if 
 session, land eigenvalues-only and record the rest. Do not open this brick before AA-1..4 are
 merged.
 
+**Gate run 2026-08-29 (after AA-1..4 merged), verdict: SPLIT.** The paper scoping decomposed
+Thm 12 into four pieces: (i) `Q`'s eigenstructure on the plane — `g ± i·b` with `e^{±2iθ}`,
+needs only linearity of the step, cheap; (ii) the error propagation — pure trig
+(`sin²x − sin²y = sin(x+y)·sin(x−y)` + the Lipschitz bound on `sin`), cheap; (iii) the
+two-register kickback state `(1/√T)Σₓ |x⟩ ⊗ Qˣψ` and its counting marginal — **requires
+generalizing the Shor tensor infrastructure** (`tensorCN`/`qftInvCount` are hard-typed
+`Fin T × ZMod N`; the second factor must become an arbitrary finite type). That generalization
+is the SAME plumbing Shor's own deferred two-register marginal needs — a twofer, but M on its
+own; (iv) the `8/π²` assembly — the branch decomposition has orthogonal eigenvector companions,
+so the marginal is a half-half **mixture** of two single-phase distributions (no cross-terms,
+unlike Shor's racing branches) and each branch gets the `4/π²` bound. (iii)+(iv) exceed the
+session → per the gate, (i)+(ii) landed as **AA-5a** (executed same day, see below);
+(iii)+(iv) are **AA-5b**, gated on the tensor generalization, first step the eigen-decomposition
+of `ampState` (mechanical from `eigenPlus_add/sub_eigenMinus`, coefficients `(∓i/2)e^{±iγ}`,
+branch weights `1/2` each).
+
 ### AA-6 — QSearch, unknown `a` (NOT planned; research-adjacent, author decision)
 
 BHMT Thm 3's exponentially-growing randomized schedule (expected `O(1/√a)` with no knowledge
@@ -225,7 +242,23 @@ on the same condition can carry different `Decidable` instances (`Finset.decidab
 distinct `(↑r)⁻¹` need two calls; higher-order `rw [Finset.sum_congr …]` under binders is
 fragile — `norm_cast` + term-mode `sum_congr` instead.
 
-AA-5 (amplitude estimation) remains gated as scoped; AA-6 not scheduled.
+AA-5 gate run and split 2026-08-29 (see the AA-5 section): **AA-5a EXECUTED same day** —
+the eigenstructure (`ampStep` linearity, `eigenPlus/eigenMinus` with `e^{±2iθ}` eigenvalues,
+the iterated eigen-action carrying the phase `e^{2ijθ}` a counting register would estimate)
+and the error algebra (`sin²` product formula, the perturbation bound, and
+`amplitude_estimation_error` — BHMT Lemma 7: angle error `ε` ⇒ amplitude error
+`≤ 2√(a(1−a))·ε + ε²`), all in the same Cat-1 module, 3 new MathlibStaging pins. The AA-5a
+slice took ≈50 minutes including build iterations (two `linear_combination`-coefficient rounds
+on the `I² = −1` closings and one `conv_lhs`-rewrote-too-much restructure). **AA-5b** (the
+kickback marginal + `8/π²` assembly) stays gated on the tensor generalization; AA-6 not
+scheduled.
+
+One more snag for the pile: `push_cast` rewrites `↑(Real.sin x)` to `Complex.sin ↑x`
+mid-goal, splitting what `linear_combination` needs to be ONE atom — prefer targeted
+`Complex.ofReal_neg`-style simp lemmas over blanket `push_cast` when the closing is
+`linear_combination` over mixed-cast trig atoms; and a simp set containing `ofReal_neg` will
+break a later `exp_ofReal_mul_I` rewrite whose pattern needs the cast OUTSIDE the negation —
+order the exp rewrite first.
 
 ## References
 

@@ -545,6 +545,29 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.amplification_query_bound
 
+-- AA-5a (2026-08-29, same file): the eigenstructure of the amplification step and the
+-- estimate's error algebra -- the two halves of amplitude ESTIMATION (BHMT Thm 12) that need
+-- no two-register tensor plumbing. On the rotation plane the step has eigenvectors g +- i*b
+-- with eigenvalues e^{+-2i*theta} (ampStep_eigenPlus/eigenMinus, via the newly-proved
+-- linearity of the step), so j rounds scale the + eigenvector by e^{2ij*theta}
+-- (ampStep_iterate_eigenPlus) -- the phase a counting register would estimate. And the error
+-- propagation: an angle estimate within eps of theta gives an amplitude estimate within
+-- 2*sqrt(a(1-a))*eps + eps^2 of a = sin^2 theta (amplitude_estimation_error, BHMT Lemma 7,
+-- via sin^2 x - sin^2 y = sin(x+y) sin(x-y) and the Lipschitz bound on sin). The remaining
+-- half -- the kickback state's counting marginal and the 8/pi^2 assembly -- is AA-5b in the
+-- plan, gated on generalizing the Shor two-register tensor infrastructure. Foundational triple.
+/-- info: 'QuantumInfo.ampStep_eigenPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ampStep_eigenPlus
+
+/-- info: 'QuantumInfo.ampStep_iterate_eigenPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ampStep_iterate_eigenPlus
+
+/-- info: 'QuantumInfo.amplitude_estimation_error' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_error
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef
