@@ -631,6 +631,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.qsearch_average' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.qsearch_average
+
+-- The Pauli/Clifford layer -- the Gottesman-Knill mechanism (Mathlib/QuantumInfo/Pauli.lean
+-- + Clifford.lean, 2026-08-29; plan specs/gottesman-knill-plan.md, GK-1/GK-2; candidate 3 of
+-- the 2026-08-28 five). Pauli.lean: X^a Z^b as concrete coordinate operators with the group
+-- law X^a Z^b . X^a' Z^b' = (-1)^{b.a'} X^{a+a'} Z^{b+b'} (pauliOp_mul), commutation
+-- governed by the F_2 symplectic form (pauliOp_comm), character orthogonality
+-- sum_z (-1)^{b.z} = 2^n [b=0] hence non-identity Paulis traceless (pauliOp_trace -- the
+-- seed of the stabiliser-uniqueness trace argument), and inner-product preservation.
+-- Clifford.lean: the three generator families as coordinate operators, and the theorem
+-- family that IS Gottesman-Knill -- conjugation by each generator maps every Pauli to a
+-- phase times a Pauli with EXPLICIT F_2-linear label maps: CNOT (cnotGate_conj_pauliOp, no
+-- phase), S (sGate_conj_pauliOp, phase i^{a_j} -- S X S+ = Y), H (hGate_conj_pauliOp, sign
+-- (-1)^{a_j b_j}, swaps a_j <-> b_j). HONEST SCOPE: the Heisenberg-picture closure is
+-- proved in full; the "classically simulable in polynomial time" reading is a complexity
+-- claim about the update rule -- no computation model, no circuit datatype, no measurement
+-- update (stabiliser layer = GK-3, gated in the plan). No priority claim of any kind
+-- (CL-061 rule; the Coq/stabiliser landscape was not surveyed). Foundational triple.
+/-- info: 'QuantumInfo.pauliOp_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliOp_mul
+
+/-- info: 'QuantumInfo.pauliOp_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliOp_comm
+
+/-- info: 'QuantumInfo.pauliOp_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliOp_trace
+
+/-- info: 'QuantumInfo.cnotGate_conj_pauliOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.cnotGate_conj_pauliOp
+
+/-- info: 'QuantumInfo.sGate_conj_pauliOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sGate_conj_pauliOp
+
+/-- info: 'QuantumInfo.hGate_conj_pauliOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.hGate_conj_pauliOp
 /-- info: 'QuantumInfo.kickbackState_ampState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.kickbackState_ampState

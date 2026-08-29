@@ -42,6 +42,8 @@ public import CsdLean4.Mathlib.QuantumInfo.Fourier
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
 public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeEstimation
+public import CsdLean4.Mathlib.QuantumInfo.Pauli
+public import CsdLean4.Mathlib.QuantumInfo.Clifford
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
