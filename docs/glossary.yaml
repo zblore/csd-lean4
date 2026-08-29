@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: d4434b79f1704a355881eb3cb697fbe010f59f46
+  sha: bb22c534347f2db8fe6ccb0b6e4225a52306a616
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -6545,10 +6545,13 @@ entries:
       Honest scope: the Heisenberg-picture closure is proved in full; the "classically
       simulable in polynomial time" reading is a complexity claim about the update rule, and
       the corpus has no computation model, so it stays prose. The stabiliser-group layer
-      itself (the group projector, its trace, and the existence of the stabilised state) is
-      now proved in the same tree, with the Steane code as its first CSS instance; the
-      measurement-update rule remains a named residue. The standing disclaimer applies: the
-      algorithm layer consumes the unitary pillar and does not support foundations.
+      itself is now proved in the same tree in full -- the group projector, its trace, the
+      dimension of the code space by rank-equals-trace, uniqueness of the full-stabiliser
+      state, and the complete measurement-update rule (deterministic and fair-coin cases,
+      with the post-measurement stabiliser) -- with the Steane code as the first CSS
+      instance and the magic layer as the proved boundary of the mechanism. The standing
+      disclaimer applies: the algorithm layer consumes the unitary pillar and does not
+      support foundations.
     mathematical: >
       On the register over Fin n -> Fin 2: pauliOp a b acts by (X^a Z^b psi)(z) =
       (-1)^(b.(z+a)) psi(z+a). The group law X^a Z^b . X^a' Z^b' = (-1)^(b.a') X^(a+a')
@@ -6574,7 +6577,7 @@ entries:
       David Gross on Clifford orbits and designs.
     term: Gottesman-Knill theorem
     eponyms: [Gottesman, Knill]
-    related: [steane-code]
+    related: [steane-code, magic-state]
     status: proved-in-corpus
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Clifford.lean
@@ -6651,3 +6654,66 @@ entries:
     external:
       - text: "Steane, Error correcting codes in quantum theory (PRL 77, 793)"
         url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
+
+  - slug: magic-state
+    reviewed: 2026-08-29
+    hook: >
+      The fuel of quantum advantage: a single special state that, consumed by otherwise
+      classical-trackable Clifford circuits, unlocks the gate the Gottesman-Knill theorem
+      cannot simulate.
+    layman: >
+      The Gottesman-Knill theorem says Clifford circuits are classically simulable -- so
+      where does quantum advantage hide? In one extra gate, the T gate, an eighth-turn phase
+      twist. Add T to the Clifford set and you can approximate anything; leave it out and a
+      laptop keeps up.
+
+      What makes T genuinely different is provable: push a Pauli operation through any
+      Clifford gate and out comes another Pauli operation -- that closure is the whole
+      simulability mechanism. Push a Pauli through T and what comes out is NOT a Pauli, and
+      never can be.
+
+      The "magic state" is T's resource form: the specific single-qubit state T would
+      produce from a plain superposition. Feed copies of it into Clifford-only circuits and
+      the T gate happens for free -- which is why fault-tolerant architectures spend most of
+      their budget manufacturing (distilling) high-quality magic states.
+    in_csd: >
+      The precise complement of the corpus's Gottesman-Knill layer, landed the same day the
+      GK plan closed. Three theorems draw the boundary: T squared IS the Clifford phase gate
+      (the hierarchy descends); conjugating the Pauli X by T gives exactly (X + i XZ)/sqrt 2
+      -- out of the Pauli family but into its two-term span, the level-3 hierarchy identity
+      as a closed operator equation; and the no-go -- no scalar multiple of any Pauli equals
+      T X T-dagger, proved by pinning two basis columns until the arithmetic demands 1 = +-i.
+
+      The magic state itself is exhibited with closed coordinates and unit norm. Honest
+      scope: distillation protocols (Bravyi-Kitaev 15-to-1), universality of Clifford+T, and
+      the injection circuit are named residues with reasons -- the module proves what magic
+      IS, not how it is farmed. The standing disclaimer applies: the algorithm layer
+      consumes the unitary pillar and does not support foundations.
+    mathematical: >
+      With tPhase = e^(i pi/4): tPhase squared is i, so T^2 = S on the register. The
+      conjugation identity T X T-dagger = (X + i XZ)/sqrt 2 holds coordinatewise via
+      e^(+-i pi/4) = (1 +- i)/sqrt 2. The no-go: if T X T-dagger = c X^a Z^b then reading
+      the |0> and |1> columns forces c = e^(i pi/4) and e^(-i pi/4) = c times a sign, hence
+      e^(-i pi/2) in {+1, -1} -- but e^(-i pi/2) = -i. The magic state T H |0> has
+      coordinates (1, e^(i pi/4))/sqrt 2.
+    person: >
+      The term "magic state" is Sergey Bravyi and Alexei Kitaev's, from their 2005 paper
+      showing that noisy copies of certain single-qubit states can be distilled by ideal
+      Clifford operations into fuel for universal computation -- the 15-to-1 protocol that
+      still anchors fault-tolerant cost estimates. The gate-injection idea goes back to
+      Gottesman and Chuang's 1999 teleportation construction, which organised gates into
+      the Clifford hierarchy: Paulis at level one, Clifford at level two, T at level three.
+
+      The economics of quantum computing largely reduce to magic-state throughput, which is
+      why "magic" -- Bravyi and Kitaev's deliberately playful word -- became sober technical
+      vocabulary.
+    term: magic state
+    eponyms: []
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Magic.lean
+      theorem: tGate_conj_X_not_pauli
+    related: [gottesman-knill]
+    external:
+      - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
+        url: https://arxiv.org/abs/quant-ph/0403025

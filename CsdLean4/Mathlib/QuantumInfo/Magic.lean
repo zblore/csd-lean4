@@ -13,6 +13,10 @@ public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 
 **Category:** 1-Mathlib (CSD-free).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/magic-state/
+Plain-language, CSD-role and formal statements of magic states, with this module as their
+Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The precise complement of the Gottesman–Knill mechanism (plan `specs/magic-plan.md`): GK-2
 proved that H, S, CNOT conjugate every Pauli to a phase times a Pauli — the closure that
 makes Clifford circuits classically trackable. This module proves the **boundary is real**:

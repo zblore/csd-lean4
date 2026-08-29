@@ -83,6 +83,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Loewner order](https://glossary.constraintsurfacedynamics.com/loewner-order/) | `` | standard-mathematics |
 | [Luders rule](https://glossary.constraintsurfacedynamics.com/luders-rule/) | `pointer_luders_born_prep` | proved-in-corpus |
 | [Mach-Zehnder interferometer](https://glossary.constraintsurfacedynamics.com/mach-zehnder/) | `` | standard-mathematics |
+| [magic state](https://glossary.constraintsurfacedynamics.com/magic-state/) | `tGate_conj_X_not_pauli` | proved-in-corpus |
 | [Malus's law](https://glossary.constraintsurfacedynamics.com/malus-law/) | `` | standard-mathematics |
 | [Many-to-one projection](https://glossary.constraintsurfacedynamics.com/many-to-one-projection/) | `` | definition |
 | [Many-Worlds interpretation](https://glossary.constraintsurfacedynamics.com/many-worlds/) | `` | definition |
