@@ -568,6 +568,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.amplitude_estimation_error
 
+-- The two-factor joint register (Mathlib/QuantumInfo/JointRegister.lean, 2026-08-29; plan
+-- AA-5b step 1). The generic tensor/partial-operator/marginal layer every two-register
+-- algorithm argument consumes, extracted from ShorCore's Fin T x ZMod N originals (now
+-- delegating instances): tensorState (product state), matrixLeft (a matrix kernel on the
+-- first factor -- "inverse QFT on the counting register" is the instance), sliceLeft, and
+-- probLeft (the Born marginal on the first register). Headlines: matrixLeft_tensorState (a
+-- first-factor kernel acts through the tensor) and -- the load-bearing new fact --
+-- probLeft_sum_tensor_orthogonal: for a sum of product states with PAIRWISE-ORTHOGONAL second
+-- factors, the first-register marginal is the MIXTURE of branch marginals, every cross-term
+-- dead. This is what turns a multi-branch kickback state into a classical mixture of
+-- single-phase counting distributions (the 8/pi^2 assembly of AA-5b consumes it; Shor's
+-- deferred r-not-dividing-T marginal is its other customer). Foundational triple.
+/-- info: 'QuantumInfo.matrixLeft_tensorState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.matrixLeft_tensorState
+
+/-- info: 'QuantumInfo.probLeft_sum_tensor_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.probLeft_sum_tensor_orthogonal
+
 /-- info: 'QuantumInfo.traceNorm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.traceNorm_of_posSemidef

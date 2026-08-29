@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
+public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.GroupTheory.OrderOfElement
 public import Mathlib.Logic.Equiv.Fin.Rotate
@@ -386,117 +387,93 @@ theorem shor_order_readout {r : ℕ} (hr : 0 < r) (hT : 0 < T) (hdvd : r ∣ T) 
 The product-index joint register `EuclideanSpace ℂ (Fin T × ZMod N)`, the modular-exponentiation
 oracle `|x⟩|y⟩ ↦ |x⟩|a^x·y⟩`, and the full ideal-case (`r ∣ T`) measurement distribution. -/
 
-/-! ### The joint register `EuclideanSpace ℂ (Fin T × ZMod N)` -/
+/-! ### The joint register `EuclideanSpace ℂ (Fin T × ZMod N)`
 
-/-- The **tensor product** of a counting-register state and a work-register state, as a vector on
-the product index: coordinate `(tensorCN φ ψ) (c, y) = φ c * ψ y`. -/
+*Rebuilt 2026-08-29 (plan `specs/amplitude-amplification-plan.md`, AA-5b step 1): the joint
+register machinery is now the `Fin T × ZMod N` instance of the generic
+`Mathlib/QuantumInfo/JointRegister.lean` (`tensorState`/`matrixLeft`/`probLeft`) — the local
+names and statements are unchanged, the proofs delegate. The `r ∤ T` marginal this file defers
+additionally gains the general orthogonal-branch mixture law
+`probLeft_sum_tensor_orthogonal` to consume when it is attempted.* -/
+
+/-- The **tensor product** of a counting-register state and a work-register state:
+the `tensorState` instance at `ι₁ = Fin T`, `ι₂ = ZMod N`. -/
 noncomputable def tensorCN (φ : EuclideanSpace ℂ (Fin T)) (ψ : EuclideanSpace ℂ (ZMod N)) :
     EuclideanSpace ℂ (Fin T × ZMod N) :=
-  (WithLp.equiv 2 (Fin T × ZMod N → ℂ)).symm (fun p => φ p.1 * ψ p.2)
+  tensorState φ ψ
 
 omit [NeZero T] in
 set_option linter.unusedSectionVars false in
 @[simp] lemma tensorCN_apply (φ : EuclideanSpace ℂ (Fin T)) (ψ : EuclideanSpace ℂ (ZMod N))
     (c : Fin T) (y : ZMod N) : tensorCN T φ ψ (c, y) = φ c * ψ y := rfl
 
-omit [NeZero T] in
-/-- The tensor is linear in the counting factor. -/
+omit [NeZero N] [NeZero T] in
+/-- The tensor is linear in the counting factor (`tensorState_smul_left`). -/
 lemma tensorCN_smul_left (k : ℂ) (φ : EuclideanSpace ℂ (Fin T)) (ψ : EuclideanSpace ℂ (ZMod N)) :
-    tensorCN T (k • φ) ψ = k • tensorCN T φ ψ := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [WithLp.ofLp_smul, Pi.smul_apply, tensorCN_apply, tensorCN_apply, WithLp.ofLp_smul,
-    Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_assoc]
+    tensorCN T (k • φ) ψ = k • tensorCN T φ ψ :=
+  tensorState_smul_left k φ ψ
 
-omit [NeZero T] in
-/-- The tensor commutes with finite sums in the counting factor. -/
+omit [NeZero N] [NeZero T] in
+/-- The tensor commutes with finite sums in the counting factor (`tensorState_sum_left`). -/
 lemma tensorCN_sum_left {κ : Type*} (s : Finset κ) (f : κ → EuclideanSpace ℂ (Fin T))
     (ψ : EuclideanSpace ℂ (ZMod N)) :
-    tensorCN T (∑ k ∈ s, f k) ψ = ∑ k ∈ s, tensorCN T (f k) ψ := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [tensorCN_apply, sum_coord, sum_coord, Finset.sum_mul]
-  exact Finset.sum_congr rfl fun k _ => by rw [tensorCN_apply]
+    tensorCN T (∑ k ∈ s, f k) ψ = ∑ k ∈ s, tensorCN T (f k) ψ :=
+  tensorState_sum_left s f ψ
 
-omit [NeZero T] in
-/-- The tensor is linear in the work factor. -/
+omit [NeZero N] [NeZero T] in
+/-- The tensor is linear in the work factor (`tensorState_smul_right`). -/
 lemma tensorCN_smul_right (k : ℂ) (φ : EuclideanSpace ℂ (Fin T)) (ψ : EuclideanSpace ℂ (ZMod N)) :
-    tensorCN T φ (k • ψ) = k • tensorCN T φ ψ := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [WithLp.ofLp_smul, Pi.smul_apply, tensorCN_apply, tensorCN_apply, WithLp.ofLp_smul,
-    Pi.smul_apply, smul_eq_mul, smul_eq_mul]
-  ring
+    tensorCN T φ (k • ψ) = k • tensorCN T φ ψ :=
+  tensorState_smul_right k φ ψ
 
-omit [NeZero T] in
-/-- The tensor commutes with finite sums in the work factor. -/
+omit [NeZero N] [NeZero T] in
+/-- The tensor commutes with finite sums in the work factor (`tensorState_sum_right`). -/
 lemma tensorCN_sum_right {κ : Type*} (φ : EuclideanSpace ℂ (Fin T)) (s : Finset κ)
     (f : κ → EuclideanSpace ℂ (ZMod N)) :
-    tensorCN T φ (∑ k ∈ s, f k) = ∑ k ∈ s, tensorCN T φ (f k) := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [tensorCN_apply, sum_coord, sum_coord, Finset.mul_sum]
-  exact Finset.sum_congr rfl fun k _ => by rw [tensorCN_apply]
+    tensorCN T φ (∑ k ∈ s, f k) = ∑ k ∈ s, tensorCN T φ (f k) :=
+  tensorState_sum_right φ s f
 
-omit [NeZero T] in
-/-- On basis states the tensor is the joint basis state: `|c⟩ ⊗ |y⟩ = |(c, y)⟩`. -/
+omit [NeZero N] [NeZero T] in
+/-- On basis states the tensor is the joint basis state: `|c⟩ ⊗ |y⟩ = |(c, y)⟩`
+(`tensorState_basis`). -/
 @[simp] lemma tensorCN_basis (c : Fin T) (y : ZMod N) :
-    tensorCN T (basisState c) (basisState y) = basisState (c, y) := by
-  ext p
-  obtain ⟨c', y'⟩ := p
-  rw [tensorCN_apply, basisState_apply, basisState_apply, basisState_apply]
-  by_cases hc : c' = c <;> by_cases hy : y' = y <;>
-    simp [hc, hy, Prod.ext_iff]
+    tensorCN T (basisState c) (basisState y) = basisState (c, y) :=
+  tensorState_basis c y
 
-/-- The **inverse QFT on the counting register only**: coordinate
-`(qftInvCount Φ) (c, y) = ∑_x (qftMatrix T)ᴴ c x · Φ (x, y)`. -/
+/-- The **inverse QFT on the counting register only**: the `matrixLeft (qftMatrix T)ᴴ`
+instance, coordinate `(qftInvCount Φ) (c, y) = ∑_x (qftMatrix T)ᴴ c x · Φ (x, y)`. -/
 noncomputable def qftInvCount (Φ : EuclideanSpace ℂ (Fin T × ZMod N)) :
     EuclideanSpace ℂ (Fin T × ZMod N) :=
-  (WithLp.equiv 2 (Fin T × ZMod N → ℂ)).symm
-    (fun p => ∑ x : Fin T, (qftMatrix T)ᴴ p.1 x * Φ (x, p.2))
+  matrixLeft (qftMatrix T)ᴴ Φ
 
 omit [NeZero T] in
 set_option linter.unusedSectionVars false in
 @[simp] lemma qftInvCount_apply (Φ : EuclideanSpace ℂ (Fin T × ZMod N)) (c : Fin T) (y : ZMod N) :
     qftInvCount T Φ (c, y) = ∑ x : Fin T, (qftMatrix T)ᴴ c x * Φ (x, y) := rfl
 
-omit [NeZero T] in
-/-- The partial inverse QFT is linear. -/
+omit [NeZero N] [NeZero T] in
+/-- The partial inverse QFT is linear (`matrixLeft_smul`). -/
 lemma qftInvCount_smul (k : ℂ) (Φ : EuclideanSpace ℂ (Fin T × ZMod N)) :
-    qftInvCount T (k • Φ) = k • qftInvCount T Φ := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [WithLp.ofLp_smul, Pi.smul_apply, qftInvCount_apply, qftInvCount_apply, smul_eq_mul,
-    Finset.mul_sum]
-  refine Finset.sum_congr rfl fun x _ => ?_
-  rw [WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul]
-  ring
+    qftInvCount T (k • Φ) = k • qftInvCount T Φ :=
+  matrixLeft_smul (qftMatrix T)ᴴ k Φ
 
-omit [NeZero T] in
-/-- The partial inverse QFT commutes with finite sums. -/
+omit [NeZero N] [NeZero T] in
+/-- The partial inverse QFT commutes with finite sums (`matrixLeft_sum`). -/
 lemma qftInvCount_sum {κ : Type*} (s : Finset κ) (f : κ → EuclideanSpace ℂ (Fin T × ZMod N)) :
-    qftInvCount T (∑ k ∈ s, f k) = ∑ k ∈ s, qftInvCount T (f k) := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [qftInvCount_apply, sum_coord]
-  simp_rw [sum_coord, Finset.mul_sum]
-  rw [Finset.sum_comm]
-  refine Finset.sum_congr rfl fun k _ => ?_
-  rw [qftInvCount_apply]
+    qftInvCount T (∑ k ∈ s, f k) = ∑ k ∈ s, qftInvCount T (f k) :=
+  matrixLeft_sum (qftMatrix T)ᴴ s f
 
 set_option linter.unusedSectionVars false in
 /-- **Key reduction:** the partial inverse QFT commutes with the tensor and reduces to M1's
-`applyQFTinv` on the counting factor. -/
+`applyQFTinv` on the counting factor (`matrixLeft_tensorState`). -/
 lemma qftInvCount_tensorCN (φ : EuclideanSpace ℂ (Fin T)) (ψ : EuclideanSpace ℂ (ZMod N)) :
-    qftInvCount T (tensorCN T φ ψ) = tensorCN T (applyQFTinv T φ) ψ := by
-  ext p
-  obtain ⟨c, y⟩ := p
-  rw [qftInvCount_apply, tensorCN_apply, applyQFTinv_apply, Finset.sum_mul]
-  exact Finset.sum_congr rfl fun x _ => by rw [tensorCN_apply, mul_assoc]
+    qftInvCount T (tensorCN T φ ψ) = tensorCN T (applyQFTinv T φ) ψ :=
+  matrixLeft_tensorState (qftMatrix T)ᴴ φ ψ
 
-/-- The **Born marginal on the counting register**: `probCount Φ c = ∑_y ‖Φ (c, y)‖²`. -/
+/-- The **Born marginal on the counting register**: `probCount Φ c = ∑_y ‖Φ (c, y)‖²`, the
+`probLeft` instance. -/
 noncomputable def probCount (Φ : EuclideanSpace ℂ (Fin T × ZMod N)) (c : Fin T) : ℝ :=
-  ∑ y : ZMod N, ‖Φ (c, y)‖ ^ 2
+  probLeft Φ c
 
 /-! ### The faithful modular-exponentiation state -/
 
@@ -862,7 +839,7 @@ the **uniform-`1/r`** spread over the order's multiples that order recovery uses
 theorem shor_order_distribution (hr : 0 < ord a) (hT : 0 < T) (hdvd : ord a ∣ T) (s : Fin (ord a)) :
     probCount T (qftInvCount T (postModexpState T a))
         ⟨(s : ℕ) * (T / ord a), bridgeIndex_lt hr hT hdvd s⟩ = (ord a : ℝ)⁻¹ := by
-  rw [qftInvCount_postModexp a T hr hT hdvd, probCount]
+  rw [qftInvCount_postModexp a T hr hT hdvd, probCount, probLeft]
   -- coordinate at (s·T/r, y): only the s'=s branch survives by bridgeIndex_inj
   have hcoord : ∀ y : ZMod N,
       ((Real.sqrt (ord a) : ℂ)⁻¹ • ∑ s' : Fin (ord a),
@@ -894,7 +871,7 @@ theorem shor_order_distribution (hr : 0 < ord a) (hT : 0 < T) (hdvd : ord a ∣ 
 theorem shor_order_distribution_zero (hr : 0 < ord a) (hT : 0 < T) (hdvd : ord a ∣ T) (c : Fin T)
     (hc : ∀ s : Fin (ord a), (c : ℕ) ≠ (s : ℕ) * (T / ord a)) :
     probCount T (qftInvCount T (postModexpState T a)) c = 0 := by
-  rw [qftInvCount_postModexp a T hr hT hdvd, probCount]
+  rw [qftInvCount_postModexp a T hr hT hdvd, probCount, probLeft]
   rw [Finset.sum_eq_zero]
   intro y _
   rw [WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul, sum_coord]

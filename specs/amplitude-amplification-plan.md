@@ -253,6 +253,19 @@ on the `I² = −1` closings and one `conv_lhs`-rewrote-too-much restructure). *
 kickback marginal + `8/π²` assembly) stays gated on the tensor generalization; AA-6 not
 scheduled.
 
+**AA-5b step 1 (the tensor generalization) EXECUTED 2026-08-29, same session.**
+`Mathlib/QuantumInfo/JointRegister.lean` (Cat-1, ~260 lines): the product-index register over
+arbitrary finite factors — `tensorState` (bilinear, basis law), `matrixLeft` (a matrix kernel
+on the first factor; ★ `matrixLeft_tensorState`), `sliceLeft`, `probLeft` (the Born marginal;
+product law), and the genuinely new ★★ `probLeft_sum_tensor_orthogonal`: a sum of product
+states with pairwise-orthogonal second factors has a first-register marginal that is the
+MIXTURE of branch marginals — every cross-term dead. ShorCore's `tensorCN`/`qftInvCount`/
+`probCount` are now delegating instances (~90 lines of duplicate proof deleted; statements
+unchanged, pins untouched; `qftInvCount_tensorCN` closes by cross-module `@[expose]` defeq
+against `applyQFTinv`). 2 new MathlibStaging pins. What remains of AA-5b: the eigen
+-decomposition of `ampState`, the kickback state `(1/√T)Σₓ |x⟩ ⊗ Qˣψ`, its marginal via the
+mixture law, and the per-branch `4/π²` instantiation — one assembly session, no plumbing left.
+
 One more snag for the pile: `push_cast` rewrites `↑(Real.sin x)` to `Complex.sin ↑x`
 mid-goal, splitting what `linear_combination` needs to be ONE atom — prefer targeted
 `Complex.ofReal_neg`-style simp lemmas over blanket `push_cast` when the closing is
