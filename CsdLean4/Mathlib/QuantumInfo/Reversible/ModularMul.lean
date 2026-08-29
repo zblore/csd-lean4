@@ -926,17 +926,10 @@ def mulState2 (y0 y1 y2 x1 x0 : Bool) : State 92 := fun w =>
 -- 2
 
 -- Green, fast, theorem-independent value checks (kernel-reduced via the strict `Array` evaluator).
--- (An `example := by decide` value-check stood here; kernel `decide` cannot reduce this cross-module
--- `Array` circuit under the Lean 4 module system. The `#eval` above exhibits the value; the
--- `runArr`/`regValRange` correctness bridge is proven separately.)
-
--- (An `example := by decide` value-check stood here; kernel `decide` cannot reduce this cross-module
--- `Array` circuit under the Lean 4 module system. The `#eval` above exhibits the value; the
--- `runArr`/`regValRange` correctness bridge is proven separately.)
-
--- (An `example := by decide` value-check stood here; kernel `decide` cannot reduce this cross-module
--- `Array` circuit under the Lean 4 module system. The `#eval` above exhibits the value; the
--- `runArr`/`regValRange` correctness bridge is proven separately.)
+-- (Three `example := by decide` value-checks stood here, one per `#eval`; kernel `decide` cannot
+-- reduce this cross-module `Array` circuit under the Lean 4 module system. The `#eval`s above
+-- exhibit the values; the `runArr`/`regValRange` correctness bridge is proven separately, and the
+-- `example` below discharges it for the first witness.)
 
 /-- The cross-check is faithful to the real `denote`-based semantics: by `regValRangeArr_eq`, the
 fast `Array` value (`0`, above) *is* the `regValRange (denote …)` quantity the chained
