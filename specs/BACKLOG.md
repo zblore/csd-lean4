@@ -361,6 +361,25 @@
 
 ---
 
+## Residues (guard-enforced mirror of [`residues.tsv`](residues.tsv))
+
+This list is machine-checked by `scripts/check-residues.sh`: it must contain **exactly**
+the registry's `open` rows (`boundary` and `closed` rows are excluded — a boundary is not
+work, and a closed row is not open). Closing a residue means flipping the registry row,
+updating the carrier headers, **and deleting its line here** — the guard fails on any
+drift in either direction. Statements, carriers, dates, and history live in the registry;
+keep these lines to one hook each, do not expand them here.
+
+- **R-001** — straddling-kernel `8/π²` two-index Dirichlet bound (`AmplitudeEstimation.lean`)
+- **R-002** — BHMT Thm 3 exponential-doubling QSearch schedule (`AmplitudeAmplification.lean`)
+- **R-003** — Steane recovery map / Knill–Laflamme conditions (`Steane.lean`)
+- **R-004** — magic-state distillation, 15-to-1 (`Magic.lean`)
+- **R-005** — Clifford+T universality / gate-synthesis density (`Magic.lean`)
+- **R-006** — T-gate injection circuit (`Magic.lean`)
+- **R-012** — FS-as-typicality sector posit, reduces to D1 (`FlowBornFrequency.lean`)
+- **R-013** — n-fold hybrid amplitude equality (`MeasurementAdder.lean` / `Reversible/Lift.lean`)
+- **R-014** — fold `inner_toEuclideanLin_unitary'` into staging on rule-of-two trigger (`FloquetInterface.lean`)
+
 ## ecdsa.fail — EXTRACTED to a separate repository (2026-07-20)
 
 **DONE.** The ecdsa.fail / ECDLP quantum-cryptanalysis track has been extracted to its own

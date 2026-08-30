@@ -432,9 +432,14 @@ nothing forces an update when the world changes.
   realisability formula (`load-bearing, externally supplied` wording or a file-level
   `LF4-todo` reference — that system's own identities), or negation. `Tests/` pin
   narratives are exempt.
+* **Todo linkage.** `specs/BACKLOG.md` (the single canonical open-items list) carries a
+  guard-enforced "## Residues" section listing exactly the open rows, one hook line each
+  — the registry and the todo file cannot drift apart, and every `R-###` token in
+  `specs/**.md` must exist in the registry.
 * **Closing a residue** = flip the row to `closed`, record the discharging declaration
-  (the guard verifies it exists in the corpus), and update every carrier header — the
-  guard fails while a closed residue is still advertised as open. `boundary` rows
+  (the guard verifies it exists in the corpus), update every carrier header, and delete
+  the BACKLOG line — the guard fails while a closed residue is still advertised as open
+  anywhere. `boundary` rows
   (e.g. R-007, the interpretive §14 labelling) are permanent by design and never close.
 * **Rule-of-two flags** become rows with a `consumer-count` trigger: the guard fails
   the moment the named declaration's corpus occurrence count reaches the threshold,

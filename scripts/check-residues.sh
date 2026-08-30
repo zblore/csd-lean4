@@ -34,6 +34,12 @@
 #      duplicates that must be folded when consumers appear.
 #   F. Staleness (WARNING, non-fatal): an open row whose last_review is more
 #      than 120 days old. Boundary rows are permanent and exempt.
+#   G. Todo linkage: specs/BACKLOG.md (the single canonical open-items list)
+#      must carry a "## Residues" section listing EXACTLY the registry's open
+#      rows — an open row missing there, or a closed/boundary/unknown id still
+#      listed, both fail. Closing a residue therefore forces the todo update.
+#   H. No dangling ids: every R-### token anywhere in specs/**.md must exist
+#      in the registry (typo/stale-reference catch).
 #
 # WHAT IT DELIBERATELY DOES NOT DO
 #   - It does not police timeless file-scope phrasing ("not attempted",
@@ -181,6 +187,29 @@ for rid, row in sorted(rows.items()):
     age = (today - lr).days
     if age > 120:
         warns.append(f'F: {rid} last reviewed {age} days ago ({row["last_review"]}) — re-verify the row still holds')
+
+# ---- G: BACKLOG mirror of open rows ----
+backlog = (root / 'specs' / 'BACKLOG.md').read_text(encoding='utf-8')
+open_ids = {rid for rid, row in rows.items() if row['status'] == 'open'}
+sec = re.search(r'^## Residues .*?$(.*?)(?=^## |\Z)', backlog, re.M | re.S)
+if sec is None:
+    if open_ids:
+        fails.append('G: specs/BACKLOG.md has no "## Residues" section but the registry has open rows')
+else:
+    listed = set(re.findall(r'\*\*(R-\d{3})\*\*', sec.group(1)))
+    for rid in sorted(open_ids - listed):
+        fails.append(f'G: open residue {rid} is not listed in BACKLOG.md "## Residues" — add its line')
+    for rid in sorted(listed - open_ids):
+        why = rows[rid]['status'] if rid in rows else 'unknown'
+        fails.append(f'G: BACKLOG.md lists {rid} ({why}) — only open rows belong there; remove the line')
+
+# ---- H: dangling R-### references in specs ----
+for f in sorted(root.glob('specs/**/*.md')):
+    t = f.read_text(encoding='utf-8', errors='replace')
+    for i, ln in enumerate(t.splitlines()):
+        for rid in re.findall(r'R-\d{3}', ln):
+            if rid not in rows:
+                fails.append(f'H: {f.as_posix()}:{i+1}: reference to unknown residue {rid}')
 
 # ---- report ----
 n_open = sum(1 for r in rows.values() if r['status'] == 'open')
