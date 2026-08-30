@@ -72,7 +72,8 @@ AND-uncompute blocks per carry bit (`andAdd_uncompute_toffoli : … = 3 * n`). E
   basis-state computation rule. So the obstruction is **not** the absence of API. What remains
   undone is the argument itself: threading the non-permutation gadget through the adder's `3n`
   blocks and proving the full-register data output on `S` unchanged. The single-block unitary
-  embedding is sound; the n-fold hybrid amplitude equality is open work, not a missing library.
+  embedding is sound; the n-fold hybrid amplitude equality is open work (⚠️ RESIDUE(R-013)),
+not a missing library.
 
 ## Honest scope (Part 3)
 

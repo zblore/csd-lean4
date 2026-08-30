@@ -21,7 +21,7 @@ state** over a finite computational basis `ι` is a vector in `EuclideanSpace �
 This file provides the computational basis `basisState`, the Born probability `prob`, the
 coordinate-of-a-sum bridge `sum_coord`, and the core API: Born as a squared inner product
 (`prob_eq_inner_sq`), normalisation of a unit state (`sum_prob_eq_one`), and that a basis state
-is measured with certainty (`prob_basisState`). Later phases add the Hadamard transform, the
+is measured with certainty (`prob_basisState`). Downstream files add the Hadamard transform, the
 QFT (`Fourier.lean`), phase estimation (`PhaseEstimation.lean`), oracles, and the algorithms.
 
 *Generalised 2026-08-29 (a strict widening, at the second consumer per `CONVENTIONS.md` §9):

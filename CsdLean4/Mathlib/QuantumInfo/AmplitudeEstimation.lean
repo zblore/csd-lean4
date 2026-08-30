@@ -54,7 +54,7 @@ collapses to a single index there; (ii) BHMT's literal `8/π²` (their Thm 11) a
 counts **both rounding directions** — the two grid points straddling `Tθ/π` — which needs a
 two-index lower bound on the Dirichlet kernel (`f(δ) + f(1/T − δ) ≥ 8/π²`, a genuine new
 kernel inequality, NOT downstream arithmetic; a single index at distance up to `1/T` can carry
-probability `0`). That inequality is recorded in the plan and not attempted; the corpus's
+probability `0`). That inequality is not attempted — ⚠️ RESIDUE(R-001); the corpus's
 bound on the estimate tops out at `4/π²`. Query counting is by rounds of the abstract step; no
 controlled-gate decomposition is claimed. The construction takes the rotation-plane data
 (`g`, `b`, `θ`) as input — the plane exists for any state with `0 < goodProb < 1`

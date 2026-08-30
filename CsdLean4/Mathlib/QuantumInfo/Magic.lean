@@ -37,11 +37,11 @@ and why *magic states* are a resource.
   consumption implements `T` by Clifford operations alone in the standard injection circuit.
 
 **Honest scope.** This module formalises what magic **is** — the provable escape from the
-Clifford closure and the resource state — not how it is **distilled**: the
-Bravyi–Kitaev 15-to-1 protocol (and any distillation threshold claim) is a
-program-verification-scale object, recorded as the named residue in the plan and not
-attempted. No universality claim is made (that would need a gate-synthesis density theorem).
-No priority claim of any kind (CL-061 rule).
+Clifford closure and the resource state — not how it is **used or distilled**: the
+Bravyi–Kitaev 15-to-1 distillation protocol is not attempted (⚠️ RESIDUE(R-004)), no
+universality claim is made — that would need a gate-synthesis density theorem
+(⚠️ RESIDUE(R-005)) — and the gate-teleportation circuit injecting `T` from `magicState`
+is not attempted (⚠️ RESIDUE(R-006)). No priority claim of any kind (CL-061 rule).
 -/
 
 @[expose] public section

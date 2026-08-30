@@ -161,7 +161,7 @@ noncomputable def FloquetEvolution.refl
 /-- Unitary inner-product preservation on `EuclideanSpace ℂ n` for an
 ARBITRARY finite index type: `⟪U v, U w⟫ = ⟪v, w⟫`. Index-generic sibling of
 the staged Fin-`N` `inner_toEuclideanLin_unitary` (same proof recipe; fold
-into the staging tree on next touch, per the rule of two). Needed because
+into the staging tree when the rule of two fires — ⚠️ RESIDUE(R-014)). Needed because
 composite systems index by product types (`Fin 2 × Fin 2` for two qubits). -/
 lemma inner_toEuclideanLin_unitary' {n : Type*} [Fintype n] [DecidableEq n]
     (U : Matrix.unitaryGroup n ℂ) (v w : EuclideanSpace ℂ n) :

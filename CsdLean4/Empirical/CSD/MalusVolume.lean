@@ -45,12 +45,9 @@ foundational triple only.
 
 **Not claimed (the interpretive §14 boundary).** Identifying the moment-sublevel
 region with the physical "the spin-`θ` `+` detector fired" outcome is the
-interpretive §14 labelling. *(Status updated 2026-08-30, audit pass: the header
-previously said this was "undischarged pre-LF5" — the FORMAL operator →
-Σ-volume dictionary has since been proved, 2026-07-22/23,
-`LF4/ObservableCorrespondenceN.lean`: `observable_correspondence_diagonal` +
-`pure_state_born_prob_eq_volume`; only the interpretive detector-labelling
-remains outside the theorem layer, as the newer Volume-series files state.)*
+interpretive §14 labelling — a permanent interpretive boundary (⚠️ RESIDUE(R-007)): the
+formal operator → Σ-volume dictionary is proved (`LF4/ObservableCorrespondenceN.lean`),
+and only the detector-labelling of the region stays outside the theorem layer.
 This file derives the Born *number* as a Kähler volume.
 
 ## Experimental verification

@@ -30,9 +30,7 @@ maps density operators to density operators. Complete positivity — positivity 
 `Kᵢ ⊗ I_b`) and `tensorRight_posSemidef` is the named CP witness, immediate from this
 file's `apply_posSemidef`. The Stinespring dilation lives in `Stinespring.lean` (C2) and
 the canonical channels in `CanonicalChannels.lean` (C3), both landed 2026-06-05 alongside
-C1. *(Header corrected 2026-08-30, audit pass: it previously called C2/C3 "later phases"
-and the CP witness "open upstream-prep work" — the phases had landed the same day as C1,
-and the witness was a one-line corollary of the existing lemmas, now stated.)*
+C1.
 
 The Kraus index `ι` is an arbitrary `Fintype` (matching `CSD.LF2.POVM`'s convention).
 -/

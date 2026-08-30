@@ -52,7 +52,8 @@ without genericity — the measurement **dynamics** (`Φ ≠ id`), not the numbe
 What **is** posited is not Born but the **CSD sector (SO-1)**: that the sector's typicality law is
 the Fubini–Study measure (i.i.d. trials with law `fubiniStudyMeasure`). Born =
 volume is a theorem; FS-as-the-typicality-measure is the sector posit, still
-undischarged (it reduces to D1, the dynamical sector origin). LF5-E wires the context-fixed pointer reading +
+undischarged — it reduces to D1, the dynamical sector origin (⚠️ RESIDUE(R-012)).
+LF5-E wires the context-fixed pointer reading +
 capstone; entangled / non-local de-isolation is deferred
 (`specs/lf5-plan.md` §0).
 

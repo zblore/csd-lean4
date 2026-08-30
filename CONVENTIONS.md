@@ -404,3 +404,39 @@ in `specs/archive/` and the tour.
 **Nothing is deleted.** Passages removed from the landing surface move to
 `docs/TOUR.md` or `specs/archive/`; the release history lives at
 `specs/archive/HISTORY.md`.
+
+## 11. Residue registry (adopted 2026-08-30)
+
+**Problem this solves.** Eleven random-file correctness audits (2026-08-29/30) found zero
+mathematical errors and six files whose status-bearing prose had gone stale — "later
+phases" that had landed, "open" items that had been discharged, "undischarged" claims
+that had been proved. A free-prose status claim has no machine-readable identity, so
+nothing forces an update when the world changes.
+
+**The system** ([`specs/residues.tsv`](specs/residues.tsv) +
+`scripts/check-residues.sh`, in CI):
+
+* Every **open residue** — a world-state claim about what the repo still lacks — gets a
+  registry row (id `R-###`, statement, status `open`/`closed`/`boundary`, carrier files,
+  discharging declaration once closed, dates, optional `consumer-count:NAME:N` trigger)
+  and ONE timeless line in each carrier file's header ending in `⚠️ RESIDUE(R-###)`.
+* **Extraction, not annotation.** The header keeps a single line per residue; detail,
+  dates, and history live in the registry row, the plan file it points to, and git.
+  Dated correction parentheticals in headers are forbidden — trim them to the timeless
+  form when touched.
+* **Timeless vs world-state phrasing.** "Not attempted / not formalised / NOT built
+  here" describes what *this file* contains — it cannot go stale and needs no tag
+  (though tag it when the gap is a tracked residue). "Undischarged / open work / later
+  phase / on next touch / open upstream" describe the *state of the world* — the guard
+  rejects them unless governed by a `RESIDUE` tag within two lines, the LF4
+  realisability formula (`load-bearing, externally supplied` wording or a file-level
+  `LF4-todo` reference — that system's own identities), or negation. `Tests/` pin
+  narratives are exempt.
+* **Closing a residue** = flip the row to `closed`, record the discharging declaration
+  (the guard verifies it exists in the corpus), and update every carrier header — the
+  guard fails while a closed residue is still advertised as open. `boundary` rows
+  (e.g. R-007, the interpretive §14 labelling) are permanent by design and never close.
+* **Rule-of-two flags** become rows with a `consumer-count` trigger: the guard fails
+  the moment the named declaration's corpus occurrence count reaches the threshold,
+  forcing the fold/promotion instead of letting the flag rot in a header (R-014 is the
+  model).

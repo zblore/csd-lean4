@@ -38,7 +38,7 @@ dimension-intrinsic statement of the same non-factorisation — forced directly 
 dimension `d`, with no qubit-sector reduction. (No implication between the two
 conjunct-7 forms is proved in either direction: they are different formal statements
 — LHV tables over `ZMod d` versus product partitions realising `Φ⁺` — so neither is
-claimed "stronger"; wording corrected 2026-08-29, audit pass.)
+claimed "stronger".)
 
 Foundational-triple-only (Gleason-free), like both parents. Residue unchanged:
 SO-1 (the entangled sector is posited, not derived).

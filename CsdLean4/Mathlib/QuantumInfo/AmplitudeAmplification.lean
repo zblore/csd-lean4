@@ -50,8 +50,8 @@ boundaries are real and excluded by hypothesis: `goodProb = 0` leaves no plane t
 **QSearch engine** (BHMT Lemma 2) is the final section here: a uniformly random round count
 below `M` succeeds with average probability `≥ 1/4` once `M·sin 2θ ≥ 1`
 (`qsearch_average`) — the paper's Thm 3 wraps this in an exponential-doubling schedule whose
-expected-runtime bookkeeping is a probabilistic-process argument, recorded in
-`specs/amplitude-amplification-plan.md` (AA-6) and not formalised.
+expected-runtime bookkeeping is a probabilistic-process argument, not formalised
+(⚠️ RESIDUE(R-002), `specs/amplitude-amplification-plan.md` AA-6).
 -/
 
 @[expose] public section

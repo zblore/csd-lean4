@@ -47,7 +47,7 @@ over a gate list lifts a whole permutation circuit basis-state by basis-state.
   strand needs amplitudes but is blocked on a *different* thing (the gadget is not a permutation,
   so it needs the tensor factorisation `QReg m ≅ QReg 3 ⊗ QReg (m − 3)` — supplied since
   2026-08-22 by `QuantumInfo.regTensorEquiv`, leaving the n-fold hybrid argument itself as the
-  open work; the permutation lift would not unblock that either); and the
+  open work (⚠️ RESIDUE(R-013)); the permutation lift would not unblock that either); and the
   documented-count QFT gap needs the *converse* direction on a non-permutation. Build it only
   when a consumer appears or as a Mathlib submission in its own right; if picked up, scope it
   fresh (prior sizing estimates oscillated and are not to be trusted).

@@ -42,7 +42,8 @@ instantiates:
 
 **Honest scope.** The code space is exhibited (two orthonormal stabilised states) and the
 error-detection mechanism is stated in syndrome form; the full recovery map, the
-Knill–Laflamme conditions, and fault-tolerance claims are not attempted — the same posture
+Knill–Laflamme conditions, and fault-tolerance claims are not attempted
+(⚠️ RESIDUE(R-003)) — the same posture
 as the three-qubit modules. The `𝔽₂` facts about the concrete Hamming rows (orthogonality,
 independence, column distinctness) are closed by `decide` — kernel-checked finite
 computation, the right tool for a fixed `7 × 3` matrix.

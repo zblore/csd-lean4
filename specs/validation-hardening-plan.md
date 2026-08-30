@@ -110,3 +110,10 @@ None recorded yet.
 Theorem names cited by the witness suite are cross-linked in each module docstring per
 the repo convention; forward pointers live in [`future-work.md`](future-work.md).
 Campaign follow-ups (if any wall) get rows in [`BACKLOG.md`](BACKLOG.md) §V.
+
+Status-bearing prose is governed by the **residue registry**
+([`residues.tsv`](residues.tsv) + `scripts/check-residues.sh`, adopted 2026-08-30 after
+the eleven-file audit series found six stale-status headers and zero mathematical
+errors): world-state phrases must carry `RESIDUE(R-###)` identities, closed rows force
+header updates, and rule-of-two flags carry consumer-count triggers. Convention:
+`CONVENTIONS.md` §11.

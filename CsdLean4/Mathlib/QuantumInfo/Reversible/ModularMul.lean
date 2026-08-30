@@ -54,17 +54,16 @@ instance (`mulCircuit2` / `mulState2`) whose three `#eval` / `decide` witnesses 
 
 **This is NOT the general-`n` multiply.** The general-`n` Horner loop — the induction folding
 `hornerStep` over all `n` bits of `X` with the invariant `acc = (X ≫ i)·Y mod N` — is the subsequent
-tranche **S6.3d-2b**, NOT built here.
+tranche **S6.3d-2b**, NOT built here — it lives in `ModularMulLoop.lean` (`mulLoop_correct`).
 
-**Named residue (the fresh-ancilla / dirty-carry model, inherited from S6.3d-1 and S6.3c):**
+**The fresh-ancilla / dirty-carry model (inherited from S6.3d-1 and S6.3c):**
 
 1. **Fresh per-iteration wires (O(n²) qubits).** Each Horner step is supplied its OWN doubling
    scratch / carries / ancilla and its OWN controlled-add carries / ancilla, disjoint from the
    previous step's. The 2-step demo exhibits exactly this: two banks, fresh wires each. Across `n`
-   steps this is `Θ(n²)` ancilla. In-place reuse (`Θ(n)` qubits) needs the **carry-clean /
-   ancilla-restoring** adder the corpus does NOT yet provide (Cuccaro-style inline carry-uncompute,
-   or the self-cleaning high-bit modular adder). That carry-clean adder is the genuine orthogonal
-   residue, NOT built here.
+   steps this is `Θ(n²)` ancilla. In-place reuse (`Θ(n)` qubits) needs a **carry-clean /
+   ancilla-restoring** adder — supplied by `CuccaroModAdd.lean` (`cuccaroModAdd_clean`) and folded
+   into the `Θ(n)`-qubit multiply in `CuccaroModMul.lean`; NOT built here.
 2. **Only the multiplicand `Y` must persist across steps.** The loop reads each `X_i` once (the bit
    wire of step `i` is dead after step `i`), but `Y = add.Aop` must survive every step; this is the
    load-bearing `hornerStep_preserves_Y`.

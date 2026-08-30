@@ -30,10 +30,8 @@ is the reproducible artifact:
   `ρ_AB.PosDef` hypothesis is satisfiable at a correlated state
   (`corrStatePD_araki_lieb`).
 
-Reuses `QuantumInfo.entropy_congr_of_eq` to transport entropy along marginal
-equalities. *(That lemma was promoted from `LF6/Decoherence.lean` down into
-`Mathlib/QuantumInfo/Entropy.lean` on 2026-08-30 — this file's second-consumer
-use was the rule-of-two trigger the header previously flagged; debt paid.)*
+Reuses `QuantumInfo.entropy_congr_of_eq` (from `Mathlib/QuantumInfo/Entropy.lean`) to
+transport entropy along marginal equalities.
 -/
 
 @[expose] public section
