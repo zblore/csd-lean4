@@ -412,6 +412,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- E4's conclusion is NOT lost for finite-dimensional unitary dynamics; its ASYMPTOTIC FORM is.
 -- ⚠️ Still conditional and still not exhibited for any Sigma-flow.  Q12-d as originally scoped
 -- (derive the race from a MIXING flow) remains blocked -- see q12-fibre-mechanism-scoping.md W1.
+-- The MIXING route stayed blocked; the successor question was later executed by a different route
+-- (constructed shear coupling, 2026-08-27, RecordLayer/ShearDeIsolation.lean, pinned in the
+-- SigmaLayer part) -- so "blocked" here scopes the mixing derivation, not the whole question.
 /-- info: 'CSD.Thermo.blockPop_timeAverage_le_of_finiteHorizon' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.blockPop_timeAverage_le_of_finiteHorizon
 

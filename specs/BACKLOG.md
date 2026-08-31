@@ -376,7 +376,7 @@ keep these lines to one hook each, do not expand them here.
 - **R-004** — magic-state distillation, 15-to-1 (`Magic.lean`)
 - **R-005** — Clifford+T universality / gate-synthesis density (`Magic.lean`)
 - **R-006** — T-gate injection circuit (`Magic.lean`)
-- **R-012** — FS-as-typicality sector posit, reduces to D1 (`FlowBornFrequency.lean`)
+- **R-012** — FS-as-typicality sector posit, reduces to D1 (`FlowBornFrequency.lean` / `SigmaLayer/MeasureBridge.lean`)
 - **R-013** — n-fold hybrid amplitude equality (`MeasurementAdder.lean` / `Reversible/Lift.lean`)
 - **R-014** — fold `inner_toEuclideanLin_unitary'` into staging on rule-of-two trigger (`FloquetInterface.lean`)
 

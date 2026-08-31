@@ -32,13 +32,14 @@ the corpus.
   Born weights realised as Fubini-Study pointer-block frequencies through a Naimark dilation, IS the
   existing `CSD.LF4.povm_born_frequency_volume_canonical`; it is not restated here.
 
-## T9 (mixed states): no inhabitant, by the reported gap
+## T9 (mixed states): the content lives upstream, not restated here
 
-We give NO inhabitant of a mixed-state Born or ensemble target. The `DensityOperatorIx.IsPure` purity
-predicate is defined (`SigmaLayer/CompositeInterface.lean`), but the convex-ensemble representation and the Born
-rule on mixtures are the reported Mathlib density-matrix gap: Mathlib has no mixed-state type, and the
-repository's `CSD.LF2.DensityOperatorIx` carries no purity/ensemble/Born API. This is left out honestly
-rather than stated vacuously.
+We give NO inhabitant of a mixed-state Born or ensemble target here, because the content already
+exists elsewhere in the corpus: `LF2/MixedEnsembleIx.lean` carries the convex-ensemble and Born API
+on `CSD.LF2.DensityOperatorIx` (`traceForm_ensemble`, `eq_eigen_ensemble`, `mixedEnsemble_capstone`),
+and `SigmaLayer/MixedState.lean` the purity predicate (`isPure_iff_trace_sq_one`), with
+`DensityOperatorIx.IsPure` re-exposed in `SigmaLayer/CompositeInterface.lean`. Mathlib itself still
+has no mixed-state type; the corpus supplies its own. Same posture as T10: not restated here.
 -/
 
 @[expose] public section
@@ -122,8 +123,9 @@ theorem ghz_noNonContextualValuation :
 
 /-! ### T10: POVM normalisation -/
 
-/-- **T10 (normalisation) inhabited.** On a unit state a POVM's Born weights sum to one, so they are a
-probability distribution over outcomes. From `POVM.weights_sum_eq_one`. -/
+/-- **T10 (normalisation) inhabited.** On a unit state a POVM's Born weights sum to one. From
+`POVM.weights_sum_eq_one`; nonnegativity — the other half of "probability distribution" — is
+`POVM.weight_nonneg` in the imported file, not transported by this statement. -/
 theorem povm_weightsProbability {N : ℕ} {ι : Type*} [Fintype ι] (P : CSD.LF2.POVM N ι)
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1) :
     POVMWeightsProbability P ψ :=

@@ -19,7 +19,8 @@ derives its Hilbert-space Pauli correlation in closed form:
 
     ⟨Ψ(c,s) | σ·a ⊗ σ·b | Ψ(c,s)⟩ = a_z b_z + 2cs·(a_x b_x − a_y b_y).
 
-The coefficient `2cs` is the **concurrence** (the entanglement measure): it is `1` exactly at the
+The coefficient's magnitude `2|cs|` is the **concurrence** (the entanglement measure; `= 2cs`
+in the canonical Schmidt form `c, s ≥ 0`): it is `1` at the
 maximally-entangled point `c = s = 1/√2`, where the correlation collapses to `Φ⁺`'s
 `a_x b_x − a_y b_y + a_z b_z` (`psQubit_pauli_correlation_maximal`), and `0` for a product state
 (`c` or `s` `= 0`). So this makes explicit **where maximal entanglement enters** the LF6-D correlation.
@@ -113,8 +114,8 @@ generalising `phiPlus_pauli_correlation` beyond maximal entanglement). For `c² 
 
 `⟨Ψ(c,s) | σ·a ⊗ σ·b | Ψ(c,s)⟩ = a_z b_z + 2cs·(a_x b_x − a_y b_y)`.
 
-The coefficient `2cs` is the concurrence: `1` at maximal entanglement (`c = s = 1/√2`), `0` at a product
-state. This makes explicit where the Schmidt spectrum enters the LF6-D `Φ⁺` correlation. -/
+The coefficient's magnitude `2|cs|` is the concurrence (`= 2cs` in the canonical Schmidt form
+`c, s ≥ 0`): `1` at maximal entanglement (`c = s = 1/√2`), `0` at a product state. This makes explicit where the Schmidt spectrum enters the LF6-D `Φ⁺` correlation. -/
 theorem psQubit_pauli_correlation (c s : ℝ) (hcs : c ^ 2 + s ^ 2 = 1) (a b : DetectorSetting) :
     psExpectation c s (sigmaDotJoint a b)
       = ((a.vec 2 * b.vec 2 + 2 * c * s * (a.vec 0 * b.vec 0 - a.vec 1 * b.vec 1) : ℝ) : ℂ) := by

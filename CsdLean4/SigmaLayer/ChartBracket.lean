@@ -23,8 +23,8 @@ The joint-arena route (`BACKLOG.md` A2) turns on one algebraic step: the control
 Poisson-commute, hence are constants of motion of the true joint flow, hence the pointer
 sees the fixed weight vector the existing analysis assumes. Stating that on the arena
 needs `ω⁻¹dH` and a manifold Poisson bracket — the one arrow Mathlib does not have
-(verified 2026-08-04: manifolds, `ContMDiff`, `IntegralCurve` yes; symplectic form,
-Poisson bracket, exterior derivative no).
+(manifolds, `ContMDiff`, `IntegralCurve` yes; symplectic form and Poisson bracket no; the
+flat-space `extDeriv` has since landed in the pin — BACKLOG A4 — but not the manifold form).
 
 What *is* expressible, and is proved here, is the same step in a **Darboux chart**: on
 `(Fin n → ℝ) × (Fin n → ℝ)` with canonical coordinates, the bracket is an explicit
@@ -61,7 +61,8 @@ supports are disjoint, not because `𝓗` is momentum-free.
 globally `ℝ^{2n}`, and nothing here transports the result to the arena — that transport is
 the missing arrow. So this machine-checks A2's *algebra*, not A2. It also says nothing
 about whether the corpus's weights satisfy the hypotheses **as functions on the arena**;
-what makes that plausible is that the weights are now `C^∞` (`SmoothProfile.lean`, B1) and
+what makes that plausible is that the weights are `C^∞` in the register coordinate
+(`contDiff_pointerWeights_lift`: the universal-cover lift at fixed base point and rates) and
 depend only on the moment coordinates and `θ₁` (`pointerWeights`). Finally, `dω = 0` is
 not stated: in a canonical chart it is automatic, which is precisely why a chart model is
 weaker than the manifold statement.
@@ -69,8 +70,8 @@ weaker than the manifold statement.
 ## References
 
 `specs/BACKLOG.md` A2 (the paper argument this supports), A3 (this row), A4 (the blocked
-arrow); `SigmaLayer/JointFlowTransfer.lean` (A1 — what conservation is *for*);
-`SigmaLayer/PointerWeights.lean` (`pointerWeights`, `contDiff_pointerWeights_lift`);
+arrow); `RecordLayer/JointFlowTransfer.lean` (A1 — what conservation is *for*);
+`RecordLayer/PointerWeights.lean` (`pointerWeights`, `contDiff_pointerWeights_lift`);
 `Mathlib/Analysis/InnerProductSpace/KahlerForm.lean` (the pointwise Kähler triple, the
 form-level analogue).
 -/

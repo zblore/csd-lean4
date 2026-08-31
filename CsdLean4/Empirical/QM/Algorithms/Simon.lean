@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Hadamard
 
 **Category:** 3-Local (QM-validity).
 
-Simon's problem: given `f : {0,1}ⁿ → {0,1}ⁿ` with the promise `f x = f x' ↔ x' = x ⊕ s`
+Simon's problem: given `f : {0,1}ⁿ → {0,1}ⁿ` with the promise `f x = f x' ↔ (x' = x ∨ x' = x ⊕ s)`
 for a hidden nonzero period `s`, find `s`. After querying `U_f` once and measuring the
 *second* register, the first register collapses to a **coset state**
 
@@ -26,7 +26,7 @@ state and measuring yields, by the Born rule, an outcome `y` whose amplitude is
 The factor `1 + (-1)^{⟨s,y⟩}` vanishes when `⟨s,y⟩` is odd, so:
 
 * `simon_orthogonal`: every measured `y` satisfies `⟨s,y⟩ ≡ 0 (mod 2)` — i.e. `y ⊥ s` — the
-  **Simon promise**; outcomes non-orthogonal to the hidden `s` have probability `0`;
+  **orthogonality property**; outcomes non-orthogonal to the hidden `s` have probability `0`;
 * `simon_uniform`: every `y ∈ s^⊥` carries the **same** probability `2/2ⁿ`. (What is proved in
   Lean is this per-outcome *equal value*; the distributional reading — that these are `2^{n-1}`
   outcomes whose probabilities sum to `1` for `s ≠ 0`, i.e. genuine uniformity on `s^⊥` — rests
@@ -36,9 +36,10 @@ The factor `1 + (-1)^{⟨s,y⟩}` vanishes when `⟨s,y⟩` is odd, so:
 measured (or traced out) first, which is the standard textbook reduction; we do not model the
 full two-register tensor circuit `H^⊗n ∘ U_f ∘ H^⊗n` nor the classical post-processing.
 The classical recovery is a remark: the valid-outcome set `{y : ⟨s,y⟩ even}` is the
-hyperplane `s^⊥ ⊆ 𝔽₂ⁿ`, so `n-1` independent uniform samples from it determine `s` by
-Gaussian elimination over `𝔽₂` with high probability. This file captures the quantum core
-(promise + uniformity), needing only the Hadamard action on basis states — not `Hn`
+hyperplane `s^⊥ ⊆ 𝔽₂ⁿ`, so uniform samples from it determine `s` by Gaussian elimination
+over `𝔽₂` — `n−1` samples span it with constant probability `∏ₖ(1−2⁻ᵏ) ≈ 0.29`, and `O(n)`
+samples succeed with high probability. This file captures the quantum core
+(orthogonality + uniformity), needing only the Hadamard action on basis states — not `Hn`
 unitarity.
 
 The hypothesis `s ≠ 0` is *not* load-bearing for `simon_uniform` (the amplitude formula and
@@ -135,7 +136,7 @@ theorem simon_amplitude (x₀ s y : Fin n → Fin 2) :
   rw [pow_succ', inv_pow]
   ring
 
-/-- **Simon's promise:** if `⟨s,y⟩` is odd, then `y` is *never* measured — `prob = 0`.
+/-- **Simon orthogonality:** if `⟨s,y⟩` is odd, then `y` is *never* measured — `prob = 0`.
 Every outcome is orthogonal to the hidden period `s` over `𝔽₂`. -/
 theorem simon_orthogonal (x₀ s y : Fin n → Fin 2) (hodd : Odd (bitInner s y)) :
     prob (simonCircuit x₀ s) y = 0 := by

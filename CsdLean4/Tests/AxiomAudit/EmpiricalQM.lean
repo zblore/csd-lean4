@@ -164,7 +164,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- Simon's algorithm (single-register reduced analysis): H^⊗n on the coset state
 -- (1/√2)(|x₀⟩+|x₀⊕s⟩). The general Hadamard entry collects per-qubit signs into one parity
 -- sign (Hn_apply_inner), giving amplitude (1/√2)^{n+1}·(-1)^⟨x₀,y⟩·(1+(-1)^⟨s,y⟩)
--- (simon_amplitude). Hence prob = 0 when ⟨s,y⟩ odd (simon_orthogonal, the Simon promise:
+-- (simon_amplitude). Hence prob = 0 when ⟨s,y⟩ odd (simon_orthogonal, the orthogonality property:
 -- every outcome ⊥ s) and prob = 2/2ⁿ when ⟨s,y⟩ even (simon_uniform, uniform on s^⊥); the
 -- coset state is normalised for s ≠ 0 (cosetState_normalized). Foundational triple.
 /-- info: 'CSD.Empirical.QM.Simon.Hn_apply_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/

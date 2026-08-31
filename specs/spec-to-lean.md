@@ -42,7 +42,7 @@ Maps spec section numbers (Paper A / B / D) to the Lean theorem or definition th
 | §2.8 (Pauli-layer identities) | `pauliDot_isHermitian`, `pauliDot_sq`, `spinProj_idem`, `spinProj_isHermitian`, `spinProj_complete` | `CsdLean4/LF3/Setup.lean` |
 | §3.2 (impulsive readout) | `MeasurementUnitary.action` field | `CsdLean4/LF3/Hamiltonian.lean` |
 | §3.4 (self-adjoint readout Hamiltonian) | `TensorFactorReadoutAlgebra` fields | `CsdLean4/LF3/Hamiltonian.lean` |
-| §3.5 (Hamiltonian commutation) | `TensorFactorReadoutAlgebra.hAB_commute` | `CsdLean4/LF3/Hamiltonian.lean` |
+| §3.5 (Hamiltonian commutation) | `TensorFactorReadoutAlgebra.commute` (re-export `hA_commute_hB`) | `CsdLean4/LF3/Hamiltonian.lean` |
 | §3.6 (unitary factorisation) | `MeasurementUnitary.factorises` | `CsdLean4/LF3/Hamiltonian.lean` |
 | §3.7 (eigenstate action) | `MeasurementUnitary.action` | `CsdLean4/LF3/Hamiltonian.lean` |
 | §4.5 (branch decomposition) | `finalState_decomposition` (definitional) | `CsdLean4/LF3/BranchSeparation.lean` |

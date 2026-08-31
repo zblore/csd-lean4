@@ -144,7 +144,8 @@ noncomputable def kickedIsingFloquet (J b : ℝ) :
 /-! ### The accessibility-change witness at `b = π/2` -/
 
 /-- The outer product `|v⟩⟨v|` on an arbitrary finite index (local pilot
-helper; the staged `outerProduct` is `Fin N`-indexed). -/
+helper: the corpus `outerProduct`s live in the CSD-side LF2 layer, which a
+CSD-free incubator module may not import). -/
 noncomputable def pilotOuter {n : Type*} [Fintype n]
     (v : EuclideanSpace ℂ n) : Matrix n n ℂ :=
   Matrix.vecMulVec v.ofLp (star v.ofLp)
@@ -199,8 +200,9 @@ lemma kickedIsing_phase_norm (J : ℝ) :
   rw [this, Real.exp_zero]
 
 /-- ★ **The accessibility-change witness.** At `b = π/2` the reduced
-(first-qubit) state of the evolved `|00⟩` differs from that of `|00⟩`:
-`Tr_B |ψ'⟩⟨ψ'| = |1⟩⟨1| ≠ |0⟩⟨0| = Tr_B |00⟩⟨00|`. Restricted accessibility
+(first-qubit) state of the evolved `|00⟩` differs from that of `|00⟩` — the two
+partial traces compute by hand to `|1⟩⟨1|` and `|0⟩⟨0|`; the formal statement is the
+disequality itself. Restricted accessibility
 genuinely changes, while `inner_iterate_iterate` keeps every global overlap
 exactly invariant — the pilot's "global information intact, local
 accessibility moved" clause. -/

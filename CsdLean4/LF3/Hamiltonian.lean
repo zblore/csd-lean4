@@ -115,9 +115,10 @@ structure MeasurementUnitary (S : SystemApparatusSetup K_A K_B H_SA) where
   /-- The B-wing pointer translation by the B-wing unitary, conditional on
       the spin label `t`. -/
   ptrTransB  : Sign → K_B → K_B
-  /-- Action of `u` on a joint spin / pointer eigenstate. Each wing's
-      unitary translates only its own pointer factor; spin labels are
-      preserved. Encodes the impulsive-readout idealisation (paper §3.2). -/
+  /-- Action of `u` on a joint spin / pointer eigenstate: the composite
+      translates each pointer factor by its own wing's translation map and
+      preserves spin labels (the per-wing actions are not individually
+      constrained). Encodes the impulsive-readout idealisation (paper §3.2). -/
   action     : ∀ s t φA φB,
                  u (jointEig (s, t) φA φB)
                    = jointEig (s, t) (ptrTransA s φA) (ptrTransB t φB)

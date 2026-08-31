@@ -38,9 +38,9 @@ module. We deliberately provide NO inhabitants here.
 * **Mixed-state / density-matrix gap.** Mathlib has NO density-matrix or mixed-state type (no
   `Mathlib/QuantumInfo`, no trace-one-state structure). The repository's own `CSD.LF2.DensityOperatorIx`
   (trace-one positive semidefinite Hermitian, with `reduced`/`reducedLeft` partial traces) is the only
-  primitive available. It has no purity predicate, no convex-ensemble API, and no Born rule stated on it
-  (the POVM/Born surface is on pure states). `DensityOperatorIx.IsPure` below adds the purity predicate;
-  the ensemble/mixture and mixed-Born content remains a genuine gap.
+  primitive available. The corpus supplies what Mathlib lacks: `DensityOperatorIx.IsPure` below adds the
+  purity predicate (see also `SigmaLayer/MixedState.lean`), and the convex-ensemble representation with
+  the mixed Born rule is `LF2/MixedEnsembleIx.lean` (`traceForm_ensemble`, `mixedEnsemble_capstone`).
 -/
 
 @[expose] public section

@@ -56,7 +56,10 @@ theorem then applies to the follow-up unchanged, which is what makes sequential 
 
 * **Nondegenerate case only.** For rank-one projectors the Lüders channel *is* measure-and-reprepare
   (a standard quantum-information fact); for **degenerate** projectors it is not, and this witness
-  does not cover them. A different mechanism (block-conditional dynamics) would be needed.
+  does not cover them. That different mechanism has since landed: the boundary is the theorem
+  `swap_not_blockLuders` (`RecordLayer/DegenerateLuders.lean`), the witness is
+  `joinWitness_blockLuders` (`RecordLayer/JoinLuders.lean`), packaged as
+  `degenerateMeasurementClosure` (`RecordLayer/JoinClosure.lean`).
 * **The calibration is a context-fixed epistemic posit**, exactly parallel to pointer-readiness:
   slot `j` is prepared in `epistemicMeasure [eⱼ]`, which depends on the measurement basis alone,
   never on `ψ` — so it is A7-compatible. Its Liouville-nullity is *forced* by `no_exact_collapse`,

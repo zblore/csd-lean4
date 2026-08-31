@@ -28,8 +28,9 @@ named field / predicate, proved only where a concrete model supplies it.
 **Consistency witness, not derivation.** On the concrete product model the Liouville measure is
 `muL = muFS ⊗ vol` — the Fubini-Study measure is built IN — so `pi_* muL = muFS` is a *compatibility fact
 about the witness* (`Measure.fst_prod` on a product whose first factor already IS `muFS`), NOT a derivation
-of the Fubini-Study measure from a more primitive ontology. Deriving `muFS` (and the sector) from a
-primitive dynamics is the open sector-origin problem SO-1 (`specs/reconstruction-status.md` §7).
+of the Fubini-Study measure from a more primitive ontology. That `muFS` is the sector's typicality
+law is the SO-1 **posit** — it reduces to D1, the dynamical sector origin (⚠️ RESIDUE(R-012));
+"derive the sector" itself is a retired framing (`specs/reconstruction-status.md` §7).
 -/
 
 @[expose] public section
