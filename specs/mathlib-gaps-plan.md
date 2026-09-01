@@ -15,7 +15,9 @@ plan's rows are indexed there as MG-1..5).
 | Analytic/polynomial null sets | `Analysis/Analytic/{IsolatedZeros,Uniqueness}.lean` carry `eqOn` results only; no measure-zero statement anywhere | Wall stands upstream — **but the lemma is buildable in-corpus** (MG-2) |
 | FS metric on `ℙ` | Mathlib has no `dist` on `Projectivization` — but nothing blocks US staging one on the already-staged topology | **Not a wall at all.** MG-1 |
 | Kronecker spectral; invariant Gaussian | — | Already worked around / dissolved; ledger rows accurate |
-| Stone general; Bargmann; Wigner §13; manifold-Kähler global half | — | Genuine / paused / XL — leave as recorded |
+| Stone general; manifold-Kähler global half | — | Genuine / XL — leave as recorded |
+| ~~Wigner §13~~; ~~Stone's C¹ workaround~~ | — | ⚠️ **This triage pass was wrong on both, corrected 2026-08-30**: `wigner_rigidity` had closed 2026-07-02 (and the "one paused lemma" is false as stated), and `stone_continuous` — continuity-only, finite-dim — landed 2026-07-23. Both rows were re-affirmed here without re-probing the tree. See `MATHLIB-GAPS.md` |
+| Bargmann | — | **Reclassified 2026-08-30: M–L, not blocked.** The corpus does not need Bargmann's theorem — for a *one-parameter* group in finite dimensions the cocycle is killed by determinant + circle-covering lift (`Λ²(ℝ) = 0`); every Mathlib brick verified present at the pin |
 
 ## The attack rows
 
