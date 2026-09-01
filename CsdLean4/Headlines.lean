@@ -17,6 +17,12 @@ public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.LF4.TypicalityForcing
 public import CsdLean4.LF4.ProjectedDynamics
 public import CsdLean4.LF4.PhaseLift
+public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
+public import CsdLean4.LF3.SettingLocality
+public import CsdLean4.Mathlib.QuantumInfo.Fidelity
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPotential
+public import CsdLean4.Mathlib.Dynamics.CatMapWitness
+public import CsdLean4.Mathlib.Analysis.CStarAlgebra.OperatorConvexCFC
 public import CsdLean4.LF4.ManyToOnePillars
 public import CsdLean4.LF5.DilationFromFlow
 public import CsdLean4.LF5.Capstone
@@ -241,5 +247,12 @@ example := @ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure -- CL-058
 example := @CSD.RecordLayer.shearDeIsolation_born -- CL-059
 example := @CSD.Empirical.CSDBridge.Einselection.pointer_invariant_iff_commute -- CL-060
 example := @QuantumInfo.phase_estimation_lower_bound -- CL-061
+example := @Matrix.ProjectiveLift.exists_continuous_phase_trivialisation -- CL-062
+example := @CSD.LF4.projectedFlow_schrodinger_form_of_continuous_flow -- CL-063
+example := @CSD.LF3.operationalNoSignalling_of_settingLocality -- CL-064
+example := @QuantumInfo.fidelity_le_one -- CL-065
+example := @Kahler.fsChartForm_apply -- CL-066
+example := @MeasureTheory.cat_hasCorrelationDecay -- CL-067
+example := @OperatorConvexCFC.convexOn_mul_log -- CL-068
 
 end CSD.Headlines
