@@ -40,10 +40,14 @@ measurement independence, and should say so.
 ## ⚠️ What this is not
 
 Verifying this predicate in a constructed sector is **not** a derivation of
-no-signalling from primitives. Sufficient primitive conditions on
-setting-dependent measure-preserving dynamics over a non-factorising ontic `Σ`
-that *imply* remote marginal invariance remain **open** — see
-`specs/BACKLOG.md`.
+no-signalling from primitives. ★ **A sufficient primitive condition now exists**
+(`LF3/SettingLocality.lean`, 2026-09-01): if a remote setting change is
+implemented by a measure-preserving relabelling of `Σ` along which the local
+wing's reading is unchanged, remote marginal invariance follows
+(`operationalNoSignalling_of_settingLocality`). ⚠️ That is a *sufficient*
+condition, not a characterisation, and it does **not** discharge the
+measurement-independence fixture above — it inherits it. Whether CSD's own `Σ`
+satisfies it is the open half.
 
 ## References
 

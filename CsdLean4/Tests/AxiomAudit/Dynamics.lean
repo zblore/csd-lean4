@@ -1100,6 +1100,36 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- VOLUMES, never of the underlying outcome partitions -- the microscopic regions differ
 -- between contexts (the two sides are built from different prepared states); only their
 -- measures agree. Under measurement independence, per LF3/OperationalNoSignalling.
+-- ★★ Q10-a/Q10-b (SettingLocality.lean, 2026-09-01): no-signalling DERIVED from a primitive on
+-- Sigma, closing the gap OperationalNoSignalling.lean's own docstring records ("sufficient
+-- primitive conditions on setting-dependent measure-preserving dynamics over a non-factorising
+-- ontic Sigma ... remain open").
+-- The primitive: a remote setting change b -> b' is IMPLEMENTED by a measure-preserving
+-- relabelling of Sigma along which the local wing's reading is unchanged.  The derivation is then
+-- one line of measure theory (the moved outcome set is the reroute-preimage of the unmoved one).
+-- ★ WHY IT ESCAPES no_product_partition_realises_singlet: IsProductPartition's product structure
+-- is the ARITY of RA RB : DetectorSetting -> Sigma -> R -- no slot for the remote setting.  This
+-- primitive does NOT impose that: wingA <a,b> still genuinely depends on b, and
+-- translation_wingA_setting_dependent exhibits a witness where it provably moves with b while the
+-- marginal does not.  That is what makes it a weakening rather than a restatement of the
+-- pointwise primitive Q10-w killed.
+-- ⚠️ Measurement independence is INHERITED, not discharged: one fixed mu across all four contexts.
+/-- info: 'CSD.LF3.remoteMarginalInvariantA_of_settingLocality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.remoteMarginalInvariantA_of_settingLocality
+
+/-- info: 'CSD.LF3.operationalNoSignalling_of_settingLocality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.operationalNoSignalling_of_settingLocality
+
+/-- info: 'CSD.LF3.translationLocality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.translationLocality
+
+/-- info: 'CSD.LF3.translation_wingA_setting_dependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.translation_wingA_setting_dependent
+
 /-- info: 'CSD.LF6.localDeisolation_A_marginal_volume_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.localDeisolation_A_marginal_volume_eq_half

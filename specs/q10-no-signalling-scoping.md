@@ -164,10 +164,32 @@ whole content is whether `Σ` admits a notion of localisation that does not pres
 1. ~~**Q10-w — settle the §4 gate on paper (S).**~~ **DONE 2026-09-01: route (a) dead, §4 retracted in writing (see the box in §4).** Originally: Write an explicit candidate `(R_A, R_B)` of
    fibre-factorised shape and check by hand whether `IsProductPartition` holds. **Gate: if it does,
    route (a) is dead and this doc's §4 conjecture is retracted, in writing.**
-2. **Q10-a — define `Σ`-level localisation (M, design).** The actual work of the row. Candidate (b):
+> ### ★★ **Q10-a AND Q10-b EXECUTED 2026-09-01** — `CsdLean4/LF3/SettingLocality.lean`
+>
+> Candidate **(b)** was the right one, and the wall-check's framing carried straight through.
+> The primitive `RemoteSettingLocalityA/B`: a remote setting change `b ↦ b'` is *implemented by*
+> a measure-preserving relabelling `reroute b b'` of `Σ` along which the local wing's reading is
+> unchanged. `operationalNoSignalling_of_settingLocality` then derives the predicate, and the
+> derivation is one line of measure theory — the moved outcome set is the `reroute`-preimage of
+> the unmoved one.
+>
+> ★ **It escapes W1 for the reason Q10-w identified.** `wingA ⟨a,b⟩` still genuinely depends on
+> `b`; only the *manner* of that dependence is constrained. `translationLocality` is a witness
+> (any additive group with a translation-invariant `μ`, A reading a setting-dependent offset) and
+> `translation_wingA_setting_dependent` proves its readout really does move with the remote
+> setting — so these maps are not of product-partition arity and the no-go does not touch them.
+> ⚠️ Note the relabelling is `l + (−g b + g b')`, not `l + (g b' − g b)`: the natural-looking
+> form silently assumes `Σ` abelian, and `abel` refusing it is what caught that.
+>
+> **Still open, and unchanged:** measurement independence is inherited rather than discharged
+> (one fixed `μ` across four contexts), and *whether CSD's own `Σ` satisfies the primitive* is
+> untouched. Q10-c (the C1 §4.2 wording) remains author-side.
+
+2. ~~**Q10-a — define `Σ`-level localisation (M, design).**~~ **DONE 2026-09-01, see the box
+   above.** Originally: The actual work of the row. Candidate (b):
    what does "the setting acts away from the remote readout" mean on a non-factorising `Σ`? The
    `CV/ModeLocality` `SupportedOn` machinery is the model to imitate, not to import.
-3. **Q10-b — the derivation (S–M, if 2 lands).** With a localisation primitive in hand the proof is
+3. ~~**Q10-b — the derivation (S–M, if 2 lands).**~~ **DONE 2026-09-01, same file.** Originally: With a localisation primitive in hand the proof is
    expected short — this is the row's own "the proofs after are likely short". Deliverable: a theorem
    whose *hypothesis* is the primitive and whose *conclusion* is `OperationalNoSignalling`, replacing
    the current verification-shaped statement.
