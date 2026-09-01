@@ -13,7 +13,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 |---|---|---|
 | [amplitude amplification](https://glossary.constraintsurfacedynamics.com/amplitude-amplification/) | `amplitude_amplification` | proved-in-corpus |
 | [amplitude estimation](https://glossary.constraintsurfacedynamics.com/amplitude-estimation/) | `amplitude_estimation` | proved-in-corpus |
-| [Bargmann invariant](https://glossary.constraintsurfacedynamics.com/bargmann/) | `` | standard-mathematics |
+| [Bargmann invariant](https://glossary.constraintsurfacedynamics.com/bargmann/) | `exists_continuous_phase_trivialisation` | proved-in-corpus |
 | [Bell and CHSH](https://glossary.constraintsurfacedynamics.com/bell-chsh/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
 | [Bell state is not a join](https://glossary.constraintsurfacedynamics.com/bell-not-join/) | `bell_not_join` | proved-in-corpus |
 | [Bernstein-Vazirani algorithm](https://glossary.constraintsurfacedynamics.com/bernstein-vazirani/) | `` | standard-mathematics |

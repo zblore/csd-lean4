@@ -1581,6 +1581,25 @@ they need a polar decomposition, absent from the pin. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.fidelity_comm
 
+/-! ### Projective one-parameter lift (ProjectiveLift.lean, 2026-09-01)
+
+A continuous projective one-parameter unitary group in finite dimensions has a COBOUNDARY
+phase cocycle -- so it lifts to a genuine unitary group. Not Bargmann's theorem: for R the
+obstruction group is trivial, and the proof is determinants (reducing N phases to one on
+the circle) + the covering lift through Circle.exp (R is simply connected) + constancy of a
+continuous map into the finite N-th roots of unity on a connected domain. -/
+/-- info: 'Matrix.ProjectiveLift.const_of_finite_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.ProjectiveLift.const_of_finite_range
+
+/-- info: 'Matrix.ProjectiveLift.norm_det_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.ProjectiveLift.norm_det_eq_one
+
+/-- info: 'Matrix.ProjectiveLift.exists_continuous_phase_trivialisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.ProjectiveLift.exists_continuous_phase_trivialisation
+
 /-! ### C^1 finite-dimensional Stone theorem (StoneC1.lean, W5-S2 under smoothness) -/
 
 /-- info: 'Matrix.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/

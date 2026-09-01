@@ -1218,16 +1218,32 @@ entries:
       preserve it, anti-unitaries conjugate it. That is what lets the branch alternative in
       the rigidity theorem be decided pointwise instead of assumed.
 
-      Honest scope, recorded rather than glossed: Bargmann's THEOREM -- continuity kills the
-      projective cocycle, letting projective representations lift to genuine ones -- is
-      beyond the proof assistant's current reach and sits in the corpus's gap register. The
-      phase lift therefore carries its coboundary datum as an explicit hypothesis, where the
-      theorem would have supplied it for free.
+      Bargmann's THEOREM is a separate thing, and the corpus now gets what it needs from it
+      without proving it. The theorem says continuity kills the projective cocycle, so
+      projective representations lift to genuine ones. In general that is hard. But the
+      corpus only ever needs it for a ONE-PARAMETER group, and there the obstruction is not
+      hard -- it is absent.
+
+      The proof is three moves. Take determinants, which turns N unknown phases into one
+      number on the circle. Lift that through the exponential, which works because the real
+      line is simply connected and has no loops to obstruct you. What is left over is an Nth
+      root of unity varying continuously on a connected space, so it cannot vary at all.
+      Rescale it away. The coboundary datum the phase lift used to carry as a hypothesis is
+      now discharged, and with the finite-dimensional Stone theorem beside it, continuity of
+      the flow alone delivers Schrodinger evolution.
     mathematical: >
       For rays u, v, w: the invariant is the phase of the product of pairwise overlaps
       around the cycle. Invariant under independent rescaling of each representative -- each
       scale factor appears once and once conjugated. Preserved by unitaries, conjugated by
       anti-unitaries, which is exactly the discriminator the rigidity proof needs.
+
+      The one-parameter lift is a separate statement, proved in the corpus:
+      `exists_continuous_phase_trivialisation`. Given a continuous U with
+      U(s+t) = c(s,t) U(s) U(t), it produces a continuous unit-modulus b with
+      c(s,t) b(s+t) = b(s) b(t). Determinants give d(s+t) = c(s,t)^N d(s) d(t) on the
+      circle; the covering lift through `Circle.exp` gives a continuous theta with
+      d = exp(i theta); b0 = exp(-i theta / N) then leaves a residual with Nth power one,
+      constant by connectedness, and absorbed by rescaling. Foundational triple only.
     person: >
       Valentine Bargmann (1908-1989) was born in Berlin, left in 1933 when the dismissals
       began, and finished his doctorate in Zurich under Wentzel and Pauli. Emigrating in
@@ -1241,7 +1257,10 @@ entries:
       had considered the other career.
     term: Bargmann invariant
     eponyms: [Bargmann]
-    status: standard-mathematics
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Analysis/Matrix/ProjectiveLift.lean
+      theorem: exists_continuous_phase_trivialisation
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Wigner%27s_theorem

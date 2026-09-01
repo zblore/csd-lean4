@@ -400,6 +400,14 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.projectedFlow_schrodinger_form_of_continuous
 
+-- ★★ S1 AND S2 both discharged (2026-09-01): continuity of the projective flow alone gives
+-- the Schrodinger form. The coboundary datum dies by the one-parameter lift (Lambda^2(R)=0,
+-- no Bargmann theorem needed) which returns a CONTINUOUS b -- exactly what stone_continuous
+-- was missing. Only hfam (transition-probability preservation) still conditions the chain.
+/-- info: 'CSD.LF4.projectedFlow_schrodinger_form_of_continuous_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_schrodinger_form_of_continuous_flow
+
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup_phase_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup_phase_lift

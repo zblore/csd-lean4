@@ -117,8 +117,19 @@ obstruction), the 2-cocycle law is proved (`phase_cocycle_identity`), and the co
 yields the GENUINE vector-level one-parameter unitary group realising the same flow
 (`projectedFlow_phase_lift`). Wired to S2 this closes the **W5 capstone**
 `projectedFlow_schrodinger_form`: projected CSD flow = `exp(-itH)`-conjugation on rays, `H` Hermitian
-recovered. Non-vacuity end-to-end on the trivial witness. Named follow-ons: Bargmann (continuity ⇒
-coboundary datum, kills S1's input for continuous flows) and full-continuity Stone (S2's input).
+recovered. Non-vacuity end-to-end on the trivial witness.
+**★★ BOTH NAMED FOLLOW-ONS NOW DONE (2026-09-01), so the capstone runs from CONTINUITY ALONE**
+(`projectedFlow_schrodinger_form_of_continuous_flow`): the S1 coboundary datum is discharged by
+`Matrix/ProjectiveLift.lean`'s `exists_continuous_phase_trivialisation` — the corpus never needed
+Bargmann's general theorem, because for a **one-parameter** group the obstruction is absent
+(`Λ²(ℝ) = 0`), and the elementary route is determinants → circle covering lift (`ℝ` simply
+connected) → the residual `N`-th root of unity constant by connectedness. ⚠️ The parenthetical
+above stays true and is worth keeping straight: `H²(ℝ,U(1)) ≠ 0` **algebraically**, which is why
+some input is required — continuity is that input, and it is what collapses the algebraic
+obstruction. The S2 smoothness input is discharged by `Matrix.StoneC1.stone_continuous`
+(finite-dimensional, continuity-only), whose missing hypothesis was exactly the *continuity* of the
+`b` the lift returns. What still conditions the chain is `hfam` (transition-probability
+preservation), which is a different kind of input from either.
 **W-3 clopen datum: CLOSED 2026-07-07** (`LF4/BargmannSelection.lean` +
 `Mathlib/LinearAlgebra/Projectivization/Bargmann.lean`): the Bargmann invariant (normalised triple
 product on `ℙ³`, preserved by unitaries, CONJUGATED by `conjProj`) separates the Wigner branches at

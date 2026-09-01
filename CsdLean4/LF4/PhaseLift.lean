@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF4.ProjectedDynamics
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
 public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
 
 /-!
 # W5-S1: the projective-to-vector phase lift
@@ -399,6 +400,42 @@ theorem projectedFlow_schrodinger_form_of_continuous
       = NormedSpace.exp (schrodingerGen (Complex.I • A) t)
   rw [hgen]
   exact hexp t
+
+/-- ★★ **The Schrödinger form from continuity alone (S1 *and* S2 discharged).**
+
+The end of the W-series staging. Neither the coboundary datum (S1) nor the smoothness
+datum (S2) is posited: continuity of the projective flow supplies both.
+
+* S1 dies by `Matrix.ProjectiveLift.exists_continuous_phase_trivialisation` — for a
+  **one-parameter** group in finite dimensions the phase cocycle is automatically a
+  coboundary (`Λ²(ℝ) = 0`; the proof is determinants + the circle covering lift, and
+  needs no Bargmann theorem). Crucially it returns a **continuous** `b`.
+* S2 then dies by `Matrix.StoneC1.stone_continuous`, whose missing hypothesis was exactly
+  that continuity.
+
+What remains conditional on the chain is `hfam` (that the projected flow IS conjugation by
+a unitary family) — the transition-probability-preservation input, not a cohomological or
+smoothness posit. -/
+theorem projectedFlow_schrodinger_form_of_continuous_flow
+    (d : KahlerOnticSetup N) (hN : 0 < N)
+    (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
+    (hfam : ∀ t p, d.projectedFlow t p = U t • p)
+    (hUcont : Continuous fun t => (U t : Matrix (Fin N) (Fin N) ℂ))
+    (c : ℝ → ℝ → ℂ)
+    (hc : ∀ s t, (U (s + t) : Matrix (Fin N) (Fin N) ℂ)
+        = c s t • ((U s : Matrix (Fin N) (Fin N) ℂ)
+            * (U t : Matrix (Fin N) (Fin N) ℂ))) :
+    ∃ H : Matrix (Fin N) (Fin N) ℂ, ∃ hH : H.IsHermitian,
+      ∀ t p, d.projectedFlow t p = schrodingerUnitary hH t • p := by
+  obtain ⟨b, hbcont, hb, hcob⟩ :=
+    Matrix.ProjectiveLift.exists_continuous_phase_trivialisation hN
+      (fun t => (U t : Matrix (Fin N) (Fin N) ℂ)) (fun t => (U t).property) hUcont c hc
+  refine projectedFlow_schrodinger_form_of_continuous d U hfam c hc b hb hcob ?_
+  have : (fun τ : ℝ => (phaseLiftFamily U b hb τ : Matrix (Fin N) (Fin N) ℂ))
+      = fun τ : ℝ => b τ • (U τ : Matrix (Fin N) (Fin N) ℂ) := by
+    funext τ; rw [phaseLiftFamily_val]
+  rw [this]
+  exact hbcont.smul hUcont
 
 /-! ## The Σ-level capstone: the ontic flow projects to Schrödinger evolution
 

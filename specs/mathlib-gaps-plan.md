@@ -17,7 +17,7 @@ plan's rows are indexed there as MG-1..5).
 | Kronecker spectral; invariant Gaussian | — | Already worked around / dissolved; ledger rows accurate |
 | Stone general; manifold-Kähler global half | — | Genuine / XL — leave as recorded |
 | ~~Wigner §13~~; ~~Stone's C¹ workaround~~ | — | ⚠️ **This triage pass was wrong on both, corrected 2026-08-30**: `wigner_rigidity` had closed 2026-07-02 (and the "one paused lemma" is false as stated), and `stone_continuous` — continuity-only, finite-dim — landed 2026-07-23. Both rows were re-affirmed here without re-probing the tree. See `MATHLIB-GAPS.md` |
-| Bargmann | — | **Reclassified 2026-08-30: M–L, not blocked.** The corpus does not need Bargmann's theorem — for a *one-parameter* group in finite dimensions the cocycle is killed by determinant + circle-covering lift (`Λ²(ℝ) = 0`); every Mathlib brick verified present at the pin |
+| ~~Bargmann~~ | — | **DONE 2026-09-01** (reclassified 2026-08-30, executed the next day). `Matrix/ProjectiveLift.lean`: `exists_continuous_phase_trivialisation`, foundational triple, ~130 lines. The route predicted at reclassification (determinant + circle-covering lift, `Λ²(ℝ) = 0`) worked unchanged; the two engines that carried the risk — the covering lift and "continuous into the finite `N`-th roots on a connected domain is constant" — both went through on the first compile |
 
 ## The attack rows
 
