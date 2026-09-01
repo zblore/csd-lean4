@@ -2688,6 +2688,40 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.conserved_of_bracket_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conserved_of_bracket_eq_zero
 
+-- ChartIntegralCurve (2026-09-01, SigmaLayer/ChartIntegralCurve.lean; frozen-base scoping
+-- brick 0). conserved_of_bracket_eq_zero took the integral curve as a HYPOTHESIS (hgamma),
+-- so the chart model said "the field is written down", not "the propagator IS its integral
+-- curve". This discharges hgamma, via Mathlib's Analysis.ODE.ExistUnique -- an API the
+-- corpus had never called (grep for IsIntegralCurve returned zero before this).
+-- ★ hamiltonianCurve_unique — a Lipschitz Hamiltonian field has AT MOST ONE integral curve
+-- through a point. Autonomous field, so the ODE API's time-dependent v is the constant
+-- family and the ambient set is univ.
+-- ★★ translationCurve_isHamiltonianCurve / translationCurve_unique — for the MOMENTUM-LINEAR
+-- H(z) = sum_i c_i y_i the rigid translation t |-> (x0 + t*c, y0) IS the integral curve, and
+-- is the only one. This is ShearWitness's coupling H_int ~ A (x) p read as a computation:
+-- momentumH_hamiltonianField gives qdot = c, pdot = 0.
+-- SCOPE, unchanged from ChartBracket: a chart MODEL. Nothing transports to the arena.
+-- ⚠️ AND THE OBSTRUCTION TO GLOBALISING IS A THEOREM, NOT A GAP: on the compact torus the
+-- translation field has iota_X omega = a*dp, closed but NOT exact, so no global generating
+-- function exists (PiecewiseHamiltonian.lean, the 2026-08-02 flux correction). "Generated in
+-- the chart, obstructed on the torus" is the accurate reading. This does NOT revive the
+-- withdrawn h_i = shearAmt(i)*p_R global reading, and does NOT make the shear propagator a
+-- Hamiltonian flow on the arena. H_int(M) stays open on both halves.
+/-- info: 'CSD.SigmaLayer.hamiltonianCurve_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.hamiltonianCurve_unique
+
+/-- info: 'CSD.SigmaLayer.momentumH_hamiltonianField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.momentumH_hamiltonianField
+
+/-- info: 'CSD.SigmaLayer.translationCurve_isHamiltonianCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.translationCurve_isHamiltonianCurve
+
+/-- info: 'CSD.SigmaLayer.translationCurve_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.translationCurve_unique
+
+/-- info: 'CSD.SigmaLayer.conserved_along_translationCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conserved_along_translationCurve
+
 /-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
 

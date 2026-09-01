@@ -1,9 +1,16 @@
 # The frozen-base obstruction — scoping the `H_int(M)` generation brick
 
-**Status: a scoping doc. No theorem here, and nothing below is a corpus claim.** Written
-2026-09-01 against HEAD `b958212`, for the Paper D `H_int(M)` row (`specs/BACKLOG.md` row
-"★★ The dynamical measurement layer (Paper D `H_int`)") and the charter's named open
-question (`specs/CSD-CHARTER.md` §"The open question is the one that was always there").
+**Status: a scoping doc with its first brick landed.** Brick 0 is ✅ DONE
+(`SigmaLayer/ChartIntegralCurve.lean`, §3); **bricks 1 and 2 are unexecuted, and nothing in
+§2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
+`H_int(M)` row (`specs/BACKLOG.md` row "★★ The dynamical measurement layer (Paper D
+`H_int`)") and the charter's named open question (`specs/CSD-CHARTER.md` §"The open question
+is the one that was always there").
+
+⚠️ **Brick 0 does not close `H_int(M)`, or any part of it that was ever in doubt.** It
+discharges a hypothesis inside a chart model. Both halves of `H_int(M)` — the arena-level
+formalisation and the foundations question of which interaction an apparatus realises —
+stand exactly as they did (`RecordLayer/ShearDeIsolation.lean` honest-scope items 1 and 2).
 
 ✅ **Anti-drift checked** (`csd-foundations`, 2026-09-01, per `CLAUDE.md`). The check
 returned **DRIFT-RISK** against the first draft of this scoping, and **four of its findings
@@ -98,17 +105,33 @@ What survives is a real but bounded finding: brick 0.
 
 ## 3. The bricks
 
-### Brick 0 (S, execution-ready) — discharge `hγ` with the unused Mathlib asset
+### Brick 0 — ✅ **DONE 2026-09-01** (`SigmaLayer/ChartIntegralCurve.lean`, 5 pins)
 
-`ChartBracket.conserved_of_bracket_eq_zero` takes the integral curve as a **hypothesis**:
-`hγ : ∀ t, HasDerivAt γ (hamiltonianField H (γ t)) t`.
-`Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique` (or flat Picard–Lindelöf) discharges
-existence and uniqueness of `γ` for a locally-Lipschitz `hamiltonianField H`, upgrading the
-chart result from *"the field is written down"* to *"the propagator **is** its integral
-curve."*
+`ChartBracket.conserved_of_bracket_eq_zero` took the integral curve as a **hypothesis**:
+`hγ : ∀ t, HasDerivAt γ (hamiltonianField H (γ t)) t`. Discharged, via
+`Mathlib/Analysis/ODE/ExistUnique.lean` — flat Picard–Lindelöf, not the manifold API, and an
+API the corpus had never called (`IsIntegralCurve` grepped to zero before this).
 
-Honest scope, to be carried in the header: this closes a hypothesis **inside the chart
-model**. The chart→arena transport is untouched and remains the missing arrow.
+* ★ `hamiltonianCurve_unique` — a Lipschitz Hamiltonian field has **at most one** integral
+  curve through a point. Via `ODE_solution_unique_univ`; the field is autonomous, so the ODE
+  API's time-dependent `v` is the constant family and the ambient set is `univ`.
+* ★★ `translationCurve_isHamiltonianCurve` + `translationCurve_unique` — for the
+  **momentum-linear** `H(z) = Σᵢ cᵢ yᵢ` the rigid translation `t ↦ (x₀ + t·c, y₀)` **is** the
+  integral curve, and is the only one. With `momentumH_hamiltonianField` (`q̇ = c`, `ṗ = 0`)
+  this is `ShearWitness.lean`'s coupling `H_int ∝ Â ⊗ p̂` as a *computation* rather than the
+  prose reading it had been.
+* `conserved_along_translationCurve` — `ChartBracket`'s conservation with `hγ` supplied.
+
+Full tree and `CsdLeanTests` green; all five pins foundational-triple only.
+
+⚠️ Honest scope, carried in the header: this closes a hypothesis **inside the chart model**.
+The chart→arena transport is untouched and remains the missing arrow. **And the obstruction
+to globalising is a theorem, not a gap** — on the compact torus the translation field has
+`ι_X ω = a·dp`, closed but not exact, so no global generating function exists
+(`PiecewiseHamiltonian.lean`, the 2026-08-02 flux correction). *"Generated in the chart,
+obstructed on the torus"* is the accurate reading; nothing here revives the withdrawn
+`hᵢ = shearAmt(i)·p_R` global reading, and the shear propagator is still not a Hamiltonian
+flow on the arena.
 
 ### Brick 1 (M, the actual result) — the frozen-base obstruction
 
