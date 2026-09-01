@@ -59,11 +59,17 @@ partial trace** — equivalently joint convexity of `D(·‖·)` or Lieb's conca
   `CFC.monotone_rpow` / `CFC.monotone_nnrpow` / `CFC.sqrt_le_sqrt` (`x^p` operator monotone for
   `p ∈ [0,1]`), and the integral-representation scaffold
   `…/Rpow/IntegralRepresentation.lean`.
-* **Operator CONVEXITY / CONCAVITY is NOT present.** The file
-  `…/ExpLog/Order.lean` carries explicit `TODO`s: "Show that the log is operator concave" and
-  "Show that `x ↦ x log x` is operator convex." There is **no** `OperatorConvex`/`OperatorMonotone`
-  predicate, **no** Lieb / Ando / Epstein / Wigner–Yanase, **no** joint convexity of any trace
-  functional, and **no** DPI / monotonicity of relative entropy anywhere in Mathlib.
+* **Operator CONCAVITY of `log` and `x^p` IS present** (re-probed 2026-08-30 at the pin; the
+  2026-06-17 scout above predates it): `CFC.concaveOn_log` and `CFC.concaveOn_nnrpow` /
+  `CFC.concaveOn_rpow` (`p ∈ [0,1]`) are proved upstream in
+  `Analysis/SpecialFunctions/ContinuousFunctionalCalculus/{ExpLog,Rpow}/Order.lean`. They are
+  stated for `[CStarAlgebra A]`, which `Matrix n n ℂ` satisfies under the **scoped** instance
+  `Matrix.instCStarAlgebra` (`open scoped Matrix.Norms.L2Operator`) — not the default one.
+  Upstream's remaining `TODO` there is `x ↦ x log x` operator convex.
+* **What is still absent:** no `OperatorConvex`/`OperatorMonotone` predicate, **no** Lieb / Ando /
+  Epstein / Effros perspective / Wigner–Yanase, **no** joint convexity of any trace functional, and
+  **no** DPI / monotonicity of relative entropy anywhere in Mathlib (its only DPI is classical,
+  `InformationTheory/KullbackLeibler/DataProcessing.lean`).
 
 So the minimal missing Mathlib lemma is **joint convexity of `(ρ,σ) ↦ D(ρ‖σ)`** (or its DPI
 form). The realistic build is the operator-convexity stratum: an `OperatorConvexOn` predicate on

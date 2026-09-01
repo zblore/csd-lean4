@@ -28,7 +28,8 @@ Frobenius-normed matrix space — the order-topology instances `integral_concave
 consumes; `Integral` section, all instances scoped, no leak to importers). This breaches both halves
 of the L.3a-interior route-ii wall; the remaining step is the final `x^p` interior assembly
 (integral representation + `integral_concaveOn_of_integrand_ae` over the resolvent family);
-L.2 (operator concavity of `log`) still **WALLED**; L.4–L.5 **not started**.
+L.2 (operator concavity of `log`) **UNWALLED 2026-08-30 — upstream proved it**, see the L.2
+section; L.4–L.5 **not started**.
 
 **Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvex.lean` (Cat-1, CSD-free,
 natural Mathlib namespace `Matrix`).
@@ -365,12 +366,37 @@ matrix-carrier "cfc commutes with the integral" identity, which is either the `C
 instance-resolution repair (i) or the from-scratch Bochner-cfc build (ii). No `x^p`/`log` operator
 concavity is *claimed* for the interior; the corpus does not assert it.
 
-## L.2 — Operator concavity of `log` (WALLED — sharper boundary identified)
+## L.2 — Operator concavity of `log` (**UNWALLED 2026-08-30**; specialization, not a build)
 
 **Target:** `Matrix.operatorConcaveOn (Set.Ioi 0) Real.log`.
 
-**The sharp wall (new finding 2026-06-17): `Matrix n n ℂ` is NOT a `CStarAlgebra` at the default
-instance.** `example : CStarAlgebra (Matrix n n ℂ) := by infer_instance` FAILS (synthInstance).
+> ### ★ **THE WALL IS GONE — re-probe 2026-08-30**
+>
+> Two things changed since the 2026-06-17 diagnosis below, and together they turn L.2 from a
+> multi-week build into a specialization:
+>
+> 1. **Upstream proved it.** `CFC.concaveOn_log : ConcaveOn ℝ {a : A | IsStrictlyPositive a} log`
+>    (`Analysis/SpecialFunctions/ContinuousFunctionalCalculus/ExpLog/Order.lean`), together with
+>    `CFC.concaveOn_nnrpow` / `CFC.concaveOn_rpow` for `p ∈ [0,1]`. The `ExpLog/Order.lean` `TODO`
+>    the note below quotes ("show that the log is operator concave") **no longer exists** — the
+>    only TODO left there is `x ↦ x log x`.
+> 2. **The instance wall was a SCOPE question, not an absence.** `Matrix.instCStarAlgebra :
+>    CStarAlgebra (Matrix n n ℂ)` exists (`Mathlib/Analysis/CStarAlgebra/Matrix.lean`) — declared
+>    `scoped[Matrix.Norms.L2Operator]`. So the statement below is literally true of the *default*
+>    instances and false as a claim about availability: `open scoped Matrix.Norms.L2Operator` makes
+>    the whole C⋆-generic tier fire. **The corpus already relies on exactly this scope elsewhere**
+>    (Track A's matrix-exp differentiability, which needs the L2Operator C⋆ norm and not the plain
+>    operator norm) — the two findings were simply never connected.
+>
+> Remaining work for L.2 is: restrict the domain via `Matrix.isStrictlyPositive_iff_posDef` +
+> `ConcaveOn.subset` + the landed `convex_spectralSet_Ioi`, then conclude with the landed
+> `operatorConcaveOn_of_concaveOn`. Rated **S–M**. The same move retires L.3a's interior.
+> ⚠️ Real risk to check first (probe, do not assume): the L2Operator topology/norm instances must
+> reconcile with the ambient product topology the `Integral` section uses — the corpus already hit
+> this and worked around it with `replaceTopology` (`OperatorConvex.lean`).
+
+**The 2026-06-17 diagnosis, retained for the record (its premise is the DEFAULT instance):**
+`example : CStarAlgebra (Matrix n n ℂ) := by infer_instance` FAILS (synthInstance).
 Consequently the entire C⋆-generic route-2 scaffold is inaccessible on the predicate's carrier:
 `CFC.log`, `CFC.tendsto_cfc_rpow_sub_one_log`, `CFC.monotone_rpow`, `CFC.monotone_nnrpow`, and the
 `Rpow/IntegralRepresentation` machinery (which DOES now exist at this pin, contradicting the prior
