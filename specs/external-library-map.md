@@ -50,13 +50,36 @@ plan.
 > The contribution direction is now frictionless (their environment IS ours; the
 > separate-worktree precaution below is moot while alignment holds).
 >
-> **Rescan of their tree (707 modules, was 690 on 2026-08-07). Consumption verdict
-> unchanged: nothing to import.** Still absent: Floquet/kicked/stroboscopic (0 hits),
-> chaos diagnostics (SFF/OTOC/Loschmidt: 0 hits) — the `upstream-candidate(physlib)`
-> marks stand and are STILL new content for them; density matrices, channels, POVMs,
-> partial trace, entropy, measurement theory, Lindblad (0 hits) — no external provider
-> for our `QuantumInfo` tree, no help for the E2 ladder or the Q16 CP-of-`e^{tℒ}` wall;
+> **Rescan of their tree (707 modules, was 690 on 2026-08-07).** Still absent:
+> Floquet/kicked/stroboscopic (0 hits), chaos diagnostics (SFF/OTOC/Loschmidt: 0 hits) — the
+> `upstream-candidate(physlib)` marks stand and are STILL new content for them;
 > symplectic/Kähler manifold API (their Kähler hits are SUSY prose; no help for Q8/KG-1).
+>
+> ⛔ **RETRACTED 2026-09-01 — this rescan recorded a VERIFIED FALSE NEGATIVE, and it is the
+> most consequential error in this file.** It reported "density matrices, channels, POVMs,
+> partial trace, entropy, measurement theory, Lindblad (**0 hits**) — no external provider for
+> our `QuantumInfo` tree". All of that is present and was present on the very commit the rescan
+> read. Re-verified at physlib `b651a4af`, searching **their** vocabulary rather than ours:
+> `MState` 25 files, `CPTPMap` 16, `HermitianMat` 44, `traceLeft`/`traceRight` 11 each, `POVM` 3,
+> `Sᵥₙ` 4, `qRelativeEnt` 6, across an **84-module `QuantumInfo` Lake target**.
+>
+> **Cause, worth naming because it will recur:** the scan grepped OUR names (`PosSemidef`,
+> `partialTrace`, `vonNeumannEntropy`, `relEntropy`) against a library that spells them
+> `HermitianMat`/`nonneg`, `traceLeft`/`traceRight`, `Sᵥₙ`, `qRelativeEnt`. The module *count*
+> in the note is right (576 + 47 + 84 = 707), so the scan enumerated these files and the search
+> missed them. **A vocabulary-blind grep is not a consumption verdict.**
+>
+> ★ **What is actually there**, and it bears directly on the DPI/SSA row of `BACKLOG.md`:
+> `QuantumInfo/Entropy/SSA.lean` proves `Sᵥₙ_strong_subadditivity` **unconditionally**, and
+> `Entropy/DPI.lean` proves `qRelativeEnt_joint_convexity` — the deep input our `hDPI` encodes.
+> `ForMathlib/HayataGroup/TraceInequality/` carries the whole operator-convexity stratum
+> (`OperatorConvexOn`, `JensenOperatorInequality`, `LownerHeinzTheorem`,
+> `GeneralizedPerspectiveFunction`, `LiebAndoTrace`), ported from
+> `Hayata-Yamasaki-Group/lean-quantum` (arXiv:2607.05492). ⚠️ And **the toolchain objection that
+> ruled out Lean-QIT does not apply here**: physlib pins `leanprover/lean4:v4.33.0` and resolves
+> mathlib to `db584cd6d46c92f209a44c0f1c829460d327499d` — **byte-identical to ours** (verified in
+> their `lake-manifest.json`). The SSA import cone is 56 `QuantumInfo` modules and is
+> `sorry`-free (static check; the `#print axioms` gate is still required before relying on it).
 > What they DID add since the baseline, none of it consumable: `FiniteTarget.timeEvolution
 > = NormedSpace.exp(-(it/ℏ)•Ham)` (supersedes the "no generic time-evolution" note below —
 > but a thin wrapper; ours carries the C¹-Stone derivation and Kähler invariance), a
