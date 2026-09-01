@@ -102,7 +102,38 @@ it: what Q10 needs was never *dynamical* independence (separate processes — CS
 **factorisation property of the typicality measure on the fibre**, which is exactly what the
 conjecture below states and what a Fubini argument consumes.
 
-**Conjecture worth scoping (not a claim):** the fibre is also where Q10's primitive lives. If the
+> ### ⛔ **Q10-w EXECUTED 2026-09-01 — the conjecture below is RETRACTED**
+>
+> The gate was "does fibre-factorisation collapse into a product partition?", and the answer is
+> visible in the **type**: `IsProductPartition RA RB` has `RA RB : DetectorSetting → SigmaSpace → ℝ`
+> and its only conditions are measurability and `±1`-valuedness. **The product structure is the
+> arity, not an extra hypothesis** — `RA a l` simply has no slot for the remote setting.
+>
+> Candidate (a)'s readout, "depends on the base and its own fibre factor", has exactly that arity.
+> So it **is** a product partition, and `no_product_partition_realises_singlet` kills it. Route (a)
+> is dead.
+>
+> ⚠️ **The reason given below for expecting otherwise is wrong**, and worth recording because it is
+> a tempting error: *"the wing readouts would still depend on the shared, non-factorising base, so
+> `R_A` still moves with `b` through the base."* The base is a **coordinate of `λ`**, not a function
+> of the settings. Under W3's measurement independence (one `μ` across all four contexts) there is
+> no channel by which `b` reaches `R_A`. A shared non-factorising base makes the wings *correlated* —
+> but an LHV already permits arbitrarily correlated `λ`; that is what `λ` is for. The singlet no-go
+> is not about independence of hidden variables, it is about response functions being setting-local.
+>
+> **The steelman also fails, differently.** Keep the readout contextual (type `Context → Σ → Sign`,
+> so W1 does not apply) and ask whether fibre-measure factorisation alone yields
+> `RemoteMarginalInvariantA`. It does not: take `wingA ⟨a,b⟩ := fun _ => if b = b₀ then + else −`,
+> whose fibre measure factorises perfectly and whose A-marginal depends entirely on `b`. Fubini
+> factorises the **integral**; the remote-setting dependence sits in the **integrand**, and no
+> factorisation of the measure removes it.
+>
+> ★ **This sharpens candidate (b) rather than weakening the row.** The support-side route is right
+> precisely because "the setting change acts by a measure-preserving map supported away from the
+> remote readout" constrains **how `b` enters** — the readout/dynamics side, which is where the
+> obstruction actually lives. Open Q10-a on (b), and do not revisit (a).
+
+**Conjecture worth scoping (not a claim) — ⛔ RETRACTED, see the box above:** the fibre is also where Q10's primitive lives. If the
 fibre factorises across the wings while the **base** does not, then remote marginal invariance could
 follow by a Fubini argument over the fibre, leaving base non-factorisation — the thing C1 needs —
 completely untouched.
@@ -130,7 +161,7 @@ whole content is whether `Σ` admits a notion of localisation that does not pres
 
 ## 6. Bricks, in order, with gates
 
-1. **Q10-w — settle the §4 gate on paper (S).** Write an explicit candidate `(R_A, R_B)` of
+1. ~~**Q10-w — settle the §4 gate on paper (S).**~~ **DONE 2026-09-01: route (a) dead, §4 retracted in writing (see the box in §4).** Originally: Write an explicit candidate `(R_A, R_B)` of
    fibre-factorised shape and check by hand whether `IsProductPartition` holds. **Gate: if it does,
    route (a) is dead and this doc's §4 conjecture is retracted, in writing.**
 2. **Q10-a — define `Σ`-level localisation (M, design).** The actual work of the row. Candidate (b):

@@ -359,15 +359,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- candidate for the DE-ISOLATION map, which Q12-d asks for and the corpus otherwise lacks.
 -- (2) torusDouble is NOT INVERTIBLE -- a symplectic/Hamiltonian Sigma-flow would be, so this
 -- witnesses that the MIXING half of Q12-d is satisfiable on T^2, not yet a physically admissible
--- de-isolation dynamics.  The invertible case is a hyperbolic toral automorphism (cat map); the
--- character argument has the same shape and the extra cost is Haar-invariance of a toral
--- automorphism, which Mathlib does not provide.
+-- de-isolation dynamics.  ★ DISCHARGED 2026-09-01 by Mathlib/Dynamics/CatMapWitness.lean:
+-- cat_hasCorrelationDecay gives the same envelope for Arnold's cat map, which IS a bijection
+-- (bijective_cat).  ⚠️ Two claims in the sentence this replaces were WRONG.  (a) "the extra cost
+-- is Haar-invariance of a toral automorphism, which Mathlib does not provide": Mathlib provides
+-- it -- AddMonoidHom.measurePreserving, the to_additive twin of MonoidHom.measurePreserving,
+-- takes continuity + surjectivity + equal total mass, and measurePreserving_cat is three lines.
+-- (b) "the character argument has the same shape": the doubling witness contains NO character
+-- argument -- it is a translation/sign-flip that relies on the map KILLING a torsion point, which
+-- a bijection cannot do (A^t rho = 0 => rho = 0).  The cat-map witness therefore uses genuine
+-- character orthogonality, the thing CorrelationDecayWitness's own header says it avoided.
 -- (3) ⚠️ MIXING IS NOT THE RACE.  Q12-d still needs first-passage times EXPONENTIAL AT MOMENT-MAP
 -- RATES.  That link (hitting times of small sets in mixing systems are asymptotically exponential,
 -- Galves-Schmitt/Abadi) is rated research-grade and not upstream in W2.  THAT, not Sigma's
 -- vocabulary, is what actually blocks Q12-d.
 /-- info: 'CSD.LF4.torusDouble_hasCorrelationDecay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF4.torusDouble_hasCorrelationDecay
+
+-- ★★ THE INVERTIBLE WITNESS (CatMapWitness.lean, 2026-09-01).  Arnold's cat map (x,y) |-> (2x+y,
+-- x+y) on T^2: a bijection (det = 1), Haar-preserving, with vanishing correlations at every
+-- nonzero lag for the observable Re e^{2pi i x}.  Route: characters transport by the TRANSPOSE
+-- catZ, a nontrivial character integrates to zero (translate to where it is -1), and the orbit
+-- catZ^[u] (1,0) has both coordinates >= 1 for u >= 1 -- a two-line omega induction on the
+-- Fibonacci-positive recursion, so no eigenvalue theory for the concrete matrix.
+-- ⚠️ Scope: one observable, not Ergodic and not mixing-in-general (that needs decay for EVERY
+-- character plus L^2-density on T^2; Mathlib's torus ergodicity is 1-D and it defines no mixing).
+-- ⚠️ Unblocks no live frontier item: Q12-d's mixing formulation was retired 2026-08-24.  What it
+-- settles is caveat (2) above -- the obstruction was the choice of map, not the ontic space.
+/-- info: 'MeasureTheory.bijective_cat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.bijective_cat
+
+/-- info: 'MeasureTheory.measurePreserving_cat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.measurePreserving_cat
+
+/-- info: 'MeasureTheory.integral_chi_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.integral_chi_eq_zero
+
+/-- info: 'MeasureTheory.integral_catObs_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.integral_catObs_pair
+
+/-- info: 'MeasureTheory.cat_hasCorrelationDecay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.cat_hasCorrelationDecay
+
+/-- info: 'MeasureTheory.cat_nontrivial' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms MeasureTheory.cat_nontrivial
 
 /-- info: 'CSD.LF4.torusObs_variance_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF4.torusObs_variance_ne
