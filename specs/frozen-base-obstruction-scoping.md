@@ -1,7 +1,9 @@
 # The frozen-base obstruction — scoping the `H_int(M)` generation brick
 
-**Status: all three bricks landed.** Brick 0 (`SigmaLayer/ChartIntegralCurve.lean`), brick 1
-(`SigmaLayer/FrozenBase.lean`), brick 2 (`SigmaLayer/UntriggeredFlow.lean`), all §3.
+**Status: all three bricks landed, brick 2 in three halves.** Brick 0
+(`SigmaLayer/ChartIntegralCurve.lean`), brick 1 (`SigmaLayer/FrozenBase.lean`), brick 2
+(`SigmaLayer/UntriggeredFlow.lean` dynamics, `SigmaLayer/UntriggeredReadout.lean` statistics,
+`SigmaLayer/UntriggeredVolume.lean` measure preservation + uniqueness), all §3.
 **Nothing in §2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
 `H_int(M)` row (`specs/BACKLOG.md` row "★★ The dynamical measurement layer (Paper D
 `H_int`)") and the charter's named open question (`specs/CSD-CHARTER.md` §"The open question
@@ -202,12 +204,24 @@ globally `ℝ^{2n}`, the arena is not, nothing transports (`R-016`). *Engineered
 Darboux chart: `shear_sector_born` is a statement about `ℂℙ^{N-1}`, Fubini–Study and the
 Kähler moment map, none of which exist on `Chart n`. Born additionally requires the
 *preparation's* weights to be the moment-map weights — exactly what `ℂℙ^{N-1}` supplies and
-`ℝ^{2n}` cannot. **Measure preservation is also not proved**: the flow is a unit-determinant
-shear and every necessary condition in `MeasurementConstraints.lean` assumes preservation, but
-establishing it needs the linear-map volume API through the product-of-pi structure and is not
-attempted. Uniqueness is not proved either: the field is linear, so brick 0 would give it from
-a `LipschitzWith` bound, but that bound is not established, so this is *an* integral curve, not
-*the* one.
+`ℝ^{2n}` cannot.
+
+**Volume half — ✅ DONE 2026-09-01** (`SigmaLayer/UntriggeredVolume.lean`, 4 pins), closing
+the two gaps the dynamics and statistics halves flagged. ★★ `untriggeredCurve_measurePreserving`:
+the time-`t` map is a block-diagonal linear map (`untriggeredLin`) with blocks
+`1 + vecMulVec (t•e_k) c` and `1 − vecMulVec (t•c) e_k`, both of determinant `1 + t·c_k = 1`
+under `c k = 0` (`det_untriggeredLin`), so Mathlib's
+`Measure.map_linearMap_addHaar_eq_smul_addHaar` gives preservation of chart volume outright —
+nothing measure-theoretic was rederived (the module header lists every Mathlib lemma used).
+Hence ★ `untriggered_no_exact_collapse`: `MeasurementConstraints.lean`'s collapse no-go now
+*applies* to this flow instead of merely presupposing preservation. ★ `untriggeredCurve_unique`:
+the field is a continuous linear map (`hamiltonianField_interactionH`), its operator norm is a
+Lipschitz constant (`lipschitzWith_interactionH_field`), and brick 0's
+`hamiltonianCurve_unique` makes the closed form *the* integral curve through `z₀`, not *an*
+integral curve. Both were stated as gaps in `UntriggeredFlow.lean` item 5 and
+`UntriggeredReadout.lean`'s scope; those paragraphs now carry the strikethrough record.
+**Still chart-level**: this is preservation of Lebesgue volume on `ℝ^{2n}`, not of Liouville
+measure on the arena, and it is not Born (`R-016`).
 
 ## 4. ⚠️ Two things this must never be written as
 

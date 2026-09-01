@@ -511,6 +511,7 @@ public import CsdLean4.SigmaLayer.ChartIntegralCurve
 public import CsdLean4.SigmaLayer.FrozenBase
 public import CsdLean4.SigmaLayer.UntriggeredFlow
 public import CsdLean4.SigmaLayer.UntriggeredReadout
+public import CsdLean4.SigmaLayer.UntriggeredVolume
 public import CsdLean4.RecordLayer.JoinClosure
 public import CsdLean4.RecordLayer.JointFlowTransfer
 public import CsdLean4.RecordLayer.LocalBlockBridge

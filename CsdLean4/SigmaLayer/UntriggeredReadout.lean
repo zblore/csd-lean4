@@ -48,11 +48,13 @@ preparation's own weights to be the moment-map weights, and that is exactly the 
 (⚠️ RESIDUE(R-016)); the choice of interaction **remains open** as a permanent boundary
 (⚠️ RESIDUE(R-015)).
 
-**Measure preservation is not proved here either.** The flow is a triangular shear (unit
-determinant), so it should preserve the chart volume, and `MeasurementConstraints.lean`'s
-necessary conditions all assume that. Establishing it needs the linear-map volume API
-transported through the product-of-pi structure, and is not attempted — so the results below
-hold for an arbitrary preparation `μ` and say nothing about which `μ` the dynamics preserves.
+~~**Measure preservation is not proved here either.**~~ **RESOLVED** in
+`SigmaLayer/UntriggeredVolume.lean`: `untriggeredCurve_measurePreserving` shows the time-`t`
+map preserves the chart volume (unit determinant, via Mathlib's
+`Measure.map_linearMap_addHaar_eq_smul_addHaar`), so `MeasurementConstraints.lean`'s
+necessary conditions apply to this flow (`untriggered_no_exact_collapse`). The results below
+still hold for an *arbitrary* preparation `μ`; the volume module says which `μ` the dynamics
+preserves. *(This paragraph originally recorded the gap; the strikethrough keeps the record.)*
 
 ## References
 

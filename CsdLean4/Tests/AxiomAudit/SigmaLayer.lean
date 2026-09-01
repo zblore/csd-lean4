@@ -2770,8 +2770,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- (R-016). ENGINEERED, not derived -- which interaction an apparatus realises is a permanent
 -- boundary (R-015). Records here are NOT yet Born weights: the measure-theoretic half
 -- (basins carrying moment-map weights, cf. shear_sector_born) is NOT redone on this flow.
--- Uniqueness is NOT proved -- the field is linear so brick 0 would give it from a Lipschitz
--- bound, but that bound is not established, so this is AN integral curve, not THE one.
+-- Uniqueness was NOT proved here at landing; it is now, in UntriggeredVolume below
+-- (untriggeredCurve_unique, via the Lipschitz bound this comment said was missing).
 -- This does NOT close H_int(M) on either half.
 /-- info: 'CSD.SigmaLayer.untriggeredCurve_isHamiltonianCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_isHamiltonianCurve
@@ -2804,11 +2804,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- moment map, none of which exist on Chart n. NOTHING HERE IS A BORN WEIGHT and nothing here
 -- may be cited as one. Born additionally requires the PREPARATION's weights to be the
 -- moment-map weights, which is exactly what CP^{N-1} supplies and R^{2n} cannot (R-016).
--- ⚠️ MEASURE PRESERVATION IS ALSO NOT PROVED. The flow is a triangular shear (unit
--- determinant) so it should preserve chart volume, and every necessary condition in
--- MeasurementConstraints assumes that -- but establishing it needs the linear-map volume API
--- transported through the product-of-pi structure and is not attempted. The results hold for
--- an ARBITRARY mu and say nothing about which mu the dynamics preserves.
+-- Measure preservation was NOT proved here at landing; it is now, in UntriggeredVolume
+-- below (untriggeredCurve_measurePreserving). The results here hold for an ARBITRARY mu; the
+-- volume module says which mu the dynamics preserves.
 /-- info: 'CSD.SigmaLayer.readoutCell_eq_observable_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.readoutCell_eq_observable_preimage
 
@@ -2820,6 +2818,37 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
+
+-- UntriggeredVolume (2026-09-01, SigmaLayer/UntriggeredVolume.lean; the VOLUME half of
+-- brick 2). UntriggeredFlow and UntriggeredReadout each flagged the same two gaps -- measure
+-- preservation and uniqueness -- and this closes both, from one observation: the time-t map
+-- is LINEAR in z, block-diagonal on Chart n = (Fin n -> R) x (Fin n -> R).
+-- ★★ untriggeredCurve_measurePreserving — the time-t map preserves chart volume. Position
+-- block 1 + vecMulVec (t e_k) c, momentum block 1 - vecMulVec (t c) e_k, each of determinant
+-- 1 + t c_k = 1 under c k = 0 (det_untriggeredLin), then Mathlib's
+-- map_linearMap_addHaar_eq_smul_addHaar. NOTHING measure-theoretic is rederived: the volume
+-- API, the rank-one determinant, and the Haar-measure product instance are all Mathlib's.
+-- ★ untriggered_no_exact_collapse — so MeasurementConstraints' collapse no-go now APPLIES
+-- to this flow, rather than presupposing the preservation it needs.
+-- ★ untriggeredCurve_unique — the field is a continuous linear map
+-- (hamiltonianField_interactionH), its operator norm is a Lipschitz constant
+-- (lipschitzWith_interactionH_field), so brick 0's hamiltonianCurve_unique makes the closed
+-- form THE integral curve through z_0. Item 5 of UntriggeredFlow's honest scope, closed.
+-- ⚠️ SCOPE. Preservation of LEBESGUE volume on R^{2n} in a Darboux chart -- not Liouville
+-- measure on the arena, and not Born: no moment map exists on Chart n (R-016). The coupling
+-- is engineered, not derived (R-015). c k = 0 is the same hypothesis brick 2 already carried;
+-- with c k != 0 the determinants are 1 +- t c_k and volume is NOT preserved.
+/-- info: 'CSD.SigmaLayer.untriggeredCurve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_measurePreserving
+
+/-- info: 'CSD.SigmaLayer.det_untriggeredLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.det_untriggeredLin
+
+/-- info: 'CSD.SigmaLayer.untriggered_no_exact_collapse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggered_no_exact_collapse
+
+/-- info: 'CSD.SigmaLayer.untriggeredCurve_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_unique
 
 -- NullSeamLift (2026-08-04, SigmaLayer/NullSeamLift.lean; BACKLOG B2). The third horn was
 -- built on S^1 x CP^2 -- real dimension 5, ODD, hence no symplectic structure, which is why

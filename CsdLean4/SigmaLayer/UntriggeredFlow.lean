@@ -65,10 +65,13 @@ conjugate variable", and it is a computation here rather than a slogan.
    successor would have to do, and it is not attempted.
 4. **`c k = 0` is a hypothesis**, and it is what keeps the system closed-form: with `c k ≠ 0`
    the pointer feeds back into its own drift rate and the flow is no longer affine.
-5. **Uniqueness is not proved here.** The field is linear in `z`, so brick 0's
-   `hamiltonianCurve_unique` would give "*the* integral curve" from a `LipschitzWith` bound —
-   but that bound is not established, so this is *an* integral curve, not *the* one. Stated
-   rather than quietly assumed, and deliberately not left as an unpopulated hypothesis field.
+5. ~~**Uniqueness is not proved here.**~~ **RESOLVED** — `SigmaLayer/UntriggeredVolume.lean`
+   establishes the `LipschitzWith` bound (`lipschitzWith_interactionH_field`: the field is a
+   continuous linear map, so its operator norm is a Lipschitz constant) and feeds it to brick
+   0's `hamiltonianCurve_unique`, giving `untriggeredCurve_unique`: this is *the* integral
+   curve through `z₀`, not merely *an* integral curve. The same module proves the flow
+   preserves chart volume (`untriggeredCurve_measurePreserving`). *(This item originally
+   recorded the gap; the strikethrough keeps the record.)*
 
 ## References
 
