@@ -35,6 +35,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Helstrom
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+public import CsdLean4.Mathlib.QuantumInfo.Fidelity
 public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
 public import CsdLean4.Mathlib.QuantumInfo.Register
 public import CsdLean4.Mathlib.QuantumInfo.RegisterTensor

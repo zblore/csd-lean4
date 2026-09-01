@@ -392,6 +392,14 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.projectedFlow_schrodinger_form
 
+-- Continuity variant (2026-09-01): same conclusion with the C^1 datum replaced by plain
+-- continuity of the lifted family, via Matrix.StoneC1.stone_continuous (which derives
+-- smoothness by integral averaging). Discharges the W5 S2 smoothness posit; before this
+-- the continuity-only Stone theorem was proved and had NO consumer.
+/-- info: 'CSD.LF4.projectedFlow_schrodinger_form_of_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_schrodinger_form_of_continuous
+
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup_phase_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.trivialKahlerOnticSetup_phase_lift

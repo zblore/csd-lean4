@@ -1563,6 +1563,24 @@ info: 'ProbabilityTheory.iIndepFun.pairwise_indepFun_indicator_preimage' depends
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.matrix_rpow_concave
 
+/-! ### Uhlmann fidelity core (Fidelity.lean, 2026-09-01)
+
+The sandwich is PSD, so the spectral definition is real; the headline is SYMMETRY, which
+is not obvious (the two sandwiches are different matrices) and comes from the corpus's
+rectangular-spectrum lemma at M = sqrt-sigma * sqrt-rho. F <= 1 and Uhlmann are NOT here:
+they need a polar decomposition, absent from the pin. -/
+/-- info: 'QuantumInfo.posSemidef_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.posSemidef_sandwich
+
+/-- info: 'QuantumInfo.fidelity_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.fidelity_nonneg
+
+/-- info: 'QuantumInfo.fidelity_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.fidelity_comm
+
 /-! ### C^1 finite-dimensional Stone theorem (StoneC1.lean, W5-S2 under smoothness) -/
 
 /-- info: 'Matrix.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/

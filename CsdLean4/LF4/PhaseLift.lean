@@ -337,6 +337,69 @@ theorem projectedFlow_schrodinger_form
   rw [hgen]
   exact hexp t
 
+/-- **The Schrödinger form from a continuous projective flow (S2 discharged).**
+
+Same conclusion as `projectedFlow_schrodinger_form`, but the smoothness datum
+`(A, hA, hderiv)` is replaced by plain **continuity** of the lifted family. The
+finite-dimensional continuity-only Stone theorem
+(`Matrix.StoneC1.stone_continuous`, which derives smoothness by integral
+averaging) supplies the generator, so no `C¹` input is posited.
+
+This is the consumer `stone_continuous` was built for: before this, the theorem
+was proved and unused, and the capstones still took the derivative datum. Only
+the S1 coboundary datum (`hcob`) remains staged here. -/
+theorem projectedFlow_schrodinger_form_of_continuous
+    (d : KahlerOnticSetup N)
+    (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
+    (hfam : ∀ t p, d.projectedFlow t p = U t • p)
+    (c : ℝ → ℝ → ℂ)
+    (hc : ∀ s t, (U (s + t) : Matrix (Fin N) (Fin N) ℂ)
+        = c s t • ((U s : Matrix (Fin N) (Fin N) ℂ)
+            * (U t : Matrix (Fin N) (Fin N) ℂ)))
+    (b : ℝ → ℂ) (hb : ∀ t, ‖b t‖ = 1)
+    (hcob : ∀ s t, c s t * b (s + t) = b s * b t)
+    (hcont : Continuous
+        (fun τ : ℝ => (phaseLiftFamily U b hb τ : Matrix (Fin N) (Fin N) ℂ))) :
+    ∃ H : Matrix (Fin N) (Fin N) ℂ, ∃ hH : H.IsHermitian,
+      ∀ t p, d.projectedFlow t p = schrodingerUnitary hH t • p := by
+  obtain ⟨hact, hgrp, h0⟩ := projectedFlow_phase_lift d U hfam c hc b hb hcob
+  have h0' : (phaseLiftFamily U b hb 0 : Matrix (Fin N) (Fin N) ℂ) = 1 := by
+    rw [h0]; rfl
+  have hgrp' : ∀ s t, (phaseLiftFamily U b hb (s + t) : Matrix (Fin N) (Fin N) ℂ)
+      = (phaseLiftFamily U b hb s : Matrix (Fin N) (Fin N) ℂ)
+        * (phaseLiftFamily U b hb t : Matrix (Fin N) (Fin N) ℂ) := by
+    intro s t; exact congrArg Subtype.val (hgrp s t)
+  have hunit : ∀ t, (phaseLiftFamily U b hb t : Matrix (Fin N) (Fin N) ℂ)ᴴ
+      * (phaseLiftFamily U b hb t : Matrix (Fin N) (Fin N) ℂ) = 1 := by
+    intro t
+    have := (phaseLiftFamily U b hb t).property
+    rw [Matrix.mem_unitaryGroup_iff'] at this
+    exact this
+  obtain ⟨A, hA, hexp⟩ := Matrix.StoneC1.stone_continuous
+    (fun τ : ℝ => (phaseLiftFamily U b hb τ : Matrix (Fin N) (Fin N) ℂ))
+    hcont h0' hgrp' hunit
+  have hH : (Complex.I • A).IsHermitian := by
+    show (Complex.I • A)ᴴ = Complex.I • A
+    rw [Matrix.conjTranspose_smul]
+    rw [show star Complex.I = -Complex.I by simp]
+    rw [show Aᴴ = -A from hA]
+    module
+  refine ⟨Complex.I • A, hH, fun t p => ?_⟩
+  rw [hact t p]
+  congr 1
+  apply Subtype.ext
+  have hgen : schrodingerGen (Complex.I • A) t = t • A := by
+    unfold schrodingerGen
+    rw [smul_smul]
+    rw [show -(t : ℂ) * Complex.I * Complex.I = (t : ℂ) by
+      rw [mul_assoc, Complex.I_mul_I]; ring]
+    ext i j
+    simp [Complex.real_smul]
+  show b t • (U t : Matrix (Fin N) (Fin N) ℂ)
+      = NormedSpace.exp (schrodingerGen (Complex.I • A) t)
+  rw [hgen]
+  exact hexp t
+
 /-! ## The Σ-level capstone: the ontic flow projects to Schrödinger evolution
 
 The ray-level `projectedFlow_schrodinger_form` above is a statement about
