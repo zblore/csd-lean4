@@ -1541,6 +1541,28 @@ info: 'ProbabilityTheory.iIndepFun.pairwise_indepFun_indicator_preimage' depends
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.matrix_sqrt_le_sqrt
 
+-- B.5/B.6 (2026-09-01): operator CONCAVITY, transported the same way as monotonicity.
+-- Upstream proved the C*-generic statements (CFC.concaveOn_log, CFC.concaveOn_rpow) and
+-- CStarAlgebra (Matrix n n C) exists as a SCOPED instance (Matrix.Norms.L2Operator), so the
+-- plan's L.2 wall ("Matrix is not a CStarAlgebra") was a scope question, not an absence.
+-- operatorConcaveOn_log is the L.2 summit in the corpus's all-dimensions predicate;
+-- matrix_rpow_concave is the L.3a interior, superseding the endpoints-only rungs.
+/-- info: 'Matrix.smul_transport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.smul_transport
+
+/-- info: 'Matrix.matrix_log_concave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.matrix_log_concave
+
+/-- info: 'Matrix.operatorConcaveOn_log' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.operatorConcaveOn_log
+
+/-- info: 'Matrix.matrix_rpow_concave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.matrix_rpow_concave
+
 /-! ### C^1 finite-dimensional Stone theorem (StoneC1.lean, W5-S2 under smoothness) -/
 
 /-- info: 'Matrix.StoneC1.eq_exp_of_hasDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/

@@ -241,6 +241,103 @@ theorem matrix_sqrt_le_sqrt {A B : Matrix n n ℂ} (hA : 0 ≤ A) (hAB : A ≤ B
   rw [CFC.sqrt_eq_nnrpow A, CFC.sqrt_eq_nnrpow B]
   exact matrix_nnrpow_le_nnrpow ⟨by norm_num, by norm_num⟩ hA hAB
 
+/-! ### B.5 / B.6 — operator CONCAVITY transported (the L.2 / L.3a-interior rungs)
+
+Upstream proves operator concavity C⋆-generically (`CFC.concaveOn_log`, `CFC.concaveOn_rpow`);
+the same transport that carries monotonicity carries concavity, so both rungs are corollaries
+rather than builds. The convex combination is taken with **real** scalars coerced to `ℂ`, which
+is what `smul_transport` normalises. -/
+
+omit [DecidableEq n] in
+/-- Real-scalar smul commutes with the `Matrix ≃ CStarMatrix` transport. The convex combinations
+below are formed in `ℂ`, so this is the lemma that lets `map_add`/`map_smul` normalise them. -/
+theorem smul_transport (t : ℝ) (A : Matrix n n ℂ) :
+    CStarMatrix.ofMatrixStarAlgEquiv ((t : ℂ) • A)
+      = t • CStarMatrix.ofMatrixStarAlgEquiv A := by
+  rw [map_smul]; exact Complex.coe_smul t _
+
+/-- **B.5.** Operator concavity of `log` on positive-definite matrices, in Löwner order:
+`t·log A + (1−t)·log B ≤ log (t·A + (1−t)·B)`. Transported from `CFC.concaveOn_log`. -/
+theorem matrix_log_concave {A B : Matrix n n ℂ} (hA : A.PosDef) (hB : B.PosDef)
+    {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    (t : ℂ) • cfc Real.log A + ((1 : ℂ) - t) • cfc Real.log B
+      ≤ cfc Real.log ((t : ℂ) • A + ((1 : ℂ) - t) • B) := by
+  have hc : ((1 : ℂ) - (t : ℂ)) = (((1 - t : ℝ)) : ℂ) := by push_cast; ring
+  rw [hc]
+  have hcomb : (((t : ℝ) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B).PosDef := by
+    rw [← hc]; exact convexComb_posDef hA hB ht0 ht1
+  have key := (CFC.concaveOn_log (A := CStarMatrix n n ℂ)).2 (cstar_isStrictlyPositive hA)
+    (cstar_isStrictlyPositive hB) ht0 (by linarith : (0:ℝ) ≤ 1 - t) (by ring)
+  have hlA : CStarMatrix.ofMatrixStarAlgEquiv (cfc Real.log A)
+      = CFC.log (CStarMatrix.ofMatrixStarAlgEquiv A) :=
+    (cstar_cfc Real.log hA.1 (logContinuousOn hA)).trans rfl
+  have hlB : CStarMatrix.ofMatrixStarAlgEquiv (cfc Real.log B)
+      = CFC.log (CStarMatrix.ofMatrixStarAlgEquiv B) :=
+    (cstar_cfc Real.log hB.1 (logContinuousOn hB)).trans rfl
+  have hlC : CStarMatrix.ofMatrixStarAlgEquiv
+        (cfc Real.log ((((t : ℝ)) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B))
+      = CFC.log (CStarMatrix.ofMatrixStarAlgEquiv
+        ((((t : ℝ)) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B)) :=
+    (cstar_cfc Real.log hcomb.1 (logContinuousOn hcomb)).trans rfl
+  rw [← cstar_le_iff]
+  simp only [map_add, smul_transport, hlA, hlB, hlC]
+  exact key
+
+/-- ★★ **L.2 — `log` is operator concave on `(0, ∞)`**, in the corpus's all-dimensions
+`OperatorConcaveOn` predicate. The plan budgeted this as a multi-day build against a wall
+("`Matrix n n ℂ` is not a `CStarAlgebra`"); the wall was a *scope* question and upstream has
+since proved the C⋆-generic statement, so it is a transport. -/
+theorem operatorConcaveOn_log : OperatorConcaveOn (Set.Ioi 0) Real.log := by
+  intro m _ _ A B hA hB hsA hsB t ht0 ht1 _
+  exact matrix_log_concave (posDef_of_spectrum_pos hA fun x hx => hsA hx)
+    (posDef_of_spectrum_pos hB fun x hx => hsB hx) ht0 ht1
+
+/-- ★ **L.3a interior — `x ^ p` is operator concave for `p ∈ [0,1]`**, on the bare `Matrix`
+carrier in `^`-notation and Löwner order. Transported from `CFC.concaveOn_rpow`; supersedes the
+endpoints-only `operatorConcaveOn_rpow_zero` / `_one`. -/
+theorem matrix_rpow_concave {p : ℝ} (hp : p ∈ Set.Icc (0:ℝ) 1) {A B : Matrix n n ℂ}
+    (hA : 0 ≤ A) (hB : 0 ≤ B) {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    (t : ℂ) • A ^ p + ((1 : ℂ) - t) • B ^ p
+      ≤ ((t : ℂ) • A + ((1 : ℂ) - t) • B) ^ p := by
+  have hc : ((1 : ℂ) - (t : ℂ)) = (((1 - t : ℝ)) : ℂ) := by push_cast; ring
+  rw [hc]
+  have hA' : (0 : CStarMatrix n n ℂ) ≤ CStarMatrix.ofMatrixStarAlgEquiv A := by
+    have := (cstar_le_iff 0 A).mpr hA; rwa [map_zero] at this
+  have hB' : (0 : CStarMatrix n n ℂ) ≤ CStarMatrix.ofMatrixStarAlgEquiv B := by
+    have := (cstar_le_iff 0 B).mpr hB; rwa [map_zero] at this
+  have key := (CFC.concaveOn_rpow (A := CStarMatrix n n ℂ) hp).2 hA' hB' ht0
+    (by linarith : (0:ℝ) ≤ 1 - t) (by ring)
+  have hrA : CStarMatrix.ofMatrixStarAlgEquiv (A ^ p)
+      = (CStarMatrix.ofMatrixStarAlgEquiv A) ^ p := by
+    rw [CFC.rpow_eq_cfc_real hA, CFC.rpow_eq_cfc_real hA']
+    exact cstar_cfc _ (Matrix.nonneg_iff_posSemidef.mp hA).1
+      (continuousOn_id.rpow_const fun x _ => Or.inr hp.1)
+  have hrB : CStarMatrix.ofMatrixStarAlgEquiv (B ^ p)
+      = (CStarMatrix.ofMatrixStarAlgEquiv B) ^ p := by
+    rw [CFC.rpow_eq_cfc_real hB, CFC.rpow_eq_cfc_real hB']
+    exact cstar_cfc _ (Matrix.nonneg_iff_posSemidef.mp hB).1
+      (continuousOn_id.rpow_const fun x _ => Or.inr hp.1)
+  have hcomb : (0 : Matrix n n ℂ) ≤ ((t : ℝ) : ℂ) • A + ((1 - t : ℝ) : ℂ) • B := by
+    have hc0 : (0 : ℂ) ≤ ((t : ℝ) : ℂ) := by exact_mod_cast ht0
+    have hc1 : (0 : ℂ) ≤ (((1 - t : ℝ)) : ℂ) := by
+      exact_mod_cast (by linarith : (0:ℝ) ≤ 1 - t)
+    exact Matrix.nonneg_iff_posSemidef.mpr
+      (((Matrix.nonneg_iff_posSemidef.mp hA).smul hc0).add
+        ((Matrix.nonneg_iff_posSemidef.mp hB).smul hc1))
+  have hcomb' : (0 : CStarMatrix n n ℂ) ≤ CStarMatrix.ofMatrixStarAlgEquiv
+      (((t : ℝ) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B) := by
+    have := (cstar_le_iff 0 _).mpr hcomb; rwa [map_zero] at this
+  have hrC : CStarMatrix.ofMatrixStarAlgEquiv
+        (((((t : ℝ)) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B) ^ p)
+      = (CStarMatrix.ofMatrixStarAlgEquiv
+        ((((t : ℝ)) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B)) ^ p := by
+    rw [CFC.rpow_eq_cfc_real hcomb, CFC.rpow_eq_cfc_real hcomb']
+    exact cstar_cfc _ (Matrix.nonneg_iff_posSemidef.mp hcomb).1
+      (continuousOn_id.rpow_const fun x _ => Or.inr hp.1)
+  rw [← cstar_le_iff]
+  simp only [map_add, smul_transport, hrA, hrB, hrC]
+  exact key
+
 /-! ### Non-vacuity witness
 
 The bridge is non-vacuous: it applies to a concrete non-commuting positive-definite pair.
