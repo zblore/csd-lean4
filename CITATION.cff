@@ -14,6 +14,18 @@ authors:
 repository-code: "https://github.com/zblore/csd-lean4"
 url: "https://constraintsurfacedynamics.com"
 license: Apache-2.0
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22232291"
+    description: >-
+      Concept DOI. Always resolves to the latest release. This is the one to
+      cite. Zenodo also mints a per-version DOI on every release
+      (10.5281/zenodo.22232292 for v1.5.0); do not cite those -- a reader who
+      follows a version DOI lands on a snapshot and cannot see that the
+      corpus moved. No `version:` or `date-released:` key is set here on
+      purpose: the concept DOI already tracks the latest release, and a
+      hand-maintained version string in this file is precisely the kind of
+      claim that has gone stale three times (see the guarded line below).
 keywords:
   - lean4
   - mathlib
@@ -28,7 +40,7 @@ keywords:
 # Formal results in this repository are cited by naming, together:
 #
 #   1. this repository (the `repository-code` URL below),
-#   2. a tagged release, or failing that the exact commit SHA,
+#   2. a tag, or failing that the exact commit SHA,
 #   3. the module path, e.g. `CsdLean4/LF6/C1BellConsistency.lean`,
 #   4. the fully-qualified theorem name, e.g.
 #      `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet`.
@@ -39,10 +51,12 @@ keywords:
 #
 # DO NOT cite the manuscript layers "LF5" or "LF6" as documents. They are
 # unpublished, and citing them would be a dependency-order violation. The
-# repository is one artefact with its own DOI; citing it at a tag is not.
+# repository is one artefact with its own DOI -- 10.5281/zenodo.22232291,
+# the concept DOI recorded under `identifiers` above -- and citing it at a tag
+# is not.
 # See `docs/C1-FORMAL-SUPPORT.md` for the claim-to-theorem map.
 #
-# C1 formal support: cite tagged release `v1.4.1-c1-complete`, together with the
+# C1 formal support: cite tag `v1.4.1-c1-complete`, together with the
 # exact module path and fully-qualified theorem name. The revised paper's pair:
 # CL-031 `CSD.LF6.no_compatible_global_chsh_assignment_realises_singlet` (the
 # general obstruction) + CL-052 `CSD.LF6.c1_singlet_contextual_capstone` (the
@@ -53,6 +67,16 @@ keywords:
 # v1.4.x pair — found 2026-08-17). Its "update it in the same commit" instruction
 # demonstrably does not self-execute, so it is now GUARDED: `check-claims.sh`
 # check (13) fails when the newest `v*-c1-*` tag is not the one this line names.
+#
+# "tag", not "tagged release": the C1 anchors are git TAGS and none of them is a
+# published GitHub Release. Exactly one release exists (v1.5.0-c2-support, the one
+# Zenodo archived), so "tagged release" was ambiguous in a repo where the Releases
+# page lists one entry and the Tags page lists two dozen. A tag is what the citation
+# quadruple actually needs -- immutable and resolvable -- and it is what to cite.
+# Policy set 2026-09-01: tags are published as Releases going forward where that is
+# warranted; older tags are deliberately NOT retro-released, because Zenodo orders a
+# concept record by publication order and back-filling would repoint the concept DOI
+# at an old snapshot.
 # Cutting a C1 tag therefore requires updating this line in the same stroke, on
 # pain of CI.
 #

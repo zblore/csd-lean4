@@ -1,6 +1,7 @@
 # csd-lean4
 
 [![CI](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/zblore/csd-lean4/actions/workflows/ci.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22232291.svg)](https://doi.org/10.5281/zenodo.22232291)
 
 Constraint-Surface Dynamics posits one object: an ontic surface `Σ`, concretely
 `ℂℙ^{N-1} × T²`, with a Liouville measure `μL` and a deterministic,
@@ -75,6 +76,7 @@ lake build CsdLeanTests  # the axiom audit: REQUIRED, root target does NOT run i
 | Release history | [`specs/archive/HISTORY.md`](specs/archive/HISTORY.md) |
 | The papers | [`CITATION.cff`](CITATION.cff); [constraintsurfacedynamics.com](https://www.constraintsurfacedynamics.com) |
 | Plain-language definitions | [glossary.constraintsurfacedynamics.com](https://glossary.constraintsurfacedynamics.com) |
+| Any declaration, rendered with its statement | [docs.constraintsurfacedynamics.com](https://docs.constraintsurfacedynamics.com) |
 
 ## Layout
 
@@ -91,7 +93,14 @@ lake build CsdLeanTests  # the axiom audit: REQUIRED, root target does NOT run i
 
 ## Citation
 
-Repository: [`CITATION.cff`](CITATION.cff), carrying ORCID and repository URL.
+Repository: [`CITATION.cff`](CITATION.cff), carrying ORCID, repository URL and DOI.
+DOI: [10.5281/zenodo.22232291](https://doi.org/10.5281/zenodo.22232291), the *concept*
+DOI, which always resolves to the latest release. Zenodo also mints a per-version DOI
+on each release; cite the concept DOI, not those.
 Programme: the LF-series Zenodo record named there.
 Background: [constraintsurfacedynamics.com](https://www.constraintsurfacedynamics.com).
 Glossary: [glossary.constraintsurfacedynamics.com](https://glossary.constraintsurfacedynamics.com), the plain-language companion to the module headers.
+API documentation: [docs.constraintsurfacedynamics.com](https://docs.constraintsurfacedynamics.com),
+the doc-gen4 render of every declaration and its docstring. Built and published from
+[zblore/csd-lean4-docs](https://github.com/zblore/csd-lean4-docs); this repository keeps
+its own `docs.yml` as a documentability smoke test, not a publisher.

@@ -8,6 +8,13 @@ name: Docs
 # DOCUMENTABLE: doc-gen4 completes, and representative pages for the load-bearing
 # public surfaces actually exist with their declarations in them. Failure is loud
 # (the job fails); nothing is published from here.
+#
+# Publishing happens ELSEWHERE, and this job is not superseded by it. The rendered
+# docs at docs.constraintsurfacedynamics.com are built by zblore/csd-lean4-docs, a
+# separate repo, because a GitHub repo gets one Pages site and this one's is spent on
+# glossary.yml. That repo publishes on a weekly cron against main; this job guards, in
+# the source tree, on the source tree's own schedule. Deleting it would mean a broken
+# public API surface is first noticed on a public URL.
 
 on:
   schedule:
