@@ -227,10 +227,13 @@ against the tree before withdrawal.
 2. **The `H_int` residue is not in the registry.** `specs/residues.tsv` has no row for
    "Hamiltonian generation stated, not formalised" or for the engineered coupling, though
    `R-012` points at D1 (*"it reduces to D1"*). `CsdLean4/RecordLayer/` carries **zero**
-   `RESIDUE(...)` tags and **zero** `MATHLIB-ABSENT(...)` tokens, so the repeated "Mathlib
-   has no manifold symplectic API" claim is invisible to
-   `scripts/check-mathlib-absence.sh` if that wall ever falls. Per `CONVENTIONS.md` §11 this
-   is a registry coverage gap.
+   residue tags and **zero** Mathlib-absence tokens, so the repeated "Mathlib has no
+   manifold symplectic API" claim is invisible to `scripts/check-mathlib-absence.sh` if that
+   wall ever falls. Per `CONVENTIONS.md` §11 this is a registry coverage gap.
+
+   ⚠️ The tag names are deliberately written in words above, not as live tags: the absence
+   guard checks tokens wherever they appear, this file included, and it flagged its own
+   worked example once already (`6835415`).
 
 ---
 
