@@ -441,6 +441,17 @@ nothing forces an update when the world changes.
   the BACKLOG line — the guard fails while a closed residue is still advertised as open
   anywhere. `boundary` rows
   (e.g. R-007, the interpretive §14 labelling) are permanent by design and never close.
+* **Claims that *Mathlib* lacks something** are governed separately, by
+  `scripts/check-mathlib-absence.sh` (in CI). Such a claim names the token it asserts
+  absent — `MATHLIB-ABSENT(CFC.concaveOn_log)`, `MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)`
+  — and the guard **fails when the token appears in the pin**, so the alarm fires the
+  week upstream lands it. Prefer the namespace-qualified form (it discriminates:
+  `ContinuousAlternatingMap.domCoprod` is absent where `AlternatingMap.domCoprod` is
+  not). ⚠️ `@[to_additive]` twins do not exist in source under their additive name —
+  tag the multiplicative declaration. Every live row of `MATHLIB-GAPS.md`'s "Genuine
+  absences" table must carry a tag; struck or CLOSED/DISSOLVED rows are exempt.
+  Motivation: a 2026-09-01 sweep found five rows asserting walls that had already
+  fallen, one of them upstream for four months across two probes.
 * **Rule-of-two flags** become rows with a `consumer-count` trigger: the guard fails
   the moment the named declaration's corpus occurrence count reaches the threshold,
   forcing the fold/promotion instead of letting the flag rot in a header (R-014 is the
