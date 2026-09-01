@@ -64,10 +64,14 @@ microstate occupies) are exactly what is carried.
    *permanently scoped* row of `reconstruction-status.md` §2a). `basin_rate` is discharged from the
    **constructed propagator**; the "flow of `H_int(M)`" reading carries that standing caveat. Do
    not cite this as a formalised `H_int`. What remains of D1 is exactly that formalisation gap,
-   plus the witness-not-derivation caveat below.
+   plus the witness-not-derivation caveat below. The generation is proved in a Darboux chart
+   (`SigmaLayer/ChartIntegralCurve.lean`); the chart→arena transport is the gap
+   (⚠️ RESIDUE(R-016)).
 2. **The coupling is engineered** (the ontic von Neumann shape, coupled to the outcome index) — a
    witness that a de-isolation interaction with the required readout exists on the arena, not a
    derivation that a physically natural interaction must take this form (`ShearWitness` items 2–3).
+   Which interaction an apparatus physically realises is a modelling input and stays outside the
+   Lean claim by design, as it does for Bohm and Everett (⚠️ RESIDUE(R-015)).
 3. **The seam.** The everywhere-form of the correlation is impossible
    (`no_everywhere_correlation`); the witness's correlation holds on the selector-and-ready
    sectors, whose union exhausts the ready preparation (`readyPrep_selReady_cover`) — the

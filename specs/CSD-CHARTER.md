@@ -147,7 +147,18 @@ resolved in Lean, the second the standing posit):
   starting points, is legitimate, and is what the Gumbel construction and the Q10 conjecture actually
   use. Conflating them is what produced the withdrawn framing.
 
-  **The open question is the one that was always there:** the mechanism is still underived — no
+  **⚠️ RESOLVED 2026-08-31/09-01 — read this before quoting the paragraph below.** This section
+  and §"How to use this" answered the same question opposite ways; the author's MD-1 closure
+  settles it, and the split is between two things this paragraph ran together. **Which physical
+  interaction an apparatus realises** is a modelling input, outside the Lean claim by design and
+  permanently (`R-015`) — the same input Bohm and Everett take, and not a debt. **The chart→arena
+  transport of Hamiltonian generation** is mathematics and stays open (`R-016`); chart-level
+  generation was proved 2026-09-01 (`SigmaLayer/ChartIntegralCurve.lean`), and globalising is
+  obstructed by the flux theorem, not by tooling. So "no `H_int(M)` produces the basins" is
+  **withdrawn as a statement of open work** and retained only as the boundary it names. The
+  paragraph is kept below because the *scoping* in it (the two partitions) is still exactly right.
+
+  **The question as it was originally framed:** the mechanism is still underived — no
   `H_int(M)` produces the basins — and the successor question is **what physical de-isolation interaction generates a READOUT whose level sets carry the Born measures? (⚠️ scope carefully -- there are TWO partitions. The Omega-regions on the projective BASE are EPISTEMIC, a calculation space (Paper C A7); nothing sculpts them and they match volume because mu_FS is forced by symmetry and the weights are the moment map. The FIBRE cells are a different object: BornFibrePartition.lean places them on the ONTIC fibre and calls the outcome the ontic selection of which cell the fibre point occupies -- while adding that the CDF family is ONE concrete realisation, the content being the interface plus the measure identity. So the cell SHAPES are bookkeeping; the fibre, the rates and the selection are not. The obligation is DeIsolationFlow.lean's: exhibit a pointer p = readout . flow(H_int(M)) whose basins are cdfCell(moment map).)** That is the `H_int` question, and it is about Σ's dynamics, not
   about supplying a probabilistic structure. Retiring the mixing route was right; the successor
   question was mis-stated.
@@ -170,7 +181,9 @@ adapters live in `CsdLean4/Interop/`.
 Before landing framing/prose/claims, or scoping new work, run the **`csd-foundations`**
 agent (`.claude/agents/csd-foundations.md`) against the change or plan, or check it
 against this charter yourself. The record layer — the step that makes QM's measurement genuinely
-arise from Σ + Ω — is now **built** (2026-07-25, `record-layer-plan.md §4`): measurement =
+arise from Σ + Ω — is now **built** (2026-07-25, `record-layer-plan.md §4`; MD-1 closed 2026-08-31,
+residuals `R-015` boundary and `R-016` open — this is the half of the former contradiction that
+was right): measurement =
 `context + unknown microstate → record` on the base×fibre Σ, outcome probabilities = the Kähler
 moment map, Born = the law of large numbers over the unknown microstate. What remains is optional
 (a mechanical field naming in the pinned closure, no new theorem) or unrelated open tiers (Lindblad,

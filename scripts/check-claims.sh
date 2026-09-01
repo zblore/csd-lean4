@@ -239,6 +239,7 @@ srcfiles() { git ls-files "$SRC/**/*.lean" 2>/dev/null; }
 DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
 fieldHamiltonian
 interactionHamiltonian
+IsHamiltonianCurve
 hamiltonianField
 hamiltonian
 hamiltonianVectorFieldOf
@@ -358,6 +359,7 @@ CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/RecordLayer/ApproxProjectability.lean:1
+CsdLean4/SigmaLayer/ChartIntegralCurve.lean:1
 CsdLean4/SigmaLayer/FiniteQMClosure.lean:1
 CsdLean4/RecordLayer/MeasurementCapstone.lean:2
 CsdLean4/RecordLayer/MixedLuders.lean:1
@@ -413,6 +415,7 @@ CsdLean4/RecordLayer/PointerLudersMarginal.lean|none
 CsdLean4/RecordLayer/PovmDynamics.lean|none
 CsdLean4/RecordLayer/PovmSectorBorn.lean|none
 CsdLean4/RecordLayer/RecordLayerClosure.lean|none
+CsdLean4/SigmaLayer/ChartIntegralCurve.lean|none
 CsdLean4/SigmaLayer/FiniteQMClosure.lean|none
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean|none
 CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none
@@ -551,6 +554,9 @@ kahler_preparations_overlap
 kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal
 coupling_hamiltonian_duality
+hamiltonianCurve_unique
+momentumH_hamiltonianField
+translationCurve_isHamiltonianCurve
 fieldHamiltonian_mulVec_single
 fubiniStudy_pointwise_kahler_compatibility
 fundamentalForm_hamiltonianVectorFieldOf

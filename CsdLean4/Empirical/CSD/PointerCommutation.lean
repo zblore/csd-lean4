@@ -72,7 +72,8 @@ disturb — computed, not narrated.
 The criterion einselects the basis **given** the interaction: `H_int` is the
 measurement context and remains an **input**, exactly as it is for Bohm and for
 Everett — no interpretation derives the apparatus Hamiltonian from first
-principles, and this module does not either. What is discharged is the
+principles, and this module does not either. That is a boundary of the
+formal claim by design, not a gap in it (⚠️ RESIDUE(R-015)). What is discharged is the
 Hamiltonian-level *criterion* (parity with the field's accepted einselection
 answer, machine-checked); what remains is the D1 obligation, untouched here
 (`RecordLayer/MomentMapRace.lean`, `specs/q12-fibre-mechanism-scoping.md`).

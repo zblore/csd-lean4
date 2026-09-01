@@ -67,6 +67,8 @@ it there. Two independent routes agreeing is the reason to believe this is the r
    Hamiltonian-flow API (`reconstruction-status.md` §2a, the *permanently scoped* row). So the plan's
    "an explicit propagator **proved to arise from** that Hamiltonian" is **half done**: explicit
    propagator yes, proof of Hamiltonian origin no. Do not cite this as a formalised `H_int`.
+   The chart-level generation is proved (`SigmaLayer/ChartIntegralCurve.lean`); transporting it
+   to the arena is what is missing (⚠️ RESIDUE(R-016)).
 2. **It is a witness, not a derivation.** The coupling is *engineered* to work. That is what
    constructing a witness means, and it is the same standard the rest of the corpus's witness models
    meet — but it does not show that a physically natural interaction must do this.
