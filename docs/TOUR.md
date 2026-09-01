@@ -154,7 +154,7 @@ preparation, and arbitrary Hermitian `H`:
 
 | Reconstructed pillar | Headline theorem | Module |
 |---|---|---|
-| Schrödinger evolution from the sector flow | `projectedFlow_schrodinger_form`, `manyToOneSchrodingerSetup_both_pillars` | `LF4/PhaseLift`, `LF4/…` |
+| Schrödinger evolution from the sector flow (**from continuity alone** since 2026-09-01) | `projectedFlow_schrodinger_form_of_continuous_flow` (neither the coboundary nor the smoothness datum is posited), `projectedFlow_schrodinger_form` (the original, both staged), `manyToOneSchrodingerSetup_both_pillars` | `LF4/PhaseLift`, `Mathlib/Analysis/Matrix/{ProjectiveLift,StoneC1}`, `LF4/…` |
 | Born rule as FS typicality volume (all `N`, POVMs, zero weights included) | `fs_born_volume_ratio_N_uncond`, `povm_born_frequency_volume` | `LF4/…` |
 | Fubini–Study bridge `π_*μL = μ_FS` | `productSector_hasFubiniStudyPushforward`, `arenaRay_pushforward` | `SigmaLayer/MeasureBridge`, `UnifiedArena` |
 | Context-fixed measurement partitions (Paper C A7) | `globalBasin_born`, `globalBasin_prob` | `SigmaLayer/GlobalBasin` |

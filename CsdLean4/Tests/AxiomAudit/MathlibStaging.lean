@@ -1581,6 +1581,27 @@ they need a polar decomposition, absent from the pin. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.fidelity_comm
 
+-- ★★ THE UPPER BOUND (2026-09-01).  F <= 1 for positive-definite states.  Route: X = sqrt-sigma
+-- sqrt-rho has X^H X = the sandwich, so the polar factor of X has trace F; writing that trace as
+-- a Hilbert-Schmidt pairing and applying Cauchy-Schwarz gives F <= ||sqrt-sigma U||_2 ||sqrt-rho||_2
+-- = sqrt(Tr sigma) sqrt(Tr rho) = 1.  BOTH ingredients had to be BUILT, not imported: Mathlib gives
+-- Matrix only a Frobenius NORM (no inner product), so norm_trace_conjTranspose_mul_le transports to
+-- EuclideanSpace C (n x n); and Mathlib has singular VALUES but no polar/SVD factorisation, so
+-- exists_unitary_conjTranspose_mul_eq_sqrt builds U = X P^{-1} for invertible X.
+-- ⚠️ PosDef is load-bearing, not decorative: it is what makes X invertible.  Same posture as
+-- klein_inequality.  Uhlmann and Fuchs-van de Graaf remain not attempted.
+/-- info: 'QuantumInfo.norm_trace_conjTranspose_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.norm_trace_conjTranspose_mul_le
+
+/-- info: 'QuantumInfo.exists_unitary_conjTranspose_mul_eq_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_unitary_conjTranspose_mul_eq_sqrt
+
+/-- info: 'QuantumInfo.fidelity_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.fidelity_le_one
+
 /-! ### Kahler chart-form identification (KahlerPotential.lean, 2026-09-01)
 
 extDeriv_fsChartForm previously asserted closedness of a form whose pointwise value was never
