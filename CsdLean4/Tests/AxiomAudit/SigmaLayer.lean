@@ -2785,6 +2785,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.not_baseFrozen_interactionH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.not_baseFrozen_interactionH
 
+-- UntriggeredReadout (2026-09-01, SigmaLayer/UntriggeredReadout.lean; the STATISTICS half of
+-- brick 2). UntriggeredFlow built a flow that records; its honest scope flagged that it said
+-- nothing about whether the record carries the right statistics. This closes the part of that
+-- the chart can express.
+-- ★★ readoutCell_eq_observable_preimage — the readout's level sets ARE the measured
+-- observable's level sets, rescaled by t. The pointer partitions the arena exactly as the
+-- observable does, no finer and no coarser.
+-- ★★ measure_readoutCell / map_untriggeredReadout — therefore for EVERY preparation mu, the
+-- measure of a set of pointer readings is the measure mu already gave the corresponding
+-- observable values. THE MEASUREMENT ADDS NO PROBABILITY OF ITS OWN.
+-- ★ untriggeredReadout_injOn_observable — at t != 0 the reading DETERMINES the observable
+-- value, so the record is exact rather than merely correlated (with the converse,
+-- untriggeredReadout_congr, and non-degeneracy, untriggeredReadout_ne).
+-- ⚠️ THIS IS THE FAITHFULNESS HALF, NOT THE BORN HALF, and the distinction is not cosmetic.
+-- THERE IS NO MOMENT MAP IN A DARBOUX CHART. shear_sector_born says the flow-carved sector
+-- carries ofReal (momentMap p i) -- a statement about CP^{N-1}, Fubini-Study and the Kahler
+-- moment map, none of which exist on Chart n. NOTHING HERE IS A BORN WEIGHT and nothing here
+-- may be cited as one. Born additionally requires the PREPARATION's weights to be the
+-- moment-map weights, which is exactly what CP^{N-1} supplies and R^{2n} cannot (R-016).
+-- ⚠️ MEASURE PRESERVATION IS ALSO NOT PROVED. The flow is a triangular shear (unit
+-- determinant) so it should preserve chart volume, and every necessary condition in
+-- MeasurementConstraints assumes that -- but establishing it needs the linear-map volume API
+-- transported through the product-of-pi structure and is not attempted. The results hold for
+-- an ARBITRARY mu and say nothing about which mu the dynamics preserves.
+/-- info: 'CSD.SigmaLayer.readoutCell_eq_observable_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.readoutCell_eq_observable_preimage
+
+/-- info: 'CSD.SigmaLayer.measure_readoutCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.measure_readoutCell
+
+/-- info: 'CSD.SigmaLayer.untriggeredReadout_injOn_observable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredReadout_injOn_observable
+
 /-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
 

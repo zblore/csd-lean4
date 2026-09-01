@@ -188,13 +188,26 @@ witness: **one** Hamiltonian, **one** flow, no trigger, no second stroke.
   outcome-dependent `C¹` generator must move the base; this exhibits one that does and
   computes how much. Two directions of one statement.
 
+**Statistics half — ✅ DONE 2026-09-01** (`SigmaLayer/UntriggeredReadout.lean`, 3 pins).
+`readoutCell_eq_observable_preimage`: the readout's level sets **are** the observable's,
+rescaled by `t`. Hence `measure_readoutCell` — for *every* preparation `μ`, a set of pointer
+readings has exactly the measure `μ` already gave the corresponding observable values: **the
+measurement adds no probability of its own**. Plus
+`untriggeredReadout_injOn_observable`: at `t ≠ 0` the reading *determines* the observable, so
+the record is exact, not merely correlated.
+
 ⚠️ **Scope, and it is why this does not finish `H_int(M)`.** A *chart* witness — `Chart n` is
 globally `ℝ^{2n}`, the arena is not, nothing transports (`R-016`). *Engineered*, not derived
-(`R-015`). **Records here are not yet Born weights**: the measure-theoretic half — that these
-basins carry the moment-map weights, the analogue of `shear_sector_born` — is not redone on
-this flow, and that is the work an arena-level successor would have to do. Uniqueness is not
-proved: the field is linear, so brick 0 would give it from a `LipschitzWith` bound, but that
-bound is not established, so this is *an* integral curve, not *the* one.
+(`R-015`). **The statistics half is FAITHFULNESS, not Born.** There is no moment map in a
+Darboux chart: `shear_sector_born` is a statement about `ℂℙ^{N-1}`, Fubini–Study and the
+Kähler moment map, none of which exist on `Chart n`. Born additionally requires the
+*preparation's* weights to be the moment-map weights — exactly what `ℂℙ^{N-1}` supplies and
+`ℝ^{2n}` cannot. **Measure preservation is also not proved**: the flow is a unit-determinant
+shear and every necessary condition in `MeasurementConstraints.lean` assumes preservation, but
+establishing it needs the linear-map volume API through the product-of-pi structure and is not
+attempted. Uniqueness is not proved either: the field is linear, so brick 0 would give it from
+a `LipschitzWith` bound, but that bound is not established, so this is *an* integral curve, not
+*the* one.
 
 ## 4. ⚠️ Two things this must never be written as
 
