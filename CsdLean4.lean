@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
+public import CsdLean4.Mathlib.Analysis.CStarAlgebra.OperatorConvexCFC
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
 public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1

@@ -1563,6 +1563,28 @@ info: 'ProbabilityTheory.iIndepFun.pairwise_indepFun_indicator_preimage' depends
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.matrix_rpow_concave
 
+-- ★ L.4 (2026-09-01): x^p operator CONVEX on Icc 1 2, and x*log x operator convex.  Both close
+-- named TODOs in Mathlib's own source (Rpow/Order.lean, ExpLog/Order.lean).  The x*log x proof
+-- needs NO new analysis: Tendsto.const_mul on the existing CFC.tendsto_cfc_rpow_sub_one_log,
+-- then isClosed_setOfPred_convexOn.mem_of_tendsto -- the same shape as CFC.concaveOn_log.  The
+-- x^p rung works because rpowIntegrand-12 is affine plus a nonneg multiple of the RESOLVENT,
+-- whose operator convexity is already upstream.
+-- ⚠️ THIS IS NOT DPI.  L.4 is an INPUT to the Effros/Lieb summit (L.5), which is untouched,
+-- absent from Mathlib entirely, and scoped at 3-5 months in specs/lieb-dpi-scoping.md.  The
+-- hDPI hypothesis of strong_subadditivity_of_relEntropy_monotone REMAINS explicit, which is its
+-- recorded terminal status (CL-023, qualified-by-design).
+/-- info: 'OperatorConvexCFC.convexOn_rpow_Ioo12' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms OperatorConvexCFC.convexOn_rpow_Ioo12
+
+/-- info: 'OperatorConvexCFC.convexOn_mul_log' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms OperatorConvexCFC.convexOn_mul_log
+
+/-- info: 'Matrix.matrix_mul_log_convex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.matrix_mul_log_convex
+
 /-! ### Uhlmann fidelity core (Fidelity.lean, 2026-09-01)
 
 The sandwich is PSD, so the spectral definition is real; the headline is SYMMETRY, which

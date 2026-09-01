@@ -13,6 +13,7 @@ public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Exp
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 public import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Order
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
+public import CsdLean4.Mathlib.Analysis.CStarAlgebra.OperatorConvexCFC
 
 /-!
 # `CStarMatrix ↔ Matrix` transport bridge for the operator-convexity ladder
@@ -336,6 +337,40 @@ theorem matrix_rpow_concave {p : ℝ} (hp : p ∈ Set.Icc (0:ℝ) 1) {A B : Matr
       (continuousOn_id.rpow_const fun x _ => Or.inr hp.1)
   rw [← cstar_le_iff]
   simp only [map_add, smul_transport, hrA, hrB, hrC]
+  exact key
+
+/-! ### B.7 — `x log x`, the L.4 rung, transported
+
+`OperatorConvexCFC.convexOn_mul_log` closes an upstream `TODO` C⋆-generically; this puts it on
+the `Matrix` carrier alongside `matrix_log_concave`. ⚠️ It is an **input** to the Effros/Lieb
+summit, not the summit: `hDPI` is untouched (`specs/lieb-dpi-scoping.md`). -/
+
+/-- **L.4 on the matrix carrier.** `A ↦ A · log A` is operator convex on positive-definite
+matrices, in Löwner order. -/
+theorem matrix_mul_log_convex {A B : Matrix n n ℂ} (hA : A.PosDef) (hB : B.PosDef)
+    {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    ((t : ℂ) • A + ((1 : ℂ) - t) • B) * cfc Real.log ((t : ℂ) • A + ((1 : ℂ) - t) • B)
+      ≤ (t : ℂ) • (A * cfc Real.log A) + ((1 : ℂ) - t) • (B * cfc Real.log B) := by
+  have hc : ((1 : ℂ) - (t : ℂ)) = (((1 - t : ℝ)) : ℂ) := by push_cast; ring
+  rw [hc]
+  have hcomb : (((t : ℝ) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B).PosDef := by
+    rw [← hc]; exact convexComb_posDef hA hB ht0 ht1
+  have hcfcA : CStarMatrix.ofMatrixStarAlgEquiv (cfc Real.log A)
+      = CFC.log (CStarMatrix.ofMatrixStarAlgEquiv A) :=
+    (cstar_cfc Real.log hA.1 (logContinuousOn hA)).trans rfl
+  have hcfcB : CStarMatrix.ofMatrixStarAlgEquiv (cfc Real.log B)
+      = CFC.log (CStarMatrix.ofMatrixStarAlgEquiv B) :=
+    (cstar_cfc Real.log hB.1 (logContinuousOn hB)).trans rfl
+  have hcfcC : CStarMatrix.ofMatrixStarAlgEquiv
+        (cfc Real.log ((((t : ℝ)) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B))
+      = CFC.log (CStarMatrix.ofMatrixStarAlgEquiv
+        ((((t : ℝ)) : ℂ) • A + (((1 - t : ℝ)) : ℂ) • B)) :=
+    (cstar_cfc Real.log hcomb.1 (logContinuousOn hcomb)).trans rfl
+  have key := (OperatorConvexCFC.convexOn_mul_log (A := CStarMatrix n n ℂ)).2
+    (cstar_isStrictlyPositive hA) (cstar_isStrictlyPositive hB) ht0
+    (by linarith : (0:ℝ) ≤ 1 - t) (by ring)
+  rw [← cstar_le_iff]
+  simp only [map_add, map_mul, map_smul, hcfcA, hcfcB, hcfcC]
   exact key
 
 /-! ### Non-vacuity witness

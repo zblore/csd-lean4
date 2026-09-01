@@ -29,7 +29,9 @@ consumes; `Integral` section, all instances scoped, no leak to importers). This 
 of the L.3a-interior route-ii wall; the remaining step is the final `x^p` interior assembly
 (integral representation + `integral_concaveOn_of_integrand_ae` over the resolvent family);
 L.2 (operator concavity of `log`) **UNWALLED 2026-08-30 — upstream proved it**, see the L.2
-section; L.4–L.5 **not started**.
+section. ★ **L.4 LANDED 2026-09-01** (`OperatorConvexCFC.convexOn_mul_log` +
+`Matrix.matrix_mul_log_convex`, with its prerequisite `convexOn_rpow_Ioo12`); **L.5 not started
+and NOT recommended** — see `specs/lieb-dpi-scoping.md`.
 
 **Module:** `CsdLean4/Mathlib/Analysis/Matrix/OperatorConvex.lean` (Cat-1, CSD-free,
 natural Mathlib namespace `Matrix`).
@@ -482,7 +484,18 @@ relative entropy) and joint convexity / Lieb concavity. Realistic decomposition:
   partial-trace contraction. Connecting to the existing `relEntropy` definition and
   `strong_subadditivity_of_relEntropy_monotone`'s exact `hDPI` shape is additional plumbing.
 
-**Total remaining to discharge `hDPI`:** order **4–7 working weeks** beyond L.1, the bulk in
+⛔ **RETIRED SIZING — do not plan from the figure below.** It read *"order 4–7 working weeks
+beyond L.1"*. Both halves of that estimate were wrong, in opposite directions, and the
+comparison should never be re-litigated from it (`specs/lieb-dpi-scoping.md`):
+
+* the **cheap half came in far under** — L.2 and L.3a were *transports* of upstream work, and
+  L.4 took hours, not the 3–5 days budgeted, because `x log x` needs no new analysis;
+* the **expensive half is an order of magnitude over** — L.5 (Effros/Lieb) is re-sized at
+  **3–5 months**, tail risk 6+, with *zero* Mathlib precedent for any two-variable result;
+* and the result **already exists** unconditionally in `physlib` on byte-identical pins, so the
+  recommendation is to build neither and keep `hDPI` explicit.
+
+*The original text, retained for the record:* order **4–7 working weeks** beyond L.1, the bulk in
 the shared "integral preserves operator concavity" lemma (unlocks L.2-route-1 + L.3) OR the
 `isClosed`-of-operator-concave + L.3 chain (L.2-route-2), then L.4 + L.5. The single highest-
 leverage next rung is **the operator-concavity closedness lemma + L.3 (`x^p` operator concave,
