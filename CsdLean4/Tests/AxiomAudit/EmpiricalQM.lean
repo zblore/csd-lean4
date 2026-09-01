@@ -525,7 +525,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- with a pure first-factor marginal |ψ⟩⟨ψ| is confined to that pure sector
 -- ((P⊗I)·ρ·(P⊗I) = ρ) — the obstruction to broadcasting a pure state. Built on the
 -- partial-trace module laws + PSD block-vanishing. Foundational triple. The full
--- BCFJS commuting-states theorem is fidelity-gated (deferred QI-infra tranche).
+-- BCFJS commuting-states theorem is DPI-gated (the hDPI hypothesis of
+-- strong_subadditivity_of_relEntropy_monotone), not fidelity-gated.
 /-- info: 'CSD.Empirical.QM.NoBroadcasting.pure_marginal_confinement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.NoBroadcasting.pure_marginal_confinement

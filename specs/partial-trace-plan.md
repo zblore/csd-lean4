@@ -127,9 +127,10 @@ Remaining: E2 no-broadcasting + the general-CPTP E3b (separate tranche).
   Foundational triple, AxiomAudit-pinned.
 
 **Honest scope:** this is the pure-state structural core, NOT the full BCFJS
-commuting-states iff (fidelity / channel-monotonicity-gated; Mathlib lacks
-fidelity / relative entropy / CPTP-Kraus — deferred to the QI-infra tranche with
-E7/E91). The general-CPTP E3b shares that tranche. Partial-trace tranche complete
+commuting-states iff. That is relative-entropy-monotonicity content, gated on the
+`hDPI` hypothesis of `strong_subadditivity_of_relEntropy_monotone` (the operator-convexity
+ladder); `relEntropy` + Klein and the Kraus `Channel` layer are in the corpus, fidelity
+and DPI are not. The general-CPTP E3b shares that tranche. Partial-trace tranche complete
 for now.
 
 ## Honesty

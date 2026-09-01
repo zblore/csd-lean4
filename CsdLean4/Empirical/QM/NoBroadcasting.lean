@@ -17,10 +17,12 @@ public import CsdLean4.LF2.ReducedDensity
 No-broadcasting (Barnum-Caves-Fuchs-Jozsa-Schumacher 1996) generalises no-cloning
 to mixed states: a set of states can be *broadcast* (each marginal of a joint
 output equals the corresponding input) iff the states mutually commute. The full
-iff is fidelity / channel-monotonicity content and is **out of scope** here —
-Mathlib has no fidelity, relative entropy, or CPTP/Kraus machinery (it joins the
-deferred quantum-information-infrastructure tranche alongside E7/E91, see
-`specs/qm-empirical-tests.md`).
+iff is relative-entropy-monotonicity content and is **out of scope** here: BCFJS run
+the argument through `D(ρ₁‖ρ₂) ≥ 2D(ρ₁‖ρ₂)` against channel monotonicity, so the gate is
+the `hDPI` hypothesis of `QuantumInfo.strong_subadditivity_of_relEntropy_monotone`
+(`specs/operator-convexity-plan.md`). The corpus does carry `relEntropy` with Klein's
+inequality (`Mathlib/QuantumInfo/Subadditivity.lean`) and the Kraus `Channel` layer
+(`Mathlib/QuantumInfo/Channel.lean`); what it does not carry is DPI, nor fidelity.
 
 What the partial-trace infrastructure
 (`CsdLean4/Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`) *does* deliver is the
