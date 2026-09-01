@@ -1,8 +1,8 @@
 # The frozen-base obstruction — scoping the `H_int(M)` generation brick
 
-**Status: a scoping doc with its first brick landed.** Brick 0 is ✅ DONE
-(`SigmaLayer/ChartIntegralCurve.lean`, §3); **bricks 1 and 2 are unexecuted, and nothing in
-§2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
+**Status: bricks 0 and 1 landed; brick 2 open.** Brick 0 ✅ DONE
+(`SigmaLayer/ChartIntegralCurve.lean`) and brick 1 ✅ DONE (`SigmaLayer/FrozenBase.lean`),
+both §3. **Brick 2 is unexecuted, and nothing in §2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
 `H_int(M)` row (`specs/BACKLOG.md` row "★★ The dynamical measurement layer (Paper D
 `H_int`)") and the charter's named open question (`specs/CSD-CHARTER.md` §"The open question
 is the one that was always there").
@@ -133,42 +133,41 @@ obstructed on the torus"* is the accurate reading; nothing here revives the with
 `hᵢ = shearAmt(i)·p_R` global reading, and the shear propagator is still not a Hamiltonian
 flow on the arena.
 
-### Brick 1 (M, the actual result) — the frozen-base obstruction
+### Brick 1 — ✅ **DONE 2026-09-01** (`SigmaLayer/FrozenBase.lean`, 3 pins)
 
-State it on `Chart n`, the existing `SigmaLayer/ChartBracket.lean` model, with **both** side
-conditions explicit, because without either the argument dies:
+Stated on `Chart n`, the existing `SigmaLayer/ChartBracket.lean` model, with **both** side
+conditions as explicit hypotheses, because without either the argument dies:
 
 * **H1 — product `ω`.** True on `PointerArena N K := LF4.KSigma N × Pointer K`, a product of
   Kähler factors. **False in general**, and a coupling that geometrically entangles system
-  and apparatus need not split. Without H1 the base component of the Hamiltonian field picks
-  up the fibre derivative through the cross terms and the argument collapses.
-* **H2 — product ready preparation.** True here: `readyPrep p = epistemicMeasure p ⊗
-  readyMeasure` (`RecordLayer/ShearDeIsolation.lean`).
+  and apparatus need not split; then the base component of the field picks up fibre
+  derivatives through the cross terms.
+* **H2 — `C¹`.** `Differentiable ℝ H`. Dropping it *is* the seam horn.
 
-The argument, and the step the first draft got wrong:
+What landed:
 
-`LF4.KSigma N = ℂℙ^{N-1} × T²` is a **full even-dimensional symplectic factor** — base
-positions *and* base momenta both live in `.1`. So (c′) kills **both** halves of
-`(∂_y 𝓗, −∂_x 𝓗)` on the base block: the base-position derivative and the base-momentum
-derivative of `𝓗` both vanish. On a connected chart with `𝓗` of class `C¹` that yields `𝓗`
-**constant in the base**, not locally constant.
+* `clm_apply_eq_sum` / `fderiv_apply_eq_sum` — the gradient expansion
+  `L Δ = Σᵢ Δxᵢ·L(∂xᵢ) + Σᵢ Δyᵢ·L(∂yᵢ)`, the coordinate lemma `ChartBracket` had implicitly
+  needed.
+* `BaseFrozen` — (c′) as a condition on the generator, with `hamiltonianField_base_eq_zero`
+  confirming it *is* the vanishing of the field's base components.
+* ★★ `baseConstant_of_baseFrozen` — the theorem. Segment argument: the difference of two
+  points agreeing off `S` is supported in `S`, a frozen generator annihilates every such
+  direction, so `H` is constant along the segment (`is_const_of_deriv_eq_zero`).
+* ★★ `not_baseFrozen_of_outcomeDependent` — the contrapositive, in the shape the obstruction
+  is used: a generator that *distinguishes* two base sectors sharing their fibre data is not
+  base-frozen. **Its flow must move the base.**
 
-⚠️ *The withdrawn draft concluded "locally constant, hence discontinuous, hence seams." That
-is circular: locally-constant-with-seams is what you get only by weakening `C¹` off a seam
-set, i.e. by assuming ¬(a) to derive ¬(a).* The corrected conclusion is **stronger**:
+`LF4.KSigma N = ℂℙ^{N-1} × T²` is a full even-dimensional symplectic factor, so base
+positions *and* momenta live in the base slot and (c′) kills **both** halves of
+`(∂_y 𝓗, −∂_x 𝓗)`. The conclusion is base-**constant**, not locally constant — which is
+what makes the argument non-circular (§5, last row).
 
-> base-constant `𝓗` ⇒ the fibre flow is identical at every base point ⇒ with a product ready
-> state (H2) the final pointer cannot depend on the outcome index ⇒ **no correlation**.
-
-That is (a) ∧ (c′) ⇒ ¬(b), and it is a real theorem shape.
-
-**What it would buy.** It converts two standing prose observations into a theorem:
-`ShearWitness.lean`'s *"the property that makes this witness work, `ẋ_sel ∝ ∇ι = 0`, is
-exactly the property that prevents collapse"*, and `PointerGeneration.lean`'s *"the
-suppressed horizontal component is register back-reaction, and
-`pointerEvolve_base_marginal_unchanged` is **its fingerprint**"*. **Frame the brick as
-upgrading an existing observation, not as a new diagnosis** — both are already in module
-docstrings, and one of them is already the contrapositive of the conclusion.
+⚠️ **This does not say back-reaction is required**, and does not say the corpus's witnesses
+are defective. `JointFlowTransfer.lean` proves the other direction: a genuine lift *does*
+move the base, and back-reaction is harmless to records and Born. Both are theorems; the
+corpus is not forced onto either horn. And it is a chart statement — nothing transports to
+the arena, and `H_int(M)` is untouched on both halves (`R-015`, `R-016`).
 
 ### Brick 2 (research, unbounded) — the untriggered flow
 

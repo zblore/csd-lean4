@@ -2722,6 +2722,37 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.conserved_along_translationCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conserved_along_translationCurve
 
+-- FrozenBase (2026-09-01, SigmaLayer/FrozenBase.lean; frozen-base scoping brick 1). THE
+-- OBSTRUCTION: (a) C1 generator on a Darboux chart AND (c') a pointwise-frozen base IMPLIES
+-- (b) fails -- no outcome-dependent generator.
+-- ★★ baseConstant_of_baseFrozen — a base-frozen differentiable H takes the SAME VALUE at any
+-- two points agreeing off the base block. Segment argument: the difference of two such points
+-- is supported in S, a frozen generator annihilates every such direction, so H is constant
+-- along the segment (is_const_of_deriv_eq_zero).
+-- ★★ not_baseFrozen_of_outcomeDependent — the contrapositive, the shape the obstruction is
+-- used in: a generator that DISTINGUISHES two base sectors sharing their fibre data is NOT
+-- base-frozen. Its flow must move the base.
+-- ★ WHY BOTH PARTIALS. KSigma = CP^{N-1} x T^2 is a FULL even-dimensional symplectic factor,
+-- so base positions AND base momenta both live in the base slot and (c') kills both halves of
+-- (d_y H, -d_x H). The conclusion is base-CONSTANT, not locally constant. Reading (c') as
+-- killing one partial gives "locally constant with seams", which assumes not-(a) to derive
+-- not-(a) -- circular. That was the withdrawn first draft.
+-- ⚠️ SCOPE, and it is load-bearing. TWO side conditions, both explicit hypotheses: PRODUCT
+-- omega (true of PointerArena, FALSE in general -- an entangling coupling need not split, and
+-- then the base field picks up fibre derivatives through cross terms) and C1 (dropping it IS
+-- the seam horn). AND THIS DOES NOT SAY BACK-REACTION IS REQUIRED: JointFlowTransfer proves
+-- the other direction, that a genuine lift moves the base and back-reaction is harmless to
+-- records and Born. Both are theorems; the corpus is not forced onto either horn. Chart
+-- statement only -- nothing transports to the arena.
+/-- info: 'CSD.SigmaLayer.baseConstant_of_baseFrozen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.baseConstant_of_baseFrozen
+
+/-- info: 'CSD.SigmaLayer.not_baseFrozen_of_outcomeDependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.not_baseFrozen_of_outcomeDependent
+
+/-- info: 'CSD.SigmaLayer.fderiv_apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.fderiv_apply_eq_sum
+
 /-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
 
