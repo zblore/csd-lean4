@@ -1581,6 +1581,29 @@ they need a polar decomposition, absent from the pin. -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.fidelity_comm
 
+/-! ### Kahler chart-form identification (KahlerPotential.lean, 2026-09-01)
+
+extDeriv_fsChartForm previously asserted closedness of a form whose pointwise value was never
+computed anywhere. fsChartForm_apply supplies the second-derivative computation on
+log(1 + |z|^2) -- the residue the module named as NOT ATTEMPTED -- and fsChartForm_zero
+identifies the result at the chart origin with the constant fundamental form of KahlerForm.lean
+up to the normalisation -4. So the closedness is now closedness of an identified object. -/
+/-- info: 'Kahler.hasFDerivAt_fsPotential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.hasFDerivAt_fsPotential
+
+/-- info: 'Kahler.dcForm_fsPotential_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.dcForm_fsPotential_apply
+
+/-- info: 'Kahler.fsChartForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.fsChartForm_apply
+
+/-- info: 'Kahler.fsChartForm_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.fsChartForm_zero
+
 /-! ### Projective one-parameter lift (ProjectiveLift.lean, 2026-09-01)
 
 A continuous projective one-parameter unitary group in finite dimensions has a COBOUNDARY
