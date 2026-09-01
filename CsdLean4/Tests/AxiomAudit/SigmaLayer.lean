@@ -2753,6 +2753,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.fderiv_apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.fderiv_apply_eq_sum
 
+-- UntriggeredFlow (2026-09-01, SigmaLayer/UntriggeredFlow.lean; frozen-base scoping brick 2).
+-- BACKLOG row 350 closes on "the relocation is not the obstacle; the TRIGGER is". This is the
+-- one-stroke counterpart: ONE Hamiltonian H(z) = (sum_i c_i x_i) * y_k with c k = 0, ONE flow,
+-- no readout trigger and no second stroke. The ontic analogue of von Neumann's A (x) p.
+-- ★★ untriggeredCurve_isHamiltonianCurve — the closed-form curve IS an integral curve.
+-- ★ untriggeredCurve_records — the pointer displacement is exactly t * (measured base value).
+-- ★ untriggeredCurve_backreacts / _backreaction_ne — the base MOMENTA move at -c_i*y_k, and
+-- genuinely so at any t != 0 with a non-trivial coupling. The base POSITIONS do not move
+-- (untriggeredCurve_fst_ne), so the measured value stays repeatable while its conjugate
+-- absorbs the disturbance: "measurement disturbs the conjugate variable", computed.
+-- ★ not_baseFrozen_interactionH — CLOSES THE LOOP WITH BRICK 1. FrozenBase says an
+-- outcome-dependent C1 generator MUST move the base; this exhibits one that does and computes
+-- how much. The two modules are the two directions of one statement.
+-- ⚠️ SCOPE. A CHART witness: Chart n is globally R^{2n}, the arena is not, nothing transports
+-- (R-016). ENGINEERED, not derived -- which interaction an apparatus realises is a permanent
+-- boundary (R-015). Records here are NOT yet Born weights: the measure-theoretic half
+-- (basins carrying moment-map weights, cf. shear_sector_born) is NOT redone on this flow.
+-- Uniqueness is NOT proved -- the field is linear so brick 0 would give it from a Lipschitz
+-- bound, but that bound is not established, so this is AN integral curve, not THE one.
+-- This does NOT close H_int(M) on either half.
+/-- info: 'CSD.SigmaLayer.untriggeredCurve_isHamiltonianCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_isHamiltonianCurve
+
+/-- info: 'CSD.SigmaLayer.untriggeredCurve_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_records
+
+/-- info: 'CSD.SigmaLayer.untriggeredCurve_backreaction_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_backreaction_ne
+
+/-- info: 'CSD.SigmaLayer.not_baseFrozen_interactionH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.not_baseFrozen_interactionH
+
 /-- info: 'CSD.SigmaLayer.weight_conserved_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.weight_conserved_of_disjoint
 

@@ -361,6 +361,7 @@ CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/RecordLayer/ApproxProjectability.lean:1
 CsdLean4/SigmaLayer/ChartIntegralCurve.lean:1
 CsdLean4/SigmaLayer/FrozenBase.lean:1
+CsdLean4/SigmaLayer/UntriggeredFlow.lean:1
 CsdLean4/SigmaLayer/FiniteQMClosure.lean:1
 CsdLean4/RecordLayer/MeasurementCapstone.lean:2
 CsdLean4/RecordLayer/MixedLuders.lean:1
@@ -418,6 +419,7 @@ CsdLean4/RecordLayer/PovmSectorBorn.lean|none
 CsdLean4/RecordLayer/RecordLayerClosure.lean|none
 CsdLean4/SigmaLayer/ChartIntegralCurve.lean|none
 CsdLean4/SigmaLayer/FrozenBase.lean|none
+CsdLean4/SigmaLayer/UntriggeredFlow.lean|none
 CsdLean4/SigmaLayer/FiniteQMClosure.lean|none
 CsdLean4/Tests/AxiomAudit/MathlibStaging.lean|none
 CsdLean4/Tests/AxiomAudit/SigmaLayer.lean|none
@@ -557,6 +559,7 @@ kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal
 coupling_hamiltonian_duality
 hamiltonianField_base_eq_zero
+untriggeredCurve_isHamiltonianCurve
 hamiltonianCurve_unique
 momentumH_hamiltonianField
 translationCurve_isHamiltonianCurve

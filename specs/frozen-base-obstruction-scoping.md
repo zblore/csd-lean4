@@ -1,8 +1,8 @@
 # The frozen-base obstruction — scoping the `H_int(M)` generation brick
 
-**Status: bricks 0 and 1 landed; brick 2 open.** Brick 0 ✅ DONE
-(`SigmaLayer/ChartIntegralCurve.lean`) and brick 1 ✅ DONE (`SigmaLayer/FrozenBase.lean`),
-both §3. **Brick 2 is unexecuted, and nothing in §2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
+**Status: all three bricks landed.** Brick 0 (`SigmaLayer/ChartIntegralCurve.lean`), brick 1
+(`SigmaLayer/FrozenBase.lean`), brick 2 (`SigmaLayer/UntriggeredFlow.lean`), all §3.
+**Nothing in §2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
 `H_int(M)` row (`specs/BACKLOG.md` row "★★ The dynamical measurement layer (Paper D
 `H_int`)") and the charter's named open question (`specs/CSD-CHARTER.md` §"The open question
 is the one that was always there").
@@ -169,18 +169,32 @@ move the base, and back-reaction is harmless to records and Born. Both are theor
 corpus is not forced onto either horn. And it is a chart statement — nothing transports to
 the arena, and `H_int(M)` is untouched on both halves (`R-015`, `R-016`).
 
-### Brick 2 (research, unbounded) — the untriggered flow
+### Brick 2 — ✅ **DONE 2026-09-01** (`SigmaLayer/UntriggeredFlow.lean`, 4 pins)
 
-The open object per W3: a single Liouville-preserving flow that creates the record **and**
-relocates the epistemic slice in one stroke, removing the readout trigger.
+`BACKLOG.md` row 350 closes on *"the relocation is not the obstacle; the **trigger** is."*
+Brick 1 says why one stroke could not do both with the base frozen. This is the converse
+witness: **one** Hamiltonian, **one** flow, no trigger, no second stroke.
 
-Prices already known, and not bought out by merging the strokes: `no_exact_collapse`
-(`RecordLayer/MeasurementConstraints.lean`) — a measure-preserving map cannot contract a
-positive-measure set into a null one, so update stays *relocation of a Liouville-null slice*,
-never contraction; and `collapse_accuracy_bound` prices exactness in ready-state
-improbability.
+  `𝓗(z) = (Σᵢ cᵢ xᵢ)·y_k`,  `c k = 0` — the ontic analogue of von Neumann's `Â ⊗ p̂`
 
----
+* ★★ `untriggeredCurve_isHamiltonianCurve` — the closed-form curve *is* an integral curve.
+* ★ `untriggeredCurve_records` — the pointer's displacement is exactly `t ·` the measured
+  base value. The record, computed.
+* ★ `untriggeredCurve_backreacts` / `_backreaction_ne` — the base **momenta** move at
+  `−cᵢ·y_k`, genuinely so at any `t ≠ 0`. The base **positions** do not
+  (`untriggeredCurve_fst_ne`), so the measured value stays repeatable while its conjugate
+  absorbs the disturbance — "measurement disturbs the conjugate variable", as a computation.
+* ★ `not_baseFrozen_interactionH` — **the loop with brick 1 closes.** Brick 1 says an
+  outcome-dependent `C¹` generator must move the base; this exhibits one that does and
+  computes how much. Two directions of one statement.
+
+⚠️ **Scope, and it is why this does not finish `H_int(M)`.** A *chart* witness — `Chart n` is
+globally `ℝ^{2n}`, the arena is not, nothing transports (`R-016`). *Engineered*, not derived
+(`R-015`). **Records here are not yet Born weights**: the measure-theoretic half — that these
+basins carry the moment-map weights, the analogue of `shear_sector_born` — is not redone on
+this flow, and that is the work an arena-level successor would have to do. Uniqueness is not
+proved: the field is linear, so brick 0 would give it from a `LipschitzWith` bound, but that
+bound is not established, so this is *an* integral curve, not *the* one.
 
 ## 4. ⚠️ Two things this must never be written as
 
