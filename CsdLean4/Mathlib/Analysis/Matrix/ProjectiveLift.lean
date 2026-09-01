@@ -143,7 +143,7 @@ theorem exists_continuous_phase_trivialisation (hN : 0 < N)
     rw [hstar s t] at h
     have htr : (U (s + t) * star (U s * U t)).trace = c s t * N := by
       rw [h, Matrix.trace_smul, Matrix.trace_one]
-      simp [Finset.card_univ, mul_comm]
+      simp
     rw [htr]
     field_simp
   have hccont : Continuous fun p : ℝ × ℝ => c p.1 p.2 := by
