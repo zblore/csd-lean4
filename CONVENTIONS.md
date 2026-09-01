@@ -443,9 +443,11 @@ nothing forces an update when the world changes.
   (e.g. R-007, the interpretive §14 labelling) are permanent by design and never close.
 * **Claims that *Mathlib* lacks something** are governed separately, by
   `scripts/check-mathlib-absence.sh` (in CI). Such a claim names the token it asserts
-  absent — `MATHLIB-ABSENT(CFC.concaveOn_log)`, `MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)`
-  — and the guard **fails when the token appears in the pin**, so the alarm fires the
-  week upstream lands it. Prefer the namespace-qualified form (it discriminates:
+  absent — written `MATHLIB-ABSENT(Namespace.declName)` or
+  `MATHLIB-ABSENT(file:Mathlib/Some/Area)` — and the guard **fails when the token appears
+  in the pin**, so the alarm fires the week upstream lands it. (Illustrations here are
+  deliberately not written as live tags: the guard checks tags wherever they appear,
+  including in this file, and it flagged its own worked example on first run.) Prefer the namespace-qualified form (it discriminates:
   `ContinuousAlternatingMap.domCoprod` is absent where `AlternatingMap.domCoprod` is
   not). ⚠️ `@[to_additive]` twins do not exist in source under their additive name —
   tag the multiplicative declaration. Every live row of `MATHLIB-GAPS.md`'s "Genuine
