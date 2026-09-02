@@ -1040,4 +1040,30 @@ The unitarity proofs cite only the foundational triple; the
 -- Mathlib/QuantumInfo/Reversible/Lift.lean; pinned in the MathlibStaging part as
 -- Reversible.ccxAtMat_lifts_denote.
 
+/-! ### Wigner–Araki–Yanase (Empirical/QM/WignerArakiYanase.lean, brick 0 of
+`specs/way-theorem-scoping.md`): master identity, off-diagonal vanishing under Yanase-or-repeatable,
+the ONB commutation theorem and its no-go contrapositive; CNOT non-vacuity (repeatability disjunct,
+pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails). -/
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.arakiYanase_identity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.arakiYanase_identity
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.arakiYanase_offDiag_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.arakiYanase_offDiag_eq_zero
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.wigner_araki_yanase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.wigner_araki_yanase
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.no_exact_record_of_not_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.no_exact_record_of_not_commute
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.way_hypotheses_satisfiable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.way_hypotheses_satisfiable
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.swap_exact_record_not_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.swap_exact_record_not_commute
+
+/-- info: 'CSD.Empirical.QM.WignerArakiYanase.sigmaX_no_exact_conserving_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.sigmaX_no_exact_conserving_record
+
 end CSD.Tests.AxiomAudit

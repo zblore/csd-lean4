@@ -171,13 +171,15 @@ lemma transProb_mk {v w : E} (hv : v ≠ 0) (hw : w ≠ 0) :
 
 variable {N : ℕ}
 
-/-- Unitary inner-product preservation on `EuclideanSpace ℂ (Fin N)`:
+/-- Unitary inner-product preservation on `EuclideanSpace ℂ n` for ANY finite index
+type (`Fin N` for one register, `Fin 2 × Fin 2` for two qubits):
 `⟪U v, U w⟫ = ⟪v, w⟫` for `U` a matrix-unitary, where the action is the
 `toEuclideanLin` of the matrix. Routes through
 `EuclideanSpace.inner_eq_star_dotProduct`, `star_mulVec`, and the unitary
-relation `Uᴴ * U = 1`. -/
-lemma inner_toEuclideanLin_unitary
-    (U : Matrix.unitaryGroup (Fin N) ℂ) (v w : EuclideanSpace ℂ (Fin N)) :
+relation `Uᴴ * U = 1`. Index-generic (the former Incubator sibling
+`inner_toEuclideanLin_unitary'` was folded here, rule of two; `R-014` closed). -/
+lemma inner_toEuclideanLin_unitary {n : Type*} [Fintype n] [DecidableEq n]
+    (U : Matrix.unitaryGroup n ℂ) (v w : EuclideanSpace ℂ n) :
     (inner ℂ (Matrix.toEuclideanLin U.val v)
         (Matrix.toEuclideanLin U.val w) : ℂ)
       = inner ℂ v w := by

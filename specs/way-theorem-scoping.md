@@ -1,9 +1,11 @@
 # The Wigner–Araki–Yanase theorem — scoping the conservation-law measurement brick
 
-**Status: SCOPED 2026-09-02, no Lean written.** Written against HEAD `8b99293` for
-`specs/BACKLOG.md` "Expert-review additions — 2026-09-02", row **A**. Two theorems and one
-finding are scoped (§3); the finding (§2 W5–W6) is the part that matters for the record layer
-and is the reason to scope before building. **Nothing in §2–§4 is a corpus claim.**
+**Status: brick 0 LANDED (`Empirical/QM/WignerArakiYanase.lean`, 7 pins); brick 1 awaits the
+author's placement decision (§3, "Landed" note); brick 2 deferred behind row B.** Written against
+HEAD `8b99293` for `specs/BACKLOG.md` "Expert-review additions — 2026-09-02", row **A**; scoped
+first, then built. Two theorems and one finding were scoped (§3); the finding (§2 W5–W6) is the part
+that matters for the record layer and is the reason the spec preceded the Lean. **§2 W3–W7 and §4
+are scope prose, not corpus claims; the corpus claims are the theorem names in §3 brick 0.**
 
 ⚠️ **This is not an `H_int` brick and must not be filed as one.** The `H_int(M)` arc is at its
 paper-side end state (`frozen-base-obstruction-scoping.md`; `R-016`). WAY is a *measurement-theory*
@@ -31,7 +33,9 @@ Three things, in decreasing order of Lean content:
 2. **The CSD reading**, which is a *scope* statement and must be built as one: the constructed
    stroke is a skew-product map on the arena `ℂℙ^{N−1} × T² × ℂℙ^N`, not a linear isometry on a
    tensor product `HS ⊗ HA`, and no additive `L_S ⊗ 1 + 1 ⊗ L_A` is modelled — so **WAY's
-   hypotheses have no instance in the model**. Sharper still: the fibrewise witness freezes the
+   hypotheses have no instance at the record layer** (the LF5 `vnUnitary` tier *does* meet them,
+   with an engineered `L`, and WAY's conclusion holds there trivially — brick 0's non-vacuity
+   witness). Sharper still: the fibrewise witness freezes the
    base (`pointerEvolve_fst`), so it conserves *every* function of the base — the context rates
    (`IsJointLift.rate_conserved`) and equally the non-commuting `rotatedProj` expectation — while
    recording the context observable exactly on the shrunk cells. That combination is exactly what
@@ -77,17 +81,19 @@ measurement unitary: `LF5.vnUnitary 2` **is** CNOT (the adder permutation `(j,k)
 mod 2; `vnUnitary_unitary`). The additive conserved quantity `L = Z ⊗ₖ 1 + 1 ⊗ₖ X` is a
 `Matrix.kronecker` at the right type with no extraction needed; `Commute (vnUnitary 2) L` is a
 `fin_cases`/`simp` computation. ⚠️ `tensorEuc` (`Empirical/QM/Algorithms/HadamardTest.lean`) is
-*same-index* `κ × κ` and is not what WAY wants; if the vector-level instance is ever needed, a
-two-index `EuclideanSpace ℂ κ → EuclideanSpace ℂ ι → EuclideanSpace ℂ (κ × ι)` with its
-`inner_tensorEuc` would be the rule-of-two extraction (CONVENTIONS §9). **Prefer the matrix-level
-witness and do not extract.**
+*same-index* `κ × κ`; for the abstract theorem (two different factors `HS`, `HA`) that is the wrong
+shape, but for the two-qubit witnesses both factors *are* `Fin 2`, so `tensorEuc`/`inner_tensorEuc`
+are exactly right and were reused (this is what landed). If a witness with different factor
+dimensions is ever needed, a two-index `EuclideanSpace ℂ κ → EuclideanSpace ℂ ι →
+EuclideanSpace ℂ (κ × ι)` would be the rule-of-two extraction (CONVENTIONS §9); **do not extract
+before then.**
 
 ### W3 — The CSD statement is a triviality and must be built as one.
 
 What can be said in Lean about the CSD side is two lines (`jointLift_base` / `pointerEvolve_fst`
 plus `rate_conserved`). Inflating it into a module or a capstone would violate CONVENTIONS §8.3b
-(capstone discipline) and the placeholder rule. The honest shape is **one corollary inside the WAY
-module**, in a clearly labelled `CSD reading` section, whose docstring says what it is: *the
+(capstone discipline) and the placeholder rule. The honest shape is **one corollary in
+`Empirical/CSD/`** (layer order; §3 Placement) — or prose only — whose docstring says what it is: *the
 stroke is not a tensor-product isometry and models no additive conserved quantity, so the
 theorem's hypotheses have no instance here; the fibrewise witness conserves every base function,
 commuting or not, and records exactly — the combination WAY forbids where it applies*. Its value
@@ -139,9 +145,11 @@ observable exactly on the shrunk cells (`born_lower`/`born_upper`). `jointLift c
 base only along its moment fibre by a diagonal-phase unitary (`jointLift_base`), conserving every
 torus-invariant base function for every shift and every base function at `Δ = 0` (`jointLift_zero`).
 **That combination — exact record of `A` plus conservation of a system quantity not commuting with
-`A` — is precisely what WAY forbids for tensor-product isometries**, and it is available here
-because no additive `L_S ⊗ 1 + 1 ⊗ L_A` and no linear joint dynamics is modelled (W7). So WAY's
-hypotheses have no instance, and WAY cannot be the *source* of any cost the trilemma records. ⚠️
+`A` — is precisely what WAY forbids for tensor-product isometries** (unconditionally: conserving
+a system quantity itself is the `L_A = 0` case, where the Yanase side condition holds trivially),
+and it is available here because no additive `L_S ⊗ 1 + 1 ⊗ L_A` and no linear joint dynamics is
+modelled (W7). So WAY's hypotheses have no record-layer instance, and WAY cannot be the *source*
+of any cost the trilemma records. ⚠️
 The first draft argued this from "everything conserved commutes with the context" — false of the
 fibrewise witness (§5); the conclusion stands on W7's reason, not on that one.
 
@@ -174,9 +182,11 @@ Formalising Ozawa's bound needs the **noise-operator** formalism (`N = M_out −
 inequality (expert-review row **B**). So quantitative WAY is a *corollary-level* brick **after** B,
 never before it, and never as its own infrastructure.
 
-### W7 — The honest boundary: the model has no additive apparatus quantity.
+### W7 — The honest boundary: the record layer has no additive apparatus quantity.
 
-"WAY has no instance here" means exactly: *the theorem's hypotheses are not met by the model* —
+"WAY has no instance here" means exactly: *the theorem's hypotheses are not met by the
+record-layer stroke* (the LF5 `vnUnitary` coupling is a tensor-product isometry and meets them
+with an engineered `L`; there WAY's conclusion holds and constrains nothing) —
 the stroke is not a linear isometry on `HS ⊗ HA` and no additive conserved `L_S ⊗ 1 + 1 ⊗ L_A`
 is modelled. It does **not** mean the CSD apparatus has been shown to carry its share of a
 physical conserved quantity (energy, angular momentum) through a measurement that does not
@@ -228,7 +238,50 @@ Cost driver: the `Fin 2 × Fin 2` kronecker computations (`vnUnitary` is a permu
 built from `Equiv.Perm`; `Matrix.kroneckerMap` on `Fin 2`); the abstract theorem itself is short.
 **Do not** build a general measurement-model structure for this; the hypotheses are the structure.
 
-### Brick 1 — the CSD reading (S; a `section` of brick 0's module, not a module)
+**Landed** (`Empirical/QM/WignerArakiYanase.lean`, namespace `CSD.Empirical.QM.WignerArakiYanase`;
+pins in `Tests/AxiomAudit/EmpiricalQM.lean`). Deviations from the list above, all deliberate:
+
+* `arakiYanase_identity` is stated as a separate theorem (the master identity itself, with no side
+  condition), and `arakiYanase_offDiag_eq_zero` takes the disjunction `Yanase ∨ repeatable` as one
+  hypothesis rather than two theorems. `wigner_araki_yanase` asks its record hypotheses only
+  *across distinct eigenvalues* `α i ≠ α j`, so a degenerate `A` is covered; the operators are
+  `Module.End ℂ HS` and the conclusion is `Commute A L_S` via `Basis.ext` on `b.toBasis`.
+* **The no-go instance is built on `sigmaX`/`sigmaZ` (`Contextuality/MerminPeres.lean`), not on
+  `rotatedProj`**: importing `Empirical/CSD/PointerCommutation.lean` into an Empirical/QM module would
+  invert the layer order (QM twins are QM-generic, "no CSD ontology"). `rotatedProj_not_commute` is
+  cross-referenced in prose only, and the "one linearity lemma" `qmZ = 1 − (2/π)·contrastH` was not
+  needed: `sigmaX_no_exact_conserving_record` runs `arakiYanase_offDiag_eq_zero` directly on the
+  unnormalised eigenvectors `(1, 1)`, `(1, −1)` (`xPlus`, `xMinus`) with
+  `⟨(1,1), σ_z (1,−1)⟩ = 2 ≠ 0`, concluding that *both* escape routes are closed (pointer violates
+  Yanase **and** record is non-repeatable) for any `L_A`.
+* **Non-vacuity is an existential, not a `Commute Z Z` capstone**: `way_hypotheses_satisfiable`
+  exhibits `tensorEuc`, `chargeZX = σ_z ⊗ₖ 1 + 1 ⊗ₖ σ_x`, `L_A = σ_x`, CNOT (`vnUnitary 2`), `|0⟩`,
+  `φ j = ξ' j = |j⟩` satisfying every hypothesis of `wigner_araki_yanase` **and** `⟨0|σ_x|1⟩ ≠ 0`
+  (the pointer fails Yanase, so the repeatability disjunct carries the instance). Building blocks:
+  `chargeZX_mul_cnot` (the `cnot_commute_additive` above), `chargeZX_cnot`, `chargeZX_tensorEuc`,
+  `inner_cnot`, `cnot_record`, `cnot_pointer_not_yanase`.
+* **Sharpness** `swap_exact_record_not_commute` is likewise existential: SWAP (`swapMap`, already in
+  `HadamardTest.lean`, not a fresh `Equiv.prodComm` matrix), `chargeZZ`, ready state `|0⟩`, records
+  `|0⟩ ⊗ (1, ±1)` — every hypothesis of `arakiYanase_offDiag_eq_zero` except `hside`, with
+  `⟨a, σ_z a'⟩ = 2 ≠ 0` **and** both disjuncts of `hside` false.
+* Rule of two, executed early: `Projectivization.inner_toEuclideanLin_unitary` was generalised in
+  place to any finite index type (the isometry of CNOT on `Fin 2 × Fin 2`), closing `R-014`
+  ahead of its consumer-count trigger because a stable-layer module may not import the Incubator
+  prime. `inner_swapMap` was added beside `swapMap` (API-first, CONVENTIONS §9.1);
+  `toEuclideanLin_kronecker_tensorEuc` lives in the WAY module to keep `Kronecker` out of the
+  Hadamard-test import chain.
+* The twins-board row is **ER1** in `qm-empirical-tests.md` (not "E1" as written above).
+
+### Brick 1 — the CSD reading (S; placement open — see ⚠️ below)
+
+⚠️ **Placement, found at brick 0's landing:** brick 1 cannot be a section of brick 0's module
+after all. Its ingredients (`jointLift_base`, `pointerEvolve_fst`, `rotatedProj`) live in
+`RecordLayer/` and `Empirical/CSD/`, and importing them into `Empirical/QM/WignerArakiYanase.lean`
+would invert the layer order (QM twins are QM-generic by category). If built, it belongs in
+`Empirical/CSD/` (a short section of `PointerCommutation.lean`, which already holds
+`pointerEvolve`/`rotatedProj` material, or a small `Empirical/CSD/WignerArakiYanase.lean` twin
+importing the QM module). The prose-only alternative is already in place: brick 0's docstring
+carries the W5/W7 boundary in substance ("Where this sits relative to CSD").
 
 * `jointLift_base_invariant_conserved` — for `f : LF4.CPN N → α` with
   `∀ g p, f (phaseUnitary g • p) = f p`, `f (jointLift c ε Δ y).1.1 = f y.1.1`
@@ -244,8 +297,10 @@ built from `Equiv.Perm`; `Matrix.kroneckerMap` on `Fin 2`); the abstract theorem
 
 ⚠️ **Author decision**: brick 1 could equally be **prose only** in brick 0's docstring plus this
 doc, with no theorem — the theorem is two lines and its only value is a machine-checked pointer.
-Default here is to include it *as a section* (the pointer is worth two lines; a module would not
-be).
+Default now: **prose only**, per the Placement note above (the two lemmas are `rfl` consequences
+of `pointerEvolve_fst` / `jointLift_base`, and a named `pointerEvolve_conserves_rotatedProj_…`
+beside a WAY theorem is exactly the witness a reader would misread as "CSD evades WAY", §4); if
+built, two lemmas in `Empirical/CSD/PointerCommutation.lean`, never a module.
 
 ### Brick 2 — quantitative WAY (L; **deferred behind row B**)
 
@@ -259,8 +314,9 @@ Not started by this scoping; not queued until B lands.
 ## 4. ⚠️ What this must never be written as
 
 * **"CSD derives / explains the WAY theorem."** WAY is a QM theorem about isometries on a tensor
-  product; the CSD stroke is *consistent* with it because it conserves only what it reads. No
-  derivation, no explanation — the theorem is stated on the QM side and the CSD side is a scope
+  product; the CSD stroke sits *outside its hypotheses* (no tensor-product isometry, no additive
+  `L`; W7) — not "consistent because it conserves only what it reads", which was withdrawn (§5).
+  No derivation, no explanation — the theorem is stated on the QM side and the CSD side is a scope
   check.
 * **"The trilemma is the WAY theorem."** W5. The trilemma's price is topological and
   measure-theoretic; WAY's is a conservation law. Do not let the shared conclusion ("exactness is
@@ -301,7 +357,7 @@ attributions in §6.
 ## 6. References
 
 Corpus: `specs/BACKLOG.md` (expert-review table, row A; NEXT STEPS item 1);
-`specs/future-work.md` ("Pillar completeness", MT-1); `specs/qm-empirical-tests.md` §3.3b (E1);
+`specs/future-work.md` ("Pillar completeness", MT-1); `specs/qm-empirical-tests.md` §3.3b (ER1);
 `specs/frozen-base-obstruction-scoping.md` (the arc this is *not* part of);
 `specs/residues.tsv` (`R-015`, the boundary W7 sits on).
 Theorems cross-linked: `IsJointLift.rate_conserved`, `isJointLift_jointLift`, `jointLift_base`,

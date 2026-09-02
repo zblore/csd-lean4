@@ -355,6 +355,15 @@ lemma swapMap_tensorEuc (ψ φ : EuclideanSpace ℂ κ) :
   obtain ⟨i, j⟩ := p
   rw [swapMap_apply, tensorEuc_apply, tensorEuc_apply, mul_comm]
 
+/-- `swapMap` preserves the inner product: it is a coordinate permutation, so the coordinate
+sum `∑ (i,j)` is merely reordered (`Finset.sum_comm`). -/
+lemma inner_swapMap (x y : EuclideanSpace ℂ (κ × κ)) :
+    inner ℂ (swapMap x) (swapMap y) = inner ℂ x y := by
+  simp only [inner_eq_sum, Fintype.sum_prod_type]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+  rw [swapMap_apply, swapMap_apply]
+
 /-- **Tensor unit norm:** `‖ψ⊗φ‖ = 1` for unit `ψ, φ` (via `‖ψ⊗φ‖² = ‖ψ‖²·‖φ‖²`). -/
 lemma tensorEuc_norm_one (ψ φ : EuclideanSpace ℂ κ) (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
     ‖tensorEuc ψ φ‖ = 1 := by

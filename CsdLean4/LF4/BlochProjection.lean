@@ -82,7 +82,7 @@ lemma blochProj_nonneg (a : EuclideanSpace ℂ (Fin N)) (p : CPN N) : 0 ≤ bloc
 lemma toEuclideanLin_unitary_norm (U : Matrix.unitaryGroup (Fin N) ℂ)
     (v : EuclideanSpace ℂ (Fin N)) :
     ‖(Matrix.toEuclideanLin U.val) v‖ = ‖v‖ := by
-  have h := Projectivization.inner_toEuclideanLin_unitary (N := N) U v v
+  have h := Projectivization.inner_toEuclideanLin_unitary U v v
   rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at h
   have h2 : ‖(Matrix.toEuclideanLin U.val) v‖ ^ 2 = ‖v‖ ^ 2 := by exact_mod_cast h
   have := norm_nonneg ((Matrix.toEuclideanLin U.val) v)
