@@ -1,11 +1,11 @@
 # The Wigner–Araki–Yanase theorem — scoping the conservation-law measurement brick
 
-**Status: brick 0 LANDED (`Empirical/QM/WignerArakiYanase.lean`, 7 pins); brick 1 awaits the
-author's placement decision (§3, "Landed" note); brick 2 deferred behind row B.** Written against
+**Status: bricks 0 and 1 LANDED (`Empirical/QM/WignerArakiYanase.lean`, 7 pins;
+`Empirical/CSD/WignerArakiYanase.lean`, 7 pins — §3); brick 2 deferred behind row B.** Written against
 HEAD `8b99293` for `specs/BACKLOG.md` "Expert-review additions — 2026-09-02", row **A**; scoped
 first, then built. Two theorems and one finding were scoped (§3); the finding (§2 W5–W6) is the part
 that matters for the record layer and is the reason the spec preceded the Lean. **§2 W3–W7 and §4
-are scope prose, not corpus claims; the corpus claims are the theorem names in §3 brick 0.**
+are scope prose, not corpus claims; the corpus claims are the theorem names in §3 bricks 0–1.**
 
 ⚠️ **This is not an `H_int` brick and must not be filed as one.** The `H_int(M)` arc is at its
 paper-side end state (`frozen-base-obstruction-scoping.md`; `R-016`). WAY is a *measurement-theory*
@@ -40,7 +40,8 @@ Three things, in decreasing order of Lean content:
    (`IsJointLift.rate_conserved`) and equally the non-commuting `rotatedProj` expectation — while
    recording the context observable exactly on the shrunk cells. That combination is exactly what
    WAY forbids for tensor-product isometries; it is available here because the stroke is not one.
-   One corollary at most, not a module (§2 W3).
+   Built as the twin module `Empirical/CSD/WignerArakiYanase.lean` at the `IsJointLift` level
+   (§2 W3, §3 brick 1) — the `rfl` corollary first scoped here was dropped.
 3. **A finding, negative both ways** (§2 W5–W6): the record trilemma (`NullSeamWitness.lean`:
    seams / `ε`-Born / Dirac calibration) is **not** WAY in disguise, and the `ε` of `ε`-Born is
    **not** a WAY bound. The corpus's accuracy trade-off (`collapse_accuracy_bound`) is
@@ -88,18 +89,30 @@ dimensions is ever needed, a two-index `EuclideanSpace ℂ κ → EuclideanSpace
 EuclideanSpace ℂ (κ × ι)` would be the rule-of-two extraction (CONVENTIONS §9); **do not extract
 before then.**
 
-### W3 — The CSD statement is a triviality and must be built as one.
+### W3 — The CSD statement: a scope theorem at the `IsJointLift` level, not a `rfl` pointer.
 
-What can be said in Lean about the CSD side is two lines (`jointLift_base` / `pointerEvolve_fst`
-plus `rate_conserved`). Inflating it into a module or a capstone would violate CONVENTIONS §8.3b
-(capstone discipline) and the placeholder rule. The honest shape is **one corollary in
-`Empirical/CSD/`** (layer order; §3 Placement) — or prose only — whose docstring says what it is: *the
-stroke is not a tensor-product isometry and models no additive conserved quantity, so the
-theorem's hypotheses have no instance here; the fibrewise witness conserves every base function,
-commuting or not, and records exactly — the combination WAY forbids where it applies*. Its value
-is that a referee's "what about WAY?" gets a machine-checked pointer instead of prose. ⚠️ The
-first draft's docstring — "the model conserves only torus-invariant quantities, which commute with
-the context observable" — was **false** (§5) and must not reappear.
+The first two drafts had this as two `rfl` lines (`jointLift_base` / `pointerEvolve_fst` plus
+`rate_conserved`), or as prose only. Both were rejected at the brick-1 build: a `rfl` lemma named
+beside a WAY theorem is exactly the witness a reader misreads as "CSD evades WAY" (§4), and prose
+is not a corpus claim. The honest shape is a theorem stated at the `IsJointLift` level
+(`IsJointLift c ε Φ`, `RecordLayer/JointFlowTransfer.lean`): the pointer image of any joint lift
+is **not a function of the Hilbert data** `(base ray, pointer)`, because from identical data the
+fibre register coordinate selects any outcome of rate `≥ 2ε` (`IsJointLift.landing` at the cell
+midpoint) and distinct outcomes land in disjoint record regions. Hence no encoding, map and
+readout on any joint space `HS ⊗ HA` reproduces the stroke's pointer image from the Hilbert data
+(`no_joint_hilbert_map`, `Empirical/CSD/WignerArakiYanase.lean`): WAY's hypothesis is met by no
+joint lift. ⚠️ **The quantifier is weaker than WAY's, not its mirror.** `IsJointLift.pointer_eq`
+pins every joint lift's pointer image to `pointerEvolve`'s, so "every joint lift" ranges over base
+back-reactions — which the pointer image cannot see; the content is `pointer_landing` +
+`recordRegion_pairwiseDisjoint` for the fibrewise witness, transported. The `IsJointLift` form buys
+survival under brick-2 / `R-016` changes to the base, not a stronger statement. The theorem has
+content (landing + disjointness), is non-vacuous (`[(1,1)]`, `ε ≤ ¼`), and is instantiated for the
+fibrewise witness and for the back-reacting `jointLift` at every shift `Δ`; it sits in
+`Empirical/CSD/` (layer order; §3). Its docstring says what it is: *a scope statement, not an
+escape — no conservation law is modelled at the record layer (`R-015`), and the `ε`-Born
+statistics are untouched*. ⚠️ The first draft's docstring — "the model conserves only
+torus-invariant quantities, which commute with the context observable" — was **false** (§5) and
+must not reappear.
 
 ### W4 — WAY's hypotheses, exactly; the Yanase condition is not optional.
 
@@ -272,35 +285,38 @@ pins in `Tests/AxiomAudit/EmpiricalQM.lean`). Deviations from the list above, al
   Hadamard-test import chain.
 * The twins-board row is **ER1** in `qm-empirical-tests.md` (not "E1" as written above).
 
-### Brick 1 — the CSD reading (S; placement open — see ⚠️ below)
+### Brick 1 — the CSD reading (S; **LANDED 2026-09-02**, `Empirical/CSD/WignerArakiYanase.lean`)
 
-⚠️ **Placement, found at brick 0's landing:** brick 1 cannot be a section of brick 0's module
-after all. Its ingredients (`jointLift_base`, `pointerEvolve_fst`, `rotatedProj`) live in
-`RecordLayer/` and `Empirical/CSD/`, and importing them into `Empirical/QM/WignerArakiYanase.lean`
-would invert the layer order (QM twins are QM-generic by category). If built, it belongs in
-`Empirical/CSD/` (a short section of `PointerCommutation.lean`, which already holds
-`pointerEvolve`/`rotatedProj` material, or a small `Empirical/CSD/WignerArakiYanase.lean` twin
-importing the QM module). The prose-only alternative is already in place: brick 0's docstring
-carries the W5/W7 boundary in substance ("Where this sits relative to CSD").
+**Placement** (found at brick 0's landing): brick 1 cannot be a section of brick 0's module — its
+ingredients live in `RecordLayer/`, and importing them into `Empirical/QM/WignerArakiYanase.lean`
+would invert the layer order (QM twins are QM-generic by category). It is the twin module
+`Empirical/CSD/WignerArakiYanase.lean`, importing the QM module and `RecordLayer/JointLift.lean`.
 
-* `jointLift_base_invariant_conserved` — for `f : LF4.CPN N → α` with
-  `∀ g p, f (phaseUnitary g • p) = f p`, `f (jointLift c ε Δ y).1.1 = f y.1.1`
-  (from `jointLift_base`). The moment coordinates are the instance (`rate_conserved`). Docstring:
-  *torus-invariant base functions are conserved for every shift; for `Δ = 0` every base function
-  is (`jointLift_zero`, `pointerEvolve_fst`)* — **never "only"**.
-* `pointerEvolve_conserves_rotatedProj_expectation` (or the general `pointerEvolve_base_fixed`
-  restated for an arbitrary `f`): the witness conserves a base quantity that does **not** commute
-  with the context observable, while `born_lower`/`born_upper` record exactly on the shrunk cells.
-  This is the machine-checked form of W5's point that the stroke sits outside WAY's hypotheses.
-* Docstring records the W5/W7 finding verbatim-in-substance: *hypotheses have no instance; not a
-  claim about physical conservation laws*.
+**What was built** (W3, corrected) — not the two `rfl` lemmas scoped in the first draft
+(`jointLift_base_invariant_conserved`, `pointerEvolve_conserves_rotatedProj_expectation`; dropped:
+`rfl` consequences of `pointerEvolve_fst` / `jointLift_base`, and a named
+`…conserves_rotatedProj…` beside a WAY theorem is the misreading §4 warns against), and not prose
+only, but the scope statement at the `IsJointLift` level (W3: a quantifier over base
+back-reactions, which the pinned pointer image cannot see — robustness, not strength):
 
-⚠️ **Author decision**: brick 1 could equally be **prose only** in brick 0's docstring plus this
-doc, with no theorem — the theorem is two lines and its only value is a machine-checked pointer.
-Default now: **prose only**, per the Placement note above (the two lemmas are `rfl` consequences
-of `pointerEvolve_fst` / `jointLift_base`, and a named `pointerEvolve_conserves_rotatedProj_…`
-beside a WAY theorem is exactly the witness a reader would misread as "CSD evades WAY", §4); if
-built, two lemmas in `Empirical/CSD/PointerCommutation.lean`, never a module.
+* `record_mem_recordRegion_of_register` — from the Hilbert data `(p, readyState)`, the register
+  coordinate `cellMid (c.rate p) j` lands the pointer in `recordRegion j` for every `j` with
+  `c.rate p j ≥ 2ε` (`IsJointLift.landing` at `δ = ½`; any `θ₂`).
+* `record_not_factor_hilbert` — the pointer image of a joint lift is not a function of
+  `(base ray, pointer)`: two admissible outcomes from identical data,
+  `recordRegion_pairwiseDisjoint`.
+* `no_joint_hilbert_map` — no encoding `e : ℂℙ^{N−1} × Pointer N → T`, map `U : T → T` and
+  readout `r : T → Pointer N` reproduce it; `T = HS ⊗ HA` is WAY's setting.
+* Non-vacuity `scope_hypotheses_satisfiable` (`momentContext 2` at `[xPlus]`, rates `½, ½` —
+  `momentMap_mk_xPlus`, the `N = 2` case of the new `LF4.momentMap_mk_of_norm_eq` (equal moduli
+  ⇒ barycentre `1/N`), extracted at this second consumer per CONVENTIONS §9.3 and now also
+  discharging `BB84Sequential.momentMap_ketPlus`; `xPlus_ne_zero` added beside `xPlus` in the QM
+  module, API-first);
+  instances `pointerEvolve_record_not_factor_hilbert` and `jointLift_record_not_factor_hilbert`
+  (every `Δ`). 7 pins in `Tests/AxiomAudit/EmpiricalCSD.lean`.
+* The docstring records W5/W7 in substance: *a scope statement, not an escape; no physical `L_A`
+  modelled at either tier (`R-015`); statistics untouched (`born_lower` / `born_upper`); the LF5
+  tier meets WAY's hypotheses and its conclusion holds there.*
 
 ### Brick 2 — quantitative WAY (L; **deferred behind row B**)
 

@@ -23,7 +23,7 @@
 > staged data; Kähler chart identification; cat-map witness; residue registry;
 > Mathlib-absence guard.
 >
-> **Do next, in this order.** Item 1 is a placement decision (brick 0 landed); 2 is execution-ready; 3 is mechanical.
+> **Do next, in this order.** Item 1 is done (bricks 0 and 1 landed; brick 2 waits on row B); 2 is execution-ready; 3 is mechanical.
 >
 > 1. **WAY** (row A; `specs/way-theorem-scoping.md`) — scoping **DONE 2026-09-02** and **brick 0
 >    LANDED 2026-09-02**: `Empirical/QM/WignerArakiYanase.lean` (`arakiYanase_identity`,
@@ -36,9 +36,18 @@
 >    conserving non-commuting base functions too; the honest reason WAY has no *record-layer*
 >    instance is that the stroke is a skew product on the arena, not a tensor-product isometry with
 >    an additive conserved `L` (`RESIDUE(R-015)`'s boundary; the LF5 `vnUnitary` tier meets the
->    hypotheses with an engineered `L` and WAY's conclusion holds there trivially). **Remaining: brick 1** (S) — the scope corollary in Lean —
->    cannot be a section of the QM module (layer order); it goes in `Empirical/CSD/` or stays
->    prose-only (already in the brick-0 docstring). Author's placement decision. (breadth/hardening)
+>    hypotheses with an engineered `L` and WAY's conclusion holds there trivially). **Brick 1 LANDED
+>    2026-09-02**: `Empirical/CSD/WignerArakiYanase.lean` — the scope statement as a theorem at
+>    the `IsJointLift` level (`record_not_factor_hilbert`, `no_joint_hilbert_map`: the pointer
+>    image is not a function of the Hilbert data, the fibre register selects the outcome via
+>    `IsJointLift.landing`; non-vacuous at `[(1,1)]`, instances for `pointerEvolve` and `jointLift`;
+>    7 pins). ⚠️ The `IsJointLift` quantifier is *weaker* than WAY's (`pointer_eq` pins every
+>    lift's pointer image to the witness's): it buys survival under base back-reactions, not a
+>    stronger statement (scoping §2 W3). Rule of two fired: `LF4.momentMap_mk_of_norm_eq`
+>    (equal moduli ⇒ barycentre) now serves both `momentMap_mk_xPlus` and
+>    `BB84Sequential.momentMap_ketPlus`. The two `rfl` lemmas first scoped were dropped as
+>    misreadable trivia. **Row A is
+>    closed except brick 2** (behind row B). (breadth/hardening)
 > 2. **brick-2 — generation-from-records** (M–L). Shape named, composites machinery landed under it.
 >    **Awaits the explicit go/no-go.**
 > 3. **runLinter adoption** (M; 122 findings, already measured) + **prose audit completion** (M) +
@@ -85,7 +94,7 @@
 >
 > | Item | Cx | P(success) | Value | Verdict |
 > |---|---|---|---|---|
-> | **A — Wigner–Araki–Yanase (WAY).** The "Araki" hits in the corpus are all Araki–Lieb (entropy); WAY is absent. Two halves: (0) QM-side finite-dim Araki–Yanase theorem in `Empirical/QM/` (a measurement that conserves an additive `L` measures exactly only observables commuting with `L_S`); (1) the CSD reading — a *scope* corollary, not a result: the stroke is a skew product on the arena, not a linear isometry on `HS ⊗ HA`, and no additive `L_S ⊗ 1 + 1 ⊗ L_A` is modelled, so WAY's hypotheses have no record-layer instance (`RESIDUE(R-015)`; the LF5 `vnUnitary` tier meets them with an engineered `L`, and WAY's conclusion holds there trivially). ⚠️ The first framing "every stroke conserves what it reads, and everything conserved commutes, so CSD is WAY-compatible by construction" was **withdrawn at scoping**: the fibrewise witness freezes the base (`pointerEvolve_fst`), conserving every base function — including the non-commuting `rotatedProj` expectation — while recording exactly; that is the combination WAY forbids, available only *outside* WAY's hypotheses. Scoping answered: the record trilemma (`NullSeamWitness.lean`) is **not** WAY in disguise (its costs are connectedness/openness/measure theorems, no conserved quantity); the `ε` of `ε`-Born is the collar measure (`born_lower`/`born_upper`), **not** a WAY (Ozawa 2002 apparatus-variance) bound | M (spec S) | High for (0); (1) is two lines in `Empirical/CSD/` or prose | **Medium–high** — the QM-side theorem is the deliverable (finite-dim, first in Lean as far as known); the CSD side is a scope pointer for the referee (machine-checked only if brick 1 is built), not a headline | **Brick 0 LANDED 2026-09-02** (`Empirical/QM/WignerArakiYanase.lean`; `specs/way-theorem-scoping.md`); brick 1 = author's placement decision (`Empirical/CSD/` or prose-only); brick 2 behind row B |
+> | **A — Wigner–Araki–Yanase (WAY).** The "Araki" hits in the corpus are all Araki–Lieb (entropy); WAY is absent. Two halves: (0) QM-side finite-dim Araki–Yanase theorem in `Empirical/QM/` (a measurement that conserves an additive `L` measures exactly only observables commuting with `L_S`); (1) the CSD reading — a *scope* theorem, not a result: the stroke is a skew product on the arena, not a linear isometry on `HS ⊗ HA`, and no additive `L_S ⊗ 1 + 1 ⊗ L_A` is modelled, so WAY's hypotheses have no record-layer instance (`RESIDUE(R-015)`; the LF5 `vnUnitary` tier meets them with an engineered `L`, and WAY's conclusion holds there trivially). ⚠️ The first framing "every stroke conserves what it reads, and everything conserved commutes, so CSD is WAY-compatible by construction" was **withdrawn at scoping**: the fibrewise witness freezes the base (`pointerEvolve_fst`), conserving every base function — including the non-commuting `rotatedProj` expectation — while recording exactly; that is the combination WAY forbids, available only *outside* WAY's hypotheses. Scoping answered: the record trilemma (`NullSeamWitness.lean`) is **not** WAY in disguise (its costs are connectedness/openness/measure theorems, no conserved quantity); the `ε` of `ε`-Born is the collar measure (`born_lower`/`born_upper`), **not** a WAY (Ozawa 2002 apparatus-variance) bound | M (spec S) | High for (0); (1) is a short `IsJointLift`-level theorem in `Empirical/CSD/` | **Medium–high** — the QM-side theorem is the deliverable (finite-dim, first in Lean as far as known); the CSD side is a machine-checked scope pointer for the referee, not a headline | **Brick 0 LANDED 2026-09-02** (`Empirical/QM/WignerArakiYanase.lean`; `specs/way-theorem-scoping.md`); **brick 1 LANDED 2026-09-02** (`Empirical/CSD/WignerArakiYanase.lean`: `no_joint_hilbert_map`, at the `IsJointLift` level — a robustness quantifier, weaker than WAY's); brick 2 behind row B |
 > | **B — Ozawa error–disturbance** (universally valid uncertainty, Ozawa 2003; Erhart et al. 2012, Rozema et al. 2012). Robertson is in; the measurement-theoretic inequality that the Heisenberg-microscope form *fails* is not. Finite-dim, operator algebra only; a CSD twin follows the `Uncertainty.lean` pattern | M | High — operator inequality, no new infrastructure | Medium — closes the uncertainty cluster at the level a 2012+ referee expects | Add to twins board; hardening-adjacent |
 > | **C — Local Friendliness** (Bong et al. 2020; Cavalcanti–Wiseman). D10/D11 (`qm-empirical-tests.md` §3.3) are conceptual rows only. LF is the *testable* Wigner's-friend no-go and CSD must say **which assumption it denies, as a theorem**: the same setting-locality it denies for Bell — the denial already lives in `no_product_partition_realises_singlet` (`LF6/ForcedContextuality.lean`) and `LF3/SettingLocality.lean`; the Bell twins (`Empirical/CSD/Bell.lean`) are transport re-exports of it — *not* Absoluteness of Observed Events (records are ontic selections in `Σ`). ⚠️ LF's Locality is *event-level* (an outcome does not depend on a distant setting), stronger than Bell's parameter independence; the denial theorem must be stated at that level, not re-exported from CHSH. Deliverable = the LF inequality as a theorem + the event-level denial as a named theorem, no more | M | High — the inequality is CHSH-shaped; the denial needs stating at LF's level, not restating | **High** — the current-decade paradox, and the one place the record layer's ontic-record claim is directly tested | Queue after A |
 > | **D — Colbeck–Renner** (no extension of QM has improved predictive power, 2011) as a **positioning theorem**: CSD escapes it by denying **parameter independence at the `Σ` level** — the same escape as Bell (`no_product_partition_realises_singlet`). ⚠️ Not by denying free choice: CR's "free choice" *bundles* parameter independence with measurement independence (Ghirardi–Romano 2013; Leegwater 2016), and the corpus **keeps** measurement independence as a premise (`LF3/OperationalNoSignalling.lean`). Record the escape as a named theorem, with the unbundling stated, not a footnote | S spec / M–L Lean | High for the spec note; Lean L because the CR argument needs the chained-Bell family | Medium — referee-facing | Spec note in the hardening session; Lean only if asked |
@@ -137,8 +146,8 @@
 > scoping doc (the frontier), with the Q16 gate re-check (S) and the prose-audit/runLinter hardening
 > pair as the bounded interleave; brick-2 whenever the go/no-go is called. **Superseded 2026-09-02**
 > by the NEXT STEPS block above: Q12 executed in honest form (2026-08-27) and the `H_int` arc is
-> landed to its paper-side end state; the live order is WAY brick 1 (placement) → brick-2
-> (go/no-go) → hardening session → LF / Ozawa twins → Q16 CP brick.
+> landed to its paper-side end state; the live order is brick-2 (go/no-go) → hardening
+> session → LF / Ozawa twins → Q16 CP brick (WAY bricks 0–1 landed 2026-09-02).
 >
 > ### Q. The numbered quick queue (added 2026-08-12 — say "do Qn" to reference)
 >

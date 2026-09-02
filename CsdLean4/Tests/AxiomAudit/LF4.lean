@@ -477,6 +477,10 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.momentMap_mk_eq_inner_sq
 
+/-- info: 'CSD.LF4.momentMap_mk_of_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.momentMap_mk_of_norm_eq
+
 -- The measured observable's Hamiltonian flow (the first physically-meaningful Φ≠id):
 -- measure-preserving (obsFlow_measurePreserving), and the Born weights are its conserved
 -- quantities (momentMap_obsFlow: momentMap (obsFlow p) = momentMap p). Ties the observable's

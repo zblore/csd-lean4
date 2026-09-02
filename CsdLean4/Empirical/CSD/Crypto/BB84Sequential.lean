@@ -152,15 +152,12 @@ lemma ketPlus_ne_zero : ketPlus ≠ 0 := by
   rw [h, inner_zero_right]
 
 /-- The Born weights of `|+⟩` in the computational basis are `½, ½` — the states are mutually
-unbiased, transported from the QM module's inner products. -/
+unbiased; the `N = 2` case of `LF4.momentMap_mk_of_norm_eq` (equal moduli ⇒ barycentre). -/
 lemma momentMap_ketPlus (i : Fin 2) :
     LF4.momentMap (Projectivization.mk ℂ ketPlus ketPlus_ne_zero) i = 1 / 2 := by
-  rw [LF4.momentMap_mk_eq_inner_sq ketPlus ketPlus_ne_zero ketPlus_unit i]
-  fin_cases i
-  · show ‖(inner ℂ ket0 ketPlus : ℂ)‖ ^ 2 = 1 / 2
-    rw [ket0_inner_ketPlus]; exact norm_sq_invSqrt2
-  · show ‖(inner ℂ ket1 ketPlus : ℂ)‖ ^ 2 = 1 / 2
-    rw [ket1_inner_ketPlus]; exact norm_sq_invSqrt2
+  rw [LF4.momentMap_mk_of_norm_eq ketPlus ketPlus_ne_zero (a := ‖((Real.sqrt 2 : ℂ)⁻¹)‖)
+    (fun j => by fin_cases j <;> simp [ketPlus])]
+  norm_num
 
 /-! ### Bob's rotated context -/
 

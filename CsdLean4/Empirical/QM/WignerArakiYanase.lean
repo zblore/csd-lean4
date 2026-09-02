@@ -107,9 +107,11 @@ are not met at all. In neither tier is a physical apparatus charge modelled —
 a consequence of the `R-015` boundary in `specs/residues.tsv` (the coupling is
 an engineered witness; which physical `H_int`, hence which conserved `L_A`, an
 apparatus realises is a modelling input). This module is a QM-side theorem, not
-a CSD result; the record-layer scope statement is prose (its Lean form is
-brick 1 of `specs/way-theorem-scoping.md` §3, not built), and §2 W5–W7 there
-record what WAY does *not* say about the record layer.
+a CSD result; the record-layer scope statement is its twin
+`Empirical/CSD/WignerArakiYanase.lean` (`no_joint_hilbert_map`: no map on a joint
+Hilbert space reproduces any joint lift's pointer image — the fibre register
+selects the outcome; brick 1 of `specs/way-theorem-scoping.md` §3), and §2 W5–W7
+there record what WAY does *not* say about the record layer.
 `specs/qm-empirical-tests.md` (ER1, the twins board) and `specs/future-work.md`
 (MT-1, the measurement-theoretic pillar row) index it.
 
@@ -330,6 +332,13 @@ lemma tensorEuc_ket (j k : Fin 2) :
 
 /-- The unnormalised `σ_x` eigenvector `(1, 1)`. -/
 noncomputable def xPlus : EuclideanSpace ℂ (Fin 2) := WithLp.toLp 2 ![1, 1]
+
+/-- `xPlus ≠ 0` (its `0`-th coordinate is `1`); the hypothesis `Projectivization.mk` needs to
+form the ray `[xPlus]` in the CSD twin. -/
+lemma xPlus_ne_zero : xPlus ≠ 0 := by
+  intro h
+  have := congrFun (congrArg WithLp.ofLp h) 0
+  simp [xPlus] at this
 
 /-- The unnormalised `σ_x` eigenvector `(1, −1)`. -/
 noncomputable def xMinus : EuclideanSpace ℂ (Fin 2) := WithLp.toLp 2 ![1, -1]

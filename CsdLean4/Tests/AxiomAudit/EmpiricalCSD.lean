@@ -1889,4 +1889,34 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Einselection.exists_population_ne_of_not_commute
 
+/-! ### Empirical/CSD/WignerArakiYanase — the record-layer twin of WAY (brick 1) -/
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.record_mem_recordRegion_of_register' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.record_mem_recordRegion_of_register
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.record_not_factor_hilbert' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.record_not_factor_hilbert
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.no_joint_hilbert_map' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.no_joint_hilbert_map
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.momentMap_mk_xPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.momentMap_mk_xPlus
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.scope_hypotheses_satisfiable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.scope_hypotheses_satisfiable
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.pointerEvolve_record_not_factor_hilbert' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.pointerEvolve_record_not_factor_hilbert
+
+/-- info: 'CSD.Empirical.CSDBridge.WignerArakiYanase.jointLift_record_not_factor_hilbert' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.jointLift_record_not_factor_hilbert
+
 end CSD.Tests.AxiomAudit

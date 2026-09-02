@@ -130,6 +130,21 @@ theorem momentMap_mk_eq_inner_sq (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ �
   rw [momentMap_mk ψ hψ0 i, hψ, one_pow, div_one,
       EuclideanSpace.inner_single_left, map_one, one_mul]
 
+/-- **Equal-modulus superpositions sit at the barycentre.** If every coordinate of `ψ` has the
+same modulus, the moment map of `[ψ]` is the uniform weight `1/N` in every coordinate — the
+normalisation is immaterial (`momentMap_mk` divides it out), so `(1, …, 1)` and
+`(1, …, 1)/√N` give the same ray and the same weights. -/
+lemma momentMap_mk_of_norm_eq (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ ≠ 0) {a : ℝ}
+    (hψ : ∀ j, ‖ψ j‖ = a) (i : Fin N) :
+    momentMap (Projectivization.mk ℂ ψ hψ0) i = 1 / N := by
+  have ha : a ≠ 0 := by
+    rintro rfl
+    exact hψ0 (by ext j; simpa using hψ j)
+  have hN : (N : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Fin.pos i).ne'
+  rw [momentMap_mk, euclidean_norm_sq_eq_sum]
+  simp only [hψ, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  field_simp
+
 /-! ### Regularity: `momentMap` is continuous, hence measurable
 
 `momentMap` is *defined* through `p.rep`, which is a `Classical.choice` representative — so it

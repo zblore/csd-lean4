@@ -362,6 +362,7 @@ public import CsdLean4.Empirical.CSD.Gates.MultiQubitDischarge
 public import CsdLean4.Empirical.CSD.Gates.BellPrepDischarge
 public import CsdLean4.Empirical.CSD.Einselection
 public import CsdLean4.Empirical.CSD.PointerCommutation
+public import CsdLean4.Empirical.CSD.WignerArakiYanase
 public import CsdLean4.Empirical.CSD.QECDecoherence
 public import CsdLean4.Empirical.CSD.ChannelCapacity
 public import CsdLean4.Empirical.Metrology.Ramsey
