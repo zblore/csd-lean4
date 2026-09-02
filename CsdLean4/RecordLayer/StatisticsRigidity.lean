@@ -8,6 +8,7 @@ module
 public import CsdLean4.RecordLayer.BasisMeasurement
 public import CsdLean4.LF4.BargmannSelection
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+public import CsdLean4.SigmaLayer.TensorTomography
 
 /-!
 # RecordLayer/StatisticsRigidity: transition probabilities are record observables (Q18)
@@ -58,6 +59,18 @@ apparatus). Consequently
   this identifies the operationally-defined symmetry group with the semi-unitary group in
   the forward-and-realisability directions.
 
+## The composite record rates are basis-measurement Born rates
+
+* `productRecordRate_eq_bornRateBasis` — on the Kronecker composite, the joint record rate
+  `productRecordRate (aliceHom m n) (bobHom m n) (rankOne ψ) bA bB i j` of
+  `SigmaLayer/TensorTomography.lean` (the vocabulary of the composites premise conversion
+  `recordLocallyTomographic_iff_adjoin_eq_top`) at a pure preparation `ψ` IS the
+  basis-measurement Born rate `bornRateBasis b ψ l` of the composite register in any
+  context `b` whose `l`-th vector is the product vector `bA i ⊗ bB j`. This is the
+  record-layer reading of that module's `productRecordRate`: at a pure preparation it is a
+  `bornRateBasis` of the joint register (mixed preparations through `mixedEnsemble_capstone`),
+  hence a record of the same kind as `recordKernel`.
+
 ## Honest scope (read before citing)
 
 * **Premise conversion, not elimination.** The operational premises survive as posits:
@@ -99,7 +112,10 @@ Q18; `specs/necessity-audit.md` (the two conditioners); `specs/future-work.md` (
 TransitionProbability.lean` (`transProb`, `transProb_mk`); `WignerRigidity.lean`
 (`TransProbPreserving`, `wigner_rigidity_unitaryGroup`, `conjProj`);
 `FubiniStudyUnique.lean` (`fubiniStudyMeasure_unique`); `LF4/BargmannSelection.lean`
-(`projectedFlow_unitary_of_bargmann_continuous`).
+(`projectedFlow_unitary_of_bargmann_continuous`); `SigmaLayer/TensorTomography.lean`
+(`productRecordRate`, `aliceHom`, `bobHom`, `outerProduct_tensorState`);
+`Mathlib/QuantumInfo/JointRegister.lean` (`tensorState`); `LF2/MixedEnsembleIx.lean`
+(`DensityOperatorIx.rankOne`, `traceForm_rankOne_outerProduct`).
 -/
 
 @[expose] public section
@@ -313,6 +329,28 @@ theorem measure_eq_fubiniStudy_of_record_statistics_invariant [NeZero N]
     μ = Matrix.UnitaryGroup.fubiniStudyMeasure p₀ :=
   Matrix.UnitaryGroup.fubiniStudyMeasure_unique p₀ μ
     (fun U => hinv _ (recordStatisticsPreserving_unitary U))
+
+/-! ## The composite record rates are basis-measurement Born rates -/
+
+/-- **The joint record rate of a local outcome pair at a pure composite preparation is a
+basis-measurement Born rate of the joint register.** For the Kronecker composite
+(`aliceHom` / `bobHom`), any context `b` of the joint register whose `l`-th vector is the
+product vector `bA i ⊗ bB j` assigns `ψ` the rate `productRecordRate … (rankOne ψ) bA bB i j`:
+the `productRecordRate` of `SigmaLayer/TensorTomography.lean` IS a `bornRateBasis` of the
+composite register. -/
+theorem productRecordRate_eq_bornRateBasis {m n : ℕ}
+    (ψ : EuclideanSpace ℂ (Fin m × Fin n)) (hψ : ‖ψ‖ = 1)
+    (bA : OrthonormalBasis (Fin m) ℂ (EuclideanSpace ℂ (Fin m)))
+    (bB : OrthonormalBasis (Fin n) ℂ (EuclideanSpace ℂ (Fin n))) (i : Fin m) (j : Fin n)
+    {k : ℕ} (b : OrthonormalBasis (Fin k) ℂ (EuclideanSpace ℂ (Fin m × Fin n))) (l : Fin k)
+    (hb : b l = QuantumInfo.tensorState (bA i) (bB j)) :
+    SigmaLayer.productRecordRate (SigmaLayer.aliceHom m n) (SigmaLayer.bobHom m n)
+        (LF2.DensityOperatorIx.rankOne ψ hψ) bA bB i j
+      = bornRateBasis b ψ l := by
+  rw [SigmaLayer.productRecordRate, SigmaLayer.aliceHom, SigmaLayer.bobHom,
+    Matrix.kroneckerLeftAlgHom_mul_kroneckerRightAlgHom, ← SigmaLayer.outerProduct_tensorState,
+    LF2.DensityOperatorIx.traceForm_rankOne_outerProduct, bornRateBasis_eq_inner_sq, hb,
+    norm_inner_symm]
 
 end RecordLayer
 end CSD

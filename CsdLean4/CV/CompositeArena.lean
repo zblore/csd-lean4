@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.CV.ArenaBridge
 public import CsdLean4.SigmaLayer.TensorReconstruction
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.KroneckerAlgHom
 public import Mathlib.LinearAlgebra.Matrix.Kronecker
 public import Mathlib.LinearAlgebra.Matrix.Reindex
 public import Mathlib.Data.Matrix.Basis
@@ -39,15 +40,19 @@ configuration into its two mode blocks, and everything is read through it:
   (`norm_sectorJoin : ‖u ⊗ v‖ = ‖u‖·‖v‖`) and the induced **Segre map** on
   rays, `FieldArena K₁ N → FieldArena K₂ N → FieldArena (K₁+K₂) N`.
 * `leftOp` / `rightOp` — the two local operator algebras (reindexed `A ⊗ₖ 1`,
-  `1 ⊗ₖ B`), with `leftHom` / `rightHom` the algebra-hom packagings, and
+  `1 ⊗ₖ B`), with `leftHom` / `rightHom` the algebra-hom packagings (the generic
+  `Matrix.kroneckerLeftAlgHom` / `kroneckerRightAlgHom` of
+  `CsdLean4/Mathlib/LinearAlgebra/Matrix/KroneckerAlgHom.lean`, reindexed), and
   ★ `leftOp_supportedOn` / `rightOp_supportedOn`: **the local subalgebras are
   mode-local** (`SupportedOn` their blocks), so every P1 theorem — statics,
   cones, strokes — applies to the composite arena with zero new proofs.
 * Transport along the join: `arenaDM_join` (`ρ_{p⊗q} = ρ_p ⊗ₖ ρ_q`),
   ★ `arenaObs_join_left` / `arenaObs_join_right` (marginal readings exact),
-  ★ `arenaObs_join_mul` (joint expectations of product observables factor —
-  local tomography read on the arena), ★ `arenaKick_join` (product unitaries
-  restrict along the join to the product action).
+  ★ `arenaObs_join_mul` (joint expectations of product observables factor on
+  joins — a property of product states, held by every local composite; local
+  tomography proper is `SigmaLayer/TensorTomography.lean` `RecordLocallyTomographic`),
+  ★ `arenaKick_join` (product unitaries restrict along the join to the product
+  action).
 * ★★ `composite_no_signalling` — **no-signalling on the composite arena,
   exactly, for ALL states**: a kick built from a right-sector unitary leaves
   every left-sector arena observable invariant — on entangled points too,
@@ -178,7 +183,7 @@ lemma sectorJoin_apply (u : EuclideanSpace ℂ (FieldConfig K₁ N))
 
 /-- Pointwise reading of an equality of Euclidean vectors (`congrFun` through
 the `WithLp` structure). -/
-lemma euclid_congrFun {ι : Type*} [Fintype ι] {x y : EuclideanSpace ℂ ι}
+lemma euclid_congrFun {ι : Type*} {x y : EuclideanSpace ℂ ι}
     (h : x = y) (i : ι) : x i = y i := by rw [h]
 
 /-- The join is bilinear on scalars: `(a•u) ⊗ (b•v) = (ab) • (u ⊗ v)`. -/
@@ -292,53 +297,21 @@ lemma leftOp_comm_rightOp (A : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) 
   rw [Commute, SemiconjBy, leftOp_mul_rightOp, rightOp, leftOp, ← map_mul,
     ← Matrix.mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
 
-/-- `A ↦ A ⊗ₖ 1` as an algebra hom into the pair-indexed algebra. -/
-noncomputable def kronLeftHom :
-    Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ
-      →ₐ[ℂ] Matrix (FieldConfig K₁ N × FieldConfig K₂ N) (FieldConfig K₁ N × FieldConfig K₂ N) ℂ :=
-  AlgHom.ofLinearMap
-    { toFun := fun A => A ⊗ₖ (1 : Matrix (FieldConfig K₂ N) (FieldConfig K₂ N) ℂ)
-      map_add' := fun A B => Matrix.add_kronecker A B 1
-      map_smul' := fun c A => by
-        simpa using Matrix.smul_kronecker c A
-          (1 : Matrix (FieldConfig K₂ N) (FieldConfig K₂ N) ℂ) }
-    (by
-      show (1 : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ) ⊗ₖ 1 = 1
-      exact Matrix.one_kronecker_one)
-    (fun A B => by
-      show (A * B) ⊗ₖ (1 : Matrix (FieldConfig K₂ N) (FieldConfig K₂ N) ℂ)
-        = (A ⊗ₖ 1) * (B ⊗ₖ 1)
-      rw [← Matrix.mul_kronecker_mul, Matrix.one_mul])
-
-/-- `B ↦ 1 ⊗ₖ B` as an algebra hom into the pair-indexed algebra. -/
-noncomputable def kronRightHom :
-    Matrix (FieldConfig K₂ N) (FieldConfig K₂ N) ℂ
-      →ₐ[ℂ] Matrix (FieldConfig K₁ N × FieldConfig K₂ N) (FieldConfig K₁ N × FieldConfig K₂ N) ℂ :=
-  AlgHom.ofLinearMap
-    { toFun := fun B => (1 : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ) ⊗ₖ B
-      map_add' := fun A B => Matrix.kronecker_add 1 A B
-      map_smul' := fun c B => by
-        simpa using Matrix.kronecker_smul c
-          (1 : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ) B }
-    (by
-      show (1 : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ) ⊗ₖ 1 = 1
-      exact Matrix.one_kronecker_one)
-    (fun A B => by
-      show (1 : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ) ⊗ₖ (A * B)
-        = (1 ⊗ₖ A) * (1 ⊗ₖ B)
-      rw [← Matrix.mul_kronecker_mul, Matrix.one_mul])
-
-/-- The left embedding as an algebra hom. -/
+/-- The left embedding as an algebra hom: the generic factor embedding
+`Matrix.kroneckerLeftAlgHom` (`A ↦ A ⊗ₖ 1`), reindexed into field coordinates. -/
 noncomputable def leftHom :
     Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ
       →ₐ[ℂ] Matrix (FieldConfig (K₁ + K₂) N) (FieldConfig (K₁ + K₂) N) ℂ :=
-  (compositeReindex (K₁ := K₁) (K₂ := K₂) (N := N)).toAlgHom.comp kronLeftHom
+  (compositeReindex (K₁ := K₁) (K₂ := K₂) (N := N)).toAlgHom.comp
+    (Matrix.kroneckerLeftAlgHom ℂ (FieldConfig K₁ N) (FieldConfig K₂ N))
 
-/-- The right embedding as an algebra hom. -/
+/-- The right embedding as an algebra hom: the generic factor embedding
+`Matrix.kroneckerRightAlgHom` (`B ↦ 1 ⊗ₖ B`), reindexed into field coordinates. -/
 noncomputable def rightHom :
     Matrix (FieldConfig K₂ N) (FieldConfig K₂ N) ℂ
       →ₐ[ℂ] Matrix (FieldConfig (K₁ + K₂) N) (FieldConfig (K₁ + K₂) N) ℂ :=
-  (compositeReindex (K₁ := K₁) (K₂ := K₂) (N := N)).toAlgHom.comp kronRightHom
+  (compositeReindex (K₁ := K₁) (K₂ := K₂) (N := N)).toAlgHom.comp
+    (Matrix.kroneckerRightAlgHom ℂ (FieldConfig K₁ N) (FieldConfig K₂ N))
 
 lemma leftHom_apply (A : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ) :
     leftHom (K₂ := K₂) A = leftOp A := rfl
@@ -462,10 +435,15 @@ lemma trace_arenaDM_mul_real {K N : ℕ} (p : FieldArena K N)
   rw [Complex.star_def] at hstar
   exact Complex.conj_eq_iff_im.mp hstar
 
-/-- ★ **Local tomography on the arena**: the joint expectation of a product of
+/-- ★ **Product expectations factor on joins**: the joint expectation of a product of
 local observables factors into the product of local expectations, on every
 join. (`A` Hermitian makes its expectation real, which is what lets the real
-parts factor.) -/
+parts factor.) This is a property of product STATES that every local composite has,
+tomographic or not; local tomography — arbitrary joint states fixed by local record
+statistics — is `SigmaLayer/TensorTomography.lean` `RecordLocallyTomographic`; an arena
+instance of it is not built here — `composite_generate_fin` is its generation half, and
+`recordLocallyTomographic_iff_adjoin_eq_top` would additionally need star-preservation of
+`leftHomFin` / `rightHomFin`. -/
 theorem arenaObs_join_mul {A : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ}
     (hA : Aᴴ = A) (B : Matrix (FieldConfig K₂ N) (FieldConfig K₂ N) ℂ)
     (p : FieldArena K₁ N) (q : FieldArena K₂ N) :
@@ -688,12 +666,7 @@ theorem composite_generate :
     Algebra.adjoin ℂ
       (Set.range (leftHom (K₁ := K₁) (K₂ := K₂) (N := N))
         ∪ Set.range (rightHom (K₁ := K₁) (K₂ := K₂) (N := N))) = ⊤ := by
-  rw [eq_top_iff]
-  intro M _
-  rw [matrix_eq_sum_single M]
-  refine Subalgebra.sum_mem _ (fun c _ => Subalgebra.sum_mem _ (fun d _ => ?_))
-  rw [CSD.SigmaLayer.single_eq_smul]
-  refine Subalgebra.smul_mem _ ?_ _
+  refine Subalgebra.eq_top_of_forall_single_mem fun c d => ?_
   have hsingle : Matrix.single c d (1 : ℂ)
       = leftHom (Matrix.single (configSplit c).1 (configSplit d).1 (1 : ℂ))
         * rightHom (Matrix.single (configSplit c).2 (configSplit d).2 (1 : ℂ)) := by

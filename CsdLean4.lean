@@ -20,6 +20,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.KroneckerAlgHom
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
 public import CsdLean4.Mathlib.MeasureTheory.MapProbability
@@ -423,6 +424,7 @@ public import CsdLean4.SigmaLayer.BellGenerality
 public import CsdLean4.SigmaLayer.TensorGeneration
 public import CsdLean4.SigmaLayer.TensorSolved
 public import CsdLean4.SigmaLayer.TensorReconstruction
+public import CsdLean4.SigmaLayer.TensorTomography
 public import CsdLean4.SigmaLayer.LocalisedTypicality
 public import CsdLean4.SigmaLayer.SectorPostulateNoGo
 public import CsdLean4.SigmaLayer.UniqueErgodicity

@@ -41,10 +41,23 @@ For a composite represented by `M_k(ℂ)`, `finrank` across the equivalence forc
 consequence of locality + generation — the reconstruction the sector interface (`CompositeInterface`,
 `TensorSector`) previously took as the bridge-B6 field.
 
+## The generation premise in record vocabulary
+
+`hgen` is a statement about a subalgebra lattice. `SigmaLayer/TensorTomography.lean` proves it is the
+SAME premise as record-level local tomography — two composite densities with equal joint record rates in
+every pair of local orthonormal bases are equal (`recordLocallyTomographic_iff_adjoin_eq_top`, under
+locality and star-preserving embeddings, both directions) — and re-consumes this module with that premise
+(`compositeAlgReconstructionOfRecords`, `composite_dim_eq_of_recordLocallyTomographic`). That the world
+IS locally tomographic is the one operational posit of the reconstruction beyond A6 locality, a permanent
+boundary (⚠️ RESIDUE(R-017)): real-Hilbert-space QM carries commuting local algebras and is not locally
+tomographic, and even over `ℂ` a composite with a third factor invisible to the pair is local and not
+generated.
+
 References: `specs/future-work.md` (P3 / SL-P3r, bridge B6); `SigmaLayer/TensorSolved.lean`
 (`composite_is_tensor_product`, the sufficiency half — the tensor model realizes the principles);
 `SigmaLayer/TensorGeneration.lean` (`joint_mem_span_local`, the quantum generation fact);
-`SigmaLayer/CompositeInterface.lean` (`CompositeSector.tensor_dimension`, the field this discharges).
+`SigmaLayer/CompositeInterface.lean` (`CompositeSector.tensor_dimension`, the field this discharges);
+`SigmaLayer/TensorTomography.lean` (the record form of the generation premise).
 -/
 
 @[expose] public section

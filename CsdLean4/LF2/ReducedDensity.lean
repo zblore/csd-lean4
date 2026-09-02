@@ -49,6 +49,7 @@ namespace LF2
 trace-one matrix on an arbitrary finite index `ι`. Generalises the `Fin N`-indexed
 `DensityOperator` so that partial traces (which land on a sub-index) stay inside
 the structure. -/
+@[ext]
 structure DensityOperatorIx (ι : Type*) [Fintype ι] [DecidableEq ι] where
   /-- Underlying matrix. -/
   M           : Matrix ι ι ℂ

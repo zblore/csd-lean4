@@ -185,33 +185,40 @@ algebraic properties (Hermitian, PSD, trace). This is the raw matrix layer;
 `rankOneEffect` / `rankOneDensity` (next phase) package it into the structure
 types above. -/
 
+section OuterProduct
+
+/-! The outer product is stated on an arbitrary finite index `ι` (not just `Fin N`): the
+`Fin N` structures above and the index-parametric `DensityOperatorIx` (`LF2/ReducedDensity.lean`,
+`LF2/MixedEnsembleIx.lean`) share one definition. -/
+
+variable {ι : Type*} [Fintype ι]
+
 /-- **Rank-1 outer product.** `|φ⟩⟨φ|` with entries `M i j = φ i * star (φ j)`. -/
-noncomputable def outerProduct (φ : EuclideanSpace ℂ (Fin N)) :
-    Matrix (Fin N) (Fin N) ℂ :=
+noncomputable def outerProduct (φ : EuclideanSpace ℂ ι) : Matrix ι ι ℂ :=
   Matrix.vecMulVec (fun i => φ i) (fun i => star (φ i))
 
 /-- The outer product is positive semi-definite. Immediate from the general
     fact `PosSemidef (vecMulVec a (star a))`. -/
-lemma outerProduct_posSemidef (φ : EuclideanSpace ℂ (Fin N)) :
+lemma outerProduct_posSemidef (φ : EuclideanSpace ℂ ι) :
     (outerProduct φ).PosSemidef := by
   unfold outerProduct
   exact Matrix.posSemidef_vecMulVec_self_star (R := ℂ) (fun i => φ i)
 
 /-- The outer product is Hermitian (a consequence of being PSD). -/
-lemma outerProduct_isHermitian (φ : EuclideanSpace ℂ (Fin N)) :
+lemma outerProduct_isHermitian (φ : EuclideanSpace ℂ ι) :
     (outerProduct φ).IsHermitian :=
   (outerProduct_posSemidef φ).isHermitian
 
 /-- Trace of the outer product equals the Hilbert-space inner product
     `inner ℂ φ φ`. -/
-lemma outerProduct_trace (φ : EuclideanSpace ℂ (Fin N)) :
+lemma outerProduct_trace (φ : EuclideanSpace ℂ ι) :
     (outerProduct φ).trace = inner ℂ φ φ := by
   rw [outerProduct, Matrix.trace_vecMulVec, EuclideanSpace.inner_eq_star_dotProduct]
   rfl
 
 /-- For a unit vector, the trace of the outer product is `1`. -/
 lemma outerProduct_trace_of_unit_norm
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (φ : EuclideanSpace ℂ ι) (hφ : ‖φ‖ = 1) :
     (outerProduct φ).trace = 1 := by
   rw [outerProduct_trace, inner_self_eq_norm_sq_to_K, hφ]
   simp
@@ -219,25 +226,45 @@ lemma outerProduct_trace_of_unit_norm
 /-- Unfolding: the dot-product `φ ⬝ᵥ star φ` is the trace of the outer product.
     For a unit vector this equals `1`. -/
 lemma dotProduct_self_star_of_unit_norm
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
-    ((fun i => φ i) : Fin N → ℂ) ⬝ᵥ (fun i => star (φ i)) = 1 := by
+    (φ : EuclideanSpace ℂ ι) (hφ : ‖φ‖ = 1) :
+    ((fun i => φ i) : ι → ℂ) ⬝ᵥ (fun i => star (φ i)) = 1 := by
   have h := outerProduct_trace_of_unit_norm φ hφ
   rwa [outerProduct, Matrix.trace_vecMulVec] at h
 
 /-- **Rank-1 projector is idempotent** for a unit vector: `P * P = P`.  This
     is the defining algebraic property of an orthogonal projection. -/
 lemma outerProduct_mul_self_of_unit_norm
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (φ : EuclideanSpace ℂ ι) (hφ : ‖φ‖ = 1) :
     outerProduct φ * outerProduct φ = outerProduct φ := by
   rw [outerProduct, Matrix.vecMulVec_mul_vecMulVec]
-  have h : ((fun i => star (φ i)) : Fin N → ℂ) ⬝ᵥ (fun i => φ i) = 1 := by
+  have h : ((fun i => star (φ i)) : ι → ℂ) ⬝ᵥ (fun i => φ i) = 1 := by
     rw [dotProduct_comm]; exact dotProduct_self_star_of_unit_norm φ hφ
   rw [h, one_smul]
+
+/-- **The trace of a product of two outer products is the squared overlap:**
+    `Tr(|ψ⟩⟨ψ| · |φ⟩⟨φ|) = |⟨ψ, φ⟩|²`. The matrix core of the Born quadratic form
+    (`born_quadratic`, `DensityOperatorIx.traceForm_rankOne_outerProduct`). -/
+lemma outerProduct_mul_outerProduct_trace (ψ φ : EuclideanSpace ℂ ι) :
+    (outerProduct ψ * outerProduct φ).trace = ((‖inner ℂ ψ φ‖ ^ 2 : ℝ) : ℂ) := by
+  simp only [outerProduct]
+  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul]
+  -- The two inner dot-products are (Euclidean) inner products up to order.
+  have h1 : ((fun i => star (ψ i)) : ι → ℂ) ⬝ᵥ (fun i => φ i) = inner ℂ ψ φ := by
+    rw [dotProduct_comm]
+    exact (EuclideanSpace.inner_eq_star_dotProduct ψ φ).symm
+  have h2 : ((fun i => ψ i) : ι → ℂ) ⬝ᵥ (fun i => star (φ i)) = inner ℂ φ ψ :=
+    (EuclideanSpace.inner_eq_star_dotProduct φ ψ).symm
+  rw [smul_eq_mul, h1, h2,
+    show inner ℂ φ ψ = starRingEnd ℂ (inner ℂ ψ φ) from (inner_conj_symm φ ψ).symm,
+    RCLike.mul_conj]
+  norm_cast
+
+variable [DecidableEq ι]
 
 /-- **`1 - P` is idempotent** when `P` is. Ring calculation: `(1-P)(1-P) =
     1 - 2P + P²` and `P² = P` gives `1 - P`. -/
 lemma one_sub_outerProduct_mul_self_of_unit_norm
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (φ : EuclideanSpace ℂ ι) (hφ : ‖φ‖ = 1) :
     (1 - outerProduct φ) * (1 - outerProduct φ) = 1 - outerProduct φ := by
   have hP := outerProduct_mul_self_of_unit_norm φ hφ
   -- Expand (1-P)(1-P) manually; matrix rings are non-commutative so `ring` won't
@@ -249,7 +276,7 @@ lemma one_sub_outerProduct_mul_self_of_unit_norm
     Proof: the matrix is Hermitian and idempotent, hence equal to its own
     product with its conjugate transpose, hence PSD. -/
 lemma one_sub_outerProduct_posSemidef
-    (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖φ‖ = 1) :
+    (φ : EuclideanSpace ℂ ι) (hφ : ‖φ‖ = 1) :
     (1 - outerProduct φ).PosSemidef := by
   have hHerm : (1 - outerProduct φ).IsHermitian :=
     Matrix.isHermitian_one.sub (outerProduct_isHermitian φ)
@@ -260,6 +287,22 @@ lemma one_sub_outerProduct_posSemidef
     rw [hHerm.eq, hIdem]
   rw [key]
   exact Matrix.posSemidef_self_mul_conjTranspose _
+
+/-- **Entrywise spectral decomposition of a Hermitian matrix** as an eigenvalue-weighted sum
+    of rank-one eigenvector projectors: `C = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`. The Hermitian spectral theorem in
+    diagonalised form, expanded entrywise. `SigmaLayer.density_eq_eigen_ensemble` and
+    `DensityOperatorIx.eq_eigen_ensemble` are its density-operator instances. -/
+theorem IsHermitian.eq_eigen_outer {C : Matrix ι ι ℂ} (hC : C.IsHermitian) :
+    C = ∑ i, (hC.eigenvalues i : ℂ) • outerProduct (hC.eigenvectorBasis i) := by
+  conv_lhs => rw [hC.spectral_theorem, Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
+  ext a b
+  rw [Matrix.mul_apply]
+  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.smul_apply,
+    outerProduct, Matrix.vecMulVec_apply, smul_eq_mul, Function.comp_apply,
+    Matrix.IsHermitian.eigenvectorUnitary_apply]
+  exact Finset.sum_congr rfl fun k _ => (mul_assoc _ _ _).trans (mul_left_comm _ _ _)
+
+end OuterProduct
 
 /-- **Rank-1 projector as an Effect.** `|φ⟩⟨φ|` for a unit vector `φ`. -/
 noncomputable def rankOneEffect
@@ -284,20 +327,9 @@ theorem born_quadratic
     (ψ φ : EuclideanSpace ℂ (Fin N))
     (hψ : ‖ψ‖ = 1) (hφ : ‖φ‖ = 1) :
     traceForm (rankOneDensity ψ hψ) (rankOneEffect φ hφ) = ‖inner ℂ ψ φ‖ ^ 2 := by
-  simp only [traceForm, rankOneDensity, rankOneEffect, outerProduct]
-  rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul]
-  -- The two inner dot-products are (Euclidean) inner products up to order.
-  have h1 : ((fun i => star (ψ i)) : Fin N → ℂ) ⬝ᵥ (fun i => φ i) = inner ℂ ψ φ := by
-    rw [dotProduct_comm]
-    exact (EuclideanSpace.inner_eq_star_dotProduct ψ φ).symm
-  have h2 : ((fun i => ψ i) : Fin N → ℂ) ⬝ᵥ (fun i => star (φ i)) = inner ℂ φ ψ :=
-    (EuclideanSpace.inner_eq_star_dotProduct φ ψ).symm
-  -- smul_eq_mul to unfold smul on ℂ.
-  rw [smul_eq_mul, h1, h2]
-  -- Conjugate symmetry: inner ℂ φ ψ = star (inner ℂ ψ φ)
-  rw [show inner ℂ φ ψ = starRingEnd ℂ (inner ℂ ψ φ) from (inner_conj_symm φ ψ).symm]
-  -- z * star z = ‖z‖^2 (in ℂ); then re strips the coercion.
-  rw [RCLike.mul_conj]
+  simp only [traceForm, rankOneDensity, rankOneEffect]
+  rw [outerProduct_mul_outerProduct_trace]
+  simp
   norm_cast
 
 /-- **Composite endpoint (Busch-mediated form).** For an operational package

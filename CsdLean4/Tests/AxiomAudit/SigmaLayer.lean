@@ -1759,6 +1759,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.composite_dim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.composite_dim_eq
 
+-- SigmaLayer P3 PREMISE CONVERSION (2026-09-02, TensorTomography.lean, brick 2 of the Q11 composites
+-- residue, specs/generation-from-records-scoping.md): the GENERATION premise hgen of
+-- compositeAlgReconstruction / composite_dim_eq IS record-level local tomography. Under locality the
+-- local products ιA A · ιB B span a unital subalgebra, so generation ⟺ the local products SPAN
+-- (span_localProducts_eq_top_iff_adjoin_eq_top) ⟺ two functionals agreeing on local products agree
+-- (locallyTomographic_iff_span_eq_top, via Submodule.exists_le_ker_of_lt_top). Record vocabulary:
+-- productRecordRate = the joint Born rate of a pair of local basis outcomes;
+-- RecordLocallyTomographic = equal joint record rates for every pair of local bases force equal composite
+-- densities. HEADLINE recordLocallyTomographic_iff_adjoin_eq_top (needs star-preserving embeddings,
+-- both directions): ⟹ via the orthonormal-basis projectors spanning each factor
+-- (span_onbProjectors_eq_top, from IsHermitian.eq_eigen_outer + ℜ/ℑ) and trace pairings on a spanning set;
+-- ⟸ via a trace-pairing functional (exists_forall_eq_trace_mul) killing the local products, made Hermitian
+-- (exists_isHermitian_ne_zero_of_trace_mul_eq_zero), traceless, and split into a positive multiple of a
+-- difference of two densities (IsHermitian.exists_densityOperatorIx_sub_eq) with identical joint records.
+-- Corollaries: composite_dim_eq_of_recordLocallyTomographic (k = m·n from records) and
+-- compositeAlgReconstructionOfRecords (M_m ⊗ M_n ≃ₐ M_κ from records). Non-vacuous on the Kronecker
+-- composite (kronecker_recordLocallyTomographic, the record form of joint_mem_span_local). Constraint work
+-- one level ABOVE Σ (not MD-1 progress); local tomography stays a posit (the boundary residue on
+-- TensorSolved/TensorReconstruction), now an operational one.
+/-- info: 'CSD.SigmaLayer.span_localProducts_eq_top_iff_adjoin_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.span_localProducts_eq_top_iff_adjoin_eq_top
+
+/-- info: 'CSD.SigmaLayer.locallyTomographic_iff_span_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.locallyTomographic_iff_span_eq_top
+
+/-- info: 'CSD.SigmaLayer.span_onbProjectors_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.span_onbProjectors_eq_top
+
+/-- info: 'CSD.SigmaLayer.exists_forall_eq_trace_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.exists_forall_eq_trace_mul
+
+/-- info: 'CSD.SigmaLayer.exists_isHermitian_ne_zero_of_trace_mul_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.exists_isHermitian_ne_zero_of_trace_mul_eq_zero
+
+/-- info: 'CSD.SigmaLayer.IsHermitian.exists_densityOperatorIx_sub_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.IsHermitian.exists_densityOperatorIx_sub_eq
+
+/-- info: 'CSD.SigmaLayer.recordLocallyTomographic_iff_adjoin_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.recordLocallyTomographic_iff_adjoin_eq_top
+
+/-- info: 'CSD.SigmaLayer.recordLocallyTomographic_iff_locallyTomographic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.recordLocallyTomographic_iff_locallyTomographic
+
+/-- info: 'CSD.SigmaLayer.composite_dim_eq_of_recordLocallyTomographic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.composite_dim_eq_of_recordLocallyTomographic
+
+/-- info: 'CSD.SigmaLayer.compositeAlgReconstructionOfRecords' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.compositeAlgReconstructionOfRecords
+
+/-- info: 'CSD.SigmaLayer.kronecker_recordLocallyTomographic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.kronecker_recordLocallyTomographic
+
 -- SigmaLayer P3 BRIDGE B6 DISCHARGED (2026-07-17): CompositeSector.ofReconstruction builds a CompositeSector
 -- whose tensor_dimension (NA*NB=Njoint) FIELD is filled by composite_dim_eq -- derived from commuting,
 -- generating local embeddings, not posited. So B6 is no longer a bare assumption.
@@ -3243,6 +3295,15 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measure_eq_fubiniStudy_of_record_statistics_invariant
+
+-- Brick-2 record-layer reading (2026-09-02): productRecordRate_eq_bornRateBasis -- on the Kronecker
+-- composite the joint record rate of TensorTomography.lean at a pure preparation IS the
+-- basis-measurement Born rate bornRateBasis of the joint register in any context containing the
+-- product vector bA i ⊗ bB j (outerProduct_tensorState + traceForm_rankOne_outerProduct). So the
+-- composites premise is stated in the SAME record vocabulary as recordKernel.
+/-- info: 'CSD.RecordLayer.productRecordRate_eq_bornRateBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.productRecordRate_eq_bornRateBasis
 
 -- C2 PBR PREPARATION CAPSTONE (2026-08-25, RecordLayer/PBRPreparation.lean): THE EXACT
 -- SHARP INTERFACE IS PSI-ONTIC. epistemicMeasure_projectiveLaw -- the concrete exact

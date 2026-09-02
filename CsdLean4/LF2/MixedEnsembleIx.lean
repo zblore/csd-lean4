@@ -89,23 +89,33 @@ theorem traceForm_ensemble (w : κ → ℝ) (hw : ∀ k, 0 ≤ w k) (hsum : ∑ 
 
 /-! ### B — the spectral ensemble decomposition (mixed = ensemble of pure) -/
 
-/-- Rank-one outer product `|φ⟩⟨φ|` on the index `ι`. -/
-noncomputable def outerProduct (φ : EuclideanSpace ℂ ι) : Matrix ι ι ℂ :=
-  Matrix.vecMulVec (fun i => φ i) (fun i => star (φ i))
+/-- **Rank-one (pure) indexed density** `|ψ⟩⟨ψ|` for a unit vector `ψ` — the
+`DensityOperatorIx` twin of `rankOneDensity`, on the shared `outerProduct`
+(`LF2/BornWrapper.lean`). -/
+noncomputable def rankOne (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) : DensityOperatorIx ι where
+  M           := outerProduct ψ
+  isHermitian := outerProduct_isHermitian ψ
+  nonneg      := outerProduct_posSemidef ψ
+  trace_one   := outerProduct_trace_of_unit_norm ψ hψ
+
+@[simp] theorem rankOne_M (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) :
+    (rankOne ψ hψ).M = outerProduct ψ := rfl
+
+/-- **The Born quadratic form on the indexed type:** at a pure preparation `|ψ⟩⟨ψ|` the trace
+form of a rank-one projector `|φ⟩⟨φ|` is `|⟨ψ, φ⟩|²` — the `DensityOperatorIx` twin of
+`born_quadratic`, from the shared matrix core `outerProduct_mul_outerProduct_trace`. -/
+theorem traceForm_rankOne_outerProduct (ψ φ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) :
+    (rankOne ψ hψ).traceForm (outerProduct φ) = ‖inner ℂ ψ φ‖ ^ 2 := by
+  rw [traceForm, rankOne_M, outerProduct_mul_outerProduct_trace]
+  exact Complex.ofReal_re _
 
 /-- **Every indexed density is the eigenvalue-weighted sum of its eigenvector
-projectors:** `ρ = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`. From the Hermitian spectral theorem. -/
+projectors:** `ρ = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|` — the `DensityOperatorIx` instance of
+`IsHermitian.eq_eigen_outer` (the Hermitian spectral theorem, expanded entrywise). -/
 theorem eq_eigen_ensemble (ρ : DensityOperatorIx ι) :
     ρ.M = ∑ i, (ρ.isHermitian.eigenvalues i : ℂ)
-      • outerProduct (ρ.isHermitian.eigenvectorBasis i) := by
-  set hA := ρ.isHermitian with hA_def
-  conv_lhs => rw [hA.spectral_theorem, conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
-  ext a b
-  rw [Matrix.mul_apply]
-  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.smul_apply,
-    outerProduct, Matrix.vecMulVec_apply, smul_eq_mul, Function.comp_apply,
-    Matrix.IsHermitian.eigenvectorUnitary_apply]
-  exact Finset.sum_congr rfl fun k _ => (mul_assoc _ _ _).trans (mul_left_comm _ _ _)
+      • outerProduct (ρ.isHermitian.eigenvectorBasis i) :=
+  IsHermitian.eq_eigen_outer ρ.isHermitian
 
 /-- **The eigenvalues of an indexed density form a probability distribution.** -/
 theorem eigenvalues_isProbability (ρ : DensityOperatorIx ι) :

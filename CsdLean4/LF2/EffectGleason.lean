@@ -1304,7 +1304,7 @@ theorem matrix_eq_zero_of_quadForm_zero {D : Matrix (Fin N) (Fin N) ℂ}
 
 /-- **The trace of a product of two Hermitian matrices is real.** `Tr(A·B)^conj = Tr(B·A) =
 Tr(A·B)`. -/
-theorem trace_mul_isHermitian_real {A B : Matrix (Fin N) (Fin N) ℂ}
+theorem trace_mul_isHermitian_real {ι : Type*} [Fintype ι] {A B : Matrix ι ι ℂ}
     (hA : A.IsHermitian) (hB : B.IsHermitian) :
     (starRingEnd ℂ) ((A * B).trace) = (A * B).trace := by
   calc (starRingEnd ℂ) ((A * B).trace)

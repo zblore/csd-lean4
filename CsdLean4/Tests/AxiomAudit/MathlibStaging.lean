@@ -373,6 +373,33 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.partialTraceLeft_density
 
+-- Kronecker factor embeddings as algebra homs (2026-09-02, Mathlib/LinearAlgebra/Matrix/KroneckerAlgHom.lean;
+-- Mathlib has kroneckerAlgEquiv but no bundled A ↦ A ⊗ₖ 1 / B ↦ 1 ⊗ₖ B): kroneckerLeftAlgHom /
+-- kroneckerRightAlgHom (kroneckerAlgEquiv ∘ includeLeft / includeRight), their commutation, star-preservation,
+-- and GENERATION (adjoin_range_kroneckerLeftAlgHom_union_eq_top) via the matrix-unit criterion
+-- Subalgebra.eq_top_of_forall_single_mem (a subalgebra containing every single i j 1 is ⊤ -- stdBasis spans).
+-- Consumed by CV/CompositeArena.lean (leftHom / rightHom, composite_generate) and
+-- SigmaLayer/TensorTomography.lean (aliceHom / bobHom). Foundational triple.
+/-- info: 'Subalgebra.eq_top_of_forall_single_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Subalgebra.eq_top_of_forall_single_mem
+
+/-- info: 'Matrix.kroneckerLeftAlgHom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.kroneckerLeftAlgHom
+
+/-- info: 'Matrix.commute_kroneckerLeftAlgHom_kroneckerRightAlgHom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.commute_kroneckerLeftAlgHom_kroneckerRightAlgHom
+
+/-- info: 'Matrix.kroneckerLeftAlgHom_star' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.kroneckerLeftAlgHom_star
+
+/-- info: 'Matrix.adjoin_range_kroneckerLeftAlgHom_union_eq_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.adjoin_range_kroneckerLeftAlgHom_union_eq_top
+
 -- K1-B.2 (specs/k1-plan.md): quantum relative entropy + Klein's inequality. relEntropy_nonneg /
 -- klein_inequality are Klein's inequality D(ρ‖σ) ≥ 0 for σ POSITIVE-DEFINITE (load-bearing: the
 -- junk-log finite expression can be negative when supp ρ ⊄ supp σ). The technical core is the

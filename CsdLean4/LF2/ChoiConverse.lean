@@ -26,7 +26,8 @@ positive semidefinite** (`choi_iff_posSemidef`), i.e. the CP maps `Fin N → Fin
 exactly the PSD Choi matrices.
 
 The construction is the spectral one. A PSD Choi matrix `C = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|` with `λᵢ ≥ 0`
-(Hermitian spectral theorem, `eq_eigen_outer`, reusing `MixedEnsembleIx.outerProduct`); the
+(Hermitian spectral theorem, `IsHermitian.eq_eigen_outer` on the shared `outerProduct` of
+`LF2/BornWrapper.lean`); the
 `i`-th Kraus operator is the eigenvector `eᵢ` scaled by `√λᵢ` and **uncurried** from a
 vector on `Fin M × Fin N` to a matrix `Fin M ← Fin N` (`krausOfChoi`). Because the Choi
 matrix is indexed by the *product* `Fin M × Fin N`, this "vectorisation / reshape iso" is
@@ -50,8 +51,9 @@ from a general CP map; it corresponds to the partial trace of `C` over the outpu
 being the identity, and is not imposed here (this is the complete-positivity converse).
 
 References: `LF2/QuantumChannel.lean` (`choiMatrix`, `choiMatrix_posSemidef`, the easy
-direction); `LF2/MixedEnsembleIx.lean` (`outerProduct`, `eq_eigen_ensemble` — the spectral
-idiom this reuses); `specs/BACKLOG.md` (M-tier "Choi converse"); `specs/future-work.md`.
+direction); `LF2/BornWrapper.lean` (`outerProduct`, `IsHermitian.eq_eigen_outer` — the spectral
+idiom this reuses; `MixedEnsembleIx.eq_eigen_ensemble` is its density instance); `specs/BACKLOG.md`
+(M-tier "Choi converse"); `specs/future-work.md`.
 -/
 
 @[expose] public section
@@ -87,21 +89,6 @@ theorem choiOfKraus_posSemidef (kraus : ι → Matrix (Fin M) (Fin N) ℂ) :
     (choiOfKraus kraus).PosSemidef :=
   Matrix.posSemidef_sum _ fun _ _ => Matrix.posSemidef_vecMulVec_self_star _
 
-/-- **Entrywise spectral decomposition of a Hermitian matrix** as an eigenvalue-weighted sum
-of rank-one eigenvector projectors: `C = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|`. The bare-matrix generalisation of
-`DensityOperatorIx.eq_eigen_ensemble` (identical proof: the Hermitian spectral theorem in
-diagonalised form, expanded entrywise). -/
-theorem IsHermitian.eq_eigen_outer {n : Type*} [Fintype n] [DecidableEq n]
-    {C : Matrix n n ℂ} (hC : C.IsHermitian) :
-    C = ∑ i, (hC.eigenvalues i : ℂ) • DensityOperatorIx.outerProduct (hC.eigenvectorBasis i) := by
-  conv_lhs => rw [hC.spectral_theorem, conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
-  ext a b
-  rw [Matrix.mul_apply]
-  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.smul_apply,
-    DensityOperatorIx.outerProduct, Matrix.vecMulVec_apply, smul_eq_mul, Function.comp_apply,
-    Matrix.IsHermitian.eigenvectorUnitary_apply]
-  exact Finset.sum_congr rfl fun k _ => (mul_assoc _ _ _).trans (mul_left_comm _ _ _)
-
 /-- **The reconstructed Kraus family of a PSD Choi matrix.** The `i`-th operator is the
 `i`-th eigenvector `eᵢ` of `C` scaled by `√λᵢ` and uncurried into a matrix: since `eᵢ` is a
 vector on `Fin M × Fin N`, `Kᵢ m n = √λᵢ · eᵢ(m,n)` is exactly its reshape into a Kraus
@@ -129,7 +116,7 @@ theorem choiOfKraus_krausOfChoi {C : Matrix (Fin M × Fin N) (Fin M × Fin N) �
   have hstar : star (Real.sqrt (hC.isHermitian.eigenvalues i) : ℂ)
       = (Real.sqrt (hC.isHermitian.eigenvalues i) : ℂ) := Complex.conj_ofReal _
   simp only [krausOfChoi, Prod.mk.eta, star_mul', hstar, Matrix.smul_apply,
-    DensityOperatorIx.outerProduct, Matrix.vecMulVec_apply, smul_eq_mul]
+    outerProduct, Matrix.vecMulVec_apply, smul_eq_mul]
   rw [mul_mul_mul_comm, hsq]
 
 /-- **Choi's theorem (finite dimensions).** A matrix `C` on the composite index

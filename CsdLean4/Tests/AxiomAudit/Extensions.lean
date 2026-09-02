@@ -1304,8 +1304,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- composite_no_signalling -- a right-sector kick leaves every left-sector observable
 -- invariant EXACTLY, for ALL states including entangled ones (instance of the P1 statics,
 -- not a consequence of the join). Transport: arenaDM_join (rho tensor factorises),
--- arenaObs_join_left/right (exact marginals), arenaObs_join_mul (local tomography on the
--- arena), arenaKick_join (product dynamics restrict). Entanglement: bell_not_join -- the
+-- arenaObs_join_left/right (exact marginals), arenaObs_join_mul (product expectations factor
+-- on joins; NOT local tomography, which is TensorTomography.lean's RecordLocallyTomographic --
+-- relabelled 2026-09-02), arenaKick_join (product dynamics restrict). Entanglement: bell_not_join -- the
 -- Bell ray is NOT a join (composite strictly larger than the pair; the arena-side
 -- signature of tensor vs Cartesian). Forcing: composite_generate (the mode-local
 -- subalgebras generate, arena-natively) + compositeArenaForced (the landed

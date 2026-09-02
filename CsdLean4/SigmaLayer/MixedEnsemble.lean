@@ -87,18 +87,12 @@ theorem traceForm_ensemble (w : ι → ℝ) (hw : ∀ i, 0 ≤ w i) (hsum : ∑ 
 
 /-- **Every density operator is the eigenvalue-weighted sum of its eigenvector projectors.**
 `ρ = ∑ᵢ λᵢ |eᵢ⟩⟨eᵢ|` (`λᵢ` the eigenvalues, `eᵢ` the orthonormal eigenvectors). The matrix core of the
-spectral ensemble decomposition, from the Hermitian spectral theorem. -/
+spectral ensemble decomposition: the density-operator instance of `LF2.IsHermitian.eq_eigen_outer`
+(the Hermitian spectral theorem, expanded entrywise). -/
 theorem density_eq_eigen_ensemble (ρ : DensityOperator N) :
     ρ.M = ∑ i, (ρ.isHermitian.eigenvalues i : ℂ)
-      • outerProduct (ρ.isHermitian.eigenvectorBasis i) := by
-  set hA := ρ.isHermitian with hA_def
-  conv_lhs => rw [hA.spectral_theorem, conjStarAlgAut_apply, Matrix.star_eq_conjTranspose]
-  ext a b
-  rw [Matrix.mul_apply]
-  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply, Matrix.sum_apply, Matrix.smul_apply,
-    outerProduct, Matrix.vecMulVec_apply, smul_eq_mul, Function.comp_apply,
-    Matrix.IsHermitian.eigenvectorUnitary_apply]
-  exact Finset.sum_congr rfl fun k _ => (mul_assoc _ _ _).trans (mul_left_comm _ _ _)
+      • outerProduct (ρ.isHermitian.eigenvectorBasis i) :=
+  IsHermitian.eq_eigen_outer ρ.isHermitian
 
 /-- **The eigenvalues of a density operator form a probability distribution:** each is `≥ 0` and they sum
 to `1` (nonnegativity from PSD, sum from trace one). So the spectral decomposition is a genuine convex

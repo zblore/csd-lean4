@@ -40,13 +40,19 @@ give the full statement; this file alone is the sufficiency half.
 
 The operational content is the standard GPT reconstruction (Hardy; Chiribella–D'Ariano–Perinotti): "why
 `⊗`" is answered by **local tomography** — the joint observables are spanned by local products. Local
-tomography singles out the quantum tensor product among general composites (real-QM and other GPTs are NOT
-locally tomographic and do NOT get `⊗`); it is here a PROVED property of the quantum local-algebra
+tomography singles out the quantum tensor product among general composites (real-Hilbert-space QM is local
+but not locally tomographic, so `⊗` is not forced there; classical probability is locally tomographic, so
+local tomography does not select `ℂ`); it is here a PROVED property of the quantum local-algebra
 structure (`joint_mem_span_local`). What is NOT derived (and cannot be, on pain of falsehood for
-non-tomographic GPTs) is that the world must be locally tomographic.
+non-tomographic GPTs) is that the world must be locally tomographic — a permanent operational boundary
+(⚠️ RESIDUE(R-017)). `SigmaLayer/TensorTomography.lean` states that posit in record vocabulary
+(`RecordLocallyTomographic`: equal joint record rates in every pair of local bases force equal composite
+densities) and proves it equivalent to the generation premise (`recordLocallyTomographic_iff_adjoin_eq_top`);
+`kronecker_recordLocallyTomographic` is this module's sufficiency half in that vocabulary.
 
 References: `specs/future-work.md` (P3 / SL-P3r); `SigmaLayer/TensorGeneration.lean` (`joint_mem_span_local`,
-`single_prod`), `SigmaLayer/TensorSector.lean` (`aliceOp`, `bobOp`, `aliceOp_bobOp_commute`).
+`single_prod`), `SigmaLayer/TensorSector.lean` (`aliceOp`, `bobOp`, `aliceOp_bobOp_commute`);
+`SigmaLayer/TensorTomography.lean` (the record form of local tomography).
 -/
 
 @[expose] public section

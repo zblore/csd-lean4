@@ -104,6 +104,21 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.IsHermitian.eq_eigen_outer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.IsHermitian.eq_eigen_outer
 
+-- Rule-of-two hoists for the composites premise conversion (2026-09-02, brick 2): outerProduct and its
+-- API generalised from Fin N to an arbitrary Fintype index in LF2/BornWrapper.lean (the ChoiConverse copy
+-- of IsHermitian.eq_eigen_outer retired, density_eq_eigen_ensemble now consumes it);
+-- outerProduct_mul_outerProduct_trace (Tr(|ψ⟩⟨ψ| |φ⟩⟨φ|) = |⟨ψ,φ⟩|², the kernel of born_quadratic);
+-- DensityOperatorIx.rankOne (pure preparations on an arbitrary index, the Ix-form of rankOneDensity) with
+-- traceForm_rankOne_outerProduct (its Born rate on a rank-one effect is the squared overlap).
+/-- info: 'CSD.LF2.outerProduct_mul_outerProduct_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.outerProduct_mul_outerProduct_trace
+
+/-- info: 'CSD.LF2.DensityOperatorIx.rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.rankOne
+
+/-- info: 'CSD.LF2.DensityOperatorIx.traceForm_rankOne_outerProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.traceForm_rankOne_outerProduct
+
 /-- info: 'CSD.LF2.choiOfKraus_krausOfChoi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.choiOfKraus_krausOfChoi
 

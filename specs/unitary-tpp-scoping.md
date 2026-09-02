@@ -80,7 +80,7 @@ clothing". Axiom by axiom against Σ:
 | Probabilities (frequencies converge) | **Already a theorem, stronger than his axiom.** LF1's LLN + typicality: convergence is derived from i.i.d. ignorance over `Ω₀`, not posited. |
 | Simplicity (`K` minimal in `N`) | **Does not survive — and is not needed.** A theory-selection meta-principle with no Σ-referent. At minimal scope the sector's dimension is part of the floor; simplicity's job (selecting `K = N²`) has no work left to do. |
 | Subspaces | Supplied by the projective-sector structure itself at minimal scope. Becomes live only at maximal scope (§3.4). |
-| Composites (`N = N_A N_B`, `K = K_A K_B`) | **Already landed as conditional necessity.** `compositeAlgReconstruction` + `composite_dim_eq`: commuting + generating local algebras force the tensor product and the product dimension. Re-grounding residue: motivate *generation* (local tomography) from records — a second-wave brick, deferred (§7). |
+| Composites (`N = N_A N_B`, `K = K_A K_B`) | **Already landed as conditional necessity.** `compositeAlgReconstruction` + `composite_dim_eq`: commuting + generating local algebras force the tensor product and the product dimension. Re-grounding residue: motivate *generation* (local tomography) from records — **CLOSED 2026-09-02** (brick 2, `SigmaLayer/TensorTomography.lean` `recordLocallyTomographic_iff_adjoin_eq_top`: generation ⟺ record-level local tomography, both directions; [`generation-from-records-scoping.md`](generation-from-records-scoping.md)) — closed as a premise conversion: restated in record vocabulary, not motivated or derived from records. The posit itself survives as boundary `R-017`. |
 | Continuous reversibility | **Survives best — it is Σ's native structure, not an operational posit.** The deterministic, continuous, Liouville-preserving flow *is* continuous reversibility; Hardy has to postulate what the substrate supplies. The derivation chain from it is already built (Wigner → Bargmann → Stone); the single missing link is why the *projected* flow preserves statistics — which is exactly the `hTPP` gap. |
 
 **Verdict: Hardy's is the shape to run.** His axioms partition cleanly into:
@@ -284,6 +284,10 @@ re-annotated (posit renamed, not removed) in the same stroke.
    session).
 3. **Decide brick 2** — generation-from-records (local tomography motivated by
    the record layer, closing the composites residue of §3.1) — only after 1–2.
+   **Decided "go" and LANDED 2026-09-02** as a premise conversion (restated in
+   record vocabulary, not motivated or derived from records):
+   `SigmaLayer/TensorTomography.lean` (`recordLocallyTomographic_iff_adjoin_eq_top`),
+   scoped in [`generation-from-records-scoping.md`](generation-from-records-scoping.md).
 4. **Maximal scope** — a new queue row if ever opened; not implied by 1–3.
 
 ## References
