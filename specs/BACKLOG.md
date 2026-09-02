@@ -7,31 +7,56 @@
 > record. **This is the live list.** It is ordered so that the top item is the one that
 > unblocks the programme's single remaining scientific blocker.
 >
-> ### ▶ NEXT STEPS — recorded 2026-09-01, end of session
+> ### ▶ NEXT STEPS — recorded 2026-09-02, end of session
 >
-> **Closed this session** (all CI-green, pinned, ledger rows CL-062…CL-068): Q10-a/b; L.4 of the
-> operator-convexity ladder; fidelity core **and** `F ≤ 1`; the one-parameter projective lift
-> (Bargmann) which composed with the Stone rewire to discharge **both** W5 staged data; the Kähler
-> chart identification; the invertible cat-map witness; the residue registry and the
+> **Closed this session** (CI-green, 13 pins): **brick 3 of the `H_int(M)` arc** — the
+> back-reacting joint lift on the arena (`RecordLayer/JointLift.lean`: `isJointLift_jointLift`,
+> `jointLift_measurePreserving` via the staged `MeasurePreserving.vadd_twist_of_invariant`,
+> `jointLift_base_moves_of_ne`) and the chart-level Hamiltonian generation of its shift
+> (`RecordLayer/HamiltonianShift.lean`: `strokeCurve_hasDerivAt_hamiltonianField`). All four
+> bricks of `frozen-base-obstruction-scoping.md` are landed; `R-016` is now exactly the manifold
+> identification `ι_X ω = dH` on the arena, paper-side (PAPER-FIRST row). ⚠️ **There is no cheap
+> `H_int` Lean brick left** — the honest options are nonvanishing of `hamiltonianShift` on
+> explicit data (M, computational, optional) or a two-stroke Lüders composition on the joint
+> lift; say so rather than scaffold a fifth brick. Previous session (2026-09-01, ledger
+> CL-062…CL-068): Q10-a/b; L.4; fidelity core + `F ≤ 1`; Bargmann lift discharging both W5
+> staged data; Kähler chart identification; cat-map witness; residue registry;
 > Mathlib-absence guard.
 >
-> **Do next, in this order.** The first two are execution-ready; the third is the cheap one.
+> **Do next, in this order.** Item 1 is a spec, not Lean; 2 is execution-ready; 3 is mechanical.
 >
-> 1. **brick-2 — generation-from-records** (M–L). Shape named, composites machinery landed under it.
-> 2. **runLinter adoption** (M). 122 findings across 4 linters, **already measured** — no discovery
->    work, purely mechanical.
-> 3. **Prose audit completion** (M) and **`REFERENCES.json`** (M). Both hardening; pair them.
-> 4. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
+> 1. **WAY scoping** (S–M; `specs/way-theorem-scoping.md`) — **DONE 2026-09-02, anti-drift
+>    checked, no Lean written.** Row A of the expert-review table below. Findings: the record
+>    trilemma (`NullSeamWitness.lean`) is **not** WAY in disguise; the `ε` of `ε`-Born is **not** a
+>    WAY bound; and the first-draft framing "WAY-compatible by construction because every stroke
+>    conserves what it reads and everything conserved commutes" was **withdrawn** — the fibrewise
+>    witness freezes the whole base (`pointerEvolve_fst`), so it conserves every base function
+>    including non-commuting ones; the honest reason WAY has no instance is that the stroke is a
+>    skew product on the arena, not a tensor-product isometry with an additive conserved `L`
+>    (`RESIDUE(R-015)`'s boundary). Next: brick 0 (QM-side theorem, M) on the author's go.
+>    (breadth/hardening)
+> 2. **brick-2 — generation-from-records** (M–L). Shape named, composites machinery landed under it.
+>    **Awaits the explicit go/no-go.**
+> 3. **runLinter adoption** (M; 122 findings, already measured) + **prose audit completion** (M) +
+>    **`REFERENCES.json`** (M) — the hardening session. (breadth/hardening) Fold in the cheap expert-review rows
+>    (D Colbeck–Renner spec note, F excess-baggage citation).
+> 4. **Local Friendliness twin** (M, row C) and **Ozawa error–disturbance twin** (M, row B) — the
+>    next content bricks (breadth/hardening); then **Q16 CP brick** (M–L, reconstruction path).
+> 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
 >    Cat-1 `Reversible/` headers); the general Boolean→amplitude lift (`RESIDUE(R-013)`'s neighbour).
 >
-> **Two open decisions that are the author's, not technical.**
+> **Open decisions that are the author's, not technical.**
 >
-> * ⚠️ **The 46 untagged "Mathlib has no …" claims.** `check-mathlib-absence.sh` reports them as a
+> * ⚠️ **The 49 untagged "Mathlib has no …" claims.** `check-mathlib-absence.sh` reports them as a
 >   non-fatal warning. The register rows are tagged; the in-corpus prose is not, and will rot exactly
->   as the five corrected rows did. Tagging is mechanical but touches 46 files.
+>   as the five corrected rows did. Tagging is mechanical but touches up to 49 files (count as of 2026-09-02, guard WARN C).
 > * ⚠️ **B6 (Mathlib PRs), retired 2026-08-06.** Unchanged for L.4's lemmas — they genuinely do not
 >   advance CSD, so the retirement logic holds. It is the **summit** where a PR would remove a wall
 >   the corpus is standing behind; `lieb-dpi-scoping.md` §3b makes that case and leaves it open.
+> * ⚠️ **CL-024 / CL-014** — the G11 Wigner hand-pass (five tactic blocks), author-only.
+> * ⚠️ **Paper C's Born-from-dynamics is ε-Born with ε free** (the smooth-pointer witness gives a
+>   sandwich, `ε`-close to Born for every `ε > 0`, exact only in the limit). Where the paper cites
+>   the smooth witness it should say so. Repo side is correct; the paper is the author's.
 >
 > **One thing genuinely unfinished.** Gate 0 of `lieb-dpi-scoping.md`: `#print axioms` on physlib's
 > SSA never ran — a build reached 8745/8761 and died on a **Windows path-length error** from the long
@@ -42,6 +67,36 @@
 > **Repo hygiene note.** Working-tree line endings were normalised to LF on 2026-09-01 and
 > `core.autocrlf=false` / `core.eol=lf` set **repo-locally**, ending the phantom modified-badges
 > `.gitattributes` was added to prevent. No content changed (`git add -A` staged zero).
+>
+> ### Expert-review additions — 2026-09-02 (QM/EFT coverage sweep)
+>
+> A both-ways grep of ~40 reviewer-level QM/EFT topics against `CsdLean4/`, `specs/`, `docs/`.
+> **Present and not re-listed:** Bell/CHSH/Tsirelson/monogamy, Kochen–Specker, Leggett–Garg, PBR,
+> Spekkens toy model, Zeno, weak values (`Empirical/CSD/WeakMeasurement.lean`), Lindblad/CP,
+> Robertson uncertainty (`csd_robertson_uncertainty`), canonical typicality, Gibbs, H-theorem,
+> no-cloning, tomography, Stern–Gerlach, Lorentz/dispersion (`CV/DispersionEarned.lean`),
+> Lieb–Robinson, interferometry cluster; EFT pillars P1/P2/P4/P5 complete, P3 the declared ceiling.
+> **Seven absences survive**, ranked; same columns as the triage table. Canonical here — the boards
+> in `qm-empirical-tests.md` carry pointer rows only.
+>
+> | Item | Cx | P(success) | Value | Verdict |
+> |---|---|---|---|---|
+> | **A — Wigner–Araki–Yanase (WAY).** The "Araki" hits in the corpus are all Araki–Lieb (entropy); WAY is absent. Two halves: (0) QM-side finite-dim Araki–Yanase theorem in `Empirical/QM/` (a measurement that conserves an additive `L` measures exactly only observables commuting with `L_S`); (1) the CSD reading — a *scope* corollary, not a result: the stroke is a skew product on the arena, not a linear isometry on `HS ⊗ HA`, and no additive `L_S ⊗ 1 + 1 ⊗ L_A` is modelled, so WAY's hypotheses have no instance (`RESIDUE(R-015)`). ⚠️ The first framing "every stroke conserves what it reads, and everything conserved commutes, so CSD is WAY-compatible by construction" was **withdrawn at scoping**: the fibrewise witness freezes the base (`pointerEvolve_fst`), conserving every base function — including the non-commuting `rotatedProj` expectation — while recording exactly; that is the combination WAY forbids, available only *outside* WAY's hypotheses. Scoping answered: the record trilemma (`NullSeamWitness.lean`) is **not** WAY in disguise (its costs are connectedness/openness/measure theorems, no conserved quantity); the `ε` of `ε`-Born is the collar measure (`born_lower`/`born_upper`), **not** a WAY (Ozawa 2002 apparatus-variance) bound | M (spec S) | High for (0); (1) is two lines inside brick 0 | **Medium–high** — the QM-side theorem is the deliverable (finite-dim, first in Lean as far as known); the CSD side is a machine-checked scope pointer for the referee, not a headline | **SCOPED 2026-09-02** (`specs/way-theorem-scoping.md`, anti-drift checked); brick 0 awaits go |
+> | **B — Ozawa error–disturbance** (universally valid uncertainty, Ozawa 2003; Erhart et al. 2012, Rozema et al. 2012). Robertson is in; the measurement-theoretic inequality that the Heisenberg-microscope form *fails* is not. Finite-dim, operator algebra only; a CSD twin follows the `Uncertainty.lean` pattern | M | High — operator inequality, no new infrastructure | Medium — closes the uncertainty cluster at the level a 2012+ referee expects | Add to twins board; hardening-adjacent |
+> | **C — Local Friendliness** (Bong et al. 2020; Cavalcanti–Wiseman). D10/D11 (`qm-empirical-tests.md` §3.3) are conceptual rows only. LF is the *testable* Wigner's-friend no-go and CSD must say **which assumption it denies, as a theorem**: the same setting-locality it denies for Bell — the denial already lives in `no_product_partition_realises_singlet` (`LF6/ForcedContextuality.lean`) and `LF3/SettingLocality.lean`; the Bell twins (`Empirical/CSD/Bell.lean`) are transport re-exports of it — *not* Absoluteness of Observed Events (records are ontic selections in `Σ`). ⚠️ LF's Locality is *event-level* (an outcome does not depend on a distant setting), stronger than Bell's parameter independence; the denial theorem must be stated at that level, not re-exported from CHSH. Deliverable = the LF inequality as a theorem + the event-level denial as a named theorem, no more | M | High — the inequality is CHSH-shaped; the denial needs stating at LF's level, not restating | **High** — the current-decade paradox, and the one place the record layer's ontic-record claim is directly tested | Queue after A |
+> | **D — Colbeck–Renner** (no extension of QM has improved predictive power, 2011) as a **positioning theorem**: CSD escapes it by denying **parameter independence at the `Σ` level** — the same escape as Bell (`no_product_partition_realises_singlet`). ⚠️ Not by denying free choice: CR's "free choice" *bundles* parameter independence with measurement independence (Ghirardi–Romano 2013; Leegwater 2016), and the corpus **keeps** measurement independence as a premise (`LF3/OperationalNoSignalling.lean`). Record the escape as a named theorem, with the unbundling stated, not a footnote | S spec / M–L Lean | High for the spec note; Lean L because the CR argument needs the chained-Bell family | Medium — referee-facing | Spec note in the hardening session; Lean only if asked |
+> | **E — Quantum Darwinism / record redundancy** (Zurek; Riedel–Zurek). The corpus proves records are *made* (`Pointer*`, Lüders); it does not state that the record is redundantly copied into many environment fragments. ⚠️ In CSD a record's objectivity is its being an *ontic selection in `Σ`*, not its redundancy — Darwinism's criterion is the operational twin of that fact, not its ground; state the redundancy theorem as a twin. Natural home: the composite arenas of P2 + `LudersMarginal` — a `k`-fragment redundancy statement for the pointer marginal | M | Medium–high — composites + marginals are in; the redundancy *statement* needs choosing carefully to avoid a placeholder | Medium–high — objectivity of records is a claim CSD makes in prose | Row, not urgent; scope only after A/C |
+> | **F — Hardy / Montina excess baggage** (an ontic model of an `N`-level system needs a continuum of ontic states). CSD's `Σ` is a continuum by construction, so the theorem is *satisfied* trivially — worth one glossary line + citation so a referee does not raise it | S | — | Low, referee-facing | Glossary line in the hardening session |
+> | **G — Geometric (Berry) phase as fibre holonomy + Aharonov–Bohm twin.** The `T²` fibre is the natural carrier of a holonomy, and AB is the flagship phase experiment with no twin. Blocked on infrastructure: Mathlib has no connection/holonomy API on principal bundles (Kähler chart yes, connection no), and the corpus's fibre is a *torus*, not a `U(1)`-bundle over configuration space | L | Low near-term (infrastructure) | Medium — a phase-holonomy twin would be a genuine CSD statement, but it is the same `R-016`-shaped wall (manifold API) from a different side | Scope doc before touching; do not start from Lean |
+>
+> **Checked and deliberately not added.** Identical particles / spin-statistics — already IP-1 (XL,
+> deferred). Cluster decomposition, Appelquist–Carazzone decoupling, EFT positivity bounds,
+> vacuum structure / Unruh — above the P3 ceiling or QFT-level; the scope ladder (QM → CV →
+> relativistic EFT) does not require infinite-dimensional QFT. Consistent histories — a competing
+> bookkeeping, not a missing theorem (settled non-goal). Page–Wootters relational time — the register
+> is a conserved *selector* coordinate (`IsJointLift.register_conserved`), not a clock (per-outcome
+> clocks were withdrawn, `CSD-CHARTER.md`); no theorem to state; off the reconstruction path.
+> Retrocausal / two-state-vector readings — interpretive, no theorem.
 
 > ### Triage 2026-08-20 — complexity × likelihood × value (post-pillars review)
 >
@@ -74,9 +129,12 @@
 > | **Q9** | — | — | — | User-deferred; untouched by instruction |
 > | **Maximal scope (full GPT reconstruction); P5 constant-matching** | — | — | — | By explicit queue decision only; declared non-goals otherwise |
 >
-> **Recommendation in one line:** the sign-off session (user, S), then Q12's scoping doc
-> (the frontier), with the Q16 gate re-check (S) and the prose-audit/runLinter hardening
-> pair as the bounded interleave; brick-2 whenever the go/no-go is called.
+> **Recommendation in one line** (as written 2026-08-20): the sign-off session (user, S), then Q12's
+> scoping doc (the frontier), with the Q16 gate re-check (S) and the prose-audit/runLinter hardening
+> pair as the bounded interleave; brick-2 whenever the go/no-go is called. **Superseded 2026-09-02**
+> by the NEXT STEPS block above: Q12 executed in honest form (2026-08-27) and the `H_int` arc is
+> landed to its paper-side end state; the live order is WAY scoping → brick-2 (go/no-go) →
+> hardening session → LF / Ozawa twins → Q16 CP brick.
 >
 > ### Q. The numbered quick queue (added 2026-08-12 — say "do Qn" to reference)
 >

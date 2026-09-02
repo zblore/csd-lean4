@@ -272,11 +272,20 @@ under the `QM/`÷`CSD/` split was adopted instead.)
 |---|---|---|---|---|
 | D10 | Wigner's friend | Observer and friend assign different states; QM gives different predictions | post-LF4 (consciousness/measurement-cut question; CSD-relevant since CSD claims an ontic state independent of observer) | Conceptual; some experimental tests (Massimiliano Proietti 2019) |
 | D11 | Frauchiger-Renner | Extended Wigner's friend: contradiction from assuming all observers' QM reasoning is consistent | post-LF4 (CSD's ontic foundation may give a sharper answer than QM here) | Theoretical 2018; no decisive experimental test |
+| D12 | Local Friendliness (Bong et al. 2020) | The *testable* extended Wigner's-friend no-go: an LF inequality from Absoluteness of Observed Events + Locality + No-Superdeterminism, violated by QM. CSD target: the inequality as a theorem **plus the named denial** — CSD denies the same Locality it denies for Bell (public via the Bell twins), *not* Absoluteness of Observed Events (records are ontic selections in `Σ`) | **Added 2026-09-02** (expert-review row C, `BACKLOG.md`; queued after WAY scoping; M) | Bong et al., Nat. Phys. 2020 (photonic, 3-setting LF inequality violated) |
 
-These two are the most philosophically loaded and most directly engage
-CSD's ontic claim. A CSD-perspective paper on Wigner's friend /
+D10–D11 are the most philosophically loaded and most directly engage
+CSD's ontic claim; D12 is their testable form and the one with a bounded Lean deliverable. A CSD-perspective paper on Wigner's friend /
 Frauchiger-Renner is a natural late-stage deliverable; the Lean
 formalisation tracks behind the paper.
+
+### 3.3b Expert-review additions — 2026-09-02 (pointer rows ER1–ER3; `BACKLOG.md` is canonical; E1–E3 are the no-go rows of §3bis.1)
+
+| # | Item | Lean target | Status | Experimental verification |
+|---|---|---|---|---|
+| ER1 | Wigner–Araki–Yanase | Finite-dim Araki–Yanase theorem (QM side, `Empirical/QM/`) + a two-line CSD scope corollary: the stroke is a skew product on the arena, not a tensor-product isometry with an additive conserved `L`, so WAY's hypotheses have no instance (the fibrewise witness conserves *every* base function, non-commuting ones included, while recording exactly — outside WAY's hypotheses, not "compatible by construction") | **SCOPED 2026-09-02, no Lean** (`specs/way-theorem-scoping.md`, row A; brick 0 awaits go) | Theoretical (Wigner 1952, Araki–Yanase 1960; Ozawa 2002 quantitative) |
+| ER2 | Ozawa error–disturbance | Universally valid error–disturbance inequality (Ozawa 2003); CSD twin on the `Uncertainty.lean` pattern | **Added 2026-09-02** (row B, M) | Erhart et al., Nat. Phys. 2012 (neutron spin); Rozema et al., PRL 2012 (weak measurement) |
+| ER3 | Aharonov–Bohm / Berry phase | Phase holonomy on the fibre; the flagship phase experiment with no twin | **Blocked on infrastructure** (row G, L): no connection/holonomy API in Mathlib; scope doc before any Lean | Chambers 1960, Tonomura 1986 (AB); Tomita–Chiao 1986 (Berry) |
 
 ### 3.4 Paradox / CSD-prediction divergence (placeholder)
 
