@@ -61,11 +61,13 @@ posited; it lives in the `Σ`-volume engine's reading of the entangled state.
   Duistermaat-Heckman volume) and non-locality (this file) are two outputs of
   the SAME `Σ`-volume engine. The marginals factorise (no-signalling,
   `engine_marginal_factorises`) even though the joint does not.
-- **(f) Residue: SO-1.** This realises the singlet correlations MODULO the posited **CSD sector (SO-1)** — the
-  entangled sector / the singlet's preparation region `Ω₀` is *posited*, not
-  derived from deterministic dynamics (SO-1: the sector origin, distinct from Paper C Axiom A5). The forced-contextuality
-  no-go is unconditional Bell content; the *engine reading* of the singlet rests
-  on the posited entangled sector.
+- **(f) Modulo the posited sector.** This realises the singlet correlations MODULO
+  the posited **CSD sector** — the entangled sector / the singlet's preparation
+  region `Ω₀` is a posit of the ontology (Paper C **A1**, the ontic sector; distinct
+  from A5 = projectability). Deriving it is a non-question — `Σ` is the floor
+  (`specs/CSD-CHARTER.md`; the earlier "SO-1: the sector origin" label that stood
+  here was the retired framing). The forced-contextuality no-go is unconditional
+  Bell content; the *engine reading* of the singlet rests on the posited sector.
 - **(g) Scope: LF6-A.1 only.** THIS file is the conceptual crux (LF6-A.1). Status
   of the rest of the A-tier, *corrected 2026-08-10* (this note previously said
   A.2 was deferred, which went stale when A.2 and A.3 landed):
