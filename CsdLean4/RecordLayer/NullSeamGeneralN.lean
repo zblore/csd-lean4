@@ -125,9 +125,6 @@ lemma loSum_last_add (r : Fin N → ℝ) (hsum : ∑ i, r i = 1) {i : Fin N}
 
 /-! ### The canonical representative -/
 
-lemma coe_rep (θ : CircleFibre) : ((rep θ : ℝ) : CircleFibre) = θ :=
-  AddCircle.coe_equivIoc
-
 lemma rep_mem (θ : CircleFibre) : rep θ ∈ Set.Ioc (0 : ℝ) 1 := by
   obtain ⟨h1, h2⟩ := (AddCircle.equivIoc (1 : ℝ) 0 θ).2
   refine ⟨h1, ?_⟩

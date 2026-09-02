@@ -2978,4 +2978,15 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.hasRaceProperty_iff_exists_expMeasure
 
+-- InvariantTwist (2026-09-02, Mathlib/MeasureTheory/InvariantTwist.lean; 1-Mathlib staging).
+-- A group with a left-invariant probability measure acts measurably on X preserving μ; φ : X → G
+-- is measurable and constant on orbits. Then y ↦ act (φ y) y preserves μ — four lines of Tonelli,
+-- no disintegration. Not found in Mathlib (2026-09-01); MeasurePreserving.skew_product is the
+-- product-space special case. Consumer: RecordLayer/JointLift.lean (jointLift_measurePreserving).
+/-- info: 'MeasureTheory.MeasurePreserving.twist_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.MeasurePreserving.twist_of_invariant
+
+/-- info: 'MeasureTheory.MeasurePreserving.vadd_twist_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.MeasurePreserving.vadd_twist_of_invariant
+
 end CSD.Tests.AxiomAudit

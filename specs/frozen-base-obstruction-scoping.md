@@ -1,9 +1,11 @@
 # The frozen-base obstruction — scoping the `H_int(M)` generation brick
 
-**Status: all three bricks landed, brick 2 in three halves.** Brick 0
+**Status: all four bricks landed, brick 2 in three halves.** Brick 0
 (`SigmaLayer/ChartIntegralCurve.lean`), brick 1 (`SigmaLayer/FrozenBase.lean`), brick 2
 (`SigmaLayer/UntriggeredFlow.lean` dynamics, `SigmaLayer/UntriggeredReadout.lean` statistics,
-`SigmaLayer/UntriggeredVolume.lean` measure preservation + uniqueness), all §3.
+`SigmaLayer/UntriggeredVolume.lean` measure preservation + uniqueness), brick 3
+(`RecordLayer/JointLift.lean` back-reacting joint lift on the arena,
+`RecordLayer/HamiltonianShift.lean` chart-level generation of its shift; 2026-09-02), all §3.
 **Nothing in §2 or §4-§6 is a corpus claim.** Written 2026-09-01 against HEAD `b958212`, for the Paper D
 `H_int(M)` row (`specs/BACKLOG.md` row "★★ The dynamical measurement layer (Paper D
 `H_int`)") and the charter's named open question (`specs/CSD-CHARTER.md` §"The open question
@@ -223,6 +225,51 @@ integral curve. Both were stated as gaps in `UntriggeredFlow.lean` item 5 and
 **Still chart-level**: this is preservation of Lebesgue volume on `ℝ^{2n}`, not of Liouville
 measure on the arena, and it is not Born (`R-016`).
 
+### Brick 3 — ✅ **DONE 2026-09-02** (`RecordLayer/ArenaTorus.lean`, `RecordLayer/JointLift.lean`, `RecordLayer/HamiltonianShift.lean`, `Mathlib/MeasureTheory/InvariantTwist.lean`; 13 pins)
+
+Bricks 0–2 live in a Darboux chart. This one goes back to the **arena**
+`PointerArena N N = ℂℙ^{N-1} × T² × ℂℙ^N` and instantiates the class
+`JointFlowTransfer.lean` was waiting for: a map whose **base genuinely moves** and which is
+still an `IsJointLift` — so landing, the `ε`-Born sandwich and the moment-marginal law
+transfer with no further work (item (i) of that module's honest scope, instantiated).
+
+  `jointLift c ε Δ y = pointerEvolve c ε (torusAct (Δ (conservedData c y)) y)`
+
+The torus `T^N × S¹` acts by diagonal phases on the base (`phaseUnitary`) and translation of
+the conjugate `θ₂`; every moment-map coordinate is fixed (`momentMap_phaseUnitary_smul`), so
+whatever the stroke reads is untouched. The shift `Δ` may depend on all the conserved data —
+context rates, register, pointer — but on nothing else.
+
+* ★★ `isJointLift_jointLift` — for **every** shift `Δ` and every torus-invariant context
+  (`ContextField.TorusInvariant`; `momentContext_torusInvariant`), `jointLift c ε Δ` is a
+  joint lift. `jointLift_base_moves_of_ne`: wherever the shift's phases differ on two
+  coordinates supporting the state, the ontic base point moves. **"The base moves and the
+  record survives", on the arena, not in a chart.**
+* ★★ `jointLift_measurePreserving` — for every **measurable** `Δ`, arena-level Liouville
+  preservation, **without disintegrating along moment fibres**: the CSD-free lemma
+  `MeasurePreserving.vadd_twist_of_invariant` (an invariant twist `y ↦ act (φ y) y` of an
+  invariant measure preserves it — four lines of Tonelli against Haar on the torus) applied to
+  `torusAct_measurePreserving`, composed with `pointerEvolve_measurePreserving`.
+* ★★ `strokeCurve_hasDerivAt_hamiltonianField` — **which shift the stroke Hamiltonian
+  generates.** With `𝓗_t(z, q) = ġ(t)·(π/2)·E(w(z₁), q)` (the coupling energy of the pointer
+  at the chart position's weights) the momentum component `−∫₀ᵗ ∂_m 𝓗` is an integral curve
+  of `hamiltonianField 𝓗_t`, and its endpoint **is** `hamiltonianShift`
+  (`hamiltonianShift_eq_strokeCurve_one`). Regular data only — rates in `(2ε, 1)`, where the
+  chart weights are smooth (`contDiffAt_arcWeights`); off the corridor the shift vanishes and
+  the lift **is** the fibrewise witness (`jointLift_eq_pointerEvolve_off_corridor`).
+  Corollaries: `isJointLift_hamiltonianShift`, `jointLift_hamiltonianShift_measurePreserving`
+  (`measurable_hamiltonianShift`).
+
+⚠️ **Scope, and it is why this does not finish `H_int(M)` either.** Generation is
+**chart-level**: `hamiltonianField` lives on `Chart (N+1)`, and nothing identifies
+`jointLift c ε (hamiltonianShift ε)` with the time-`1` map of a Hamiltonian flow on the arena
+Kähler manifold (`ι_X ω = dH`) — that transport is exactly `R-016`, still open, now with the
+shift's chart-level generation in hand. The stroke Hamiltonian is time-dependent, so the
+statement is `HasDerivAt` against the time-`t` field directly, not the autonomous
+`IsHamiltonianCurve`. **Nonvanishing** of the shift is not attempted (paper-side heuristic
+only: single-cell collar → energies conserved and zero on the ready pointer; shared edges →
+two weights vary). Engineered coupling, not derived (`R-015`).
+
 ## 4. ⚠️ Two things this must never be written as
 
 1. **Not a derivation of the interaction.** `ShearDeIsolation.lean` honest-scope item 2
@@ -299,4 +346,13 @@ Theorems named above, with their modules:
 `CSD.RecordLayer.shearDeIsolationInteraction`, `CSD.RecordLayer.shear_sector_born`
 (`RecordLayer/ShearDeIsolation.lean`);
 `CSD.LF4.measurePreserving_fst_of_baseRotate` (`LF4/LiouvilleUnique.lean`);
-`CSD.RecordLayer.kMuL_fst` (`RecordLayer/EpistemicDisintegration.lean`).
+`CSD.RecordLayer.kMuL_fst` (`RecordLayer/EpistemicDisintegration.lean`);
+`CSD.RecordLayer.isJointLift_jointLift`, `CSD.RecordLayer.jointLift_measurePreserving`,
+`CSD.RecordLayer.jointLift_base_moves_of_ne` (`RecordLayer/JointLift.lean`);
+`CSD.RecordLayer.torusAct_measurePreserving`, `CSD.RecordLayer.momentMap_phaseUnitary_smul`
+(`RecordLayer/ArenaTorus.lean`);
+`CSD.RecordLayer.strokeCurve_hasDerivAt_hamiltonianField`,
+`CSD.RecordLayer.hamiltonianShift_eq_strokeCurve_one`, `CSD.RecordLayer.contDiffAt_arcWeights`,
+`CSD.RecordLayer.jointLift_eq_pointerEvolve_off_corridor` (`RecordLayer/HamiltonianShift.lean`);
+`MeasureTheory.MeasurePreserving.vadd_twist_of_invariant`
+(`Mathlib/MeasureTheory/InvariantTwist.lean`).

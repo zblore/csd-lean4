@@ -112,6 +112,10 @@ noncomputable def rep (x : CircleFibre) : ℝ := (AddCircle.equivIoc (1 : ℝ) 0
 theorem measurable_rep : Measurable rep :=
   measurable_subtype_coe.comp (AddCircle.measurableEquivIoc (1 : ℝ) 0).measurable
 
+/-- The canonical representative projects back to the point. -/
+lemma coe_rep (θ : CircleFibre) : ((rep θ : ℝ) : CircleFibre) = θ :=
+  AddCircle.coe_equivIoc
+
 /-- The **Born cell on the circle**: the points whose canonical representative lies in the CDF
 interval. A *preimage*, so measurability is immediate — unlike the image of `cdfCell`. -/
 noncomputable def circleCell (r : Fin n → ℝ) (i : Fin n) : Set CircleFibre :=

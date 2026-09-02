@@ -23,6 +23,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
 public import CsdLean4.Mathlib.MeasureTheory.MapProbability
+public import CsdLean4.Mathlib.MeasureTheory.InvariantTwist
 public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 public import CsdLean4.Mathlib.Probability.CGLMP
 public import CsdLean4.Mathlib.Probability.CompetingExponentials
@@ -514,6 +515,9 @@ public import CsdLean4.SigmaLayer.UntriggeredReadout
 public import CsdLean4.SigmaLayer.UntriggeredVolume
 public import CsdLean4.RecordLayer.JoinClosure
 public import CsdLean4.RecordLayer.JointFlowTransfer
+public import CsdLean4.RecordLayer.ArenaTorus
+public import CsdLean4.RecordLayer.JointLift
+public import CsdLean4.RecordLayer.HamiltonianShift
 public import CsdLean4.RecordLayer.LocalBlockBridge
 public import CsdLean4.RecordLayer.LocalLuders
 public import CsdLean4.RecordLayer.LocalLudersBasis

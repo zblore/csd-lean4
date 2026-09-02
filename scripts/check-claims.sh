@@ -243,6 +243,7 @@ IsHamiltonianCurve
 hamiltonianField
 hamiltonian
 hamiltonianVectorFieldOf
+hamiltonianShift
 HasHamiltonianRealisation
 IsForcedKahlerVolume
 IsFubiniStudyKahler
@@ -290,6 +291,15 @@ trivialKahlerOnticSetup"
 #       `fundamentalForm_hamiltonianVectorFieldOf` proves `ω (X w) v = g w v`, i.e.
 #       `ι_X ω = dH` once `w` is the gradient (`hamiltonian_duality`). Flat model,
 #       constant ω; the manifold statement stays §2a.                EARNED (linear-level).
+#     hamiltonianShift — (RecordLayer/HamiltonianShift.lean, brick 3 of the frozen-base
+#       scoping, 2026-09-02) the torus shift fed to `jointLift`. The word is earned by the
+#       GENERATION THEOREM in the same module: `strokeCurve_hasDerivAt_hamiltonianField`
+#       proves the chart curve with frozen positions and accumulating momenta is an
+#       integral curve of the explicit stroke Hamiltonian `strokeH` (time-dependent, in
+#       the ChartBracket Darboux chart, on regular data), and
+#       `hamiltonianShift_eq_strokeCurve_one` says the shift IS that curve's endpoint.
+#       Nonvanishing of the shift and the arena-manifold identification are NOT claimed
+#       (R-016).                                              EARNED (chart-level).
 #
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -370,6 +380,7 @@ CsdLean4/RecordLayer/MixedLuders.lean:1
 CsdLean4/RecordLayer/MixedSwap.lean:1
 CsdLean4/RecordLayer/PointerBorn.lean:1
 CsdLean4/RecordLayer/PointerGeneration.lean:2
+CsdLean4/RecordLayer/HamiltonianShift.lean:1
 CsdLean4/RecordLayer/PointerLudersMarginal.lean:1
 CsdLean4/RecordLayer/PovmDynamics.lean:2
 CsdLean4/RecordLayer/PovmSectorBorn.lean:1
@@ -415,6 +426,7 @@ CsdLean4/RecordLayer/MixedLuders.lean|none
 CsdLean4/RecordLayer/MixedSwap.lean|none
 CsdLean4/RecordLayer/PointerBorn.lean|none
 CsdLean4/RecordLayer/PointerGeneration.lean|none
+CsdLean4/RecordLayer/HamiltonianShift.lean|none
 CsdLean4/RecordLayer/PointerLudersMarginal.lean|none
 CsdLean4/RecordLayer/PovmDynamics.lean|none
 CsdLean4/RecordLayer/PovmSectorBorn.lean|none
@@ -554,6 +566,19 @@ liouville_isProbability"
 #     preparation, restated through the concrete kahlerFstSector. Same earned referent as
 #     kahlerFstSector_projectiveLaw above: the word names the arena's base projection, and
 #     the statement is a pushforward identity with no Kähler-structure content.
+#   measurable_hamiltonianShift / hamiltonianShift_eq_zero_of_offCorridor /
+#   hamiltonianShift_eq_strokeCurve_one / isJointLift_hamiltonianShift /
+#   jointLift_hamiltonianShift_measurePreserving — (2026-09-02, RecordLayer/
+#     HamiltonianShift.lean) inherit the word from the object `hamiltonianShift` (declared
+#     above); each is a statement ABOUT that shift (measurable; zero off the corridor; equal
+#     to the generated curve's endpoint; the joint lift it feeds is a joint lift and
+#     preserves pointerLiouville). No new Hamiltonian claim beyond the object's.
+#   hamiltonianField_strokeH / strokeCurve_hasDerivAt_hamiltonianField — (same landing) the
+#     CLASSIFICATION statements: the chart Hamiltonian field of `strokeH` written out
+#     (`(0, −∂ₓ𝓗)`, momentum-independent), and the curve `strokeCurve` PROVED an integral
+#     curve of it for every `t` on regular data (`RegularPos`). Chart-level and
+#     time-dependent (stated directly as HasDerivAt against hamiltonianField, since
+#     IsHamiltonianCurve is autonomous); the arena-manifold form stays R-016.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -608,7 +633,14 @@ trivialKahlerOnticSetup_transProbPreserving
 trivialKahlerOnticSetup_unitary_of_clopen
 trivialKahlerOnticSetup_unitary_or_antiunitary
 unitaryFlowSetup_liouville_isForcedKahlerVolume
-unitaryFlowSetup_liouville_isProbability"
+unitaryFlowSetup_liouville_isProbability
+measurable_hamiltonianShift
+hamiltonianShift_eq_zero_of_offCorridor
+hamiltonianField_strokeH
+hamiltonianShift_eq_strokeCurve_one
+strokeCurve_hasDerivAt_hamiltonianField
+isJointLift_hamiltonianShift
+jointLift_hamiltonianShift_measurePreserving"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

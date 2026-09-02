@@ -63,7 +63,10 @@ conserved". Both were wrong, and the corrections are worth recording:
 
 ⚠️ **Honest scope.** (i) This is a **conditional** (`CONVENTIONS.md` §8.3 `_of_` pattern):
 it makes back-reaction harmless *given* the three hypotheses, and does not construct a
-joint flow satisfying them. Discharging them for the actual `X_𝓗` is the paper's job
+joint flow satisfying them. (`RecordLayer/JointLift.lean` constructs a back-reacting family of
+instances, `isJointLift_jointLift`, with the shift as a *parameter*; the shift the stroke
+Hamiltonian generates is `RecordLayer/HamiltonianShift.lean`, chart-level.) Discharging them
+for the actual `X_𝓗` on the arena manifold is the paper's job
 (`BACKLOG.md` A2) and needs `{wᵢ,wⱼ} = 0`, which is well-formed only now that the weights
 are `C^∞` (`SmoothProfile.lean`, B1). (ii) The transfer covers the **single measurement
 stroke** — landing and the sector Born. The protocol's two-time laws and persistence are

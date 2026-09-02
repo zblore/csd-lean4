@@ -3296,4 +3296,61 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exact_sharp_ne_region_conditional
 
+-- Brick 3 of specs/frozen-base-obstruction-scoping.md (2026-09-02): the back-reacting joint lift
+-- on the ARENA (RecordLayer/ArenaTorus.lean, JointLift.lean, HamiltonianShift.lean).
+-- ArenaTorus: the diagonal phase torus T^N acts on CP^{N-1} by unitaries, fixes every moment-map
+-- coordinate (momentMap_phaseUnitary_smul), and together with translation of the conjugate
+-- coordinate acts on the pointer arena preserving Liouville measure (torusAct_measurePreserving —
+-- Fubini-Study is unitarily invariant, Haar on the circle is translation-invariant).
+-- ★★ isJointLift_jointLift — for EVERY shift Δ read off the conserved data, and every
+-- torus-invariant context, `jointLift c ε Δ` is an IsJointLift; so landing, the ε-Born sandwich
+-- and the moment-marginal law of JointFlowTransfer apply to a map whose base genuinely moves
+-- (jointLift_base_moves_of_ne). Item (i) of JointFlowTransfer's honest scope, instantiated.
+-- ★★ jointLift_measurePreserving — arena-level Liouville for the back-reacting map, WITHOUT
+-- disintegrating along moment fibres: the invariant-twist lemma (MathlibStaging part) applied to
+-- the arena torus, composed with pointerEvolve_measurePreserving.
+-- HamiltonianShift: the shift the stroke Hamiltonian generates.
+-- ★★ strokeCurve_hasDerivAt_hamiltonianField — in the Darboux chart, the curve whose momentum
+-- component is -∫ ∂_m 𝓗 along the stroke IS an integral curve of the (time-dependent) stroke
+-- Hamiltonian's hamiltonianField; its endpoint is the shift (hamiltonianShift_eq_strokeCurve_one).
+-- Regular data only (rates in (2ε, 1), contDiffAt_arcWeights); off the corridor the shift vanishes
+-- and the lift IS the fibrewise witness (jointLift_eq_pointerEvolve_off_corridor).
+-- ⚠️ SCOPE. Generation is CHART-LEVEL: hamiltonianField lives on Chart (N+1), not on the arena
+-- manifold; the identification of the arena-level shift with a Hamiltonian flow on the arena
+-- (ι_X ω = dH) is NOT proved — residue R-016 stays open. Nonvanishing of the shift is not
+-- claimed. Both are recorded in the module docstrings; nothing here is Born beyond what
+-- JointFlowTransfer already transfers.
+/-- info: 'CSD.RecordLayer.momentMap_phaseUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.momentMap_phaseUnitary_smul
+
+/-- info: 'CSD.RecordLayer.torusAct_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.torusAct_measurePreserving
+
+/-- info: 'CSD.RecordLayer.isJointLift_jointLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.isJointLift_jointLift
+
+/-- info: 'CSD.RecordLayer.jointLift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.jointLift_measurePreserving
+
+/-- info: 'CSD.RecordLayer.jointLift_base_moves_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.jointLift_base_moves_of_ne
+
+/-- info: 'CSD.RecordLayer.contDiffAt_arcWeights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.contDiffAt_arcWeights
+
+/-- info: 'CSD.RecordLayer.measurable_hamiltonianShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.measurable_hamiltonianShift
+
+/-- info: 'CSD.RecordLayer.strokeCurve_hasDerivAt_hamiltonianField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.strokeCurve_hasDerivAt_hamiltonianField
+
+/-- info: 'CSD.RecordLayer.jointLift_eq_pointerEvolve_off_corridor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.jointLift_eq_pointerEvolve_off_corridor
+
+/-- info: 'CSD.RecordLayer.isJointLift_hamiltonianShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.isJointLift_hamiltonianShift
+
+/-- info: 'CSD.RecordLayer.jointLift_hamiltonianShift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.jointLift_hamiltonianShift_measurePreserving
+
 end CSD.Tests.AxiomAudit
