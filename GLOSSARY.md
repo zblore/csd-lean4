@@ -36,6 +36,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Dirichlet distribution](https://glossary.constraintsurfacedynamics.com/dirichlet-distribution/) | `` | standard-mathematics |
 | [Does CSD make new predictions?](https://glossary.constraintsurfacedynamics.com/does-csd-make-new-predictions/) | `` | question |
 | [Does CSD violate Bell's theorem?](https://glossary.constraintsurfacedynamics.com/does-csd-violate-bell/) | `` | question |
+| [Does the excess-baggage theorem count against CSD?](https://glossary.constraintsurfacedynamics.com/excess-baggage/) | `` | question |
 | [Does the Kochen-Specker theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-kochen-specker-rule-out-csd/) | `` | question |
 | [Does the PBR theorem rule out CSD?](https://glossary.constraintsurfacedynamics.com/does-csd-conflict-with-pbr/) | `pbr_sharp_preparation_capstone` | question |
 | [Duistermaat-Heckman formula](https://glossary.constraintsurfacedynamics.com/duistermaat-heckman/) | `fs_volume_eq_dirichlet` | proved-in-corpus |
