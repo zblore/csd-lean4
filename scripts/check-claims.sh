@@ -369,6 +369,7 @@ CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/RecordLayer/ApproxProjectability.lean:1
+CsdLean4/RecordLayer/CellLawFreedom.lean:1
 CsdLean4/SigmaLayer/ChartIntegralCurve.lean:1
 CsdLean4/SigmaLayer/FrozenBase.lean:1
 CsdLean4/SigmaLayer/UntriggeredFlow.lean:1
@@ -421,6 +422,7 @@ CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
 CsdLean4/LF4/PhaseLift.lean|none
 CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/RecordLayer/ApproxProjectability.lean|none
+CsdLean4/RecordLayer/CellLawFreedom.lean|R-018
 CsdLean4/RecordLayer/MeasurementCapstone.lean|none
 CsdLean4/RecordLayer/MixedLuders.lean|none
 CsdLean4/RecordLayer/MixedSwap.lean|none

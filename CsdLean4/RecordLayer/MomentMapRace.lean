@@ -20,12 +20,16 @@ carves the fibre has rates `rᵢ`, and the CSD-native requirement is that those 
 *Kähler geometry of the state* — the torus moment map — not from an injected/hand-picked probability
 vector. That is **feature (2)** of the §3c decomposition, and it is what this file grounds in Lean.
 
-## What is proved (feature 2, the rates are forced by geometry)
+## What is proved (feature 2, the rates are the moment map)
 
 * `bornRate_eq_momentMap` — for a unit state the record-layer rate `bornRate ψ i = ‖ψ i‖²` is exactly
   the `i`-th coordinate of the Fubini–Study **torus moment map** at `[ψ]` (corpus `LF4/MomentMap.lean`,
-  `momentMap`). So the fibre-partition rates are the moment map — forced by the Kähler structure and the
-  `Tⁿ` action, no carving and no operational posit (`momentMap_mk`).
+  `momentMap`). At unit norm the identification is near-definitional — both sides are `‖ψ i‖²`, and
+  `momentMap_mk` supplies scale-invariance, not a forcing argument. What it buys is that the rates are
+  read off the context, with no carving to a target and no operational posit.
+  ⚠️ It does **not** buy that the moment map is the *forced choice* of rate field. That is canonical in
+  the standard symplectic reading (unformalised — `LF4/MomentMap.lean`'s boundary note) and is a posit
+  relative to the Lean corpus (`RecordLayer/CellLawFreedom.lean`, `specs/POSITS.md` Posit 1).
 * `bornRate_eq_inner_sq` — hence the rate equals the corpus's Born weight `‖⟨eᵢ, ψ⟩‖²`
   (`momentMap_mk_eq_inner_sq`), the exact target of `FiniteQMClosure.born_frequency`. This ties the
   whole record-layer ladder to the established Born number.
@@ -93,9 +97,9 @@ namespace CSD.RecordLayer
 variable {n : ℕ}
 
 /-- **The record-layer rates are the torus moment map.** For a unit state the fibre-partition rate
-`bornRate ψ i = ‖ψ i‖²` equals the `i`-th Fubini–Study moment-map coordinate at `[ψ]`. The rates are
-*forced by the Kähler structure* (`momentMap_mk`), not an injected probability vector — feature (2) of
-the §3c decomposition. -/
+`bornRate ψ i = ‖ψ i‖²` equals the `i`-th Fubini–Study moment-map coordinate at `[ψ]` — read off the
+context, not an injected probability vector (feature (2) of the §3c decomposition). ⚠️ That the moment
+map is the forced *choice* of rate field is a posit relative to Lean (`specs/POSITS.md` Posit 1). -/
 theorem bornRate_eq_momentMap (ψ : EuclideanSpace ℂ (Fin n)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (i : Fin n) :
     bornRate ψ i = momentMap (Projectivization.mk ℂ ψ hψ0) i := by
   unfold bornRate

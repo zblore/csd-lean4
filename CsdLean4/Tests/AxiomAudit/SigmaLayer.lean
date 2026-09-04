@@ -2093,8 +2093,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 -- MomentMapRace (record layer / MD-1 step 2b′, 2026-07-25): grounds the fibre-partition rates in the
 -- Kähler geometry (feature 2 of §3c). bornRate_eq_momentMap: for a unit ψ the rate ‖ψ i‖² IS the
--- i-th Fubini-Study torus moment-map coordinate at [ψ] (corpus LF4/MomentMap.momentMap) — forced by
--- the Kähler structure, not injected. bornRate_eq_inner_sq: hence = the corpus Born weight ‖⟨eᵢ,ψ⟩‖²
+-- i-th Fubini-Study torus moment-map coordinate at [ψ] (corpus LF4/MomentMap.momentMap) — read off
+-- the context, not injected; that the moment map is the forced CHOICE of rate field is a posit
+-- (specs/POSITS.md Posit 1, RecordLayer/CellLawFreedom.lean). bornRate_eq_inner_sq: hence = the corpus Born weight ‖⟨eᵢ,ψ⟩‖²
 -- (FiniteQMClosure.born_frequency target). DeIsolationInteraction: the kinematic interface (pointer
 -- with moment-map basins) ⟹ Born (.born). Open: realising the interface from a Hamiltonian H_int(M).
 /-- info: 'CSD.RecordLayer.bornRate_eq_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3413,5 +3414,20 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.RecordLayer.jointLift_hamiltonianShift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.jointLift_hamiltonianShift_measurePreserving
+
+-- CR-15 stage 1 (2026-09-04): the moment-map cell law is a POSIT. `globalBasin_prob` is generic
+-- in the ContextField, and `sqContext` is a second one with the same symmetries, so equivariance
+-- + normalisation + support do not single out the moment map.
+/-- info: 'CSD.RecordLayer.rate_field_not_forced_by_torus_symmetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rate_field_not_forced_by_torus_symmetry
+
+/-- info: 'CSD.RecordLayer.sqRate_phaseDiag_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqRate_phaseDiag_invariant
+
+/-- info: 'CSD.RecordLayer.globalBasin_prob_sqContext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_prob_sqContext
 
 end CSD.Tests.AxiomAudit

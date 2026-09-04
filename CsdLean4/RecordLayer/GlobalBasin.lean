@@ -37,9 +37,13 @@ with the rate vector read off **at the ontic point `p`**, not at the preparation
 anywhere in the definition, so the basin is a function of the context alone — which is what A7 asks.
 
 ★ **Why this is not circular.** One might object that the Born weights are being *put in* by using
-the moment map. They are not put in by hand: `bornRate_eq_momentMap` (`RecordLayer/MomentMapRace.lean`)
-already identifies the record-layer rates with the Fubini–Study torus moment map, forced by the
-Kähler structure and the `Tⁿ` action rather than carved to a target.
+the moment map. The anti-circularity point that survives is the one made just above: the rate is
+read at the ontic point `p`, no `ψ` occurs in the definition, so nothing is carved to the
+preparation (`bornRate_eq_momentMap`, `RecordLayer/MomentMapRace.lean`). ⚠️ What is *not* claimed is
+that the moment map is the **forced** choice of rate field. It is canonical in the standard
+symplectic reading, which is unformalised (`LF4/MomentMap.lean`'s boundary note), and
+`RecordLayer/CellLawFreedom.lean` proves it is not forced by anything Lean verifies. The cell law is
+a posit — `specs/POSITS.md` Posit 1 (⚠️ RESIDUE(R-018)).
 
 ★ **Why it does not collide with the parked `N ≥ 3` chain.** That chain constrains **base-only**
 densities. This partition is genuinely *fibred* — the cell is an arc in `θ₁` — which is exactly where
@@ -89,7 +93,9 @@ shown Liouville. See the ★★ `specs/BACKLOG.md` row.
 
 `RecordLayer/TorusFibre.lean` (`torusCell`, `volume_torusCell`, `loSum_add_self_le_one`);
 `LF4/MomentMap.lean` (`momentMap`, `measurable_momentMap`, `momentMap_mk_eq_inner_sq`);
-`RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap` — the rates are forced, not carved);
+`RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap` — the rates are the moment map, read at
+`p` rather than carved to `ψ`); `RecordLayer/CellLawFreedom.lean` and `specs/POSITS.md` (Posit 1 —
+why that *choice* of rate field is a posit); `specs/cell-law-scoping.md`;
 `LF4/KahlerInstance.lean` (`KSigma`, `KTorus`); `specs/BACKLOG.md` (the ★★ row's successor target);
 `specs/sigma-fibre-contextuality.md`.
 -/

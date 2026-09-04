@@ -316,7 +316,8 @@ computes. The goal now is to **complete the reconstruction of QM from Σ and Ω-
   the context fixes the basin partition, the unknown microstate selects the basin it occupies, and the
   combined result is the P5 `RecordSemantics` record (`RecordLayer/FibreRecord.lean`,
   `RecordLayer/ProjectiveRecord.lean`). The outcome probabilities are the **Kähler torus moment map**
-  (`RecordLayer/MomentMapRace.lean`, `bornRate_eq_momentMap` — forced by the geometry, not injected), and
+  (`RecordLayer/MomentMapRace.lean`, `bornRate_eq_momentMap` — read off the context, not injected; the choice of rate field is a posit,
+  `specs/POSITS.md` Posit 1), and
   the frequencies are the **law of large numbers over the unknown initial microstate**
   (`Measurement.bornMeasurement_frequency`, `ProjectiveRecord.projRecord_frequency` — no dynamical
   postulate; randomness = ignorance of the initial condition). This is realized on the corpus's actual Σ:

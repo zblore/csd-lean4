@@ -686,7 +686,9 @@ genuine Fubini–Study Kähler structure, **not** by carving and **not** via
 `busch_effect_gleason`:
 
 - Born weight = torus moment-map coordinate `Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²`
-  (`momentMap_mk_eq_inner_sq`) — a forced symplectic invariant.
+  (`momentMap_mk_eq_inner_sq`) — canonical in the standard symplectic reading
+  (unformalised), a posit relative to Lean (`specs/POSITS.md` Posit 1;
+  `RecordLayer/CellLawFreedom.lean`).
 - Born weight = barycentric Lebesgue-volume ratio (`born_eq_volume_ratio`),
   general `N`, unconditional.
 - For the qubit, Born weight = genuine `fubiniStudyMeasure` volume ratio on

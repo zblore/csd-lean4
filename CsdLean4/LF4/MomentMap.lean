@@ -35,6 +35,12 @@ torus action — not an arc carved to a target value
 invariant of the very structure the programme takes as primitive (the compact
 Kähler `Σ`). See `specs/carve-out-plan.md` (Tranche 1).
 
+⚠️ **What the boundary costs downstream.** Because the symplectic characterisation is absent,
+nothing machine-checked singles this function out: `RecordLayer/CellLawFreedom.lean` exhibits a
+rival rate field with the same verified properties (`rate_field_not_forced_by_torus_symmetry`).
+Prose citing this module for "the rates are forced" should say *posited* — `specs/POSITS.md`
+Posit 1.
+
 **Formalisation boundary (honest scope).** In Lean, `momentMap` is *defined*
 directly by the coordinate formula `‖p.rep i‖²/‖p.rep‖²`; the statement that
 this function satisfies the Hamiltonian moment-map equation `ι_{X_i} ω = dΦᵢ`

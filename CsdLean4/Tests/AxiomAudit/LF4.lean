@@ -466,8 +466,9 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.kSectorDataFlow_frequency_convergence
 
--- Tranche 1: the Born weights as the torus moment map on ℂℙ^{N-1} (a forced
--- symplectic invariant of the Kähler structure, not a carving). Headline:
+-- Tranche 1: the Born weights as the torus moment map on ℂℙ^{N-1} (canonical in the
+-- standard symplectic reading, unformalised; a posit relative to Lean -- specs/POSITS.md
+-- Posit 1, RecordLayer/CellLawFreedom.lean). Not a carving. Headline:
 -- momentMap_mk_eq_inner_sq — Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖² at a unit preparation.
 /-- info: 'CSD.LF4.momentMap_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

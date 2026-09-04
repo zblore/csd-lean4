@@ -703,6 +703,7 @@ keep these lines to one hook each, do not expand them here.
 - **R-012** — FS-as-typicality sector posit, reduces to D1 (`FlowBornFrequency.lean` / `SigmaLayer/MeasureBridge.lean`)
 - **R-013** — n-fold hybrid amplitude equality (`MeasurementAdder.lean` / `Reversible/Lift.lean`)
 - **R-016** — arena-level Hamiltonian generation: the chart→arena transport (`ShearDeIsolation.lean` / `ShearWitness.lean`; brick 3 `JointLift.lean` / `HamiltonianShift.lean` narrow it to the manifold identification, 2026-09-02)
+- **R-018** — cell-law characterisation: does cross-basis consistency force the rate field? (`CellLawFreedom.lean` / `GlobalBasin.lean`; stage 1 negative half proved 2026-09-04 — ⚠️ stage 2 would buy the cell law with noncontextuality, see `specs/cell-law-scoping.md`)
 
 ## ecdsa.fail — EXTRACTED to a separate repository (2026-07-20)
 
