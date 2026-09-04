@@ -172,8 +172,18 @@
 >    `[Key, file:Lstart-Lend]` citations §8.2 asks for. And **prose audit passes 1–2 over the
 >    remaining four-fifths** of the surface; the pass-3 sweep against corrections recorded only
 >    in commit messages is also unrun.
-> 4. **Local Friendliness twin** (M, row C) and **Ozawa error–disturbance twin** (M, row B) — the
->    next content bricks (breadth/hardening); then **Q16 CP brick** (M–L, reconstruction path).
+> 4. **Ozawa error–disturbance twin** (M, row B) — **SCOPED 2026-09-04**
+>    ([`ozawa-scoping.md`](ozawa-scoping.md), `csd-foundations`-checked, 15 findings folded), not yet
+>    built. Two decisions settled there and worth carrying: the core is stated on WAY's
+>    **abstract-`tensor` interface**, not Mathlib `⊗[ℂ]` (§3a — otherwise brick 2 cannot share the
+>    definitions `way-theorem-scoping.md` says it shares), and the CSD side is a **scope theorem** on
+>    the brick-1 pattern, NOT a volume-ratio twin (§5 — there is no Σ-side reading of `ε`/`η`, and the
+>    named template `Empirical/CSD/Uncertainty.lean` is itself SCHEMA-MISMATCH / TRANSPORT-ONLY).
+>    ⚠️ The row's "no new infrastructure" likelihood note is inaccurate — `isSymmetric_map`, an
+>    unsquared Cauchy–Schwarz core, and `stdDev` are all new — though the **High** rating stands.
+>    Then **Local Friendliness twin** (M, row C; scope first — LF's Locality is *event-level*,
+>    stronger than Bell's parameter independence, and must not be re-exported from CHSH), then
+>    **Q16 CP brick** (M–L, reconstruction path).
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
 >    Cat-1 `Reversible/` headers); the general Boolean→amplitude lift (`RESIDUE(R-013)`'s neighbour).
 >

@@ -182,6 +182,10 @@ PATH_EXCEPT = {
     # "No Tests/AxiomAudit/C1.lean was created" — an assertion that it does NOT exist.
     ("specs/c1-closure-report.md", "Tests/AxiomAudit/C1.lean"),
     ("specs/c1-correction-plan.md", "Tests/AxiomAudit/C1.lean"),
+    # A scoping note names its own deliverable before it is built. REMOVE THESE TWO when
+    # the brick lands — a stale exception silently weakens the guard for that pair.
+    ("specs/ozawa-scoping.md", "Empirical/QM/Ozawa.lean"),
+    ("specs/ozawa-scoping.md", "Empirical/CSD/Ozawa.lean"),
 }
 
 corpus_tops = {d for d in os.listdir("CsdLean4") if os.path.isdir(os.path.join("CsdLean4", d))} - {"Mathlib"}
