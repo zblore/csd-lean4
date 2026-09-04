@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 
 /-!
-# Reversible modular reduction — comparison via carry-out, single-step reduce  (ECDLP Phase 2, Stage S4)
-
+# Reversible modular reduction — comparison via carry-out, single-step reduce
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The resource figures so far (`ResourceBounds.lean`) cost *multiply-and-accumulate* but **omit the

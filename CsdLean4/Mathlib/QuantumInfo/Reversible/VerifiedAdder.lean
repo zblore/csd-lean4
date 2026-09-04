@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 
 /-!
-# An adder-parametric modular multiplier — the substitution keystone  (ECDLP Phase 2, Stage S6.3-36a)
-
+# An adder-parametric modular multiplier — the substitution keystone
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module turns re-costing the modular multiplier with a different (cheaper) per-bit step from a

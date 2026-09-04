@@ -11,12 +11,11 @@ public import Mathlib.Algebra.BigOperators.Fin
 public import Mathlib.Data.Fintype.Pi
 
 /-!
-# Reversible modular addition — register encoding, verified full adder, ripple cost  (ECDLP Tranche 2, Pass 1)
-
+# Reversible modular addition — register encoding, verified full adder, ripple cost
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The addition layer of the reversible-circuit substrate
-(`Circuit.lean` / `Cost.lean`, `specs/ecdlp-resource-plan.md`). Pass 1 delivers a **sorry-free
+(`Circuit.lean` / `Cost.lean`; the application that motivated this substrate lives in the `Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there). Pass 1 delivers a **sorry-free
 semantic + derived-cost scaffold**: the register readout `regVal`, the **fully verified** four-gate
 full-adder gadget, its derived cost, and the **linear** Toffoli / CNOT count of an `k`-slice ripple
 adder (composed through the Tranche-1 `cost_comp_*` lemmas, not re-derived).

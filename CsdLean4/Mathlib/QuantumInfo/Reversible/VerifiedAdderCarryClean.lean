@@ -9,8 +9,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 
 /-!
-# A carry-clean adder-parametric modular multiplier  (ECDLP Phase 2, Stage S6.3-36b)
-
+# A carry-clean adder-parametric modular multiplier
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module is the carry-clean (`Θ(n)`-qubit) counterpart of the fresh-ancilla keystone 36a
@@ -63,7 +62,7 @@ parametric, the ~67%). **No ECDSA score change is claimed yet** (still needs 36c
 `Θ(n)`-qubit win is real: the restored-clean invariant (this module's `cleanRestored`, realised by
 `cuccaroModMul_clean`) is exactly what lets the single scratch bank be reused across all `n` steps.
 **Load-bearing hypothesis: `N` odd** (inherited from the doubler's parity flag-uncompute), which holds
-for the ECDLP prime field.
+for any odd modulus, a prime field in particular.
 -/
 
 @[expose] public section

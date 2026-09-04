@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 
 /-!
-# Reversible controlled addition — the quantum×quantum primitive  (ECDLP Phase 2, Stage S2)
-
+# Reversible controlled addition — the quantum×quantum primitive
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The Tranche-3 multiplier (`ModMul.lean`) is **quantum×classical**: it multiplies a *classical constant*

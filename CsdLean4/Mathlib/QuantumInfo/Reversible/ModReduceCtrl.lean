@@ -9,8 +9,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
 
 /-!
-# Reversible modular reduction — the complete single-step reduce circuit  (ECDLP Phase 2, Stage S6.3a)
-
+# Reversible modular reduction — the complete single-step reduce circuit
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 S4 (`ModReduce.lean`) verified the comparison-as-carry-out primitive and the `x ≥ N` reduce *value*

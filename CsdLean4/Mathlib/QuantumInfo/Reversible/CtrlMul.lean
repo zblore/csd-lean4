@@ -9,8 +9,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 
 /-!
-# Reversible quantum×quantum multiplication — controlled shift-and-add  (ECDLP Phase 2, Stage S2.3)
-
+# Reversible quantum×quantum multiplication — controlled shift-and-add
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The Tranche-3 multiplier (`ModMul.lean`) is quantum×classical (`a·Y`, `a` a *classical* constant fixing

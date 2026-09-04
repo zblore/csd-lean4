@@ -11,12 +11,11 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Algebra.BigOperators.Intervals
 
 /-!
-# Reversible modular multiplication — semantic target + shift-and-add multiplier cost  (ECDLP Tranche 3, Stage A)
-
+# Reversible modular multiplication — semantic target + shift-and-add multiplier cost
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The multiplication layer of the reversible-circuit substrate
-(`Circuit.lean` / `Cost.lean` / `ModAdd.lean`, `specs/ecdlp-resource-plan.md`). The semantic target is
+(`Circuit.lean` / `Cost.lean` / `ModAdd.lean`; the application that motivated this substrate lives in the `Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there). The semantic target is
 **Shor's modular-multiplication oracle** `mulOracle : |y⟩ ↦ |a·y⟩` on `ZMod N` (a permutation when `a`
 is a unit), which the corpus's `Empirical/QM/Algorithms/ShorCore.lean` carries with no gate-level
 content. This tranche builds the missing reversible circuit + *derived* cost.

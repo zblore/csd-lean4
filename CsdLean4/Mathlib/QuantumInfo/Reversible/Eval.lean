@@ -9,10 +9,9 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 
 /-!
-# Fast `#eval`-able reversible-circuit evaluation — the `Array Bool` bridge  (ECDLP testing infra)
-
+# Fast `#eval`-able reversible-circuit evaluation — the `Array Bool` bridge
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). **This is testing
-infrastructure, not part of the ECDLP cost / correctness claims.**
+infrastructure, not part of this substrate's cost / correctness claims.**
 
 ## Purpose
 

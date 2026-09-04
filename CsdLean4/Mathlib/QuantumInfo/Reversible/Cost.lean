@@ -9,15 +9,15 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 public import Mathlib.Algebra.BigOperators.Group.List.Basic
 
 /-!
-# Reversible-circuit resource cost — the derived gate-list cost model  (ECDLP Tranche 1b)
-
+# Reversible-circuit resource cost — the derived gate-list cost model
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The cost half of the reversible-circuit substrate (`Circuit.lean`). The design decision (locked in
-`specs/ecdlp-resource-plan.md`): a circuit's resource cost is a **function of its gate list**, not a
+the resource plan — the application that motivated this substrate lives in the `Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there): a
+circuit's resource cost is a **function of its gate list**, not a
 number annotated onto an opaque `Equiv`. So "operation `op` costs `≤ B` Toffolis" is a *theorem* —
 exhibit a circuit `c`, prove `denote c = op` and `(circuitCost c).toffoli ≤ B` — not a trusted
-constant. This is what makes the downstream ECDLP resource accounting genuinely machine-checked.
+constant. This is what makes the downstream resource accounting genuinely machine-checked.
 
 `Cost` bundles the standard fault-tolerant resource fields (qubit width, ancilla, Toffoli count and
 depth, CNOT count, T-count, measurements), all `ℕ`. `circuitCost` reads each additive field off the

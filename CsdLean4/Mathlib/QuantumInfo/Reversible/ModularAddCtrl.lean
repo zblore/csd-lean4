@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
 
 /-!
-# Reversible controlled modular addition — `(ctrl, a, b) ↦ if ctrl then (a+b) mod N else b`  (ECDLP Phase 2, Stage S6.3c)
-
+# Reversible controlled modular addition — `(ctrl, a, b) ↦ if ctrl then (a+b) mod N else b`
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module **verifies the controlled modular-addition VALUE primitive** — the controlled analogue of

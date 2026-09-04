@@ -13,8 +13,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 
 /-!
-# Reversible interleaved modular multiply — the verified Horner LOOP BODY  (ECDLP Phase 2, Stage S6.3d-2a)
-
+# Reversible interleaved modular multiply — the verified Horner LOOP BODY
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module **verifies the loop body of the interleaved MSB-first modular multiply** over `𝔽_p`,

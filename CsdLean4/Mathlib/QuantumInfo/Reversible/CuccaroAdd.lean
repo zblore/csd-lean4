@@ -10,8 +10,7 @@ meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 public import Mathlib.Tactic.Ring
 
 /-!
-# The carry-clean (Cuccaro) ripple-carry adder — in-place, ancilla-restoring  (ECDLP Phase 2, Stage 1)
-
+# The carry-clean (Cuccaro) ripple-carry adder — in-place, ancilla-restoring
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The single highest-leverage reversible gadget the corpus lacked: an **in-place, ancilla-restoring**
@@ -19,7 +18,7 @@ ripple-carry adder (Cuccaro, Draper, Kutin, Moulton 2004). Unlike `rippleCirc` /
 (which thread an explicit Θ(n)-wire carry chain `C` and leave its top carry dirty), the Cuccaro adder
 stores the carries *inside the preserved addend register* during the computation and **restores them**,
 needing only **one** clean ancilla `Z` (the low carry, init `false`, returned `false`). This collapses
-the fresh-ancilla penalty that every prior ECDLP adder (`ModularAdd`, `ModularAddCtrl`,
+the fresh-ancilla penalty that every prior adder in this substrate (`ModularAdd`, `ModularAddCtrl`,
 `DoublingAssembly`) carried as a named residue, and brings the per-multiply Toffoli cost from ~30n²
 toward ~2n².
 

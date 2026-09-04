@@ -11,8 +11,7 @@ meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
 
 /-!
-# The carry-clean (ancilla-restoring) MODULAR adder  (ECDLP Phase 2, Stage 2)
-
+# The carry-clean (ancilla-restoring) MODULAR adder
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 Stage 1 (`CuccaroAdd.lean`) delivered the in-place, ancilla-restoring ripple-carry adder

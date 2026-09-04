@@ -14,8 +14,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 
 /-!
-# Reversible interleaved modular multiply — the general-`n` Horner LOOP  (ECDLP Phase 2, Stage S6.3d-2b)
-
+# Reversible interleaved modular multiply — the general-`n` Horner LOOP
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module delivers the **verified general-`n` interleaved MSB-first modular multiply** over `𝔽_p`,

@@ -11,8 +11,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 
 /-!
-# Reversible modular doubling — the verified value primitive `a ↦ 2a mod N`  (ECDLP Phase 2, Stage S6.3d-1)
-
+# Reversible modular doubling — the verified value primitive `a ↦ 2a mod N`
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module **verifies the modular-doubling VALUE primitive** `a ↦ 2a mod N` over bit registers, the

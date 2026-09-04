@@ -206,6 +206,29 @@ for f in files + sorted(set(doc_files)):
         if not os.path.exists(os.path.join("CsdLean4", rel)):
             path_findings.append((f, m))
 
+# ---------------------------------------------------------------------------
+# Spec/doc references from Lean docstrings must resolve too (added 2026-09-04).
+#
+# WHY. The module-path check above covers `CsdLean4/...` targets. Lean headers also cite
+# `specs/*.md` and `docs/*.md` 691 times, and those rot the same way: the reversible
+# substrate carried four references to `specs/ecdlp-resource-plan.md` for weeks after that
+# plan moved to the separate Ecdsafail repository.
+#
+# CROSS-REPO references are legitimate and are declared by PREFIX, not one by one: a path
+# under a prefix below is owned by another repository, so its absence here is expected.
+CROSS_REPO = {
+    "specs/ecdsa/": "the Ecdsafail repository (one-way dependency; see CLAUDE.md)",
+}
+docref_re = re.compile(r"(?:`|\()((?:specs|docs)/[A-Za-z0-9._/-]+\.md)")
+for f in files:
+    with open(f, encoding="utf-8", errors="replace") as fh:
+        text = fh.read()
+    for m in sorted(set(docref_re.findall(text))):
+        if any(m.startswith(pre) for pre in CROSS_REPO):
+            continue
+        if not os.path.exists(m):
+            path_findings.append((f, m))
+
 if path_findings:
     print("check-doc-promises: FAIL — %d module path(s) named in prose do not exist:"
           % len(path_findings))

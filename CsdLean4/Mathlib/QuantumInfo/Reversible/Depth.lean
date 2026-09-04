@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
 
 /-!
-# Layered circuits and depth  (ECDLP Phase 2, Stage S1)
-
+# Layered circuits and depth
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The flat `Circuit = List (Gate n)` model (Tranche 1) costs only **gate count**; it cannot express

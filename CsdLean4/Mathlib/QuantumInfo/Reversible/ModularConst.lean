@@ -14,8 +14,7 @@ meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 public import Mathlib.Tactic.IntervalCases
 
 /-!
-# Reversible modular constant-multiply and negation — the last two field-op gadgets  (ECDLP Phase 2, Stage S6.3e-2a)
-
+# Reversible modular constant-multiply and negation — the last two field-op gadgets
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module verifies the **last two modular field-operation gadgets** the SLP → circuit router needs,

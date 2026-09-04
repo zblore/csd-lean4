@@ -8,11 +8,10 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
 
 /-!
-# Reversible modular inverse — the semantic layer  (ECDLP Tranche 4)
-
+# Reversible modular inverse — the semantic layer
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
-The modular-inverse layer of the reversible-arithmetic substrate (`specs/ecdlp-resource-plan.md`). The
+The modular-inverse layer of the reversible-arithmetic substrate (the application that motivated this substrate lives in the `Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there). The
 semantic target is the oracle action `y ↦ y⁻¹` on `ZMod N` (modular inversion — the field division
 underlying elliptic-curve slope computation). Per the investigation map this layer is **reuse**: the
 arithmetic content is Mathlib's `ZMod` inverse (`ZMod.mul_inv_of_unit`, `inv_mul_of_unit`,
@@ -32,7 +31,7 @@ inverse is `mulConst a⁻¹`.
 ## Honest scope — no inversion circuit (and why that is the right call here)
 
 This is the **semantic / algebraic** layer only. A *reversible circuit* for modular inversion (extended
-Euclid) is large and is **not** built. This is deliberate and standard for ECDLP resource accounting:
+Euclid) is large and is **not** built. This is deliberate and standard for resource accounting:
 elliptic-curve point arithmetic in **projective / Jacobian coordinates** avoids a per-operation field
 inversion (one inversion at the very end, or via Fermat `a⁻¹ = a^{N-2}` = modular exponentiation built
 from the Tranche-3 multiplier). So the dominant cost is multiplications (Tranche 3, with derived gate

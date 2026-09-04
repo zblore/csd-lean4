@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 
 /-!
-# A VALUE-EXACT constant-propagation pass on reversible circuits  (ECDLP, the frontier's key lever)
-
+# A VALUE-EXACT constant-propagation pass on reversible circuits
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 The ecdsa.fail frontier's dominant Toffoli lever is `constprop` (`ecdsafail-toffoli-reduction`): a forward

@@ -11,8 +11,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 
 /-!
-# Reversible modular subtraction — the verified value primitive `(a, b) ↦ (a − b mod N, b)`  (ECDLP Phase 2, Stage S6.3e-1)
-
+# Reversible modular subtraction — the verified value primitive `(a, b) ↦ (a − b mod N, b)`
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module **verifies the modular-subtraction VALUE primitive** `a − b mod N` over bit registers,

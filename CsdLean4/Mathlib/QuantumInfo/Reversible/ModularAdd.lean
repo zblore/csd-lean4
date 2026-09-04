@@ -8,8 +8,7 @@ module
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
 
 /-!
-# Reversible modular addition — the verified value primitive `(a, b) ↦ (a, (a+b) mod N)`  (ECDLP Phase 2, Stage S6.3b)
-
+# Reversible modular addition — the verified value primitive `(a, b) ↦ (a, (a+b) mod N)`
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 This module **verifies the modular-addition VALUE primitive** `(a, b) ↦ (a, (a + b) mod N)` over bit

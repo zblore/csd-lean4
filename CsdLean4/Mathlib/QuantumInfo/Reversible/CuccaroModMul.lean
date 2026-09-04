@@ -13,8 +13,7 @@ meta import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
 meta import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
 
 /-!
-# The carry-clean (Θ(n)-qubit) MODULAR MULTIPLY `X·Y mod N`  (ECDLP Phase 2, Stage 2b)
-
+# The carry-clean (Θ(n)-qubit) MODULAR MULTIPLY `X·Y mod N`
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
 Stage 2 (`CuccaroModAdd.lean`) delivered the carry-clean modular ADDER `cuccaroModAdd`
@@ -35,7 +34,7 @@ Acc = 0; for each bit i of X MSB-first: Acc ← (2·Acc) mod N; Acc ← (Acc + X
    doubles by an information-preserving wire rotation (`new[i] = old[i-1]`, `new[0] = old[n] = 0`),
    so there is *no* scratch to clean from the doubling itself; the `mod N` reduce reuses the Stage-2
    pieces (`cuccaroSub`, `maskCopy`, `cuccaroAdd`). The comparison flag is uncomputed **by parity**:
-   for **odd `N`** (the ECDLP prime case), `[2a < N] = ¬(2a mod N) mod 2`, so a `CX (Acc 0) flag ; X`
+   for **odd `N`** (the case an odd prime modulus gives), `[2a < N] = ¬(2a mod N) mod 2`, so a `CX (Acc 0) flag ; X`
    clears it. **Load-bearing hypothesis: `N` odd.**
 2. **`cuccaroCModAdd` — clean bit-gated `Acc ← (Acc + X_i·Y) mod N`.** The masked-operand trick:
    `Mask2 ^= X_i·Y` (`maskCopyCtrl`, `n` `CCX`s), run `cuccaroModAdd` with addend `Mask2`, then
@@ -58,7 +57,7 @@ step is irreducible in this measurement-free `CCX`-only DSL). The prize is **Θ(
 (ONE shared scratch bank `mod`) vs the dirty `mulLoop`'s Θ(n²) fresh ancilla; the per-multiply
 Toffoli is also ~`1.5×` better than the dirty `30n²`. This is the verified modular field-multiply
 atom; the elliptic-curve point op is a later stage. **Load-bearing hypothesis: `N` odd** (the parity
-flag-uncompute in the doubler), which holds for the ECDLP prime field.
+flag-uncompute in the doubler), which holds for any odd modulus — a prime field in particular.
 -/
 
 @[expose] public section
