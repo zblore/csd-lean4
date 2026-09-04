@@ -10,8 +10,8 @@ discipline: the twin must not read as though CSD explained anything.
 ⚠️ **Two things to read before any Lean.** §2: three different statements are all called
 "locality" here, the corpus proves one *conditionally*, denies another, and Local Friendliness is
 about a **third** — a brick that re-exports the Bell denial would be wrong in a way that reads
-plausibly. §3: there is a **fork** in CSD's own position, created by a landed theorem, and it may
-make the headline of this row the opposite of what was expected.
+plausibly. §3: why the coherent branch IS available to CSD (forward evolution, not reversal), and
+what that availability rests on.
 
 ## 1. What Local Friendliness is
 
@@ -80,30 +80,48 @@ Consequences for the brick:
   `Σ` with one `μ`; the joint distribution exists by construction. That closes the only other
   standard exit, and it is genuine CSD content rather than a restatement of the posit.
 
-## 3. ⚠️ The fork — write this down whether or not any Lean is built
+## 3. The coherent branch: forward evolution, not reversal
 
-The elimination gives the denial *conditionally*: if the CSD record layer reproduces the quantum
-violation, and AOE and No-Superdeterminism hold, then Locality fails. But the antecedent is not
-established, and a landed theorem points the other way.
+An earlier draft of this note (2026-09-04, corrected the same day) claimed a **fork**: that
+`Empirical/CSD/EraserSequential.lean` `sequential_no_revival` — "un-measuring is not an operation
+the dynamics has" — might mean CSD does not reproduce QM's coherent-branch statistics, hence does
+not violate an LF inequality, hence is *empirically exposed* to Bong et al. **That reading was
+wrong**, on two counts, and the correction is the physics of the row.
 
-`Empirical/CSD/EraserSequential.lean` `sequential_no_revival`: **once a record exists, no later
-marker measurement revives the fringe** — "un-measuring is not an operation the dynamics has".
-The LF coherent setting is exactly an un-measuring: a coherent measurement on a lab that has
-already made a record.
+**(1) The LF coherent setting does not require reversal.** In CSD there is one trajectory and it
+moves forward; running it backwards is indeed not an operation the dynamics has. But Alice's
+coherent setting is not a time reversal — it is an **apparatus she applies**, a forward
+interaction whose effect on the Hilbert data is some unitary. The "undo" unitary `U†` is a
+unitary like any other, and its realisation is a forward Σ-flow. The record is not un-made by
+going back; the trajectory moves *forward* into a configuration in which the which-path
+information is no longer locally readable. Nothing in CSD forbids that.
 
-So the fork is:
+**(2) `sequential_no_revival` is narrower than its own prose.** What it proves is that a later
+**±-basis marker measurement** leaves the rate flat at `1/2` — a composed Lüders update, and a
+statement that holds in ordinary quantum mechanics too. It is not a CSD-specific deviation, and
+it says nothing against a forward **unitary** that restores coherence. The module's gloss
+"un-measuring is not an operation the dynamics has" is true of *reversal* and over-reads as a
+claim about the coherent branch.
 
-* **If records are genuinely irreversible selections**, CSD does *not* reproduce QM's
-  coherent-branch statistics, therefore does *not* violate an LF inequality, therefore the
-  elimination never fires — and the honest headline is that **CSD is empirically exposed to Bong
-  et al.**, which is a sharper and more interesting claim than "CSD denies Locality".
-* **The fork stays open** only because `sequential_no_revival` is basis-scoped (its own honest
-  scope: the second stroke's basis is fixed by `seqProfile`; only the outcome is quantified) and
-  because `RecordPersistence.lean`'s record window `[T_M, T_M + τ_R]` is *deliberately finite*, so
-  nothing yet forbids post-`τ_R` recoherence.
+**So CSD reproduces QM here, and the elimination of §2 fires.** With AOE kept and
+No-Superdeterminism kept (by posit), an LF violation forces the denial of Locality (iii). There
+is no empirical exposure to Bong et al., and the row is not a falsification story.
 
-**Route A must not be written as though the antecedent were established.** This is the one thing
-in row C that bears on the record layer, and it was invisible before this note.
+⚠️ **What this rests on, stated plainly.** That *every* unitary is realisable as a
+measure-preserving, `π`-equivariant Σ-flow is **posited, not derived**. `CSDUnitaryBundle`
+(`Empirical/CSD/Gates/Framework.lean`) carries only QM-side data — `U` and `U_isometry` — and
+`PLACEHOLDERS.md` §7 says so outright: *"no field carries a Σ-side flow, no field asserts
+π-equivariance, no field asserts measure-preservation. The CSD-side ontic claim lives entirely in
+the docstring prose."* So the coherent branch is available to CSD **on the same posit that the
+whole gates layer rests on**, with the same discharge route. That is the honest dependency, and
+the twin must carry it.
+
+*(Not to be confused with recurrence. `recordDuration` is a deliberately finite window because
+"indefinite stability raises recurrence questions" — Poincaré return on a compact Σ with an
+invariant probability measure, quantified by Kac's formula, which the corpus has
+(`Mathlib/Dynamics/Kac.lean`). That is **spontaneous** return at an astronomically long mean time
+`1/μ(A)`; it is a different mechanism from an engineered forward unitary and is not what makes
+the coherent branch available.)*
 
 ## 4. The deliverable — the §2 table, machine-checked
 
@@ -150,8 +168,9 @@ and `E91.lhvCHSH_abs_le_two` (generic in `Λ`, instantiable at a joint outcome s
 
 ## 5. What the twin must NOT say
 
-* **Not** that CSD explains or predicts the LF violation. §3's fork means the corpus may not even
-  produce one.
+* **Not** that CSD explains or predicts the LF violation. CSD reproduces the quantum statistics
+  here (§3); reproducing them is not explaining them, and the denial of (iii) is a consequence of
+  the elimination, not a mechanism.
 * **Not** that CSD denies no-signalling. It proves (i) conditionally; "CSD denies Locality" read
   without §2's table says the opposite of what is true.
 * **Not** that the Bell denial is the LF denial. (ii) and (iii) are different statements over
