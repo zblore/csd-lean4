@@ -434,6 +434,17 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.Ozawa.ozawa_two_term_false
 
+-- WAY brick 2 (quantitative WAY, Ozawa 2002), 2026-09-04. Deferred behind row B and rated L
+-- there; sharing row B's definitions made it an S -- one commutator identity and a single
+-- `commutator_le_two_mul_norm`. The structural WAY theorem is its epsilon = 0 corner.
+/-- info: 'CSD.Empirical.Ozawa.quantitative_way' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Ozawa.quantitative_way
+
+/-- info: 'CSD.Empirical.Ozawa.commutator_eq_zero_of_error_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Ozawa.commutator_eq_zero_of_error_eq_zero
+
 -- The CSD side is a SCOPE theorem (WAY brick 1 pattern), not a volume-ratio transport twin:
 -- no Ozawa measurement model computes the record-layer stroke, so its epsilon and eta are not
 -- defined there.

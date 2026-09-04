@@ -318,12 +318,28 @@ back-reactions, which the pinned pointer image cannot see — robustness, not st
   modelled at either tier (`R-015`); statistics untouched (`born_lower` / `born_upper`); the LF5
   tier meets WAY's hypotheses and its conclusion holds there.*
 
-### Brick 2 — quantitative WAY (L; **deferred behind row B**)
+### Brick 2 — quantitative WAY (**LANDED 2026-09-04**; rated L here, actually an **S**)
 
 Ozawa 2002's bound on the noise-operator formalism. Shares every definition with the Ozawa
-error–disturbance inequality (row B: noise `N`, disturbance `D`, the `ε(A)ε(B) + ε(A)σ(B) +
-σ(A)ε(B) ≥ ½|⟨[A,B]⟩|` inequality). **Sequence: B first, then this as a corollary-level brick.**
-Not started by this scoping; not queued until B lands.
+error–disturbance inequality (row B: noise `N`, disturbance `D`). **Sequence: B first, then this
+as a corollary-level brick** — which is exactly how it went, on the day row B landed.
+
+`Empirical/QM/QuantitativeWAY.lean`: ★★ `quantitative_way` —
+`ε(A) · σ(L) ≥ ½|⟪Ψ, [A_in, L] Ψ⟫|`, so an apparatus measures `A` accurately only at the price of
+charge variance; and ★ `commutator_eq_zero_of_error_eq_zero` — the structural WAY theorem
+recovered as the `ε = 0` corner, which is why the two are one statement rather than two. 2 pins.
+
+⚠️ **The L rating was wrong**, and the reason is worth keeping: sharing row B's definitions did
+not merely help, it collapsed the work. `OzawaData` turned out to need no tensor product (four
+symmetric operators on one space, two of them commuting), so the proof is one commutator identity
+— `[A_in, L] = −[N, L] + [A_out, L]`, second term killed by conservation — and a single
+application of `Uncertainty.commutator_le_two_mul_norm`. Four lines. Deferring it behind B was
+right; rating it L before B existed was an estimate made on the wrong vocabulary.
+
+⚠️ **Assumed, not derived:** `Commute A_out L`. In the full model that holds exactly when the probe
+observable commutes with the apparatus's own charge — the standard extra assumption of the
+quantitative treatment, not a consequence of conservation. `OzawaData` carries no `U`, so it
+cannot be derived there and is carried as a hypothesis, stated in the module.
 
 ---
 

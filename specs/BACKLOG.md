@@ -221,6 +221,16 @@
 >    "share every definition" with Ozawa, and the Ozawa core turned out to need **no tensor product
 >    at all** (four symmetric operators, two of them commuting), so `OzawaData` composes with WAY's
 >    abstract-tensor interface whichever way brick 2 goes. Re-rate before queueing.
+>
+>    **WAY brick 2 LANDED 2026-09-04, the same day** (`Empirical/QM/QuantitativeWAY.lean`,
+>    2 pins): ★★ `quantitative_way` — `ε(A)·σ(L) ≥ ½|⟪Ψ,[A_in,L]Ψ⟫|`, an apparatus measures `A`
+>    accurately only at the price of charge variance — and ★ `commutator_eq_zero_of_error_eq_zero`,
+>    the structural WAY theorem as its `ε = 0` corner. ⚠️ The **L** rating was wrong and the reason
+>    is instructive: sharing row B's definitions collapsed the work to one commutator identity plus
+>    a single `commutator_le_two_mul_norm`. Rating a brick before the vocabulary it depends on
+>    exists is rating the wrong problem. ⚠️ `Commute A_out L` is assumed, not derived (`OzawaData`
+>    carries no `U`); it encodes the probe observable commuting with the apparatus charge, the
+>    standard extra assumption of the quantitative treatment.
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
 >    Cat-1 `Reversible/` headers); the general Boolean→amplitude lift (`RESIDUE(R-013)`'s neighbour).
 >

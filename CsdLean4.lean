@@ -286,6 +286,7 @@ public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Ozawa
+public import CsdLean4.Empirical.QM.QuantitativeWAY
 public import CsdLean4.Empirical.QM.WignerArakiYanase
 public import CsdLean4.Empirical.QM.Multipartite.GHZ
 public import CsdLean4.Empirical.QM.Contextuality.KS18
