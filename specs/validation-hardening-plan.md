@@ -30,7 +30,7 @@ headline, no landing-surface edit arises from this campaign.
 * `lake build --wfail` on both targets — **green already** (the corpus is
   warning-clean; the only replayed diagnostics are `info:`-level `#eval` outputs in
   `Mathlib/QuantumInfo/Reversible/` and two `Try this:` notes in
-  `SigmaLayer/ShearWitness.lean`).
+  `RecordLayer/ShearWitness.lean`).
 * All 12 blocking guards PASS: module-coverage, validation-ledger, semantic-mutations,
   connectivity, sector-linkage, axiom-imports, claims, claim-provenance, citation-use,
   axiom-sweep, import-negative, guards.

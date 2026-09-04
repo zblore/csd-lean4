@@ -36,7 +36,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 python - <<'PY'
-import os, re, sys
+import os, re, subprocess, sys
 
 # ---------------------------------------------------------------------------
 # EXCEPTIONS — informal names in explanatory bullets, not promised declarations.
@@ -168,15 +168,40 @@ if os.path.exists(ledger):
 # noticed for months: this guard checked that named DECLARATIONS exist and said
 # nothing about named FILES. Paths under `Mathlib/` are exempt — they are usually
 # references to upstream Mathlib, which is not in this tree.
+# Paths that a document names DELIBERATELY although they do not exist: the subject of a
+# rename sentence, a file recorded as never created, a proposed future companion. Fixing
+# these would falsify the record. Each carries its reason.
+PATH_EXCEPT = {
+    # "File rename: X -> Y" — the old name IS the subject.
+    ("specs/pre-LF4-plan.md", "LF3/BranchSeparation.lean"),
+    ("specs/pre-LF4-plan.md", "LF3/Projectors/BranchWeight.lean"),
+    # "(moved from Empirical/Bell.lean)" — same.
+    ("specs/empirical-csd-bridge-plan.md", "Empirical/Bell.lean"),
+    # A proposed companion that was never built.
+    ("specs/empirical-csd-bridge-plan.md", "Empirical/Bohmian/Bell.lean"),
+    # "No Tests/AxiomAudit/C1.lean was created" — an assertion that it does NOT exist.
+    ("specs/c1-closure-report.md", "Tests/AxiomAudit/C1.lean"),
+    ("specs/c1-correction-plan.md", "Tests/AxiomAudit/C1.lean"),
+}
+
 corpus_tops = {d for d in os.listdir("CsdLean4") if os.path.isdir(os.path.join("CsdLean4", d))} - {"Mathlib"}
 path_re = re.compile(r"(?:CsdLean4/)?(?:[A-Za-z][A-Za-z0-9]*/)+[A-Z][A-Za-z0-9]*\.lean")
+# Markdown carries the same references and rots the same way — the SigmaLayer -> RecordLayer
+# split left 207 broken paths in 22 documents, including the A2 row that README sends readers
+# to for the axiom-level audit.
+doc_files = [p for p in subprocess.run(
+    ["git", "ls-files", "*.md", "specs/*.md", "docs/*.md", "specs/**/*.md", "docs/**/*.md"],
+    capture_output=True, text=True).stdout.split() if p]
+
 path_findings = []
-for f in files:
-    with open(f, encoding="utf-8") as fh:
+for f in files + sorted(set(doc_files)):
+    with open(f, encoding="utf-8", errors="replace") as fh:
         text = fh.read()
     for m in sorted(set(path_re.findall(text))):
         rel = m[len("CsdLean4/"):] if m.startswith("CsdLean4/") else m
         if rel.split("/")[0] not in corpus_tops:
+            continue
+        if (f, rel) in PATH_EXCEPT:
             continue
         if not os.path.exists(os.path.join("CsdLean4", rel)):
             path_findings.append((f, m))

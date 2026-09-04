@@ -18,7 +18,7 @@
 >
 > ⚠️ **Banner corrected 2026-08-24 — it had gone stale by six weeks.** It listed **general-`N` A7**
 > as open ("the partition is preparation-indexed; `Ωᵢ(M)` from the apparatus alone is proved only at
-> `N=2`"). **That closed on 2026-07-31** — `SigmaLayer/GlobalRecordClosure.lean` makes the record
+> `N=2`"). **That closed on 2026-07-31** — `RecordLayer/GlobalRecordClosure.lean` makes the record
 > event a function of `(context, outcome, time)` and nothing else, so the same set serves every
 > preparation and only the epistemic measure moves. Ledger row CL-011 was replaced on exactly that
 > basis 2026-08-24.

@@ -83,7 +83,7 @@ preparation, and arbitrary Hermitian `H`:
   projective-join witness, and a single capstone bundling rank-one, all bases, and
   degenerate is delivered in the next bullet.
 - **one theorem now carries the whole projective-measurement layer**
-  (`projectiveMeasurementCapstone`, `SigmaLayer/MeasurementCapstone.lean`): for every
+  (`projectiveMeasurementCapstone`, `RecordLayer/MeasurementCapstone.lean`): for every
   Hermitian generator, base point, and unit preparation, rank-one on the unified arena,
   the six-fact closure in **every** apparatus basis, the **complete degenerate package on
   one protocol** for every block structure (records, exclusivity, persistence, Liouville,
@@ -108,14 +108,14 @@ preparation, and arbitrary Hermitian `H`:
   and erasing **after** the mark record revives nothing (`sequential_no_revival`),
   interference is recoverable only before a record exists;
 - **POVMs and instruments are dynamical too** (`povm_selector_born`, `povm_instrument`,
-  `naimarkInstrumentClosureCanonical`, `SigmaLayer/PovmDynamics.lean`): Naimark-dilate and
+  `naimarkInstrumentClosureCanonical`, `RecordLayer/PovmDynamics.lean`): Naimark-dilate and
   run the *existing* degenerate record protocol on the dilated arena, the ancilla block
   structure IS `localBlock`, so no new dynamics or sectors are needed. Outcome sectors
   carry `⟨ψ, Eᵢ ψ⟩` exactly, and the post-states the join witness delivers are the
   Naimark–Lüders instrument posts `Πᵢ(Vψ)`. Every POVM, via the canonical dilation
   (the instrument is dilation-relative, a POVM does not determine its instrument);
 - **measurement dynamics has a smooth horn** (`smoothWitnessClosure`,
-  `SigmaLayer/PointerBorn.lean`): on the pointer arena `ℂℙ^{N-1} × T² × ℂℙ^N`, one witness
+  `RecordLayer/PointerBorn.lean`): on the pointer arena `ℂℙ^{N-1} × T² × ℂℙ^N`, one witness
   simultaneously carries a measurement protocol whose two-time law is the exponential group
   property, a propagator **jointly continuous in time and state**
   (`continuous_pointerRampedEvolve`), Liouville preservation, a positive-measure ready state
@@ -184,7 +184,7 @@ preparation, and arbitrary Hermitian `H`:
 
 Historical capstones (`FiniteQMClosure`, `unified_projectiveSector_capstone`,
 `measurement_flow_born_frequency`) stand unchanged; `unifiedArenaClosure` is their one-arena
-successor, with an explicit field-by-field mapping table in `SigmaLayer/UnifiedArena.lean`.
+successor, with an explicit field-by-field mapping table in `RecordLayer/UnifiedArena.lean`.
 
 ## The story of measurement
 
@@ -238,7 +238,7 @@ Neither, and that is a settled framing (author decision, 2026-08-03), not an ope
 `no_everywhere_correlation` rules out **everywhere**-exact records for any continuous
 dynamics on a connected state space, and every measuring science has met that constraint.
 (*Precision added 2026-08-03, fourth external review; the candidate third option was
-**exhibited the same day**: `nullSeamClosure` (`SigmaLayer/NullSeamWitness.lean`) is a
+**exhibited the same day**: `nullSeamClosure` (`RecordLayer/NullSeamWitness.lean`) is a
 continuous, measure-preserving witness with records exact off a **two-point** seam and
 **exact** Born, the transition crosses where the record regions kiss. Its price is the
 **Dirac calibration**: exactness holds at the calibrated ready point, and a positive-width
@@ -249,7 +249,7 @@ therefore a* **trilemma** *, each formalised horn pays exactly one of: seams (pi
 witness), ε-Born (smooth witness), Dirac calibration (null-seam witness), the last already
 priced by `collapse_accuracy_bound`. On the pointer's own geometry the fourth combination
 is now provably impossible, `posMeasure_noRecord_pointer`
-(`SigmaLayer/NoRecordGeometry.lean`, 2026-08-05): continuity + open-map + open preconnected
+(`RecordLayer/NoRecordGeometry.lean`, 2026-08-05): continuity + open-map + open preconnected
 positive-width ready + correlation force a positive-measure no-record set. General
 exhaustiveness over all arenas remains research, not a claim.*) Digital
 electronics keeps continuous dynamics and engineers the `ε`: flip-flop *metastability* is an
@@ -312,11 +312,11 @@ dilation. Three witness families now populate the measurement **trilemma** (seam
 `ε`-Born, Dirac calibration), and the transition profiles have `C^∞` variants with the
 plateau interface unchanged. The two formerly-recorded extensions are now theorems: the
 `ε`-Born frequency layer (`pointer_born_frequency`, 2026-08-04) and the **smooth-witness
-Lüders composition** (`pointer_luders_marginal`, `SigmaLayer/PointerLudersMarginal.lean`,
+Lüders composition** (`pointer_luders_marginal`, `RecordLayer/PointerLudersMarginal.lean`,
 2026-08-05), conditioned on the outcome sector, the post-stroke system marginal is the
 slot calibration, so the smooth horn delivers records *and* a collapse-as-relocation
 update on one arena. The **local sharpened no-go is now a theorem**
-(`posMeasure_noRecord_pointer`, `SigmaLayer/NoRecordGeometry.lean`, 2026-08-05): on the
+(`posMeasure_noRecord_pointer`, `RecordLayer/NoRecordGeometry.lean`, 2026-08-05): on the
 pointer's moment-region geometry, exact-a.e. records force Dirac calibration, the
 trilemma's third leg closed with no geometric hypothesis. General exhaustiveness over all
 arenas stays research (`specs/BACKLOG.md`). The empirical suite

@@ -81,7 +81,7 @@ headlines.** `Matrix.StoneC1.stone_continuous` (continuity plus the group law
 plus unitarity forces `exp(t·A)`, with differentiability derived rather than
 assumed) is a second unconditional necessity and is not a ledger row.
 `CV.no_exact_finite_ccr`, and the three no-gos in
-`SigmaLayer/MeasurementConstraints.lean`, are unconditional impossibilities with
+`RecordLayer/MeasurementConstraints.lean`, are unconditional impossibilities with
 no CSD-specific hypotheses at all, and none of them is a ledger row either. The
 ledger is a record of what the programme set out to build, not a ranking by
 logical force.

@@ -230,5 +230,5 @@ consumer grep against the corpus's other recorded corrections.
 `specs/future-work.md`; `specs/c1-closure-report.md` (the correction that
 motivated this); `specs/publication-errata.md`;
 `scripts/check-claim-provenance.sh` (what the guards *can* catch, and its stated
-limits); `CsdLean4/SigmaLayer/DeIsolationFlow.lean`
+limits); `CsdLean4/RecordLayer/DeIsolationFlow.lean`
 (`fibreTypicality_uncovered_univ`, `fibreTypicality_Ici_one`).

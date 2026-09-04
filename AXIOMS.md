@@ -150,7 +150,7 @@ This is the **sector-posit assumption**: the physical motivation for the quantum
 ### 3.8 The calibrated bank (swap / join witnesses) — *added 2026-08-02*
 
 The dynamical measurement witnesses posit an apparatus **calibration**: the swap witness's ancilla
-bank starts in the computational vertex states (`calibratedBank`, `SigmaLayer/SwapClosure.lean`),
+bank starts in the computational vertex states (`calibratedBank`, `RecordLayer/SwapClosure.lean`),
 and the join witness's slot starts block-supported (`join_block_luders`'s `hα`). This is a
 *preparation-of-the-apparatus* posit — the analogue of "the pointer starts at zero" — carried as
 explicit hypotheses/definitions, never as `axiom`s. Two facts keep it honest: the Dirac form of the

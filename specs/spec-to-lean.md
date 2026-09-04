@@ -45,12 +45,12 @@ Maps spec section numbers (Paper A / B / D) to the Lean theorem or definition th
 | §3.5 (Hamiltonian commutation) | `TensorFactorReadoutAlgebra.commute` (re-export `hA_commute_hB`) | `CsdLean4/LF3/Hamiltonian.lean` |
 | §3.6 (unitary factorisation) | `MeasurementUnitary.factorises` | `CsdLean4/LF3/Hamiltonian.lean` |
 | §3.7 (eigenstate action) | `MeasurementUnitary.action` | `CsdLean4/LF3/Hamiltonian.lean` |
-| §4.5 (branch decomposition) | `finalState_decomposition` (definitional) | `CsdLean4/LF3/BranchSeparation.lean` |
-| §4.7 (per-side leakage bounds) | `PointerLeakageBounds` | `CsdLean4/LF3/BranchSeparation.lean` |
-| §4.11 (geometric leakage bound) | `branch_separation_leakage_bound` (standalone; see disclosure note) | `CsdLean4/LF3/BranchSeparation.lean` |
-| §5.10 (branchWeight, strong readout) | `branchWeight_strong_readout` | `CsdLean4/LF3/Projectors/BranchWeight.lean` |
-| §5.10 (branchWeight, finite leakage) | `branchWeight_finite_leakage` | `CsdLean4/LF3/Projectors/BranchWeight.lean` |
-| §5.11 (leakage compatibility) | `LeakageCompat` (structure; deviation bound is a field, not a theorem — see `AXIOMS.md §6.1`) | `CsdLean4/LF3/Projectors/BranchWeight.lean` |
+| §4.5 (branch decomposition) | `finalState_decomposition` (definitional) | `CsdLean4/LF3/SectorSeparation.lean` |
+| §4.7 (per-side leakage bounds) | `PointerLeakageBounds` | `CsdLean4/LF3/SectorSeparation.lean` |
+| §4.11 (geometric leakage bound) | `branch_separation_leakage_bound` (standalone; see disclosure note) | `CsdLean4/LF3/SectorSeparation.lean` |
+| §5.10 (branchWeight, strong readout) | `branchWeight_strong_readout` | `CsdLean4/LF3/Projectors/SectorVolume.lean` |
+| §5.10 (branchWeight, finite leakage) | `branchWeight_finite_leakage` | `CsdLean4/LF3/Projectors/SectorVolume.lean` |
+| §5.11 (leakage compatibility) | `LeakageCompat` (structure; deviation bound is a field, not a theorem — see `AXIOMS.md §6.1`) | `CsdLean4/LF3/Projectors/SectorVolume.lean` |
 | §5.14 (projector-algebra theorems) | `ProjectorAlgebra.idem_re_export` and field re-exports | `CsdLean4/LF3/Projectors/Core.lean` |
 | §5.14 (LF3 → LF2 Born form) | `branchWeight_eq_LF2_Born` | `CsdLean4/LF3/Projectors/LF2Interface.lean` |
 | §6 (Bell singlet) | `singlet`, `singlet_norm` | `CsdLean4/LF3/Singlet/State.lean` |
@@ -65,7 +65,7 @@ Maps spec section numbers (Paper A / B / D) to the Lean theorem or definition th
 | §8.12 (context-form re-statements) | six context theorems (kernel, correlation, A/B marginals, A/B no-signalling) | `CsdLean4/LF3/ContextMap.lean` |
 | §9.4 (Sign type) | `Sign`, `Sign.val` | `CsdLean4/LF3/Setup.lean` |
 | §9.5 (operator exponential carve-out) | not formalised; field-level disclosure in `MeasurementUnitary.action` | `CsdLean4/LF3/Hamiltonian.lean` |
-| §9.6 (branch decomposition) | `finalState_decomposition` (definitional) | `CsdLean4/LF3/BranchSeparation.lean` |
+| §9.6 (branch decomposition) | `finalState_decomposition` (definitional) | `CsdLean4/LF3/SectorSeparation.lean` |
 | §9.7 (ProjectorAlgebra / LeakageCompat as data) | `ProjectorAlgebra`, `LeakageCompat` (v1.00 carve-out; v2 derivation via `ProjectorAlgebra.ofTensorEmbedding`) | `CsdLean4/LF3/Projectors/{Core,BranchWeight,TensorModel}.lean` |
 | §9.8 (algebraic core) | `P_st`, `cst_squared_eq` | `CsdLean4/LF3/Singlet/Kernel.lean` |
 | §9.11 (self-adjointness convention) | inner-product-equation spelling throughout LF3 (see CONVENTIONS) | various |

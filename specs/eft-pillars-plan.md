@@ -465,4 +465,4 @@ honest list of *work* on this page is now empty.
 `specs/cv-stage3-plan.md`, `specs/eft-stage4-plan.md`, `specs/eft-stage5-plan.md`;
 `CsdLean4/CV/ModeLocality.lean`, `CsdLean4/CV/LiebRobinson.lean`,
 `CsdLean4/CV/Decimation.lean`, `CsdLean4/SigmaLayer/TensorReconstruction.lean`,
-`CsdLean4/SigmaLayer/JoinGeneration.lean`; `specs/BACKLOG.md`.
+`CsdLean4/RecordLayer/JoinGeneration.lean`; `specs/BACKLOG.md`.

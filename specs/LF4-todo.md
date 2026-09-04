@@ -629,7 +629,7 @@ Hilbert-space isometry on the tensor space `Htensor`.
 ### 13.2 General N-qubit case (added 2026-05-21 for Tranche 1 Tier A)
 
 Carried by `Empirical.CSDBridge.Gates.CSDUnitaryBundle` in
-`CsdLean4/Empirical/Gates/Framework.lean`. For any `N`-qubit unitary
+`CsdLean4/Empirical/CSD/Gates/Framework.lean`. For any `N`-qubit unitary
 `U` on `H_n = EuclideanSpace ℂ (Fin (2^N))`, a measure-preserving
 π-equivariant flow on `Σ^N → Σ^N` induces a Hilbert-space isometry
 on `H_n` that realises the projective action of `U`.
