@@ -1,7 +1,10 @@
 # Cell-law scoping: what forces the outcome rates, and what does not
 
-**Status:** created 2026-09-04. Scopes `specs/POSITS.md` Posit 1. Stage 1 is **done**
-(`CsdLean4/RecordLayer/CellLawFreedom.lean`); stage 2 is **open and unstarted**.
+**Status:** created 2026-09-04, **resolved the same day**. Scopes `specs/POSITS.md` Posit 1. Stage 1
+is done (`CsdLean4/RecordLayer/CellLawFreedom.lean`); the characterisation landed by a **different
+route** — argument A below, formalised at the linear level in
+`CsdLean4/RecordLayer/CellLawForced.lean` (`torusGenerated_eq_momentMap`). The frame-function
+stage 2 was **declined, not attempted**, and its cost analysis is kept below as the record of why.
 
 ## The question
 
@@ -14,9 +17,9 @@ Three candidate forcing arguments, and they have very different standing.
 
 | # | Argument | Standing |
 |---|----------|----------|
-| A | Symplectic: a moment map for `Tⁿ` is unique up to a constant; the simplex pins it | **Sound, unformalised** — no symplectic API in Mathlib |
-| B | Symmetry: the rates are torus-invariant and normalised, hence the moment map | **Invalid** — refuted, stage 1 |
-| C | Cross-basis consistency: a rate field additive under merging outcomes is a frame function | **Open** — stage 2 |
+| A | Symplectic: a rate field **generating** the torus is the moment map | ✅ **PROVED** at the linear level — `torusGenerated_eq_momentMap` |
+| B | Symmetry: the rates are torus-**invariant** and normalised, hence the moment map | ❌ **Invalid** — refuted, stage 1 |
+| C | Cross-basis consistency: a rate field additive under merging outcomes is a frame function | ⛔ **DECLINED** — costs noncontextuality; not needed once A landed |
 
 The prose sites were, in effect, asserting A while citing Lean lemmas that only support B — and B is
 false. That is the defect: not the claim, but its attribution.
@@ -33,9 +36,9 @@ of the moment map:
 * it drives the whole basin machinery — `globalBasin_prob_sqContext`
 
 and yet **★★ `rate_field_not_forced_by_torus_symmetry`**: at `[(2,1,1)] ∈ ℂℙ²` the moment map gives
-outcome `0` the rate `⅔` while `sqRate` gives `8/9`. So argument **B is refuted**. Since B is the
-only one of the three that the Lean corpus could be said to verify, the honest position is: *the
-cell law is a posit relative to the machine-checked corpus.*
+outcome `0` the rate `⅔` while `sqRate` gives `8/9`. So argument **B is refuted**. At the time this
+was written B was the only one of the three the Lean corpus verified, which made the cell law a bare
+posit relative to the machine-checked corpus. That held for about an hour — see argument A below.
 
 **What stage 1 does not do.** It does not touch argument A. `sqRate` is torus-invariant but is not a
 moment map — there is no `ι_{X_i} ω = d(sqRateᵢ)` — so the symplectic uniqueness argument stands
@@ -45,9 +48,47 @@ untouched, and the corrected prose must keep it rather than deny it. Nor does st
 (`shearDeIsolationInteraction`) are proved asymmetries. They are asymmetries, not characterisations,
 and no record-layer selection argument currently invokes them.
 
-## Stage 2 — open: does cross-basis consistency force it?
+## Argument A — LANDED (2026-09-04), and it is the answer
 
-The natural remaining candidate. A rate field defined for **every** orthogonal decomposition, and
+`RecordLayer/CellLawForced.lean`. The gap between A and B is one word: `sqRate` is **invariant**
+under the torus; the moment map **generates** it. Generation is the moment-map equation
+`ι_{X_i} ω = dΦᵢ`, and it does pin the field.
+
+* ★ `isPhaseHamiltonian_coordEnergy` — the coordinate energy `‖xᵢ‖²/2` generates the `i`-th phase
+  rotation. This is the instantiation, at the coordinate projection, of the corpus's existing
+  `quadraticEnergy_hamiltonian_duality` — an ingredient that had been sitting in
+  `Mathlib/Analysis/InnerProductSpace/HamiltonianVectorField.lean` unused.
+* ★ `IsPhaseHamiltonian.eq_coordEnergy_add` — uniqueness up to an additive constant, from
+  `is_const_of_fderiv_eq_zero` on the connected flat model.
+* ★★ `torusGenerated_eq_momentMap` — a `ContextField` whose rates generate the phase rotations **is**
+  the moment map. Exactly, and with no side hypothesis: the additive constant dies by *homogeneity*
+  (the rate is a function of the ray, the homogenisation has degree two, so `k = 4k`), not by the
+  simplex axioms and not by any `N ≥ 2` assumption.
+* ★ `sqContext_not_torusGenerated` — and the stage-1 rival fails the generating condition, in one
+  line from the two modules together.
+
+**Why the manifold API turned out not to be needed.** The forcing argument needs the moment-map
+equation on the *vector space* `ℂᴺ`, where `ω` is constant and a single global chart covers
+everything; the descent to `ℂℙᴺ⁻¹` is by explicit degree-0 homogenisation inside `IsTorusGenerated`.
+The manifold statement — that this is the moment map of the `Tⁿ` action on `ℂℙᴺ⁻¹` for `ω_FS` — is
+still unformalised and is **posited** (author decision 2026-09-04: Kähler and manifold structure are
+a reasonable posit). Blocking on `MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)`
+was the wrong read: that wall stands for the manifold form, not for forcing.
+
+⚠️ **What A does not do.** `IsTorusGenerated` is extensionally equivalent to the conclusion, so this
+is a characterisation and Posit 1 is **restated, not discharged**. Nothing in the corpus compels a
+context's rates to generate its pointer torus; deriving that from the de-isolation dynamics is the
+`H_int` frontier. The gain is anti-circularity — the premise mentions no probability.
+
+## Stage 2 — DECLINED (not open, not answered)
+
+⛔ **Do not re-raise this as queued work.** Argument A landed instead, so the corpus does not need
+argument C, and taking it would *cost* something the programme is not willing to spend. Recorded
+here in full because the reasoning is the valuable part, and because "we could still try Gleason"
+is the kind of suggestion that recurs. The frame-function question itself remains open mathematics;
+it simply no longer carries corpus status.
+
+The candidate was this. A rate field defined for **every** orthogonal decomposition, and
 additive when outcomes are merged, is a *frame function*; for `N ≥ 3` that is Gleason's hypothesis,
 and Gleason's theorem would then force the rates to be `tr(ρ Pᵢ)` — the Born form.
 
@@ -74,7 +115,11 @@ to assume. Either outcome closes the question; neither should be started without
 
 ## References
 
-`RecordLayer/CellLawFreedom.lean` (stage 1); `specs/POSITS.md` (Posit 1);
+`RecordLayer/CellLawFreedom.lean` (stage 1, the refutation of B);
+`RecordLayer/CellLawForced.lean` (argument A, the characterisation);
+`Mathlib/Analysis/InnerProductSpace/HamiltonianVectorField.lean`
+(`quadraticEnergy_hamiltonian_duality`, the linear machinery A instantiates);
+`specs/POSITS.md` (Posit 1, restated);
 `RecordLayer/GlobalBasin.lean` (`ContextField`, `momentContext`, `globalBasin_born`);
 `RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`); `LF4/MomentMap.lean` (the definition and
 its boundary note); `LF4/MomentUniform.lean`, `LF4/MomentDirichletN.lean` (the DH pushforward laws);

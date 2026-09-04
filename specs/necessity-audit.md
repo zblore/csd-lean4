@@ -188,6 +188,9 @@ all the observed measurement phenomenology at once, including the state-dependen
 degenerate Lüders update that the swap architecture provably cannot supply and
 the join witness does.
 
+⚠️ *Superseded 2026-09-04:* `RecordLayer/CellLawForced.lean` (`torusGenerated_eq_momentMap`) makes
+the moment map the forced rate field given torus generation, so the rate is no longer a bare posit;
+what stays posited is that a context's rates generate its pointer torus. The finding as written:
 Every Born number in this layer traces back to the moment map being the posited
 rate, not to an independent derivation.
 

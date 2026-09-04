@@ -240,6 +240,7 @@ DECLARED_SYMPLECTIC_VOCAB="arenaLiouville
 fieldHamiltonian
 interactionHamiltonian
 IsHamiltonianCurve
+IsPhaseHamiltonian
 hamiltonianField
 hamiltonian
 hamiltonianVectorFieldOf
@@ -300,6 +301,13 @@ trivialKahlerOnticSetup"
 #       `hamiltonianShift_eq_strokeCurve_one` says the shift IS that curve's endpoint.
 #       Nonvanishing of the shift and the arena-manifold identification are NOT claimed
 #       (R-016).                                              EARNED (chart-level).
+#     IsPhaseHamiltonian — (RecordLayer/CellLawForced.lean, CR-15 stage 2, 2026-09-04) a Prop
+#       DEMANDING the defining equation itself: `ω (phaseGen i x) v = dF x v`, i.e. ι_X ω = dF
+#       with X the explicit i-th phase-rotation generator `-(i · Pᵢ x)`. Nothing is asserted by
+#       the name that the predicate does not spell out, and an inhabitant is exhibited in the
+#       same module (`isPhaseHamiltonian_coordEnergy`: the coordinate energy ‖xᵢ‖²/2 generates
+#       the rotation), so it is not vacuous. Flat model ℂᴺ, constant ω; the manifold moment-map
+#       statement stays posited per the author decision of 2026-09-04.  EARNED (linear-level).
 #
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -369,7 +377,6 @@ CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean:1
 CsdLean4/LF4/PhaseLift.lean:1
 CsdLean4/LF4/TypicalityForcing.lean:1
 CsdLean4/RecordLayer/ApproxProjectability.lean:1
-CsdLean4/RecordLayer/CellLawFreedom.lean:1
 CsdLean4/SigmaLayer/ChartIntegralCurve.lean:1
 CsdLean4/SigmaLayer/FrozenBase.lean:1
 CsdLean4/SigmaLayer/UntriggeredFlow.lean:1
@@ -422,7 +429,6 @@ CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean|none
 CsdLean4/LF4/PhaseLift.lean|none
 CsdLean4/LF4/TypicalityForcing.lean|none
 CsdLean4/RecordLayer/ApproxProjectability.lean|none
-CsdLean4/RecordLayer/CellLawFreedom.lean|R-018
 CsdLean4/RecordLayer/MeasurementCapstone.lean|none
 CsdLean4/RecordLayer/MixedLuders.lean|none
 CsdLean4/RecordLayer/MixedSwap.lean|none
@@ -552,6 +558,13 @@ liouville_isProbability"
 #     each PROVES an ι_Xω = dH statement — the word names the established duality, with
 #     the Schrödinger field -(i•Ax) exhibited explicitly in the quadratic/coupling cases.
 #     Flat model, fixed weights; the joint-arena manifold form stays §2a.
+#   IsPhaseHamiltonian / isPhaseHamiltonian_coordEnergy — (2026-09-04, CellLawForced.lean,
+#     CR-15) the predicate IS the ι_Xω = dF equation for the explicit phase generator, and
+#     the theorem PROVES an inhabitant: the coordinate energy ‖xᵢ‖²/2 generates the i-th
+#     phase rotation, by instantiating quadraticEnergy_hamiltonian_duality at the coordinate
+#     projection. The word names an established duality, not an aspiration. Same flat model
+#     and same §2a boundary as the four entries above; the manifold moment-map statement is
+#     POSITED (author decision 2026-09-04), and the module's header says so.
 #   kSectorData_fromPreparation_liouville_apply — (2026-08-12, witness suite WS-D)
 #     inherits the word from the production OperationalPackage.fromPreparation_
 #     liouville_apply it instantiates; the statement genuinely concerns the Liouville
@@ -589,6 +602,8 @@ kahler_preparations_overlap
 kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal
 coupling_hamiltonian_duality
+IsPhaseHamiltonian
+isPhaseHamiltonian_coordEnergy
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

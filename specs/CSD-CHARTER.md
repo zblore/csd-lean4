@@ -63,8 +63,9 @@ resolved in Lean, the second the standing posit):
   *ontic* record coordinate. A measurement is **`context + unknown microstate → record`**
   (`Measurement`): the context fixes the basin partition, the unknown microstate selects the basin
   it occupies, and the combined result is a genuine postulate-P5 `RecordSemantics` record. The
-  outcome probabilities are the **Kähler torus moment map** (`MomentMapRace` — read off the context, not injected; that the
-  moment map is the forced *choice* is a posit, `specs/POSITS.md` Posit 1),
+  outcome probabilities are the **Kähler torus moment map** (`MomentMapRace` — read off the context, not injected; the choice of
+  the moment map is forced by torus *generation* (`RecordLayer/CellLawForced.lean`, `torusGenerated_eq_momentMap`), not by invariance; that the rates are generators is the restated posit,
+  `specs/POSITS.md` Posit 1),
   and Born is nothing but the **law of large numbers over the unknown initial microstate**
   (`Measurement.bornMeasurement_frequency`; randomness = ignorance of the initial condition). The
   Ω-regions stay epistemic (on ℂℙ) — they were *not* relocated to Σ; the record is the ontic

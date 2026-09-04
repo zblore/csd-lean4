@@ -3415,9 +3415,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.jointLift_hamiltonianShift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.jointLift_hamiltonianShift_measurePreserving
 
--- CR-15 stage 1 (2026-09-04): the moment-map cell law is a POSIT. `globalBasin_prob` is generic
--- in the ContextField, and `sqContext` is a second one with the same symmetries, so equivariance
--- + normalisation + support do not single out the moment map.
+-- CR-15 stage 1 (2026-09-04): the moment-map cell law is not forced by INVARIANCE.
+-- `globalBasin_prob` is generic in the ContextField, and `sqContext` is a second one with the same
+-- symmetries, so equivariance + normalisation + support do not single out the moment map.
+-- What DOES single it out is generation, not invariance -- see the CellLawForced block below.
 /-- info: 'CSD.RecordLayer.rate_field_not_forced_by_torus_symmetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.rate_field_not_forced_by_torus_symmetry
@@ -3429,5 +3430,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.globalBasin_prob_sqContext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.globalBasin_prob_sqContext
+
+-- CR-15 (2026-09-04): the cell law is forced by torus GENERATION -- not by torus invariance
+-- (CellLawFreedom shows that fails) but by the moment-map equation, at the linear level. The
+-- Kahler structure is posited; given it, the rate field is unique, with no side hypothesis (the
+-- additive constant dies by homogeneity, not by the ContextField axioms). No noncontextuality is
+-- assumed, so "Gleason-free" survives. specs/POSITS.md Posit 1 is RESTATED, not discharged:
+-- IsTorusGenerated is extensionally equivalent to the conclusion, so this is a characterisation --
+-- the premise is better motivated (it mentions no probability), not weaker.
+/-- info: 'CSD.RecordLayer.isPhaseHamiltonian_coordEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isPhaseHamiltonian_coordEnergy
+
+/-- info: 'CSD.RecordLayer.isTorusGenerated_momentContext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isTorusGenerated_momentContext
+
+/-- info: 'CSD.RecordLayer.torusGenerated_eq_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusGenerated_eq_momentMap
+
+/-- info: 'CSD.RecordLayer.sqContext_not_torusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqContext_not_torusGenerated
 
 end CSD.Tests.AxiomAudit

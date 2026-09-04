@@ -113,9 +113,10 @@ theorem bornMeasurement_prob (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ =
   exact fibreTypicality_bornRecord ψ hψ i t
 
 /-- **The probability is the Kähler moment map.** The Born measurement's outcome-`i` probability is
-the `i`-th torus moment-map coordinate at `[ψ]` — read off the context, not injected. ⚠️ That the
-moment map is the *right* rate field is canonical in the standard symplectic reading and a posit
-relative to what Lean verifies (`specs/POSITS.md` Posit 1; `RecordLayer/CellLawFreedom.lean`). -/
+the `i`-th torus moment-map coordinate at `[ψ]` — read off the context, not injected. That the moment map is the
+*right* rate field is pinned by torus *generation* (`torusGenerated_eq_momentMap`, `RecordLayer/CellLawForced.lean`): a context field whose rates generate the coordinate phase
+rotations is exactly the moment map. What remains posited is that the rates are generators
+(`specs/POSITS.md` Posit 1, restated). -/
 theorem bornMeasurement_prob_momentMap (ψ : EuclideanSpace ℂ (Fin n)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (i : Fin n) (t : OnticTime) :
     (bornMeasurement ψ t).prob i = ENNReal.ofReal (momentMap (Projectivization.mk ℂ ψ hψ0) i) := by

@@ -256,8 +256,8 @@ exponential-law theorem are the scaffolding.
 fibre-partition rate `bornRate ψ i = ‖ψ i‖²` **is** the `i`-th Fubini–Study torus moment-map
 coordinate `momentMap([ψ])ᵢ` (`bornRate_eq_momentMap`, via corpus `LF4/MomentMap.momentMap_mk`) —
 hence `= ‖⟨eᵢ,ψ⟩‖²`, the `FiniteQMClosure.born_frequency` target (`bornRate_eq_inner_sq`). So the
-race rates are the Kähler moment map, read off the context rather than injected (that the moment map
-is the forced *choice* of rate field is a posit — `specs/POSITS.md` Posit 1). The residual is sharpened to one
+race rates are the Kähler moment map, read off the context rather than injected; the choice of the
+moment map is forced by torus *generation* (`RecordLayer/CellLawForced.lean`, `torusGenerated_eq_momentMap`), not by invariance (`specs/POSITS.md` Posit 1, restated). The residual is sharpened to one
 statement: `DeIsolationInteraction` (a measurable pointer whose basins carry the moment-map rates)
 ⟹ Born (`DeIsolationInteraction.born`); the open part is realising it from a Hamiltonian `H_int(M)`,
 i.e. feature (A) (the exponential first-passage from a mixing flow) tied to these rates. Kinematics
@@ -345,7 +345,7 @@ done, dynamics open.
   [`RecordLayer/MomentMapRace.lean`](../CsdLean4/RecordLayer/MomentMapRace.lean). `bornRate_eq_momentMap`
   — for a unit `ψ` the fibre-partition rate `‖ψ i‖²` **is** the `i`-th Fubini–Study torus moment-map
   coordinate at `[ψ]` (corpus `LF4/MomentMap.momentMap_mk`) — read off the context, not injected; the
-  choice of that rate field is a posit (`specs/POSITS.md` Posit 1). `bornRate_eq_inner_sq` — hence `= ‖⟨eᵢ,ψ⟩‖²`, the `FiniteQMClosure.born_frequency` target.
+  choice of that rate field is forced by torus *generation* (`RecordLayer/CellLawForced.lean`, `torusGenerated_eq_momentMap`), not by invariance. `bornRate_eq_inner_sq` — hence `= ‖⟨eᵢ,ψ⟩‖²`, the `FiniteQMClosure.born_frequency` target.
   `fibreTypicality_bornCell_eq_momentMap` — the record-layer Born rule in moment-map terms.
   `DeIsolationInteraction` — the sharpened residual: a measurable pointer whose basins carry the
   moment-map rates ⟹ Born (`.born`). Foundational-triple, no `sorry`; pinned; exported. **Open (the
@@ -358,7 +358,7 @@ done, dynamics open.
   `record_of_mem_basin` (the combined result *is* the record `⟨context, outcome, time⟩`);
   `bornMeasurement_prob` (the basins set the probabilities `= ‖ψ i‖²`) and
   `bornMeasurement_prob_momentMap` (`=` the Kähler moment map — read off the context, not
-  injected; the choice is a posit, `specs/POSITS.md` Posit 1);
+  injected; the choice is forced by torus *generation* (`RecordLayer/CellLawForced.lean`, `torusGenerated_eq_momentMap`), not by invariance);
   `bornMeasurement_ae_total` (a.e. microstate yields a record). The whole record layer as one
   measurement event. Foundational-triple, no `sorry`; pinned; exported. Assembles the proven pieces —
   the physical flow `H_int(M)` behind the basins stays open (feature A).
@@ -430,7 +430,7 @@ done, dynamics open.
 | 1b (optional) | Quick check: does a *non-Voronoi* context-fixed region family rescue base-only? (bound the caveat before committing to the fibre) | low |
 | 2b (existence) | **NUMERICALLY VERIFIED 2026-07-25 → §3b, not formalized.** A fibre model reproduces Born at N≥3 (Gumbel race; checked in `scripts/experiments/record_layer_fibre_gumbel.py`, no Lean theorem). Suggestive of where contextuality can live; it does **not** settle the architecture, and the Gumbel noise is injected rather than CSD-native. *(This row read "DONE … Architecture settled"; corrected 2026-07-28.)* | **open** |
 | 2b′ (flow-independent half) | **DONE 2026-07-25 → §4:** `RecordLayer/DeIsolationFlow.lean` — canonical fibre typicality `fibreTypicality=vol\|[0,1)`; outcome prob = Born (`fibreTypicality_bornCell`); pointer a.e. defined (`fibreTypicality_uncovered`); **flow ⟹ Born bridge** `map_pointer_apply` (any pointer with Born basin measures → Born distribution). Born as a typicality volume of a basin. | — |
-| 2b′ feature (B) rates=moment map | **DONE 2026-07-25 → §3c/§4:** `RecordLayer/MomentMapRace.lean` — `bornRate_eq_momentMap` (rate ‖ψ i‖² IS the torus moment-map coordinate; the choice of rate field is a posit, `specs/POSITS.md` Posit 1), `bornRate_eq_inner_sq` (= corpus Born weight), `DeIsolationInteraction` (moment-map basins ⟹ Born). Feature (2) grounded. | — |
+| 2b′ feature (B) rates=moment map | **DONE 2026-07-25 → §3c/§4:** `RecordLayer/MomentMapRace.lean` — `bornRate_eq_momentMap` (rate ‖ψ i‖² IS the torus moment-map coordinate; the choice of rate field is forced by torus *generation* (`RecordLayer/CellLawForced.lean`, `torusGenerated_eq_momentMap`), not by invariance), `bornRate_eq_inner_sq` (= corpus Born weight), `DeIsolationInteraction` (moment-map basins ⟹ Born). Feature (2) grounded. | — |
 | 2b′ feature (A) — "the wall" | **STATISTICAL half done; DYNAMICAL half OPEN.** ⚠️ This row previously read "DISSOLVED — not a research problem"; that was wrong and is retracted (2026-07-28). **Done:** once the basins are given, no extra probabilistic postulate is needed — each run is deterministic given its microstate, the microstate is typical (`fibreTypicality`), so the outcome frequency → the basin measure `‖ψ i‖²` = the moment map (`Measurement.bornMeasurement_frequency`, via `LF1.freq_tendsto_of_iid`). **Open:** the basins are *assumed*, not derived — `DeIsolationInteraction.basin_rate` is a hypothesis field, and no interaction Hamiltonian `H_int(M)` generating `cdfCell (moment map)` is constructed. Paper D additionally wants system–apparatus–environment coupling, interaction-generated outcome regions, stable macroscopic correlations, and persistence of the record: none of that is formalized. `DeIsolationFlow.lean` states the obligation correctly; this table did not. | **open** |
 | ~~fibre-partition factor~~ | **DONE 2026-07-25 → §4:** `RecordLayer/BornFibrePartition.lean` — CDF cells, `volume_cdfCell = rᵢ`, pairwise-disjoint, Born rates → `volume_bornCell`, unit-state total measure `= 1`. Foundational-triple, pinned. The "(A) mechanism" of §3c. | — |
 | ~~3 (the record)~~ | **DONE 2026-07-25 → §4:** `RecordLayer/FibreRecord.lean` — the readout as a first-class P5 `RecordSemantics` on `Σ=ℝ`: record event = `cdfCell c.rate i` (measurable + exclusive via `cdfCell_pairwiseDisjoint`); `fibreOutcome_eq_record` (selection = record); `compatibleSet_fibre_single` (isolation = conditioning on the cell); `fibreTypicality_bornRecord` (typicality of recording `i` = `‖ψ i‖²`). Replaces the prep-indexed `vnPointerOutcome` readout. | — |

@@ -55,10 +55,18 @@ equivariance is shared by a continuum of other fields, of which this is one. The
 argument above is untouched, because `sqRate` is *not* a moment map for the torus action: no
 `ι_{X_i} ω = d(sqRateᵢ)` holds. What fails is the weak package, which is the only package in Lean.
 
-**Does not settle:** whether some *stronger* condition characterises the moment map. The natural
-candidate is consistency across bases — a rate field defined for every orthogonal decomposition
+**Settled since, by a different route:** a stronger condition *does* characterise the moment map,
+and it is not the one guessed here. `RecordLayer/CellLawForced.lean` proves
+`torusGenerated_eq_momentMap` — a context field whose rates **generate** the coordinate phase
+rotations (the moment-map equation, at the linear level) is exactly the moment map, and
+`sqContext_not_torusGenerated` shows the rival below fails precisely that. The gap between the two
+modules is one word: `sqRate` is *invariant* under the torus, the moment map *generates* it.
+
+The frame-function route sketched below was **declined, not attempted**: it would have bought the
+cell law with noncontextuality. Kept because the cost analysis is worth preserving. The natural
+candidate was consistency across bases — a rate field defined for every orthogonal decomposition
 and additive under merging outcomes is a frame function, and for `N ≥ 3` that is Gleason's
-hypothesis (⚠️ RESIDUE(R-018)). Whether the corpus's `effect_gleason_representation` transfers (it fixes a state and
+hypothesis. Whether the corpus's `effect_gleason_representation` transfers (it fixes a state and
 varies effects; the cell law fixes a context and varies the state) is open and is stage 2 of
 `specs/cell-law-scoping.md`. ⚠️ If noncontextuality is what forces the cell law, then
 "Gleason-free" is true of the *volume theorem* and false of the *choice of cell law* — a
@@ -71,8 +79,9 @@ Duistermaat–Heckman results: the moment map pushes `μ_FS` forward to the flat
 That is a proved asymmetry — though not a characterisation (any `μ_FS`-preserving precomposition
 shares a pushforward), and no record-layer selection argument currently invokes it. (ii) `bornRate`
 has a flow-carved witness (`shearDeIsolationInteraction` discharges `basin_rate` from a constructed
-propagator); `sqRate` has none. What selects `momentContext` in this corpus is agreement with the
-Born target — which is the thing MD-1 wants *derived*, hence the posit.
+propagator); `sqRate` has none. ⚠️ *Superseded in part:* when this was written, what selected
+`momentContext` was agreement with the Born target. `CellLawForced.lean` now supplies an in-corpus
+selection theorem whose premise mentions no probability at all.
 
 **Not a defect report.** The machinery is correct and `globalBasin_born` is true. What is
 corrected is an account of *why* it is true.
@@ -217,10 +226,10 @@ At `[(2,1,1)] ∈ ℂℙ²` the moment map gives outcome `0` the rate `⅔`; the
 from equivariance, normalisation and support can single out the moment map: those hypotheses hold
 of both.
 
-`momentContext` is therefore a **choice**, and the Born weights of `globalBasin_born` follow from
-that choice together with the fibre-volume machinery, not from the geometry alone. What might
-still characterise it — consistency across bases, i.e. a frame-function hypothesis — is stage 2
-and is not claimed here. -/
+`momentContext` is therefore not pinned down *by these properties*. What does pin it is torus
+**generation** rather than invariance — `torusGenerated_eq_momentMap` in
+`RecordLayer/CellLawForced.lean`, which this theorem is the exact complement of: invariance leaves a
+continuum, generation leaves one. -/
 theorem rate_field_not_forced_by_torus_symmetry :
     ∃ (p : CPN 3) (i : Fin 3), sqRate p i ≠ momentMap p i := by
   refine ⟨Projectivization.mk ℂ witState witState_ne_zero, 0, ?_⟩

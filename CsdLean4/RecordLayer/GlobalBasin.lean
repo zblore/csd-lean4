@@ -42,8 +42,11 @@ read at the ontic point `p`, no `ψ` occurs in the definition, so nothing is car
 preparation (`bornRate_eq_momentMap`, `RecordLayer/MomentMapRace.lean`). ⚠️ What is *not* claimed is
 that the moment map is the **forced** choice of rate field. It is canonical in the standard
 symplectic reading, which is unformalised (`LF4/MomentMap.lean`'s boundary note), and
-`RecordLayer/CellLawFreedom.lean` proves it is not forced by anything Lean verifies. The cell law is
-a posit — `specs/POSITS.md` Posit 1 (⚠️ RESIDUE(R-018)).
+torus *invariance* does not pin it (`RecordLayer/CellLawFreedom.lean`) — but torus **generation**
+does: `torusGenerated_eq_momentMap` (`RecordLayer/CellLawForced.lean`) proves a context field whose
+rates generate the coordinate phase rotations *is* the moment map. That premise mentions no
+probability, so the Born shape is no longer assumed to get the Born shape. What stays posited is
+that a context's rates are generators of its pointer torus (`specs/POSITS.md` Posit 1, restated).
 
 ★ **Why it does not collide with the parked `N ≥ 3` chain.** That chain constrains **base-only**
 densities. This partition is genuinely *fibred* — the cell is an arc in `θ₁` — which is exactly where
@@ -94,8 +97,9 @@ shown Liouville. See the ★★ `specs/BACKLOG.md` row.
 `RecordLayer/TorusFibre.lean` (`torusCell`, `volume_torusCell`, `loSum_add_self_le_one`);
 `LF4/MomentMap.lean` (`momentMap`, `measurable_momentMap`, `momentMap_mk_eq_inner_sq`);
 `RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap` — the rates are the moment map, read at
-`p` rather than carved to `ψ`); `RecordLayer/CellLawFreedom.lean` and `specs/POSITS.md` (Posit 1 —
-why that *choice* of rate field is a posit); `specs/cell-law-scoping.md`;
+`p` rather than carved to `ψ`); `RecordLayer/CellLawFreedom.lean` (invariance does not pin the field) and
+`RecordLayer/CellLawForced.lean` (`torusGenerated_eq_momentMap` — generation does);
+`specs/POSITS.md` (Posit 1, restated); `specs/cell-law-scoping.md`;
 `LF4/KahlerInstance.lean` (`KSigma`, `KTorus`); `specs/BACKLOG.md` (the ★★ row's successor target);
 `specs/sigma-fibre-contextuality.md`.
 -/

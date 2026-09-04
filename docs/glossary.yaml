@@ -3914,7 +3914,8 @@ entries:
     mathematical: >
       The carved tier: fibre arcs of prescribed length realising prescribed weights --
       genuine disjointness and correct totals, with the target built in. The derived
-      tier: the Born weight as a moment-map coordinate, a forced symplectic invariant;
+      tier: the Born weight as a moment-map coordinate, forced by torus generation
+      (CellLawForced.lean, torusGenerated_eq_momentMap) rather than by invariance;
       the joint pushforward of the Fubini-Study measure under the moment map equal to
       the uniform simplex law; and the resulting volume-ratio theorems at every N,
       unconditional.
@@ -4442,7 +4443,8 @@ entries:
       coordinates of phase rotation.
     in_csd: >
       The moment map is the corpus's carving-free route to the Born numbers: the
-      weight of outcome i is the i-th moment coordinate -- a forced symplectic
+      weight of outcome i is the i-th moment coordinate -- forced by torus
+      generation (torusGenerated_eq_momentMap), a symplectic
       invariant, with no partition drawn and no operational input consulted. It also
       supplies the canonical measurement context, whose rate field IS the moment
       map, making even the record layer's rates geometric.

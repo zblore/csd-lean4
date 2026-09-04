@@ -35,16 +35,20 @@ torus action — not an arc carved to a target value
 invariant of the very structure the programme takes as primitive (the compact
 Kähler `Σ`). See `specs/carve-out-plan.md` (Tranche 1).
 
-⚠️ **What the boundary costs downstream.** Because the symplectic characterisation is absent,
-nothing machine-checked singles this function out: `RecordLayer/CellLawFreedom.lean` exhibits a
-rival rate field with the same verified properties (`rate_field_not_forced_by_torus_symmetry`).
-Prose citing this module for "the rates are forced" should say *posited* — `specs/POSITS.md`
-Posit 1.
+⚠️ **What the boundary costs downstream, and what closes it.** The properties proved *here* do not
+single this function out: `RecordLayer/CellLawFreedom.lean` exhibits a rival rate field sharing all
+of them (`rate_field_not_forced_by_torus_symmetry`). What does single it out is the moment-map
+equation itself, formalised at the **linear** level in `RecordLayer/CellLawForced.lean`
+(`torusGenerated_eq_momentMap`): a context field whose rates *generate* the coordinate phase
+rotations is exactly the moment map. So prose citing this module for "the rates are forced" should
+cite that theorem, and should say what is still posited — that a context's rates are generators of
+its pointer torus (`specs/POSITS.md` Posit 1, restated).
 
 **Formalisation boundary (honest scope).** In Lean, `momentMap` is *defined*
 directly by the coordinate formula `‖p.rep i‖²/‖p.rep‖²`; the statement that
 this function satisfies the Hamiltonian moment-map equation `ι_{X_i} ω = dΦᵢ`
-for the FS symplectic form is the (standard, unformalised) symplectic fact
+for the FS symplectic form **at the manifold level** is the (standard,
+unformalised) symplectic fact
 motivating the name — Mathlib has no symplectic-form API and no Kähler API
 (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)), so
 the "forced by the Kähler structure" claim is mathematical narrative, not a
