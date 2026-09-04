@@ -5407,8 +5407,9 @@ entries:
       Measure precisely, disturb proportionally. The trade-off gets written as a formula,
       error times disturbance is at least a fixed amount, and it is quoted constantly.
 
-      It is not true as stated. In 2012 two groups measured it failing -- one with neutron
-      spins in Vienna, one with photon polarisation in Toronto. Not a subtle correction: the
+      It is not true as stated. In 2012 two groups measured it failing -- Erhart and
+      colleagues with neutron spins in Vienna (Nature Physics 8, 185), Rozema and colleagues
+      with photon polarisation in Toronto. Not a subtle correction: the
       product came out below the supposed floor.
 
       What is true is Ozawa's version, and the difference is instructive. Three terms, not
@@ -5466,7 +5467,6 @@ entries:
         url: https://doi.org/10.1103/PhysRevA.67.042105
       - text: "Rozema et al., Violation of Heisenberg's measurement-disturbance relationship by weak measurements, Phys. Rev. Lett. 109, 100404 (2012)"
         url: https://doi.org/10.1103/PhysRevLett.109.100404
-      - text: "Erhart et al., Experimental demonstration of a universally valid error-disturbance uncertainty relation in spin measurements, Nature Physics 8, 185 (2012)"
     related: [robertson-uncertainty, hermitian-operator, measurement-problem, collapse]
 
   - slug: robertson-uncertainty

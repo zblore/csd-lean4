@@ -98,6 +98,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [No-signalling](https://glossary.constraintsurfacedynamics.com/no-signalling/) | `composite_no_signalling` | proved-in-corpus |
 | [Ontic vs epistemic](https://glossary.constraintsurfacedynamics.com/ontic-vs-epistemic/) | `` | definition |
 | [Outcome region](https://glossary.constraintsurfacedynamics.com/outcome-region/) | `globalBasin_born` | proved-in-corpus |
+| [Ozawa error-disturbance relation](https://glossary.constraintsurfacedynamics.com/ozawa-error-disturbance/) | `ozawa_error_disturbance` | proved-in-corpus |
 | [Partial trace](https://glossary.constraintsurfacedynamics.com/partial-trace/) | `partialTraceRight` | proved-in-corpus |
 | [Pauli matrices](https://glossary.constraintsurfacedynamics.com/pauli-matrices/) | `` | standard-mathematics |
 | [Peres criterion](https://glossary.constraintsurfacedynamics.com/peres-criterion/) | `` | standard-mathematics |

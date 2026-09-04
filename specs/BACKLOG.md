@@ -204,7 +204,23 @@
 >    ⚠️ **Not built:** no LF inequality, no derivation that CSD's joint law moves (that needs the
 >    friends' labs). ⚠️ The scoping note's own §4 deliverable was **refuted before building** — its
 >    `RemoteJointInvariantA` demanded that A's outcome be independent of A's own setting, which no
->    model satisfies; superseded by §4a. Then **Q16 CP brick** (M–L, reconstruction path).
+>    model satisfies; superseded by §4a.
+>
+> 5. ⚠️ **The Q16 CP brick is NOT pending — it landed 2026-08-20**, and this list said otherwise
+>    until 2026-09-04. `Mathlib/Analysis/NormedSpace/TrotterGeneral.lean` + `LF6/LindbladPositivity.lean`:
+>    ★★ `NormedSpace.trotter_product` (de-skewed Lie–Trotter), ★★ `lindbladSemigroup_posSemidef`
+>    (every GKSL flow with Hermitian `H` is positive at every `t ≥ 0`), and — closing the brick's
+>    own declared boundary — ★★ `idTensor_lindbladSemigroup` + ★★
+>    `lindbladSemigroup_completelyPositive` (Q23, same week): `id ⊗ Φₜ` maps PSD to PSD for every
+>    finite ancilla, i.e. complete positivity in so many words. Pinned in
+>    `Tests/AxiomAudit/Dynamics.lean`.
+>
+>    **So the reconstruction-path row of this list is closed.** What rows B and C unblock instead
+>    is **WAY brick 2** (quantitative WAY, `way-theorem-scoping.md` §3), deferred *behind row B*
+>    and now free. ⚠️ Its **L** rating predates row B and is likely stale: brick 2 was scoped to
+>    "share every definition" with Ozawa, and the Ozawa core turned out to need **no tensor product
+>    at all** (four symmetric operators, two of them commuting), so `OzawaData` composes with WAY's
+>    abstract-tensor interface whichever way brick 2 goes. Re-rate before queueing.
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
 >    Cat-1 `Reversible/` headers); the general Boolean→amplitude lift (`RESIDUE(R-013)`'s neighbour).
 >
@@ -297,7 +313,8 @@
 > pair as the bounded interleave; brick-2 whenever the go/no-go is called. **Superseded 2026-09-02**
 > by the NEXT STEPS block above: Q12 executed in honest form (2026-08-27) and the `H_int` arc is
 > landed to its paper-side end state; brick-2 landed 2026-09-02 (`TensorTomography.lean`); the
-> live order is hardening session → LF / Ozawa twins → Q16 CP brick (WAY bricks 0–1 landed
+> live order (corrected 2026-09-04: the Q16 CP brick landed 2026-08-20 and was listed here in
+> error) is hardening session → LF / Ozawa twins **[both landed 2026-09-04]** → WAY brick 2 (WAY bricks 0–1 landed
 > 2026-09-02).
 >
 > ### Q. The numbered quick queue (added 2026-08-12 — say "do Qn" to reference)
