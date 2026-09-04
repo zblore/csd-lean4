@@ -1,15 +1,352 @@
 {
   "$comment": [
     "Machine-readable provenance for the CSD Lean corpus (CONVENTIONS.md §8.2).",
-    "SEEDED 2026-07-31, NOT COMPLETE: this file was created to carry the Lean-QIT",
-    "citation and currently holds only the entries that already have a concrete",
-    "consumer. The §8.2 obligation -- one entry per source, plus line-precise",
-    "[Key, file:Lstart-Lend] citations in every module docstring -- remains OPEN in",
-    "specs/BACKLOG.md. Do not read the size of this file as the corpus's citation",
-    "coverage; read it as the start of that migration.",
+    "SEEDED 2026-07-31; HARVESTED 2026-09-04 from the citing modules' `## Source` blocks --",
+    "37 entries against ~110 distinct `Author YYYY` citations in Lean docstrings, so this is",
+    "coverage of the sourced modules, NOT of the corpus. `scripts/check-references.sh` reports",
+    "the gap on every run.",
+    "FIELDS. `venue` is the corpus's own reference string, transcribed verbatim. `title` is",
+    "present only where the corpus records one: titles were NOT supplied from memory, because a",
+    "provenance file whose bibliographic details are half-remembered is worse than a short one.",
+    "`doi`/`url` are present only where the identifier is derivable from the citation itself --",
+    "APS journals construct DOIs from journal+volume+page. Everything else is null and is the",
+    "author's to fill.",
+    "The §8.2 obligation proper -- one entry per source, plus line-precise",
+    "[Key, file:Lstart-Lend] citations in module docstrings -- remains OPEN in specs/BACKLOG.md.",
     "Keys are stable citation handles used from module docstrings."
   ],
   "references": [
+    {
+      "key": "Acin2007",
+      "title": null,
+      "authors": [
+        "Antonio Acín",
+        "Nicolas Brunner",
+        "Nicolas Gisin",
+        "Serge Massar",
+        "Stefano Pironio",
+        "Valerio Scarani"
+      ],
+      "year": 2007,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 98, 230501",
+      "doi": "10.1103/PhysRevLett.98.230501",
+      "url": "https://doi.org/10.1103/PhysRevLett.98.230501",
+      "cited_by": [
+        "CsdLean4/Empirical/QM/Crypto/E91KeyRate.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "ArakiYanase1960",
+      "title": null,
+      "authors": [
+        "Huzihiro Araki",
+        "Mutsuo M. Yanase"
+      ],
+      "year": 1960,
+      "kind": "article",
+      "venue": "Phys. Rev. 120, 622",
+      "doi": "10.1103/PhysRev.120.622",
+      "url": "https://doi.org/10.1103/PhysRev.120.622",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/WignerArakiYanase.lean",
+        "CsdLean4/Empirical/QM/WignerArakiYanase.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "BBCJPW1993",
+      "title": null,
+      "authors": [
+        "Charles H. Bennett",
+        "Gilles Brassard",
+        "Claude Crépeau",
+        "Richard Jozsa",
+        "Asher Peres",
+        "William K. Wootters"
+      ],
+      "year": 1993,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 70, 1895",
+      "doi": "10.1103/PhysRevLett.70.1895",
+      "url": "https://doi.org/10.1103/PhysRevLett.70.1895",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Resources/Teleportation.lean",
+        "CsdLean4/Empirical/QM/Resources/Teleportation.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "BCFJS1996",
+      "title": null,
+      "authors": [
+        "Howard Barnum",
+        "Carlton M. Caves",
+        "Christopher A. Fuchs",
+        "Richard Jozsa",
+        "Benjamin Schumacher"
+      ],
+      "year": 1996,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 76, 2818",
+      "doi": "10.1103/PhysRevLett.76.2818",
+      "url": "https://doi.org/10.1103/PhysRevLett.76.2818",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/NoBroadcasting.lean",
+        "CsdLean4/Empirical/QM/NoBroadcasting.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "BennettWiesner1992",
+      "title": null,
+      "authors": [
+        "Charles H. Bennett",
+        "Stephen J. Wiesner"
+      ],
+      "year": 1992,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 69, 2881",
+      "doi": "10.1103/PhysRevLett.69.2881",
+      "url": "https://doi.org/10.1103/PhysRevLett.69.2881",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Resources/SuperdenseCoding.lean",
+        "CsdLean4/Empirical/QM/Resources/SuperdenseCoding.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Bouwmeester1997",
+      "title": null,
+      "authors": [
+        "Dik Bouwmeester",
+        "et al."
+      ],
+      "year": 1997,
+      "kind": "article",
+      "venue": "Nature 390, 575",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Resources/Teleportation.lean",
+        "CsdLean4/Empirical/QM/Resources/Teleportation.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Busch2003",
+      "title": "Quantum States and Generalized Observables: A Simple Proof of Gleason's Theorem",
+      "authors": [
+        "Paul Busch"
+      ],
+      "year": 2003,
+      "kind": "article",
+      "arxiv_id": "quant-ph/9909073",
+      "doi": "10.1103/PhysRevLett.91.120403",
+      "url": null,
+      "cited_by": [
+        "CsdLean4/LF2/EffectGleason.lean"
+      ],
+      "status": "The effect-Gleason result this corpus PROVES independently as `OperationalPackage.effect_gleason_representation` (2026-07-21), which deleted the last `axiom`. Cited as the source of the statement, not of the proof."
+    },
+    {
+      "key": "BuschLahtiMittelstaedt1996",
+      "title": "The Quantum Theory of Measurement",
+      "authors": [
+        "Paul Busch",
+        "Pekka J. Lahti",
+        "Peter Mittelstaedt"
+      ],
+      "year": 1996,
+      "kind": "book",
+      "venue": "book",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/QutritPOVMVolume.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. "
+    },
+    {
+      "key": "CHSH1969",
+      "title": null,
+      "authors": [
+        "John F. Clauser",
+        "Michael A. Horne",
+        "Abner Shimony",
+        "Richard A. Holt"
+      ],
+      "year": 1969,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 23, 880",
+      "doi": "10.1103/PhysRevLett.23.880",
+      "url": "https://doi.org/10.1103/PhysRevLett.23.880",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Crypto/E91.lean",
+        "CsdLean4/Empirical/QM/Crypto/E91.lean",
+        "CsdLean4/SigmaLayer/BellGenerality.lean",
+        "CsdLean4/Tests/AxiomAudit/EmpiricalQM.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "ColbeckRenner2011",
+      "title": "No extension of quantum theory can have improved predictive power",
+      "authors": [
+        "Roger Colbeck",
+        "Renato Renner"
+      ],
+      "year": 2011,
+      "kind": "article",
+      "doi": "10.1038/ncomms1416",
+      "arxiv_id": "1005.5173",
+      "url": null,
+      "cited_by": [
+        "specs/colbeck-renner-note.md"
+      ],
+      "note": "Positioning theorem. CSD escapes it by denying parameter independence at the Sigma level, the same escape as Bell; NOT by denying free choice. See specs/colbeck-renner-note.md for the unbundling."
+    },
+    {
+      "key": "Dieks1982",
+      "title": null,
+      "authors": [
+        "Dennis Dieks"
+      ],
+      "year": 1982,
+      "kind": "article",
+      "venue": "Phys. Lett. A 92, 271",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean",
+        "CsdLean4/Empirical/QM/Crypto/QuantumMoney.lean",
+        "CsdLean4/Empirical/QM/Crypto/WiesnerProtocol.lean",
+        "CsdLean4/Empirical/QM/NoCloning.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Ekert1991",
+      "title": null,
+      "authors": [
+        "Artur K. Ekert"
+      ],
+      "year": 1991,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 67, 661",
+      "doi": "10.1103/PhysRevLett.67.661",
+      "url": "https://doi.org/10.1103/PhysRevLett.67.661",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Crypto/E91.lean",
+        "CsdLean4/Empirical/QM/Crypto/E91.lean",
+        "CsdLean4/Empirical/QM/Crypto/E91KeyRate.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "GRW1980",
+      "title": null,
+      "authors": [
+        "GianCarlo Ghirardi",
+        "Alberto Rimini",
+        "Tullio Weber"
+      ],
+      "year": 1980,
+      "kind": "article",
+      "venue": "Lett. Nuovo Cimento 27, 293",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/NoCommunication.lean",
+        "CsdLean4/Empirical/QM/NoCommunication.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "GhirardiRomano2013",
+      "title": "About possible extensions of quantum theory",
+      "authors": [
+        "GianCarlo Ghirardi",
+        "Raffaele Romano"
+      ],
+      "year": 2013,
+      "kind": "article",
+      "doi": "10.1007/s10701-013-9740-6",
+      "arxiv_id": "1301.5040",
+      "url": null,
+      "cited_by": [
+        "specs/colbeck-renner-note.md"
+      ],
+      "note": "One of the two analyses showing Colbeck-Renner's 'free choice' bundles parameter independence with measurement independence."
+    },
+    {
+      "key": "Hardy1992",
+      "title": null,
+      "authors": [
+        "Lucien Hardy"
+      ],
+      "year": 1992,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 68, 2981",
+      "doi": "10.1103/PhysRevLett.68.2981",
+      "url": "https://doi.org/10.1103/PhysRevLett.68.2981",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Hardy.lean",
+        "CsdLean4/Empirical/QM/Hardy.lean",
+        "CsdLean4/LF4/HardyKahler.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Hardy1993",
+      "title": null,
+      "authors": [
+        "Lucien Hardy"
+      ],
+      "year": 1993,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 71, 1665",
+      "doi": "10.1103/PhysRevLett.71.1665",
+      "url": "https://doi.org/10.1103/PhysRevLett.71.1665",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Hardy.lean",
+        "CsdLean4/Empirical/CSD/HardyVolume.lean",
+        "CsdLean4/Empirical/QM/Hardy.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Hardy2004",
+      "title": "Quantum ontological excess baggage",
+      "authors": [
+        "Lucien Hardy"
+      ],
+      "year": 2004,
+      "kind": "article",
+      "doi": "10.1016/j.shpsb.2003.12.001",
+      "url": null,
+      "cited_by": [
+        "docs/glossary.yaml"
+      ],
+      "note": "Excess baggage: an ontic model of an N-level system needs a continuum of ontic states. Satisfied trivially by CSD's Sigma; glossary entry `excess-baggage`."
+    },
+    {
+      "key": "Hoeffding1963",
+      "title": null,
+      "authors": [
+        "Wassily Hoeffding"
+      ],
+      "year": 1963,
+      "kind": "article",
+      "venue": "J. Amer. Statist. Assoc. 58, 13",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/QM/Crypto/E91FiniteKey.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
     {
       "key": "LeanQIT2026",
       "title": "Lean-QIT: quantum information theory in Lean 4",
@@ -62,56 +399,6 @@
       "planned_use": "A separate `csd-qit-bridge` package depending on both projects BY TAG, holding the Matrix<->State adapter, discharging `hDPI`, and exporting unconditional SSA. Neither project merges into the other; CsdLean4 keeps its Mathlib-only dependency footprint."
     },
     {
-      "key": "Busch2003",
-      "title": "Quantum States and Generalized Observables: A Simple Proof of Gleason's Theorem",
-      "authors": [
-        "Paul Busch"
-      ],
-      "year": 2003,
-      "kind": "article",
-      "arxiv_id": "quant-ph/9909073",
-      "doi": "10.1103/PhysRevLett.91.120403",
-      "url": null,
-      "cited_by": [
-        "CsdLean4/LF2/EffectGleason.lean"
-      ],
-      "status": "The effect-Gleason result this corpus PROVES independently as `OperationalPackage.effect_gleason_representation` (2026-07-21), which deleted the last `axiom`. Cited as the source of the statement, not of the proof."
-    },
-    {
-      "key": "ColbeckRenner2011",
-      "title": "No extension of quantum theory can have improved predictive power",
-      "authors": [
-        "Roger Colbeck",
-        "Renato Renner"
-      ],
-      "year": 2011,
-      "kind": "article",
-      "doi": "10.1038/ncomms1416",
-      "arxiv_id": "1005.5173",
-      "url": null,
-      "cited_by": [
-        "specs/colbeck-renner-note.md"
-      ],
-      "note": "Positioning theorem. CSD escapes it by denying parameter independence at the Sigma level, the same escape as Bell; NOT by denying free choice. See specs/colbeck-renner-note.md for the unbundling."
-    },
-    {
-      "key": "GhirardiRomano2013",
-      "title": "About possible extensions of quantum theory",
-      "authors": [
-        "GianCarlo Ghirardi",
-        "Raffaele Romano"
-      ],
-      "year": 2013,
-      "kind": "article",
-      "doi": "10.1007/s10701-013-9740-6",
-      "arxiv_id": "1301.5040",
-      "url": null,
-      "cited_by": [
-        "specs/colbeck-renner-note.md"
-      ],
-      "note": "One of the two analyses showing Colbeck-Renner's 'free choice' bundles parameter independence with measurement independence."
-    },
-    {
       "key": "Leegwater2016",
       "title": "An impossibility theorem for parameter independent hidden variable theories",
       "authors": [
@@ -127,19 +414,24 @@
       "note": "The second unbundling analysis: what Colbeck-Renner actually needs is parameter independence."
     },
     {
-      "key": "Hardy2004",
-      "title": "Quantum ontological excess baggage",
+      "key": "Mermin1990",
+      "title": null,
       "authors": [
-        "Lucien Hardy"
+        "N. David Mermin"
       ],
-      "year": 2004,
+      "year": 1990,
       "kind": "article",
-      "doi": "10.1016/j.shpsb.2003.12.001",
-      "url": null,
+      "venue": "Phys. Rev. Lett. 65, 3373",
+      "doi": "10.1103/PhysRevLett.65.3373",
+      "url": "https://doi.org/10.1103/PhysRevLett.65.3373",
       "cited_by": [
-        "docs/glossary.yaml"
+        "CsdLean4/Empirical/CSD/Contextuality/MerminPeres.lean",
+        "CsdLean4/Empirical/CSD/GHZVolume.lean",
+        "CsdLean4/Empirical/CSD/Multipartite/GHZ.lean",
+        "CsdLean4/Empirical/QM/Contextuality/MerminPeres.lean",
+        "CsdLean4/Empirical/QM/Multipartite/GHZ.lean"
       ],
-      "note": "Excess baggage: an ontic model of an N-level system needs a continuum of ontic states. Satisfied trivially by CSD's Sigma; glossary entry `excess-baggage`."
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
     },
     {
       "key": "Montina2008",
@@ -155,6 +447,280 @@
         "docs/glossary.yaml"
       ],
       "note": "Sharpening of Hardy 2004; same disposition."
+    },
+    {
+      "key": "Ozawa2002",
+      "title": null,
+      "authors": [
+        "Masanao Ozawa"
+      ],
+      "year": 2002,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 88, 050402",
+      "doi": "10.1103/PhysRevLett.88.050402",
+      "url": "https://doi.org/10.1103/PhysRevLett.88.050402",
+      "cited_by": [
+        "CsdLean4/Empirical/QM/QuantitativeWAY.lean",
+        "CsdLean4/Empirical/QM/WignerArakiYanase.lean",
+        "CsdLean4/Tests/AxiomAudit/EmpiricalCSD.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Ozawa2002b",
+      "title": null,
+      "authors": [
+        "Masanao Ozawa"
+      ],
+      "year": 2002,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 89, 057902",
+      "doi": "10.1103/PhysRevLett.89.057902",
+      "url": "https://doi.org/10.1103/PhysRevLett.89.057902",
+      "cited_by": [
+        "CsdLean4/Empirical/QM/QuantitativeWAY.lean",
+        "CsdLean4/Empirical/QM/WignerArakiYanase.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "PatiBraunstein2000",
+      "title": "Impossibility of deleting an unknown quantum state",
+      "authors": [
+        "Arun K. Pati",
+        "Samuel L. Braunstein"
+      ],
+      "year": 2000,
+      "kind": "article",
+      "venue": "Nature 404, 164",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/QM/NoDeleting.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. "
+    },
+    {
+      "key": "Peres1990",
+      "title": null,
+      "authors": [
+        "Asher Peres"
+      ],
+      "year": 1990,
+      "kind": "article",
+      "venue": "Phys. Lett. A 151, 107",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Contextuality/MerminPeres.lean",
+        "CsdLean4/Empirical/QM/Contextuality/MerminPeres.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Pironio2009",
+      "title": null,
+      "authors": [
+        "Stefano Pironio",
+        "et al."
+      ],
+      "year": 2009,
+      "kind": "article",
+      "venue": "New J. Phys. 11, 045021",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/QM/Crypto/E91FiniteKey.lean",
+        "CsdLean4/Empirical/QM/Crypto/E91KeyRate.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "RBSC2004",
+      "title": null,
+      "authors": [
+        "Joseph M. Renes",
+        "Robin Blume-Kohout",
+        "A. J. Scott",
+        "Carlton M. Caves"
+      ],
+      "year": 2004,
+      "kind": "article",
+      "venue": "J. Math. Phys. 45, 2171",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/SIC3Volume.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Robertson1929",
+      "title": null,
+      "authors": [
+        "Howard P. Robertson"
+      ],
+      "year": 1929,
+      "kind": "article",
+      "venue": "Phys. Rev. 34, 163",
+      "doi": "10.1103/PhysRev.34.163",
+      "url": "https://doi.org/10.1103/PhysRev.34.163",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Uncertainty.lean",
+        "CsdLean4/Empirical/CSD/UncertaintyVolume.lean",
+        "CsdLean4/Empirical/QM/Uncertainty.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Shor1995",
+      "title": null,
+      "authors": [
+        "Peter W. Shor"
+      ],
+      "year": 1995,
+      "kind": "article",
+      "venue": "Phys. Rev. A 52, R2493",
+      "doi": "10.1103/PhysRevA.52.R2493",
+      "url": "https://doi.org/10.1103/PhysRevA.52.R2493",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/QEC/ThreeQubit.lean",
+        "CsdLean4/Empirical/QM/QEC/ErrorDiscretization.lean",
+        "CsdLean4/Empirical/QM/QEC/PhaseFlip.lean",
+        "CsdLean4/Empirical/QM/QEC/ShorNine.lean",
+        "CsdLean4/Empirical/QM/QEC/SyndromeCollapse.lean",
+        "CsdLean4/Empirical/QM/QEC/ThreeQubit.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "SternGerlach1922",
+      "title": null,
+      "authors": [
+        "Otto Stern",
+        "Walther Gerlach"
+      ],
+      "year": 1922,
+      "kind": "article",
+      "venue": "Z. Phys. 9, 349",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/MalusVolume.lean",
+        "CsdLean4/Empirical/CSD/SternGerlach.lean",
+        "CsdLean4/Empirical/CSD/SternGerlachVolume.lean",
+        "CsdLean4/Empirical/QM/SternGerlach.lean",
+        "CsdLean4/LF4/SingleQubitKahler.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Wiesner1983",
+      "title": "Conjugate Coding",
+      "authors": [
+        "Stephen Wiesner"
+      ],
+      "year": 1983,
+      "kind": "article",
+      "venue": "SIGACT News 15(1), 78",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean",
+        "CsdLean4/Empirical/CSD/Crypto/WiesnerSequential.lean",
+        "CsdLean4/Empirical/QM/Crypto/QuantumMoney.lean",
+        "CsdLean4/Empirical/QM/Crypto/WiesnerProtocol.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. "
+    },
+    {
+      "key": "Wigner1952",
+      "title": null,
+      "authors": [
+        "Eugene P. Wigner"
+      ],
+      "year": 1952,
+      "kind": "article",
+      "venue": "Z. Phys. 133, 101",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/WignerArakiYanase.lean",
+        "CsdLean4/Empirical/QM/WignerArakiYanase.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "WoottersFields1989",
+      "title": null,
+      "authors": [
+        "William K. Wootters",
+        "Brian D. Fields"
+      ],
+      "year": 1989,
+      "kind": "article",
+      "venue": "Ann. Phys. 191, 363",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/MUB3Volume.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "WoottersZurek1982",
+      "title": null,
+      "authors": [
+        "William K. Wootters",
+        "Wojciech H. Zurek"
+      ],
+      "year": 1982,
+      "kind": "article",
+      "venue": "Nature 299, 802",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/Crypto/QuantumMoney.lean",
+        "CsdLean4/Empirical/CSD/MUB3Volume.lean",
+        "CsdLean4/Empirical/CSD/NoCloning.lean",
+        "CsdLean4/Empirical/CSD/Resources/Teleportation.lean",
+        "CsdLean4/Empirical/QM/Crypto/QuantumMoney.lean",
+        "CsdLean4/Empirical/QM/Crypto/WiesnerProtocol.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Yanase1961",
+      "title": null,
+      "authors": [
+        "Mutsuo M. Yanase"
+      ],
+      "year": 1961,
+      "kind": "article",
+      "venue": "Phys. Rev. 123, 666",
+      "doi": "10.1103/PhysRev.123.666",
+      "url": "https://doi.org/10.1103/PhysRev.123.666",
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/WignerArakiYanase.lean",
+        "CsdLean4/Empirical/QM/WignerArakiYanase.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Zauner1999",
+      "title": null,
+      "authors": [
+        "Gerhard Zauner"
+      ],
+      "year": 1999,
+      "kind": "thesis",
+      "venue": "PhD thesis",
+      "doi": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Empirical/CSD/SIC3Volume.lean"
+      ],
+      "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
     }
   ]
 }

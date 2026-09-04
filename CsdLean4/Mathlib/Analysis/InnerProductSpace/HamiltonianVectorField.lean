@@ -15,7 +15,8 @@ public import Mathlib.Analysis.InnerProductSpace.Calculus
 
 **This is BACKLOG A4's formalisable fragment.** A4 is the manifold identification
 `X_𝓗 = ω⁻¹d𝓗` — the arrow from a scalar observable to the flow that generates measurement
-dynamics. Mathlib has no symplectic-form or Poisson API on *manifolds* (verified again
+dynamics. Mathlib has no symplectic-form or Poisson API on *manifolds*
+(MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm); verified again
 2026-08-06: `Analysis/Calculus/DifferentialForm/` now delivers the exterior derivative on
 **normed spaces** — flat space — with manifold forms explicitly TODO upstream). What IS
 formalisable today is the identification on the flat Hermitian model `E`, where the

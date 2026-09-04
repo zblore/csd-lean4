@@ -39,7 +39,8 @@ Kähler `Σ`). See `specs/carve-out-plan.md` (Tranche 1).
 directly by the coordinate formula `‖p.rep i‖²/‖p.rep‖²`; the statement that
 this function satisfies the Hamiltonian moment-map equation `ι_{X_i} ω = dΦᵢ`
 for the FS symplectic form is the (standard, unformalised) symplectic fact
-motivating the name — Mathlib has no symplectic-form API and no Kähler API, so
+motivating the name — Mathlib has no symplectic-form API and no Kähler API
+(MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)), so
 the "forced by the Kähler structure" claim is mathematical narrative, not a
 Lean theorem. What **is** machine-verified: well-definedness on rays
 (`momentMap_mk`), the simplex constraints (`momentMap_nonneg`,

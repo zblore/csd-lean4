@@ -23,7 +23,8 @@ this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 
 * `kahler_pointwise : IsFubiniStudyKahler N` — the pointwise compatibility core of "`Σ` has a closed
   2-form `ω` compatible with a complex structure `J`". The manifold residual (`dω = 0`, top-power)
-  is genuinely **blocked**: Mathlib has no symplectic/Kähler-form API (KG-1 / link L1).
+  is genuinely **blocked**: Mathlib has no symplectic/Kähler-form API (KG-1 / link L1;
+  MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)).
 * `liouville_isProbability` — the *normalisation* core of "`liouvilleMeasure` is the top-power
   Kähler volume `ω^{∧n}/n!`" (fix C5). **This module upgrades that content** from "it is *a* probability
   measure" to "it is *the* volume forced by the space and its symmetry".

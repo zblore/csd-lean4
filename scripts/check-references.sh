@@ -36,8 +36,13 @@ if len(keys) != len(set(keys)):
 
 for r in refs:
     key = r.get("key", "<no key>")
-    if not r.get("title") or not r.get("year"):
-        findings.append("%s: missing title or year" % key)
+    # An entry is auditable if a reader can find the source. Authors + year + a venue string
+    # ("Phys. Rev. Lett. 67, 661") does that; the title is a convenience. The 2026-09-04 harvest
+    # took its data from the citing modules' `## Source` blocks, which record venue/volume/page
+    # but often no title — and supplying titles from memory is exactly the fabrication this file
+    # exists to prevent. So: `title` OR `venue`, plus a year.
+    if not (r.get("title") or r.get("venue")) or not r.get("year"):
+        findings.append("%s: needs a year and at least one of title / venue" % key)
     for p in r.get("cited_by", []):
         if not os.path.exists(p):
             findings.append("%s: cited_by names `%s`, which is not a file in this tree" % (key, p))

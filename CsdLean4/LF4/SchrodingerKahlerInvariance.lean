@@ -35,7 +35,8 @@ form-level companion to the geometric phase / action (Aharonov–Anandan), whose
 symplectic potential of `ω`.
 
 It does **NOT** derive the flow FROM the form (the Hamiltonian-vector-field statement `X_H = ω⁻¹dH`,
-`KG-2`) — that needs the symplectic-gradient / manifold-differential API Mathlib lacks and stays
+`KG-2`) — that needs the symplectic-gradient / manifold-differential API Mathlib lacks
+(MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)) and stays
 blocked. This module proves the invariance (a symmetry of `ω`), not the generation. It is at the
 Hilbert-vector level; the descent to the ray-level FS form rides on the tangent-space `J`-invariance
 (`Kahler.tangent_complexStructure_invariant`).

@@ -167,9 +167,15 @@
 >      NOT bulk-filled: entries whose bibliographic details are unverified would make the file
 >      bigger and less trustworthy, which is the failure its own header warns about.
 >
->    **Tranche 2, still open:** **`REFERENCES.json` coverage** proper (M) — the ~101 missing
->    entries need bibliographic details from the author, plus the line-precise
->    `[Key, file:Lstart-Lend]` citations §8.2 asks for. And **prose audit passes 1–2 over the
+>    **`REFERENCES.json` — HARVESTED 2026-09-04, 7 → 37 entries.** Taken from the citing modules'
+>    own `## Source` blocks (33 of them carry full references), so this is transcription, not
+>    recall: `venue` is the corpus's verbatim string, `title` appears only where the corpus records
+>    one, and `doi`/`url` only where the identifier is derivable from the citation (APS constructs
+>    DOIs from journal+volume+page). `check-references.sh` now accepts *title OR venue* — authors +
+>    year + "Phys. Rev. Lett. 67, 661" is auditable, and requiring a title would have forced exactly
+>    the half-remembered bibliography the file exists to prevent. **Still open:** ~73 of ~110 cited
+>    sources have no entry, and the line-precise `[Key, file:Lstart-Lend]` citations §8.2 asks for
+>    are untouched. And **prose audit passes 1–2 over the
 >    remaining four-fifths** of the surface; the pass-3 sweep against corrections recorded only
 >    in commit messages is also unrun.
 > 4. **Ozawa error–disturbance twin** (M, row B) — **LANDED 2026-09-04**
@@ -262,7 +268,15 @@
 >
 > * ⚠️ **The 49 untagged "Mathlib has no …" claims.** `check-mathlib-absence.sh` reports them as a
 >   non-fatal warning. The register rows are tagged; the in-corpus prose is not, and will rot exactly
->   as the five corrected rows did. Tagging is mechanical but touches up to 49 files (count as of 2026-09-02, guard WARN C).
+>   as the five corrected rows did. **49 → 44 on 2026-09-04**: the five claims of the *Kähler /
+>   symplectic manifold API* wall now carry the register's own token
+>   (`file:Mathlib/Geometry/Manifold/DifferentialForm`) rather than an invented one.
+>   ⚠️ **The residue is not mechanical, which is why it stopped there.** Each remaining claim needs a
+>   token naming what would exist if Mathlib added it, and a wrong guess produces a tag that can
+>   NEVER fire — decoration wearing a guard's clothes. Where a claim maps to an existing
+>   `MATHLIB-GAPS.md` row, reuse that row's token (honest, and what was done here). Where it does
+>   not — e.g. "no Finset-level `factorization_lcm`" — the token is a guess about upstream naming
+>   and is the author's call, or the claim should be reworded to name a declaration that exists.
 > * ⚠️ **B6 (Mathlib PRs), retired 2026-08-06.** Unchanged for L.4's lemmas — they genuinely do not
 >   advance CSD, so the retirement logic holds. It is the **summit** where a PR would remove a wall
 >   the corpus is standing behind; `lieb-dpi-scoping.md` §3b makes that case and leaves it open.
