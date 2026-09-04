@@ -285,6 +285,7 @@ public import CsdLean4.Empirical.QM.QEC.SyndromeCollapse
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.Uncertainty
+public import CsdLean4.Empirical.QM.Ozawa
 public import CsdLean4.Empirical.QM.WignerArakiYanase
 public import CsdLean4.Empirical.QM.Multipartite.GHZ
 public import CsdLean4.Empirical.QM.Contextuality.KS18
@@ -309,6 +310,7 @@ public import CsdLean4.Empirical.CSD.NoDeleting
 public import CsdLean4.Empirical.CSD.NoBroadcasting
 public import CsdLean4.Empirical.CSD.NoCommunication
 public import CsdLean4.Empirical.CSD.Uncertainty
+public import CsdLean4.Empirical.CSD.Ozawa
 public import CsdLean4.Empirical.CSD.SternGerlach
 public import CsdLean4.Empirical.CSD.SternGerlachVolume
 public import CsdLean4.Empirical.CSD.MachZehnderVolume

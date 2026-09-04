@@ -172,9 +172,20 @@
 >    `[Key, file:Lstart-Lend]` citations §8.2 asks for. And **prose audit passes 1–2 over the
 >    remaining four-fifths** of the surface; the pass-3 sweep against corrections recorded only
 >    in commit messages is also unrun.
-> 4. **Ozawa error–disturbance twin** (M, row B) — **SCOPED 2026-09-04**
->    ([`ozawa-scoping.md`](ozawa-scoping.md), `csd-foundations`-checked, 15 findings folded), not yet
->    built. Two decisions settled there and worth carrying: the core is stated on WAY's
+> 4. **Ozawa error–disturbance twin** (M, row B) — **LANDED 2026-09-04**
+>    ([`ozawa-scoping.md`](ozawa-scoping.md), `csd-foundations`-checked, 15 findings folded).
+>    `Empirical/QM/Ozawa.lean`: ★★ `ozawa_error_disturbance`, the universally valid relation
+>    `ε(A)η(B) + ε(A)σ(B) + σ(A)η(B) ≥ ½|⟪Ψ,[A_in,B_in]Ψ⟫|`, from ★ `ozawa_commutator_identity`
+>    (the fourth commutator term vanishes by `commute_out` — that is the whole content) and three
+>    instances of the new unsquared ★ `commutator_le_two_mul_norm`, which `robertson_core` is now
+>    **derived from** (§9.3). Non-vacuous where it matters: `zxWitness_commutator_ne_zero` gives a
+>    nonzero right-hand side, and ★ `ozawa_two_term_false` refutes the two-term variant outright.
+>    `Empirical/CSD/Ozawa.lean`: ★ `no_ozawa_model_of_jointLift` — the record layer supplies **no**
+>    such model, so `ε` and `η` are not defined there (a corollary of `no_joint_hilbert_map`, not a
+>    parallel capstone). Six pins. ⚠️ **Not built, and not claimed:** a measurement-model
+>    instantiation deriving `A_out = U†(1 ⊗ M)U` from a probe — the inequality turned out not to
+>    need the tensor product at all, so the structure is four operators on one space. The naive
+>    Heisenberg form remains un-refuted in Lean, deliberately. Two decisions settled there and worth carrying: the core is stated on WAY's
 >    **abstract-`tensor` interface**, not Mathlib `⊗[ℂ]` (§3a — otherwise brick 2 cannot share the
 >    definitions `way-theorem-scoping.md` says it shares), and the CSD side is a **scope theorem** on
 >    the brick-1 pattern, NOT a volume-ratio twin (§5 — there is no Σ-side reading of `ε`/`η`, and the

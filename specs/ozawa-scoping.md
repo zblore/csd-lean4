@@ -1,7 +1,24 @@
 # Ozawa error–disturbance: scoping note
 
-**Status:** SCOPED 2026-09-04, `csd-foundations`-checked the same day (15 findings, all folded);
-not yet built. Expert-review row **B** of `specs/BACKLOG.md`.
+**Status:** SCOPED, `csd-foundations`-checked (15 findings folded), **BUILT and LANDED
+2026-09-04**. Expert-review row **B** of `specs/BACKLOG.md`.
+
+**As landed:** `Empirical/QM/Ozawa.lean` — `OzawaData`, `error`, `disturbance`,
+★ `ozawa_commutator_identity`, ★★ `ozawa_error_disturbance`, the witness `zxWitness` with
+★ `zxWitness_commutator_ne_zero` and ★ `ozawa_two_term_false`; `Empirical/CSD/Ozawa.lean` —
+★ `no_ozawa_model_of_jointLift`. Six audit pins. `Uncertainty.lean` gained `stdDev` and the
+unsquared ★ `commutator_le_two_mul_norm`, with `robertson_core` **re-derived from it** (§9.3, as
+the plan required).
+
+**One deviation from §3, recorded.** The plan had `MeasurementModel` as a probe space, three
+fields and three hypotheses. Building it showed the tensor product plays **no part in the
+inequality**: what the proof consumes is four symmetric operators on one space with the two "out"
+operators commuting. So the theorem is stated at that level (`OzawaData`) and a measurement model
+is one way to produce the data. This *strengthens* §3a's decision — there is now no tensor
+vocabulary in the statement at all, so WAY brick 2 can share it whichever tensor it uses — and it
+means `isSymmetric_map` and the normalisation hypotheses of §3 were **not needed**. They stay
+recorded here as what a measurement-model instantiation will need; that instantiation is **not
+built**.
 
 This is a **breadth / hardening** row, not reconstruction-path work (`BACKLOG.md` "▶ NEXT STEPS",
 item 4). It closes a coverage gap on the twins board; it does not advance the record layer (MD-1),

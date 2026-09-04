@@ -409,6 +409,38 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.Uncertainty.robertson_uncertainty
 
+-- Ozawa's universally valid error-disturbance relation (row B, 2026-09-04). The unsquared
+-- `commutator_le_two_mul_norm` is the shared Cauchy-Schwarz core: `robertson_core` is now derived
+-- from it, and Ozawa sums three instances of it (the squared form cannot be summed).
+/-- info: 'CSD.Empirical.Uncertainty.commutator_le_two_mul_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Uncertainty.commutator_le_two_mul_norm
+
+/-- info: 'CSD.Empirical.Ozawa.ozawa_commutator_identity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Ozawa.ozawa_commutator_identity
+
+/-- info: 'CSD.Empirical.Ozawa.ozawa_error_disturbance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Ozawa.ozawa_error_disturbance
+
+-- Non-vacuity: the bound is asserted where the right-hand side is nonzero, and the two-term
+-- variant is refuted by the same witness.
+/-- info: 'CSD.Empirical.Ozawa.zxWitness_commutator_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Ozawa.zxWitness_commutator_ne_zero
+
+/-- info: 'CSD.Empirical.Ozawa.ozawa_two_term_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Ozawa.ozawa_two_term_false
+
+-- The CSD side is a SCOPE theorem (WAY brick 1 pattern), not a volume-ratio transport twin:
+-- no Ozawa measurement model computes the record-layer stroke, so its epsilon and eta are not
+-- defined there.
+/-- info: 'CSD.Empirical.CSDBridge.Ozawa.no_ozawa_model_of_jointLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Ozawa.no_ozawa_model_of_jointLift
+
 /-! ### Empirical predictions (GHZ paradox, Phase D6 / Mermin all-or-nothing) -/
 
 /-- info: 'CSD.Empirical.GHZ.ghz_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/

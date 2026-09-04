@@ -963,7 +963,7 @@ entries:
     related: [liouville-measure, fubini-study-measure]
 
   - slug: luders-rule
-    reviewed: 2026-08-25
+    reviewed: 2026-09-04
     hook: >
       The textbook's second rule -- how a state changes when measured -- is not a second
       rule here. It is what the record layer does.
@@ -2911,7 +2911,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Hidden-variable_theory
 
   - slug: measurement-problem
-    reviewed: 2026-08-25
+    reviewed: 2026-09-04
     hook: >
       Quantum mechanics contains two incompatible rules and no instruction for when to
       switch. CSD replaces the switch with a theorem about what no dynamics can do.
@@ -2964,7 +2964,7 @@ entries:
         url: https://plato.stanford.edu/entries/qt-issues/
 
   - slug: collapse
-    reviewed: 2026-08-25
+    reviewed: 2026-09-04
     hook: >
       The state never jumps here -- and that is a theorem about volume-preserving maps, not
       a preference about interpretations.
@@ -3778,7 +3778,7 @@ entries:
       text: Paper A is the volume-based account of outcome frequencies
 
   - slug: outcome-region
-    reviewed: 2026-08-25
+    reviewed: 2026-09-04
     hook: >
       An outcome is a region, and the apparatus alone draws its boundary. The preparation
       decides where the trajectory lands; it does not get to draw the map.

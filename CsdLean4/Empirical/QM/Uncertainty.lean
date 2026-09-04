@@ -53,6 +53,17 @@ observable applied to `ψ` (the standard quantum variance for a unit `ψ`). -/
 noncomputable def variance (A : Module.End ℂ H) (ψ : H) : ℝ :=
   ‖A ψ - (expectation A ψ) • ψ‖ ^ 2
 
+/-- Standard deviation `σ_ψ(A) = ‖(A − ⟨A⟩) ψ‖`, the unsquared spread. `variance` is its
+square (`variance_eq_stdDev_sq`); the error–disturbance relation of `Ozawa.lean` is stated in
+unsquared quantities, which is why this lives beside `variance` rather than in that file. -/
+noncomputable def stdDev (A : Module.End ℂ H) (ψ : H) : ℝ :=
+  ‖A ψ - (expectation A ψ) • ψ‖
+
+lemma stdDev_nonneg (A : Module.End ℂ H) (ψ : H) : 0 ≤ stdDev A ψ := norm_nonneg _
+
+lemma variance_eq_stdDev_sq (A : Module.End ℂ H) (ψ : H) :
+    variance A ψ = stdDev A ψ ^ 2 := rfl
+
 /-- For a symmetric operator the expectation value is real. -/
 lemma expectation_conj (A : Module.End ℂ H) (hA : A.IsSymmetric) (ψ : H) :
     conj (expectation A ψ) = expectation A ψ := by
@@ -81,13 +92,16 @@ lemma variance_centered (A : Module.End ℂ H) (ψ : H) :
   unfold variance
   rw [LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply]
 
-/-- **Core inequality.** For symmetric `A, B` and any `ψ`,
-`‖A ψ‖² · ‖B ψ‖² ≥ ¼ ‖⟪ψ, [A,B] ψ⟫‖²`. The uncertainty relation is this
-applied to the centered observables. -/
-lemma robertson_core (A B : Module.End ℂ H) (hA : A.IsSymmetric) (hB : B.IsSymmetric)
-    (ψ : H) :
-    ‖A ψ‖ ^ 2 * ‖B ψ‖ ^ 2 ≥ (1 / 4) * ‖inner ℂ ψ ((A * B - B * A) ψ)‖ ^ 2 := by
-  -- `z := ⟪A ψ, B ψ⟫`; push the operators onto the right via symmetry.
+/-- ★ **The commutator bound, unsquared.** For symmetric `A, B`,
+`‖⟪ψ, [A,B] ψ⟫‖ ≤ 2 ‖A ψ‖ ‖B ψ‖`.
+
+Both `robertson_core` (by squaring) and Ozawa's error–disturbance relation (by summing three
+instances) are this inequality; the squared form cannot be summed, which is why the unsquared
+one is the primitive. The content is that `⟪ψ,[A,B]ψ⟫ = z − conj z = 2i·Im z` for
+`z = ⟪A ψ, B ψ⟫`, so the commutator sees only the imaginary part, and `|Im z| ≤ ‖z‖`. -/
+lemma commutator_le_two_mul_norm (A B : Module.End ℂ H) (hA : A.IsSymmetric)
+    (hB : B.IsSymmetric) (ψ : H) :
+    ‖inner ℂ ψ ((A * B - B * A) ψ)‖ ≤ 2 * (‖A ψ‖ * ‖B ψ‖) := by
   have hz : inner ℂ (A ψ) (B ψ) = inner ℂ ψ ((A * B) ψ) := by
     rw [hA ψ (B ψ), ← Module.End.mul_apply]
   have hcz : conj (inner ℂ (A ψ) (B ψ)) = inner ℂ ψ ((B * A) ψ) := by
@@ -96,26 +110,27 @@ lemma robertson_core (A B : Module.End ℂ H) (hA : A.IsSymmetric) (hB : B.IsSym
       = inner ℂ ψ ((A * B - B * A) ψ) := by
     rw [hcz, hz, ← inner_sub_right, ← LinearMap.sub_apply]
   set z := inner ℂ (A ψ) (B ψ) with hz_def
-  set C := inner ℂ ψ ((A * B - B * A) ψ) with hC_def
-  -- `C = z − conj z = 2 i·Im z`, hence `‖C‖² = 4 (Im z)²`.
-  have hCnorm : ‖C‖ ^ 2 = 4 * z.im ^ 2 := by
+  have hCnorm : ‖inner ℂ ψ ((A * B - B * A) ψ)‖ = 2 * |z.im| := by
     rw [← hsub, Complex.sub_conj, norm_mul, Complex.norm_I, mul_one, Complex.norm_real,
-      Real.norm_eq_abs, sq_abs]
-    ring
-  -- `(Im z)² ≤ ‖z‖²`.
-  have him : z.im ^ 2 ≤ ‖z‖ ^ 2 := by
-    have h := RCLike.abs_im_le_norm z
-    have h' : |z.im| ≤ ‖z‖ := by simpa using h
-    nlinarith [abs_nonneg z.im, norm_nonneg z, sq_abs z.im, h']
-  -- Cauchy–Schwarz, squared.
-  have hCS : ‖z‖ ^ 2 ≤ ‖A ψ‖ ^ 2 * ‖B ψ‖ ^ 2 := by
-    have h := norm_inner_le_norm (𝕜 := ℂ) (A ψ) (B ψ)
-    rw [← hz_def] at h
-    nlinarith [h, norm_nonneg z, mul_nonneg (norm_nonneg (A ψ)) (norm_nonneg (B ψ))]
-  rw [ge_iff_le]
-  calc (1 / 4) * ‖C‖ ^ 2 = z.im ^ 2 := by rw [hCnorm]; ring
-    _ ≤ ‖z‖ ^ 2 := him
-    _ ≤ ‖A ψ‖ ^ 2 * ‖B ψ‖ ^ 2 := hCS
+      Real.norm_eq_abs, abs_mul]
+    norm_num
+  have him : |z.im| ≤ ‖z‖ := by simpa using RCLike.abs_im_le_norm z
+  have hCS : ‖z‖ ≤ ‖A ψ‖ * ‖B ψ‖ := by
+    rw [hz_def]; exact norm_inner_le_norm (𝕜 := ℂ) (A ψ) (B ψ)
+  rw [hCnorm]
+  linarith
+
+/-- **Core inequality.** For symmetric `A, B` and any `ψ`,
+`‖A ψ‖² · ‖B ψ‖² ≥ ¼ ‖⟪ψ, [A,B] ψ⟫‖²`. The uncertainty relation is this
+applied to the centered observables. Derived from the unsquared
+`commutator_le_two_mul_norm` by squaring (CONVENTIONS §9.3: one Cauchy–Schwarz, two
+consumers). -/
+lemma robertson_core (A B : Module.End ℂ H) (hA : A.IsSymmetric) (hB : B.IsSymmetric)
+    (ψ : H) :
+    ‖A ψ‖ ^ 2 * ‖B ψ‖ ^ 2 ≥ (1 / 4) * ‖inner ℂ ψ ((A * B - B * A) ψ)‖ ^ 2 := by
+  have h := commutator_le_two_mul_norm A B hA hB ψ
+  have hnn : 0 ≤ ‖A ψ‖ * ‖B ψ‖ := mul_nonneg (norm_nonneg _) (norm_nonneg _)
+  nlinarith [norm_nonneg (inner ℂ ψ ((A * B - B * A) ψ)), h, hnn]
 
 /-- **Robertson uncertainty relation.** For self-adjoint observables `A, B`
 and any state `ψ`,
