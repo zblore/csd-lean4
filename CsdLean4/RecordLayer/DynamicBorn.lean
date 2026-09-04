@@ -33,8 +33,8 @@ API). This file closes the *Born* half of item 4, not item 3.
 
 ## References
 
-`SigmaLayer/ShearWitness.lean`; `SigmaLayer/GlobalBasin.lean` (`globalBasin`, `globalBasin_born`,
-`globalBasin_ae_total`); `SigmaLayer/MeasurementProtocol.lean`
+`RecordLayer/ShearWitness.lean`; `RecordLayer/GlobalBasin.lean` (`globalBasin`, `globalBasin_born`,
+`globalBasin_ae_total`); `RecordLayer/MeasurementProtocol.lean`
 (`measure_outcomeSector_eq_of_correlates`).
 -/
 

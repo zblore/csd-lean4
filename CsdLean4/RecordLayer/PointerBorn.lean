@@ -56,9 +56,9 @@ bounds, not an LLN frequency statement (the LLN layer can consume them exactly a
 
 `specs/pointer-witness-plan.md` (bricks 4, 5); `specs/BACKLOG.md` (the ★ L row);
 `specs/future-work.md`. Reused corpus API: `epistemicMeasure`/`globalBasin_prob` slice
-pattern (`SigmaLayer/GlobalBasin.lean`), `volume_shrunkCell_slice`
-(`SigmaLayer/PointerLanding.lean`), `pointerProtocol` + correlation/invariance
-(`SigmaLayer/PointerProtocol.lean`), `ProbabilityTheory.cond` (Mathlib +
+pattern (`RecordLayer/GlobalBasin.lean`), `volume_shrunkCell_slice`
+(`RecordLayer/PointerLanding.lean`), `pointerProtocol` + correlation/invariance
+(`RecordLayer/PointerProtocol.lean`), `ProbabilityTheory.cond` (Mathlib +
 `CsdLean4/Mathlib/Probability/ConditionalProbability.lean` staging).
 -/
 

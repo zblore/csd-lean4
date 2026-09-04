@@ -66,9 +66,9 @@ Nothing outside `Tests/AxiomAudit.lean` consumes this yet; the corpus's record-l
 
 ## References
 
-`SigmaLayer/CircleFibre.lean` (`circleCell` and its Born weights — every theorem here transports one
+`RecordLayer/CircleFibre.lean` (`circleCell` and its Born weights — every theorem here transports one
 of those); `LF4/KahlerInstance.lean` (`KTorus`, `KSigma`, `instProbKTorusVolume`);
-`SigmaLayer/BornFibrePartition.lean` (`bornRate`, `loSum`); `specs/BACKLOG.md` (the ★★ row and its
+`RecordLayer/BornFibrePartition.lean` (`bornRate`, `loSum`); `specs/BACKLOG.md` (the ★★ row and its
 successor target); `specs/reconstruction-status.md` §2a (the parity correction).
 -/
 

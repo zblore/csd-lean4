@@ -13,7 +13,7 @@ public import CsdLean4.RecordLayer.CircleRecord
 
 **Category:** 7-SigmaLayer (the record layer — MD-1, the closure).
 
-The successor to `SigmaLayer/RecordLayerClosure.lean`. That bundle certifies the record layer on the
+The successor to `RecordLayer/RecordLayerClosure.lean`. That bundle certifies the record layer on the
 fibre `Σ = ℝ` with `fibreTypicality`, for the context `bornContext ψ` — **built from the
 preparation**. This one certifies the same five facts on the corpus's actual compact sector
 `Σ = ℂℙⁿ⁻¹ × T²`, for a `ContextField` — **built from the apparatus alone**.
@@ -47,7 +47,7 @@ than obtained by disintegration (conditioning on `p` conditions on a `μ_FS`-nul
 Liouville measure; `kMuL = μ_FS ⊗ vol` remains that.
 
 ⚠️ **KINEMATIC.** No `H_int(M)` generating these basins is constructed. The Paper D obligation
-(`SigmaLayer/DeIsolationFlow.lean`) is untouched, and a certified readout is not a dynamical account
+(`RecordLayer/DeIsolationFlow.lean`) is untouched, and a certified readout is not a dynamical account
 of measurement.
 
 ⚠️ ~~This closes the preparation-indexing defect, not general-`N` A7 outright~~ **ANSWERED
@@ -61,11 +61,11 @@ carries the older `vnPointerOutcome` readout — swapping *that* is a separate m
 
 ## References
 
-`SigmaLayer/RecordLayerClosure.lean` (the `ℝ` bundle this succeeds);
-`SigmaLayer/GlobalBasin.lean` (`ContextField`, `globalBasin`, `epistemicMeasure`, `globalBasin_born`);
+`RecordLayer/RecordLayerClosure.lean` (the `ℝ` bundle this succeeds);
+`RecordLayer/GlobalBasin.lean` (`ContextField`, `globalBasin`, `epistemicMeasure`, `globalBasin_born`);
 `SigmaLayer/RecordedFact.lean` (`RecordSemantics`, `compatibleSet`, and the warning that the
 structure is trivially inhabited — the non-vacuity here is `ae_total` and `born_typicality`);
-`SigmaLayer/CircleRecord.lean` (`circleOutcome`); `specs/record-layer-plan.md` §4 (MD-1);
+`RecordLayer/CircleRecord.lean` (`circleOutcome`); `specs/record-layer-plan.md` §4 (MD-1);
 `specs/BACKLOG.md` (the ★★ row).
 -/
 

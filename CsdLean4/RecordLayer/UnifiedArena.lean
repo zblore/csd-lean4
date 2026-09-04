@@ -64,10 +64,10 @@ preserves. That coincidence is the engine migration's mathematical content.
 ## References
 
 `SigmaLayer/FiniteQMClosure.lean` (the operational predecessor, untouched);
-`SigmaLayer/SwapClosure.lean` (`SwapMeasurementClosure` — the dynamical half);
+`RecordLayer/SwapClosure.lean` (`SwapMeasurementClosure` — the dynamical half);
 `SigmaLayer/MeasureBridge.lean` (`productDynamics`, `productSector`,
 `productSector_hasFubiniStudyPushforward`); `SigmaLayer/DynamicsBridge.lean`
-(`productDynamicsBridge.projectable`); `SigmaLayer/SwapWitness.lean` (`swapMeasure`,
+(`productDynamicsBridge.projectable`); `RecordLayer/SwapWitness.lean` (`swapMeasure`,
 `swapEvolve_measurePreserving`); `SigmaLayer/UnifiedFlowedRecords.lean`
 (`unified_born_frequency`); `SigmaLayer/MixedOntic.lean` (`mixed_ontic_born_weight`);
 `specs/BACKLOG.md` (the engine-migration row, closed by this module).

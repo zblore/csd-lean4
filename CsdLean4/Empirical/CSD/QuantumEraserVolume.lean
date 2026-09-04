@@ -87,11 +87,11 @@ erasure choice precedes or follows the screen detection.
 
 `Empirical/QM/QuantumEraser.lean` (`jointAmp_eq`, `eraser_joint`, `eraser_no_interference`,
 `eraser_fringe_dark`); `Empirical/CSD/HongOuMandelVolume.lean` (the record-route template and
-the `hpos` discussion); `SigmaLayer/BornFibrePartition.lean` (`cdfCell`, `bornRate`);
-`SigmaLayer/DeIsolationFlow.lean` (`fibreTypicality_bornCell`); `SigmaLayer/FibreRecord.lean`
-(`fibreTypicality_bornRecord`); `SigmaLayer/Measurement.lean` (`bornMeasurement_prob`);
-`SigmaLayer/GlobalBasin.lean` (`globalBasin_prob`, `momentContext`);
-`SigmaLayer/DegenerateLuders.lean` (`vertexPoint`, `momentMap_vertex`);
+the `hpos` discussion); `RecordLayer/BornFibrePartition.lean` (`cdfCell`, `bornRate`);
+`RecordLayer/DeIsolationFlow.lean` (`fibreTypicality_bornCell`); `RecordLayer/FibreRecord.lean`
+(`fibreTypicality_bornRecord`); `RecordLayer/Measurement.lean` (`bornMeasurement_prob`);
+`RecordLayer/GlobalBasin.lean` (`globalBasin_prob`, `momentContext`);
+`RecordLayer/DegenerateLuders.lean` (`vertexPoint`, `momentMap_vertex`);
 `specs/BACKLOG.md`; `specs/record-layer-plan.md`.
 -/
 

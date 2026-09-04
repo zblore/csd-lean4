@@ -57,9 +57,9 @@ here claims a ray-level witness.
 
 ## References
 
-`SigmaLayer/DegenerateLuders.lean` (`blockProj`, `BlockLudersObligation`,
-`swap_not_blockLuders` — the boundary); `SigmaLayer/MeasurementConstraints.lean`
-(`no_exact_collapse` — why storage is forced); `SigmaLayer/SwapWitness.lean` (the rank-one
+`RecordLayer/DegenerateLuders.lean` (`blockProj`, `BlockLudersObligation`,
+`swap_not_blockLuders` — the boundary); `RecordLayer/MeasurementConstraints.lean`
+(`no_exact_collapse` — why storage is forced); `RecordLayer/SwapWitness.lean` (the rank-one
 precedent); `Mathlib/LinearAlgebra/Projectivization/MeasureSpace.lean`
 (`measurable_iff_measurable_comp_mk'`); `specs/BACKLOG.md`.
 -/

@@ -41,17 +41,17 @@ recorded in `specs/BACKLOG.md`.
 
 *Corrected 2026-08-04 (codebase audit).* The sentence "nothing in this module claims progress" stood long after the
 construction landed. **`BlockLudersObligation` — defined right here — is inhabited** by
-`joinWitness_blockLuders` (`SigmaLayer/JoinLuders.lean`), packaged as
-`degenerateMeasurementClosure` (`SigmaLayer/JoinClosure.lean`). The anticipated wall (an
+`joinWitness_blockLuders` (`RecordLayer/JoinLuders.lean`), packaged as
+`degenerateMeasurementClosure` (`RecordLayer/JoinClosure.lean`). The anticipated wall (an
 FS *measure decomposition* under the join) was **dissolved rather than crossed**: the pair
 arena simply *is* the projective join `ℙ(ℂ^{N+N})`, the update is a permutation unitary on
 it, and Liouville preservation is FS unitary invariance — no disintegration needed.
 
 ## References
 
-`SigmaLayer/SwapLuders.lean` (`swap_luders_marginal` — whose *preparation-independence* is exactly
+`RecordLayer/SwapLuders.lean` (`swap_luders_marginal` — whose *preparation-independence* is exactly
 what this module turns against the fixed-calibration architecture);
-`SigmaLayer/OutcomeField.lean` (`blockField` — the kinematic form of the degenerate rates this
+`RecordLayer/OutcomeField.lean` (`blockField` — the kinematic form of the degenerate rates this
 module's `degenerate_selector_born` makes dynamical); `CONVENTIONS.md` §8.3 (the `_statement`
 discipline); `specs/BACKLOG.md` (the ★★ row's open item (i)).
 -/
@@ -206,7 +206,7 @@ post-outcome-`i` marginal is the epistemic state of the **normalised block proje
 ★ The right-hand side depends on `ψ` — that is the entire content, and precisely what a fixed
 calibration cannot produce. A fixed *ray-level* calibration cannot produce it
 (`swap_not_blockLuders`, below) — but the phase-carrying **join** witness does:
-`joinWitness_blockLuders` (`SigmaLayer/JoinLuders.lean`) inhabits this for **every** block
+`joinWitness_blockLuders` (`RecordLayer/JoinLuders.lean`) inhabits this for **every** block
 structure, including blocks of dimension ≥ 2. (*Corrected 2026-08-04 (codebase audit).* — this line read "nothing in the
 corpus inhabits this", which the corpus itself had already contradicted.) -/
 def BlockLudersObligation (b : Fin N → Fin K)

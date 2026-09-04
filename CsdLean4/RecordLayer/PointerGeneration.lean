@@ -69,7 +69,7 @@ stated as a theorem rather than left implicit.
   is the recorded research row in [`BACKLOG.md`](../../specs/BACKLOG.md).
 * *Same review, same date:* the weight and ramp ingredients (`clampDiv`, `min`/`max`, the
   trapezoid) *were* Lipschitz and proved `Continuous`, not `C¹` at their joins — and the
-  **weights are now `C^∞`** (substituted 2026-08-04, `SigmaLayer/SmoothProfile.lean`;
+  **weights are now `C^∞`** (substituted 2026-08-04, `RecordLayer/SmoothProfile.lean`;
   `contDiff_pointerWeights_lift`), which the joint-arena Poisson route required, since
   `{wᵢ,wⱼ}` is undefined on non-differentiable weights. The *time ramp* is deliberately
   still the trapezoid `pointerRamp`: it is not a phase-space function, so it plays no part
@@ -80,7 +80,7 @@ stated as a theorem rather than left implicit.
   smooth) *landed same day*: `PointerSmoothProfile.lean` — identical plateau interface,
   `C^∞` weight lift, Schrödinger at every time.
 * ~~**The Lüders composition is a recorded extension, not delivered here**~~ **Delivered
-  2026-08-05** (`SigmaLayer/PointerLuders.lean` + `PointerLudersMarginal.lean`, BACKLOG
+  2026-08-05** (`RecordLayer/PointerLuders.lean` + `PointerLudersMarginal.lean`, BACKLOG
   B3b): the smooth record stroke composed with record-triggered relocation on one arena,
   with `pointer_luders_marginal` the conditioned post-measurement marginal. The
   no-collapse theorem below is untouched — the update is a *second* stroke. The ε-Born
@@ -90,7 +90,7 @@ stated as a theorem rather than left implicit.
 
 `specs/pointer-witness-plan.md` (brick 5, closing the ladder); `specs/BACKLOG.md`;
 `specs/reconstruction-status.md` §2a (A2); `specs/future-work.md`. Reused corpus API:
-`couplingUAt`/`pointerRamp` (`SigmaLayer/PointerProtocol.lean`), `couplingH_isHermitian`
+`couplingUAt`/`pointerRamp` (`RecordLayer/PointerProtocol.lean`), `couplingH_isHermitian`
 (`PointerCoupling.lean`), `pointerEvolve_fst` (`PointerWeights.lean`),
 `hasDerivAt_exp_smul_const` (Mathlib), `shear_base_marginal_unchanged` (the piecewise
 counterpart).

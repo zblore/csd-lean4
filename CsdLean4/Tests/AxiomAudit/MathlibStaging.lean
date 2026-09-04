@@ -117,7 +117,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- READING FOR A5: a Hamiltonian eps-close in operator norm to a sector-projectable one generates
 -- dynamics that sector dynamics SHADOWS to within eps*T over [-T, T] -- what makes a Hamiltonian
 -- QUANTUM-EFFECTIVE. The predicate + exact-case-iff + shadowing packaging is the next step
--- (SigmaLayer/ApproxProjectability.lean, not yet written).
+-- (RecordLayer/ApproxProjectability.lean, not yet written).
 /-- info: 'Matrix.l2_opNorm_exp_smul_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.l2_opNorm_exp_smul_skew
@@ -2508,7 +2508,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Matrix.l2_opNorm_diagonal_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.l2_opNorm_diagonal_le
 
--- MixedLuders (2026-08-03, SigmaLayer/MixedLuders.lean; the outcome-conditioned mixed update,
+-- MixedLuders (2026-08-03, RecordLayer/MixedLuders.lean; the outcome-conditioned mixed update,
 -- MixedSwap's recorded extension + the fourth review's row). Spine: mixedSwapPrep FACTORS
 -- (mixedSwapPrep_eq_prod — the mixture lives on system-and-register, bank common), so the pure
 -- swap_luders_born (stated for arbitrary probability μ12) applies verbatim; positivity is a
@@ -2527,7 +2527,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 -- HamiltonianVectorField + PointerHamiltonianField (2026-08-06,
 -- Mathlib/Analysis/InnerProductSpace/HamiltonianVectorField.lean +
--- SigmaLayer/PointerHamiltonianField.lean; BACKLOG A4's LINEAR FRAGMENT -- the manifold
+-- RecordLayer/PointerHamiltonianField.lean; BACKLOG A4's LINEAR FRAGMENT -- the manifold
 -- form stays the section-2a wall, now NARROWED: upstream extDeriv exists on normed
 -- spaces, manifold forms are upstream's own TODO).
 -- hamiltonianVectorFieldOf w = -(J w) -- the omega-dual of a gradient representative;

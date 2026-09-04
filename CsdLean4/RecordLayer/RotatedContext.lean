@@ -34,11 +34,11 @@ The recorded unitary-covariance extension asks for the full equivariance
 module builds the *object* that extension quantifies over — the rotated context — and proves its
 `ContextField` obligations (measurability via `Projectivization.mapOfInjective_continuous`, the
 simplex constraints via transport along the isometry). *(Addendum 2026-08-02: the equivariance
-law itself has since landed — `SigmaLayer/RotatedSwap.lean`, `measurement_covariance`.)*
+law itself has since landed — `RecordLayer/RotatedSwap.lean`, `measurement_covariance`.)*
 
 ## References
 
-`SigmaLayer/GlobalBasin.lean` (`ContextField`, `momentContext`, `globalBasin_prob`);
+`RecordLayer/GlobalBasin.lean` (`ContextField`, `momentContext`, `globalBasin_prob`);
 `Mathlib/LinearAlgebra/Projectivization/Topology.lean` (`mapOfInjective_continuous` — the staged
 continuity lemma); `LF4/MomentMap.lean` (`momentMap_mk_eq_inner_sq`, `measurable_momentMap`);
 `Empirical/CSD/SequentialMeasurement.lean` (the consumer); `specs/BACKLOG.md` (unitary

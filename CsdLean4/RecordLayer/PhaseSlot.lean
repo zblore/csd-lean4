@@ -57,17 +57,17 @@ the recorded remaining work (`specs/BACKLOG.md`, effort M). Nothing here claims 
 
 *Corrected 2026-08-04 (codebase audit).* **Both debts were paid the same day (2026-08-02), and (b) did not need the Gaussian
 route**: the phase-enriched pair arena *is* the projective join, so Liouville preservation is
-FS unitary invariance (`joinSwap_measurePreserving`, `SigmaLayer/JoinArena.lean`), and the
-protocol plumbing (a) is `SigmaLayer/JoinProtocol.lean`. The paragraph above is kept as the
+FS unitary invariance (`joinSwap_measurePreserving`, `RecordLayer/JoinArena.lean`), and the
+protocol plumbing (a) is `RecordLayer/JoinProtocol.lean`. The paragraph above is kept as the
 construction record. The
 obligation is discharged at the level `BlockLudersObligation` actually demands — the
 post-state as a measure — for the canonical phase-orbit preparations and fixed calibration.
 
 ## References
 
-`SigmaLayer/BlockCollapse.lean` (`componentSwap`, the sharpened wall, brick 1);
-`SigmaLayer/DegenerateLuders.lean` (`swap_not_blockLuders` — the boundary this evades,
-`BlockLudersObligation`); `SigmaLayer/MeasurementConstraints.lean` (`no_exact_collapse`);
+`RecordLayer/BlockCollapse.lean` (`componentSwap`, the sharpened wall, brick 1);
+`RecordLayer/DegenerateLuders.lean` (`swap_not_blockLuders` — the boundary this evades,
+`BlockLudersObligation`); `RecordLayer/MeasurementConstraints.lean` (`no_exact_collapse`);
 `Mathlib/LinearAlgebra/Projectivization/MeasureSpace.lean` (`measurable_mk'`);
 `Mathlib/Analysis/SpecialFunctions/Complex/Circle.lean` (`AddCircle.toCircle`);
 `specs/BACKLOG.md`.

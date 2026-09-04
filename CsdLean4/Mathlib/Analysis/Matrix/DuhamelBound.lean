@@ -24,7 +24,7 @@ exponential factors being **unitary** — and the mean-value inequality
 
 This is the quantitative engine of A5 (`(ε,T)`-projectability): a Hamiltonian `ε`-close in operator
 norm to a sector-projectable one generates dynamics that the sector dynamics **shadows** to within
-`ε·T` over the time window `[−T, T]`. Consumed by `SigmaLayer/ApproxProjectability.lean`.
+`ε·T` over the time window `[−T, T]`. Consumed by `RecordLayer/ApproxProjectability.lean`.
 
 ## Provenance
 

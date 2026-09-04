@@ -41,12 +41,12 @@ is what this brick builds.
 * `pointerLudersStroke` — the two-stroke composite (record, then relocate), defined.
 
 ~~⚠️ Deliberately **not** claimed here: measure preservation of `pointerRelocate`
-*itself*.~~ **Discharged 2026-08-05** (`SigmaLayer/PointerLudersMarginal.lean`,
+*itself*.~~ **Discharged 2026-08-05** (`RecordLayer/PointerLudersMarginal.lean`,
 `pointerRelocate_measurePreserving`): exactly the predicted partition argument — the
 `swapG` route with record cylinders in place of register arcs.
 
 ~~⚠️ **Honest scope — this is brick 1 of B3b, not B3b.**~~ **Brick 2 landed 2026-08-05**
-(`SigmaLayer/PointerLudersMarginal.lean`): the conditioned post-measurement system marginal
+(`RecordLayer/PointerLudersMarginal.lean`): the conditioned post-measurement system marginal
 is now a theorem (`pointer_luders_marginal`), so the smooth horn claims a Lüders update —
 records (ε-Born) *and* collapse-as-relocation on one arena. **B3b is closed.** Nothing in
 brick 2 weakens `pointerEvolve_base_marginal_unchanged`: the relocation is a *second*
@@ -58,13 +58,13 @@ rather than aspirational.
 The conditioned post-measurement system marginal (`pointer_luders_marginal`, with the CSD
 forms `pointer_luders_born`/`pointer_luders_born_prep`) and the piecewise invariance
 (`pointerRelocate_measurePreserving`, plus the full-composite
-`pointerLudersStroke_measurePreserving`). See `SigmaLayer/PointerLudersMarginal.lean`.
+`pointerLudersStroke_measurePreserving`). See `RecordLayer/PointerLudersMarginal.lean`.
 
 ## References
 
-`specs/BACKLOG.md` B3b; `SigmaLayer/PointerBorn.lean` (the smooth stroke and its arena);
-`SigmaLayer/SwapWitness.lean` (`bankSwap`, `measurePreserving_bankSwap` — the torus-
-triggered original this mirrors); `SigmaLayer/PointerGeneration.lean`
+`specs/BACKLOG.md` B3b; `RecordLayer/PointerBorn.lean` (the smooth stroke and its arena);
+`RecordLayer/SwapWitness.lean` (`bankSwap`, `measurePreserving_bankSwap` — the torus-
+triggered original this mirrors); `RecordLayer/PointerGeneration.lean`
 (`pointerEvolve_base_marginal_unchanged`, the theorem that makes this module necessary).
 -/
 

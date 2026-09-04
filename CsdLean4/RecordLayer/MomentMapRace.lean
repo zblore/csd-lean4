@@ -58,7 +58,7 @@ pointer whose basins carry the (moment-map) rates. From it the Born outcome dist
 (`DeIsolationInteraction.basin_momentMap`). *Given the basins*, no extra stochastic postulate is
 needed: the de-isolation flow is the deterministic microstate→basin map (which is what a measurement
 *context* is), and the probabilistic content is the plain **law of large numbers over the unknown
-initial microstate** (`SigmaLayer/Measurement.lean`, `bornMeasurement_frequency`) — randomness is
+initial microstate** (`RecordLayer/Measurement.lean`, `bornMeasurement_frequency`) — randomness is
 ignorance of the initial condition, the standard Papers A/D typicality story. This file grounds the
 rates in the Kähler moment map; the statistics are LLN. Foundational-triple, no `sorry`.
 
@@ -78,8 +78,8 @@ formalised Hamiltonian generates the basins" remains exactly as unclaimed as thi
 
 ## References
 `specs/record-layer-plan.md` §3c (the first-passage race; step 2b′, feature 2); `LF4/MomentMap.lean`
-(`momentMap`, `momentMap_mk`, `momentMap_mk_eq_inner_sq`); `SigmaLayer/DeIsolationFlow.lean`
-(`fibreTypicality`, `map_pointer_apply`); `SigmaLayer/BornFibrePartition.lean` (`bornRate`, `cdfCell`);
+(`momentMap`, `momentMap_mk`, `momentMap_mk_eq_inner_sq`); `RecordLayer/DeIsolationFlow.lean`
+(`fibreTypicality`, `map_pointer_apply`); `RecordLayer/BornFibrePartition.lean` (`bornRate`, `cdfCell`);
 `SigmaLayer/FiniteQMClosure.lean` (`born_frequency`, whose `‖⟨eᵢ,ψ⟩‖²` target this matches).
 -/
 

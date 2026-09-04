@@ -34,7 +34,7 @@ Foundational-triple, no `sorry`.
 ## References
 `CV/OscillatorBorn.lean` (the single mode as a record-layer measurement); `CV/OscillatorSpectrum.lean`
 (`oscEnergy`, `oscEnergy_cutoff_independent`); `CV/Position.lean` (the spatial-lattice seed);
-`SigmaLayer/Measurement.lean` (the record layer).
+`RecordLayer/Measurement.lean` (the record layer).
 -/
 
 @[expose] public section

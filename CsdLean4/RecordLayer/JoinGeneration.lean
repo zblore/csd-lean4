@@ -70,10 +70,10 @@ is now established is that the *relocation* is not the obstacle.
 
 ## References
 
-`SigmaLayer/JoinArena.lean` (`joinMat`, `joinU`, `joinSwap`,
-`joinSwap_measurePreserving`); `SigmaLayer/JoinLuders.lean`
-(`joinWitness_blockLuders`); `SigmaLayer/RelocationObstruction.lean` (the two
-horns this escapes); `SigmaLayer/PointerGeneration.lean`
+`RecordLayer/JoinArena.lean` (`joinMat`, `joinU`, `joinSwap`,
+`joinSwap_measurePreserving`); `RecordLayer/JoinLuders.lean`
+(`joinWitness_blockLuders`); `RecordLayer/RelocationObstruction.lean` (the two
+horns this escapes); `RecordLayer/PointerGeneration.lean`
 (`rampedU_schrodinger`, the record-stroke analogue); `specs/BACKLOG.md`.
 -/
 

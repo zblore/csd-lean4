@@ -83,7 +83,7 @@ this capstone a `Prop`.
 
 `specs/BACKLOG.md` (the capstone row — this discharges it); second external review
 2026-08-02 (step 4); `specs/reconstruction-status.md` §2a. Constituents:
-`SigmaLayer/UnifiedArena.lean`, `RotatedSwap.lean`, `JoinLuders.lean`, `PointerBorn.lean`.
+`RecordLayer/UnifiedArena.lean`, `RotatedSwap.lean`, `JoinLuders.lean`, `PointerBorn.lean`.
 -/
 
 @[expose] public section

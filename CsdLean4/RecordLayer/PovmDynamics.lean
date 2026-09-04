@@ -31,7 +31,7 @@ sectors, no new arena:
   `SwapClosure.lean` ("`sector_born` is the dynamical Born, **not** the kinematic selector
   Born"), and `join_sector_born` (`JoinClosure.lean`) shows what the protocol-level form
   costs (`preimage_sector_ae` + `volume_goodTheta`). ~~Lifting this to the sector form is a
-  recorded extension~~ — **delivered 2026-08-04**: `SigmaLayer/PovmSectorBorn.lean`,
+  recorded extension~~ — **delivered 2026-08-04**: `RecordLayer/PovmSectorBorn.lean`,
   `povm_sector_born`. The selector-level statement below remains as the kinematic
   ingredient it always was.
 - ★ `toComposite_blockProj_dilate` — the record-layer block projection of the dilated
@@ -55,7 +55,7 @@ that *this* dilation's instrument is dynamically realised. (iii) The dilated pre
 system to a ready ancilla (the standard factorisation `V = U(· ⊗ |0⟩)`); realising `V`
 itself as a unitary-plus-ancilla stroke inside the record dynamics is a recorded
 extension, not claimed here. (iv) Mixed preparations compose exactly as in
-`SigmaLayer/MixedSwap.lean` (two-stage sampling) and are not restated on the dilated
+`RecordLayer/MixedSwap.lean` (two-stage sampling) and are not restated on the dilated
 space.
 
 ## References
@@ -64,11 +64,11 @@ space.
 `specs/future-work.md`; `LF2/POVM.lean` (`POVM`, `POVM.weight`);
 `LF4/POVMDilation.lean` (`NaimarkDilation`, `LF4.blockProj`, `born_transfer`),
 `LF4/POVMNaimark.lean` (`canonicalNaimark`);
-`SigmaLayer/DegenerateLuders.lean` (`blockIndex`, `degenerate_selector_born`,
-`BlockLudersObligation`), `SigmaLayer/JoinLuders.lean` (`joinPostMarg`,
-`joinWitness_blockLuders`), `SigmaLayer/LocalBlockBridge.lean` (`localBlock`,
+`RecordLayer/DegenerateLuders.lean` (`blockIndex`, `degenerate_selector_born`,
+`BlockLudersObligation`), `RecordLayer/JoinLuders.lean` (`joinPostMarg`,
+`joinWitness_blockLuders`), `RecordLayer/LocalBlockBridge.lean` (`localBlock`,
 `toComposite`, `toComposite_blockProj`),
-`SigmaLayer/MeasurementCapstone.lean` (the projective layer this rides on).
+`RecordLayer/MeasurementCapstone.lean` (the projective layer this rides on).
 -/
 
 @[expose] public section

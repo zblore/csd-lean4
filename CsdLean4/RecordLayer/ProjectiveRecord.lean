@@ -16,7 +16,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 
 **Category:** 7-SigmaLayer (the record layer — realised on the corpus's real model).
 
-The record-layer framing of `SigmaLayer/FibreRecord.lean` was built on an abstract fibre `Σ = ℝ`. This
+The record-layer framing of `RecordLayer/FibreRecord.lean` was built on an abstract fibre `Σ = ℝ`. This
 file **migrates it onto the corpus's actual measurement model**: the projective space
 `Σ = CPN (M+1) = ℂℙ^M`, with the corpus's own outcome regions `bornRegion` (`LF4/BornRegionDisjoint`),
 its per-microstate outcome map `bornOutcome`, and the Fubini–Study measure `fubiniStudyMeasure` — the
@@ -52,7 +52,7 @@ statistics are LLN over the unknown microstate.
 `SigmaLayer/RecordedFact.lean` (`RecordSemantics`, `compatibleSet`, P5/P6); `LF4/BornRegionDisjoint.lean`
 (`bornRegion`, `bornRegion_pairwiseDisjoint`, `bornOutcome`, `bornOutcome_eq_some_iff`);
 `LF4/BornRegionUncond.lean` (`bornRegion_measurable_uncond`, `bornRegion_fs_measure_uncond`);
-`LF1/GeneralFrequency.lean` (`freq_tendsto_of_iid`); `SigmaLayer/FibreRecord.lean` (the abstract-fibre
+`LF1/GeneralFrequency.lean` (`freq_tendsto_of_iid`); `RecordLayer/FibreRecord.lean` (the abstract-fibre
 version this migrates); `SigmaLayer/FiniteQMClosure.lean` (`born_frequency`, whose conclusion this matches).
 -/
 

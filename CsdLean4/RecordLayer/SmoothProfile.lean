@@ -42,8 +42,8 @@ decision, recorded in `BACKLOG.md`.
 
 ## References
 
-`specs/BACKLOG.md` (B1, and A2 which depends on it); `SigmaLayer/PointerWeights.lean` (the
-consumer); `SigmaLayer/PointerSmoothProfile.lean` (the time ramp and the global-time
+`specs/BACKLOG.md` (B1, and A2 which depends on it); `RecordLayer/PointerWeights.lean` (the
+consumer); `RecordLayer/PointerSmoothProfile.lean` (the time ramp and the global-time
 Schrödinger ODE, which stay there).
 -/
 

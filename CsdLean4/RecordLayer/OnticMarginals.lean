@@ -46,7 +46,7 @@ of A6's mathematical content:
 
 ## References
 
-`SigmaLayer/OnticComposite.lean` (step 1); `Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`
+`RecordLayer/OnticComposite.lean` (step 1); `Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`
 (`traceRight`, `traceLeft`); `LF4/ProjectedDynamics.lean` (`schrodingerUnitary`);
 `LF3/Projectors/TensorModel.lean`, `SigmaLayer/TensorSector.lean` (the operational no-signalling
 this is the ontic form of); `specs/reconstruction-status.md` §2 (the A6 row).

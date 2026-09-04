@@ -53,9 +53,9 @@ discharge is claimed here.
 
 ## References
 
-`SigmaLayer/TorusFibre.lean` (the cells and the parity argument);
-`SigmaLayer/CircleRecord.lean` (the compact-fibre record layer this
-ports); `SigmaLayer/Measurement.lean` (P5/P6, `bornContext`);
+`RecordLayer/TorusFibre.lean` (the cells and the parity argument);
+`RecordLayer/CircleRecord.lean` (the compact-fibre record layer this
+ports); `RecordLayer/Measurement.lean` (P5/P6, `bornContext`);
 `specs/BACKLOG.md` (the A1 sector row); `MATHLIB-GAPS.md` (KG-1).
 -/
 

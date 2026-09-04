@@ -31,13 +31,13 @@ collapse is a pushforward theorem, not a modelling assumption.
 The QM module's canonical sifted round is *Alice Z, Bob Z, Eve X*. Here we take the dual round
 *Alice X (`|+⟩`), Bob X, Eve Z* — so that Eve's measurement is in the **computational** basis,
 the calibrated-swap witness's native scope, and Bob's follow-up is the **rotated** (X-basis)
-context `basisContext xBasisON` from `SigmaLayer/RotatedContext.lean`. The two rounds have the
+context `basisContext xBasisON` from `RecordLayer/RotatedContext.lean`. The two rounds have the
 same per-basis error values by the Z/X symmetry of the four states;
 `bb84_dynamical_matches_marginal` records that the dynamically derived numbers coincide with
 the QM module's classical-marginal ones.
 
 *Addendum 2026-08-02 — the dual-round caveat is retired:* with the unitary-covariance law
-(`SigmaLayer/RotatedSwap.lean`, `measurement_covariance`), the **primal** round is now directly
+(`RecordLayer/RotatedSwap.lean`, `measurement_covariance`), the **primal** round is now directly
 formalised too: `bb84_primal_wrong_basis` — Eve X-measures the Z-carrier `|a⟩` (rotated
 selector, rotated bank), and whatever she records, Bob's Z-basin has probability exactly `½`.
 Both rounds now run natively; neither needs the other's symmetry.
@@ -76,9 +76,9 @@ intercept-resend is claimed, matching the QM module's own boundary.
 `Empirical/QM/Crypto/B92.lean` (`ketPlus_inner_self`, `ketPlus_unit`, `ketMinus_inner_ketPlus`,
 `half` — reused, not re-proved);
 `Empirical/CSD/SequentialMeasurement.lean` (`csd_sequential_born`, `csd_repeatability_*`,
-`readyPrep`, `prep_outcome_pos`); `SigmaLayer/RotatedContext.lean` (`basisContext`,
-`basisContext_rate_mk`); `SigmaLayer/SwapLuders.lean` (`swap_luders_born` — the engine);
-`SigmaLayer/DegenerateLuders.lean` (`vertexPoint`, `momentMap_vertex`);
+`readyPrep`, `prep_outcome_pos`); `RecordLayer/RotatedContext.lean` (`basisContext`,
+`basisContext_rate_mk`); `RecordLayer/SwapLuders.lean` (`swap_luders_born` — the engine);
+`RecordLayer/DegenerateLuders.lean` (`vertexPoint`, `momentMap_vertex`);
 Bennett–Brassard 1984; `specs/BACKLOG.md`; `specs/future-work.md`.
 -/
 

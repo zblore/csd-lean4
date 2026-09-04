@@ -54,9 +54,9 @@ the ray-pair `SwapArena`* — the join arena is where degenerate measurements li
 
 ## References
 
-`SigmaLayer/BlockCollapse.lean` (`componentSwap`, brick 1);
-`SigmaLayer/PhaseSlot.lean` (brick 2 — the measure form);
-`SigmaLayer/DegenerateLuders.lean` (`swap_not_blockLuders`, `blockProj`);
+`RecordLayer/BlockCollapse.lean` (`componentSwap`, brick 1);
+`RecordLayer/PhaseSlot.lean` (brick 2 — the measure form);
+`RecordLayer/DegenerateLuders.lean` (`swap_not_blockLuders`, `blockProj`);
 `Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`
 (`fubiniStudyMeasure_smul_invariant` — the Liouville driver); `specs/BACKLOG.md`.
 -/

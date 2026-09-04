@@ -46,7 +46,7 @@ scope notes via `SequentialMeasurement.lean`. The unambiguous-discrimination *op
 `Empirical/QM/Crypto/B92.lean` (`b92_unambiguous_zero`, `b92_conclusive_rate_one`,
 `ketMinus_inner_ketPlus`, `ketPlus_unit`); `Empirical/CSD/Crypto/BB84Sequential.lean` (the
 engine: `xBasisON`, `xContext_rate_vertex`, `bb84_wrong_basis_error`);
-`SigmaLayer/RotatedContext.lean` (`basisContext_rate_mk`); Bennett 1992; `specs/BACKLOG.md`.
+`RecordLayer/RotatedContext.lean` (`basisContext_rate_mk`); Bennett 1992; `specs/BACKLOG.md`.
 -/
 
 @[expose] public section

@@ -41,8 +41,8 @@ those. Foundational-triple, no `sorry`.
 
 ## References
 `specs/record-layer-plan.md` (record layer, MD-1; step 3 = the record); `SigmaLayer/RecordedFact.lean`
-(`RecordSignature`, `RecordSemantics`, `compatibleSet`, postulates P5/P6); `SigmaLayer/DeIsolationFlow.lean`
-(`fibreTypicality`, `fibreTypicality_bornCell`); `SigmaLayer/BornFibrePartition.lean`
+(`RecordSignature`, `RecordSemantics`, `compatibleSet`, postulates P5/P6); `RecordLayer/DeIsolationFlow.lean`
+(`fibreTypicality`, `fibreTypicality_bornCell`); `RecordLayer/BornFibrePartition.lean`
 (`cdfCell`, `cdfCell_pairwiseDisjoint`, `fibreOutcome`, `bornRate`); `LF5/PointerOutcome.lean`
 (`vnPointerOutcome`, the prep-indexed readout this replaces).
 -/

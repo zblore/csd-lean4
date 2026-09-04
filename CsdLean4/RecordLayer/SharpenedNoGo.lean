@@ -48,7 +48,7 @@ Two further gaps, stated rather than papered over:
   hypotheses now split by kind: everything about the **dynamics** is discharged, and what
   remains is one assumption about the **record geometry**.
 * ~~The one remaining hypothesis is `hreg`~~ **Discharged 2026-08-05**
-  (`SigmaLayer/NoRecordGeometry.lean`): the no-record set IS contained in the closure of
+  (`RecordLayer/NoRecordGeometry.lean`): the no-record set IS contained in the closure of
   its interior — the perturbation (feed weight into the ready component, fixing every
   record numerator while the norm strictly grows) is now constructed, and
   `posMeasure_noRecord_pointer` instantiates this theorem for the pointer's record regions
@@ -56,10 +56,10 @@ Two further gaps, stated rather than papered over:
 
 ## References
 
-`specs/BACKLOG.md` B5; `SigmaLayer/NullSeamWitness.lean` (the third horn, and the scope
-note corrected alongside this); `SigmaLayer/MeasurementConstraints.lean`
+`specs/BACKLOG.md` B5; `RecordLayer/NullSeamWitness.lean` (the third horn, and the scope
+note corrected alongside this); `RecordLayer/MeasurementConstraints.lean`
 (`no_everywhere_correlation`, whose connectedness argument the forcing step would reuse);
-`SigmaLayer/NoRecordGeometry.lean` (the geometric hypothesis `hreg`, discharged
+`RecordLayer/NoRecordGeometry.lean` (the geometric hypothesis `hreg`, discharged
 2026-08-05); `docs/TOUR.md` §"Which horn is the right one?".
 -/
 
@@ -143,7 +143,7 @@ The hypotheses now split cleanly by kind: everything about the *dynamics* is dis
 (continuity, openness, correlation), and the single remaining assumption `hreg` is a
 property of the **record geometry** alone. For the corpus's moment regions
 `{m_{j+1} > 1/2}` regularity is now a theorem — `recordRegion_pair_compl_regular`
-(`SigmaLayer/NoRecordGeometry.lean`, 2026-08-05) constructs the perturbation toward the
+(`RecordLayer/NoRecordGeometry.lean`, 2026-08-05) constructs the perturbation toward the
 ready vertex, and `posMeasure_noRecord_pointer` instantiates this statement with `hreg`
 discharged.
 

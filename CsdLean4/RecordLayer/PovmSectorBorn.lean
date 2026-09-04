@@ -57,10 +57,10 @@ statistics cannot depend on it.
 
 ## References
 
-`specs/BACKLOG.md` B4; `SigmaLayer/PovmDynamics.lean` (`povm_selector_born`,
+`specs/BACKLOG.md` B4; `RecordLayer/PovmDynamics.lean` (`povm_selector_born`,
 `sum_block_normSq_dilate`, and the scope note this discharges);
-`SigmaLayer/JoinClosure.lean` (`join_sector_born`, the protocol-sector template);
-`SigmaLayer/SwapClosure.lean` (the selector-vs-sector distinction, stated there first).
+`RecordLayer/JoinClosure.lean` (`join_sector_born`, the protocol-sector template);
+`RecordLayer/SwapClosure.lean` (the selector-vs-sector distinction, stated there first).
 -/
 
 @[expose] public section

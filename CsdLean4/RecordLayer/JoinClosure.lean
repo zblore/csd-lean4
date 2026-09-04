@@ -44,12 +44,12 @@ consumes any probability measure and event and applies verbatim. The rank-one sp
 ## References
 
 `specs/BACKLOG.md` (the degenerate one-protocol package row — this discharges it; fourth
-external review 2026-08-03); `SigmaLayer/DegenerateLuders.lean`
-(`degenerate_selector_born`, `BlockLudersObligation`), `SigmaLayer/JoinProtocol.lean`
+external review 2026-08-03); `RecordLayer/DegenerateLuders.lean`
+(`degenerate_selector_born`, `BlockLudersObligation`), `RecordLayer/JoinProtocol.lean`
 (`joinProtocol`, `join_correlates`, `join_pointerInvariant`,
-`joinEvolve_measurePreserving`), `SigmaLayer/JoinLuders.lean` (`joinPrep`, `goodTheta`,
-`preimage_sector_ae`, `joinWitness_blockLuders`), `SigmaLayer/SwapClosure.lean`
-(`SwapMeasurementClosure`, the rank-one precedent), `SigmaLayer/MeasurementCapstone.lean`
+`joinEvolve_measurePreserving`), `RecordLayer/JoinLuders.lean` (`joinPrep`, `goodTheta`,
+`preimage_sector_ae`, `joinWitness_blockLuders`), `RecordLayer/SwapClosure.lean`
+(`SwapMeasurementClosure`, the rank-one precedent), `RecordLayer/MeasurementCapstone.lean`
 (whose `degenerate` field this upgrades).
 -/
 

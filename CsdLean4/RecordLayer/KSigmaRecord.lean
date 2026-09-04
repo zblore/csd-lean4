@@ -13,7 +13,7 @@ public import CsdLean4.SigmaLayer.MeasureBridge
 
 **Category:** 7-SigmaLayer (the record layer — on the product model `KSigma`).
 
-`SigmaLayer/ProjectiveRecord.lean` put the record layer on the projective base `CPN (M+1)`. The
+`RecordLayer/ProjectiveRecord.lean` put the record layer on the projective base `CPN (M+1)`. The
 `FiniteQMClosure` capstone, however, lives on the **product model** `Σ = KSigma (M+1) = CPN (M+1) × T²`
 (the torus factor carries the dynamics phase). This file lifts the record layer to that actual space
 and — crucially — shows the closure's own Born-frequency region *is* the record-layer event.
@@ -36,7 +36,7 @@ regions, `vnPointerOutcome_preimage_some`); rewriting that pinned statement carr
 deliberately not done. Foundational-triple, no `sorry`.
 
 ## References
-`SigmaLayer/ProjectiveRecord.lean` (the base record layer); `SigmaLayer/MeasureBridge.lean`
+`RecordLayer/ProjectiveRecord.lean` (the base record layer); `SigmaLayer/MeasureBridge.lean`
 (`productSector`, `π = Prod.fst`); `SigmaLayer/FiniteQMClosure.lean` (`born_frequency`, whose region this
 is); `LF4/KahlerInstance.lean` (`KSigma`); `LF5/PointerOutcome.lean` (`vnPointerOutcome`, the coarse readout).
 -/

@@ -42,7 +42,7 @@ fall out, now as consequences of the dynamics rather than as separate posits:
   preparation** `readyPrep p = epistemicMeasure p ⊗ readyMeasure N`, `prep_outcome_pos` proves
   `hpos` outright whenever the Born weight `momentMap p i` is nonzero — the preparation itself
   licenses the conditioning. *(Moved 2026-08-02, same day:)* `readyPrep` and `prep_outcome_pos`
-  now live in `SigmaLayer/SwapClosure.lean` — they are `SigmaLayer` machinery, born one layer
+  now live in `RecordLayer/SwapClosure.lean` — they are `SigmaLayer` machinery, born one layer
   too high here; re-exported through this module's imports, so consumers are unchanged.
 * These are theorems about the witness dynamics, inheriting the witness's own scope notes
   (calibration is a context-fixed posit; Hamiltonian origin of the propagator is §2a-scoped).
@@ -54,9 +54,9 @@ fall out, now as consequences of the dynamics rather than as separate posits:
 
 ## References
 
-`SigmaLayer/SwapLuders.lean` (`swap_luders_born` — the engine);
-`SigmaLayer/DegenerateLuders.lean` (`momentMap_vertex`);
-`SigmaLayer/RecordPersistence.lean` (`readout_persists_on_interval` — the *pointer-level*
+`RecordLayer/SwapLuders.lean` (`swap_luders_born` — the engine);
+`RecordLayer/DegenerateLuders.lean` (`momentMap_vertex`);
+`RecordLayer/RecordPersistence.lean` (`readout_persists_on_interval` — the *pointer-level*
 repeatability this complements at the *state* level); `EMPIRICAL.md`.
 -/
 

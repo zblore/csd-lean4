@@ -28,14 +28,14 @@ base pinned (Dirac), the fibre uniform — so the ontic support is `{[ψ]} × [0
 outcome is then the product-measure typicality of its fibre event, which is exactly the fibre measure
 (`sharpTypicality_fibredEvent`): `‖ψ i‖²`, the Kähler moment map (`sharpTypicality_fibredEvent_momentMap`).
 
-So this ties `SigmaLayer/FibreRecord.lean` (the fibre) to the projective base: the ψ-dependence sits in
+So this ties `RecordLayer/FibreRecord.lean` (the fibre) to the projective base: the ψ-dependence sits in
 the *base* (the epistemic point / the preparation), the *fibre* carries the context-fixed outcome
 partition, and Born is the ontic typicality of the fibre event over the pinned base — the epistemic
 (base) / ontic (fibre) split made literal. Foundational-triple, no `sorry`.
 
 ## References
-`specs/record-layer-plan.md` (record layer, MD-1; epistemic base / ontic fibre); `SigmaLayer/FibreRecord.lean`
-(the fibre partition + record); `SigmaLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`); Paper C A7
+`specs/record-layer-plan.md` (record layer, MD-1; epistemic base / ontic fibre); `RecordLayer/FibreRecord.lean`
+(the fibre partition + record); `RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`); Paper C A7
 (epistemic `Ωᵢ(M)` ⊂ ℂℙⁿ⁻¹), Paper D (ontic/epistemic split).
 -/
 

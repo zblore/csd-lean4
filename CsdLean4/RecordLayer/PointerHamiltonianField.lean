@@ -50,9 +50,9 @@ what the corpus can honestly say about A4 today.
 
 `specs/BACKLOG.md` A4, A3, A1; `Mathlib/Analysis/InnerProductSpace/`
 `HamiltonianVectorField.lean` (`quadraticEnergy_hamiltonian_duality`, the linear-level
-arrow); `SigmaLayer/PointerCoupling.lean` (`couplingH`, `couplingH_isHermitian`);
-`SigmaLayer/PointerGeneration.lean` (`rampedU_schrodinger` — the same generator's ODE);
-`SigmaLayer/SchrodingerKahlerInvariance.lean` (the invariance half);
+arrow); `RecordLayer/PointerCoupling.lean` (`couplingH`, `couplingH_isHermitian`);
+`RecordLayer/PointerGeneration.lean` (`rampedU_schrodinger` — the same generator's ODE);
+`LF4/SchrodingerKahlerInvariance.lean` (the invariance half);
 `specs/reconstruction-status.md` §2a.
 -/
 

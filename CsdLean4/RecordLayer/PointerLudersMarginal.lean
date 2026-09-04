@@ -78,13 +78,13 @@ ontic memory, with irreversibility priced only at erasure (`collapse_accuracy_bo
 
 ## References
 
-`specs/BACKLOG.md` B3b; `SigmaLayer/PointerLuders.lean` (brick 1 — arena, relocation, slot
-swap); `SigmaLayer/SwapLuders.lean` (`swap_luders_marginal`, `cond_prod_cylinder` — the
+`specs/BACKLOG.md` B3b; `RecordLayer/PointerLuders.lean` (brick 1 — arena, relocation, slot
+swap); `RecordLayer/SwapLuders.lean` (`swap_luders_marginal`, `cond_prod_cylinder` — the
 torus-triggered original whose shape this transports); `Mathlib/MeasureTheory/`
 `PiecewisePreserving.lean` (`measurePreserving_of_partition`, `Measure.map_eval_pi'`);
-`SigmaLayer/PointerBorn.lean` (`pointerPrep`, `pointer_born_lower` — the non-vacuity
-supply); `SigmaLayer/GlobalBasin.lean` (`epistemicMeasure`, `globalBasin_prob`);
-`SigmaLayer/PointerGeneration.lean` (`pointerEvolve_base_marginal_unchanged` — why the
+`RecordLayer/PointerBorn.lean` (`pointerPrep`, `pointer_born_lower` — the non-vacuity
+supply); `RecordLayer/GlobalBasin.lean` (`epistemicMeasure`, `globalBasin_prob`);
+`RecordLayer/PointerGeneration.lean` (`pointerEvolve_base_marginal_unchanged` — why the
 update needed a second stroke at all).
 -/
 

@@ -51,9 +51,9 @@ preservation.
 
 `specs/pointer-witness-plan.md` (bricks 3, 4); `specs/BACKLOG.md` (the ★ L row);
 `specs/future-work.md`. Reused corpus API: `pointerEvolve_pure`/`pointerWeights`
-(`SigmaLayer/PointerWeights.lean`), `loSum_add_le_loSum`/`loSum_add_self_le_one`
-(`SigmaLayer/BornFibrePartition.lean`), `circleFibre_volume_univ`
-(`SigmaLayer/TorusFibre.lean`), `Projectivization.inner_toEuclideanLin_unitary`
+(`RecordLayer/PointerWeights.lean`), `loSum_add_le_loSum`/`loSum_add_self_le_one`
+(`RecordLayer/BornFibrePartition.lean`), `circleFibre_volume_univ`
+(`RecordLayer/TorusFibre.lean`), `Projectivization.inner_toEuclideanLin_unitary`
 (transition-probability staging), `UnitAddCircle.norm_eq` + `AddCircle.volume_closedBall`
 (Mathlib).
 -/

@@ -88,10 +88,10 @@ it there. Two independent routes agreeing is the reason to believe this is the r
 
 ## References
 
-`SigmaLayer/MeasurementProtocol.lean` (`MeasurementProtocol`, `CorrelatesOn`);
-`SigmaLayer/RecordPersistence.lean` (`PointerInvariantOn`);
-`SigmaLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — which predicted the seam);
-`SigmaLayer/CircleFibre.lean` (`rep`); `LF4/KahlerInstance.lean` (`KTorus`).
+`RecordLayer/MeasurementProtocol.lean` (`MeasurementProtocol`, `CorrelatesOn`);
+`RecordLayer/RecordPersistence.lean` (`PointerInvariantOn`);
+`RecordLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — which predicted the seam);
+`RecordLayer/CircleFibre.lean` (`rep`); `LF4/KahlerInstance.lean` (`KTorus`).
 -/
 
 @[expose] public section

@@ -69,7 +69,7 @@ weight is stated here, not formalised.
 region `{m₀ > 1 − δ}`, states near the crossing angle land near the kissing state, and
 because the stroke is a homeomorphism their image is an **open** neighbourhood of it —
 which necessarily meets the interior of the no-record set, giving that set **positive
-measure** (`posMeasure_noRecord_of_isOpenMap`, `SigmaLayer/SharpenedNoGo.lean`). A Dirac
+measure** (`posMeasure_noRecord_of_isOpenMap`, `RecordLayer/SharpenedNoGo.lean`). A Dirac
 calibration escapes precisely because a point has no neighbourhood to spare, which is how
 this witness threads the kissing state exactly. ⚠️ *Corrected 2026-08-04:* this note
 previously said the seam fattens "to a positive-measure set **of order the calibration
@@ -83,7 +83,7 @@ witness, exact records a.e. and exact Born). ~~Whether a fourth combination
 (continuous + positive-width ready + exact-Born-and-a.e.-records) is impossible is a
 candidate *sharpened no-go*, recorded, not claimed.~~ *Updated 2026-08-05:* on the
 pointer's moment-region geometry this is now a **theorem** — `posMeasure_noRecord_pointer`
-(`SigmaLayer/NoRecordGeometry.lean`): continuity + open-map + open preconnected
+(`RecordLayer/NoRecordGeometry.lean`): continuity + open-map + open preconnected
 positive-width ready + two-outcome correlation force a positive-measure no-record set, so
 exact-a.e. records force Dirac calibration. General exhaustiveness over *all* arenas
 remains research, not claimed. Further scope: two cells and a
@@ -97,12 +97,12 @@ mechanical wrapping as brick 4 and is not duplicated); no protocol packaging.
 
 `specs/BACKLOG.md` (the Cantor-horn row — this discharges it; fourth external review
 2026-08-03); `docs/TOUR.md` §"Which horn is the right one?" (updated to the trilemma);
-`SigmaLayer/PointerArena.lean` (`Pointer`, `recordRegion`, `readyState`,
-`momentMap_add_le_one` — the kissing geometry), `SigmaLayer/PointerWeights.lean` (the
+`RecordLayer/PointerArena.lean` (`Pointer`, `recordRegion`, `readyState`,
+`momentMap_add_le_one` — the kissing geometry), `RecordLayer/PointerWeights.lean` (the
 continuity-descent and skew-product idioms this reuses), `SigmaLayer/ShearDiscontinuity.
 lean` (`shearEvolve_not_continuous` — what the first horn pays),
-`SigmaLayer/PointerBorn.lean` (the `ε` the second horn pays),
-`SigmaLayer/Measurement.lean` (`collapse_accuracy_bound` — the price tag on the third).
+`RecordLayer/PointerBorn.lean` (the `ε` the second horn pays),
+`RecordLayer/Measurement.lean` (`collapse_accuracy_bound` — the price tag on the third).
 -/
 
 @[expose] public section

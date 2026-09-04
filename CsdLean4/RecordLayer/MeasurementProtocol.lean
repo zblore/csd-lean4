@@ -68,9 +68,9 @@ only up to a null set; a witness must say what happens on the seam.
 
 ## References
 
-`SigmaLayer/MeasurementConstraints.lean` (the necessary conditions any witness must meet);
-`SigmaLayer/GlobalBasin.lean` (`globalBasin`, `globalBasin_born` — the selector);
-`SigmaLayer/DeIsolationFlow.lean` (the open `H_int(M)` obligation); `specs/BACKLOG.md` (the ★★ row).
+`RecordLayer/MeasurementConstraints.lean` (the necessary conditions any witness must meet);
+`RecordLayer/GlobalBasin.lean` (`globalBasin`, `globalBasin_born` — the selector);
+`RecordLayer/DeIsolationFlow.lean` (the open `H_int(M)` obligation); `specs/BACKLOG.md` (the ★★ row).
 -/
 
 @[expose] public section

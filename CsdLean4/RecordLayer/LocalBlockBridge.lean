@@ -46,9 +46,9 @@ dimension `nA`; nondegenerate `B`-measurements are the `nA = 1` corner, as expec
 
 `specs/BACKLOG.md` (the dynamical no-signalling + eraser row); `specs/future-work.md`;
 `specs/reconstruction-status.md` §2 (A6). Reused corpus API: `localProjB` +
-`reduceA_localLuders_mixture` (`SigmaLayer/LocalLuders.lean`), `blockProj` +
-`BlockLudersObligation` (`SigmaLayer/DegenerateLuders.lean`), `joinWitness_blockLuders`
-(`SigmaLayer/JoinLuders.lean`), `finProdFinEquiv` (Mathlib).
+`reduceA_localLuders_mixture` (`RecordLayer/LocalLuders.lean`), `blockProj` +
+`BlockLudersObligation` (`RecordLayer/DegenerateLuders.lean`), `joinWitness_blockLuders`
+(`RecordLayer/JoinLuders.lean`), `finProdFinEquiv` (Mathlib).
 -/
 
 @[expose] public section

@@ -63,9 +63,9 @@ rates) is untouched: smoothness here is per cell at fixed rates.
 ## References
 
 `specs/BACKLOG.md` (the `C^∞`-ingredients row — this discharges it; fourth external
-review 2026-08-03); `SigmaLayer/PointerWeights.lean` (`clampDiv`, `pointerWeights`, the
-trapezoid interface this mirrors), `SigmaLayer/PointerProtocol.lean` (`couplingUAt`,
-`pointerRamp`), `SigmaLayer/PointerGeneration.lean` (`pointerHeff`,
+review 2026-08-03); `RecordLayer/PointerWeights.lean` (`clampDiv`, `pointerWeights`, the
+trapezoid interface this mirrors), `RecordLayer/PointerProtocol.lean` (`couplingUAt`,
+`pointerRamp`), `RecordLayer/PointerGeneration.lean` (`pointerHeff`,
 `rampedU_schrodinger`, the honest-scope boundary), `Mathlib.Analysis.SpecialFunctions.
 SmoothTransition` (`Real.smoothTransition`).
 -/

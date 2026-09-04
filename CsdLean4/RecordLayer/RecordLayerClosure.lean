@@ -30,7 +30,7 @@ for the Born context of a unit state `ψ`:
   (the record-layer form of the Born rule);
 * `ae_total` — the record events cover the fibre up to a null set (the readout is a.e. total).
 
-## ⚠️ SUPERSEDED 2026-07-31 by `SigmaLayer/GlobalRecordClosure.lean`
+## ⚠️ SUPERSEDED 2026-07-31 by `RecordLayer/GlobalRecordClosure.lean`
 
 This bundle remains **true and is not deprecated**, but it is no longer the record layer's best
 statement. Two defects, both fixed by the successor:
@@ -67,8 +67,8 @@ step 5 lands the successor and its closure-level statement; the full migration o
 onto it, and the flow behind it, stay open (MD-1). Foundational-triple, no `sorry`.
 
 ## References
-`specs/record-layer-plan.md` (record layer, MD-1; step 5); `SigmaLayer/FibreRecord.lean`
-(the `RecordSemantics` instance); `SigmaLayer/DeIsolationFlow.lean` (`fibreTypicality`,
+`specs/record-layer-plan.md` (record layer, MD-1; step 5); `RecordLayer/FibreRecord.lean`
+(the `RecordSemantics` instance); `RecordLayer/DeIsolationFlow.lean` (`fibreTypicality`,
 `fibreTypicality_uncovered`); `SigmaLayer/FiniteQMClosure.lean` (the closure this parallels, and whose
 `vnPointerOutcome` readout this succeeds).
 -/

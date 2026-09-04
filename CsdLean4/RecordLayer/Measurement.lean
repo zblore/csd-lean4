@@ -40,9 +40,9 @@ separate "derive the flow" problem, only the standard typicality+LLN story of Pa
 Foundational-triple, no `sorry`.
 
 ## References
-`specs/record-layer-plan.md` (record layer, MD-1); `SigmaLayer/FibreRecord.lean` (the P5
-`RecordSemantics`, `bornContext`); `SigmaLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`,
-the rates = the Kähler moment map); `SigmaLayer/DeIsolationFlow.lean` (`fibreTypicality`).
+`specs/record-layer-plan.md` (record layer, MD-1); `RecordLayer/FibreRecord.lean` (the P5
+`RecordSemantics`, `bornContext`); `RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`,
+the rates = the Kähler moment map); `RecordLayer/DeIsolationFlow.lean` (`fibreTypicality`).
 -/
 
 @[expose] public section

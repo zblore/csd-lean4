@@ -57,9 +57,9 @@ brick 4b, not this module.
 
 `specs/pointer-witness-plan.md` (brick 4); `specs/BACKLOG.md` (the ★ L row);
 `specs/future-work.md`. Reused corpus API: `MeasurementProtocol` +
-`CorrelatesOn`/`PointerInvariantOn` (`SigmaLayer/MeasurementProtocol.lean`,
-`RecordPersistence.lean`), `pointer_landing`/`shrunkCell` (`SigmaLayer/PointerLanding.lean`),
-`couplingH`/`couplingU` estimates (`SigmaLayer/PointerCoupling.lean`),
+`CorrelatesOn`/`PointerInvariantOn` (`RecordLayer/MeasurementProtocol.lean`,
+`RecordPersistence.lean`), `pointer_landing`/`shrunkCell` (`RecordLayer/PointerLanding.lean`),
+`couplingH`/`couplingU` estimates (`RecordLayer/PointerCoupling.lean`),
 `Matrix.norm_exp_smul_sub_exp_smul_le` + `Matrix.conjTranspose_real_smul_skew`
 (`DuhamelBound.lean` staging), `Matrix.exp_add_of_commute` (Mathlib).
 -/

@@ -45,8 +45,8 @@ system — sequential measurement on a single system is the swap/join witnesses'
 ## References
 
 `specs/BACKLOG.md` B3a; `LF1/GeneralFrequency.lean` (`freq_tendsto_of_iid`, the generic
-strong law used unchanged); `SigmaLayer/PointerBorn.lean` (`pointerPrep`, the sandwich);
-`SigmaLayer/JointFlowTransfer.lean` (A1, which transports the sandwich to joint flows —
+strong law used unchanged); `RecordLayer/PointerBorn.lean` (`pointerPrep`, the sandwich);
+`RecordLayer/JointFlowTransfer.lean` (A1, which transports the sandwich to joint flows —
 and hence transports this too).
 -/
 

@@ -48,7 +48,7 @@ microcausality would overstate it; it is its kinematic core.
 `CV/Dispersion.lean` (Stage 2a, the dispersion relation); `CV/FieldModes.lean` (Stage 1, the mode
 product); `CV/Position.lean` (the spatial lattice, under which mode-disjointness reads as spatial
 disjointness); `CV/ApproxCCR.lean` (`no_exact_finite_ccr`, why the continuum is deferred);
-`SigmaLayer/Measurement.lean` (the record layer that commuting observables let act jointly);
+`RecordLayer/Measurement.lean` (the record layer that commuting observables let act jointly);
 `specs/BACKLOG.md` (the CV-chain row); `specs/future-work.md`.
 Haag, *Local Quantum Physics* (1992); Haag–Kastler (1964).
 -/

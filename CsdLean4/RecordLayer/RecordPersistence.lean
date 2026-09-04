@@ -64,8 +64,8 @@ is what a correct interface looks like.
 
 ## References
 
-`SigmaLayer/MeasurementProtocol.lean` (`MeasurementProtocol`, `outcomeSector`, `CorrelatesOn`);
-`SigmaLayer/MeasurementConstraints.lean`; `SigmaLayer/ConditioningLuders.lean` (the *operational*
+`RecordLayer/MeasurementProtocol.lean` (`MeasurementProtocol`, `outcomeSector`, `CorrelatesOn`);
+`RecordLayer/MeasurementConstraints.lean`; `SigmaLayer/ConditioningLuders.lean` (the *operational*
 Lüders result this does not yet connect to); `specs/BACKLOG.md` (the ★★ row).
 -/
 

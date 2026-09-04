@@ -79,9 +79,9 @@ data — *approximate* conservation buys nothing without a separate collar estim
 ## References
 
 `specs/BACKLOG.md` A1 (this row), A2 (the paper half), B1 (the discharged prerequisite);
-`SigmaLayer/PointerLanding.lean` (`pointer_landing`), `SigmaLayer/PointerBorn.lean`
-(`pointer_born_lower`/`_upper`, `pointerPrep`), `SigmaLayer/PointerGeneration.lean` (the
-fibrewise boundary this answers), `SigmaLayer/PointerWeights.lean`
+`RecordLayer/PointerLanding.lean` (`pointer_landing`), `RecordLayer/PointerBorn.lean`
+(`pointer_born_lower`/`_upper`, `pointerPrep`), `RecordLayer/PointerGeneration.lean` (the
+fibrewise boundary this answers), `RecordLayer/PointerWeights.lean`
 (`contDiff_pointerWeights_lift`).
 -/
 

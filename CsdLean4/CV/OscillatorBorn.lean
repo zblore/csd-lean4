@@ -15,7 +15,7 @@ public import CsdLean4.RecordLayer.Measurement
 
 Turns the truncated single mode of `CV/OscillatorSpectrum.lean` from an *operator algebra* into a
 genuine **CSD reconstruction**, by wiring its number/energy measurement into the record layer
-(`SigmaLayer/Measurement.lean`) and establishing **cutoff-independence** of the Born content — Stage 0
+(`RecordLayer/Measurement.lean`) and establishing **cutoff-independence** of the Born content — Stage 0
 of the EFT direction (`specs/record-layer-plan.md`; the ladder QM → CV → relativistic EFT).
 
 The oscillator Hamiltonian is diagonal (`hamiltonian_eq_diagonal`), so the number/energy eigenbasis is
@@ -42,8 +42,8 @@ dispersion, locality, and interactions are the later EFT stages. Foundational-tr
 ## References
 `CV/OscillatorSpectrum.lean` (`hamiltonian`, `oscEnergy`, `hamiltonian_mulVec_single`,
 `oscEnergy_cutoff_independent`); `CV/ApproxCCR.lean` (the finite-CCR obstruction / bulk-exactness);
-`SigmaLayer/Measurement.lean` (the record layer, `bornMeasurement`, `bornMeasurement_frequency`);
-`SigmaLayer/BasisMeasurement.lean` (arbitrary observable, if a non-number basis is measured).
+`RecordLayer/Measurement.lean` (the record layer, `bornMeasurement`, `bornMeasurement_frequency`);
+`RecordLayer/BasisMeasurement.lean` (arbitrary observable, if a non-number basis is measured).
 -/
 
 @[expose] public section

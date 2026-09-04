@@ -60,7 +60,7 @@ that.
 ## References
 
 `SigmaLayer/FiniteQMClosure.lean` (the operational closure, untouched);
-`SigmaLayer/ShearWitness.lean`, `SigmaLayer/DynamicBorn.lean`, `SigmaLayer/RecordPersistence.lean`.
+`RecordLayer/ShearWitness.lean`, `RecordLayer/DynamicBorn.lean`, `RecordLayer/RecordPersistence.lean`.
 -/
 
 @[expose] public section

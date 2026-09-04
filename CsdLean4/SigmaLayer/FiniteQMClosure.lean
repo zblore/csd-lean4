@@ -100,14 +100,14 @@ already named above:
   (`specs/BACKLOG.md`, `SigmaLayer/SectorPostulateNoGo.lean` proves the single-flow no-go);
 * **MD-1** — the Paper C A7 measurement-partition mismatch: the outcome cells `bornRegion ψ'` are
   preparation-indexed, not the context-fixed `Ωᵢ(M)` of A7 (`specs/BACKLOG.md`). **Progress:** the
-  record-layer readout now has a first-class successor, `SigmaLayer/RecordLayerClosure.lean`
-  (`recordLayerClosure`, built on `SigmaLayer/FibreRecord.lean`), whose outcome probabilities are
+  record-layer readout now has a first-class successor, `RecordLayer/RecordLayerClosure.lean`
+  (`recordLayerClosure`, built on `RecordLayer/FibreRecord.lean`), whose outcome probabilities are
   measurement-noncontextual (`‖ψ i‖²` from the fibre typicality of a genuine P5 `RecordSemantics`
-  event). It is realised **on this very model** in `SigmaLayer/ProjectiveRecord.lean`: a P5
+  event). It is realised **on this very model** in `RecordLayer/ProjectiveRecord.lean`: a P5
   `RecordSemantics` on `Σ = CPN (M+1)` whose events are these `bornRegion`s, whose outcome map is
   `bornOutcome`, and whose FS-typicality frequency is Born (`projRecord_frequency`, the same
   `born_frequency` conclusion carried by the record semantics rather than by `vnPointerOutcome`). The
-  probabilities are the Kähler moment map (`SigmaLayer/MomentMapRace.lean`) and the statistics are the
+  probabilities are the Kähler moment map (`RecordLayer/MomentMapRace.lean`) and the statistics are the
   law of large numbers over the unknown microstate (`Measurement.bornMeasurement_frequency`) — no
   dynamical postulate. What is *not* done is re-plumbing the field wiring of `unifiedFiniteQMClosure`
   itself onto the record semantics (a mechanical restatement carrying no new theorem); the regions

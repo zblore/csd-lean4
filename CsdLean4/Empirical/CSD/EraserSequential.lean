@@ -43,8 +43,8 @@ ever appears.
 ## References
 
 `specs/BACKLOG.md` (the row); `Empirical/CSD/EraserDynamics.lean` (the two single strokes);
-`SigmaLayer/LocalLuders.lean` + `LocalLudersBasis.lean` (the machinery);
-`SigmaLayer/RecordPersistence.lean` (the structural face of irreversibility).
+`RecordLayer/LocalLuders.lean` + `LocalLudersBasis.lean` (the machinery);
+`RecordLayer/RecordPersistence.lean` (the structural face of irreversibility).
 -/
 
 @[expose] public section

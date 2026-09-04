@@ -37,7 +37,7 @@ done here.
 
 ## References
 
-`SigmaLayer/OutcomeField.lean` (`OutcomeField`, `blockField`); `SigmaLayer/GlobalBasin.lean` (the
+`RecordLayer/OutcomeField.lean` (`OutcomeField`, `blockField`); `RecordLayer/GlobalBasin.lean` (the
 `K = N` original this generalises).
 -/
 

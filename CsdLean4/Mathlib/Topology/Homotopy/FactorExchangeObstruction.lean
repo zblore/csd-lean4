@@ -29,7 +29,7 @@ retract is enough to obstruct.
 ## Why this is here
 
 It is the engine of the relocation-generation obstruction
-(`SigmaLayer/RelocationObstruction.lean`). Exchanging two identical factors of a
+(`RecordLayer/RelocationObstruction.lean`). Exchanging two identical factors of a
 product arena collapses the section that embeds a circle into the *first* of
 them, because after the exchange that coordinate reads the *second* factor,
 which the section held constant. The circle is not contractible

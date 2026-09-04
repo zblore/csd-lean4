@@ -59,10 +59,10 @@ for the canonical phase-orbit preparation equals `epistemicMeasure [Πᵢψ]` �
 
 ## References
 
-`SigmaLayer/JoinArena.lean` (`joinSwap`, `join_block_luders`, `joinFst`);
-`SigmaLayer/SwapWitness.lean` (the transcribed architecture: `arcIndex`, the crossing
-propagator, the partition argument); `SigmaLayer/ShearWitness.lean` (`shearEvolve` and the
-generic record machinery, inherited); `SigmaLayer/DegenerateLuders.lean`
+`RecordLayer/JoinArena.lean` (`joinSwap`, `join_block_luders`, `joinFst`);
+`RecordLayer/SwapWitness.lean` (the transcribed architecture: `arcIndex`, the crossing
+propagator, the partition argument); `RecordLayer/ShearWitness.lean` (`shearEvolve` and the
+generic record machinery, inherited); `RecordLayer/DegenerateLuders.lean`
 (`swap_not_blockLuders` — why the rank-one architecture could not host this);
 `specs/BACKLOG.md`.
 -/

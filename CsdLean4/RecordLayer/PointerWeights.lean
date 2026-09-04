@@ -62,7 +62,7 @@ would back-react on the register wherever the weights vary (`ι_Vω ≠ d𝓗` o
 full accounting in `PointerGeneration.lean`'s honest-scope block). The weight functions
 here ~~are Lipschitz (`clampDiv`/`min`/`max`), proved `Continuous`, not `C¹` at the
 joins~~ **are now `C^∞`**: the substitution landed 2026-08-04 (`BACKLOG.md` B1) —
-`pointerWeights` is built on `smoothArcWeight` (`SigmaLayer/SmoothProfile.lean`), the
+`pointerWeights` is built on `smoothArcWeight` (`RecordLayer/SmoothProfile.lean`), the
 plateau interface is unchanged so every downstream proof transferred untouched, and
 `contDiff_pointerWeights_lift` is the new smoothness statement. `clampDiv` remains below as
 the construction record, no longer used by the witness.
@@ -71,8 +71,8 @@ the construction record, no longer used by the witness.
 
 `specs/pointer-witness-plan.md` (bricks 2b, 3); `specs/BACKLOG.md` (the ★ L row);
 `specs/future-work.md`. Reused corpus API: `couplingUU`/`couplingU_single`/
-`continuous_couplingU_entry` (`SigmaLayer/PointerCoupling.lean`), `ContextField`/`loSum`
-(`SigmaLayer/GlobalBasin.lean`, `BornFibrePartition.lean`),
+`continuous_couplingU_entry` (`RecordLayer/PointerCoupling.lean`), `ContextField`/`loSum`
+(`RecordLayer/GlobalBasin.lean`, `BornFibrePartition.lean`),
 `Projectivization.isOpenQuotientMap_mk'` + `smul_mk_eq_mk_toEuclideanLin` +
 `toEuclideanLin_unitary_apply_ne_zero` (projectivization staging),
 `MeasurePreserving.skew_product` (Mathlib).

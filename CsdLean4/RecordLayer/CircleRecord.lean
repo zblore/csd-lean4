@@ -62,8 +62,8 @@ all is ⏸ parked, not settled (`specs/sigma-fibre-contextuality.md`).
 
 ## References
 
-`SigmaLayer/CircleFibre.lean` (the compact fibre and its Born arcs);
-`SigmaLayer/FibreRecord.lean`, `SigmaLayer/Measurement.lean` (the `ℝ` originals this mirrors);
+`RecordLayer/CircleFibre.lean` (the compact fibre and its Born arcs);
+`RecordLayer/FibreRecord.lean`, `RecordLayer/Measurement.lean` (the `ℝ` originals this mirrors);
 `SigmaLayer/RecordedFact.lean` (`RecordSemantics`, and the warning that it is trivially inhabited —
 the content is in the non-vacuity results, of which `circleBornMeasurement_ae_total` is one);
 `specs/BACKLOG.md` (the ★★ fibre/A1 row).

@@ -42,14 +42,14 @@ and an event and applies as everywhere (`arena_mixed_born_frequency` is the two-
 precedent on the unified arena). The **conditional** post-measurement analysis of a mixture
 — Bayes-updating the ensemble weights on the outcome and composing with the rank-one Lüders
 posts — ~~is a recorded extension, not claimed here~~ *delivered 2026-08-03:
-`SigmaLayer/MixedLuders.lean` (`mixed_post_bayes`, `mixed_luders_followup`)*. The spectral decomposition is the
+`RecordLayer/MixedLuders.lean` (`mixed_post_bayes`, `mixed_luders_followup`)*. The spectral decomposition is the
 canonical ensemble; the mixture realisation is of course not unique (`density_isPureEnsemble`
 states existence, not uniqueness), and nothing here depends on the choice.
 
 ## References
 
 `specs/BACKLOG.md` (the mixed-preparations row — this discharges it);
-`SigmaLayer/SwapClosure.lean` (`swapPrep`, `swap_sector_born`),
+`RecordLayer/SwapClosure.lean` (`swapPrep`, `swap_sector_born`),
 `SigmaLayer/MixedEnsemble.lean` (`eigenvalues_isProbability`, `traceForm_eq_pureEnsemble`),
 `SigmaLayer/MixedOntic.lean` (the kinematic counterpart, `mixed_ontic_born_weight`),
 `LF2/BornWrapper.lean` (`born_quadratic`, `rankOneEffect`).

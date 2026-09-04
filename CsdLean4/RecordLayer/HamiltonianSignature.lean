@@ -43,7 +43,7 @@ unscoped content is discharged; what remains of A2 is exactly its §2a-scoped ha
 
 ## References
 
-`SigmaLayer/ApproxProjectability.lean` (`EpsProjectable` — the A5 junction);
+`RecordLayer/ApproxProjectability.lean` (`EpsProjectable` — the A5 junction);
 `SigmaLayer/MeasureBridge.lean` (`productDynamics` — the witness flow);
 `LF4/ProjectedDynamics.lean` (`schrodingerUnitary`, `schrodingerGen`);
 `LF4/MomentMap.lean` (`momentMap`); `specs/reconstruction-status.md` §2a.

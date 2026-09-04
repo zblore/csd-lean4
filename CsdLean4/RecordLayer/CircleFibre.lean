@@ -70,8 +70,8 @@ the product-measure step, not new fibre mathematics. See `specs/BACKLOG.md` (the
 
 ## References
 
-`SigmaLayer/BornFibrePartition.lean` (`cdfCell`, `loSum`, `bornRate` — the `ℝ` construction);
-`SigmaLayer/FibredSigma.lean` (the active-fibre Σ); `SigmaLayer/KSigmaRecord.lean` (the compact but
+`RecordLayer/BornFibrePartition.lean` (`cdfCell`, `loSum`, `bornRate` — the `ℝ` construction);
+`RecordLayer/FibredSigma.lean` (the active-fibre Σ); `RecordLayer/KSigmaRecord.lean` (the compact but
 inert-fibre Σ); `LF4/KahlerInstance.lean` (`KTorus = AddCircle 1 × AddCircle 1`);
 `specs/sigma-fibre-contextuality.md`; `specs/BACKLOG.md` (the ★★ fibre/A1 row).
 -/

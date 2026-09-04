@@ -58,10 +58,10 @@ second.
 
 ## References
 
-`SigmaLayer/PointerLuders.lean` (`pointerBankSwap`, `pointerRelocate`);
-`SigmaLayer/PointerGeneration.lean` (`rampedU_schrodinger`, the positive half);
-`SigmaLayer/PiecewiseHamiltonian.lean` (the flux obstruction this is *not*);
-`SigmaLayer/DegenerateLuders.lean` (`swap_not_blockLuders`);
+`RecordLayer/PointerLuders.lean` (`pointerBankSwap`, `pointerRelocate`);
+`RecordLayer/PointerGeneration.lean` (`rampedU_schrodinger`, the positive half);
+`RecordLayer/PiecewiseHamiltonian.lean` (the flux obstruction this is *not*);
+`RecordLayer/DegenerateLuders.lean` (`swap_not_blockLuders`);
 `Mathlib/Topology/Homotopy/FactorExchangeObstruction.lean`;
 `Mathlib/Topology/Homotopy/CircleFundamentalGroup.lean`; `specs/BACKLOG.md`.
 -/

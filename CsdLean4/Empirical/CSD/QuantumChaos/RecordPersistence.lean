@@ -31,8 +31,8 @@ record factor acts as `Φ ×ˢ id`. Then:
 
 The **stated hypothesis** is the product form — the post-record dynamics does
 not couple to the record sector. That is exactly the regime the corpus's
-record modules call persistence (cf. `SigmaLayer/RecordPersistence.lean`,
-`SigmaLayer/KSigmaRecord.lean`: there records persist under the *protocol's*
+record modules call persistence (cf. `RecordLayer/RecordPersistence.lean`,
+`RecordLayer/KSigmaRecord.lean`: there records persist under the *protocol's*
 own dynamics; here under arbitrary post-record Floquet driving of the system
 factor). Coupled post-record dynamics — where the drive can erase records —
 is the §H thread's genuinely open continuation, priced by

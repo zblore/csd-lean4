@@ -71,9 +71,9 @@ theorem then applies to the follow-up unchanged, which is what makes sequential 
 
 ## References
 
-`SigmaLayer/SwapWitness.lean` (the witness); `SigmaLayer/MeasurementConstraints.lean`
-(`no_exact_collapse` — why relocation is the only shape); `SigmaLayer/GlobalBasin.lean`
-(`epistemicMeasure`, `globalBasin_prob`); `SigmaLayer/ShearWitness.lean`
+`RecordLayer/SwapWitness.lean` (the witness); `RecordLayer/MeasurementConstraints.lean`
+(`no_exact_collapse` — why relocation is the only shape); `RecordLayer/GlobalBasin.lean`
+(`epistemicMeasure`, `globalBasin_prob`); `RecordLayer/ShearWitness.lean`
 (`shear_base_marginal_unchanged` — the defect this repairs).
 -/
 

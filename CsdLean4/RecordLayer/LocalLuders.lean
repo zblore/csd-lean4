@@ -33,7 +33,7 @@ two-line entrywise computation: tracing out `B` collapses the projector sum befo
 seen.
 
 ⚠️ **Honest scope.** (*2026-08-04: the propagator arrived in brick 2 —
-`reduceA_blockLuders_mixture`, `SigmaLayer/LocalBlockBridge.lean`; the sentence below
+`reduceA_blockLuders_mixture`, `RecordLayer/LocalBlockBridge.lean`; the sentence below
 scopes THIS module and stays true of it.*) This brick is statics: the Lüders mixture is
 written down, not yet
 produced by a propagator. Brick 2 wires it to the dynamical layer — the local `B`-block
@@ -47,7 +47,7 @@ multiplied by a vanishing weight, no positivity hypothesis is smuggled in.
 
 `specs/BACKLOG.md` (the dynamical no-signalling + eraser row); `specs/future-work.md`;
 `specs/reconstruction-status.md` §2 (A6). Reused corpus API: `reduceA`/`rayDensity`
-(`SigmaLayer/OnticMarginals.lean`), `traceRight` + linearity
+(`RecordLayer/OnticMarginals.lean`), `traceRight` + linearity
 (`Mathlib/LinearAlgebra/Matrix/PartialTrace.lean` staging); the operational-statics
 counterparts are `csd_no_communication` (`Empirical/CSD/NoCommunication.lean`) and
 `singlet_hasNoSignalling` (`SigmaLayer/CompositeAdapters.lean`).

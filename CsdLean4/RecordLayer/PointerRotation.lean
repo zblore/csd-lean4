@@ -52,7 +52,7 @@ all planes share `f₀`) is brick 2 and will need the exponential route, not thi
 `smul_mk_eq_mk_toEuclideanLin` + `orbit_map_continuous`
 (`Mathlib/LinearAlgebra/Projectivization/{TransitionProbability,FubiniStudy}.lean` staging),
 `fubiniStudyMeasure_smul_invariant` (ibid.), `readyState`/`recordState`
-(`SigmaLayer/PointerArena.lean`).
+(`RecordLayer/PointerArena.lean`).
 -/
 
 @[expose] public section

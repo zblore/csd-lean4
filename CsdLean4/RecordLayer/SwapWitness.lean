@@ -76,10 +76,10 @@ Because `swapG` is an **involution**, the repair is to fire it on crossings in *
 
 ## References
 
-`SigmaLayer/ShearWitness.lean` (the shear this composes with);
-`SigmaLayer/MeasurementConstraints.lean` (`no_exact_collapse`, `collapse_accuracy_bound` — why
+`RecordLayer/ShearWitness.lean` (the shear this composes with);
+`RecordLayer/MeasurementConstraints.lean` (`no_exact_collapse`, `collapse_accuracy_bound` — why
 relocation is the only shape); `Mathlib/MeasureTheory/PiecewisePreserving.lean` (`swapSlot`,
-`measurePreserving_of_partition`); `SigmaLayer/MeasurementProtocol.lean`.
+`measurePreserving_of_partition`); `RecordLayer/MeasurementProtocol.lean`.
 -/
 
 @[expose] public section

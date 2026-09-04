@@ -44,7 +44,7 @@ The plan is explicit on two points, and both are followed:
 ## The remaining extensions, in the plan's order
 
 `blockField` covers **degenerate projective measurements** (step 2). *Corrected 2026-08-04 (codebase audit).* — **steps 1, 3, 4
-and 5 have all since landed** (`measurement_covariance`, `SigmaLayer/RotatedSwap.lean`;
+and 5 have all since landed** (`measurement_covariance`, `RecordLayer/RotatedSwap.lean`;
 `mixed_swap_sector_born`, `MixedSwap.lean`, with the conditioned update in `MixedLuders.lean`;
 `povm_selector_born`/`povm_instrument`, `PovmDynamics.lean`). What this module does not do is
 *drive* them. Formerly: still open, and *not* attempted
@@ -58,7 +58,7 @@ is deliberately not done here — see design constraint 1.
 
 ## References
 
-`SigmaLayer/GlobalBasin.lean` (`ContextField`, `momentContext`); `LF4/MomentMap.lean`
+`RecordLayer/GlobalBasin.lean` (`ContextField`, `momentContext`); `LF4/MomentMap.lean`
 (`momentMap_nonneg`, `momentMap_sum_eq_one`, `measurable_momentMap`); `specs/BACKLOG.md`.
 -/
 

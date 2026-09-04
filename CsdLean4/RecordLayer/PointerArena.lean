@@ -14,7 +14,7 @@ public import CsdLean4.LF4.TypicalityForcing
 **Category:** dynamical measurement — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 0; the ★ L backlog item, route confirmed 2026-08-03).
 
-The torus-flux correction (2026-08-02, `SigmaLayer/PiecewiseHamiltonian.lean`) showed the landed
+The torus-flux correction (2026-08-02, `RecordLayer/PiecewiseHamiltonian.lean`) showed the landed
 witnesses' register translations are symplectic but **not globally Hamiltonian** on `T²`
 (`ι_Xω = a·dp` closed-not-exact, `∮dp ≠ 0`). The confirmed repair replaces the torus **register**
 with a projective pointer `ℂℙ^K = ℙ(ℂ^{K+1})` — compact Kähler with `H¹ = 0`, where unitary
@@ -36,17 +36,17 @@ one-line simplex fact (two moment coordinates cannot both exceed `1/2`); nothing
 read `q ∈ recordRegion j` as "the pointer IS `[f_{j+1}]`" — **transition states** (all moment
 coordinates `≤ 1/2`) are legitimate pointer points lying *outside every region by design*, which
 is exactly the exceptional room `no_everywhere_correlation`
-(`SigmaLayer/MeasurementConstraints.lean`) forces every continuous exact-record dynamics to
+(`RecordLayer/MeasurementConstraints.lean`) forces every continuous exact-record dynamics to
 have. Contrast the piecewise horn: the openness of these regions is the property whose torus
 analogue (discrete register arcs) fed `shearEvolve_not_continuous`
-(`SigmaLayer/ShearDiscontinuity.lean`).
+(`RecordLayer/ShearDiscontinuity.lean`).
 
 ## References
 
 `specs/pointer-witness-plan.md` (the brick ladder and the trade-off table);
 `specs/BACKLOG.md` (the ★ L row); `specs/future-work.md`; second external review 2026-08-02
-(steps 1–3). Reused corpus API: `vertexPoint` (`SigmaLayer/SwapLuders.lean`),
-`momentMap_vertex` (`SigmaLayer/DegenerateLuders.lean`), the `momentMap` simplex facts
+(steps 1–3). Reused corpus API: `vertexPoint` (`RecordLayer/SwapLuders.lean`),
+`momentMap_vertex` (`RecordLayer/DegenerateLuders.lean`), the `momentMap` simplex facts
 (`LF4/MomentMap.lean`), `fubiniStudyMeasure_pos_of_isOpen` (`LF4/TypicalityForcing.lean`),
 `kMuL` (`LF4/KahlerInstance.lean`).
 -/

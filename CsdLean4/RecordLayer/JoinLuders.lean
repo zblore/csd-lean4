@@ -59,9 +59,9 @@ could not host this.
 
 ## References
 
-`SigmaLayer/DegenerateLuders.lean` (`BlockLudersObligation`, `swap_not_blockLuders`);
-`SigmaLayer/JoinProtocol.lean` (the protocol); `SigmaLayer/JoinArena.lean`
-(`join_block_luders` — the pointwise input); `SigmaLayer/SwapLuders.lean` (the rank-one
+`RecordLayer/DegenerateLuders.lean` (`BlockLudersObligation`, `swap_not_blockLuders`);
+`RecordLayer/JoinProtocol.lean` (the protocol); `RecordLayer/JoinArena.lean`
+(`join_block_luders` — the pointwise input); `RecordLayer/SwapLuders.lean` (the rank-one
 precedent whose conditioning toolkit this mirrors); `specs/BACKLOG.md`.
 -/
 

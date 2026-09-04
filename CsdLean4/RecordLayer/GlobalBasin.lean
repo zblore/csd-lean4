@@ -37,7 +37,7 @@ with the rate vector read off **at the ontic point `p`**, not at the preparation
 anywhere in the definition, so the basin is a function of the context alone — which is what A7 asks.
 
 ★ **Why this is not circular.** One might object that the Born weights are being *put in* by using
-the moment map. They are not put in by hand: `bornRate_eq_momentMap` (`SigmaLayer/MomentMapRace.lean`)
+the moment map. They are not put in by hand: `bornRate_eq_momentMap` (`RecordLayer/MomentMapRace.lean`)
 already identifies the record-layer rates with the Fubini–Study torus moment map, forced by the
 Kähler structure and the `Tⁿ` action rather than carved to a target.
 
@@ -73,7 +73,7 @@ the arena's own disintegration, planted at its base point. `kMuL = μ_FS ⊗ vol
 Liouville measure, and nothing here claims `δ_p ⊗ Haar` is one.
 
 ⚠️ **This is KINEMATIC.** No interaction Hamiltonian `H_int(M)` generating these basins is
-constructed — that is the open Paper D obligation (`SigmaLayer/DeIsolationFlow.lean`), and it is
+constructed — that is the open Paper D obligation (`RecordLayer/DeIsolationFlow.lean`), and it is
 untouched here. A context-fixed partition is not a dynamical account of measurement.
 
 ⚠️ ~~A7 at general `N` is not thereby closed~~ **ANSWERED 2026-08-02 (author decision): the fibred
@@ -87,9 +87,9 @@ shown Liouville. See the ★★ `specs/BACKLOG.md` row.
 
 ## References
 
-`SigmaLayer/TorusFibre.lean` (`torusCell`, `volume_torusCell`, `loSum_add_self_le_one`);
+`RecordLayer/TorusFibre.lean` (`torusCell`, `volume_torusCell`, `loSum_add_self_le_one`);
 `LF4/MomentMap.lean` (`momentMap`, `measurable_momentMap`, `momentMap_mk_eq_inner_sq`);
-`SigmaLayer/MomentMapRace.lean` (`bornRate_eq_momentMap` — the rates are forced, not carved);
+`RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap` — the rates are forced, not carved);
 `LF4/KahlerInstance.lean` (`KSigma`, `KTorus`); `specs/BACKLOG.md` (the ★★ row's successor target);
 `specs/sigma-fibre-contextuality.md`.
 -/

@@ -68,10 +68,10 @@ it beyond the foundational one.
 ## References
 
 `Empirical/QM/HongOuMandel.lean` (`bsTwo_bosonIn`, `hom_coincidence_zero`);
-`SigmaLayer/BornFibrePartition.lean` (`cdfCell`, `volume_cdfCell`, `bornRate`);
-`SigmaLayer/DeIsolationFlow.lean` (`fibreTypicality`, `fibreTypicality_bornCell`);
-`SigmaLayer/FibreRecord.lean` (`fibreTypicality_bornRecord` — the P5 record event);
-`SigmaLayer/Measurement.lean` (`bornMeasurement_prob`);
+`RecordLayer/BornFibrePartition.lean` (`cdfCell`, `volume_cdfCell`, `bornRate`);
+`RecordLayer/DeIsolationFlow.lean` (`fibreTypicality`, `fibreTypicality_bornCell`);
+`RecordLayer/FibreRecord.lean` (`fibreTypicality_bornRecord` — the P5 record event);
+`RecordLayer/Measurement.lean` (`bornMeasurement_prob`);
 `LF4/ObservableCorrespondenceN.lean` (`fsMeasure_bornRegionN` — the DH route, and its `hpos`);
 `LF4/BornVolume.lean` (`replaceMap_det` — why `hpos` is load-bearing);
 `specs/record-layer-plan.md`; `specs/BACKLOG.md`; `specs/future-work.md`.

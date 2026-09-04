@@ -121,7 +121,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.fs_balanced_abundance
 
--- THE RE-PLUMBING (2026-07-29, SigmaLayer/CircleRecord.lean): the RECORD LAYER on the compact fibre.
+-- THE RE-PLUMBING (2026-07-29, RecordLayer/CircleRecord.lean): the RECORD LAYER on the compact fibre.
 -- CircleFibre.lean moved the Born PARTITION to AddCircle 1; this moves the rest with it -- the P5
 -- record semantics, isolation-as-conditioning, measurement-as-(context + unknown microstate), the
 -- Born probabilities, and a.e. totality of the readout.
@@ -159,7 +159,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.circleBornMeasurement_ae_total
 
--- THE FIBRE SWAP (2026-07-29, SigmaLayer/CircleFibre.lean) -- the Born partition on a COMPACT fibre.
+-- THE FIBRE SWAP (2026-07-29, RecordLayer/CircleFibre.lean) -- the Born partition on a COMPACT fibre.
 -- ⚠️ THE DIAGNOSIS THIS FIXES: the corpus had TWO record-layer constructions and COMPACTNESS AND
 -- FIBRE-ACTIVITY SAT IN DIFFERENT ONES. KSigmaRecord puts a P5 RecordSemantics on the COMPACT
 -- KSigma = CPN x T^2, but its events are pi^-1(bornRegion psi i) -- pulled back from the BASE, so
@@ -205,7 +205,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.volume_circleBornCell
 
--- THE PARITY FIX (2026-07-30, SigmaLayer/TorusFibre.lean) -- the Born partition on KTorus.
+-- THE PARITY FIX (2026-07-30, RecordLayer/TorusFibre.lean) -- the Born partition on KTorus.
 -- ⚠️ WHAT THIS FIXES, and it is NOT what the fibre-swap block above first said. CircleFibre closed
 -- the COMPACTNESS objection but left a second one that is NOT a tooling gap: CP^{n-1} has real
 -- dimension 2n-2, so CP^{n-1} x AddCircle 1 has real dimension 2n-1 -- ODD. A symplectic form needs
@@ -253,7 +253,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusBornCell_ae_total
 
--- ★★ THE CONTEXT-FIXED GLOBAL BASIN (2026-07-30, SigmaLayer/GlobalBasin.lean) -- Paper C A7, fibred.
+-- ★★ THE CONTEXT-FIXED GLOBAL BASIN (2026-07-30, RecordLayer/GlobalBasin.lean) -- Paper C A7, fibred.
 -- THE DEFECT THIS CLOSES: the corpus's record-layer partition is cdfCell (bornRate psi) -- built from
 -- the PREPARATION -- so it was never the Omega_i(M) Paper C A7 asks for. QubitBorn does it at N = 2;
 -- the general-N BASE-ONLY question is PARKED (ContextFixedA7*, sigma-fibre-contextuality.md).
@@ -299,7 +299,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.globalBasin_born
 
--- ★★ THE RECORD-LAYER CAPSTONE, MIGRATED (2026-07-31, SigmaLayer/GlobalRecordClosure.lean).
+-- ★★ THE RECORD-LAYER CAPSTONE, MIGRATED (2026-07-31, RecordLayer/GlobalRecordClosure.lean).
 -- RecordLayerClosure certifies the record layer on the fibre Sigma = R with fibreTypicality, for the
 -- context bornContext psi -- BUILT FROM THE PREPARATION. This bundle certifies THE SAME FIVE FACTS on
 -- the corpus's actual compact sector KSigma = CPN x T^2, for a ContextField -- built from the
@@ -338,7 +338,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.globalRecordClosure_born
 
--- CONSTRAINTS ON THE UNBUILT DYNAMICAL LAYER (2026-08-01, SigmaLayer/MeasurementConstraints.lean).
+-- CONSTRAINTS ON THE UNBUILT DYNAMICAL LAYER (2026-08-01, RecordLayer/MeasurementConstraints.lean).
 -- ⚠️ THE DIAGNOSIS THAT FORCED THIS (external review, and it is SHARPER than the "still kinematic"
 -- caveat the GlobalBasin block carries): globalBasin_ae_total shows the basins cover Sigma up to a
 -- null set, so A.E. EVERY POINT ALREADY CARRIES A RECORD and there is no apparatus-ready state of
@@ -373,7 +373,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.no_everywhere_correlation
 
--- THE DYNAMICAL MEASUREMENT INTERFACE (2026-08-01, SigmaLayer/MeasurementProtocol.lean) -- items 1-2.
+-- THE DYNAMICAL MEASUREMENT INTERFACE (2026-08-01, RecordLayer/MeasurementProtocol.lean) -- items 1-2.
 -- Supplies what GlobalBasin structurally could not: a POINTER REGISTER whose ready region is
 -- disjoint from every outcome region, plus a TWO-TIME propagator Phi_{s->t} (not a one-parameter
 -- group -- a measurement interaction is switched on and off, and a time-dependent H_int(M,t) does
@@ -418,7 +418,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.MeasurementProtocol.measure_outcomeSector_eq_of_correlates
 
--- PERSISTENCE AND THE POST-MEASUREMENT ENSEMBLE (2026-08-01, SigmaLayer/RecordPersistence.lean) --
+-- PERSISTENCE AND THE POST-MEASUREMENT ENSEMBLE (2026-08-01, RecordLayer/RecordPersistence.lean) --
 -- items 5-6.
 -- ★ BOTH USE THE EVOLUTION, WHICH IS THE POINT. The plan is explicit that reusing the same set at
 -- every time does not count as persistence. record_persists_on_interval is stated about
@@ -459,7 +459,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.MeasurementProtocol.postMeasure_supported_pointerRegion
 
--- ★★ THE CONCRETE MEASUREMENT WITNESS (2026-08-01, SigmaLayer/ShearWitness.lean) -- item 3, PARTLY.
+-- ★★ THE CONCRETE MEASUREMENT WITNESS (2026-08-01, RecordLayer/ShearWitness.lean) -- item 3, PARTLY.
 -- An explicit propagator on Sigma_sel x T^2_R that takes a ready pointer into one displaying the
 -- outcome the hidden selector had already fixed. It DISCHARGES BOTH standing hypotheses of the
 -- interface -- CorrelatesOn AND PointerInvariantOn -- so neither is assumed.
@@ -527,7 +527,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shear_measurePreserving
 
--- THE SHEAR DRIVEN BY THE CONTEXT-FIXED BASINS (2026-08-01, SigmaLayer/DynamicBorn.lean) -- item 4.
+-- THE SHEAR DRIVEN BY THE CONTEXT-FIXED BASINS (2026-08-01, RecordLayer/DynamicBorn.lean) -- item 4.
 -- ShearWitness proves the correlation for an ABSTRACT measurable index. This supplies the index the
 -- architecture intends -- the one read off globalBasin -- so the dynamical sectors carry BORN
 -- WEIGHTS rather than arbitrary ones.
@@ -602,7 +602,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.csdFiniteQMClosure
 
 -- THE TWO REMAINING BRIDGES (2026-08-01).
--- BRIDGE A -- OutcomeField -> basins (SigmaLayer/OutcomeBasin.lean). OutcomeField decoupled the
+-- BRIDGE A -- OutcomeField -> basins (RecordLayer/OutcomeBasin.lean). OutcomeField decoupled the
 -- outcome count from the dimension but globalBasin still consumed a ContextField, so a K-outcome
 -- field could not drive the record layer. outcomeBasin closes that: same construction, Fin K in
 -- place of Fin N, with measurability, exclusivity, outcomeBasin_prob and a.e. totality re-proved.
@@ -634,7 +634,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shear_base_marginal_unchanged
 
--- ★★ THE CALIBRATED-SWAP WITNESS AND THE LUDERS THEOREM (2026-08-01/02, SigmaLayer/SwapWitness.lean
+-- ★★ THE CALIBRATED-SWAP WITNESS AND THE LUDERS THEOREM (2026-08-01/02, RecordLayer/SwapWitness.lean
 -- + SwapLuders.lean + MeasurementConstraints additions + Mathlib/MeasureTheory/PiecewisePreserving).
 -- shear_base_marginal_unchanged proved the shear CANNOT collapse: no back-reaction on the selector
 -- is exactly what prevents it. The design (Fable review, 2026-08-01) starts from TWO NO-GOS proved
@@ -767,7 +767,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.two_time_other_fate
 
 -- DEGENERATE LUDERS: THE PROBLEM MADE PRECISE, THE BOUNDARY PROVED (2026-08-02,
--- SigmaLayer/DegenerateLuders.lean).
+-- RecordLayer/DegenerateLuders.lean).
 -- At rank one the Luders channel IS measure-and-reprepare and swap_luders_born delivers it. At
 -- higher rank the post-state is the NORMALISED PROJECTION [Pi_i psi] -- psi-DEPENDENT, coherence
 -- inside the block intact -- and that dependence is the whole difficulty. This module does three
@@ -809,7 +809,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.swap_not_blockLuders
 
 -- A5 STEP TWO: THE (eps,T)-PROJECTABILITY PACKAGE (2026-08-02,
--- SigmaLayer/ApproxProjectability.lean) -- the BACKLOG ★ A5 row's stated shape, delivered.
+-- RecordLayer/ApproxProjectability.lean) -- the BACKLOG ★ A5 row's stated shape, delivered.
 -- EpsProjectable: the predicate on ontic Hamiltonians Sigma -> R in OSCILLATION form -- Hs varies by
 -- at most eps along each fibre of pi. ⚠️ The DERIVATIVE form sup||d(deltaH)|_V|| <= eps is the
 -- scoped manifold statement (section 2a; no exterior-calculus API); the oscillation form is its
@@ -846,7 +846,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.quantum_effective_shadowing_state
 
 -- A2'S FORMALISABLE HALF: THE HAMILTONIAN SIGNATURE (2026-08-02,
--- SigmaLayer/HamiltonianSignature.lean).
+-- RecordLayer/HamiltonianSignature.lean).
 -- A2 as written -- the flow is generated by X_H = w^{-1} dH -- needs the symplectic form and
 -- exterior derivative: the section-2a-scoped manifold gap (verified a tooling gap, not a falsity).
 -- What a measure space CAN express is the SIGNATURE a Hamiltonian flow leaves, and the witness flow
@@ -894,7 +894,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.phaseDiag_comm
 
 -- A6 STEP ONE: THE SEGRE EMBEDDING AND NON-FACTORISATION (2026-08-02,
--- SigmaLayer/OnticComposite.lean).
+-- RecordLayer/OnticComposite.lean).
 -- Paper C A6's "the composite ontic sector is NOT the product of the subsystem sectors" made sharp:
 -- segre ([u],[v]) = [u (x) v] is INJECTIVE (segre_injective -- product rays remember their factors;
 -- the scalar is recovered from a nonzero coordinate of the other factor) but NOT SURJECTIVE
@@ -1054,7 +1054,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.kMuL_disintegration
 
 -- A6 STEPS TWO AND THREE: ONTIC REDUCTION MAPS + MARGINAL STABILITY (2026-08-02,
--- SigmaLayer/OnticMarginals.lean).
+-- RecordLayer/OnticMarginals.lean).
 -- STEP 2: rayDensity -- the density matrix of a composite ray, RAY-WELL-DEFINED (rayDensity_mk, the
 -- quotient-descent pattern) and UNIT TRACE (rayDensity_trace): a genuine state. reduceA / reduceB:
 -- the subsystem marginals as partial traces -- the ontic-level r_S, what a subsystem observer can
@@ -1098,7 +1098,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.reduceB_local_flow_invariant
 
 -- BB84 INTERCEPT-RESEND WITH A DYNAMICAL COLLAPSE STEP (2026-08-02,
--- Empirical/CSD/Crypto/BB84Sequential.lean + SigmaLayer/RotatedContext.lean).
+-- Empirical/CSD/Crypto/BB84Sequential.lean + RecordLayer/RotatedContext.lean).
 -- The QM module (Crypto/BB84.lean) models Eve's measure-and-resend as a CLASSICAL MARGINAL, with a
 -- scope note gating the collapse operator on "the LF5 gate". The dynamical measurement layer
 -- dissolved that gate; this entry replaces the posited marginal with the calibrated-swap dynamics:
@@ -1125,11 +1125,11 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.RecordLayer.prep_outcome_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
--- (moved 2026-08-02 from Empirical/CSD/SequentialMeasurement.lean to SigmaLayer/SwapClosure.lean)
+-- (moved 2026-08-02 from Empirical/CSD/SequentialMeasurement.lean to RecordLayer/SwapClosure.lean)
 #print axioms CSD.RecordLayer.prep_outcome_pos
 
 -- THE MEASUREMENT PROPAGATOR IS PROVABLY NOT CONTINUOUS (2026-08-02,
--- SigmaLayer/ShearDiscontinuity.lean; machine-checks an external review's claim).
+-- RecordLayer/ShearDiscontinuity.lean; machine-checks an external review's claim).
 -- ★ shearEvolve_not_continuous: over the measurement interval the shear witness displaces the
 -- register by shearAmt(basinIndex x); if continuous, its register marginal would be a continuous
 -- map from the CONNECTED KSigma onto >= 2 distinct points, whose fibres give a clopen partition --
@@ -1149,7 +1149,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.vertex_mem_globalBasin
 
--- THE PIECEWISE-HAMILTONIAN CLASSIFICATION (2026-08-02, SigmaLayer/PiecewiseHamiltonian.lean;
+-- THE PIECEWISE-HAMILTONIAN CLASSIFICATION (2026-08-02, RecordLayer/PiecewiseHamiltonian.lean;
 -- the decision resolving the reopened Hamiltonian-origin row -- route 2, user decision).
 -- ★ shear_piecewise_hamiltonian: (1) on every basin cylinder the propagator IS an explicit rigid
 -- register translation -- a Hamiltonian flow slice -- and is ContinuousOn there
@@ -1175,7 +1175,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.seam_null
 
--- ALL SIX DYNAMICAL FACTS ON ONE ARENA (2026-08-02, SigmaLayer/SwapClosure.lean; the external
+-- ALL SIX DYNAMICAL FACTS ON ONE ARENA (2026-08-02, RecordLayer/SwapClosure.lean; the external
 -- review's step 2, the precursor to the engine migration).
 -- ★ swapMeasurementClosure: ready ⇒ no record, record created, outcomes exclusive, record persists,
 -- DYNAMICAL Born (sector measure = Born weight, via measure_outcomeSector_eq_of_correlates -- the
@@ -1194,7 +1194,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.swap_sector_born
 
--- ★★ THE ENGINE MIGRATION (2026-08-02, SigmaLayer/UnifiedArena.lean; review step 3 -- arena
+-- ★★ THE ENGINE MIGRATION (2026-08-02, RecordLayer/UnifiedArena.lean; review step 3 -- arena
 -- unification step 2 of 2). ONE ontic model now carries the finite-QM reconstruction:
 -- UnifiedArena M = ((ℂℙ^M × T²) × T²_R) × bank, with Liouville measure arenaLiouville =
 -- swapMeasure at μs = kMuL -- so the measure the MEASUREMENT dynamics preserves IS the Liouville
@@ -1238,7 +1238,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arena_mixed_born_frequency
 
--- DEGENERATE LÜDERS, THE JOIN ROUTE, BRICK 1 (2026-08-02, SigmaLayer/BlockCollapse.lean; review
+-- DEGENERATE LÜDERS, THE JOIN ROUTE, BRICK 1 (2026-08-02, RecordLayer/BlockCollapse.lean; review
 -- step 4 opened). swap_not_blockLuders proved no FIXED calibration works; this brick builds the
 -- object every witness must realise and the mechanism one level above the rays:
 -- ★ blockCollapse -- the measurable ray-level collapse [ψ] ↦ [Πᵢψ] (quotient descent via
@@ -1273,7 +1273,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.measurable_blockCollapse
 
 -- ★★ THE PHASE-CARRYING SLOT: DEGENERATE LÜDERS REALISED (2026-08-02,
--- SigmaLayer/PhaseSlot.lean; route (ii) of the sharpened wall, brick 2).
+-- RecordLayer/PhaseSlot.lean; route (ii) of the sharpened wall, brick 2).
 -- ★★ phase_slot_block_luders: prepare the PHASE ORBIT of ψ (uniform over the ontic phase --
 -- the enrichment adds ontic phase, not epistemic content: readout_phasePrep gives back the
 -- Dirac at [ψ]); calibrate the slot with a FIXED block-supported α; fire the pair swap; read
@@ -1306,7 +1306,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.measurable_pairSwap
 
 -- ★★ THE JOIN ARENA: LIOUVILLE-PRESERVING DEGENERATE LÜDERS (2026-08-02,
--- SigmaLayer/JoinArena.lean; brick 3's Liouville half). The identification that closes the arc:
+-- RecordLayer/JoinArena.lean; brick 3's Liouville half). The identification that closes the arc:
 -- THE PHASE-ENRICHED PAIR ARENA IS THE PROJECTIVE JOIN ℙ(ℂ^{N+N}) -- a system-slot pair
 -- quotiented only by the GLOBAL phase, so the relative phase (the join coordinate the wall
 -- demanded) lives in the point itself. There the component swap is a PERMUTATION UNITARY
@@ -1336,7 +1336,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measurable_joinFst
 
--- THE DEGENERATE MEASUREMENT AS A MeasurementProtocol (2026-08-02, SigmaLayer/JoinProtocol.lean;
+-- THE DEGENERATE MEASUREMENT AS A MeasurementProtocol (2026-08-02, RecordLayer/JoinProtocol.lean;
 -- brick 4 -- the protocol plumbing). The join update now runs inside the standard architecture:
 -- arena = (join point, system fibre, ANCILLA fibre) x register; selector = coarse block index
 -- (joinIdx); propagator = register shear + record-triggered joinG at the readout crossing (join
@@ -1365,7 +1365,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.joinG_joinG
 
--- ★★ BlockLudersObligation, INHABITED (2026-08-02, SigmaLayer/JoinLuders.lean; brick 5 -- the
+-- ★★ BlockLudersObligation, INHABITED (2026-08-02, RecordLayer/JoinLuders.lean; brick 5 -- the
 -- degenerate-Lüders arc CLOSED). The §8.3 demand that swap_not_blockLuders proved impossible for
 -- every fixed ray-level calibration is DELIVERED by the join witness:
 -- ★★ joinWitness_blockLuders -- with any block-supported calibration family, the sector-
@@ -1397,7 +1397,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.basisContext_basisFun_rate
 
--- ★★ THE UNITARY-COVARIANCE LAW (2026-08-02, SigmaLayer/RotatedSwap.lean; the last extension
+-- ★★ THE UNITARY-COVARIANCE LAW (2026-08-02, RecordLayer/RotatedSwap.lean; the last extension
 -- item of the dynamical arc). The first measurement now runs in ANY orthonormal basis:
 -- ★★ measurement_covariance -- for EVERY orthonormal basis bON and every state, the full
 -- six-fact measurement closure holds (RotatedSwapClosure): selector = the rotated context's
@@ -2263,7 +2263,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.born_frequency_region_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.born_frequency_region_eq_record
 
--- PointerArena (2026-08-03, SigmaLayer/PointerArena.lean; pointer-witness-plan.md brick 0 — the
+-- PointerArena (2026-08-03, RecordLayer/PointerArena.lean; pointer-witness-plan.md brick 0 — the
 -- smooth-Hamiltonian route's kinematic floor, architecture confirmed 2026-08-03). The compact
 -- Kähler pointer ℂℙ^K replacing the torus register (the flux correction's repair): open,
 -- disjoint, positive-FS-measure ready/record regions via the pointer moment map, and the arena
@@ -2285,7 +2285,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.arenaReady_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.arenaReady_pos
 
--- PointerRotation (2026-08-03, SigmaLayer/PointerRotation.lean; pointer-witness-plan.md brick 1).
+-- PointerRotation (2026-08-03, RecordLayer/PointerRotation.lean; pointer-witness-plan.md brick 1).
 -- The fixed-outcome pointer rotation: Hermitian generator h_j = |f0><f_{j+1}| + |f_{j+1}><f0|
 -- (pointerH_isHermitian), whose rotation family pointerRot θ j = 1 + (cosθ−1)•P_j − (i sinθ)•h_j
 -- is a CONTINUOUS ONE-PARAMETER UNITARY GROUP: group law (pointerRotU_add), unitarity via
@@ -2311,7 +2311,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pointerRotU_pi_div_two_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerRotU_pi_div_two_ready
 
--- PointerCoupling (2026-08-03, SigmaLayer/PointerCoupling.lean; pointer-witness-plan.md brick 2a,
+-- PointerCoupling (2026-08-03, RecordLayer/PointerCoupling.lean; pointer-witness-plan.md brick 2a,
 -- generator half). The selector-modulated coupling: couplingH w = Σⱼ wⱼ•hⱼ Hermitian for every
 -- real weight vector; couplingU w = exp((π/2)•(−i•couplingH w)) UNITARY (skew-Hermitian
 -- exponential; the hⱼ do NOT commute — genuine exp, no closed form). ★ pointerRot_eq_exp: the
@@ -2336,7 +2336,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.continuous_couplingU_entry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.continuous_couplingU_entry
 
--- PointerWeights (2026-08-03, SigmaLayer/PointerWeights.lean; pointer-witness-plan.md brick 2b).
+-- PointerWeights (2026-08-03, RecordLayer/PointerWeights.lean; pointer-witness-plan.md brick 2b).
 -- The selector-modulated weight field and the arena propagator. Weights are CIRCLE-INTRINSIC
 -- trapezoids clamp((r_j/2 − dist(θ₁, cellMid_j))/ε) with rates read at the base point
 -- (ContextField, no preparation) — so joint continuity is a composition, no lift, no seam.
@@ -2362,7 +2362,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pointerEvolve_pure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_pure
 
--- PointerLanding (2026-08-03, SigmaLayer/PointerLanding.lean; pointer-witness-plan.md brick 3).
+-- PointerLanding (2026-08-03, RecordLayer/PointerLanding.lean; pointer-witness-plan.md brick 3).
 -- The landing geometry. cellMid_dist_ge: distinct CDF-cell midpoints are ≥ (r_j+r_k)/2 apart on
 -- the circle (UnitAddCircle.norm_eq + round case analysis + the loSum interval ordering);
 -- shrunk_dist_other: triangle inequality discharges pointerEvolve_pure's second hypothesis — no
@@ -2391,7 +2391,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.volume_shrunkCell_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.volume_shrunkCell_slice
 
--- PointerProtocol (2026-08-03, SigmaLayer/PointerProtocol.lean; pointer-witness-plan.md brick 4a).
+-- PointerProtocol (2026-08-03, RecordLayer/PointerProtocol.lean; pointer-witness-plan.md brick 4a).
 -- The smooth witness in the standard record architecture: MeasurementProtocol on the pointer
 -- arena with evolve = ramped exponential of the selector-modulated coupling. The two-time law is
 -- THE GROUP PROPERTY of the exponential (couplingUAt_mul, exp_add_of_commute) — vs the swap's
@@ -2423,7 +2423,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pointerProtocol_pointerInvariantOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerProtocol_pointerInvariantOn
 
--- PointerBorn (2026-08-03, SigmaLayer/PointerBorn.lean; pointer-witness-plan.md brick 4b —
+-- PointerBorn (2026-08-03, RecordLayer/PointerBorn.lean; pointer-witness-plan.md brick 4b —
 -- closes brick 4). The ε-Born sandwich for the ready-CONDITIONED preparation
 -- pointerPrep = epistemicMeasure ⊗ FS[|ready] (legitimate: readyRegion_pos — NO Dirac
 -- calibration posit, unlike the swap): pointerPrep_sector_measure = r_j − 2ε EXACTLY (the
@@ -2451,7 +2451,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.smoothWitnessClosureCanonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothWitnessClosureCanonical
 
--- PointerGeneration (2026-08-03, SigmaLayer/PointerGeneration.lean; pointer-witness-plan.md
+-- PointerGeneration (2026-08-03, RecordLayer/PointerGeneration.lean; pointer-witness-plan.md
 -- brick 5 -- COMPLETES THE LADDER). * rampedU_schrodinger: on the interaction window the ramped
 -- propagator satisfies the SCHRODINGER EQUATION U' = U*(-i*H_eff) with the explicit HERMITIAN
 -- generator H_eff = (pi/2) * couplingH w (pointerHeff_isHermitian) -- the Hamiltonian-generation
@@ -2469,7 +2469,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pointerEvolve_base_marginal_unchanged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerEvolve_base_marginal_unchanged
 
--- LocalLuders (2026-08-03, SigmaLayer/LocalLuders.lean; dynamical no-signalling brick 1).
+-- LocalLuders (2026-08-03, RecordLayer/LocalLuders.lean; dynamical no-signalling brick 1).
 -- A local B-measurement on the composite acts by the coordinate-form local projectors
 -- P_j = 1_A (x) |f_j><f_j| (localProjB): idempotent, identity-resolving (sum_localProjB),
 -- norm-resolving Born weights (sum_normSq_localProjB). ★★ reduceA_localLuders_mixture — THE
@@ -2490,7 +2490,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.reduceA_localLuders_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_localLuders_mixture
 
--- LocalBlockBridge (2026-08-03, SigmaLayer/LocalBlockBridge.lean; dynamical no-signalling
+-- LocalBlockBridge (2026-08-03, RecordLayer/LocalBlockBridge.lean; dynamical no-signalling
 -- brick 2). Under finProdFinEquiv, the block structure of a local B-measurement is the second
 -- projection (localBlock) and ★ the degenerate-Lüders block projector IS the local projector
 -- (toComposite_blockProj — a definitional identity, not an analogy), with isometric transport
@@ -2508,7 +2508,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.reduceA_blockLuders_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_blockLuders_mixture
 
--- LocalLudersBasis (2026-08-03, SigmaLayer/LocalLudersBasis.lean; dynamical no-signalling
+-- LocalLudersBasis (2026-08-03, RecordLayer/LocalLudersBasis.lean; dynamical no-signalling
 -- brick 3a). The local Lüders map for an ARBITRARY orthonormal basis on the measured factor:
 -- localProjOn g j = 1_A (x) |g_j><g_j| in coordinate form; the computational case recovers
 -- localProjB exactly (localProjOn_basisFun). Identity resolution by basis expansion
@@ -2533,7 +2533,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.reduceA_localLudersOn_mixture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.reduceA_localLudersOn_mixture
 
--- MeasurementCapstone (2026-08-03, SigmaLayer/MeasurementCapstone.lean; the second review's
+-- MeasurementCapstone (2026-08-03, RecordLayer/MeasurementCapstone.lean; the second review's
 -- step 4). ★★★ projectiveMeasurementCapstone — the corpus's four measurement closures as ONE
 -- Prop, for every Hermitian generator, base point, and unit preparation: rank_one
 -- (unifiedArenaClosure — one arena, one Liouville family), every_basis
@@ -2547,7 +2547,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.projectiveMeasurementCapstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.projectiveMeasurementCapstone
 
--- MixedSwap (2026-08-03, SigmaLayer/MixedSwap.lean; the mixed-preparations row). A mixed
+-- MixedSwap (2026-08-03, RecordLayer/MixedSwap.lean; the mixed-preparations row). A mixed
 -- preparation is two-stage sampling made a measure: mixedSwapPrep ρ = Σ_j λ_j • swapPrep [ψ_j]
 -- over the spectral ensemble (a probability measure by eigenvalues_isProbability).
 -- ★ mixed_swap_sector_born — THE MIXED DYNAMICAL BORN RULE: the mixture's mass on the
@@ -2563,7 +2563,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.mixed_swap_sector_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_swap_sector_born
 
--- PovmDynamics (2026-08-03, SigmaLayer/PovmDynamics.lean; the POVM/instrument-dynamics row).
+-- PovmDynamics (2026-08-03, RecordLayer/PovmDynamics.lean; the POVM/instrument-dynamics row).
 -- A POVM is a projective measurement on a dilated space watched through an isometry — made
 -- DYNAMICAL: prepare the dilated ray [Vψ] on the flat index and run the EXISTING degenerate
 -- record protocol with the ancilla block structure localBlock N K (no new dynamics/sectors).
@@ -2594,7 +2594,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.naimarkInstrumentClosureCanonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.naimarkInstrumentClosureCanonical
 
--- JoinClosure (2026-08-03, SigmaLayer/JoinClosure.lean; the degenerate one-protocol package,
+-- JoinClosure (2026-08-03, RecordLayer/JoinClosure.lean; the degenerate one-protocol package,
 -- fourth external review). The degenerate pieces existed as theorems on the join protocol but
 -- were never packaged as ONE closure on ONE protocol.
 -- ★ join_sector_born — the coarse dynamical Born mass: the canonical join preparation gives
@@ -2617,7 +2617,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.mixed_luders_followup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.mixed_luders_followup
 
--- PointerSmoothProfile (2026-08-03, SigmaLayer/PointerSmoothProfile.lean; the C^∞-ingredients
+-- PointerSmoothProfile (2026-08-03, RecordLayer/PointerSmoothProfile.lean; the C^∞-ingredients
 -- row, fourth external review's "continuous, not smooth"). Real.smoothTransition profiles with
 -- the plateau interface VERBATIM IDENTICAL to the trapezoids' (same statements, same
 -- hypotheses: =1 on the shrunk arc, =0 off the open arc, 0/π-halves around the stroke) — only
@@ -2629,7 +2629,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- inside the half-integer window). The strongest formulation without a manifold structure on
 -- the arena (that stays §2a-scoped with A1/A3).
 -- SUBSTITUTED 2026-08-04 (BACKLOG B1): the profile primitives moved DOWN the import graph to
--- SigmaLayer/SmoothProfile.lean and pointerWeights is now built on smoothArcWeight, so the
+-- RecordLayer/SmoothProfile.lean and pointerWeights is now built on smoothArcWeight, so the
 -- witness USES the C^infinity profile rather than citing it. The plateau interface is
 -- identical by construction, so every downstream landing/Born/protocol proof transferred with
 -- no change. contDiff_pointerWeights_lift is the new smoothness statement, and it is what
@@ -2652,7 +2652,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.smoothRampedU_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.smoothRampedU_schrodinger
 
--- NullSeamWitness (2026-08-03, SigmaLayer/NullSeamWitness.lean; the "Cantor-horn" row, fourth
+-- NullSeamWitness (2026-08-03, RecordLayer/NullSeamWitness.lean; the "Cantor-horn" row, fourth
 -- external review — delivered, and SIMPLER than the devil's-staircase sketch: the transition
 -- between record regions dodges the record gap by crossing WHERE THE RECORD REGIONS KISS
 -- (m₁ = m₂ = ½), touching the complement at one projective point; the crossing angle sweeps
@@ -2680,7 +2680,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.nullSeamClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamClosure
 
--- JointFlowTransfer (2026-08-04, SigmaLayer/JointFlowTransfer.lean; BACKLOG A1 -- the
+-- JointFlowTransfer (2026-08-04, RecordLayer/JointFlowTransfer.lean; BACKLOG A1 -- the
 -- formalisable half of the joint-arena Hamiltonian route). Paper C A2 / TN6 want measurement
 -- generated by a scalar on the WHOLE arena; the corpus's witness is fibrewise
 -- (pointerEvolve_fst freezes the base by rfl). A genuine joint flow BACK-REACTS, and the
@@ -2902,7 +2902,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.untriggeredCurve_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.untriggeredCurve_unique
 
--- NullSeamLift (2026-08-04, SigmaLayer/NullSeamLift.lean; BACKLOG B2). The third horn was
+-- NullSeamLift (2026-08-04, RecordLayer/NullSeamLift.lean; BACKLOG B2). The third horn was
 -- built on S^1 x CP^2 -- real dimension 5, ODD, hence no symplectic structure, which is why
 -- its measure had to be renamed nullSeamMeasure. Giving the register its CONJUGATE coordinate
 -- makes the arena T^2 x CP^2, dimension 6. The construction is unchanged (the crossing still
@@ -2922,7 +2922,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.nullSeamEvolveLift_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamEvolveLift_measurePreserving
 
--- PointerFrequency (2026-08-04, SigmaLayer/PointerFrequency.lean; BACKLOG B3a). The smooth
+-- PointerFrequency (2026-08-04, RecordLayer/PointerFrequency.lean; BACKLOG B3a). The smooth
 -- horn proved a SINGLE-SHOT sandwich but never said what an experimenter sees. The exact
 -- horns have had the frequency layer since LF1; the smooth horn did not.
 -- ★ pointer_born_frequency — i.i.d. trials of the smooth witness's preparation: the relative
@@ -2939,7 +2939,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pointerSectorProb_mem_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerSectorProb_mem_window
 
--- PovmSectorBorn (2026-08-04, SigmaLayer/PovmSectorBorn.lean; BACKLOG B4). Discharges the
+-- PovmSectorBorn (2026-08-04, RecordLayer/PovmSectorBorn.lean; BACKLOG B4). Discharges the
 -- scope note the 2026-08-04 audit added to PovmDynamics: povm_selector_born was DESCRIBED as
 -- "the dynamical POVM Born rule" but measures a SELECTOR FIBRE, not a protocol outcome
 -- sector -- the distinction SwapClosure states explicitly.
@@ -2957,7 +2957,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.povm_sector_born_canonical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.povm_sector_born_canonical
 
--- SharpenedNoGo (2026-08-04, SigmaLayer/SharpenedNoGo.lean; BACKLOG B5, the trilemma's
+-- SharpenedNoGo (2026-08-04, RecordLayer/SharpenedNoGo.lean; BACKLOG B5, the trilemma's
 -- third leg -- SHARPENED, NOT CLOSED).
 -- ★ posMeasure_noRecord_of_isOpenMap — an OPEN-MAP propagator on an OPEN ready set cannot
 -- hide the no-record set in a null set: the image is an open neighbourhood, and any
@@ -2997,7 +2997,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.posMeasure_noRecord_of_correlates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_of_correlates
 
--- PointerLuders (2026-08-05, SigmaLayer/PointerLuders.lean; BACKLOG B3b, BRICK 1 ONLY).
+-- PointerLuders (2026-08-05, RecordLayer/PointerLuders.lean; BACKLOG B3b, BRICK 1 ONLY).
 -- The smooth witness PROVABLY does not collapse (pointerEvolve_base_marginal_unchanged) --
 -- a feature, but it means the smooth horn gives records and Born and no state update.
 -- Composing with relocation needs an arena carrying pointer AND bank, and a relocation
@@ -3024,7 +3024,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.pointerIndex_eq_some_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.pointerIndex_eq_some_of_mem
 
--- NoRecordGeometry (2026-08-05, SigmaLayer/NoRecordGeometry.lean; BACKLOG B5-geom -- and
+-- NoRecordGeometry (2026-08-05, RecordLayer/NoRecordGeometry.lean; BACKLOG B5-geom -- and
 -- with it B5 CLOSED OUTRIGHT).
 -- The single remaining hypothesis of the trilemma's third leg was GEOMETRIC: that the
 -- no-record set is contained in the closure of its interior. The construction: feed weight
@@ -3054,7 +3054,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.posMeasure_noRecord_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_pointer
 
--- PointerLudersMarginal (2026-08-05, SigmaLayer/PointerLudersMarginal.lean; BACKLOG B3b
+-- PointerLudersMarginal (2026-08-05, RecordLayer/PointerLudersMarginal.lean; BACKLOG B3b
 -- brick 2 -- and with it B3b CLOSED).
 -- Brick 1 explicitly owed two things; both land here.
 -- ★ pointerRelocate_measurePreserving — the piecewise invariance: the arena partitions
@@ -3101,7 +3101,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.coupling_hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.coupling_hamiltonian_duality
 
--- MixedJoinLuders (2026-08-06, SigmaLayer/MixedJoinLuders.lean; BACKLOG D3a --
+-- MixedJoinLuders (2026-08-06, RecordLayer/MixedJoinLuders.lean; BACKLOG D3a --
 -- degenerate outcomes on mixed preparations, riding JoinClosure exactly as
 -- MixedLuders's scope note predicted).
 -- ★ mixed_join_sector_born — the mixed BLOCK Born rule: sector mass = the block sum
@@ -3134,7 +3134,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 
 -- A1 parity: the record layer on the EVEN-dimensional fibre (2026-08-09,
--- SigmaLayer/TorusRecord.lean). CircleFibre/CircleRecord fixed the fibre's non-compactness
+-- RecordLayer/TorusRecord.lean). CircleFibre/CircleRecord fixed the fibre's non-compactness
 -- but not its parity: a single circle is 1-dimensional, so CP^{N-1} x S^1 has ODD real
 -- dimension and cannot carry a symplectic or Kaehler structure at all. TorusFibre put the
 -- Born cells on T^2 (cells constrain the first angle, the second stays free); this file

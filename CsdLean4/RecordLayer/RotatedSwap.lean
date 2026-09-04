@@ -46,9 +46,9 @@ POVM/instrument dynamics) stay recorded in `specs/BACKLOG.md`.
 
 ## References
 
-`SigmaLayer/SwapClosure.lean` (`readyPrep`, `selReadyBank` machinery, the `momentContext`
-instance); `SigmaLayer/SwapLuders.lean` (`swap_luders_marginal` — the generic engine);
-`SigmaLayer/RotatedContext.lean` (`basisContext`, `basisContext_rate_mk`);
+`RecordLayer/SwapClosure.lean` (`readyPrep`, `selReadyBank` machinery, the `momentContext`
+instance); `RecordLayer/SwapLuders.lean` (`swap_luders_marginal` — the generic engine);
+`RecordLayer/RotatedContext.lean` (`basisContext`, `basisContext_rate_mk`);
 `specs/BACKLOG.md`.
 -/
 

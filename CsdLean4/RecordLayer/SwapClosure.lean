@@ -44,11 +44,11 @@ the split *within* the dynamical bundle only. See `specs/BACKLOG.md`.
 
 ## References
 
-`SigmaLayer/DynamicMeasurementClosure.lean` (the predecessor bundle, untouched);
-`SigmaLayer/SwapWitness.lean` (`swapProtocol`, `selReadyBank`, `swap_correlates`,
-`swap_pointerInvariant`); `SigmaLayer/SwapLuders.lean` (`swap_luders_born`);
-`SigmaLayer/MeasurementProtocol.lean` (`measure_outcomeSector_eq_of_correlates`);
-`SigmaLayer/DynamicBorn.lean` (`basinIndex`, `measure_basinIndex_fibre`);
+`RecordLayer/DynamicMeasurementClosure.lean` (the predecessor bundle, untouched);
+`RecordLayer/SwapWitness.lean` (`swapProtocol`, `selReadyBank`, `swap_correlates`,
+`swap_pointerInvariant`); `RecordLayer/SwapLuders.lean` (`swap_luders_born`);
+`RecordLayer/MeasurementProtocol.lean` (`measure_outcomeSector_eq_of_correlates`);
+`RecordLayer/DynamicBorn.lean` (`basinIndex`, `measure_basinIndex_fibre`);
 `Empirical/CSD/SequentialMeasurement.lean` (the empirical consumer); `specs/BACKLOG.md`.
 -/
 

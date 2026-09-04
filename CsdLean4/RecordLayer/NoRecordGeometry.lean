@@ -59,9 +59,9 @@ arenas and stays research (`specs/BACKLOG.md` §E, the two research frontiers).
 
 `specs/BACKLOG.md` B5, B5-geom (and §E for general trilemma exhaustiveness, which stays
 research); `specs/future-work.md` (the completed-work ledger this lands in);
-`SigmaLayer/SharpenedNoGo.lean` (`posMeasure_noRecord_of_correlates`, whose `hreg` this
-discharges); `SigmaLayer/PointerArena.lean` (`recordRegion`, the moment-region geometry);
-`SigmaLayer/NullSeamWitness.lean` (the third horn whose Dirac price this makes a theorem);
+`RecordLayer/SharpenedNoGo.lean` (`posMeasure_noRecord_of_correlates`, whose `hreg` this
+discharges); `RecordLayer/PointerArena.lean` (`recordRegion`, the moment-region geometry);
+`RecordLayer/NullSeamWitness.lean` (the third horn whose Dirac price this makes a theorem);
 `docs/TOUR.md` §"Which horn is the right one?".
 -/
 

@@ -40,7 +40,7 @@ licensed by `Tr(ρ|eᵢ⟩⟨eᵢ|) ≠ 0` through the spectral bridge — no me
 
 ⚠️ **Honest scope.** ~~Degenerate outcomes on mixtures (block-Lüders composed with Bayes)
 would ride `JoinClosure` the same way and are not restated~~ **delivered 2026-08-06**
-(`SigmaLayer/MixedJoinLuders.lean`, BACKLOG D3 first half): it rides `JoinClosure`
+(`RecordLayer/MixedJoinLuders.lean`, BACKLOG D3 first half): it rides `JoinClosure`
 exactly as predicted, and at rank ≥ 2 the posterior components are proven genuinely
 distinct — `mixed_join_luders` exhibits the conditioned mixture as the Bayes mixture of
 the per-component block posts `epistemicMeasure [Πᵢψⱼ]`, nothing collapsing to a vertex.
@@ -50,10 +50,10 @@ choice (`MixedSwap.lean`).
 ## References
 
 `specs/BACKLOG.md` (the outcome-conditioned mixed update row — this discharges it; fourth
-external review 2026-08-03); `SigmaLayer/MixedSwap.lean` (`mixedSwapPrep`, `eigRay`,
-`spectral_born_eq_traceForm`, `mixed_swap_sector_born`), `SigmaLayer/SwapClosure.lean`
+external review 2026-08-03); `RecordLayer/MixedSwap.lean` (`mixedSwapPrep`, `eigRay`,
+`spectral_born_eq_traceForm`, `mixed_swap_sector_born`), `RecordLayer/SwapClosure.lean`
 (`swapPrep`, `readyPrep`, `calibratedBank`, `prep_outcome_pos`, `swap_sector_born`),
-`SigmaLayer/SwapLuders.lean` (`swap_luders_born`),
+`RecordLayer/SwapLuders.lean` (`swap_luders_born`),
 `CsdLean4/Mathlib/Probability/ConditionalProbability.lean` (`cond_finsetSum`).
 -/
 

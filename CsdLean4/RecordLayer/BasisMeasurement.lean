@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.Measurement
 
 **Category:** 7-SigmaLayer (the record layer — arbitrary measurement context).
 
-The record layer of `SigmaLayer/Measurement.lean` is stated in the computational basis
+The record layer of `RecordLayer/Measurement.lean` is stated in the computational basis
 (`bornRate ψ i = ‖ψ i‖²`). This file generalises it to an **arbitrary observable** — any orthonormal
 basis `b : OrthonormalBasis (Fin n) ℂ E` of a complex inner-product space `E` — with the outcome
 probability the standard Born weight `‖⟨bᵢ, ψ⟩‖²`. The generalisation is a change of basis: measuring
@@ -28,7 +28,7 @@ every record-layer theorem transports along the isometry `b.repr`.
 Foundational-triple, no `sorry`.
 
 ## References
-`SigmaLayer/Measurement.lean` (the computational-basis record layer, `bornMeasurement`); Mathlib
+`RecordLayer/Measurement.lean` (the computational-basis record layer, `bornMeasurement`); Mathlib
 `OrthonormalBasis.repr` (the isometry to `EuclideanSpace`).
 -/
 

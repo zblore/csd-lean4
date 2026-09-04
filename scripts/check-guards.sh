@@ -111,6 +111,22 @@ expect_fail "mode4 (unwitnessed reason)" check-claim-provenance \
 case carries no physical information. -/
 noncomputable def guardSelfTestMode4 : Nat := 0'
 
+# --- check-doc-promises: a module PATH named in prose that does not exist must fail.
+# (2026-09-04: the SigmaLayer -> RecordLayer split had left 303 such references in 87
+# headers, and this guard only checked declaration NAMES.)
+plant '/-!
+# Probe
+
+References: `RecordLayer/NoSuchModuleProbe.lean`.
+-/'
+if bash scripts/check-doc-promises.sh >/dev/null 2>&1; then
+  echo "  BROKEN  doc-promises — did NOT fire on a module path that does not exist"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+unplant
+
 # --- check-import-negative: point the declared pair at a module that IS reachable.
 # Done on a copy, since the probe is in the script rather than the corpus.
 tmpg="${TMPDIR:-/tmp}/csd-guardtest.$$.sh"

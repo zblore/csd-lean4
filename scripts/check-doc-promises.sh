@@ -159,6 +159,40 @@ if os.path.exists(ledger):
                              "exact name — so neither its axiom footprint nor its spelling is "
                              "checked by anything" % row.get("id")))
 
+# ---------------------------------------------------------------------------
+# Module PATHS named in prose must exist too (added 2026-09-04).
+#
+# WHY. The SigmaLayer -> RecordLayer split left 303 references to
+# `SigmaLayer/X.lean` in 87 module headers, pointing at files that had moved. A
+# reader following a header's "References" section landed nowhere, and nothing
+# noticed for months: this guard checked that named DECLARATIONS exist and said
+# nothing about named FILES. Paths under `Mathlib/` are exempt — they are usually
+# references to upstream Mathlib, which is not in this tree.
+corpus_tops = {d for d in os.listdir("CsdLean4") if os.path.isdir(os.path.join("CsdLean4", d))} - {"Mathlib"}
+path_re = re.compile(r"(?:CsdLean4/)?(?:[A-Za-z][A-Za-z0-9]*/)+[A-Z][A-Za-z0-9]*\.lean")
+path_findings = []
+for f in files:
+    with open(f, encoding="utf-8") as fh:
+        text = fh.read()
+    for m in sorted(set(path_re.findall(text))):
+        rel = m[len("CsdLean4/"):] if m.startswith("CsdLean4/") else m
+        if rel.split("/")[0] not in corpus_tops:
+            continue
+        if not os.path.exists(os.path.join("CsdLean4", rel)):
+            path_findings.append((f, m))
+
+if path_findings:
+    print("check-doc-promises: FAIL — %d module path(s) named in prose do not exist:"
+          % len(path_findings))
+    print()
+    for f, m in path_findings:
+        print("  %s" % f)
+        print("      names `%s`, which is not a file in this tree" % m)
+    print()
+    print("  A moved module leaves every header that cited it pointing at nothing.")
+    print("  Fix the path, or drop the reference.")
+    sys.exit(1)
+
 if findings:
     print("check-doc-promises: FAIL — %d docstring promise(s) with no declaration:" % len(findings))
     print()
@@ -172,6 +206,6 @@ if findings:
     print("  EXCEPT in this script WITH ITS REASON.")
     sys.exit(1)
 
-print("check-doc-promises: OK — every declaration named in a module docstring exists.")
+print("check-doc-promises: OK — every declaration and module path named in a docstring exists.")
 print("  (%d files scanned, %d exception(s) declared.)" % (len(files), len(EXCEPT)))
 PY

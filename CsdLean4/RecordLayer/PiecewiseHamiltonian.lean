@@ -70,10 +70,10 @@ Hamiltonian flow (`shearEvolve_not_continuous` refutes it).
 
 ## References
 
-`SigmaLayer/ShearDiscontinuity.lean` (`shearEvolve_not_continuous` — why the classification is
-needed); `SigmaLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — why the seams
-are forced); `SigmaLayer/GlobalBasin.lean` (`globalBasin_ae_total` — why they are null);
-`SigmaLayer/ShearWitness.lean` (`shearEvolve`, `pshift`, `shearAmt`);
+`RecordLayer/ShearDiscontinuity.lean` (`shearEvolve_not_continuous` — why the classification is
+needed); `RecordLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — why the seams
+are forced); `RecordLayer/GlobalBasin.lean` (`globalBasin_ae_total` — why they are null);
+`RecordLayer/ShearWitness.lean` (`shearEvolve`, `pshift`, `shearAmt`);
 `specs/BACKLOG.md`; `specs/reconstruction-status.md` §2a.
 -/
 

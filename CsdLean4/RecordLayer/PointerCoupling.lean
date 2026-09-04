@@ -59,7 +59,7 @@ Mathlib has no symplectic API (`MATHLIB-GAPS.md`).
 `exp_smul_unitary` (`Mathlib/Analysis/Matrix/StoneC1.lean` staging),
 `Matrix.norm_exp_smul_neg_I_sub_le` (`DuhamelBound.lean` staging),
 `Matrix.norm_entry_le_l2_opNorm` (`L2OpNormEntry.lean` staging, new),
-`pointerH`/`pointerRot` algebra (`SigmaLayer/PointerRotation.lean`),
+`pointerH`/`pointerRot` algebra (`RecordLayer/PointerRotation.lean`),
 `fubiniStudyMeasure_smul_invariant`.
 -/
 

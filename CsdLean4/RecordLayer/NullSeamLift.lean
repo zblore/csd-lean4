@@ -54,7 +54,7 @@ moment map (`NullSeamWitness.lean`'s scope note).
 
 ## References
 
-`specs/BACKLOG.md` B2 (this row), A4 (the blocked arrow); `SigmaLayer/NullSeamWitness.lean`
+`specs/BACKLOG.md` B2 (this row), A4 (the blocked arrow); `RecordLayer/NullSeamWitness.lean`
 (the construction lifted here); `docs/TOUR.md` §"Which horn is the right one?" (the
 trilemma).
 -/

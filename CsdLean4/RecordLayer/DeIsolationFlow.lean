@@ -50,7 +50,7 @@ permanently-scoped symplectic row).
 
 ## References
 `specs/record-layer-plan.md` §3c (the de-isolation flow / first-passage race; step 2b′);
-`SigmaLayer/BornFibrePartition.lean` (the fibre partition — `cdfCell`, `bornRate`, `volume_bornCell`,
+`RecordLayer/BornFibrePartition.lean` (the fibre partition — `cdfCell`, `bornRate`, `volume_bornCell`,
 `volume_iUnion_bornCell_unit`); `LF4/MomentMap.lean` (`momentMap_mk_eq_inner_sq`, the rates).
 -/
 

@@ -78,8 +78,8 @@ and topological, and only `no_everywhere_correlation` here is of that kind.
 
 ## References
 
-`SigmaLayer/GlobalBasin.lean` (`globalBasin`, `globalBasin_ae_total` — the a.e.-totality that
-forces the selector/register split); `SigmaLayer/DeIsolationFlow.lean` (the open `H_int(M)`
+`RecordLayer/GlobalBasin.lean` (`globalBasin`, `globalBasin_ae_total` — the a.e.-totality that
+forces the selector/register split); `RecordLayer/DeIsolationFlow.lean` (the open `H_int(M)`
 obligation these constrain); `specs/BACKLOG.md`.
 -/
 

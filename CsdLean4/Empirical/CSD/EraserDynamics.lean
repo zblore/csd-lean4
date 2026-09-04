@@ -53,7 +53,7 @@ its local-unitary rotation for the `±` arm).
 `specs/BACKLOG.md` (the row); `specs/future-work.md`;
 `Empirical/CSD/QuantumEraserVolume.lean` (the statistics this module grounds dynamically);
 `Empirical/QM/QuantumEraser.lean` (`bellVec`, `sysBra`, `markBra`);
-`SigmaLayer/LocalLuders.lean` + `LocalLudersBasis.lean` (the machinery).
+`RecordLayer/LocalLuders.lean` + `LocalLudersBasis.lean` (the machinery).
 -/
 
 @[expose] public section

@@ -53,11 +53,11 @@ composed with Bayes, the degenerate counterpart of `MixedLuders.lean`, riding
 
 ## References
 
-`specs/BACKLOG.md` D3; `SigmaLayer/MixedLuders.lean` (the rank-one model this transports,
-and whose scope note this discharges); `SigmaLayer/MixedSwap.lean` (`eigRay`,
-`spectral_born_eq_traceForm`); `SigmaLayer/JoinClosure.lean` (`join_sector_born`);
-`SigmaLayer/JoinLuders.lean` (`joinPrep`, `joinPostMarg`, `joinWitness_blockLuders`,
-`sysRead`); `SigmaLayer/DegenerateLuders.lean` (`blockProj`);
+`specs/BACKLOG.md` D3; `RecordLayer/MixedLuders.lean` (the rank-one model this transports,
+and whose scope note this discharges); `RecordLayer/MixedSwap.lean` (`eigRay`,
+`spectral_born_eq_traceForm`); `RecordLayer/JoinClosure.lean` (`join_sector_born`);
+`RecordLayer/JoinLuders.lean` (`joinPrep`, `joinPostMarg`, `joinWitness_blockLuders`,
+`sysRead`); `RecordLayer/DegenerateLuders.lean` (`blockProj`);
 `Mathlib/Probability/ConditionalProbability.lean` (`cond_finsetSum`).
 -/
 

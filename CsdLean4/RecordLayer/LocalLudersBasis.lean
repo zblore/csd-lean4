@@ -42,8 +42,8 @@ the `QuantumEraserVolume` statistics).
 ## References
 
 `specs/BACKLOG.md` (the dynamical no-signalling + eraser row); `specs/future-work.md`.
-Reused corpus API: `localProjB`/`vecOuter`/`reduceA_mk` (`SigmaLayer/LocalLuders.lean`),
-`normSq_eq_sum_mul_star` (`SigmaLayer/OnticMarginals.lean`),
+Reused corpus API: `localProjB`/`vecOuter`/`reduceA_mk` (`RecordLayer/LocalLuders.lean`),
+`normSq_eq_sum_mul_star` (`RecordLayer/OnticMarginals.lean`),
 `OrthonormalBasis.sum_inner_mul_inner` + `OrthonormalBasis.sum_repr'` (Mathlib).
 -/
 

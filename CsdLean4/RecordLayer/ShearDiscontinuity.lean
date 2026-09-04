@@ -42,8 +42,8 @@ This module machine-checks the review's claim: ★ `shearEvolve_not_continuous`.
   transition states *outside* `⋃ᵢ Bᵢ` remains mathematically open. What this module proves is
   only that **this witness** is discontinuous. *Corrected 2026-08-04 (codebase audit).* — the continuous route was
   **delivered twice on 2026-08-03**: the ε-corridor pointer witness
-  (`continuous_pointerEvolve`, `SigmaLayer/PointerWeights.lean`) and the exact-Born third
-  horn (`nullSeamClosure`, `SigmaLayer/NullSeamWitness.lean`, whose seams map to the
+  (`continuous_pointerEvolve`, `RecordLayer/PointerWeights.lean`) and the exact-Born third
+  horn (`nullSeamClosure`, `RecordLayer/NullSeamWitness.lean`, whose seams map to the
   kissing state outside every record region). This module's negative result stands, and is
   what makes its witness one horn of a trilemma rather than a defect.
 * The two recorded repair routes (`specs/BACKLOG.md`): **(1)** smooth corridor regularisation —
@@ -64,10 +64,10 @@ This module machine-checks the review's claim: ★ `shearEvolve_not_continuous`.
 
 ## References
 
-`SigmaLayer/ShearWitness.lean` (`shearEvolve`, `pshift`, `shearAmt`);
-`SigmaLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — the forced-seam no-go);
-`SigmaLayer/DynamicBorn.lean` (`basinIndex`, `basinIndex_eq_of_mem`);
-`SigmaLayer/DegenerateLuders.lean` (`vertexPoint`, `momentMap_vertex`);
+`RecordLayer/ShearWitness.lean` (`shearEvolve`, `pshift`, `shearAmt`);
+`RecordLayer/MeasurementConstraints.lean` (`no_everywhere_correlation` — the forced-seam no-go);
+`RecordLayer/DynamicBorn.lean` (`basinIndex`, `basinIndex_eq_of_mem`);
+`RecordLayer/DegenerateLuders.lean` (`vertexPoint`, `momentMap_vertex`);
 `Mathlib/LinearAlgebra/Projectivization/Topology.lean` (connectedness, staged);
 `specs/reconstruction-status.md` §2a (A2 row); `specs/BACKLOG.md` (the reopened row).
 -/
