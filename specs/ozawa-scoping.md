@@ -149,8 +149,9 @@ reads "High — operator inequality, **no new infrastructure**", and that half i
 
 ⚠️ **Do not copy `Empirical/CSD/Uncertainty.lean` as a template.** That file is itself marked
 **SCHEMA-MISMATCH** ("docstring claims CSD-side content the type does not carry") and
-**TRANSPORT-ONLY**, with a `PLACEHOLDERS.md §7` row. Copying it silently adds a second undeclared
-placeholder, against the standing no-placeholder rule.
+**TRANSPORT-ONLY**. Copying it silently adds a second such bundle, against the standing
+no-placeholder rule. (It cites `PLACEHOLDERS.md` §7 for the *category*; §7's table lists only
+`CSDCloningBundle` and `CSDUnitaryBundle`, so there is no row for it — do not cite one.)
 
 ⚠️ **There is no volume-ratio reading of `ε` and `η`.** LF4-todo §14's discharged correspondence
 (`pauliDot_observable_correspondence`) matches the Hilbert expectation of a **system** observable

@@ -33,8 +33,10 @@ The obvious move would be a "volume-ratio reading" of `ε` and `η` on the patte
   observable against a Σ-side integral. Ozawa's `ε` and `η` are expectations of **joint**
   operators in `ψ ⊗ σ_probe`. There is no Σ-side fibre law for the probe factor and no ontic
   function for `A_out`, so there is nothing to state.
-* `Empirical/CSD/Uncertainty.lean` is itself marked **SCHEMA-MISMATCH** and **TRANSPORT-ONLY**
-  with a `PLACEHOLDERS.md §7` row. Copying it would add a second undeclared placeholder.
+* `Empirical/CSD/Uncertainty.lean` carries its own **SCHEMA-MISMATCH** marker ("docstring claims
+  CSD-side content the type does not carry") and a TRANSPORT-ONLY section. Copying it would add a
+  second such bundle. (Its header cites `PLACEHOLDERS.md` §7 for the *category*; §7's table lists
+  only `CSDCloningBundle` and `CSDUnitaryBundle`, so there is no row for it — do not cite one.)
 
 So the twin follows WAY **brick 1** instead (`Empirical/CSD/WignerArakiYanase.lean`): state the
 scope as a theorem at the `IsJointLift` level. This file is a **corollary** of
