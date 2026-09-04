@@ -53,7 +53,7 @@ cleanup() {
   rm -f "$PROBE" "${TMPDIR:-/tmp}"/csd-guardtest.* 2>/dev/null || true
   # The axiom-sweep probe imports itself from the root module; put the root back.
   [ -f "$ROOTBAK" ] && mv -f "$ROOTBAK" "$ROOT"
-  rm -f "docs/std-lint-baseline.txt.guardbak" 2>/dev/null || true
+  rm -f "docs/std-lint-baseline.txt.guardbak" "scripts/gleason-free.lean.guardbak" 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -204,6 +204,22 @@ end CSD.GuardSelfTest'
   git rm -q --cached "$PROBE" >/dev/null 2>&1; rm -f "$PROBE"; lake build >/dev/null 2>&1
   if [ "$rc" -eq 0 ]; then
     echo "  BROKEN  axiom-sweep — did NOT fire on a planted sorry"
+    fail=1
+  else
+    pass=$((pass + 1))
+  fi
+
+  # (11b) check-gleason-free must fire when a declared module's proofs DO reach Busch.
+  # Adding a module that provably does (LF2/Preparation consumes the Busch step) is the same
+  # defect as a re-route through the Busch-mediated twin.
+  gf="scripts/gleason-free.lean"
+  cp "$gf" "$gf.guardbak"
+  sed -i 's#CsdLean4.LF4.SingletKahler,#CsdLean4.LF2.Preparation,#' "$gf"
+  bash scripts/check-gleason-free.sh >/dev/null 2>&1
+  rc=$?
+  mv "$gf.guardbak" "$gf"
+  if [ "$rc" -eq 0 ]; then
+    echo "  BROKEN  gleason-free — did NOT fire on a module whose proofs reach Busch"
     fail=1
   else
     pass=$((pass + 1))

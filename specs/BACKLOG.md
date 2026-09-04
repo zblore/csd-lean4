@@ -105,17 +105,19 @@
 >      The guard also fails now when a declared root is not a tracked module (a rename used to
 >      leave the claim silently unchecked) and when its own BFS errors — an escaping slip made
 >      `awk` abort mid-change and the empty result read as "all claims hold". Two new probes.
->    * ⚠️ **Still unguarded: the 12 proof-term claims.** `MalusVolume`, `MachZehnderVolume`,
->      `SternGerlachVolume`, `VolumeCanonical`, `KS18Volume`, `MerminPeresVolume`,
->      `KCBSVolume`, `ElitzurVaidmanVolume`, `Metrology/Ramsey`, `SingletKahler`,
->      `SingletKahlerFlow`, `Tests/Witnesses/SingletBell` DO import `EffectGleason`
->      transitively and claim only that their proofs route around Busch (`SingletKahler`:
->      "routes through the Busch-free `OP_p_at_jointEig_eq_P_st_direct` … not through the
->      Busch-mediated twin"). Checked by hand 2026-09-04 with a constant-graph walk — 259
->      declarations, none reaching `effect_gleason_representation` — and true then. **One
->      re-route through the Busch-mediated twin makes 12 headers false, silently.** Closing it
->      needs a dependency-level guard in the style of `scripts/axiom-sweep.lean` (S–M; the
->      probe is written and worked, it needs turning into a script with a declared inventory).
+>    * **The 12 proof-term claims, guarded too** (2026-09-04). The modules that DO import
+>      `EffectGleason` and claim only that their proofs route around it — `MalusVolume`,
+>      `MachZehnderVolume`, `SternGerlachVolume`, `VolumeCanonical`, `KS18Volume`,
+>      `MerminPeresVolume`, `KCBSVolume`, `ElitzurVaidmanVolume`, `Metrology/Ramsey`,
+>      `SingletKahler`, `SingletKahlerFlow` — are now checked at the **constant-graph** level by
+>      `scripts/check-gleason-free.sh` (+ `gleason-free.lean`), in CI next to the axiom sweep:
+>      259 declarations, none reaching `effect_gleason_representation`. A re-route through the
+>      Busch-mediated twin now fails on the commit that makes it, instead of falsifying eleven
+>      headers and the glossary's headline framing silently. A declared module that is renamed
+>      away fails too, rather than being checked vacuously. Two probes in `check-guards.sh`
+>      (16 probes). `Tests/Witnesses/SingletBell.lean` carries the same claim and is out of
+>      scope (it is in `CsdLeanTests`, outside `import CsdLean4`); its content is an
+>      instantiation of `LF4.ofKählerPreparation`, whose module is covered.
 >
 >    **Tranche 2, still open:** **prose audit completion** (M) + **`REFERENCES.json`** (M), plus
 >    the cheap expert-review rows (D Colbeck–Renner spec note, F excess-baggage citation).

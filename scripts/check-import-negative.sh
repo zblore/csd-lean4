@@ -44,8 +44,9 @@ cd "$(git rev-parse --show-toplevel)"
 # Busch-mediated twin"). Checked by hand 2026-09-04 with a constant-graph walk -- 259
 # declarations, none reaching `effect_gleason_representation` -- and TRUE THEN. An
 # import-closure guard cannot see it; one re-route through the Busch-mediated twin would
-# make 12 headers false silently. Closing that needs a dependency-level check in the style
-# of `scripts/axiom-sweep.lean` (BACKLOG, hardening).
+# make 12 headers false silently. That is now checked, at the constant-graph level, by
+# `scripts/check-gleason-free.sh` (2026-09-04) — the two guards are complementary: this one
+# says a proof CANNOT reach Busch, that one says it DOES not.
 PAIRS='
 CsdLean4.LF6.LocalDeisolationFlow|CsdLean4.LF2.EffectGleason|C1 Born-volume route must not reach Busch/effect-Gleason
 CsdLean4.Empirical.CSD.BellVolume|CsdLean4.LF2.EffectGleason|header asserts Gleason-free
