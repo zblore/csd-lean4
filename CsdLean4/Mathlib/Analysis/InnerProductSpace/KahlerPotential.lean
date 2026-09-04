@@ -13,6 +13,8 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 /-!
 # Kähler potentials: `dd^c` forms are closed, and the Fubini–Study chart form
 
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+
 **Category:** 1-Mathlib-staging (CSD-free; differential forms on normed spaces).
 
 `KahlerClosed.lean` proved `dω = 0` for the **constant** fundamental form — the flat statement,

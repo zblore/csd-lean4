@@ -12,6 +12,8 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 /-!
 # Moving up the chain: the Kähler-sector VOLUME is forced, not posited
 
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+
 **Category:** 3-Local (the Kähler-sector VOLUME is forced, not posited).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/liouville-measure/

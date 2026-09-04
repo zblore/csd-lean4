@@ -247,6 +247,21 @@ it **cannot** see a claim that stays put while the fact beneath it changes. Disc
 `BACKLOG.md` row therefore carries a mechanical companion step: re-read the sites check (8)
 prints.
 
+**8.3a-bis — what each word means, and the marker** *(added 2026-09-04).* §8.3a says a
+content-carrying word must be honest. [`specs/TERMS.md`](specs/TERMS.md) says **what each one
+means in this corpus and what backs it**, so the rule can be checked instead of remembered. Where
+a module uses the *restricted* sense — the part TERMS.md records as NOT established — it carries
+`TERM-SCOPE(<Term>)` in its docstring, and `scripts/check-terms.sh` ratchets the unmarked count
+against `docs/terms-baseline.txt`.
+
+Two findings shaped it, and both are worth keeping. **"Hamiltonian" has two senses here**: the
+operator sense (a Hermitian `H` generating `exp(-itH)`) is fully backed and is the corpus's usual
+meaning; only the vector-field sense `X_H = ω⁻¹dH` is restricted. A guard keyed on *names* would
+have raised 37 declarations of which essentially none are defects. And **a uniqueness scan is
+deliberately not gated**: docstrings claiming "the only" without `∃!` are 34 hits that are almost
+all ordinary English. The guard keys on vocabulary that *cannot* mean anything else, which is the
+difference between a guard and noise.
+
 ### 8.3b Capstone discipline: strengthen, don't multiply — *policy, adopted 2026-08-14*
 
 Author decision (2026-08-14, after the Q19/Q20 C1 arc): **limit capstone/closure bundles

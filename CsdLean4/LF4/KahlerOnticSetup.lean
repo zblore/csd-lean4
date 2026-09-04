@@ -13,6 +13,8 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 /-!
 # W2: the Kähler ontic-sector interface
 
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+
 **Category:** 3-Local (the Kähler ontic-sector interface).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/kahler-form/

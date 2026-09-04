@@ -12,6 +12,8 @@ public import Mathlib.Analysis.Complex.Basic
 /-!
 # The pointwise Fubini–Study / Kähler fundamental form (linear-algebra core)
 
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+
 **Category:** 1-Mathlib (CSD-free; the form-level analogue of `fubiniStudyMeasure`).
 
 Mathlib has no Kähler-geometry API (no manifold differential forms, no exterior derivative, no

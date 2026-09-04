@@ -10,6 +10,8 @@ public import CsdLean4.RecordLayer.ShearDiscontinuity
 /-!
 # SigmaLayer/PiecewiseHamiltonian: the classification of the measurement dynamics
 
+**TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian"; `specs/TERMS.md` records what is backed and what is not.
+
 **Category:** dynamical measurement / classification (the decision resolving the reopened
 Hamiltonian-origin row, 2026-08-02).
 

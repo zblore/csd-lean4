@@ -127,6 +127,24 @@ else
 fi
 unplant
 
+# --- check-terms: an unmarked use of a restricted term sense must fail when the count grows.
+# (Written with awk, not sed: every earlier attempt to put a backreference through a heredoc
+#  landed a literal control byte in this file and the probe passed while mutating nothing.)
+tb="docs/terms-baseline.txt"
+cp "$tb" "$tb.guardbak"
+k=$(awk '$1=="Kahler"{print $2}' "$tb")
+awk -v n="$((k - 1))" '$1=="Kahler"{print $1, n; next} {print}' "$tb" > "$tb.tmp"
+mv "$tb.tmp" "$tb"
+bash scripts/check-terms.sh >/dev/null 2>&1
+rc=$?
+mv "$tb.guardbak" "$tb"
+if [ "$rc" -eq 0 ]; then
+  echo "  BROKEN  terms — ratchet did NOT fire on a term over its pin"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+
 # --- check-references: a `[Key]` citation with no entry must fail.
 plant '/-!
 # Probe
