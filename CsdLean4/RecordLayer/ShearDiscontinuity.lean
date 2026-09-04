@@ -48,9 +48,13 @@ This module machine-checks the review's claim: ★ `shearEvolve_not_continuous`.
   what makes its witness one horn of a trilemma rather than a defect.
 * The two recorded repair routes (`specs/BACKLOG.md`): **(1)** smooth corridor regularisation —
   records and Born correct up to `ε`, priced by `collapse_accuracy_bound`; **(2)** classify the
-  measurement dynamics as *piecewise Hamiltonian with null seam set* (standard in dynamics:
-  billiards, impact systems), justified physically by the forced-seam no-go. Choosing between
-  them is an authorial decision, reopened 2026-08-02.
+  measurement dynamics **piecewise, with a null seam set** (standard in dynamics: billiards,
+  impact systems), justified physically by the forced-seam no-go. ⚠️ Route (2) was taken
+  (`RecordLayer/PiecewiseHamiltonian.lean`) and its name corrected the same evening: the pieces
+  are rigid **symplectic** translations, *not* flows of global Hamiltonians (`ι_Xω = a·dp` is
+  closed but not exact on `T²`). Route (1) was then delivered separately as the compact-Kähler
+  pointer witness. Both stand, as two horns of the trilemma named above — this is no longer an
+  open choice between repairs.
 
 ## Supporting results
 

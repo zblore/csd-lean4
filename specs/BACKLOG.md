@@ -145,11 +145,33 @@
 >      line-precise `[Key, file:Lstart-Lend]` citations. The guard checks what is there; it
 >      says nothing about how much of the corpus is cited.
 >
->    **Tranche 2, still open:** the rest of **`REFERENCES.json` coverage** (M) and **prose audit
->    completion** (M). ⚠️ `prose-audit.md` is at "roughly a fifth of the surface covered" and
->    names its own next step: the **unrun pass-3 consumer sweep** — for every recorded
->    correction, grep for downstream restatements that still assert the old claim. That sweep is
->    the cheapest remaining defect-finder in the hardening queue.
+>    **Tranche 2 — second part LANDED 2026-09-04.**
+>    * **Prose audit pass 4** (`prose-audit.md`): the pass-3 consumer sweep, run against every
+>      recorded correction — twelve probes. **Three stale restatements found**, all of the A2
+>      torus-flux withdrawal ("piecewise Hamiltonian" → piecewise rigid symplectic translation):
+>      two in `PiecewiseHamiltonian.lean` itself (its "## The decision" record and a section
+>      heading) and one in `ShearDiscontinuity.lean` (route (2) named by the withdrawn name, and
+>      still calling the choice open). Fixed; no identifier changed. Nine probes clean.
+>      **Sharpened lesson:** the stale restatements were in the *same file as the correction*
+>      and its nearest neighbour — a correction paragraph at the top of a module does not sweep
+>      that module's own headings.
+>    * **Publication errata E-3 and E-4** — Paper D §8: PBR's target stated backwards with the
+>      three senses of "epistemic" run together (E-3), and the equivariance analogue described as
+>      "proved twice" when μL-preservation is a *structure field* (`ConstraintDynamics.flow_preserves`,
+>      P4) and only μ_FS invariance is a theorem (E-4). ⚠️ Both are **reported, not verified here**
+>      — the manuscripts are not in this repository; what is verified is every repository-side
+>      claim the entries make.
+>    * **`REFERENCES.json` coverage, measured rather than asserted.** `check-references.sh` now
+>      reports the gap: **7 entries against ~108 distinct `Author YYYY` citations in Lean
+>      docstrings**. Deliberately NOT gated (the pattern over-counts dated prose) and deliberately
+>      NOT bulk-filled: entries whose bibliographic details are unverified would make the file
+>      bigger and less trustworthy, which is the failure its own header warns about.
+>
+>    **Tranche 2, still open:** **`REFERENCES.json` coverage** proper (M) — the ~101 missing
+>    entries need bibliographic details from the author, plus the line-precise
+>    `[Key, file:Lstart-Lend]` citations §8.2 asks for. And **prose audit passes 1–2 over the
+>    remaining four-fifths** of the surface; the pass-3 sweep against corrections recorded only
+>    in commit messages is also unrun.
 > 4. **Local Friendliness twin** (M, row C) and **Ozawa error–disturbance twin** (M, row B) — the
 >    next content bricks (breadth/hardening); then **Q16 CP brick** (M–L, reconstruction path).
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in

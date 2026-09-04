@@ -218,12 +218,48 @@ passes hunted *reasons given for restrictions*; this one hunts **stale restateme
 downstream of a fixed definition**, which is a different and cheaper sweep — one grep
 per corrected term. Worth running against every past correction, not just E-2.
 
+### Pass 4 (2026-09-04) — the pass-3 sweep, run against every recorded correction
+
+Pass 3 ended with "worth running against every past correction, not just E-2". This is
+that run: twelve probes, one per recorded correction, each grepping the corpus for prose
+that still asserts the falsified reading. **Three stale restatements found, all of the
+same correction** — the A2 torus-flux withdrawal of the "piecewise Hamiltonian" reading
+(2026-08-02 evening):
+
+* `RecordLayer/PiecewiseHamiltonian.lean`, "## The decision" — recorded the 2026-08-02
+  decision as *"CSD measurement dynamics is classified as piecewise Hamiltonian with a
+  null seam set"*, the name withdrawn later the same evening by the correction stated at
+  the top of that very file.
+* the same file's section heading, *"What 'piecewise Hamiltonian with null seam set'
+  means"* — the withdrawn name as the thing being explained.
+* `RecordLayer/ShearDiscontinuity.lean`, the repair-routes bullet — named route (2) by the
+  withdrawn name AND still called the choice open ("an authorial decision, reopened
+  2026-08-02"), when route (2) was taken, renamed, and route (1) later delivered as the
+  compact-Kähler pointer witness.
+
+All three fixed 2026-09-04; no theorem or module identifier changed (those are retained
+for pin stability, which is what the file's own correction paragraph licenses — it does
+**not** license restating the withdrawn reading in prose).
+
+The other nine probes came back clean: every hit was either a correction record or a
+correct use. Notably clean were E-1 (type separation / Bell content), the `nullSeamLiouville`
+naming slip, the Q28 "Segre non-factorisation implies a PBR contradiction" withdrawal, the
+WAY "compatible by construction" withdrawal, and the brick-2 "local tomography on the arena"
+relabel.
+
+**The lesson pass 3 predicted, confirmed and sharpened.** The stale restatements were not
+in distant consumers — they were in the *same file as the correction* and in its nearest
+neighbour. A correction paragraph at the top of a module does not sweep the module's own
+headings and decision records. Grep the corrected term inside the corrected file first.
+
 ## Status
 
-**Roughly a fifth of the surface covered. Two defects found** (one per method: pass 2
-the false reason, pass 3 the stale downstream restatement). The remaining blocks are
-recorded here rather than implied to be clean. **Unrun cheap sweep:** the pass-3
-consumer grep against the corpus's other recorded corrections.
+**Roughly a fifth of the surface covered. Five defects found** (pass 2 the false reason,
+pass 3 the stale downstream restatement, pass 4 three more of the pass-3 kind). The
+remaining blocks are recorded here rather than implied to be clean. The pass-3 sweep is
+now **run** against the recorded corrections; what stays unrun is the same sweep against
+corrections recorded only in commit messages, and passes 1-2 over the remaining
+four-fifths of the surface.
 
 ## References
 

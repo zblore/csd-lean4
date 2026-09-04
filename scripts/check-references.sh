@@ -74,4 +74,24 @@ if findings:
 
 print("check-references: OK (%d entr%s, every cited_by resolves, every `[Key]` citation is known)"
       % (len(refs), "y" if len(refs) == 1 else "ies"))
+
+# COVERAGE, reported and NOT gated. The §8.2 obligation is one entry per source; the file is
+# a seed. This measures the gap instead of leaving it vague: distinct `Author YYYY`-shaped
+# citations in Lean docstrings, against the keys that exist. It is deliberately not a ratchet
+# — the pattern also catches dated prose ("Corrected 2026"), so the number is an upper bound
+# on real sources, not a defect count.
+noise = re.compile(r"^(Corrected|DISCHARGED|The|Landed|Added|Fixed|Superseded|Delivered|Scoped|Done|Closed|Updated|Reopened|Withdrawn|Verified|Adopted|Extracted|Relocated|Corrections?|Correction)$")
+authoryear = re.compile(r"([A-Z][a-zA-Z]+(?:[–-][A-Z][a-zA-Z]+)*)\s+((?:19|20)\d\d)")
+lean = [p for p in subprocess.run(["git", "ls-files", "CsdLean4/**/*.lean"],
+                                  capture_output=True, text=True).stdout.split() if p]
+cited = set()
+for f in lean:
+    with open(f, encoding="utf-8", errors="replace") as fh:
+        for m in authoryear.finditer(fh.read()):
+            if not noise.match(m.group(1)):
+                cited.add("%s %s" % (m.group(1), m.group(2)))
+print("  coverage: %d entr%s against ~%d distinct `Author YYYY` citations in Lean docstrings"
+      % (len(refs), "y" if len(refs) == 1 else "ies", len(cited)))
+print("            (§8.2 obligation — one entry per source plus line-precise citations — is OPEN;")
+print("             see specs/BACKLOG.md. This line measures the gap, it does not gate it.)")
 PY

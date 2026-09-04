@@ -112,6 +112,105 @@ chain-locality claim is available, but only through the corrected object
 
 ---
 
+## E-3 — Paper D §8: PBR's target is stated backwards, and two senses of "epistemic" are run together
+
+**Status:** OPEN (paper edit required; the repository side is correct and was
+never wrong). **Raised:** 2026-09-04, during an external review of the §0
+report. ⚠️ **Reported, not verified here:** the manuscripts are not in this
+repository, so the reviewer's reading of §8 is taken as given. What IS verified
+is everything the repository side asserts below.
+
+**What the text is reported to claim.** That PBR targets ψ-**ontic** models, and
+that CSD's "epistemic" reading of the state puts it on the side PBR rules out.
+
+**Why it is wrong.** The Harrigan–Spekkens classification runs the other way. A
+preparation interface is ψ-**ontic** when distinct exact pure preparations have
+**mutually singular** ontic measures, ψ-**epistemic** when some distinct pair
+overlaps; PBR rules out the **ψ-epistemic** class (under preparation
+independence). CSD's exact sharp interface is on the ψ-**ontic** side, so it
+*satisfies* PBR's disjointness conclusion rather than being a target of it.
+
+The conflation underneath is between three distinct claims, which
+`RecordLayer/PBRPreparation.lean` was written to separate and which its header
+lists in order:
+
+1. **CSD epistemicity of `[ψ]`** — `π : Σ → ℂℙ^{N-1}` is many-to-one and
+   incomplete. This is the corpus's own sense of "the state is epistemic".
+2. **Harrigan–Spekkens ψ-onticity** — the technical classification above. CSD is
+   ψ-ONTIC here.
+3. **Finite-resolution preparation overlap** — positive-volume *region*
+   preparations with overlapping regions provably DO have non-mutually-singular
+   conditional laws.
+
+(1) and (3) are true; (2) says CSD is ψ-ontic on the exact interface; there is no
+tension, because they are claims about different objects. The module's own
+verdict: *"Conflating (3) with (2) was the error this module corrects."*
+
+**What the repository now says.** ★★ `sharp_preparations_mutuallySingular`
+(`RecordLayer/PBRPreparation.lean:141`) — any two ontic measures whose projective
+laws are Diracs at distinct points are mutually singular, with no `Preparation`
+structure, no region and no finiteness in the hypotheses. Concrete corollary
+`epistemicMeasure_mutuallySingular` (:163); capstone
+`pbr_sharp_preparation_capstone` (:258); class separation
+`exact_sharp_ne_region_conditional`. `Mathlib/MeasureTheory/MutuallySingularMap.lean`
+is the Cat-1 measure-theory input (`Measure.MutuallySingular.of_map`), **not** the
+result itself — a citation naming that file for the ψ-onticity claim is naming the
+wrong thing.
+
+⚠️ Two riders the paper must keep. **Nothing in the corpus bears on PBR
+preparation independence** — PI is neither established nor refuted, and the
+module says so explicitly. And the **earlier non-factorisation defence is
+withdrawn**: reading the Segre composite-geometry results as a PBR contradiction
+was the superseded Q28 interpretation (`specs/c2-support-plan.md`).
+
+**What the paper must do.** State the classification in the Harrigan–Spekkens
+direction; say that CSD's exact sharp interface is ψ-ontic and cite
+`sharp_preparations_mutuallySingular`; keep the corpus's sense (1) of "epistemic"
+verbally distinct from the classification; mention (3) rather than leaving a
+referee to find it; and assert nothing about preparation independence.
+
+---
+
+## E-4 — Paper D §8: the equivariance analogue is posited on one side, not "proved twice"
+
+**Status:** OPEN (paper edit required; the repository side is correct as stated,
+but is easy to over-read). **Raised:** 2026-09-04, same review. ⚠️ Same caveat:
+the §8 text is reported, not read from here.
+
+**What the text is reported to claim.** That CSD's analogue of Bohmian
+equivariance is *proved twice* — Liouville preservation of `μL` under the ontic
+flow, and invariance of `μ_FS` under the projective unitary flow.
+
+**Why it is wrong.** The two halves have different status.
+
+* `μ_FS` invariance IS a theorem: `fubiniStudyMeasure_smul_invariant`
+  (`Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:165`), with
+  `kFlow_measurePreserving` (`LF4/KahlerFlow.lean:86`) the constructed instance.
+* `μL` preservation is **not a theorem**. It is a **field of the structure** —
+  `ConstraintDynamics.flow_preserves`, P4: *"each time-`t` map preserves the
+  Liouville measure"*. It is posited of every model, not derived in any.
+
+The distinction is exactly the one a Bohm comparison turns on. In Bohmian
+mechanics equivariance is a theorem, obtained from the guidance equation with the
+continuity equation. In CSD the corresponding preservation is structural. That
+does not weaken the comparison — it sharpens it, and it is why the origin of the
+measure remains a posit on both sides, which is the paragraph's own conclusion.
+
+Related: the "Dirac on the base, Haar on the fibre" preparation
+(`epistemicMeasure p = δ_p ⊗ vol`) is **covariant, not invariant** — the shape is
+preserved while the base point transports. And there is at present **no single
+named theorem** stating the equivariance analogue, which is why the comparison
+keeps being lost; a capstone stating it is a candidate Lean brick, not an
+existing result. `isolated_flow_measure_preserving`, cited in the review draft,
+does not exist.
+
+**What the paper must do.** Say "posited once, proved once", naming
+`ConstraintDynamics.flow_preserves` (P4) and `fubiniStudyMeasure_smul_invariant`;
+or, if a single citation is wanted, cite `kFlow_measurePreserving` as the
+constructed instance and say that the general preservation is structural.
+
+---
+
 ## How to use this file
 
 Add an entry whenever formal work contradicts or materially weakens a claim in
@@ -122,4 +221,7 @@ actually amended — not when the repository side is fixed.
 
 `specs/c1-correction-plan.md`; `docs/C1-FORMAL-SUPPORT.md`;
 `CsdLean4/LF3/ContextMap.lean`; `CsdLean4/LF6/NudgeLocality.lean`;
-`CsdLean4/LF6/SingletDeisolationFlow.lean`.
+`CsdLean4/LF6/SingletDeisolationFlow.lean`; `CsdLean4/RecordLayer/PBRPreparation.lean`
+and `specs/c2-support-plan.md` (E-3); `CsdLean4/SigmaLayer/ConstraintDynamics.lean`,
+`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean` and
+`CsdLean4/LF4/KahlerFlow.lean` (E-4).

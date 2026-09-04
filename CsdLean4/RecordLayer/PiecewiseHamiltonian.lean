@@ -33,11 +33,18 @@ obstruction vanishes. See `specs/BACKLOG.md`.
 
 `ShearDiscontinuity.lean` proved the measurement propagator is **not** continuous, reopening the
 Hamiltonian-origin row with two recorded routes. **The decision (author, 2026-08-02): route (2)
-— CSD measurement dynamics is classified as *piecewise Hamiltonian with a null seam set*.**
-Corridor regularisation (route 1) stays recorded in `specs/BACKLOG.md` as an optional later
-strengthening, not an obligation.
+— classify the measurement dynamics piecewise, with a null seam set.** ⚠️ The classification was
+named "piecewise Hamiltonian" when that decision was taken; the flux correction of the same
+evening (above) withdrew the Hamiltonian reading, and the accurate name is **piecewise rigid
+symplectic torus translation with null seam set**. Route 1 (corridor regularisation) was later
+delivered on its own terms as the compact-Kähler pointer witness, so the two are now horns of a
+trilemma rather than alternatives (`RecordLayer/NullSeamWitness.lean` is the third).
 
-## What "piecewise Hamiltonian with null seam set" means, machine-checked
+## What the piecewise classification means, machine-checked
+
+*(The section heading said "piecewise Hamiltonian with null seam set" until 2026-09-04; the
+theorem and module names are kept for pin stability, but the prose should not restate a reading
+the header withdraws.)*
 
 Three facts, each a theorem:
 
