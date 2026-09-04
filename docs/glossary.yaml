@@ -5550,6 +5550,57 @@ entries:
     source: curated
     related: [bell-chsh, singlet-contextual-model, hidden-variables, contextuality, no-signalling, is-csd-superdeterministic]
 
+  - slug: excess-baggage
+    kind: question
+    hook: >
+      No. The excess-baggage theorems say an ontic model of an N-level system needs a
+      continuum of ontic states. CSD's Sigma is a continuum by construction, so the
+      theorem is satisfied before it is asked.
+    layman: >
+      There is a family of results -- Hardy's, and Montina's sharpening -- with a
+      deliberately deflating name. They say that any model putting real underlying states
+      beneath quantum mechanics must carry more than looks necessary: for a system with N
+      distinguishable outcomes, no finite number of underlying states will do. You need a
+      continuum. The name suggests the cost is embarrassing.
+
+      For most hidden-variable programmes it is a real cost, because they set out to
+      recover quantum statistics from something smaller or simpler than the quantum state.
+      For CSD it is not a cost at all, because the continuum is not a concession. The
+      constraint surface is a continuous space from the first line of the construction --
+      that is what it is -- and the ontic measures are volumes on it. The theorem asks for
+      exactly what the programme already assumes.
+
+      This entry exists so that the question is answered rather than left hanging: a
+      referee meeting a hidden-variable-shaped theory is entitled to raise excess baggage,
+      and the answer is short.
+    in_csd: >
+      Sigma is a measurable space carrying a finite Liouville measure, and the sector map
+      is many-to-one onto projective space. Nothing in the construction attempts a finite
+      or countable ontic state space, so the excess-baggage lower bound is satisfied
+      trivially rather than evaded.
+
+      Two things the entry does NOT claim. It does not claim the theorem supports CSD --
+      satisfying a lower bound is not evidence for a model. And it does not claim
+      cardinality is what makes the programme work: the load-bearing structure is the
+      fibre, its measure, and the moment-map cells, not the mere fact that Sigma is
+      uncountable. The excess-baggage theorems are silent about all of that.
+    mathematical: >
+      Hardy 2004 and Montina 2008: an ontic model reproducing the statistics of an N-level
+      quantum system requires an ontic state space of continuum cardinality; a finite set
+      of ontic states cannot reproduce the continuum of pure-state predictions. CSD's
+      Sigma is a continuum by construction (P1 measurable constraint surface, P2 finite
+      Liouville measure), so no bound is approached from below.
+    term: Does the excess-baggage theorem count against CSD?
+    status: definition
+    source: curated
+    reviewed: 2026-09-04
+    external:
+      - text: "Hardy, Quantum ontological excess baggage, Stud. Hist. Phil. Mod. Phys. 2004"
+        url: https://doi.org/10.1016/j.shpsb.2003.12.001
+      - text: "Montina, Exponential complexity and ontological theories of quantum mechanics, Phys. Rev. A 2008"
+        url: https://doi.org/10.1103/PhysRevA.77.022104
+    related: [hidden-variables, is-csd-a-hidden-variable-theory, does-csd-conflict-with-pbr, epistemic-measure]
+
   - slug: does-csd-conflict-with-pbr
     kind: question
     hook: >

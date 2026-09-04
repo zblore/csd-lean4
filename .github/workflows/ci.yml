@@ -46,6 +46,7 @@ jobs:
           bash scripts/check-citation-use.sh
           bash scripts/check-doc-promises.sh
           bash scripts/check-residues.sh
+          bash scripts/check-references.sh
           bash scripts/check-mathlib-absence.sh
           bash scripts/check-axiom-sweep.sh
           bash scripts/check-gleason-free.sh

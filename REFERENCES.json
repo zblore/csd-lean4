@@ -13,7 +13,9 @@
     {
       "key": "LeanQIT2026",
       "title": "Lean-QIT: quantum information theory in Lean 4",
-      "authors": ["QuAIR Team"],
+      "authors": [
+        "QuAIR Team"
+      ],
       "year": 2026,
       "kind": "software",
       "url": "https://github.com/QuAIR/Lean-QIT",
@@ -31,7 +33,11 @@
           "file": "QIT/Information/Entropy/RelativeEntropyDPI.lean",
           "why": "Data-processing inequality for quantum relative entropy -- the upstream discharge of this corpus's `hDPI` hypothesis.",
           "statement": "∀ {a b} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] (rho sigma : State a) (Phi : Channel a b), rho.relativeEntropy sigma ≥ (Phi.applyState rho).relativeEntropy (Phi.applyState sigma)",
-          "axioms": ["propext", "Classical.choice", "Quot.sound"],
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ],
           "note": "STRONGER than this corpus needs: stated for an ARBITRARY channel, where `hDPI` requires only the partial-trace instance."
         },
         {
@@ -39,7 +45,11 @@
           "file": "QIT/Information/Entropy/StrongSubadditivity.lean",
           "why": "Non-negativity of conditional mutual information, i.e. strong subadditivity.",
           "statement": "∀ {a b c} [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] [Fintype c] [DecidableEq c] (ρ : State ((a × b) × c)), 0 ≤ ρ.condMutualInfo",
-          "axioms": ["propext", "Classical.choice", "Quot.sound"]
+          "axioms": [
+            "propext",
+            "Classical.choice",
+            "Quot.sound"
+          ]
         }
       ],
       "independent_verification": {
@@ -54,7 +64,9 @@
     {
       "key": "Busch2003",
       "title": "Quantum States and Generalized Observables: A Simple Proof of Gleason's Theorem",
-      "authors": ["Paul Busch"],
+      "authors": [
+        "Paul Busch"
+      ],
       "year": 2003,
       "kind": "article",
       "arxiv_id": "quant-ph/9909073",
@@ -64,6 +76,85 @@
         "CsdLean4/LF2/EffectGleason.lean"
       ],
       "status": "The effect-Gleason result this corpus PROVES independently as `OperationalPackage.effect_gleason_representation` (2026-07-21), which deleted the last `axiom`. Cited as the source of the statement, not of the proof."
+    },
+    {
+      "key": "ColbeckRenner2011",
+      "title": "No extension of quantum theory can have improved predictive power",
+      "authors": [
+        "Roger Colbeck",
+        "Renato Renner"
+      ],
+      "year": 2011,
+      "kind": "article",
+      "doi": "10.1038/ncomms1416",
+      "arxiv_id": "1005.5173",
+      "url": null,
+      "cited_by": [
+        "specs/colbeck-renner-note.md"
+      ],
+      "note": "Positioning theorem. CSD escapes it by denying parameter independence at the Sigma level, the same escape as Bell; NOT by denying free choice. See specs/colbeck-renner-note.md for the unbundling."
+    },
+    {
+      "key": "GhirardiRomano2013",
+      "title": "About possible extensions of quantum theory",
+      "authors": [
+        "GianCarlo Ghirardi",
+        "Raffaele Romano"
+      ],
+      "year": 2013,
+      "kind": "article",
+      "doi": "10.1007/s10701-013-9740-6",
+      "arxiv_id": "1301.5040",
+      "url": null,
+      "cited_by": [
+        "specs/colbeck-renner-note.md"
+      ],
+      "note": "One of the two analyses showing Colbeck-Renner's 'free choice' bundles parameter independence with measurement independence."
+    },
+    {
+      "key": "Leegwater2016",
+      "title": "An impossibility theorem for parameter independent hidden variable theories",
+      "authors": [
+        "Gijs Leegwater"
+      ],
+      "year": 2016,
+      "kind": "article",
+      "doi": "10.1016/j.shpsb.2016.03.003",
+      "url": null,
+      "cited_by": [
+        "specs/colbeck-renner-note.md"
+      ],
+      "note": "The second unbundling analysis: what Colbeck-Renner actually needs is parameter independence."
+    },
+    {
+      "key": "Hardy2004",
+      "title": "Quantum ontological excess baggage",
+      "authors": [
+        "Lucien Hardy"
+      ],
+      "year": 2004,
+      "kind": "article",
+      "doi": "10.1016/j.shpsb.2003.12.001",
+      "url": null,
+      "cited_by": [
+        "docs/glossary.yaml"
+      ],
+      "note": "Excess baggage: an ontic model of an N-level system needs a continuum of ontic states. Satisfied trivially by CSD's Sigma; glossary entry `excess-baggage`."
+    },
+    {
+      "key": "Montina2008",
+      "title": "Exponential complexity and ontological theories of quantum mechanics",
+      "authors": [
+        "Alberto Montina"
+      ],
+      "year": 2008,
+      "kind": "article",
+      "doi": "10.1103/PhysRevA.77.022104",
+      "url": null,
+      "cited_by": [
+        "docs/glossary.yaml"
+      ],
+      "note": "Sharpening of Hardy 2004; same disposition."
     }
   ]
 }

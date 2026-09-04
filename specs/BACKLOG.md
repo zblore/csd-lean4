@@ -119,8 +119,37 @@
 >      scope (it is in `CsdLeanTests`, outside `import CsdLean4`); its content is an
 >      instantiation of `LF4.ofKählerPreparation`, whose module is covered.
 >
->    **Tranche 2, still open:** **prose audit completion** (M) + **`REFERENCES.json`** (M), plus
->    the cheap expert-review rows (D Colbeck–Renner spec note, F excess-baggage citation).
+>    **Tranche 2 — PART LANDED 2026-09-04.**
+>    * **Module paths in prose.** The `SigmaLayer` → `RecordLayer` split had left **510 broken
+>      path references** — 303 in 87 Lean headers, 207 in 22 documents (including the
+>      `reconstruction-status.md` A2 row README sends readers to for the axiom-level audit).
+>      All fixed; six left deliberately (a rename sentence's subject, a companion never built,
+>      an audit file recorded as never created) as a declared exception list with reasons.
+>      `check-doc-promises.sh` now checks paths as well as declaration names, over Lean and
+>      markdown both.
+>    * **Expert row D — Colbeck–Renner.** [`colbeck-renner-note.md`](colbeck-renner-note.md):
+>      the escape is **parameter independence at the `Σ` level** (the Bell escape, a theorem —
+>      `no_product_partition_realises_singlet`, CL-020), ⚠️ **not** free choice; CR's "free
+>      choice" bundles parameter independence with measurement independence
+>      (Ghirardi–Romano 2013, Leegwater 2016) and the corpus KEEPS measurement independence as
+>      an explicit premise. Positioning prose; the Lean form needs the chained-Bell family and
+>      stays unqueued, as the row said.
+>    * **Expert row F — excess baggage.** `docs/glossary.yaml` entry `excess-baggage`: Hardy
+>      2004 / Montina 2008 are satisfied trivially (Σ is a continuum by construction), with the
+>      two disclaimers a referee needs — satisfying a lower bound is not evidence, and
+>      cardinality is not what carries the programme.
+>    * **`REFERENCES.json`** grew from the 2-entry seed to 7 (the five sources rows D and F
+>      cite), and is now guarded: `check-references.sh` (CI) fails when a `cited_by` path does
+>      not exist, when a `[Key]` citation in prose has no entry, or when an entry is cited by
+>      nothing. ⚠️ **Coverage is still the open §8.2 obligation** — one entry per source plus
+>      line-precise `[Key, file:Lstart-Lend]` citations. The guard checks what is there; it
+>      says nothing about how much of the corpus is cited.
+>
+>    **Tranche 2, still open:** the rest of **`REFERENCES.json` coverage** (M) and **prose audit
+>    completion** (M). ⚠️ `prose-audit.md` is at "roughly a fifth of the surface covered" and
+>    names its own next step: the **unrun pass-3 consumer sweep** — for every recorded
+>    correction, grep for downstream restatements that still assert the old claim. That sweep is
+>    the cheapest remaining defect-finder in the hardening queue.
 > 4. **Local Friendliness twin** (M, row C) and **Ozawa error–disturbance twin** (M, row B) — the
 >    next content bricks (breadth/hardening); then **Q16 CP brick** (M–L, reconstruction path).
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in

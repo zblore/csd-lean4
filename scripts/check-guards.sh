@@ -127,6 +127,20 @@ else
 fi
 unplant
 
+# --- check-references: a `[Key]` citation with no entry must fail.
+plant '/-!
+# Probe
+
+Cited as `[NoSuchKey2020]`.
+-/'
+if bash scripts/check-references.sh >/dev/null 2>&1; then
+  echo "  BROKEN  references — did NOT fire on a citation key with no entry"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+unplant
+
 # --- check-import-negative: point the declared pair at a module that IS reachable.
 # Done on a copy, since the probe is in the script rather than the corpus.
 tmpg="${TMPDIR:-/tmp}/csd-guardtest.$$.sh"
