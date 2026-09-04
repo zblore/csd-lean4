@@ -15,6 +15,9 @@ public import Mathlib.Analysis.Matrix.Hermitian
 **Category:** 3-Local (promotion-ready to 2-Framework on demand). QM-generic: no CSD ontology,
 pure operator geometry on one inner-product space.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/ozawa-error-disturbance/ — the
+entry names this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Robertson (`Uncertainty.lean`) bounds the **preparation** spread of two observables in one state.
 It says nothing about a measurement's **error** or the **disturbance** it inflicts. The
 Heisenberg-microscope reading

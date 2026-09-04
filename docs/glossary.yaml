@@ -5397,6 +5397,78 @@ entries:
       theorem: shor_corrects_XZ
     related: [shor-algorithm, pauli-matrices, quantum-channel]
 
+  - slug: ozawa-error-disturbance
+    hook: >
+      The most-quoted inequality in quantum mechanics is not a theorem. The one that is has
+      three terms, and the corpus now proves it.
+    layman: >
+      Heisenberg's microscope is the story everyone is told: look at an electron closely
+      enough to pin down its position and the light you use kicks it, spoiling the momentum.
+      Measure precisely, disturb proportionally. The trade-off gets written as a formula,
+      error times disturbance is at least a fixed amount, and it is quoted constantly.
+
+      It is not true as stated. In 2012 two groups measured it failing -- one with neutron
+      spins in Vienna, one with photon polarisation in Toronto. Not a subtle correction: the
+      product came out below the supposed floor.
+
+      What is true is Ozawa's version, and the difference is instructive. Three terms, not
+      one. Each pairs something about the measurement with something about the state you
+      prepared. You cannot have an exact measurement that disturbs nothing, but the
+      bookkeeping needs the preparation spreads in it, and the naive formula left them out.
+
+      Two things are worth keeping apart here. The trade-off is real. The famous formula for
+      it was wrong.
+    in_csd: >
+      This is a coverage result, not a CSD one, and the corpus says so in a theorem rather
+      than a footnote.
+
+      The relation is about a measurement model: a system, a probe, an interaction, a meter
+      read at the end. The record layer has no such model -- its stroke is a skew product on
+      the arena, not a linear map on a joint Hilbert space -- so the error and the
+      disturbance are not defined there at all. That is proved, not asserted:
+      no_ozawa_model_of_jointLift, a corollary of the same theorem that gives
+      Wigner-Araki-Yanase no record-layer instance.
+
+      So CSD neither explains nor predicts the error-disturbance trade-off. What the corpus
+      gains is that it no longer asserts Robertson while staying silent on the
+      measurement-theoretic relation a post-2012 reader expects next to it.
+    mathematical: >
+      For a measurement model with A_in and B_in the observables entering, A_out the meter
+      read-back and B_out the disturbed observable,
+
+        eps(A) eta(B) + eps(A) sigma(B) + sigma(A) eta(B) >= 1/2 |<psi, [A,B] psi>|
+
+      with sigma the standard deviations. Proved here at the level the proof actually uses:
+      four symmetric operators on one inner-product space with A_out and B_out COMMUTING --
+      no tensor product appears. That commutation is the whole content. Expanding the
+      commutator of the two "out" operators gives four terms whose left side vanishes, and
+      the three survivors are bounded by one Cauchy-Schwarz each.
+
+      The naive form eps eta >= 1/2 |<[A,B]>| is not universally valid rather than false: it
+      holds for unbiased measurements. The corpus makes no Lean claim about it. It does
+      refute the two-term variant, which shows the third term is load-bearing.
+    person: >
+      Masanao Ozawa, born 1950, worked at Nagoya and Chubu on the mathematical foundations of
+      quantum measurement -- the theory of instruments, measuring processes, and what a
+      measurement can and cannot achieve. The 2003 relation came out of taking the
+      measurement process itself as the object rather than assuming the textbook trade-off,
+      and it took nine years for the experiments to catch up with it.
+    term: Ozawa error-disturbance relation
+    eponyms: [Ozawa]
+    status: proved-in-corpus
+    source: curated
+    reviewed: 2026-09-04
+    lean:
+      module: CsdLean4/Empirical/QM/Ozawa.lean
+      theorem: ozawa_error_disturbance
+    external:
+      - text: "Ozawa, Universally valid reformulation of the Heisenberg uncertainty principle, Phys. Rev. A 67, 042105 (2003)"
+        url: https://doi.org/10.1103/PhysRevA.67.042105
+      - text: "Rozema et al., Violation of Heisenberg's measurement-disturbance relationship by weak measurements, Phys. Rev. Lett. 109, 100404 (2012)"
+        url: https://doi.org/10.1103/PhysRevLett.109.100404
+      - text: "Erhart et al., Experimental demonstration of a universally valid error-disturbance uncertainty relation in spin measurements, Nature Physics 8, 185 (2012)"
+    related: [robertson-uncertainty, hermitian-operator, measurement-problem, collapse]
+
   - slug: robertson-uncertainty
     reviewed: 2026-08-25
     hook: >
