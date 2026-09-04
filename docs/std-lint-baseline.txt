@@ -1,0 +1,36 @@
+# check-std-lint.sh ratchet baseline — 2026-09-04, the hardening session.
+#
+# One line per linter class: the number of DECLARATIONS flagged by
+# `lake exe runLinter CsdLean4`. The guard fails when a count grows; when a count
+# shrinks it says so and this file is re-pinned in the same commit.
+#
+# simpNF and docBlame are at ZERO by the 2026-09-04 pass and are meant to stay there:
+#   simpNF   — 18 dead simp lemmas fixed. A lemma whose LHS is not in simp-normal form
+#              never fires, so the attribute is a silent lie. Two head unfolders were
+#              the root cause (`Channel.apply_def` killed five channel lemmas;
+#              `Kahler.complexStructure_apply` killed `J² = -1` and the taming
+#              identity); the rest were specialisations subsumed by their own
+#              unfolders, de-`simp`ed with the reason recorded at the declaration.
+#   docBlame — 20 definitions given docstrings (12 in `LF6/CGLMPQudit.lean`).
+#
+# The two open classes are the CONVENTIONS §9.2 / §9.5 fix-on-touch classes, and the
+# ratchet is exactly the enforcement §9.5 prescribes — diff discipline, not a sweep:
+#   unusedArguments    — 68 of the 73 are unused INSTANCE binders kept for API
+#                        uniformity. The five explicit-hypothesis findings (the class
+#                        the necessity audit found by hand, where a stated assumption
+#                        does no work) were read individually on 2026-09-04 and are all
+#                        deliberate uniform-interface bundles already documented at the
+#                        declaration: `shor_phase_estimation_lower_bound` (`hr : 0 < r`,
+#                        implied by `s : Fin r`, recorded for the spec reading),
+#                        `cfullAdder_correct_general` (3 of 15 pairwise-distinctness
+#                        hypotheses), `cuccaroAdd_preserves_B` (`hZ`). No unused
+#                        hypothesis in this corpus is currently unexplained.
+#   defsWithUnderscore — theorem-style names on `def`s (`bell_prep_realisable_for`,
+#                        `cnot_realisable_for`, `b92_encode`, …); CONVENTIONS §9.2
+#                        renames these on touch and documents the literature-notation
+#                        exceptions the linter cannot know about.
+
+simpNF                0
+docBlame              0
+unusedArguments      73
+defsWithUnderscore   34

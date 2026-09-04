@@ -59,7 +59,11 @@ variable {n m ι : Type*} [Fintype n] [Fintype m] [Fintype ι] [DecidableEq n]
 noncomputable def apply (Φ : Channel n m ι) (ρ : Matrix n n ℂ) : Matrix m m ℂ :=
   ∑ i : ι, Φ.kraus i * ρ * (Φ.kraus i)ᴴ
 
-@[simp] lemma apply_def (Φ : Channel n m ι) (ρ : Matrix n n ℂ) :
+/-- The channel action, unfolded to its Kraus sum. **Not `@[simp]`**: as a head unfolder it would
+rewrite every `Φ.apply ρ` before the specific closed forms (`id_apply`, `unitaryChannel_apply`,
+`traceOutChannel_apply`, `mixedUnitaryChannel_apply`, `tensorRight_apply`) could fire, leaving
+those lemmas dead (`simpNF`). Use it explicitly when the sum is what you want. -/
+lemma apply_def (Φ : Channel n m ι) (ρ : Matrix n n ℂ) :
     Φ.apply ρ = ∑ i : ι, Φ.kraus i * ρ * (Φ.kraus i)ᴴ := rfl
 
 /-- The channel action is additive. -/

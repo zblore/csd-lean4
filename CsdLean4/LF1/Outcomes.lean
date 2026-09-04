@@ -49,7 +49,9 @@ namespace OnticSetup
     Parameterized by `S` so that `S.OutcomeRegion` works as dot notation. -/
 structure OutcomeRegion {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
     (_S : OnticSetup SigmaSpace) where
+  /-- The region of ontic states carrying the outcome. -/
   Ω : Set SigmaSpace
+  /-- The region is measurable, so it carries a typicality weight. -/
   hΩ_meas : MeasurableSet Ω
 
 namespace OutcomeRegion

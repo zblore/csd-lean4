@@ -87,7 +87,9 @@ lemma torusDouble_iterate (u : ℕ) (y : KTorus) :
   | zero => simp
   | succ k ih => rw [Function.iterate_succ_apply, ih]; rfl
 
-@[simp] lemma torusObs_torusDouble_iterate (u : ℕ) (y : KTorus) :
+/-- The observable along the doubling orbit. Not `@[simp]`: `torusObs_apply` rewrites the head
+first, so this composite could never fire (`simpNF`); it is a `rw`/`simp only` lemma. -/
+lemma torusObs_torusDouble_iterate (u : ℕ) (y : KTorus) :
     torusObs (torusDouble^[u] y) = MeasureTheory.circObs (MeasureTheory.doubling^[u] y.1) := by
   rw [torusObs_apply, torusDouble_iterate]
 

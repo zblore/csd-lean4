@@ -200,11 +200,13 @@ theorem eraser_fringe_typicality (φ : ℝ) {c : ℝ} (hc : c = 1 ∨ c = -1) :
 
 /-! ### The dark fringe: `φ = π`, marker `+` — an exact ontic zero -/
 
-@[simp] lemma eraserOut_pi_zero : eraserOut Real.pi 1 0 = 0 := by
+-- Not `@[simp]`: `eraserOut_zero` rewrites the head first, so the specialisation at `φ = π` could
+-- never fire (`simpNF`). Both are used by name below.
+lemma eraserOut_pi_zero : eraserOut Real.pi 1 0 = 0 := by
   rw [eraserOut_zero]
   simp [phaseC, Real.cos_pi, Real.sin_pi]
 
-@[simp] lemma eraserOut_pi_one : eraserOut Real.pi 1 1 = 1 := by
+lemma eraserOut_pi_one : eraserOut Real.pi 1 1 = 1 := by
   rw [eraserOut_one]
   simp [phaseC, Real.cos_pi, Real.sin_pi]
 

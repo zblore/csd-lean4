@@ -48,8 +48,10 @@ lemma norm_rt2 : ‖rt2‖ = Real.sqrt 2 := by
 lemma norm_div_rt2_sq (x : ℂ) : ‖x / rt2‖ ^ 2 = ‖x‖ ^ 2 / 2 := by
   rw [norm_div, div_pow, norm_rt2, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
 
-/-- Input path states `|0⟩`, `|1⟩` (the two interferometer arms). -/
+/-- Input path state `|0⟩` (the first interferometer arm). -/
 def ket0 : Fin 2 → ℂ := ![1, 0]
+
+/-- Input path state `|1⟩` (the second interferometer arm). -/
 def ket1 : Fin 2 → ℂ := ![0, 1]
 
 /-- The `50:50` beam splitter (Hadamard): `H(v) = ((v₀+v₁)/√2, (v₀−v₁)/√2)`. -/

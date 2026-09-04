@@ -366,6 +366,17 @@ mechanical tracker:
   adds theorem-style def names (E) says so, with justification, in its commit message.
   Unjustified regressions are review findings.
 
+  **The std linters ratchet in CI (2026-09-04).** `check-std-lint` was advisory from its
+  adoption (2026-08-12) so that a blocking gate could not force the sweep §9.2 rejects.
+  It now compares per-class counts against `docs/std-lint-baseline.txt` and **fails when a
+  class grows**, never on the existing findings — the same diff discipline as above, made
+  mechanical. `simpNF` and `docBlame` are at **zero** as of 2026-09-04, so a newly dead simp
+  lemma (LHS not in normal form: the attribute silently never fires) or a new undocumented
+  definition fails on the commit that introduces it. `unusedArguments` and
+  `defsWithUnderscore` are pinned at their current counts and shrink on touch. A count that
+  drops is re-pinned in the same commit; a count may not grow — fix the finding, or record
+  the deliberate exception at the declaration and say so in the commit message.
+
 **What this section does NOT change:** the correctness stack (kernel, AxiomAudit,
 `check-claims` and the guard family) remains the authority on soundness and claim
 honesty; §9 is an ergonomics-and-reuse bar layered on top. *(Historical note: when

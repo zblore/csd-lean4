@@ -109,8 +109,16 @@ lemma dirichlet_kernel (φ : ℝ) (hs : Real.sin (φ/2) ≠ 0) (n : ℕ) :
   rw [geom_sum_eq hw1 n, norm_div, div_pow, hnum, hden]
   field_simp
 
+/-- **Alice's setting offset** `α_x`: `0` for setting `A₁`, `1/2` for `A₂` (the CGLMP
+convention — the two settings differ by half a phase step). -/
 noncomputable def alphaOff (x : Bool) : ℝ := if x then 1/2 else 0
+
+/-- **Bob's setting offset** `β_y`: `-1/4` for `B₁`, `+1/4` for `B₂` — the quarter-step
+staggering against Alice's grid that makes the CGLMP value maximal. -/
 noncomputable def betaOff (y : Bool) : ℝ := if y then 1/4 else -1/4
+
+/-- **The joint offset** `δ_{xy} = α_x - β_y`, the only combination of the two settings the
+correlation depends on. -/
 noncomputable def deltaOff (x y : Bool) : ℝ := alphaOff x - betaOff y
 
 /-! Interface lemmas (CONVENTIONS §9.1, F2): the values the case splits below keep
@@ -185,8 +193,14 @@ lemma deltaOff_not_int (x y : Bool) (N : ℤ) : deltaOff x y ≠ (N:ℝ) := by
 
 variable (d : ℕ)
 
+/-- **Alice's measurement phase** on computational index `j` for outcome `k` of setting `x`:
+`2π j (k + α_x) / d`. The offset `α_x` is what distinguishes her two settings. -/
 noncomputable def aAngle (x : Bool) (k : ZMod d) (j : Fin d) : ℝ :=
   2 * Real.pi * (j.val : ℝ) * ((k.val : ℝ) + alphaOff x) / d
+
+/-- **Bob's measurement phase** on computational index `j` for outcome `l` of setting `y`:
+`-2π j (l + β_y) / d`. The sign is opposite to Alice's, so a product measurement pairs
+their phases by difference. -/
 noncomputable def bAngle (y : Bool) (l : ZMod d) (j : Fin d) : ℝ :=
   - (2 * Real.pi * (j.val : ℝ) * ((l.val : ℝ) + betaOff y) / d)
 
@@ -197,14 +211,28 @@ lemma aAngle_def (x : Bool) (k : ZMod d) (j : Fin d) :
 /-- Bob's measurement phase, as its defining formula (interface lemma, §9.1). -/
 lemma bAngle_def (y : Bool) (l : ZMod d) (j : Fin d) :
     bAngle d y l j = - (2 * Real.pi * (j.val : ℝ) * ((l.val : ℝ) + betaOff y) / d) := rfl
+/-- **Alice's measurement vector** for outcome `k` of setting `x`: the normalised Fourier
+vector carrying the phases `aAngle`. -/
 noncomputable def aVec (x : Bool) (k : ZMod d) : EuclideanSpace ℂ (Fin d) :=
   WithLp.toLp 2 (fun j => (Real.sqrt d : ℂ)⁻¹ * Complex.exp ((aAngle d x k j : ℝ) * Complex.I))
+
+/-- **Bob's measurement vector** for outcome `l` of setting `y`: the normalised Fourier vector
+carrying the phases `bAngle`. -/
 noncomputable def bVec (y : Bool) (l : ZMod d) : EuclideanSpace ℂ (Fin d) :=
   WithLp.toLp 2 (fun j => (Real.sqrt d : ℂ)⁻¹ * Complex.exp ((bAngle d y l j : ℝ) * Complex.I))
+
+/-- **The joint measurement vector** for the outcome pair `(k, l)` at settings `(x, y)`: the
+product vector `aVec ⊗ bVec` on the two-qudit register. -/
 noncomputable def outcome (x y : Bool) (k l : ZMod d) : EuclideanSpace ℂ (Fin d × Fin d) :=
   WithLp.toLp 2 (fun p => aVec d x k p.1 * bVec d y l p.2)
+
+/-- **The Born probability** of the outcome pair `(k, l)` at settings `(x, y)` on the maximally
+entangled state. -/
 noncomputable def bornPair (x y : Bool) (k l : ZMod d) : ℝ :=
   ‖inner ℂ (outcome d x y k l) (maxEntangled d)‖ ^ 2
+
+/-- **The joint phase base** `-2π (k - l + δ_{xy}) / d`: the single angle the pair probability
+depends on, so the correlation is a function of the outcome *difference* `k - l` alone. -/
 noncomputable def baseAngle (x y : Bool) (k l : ZMod d) : ℝ :=
   - (2 * Real.pi * ((k.val : ℝ) - (l.val : ℝ) + deltaOff x y) / d)
 
@@ -390,6 +418,8 @@ lemma denom_diff_reduce (a b : ZMod d) (n : ℤ) (δ : ℝ) (h : (n : ZMod d) = 
 
 /-! ### pQM and its closed form -/
 
+/-- **The quantum correlation** `P(A - B = c)` at settings `(x, y)`: the total Born weight of
+all outcome pairs whose difference is `c`. This is the quantity the CGLMP bracket combines. -/
 noncomputable def pQM (x y : Bool) (c : ZMod d) : ℝ := ∑ l : ZMod d, bornPair d x y (c+l) l
 
 lemma pQM_closed (x y : Bool) (c : ZMod d) :
@@ -417,6 +447,9 @@ lemma pQM_reduce (x y : Bool) (c : ZMod d) (n : ℤ) (r : ℝ) (hc : (n : ZMod d
 
 /-! ### The bracket closed form -/
 
+/-- **The closed form of the `k`-th CGLMP bracket term** on the maximally entangled state: the
+difference of two `1/sin²` weights a quarter-step either side of `k`. Summing these with the
+CGLMP coefficients gives the qudit Bell value. -/
 noncomputable def bracketClosed (k : ℕ) : ℝ :=
   (2/(d:ℝ)^2) * (1/Real.sin (π*((k:ℝ)+1/4)/d)^2 - 1/Real.sin (π*((k:ℝ)+3/4)/d)^2)
 

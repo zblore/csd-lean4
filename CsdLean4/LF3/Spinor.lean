@@ -99,11 +99,14 @@ noncomputable def spinorRaw (s : Sign) (a : DetectorSetting) : Fin 2 → ℂ :=
     spinorRaw s a 1
       = (s.val : ℂ) * ((((a.vec 0 : ℝ)) : ℂ) + Complex.I * (((a.vec 1 : ℝ)) : ℂ)) := rfl
 
-@[simp] lemma star_spinorRaw_zero (s : Sign) (a : DetectorSetting) :
+-- Not `@[simp]`: `spinorRaw_zero` rewrites the head first and the conjugation closes by the
+-- `RCLike`/`Complex.conj` simp set, so the attribute made a dead rule (`simpNF`).
+lemma star_spinorRaw_zero (s : Sign) (a : DetectorSetting) :
     star (spinorRaw s a 0) = (((1 + (s.val : ℝ) * (a.vec 2 : ℝ)) : ℝ) : ℂ) := by
   rw [spinorRaw_zero, RCLike.star_def, Complex.conj_ofReal]
 
-@[simp] lemma star_spinorRaw_one (s : Sign) (a : DetectorSetting) :
+-- Not `@[simp]`: same reason as `star_spinorRaw_zero` — `spinorRaw_one` rewrites the head first.
+lemma star_spinorRaw_one (s : Sign) (a : DetectorSetting) :
     star (spinorRaw s a 1)
       = (s.val : ℂ) * ((((a.vec 0 : ℝ)) : ℂ) - Complex.I * (((a.vec 1 : ℝ)) : ℂ)) := by
   rw [spinorRaw_one, RCLike.star_def, map_mul, map_add, map_mul, Complex.conj_I,

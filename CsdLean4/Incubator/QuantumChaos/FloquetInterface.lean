@@ -97,14 +97,16 @@ lemma iterate_succ_apply' (n : ℕ) (ψ : H) :
 
 /-- ★ **Global information preservation (norms).** The norm is an exact
 invariant of arbitrarily many periods. -/
-@[simp] lemma norm_iterate_apply (n : ℕ) (ψ : H) :
+-- Not `@[simp]`: `norm_map` for the underlying isometry already closes this (`simpNF`).
+lemma norm_iterate_apply (n : ℕ) (ψ : H) :
     ‖F.iterate n ψ‖ = ‖ψ‖ :=
   (F.iterate n).norm_map ψ
 
 /-- ★ **Global information preservation (overlaps).** Inner products are exact
 invariants of arbitrarily many periods: no global information is lost, however
 scrambled the local accessibility becomes. -/
-@[simp] lemma inner_iterate_iterate (n : ℕ) (u v : H) :
+-- Not `@[simp]`: `inner_map_map` for the underlying isometry already closes this (`simpNF`).
+lemma inner_iterate_iterate (n : ℕ) (u v : H) :
     (inner ℂ (F.iterate n u) (F.iterate n v) : ℂ) = inner ℂ u v :=
   (F.iterate n).inner_map_map u v
 

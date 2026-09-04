@@ -45,7 +45,9 @@ Each `X n` is measurable and has law equal to the preparation probability measur
 hypotheses in `Convergence.lean`, where the law of large numbers is applied.
 -/
 structure TrialModel (Ω : Type*) [MeasurableSpace Ω] where
+  /-- The probability law on the external sample space indexing repeated runs. -/
   P : ProbabilityMeasure Ω
+  /-- `X n` is the ontic initial microstate used on the `n`-th trial. -/
   X : ℕ → Ω → SigmaSpace
   hX_measurable : ∀ n, Measurable (X n)
   hLaw : ∀ n,

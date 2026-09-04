@@ -148,7 +148,9 @@ noncomputable def shiftDev (v : KTorus) : ℝ := ‖fourier 1 v.1 - 1‖
 lemma continuous_shiftDev : Continuous shiftDev :=
   (((fourier 1).continuous.comp continuous_fst).sub continuous_const).norm
 
-@[simp] lemma shiftDev_zero : shiftDev 0 = 0 := by simp [shiftDev]
+-- Not `@[simp]`: `shiftDev_apply` plus the `fourier`/`AddCircle` simp set already close this goal,
+-- so the attribute only made a duplicate rule (`simpNF`).
+lemma shiftDev_zero : shiftDev 0 = 0 := by simp [shiftDev]
 
 /-- ★ **The correlation moves by at most `shiftDev v`.** Shifting the fibre replaces the character
 `e(x)` by `e(v)·e(x)`, so the observable moves by `Re((e(v) − 1)·e(x))`, whose size is `‖e(v) − 1‖`

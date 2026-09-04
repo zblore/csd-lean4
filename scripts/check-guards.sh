@@ -45,9 +45,15 @@ PROBE="CsdLean4/SigmaLayer/GuardSelfTestProbe.lean"
 fail=0
 pass=0
 
+ROOT="CsdLean4.lean"
+ROOTBAK="${TMPDIR:-/tmp}/csd-guardtest-root.$$"
+
 cleanup() {
   git rm -q --cached "$PROBE" >/dev/null 2>&1 || true
   rm -f "$PROBE" "${TMPDIR:-/tmp}"/csd-guardtest.* 2>/dev/null || true
+  # The axiom-sweep probe imports itself from the root module; put the root back.
+  [ -f "$ROOTBAK" ] && mv -f "$ROOTBAK" "$ROOT"
+  rm -f "docs/std-lint-baseline.txt.guardbak" 2>/dev/null || true
 }
 trap cleanup EXIT
 
@@ -118,6 +124,18 @@ else
 fi
 rm -f "$tmpg"
 
+# --- check-import-negative: a declared root that no longer exists must FAIL, not pass
+# quietly. A renamed module used to leave its independence claim silently unchecked
+# (2026-09-04, when the inventory grew from 1 pair to 46).
+sed 's#^CsdLean4.LF6.LocalDeisolationFlow|#CsdLean4.LF6.RenamedAway|#'   scripts/check-import-negative.sh > "$tmpg"
+if bash "$tmpg" >/dev/null 2>&1; then
+  echo "  BROKEN  import-negative — did NOT fire on a declared root that is not a module"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+rm -f "$tmpg"
+
 # --- check-import-hygiene (WS-L, 2026-08-12): three probes, one per rule.
 # (10a) a bare whole-Mathlib import in a production module;
 expect_fail "hygiene-10a (bare import Mathlib)" check-import-hygiene \
@@ -139,14 +157,34 @@ def guardSelfTestHygieneC : Nat := 0'
 if [ "$WITH_LEAN" -eq 1 ]; then
   echo "  (--with-lean: rebuilding for the environment-based checkers, minutes…)"
 
-  plant 'namespace CSD.GuardSelfTest
+  # The probe must look like a corpus module: `module` (the tree rejects a non-`module`
+  # import) and `@[expose] public section` (without it the proof term is not exported and
+  # the sweep cannot see the sorry — the coverage precondition check-axiom-sweep now
+  # enforces). Both were missing until 2026-09-04, which is why this probe passed
+  # vacuously: the planted file did not even compile.
+  plant 'module
+
+@[expose] public section
+
+namespace CSD.GuardSelfTest
 /-- Placeholder. -/
 theorem guard_self_test_sorry : 2 + 2 = 5 := by sorry
 end CSD.GuardSelfTest'
   git add "$PROBE" >/dev/null 2>&1
+  # The lib target has ROOTS (lakefile.toml), not a glob: a file nothing imports is never
+  # compiled, so `axiom-sweep.lean` (which does `import CsdLean4`) would never see the
+  # planted sorry and the probe would report BROKEN for the wrong reason. Import it from
+  # the root module for the duration. (Found 2026-09-04: the probe had been passing
+  # vacuously — it is `--with-lean` only, which CI does not run.)
+  cp "$ROOT" "$ROOTBAK"
+  # Insert AFTER the last import: Lean rejects an import that follows other commands,
+  # and a root module that does not parse would fail the sweep for the wrong reason.
+  lastimp=$(grep -n '^public import ' "$ROOT" | tail -1 | cut -d: -f1)
+  sed -i "${lastimp}a public import CsdLean4.SigmaLayer.GuardSelfTestProbe" "$ROOT"
   lake build >/dev/null 2>&1
   bash scripts/check-axiom-sweep.sh >/dev/null 2>&1
   rc=$?
+  mv -f "$ROOTBAK" "$ROOT"
   git rm -q --cached "$PROBE" >/dev/null 2>&1; rm -f "$PROBE"; lake build >/dev/null 2>&1
   if [ "$rc" -eq 0 ]; then
     echo "  BROKEN  axiom-sweep — did NOT fire on a planted sorry"
@@ -154,8 +192,24 @@ end CSD.GuardSelfTest'
   else
     pass=$((pass + 1))
   fi
+
+  # (11) the std-lint RATCHET must fire when a class grows past its pin. Mutating the
+  # baseline down by one is the same defect as a new finding appearing, and costs one
+  # linter run instead of a rebuild.
+  bl="docs/std-lint-baseline.txt"
+  cp "$bl" "$bl.guardbak"
+  sed -i -E 's/^(unusedArguments[[:space:]]+)([0-9]+)$/\1'"$(( $(sed -nE 's/^unusedArguments[[:space:]]+([0-9]+)$/\1/p' "$bl") - 1 ))"'/' "$bl"
+  bash scripts/check-std-lint.sh >/dev/null 2>&1
+  rc=$?
+  mv "$bl.guardbak" "$bl"
+  if [ "$rc" -eq 0 ]; then
+    echo "  BROKEN  std-lint — ratchet did NOT fire on a class over its pin"
+    fail=1
+  else
+    pass=$((pass + 1))
+  fi
 else
-  echo "  (skipping axiom-sweep / citation-use probes: need --with-lean and a rebuild)"
+  echo "  (skipping axiom-sweep / citation-use / std-lint probes: need --with-lean)"
 fi
 
 # --- Every guard must also PASS on the clean tree; a guard stuck at FAIL is equally bad.

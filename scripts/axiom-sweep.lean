@@ -37,6 +37,17 @@ anything else.
 Traversal uses the `.thmInfo` constructor directly — `ConstantInfo.value?` is `none` for
 theorems under the module system, so the obvious implementation reports a clean corpus
 no matter what is in it. See `scripts/citation-use.lean`.
+
+## The module-system precondition (2026-09-04)
+
+This runs on the environment of `import CsdLean4`, so it sees exactly what that import
+EXPORTS. Under the module system a theorem's proof term is exported only from an
+`@[expose] public section`. Planted and verified: a module-private `theorem … := by sorry`
+consumed by a `public theorem` in a module WITHOUT that section passes this sweep clean.
+Every declaring module in the corpus has the section, and `check-axiom-sweep.sh` now
+FAILS if one does not — the sweep is a cover only while that holds. The residue this
+leaves is dead module-private code (a private `sorry` nothing public consumes) in a module
+that does have the section: it is exported there, so in practice it is caught too.
 -/
 
 namespace AxiomSweep

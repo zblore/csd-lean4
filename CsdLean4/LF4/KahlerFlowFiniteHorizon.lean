@@ -66,7 +66,9 @@ noncomputable def charDev (x : MeasureTheory.Circ) : ℝ := ‖fourier 1 x - 1�
 
 @[simp] lemma charDev_apply (x : MeasureTheory.Circ) : charDev x = ‖fourier 1 x - 1‖ := rfl
 
-@[simp] lemma charDev_zero : charDev 0 = 0 := by simp [charDev]
+-- Not `@[simp]`: `charDev_apply` plus the `fourier`/`AddCircle` simp set already close this goal,
+-- so the attribute only made a duplicate rule (`simpNF`).
+lemma charDev_zero : charDev 0 = 0 := by simp [charDev]
 
 lemma continuous_charDev : Continuous charDev :=
   ((fourier 1).continuous.sub continuous_const).norm

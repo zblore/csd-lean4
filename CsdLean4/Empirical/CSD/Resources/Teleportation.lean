@@ -78,8 +78,9 @@ through the CSD substrate of `D`.
 structure CSDTeleportationBundle
     (D : CSD.LF2.SectorData SigmaSpace P G)
   extends CSD.Empirical.CSDBridge.Context D where
-  /-- The input-qubit amplitudes. -/
+  /-- The input qubit's `|0⟩` amplitude. -/
   α  : ℂ
+  /-- The input qubit's `|1⟩` amplitude. -/
   β  : ℂ
 
 /-- **TRANSPORT-ONLY: proof body unpacks the bundle's amplitudes and calls the QM-side

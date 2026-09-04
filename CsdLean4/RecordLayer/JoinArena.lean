@@ -143,14 +143,17 @@ noncomputable def dblVec (v α : EuclideanSpace ℂ (Fin N)) :
     EuclideanSpace ℂ (Fin (N + N)) :=
   WithLp.toLp 2 (fun j => Sum.elim (fun k => v k) (fun k => α k) (finSumFinEquiv.symm j))
 
-@[simp] lemma dblVec_inl (v α : EuclideanSpace ℂ (Fin N)) (k : Fin N) :
+-- Not `@[simp]`: simp normalises the index `finSumFinEquiv (Sum.inl k)` to `Fin.castAdd N k`, so
+-- these could never fire in this (sum-indexed) form (`simpNF`). They are `rw` lemmas for the
+-- sum vocabulary the join arena is written in.
+lemma dblVec_inl (v α : EuclideanSpace ℂ (Fin N)) (k : Fin N) :
     dblVec v α (finSumFinEquiv (Sum.inl k)) = v k := by
   show Sum.elim (fun k => v k) (fun k => α k)
     (finSumFinEquiv.symm (finSumFinEquiv (Sum.inl k))) = v k
   rw [Equiv.symm_apply_apply]
   rfl
 
-@[simp] lemma dblVec_inr (v α : EuclideanSpace ℂ (Fin N)) (k : Fin N) :
+lemma dblVec_inr (v α : EuclideanSpace ℂ (Fin N)) (k : Fin N) :
     dblVec v α (finSumFinEquiv (Sum.inr k)) = α k := by
   show Sum.elim (fun k => v k) (fun k => α k)
     (finSumFinEquiv.symm (finSumFinEquiv (Sum.inr k))) = α k

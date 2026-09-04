@@ -302,18 +302,15 @@ theorem pointer_invariant_iff_commute {P Hint : Matrix (Fin N) (Fin N) ℂ}
     (∀ t : ℝ, (intFlow Hint t)ᴴ * P * intFlow Hint t = P) ↔ Commute P Hint :=
   ⟨commute_of_pointer_invariant hH, fun hcomm t => pointer_invariant_of_commute hH hcomm t⟩
 
-/-- Trace separation: distinct matrices are told apart by some trace pairing (the matrix witness
-`ρ = single j i 1` reads entry `(i, j)`; `ρ` is a matrix, not necessarily a state — the
-state-level witness is the `N = 2` contrast below). -/
+/-- Trace separation: distinct matrices are told apart by some trace pairing. The existence form of
+Mathlib's `Matrix.ext_iff_trace_mul_right` (whose witness is the matrix unit `single j i 1`, reading
+entry `(i, j)`); `ρ` is a matrix, not necessarily a state — the state-level witness is the `N = 2`
+contrast below. -/
 lemma exists_trace_mul_ne {X Y : Matrix (Fin N) (Fin N) ℂ} (hXY : X ≠ Y) :
     ∃ ρ : Matrix (Fin N) (Fin N) ℂ, (X * ρ).trace ≠ (Y * ρ).trace := by
-  obtain ⟨i, j, hij⟩ : ∃ i j, X i j ≠ Y i j := by
-    by_contra h
-    push Not at h
-    exact hXY (Matrix.ext h)
-  refine ⟨Matrix.single j i 1, ?_⟩
-  rw [Matrix.trace_mul_single, Matrix.trace_mul_single]
-  simpa using hij
+  by_contra h
+  push Not at h
+  exact hXY (Matrix.ext_iff_trace_mul_right.mpr h)
 
 /-- ★ **A non-commuting observable is disturbed.** If `[P, H_int] ≠ 0` then at some time some
 trace-functional detects the change: `tr (P · U ρ Uᴴ) ≠ tr (P · ρ)`. (The witness `ρ` is a

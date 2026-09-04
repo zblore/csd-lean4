@@ -94,10 +94,12 @@ because the product projectors are Hermitian).
 (`joint_mem_span_local`, `single_eq_smul`); `LF2/BornWrapper.lean` (`outerProduct`,
 `IsHermitian.eq_eigen_outer`, `outerProduct_mul_outerProduct_trace`); `LF2/MixedEnsembleIx.lean`
 (`DensityOperatorIx.rankOne`, `ensemble`, `traceForm_rankOne_outerProduct`); `LF2/EffectGleason.lean`
-(`trace_mul_isHermitian_real`, and `matrix_eq_zero_of_quadForm_zero` — the pure-state separation
-lemma this module's functional-form separation `exists_forall_eq_trace_mul` sits beside;
-`Empirical/CSD/PointerCommutation.lean` `exists_trace_mul_ne` is the same separation in
-contrapositive form); `RecordLayer/StatisticsRigidity.lean` (the Q11 conversion template, and
+(`trace_mul_isHermitian_real`, and `matrix_eq_zero_of_quadForm_zero` — the quadratic-form
+separation, a polarisation, which this module's functional-form separation
+`exists_forall_eq_trace_mul` sits beside; both are distinct from the trace-pairing separation
+`Matrix.ext_iff_trace_mul_left`/`_right`, whose existence form is
+`Empirical/CSD/PointerCommutation.lean` `exists_trace_mul_ne`);
+`RecordLayer/StatisticsRigidity.lean` (the Q11 conversion template, and
 `productRecordRate_eq_bornRateBasis` — the record rates at a pure preparation ARE the basis-measurement
 Born rates of the composite register). Pins: `Tests/AxiomAudit/SigmaLayer.lean`.
 -/

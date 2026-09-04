@@ -225,6 +225,9 @@ B₄ = {v1, v4, v12, v13}
 Appearance count: each `vᵢ` appears in exactly 2 of the 9 bases (e.g.
 `v0 ∈ B₀ ∩ B₁`, `v7 ∈ B₂ ∩ B₃`, etc.). Verified by `decide` over the
 finite combinatorial structure. -/
+/-- **The Cabello–Estebaranz–García-Alcaine 18-vector, 9-basis set**, as the index sets: the
+`i`-th orthogonal basis is the four vectors of `cabelloBasis i` (the table above). Each vector
+appears in exactly two bases, which is what makes the parity argument work. -/
 def cabelloBasis : Fin 9 → Finset (Fin 18)
   | 0 => {0, 1, 2, 3}
   | 1 => {0, 4, 5, 6}

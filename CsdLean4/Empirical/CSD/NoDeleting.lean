@@ -117,8 +117,9 @@ structure CSDDeletingBundle
   /-- The fixed "blank" state used as the deletion target. -/
   blank           : EuclideanSpace ℂ (Fin N)
   h_blank_unit    : ‖blank‖ = 1
-  /-- The two unit states the bundle attempts to delete a copy of. -/
+  /-- The first of the two unit states the bundle attempts to delete a copy of. -/
   ψ               : EuclideanSpace ℂ (Fin N)
+  /-- The second of the two unit states the bundle attempts to delete a copy of. -/
   φ               : EuclideanSpace ℂ (Fin N)
   hψ              : ‖ψ‖ = 1
   hφ              : ‖φ‖ = 1

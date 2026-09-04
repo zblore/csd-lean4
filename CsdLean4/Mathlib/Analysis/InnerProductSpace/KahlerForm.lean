@@ -81,7 +81,10 @@ def metric (u v : E) : ℝ := (inner ℂ u v).re
 `ω u v = im ⟪u, v⟫`. Alternating `ℝ`-bilinear (the pointwise Kähler form). -/
 def fundamentalForm (u v : E) : ℝ := (inner ℂ u v).im
 
-@[simp] theorem complexStructure_apply (u : E) : complexStructure u = Complex.I • u := rfl
+/-- `J u = i • u`, unfolded. **Not `@[simp]`**: as a head unfolder it rewrites `J` away before the
+structural lemmas (`complexStructure_involutive`, `fundamentalForm_complexStructure_self`) can fire,
+leaving them dead (`simpNF`). -/
+theorem complexStructure_apply (u : E) : complexStructure u = Complex.I • u := rfl
 
 /-- **`J² = -1`**: the fundamental relation of a complex structure. `J (J u) = i • (i • u) = -u`. -/
 @[simp] theorem complexStructure_involutive (u : E) :

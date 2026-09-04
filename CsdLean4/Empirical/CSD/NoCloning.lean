@@ -165,8 +165,9 @@ structure CSDCloningBundle
   /-- The fixed "blank" state from which cloning starts. -/
   blank           : EuclideanSpace ℂ (Fin N)
   h_blank_unit    : ‖blank‖ = 1
-  /-- The two unit states the bundle attempts to clone. -/
+  /-- The first of the two unit states the bundle attempts to clone. -/
   ψ               : EuclideanSpace ℂ (Fin N)
+  /-- The second of the two unit states the bundle attempts to clone. -/
   φ               : EuclideanSpace ℂ (Fin N)
   hψ              : ‖ψ‖ = 1
   hφ              : ‖φ‖ = 1

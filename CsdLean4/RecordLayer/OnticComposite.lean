@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.RecordLayer.HamiltonianSignature
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 
 /-!
 # SigmaLayer/OnticComposite: A6 step 1 — the Segre embedding, and non-factorisation as a theorem
@@ -47,52 +48,21 @@ remark.
 
 ## References
 
-`LF3/Projectors/TensorModel.lean`, `LF6/GisinTheorem.lean` (the corpus's operational entanglement);
-`specs/reconstruction-status.md` §2 (the A6 row this addresses); `specs/BACKLOG.md`.
+`Mathlib/QuantumInfo/JointRegister.lean` (`tensorState` and its API — the product vector `u ⊗ v`,
+`tensorState_ne_zero`, `tensorState_smul_smul`, `tensorState_continuous` — which this file's Segre
+embedding is built from); `LF3/Projectors/TensorModel.lean`, `LF6/GisinTheorem.lean` (the corpus's
+operational entanglement); `specs/reconstruction-status.md` §2 (the A6 row this addresses);
+`specs/BACKLOG.md`.
 -/
 
 @[expose] public section
 
-open Topology
+open Topology QuantumInfo
 open scoped LinearAlgebra.Projectivization
 
 namespace CSD.RecordLayer
 
 variable {nA nB : ℕ}
-
-/-! ### Product vectors -/
-
-/-- The product (Kronecker) vector `u ⊗ v`: coordinates `(u ⊗ v)(j,k) = u j · v k`. -/
-noncomputable def prodVec (u : EuclideanSpace ℂ (Fin nA)) (v : EuclideanSpace ℂ (Fin nB)) :
-    EuclideanSpace ℂ (Fin nA × Fin nB) :=
-  WithLp.toLp 2 fun jk => u jk.1 * v jk.2
-
-@[simp] theorem prodVec_apply (u : EuclideanSpace ℂ (Fin nA)) (v : EuclideanSpace ℂ (Fin nB))
-    (j : Fin nA) (k : Fin nB) : prodVec u v (j, k) = u j * v k := rfl
-
-theorem prodVec_smul_smul (a b : ℂ) (u : EuclideanSpace ℂ (Fin nA))
-    (v : EuclideanSpace ℂ (Fin nB)) :
-    prodVec (a • u) (b • v) = (a * b) • prodVec u v := by
-  apply PiLp.ext
-  intro jk
-  show (a • u) jk.1 * (b • v) jk.2 = (a * b) * (u jk.1 * v jk.2)
-  simp [PiLp.smul_apply, smul_eq_mul]
-  ring
-
-theorem prodVec_ne_zero {u : EuclideanSpace ℂ (Fin nA)} {v : EuclideanSpace ℂ (Fin nB)}
-    (hu : u ≠ 0) (hv : v ≠ 0) : prodVec u v ≠ 0 := by
-  obtain ⟨j, hj⟩ : ∃ j, u j ≠ 0 := by
-    by_contra h
-    push Not at h
-    exact hu (by apply PiLp.ext; intro j; simpa using h j)
-  obtain ⟨k, hk⟩ : ∃ k, v k ≠ 0 := by
-    by_contra h
-    push Not at h
-    exact hv (by apply PiLp.ext; intro k; simpa using h k)
-  intro h0
-  have := congrArg (fun w : EuclideanSpace ℂ (Fin nA × Fin nB) => w (j, k)) h0
-  simp only [prodVec_apply] at this
-  exact mul_ne_zero hj hk (by simpa using this)
 
 /-! ### The Segre embedding -/
 
@@ -101,14 +71,14 @@ theorem prodVec_ne_zero {u : EuclideanSpace ℂ (Fin nA)} {v : EuclideanSpace �
 noncomputable def segre
     (p : ℙ ℂ (EuclideanSpace ℂ (Fin nA)) × ℙ ℂ (EuclideanSpace ℂ (Fin nB))) :
     ℙ ℂ (EuclideanSpace ℂ (Fin nA × Fin nB)) :=
-  Projectivization.mk ℂ (prodVec p.1.rep p.2.rep)
-    (prodVec_ne_zero p.1.rep_nonzero p.2.rep_nonzero)
+  Projectivization.mk ℂ (tensorState p.1.rep p.2.rep)
+    (tensorState_ne_zero p.1.rep_nonzero p.2.rep_nonzero)
 
 /-- The Segre embedding on representatives. -/
 theorem segre_mk (u : EuclideanSpace ℂ (Fin nA)) (v : EuclideanSpace ℂ (Fin nB))
     (hu : u ≠ 0) (hv : v ≠ 0) :
     segre (Projectivization.mk ℂ u hu, Projectivization.mk ℂ v hv)
-      = Projectivization.mk ℂ (prodVec u v) (prodVec_ne_zero hu hv) := by
+      = Projectivization.mk ℂ (tensorState u v) (tensorState_ne_zero hu hv) := by
   obtain ⟨a, ha⟩ :=
     (Projectivization.mk_eq_mk_iff ℂ (Projectivization.mk ℂ u hu).rep u
         (Projectivization.rep_nonzero _) hu).mp (Projectivization.mk_rep _)
@@ -118,13 +88,13 @@ theorem segre_mk (u : EuclideanSpace ℂ (Fin nA)) (v : EuclideanSpace ℂ (Fin 
   unfold segre
   rw [Projectivization.mk_eq_mk_iff]
   refine ⟨Units.mk0 ((a : ℂ) * b) (mul_ne_zero (Units.ne_zero a) (Units.ne_zero b)), ?_⟩
-  show ((a : ℂ) * b) • prodVec u v = prodVec (Projectivization.mk ℂ u hu).rep
+  show ((a : ℂ) * b) • tensorState u v = tensorState (Projectivization.mk ℂ u hu).rep
     (Projectivization.mk ℂ v hv).rep
   have hau : (a : ℂ) • u = (Projectivization.mk ℂ u hu).rep := by
     simpa [Units.smul_def] using ha
   have hbv : (b : ℂ) • v = (Projectivization.mk ℂ v hv).rep := by
     simpa [Units.smul_def] using hb
-  rw [← prodVec_smul_smul, hau, hbv]
+  rw [← tensorState_smul_smul, hau, hbv]
 
 /-- **The Segre embedding is injective**: product rays remember their factors. -/
 theorem segre_injective : Function.Injective (segre (nA := nA) (nB := nB)) := by
@@ -243,7 +213,7 @@ theorem segre_not_surjective (hA : 2 ≤ nA) (hB : 2 ≤ nB) :
       p.rep j * q.rep k = (c : ℂ) * (bellVec hA hB) (j, k) := by
     intro j k
     have h := congrArg (fun w : EuclideanSpace ℂ (Fin nA × Fin nB) => w (j, k)) hc
-    simpa [Units.smul_def, PiLp.smul_apply, smul_eq_mul, prodVec_apply] using h.symm
+    simpa [Units.smul_def, PiLp.smul_apply, smul_eq_mul, tensorState_apply] using h.symm
   have h00 := hcoord i0A i0B
   have h11 := hcoord i1A i1B
   have h01 := hcoord i0A i1B
@@ -282,21 +252,9 @@ The Segre embedding is continuous — descended through the open quotient maps
 is closed. That measurability-grade fact is what the measure tier
 (`RecordLayer/EntangledMeasure.lean`) consumes. -/
 
-/-- The product-vector map is (jointly) continuous. -/
-lemma prodVec_continuous :
-    Continuous fun uv : EuclideanSpace ℂ (Fin nA) × EuclideanSpace ℂ (Fin nB) =>
-      prodVec uv.1 uv.2 := by
-  show Continuous fun uv : EuclideanSpace ℂ (Fin nA) × EuclideanSpace ℂ (Fin nB) =>
-    (WithLp.toLp 2 (fun jk : Fin nA × Fin nB => uv.1 jk.1 * uv.2 jk.2)
-      : EuclideanSpace ℂ (Fin nA × Fin nB))
-  refine (PiLp.continuous_toLp _ _).comp ?_
-  refine continuous_pi fun jk => ?_
-  exact ((continuous_apply jk.1).comp ((PiLp.continuous_ofLp _ _).comp continuous_fst)).mul
-    ((continuous_apply jk.2).comp ((PiLp.continuous_ofLp _ _).comp continuous_snd))
-
 /-- **The Segre embedding is continuous.** Continuity descends through the open
 quotient maps `mk'` on both factors (`IsOpenQuotientMap.prodMap`), where the
-composite is `mk'` of the continuous nonvanishing `prodVec`. -/
+composite is `mk'` of the continuous nonvanishing `QuantumInfo.tensorState`. -/
 theorem segre_continuous : Continuous (segre (nA := nA) (nB := nB)) := by
   have hq : IsQuotientMap
       (Prod.map (Projectivization.mk' ℂ) (Projectivization.mk' ℂ) :
@@ -310,14 +268,14 @@ theorem segre_continuous : Continuous (segre (nA := nA) (nB := nB)) := by
       = fun uv : { v : EuclideanSpace ℂ (Fin nA) // v ≠ 0 } ×
           { v : EuclideanSpace ℂ (Fin nB) // v ≠ 0 } =>
         Projectivization.mk' ℂ
-          ⟨prodVec uv.1.val uv.2.val, prodVec_ne_zero uv.1.property uv.2.property⟩ := by
+          ⟨tensorState uv.1.val uv.2.val, tensorState_ne_zero uv.1.property uv.2.property⟩ := by
     funext uv
     show segre (Projectivization.mk' ℂ uv.1, Projectivization.mk' ℂ uv.2) = _
     rw [Projectivization.mk'_eq_mk, Projectivization.mk'_eq_mk, segre_mk,
       Projectivization.mk'_eq_mk]
   rw [h_eq]
   refine Projectivization.continuous_mk'.comp (Continuous.subtype_mk ?_ _)
-  exact prodVec_continuous.comp
+  exact tensorState_continuous.comp
     ((continuous_subtype_val.comp continuous_fst).prodMk
       (continuous_subtype_val.comp continuous_snd))
 
@@ -412,28 +370,28 @@ theorem exists_entangled_mem_nhds (hA : 2 ≤ nA) (hB : 2 ≤ nB)
       e jk = if jk = (j₁, k₁) then 1 else 0 := by
     intro jk
     rw [he_def, PiLp.single_apply]
-  have hw : ∀ t : ℂ, prodVec a b + t • e ≠ 0 := by
+  have hw : ∀ t : ℂ, tensorState a b + t • e ≠ 0 := by
     intro t h0
     have h00 := congrArg
       (fun z : EuclideanSpace ℂ (Fin nA × Fin nB) => z (j₀, k₀)) h0
     have hsingle : e (j₀, k₀) = 0 := by
       rw [he_apply]
       exact if_neg (by intro h; exact hj₁ (congrArg Prod.fst h).symm)
-    simp only [PiLp.add_apply, PiLp.smul_apply, prodVec_apply, hsingle,
+    simp only [PiLp.add_apply, PiLp.smul_apply, tensorState_apply, hsingle,
       smul_eq_mul, mul_zero, add_zero, PiLp.zero_apply] at h00
     exact mul_ne_zero hj₀ hk₀ h00
   set γ : ℂ → ℙ ℂ (EuclideanSpace ℂ (Fin nA × Fin nB)) :=
-    fun t => Projectivization.mk' ℂ ⟨prodVec a b + t • e, hw t⟩ with hγ_def
+    fun t => Projectivization.mk' ℂ ⟨tensorState a b + t • e, hw t⟩ with hγ_def
   have hγc : Continuous γ := by
     refine Projectivization.continuous_mk'.comp (Continuous.subtype_mk ?_ _)
     exact continuous_const.add (continuous_id.smul continuous_const)
   have hγ0 : γ 0 = segre (pA, pB) := by
-    show Projectivization.mk' ℂ ⟨prodVec a b + (0 : ℂ) • e, hw 0⟩ = segre (pA, pB)
+    show Projectivization.mk' ℂ ⟨tensorState a b + (0 : ℂ) • e, hw 0⟩ = segre (pA, pB)
     rw [Projectivization.mk'_eq_mk]
     unfold segre
     rw [Projectivization.mk_eq_mk_iff]
     refine ⟨1, ?_⟩
-    show (1 : ℂ) • prodVec pA.rep pB.rep = prodVec a b + (0 : ℂ) • e
+    show (1 : ℂ) • tensorState pA.rep pB.rep = tensorState a b + (0 : ℂ) • e
     rw [one_smul, zero_smul, add_zero]
   have hnhds : γ ⁻¹' U ∈ nhds (0 : ℂ) :=
     hγc.continuousAt.preimage_mem_nhds (hU.mem_nhds (hγ0 ▸ hpU))
@@ -442,15 +400,15 @@ theorem exists_entangled_mem_nhds (hA : 2 ≤ nA) (hB : 2 ≤ nB)
   have ht0 : t ≠ 0 := norm_pos_iff.mp ht_pos
   have htU : γ t ∈ U := hball (by simpa [Metric.mem_ball, dist_zero_right] using ht_lt)
   refine ⟨γ t, htU, ?_⟩
-  show Projectivization.mk' ℂ ⟨prodVec a b + t • e, hw t⟩ ∉
+  show Projectivization.mk' ℂ ⟨tensorState a b + t • e, hw t⟩ ∉
     Set.range (segre (nA := nA) (nB := nB))
   rw [Projectivization.mk'_eq_mk]
   refine not_mem_range_segre (hw t) (j := j₀) (j' := j₁) (k := k₀) (k' := k₁) ?_
   have hval : ∀ (j : Fin nA) (k : Fin nB),
-      (prodVec a b + t • e) (j, k)
+      (tensorState a b + t • e) (j, k)
         = a j * b k + t * (if (j, k) = ((j₁ : Fin nA), (k₁ : Fin nB)) then 1 else 0) := by
     intro j k
-    simp only [PiLp.add_apply, PiLp.smul_apply, prodVec_apply, he_apply,
+    simp only [PiLp.add_apply, PiLp.smul_apply, tensorState_apply, he_apply,
       smul_eq_mul]
   rw [hval j₀ k₀, hval j₁ k₁, hval j₀ k₁, hval j₁ k₀]
   rw [if_neg (by intro h; exact hj₁ (congrArg Prod.fst h).symm),

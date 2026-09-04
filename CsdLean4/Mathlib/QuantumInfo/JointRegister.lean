@@ -16,8 +16,10 @@ The product-index register `EuclideanSpace ℂ (ι₁ × ι₂)` over arbitrary 
 four pieces every two-register algorithm argument consumes:
 
 * **`tensorState φ ψ`** — the product state, coordinate `φ c * ψ y`, with bilinearity
-  (`tensorState_smul_left/right`, `tensorState_sum_left/right`) and `|c⟩ ⊗ |y⟩ = |(c,y)⟩`
-  (`tensorState_basis`).
+  (`tensorState_smul_left/right`, `tensorState_sum_left/right`, two-sided `tensorState_smul_smul`)
+  and `|c⟩ ⊗ |y⟩ = |(c,y)⟩` (`tensorState_basis`); nonvanishing on nonzero factors
+  (`tensorState_ne_zero`) and jointly continuous (`tensorState_continuous`), the two facts a
+  projective (Segre) argument needs.
 * **`matrixLeft M Φ`** — a matrix kernel acting on the **first factor only** (the shape of "the
   inverse QFT on the counting register"), linear (`matrixLeft_smul`/`matrixLeft_sum`), with the
   key reduction ★ `matrixLeft_tensorState`: on a product state it acts on the first factor and
@@ -117,6 +119,43 @@ lemma tensorState_add_right (φ : EuclideanSpace ℂ ι₁) (ψ χ : EuclideanSp
   rw [WithLp.ofLp_add, Pi.add_apply, tensorState_apply, tensorState_apply, tensorState_apply,
     WithLp.ofLp_add, Pi.add_apply]
   ring
+
+omit [Fintype ι₁] [Fintype ι₂] [DecidableEq ι₁] [DecidableEq ι₂] in
+/-- The two-sided homogeneity law: scaling both factors scales the product by the product of the
+scalars. The form a projective (ray) argument consumes. -/
+lemma tensorState_smul_smul (a b : ℂ) (φ : EuclideanSpace ℂ ι₁) (ψ : EuclideanSpace ℂ ι₂) :
+    tensorState (a • φ) (b • ψ) = (a * b) • tensorState φ ψ := by
+  rw [tensorState_smul_left, tensorState_smul_right, smul_smul]
+
+omit [Fintype ι₁] [Fintype ι₂] [DecidableEq ι₁] [DecidableEq ι₂] in
+/-- **A product of nonzero factors is nonzero**: the coordinates of the tensor state are the
+products of the coordinates, and `ℂ` has no zero divisors. -/
+lemma tensorState_ne_zero {φ : EuclideanSpace ℂ ι₁} {ψ : EuclideanSpace ℂ ι₂}
+    (hφ : φ ≠ 0) (hψ : ψ ≠ 0) : tensorState φ ψ ≠ 0 := by
+  obtain ⟨c, hc⟩ : ∃ c, φ c ≠ 0 := by
+    by_contra h
+    push Not at h
+    exact hφ (by apply PiLp.ext; intro c; simpa using h c)
+  obtain ⟨y, hy⟩ : ∃ y, ψ y ≠ 0 := by
+    by_contra h
+    push Not at h
+    exact hψ (by apply PiLp.ext; intro y; simpa using h y)
+  intro h0
+  have := congrArg (fun w : EuclideanSpace ℂ (ι₁ × ι₂) => w (c, y)) h0
+  simp only [tensorState_apply] at this
+  exact mul_ne_zero hc hy (by simpa using this)
+
+omit [Fintype ι₁] [Fintype ι₂] [DecidableEq ι₁] [DecidableEq ι₂] in
+/-- **The product map is jointly continuous.** Coordinatewise it is a product of two coordinate
+evaluations, and the `PiLp` topology is the product topology. -/
+lemma tensorState_continuous :
+    Continuous fun p : EuclideanSpace ℂ ι₁ × EuclideanSpace ℂ ι₂ => tensorState p.1 p.2 := by
+  show Continuous fun p : EuclideanSpace ℂ ι₁ × EuclideanSpace ℂ ι₂ =>
+    (WithLp.toLp 2 (fun q : ι₁ × ι₂ => p.1 q.1 * p.2 q.2) : EuclideanSpace ℂ (ι₁ × ι₂))
+  refine (PiLp.continuous_toLp _ _).comp ?_
+  refine continuous_pi fun q => ?_
+  exact ((continuous_apply q.1).comp ((PiLp.continuous_ofLp _ _).comp continuous_fst)).mul
+    ((continuous_apply q.2).comp ((PiLp.continuous_ofLp _ _).comp continuous_snd))
 
 /-! ## A matrix kernel on the first factor -/
 
