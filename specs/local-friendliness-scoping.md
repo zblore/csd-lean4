@@ -1,8 +1,21 @@
 # Local Friendliness: scoping note
 
-**Status:** SCOPED 2026-09-04, `csd-foundations`-checked the same day (14 findings folded);
-not yet built. Expert-review row **C** of `specs/BACKLOG.md` (M), twins-board row **D12**
+**Status:** SCOPED, `csd-foundations`-checked (14 findings folded), **BUILT and LANDED
+2026-09-04**. Expert-review row **C** of `specs/BACKLOG.md` (M), twins-board row **D12**
 (`qm-empirical-tests.md` §3.3).
+
+**As landed:** `Empirical/CSD/LocalFriendliness.lean` — `FriendRecords`, `Persistent`,
+`JointLawInvariant`, ★ `jointLawInvariant_of_persistent`, ★★ `not_persistent_of_jointLaw_moves`,
+★ `movingRecords_not_persistent`. Three audit pins.
+
+⚠️ **§4's deliverable was wrong and is superseded.** The `RemoteJointInvariantA` proposed there
+quantifies over A's *own* setting while tracking A's *own* outcome, so it demands that A's outcome
+distribution be independent of A's setting — **no measurement model satisfies it**, and both
+"ordering" theorems would have been vacuous. Machine-checked with a counterexample before building.
+The deeper reason: LF's `p(a₁b₁|xy) = p(a₁b₁)` is about the **friends'** outcomes, and the
+two-wing vocabulary has no friends, so (iii) has no faithful formulation in it. The brick adds the
+friend's reading as an object and states the assumption LF uses tacitly — **persistence** — which
+is what CSD denies. See §4a.
 
 Breadth / hardening, not reconstruction path — same standing as row B (Ozawa), and the same
 discipline: the twin must not read as though CSD explained anything.
@@ -123,7 +136,31 @@ invariant probability measure, quantified by Kac's formula, which the corpus has
 `1/μ(A)`; it is a different mechanism from an engineered forward unitary and is not what makes
 the coherent branch available.)*
 
-## 4. The deliverable — the §2 table, machine-checked
+## 4a. What was built instead: persistence
+
+The assumption CSD denies is not one of LF's three as usually listed. It is a fourth the
+derivation uses tacitly: that the friends' records, **once made, are fixed** — a function of the
+microstate alone, unchanged by whatever the party does next.
+
+* `FriendRecords.read : MeasurementContext → Σ → Sign × Sign` — the friends' outcomes *as read in
+  a context*, because that is what the protocol does. A bare `Σ → Sign × Sign` would assume the
+  answer.
+* `Persistent` — the reading does not depend on the context.
+* `JointLawInvariant` — LF Locality at the friend level, `p(a₁b₁|xy) = p(a₁b₁)`.
+* ★ `jointLawInvariant_of_persistent` — **persistence forces LF Locality.** On a single `Σ` with a
+  single `μ` the sets are literally equal. So fixed records *give* Locality; a model cannot keep
+  the first and deny the second.
+* ★★ `not_persistent_of_jointLaw_moves` — the elimination: a joint law that moves has
+  non-persistent records.
+* ★ `movingRecords_not_persistent` — non-vacuity.
+
+**CSD keeps Absoluteness of Observed Events** (a record is a definite ontic selection at every
+moment) and **denies persistence** (the trajectory moves forward under the party's operation into
+a configuration where the record is no longer what it was). Definite at every moment, not
+invariant across the operation. Not superdeterminism and not retrocausality: persistence fails
+*forward*.
+
+## 4. The superseded deliverable — the §2 table, machine-checked
 
 ⚠️ **This replaces the first draft's target.** That draft proposed the 2-setting LF facet plus a
 modus-tollens conditional. The review's objection is decisive on both halves: at two settings LF

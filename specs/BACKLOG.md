@@ -192,9 +192,19 @@
 >    named template `Empirical/CSD/Uncertainty.lean` is itself SCHEMA-MISMATCH / TRANSPORT-ONLY).
 >    ⚠️ The row's "no new infrastructure" likelihood note is inaccurate — `isSymmetric_map`, an
 >    unsquared Cauchy–Schwarz core, and `stdDev` are all new — though the **High** rating stands.
->    Then **Local Friendliness twin** (M, row C; scope first — LF's Locality is *event-level*,
->    stronger than Bell's parameter independence, and must not be re-exported from CHSH), then
->    **Q16 CP brick** (M–L, reconstruction path).
+>    **Local Friendliness twin** (M, row C) — **LANDED 2026-09-04**
+>    ([`local-friendliness-scoping.md`](local-friendliness-scoping.md), `csd-foundations`-checked,
+>    14 findings folded). `Empirical/CSD/LocalFriendliness.lean`: the assumption CSD denies is not
+>    one of LF's three as listed but a fourth the derivation uses tacitly — **persistence** of the
+>    friends' records. ★ `jointLawInvariant_of_persistent`: on a single `Σ` with a single `μ`,
+>    fixed records *force* LF Locality, so a model reproducing the violation must deny persistence
+>    (★★ `not_persistent_of_jointLaw_moves`, non-vacuous by `movingRecords_not_persistent`).
+>    **CSD keeps Absoluteness of Observed Events** — definite at every moment — and denies only
+>    invariance across the party's operation, which is forward evolution, not reversal. 3 pins.
+>    ⚠️ **Not built:** no LF inequality, no derivation that CSD's joint law moves (that needs the
+>    friends' labs). ⚠️ The scoping note's own §4 deliverable was **refuted before building** — its
+>    `RemoteJointInvariantA` demanded that A's outcome be independent of A's own setting, which no
+>    model satisfies; superseded by §4a. Then **Q16 CP brick** (M–L, reconstruction path).
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
 >    Cat-1 `Reversible/` headers); the general Boolean→amplitude lift (`RESIDUE(R-013)`'s neighbour).
 >

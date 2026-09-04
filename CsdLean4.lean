@@ -311,6 +311,7 @@ public import CsdLean4.Empirical.CSD.NoBroadcasting
 public import CsdLean4.Empirical.CSD.NoCommunication
 public import CsdLean4.Empirical.CSD.Uncertainty
 public import CsdLean4.Empirical.CSD.Ozawa
+public import CsdLean4.Empirical.CSD.LocalFriendliness
 public import CsdLean4.Empirical.CSD.SternGerlach
 public import CsdLean4.Empirical.CSD.SternGerlachVolume
 public import CsdLean4.Empirical.CSD.MachZehnderVolume

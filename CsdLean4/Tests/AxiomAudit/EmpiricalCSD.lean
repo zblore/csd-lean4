@@ -441,6 +441,22 @@ arithmetic. -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Ozawa.no_ozawa_model_of_jointLift
 
+-- Local Friendliness (row C, 2026-09-04). The assumption CSD denies is PERSISTENCE of the
+-- friends' records -- not Absoluteness of Observed Events, which it keeps. Persistence forces
+-- LF Locality on a single Sigma with a single mu, so it is what has to give.
+/-- info: 'CSD.Empirical.CSDBridge.LocalFriendliness.jointLawInvariant_of_persistent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.LocalFriendliness.jointLawInvariant_of_persistent
+
+/-- info: 'CSD.Empirical.CSDBridge.LocalFriendliness.not_persistent_of_jointLaw_moves' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.LocalFriendliness.not_persistent_of_jointLaw_moves
+
+-- Non-vacuity: records that move with the context really do fail persistence.
+/-- info: 'CSD.Empirical.CSDBridge.LocalFriendliness.movingRecords_not_persistent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.LocalFriendliness.movingRecords_not_persistent
+
 /-! ### Empirical predictions (GHZ paradox, Phase D6 / Mermin all-or-nothing) -/
 
 /-- info: 'CSD.Empirical.GHZ.ghz_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
