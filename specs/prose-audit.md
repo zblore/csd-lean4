@@ -252,10 +252,43 @@ in distant consumers — they were in the *same file as the correction* and in i
 neighbour. A correction paragraph at the top of a module does not sweep the module's own
 headings and decision records. Grep the corrected term inside the corrected file first.
 
+### Pass 5 (2026-09-04) — the pass-1 method, run against stated corpus counts
+
+Pass 1's method is quantitative explanatory prose checked against the object it describes. This
+run applied it to the numbers the corpus states **about itself** — counts of claims, pins,
+modules — on the reasoning that those drift silently every time the corpus grows, and that a
+reader who checks one and finds it wrong discounts the rest.
+
+**Three defects, in two of the most-read places.**
+
+* `CsdLean4/Headlines.lean` — the **facade a reviewer imports**. Its docstring said "the corpus's
+  **51 headline claims**" in the opening paragraph and "## The **31** headline claims, by layer"
+  as a section heading; the by-layer listing actually covers **50**; and the ledger and the
+  module's own drift guard carry **68**. Three numbers, none matching the object, in the one
+  module whose job is to present the claim set. Fixed: the opening states 68 and says what
+  enforces it; the heading is now **count-free**, with the guard block named as the authority and
+  the listing's partiality stated. A count in a heading that grows with the ledger is a defect
+  generator, not a fact.
+* `scripts/axiom-sweep.lean` and `scripts/check-axiom-sweep.sh` — both argued that the AxiomAudit
+  pins are "a curated subset, not a cover" from "**1843 pins** against roughly **494** modules".
+  The pins are now ~2300 and the modules 590. The *argument* is untouched by the drift, which is
+  why this is worth recording rather than merely fixing: the numbers were doing rhetorical work
+  ("look how partial the cover is") while quietly ceasing to be true.
+
+**Cleared, not a defect:** `Incubator/QuantumChaos/FloquetInterface.lean`'s "690 modules" is
+physlib's module count, not this corpus's, and is dated ("checked 2026-08-07 against the actual
+repositories"). Dating a number is what makes it survive.
+
+**The generalisable lesson.** Pass 2 hunts reasons given for restrictions; pass 3–4 hunt stale
+restatements downstream of a correction. This one hunts **numbers a document states about
+itself**, and it is the cheapest of the three: the object is always available, and the check is
+arithmetic. Every count in corpus prose is either dated, mechanically enforced, or already wrong.
+
 ## Status
 
-**Roughly a fifth of the surface covered. Five defects found** (pass 2 the false reason,
-pass 3 the stale downstream restatement, pass 4 three more of the pass-3 kind). The
+**Roughly a fifth of the surface covered. Eight defects found** (pass 2 the false reason,
+pass 3 the stale downstream restatement, pass 4 three more of the pass-3 kind, pass 5 three stale
+self-counts). The
 remaining blocks are recorded here rather than implied to be clean. The pass-3 sweep is
 now **run** against the recorded corrections; what stays unrun is the same sweep against
 corrections recorded only in commit messages, and passes 1-2 over the remaining

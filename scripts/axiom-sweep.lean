@@ -19,7 +19,9 @@ placeholder proof.
 
 The `#guard_msgs` axiom pins in `CsdLean4/Tests/AxiomAudit/` do catch it, because a
 `sorry` shows up as `sorryAx` and breaks the pinned message — but **only for pinned
-constants**. There are 1843 pins against roughly 494 modules' worth of declarations, so
+constants**. There are ~2300 pins against roughly 590 modules' worth of declarations (counts as
+of 2026-09-04; they were 1843 and 494 when this was written, which is the point — the ratio moves
+and the argument does not depend on it), so
 the pins are a curated subset, not a cover. A `sorry` in an unpinned lemma passed
 everything.
 

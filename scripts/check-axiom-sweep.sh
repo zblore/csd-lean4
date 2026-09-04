@@ -6,7 +6,7 @@
 #
 # WHY THIS EXISTS. `lake build` EXITS 0 ON A `sorry` -- it is a warning, not an error
 # (verified 2026-08-11 by planting one). The AxiomAudit pins catch a sorry as `sorryAx`,
-# but only for PINNED constants: 1843 pins is a curated subset, not a cover. A sorry in
+# but only for PINNED constants: ~2300 pins (2026-09-04) is a curated subset, not a cover. A sorry in
 # an unpinned lemma passed every gate.
 #
 # COVERAGE PRECONDITION (added 2026-09-04, the hardening session). The sweep runs on the

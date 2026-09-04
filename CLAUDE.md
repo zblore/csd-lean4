@@ -36,6 +36,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > *proved* and point to `BACKLOG.md` for what is *open*. When you close or add work, edit
 > `BACKLOG.md`.
 
+> **⛔ Some open items are NOT assistant work.** `BACKLOG.md` has a section headed
+> *"⛔ NOT ASSISTANT WORK — do not re-raise"* — the G11 Wigner hand-pass (author-only human
+> review), manuscript edits (errata entries only, never the papers), Gate 0 of
+> `lieb-dpi-scoping.md` (blocked on the Gate 1 need decision, not on effort), and B6. Read it
+> before proposing "what's next", and do not offer these back.
+
 **[`specs/INDEX.md`](specs/INDEX.md) is the orientation map** for every plan / todo /
 reference doc, with one-line status on each. Read it first when picking up work. The
 **POVM tranche is closed** ([`specs/povm-plan.md`](specs/povm-plan.md), DONE 2026-06-03 —

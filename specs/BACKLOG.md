@@ -234,6 +234,30 @@
 > 5. Opportunistic: `_of_` hypothesis pattern; Ecdsafail doc de-application (~70 stale ECDLP refs in
 >    Cat-1 `Reversible/` headers); the general Boolean→amplitude lift (`RESIDUE(R-013)`'s neighbour).
 >
+> ### ⛔ NOT ASSISTANT WORK — do not re-raise these as "what's next"
+>
+> *(Added 2026-09-04, because they kept being offered back to the author in session summaries.
+> Each is here for a stated reason, not because it is hard. An assistant reading this list should
+> treat these as **closed to it** and say so in one line if asked, rather than proposing them.)*
+>
+> * ⛔ **G11 / CL-024 / CL-014 — the Wigner hand-pass.** Moved off the queue by author decision
+>   2026-08-07: *"owner-tracked with the author's own review work, same stroke as §C; not
+>   repository work."* It is a human review of the five highest-risk Wigner tactic blocks for
+>   whether the reasoning is right. An assistant re-deriving them would defeat its purpose — the
+>   point is a second, human pair of eyes on machine-checked proofs. **Do not offer to do it.**
+> * ⛔ **Manuscript edits, anywhere.** Standing rule. Defects found in published or circulating
+>   text go to `specs/publication-errata.md` as an entry (currently E-1…E-4) and stop there. The
+>   entry closes when the *text* is amended, which is the author's act. Assistants correct the
+>   repository side and record the debt; they do not edit papers and do not track their progress.
+> * ⛔ **Gate 0 of `lieb-dpi-scoping.md` — BLOCKED, not pending.** Mechanically an assistant *can*
+>   clone physlib to a short path, build it and run `#print axioms`. It should not, until **Gate 1**
+>   is answered: *is SSA-unconditional actually consumed?* The scoping doc is explicit — "Decide
+>   this before spending days, not after" — and the row is marked *deferred by user 2026-07-23*.
+>   Running Gate 0 first would be decisive about something that may not be needed. **Ask about
+>   Gate 1; do not offer Gate 0.**
+> * ⛔ **B6 (Mathlib PRs), retired 2026-08-06.** Retirement logic unchanged. The one live question
+>   is the *summit* case in `lieb-dpi-scoping.md` §3b, which is an author call, not a queue item.
+>
 > **Open decisions that are the author's, not technical.**
 >
 > * ⚠️ **The 49 untagged "Mathlib has no …" claims.** `check-mathlib-absence.sh` reports them as a
@@ -242,12 +266,13 @@
 > * ⚠️ **B6 (Mathlib PRs), retired 2026-08-06.** Unchanged for L.4's lemmas — they genuinely do not
 >   advance CSD, so the retirement logic holds. It is the **summit** where a PR would remove a wall
 >   the corpus is standing behind; `lieb-dpi-scoping.md` §3b makes that case and leaves it open.
-> * ⚠️ **CL-024 / CL-014** — the G11 Wigner hand-pass (five tactic blocks), author-only.
+> * ⛔ **CL-024 / CL-014** — the G11 Wigner hand-pass (five tactic blocks), author-only. See the ⛔ section above: not assistant work, do not re-raise.
 > * ⚠️ **Paper C's Born-from-dynamics is ε-Born with ε free** (the smooth-pointer witness gives a
 >   sandwich, `ε`-close to Born for every `ε > 0`, exact only in the limit). Where the paper cites
 >   the smooth witness it should say so. Repo side is correct; the paper is the author's.
 >
-> **One thing genuinely unfinished.** Gate 0 of `lieb-dpi-scoping.md`: `#print axioms` on physlib's
+> **One thing genuinely unfinished — and ⛔ BLOCKED on a decision, not on effort** (see the ⛔
+> section above: answer Gate 1 first). Gate 0 of `lieb-dpi-scoping.md`: `#print axioms` on physlib's
 > SSA never ran — a build reached 8745/8761 and died on a **Windows path-length error** from the long
 > scratchpad path, not a Lean or physlib fault. Re-run from a short path (e.g. `C:\zayn\physlib`).
 > Only matters if the bridge is ever revisited. ⚠️ Physlib sets `-Dwarn.sorry=false` on that target,

@@ -72,7 +72,9 @@ public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
 **Category:** Special (facade — the reconstruction's actual API in one import).
 
 `import CsdLean4.Headlines` gives a reviewer or downstream consumer exactly the
-modules carrying the corpus's **51 headline claims** — the rows of
+modules carrying the corpus's **68 headline claims** (count as of 2026-09-04, and
+enforced: `check-validation-ledger.sh` reports it, and the drift guard below
+elaborates every one) — the rows of
 `specs/validation-claims.tsv` (canonical; human view `specs/VALIDATION-LEDGER.md`)
 — without pulling the full 400+-module implementation surface through a single
 flat root. Created 2026-08-06 (BACKLOG G8, the adopted half of the 2026-08-06
@@ -93,7 +95,14 @@ missing `OnticSetup.TrialModel` prefix; all fixed in the tsv same day).
 `check-validation-ledger.sh` also enforces that every ledger module is imported
 above, so the facade cannot silently drop a headline.
 
-## The 31 headline claims, by layer
+## The headline claims, by layer
+
+⚠️ **This listing is a reader's orientation, not the authority, and it lags.** The exhaustive,
+machine-checked list is the `example := @…` drift-guard block at the bottom — it covers all 68
+rows and breaks the build if any is renamed or deleted. The by-layer prose below covers 50 of
+them; it is deliberately left without a count, because a number here drifts every time the ledger
+grows and this heading said "31" for long enough to be wrong twice over
+(`specs/prose-audit.md`, pass 5).
 
 * **LF1 — typicality → frequencies:** `CSD.LF1.OnticSetup.TrialModel.main_theorem_ae` (CL-001),
   `CSD.LF1.freq_tendsto_of_iid` (CL-002).
