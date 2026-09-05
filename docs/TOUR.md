@@ -23,7 +23,8 @@ equals the Born weight, in every finite dimension, for arbitrary unit
 preparations, with no positivity side condition, and for generalised
 measurements as well as sharp ones. Observed frequencies over repeated
 preparations converge to those weights. Measurement is a physical interaction:
-an explicit volume-preserving dynamics creates a record, the record persists,
+an explicit volume-preserving dynamics creates a record, the record persists
+in the specific sense given below,
 distinct outcomes exclude one another, and the post-measurement state update
 falls out as a pushforward rather than being postulated. What looks like collapse
 is relocation of information with storage, not destruction.
@@ -39,7 +40,17 @@ Schrodinger", not "the flow is unitary". The assumption is not arbitrary: withou
 nonlinear projective evolution combined with tensor structure and local Born statistics
 permits signalling (Gisin 1990), which no-signalling forbids. A derivation from
 no-signalling is available if wanted, and until it is done this stands as a posit.
-The exact-record measurement witnesses require a calibration that is posited. A proved trade-off shows that
+The exact-record measurement witnesses require a calibration that is posited.
+**Persistence of records** is register-freezing by construction, not apparatus
+memory. In the witness model the interaction carries the register coordinate
+through unchanged and the readout never inspects it, both of which are theorems
+rather than readings, so a record survives because nothing in the model can
+disturb it. A pointer that physically latches and holds would have to write to
+the register and read from it, and this model does neither. Generic recurrence
+is also deferred: a measure-preserving flow on a finite measure space returns,
+by Poincare and quantitatively by Kac, so indefinite persistence does not follow
+from conservation alone. What would break recurrence is record proliferation,
+and that tier is not built. A proved trade-off shows that
 continuity of the dynamics and exactness of records everywhere cannot both hold,
 so each measurement witness gives up exactly one of continuity, exactness of the
 Born weights, or exactness at a calibrated point.

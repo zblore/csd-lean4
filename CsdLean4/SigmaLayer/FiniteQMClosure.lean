@@ -76,7 +76,17 @@ All eleven on the ONE model `productDynamics H hH p₀`:
 * `readout_ae_total` — the contextual pointer readout is a.e. defined (T6, `unifiedDeisolationModel_ae_total`);
 * `records_established` — the readout records the established outcome, B5 (`unifiedDeisolationModel_records`);
 * `records_time_physical` — the time-indexed record probability is conserved and flow-covariant, #5
-  (`unified_records_persistence`);
+  (`unified_records_persistence`). ⚠️ **Read this as register-freezing, not as apparatus memory.**
+  The interaction carries the register coordinate through unchanged and the readout never inspects
+  it — both are theorems, not readings (`unifiedDeisolationModel_interaction_register`,
+  `unifiedDeisolationModel_readout_register_irrelevant`). So the record persists here because
+  nothing in the model can disturb it; a pointer that physically latches and holds would have to
+  write to the register and read from it, and this model does neither
+  (`SigmaLayer/TimeIndexedRecord.lean`, "Honest scope"). ⚠️ **Generic recurrence is deferred.** A
+  measure-preserving flow on a finite-measure space returns (Poincaré, and quantitatively Kac —
+  `Mathlib/Dynamics/Kac.lean`, `tsum_measure_lt_returnTime`), so indefinite persistence is not
+  available from conservation alone. What would break recurrence is record *proliferation*, and
+  that tier is not built;
 * `born_frequency` — i.i.d. trials of `μL` have outcome-region frequency → `‖⟨eᵢ,ψ⟩‖²`, #2, for EVERY
   unit `ψ` (no genericity hypothesis — the `hpos` full-support requirement is retired via the `_uncond`
   engine, `unified_born_frequency` / `born_frequency_convergence_N_uncond`; vanishing amplitudes give

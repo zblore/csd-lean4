@@ -1739,6 +1739,19 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.unifiedDeisolationModel_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.unifiedDeisolationModel_ae_total
 
+-- CR-12 (2026-09-05): persistence in this model is REGISTER-FREEZING, and these two make that
+-- checkable rather than a docstring reading. The interaction carries the KTorus register through
+-- unchanged and the readout never reads it, so nothing writes to the register and nothing reads
+-- from it. A latching-memory model would have to do both. Generic recurrence (Kac,
+-- Mathlib/Dynamics/Kac.lean tsum_measure_lt_returnTime) is deferred to the record-proliferation tier.
+/-- info: 'CSD.SigmaLayer.unifiedDeisolationModel_interaction_register' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.unifiedDeisolationModel_interaction_register
+
+/-- info: 'CSD.SigmaLayer.unifiedDeisolationModel_readout_register_irrelevant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.unifiedDeisolationModel_readout_register_irrelevant
+
 -- SigmaLayer P3 SOLVED via local tomography (2026-07-15): composite_is_tensor_product. The composite observable
 -- algebra IS the tensor product of the local ones -- compositeTensorEquiv (= kroneckerLinearEquiv) is a
 -- SUFFICIENCY (2026-07-17 downgrade): BIJECTIVE linear iso M_{NA} ⊗ M_{NB} ≃ M_{NA·NB} sending

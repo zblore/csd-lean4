@@ -28,7 +28,7 @@ author before it is worked: **do not infer the scope from the title** (author in
 | CR-9 | Mathlib upstream batch | weeks, background | open — ⚠️ *body not recovered; the author will supply it. Do NOT infer the scope from the title.* |
 | CR-10 | *Optional:* unitarity from no-signalling | 4–8 weeks | open — would upgrade the review's Posit 4 to a theorem |
 | CR-11 | Moving-fibre witness | 1–2 weeks | open |
-| CR-12 | Recurrence and persistence scope | days | open |
+| CR-12 | Recurrence and persistence scope | days | **DONE 2026-09-05** — two new theorems making register-freezing checkable (`unifiedDeisolationModel_interaction_register`, `…_readout_register_irrelevant`, 2 pins), plus FiniteQMClosure header and TOUR |
 | CR-13 | Name the equivariance theorem | days | open — first item with real mathematical content after the wording batch |
 | CR-14 | Exploration only: relaxation H-theorem | — | blocked on hitting-time asymptotics; after CR-11 |
 | CR-15 | *Optional:* characterise the cell law | weeks | **DONE 2026-09-04** (`aa7c3cb`, `e6ba209`) |

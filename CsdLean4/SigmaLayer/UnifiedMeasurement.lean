@@ -98,6 +98,30 @@ noncomputable def unifiedDeisolationModel :
   readout := fun _ _ x => vnPointerOutcome ψ' hψ'0 e x.1
   readout_eq_some_iff := fun _ _ _ _ => Iff.rfl
 
+/-! ### Why the record persists: the register is frozen, and that is a theorem, not a reading
+
+`records_time_physical` (`SigmaLayer/FiniteQMClosure.lean`) says the record probability is conserved
+and the record is flow-covariant. It is easy to read that as apparatus *memory* — a pointer latching
+and holding. It is not. The two lemmas below say exactly what the model does: the de-isolation
+interaction leaves the register coordinate **untouched**, and the readout never looks at it. So
+persistence here is register-freezing by construction, and naming it as a theorem keeps the stronger
+reading from being taken for free (`SigmaLayer/TimeIndexedRecord.lean`, "Honest scope"). -/
+
+/-- ★ **The interaction freezes the register.** The de-isolation interaction acts only on the base
+coordinate; the `KTorus` register is carried through unchanged. This is what "persistence by
+construction" means, stated so it can be checked rather than believed. -/
+@[simp] theorem unifiedDeisolationModel_interaction_register
+    (t : OnticTime) (c : (vnRecordSignature N).Context) (x : KSigma (M + 1)) :
+    ((unifiedDeisolationModel H hH p₀ e ψ' hψ'0).interaction t c x).2 = x.2 := rfl
+
+/-- ★ **The readout ignores the register.** Two ontic states sharing a base coordinate read out the
+same outcome whatever their register values. Together with the lemma above: nothing in this model
+writes to the register, and nothing reads from it. A latching-memory model would have to do both. -/
+theorem unifiedDeisolationModel_readout_register_irrelevant
+    (c : (vnRecordSignature N).Context) (p : ℙ ℂ (EuclideanSpace ℂ (Fin (M + 1)))) (r r' : KTorus) :
+    (unifiedDeisolationModel H hH p₀ e ψ' hψ'0).readout () c (p, r)
+      = (unifiedDeisolationModel H hH p₀ e ψ' hψ'0).readout () c (p, r') := rfl
+
 /-- **The readout records the established outcome (B5) on the unified model.** -/
 theorem unifiedDeisolationModel_records :
     DeisolationModel.RecordsEstablishedOutcome (unifiedDeisolationModel H hH p₀ e ψ' hψ'0) :=
