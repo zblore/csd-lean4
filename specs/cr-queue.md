@@ -6,7 +6,8 @@ repository, so a lost session would have lost the plan. The titles, sizes, depen
 execution order below were recovered from the session log; ⚠️ **the per-item bodies were not fully
 recoverable**. ⚠️ Where an item's body is not recovered the detail must be re-supplied by the
 author before it is worked: **do not infer the scope from the title** (author instruction,
-2026-09-05).
+2026-09-05). As of 2026-09-05 every body has been supplied or recovered; CR-9's is recorded below
+and deferred.
 
 ## Execution order (as set by the author)
 
@@ -25,7 +26,7 @@ author before it is worked: **do not infer the scope from the title** (author in
 | CR-6 | Unitary-class posit recorded | days | **DONE 2026-09-05** — TOUR (both halves), `LF4/ProjectedDynamics.lean` header, reconstruction-status A5, Posit 6, Gisin1990 registered |
 | CR-7 | Label-space and infrastructure hygiene | days | **DONE 2026-09-05** — CONVENTIONS §12 (not §10, which was taken), `scripts/check-labels.sh` + baseline + 2 probes + CI. ⚠️ The five collisions are **grandfathered, not renamed**; reasons in §12 |
 | CR-8 | Naming and residue paragraphs in CV and Empirical | hours | **DONE 2026-09-05** — mode-disjoint commutation (not Haag–Kastler), boost covariance of a posited cone (not Lorentz content), CV Born wording, CV residue paragraph, TOUR three-localities, and CL-049's scope as a theorem (`unitary_invariant_of_recordStatistics_invariant`, pinned) |
-| CR-9 | Mathlib upstream batch | weeks, background | open — ⚠️ *body not recovered; the author will supply it. Do NOT infer the scope from the title.* |
+| CR-9 | Mathlib upstream batch | weeks, background | ⛔ **DEFERRED by author decision 2026-09-05** — not blocked, not scheduled. Body recorded below so it survives; do not re-raise as pending work |
 | CR-10 | *Optional:* unitarity from no-signalling | 4–8 weeks | open — would upgrade the review's Posit 4 to a theorem |
 | CR-11 | Moving-fibre witness | 1–2 weeks | open |
 | CR-12 | Recurrence and persistence scope | days | **DONE 2026-09-05** (incl. the E5 spike retained-not-required annotation) — two new theorems making register-freezing checkable (`unifiedDeisolationModel_interaction_register`, `…_readout_register_irrelevant`, 2 pins), plus FiniteQMClosure header and TOUR |
@@ -51,6 +52,30 @@ remaining items should not re-litigate:
 means provenance — which is what ~130 of the uses mean, across 59 module headers, backed by two
 guards. Deleting them would have orphaned machine-checked claims. The *meaning* was narrowed at the
 governance sites instead. Do not re-raise the grep as an outstanding acceptance failure.
+
+## CR-9 — the upstream batch, recorded but DEFERRED
+
+⛔ **Author decision 2026-09-05: not to be done at this point.** Recorded in full because the whole
+purpose of this file is that a plan should not live only in a chat window. Not blocked, not
+scheduled, and not to be re-raised as pending work.
+
+**Upstreaming order** (all twelve modules verified present 2026-09-05):
+
+1. `Mathlib/Dynamics/Kac.lean`
+2. `Mathlib/Topology/Algebra/CompactRecurrence.lean`, with
+   `Mathlib/Dynamics/{CompactGroupNoMixing, CorrelationDecay, CorrelationDecayWitness, CatMapWitness}.lean`
+3. The invariant measure on `ℙ(ℂⁿ)`:
+   `Mathlib/LinearAlgebra/Projectivization/{Unitary, UnitaryTransitive, FubiniStudy, FubiniStudyUnique}.lean`
+   with `Mathlib/LinearAlgebra/Matrix/UnitaryHaar.lean`
+4. `Mathlib/MeasureTheory/MutuallySingularMap.lean`
+
+**Process constraints, which are the part most easily lost:**
+
+* **Zulip "Is there code for X?" first**, and specifically ask whether a *Haar-pushforward
+  construction* is wanted before building toward one.
+* **Wigner rigidity goes last**, and only after maintainer contact.
+* ⚠️ **The `QuantumInfo` and `Reversible` trees are NOT Mathlib material.** Do not include them in
+  any upstreaming pass.
 
 ## Numbering warning
 
