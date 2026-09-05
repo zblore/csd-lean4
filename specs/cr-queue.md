@@ -27,7 +27,7 @@ and deferred.
 | CR-7 | Label-space and infrastructure hygiene | days | **DONE 2026-09-05** — CONVENTIONS §12 (not §10, which was taken), `scripts/check-labels.sh` + baseline + 2 probes + CI. ⚠️ The five collisions are **grandfathered, not renamed**; reasons in §12 |
 | CR-8 | Naming and residue paragraphs in CV and Empirical | hours | **DONE 2026-09-05** — mode-disjoint commutation (not Haag–Kastler), boost covariance of a posited cone (not Lorentz content), CV Born wording, CV residue paragraph, TOUR three-localities, and CL-049's scope as a theorem (`unitary_invariant_of_recordStatistics_invariant`, pinned) |
 | CR-9 | Mathlib upstream batch | weeks, background | ⛔ **DEFERRED by author decision 2026-09-05** — not blocked, not scheduled. Body recorded below so it survives; do not re-raise as pending work |
-| CR-10 | *Optional:* unitarity from no-signalling | 4–8 weeks | open — would upgrade the review's Posit 4 to a theorem |
+| CR-10 | *Optional:* unitarity from no-signalling | 4–8 weeks | ⛔ **DECLINED 2026-09-05, with reasons** — premises point the wrong way and the conclusion overshoots Gisin. Successor named below: the Bargmann continuity datum |
 | CR-11 | Moving-fibre witness | 1–2 weeks | **DONE 2026-09-05** — `SigmaLayer/MovingFibreWitness.lean` (`movingFibreEnergy`, `_epsProjectable`, ★★ `_not_projectable`, `catStroke` + 3 properties; 3 pins, CL-071), reconstruction-status §7 narrowed. ⚠️ Its `quantum_effective_shadowing` step does not typecheck: that theorem is about matrices, not `EpsProjectable` on `KSigma` |
 | CR-12 | Recurrence and persistence scope | days | **DONE 2026-09-05** (incl. the E5 spike retained-not-required annotation) — two new theorems making register-freezing checkable (`unifiedDeisolationModel_interaction_register`, `…_readout_register_irrelevant`, 2 pins), plus FiniteQMClosure header and TOUR |
 | CR-13 | Name the equivariance theorem | days | **DONE 2026-09-05** — new `SigmaLayer/Equivariance.lean` (`epistemicMeasure_equivariant`, ★★ `csd_equivariance`, 2 pins, CL-069), POSITS Posit 9, TOUR, Headlines. ⚠️ Corrects the item's premise: µL-preservation is **proved** on the concrete arena, not posited |
@@ -94,6 +94,55 @@ sequential/record-layer, not frequency-volume, so there was no precedent migrati
 `ContextField`-generic `globalBasin_born_frequency_context`, instantiating the already-generic engine
 `born_frequency_convergence_partition`. It carries **no positivity hypothesis**, unlike the base-side
 twin. The 28 files can now be migrated by application.
+
+## ⛔ CR-10: declined, and what to do instead
+
+Assessed 2026-09-05 and **not** attempted. Three reasons, none of them effort.
+
+1. **Its premises point the wrong way.** The item says it upgrades the unitary-class posit "using
+   premises already carried (marginal stability, Paper C A6)". The corpus's marginal-stability
+   object is `reduceB_local_flow_invariant` (`RecordLayer/OnticMarginals.lean`), whose statement
+   *takes* `schrodingerUnitary hHA t`. That is **unitary ⇒ marginal stability**. CR-10 needs the
+   converse, so using the carried premise would be circular; the converse is not in the corpus.
+   ⚠️ Note also that "Paper C A6" is **not** the corpus's `A6`, which is Tsirelson's bound
+   (`Empirical/QM/Bell.lean`) — the CONVENTIONS §12 collision, in the wild.
+2. **Gisin does not reach unitarity.** Gisin 1990 shows *nonlinear* evolution permits signalling;
+   the contrapositive gives **linearity**, not unitarity. Norm preservation and then Wigner-type
+   rigidity are still needed, and Wigner lands on *semi*-unitary (unitary **or** antiunitary). The
+   argument also turns on an ensemble semantics that is a modelling choice with a live literature of
+   objections — a research programme with a posit at its heart, not a derivation.
+3. **The corpus already has a shorter route, and it is nearly closed.** Unitarity is reached here via
+   Wigner, not no-signalling. Branch exclusivity is **proved**
+   (`not_projUnitary_and_projAntiunitary`, by the Bargmann invariant being conjugated on the
+   antiunitary branch), and `projectedFlow_unitary_of_bargmann_continuous` closes the selection given
+   `hTPP`, a probe triple, and one remaining hypothesis.
+
+**The successor target is that remaining hypothesis:** `hcont`, continuity of the *scalar* Bargmann
+observable `t ↦ Δ(Φ_t p, Φ_t q, Φ_t r)` along the flow (`LF4/BargmannSelection.lean`). Concrete,
+small, and already reduced. Attack that rather than no-signalling.
+
+**And `hcont` reduces further, which is the useful part.** It is a bespoke condition on a scalar
+observable; it should be replaced by a primitive one. Two steps:
+
+1. **`bargmann : ℙ³ → ℂ` is continuous** — *new, and the only real work.* ⚠️ It cannot go through
+   `Projectivization.rep`, which is choice-defined and **not** continuous; the route is that
+   `bargmann` descends from `bargmannVec` on nonzero vectors and the projection is an *open quotient
+   map*, so the descended function is continuous. `Mathlib/LinearAlgebra/Projectivization/Bargmann.lean`
+   currently contains **no** continuity infrastructure at all (zero occurrences of `Continuous`).
+2. Given (1), `hcont` follows from **continuity of the projected flow in `t`**, which is a natural
+   primitive assumption and far weaker than unitarity. ⚠️ It is *not* a field of `KahlerOnticSetup`
+   — that structure carries only `measurable_projectedFlow` — so it would be an added hypothesis,
+   but a standard one rather than a technical artefact.
+
+So the discharge condition for this posit can be reduced from "the Bargmann observable is
+continuous along the flow" to "**the flow is continuous**", at the cost of one continuity lemma.
+That is the shape of the next attempt, and it is a lemma rather than a programme.
+
+⚠️ Do not attempt to discharge `hcont` on the *concrete* arena as evidence: there the flow is
+`schrodingerUnitary • ·`, so `ProjUnitary` holds by construction and
+`bargmannObservable_of_projUnitary` makes the observable constant. Trivially continuous, and
+circular — the selection theorem exists for *abstract* setups where unitarity is not yet known.
+
 
 ## Numbering warning
 

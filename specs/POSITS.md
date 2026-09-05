@@ -168,11 +168,22 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   is the class, not the consequence. It is also *motivated*: nonlinear projective evolution with
   tensor structure and local Born statistics permits signalling (Gisin 1990), which no-signalling
   forbids — a reason to believe the posit, not a derivation of it.
-* **⚠️ An optional upgrade exists.** A derivation from no-signalling (Gisin's argument) would turn
-  this into a theorem — queued as `CR-11`/`CR-10` in `specs/cr-queue.md`, four to eight weeks, and
-  explicitly optional. Until then it is a posit with a known route out, which is a better position
-  than most entries here.
-* **What would discharge it.** That derivation.
+* **⚠️ The no-signalling route was assessed and DECLINED** (2026-09-05, `specs/cr-queue.md`). Its
+  premises run backwards — the corpus's marginal stability is `unitary ⇒ stability`
+  (`reduceB_local_flow_invariant` literally takes `schrodingerUnitary`), so deriving unitarity from
+  it is circular — and Gisin's argument yields *linearity*, not unitarity, on top of an ensemble
+  semantics that is itself a modelling choice.
+* **What would discharge it, and it is much smaller than that.** The corpus reaches unitarity via
+  **Wigner**, not no-signalling, and that chain is closed but for one hypothesis: branch exclusivity
+  is proved (`not_projUnitary_and_projAntiunitary`), and
+  `projectedFlow_unitary_of_bargmann_continuous` fires given `hTPP`, a probe triple with
+  `Im Δ ≠ 0`, and **`hcont`** — continuity of the scalar Bargmann observable
+  `t ↦ Δ(Φ_t p, Φ_t q, Φ_t r)`. That datum is the discharge condition. See
+  `LF4/BargmannSelection.lean`.
+* **And it reduces further:** given a continuity lemma for `bargmann` on projective space (new;
+  must avoid the choice-defined `Projectivization.rep`, which is not continuous, and go through the
+  open quotient map instead), `hcont` follows from plain **continuity of the projected flow in `t`**
+  — a primitive assumption rather than a technical one. Scoped in `specs/cr-queue.md` under CR-10.
 
 ## Posit 7 — composite structure (local tomography)
 
