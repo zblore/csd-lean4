@@ -66,6 +66,7 @@ public import CsdLean4.RecordLayer.ShearDeIsolation
 public import CsdLean4.Empirical.CSD.PointerCommutation
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
 public import CsdLean4.SigmaLayer.Equivariance
+public import CsdLean4.RecordLayer.NStepChain
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -265,5 +266,6 @@ example := @Kahler.fsChartForm_apply -- CL-066
 example := @MeasureTheory.cat_hasCorrelationDecay -- CL-067
 example := @OperatorConvexCFC.convexOn_mul_log -- CL-068
 example := @CSD.SigmaLayer.csd_equivariance -- CL-069
+example := @CSD.RecordLayer.csd_nstep_born -- CL-070
 
 end CSD.Headlines

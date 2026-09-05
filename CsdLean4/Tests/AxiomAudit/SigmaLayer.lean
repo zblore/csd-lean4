@@ -3491,6 +3491,25 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.unitary_invariant_of_recordStatistics_invariant
 
+-- CR-16 (2026-09-05): the measurement chain to ARBITRARY depth, previously an argument. The content
+-- is self-similarity: after a record the state is vertexPoint i, so the state entering step k+1 is a
+-- function of the previous record ALONE (chainState_succ), and the chain law is the product of
+-- per-step rates read at those states. Induction on depth; each step is globalBasin_prob.
+-- csd_nstep_repeatable is non-vacuity with teeth: repeating one basis reproduces the first outcome
+-- with probability 1 at every depth. ⚠️ STATE-LEVEL, not a single-arena factorisation --
+-- two_stage_joint does the harder n=2 arena version and generalising IT is not done here.
+/-- info: 'CSD.RecordLayer.csd_nstep_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_nstep_born
+
+/-- info: 'CSD.RecordLayer.csd_nstep_born_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_nstep_born_succ
+
+/-- info: 'CSD.RecordLayer.csd_nstep_repeatable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_nstep_repeatable
+
 /-- info: 'CSD.RecordLayer.sqContext_not_torusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sqContext_not_torusGenerated

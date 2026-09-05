@@ -33,7 +33,7 @@ and deferred.
 | CR-13 | Name the equivariance theorem | days | **DONE 2026-09-05** — new `SigmaLayer/Equivariance.lean` (`epistemicMeasure_equivariant`, ★★ `csd_equivariance`, 2 pins, CL-069), POSITS Posit 9, TOUR, Headlines. ⚠️ Corrects the item's premise: µL-preservation is **proved** on the concrete arena, not posited |
 | CR-14 | Exploration only: relaxation H-theorem | — | blocked on hitting-time asymptotics; after CR-11 |
 | CR-15 | *Optional:* characterise the cell law | weeks | **DONE 2026-09-04** (`aa7c3cb`, `e6ba209`) |
-| CR-16 | *Optional:* the n-step chain theorem | weeks | open |
+| CR-16 | *Optional:* the n-step chain theorem | weeks | **DONE 2026-09-05** — `RecordLayer/NStepChain.lean` (`csd_nstep_born`, `_succ`, `csd_twostep_born`, `csd_nstep_repeatable`, `chainState_shift`; 3 pins, CL-070), POSITS Posit 5. ⚠️ State-level; the n-stage **arena** construction is explicitly not built |
 
 ## What CR-15 and CR-1 settled, for anyone reading the later items
 

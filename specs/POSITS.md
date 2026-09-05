@@ -132,6 +132,15 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   of the calibration is **forced** by `collapse_accuracy_bound` (approximate collapse is priced in
   ready-state improbability), and `swap_not_blockLuders` proves no fixed ray-level calibration
   serves both witnesses — so the posit is constrained from two sides.
+* **⚠️ The chain is now proved to arbitrary depth, GIVEN `n` banks** (2026-09-05, CR-16).
+  `csd_nstep_born` (`RecordLayer/NStepChain.lean`) proves the depth-`n` law for every sequence of
+  contexts and outcomes, by induction, with each step's rate read at `chainState` — the preparation
+  first, the collapsed vertex thereafter. One measurement consumes one bank, so a depth-`n` chain
+  renews this posit `n` times, and that renewal is visible in the statement as the per-step
+  `epistemicMeasure` rather than hidden. `csd_nstep_repeatable` supplies non-vacuity: repeating one
+  basis reproduces the first outcome with probability one at every depth.
+  ⚠️ State-level, not a single-arena factorisation — `two_stage_joint` does the harder `n = 2`
+  arena version and generalising *it* is not done.
 * **⚠️ This is "the pointer starts at zero".** A preparation-of-the-apparatus assumption, of the
   same family every measurement account makes.
 * **What would discharge it.** Deriving the ready state from the dynamics rather than positing it —
