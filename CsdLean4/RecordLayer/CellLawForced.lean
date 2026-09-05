@@ -99,7 +99,7 @@ negative half this module completes); `RecordLayer/GlobalBasin.lean` (`ContextFi
 `momentContext`, `globalBasin_born`); `Mathlib/Analysis/InnerProductSpace/HamiltonianVectorField.lean`
 (`quadraticEnergy_hamiltonian_duality`, `hamiltonianVectorFieldOf`, `fundamentalForm`);
 `LF4/MomentMap.lean` (`momentMap_mk`, `euclidean_norm_sq_eq_sum`); `LF4/KahlerOnticSetup.lean`
-(`IsFubiniStudyKahler` — the posited structure); `specs/POSITS.md` (Posit 1, discharged here);
+(`IsFubiniStudyKahler` — the posited structure); `specs/POSITS.md` (Posit 1, restated here — *not* discharged);
 `specs/cell-law-scoping.md` (why the frame-function route was declined);
 `specs/future-work.md` ("Cell-law characterisation"); `specs/TERMS.md` (Hamiltonian, two senses).
 -/
@@ -226,10 +226,13 @@ theorem isTorusGenerated_momentContext : IsTorusGenerated (momentContext N) := b
   rw [momentMap_mk x hx i, coordEnergy]
   field_simp
 
-/-- ★★ **The cell law is forced.** A context field whose rates generate the coordinate phase
-rotations *is* the moment map — exactly, not up to a constant. The additive freedom left by
-`IsPhaseHamiltonian.eq_coordEnergy_add` is removed by the context field's own axioms: `sum_one`
-gives `∑ cᵢ = 0`, `nonneg` gives `cᵢ ≥ 0`, and a sum of non-negatives vanishing forces each to zero.
+/-- ★★ **The cell law is forced, given generation.** A context field whose rates generate the
+coordinate phase rotations *is* the moment map — exactly, not up to a constant, and with no side
+hypothesis. The additive freedom left by `IsPhaseHamiltonian.eq_coordEnergy_add` is removed by
+**homogeneity**: the rate is a function of the ray while the homogenisation has degree two, so
+rescaling a representative by `2` forces `k = 4k`. ⚠️ The context field's own axioms (`sum_one`,
+`nonneg`) are **not** used — an earlier draft of this docstring said they were, which was a
+misreading of the proof route; see the header.
 
 With `CellLawFreedom.rate_field_not_forced_by_torus_symmetry` this locates the boundary precisely:
 torus *invariance* leaves a continuum of rate fields, torus *generation* leaves exactly one. -/

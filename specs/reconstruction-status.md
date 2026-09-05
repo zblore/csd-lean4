@@ -381,6 +381,26 @@ machine-checked facts in the corpus.
   imported-axiom count to zero — an **audit-posture** improvement, NOT a strengthening of the CSD
   reconstruction.
 
+  ⚠️ **What "Gleason-free" does and does not say** (governance wording, 2026-09-05). It says the
+  Σ-side road shares **no machinery** with Gleason or Busch — a provenance claim, and a
+  machine-checked one, by two guards: `check-import-negative.sh` (46 modules — the
+  claim that `LF2/EffectGleason` is absent from the import closure) and `check-gleason-free.sh`
+  (11 modules, 259 declarations, none reaching `effect_gleason_representation` in the constant
+  graph). ⚠️ 59 module headers assert Gleason-freeness, so the two guards together cover most but
+  not every assertion; the uncovered remainder rests on the axiom sweep. It does **not** say the Born form is derived from nothing.
+  The record layer's rates rest on the **cell law**, which is a posit *with a characterisation*: a
+  context field whose rates **generate** the coordinate phase rotations is exactly the moment map
+  (`torusGenerated_eq_momentMap`), while torus **invariance** alone does not
+  (`rate_field_not_forced_by_torus_symmetry` exhibits a rival field). Two adjacent uniqueness results support the
+  surrounding structure without bearing on the cell law: `μ_FS` is the unique `U(N)`-invariant
+  probability measure (`fubiniStudy_forced_by_symmetry`), and additivity on effects forces the trace
+  form in the operational stratum (`effect_gleason_representation`). The record layer then realises
+  the Born weights as volume fractions under a uniform fibre variable (`globalBasin_born`) by a
+  route that uses neither — and the cell-law characterisation is **single-context**, so it does not
+  import noncontextuality either. ⚠️ That is not a claim that no Gleason-style characterisation
+  could exist: the frame-function route was **declined, not refuted**.
+  See `specs/POSITS.md` Posit 1 and `specs/cell-law-scoping.md`.
+
 ## 8. Bottom line
 
 The corpus proves the **QM calculation engine on a concrete projective witness** — the *consistency floor*:

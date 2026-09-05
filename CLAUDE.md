@@ -601,7 +601,8 @@ KahlerFlow.lean        — kFlow: first non-trivial measure-preserving flow Φ�
                          (LF1 typicality non-vacuous; hΦ_pres load-bearing)
 MomentMap.lean         — momentMap (torus moment map); momentMap_mk_eq_inner_sq:
                          Born weight = moment coordinate Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖²
-                         (forced symplectic invariant, no carving, no Busch)
+                         (forced by torus GENERATION, CellLawForced.lean; not by
+                         invariance; no carving, no Busch)
 BornVolume.lean        — replaceMap (vertex-replacement); born_eq_volume_ratio:
                          Born weight = barycentric Lebesgue-volume ratio
                          (det = barycentric coord via Cramer + addHaar)

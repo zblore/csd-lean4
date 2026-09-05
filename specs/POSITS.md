@@ -97,6 +97,18 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 
 ---
 
+## Where the posits are also listed
+
+Keep these in step with this file, or the register stops being a register:
+`AXIOMS.md` §3 (the postulate ledger — the cell law is §3.10), `specs/INDEX.md`'s AXIOMS row,
+`specs/CSD-CHARTER.md` "The picture", `specs/reconstruction-status.md` §7a, and the glossary entry
+`is-the-born-rule-derived`.
+
+⚠️ **Known undercount, deliberately not fixed here.** `README.md` and `docs/TOUR.md` both carry a
+"what is posited and not derived" inventory that omits the cell law. Those are landing-surface
+documents (CONVENTIONS §10) and change only when a headline claim changes, so the line is queued
+for the next headline-touching landing rather than patched now. Recorded so it is not lost.
+
 ## Adding an entry
 
 A new entry belongs here when all three hold: the object is a definition or structure field; prose

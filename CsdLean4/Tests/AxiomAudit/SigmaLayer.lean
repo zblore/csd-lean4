@@ -2191,7 +2191,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- type, fixes the basins/probabilities) + unknown microstate ξ → outcome (the basin it occupies) →
 -- record. outcome_eq_some_iff (microstate selects its basin), record_of_mem_basin (combined result IS
 -- the record ⟨context,outcome,time⟩), bornMeasurement_prob (basins set the probabilities = ‖ψ i‖²),
--- bornMeasurement_prob_momentMap (= the Kähler moment map, forced not injected), bornMeasurement_ae_total
+-- bornMeasurement_prob_momentMap (= the Kähler moment map, forced by GENERATION not invariance --
+-- CellLawForced.lean; posit restated, specs/POSITS.md Posit 1), bornMeasurement_ae_total
 -- (a.e. microstate yields a record). Assembles the proven pieces; the physical flow H_int(M) stays open.
 /-- info: 'CSD.RecordLayer.Measurement.record_of_mem_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.Measurement.record_of_mem_basin

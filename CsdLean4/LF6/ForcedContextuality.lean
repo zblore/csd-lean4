@@ -38,10 +38,15 @@ posited; it lives in the `Σ`-volume engine's reading of the entangled state.
 
 ## Conceptual ledger (honest)
 
-- **(a) Derived, not posited.** The non-factorisation is a property of the
-  `Σ`-volume engine's reading of the entangled state (the singlet kernel
-  `P_st`), not a partition put in by hand. `engine_joint_nonfactorises` is a
-  `P_st`-arithmetic fact; the correlations are the *derived* source.
+- **(a) Derived, not posited — and here is the theorem that earns it.** The
+  non-factorisation is a property of the `Σ`-volume engine's reading of the
+  entangled state (the singlet kernel `P_st`), not a partition put in by hand.
+  `engine_joint_nonfactorises` is a `P_st`-arithmetic fact; the correlations are
+  the *derived* source. What is **not** derived here is the engine's cell law
+  itself: the outcome rates are the moment map, a posit with a characterisation
+  (`RecordLayer/CellLawForced.lean` `torusGenerated_eq_momentMap`;
+  `specs/POSITS.md` Posit 1). "Derived, not posited" is a claim about the
+  non-factorisation, not about the rates it is computed from.
 - **(b) Contextuality is FORCED (Bell).** By
   `no_product_partition_realises_singlet`, no setting-local `Σ`-partition on a
   shared `(SigmaSpace, μ)` reproduces the singlet correlations. Hence any de-isolation

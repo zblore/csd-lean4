@@ -36,6 +36,17 @@ SU(n)-fixed μ_FS (Paper B) — is the Born weight |⟨i|ψ⟩|². So: **the reg
 ℂℙ); the measure/typicality that weights them is ontic (μL over Ω₀ ⊂ Σ).** QM is the
 calculation engine born from this structure.
 
+**The cell law — posit plus characterisation.** The record layer's outcome rates are the
+Fubini–Study torus moment map. That is a **posit** (`specs/POSITS.md` Posit 1) *with a
+characterisation*: a context field whose rates **generate** the coordinate phase rotations is
+exactly the moment map (`torusGenerated_eq_momentMap`, `RecordLayer/CellLawForced.lean`), while
+torus **invariance** alone does not
+(`rate_field_not_forced_by_torus_symmetry`, `RecordLayer/CellLawFreedom.lean`, exhibits a rival). What stays posited
+is that a context's rates generate its pointer torus. ⚠️ Restated, not discharged — the premise is
+extensionally equivalent to the conclusion — but it mentions **no probability**, so the Born *shape*
+is derived rather than assumed. Say "posit with a characterisation", never "forced" unqualified and
+never "a free choice".
+
 ## The goal now — complete the Σ+Ω reconstruction of QM
 
 The immediate deliverable is to make **the whole of finite-dimensional QM arise from Σ and
@@ -109,6 +120,15 @@ resolved in Lean, the second the standing posit):
 
 - Reproducing QM on the *epistemic* side (more results, gates, algorithms) presented as
   completing the reconstruction.
+- **"Gleason-free" used to mean the Born form is derived from nothing.** It means only that the
+  Σ-side road shares no machinery with Gleason or Busch — provenance, machine-checked by
+  `check-import-negative.sh` (46 modules) and `check-gleason-free.sh` (11 modules, 259
+  declarations). The cell-law characterisation is single-context and routes through neither.
+  ⚠️ But do not write that no Gleason-style characterisation *could* exist — the frame-function
+  route was declined, not refuted (`specs/cell-law-scoping.md`).
+- **The cell law described as either "forced" (unqualified) or "a free choice".** Both are wrong
+  since 2026-09-04: it is a posit *with* a characterisation (torus generation — see "The picture").
+  Equally: attributing the characterisation to invariance, which is exactly what fails.
 - Any attempt to "derive Σ" / explain Σ's origin — a non-question.
 - Measurement outcome regions **preparation-indexed** (`bornRegion ψ'`) instead of
   **context-fixed** {Ωᵢ(M)} — both epistemic; and the record not realized as the ontic
@@ -187,6 +207,7 @@ arise from Σ + Ω — is now **built** (2026-07-25, `record-layer-plan.md §4`;
 residuals `R-015` boundary and `R-016` open — this is the half of the former contradiction that
 was right): measurement =
 `context + unknown microstate → record` on the base×fibre Σ, outcome probabilities = the Kähler
-moment map, Born = the law of large numbers over the unknown microstate. What remains is optional
+moment map (a posit with a characterisation — see "The picture"; `specs/POSITS.md` Posit 1,
+`specs/cell-law-scoping.md`), Born = the law of large numbers over the unknown microstate. What remains is optional
 (a mechanical field naming in the pinned closure, no new theorem) or unrelated open tiers (Lindblad,
 the Kähler 2-form) — not a foundational frontier.

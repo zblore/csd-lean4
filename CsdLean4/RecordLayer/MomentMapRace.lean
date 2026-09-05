@@ -28,9 +28,10 @@ vector. That is **feature (2)** of the §3c decomposition, and it is what this f
   `momentMap_mk` supplies scale-invariance, not a forcing argument. What it buys is that the rates are
   read off the context, with no carving to a target and no operational posit.
   ⚠️ It does **not** by itself buy that the moment map is the *forced choice* of rate field. That is
-  proved separately, and by generation rather than invariance: pinned by torus *generation* (`torusGenerated_eq_momentMap`, `RecordLayer/CellLawForced.lean`).
-  Torus invariance alone leaves a continuum of rivals (`RecordLayer/CellLawFreedom.lean`). What stays
-  posited is that a context's rates generate its pointer torus (`specs/POSITS.md` Posit 1, restated).
+  proved separately, and by generation rather than invariance: `torusGenerated_eq_momentMap`
+  (`RecordLayer/CellLawForced.lean`) pins the field, while torus invariance alone leaves a continuum
+  of rivals (`RecordLayer/CellLawFreedom.lean`). What stays posited is that a context's rates
+  generate its pointer torus (`specs/POSITS.md` Posit 1, restated).
 * `bornRate_eq_inner_sq` — hence the rate equals the corpus's Born weight `‖⟨eᵢ, ψ⟩‖²`
   (`momentMap_mk_eq_inner_sq`), the exact target of `FiniteQMClosure.born_frequency`. This ties the
   whole record-layer ladder to the established Born number.
@@ -99,9 +100,10 @@ variable {n : ℕ}
 
 /-- **The record-layer rates are the torus moment map.** For a unit state the fibre-partition rate
 `bornRate ψ i = ‖ψ i‖²` equals the `i`-th Fubini–Study moment-map coordinate at `[ψ]` — read off the
-context, not an injected probability vector (feature (2) of the §3c decomposition). That the moment map is the
-forced *choice* of rate field is proved by pinned by torus *generation* (`torusGenerated_eq_momentMap`, `RecordLayer/CellLawForced.lean`), from a premise that mentions no
-probability; that the rates are generators is the restated posit (`specs/POSITS.md` Posit 1). -/
+context, not an injected probability vector (feature (2) of the §3c decomposition). That the moment
+map is the forced *choice* of rate field is proved by `torusGenerated_eq_momentMap`
+(`RecordLayer/CellLawForced.lean`), from a premise that mentions no probability; that the rates are
+generators is the restated posit (`specs/POSITS.md` Posit 1). -/
 theorem bornRate_eq_momentMap (ψ : EuclideanSpace ℂ (Fin n)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (i : Fin n) :
     bornRate ψ i = momentMap (Projectivization.mk ℂ ψ hψ0) i := by
   unfold bornRate

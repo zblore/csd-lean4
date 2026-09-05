@@ -86,7 +86,7 @@ LIVE doc for the tranche you are on.
 | [`../MATHLIB-GAPS.md`](../MATHLIB-GAPS.md) | Mathlib gaps this project hit (what each blocks) + the staged upstream candidates and the suggested first batch. |
 | [`../EMPIRICAL.md`](../EMPIRICAL.md) | Per-test index of the empirical suite (both branches: file, headline theorem, claim, source). |
 | [`../CLAUDE.md`](../CLAUDE.md) | Working-with-the-code guide (architecture, conventions, module chains). |
-| [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: **zero imported axioms** (`busch_effect_gleason` proved and de-axiomatised 2026-07-21, §2.2; `invariant_measure_uniqueness` removed 2026-06-04, §2.1); every theorem reports only the foundational triple. Structural assumptions/posits in §3 (posited Σ, typicality reading, swap calibration), per-theorem audit §5. |
+| [`../AXIOMS.md`](../AXIOMS.md) | Axiom posture: **zero imported axioms** (`busch_effect_gleason` proved and de-axiomatised 2026-07-21, §2.2; `invariant_measure_uniqueness` removed 2026-06-04, §2.1); every theorem reports only the foundational triple. Structural assumptions/posits in §3 (posited Σ, typicality reading, swap calibration, the cell law §3.10), registered with discharge conditions in [`POSITS.md`](POSITS.md); per-theorem audit §5. |
 | [`../CONVENTIONS.md`](../CONVENTIONS.md) | Three-category (Cat-1/2/3) discipline, naming, namespace rules. |
 | [`../BRIDGE-OBLIGATIONS.md`](../BRIDGE-OBLIGATIONS.md) | Ledger of load-bearing Empirical/CSD bridge fields with LF4-todo cross-refs. |
 | [`../PLACEHOLDERS.md`](../PLACEHOLDERS.md) | Placeholder / stub tracking. |

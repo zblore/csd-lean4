@@ -349,9 +349,16 @@ entries:
       Two things turn on this, and they pull in different directions, which is why both
       matter.
 
-      First, honesty. With this proved, the corpus depends on no imported result and no
-      postulate beyond the foundations of the proof assistant itself. When the documentation
+      First, honesty. With this proved, the corpus depends on no imported mathematical
+      result beyond the foundations of the proof assistant itself. When the documentation
       says axiom-free, it means it -- not axiom-free modulo one large borrowed theorem.
+
+      That is a claim about imported AXIOMS, not about assumptions. CSD's physical
+      postulates are a separate category (AXIOMS.md section 0, category 3) and are carried
+      as hypotheses and structure fields rather than axiom declarations, so they never
+      appear in #print axioms. They are registered in specs/POSITS.md -- the ontic
+      substrate, the sector, Liouville preservation, and the cell law. "Axiom-free" has
+      never meant "assumption-free".
 
       Second, independence. CSD's own Born derivation runs through volume ratios and never
       touches this theorem. So the corpus contains two separate roads to the same rule, and
@@ -5794,7 +5801,9 @@ entries:
       derived route stands independent of them.
 
       The remaining posits are structural and named: projectability (the sector
-      postulate), and the typicality reading of the conditioned measure. The
+      postulate), the typicality reading of the conditioned measure, and the cell law
+      -- that a measurement context's outcome rates generate its pointer torus, which
+      is what pins them to the moment map. All are registered in specs/POSITS.md. The
       operational stratum's Gleason-type route exists in parallel and is kept
       distinct, so nobody can mistake which stratum a citation leans on.
     mathematical: >

@@ -12,7 +12,12 @@ public import Mathlib.Analysis.SpecialFunctions.Arsinh
 # P4: the dispersion earned — covariance selects `ω = √(p² + m²)`
 
 **Category:** CV (continuous variables — relativistic structure forced, not
-defined; `eft-pillars-plan.md` P4).
+defined; `eft-pillars-plan.md` P4). "Forced" is earned here in the strong sense
+CONVENTIONS §8.3a asks for: the converse is a theorem of this module
+(`cone_preserving_is_boost` and the selection chain below), not a motivation.
+Contrast the record layer's cell law, where "forced" holds only *given* torus
+generation (`specs/POSITS.md` Posit 1) — the two uses are not the same strength,
+and the governance wording keeps them apart.
 
 `CV/Dispersion.lean` *defines* `omega m p := √(p² + m²)`; `CV/Boost.lean`
 proves the forward direction (`boost_omega`: the definition is covariant).
