@@ -14,6 +14,25 @@ public import CsdLean4.RecordLayer.OutcomeBasin
 
 **Category:** 7-SigmaLayer (the record layer — the collapse theorem).
 
+## The chain, and its exact status
+
+The chain is: a **record fixes the state** (the collapse — the post-measurement marginal is the
+slot-`i` calibration), **Born gives the next volume fractions** at that state, and **repeat**. Each
+repetition consumes a fresh bank.
+
+⚠️ **Status, and it changed on 2026-09-05 — do not repeat the older wording.** Iteration beyond two
+steps used to be an argument from self-similarity. It is now a **theorem**: `csd_nstep_born`
+(`RecordLayer/NStepChain.lean`) proves the depth-`n` law for every sequence of contexts and
+outcomes, by induction, with `csd_nstep_repeatable` for non-vacuity. What is *still* an argument is
+one level up: that an **`n`-stage arena** assembles to give it. `two_stage_joint` builds that arena
+for `n = 2`; the general construction is not done. So the honest split is — the chain **law** is
+proved to arbitrary depth given `n` banks; the chain **arena** is built for two.
+
+⚠️ The calibration this rests on is a **named posit**: `specs/POSITS.md` Posit 5, defined at
+`calibratedBank` (`RecordLayer/SwapClosure.lean`). Scope conditions travel with it — a rank-one
+computational-basis first measurement (degenerate ones are the open construction,
+`RecordLayer/DegenerateLuders.lean`), and the §2a-scoped Hamiltonian origin of the propagator.
+
 ## The headline
 
 For the calibrated-swap witness, **conditioned on outcome `i`, the post-measurement system marginal

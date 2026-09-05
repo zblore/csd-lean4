@@ -22,7 +22,7 @@ and deferred.
 | CR-2 | Posit register | days | **DONE 2026-09-05** — `specs/POSITS.md`, the frontier trichotomy, this file |
 | CR-3 | The three priced witnesses as a first-class statement | days | **DONE 2026-09-05** — TOUR section, the horn named in `FiniteQMClosure.lean` (**seams**), the everywhere-only scope recorded at `no_everywhere_correlation`, the Q12-d retirement in `KahlerFibreMixing.lean`, A2 pointer |
 | CR-4 | BELL-MIGRATE (28 files, mechanical) | 1–2 weeks | open |
-| CR-5 | Promote the calibrated bank to a named posit **in code** | days | open — registered as Posit 5, code half outstanding |
+| CR-5 | Promote the calibrated bank to a named posit **in code** | days | **DONE 2026-09-05** — named at `calibratedBank`, chain status in four headers, POSITS Posit 5 gains the one-bank cost and the three travelling scope conditions. ⚠️ Its "there is no n-step theorem" premise was stale: CR-16 landed one, so the headers say what is proved and what is not |
 | CR-6 | Unitary-class posit recorded | days | **DONE 2026-09-05** — TOUR (both halves), `LF4/ProjectedDynamics.lean` header, reconstruction-status A5, Posit 6, Gisin1990 registered |
 | CR-7 | Label-space and infrastructure hygiene | days | **DONE 2026-09-05** — CONVENTIONS §12 (not §10, which was taken), `scripts/check-labels.sh` + baseline + 2 probes + CI. ⚠️ The five collisions are **grandfathered, not renamed**; reasons in §12 |
 | CR-8 | Naming and residue paragraphs in CV and Empirical | hours | **DONE 2026-09-05** — mode-disjoint commutation (not Haag–Kastler), boost covariance of a posited cone (not Lorentz content), CV Born wording, CV residue paragraph, TOUR three-localities, and CL-049's scope as a theorem (`unitary_invariant_of_recordStatistics_invariant`, pinned) |

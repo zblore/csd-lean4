@@ -72,7 +72,17 @@ instance (p : LF4.CPN N) : IsProbabilityMeasure (readyPrep p) := by
   unfold readyPrep
   infer_instance
 
-/-- The vertex-calibrated ancilla bank of the swap witness. -/
+/-- **The vertex-calibrated ancilla bank of the swap witness — and a named posit.**
+
+This is `specs/POSITS.md` **Posit 5** (the external review's Posit 2): the apparatus starts in a
+known state. It is "the pointer starts at zero", carried as a definition rather than an `axiom`, and
+it is not free — the Dirac form is forced by `collapse_accuracy_bound` (approximate collapse is
+priced in ready-state improbability) and `swap_not_blockLuders` proves no fixed ray-level
+calibration serves both witnesses.
+
+⚠️ **Its cost is one bank per measurement.** A depth-`n` record chain is an `n`-bank construction,
+so the posit is renewed at every step rather than paid once; `RecordLayer/NStepChain.lean` makes
+that renewal visible in the statement as the per-step `epistemicMeasure`. -/
 noncomputable def calibratedBank (N : ℕ) [NeZero N] : Measure (Fin N → LF4.KSigma N) :=
   Measure.pi fun k => epistemicMeasure (vertexPoint k)
 

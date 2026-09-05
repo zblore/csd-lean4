@@ -127,7 +127,16 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 * **Statement.** The apparatus starts in a known state: the swap witness's ancilla bank in the
   computational vertex states, the join witness's slot block-supported.
 * **Where it enters.** `calibratedBank` (`RecordLayer/SwapClosure.lean`) and `join_block_luders`'s
-  `hα` — definitions and hypotheses, never `axiom`s. `AXIOMS.md` §3.8.
+  `hα` — definitions and hypotheses, never `axiom`s. `AXIOMS.md` §3.8. The definition site names it
+  as this posit, so the code and the register agree.
+* **⚠️ Its cost: one bank per measurement.** A depth-`n` record chain is an `n`-bank construction,
+  so this posit is **renewed at every step**, not paid once. That is what makes the chain's status
+  worth stating precisely rather than loosely.
+* **⚠️ Three scope conditions travel with it,** and they are conditions on the result rather than
+  gaps in it: a **rank-one, computational-basis first measurement** (degenerate first measurements
+  are the recorded open construction, `RecordLayer/DegenerateLuders.lean`); **one bank per
+  measurement**, as above; and the **§2a-scoped Hamiltonian origin** of the swap propagator, which
+  is stated and not formalised (`R-016`'s family).
 * **What backs it short of derivation.** Two results keep it honest rather than free: the Dirac form
   of the calibration is **forced** by `collapse_accuracy_bound` (approximate collapse is priced in
   ready-state improbability), and `swap_not_blockLuders` proves no fixed ray-level calibration
