@@ -30,7 +30,7 @@ typicality; that IS the reconstruction, not a "derive the sector" debt. The goal
 **formalized in Lean** (2026-07-25, `record-layer-plan.md §4`; measurement as `context + unknown
 microstate → record` on the base×fibre Σ, Born = the LLN over the unknown microstate). The residual is
 context-fixing the *pinned closure's* regions (still the prep-indexed `bornRegion ψ'`); the near
-frontier is now the **extensions** (continuous spectra, relativistic locality, identical particles).
+frontier is now the **extensions** (continuous spectra, relativistic locality, identical particles). ⚠️ *Frontier vocabulary superseded 2026-09-05:* `specs/POSITS.md` ("What 'frontier' means here") separates **permanent boundary** / **open mathematics** / **open foundations**. The surviving foundational frontier is Posit 1's discharge condition — deriving `IsTorusGenerated` from the de-isolation dynamics. The extensions are breadth, not the frontier.
 (Paper C **Axiom A5** =
 projectability, never "the origin of Σ".) The Kähler-geometry fields (L1) now carry their genuine
 pointwise/linear core (the concrete field `kahler_pointwise : IsFubiniStudyKahler`, proved; F-04 tightening 2026-08-06); only the
@@ -79,11 +79,14 @@ matching Paper C's A3 fibred-projection shape. Remaining:
 - **L7 — N/A (a non-question).** "Born weights derived FROM the flow" is retired: Σ is
   the floor, and the Born trials sampling the sector's measure is not a gap — Born *arises
   from* the Ω-region volume ratios + typicality, which IS the reconstruction. (Paper C Axiom
-  A5 = projectability, not "the origin of Σ".) The record layer is now built; the frontier is now the extensions, not this.
+  A5 = projectability, not "the origin of Σ".) The record layer is now built; the frontier is now the extensions, not this. ⚠️ *Frontier vocabulary superseded 2026-09-05:* `specs/POSITS.md` ("What 'frontier' means here") separates **permanent boundary** / **open mathematics** / **open foundations**. The surviving foundational frontier is Posit 1's discharge condition — deriving `IsTorusGenerated` from the de-isolation dynamics. The extensions are breadth, not the frontier.
 So the honest headline is now: **"a single posited Kähler sector object yields
 both the Born rule and Schrödinger dynamics"** is CONNECTED (structurally); the
 remaining frontier is deriving that sector — and the Born trials — from the
-deterministic flow itself.
+deterministic flow itself. ⚠️ *Corrected 2026-09-05:* as written this is the **retired "derive Σ"**
+framing — a non-question (`specs/CSD-CHARTER.md`), and `SectorPostulateNoGo` proves a deterministic
+flow does not pin the sector. What is legitimately open is Posit 1's discharge condition (derive the
+*rate field* from the de-isolation dynamics), not deriving the sector.
 
 **Paper-C cross-check caveat (2026-07-08).** Paper C's architecture (Axiom A3)
 requires the projection `π : Σ → ℂℙ^{N-1}` to be **smooth many-to-one** — `Σ` is
@@ -123,7 +126,7 @@ on the projected trials. This is now on the `KahlerOnticSetup` track (not the
 older `SectorData` track), so it composes with the Schrödinger chain.
 **Not addressed by C7 (nor a gap):** "weights-from-flow" (L7) is a non-question — Σ is
 the floor; the Born trials sampling `kMuL` is not a debt (Born arises from the Ω-region
-volume ratios). C7 fixes the *projection shape*; the frontier is now the extensions (the record layer is built). Our
+volume ratios). C7 fixes the *projection shape*; the frontier is now the extensions (the record layer is built). ⚠️ *Frontier vocabulary superseded 2026-09-05:* `specs/POSITS.md` ("What 'frontier' means here") separates **permanent boundary** / **open mathematics** / **open foundations**. The surviving foundational frontier is Posit 1's discharge condition — deriving `IsTorusGenerated` from the de-isolation dynamics. The extensions are breadth, not the frontier. Our
 route is still Wigner, not Ashtekar–Schilling.
 
 ## What may be claimed (until a link flips to CONNECTED)

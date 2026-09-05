@@ -210,4 +210,7 @@ was right): measurement =
 moment map (a posit with a characterisation — see "The picture"; `specs/POSITS.md` Posit 1,
 `specs/cell-law-scoping.md`), Born = the law of large numbers over the unknown microstate. What remains is optional
 (a mechanical field naming in the pinned closure, no new theorem) or unrelated open tiers (Lindblad,
-the Kähler 2-form) — not a foundational frontier.
+the Kähler 2-form) — not a foundational frontier *as remaining work*. ⚠️ The surviving foundational
+item is Posit 1's discharge condition — derive `IsTorusGenerated` from the de-isolation dynamics
+(`specs/POSITS.md`, "What 'frontier' means here", which separates permanent boundary from open
+mathematics from open foundations).

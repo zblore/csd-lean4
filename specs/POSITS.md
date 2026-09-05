@@ -81,6 +81,10 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   (`flow_admits_invariant_ne_fubiniStudy`) proves a deterministic flow does not pin the sector, and
   `LF4/TypicalityForcing.lean` records the same wall. Attempts to "derive Σ" are a non-question
   (`specs/CSD-CHARTER.md`); *constraining* it, as `fubiniStudyMeasure_unique` does, is the live form.
+* **⚠️ This entry covers the MEASURE half only.** `AXIOMS.md` §3.3 posits more: nothing forces `π`
+  to project onto the quantum-effective sector specifically, and nothing forces `G = SU(N)`. That
+  `(π, G)` half is posited structural data with only two coherence conditions constraining it, and
+  it is **not** discharged by `fubiniStudyMeasure_unique`, which presupposes the symmetry.
 * **What would discharge it.** Nothing is expected to: this is close to the floor. The honest
   statement is that the sector is posited and tightly constrained, not derived.
 
@@ -97,6 +101,96 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 * **What would discharge it.** Constructing the flow from a Hamiltonian and proving preservation,
   rather than positing it as a field — blocked on the same manifold API.
 
+## Posit 4 — the typicality reading (probability *is* volume ratio)
+
+* **Statement.** The outcome weight is the `μL`-volume ratio
+  `μL(π⁻¹Ωᵢ(M) ∩ Ω₀) / μL(Ω₀)`. Not that it *equals* a probability numerically — that it **is** one.
+* **Where it enters.** Its Lean entry point is the **i.i.d. product structure of LF1's
+  repeated-trial law** — where the reading stops being interpretation and becomes mathematics.
+  `AXIOMS.md` §3 names it one of the three load-bearing postulates, alongside the ontic substrate
+  and the sector.
+* **⚠️ A second commitment rides along, and should be named:** that one preparation law serves
+  every trial — i.i.d. *across preparations*. Bohmian quantum equilibrium carries the analogous
+  assumption. It is implicit in the product measure, not separately posited, and it is what
+  `specs/sigma-fibre-contextuality.md` calls measurement-independence.
+* **What backs it short of derivation.** Self-consistency: the strong law shows the reading does not
+  contradict itself — typical trajectories reproduce the volume ratios as frequencies
+  (`born_frequency_convergence_N`). That is a coherence check, not a derivation.
+* **⚠️ This is the interpretive posit, and it is the one that cannot be argued down.** Distinct from
+  Posit 2: Posit 2 says *which* measure; this says that measure *is* the probability. Every
+  typicality-based programme (Boltzmann, Bohmian equivariance) carries a posit of this shape.
+* **What would discharge it.** Nothing, and the register should not pretend otherwise. It is a
+  choice about what probability means, not a theorem with a missing proof.
+
+## Posit 5 — the calibrated bank (apparatus preparation)
+
+* **Statement.** The apparatus starts in a known state: the swap witness's ancilla bank in the
+  computational vertex states, the join witness's slot block-supported.
+* **Where it enters.** `calibratedBank` (`RecordLayer/SwapClosure.lean`) and `join_block_luders`'s
+  `hα` — definitions and hypotheses, never `axiom`s. `AXIOMS.md` §3.8.
+* **What backs it short of derivation.** Two results keep it honest rather than free: the Dirac form
+  of the calibration is **forced** by `collapse_accuracy_bound` (approximate collapse is priced in
+  ready-state improbability), and `swap_not_blockLuders` proves no fixed ray-level calibration
+  serves both witnesses — so the posit is constrained from two sides.
+* **⚠️ This is "the pointer starts at zero".** A preparation-of-the-apparatus assumption, of the
+  same family every measurement account makes.
+* **What would discharge it.** Deriving the ready state from the dynamics rather than positing it —
+  adjacent to Posit 1's discharge condition, and blocked by the same `H_int` frontier.
+
+---
+
+## What "frontier" means here — three different things
+
+Three dated statements of frontier status looked contradictory, and the disagreement was real but
+verbal. They were written either side of the MD-1 closure (2026-08-31) and each used "frontier" for
+a different object. The trichotomy that dissolves it:
+
+1. **Permanent boundary** — an input the Lean claim can never supply. `R-015` (which `H_int` a given
+   apparatus physically realises) and `R-017` (local tomography). These never close. *Not gaps.*
+   ⚠️ The two are boundaries for different reasons and the comparison only fits one: `R-015` is a
+   modelling input Bohm and Everett take too, whereas `R-017` is a **structural posit on the
+   composite sector** — Bohm and Everett do not assume local tomography, they assume the tensor
+   product outright.
+2. **Open mathematics** — a statement with a concrete Lean shape and no proof yet. `R-016` (the
+   chart→arena transport of Hamiltonian generation). Closes when someone proves it.
+3. **Open foundations** — a posit whose discharge condition is known but is not a Lean-shaped task.
+   Posit 1's: derive `IsTorusGenerated` from the de-isolation dynamics. This is *the* reconstruction
+   frontier, and it is not on any queue because it is not a brick.
+   ⚠️ The definite article is a **decision**, not an oversight. The ranked-out candidate is
+   **base-only context-fixed regions at `N ≥ 3`**: discharged on the fibre at every `N`
+   (`GlobalBasin`), with the base-only question parked, open in both directions, and by author
+   decision characterising a special case rather than gating the axiom
+   (`specs/sigma-fibre-contextuality.md`). Posit 5's discharge is the same `H_int` family, so the
+   singular holds.
+
+Read that way the three statements agree:
+
+* `specs/reconstruction-status.md` §1 — "the goal is NOT met." **True**, by (3): the reconstruction
+  is complete only when the cell law is derived rather than posited.
+* `specs/CSD-CHARTER.md` — what remains is "not a foundational frontier." **True of the record
+  layer's machinery**, by (1) **and** (2): the charter names both residuals, so the residue there is
+  a permanent boundary *plus* one open-mathematics item — not a gap in the account.
+* `specs/BACKLOG.md` E5 — "the two research frontiers." **Partly stale**: the fibre-from-dynamics
+  question in its mixing form was retired as mis-specified (2026-08-24) and re-executed in honest
+  form (2026-08-27, `ShearDeIsolation.lean`); what survives of it is (3).
+
+⚠️ **`G3b` / carve-out `L2` ("outcome region generated by the dynamics, not posited") is not a
+single open target and should not be cited as one.** It splits: the choice of interaction is (1),
+the generation statement is (2), and deriving the rate field is (3). `ShearDeIsolation.lean`
+discharges `basin_rate` from a *constructed* propagator — a witness, not a derivation, and the
+propagator's Hamiltonian generation is stated-not-formalised. Retiring `G3b` outright would
+overclaim; splitting it is the accurate move.
+
+---
+
+## Numbering
+
+⚠️ **These numbers are the repository's.** They are cited from `AXIOMS.md` §3.10,
+`specs/CSD-CHARTER.md`, `specs/reconstruction-status.md` §7a, several module headers and the
+glossary, so they are **stable and must not be renumbered** — add, never resequence. An external
+review's "Part II" used its own numbering that agrees at Posit 1 (the cell law) and diverges after;
+if a document cites "Posit N", check which register it means.
+
 ---
 
 ## Where the posits are also listed
@@ -104,7 +198,8 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 Keep these in step with this file, or the register stops being a register:
 `AXIOMS.md` §3 (the postulate ledger — the cell law is §3.10), `specs/INDEX.md`'s AXIOMS row,
 `specs/CSD-CHARTER.md` "The picture", `specs/reconstruction-status.md` §7a, and the glossary entry
-`is-the-born-rule-derived`.
+`is-the-born-rule-derived`. The external review that prompted the register is tracked in
+`specs/cr-queue.md`.
 
 ⚠️ **Known undercount, deliberately not fixed here.** `README.md` and `docs/TOUR.md` both carry a
 "what is posited and not derived" inventory that omits the cell law. Those are landing-surface

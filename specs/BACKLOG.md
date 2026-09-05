@@ -477,7 +477,7 @@
 > | E2 | The operator-convexity → DPI → SSA ladder (**L**, still gated on the `CStarMatrix` instance wall) |
 > | E3 | Composable finite-key QKD (**XL**) |
 > | E4 | The CV programme |
-> | E5 | The two research frontiers — the fibre-from-dynamics question and general trilemma exhaustiveness |
+> | E5 | ⚠️ *Restated 2026-09-05 — "the two research frontiers" was partly stale.* The fibre-from-dynamics question was **retired in its mixing form** (2026-08-24, mis-specified) and re-executed honestly (2026-08-27, `ShearDeIsolation.lean`); what survives of it is Posit 1's discharge condition — derive `IsTorusGenerated` from the de-isolation dynamics — which is **open foundations**, not a queued brick (`specs/POSITS.md`, "What 'frontier' means here"). General trilemma exhaustiveness (`Q13`) is unchanged and open. |
 >
 > ### F. Library-grade quality programme (adopted as standard 2026-08-06 — `CONVENTIONS.md` §9)
 >

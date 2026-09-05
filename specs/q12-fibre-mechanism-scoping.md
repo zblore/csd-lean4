@@ -291,7 +291,7 @@ times are exponential. If provable, the fibre law stops being a free choice and 
 > single clock law serves every `n`* — which is the measurement-independence CSD has already
 > committed to in `sigma-fibre-contextuality.md`.
 
-### Q12-d — the genuine frontier: derive the race from a deterministic flow (**BLOCKED**, foundations)
+### Q12-d — ⚠️ RETIRED 2026-08-24 as mis-specified (heading kept for pin stability; see `specs/POSITS.md` for the surviving frontier): derive the race from a deterministic flow (**BLOCKED**, foundations)
 
 Exhibit a de-isolation coupling whose environment target-measures are `∝ the moment map`, with the
 first-passage structure coming from *mixing* rather than from an assumed clock law.

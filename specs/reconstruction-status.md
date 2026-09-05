@@ -65,8 +65,13 @@ basins (`DeIsolationInteraction.basin_rate` is a hypothesis field), and whether 
 **base-only** question stays ⏸ parked. ⚠️ **Updated 2026-08-25: item three is now CLOSED** —
 `kMuL_unique` (`LF4/LiouvilleUnique.lean`) exhibits the sector's measure as forced by its own
 symmetry rather than merely Haar, completing the A1 ontic-sector row (all three sub-items done;
-the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one). **Item two stands** —
-no `H_int` generates the basins — and the goal is still not met.
+the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one). **Item two stands, and 2026-09-05 it is stated more precisely** —
+"no `H_int` generates the basins" ran together three things that `specs/POSITS.md` now separates:
+*which* interaction an apparatus realises is a **permanent boundary** (`R-015`, never closes); the
+chart→arena transport of Hamiltonian generation is **open mathematics** (`R-016`); and deriving the
+rate field from the de-isolation dynamics is **open foundations** (Posit 1's discharge condition).
+`ShearDeIsolation.lean` discharges `basin_rate` from a constructed propagator — a witness, not a
+derivation. The goal is still not met, and it is the third of those that is why.
 Beyond those, the residue is a mechanical field naming in the pinned closure (no new theorem). (The Ω-regions are epistemic, on `ℂℙⁿ⁻¹`; the record is the ontic selection in Σ.)
 The earlier "SO-1 = derive the sector" framing that appeared here is a **retired error** (§7).
 
@@ -417,6 +422,12 @@ record-layer gap. The
 genuine near frontier is now the **extensions** — continuous spectra (CV), relativistic locality,
 identical particles. (The earlier "SO-1 = derive the sector, the central frontier" framing is a retired
 error — §7.)
+
+⚠️ *Frontier vocabulary superseded 2026-09-05, and this sentence with it.* `specs/POSITS.md`
+("What 'frontier' means here") separates **permanent boundary** / **open mathematics** / **open
+foundations**. The extensions are breadth, not the frontier; the surviving foundational item is
+Posit 1's discharge condition — deriving `IsTorusGenerated` from the de-isolation dynamics. §1 of
+this file carries the corrected statement.
 
 References: [`connectivity-manifest.md`](connectivity-manifest.md), [`future-work.md`](future-work.md),
 [`../AXIOMS.md`](../AXIOMS.md), [`../CsdLean4/SigmaLayer/Adapters.lean`](../CsdLean4/SigmaLayer/Adapters.lean).

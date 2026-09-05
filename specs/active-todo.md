@@ -127,7 +127,7 @@ The naive "single ergodic flow forcing μFS" is MATHEMATICALLY OBSTRUCTED (a one
 Follow-up #32 (moment-fibre conserved quantities `momentMap ∘ obsFlow = momentMap`) is likewise constraint
 work on Σ. The **record layer** — measurement as record selection via Ω-basins on Σ — is now **BUILT**
 (2026-07-25; see the banner at the top of this file and `record-layer-plan.md §4`), so QM's measurement
-account is genuinely ontic; the near frontier is now the **extensions** (continuous spectra, relativistic
+account is genuinely ontic; the near frontier is now the **extensions** (continuous spectra, relativistic ⚠️ *Frontier vocabulary superseded 2026-09-05:* `specs/POSITS.md` ("What 'frontier' means here") separates **permanent boundary** / **open mathematics** / **open foundations**. The surviving foundational frontier is Posit 1's discharge condition — deriving `IsTorusGenerated` from the de-isolation dynamics. The extensions are breadth, not the frontier.
 locality, identical particles).
 
 (superseded:) The fuller D1c-2 is threading the LF5/LF6 de-isolation/measurement `Φ_vN`

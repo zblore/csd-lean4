@@ -135,6 +135,14 @@ CSD structure: deterministic map + fixed typicality, not an external random orac
 
 ## The genuine open frontier (not a defect — the next research)
 
+⚠️ **This section states a RETIRED formulation (annotated 2026-09-05).** The softmax/race reading of
+the fibre mechanism was withdrawn as mis-specified on 2026-08-24 (three reasons: regime mismatch,
+exact-vs-asymptotic, and independence — see `specs/BACKLOG.md` Q12), the successor question was
+corrected 2026-08-26, and it was executed in honest form 2026-08-27
+(`RecordLayer/ShearDeIsolation.lean`). The surviving open item is **Posit 1's discharge condition**
+(`specs/POSITS.md`): derive `IsTorusGenerated` from the de-isolation dynamics. The structural lesson
+about Σ that this file exists to record is unaffected; only the frontier framing below is stale.
+
 The fibre mechanism is currently **posited** (softmax/Gumbel form), not **derived** from a specific
 CSD de-isolation dynamics. The open problem: exhibit a de-isolation coupling whose deterministic
 flow on `Σ = base × fibre`, with fixed fibre typicality, *yields* the Born-reproducing fibre
