@@ -69,6 +69,7 @@ public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.RecordLayer.NStepChain
 public import CsdLean4.SigmaLayer.MovingFibreWitness
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.LF4.BargmannSelection
 
 /-!
 # Headlines: the curated consumer facade (G8)
