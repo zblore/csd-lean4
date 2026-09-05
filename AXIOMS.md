@@ -247,8 +247,9 @@ choice of that field is a commitment, and it was missing from this ledger.
 
 **Posit plus characterisation, which is the honest form.** A context field whose rates *generate*
 the coordinate phase rotations — the moment-map equation `ι_{X_i} ω = dF`, at the linear level — is
-exactly the moment map (`torusGenerated_eq_momentMap`, `RecordLayer/CellLawForced.lean`), with no
-side hypothesis. Torus *invariance* alone does **not** pin it: `sqContext` shares every property the
+exactly the moment map (`generatedRateField_eq_momentMap`, `RecordLayer/CellLawForced.lean`), with
+no side hypothesis — and stated for a bare rate field, so not even the `ContextField` axioms are in
+play; `torusGenerated_eq_momentMap` is the corollary the record layer consumes. Torus *invariance* alone does **not** pin it: `sqContext` shares every property the
 *freedom module* tests — invariance, normalisation, support, measurability — and differs from it (`rate_field_not_forced_by_torus_symmetry`,
 `RecordLayer/CellLawFreedom.lean`). So what this ledger asks you to accept is **that a measurement
 context's rates generate its pointer torus** — `specs/POSITS.md` Posit 1.

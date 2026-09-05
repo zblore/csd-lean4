@@ -52,8 +52,10 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
     same-support (`sqRate_eq_zero_iff`), and still differs from the moment map at `[(2,1,1)] ∈ ℂℙ²`
     (`rate_field_not_forced_by_torus_symmetry`).
   * `RecordLayer/CellLawForced.lean` — torus **generation** does pin it, exactly and with no side
-    hypothesis (`torusGenerated_eq_momentMap`); `sqContext_not_torusGenerated` shows the rival fails
-    the generating condition.
+    hypothesis. Stated for a **bare rate field** (`generatedRateField_eq_momentMap`): no
+    `ContextField` structure is used, so the simplex axioms are visibly not what does the work —
+    the additive constant dies by homogeneity. `torusGenerated_eq_momentMap` is the `ContextField`
+    corollary; `sqContext_not_torusGenerated` shows the rival fails the generating condition.
 
   **The posit count is unchanged; its quality is not.** `IsTorusGenerated` is extensionally
   equivalent to the conclusion, so this is a *characterisation*, not a discharge. What it buys is

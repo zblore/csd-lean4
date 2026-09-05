@@ -21,9 +21,15 @@ it. Generation is the moment-map equation `ι_{X_i} ω = dΦᵢ`, and it forces 
 
 ## What is proved
 
-★★ `torusGenerated_eq_momentMap` — if a `ContextField`'s rates are the degree-0 normalisations of
-Hamiltonians for the coordinate phase rotations, then they **are** the moment map. Not up to a
-constant: exactly, and with **no side hypothesis at all** — not even `N ≥ 2`.
+★★ `generatedRateField_eq_momentMap` — if a **bare rate field** `CPN N → Fin N → ℝ` has rates that
+are the degree-0 normalisations of Hamiltonians for the coordinate phase rotations, then they **are**
+the moment map. Not up to a constant: exactly, with **no side hypothesis at all** — no `ContextField`
+structure and not even `N ≥ 2`. `torusGenerated_eq_momentMap` is the one-line `ContextField`
+corollary the record layer consumes.
+
+Stating the theorem bare is deliberate, and it is the second correction this module has taken on the
+same point: with `sum_one` and `nonneg` absent from the *statement*, no reader can misattribute the
+constant-killing to them, as an earlier draft of this header did.
 
 ⚠️ **Where the rigidity actually lives**, because it is easy to misattribute and a first draft of
 this header did. The additive constant is killed by **homogeneity**, not by the context field's
@@ -80,13 +86,21 @@ and manifold structures are posited, deliberately** (author decision 2026-09-04)
 that *given* them the rate field is forced. The descent from `ℂᴺ` to `ℂℙᴺ⁻¹` is by explicit degree-0
 homogenisation (`IsTorusGenerated`), not by manifold theory, so no quotient machinery is assumed.
 
-**Two conventions are visible in the predicate and should stay visible.** `IsTorusGenerated` asks
+**Three conventions are visible in the predicate and should stay visible.** `IsTorusGenerated` asks
 for a Hamiltonian defined and differentiable on all of `ℂᴺ`; `momentContext` supplies one
 (`‖xᵢ‖²/2`, polynomial), and since `ℂᴺ ∖ {0}` is connected any solution on the punctured space
 extends, so this costs nothing. And the form's **scale** is fixed — `phaseGen` fixes unit-speed
 rotation, `fundamentalForm` fixes `ω u (J u) = ‖u‖²`. Rescaling `ω ↦ λω` does not produce a rival
 cell law: it makes the predicate uninhabited among context fields, since `sum_one` rejects
 `λ · momentMap`. (`CellLawFreedom.lean` records the same scale point.)
+
+And the form's **orientation**: `phaseGen i x = -(i · Pᵢ x)` is the generator of `ψᵢ ↦ e^{-iθ}ψᵢ`,
+the clockwise rotation — the `exp(-itA)` Hamiltonian-flow convention the corpus already uses in
+`quadraticEnergy_hamiltonian_duality`. This is doing the same kind of quiet selection work as the
+scale: under the mirrored convention `+(i · Pᵢ x)` the forced Hamiltonian is `-coordEnergy`, whose
+normalisation is `-momentMap`, and *no* context field carries that (`sum_one` refutes it). So the
+orientation is what picks `+momentMap` over `-momentMap`, and is recorded here rather than left
+implicit.
 
 ⚠️ Constant-shifted fields `momentMap + c` with `∑cᵢ = 0` *are* circle-Hamiltonians on `ℂℙᴺ⁻¹` and
 fail this predicate — so it is intensionally stricter than the manifold condition. No legitimate
@@ -210,10 +224,13 @@ Hamiltonians for the coordinate phase rotations — i.e. when they are moment co
 
 This is the hypothesis that does the work, and it is the one `sqContext` fails: invariance under
 the torus is weaker than generating it. -/
-def IsTorusGenerated (c : ContextField N) : Prop :=
+def IsGeneratedRateField (rate : CPN N → Fin N → ℝ) : Prop :=
   ∀ i : Fin N, ∃ F : EuclideanSpace ℂ (Fin N) → ℝ, IsPhaseHamiltonian F i ∧
     ∀ (x : EuclideanSpace ℂ (Fin N)) (hx : x ≠ 0),
-      c.rate (Projectivization.mk ℂ x hx) i = F x / (‖x‖ ^ 2 / 2)
+      rate (Projectivization.mk ℂ x hx) i = F x / (‖x‖ ^ 2 / 2)
+
+/-- The same condition on a `ContextField`. -/
+def IsTorusGenerated (c : ContextField N) : Prop := IsGeneratedRateField c.rate
 
 /-- ★ **The hypothesis is inhabited** — the moment-map field is torus-generated, so the forcing
 theorem below is not vacuous. -/
@@ -226,19 +243,23 @@ theorem isTorusGenerated_momentContext : IsTorusGenerated (momentContext N) := b
   rw [momentMap_mk x hx i, coordEnergy]
   field_simp
 
-/-- ★★ **The cell law is forced, given generation.** A context field whose rates generate the
-coordinate phase rotations *is* the moment map — exactly, not up to a constant, and with no side
-hypothesis. The additive freedom left by `IsPhaseHamiltonian.eq_coordEnergy_add` is removed by
-**homogeneity**: the rate is a function of the ray while the homogenisation has degree two, so
-rescaling a representative by `2` forces `k = 4k`. ⚠️ The context field's own axioms (`sum_one`,
-`nonneg`) are **not** used — an earlier draft of this docstring said they were, which was a
-misreading of the proof route; see the header.
+/-- ★★ **The cell law is forced, given generation** — stated for a **bare rate field**, because
+that is the honest strength. Any function `CPN N → Fin N → ℝ` whose rates generate the coordinate
+phase rotations *is* the moment map: exactly, not up to a constant, with no `ContextField` in
+sight and no cardinality hypothesis.
+
+The additive freedom left by `IsPhaseHamiltonian.eq_coordEnergy_add` is removed by **homogeneity**:
+the rate is a function of the ray while the homogenisation has degree two, so rescaling a
+representative by `2` forces `k = 4k`. ⚠️ Stating this for a bare rate field is deliberate. An
+earlier draft credited the constant-killing to `sum_one` and `nonneg`, which was a misreading of
+the proof route; with those axioms absent from the statement the misreading is no longer
+available.
 
 With `CellLawFreedom.rate_field_not_forced_by_torus_symmetry` this locates the boundary precisely:
 torus *invariance* leaves a continuum of rate fields, torus *generation* leaves exactly one. -/
-theorem torusGenerated_eq_momentMap (c : ContextField N)
-    (h : IsTorusGenerated c) (p : CPN N) (i : Fin N) :
-    c.rate p i = momentMap p i := by
+theorem generatedRateField_eq_momentMap (rate : CPN N → Fin N → ℝ)
+    (h : IsGeneratedRateField rate) (p : CPN N) (i : Fin N) :
+    rate p i = momentMap p i := by
   choose F hF hrate using h
   -- The additive constant vanishes, and it is **homogeneity** that kills it, not the context
   -- field's axioms: `c.rate` is a function of the ray, while the homogenisation has degree two,
@@ -265,19 +286,27 @@ theorem torusGenerated_eq_momentMap (c : ContextField N)
     norm_num at e2
     linarith
   have key : ∀ (x : EuclideanSpace ℂ (Fin N)) (hx : x ≠ 0),
-      c.rate (Projectivization.mk ℂ x hx) i = coordEnergy i x / (‖x‖ ^ 2 / 2) := by
+      rate (Projectivization.mk ℂ x hx) i = coordEnergy i x / (‖x‖ ^ 2 / 2) := by
     intro x hx
     rw [hrate i x hx, (hF i).eq_coordEnergy_add x, hzero, add_zero]
   have hrep := Projectivization.mk_rep p
   have hpn : p.rep ≠ 0 := p.rep_nonzero
   have hn : ‖p.rep‖ ^ 2 ≠ 0 := pow_ne_zero _ (norm_ne_zero_iff.mpr hpn)
-  calc c.rate p i
-      = c.rate (Projectivization.mk ℂ p.rep hpn) i := by rw [hrep]
+  calc rate p i
+      = rate (Projectivization.mk ℂ p.rep hpn) i := by rw [hrep]
     _ = coordEnergy i p.rep / (‖p.rep‖ ^ 2 / 2) := key p.rep hpn
     _ = momentMap p i := by
         rw [coordEnergy]
         show _ = ‖p.rep i‖ ^ 2 / ‖p.rep‖ ^ 2
         field_simp
+
+/-- ★★ **The cell law is forced, given generation** — the `ContextField` form, for the record
+layer's consumers. A one-line corollary of the bare-rate-field theorem above, which is where the
+mathematics is. -/
+theorem torusGenerated_eq_momentMap (c : ContextField N)
+    (h : IsTorusGenerated c) (p : CPN N) (i : Fin N) :
+    c.rate p i = momentMap p i :=
+  generatedRateField_eq_momentMap c.rate h p i
 
 /-- ★ **The rival cell law fails the generating condition.** `sqContext` matches the moment map on
 every property the corpus verifies of it and is still not it, so by the forcing theorem it cannot
