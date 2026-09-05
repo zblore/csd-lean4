@@ -237,6 +237,32 @@ load-bearing:
 Neither, and that is a settled framing (author decision, 2026-08-03), not an open question.
 `no_everywhere_correlation` rules out **everywhere**-exact records for any continuous
 dynamics on a connected state space, and every measuring science has met that constraint.
+
+### The three priced witnesses
+
+The constraint is sharp enough to be worth stating as a price list rather than a caveat. Records,
+exact Born and continuity are jointly impossible, so each formalised witness pays **exactly one**
+of three prices. Every one of the three is inhabited, which is what makes this a classification
+rather than an obstruction.
+
+| Witness | Price it pays | Where |
+|---|---|---|
+| Piecewise | **Seams**: records exact off a discontinuity set | `RecordLayer/` piecewise closure |
+| Smooth | **`ε`-Born**: continuous throughout, Born exact only to a stated `ε` | `smoothWitnessClosure` |
+| Null-seam | **Dirac calibration**: exact records *and* exact Born, at a calibrated ready point | `nullSeamClosure` (`RecordLayer/NullSeamWitness.lean`) |
+
+The finite-QM closure pays the first: its interaction is unitary and its Born weights are exact, so
+what gives is totality: `readout_ae_total`, records defined almost everywhere
+(`SigmaLayer/FiniteQMClosure.lean` names the horn).
+
+Two scope points, because the price list is easy to over-read. `no_everywhere_correlation` prices
+the **everywhere** case only: it does not bound the exceptional set's measure, so "a.e., with a null
+seam" is a coherent position and is the one the closure occupies. What forces a *positive-measure*
+no-record set is `posMeasure_noRecord_pointer` (`RecordLayer/NoRecordGeometry.lean`, 2026-08-05), on
+the pointer's own geometry, where continuity + open-map + positive-width ready + correlation leave
+no room. And **general exhaustiveness over all arenas is research, not a claim**. Three horns are
+exhibited and the fourth combination is refuted on one geometry; that is not a proof that no fourth
+horn exists anywhere.
 (*Precision added 2026-08-03, fourth external review; the candidate third option was
 **exhibited the same day**: `nullSeamClosure` (`RecordLayer/NullSeamWitness.lean`) is a
 continuous, measure-preserving witness with records exact off a **two-point** seam and

@@ -14,6 +14,21 @@ public import Mathlib.Dynamics.Ergodic.AddCircle
 
 **Category:** 3-CSD. `Q12-d` brick (i).
 
+⚠️ **The race route this brick served was RETIRED 2026-08-24, and the brick outlived it.** `Q12-d`
+— derive the race from a deterministic flow — was withdrawn as **mis-specified**, not as blocked,
+for three reasons none of which is effort: *regime mismatch* (Galves–Schmitt/Abadi is about rare
+sets, `μA → 0`, while a Born partition's cells sum to 1); *exact vs asymptotic* (Q12-c2 gives exact
+Born ⟺ exactly exponential, so a limit theorem yields Born only asymptotically — strictly weaker
+than `measure_raceCell`, which already proves it exactly); and *independence* (the race needs `n`
+independent clocks, but one deterministic trajectory is one process). See `specs/BACKLOG.md` (Q12)
+and `specs/q12-fibre-mechanism-scoping.md`.
+
+**What survives here is the corrective, and it is the whole point of the module:** the wall is about
+the *map*, not about Σ. That reading is independent of the race framing and is why this module is
+not retired with it. The successor question was executed in honest form 2026-08-27
+(`RecordLayer/ShearDeIsolation.lean`); the surviving open item is Posit 1's discharge condition
+(`specs/POSITS.md`).
+
 `W1` and its finite-horizon companion say no flow the corpus *defines* can decorrelate. It is easy
 to read that as "Σ cannot mix", and that reading is **wrong**. ★★
 `torusDouble_hasCorrelationDecay` exhibits a map of the corpus's own fibre `T²` whose correlations

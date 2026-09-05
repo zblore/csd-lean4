@@ -18,7 +18,7 @@ before it is worked.
 |---|------|------|--------|
 | CR-1 | Governance layer: posit-plus-characterisation wording | days | **DONE 2026-09-05** (`edb34d1`) |
 | CR-2 | Posit register | days | **DONE 2026-09-05** — `specs/POSITS.md`, the frontier trichotomy, this file |
-| CR-3 | The three priced witnesses as a first-class statement | days | open |
+| CR-3 | The three priced witnesses as a first-class statement | days | **DONE 2026-09-05** — TOUR section, the horn named in `FiniteQMClosure.lean` (**seams**), the everywhere-only scope recorded at `no_everywhere_correlation`, the Q12-d retirement in `KahlerFibreMixing.lean`, A2 pointer |
 | CR-4 | BELL-MIGRATE (28 files, mechanical) | 1–2 weeks | open |
 | CR-5 | Promote the calibrated bank to a named posit **in code** | days | open — registered as Posit 5, code half outstanding |
 | CR-6 | Unitary-class posit recorded | days | open |

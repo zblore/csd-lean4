@@ -56,6 +56,12 @@ failed cheaply had anyone run it (`specs/reconstruction-status.md` §2a).
   *everywhere* rather than a.e., a connected `S ×ˢ R₀` would have connected image, which cannot
   meet two disjoint open pointer regions. So an everywhere-version is **impossible** for any
   continuous `Φ` whenever `n ≥ 2`.
+  ⚠️ **It prices the everywhere case and nothing more.** It does not bound the measure of the
+  exceptional set, and it does not rule out an a.e. correlation whose exceptional set has positive
+  measure. Do not cite it for either. The theorem that forces *positive* measure is
+  `posMeasure_noRecord_pointer` (`RecordLayer/NoRecordGeometry.lean`), which is about the pointer's
+  own geometry; `SigmaLayer/FiniteQMClosure.lean` occupies the a.e.-with-a-null-seam position that
+  this theorem leaves open, and names it as the seams horn.
 
 ## ★ The finding that matters for the implementation
 

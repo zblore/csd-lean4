@@ -43,6 +43,27 @@ gives a context-fixed partition at every `N`. What sits outside this closure and
 the measurement cells `bornRegion ψ'` are preparation-indexed, not the context-fixed `Ωᵢ(M)` of A7; the
 readout here is an honest preparation-indexed operational witness.
 
+## Which trilemma horn this closure pays
+
+Records, exact Born and continuity are jointly impossible, so every witness in the record layer
+pays exactly one price: **seams** (piecewise witness), **`ε`-Born** (smooth witness), or **Dirac
+calibration** (null-seam witness). This closure pays **seams**, and it is worth naming because a
+reader can otherwise take the closure for a free lunch.
+
+The interaction here is *unitary* — `measurementFlow N e p = vnUnitaryReindexed N e • p`
+(`LF5/MeasurementFlow.lean`), so it is continuous and measure-preserving — and the Born weights are
+exact. What gives is totality of the readout: the closure's field is `readout_ae_total`, i.e.
+`AETotalReadout`, records defined **almost everywhere** rather than everywhere. That is forced, not
+chosen: `no_everywhere_correlation` (`RecordLayer/MeasurementConstraints.lean`) proves an
+everywhere-defined correlation is impossible for any continuous `Φ` at `n ≥ 2`, and its exceptional
+set is *necessarily non-empty* — it contains the seams between selector sectors.
+
+⚠️ **`no_everywhere_correlation` prices the everywhere case only.** It does not bound the
+exceptional set's measure and does not rule out an a.e. correlation whose exceptional set has
+positive measure. The theorem that forces positive measure is `posMeasure_noRecord_pointer`
+(`RecordLayer/NoRecordGeometry.lean`), and it is about the pointer's own geometry, not this model.
+So "a.e., with a null seam" is a coherent position here and is the one this closure occupies.
+
 ## Tier 1 — PROVED on the unified model (the fields of `FiniteQMClosure`)
 
 All eleven on the ONE model `productDynamics H hH p₀`:
