@@ -19,6 +19,23 @@ placed every time-`t` map on the unitary branch, IS the projective action of a
 one-parameter unitary family `{U_t}`. This is the honest Lean-first reading of
 "projected CSD dynamics recovers finite-dimensional Schrödinger evolution".
 
+## ⚠️ What is assumed: the unitary class is a posit
+
+`ProjUnitary` enters as a **hypothesis**, and this module proves an implication, not the
+antecedent. `projectedFlow_eq_unitary_family` is literally `choose U hU'; exact ⟨U, hU'⟩`: it
+selects the family from `hU` and establishes nothing about why the flow should be unitary.
+With `projectedFlow_schrodinger_form_of_continuous_flow` (ledger `CL-063`) the corpus therefore
+proves **"unitary ⇒ Schrödinger"** and **posits "unitary"** — registered as Posit 6 in
+`specs/POSITS.md` (the external review's Part II numbers it Posit 4).
+
+**The posit is motivated, not arbitrary.** Nonlinear projective evolution, combined with tensor
+structure and local Born statistics, permits superluminal signalling (Gisin 1990), which
+no-signalling forbids. So the unitary class is the one compatible with a constraint the corpus
+independently respects. ⚠️ That is a *reason to believe* the posit, not a derivation of it: no such
+derivation is in the corpus. One is available if wanted (Gisin's argument run in reverse), queued as
+an optional upgrade in `specs/cr-queue.md`; until it lands, "Schrödinger evolution is derived"
+should be read as "derived from the unitary class", never unqualified.
+
 ## What is proved (the achievable core)
 
 * `projectedFlow_eq_unitary_family` (PROVED, the milestone): given the W3

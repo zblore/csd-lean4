@@ -142,8 +142,14 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 * **Statement.** The projected flow is projectively unitary (`ProjUnitary`, `LF4/BargmannSelection.lean`);
   equivalently the generator is a Fubini–Study isometry generator, equivalently the expectation of a
   self-adjoint operator.
+* **Where it enters.** `LF4/ProjectedDynamics.lean`: `projectedFlow_eq_unitary_family` takes
+  `hU : ∀ t, ProjUnitary d t` as a hypothesis and *chooses* the family (`choose U hU'`), so nothing
+  there establishes unitarity.
 * **What backs it short of derivation.** The forward half is a **theorem**: unitary ⇒ Schrödinger
-  generator (ledger `CL-063`). What is posited is the class, not the consequence.
+  generator (`projectedFlow_schrodinger_form_of_continuous_flow`, ledger `CL-063`). What is posited
+  is the class, not the consequence. It is also *motivated*: nonlinear projective evolution with
+  tensor structure and local Born statistics permits signalling (Gisin 1990), which no-signalling
+  forbids — a reason to believe the posit, not a derivation of it.
 * **⚠️ An optional upgrade exists.** A derivation from no-signalling (Gisin's argument) would turn
   this into a theorem — queued as `CR-11`/`CR-10` in `specs/cr-queue.md`, four to eight weeks, and
   explicitly optional. Until then it is a posit with a known route out, which is a better position

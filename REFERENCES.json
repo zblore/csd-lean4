@@ -281,6 +281,22 @@
       "note": "One of the two analyses showing Colbeck-Renner's 'free choice' bundles parameter independence with measurement independence."
     },
     {
+      "key": "Gisin1990",
+      "title": "Weinberg's non-linear quantum mechanics and supraluminal communications",
+      "authors": [
+        "Nicolas Gisin"
+      ],
+      "year": 1990,
+      "kind": "article",
+      "venue": "Phys. Lett. A 143, 1",
+      "doi": "10.1016/0375-9601(90)90786-N",
+      "url": "https://doi.org/10.1016/0375-9601(90)90786-N",
+      "cited_by": [
+        "CsdLean4/LF4/ProjectedDynamics.lean"
+      ],
+      "note": "Added 2026-09-05 with CR-6. Cited as the MOTIVATION for the unitary-class posit (specs/POSITS.md Posit 6): nonlinear projective evolution with tensor structure and local Born statistics permits signalling. The corpus does NOT formalise this argument and does not derive unitarity from no-signalling; the reverse derivation is an optional queued upgrade."
+    },
+    {
       "key": "Hardy1992",
       "title": null,
       "authors": [

@@ -16,7 +16,8 @@ move that makes statistical mechanics work, applied to a different space.
 
 **What is derived, and how generally.** Given the posit, the following are
 theorems rather than assumptions. The evolution induced on rays is the
-Schrodinger equation for an arbitrary Hermitian generator. The probability of an
+Schrodinger equation for an arbitrary Hermitian generator, given that the
+projected flow is in the unitary class, which is itself posited (see below). The probability of an
 outcome is the volume fraction of the region realising it, and that fraction
 equals the Born weight, in every finite dimension, for arbitrary unit
 preparations, with no positivity side condition, and for generalised
@@ -30,8 +31,15 @@ is relocation of information with storage, not destruction.
 **What is posited and not derived.** The state space itself. Its existence,
 dimension, and product structure are assumed, and this document does not pretend
 otherwise. The typicality reading, that volume fraction is probability, is a
-hypothesis on the types rather than a consequence. The exact-record measurement
-witnesses require a calibration that is posited. A proved trade-off shows that
+hypothesis on the types rather than a consequence. The **unitary class**: that the
+projected flow is projectively unitary is assumed, not shown.
+`projectedFlow_eq_unitary_family` takes that as a hypothesis and selects the family,
+and the generator then follows, so what the corpus proves is "unitary implies
+Schrodinger", not "the flow is unitary". The assumption is not arbitrary: without it,
+nonlinear projective evolution combined with tensor structure and local Born statistics
+permits signalling (Gisin 1990), which no-signalling forbids. A derivation from
+no-signalling is available if wanted, and until it is done this stands as a posit.
+The exact-record measurement witnesses require a calibration that is posited. A proved trade-off shows that
 continuity of the dynamics and exactness of records everywhere cannot both hold,
 so each measurement witness gives up exactly one of continuity, exactness of the
 Born weights, or exactness at a calibrated point.
