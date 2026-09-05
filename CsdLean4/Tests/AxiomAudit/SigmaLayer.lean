@@ -3468,6 +3468,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.generatedRateField_eq_momentMap
 
+-- CR-13 (2026-09-05): the equivariance theorem, named at last. The EPISTEMIC measure is carried by
+-- the flow (the Bohmian analogue); the TYPICALITY measure is invariant. Kept apart deliberately.
+-- epistemicMeasure_equivariant takes measurability and NOTHING ELSE -- no preservation hypothesis,
+-- because a Dirac base needs none. csd_equivariance is UNCONDITIONAL on the concrete arena: the
+-- review recorded muL-preservation as the posited ConstraintDynamics field, but manyToOneSetup
+-- DISCHARGES flow_preserves_volume with a proof (fubiniStudyMeasure_smul_invariant x id on fibre).
+-- Read with flow_admits_invariant_ne_fubiniStudy: preservation does not select mu_FS; symmetry does.
+/-- info: 'CSD.SigmaLayer.epistemicMeasure_equivariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epistemicMeasure_equivariant
+
+/-- info: 'CSD.SigmaLayer.csd_equivariance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.csd_equivariance
+
 /-- info: 'CSD.RecordLayer.sqContext_not_torusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sqContext_not_torusGenerated

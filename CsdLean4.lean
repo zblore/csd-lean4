@@ -431,6 +431,7 @@ public import CsdLean4.SigmaLayer.TensorReconstruction
 public import CsdLean4.SigmaLayer.TensorTomography
 public import CsdLean4.SigmaLayer.LocalisedTypicality
 public import CsdLean4.SigmaLayer.SectorPostulateNoGo
+public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.SigmaLayer.UniqueErgodicity
 public import CsdLean4.SigmaLayer.Interference
 public import CsdLean4.SigmaLayer.TensorSector

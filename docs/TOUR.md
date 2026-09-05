@@ -55,6 +55,16 @@ continuity of the dynamics and exactness of records everywhere cannot both hold,
 so each measurement witness gives up exactly one of continuity, exactness of the
 Born weights, or exactness at a calibrated point.
 
+**Equivariance.** The Bohmian analogue holds and is named. Under the isolated
+flow the epistemic measure is carried to the epistemic measure at the evolved
+ray, exactly as Bohmian mechanics carries the squared amplitude to its evolved
+value, while the typicality measure is left invariant. Both halves are theorems
+on the concrete arena, with no posit inside either (`csd_equivariance`). Two
+things it does not say: the epistemic measure and the typicality measure behave
+differently, one moving and one fixed, so they must not be run together; and
+preservation does not select the measure. That selection is symmetry, and a
+deterministic flow provably does not pin it.
+
 **Where this sits.** Like Bohmian mechanics, this surrenders ontic
 factorisability: the underlying state is not a product over subsystems, and that
 is what buys locality of the dynamics without locality of the state. Unlike

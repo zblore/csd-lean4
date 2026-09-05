@@ -189,6 +189,12 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 * **What backs it short of derivation.** The **base half is proved** — `fubiniStudyMeasure_unique`
   (Posit 2). The fibre half is the product form itself
   (`epistemicMeasure_eq_disintegration`, `RecordLayer/EpistemicDisintegration.lean`).
+* **⚠️ Preservation is not the same as selection, and the pair is now named.**
+  `csd_equivariance` (`SigmaLayer/Equivariance.lean`) proves that on the concrete arena the flow
+  carries the epistemic measure to the epistemic measure at the evolved ray *and* leaves `μL`
+  invariant — unconditionally, since `manyToOneSetup` discharges `flow_preserves_volume` with a
+  proof rather than positing it. None of that selects `μ_FS`; symmetry does. Cite the two together
+  or the no-go below reads more negatively than the position warrants.
 * **⚠️ A posit by necessity, not by omission.** The dynamical route is closed *by theorem*:
   `flow_admits_invariant_ne_fubiniStudy` (`SigmaLayer/SectorPostulateNoGo.lean`) shows a
   deterministic flow does not pin the measure. So this cannot be derived from the dynamics, and

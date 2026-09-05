@@ -65,6 +65,7 @@ public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
 public import CsdLean4.RecordLayer.ShearDeIsolation
 public import CsdLean4.Empirical.CSD.PointerCommutation
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
+public import CsdLean4.SigmaLayer.Equivariance
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -263,5 +264,6 @@ example := @QuantumInfo.fidelity_le_one -- CL-065
 example := @Kahler.fsChartForm_apply -- CL-066
 example := @MeasureTheory.cat_hasCorrelationDecay -- CL-067
 example := @OperatorConvexCFC.convexOn_mul_log -- CL-068
+example := @CSD.SigmaLayer.csd_equivariance -- CL-069
 
 end CSD.Headlines
