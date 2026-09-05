@@ -21,7 +21,7 @@ and deferred.
 | CR-1 | Governance layer: posit-plus-characterisation wording | days | **DONE 2026-09-05** (`edb34d1`) |
 | CR-2 | Posit register | days | **DONE 2026-09-05** — `specs/POSITS.md`, the frontier trichotomy, this file |
 | CR-3 | The three priced witnesses as a first-class statement | days | **DONE 2026-09-05** — TOUR section, the horn named in `FiniteQMClosure.lean` (**seams**), the everywhere-only scope recorded at `no_everywhere_correlation`, the Q12-d retirement in `KahlerFibreMixing.lean`, A2 pointer |
-| CR-4 | BELL-MIGRATE (28 files, mechanical) | 1–2 weeks | open |
+| CR-4 | BELL-MIGRATE (28 files) | 1–2 weeks | open — ⚠️ **its "no new theorem" premise was false**: the 28 files prove *frequency* statements (32 `born_frequency_convergence_*` call sites) and no frequency theorem existed on the fibred side. **Prerequisite now built** 2026-09-05: `RecordLayer/BasinFrequency.lean` (`globalBasin_born_frequency`, CL-072). With it the migration is an application rather than 28 re-derivations |
 | CR-5 | Promote the calibrated bank to a named posit **in code** | days | **DONE 2026-09-05** — named at `calibratedBank`, chain status in four headers, POSITS Posit 5 gains the one-bank cost and the three travelling scope conditions. ⚠️ Its "there is no n-step theorem" premise was stale: CR-16 landed one, so the headers say what is proved and what is not |
 | CR-6 | Unitary-class posit recorded | days | **DONE 2026-09-05** — TOUR (both halves), `LF4/ProjectedDynamics.lean` header, reconstruction-status A5, Posit 6, Gisin1990 registered |
 | CR-7 | Label-space and infrastructure hygiene | days | **DONE 2026-09-05** — CONVENTIONS §12 (not §10, which was taken), `scripts/check-labels.sh` + baseline + 2 probes + CI. ⚠️ The five collisions are **grandfathered, not renamed**; reasons in §12 |
@@ -76,6 +76,24 @@ scheduled, and not to be re-raised as pending work.
 * **Wigner rigidity goes last**, and only after maintainer contact.
 * ⚠️ **The `QuantumInfo` and `Reversible` trees are NOT Mathlib material.** Do not include them in
   any upstreaming pass.
+
+## ⚠️ CR-4: what the premise got wrong, and what unblocks it
+
+CR-4 says "Numbers are identical by `globalBasin_born`, so no new theorem." The **weights** are
+identical — that half is right. But the 28 files do not prove weights, they prove **frequency**
+statements, calling `born_frequency_convergence_N` / `_uncond` at 32 sites, and those are almost-sure
+limits over i.i.d. draws from `fubiniStudyMeasure` on `ℂℙ^{N−1}`. The fibred side had **no frequency
+theorem at all**. So the migration needed a new theorem, and it was the prerequisite rather than a
+corollary.
+
+Two further signs it is not textual: the events occur as `(X n) ⁻¹' bornRegion …`, so the random
+variables change with the ambient space; and the five files already on the canonical route are all
+sequential/record-layer, not frequency-volume, so there was no precedent migration to copy.
+
+**Built 2026-09-05:** `RecordLayer/BasinFrequency.lean` — `globalBasin_born_frequency` and the
+`ContextField`-generic `globalBasin_born_frequency_context`, instantiating the already-generic engine
+`born_frequency_convergence_partition`. It carries **no positivity hypothesis**, unlike the base-side
+twin. The 28 files can now be migrated by application.
 
 ## Numbering warning
 

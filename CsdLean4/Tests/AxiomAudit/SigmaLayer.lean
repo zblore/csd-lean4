@@ -3528,6 +3528,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.catStroke_measurePreserving
 
+-- CR-4 PREREQUISITE (2026-09-05): the fibred frequency theorem. Every frequency theorem in the
+-- corpus lived on the BASE (fubiniStudyMeasure + bornRegion, 32 call sites); the canonical A7
+-- reading is fibred and had no frequency theorem at all, only the single-draw weight
+-- globalBasin_born. That absence is why the base->fibre migration is NOT mechanical: the weights
+-- agree, but a frequency statement is an a.s. limit over draws from a different measure on a
+-- different space. ⚠️ Needs NO positivity hypothesis, unlike its base-side twin -- vanishing
+-- amplitudes give null basins whose frequencies converge to 0, which is their Born weight.
+/-- info: 'CSD.RecordLayer.globalBasin_born_frequency_context' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_born_frequency_context
+
+/-- info: 'CSD.RecordLayer.globalBasin_born_frequency' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_born_frequency
+
 /-- info: 'CSD.RecordLayer.sqContext_not_torusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sqContext_not_torusGenerated

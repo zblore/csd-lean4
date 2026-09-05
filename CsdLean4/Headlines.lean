@@ -68,6 +68,7 @@ public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
 public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.RecordLayer.NStepChain
 public import CsdLean4.SigmaLayer.MovingFibreWitness
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -269,5 +270,6 @@ example := @OperatorConvexCFC.convexOn_mul_log -- CL-068
 example := @CSD.SigmaLayer.csd_equivariance -- CL-069
 example := @CSD.RecordLayer.csd_nstep_born -- CL-070
 example := @CSD.SigmaLayer.movingFibreEnergy_not_projectable -- CL-071
+example := @CSD.RecordLayer.globalBasin_born_frequency -- CL-072
 
 end CSD.Headlines
