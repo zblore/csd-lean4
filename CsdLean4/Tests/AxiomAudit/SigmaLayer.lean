@@ -3510,6 +3510,24 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.csd_nstep_repeatable
 
+-- CR-11 (2026-09-05): EpsProjectable finally has an eps > 0 inhabitant. Every previous instance sat
+-- at eps = 0, which by epsProjectable_zero_iff is exactly "factors through pi" -- so the approximate
+-- regime, Sigma1's central object, had nothing in it. movingFibreEnergy_not_projectable is the
+-- non-vacuity that matters: the witness is NOT EpsProjectable at 0, so it is not an eps = 0 instance
+-- wearing a parameter. Proof is variance, via cat_nontrivial. catStroke is the hyperbolic fibre map
+-- (a translation provably cannot decorrelate; this one has zero correlation at every nonzero lag).
+/-- info: 'CSD.SigmaLayer.movingFibreEnergy_epsProjectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.movingFibreEnergy_epsProjectable
+
+/-- info: 'CSD.SigmaLayer.movingFibreEnergy_not_projectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.movingFibreEnergy_not_projectable
+
+/-- info: 'CSD.SigmaLayer.catStroke_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catStroke_measurePreserving
+
 /-- info: 'CSD.RecordLayer.sqContext_not_torusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sqContext_not_torusGenerated

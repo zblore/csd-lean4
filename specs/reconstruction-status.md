@@ -355,8 +355,16 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
   non-factorising ontic composite (A6 as a primitive) is not reconstructed.
 * **A1 / KG-1** — the Kähler closed 2-form `dω = 0` and the global volume identity, blocked on missing
   Mathlib manifold exterior calculus (the volume is forced; the pointwise form is proved).
-* **A5 approximate regime** — the `(ε, T)`-projectable case (`sup‖d(δH)|_V‖ ≤ ε`, `ε > 0`) is not
-  formalised; only the exact `ε = 0` fibre-invariant case is.
+* **A5 approximate regime** — ⚠️ *narrowed 2026-09-05 (CR-11): the predicate is now populated at
+  `ε > 0`.* `SigmaLayer/MovingFibreWitness.lean` gives `movingFibreEnergy`, an `EpsProjectable _ ε`
+  witness for every `ε ≥ 0`, together with `movingFibreEnergy_not_projectable` — for `ε > 0` it is
+  **not** `EpsProjectable _ 0`, so it genuinely does not factor through `π` and is not an `ε = 0`
+  instance wearing a parameter. Every earlier instance sat at `ε = 0`, which by
+  `epsProjectable_zero_iff` is exactly the exact case, so the approximate regime had no inhabitant
+  at all. What remains open is the regime as a **dynamical** statement: no flow is constructed whose
+  generator this is, the derivative form `sup‖d(δH)|_V‖ ≤ ε` still needs the §2a smooth structure,
+  and `quantum_effective_shadowing` is a statement about **matrices** with no bridge to ontic
+  Hamiltonians on `KSigma` — so the `(ε, T)` shadowing bound is *not* claimed for this witness.
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
 * **IP-1** — identical particles / spin-statistics, not in the corpus.
 
