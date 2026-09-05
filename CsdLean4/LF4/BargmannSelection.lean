@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.UnitarySelection
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.BargmannContinuity
 
 /-!
 # W3 clopen-datum closure: the Bargmann discriminator
@@ -196,6 +197,41 @@ theorem projectedFlow_unitary_of_bargmann_continuous
     ∀ t, ProjUnitary d t :=
   projectedFlow_unitary_of_clopen d h0
     (projUnitary_isClopen_of_bargmann_continuous d hTPP him hcont)
+
+/-! ## The datum discharged: plain continuity of the flow
+
+The `hcont` above is a condition on a bespoke scalar observable, which is an awkward thing to ask a
+model for. With `continuous_bargmann` it reduces to something primitive. -/
+
+/-- ★ **The Bargmann observable is continuous whenever the flow is.** Composing the flow's
+continuity in `t` with joint continuity of the Bargmann invariant on rays
+(`Projectivization.continuous_bargmann`). -/
+theorem bargmannObservable_continuous_of_flow_continuous (d : KahlerOnticSetup N)
+    (hflow : ∀ x : ℙ ℂ (EuclideanSpace ℂ (Fin N)),
+      Continuous fun t : ℝ => d.projectedFlow t x)
+    (p q r : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    Continuous (bargmannObservable d p q r) :=
+  Projectivization.continuous_bargmann.comp
+    (((hflow p).prodMk ((hflow q).prodMk (hflow r))))
+
+/-- ★★ **The W3 selection fires on a continuous flow.** Replacing `hcont` by plain continuity of the
+projected flow: a transition-probability-preserving flow that starts unitary and is continuous in
+time is unitary at every time.
+
+⚠️ This is what the discharge condition for the unitary-class posit now looks like
+(`specs/POSITS.md` Posit 6). Continuity of the flow is a primitive assumption and much weaker than
+unitarity; it is *not* a field of `KahlerOnticSetup`, which carries only
+`measurable_projectedFlow`, so it remains a hypothesis — but an honest one rather than a technical
+artefact. -/
+theorem projectedFlow_unitary_of_flow_continuous (d : KahlerOnticSetup N)
+    (hTPP : ∀ t, TransProbPreserving (d.projectedFlow t))
+    (h0 : ProjUnitary d 0)
+    {p q r : ℙ ℂ (EuclideanSpace ℂ (Fin N))} (him : (bargmann p q r).im ≠ 0)
+    (hflow : ∀ x : ℙ ℂ (EuclideanSpace ℂ (Fin N)),
+      Continuous fun t : ℝ => d.projectedFlow t x) :
+    ∀ t, ProjUnitary d t :=
+  projectedFlow_unitary_of_bargmann_continuous d hTPP h0 him
+    (bargmannObservable_continuous_of_flow_continuous d hflow p q r)
 
 /-! ## The degenerate dimensions (`N ≤ 1`): no datum needed -/
 

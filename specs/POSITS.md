@@ -180,10 +180,16 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   `Im Δ ≠ 0`, and **`hcont`** — continuity of the scalar Bargmann observable
   `t ↦ Δ(Φ_t p, Φ_t q, Φ_t r)`. That datum is the discharge condition. See
   `LF4/BargmannSelection.lean`.
-* **And it reduces further:** given a continuity lemma for `bargmann` on projective space (new;
-  must avoid the choice-defined `Projectivization.rep`, which is not continuous, and go through the
-  open quotient map instead), `hcont` follows from plain **continuity of the projected flow in `t`**
-  — a primitive assumption rather than a technical one. Scoped in `specs/cr-queue.md` under CR-10.
+* **✅ Reduced 2026-09-05.** `Projectivization.continuous_bargmann`
+  (`Mathlib/LinearAlgebra/Projectivization/BargmannContinuity.lean`) proves the Bargmann invariant
+  jointly continuous on rays — through the **open quotient map**, since `Projectivization.rep` is
+  choice-defined and *not* continuous, so the obvious route is unavailable. With it,
+  `projectedFlow_unitary_of_flow_continuous` (`LF4/BargmannSelection.lean`) fires on **plain
+  continuity of the projected flow**: a transition-probability-preserving flow that starts unitary
+  and is continuous in time is unitary at every time.
+* **What would discharge it, now.** Continuity of the projected flow in `t`. ⚠️ Still a hypothesis —
+  `KahlerOnticSetup` carries only `measurable_projectedFlow` — but a primitive one, and much weaker
+  than unitarity. That is the whole of what remains between this posit and a theorem.
 
 ## Posit 7 — composite structure (local tomography)
 

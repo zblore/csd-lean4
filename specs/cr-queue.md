@@ -136,7 +136,11 @@ observable; it should be replaced by a primitive one. Two steps:
 
 So the discharge condition for this posit can be reduced from "the Bargmann observable is
 continuous along the flow" to "**the flow is continuous**", at the cost of one continuity lemma.
-That is the shape of the next attempt, and it is a lemma rather than a programme.
+
+✅ **DONE 2026-09-05.** `Projectivization.continuous_bargmann`
+(`Mathlib/LinearAlgebra/Projectivization/BargmannContinuity.lean`, CSD-free and upstreamable) and
+`projectedFlow_unitary_of_flow_continuous` (`LF4/BargmannSelection.lean`, CL-073). The posit's
+discharge condition is now plain continuity of the projected flow.
 
 ⚠️ Do not attempt to discharge `hcont` on the *concrete* arena as evidence: there the flow is
 `schrodingerUnitary • ·`, so `ProjUnitary` holds by construction and

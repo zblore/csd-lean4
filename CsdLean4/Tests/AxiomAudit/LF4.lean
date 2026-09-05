@@ -1331,4 +1331,18 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.kMuL_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF4.kMuL_unique
 
+-- CR-10 SUCCESSOR (2026-09-05): the unitary-class posit's discharge condition, reduced. W3's
+-- selection needed hcont -- continuity of a bespoke scalar observable along the flow, which a model
+-- cannot reasonably be asked for. Projectivization.continuous_bargmann (proved through the OPEN
+-- QUOTIENT MAP; rep is choice-defined and NOT continuous, so the obvious route is unavailable)
+-- reduces it to plain continuity of the projected flow -- primitive, and far weaker than unitarity.
+-- ⚠️ Still a hypothesis: KahlerOnticSetup carries only measurable_projectedFlow.
+/-- info: 'Projectivization.continuous_bargmann' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_bargmann
+
+/-- info: 'CSD.LF4.projectedFlow_unitary_of_flow_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.projectedFlow_unitary_of_flow_continuous
+
 end CSD.Tests.AxiomAudit
