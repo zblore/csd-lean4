@@ -12,7 +12,10 @@ public import Mathlib.Analysis.SpecialFunctions.Arsinh
 # P4: the dispersion earned — covariance selects `ω = √(p² + m²)`
 
 **Category:** CV (continuous variables — relativistic structure forced, not
-defined; `eft-pillars-plan.md` P4). "Forced" is earned here in the strong sense
+defined; `eft-pillars-plan.md` P4). ⚠️ **Scope (CR-8):** "relativistic structure" here is boost
+covariance of a *posited* `(E, p)`-plane cone. The plane, the cone and the boost family are set up;
+what is earned is that covariance selects `ω = √(p² + m²)` among dispersions on them. No Lorentz
+group, no four-dimensional spacetime, no signature is derived. "Forced" is earned here in the strong sense
 CONVENTIONS §8.3a asks for: the converse is a theorem of this module
 (`cone_preserving_is_boost` and the selection chain below), not a motivation.
 Contrast the record layer's cell law, where "forced" holds only *given* torus

@@ -43,7 +43,8 @@ twice-observed bottleneck). This module is the translation.
   sup-norm estimate about functions on the arena.
 * ★ `arenaObs_kick_of_disjointSupport` — **statics**: an arena observable of
   mode set `S` is *exactly* invariant under any kick supported on disjoint `T`.
-  Haag–Kastler locality (CV-8), restated as a fact about functions on the arena.
+  mode-disjoint commutation (CV-8; the Haag–Kastler *analogue* on mode sets, not the axiom —
+  see `CV/ModeLocality.lean`), restated as a fact about functions on the arena.
 * ★★ `arena_lightcone` — **the previously unstatable theorem**: under a
   graph-local skew generator, a kick supported outside the graph `d`-ball of `R`
   changes any region-`R` arena observable after time `t` by at most
@@ -341,7 +342,8 @@ theorem arenaObs_kick (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
 
 /-! ### Statics: exact locality on the arena -/
 
-/-- ★★ **Haag–Kastler locality on the arena** (statics): an arena observable of
+/-- ★★ **Mode-disjoint commutation on the arena** (statics; the Haag–Kastler analogue, on mode
+sets rather than spacetime regions): an arena observable of
 mode set `S` is *exactly* invariant under any unitary kick supported on a
 disjoint mode set `T`. Not approximately — exactly: the record layer cannot see
 disjointly supported interventions at all. -/

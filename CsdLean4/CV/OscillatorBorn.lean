@@ -22,6 +22,8 @@ The oscillator Hamiltonian is diagonal (`hamiltonian_eq_diagonal`), so the numbe
 the **standard basis** of `EuclideanSpace ℂ (Fin N)`; a number/energy measurement is therefore exactly
 the standard-basis record-layer measurement. Hence:
 
+⚠️ **Born wording (CR-1 standard).** The Born content here rests on the record layer's **cell law**, which is a posit *with* a characterisation: a context field whose rates generate the coordinate phase rotations is exactly the moment map (`torusGenerated_eq_momentMap`), while torus invariance alone does not pin it (`rate_field_not_forced_by_torus_symmetry`). What stays posited is that a context's rates generate its pointer torus — `specs/POSITS.md` Posit 1. So "the Born rule is derived" is accurate only as "derived given the cell law".
+
 * `numberBornProb` / `numberBornProb_eq` — the Born probability of finding `n` quanta (energy
   `oscEnergy n = n + ½`) is `‖⟨n|ψ⟩‖²`, the record-layer `bornRate`;
 * `numberMeasurement` / `numberMeasurement_prob` — the mode's measurement *is* a record-layer

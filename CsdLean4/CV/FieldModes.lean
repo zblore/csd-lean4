@@ -22,6 +22,20 @@ indexed by occupation **configurations** `c : Fin K → Fin N` (mode `k` has `c 
   `fieldEnergy c = ∑ₖ oscEnergy (c k)` (free field = sum of oscillators);
 * `fieldEnergy_cutoff_independent` — the field energy of a configuration is cutoff-independent
   (the multi-mode analogue of `oscEnergy_cutoff_independent`);
+## Honest residue for the CV track
+
+⚠️ CV has no root module, so `EMPIRICAL.md`'s honest-residue paragraph is carried here, at the
+field-side entry point (CR-8, 2026-09-05).
+
+The concrete `SectorData` instances behind the CV volume readings still carry `Φ = id` — LF5
+exercises a genuine `Φ_vN ≠ id` only on the dilated `Σ'`, not in these instances — so these readings
+remain **realisation, not derivation**. The Born value is derived from the posited sector geometry
+on `Σ`, which is the standing assumption these results rest on. The Born content additionally rests
+on the record layer's cell law: a posit with a characterisation (`specs/POSITS.md` Posit 1; torus
+*generation* pins the rate field, torus invariance does not). And the locality proved on this track
+is **mode-disjoint commutation**, not the Haag–Kastler axiom — mode sets, no net, no covariance
+(`CV/ModeLocality.lean`).
+
 * `fieldBornProb` / `sum_fieldBornProb_unit` — the full-configuration measurement is a standard-basis
   (record-layer) measurement: `‖⟨c|Ψ⟩‖²`, a probability distribution over configurations;
 * `tprodState` / `norm_sq_tprodState` — a **product state** `Ψ = ⊗ₖ ψₖ` has `‖Ψ‖² = ∏ₖ ‖ψₖ‖²`; a

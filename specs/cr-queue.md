@@ -24,7 +24,7 @@ author before it is worked: **do not infer the scope from the title** (author in
 | CR-5 | Promote the calibrated bank to a named posit **in code** | days | open — registered as Posit 5, code half outstanding |
 | CR-6 | Unitary-class posit recorded | days | **DONE 2026-09-05** — TOUR (both halves), `LF4/ProjectedDynamics.lean` header, reconstruction-status A5, Posit 6, Gisin1990 registered |
 | CR-7 | Label-space and infrastructure hygiene | days | **DONE 2026-09-05** — CONVENTIONS §12 (not §10, which was taken), `scripts/check-labels.sh` + baseline + 2 probes + CI. ⚠️ The five collisions are **grandfathered, not renamed**; reasons in §12 |
-| CR-8 | Naming and residue paragraphs in CV and Empirical | hours | open — ⚠️ *body not recovered; the author will supply it. Do NOT infer the scope from the title.* |
+| CR-8 | Naming and residue paragraphs in CV and Empirical | hours | **DONE 2026-09-05** — mode-disjoint commutation (not Haag–Kastler), boost covariance of a posited cone (not Lorentz content), CV Born wording, CV residue paragraph, TOUR three-localities, and CL-049's scope as a theorem (`unitary_invariant_of_recordStatistics_invariant`, pinned) |
 | CR-9 | Mathlib upstream batch | weeks, background | open — ⚠️ *body not recovered; the author will supply it. Do NOT infer the scope from the title.* |
 | CR-10 | *Optional:* unitarity from no-signalling | 4–8 weeks | open — would upgrade the review's Posit 4 to a theorem |
 | CR-11 | Moving-fibre witness | 1–2 weeks | open |

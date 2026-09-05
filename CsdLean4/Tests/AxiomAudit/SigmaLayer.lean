@@ -3483,6 +3483,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.csd_equivariance
 
+-- CR-8 (2026-09-05): the CL-049 scope, as a theorem. The record-statistics premise CONTAINS U(N),
+-- so quantifying over record-statistics-preserving maps is the symmetry posit in operational
+-- vocabulary, not a derivation of symmetry from records. This one line is all the rigidity proof
+-- uses; stating it separately makes the scope checkable instead of argued in a docstring.
+/-- info: 'CSD.RecordLayer.unitary_invariant_of_recordStatistics_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.unitary_invariant_of_recordStatistics_invariant
+
 /-- info: 'CSD.RecordLayer.sqContext_not_torusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sqContext_not_torusGenerated

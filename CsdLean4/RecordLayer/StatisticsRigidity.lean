@@ -52,6 +52,15 @@ apparatus). Consequently
   `fubiniStudyMeasure_unique`), **never in the statement** — the conversion the necessity
   audit asked for, in the `fubiniStudy_forced_by_symmetry` template: the group is no
   longer named in the premise.
+
+  ⚠️ **This is the symmetry posit restated, not a derivation from records** (CR-8, 2026-09-05,
+  and it is the honest reading of `CL-049`). The hypothesis quantifies over *every*
+  record-statistics-preserving map, and that class **contains** `U(N)` —
+  `unitary_invariant_of_recordStatistics_invariant` below is the one-line theorem that says so,
+  and it is the whole of what the proof uses. So the operational premise is at least as strong as
+  the geometric one; removing `U(N)` from the *statement* changes the vocabulary, not the
+  commitment. What would be a genuine strengthening is a premise quantifying over something
+  strictly weaker than the full symmetry group, and that is not what is here.
 * `recordStatisticsPreserving_realisation` — the operational symmetry group is
   semi-unitary: every record-statistics-preserving self-map is realised by a unitary or an
   antiunitary (`wigner_rigidity_unitaryGroup` through the iff). With the realisability
@@ -313,6 +322,21 @@ theorem projectedFlow_unitary_of_record_statistics
     (fun t => (recordStatisticsPreserving_iff_transProbPreserving _).mp (hStats t))
     h0 him hcont
 
+/-- ★ **The operational premise contains the geometric one.** A measure invariant under every
+record-statistics-preserving map is in particular invariant under every unitary, because unitaries
+*are* such maps (`recordStatisticsPreserving_unitary`).
+
+This one line is the entire content the rigidity theorem below draws on, and it is stated
+separately so the scope is visible rather than argued: quantifying over record-statistics-preserving
+maps is the symmetry posit in operational vocabulary, not a derivation of symmetry from records. -/
+theorem unitary_invariant_of_recordStatistics_invariant
+    (μ : Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    (hinv : ∀ f : ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N)),
+      RecordStatisticsPreserving f → μ.map f = μ)
+    (U : Matrix.unitaryGroup (Fin N) ℂ) :
+    μ.map (fun p => U • p) = μ :=
+  hinv _ (recordStatisticsPreserving_unitary U)
+
 /-- ★★ **The `U(N)`-free measure statement.** Any probability measure on the sector
 invariant under EVERY record-statistics-preserving symmetry is the Fubini–Study measure.
 `U(N)` appears in the proof (`transProbPreserving_unitary` feeds
@@ -320,7 +344,14 @@ invariant under EVERY record-statistics-preserving symmetry is the Fubini–Stud
 it is the epistemic indifference "the sampling law cannot weight sector configurations
 that no record statistics distinguish", and the group over which it quantifies is itself
 pinned by `recordStatisticsPreserving_realisation`. This is the conversion the necessity
-audit requested, in the same template as `fubiniStudy_forced_by_symmetry`. -/
+audit requested, in the same template as `fubiniStudy_forced_by_symmetry`.
+
+⚠️ **But the premise is not weaker for naming no group** (CR-8, 2026-09-05). It quantifies over
+*every* record-statistics-preserving map, and that class contains `U(N)` — see
+`unitary_invariant_of_recordStatistics_invariant` just above, which is the whole of what this proof
+uses. So this is the symmetry posit in operational vocabulary, **not** a derivation of symmetry from
+records. A genuine strengthening would quantify over something strictly weaker than the full
+symmetry group. -/
 theorem measure_eq_fubiniStudy_of_record_statistics_invariant [NeZero N]
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
     (μ : Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N)))) [IsProbabilityMeasure μ]

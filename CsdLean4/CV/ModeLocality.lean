@@ -16,7 +16,10 @@ The **locality** half of EFT Stage 2, stated at the finite cutoff where it is ac
 
 An operator on the field is **supported on** a set `S` of modes (`SupportedOn`) when it (i) does
 not move the modes outside `S` and (ii) has entries that do not depend on those spectator modes.
-The headline is the **Haag–Kastler kinematic locality axiom**:
+⚠️ **Name check (2026-09-05, CR-8): this is mode-disjoint commutation, not the Haag–Kastler axiom.** The index sets here are **modes**, not spacetime regions, and there is no net, no isotony and no covariance — so the name imports structure the corpus does not have. Haag–Kastler is cited as the *analogue*, never as what is proved.
+
+The headline is **mode-disjoint commutation**, the finite-cutoff analogue of the Haag–Kastler
+kinematic locality axiom:
 
   `commute_of_disjointSupport` — `S ∩ T = ∅` ⟹ `A * B = B * A`
 
@@ -79,7 +82,8 @@ structure SupportedOn (S : Finset (Fin K))
 
 /-! ### Locality: disjoint supports commute -/
 
-/-- **The Haag–Kastler locality axiom at a finite cutoff.** Operators supported on disjoint mode
+/-- **Mode-disjoint commutation at a finite cutoff** (the Haag–Kastler analogue on mode sets, not
+regions). Operators supported on disjoint mode
 sets commute — so observables of disjoint regions are jointly measurable, and the record layer
 can assign them outcomes simultaneously.
 

@@ -25,8 +25,10 @@ its invariant.
 * ★ `boost_invariant` — `E'² − p'² = E² − p²` for every rapidity: the
   quadratic form is preserved (`cosh² − sinh² = 1`).
 * ★★ `boost_mass_shell` — the boosted dispersion pair satisfies the SAME
-  shell: `(ω')² − (p')² = m²`. **The Lorentz content of the dispersion
-  relation, as a theorem rather than a reading.**
+  shell: `(ω')² − (p')² = m²`. ⚠️ **Boost covariance of a *posited* `(E, p)`-plane cone, not
+  Lorentz content derived** (name check 2026-09-05, CR-8). The two-dimensional `(ω, p)` plane and
+  its cone are set up, not deduced; what is proved is that the boost family preserves the shell on
+  them. Nothing here derives the Lorentz group, four-dimensional spacetime, or the signature.
 * `boost_forward` — the forward shell is preserved (`0 ≤ ω'`), using
   `abs_le_omega` and `|sinh| ≤ cosh`: boosts cannot turn a physical mode
   into a negative-energy one.
@@ -92,7 +94,8 @@ theorem boost_invariant (χ E p : ℝ) :
 
 /-- ★★ **Boost covariance of the mass shell**: the boosted
 energy–momentum pair of a mode satisfies the same shell, with the same
-mass. The Lorentz content of the dispersion relation, as a theorem. -/
+mass. ⚠️ Boost covariance of a posited `(E, p)`-plane cone — not a derivation of Lorentz
+structure; see the module header. -/
 theorem boost_mass_shell (m p χ : ℝ) :
     (boostE χ (omega m p) p) ^ 2 - (boostP χ (omega m p) p) ^ 2 = m ^ 2 := by
   rw [boost_invariant]

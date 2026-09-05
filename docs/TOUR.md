@@ -67,7 +67,12 @@ deterministic flow provably does not pin it.
 
 **Where this sits.** Like Bohmian mechanics, this surrenders ontic
 factorisability: the underlying state is not a product over subsystems, and that
-is what buys locality of the dynamics without locality of the state. Unlike
+is what buys no-signalling of the marginals without locality of the state.
+The precision matters, because three different things get called locality
+here: no-signalling of the marginals, which is what is proved and only
+conditionally; independence of the Bell parameter, which is denied as a
+theorem; and joint locality in the local-friendliness sense, which the corpus
+does not address. Only the first is claimed. Unlike
 Everett, there is one world; the branching structure appears as regions of a
 single trajectory space, and outcomes are selected by which region the actual
 point occupies. Unlike Gleason-style and Busch-style derivations, the general
