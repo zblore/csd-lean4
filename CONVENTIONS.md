@@ -484,3 +484,43 @@ nothing forces an update when the world changes.
   the moment the named declaration's corpus occurrence count reaches the threshold,
   forcing the fold/promotion instead of letting the flag rot in a header (R-014 is the
   model).
+
+## 12. Identifier prefixes (adopted 2026-09-05)
+
+A label must mean one thing. Five did not when this section was written, and the cost is the kind
+that only shows up in review: a reader following "D1" from a paper into the repository lands on a
+different object and does not notice.
+
+**Reserved prefixes.**
+
+| Side | Prefixes |
+|---|---|
+| Paper | `A` `D` `G` `P` `R` `E` |
+| Repository | `Q` `CV` `CL` `R-` `HY` `TH` `CR` |
+
+A new row id in a repository registry (`specs/BACKLOG.md`, `specs/future-work.md`) must use a
+repository prefix. `scripts/check-labels.sh` enforces this as a ratchet against
+`docs/labels-baseline.txt`: the count of paper-prefixed row ids may shrink, never grow.
+
+**The five known collisions are GRANDFATHERED, not renamed.** This is a deliberate scope decision
+(2026-09-05), and the reasoning belongs on the record because the obvious move is the wrong one:
+
+* `D1` — repository: the de-isolation dynamics gate (242 occurrences, 98 files). Largely superseded
+  by the frontier trichotomy in `specs/POSITS.md`.
+* `D4` / `G6` — repository: the composite-tensor debt. **Resolved** (Posit 7, `R-017`,
+  `compositeAlgReconstruction`), so these are historical labels.
+* `E1` — repository: the equilibration-arc rows `E1`–`E5`. Complete.
+* `C1` — carries at least four unrelated meanings, and only two are labels: the paper of that name,
+  the connectivity fixes `C1`–`C7`, ⚠️ **the live Lean identifiers `C1`/`C2` (carry chains in the
+  adder circuits)**, and ⚠️ **the release tag `v1.4.1-c1-complete`, which `check-claims.sh` verifies
+  against `CITATION.cff`**.
+
+Renaming would touch ~790 occurrences across ~150 files, would break compiled Lean and a guard, and
+would buy nomenclature hygiene on rows that are mostly retired. The ratchet stops the problem
+growing, which is the part that still has value. If a rename is wanted later it should be done one
+label at a time, with the non-label uses of `C1` excluded first.
+
+**`claims.yaml` does not exist and never has.** The register is `specs/validation-claims.tsv` plus
+`specs/residues.tsv`, with `scripts/check-claims.sh` as the guard. Both surviving mentions of the
+name say so explicitly, and `check-labels.sh` fails any mention that does not — a reference implying
+the file exists would send a reader looking for ground truth that is not there.

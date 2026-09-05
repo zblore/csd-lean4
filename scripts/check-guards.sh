@@ -145,6 +145,36 @@ else
   pass=$((pass + 1))
 fi
 
+# --- check-labels: a paper-prefixed row id in a repository registry must fail when the count grows.
+lb="docs/labels-baseline.txt"
+cp specs/BACKLOG.md specs/BACKLOG.md.guardbak
+printf '> | **G12** | planted collision | x | y |
+' >> specs/BACKLOG.md
+bash scripts/check-labels.sh >/dev/null 2>&1
+rc=$?
+mv specs/BACKLOG.md.guardbak specs/BACKLOG.md
+if [ "$rc" -eq 0 ]; then
+  echo "  BROKEN  labels — a new paper-prefixed row id did NOT fire the ratchet"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+
+# --- check-labels: a claims.yaml mention that does not deny the file's existence must fail.
+eq="specs/equilibration-arc-plan.md"
+cp "$eq" "$eq.guardbak"
+awk '{gsub(/There is no `claims\.yaml`/, "See `claims.yaml`"); print}' "$eq" > "$eq.tmp"
+mv "$eq.tmp" "$eq"
+bash scripts/check-labels.sh >/dev/null 2>&1
+rc=$?
+mv "$eq.guardbak" "$eq"
+if [ "$rc" -eq 0 ]; then
+  echo "  BROKEN  labels — a claims.yaml mention implying the file exists did NOT fire"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+
 # --- check-references: a `[Key]` citation with no entry must fail.
 plant '/-!
 # Probe
