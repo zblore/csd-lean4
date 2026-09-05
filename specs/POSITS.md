@@ -109,10 +109,10 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   repeated-trial law** — where the reading stops being interpretation and becomes mathematics.
   `AXIOMS.md` §3 names it one of the three load-bearing postulates, alongside the ontic substrate
   and the sector.
-* **⚠️ A second commitment rides along, and should be named:** that one preparation law serves
-  every trial — i.i.d. *across preparations*. Bohmian quantum equilibrium carries the analogous
-  assumption. It is implicit in the product measure, not separately posited, and it is what
-  `specs/sigma-fibre-contextuality.md` calls measurement-independence.
+* **⚠️ A second commitment rides along:** that one preparation law serves every trial — i.i.d.
+  *across preparations*. Bohmian quantum equilibrium carries the analogous assumption. It is
+  implicit in the product measure and is registered in its own right as **Posit 8** (measurement
+  independence); `specs/sigma-fibre-contextuality.md` calls it measurement-independence.
 * **What backs it short of derivation.** Self-consistency: the strong law shows the reading does not
   contradict itself — typical trajectories reproduce the volume ratios as frequencies
   (`born_frequency_convergence_N`). That is a coherence check, not a derivation.
@@ -136,6 +136,90 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   same family every measurement account makes.
 * **What would discharge it.** Deriving the ready state from the dynamics rather than positing it —
   adjacent to Posit 1's discharge condition, and blocked by the same `H_int` frontier.
+
+## Posit 6 — the unitary class
+
+* **Statement.** The projected flow is projectively unitary (`ProjUnitary`, `LF4/BargmannSelection.lean`);
+  equivalently the generator is a Fubini–Study isometry generator, equivalently the expectation of a
+  self-adjoint operator.
+* **What backs it short of derivation.** The forward half is a **theorem**: unitary ⇒ Schrödinger
+  generator (ledger `CL-063`). What is posited is the class, not the consequence.
+* **⚠️ An optional upgrade exists.** A derivation from no-signalling (Gisin's argument) would turn
+  this into a theorem — queued as `CR-11`/`CR-10` in `specs/cr-queue.md`, four to eight weeks, and
+  explicitly optional. Until then it is a posit with a known route out, which is a better position
+  than most entries here.
+* **What would discharge it.** That derivation.
+
+## Posit 7 — composite structure (local tomography)
+
+* **Statement.** Local subsystems carry full matrix algebras and the composite is locally
+  tomographic.
+* **What backs it short of derivation.** A great deal: Artin–Wedderburn then **forces** the tensor
+  product and `N_AB = N_A · N_B` (`compositeAlgReconstruction`, `CV/CompositeArena.lean`), and the
+  algebraic premise is provably the record-level statement in both directions
+  (`recordLocallyTomographic_iff_adjoin_eq_top`). So the posit is stated in record vocabulary rather
+  than lattice vocabulary — that conversion is what brick 2 bought.
+* **⚠️ Permanent boundary, registered as `R-017`.** It cannot be derived: a composite carrying
+  commuting local algebras need not be locally tomographic (real-Hilbert-space QM is the
+  counterexample), and local tomography alone does not select the complex field.
+* **What would discharge it.** Nothing. This is a boundary, not a gap — the entry exists so that
+  "the tensor product is derived" is never written without its premise.
+
+## Posit 8 — measurement independence
+
+* **Statement.** One preparation measure serves every measurement context.
+* **What backs it short of derivation.** **Nothing, and that is the honest entry.** It is shared
+  with every deterministic theory — the assumption Bell-type arguments call measurement
+  independence or no-conspiracy.
+* **⚠️ Settings are not represented in Σ.** The corpus does not model the apparatus setting as a
+  Σ-degree of freedom, so the independence is a modelling choice rather than a derived fact. It also
+  rides inside Posit 4's product structure, which is why the two entries cross-reference.
+* **What would discharge it.** Nothing available. Denying it is superdeterminism, which is a
+  different theory rather than a proof.
+
+## Posit 9 — the product form of the preparation measure
+
+* **Statement.** `μL` is a product: the base factor is `μ_FS`, the fibre factor uniform.
+* **What backs it short of derivation.** The **base half is proved** — `fubiniStudyMeasure_unique`
+  (Posit 2). The fibre half is the product form itself
+  (`epistemicMeasure_eq_disintegration`, `RecordLayer/EpistemicDisintegration.lean`).
+* **⚠️ A posit by necessity, not by omission.** The dynamical route is closed *by theorem*:
+  `flow_admits_invariant_ne_fubiniStudy` (`SigmaLayer/SectorPostulateNoGo.lean`) shows a
+  deterministic flow does not pin the measure. So this cannot be derived from the dynamics, and
+  saying so is a result rather than an admission.
+* **What would discharge it.** Nothing from the dynamics, by that theorem. Extends Posit 2 to the
+  fibred Σ.
+
+---
+
+## Correspondence with the external review's Part II
+
+⚠️ **Two registers, two numberings.** This file's numbers are the repository's and are frozen; the
+review's Part II numbers its own. They agree at Posit 1 and diverge after. The map:
+
+| Review Part II | Here | Note |
+|---|---|---|
+| 1 — cell law | **1** | agree; but see the correction below |
+| 2 — calibrated bank | **5** | |
+| 3 — preparation measure | **9** (+ base half in **2**) | |
+| 4 — unitary class | **6** | |
+| 5 — composite structure | **7** | |
+| 6 — measurement independence | **8** | |
+| *(not in the review)* | **3** | Liouville preservation of the flow |
+| *(not in the review)* | **4** | the typicality reading |
+
+⚠️ **The review's Posit 1 characterisation paragraph is superseded, and in one respect refuted.**
+It proposed that "`T^N`-equivariance plus a normalisation condition forces the rate field to be
+exactly `momentMap`" as "a bounded, plausible theorem worth attempting (see CR-15)". CR-15 was
+attempted, and **that conjecture is false**: `rate_field_not_forced_by_torus_symmetry`
+(`RecordLayer/CellLawFreedom.lean`) exhibits `sqContext`, torus-invariant and normalised and
+same-support, which is not the moment map. What *does* force the rate field is torus **generation**
+— the moment-map equation, not the symmetry (`torusGenerated_eq_momentMap`). So the review's
+"one genuine characterisation gap" is closed, but by a different theorem than the one proposed, and
+the proposed one is a counterexample rather than a target. See `specs/cell-law-scoping.md`.
+
+The review also records the measurement **trilemma** as a theorem rather than a posit — correct, and
+it is deliberately absent from this register.
 
 ---
 
@@ -187,9 +271,9 @@ overclaim; splitting it is the accurate move.
 
 ⚠️ **These numbers are the repository's.** They are cited from `AXIOMS.md` §3.10,
 `specs/CSD-CHARTER.md`, `specs/reconstruction-status.md` §7a, several module headers and the
-glossary, so they are **stable and must not be renumbered** — add, never resequence. An external
-review's "Part II" used its own numbering that agrees at Posit 1 (the cell law) and diverges after;
-if a document cites "Posit N", check which register it means.
+glossary, so they are **stable and must not be renumbered** — add, never resequence. The external
+review's "Part II" uses its own numbering; the correspondence table above is authoritative. If a
+document cites "Posit N", check which register it means.
 
 ---
 
@@ -200,6 +284,10 @@ Keep these in step with this file, or the register stops being a register:
 `specs/CSD-CHARTER.md` "The picture", `specs/reconstruction-status.md` §7a, and the glossary entry
 `is-the-born-rule-derived`. The external review that prompted the register is tracked in
 `specs/cr-queue.md`.
+
+⚠️ **`AXIOMS.md` §3 currently registers Posits 1–5 only.** Posits 6–9 arrived 2026-09-05 from the
+review's Part II and have no §3 section yet; `CR-6` covers the unitary class specifically. Adding
+them is queued, not forgotten.
 
 ⚠️ **Known undercount, deliberately not fixed here.** `README.md` and `docs/TOUR.md` both carry a
 "what is posited and not derived" inventory that omits the cell law. Those are landing-surface

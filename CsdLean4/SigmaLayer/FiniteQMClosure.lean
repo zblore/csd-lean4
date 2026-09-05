@@ -31,11 +31,17 @@ pushforward-to-`μFS` (`fubini_study_bridge`) and the Schrödinger projection (`
 or unitary evolution from a more primitive ontic model. The precise claim `unifiedFiniteQMClosure` earns is:
 **operational finite-QM closure holds on a concrete projective product witness satisfying the exact
 formalised subset of the Paper C assumptions** (`specs/reconstruction-status.md` §2, the A1–A7 map). It does
-NOT claim the witness derives that architecture. The two genuinely open frontiers sit OUTSIDE this closure:
-**SO-1** (the sector-origin problem — the origin of `(Σ, π, μL)`; the trials SAMPLE `μL`) and **MD-1** (the
-Paper C A7 mismatch — the measurement cells `bornRegion ψ'` are preparation-indexed, not the context-fixed
-`Ωᵢ(M)` of A7; the readout here is an honest preparation-indexed operational witness). See
-`specs/BACKLOG.md` (SO-1, MD-1).
+NOT claim the witness derives that architecture. ⚠️ **Frontier statement corrected 2026-09-05 — both
+labels below are retired or closed.** `SO-1` was **retired as a non-question** (2026-07-24: Σ is the floor,
+there is nothing beneath it to derive it from; what survives is *constraint* work such as
+`fubiniStudyMeasure_unique`). `MD-1` was **closed** (2026-08-31), its residuals being the permanent boundary
+`R-015` and the open-mathematics item `R-016`. The A7 mismatch recorded below is real but is a property of
+*this witness*: the cells here are preparation-indexed `bornRegion ψ'`, whereas `RecordLayer/GlobalBasin.lean`
+gives a context-fixed partition at every `N`. What sits outside this closure and is genuinely open is
+**Posit 1's discharge condition** — deriving the rate field from the de-isolation dynamics
+(`specs/POSITS.md`, "What 'frontier' means here"). The original wording, kept for the A7 point it makes:
+the measurement cells `bornRegion ψ'` are preparation-indexed, not the context-fixed `Ωᵢ(M)` of A7; the
+readout here is an honest preparation-indexed operational witness.
 
 ## Tier 1 — PROVED on the unified model (the fields of `FiniteQMClosure`)
 

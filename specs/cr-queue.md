@@ -37,7 +37,8 @@ before it is worked.
 
 CR-15 was executed first on the author's instruction, being the only item that could convert the
 programme's weakest posit into a theorem. It did, by a route the queue did not anticipate — torus
-**generation** rather than the frame-function characterisation CR-15 proposed. Consequences the
+**generation**, not the `T^N`-equivariance-plus-normalisation package Part II proposed (which is
+false; see the numbering warning below) and not the frame-function route, which was declined. Consequences the
 remaining items should not re-litigate:
 
 * The Gleason/frame-function route is **declined, not refuted** (`specs/cell-law-scoping.md`).
@@ -53,11 +54,19 @@ governance sites instead. Do not re-raise the grep as an outstanding acceptance 
 ## Numbering warning
 
 The review's own "Part II" numbers posits 1–6; `specs/POSITS.md` numbers the repository's. They
-agree at Posit 1 (the cell law) and **diverge after** — the review's Posit 2 concerns n-bank chain
-depth and its Posit 4 is unitarity, neither of which is the repository's Posit 2 or 4. When an item
-below says "Posit N", check which register is meant. The review's Part II enumeration is **not**
-recorded here because it was not recoverable from the session log; re-supply it if exact
-correspondence is needed.
+agree at Posit 1 (the cell law) and **diverge after**: review 2 (calibrated bank) = repo 5, review 3
+(preparation measure) = repo 9, review 4 (unitary class) = repo 6, review 5 (composite structure) =
+repo 7, review 6 (measurement independence) = repo 8; repo 3 (Liouville preservation) and repo 4
+(typicality reading) have no review counterpart. When an item below says "Posit N", check which
+register is meant. The review's Part II was supplied by the author on 2026-09-05 and the
+correspondence is now recorded in `specs/POSITS.md` ("Correspondence with the external review's
+Part II").
+
+⚠️ **One Part II claim is refuted, not merely superseded.** Its Posit 1 proposed that
+`T^N`-equivariance plus normalisation forces the rate field to be `momentMap`, calling this "a
+bounded, plausible theorem worth attempting (see CR-15)". CR-15 showed it **false** —
+`rate_field_not_forced_by_torus_symmetry` is a counterexample to exactly that package. The rate
+field is forced by torus *generation* instead. Do not re-queue the proposed theorem.
 
 ## References
 
