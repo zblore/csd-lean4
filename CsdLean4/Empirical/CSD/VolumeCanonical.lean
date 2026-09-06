@@ -439,6 +439,33 @@ theorem context_born_frequency_volume_canonical
     (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ))
       (bornRegion_measurable_uncond (B.repr ψ) (repr_ne_zero B ψ hψ)))
 
+/-- ★ `context_born_frequency_basin` on the canonical i.i.d. process for the epistemic measure —
+the fibred twin of `context_born_frequency_volume_canonical` (CR-4). -/
+theorem context_born_frequency_basin_canonical
+    (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (B.repr ψ) (repr_ne_zero B ψ hψ))),
+      ∀ i : Fin (M + 1),
+      Tendsto
+        (fun m : ℕ =>
+          (∑ k ∈ Finset.range m,
+              Set.indicator
+                ((MeasureTheory.iidTrial (CSD.LF4.KSigma (M + 1)) k) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i)
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (B i) ψ‖ ^ 2)) :=
+  context_born_frequency_basin B ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma (M + 1)))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin (M + 1) =>
+        CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
+
 omit [Fintype ι] in
 /-- `block_born_frequency_volume_event` on the canonical i.i.d. FS process. The
 **inhabited block form** (the union-event restatement of `block_born_frequency_volume`,

@@ -9,6 +9,7 @@ public import CsdLean4.Empirical.CSD.ContextVolume
 public import CsdLean4.Empirical.CSD.VolumeCanonical
 public import CsdLean4.Empirical.QM.KCBS
 public import Mathlib.LinearAlgebra.CrossProduct
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: KCBS pentagon Born weights as Kähler volumes
@@ -221,45 +222,49 @@ the *fixed* `Σ`; the contextuality is *which projective carving* is measured, n
 variable. The other four pentagon contexts are identical instantiations (`kv_orth` certifies
 all five adjacencies). -/
 theorem kcbs_context_born_frequency_volume
-    (p₀ : CPN 3) (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1)
+    (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 3) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 3) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (kcbsContextBasis.repr ψ)
+          (repr_ne_zero kcbsContextBasis ψ hψ)))
     (hindep : ∀ i : Fin 3,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (kcbsContextBasis.repr ψ)
-              (repr_ne_zero kcbsContextBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 3) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin 3,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((X k) ⁻¹' bornRegion (kcbsContextBasis.repr ψ)
-                  (repr_ne_zero kcbsContextBasis ψ hψ) i)
+                ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 3) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (kcbsContextBasis i) ψ‖ ^ 2)) :=
-  context_born_frequency_volume p₀ kcbsContextBasis ψ hψ X hX hlaw hindep
+  context_born_frequency_basin kcbsContextBasis ψ hψ X hX hlaw hindep
 
 /-- `kcbs_context_born_frequency_volume` on the canonical i.i.d. Fubini–Study trial witness:
 the trial bundle is discharged, so the hypothesis set is Lean-inhabited, not merely
 classically satisfiable. -/
 theorem kcbs_context_born_frequency_volume_canonical
-    (p₀ : CPN 3) (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 3,
+    (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (kcbsContextBasis.repr ψ)
+            (repr_ne_zero kcbsContextBasis ψ hψ))), ∀ i : Fin 3,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((fsTrial 3 k) ⁻¹' bornRegion (kcbsContextBasis.repr ψ)
-                  (repr_ne_zero kcbsContextBasis ψ hψ) i)
+                ((MeasureTheory.iidTrial (CSD.LF4.KSigma 3) k) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 3) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (kcbsContextBasis i) ψ‖ ^ 2)) :=
-  context_born_frequency_volume_canonical p₀ kcbsContextBasis ψ hψ
+  context_born_frequency_basin_canonical kcbsContextBasis ψ hψ
 
 end KCBS
 end CSDBridge

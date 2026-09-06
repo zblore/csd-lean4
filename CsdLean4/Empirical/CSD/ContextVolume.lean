@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF4.BornRegionDisjoint
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: arbitrary projective measurement contexts as derived Kähler volumes
@@ -150,6 +151,46 @@ lemma repr_hpos (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin
   exact hpos i
 
 /-! ### The context volume-frequency capstone -/
+
+/-- ★★ **Rotated-basis context frequencies on the fibred arena** — the fibred twin of
+`context_born_frequency_volume` (CR-4).
+
+Same statement with the epistemic measure at `[B.repr ψ]` in place of `fubiniStudyMeasure p₀` and
+global basins in place of rotated Born regions, so the base measure leaves the statement. Proof is
+the base-side proof with `globalBasin_born_frequency` substituted; the rotation identity
+`context_born_eq_rotated` after it is unchanged, being about the basis rather than the trial law.
+
+This is the engine the contextuality entries (KCBS, KS18, Mermin–Peres) delegate to. -/
+theorem context_born_frequency_basin
+    (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (B.repr ψ) (repr_ne_zero B ψ hψ)))
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin
+              (CSD.RecordLayer.momentContext (M + 1)) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr, ∀ i : Fin (M + 1),
+      Tendsto
+        (fun m : ℕ =>
+          (∑ k ∈ Finset.range m,
+              Set.indicator
+                ((X k) ⁻¹' CSD.RecordLayer.globalBasin
+                  (CSD.RecordLayer.momentContext (M + 1)) i)
+                (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (B i) ψ‖ ^ 2)) := by
+  have key := CSD.RecordLayer.globalBasin_born_frequency (B.repr ψ)
+    (repr_ne_zero B ψ hψ) (repr_norm B ψ hψ) X hX hlaw hindep
+  filter_upwards [key] with ω hω i
+  rw [context_born_eq_rotated B ψ i]
+  exact hω i
 
 /-- **Any projective measurement context's outcome Born weights as derived Kähler
 volumes.** For i.i.d. trials drawing microstates from the Fubini–Study typicality
