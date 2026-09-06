@@ -8,6 +8,7 @@ module
 public import CsdLean4.RecordLayer.GlobalBasin
 public import CsdLean4.LF4.BornFrequencyPartition
 public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.LF4.POVMVolume
 
 /-!
 # RecordLayer/BasinFrequency: frequencies converge to Born on the fibred arena
@@ -74,6 +75,7 @@ namespace CSD
 namespace RecordLayer
 
 open LF4
+open CSD.LF2
 
 variable {N : ℕ}
 
@@ -133,6 +135,49 @@ theorem globalBasin_born_frequency (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ 
     (fun i => by
       rw [globalBasin_born ψ hψ0 hψ i, ENNReal.toReal_ofReal (by positivity)])
     X hX hlaw hindep
+
+/-! ### The POVM engine, on the fibred arena -/
+
+/-- ★★ **POVM frequencies on the fibred arena.** The Naimark-dilated twin of
+`LF4.povm_born_frequency_volume_uncond`: for i.i.d. draws from `epistemicMeasure [ψ']`, the summed
+block frequencies converge to the POVM weight `P.weight ψ i`.
+
+This is the engine the six POVM volume entries (trine, USD, SIC, SIC3, MUB3, qutrit-POVM) delegate
+to, so migrating it carries all of them. Body is the base-side proof with one substitution: the
+fibred frequency theorem in place of `born_frequency_convergence_N_uncond`. Everything after —
+summing the block and identifying it with the POVM weight — is unchanged, because that part is
+about the *dilated vector*, not about which measure the trials are drawn from. -/
+theorem povm_born_frequency_basin {M : ℕ} {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (P : POVM N ι) (D : LF4.NaimarkDilation P)
+    (ψ : EuclideanSpace ℂ (Fin N)) (e : (Fin N × ι) ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr = epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
+    (hindep : ∀ j : Fin (M + 1),
+      Pairwise (Function.onFun (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g Pr)
+        (fun n => Set.indicator ((X n) ⁻¹' globalBasin (momentContext (M + 1)) j)
+          (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr, ∀ i : ι,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ n : Fin N,
+            (∑ k ∈ Finset.range m,
+                Set.indicator ((X k) ⁻¹' globalBasin (momentContext (M + 1)) (e (n, i)))
+                  (fun _ => (1 : ℝ)) ω)
+              / (m : ℝ))
+        atTop
+        (nhds (P.weight ψ i)) := by
+  filter_upwards [globalBasin_born_frequency ψ' hψ'0 hnorm X hX hlaw hindep] with ω hω
+  intro i
+  have hlim := tendsto_finsetSum (Finset.univ : Finset (Fin N))
+    (fun n (_ : n ∈ Finset.univ) => hω (e (n, i)))
+  rwa [show (∑ n : Fin N, ‖inner ℂ (EuclideanSpace.single (e (n, i)) (1 : ℂ)) ψ'‖ ^ 2)
+        = P.weight ψ i from by
+      rw [LF4.povm_born_eq_block_sum P D ψ i, hψ'eq]
+      exact Finset.sum_congr rfl (fun n _ => LF4.piLpCongrLeft_inner_single_sq e _ (n, i))] at hlim
 
 /-! ### The migration bridge -/
 

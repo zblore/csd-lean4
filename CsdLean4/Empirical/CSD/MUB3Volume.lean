@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF4.POVMNaimark
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF2.EffectAux
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: the d=3 mutually-unbiased-bases POVM and its Born weights as Kähler volumes
@@ -224,23 +225,24 @@ theorem mub3_born_frequency_volume
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin mub3Naimark.V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (p₀ : CPN 36) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 36) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma 36) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin 36,
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 36) j) (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin 4 × Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 3,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((X l) ⁻¹' bornRegion ψ' hψ'0 (e (n, i))) (fun _ => (1 : ℝ)) ω)
+                Set.indicator ((X l) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 36) (e (n, i))) (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (mub3POVM.weight ψ i)) :=
-  povm_born_frequency_volume_uncond mub3POVM mub3Naimark ψ e ψ' hψ'eq hψ'0 hnorm
-    p₀ X hX hlaw hindep
+  CSD.RecordLayer.povm_born_frequency_basin mub3POVM mub3Naimark ψ e ψ' hψ'eq hψ'0 hnorm
+    X hX hlaw hindep
 
 end MUB3Volume
 end CSDBridge

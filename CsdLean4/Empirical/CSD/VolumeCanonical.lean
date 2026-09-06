@@ -231,21 +231,25 @@ theorem trine_born_frequency_volume_canonical
     (ψ' : EuclideanSpace ℂ (Fin 6))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin trineNaimark.V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 6) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ k : Fin 3,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ k : Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 2,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 6 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, k)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 6) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 6) (e (n, k)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (trinePOVM.weight ψ k)) :=
-  trine_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 6) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  trine_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 6)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 6 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 6) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end TrineVolume
 
@@ -259,21 +263,25 @@ theorem usd_born_frequency_volume_canonical (s : ℝ) (hs0 : 0 ≤ s) (hs1 : s �
     (ψ' : EuclideanSpace ℂ (Fin 6))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (usdNaimark s hs0 hs1).V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 6) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ k : Fin 3,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ k : Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 2,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 6 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, k)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 6) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 6) (e (n, k)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds ((usdPOVM s hs0 hs1).weight ψ k)) :=
-  usd_born_frequency_volume s hs0 hs1 ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 6) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  usd_born_frequency_volume s hs0 hs1 ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 6)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 6 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 6) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end USDVolume
 
@@ -287,21 +295,25 @@ theorem sic_born_frequency_volume_canonical
     (ψ' : EuclideanSpace ℂ (Fin 8))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin sicNaimark.V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 8) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ k : Fin 4,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ k : Fin 4,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 2,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 8 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, k)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 8) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 8) (e (n, k)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (sicPOVM.weight ψ k)) :=
-  sic_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 8) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  sic_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 8)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 8 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 8) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end SICVolume
 
@@ -315,21 +327,25 @@ theorem sic3_born_frequency_volume_canonical
     (ψ' : EuclideanSpace ℂ (Fin 27))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin sic3Naimark.V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 27) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 3 × Fin 3,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ i : Fin 3 × Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 3,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 27 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, i)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 27) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 27) (e (n, i)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (sic3POVM.weight ψ i)) :=
-  sic3_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 27) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  sic3_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 27)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 27 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 27) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end SIC3Volume
 
@@ -343,21 +359,25 @@ theorem mub3_born_frequency_volume_canonical
     (ψ' : EuclideanSpace ℂ (Fin 36))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin mub3Naimark.V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 36) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 4 × Fin 3,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ i : Fin 4 × Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 3,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 36 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, i)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 36) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 36) (e (n, i)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (mub3POVM.weight ψ i)) :=
-  mub3_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 36) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  mub3_born_frequency_volume ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 36)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 36 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 36) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end MUB3Volume
 
@@ -371,21 +391,25 @@ theorem noisy_born_frequency_volume_canonical (ε : ℝ) (hε0 : 0 ≤ ε) (hε1
     (ψ' : EuclideanSpace ℂ (Fin 9))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (noisyNaimark ε hε0 hε1).V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 9) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ k : Fin 3,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ k : Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 3,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 9 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, k)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 9) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 9) (e (n, k)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds ((noisyPOVM ε hε0 hε1).weight ψ k)) :=
-  noisy_born_frequency_volume ε hε0 hε1 ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 9) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  noisy_born_frequency_volume ε hε0 hε1 ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 9)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 9 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 9) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end QutritPOVMVolume
 

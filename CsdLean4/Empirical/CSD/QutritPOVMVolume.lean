@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF4.POVMNaimark
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF2.EffectAux
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: the unsharp qutrit POVM and its Born weights as Kähler volumes
@@ -165,23 +166,24 @@ theorem noisy_born_frequency_volume (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (noisyNaimark ε hε0 hε1).V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (p₀ : CPN 9) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 9) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma 9) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin 9,
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 9) j) (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ k : Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 3,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((X l) ⁻¹' bornRegion ψ' hψ'0 (e (n, k))) (fun _ => (1 : ℝ)) ω)
+                Set.indicator ((X l) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 9) (e (n, k))) (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds ((noisyPOVM ε hε0 hε1).weight ψ k)) :=
-  povm_born_frequency_volume_uncond (noisyPOVM ε hε0 hε1) (noisyNaimark ε hε0 hε1) ψ e ψ'
-    hψ'eq hψ'0 hnorm p₀ X hX hlaw hindep
+  CSD.RecordLayer.povm_born_frequency_basin (noisyPOVM ε hε0 hε1) (noisyNaimark ε hε0 hε1) ψ e ψ'
+    hψ'eq hψ'0 hnorm X hX hlaw hindep
 
 end QutritPOVMVolume
 end CSDBridge

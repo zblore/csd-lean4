@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF4.POVMNaimark
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF2.EffectAux
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: the qubit trine POVM and its Born weights as Kähler volumes
@@ -146,23 +147,24 @@ theorem trine_born_frequency_volume
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin trineNaimark.V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (p₀ : CPN 6) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 6) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma 6) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin 6,
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 6) j) (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ k : Fin 3,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 2,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((X l) ⁻¹' bornRegion ψ' hψ'0 (e (n, k))) (fun _ => (1 : ℝ)) ω)
+                Set.indicator ((X l) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 6) (e (n, k))) (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (trinePOVM.weight ψ k)) :=
-  povm_born_frequency_volume_uncond trinePOVM trineNaimark ψ e ψ' hψ'eq hψ'0 hnorm
-    p₀ X hX hlaw hindep
+  CSD.RecordLayer.povm_born_frequency_basin trinePOVM trineNaimark ψ e ψ' hψ'eq hψ'0 hnorm
+    X hX hlaw hindep
 
 end TrineVolume
 end CSDBridge
