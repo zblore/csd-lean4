@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF6.SingletDeisolationFlow
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-A.3: a manifestly LOCAL product de-isolation flow realising the singlet
@@ -316,11 +317,14 @@ theorem localDeisolation_pointer_volume {M : ℕ}
         (Matrix.toEuclideanLin localDeisolationV (nudgedSinglet a b)))
     (hψ'0 : ψ' ≠ 0) (s t : Sign) :
     ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, stIdx (s, t))))).toReal
       = P_st a b s t := by
   have hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin localDeisolationV (nudgedSinglet a b))‖ = 1 := by
     rw [LinearIsometryEquiv.norm_map, localDeisolation_norm_map, nudgedSinglet_norm a b hgen]
+  have hψ'1 : ‖ψ'‖ = 1 := by rw [hψ'eq]; exact hnorm
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
   have h := povm_born_eq_dilated_volume_uncond (basisPOVM 4) localNaimark
       (nudgedSinglet a b) (stIdx (s, t)) e p₀ hnorm
   rw [basisPOVM_weight, nudgedSinglet_born a b hgen s t] at h
@@ -643,7 +647,8 @@ theorem localDeisolation_capstone {M : ℕ}
     -- (3) the LOCAL product flow reproduces the singlet: pointer-block volume = P_st
     ∧ (∀ s t : Sign,
         ∑ n : Fin 4,
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, stIdx (s, t))))).toReal
           = P_st a b s t)
     -- (4) the projectivised product flow is FS measure-preserving
     ∧ MeasurePreserving localDeisolationFlow (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀)

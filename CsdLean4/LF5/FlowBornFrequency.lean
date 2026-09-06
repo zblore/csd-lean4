@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF5.DilationFromFlow
 public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF5: pointer frequencies of the de-isolation flow → Born (LF5-D)
@@ -112,6 +113,48 @@ theorem vnDilation_pointer_volume {M : ℕ}
   have h := povm_born_eq_dilated_volume_uncond (basisPOVM N) (vnNaimark N) ψ i e p₀ hnorm
   rw [basisPOVM_weight ψ i] at h
   exact h
+
+/-- ★★ **Pointer frequencies on the fibred arena** — the fibred twin of
+`vnDilation_pointer_frequency`, for the base-to-fibre migration (CR-4).
+
+Same statement with `epistemicMeasure [ψ']` in place of `fubiniStudyMeasure p₀` and global basins
+in place of Born regions, so the base measure leaves the statement. Proof is the base-side proof
+with the fibred POVM engine substituted; the dilation bookkeeping after it is unchanged, because
+that part concerns the dilated vector rather than the trial law. -/
+theorem vnDilation_pointer_frequency_basin {M : ℕ}
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (e : (Fin N × Fin N) ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin (vnDilationV N) ψ))
+    (hψ'0 : ψ' ≠ 0)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
+    (hindep : ∀ j : Fin (M + 1),
+      Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+        (fun n => Set.indicator
+          ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j)
+          (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr, ∀ i : Fin N,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ n : Fin N,
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin
+                    (CSD.RecordLayer.momentContext (M + 1)) (e (n, i)))
+                  (fun _ => (1 : ℝ)) ω)
+              / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) := by
+  have hnorm : ‖ψ'‖ = 1 := by
+    rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e ψ hψ
+  filter_upwards [CSD.RecordLayer.povm_born_frequency_basin (basisPOVM N) (vnNaimark N) ψ e ψ'
+      hψ'eq hψ'0 hnorm X hX hlaw hindep] with ω hω i
+  have h := hω i
+  rwa [basisPOVM_weight ψ i] at h
 
 /-- **The LF5-D capstone: pointer-block frequencies of the de-isolation flow
 converge to the Born weight, every unit `ψ`.** For i.i.d. FS-typical trials on

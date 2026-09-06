@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF6.LocalDeisolationFlow
 public import CsdLean4.LF6.GHZDeisolationFlow
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-C.4: a manifestly LOCAL product de-isolation flow realising the GHZ measurement
@@ -297,8 +298,12 @@ theorem ghzLocal_pointer_volume {M : ℕ}
         (Matrix.toEuclideanLin ghzLocalV nudgedGHZ))
     (hψ'0 : ψ' ≠ 0) (w : Fin 2 × Fin 2 × Fin 2) :
     ∑ n : Fin 8,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, ghzIdx w)))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, ghzIdx w)))).toReal
       = ghzWeight w := by
+  have hψ'1 : ‖ψ'‖ = 1 := by
+    rw [hψ'eq, LinearIsometryEquiv.norm_map, ghzLocal_norm_map, nudgedGHZ_norm]
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
   have hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin ghzLocalV nudgedGHZ)‖ = 1 := by
     rw [LinearIsometryEquiv.norm_map, ghzLocal_norm_map, nudgedGHZ_norm]
@@ -620,7 +625,8 @@ theorem ghzLocal_capstone {M : ℕ}
     -- (3) the LOCAL product flow reproduces the GHZ diagonal weights
     ∧ (∀ w : Fin 2 × Fin 2 × Fin 2,
         ∑ n : Fin 8,
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, ghzIdx w)))).toReal
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, ghzIdx w)))).toReal
           = ghzWeight w)
     -- (4) the projectivised product flow is FS measure-preserving
     ∧ MeasurePreserving ghzLocalFlow (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀)
