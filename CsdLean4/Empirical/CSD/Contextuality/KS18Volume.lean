@@ -15,7 +15,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 
 **Category:** 3-Local (CSD-ontic volume reading; a quick-win instantiation of the
 already-proved context-generic engine
-`CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_volume`).
+`CSD.Empirical.CSDBridge.ContextVolume.context_born_frequency_basin`).
 
 This is the **volume-ratio companion** to the *impossibility* readings of the
 Kochen-Specker theorem:
@@ -36,10 +36,11 @@ The two halves of the KS story, told honestly:
    Orthonormality is **not re-proved**: the off-diagonal inner products are pulled from the
    QM-side `cabello_pairwise_orthogonal_in_basis` through the complexification transport
    `cabelloVecC_inner` (`⟨cabelloVecC i, cabelloVecC j⟩_ℂ = ↑⟨cabelloVec i, cabelloVec j⟩_ℝ`).
-   Instantiating the engine `context_born_frequency_volume` at this basis, **every** ray's
+   Instantiating the engine `context_born_frequency_basin` at this basis, **every** ray's
    context-dependent Born weight `‖⟨ksContextBasis i, ψ⟩‖²` is the almost-sure limit of
-   empirical frequencies of the barycentric Born region `bornRegion` on the fixed ontic
-   `Σ = ℂℙ³` — a Fubini-Study typicality volume (`ks18_context_born_frequency_volume`).
+   empirical frequencies of the global basin on the fibred ontic arena
+   `Σ = ℂℙ³ × T²` (`ks18_context_born_frequency_volume`; migrated to the fibred route
+   2026-09-06, CR-4).
 2. **Yet no single non-contextual value assignment reproduces all 9 contexts jointly**
    (`ks_no_value_assignment_cabello18`, the combinatorial `9 = 2k` impossibility).
 
@@ -53,8 +54,8 @@ no-go, now sitting beside a genuine per-context volume realisation.
 
 ## Scope and honesty
 
-- **Rank-1.** The Cabello rays are rank-1, matching `context_born_frequency_volume`'s rank-1
-  scope (degenerate eigenspaces would route through `block_born_frequency_volume`).
+- **Rank-1.** The Cabello rays are rank-1, matching `context_born_frequency_basin`'s rank-1
+  scope (degenerate eigenspaces would route through `block_born_frequency_basin`).
 - **One representative context built.** Basis `0` is built explicitly; the other 8 Cabello
   contexts (`cabelloBasis 1 … 8`) are **identical instantiations** of the same engine at the
   corresponding orthonormal frame — the only per-context input is the 4-ray orthogonal tuple,
@@ -173,7 +174,7 @@ lemma ksCtxVec_orthonormal : Orthonormal ℂ ksCtxVec := by
 /-- **The representative Cabello context as a Mathlib `OrthonormalBasis`.** A 4-element
 orthonormal family in the 4-dimensional `EuclideanSpace ℂ (Fin 4)` spans (cardinality =
 `finrank`), so `OrthonormalBasis.mk` applies. This is the projective measurement frame fed to
-the engine `context_born_frequency_volume`. -/
+the engine `context_born_frequency_basin`. -/
 noncomputable def ksContextBasis :
     OrthonormalBasis (Fin 4) ℂ (EuclideanSpace ℂ (Fin 4)) := by
   refine OrthonormalBasis.mk ksCtxVec_orthonormal ?_
@@ -195,7 +196,7 @@ the empirical frequencies of the four barycentric Born regions (carved in the ro
 Born weights `‖⟨ksContextBasis i, ψ⟩‖²` of measuring the unit preparation `ψ` in the
 representative Cabello context `cabelloBasis 0`.
 
-A direct instantiation of `context_born_frequency_volume` at `M = 3`, the representative
+A direct instantiation of `context_born_frequency_basin` at `M = 3`, the representative
 Cabello orthonormal frame `ksContextBasis`, and an arbitrary unit `ψ` — carving-free,
 Gleason-free, unconditional (every unit preparation, eigenstates of the context included), no
 new mathematics. The other 8 Cabello contexts (`cabelloBasis 1 … 8`) are identical
@@ -231,10 +232,10 @@ theorem ks18_context_born_frequency_volume
         (nhds (‖inner ℂ (ksContextBasis i) ψ‖ ^ 2)) :=
   context_born_frequency_basin ksContextBasis ψ hψ X hX hlaw hindep
 
-/-- `ks18_context_born_frequency_volume` on the canonical i.i.d. Fubini-Study trial witness
-(`fsTrialMeasure` / `fsTrial`): the trial bundle is discharged, so the hypothesis set is
-Lean-inhabited, not merely classically satisfiable. Direct instantiation of
-`context_born_frequency_volume_canonical`. -/
+/-- `ks18_context_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred
+epistemic law (`MeasureTheory.iidMeasure` / `iidTrial`): the trial bundle is discharged, so the
+hypothesis set is Lean-inhabited, not merely classically satisfiable. Direct instantiation of
+`context_born_frequency_basin_canonical`. -/
 theorem ks18_context_born_frequency_volume_canonical
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
     ∀ᵐ ω ∂ MeasureTheory.iidMeasure

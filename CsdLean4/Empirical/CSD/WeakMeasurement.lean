@@ -9,6 +9,8 @@ public import CsdLean4.LF4.POVMNaimark
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF4.TrialWitness
 public import CsdLean4.LF2.EffectAux
+public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Mathlib.MeasureTheory.IidTrials
 
 /-!
 # Empirical/CSD: weak / unsharp measurement as a partial volume nudge (Build 15c)
@@ -368,23 +370,24 @@ theorem weak_born_frequency_volume (η : ℝ) (h0 : 0 ≤ η) (h1 : η ≤ 1)
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (weakNaimark η h0 h1).V ψ))
     (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1)
-    (p₀ : CPN 4) {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin 4,
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) j) (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin 2,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 2,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((X l) ⁻¹' bornRegion ψ' hψ'0 (e (n, i))) (fun _ => (1 : ℝ)) ω)
+                Set.indicator ((X l) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) (e (n, i))) (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds ((weakPOVM η h0 h1).weight ψ i)) :=
-  povm_born_frequency_volume_uncond (weakPOVM η h0 h1) (weakNaimark η h0 h1) ψ e ψ' hψ'eq
-    hψ'0 hnorm p₀ X hX hlaw hindep
+  CSD.RecordLayer.povm_born_frequency_basin (weakPOVM η h0 h1) (weakNaimark η h0 h1) ψ e ψ' hψ'eq
+    hψ'0 hnorm X hX hlaw hindep
 
 /-- `weak_born_frequency_volume` on the canonical i.i.d. FS process (the trial bundle is
 discharged, so the hypothesis set is Lean-inhabited). -/
@@ -393,21 +396,25 @@ theorem weak_born_frequency_volume_canonical (η : ℝ) (h0 : 0 ≤ η) (h1 : η
     (ψ' : EuclideanSpace ℂ (Fin 4))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin (weakNaimark η h0 h1).V ψ))
-    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) (p₀ : CPN 4) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 2,
+    (hψ'0 : ψ' ≠ 0) (hnorm : ‖ψ'‖ = 1) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)), ∀ i : Fin 2,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 2,
             (∑ l ∈ Finset.range m,
-                Set.indicator ((fsTrial 4 l) ⁻¹' bornRegion ψ' hψ'0 (e (n, i)))
+                Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) l) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) (e (n, i)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds ((weakPOVM η h0 h1).weight ψ i)) :=
-  weak_born_frequency_volume η h0 h1 ψ e ψ' hψ'eq hψ'0 hnorm p₀
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion ψ' hψ'0)
-      (bornRegion_measurable_uncond ψ' hψ'0))
+  weak_born_frequency_volume η h0 h1 ψ e ψ' hψ'eq hψ'0 hnorm
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun j : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) j)
+      (fun j => CSD.RecordLayer.measurableSet_globalBasin _ j))
 
 end WeakMeasurement
 end CSDBridge

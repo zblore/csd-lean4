@@ -7,6 +7,8 @@ module
 
 public import CsdLean4.Empirical.CSD.ContextVolume
 public import CsdLean4.LF4.TrialWitness
+public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Mathlib.MeasureTheory.IidTrials
 
 /-!
 # Empirical/CSD: qubit observable variance as a product of Fubini–Study volumes
@@ -26,9 +28,9 @@ typicality volumes** on the ontic `Σ = ℂℙ¹`.
 A `±1`-valued qubit observable `O` measured in an orthonormal context
 `B : OrthonormalBasis (Fin 2) ℂ (EuclideanSpace ℂ (Fin 2))` has two outcomes,
 with Born weights `p₊ = ‖⟨B 0, ψ⟩‖²`, `p₋ = ‖⟨B 1, ψ⟩‖²`. By
-`ContextVolume.context_born_frequency_volume` (M = 1) these are genuine
-Fubini–Study typicality volumes on `Σ = ℂℙ¹`, derived (carving-free,
-Gleason-free) from the Kähler moment map; and `p₊ + p₋ = 1` by Parseval. The
+`ContextVolume.context_born_frequency_basin` (M = 1) these are genuine
+epistemic typicality measures of the global basins on the fibred ontic arena
+`Σ = ℂℙ¹ × T²`, derived (carving-free, Gleason-free) from the Kähler moment map; and `p₊ + p₋ = 1` by Parseval. The
 variance of a `±1` observable is
 
   `Var = ⟨O²⟩ − ⟨O⟩² = 1 − (p₊ − p₋)² = 4·p₊·p₋`
@@ -48,8 +50,9 @@ variance, so the spread is *grounded in ontic typicality volumes*, not assumed.
 ## What is and is not claimed
 
 **Derived (Lean-checked, carving-free, Gleason-free).** The `±` Born weights are
-Fubini–Study typicality volumes on `Σ = ℂℙ¹` (composing the qubit Born-volume
-engine `ContextVolume.context_born_frequency_volume` at M = 1), and the variance
+epistemic typicality measures of the global basins on the fibred ontic arena
+`Σ = ℂℙ¹ × T²` (composing the qubit Born-volume engine
+`ContextVolume.context_born_frequency_basin` at M = 1), and the variance
 is their product `4·vol₊·vol₋`. Foundational triple only (no
 `busch_effect_gleason`).
 
@@ -62,8 +65,8 @@ substituting them into `robertson_uncertainty` reads the bound as an inequality
 between products of FS typicality volumes, with no new volume content needed.
 
 **Realisation not derivation (Tier-2).** As with the rest of the `*Volume`
-series, `Φ = id` in the underlying `SectorData`; the FS regions are carved in the
-rotated frame `B.repr ψ`. The identification of the moment regions with the
+series, `Φ = id` in the underlying `SectorData`; the basins are read at the
+rotated ray `B.repr ψ`. The identification of the moment regions with the
 physical "the `+` detector fired" outcome is LF4-todo §14.
 
 ## Source
@@ -151,33 +154,30 @@ variance by continuity of multiplication. Foundational triple only (no
 `busch_effect_gleason`); the Robertson inequality itself stays at the QM-validity
 layer (`Empirical/QM/Uncertainty.lean`). -/
 theorem uncertainty_volume_frequency
-    (p₀ : CPN 2)
     (B : OrthonormalBasis (Fin 2) ℂ (EuclideanSpace ℂ (Fin 2)))
     (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 2) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ (B.repr ψ) (ContextVolume.repr_ne_zero (M := 1) B ψ hψ)))
     (hindep : ∀ i : Fin 2,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (B.repr ψ)
-                (ContextVolume.repr_ne_zero (M := 1) B ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 2) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
         (fun m : ℕ =>
           4 * (((∑ k ∈ Finset.range m,
-                  Set.indicator ((X k) ⁻¹' bornRegion (B.repr ψ)
-                      (ContextVolume.repr_ne_zero (M := 1) B ψ hψ) 0)
+                  Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 2) 0)
                     (fun _ => (1 : ℝ)) ω) / (m : ℝ))
               * ((∑ k ∈ Finset.range m,
-                  Set.indicator ((X k) ⁻¹' bornRegion (B.repr ψ)
-                      (ContextVolume.repr_ne_zero (M := 1) B ψ hψ) 1)
+                  Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 2) 1)
                     (fun _ => (1 : ℝ)) ω) / (m : ℝ))))
         atTop
         (nhds (varFromVolume (‖inner ℂ (B 0) ψ‖ ^ 2))) := by
-  have h := ContextVolume.context_born_frequency_volume (M := 1) p₀ B ψ hψ X hX hlaw hindep
+  have h := ContextVolume.context_born_frequency_basin (M := 1) B ψ hψ X hX hlaw hindep
   filter_upwards [h] with ω hω
   have hmul := ((hω 0).mul (hω 1)).const_mul (4 : ℝ)
   have hval : (4 : ℝ) * (‖inner ℂ (B 0) ψ‖ ^ 2 * ‖inner ℂ (B 1) ψ‖ ^ 2)
@@ -186,32 +186,31 @@ theorem uncertainty_volume_frequency
   rw [hval] at hmul
   exact hmul
 
-/-- `uncertainty_volume_frequency` on the canonical i.i.d. Fubini–Study process
-(`fsTrialMeasure` / `fsTrial`), so the hypothesis set is Lean-inhabited, not
-merely classically satisfiable. The region family is the rotated-basis cell
-`bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ)`. -/
+/-- `uncertainty_volume_frequency` on the canonical i.i.d. process over the fibred epistemic law
+(`MeasureTheory.iidMeasure` / `iidTrial`), so the hypothesis set is Lean-inhabited, not merely
+classically satisfiable. The region family is the rotated-basis global basin
+`globalBasin (momentContext 2)` read at the rotated ray `Projectivization.mk ℂ (B.repr ψ) ⋯`. -/
 theorem uncertainty_volume_frequency_canonical
-    (p₀ : CPN 2)
     (B : OrthonormalBasis (Fin 2) ℂ (EuclideanSpace ℂ (Fin 2)))
     (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ (B.repr ψ) (ContextVolume.repr_ne_zero (M := 1) B ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           4 * (((∑ k ∈ Finset.range m,
-                  Set.indicator ((fsTrial 2 k) ⁻¹' bornRegion (B.repr ψ)
-                      (ContextVolume.repr_ne_zero (M := 1) B ψ hψ) 0)
+                  Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 2) k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 2) 0)
                     (fun _ => (1 : ℝ)) ω) / (m : ℝ))
               * ((∑ k ∈ Finset.range m,
-                  Set.indicator ((fsTrial 2 k) ⁻¹' bornRegion (B.repr ψ)
-                      (ContextVolume.repr_ne_zero (M := 1) B ψ hψ) 1)
+                  Set.indicator ((MeasureTheory.iidTrial (CSD.LF4.KSigma 2) k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 2) 1)
                     (fun _ => (1 : ℝ)) ω) / (m : ℝ))))
         atTop
         (nhds (varFromVolume (‖inner ℂ (B 0) ψ‖ ^ 2))) :=
-  uncertainty_volume_frequency p₀ B ψ hψ
-    (fsTrial 2) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (B.repr ψ) (ContextVolume.repr_ne_zero (M := 1) B ψ hψ))
-      (bornRegion_measurable_uncond (B.repr ψ) (ContextVolume.repr_ne_zero (M := 1) B ψ hψ)))
+  uncertainty_volume_frequency B ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 2)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 2 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 2) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 end UncertaintyVolume
 end CSDBridge
