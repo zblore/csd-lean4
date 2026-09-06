@@ -276,6 +276,42 @@ lemma block_born_eq_blockSum
 /-! ### The degenerate-context block volume-frequency capstone (step 2) -/
 
 omit [Fintype ι] in
+/-- ★ **Degenerate-block frequencies on the fibred arena** — the fibred twin of
+`block_born_frequency_volume` (CR-4). Sums the per-outcome basin frequencies over a degeneracy
+block; the Mermin–Peres square's eight observables all delegate to this. -/
+theorem block_born_frequency_basin
+    (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
+    (blk : Fin (M + 1) → ι) (a : ι)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (B.repr ψ) (repr_ne_zero B ψ hψ)))
+    (hindep : ∀ i : Fin (M + 1),
+      Pairwise
+        (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
+          (fun n => Set.indicator
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin
+              (CSD.RecordLayer.momentContext (M + 1)) i)
+            (fun _ => (1 : ℝ))))) :
+    ∀ᵐ ω ∂ Pr,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin
+                    (CSD.RecordLayer.momentContext (M + 1)) i)
+                  (fun _ => (1 : ℝ)) ω) / (m : ℝ))
+        atTop
+        (nhds (∑ i ∈ Finset.univ.filter (fun i => blk i = a),
+          ‖inner ℂ (B i) ψ‖ ^ 2)) := by
+  have h := context_born_frequency_basin B ψ hψ X hX hlaw hindep
+  filter_upwards [h] with ω hω
+  exact tendsto_finsetSum _ (fun i _ => hω i)
+
+omit [Fintype ι] in
 /-- **Degenerate projective measurement context's block (eigenspace) Born weight as a
 derived sum of Kähler volumes.** For i.i.d. trials drawing microstates from the
 Fubini–Study typicality measure on the ontic `Σ = ℂℙ^M`, the empirical frequency of
