@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.Empirical.QM.Hardy
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: Hardy's probability as a derived Kähler-volume frequency
@@ -208,27 +209,27 @@ Carving-free, Gleason-free, unconditional — no `busch_effect_gleason`, no carv
 regions, no preparation bundle. The amplitude values are the physics input; the
 `volume = Born number` step is derived. -/
 theorem hardy_max_born_frequency_volume
-    (p₀ : CPN 4)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ hardyVolVec hardyVolVec_ne_zero))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion hardyVolVec hardyVolVec_ne_zero i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin 4,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((X k) ⁻¹' bornRegion hardyVolVec hardyVolVec_ne_zero i)
+                ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) hardyVolVec‖ ^ 2)) :=
-  born_frequency_convergence_N (M := 3) p₀ hardyVolVec hardyVolVec_ne_zero
-    hardyVolVec_norm hardyVolVec_hpos X hX hlaw hindep
+  CSD.RecordLayer.globalBasin_born_frequency hardyVolVec hardyVolVec_ne_zero
+    hardyVolVec_norm X hX hlaw hindep
 
 end HardyVolume
 end CSDBridge

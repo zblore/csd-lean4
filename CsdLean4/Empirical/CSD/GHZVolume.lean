@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: GHZ three-qubit joint probabilities as derived Kähler-volume frequencies
@@ -242,26 +243,27 @@ sparse outcomes' cells are FS-null with frequencies converging to `0` (see modul
 docstring). The amplitude values are the physics input; the
 `volume = Born number` step is derived. -/
 theorem ghz_born_frequency_volume
-    (Φ : ℝ) (p₀ : CPN 8)
+    (Φ : ℝ)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 8) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 8) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ (ghzVec Φ) (ghzVec_ne_zero Φ)))
     (hindep : ∀ i : Fin 8,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (ghzVec Φ) (ghzVec_ne_zero Φ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 8) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin 8,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((X k) ⁻¹' bornRegion (ghzVec Φ) (ghzVec_ne_zero Φ) i)
+                ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 8) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) (ghzVec Φ)‖ ^ 2)) :=
-  born_frequency_convergence_N_uncond (M := 7) p₀ (ghzVec Φ) (ghzVec_ne_zero Φ)
+  CSD.RecordLayer.globalBasin_born_frequency (ghzVec Φ) (ghzVec_ne_zero Φ)
     (ghzVec_norm Φ) X hX hlaw hindep
 
 /-- **Recovered GHZ three-point correlation.** The parity-signed sum of the eight

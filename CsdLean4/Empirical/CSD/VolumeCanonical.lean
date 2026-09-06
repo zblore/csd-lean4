@@ -106,20 +106,24 @@ end BellVolume
 namespace GHZVolume
 
 /-- `ghz_born_frequency_volume` on the canonical i.i.d. FS process. -/
-theorem ghz_born_frequency_volume_canonical (Φ : ℝ) (p₀ : CPN 8) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 8,
+theorem ghz_born_frequency_volume_canonical (Φ : ℝ) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ (ghzVec Φ) (ghzVec_ne_zero Φ))), ∀ i : Fin 8,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((fsTrial 8 k) ⁻¹' bornRegion (ghzVec Φ) (ghzVec_ne_zero Φ) i)
+                ((MeasureTheory.iidTrial (CSD.LF4.KSigma 8) k) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 8) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) (ghzVec Φ)‖ ^ 2)) :=
-  ghz_born_frequency_volume Φ p₀
-    (fsTrial 8) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion (ghzVec Φ) (ghzVec_ne_zero Φ))
-      (bornRegion_measurable_uncond (ghzVec Φ) (ghzVec_ne_zero Φ)))
+  ghz_born_frequency_volume Φ 
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 8)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 8 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 8) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 end GHZVolume
 
@@ -128,20 +132,24 @@ end GHZVolume
 namespace HardyVolume
 
 /-- `hardy_max_born_frequency_volume` on the canonical i.i.d. FS process. -/
-theorem hardy_max_born_frequency_volume_canonical (p₀ : CPN 4) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 4,
+theorem hardy_max_born_frequency_volume_canonical :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ hardyVolVec hardyVolVec_ne_zero)), ∀ i : Fin 4,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((fsTrial 4 k) ⁻¹' bornRegion hardyVolVec hardyVolVec_ne_zero i)
+                ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) hardyVolVec‖ ^ 2)) :=
-  hardy_max_born_frequency_volume p₀
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion hardyVolVec hardyVolVec_ne_zero)
-      (bornRegion_measurable_uncond hardyVolVec hardyVolVec_ne_zero))
+  hardy_max_born_frequency_volume 
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 end HardyVolume
 
