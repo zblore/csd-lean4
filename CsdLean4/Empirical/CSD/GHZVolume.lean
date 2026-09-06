@@ -54,8 +54,9 @@ four null weights `0`.
 ## What is and is not claimed
 
 **Derived (carving-free, Gleason-free, unconditional).** For **every** `Φ`, the
-eight Born weights are the genuine Fubini–Study volumes of the barycentric moment
-regions on `ℂℙ⁷`, and i.i.d. FS trials have frequencies converging a.s. to them.
+eight Born weights are the genuine typicality measures of the global basins on the
+fibred `Σ = ℂℙ⁷ × T²`, and i.i.d. trials over that law have frequencies converging
+a.s. to them.
 No `busch_effect_gleason`, no carving, no preparation bundle, no genericity.
 
 **Not claimed.** (i) The closed-form amplitudes are the physics input (cf. LF3
@@ -233,7 +234,7 @@ lemma ghzVec_hpos (Φ : ℝ) (hΦ : 0 < Φ ∧ Φ < Real.pi) :
 /-- **CSD GHZ joint frequencies as derived Kähler-volume convergence.** For
 **every** angle-sum `Φ` and i.i.d. trials drawing microstates from the Fubini–Study
 typicality measure on the ontic `Σ = ℂℙ⁷`, the empirical frequencies of the eight
-barycentric Born outcome regions converge, on a single almost-sure event, to the
+global basins converge, on a single almost-sure event, to the
 GHZ joint Born weights `‖⟨eᵢ, ghzVec Φ⟩‖²`.
 
 Carving-free, Gleason-free, unconditional — no `busch_effect_gleason`, no carved

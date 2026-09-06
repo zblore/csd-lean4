@@ -22,8 +22,9 @@ capstone `LF4.born_frequency_convergence_N_uncond` (the hpos-free form, since th
 on the undischarged `PureSingletPreparation` bundle (LF4-todo §2/§3/§7) and where
 `LF4/SingletObservables.lean` works with sector regions **carved** to volume
 `P_st` (Tier-2), this file lands the singlet's four joint-outcome probabilities as
-genuine **Fubini–Study volumes** on the ontic `Σ = ℂℙ³`, derived via the
-Duistermaat–Heckman theorem, carving-free and Gleason-free, and unconditional.
+genuine **epistemic typicality measures** on the fibred ontic `Σ = ℂℙ³ × T²`, whose
+values come from the Duistermaat–Heckman theorem one layer down (Born = FS-volume,
+imported not re-derived), carving-free and Gleason-free, and unconditional.
 
 ## Construction
 
@@ -220,8 +221,8 @@ lemma bellSingletVec_hpos (θ : ℝ) (hθ : 0 < θ ∧ θ < Real.pi) :
 
 /-- **CSD Bell singlet joint frequencies as derived Kähler-volume convergence.**
 For detectors at **any** relative angle `θ` and i.i.d. trials drawing microstates
-from the Fubini–Study typicality measure on the ontic `Σ = ℂℙ³`, the empirical
-frequencies of the four barycentric Born outcome regions converge, on a single
+from the epistemic typicality measure on the fibred ontic `Σ = ℂℙ³ × T²`, the empirical
+frequencies of the four global basins converge, on a single
 almost-sure event, to the singlet joint Born weights `‖⟨eᵢ, bellSingletVec θ⟩‖²`
 (equal to `(1 ∓ cos θ)/4`, see `born_value_pst_minus/plus`).
 

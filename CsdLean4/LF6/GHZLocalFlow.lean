@@ -20,7 +20,7 @@ This is **LF6-C.4** of `specs/lf6-plan.md`, the three-party analogue of LF6-A.3
 de-isolation** `V_loc = V_0 ⊗ V_1 ⊗ V_2` — each wing an LF5 single-system
 (`N = 2`) de-isolation — and proves it realises the SAME three-qubit
 computational-basis measurement as the C.2 flow: its context-fixed pointer-block
-Fubini-Study volumes are the GHZ Born weights `ghzWeight`. So the de-isolation
+basin measures are the GHZ Born weights `ghzWeight`. So the de-isolation
 needs **no non-local interaction** among the three parties; the GHZ non-locality
 lives entirely in the contextual carve (C.1/C.3) and the entangled preparation
 (SO-1).
@@ -75,7 +75,7 @@ factor reuse A.3's `localDeisolation_pullback` verbatim.
 - **Exhibited.** A genuinely local product de-isolation `V_loc = V_0 ⊗ V_1 ⊗ V_2`
   (`ghzLocalV`, `ghzLocal_factorises` — `V_loc` *is* a triple tensor product), a
   Naimark dilation of the joint basis POVM (`ghzLocal_pullback`, the tensor
-  pullback composing the three wing LF5 pullbacks), whose pointer-block FS volumes
+  pullback composing the three wing LF5 pullbacks), whose pointer-block basin measures
   reproduce the GHZ Born weights (`ghzLocal_pointer_volume = ghzWeight`); the
   projectivised product flow is FS-measure-preserving and `≠ id`
   (`ghzLocalFlow_*`).
@@ -281,7 +281,7 @@ theorem ghzLocal_norm_map (ψ : EuclideanSpace ℂ (Fin 8)) :
 
 /-- **The reproduction (the C.4 headline).** The LOCAL product de-isolation
 `V_loc = V_0 ⊗ V_1 ⊗ V_2` reproduces the GHZ measurement: its context-fixed
-pointer-block `w` Fubini-Study volume equals the GHZ Born weight `ghzWeight w`,
+pointer-block `w` basin measure equals the GHZ Born weight `ghzWeight w`,
 for the prepared state `φ = nudgedGHZ` (the three-qubit GHZ state in the
 computational basis, reused from C.2).
 
@@ -292,7 +292,7 @@ the POVM weight via `basisPOVM_weight` + the GHZ coordinate-Born identity
 `nudgedGHZ_born`. So a manifestly LOCAL three-party flow gives the same
 pointer-block volumes as the (non-factoring) `N=8`-adder C.2 flow. -/
 theorem ghzLocal_pointer_volume {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin ghzLocalV nudgedGHZ))
@@ -303,12 +303,13 @@ theorem ghzLocal_pointer_volume {M : ℕ}
       = ghzWeight w := by
   have hψ'1 : ‖ψ'‖ = 1 := by
     rw [hψ'eq, LinearIsometryEquiv.norm_map, ghzLocal_norm_map, nudgedGHZ_norm]
-  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal (Projectivization.mk ℂ ψ' hψ'0)
+    ψ' hψ'0 hψ'1]
   have hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin ghzLocalV nudgedGHZ)‖ = 1 := by
     rw [LinearIsometryEquiv.norm_map, ghzLocal_norm_map, nudgedGHZ_norm]
   have h := povm_born_eq_dilated_volume_uncond (basisPOVM 8) ghzLocalNaimark
-      nudgedGHZ (ghzIdx w) e p₀ hnorm
+      nudgedGHZ (ghzIdx w) e (Projectivization.mk ℂ ψ' hψ'0) hnorm
   rw [basisPOVM_weight, nudgedGHZ_born w] at h
   subst hψ'eq
   exact h.symm
@@ -608,7 +609,7 @@ manifestly-local one. Born = FS-volume is imported (LF5/DH/POVM-Naimark engine),
 not re-derived. Residue: SO-1 (the entangled GHZ sector posited). Honest ledger:
 module docstring. -/
 theorem ghzLocal_capstone {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin ghzLocalV nudgedGHZ))
@@ -645,7 +646,7 @@ theorem ghzLocal_capstone {M : ℕ}
               (ghzLocalDil_ne_zero φ hφ)) :=
   ⟨ghzLocal_factorises,
    fun i j k => ghzLocal_pullback i j k,
-   fun w => ghzLocal_pointer_volume e p₀ ψ' hψ'eq hψ'0 w,
+   fun w => ghzLocal_pointer_volume e ψ' hψ'eq hψ'0 w,
    ghzLocalFlow_measurePreserving q₀,
    ghzLocalFlow_ne_id,
    fun φ hφ => ghzLocalFlow_realises_localNaimark φ hφ⟩

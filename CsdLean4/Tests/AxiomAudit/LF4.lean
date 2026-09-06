@@ -956,7 +956,15 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #print axioms CSD.LF4.pure_state_born_prob_eq_volume
 
 -- LF4 §14 STATES obligation, MIXED-STATE / density-operator case (2026-07-23): Tr(ρ·|φ⟩⟨φ|) =
--- ρ-eigenvalue-weighted sum of ontic Fubini–Study volumes of ρ's pure eigenstates. Foundational triple.
+-- ρ-eigenvalue-weighted sum of the ontic typicality measures of ρ's pure eigenstates.
+-- MIGRATED to the fibred arena 2026-09-06 (CR-4, CL-074) through pure_state_born_prob_eq_basin,
+-- which drops the genericity bundle the base-side pure_state_born_prob_eq_volume still carries:
+-- the fibred route goes through the unconditional globalBasin_born, so every density operator
+-- and every pure outcome is covered. Foundational triple.
+/-- info: 'CSD.LF4.pure_state_born_prob_eq_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pure_state_born_prob_eq_basin
+
 /-- info: 'CSD.LF4.mixed_state_born_eq_ensemble_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.mixed_state_born_eq_ensemble_volume

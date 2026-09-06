@@ -107,6 +107,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.vnDilation_pointer_frequency
 
+-- The two fibred twins (CR-4, 2026-09-06). Same statements with epistemicMeasure [ψ'] and
+-- global basins in place of fubiniStudyMeasure p₀ and Born regions, so the basepoint leaves
+-- the statement; the LF6 flow files (SingletDeisolationFlow, GHZMerminCarve, NudgeLocality)
+-- delegate to these. Foundational triple.
+/-- info: 'CSD.LF5.vnDilation_pointer_volume_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilation_pointer_volume_basin
+
+/-- info: 'CSD.LF5.vnDilation_pointer_frequency_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilation_pointer_frequency_basin
+
 -- LF5-E (capstone): the LF5 layer headline measurement_flow_born_frequency —
 -- the single named chain theorem: Φ_vN ≠ id (genuine measurement dynamics),
 -- FS measure-preserving (Liouville admissibility), context-fixed (the same
@@ -509,8 +521,9 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 -- decohereReduced ψ = partialTraceRight (V |ψ⟩⟨ψ| Vᴴ) GENUINELY COMPUTES to the
 -- Born-weighted diagonal mixture ∑ⱼ ‖⟨eⱼ,ψ⟩‖² • |eⱼ⟩⟨eⱼ| (dephases); off-diagonal
 -- coherences are explicit zeros; diagonal weights are the Born weights, TIED to the
--- LF5/LF6 pointer-block FS typicality volumes (decoherence_diagonal_eq_pointer_volume,
--- vnDilation_pointer_volume); the de-isolation V is an isometry (conservative on the
+-- LF5/LF6 pointer-block typicality measures on the fibred arena
+-- (decoherence_diagonal_eq_pointer_volume, vnDilation_pointer_volume_basin since CR-4);
+-- the de-isolation V is an isometry (conservative on the
 -- joint, dissipative only on the marginal). Foundational triple only, no busch (the
 -- partial-trace + dilation machinery is measure-theoretic / linear-algebraic, off the
 -- ontic Born path). DEFERRED: continuous-time Lindblad / T1-T2; system-marginal

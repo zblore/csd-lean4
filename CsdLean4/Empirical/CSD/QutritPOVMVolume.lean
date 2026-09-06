@@ -37,7 +37,7 @@ This file:
 
 This is the first entry exercising the general-`N` Naimark→volume machinery past the
 qubit: the dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ⁸` for `N = 3`, `|ι| = 3`. The capstone
-routes through the hpos-free engine (`povm_born_frequency_volume_uncond`,
+routes through the hpos-free engine (`povm_born_frequency_basin`,
 `LF4/BornRegionUncond.lean`), so no genericity hypothesis on the dilated state is
 carried (2026-06-11 migration).
 
@@ -152,11 +152,11 @@ noncomputable def noisyNaimark (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1) :
     NaimarkDilation (noisyPOVM ε hε0 hε1) := canonicalNaimark (noisyPOVM ε hε0 hε1)
 
 /-- **The unsharp qutrit POVM Born weights as Kähler volumes (the capstone).**
-Instantiating `povm_born_frequency_volume_uncond` at the unsharp qutrit measurement:
-i.i.d. Fubini–Study trials on the dilated ontic `Σ' = ℂℙ⁸` have the `k`-th outcome's
+Instantiating `povm_born_frequency_basin` at the unsharp qutrit measurement:
+i.i.d. trials over the fibred epistemic law on the dilated ontic `Σ' = ℂℙ⁸` have the `k`-th outcome's
 empirical frequency converge, on a single almost-sure event, to the Born weight
-`pₖ(ψ) = ⟨ψ, Eₖ ψ⟩ = (1 − ε)‖⟨k,ψ⟩‖² + ε/3` — realised as a sum of Fubini–Study volumes
-of the dilated barycentric cells. The **first non-qubit (`N = 3`) entry in the
+`pₖ(ψ) = ⟨ψ, Eₖ ψ⟩ = (1 − ε)‖⟨k,ψ⟩‖² + ε/3` — realised as a sum of the epistemic typicality measures
+of the dilated global basins. The **first non-qubit (`N = 3`) entry in the
 volume-frequency series**, and the first non-projective qutrit POVM; carving-free,
 Gleason-free, and (since the 2026-06-11 hpos migration) with no genericity hypothesis
 on the dilated state — the sharp limit `ε = 0` at a basis state is covered. -/

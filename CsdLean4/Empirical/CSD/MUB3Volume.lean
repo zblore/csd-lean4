@@ -34,7 +34,7 @@ This file:
   volumes** on the dilated ontic `Σ' = ℂℙ³⁵` — carving-free, Gleason-free.
 
 The dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ³⁵` (`N = 3`, `|ι| = 12`). The capstone routes
-through the hpos-free engine (`povm_born_frequency_volume_uncond`,
+through the hpos-free engine (`povm_born_frequency_basin`,
 `LF4/BornRegionUncond.lean`), so no genericity hypothesis on the dilated state is
 carried (2026-06-11 migration) — notably, MUB vectors themselves (which zero the other
 two outcomes of their own basis) are covered.
@@ -212,11 +212,11 @@ theorem mub3_weight_eq (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1) (i
 noncomputable def mub3Naimark : NaimarkDilation mub3POVM := canonicalNaimark mub3POVM
 
 /-- **The d=3 MUB POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume_uncond` at the complete-MUB measurement: i.i.d. Fubini–Study
-trials on the dilated ontic `Σ' = ℂℙ³⁵` have each of the twelve outcome frequencies
+`povm_born_frequency_basin` at the complete-MUB measurement: i.i.d.
+trials over the fibred epistemic law on the dilated ontic `Σ' = ℂℙ³⁵` have each of the twelve outcome frequencies
 converge, on a single almost-sure event, to the Born weight
-`p_{b,j}(ψ) = (1/4)‖⟨v_{b,j},ψ⟩‖²` — realised as a sum of Fubini–Study volumes of the
-dilated barycentric cells. A second non-qubit symmetric entry; carving-free,
+`p_{b,j}(ψ) = (1/4)‖⟨v_{b,j},ψ⟩‖²` — realised as a sum of epistemic typicality measures of the
+dilated global basins. A second non-qubit symmetric entry; carving-free,
 Gleason-free, and (since the 2026-06-11 hpos migration) with no genericity hypothesis
 on the dilated state. -/
 theorem mub3_born_frequency_volume

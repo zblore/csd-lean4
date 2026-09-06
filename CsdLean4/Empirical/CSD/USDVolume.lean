@@ -30,7 +30,8 @@ This file:
   `p₁(ψ) = a‖⟨ψ, ψ₂^⊥⟩‖²`, `p₂(ψ) = a‖⟨ψ, ψ₁^⊥⟩‖²`;
 - runs the POVM through the tranche: `canonicalNaimark (usdPOVM …)` is the dilation,
   and `usd_born_frequency_volume` lands the three USD outcome frequencies as
-  **Fubini–Study volumes** on the dilated ontic `Σ' = ℂℙ⁵` — carving-free, Gleason-free.
+  **epistemic typicality measures** on the dilated fibred ontic `Σ = ℂℙ⁵ × T²` —
+  carving-free, Gleason-free.
 
 Like the trine, the volume reading is the general POVM capstone instantiated at a
 concrete non-projective measurement; since 2026-09-06 (CR-4) it routes through the fibred
@@ -83,7 +84,7 @@ trials from the epistemic measure on the dilated fibred arena `Σ' = ℂℙ⁵ �
 USD outcome's
 empirical frequency converge, on a single almost-sure event, to the USD Born weight
 `pₖ(ψ) = ⟨ψ, Eₖ ψ⟩` (the two conclusive weights `a‖⟨ψₖ^⊥, ψ⟩‖²` and the inconclusive
-weight) — realised as a sum of Fubini–Study volumes of the dilated barycentric cells.
+weight) — realised as a sum of the epistemic typicality measures of the dilated global basins.
 ⚠️ Migrated to the fibred route 2026-09-06 (CR-4); it no longer routes through the
 base-only POVM engine in `LF4/BornRegionUncond.lean`.
 The **second non-projective (POVM) entry in the volume-frequency series**, after the

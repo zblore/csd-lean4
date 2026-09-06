@@ -29,7 +29,7 @@ Kochen-Specker theorem:
 
 The two halves of the KS story, told honestly:
 
-1. **Each Cabello context carries genuine Born weights as FS typicality volumes.** Taking
+1. **Each Cabello context carries genuine Born weights as ontic typicality measures.** Taking
    a representative context (basis `0`, the rays `{v0, v1, v2, v3}`), the four un-normalised
    real Cabello rays are complexified (`cabelloVecC`) and normalised (`ksCtxVec`) into a
    genuine `OrthonormalBasis (Fin 4) ℂ (EuclideanSpace ℂ (Fin 4))` (`ksContextBasis`).
@@ -187,11 +187,11 @@ lemma ksContextBasis_apply (j : Fin 4) : ksContextBasis j = ksCtxVec j := by
   unfold ksContextBasis
   rw [OrthonormalBasis.coe_mk]
 
-/-! ### The headline: Cabello-context Born weights as FS typicality volumes -/
+/-! ### The headline: Cabello-context Born weights as ontic typicality measures -/
 
 /-- **Kochen-Specker (Cabello-18) contextual Born weights as Kähler volumes.** For i.i.d.
-trials drawing microstates from the Fubini-Study typicality measure on the ontic `Σ = ℂℙ³`,
-the empirical frequencies of the four barycentric Born regions (carved in the rotated frame
+trials drawing microstates from the epistemic typicality measure on the fibred ontic `Σ = ℂℙ³ × T²`,
+the empirical frequencies of the four global basins (carved in the rotated frame
 `ksContextBasis.repr ψ`) converge, on a single almost-sure event, to the context-dependent
 Born weights `‖⟨ksContextBasis i, ψ⟩‖²` of measuring the unit preparation `ψ` in the
 representative Cabello context `cabelloBasis 0`.
@@ -205,9 +205,9 @@ certified by `cabello_pairwise_orthogonal_in_basis`.
 
 This grounds each Cabello context's rank-1 outcome weight — the context-dependent weights that
 no non-contextual hidden-variable assignment can jointly reproduce
-(`ks_no_value_assignment_cabello18`) — as a genuine Fubini-Study typicality volume on the
-*fixed* ontic `Σ`. The CSD reading of contextuality: context-dependence is *which projective
-carving of the one Σ* is measured, not a hidden variable. -/
+(`ks_no_value_assignment_cabello18`) — as a genuine epistemic typicality measure on the
+*fixed* fibred ontic `Σ`. The CSD reading of contextuality: context-dependence is *which
+projective carving of the one Σ* is measured, not a hidden variable. -/
 theorem ks18_context_born_frequency_volume
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
@@ -240,7 +240,8 @@ theorem ks18_context_born_frequency_volume_canonical
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
     ∀ᵐ ω ∂ MeasureTheory.iidMeasure
         (CSD.RecordLayer.epistemicMeasure
-          (Projectivization.mk ℂ (ksContextBasis.repr ψ) (repr_ne_zero ksContextBasis ψ hψ))), ∀ i : Fin 4,
+          (Projectivization.mk ℂ (ksContextBasis.repr ψ)
+            (repr_ne_zero ksContextBasis ψ hψ))), ∀ i : Fin 4,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,

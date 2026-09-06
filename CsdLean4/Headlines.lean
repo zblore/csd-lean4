@@ -70,6 +70,7 @@ public import CsdLean4.RecordLayer.NStepChain
 public import CsdLean4.SigmaLayer.MovingFibreWitness
 public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.LF4.BargmannSelection
+public import CsdLean4.Empirical.CSD.MixedStateBornVolume
 
 /-!
 # Headlines: the curated consumer facade (G8)
@@ -77,9 +78,10 @@ public import CsdLean4.LF4.BargmannSelection
 **Category:** Special (facade — the reconstruction's actual API in one import).
 
 `import CsdLean4.Headlines` gives a reviewer or downstream consumer exactly the
-modules carrying the corpus's **68 headline claims** (count as of 2026-09-04, and
-enforced: `check-validation-ledger.sh` reports it, and the drift guard below
-elaborates every one) — the rows of
+modules carrying the corpus's **headline claims** (deliberately not counted here —
+`check-validation-ledger.sh` reports the number and the drift guard below elaborates
+every one; a number in this docstring drifts on every ledger row, as the by-layer
+listing below records having learned) — the rows of
 `specs/validation-claims.tsv` (canonical; human view `specs/VALIDATION-LEDGER.md`)
 — without pulling the full 400+-module implementation surface through a single
 flat root. Created 2026-08-06 (BACKLOG G8, the adopted half of the 2026-08-06
@@ -103,11 +105,11 @@ above, so the facade cannot silently drop a headline.
 ## The headline claims, by layer
 
 ⚠️ **This listing is a reader's orientation, not the authority, and it lags.** The exhaustive,
-machine-checked list is the `example := @…` drift-guard block at the bottom — it covers all 68
-rows and breaks the build if any is renamed or deleted. The by-layer prose below covers 50 of
-them; it is deliberately left without a count, because a number here drifts every time the ledger
-grows and this heading said "31" for long enough to be wrong twice over
-(`specs/prose-audit.md`, pass 5).
+machine-checked list is the `example := @…` drift-guard block at the bottom — it covers every
+row and breaks the build if any is renamed or deleted. The by-layer prose below covers a subset;
+it is deliberately left without a count, because a number here drifts every time the ledger grows
+and this heading said "31" for long enough to be wrong twice over (`specs/prose-audit.md`, pass 5).
+The same drift caught the paragraph above, which said "68" after the ledger had reached 73.
 
 * **LF1 — typicality → frequencies:** `CSD.LF1.OnticSetup.TrialModel.main_theorem_ae` (CL-001),
   `CSD.LF1.freq_tendsto_of_iid` (CL-002).
@@ -273,5 +275,6 @@ example := @CSD.RecordLayer.csd_nstep_born -- CL-070
 example := @CSD.SigmaLayer.movingFibreEnergy_not_projectable -- CL-071
 example := @CSD.RecordLayer.globalBasin_born_frequency -- CL-072
 example := @CSD.LF4.projectedFlow_unitary_of_flow_continuous -- CL-073
+example := @CSD.LF4.mixed_state_born_eq_ensemble_volume -- CL-074
 
 end CSD.Headlines

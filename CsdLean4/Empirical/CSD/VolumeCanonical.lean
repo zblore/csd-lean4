@@ -22,7 +22,7 @@ public import CsdLean4.Mathlib.MeasureTheory.IidTrials
 public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
-# Empirical/CSD: every volume-frequency headline on the canonical i.i.d. FS witness
+# Empirical/CSD: every volume-frequency headline on a canonical i.i.d. trial witness
 
 **Category:** 3-Local (CSD-ontic volume series, trial-witness coverage tranche).
 
@@ -35,18 +35,31 @@ process of `CsdLean4/LF4/TrialWitness.lean`
 remaining volume headline, so each acquires a `_canonical` corollary whose
 hypothesis set is **Lean-inhabited**, not merely classically satisfiable.
 
-Each `_canonical` conclusion is the parent's conclusion **verbatim** with
-`Pr := fsTrialMeasure p₀` and `X := fsTrial _` substituted; the body is a bare
-term-mode application of the parent (no restatement), mirroring
-`LF4.born_frequency_convergence_N_canonical`. The region family supplied to the
-witness is exactly the parent's `hindep` region family:
+Each `_canonical` conclusion is the parent's conclusion **verbatim** with the canonical
+process substituted for `(Pr, X)`; the body is a bare term-mode application of the parent
+(no restatement), mirroring `LF4.born_frequency_convergence_N_canonical`. The region family
+supplied to the witness is exactly the parent's `hindep` region family:
 
-* `bornRegion ψ' …` (rotated / dilated state) for the barycentric-cell parents
-  (Bell, GHZ, Hardy, Trine, USD, SIC, SIC3, MUB3, QutritPOVM, the Context family),
-  with measurability `bornRegion_measurable_uncond`;
+* `CSD.RecordLayer.globalBasin (momentContext _) …` for the parents that have been migrated
+  to the fibred arena (Bell, GHZ, Hardy, Trine, USD, SIC, SIC3, MUB3, QutritPOVM, and the
+  degenerate-block and `Z⊗Z` entries), with measurability
+  `CSD.RecordLayer.measurableSet_globalBasin` and the trial process
+  `MeasureTheory.iidTrial` / `iidMeasure` over the epistemic law
+  (`Mathlib/MeasureTheory/IidTrials.lean`);
+* `bornRegion ψ' …` (rotated / dilated state) for `context_born_frequency_volume_canonical`,
+  which is deliberately kept as the **base-side** twin of
+  `context_born_frequency_basin_canonical` — see below;
 * the moment-map sublevel set `{p | momentMap p 0 ≤ momentMap [ψ] 0}` for the
   qubit chain (Malus, Stern-Gerlach), with measurability
   `(momentMap_measurable 0) measurableSet_Iic`.
+
+⚠️ **Two base-side statements are kept on purpose** (CR-4, 2026-09-06):
+`ContextVolume.context_born_frequency_volume` / `block_born_frequency_volume` and the
+`context_born_frequency_volume_canonical` entry here. They are the base-arena engines that the
+fibred twins are documented against, and the bridge
+`CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal` is stated between the two routes;
+removing them would leave the fibred statements with nothing to be compared to. Everything
+*downstream* of them — every witness, capstone and empirical entry — is on the fibred arena.
 
 The POVM headline `LF4.povm_born_frequency_volume_canonical` lives in
 `TrialWitness.lean` itself (import-direction constraint:
@@ -77,7 +90,7 @@ namespace CSDBridge
 
 namespace BellVolume
 
-/-- `bell_singlet_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `bell_singlet_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem bell_singlet_born_frequency_volume_canonical (θ : ℝ) :
     ∀ᵐ ω ∂ MeasureTheory.iidMeasure
         (CSD.RecordLayer.epistemicMeasure
@@ -105,10 +118,11 @@ end BellVolume
 
 namespace GHZVolume
 
-/-- `ghz_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `ghz_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem ghz_born_frequency_volume_canonical (Φ : ℝ) :
     ∀ᵐ ω ∂ MeasureTheory.iidMeasure
-        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ (ghzVec Φ) (ghzVec_ne_zero Φ))), ∀ i : Fin 8,
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (ghzVec Φ) (ghzVec_ne_zero Φ))), ∀ i : Fin 8,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
@@ -131,10 +145,11 @@ end GHZVolume
 
 namespace HardyVolume
 
-/-- `hardy_max_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `hardy_max_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem hardy_max_born_frequency_volume_canonical :
     ∀ᵐ ω ∂ MeasureTheory.iidMeasure
-        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ hardyVolVec hardyVolVec_ne_zero)), ∀ i : Fin 4,
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ hardyVolVec hardyVolVec_ne_zero)), ∀ i : Fin 4,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
@@ -225,7 +240,7 @@ namespace TrineVolume
 
 open CSD.LF2 CSD.LF4
 
-/-- `trine_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `trine_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem trine_born_frequency_volume_canonical
     (ψ : EuclideanSpace ℂ (Fin 2)) (e : (Fin 2 × Fin 3) ≃ Fin 6)
     (ψ' : EuclideanSpace ℂ (Fin 6))
@@ -257,7 +272,7 @@ namespace USDVolume
 
 open CSD.LF2 CSD.LF4 CSD.Empirical.QM.USD
 
-/-- `usd_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `usd_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem usd_born_frequency_volume_canonical (s : ℝ) (hs0 : 0 ≤ s) (hs1 : s ≤ 1)
     (ψ : EuclideanSpace ℂ (Fin 2)) (e : (Fin 2 × Fin 3) ≃ Fin 6)
     (ψ' : EuclideanSpace ℂ (Fin 6))
@@ -289,7 +304,7 @@ namespace SICVolume
 
 open CSD.LF2 CSD.LF4
 
-/-- `sic_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `sic_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem sic_born_frequency_volume_canonical
     (ψ : EuclideanSpace ℂ (Fin 2)) (e : (Fin 2 × Fin 4) ≃ Fin 8)
     (ψ' : EuclideanSpace ℂ (Fin 8))
@@ -321,7 +336,7 @@ namespace SIC3Volume
 
 open CSD.LF2 CSD.LF4
 
-/-- `sic3_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `sic3_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem sic3_born_frequency_volume_canonical
     (ψ : EuclideanSpace ℂ (Fin 3)) (e : (Fin 3 × (Fin 3 × Fin 3)) ≃ Fin 27)
     (ψ' : EuclideanSpace ℂ (Fin 27))
@@ -353,7 +368,7 @@ namespace MUB3Volume
 
 open CSD.LF2 CSD.LF4
 
-/-- `mub3_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `mub3_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem mub3_born_frequency_volume_canonical
     (ψ : EuclideanSpace ℂ (Fin 3)) (e : (Fin 3 × (Fin 4 × Fin 3)) ≃ Fin 36)
     (ψ' : EuclideanSpace ℂ (Fin 36))
@@ -385,7 +400,7 @@ namespace QutritPOVMVolume
 
 open CSD.LF2 CSD.LF4
 
-/-- `noisy_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `noisy_born_frequency_volume` on the canonical i.i.d. process over the fibred epistemic law. -/
 theorem noisy_born_frequency_volume_canonical (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1)
     (ψ : EuclideanSpace ℂ (Fin 3)) (e : (Fin 3 × Fin 3) ≃ Fin 9)
     (ψ' : EuclideanSpace ℂ (Fin 9))
@@ -467,53 +482,62 @@ theorem context_born_frequency_basin_canonical
       (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 omit [Fintype ι] in
-/-- `block_born_frequency_volume_event` on the canonical i.i.d. FS process. The
-**inhabited block form** (the union-event restatement of `block_born_frequency_volume`,
-which is superseded for the canonical purpose; its sum-form canonical is omitted). -/
+/-- `block_born_frequency_volume_event` on the canonical i.i.d. process over the fibred
+epistemic law. The **inhabited block form** (the union-event restatement of
+`block_born_frequency_basin`, which is superseded for the canonical purpose; its sum-form
+canonical is omitted). -/
 theorem block_born_frequency_volume_event_canonical
-    (p₀ : CPN (M + 1))
     (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
     (blk : Fin (M + 1) → ι) (a : ι) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (B.repr ψ) (repr_ne_zero B ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((fsTrial (M + 1) k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
-                    bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i))
+                ((MeasureTheory.iidTrial (CSD.LF4.KSigma (M + 1)) k) ⁻¹'
+                  (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i))
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (∑ i ∈ Finset.univ.filter (fun i => blk i = a),
           ‖inner ℂ (B i) ψ‖ ^ 2)) :=
-  block_born_frequency_volume_event p₀ B ψ hψ blk a
-    (fsTrial (M + 1)) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀ (bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ))
-      (bornRegion_measurable_uncond (B.repr ψ) (repr_ne_zero B ψ hψ)))
+  block_born_frequency_volume_event B ψ hψ blk a
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma (M + 1)))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin (M + 1) => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
-/-- `zz_parity_born_frequency_volume` on the canonical i.i.d. FS process. -/
+/-- `zz_parity_born_frequency_volume` on the canonical i.i.d. process over the fibred
+epistemic law. -/
 theorem zz_parity_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+            (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (3 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) :=
-  zz_parity_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))
-      (bornRegion_measurable_uncond ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
+  zz_parity_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 end ContextVolume
 

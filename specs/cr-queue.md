@@ -21,7 +21,7 @@ and deferred.
 | CR-1 | Governance layer: posit-plus-characterisation wording | days | **DONE 2026-09-05** (`edb34d1`) |
 | CR-2 | Posit register | days | **DONE 2026-09-05** — `specs/POSITS.md`, the frontier trichotomy, this file |
 | CR-3 | The three priced witnesses as a first-class statement | days | **DONE 2026-09-05** — TOUR section, the horn named in `FiniteQMClosure.lean` (**seams**), the everywhere-only scope recorded at `no_everywhere_correlation`, the Q12-d retirement in `KahlerFibreMixing.lean`, A2 pointer |
-| CR-4 | BELL-MIGRATE (28 files) | 1–2 weeks | open — ⚠️ **its "no new theorem" premise was false**: the 28 files prove *frequency* statements (32 `born_frequency_convergence_*` call sites) and no frequency theorem existed on the fibred side. **Prerequisite now built** 2026-09-05: `RecordLayer/BasinFrequency.lean` (`globalBasin_born_frequency`, CL-072). With it the migration is an application rather than 28 re-derivations |
+| CR-4 | BELL-MIGRATE (28 files) | 1–2 weeks | **DONE 2026-09-06** — every result that was stated over `bornRegion` / `bornRegionN` is now on the fibred arena; nothing in `Empirical` or `LF6` states a Born-region result on the base any more. ⚠️ Its "no new theorem" premise was false: the files prove *frequency* statements, and the fibred side had no frequency theorem. Seven engine pieces were built for it (`globalBasin_born_frequency`, `povm_born_frequency_basin`, `context_born_frequency_basin`, `block_born_frequency_basin`, `vnDilation_pointer_frequency_basin`, `vnDilation_pointer_volume_basin`, `pure_state_born_prob_eq_basin`) plus the weight bridge `globalBasin_toReal_eq_bornRegion_toReal` and the generic i.i.d. process `Mathlib/MeasureTheory/IidTrials.lean`. **Two base-side engines are kept on purpose** (`context_born_frequency_volume`, `block_born_frequency_volume`): the bridge is stated between the two routes, so deleting them would leave the fibred statements with nothing to be compared to |
 | CR-5 | Promote the calibrated bank to a named posit **in code** | days | **DONE 2026-09-05** — named at `calibratedBank`, chain status in four headers, POSITS Posit 5 gains the one-bank cost and the three travelling scope conditions. ⚠️ Its "there is no n-step theorem" premise was stale: CR-16 landed one, so the headers say what is proved and what is not |
 | CR-6 | Unitary-class posit recorded | days | **DONE 2026-09-05** — TOUR (both halves), `LF4/ProjectedDynamics.lean` header, reconstruction-status A5, Posit 6, Gisin1990 registered |
 | CR-7 | Label-space and infrastructure hygiene | days | **DONE 2026-09-05** — CONVENTIONS §12 (not §10, which was taken), `scripts/check-labels.sh` + baseline + 2 probes + CI. ⚠️ The five collisions are **grandfathered, not renamed**; reasons in §12 |
@@ -94,6 +94,47 @@ sequential/record-layer, not frequency-volume, so there was no precedent migrati
 `ContextField`-generic `globalBasin_born_frequency_context`, instantiating the already-generic engine
 `born_frequency_convergence_partition`. It carries **no positivity hypothesis**, unlike the base-side
 twin. The 28 files can now be migrated by application.
+
+✅ **DONE 2026-09-06.** The migration is finished. What it actually cost, and what it bought:
+
+**Cost.** Seven engine theorems, not one. `BasinFrequency.lean` (the prerequisite, CL-072) covers the
+direct frequency statements and the POVM family; `ContextVolume.lean` gained the rotated-basis and
+degenerate-block twins; `LF5/FlowBornFrequency.lean` gained the pointer-frequency twin and then, in
+the last pass, the pointer-**volume** twin that the LF6 flow files needed; `MixedStateBornVolume.lean`
+carries the pure-state twin `pure_state_born_prob_eq_basin`, its only consumer. The weight statements
+go through one bridge, `globalBasin_toReal_eq_bornRegion_toReal`. The canonical corollaries needed a
+law-generic i.i.d. process, so `LF4/TrialWitness.lean`'s `fsTrial*` block was generalised into
+`Mathlib/MeasureTheory/IidTrials.lean` (the `fsTrial*` block is left in place with a fold note).
+
+**Bought.** Two things beyond the arena change. (1) `p₀` leaves nearly every statement: the fibred
+law is fixed by the prepared ray, so there is no basepoint left to quantify over. The exceptions are
+genuine base-arena claims — the flow capstones' `MeasurePreserving (measurementFlow …)` conjuncts —
+which keep theirs. (2) **Genericity hypotheses die.** The fibred engines are unconditional where the
+base ones carry `hpos`, so migration strictly weakens hypothesis sets: `hardy_max_born_frequency_volume`
+lost its `hpos` earlier in the campaign, and `mixed_state_born_eq_ensemble_volume` lost the
+`∀ i j, 0 < ‖⟨e_j, Wᴴ eᵢ⟩‖²` bundle entirely (CL-074) — every density operator and every pure
+outcome is now covered, where before the outcome had to overlap every eigenvector of `ρ`.
+
+⚠️ **What still names `fubiniStudyMeasure`, and why none of it is unfinished migration.** The
+scope of this item was the `bornRegion` / `bornRegionN` consumers; three other families legitimately
+keep the base measure, and they are not leftovers.
+
+1. **The retained base engines** — `context_born_frequency_volume`, `block_born_frequency_volume`,
+   `context_born_frequency_volume_canonical`, `LF4.pure_state_born_prob_eq_volume`. These are the
+   base-side statements the fibred twins are documented against, and
+   `globalBasin_toReal_eq_bornRegion_toReal` is an equality *between the two routes*. They have no
+   downstream consumers, and that is deliberate.
+2. **The moment-map sublevel-set family** — Malus, Stern–Gerlach, Elitzur–Vaidman, Leggett–Garg,
+   `QuantumChaos/DerivedCoupling`, `Metrology/Ramsey`. Their region family is
+   `{p | momentMap p 0 ≤ momentMap [ψ] 0}`, not a Born region, so they were never in scope. Migrating
+   them is a **separate** question with its own engine cost, and it is not opened here.
+3. **Genuine base-arena claims** — the flow capstones' `MeasurePreserving (measurementFlow …)`
+   conjuncts, `Gates/WignerDischarge`'s `MeasureBridgeData`, `LF6/BlochContraction`. These are
+   statements *about* the Fubini–Study measure (invariance, measure-preservation); there is nothing
+   to migrate.
+
+`HongOuMandelVolume.lean` mentions `bornRegionN` only to explain why the volume route is unavailable
+there, which is still true and still worth saying.
 
 ## ⛔ CR-10: declined, and what to do instead
 

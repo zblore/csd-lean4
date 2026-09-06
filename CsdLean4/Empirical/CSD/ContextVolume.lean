@@ -18,13 +18,28 @@ transport tag, and **not** conditional on any preparation bundle).
 The context-generic surfacing of `LF4.born_frequency_convergence_N_uncond`:
 measuring a pure state `ψ` on `ℂℙ^M` in **any** orthonormal-basis (rank-1
 projective) context `B`, the outcome Born weights `‖⟨B i, ψ⟩‖²` are genuine
-Fubini–Study typicality volumes on the ontic `Σ = ℂℙ^M`. Carving-free,
+typicality measures on the ontic `Σ`. Carving-free,
 Gleason-free, unconditional — **every** unit preparation, eigenstates of the
 context included (no genericity hypothesis; hpos-free since the 2026-06-11
 call-site migration onto `LF4/BornRegionUncond.lean`). In the spirit of
 `Empirical/CSD/BellVolume.lean`, `Empirical/CSD/GHZVolume.lean`, and
 `Empirical/CSD/HardyVolume.lean`, but parameterised over the *context* rather
 than a fixed state.
+
+## ⚠️ Two routes live here, on purpose
+
+Since CR-4 (2026-09-06) this module carries the context engine **twice**:
+
+* `context_born_frequency_basin` / `block_born_frequency_basin` — on the fibred arena
+  `Σ = ℂℙ^M × T²`, with `epistemicMeasure [B.repr ψ]` and global basins. **These are what every
+  downstream consumer uses** (KCBS, KS18, Mermin–Peres, Uncertainty).
+* `context_born_frequency_volume` / `block_born_frequency_volume` — the original Fubini–Study
+  statements on the base `Σ = ℂℙ^M`, with global basins. They have **no consumers**,
+  and that is deliberate: `CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal` is an equality
+  *between the two routes*, so the base statements are what the fibred ones are compared against.
+  Do not delete them as dead code.
+
+The union-event restatement and the `Z⊗Z` witness at the bottom are on the **fibred** side.
 
 ## The key reduction (no new geometry)
 
@@ -50,8 +65,8 @@ The Kochen–Specker / Mermin–Peres no-go statements (`Empirical/QM/`) turn on
 the fact that the outcome weights a measurement assigns are **context-dependent**:
 no single non-contextual hidden-variable assignment of `0/1` values to all rays
 reproduces the quantum statistics across overlapping contexts. This file realises
-each such context's rank-1 outcome weight as a genuine Fubini–Study typicality
-volume on the *same* ontic `Σ = ℂℙ^M` — the context enters only through which
+each such context's rank-1 outcome weight as a genuine epistemic typicality
+measure on the *same* ontic `Σ = ℂℙ^M` — the context enters only through which
 orthonormal frame `B` carves the moment regions, not through any extra ontic
 structure. The context-dependence the KS/MP theorems exploit is, on the CSD
 ontology, the dependence of the carved volume regions on the measurement frame.
@@ -78,14 +93,14 @@ projector is `Pₐ = ∑_{blk i = a} |B i⟩⟨B i|`, so the outcome Born weight
 ⟨ψ, Pₐ ψ⟩ = ∑_{blk i = a} ‖⟨B i, ψ⟩‖²        (block_born_eq_blockSum)
 ```
 
-a finite **sum of Fubini–Study typicality volumes** on the same ontic `Σ = ℂℙ^M`.
+a finite **sum of epistemic typicality measures** on the same ontic `Σ = ℂℙ^M`.
 The block (degenerate-outcome) empirical frequency is the finite sum of the per-ray
 frequencies (the per-ray barycentric regions are disjoint, so summing the
 frequencies is the frequency of their union, the block outcome region), and it
 converges to the block Born weight: `block_born_frequency_volume`. This closes the
 rank-1 scope note above: degenerate contexts — including the two-qubit Mermin–Peres
 rank-2 eigenspace observables and any other rank ≥ 1 projective context — are now
-grounded as block sums of FS volumes. `block_born_eq_blockSum` writes the block
+grounded as block sums of basin measures. `block_born_eq_blockSum` writes the block
 Born weight via the explicit rank-1-sum projector image `Pₐ ψ = ∑_{blk i = a}
 ⟨B i, ψ⟩ • B i`; the equivalent reading is `∑_{blk i = a} ‖⟨B i, ψ⟩‖² =
 ‖orthogonalProjection (span {B i : blk i = a}) ψ‖²` (Parseval over the orthonormal
@@ -322,8 +337,8 @@ Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖² = ⟨ψ, Pₐ ψ⟩` (see `bl
 barycentric per-ray regions, because those regions are pairwise disjoint — the
 barycentric subdivision is a genuine partition, now formalised as
 `CSD.LF4.bornRegion_pairwiseDisjoint` (LF5-F engine half). The union-event
-restatement is `block_born_frequency_volume_event` below; the sum form proved here
-needs only additivity of limits.)
+restatement is `block_born_frequency_volume_event` below, stated on the fibred arena; the sum
+form proved here needs only additivity of limits.)
 
 Carving-free, Gleason-free, unconditional — no genericity hypothesis (every unit
 preparation, eigenvectors of any block included).
@@ -370,28 +385,28 @@ theorem block_born_frequency_volume
 
 omit [Fintype ι] in
 /-- **Degenerate-outcome block frequency, as the frequency of a single union
-event.** The `aeece86`-owed restatement of `block_born_frequency_volume`: the
-empirical frequency of the degenerate outcome `a` stated as the frequency of the
-**single** union event `⋃_{blk i = a} bornRegion …` (the eigenspace outcome
-region), converging to the block Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖²`. The
-union form is now available because the per-ray barycentric cells are pairwise
-disjoint (`CSD.LF4.bornRegion_pairwiseDisjoint`, LF5-F engine half), so the
-indicator of the union equals the sum of the per-ray indicators
-(`CSD.LF4.indicator_iUnion_disjoint`). The sum form (`block_born_frequency_volume`)
-is untouched. -/
+event.** The `aeece86`-owed restatement of `block_born_frequency_basin`: the empirical
+frequency of the degenerate outcome `a`, on the fibred arena, stated as the frequency of the
+**single** union event `⋃_{blk i = a} globalBasin …` (the eigenspace outcome region),
+converging to the block Born weight `∑_{blk i = a} ‖⟨B i, ψ⟩‖²`. The union form is available
+because the per-outcome basins are pairwise disjoint
+(`CSD.RecordLayer.globalBasin_pairwiseDisjoint`), so the indicator of the union equals the sum
+of the per-outcome indicators (`CSD.LF4.indicator_iUnion_disjoint`). The sum form
+(`block_born_frequency_basin`) is untouched. -/
 theorem block_born_frequency_volume_event
-    (p₀ : CPN (M + 1))
     (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin (M + 1))))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
     (blk : Fin (M + 1) → ι) (a : ι)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (B.repr ψ) (repr_ne_zero B ψ hψ)))
     (hindep : ∀ i : Fin (M + 1),
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -399,24 +414,27 @@ theorem block_born_frequency_volume_event
           (∑ k ∈ Finset.range m,
               Set.indicator
                 ((X k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
-                    bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i))
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i))
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (∑ i ∈ Finset.univ.filter (fun i => blk i = a),
           ‖inner ℂ (B i) ψ‖ ^ 2)) := by
-  have hbase := block_born_frequency_volume p₀ B ψ hψ blk a X hX hlaw hindep
+  have hbase := block_born_frequency_basin B ψ hψ blk a X hX hlaw hindep
   filter_upwards [hbase] with ω hω
   -- the union-event indicator equals the block sum of per-ray indicators
   have hdisj : ∀ k,
       ((Finset.univ.filter (fun i => blk i = a)) : Set (Fin (M + 1))).PairwiseDisjoint
-        (fun i => (X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i) := by
+        (fun i => (X k) ⁻¹'
+          CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i) := by
     intro k i _ j _ hij
-    exact (bornRegion_pairwiseDisjoint (B.repr ψ) (repr_ne_zero B ψ hψ) hij).preimage _
+    exact (CSD.RecordLayer.globalBasin_pairwiseDisjoint _ hij).preimage _
   have hind : ∀ k ω0,
       Set.indicator ((X k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
-          bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)) (fun _ => (1 : ℝ)) ω0
+          CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i))
+        (fun _ => (1 : ℝ)) ω0
       = ∑ i ∈ Finset.univ.filter (fun i => blk i = a),
-          Set.indicator ((X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+          Set.indicator ((X k) ⁻¹'
+              CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i)
             (fun _ => (1 : ℝ)) ω0 := by
     intro k ω0
     rw [Set.preimage_iUnion₂]
@@ -424,10 +442,12 @@ theorem block_born_frequency_volume_event
   have hfreq_eq : ∀ m : ℕ,
       (∑ k ∈ Finset.range m,
           Set.indicator ((X k) ⁻¹' (⋃ i ∈ Finset.univ.filter (fun i => blk i = a),
-              bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)) (fun _ => (1 : ℝ)) ω) / (m : ℝ)
+              CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i))
+            (fun _ => (1 : ℝ)) ω) / (m : ℝ)
       = ∑ i ∈ Finset.univ.filter (fun i => blk i = a),
           (∑ k ∈ Finset.range m,
-              Set.indicator ((X k) ⁻¹' bornRegion (B.repr ψ) (repr_ne_zero B ψ hψ) i)
+              Set.indicator ((X k) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ) := by
     intro m
     rw [← Finset.sum_div]
@@ -440,8 +460,8 @@ theorem block_born_frequency_volume_event
 /-! ### Concrete degenerate (rank-2) witness: the two-qubit parity `Z⊗Z` -/
 
 /-- **Concrete degenerate (rank-2) witness: the two-qubit parity observable `Z⊗Z`.**
-The parity / `Z⊗Z` outcome Born weight realised as a block sum of Fubini–Study
-typicality volumes — the Mermin–Peres rank-2 observable case made explicit.
+The parity / `Z⊗Z` outcome Born weight realised as a block sum of epistemic
+typicality measures — the Mermin–Peres rank-2 observable case made explicit.
 
 `Z⊗Z` on `EuclideanSpace ℂ (Fin 4)` has eigenvalues `±1`, each eigenspace of
 rank 2; its eigenbasis **is** the computational basis (no rotation needed), so we
@@ -451,32 +471,33 @@ take `B := EuclideanSpace.basisFun (Fin 4) ℂ` (whose `i`-th vector is
 indices `{0,3}` (`|00⟩, |11⟩`, even parity, eigenvalue `+1`) ↦ outcome `0`; indices
 `{1,2}` (`|01⟩, |10⟩`, odd parity, eigenvalue `−1`) ↦ outcome `1`.
 
-Instantiating `block_born_frequency_volume` at `B`, `blk`, `a = 0` and collapsing the
+Instantiating `block_born_frequency_basin` at `B`, `blk`, `a = 0` and collapsing the
 even-parity block `{0,3}` (`Finset.sum_pair`, `decide` on the filter), the empirical
 frequency of the even-parity (`Z⊗Z = +1`) outcome converges almost surely to the
 `Z⊗Z = +1` Born weight `‖⟨e₀, ψ⟩‖² + ‖⟨e₃, ψ⟩‖² = ⟨ψ, P₊ ψ⟩`, a block sum of two
-FS typicality volumes on the fixed ontic `Σ = ℂℙ³`. Carving-free, Gleason-free,
+epistemic typicality measures on the fibred ontic `Σ = ℂℙ³ × T²`. Carving-free, Gleason-free,
 foundational-triple-only.
 
-Honest scope unchanged from the generic degenerate case (`block_born_frequency_volume`):
+Honest scope unchanged from the generic degenerate case (`block_born_frequency_basin`):
 this is a faithful **realisation** of the rank-2 outcome weight as a sum of ontic
-volumes, not a derivation (`Φ = id`, FS regions carved in the computational frame);
+volumes, not a derivation (`Φ = id`, the basins read at the computational ray);
 the Mermin–Peres / Kochen–Specker no-go itself stays at the QM-validity layer
 (`Empirical/QM/`). No genericity hypothesis: every unit two-qubit preparation is
 covered, the computational eigenstates `|00⟩, |01⟩, |10⟩, |11⟩` (and the Bell
 states with vanishing components) included. -/
 theorem zz_parity_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+          (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-              (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -484,13 +505,12 @@ theorem zz_parity_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (3 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
+  have h := block_born_frequency_basin (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
     (![0, 1, 1, 0] : Fin 4 → Fin 2) 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0),

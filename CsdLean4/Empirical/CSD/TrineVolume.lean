@@ -27,11 +27,12 @@ This file:
 - gives the closed-form Born weights `pₖ(ψ) = (2/3)‖⟨ψₖ, ψ⟩‖²`;
 - runs it through the POVM tranche: `canonicalNaimark trinePOVM` is the dilation,
   and `trine_born_frequency_volume` lands the trine outcome frequencies as
-  **Fubini–Study volumes** on the dilated `Σ' = ℂℙ⁵` — carving-free, Gleason-free.
+  **epistemic typicality measures** on the dilated fibred `Σ = ℂℙ⁵ × T²` — carving-free,
+  Gleason-free.
 
 The trine has no structural zeros (for generic `ψ` all three weights are nonzero).
 The capstone is unconditional: it routes through the hpos-free engine
-(`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no
+(`povm_born_frequency_basin`, `RecordLayer/BasinFrequency.lean`), so no
 genericity hypothesis on the dilated state is carried (2026-06-11 migration);
 vanishing dilated amplitudes give FS-null cells.
 -/
@@ -133,11 +134,11 @@ theorem trine_weight_eq (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) (
 noncomputable def trineNaimark : NaimarkDilation trinePOVM := canonicalNaimark trinePOVM
 
 /-- **The trine POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume_uncond` at the trine: i.i.d. Fubini–Study trials on the
+`povm_born_frequency_basin` at the trine: i.i.d. trials over the fibred epistemic law on the
 dilated ontic `Σ' = ℂℙ⁵` have the `k`-th trine outcome's empirical frequency converge,
 on a single almost-sure event, to the trine Born weight `pₖ(ψ) = ⟨ψ, Eₖ ψ⟩` (the
-symmetric 120°-measurement outcome probability `(2/3)‖⟨ψₖ,ψ⟩‖²`) — realised as a sum of
-Fubini–Study volumes of the dilated barycentric cells. The **first
+symmetric 120°-measurement outcome probability `(2/3)‖⟨ψₖ,ψ⟩‖²`) — realised as a sum of the
+epistemic typicality measures of the dilated global basins. The **first
 non-projective (POVM) entry in the volume-frequency series**; carving-free,
 Gleason-free, and (since the 2026-06-11 hpos migration) with no genericity
 hypothesis on the dilated state. -/

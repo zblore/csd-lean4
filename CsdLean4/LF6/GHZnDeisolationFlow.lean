@@ -43,7 +43,7 @@ general `n ≥ 3`; the essentially-4-party case is additionally witnessed at `n 
 2. **The de-isolation flow + Born-from-volume at `N = 2^n` (the clean general-party
    core).** `ghzNDeisolationFlow n = measurementFlow (2^n) finProdFinEquiv` on the
    dilated `Σ' = ℂℙ^{2^n·2^n − 1}` (genuinely `Φ ≠ id` for `n ≥ 1`,
-   FS-measure-preserving), `ghzNDeisolation_pointer_volume` (pointer-block FS volume
+   FS-measure-preserving), `ghzNDeisolation_pointer_volume` (pointer-block basin measure
    = `ghzNWeight`, composing LF5 `vnDilation_pointer_volume` @ `N=2^n` with the Born
    identity `ghzN_born`), `_frequency` (a.s. block freq → Born), `_ne_id`,
    `_measurePreserving`. This is genuine **party-number**-general de-isolation
@@ -256,7 +256,7 @@ theorem ghzNDeisolation_ne_id (n : ℕ) (hn : 0 < n) : ghzNDeisolationFlow n ≠
   measurementFlow_ne_id (Nat.one_lt_two_pow_iff.mpr hn.ne') finProdFinEquiv
 
 /-- **The reproduction (the GHZ_n headline).** The context-fixed `BornRegion`
-pointer-block `i` Fubini-Study volume of the GHZ_n de-isolation flow equals the
+pointer-block `i` basin measure of the GHZ_n de-isolation flow equals the
 GHZ_n Born weight `ghzNWeight n i`, for the prepared state `φ = ghzN n`, every
 `n ≥ 1`.
 
@@ -264,7 +264,7 @@ The proof **composes** LF5 `vnDilation_pointer_volume` at `N = 2^n` (pointer-blo
 volume = `‖⟨e_i, φ⟩‖²`, Gleason-free, Born = FS-volume imported from the DH engine)
 with the coordinate-Born identity `ghzN_born` (the computed GHZ_n weights). -/
 theorem ghzNDeisolation_pointer_volume (n : ℕ) (hn : 0 < n) {M : ℕ}
-    (e : Fin (2 ^ n) × Fin (2 ^ n) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin (2 ^ n) × Fin (2 ^ n) ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV (2 ^ n)) (ghzN n)))
@@ -275,8 +275,7 @@ theorem ghzNDeisolation_pointer_volume (n : ℕ) (hn : 0 < n) {M : ℕ}
       = ghzNWeight n i := by
   have hψ'1 : ‖ψ'‖ = 1 := by
     rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e _ (ghzN_norm n hn)
-  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
-  rw [← vnDilation_pointer_volume (ghzN n) (ghzN_norm n hn) e p₀ ψ' hψ'eq hψ'0 i]
+  rw [← vnDilation_pointer_volume_basin (ghzN n) (ghzN_norm n hn) e ψ' hψ'eq hψ'0 i]
   exact ghzN_born n i
 
 /-- **The empirical capstone.** For i.i.d. Fubini-Study-typical trials on the
@@ -560,7 +559,7 @@ Conjuncts:
 
 1. genuine dynamics, `Φ ≠ id` (`measurementFlow_ne_id`, `1 < 2^n`);
 2. physically admissible: FS measure-preserving (`measurementFlow_measurePreserving`);
-3. pointer-block FS volume = the GHZ_n Born weight, every outcome
+3. pointer-block basin measure = the GHZ_n Born weight, every outcome
    (`ghzNDeisolation_pointer_volume`);
 4. a.s. block frequencies → the GHZ_n Born weight (`ghzNDeisolation_frequency`);
 5. the n-party deterministic forcing: no setting-local `±1` product partition
@@ -589,7 +588,7 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow (2 ^ n) e)
         (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
-    -- (3) pointer-block FS volume = the GHZ_n Born weight
+    -- (3) pointer-block basin measure = the GHZ_n Born weight
     ∧ (∀ i : Fin (2 ^ n),
         ∑ nn : Fin (2 ^ n),
             (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
@@ -612,7 +611,7 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
         ReproducesGHZN n μ R → False) :=
   ⟨measurementFlow_ne_id (Nat.one_lt_two_pow_iff.mpr (by omega)) e,
    measurementFlow_measurePreserving e p₀,
-   fun i => ghzNDeisolation_pointer_volume n (by omega) e p₀ ψ' hψ'eq hψ'0 i,
+   fun i => ghzNDeisolation_pointer_volume n (by omega) e ψ' hψ'eq hψ'0 i,
    ghzNDeisolation_frequency n (by omega) e ψ' hψ'eq hψ'0 X hX hlaw hindep,
    fun Λ _ μ _ R hPP hRep => no_product_partition_realises_ghzN μ n R hPP hRep⟩
 

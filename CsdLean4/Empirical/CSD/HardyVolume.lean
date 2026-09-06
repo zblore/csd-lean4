@@ -26,8 +26,8 @@ satisfies the four Hardy constraints (`no_lhv_hardy`), QM realises them
 (`exists_hardy_realisation_max`), and the maximal Hardy probability is the
 closed-form `(5√5 − 11)/2 ≈ 9.017 %` (`hardyMax_probability_eq`). That number is
 an *inner-product* Born value. This file **derives the same number as a genuine
-Fubini–Study typicality volume** on the ontic `Σ = ℂℙ³`: carving-free,
-Gleason-free, unconditional.
+epistemic typicality measure** of a global basin on the fibred ontic
+`Σ = ℂℙ³ × T²`: carving-free, Gleason-free, unconditional.
 
 ## The interior-point property (no boundary obstruction)
 
@@ -50,11 +50,17 @@ are all strictly positive, so the Hardy state is an *interior* point of the
 holds outright — no `Φ ∈ (0,π)` carve-out is needed, the full Hardy instance is
 covered. `P_00` is exactly the Hardy probability the experiment measures.
 
+⚠️ **Since the CR-4 migration the headlines no longer *need* that** — they route through the
+unconditional fibred engine, which has no `hpos` at all. `hardyVolVec_hpos` is kept anyway, and
+kept deliberately: it certifies that the Hardy instance was never a boundary case, so the move to
+the fibred arena is not quietly dodging one. It has no consumer, and that is the point.
+
 ## What is and is not claimed
 
 **Derived (carving-free, Gleason-free, unconditional).** The four Born weights
-are the genuine Fubini–Study volumes of the barycentric moment regions on `ℂℙ³`,
-and i.i.d. FS trials have frequencies converging a.s. to them. In particular the
+are the genuine typicality measures of the global basins on the fibred
+`Σ = ℂℙ³ × T²`, and i.i.d. trials over that law have frequencies converging a.s. to
+them. In particular the
 Hardy probability `(5√5 − 11)/2` is a Kähler volume. No `busch_effect_gleason`,
 no carving, no preparation bundle.
 
@@ -170,8 +176,13 @@ lemma hardyVolVec_ne_zero : hardyVolVec ≠ 0 := by
   exact one_ne_zero hz
 
 /-- Genericity: all four Born weights are strictly positive (the Hardy state is an
-interior point of the 3-simplex), so `born_frequency_convergence_N` applies with no
-boundary carve-out. -/
+interior point of the 3-simplex), so the *base-side* `born_frequency_convergence_N` applies with
+no boundary carve-out.
+
+⚠️ **Deliberately consumer-free since the CR-4 migration.** The headlines now use the fibred
+engine, which carries no genericity hypothesis, so nothing needs this. It is retained as the
+record that the Hardy instance is an interior point — evidence that the fibred route was not
+chosen to avoid a boundary case here. -/
 lemma hardyVolVec_hpos :
     ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) hardyVolVec‖ ^ 2 := by
   have hden : (0 : ℝ) < 5 * phi + 3 := denom_pos
@@ -191,17 +202,17 @@ lemma hardyVolVec_hpos :
 /-- **Hardy's maximal probability as a derived Kähler volume.** The `|00⟩`
 computational-basis Born weight of the golden-ratio Hardy state — the quantity the
 Hardy experiment measures — equals the closed-form maximum `(5√5 − 11)/2 ≈
-9.017 %`, here obtained as a genuine Fubini–Study typicality volume on the ontic
-`Σ = ℂℙ³` (via `born_value_zero` + `QM/Hardy.lean`'s `hardyMax_value`). -/
+9.017 %`, here obtained as a genuine epistemic typicality measure on the fibred ontic
+`Σ = ℂℙ³ × T²` (via `born_value_zero` + `QM/Hardy.lean`'s `hardyMax_value`). -/
 theorem hardy_max_volume_probability :
     ‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) hardyVolVec‖ ^ 2
       = (5 * Real.sqrt 5 - 11) / 2 := by
   rw [born_value_zero]; exact hardyMax_value
 
 /-- **CSD Hardy joint frequencies as derived Kähler-volume convergence.** For
-i.i.d. trials drawing microstates from the Fubini–Study typicality measure on the
-ontic `Σ = ℂℙ³`, the empirical frequencies of the four barycentric Born outcome
-regions converge, on a single almost-sure event, to the golden-ratio Hardy state's
+i.i.d. trials drawing microstates from the epistemic typicality measure on the
+fibred ontic `Σ = ℂℙ³ × T²`, the empirical frequencies of the four global
+basins converge, on a single almost-sure event, to the golden-ratio Hardy state's
 joint Born weights `‖⟨eᵢ, hardyVolVec⟩‖²` — the `i = 0` coordinate of which is
 Hardy's maximal probability `(5√5 − 11)/2` (`hardy_max_volume_probability`).
 

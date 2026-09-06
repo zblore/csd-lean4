@@ -15,7 +15,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 # Empirical/CSD: KCBS pentagon Born weights as Kähler volumes
 
 **Category:** 3-Local (CSD-ontic volume reading; an instantiation of the context-generic
-engine `context_born_frequency_volume`, closing the KCBS gap found by the 2026-08-02
+engine `context_born_frequency_basin`, closing the KCBS gap found by the 2026-08-02
 empirical-coverage audit — the last flagship test without a CSD twin).
 
 The **volume-ratio companion** to the QM-side KCBS inequality
@@ -206,11 +206,11 @@ theorem kcbs_pentagon_weight :
   rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
   exact kv_apex_born 0
 
-/-! ### The headline: KCBS context Born weights as FS typicality volumes -/
+/-! ### The headline: KCBS context Born weights as ontic typicality measures -/
 
 /-- **KCBS pentagon Born weights as Kähler volumes.** For i.i.d. trials drawing microstates
-from the Fubini–Study typicality measure on the ontic `Σ = ℂℙ²`, the empirical frequencies of
-the three barycentric Born regions (carved in the rotated frame `kcbsContextBasis.repr ψ`)
+from the epistemic typicality measure on the fibred ontic `Σ = ℂℙ² × T²`, the empirical
+frequencies of the three global basins (read at the rotated ray `kcbsContextBasis.repr ψ`)
 converge, on a single almost-sure event, to the context-dependent Born weights
 `‖⟨kcbsContextBasis i, ψ⟩‖²` of measuring the unit preparation `ψ` in the representative
 pentagon context `{kv 0, kv 1}`.

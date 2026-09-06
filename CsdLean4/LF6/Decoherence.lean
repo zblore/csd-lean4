@@ -51,8 +51,8 @@ correlated structure `V *ᵥ ψ`.
   `i ≠ i'` (coherences gone).
 - `decoherence_diagonal_born` — `(decohereReduced ψ) i i = ‖⟨eᵢ,ψ⟩‖²` (Born weights).
 - `decoherence_diagonal_eq_pointer_volume` — TIES the decohered diagonal weight to the
-  LF5/LF6 pointer-block **Fubini–Study volumes** (`vnDilation_pointer_volume`): the
-  decohered weights ARE the FS typicality volumes (Born = FS-volume imported from the
+  LF5/LF6 pointer-block **typicality measures** (`vnDilation_pointer_volume_basin`): the
+  decohered weights ARE the ontic typicality measures (Born = volume imported from the
   DH engine one layer down, Gleason-free, not re-derived).
 - `deisolation_conservative` — the de-isolation `V` is an isometry `Vᴴ V = 1`
   (`vnDilationV_isom`): conservative on the joint, dissipative only on the marginal.
@@ -76,7 +76,7 @@ correlated structure `V *ᵥ ψ`.
 This is the **reduced-density-operator** level of decoherence (a standard QM-validity
 object); the CSD increment is the *conservative-flow-coarse-graining reading*:
 irreversibility = partial-trace over an isometric (measure-preserving) de-isolation,
-no fundamental noise. The Born weights are **imported** as FS typicality volumes
+no fundamental noise. The Born weights are **imported** as ontic typicality measures
 (LF6-A / the moment-map / Duistermaat–Heckman cluster), not postulated and not
 re-derived here.
 
@@ -221,17 +221,17 @@ theorem decoherence_dephases (ψ : EuclideanSpace ℂ (Fin N)) :
     refine (Finset.sum_eq_zero fun j _ => ?_).symm
     rw [if_neg (fun hc => h (hc.1.symm.trans hc.2))]; exact smul_zero _
 
-/-! ### The decohered weights ARE the FS typicality volumes -/
+/-! ### The decohered weights ARE the ontic typicality measures -/
 
-/-- **The decohered diagonal weight = the LF5/LF6 pointer-block Fubini–Study volume.**
+/-- **The decohered diagonal weight = the LF5/LF6 pointer-block typicality measure.**
 Ties the dephased mixture's Born weight `‖⟨eᵢ,ψ⟩‖²` to the de-isolation flow's
-context-fixed pointer-block FS volume (`vnDilation_pointer_volume`). So the weights
-into which the system decoheres are exactly the FS *typicality* volumes carved by the
-measurement-flow dynamics — Born = FS-volume imported from the moment-map /
+context-fixed pointer-block basin measure (`vnDilation_pointer_volume_basin`). So the weights
+into which the system decoheres are exactly the *typicality* measures carved by the
+measurement-flow dynamics — Born = volume imported from the moment-map /
 Duistermaat–Heckman cluster (Gleason-free), not postulated. -/
 theorem decoherence_diagonal_eq_pointer_volume {M : ℕ}
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
-    (e : (Fin N × Fin N) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : (Fin N × Fin N) ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV N) ψ))
@@ -241,10 +241,7 @@ theorem decoherence_diagonal_eq_pointer_volume {M : ℕ}
             (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
               (CSD.RecordLayer.globalBasin
                 (CSD.RecordLayer.momentContext (M + 1)) (e (n, i)))).toReal : ℝ) : ℂ) := by
-  have hψ'1 : ‖ψ'‖ = 1 := by
-    rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e ψ hψ
-  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
-  rw [decoherence_diagonal_born, vnDilation_pointer_volume ψ hψ e p₀ ψ' hψ'eq hψ'0 i]
+  rw [decoherence_diagonal_born, vnDilation_pointer_volume_basin ψ hψ e ψ' hψ'eq hψ'0 i]
 
 /-! ### Conservativity of the de-isolation -/
 
@@ -269,7 +266,7 @@ mixture.** Conjuncts:
    (`decoherence_diagonal_born`);
 4. the de-isolation is conservative: `Vᴴ V = 1` (`deisolation_conservative`).
 
-The Born weights are the FS typicality volumes (LF6-A, imported via
+The Born weights are the ontic typicality measures (LF6-A, imported via
 `decoherence_diagonal_eq_pointer_volume`; Born = FS-volume derived one layer down in
 the DH cluster, Gleason-free). Irreversibility is coarse-graining over a conservative
 flow — no fundamental stochasticity. This is reduced-density-operator-level

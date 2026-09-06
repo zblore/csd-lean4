@@ -8,13 +8,15 @@ module
 public import CsdLean4.Empirical.CSD.ContextVolume
 public import CsdLean4.Empirical.CSD.VolumeCanonical
 public import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
+public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Mathlib.MeasureTheory.IidTrials
 
 /-!
 # Empirical/CSD: a Mermin–Peres rank-2 observable's outcome Born weights as Kähler volumes
 
 **Category:** 3-Local (CSD-ontic volume reading; a quick-win instantiation of the
 already-proved degenerate-eigenspace engine
-`CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_volume`).
+`CSD.Empirical.CSDBridge.ContextVolume.block_born_frequency_basin`).
 
 This is the **volume-ratio companion** to the *impossibility* readings of the
 Mermin–Peres magic-square contextuality theorem:
@@ -66,11 +68,11 @@ outcome Born weight; the kernel would reject it for any other basis.
 ## The two halves of the Mermin–Peres story, told honestly
 
 1. **A rank-2 grid observable carries genuine Born weights as block sums of FS
-   typicality volumes.** Instantiating `block_born_frequency_volume` at `mpXXBasis`,
+   typicality volumes.** Instantiating `block_born_frequency_basin` at `mpXXBasis`,
    `mpXXBlk`, and the `+1` block, the `X ⊗ X = +1` outcome Born weight
    `⟨ψ, P₊ ψ⟩ = ‖⟨v0, ψ⟩‖² + ‖⟨v3, ψ⟩‖²` is the almost-sure limit of empirical
-   frequencies of the block's barycentric Born regions on the fixed ontic
-   `Σ = ℂℙ³` — a sum of two Fubini–Study typicality volumes
+   frequencies of the block's global basins on the fixed fibred ontic
+   `Σ = ℂℙ³ × T²` — a sum of two epistemic typicality measures
    (`mp_xx_born_frequency_volume`). The `−1` block is the identical instantiation at
    `a = 1`.
 2. **Yet no single non-contextual `±1` assignment is jointly consistent across the
@@ -152,7 +154,7 @@ lemma mpXXVec_orthonormal : Orthonormal ℂ mpXXVec := by
 /-- **The `X ⊗ X` eigenbasis as a Mathlib `OrthonormalBasis`.** A 4-element orthonormal
 family in the 4-dimensional `EuclideanSpace ℂ (Fin 4)` spans (cardinality = `finrank`),
 so `OrthonormalBasis.mk` applies. This is the (degenerate) projective measurement frame
-fed to the engine `block_born_frequency_volume`. -/
+fed to the engine `block_born_frequency_basin`. -/
 noncomputable def mpXXBasis :
     OrthonormalBasis (Fin 4) ℂ (EuclideanSpace ℂ (Fin 4)) := by
   refine OrthonormalBasis.mk mpXXVec_orthonormal ?_
@@ -274,14 +276,14 @@ theorem mpZZBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     (![0, 1, 1, 0] : Fin 4 → Fin 2) i = 0 ↔ mpZZEigval i = 1 := by
   fin_cases i <;> simp [mpZZEigval] <;> norm_num
 
-/-! ### The headline: the `X ⊗ X = +1` Born weight as a block sum of FS volumes -/
+/-! ### The headline: the `X ⊗ X = +1` Born weight as a block sum of basin measures -/
 
 /-- **A Mermin–Peres rank-2 observable's outcome Born weight as a derived sum of Kähler
-volumes.** For i.i.d. trials drawing microstates from the Fubini–Study typicality
-measure on the ontic `Σ = ℂℙ³`, the empirical frequency of the `X ⊗ X = +1`
+volumes.** For i.i.d. trials drawing microstates from the epistemic typicality
+measure on the fibred ontic `Σ = ℂℙ³ × T²`, the empirical frequency of the `X ⊗ X = +1`
 (even-parity) outcome — the sum of the per-ray frequencies over the block
 `{v0, v3}` — converges, on a single almost-sure event, to the `X ⊗ X = +1` Born
-weight `‖⟨v0, ψ⟩‖² + ‖⟨v3, ψ⟩‖² = ⟨ψ, P₊ ψ⟩`, a block sum of two FS typicality volumes
+weight `‖⟨v0, ψ⟩‖² + ‖⟨v3, ψ⟩‖² = ⟨ψ, P₊ ψ⟩`, a block sum of two ontic typicality measures
 on the fixed ontic `Σ = ℂℙ³`.
 
 That this block weight genuinely is the `σx ⊗ σx = +1` outcome weight (and not an
@@ -290,7 +292,7 @@ proves `(σx ⊗ σx) · vᵢ = mpXXEigval i • vᵢ` against the real Pauli ob
 `sigmaX ⊗ₖ sigmaX`, and `mpXXBlk_eq_zero_iff_eigval_one` proves the `a = 0` block is
 exactly the `+1` eigenspace.
 
-A direct instantiation of `block_born_frequency_volume` at `M = 3`, the `X ⊗ X`
+A direct instantiation of `block_born_frequency_basin` at `M = 3`, the `X ⊗ X`
 eigenframe `mpXXBasis`, the sign-parity block `mpXXBlk`, the `+1` block `a = 0`, and an
 arbitrary unit `ψ` — carving-free, Gleason-free, unconditional (every unit preparation,
 eigenstates included), no new mathematics. The even-parity block `{0, 3}` is collapsed
@@ -301,20 +303,21 @@ identical instantiation at `a = 1`; the diagonal `Z ⊗ Z` companion is
 This grounds a rank-2 Mermin–Peres grid observable's context-dependent `±1` outcome
 weights — the weights that no non-contextual hidden-variable assignment can jointly
 reproduce across the square (`no_lhv_mermin_peres`) — as genuine Fubini–Study
-typicality volumes on the *fixed* ontic `Σ`. Honest scope: realisation not derivation
-(`Φ = id`, FS regions carved in the rotated `H ⊗ H` frame); the Mermin–Peres no-go
+typicality measures on the *fixed* fibred ontic `Σ`. Honest scope: realisation not derivation
+(`Φ = id`, the basins read at the rotated `H ⊗ H` ray); the Mermin–Peres no-go
 stays at the QM-validity layer (`Empirical/QM/`). -/
 theorem mp_xx_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (mpXXBasis.repr ψ) (repr_ne_zero mpXXBasis ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (mpXXBasis.repr ψ) (repr_ne_zero mpXXBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -322,12 +325,11 @@ theorem mp_xx_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => mpXXBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion (mpXXBasis.repr ψ)
-                    (repr_ne_zero mpXXBasis ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpXXVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpXXVec 3) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ mpXXBasis ψ hψ mpXXBlk 0 X hX hlaw hindep
+  have h := block_born_frequency_basin mpXXBasis ψ hψ mpXXBlk 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => mpXXBlk i = 0),
           ‖inner ℂ (mpXXBasis i) ψ‖ ^ 2)
@@ -338,29 +340,33 @@ theorem mp_xx_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_xx_born_frequency_volume` on the canonical i.i.d. Fubini–Study trial witness
-(`fsTrialMeasure` / `fsTrial`): the trial bundle is discharged, so the hypothesis set is
-Lean-inhabited, not merely classically satisfiable. Direct instantiation of
-`mp_xx_born_frequency_volume` at the canonical FS coordinate process. -/
+/-- `mp_xx_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred
+epistemic law (`MeasureTheory.iidMeasure` / `iidTrial`): the trial bundle is discharged, so
+the hypothesis set is Lean-inhabited, not merely classically satisfiable. Direct
+instantiation of `mp_xx_born_frequency_volume` at that process. -/
 theorem mp_xx_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (mpXXBasis.repr ψ)
+            (repr_ne_zero mpXXBasis ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => mpXXBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion (mpXXBasis.repr ψ)
-                    (repr_ne_zero mpXXBasis ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpXXVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpXXVec 3) ψ‖ ^ 2)) :=
-  mp_xx_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (mpXXBasis.repr ψ) (repr_ne_zero mpXXBasis ψ hψ))
-      (bornRegion_measurable_uncond (mpXXBasis.repr ψ) (repr_ne_zero mpXXBasis ψ hψ)))
+  mp_xx_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ## The remaining seven square observables
 
@@ -393,9 +399,9 @@ the real `sigma_a ⊗ₖ sigma_b` (the four `finProdFinEquiv.symm` resolutions b
 the eigenvector lemma `mp_<ab>Vec_eigenvector` (the load-bearing faithfulness fact:
 `(σ_a ⊗ σ_b) · vᵢ = eigval i • vᵢ` against the genuine Pauli observable), the
 `_blk_eq_zero_iff_eigval_one` block/`+1`-eigenspace certificate, and the volume headline
-`mp_<ab>_born_frequency_volume` instantiating `block_born_frequency_volume` on the `+1`
+`mp_<ab>_born_frequency_volume` instantiating `block_born_frequency_basin` on the `+1`
 block. Honest scope is unchanged from `mp_xx_born_frequency_volume`: realisation not
-derivation (`Φ = id`, FS regions carved in the rotated frame), Gleason-free,
+derivation (`Φ = id`, the basins read at the rotated ray), Gleason-free,
 foundational-triple-only; the Mermin–Peres no-go stays at the QM layer. -/
 
 /-- `1/√2` (as `Real.sqrt 2 / 2`), the single-Hadamard component magnitude. -/
@@ -516,20 +522,21 @@ theorem mpXIBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     mpXIBlk i = 0 ↔ mpXIEigval i = 1 := by
   fin_cases i <;> simp [mpXIBlk, mpXIEigval] <;> norm_num
 
-/-- **`X ⊗ I = +1` Born weight as a block sum of FS volumes.** Instantiation of
-`block_born_frequency_volume` at `mpHIBasis`, `mpXIBlk`, `a = 0`; the `+1` block `{0,1}`
+/-- **`X ⊗ I = +1` Born weight as a block sum of ontic typicality measures.** Instantiation of
+`block_born_frequency_basin` at `mpHIBasis`, `mpXIBlk`, `a = 0`; the `+1` block `{0,1}`
 is collapsed via `Finset.sum_pair`. Eigenbasis faithfulness is `mpXIVec_eigenvector`. -/
 theorem mp_xi_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -537,12 +544,11 @@ theorem mp_xi_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => mpXIBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
-                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 1) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ mpHIBasis ψ hψ mpXIBlk 0 X hX hlaw hindep
+  have h := block_born_frequency_basin mpHIBasis ψ hψ mpXIBlk 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => mpXIBlk i = 0),
           ‖inner ℂ (mpHIBasis i) ψ‖ ^ 2)
@@ -553,26 +559,30 @@ theorem mp_xi_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_xi_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_xi_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_xi_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (mpHIBasis.repr ψ)
+            (repr_ne_zero mpHIBasis ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => mpXIBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
-                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 1) ψ‖ ^ 2)) :=
-  mp_xi_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ))
-      (bornRegion_measurable_uncond (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ)))
+  mp_xi_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ### `X ⊗ Z` (`H ⊗ I` frame, eigenvalues `+1,−1,−1,+1`) -/
 
@@ -609,19 +619,20 @@ theorem mpXZBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     mpXZBlk i = 0 ↔ mpXZEigval i = 1 := by
   fin_cases i <;> simp [mpXZBlk, mpXZEigval] <;> norm_num
 
-/-- **`X ⊗ Z = +1` Born weight as a block sum of FS volumes.** Same `H ⊗ I` frame as
+/-- **`X ⊗ Z = +1` Born weight as a block sum of ontic typicality measures.** Same `H ⊗ I` frame as
 `X ⊗ I`, different observable (eigenvalues `+1,−1,−1,+1`); `+1` block `{0,3}`. -/
 theorem mp_xz_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -629,12 +640,11 @@ theorem mp_xz_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => mpXZBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
-                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 3) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ mpHIBasis ψ hψ mpXZBlk 0 X hX hlaw hindep
+  have h := block_born_frequency_basin mpHIBasis ψ hψ mpXZBlk 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => mpXZBlk i = 0),
           ‖inner ℂ (mpHIBasis i) ψ‖ ^ 2)
@@ -645,26 +655,30 @@ theorem mp_xz_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_xz_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_xz_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_xz_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (mpHIBasis.repr ψ)
+            (repr_ne_zero mpHIBasis ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => mpXZBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion (mpHIBasis.repr ψ)
-                    (repr_ne_zero mpHIBasis ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpHIVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpHIVec 3) ψ‖ ^ 2)) :=
-  mp_xz_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ))
-      (bornRegion_measurable_uncond (mpHIBasis.repr ψ) (repr_ne_zero mpHIBasis ψ hψ)))
+  mp_xz_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ### `I ⊗ X` (`I ⊗ H` frame, eigenvalues `+1,−1,+1,−1`) -/
 
@@ -702,18 +716,19 @@ theorem mpIXBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     mpIXBlk i = 0 ↔ mpIXEigval i = 1 := by
   fin_cases i <;> simp [mpIXBlk, mpIXEigval] <;> norm_num
 
-/-- **`I ⊗ X = +1` Born weight as a block sum of FS volumes.** -/
+/-- **`I ⊗ X = +1` Born weight as a block sum of ontic typicality measures.** -/
 theorem mp_ix_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -721,12 +736,11 @@ theorem mp_ix_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => mpIXBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
-                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 2) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ mpIHBasis ψ hψ mpIXBlk 0 X hX hlaw hindep
+  have h := block_born_frequency_basin mpIHBasis ψ hψ mpIXBlk 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => mpIXBlk i = 0),
           ‖inner ℂ (mpIHBasis i) ψ‖ ^ 2)
@@ -737,26 +751,30 @@ theorem mp_ix_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_ix_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_ix_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_ix_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (mpIHBasis.repr ψ)
+            (repr_ne_zero mpIHBasis ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => mpIXBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
-                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 2) ψ‖ ^ 2)) :=
-  mp_ix_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ))
-      (bornRegion_measurable_uncond (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ)))
+  mp_ix_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ### `Z ⊗ X` (`I ⊗ H` frame, eigenvalues `+1,−1,−1,+1`) -/
 
@@ -793,18 +811,19 @@ theorem mpZXBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     mpZXBlk i = 0 ↔ mpZXEigval i = 1 := by
   fin_cases i <;> simp [mpZXBlk, mpZXEigval] <;> norm_num
 
-/-- **`Z ⊗ X = +1` Born weight as a block sum of FS volumes.** -/
+/-- **`Z ⊗ X = +1` Born weight as a block sum of ontic typicality measures.** -/
 theorem mp_zx_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -812,12 +831,11 @@ theorem mp_zx_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => mpZXBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
-                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 3) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ mpIHBasis ψ hψ mpZXBlk 0 X hX hlaw hindep
+  have h := block_born_frequency_basin mpIHBasis ψ hψ mpZXBlk 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => mpZXBlk i = 0),
           ‖inner ℂ (mpIHBasis i) ψ‖ ^ 2)
@@ -828,26 +846,30 @@ theorem mp_zx_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_zx_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_zx_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_zx_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (mpIHBasis.repr ψ)
+            (repr_ne_zero mpIHBasis ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => mpZXBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion (mpIHBasis.repr ψ)
-                    (repr_ne_zero mpIHBasis ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpIHVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpIHVec 3) ψ‖ ^ 2)) :=
-  mp_zx_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ))
-      (bornRegion_measurable_uncond (mpIHBasis.repr ψ) (repr_ne_zero mpIHBasis ψ hψ)))
+  mp_zx_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ### `Z ⊗ I` and `I ⊗ Z` (computational frame `EuclideanSpace.basisFun`)
 
@@ -887,19 +909,20 @@ theorem mpZIBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0 ↔ mpZIEigval i = 1 := by
   fin_cases i <;> simp [mpZIEigval] <;> norm_num
 
-/-- **`Z ⊗ I = +1` Born weight as a block sum of FS volumes** (computational frame). -/
+/-- **`Z ⊗ I = +1` Born weight as a block sum of ontic typicality measures** (computational frame). -/
 theorem mp_zi_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+          (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-              (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -907,13 +930,12 @@ theorem mp_zi_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (1 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
+  have h := block_born_frequency_basin (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
     (![0, 0, 1, 1] : Fin 4 → Fin 2) 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0),
@@ -927,29 +949,31 @@ theorem mp_zi_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_zi_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_zi_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_zi_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+            (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => (![0, 0, 1, 1] : Fin 4 → Fin 2) i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (1 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) :=
-  mp_zi_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))
-      (bornRegion_measurable_uncond ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
+  mp_zi_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-- Eigenvalues of the computational basis under `I ⊗ σz`. -/
 def mpIZEigval : Fin 4 → ℂ := ![1, -1, 1, -1]
@@ -982,19 +1006,20 @@ theorem mpIZBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0 ↔ mpIZEigval i = 1 := by
   fin_cases i <;> simp [mpIZEigval] <;> norm_num
 
-/-- **`I ⊗ Z = +1` Born weight as a block sum of FS volumes** (computational frame). -/
+/-- **`I ⊗ Z = +1` Born weight as a block sum of ontic typicality measures** (computational frame). -/
 theorem mp_iz_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+          (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-              (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -1002,13 +1027,12 @@ theorem mp_iz_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (2 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
+  have h := block_born_frequency_basin (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ
     (![0, 1, 0, 1] : Fin 4 → Fin 2) 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0),
@@ -1022,29 +1046,31 @@ theorem mp_iz_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_iz_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_iz_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_iz_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
+            (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => (![0, 1, 0, 1] : Fin 4 → Fin 2) i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-                    (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single (0 : Fin 4) (1 : ℂ)) ψ‖ ^ 2
           + ‖inner ℂ (EuclideanSpace.single (2 : Fin 4) (1 : ℂ)) ψ‖ ^ 2)) :=
-  mp_iz_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ))
-      (bornRegion_measurable_uncond ((EuclideanSpace.basisFun (Fin 4) ℂ).repr ψ)
-        (repr_ne_zero (EuclideanSpace.basisFun (Fin 4) ℂ) ψ hψ)))
+  mp_iz_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ### `Y ⊗ Y` (the complex `U_Y ⊗ U_Y` frame `|y±⟩ ⊗ |y±⟩`)
 
@@ -1123,21 +1149,22 @@ theorem mpYYBlk_eq_zero_iff_eigval_one (i : Fin 4) :
     mpYYBlk i = 0 ↔ mpYYEigval i = 1 := by
   fin_cases i <;> simp [mpYYBlk, mpYYEigval] <;> norm_num
 
-/-- **`Y ⊗ Y = +1` Born weight as a block sum of FS volumes.** The complex-frame cell,
-completing the square. Instantiation of `block_born_frequency_volume` at `mpYYBasis`,
+/-- **`Y ⊗ Y = +1` Born weight as a block sum of ontic typicality measures.** The complex-frame cell,
+completing the square. Instantiation of `block_born_frequency_basin` at `mpYYBasis`,
 `mpYYBlk`, `a = 0`; the `+1` block `{0,3}`. Eigenbasis faithfulness is
 `mpYYVec_eigenvector` against the genuine `σy ⊗ σy`. -/
 theorem mp_yy_born_frequency_volume
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr,
       Tendsto
@@ -1145,12 +1172,11 @@ theorem mp_yy_born_frequency_volume
           ∑ i ∈ Finset.univ.filter (fun i => mpYYBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((X k) ⁻¹' bornRegion (mpYYBasis.repr ψ)
-                    (repr_ne_zero mpYYBasis ψ hψ) i)
+                  ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpYYVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpYYVec 3) ψ‖ ^ 2)) := by
-  have h := block_born_frequency_volume p₀ mpYYBasis ψ hψ mpYYBlk 0 X hX hlaw hindep
+  have h := block_born_frequency_basin mpYYBasis ψ hψ mpYYBlk 0 X hX hlaw hindep
   have hsum :
       (∑ i ∈ Finset.univ.filter (fun i => mpYYBlk i = 0),
           ‖inner ℂ (mpYYBasis i) ψ‖ ^ 2)
@@ -1161,26 +1187,30 @@ theorem mp_yy_born_frequency_volume
   rw [← hsum]
   exact h
 
-/-- `mp_yy_born_frequency_volume` on the canonical FS trial witness. -/
+/-- `mp_yy_born_frequency_volume` on the canonical i.i.d. trial witness over the fibred epistemic law. -/
 theorem mp_yy_born_frequency_volume_canonical
-    (p₀ : CPN 4)
     (ψ : EuclideanSpace ℂ (Fin 4)) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀,
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (mpYYBasis.repr ψ)
+            (repr_ne_zero mpYYBasis ψ hψ))),
       Tendsto
         (fun m : ℕ =>
           ∑ i ∈ Finset.univ.filter (fun i => mpYYBlk i = 0),
             (∑ k ∈ Finset.range m,
                 Set.indicator
-                  ((fsTrial 4 k) ⁻¹' bornRegion (mpYYBasis.repr ψ)
-                    (repr_ne_zero mpYYBasis ψ hψ) i)
+                  ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                    CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                   (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (mpYYVec 0) ψ‖ ^ 2 + ‖inner ℂ (mpYYVec 3) ψ‖ ^ 2)) :=
-  mp_yy_born_frequency_volume p₀ ψ hψ
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ))
-      (bornRegion_measurable_uncond (mpYYBasis.repr ψ) (repr_ne_zero mpYYBasis ψ hψ)))
+  mp_yy_born_frequency_volume ψ hψ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4))
+    (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 /-! ## Closure: the full nine-observable Mermin–Peres square is grounded
 
@@ -1202,7 +1232,7 @@ label is **earned**, not asserted — each via a `mp_<ab>Vec_eigenvector` lemma 
 | `Y ⊗ Y` | `mpYYBasis` (`U_Y ⊗ U_Y`)| `mpYYVec_eigenvector` | `mp_yy_born_frequency_volume` |
 
 Each headline lands on the `σ_a ⊗ σ_b = +1` outcome Born weight as a block sum of two
-Fubini–Study typicality volumes on the fixed ontic `Σ = ℂℙ³`, every unit two-qubit
+epistemic typicality measures on the fixed fibred ontic `Σ = ℂℙ³ × T²`, every unit two-qubit
 preparation covered (no genericity hypothesis), carving-free and Gleason-free
 (foundational-triple-only). The `−1` outcome of each cell is the identical instantiation
 at `a = 1`.

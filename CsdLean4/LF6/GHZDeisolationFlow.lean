@@ -35,7 +35,7 @@ The prepared state is the GHZ state itself, reindexed to the computational
 `Fin 8` basis (`nudgedGHZ = ghzState ∘ ghzIdx.symm`). Then the headline:
 
 ```
-pointer-block w FS volume  =  ‖⟨e_{ghzIdx w}, nudgedGHZ⟩‖²   -- LF5 vnDilation_pointer_volume @ N=8
+pointer-block w basin measure =  ‖⟨e_{ghzIdx w}, nudgedGHZ⟩‖²   -- LF5 vnDilation_pointer_volume @ N=8
                            =  ‖ghzState w‖²                    -- reindex coordinate identity
                            =  ghzWeight w                      -- computed GHZ Born weight (1/2 or 0)
 ```
@@ -215,10 +215,10 @@ inherited from `measurementFlow_ne_id`. -/
 theorem ghzDeisolation_ne_id : ghzDeisolationFlow ≠ id :=
   measurementFlow_ne_id (by norm_num) finProdFinEquiv
 
-/-! ### Deliverable 2: pointer-block FS volume = GHZ Born weight (the headline) -/
+/-! ### Deliverable 2: pointer-block basin measure = GHZ Born weight (the headline) -/
 
 /-- **The reproduction (the C.2 headline).** The context-fixed `BornRegion`
-pointer-block `w` Fubini-Study volume of the GHZ de-isolation flow equals the GHZ
+pointer-block `w` basin measure of the GHZ de-isolation flow equals the GHZ
 Born weight `ghzWeight w`, for the prepared state `φ = nudgedGHZ`.
 
 The proof **composes** LF5 `vnDilation_pointer_volume` at `N = 8` (pointer-block
@@ -227,7 +227,7 @@ with the nudge coordinate-Born identity `nudgedGHZ_born` (the reindex-isometry
 step + the computed GHZ Born weights). Minimal computational-basis carve; the
 weights are the real GHZ diagonal `(1/2, 0, …, 0, 1/2)`. -/
 theorem ghzDeisolation_pointer_volume {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ)))
@@ -238,8 +238,7 @@ theorem ghzDeisolation_pointer_volume {M : ℕ}
       = ghzWeight w := by
   have hψ'1 : ‖ψ'‖ = 1 := by
     rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e _ nudgedGHZ_norm
-  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
-  rw [← vnDilation_pointer_volume (nudgedGHZ) nudgedGHZ_norm e p₀ ψ' hψ'eq hψ'0 (ghzIdx w)]
+  rw [← vnDilation_pointer_volume_basin (nudgedGHZ) nudgedGHZ_norm e ψ' hψ'eq hψ'0 (ghzIdx w)]
   exact nudgedGHZ_born w
 
 /-! ### Deliverable 3: a.s. pointer-block frequencies → GHZ Born weight -/
@@ -308,7 +307,7 @@ anchor routed through C.1. Conjuncts:
 
 1. genuine dynamics, `Phi != id` (`measurementFlow_ne_id`, `1 < 8`);
 2. physically admissible: FS measure-preserving (`measurementFlow_measurePreserving`);
-3. pointer-block FS volume = the GHZ Born weight, every outcome
+3. pointer-block basin measure = the GHZ Born weight, every outcome
    (`ghzDeisolation_pointer_volume`);
 4. a.s. block frequencies → the GHZ Born weight (`ghzDeisolation_frequency`);
 5. the contextuality anchor: no setting-local `plus/minus 1` product partition
@@ -338,7 +337,7 @@ theorem ghzDeisolation_flow_capstone {M : ℕ}
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow 8 e)
         (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
-    -- (3) pointer-block FS volume = the GHZ Born weight
+    -- (3) pointer-block basin measure = the GHZ Born weight
     ∧ (∀ w : Fin 2 × Fin 2 × Fin 2,
         ∑ n : Fin 8,
             (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
@@ -361,7 +360,7 @@ theorem ghzDeisolation_flow_capstone {M : ℕ}
         ReproducesGHZ μ R → False) :=
   ⟨measurementFlow_ne_id (by norm_num) e,
    measurementFlow_measurePreserving e p₀,
-   fun w => ghzDeisolation_pointer_volume e p₀ ψ' hψ'eq hψ'0 w,
+   fun w => ghzDeisolation_pointer_volume e ψ' hψ'eq hψ'0 w,
    ghzDeisolation_frequency e ψ' hψ'eq hψ'0 X hX hlaw hindep,
    fun Λ _ μ _ R hPP hRep => no_product_partition_realises_ghz μ R hPP hRep⟩
 

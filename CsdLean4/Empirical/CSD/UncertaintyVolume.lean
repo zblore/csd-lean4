@@ -62,7 +62,7 @@ is their product `4·vol₊·vol₋`. Foundational triple only (no
 inner-product Cauchy–Schwarz fact, not a volume identity. This file grounds the
 two single-observable variances entering that inequality as FS-volume products;
 substituting them into `robertson_uncertainty` reads the bound as an inequality
-between products of FS typicality volumes, with no new volume content needed.
+between products of ontic typicality measures, with no new volume content needed.
 
 **Realisation not derivation (Tier-2).** As with the rest of the `*Volume`
 series, `Φ = id` in the underlying `SectorData`; the basins are read at the
@@ -125,10 +125,10 @@ lemma context_vol_sum_two
   rw [Fin.sum_univ_two, hψ, one_pow] at h
   exact h
 
-/-- **Born-tied headline: variance = product of the two FS Born volumes.** For a
+/-- **Born-tied headline: variance = product of the two ontic Born volumes.** For a
 `±1` qubit observable measured in context `B` on a unit preparation `ψ`, the
 variance `varFromVolume (‖⟨B 0, ψ⟩‖²)` equals the product of the two outcome
-Fubini–Study typicality volumes `4·‖⟨B 0, ψ⟩‖²·‖⟨B 1, ψ⟩‖²`. Composes
+typicality measures `4·‖⟨B 0, ψ⟩‖²·‖⟨B 1, ψ⟩‖²`. Composes
 `variance_eq_four_vol_product` with the Parseval normalisation
 `context_vol_sum_two`. -/
 theorem born_variance_eq_vol_product
@@ -141,14 +141,14 @@ theorem born_variance_eq_vol_product
 /-! ### The variance-as-volume-product frequency capstone -/
 
 /-- **CSD uncertainty as a product of derived Kähler-volume frequencies.** For
-i.i.d. trials drawing microstates from the Fubini–Study typicality measure on the
-ontic `Σ = ℂℙ¹`, the variance of a `±1` qubit observable computed from the
+i.i.d. trials drawing microstates from the epistemic typicality measure on the
+fibred ontic `Σ = ℂℙ¹ × T²`, the variance of a `±1` qubit observable computed from the
 empirical finite-sample frequencies `4·freq₊(m)·freq₋(m)` converges almost surely
 to the volume-product variance `varFromVolume (‖⟨B 0, ψ⟩‖²) = 4·vol₊·vol₋`.
 
 So the observable spread is **grounded in ontic typicality volumes** on
 `Σ = ℂℙ¹`, not assumed: each outcome frequency converges to a Fubini–Study
-typicality volume (`ContextVolume.context_born_frequency_volume`, M = 1,
+typicality volume (`ContextVolume.context_born_frequency_basin`, M = 1,
 carving-free and Gleason-free), and their `4·(·)·(·)` product converges to the
 variance by continuity of multiplication. Foundational triple only (no
 `busch_effect_gleason`); the Robertson inequality itself stays at the QM-validity

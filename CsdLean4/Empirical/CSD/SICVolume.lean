@@ -36,7 +36,7 @@ This file:
   `sic_born_frequency_volume` lands the four SIC outcome frequencies as **Fubini–Study
   volumes** on the dilated `Σ' = ℂℙ⁷` — carving-free, Gleason-free.
 
-The capstone routes through the hpos-free engine (`povm_born_frequency_volume_uncond`,
+The capstone routes through the hpos-free engine (`povm_born_frequency_basin`,
 `LF4/BornRegionUncond.lean`), so no genericity hypothesis on the dilated state is
 carried (2026-06-11 migration).
 -/
@@ -176,11 +176,11 @@ theorem sic_weight_eq (ψ : EuclideanSpace ℂ (Fin 2)) (hψ : ‖ψ‖ = 1) (k 
 noncomputable def sicNaimark : NaimarkDilation sicPOVM := canonicalNaimark sicPOVM
 
 /-- **The SIC POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume_uncond` at the tetrahedral SIC POVM: i.i.d. Fubini–Study
-trials on the dilated ontic `Σ' = ℂℙ⁷` have the `k`-th SIC outcome's empirical
+`povm_born_frequency_basin` at the tetrahedral SIC POVM: i.i.d.
+trials over the fibred epistemic law on the dilated ontic `Σ' = ℂℙ⁷` have the `k`-th SIC outcome's empirical
 frequency converge, on a single almost-sure event, to the SIC Born weight
-`pₖ(ψ) = ⟨ψ, Eₖ ψ⟩ = (1/2)‖⟨ψₖ,ψ⟩‖²` — realised as a sum of Fubini–Study volumes of
-the dilated barycentric cells. The **third non-projective (POVM) entry in the
+`pₖ(ψ) = ⟨ψ, Eₖ ψ⟩ = (1/2)‖⟨ψₖ,ψ⟩‖²` — realised as a sum of the epistemic typicality measures of
+the dilated global basins. The **third non-projective (POVM) entry in the
 volume-frequency series**, after the trine and USD; carving-free, Gleason-free, and
 (since the 2026-06-11 hpos migration) with no genericity hypothesis on the dilated
 state. -/

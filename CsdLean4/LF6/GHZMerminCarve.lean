@@ -20,7 +20,7 @@ that C.2 (`GHZDeisolationFlow.lean`) honestly deferred. Where C.2's minimal
 computational-basis carve lands on the GHZ diagonal weights and ties to C.1 only
 by a bare re-export of `no_product_partition_realises_ghz`, C.3 builds the GHZ
 **Mermin-context** carve: the GHZ state in each X/Y measurement basis, whose
-sign-product-weighted pointer-block Fubini-Study volumes reproduce the four
+sign-product-weighted pointer-block basin measures reproduce the four
 Mermin correlations `<XXX> = +1`, `<XYY> = <YXY> = <YYX> = -1`, and the carve
 ties to C.1 by its OWN achieved correlations (`ghzDeisolation_carve_not_product`).
 This is the three-party analogue of A.2's
@@ -376,7 +376,7 @@ theorem nudgedGHZ_mermin_ne_zero (ctx : Fin 3 → PauliAxis) (pv : ℝ)
   rw [h, norm_zero] at this
   exact one_ne_zero this.symm
 
-/-! ### Deliverable: pointer-block FS volume = Mermin block weight -/
+/-! ### Deliverable: pointer-block basin measure = Mermin block weight -/
 
 /-- **The Mermin-context reproduction (per-block).** The context-fixed pointer-block `o`
 epistemic typicality measure of the GHZ de-isolation flow equals the Mermin block weight
@@ -447,7 +447,7 @@ theorem ghzDeisolation_blockVolume_correlation {M : ℕ}
 /-- **The carve's XXX block-volume correlation is the QM Mermin expectation
 `<XXX>` (`= +1`).** Ties the exhibited carve's achieved value to the genuine QM
 Mermin expectation `Complex.re ⟨ghz| sigma_x⊗sigma_x⊗sigma_x |ghz⟩` (via
-`ghz_expectation_xxx`), through structurally distinct machinery (LF5 FS volumes
+`ghz_expectation_xxx`), through structurally distinct machinery (LF5 basin measures
 vs the Hilbert expectation) meeting at `+1`. -/
 theorem merminCarveCorrelation_eq_xxx {M : ℕ}
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1))

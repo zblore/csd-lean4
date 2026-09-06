@@ -17,7 +17,7 @@ This is **LF6-A.3** of `specs/lf6-plan.md`. It completes the LF6-A entangled-tie
 stage by exhibiting a **manifestly local product de-isolation**
 `V_loc = V_A ⊗ V_B` — each wing an LF5 single-system (`N = 2`) de-isolation — and
 proving it realises the SAME joint measurement as the A.2 flow: its
-context-fixed pointer-block Fubini–Study volumes are the LF3 singlet kernel
+context-fixed pointer-block basin measures are the LF3 singlet kernel
 `P_st`. So the de-isolation needs **no non-local interaction**; the non-locality
 is entirely in the contextual carve (LF6-A.2) and the entangled preparation
 (SO-1).
@@ -72,7 +72,7 @@ regrouping `((s_a,p_a),(s_b,p_b)) ↦ ((s_a,s_b),(p_a,p_b))`. The block reshuffl
   (`localDeisolationV`, `localDeisolation_factorises` — `V_loc` *is* a tensor
   product), a Naimark dilation of the joint basis POVM
   (`localDeisolation_pullback`, the tensor-pullback composing the two wing LF5
-  pullbacks), whose pointer-block FS volumes reproduce the singlet kernel
+  pullbacks), whose pointer-block basin measures reproduce the singlet kernel
   (`localDeisolation_pointer_volume = P_st`); the projectivised product flow is
   FS-measure-preserving and `≠ id` (`localDeisolationFlow_*`).
 - **Imported, not re-derived.** Born = FS-volume is derived one layer down (the
@@ -297,7 +297,7 @@ theorem localDeisolation_norm_map (ψ : EuclideanSpace ℂ (Fin 4)) :
 
 /-- **The reproduction (the A.3 headline).** The LOCAL product de-isolation
 `V_loc = V_A ⊗ V_B` reproduces the singlet: its context-fixed pointer-block
-`(s, t)` Fubini–Study volume equals the LF3 singlet kernel `P_st a b s t`, for
+`(s, t)` basin measure equals the LF3 singlet kernel `P_st a b s t`, for
 the prepared state `φ = nudgedSinglet a b` (the setting-dependent **moduli**
 `√(P_st a b s t)`, reused from A.2 — *not* a locally rotated singlet; see the
 erratum note on `localDeisolation_pullback` above and `LF6.localNudgeVec` for the
@@ -311,7 +311,7 @@ the POVM weight via `basisPOVM_weight` + the LF3 Born identity behind
 the same pointer-block volumes as the (non-factoring) `N=4`-adder A.2 flow. -/
 theorem localDeisolation_pointer_volume {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (nudgedSinglet a b)))
@@ -324,9 +324,10 @@ theorem localDeisolation_pointer_volume {M : ℕ}
       (Matrix.toEuclideanLin localDeisolationV (nudgedSinglet a b))‖ = 1 := by
     rw [LinearIsometryEquiv.norm_map, localDeisolation_norm_map, nudgedSinglet_norm a b hgen]
   have hψ'1 : ‖ψ'‖ = 1 := by rw [hψ'eq]; exact hnorm
-  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal (Projectivization.mk ℂ ψ' hψ'0)
+    ψ' hψ'0 hψ'1]
   have h := povm_born_eq_dilated_volume_uncond (basisPOVM 4) localNaimark
-      (nudgedSinglet a b) (stIdx (s, t)) e p₀ hnorm
+      (nudgedSinglet a b) (stIdx (s, t)) e (Projectivization.mk ℂ ψ' hψ'0) hnorm
   rw [basisPOVM_weight, nudgedSinglet_born a b hgen s t] at h
   subst hψ'eq
   exact h.symm
@@ -591,7 +592,7 @@ singlet.** Conjuncts:
 2. it is a Naimark dilation of the joint product POVM: the tensor pullback
    `(V_A⊗V_B)ᴴ (Π^A_i ⊗ Π^B_j) (V_A⊗V_B) = |a_i⊗b_j⟩⟨a_i⊗b_j|`
    (`localDeisolation_pullback`), composing the two wing LF5 pullbacks;
-3. the LOCAL product flow reproduces the singlet: pointer-block FS volume
+3. the LOCAL product flow reproduces the singlet: pointer-block basin measure
    `= P_st` for every `(s,t)` sector (`localDeisolation_pointer_volume`).
    ⚠️ **Generic contexts only** — this conjunct carries `hgen`, so it says
    nothing at `a·b = ±1`. The `hgen`-free version is
@@ -631,7 +632,7 @@ Residue: SO-1 (the entangled sector posited, never derived). Honest ledger:
 module docstring. -/
 theorem localDeisolation_capstone {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (nudgedSinglet a b)))
@@ -667,7 +668,7 @@ theorem localDeisolation_capstone {M : ℕ}
               (localDil_ne_zero φ hφ)) :=
   ⟨localDeisolation_factorises,
    fun i j => localDeisolation_pullback i j,
-   fun s t => localDeisolation_pointer_volume a b hgen e p₀ ψ' hψ'eq hψ'0 s t,
+   fun s t => localDeisolation_pointer_volume a b hgen e ψ' hψ'eq hψ'0 s t,
    localDeisolationFlow_measurePreserving q₀,
    localDeisolationFlow_ne_id,
    fun φ hφ => localDeisolationFlow_realises_localNaimark φ hφ⟩

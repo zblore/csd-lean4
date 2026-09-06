@@ -22,7 +22,7 @@ instances: the 2x2 singlet (LF6-A) and the three-qubit GHZ (LF6-C). This module
 makes "general-N" actually general: it instantiates the LF5 general-`N`
 de-isolation engine at `N = d * d` for the bipartite maximally-entangled state
 `Ψ_d = (1/√d) ∑_i |i⟩|i⟩` on `EuclideanSpace ℂ (Fin d × Fin d)`, for **every**
-`d ≥ 2`, and lands the pointer-block Fubini-Study volumes on the maximally-mixed
+`d ≥ 2`, and lands the pointer-block basin measures on the maximally-mixed
 Born weights `1/d`, with a.s. block frequencies converging to them.
 
 ## The construction (reusing LF5 @ N = d·d)
@@ -35,7 +35,7 @@ measure-preserving. The prepared state is `Ψ_d` reindexed to the computational
 `Fin (d*d)` basis (`nudgedMaxEntangled d`). Then the headline:
 
 ```
-pointer-block w FS volume  =  ‖⟨e_{medIdx w}, nudgedMaxEntangled d⟩‖²   -- LF5 @ N=d·d
+pointer-block w basin measure =  ‖⟨e_{medIdx w}, nudgedMaxEntangled d⟩‖²   -- LF5 @ N=d·d
                            =  ‖(maxEntangled d) w‖²                       -- reindex identity
                            =  medWeight d w                               -- 1/d on the diagonal, 0 off
 ```
@@ -449,10 +449,10 @@ theorem maxEntangledDeisolation_ne_id (d : ℕ) [NeZero d] (hd : 2 ≤ d) :
     have := Nat.mul_le_mul hd hd; omega
   exact measurementFlow_ne_id h finProdFinEquiv
 
-/-! ### Deliverable 2: pointer-block FS volume = Born weight (the headline) -/
+/-! ### Deliverable 2: pointer-block basin measure = Born weight (the headline) -/
 
 /-- **The reproduction (the D headline).** The context-fixed `BornRegion`
-pointer-block `w` Fubini-Study volume of the maximally-entangled de-isolation flow
+pointer-block `w` basin measure of the maximally-entangled de-isolation flow
 equals the Born weight `medWeight d w`, for the prepared state
 `φ = nudgedMaxEntangled d`, for every `d ≥ 1`.
 
@@ -462,7 +462,7 @@ with the nudge coordinate-Born identity `nudgedMaxEntangled_born` (the
 reindex-isometry step + the computed maximally-entangled weights). Dimension-general:
 the weights are the real maximally-mixed diagonal `(1/d, …, 1/d)`. -/
 theorem maxEntangledDeisolation_pointer_volume (d : ℕ) [NeZero d] {M : ℕ}
-    (e : Fin (d * d) × Fin (d * d) ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin (d * d) × Fin (d * d) ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV (d * d)) (nudgedMaxEntangled d)))
@@ -474,9 +474,8 @@ theorem maxEntangledDeisolation_pointer_volume (d : ℕ) [NeZero d] {M : ℕ}
   have hψ'1 : ‖ψ'‖ = 1 := by
     rw [hψ'eq]
     exact piLpCongrLeft_vnDilationV_norm e _ (nudgedMaxEntangled_norm d (NeZero.pos d))
-  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
-  rw [← vnDilation_pointer_volume (nudgedMaxEntangled d)
-      (nudgedMaxEntangled_norm d (NeZero.pos d)) e p₀ ψ' hψ'eq hψ'0 (medIdx d w)]
+  rw [← vnDilation_pointer_volume_basin (nudgedMaxEntangled d)
+      (nudgedMaxEntangled_norm d (NeZero.pos d)) e ψ' hψ'eq hψ'0 (medIdx d w)]
   exact nudgedMaxEntangled_born d w
 
 /-! ### Deliverable 3: a.s. pointer-block frequencies → Born weight -/
@@ -676,7 +675,7 @@ non-factorisation. Conjuncts:
 
 1. genuine dynamics, `Φ ≠ id` (`measurementFlow_ne_id`, `1 < d*d`);
 2. physically admissible: FS measure-preserving (`measurementFlow_measurePreserving`);
-3. pointer-block FS volume = the Born weight, every outcome
+3. pointer-block basin measure = the Born weight, every outcome
    (`maxEntangledDeisolation_pointer_volume`);
 4. a.s. block frequencies → the Born weight (`maxEntangledDeisolation_frequency`);
 5. the 2x2 Schmidt sector's diagonal Born-weight marginal is uniform `1/d`
@@ -719,7 +718,7 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow (d * d) e)
         (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
-    -- (3) pointer-block FS volume = the Born weight
+    -- (3) pointer-block basin measure = the Born weight
     ∧ (∀ w : Fin d × Fin d,
         ∑ n : Fin (d * d),
             (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
@@ -749,7 +748,7 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
   ⟨by have h : 1 < d * d := by have := Nat.mul_le_mul hd hd; omega
       exact measurementFlow_ne_id h e,
    measurementFlow_measurePreserving e p₀,
-   fun w => maxEntangledDeisolation_pointer_volume d e p₀ ψ' hψ'eq hψ'0 w,
+   fun w => maxEntangledDeisolation_pointer_volume d e ψ' hψ'eq hψ'0 w,
    maxEntangledDeisolation_frequency d e ψ' hψ'eq hψ'0 X hX hlaw hindep,
    fun i => maxEntangled_sector_marginal_uniform d hd i,
    maxEntangledSector_eq_phiPlus d hd,

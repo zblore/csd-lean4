@@ -54,7 +54,7 @@ sharp Born weight `1` (genuine partial information).
 ## The CSD volume reading (the "nudge")
 
 Run `weakPOVM η` through the POVM tranche: `canonicalNaimark` is its Naimark dilation, and
-`povm_born_frequency_volume_uncond` reads the weak-outcome Born weight as a sum of
+`povm_born_frequency_basin` reads the weak-outcome Born weight as a sum of
 Fubini–Study **volumes** on the dilated ontic `Σ' = ℂℙ³` — carving-free, Gleason-free,
 unconditional (`weak_born_frequency_volume`). The honest reading: the weak measurement is a
 **partial volume nudge** — at `η = 0` the dilated volumes are the trivial `1/2` split (no
@@ -353,11 +353,11 @@ noncomputable def weakNaimark (η : ℝ) (h0 : 0 ≤ η) (h1 : η ≤ 1) :
     NaimarkDilation (weakPOVM η h0 h1) := canonicalNaimark (weakPOVM η h0 h1)
 
 /-- **(Part C) The weak-measurement Born weights as Kähler volumes (the volume companion).**
-Instantiating the unconditional POVM volume engine `povm_born_frequency_volume_uncond` at the
-unsharp `weakPOVM η`: i.i.d. Fubini–Study trials on the dilated ontic `Σ' = ℂℙ³` have the
+Instantiating the unconditional POVM volume engine `povm_born_frequency_basin` at the
+unsharp `weakPOVM η`: i.i.d. trials over the fibred epistemic law on the dilated ontic `Σ' = ℂℙ³` have the
 `i`-th weak-outcome empirical frequency converge, on a single almost-sure event, to the weak
-Born weight `(weakPOVM η).weight ψ i` — realised as a sum of Fubini–Study volumes of the
-dilated barycentric cells.
+Born weight `(weakPOVM η).weight ψ i` — realised as a sum of epistemic typicality measures of the
+dilated global basins.
 
 This is the **partial volume nudge** reading: at `η = 0` the dilated volumes are the trivial
 `1/2` split (no nudge); at `η = 1` the full projective carve; intermediate `η` a partial

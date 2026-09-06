@@ -41,7 +41,7 @@ This file:
 
 The first *symmetric* qutrit entry; the dilation lives on `ℂℙ^{N·|ι|−1} = ℂℙ²⁶`
 (`N = 3`, `|ι| = 9`). The capstone routes through the hpos-free engine
-(`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no genericity
+(`povm_born_frequency_basin`, `RecordLayer/BasinFrequency.lean`), so no genericity
 hypothesis on the dilated state is carried (2026-06-11 migration).
 
 ## Source
@@ -210,10 +210,10 @@ theorem sic3_weight_eq (ψ : EuclideanSpace ℂ (Fin 3)) (hψ : ‖ψ‖ = 1) (i
 noncomputable def sic3Naimark : NaimarkDilation sic3POVM := canonicalNaimark sic3POVM
 
 /-- **The d=3 SIC-POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume_uncond` at the Hesse SIC: i.i.d. Fubini–Study trials on the
+`povm_born_frequency_basin` at the Hesse SIC: i.i.d. trials over the fibred epistemic law on the
 dilated ontic `Σ' = ℂℙ²⁶` have each SIC outcome's empirical frequency converge, on a single
 almost-sure event, to the SIC Born weight `p_{a,b}(ψ) = ⟨ψ, E_{a,b} ψ⟩ = (1/3)‖⟨ψ_{a,b},ψ⟩‖²`
-— realised as a sum of Fubini–Study volumes of the dilated barycentric cells. The first
+— realised as a sum of the epistemic typicality measures of the dilated global basins. The first
 *symmetric* non-qubit entry in the volume-frequency series; carving-free, Gleason-free,
 and (since the 2026-06-11 hpos migration) with no genericity hypothesis on the dilated
 state — notably, `ψ ⊥ ψ_{a,b}` (a SIC outcome weight exactly zero) is covered. -/
