@@ -31,7 +31,7 @@ and deferred.
 | CR-11 | Moving-fibre witness | 1–2 weeks | **DONE 2026-09-05** — `SigmaLayer/MovingFibreWitness.lean` (`movingFibreEnergy`, `_epsProjectable`, ★★ `_not_projectable`, `catStroke` + 3 properties; 3 pins, CL-071), reconstruction-status §7 narrowed. ⚠️ Its `quantum_effective_shadowing` step does not typecheck: that theorem is about matrices, not `EpsProjectable` on `KSigma` |
 | CR-12 | Recurrence and persistence scope | days | **DONE 2026-09-05** (incl. the E5 spike retained-not-required annotation) — two new theorems making register-freezing checkable (`unifiedDeisolationModel_interaction_register`, `…_readout_register_irrelevant`, 2 pins), plus FiniteQMClosure header and TOUR |
 | CR-13 | Name the equivariance theorem | days | **DONE 2026-09-05** — new `SigmaLayer/Equivariance.lean` (`epistemicMeasure_equivariant`, ★★ `csd_equivariance`, 2 pins, CL-069), POSITS Posit 9, TOUR, Headlines. ⚠️ Corrects the item's premise: µL-preservation is **proved** on the concrete arena, not posited |
-| CR-14 | Exploration only: relaxation H-theorem | — | blocked on hitting-time asymptotics; after CR-11 |
+| CR-14 | Exploration only: relaxation H-theorem | — | **FALLBACK DONE 2026-09-06** (`relaxation_requires_hyperbolic_fibre`, pinned). ⛔ The H-theorem itself is **not scheduled** — the item says so and it is blocked on first-passage asymptotics; registered as `R-019` |
 | CR-15 | *Optional:* characterise the cell law | weeks | **DONE 2026-09-04** (`aa7c3cb`, `e6ba209`) |
 | CR-16 | *Optional:* the n-step chain theorem | weeks | **DONE 2026-09-05** — `RecordLayer/NStepChain.lean` (`csd_nstep_born`, `_succ`, `csd_twostep_born`, `csd_nstep_repeatable`, `chainState_shift`; 3 pins, CL-070), POSITS Posit 5. ⚠️ State-level; the n-stage **arena** construction is explicitly not built |
 
@@ -147,6 +147,35 @@ discharge condition is now plain continuity of the projected flow.
 `bargmannObservable_of_projUnitary` makes the observable constant. Trivially continuous, and
 circular — the selection theorem exists for *abstract* setups where unitarity is not yet known.
 
+
+## CR-14: the fallback was the target, and the item agrees
+
+CR-14 proposes a relaxation H-theorem and then says of it: *"Do not schedule this as a result."* Its
+own fallback is *"state and prove the obstruction for the compact-group class"*. That fallback was
+built on 2026-09-06 and the H-theorem was not attempted.
+
+**Done:** `relaxation_requires_hyperbolic_fibre`
+(`SigmaLayer/MovingFibreWitness.lean`). On **one and the same fibre** `KTorus`, the corpus's own
+translation `kFlow sh` admits **no summable decay envelope** — for every shift and every summable
+`ε` — while the hyperbolic `catStroke` has a finitely supported one. That converts "CSD has no
+relaxation account" into "relaxation requires a hyperbolic fibre, and here is the proof that
+translations cannot supply it".
+
+⚠️ **Not a relaxation theorem.** It says which dynamics *could* relax, not that any does. No
+coarse-grained distribution is shown to approach Haar and no H-theorem is claimed.
+
+⚠️ **Not "Σ cannot mix" either.** The obstruction is the choice of *map*: the compact-group theorem
+rules out flows whose iterates are powers of a compact-group element, and a torus *translation* is
+one while a toral *automorphism* is not (`LF4/KahlerFibreMixing.lean`).
+
+**Left open as `R-019`,** with the reasons it is not scheduled: the binding problem is first-passage
+asymptotics for small sets (research-grade, absent from Mathlib), `HasCorrelationDecayUpTo` is the
+untouched finite-scale escape, and route 2 was closed for `kFlow` specifically by
+`exists_lag_le_envelope`, so an attempt needs a different fibre map. This is the one place a rival
+programme is ahead, and it is the only route to Track B.
+
+⚠️ The item also asks for a paragraph in **Paper D §8**. Manuscripts are not edited here; that
+paragraph is the author's, and the repository side is `R-019` plus this entry.
 
 ## Numbering warning
 

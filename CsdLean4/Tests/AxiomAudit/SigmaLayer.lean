@@ -3528,6 +3528,17 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.catStroke_measurePreserving
 
+-- CR-14 FALLBACK (2026-09-06): the H-theorem is NOT attempted (the item says do not schedule it;
+-- blocked on first-passage asymptotics, R-019). What IS proved is the structural precondition, and
+-- it converts "CSD has no relaxation account" into "relaxation requires a hyperbolic fibre, and
+-- here is why translations cannot supply it". On ONE fibre: kFlow admits no summable decay envelope
+-- for any shift and any summable eps; catStroke has a finitely supported one. ⚠️ NOT a relaxation
+-- theorem -- it says which dynamics COULD relax, not that any does. And the obstruction is the
+-- choice of MAP, not the space (a toral automorphism is not a compact-group power).
+/-- info: 'CSD.SigmaLayer.relaxation_requires_hyperbolic_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.relaxation_requires_hyperbolic_fibre
+
 -- CR-4 PREREQUISITE (2026-09-05): the fibred frequency theorem. Every frequency theorem in the
 -- corpus lived on the BASE (fubiniStudyMeasure + bornRegion, 32 call sites); the canonical A7
 -- reading is fibred and had no frequency theorem at all, only the single-draw weight

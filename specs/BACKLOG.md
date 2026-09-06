@@ -703,6 +703,7 @@ keep these lines to one hook each, do not expand them here.
 - **R-012** — FS-as-typicality sector posit, reduces to D1 (`FlowBornFrequency.lean` / `SigmaLayer/MeasureBridge.lean`)
 - **R-013** — n-fold hybrid amplitude equality (`MeasurementAdder.lean` / `Reversible/Lift.lean`)
 - **R-016** — arena-level Hamiltonian generation: the chart→arena transport (`ShearDeIsolation.lean` / `ShearWitness.lean`; brick 3 `JointLift.lean` / `HamiltonianShift.lean` narrow it to the manifold identification, 2026-09-02)
+- **R-019** — relaxation H-theorem for the fibre (`MovingFibreWitness.lean`; blocked on first-passage asymptotics, ⚠️ **explicitly not scheduled** — the structural precondition *is* proved: relaxation requires a hyperbolic fibre)
 
 ## ecdsa.fail — EXTRACTED to a separate repository (2026-07-20)
 

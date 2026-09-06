@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.RecordLayer.ApproxProjectability
 public import CsdLean4.Mathlib.Dynamics.CatMapWitness
+public import CsdLean4.LF4.KahlerFlowNoMixing
 
 /-!
 # SigmaLayer/MovingFibreWitness: an `ε > 0` projectable Hamiltonian, and a fibre that moves
@@ -101,6 +102,39 @@ theorem catStroke_bijective : Function.Bijective catStroke :=
 
 theorem catStroke_continuous : Continuous catStroke :=
   MeasureTheory.continuous_cat
+
+/-- ★ **The hyperbolic stroke does decorrelate**, with a finitely supported envelope: correlations
+are exactly zero at every nonzero lag. -/
+theorem catStroke_hasCorrelationDecay :
+    MeasureTheory.HasCorrelationDecay (volume : Measure KTorus) catStroke
+      MeasureTheory.catObs MeasureTheory.catEnv :=
+  MeasureTheory.cat_hasCorrelationDecay
+
+/-- ★★ **Relaxation requires a hyperbolic fibre — the CR-14 fallback, as a theorem.**
+
+On **one and the same fibre** `KTorus`, with observables of the same kind:
+
+* the corpus's own fibre flow, the **translation** `kFlow sh`, admits **no summable decay
+  envelope at all** — for *every* shift and *every* summable `ε`; and
+* the **hyperbolic** stroke `catStroke` has one, indeed a finitely supported one.
+
+⚠️ **What this converts, and what it does not.** It converts "CSD has no relaxation account" into
+"relaxation requires a hyperbolic fibre, and here is the proof that translations cannot supply it".
+That is a structural result about which dynamics *could* relax, not a relaxation theorem: nothing
+here shows a coarse-grained distribution approaches Haar, and no H-theorem is claimed. The
+H-theorem itself stays blocked on first-passage asymptotics for small sets, which is research-grade
+and is **not** scheduled (`RESIDUE(R-019)`).
+
+⚠️ It also does not say Σ cannot mix. The obstruction is the **choice of map**, not the space:
+`not_hasCorrelationDecay_of_compactGroup` rules out flows whose iterates are powers of a
+compact-group element, and a torus *translation* is one while a toral *automorphism* is not
+(`LF4/KahlerFibreMixing.lean`). -/
+theorem relaxation_requires_hyperbolic_fibre (p₀ : CPN N) (sh : KTorus) {ε : ℕ → ℝ}
+    (hsum : Summable ε) :
+    (¬ MeasureTheory.HasCorrelationDecay (kMuL p₀) (kFlow sh) (fibreObs (N := N)) ε)
+      ∧ MeasureTheory.HasCorrelationDecay (volume : Measure KTorus) catStroke
+          MeasureTheory.catObs MeasureTheory.catEnv :=
+  ⟨not_hasCorrelationDecay_kFlow p₀ sh hsum, catStroke_hasCorrelationDecay⟩
 
 /-! ### The `ε > 0` witness -/
 
