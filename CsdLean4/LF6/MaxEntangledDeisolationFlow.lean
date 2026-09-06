@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF5.FlowBornFrequency
 public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF3.Singlet.Expectations
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-D: the general d x d maximally-entangled de-isolation flow
@@ -467,8 +468,13 @@ theorem maxEntangledDeisolation_pointer_volume (d : ℕ) [NeZero d] {M : ℕ}
         (Matrix.toEuclideanLin (vnDilationV (d * d)) (nudgedMaxEntangled d)))
     (hψ'0 : ψ' ≠ 0) (w : Fin d × Fin d) :
     ∑ n : Fin (d * d),
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, medIdx d w)))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, medIdx d w)))).toReal
       = medWeight d w := by
+  have hψ'1 : ‖ψ'‖ = 1 := by
+    rw [hψ'eq]
+    exact piLpCongrLeft_vnDilationV_norm e _ (nudgedMaxEntangled_norm d (NeZero.pos d))
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
   rw [← vnDilation_pointer_volume (nudgedMaxEntangled d)
       (nudgedMaxEntangled_norm d (NeZero.pos d)) e p₀ ψ' hψ'eq hψ'0 (medIdx d w)]
   exact nudgedMaxEntangled_born d w
@@ -487,25 +493,26 @@ theorem maxEntangledDeisolation_frequency (d : ℕ) [NeZero d] {M : ℕ}
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV (d * d)) (nudgedMaxEntangled d)))
     (hψ'0 : ψ' ≠ 0)
-    (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j) (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ w : Fin d × Fin d,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin (d * d),
             (∑ k ∈ Finset.range m,
-                Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, medIdx d w)))
+                Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                  (e (n, medIdx d w)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (medWeight d w)) := by
-  filter_upwards [vnDilation_pointer_frequency (nudgedMaxEntangled d)
-      (nudgedMaxEntangled_norm d (NeZero.pos d)) e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep]
+  filter_upwards [vnDilation_pointer_frequency_basin (nudgedMaxEntangled d)
+      (nudgedMaxEntangled_norm d (NeZero.pos d)) e ψ' hψ'eq hψ'0 X hX hlaw hindep]
     with ω hω w
   have h := hω (medIdx d w)
   rwa [nudgedMaxEntangled_born d w] at h
@@ -701,11 +708,12 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
         (Matrix.toEuclideanLin (vnDilationV (d * d)) (nudgedMaxEntangled d)))
     (hψ'0 : ψ' ≠ 0)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j) (fun _ => (1 : ℝ))))) :
     -- (1) genuine dynamics
     measurementFlow (d * d) e ≠ id
     -- (2) FS measure-preserving
@@ -714,7 +722,8 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
     -- (3) pointer-block FS volume = the Born weight
     ∧ (∀ w : Fin d × Fin d,
         ∑ n : Fin (d * d),
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, medIdx d w)))).toReal
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+                (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, medIdx d w)))).toReal
           = medWeight d w)
     -- (4) a.s. block frequencies → the Born weight
     ∧ (∀ᵐ ω ∂ Pr, ∀ w : Fin d × Fin d,
@@ -722,7 +731,8 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
           (fun m : ℕ =>
             ∑ n : Fin (d * d),
               (∑ k ∈ Finset.range m,
-                  Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, medIdx d w)))
+                  Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                  (e (n, medIdx d w)))
                     (fun _ => (1 : ℝ)) ω)
                 / (m : ℝ))
           atTop
@@ -740,7 +750,7 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
       exact measurementFlow_ne_id h e,
    measurementFlow_measurePreserving e p₀,
    fun w => maxEntangledDeisolation_pointer_volume d e p₀ ψ' hψ'eq hψ'0 w,
-   maxEntangledDeisolation_frequency d e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep,
+   maxEntangledDeisolation_frequency d e ψ' hψ'eq hψ'0 X hX hlaw hindep,
    fun i => maxEntangled_sector_marginal_uniform d hd i,
    maxEntangledSector_eq_phiPlus d hd,
    fun _Λ _ μ _ RA RB hPP hRep => no_product_partition_realises_phiPlus μ RA RB hPP hRep⟩

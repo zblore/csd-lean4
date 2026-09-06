@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF6.CGLMPQudit
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-1: the `d`-intrinsic CGLMP capstone
@@ -78,11 +79,12 @@ theorem maxEntangledDeisolation_flow_capstone_cglmp (d : ℕ) [NeZero d] (hd : 2
         (Matrix.toEuclideanLin (vnDilationV (d * d)) (nudgedMaxEntangled d)))
     (hψ'0 : ψ' ≠ 0)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j) (fun _ => (1 : ℝ))))) :
     -- (1) genuine dynamics
     measurementFlow (d * d) e ≠ id
     -- (2) FS measure-preserving
@@ -91,7 +93,8 @@ theorem maxEntangledDeisolation_flow_capstone_cglmp (d : ℕ) [NeZero d] (hd : 2
     -- (3) pointer-block FS volume = the Born weight
     ∧ (∀ w : Fin d × Fin d,
         ∑ n : Fin (d * d),
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, medIdx d w)))).toReal
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+                (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, medIdx d w)))).toReal
           = medWeight d w)
     -- (4) a.s. block frequencies → the Born weight
     ∧ (∀ᵐ ω ∂ Pr, ∀ w : Fin d × Fin d,
@@ -99,7 +102,8 @@ theorem maxEntangledDeisolation_flow_capstone_cglmp (d : ℕ) [NeZero d] (hd : 2
           (fun m : ℕ =>
             ∑ n : Fin (d * d),
               (∑ k ∈ Finset.range m,
-                  Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, medIdx d w)))
+                  Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                    (e (n, medIdx d w)))
                     (fun _ => (1 : ℝ)) ω)
                 / (m : ℝ))
           atTop
