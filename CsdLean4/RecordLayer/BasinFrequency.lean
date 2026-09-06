@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.RecordLayer.GlobalBasin
 public import CsdLean4.LF4.BornFrequencyPartition
+public import CsdLean4.LF4.BornRegionUncond
 
 /-!
 # RecordLayer/BasinFrequency: frequencies converge to Born on the fibred arena
@@ -44,6 +45,18 @@ number needs only `0 ≤ ‖·‖²`. Vanishing amplitudes give null basins whos
 `0`, which is their Born weight. So the fibred route is unconditional **by construction** rather
 than by repair.
 
+## The migration bridge
+
+★ `globalBasin_toReal_eq_bornRegion_toReal` — the two routes give the *same number*, unconditionally.
+This is the second half of the CR-4 toolkit: the frequency theorem above handles the a.s.-limit
+statements, this handles the weight statements, and together they turn the base-to-fibre migration
+into rewriting rather than re-deriving.
+
+⚠️ Note which side needs what. The base-side value is `bornRegion_fs_measure_uncond`, itself the
+repaired form of `bornRegion_fs_measure`, which carries a genericity hypothesis `hpos`. The fibred
+side is `globalBasin_born` and needs nothing. So the bridge is stated unconditionally, and migrating
+a statement across it can only *drop* hypotheses, never add them.
+
 ## References
 
 `RecordLayer/GlobalBasin.lean` (`globalBasin`, `epistemicMeasure`, `globalBasin_prob`,
@@ -55,7 +68,7 @@ than by repair.
 
 @[expose] public section
 
-open MeasureTheory Filter Topology
+open MeasureTheory Filter Topology Matrix.UnitaryGroup
 
 namespace CSD
 namespace RecordLayer
@@ -120,6 +133,24 @@ theorem globalBasin_born_frequency (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ 
     (fun i => by
       rw [globalBasin_born ψ hψ0 hψ i, ENNReal.toReal_ofReal (by positivity)])
     X hX hlaw hindep
+
+/-! ### The migration bridge -/
+
+/-- ★ **The two routes give the same number.** The fibred basin measure and the base-only Born-region
+measure agree, unconditionally — both are `‖⟨eᵢ, ψ⟩‖²`.
+
+This is what makes the base-to-fibre migration a rewrite. ⚠️ The base side arrives via
+`bornRegion_fs_measure_uncond`, the repaired form of `bornRegion_fs_measure` (which carries a
+genericity hypothesis `hpos`); the fibred side needs nothing. So crossing this bridge can only drop
+hypotheses. -/
+theorem globalBasin_toReal_eq_bornRegion_toReal {M : ℕ} (p₀ : CPN (M + 1))
+    (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (i : Fin (M + 1)) :
+    (epistemicMeasure (Projectivization.mk ℂ ψ hψ0)
+        (globalBasin (momentContext (M + 1)) i)).toReal
+      = (fubiniStudyMeasure p₀ (bornRegion ψ hψ0 i)).toReal := by
+  rw [globalBasin_born ψ hψ0 hψ i,
+    ENNReal.toReal_ofReal (by positivity),
+    LF4.bornRegion_fs_measure_uncond p₀ ψ hψ0 hψ i]
 
 end RecordLayer
 end CSD

@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF5.FlowBornFrequency
+public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
@@ -237,7 +238,12 @@ theorem decoherence_diagonal_eq_pointer_volume {M : ℕ}
     (hψ'0 : ψ' ≠ 0) (i : Fin N) :
     decohereReduced ψ i i
       = ((∑ n : Fin N,
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal : ℝ) : ℂ) := by
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+              (CSD.RecordLayer.globalBasin
+                (CSD.RecordLayer.momentContext (M + 1)) (e (n, i)))).toReal : ℝ) : ℂ) := by
+  have hψ'1 : ‖ψ'‖ = 1 := by
+    rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e ψ hψ
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
   rw [decoherence_diagonal_born, vnDilation_pointer_volume ψ hψ e p₀ ψ' hψ'eq hψ'0 i]
 
 /-! ### Conservativity of the de-isolation -/
