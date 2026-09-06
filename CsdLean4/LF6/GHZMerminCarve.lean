@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF6.GHZDeisolationFlow
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-C.3: the GHZ Mermin-context carve (the genuine contextual increment)
@@ -71,7 +72,7 @@ does not re-derive it. What is exercised is the measurement **dynamics**
 
 C.2's `ghzDeisolation_contextuality_anchor` is a bare re-export of C.1. C.3's
 `ghzDeisolation_carve_not_product` feeds the carve's OWN four achieved Mermin
-correlations (each a sign-product-weighted sum of `bornRegion` FS volumes on
+correlations (each a sign-product-weighted sum of global-basin measures on
 `Σ'`, discharged to the Mermin value `±1` via
 `ghzDeisolation_blockVolume_correlation`) into C.1
 `no_product_partition_realises_ghz`. The four-context tie is **closed**: no
@@ -377,59 +378,70 @@ theorem nudgedGHZ_mermin_ne_zero (ctx : Fin 3 → PauliAxis) (pv : ℝ)
 
 /-! ### Deliverable: pointer-block FS volume = Mermin block weight -/
 
-/-- **The Mermin-context reproduction (per-block).** The context-fixed
-`BornRegion` pointer-block `o` Fubini-Study volume of the GHZ de-isolation flow
-equals the Mermin block weight `(1/16)(1 + signProd o · pv)²`, for the prepared
-state `φ = nudgedGHZ_mermin ctx`. Composes LF5 `vnDilation_pointer_volume` at
-`N = 8` (Gleason-free, Born = FS-volume imported from the DH engine) with the
-nudge coordinate-Born identity. -/
+/-- **The Mermin-context reproduction (per-block).** The context-fixed pointer-block `o`
+epistemic typicality measure of the GHZ de-isolation flow equals the Mermin block weight
+`(1/16)(1 + signProd o · pv)²`, for the prepared state `φ = nudgedGHZ_mermin ctx`.
+Composes LF5 `vnDilation_pointer_volume_basin` at `N = 8` (Gleason-free, Born = FS-volume
+imported from the DH engine) with the nudge coordinate-Born identity.
+
+The blocks are the global basins on the fibred ontic arena `Σ = ℂℙ^{63} × T²` (migrated
+2026-09-06, CR-4); the base-side Fubini-Study reading is `vnDilation_pointer_volume`, and
+the two agree by `globalBasin_toReal_eq_bornRegion_toReal`. -/
 theorem ghzMermin_pointer_volume {M : ℕ}
     (ctx : Fin 3 → PauliAxis) (pv : ℝ) (hpv : phaseProd ctx = (pv : ℂ)) (hpv2 : pv ^ 2 = 1)
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctx)))
     (hψ'0 : ψ' ≠ 0) (o : Fin 2 × Fin 2 × Fin 2) :
     ∑ n : Fin 8,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, ghzIdx o)))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, ghzIdx o)))).toReal
       = (1/16) * (1 + signProd o * pv) ^ 2 := by
-  rw [← vnDilation_pointer_volume (nudgedGHZ_mermin ctx)
-        (nudgedGHZ_mermin_norm ctx pv hpv hpv2) e p₀ ψ' hψ'eq hψ'0 (ghzIdx o)]
+  rw [← vnDilation_pointer_volume_basin (nudgedGHZ_mermin ctx)
+        (nudgedGHZ_mermin_norm ctx pv hpv hpv2) e ψ' hψ'eq hψ'0 (ghzIdx o)]
   exact nudgedGHZ_mermin_born ctx o pv hpv
 
 /-! ### The headline: the carve's block-volume correlation is the Mermin value -/
 
 /-- **The carve's sign-product-weighted block-volume correlation
 (`merminCarveCorrelation`).** The achieved value of the EXHIBITED Mermin-context
-carve: a sign-product-weighted sum of `bornRegion` Fubini-Study volumes on
-`Σ' = ℂℙ^{63}` (not a free real). -/
-noncomputable def merminCarveCorrelation {M : ℕ} (p₀ : CPN (M + 1))
+carve: a sign-product-weighted sum of global-basin measures on
+`Σ = ℂℙ^{63} × T²` (not a free real). -/
+noncomputable def merminCarveCorrelation {M : ℕ}
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0) : ℝ :=
   ∑ o : Fin 2 × Fin 2 × Fin 2, signProd o *
-    (∑ n : Fin 8, (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, ghzIdx o)))).toReal)
+    (∑ n : Fin 8,
+      (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+        (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+          (e (n, ghzIdx o)))).toReal)
 
 /-- **`ghzDeisolation_blockVolume_correlation` (THE C.3 headline, the genuine
 increment over C.2).** For any Mermin context with real phase product `pv`, the
-carve's sign-product-weighted pointer-block Fubini-Study-volume sum equals the
+carve's sign-product-weighted pointer-block basin-measure sum equals the
 Mermin expectation `pv`. GENUINELY COMPUTED (LF5 engine block volumes composed
 with the Mermin Born identity), not asserted — this is what C.2's diagonal carve
 lacked. Instantiated at the four contexts: `<XXX> = +1`,
 `<XYY> = <YXY> = <YYX> = -1`. -/
 theorem ghzDeisolation_blockVolume_correlation {M : ℕ}
     (ctx : Fin 3 → PauliAxis) (pv : ℝ) (hpv : phaseProd ctx = (pv : ℂ)) (hpv2 : pv ^ 2 = 1)
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctx)))
     (hψ'0 : ψ' ≠ 0) :
-    merminCarveCorrelation p₀ e ψ' hψ'0 = pv := by
+    merminCarveCorrelation e ψ' hψ'0 = pv := by
   unfold merminCarveCorrelation
   have hcongr : ∀ o : Fin 2 × Fin 2 × Fin 2,
       signProd o *
-          (∑ n : Fin 8, (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, ghzIdx o)))).toReal)
+          (∑ n : Fin 8,
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+              (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                (e (n, ghzIdx o)))).toReal)
         = signProd o * ((1/16) * (1 + signProd o * pv) ^ 2) := fun o => by
-    rw [ghzMermin_pointer_volume ctx pv hpv hpv2 e p₀ ψ' hψ'eq hψ'0 o]
+    rw [ghzMermin_pointer_volume ctx pv hpv hpv2 e ψ' hψ'eq hψ'0 o]
   rw [Finset.sum_congr rfl (fun o _ => hcongr o), sum_signProd_merminWeight pv]
 
 /-- **The carve's XXX block-volume correlation is the QM Mermin expectation
@@ -438,58 +450,58 @@ Mermin expectation `Complex.re ⟨ghz| sigma_x⊗sigma_x⊗sigma_x |ghz⟩` (via
 `ghz_expectation_xxx`), through structurally distinct machinery (LF5 FS volumes
 vs the Hilbert expectation) meeting at `+1`. -/
 theorem merminCarveCorrelation_eq_xxx {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctxXXX)))
     (hψ'0 : ψ' ≠ 0) :
-    merminCarveCorrelation p₀ e ψ' hψ'0
+    merminCarveCorrelation e ψ' hψ'0
       = Complex.re (inner ℂ ghzState
           (Matrix.toEuclideanLin (sigmaDotTriple chshA chshA chshA) ghzState)) := by
   rw [ghzDeisolation_blockVolume_correlation ctxXXX 1 phaseProd_ctxXXX (by norm_num)
-        e p₀ ψ' hψ'eq hψ'0, ghz_expectation_xxx]
+        e ψ' hψ'eq hψ'0, ghz_expectation_xxx]
 
 /-- **The carve's XYY block-volume correlation is the QM Mermin expectation
 `<XYY>` (`= -1`).** The `σx⊗σy⊗σy` analogue of `merminCarveCorrelation_eq_xxx`. -/
 theorem merminCarveCorrelation_eq_xyy {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctxXYY)))
     (hψ'0 : ψ' ≠ 0) :
-    merminCarveCorrelation p₀ e ψ' hψ'0
+    merminCarveCorrelation e ψ' hψ'0
       = Complex.re (inner ℂ ghzState
           (Matrix.toEuclideanLin (sigmaDotTriple chshA chshA' chshA') ghzState)) := by
   rw [ghzDeisolation_blockVolume_correlation ctxXYY (-1) phaseProd_ctxXYY (by norm_num)
-        e p₀ ψ' hψ'eq hψ'0, ghz_expectation_xyy]
+        e ψ' hψ'eq hψ'0, ghz_expectation_xyy]
 
 /-- **The carve's YXY block-volume correlation is the QM Mermin expectation
 `<YXY>` (`= -1`).** The `σy⊗σx⊗σy` analogue. -/
 theorem merminCarveCorrelation_eq_yxy {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctxYXY)))
     (hψ'0 : ψ' ≠ 0) :
-    merminCarveCorrelation p₀ e ψ' hψ'0
+    merminCarveCorrelation e ψ' hψ'0
       = Complex.re (inner ℂ ghzState
           (Matrix.toEuclideanLin (sigmaDotTriple chshA' chshA chshA') ghzState)) := by
   rw [ghzDeisolation_blockVolume_correlation ctxYXY (-1) phaseProd_ctxYXY (by norm_num)
-        e p₀ ψ' hψ'eq hψ'0, ghz_expectation_yxy]
+        e ψ' hψ'eq hψ'0, ghz_expectation_yxy]
 
 /-- **The carve's YYX block-volume correlation is the QM Mermin expectation
 `<YYX>` (`= -1`).** The `σy⊗σy⊗σx` analogue. -/
 theorem merminCarveCorrelation_eq_yyx {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctxYYX)))
     (hψ'0 : ψ' ≠ 0) :
-    merminCarveCorrelation p₀ e ψ' hψ'0
+    merminCarveCorrelation e ψ' hψ'0
       = Complex.re (inner ℂ ghzState
           (Matrix.toEuclideanLin (sigmaDotTriple chshA' chshA' chshA) ghzState)) := by
   rw [ghzDeisolation_blockVolume_correlation ctxYYX (-1) phaseProd_ctxYYX (by norm_num)
-        e p₀ ψ' hψ'eq hψ'0, ghz_expectation_yyx]
+        e ψ' hψ'eq hψ'0, ghz_expectation_yyx]
 
 /-! ### The dynamical carve-tie to C.1 (the four-context contextuality tie) -/
 
@@ -498,7 +510,7 @@ tie CLOSED).** No setting-local `±1` product partition of any shared
 probability space `(Λ, μ)` reproduces the EXHIBITED GHZ Mermin-context carve's
 four block-volume correlations. The hypothesis `hmatch` feeds the carve's OWN
 achieved values (`merminCarveCorrelation` at the four contexts XXX/XYY/YXY/YYX —
-each a sign-product-weighted sum of `bornRegion` FS volumes) into the four LHV
+each a sign-product-weighted sum of global-basin measures) into the four LHV
 integrals of `ReproducesGHZ`; the proof discharges each carve correlation to its
 Mermin value `±1` via `ghzDeisolation_blockVolume_correlation`, then routes
 through C.1 `no_product_partition_realises_ghz` — Mermin's `+1 = -1`
@@ -511,7 +523,7 @@ The carve data is a family indexed by the context (`ψ' ctx` is the prepared
 `nudgedGHZ_mermin ctx` for that Mermin measurement basis); the Mermin no-go
 consumes all four contexts, so the family is essential. -/
 theorem ghzDeisolation_carve_not_product {M : ℕ}
-    (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (ψ' : (Fin 3 → PauliAxis) → EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'0 : ∀ ctx, ψ' ctx ≠ 0)
     (hψ'eq : ∀ ctx, ψ' ctx = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
@@ -521,31 +533,31 @@ theorem ghzDeisolation_carve_not_product {M : ℕ}
     (hPP : IsProductPartitionGHZ R)
     (hmatch :
       (∫ l, R 0 PauliAxis.x l * R 1 PauliAxis.x l * R 2 PauliAxis.x l ∂μ
-          = merminCarveCorrelation p₀ e (ψ' ctxXXX) (hψ'0 ctxXXX)) ∧
+          = merminCarveCorrelation e (ψ' ctxXXX) (hψ'0 ctxXXX)) ∧
       (∫ l, R 0 PauliAxis.x l * R 1 PauliAxis.y l * R 2 PauliAxis.y l ∂μ
-          = merminCarveCorrelation p₀ e (ψ' ctxXYY) (hψ'0 ctxXYY)) ∧
+          = merminCarveCorrelation e (ψ' ctxXYY) (hψ'0 ctxXYY)) ∧
       (∫ l, R 0 PauliAxis.y l * R 1 PauliAxis.x l * R 2 PauliAxis.y l ∂μ
-          = merminCarveCorrelation p₀ e (ψ' ctxYXY) (hψ'0 ctxYXY)) ∧
+          = merminCarveCorrelation e (ψ' ctxYXY) (hψ'0 ctxYXY)) ∧
       (∫ l, R 0 PauliAxis.y l * R 1 PauliAxis.y l * R 2 PauliAxis.x l ∂μ
-          = merminCarveCorrelation p₀ e (ψ' ctxYYX) (hψ'0 ctxYYX))) :
+          = merminCarveCorrelation e (ψ' ctxYYX) (hψ'0 ctxYYX))) :
     False := by
   obtain ⟨m1, m2, m3, m4⟩ := hmatch
   refine no_product_partition_realises_ghz μ R hPP ⟨?_, ?_, ?_, ?_⟩
   · rw [m1, ghzDeisolation_blockVolume_correlation ctxXXX 1 phaseProd_ctxXXX (by norm_num)
-        e p₀ (ψ' ctxXXX) (hψ'eq ctxXXX) (hψ'0 ctxXXX)]
+        e (ψ' ctxXXX) (hψ'eq ctxXXX) (hψ'0 ctxXXX)]
   · rw [m2, ghzDeisolation_blockVolume_correlation ctxXYY (-1) phaseProd_ctxXYY (by norm_num)
-        e p₀ (ψ' ctxXYY) (hψ'eq ctxXYY) (hψ'0 ctxXYY)]
+        e (ψ' ctxXYY) (hψ'eq ctxXYY) (hψ'0 ctxXYY)]
   · rw [m3, ghzDeisolation_blockVolume_correlation ctxYXY (-1) phaseProd_ctxYXY (by norm_num)
-        e p₀ (ψ' ctxYXY) (hψ'eq ctxYXY) (hψ'0 ctxYXY)]
+        e (ψ' ctxYXY) (hψ'eq ctxYXY) (hψ'0 ctxYXY)]
   · rw [m4, ghzDeisolation_blockVolume_correlation ctxYYX (-1) phaseProd_ctxYYX (by norm_num)
-        e p₀ (ψ' ctxYYX) (hψ'eq ctxYYX) (hψ'0 ctxYYX)]
+        e (ψ' ctxYYX) (hψ'eq ctxYYX) (hψ'0 ctxYYX)]
 
 /-! ### The capstone -/
 
 /-- **The LF6-C.3 capstone: the GHZ Mermin-context carve.** The genuine
 contextual increment over C.2. On the LF5 de-isolation flow (dynamics
 `Phi != id`, FS measure-preserving, inherited from C.2), for the four Mermin
-contexts the carve's sign-product-weighted pointer-block Fubini-Study volumes
+contexts the carve's sign-product-weighted pointer-block basin measures
 reproduce the four Mermin correlations, and the carve ties to C.1 by its own
 achieved values. Conjuncts:
 
@@ -561,7 +573,7 @@ achieved values. Conjuncts:
    routed through C.1 `no_product_partition_realises_ghz`).
 
 The increment over C.2 is conjunct (3)/(4)/(5): a GENUINE dynamical Mermin
-correlation (a sign-product-weighted sum of `bornRegion` FS volumes = the Mermin
+correlation (a sign-product-weighted sum of global-basin measures = the Mermin
 expectation), not a diagonal-carve re-export. Born = FS-volume is imported from
 the DH/FS-volume engine, not re-derived; the flow realises (not derives) the
 Mermin measurement. Residue: SO-1 (the GHZ entangled sector posited). Honest
@@ -578,17 +590,17 @@ theorem ghzMermin_carve_capstone {M : ℕ}
     ∧ MeasurePreserving (measurementFlow 8 e)
         (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
     -- (3) the XXX carve correlation is the QM Mermin expectation ⟨XXX⟩ = +1
-    ∧ merminCarveCorrelation p₀ e ψ' hψ'0
+    ∧ merminCarveCorrelation e ψ' hψ'0
         = Complex.re (inner ℂ ghzState
             (Matrix.toEuclideanLin (sigmaDotTriple chshA chshA chshA) ghzState))
     -- (4) all four Mermin carve correlations are the Mermin values ±1
-    ∧ (∀ {M' : ℕ} (e' : Fin 8 × Fin 8 ≃ Fin (M' + 1)) (p₀' : CPN (M' + 1))
+    ∧ (∀ {M' : ℕ} (e' : Fin 8 × Fin 8 ≃ Fin (M' + 1))
         (ctx : Fin 3 → PauliAxis) (pv : ℝ), phaseProd ctx = (pv : ℂ) → pv ^ 2 = 1 →
         ∀ (φ' : EuclideanSpace ℂ (Fin (M' + 1)))
           (_hφ'eq : φ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e'
               (Matrix.toEuclideanLin (vnDilationV 8) (nudgedGHZ_mermin ctx)))
           (hφ'0 : φ' ≠ 0),
-          merminCarveCorrelation p₀' e' φ' hφ'0 = pv)
+          merminCarveCorrelation e' φ' hφ'0 = pv)
     -- (5) the four-context carve-tie to C.1
     ∧ (∀ (ψ'' : (Fin 3 → PauliAxis) → EuclideanSpace ℂ (Fin (M + 1)))
         (hψ''0 : ∀ ctx, ψ'' ctx ≠ 0),
@@ -597,20 +609,20 @@ theorem ghzMermin_carve_capstone {M : ℕ}
         ∀ (Λ : Type) [MeasurableSpace Λ] (μ : Measure Λ) [IsProbabilityMeasure μ]
           (R : Fin 3 → PauliAxis → Λ → ℝ), IsProductPartitionGHZ R →
           ((∫ l, R 0 PauliAxis.x l * R 1 PauliAxis.x l * R 2 PauliAxis.x l ∂μ
-              = merminCarveCorrelation p₀ e (ψ'' ctxXXX) (hψ''0 ctxXXX)) ∧
+              = merminCarveCorrelation e (ψ'' ctxXXX) (hψ''0 ctxXXX)) ∧
            (∫ l, R 0 PauliAxis.x l * R 1 PauliAxis.y l * R 2 PauliAxis.y l ∂μ
-              = merminCarveCorrelation p₀ e (ψ'' ctxXYY) (hψ''0 ctxXYY)) ∧
+              = merminCarveCorrelation e (ψ'' ctxXYY) (hψ''0 ctxXYY)) ∧
            (∫ l, R 0 PauliAxis.y l * R 1 PauliAxis.x l * R 2 PauliAxis.y l ∂μ
-              = merminCarveCorrelation p₀ e (ψ'' ctxYXY) (hψ''0 ctxYXY)) ∧
+              = merminCarveCorrelation e (ψ'' ctxYXY) (hψ''0 ctxYXY)) ∧
            (∫ l, R 0 PauliAxis.y l * R 1 PauliAxis.y l * R 2 PauliAxis.x l ∂μ
-              = merminCarveCorrelation p₀ e (ψ'' ctxYYX) (hψ''0 ctxYYX))) → False) :=
+              = merminCarveCorrelation e (ψ'' ctxYYX) (hψ''0 ctxYYX))) → False) :=
   ⟨measurementFlow_ne_id (by norm_num) e,
    measurementFlow_measurePreserving e p₀,
-   merminCarveCorrelation_eq_xxx e p₀ ψ' hψ'eq hψ'0,
-   fun e' p₀' ctx pv hpv hpv2 φ' hφ'eq hφ'0 =>
-     ghzDeisolation_blockVolume_correlation ctx pv hpv hpv2 e' p₀' φ' hφ'eq hφ'0,
+   merminCarveCorrelation_eq_xxx e ψ' hψ'eq hψ'0,
+   fun e' ctx pv hpv hpv2 φ' hφ'eq hφ'0 =>
+     ghzDeisolation_blockVolume_correlation ctx pv hpv hpv2 e' φ' hφ'eq hφ'0,
    fun ψ'' hψ''0 hψ''eq Λ _ μ _ R hPP hmatch =>
-     ghzDeisolation_carve_not_product e p₀ ψ'' hψ''0 hψ''eq μ R hPP hmatch⟩
+     ghzDeisolation_carve_not_product e ψ'' hψ''0 hψ''eq μ R hPP hmatch⟩
 
 end LF6
 end CSD
