@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.BornRegionUncond
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: Bell singlet joint probabilities as derived Kähler-volume frequencies
@@ -233,26 +234,28 @@ upgrade over `Empirical/CSD/Bell.lean`'s bundle-conditional capstones and over
 `LF4/SingletObservables.lean`'s carved sector identities. The amplitude values
 are the physics input; the `volume = Born number` step is derived. -/
 theorem bell_singlet_born_frequency_volume
-    (θ : ℝ) (p₀ : CPN 4)
+    (θ : ℝ)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN 4) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma 4) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure
+        (Projectivization.mk ℂ (bellSingletVec θ) (bellSingletVec_ne_zero θ)))
     (hindep : ∀ i : Fin 4,
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
           (fun n => Set.indicator
-            ((X n) ⁻¹' bornRegion (bellSingletVec θ) (bellSingletVec_ne_zero θ) i)
+            ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
             (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin 4,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((X k) ⁻¹' bornRegion (bellSingletVec θ) (bellSingletVec_ne_zero θ) i)
+                ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) (bellSingletVec θ)‖ ^ 2)) :=
-  born_frequency_convergence_N_uncond (M := 3) p₀ (bellSingletVec θ)
+  CSD.RecordLayer.globalBasin_born_frequency (bellSingletVec θ)
     (bellSingletVec_ne_zero θ) (bellSingletVec_norm θ) X hX hlaw hindep
 
 /-- **Recovered singlet correlation.** The signed sum of the four volume-derived

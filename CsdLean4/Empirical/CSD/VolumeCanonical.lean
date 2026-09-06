@@ -18,6 +18,8 @@ public import CsdLean4.Empirical.CSD.SIC3Volume
 public import CsdLean4.Empirical.CSD.MUB3Volume
 public import CsdLean4.Empirical.CSD.QutritPOVMVolume
 public import CsdLean4.Empirical.CSD.ContextVolume
+public import CsdLean4.Mathlib.MeasureTheory.IidTrials
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # Empirical/CSD: every volume-frequency headline on the canonical i.i.d. FS witness
@@ -76,21 +78,26 @@ namespace CSDBridge
 namespace BellVolume
 
 /-- `bell_singlet_born_frequency_volume` on the canonical i.i.d. FS process. -/
-theorem bell_singlet_born_frequency_volume_canonical (θ : ℝ) (p₀ : CPN 4) :
-    ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin 4,
+theorem bell_singlet_born_frequency_volume_canonical (θ : ℝ) :
+    ∀ᵐ ω ∂ MeasureTheory.iidMeasure
+        (CSD.RecordLayer.epistemicMeasure
+          (Projectivization.mk ℂ (bellSingletVec θ) (bellSingletVec_ne_zero θ))),
+      ∀ i : Fin 4,
       Tendsto
         (fun m : ℕ =>
           (∑ k ∈ Finset.range m,
               Set.indicator
-                ((fsTrial 4 k) ⁻¹' bornRegion (bellSingletVec θ) (bellSingletVec_ne_zero θ) i)
+                ((MeasureTheory.iidTrial (CSD.LF4.KSigma 4) k) ⁻¹'
+                  CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
                 (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) (bellSingletVec θ)‖ ^ 2)) :=
-  bell_singlet_born_frequency_volume θ p₀
-    (fsTrial 4) fsTrial_measurable (fsTrial_law p₀)
-    (fsTrial_pairwise_indepFun_indicator p₀
-      (bornRegion (bellSingletVec θ) (bellSingletVec_ne_zero θ))
-      (bornRegion_measurable_uncond (bellSingletVec θ) (bellSingletVec_ne_zero θ)))
+  bell_singlet_born_frequency_volume θ
+    (MeasureTheory.iidTrial (CSD.LF4.KSigma 4)) (fun n => MeasureTheory.iidTrial_measurable n)
+    (fun n => MeasureTheory.iidTrial_law _ n)
+    (MeasureTheory.iidTrial_pairwise_indepFun_indicator _
+      (fun i : Fin 4 => CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext 4) i)
+      (fun i => CSD.RecordLayer.measurableSet_globalBasin _ i))
 
 end BellVolume
 
