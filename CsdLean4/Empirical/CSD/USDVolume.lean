@@ -33,9 +33,10 @@ This file:
   **Fubini–Study volumes** on the dilated ontic `Σ' = ℂℙ⁵` — carving-free, Gleason-free.
 
 Like the trine, the volume reading is the general POVM capstone instantiated at a
-concrete non-projective measurement; it routes through the hpos-free engine
-(`povm_born_frequency_volume_uncond`, `LF4/BornRegionUncond.lean`), so no genericity
-hypothesis on the dilated state is carried (2026-06-11 migration).
+concrete non-projective measurement; since 2026-09-06 (CR-4) it routes through the fibred
+engine `CSD.RecordLayer.povm_born_frequency_basin`, so no genericity hypothesis on the
+dilated state is carried. The base-only engine it used before lives in
+`LF4/BornRegionUncond.lean`.
 -/
 
 @[expose] public section
@@ -77,11 +78,14 @@ noncomputable def usdNaimark (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
     NaimarkDilation (usdPOVM s hs0 hs1) := canonicalNaimark (usdPOVM s hs0 hs1)
 
 /-- **The USD POVM Born weights as Kähler volumes (the capstone).** Instantiating
-`povm_born_frequency_volume_uncond` at the unambiguous-discrimination POVM: i.i.d.
-Fubini–Study trials on the dilated ontic `Σ' = ℂℙ⁵` have the `k`-th USD outcome's
+`CSD.RecordLayer.povm_born_frequency_basin` at the unambiguous-discrimination POVM: i.i.d.
+trials from the epistemic measure on the dilated fibred arena `Σ' = ℂℙ⁵ × T²` have the `k`-th
+USD outcome's
 empirical frequency converge, on a single almost-sure event, to the USD Born weight
 `pₖ(ψ) = ⟨ψ, Eₖ ψ⟩` (the two conclusive weights `a‖⟨ψₖ^⊥, ψ⟩‖²` and the inconclusive
 weight) — realised as a sum of Fubini–Study volumes of the dilated barycentric cells.
+⚠️ Migrated to the fibred route 2026-09-06 (CR-4); it no longer routes through the
+base-only POVM engine in `LF4/BornRegionUncond.lean`.
 The **second non-projective (POVM) entry in the volume-frequency series**, after the
 trine; carving-free, Gleason-free, and (since the 2026-06-11 hpos migration) with no
 genericity hypothesis on the dilated state — notably, `ψ = ψ₁` or `ψ₂` (a conclusive
