@@ -114,6 +114,33 @@ theorem vnDilation_pointer_volume {M : ℕ}
   rw [basisPOVM_weight ψ i] at h
   exact h
 
+/-- ★★ **Pointer volumes on the fibred arena** — the fibred twin of `vnDilation_pointer_volume`,
+for the base-to-fibre migration (CR-4).
+
+Same statement with `epistemicMeasure [ψ']` in place of `fubiniStudyMeasure p₀` and global basins
+in place of Born regions, so the base measure leaves the statement. The proof rewrites cell by cell
+through `globalBasin_toReal_eq_bornRegion_toReal` and then applies the base-side theorem at the
+prepared ray itself — the bridge holds at *every* basepoint, so the choice is free and the
+statement has no basepoint left in it. -/
+theorem vnDilation_pointer_volume_basin {M : ℕ}
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
+    (e : (Fin N × Fin N) ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin (vnDilationV N) ψ))
+    (hψ'0 : ψ' ≠ 0) (i : Fin N) :
+    ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2
+      = ∑ n : Fin N,
+          (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+              (e (n, i)))).toReal := by
+  have hnorm : ‖ψ'‖ = 1 := by
+    rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e ψ hψ
+  rw [Finset.sum_congr rfl fun n _ =>
+    CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal
+      (Projectivization.mk ℂ ψ' hψ'0) ψ' hψ'0 hnorm (e (n, i))]
+  exact vnDilation_pointer_volume ψ hψ e (Projectivization.mk ℂ ψ' hψ'0) ψ' hψ'eq hψ'0 i
+
 /-- ★★ **Pointer frequencies on the fibred arena** — the fibred twin of
 `vnDilation_pointer_frequency`, for the base-to-fibre migration (CR-4).
 

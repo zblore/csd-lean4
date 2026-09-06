@@ -10,6 +10,7 @@ public import CsdLean4.LF3.Singlet.JointProjector
 public import CsdLean4.LF6.SingletDeisolationFlow
 public import CsdLean4.LF6.LocalDeisolationFlow
 public import CsdLean4.LF3.OperationalNoSignalling
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6/NudgeLocality: the setting-dependent nudge, done locally
@@ -222,22 +223,35 @@ This is `localDeisolation_pointer_volume` with `nudgedSinglet` replaced by
 intrinsic to the volume machinery — `povm_born_eq_dilated_volume_uncond` is
 already hpos-free — it entered only through `singletJointEig`'s division by
 `√P_st`. Routing through the local object removes it, so the perfectly
-(anti)correlated endpoints `a·b = ±1` are now covered. -/
+(anti)correlated endpoints `a·b = ±1` are now covered.
+
+The volumes are the epistemic typicality measures of the global basins on the fibred ontic
+arena `Σ = ℂℙ^M × T²` (migrated 2026-09-06, CR-4). The base-side Fubini–Study reading is
+recovered by `globalBasin_toReal_eq_bornRegion_toReal`, which is what the proof rewrites
+through; there is no basepoint argument left because the fibred law is fixed by the prepared
+ray alone. -/
 theorem localDeisolation_pointer_volume_local {M : ℕ}
     (a b : DetectorSetting)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
     (hψ'0 : ψ' ≠ 0) (s t : Sign) :
     ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal
       = P_st a b s t := by
+  have hψ'1 : ‖ψ'‖ = 1 := by
+    rw [hψ'eq, LinearIsometryEquiv.norm_map, localDeisolation_norm_map, localNudgeVec_norm a b]
+  rw [Finset.sum_congr rfl fun n _ =>
+    CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal
+      (Projectivization.mk ℂ ψ' hψ'0) ψ' hψ'0 hψ'1 (e (n, stIdx (s, t)))]
   have hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
       (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b))‖ = 1 := by
     rw [LinearIsometryEquiv.norm_map, localDeisolation_norm_map, localNudgeVec_norm a b]
   have h := povm_born_eq_dilated_volume_uncond (basisPOVM 4) localNaimark
-      (localNudgeVec a b) (stIdx (s, t)) e p₀ hnorm
+      (localNudgeVec a b) (stIdx (s, t)) e (Projectivization.mk ℂ ψ' hψ'0) hnorm
   rw [basisPOVM_weight, localNudgeVec_born a b s t] at h
   subst hψ'eq
   exact h.symm
@@ -286,36 +300,44 @@ over the B outcome recovers the A marginal, which the singlet fixes at one half.
 No genericity hypothesis. -/
 theorem localDeisolation_A_marginal_volume_eq_half {M : ℕ}
     (a b : DetectorSetting)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
     (hψ'0 : ψ' ≠ 0) (s : Sign) :
     ∑ t : Sign, ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal
       = 1 / 2 := by
   have hcell : ∀ t : Sign, ∑ n : Fin 4,
-      (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+        (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+          (e (n, stIdx (s, t))))).toReal
         = P_st a b s t :=
-    fun t => localDeisolation_pointer_volume_local a b e p₀ ψ' hψ'eq hψ'0 s t
+    fun t => localDeisolation_pointer_volume_local a b e ψ' hψ'eq hψ'0 s t
   rw [Finset.sum_congr rfl (fun t _ => hcell t)]
   exact marginal_a_eq_half a b s
 
 /-- ★ **The B-wing marginal volume is `1/2`**, symmetrically. -/
 theorem localDeisolation_B_marginal_volume_eq_half {M : ℕ}
     (a b : DetectorSetting)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
     (hψ'0 : ψ' ≠ 0) (t : Sign) :
     ∑ s : Sign, ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal
       = 1 / 2 := by
   have hcell : ∀ s : Sign, ∑ n : Fin 4,
-      (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+      (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+        (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+          (e (n, stIdx (s, t))))).toReal
         = P_st a b s t :=
-    fun s => localDeisolation_pointer_volume_local a b e p₀ ψ' hψ'eq hψ'0 s t
+    fun s => localDeisolation_pointer_volume_local a b e ψ' hψ'eq hψ'0 s t
   rw [Finset.sum_congr rfl (fun s _ => hcell s)]
   exact marginal_b_eq_half a b t
 
@@ -326,7 +348,7 @@ The two sides are built from *different* prepared states, so the underlying
 pointer regions differ; what agrees is their measure. -/
 theorem localDeisolation_no_signalling_A {M : ℕ}
     (a b b' : DetectorSetting)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' ψ'' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
@@ -334,16 +356,20 @@ theorem localDeisolation_no_signalling_A {M : ℕ}
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b')))
     (hψ'0 : ψ' ≠ 0) (hψ''0 : ψ'' ≠ 0) (s : Sign) :
     ∑ t : Sign, ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal
       = ∑ t : Sign, ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ'' hψ''0 (e (n, stIdx (s, t))))).toReal := by
-  rw [localDeisolation_A_marginal_volume_eq_half a b e p₀ ψ' hψ'eq hψ'0 s,
-    localDeisolation_A_marginal_volume_eq_half a b' e p₀ ψ'' hψ''eq hψ''0 s]
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ'' hψ''0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal := by
+  rw [localDeisolation_A_marginal_volume_eq_half a b e ψ' hψ'eq hψ'0 s,
+    localDeisolation_A_marginal_volume_eq_half a b' e ψ'' hψ''eq hψ''0 s]
 
 /-- ★★ **B-wing operational no-signalling for the explicit construction.** -/
 theorem localDeisolation_no_signalling_B {M : ℕ}
     (a a' b : DetectorSetting)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' ψ'' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a b)))
@@ -351,11 +377,15 @@ theorem localDeisolation_no_signalling_B {M : ℕ}
         (Matrix.toEuclideanLin localDeisolationV (localNudgeVec a' b)))
     (hψ'0 : ψ' ≠ 0) (hψ''0 : ψ'' ≠ 0) (t : Sign) :
     ∑ s : Sign, ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal
       = ∑ s : Sign, ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ'' hψ''0 (e (n, stIdx (s, t))))).toReal := by
-  rw [localDeisolation_B_marginal_volume_eq_half a b e p₀ ψ' hψ'eq hψ'0 t,
-    localDeisolation_B_marginal_volume_eq_half a' b e p₀ ψ'' hψ''eq hψ''0 t]
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ'' hψ''0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal := by
+  rw [localDeisolation_B_marginal_volume_eq_half a b e ψ' hψ'eq hψ'0 t,
+    localDeisolation_B_marginal_volume_eq_half a' b e ψ'' hψ''eq hψ''0 t]
 
 
 end CSD.LF6

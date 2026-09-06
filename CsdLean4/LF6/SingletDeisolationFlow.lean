@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF5.FlowBornFrequency
 public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF3.Singlet.JointEig
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-A.2: the full singlet de-isolation flow
@@ -57,7 +58,7 @@ as `(U_A(a) ⊗ U_B(b))ᴴ ψ⁻` for the proved-unitary `wingBasisUnitary`, wit
 same Born statistics and **no `hgen`**. Then the headline:
 
 ```
-pointer-block (s,t) FS volume  =  ‖⟨e_{stIdx (s,t)}, φ⟩‖²        -- LF5 vnDilation_pointer_volume @ N=4
+pointer-block (s,t) basin measure =  ‖⟨e_{stIdx (s,t)}, φ⟩‖²     -- LF5 vnDilation_pointer_volume_basin @ N=4
                                =  ‖⟨ψ⁻, singletJointEig s t a b⟩‖² -- nudge coordinate identity
                                =  P_st a b s t                     -- LF3 singletJointEig_born
 ```
@@ -260,41 +261,47 @@ inherited from `measurementFlow_ne_id`. -/
 theorem singletDeisolation_ne_id : singletDeisolationFlow ≠ id :=
   measurementFlow_ne_id (by norm_num) finProdFinEquiv
 
-/-! ### Deliverable 2: pointer-block FS volume = `P_st` (the headline) -/
+/-! ### Deliverable 2: pointer-block basin measure = `P_st` (the headline) -/
 
-/-- **The reproduction (the A.2 headline).** The joint `BornRegion` pointer-block
-`(s, t)` Fubini–Study volume of the singlet de-isolation flow equals the LF3
-singlet kernel `P_st a b s t`, for the prepared state `φ = nudgedSinglet a b`.
+/-- **The reproduction (the A.2 headline).** The joint pointer-block `(s, t)` epistemic
+typicality measure of the singlet de-isolation flow equals the LF3 singlet kernel
+`P_st a b s t`, for the prepared state `φ = nudgedSinglet a b`.
 
 A deterministic FS-measure-preserving de-isolation flow's *contextual* carve (the
-joint moment-subdivision `BornRegion`, never a setting-local product region) has
-block volumes = the singlet kernel. The proof **composes** LF5
-`vnDilation_pointer_volume` at `N = 4` (pointer-block volume = `‖⟨e_i, φ⟩‖²`,
-Gleason-free, imported from the DH/FS-volume engine) with the nudge
-coordinate-Born identity `nudgedSinglet_born` (which composes the unitary
-invariance step with LF3 `singletJointEig_born`). Generic context (`hgen`). -/
+joint moment subdivision, never a setting-local product region) has block volumes = the
+singlet kernel. The proof **composes** LF5 `vnDilation_pointer_volume_basin` at `N = 4`
+(pointer-block measure = `‖⟨e_i, φ⟩‖²`, Gleason-free, imported from the DH/FS-volume
+engine) with the nudge coordinate-Born identity `nudgedSinglet_born` (which composes the
+unitary invariance step with LF3 `singletJointEig_born`). Generic context (`hgen`).
+
+The blocks are the global basins on the fibred ontic arena `Σ = ℂℙ¹⁵ × T²` (migrated
+2026-09-06, CR-4); the base-side Fubini–Study reading is `vnDilation_pointer_volume`, and
+the two agree by `globalBasin_toReal_eq_bornRegion_toReal`. -/
 theorem singletDeisolation_pointer_volume {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 4) (nudgedSinglet a b)))
     (hψ'0 : ψ' ≠ 0) (s t : Sign) :
     ∑ n : Fin 4,
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+          (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+            (e (n, stIdx (s, t))))).toReal
       = P_st a b s t := by
-  rw [← vnDilation_pointer_volume (nudgedSinglet a b) (nudgedSinglet_norm a b hgen)
-        e p₀ ψ' hψ'eq hψ'0 (stIdx (s, t))]
+  rw [← vnDilation_pointer_volume_basin (nudgedSinglet a b) (nudgedSinglet_norm a b hgen)
+        e ψ' hψ'eq hψ'0 (stIdx (s, t))]
   exact nudgedSinglet_born a b hgen s t
 
 /-! ### Deliverable 3: a.s. pointer-block frequencies → `P_st` -/
 
-/-- **The empirical capstone.** For i.i.d. Fubini–Study-typical trials on the
-dilated `Σ' = ℂℙ¹⁵` (the sector-typicality posit (SO-1) on the enlarged entangled sector),
+/-- **The empirical capstone.** For i.i.d. typical trials on the fibred dilated arena
+`Σ = ℂℙ¹⁵ × T²` (the sector-typicality posit (SO-1) on the enlarged entangled sector),
 almost surely every pointer-block `(s, t)` empirical frequency converges to the
 singlet kernel `P_st a b s t`. Instantiates LF5 `vnDilation_pointer_frequency` at
 `N = 4`, `φ = nudgedSinglet a b`, and lands the limit on `P_st` via
-`nudgedSinglet_born`. -/
+`nudgedSinglet_born`. Instantiates the fibred engine
+`vnDilation_pointer_frequency_basin`. -/
 theorem singletDeisolation_frequency {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
     (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
@@ -302,25 +309,28 @@ theorem singletDeisolation_frequency {M : ℕ}
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 4) (nudgedSinglet a b)))
     (hψ'0 : ψ' ≠ 0)
-    (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator
+          ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j)
+          (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ s t : Sign,
       Tendsto
         (fun m : ℕ =>
           ∑ n : Fin 4,
             (∑ k ∈ Finset.range m,
-                Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))
+                Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                    (e (n, stIdx (s, t))))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (P_st a b s t)) := by
-  filter_upwards [vnDilation_pointer_frequency (nudgedSinglet a b)
-      (nudgedSinglet_norm a b hgen) e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep] with ω hω s t
+  filter_upwards [vnDilation_pointer_frequency_basin (nudgedSinglet a b)
+      (nudgedSinglet_norm a b hgen) e ψ' hψ'eq hψ'0 X hX hlaw hindep] with ω hω s t
   have h := hω (stIdx (s, t))
   rwa [nudgedSinglet_born a b hgen s t] at h
 
@@ -333,21 +343,25 @@ input fed to the A.1 no-go: the exhibited contextual carve reproduces the single
 correlation function. -/
 theorem singletDeisolation_blockVolume_correlation {M : ℕ}
     (a b : DetectorSetting) (hgen : ∀ s t, 0 < P_st a b s t)
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 4) (nudgedSinglet a b)))
     (hψ'0 : ψ' ≠ 0) :
     ∑ st : Sign × Sign, st.1.val * st.2.val *
         (∑ n : Fin 4,
-          (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (st.1, st.2))))).toReal)
+          (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+              (e (n, stIdx (st.1, st.2))))).toReal)
       = - dotR a b := by
   have hcongr : ∀ st : Sign × Sign,
       st.1.val * st.2.val *
           (∑ n : Fin 4,
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (st.1, st.2))))).toReal)
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+              (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                (e (n, stIdx (st.1, st.2))))).toReal)
         = st.1.val * st.2.val * P_st a b st.1 st.2 := fun st => by
-    rw [singletDeisolation_pointer_volume a b hgen e p₀ ψ' hψ'eq hψ'0 st.1 st.2]
+    rw [singletDeisolation_pointer_volume a b hgen e ψ' hψ'eq hψ'0 st.1 st.2]
   rw [Finset.sum_congr rfl (fun st _ => hcongr st), correlation_eq_neg_dot]
 
 /-- **The carve is contextual (the safety anchor, routed through A.1).** No
@@ -368,15 +382,17 @@ theorem singletDeisolation_carve_contextual {Λ : Type*} [MeasurableSpace Λ]
 
 /-- **The exhibited carve's block-volume correlation function** at settings
 `(a, b)`: the `s·t`-weighted sum of the singlet de-isolation carve's pointer-block
-Fubini–Study volumes. This is the *achieved* value of the EXHIBITED carve (a sum
-of `bornRegion` FS volumes on `Σ' = ℂℙ¹⁵`, not a free real); by
+basin measures. This is the *achieved* value of the EXHIBITED carve (a sum of
+global-basin measures on `Σ = ℂℙ¹⁵ × T²`, not a free real); by
 `singletDeisolation_blockVolume_correlation` it equals the singlet's `−a·b`. -/
-noncomputable def carveBlockCorrelation {M : ℕ} (p₀ : CPN (M + 1))
+noncomputable def carveBlockCorrelation {M : ℕ}
     (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0) : ℝ :=
   ∑ st : Sign × Sign, st.1.val * st.2.val *
     (∑ n : Fin 4,
-      (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (st.1, st.2))))).toReal)
+      (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+        (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+          (e (n, stIdx (st.1, st.2))))).toReal)
 
 /-- **The exhibited carve is not a product partition (LF6-A.2, the composed
 contextuality corollary).** No setting-local ±1 product partition of any shared
@@ -385,8 +401,8 @@ block-volume correlation function.
 
 This closes the A.2 contextuality juxtaposition into a single theorem: the
 hypothesis `hmatch` feeds the carve's OWN achieved value
-(`carveBlockCorrelation`, a `s·t`-weighted sum of the carve's `bornRegion`
-Fubini–Study volumes — not a free `−a·b`) at every setting pair, and the
+(`carveBlockCorrelation`, a `s·t`-weighted sum of the carve's global-basin
+measures — not a free `−a·b`) at every setting pair, and the
 conclusion routes through A.1 `no_product_partition_realises_singlet`. The proof
 discharges each carve correlation to the singlet's `−a·b` via
 `singletDeisolation_blockVolume_correlation` (which is exactly
@@ -408,7 +424,7 @@ not a local-unitary image of the singlet. See its docstring, and use
 theorem does **not** cover `a·b = ±1`. The local route
 (`localDeisolation_pointer_volume_local`) carries no such restriction. -/
 theorem singletDeisolation_carve_not_product {M : ℕ}
-    (e : Fin 4 × Fin 4 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
+    (e : Fin 4 × Fin 4 ≃ Fin (M + 1))
     (ψ' : DetectorSetting → DetectorSetting → EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'0 : ∀ a b, ψ' a b ≠ 0)
     (hgen : ∀ a b, ∀ s t, 0 < P_st a b s t)
@@ -418,25 +434,25 @@ theorem singletDeisolation_carve_not_product {M : ℕ}
     (μ : Measure Λ) [IsProbabilityMeasure μ] (RA RB : DetectorSetting → Λ → ℝ)
     (hPP : IsProductPartition RA RB)
     (hmatch : ∀ a b : DetectorSetting,
-      lhvCorrelation μ RA RB a b = carveBlockCorrelation p₀ e (ψ' a b) (hψ'0 a b)) :
+      lhvCorrelation μ RA RB a b = carveBlockCorrelation e (ψ' a b) (hψ'0 a b)) :
     False := by
   refine singletDeisolation_carve_contextual μ RA RB hPP ?_
   intro a b
   rw [hmatch a b]
-  exact singletDeisolation_blockVolume_correlation a b (hgen a b) e p₀ (ψ' a b)
+  exact singletDeisolation_blockVolume_correlation a b (hgen a b) e (ψ' a b)
     (hψ'eq a b) (hψ'0 a b)
 
 /-! ### Deliverable 6: the capstone -/
 
 /-- **The LF6-A.2 capstone: the singlet de-isolation flow.** A deterministic,
 Fubini–Study-measure-preserving de-isolation flow `Φ ≠ id` on the dilated
-`Σ' = ℂℙ¹⁵` whose contextual joint-`BornRegion` carve reproduces the LF3 singlet
+`Σ' = ℂℙ¹⁵` whose contextual joint moment-subdivision carve reproduces the LF3 singlet
 kernel `P_st`, with a.s. block frequencies → `P_st` and a contextuality anchor
 routed through A.1. Conjuncts:
 
 1. genuine dynamics, `Φ ≠ id` (`singletDeisolation_ne_id`);
 2. physically admissible: FS measure-preserving (`singletDeisolation_measurePreserving`);
-3. pointer-block FS volume = the singlet kernel, every sector
+3. pointer-block basin measure = the singlet kernel, every sector
    (`singletDeisolation_pointer_volume`);
 4. the carve's block-volume correlation is the singlet's `−a·b`
    (`singletDeisolation_blockVolume_correlation`);
@@ -448,7 +464,7 @@ routed through A.1. Conjuncts:
 The contextuality conjunct (6) is no longer a juxtaposition of two separate
 facts: `singletDeisolation_carve_not_product` composes the EXHIBITED carve's
 achieved block-volume correlation (`carveBlockCorrelation`, the `s·t`-weighted sum
-of the carve's `bornRegion` FS volumes) with A.1 in one theorem — feeding the
+of the carve's global-basin measures) with A.1 in one theorem — feeding the
 carve's own value, not a free `−a·b`, into `no_product_partition_realises_singlet`.
 
 The flow is an apparatus dynamics (LF5 @ N=4) — **not** shown to be a wing
@@ -468,25 +484,32 @@ theorem singletDeisolation_flow_capstone {M : ℕ}
         (Matrix.toEuclideanLin (vnDilationV 4) (nudgedSinglet a b)))
     (hψ'0 : ψ' ≠ 0)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator
+          ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j)
+          (fun _ => (1 : ℝ))))) :
     -- (1) genuine dynamics
     measurementFlow 4 e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow 4 e)
         (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
-    -- (3) pointer-block FS volume = the singlet kernel
+    -- (3) pointer-block basin measure = the singlet kernel
     ∧ (∀ s t : Sign,
         ∑ n : Fin 4,
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))).toReal
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+              (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                (e (n, stIdx (s, t))))).toReal
           = P_st a b s t)
     -- (4) the carve's block-volume correlation is the singlet's −a·b
     ∧ (∑ st : Sign × Sign, st.1.val * st.2.val *
           (∑ n : Fin 4,
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, stIdx (st.1, st.2))))).toReal)
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+              (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1))
+                (e (n, stIdx (st.1, st.2))))).toReal)
         = - dotR a b)
     -- (5) a.s. block frequencies → P_st
     ∧ (∀ᵐ ω ∂ Pr, ∀ s t : Sign,
@@ -494,7 +517,8 @@ theorem singletDeisolation_flow_capstone {M : ℕ}
           (fun m : ℕ =>
             ∑ n : Fin 4,
               (∑ k ∈ Finset.range m,
-                  Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, stIdx (s, t))))
+                  Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin
+                      (CSD.RecordLayer.momentContext (M + 1)) (e (n, stIdx (s, t))))
                     (fun _ => (1 : ℝ)) ω)
                 / (m : ℝ))
           atTop
@@ -505,9 +529,9 @@ theorem singletDeisolation_flow_capstone {M : ℕ}
         (∀ a' b' : DetectorSetting, lhvCorrelation μ RA RB a' b' = - dotR a' b') → False) :=
   ⟨measurementFlow_ne_id (by norm_num) e,
    measurementFlow_measurePreserving e p₀,
-   fun s t => singletDeisolation_pointer_volume a b hgen e p₀ ψ' hψ'eq hψ'0 s t,
-   singletDeisolation_blockVolume_correlation a b hgen e p₀ ψ' hψ'eq hψ'0,
-   singletDeisolation_frequency a b hgen e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep,
+   fun s t => singletDeisolation_pointer_volume a b hgen e ψ' hψ'eq hψ'0 s t,
+   singletDeisolation_blockVolume_correlation a b hgen e ψ' hψ'eq hψ'0,
+   singletDeisolation_frequency a b hgen e ψ' hψ'eq hψ'0 X hX hlaw hindep,
    fun Λ _ μ _ RA RB hPP hcarve => singletDeisolation_carve_contextual μ RA RB hPP hcarve⟩
 
 end LF6
