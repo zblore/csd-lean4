@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF5.FlowBornFrequency
 public import CsdLean4.LF6.GHZContextuality
+public import CsdLean4.RecordLayer.BasinFrequency
 
 /-!
 # LF6-C (GHZ_n): the n-party GHZ de-isolation flow and the general-n Mermin forcing
@@ -269,8 +270,12 @@ theorem ghzNDeisolation_pointer_volume (n : ℕ) (hn : 0 < n) {M : ℕ}
         (Matrix.toEuclideanLin (vnDilationV (2 ^ n)) (ghzN n)))
     (hψ'0 : ψ' ≠ 0) (i : Fin (2 ^ n)) :
     ∑ nn : Fin (2 ^ n),
-        (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (nn, i)))).toReal
+        (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (nn, i)))).toReal
       = ghzNWeight n i := by
+  have hψ'1 : ‖ψ'‖ = 1 := by
+    rw [hψ'eq]; exact piLpCongrLeft_vnDilationV_norm e _ (ghzN_norm n hn)
+  simp_rw [CSD.RecordLayer.globalBasin_toReal_eq_bornRegion_toReal p₀ ψ' hψ'0 hψ'1]
   rw [← vnDilation_pointer_volume (ghzN n) (ghzN_norm n hn) e p₀ ψ' hψ'eq hψ'0 i]
   exact ghzN_born n i
 
@@ -285,25 +290,25 @@ theorem ghzNDeisolation_frequency (n : ℕ) (hn : 0 < n) {M : ℕ}
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV (2 ^ n)) (ghzN n)))
     (hψ'0 : ψ' ≠ 0)
-    (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j) (fun _ => (1 : ℝ))))) :
     ∀ᵐ ω ∂ Pr, ∀ i : Fin (2 ^ n),
       Tendsto
         (fun m : ℕ =>
           ∑ nn : Fin (2 ^ n),
             (∑ k ∈ Finset.range m,
-                Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (nn, i)))
+                Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (nn, i)))
                   (fun _ => (1 : ℝ)) ω)
               / (m : ℝ))
         atTop
         (nhds (ghzNWeight n i)) := by
-  filter_upwards [vnDilation_pointer_frequency (ghzN n) (ghzN_norm n hn) e ψ'
-      hψ'eq hψ'0 p₀ X hX hlaw hindep] with ω hω i
+  filter_upwards [vnDilation_pointer_frequency_basin (ghzN n) (ghzN_norm n hn) e ψ'
+      hψ'eq hψ'0 X hX hlaw hindep] with ω hω i
   have h := hω i
   rwa [ghzN_born n i] at h
 
@@ -573,11 +578,12 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
         (Matrix.toEuclideanLin (vnDilationV (2 ^ n)) (ghzN n)))
     (hψ'0 : ψ' ≠ 0)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
-    (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0))
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
-        (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
+        (fun n => Set.indicator ((X n) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j) (fun _ => (1 : ℝ))))) :
     -- (1) genuine dynamics
     measurementFlow (2 ^ n) e ≠ id
     -- (2) FS measure-preserving
@@ -586,7 +592,8 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
     -- (3) pointer-block FS volume = the GHZ_n Born weight
     ∧ (∀ i : Fin (2 ^ n),
         ∑ nn : Fin (2 ^ n),
-            (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (nn, i)))).toReal
+            (CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ ψ' hψ'0)
+            (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (nn, i)))).toReal
           = ghzNWeight n i)
     -- (4) a.s. block frequencies → the GHZ_n Born weight
     ∧ (∀ᵐ ω ∂ Pr, ∀ i : Fin (2 ^ n),
@@ -594,7 +601,7 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
           (fun m : ℕ =>
             ∑ nn : Fin (2 ^ n),
               (∑ k ∈ Finset.range m,
-                  Set.indicator ((X k) ⁻¹' bornRegion ψ' hψ'0 (e (nn, i)))
+                  Set.indicator ((X k) ⁻¹' CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (nn, i)))
                     (fun _ => (1 : ℝ)) ω)
                 / (m : ℝ))
           atTop
@@ -606,7 +613,7 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
   ⟨measurementFlow_ne_id (Nat.one_lt_two_pow_iff.mpr (by omega)) e,
    measurementFlow_measurePreserving e p₀,
    fun i => ghzNDeisolation_pointer_volume n (by omega) e p₀ ψ' hψ'eq hψ'0 i,
-   ghzNDeisolation_frequency n (by omega) e ψ' hψ'eq hψ'0 p₀ X hX hlaw hindep,
+   ghzNDeisolation_frequency n (by omega) e ψ' hψ'eq hψ'0 X hX hlaw hindep,
    fun Λ _ μ _ R hPP hRep => no_product_partition_realises_ghzN μ n R hPP hRep⟩
 
 /-! ### Deliverable 5 (residual closure): the general-`n` GHZ_n QM tensor-Pauli link
