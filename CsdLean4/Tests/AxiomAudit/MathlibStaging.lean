@@ -2668,6 +2668,20 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousAlternatingMap.contDiff_uncurry_compContinuousLinearMap
 
+-- The operator-valued layer (2026-09-07, same file): what a bundle coordinate change is
+-- actually built from. ⚠️ The layer above these stops on an INSTANCE-PATH mismatch, not a
+-- theorem -- the decomposition of the coordinate change is `rfl` and the proof is three lines,
+-- but the bundled maps elaborate on the topological-module instances where the normed path is
+-- wanted. Recorded in the module header; deliberately not papered over.
+
+/-- info: 'ContinuousAlternatingMap.contDiff_compContinuousLinearMapCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.contDiff_compContinuousLinearMapCLM
+
+/-- info: 'ContinuousLinearMap.compContinuousAlternatingMapL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousLinearMap.compContinuousAlternatingMapL
+
 /-! ### Complex projective space as an analytic manifold (ProjectiveSpace.lean, 2026-09-07) -/
 
 -- Step (0) of the manifold exterior-calculus plan. Before this, `Projectivization` had a

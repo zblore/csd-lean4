@@ -9,6 +9,8 @@ public import Mathlib.Analysis.Normed.Module.Alternating.Basic
 public import Mathlib.Analysis.Normed.Module.Multilinear.Curry
 public import Mathlib.Analysis.Analytic.CPolynomial
 public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Operations
+public import Mathlib.Analysis.Calculus.ContDiff.CPolynomial
 
 /-!
 # The pullback of a continuous alternating map is jointly analytic
@@ -59,7 +61,19 @@ applied to the multilinear pullback of the inclusion, along the diagonal.
 ⚠️ **This unblocks step (2a); it does not perform it.** What still has to be built on top:
 the `ContMDiffOn` lemma for the alternating bundle's coordinate change, the
 `ContMDiffVectorBundle` instance (the analogue of `Geometry/Manifold/VectorBundle/Hom.lean`),
-and only then differential forms on a manifold as smooth sections. **Three layers remain.**
+and only then differential forms on a manifold as smooth sections.
+
+⚠️ **Where the next layer stops, recorded precisely, because it is not a mathematical wall.**
+The coordinate change of the alternating bundle decomposes as
+`compContinuousAlternatingMapL (e₂.coordChangeL b) ∘L compContinuousLinearMapCLM (e₁'.coordChangeL b)`
+— and that decomposition is **`rfl`**, checked. With `contDiff_compContinuousLinearMapCLM` and
+`compContinuousAlternatingMapL` (both here) the `ContMDiffOn` proof is then the same three
+lines as `Hom.lean`'s. What blocks it is an **instance-path mismatch**: feeding those bundled
+maps to `ContinuousLinearMap.contDiff` elaborates the operator and alternating spaces on the
+*topological-module* instances (`ContinuousLinearMap.topologicalSpace`,
+`ContinuousAlternatingMap.topologicalSpace`) where the normed path is wanted. The two are
+mathematically the same topology; reconciling them is instance plumbing, not a theorem, and it
+is deliberately **not** attempted here rather than papered over.
 
 ⚠️ **Characteristic zero is essential, not incidental.** The retraction divides by
 `(card ι)!`; over a field of positive characteristic the argument fails at exactly that step,
@@ -215,3 +229,60 @@ theorem contDiff_uncurry_compContinuousLinearMap {n : WithTop ℕ∞} :
   contDiff_iff_contDiffAt.2 fun q => contDiffAt_uncurry_compContinuousLinearMap q
 
 end ContinuousAlternatingMap
+
+/-! ### The operator-valued form, and postcomposition
+
+What a smooth-bundle instance actually consumes is not the *application* `(g, ω) ↦ ω ∘ g` but
+the operator-valued map `g ↦ (ω ↦ ω ∘ g)`, together with its postcomposition partner. Both are
+here. ⚠️ See the honest-scope note at the top of the file for where the next layer stops. -/
+
+namespace ContinuousAlternatingMap
+open ContinuousMultilinearMap
+variable {𝕜 ι E F G : Type*} [NontriviallyNormedField 𝕜] [Fintype ι] [DecidableEq ι]
+  [NormedAddCommGroup E] [NormedSpace 𝕜 E] [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+  [NormedAddCommGroup G] [NormedSpace 𝕜 G] [CharZero 𝕜]
+
+/-- The retraction identity in operator form. -/
+theorem compContinuousLinearMapCLM_eq (g : E →L[𝕜] F) :
+    (compContinuousLinearMapCLM g : (F [⋀^ι]→L[𝕜] G) →L[𝕜] (E [⋀^ι]→L[𝕜] G))
+      = (((Fintype.card ι).factorial : 𝕜)⁻¹ • alternatizationCLM).comp
+          (((ContinuousMultilinearMap.compContinuousLinearMapContinuousMultilinear 𝕜
+              (fun _ : ι => E) (fun _ : ι => F) G) (fun _ => g)).comp
+            (toContinuousMultilinearMapCLM 𝕜)) := by
+  ext ω v
+  have h := compContinuousLinearMap_eq_smul_alternatization (ι := ι) g ω
+  simpa using congrArg (fun x : E [⋀^ι]→L[𝕜] G => x v) h
+
+/-- ★ **The pullback operator is smooth in the linear map.** This is the form the coordinate
+change of an alternating-map bundle is built from. -/
+theorem contDiff_compContinuousLinearMapCLM {n : WithTop ℕ∞} :
+    ContDiff 𝕜 n (fun g : E →L[𝕜] F =>
+      (compContinuousLinearMapCLM g : (F [⋀^ι]→L[𝕜] G) →L[𝕜] (E [⋀^ι]→L[𝕜] G))) := by
+  simp only [compContinuousLinearMapCLM_eq]
+  have hM : ContDiff 𝕜 n (fun g : E →L[𝕜] F =>
+      (ContinuousMultilinearMap.compContinuousLinearMapContinuousMultilinear 𝕜
+        (fun _ : ι => E) (fun _ : ι => F) G) (fun _ => g)) :=
+    (ContinuousMultilinearMap.contDiff _).comp (contDiff_pi.2 fun _ => contDiff_id)
+  exact contDiff_const.clm_comp (hM.clm_comp contDiff_const)
+
+end ContinuousAlternatingMap
+
+namespace ContinuousLinearMap
+variable {𝕜 ι E F G : Type*} [NontriviallyNormedField 𝕜] [Fintype ι]
+  [NormedAddCommGroup E] [NormedSpace 𝕜 E] [NormedAddCommGroup F] [NormedSpace 𝕜 F]
+  [NormedAddCommGroup G] [NormedSpace 𝕜 G]
+
+/-- Postcomposition of continuous alternating maps, as a continuous linear map in the
+normed setting. -/
+noncomputable def compContinuousAlternatingMapL :
+    (F →L[𝕜] G) →L[𝕜] ((E [⋀^ι]→L[𝕜] F) →L[𝕜] (E [⋀^ι]→L[𝕜] G)) :=
+  LinearMap.mkContinuous₂
+    (LinearMap.mk₂ 𝕜
+      (fun (g : F →L[𝕜] G) (f : E [⋀^ι]→L[𝕜] F) => g.compContinuousAlternatingMap f)
+      (fun g₁ g₂ f => by ext v; simp)
+      (fun c g f => by ext v; simp)
+      (fun g f₁ f₂ => by ext v; simp)
+      (fun c g f => by ext v; simp))
+    1 (fun g f => by simpa using norm_compContinuousAlternatingMap_le g f)
+
+end ContinuousLinearMap
