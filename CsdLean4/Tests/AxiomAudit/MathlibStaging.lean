@@ -2630,6 +2630,44 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Kahler.extDeriv_fundamentalFormSq
 
+/-! ### The alternating pullback is jointly analytic (Alternating/Pullback.lean, 2026-09-07) -/
+
+-- The lemma step (2a) ran aground on. Smooth differential forms on a MANIFOLD need a
+-- ContMDiffVectorBundle instance for the alternating-map bundle, whose crux is smoothness of
+-- the coordinate change, which reduces to joint smoothness of the pullback (g, omega) |-> omega
+-- after g. Upstream has that for the MULTILINEAR pullback and, for the alternating one, only
+-- continuity and the first derivative. ⚠️ The obvious reduction fails: the alternating pullback
+-- is the DIAGONAL of the multilinear one, degree (card iota) in g rather than linear.
+-- What unlocks it is a RETRACTION: alternatization is continuous linear (built here; upstream
+-- has only the AddMonoidHom) and multiplies an already-alternating map by (card iota)!, so in
+-- characteristic zero it inverts the inclusion and analyticity reflects along it.
+-- ⚠️ Three layers still remain before step (2a) itself: the ContMDiffOn coordinate change, the
+-- bundle instance, and forms as smooth sections.
+
+/-- info: 'ContinuousMultilinearMap.continuous_alternatization' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousMultilinearMap.continuous_alternatization
+
+/-- info: 'ContinuousMultilinearMap.alternatizationCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousMultilinearMap.alternatizationCLM
+
+/-- info: 'ContinuousMultilinearMap.alternatizationCLM_of_alternating' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousMultilinearMap.alternatizationCLM_of_alternating
+
+/-- info: 'ContinuousAlternatingMap.compContinuousLinearMap_eq_smul_alternatization' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.compContinuousLinearMap_eq_smul_alternatization
+
+/-- info: 'ContinuousAlternatingMap.analyticAt_uncurry_compContinuousLinearMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.analyticAt_uncurry_compContinuousLinearMap
+
+/-- info: 'ContinuousAlternatingMap.contDiff_uncurry_compContinuousLinearMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.contDiff_uncurry_compContinuousLinearMap
+
 /-! ### Complex projective space as an analytic manifold (ProjectiveSpace.lean, 2026-09-07) -/
 
 -- Step (0) of the manifold exterior-calculus plan. Before this, `Projectivization` had a
