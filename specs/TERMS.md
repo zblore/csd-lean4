@@ -103,10 +103,15 @@ alarming and is not.
 
 ## symplectic / manifold
 
-* **Means here:** nothing is named for either — **zero** declarations carry them, and roughly half
-  the mentions are the corpus saying the API is absent.
-* **NOT established:** any manifold-level symplectic structure. Marker: `TERM-SCOPE(Hamiltonian)`
-  (same wall).
+* **Means here (backed, 2026-09-07):** `DifferentialForm.IsSymplectic`
+  (`Mathlib/Geometry/Manifold/SymplecticForm.lean`) — a `C^∞` 2-form on a real boundaryless manifold
+  that is closed (`mextDeriv α = 0`) and non-degenerate at every point — and its one inhabitant,
+  `Projectivization.fsForm_isSymplectic`: **`ℂℙⁿ` with the Fubini–Study form is a symplectic
+  manifold** (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`; real dimension `2n`).
+  Before that date zero declarations carried either word at manifold level.
+* **NOT established:** anything *derived* from the structure — Darboux, the symplectic volume
+  (top-power identity), generators of flows on the manifold, moment maps. Those keep the marker
+  `TERM-SCOPE(Hamiltonian)` (same wall as the Hamiltonian entry).
 
 ## Fubini–Study
 

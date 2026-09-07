@@ -256,7 +256,8 @@ ofKählerPreparation
 ofKählerPreparationFlow
 pointerLiouville
 relFieldHamiltonian
-trivialKahlerOnticSetup"
+trivialKahlerOnticSetup
+IsSymplectic"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -309,6 +310,14 @@ trivialKahlerOnticSetup"
 #       the rotation), so it is not vacuous. Flat model ℂᴺ, constant ω; the manifold moment-map
 #       statement stays posited per the author decision of 2026-09-04.  EARNED (linear-level).
 #
+#     IsSymplectic — (Mathlib/Geometry/Manifold/SymplecticForm.lean, 2026-09-07) a Prop DEMANDING
+#       the two obligations the word carries, for a C^infinity 2-form on a real boundaryless
+#       manifold: closedness `alpha.mextDeriv = 0` (the staged manifold exterior derivative) and
+#       non-degeneracy at every point (`v ≠ 0 → ∃ w, alpha x (v, w) ≠ 0`). Nothing is asserted by
+#       the name that the fields do not spell out. Parity: pointwise non-degeneracy of an
+#       alternating 2-form forces EVEN dimension wherever it is inhabited; the one inhabitant
+#       in-tree is `fsForm_isSymplectic` on CP^n (Fin n → ℂ model, real dim 2n).
+#                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
 #     pointerLiouville        — PointerArena: CP^{N-1} x T^2 x CP^K, 2(N-1)+2+2K.     EVEN.
@@ -596,6 +605,11 @@ liouville_isProbability"
 #     curve of it for every `t` on regular data (`RegularPos`). Chart-level and
 #     time-dependent (stated directly as HasDerivAt against hamiltonianField, since
 #     IsHamiltonianCurve is autonomous); the arena-manifold form stays R-016.
+#   fsForm_isSymplectic — (Instances/ProjectiveSpaceFubiniStudySymplectic.lean, 2026-09-07): CP^n
+#     with the Fubini-Study form `fsForm` is symplectic in the sense of `IsSymplectic` above --
+#     closed (fsForm_mextDeriv, the staged manifold `d`) and non-degenerate at every point
+#     (fsForm_nondegenerate, taming `fsForm x (v, i v) < 0` via Cauchy-Schwarz in the chart).
+#     Real dimension 2n.                                          EVEN, manifold-level.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -659,7 +673,8 @@ hamiltonianField_strokeH
 hamiltonianShift_eq_strokeCurve_one
 strokeCurve_hasDerivAt_hamiltonianField
 isJointLift_hamiltonianShift
-jointLift_hamiltonianShift_measurePreserving"
+jointLift_hamiltonianShift_measurePreserving
+fsForm_isSymplectic"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

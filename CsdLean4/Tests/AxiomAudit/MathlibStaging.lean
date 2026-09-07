@@ -2990,6 +2990,45 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsForm_mextDeriv
 
+/-! ### CP^n with the Fubini-Study form is a symplectic manifold (SymplecticForm.lean, ProjectiveSpaceFubiniStudySymplectic.lean, 2026-09-07) -/
+
+-- ★★★ `fsForm_isSymplectic`: closed (fsForm_mextDeriv) AND non-degenerate at every point.
+-- Non-degeneracy is taming in the chart: fsChartForm x (v, Jv) = -4 (1+|x|^2)^-2 ((1+|x|^2)|v|^2
+-- - |<x,v>|^2) < 0 for v ≠ 0 by Cauchy-Schwarz (fsChartForm_complexStructure_self_neg), and the
+-- section at x IS the model form at x's own chart coordinate, so the witness is i·v in the model.
+-- `IsSymplectic` (SymplecticForm.lean) is a predicate demanding exactly those two obligations;
+-- registered in check-claims' symplectic-vocabulary inventory with parity 2n (EVEN).
+-- ⚠️ Not a manifold-level Kahler predicate (metric + complex structure not packaged), no volume
+-- (top-power identity, step 3), nothing derived from the structure (Darboux, generators, moment maps).
+
+/-- info: 'Kahler.metric_mul_fundamentalForm_complexStructure_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.metric_mul_fundamentalForm_complexStructure_sub
+
+/-- info: 'Kahler.fsChartForm_apply_complexStructure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.fsChartForm_apply_complexStructure
+
+/-- info: 'Kahler.fsChartForm_complexStructure_self_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.fsChartForm_complexStructure_self_neg
+
+/-- info: 'Projectivization.fsModelForm_smul_I_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_smul_I_neg
+
+/-- info: 'Projectivization.fsSection_smul_I_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsSection_smul_I_neg
+
+/-- info: 'Projectivization.fsForm_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_nondegenerate
+
+/-- info: 'Projectivization.fsForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_isSymplectic
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

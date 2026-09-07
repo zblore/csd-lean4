@@ -524,10 +524,12 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Pullback
 public import CsdLean4.Mathlib.Geometry.Manifold.VectorBundle.AlternatingMap
 public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
+public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.Empirical.QM.Darwinism
