@@ -23,23 +23,33 @@
 > longer route through `fubiniStudyMeasure` at all (`TERMS.md`, 2026-09-07, which also
 > registered `momentMap` — the corpus's most load-bearing named object — with a guard).
 >
-> ⚠️ **There is no queued Lean brick left.** That is the state of the programme, not an
-> oversight in this list. An assistant asked "what is next" should answer from the three
-> lists below **and say which list the item is on**: list 1 is not queueable and offering an
-> item from it as though it were a tranche is the specific error this block exists to
-> prevent; list 2 is real but is entirely prose-and-guards; list 3 is closed to assistants.
+> ⚠️ **There is no queued Lean brick left** — no item that is scoped, sized and waiting to be
+> built the way the CR queue's were. That is the state of the programme, not an oversight in
+> this list. An assistant asked "what is next" should answer from the four lists below **and
+> say which list the item is on**: list 1 is research, and offering an item from it as though
+> it were a tranche is the specific error this block exists to prevent (exactly one row of it
+> is buildable); list 2 is real but is entirely prose-and-guards; list 3 is Mathlib depth —
+> two rows are buildable today and neither of them advances the physics; list 4 is closed to
+> assistants. **Every row in lists 1–3 carries `Cx / P(success) / Value`**, on the 2026-08-20
+> triage's columns; a row offered without them is a row that has not been thought about.
 >
 > **1. Forward — research, and only one of it is buildable today.**
 >
-> | Item | Recorded in | Status, honestly |
-> |---|---|---|
-> | **★ Expert row E — quantum Darwinism / record redundancy** | the expert-review table below (2026-09-02) | **The one buildable forward item.** M, P(success) medium–high, value medium–high. Its own note says "scope only after A/C" — rows A (WAY) and C (Local Friendliness) both landed 2026-09-04, so it is **unblocked as of that date**. Natural home: the P2 composite arenas + `RecordLayer/PointerLudersMarginal.lean`, as a `k`-fragment redundancy statement for the pointer marginal. ⚠️ In CSD a record's objectivity is its being an *ontic selection in `Σ`*, **not** its redundancy — Darwinism's criterion is the operational twin of that fact, not its ground, and the statement has to be chosen carefully to avoid landing a placeholder |
-> | **Posit 1's discharge — derive `IsTorusGenerated` from the de-isolation dynamics** | [`POSITS.md`](POSITS.md) §"three different things" (3) | ***The* reconstruction frontier**, and deliberately **not on any queue**: it is open *foundations*, with a known discharge condition but no Lean-shaped task. Posit 5's discharge is the same `H_int` family, which is why the definite article holds |
-> | **`R-016` — arena-level Hamiltonian generation** (`ι_X ω = dH` on the arena) | [`residues.tsv`](residues.tsv), §A rows A2/A4 below | **Open mathematics, paper-side.** Chart-level generation is proved (`SigmaLayer/ChartIntegralCurve.lean`, `RecordLayer/HamiltonianShift.lean`); exactly one arrow is missing and Mathlib has no symplectic form, no Poisson bracket, no exterior derivative |
-> | **`R-019` — the relaxation H-theorem** (Track B / Valentini) | [`cr-queue.md`](cr-queue.md) CR-14, [`residues.tsv`](residues.tsv) | The only route to *new predictions* past the empirically-identical ceiling — and **not scheduled**: blocked on first-passage asymptotics. The fallback `relaxation_requires_hyperbolic_fibre` landed 2026-09-06 and **was** the target of the item; the H-theorem was not |
-> | **Expert row G — Berry phase as fibre holonomy + Aharonov–Bohm twin** | the expert-review table below | Blocked on the **same manifold-API wall as `R-016`** from a different side (no connection/holonomy API; and the corpus's fibre is a torus, not a `U(1)`-bundle). Scope doc before touching; do not start from Lean |
-> | **General-`N` base-only A7** | the Research table below | ⏸ **PARKED, not refuted** — a well-characterised open problem with the decision-relevant output already in hand. **Do not resume without a new idea**; it gates nothing (the fibred reading is canonical, A7 is discharged at every `N`) |
->
+> | Item | Cx | P(success) | Value | Recorded in | Status, honestly |
+> |---|---|---|---|---|---|
+> | **★ Expert row E — quantum Darwinism / record redundancy** | **M** | Medium–high | Medium–high | the expert-review table below (2026-09-02) | **The one buildable forward item.** M, P(success) medium–high, value medium–high. Its own note says "scope only after A/C" — rows A (WAY) and C (Local Friendliness) both landed 2026-09-04, so it is **unblocked as of that date**. Natural home: the P2 composite arenas + `RecordLayer/PointerLudersMarginal.lean`, as a `k`-fragment redundancy statement for the pointer marginal. ⚠️ In CSD a record's objectivity is its being an *ontic selection in `Σ`*, **not** its redundancy — Darwinism's criterion is the operational twin of that fact, not its ground, and the statement has to be chosen carefully to avoid landing a placeholder |
+> | **Posit 1's discharge — derive `IsTorusGenerated` from the de-isolation dynamics** | **XL** | Low — no Lean shape today | Highest in the programme | [`POSITS.md`](POSITS.md) §"three different things" (3) | ***The* reconstruction frontier**, and deliberately **not on any queue**: it is open *foundations*, with a known discharge condition but no Lean-shaped task. Posit 5's discharge is the same `H_int` family, which is why the definite article holds |
+> | **`R-016` — arena-level Hamiltonian generation** (`ι_X ω = dH` on the arena) | **L–XL** | Low near-term | High | [`residues.tsv`](residues.tsv), §A rows A2/A4 below | **Open mathematics, paper-side.** Chart-level generation is proved (`SigmaLayer/ChartIntegralCurve.lean`, `RecordLayer/HamiltonianShift.lean`); exactly one arrow is missing and Mathlib has no symplectic form, no Poisson bracket, no exterior derivative |
+> | **`R-019` — the relaxation H-theorem** (Track B / Valentini) | **XL** | Low | Highest *outside* the programme | [`cr-queue.md`](cr-queue.md) CR-14, [`residues.tsv`](residues.tsv) | The only route to *new predictions* past the empirically-identical ceiling — and **not scheduled**: blocked on first-passage asymptotics. The fallback `relaxation_requires_hyperbolic_fibre` landed 2026-09-06 and **was** the target of the item; the H-theorem was not |
+> | **Expert row G — Berry phase as fibre holonomy + Aharonov–Bohm twin** | **L** | Low near-term | Medium | the expert-review table below | Blocked on the **same manifold-API wall as `R-016`** from a different side (no connection/holonomy API; and the corpus's fibre is a torus, not a `U(1)`-bundle). Scope doc before touching; do not start from Lean |
+> | **General-`N` base-only A7** | **XL** | — (parked) | Low — gates nothing | the Research table below | ⏸ **PARKED, not refuted** — a well-characterised open problem with the decision-relevant output already in hand. **Do not resume without a new idea**; it gates nothing (the fibred reading is canonical, A7 is discharged at every `N`) |
+> 
+> ⚠️ **Row E's three ratings are its own, from 2026-09-02, and they predate rows A/C and
+> brick 3.** The corpus precedent is that such ratings run HIGH: WAY brick 2 was rated **L**
+> and collapsed to one commutator identity once the Ozawa vocabulary existed — "rating a brick
+> before the vocabulary it depends on exists is rating the wrong problem" (`cr-queue.md`).
+> Re-rate row E at scope time; do not carry the **M** forward as though it had been re-checked.
+> 
 > **2. Queueable now — hardening residue.** All of it is prose and guards; none of it is new
 > mathematics. In rough order of how much a referee would notice:
 >
@@ -75,7 +85,33 @@
 >   disclaimer, or a section label in `Tests/AxiomAudit/MathlibStaging.lean`. Nothing applies
 >   the corpus to ECDLP. Do not re-raise it.
 >
-> **3. Closed to assistants** — the ⛔ section immediately below. Read it before proposing
+> **3. Mathlib gaps — and yes, two of them are buildable.** [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)
+> carries 14 rows; **9 are struck** (closed in-corpus, dissolved when the consumer turned out not
+> to need them, or simply wrong — the toral-automorphism row was factually false and the
+> Wigner-normal-form row described a lemma that is false as stated). Five stay live, and only the
+> first has a queueable piece:
+>
+> | Gap | Cx | P(success) | Value | Verdict |
+> |---|---|---|---|---|
+> | **Manifold exterior calculus — step (0): `ℂℙ^{N−1}` as a smooth manifold** (the standard affine charts) | **M** | High — standard charts, and this repo has already staged `Projectivization`'s topology, measurable space and metric | Medium | **Buildable now.** Genuine standalone Mathlib contribution (`Projectivization` has a charted-space instance *nowhere*) |
+> | **Manifold exterior calculus — step (1): `ContinuousAlternatingMap.domCoprod`** | **S** | High — boundedness on an existing algebraic construction (`AlternatingMap.domCoprod` exists; the continuous version is 0 declarations) | **Medium–high, out of all proportion to its size** | **Buildable now, and it is the leverage point:** without the continuous wedge the top-power identity `ω^{∧(N−1)}/(N−1)! = μ_FS` **cannot be stated in Lean at all**. Step (1) converts it from *unsayable* to *said, and open* |
+> | Manifold exterior calculus — steps (2)–(4): forms on manifolds, top-forms→measures, the symplectic/Kähler/moment-map layer | **XL / L / L–XL** | Low | High (it is `R-016`'s wall, and `momentMap`'s) | **Price it as a Mathlib programme, not a repo task.** Step (2) is upstream's own stated TODO |
+> | **Operator convexity — the Effros/Lieb summit** → joint convexity of relative entropy → DPI → unconditional SSA (row E2) | **L–XL** | Low–medium | Gated | ⛔ **Ask `lieb-dpi-scoping.md` Gate 1 first** — *is SSA-unconditional actually consumed?* Do not run Gate 0. The instance wall that used to head this row is **resolved**; what is left is the theorem |
+> | **Lévy concentration / spherical isoperimetry** | **XL** | Low | Low | Blocks only the `exp(−c·d_E·ε²)` *rate*; the expectation form and a polynomial Chebyshev rate are both proved. Not worth the tower |
+> | **Pointwise Birkhoff** | — | — | — | ⛔ **Do not pursue** — the single-flow route is a proved dead end CSD does not take (NG1) |
+> | **Stone's theorem, general** | **XL** | Low | — | Nothing in flight; the dynamics spine is `Matrix (Fin N) (Fin N) ℂ` and the finite-dimensional continuity-only theorem is proved |
+>
+> ⚠️ **Honest price on steps (0)+(1).** *Nothing in flight waits on them.* The corpus routes around
+> all four restricted terms — `μ_FS` is pinned by uniqueness-under-symmetry, Duistermaat–Heckman by
+> an independent Gaussian route, the moment-map equation at the linear level. What closing them buys
+> is **self-containment and a statable top-power identity**, not new results. That is a real gain for
+> an honest-scope register and a real Mathlib contribution; it is not progress on the physics, and
+> should not be sold as such.
+>
+> ⚠️ **Upstreaming the staged batch is CR-9 — DEFERRED by author decision 2026-09-05**, not blocked.
+> `MATHLIB-GAPS.md`'s "suggested first upstream batch" is that item. Do not re-raise it as pending.
+>
+> **4. Closed to assistants** — the ⛔ section immediately below. Read it before proposing
 > anything: the Wigner hand-pass, manuscript edits, and `lieb-dpi` Gate 0 keep being offered
 > back to the author, which is why the section exists.
 >
