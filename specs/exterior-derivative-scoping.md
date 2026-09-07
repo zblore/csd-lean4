@@ -1,8 +1,8 @@
 # The exterior derivative on manifolds (step 2b): scoping note
 
-**Status:** SCOPED 2026-09-07; **§3.1 attempted the same day and STOPPED at the §6 stop
-condition** (see §3a — the finding is that a missing trivialisation-unfolding API, not `d`
-itself, is the next brick). **NOT BUILT.** Step (2b) of the manifold exterior-calculus
+**Status:** SCOPED 2026-09-07; §3.1 attempted the same day. **NOT BUILT.** ⚠️ §3a records two
+retracted findings from that attempt and the procedural lesson behind them — read it before
+trusting any "wall" claim in this note. Step (2b) of the manifold exterior-calculus
 plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)).
 
 ⚠️ **Read §2 before writing any Lean.** There are three standard routes to `d` on a manifold,
@@ -82,38 +82,57 @@ Route A and it buys nothing Route A does not give.
    `DifferentialForm`, which is what makes `d` iterable.
 5. **`mextDeriv_mextDeriv`** — `d² = 0`, transported from `extDeriv_extDeriv`.
 
-## 3a. ⚠️ §3.1 ATTEMPTED 2026-09-07 — and the §6 stop condition fired
+## 3a. ⚠️ §3.1 attempted 2026-09-07 — the first write-up was WRONG, twice
 
-`localRep` was written and **typechecks**: the definition
+**Read this section as a correction, not as a finding.**
 
-    localRep form x₀ y = (trivializationAt _ _ x₀ ⟨(extChartAt I x₀).symm y,
-                            form ((extChartAt I x₀).symm y)⟩).2
+`localRep` was written and **typechecks**. The base-point identity —
+`localRep form x₀ (extChartAt I x₀ x₀) = form x₀` — was then attempted as the smallest test.
 
-is the right shape and the type is well-formed. So the *definition* is not the obstacle.
+⚠️ **First write-up (retracted): "Mathlib has every construction in that chain and none of the
+computation lemmas."** That is false. The lemmas exist and the file's own docstring points
+straight at the main one:
 
-**What stopped it is the smallest possible consequence of that definition.** The base-point
-identity — `localRep form x₀ (extChartAt I x₀ x₀) = form x₀`, which says nothing more than
-"a chart is the identity at its own centre" — does **not** fall out. `simp` reduces it to
+* `FiberBundle.trivializationAt_continuousAlternatingMap_apply` — the alternating bundle's
+  trivialisation in terms of `inCoordinates`, and it is **`rfl`**;
+* `ContinuousAlternatingMap.inCoordinates` + `inCoordinates_eq` — the same through continuous
+  linear equivalences;
+* `VectorBundleCore.trivializationAt_symmL` — `@[simp, mfld_simps]`, the trivialisation's
+  `symmL` as a `coordChange`;
+* `VectorBundleCore.coordChange_self` — and that coordinate change is the identity at the
+  base point.
 
-    (trivializationAt _ (fun p ↦ TangentSpace I p [⋀^Fin k]→L[𝕜] Trivial M G p) x₀ ⟨…, form …⟩).2
-      = form x₀
+⚠️ **Second write-up (also retracted): "the next brick is a trivialisation-unfolding API,
+rated M–L."** There is no such brick to build. With the four lemmas above the base-point
+identity reduces — checked — to exactly one goal:
 
-and stalls, because closing it needs an **unfolding API for the alternating bundle's
-trivialisation** in terms of the base bundles' coordinate changes: a chain through
-`Pretrivialization.continuousAlternatingMap` → `ContinuousLinearEquiv.continuousAlternatingMapCongr`
-→ `tangentBundleCore.coordChange` at the identity transition. Mathlib has every *construction*
-in that chain and **none of the computation lemmas**.
+    (form x₀) (⇑((trivializationAt EM (TangentSpace I) x₀).symmL 𝕜 x₀) ∘ v) = (form x₀) v
 
-⚠️ **That settles the re-price, and it is the useful output of the attempt.** §3.3
-(chart-independence) needs the *transition* version of exactly the same unfolding, matched
-against `extDeriv_pullback`'s side conditions — strictly harder than the base-point case that
-already does not close. **The stop condition in §6 is therefore met and nothing was landed**: a
-bare `localRep` with no lemmas is scaffolding, which `CLAUDE.md` forbids.
+which is `trivializationAt_symmL` + `coordChange_self`, and what stops `rw` closing it is that
+`TangentSpace I` and `(tangentBundleCore I M).Fiber` are **defeq but not syntactically equal**
+— a `show`/`change`, not a theorem.
 
-**The next concrete brick is named, and it is not `d`:** an unfolding/computation API for
-`Bundle.ContinuousAlternatingMap`'s trivialisation — `trivializationAt … x ⟨p, v⟩` in terms of
-the two base coordinate changes, and its identity case. Rate that **M–L** on its own, build it
-first, and only then return to §3.
+**Corrected finding: there is no level below §3.** The route-A plan stands as written, and the
+work is the ordinary chart-plumbing it always was: `extChartAt` round-trips that must be
+rewritten *before* the trivialisation is unfolded (rewriting after, the `extChartAt` is already
+delta-reduced and the rewrite will not fire), and `TangentSpace`-vs-`Fiber` bridging at each
+`VectorBundleCore` lemma. Neither is deep; both are constant friction, and **that friction is
+what the XL is made of** — not any single missing theorem.
+
+### ⚠️ The procedural lesson, which is the real output of this attempt
+
+Four "walls" were recorded on 2026-09-07 and **all four were wrong**: an instance-path
+mismatch that was an ascription, a missing hypothesis that was a missing `IsManifold`, and the
+two retracted above. Every one was called after a failed `simp` or a failed `exact`, and every
+one dissolved on the next probe. The corrective is procedural and cheap:
+
+* **before recording a wall, follow the file's own docstrings** — this one names
+  `FiberBundle.trivializationAt_continuousAlternatingMap_apply` in a comment eleven lines above
+  the definition that needed it, and it was not read;
+* **a failed tactic is evidence about the tactic, not about Mathlib.** Grep for the lemma by
+  name before concluding it does not exist;
+* **the cheapest disproof first.** "Are these the same instance?" was one `rfl`; "does this
+  lemma exist?" was one `grep`. Both were skipped in favour of a paragraph.
 
 ## 4. ⚠️ Four traps, all of them design decisions rather than difficulties
 
