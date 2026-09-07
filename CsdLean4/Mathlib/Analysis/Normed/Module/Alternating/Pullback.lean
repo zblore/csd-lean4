@@ -63,7 +63,19 @@ the `ContMDiffOn` lemma for the alternating bundle's coordinate change, the
 `ContMDiffVectorBundle` instance (the analogue of `Geometry/Manifold/VectorBundle/Hom.lean`),
 and only then differential forms on a manifold as smooth sections.
 
-⚠️ **Where the next layer stops, recorded precisely, because it is not a mathematical wall.**
+⚠️⚠️ **CORRECTION (same day): the note below was DIAGNOSED WRONG, and both remaining layers
+have since landed** in `Mathlib/Geometry/Manifold/VectorBundle/AlternatingMap.lean`. It is not
+an instance-path mismatch: the two topologies on a continuous-linear-map space **are the same
+instance** (`inferInstance = ContinuousLinearMap.topologicalSpace` by `rfl`, checked). The real
+cause is **elaboration order** — a type *ascription* re-synthesises the instances down the
+normed path while the term carries the topological-module path, and the application check runs
+at reducible transparency. Stating the `ContDiff` fact **through the term**
+(`ContDiff 𝕜 n ⇑f`) rather than through an ascription fixes it outright. The original note is
+kept below because the lesson is worth more than the mistake: *a failure at the instance layer
+is not automatically an instance-diamond problem, and the cheapest test — are these the same
+instance? — was one `rfl` away and was not run.*
+
+⚠️ **The original, incorrect note.**
 The coordinate change of the alternating bundle decomposes as
 `compContinuousAlternatingMapL (e₂.coordChangeL b) ∘L compContinuousLinearMapCLM (e₁'.coordChangeL b)`
 — and that decomposition is **`rfl`**, checked. With `contDiff_compContinuousLinearMapCLM` and

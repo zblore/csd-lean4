@@ -2682,6 +2682,24 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousLinearMap.compContinuousAlternatingMapL
 
+/-! ### The alternating-map bundle is a `C^n` vector bundle (VectorBundle/AlternatingMap.lean) -/
+
+-- Step (2a), layers three and four. ⚠️ The blocker recorded in the previous commit as an
+-- "instance-path mismatch needing plumbing" was DIAGNOSED WRONG: the two topologies on a
+-- continuous-linear-map space are the same instance (checked by rfl). The real cause is
+-- elaboration order -- a type ASCRIPTION re-synthesises instances down the normed path while
+-- the term carries the topological-module path. Stating the ContDiff fact through the term
+-- (`ContDiff k n (coe f)`) instead of through an ascription fixes it outright, and both layers
+-- then land. The correction is written up in the module header.
+
+/-- info: 'contMDiffOn_continuousAlternatingMapCoordChange' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contMDiffOn_continuousAlternatingMapCoordChange
+
+/-- info: 'ContMDiffVectorBundle.continuousAlternatingMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContMDiffVectorBundle.continuousAlternatingMap
+
 /-! ### Complex projective space as an analytic manifold (ProjectiveSpace.lean, 2026-09-07) -/
 
 -- Step (0) of the manifold exterior-calculus plan. Before this, `Projectivization` had a
