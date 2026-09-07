@@ -1978,4 +1978,38 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.WignerArakiYanase.jointLift_record_not_factor_hilbert
 
+/-! ### Record redundancy: agreement, not replication (Empirical/CSD/Darwinism.lean, 2026-09-07) -/
+
+-- Expert row E, CSD side. The twin's job is to stop the QM-side redundancy theorem being read
+-- as CSD's account of objectivity. `register_eq_of_same_point` is the theorem that does it:
+-- two registers agree even across DIFFERENT strokes with DIFFERENT fragment counts, so the
+-- agreement comes from one ontic selection upstream, not from the copying.
+-- `copyStroke_zero_eq_id` is the same point from the other end: with zero fragments the stroke
+-- is the identity and the record is exactly as definite as before.
+-- ⚠️ Frozen base and kinematic only -- no measure on the fragment product, no a.e. statement.
+
+/-- info: 'CSD.Empirical.CSDBridge.Darwinism.RecordStroke.outcome_not_made' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Darwinism.RecordStroke.outcome_not_made
+
+/-- info: 'CSD.Empirical.CSDBridge.Darwinism.RecordStroke.registers_agree' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Darwinism.RecordStroke.registers_agree
+
+/-- info: 'CSD.Empirical.CSDBridge.Darwinism.RecordStroke.frozen_forces_prewritten' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Darwinism.RecordStroke.frozen_forces_prewritten
+
+/-- info: 'CSD.Empirical.CSDBridge.Darwinism.RecordStroke.not_frozen_of_two_outcomes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Darwinism.RecordStroke.not_frozen_of_two_outcomes
+
+/-- info: 'CSD.Empirical.CSDBridge.Darwinism.register_eq_of_same_point' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Darwinism.register_eq_of_same_point
+
+/-- info: 'CSD.Empirical.CSDBridge.Darwinism.copyStroke_zero_eq_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.Darwinism.copyStroke_zero_eq_id
+
 end CSD.Tests.AxiomAudit

@@ -1,7 +1,23 @@
 # Quantum Darwinism / record redundancy: scoping note
 
-**Status:** SCOPED 2026-09-07; **QM side BUILT the same day** (`Empirical/QM/Darwinism.lean`,
-5 pins). **CSD side NOT BUILT.** Expert-review row **E** of [`BACKLOG.md`](BACKLOG.md).
+**Status:** SCOPED and **BUILT, both sides, 2026-09-07** (`Empirical/QM/Darwinism.lean`,
+5 pins; `Empirical/CSD/Darwinism.lean`, 6 pins). Expert-review row **E** of
+[`BACKLOG.md`](BACKLOG.md).
+
+**As landed (CSD side):** `RecordStroke` on the arena `Σ × (Fin k → register)`,
+★ `outcome_not_made` (the stroke records, it does not decide), ★★ `registers_agree`,
+★★ `register_eq_of_same_point` — §5's theorem: two registers agree **across different strokes
+with different fragment counts**, so the agreement comes from one selection upstream and not
+from the copying — ★ `frozen_forces_prewritten` (§4's test) with its refutation form, and
+★ `copyStroke_zero_eq_id`: with **zero** fragments the stroke is the identity and the record
+is exactly as definite as before.
+
+⚠️ **Two deviations from §3, both narrowing.** (i) The arena is a plain product coordinate,
+not a `Measure.pi` — because nothing here is measure-theoretic, so §3's worry about needing a
+new arena *species* did not arise and its stop condition was never reached. (ii) That is also
+the limitation: everything is **pointwise and kinematic**, with no invariance claim and no
+`a.e.` statement, and the frozen-base tier is assumed (`base_fixed`) rather than the
+back-reacting `IsJointLift`. The measure-theoretic redundancy §3 costed is **not built**.
 
 **As landed (QM side):** `SpectrumBroadcast` (§2b), ★ `not_of_constant_fragment` — §4's
 vacuity test *as a theorem*, ★ `successProb_eq_one_of_discriminating`, the witness
