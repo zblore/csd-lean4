@@ -31,6 +31,38 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `ω^{∧(N−1)}/(N−1)! = μ_FS`. Needs exterior calculus Mathlib does not have on manifolds
   (`MATHLIB-GAPS.md`, "Kähler / symplectic manifold API"). Marker: `TERM-SCOPE(Kahler)`.
 
+## moment map
+
+* **Means here (backed):** the coordinate function `Φ([z])ᵢ = |zᵢ|²/‖z‖²` on `ℂℙ^{N−1}`
+  (`LF4.momentMap`), with its elementary properties — well-definedness on rays (`momentMap_mk`),
+  `momentMap_nonneg`, `momentMap_sum_eq_one`, `continuous_momentMap`, `measurable_momentMap` — **and
+  the moment-map defining equation `ι_{X_i}ω = dF` at the LINEAR level**: `IsPhaseHamiltonian` is
+  exactly that equation on the ambient `EuclideanSpace`, and `generatedRateField_eq_momentMap`
+  proves that a rate field satisfying it *is* `momentMap`.
+* **Backed by:** `LF4/MomentMap.lean`; `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`,
+  `generatedRateField_eq_momentMap`, `torusGenerated_eq_momentMap`, CR-15). The pushforward facts
+  the corpus needs are **theorems, not citations**: `fs_moment_pushforward_uniform` (qubit —
+  a *discharged axiom*, 2026-05-31) and `fs_moment_joint_dirichlet_N` (general `N`), both on the
+  foundational triple.
+* **NOT established:** that it is the moment map of a Hamiltonian torus action on the symplectic
+  *manifold* `ℂℙ^{N−1}` — the defining equation on the quotient, and with it the moment *polytope*
+  in the Atiyah–Guillemin–Sternberg sense. Same manifold wall as Kähler. Marker:
+  `TERM-SCOPE(MomentMap)`.
+* ⚠️ **Why this entry is late (added 2026-09-06).** This file is indexed by *words*, and "moment
+  map" matched none of the Kähler / Hamiltonian / Liouville patterns, so the ratchet could not see
+  it — even though `momentMap` is the most load-bearing named object in the corpus. It **is** the
+  cell law, and the fibred Born route (`RecordLayer.globalBasin_born`) rests on exactly twelve
+  definitions, of which this is the **only** one carrying external mathematical content. Found by a
+  declaration-indexed sweep of the Born route's proof term, not by a word list. The lesson is about
+  the register, not the object: the object's defining equation *is* proved as far as the corpus can
+  reach.
+* ⚠️ **Duistermaat–Heckman is NOT in this category**, despite appearing in ~48 modules. Nothing is
+  named for it — `LF4/DuistermaatHeckman.lean` is a tombstone — and the statements the corpus needs
+  are proved by an independent (Gaussian / change-of-variables) route. It is a literature signpost,
+  not an unformalised import. The same check cleared `Naimark` (the defining properties are
+  *structure fields* of `NaimarkDilation`, and `canonicalNaimark` builds one for an **arbitrary**
+  POVM) and `UniquelyErgodic` (the standard definition, absent from Mathlib, defined here).
+
 ## Hamiltonian
 
 ⚠️ **Two senses, and only one is restricted.** Conflating them is why an audit of this word looks
@@ -80,6 +112,13 @@ alarming and is not.
 * **NOT established:** that it is the normalised Riemannian volume of the Fubini–Study *metric*,
   or the top power of the Kähler form. Cited as background, not as a corpus result (see the
   glossary entry `fubini-study-measure`). Marker: `TERM-SCOPE(Kahler)` where that reading is used.
+* ⚠️ **Since CR-4 (2026-09-06) the Born headlines no longer route through it.** The dependency cone
+  of `globalBasin_born` contains **no** `fubiniStudyMeasure`: the fibred route is
+  `epistemicMeasure = Dirac ⊗ Haar`, the basin measure is a torus-cell width, and the value is the
+  moment map. `μ_FS` stays load-bearing for the **ontic** law (`kMuL = μ_FS ⊗ vol`, and
+  `kMuL_unique`), for the retained base-side engines, and for the bridge
+  `globalBasin_toReal_eq_bornRegion_toReal`. So this gap is inherited by the *justification* of the
+  typicality law, not by the Born *computation*.
 
 ## smooth
 

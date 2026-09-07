@@ -13,6 +13,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbabil
 # SigmaLayer/HamiltonianSignature: A2's formalisable half
 
 **TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian"; `specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(MomentMap)** — this module uses the *restricted* (symplectic-manifold) sense of "moment map"; `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 7-SigmaLayer (Paper C A2 — Hamiltonian ontic dynamics).
 

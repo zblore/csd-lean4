@@ -21,6 +21,14 @@
 #     "closed form" and raised 40 modules including `MeasurementAdder.lean`. Patterns here must be
 #     phrases that CANNOT mean anything else.
 #
+#   * MomentMap (added 2026-09-06) keys on `moment polytope` / `maximal-torus action` /
+#     `generates the torus action`, NOT on "moment map" — the bare phrase appears in ~50 modules
+#     and almost all of them mean the backed coordinate function `|zᵢ|²/‖z‖²`, whose defining
+#     equation IS proved at the linear level (`IsPhaseHamiltonian`). Only the symplectic-manifold
+#     reading is restricted. This term was missing until a declaration-indexed sweep found it:
+#     the guard is word-indexed, so a content-carrying name matching no existing pattern is
+#     invisible to it. That is a known limit of this design, not a bug in it.
+#
 # So this guard keys on the RESTRICTED VOCABULARY — the phrases that can only mean the unbacked
 # sense — not on names. That keeps it precise, which is the difference between a guard and noise.
 #
@@ -39,11 +47,12 @@ TERMS='
 Kahler|dω = 0|dω=0|top-power identity|top power identity|ω^{∧
 Hamiltonian|X_H|ω⁻¹dH|Hamiltonian vector field|symplectic gradient|globally Hamiltonian
 Liouville|top-power volume|ω^{∧n}/n!
+MomentMap|moment polytope|maximal-torus action|generates the torus action
 '
 
 fail=0
 report=""
-for term in Kahler Hamiltonian Liouville; do
+for term in Kahler Hamiltonian Liouville MomentMap; do
   pat=$(printf '%s\n' "$TERMS" | grep "^${term}|" | cut -d'|' -f2- | tr '|' '\n' | paste -sd'|' -)
   [ -z "$pat" ] && continue
   # modules using the restricted vocabulary

@@ -11,6 +11,8 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
 # LF4 Tranche 1: the Born weights as the torus moment map on ℂℙ^{N-1}
 
+**TERM-SCOPE(MomentMap)** — this module uses the *restricted* (symplectic-manifold) sense of "moment map"; `specs/TERMS.md` records what is backed and what is not.
+
 The Kähler structure on `ℂℙ^{N-1}` carries a canonical object the CSD corpus
 never invokes: the **moment map** of the maximal-torus action. For the standard
 phase action of `Tᴺ` on `ℂℙ^{N-1}`, the moment map is
