@@ -2700,6 +2700,18 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ContMDiffVectorBundle.continuousAlternatingMap
 
+-- ★ STEP (2a) COMPLETE (DifferentialForm.lean): a differential form on a manifold is a smooth
+-- section of the alternating-map bundle on the tangent bundle, and CP^n carries ANALYTIC forms
+-- of every degree -- the whole chain from step (0) in one statement. ⚠️ The witness is the ZERO
+-- form: the type exists, the Fubini-Study form as a section does NOT (it needs chart-overlap
+-- agreement, a real computation, not attempted). ⚠️ And still no exterior derivative: that is
+-- step (2b), upstream's own TODO, so the top-power identity is SAYABLE and no more provable
+-- than it was this morning.
+
+/-- info: 'projectiveDifferentialForm_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms projectiveDifferentialForm_nonempty
+
 /-! ### Complex projective space as an analytic manifold (ProjectiveSpace.lean, 2026-09-07) -/
 
 -- Step (0) of the manifold exterior-calculus plan. Before this, `Projectivization` had a
