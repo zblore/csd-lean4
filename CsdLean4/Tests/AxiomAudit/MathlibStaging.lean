@@ -2597,6 +2597,39 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Kahler.extDeriv_fsChartForm
 
+/-! ### The continuous exterior product (Wedge.lean / KahlerWedge.lean, 2026-09-07) -/
+
+-- Step (1) of the manifold exterior-calculus plan (MATHLIB-GAPS.md, BACKLOG XL). Mathlib's
+-- exterior product is AlternatingMap-only and is valued in the TENSOR product of the
+-- codomains, which carries no topology at the pin -- so the continuous analogue cannot even
+-- be stated in that form. Pairing the codomains through a continuous bilinear map is the
+-- standard fix and is what these pins cover. The payoff is that omega ^ omega is now a term:
+-- before this, a top-power identity was not expressible in Lean at all.
+
+/-- info: 'ContinuousAlternatingMap.continuous_liftTensor_summand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.continuous_liftTensor_summand
+
+/-- info: 'ContinuousAlternatingMap.wedge_toAlternatingMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_toAlternatingMap
+
+/-- info: 'ContinuousAlternatingMap.wedge_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_apply
+
+/-- info: 'ContinuousAlternatingMap.domDomCongr_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.domDomCongr_apply
+
+/-- info: 'Kahler.fundamentalFormSq_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.fundamentalFormSq_apply
+
+/-- info: 'Kahler.extDeriv_fundamentalFormSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.extDeriv_fundamentalFormSq
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling
