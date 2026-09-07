@@ -7,7 +7,79 @@
 > record. **This is the live list.** It is ordered so that the top item is the one that
 > unblocks the programme's single remaining scientific blocker.
 >
-> ### ▶ NEXT STEPS — recorded 2026-09-02, end of session
+> ### ▶ NEXT STEPS — recorded 2026-09-07
+>
+> **State.** HEAD `46be6c6`, tree clean, CI green (`CI` and `Glossary` both pass at HEAD).
+> Two queues have closed since the 2026-09-02 block below was written. Every numbered item
+> of that block landed, and the external-review **CR queue**
+> ([`cr-queue.md`](cr-queue.md), CR-1…CR-16) is fully resolved: 13 done, CR-9 deferred by
+> author decision, CR-10 declined with reasons, CR-14 fallback-only (`R-019`). The heavy one
+> was **CR-4** (BELL-MIGRATE, 28 files, closed 2026-09-06 over fifteen commits): nothing in
+> `Empirical` or `LF6` states a Born-region result on the base arena any more. ⚠️ Its "no new
+> theorem" premise was false — the migrated files prove *frequency* statements and the fibred
+> side had no frequency theorem, so seven engine pieces, the weight bridge
+> `globalBasin_toReal_eq_bornRegion_toReal` and a generic i.i.d. trial process
+> (`Mathlib/MeasureTheory/IidTrials.lean`) were built for it. Since CR-4 the Born headlines no
+> longer route through `fubiniStudyMeasure` at all (`TERMS.md`, 2026-09-07, which also
+> registered `momentMap` — the corpus's most load-bearing named object — with a guard).
+>
+> ⚠️ **There is no queued Lean brick left.** That is the state of the programme, not an
+> oversight in this list. An assistant asked "what is next" should answer from the three
+> lists below **and say which list the item is on**: list 1 is not queueable and offering an
+> item from it as though it were a tranche is the specific error this block exists to
+> prevent; list 2 is real but is entirely prose-and-guards; list 3 is closed to assistants.
+>
+> **1. Forward — research, and only one of it is buildable today.**
+>
+> | Item | Recorded in | Status, honestly |
+> |---|---|---|
+> | **★ Expert row E — quantum Darwinism / record redundancy** | the expert-review table below (2026-09-02) | **The one buildable forward item.** M, P(success) medium–high, value medium–high. Its own note says "scope only after A/C" — rows A (WAY) and C (Local Friendliness) both landed 2026-09-04, so it is **unblocked as of that date**. Natural home: the P2 composite arenas + `RecordLayer/PointerLudersMarginal.lean`, as a `k`-fragment redundancy statement for the pointer marginal. ⚠️ In CSD a record's objectivity is its being an *ontic selection in `Σ`*, **not** its redundancy — Darwinism's criterion is the operational twin of that fact, not its ground, and the statement has to be chosen carefully to avoid landing a placeholder |
+> | **Posit 1's discharge — derive `IsTorusGenerated` from the de-isolation dynamics** | [`POSITS.md`](POSITS.md) §"three different things" (3) | ***The* reconstruction frontier**, and deliberately **not on any queue**: it is open *foundations*, with a known discharge condition but no Lean-shaped task. Posit 5's discharge is the same `H_int` family, which is why the definite article holds |
+> | **`R-016` — arena-level Hamiltonian generation** (`ι_X ω = dH` on the arena) | [`residues.tsv`](residues.tsv), §A rows A2/A4 below | **Open mathematics, paper-side.** Chart-level generation is proved (`SigmaLayer/ChartIntegralCurve.lean`, `RecordLayer/HamiltonianShift.lean`); exactly one arrow is missing and Mathlib has no symplectic form, no Poisson bracket, no exterior derivative |
+> | **`R-019` — the relaxation H-theorem** (Track B / Valentini) | [`cr-queue.md`](cr-queue.md) CR-14, [`residues.tsv`](residues.tsv) | The only route to *new predictions* past the empirically-identical ceiling — and **not scheduled**: blocked on first-passage asymptotics. The fallback `relaxation_requires_hyperbolic_fibre` landed 2026-09-06 and **was** the target of the item; the H-theorem was not |
+> | **Expert row G — Berry phase as fibre holonomy + Aharonov–Bohm twin** | the expert-review table below | Blocked on the **same manifold-API wall as `R-016`** from a different side (no connection/holonomy API; and the corpus's fibre is a torus, not a `U(1)`-bundle). Scope doc before touching; do not start from Lean |
+> | **General-`N` base-only A7** | the Research table below | ⏸ **PARKED, not refuted** — a well-characterised open problem with the decision-relevant output already in hand. **Do not resume without a new idea**; it gates nothing (the fibred reading is canonical, A7 is discharged at every `N`) |
+>
+> **2. Queueable now — hardening residue.** All of it is prose and guards; none of it is new
+> mathematics. In rough order of how much a referee would notice:
+>
+> * **Prose audit passes 1–2 over the remaining four-fifths of the surface**
+>   ([`prose-audit.md`](prose-audit.md)). Passes 3–5 are done. ⚠️ The 2026-09-07 pass (below)
+>   is evidence this is not busywork.
+> * **`REFERENCES.json` coverage** — 37 entries against ~110 distinct cited sources, and the
+>   line-precise `[Key, file:Lstart-Lend]` citations CONVENTIONS §8.2 asks for are untouched.
+>   Deliberately not gated; entries must be transcribed from the citing modules' own
+>   `## Source` blocks, never recalled.
+> * **The 44 untagged "Mathlib has no …" claims.** Author call, not mechanical — see the open
+>   decisions below.
+> * **The `_of_` / `_statement` migration** (CONVENTIONS §8.3), opportunistic by policy.
+>   ⚠️ **Executed as an audit 2026-09-07, and the finding was in the ledgers, not the code:**
+>   the nine gate realisability Props were DISCHARGED 2026-07-19 on `cpSectorData`
+>   (`Gates/*Discharge.lean`) and the `PLACEHOLDERS.md` §1 *table* was updated the same day —
+>   but all nine defining docstrings still opened with `**PLACEHOLDER (Prop definition, not
+>   proved).**` and still carried `TODO(LF4 §13.2): construct a witness bundle`;
+>   `Gates/BellPrep.lean` contradicted itself inside one docstring; §1's own header paragraph
+>   still said "the remaining five … are the mechanical continuation" directly above the table
+>   saying otherwise; and `BRIDGE-OBLIGATIONS.md` §2.6 still said "pre-LF4, no concrete `D`
+>   exists for which any of them is shown to hold". **A ledger that understates what is
+>   proved is still a false ledger**, and these two files exist to be believed. Fixed at every
+>   site and now guarded by `scripts/check-placeholder-status.sh` (both directions: a
+>   discharged Prop may not keep its banner, an undischarged one may not lose it, and a
+>   discharge witness renamed away fails instead of being checked vacuously). `§2.1` was stale
+>   the same way — `ofKählerPreparation` proves both LF3 singlet fields.
+> * ~~**Ecdsafail doc de-application** (~70 stale ECDLP refs in Cat-1 `Reversible/` headers)~~
+>   — **STRUCK 2026-09-07: already done, and the row's count was never right.** The corpus
+>   carries 42 ECDSA/ECDLP mentions in total, 11 of them in `Reversible/`. Every one is either
+>   a provenance pointer to the separate `Ecdsafail` repository ("the application that
+>   motivated this substrate lives in …"), an explicit **"no ECDSA score change is claimed"**
+>   disclaimer, or a section label in `Tests/AxiomAudit/MathlibStaging.lean`. Nothing applies
+>   the corpus to ECDLP. Do not re-raise it.
+>
+> **3. Closed to assistants** — the ⛔ section immediately below. Read it before proposing
+> anything: the Wigner hand-pass, manuscript edits, and `lieb-dpi` Gate 0 keep being offered
+> back to the author, which is why the section exists.
+>
+> ### Session record — 2026-09-02 → 09-04 (every numbered item below LANDED; kept as the construction record)
 >
 > **Closed this session** (CI-green, 13 pins): **brick 3 of the `H_int(M)` arc** — the
 > back-reacting joint lift on the arena (`RecordLayer/JointLift.lean`: `isJointLift_jointLift`,
