@@ -736,7 +736,10 @@ fi
 # (4) backing theorems exist
 while read -r thm; do
   [ -z "$thm" ] && continue
-  if srcfiles | xargs grep -lE "^(theorem|lemma|def|noncomputable def)[[:space:]]+([A-Za-z0-9_'.]+\.)?$thm([[:space:](:{]|\$)" >/dev/null 2>&1; then
+  # Test for OUTPUT, not xargs's exit status: once the file list exceeds one xargs batch,
+  # every batch without a match makes xargs exit 123 even though another batch found the
+  # declaration (first seen 2026-09-07, when the 608th module tipped the list over).
+  if srcfiles | xargs grep -lE "^(theorem|lemma|def|noncomputable def)[[:space:]]+([A-Za-z0-9_'.]+\.)?$thm([[:space:](:{]|\$)" 2>/dev/null | grep -q .; then
     :
   else
     say_fail "backing theorem '$thm' not found as a declaration (CONNECTED claim orphaned?)"

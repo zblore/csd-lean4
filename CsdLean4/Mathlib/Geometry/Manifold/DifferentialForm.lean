@@ -38,10 +38,12 @@ analyticity in
 
 ## Honest scope
 
-⚠️ **Existence of the type is not existence of a form anyone wants.** The witness is the zero
-section. Putting the **Fubini–Study** form on `ℂℙⁿ` as a section of this bundle is NOT done: it
-needs the chart-local form of `KahlerClosed.lean` plus a proof that the chart expressions agree
-on overlaps, which is a real computation and is not attempted here.
+⚠️ **Existence of the type is not existence of a form anyone wants.** The witness *in this
+module* is the zero section. The **Fubini–Study** form as a `C^∞` section of this bundle is
+built downstream, in
+[`Instances/ProjectiveSpaceFubiniStudyForm.lean`](Instances/ProjectiveSpaceFubiniStudyForm.lean)
+(`Projectivization.fsForm`, with `fsForm_ne_zero`), from the chart-overlap agreement proved in
+`Instances/ProjectiveSpaceFubiniStudy.lean`.
 
 ⚠️ **Still no exterior derivative.** `d` on manifolds is step (2b) — upstream's own stated TODO
 — and none of this touches it. So `dω = 0` and the top-power identity remain exactly as
@@ -64,16 +66,16 @@ open scoped Manifold Bundle Topology ContDiff LinearAlgebra.Projectivization
 
 section
 
-variable {𝕜 EM HM M G ι : Type*} [NontriviallyNormedField 𝕜] [CharZero 𝕜]
-  [Fintype ι] [DecidableEq ι]
+variable {𝕜 EM HM : Type*} [NontriviallyNormedField 𝕜] [CharZero 𝕜]
   [NormedAddCommGroup EM] [NormedSpace 𝕜 EM] [TopologicalSpace HM]
-  [NormedAddCommGroup G] [NormedSpace 𝕜 G]
-  [TopologicalSpace M] [ChartedSpace HM M] {n : WithTop ℕ∞}
 
-variable (IM : ModelWithCorners 𝕜 EM HM) (M) (n) (ι) (G) in
 /-- **A `C^n` differential form** of degree `ι` on `M`, valued in `G`: a `C^n` section of the
-bundle whose fibre at `x` is the continuous alternating maps `(TₓM)^ι → G`. -/
-abbrev DifferentialForm [IsManifold IM 1 M] :=
+bundle whose fibre at `x` is the continuous alternating maps `(TₓM)^ι → G`.
+
+Explicit arguments in the order `DifferentialForm IM M n ι G`. -/
+abbrev DifferentialForm (IM : ModelWithCorners 𝕜 EM HM) (M : Type*) [TopologicalSpace M]
+    [ChartedSpace HM M] [IsManifold IM 1 M] (n : WithTop ℕ∞) (ι : Type*) [Fintype ι]
+    (G : Type*) [NormedAddCommGroup G] [NormedSpace 𝕜 G] :=
   ContMDiffSection IM (EM [⋀^ι]→L[𝕜] G) n
     (fun x : M => TangentSpace IM x [⋀^ι]→L[𝕜] Bundle.Trivial M G x)
 
@@ -94,8 +96,8 @@ This is the whole chain in one statement. `ℂℙⁿ` is a charted space and an 
 bundle over it is then an analytic vector bundle (step (2a)'s instance); and only then is the
 type of analytic `ι`-forms on `ℂℙⁿ` well-formed at all.
 
-⚠️ The witness is the **zero** form. Nothing here produces the Fubini–Study form as a section
-— see the honest-scope note in the module header. -/
+⚠️ The witness here is the **zero** form; the Fubini–Study form as a section is
+`Projectivization.fsForm` in `Instances/ProjectiveSpaceFubiniStudyForm.lean`. -/
 theorem projectiveDifferentialForm_nonempty (m : ℕ) :
     Nonempty (DifferentialForm (IM := modelWithCornersSelf ℂ (Fin m → ℂ))
       (M := ℙ ℂ (Ambient m)) (n := ω) (ι := ι) (G := ℂ)) :=

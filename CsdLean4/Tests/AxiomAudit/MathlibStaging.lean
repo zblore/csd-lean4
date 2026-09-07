@@ -2630,6 +2630,33 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Kahler.extDeriv_fundamentalFormSq
 
+/-! ### dd^c calculus: pluriharmonicity and naturality (KahlerPluriharmonic.lean, 2026-09-07) -/
+
+-- The flat lemmas a chart-invariance argument for the Fubini-Study form composes: Cauchy-Riemann
+-- in the d^c vocabulary, hence Re(holomorphic) is pluriharmonic; log|L .| pluriharmonic off the
+-- kernel via a LOCAL holomorphic logarithm (no global branch); and dd^c natural under holomorphic
+-- maps, whose d-half is upstream's extDeriv_pullback.
+
+/-- info: 'Kahler.dcForm_re_eq_neg_dForm_im' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.dcForm_re_eq_neg_dForm_im
+
+/-- info: 'Kahler.ddcForm_re_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.ddcForm_re_eq_zero
+
+/-- info: 'Kahler.ddcForm_log_norm_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.ddcForm_log_norm_eq_zero
+
+/-- info: 'Kahler.ddcForm_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.ddcForm_comp
+
+/-- info: 'Kahler.ddcForm_sub'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.ddcForm_sub'
+
 /-! ### The alternating pullback is jointly analytic (Alternating/Pullback.lean, 2026-09-07) -/
 
 -- The lemma step (2a) ran aground on. Smooth differential forms on a MANIFOLD need a
@@ -2702,9 +2729,10 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 -- ★ STEP (2a) COMPLETE (DifferentialForm.lean): a differential form on a manifold is a smooth
 -- section of the alternating-map bundle on the tangent bundle, and CP^n carries ANALYTIC forms
--- of every degree -- the whole chain from step (0) in one statement. ⚠️ The witness is the ZERO
--- form: the type exists, the Fubini-Study form as a section does NOT (it needs chart-overlap
--- agreement, a real computation, not attempted). ⚠️ And still no exterior derivative: that is
+-- of every degree -- the whole chain from step (0) in one statement. ⚠️ The witness HERE is the
+-- ZERO form; the Fubini-Study form as a section landed later the same day (chart-overlap
+-- agreement + bundle assembly: ProjectiveSpaceFubiniStudy{,Form}.lean, pinned below). ⚠️ And
+-- still no exterior derivative: that is
 -- step (2b), upstream's own TODO, so the top-power identity is SAYABLE and no more provable
 -- than it was this morning.
 
@@ -2743,6 +2771,130 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Projectivization.instIsManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.instIsManifold
+
+-- The same atlas over R (2026-09-07): a C-analytic manifold is R-analytic, and the real
+-- structure is where a REAL 2-form -- the Fubini-Study form is R-bilinear, not C-bilinear --
+-- has to live.
+/-- info: 'Projectivization.instIsManifoldReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.instIsManifoldReal
+
+/-! ### The Fubini-Study chart form is chart-invariant (ProjectiveSpaceFubiniStudy.lean, 2026-09-07) -/
+
+-- The mathematical heart of "the Fubini-Study form is a global object on CP^n": under the affine
+-- chart transition i -> j the potential log(1+|z|^2) changes by -2 log|z_j|, a pluriharmonic
+-- correction, so dd^c naturality (KahlerPluriharmonic.lean) carries the chart form in chart j to
+-- the chart form in chart i on the overlap. Stated on the Euclidean model (fsChartForm_transE)
+-- and on the Fin n -> C model the manifold is charted on (fsModelForm_transP), which is the form
+-- the bundle argument below consumes.
+
+/-- info: 'Kahler.ddcForm_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.ddcForm_congr
+
+/-- info: 'Projectivization.norm_sq_insertOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sq_insertOne
+
+/-- info: 'Projectivization.norm_sq_toLp_coordRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sq_toLp_coordRatio
+
+/-- info: 'Projectivization.fsPotential_toLp_coordRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPotential_toLp_coordRatio
+
+/-- info: 'Projectivization.contDiffAt_transE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiffAt_transE
+
+/-- info: 'Projectivization.coordRatio_insertOne_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.coordRatio_insertOne_self
+
+/-- info: 'Projectivization.transE_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transE_self
+
+/-- info: 'Projectivization.fsPotential_transE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPotential_transE
+
+/-- info: 'Projectivization.fsChartForm_transE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsChartForm_transE
+
+/-- info: 'Projectivization.transE_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transE_eq
+
+/-- info: 'Projectivization.fsModelForm_transP' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_transP
+
+/-! ### The Fubini-Study form as a global smooth 2-form on CP^n (ProjectiveSpaceFubiniStudyForm.lean, 2026-09-07) -/
+
+-- ★★ Step (2a)'s witness is no longer the zero form. `fsForm` is a C^infinity section of the
+-- alternating bundle on the tangent bundle of CP^n -- a term of `DifferentialForm` -- built from
+-- the chart forms through the local-representative identity `localRep_fsSection`: the tangent
+-- coordinate change is the derivative of the chart transition
+-- (`VectorBundleCore.trivializationAt_symmL`) and the pullback of the chart form along it is the
+-- chart form (`fsModelForm_transP`). Non-vacuity: `fsForm_ne_zero` (n >= 1) -- at a chart origin
+-- it is -4 times the flat fundamental form. ⚠️ C^infinity, not omega (the potential is only
+-- known C^infinity); ⚠️ no `d` on the manifold, so `d fsForm = 0` is still unstated, and neither
+-- non-degeneracy nor the top-power identity is attempted.
+
+/-- info: 'Projectivization.extChartAt_trans_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.extChartAt_trans_eq
+
+/-- info: 'Projectivization.localRep_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.localRep_fsSection
+
+/-- info: 'Projectivization.contDiff_fsChartForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_fsChartForm
+
+/-- info: 'Projectivization.contDiff_fsModelForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_fsModelForm
+
+/-- info: 'Projectivization.contMDiffAt_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiffAt_fsSection
+
+/-- info: 'Projectivization.contMDiff_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_fsSection
+
+/-- info: 'Projectivization.fsForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_apply
+
+/-- info: 'Projectivization.rep_origin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.rep_origin
+
+/-- info: 'Projectivization.idx_origin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.idx_origin
+
+/-- info: 'Projectivization.chartFun_idx_origin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartFun_idx_origin
+
+/-- info: 'Projectivization.fsSection_origin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsSection_origin
+
+/-- info: 'Projectivization.fsModelForm_zero_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_zero_apply
+
+/-- info: 'Projectivization.fsForm_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_ne_zero
 
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the

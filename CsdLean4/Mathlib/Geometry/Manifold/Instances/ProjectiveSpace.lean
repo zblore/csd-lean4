@@ -304,4 +304,24 @@ noncomputable instance instIsManifold :
     Set.range_id, Set.inter_univ, Set.preimage_id_eq, id_eq, hset]
   exact (contDiffOn_transition i j).congr fun w _ => hfun w
 
+/-- ★ **The same atlas, read over `ℝ`.** A `ℂ`-analytic manifold is `ℝ`-analytic
+(`ContDiffOn.restrict_scalars`), and the real structure is the one a *real* differential
+form — the Fubini–Study form is `ℝ`-bilinear, not `ℂ`-bilinear — has to live on. -/
+noncomputable instance instIsManifoldReal :
+    IsManifold (modelWithCornersSelf ℝ (Fin n → ℂ)) ω (ℙ ℂ (Ambient n)) := by
+  refine isManifold_of_contDiffOn _ _ _ ?_
+  rintro e e' ⟨i, rfl⟩ ⟨j, rfl⟩
+  have hset : ((chartAtIdx (n := n) i).symm ≫ₕ chartAtIdx j).source
+      = {w : Fin n → ℂ | insertOne i w j ≠ 0} := by
+    ext w
+    simp [chartAtIdx, chartInv, mem_chartSource_mk, insertOne]
+  have hfun : ∀ w : Fin n → ℂ,
+      ((chartAtIdx (n := n) i).symm ≫ₕ chartAtIdx j) w = coordRatio j (insertOne i w) := by
+    intro w
+    show chartFun j (chartInv i w) = _
+    rw [chartInv, chartFun_mk]
+  simp only [modelWithCornersSelf_coe, modelWithCornersSelf_coe_symm, Function.comp_def,
+    Set.range_id, Set.inter_univ, Set.preimage_id_eq, id_eq, hset]
+  exact ((contDiffOn_transition i j).restrict_scalars ℝ).congr fun w _ => hfun w
+
 end Projectivization
