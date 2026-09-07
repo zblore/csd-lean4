@@ -44,18 +44,20 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **PLACEHOLDER (Prop definition, not proved).**
+/-- **Claim-shaped `Prop`, DISCHARGED 2026-07-19** (`toffoli_realisable_cpSector`,
+`Gates/MultiQubitDischarge.lean`; as typed, modulo the posited CSD sector (SO-1) --
+`PLACEHOLDERS.md` §1/§7).
 CSD realisability for Toffoli (CCNOT). See `PLACEHOLDERS.md`. -/
--- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def toffoli_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 3 (EuclideanSpace ℂ (Fin 8)),
     ∀ v : EuclideanSpace ℂ (Fin 8),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmToffoli) v
 
-/-- **PLACEHOLDER (Prop definition, not proved).**
+/-- **Claim-shaped `Prop`, DISCHARGED 2026-07-19** (`fredkin_realisable_cpSector`,
+`Gates/MultiQubitDischarge.lean`; as typed, modulo the posited CSD sector (SO-1) --
+`PLACEHOLDERS.md` §1/§7).
 CSD realisability for Fredkin (CSWAP). See `PLACEHOLDERS.md`. -/
--- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def fredkin_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 3 (EuclideanSpace ℂ (Fin 8)),

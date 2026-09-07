@@ -60,7 +60,7 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **PLACEHOLDER (Prop definition, not proved).**
+/-- **Claim-shaped `Prop`, DISCHARGED 2026-07-19** (status note below).
 
 Bell-state preparation circuit realisability: there exist CSD
 unitary bundles for the Hadamard-on-qubit-0 operation `H ⊗ I` and

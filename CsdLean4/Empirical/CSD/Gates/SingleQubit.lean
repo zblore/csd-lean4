@@ -87,34 +87,38 @@ variable {SigmaSpace P G : Type*}
   [MulAction G SigmaSpace] [MulAction G P]
   [MulAction.IsPretransitive G P]
 
-/-- **PLACEHOLDER (Prop definition, not proved).**
+/-- **Claim-shaped `Prop`, DISCHARGED 2026-07-19.**
 CSD realisability for the Hadamard gate. The QM-side
 `CSD.Empirical.QM.Gates.qmH` matrix admits a `CSDUnitaryBundle D 1 _`
 realisation under the Kähler `SectorData D`.
 
-**Status: claim-shaped, undischarged.** This is a `Prop` definition,
-not a theorem. Pre-LF4 there is no construction of any `D` for which
-`hadamard_realisable_for D` holds; the claim is recorded as an
-LF4-§13.2 obligation. See `PLACEHOLDERS.md`. -/
--- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
+**Status: discharged on the concrete sector.** `hadamard_realisable_cpSector`
+(`Gates/SingleQubitDischarge.lean`) constructs the witness bundle at
+`D = cpSectorData p₀`, with `U_isometry` *derived* from `qmH ∈ U(2)`. Honest
+scope (`PLACEHOLDERS.md` §7): the bundle type carries `U` + `U_isometry` + a
+`Context`, not a Σ-flow, so this discharges the Prop *as typed*, not the
+Σ-flow-lift prose (the open D1 gap), and it is modulo the posited CSD sector
+(SO-1). See `PLACEHOLDERS.md` §1. -/
 def hadamard_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 1 (EuclideanSpace ℂ (Fin 2)),
     ∀ v : EuclideanSpace ℂ (Fin 2),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmH) v
 
-/-- **PLACEHOLDER (Prop definition, not proved).**
+/-- **Claim-shaped `Prop`, DISCHARGED 2026-07-19** (`phaseS_realisable_cpSector`,
+`Gates/SingleQubitDischarge.lean`; as typed, modulo the posited CSD sector (SO-1) --
+`PLACEHOLDERS.md` §1/§7).
 CSD realisability for the Phase S gate. See `PLACEHOLDERS.md`. -/
--- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def phaseS_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 1 (EuclideanSpace ℂ (Fin 2)),
     ∀ v : EuclideanSpace ℂ (Fin 2),
       b.U v = (Matrix.toEuclideanLin CSD.Empirical.QM.Gates.qmS) v
 
-/-- **PLACEHOLDER (Prop definition, not proved).**
+/-- **Claim-shaped `Prop`, DISCHARGED 2026-07-19** (`phaseT_realisable_cpSector`,
+`Gates/SingleQubitDischarge.lean`; as typed, modulo the posited CSD sector (SO-1) --
+`PLACEHOLDERS.md` §1/§7).
 CSD realisability for the Phase T gate. See `PLACEHOLDERS.md`. -/
--- TODO(LF4 §13.2): construct a witness bundle for the Kähler `SectorData`.
 def phaseT_realisable_for
     (D : CSD.LF2.SectorData SigmaSpace P G) : Prop :=
   ∃ b : CSDUnitaryBundle D 1 (EuclideanSpace ℂ (Fin 2)),

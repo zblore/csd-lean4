@@ -20,6 +20,15 @@
 # It scans BOTH the spec/status docs and the Lean docstrings, because the sharpest
 # contradiction in the motivating case was between a plan table and a source file.
 #
+# 2026-09-07: `PLACEHOLDERS.md` and `BRIDGE-OBLIGATIONS.md` added to the set. They are the
+# two ledgers that record what is NOT proved, so they are where a settled/open split is
+# most likely to be load-bearing, and they were absent. ⚠️ Honest note: adding them found
+# nothing (10 findings before, 10 after) and would NOT have caught the defect that
+# prompted it — nine discharged Props still wearing "PLACEHOLDER (Prop definition, not
+# proved)" banners, because those banner lines name no backticked identifier and this
+# scanner keys on identifiers. `scripts/check-placeholder-status.sh` keys on the ledger
+# row instead and does catch it. This is a coverage hole closed, not a defect found.
+#
 # ============================ HONEST LIMITS — READ THIS ======================
 # THIS IS AN ADVISORY READING LIST, NOT A GATE. Do not treat a PASS as coverage.
 #
@@ -56,7 +65,8 @@ STRICT=0
 
 DOCS="README.md EMPIRICAL.md AXIOMS.md specs/BACKLOG.md specs/record-layer-plan.md
 specs/active-todo.md specs/CSD-CHARTER.md specs/reconstruction-status.md
-specs/connectivity-manifest.md specs/future-work.md specs/INDEX.md"
+specs/connectivity-manifest.md specs/future-work.md specs/INDEX.md
+PLACEHOLDERS.md BRIDGE-OBLIGATIONS.md"
 
 SETTLED='DONE|BUILT|DISSOLVED|discharged|DISCHARGED|is complete|CLOSED|closed|settled|SETTLED|proved|PROVED|NOT A TARGET|no longer open'
 # 'not proved|NOT proved' added 2026-08-13 (D5 sweep): "What is NOT proved here" was

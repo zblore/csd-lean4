@@ -65,6 +65,15 @@ Both fields are carried inside `CsdLean4/LF3/PurePreparation.lean` and
 re-exported into the CSD-side bridge content via the chain capstone
 re-exports in `CsdLean4/Empirical/CSD/Bell.lean`.
 
+**Both are discharged at the concrete instance** (`LF4/SingletKahler.lean`, recorded
+here 2026-09-07): `ofKählerPreparation` builds a `PureSingletPreparation` on
+`kSectorData p₀` with `bridge_op_p` proved from the carving identity `kMuPsi_kRegion`
++ `LF2.PurePreparation.born_rank_one_direct`, and `kJED` supplies
+`born_eq_P_st := kEig_born` — so the `born_eq_P_st` row's "pending only the
+`Fin 2×2 → Fin N` re-index wiring" is **done**, not pending. The fields remain
+*fields* — the bundle still asks a general caller to supply them, which is what this
+ledger records — but the corpus exhibits a caller that proves them.
+
 ### 2.2 LF2 measure-bridge (pre-existing, since LF2 v1.00)
 
 Used by `Empirical/CSD/Framework.lean`'s `Context` bundle.
@@ -239,12 +248,23 @@ Per-gate realisability claims (`hadamard_realisable_for`,
 the same `CSDUnitaryBundle` at the appropriate gate matrix; they
 do not carry separate LF4 obligations beyond §13.2.
 
-**Honest reading.** The nine per-gate `*_realisable_for` Props are
-**unproved claim-shaped placeholders** for the LF4-§13.2 obligation:
-pre-LF4, no concrete `D` exists for which any of them is shown to
-hold. They are catalogued in `PLACEHOLDERS.md §1` with explicit
-TODO markers, and the BellPrep tautology + its CSD re-export are
-catalogued in `PLACEHOLDERS.md §2`.
+**Honest reading — corrected 2026-09-07.** The nine per-gate
+`*_realisable_for` Props are **DISCHARGED** (2026-07-19) on the concrete
+`cpSectorData p₀`: `hadamard_/phaseS_/phaseT_/cnot_/swap_/cz_/toffoli_/fredkin_/
+bell_prep_realisable_cpSector`, in the four `Gates/*Discharge.lean` modules.
+`U_isometry` is derived from the gate lying in `U(2ⁿ)`, not posited. Honest scope
+(`PLACEHOLDERS.md §7`): the `CSDUnitaryBundle` type carries `U` + `U_isometry` + a
+`Context`, **not** a Σ-flow, so the Props are discharged *as typed*; the stronger
+Σ-flow-lift prose reading is the open **D1** gap, and the discharge is modulo the
+posited CSD sector (SO-1). The BellPrep tautology + its CSD re-export stay in
+`PLACEHOLDERS.md §2`.
+
+⚠️ This paragraph read "**unproved claim-shaped placeholders** … pre-LF4, no concrete
+`D` exists for which any of them is shown to hold" for seven weeks after the discharge
+landed. It is the only kind of ledger error that is not conservative in the safe
+direction *and* not conservative in the honest one: it understated proved content in
+the file whose whole job is to state what is unproved. Guarded now by
+`scripts/check-placeholder-status.sh`.
 
 This is the first **positive-existence-conditional-on-LF4** polarity
 in the architecture; the previous five bundles used negative-

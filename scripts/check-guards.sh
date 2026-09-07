@@ -231,6 +231,36 @@ expect_fail "hygiene-10c (undeclared Incubator seam)" check-import-hygiene \
 'import CsdLean4.Incubator.QuantumChaos.FloquetInterface
 def guardSelfTestHygieneC : Nat := 0'
 
+# --- check-placeholder-status (2026-09-07): the ledger and the banners are two records
+# of one fact. The defect it was written for is a DISCHARGED Prop that still wears its
+# "not proved" banner (nine of them did, for seven weeks). Probe both directions.
+pf="CsdLean4/Empirical/CSD/Gates/TwoQubit.lean"
+cp "$pf" "$pf.guardbak"
+sed -i 's|/-- \*\*Claim-shaped `Prop`, DISCHARGED 2026-07-19\*\* (`cnot_realisable_cpSector`,|/-- **PLACEHOLDER (Prop definition, not proved).** (`cnot_realisable_cpSector`,|' "$pf"
+bash scripts/check-placeholder-status.sh >/dev/null 2>&1
+rc=$?
+mv "$pf.guardbak" "$pf"
+if [ "$rc" -eq 0 ]; then
+  echo "  BROKEN  placeholder-status — did NOT fire on a discharged Prop still bannered"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+
+# The reverse: a discharge witness renamed away leaves the row unchecked, which is how a
+# ledger rots into decoration (the same defect check-import-negative was hardened for).
+cp PLACEHOLDERS.md PLACEHOLDERS.md.guardbak
+sed -i 's|`hadamard_realisable_cpSector`|`hadamardGone_realisable_cpSector`|' PLACEHOLDERS.md
+bash scripts/check-placeholder-status.sh >/dev/null 2>&1
+rc=$?
+mv PLACEHOLDERS.md.guardbak PLACEHOLDERS.md
+if [ "$rc" -eq 0 ]; then
+  echo "  BROKEN  placeholder-status — did NOT fire on a witness renamed away"
+  fail=1
+else
+  pass=$((pass + 1))
+fi
+
 # --- Lean-based checkers: need the probe COMPILED, so they cost a build cycle.
 if [ "$WITH_LEAN" -eq 1 ]; then
   echo "  (--with-lean: rebuilding for the environment-based checkers, minutes…)"
@@ -307,7 +337,7 @@ else
 fi
 
 # --- Every guard must also PASS on the clean tree; a guard stuck at FAIL is equally bad.
-for g in check-claim-provenance check-import-negative check-import-hygiene; do
+for g in check-claim-provenance check-import-negative check-import-hygiene check-placeholder-status; do
   if ! bash "scripts/$g.sh" >/dev/null 2>&1; then
     echo "  BROKEN  $g — fails on the CLEAN tree"
     fail=1

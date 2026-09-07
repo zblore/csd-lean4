@@ -85,15 +85,24 @@ the same LF4-todo §13.2 discharge route. Each Prop asserts:
 "there exists a `CSDUnitaryBundle D N H_n` whose carried unitary `U`
 equals the QM-side gate matrix's action."
 
-**Partially discharged 2026-07-19:** the three single-qubit gate Props
-(`hadamard_/phaseS_/phaseT_realisable_for`) are now PROVED on the concrete
-`cpSectorData` (`Gates/SingleQubitDischarge.lean`) — each gate's action is a genuine
-`CSDUnitaryBundle` whose `U_isometry` is *derived* from the gate lying in `U(2)`
+**FULLY discharged 2026-07-19** — all nine, in one day: the three single-qubit Props
+(`Gates/SingleQubitDischarge.lean`), CNOT/SWAP/CZ (`TwoQubitDischarge.lean`),
+Toffoli/Fredkin (`MultiQubitDischarge.lean`) and Bell-prep (`BellPrepDischarge.lean`)
+are PROVED on the concrete `cpSectorData` — each gate's action is a genuine
+`CSDUnitaryBundle` whose `U_isometry` is *derived* from the gate lying in `U(2ⁿ)`
 (the sector-symmetry membership), modulo A5. Honest scope (`§7` below): the bundle
 type carries `U` + `U_isometry` + a `Context`, not a Σ-flow, so this discharges the
-Prop *as typed*, not the stronger Σ-flow-lift prose (the open D1 gap). The remaining
-five (2-qubit CNOT/SWAP/CZ, multi-qubit Toffoli/Fredkin) and Bell-prep follow the same
-pattern — each gate matrix is unitary — and are the mechanical continuation.
+Prop *as typed*, not the stronger Σ-flow-lift prose (the open D1 gap).
+
+⚠️ **This paragraph said "partially discharged … the remaining five … are the mechanical
+continuation" until 2026-09-07**, seven weeks after the continuation happened — while the
+table below it already said DISCHARGED on every row. The nine defining docstrings carried
+the same stale `PLACEHOLDER (Prop definition, not proved)` banner and a `TODO(LF4 §13.2):
+construct a witness bundle` line; `Gates/BellPrep.lean` contradicted itself inside one
+docstring (banner "not proved", body "**Status: DISCHARGED**"). Fixed at every site and
+now guarded by `scripts/check-placeholder-status.sh`. The lesson is prose-audit pass 4's,
+one level up: **a corrected table does not sweep the paragraph above it, and a discharge
+landed in a sibling module does not sweep the module it discharges.**
 
 | File | Prop | LF4-todo | Status |
 |---|---|---|---|
