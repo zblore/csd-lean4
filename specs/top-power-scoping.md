@@ -1,6 +1,15 @@
 # The top-power identity `ωⁿ/n! = μ_FS` (step 3): scoping note
 
-**Status:** SCOPED 2026-09-07 (late evening, after `c35b090`). **NOT BUILT.** Step (3) of the
+**Status:** SCOPED 2026-09-07 (late evening, after `c35b090`); **M1 and M3 BUILT 2026-09-08**
+(`Mathlib/Analysis/Normed/Module/Alternating/TopForm.lean`;
+`Mathlib/Geometry/Manifold/TopFormMeasure.lean` — `chartMeasure`, ★★ `chartMeasure_congr`,
+`ChartCover`, ★★ `topFormMeasure`, `topFormMeasure_apply_of_subset_source` for *any* chart, ★
+`topFormMeasure_congr_cover`; and `Instances/ProjectiveSpaceChartCover.lean`, the affine atlas of
+`ℂℙⁿ` as a cover). The §6 stop condition held: chart-independence was
+`lintegral_image_eq_lintegral_abs_det_fderiv_mul` + the Jacobian rule through
+`localRep_transition`, no new measure-theoretic lemma; the one lemma that had to be written was
+`MeasurableSet.inter_preimage_of_continuousOn`. Cost: one sitting. **M2, M4–M7 NOT BUILT.**
+Step (3) of the
 manifold exterior-calculus plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)),
 the "top forms → measures" step, scoped against what `c35b090` left standing: `ℂℙⁿ` is an analytic
 manifold, `fsForm` is a global `C^∞` 2-form on it, `mextDeriv` exists with `d ∘ d = 0`, and

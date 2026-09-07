@@ -3029,6 +3029,86 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsForm_isSymplectic
 
+/-! ### Top forms: the Jacobian rule (TopForm.lean) and the measure of a top form on a manifold (TopFormMeasure.lean, ProjectiveSpaceChartCover.lean, 2026-09-08) -/
+
+-- Milestones M1 and M3 of specs/top-power-scoping.md. M1: a top-degree continuous alternating
+-- form is (its value on a basis) times the basis determinant, and pulling it back along an
+-- endomorphism multiplies that value by the determinant -- the factor the change-of-variables
+-- formula carries. M3 (the genuine upstream gap: NO measure/integration on manifolds at the pin):
+-- a top-form family has a density in every chart (|coefficient|); the chart measures are pushed
+-- to M and ★★ agree on overlaps (chartMeasure_congr) by
+-- lintegral_image_eq_lintegral_abs_det_fderiv_mul along the chart transition + the Jacobian rule
+-- through localRep_transition; glued along the measurable partition of a FINITE chart cover given
+-- as data (ChartCover) into ★★ topFormMeasure, which on any chart domain is that chart's measure
+-- and ★ does not depend on the cover. The affine atlas of CP^n is such a cover
+-- (affineChartCover). ⚠️ No naturality under diffeomorphisms yet (M5), no wedge of sections (M2),
+-- nothing evaluated on the Fubini-Study form (M6). The plan's stop condition held:
+-- chart-independence was a direct application, no new measure-theoretic lemma.
+
+/-- info: 'ContinuousAlternatingMap.apply_eq_mul_basis_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.apply_eq_mul_basis_det
+
+/-- info: 'ContinuousAlternatingMap.ext_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.ext_basis
+
+/-- info: 'ContinuousAlternatingMap.compContinuousLinearMap_apply_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.compContinuousLinearMap_apply_basis
+
+/-- info: 'MeasurableSet.inter_preimage_of_continuousOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasurableSet.inter_preimage_of_continuousOn
+
+/-- info: 'ChartCover.piece_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ChartCover.piece_subset
+
+/-- info: 'ChartCover.measurableSet_piece' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ChartCover.measurableSet_piece
+
+/-- info: 'ChartCover.pairwise_disjoint_piece' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ChartCover.pairwise_disjoint_piece
+
+/-- info: 'ChartCover.iUnion_piece' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ChartCover.iUnion_piece
+
+/-- info: 'ChartCover.iUnion_inter_piece' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ChartCover.iUnion_inter_piece
+
+/-- info: 'DifferentialForm.measurableSet_target_inter_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.measurableSet_target_inter_preimage
+
+/-- info: 'DifferentialForm.chartMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.chartMeasure_apply
+
+/-- info: 'DifferentialForm.chartMeasure_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.chartMeasure_congr
+
+/-- info: 'DifferentialForm.topFormMeasure_apply_of_subset_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.topFormMeasure_apply_of_subset_source
+
+/-- info: 'DifferentialForm.topFormMeasure_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.topFormMeasure_congr_cover
+
+/-- info: 'Projectivization.affineChartCover_m' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.affineChartCover_m
+
+/-- info: 'Projectivization.affineChartCover_pt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.affineChartCover_pt
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

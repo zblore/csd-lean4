@@ -85,7 +85,7 @@ noncomputable section
 variable {E G : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [NormedAddCommGroup G] [NormedSpace ℝ G]
   {M : Type*} [TopologicalSpace M] [ChartedSpace E M]
-  [IsManifold (modelWithCornersSelf ℝ E) ∞ M] {k : ℕ}
+  [IsManifold (modelWithCornersSelf ℝ E) ∞ M] {k : ℕ} {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- Over `ℝ`, the smoothness the flat pullback and `d² = 0` lemmas ask for is `2`. -/
 theorem minSmoothness_two_le_infty : minSmoothness ℝ 2 ≤ ∞ := by
@@ -160,16 +160,16 @@ namespace DifferentialForm
 
 /-- Definitional identification of the fibre `TₓM [⋀^k]→L G` with the model fibre. -/
 abbrev toFlat {x : M}
-    (α : TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ] Bundle.Trivial M G x) :
-    E [⋀^Fin k]→L[ℝ] G := α
+    (α : TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x) :
+    E [⋀^ι]→L[ℝ] G := α
 
 /-- **The local representative** of a family of alternating maps in the chart at `x₀`: an
 unbundled flat form on the model space. Outside the chart's target it is junk; every use is at
 a point of the target. -/
-def localRep (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ]
-    Bundle.Trivial M G x) (x₀ : M) : E → E [⋀^Fin k]→L[ℝ] G :=
-  fun w => (trivializationAt (E [⋀^Fin k]→L[ℝ] G)
-    (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ] Bundle.Trivial M G x) x₀
+def localRep (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ]
+    Bundle.Trivial M G x) (x₀ : M) : E → E [⋀^ι]→L[ℝ] G :=
+  fun w => (trivializationAt (E [⋀^ι]→L[ℝ] G)
+    (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x) x₀
     ⟨(chartAt E x₀).symm w, s ((chartAt E x₀).symm w)⟩).2
 
 end DifferentialForm
@@ -189,12 +189,13 @@ theorem toFlat_mextDeriv (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ 
     Bundle.Trivial M G x) (x : M) :
     toFlat (mextDeriv s x) = extDeriv (localRep s x) (chartAt E x x) := rfl
 
+omit [DecidableEq ι] in
 /-- ★ The trivialisation of a section value, on the model: pull back along the derivative of
 the chart transition. -/
-theorem trivializationAt_snd (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ]
+theorem trivializationAt_snd (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ]
     Bundle.Trivial M G x) (x₀ y : M) (hy : y ∈ (chartAt E x₀).source) :
-    (trivializationAt (E [⋀^Fin k]→L[ℝ] G)
-      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ] Bundle.Trivial M G x) x₀
+    (trivializationAt (E [⋀^ι]→L[ℝ] G)
+      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x) x₀
       ⟨y, s y⟩).2
       = (toFlat (s y)).compContinuousLinearMap
           (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y)) := by
@@ -218,8 +219,9 @@ theorem trivializationAt_snd (s : ∀ x : M, TangentSpace (modelWithCornersSelf 
     funext fun i => hS (v i)
   exact congrArg (fun g => (toFlat (s y)) g) hfun
 
+omit [DecidableEq ι] in
 /-- ★ Local representatives in two charts differ by the pullback along the transition. -/
-theorem localRep_transition (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ]
+theorem localRep_transition (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ]
     Bundle.Trivial M G x) (x₀ y : M) {w : E} (hw : w ∈ (chartAt E x₀).target)
     (hy : (chartAt E x₀).symm w ∈ (chartAt E y).source) :
     localRep s x₀ w
@@ -238,30 +240,31 @@ theorem localRep_transition (s : ∀ x : M, TangentSpace (modelWithCornersSelf �
   exact congrArg (fun g => (toFlat (s ((chartAt E x₀).symm w))) g)
     (funext fun i => congrArg (fun L => L (v i)) hc)
 
-variable (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ]
-    Bundle.Trivial M G x)
-
 /-- ★ A `C^∞` section has `C^∞` local representatives (on the chart's target). -/
 theorem contDiffAt_localRep
+    (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
     (hs : ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^Fin k]→L[ℝ] G))) ∞
-      (fun x : M => TotalSpace.mk' (E [⋀^Fin k]→L[ℝ] G) x (s x)))
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] G))) ∞
+      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] G) x (s x)))
     (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
     ContDiffAt ℝ ∞ (localRep s x₀) w := by
   rw [← contMDiffAt_iff_contDiffAt]
   have hy : (chartAt E x₀).symm w ∈ (chartAt E x₀).source := (chartAt E x₀).map_target hw
-  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ (E [⋀^Fin k]→L[ℝ] G)) ∞
-      (fun x => (trivializationAt (E [⋀^Fin k]→L[ℝ] G)
-        (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ] Bundle.Trivial M G x)
+  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] G)) ∞
+      (fun x => (trivializationAt (E [⋀^ι]→L[ℝ] G)
+        (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
         x₀ ⟨x, s x⟩).2) ((chartAt E x₀).symm w) :=
-    ((trivializationAt (E [⋀^Fin k]→L[ℝ] G)
-      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ] Bundle.Trivial M G x)
+    ((trivializationAt (E [⋀^ι]→L[ℝ] G)
+      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
       x₀).contMDiffAt_section_iff ⟨hy, Set.mem_univ _⟩).mp (hs _)
   have h2 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
       (chartAt E x₀).symm w :=
     (contMDiffOn_chart_symm (n := ∞) (x := x₀)).contMDiffAt
       ((chartAt E x₀).open_target.mem_nhds hw)
   exact h1.comp w h2
+
+variable (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin k]→L[ℝ]
+    Bundle.Trivial M G x)
 
 /-- ★★ **The local representative of `d s` is the flat `d` of the local representative of
 `s`**, in every chart, at every point of its target. Chart-independence of `mextDeriv`, in the
