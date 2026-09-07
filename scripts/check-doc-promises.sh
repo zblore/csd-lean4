@@ -185,6 +185,13 @@ PATH_EXCEPT = {
     # A scoping note names its own deliverable before it is built. REMOVE the entry when the
     # brick lands — a stale exception silently weakens the guard for that pair. (The two
     # `ozawa-scoping.md` entries were removed on 2026-09-04 when that brick landed.)
+    # top-power-scoping.md (2026-09-07): step (3) deliverables M1-M7, none built yet.
+    ("specs/top-power-scoping.md", "Mathlib/Analysis/Normed/Module/Alternating/TopForm.lean"),
+    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/WedgeForm.lean"),
+    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/TopFormMeasure.lean"),
+    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Pullback.lean"),
+    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceUnitaryAction.lean"),
+    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean"),
 }
 
 corpus_tops = {d for d in os.listdir("CsdLean4") if os.path.isdir(os.path.join("CsdLean4", d))} - {"Mathlib"}
