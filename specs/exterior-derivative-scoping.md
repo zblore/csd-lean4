@@ -1,6 +1,8 @@
 # The exterior derivative on manifolds (step 2b): scoping note
 
-**Status:** SCOPED 2026-09-07. **NOT BUILT.** Step (2b) of the manifold exterior-calculus
+**Status:** SCOPED 2026-09-07; **§3.1 attempted the same day and STOPPED at the §6 stop
+condition** (see §3a — the finding is that a missing trivialisation-unfolding API, not `d`
+itself, is the next brick). **NOT BUILT.** Step (2b) of the manifold exterior-calculus
 plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)).
 
 ⚠️ **Read §2 before writing any Lean.** There are three standard routes to `d` on a manifold,
@@ -79,6 +81,39 @@ Route A and it buys nothing Route A does not give.
 4. **Smoothness**: `mextDeriv ω` is a `C^(n-1)` section — i.e. the result really is a
    `DifferentialForm`, which is what makes `d` iterable.
 5. **`mextDeriv_mextDeriv`** — `d² = 0`, transported from `extDeriv_extDeriv`.
+
+## 3a. ⚠️ §3.1 ATTEMPTED 2026-09-07 — and the §6 stop condition fired
+
+`localRep` was written and **typechecks**: the definition
+
+    localRep form x₀ y = (trivializationAt _ _ x₀ ⟨(extChartAt I x₀).symm y,
+                            form ((extChartAt I x₀).symm y)⟩).2
+
+is the right shape and the type is well-formed. So the *definition* is not the obstacle.
+
+**What stopped it is the smallest possible consequence of that definition.** The base-point
+identity — `localRep form x₀ (extChartAt I x₀ x₀) = form x₀`, which says nothing more than
+"a chart is the identity at its own centre" — does **not** fall out. `simp` reduces it to
+
+    (trivializationAt _ (fun p ↦ TangentSpace I p [⋀^Fin k]→L[𝕜] Trivial M G p) x₀ ⟨…, form …⟩).2
+      = form x₀
+
+and stalls, because closing it needs an **unfolding API for the alternating bundle's
+trivialisation** in terms of the base bundles' coordinate changes: a chain through
+`Pretrivialization.continuousAlternatingMap` → `ContinuousLinearEquiv.continuousAlternatingMapCongr`
+→ `tangentBundleCore.coordChange` at the identity transition. Mathlib has every *construction*
+in that chain and **none of the computation lemmas**.
+
+⚠️ **That settles the re-price, and it is the useful output of the attempt.** §3.3
+(chart-independence) needs the *transition* version of exactly the same unfolding, matched
+against `extDeriv_pullback`'s side conditions — strictly harder than the base-point case that
+already does not close. **The stop condition in §6 is therefore met and nothing was landed**: a
+bare `localRep` with no lemmas is scaffolding, which `CLAUDE.md` forbids.
+
+**The next concrete brick is named, and it is not `d`:** an unfolding/computation API for
+`Bundle.ContinuousAlternatingMap`'s trivialisation — `trivializationAt … x ⟨p, v⟩` in terms of
+the two base coordinate changes, and its identity case. Rate that **M–L** on its own, build it
+first, and only then return to §3.
 
 ## 4. ⚠️ Four traps, all of them design decisions rather than difficulties
 
