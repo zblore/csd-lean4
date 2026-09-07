@@ -1,9 +1,21 @@
 # The exterior derivative on manifolds (step 2b): scoping note
 
-**Status:** SCOPED 2026-09-07; §3.1 attempted the same day. **NOT BUILT.** ⚠️ §3a records two
-retracted findings from that attempt and the procedural lesson behind them — read it before
-trusting any "wall" claim in this note. Step (2b) of the manifold exterior-calculus
-plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)).
+**Status:** SCOPED 2026-09-07; §3.1 attempted the same day and recorded as a wall; **BUILT the same
+evening** — `Mathlib/Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, chart-independence as
+`DifferentialForm.localRep_mextDeriv`, `contMDiff_mextDeriv`, `mextDeriv_mextDeriv`; 15 pins), with
+the payoff `Projectivization.fsForm_mextDeriv`, **`d ω_FS = 0` on `ℂℙⁿ`**. ⚠️ §3a records two
+retracted findings from the first attempt and the procedural lesson behind them — that lesson is
+what the build confirmed: the wall was §3.1's plumbing, and once that plumbing had been written
+for one concrete section (`fsSection`, the same day) route A was an evening. §§2–7 below are kept
+as written, as the record of how the item was priced before it was built. Step (2b) of the
+manifold exterior-calculus plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)).
+
+**What the build took (for re-pricing the next item of this shape):** the four design decisions
+of §4 all taken the cheap way — real boundaryless model `𝓘(ℝ, E)`, smoothness `∞` only, degrees
+`Fin k`, and a definitional cast `toFlat` from the fibre to the model fibre so every identity is
+*stated* on the model space; the `TangentSpace`-vs-model instance path is crossed exactly once,
+pointwise, in `trivializationAt_snd`. §5's list (Palais, naturality, linearity, Leibniz) is still
+open.
 
 ⚠️ **Read §2 before writing any Lean.** There are three standard routes to `d` on a manifold,
 they differ by more than taste, and a probe at the pin settles which one to take — one of the

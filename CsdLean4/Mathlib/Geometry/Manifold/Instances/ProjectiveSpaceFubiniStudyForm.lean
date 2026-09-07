@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
+public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
 
 /-!
 # The Fubini–Study form as a global smooth 2-form on `ℂℙⁿ`
@@ -35,7 +36,12 @@ forms `fsChartForm = dd^c log(1 + ‖z‖²)` of `KahlerPotential.lean` using th
 * ★★ `fsForm` — **the Fubini–Study form as a `C^∞` global 2-form on `ℂℙⁿ`**, a term of
   `DifferentialForm 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)) ∞ (Fin 2) ℝ`;
 * ★★ `fsForm_ne_zero` — it is **not the zero form** (`n ≥ 1`): at a chart origin it is `-4`
-  times the flat fundamental form (`fsChartForm_zero`), which pairs `e` with `i • e` to `‖e‖²`.
+  times the flat fundamental form (`fsChartForm_zero`), which pairs `e` with `i • e` to `‖e‖²`;
+* ★★★ `fsForm_mextDeriv` — **`d ω_FS = 0` on `ℂℙⁿ`**: the Fubini–Study form is closed at
+  manifold level, for the exterior derivative `mextDeriv` of `ExteriorDerivative.lean` (step
+  (2b)). Its local representative in every chart is the flat chart form `fsModelForm`
+  (`localRep_fsSection`), whose flat `d` vanishes (`extDeriv_fsChartForm`, MG-4) — so the
+  manifold statement is the flat one read through the chart, which is what `mextDeriv` is.
 
 ## Honest scope
 
@@ -47,8 +53,7 @@ potential `log(1 + ‖z‖²)` is only known `C^∞` here (`contDiff_fsPotential
 form is real-valued and `ℝ`-alternating, as a Kähler form is. No `(1,1)`-type statement is made
 on the manifold.
 
-⚠️ **Not closed, not non-degenerate, not a volume.** There is no exterior derivative on the
-manifold at the pin (step (2b), upstream's own TODO), so `d fsForm = 0` is unstated;
+⚠️ **Closed, but not non-degenerate and not a volume.** `d fsForm = 0` is `fsForm_mextDeriv`;
 non-degeneracy at every point and the top-power identity `ωⁿ/n! = μ_FS` are not attempted.
 `fsForm_ne_zero` is a non-vacuity certificate at one point, nothing more.
 
@@ -56,6 +61,7 @@ non-degeneracy at every point and the top-power identity `ωⁿ/n! = μ_FS` are 
 it; `localRep_fsSection` is what shows the value does not depend on the choice.
 
 References: `Geometry/Manifold/DifferentialForm.lean` (the type; step (2a));
+`Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `d ∘ d = 0`; step (2b));
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudy.lean` (chart invariance);
 `Geometry/Manifold/Instances/ProjectiveSpace.lean` (the atlas);
 `Analysis/InnerProductSpace/KahlerPotential.lean` (`fsChartForm`, `fsChartForm_zero`);
@@ -294,5 +300,48 @@ theorem fsForm_ne_zero (hn : 0 < n) : (fsForm (n := n)) ≠ 0 := by
   have hpos : 0 < fundamentalForm e (Complex.I • e) :=
     fundamentalForm_complexStructure_self_pos he
   linarith
+
+/-! ### Closedness: `d ω_FS = 0` on `ℂℙⁿ` -/
+
+section Closed
+open DifferentialForm
+
+/-- The model form is closed on the flat model: the chart form is (`extDeriv_fsChartForm`), and
+the model form is its pullback along the linear identification `toLpCLM`. -/
+theorem extDeriv_fsModelForm (w : Fin n → ℂ) : extDeriv (fsModelForm (n := n)) w = 0 := by
+  have h : fsModelForm (n := n)
+      = fun w => (fsChartForm (toLpCLM w)).compContinuousLinearMap (fderiv ℝ toLpCLM w) := by
+    funext w
+    rw [fsModelForm, ContinuousLinearMap.fderiv]
+  rw [h, extDeriv_pullback ((contDiff_fsChartForm (n := n)).differentiable (by simp) _)
+    (ContinuousLinearMap.contDiff (n := ∞)
+      (toLpCLM : (Fin n → ℂ) →L[ℝ] EuclideanSpace ℂ (Fin n))).contDiffAt
+    minSmoothness_two_le_infty]
+  rw [show extDeriv (fsChartForm (E := EuclideanSpace ℂ (Fin n))) (toLpCLM w) = 0 from
+    congrFun extDeriv_fsChartForm _]
+  ext v
+  simp
+
+/-- ★★★ **The Fubini–Study form is closed on `ℂℙⁿ`**, pointwise: in the chart at `x` its local
+representative is the flat chart form, whose flat `d` is zero. -/
+theorem mextDeriv_fsSection (x : ℙ ℂ (Ambient n)) : mextDeriv fsSection x = 0 := by
+  show extDeriv (localRep fsSection x) (chartAt (Fin n → ℂ) x x) = 0
+  have hev : localRep fsSection x =ᶠ[𝓝 (chartAt (Fin n → ℂ) x x)] fsModelForm := by
+    filter_upwards [(chartAt (Fin n → ℂ) x).open_target.mem_nhds (mem_chart_target _ x)] with w hw
+    have h := localRep_fsSection x ((chartAt (Fin n → ℂ) x).symm w)
+      ((chartAt (Fin n → ℂ) x).map_target hw)
+    show (trivializationAt _ _ x ⟨(chartAt (Fin n → ℂ) x).symm w, _⟩).2 = _
+    rw [h]
+    exact congrArg fsModelForm ((chartAt (Fin n → ℂ) x).right_inv hw)
+  rw [hev.extDeriv_eq]
+  exact extDeriv_fsModelForm _
+
+/-- ★★★ **`d ω_FS = 0` on `ℂℙⁿ`.** -/
+theorem fsForm_mextDeriv : (fsForm (n := n)).mextDeriv = 0 := by
+  apply ContMDiffSection.ext
+  intro x
+  exact mextDeriv_fsSection x
+
+end Closed
 
 end Projectivization

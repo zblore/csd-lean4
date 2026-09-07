@@ -27,9 +27,14 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `Kahler.fubiniStudy_pointwise_kahler_compatibility`; the objects themselves are
   `Kahler.complexStructure`, `Kahler.metric`, `Kahler.fundamentalForm`
   (`Mathlib/Analysis/InnerProductSpace/KahlerForm.lean`).
-* **NOT established:** the **manifold** half — closedness `dω = 0` and the top-power identity
-  `ω^{∧(N−1)}/(N−1)! = μ_FS`. Needs exterior calculus Mathlib does not have on manifolds
-  (`MATHLIB-GAPS.md`, "Kähler / symplectic manifold API"). Marker: `TERM-SCOPE(Kahler)`.
+* **Also backed (2026-09-07):** the manifold-level **closedness** `dω = 0` on `ℂℙⁿ` —
+  `Projectivization.fsForm_mextDeriv` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean`),
+  for the Fubini–Study form `fsForm` as a `C^∞` global 2-form and the exterior derivative
+  `mextDeriv` of `Mathlib/Geometry/Manifold/ExteriorDerivative.lean` (real boundaryless model,
+  smoothness `∞`).
+* **NOT established:** the top-power identity `ω^{∧(N−1)}/(N−1)! = μ_FS` (no top-forms → measures
+  step; `MATHLIB-GAPS.md`, "Kähler / symplectic manifold API"), non-degeneracy of `fsForm` at every
+  point, and analyticity (the potential is only known `C^∞`). Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 

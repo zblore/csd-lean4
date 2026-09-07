@@ -65,7 +65,7 @@ basins (`DeIsolationInteraction.basin_rate` is a hypothesis field), and whether 
 **base-only** question stays ⏸ parked. ⚠️ **Updated 2026-08-25: item three is now CLOSED** —
 `kMuL_unique` (`LF4/LiouvilleUnique.lean`) exhibits the sector's measure as forced by its own
 symmetry rather than merely Haar, completing the A1 ontic-sector row (all three sub-items done;
-the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one). **Item two stands, and 2026-09-05 it is stated more precisely** —
+the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one — ⚠️ and 2026-09-07 the `dω = 0` half of that wall fell: `fsForm_mextDeriv`, closedness of the Fubini–Study form on `ℂℙⁿ` at manifold level; only the top-power identity remains). **Item two stands, and 2026-09-05 it is stated more precisely** —
 "no `H_int` generates the basins" ran together three things that `specs/POSITS.md` now separates:
 *which* interaction an apparatus realises is a **permanent boundary** (`R-015`, never closes); the
 chart→arena transport of Hamiltonian generation is **open mathematics** (`R-016`); and deriving the
@@ -115,7 +115,9 @@ unfinished. It is not: the rows fail for *different reasons*, and only some are 
 should not be counted against the reconstruction.
 
 * **A1, the exterior-calculus half** — `dω = 0` and `ωⁿ/n! = μ_FS` need a manifold exterior-calculus
-  API that Mathlib does not have. The *formalizable core is done and consumed*
+  API that Mathlib does not have. ⚠️ *Narrowed 2026-09-07:* the API is now staged in this repository
+  (`Mathlib/Geometry/Manifold/{DifferentialForm,ExteriorDerivative}.lean`) and **`dω = 0` is proved on
+  `ℂℙⁿ`** (`Projectivization.fsForm_mextDeriv`); only `ωⁿ/n! = μ_FS` is still open. The *formalizable core is done and consumed*
   (`IsFubiniStudyKahler`, proved axiom-free, since 2026-08-06 the concrete structure field `kahler_pointwise`). The Kähler condition is
   the slot to strengthen if Mathlib ever grows the API.
   ⚠️ **Scope of this bullet, narrowed 2026-07-30.** It covers the exterior calculus **on `KSigma`**
@@ -354,7 +356,9 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
   `recordLocallyTomographic_iff_adjoin_eq_top`; registered boundary `R-017`); and the general
   non-factorising ontic composite (A6 as a primitive) is not reconstructed.
 * **A1 / KG-1** — the Kähler closed 2-form `dω = 0` and the global volume identity, blocked on missing
-  Mathlib manifold exterior calculus (the volume is forced; the pointwise form is proved).
+  Mathlib manifold exterior calculus (the volume is forced; the pointwise form is proved). ⚠️ *2026-09-07:*
+  `dω = 0` is **no longer blocked** — proved on `ℂℙⁿ` (`fsForm_mextDeriv`, staged manifold exterior
+  calculus); the volume identity `ωⁿ/n! = μ_FS` is what remains.
 * **A5 approximate regime** — ⚠️ *narrowed 2026-09-05 (CR-11): the predicate is now populated at
   `ε > 0`.* `SigmaLayer/MovingFibreWitness.lean` gives `movingFibreEnergy`, an `EpsProjectable _ ε`
   witness for every `ε ≥ 0`, together with `movingFibreEnergy_not_projectable` — for `ε > 0` it is

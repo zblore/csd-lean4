@@ -45,10 +45,11 @@ built downstream, in
 (`Projectivization.fsForm`, with `fsForm_ne_zero`), from the chart-overlap agreement proved in
 `Instances/ProjectiveSpaceFubiniStudy.lean`.
 
-⚠️ **Still no exterior derivative.** `d` on manifolds is step (2b) — upstream's own stated TODO
-— and none of this touches it. So `dω = 0` and the top-power identity remain exactly as
-unprovable as they were this morning; what changed is that both are now *statable*, which was
-the entire point of steps (0), (1) and (2a).
+⚠️ **No exterior derivative in this module.** `d` on manifolds is step (2b) — upstream's own
+stated TODO — and is built downstream in
+[`ExteriorDerivative.lean`](ExteriorDerivative.lean) (`mextDeriv`, `d ∘ d = 0`, for the real
+boundaryless model at `∞`). The top-power identity is statable after steps (0), (1) and (2a) and
+is not proved anywhere.
 
 ⚠️ **No physics.** Nothing in this repository waits on any of it. The corpus's geometry is done
 on the ambient space and in charts, and `R-016` is untouched.

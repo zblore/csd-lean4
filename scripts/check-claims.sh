@@ -882,7 +882,7 @@ fi
 
 # (7e) group-naming inventory: SU( mentions must be the declared explanatory sites
 found_su="$(srcfiles | tr '\n' '\0' \
-  | xargs -0 grep -cE 'SU\(' 2>/dev/null \
+  | xargs -0 grep -cHE 'SU\(' 2>/dev/null \
   | grep -v ':0$' | sort)"
 decl_su="$(printf '%s\n' "$DECLARED_SU_MENTIONS" | grep -v '^[[:space:]]*$' | sort)"
 if [ "$found_su" = "$decl_su" ]; then
@@ -895,7 +895,7 @@ fi
 
 # (8) open-scope inventory: boundary claims are diffable, so they cannot go stale silently
 found_scope="$(srcfiles | tr '\n' '\0' \
-  | xargs -0 grep -cE "$OPEN_SCOPE_PHRASES" 2>/dev/null \
+  | xargs -0 grep -cHE "$OPEN_SCOPE_PHRASES" 2>/dev/null \
   | grep -v ':0$' | sort)"
 decl_scope="$(printf '%s\n' "$DECLARED_OPEN_SCOPE" | grep -v '^[[:space:]]*$' | sort)"
 if [ "$found_scope" = "$decl_scope" ]; then

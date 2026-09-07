@@ -2732,7 +2732,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- of every degree -- the whole chain from step (0) in one statement. ⚠️ The witness HERE is the
 -- ZERO form; the Fubini-Study form as a section landed later the same day (chart-overlap
 -- agreement + bundle assembly: ProjectiveSpaceFubiniStudy{,Form}.lean, pinned below). ⚠️ And
--- still no exterior derivative: that is
+-- the exterior derivative landed later still (ExteriorDerivative.lean, pinned below); at the
+-- time of this pin there was none: that was
 -- step (2b), upstream's own TODO, so the top-power identity is SAYABLE and no more provable
 -- than it was this morning.
 
@@ -2841,7 +2842,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- (`VectorBundleCore.trivializationAt_symmL`) and the pullback of the chart form along it is the
 -- chart form (`fsModelForm_transP`). Non-vacuity: `fsForm_ne_zero` (n >= 1) -- at a chart origin
 -- it is -4 times the flat fundamental form. ⚠️ C^infinity, not omega (the potential is only
--- known C^infinity); ⚠️ no `d` on the manifold, so `d fsForm = 0` is still unstated, and neither
+-- known C^infinity); ⚠️ at the time of this pin there was no `d` on the manifold -- it landed the
+-- same evening (ExteriorDerivative.lean, below) and `d fsForm = 0` is `fsForm_mextDeriv`; neither
 -- non-degeneracy nor the top-power identity is attempted.
 
 /-- info: 'Projectivization.extChartAt_trans_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -2895,6 +2897,98 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Projectivization.fsForm_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsForm_ne_zero
+
+/-! ### The exterior derivative on a manifold (ExteriorDerivative.lean, 2026-09-07) -/
+
+-- ★★ STEP (2b) -- upstream's own TODO -- route A of specs/exterior-derivative-scoping.md, built
+-- the same evening the Fubini-Study section landed, because the section's local-representative
+-- identity IS route A's step 3.1 for one form. `mextDeriv s x` is the flat `extDeriv` of the local
+-- representative of `s` in the chart at `x`; `localRep_mextDeriv` says the local representative
+-- of `d s` in EVERY chart is the flat `d` of the local representative of `s` (extDeriv_pullback on
+-- the chart transition + the tangent-bundle cocycle), which is chart-independence in the only
+-- form a consumer needs; `contMDiff_mextDeriv` makes `d` iterate; `mextDeriv_mextDeriv` is
+-- `d ∘ d = 0`. Scope: real boundaryless model 𝓘(ℝ, E), smoothness ∞, degrees Fin k -- the
+-- finite-dimensional real manifolds the corpus uses, and none of the C^n / corners bookkeeping.
+-- ⚠️ No Palais formula, no naturality under maps of manifolds, no Leibniz rule (needs the wedge
+-- of sections).
+
+/-- info: 'minSmoothness_two_le_infty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms minSmoothness_two_le_infty
+
+/-- info: 'ContDiffAt.extDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.extDeriv
+
+/-- info: 'extChartAt_comp_symm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms extChartAt_comp_symm_eq
+
+/-- info: 'tangent_symmL_eq_fderiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tangent_symmL_eq_fderiv
+
+/-- info: 'contDiffAt_chart_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffAt_chart_transition
+
+/-- info: 'fderiv_chart_transition_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms fderiv_chart_transition_comp
+
+/-- info: 'DifferentialForm.toFlat_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.toFlat_mextDeriv
+
+/-- info: 'DifferentialForm.trivializationAt_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.trivializationAt_snd
+
+/-- info: 'DifferentialForm.localRep_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_transition
+
+/-- info: 'DifferentialForm.contDiffAt_localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contDiffAt_localRep
+
+/-- info: 'DifferentialForm.localRep_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_mextDeriv
+
+/-- info: 'contMDiff_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contMDiff_mextDeriv
+
+/-- info: 'mextDeriv_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms mextDeriv_mextDeriv
+
+/-- info: 'DifferentialForm.mextDeriv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.mextDeriv_apply
+
+/-- info: 'DifferentialForm.mextDeriv_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.mextDeriv_mextDeriv
+
+-- ★★★ THE PAYOFF: `d ω_FS = 0` on CP^n (ProjectiveSpaceFubiniStudyForm.lean, same commit). The
+-- local representative of `fsSection` in every chart is the flat chart form (localRep_fsSection),
+-- whose flat `d` is zero (extDeriv_fsChartForm, MG-4) -- so the manifold closedness is the flat
+-- closedness read through the chart, which is exactly what `mextDeriv` is. First manifold-level
+-- Kahler statement in the corpus; the top-power identity is still not attempted.
+
+/-- info: 'Projectivization.extDeriv_fsModelForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.extDeriv_fsModelForm
+
+/-- info: 'Projectivization.mextDeriv_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mextDeriv_fsSection
+
+/-- info: 'Projectivization.fsForm_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_mextDeriv
 
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
