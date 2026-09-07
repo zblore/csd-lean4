@@ -2630,6 +2630,38 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Kahler.extDeriv_fundamentalFormSq
 
+/-! ### Complex projective space as an analytic manifold (ProjectiveSpace.lean, 2026-09-07) -/
+
+-- Step (0) of the manifold exterior-calculus plan. Before this, `Projectivization` had a
+-- topology, a measurable space and a metric in this repository and a charted-space instance
+-- NOWHERE -- so the space the reconstruction is stated over was not a manifold in Lean and
+-- nothing on it could be differentiated. The transition maps are ratios of coordinates of
+-- `Fin.insertNth i 1 w`, hence analytic, so the instance is `omega`, not merely `C^infinity`.
+
+/-- info: 'Projectivization.isOpen_chartSource' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isOpen_chartSource
+
+/-- info: 'Projectivization.chartInv_chartFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartInv_chartFun
+
+/-- info: 'Projectivization.continuousOn_chartFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuousOn_chartFun
+
+/-- info: 'Projectivization.instChartedSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.instChartedSpace
+
+/-- info: 'Projectivization.contDiffOn_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiffOn_transition
+
+/-- info: 'Projectivization.instIsManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.instIsManifold
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

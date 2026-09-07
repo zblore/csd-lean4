@@ -1353,4 +1353,13 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.projectedFlow_unitary_of_flow_continuous
 
+-- STEP (0) of the manifold plan, transported onto the corpus's own name for the space
+-- (2026-09-07, ProjectiveManifold.lean). ⚠️ Changes no CSD claim and closes no residue: the
+-- corpus does its geometry on the ambient space and in charts, and R-016 is untouched. What
+-- it removes is the oddity that every geometric word applied to CPN -- chart, form, flow,
+-- moment map -- was prose about a space with no smooth structure in Lean.
+/-- info: 'CSD.LF4.cpn_isManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.cpn_isManifold
+
 end CSD.Tests.AxiomAudit
