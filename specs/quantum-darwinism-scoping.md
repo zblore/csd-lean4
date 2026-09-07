@@ -1,7 +1,23 @@
 # Quantum Darwinism / record redundancy: scoping note
 
-**Status:** SCOPED 2026-09-07. **NOT BUILT.** Expert-review row **E** of
-[`BACKLOG.md`](BACKLOG.md).
+**Status:** SCOPED 2026-09-07; **QM side BUILT the same day** (`Empirical/QM/Darwinism.lean`,
+5 pins). **CSD side NOT BUILT.** Expert-review row **E** of [`BACKLOG.md`](BACKLOG.md).
+
+**As landed (QM side):** `SpectrumBroadcast` (§2b), ★ `not_of_constant_fragment` — §4's
+vacuity test *as a theorem*, ★ `successProb_eq_one_of_discriminating`, the witness
+`copyBroadcast` and ★★ `copyBroadcast_perfect` (every fragment, on its own, identifies the
+outcome with probability one, at arbitrary `k`). §2's rejection of the entropic form is
+recorded in the module header with its reason.
+
+⚠️ **One deviation from §6, recorded.** §6 asked for `sbs_fragment_determines_outcome` as a
+theorem about *every* `SpectrumBroadcast`. Building it showed that deriving the discriminating
+test from `ρᵢρⱼ = 0` alone needs the **support projection** of a positive semidefinite matrix
+and a lemma that it annihilates orthogonal states — a spectral argument, and
+`TraceDistance.lean` has `posProj` but not that lemma. What landed instead is the conditional
+lemma (`successProb_eq_one_of_discriminating`, hypotheses about the test, not about
+discriminability — so §4 is respected) plus its instantiation on the witness, where the
+projection is explicit. **The general theorem is the residue**, recorded in the module's own
+honest-scope block.
 
 ⚠️ **NOT `csd-foundations`-checked.** Every comparable note in this directory
 ([`ozawa-scoping.md`](ozawa-scoping.md), [`local-friendliness-scoping.md`](local-friendliness-scoping.md),

@@ -1066,4 +1066,34 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 /-- info: 'CSD.Empirical.QM.WignerArakiYanase.sigmaX_no_exact_conserving_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.WignerArakiYanase.sigmaX_no_exact_conserving_record
 
+/-! ### Quantum Darwinism / spectrum broadcast structure (Darwinism.lean, 2026-09-07) -/
+
+-- Expert row E, QM side. ⚠️ The ENTROPIC form of Darwinism (the mutual-information plateau)
+-- is deliberately NOT built: it routes through SSA, which this corpus carries only with
+-- `hDPI`, behind the Lieb summit behind lieb-dpi Gate 1. The structural form needs no
+-- entropies. `not_of_constant_fragment` is the vacuity test of the scoping note as a theorem:
+-- a fragment the interaction never touched cannot appear in the structure at all, so the
+-- orthogonality field excludes something and the redundancy statement is not true by
+-- construction.
+
+/-- info: 'CSD.Empirical.Darwinism.SpectrumBroadcast.trace_mul_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Darwinism.SpectrumBroadcast.trace_mul_eq_zero
+
+/-- info: 'CSD.Empirical.Darwinism.SpectrumBroadcast.not_of_constant_fragment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Darwinism.SpectrumBroadcast.not_of_constant_fragment
+
+/-- info: 'CSD.Empirical.Darwinism.successProb_eq_one_of_discriminating' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Darwinism.successProb_eq_one_of_discriminating
+
+/-- info: 'CSD.Empirical.Darwinism.basisProj_isTest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Darwinism.basisProj_isTest
+
+/-- info: 'CSD.Empirical.Darwinism.copyBroadcast_perfect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.Darwinism.copyBroadcast_perfect
+
 end CSD.Tests.AxiomAudit

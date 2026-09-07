@@ -185,7 +185,6 @@ PATH_EXCEPT = {
     # A scoping note names its own deliverable before it is built. REMOVE the entry when the
     # brick lands — a stale exception silently weakens the guard for that pair. (The two
     # `ozawa-scoping.md` entries were removed on 2026-09-04 when that brick landed.)
-    ("specs/quantum-darwinism-scoping.md", "Empirical/QM/Darwinism.lean"),
     ("specs/quantum-darwinism-scoping.md", "Empirical/CSD/Darwinism.lean"),
 }
 
