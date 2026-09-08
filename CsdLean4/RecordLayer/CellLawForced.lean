@@ -85,6 +85,12 @@ manifold API (`MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)`)
 and manifold structures are posited, deliberately** (author decision 2026-09-04); what is proved is
 that *given* them the rate field is forced. The descent from `ℂᴺ` to `ℂℙᴺ⁻¹` is by explicit degree-0
 homogenisation (`IsTorusGenerated`), not by manifold theory, so no quotient machinery is assumed.
+⚠️ *Updated 2026-09-08:* the **manifold** form of the moment-map equation for the torus action now
+exists — `Projectivization.torusField_isHamiltonianVectorField`
+(`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`, `ι_X ω_FS = d(2 ∑ θₖ momentMap)`
+on `ℂℙⁿ` with `fsForm`). This module's posit and proof are unchanged — they rest on the linear-level
+`IsPhaseHamiltonian` — and what changed is only that "Mathlib has no symplectic manifold API" is no
+longer the reason the manifold form was absent.
 
 **Three conventions are visible in the predicate and should stay visible.** `IsTorusGenerated` asks
 for a Hamiltonian defined and differentiable on all of `ℂᴺ`; `momentContext` supplies one

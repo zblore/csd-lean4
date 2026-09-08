@@ -54,9 +54,15 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   the corpus needs are **theorems, not citations**: `fs_moment_pushforward_uniform` (qubit —
   a *discharged axiom*, 2026-05-31) and `fs_moment_joint_dirichlet_N` (general `N`), both on the
   foundational triple.
-* **NOT established:** that it is the moment map of a Hamiltonian torus action on the symplectic
-  *manifold* `ℂℙ^{N−1}` — the defining equation on the quotient, and with it the moment *polytope*
-  in the Atiyah–Guillemin–Sternberg sense. Same manifold wall as Kähler. Marker:
+* **Also backed (2026-09-08):** the defining equation on the symplectic *manifold* — ★★★
+  `Projectivization.torusField_isHamiltonianVectorField`
+  (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`, brick G6 of
+  `specs/generator-layer-scoping.md`): the velocity field of the torus action `p ↦ diag(e^{iθ}) • p`
+  on `ℂℙⁿ` — proved to be that velocity (`hasDerivAt_chartFun_torusUnitary`) — satisfies
+  `ι_X ω_FS = dH` with `H = 2 ∑ₖ θₖ · momentMap`, for the Fubini–Study form `fsForm` of the symplectic
+  manifold `fsForm_isSymplectic`. The factor `2` is the `-4` convention of `fsChartForm`.
+* **NOT established:** the moment *polytope* in the Atiyah–Guillemin–Sternberg sense (convexity of
+  the image), and smoothness of the field as a section of the tangent bundle (G3). Marker:
   `TERM-SCOPE(MomentMap)`.
 * ⚠️ **Why this entry is late (added 2026-09-06).** This file is indexed by *words*, and "moment
   map" matched none of the Kähler / Hamiltonian / Liouville patterns, so the ratchet could not see
@@ -91,8 +97,10 @@ alarming and is not.
   `DifferentialForm.IsHamiltonianVectorField α X H` (`Mathlib/Geometry/Manifold/HamiltonianVectorField.lean`,
   brick G1 of `specs/generator-layer-scoping.md`): `α x (X x, v) = mfderiv H x v` for a 2-form family
   and a vector-field family, with `dH (X) = 0` and uniqueness for a symplectic form proved from it.
-  **NOT established:** existence of `X_H` from non-degeneracy (G2/G3), any inhabitant on `ℂℙⁿ` (G6,
-  the moment map), and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
+  **Inhabited on `ℂℙⁿ` (2026-09-08, G6):** `torusField_isHamiltonianVectorField` — the torus action
+  is Hamiltonian for `fsForm` with `2 ∑ θₖ momentMap` as its Hamiltonian (see the moment-map entry).
+  **NOT established:** existence of `X_H` from non-degeneracy (G2/G3), smoothness of `torusField` as
+  a section, and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
   so no global generator exists). Retained deliberately for pin stability, with the correction at

@@ -36,6 +36,12 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
      ⚠️ *Updated 2026-09-04:* the corpus now states `ι_{X_i} ω = dΦᵢ` at the **linear** level
      (`RecordLayer/CellLawForced.lean`, `IsPhaseHamiltonian`), which is what the restatement above
      rests on; only the **manifold** form is still absent, Mathlib having no symplectic manifold API.
+     ⚠️ *Updated 2026-09-08:* the manifold form now exists — `Projectivization.torusField_isHamiltonianVectorField`
+     (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`): the velocity field of the
+     torus action on `ℂℙⁿ` is Hamiltonian for the Fubini–Study form with `2 ∑ θₖ momentMap` as its
+     Hamiltonian, on the symplectic manifold `fsForm_isSymplectic`. What the standard argument still
+     uses beyond it — uniqueness of a moment map up to an additive constant on a connected manifold,
+     and the sum-one normalisation — is not formalised, so the posit stands as written.
      See the boundary note in `LF4/MomentMap.lean` and `MATHLIB-GAPS.md`.
   2. **Two proved asymmetries** that fall short of characterisation: the moment map's `μ_FS`
      pushforward is flat / Dirichlet (`fs_moment_pushforward_uniform`,

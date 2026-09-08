@@ -541,6 +541,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartC
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.Empirical.QM.Darwinism

@@ -189,9 +189,7 @@ PATH_EXCEPT = {
     # (M4(a)) was superseded -- the invariance is consumed in chart form -- but the note still names
     # it as a deliverable, so the entry stays until the note is revised.
     ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Pullback.lean"),
-    # generator-layer-scoping.md (2026-09-08): step (4) deliverables. G1 landed 2026-09-08 (its file also
-    # carries G2 when that lands); G6 not built.
-    ("specs/generator-layer-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean"),
+    # generator-layer-scoping.md (2026-09-08): step (4) deliverables G1 and G6 both landed 2026-09-08.
 }
 
 corpus_tops = {d for d in os.listdir("CsdLean4") if os.path.isdir(os.path.join("CsdLean4", d))} - {"Mathlib"}

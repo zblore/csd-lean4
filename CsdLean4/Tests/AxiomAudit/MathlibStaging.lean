@@ -3761,6 +3761,83 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsHamiltonianVectorField.unique_of_isSymplectic
 
+/-! ### G6: the moment map of the torus action on CP^n, at manifold level (ProjectiveSpaceMomentMap.lean, 2026-09-08) -/
+
+-- Brick G6 of specs/generator-layer-scoping.md. The torus acts on CP^n by p ↦ diag(e^{iθ}) • p; in
+-- the affine chart i this is the coordinatewise phase rotation w_j ↦ e^{i(θ_{s j} − θ_i)} w_j
+-- (chartFun_torusUnitary_smul), whose t-derivative at 0 is the explicit field
+-- torusChartField (★ hasDerivAt_chartFun_torusUnitary — so torusField IS the fundamental vector
+-- field of the action, not a field named after it). The Hamiltonian is torusHamiltonian θ p =
+-- 2 ∑ θ_k · CSD.LF4.momentMap p k, the corpus's cell law; its chart expression is the rational
+-- function 2N/D with N = θ_i + ∑ θ_{s j}|w_j|², D = 1 + ∑|w_j|², differentiated by the product and
+-- inverse rules (no quotient rule at the pin for HasFDerivAt), and ★ hasMFDerivAt_torusHamiltonian
+-- reads the manifold derivative off the chart. The whole content is the chart identity ★★
+-- fsModelForm_torusChartField, ω_w(X_w, v) = dH_w v, a real computation through fsModelForm_apply
+-- (M7). Result: ★★★ torusField_isHamiltonianVectorField — THE TORUS ACTION ON CP^n IS HAMILTONIAN
+-- FOR THE FUBINI-STUDY FORM, WITH 2 ∑ θ_k momentMap AS ITS HAMILTONIAN: the moment-map equation of
+-- the corpus's most load-bearing object, at manifold level. ⚠️ The factor 2 is the -4 convention of
+-- fsChartForm. ⚠️ A family, not a smooth section (G3). ⚠️ Not the convexity statement. ⚠️ Torus only.
+
+/-- info: 'Projectivization.chartDen_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartDen_pos
+
+/-- info: 'Projectivization.normSqCoordDeriv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.normSqCoordDeriv_apply
+
+/-- info: 'Projectivization.hasFDerivAt_normSq_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_normSq_coord
+
+/-- info: 'Projectivization.hasFDerivAt_torusChartNum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_torusChartNum
+
+/-- info: 'Projectivization.hasFDerivAt_chartDen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_chartDen
+
+/-- info: 'Projectivization.hasFDerivAt_torusChartHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_torusChartHam
+
+/-- info: 'Projectivization.torusChartHamDeriv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusChartHamDeriv_apply
+
+/-- info: 'Projectivization.fsModelForm_torusChartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_torusChartField
+
+/-- info: 'Projectivization.continuous_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_torusHamiltonian
+
+/-- info: 'Projectivization.torusHamiltonian_chartInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusHamiltonian_chartInv
+
+/-- info: 'Projectivization.hasMFDerivAt_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasMFDerivAt_torusHamiltonian
+
+/-- info: 'Projectivization.torusField_isHamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusField_isHamiltonianVectorField
+
+/-- info: 'Projectivization.torusUnitary_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusUnitary_val
+
+/-- info: 'Projectivization.chartFun_torusUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartFun_torusUnitary_smul
+
+/-- info: 'Projectivization.hasDerivAt_chartFun_torusUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_chartFun_torusUnitary
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

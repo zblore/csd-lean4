@@ -259,7 +259,8 @@ relFieldHamiltonian
 trivialKahlerOnticSetup
 IsSymplectic
 IsHamiltonianVectorField
-IsLocallyHamiltonian"
+IsLocallyHamiltonian
+torusHamiltonian"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -330,6 +331,12 @@ IsLocallyHamiltonian"
 #       `.unique_of_isSymplectic`, `.add`, `.smul`, `.const`) and assert nothing beyond it. Parity:
 #       whenever the predicate is combined with non-degeneracy (its uniqueness lemma) the
 #       dimension is EVEN by the same argument as IsSymplectic; the predicate alone fixes no arena.
+#                                                                  EARNED (manifold-level).
+#     torusHamiltonian — (Instances/ProjectiveSpaceMomentMap.lean, 2026-09-08, brick G6) the real
+#       function 2 ∑ θ_k · momentMap p k on CP^n. The word is earned by the GENERATION THEOREM in
+#       the same module: torusField_isHamiltonianVectorField proves ι_X ω_FS = d(torusHamiltonian)
+#       on the MANIFOLD for the velocity field of the torus action (itself proved to be that
+#       velocity, hasDerivAt_chartFun_torusUnitary). Arena CP^n, real dimension 2n.   EVEN.
 #                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -588,7 +595,17 @@ liouville_isProbability"
 #     phase rotation, by instantiating quadraticEnergy_hamiltonian_duality at the coordinate
 #     projection. The word names an established duality, not an aspiration. Same flat model
 #     and same §2a boundary as the four entries above; the manifold moment-map statement is
-#     POSITED (author decision 2026-09-04), and the module's header says so.
+#     POSITED (author decision 2026-09-04), and the module's header says so. ⚠️ The manifold
+#     statement for the TORUS action was proved 2026-09-08 (G6, torusField_isHamiltonianVectorField
+#     below); CellLawForced.lean's own posit is unchanged, its proof still rests on the linear level.
+#   continuous_torusHamiltonian / torusHamiltonian_chartInv / hasMFDerivAt_torusHamiltonian —
+#     (2026-09-08, Instances/ProjectiveSpaceMomentMap.lean, G6) inherit the word from the object
+#     torusHamiltonian (declared above); continuity, the chart expression 2N/D, and the manifold
+#     derivative of that function. No new classification.
+#   torusField_isHamiltonianVectorField — (2026-09-08, same module, G6) PROVES the manifold-level
+#     equation ι_X ω_FS = dH for the velocity field of the torus action on CP^n and
+#     H = 2 ∑ θ_k momentMap — the moment-map equation of the cell law on the symplectic MANIFOLD
+#     (fsForm_isSymplectic). The word names the established equation. CP^n, real dim 2n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -641,6 +658,10 @@ coupling_hamiltonian_duality
 IsPhaseHamiltonian
 isPhaseHamiltonian_coordEnergy
 IsHamiltonianVectorField
+continuous_torusHamiltonian
+torusHamiltonian_chartInv
+hasMFDerivAt_torusHamiltonian
+torusField_isHamiltonianVectorField
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

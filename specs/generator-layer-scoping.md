@@ -6,7 +6,18 @@
 ★ `mfderiv_apply_self` (`dH (X) = 0`), ★ `unique_of_isSymplectic`, linearity in `H`. The **S** held; the one
 non-mechanical point was that `TangentSpace` carries no normed instance at the pin, so `curryLeft` and every
 linearity lemma had to be forced onto the model space `E` by explicit `(E := E)` and finished by `calc`, never
-`rw` (the module-system instance-path trap again). G2–G7 not built. Every rating for step (4)
+`rw` (the module-system instance-path trap again). **G6 BUILT the same night**
+(`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`, 15 pins): ★★★
+`torusField_isHamiltonianVectorField` — the velocity field of the torus action `p ↦ diag(e^{iθ}) • p`
+on `ℂℙⁿ` (★ proved to be that velocity, `hasDerivAt_chartFun_torusUnitary`) is the Hamiltonian
+vector field of `2 ∑ₖ θₖ · momentMap` for `fsForm`. The **L** came in under: no pullback of forms was
+needed (the §5 stop condition never triggered), the derivative of the action was one `HasDerivAt` of a
+phase, and the content was the single chart identity `ω_w(X_w, v) = dH_w v` through M7's
+`fsModelForm_apply` — the sums were the work, not the geometry. Two shelf facts worth recording: at the
+pin `HasFDerivAt` has no quotient rule and no inverse-of-a-function rule (only `hasFDerivAt_inv` for
+`x ↦ x⁻¹`), so `2N/D` is differentiated as `N · D⁻¹` by composition; and `Complex.exp` on `ℝ` is
+differentiated through `Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt`. ⚠️ The factor `2` is the `-4`
+convention of `fsChartForm`. **The `TERMS.md` moment-map line is discharged.** G2–G5, G7 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per
