@@ -32,9 +32,14 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   for the Fubini–Study form `fsForm` as a `C^∞` global 2-form and the exterior derivative
   `mextDeriv` of `Mathlib/Geometry/Manifold/ExteriorDerivative.lean` (real boundaryless model,
   smoothness `∞`).
-* **NOT established:** the top-power identity `ω^{∧(N−1)}/(N−1)! = μ_FS` (no top-forms → measures
-  step; `MATHLIB-GAPS.md`, "Kähler / symplectic manifold API"), non-degeneracy of `fsForm` at every
-  point, and analyticity (the potential is only known `C^∞`). Marker: `TERM-SCOPE(Kahler)`.
+* **Also backed (2026-09-07/08):** non-degeneracy at every point and the symplectic predicate —
+  `fsForm_nondegenerate`, ★★★ `fsForm_isSymplectic` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`);
+  and the top-power identity with its constant — ★★★ `fsVolume_eq_smul_fubiniStudyMeasure`,
+  `ω_FS^{∧n} = (4π)ⁿ · μ_FS` (`Instances/ProjectiveSpaceFubiniStudyMass.lean`; see the Liouville
+  entry for the convention behind `(4π)ⁿ`).
+* **NOT established:** analyticity (the potential is only known `C^∞`), and a manifold-level Kähler
+  *predicate* packaging `J`, `g` and `ω` on `ℂℙⁿ` (`specs/generator-layer-scoping.md`, G7 — cosmetic,
+  the triple is proved pointwise). Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 
