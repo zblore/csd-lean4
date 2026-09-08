@@ -3240,6 +3240,143 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.wedgePow_succ
 
+/-! ### The Fubini-Study volume: unitary invariance, finiteness, and the identity up to non-vanishing (ProjectiveSpaceUnitaryAction.lean, TopFormMeasure.lean, WedgeForm.lean, ProjectiveSpaceFubiniStudyVolume.lean, 2026-09-08) -/
+
+-- Milestones M4, M5, M6(a),(c) of specs/top-power-scoping.md. M4 (chart half): the unitary
+-- action read from affine chart i to affine chart j is the linear-fractional map uTrans U i j,
+-- holomorphic on its domain; the potential shifts by -2 log|affine coordinate|, pluriharmonic
+-- (ddcForm_log_norm_eq_zero_of_holomorphic generalises the linear lemma to any holomorphic f),
+-- so ★★ fsChartForm_uTransE / fsModelForm_uTrans: the chart form is U(n+1)-invariant. M5
+-- (generic, TopFormMeasure.lean): ★★ topFormMeasure_map_eq -- a homeomorphism that preserves
+-- the form in charts preserves the measure (chart-independence with the transition replaced by
+-- the map's chart expression, summed over the double partition by the cover's pieces and their
+-- images); the local representative of the k-th power is the k-th power of the local
+-- representative (localRep_wedgePow) and pullback commutes with powers, which lifts the 2-form
+-- invariance to the top power. M6(a): the measure of a smooth top form is locally finite (a
+-- compact ball in a chart, continuous density), hence finite on a compact manifold -- no decay
+-- estimate. M6(c): ★★★ fsVolumeNormalized_eq_fubiniStudyMeasure -- the NORMALISED volume of
+-- the top power of the Fubini-Study form IS fubiniStudyMeasure p₀ for every p₀, by
+-- fubiniStudyMeasure_unique applied to a U(n+1)-invariant probability measure -- ⚠️ UNDER THE
+-- PREMISE fsVolume n ≠ 0 (M6(b), the flat non-vanishing of the n-th power of the standard
+-- symplectic form on the standard basis, NOT proved; the premise is in the statement).
+-- ⚠️ No constant (M7); no general pullback of forms (the invariance is consumed in chart form).
+
+/-- info: 'Kahler.ddcForm_log_norm_eq_zero_of_holomorphic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.ddcForm_log_norm_eq_zero_of_holomorphic
+
+/-- info: 'Projectivization.norm_toEuclideanLinearEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_toEuclideanLinearEquiv
+
+/-- info: 'Projectivization.uTransE_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.uTransE_eq
+
+/-- info: 'Projectivization.smul_chartInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.smul_chartInv
+
+/-- info: 'Projectivization.chartFun_smul_chartInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartFun_smul_chartInv
+
+/-- info: 'Projectivization.contDiff_uAct_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_uAct_coord
+
+/-- info: 'Projectivization.contDiffOn_uTrans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiffOn_uTrans
+
+/-- info: 'Projectivization.isOpen_uDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isOpen_uDomain
+
+/-- info: 'Projectivization.contDiffAt_uTransE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiffAt_uTransE
+
+/-- info: 'Projectivization.fsPotential_uTransE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPotential_uTransE
+
+/-- info: 'Projectivization.fsChartForm_uTransE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsChartForm_uTransE
+
+/-- info: 'Projectivization.fsModelForm_uTrans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_uTrans
+
+/-- info: 'DifferentialForm.chartMeasure_preimage_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.chartMeasure_preimage_eq
+
+/-- info: 'DifferentialForm.topFormMeasure_map_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.topFormMeasure_map_eq
+
+/-- info: 'DifferentialForm.continuousOn_localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.continuousOn_localRep
+
+/-- info: 'DifferentialForm.isLocallyFiniteMeasure_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.isLocallyFiniteMeasure_topFormMeasure
+
+/-- info: 'DifferentialForm.isFiniteMeasure_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.isFiniteMeasure_topFormMeasure
+
+/-- info: 'ContinuousAlternatingMap.wedgePow_compContinuousLinearMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedgePow_compContinuousLinearMap
+
+/-- info: 'DifferentialForm.localRep_constZeroFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_constZeroFamily
+
+/-- info: 'DifferentialForm.localRep_wedgePow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_wedgePow
+
+/-- info: 'Projectivization.chartAt_smul_comp_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartAt_smul_comp_symm
+
+/-- info: 'Projectivization.smul_symm_mem_source_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.smul_symm_mem_source_iff
+
+/-- info: 'Projectivization.localRep_fsSection'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.localRep_fsSection'
+
+/-- info: 'Projectivization.localRep_fsTopForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.localRep_fsTopForm
+
+/-- info: 'Projectivization.fsVolume_map_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_map_smul
+
+/-- info: 'Projectivization.isFiniteMeasure_fsVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isFiniteMeasure_fsVolume
+
+/-- info: 'Projectivization.fsVolumeNormalized_map_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolumeNormalized_map_smul
+
+/-- info: 'Projectivization.isProbabilityMeasure_fsVolumeNormalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isProbabilityMeasure_fsVolumeNormalized
+
+/-- info: 'Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

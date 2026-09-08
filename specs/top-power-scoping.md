@@ -12,7 +12,20 @@
 bilinear map, ★ pullback commutes with it, reindexing is a continuous linear map;
 `Geometry/Manifold/WedgeForm.lean`: ★★ `DifferentialForm.wedge`, `domDomCongr`, `constZero`, ★★
 `wedgePow`; and `Projectivization.fsTopForm n := wedgePow fsForm n` in
-`ProjectiveSpaceFubiniStudyForm.lean`). **M4–M7 NOT BUILT.**
+`ProjectiveSpaceFubiniStudyForm.lean`). **M4, M5 and M6(a),(c) BUILT 2026-09-08 too**
+(`Instances/ProjectiveSpaceUnitaryAction.lean`: the action in charts is the linear-fractional
+`uTrans U i j`, ★★ `fsChartForm_uTransE` / `fsModelForm_uTrans` — the chart form is `U(n+1)`-invariant,
+via `ddcForm_log_norm_eq_zero_of_holomorphic`; `TopFormMeasure.lean`: ★★ `topFormMeasure_map_eq`, a
+form-preserving homeomorphism preserves the measure, and `isFiniteMeasure_topFormMeasure`, finite on a
+compact manifold by local finiteness — **no decay estimate was needed, compactness replaced the
+Japanese bracket**; `Instances/ProjectiveSpaceFubiniStudyVolume.lean`: `fsVolume n`, ★★
+`fsVolume_map_smul`, ★ `isFiniteMeasure_fsVolume`, and ★★★ `fsVolumeNormalized_eq_fubiniStudyMeasure`
+— **the normalised volume of the top power of the Fubini–Study form is `fubiniStudyMeasure p₀`, under the
+premise `fsVolume n ≠ 0`**). ⚠️ **M6(b) NOT BUILT — the premise stands in the statement**, exactly as
+§6's stop condition prescribes: the flat non-vanishing `fundamentalFormAlt^{∧n} ≠ 0` on the standard
+basis (a shuffle count over `Perm.ModSumCongr`) is the one piece of genuine mathematics left, and it
+was not attempted here. **M7 NOT BUILT.** Deviation from §4 worth recording: no general pullback of
+forms was built (M4(a)); the invariance is consumed directly in chart form, which is all Route U needs.
 Step (3) of the
 manifold exterior-calculus plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)),
 the "top forms → measures" step, scoped against what `c35b090` left standing: `ℂℙⁿ` is an analytic

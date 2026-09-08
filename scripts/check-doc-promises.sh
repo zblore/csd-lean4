@@ -187,8 +187,6 @@ PATH_EXCEPT = {
     # `ozawa-scoping.md` entries were removed on 2026-09-04 when that brick landed.)
     # top-power-scoping.md (2026-09-07): step (3) deliverables M1-M7, none built yet.
     ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Pullback.lean"),
-    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceUnitaryAction.lean"),
-    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean"),
 }
 
 corpus_tops = {d for d in os.listdir("CsdLean4") if os.path.isdir(os.path.join("CsdLean4", d))} - {"Mathlib"}

@@ -94,7 +94,8 @@ alarming and is not.
   is what `ConstraintDynamics.flow_preserves` (P4) licenses: each time-`t` map preserves `muL`.
 * **Backed by:** `ConstraintDynamics.flow_preserves` (a structure field — *posited* of every
   model, not derived), and `liouville_isProbability` for the Kähler instance.
-* **NOT established:** that this measure **is** the Kähler top-power volume `ω^{∧n}/n!`. That is
+* **Partly established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the normalised measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, **under the premise `fsVolume n ≠ 0`** (the flat non-vanishing of the top power, `specs/top-power-scoping.md` M6(b), not proved). Unconditionally, the volume is `U(n+1)`-invariant and finite.
+* **NOT established:** the premise, and the constant; so the unqualified sentence "this measure **is** the Kähler top-power volume `ω^{∧n}/n!`" is still not backed. That is
   the same manifold residual as above; `LF4/KahlerVolumeForced.lean` proves the normalisation core
   and leaves the top-power identity open. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an

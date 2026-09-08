@@ -31,7 +31,10 @@ the flat "commutes with pullback" lemma), the flat operation is `C^∞` in its a
 * `constZeroFamily`, `contMDiff_constZeroFamily`, `DifferentialForm.constZero c` — the constant
   `0`-form;
 * ★★ `DifferentialForm.wedgePow α k` — **the `k`-th exterior power of a real 2-form**, a
-  `2k`-form, by recursion (`powEquiv k : Fin (2k) ⊕ Fin 2 ≃ Fin (2(k+1))`).
+  `2k`-form, by recursion (`powEquiv k : Fin (2k) ⊕ Fin 2 ≃ Fin (2(k+1))`); its flat twin
+  `ContinuousAlternatingMap.wedgePow` with ★ `wedgePow_compContinuousLinearMap` (pullback
+  commutes with the power) and ★ `localRep_wedgePow` (the local representative of the power is
+  the power of the local representative) — what lifts an invariance of a 2-form to its top power.
 
 ## Honest scope
 
@@ -277,6 +280,61 @@ def wedgePow (α₂ : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2
     (k : ℕ) :
     wedgePow α₂ (k + 1) = domDomCongr (powEquiv k) (wedge (ContinuousLinearMap.mul ℝ ℝ) (wedgePow α₂ k) α₂) :=
   rfl
+
+end DifferentialForm
+
+/-! ### The flat iterated power, and the local representative of a power -/
+
+namespace ContinuousAlternatingMap
+
+/-- The `k`-th exterior power of a flat real 2-form, as a `2k`-form (same recursion as
+`DifferentialForm.wedgePow`). -/
+def wedgePow (α : E [⋀^Fin 2]→L[ℝ] ℝ) : (k : ℕ) → E [⋀^Fin (2 * k)]→L[ℝ] ℝ
+  | 0 => domDomCongr (finCongr (by simp) : Fin 0 ≃ Fin (2 * 0)) (constOfIsEmpty ℝ E (Fin 0) 1)
+  | k + 1 => domDomCongr (DifferentialForm.powEquiv k)
+      (wedge (ContinuousLinearMap.mul ℝ ℝ) (wedgePow α k) α)
+
+/-- Pullback commutes with the iterated power. -/
+theorem wedgePow_compContinuousLinearMap {E' : Type*} [NormedAddCommGroup E'] [NormedSpace ℝ E']
+    (α : E [⋀^Fin 2]→L[ℝ] ℝ) (L : E' →L[ℝ] E) :
+    ∀ k, (wedgePow α k).compContinuousLinearMap L = wedgePow (α.compContinuousLinearMap L) k
+  | 0 => by
+    simp only [wedgePow]
+    rw [domDomCongr_compContinuousLinearMap]
+    congr 1
+  | k + 1 => by
+    simp only [wedgePow]
+    rw [domDomCongr_compContinuousLinearMap, wedge_compContinuousLinearMap,
+      wedgePow_compContinuousLinearMap α L k]
+
+end ContinuousAlternatingMap
+
+namespace DifferentialForm
+
+omit [DecidableEq ι] in
+theorem localRep_constZeroFamily [IsEmpty ι] (c : F) (x₀ : M) {w : E}
+    (hw : w ∈ (chartAt E x₀).target) :
+    localRep (constZeroFamily (E := E) (M := M) (ι := ι) c) x₀ w
+      = ContinuousAlternatingMap.constOfIsEmpty ℝ E ι c :=
+  trivializationAt_constZeroFamily_snd c x₀ _ ((chartAt E x₀).map_target hw)
+
+/-- ★ The local representative of the `k`-th power is the `k`-th power of the local
+representative. -/
+theorem localRep_wedgePow (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ)
+    (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
+    ∀ k, localRep (fun x => wedgePow α k x) x₀ w
+      = ContinuousAlternatingMap.wedgePow (localRep (fun x => α x) x₀ w) k
+  | 0 => by
+    show localRep (domDomCongrFamily (finCongr (by simp) : Fin 0 ≃ Fin (2 * 0))
+      (constZeroFamily (E := E) (M := M) (ι := Fin 0) (1 : ℝ))) x₀ w = _
+    rw [localRep_domDomCongrFamily _ _ x₀ hw, localRep_constZeroFamily _ x₀ hw]
+    rfl
+  | k + 1 => by
+    show localRep (domDomCongrFamily (powEquiv k)
+      (wedgeFamily (ContinuousLinearMap.mul ℝ ℝ) (fun x => wedgePow α k x) (fun x => α x))) x₀ w = _
+    rw [localRep_domDomCongrFamily _ _ x₀ hw, localRep_wedgeFamily _ _ _ x₀ hw,
+      localRep_wedgePow α x₀ hw k]
+    rfl
 
 end DifferentialForm
 

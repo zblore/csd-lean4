@@ -37,7 +37,16 @@ the basis — and those densities glue to a measure on the manifold.
   measures glued along the partition;
 * ★★ `topFormMeasure_apply_of_subset_source` — on a measurable set inside **any** chart domain
   (not only the cover's) the glued measure is that chart's measure; hence
-  ★ `topFormMeasure_congr_cover` — the measure does not depend on the cover.
+  ★ `topFormMeasure_congr_cover` — the measure does not depend on the cover;
+* ★ `chartMeasure_preimage_eq` and ★★ `topFormMeasure_map_eq` (milestone **M5**) —
+  **invariance**: a homeomorphism whose chart expressions are smooth and pull the local
+  representative at the target chart back to the local representative at the source chart
+  preserves the measure. The proof is chart-independence with the chart transition replaced by
+  the map's chart expression, summed over the double partition by the cover's pieces and their
+  images;
+* ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` (milestone
+  **M6(a)**) — the measure of a smooth top form is locally finite (a compact ball inside a chart
+  has finite measure, the density being continuous there), hence finite on a compact manifold.
 
 ## Honest scope
 
@@ -49,9 +58,11 @@ construction needs no paracompactness and no bump functions.
 ⚠️ **Densities, not integrals of forms.** The measure uses `|coefficient|`; no orientation is
 chosen and none is needed. Integrating a form with its sign is not defined here.
 
-⚠️ **No naturality yet.** That a diffeomorphism carries the measure of a pulled-back form to the
-pushforward measure is milestone M5 and needs the pullback of forms (M4); it is not here.
-Finiteness and non-vanishing of any particular measure are likewise consumer-side (M6).
+⚠️ **Invariance, not general naturality.** `topFormMeasure_map_eq` is stated for a map that
+preserves the form in charts (the hypothesis is the chart form of "`g^* s = s`"); the general
+statement `measureOf (g^* s) = map g⁻¹ (measureOf s)` would need the pullback of forms along
+maps of manifolds, which is not built. Non-vanishing of any particular measure is consumer-side
+(M6(b)).
 
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`; the model `E` is
 finite-dimensional real, Borel, with an additive Haar measure supplied as an argument.
@@ -272,6 +283,184 @@ theorem topFormMeasure_congr_cover (c c' : ChartCover E M) :
       (fun x hx => c'.piece_subset i hx.2),
     topFormMeasure_apply_of_subset_source μ e s c' (c'.pt i) (hA.inter (c'.measurableSet_piece i))
       (fun x hx => c'.piece_subset i hx.2)]
+
+/-! ### Invariance under a form-preserving homeomorphism -/
+
+/-- ★ **A chart measure under a form-preserving map.** If `g` is injective, smooth in the charts
+at `x₀` and `z`, and its chart expression pulls the local representative at `z` back to the
+local representative at `x₀`, then the chart measure at `x₀` of `g ⁻¹' A` is the chart measure
+at `z` of `A`. -/
+theorem chartMeasure_preimage_eq (g : M → M) (hg_inj : Function.Injective g)
+    (hg_surj : Function.Surjective g) (x₀ z : M)
+    (hG : ∀ w ∈ (chartAt E x₀).target, g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
+      ContDiffAt ℝ ∞ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)
+    (hinv : ∀ w ∈ (chartAt E x₀).target, g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
+      (localRep s z ((chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)).compContinuousLinearMap
+        (fderiv ℝ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w) = localRep s x₀ w)
+    {A : Set M} (hA : MeasurableSet A) (hgA : MeasurableSet (g ⁻¹' A))
+    (hAz : A ⊆ (chartAt E z).source) (hA₀ : g ⁻¹' A ⊆ (chartAt E x₀).source) :
+    chartMeasure μ e s x₀ (g ⁻¹' A) = chartMeasure μ e s z A := by
+  rw [chartMeasure_apply μ e s x₀ hgA, chartMeasure_apply μ e s z hA]
+  have hS₀ := measurableSet_target_inter_preimage (E := E) x₀ hgA
+  have himg : (chartAt E z).target ∩ (chartAt E z).symm ⁻¹' A
+      = (chartAt E z ∘ g ∘ (chartAt E x₀).symm) ''
+          ((chartAt E x₀).target ∩ (chartAt E x₀).symm ⁻¹' (g ⁻¹' A)) := by
+    have h1 := (chartAt E z).image_eq_target_inter_inv_preimage hAz
+    have h0 := (chartAt E x₀).image_eq_target_inter_inv_preimage hA₀
+    calc (chartAt E z).target ∩ (chartAt E z).symm ⁻¹' A
+        = chartAt E z '' A := h1.symm
+      _ = chartAt E z '' (g '' (g ⁻¹' A)) := by rw [Set.image_preimage_eq A hg_surj]
+      _ = chartAt E z '' (g '' ((chartAt E x₀).symm '' (chartAt E x₀ '' (g ⁻¹' A)))) := by
+          congr 2
+          exact ((chartAt E x₀).symm_image_image_of_subset_source hA₀).symm
+      _ = (chartAt E z ∘ g ∘ (chartAt E x₀).symm) '' (chartAt E x₀ '' (g ⁻¹' A)) := by
+          rw [Set.image_comp, Set.image_comp]
+      _ = (chartAt E z ∘ g ∘ (chartAt E x₀).symm) ''
+            ((chartAt E x₀).target ∩ (chartAt E x₀).symm ⁻¹' (g ⁻¹' A)) := by rw [h0]
+  rw [himg, lintegral_image_eq_lintegral_abs_det_fderiv_mul μ hS₀
+    (f' := fun w => fderiv ℝ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w) ?_ ?_]
+  · apply setLIntegral_congr_fun hS₀
+    intro w hw
+    have hgw : g ((chartAt E x₀).symm w) ∈ (chartAt E z).source := hAz hw.2
+    simp only [chartDensity]
+    rw [← ENNReal.ofReal_mul (abs_nonneg _), ← abs_mul, ← hinv w hw.1 hgw,
+      ContinuousAlternatingMap.compContinuousLinearMap_apply_basis]
+  · intro w hw
+    exact ((hG w hw.1 (hAz hw.2)).differentiableAt (by simp)).hasFDerivAt.hasFDerivWithinAt
+  · intro w₁ hw₁ w₂ hw₂ h
+    have h1 := (chartAt E z).injOn (hAz hw₁.2) (hAz hw₂.2) h
+    have h2 := hg_inj h1
+    exact (chartAt E x₀).symm.injOn hw₁.1 hw₂.1 h2
+
+/-- ★★ **Invariance of the measure of a top form** under a homeomorphism that preserves the
+form in charts. -/
+theorem topFormMeasure_map_eq (c : ChartCover E M) (g : M ≃ₜ M)
+    (hG : ∀ x₀ z : M, ∀ w ∈ (chartAt E x₀).target,
+      g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
+      ContDiffAt ℝ ∞ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)
+    (hinv : ∀ x₀ z : M, ∀ w ∈ (chartAt E x₀).target,
+      g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
+      (localRep s z ((chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)).compContinuousLinearMap
+        (fderiv ℝ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w) = localRep s x₀ w) :
+    Measure.map g (topFormMeasure μ e s c) = topFormMeasure μ e s c := by
+  ext A hA
+  rw [Measure.map_apply g.measurable hA]
+  -- the double partition: pieces of the cover and their images under g
+  set P : Fin c.m × Fin c.m → Set M := fun p => A ∩ (c.piece p.2 ∩ g '' c.piece p.1) with hP
+  have hPmeas : ∀ p, MeasurableSet (P p) := fun p =>
+    hA.inter ((c.measurableSet_piece p.2).inter
+      (g.measurableEmbedding.measurableSet_image.2 (c.measurableSet_piece p.1)))
+  have hPdisj : Pairwise (Disjoint on P) := by
+    intro p q hpq
+    rcases ne_or_eq p.2 q.2 with h2 | h2
+    · exact Set.disjoint_left.2 fun x hxp hxq =>
+        Set.disjoint_left.1 (c.pairwise_disjoint_piece h2) hxp.2.1 hxq.2.1
+    · have h1 : p.1 ≠ q.1 := fun h1 => hpq (Prod.ext h1 h2)
+      exact Set.disjoint_left.2 fun x hxp hxq =>
+        Set.disjoint_left.1
+          ((Set.disjoint_image_iff g.injective).2 (c.pairwise_disjoint_piece h1)) hxp.2.2 hxq.2.2
+  have hPunion : ⋃ p, P p = A := by
+    ext x
+    constructor
+    · rintro ⟨_, ⟨p, rfl⟩, hx⟩
+      exact hx.1
+    · intro hx
+      have hj : ∃ j, x ∈ c.piece j := Set.mem_iUnion.1 (by rw [c.iUnion_piece]; exact Set.mem_univ x)
+      have hi : ∃ i, g.symm x ∈ c.piece i :=
+        Set.mem_iUnion.1 (by rw [c.iUnion_piece]; exact Set.mem_univ _)
+      obtain ⟨j, hj⟩ := hj
+      obtain ⟨i, hi⟩ := hi
+      exact Set.mem_iUnion.2 ⟨(i, j), hx, hj, ⟨g.symm x, hi, g.apply_symm_apply x⟩⟩
+  -- each piece is handled by the chart pair (pt i, pt j)
+  have hpiece : ∀ p : Fin c.m × Fin c.m,
+      topFormMeasure μ e s c (g ⁻¹' P p) = topFormMeasure μ e s c (P p) := by
+    intro p
+    have hsub_z : P p ⊆ (chartAt E (c.pt p.2)).source := fun x hx => c.piece_subset _ hx.2.1
+    have hsub_0 : g ⁻¹' P p ⊆ (chartAt E (c.pt p.1)).source := by
+      intro x hx
+      obtain ⟨y, hy, hyx⟩ := hx.2.2
+      have : y = x := g.injective hyx
+      subst this
+      exact c.piece_subset _ hy
+    rw [topFormMeasure_apply_of_subset_source μ e s c (c.pt p.1) (g.measurable (hPmeas p)) hsub_0,
+      topFormMeasure_apply_of_subset_source μ e s c (c.pt p.2) (hPmeas p) hsub_z]
+    exact chartMeasure_preimage_eq μ e s g g.injective g.surjective (c.pt p.1) (c.pt p.2)
+      (hG _ _) (hinv _ _) (hPmeas p) (g.measurable (hPmeas p)) hsub_z hsub_0
+  calc topFormMeasure μ e s c (g ⁻¹' A)
+      = topFormMeasure μ e s c (⋃ p, g ⁻¹' P p) := by rw [← Set.preimage_iUnion, hPunion]
+    _ = ∑' p, topFormMeasure μ e s c (g ⁻¹' P p) :=
+        measure_iUnion (fun p q hpq => (hPdisj hpq).preimage g) (fun p => g.measurable (hPmeas p))
+    _ = ∑' p, topFormMeasure μ e s c (P p) := by simp_rw [hpiece]
+    _ = topFormMeasure μ e s c (⋃ p, P p) := (measure_iUnion hPdisj hPmeas).symm
+    _ = topFormMeasure μ e s c A := by rw [hPunion]
+
+/-! ### Local finiteness -/
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+  in
+theorem continuousOn_localRep
+    (hs : ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
+    (x₀ : M) : ContinuousOn (localRep s x₀) (chartAt E x₀).target :=
+  fun _ hw => (contDiffAt_localRep s hs x₀ hw).continuousAt.continuousWithinAt
+
+/-- ★ **The measure of a smooth top form is locally finite**: a compact ball inside a chart has
+finite measure because the density is continuous there. -/
+theorem isLocallyFiniteMeasure_topFormMeasure
+    (hs : ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
+    (c : ChartCover E M) : IsLocallyFiniteMeasure (topFormMeasure μ e s c) := by
+  refine ⟨fun x => ?_⟩
+  obtain ⟨r, hr, hball⟩ := Metric.isOpen_iff.1 (chartAt E x).open_target (chartAt E x x)
+    (mem_chart_target E x)
+  set K := Metric.closedBall (chartAt E x x) (r / 2) with hKdef
+  have hK : K ⊆ (chartAt E x).target :=
+    (Metric.closedBall_subset_ball (by linarith)).trans hball
+  have hKc : IsCompact K := isCompact_closedBall _ _
+  set V := (chartAt E x).source ∩ chartAt E x ⁻¹' K with hVdef
+  refine ⟨V, ?_, ?_⟩
+  · have hopen : IsOpen ((chartAt E x).source ∩ chartAt E x ⁻¹' Metric.ball (chartAt E x x) (r / 2)) :=
+      (chartAt E x).continuousOn.isOpen_inter_preimage (chartAt E x).open_source Metric.isOpen_ball
+    exact Filter.mem_of_superset
+      (hopen.mem_nhds ⟨mem_chart_source E x, Metric.mem_ball_self (by linarith)⟩)
+      (Set.inter_subset_inter_right _ (Set.preimage_mono Metric.ball_subset_closedBall))
+  · have hVmeas : MeasurableSet V :=
+      MeasurableSet.inter_preimage_of_continuousOn (chartAt E x).continuousOn
+        (chartAt E x).open_source.measurableSet hKc.isClosed.measurableSet
+    rw [topFormMeasure_apply_of_subset_source μ e s c x hVmeas Set.inter_subset_left,
+      chartMeasure_apply μ e s x hVmeas]
+    have hsub : (chartAt E x).target ∩ (chartAt E x).symm ⁻¹' V ⊆ K := by
+      rintro w ⟨hw, hwV⟩
+      have := hwV.2
+      rwa [Set.mem_preimage, (chartAt E x).right_inv hw] at this
+    have hev : Continuous fun α : E [⋀^ι]→L[ℝ] ℝ => α e := by
+      refine (LipschitzWith.of_dist_le_mul
+        (K := ⟨∏ i, ‖e i‖, Finset.prod_nonneg fun _ _ => norm_nonneg _⟩) fun α β => ?_).continuous
+      simp only [dist_eq_norm]
+      rw [← ContinuousAlternatingMap.sub_apply, mul_comm]
+      exact ContinuousAlternatingMap.le_opNorm _ _
+    have hcont : ContinuousOn (fun w => localRep s x w e) K :=
+      hev.comp_continuousOn ((continuousOn_localRep s hs x).mono hK)
+    obtain ⟨C, hC⟩ := hKc.exists_bound_of_continuousOn hcont
+    calc ∫⁻ w in (chartAt E x).target ∩ (chartAt E x).symm ⁻¹' V, chartDensity e s x w ∂μ
+        ≤ ∫⁻ w in K, chartDensity e s x w ∂μ := lintegral_mono_set hsub
+      _ ≤ ∫⁻ _ in K, ENNReal.ofReal C ∂μ := by
+          refine setLIntegral_mono measurable_const fun w hw => ?_
+          simp only [chartDensity]
+          exact ENNReal.ofReal_le_ofReal (by simpa [Real.norm_eq_abs] using hC w hw)
+      _ = ENNReal.ofReal C * μ K := setLIntegral_const _ _
+      _ < ⊤ := ENNReal.mul_lt_top ENNReal.ofReal_lt_top hKc.measure_lt_top
+
+/-- ★ On a compact manifold, the measure of a smooth top form is finite. -/
+theorem isFiniteMeasure_topFormMeasure [CompactSpace M]
+    (hs : ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
+    (c : ChartCover E M) : IsFiniteMeasure (topFormMeasure μ e s c) := by
+  have := isLocallyFiniteMeasure_topFormMeasure μ e s hs c
+  infer_instance
 
 end DifferentialForm
 
