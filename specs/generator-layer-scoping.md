@@ -146,6 +146,59 @@ is wrong: state it on `TangentSpace` directly and never through a `Fin 1`-form.
 G5, not scheduled. `R-016′` **L**, medium, value medium, and it is a statement, not a discharge.
 Nothing here has been "attempted and walled"; every absence above was a grep.
 
+## 8. Additions after G1 and G6 (2026-09-08, late): G8–G13
+
+The remaining "not established" lines of `TERMS.md` and `POSITS.md`, each as a numbered brick. Every
+shelf claim was grep-probed at the pin on 2026-09-08. These IDs supersede the chat-only labels used
+earlier the same evening.
+
+| # | Brick | Cx | P(success) | Value | What it lands, honestly |
+|---|---|---|---|---|---|
+| **G8** | **A moment map is unique up to a constant, and the normalisation pins it.** (A) On `ℂℙⁿ`, two `MDifferentiable` Hamiltonians `H, K` of the same field for the same 2-form family differ by a constant. (B) If `Hₖ` is a Hamiltonian for the `k`-th phase field `torusField (Pi.single k 1)`, `Hₖ ≥ 0`, and `∑ₖ Hₖ = 2` (the form's scale), then `Hₖ = torusHamiltonian (Pi.single k 1) = 2 · momentMap · k`. | **M** | High | **High** (ledgers) | The sentence `POSITS.md` bullet 1 calls "the standard symplectic argument, unformalised" becomes a theorem, given G6. **Posit 1 is unchanged**: it asserts that the *dynamics* generates the torus action; G8 only says the map that action has is the corpus's. Appends to `Instances/ProjectiveSpaceMomentMap.lean` (no new file). |
+| **G9** | The image of `momentMap` is exactly the standard simplex | S–M | High | Medium | `momentMap_sum_eq_one` and `momentMap_nonneg` give `⊆`; `⊇` by exhibiting `mk (fun k => √tₖ)`. Closes the "moment polytope" line for this action, without the convexity theorem. |
+| **G10** | The torus flow preserves the Fubini–Study volume: `Measure.map (torusUnitary θ • ·) (fsVolume n) = fsVolume n` | S | High | Medium | A one-line corollary of `fsVolume_map_smul`. Liouville in the dynamics sense for the flow G6 built, without G5. |
+| **G11** | Hamiltonian implies locally Hamiltonian | M | High | Low–medium | `mextDeriv` of a 0-form family is `mfderiv` (flat half upstream: `extDeriv_constOfIsEmpty`) plus smoothness of the 0-form section and `d ∘ d = 0`. |
+| **G12** | `fsForm` is analytic, not merely `C^∞` | M–L | Medium | Low | Real-analyticity of `log(1 + ‖z‖²)`; registry line only. |
+| **G13** | The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A` | M–L | Medium | Low–medium | The G6 computation with a non-diagonal velocity; the corpus uses the torus. |
+
+### G8, planned
+
+**Route for (A).** No connectedness lemma is needed. (i) From `α x (X x, v) = dH v = dK v` for all `v`,
+`mfderiv H x = mfderiv K x` (CLM extensionality), so `mfderiv (H − K) x = 0` (`mfderiv_sub`). (ii) In
+the affine chart `i`, `mfderiv` is the chart derivative — the bridge G6 built in
+`hasMFDerivAt_torusHamiltonian` (`MDifferentiableAt.mfderiv`, `writtenInExtChartAt`,
+`extChartAt_model_space_eq_id`, `extChartAt_coe_symm`, `modelWithCornersSelf_coe_symm`) — so
+`fderiv ℝ ((H − K) ∘ chartInv i) w = 0` for every `w`, and `(H − K) ∘ chartInv i` is differentiable
+(`MDifferentiableAt` in the chart). (iii) The chart image is all of `Fin n → ℂ`, a normed space, so
+Mathlib's `is_const_of_fderiv_eq_zero` (grep-confirmed, `Analysis/Calculus/MeanValue.lean`) makes
+`(H − K) ∘ chartInv i` constant, hence `H − K` constant on `chartSource i` (`chartInv_chartFun`).
+(iv) Glue: `mk (fun _ => 1)` lies in every `chartSource i` (`mem_chartSource_mk`, `1 ≠ 0`), so the
+constants agree across charts and `c := (H − K) (mk 1)` works at every `p` through `chartSource (idx p)`.
+
+**Route for (B).** By (A) and G6's `torusField_isHamiltonianVectorField (Pi.single k 1)`, with
+`torusHamiltonian (Pi.single k 1) p = 2 · momentMap p k` (`Finset.sum_ite_eq`), `Hₖ = 2μₖ + cₖ`. Summing
+and `momentMap_sum_eq_one`: `∑ cₖ = 0`. Non-negativity at a point where `μₖ = 0`: for `n ≥ 1` and
+`j ≠ k`, `momentMap (origin j) k = 0` (from `rep_origin`; a new S lemma), so `cₖ ≥ 0`; then
+`Finset.sum_eq_zero_iff_of_nonneg` gives `cₖ = 0`. For `n = 0` the sum has one term, so `c₀ = 0`
+directly.
+
+**Generic piece for G1's module:** `IsHamiltonianVectorField.mfderiv_eq` — two Hamiltonians of the
+same field for the same form have the same `mfderiv` at every point (S; `HamiltonianVectorField.lean`).
+
+**Deliverable and pins.** Appended to `Instances/ProjectiveSpaceMomentMap.lean` (capstone discipline,
+CONVENTIONS §8.3b): `momentMap_origin_of_ne`, `torusHamiltonian_single`,
+★★ `eq_add_const_of_isHamiltonianVectorField` (A), ★★★ `eq_torusHamiltonian_of_nonneg_of_sum` (B);
+plus `IsHamiltonianVectorField.mfderiv_eq` in G1's module. Names carrying "Hamiltonian" go into
+`check-claims.sh`'s theorem inventory. Docs: `POSITS.md` bullet 1 (the argument is formalised; the
+posit stands), `TERMS.md` moment map, this note, BACKLOG.
+
+**⛔ Stop condition.** If step (ii) needs more than the G6 bridge — if `MDifferentiableAt.mfderiv`
+does not hand over the chart derivative on `Fin n → ℂ` in the form `is_const_of_fderiv_eq_zero`
+takes — state (A) with `HasMFDerivAt` hypotheses instead of `MDifferentiable` and stop there; do not
+build a manifold-level constancy lemma for one consumer.
+
+**Rating: M, P(success) high, value high for the ledgers and nil for the posit count.**
+
 ## References
 
 [`BACKLOG.md`](BACKLOG.md) (list 3, and the `R-016` row of list 1);
