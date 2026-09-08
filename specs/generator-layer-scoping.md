@@ -17,7 +17,14 @@ phase, and the content was the single chart identity `ω_w(X_w, v) = dH_w v` thr
 pin `HasFDerivAt` has no quotient rule and no inverse-of-a-function rule (only `hasFDerivAt_inv` for
 `x ↦ x⁻¹`), so `2N/D` is differentiated as `N · D⁻¹` by composition; and `Complex.exp` on `ℝ` is
 differentiated through `Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt`. ⚠️ The factor `2` is the `-4`
-convention of `fsChartForm`. **The `TERMS.md` moment-map line is discharged.** G2–G5, G7 not built. Every rating for step (4)
+convention of `fsChartForm`. **The `TERMS.md` moment-map line is discharged.** **G8 BUILT 2026-09-08 (late; 9 pins)** exactly
+as §8 planned: ★★ `eq_add_const_of_isHamiltonianVectorField` (uniqueness up to a constant on `ℂℙⁿ`,
+no connectedness lemma — `is_const_of_fderiv_eq_zero` on each whole chart image plus the point
+`[1 : ⋯ : 1]`) and ★★★ `eq_torusHamiltonian_of_nonneg_of_sum` (the normalisation pins it to
+`2 · momentMap`). The **M** held; the stop condition never triggered — the chart bridge was
+`mfderiv_comp` with the chart inverse (`mdifferentiableAt_atlas_symm`) and `mfderiv_eq_fderiv`, not
+`MDifferentiableAt.mfderiv`. `POSITS.md` bullet 1's "unformalised" is now formalised; **Posit 1 is
+unchanged.** G2–G5, G7, G9–G13 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per

@@ -3838,6 +3838,59 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.hasDerivAt_chartFun_torusUnitary
 
+/-! ### G8: a moment map is unique up to a constant, and the normalisation pins it (HamiltonianVectorField.lean, ProjectiveSpaceMomentMap.lean, 2026-09-08) -/
+
+-- Brick G8 of specs/generator-layer-scoping.md §8. (A) ★★ eq_add_const_of_isHamiltonianVectorField:
+-- on CP^n two MDifferentiable Hamiltonians of the same field for the same 2-form family differ by
+-- a constant. NO connectedness lemma: their difference has zero mfderiv (mfderiv_eq, a CLM
+-- extensionality), which in the chart at origin i is a zero fderiv of D ∘ chartInv i on ALL of
+-- Fin n → ℂ (mfderiv_comp with the chart inverse, mfderiv_eq_fderiv), so Mathlib's
+-- is_const_of_fderiv_eq_zero makes D constant on each chart domain, and the point [1 : ⋯ : 1]
+-- (allOnes) lies in every chart domain, so the constants agree. (B) ★★★
+-- eq_torusHamiltonian_of_nonneg_of_sum: a family of Hamiltonians for the phase fields
+-- torusField (Pi.single k 1), non-negative and summing to 2 (the form's scale), IS
+-- 2 · momentMap: by (A) and G6 each is 2 μ_k + c_k; momentMap_sum_eq_one gives ∑ c_k = 0;
+-- μ_k vanishes at the chart origin j ≠ k (momentMap_origin_of_ne), so c_k ≥ 0; hence all c_k = 0
+-- (n = 0 by the one-term sum). This is the "standard symplectic argument, unformalised" of
+-- specs/POSITS.md bullet 1, formalised. ⚠️ POSIT 1 IS UNCHANGED: it asserts that the DYNAMICS
+-- is the source of the torus action; G8 says only which map that action has.
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.mfderiv_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.mfderiv_eq
+
+/-- info: 'Projectivization.chartAt_origin_target' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartAt_origin_target
+
+/-- info: 'Projectivization.allOnes_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.allOnes_ne_zero
+
+/-- info: 'Projectivization.mk_allOnes_mem_chartSource' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mk_allOnes_mem_chartSource
+
+/-- info: 'Projectivization.momentMap_origin_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.momentMap_origin_of_ne
+
+/-- info: 'Projectivization.torusHamiltonian_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusHamiltonian_single
+
+/-- info: 'Projectivization.mdifferentiable_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mdifferentiable_torusHamiltonian
+
+/-- info: 'Projectivization.eq_add_const_of_isHamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_add_const_of_isHamiltonianVectorField
+
+/-- info: 'Projectivization.eq_torusHamiltonian_of_nonneg_of_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_torusHamiltonian_of_nonneg_of_sum
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

@@ -60,7 +60,10 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `specs/generator-layer-scoping.md`): the velocity field of the torus action `p ↦ diag(e^{iθ}) • p`
   on `ℂℙⁿ` — proved to be that velocity (`hasDerivAt_chartFun_torusUnitary`) — satisfies
   `ι_X ω_FS = dH` with `H = 2 ∑ₖ θₖ · momentMap`, for the Fubini–Study form `fsForm` of the symplectic
-  manifold `fsForm_isSymplectic`. The factor `2` is the `-4` convention of `fsChartForm`.
+  manifold `fsForm_isSymplectic`. The factor `2` is the `-4` convention of `fsChartForm`. **And it is
+  unique (G8):** `eq_add_const_of_isHamiltonianVectorField` (any Hamiltonian of the same field differs
+  by a constant) and `eq_torusHamiltonian_of_nonneg_of_sum` (non-negativity and the sum-two
+  normalisation pin a family of phase-field Hamiltonians to `2 · momentMap`).
 * **NOT established:** the moment *polytope* in the Atiyah–Guillemin–Sternberg sense (convexity of
   the image), and smoothness of the field as a section of the tangent bundle (G3). Marker:
   `TERM-SCOPE(MomentMap)`.

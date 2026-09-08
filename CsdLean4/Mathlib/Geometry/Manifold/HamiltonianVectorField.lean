@@ -32,8 +32,9 @@ alternation and linearity alone.
   ★ `h.mfderiv_apply_self` (**`dH (X) = 0`**: the energy is infinitesimally conserved along its own
   field, by alternation), `h.eq_of_nondegenerate` and ★ `h.unique_of_isSymplectic` (**the
   Hamiltonian vector field of `H` is unique** where `ω` is non-degenerate, in particular for a
-  symplectic form), `h.add`, `h.smul` (linearity in `H`), and `IsHamiltonianVectorField.const`
-  (the zero field is Hamiltonian for a constant).
+  symplectic form), `h.add`, `h.smul` (linearity in `H`), `IsHamiltonianVectorField.const`
+  (the zero field is Hamiltonian for a constant), and `h.mfderiv_eq` (two Hamiltonians of one field
+  have the same derivative — the input to uniqueness up to a constant, brick G8).
 
 ## Honest scope
 
@@ -214,6 +215,13 @@ theorem const (c : ℝ) : IsHamiltonianVectorField α (fun _ => 0) (fun _ => c) 
   intro x v
   rw [mfderiv_const, apply_zero_left]
   rfl
+
+/-- Two Hamiltonians of the same field for the same form have the same derivative everywhere. -/
+theorem mfderiv_eq (h : IsHamiltonianVectorField α X H) (h' : IsHamiltonianVectorField α X K)
+    (x : M) :
+    mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x
+      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) K x :=
+  ContinuousLinearMap.ext fun v => (h x v).symm.trans (h' x v)
 
 end IsHamiltonianVectorField
 

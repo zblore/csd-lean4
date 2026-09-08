@@ -606,6 +606,16 @@ liouville_isProbability"
 #     equation ι_X ω_FS = dH for the velocity field of the torus action on CP^n and
 #     H = 2 ∑ θ_k momentMap — the moment-map equation of the cell law on the symplectic MANIFOLD
 #     (fsForm_isSymplectic). The word names the established equation. CP^n, real dim 2n, EVEN.
+#   torusHamiltonian_single / mdifferentiable_torusHamiltonian — (2026-09-08, G8) inherit the
+#     word from torusHamiltonian: its value at a coordinate vector, and its differentiability.
+#   eq_add_const_of_isHamiltonianVectorField — (2026-09-08, ProjectiveSpaceMomentMap.lean, G8)
+#     PROVES that two Hamiltonians of one field for one 2-form family on CP^n differ by a
+#     constant. The word is a hypothesis of the statement (the predicate of G1); the
+#     conclusion is uniqueness up to a constant. CP^n, EVEN.
+#   eq_torusHamiltonian_of_nonneg_of_sum — (2026-09-08, same module, G8) PROVES that a
+#     non-negative family of Hamiltonians for the phase fields summing to 2 IS
+#     torusHamiltonian = 2 · momentMap. The word names the established object; the standard
+#     symplectic argument of POSITS.md bullet 1 as a theorem. Posit 1 unchanged. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -662,6 +672,10 @@ continuous_torusHamiltonian
 torusHamiltonian_chartInv
 hasMFDerivAt_torusHamiltonian
 torusField_isHamiltonianVectorField
+torusHamiltonian_single
+mdifferentiable_torusHamiltonian
+eq_add_const_of_isHamiltonianVectorField
+eq_torusHamiltonian_of_nonneg_of_sum
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

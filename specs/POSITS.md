@@ -39,9 +39,13 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
      ⚠️ *Updated 2026-09-08:* the manifold form now exists — `Projectivization.torusField_isHamiltonianVectorField`
      (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`): the velocity field of the
      torus action on `ℂℙⁿ` is Hamiltonian for the Fubini–Study form with `2 ∑ θₖ momentMap` as its
-     Hamiltonian, on the symplectic manifold `fsForm_isSymplectic`. What the standard argument still
-     uses beyond it — uniqueness of a moment map up to an additive constant on a connected manifold,
-     and the sum-one normalisation — is not formalised, so the posit stands as written.
+     Hamiltonian, on the symplectic manifold `fsForm_isSymplectic`. ⚠️ *Updated 2026-09-08 (late):*
+     the rest of the argument is formalised too — ★★ `eq_add_const_of_isHamiltonianVectorField`
+     (a Hamiltonian is unique up to a constant on `ℂℙⁿ`) and ★★★ `eq_torusHamiltonian_of_nonneg_of_sum`
+     (non-negativity and the sum-two normalisation, the form's scale, pin it to `2 · momentMap`;
+     same module). The standard symplectic argument is now a theorem. **The posit stands as
+     written**: what it asserts is that the *dynamics* generates the torus action, and no part of
+     this touches that.
      See the boundary note in `LF4/MomentMap.lean` and `MATHLIB-GAPS.md`.
   2. **Two proved asymmetries** that fall short of characterisation: the moment map's `μ_FS`
      pushforward is flat / Dirichlet (`fs_moment_pushforward_uniform`,
