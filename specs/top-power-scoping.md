@@ -21,11 +21,23 @@ compact manifold by local finiteness — **no decay estimate was needed, compact
 Japanese bracket**; `Instances/ProjectiveSpaceFubiniStudyVolume.lean`: `fsVolume n`, ★★
 `fsVolume_map_smul`, ★ `isFiniteMeasure_fsVolume`, and ★★★ `fsVolumeNormalized_eq_fubiniStudyMeasure`
 — **the normalised volume of the top power of the Fubini–Study form is `fubiniStudyMeasure p₀`, under the
-premise `fsVolume n ≠ 0`**). ⚠️ **M6(b) NOT BUILT — the premise stands in the statement**, exactly as
-§6's stop condition prescribes: the flat non-vanishing `fundamentalFormAlt^{∧n} ≠ 0` on the standard
-basis (a shuffle count over `Perm.ModSumCongr`) is the one piece of genuine mathematics left, and it
-was not attempted here. **M7 NOT BUILT.** Deviation from §4 worth recording: no general pullback of
-forms was built (M4(a)); the invariance is consumed directly in chart form, which is all Route U needs.
+premise `fsVolume n ≠ 0`**). **M6(b) BUILT 2026-09-08, later the same day** — the §6 fallback (the
+premise in the statement) lived for one commit and was then retired. Generic half,
+`TopFormMeasure.lean`: ★ `topFormMeasure_ne_zero_of_localRep_ne_zero` — one nonzero chart coefficient
+at one point makes the measure nonzero (continuous density, a ball, Haar). Flat half,
+`Alternating/WedgeShuffle.lean`: the shuffle sum of `α ∧ β` (`β` a 2-form) on a **pair family** — only
+the `k + 1` classes sending the two `β`-slots into one pair survive, and each has a representative made
+of **two disjoint transpositions**, sign `+1`, so no sign is ever computed — ★★ `wedge_mul_apply_pairs`,
+`(α ∧ β) u = ∑ⱼ α (u ∘ pairRep j ∘ inl)`; then in the Volume module ★★ `wedgePow_stdForm_pairFamily`
+by induction — **the `k`-th power of the standard symplectic form on `k` distinct standard pairs is
+`k!`** — hence ★★ `wedgePow_fsModelForm_zero_stdBasis` `= (-4)ⁿ n!` (`fsModelForm_zero`), ★★
+`fsVolume_ne_zero`, and **★★★ `fsVolumeNormalized_eq_fubiniStudyMeasure` with NO premise** (the
+premise forms survive as `_of_ne_zero`). Neither of the two tools named in §2 for M6(b) was used: the
+quotient `Perm.ModSumCongr` was handled class by class (`Quotient.out`, and Mathlib's
+`mem_sumCongrHom_range_of_perm_mapsTo_inl` to identify a class by where it sends the `inr` slots), and
+`domCoprod_alternization_eq` was not needed. **M7 NOT BUILT** (the constant). Deviation from §4 worth
+recording: no general pullback of forms was built (M4(a)); the invariance is consumed directly in chart
+form, which is all Route U needs.
 Step (3) of the
 manifold exterior-calculus plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)),
 the "top forms → measures" step, scoped against what `c35b090` left standing: `ℂℙⁿ` is an analytic

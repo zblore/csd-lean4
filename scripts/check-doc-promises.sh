@@ -185,7 +185,9 @@ PATH_EXCEPT = {
     # A scoping note names its own deliverable before it is built. REMOVE the entry when the
     # brick lands — a stale exception silently weakens the guard for that pair. (The two
     # `ozawa-scoping.md` entries were removed on 2026-09-04 when that brick landed.)
-    # top-power-scoping.md (2026-09-07): step (3) deliverables M1-M7, none built yet.
+    # top-power-scoping.md (2026-09-07): step (3) deliverables. M1-M6 landed 2026-09-08; Pullback.lean
+    # (M4(a)) was superseded -- the invariance is consumed in chart form -- but the note still names
+    # it as a deliverable, so the entry stays until the note is revised.
     ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Pullback.lean"),
 }
 

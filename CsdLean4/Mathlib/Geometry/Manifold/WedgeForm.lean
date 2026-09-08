@@ -33,7 +33,7 @@ the flat "commutes with pullback" lemma), the flat operation is `C^∞` in its a
 * ★★ `DifferentialForm.wedgePow α k` — **the `k`-th exterior power of a real 2-form**, a
   `2k`-form, by recursion (`powEquiv k : Fin (2k) ⊕ Fin 2 ≃ Fin (2(k+1))`); its flat twin
   `ContinuousAlternatingMap.wedgePow` with ★ `wedgePow_compContinuousLinearMap` (pullback
-  commutes with the power) and ★ `localRep_wedgePow` (the local representative of the power is
+  commutes with the power), `wedgePow_smul` (homogeneity) and ★ `localRep_wedgePow` (the local representative of the power is
   the power of the local representative) — what lifts an invariance of a 2-form to its top power.
 
 ## Honest scope
@@ -306,6 +306,16 @@ theorem wedgePow_compContinuousLinearMap {E' : Type*} [NormedAddCommGroup E'] [N
     simp only [wedgePow]
     rw [domDomCongr_compContinuousLinearMap, wedge_compContinuousLinearMap,
       wedgePow_compContinuousLinearMap α L k]
+
+/-- The iterated power is homogeneous of degree `k`: `(c • α)^{∧k} = c^k • α^{∧k}`. -/
+theorem wedgePow_smul (c : ℝ) (α : E [⋀^Fin 2]→L[ℝ] ℝ) :
+    ∀ k, wedgePow (c • α) k = c ^ k • wedgePow α k
+  | 0 => by simp [wedgePow]
+  | k + 1 => by
+    simp only [wedgePow]
+    rw [wedgePow_smul c α k, wedge_smul_left, wedge_smul_right]
+    ext v
+    simp [domDomCongr_apply, smul_smul, pow_succ, mul_comm]
 
 end ContinuousAlternatingMap
 

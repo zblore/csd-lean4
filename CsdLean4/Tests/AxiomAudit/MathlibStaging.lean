@@ -3258,7 +3258,9 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- the top power of the Fubini-Study form IS fubiniStudyMeasure p₀ for every p₀, by
 -- fubiniStudyMeasure_unique applied to a U(n+1)-invariant probability measure -- ⚠️ UNDER THE
 -- PREMISE fsVolume n ≠ 0 (M6(b), the flat non-vanishing of the n-th power of the standard
--- symplectic form on the standard basis, NOT proved; the premise is in the statement).
+-- symplectic form on the standard basis; the premise is in the statement). ⚠️ The premise was
+-- discharged later the same day (M6(b) block below); the two premise theorems were renamed
+-- `_of_ne_zero` and the unconditional names now carry the identity.
 -- ⚠️ No constant (M7); no general pullback of forms (the invariance is consumed in chart form).
 
 /-- info: 'Kahler.ddcForm_log_norm_eq_zero_of_holomorphic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -3368,6 +3370,182 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Projectivization.fsVolumeNormalized_map_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsVolumeNormalized_map_smul
+
+/-- info: 'Projectivization.isProbabilityMeasure_fsVolumeNormalized_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isProbabilityMeasure_fsVolumeNormalized_of_ne_zero
+
+/-- info: 'Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero
+
+/-! ### M6(b): the flat count, and the top-power identity WITHOUT premise (WedgeShuffle.lean, TopFormMeasure.lean, WedgeForm.lean, ProjectiveSpaceFubiniStudyVolume.lean, 2026-09-08) -/
+
+-- Milestone M6(b) of specs/top-power-scoping.md, discharging the premise of the block above.
+-- Two halves. GENERIC (TopFormMeasure.lean): ★ topFormMeasure_ne_zero_of_localRep_ne_zero --
+-- a smooth top form whose coefficient against the basis is nonzero at ONE chart point has
+-- nonzero measure (the density is continuous, so bounded below on a ball, and Haar measure
+-- gives balls positive measure). FLAT (WedgeShuffle.lean, then the Volume module): (α ∧ β) u
+-- with β a 2-form is a sum over the shuffle classes Perm.ModSumCongr (Fin 2k) (Fin 2); on a
+-- PAIR FAMILY (β = ±1 within a pair, 0 across pairs) only the k+1 classes sending the two
+-- β-slots into one pair survive, and each has a representative made of TWO DISJOINT
+-- TRANSPOSITIONS (sign +1), so no sign is ever computed: ★★ wedge_mul_apply_pairs,
+-- (α ∧ β) u = ∑ⱼ α (u ∘ pairRep j ∘ inl). Then ★★ wedgePow_stdForm_pairFamily by induction: the
+-- k-th power of the standard symplectic form on k distinct standard pairs (e_a, i e_a) is k!,
+-- and on the standard basis of Fin n → ℂ the top power of the model form at the origin is
+-- (-4)^n n! (fsModelForm_zero: the model form at 0 is -4 • stdForm). Hence ★★ fsVolume_ne_zero,
+-- and ★★★ fsVolumeNormalized_eq_fubiniStudyMeasure UNCONDITIONALLY: the normalised volume of
+-- the top power of the Fubini-Study form IS fubiniStudyMeasure p₀, for every p₀.
+-- ⚠️ Still no constant (M7): the identity is for the normalised measure; (-4)^n n! is one
+-- chart coefficient, not the total mass.
+
+/-- info: 'ContinuousAlternatingMap.slotPair_slotOf' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.slotPair_slotOf
+
+/-- info: 'ContinuousAlternatingMap.slotMem_slotOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.slotMem_slotOf
+
+/-- info: 'ContinuousAlternatingMap.slotOf_slotPair_slotMem' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.slotOf_slotPair_slotMem
+
+/-- info: 'ContinuousAlternatingMap.slot_ext' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.slot_ext
+
+/-- info: 'ContinuousAlternatingMap.pairRep_inr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.pairRep_inr
+
+/-- info: 'ContinuousAlternatingMap.pairRep_inl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.pairRep_inl
+
+/-- info: 'ContinuousAlternatingMap.sign_pairRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.sign_pairRep
+
+/-- info: 'ContinuousAlternatingMap.modSumCongr_mk_eq_of_inr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.modSumCongr_mk_eq_of_inr
+
+/-- info: 'ContinuousAlternatingMap.exists_inr_eq_of_mk_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.exists_inr_eq_of_mk_eq
+
+/-- info: 'ContinuousAlternatingMap.classTerm_mk''' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.classTerm_mk''
+
+/-- info: 'ContinuousAlternatingMap.wedge_mul_apply_eq_sum_classTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_mul_apply_eq_sum_classTerm
+
+/-- info: 'ContinuousAlternatingMap.beta_inr_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.beta_inr_eq
+
+/-- info: 'ContinuousAlternatingMap.slotPair_eq_of_classTerm_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.slotPair_eq_of_classTerm_ne_zero
+
+/-- info: 'ContinuousAlternatingMap.mk_eq_pairRep_of_classTerm_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.mk_eq_pairRep_of_classTerm_ne_zero
+
+/-- info: 'ContinuousAlternatingMap.classTerm_pairRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.classTerm_pairRep
+
+/-- info: 'ContinuousAlternatingMap.wedge_mul_apply_pairs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_mul_apply_pairs
+
+/-- info: 'ContinuousAlternatingMap.continuous_eval_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.continuous_eval_const
+
+/-- info: 'DifferentialForm.topFormMeasure_ne_zero_of_localRep_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.topFormMeasure_ne_zero_of_localRep_ne_zero
+
+/-- info: 'ContinuousAlternatingMap.wedgePow_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedgePow_smul
+
+/-- info: 'Projectivization.fsModelForm_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_zero
+
+/-- info: 'Projectivization.stdForm_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.stdForm_single
+
+/-- info: 'Projectivization.im_conj_mul_pairs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.im_conj_mul_pairs
+
+/-- info: 'Projectivization.coe_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.coe_powEquiv_inl
+
+/-- info: 'Projectivization.coe_powEquiv_inr' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.coe_powEquiv_inr
+
+/-- info: 'Projectivization.pairIdx_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.pairIdx_powEquiv_inl
+
+/-- info: 'Projectivization.memIdx_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.memIdx_powEquiv_inl
+
+/-- info: 'Projectivization.pairIdx_powEquiv_inr' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.pairIdx_powEquiv_inr
+
+/-- info: 'Projectivization.memIdx_powEquiv_inr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.memIdx_powEquiv_inr
+
+/-- info: 'Projectivization.pairFamily_powEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.pairFamily_powEquiv
+
+/-- info: 'Projectivization.isPairFamily_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isPairFamily_pairFamily
+
+/-- info: 'Projectivization.removePair_injective' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.removePair_injective
+
+/-- info: 'Projectivization.pairFamily_pairRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.pairFamily_pairRep
+
+/-- info: 'Projectivization.wedgePow_stdForm_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_stdForm_pairFamily
+
+/-- info: 'Projectivization.stdBasis_eq_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.stdBasis_eq_pairFamily
+
+/-- info: 'Projectivization.wedgePow_fsModelForm_zero_stdBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_fsModelForm_zero_stdBasis
+
+/-- info: 'Projectivization.wedgePow_fsModelForm_zero_stdBasis_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_fsModelForm_zero_stdBasis_ne_zero
+
+/-- info: 'Projectivization.fsVolume_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_ne_zero
 
 /-- info: 'Projectivization.isProbabilityMeasure_fsVolumeNormalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

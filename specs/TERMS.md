@@ -94,10 +94,10 @@ alarming and is not.
   is what `ConstraintDynamics.flow_preserves` (P4) licenses: each time-`t` map preserves `muL`.
 * **Backed by:** `ConstraintDynamics.flow_preserves` (a structure field — *posited* of every
   model, not derived), and `liouville_isProbability` for the Kähler instance.
-* **Partly established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the normalised measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, **under the premise `fsVolume n ≠ 0`** (the flat non-vanishing of the top power, `specs/top-power-scoping.md` M6(b), not proved). Unconditionally, the volume is `U(n+1)`-invariant and finite.
-* **NOT established:** the premise, and the constant; so the unqualified sentence "this measure **is** the Kähler top-power volume `ω^{∧n}/n!`" is still not backed. That is
-  the same manifold residual as above; `LF4/KahlerVolumeForced.lean` proves the normalisation core
-  and leaves the top-power identity open. Marker: `TERM-SCOPE(Liouville)`.
+* **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
+* **NOT established:** the constant (M7). The total mass of `fsVolume n` is not computed, so the literal `ω^{∧n}/n!` with its `n!` is not backed; the identity is for the normalised measure. That is
+  the last manifold residual of this entry; `LF4/KahlerVolumeForced.lean` proves the normalisation core,
+  and the normalised top-power identity is now closed. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an
   odd-dimensional space, which cannot be symplectic (CONVENTIONS §8.3a). That is the failure this
   entry exists to prevent recurring.

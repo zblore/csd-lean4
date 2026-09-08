@@ -46,7 +46,12 @@ the basis — and those densities glue to a measure on the manifold.
   images;
 * ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` (milestone
   **M6(a)**) — the measure of a smooth top form is locally finite (a compact ball inside a chart
-  has finite measure, the density being continuous there), hence finite on a compact manifold.
+  has finite measure, the density being continuous there), hence finite on a compact manifold;
+* ★ `topFormMeasure_ne_zero_of_localRep_ne_zero` (milestone **M6(b)**, the generic half) — a
+  smooth top form whose coefficient against the basis does not vanish at one chart point has
+  **nonzero** measure: the density is continuous, so bounded below on a ball, and Haar measure
+  gives balls positive measure (`ContinuousAlternatingMap.continuous_eval_const`: evaluation on
+  a fixed family is Lipschitz).
 
 ## Honest scope
 
@@ -61,8 +66,9 @@ chosen and none is needed. Integrating a form with its sign is not defined here.
 ⚠️ **Invariance, not general naturality.** `topFormMeasure_map_eq` is stated for a map that
 preserves the form in charts (the hypothesis is the chart form of "`g^* s = s`"); the general
 statement `measureOf (g^* s) = map g⁻¹ (measureOf s)` would need the pullback of forms along
-maps of manifolds, which is not built. Non-vanishing of any particular measure is consumer-side
-(M6(b)).
+maps of manifolds, which is not built. Non-vanishing of a particular measure reduces to one chart
+coefficient at one point (`topFormMeasure_ne_zero_of_localRep_ne_zero`); computing that
+coefficient is consumer-side.
 
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`; the model `E` is
 finite-dimensional real, Borel, with an additive Haar measure supplied as an argument.
@@ -162,6 +168,24 @@ theorem iUnion_inter_piece (A : Set M) : ⋃ i, A ∩ c.piece i = A := by
 end ChartCover
 
 end ChartCover
+
+/-! ### Evaluation on a fixed family is continuous -/
+
+section Eval
+
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {ι : Type*} [Fintype ι]
+
+/-- Evaluating a continuous alternating map on a fixed family is Lipschitz (constant
+`∏ i, ‖v i‖`, by `le_opNorm`), hence continuous. -/
+theorem ContinuousAlternatingMap.continuous_eval_const (v : ι → E) :
+    Continuous fun α : E [⋀^ι]→L[ℝ] ℝ => α v := by
+  refine (LipschitzWith.of_dist_le_mul
+    (K := ⟨∏ i, ‖v i‖, Finset.prod_nonneg fun _ _ => norm_nonneg _⟩) fun α β => ?_).continuous
+  simp only [dist_eq_norm]
+  rw [← ContinuousAlternatingMap.sub_apply, mul_comm]
+  exact ContinuousAlternatingMap.le_opNorm _ _
+
+end Eval
 
 /-! ### Chart densities and chart measures -/
 
@@ -394,7 +418,7 @@ theorem topFormMeasure_map_eq (c : ChartCover E M) (g : M ≃ₜ M)
     _ = topFormMeasure μ e s c (⋃ p, P p) := (measure_iUnion hPdisj hPmeas).symm
     _ = topFormMeasure μ e s c A := by rw [hPunion]
 
-/-! ### Local finiteness -/
+/-! ### Local finiteness, and positivity -/
 
 omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
   in
@@ -435,14 +459,9 @@ theorem isLocallyFiniteMeasure_topFormMeasure
       rintro w ⟨hw, hwV⟩
       have := hwV.2
       rwa [Set.mem_preimage, (chartAt E x).right_inv hw] at this
-    have hev : Continuous fun α : E [⋀^ι]→L[ℝ] ℝ => α e := by
-      refine (LipschitzWith.of_dist_le_mul
-        (K := ⟨∏ i, ‖e i‖, Finset.prod_nonneg fun _ _ => norm_nonneg _⟩) fun α β => ?_).continuous
-      simp only [dist_eq_norm]
-      rw [← ContinuousAlternatingMap.sub_apply, mul_comm]
-      exact ContinuousAlternatingMap.le_opNorm _ _
     have hcont : ContinuousOn (fun w => localRep s x w e) K :=
-      hev.comp_continuousOn ((continuousOn_localRep s hs x).mono hK)
+      (ContinuousAlternatingMap.continuous_eval_const e).comp_continuousOn
+        ((continuousOn_localRep s hs x).mono hK)
     obtain ⟨C, hC⟩ := hKc.exists_bound_of_continuousOn hcont
     calc ∫⁻ w in (chartAt E x).target ∩ (chartAt E x).symm ⁻¹' V, chartDensity e s x w ∂μ
         ≤ ∫⁻ w in K, chartDensity e s x w ∂μ := lintegral_mono_set hsub
@@ -461,6 +480,44 @@ theorem isFiniteMeasure_topFormMeasure [CompactSpace M]
     (c : ChartCover E M) : IsFiniteMeasure (topFormMeasure μ e s c) := by
   have := isLocallyFiniteMeasure_topFormMeasure μ e s hs c
   infer_instance
+
+/-- ★ **A smooth top form whose coefficient does not vanish at one chart point has nonzero
+measure.** The density is continuous, so it is bounded below by a positive constant on a ball
+around that point, and Haar measure gives balls positive measure. -/
+theorem topFormMeasure_ne_zero_of_localRep_ne_zero
+    (hs : ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
+    (c : ChartCover E M) (x₀ : M) {w₀ : E} (hw₀ : w₀ ∈ (chartAt E x₀).target)
+    (hne : localRep s x₀ w₀ e ≠ 0) : topFormMeasure μ e s c ≠ 0 := by
+  intro hzero
+  have hsrc : topFormMeasure μ e s c (chartAt E x₀).source = 0 := by simp [hzero]
+  rw [topFormMeasure_apply_of_subset_source μ e s c x₀ (chartAt E x₀).open_source.measurableSet
+    subset_rfl, chartMeasure_apply μ e s x₀ (chartAt E x₀).open_source.measurableSet] at hsrc
+  have hcont : ContinuousAt (fun w => |localRep s x₀ w e|) w₀ :=
+    ((ContinuousAlternatingMap.continuous_eval_const e).continuousAt.comp
+      (contDiffAt_localRep s hs x₀ hw₀).continuousAt).abs
+  set c₀ : ℝ := |localRep s x₀ w₀ e| / 2 with hc₀
+  have habs : 0 < |localRep s x₀ w₀ e| := abs_pos.2 hne
+  have hc₀pos : 0 < c₀ := by rw [hc₀]; positivity
+  have hlow : ∀ᶠ w in 𝓝 w₀, c₀ < |localRep s x₀ w e| :=
+    continuousAt_const.eventually_lt hcont (by rw [hc₀]; linarith)
+  obtain ⟨r, hr, hball⟩ := Metric.eventually_nhds_iff.1
+    (hlow.and ((chartAt E x₀).open_target.mem_nhds hw₀))
+  have hsub : Metric.ball w₀ r ⊆
+      (chartAt E x₀).target ∩ (chartAt E x₀).symm ⁻¹' (chartAt E x₀).source :=
+    fun w hw => ⟨(hball hw).2, (chartAt E x₀).map_target (hball hw).2⟩
+  have hpos : 0 < ∫⁻ w in Metric.ball w₀ r, chartDensity e s x₀ w ∂μ := by
+    calc (0 : ℝ≥0∞) < ENNReal.ofReal c₀ * μ (Metric.ball w₀ r) :=
+          ENNReal.mul_pos (ENNReal.ofReal_pos.2 hc₀pos).ne' (Metric.measure_ball_pos μ w₀ hr).ne'
+      _ = ∫⁻ _ in Metric.ball w₀ r, ENNReal.ofReal c₀ ∂μ := (setLIntegral_const _ _).symm
+      _ ≤ ∫⁻ w in Metric.ball w₀ r, chartDensity e s x₀ w ∂μ := by
+          refine lintegral_mono_ae ((ae_restrict_iff' Metric.isOpen_ball.measurableSet).2
+            (Filter.Eventually.of_forall fun w hw => ?_))
+          exact ENNReal.ofReal_le_ofReal (le_of_lt (hball hw).1)
+  have := lintegral_mono_set (μ := μ) (f := chartDensity e s x₀) hsub
+  rw [hsrc] at this
+  exact absurd (lt_of_lt_of_le hpos this) (lt_irrefl _)
 
 end DifferentialForm
 

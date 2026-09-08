@@ -523,6 +523,7 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Wedge
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Pullback
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.TopForm
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeCLM
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeShuffle
 public import CsdLean4.Mathlib.Geometry.Manifold.VectorBundle.AlternatingMap
 public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
