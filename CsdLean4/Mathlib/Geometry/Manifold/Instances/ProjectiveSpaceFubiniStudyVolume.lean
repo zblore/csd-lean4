@@ -60,9 +60,9 @@ Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This 
 
 ## Honest scope
 
-⚠️ **No constant.** The total mass `fsVolume n univ` is not computed (M7); the identity is for the
-normalised measure, so the literal `ωⁿ/n!` is not yet a statement here — `(-4)ⁿ n!` is the
-coefficient at one point, not the total mass.
+⚠️ **No constant here.** The identity of this module is for the normalised measure; `(-4)ⁿ n!` is
+the coefficient at one point, not the total mass. The mass, `(4π)ⁿ`, and the identity with its
+constant are `ProjectiveSpaceFubiniStudyMass.lean` (M7).
 
 ⚠️ **`n ≥ 1` is not assumed and not needed**: for `n = 0` the manifold is a point, the top power
 is the constant `0`-form `1` (`wedgePow_stdForm_pairFamily` at `k = 0`), and every statement holds.

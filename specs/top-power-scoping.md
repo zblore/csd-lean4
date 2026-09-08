@@ -35,7 +35,21 @@ by induction — **the `k`-th power of the standard symplectic form on `k` disti
 premise forms survive as `_of_ne_zero`). Neither of the two tools named in §2 for M6(b) was used: the
 quotient `Perm.ModSumCongr` was handled class by class (`Quotient.out`, and Mathlib's
 `mem_sumCongrHom_range_of_perm_mapsTo_inl` to identify a class by where it sends the `inr` slots), and
-`domCoprod_alternization_eq` was not needed. **M7 NOT BUILT** (the constant). Deviation from §4 worth
+`domCoprod_alternization_eq` was not needed. **M7 BUILT 2026-09-08 as well — every milestone of this
+note is built.** `Analysis/SpecialFunctions/JapaneseBracketIntegral.lean`: the radial integral by the
+fundamental theorem of calculus on `[0, ∞)`, the planar one by polar coordinates, and ★★
+`lintegral_pi_pow_inv_one_add_sum_norm_sq`, `∫_{ℂⁿ} (1 + ‖w‖²)^{-(n+1)} = πⁿ/n!`, by splitting one
+coordinate off (`measurePreserving_piFinSuccAbove`) and induction — the "Gaussian-type integral not on the
+shelf" of the M7 row was a one-factor Fubini induction. `Instances/ProjectiveSpaceFubiniStudyMass.lean`:
+the density **everywhere** — rotate `w` to the first axis by a unitary matrix (§5's `|det_ℂ|²` identity
+was on the shelf as `LinearMap.det_restrictScalars`, so a unitary has Jacobian `1`), where the model form
+is the diagonal pullback of the form at the origin (`fsModelForm_single`), hence ★★
+`wedgePow_fsModelForm_stdBasis` `= (-4)ⁿ n! (1 + ‖w‖²)^{-(n+1)}`; the hyperplane `z₀ = 0` is null
+(`addHaar_submodule` in every other chart), so the mass is one chart integral; ★★ `fsVolume_univ = (4π)ⁿ`;
+and **★★★ `fsVolume_eq_smul_fubiniStudyMeasure : fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`** — the
+top power of the Fubini–Study form IS the Fubini–Study measure, with its constant (the `(4π)ⁿ` is
+convention-bound: the chart form carries the potential's `-4`, the wedge its own normalisation; every
+factor is in the statement). Deviation from §4 worth
 recording: no general pullback of forms was built (M4(a)); the invariance is consumed directly in chart
 form, which is all Route U needs.
 Step (3) of the

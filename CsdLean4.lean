@@ -524,6 +524,7 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Pullback
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.TopForm
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeCLM
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeShuffle
+public import CsdLean4.Mathlib.Analysis.SpecialFunctions.JapaneseBracketIntegral
 public import CsdLean4.Mathlib.Geometry.Manifold.VectorBundle.AlternatingMap
 public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
@@ -538,6 +539,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartCover
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.Empirical.QM.Darwinism

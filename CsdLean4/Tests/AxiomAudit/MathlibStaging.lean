@@ -3396,8 +3396,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- (-4)^n n! (fsModelForm_zero: the model form at 0 is -4 • stdForm). Hence ★★ fsVolume_ne_zero,
 -- and ★★★ fsVolumeNormalized_eq_fubiniStudyMeasure UNCONDITIONALLY: the normalised volume of
 -- the top power of the Fubini-Study form IS fubiniStudyMeasure p₀, for every p₀.
--- ⚠️ Still no constant (M7): the identity is for the normalised measure; (-4)^n n! is one
--- chart coefficient, not the total mass.
+-- ⚠️ Still no constant at this block: the identity is for the normalised measure; (-4)^n n! is
+-- one chart coefficient, not the total mass. The constant is the M7 block below (same day).
 
 /-- info: 'ContinuousAlternatingMap.slotPair_slotOf' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3554,6 +3554,146 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure
+
+/-! ### M7: the constant -- the mass of the Fubini-Study volume is (4π)^n (JapaneseBracketIntegral.lean, ProjectiveSpaceFubiniStudyMass.lean, 2026-09-08; 30 pins) -/
+
+-- Milestone M7 of specs/top-power-scoping.md, the last one. Analytic half
+-- (Analysis/SpecialFunctions/JapaneseBracketIntegral.lean; upstream has integrability of the
+-- Japanese bracket, never a value): the radial integral by the fundamental theorem of calculus on
+-- [0, ∞), the planar integral by polar coordinates, and ★★ lintegral_pi_pow_inv_one_add_sum_norm_sq,
+-- ∫_{ℂⁿ} (1 + ∑|wⱼ|²)^{-(n+1)} = πⁿ/n!, by splitting one coordinate off (piFinSuccAbove) and
+-- induction. Geometric half (Instances/ProjectiveSpaceFubiniStudyMass.lean): the density of the
+-- top power EVERYWHERE on the chart -- rotate w to the first axis by a unitary matrix (the real
+-- determinant of a complex matrix is |det|², LinearMap.det_restrictScalars + Algebra.norm_complex_apply,
+-- so a unitary has Jacobian 1), where the model form is the diagonal pullback
+-- diag(t⁻¹, t^{-1/2}, …) of the form at the origin, hence by the Jacobian rule and the M6(b) count
+-- ★★ wedgePow_fsModelForm_stdBasis = (-4)ⁿ n! (1+‖w‖²)^{-(n+1)}; the hyperplane z₀ = 0 is null (a
+-- coordinate hyperplane in every other chart, addHaar_submodule), so the mass is one chart integral;
+-- ★★ fsVolume_univ = (4π)ⁿ; and ★★★ fsVolume_eq_smul_fubiniStudyMeasure:
+-- fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀ -- THE TOP POWER OF THE FUBINI-STUDY FORM IS THE
+-- FUBINI-STUDY MEASURE, with its constant. The (4π)ⁿ is convention-bound (the chart form carries
+-- the potential's -4, the wedge its own normalisation); every factor is visible in the statement.
+-- Every milestone of the scoping note is now built.
+
+/-- info: 'MeasureTheory.hasDerivAt_bracketAnti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasDerivAt_bracketAnti
+
+/-- info: 'MeasureTheory.continuous_bracketAnti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.continuous_bracketAnti
+
+/-- info: 'MeasureTheory.tendsto_bracketAnti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_bracketAnti
+
+/-- info: 'MeasureTheory.integrableOn_Ioi_mul_pow_inv_add_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.integrableOn_Ioi_mul_pow_inv_add_sq
+
+/-- info: 'MeasureTheory.integral_Ioi_mul_pow_inv_add_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.integral_Ioi_mul_pow_inv_add_sq
+
+/-- info: 'MeasureTheory.lintegral_complex_pow_inv_add_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.lintegral_complex_pow_inv_add_norm_sq
+
+/-- info: 'MeasureTheory.lintegral_pi_pow_inv_one_add_sum_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.lintegral_pi_pow_inv_one_add_sum_norm_sq
+
+/-- info: 'Projectivization.mulVecCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mulVecCLM_apply
+
+/-- info: 'Projectivization.det_mulVecCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.det_mulVecCLM
+
+/-- info: 'Projectivization.normSq_det_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.normSq_det_unitary
+
+/-- info: 'Projectivization.norm_toEuclideanLin_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_toEuclideanLin_unitary
+
+/-- info: 'Projectivization.toLpCLM_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toLpCLM_mulVec
+
+/-- info: 'Projectivization.toLpCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toLpCLM_apply
+
+/-- info: 'Projectivization.fsModelForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_apply
+
+/-- info: 'Projectivization.fsModelForm_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_mulVec
+
+/-- info: 'Projectivization.fsScale_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsScale_mulVec_apply
+
+/-- info: 'Projectivization.fsScaleEntry_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsScaleEntry_mul_self
+
+/-- info: 'Projectivization.inner_fsScale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_fsScale
+
+/-- info: 'Projectivization.fsModelForm_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_single
+
+/-- info: 'Projectivization.normSq_det_fsScale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.normSq_det_fsScale
+
+/-- info: 'Projectivization.wedgePow_fsModelForm_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_fsModelForm_single
+
+/-- info: 'Projectivization.wedgePow_fsModelForm_stdBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_fsModelForm_stdBasis
+
+/-- info: 'Projectivization.chartDensity_fsTopForm_origin_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartDensity_fsTopForm_origin_zero
+
+/-- info: 'Projectivization.chartAt_origin_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartAt_origin_source
+
+/-- info: 'Projectivization.chartAt_origin_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartAt_origin_symm
+
+/-- info: 'Projectivization.fsVolume_chartSource_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_chartSource_zero
+
+/-- info: 'Projectivization.fsVolume_compl_chartSource_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_compl_chartSource_zero
+
+/-- info: 'Projectivization.fsVolume_univ_eq_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_univ_eq_lintegral
+
+/-- info: 'Projectivization.fsVolume_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_univ
+
+/-- info: 'Projectivization.fsVolume_eq_smul_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_eq_smul_fubiniStudyMeasure
 
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the

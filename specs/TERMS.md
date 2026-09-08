@@ -95,9 +95,8 @@ alarming and is not.
 * **Backed by:** `ConstraintDynamics.flow_preserves` (a structure field — *posited* of every
   model, not derived), and `liouville_isProbability` for the Kähler instance.
 * **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
-* **NOT established:** the constant (M7). The total mass of `fsVolume n` is not computed, so the literal `ω^{∧n}/n!` with its `n!` is not backed; the identity is for the normalised measure. That is
-  the last manifold residual of this entry; `LF4/KahlerVolumeForced.lean` proves the normalisation core,
-  and the normalised top-power identity is now closed. Marker: `TERM-SCOPE(Liouville)`.
+* **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
+* **NOT established:** nothing on the `ℂℙⁿ` side of this entry remains open. The arena-level volume (`ℂℙⁿ × T² × …`) is a product of this with Haar factors and is not restated as a top power; `LF4/KahlerVolumeForced.lean` proves the normalisation core. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an
   odd-dimensional space, which cannot be symplectic (CONVENTIONS §8.3a). That is the failure this
   entry exists to prevent recurring.
