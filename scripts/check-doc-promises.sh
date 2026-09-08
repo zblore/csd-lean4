@@ -186,7 +186,6 @@ PATH_EXCEPT = {
     # brick lands — a stale exception silently weakens the guard for that pair. (The two
     # `ozawa-scoping.md` entries were removed on 2026-09-04 when that brick landed.)
     # top-power-scoping.md (2026-09-07): step (3) deliverables M1-M7, none built yet.
-    ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/WedgeForm.lean"),
     ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Pullback.lean"),
     ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceUnitaryAction.lean"),
     ("specs/top-power-scoping.md", "Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean"),

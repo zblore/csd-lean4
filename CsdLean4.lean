@@ -522,11 +522,13 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPotential
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Wedge
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Pullback
 public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.TopForm
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeCLM
 public import CsdLean4.Mathlib.Geometry.Manifold.VectorBundle.AlternatingMap
 public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
 public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
 public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure
+public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy

@@ -3109,6 +3109,137 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.affineChartCover_pt
 
+/-! ### The wedge of sections (WedgeCLM.lean, WedgeForm.lean, 2026-09-08) -/
+
+-- Milestone M2 of specs/top-power-scoping.md. Flat (WedgeCLM.lean): the wedge of Wedge.lean is
+-- bilinear and BOUNDED in the pair of forms (norm_wedge_le, the bound Wedge.lean's honest scope
+-- listed as a follow-up), hence a continuous bilinear map (wedgeL) and C^n in the pair; ★ pullback
+-- commutes with the wedge (wedge_compContinuousLinearMap); reindexing is a norm-1 continuous
+-- linear map (domDomCongrL). Manifold (WedgeForm.lean): the wedge of two C^infinity sections is
+-- C^infinity (★★ contMDiff_wedgeFamily -- its trivialisation in a chart is the wedge of the local
+-- representatives), likewise reindexing and the constant 0-form; ★★ DifferentialForm.wedge,
+-- DifferentialForm.domDomCongr, DifferentialForm.constZero, DifferentialForm.wedgePow (the k-th
+-- power of a real 2-form, a 2k-form). Consumer: Projectivization.fsTopForm n := wedgePow fsForm n,
+-- the top power of the Fubini-Study form (ProjectiveSpaceFubiniStudyForm.lean). ⚠️ No algebraic
+-- law of the wedge (associativity, graded commutativity, Leibniz) at either level, and nothing
+-- says the power is nonzero -- that is M6.
+
+/-- info: 'ContinuousAlternatingMap.liftTensor_summand_mk''' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.liftTensor_summand_mk''
+
+/-- info: 'ContinuousAlternatingMap.wedge_compContinuousLinearMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_compContinuousLinearMap
+
+/-- info: 'ContinuousAlternatingMap.wedge_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_add_left
+
+/-- info: 'ContinuousAlternatingMap.wedge_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_smul_left
+
+/-- info: 'ContinuousAlternatingMap.wedge_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_add_right
+
+/-- info: 'ContinuousAlternatingMap.wedge_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_smul_right
+
+/-- info: 'ContinuousAlternatingMap.norm_wedge_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.norm_wedge_le
+
+/-- info: 'ContinuousAlternatingMap.wedgeL_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedgeL_apply
+
+/-- info: 'ContinuousAlternatingMap.contDiff_wedge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.contDiff_wedge
+
+/-- info: 'ContDiff.wedge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiff.wedge
+
+/-- info: 'ContDiffAt.wedge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.wedge
+
+/-- info: 'ContinuousAlternatingMap.domDomCongr_compContinuousLinearMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.domDomCongr_compContinuousLinearMap
+
+/-- info: 'ContinuousAlternatingMap.norm_domDomCongr_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.norm_domDomCongr_le
+
+/-- info: 'ContinuousAlternatingMap.domDomCongrL_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.domDomCongrL_apply
+
+/-- info: 'ContDiff.domDomCongr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiff.domDomCongr
+
+/-- info: 'ContDiffAt.domDomCongr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.domDomCongr
+
+/-- info: 'DifferentialForm.toFlat_wedgeFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.toFlat_wedgeFamily
+
+/-- info: 'DifferentialForm.trivializationAt_wedgeFamily_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.trivializationAt_wedgeFamily_snd
+
+/-- info: 'DifferentialForm.localRep_wedgeFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_wedgeFamily
+
+/-- info: 'DifferentialForm.contMDiff_wedgeFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_wedgeFamily
+
+/-- info: 'DifferentialForm.wedge_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.wedge_apply
+
+/-- info: 'DifferentialForm.toFlat_domDomCongrFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.toFlat_domDomCongrFamily
+
+/-- info: 'DifferentialForm.trivializationAt_domDomCongrFamily_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.trivializationAt_domDomCongrFamily_snd
+
+/-- info: 'DifferentialForm.localRep_domDomCongrFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_domDomCongrFamily
+
+/-- info: 'DifferentialForm.contMDiff_domDomCongrFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_domDomCongrFamily
+
+/-- info: 'DifferentialForm.domDomCongr_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.domDomCongr_apply
+
+/-- info: 'DifferentialForm.trivializationAt_constZeroFamily_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.trivializationAt_constZeroFamily_snd
+
+/-- info: 'DifferentialForm.contMDiff_constZeroFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_constZeroFamily
+
+/-- info: 'DifferentialForm.wedgePow_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.wedgePow_succ
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

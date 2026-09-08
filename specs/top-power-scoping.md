@@ -8,7 +8,11 @@
 `ℂℙⁿ` as a cover). The §6 stop condition held: chart-independence was
 `lintegral_image_eq_lintegral_abs_det_fderiv_mul` + the Jacobian rule through
 `localRep_transition`, no new measure-theoretic lemma; the one lemma that had to be written was
-`MeasurableSet.inter_preimage_of_continuousOn`. Cost: one sitting. **M2, M4–M7 NOT BUILT.**
+`MeasurableSet.inter_preimage_of_continuousOn`. Cost: one sitting. **M2 BUILT 2026-09-08 as well** (`Alternating/WedgeCLM.lean`: the wedge is a bounded
+bilinear map, ★ pullback commutes with it, reindexing is a continuous linear map;
+`Geometry/Manifold/WedgeForm.lean`: ★★ `DifferentialForm.wedge`, `domDomCongr`, `constZero`, ★★
+`wedgePow`; and `Projectivization.fsTopForm n := wedgePow fsForm n` in
+`ProjectiveSpaceFubiniStudyForm.lean`). **M4–M7 NOT BUILT.**
 Step (3) of the
 manifold exterior-calculus plan ([`BACKLOG.md`](BACKLOG.md) XL, [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)),
 the "top forms → measures" step, scoped against what `c35b090` left standing: `ℂℙⁿ` is an analytic

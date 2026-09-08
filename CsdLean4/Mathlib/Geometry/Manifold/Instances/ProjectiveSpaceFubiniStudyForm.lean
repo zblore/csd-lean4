@@ -8,6 +8,7 @@ module
 public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
+public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 
 /-!
 # The Fubini–Study form as a global smooth 2-form on `ℂℙⁿ`
@@ -343,5 +344,14 @@ theorem fsForm_mextDeriv : (fsForm (n := n)).mextDeriv = 0 := by
   exact mextDeriv_fsSection x
 
 end Closed
+
+/-! ### The top power -/
+
+/-- **The top power of the Fubini–Study form**, a `2n`-form on `ℂℙⁿ`. -/
+noncomputable def fsTopForm (n : ℕ) :
+    DifferentialForm (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n)) ∞ (Fin (2 * n)) ℝ :=
+  DifferentialForm.wedgePow (fsForm (n := n)) n
+
+
 
 end Projectivization
