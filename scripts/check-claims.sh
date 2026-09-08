@@ -257,7 +257,9 @@ ofKählerPreparationFlow
 pointerLiouville
 relFieldHamiltonian
 trivialKahlerOnticSetup
-IsSymplectic"
+IsSymplectic
+IsHamiltonianVectorField
+IsLocallyHamiltonian"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -317,6 +319,17 @@ IsSymplectic"
 #       the name that the fields do not spell out. Parity: pointwise non-degeneracy of an
 #       alternating 2-form forces EVEN dimension wherever it is inhabited; the one inhabitant
 #       in-tree is `fsForm_isSymplectic` on CP^n (Fin n → ℂ model, real dim 2n).
+#                                                                  EARNED (manifold-level).
+#     IsHamiltonianVectorField / IsLocallyHamiltonian — (Mathlib/Geometry/Manifold/
+#       HamiltonianVectorField.lean, 2026-09-08, brick G1 of generator-layer-scoping.md) Props
+#       DEMANDING the defining equations themselves, at manifold level: `α x (X x, v) =
+#       mfderiv H x v` for every x and v, and `mextDeriv (ι_X α) = 0`. Nothing is asserted by the
+#       names that the equations do not spell out; no existence, no smoothness, no inhabitant is
+#       claimed (the CP^n inhabitant is brick G6). The lemmas about the predicate live in its own
+#       namespace (`IsHamiltonianVectorField.mfderiv_apply_self`, `.eq_of_nondegenerate`,
+#       `.unique_of_isSymplectic`, `.add`, `.smul`, `.const`) and assert nothing beyond it. Parity:
+#       whenever the predicate is combined with non-degeneracy (its uniqueness lemma) the
+#       dimension is EVEN by the same argument as IsSymplectic; the predicate alone fixes no arena.
 #                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -576,6 +589,13 @@ liouville_isProbability"
 #     projection. The word names an established duality, not an aspiration. Same flat model
 #     and same §2a boundary as the four entries above; the manifold moment-map statement is
 #     POSITED (author decision 2026-09-04), and the module's header says so.
+#   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
+#     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
+#     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
+#     manifold-level equation `α x (X x, v) = mfderiv H x v` for the same H agree when α is
+#     symplectic (`IsSymplectic.nondegenerate`, pointwise). Both words name predicates that
+#     are hypotheses of the statement, and the conclusion is uniqueness — no existence, no
+#     inhabitant, no flow. Manifold level, real boundaryless model, EVEN where inhabited.
 #   kSectorData_fromPreparation_liouville_apply — (2026-08-12, witness suite WS-D)
 #     inherits the word from the production OperationalPackage.fromPreparation_
 #     liouville_apply it instantiates; the statement genuinely concerns the Liouville
@@ -620,6 +640,7 @@ arenaLiouville_sys_marginal
 coupling_hamiltonian_duality
 IsPhaseHamiltonian
 isPhaseHamiltonian_coordEnergy
+IsHamiltonianVectorField
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

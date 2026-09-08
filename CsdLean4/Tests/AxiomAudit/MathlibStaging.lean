@@ -3695,6 +3695,72 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsVolume_eq_smul_fubiniStudyMeasure
 
+/-! ### G1: Hamiltonian vector fields on a manifold -- the defining equation (HamiltonianVectorField.lean, 2026-09-08) -/
+
+-- Brick G1 of specs/generator-layer-scoping.md. `IsHamiltonianVectorField α X H` is the
+-- equation `α x (X x, v) = mfderiv H x v` at every point, for a 2-form FAMILY α and a vector
+-- field FAMILY X (no smoothness asserted or needed); `IsLocallyHamiltonian α X` is `d (ι_X α) = 0`
+-- (the notion the flux correction of RecordLayer/PiecewiseHamiltonian.lean needs -- meaningful
+-- when the family is smooth, brick G3). `interiorProduct` is `curryLeft` pointwise, forced onto
+-- the model space E because `TangentSpace` carries no normed instance at the pin. What follows
+-- from the equation by alternation and linearity alone: ★ dH (X) = 0 (energy conserved along its
+-- own field), ★ uniqueness of X_H where α is non-degenerate, hence for a symplectic form
+-- (`unique_of_isSymplectic`), and linearity in H. ⚠️ NO existence (G2/G3), NO "Hamiltonian ⇒
+-- locally Hamiltonian" (needs `mextDeriv` of a 0-form = `mfderiv`, first item of G3), NO
+-- inhabitant on CP^n (G6, the moment map of the torus action).
+
+/-- info: 'DifferentialForm.interiorProduct_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.interiorProduct_apply
+
+/-- info: 'DifferentialForm.curryLeft_apply_vecCons' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.curryLeft_apply_vecCons
+
+/-- info: 'DifferentialForm.apply_sub_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_sub_left
+
+/-- info: 'DifferentialForm.apply_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_add_left
+
+/-- info: 'DifferentialForm.apply_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_smul_left
+
+/-- info: 'DifferentialForm.apply_zero_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_zero_left
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.interiorProduct_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.interiorProduct_eq
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.mfderiv_apply_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.mfderiv_apply_self
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.eq_of_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.eq_of_nondegenerate
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.add
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.smul
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.const
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.unique_of_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.unique_of_isSymplectic
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

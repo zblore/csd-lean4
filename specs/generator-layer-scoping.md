@@ -1,6 +1,12 @@
 # The generator layer (step 4) and `R-016`, re-priced after step (3): scoping note
 
-**Status:** SCOPED 2026-09-08 (evening, after `c4e295d`). Nothing built. Every rating for step (4)
+**Status:** SCOPED 2026-09-08 (evening, after `c4e295d`). **G1 BUILT the same evening**
+(`Mathlib/Geometry/Manifold/HamiltonianVectorField.lean`, 13 pins): `interiorProduct`,
+`IsHamiltonianVectorField`, `IsLocallyHamiltonian`, and what alternation and linearity give for free —
+★ `mfderiv_apply_self` (`dH (X) = 0`), ★ `unique_of_isSymplectic`, linearity in `H`. The **S** held; the one
+non-mechanical point was that `TangentSpace` carries no normed instance at the pin, so `curryLeft` and every
+linearity lemma had to be forced onto the model space `E` by explicit `(E := E)` and finished by `calc`, never
+`rw` (the module-system instance-path trap again). G2–G7 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per
